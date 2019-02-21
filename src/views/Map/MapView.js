@@ -11,9 +11,9 @@ const MapView = (props) => {
       zoomControl={false}
       crs={mapBase.crs}
       center={mapOptions.initialPosition}
-      zoom={mapOptions.zoom}
-      minZoom={mapOptions.minZoom}
-      maxZoom={mapOptions.maxZoom}
+      zoom={mapBase.layer.options.zoom}
+      minZoom={mapBase.layer.options.minZoom}
+      maxZoom={mapBase.layer.options.maxZoom}
       maxBounds={mapOptions.maxBounds}
     >
       <TileLayer
