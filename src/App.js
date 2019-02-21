@@ -1,9 +1,10 @@
 import React from 'react'
+import MapContainer from './views/Map/MapContainer'
 import './App.css'
 
 const App = () => (
-  <div className="App">
-    Palvelukartta
+  <div>
+    <MapContainer />
   </div>
 )
 

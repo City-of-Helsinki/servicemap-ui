@@ -22,3 +22,5 @@ export const getUnitsState = createSelector(
     return []
   }
 )
+
+export const getMapType = store => store.mapType
