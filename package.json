@@ -4,10 +4,13 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^3.9.2",
+    "leaflet": "^1.4.0",
+    "proj4leaflet": "^1.0.2",
     "prop-types": "^15.7.2",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
     "react-intl": "^2.8.0",
+    "react-leaflet": "^2.2.1",
     "react-redux": "^6.0.0",
     "react-scripts": "2.1.5",
     "redux": "^4.0.1",
