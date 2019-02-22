@@ -1,11 +1,11 @@
-import { createMuiTheme } from "@material-ui/core";
+import { createMuiTheme } from '@material-ui/core';
 
 const SMTheme = createMuiTheme({
   // Color palette
   palette: {
     primary: {
-      main: '#1964e6'
-    }
+      main: '#1964e6',
+    },
   },
   // Typography
   typography: {
@@ -20,8 +20,8 @@ const SMTheme = createMuiTheme({
     },
   },
   spacing: {
-    unit: 8
-  }
+    unit: 8,
+  },
 });
 
-export default { SMTheme }
+export default { SMTheme };

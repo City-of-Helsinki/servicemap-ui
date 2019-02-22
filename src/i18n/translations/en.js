@@ -1,3 +1,3 @@
 export default {
-  "app.title": "Service map",
-}
+  'app.title': 'Service map',
+};

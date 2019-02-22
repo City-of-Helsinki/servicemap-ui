@@ -1,25 +1,27 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { Button } from '@material-ui/core'
-import { connect } from 'react-redux'
-import { unitsFetchData, setFilter } from '../redux/actions'
-import { getUnitsState, getLoadingState, getErrorState } from '../redux/selectors'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { Button } from '@material-ui/core';
+import { connect } from 'react-redux';
+import { unitsFetchData, setFilter } from '../redux/actions';
+import { getUnitsState, getLoadingState, getErrorState } from '../redux/selectors';
 
 // Simple fetch + filter test using redux, redux-thunk and reselect
 class Template extends Component {
   componentDidMount() {
-    const { unitsFetchData } = this.props
-    unitsFetchData()
+    const { unitsFetchData } = this.props;
+    unitsFetchData();
   }
 
   render() {
-    const { hasErrored, isLoading, units, setFilter } = this.props
-    const cities = ['helsinki', 'espoo', 'vantaa']
+    const {
+      hasErrored, isLoading, units, setFilter,
+    } = this.props;
+    const cities = ['helsinki', 'espoo', 'vantaa'];
     if (hasErrored) {
-      return <p>Error fetching units</p>
+      return <p>Error fetching units</p>;
     }
     if (isLoading) {
-      return <p>Loading…</p>
+      return <p>Loading…</p>;
     }
     return (
       <div>
@@ -41,25 +43,25 @@ class Template extends Component {
           ))}
         </ul>
       </div>
-    )
+    );
   }
 }
 // Import redux state to component props
 const mapStateToProps = (state) => {
-  const units = getUnitsState(state)
-  const hasErrored = getErrorState(state)
-  const isLoading = getLoadingState(state)
+  const units = getUnitsState(state);
+  const hasErrored = getErrorState(state);
+  const isLoading = getLoadingState(state);
   return {
     units,
     hasErrored,
     isLoading,
-  }
-}
+  };
+};
 
 export default connect(
   mapStateToProps,
   { unitsFetchData, setFilter },
-)(Template)
+)(Template);
 
 // Typechecking
 Template.propTypes = {
@@ -68,7 +70,7 @@ Template.propTypes = {
   isLoading: PropTypes.bool,
   unitsFetchData: PropTypes.func,
   setFilter: PropTypes.func,
-}
+};
 
 Template.defaultProps = {
   units: [],
@@ -76,4 +78,4 @@ Template.defaultProps = {
   isLoading: false,
   unitsFetchData: null,
   setFilter: null,
-}
+};

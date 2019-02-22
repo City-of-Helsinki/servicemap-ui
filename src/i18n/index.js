@@ -1,46 +1,49 @@
-import locale_fi from 'react-intl/locale-data/fi';
-import locale_en from 'react-intl/locale-data/en';
-import locale_se from 'react-intl/locale-data/se';
-import messages_fi from "./translations/fi";
-import messages_en from "./translations/en";
-import messages_se from "./translations/se";
+import localeFi from 'react-intl/locale-data/fi';
+import localeEn from 'react-intl/locale-data/en';
+import localeSe from 'react-intl/locale-data/se';
 import { addLocaleData } from 'react-intl';
+import messagesFi from './translations/fi';
+import messagesEn from './translations/en';
+import messagesSe from './translations/se';
 
 // Translation messages for React Intl
 const messages = {
-  'fi': messages_fi,
-  'en': messages_en,
-  'se': messages_se
+  fi: { text: 'Suomi', messages: messagesFi },
+  en: { text: 'English', messages: messagesEn },
+  se: { text: 'Svenska', messages: messagesSe },
 };
 
 // Mutable class keys
 const mutableKeys = [
   'locale',
-  'fallback_locale'
+  'fallbackLocale',
 ];
 
 /**
  * Internationalization
- * 
  * Handle locale changes and get appropriate
- * localization data for React Intl 
- **/
+ * localization data for React Intl
+ * */
 class i18n {
   constructor(props) {
-    addLocaleData([...locale_fi, ...locale_en, ...locale_se]); // Add locale data to react-intl
-    const _this = this;
+    addLocaleData([...localeFi, ...localeEn, ...localeSe]); // Add locale data to react-intl
+    const instance = this;
     if (props) {
-      Object.keys(props).forEach(function (key) {
+      Object.keys(props).forEach((key) => {
         // Check that key is mutable and value exists
         if (mutableKeys.includes(key) && props[key]) {
-          _this[key] = props[key];
+          instance[key] = props[key];
         }
       });
     }
   }
+
   // Options
   locale = 'fi';
-  fallback_locale = 'fi';
+
+  fallbackLocale = 'fi';
+
+  availableLocales = Object.keys(messages);
 
   // Change locale
   changeLocale = (locale) => {
@@ -51,20 +54,25 @@ class i18n {
 
   // Check if locale is valid
   isValidLocale = (locale = this.locale) => {
-    if (this.locale && messages.hasOwnProperty(this.locale)) {
+    if (this.locale && Object.prototype.hasOwnProperty.call(messages, locale)) {
       return true;
     }
     return false;
   }
 
+  getAvailableLocales = () => this.availableLocales
+
+  localeText = (locale = this.locale) => messages[locale] && messages[locale].text
+
   // Get data object with locale and messages (for React Intl)
   data = () => {
-    const newLocale = this.isValidLocale() ? this.locale : this.fallback_locale;
-    const newMessages = this.isValidLocale() ? messages[this.locale] : messages[this.fallback_locale];
+    const newLocale = this.isValidLocale() ? this.locale : this.fallbackLocale;
+    const newMessages = this.isValidLocale()
+      ? messages[this.locale].messages : messages[this.fallbackLocale].messages;
     return {
       locale: newLocale,
-      messages: newMessages
-    }
+      messages: newMessages,
+    };
   }
 }
 
