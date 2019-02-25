@@ -4,12 +4,15 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^3.9.2",
+    "babel-core": "^6.26.3",
+    "express": "^4.16.4",
     "leaflet": "^1.4.0",
     "proj4leaflet": "^1.0.2",
     "prop-types": "^15.7.2",
-    "react": "^16.8.2",
-    "react-dom": "^16.8.2",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3",
     "react-leaflet": "^2.2.1",
+    "react-leaflet-universal": "^1.2.0",
     "react-redux": "^6.0.0",
     "react-scripts": "2.1.5",
     "redux": "^4.0.1",
@@ -17,6 +20,7 @@
     "reselect": "^4.0.0"
   },
   "scripts": {
+    "dev": "webpack && concurrently \"webpack --watch\" \"nodemon dist\"",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -32,9 +36,23 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@babel/core": "^7.3.3",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^7.1.5",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "concurrently": "^4.1.0",
+    "css-loader": "^2.1.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-jsx-a11y": "^6.2.1",
-    "eslint-plugin-react": "^7.12.4"
+    "eslint-plugin-react": "^7.12.4",
+    "nodemon": "^1.18.10",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.29.5",
+    "webpack-cli": "^3.2.3",
+    "webpack-node-externals": "^1.7.2"
   }
 }

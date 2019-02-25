@@ -1,9 +1,9 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Map, /* Marker, Popup, */ TileLayer, ZoomControl } from 'react-leaflet'
+import React from 'react';
+import PropTypes from 'prop-types';
+// import { Map, /* Marker, Popup, */ TileLayer, ZoomControl } from 'react-leaflet';
 
 const MapView = (props) => {
-  const { mapBase, mapOptions, style } = props
+  const { mapBase, mapOptions, style } = props;
   return (
     <Map
       style={style}
@@ -22,20 +22,20 @@ const MapView = (props) => {
       />
       <ZoomControl position="bottomright" />
     </Map>
-  )
-}
+  );
+};
 
-export default MapView
+export default MapView;
 
 // Typechecking
 MapView.propTypes = {
   style: PropTypes.objectOf(PropTypes.any),
   mapBase: PropTypes.objectOf(PropTypes.any),
-  mapOptions: PropTypes.objectOf(PropTypes.any)
-}
+  mapOptions: PropTypes.objectOf(PropTypes.any),
+};
 
 MapView.defaultProps = {
   style: { width: '100%', height: '100%' },
   mapBase: {},
-  mapOptions: {}
-}
+  mapOptions: {},
+};
