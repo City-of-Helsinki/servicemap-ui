@@ -4,13 +4,14 @@ import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import App from '../App';
 import Template from '../views/Template';
+import MapView from '../views/Map/MapView'
 
 const app = express();
 
 app.use('/static', express.static(path.resolve(__dirname, 'src')));
 
 app.get('/', (req, res) => {
-  const component = ReactDOMServer.renderToString(<Template />);
+  const component = ReactDOMServer.renderToString(<App />);
 
   const html = `
     <!doctype html>
