@@ -6,7 +6,7 @@ import {
 
 import I18n from './i18n';
 import themes from './themes';
-import './App.css'
+import './App.css';
 
 class App extends React.Component {
   constructor(props) {
