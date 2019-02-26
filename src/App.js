@@ -1,11 +1,14 @@
-import React from 'react'
-import MapContainer from './views/Map/MapContainer'
-import './App.css'
+import React from 'react';
+import Routes from './routes';
+// import MapView from './views/Map/MapView';
+import TestView from './views/TestView';
+// import './App.css';
 
 const App = () => (
   <div>
-    <MapContainer />
+    <TestView />
+    <Routes />
   </div>
-)
+);
 
-export default App
+export default App;
