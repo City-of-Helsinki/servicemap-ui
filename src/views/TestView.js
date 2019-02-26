@@ -1,23 +1,28 @@
-import React from 'react';
+import { Button } from '@material-ui/core';
+
+const React = require('react');
+
 
 class TestView extends React.Component {
-  componentWillMount() {
-    console.log('will mount');
+  componentDidMount() {
+    console.log('did mount');
   }
 
   render() {
     console.log('render');
     return (
       <div>
-        <p>This stays the same</p>
-        <button
+        <p>Hello</p>
+        <Button
+          color="primary"
           type="button"
+          variant="outlined"
           onClick={(e) => {
             console.log('clicked ', e);
           }}
         >
           Button
-        </button>
+        </Button>
       </div>
     );
   }

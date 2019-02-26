@@ -19,6 +19,7 @@
 .env.production.local
 
 .eslintrc.json
+/dist
 
 npm-debug.log*
 yarn-debug.log*
