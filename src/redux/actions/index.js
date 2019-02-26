@@ -1,25 +1,25 @@
-import fetchUnits from '../../utils/fetchGetUnits'
+import fetchUnits from '../../utils/fetchGetUnits';
 
 export const fetchHasErrored = bool => ({
   type: 'FETCH_HAS_ERRORED',
-  hasErrored: bool
-})
+  hasErrored: bool,
+});
 
 export const fetchIsLoading = bool => ({
   type: 'FETCH_IS_LOADING',
-  isLoading: bool
-})
+  isLoading: bool,
+});
 
 export const unitsFetchDataSuccess = units => ({
   type: 'UNITS_FETCH_DATA_SUCCESS',
-  units
-})
+  units,
+});
 
 export const setFilter = (filter, value) => ({
   type: 'SET_FILTER',
-  filter: { filter, value }
-})
+  filter: { filter, value },
+});
 // Thunk fetch
 export const unitsFetchData = () => (dispatch) => {
-  fetchUnits(dispatch, [], { fetchHasErrored, fetchIsLoading, unitsFetchDataSuccess })
-}
+  fetchUnits(dispatch, [], { fetchHasErrored, fetchIsLoading, unitsFetchDataSuccess });
+};

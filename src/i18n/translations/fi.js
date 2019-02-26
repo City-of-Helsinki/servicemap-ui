@@ -1,3 +1,3 @@
 export default {
-  "app.title": "Palvelukartta",
-}
+  'app.title': 'Palvelukartta',
+};
