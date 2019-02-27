@@ -1,42 +1,56 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { Map, /* Marker, Popup, */ TileLayer, ZoomControl } from 'react-leaflet-universal';
 
-let Map;
-let TileLayer;
-// const { mapBase, mapOptions, style } = props;
 class MapView extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      Map: undefined,
+      TileLayer: undefined,
+      ZoomControl: undefined,
+    };
+  }
+
   componentDidMount() {
-    console.log('did mount');
-    // Only runs on Client, not on server render
-    Map = require('react-leaflet').Map;
-    TileLayer = require('react-leaflet').TileLayer;
-    this.forceUpdate();
+    const leaflet = require('react-leaflet'); // eslint-disable-line global-require
+    const leafletMap = leaflet.Map;
+    const leafletTile = leaflet.TileLayer;
+    const leafletZoom = leaflet.ZoomControl;
+    this.setState({ Map: leafletMap, TileLayer: leafletTile, ZoomControl: leafletZoom });
   }
 
   render() {
+    const {
+      mapBase, mapOptions, style, changeMap,
+    } = this.props;
+    const { Map, TileLayer, ZoomControl } = this.state;
     if (Map) {
       return (
         <div>
-          <p>Map here</p>
+          <button
+            type="button"
+            onClick={() => {
+              changeMap();
+            }}
+          >
+          Change Map
+          </button>
           <Map
-            style={{ width: '100%', height: '100%', position: 'absolute' }}
+            style={style}
             id="mapid"
             zoomControl={false}
-        // crs={mapBase.crs}
-            center={[60.171631597530016, 24.906860323934886]}
-            zoom={10}
-            minZoom={6}
-            maxZoom={15}
-            maxBounds={[
-              [60.73428157014129, 26.60179232355852],
-              [59.59191469116564, 23.40571236451516],
-            ]}
+            crs={mapBase.crs}
+            center={mapOptions.initialPosition}
+            zoom={mapBase.layer.options.zoom}
+            minZoom={mapBase.layer.options.minZoom}
+            maxZoom={mapBase.layer.options.maxZoom}
+            maxBounds={mapOptions.maxBounds}
           >
             <TileLayer
-              url="https://geoserver.hel.fi/mapproxy/wmts/osm-sm-hq/etrs_tm35fin_hq/{z}/{x}/{y}.png"
+              url={mapBase.layer.url}
               attribution='&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors'
             />
+            <ZoomControl position="bottomright" />
           </Map>
         </div>
       );
@@ -51,10 +65,12 @@ MapView.propTypes = {
   style: PropTypes.objectOf(PropTypes.any),
   mapBase: PropTypes.objectOf(PropTypes.any),
   mapOptions: PropTypes.objectOf(PropTypes.any),
+  changeMap: PropTypes.func,
 };
 
 MapView.defaultProps = {
   style: { width: '100%', height: '100%' },
   mapBase: {},
   mapOptions: {},
+  changeMap: {},
 };

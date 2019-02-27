@@ -1,65 +1,74 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import './Map.css'
-import { connect } from 'react-redux'
-import { getMapType } from '../../redux/selectors'
-import MapView from './MapView'
-import CreateMap from '../../utils/createMap'
-import { mapOptions } from '../../config/mapConfig'
-
-require('proj4leaflet')
+import React from 'react';
+import PropTypes from 'prop-types';
+import './Map.css';
+import { connect } from 'react-redux';
+import { getMapType } from '../../redux/selectors';
+import { setMapType } from '../../redux/actions';
+import MapView from './MapView';
+import CreateMap from '../../utils/createMap';
+import { mapOptions } from '../../config/mapConfig';
 
 class MapContainer extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      initialMap: null
-    }
+      initialMap: null,
+    };
   }
 
   componentDidMount() {
-    this.initiateMap()
+    this.initiateMap();
   }
 
   initiateMap = () => {
-    const initialMap = CreateMap('servicemap')
-    this.setState({ initialMap })
+    require('proj4leaflet');
+    const initialMap = CreateMap('servicemap');
+    this.setState({ initialMap });
+  }
+
+  changeMap = () => {
+    const { setMapType } = this.props;
+    setMapType('ortoImage');
   }
 
   render() {
-    const { mapType } = this.props
-    const { initialMap } = this.state
+    const { mapType } = this.props;
+    const { initialMap } = this.state;
     if (initialMap) {
       return (
         <MapView
           key={mapType ? mapType.crs.code : initialMap.crs.code}
           mapBase={mapType || initialMap}
           mapOptions={mapOptions}
+          changeMap={this.changeMap}
           // TODO: think about better styling location for map
           style={{ width: '100%', height: '100%', position: 'absolute' }}
         />
-      )
+      );
     }
-    return null
+    return null;
   }
 }
 
 const mapStateToProps = (state) => {
-  const mapType = getMapType(state)
+  const mapType = getMapType(state);
   return {
-    mapType
-  }
-}
+    mapType,
+  };
+};
 
 export default connect(
   mapStateToProps,
-  { getMapType }
-)(MapContainer)
+  { getMapType, setMapType },
+)(MapContainer);
 
+// Typechecking
 MapContainer.propTypes = {
-  mapType: PropTypes.oneOfType([PropTypes.objectOf(PropTypes.any), PropTypes.string])
-}
+  mapType: PropTypes.oneOfType([PropTypes.objectOf(PropTypes.any), PropTypes.string]),
+  setMapType: PropTypes.func,
+};
 
 MapContainer.defaultProps = {
-  mapType: 'servicemap'
-}
+  mapType: 'servicemap',
+  setMapType: '',
+};
