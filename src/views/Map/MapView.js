@@ -1,3 +1,6 @@
+/* eslint-disable react/no-unused-prop-types */
+/* eslint-disable global-require */
+/* eslint-disable prefer-destructuring */
 import React from 'react';
 import PropTypes from 'prop-types';
 // import { Map, /* Marker, Popup, */ TileLayer, ZoomControl } from 'react-leaflet-universal';

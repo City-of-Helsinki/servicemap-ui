@@ -1,10 +1,10 @@
 const mapType = (state = '', action) => {
   switch (action.type) {
     case 'SET_MAPTYPE':
-      return action.mapType
+      return action.mapType;
     default:
-      return state
+      return state;
   }
-}
+};
 
-export default mapType
+export default mapType;

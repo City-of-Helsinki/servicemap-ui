@@ -1,34 +1,34 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import './Map.css'
-import { connect } from 'react-redux'
-import { getMapType } from '../../redux/selectors'
-import MapView from './MapView'
-import CreateMap from '../../utils/createMap'
-import { mapOptions } from '../../config/mapConfig'
+import React from 'react';
+import PropTypes from 'prop-types';
+import './Map.css';
+import { connect } from 'react-redux';
+import { getMapType } from '../../redux/selectors';
+import MapView from './MapView';
+import CreateMap from '../../utils/createMap';
+import { mapOptions } from '../../config/mapConfig';
 
-require('proj4leaflet')
+require('proj4leaflet');
 
 class MapContainer extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      initialMap: null
-    }
+      initialMap: null,
+    };
   }
 
   componentDidMount() {
-    this.initiateMap()
+    this.initiateMap();
   }
 
   initiateMap = () => {
-    const initialMap = CreateMap('servicemap')
-    this.setState({ initialMap })
+    const initialMap = CreateMap('servicemap');
+    this.setState({ initialMap });
   }
 
   render() {
-    const { mapType } = this.props
-    const { initialMap } = this.state
+    const { mapType } = this.props;
+    const { initialMap } = this.state;
     if (initialMap) {
       return (
         <MapView
@@ -38,28 +38,28 @@ class MapContainer extends React.Component {
           // TODO: think about better styling location for map
           style={{ width: '100%', height: '100%', position: 'absolute' }}
         />
-      )
+      );
     }
-    return null
+    return null;
   }
 }
 
 const mapStateToProps = (state) => {
-  const mapType = getMapType(state)
+  const mapType = getMapType(state);
   return {
-    mapType
-  }
-}
+    mapType,
+  };
+};
 
 export default connect(
   mapStateToProps,
-  { getMapType }
-)(MapContainer)
+  { getMapType },
+)(MapContainer);
 
 MapContainer.propTypes = {
-  mapType: PropTypes.oneOfType([PropTypes.objectOf(PropTypes.any), PropTypes.string])
-}
+  mapType: PropTypes.oneOfType([PropTypes.objectOf(PropTypes.any), PropTypes.string]),
+};
 
 MapContainer.defaultProps = {
-  mapType: 'servicemap'
-}
+  mapType: 'servicemap',
+};
