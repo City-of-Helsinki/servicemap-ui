@@ -12,6 +12,7 @@ class MapView extends React.Component {
   }
 
   componentDidMount() {
+    // The leaflet map works only client-side so it needs to be imported here
     const leaflet = require('react-leaflet'); // eslint-disable-line global-require
     const leafletMap = leaflet.Map;
     const leafletTile = leaflet.TileLayer;
@@ -33,11 +34,12 @@ class MapView extends React.Component {
               changeMap();
             }}
           >
-          Change Map
+            Change Map
           </button>
           <Map
+            keyboard={false}
             style={style}
-            id="mapid"
+            // id="mapid"
             zoomControl={false}
             crs={mapBase.crs}
             center={mapOptions.initialPosition}

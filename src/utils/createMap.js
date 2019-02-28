@@ -1,8 +1,10 @@
 import { tileLayers } from '../config/mapConfig';
 
 let L;
+// Check if we are on client side because leafelt map works only on client side
 if (typeof window !== 'undefined') {
-  L = require('leaflet');
+  require('proj4leaflet'); // eslint-disable-line global-require
+  L = require('leaflet'); // eslint-disable-line global-require
 }
 
 const CreateMap = (mapType) => {
@@ -20,6 +22,7 @@ const CreateMap = (mapType) => {
     layer = options.guideMap;
   }
 
+  // Functions for leaflet crs generation
   const bounds = L.bounds(L.point(options.boundsPoints[0]), L.point(options.boundsPoints[1]));
   const crsOpts = {
     resolutions: options.resolutions,
