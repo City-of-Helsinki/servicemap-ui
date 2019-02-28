@@ -6,6 +6,9 @@ const SMTheme = createMuiTheme({
     primary: {
       main: '#1964e6',
     },
+    secondary: {
+      main: '#ffffff',
+    },
   },
   // Typography
   typography: {
