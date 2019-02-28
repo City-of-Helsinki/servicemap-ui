@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import express from 'express';
 import path from 'path';
 import React from 'react';
@@ -5,6 +6,7 @@ import { renderToString } from 'react-dom/server';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router-dom';
+import StyleContext from 'isomorphic-style-loader/StyleContext';
 import thunk from 'redux-thunk';
 import rootReducer from './rootReducer';
 import App from './App';
@@ -13,7 +15,7 @@ const app = express();
 
 app.use(express.static(path.resolve(__dirname, 'src')));
 
-const htmlTemplate = (reactDom, preloadedState) => `
+const htmlTemplate = (reactDom, preloadedState, css) => `
   <!DOCTYPE html>
   <html>
     <head>
@@ -32,6 +34,7 @@ const htmlTemplate = (reactDom, preloadedState) => `
 
     <body>
       <div id="app">${reactDom}</div>
+      <style>${[...css].join('')}</style>
       <script>
         // WARNING: See the following for security issues around embedding JSON in HTML:
         // http://redux.js.org/recipes/ServerRendering.html#security-considerations
@@ -43,11 +46,15 @@ const htmlTemplate = (reactDom, preloadedState) => `
 `;
 
 app.get('/*', (req, res) => {
+  const css = new Set(); // CSS for all rendered React components
+  const insertCss = (...styles) => styles.forEach(style => css.add(style._getCss()));
   const store = createStore(rootReducer, applyMiddleware(thunk));
   const jsx = (
     <Provider store={store}>
-      <StaticRouter location={req.url}>
-        <App />
+      <StaticRouter location={req.url} context={{}}>
+        <StyleContext.Provider value={{ insertCss }}>
+          <App />
+        </StyleContext.Provider>
       </StaticRouter>
     </Provider>
   );
@@ -56,7 +63,7 @@ app.get('/*', (req, res) => {
   const preloadedState = store.getState();
 
   res.writeHead(200, { 'Content-Type': 'text/html' });
-  res.end(htmlTemplate(reactDom, preloadedState));
+  res.end(htmlTemplate(reactDom, preloadedState, css));
 });
 
 app.listen(2048);

@@ -15,7 +15,15 @@ const js = {
 const css = {
   test: /\.css$/,
   exclude: /node_modules/,
-  use: 'css-loader',
+  use: [
+    'isomorphic-style-loader',
+    {
+      loader: 'css-loader',
+      options: {
+        importLoaders: 1
+      }
+    }
+  ],
 };
 
 const serverConfig = {
