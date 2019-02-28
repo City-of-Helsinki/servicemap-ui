@@ -28,6 +28,8 @@ class i18n {
   constructor(props) {
     addLocaleData([...localeFi, ...localeEn, ...localeSe]); // Add locale data to react-intl
     const instance = this;
+
+    // Set given options
     if (props) {
       Object.keys(props).forEach((key) => {
         // Check that key is mutable and value exists
@@ -49,6 +51,11 @@ class i18n {
   changeLocale = (locale) => {
     if (this.isValidLocale(locale)) {
       this.locale = locale;
+    } else {
+      const baseLocale = locale.split('-')[0];
+      if (this.isValidLocale(baseLocale)) {
+        this.locale = baseLocale;
+      }
     }
   }
 
