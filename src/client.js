@@ -3,9 +3,10 @@ import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware } from 'redux';
 import './index.css';
 import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 import thunk from 'redux-thunk';
-import MapContainer from './views/Map/MapContainer';
 import rootReducer from './rootReducer';
+import App from './App';
 
 const preloadedState = window.PRELOADED_STATE;
 
@@ -18,6 +19,8 @@ const store = createStore(rootReducer, preloadedState, applyMiddleware(thunk));
 const app = document.getElementById('app');
 ReactDOM.hydrate(
   <Provider store={store}>
-    <MapContainer />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </Provider>, app,
 );

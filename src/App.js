@@ -8,6 +8,7 @@ import I18n from './i18n';
 import themes from './themes';
 import './App.css';
 import isClient from './utils';
+import MapContainer from './views/Map/MapContainer';
 
 class App extends React.Component {
   constructor(props) {
@@ -48,6 +49,7 @@ class App extends React.Component {
             </Typography>
             <Button onClick={() => this.changeLocale('en')}>En</Button>
             <Button onClick={() => this.changeLocale('fi')}>Fi</Button>
+            <MapContainer />
           </div>
         </MuiThemeProvider>
       </IntlProvider>

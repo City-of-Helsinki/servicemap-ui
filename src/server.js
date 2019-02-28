@@ -4,9 +4,10 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import { StaticRouter } from 'react-router-dom';
 import thunk from 'redux-thunk';
 import rootReducer from './rootReducer';
-import MapContainer from './views/Map/MapContainer';
+import App from './App';
 
 const app = express();
 
@@ -45,7 +46,9 @@ app.get('/*', (req, res) => {
   const store = createStore(rootReducer, applyMiddleware(thunk));
   const jsx = (
     <Provider store={store}>
-      <MapContainer />
+      <StaticRouter location={req.url}>
+        <App />
+      </StaticRouter>
     </Provider>
   );
   const reactDom = renderToString(jsx);
