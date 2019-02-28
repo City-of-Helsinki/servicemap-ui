@@ -2,9 +2,10 @@ import express from 'express';
 import path from 'path';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import servicemap from './redux/reducers';
+import thunk from 'redux-thunk';
+import rootReducer from './rootReducer';
 import MapContainer from './views/Map/MapContainer';
 
 const app = express();
@@ -41,7 +42,7 @@ const htmlTemplate = (reactDom, preloadedState) => `
 `;
 
 app.get('/*', (req, res) => {
-  const store = createStore(servicemap);
+  const store = createStore(rootReducer, applyMiddleware(thunk));
   const jsx = (
     <Provider store={store}>
       <MapContainer />

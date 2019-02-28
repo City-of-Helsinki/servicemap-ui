@@ -1,4 +1,4 @@
-import { createSelector } from 'reselect';
+/* import { createSelector } from 'reselect';
 
 // Returns loading state, used for fetch
 export const getLoadingState = store => store.fetchIsLoading;
@@ -21,5 +21,4 @@ export const getUnitsState = createSelector(
     }
     return [];
   },
-);
-export const getMapType = store => store.mapType;
+); */

@@ -1,4 +1,4 @@
-export const fetchHasErrored = (state = false, action) => {
+/* export const fetchHasErrored = (state = false, action) => {
   switch (action.type) {
     case 'FETCH_HAS_ERRORED':
       return action.hasErrored;
@@ -30,4 +30,4 @@ export const filter = (state = '', action) => {
     default:
       return state;
   }
-};
+}; */

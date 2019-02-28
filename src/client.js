@@ -1,9 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import './index.css';
 import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
 import MapContainer from './views/Map/MapContainer';
-import servicemap from './redux/reducers';
+import rootReducer from './rootReducer';
 
 const preloadedState = window.PRELOADED_STATE;
 
@@ -11,7 +13,7 @@ const preloadedState = window.PRELOADED_STATE;
 delete window.PRELOADED_STATE;
 
 // Create Redux store with initial state
-const store = createStore(servicemap, preloadedState);
+const store = createStore(rootReducer, preloadedState, applyMiddleware(thunk));
 
 const app = document.getElementById('app');
 ReactDOM.hydrate(
