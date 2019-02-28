@@ -2,12 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './Map.css';
 import { connect } from 'react-redux';
-import { getMapType } from '../../redux/selectors';
+import getMapType from './redux/selectors';
+import setMapType from './redux/actions';
 import MapView from './MapView';
 import CreateMap from '../../utils/createMap';
 import { mapOptions } from '../../config/mapConfig';
-
-require('proj4leaflet');
 
 class MapContainer extends React.Component {
   constructor(props) {
@@ -26,6 +25,12 @@ class MapContainer extends React.Component {
     this.setState({ initialMap });
   }
 
+  changeMap = () => {
+    // A test function to change maptype to aerial image through redux
+    const { setMapType } = this.props;
+    setMapType('ortoImage');
+  }
+
   render() {
     const { mapType } = this.props;
     const { initialMap } = this.state;
@@ -35,15 +40,16 @@ class MapContainer extends React.Component {
           key={mapType ? mapType.crs.code : initialMap.crs.code}
           mapBase={mapType || initialMap}
           mapOptions={mapOptions}
+          changeMap={this.changeMap}
           // TODO: think about better styling location for map
-          style={{ width: '100%', height: '100%', position: 'absolute' }}
+          style={{ width: '100%', height: '96%', position: 'absolute' }}
         />
       );
     }
     return null;
   }
 }
-
+// Listen to redux state
 const mapStateToProps = (state) => {
   const mapType = getMapType(state);
   return {
@@ -53,13 +59,17 @@ const mapStateToProps = (state) => {
 
 export default connect(
   mapStateToProps,
-  { getMapType },
+  { getMapType, setMapType },
 )(MapContainer);
 
+
+// Typechecking
 MapContainer.propTypes = {
   mapType: PropTypes.oneOfType([PropTypes.objectOf(PropTypes.any), PropTypes.string]),
+  setMapType: PropTypes.func,
 };
 
 MapContainer.defaultProps = {
   mapType: 'servicemap',
+  setMapType: '',
 };

@@ -4,9 +4,9 @@ const mapOptions = {
   // Max bounds could be defined separately for differernt map types
   maxBounds: [
     [60.73428157014129, 26.60179232355852],
-    [59.59191469116564, 23.40571236451516]
-  ]
-}
+    [59.59191469116564, 23.40571236451516],
+  ],
+};
 
 const tileLayers = {
   // These define the options for the different map projections (tms32 and gk25)
@@ -23,8 +23,8 @@ const tileLayers = {
         minZoom: 6,
         maxZoom: 15,
         zoom: 10,
-      }
-    }
+      },
+    },
   },
   gk25: {
     crsName: 'EPSG:3879',
@@ -39,7 +39,7 @@ const tileLayers = {
         minZoom: 2,
         maxZoom: 10,
         zoom: 5,
-      }
+      },
     },
     guideMap: {
       // TODO: maybe have map names and formats as variables from the URL, like in the old version
@@ -48,12 +48,12 @@ const tileLayers = {
         minZoom: 3,
         maxZoom: 10,
         zoom: 5,
-      }
-    }
-  }
-}
+      },
+    },
+  },
+};
 
 export {
   mapOptions,
-  tileLayers
-}
+  tileLayers,
+};
