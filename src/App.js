@@ -1,4 +1,6 @@
+/* eslint-disable react/forbid-prop-types */
 import React from 'react';
+import PropTypes from 'prop-types';
 import { IntlProvider, FormattedMessage } from 'react-intl';
 import {
   MuiThemeProvider, Typography, Button, AppBar, Toolbar, Grid,
@@ -103,3 +105,10 @@ const LanguageWrapper = () => (
   </Switch>
 );
 export default withStyles(styles, appStyles)(LanguageWrapper);
+
+// Typechecking
+App.propTypes = {
+  match: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+};
