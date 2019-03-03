@@ -4,6 +4,7 @@ import {
   MuiThemeProvider, Typography, Button, AppBar, Toolbar, Grid,
 } from '@material-ui/core';
 import withStyles from 'isomorphic-style-loader/withStyles';
+import { Switch, Route } from 'react-router-dom';
 
 import I18n from './i18n';
 import themes from './themes';
@@ -16,7 +17,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     // Default state
-    const i18n = new I18n();
+    const { match } = this.props;
+    const i18n = new I18n({ locale: match.params.lng });
     this.state = {
       i18n,
     };
@@ -34,8 +36,21 @@ class App extends React.Component {
   changeLocale = (locale) => {
     if (locale) {
       const { i18n } = this.state;
-      i18n.changeLocale(locale);
-      this.setState({ i18n });
+      const { history, location } = this.props;
+
+      // but you can use a location instead
+      if (history && location) {
+        const pathArray = location.pathname.split('/');
+        pathArray[1] = locale; // Change locale in path
+
+        // Change location
+        const newLocation = location;
+        newLocation.pathname = pathArray.join('/');
+
+        history.push(newLocation);
+        i18n.changeLocale(locale);
+        this.setState({ i18n });
+      }
     }
   }
 
@@ -46,6 +61,7 @@ class App extends React.Component {
       <IntlProvider {...i18nData}>
         <MuiThemeProvider theme={themes.SMTheme}>
           <div className="App">
+
             <AppBar position="static">
               <Toolbar>
                 <Grid
@@ -70,11 +86,20 @@ class App extends React.Component {
                 </Grid>
               </Toolbar>
             </AppBar>
+
             <MapContainer />
+
           </div>
         </MuiThemeProvider>
       </IntlProvider>
     );
   }
 }
-export default withStyles(styles, appStyles)(App);
+
+// Wrapper to get language route
+const LanguageWrapper = () => (
+  <Switch>
+    <Route path="/:lng(en|fi|se)" component={App} />
+  </Switch>
+);
+export default withStyles(styles, appStyles)(LanguageWrapper);
