@@ -8,10 +8,12 @@ import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router-dom';
 import StyleContext from 'isomorphic-style-loader/StyleContext';
 import thunk from 'redux-thunk';
+import config from '../config';
 import rootReducer from './rootReducer';
 import App from './App';
 
 const app = express();
+const serverConfig = config.server;
 
 app.use(express.static(path.resolve(__dirname, 'src')));
 
@@ -40,7 +42,7 @@ const htmlTemplate = (reactDom, preloadedState, css) => `
         // http://redux.js.org/recipes/ServerRendering.html#security-considerations
         window.PRELOADED_STATE = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')}
       </script>
-      <script src="index.js"></script>
+      <script src="/index.js"></script>
     </body>
   </html>
 `;
@@ -66,4 +68,4 @@ app.get('/*', (req, res) => {
   res.end(htmlTemplate(reactDom, preloadedState, css));
 });
 
-app.listen(2048);
+app.listen(serverConfig.port || 2048);
