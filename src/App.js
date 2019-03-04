@@ -101,7 +101,7 @@ class App extends React.Component {
 // Wrapper to get language route
 const LanguageWrapper = () => (
   <Switch>
-    <Route path="/:lng(en|fi|se)" component={App} />
+    <Route path="/:lng" component={App} />
   </Switch>
 );
 export default withStyles(styles, appStyles)(LanguageWrapper);
