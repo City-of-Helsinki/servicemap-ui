@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './Map.css';
 import { connect } from 'react-redux';
-import getMapType from './redux/selectors';
+import { getMapType, getUnits } from './redux/selectors';
 import setMapType from './redux/actions';
 import MapView from './MapView';
 import CreateMap from '../../utils/createMap';
@@ -32,13 +32,14 @@ class MapContainer extends React.Component {
   }
 
   render() {
-    const { mapType } = this.props;
+    const { mapType, unitList } = this.props;
     const { initialMap } = this.state;
     if (initialMap) {
       return (
         <MapView
           key={mapType ? mapType.crs.code : initialMap.crs.code}
           mapBase={mapType || initialMap}
+          unitList={unitList}
           mapOptions={mapOptions}
           changeMap={this.changeMap}
           // TODO: think about better styling location for map
@@ -52,24 +53,33 @@ class MapContainer extends React.Component {
 // Listen to redux state
 const mapStateToProps = (state) => {
   const mapType = getMapType(state);
+  const unitList = getUnits(state);
   return {
     mapType,
+    unitList,
   };
 };
 
 export default connect(
   mapStateToProps,
-  { getMapType, setMapType },
+  { getMapType, setMapType, getUnits },
 )(MapContainer);
 
 
 // Typechecking
 MapContainer.propTypes = {
   mapType: PropTypes.oneOfType([PropTypes.objectOf(PropTypes.any), PropTypes.string]),
+  unitList: PropTypes.arrayOf(PropTypes.object),
   setMapType: PropTypes.func,
 };
 
 MapContainer.defaultProps = {
-  mapType: 'servicemap',
+  mapType: '',
   setMapType: '',
+  unitList: [{
+    name: 'Marker 1', id: 58560, node: 986, lat: 60.174722, lng: 24.957097,
+  },
+  {
+    name: 'Marker 2', id: 58537, node: 783, lat: 60.169305, lng: 24.947600,
+  }],
 };
