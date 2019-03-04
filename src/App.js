@@ -12,7 +12,6 @@ import I18n from './i18n';
 import themes from './themes';
 import styles from './index.css';
 import appStyles from './App.css';
-import isClient from './utils';
 import MapContainer from './views/Map/MapContainer';
 
 class App extends React.Component {
@@ -24,14 +23,6 @@ class App extends React.Component {
     this.state = {
       i18n,
     };
-  }
-
-  componentDidMount() {
-    // Get default locale from browser
-    if (isClient()) {
-      console.log('Browser locale: ', window.navigator.language);
-      this.changeLocale(window.navigator.language);
-    }
   }
 
   // Change locale of app
