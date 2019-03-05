@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './Map.css';
 import { connect } from 'react-redux';
-import { getMapType, getUnitList } from './redux/selectors';
+import { getMapType } from './redux/selectors';
 import MapView from './MapView';
 import CreateMap from '../../utils/createMap';
 import { mapOptions } from '../../config/mapConfig';
@@ -46,10 +46,10 @@ class MapContainer extends React.Component {
 // Listen to redux state
 const mapStateToProps = (state) => {
   const mapType = getMapType(state);
-  const unitList = getUnitList(state);
+  // const unitList = getUnitList(state);
   return {
     mapType,
-    unitList,
+    // unitList,
   };
 };
 
