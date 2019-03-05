@@ -109,6 +109,11 @@ const drawStem = (ctx, id, mapLayer) => {
   ctx.closePath();
 };
 
+const drawNumber = (ctx, number) => {
+  ctx.font = '30px Arial';
+  ctx.fillText(number, canvasSize.width - 30, canvasSize.height - 5);
+};
+
 
 const drawIcon = (unit, mapLayer) => {
   const L = require('leaflet'); // eslint-disable-line global-require
@@ -117,6 +122,11 @@ const drawIcon = (unit, mapLayer) => {
   canvas.height = canvasSize.height;
   canvas.width = canvasSize.width;
 
+  if (Array.isArray(unit)) {
+    drawStem(ctx, unit[0].id, mapLayer);
+    drawBerry(ctx, unit[0]);
+    drawNumber(ctx, unit.length);
+  }
   drawStem(ctx, unit.id, mapLayer);
   drawBerry(ctx, unit);
 

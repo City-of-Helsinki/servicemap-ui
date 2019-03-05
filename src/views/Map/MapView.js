@@ -27,7 +27,7 @@ class MapView extends React.Component {
 
   render() {
     const {
-      mapBase, unitList, mapOptions, style, changeMap,
+      mapBase, unitList, mapOptions, style,
     } = this.props;
     const {
       Map, TileLayer, ZoomControl, Marker,
@@ -35,14 +35,6 @@ class MapView extends React.Component {
     if (Map) {
       return (
         <div>
-          <button
-            type="button"
-            onClick={() => {
-              changeMap();
-            }}
-          >
-            Change Map
-          </button>
           <Map
             keyboard={false}
             style={style}
@@ -61,8 +53,8 @@ class MapView extends React.Component {
             />
             {unitList.map(unit => (
               <Marker
-                key={unit.id}
-                position={[unit.lat, unit.lng]}
+                key={unit.id ? unit.id : unit[0].id}
+                position={unit.lat ? [unit.lat, unit.lng] : [unit[0].lat, unit[0].lng]}
                 icon={drawIcon(unit, mapBase.options.name)}
               />
             ))}
@@ -80,15 +72,13 @@ export default MapView;
 MapView.propTypes = {
   style: PropTypes.objectOf(PropTypes.any),
   mapBase: PropTypes.objectOf(PropTypes.any),
-  unitList: PropTypes.arrayOf(PropTypes.object),
+  unitList: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.array])),
   mapOptions: PropTypes.objectOf(PropTypes.any),
-  changeMap: PropTypes.func,
 };
 
 MapView.defaultProps = {
   style: { width: '100%', height: '100%' },
   mapBase: {},
   mapOptions: {},
-  changeMap: {},
   unitList: [],
 };
