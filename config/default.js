@@ -3,8 +3,8 @@ export default {
         "address": "127.0.0.1",
         "port": "2048"
     },
-    "street_address_languages": ["fi", "se"],
+    "street_address_languages": ["fi", "sv"],
     "supported_languages": [
-        "fi", "se", "en"
+        "fi", "sv", "en"
     ],
 }
