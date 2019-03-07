@@ -3,15 +3,17 @@ import PropTypes from 'prop-types';
 import './Map.css';
 import { connect } from 'react-redux';
 import { getMapType } from './redux/selectors';
-import MapView from './MapView';
+import MapView from './components/MapView';
 import CreateMap from '../../utils/createMap';
 import { mapOptions } from '../../config/mapConfig';
+import fetchStops from '../../utils/fetchStops';
 
 class MapContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       initialMap: null,
+      transitStops: [],
     };
   }
 
@@ -24,9 +26,18 @@ class MapContainer extends React.Component {
     this.setState({ initialMap });
   }
 
+  fetchTransitStops = (bounds) => {
+    fetchStops(bounds)
+      .then((data => this.setState({ transitStops: data.data.stopsByBbox })));
+  }
+
+  clearTransitStops = () => {
+    this.setState({ transitStops: [] });
+  }
+
   render() {
     const { mapType, unitList } = this.props;
-    const { initialMap } = this.state;
+    const { initialMap, transitStops } = this.state;
     if (initialMap) {
       return (
         <MapView
@@ -34,7 +45,9 @@ class MapContainer extends React.Component {
           mapBase={mapType || initialMap}
           unitList={unitList}
           mapOptions={mapOptions}
-          changeMap={this.changeMap}
+          fetchTransitStops={this.fetchTransitStops}
+          clearTransitStops={this.clearTransitStops}
+          transitStops={transitStops}
           // TODO: think about better styling location for map
           style={{ width: '100%', height: '96%', position: 'absolute' }}
         />
