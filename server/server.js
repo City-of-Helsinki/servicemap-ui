@@ -8,10 +8,14 @@ import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router-dom';
 import StyleContext from 'isomorphic-style-loader/StyleContext';
 import thunk from 'redux-thunk';
-import rootReducer from './rootReducer';
-import App from './App';
+import config from '../config';
+import rootReducer from '../src/rootReducer';
+import App from '../src/App';
+import {handleRequestRedirect} from './utils';
 
+// Configure constants
 const app = express();
+const serverConfig = config.server;
 
 app.use(express.static(path.resolve(__dirname, 'src')));
 
@@ -40,12 +44,17 @@ const htmlTemplate = (reactDom, preloadedState, css) => `
         // http://redux.js.org/recipes/ServerRendering.html#security-considerations
         window.PRELOADED_STATE = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')}
       </script>
-      <script src="index.js"></script>
+      <script src="/index.js"></script>
     </body>
   </html>
 `;
 
 app.get('/*', (req, res) => {
+
+  if(handleRequestRedirect(req, res)) {
+    return;
+  }
+
   const css = new Set(); // CSS for all rendered React components
   const insertCss = (...styles) => styles.forEach(style => css.add(style._getCss()));
   const store = createStore(rootReducer, applyMiddleware(thunk));
@@ -66,4 +75,4 @@ app.get('/*', (req, res) => {
   res.end(htmlTemplate(reactDom, preloadedState, css));
 });
 
-app.listen(2048);
+app.listen(serverConfig.port || 2048);

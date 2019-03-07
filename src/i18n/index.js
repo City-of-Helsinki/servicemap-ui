@@ -1,16 +1,16 @@
 import localeFi from 'react-intl/locale-data/fi';
 import localeEn from 'react-intl/locale-data/en';
-import localeSe from 'react-intl/locale-data/se';
+import localeSv from 'react-intl/locale-data/sv';
 import { addLocaleData } from 'react-intl';
 import messagesFi from './translations/fi';
 import messagesEn from './translations/en';
-import messagesSe from './translations/se';
+import messagesSv from './translations/sv';
 
 // Translation messages for React Intl
 const messages = {
   fi: { text: 'Suomi', messages: messagesFi },
   en: { text: 'English', messages: messagesEn },
-  se: { text: 'Svenska', messages: messagesSe },
+  sv: { text: 'Svenska', messages: messagesSv },
 };
 
 // Mutable class keys
@@ -26,7 +26,7 @@ const mutableKeys = [
  * */
 class i18n {
   constructor(props) {
-    addLocaleData([...localeFi, ...localeEn, ...localeSe]); // Add locale data to react-intl
+    addLocaleData([...localeFi, ...localeEn, ...localeSv]); // Add locale data to react-intl
     const instance = this;
 
     // Set given options
@@ -38,6 +38,9 @@ class i18n {
         }
       });
     }
+
+    // Validate locale
+    this.changeLocale(this.locale);
   }
 
   // Options
