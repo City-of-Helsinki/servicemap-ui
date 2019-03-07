@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import drawIcon from '../../utils/drawIcon';
 
 class MapView extends React.Component {
   constructor(props) {
@@ -8,6 +9,7 @@ class MapView extends React.Component {
       Map: undefined,
       TileLayer: undefined,
       ZoomControl: undefined,
+      Marker: undefined,
     };
   }
 
@@ -17,25 +19,22 @@ class MapView extends React.Component {
     const leafletMap = leaflet.Map;
     const leafletTile = leaflet.TileLayer;
     const leafletZoom = leaflet.ZoomControl;
-    this.setState({ Map: leafletMap, TileLayer: leafletTile, ZoomControl: leafletZoom });
+    const leafletMarker = leaflet.Marker;
+    this.setState({
+      Map: leafletMap, TileLayer: leafletTile, ZoomControl: leafletZoom, Marker: leafletMarker,
+    });
   }
 
   render() {
     const {
-      mapBase, mapOptions, style, changeMap,
+      mapBase, unitList, mapOptions, style,
     } = this.props;
-    const { Map, TileLayer, ZoomControl } = this.state;
+    const {
+      Map, TileLayer, ZoomControl, Marker,
+    } = this.state;
     if (Map) {
       return (
         <div>
-          <button
-            type="button"
-            onClick={() => {
-              changeMap();
-            }}
-          >
-            Change Map
-          </button>
           <Map
             keyboard={false}
             style={style}
@@ -43,15 +42,22 @@ class MapView extends React.Component {
             zoomControl={false}
             crs={mapBase.crs}
             center={mapOptions.initialPosition}
-            zoom={mapBase.layer.options.zoom}
-            minZoom={mapBase.layer.options.minZoom}
-            maxZoom={mapBase.layer.options.maxZoom}
+            zoom={mapBase.options.zoom}
+            minZoom={mapBase.options.minZoom}
+            maxZoom={mapBase.options.maxZoom}
             maxBounds={mapOptions.maxBounds}
           >
             <TileLayer
-              url={mapBase.layer.url}
+              url={mapBase.options.url}
               attribution='&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors'
             />
+            {unitList.map(unit => (
+              <Marker
+                key={unit.id ? unit.id : unit[0].id}
+                position={unit.lat ? [unit.lat, unit.lng] : [unit[0].lat, unit[0].lng]}
+                icon={drawIcon(unit, mapBase.options.name)}
+              />
+            ))}
             <ZoomControl position="bottomright" />
           </Map>
         </div>
@@ -66,13 +72,13 @@ export default MapView;
 MapView.propTypes = {
   style: PropTypes.objectOf(PropTypes.any),
   mapBase: PropTypes.objectOf(PropTypes.any),
+  unitList: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.array])),
   mapOptions: PropTypes.objectOf(PropTypes.any),
-  changeMap: PropTypes.func,
 };
 
 MapView.defaultProps = {
   style: { width: '100%', height: '100%' },
   mapBase: {},
   mapOptions: {},
-  changeMap: {},
+  unitList: [],
 };
