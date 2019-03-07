@@ -18,6 +18,7 @@ const fetchStops = async (bounds) => {
             realtime
             realtimeState
             serviceDay
+            pickupType
             headsign
             trip {
               route {

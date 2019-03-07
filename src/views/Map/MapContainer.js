@@ -49,7 +49,7 @@ class MapContainer extends React.Component {
           clearTransitStops={this.clearTransitStops}
           transitStops={transitStops}
           // TODO: think about better styling location for map
-          style={{ width: '100%', height: '96%', position: 'absolute' }}
+          style={{ width: '100%', height: '92.6%', position: 'absolute' }}
         />
       );
     }
