@@ -33,7 +33,7 @@ const serverConfig = {
     __dirname: false,
   },
   entry: {
-    'index.js': path.resolve(__dirname, 'src/server.js'),
+    'index.js': path.resolve(__dirname, 'server/server.js'),
   },
   module: {
     rules: [js, css],
