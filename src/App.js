@@ -19,11 +19,17 @@ class App extends React.Component {
     super(props);
     // Default state
     const { match } = this.props;
-    const i18n = new I18n({ locale: match.params.lng });
+    const newLocale = match.params.lng;
+    const i18n = new I18n();
+
+    if (i18n.isValidLocale(newLocale)) {
+      i18n.changeLocale(newLocale);
+    }
+
     this.state = {
       i18n,
     };
-  }
+  } 
 
   // Change locale of app
   changeLocale = (locale) => {

@@ -38,6 +38,9 @@ class i18n {
         }
       });
     }
+
+    // Validate locale
+    this.changeLocale(this.locale);
   }
 
   // Options
