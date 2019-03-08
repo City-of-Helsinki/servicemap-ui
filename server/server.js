@@ -13,6 +13,7 @@ import rootReducer from '../src/rootReducer';
 import App from '../src/App';
 import {makeLanguageHandler, makeUnitHandler} from './utils';
 import { unitsFetchDataSuccess } from '../src/redux/actions/unit';
+import { setSelectedFilter } from '../src/redux/actions/filter';
 
 // Configure constants
 const app = express();
@@ -36,6 +37,7 @@ app.get('/*', (req, res, next) => {
 
   // Dispatch unit data to redux
   if (req._context) {
+    store.dispatch(setSelectedFilter(req._context.id))
     store.dispatch(unitsFetchDataSuccess([req._context]));
   }
   const jsx = (
