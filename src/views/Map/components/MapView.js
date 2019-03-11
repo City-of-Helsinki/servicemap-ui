@@ -52,7 +52,7 @@ class MapView extends React.Component {
             maxBounds={mapOptions.maxBounds}
             onMoveEnd={() => {
               if (this.mapRef.current.leafletElement._zoom >= 14) {
-                fetchTransitStops(this.mapRef.current.leafletElement.getBounds());
+                fetchTransitStops(this.mapRef.current.leafletElement);
               } else if (transitStops.length > 0) {
                 clearTransitStops();
               }
@@ -71,7 +71,7 @@ class MapView extends React.Component {
             ))}
             {transitStops.map(stop => (
               <Marker
-                key={stop.gtfsId}
+                key={stop.name + stop.gtfsId}
                 position={[stop.lat, stop.lon]}
                 // icon={}
               >

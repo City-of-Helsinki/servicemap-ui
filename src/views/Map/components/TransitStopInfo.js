@@ -28,6 +28,8 @@ const TransitStopInfo = (props) => {
 
       {stop.stoptimesWithoutPatterns.map((arrival, index) => {
         const time = new Date((arrival.realtimeArrival + arrival.serviceDay) * 1000);
+        const hours = time.getHours();
+        const minutes = time.getMinutes();
 
         let TransitIcon = null;
         if (arrival.trip.route.mode === 'BUS') {
@@ -62,7 +64,10 @@ const TransitStopInfo = (props) => {
 
         return (
           <div key={index} style={{ display: 'flex' }}>
-            <p style={{ marginTop: '0px', marginBottom: '2px', width: '15%' }}>{`${time.getHours()}:${time.getMinutes()}`}</p>
+            <p style={{ marginTop: '0px', marginBottom: '2px', width: '15%' }}>
+              {/* This adds 0 before single digit times */}
+              {`${hours < 10 ? `0${hours}` : hours}:${minutes < 10 ? `0${minutes}` : minutes}`}
+            </p>
             <div style={{ marginTop: '0px', marginBottom: '2px', width: '30%' }}>
               {TransitIcon}
               <p style={{ display: 'inline', fontSize: '120%' }}>{arrival.trip.route.shortName}</p>
@@ -71,6 +76,7 @@ const TransitStopInfo = (props) => {
               marginTop: '0px', marginBottom: '2px', width: '55%', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis', lineHeight: '20px', height: '20px',
             }}
             >
+              {/* TODO: language */}
               {arrival.pickupType === 'NONE' ? 'Päätepysäkki' : arrival.headsign}
             </p>
           </div>
