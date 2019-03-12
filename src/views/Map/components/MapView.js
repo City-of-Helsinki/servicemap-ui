@@ -51,7 +51,7 @@ class MapView extends React.Component {
             maxZoom={mapBase.options.maxZoom}
             maxBounds={mapOptions.maxBounds}
             onMoveEnd={() => {
-              if (this.mapRef.current.leafletElement._zoom >= 14) {
+              if (this.mapRef.current.leafletElement._zoom >= mapBase.options.transitZoom) {
                 fetchTransitStops(this.mapRef.current.leafletElement);
               } else if (transitStops.length > 0) {
                 clearTransitStops();
