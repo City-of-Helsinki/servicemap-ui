@@ -3,8 +3,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './Map.css';
 import { connect } from 'react-redux';
-import { getMapType } from './redux/selectors';
+import { getMapType } from '../../redux/selectors/map';
 import MapView from './components/MapView';
+import { getLocale, translate } from '../../redux/selectors/locale';
 import CreateMap from '../../utils/createMap';
 import { mapOptions } from '../../config/mapConfig';
 import fetchStops from '../../utils/fetchStops';
@@ -22,12 +23,14 @@ class MapContainer extends React.Component {
     this.initiateMap();
   }
 
+
   initiateMap = () => {
     const initialMap = CreateMap('servicemap');
     this.setState({ initialMap });
   }
 
   fetchTransitStops = (bounds) => {
+    const { locale } = this.props;
     fetchStops(bounds)
       .then(((data) => {
         const stops = data[0].data.stopsByBbox;
@@ -77,8 +80,7 @@ class MapContainer extends React.Component {
             gtfsId: entrance.id,
             lat: entrance.location.coordinates[1],
             lon: entrance.location.coordinates[0],
-            // TODO: language!
-            name: entrance.name.fi,
+            name: entrance.name[locale],
             patterns: closest.stop.patterns,
             stoptimesWithoutPatterns: arrivalTimes,
           };
@@ -90,6 +92,11 @@ class MapContainer extends React.Component {
 
   clearTransitStops = () => {
     this.setState({ transitStops: [] });
+  }
+
+  translate = (id) => {
+    const { state } = this.props;
+    return (translate(state, id));
   }
 
   render() {
@@ -105,6 +112,7 @@ class MapContainer extends React.Component {
           fetchTransitStops={this.fetchTransitStops}
           clearTransitStops={this.clearTransitStops}
           transitStops={transitStops}
+          t={this.translate}
           // TODO: think about better styling location for map
           style={{ width: '100%', height: '92.6%', position: 'absolute' }}
         />
@@ -116,9 +124,12 @@ class MapContainer extends React.Component {
 // Listen to redux state
 const mapStateToProps = (state) => {
   const mapType = getMapType(state);
+  const locale = getLocale(state);
   // const unitList = getUnitList(state);
   return {
     mapType,
+    locale,
+    state,
     // unitList,
   };
 };
@@ -133,9 +144,13 @@ export default connect(
 MapContainer.propTypes = {
   mapType: PropTypes.oneOfType([PropTypes.objectOf(PropTypes.any), PropTypes.string]),
   unitList: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.array])),
+  locale: PropTypes.string,
+  state: PropTypes.objectOf(PropTypes.any),
 };
 
 MapContainer.defaultProps = {
   mapType: '',
   unitList: [],
+  locale: 'fi',
+  state: {},
 };

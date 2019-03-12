@@ -8,7 +8,7 @@ import '../Map.css';
 
 // TODO: better styling + styling location
 const TransitStopInfo = (props) => {
-  const { stop } = props;
+  const { stop, t } = props;
   return (
     <div style={{ width: '230px' }}>
       <p style={{
@@ -76,8 +76,7 @@ const TransitStopInfo = (props) => {
               marginTop: '0px', marginBottom: '2px', width: '55%', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis', lineHeight: '20px', height: '20px',
             }}
             >
-              {/* TODO: language */}
-              {arrival.pickupType === 'NONE' ? 'Päätepysäkki' : arrival.headsign}
+              {arrival.pickupType === 'NONE' ? t('transit.endStation') : arrival.headsign}
             </p>
           </div>
         );
@@ -90,8 +89,10 @@ export default TransitStopInfo;
 
 TransitStopInfo.propTypes = {
   stop: PropTypes.objectOf(PropTypes.any),
+  t: PropTypes.func,
 };
 
 TransitStopInfo.defaultProps = {
   stop: {},
+  t: null,
 };
