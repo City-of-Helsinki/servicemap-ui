@@ -8,13 +8,13 @@ export default (state = initialState, action) => {
     case 'SET_FILTER':
       return {
         ...state,
-        filter: action.filter
-      }
+        filter: action.filter,
+      };
     case 'SET_SELECTED_FILTER':
-    return {
-      ...state,
-      selected: action.filter
-    }
+      return {
+        ...state,
+        selected: action.filter,
+      };
     default:
       return state;
   }

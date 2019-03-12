@@ -1,9 +1,8 @@
-import { fetchHasErrored, fetchIsLoading, unitsFetchDataSuccess } from '../redux/actions';
 import config from '../../config';
 
 const allowedTypes = [
   'search',
-  'unit'
+  'unit',
 ];
 
 const searchQueryData = {
@@ -12,17 +11,16 @@ const searchQueryData = {
   only: 'root_service_nodes,services,location,name,street_address,contract_type,municipality',
   include: 'service_nodes,services',
   geometry: true,
-}
+};
 
 class QueryBuilder {
   constructor() {
     const { unit } = config;
     this.url = unit && unit.api_url;
+    this.defaultType = 'search';
+    this.searchQuery = null;
+    this.data = null;
   }
-
-  defaultType = 'search';
-  searchQuery = null;
-  data = null;
 
   // Set type of query
   setType = (type, data = null) => {
@@ -42,16 +40,14 @@ class QueryBuilder {
       case 'search':
         return searchQueryData;
       case 'unit':
-        return null
+        return null;
       default:
         return searchQueryData;
     }
   }
 
   // Get base url
-  getBase = () => {
-    return this.url;
-  }
+  getBase = () => this.url
 
   // Set query to search and add search text
   search = (search = null) => {
@@ -64,23 +60,23 @@ class QueryBuilder {
 
   // Build query to a URL
   run = () => {
-    let query = '',
-        fetchURL = null,
-        first = true;
+    let query = '';
+    let fetchURL = null;
+    let first = true;
 
     const data = this.getQueryData();
 
     if (data) {
       // Add search query to query data
       if (this.searchQuery && this.searchQuery !== '') {
-        data['q'] = this.searchQuery;
+        data.q = this.searchQuery;
       }
 
-      Object.keys(data).forEach(function (item) {
+      Object.keys(data).forEach((item) => {
         if (first) {
           query += `${item}=${data[item]}`;
           first = false;
-        } else {
+        } else {
           query += `&${item}=${data[item]}`;
         }
       });
@@ -88,7 +84,7 @@ class QueryBuilder {
 
     switch (this.type) {
       case 'unit':
-        fetchURL = `${this.url}${this.type}/${this.data}`
+        fetchURL = `${this.url}${this.type}/${this.data}`;
         break;
       default:
         fetchURL = `${this.url}${this.type}/?${encodeURI(query)}`;

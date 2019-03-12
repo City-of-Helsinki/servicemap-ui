@@ -7,5 +7,5 @@ import filters from './redux/reducers/filter';
 export default combineReducers({
   mapType,
   units,
-  filters
+  filters,
 });
