@@ -3,7 +3,7 @@ export const setFilter = (key, value) => ({
   filter: { key, value },
 });
 
-export const setSelectedFilter = id => ({
-  type: 'SET_SELECTED_FILTER',
+export const setSelectedUnit = id => ({
+  type: 'SET_SELECTED_UNIT_FILTER',
   filter: id,
 });

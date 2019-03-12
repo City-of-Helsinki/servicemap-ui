@@ -10,10 +10,10 @@ export default (state = initialState, action) => {
         ...state,
         filter: action.filter,
       };
-    case 'SET_SELECTED_FILTER':
+    case 'SET_SELECTED_UNIT_FILTER':
       return {
         ...state,
-        selected: action.filter,
+        selectedUnit: action.filter,
       };
     default:
       return state;

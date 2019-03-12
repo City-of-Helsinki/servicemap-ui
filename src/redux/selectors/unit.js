@@ -3,7 +3,7 @@ import { createSelector } from 'reselect';
 const getUnits = store => store.units && store.units.data;
 // Filters
 const getFilters = store => store.filters && store.filters.filter;
-const getSelectedFilter = store => store.filters && store.filters.selected;
+const getSelectedFilter = store => store.filters && store.filters.selectedUnit;
 
 export const getSelectedUnit = createSelector(
   [getUnits, getSelectedFilter],
