@@ -53,7 +53,7 @@ export const makeUnitHandler = (req, res, next) => {
 
   // Handle unit data collection from api
   const unitId = r[1];
-  const url = config.unit.api_url + unitId + '/';
+  const url = `${config.unit.api_url}unit/${unitId}/`;
   let unitInfo = null;
   let context = null;
   

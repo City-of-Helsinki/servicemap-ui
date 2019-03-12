@@ -9,6 +9,6 @@ export default {
     "fi", "sv", "en"
   ],
   "unit": {
-    "api_url": "https://api.hel.fi/servicemap/v2/unit/"
+    "api_url": "https://api.hel.fi/servicemap/v2/"
   }
 }
