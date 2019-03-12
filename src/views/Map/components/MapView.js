@@ -1,44 +1,48 @@
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import PropTypes from 'prop-types';
-import drawIcon from '../../utils/drawIcon';
+import TransitStopInfo from './TransitStopInfo';
+import drawIcon from '../../../utils/drawIcon';
 
 class MapView extends React.Component {
   constructor(props) {
     super(props);
+    this.mapRef = React.createRef();
     this.state = {
       Map: undefined,
       TileLayer: undefined,
       ZoomControl: undefined,
       Marker: undefined,
+      Popup: undefined,
     };
   }
 
   componentDidMount() {
     // The leaflet map works only client-side so it needs to be imported here
     const leaflet = require('react-leaflet'); // eslint-disable-line global-require
-    const leafletMap = leaflet.Map;
-    const leafletTile = leaflet.TileLayer;
-    const leafletZoom = leaflet.ZoomControl;
-    const leafletMarker = leaflet.Marker;
+    const {
+      Map, TileLayer, ZoomControl, Marker, Popup,
+    } = leaflet;
+
     this.setState({
-      Map: leafletMap, TileLayer: leafletTile, ZoomControl: leafletZoom, Marker: leafletMarker,
+      Map, TileLayer, ZoomControl, Marker, Popup,
     });
   }
 
   render() {
     const {
-      mapBase, unitList, mapOptions, style,
+      mapBase, unitList, mapOptions, style, fetchTransitStops, clearTransitStops, transitStops,
     } = this.props;
     const {
-      Map, TileLayer, ZoomControl, Marker,
+      Map, TileLayer, ZoomControl, Marker, Popup,
     } = this.state;
     if (Map) {
       return (
         <div>
           <Map
+            ref={this.mapRef}
             keyboard={false}
             style={style}
-            // id="mapid"
             zoomControl={false}
             crs={mapBase.crs}
             center={mapOptions.initialPosition}
@@ -46,6 +50,13 @@ class MapView extends React.Component {
             minZoom={mapBase.options.minZoom}
             maxZoom={mapBase.options.maxZoom}
             maxBounds={mapOptions.maxBounds}
+            onMoveEnd={() => {
+              if (this.mapRef.current.leafletElement._zoom >= mapBase.options.transitZoom) {
+                fetchTransitStops(this.mapRef.current.leafletElement);
+              } else if (transitStops.length > 0) {
+                clearTransitStops();
+              }
+            }}
           >
             <TileLayer
               url={mapBase.options.url}
@@ -57,6 +68,17 @@ class MapView extends React.Component {
                 position={unit.lat ? [unit.lat, unit.lng] : [unit[0].lat, unit[0].lng]}
                 icon={drawIcon(unit, mapBase.options.name)}
               />
+            ))}
+            {transitStops.map(stop => (
+              <Marker
+                key={stop.name + stop.gtfsId}
+                position={[stop.lat, stop.lon]}
+                // icon={}
+              >
+                <Popup autoPan={false}>
+                  <TransitStopInfo stop={stop} />
+                </Popup>
+              </Marker>
             ))}
             <ZoomControl position="bottomright" />
           </Map>
@@ -74,6 +96,9 @@ MapView.propTypes = {
   mapBase: PropTypes.objectOf(PropTypes.any),
   unitList: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.array])),
   mapOptions: PropTypes.objectOf(PropTypes.any),
+  fetchTransitStops: PropTypes.func,
+  clearTransitStops: PropTypes.func,
+  transitStops: PropTypes.arrayOf(PropTypes.object),
 };
 
 MapView.defaultProps = {
@@ -81,4 +106,7 @@ MapView.defaultProps = {
   mapBase: {},
   mapOptions: {},
   unitList: [],
+  fetchTransitStops: null,
+  clearTransitStops: null,
+  transitStops: [],
 };

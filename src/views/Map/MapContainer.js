@@ -1,17 +1,20 @@
+/* eslint-disable max-len */
 import React from 'react';
 import PropTypes from 'prop-types';
 import './Map.css';
 import { connect } from 'react-redux';
 import { getMapType } from './redux/selectors';
-import MapView from './MapView';
+import MapView from './components/MapView';
 import CreateMap from '../../utils/createMap';
 import { mapOptions } from '../../config/mapConfig';
+import fetchStops from '../../utils/fetchStops';
 
 class MapContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       initialMap: null,
+      transitStops: [],
     };
   }
 
@@ -24,9 +27,74 @@ class MapContainer extends React.Component {
     this.setState({ initialMap });
   }
 
+  fetchTransitStops = (bounds) => {
+    fetchStops(bounds)
+      .then(((data) => {
+        const stops = data[0].data.stopsByBbox;
+        const subwayStations = stops.filter(stop => stop.patterns[0].route.mode === 'SUBWAY');
+
+        // Remove subwaystations from stops list since they will be replaced with subway entrances
+        const filteredStops = stops.filter(stop => stop.patterns[0].route.mode !== 'SUBWAY');
+
+        const entrances = data[1].results;
+
+        // Add subway entrances to the list of stops and give them proper schedules
+        entrances.forEach((entrance) => {
+          const closest = {
+            distance: null,
+            stop: null,
+          };
+          // Find the subwaystation closest to the entrance
+          subwayStations.forEach((stop) => {
+            const distance = Math.sqrt(
+              ((stop.lat - entrance.location.coordinates[1]) ** 2)
+              + ((stop.lon - entrance.location.coordinates[0]) ** 2),
+            );
+            if (!closest.distance || distance < closest.distance) {
+              closest.distance = distance;
+              closest.stop = stop;
+            }
+          });
+          // Get the same station's stop for other direction (west/east)
+          const otherStop = subwayStations.find(
+            station => station.name === closest.stop.name && station.gtfsId !== closest.stop.gtfsId,
+          );
+
+          // Combine the arrival schedules to add them to the subway entrance info
+          let arrivalTimes = [
+            ...closest.stop.stoptimesWithoutPatterns,
+            ...otherStop.stoptimesWithoutPatterns,
+          ];
+
+          // Sort arrivals by time and shorten the list
+          arrivalTimes.sort(
+            (a, b) => (a.realtimeArrival + a.serviceDay) - (b.realtimeArrival + b.serviceDay),
+          );
+          arrivalTimes = arrivalTimes.slice(0, 5);
+
+          // Create a new stop from the entrance, give it the arrival schedule of the corresponding station and add it to the list of stops
+          const newStop = {
+            gtfsId: entrance.id,
+            lat: entrance.location.coordinates[1],
+            lon: entrance.location.coordinates[0],
+            // TODO: language!
+            name: entrance.name.fi,
+            patterns: closest.stop.patterns,
+            stoptimesWithoutPatterns: arrivalTimes,
+          };
+          filteredStops.push(newStop);
+        });
+        this.setState({ transitStops: filteredStops });
+      }));
+  }
+
+  clearTransitStops = () => {
+    this.setState({ transitStops: [] });
+  }
+
   render() {
     const { mapType, unitList } = this.props;
-    const { initialMap } = this.state;
+    const { initialMap, transitStops } = this.state;
     if (initialMap) {
       return (
         <MapView
@@ -34,9 +102,11 @@ class MapContainer extends React.Component {
           mapBase={mapType || initialMap}
           unitList={unitList}
           mapOptions={mapOptions}
-          changeMap={this.changeMap}
+          fetchTransitStops={this.fetchTransitStops}
+          clearTransitStops={this.clearTransitStops}
+          transitStops={transitStops}
           // TODO: think about better styling location for map
-          style={{ width: '100%', height: '96%', position: 'absolute' }}
+          style={{ width: '100%', height: '92.6%', position: 'absolute' }}
         />
       );
     }
