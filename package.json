@@ -8,6 +8,7 @@
     "@babel/runtime": "^7.3.4",
     "@material-ui/core": "^3.9.2",
     "@material-ui/icons": "^3.0.2",
+    "axe-testcafe": "^1.1.0",
     "express": "^4.16.4",
     "isomorphic-style-loader": "^5.0.1",
     "leaflet": "^1.4.0",
@@ -25,6 +26,8 @@
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
+    "testcafe": "^1.1.0",
+    "testcafe-react-selectors": "^3.1.0",
     "webpack": "^4.29.5",
     "webpack-cli": "^3.2.3"
   },
