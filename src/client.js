@@ -3,7 +3,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
 import thunk from 'redux-thunk';
 import StyleContext from 'isomorphic-style-loader/StyleContext';
 import rootReducer from './rootReducer';
@@ -25,10 +24,8 @@ const insertCss = (...styles) => {
 };
 ReactDOM.hydrate(
   <Provider store={store}>
-    <BrowserRouter>
-      <StyleContext.Provider value={{ insertCss }}>
-        <App />
-      </StyleContext.Provider>
-    </BrowserRouter>
+    <StyleContext.Provider value={{ insertCss }}>
+      <App />
+    </StyleContext.Provider>
   </Provider>, app,
 );
