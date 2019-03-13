@@ -94,13 +94,8 @@ class MapContainer extends React.Component {
     this.setState({ transitStops: [] });
   }
 
-  translate = (id) => {
-    const { state } = this.props;
-    return (translate(state, id));
-  }
-
   render() {
-    const { mapType, unitList } = this.props;
+    const { mapType, unitList, state } = this.props;
     const { initialMap, transitStops } = this.state;
     if (initialMap) {
       return (
@@ -112,7 +107,7 @@ class MapContainer extends React.Component {
           fetchTransitStops={this.fetchTransitStops}
           clearTransitStops={this.clearTransitStops}
           transitStops={transitStops}
-          t={this.translate}
+          t={id => translate(state, id)}
           // TODO: think about better styling location for map
           style={{ width: '100%', height: '92.6%', position: 'absolute' }}
         />
