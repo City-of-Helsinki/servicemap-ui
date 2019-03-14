@@ -31,7 +31,7 @@ class MapView extends React.Component {
 
   render() {
     const {
-      mapBase, unitList, mapOptions, style, fetchTransitStops, clearTransitStops, transitStops,
+      mapBase, unitList, mapOptions, style, fetchTransitStops, clearTransitStops, transitStops, t,
     } = this.props;
     const {
       Map, TileLayer, ZoomControl, Marker, Popup,
@@ -76,7 +76,7 @@ class MapView extends React.Component {
                 // icon={}
               >
                 <Popup autoPan={false}>
-                  <TransitStopInfo stop={stop} />
+                  <TransitStopInfo t={t} stop={stop} />
                 </Popup>
               </Marker>
             ))}
@@ -99,6 +99,7 @@ MapView.propTypes = {
   fetchTransitStops: PropTypes.func,
   clearTransitStops: PropTypes.func,
   transitStops: PropTypes.arrayOf(PropTypes.object),
+  t: PropTypes.func,
 };
 
 MapView.defaultProps = {
@@ -109,4 +110,5 @@ MapView.defaultProps = {
   fetchTransitStops: null,
   clearTransitStops: null,
   transitStops: [],
+  t: null,
 };
