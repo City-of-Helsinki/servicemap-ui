@@ -34,9 +34,9 @@
   "scripts": {
     "start": "webpack-dev-server --open --mode development",
     "build": "webpack --mode production",
-    "test": "react-scripts test",
+    "test": "jest test",
     "eject": "react-scripts eject",
-    "dev": "webpack --watch --progress & nodemon dist",
+    "dev": "NODE_ENV=development BABEL_ENV=development webpack --watch --progress & nodemon dist",
     "browserTest": "node src/browserTests/browserTestRunner.js"
   },
   "eslintConfig": {
@@ -50,9 +50,19 @@
   ],
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.3.4",
+    "babel-polyfill": "^6.26.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-jsx-a11y": "^6.2.1",
-    "eslint-plugin-react": "^7.12.4"
+    "eslint-plugin-react": "^7.12.4",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^24.5.0"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.(css|less)$": "identity-obj-proxy",
+      "isomorphic-style-loader/withStyles": "<rootDir>/__mocks__/withStyles.js"
+    }
   }
 }

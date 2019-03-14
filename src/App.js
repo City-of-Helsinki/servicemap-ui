@@ -7,13 +7,16 @@ import {
   MuiThemeProvider, Typography, Button, AppBar, Toolbar, Grid,
 } from '@material-ui/core';
 import withStyles from 'isomorphic-style-loader/withStyles';
-import { Switch, Route } from 'react-router-dom';
+import {
+  Switch, Route, BrowserRouter,
+} from 'react-router-dom';
 
 import I18n from './i18n';
 import themes from './themes';
 import styles from './index.css';
 import appStyles from './App.css';
 import MapContainer from './views/Map/MapContainer';
+import isClient from './utils';
 import { getLocale } from './redux/selectors/locale';
 import { changeLocaleAction } from './redux/actions/locale';
 
@@ -115,11 +118,23 @@ const ConnectedApp = connect(
 )(App);
 
 // Wrapper to get language route
-const LanguageWrapper = () => (
-  <Switch>
-    <Route path="/:lng" component={ConnectedApp} />
-  </Switch>
-);
+const LanguageWrapper = () => {
+  if (isClient()) {
+    return (
+      <BrowserRouter>
+        <Switch>
+          <Route path="/:lng" component={ConnectedApp} />
+        </Switch>
+      </BrowserRouter>
+    );
+  }
+
+  return (
+    <Switch>
+      <Route path="/:lng" component={ConnectedApp} />
+    </Switch>
+  );
+};
 
 export default withStyles(styles, appStyles)(LanguageWrapper);
 

@@ -7,14 +7,14 @@ import messagesEn from './translations/en';
 import messagesSv from './translations/sv';
 
 // Translation messages for React Intl
-const messages = {
+export const messages = {
   fi: { text: 'Suomi', messages: messagesFi },
   en: { text: 'English', messages: messagesEn },
   sv: { text: 'Svenska', messages: messagesSv },
 };
 
 // Mutable class keys
-const mutableKeys = [
+export const mutableKeys = [
   'locale',
   'fallbackLocale',
 ];
@@ -44,9 +44,9 @@ class i18n {
   }
 
   // Options
-  locale = 'fi';
-
   fallbackLocale = 'fi';
+
+  locale = this.fallbackLocale;
 
   availableLocales = Object.keys(messages);
 
