@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { IntlProvider, FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
 import {
   MuiThemeProvider, Typography, Button, AppBar, Toolbar, Grid,
 } from '@material-ui/core';
@@ -13,6 +14,8 @@ import themes from './themes';
 import styles from './index.css';
 import appStyles from './App.css';
 import MapContainer from './views/Map/MapContainer';
+import { getLocale } from './redux/selectors/locale';
+import { changeLocaleAction } from './redux/actions/locale';
 
 class App extends React.Component {
   constructor(props) {
@@ -29,13 +32,13 @@ class App extends React.Component {
     this.state = {
       i18n,
     };
-  } 
+  }
 
   // Change locale of app
   changeLocale = (locale) => {
     if (locale) {
       const { i18n } = this.state;
-      const { history, location } = this.props;
+      const { history, location, changeLocaleAction } = this.props;
 
       // but you can use a location instead
       if (history && location) {
@@ -48,7 +51,10 @@ class App extends React.Component {
 
         history.push(newLocation);
         i18n.changeLocale(locale);
-        this.setState({ i18n });
+        // this.setState({ i18n });
+        if (changeLocaleAction) {
+          changeLocaleAction(i18n.locale);
+        }
       }
     }
   }
@@ -95,12 +101,26 @@ class App extends React.Component {
   }
 }
 
+// Listen to redux state
+const mapStateToProps = (state) => {
+  const locale = getLocale(state);
+  return {
+    locale,
+  };
+};
+
+const ConnectedApp = connect(
+  mapStateToProps,
+  { changeLocaleAction },
+)(App);
+
 // Wrapper to get language route
 const LanguageWrapper = () => (
   <Switch>
-    <Route path="/:lng" component={App} />
+    <Route path="/:lng" component={ConnectedApp} />
   </Switch>
 );
+
 export default withStyles(styles, appStyles)(LanguageWrapper);
 
 // Typechecking
