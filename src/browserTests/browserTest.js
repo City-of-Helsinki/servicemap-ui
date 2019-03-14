@@ -3,6 +3,7 @@ import { Selector, ClientFunction } from 'testcafe';
 
 import { waitForReact, ReactSelector } from 'testcafe-react-selectors';
 
+// TODO: move these to the related view folders
 fixture`Frontpage tests`
   .page`http://localhost:2048/fi`
   .beforeEach(async () => {
@@ -45,6 +46,7 @@ test('Test transit marker visibility', async (t) => {
   const zoomIn  = Selector('.leaflet-control-zoom-in');
   const markers = ReactSelector('Marker');
   
+  // Zoom in to make transit markers visible
   for(let i = 0; i < 4; i++) {
     await t 
       .click(zoomIn)
