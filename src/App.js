@@ -19,6 +19,7 @@ import MapContainer from './views/Map/MapContainer';
 import isClient from './utils';
 import { getLocale } from './redux/selectors/locale';
 import { changeLocaleAction } from './redux/actions/locale';
+import Sidebar from './views/Sidebar';
 
 class App extends React.Component {
   constructor(props) {
@@ -94,9 +95,17 @@ class App extends React.Component {
                 </Grid>
               </Toolbar>
             </AppBar>
-
-            <MapContainer />
-
+            <Grid
+              container
+              spacing={24}
+            >
+              <Grid item sm={3}>
+                <Sidebar />
+              </Grid>
+              <Grid item sm={9}>
+                <MapContainer />
+              </Grid>
+            </Grid>
           </div>
         </MuiThemeProvider>
       </IntlProvider>
