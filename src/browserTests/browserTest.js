@@ -12,7 +12,7 @@ fixture`Frontpage tests`
 
 const getLocation = ClientFunction(() => document.location.href);
 
-test('Language change test', async (t) => {
+test('Language does change', async (t) => {
   const languageButtons = ReactSelector('Button');
   const title =           ReactSelector('FormattedMessage');
 
@@ -42,7 +42,7 @@ fixture`Map tests`
     await waitForReact();
   });
 
-test('Test transit marker visibility', async (t) => {
+test('Transit marker visible after zoom', async (t) => {
   const zoomIn  = Selector('.leaflet-control-zoom-in');
   const markers = ReactSelector('Marker');
   
