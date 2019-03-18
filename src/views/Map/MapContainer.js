@@ -1,4 +1,4 @@
-/* eslint-disable max-len */
+/* eslint-disable max-len, global-require */
 import React from 'react';
 import PropTypes from 'prop-types';
 import './Map.css';
@@ -9,6 +9,7 @@ import { getLocale, translate } from '../../redux/selectors/locale';
 import CreateMap from '../../utils/createMap';
 import { mapOptions } from '../../config/mapConfig';
 import fetchStops from '../../utils/fetchStops';
+import fetchDistricts from '../../utils/fetchDistricts';
 
 class MapContainer extends React.Component {
   constructor(props) {
@@ -16,17 +17,42 @@ class MapContainer extends React.Component {
     this.state = {
       initialMap: null,
       transitStops: [],
+      districtList: [],
     };
   }
 
   componentDidMount() {
     this.initiateMap();
+    const mockPosition = {
+      lat: 60.1715997,
+      lng: 24.9381021,
+    };
+    this.fetchMapDistricts(mockPosition);
   }
 
 
   initiateMap = () => {
     const initialMap = CreateMap('servicemap');
     this.setState({ initialMap });
+  }
+
+  fetchMapDistricts = (position) => {
+    const L = require('leaflet');
+    fetchDistricts(position)
+      .then((data) => {
+        const districtList = data;
+        // Change district coordinates from lnglat to latlng
+        for (let i = 0; i < data.length; i += 1) {
+          const geoJSONBounds = [];
+          data[i].boundary.coordinates[0][0].forEach((coordinate) => {
+            const geoJSONCoord = L.GeoJSON.coordsToLatLng(coordinate);
+            geoJSONBounds.push([geoJSONCoord.lat, geoJSONCoord.lng]);
+          });
+          districtList[i].boundary.coordinates[0][0] = geoJSONBounds;
+        }
+        return districtList;
+      })
+      .then(districtList => this.setState({ districtList }));
   }
 
   fetchTransitStops = (bounds) => {
@@ -96,20 +122,23 @@ class MapContainer extends React.Component {
 
   render() {
     const { mapType, unitList, state } = this.props;
-    const { initialMap, transitStops } = this.state;
+    const { initialMap, transitStops, districtList } = this.state;
     if (initialMap) {
       return (
         <MapView
           key={mapType ? mapType.crs.code : initialMap.crs.code}
           mapBase={mapType || initialMap}
           unitList={unitList}
+          districtList={districtList}
           mapOptions={mapOptions}
           fetchTransitStops={this.fetchTransitStops}
           clearTransitStops={this.clearTransitStops}
           transitStops={transitStops}
           t={id => translate(state, id)}
           // TODO: think about better styling location for map
-          style={{ width: '100%', height: '92.6%', position: 'absolute' }}
+          style={{
+            width: '100%', height: '92.6%', position: 'absolute', zIndex: -1,
+          }}
         />
       );
     }
