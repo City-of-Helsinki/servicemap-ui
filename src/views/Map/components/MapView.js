@@ -14,6 +14,8 @@ class MapView extends React.Component {
       ZoomControl: undefined,
       Marker: undefined,
       Popup: undefined,
+      address: undefined,
+      mapClickPoint: undefined,
     };
   }
 
@@ -29,12 +31,35 @@ class MapView extends React.Component {
     });
   }
 
+  getAddress(e) {
+    // Get address of clicked location
+    const { fetchAddress } = this.props;
+    this.setState({ mapClickPoint: null });
+    this.setState({ mapClickPoint: e.latlng, address: null });
+    /* Calling parent function and returning value straight here instead of through props
+    can it/should it be done like this?? */
+    fetchAddress(e.latlng)
+      .then(data => this.setState({ address: data }));
+  }
+
+  getTransitStops() {
+    // Fetch transit stops of screen area
+    const {
+      fetchTransitStops, clearTransitStops, transitStops, mapBase,
+    } = this.props;
+    if (this.mapRef.current.leafletElement._zoom >= mapBase.options.transitZoom) {
+      fetchTransitStops(this.mapRef.current.leafletElement);
+    } else if (transitStops.length > 0) {
+      clearTransitStops();
+    }
+  }
+
   render() {
     const {
-      mapBase, unitList, mapOptions, style, fetchTransitStops, clearTransitStops, transitStops, t,
+      mapBase, unitList, mapOptions, style, transitStops, t,
     } = this.props;
     const {
-      Map, TileLayer, ZoomControl, Marker, Popup,
+      Map, TileLayer, ZoomControl, Marker, Popup, address, mapClickPoint,
     } = this.state;
     if (Map) {
       return (
@@ -50,26 +75,25 @@ class MapView extends React.Component {
             minZoom={mapBase.options.minZoom}
             maxZoom={mapBase.options.maxZoom}
             maxBounds={mapOptions.maxBounds}
+            onClick={(e) => { this.getAddress(e); }}
             onMoveEnd={() => {
-              if (this.mapRef.current.leafletElement._zoom >= mapBase.options.transitZoom) {
-                fetchTransitStops(this.mapRef.current.leafletElement);
-              } else if (transitStops.length > 0) {
-                clearTransitStops();
-              }
+              this.getTransitStops();
             }}
           >
             <TileLayer
               url={mapBase.options.url}
               attribution='&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors'
             />
-            {unitList.map(unit => (
+
+            {unitList.map(unit => ( // Draw unit markers to map
               <Marker
                 key={unit.id ? unit.id : unit[0].id}
                 position={unit.lat ? [unit.lat, unit.lng] : [unit[0].lat, unit[0].lng]}
                 icon={drawIcon(unit, mapBase.options.name)}
               />
             ))}
-            {transitStops.map(stop => (
+
+            {transitStops.map(stop => ( // Draw Transit stops to map
               <Marker
                 key={stop.name + stop.gtfsId}
                 position={[stop.lat, stop.lon]}
@@ -80,6 +104,17 @@ class MapView extends React.Component {
                 </Popup>
               </Marker>
             ))}
+
+            {mapClickPoint ? ( // Draw address popoup on mapclick to map
+              <Popup autoPan={false} position={[mapClickPoint.lat, mapClickPoint.lng]}>
+                <div style={{ display: 'flex', width: '150px' }}>
+                  <p style={{ margin: '0px', width: '80%' }}>
+                    {address ? `${address.street.name.fi} ${address.number}` : 'Getting address...'}
+                  </p>
+                </div>
+              </Popup>
+            ) : null}
+
             <ZoomControl position="bottomright" />
           </Map>
         </div>
@@ -97,6 +132,7 @@ MapView.propTypes = {
   unitList: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.array])),
   mapOptions: PropTypes.objectOf(PropTypes.any),
   fetchTransitStops: PropTypes.func,
+  fetchAddress: PropTypes.func,
   clearTransitStops: PropTypes.func,
   transitStops: PropTypes.arrayOf(PropTypes.object),
   t: PropTypes.func,
@@ -108,6 +144,7 @@ MapView.defaultProps = {
   mapOptions: {},
   unitList: [],
   fetchTransitStops: null,
+  fetchAddress: null,
   clearTransitStops: null,
   transitStops: [],
   t: null,

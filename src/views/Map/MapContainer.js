@@ -29,6 +29,13 @@ class MapContainer extends React.Component {
     this.setState({ initialMap });
   }
 
+  fetchAddress = async (latlng) => {
+    const addressData = await fetch(`https://api.hel.fi/servicemap/v2/address/?lat=${latlng.lat}&lon=${latlng.lng}&page_size=5`)
+      .then(response => response.json())
+      .then(data => data);
+    return addressData.results[0];
+  }
+
   fetchTransitStops = (bounds) => {
     const { locale } = this.props;
     fetchStops(bounds)
@@ -95,6 +102,7 @@ class MapContainer extends React.Component {
   }
 
   render() {
+    console.log('parent renders');
     const { mapType, unitList, state } = this.props;
     const { initialMap, transitStops } = this.state;
     if (initialMap) {
@@ -105,6 +113,7 @@ class MapContainer extends React.Component {
           unitList={unitList}
           mapOptions={mapOptions}
           fetchTransitStops={this.fetchTransitStops}
+          fetchAddress={this.fetchAddress}
           clearTransitStops={this.clearTransitStops}
           transitStops={transitStops}
           t={id => translate(state, id)}
