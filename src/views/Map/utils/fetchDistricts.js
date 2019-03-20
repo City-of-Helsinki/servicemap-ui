@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 const fetchDistricts = async (position) => {
   const url = 'https://api.hel.fi/servicemap/v2/administrative_division/?geometry=true&';
   const districts = [
@@ -41,7 +42,20 @@ const fetchDistricts = async (position) => {
       });
     });
   }
-  return districtData.results;
+
+  // Change district coordinates from lnglat to latlng before returning data
+  const data = districtData.results;
+  const districtList = data;
+  for (let i = 0; i < data.length; i += 1) {
+    const L = require('leaflet');
+    const geoJSONBounds = [];
+    data[i].boundary.coordinates[0][0].forEach((coordinate) => {
+      const geoJSONCoord = L.GeoJSON.coordsToLatLng(coordinate);
+      geoJSONBounds.push([geoJSONCoord.lat, geoJSONCoord.lng]);
+    });
+    districtList[i].boundary.coordinates[0][0] = geoJSONBounds;
+  }
+  return districtList;
 };
 
 export default fetchDistricts;

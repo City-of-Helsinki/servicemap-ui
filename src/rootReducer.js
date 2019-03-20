@@ -3,6 +3,7 @@ import mapType from './redux/reducers/map';
 import units from './redux/reducers/unit';
 import filters from './redux/reducers/filter';
 import locale from './redux/reducers/locale';
+import districts from './redux/reducers/district';
 
 // Export all redux reducers here
 export default combineReducers({
@@ -10,4 +11,5 @@ export default combineReducers({
   units,
   filters,
   locale,
+  districts,
 });

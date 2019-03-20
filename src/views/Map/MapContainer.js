@@ -3,12 +3,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getMapType } from '../../redux/selectors/map';
+import getDistricts from '../../redux/selectors/district';
+import { fetchDistrictsData } from '../../redux/actions/district';
 import MapView from './components/MapView';
 import { getLocale, translate } from '../../redux/selectors/locale';
 import CreateMap from './utils/createMap';
 import { mapOptions } from './constants/mapConstants';
 import fetchStops from './utils/fetchStops';
-import fetchDistricts from './utils/fetchDistricts';
 
 class MapContainer extends React.Component {
   constructor(props) {
@@ -16,7 +17,6 @@ class MapContainer extends React.Component {
     this.state = {
       initialMap: null,
       transitStops: [],
-      districtList: [],
     };
   }
 
@@ -36,22 +36,8 @@ class MapContainer extends React.Component {
   }
 
   fetchMapDistricts = (position) => {
-    const L = require('leaflet');
-    fetchDistricts(position)
-      .then((data) => {
-        const districtList = data;
-        // Change district coordinates from lnglat to latlng
-        for (let i = 0; i < data.length; i += 1) {
-          const geoJSONBounds = [];
-          data[i].boundary.coordinates[0][0].forEach((coordinate) => {
-            const geoJSONCoord = L.GeoJSON.coordsToLatLng(coordinate);
-            geoJSONBounds.push([geoJSONCoord.lat, geoJSONCoord.lng]);
-          });
-          districtList[i].boundary.coordinates[0][0] = geoJSONBounds;
-        }
-        return districtList;
-      })
-      .then(districtList => this.setState({ districtList }));
+    const { fetchDistrictsData } = this.props;
+    fetchDistrictsData(position);
   }
 
   fetchTransitStops = (bounds) => {
@@ -120,15 +106,17 @@ class MapContainer extends React.Component {
   }
 
   render() {
-    const { mapType, unitList, state } = this.props;
-    const { initialMap, transitStops, districtList } = this.state;
+    const {
+      mapType, unitList, state, districts,
+    } = this.props;
+    const { initialMap, transitStops } = this.state;
     if (initialMap) {
       return (
         <MapView
           key={mapType ? mapType.crs.code : initialMap.crs.code}
           mapBase={mapType || initialMap}
           unitList={unitList}
-          districtList={districtList}
+          districtList={districts}
           mapOptions={mapOptions}
           fetchTransitStops={this.fetchTransitStops}
           clearTransitStops={this.clearTransitStops}
@@ -148,10 +136,12 @@ class MapContainer extends React.Component {
 const mapStateToProps = (state) => {
   const mapType = getMapType(state);
   const locale = getLocale(state);
+  const districts = getDistricts(state);
   // const unitList = getUnitList(state);
   return {
     mapType,
     locale,
+    districts,
     state,
     // unitList,
   };
@@ -159,7 +149,8 @@ const mapStateToProps = (state) => {
 
 export default connect(
   mapStateToProps,
-  null,
+  // TODO: remove redux action from this class
+  { fetchDistrictsData },
 )(MapContainer);
 
 
@@ -169,6 +160,8 @@ MapContainer.propTypes = {
   unitList: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.array])),
   locale: PropTypes.string,
   state: PropTypes.objectOf(PropTypes.any),
+  districts: PropTypes.arrayOf(PropTypes.object),
+  fetchDistrictsData: PropTypes.func,
 };
 
 MapContainer.defaultProps = {
@@ -176,4 +169,6 @@ MapContainer.defaultProps = {
   unitList: [],
   locale: 'fi',
   state: {},
+  districts: {},
+  fetchDistrictsData: null,
 };
