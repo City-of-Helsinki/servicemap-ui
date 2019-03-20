@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import DirectionsBus from '@material-ui/icons/DirectionsBus';
 import DirectionsRailway from '@material-ui/icons/DirectionsRailway';
 import DirectionsSubway from '@material-ui/icons/DirectionsSubway';
-import '../Map.css';
 
 // TODO: better styling + styling location
 const TransitStopInfo = (props) => {

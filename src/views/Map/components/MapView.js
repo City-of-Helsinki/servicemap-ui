@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@material-ui/core';
 import TransitStopInfo from './TransitStopInfo';
-import drawIcon from '../../../utils/drawIcon';
+import drawIcon from '../utils/drawIcon';
 
 class MapView extends React.Component {
   constructor(props) {

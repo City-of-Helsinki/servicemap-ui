@@ -1,15 +1,14 @@
 /* eslint-disable max-len, global-require */
 import React from 'react';
 import PropTypes from 'prop-types';
-import './Map.css';
 import { connect } from 'react-redux';
 import { getMapType } from '../../redux/selectors/map';
 import MapView from './components/MapView';
 import { getLocale, translate } from '../../redux/selectors/locale';
-import CreateMap from '../../utils/createMap';
-import { mapOptions } from '../../config/mapConfig';
-import fetchStops from '../../utils/fetchStops';
-import fetchDistricts from '../../utils/fetchDistricts';
+import CreateMap from './utils/createMap';
+import { mapOptions } from './constants/mapConstants';
+import fetchStops from './utils/fetchStops';
+import fetchDistricts from './utils/fetchDistricts';
 
 class MapContainer extends React.Component {
   constructor(props) {
