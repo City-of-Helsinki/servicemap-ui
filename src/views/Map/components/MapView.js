@@ -38,51 +38,49 @@ class MapView extends React.Component {
     } = this.state;
     if (Map) {
       return (
-        <div>
-          <Map
-            ref={this.mapRef}
-            keyboard={false}
-            style={style}
-            zoomControl={false}
-            crs={mapBase.crs}
-            center={mapOptions.initialPosition}
-            zoom={mapBase.options.zoom}
-            minZoom={mapBase.options.minZoom}
-            maxZoom={mapBase.options.maxZoom}
-            maxBounds={mapOptions.maxBounds}
-            onMoveEnd={() => {
-              if (this.mapRef.current.leafletElement._zoom >= mapBase.options.transitZoom) {
-                fetchTransitStops(this.mapRef.current.leafletElement);
-              } else if (transitStops.length > 0) {
-                clearTransitStops();
-              }
-            }}
-          >
-            <TileLayer
-              url={mapBase.options.url}
-              attribution='&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors'
+        <Map
+          ref={this.mapRef}
+          keyboard={false}
+          style={style}
+          zoomControl={false}
+          crs={mapBase.crs}
+          center={mapOptions.initialPosition}
+          zoom={mapBase.options.zoom}
+          minZoom={mapBase.options.minZoom}
+          maxZoom={mapBase.options.maxZoom}
+          maxBounds={mapOptions.maxBounds}
+          onMoveEnd={() => {
+            if (this.mapRef.current.leafletElement._zoom >= mapBase.options.transitZoom) {
+              fetchTransitStops(this.mapRef.current.leafletElement);
+            } else if (transitStops.length > 0) {
+              clearTransitStops();
+            }
+          }}
+        >
+          <TileLayer
+            url={mapBase.options.url}
+            attribution='&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors'
+          />
+          {unitList.map(unit => (
+            <Marker
+              key={unit.id ? unit.id : unit[0].id}
+              position={unit.lat ? [unit.lat, unit.lng] : [unit[0].lat, unit[0].lng]}
+              icon={drawIcon(unit, mapBase.options.name)}
             />
-            {unitList.map(unit => (
-              <Marker
-                key={unit.id ? unit.id : unit[0].id}
-                position={unit.lat ? [unit.lat, unit.lng] : [unit[0].lat, unit[0].lng]}
-                icon={drawIcon(unit, mapBase.options.name)}
-              />
-            ))}
-            {transitStops.map(stop => (
-              <Marker
-                key={stop.name + stop.gtfsId}
-                position={[stop.lat, stop.lon]}
-                // icon={}
-              >
-                <Popup autoPan={false}>
-                  <TransitStopInfo t={t} stop={stop} />
-                </Popup>
-              </Marker>
-            ))}
-            <ZoomControl position="bottomright" />
-          </Map>
-        </div>
+          ))}
+          {transitStops.map(stop => (
+            <Marker
+              key={stop.name + stop.gtfsId}
+              position={[stop.lat, stop.lon]}
+              // icon={}
+            >
+              <Popup autoPan={false}>
+                <TransitStopInfo t={t} stop={stop} />
+              </Popup>
+            </Marker>
+          ))}
+          <ZoomControl position="bottomright" />
+        </Map>
       );
     }
     return <p>No map</p>;
