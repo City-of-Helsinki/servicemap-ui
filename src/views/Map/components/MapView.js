@@ -54,29 +54,34 @@ class MapView extends React.Component {
     } = this.state;
     if (Map) {
       return (
-        <div>
-          <Map
-            ref={this.mapRef}
-            keyboard={false}
-            style={style}
-            zoomControl={false}
-            crs={mapBase.crs}
-            center={mapOptions.initialPosition}
-            zoom={mapBase.options.zoom}
-            minZoom={mapBase.options.minZoom}
-            maxZoom={mapBase.options.maxZoom}
-            maxBounds={mapOptions.maxBounds}
-            onMoveEnd={() => {
-              if (this.mapRef.current.leafletElement._zoom >= mapBase.options.transitZoom) {
-                fetchTransitStops(this.mapRef.current.leafletElement);
-              } else if (transitStops.length > 0) {
-                clearTransitStops();
-              }
-            }}
-          >
-            <TileLayer
-              url={mapBase.options.url}
-              attribution='&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors'
+        <Map
+          ref={this.mapRef}
+          keyboard={false}
+          style={style}
+          zoomControl={false}
+          crs={mapBase.crs}
+          center={mapOptions.initialPosition}
+          zoom={mapBase.options.zoom}
+          minZoom={mapBase.options.minZoom}
+          maxZoom={mapBase.options.maxZoom}
+          maxBounds={mapOptions.maxBounds}
+          onMoveEnd={() => {
+            if (this.mapRef.current.leafletElement._zoom >= mapBase.options.transitZoom) {
+              fetchTransitStops(this.mapRef.current.leafletElement);
+            } else if (transitStops.length > 0) {
+              clearTransitStops();
+            }
+          }}
+        >
+          <TileLayer
+            url={mapBase.options.url}
+            attribution='&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors'
+          />
+          {unitList.map(unit => (
+            <Marker
+              key={unit.id ? unit.id : unit[0].id}
+              position={unit.lat ? [unit.lat, unit.lng] : [unit[0].lat, unit[0].lng]}
+              icon={drawIcon(unit, mapBase.options.name)}
             />
             {highlightedDistrict ? (
               <Polygon
@@ -121,30 +126,6 @@ class MapView extends React.Component {
             ))}
             <ZoomControl position="bottomright" />
           </Map>
-
-          {/* Element to test district toggling */ }
-          {districtList ? (
-            <div>
-              <p>District test buttons</p>
-              {districtList.map(district => (
-                <Button
-                  key={district.id}
-                  onClick={() => {
-                    if (highlightedDistrict !== district) {
-                      this.setState({ highlightedDistrict: district });
-                      this.mapRef.current.leafletElement
-                        .fitBounds(district.boundary.coordinates[0]);
-                    } else {
-                      this.setState({ highlightedDistrict: null });
-                    }
-                  }}
-                >
-                  {district.type}
-                </Button>
-              ))}
-            </div>
-          ) : null }
-        </div>
       );
     }
     return <p>No map</p>;
