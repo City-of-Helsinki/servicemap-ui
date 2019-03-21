@@ -7,8 +7,8 @@ const allowedTypes = [
 
 const searchQueryData = {
   page: 1,
-  page_size: 1000,
-  only: 'root_service_nodes,services,location,name,street_address,contract_type,municipality',
+  page_size: 200,
+  only: 'unit.root_service_nodes,unit.services,unit.location,unit.name,unit.street_address,unit.contract_type,unit.municipality',
   include: 'service_nodes,services',
   geometry: true,
 };
@@ -51,9 +51,11 @@ class QueryBuilder {
 
   // Set query to search and add search text
   search = (search = null) => {
-    if (search && typeof search === 'string') {
-      this.setType('search');
+    this.setType('search');
+    if (search && typeof search === 'string' && search.length > 0) {
       this.searchQuery = search;
+    } else {
+      this.searchQuery = null;
     }
     return this;
   }
