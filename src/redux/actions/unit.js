@@ -37,7 +37,12 @@ export const fetchUnits = (allData = [], next = null, searchQuery = null) => asy
       dispatch(unitsFetchProgressUpdate(newData.length, data.count));
       dispatch(fetchUnits(newData, data.next));
     } else {
-      dispatch(unitsFetchDataSuccess(newData));
+      // Filter out duplicate units
+      const distinctData = Array.from(new Set(newData.map(x => x.id))).map((id) => {
+        const obj = newData.find(s => id === s.id);
+        return obj;
+      });
+      dispatch(unitsFetchDataSuccess(distinctData));
     }
   } catch (e) {
     dispatch(fetchHasErrored(e.message));
