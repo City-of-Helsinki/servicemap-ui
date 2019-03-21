@@ -1,7 +1,6 @@
 /* eslint-disable no-underscore-dangle, global-require */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from '@material-ui/core';
 import TransitStopInfo from './TransitStopInfo';
 import drawIcon from '../utils/drawIcon';
 
@@ -83,49 +82,49 @@ class MapView extends React.Component {
               position={unit.lat ? [unit.lat, unit.lng] : [unit[0].lat, unit[0].lng]}
               icon={drawIcon(unit, mapBase.options.name)}
             />
-            {highlightedDistrict ? (
-              <Polygon
-                positions={[
-                  [mapOptions.polygonBounds],
-                  [highlightedDistrict.boundary.coordinates[0]],
-                ]}
-                color="#ff8400"
-                fillColor="#000"
-              />
-            ) : null}
-            {highlightedDistrict && highlightedDistrict.unit ? (
-              <Marker
-                position={[
-                  highlightedDistrict.unit.location.coordinates[1],
-                  highlightedDistrict.unit.location.coordinates[0],
-                ]}
-                icon={drawIcon(highlightedDistrict.unit, mapBase.options.name)}
-              >
-                <Popup autoPan={false}>
-                  <p>{highlightedDistrict.unit.name.fi}</p>
-                </Popup>
-              </Marker>
-            ) : null}
-            {unitList.map(unit => (
-              <Marker
-                key={unit.id ? unit.id : unit[0].id}
-                position={unit.lat ? [unit.lat, unit.lng] : [unit[0].lat, unit[0].lng]}
-                icon={drawIcon(unit, mapBase.options.name)}
-              />
-            ))}
-            {transitStops.map(stop => (
-              <Marker
-                key={stop.name + stop.gtfsId}
-                position={[stop.lat, stop.lon]}
-                // icon={}
-              >
-                <Popup autoPan={false}>
-                  <TransitStopInfo t={t} stop={stop} />
-                </Popup>
-              </Marker>
-            ))}
-            <ZoomControl position="bottomright" />
-          </Map>
+          ))}
+          {highlightedDistrict ? (
+            <Polygon
+              positions={[
+                [mapOptions.polygonBounds],
+                [highlightedDistrict.boundary.coordinates[0]],
+              ]}
+              color="#ff8400"
+              fillColor="#000"
+            />
+          ) : null}
+          {highlightedDistrict && highlightedDistrict.unit ? (
+            <Marker
+              position={[
+                highlightedDistrict.unit.location.coordinates[1],
+                highlightedDistrict.unit.location.coordinates[0],
+              ]}
+              icon={drawIcon(highlightedDistrict.unit, mapBase.options.name)}
+            >
+              <Popup autoPan={false}>
+                <p>{highlightedDistrict.unit.name.fi}</p>
+              </Popup>
+            </Marker>
+          ) : null}
+          {unitList.map(unit => (
+            <Marker
+              key={unit.id ? unit.id : unit[0].id}
+              position={unit.lat ? [unit.lat, unit.lng] : [unit[0].lat, unit[0].lng]}
+              icon={drawIcon(unit, mapBase.options.name)}
+            />
+          ))}
+          {transitStops.map(stop => (
+            <Marker
+              key={stop.name + stop.gtfsId}
+              position={[stop.lat, stop.lon]}
+            >
+              <Popup autoPan={false}>
+                <TransitStopInfo t={t} stop={stop} />
+              </Popup>
+            </Marker>
+          ))}
+          <ZoomControl position="bottomright" />
+        </Map>
       );
     }
     return <p>No map</p>;
