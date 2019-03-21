@@ -3,9 +3,12 @@ import { Selector, ClientFunction } from 'testcafe';
 
 import { waitForReact, ReactSelector } from 'testcafe-react-selectors';
 
+import config from '../../config';
+const { server } = config;
+
 // TODO: move these to the related view folders
 fixture`Frontpage tests`
-  .page`http://localhost:2048/fi`
+  .page`http://${server.address}:${server.port}/fi`
   .beforeEach(async () => {
     await waitForReact();
   });
@@ -17,19 +20,19 @@ test('Language does change', async (t) => {
   const title =           ReactSelector('FormattedMessage');
 
   await t
-    .expect(getLocation()).contains('http://localhost:2048/fi')
+    .expect(getLocation()).contains(`http://${server.address}:${server.port}/fi`)
     .expect(title.innerText).eql('Palvelukartta')
     .expect(languageButtons.nth(0).innerText).eql('ENGLISH')
     .expect(languageButtons.nth(1).innerText).eql('SVENSKA')
     
     .click(languageButtons.nth(0))
-    .expect(getLocation()).contains('http://localhost:2048/en')
+    .expect(getLocation()).contains(`http://${server.address}:${server.port}/en`)
     .expect(title.innerText).eql('Service map')
     .expect(languageButtons.nth(0).innerText).eql('SUOMI')
     .expect(languageButtons.nth(1).innerText).eql('SVENSKA')
 
     .click(languageButtons.nth(1))
-    .expect(getLocation()).contains('http://localhost:2048/sv')
+    .expect(getLocation()).contains(`http://${server.address}:${server.port}/sv`)
     .expect(title.innerText).eql('Servicekarta')
     .expect(languageButtons.nth(0).innerText).eql('SUOMI')
     .expect(languageButtons.nth(1).innerText).eql('ENGLISH');
@@ -37,7 +40,7 @@ test('Language does change', async (t) => {
 
 
 fixture`Map tests`
-  .page`http://localhost:2048/en`
+  .page`http://${server.address}:${server.port}/en`
   .beforeEach(async () => {
     await waitForReact();
   });
