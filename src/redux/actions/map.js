@@ -1,4 +1,4 @@
-import CreateMap from '../../utils/createMap';
+import CreateMap from '../../views/Map/utils/createMap';
 
 const setMapType = (mapType) => {
   const newMap = CreateMap(mapType);

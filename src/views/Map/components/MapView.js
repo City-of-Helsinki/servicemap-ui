@@ -1,8 +1,8 @@
-/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-underscore-dangle, global-require */
 import React from 'react';
 import PropTypes from 'prop-types';
 import TransitStopInfo from './TransitStopInfo';
-import drawIcon from '../../../utils/drawIcon';
+import drawIcon from '../utils/drawIcon';
 
 class MapView extends React.Component {
   constructor(props) {
@@ -14,27 +14,42 @@ class MapView extends React.Component {
       ZoomControl: undefined,
       Marker: undefined,
       Popup: undefined,
+      Polygon: undefined,
+      highlightedDistrict: null,
     };
   }
 
   componentDidMount() {
+    this.initiateLeaflet();
+  }
+
+  initiateLeaflet() {
     // The leaflet map works only client-side so it needs to be imported here
-    const leaflet = require('react-leaflet'); // eslint-disable-line global-require
+    const leaflet = require('react-leaflet');
+
     const {
-      Map, TileLayer, ZoomControl, Marker, Popup,
+      Map, TileLayer, ZoomControl, Marker, Popup, Polygon,
     } = leaflet;
 
     this.setState({
-      Map, TileLayer, ZoomControl, Marker, Popup,
+      Map, TileLayer, ZoomControl, Marker, Popup, Polygon,
     });
   }
 
   render() {
     const {
-      mapBase, unitList, mapOptions, style, fetchTransitStops, clearTransitStops, transitStops, t,
+      mapBase,
+      unitList,
+      mapOptions,
+      districtList,
+      style,
+      fetchTransitStops,
+      clearTransitStops,
+      transitStops,
+      t,
     } = this.props;
     const {
-      Map, TileLayer, ZoomControl, Marker, Popup,
+      Map, TileLayer, ZoomControl, Marker, Popup, Polygon, highlightedDistrict,
     } = this.state;
     if (Map) {
       return (
@@ -68,11 +83,40 @@ class MapView extends React.Component {
               icon={drawIcon(unit, mapBase.options.name)}
             />
           ))}
+          {highlightedDistrict ? (
+            <Polygon
+              positions={[
+                [mapOptions.polygonBounds],
+                [highlightedDistrict.boundary.coordinates[0]],
+              ]}
+              color="#ff8400"
+              fillColor="#000"
+            />
+          ) : null}
+          {highlightedDistrict && highlightedDistrict.unit ? (
+            <Marker
+              position={[
+                highlightedDistrict.unit.location.coordinates[1],
+                highlightedDistrict.unit.location.coordinates[0],
+              ]}
+              icon={drawIcon(highlightedDistrict.unit, mapBase.options.name)}
+            >
+              <Popup autoPan={false}>
+                <p>{highlightedDistrict.unit.name.fi}</p>
+              </Popup>
+            </Marker>
+          ) : null}
+          {unitList.map(unit => (
+            <Marker
+              key={unit.id ? unit.id : unit[0].id}
+              position={unit.lat ? [unit.lat, unit.lng] : [unit[0].lat, unit[0].lng]}
+              icon={drawIcon(unit, mapBase.options.name)}
+            />
+          ))}
           {transitStops.map(stop => (
             <Marker
               key={stop.name + stop.gtfsId}
               position={[stop.lat, stop.lon]}
-              // icon={}
             >
               <Popup autoPan={false}>
                 <TransitStopInfo t={t} stop={stop} />
@@ -93,6 +137,7 @@ MapView.propTypes = {
   style: PropTypes.objectOf(PropTypes.any),
   mapBase: PropTypes.objectOf(PropTypes.any),
   unitList: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.array])),
+  districtList: PropTypes.arrayOf(PropTypes.object),
   mapOptions: PropTypes.objectOf(PropTypes.any),
   fetchTransitStops: PropTypes.func,
   clearTransitStops: PropTypes.func,
@@ -105,6 +150,7 @@ MapView.defaultProps = {
   mapBase: {},
   mapOptions: {},
   unitList: [],
+  districtList: [],
   fetchTransitStops: null,
   clearTransitStops: null,
   transitStops: [],

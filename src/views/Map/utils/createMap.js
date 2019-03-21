@@ -1,10 +1,11 @@
-import { mapTypes } from '../config/mapConfig';
+/* eslint-disable global-require */
+import { mapTypes } from '../constants/mapConstants';
 
 let L;
 // Check if we are on client side because leafelt map works only on client side
 if (typeof window !== 'undefined') {
-  require('proj4leaflet'); // eslint-disable-line global-require
-  L = require('leaflet'); // eslint-disable-line global-require
+  require('proj4leaflet');
+  L = require('leaflet');
 }
 
 const CreateMap = (mapType) => {

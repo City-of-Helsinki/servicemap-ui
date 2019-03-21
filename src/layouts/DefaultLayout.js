@@ -18,6 +18,7 @@ const createContentStyles = isMobile => ({
   map: {
     display: isMobile ? 'none' : 'block',
     margin: 0,
+    flex: 1,
   },
 });
 
