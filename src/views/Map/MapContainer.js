@@ -123,7 +123,7 @@ class MapContainer extends React.Component {
           transitStops={transitStops}
           t={id => translate(state, id)}
           // TODO: think about better styling location for map
-          style={{ width: '100%', height: '100%', position: 'fixed' }}
+          style={{ width: '100%', height: '100%', position: 'relative' }}
         />
       );
     }

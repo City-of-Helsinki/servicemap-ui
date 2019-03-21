@@ -14,10 +14,12 @@ const createContentStyles = isMobile => ({
   sidebar: {
     width: isMobile ? '100%' : 360,
     margin: 0,
+    flex: '0 0 360',
   },
   map: {
     display: isMobile ? 'none' : 'block',
     margin: 0,
+    flex: 1,
   },
 });
 
