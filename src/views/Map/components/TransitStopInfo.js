@@ -76,7 +76,7 @@ const TransitStopInfo = (props) => {
               marginTop: '0px', marginBottom: '2px', width: '55%', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis', lineHeight: '20px', height: '20px',
             }}
             >
-              {arrival.pickupType === 'NONE' ? t('transit.endStation') : arrival.headsign}
+              {arrival.pickupType === 'NONE' ? t('map.transit.endStation') : arrival.headsign}
             </p>
           </div>
         );
