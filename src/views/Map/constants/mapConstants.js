@@ -1,9 +1,25 @@
+// The maximum bounds of the map
+const mapBounds = {
+  maxLat: 60.68260671624568,
+  maxLng: 26.05329875808676,
+  minLat: 59.695219623662894,
+  minLng: 23.39691082417145,
+};
+
 const mapOptions = {
   initialPosition: [60.171631597530016, 24.906860323934886],
-  // Max bounds could be defined separately for differernt map types
   maxBounds: [
-    [60.73428157014129, 26.60179232355852],
-    [59.59191469116564, 23.40571236451516],
+    [mapBounds.maxLat, mapBounds.minLng],
+    [mapBounds.maxLat, mapBounds.maxLng],
+    [mapBounds.minLat, mapBounds.maxLng],
+    [mapBounds.minLat, mapBounds.minLng],
+  ],
+  // Make district polygon bounds slightly larger than max bounds, so the polygon borders are hidden
+  polygonBounds: [
+    [mapBounds.maxLat + 10, mapBounds.minLng - 10],
+    [mapBounds.maxLat + 10, mapBounds.maxLng + 10],
+    [mapBounds.minLat - 10, mapBounds.maxLng + 10],
+    [mapBounds.minLat - 10, mapBounds.minLng - 10],
   ],
 };
 

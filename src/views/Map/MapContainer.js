@@ -1,14 +1,15 @@
-/* eslint-disable max-len */
+/* eslint-disable max-len, global-require */
 import React from 'react';
 import PropTypes from 'prop-types';
-import './Map.css';
 import { connect } from 'react-redux';
 import { getMapType } from '../../redux/selectors/map';
+import getDistricts from '../../redux/selectors/district';
+import { fetchDistrictsData } from '../../redux/actions/district';
 import MapView from './components/MapView';
 import { getLocale, translate } from '../../redux/selectors/locale';
-import CreateMap from '../../utils/createMap';
-import { mapOptions } from '../../config/mapConfig';
-import fetchStops from '../../utils/fetchStops';
+import CreateMap from './utils/createMap';
+import { mapOptions } from './constants/mapConstants';
+import fetchStops from './utils/fetchStops';
 
 class MapContainer extends React.Component {
   constructor(props) {
@@ -21,6 +22,11 @@ class MapContainer extends React.Component {
 
   componentDidMount() {
     this.initiateMap();
+    const mockPosition = {
+      lat: 60.1715997,
+      lng: 24.9381021,
+    };
+    this.fetchMapDistricts(mockPosition);
   }
 
 
@@ -34,6 +40,11 @@ class MapContainer extends React.Component {
       .then(response => response.json())
       .then(data => data);
     return addressData.results[0];
+  }
+
+  fetchMapDistricts = (position) => {
+    const { fetchDistrictsData } = this.props;
+    fetchDistrictsData(position);
   }
 
   fetchTransitStops = (bounds) => {
@@ -102,8 +113,9 @@ class MapContainer extends React.Component {
   }
 
   render() {
-    console.log('parent renders');
-    const { mapType, unitList, state } = this.props;
+    const {
+      mapType, unitList, state, districts,
+    } = this.props;
     const { initialMap, transitStops } = this.state;
     if (initialMap) {
       return (
@@ -111,6 +123,7 @@ class MapContainer extends React.Component {
           key={mapType ? mapType.crs.code : initialMap.crs.code}
           mapBase={mapType || initialMap}
           unitList={unitList}
+          districtList={districts}
           mapOptions={mapOptions}
           fetchTransitStops={this.fetchTransitStops}
           fetchAddress={this.fetchAddress}
@@ -118,7 +131,7 @@ class MapContainer extends React.Component {
           transitStops={transitStops}
           t={id => translate(state, id)}
           // TODO: think about better styling location for map
-          style={{ width: '100%', height: '92.6%', position: 'absolute' }}
+          style={{ width: '100%', height: '100%', position: 'relative' }}
         />
       );
     }
@@ -129,10 +142,12 @@ class MapContainer extends React.Component {
 const mapStateToProps = (state) => {
   const mapType = getMapType(state);
   const locale = getLocale(state);
+  const districts = getDistricts(state);
   // const unitList = getUnitList(state);
   return {
     mapType,
     locale,
+    districts,
     state,
     // unitList,
   };
@@ -140,7 +155,8 @@ const mapStateToProps = (state) => {
 
 export default connect(
   mapStateToProps,
-  null,
+  // TODO: remove redux action from this class
+  { fetchDistrictsData },
 )(MapContainer);
 
 
@@ -150,6 +166,8 @@ MapContainer.propTypes = {
   unitList: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.array])),
   locale: PropTypes.string,
   state: PropTypes.objectOf(PropTypes.any),
+  districts: PropTypes.arrayOf(PropTypes.object),
+  fetchDistrictsData: PropTypes.func,
 };
 
 MapContainer.defaultProps = {
@@ -157,4 +175,6 @@ MapContainer.defaultProps = {
   unitList: [],
   locale: 'fi',
   state: {},
+  districts: {},
+  fetchDistrictsData: null,
 };
