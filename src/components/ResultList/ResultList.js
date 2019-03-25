@@ -4,6 +4,7 @@ import {
   List, withStyles, Typography, Divider,
 } from '@material-ui/core';
 import { Menu } from '@material-ui/icons';
+import { FormattedMessage } from 'react-intl';
 import ResultItem from './ResultItem';
 
 const styles = theme => ({
@@ -37,8 +38,8 @@ const styles = theme => ({
 class ResultList extends React.Component {
   // Update only when data changes
   shouldComponentUpdate(nextProps) {
-    const { data } = this.props;
-    return (data !== nextProps.data);
+    const { data, title } = this.props;
+    return (data !== nextProps.data) || (title !== nextProps.title);
   }
 
   render() {
@@ -55,7 +56,7 @@ class ResultList extends React.Component {
           }}
           >
             <Typography className={classes.left} variant="h3">{title}</Typography>
-            <Typography className={classes.right} variant="subtitle1">{`${data.length} osumaa`}</Typography>
+            <Typography className={classes.right} variant="subtitle1"><FormattedMessage id="search.results" values={{ count: data.length }} /></Typography>
           </div>
         </div>
         <Divider />
