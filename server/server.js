@@ -76,6 +76,9 @@ const htmlTemplate = (reactDom, preloadedState, css) => `
       integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
       crossorigin="">
     </script>
+    <style>
+      @import url('https://fonts.googleapis.com/css?family=Lato');
+    </style>
   </head>
 
   <body>
