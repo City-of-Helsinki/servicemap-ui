@@ -6,7 +6,7 @@ import {
 import { ArrowBack, Search } from '@material-ui/icons';
 import { withRouter } from 'react-router-dom';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
-import SearchList from './components/SearchList';
+import ResultList from '../../components/ResultList';
 import styles from './styles';
 import Loading from '../../components/Loading/Loading';
 
@@ -34,10 +34,21 @@ class SearchView extends React.Component {
   onSearchSubmit = (e) => {
     e.preventDefault();
     const { search } = this.state;
-    const { fetchUnits } = this.props;
+    // const { fetchUnits } = this.props;
     console.log(`Search query = ${search}`);
     if (search && search !== '') {
-      fetchUnits([], null, search);
+      // fetchUnits([], null, search);
+    }
+  }
+
+  // onClick event for each ResultList's item
+  onItemClick = (e, item) => {
+    const { history, match } = this.props;
+    const { params } = match;
+    const lng = params && params.lng;
+    e.preventDefault();
+    if (history && item) {
+      history.push(`/${lng || 'fi'}/unit/${item.id}/`);
     }
   }
 
@@ -100,8 +111,10 @@ class SearchView extends React.Component {
         {
           resultsShowing
           && (
-          <SearchList
+          <ResultList
+            title={intl.formatMessage({ id: 'unit.plural' })}
             data={units}
+            onItemClick={this.onItemClick}
           />
           )
         }
@@ -119,6 +132,7 @@ SearchView.propTypes = {
   history: PropTypes.objectOf(PropTypes.any).isRequired,
   intl: intlShape.isRequired,
   isFetching: PropTypes.bool,
+  match: PropTypes.objectOf(PropTypes.any).isRequired,
   max: PropTypes.number,
   units: PropTypes.arrayOf(PropTypes.any),
 };
