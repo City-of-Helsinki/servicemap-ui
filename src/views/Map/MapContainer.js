@@ -3,8 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getMapType } from '../../redux/selectors/map';
-import getDistricts from '../../redux/selectors/district';
-import { fetchDistrictsData } from '../../redux/actions/district';
+import { getDistricts, getHighlightedDistrict } from '../../redux/selectors/district';
 import MapView from './components/MapView';
 import { getLocale, translate } from '../../redux/selectors/locale';
 import CreateMap from './utils/createMap';
@@ -22,13 +21,7 @@ class MapContainer extends React.Component {
 
   componentDidMount() {
     this.initiateMap();
-    const mockPosition = {
-      lat: 60.1715997,
-      lng: 24.9381021,
-    };
-    this.fetchMapDistricts(mockPosition);
   }
-
 
   initiateMap = () => {
     const initialMap = CreateMap('servicemap');
@@ -40,11 +33,6 @@ class MapContainer extends React.Component {
       .then(response => response.json())
       .then(data => data);
     return addressData.results[0];
-  }
-
-  fetchMapDistricts = (position) => {
-    const { fetchDistrictsData } = this.props;
-    fetchDistrictsData(position);
   }
 
   fetchTransitStops = (bounds) => {
@@ -114,7 +102,7 @@ class MapContainer extends React.Component {
 
   render() {
     const {
-      mapType, unitList, state, districts,
+      mapType, unitList, state, highlightedDistrict,
     } = this.props;
     const { initialMap, transitStops } = this.state;
     if (initialMap) {
@@ -123,7 +111,7 @@ class MapContainer extends React.Component {
           key={mapType ? mapType.crs.code : initialMap.crs.code}
           mapBase={mapType || initialMap}
           unitList={unitList}
-          districtList={districts}
+          highlightedDistrict={highlightedDistrict}
           mapOptions={mapOptions}
           fetchTransitStops={this.fetchTransitStops}
           fetchAddress={this.fetchAddress}
@@ -143,11 +131,13 @@ const mapStateToProps = (state) => {
   const mapType = getMapType(state);
   const locale = getLocale(state);
   const districts = getDistricts(state);
+  const highlightedDistrict = getHighlightedDistrict(state);
   // const unitList = getUnitList(state);
   return {
     mapType,
     locale,
     districts,
+    highlightedDistrict,
     state,
     // unitList,
   };
@@ -155,8 +145,7 @@ const mapStateToProps = (state) => {
 
 export default connect(
   mapStateToProps,
-  // TODO: remove redux action from this class
-  { fetchDistrictsData },
+  null,
 )(MapContainer);
 
 
@@ -166,8 +155,7 @@ MapContainer.propTypes = {
   unitList: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.array])),
   locale: PropTypes.string,
   state: PropTypes.objectOf(PropTypes.any),
-  districts: PropTypes.arrayOf(PropTypes.object),
-  fetchDistrictsData: PropTypes.func,
+  highlightedDistrict: PropTypes.objectOf(PropTypes.any),
 };
 
 MapContainer.defaultProps = {
@@ -175,6 +163,5 @@ MapContainer.defaultProps = {
   unitList: [],
   locale: 'fi',
   state: {},
-  districts: {},
-  fetchDistrictsData: null,
+  highlightedDistrict: {},
 };

@@ -1,6 +1,8 @@
 /* eslint-disable no-underscore-dangle, global-require */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter, Router, Link } from 'react-router-dom';
+import { ButtonBase } from '@material-ui/core';
 import TransitStopInfo from './TransitStopInfo';
 import drawIcon from '../utils/drawIcon';
 
@@ -17,7 +19,6 @@ class MapView extends React.Component {
       address: undefined,
       mapClickPoint: undefined,
       Polygon: undefined,
-      highlightedDistrict: null,
     };
   }
 
@@ -25,27 +26,14 @@ class MapView extends React.Component {
     this.initiateLeaflet();
   }
 
-  initiateLeaflet() {
-    // The leaflet map works only client-side so it needs to be imported here
-    const leaflet = require('react-leaflet');
-
-    const {
-      Map, TileLayer, ZoomControl, Marker, Popup, Polygon,
-    } = leaflet;
-
-    this.setState({
-      Map, TileLayer, ZoomControl, Marker, Popup, Polygon,
-    });
-  }
-
-  getAddress(e) {
+  getAddress(ev) {
     // Get address of clicked location
     const { fetchAddress } = this.props;
     this.setState({ mapClickPoint: null });
-    this.setState({ mapClickPoint: e.latlng, address: null });
+    this.setState({ mapClickPoint: ev.latlng, address: null });
     /* Calling parent function and returning value straight here instead of through props
     can it/should it be done like this?? */
-    fetchAddress(e.latlng)
+    fetchAddress(ev.latlng)
       .then(data => this.setState({ address: data }));
   }
 
@@ -61,19 +49,46 @@ class MapView extends React.Component {
     }
   }
 
+
+  openAddress = (address) => {
+    const { history } = this.props;
+    history.push(`/fi/address/${address.street.municipality}/${address.street.name.fi}/${address.number}`);
+    console.log(address);
+  }
+
+  initiateLeaflet() {
+    // The leaflet map works only client-side so it needs to be imported here
+    const leaflet = require('react-leaflet');
+
+    const {
+      Map, TileLayer, ZoomControl, Marker, Popup, Polygon,
+    } = leaflet;
+
+    this.setState({
+      Map, TileLayer, ZoomControl, Marker, Popup, Polygon,
+    });
+  }
+
+
   render() {
+    console.log(this.props);
     const {
       mapBase,
       unitList,
       mapOptions,
-      districtList,
+      highlightedDistrict,
       style,
       transitStops,
       t,
     } = this.props;
     const {
-      Map, TileLayer, ZoomControl, Marker, Popup, Polygon, highlightedDistrict, address, mapClickPoint,
+      Map, TileLayer, ZoomControl, Marker, Popup, Polygon, address, mapClickPoint,
     } = this.state;
+
+    if (highlightedDistrict) {
+      // this.mapRef.current.leafletElement.fitBounds(highlightedDistrict.boundary.coordinates[0]);
+    }
+
     if (Map) {
       return (
         <Map
@@ -87,7 +102,7 @@ class MapView extends React.Component {
           minZoom={mapBase.options.minZoom}
           maxZoom={mapBase.options.maxZoom}
           maxBounds={mapOptions.maxBounds}
-          onClick={(e) => { this.getAddress(e); }}
+          onClick={(ev) => { this.getAddress(ev); }}
           onMoveEnd={() => {
             this.getTransitStops();
           }}
@@ -143,11 +158,27 @@ class MapView extends React.Component {
 
           {mapClickPoint ? ( // Draw address popoup on mapclick to map
             <Popup autoPan={false} position={[mapClickPoint.lat, mapClickPoint.lng]}>
-              <div style={{ display: 'flex', width: '150px' }}>
-                <p style={{ margin: '0px', width: '80%' }}>
-                  {address ? `${address.street.name.fi} ${address.number}` : 'Getting address...'}
+              {address ? (
+                <div style={{ display: 'flex', width: '150px' }}>
+                  <p style={{ margin: '0px', width: '80%' }}>
+                    {`${address.street.name.fi} ${address.number}`}
+                  </p>
+                  <ButtonBase onClick={() => {
+                    // window.history.pushState('', '', `http://localhost:2048/fi/address/${address.street.municipality}/${address.street.name.fi}/${address.number}`);
+                    this.openAddress(address);
+                  }}
+                  >
+                    {'->'}
+                  </ButtonBase>
+                  <Link to={`/fi/address/${address.street.municipality}/${address.street.name.fi}/${address.number}`}>
+                      Linkki
+                  </Link>
+                </div>
+              ) : (
+                <p style={{ margin: '0px', width: '100%' }}>
+                  {'Getting address...'}
                 </p>
-              </div>
+              )}
             </Popup>
           ) : null}
 
@@ -165,7 +196,7 @@ MapView.propTypes = {
   style: PropTypes.objectOf(PropTypes.any),
   mapBase: PropTypes.objectOf(PropTypes.any),
   unitList: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.array])),
-  districtList: PropTypes.arrayOf(PropTypes.object),
+  highlightedDistrict: PropTypes.objectOf(PropTypes.any),
   mapOptions: PropTypes.objectOf(PropTypes.any),
   fetchTransitStops: PropTypes.func,
   fetchAddress: PropTypes.func,
@@ -179,7 +210,7 @@ MapView.defaultProps = {
   mapBase: {},
   mapOptions: {},
   unitList: [],
-  districtList: [],
+  highlightedDistrict: {},
   fetchTransitStops: null,
   fetchAddress: null,
   clearTransitStops: null,

@@ -1,3 +1,8 @@
 const getDistricts = store => store.districts.data;
 
-export default getDistricts;
+const getHighlightedDistrict = store => store.districts.highlitedDistrict;
+
+export {
+  getDistricts,
+  getHighlightedDistrict,
+};

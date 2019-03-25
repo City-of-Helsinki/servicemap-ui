@@ -22,3 +22,8 @@ export const fetchDistrictsData = latlng => (dispatch) => {
       dispatch(fetchHasErrored(e.message));
     });
 };
+
+export const setHighlightedDistrict = district => ({
+  type: 'SET_DISTRICT_HIGHLIGHT',
+  district,
+});
