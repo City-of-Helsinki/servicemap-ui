@@ -3,8 +3,12 @@ import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
 import Search from '../SearchView';
 
+import LinkList from './components/LinkList';
+
 const Test = () => (
-  <div> Temporary </div>
+  <div>
+    <LinkList />
+  </div>
 );
 
 class Sidebar extends React.Component {
