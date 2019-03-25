@@ -2,6 +2,8 @@ const initialState = {
   isFetching: false,
   errorMessage: null,
   data: [],
+  count: 0,
+  max: 0,
 };
 
 export default (state = initialState, action) => {
@@ -17,6 +19,8 @@ export default (state = initialState, action) => {
         ...state,
         isFetching: false,
         errorMessage: action.errorMessage,
+        count: 0,
+        max: 0,
       };
     case 'UNITS_FETCH_DATA_SUCCESS':
       return {
@@ -24,6 +28,14 @@ export default (state = initialState, action) => {
         isFetching: false,
         errorMessage: null,
         data: action.units,
+        count: 0,
+        max: 0,
+      };
+    case 'UNITS_FETCH_PROGRESS_UPDATE':
+      return {
+        ...state,
+        count: action.count,
+        max: action.max,
       };
 
     default:

@@ -11,16 +11,21 @@ export const unitsFetchDataSuccess = units => ({
   type: 'UNITS_FETCH_DATA_SUCCESS',
   units,
 });
+export const unitsFetchProgressUpdate = (count, max) => ({
+  type: 'UNITS_FETCH_PROGRESS_UPDATE',
+  count,
+  max,
+});
 
 // Thunk fetch
-export const fetchUnits = (allData = [], next = null) => async (dispatch) => {
+export const fetchUnits = (allData = [], next = null, searchQuery = null) => async (dispatch) => {
   dispatch(fetchIsLoading());
   try {
     let response = null;
     if (next) {
       response = await fetch(next);
     } else {
-      response = await queryBuilder.search('kallion kirjasto').run();
+      response = await queryBuilder.search(searchQuery).run();
     }
     if (!response.ok) {
       throw Error(response.statusText);
@@ -29,9 +34,15 @@ export const fetchUnits = (allData = [], next = null) => async (dispatch) => {
     const newData = [...allData, ...data.results];
     if (data.next) {
       // Fetch the next page if response has more than one page of results
+      dispatch(unitsFetchProgressUpdate(newData.length, data.count));
       dispatch(fetchUnits(newData, data.next));
     } else {
-      dispatch(unitsFetchDataSuccess(newData));
+      // Filter out duplicate units
+      const distinctData = Array.from(new Set(newData.map(x => x.id))).map((id) => {
+        const obj = newData.find(s => id === s.id);
+        return obj;
+      });
+      dispatch(unitsFetchDataSuccess(distinctData));
     }
   } catch (e) {
     dispatch(fetchHasErrored(e.message));
