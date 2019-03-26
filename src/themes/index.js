@@ -19,7 +19,28 @@ const SMTheme = createMuiTheme({
       'Lato',
     ].join(','),
     body1: {
-      fontWeight: 700,
+      fontSize: 16,
+    },
+    subtitle1: {
+      fontSize: 12,
+    },
+    h1: {
+      fontSize: 22,
+    },
+    h2: {
+      fontSize: 20,
+    },
+    h3: {
+      fontSize: 18,
+    },
+    h4: {
+      fontSize: 16,
+    },
+    h5: {
+      fontSize: 14,
+    },
+    h6: {
+      fontSize: 12,
     },
   },
   spacing: {

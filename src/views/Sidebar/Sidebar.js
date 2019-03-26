@@ -1,7 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
 import Search from '../SearchView';
+import UnitView from '../UnitView';
 
 import LinkList from './components/LinkList';
 
@@ -21,8 +21,9 @@ class Sidebar extends React.Component {
     return (
       <div className="Sidebar" style={{ height: '100%' }}>
         <Switch>
-          <Route path="/:lng/unit/:unit" component={Test} />
+          <Route path="/:lng/unit/:unit" component={UnitView} />
           <Route path="/:lng/search" component={Search} />
+          <Route path="/:lng/" component={Test} />
         </Switch>
       </div>
     );
