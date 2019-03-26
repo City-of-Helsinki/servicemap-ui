@@ -1,8 +1,7 @@
 /* eslint-disable no-underscore-dangle, global-require */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withRouter, Router, Link } from 'react-router-dom';
-import { ButtonBase } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 import TransitStopInfo from './TransitStopInfo';
 import drawIcon from '../utils/drawIcon';
 
@@ -49,13 +48,6 @@ class MapView extends React.Component {
     }
   }
 
-
-  openAddress = (address) => {
-    const { history } = this.props;
-    history.push(`/fi/address/${address.street.municipality}/${address.street.name.fi}/${address.number}`);
-    console.log(address);
-  }
-
   initiateLeaflet() {
     // The leaflet map works only client-side so it needs to be imported here
     const leaflet = require('react-leaflet');
@@ -71,7 +63,6 @@ class MapView extends React.Component {
 
 
   render() {
-    console.log(this.props);
     const {
       mapBase,
       unitList,
@@ -86,6 +77,7 @@ class MapView extends React.Component {
     } = this.state;
 
     if (highlightedDistrict) {
+      // TODO: fix this fitbounds from triggering on each render
       // this.mapRef.current.leafletElement.fitBounds(highlightedDistrict.boundary.coordinates[0]);
     }
 
@@ -163,13 +155,6 @@ class MapView extends React.Component {
                   <p style={{ margin: '0px', width: '80%' }}>
                     {`${address.street.name.fi} ${address.number}`}
                   </p>
-                  <ButtonBase onClick={() => {
-                    // window.history.pushState('', '', `http://localhost:2048/fi/address/${address.street.municipality}/${address.street.name.fi}/${address.number}`);
-                    this.openAddress(address);
-                  }}
-                  >
-                    {'->'}
-                  </ButtonBase>
                   <Link to={`/fi/address/${address.street.municipality}/${address.street.name.fi}/${address.number}`}>
                       Linkki
                   </Link>

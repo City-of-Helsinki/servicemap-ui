@@ -11,7 +11,6 @@ class AddressInfo extends React.Component {
     super(props);
     this.state = {
       addressData: null,
-      fetching: false,
     };
   }
 
@@ -20,13 +19,36 @@ class AddressInfo extends React.Component {
     this.fetchAddressData(match);
   }
 
+  componentDidUpdate() {
+    const { match } = this.props;
+    const { addressData } = this.state;
+    if (
+      addressData
+      && match.params.street === addressData.street.name.fi
+      && match.params.number === addressData.number
+      && match.params.municipality === addressData.street.municipality
+    ) {
+      // console.log('same address');
+    } else {
+      this.fetchAddressData(match);
+    }
+  }
+
   fetchAddressData = async (match) => {
-    this.setState({ fetching: true});
+    // TODO: check why municipality filter is not working
     await fetch(`https://api.hel.fi/servicemap/v2/search/?type=address&municipality=${match.params.municipality}&q=${match.params.street} ${match.params.number}`)
       .then(response => response.json())
       .then((data) => {
-        this.setState({ addressData: data.results[0], fetching: false });
-        this.fetchDistricts(data.results[0].location.coordinates);
+        if (data.results.length > 0) {
+          const address = data.results[0];
+          if (address.letter) {
+            address.number += address.letter;
+          }
+          this.setState({ addressData: data.results[0] });
+          this.fetchDistricts(data.results[0].location.coordinates);
+        } else {
+          console.log('error');
+        }
       });
   }
 
@@ -35,28 +57,20 @@ class AddressInfo extends React.Component {
     fetchDistrictsData({ lat: lnglat[1], lng: lnglat[0] });
   }
 
+
   showDistrictOnMap = (district) => {
     const { setHighlightedDistrict } = this.props;
     setHighlightedDistrict(district);
   }
 
+  UNSAFE_componentWillMount() { // eslint-disable-line camelcase
+    const { match } = this.props;
+    this.fetchAddressData(match);
+  }
+
   render() {
     const { match, districts } = this.props;
-    const { addressData, fetching } = this.state;
-    // TODO: better if
-    console.log(addressData);
-    // console.log(match.params.street, ' vs: ', addressData.street.name.fi);
-    // console.log(match.params.number, ' vs: ', addressData.number);
-    // console.log(match.params.municipality, ' vs: ', addressData.number);
-    if (
-      (!addressData && !fetching)
-      || (match.params.street !== addressData.street.name.fi
-      && match.params.number !== addressData.number)
-      || match.params.municipality !== addressData.street.municipality
-    ) {
-      console.log('fetching address');
-      this.fetchAddressData(match);
-    }
+    const { addressData } = this.state;
     return (
       <div>
         <p>

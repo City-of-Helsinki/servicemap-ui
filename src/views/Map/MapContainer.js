@@ -31,7 +31,13 @@ class MapContainer extends React.Component {
   fetchAddress = async (latlng) => {
     const addressData = await fetch(`https://api.hel.fi/servicemap/v2/address/?lat=${latlng.lat}&lon=${latlng.lng}&page_size=5`)
       .then(response => response.json())
-      .then(data => data);
+      .then((data) => {
+        const address = data.results[0];
+        if (address.letter) {
+          address.number += address.letter;
+        }
+        return data;
+      });
     return addressData.results[0];
   }
 
