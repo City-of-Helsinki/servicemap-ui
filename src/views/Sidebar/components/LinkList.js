@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { Divider } from '@material-ui/core';
+import { Divider, Typography } from '@material-ui/core';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -19,13 +19,14 @@ class LinkList extends React.Component {
     const list = [0, 1, 2, 3];
     return (
       <div>
-        <h4>List title</h4>
+        <Typography className={classes.title} variant="h3">Sähköiset palvelut</Typography>
         <List>
           {list.map(number => (
             <div key={number}>
               <ListItem
                 button
-                role="link"
+                // role="link"
+                component="a"
                 onClick={() => {
                   this.handleClick();
                 }}
@@ -54,6 +55,13 @@ class LinkList extends React.Component {
 }
 
 const styles = () => ({
+  title: {
+    float: 'left',
+    marginLeft: '15px',
+    fontWeight: 700,
+    fontSize: 18,
+    lineHeight: 1.5,
+  },
   listItem: {
     height: '56px',
     padding: 0,
