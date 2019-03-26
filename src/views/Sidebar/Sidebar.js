@@ -3,11 +3,9 @@ import { Switch, Route } from 'react-router-dom';
 import Search from '../SearchView';
 import UnitView from '../UnitView';
 
-import LinkList from './components/LinkList';
-
 const Test = () => (
   <div>
-    <LinkList />
+    Test
   </div>
 );
 

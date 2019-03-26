@@ -6,6 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import { fetchUnit, fetchUnits } from '../../redux/actions/unit';
 import { getSelectedUnit } from '../../redux/selectors/unit';
 import { changeSelectedUnit } from '../../redux/actions/filter';
+import LinkList from './components/LinkList';
 import styles from './styles';
 
 // TODO: Add proper component's when ready
@@ -38,6 +39,7 @@ class UnitView extends React.Component {
     }
 
     if (unit) {
+      console.log(unit);
       return (
         <div className={classes.root}>
           <div className="Content">
@@ -49,6 +51,16 @@ class UnitView extends React.Component {
             <Typography color="primary" variant="h3">
               {unit.name && unit.name.fi}
             </Typography>
+
+            {unit.connections
+              ? (
+                <LinkList
+                  links={unit.connections.filter(item => item.section_type === 'LINK')}
+                  title="List title"
+                />
+              )
+              : null}
+
             <span>
               {unit.provider && <FormattedMessage id="unit.data_source" defaultMessage={'Source: {data_source}'} values={{ data_source: unit.provider }} />}
             </span>
