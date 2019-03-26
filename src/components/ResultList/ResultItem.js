@@ -6,7 +6,7 @@ import {
 } from '@material-ui/core';
 import { uppercaseFirst } from '../../utils';
 
-const styles = {
+const styles = theme => ({
   cssFocused: {
     outlineStyle: 'solid',
     outlineColor: 'blue',
@@ -28,7 +28,33 @@ const styles = {
     fontSize: 14,
     margin: 0,
   },
-};
+  itemTextContainer: {
+    flex: '1 1 auto',
+    marginLeft: theme.spacing.unit,
+    paddingLeft: theme.spacing.unit,
+  },
+  topRow: {
+    display: 'flex',
+    width: '100%',
+    justifyContent: 'space-between',
+  },
+  bottomRow: {
+    display: 'flex',
+    width: '100%',
+    justifyContent: 'space-between',
+  },
+  marginLeft: {
+    marginLeft: theme.spacing.unit,
+  },
+  rightColumn: {
+    textAlign: 'right',
+  },
+  bottomColumn: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+  },
+});
 
 const ResultItem = ({
   data, classes, onClick, icon,
@@ -72,17 +98,28 @@ const ResultItem = ({
           </ListItemIcon>
           )
         }
-        <ListItemText>
-          <Typography variant="h4" className={classes.title}>{name && name.fi}</Typography>
-          <Typography variant="body2" className={[classes.subtitle, classes.smallFont]}>{contract_type && contract_type.description && uppercaseFirst(contract_type.description.fi)}</Typography>
-        </ListItemText>
-        <ListItemSecondaryAction className={classes.secondaryContent}>
-          {
-            distance
-            && <Typography variant="body2" className={classes.smallFont}>{distance}</Typography>
-          }
-          <Typography variant="body2" className={classes.smallFont}>{accessText}</Typography>
-        </ListItemSecondaryAction>
+        <div className={classes.itemTextContainer}>
+          <div className={classes.topRow}>
+            <Typography variant="h4" className={classes.title}>{name && name.fi}</Typography>
+            {
+              distance
+              && (
+                <div className={classes.rightColumn}>
+                  <Typography variant="body2" className={`${classes.smallFont} ${classes.marginLeft}`}>{distance}</Typography>
+                </div>
+              )
+            }
+          </div>
+          <div className={classes.bottomRow}>
+            <Typography variant="body2" className={`${classes.subtitle} ${classes.smallFont}`}>
+              {contract_type && contract_type.description && uppercaseFirst(contract_type.description.fi)}
+            </Typography>
+            <div className={`${classes.rightColumn} ${classes.bottomColumn}`}>
+              <Typography variant="body2" className={`${classes.smallFont} ${classes.marginLeft}`}>{accessText}</Typography>
+
+            </div>
+          </div>
+        </div>
       </ListItem>
       <li>
         <Divider variant={icon && 'inset'} />
