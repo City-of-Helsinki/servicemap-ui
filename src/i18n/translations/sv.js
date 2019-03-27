@@ -10,6 +10,7 @@ export default {
   // Units
   'unit.details.notFound': 'Unit info not found', // TODO: Translate
   'unit.data_source': 'Source: {data_source}', // TODO: Translate
+  'unit.opens.new.tab': '(new tab)', // TODO: Translate
 
   // Search
   'search': 'Sök',

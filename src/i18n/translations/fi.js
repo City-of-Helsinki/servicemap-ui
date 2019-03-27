@@ -11,6 +11,7 @@ export default {
   // Units
   'unit.data_source': 'Lähde: {data_source}', // TODO: Translate
   'unit.details.notFound': 'Toimipisteen tietoja ei saatavilla.',
+  'unit.opens.new.tab': '(uusi välilehti)',
 
   // Search
   'search': 'Hae',

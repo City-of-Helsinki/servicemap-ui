@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Divider, Typography } from '@material-ui/core';
+import { FormattedMessage } from 'react-intl';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -43,8 +44,13 @@ class LinkList extends React.Component {
                       root: classes.textContainer,
                       primary: classes.listLinkText,
                     }}
-                    primary={`${link.name.fi} (uusi välilehti)`}
-                  />
+                    // primary={`${link.name.fi}`}
+                  >
+                    {link.name.fi}
+                    {' '}
+                    <FormattedMessage id="unit.opens.new.tab" />
+                  </ListItemText>
+
                 </ListItem>
                 <Divider className={classes.divider} />
               </div>

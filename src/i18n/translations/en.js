@@ -11,6 +11,7 @@ export default {
   // Unit
   'unit.data_source': 'Source: {data_source}',
   'unit.details.notFound': 'Unit info not found.',
+  'unit.opens.new.tab': '(new tab)',
 
   // Search
   'search': 'Search',
