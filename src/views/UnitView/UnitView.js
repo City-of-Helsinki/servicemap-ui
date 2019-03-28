@@ -28,6 +28,21 @@ class UnitView extends React.Component {
     }
   }
 
+  sectionFilter = (list, section) => {
+    const filteredList = [];
+    let i = 0;
+    list.forEach((item) => {
+      if (item.section_type === section) {
+        // Don't add duplicate elements
+        if (!filteredList.some(e => e.value.name.fi === item.name.fi)) {
+          filteredList.push({ type: section, value: item, id: i });
+          i += 1;
+        }
+      }
+    });
+    return filteredList;
+  }
+
   render() {
     const { isFetching, unit, classes } = this.props;
     console.log(unit);
@@ -52,14 +67,29 @@ class UnitView extends React.Component {
               {unit.name && unit.name.fi}
             </Typography>
 
-            {unit.connections
+            {/* {unit.connections
               ? (
                 <LinkList
                   links={unit.connections.filter(item => item.section_type === 'LINK')}
                   title="List title"
                 />
               )
-              : null}
+              : null} */}
+            <LinkList
+              data={[
+                { type: 'ADDRESS', value: unit.street_address },
+                { type: 'OPENING_HOURS', value: unit.connections.filter(item => item.section_type === 'OPENING_HOURS')[0] },
+                { type: 'PHONE', value: unit.accessibility_phone },
+                { type: 'CONTACT', value: unit.connections.filter(item => item.section_type === 'PHONE_OR_EMAIL')[0] },
+              ]}
+              title={<FormattedMessage id="unit.contact.info" />}
+            />
+
+            <LinkList
+              data={this.sectionFilter(unit.connections, 'LINK')}
+              title={<FormattedMessage id="unit.contact.info" />}
+            />
+
 
             <span>
               {unit.provider && <FormattedMessage id="unit.data_source" defaultMessage={'Source: {data_source}'} values={{ data_source: unit.provider }} />}

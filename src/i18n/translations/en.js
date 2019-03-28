@@ -11,7 +11,10 @@ export default {
   // Unit
   'unit.data_source': 'Source: {data_source}',
   'unit.details.notFound': 'Unit info not found.',
+
+  'unit.contact.info': 'Contact information',
   'unit.opens.new.tab': '(new tab)',
+  'unit.call.number': '(call)',
 
   // Search
   'search': 'Search',
