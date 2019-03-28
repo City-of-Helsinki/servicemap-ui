@@ -1,6 +1,7 @@
 /* eslint-disable quote-props */
 export default {
   'app.title': 'Palvelukartta',
+  'address': 'Osoite',
 
   // General
   'general.back': 'Takaisin',
@@ -9,6 +10,7 @@ export default {
   'map.transit.endStation': 'Päätepysäkki',
 
   // Units
+  'unit': 'Toimipiste',
   'unit.data_source': 'Lähde: {data_source}', // TODO: Translate
   'unit.details.notFound': 'Toimipisteen tietoja ei saatavilla.',
   'unit.plural': 'Toimipisteet',
@@ -27,4 +29,7 @@ export default {
   }`,
   'search.input.placeholder': 'Hae toimipisteitä',
   'search.loading.units': 'Haetaan toimipisteitä {count} / {max}',
+
+  // Service
+  'service': 'Palvelu',
 };

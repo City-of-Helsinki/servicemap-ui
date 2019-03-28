@@ -1,6 +1,7 @@
 /* eslint-disable quote-props */
 export default {
   'app.title': 'Service map',
+  'address': 'Address',
 
   // General
   'general.back': 'Back',
@@ -9,6 +10,7 @@ export default {
   'map.transit.endStation': 'Terminus',
 
   // Unit
+  'unit': 'Unit',
   'unit.data_source': 'Source: {data_source}',
   'unit.details.notFound': 'Unit info not found.',
   'unit.plural': 'Units',
@@ -27,4 +29,7 @@ export default {
                 }`,
   'search.input.placeholder': 'Search units',
   'search.loading.units': 'Searching units {count} / {max}',
+
+  // Service
+  'service': 'Service',
 };
