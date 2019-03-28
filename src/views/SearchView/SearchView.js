@@ -34,10 +34,10 @@ class SearchView extends React.Component {
   onSearchSubmit = (e) => {
     e.preventDefault();
     const { search } = this.state;
-    // const { fetchUnits } = this.props;
+    const { fetchUnits } = this.props;
     console.log(`Search query = ${search}`);
     if (search && search !== '') {
-      // fetchUnits([], null, search);
+      fetchUnits([], null, search);
     }
   }
 

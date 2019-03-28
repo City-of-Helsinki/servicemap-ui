@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {
   ListItem, ListItemIcon, Typography, withStyles, Divider,
 } from '@material-ui/core';
-import { uppercaseFirst } from '../../utils';
+import { FormattedMessage } from 'react-intl';
 
 const styles = theme => ({
   cssFocused: {
@@ -59,7 +59,9 @@ const styles = theme => ({
 const ResultItem = ({
   data, classes, onClick, icon, listId,
 }) => {
-  const { id, name, contract_type } = data;
+  const {
+    id, name, object_type, street,
+  } = data;
 
   // Accessibility text
   // TODO: Change to check data once accessibility messages functionality has been added
@@ -106,7 +108,16 @@ const ResultItem = ({
               className={classes.title}
               aria-labelledby={`${listId}-result-item-title-${id} ${listId}-result-item-type-${id} ${listId}-result-item-distance-${id} ${listId}-result-item-accessibility-${id}`}
             >
-              {name && name.fi}
+              {
+                object_type === 'address'
+                && street.name.fi
+              }
+              {
+                object_type !== 'address'
+                && name
+                && name.fi
+              }
+              {}
             </Typography>
 
             {
@@ -124,18 +135,17 @@ const ResultItem = ({
 
           </div>
           <div className={classes.bottomRow}>
-            <Typography
-              id={`${listId}-result-item-type-${id}`}
-              variant="h4"
-              className={`${classes.subtitle} ${classes.smallFont}`}
-              aria-hidden="true"
-            >
-              {
-                contract_type
-                && contract_type.description
-                && uppercaseFirst(contract_type.description.fi)
-              }
-            </Typography>
+
+            <div className={classes.bottomColumn}>
+              <Typography
+                id={`${listId}-result-item-type-${id}`}
+                variant="h4"
+                className={`${classes.subtitle} ${classes.smallFont}`}
+                aria-hidden="true"
+              >
+                <FormattedMessage id={object_type} />
+              </Typography>
+            </div>
 
             <div className={`${classes.rightColumn} ${classes.bottomColumn}`}>
               <Typography
