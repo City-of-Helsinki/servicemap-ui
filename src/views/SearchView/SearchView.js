@@ -112,6 +112,7 @@ class SearchView extends React.Component {
           resultsShowing
           && (
           <ResultList
+            listId="search-list"
             title={intl.formatMessage({ id: 'unit.plural' })}
             data={units}
             onItemClick={this.onItemClick}

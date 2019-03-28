@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  ListItem, ListItemIcon, ListItemText, Typography, ListItemSecondaryAction, withStyles, Divider,
+  ListItem, ListItemIcon, Typography, withStyles, Divider,
 } from '@material-ui/core';
 import { uppercaseFirst } from '../../utils';
 
@@ -57,9 +57,9 @@ const styles = theme => ({
 });
 
 const ResultItem = ({
-  data, classes, onClick, icon,
+  data, classes, onClick, icon, listId,
 }) => {
-  const { name, contract_type } = data;
+  const { id, name, contract_type } = data;
 
   // Accessibility text
   // TODO: Change to check data once accessibility messages functionality has been added
@@ -78,13 +78,13 @@ const ResultItem = ({
 
   // Distance text
   // TODO: Change to check data for distance once location info is available
-  const distance = '100m';
+  const distance = '100';
 
   return (
     <>
       <ListItem
-        button
         component="a"
+        tabIndex={0}
         onClick={onClick}
         classes={{
           focusVisible: classes.cssFocused,
@@ -100,29 +100,59 @@ const ResultItem = ({
         }
         <div className={classes.itemTextContainer}>
           <div className={classes.topRow}>
-            <Typography variant="h4" className={classes.title}>{name && name.fi}</Typography>
+            <Typography
+              id={`${listId}-result-item-title-${id}`}
+              variant="h4"
+              className={classes.title}
+              aria-labelledby={`${listId}-result-item-title-${id} ${listId}-result-item-type-${id} ${listId}-result-item-distance-${id} ${listId}-result-item-accessibility-${id}`}
+            >
+              {name && name.fi}
+            </Typography>
+
             {
               distance
               && (
                 <div className={classes.rightColumn}>
-                  <Typography variant="body2" className={`${classes.smallFont} ${classes.marginLeft}`}>{distance}</Typography>
+                  <Typography variant="body2" className={`${classes.smallFont} ${classes.marginLeft}`} aria-hidden="true">
+                    {distance}
+                    m
+                    <span id={`${listId}-result-item-distance-${id}`} className="sr-only" aria-hidden="true">{`${distance} metrin päässä`}</span>
+                  </Typography>
                 </div>
               )
             }
+
           </div>
           <div className={classes.bottomRow}>
-            <Typography variant="body2" className={`${classes.subtitle} ${classes.smallFont}`}>
-              {contract_type && contract_type.description && uppercaseFirst(contract_type.description.fi)}
+            <Typography
+              id={`${listId}-result-item-type-${id}`}
+              variant="h4"
+              className={`${classes.subtitle} ${classes.smallFont}`}
+              aria-hidden="true"
+            >
+              {
+                contract_type
+                && contract_type.description
+                && uppercaseFirst(contract_type.description.fi)
+              }
             </Typography>
-            <div className={`${classes.rightColumn} ${classes.bottomColumn}`}>
-              <Typography variant="body2" className={`${classes.smallFont} ${classes.marginLeft}`}>{accessText}</Typography>
 
+            <div className={`${classes.rightColumn} ${classes.bottomColumn}`}>
+              <Typography
+                id={`${listId}-result-item-accessibility-${id}`}
+                variant="body2"
+                className={`${classes.smallFont} ${classes.marginLeft}`}
+                aria-hidden="true"
+              >
+                {accessText}
+              </Typography>
             </div>
+
           </div>
         </div>
       </ListItem>
       <li>
-        <Divider variant={icon && 'inset'} />
+        <Divider aria-hidden="true" variant={icon && 'inset'} />
       </li>
     </>
   );
@@ -135,6 +165,7 @@ ResultItem.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any),
   data: PropTypes.objectOf(PropTypes.any),
   icon: PropTypes.node,
+  listId: PropTypes.string.isRequired,
   onClick: PropTypes.func,
 };
 

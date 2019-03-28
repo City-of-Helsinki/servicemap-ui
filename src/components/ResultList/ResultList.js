@@ -44,23 +44,39 @@ class ResultList extends React.Component {
 
   render() {
     const {
-      classes, data, onItemClick, title,
+      classes, data, listId, onItemClick, title,
     } = this.props;
 
     return (
       <div className={classes.root}>
         <div className={classes.title}>
-          <div style={{
-            width: '100%',
-            overflow: 'hidden',
-          }}
+          <div
+            style={{
+              width: '100%',
+              overflow: 'hidden',
+            }}
           >
-            <Typography className={classes.left} variant="h3">{title}</Typography>
-            <Typography className={classes.right} variant="subtitle1"><FormattedMessage id="search.results" values={{ count: data.length }} /></Typography>
+            <Typography
+              id={`${listId}-result-title`}
+              className={classes.left}
+              variant="h3"
+              aria-labelledby={`${listId}-result-title ${listId}-result-title-info`}
+            >
+              {title}
+
+            </Typography>
+            <Typography
+              id={`${listId}-result-title-info`}
+              className={classes.right}
+              variant="body1"
+              aria-hidden="true"
+            >
+              <FormattedMessage id="search.results" values={{ count: data.length }} />
+            </Typography>
           </div>
         </div>
         <Divider />
-        <List className={classes.list}>
+        <List className={classes.list} id={listId}>
           {
             data && data.length
             && data.map((item) => {
@@ -74,6 +90,7 @@ class ResultList extends React.Component {
                     }}
                     data={item}
                     icon={<Menu />}
+                    listId={listId}
                   />
                 );
               }
@@ -92,6 +109,7 @@ export default withStyles(styles)(ResultList);
 ResultList.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any),
   data: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)).isRequired,
+  listId: PropTypes.string.isRequired,
   onItemClick: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
 };
