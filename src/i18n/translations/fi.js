@@ -15,6 +15,7 @@ export default {
   'unit.contact.info': 'Yhteystiedot',
   'unit.services': 'Palvelut toimipisteessä',
   'unit.e.services': 'Sähköiset palvelut',
+  'unit.school.year': 'Lukuvuosi',
   'unit.opens.new.tab': '(uusi välilehti)',
   'unit.call.number': '(soita)',
 

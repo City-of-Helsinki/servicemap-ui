@@ -5,35 +5,30 @@ import { withStyles } from '@material-ui/core/styles';
 import { Divider, Typography } from '@material-ui/core';
 import List from '@material-ui/core/List';
 import LinkListItem from './LinkListItem';
-import listStyles from '../listStyles';
+import listStyles from '../styles/listStyles';
 
-class LinkList extends React.Component {
-  handleClick = () => {
-    console.log('clicked');
-  }
-
-  render() {
-    const { classes, data, title } = this.props;
-    if (data.length > 0) {
-      return (
-        <div>
-          <Typography className={classes.title} variant="h3">{title}</Typography>
-          <List>
-            {data.map(data => (
-              <div key={data.type + data.id}>
-                <LinkListItem data={data} />
-                <Divider className={classes.divider} />
-              </div>
-            ))}
-          </List>
-        </div>
-      );
-    }
+const LinkList = (props) => {
+  const { classes, data, title } = props;
+  if (data.length > 0) {
+    const filteredData = data.filter(item => Object.keys(item).length > 0);
     return (
-      null
+      <div>
+        <Typography className={classes.title} variant="h3">{title}</Typography>
+        <List>
+          {filteredData.map(data => (
+            <div key={data.type + data.id}>
+              <LinkListItem data={data} />
+              <Divider className={classes.divider} />
+            </div>
+          ))}
+        </List>
+      </div>
     );
   }
-}
+  return (
+    null
+  );
+};
 
 
 export default withStyles(listStyles)(LinkList);

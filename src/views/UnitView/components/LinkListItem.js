@@ -4,66 +4,9 @@ import { FormattedMessage } from 'react-intl';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-
-import OpenLinkIcon from '@material-ui/icons/OpenInNew';
-import AddressIcon from '@material-ui/icons/LocationOn';
-import PhoneIcon from '@material-ui/icons/Phone';
-import HoursIcon from '@material-ui/icons/AccessTime';
-import PersonIcon from '@material-ui/icons/Person';
-import ServiceIcon from '@material-ui/icons/Reorder';
-
 import { withStyles } from '@material-ui/core';
-import listStyles from '../listStyles';
-
-const itemData = {
-  ADDRESS: {
-    icon: <AddressIcon />,
-    link: false,
-    urlPath: null,
-    textPaths: [['fi']],
-  },
-  OPENING_HOURS_LINK: {
-    icon: <HoursIcon />,
-    link: true,
-    urlPath: [['www', 'fi']],
-    textPaths: [['name', 'fi']],
-  },
-  OPENING_HOURS: {
-    icon: <HoursIcon />,
-    link: false,
-    textPaths: [['name', 'fi']],
-  },
-  PHONE: {
-    icon: <PhoneIcon />,
-    link: true,
-    urlPath: null,
-    textPaths: [[]],
-  },
-  LINK: {
-    icon: <OpenLinkIcon />,
-    link: true,
-    urlPath: [['www', 'fi']],
-    textPaths: [['name', 'fi']],
-  },
-  ESERVICE_LINK: {
-    icon: <OpenLinkIcon />,
-    link: true,
-    urlPath: [['www', 'fi']],
-    textPaths: [['name', 'fi']],
-  },
-  CONTACT: {
-    icon: <PersonIcon />,
-    link: true,
-    urlPath: null,
-    textPaths: [['name', 'fi'], ['contact_person'], ['phone']],
-  },
-  SERVICE: {
-    icon: <ServiceIcon />,
-    link: false,
-    urlPath: null,
-    textPaths: [['name', 'fi']],
-  },
-};
+import listStyles from '../styles/listStyles';
+import itemData from '../constants/itemData';
 
 const getItem = id => itemData[id];
 
@@ -76,7 +19,12 @@ const returnValue = (path, data) => {
     });
     return fullText;
   }
-  return path[0].reduce((obj, key) => obj[key], data.value);
+  let value = path[0].reduce((obj, key) => obj[key], data.value);
+  // If school year
+  if (data.value.period && Array.isArray(value)) {
+    value = ` ${value[0]} - ${value[1]}`;
+  }
+  return value;
 };
 
 const LinkListItem = (props) => {
@@ -114,6 +62,9 @@ const LinkListItem = (props) => {
           {' '}
           {item.urlPath ? <FormattedMessage id="unit.opens.new.tab" /> : null}
           {!item.urlPath && item.link ? <FormattedMessage id="unit.call.number" /> : null}
+
+          {data.value.period ? <FormattedMessage id="unit.school.year" /> : null}
+          {data.value.period ? returnValue(item.periodPath, data) : null}
         </ListItemText>
 
       </ListItem>

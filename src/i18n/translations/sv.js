@@ -14,6 +14,7 @@ export default {
   'unit.contact.info': 'Contact information', // TODO: Translate
   'unit.services': 'Services', // TODO: Translate
   'unit.e.services': 'Electronic services', // TODO: Translate
+  'unit.school.year': 'Läsåret',
   'unit.opens.new.tab': '(new tab)', // TODO: Translate
   'unit.call.number': '(call)', // TODO: Translate
 

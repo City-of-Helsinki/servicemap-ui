@@ -7,7 +7,7 @@ import { fetchUnit, fetchUnits } from '../../redux/actions/unit';
 import { getSelectedUnit } from '../../redux/selectors/unit';
 import { changeSelectedUnit } from '../../redux/actions/filter';
 import LinkList from './components/LinkList';
-import styles from './styles';
+import styles from './styles/styles';
 
 // TODO: Add proper component's when ready
 
@@ -28,6 +28,7 @@ class UnitView extends React.Component {
     }
   }
 
+  // Filters connections by section
   sectionFilter = (list, section) => {
     const filteredList = [];
     let i = 0;
@@ -67,7 +68,6 @@ class UnitView extends React.Component {
     }
 
     if (unit) {
-      console.log(unit);
       return (
         <div className={classes.root}>
           <div className="Content">
@@ -84,7 +84,7 @@ class UnitView extends React.Component {
               data={[
                 { type: 'ADDRESS', value: unit.street_address },
                 this.getOpeningHours(unit),
-                { type: 'PHONE', value: unit.accessibility_phone },
+                { type: 'PHONE', value: unit.phone },
                 { type: 'CONTACT', value: unit.connections.filter(item => item.section_type === 'PHONE_OR_EMAIL')[0] },
               ]}
               title={<FormattedMessage id="unit.contact.info" />}
