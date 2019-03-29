@@ -97,9 +97,6 @@ class SearchBar extends React.Component {
           />
 
           <InputBase
-            classes={{
-              focused: classes.cssFocused,
-            }}
             className={classes.input}
             placeholder={placeholder}
             value={search}
