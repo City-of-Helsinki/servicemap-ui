@@ -32,7 +32,9 @@ class UnitView extends React.Component {
     const filteredList = [];
     let i = 0;
     list.forEach((item) => {
-      if (item.section_type === section) {
+      if (!item.section_type) {
+        filteredList.push({ type: section, value: item, id: i });
+      } else if (item.section_type === section) {
         // Don't add duplicate elements
         if (!filteredList.some(e => e.value.name.fi === item.name.fi)) {
           filteredList.push({ type: section, value: item, id: i });
@@ -41,6 +43,17 @@ class UnitView extends React.Component {
       }
     });
     return filteredList;
+  }
+
+  getOpeningHours = (unit) => {
+    const value = unit.connections.filter(item => item.section_type === 'OPENING_HOURS')[0];
+    if (value) {
+      if (value.www) {
+        return { type: 'OPENING_HOURS_LINK', value };
+      }
+      return { type: 'OPENING_HOURS', value };
+    }
+    return {};
   }
 
   render() {
@@ -67,27 +80,22 @@ class UnitView extends React.Component {
               {unit.name && unit.name.fi}
             </Typography>
 
-            {/* {unit.connections
-              ? (
-                <LinkList
-                  links={unit.connections.filter(item => item.section_type === 'LINK')}
-                  title="List title"
-                />
-              )
-              : null} */}
-            <LinkList
+            <LinkList // Contact information
               data={[
                 { type: 'ADDRESS', value: unit.street_address },
-                { type: 'OPENING_HOURS', value: unit.connections.filter(item => item.section_type === 'OPENING_HOURS')[0] },
+                this.getOpeningHours(unit),
                 { type: 'PHONE', value: unit.accessibility_phone },
                 { type: 'CONTACT', value: unit.connections.filter(item => item.section_type === 'PHONE_OR_EMAIL')[0] },
               ]}
               title={<FormattedMessage id="unit.contact.info" />}
             />
-
-            <LinkList
-              data={this.sectionFilter(unit.connections, 'LINK')}
-              title={<FormattedMessage id="unit.contact.info" />}
+            <LinkList // E-services
+              data={[...this.sectionFilter(unit.connections, 'LINK'), ...this.sectionFilter(unit.connections, 'ESERVICE_LINK')]}
+              title={<FormattedMessage id="unit.e.services" />}
+            />
+            <LinkList // Unit services
+              data={this.sectionFilter(unit.services, 'SERVICE')}
+              title={<FormattedMessage id="unit.services" />}
             />
 
 

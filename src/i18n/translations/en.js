@@ -13,6 +13,8 @@ export default {
   'unit.details.notFound': 'Unit info not found.',
 
   'unit.contact.info': 'Contact information',
+  'unit.services': 'Services',
+  'unit.e.services': 'Electronic services', // TODO: verify
   'unit.opens.new.tab': '(new tab)',
   'unit.call.number': '(call)',
 

@@ -12,6 +12,8 @@ export default {
   'unit.data_source': 'Source: {data_source}', // TODO: Translate
 
   'unit.contact.info': 'Contact information', // TODO: Translate
+  'unit.services': 'Services', // TODO: Translate
+  'unit.e.services': 'Electronic services', // TODO: Translate
   'unit.opens.new.tab': '(new tab)', // TODO: Translate
   'unit.call.number': '(call)', // TODO: Translate
 
