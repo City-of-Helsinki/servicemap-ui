@@ -26,18 +26,6 @@ const styles = theme => ({
     display: 'flex',
     flex: '0 0 auto',
   },
-  margin: {
-    margin: theme.spacing.unit,
-  },
-  label: {
-    paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2,
-  },
-  cssFocused: {
-    outlineStyle: 'solid',
-    outlineColor: 'blue',
-    outlineWidth: 2,
-  },
   input: {
     flex: '1 1 auto',
     marginLeft: theme.spacing.unit,
@@ -51,9 +39,6 @@ const styles = theme => ({
   icon: {
     flex: '0 1 auto',
     padding: theme.spacing.unit,
-  },
-  borderBottom: {
-    borderBottom: '1px solid rgba(0,0,0,0.2)',
   },
 });
 
