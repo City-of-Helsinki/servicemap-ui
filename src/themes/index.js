@@ -7,7 +7,7 @@ const SMTheme = createMuiTheme({
       main: '#1964e6',
     },
     secondary: {
-      main: '#ffffff',
+      main: '#000000',
     },
   },
   // Typography
@@ -19,28 +19,28 @@ const SMTheme = createMuiTheme({
       'Lato',
     ].join(','),
     body1: {
-      fontSize: 16,
+      fontSize: '1rem',
     },
     subtitle1: {
-      fontSize: 12,
+      fontSize: '1.2rem',
     },
     h1: {
-      fontSize: 22,
+      fontSize: '2.2rem',
     },
     h2: {
-      fontSize: 20,
+      fontSize: '2rem',
     },
     h3: {
-      fontSize: 18,
+      fontSize: '1.8rem',
     },
     h4: {
-      fontSize: 16,
+      fontSize: '1.6rem',
     },
     h5: {
-      fontSize: 14,
+      fontSize: '1.4rem',
     },
     h6: {
-      fontSize: 12,
+      fontSize: '1.2rem',
     },
   },
   spacing: {
