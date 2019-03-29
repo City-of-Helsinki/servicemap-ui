@@ -51,7 +51,7 @@ const DefaultLayout = (props) => {
               spacing={24}
             >
               <Grid item>
-                <Typography color="secondary" variant="body1">
+                <Typography color="inherit" variant="body1">
                   <FormattedMessage id="app.title" />
                 </Typography>
               </Grid>
@@ -60,7 +60,7 @@ const DefaultLayout = (props) => {
                   i18n.availableLocales
                     .filter(locale => locale !== i18n.locale)
                     .map(locale => (
-                      <Button key={locale} color="secondary" onClick={() => onLanguageChange(locale)}>{i18n.localeText(locale)}</Button>
+                      <Button key={locale} color="inherit" onClick={() => onLanguageChange(locale)}>{i18n.localeText(locale)}</Button>
                     ))
                 }
               </Grid>
