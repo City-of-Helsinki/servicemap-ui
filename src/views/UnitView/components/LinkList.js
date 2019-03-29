@@ -11,6 +11,12 @@ const LinkList = (props) => {
   const { classes, data, title } = props;
   if (data.length > 0) {
     const filteredData = data.filter(item => Object.keys(item).length > 0);
+
+    // Assign id for each item
+    for (let i = 0; i < filteredData.length; i += 1) {
+      filteredData[i].id = i;
+    }
+
     return (
       <div>
         <Typography className={classes.title} variant="h3">{title}</Typography>

@@ -22,7 +22,7 @@ const insertCss = (...styles) => {
   const removeCss = styles.map(style => style._insertCss());
   return () => removeCss.forEach(dispose => dispose());
 };
-ReactDOM.render(
+ReactDOM.hydrate(
   <Provider store={store}>
     <StyleContext.Provider value={{ insertCss }}>
       <App />
