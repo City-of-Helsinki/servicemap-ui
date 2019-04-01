@@ -39,46 +39,48 @@ class UnitView extends React.Component {
   }
 
   render() {
-    const { unit, classes } = this.props;
+    const { classes } = this.props;
     const { unitData, isFetching } = this.state;
-    console.log(unit);
-
+    let { unit } = this.props;
+    if (unitData) {
+      unit = unitData;
+    }
     if (isFetching) {
       return (
         <p>Loading unit data</p>
       );
     }
 
-    if (unit && unitData) {
+    if (unit) {
       return (
         <div className={classes.root}>
           <div className="Content">
             {
-                unitData.picture_url
-                && <img alt="Unit" src={unitData.picture_url} />
+                unit.picture_url
+                && <img alt="Unit" src={unit.picture_url} />
               }
 
             <Typography color="primary" variant="h3">
-              {unitData.name && unitData.name.fi}
+              {unit.name && unit.name.fi}
             </Typography>
             <span>
-              {unitData.provider && <FormattedMessage id="unit.data_source" defaultMessage={'Source: {data_source}'} values={{ data_source: unitData.provider }} />}
+              {unit.provider && <FormattedMessage id="unit.data_source" defaultMessage={'Source: {data_source}'} values={{ data_source: unit.provider }} />}
             </span>
             <span>
-              {unitData.data_source && <FormattedMessage id="unit.data_source" defaultMessage={'Source: {data_source}'} values={{ data_source: unitData.data_source }} />}
+              {unit.data_source && <FormattedMessage id="unit.data_source" defaultMessage={'Source: {data_source}'} values={{ data_source: unit.data_source }} />}
             </span>
             {
-                unitData.contract_type
-                && unitData.contract_type.description
-                && unitData.contract_type.description.fi
-                && <p className="text-small">{unitData.contract_type.description.fi}</p>
+                unit.contract_type
+                && unit.contract_type.description
+                && unit.contract_type.description.fi
+                && <p className="text-small">{unit.contract_type.description.fi}</p>
               }
 
-            <p>{`${unitData.street_address && unitData.street_address.fi}, ${unitData.address_zip} ${unitData.municipality ? unitData.municipality.charAt(0).toUpperCase() + unitData.municipality.slice(1) : ''}`}</p>
+            <p>{`${unit.street_address && unit.street_address.fi}, ${unit.address_zip} ${unit.municipality ? unit.municipality.charAt(0).toUpperCase() + unit.municipality.slice(1) : ''}`}</p>
 
             {
-                unitData.www && unitData.www.fi
-                && <a href={unitData.www.fi}><p>Kotisivu</p></a>
+                unit.www && unit.www.fi
+                && <a href={unit.www.fi}><p>Kotisivu</p></a>
               }
           </div>
         </div>

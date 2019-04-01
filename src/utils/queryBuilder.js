@@ -93,7 +93,7 @@ class QueryBuilder {
 
     switch (this.type) {
       case 'unit':
-        fetchURL = `${this.url}${this.type}/${this.data}`;
+        fetchURL = `${this.url}${this.type}/${this.data}/?${encodeURI(query)}`;
         break;
       default:
         fetchURL = `${this.url}${this.type}/?${encodeURI(query)}`;
