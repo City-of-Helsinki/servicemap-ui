@@ -13,6 +13,10 @@ const searchQueryData = {
   geometry: true,
 };
 
+const unitQueryData = {
+  include: 'service_nodes,services',
+};
+
 class QueryBuilder {
   constructor() {
     const { unit } = config;
@@ -40,7 +44,7 @@ class QueryBuilder {
       case 'search':
         return searchQueryData;
       case 'unit':
-        return null;
+        return unitQueryData;
       default:
         return searchQueryData;
     }
@@ -86,7 +90,7 @@ class QueryBuilder {
 
     switch (this.type) {
       case 'unit':
-        fetchURL = `${this.url}${this.type}/${this.data}`;
+        fetchURL = `${this.url}${this.type}/${this.data}/?${encodeURI(query)}`;
         break;
       default:
         fetchURL = `${this.url}${this.type}/?${encodeURI(query)}`;

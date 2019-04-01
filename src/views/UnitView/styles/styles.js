@@ -3,6 +3,7 @@ export default theme => ({
     height: '100%',
     display: 'flex',
     flexFlow: 'column',
+    overflowY: 'auto',
   },
   margin: {
     margin: theme.spacing.unit,
@@ -41,5 +42,8 @@ export default theme => ({
   },
   divider: {
     marginLeft: '72px',
+  },
+  image: {
+    width: '100%',
   },
 });

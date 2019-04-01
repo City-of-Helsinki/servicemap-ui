@@ -1,6 +1,5 @@
 export default theme => ({
   root: {
-    padding: '2px 4px',
     display: 'flex',
     alignItems: 'center',
     width: '100%',
@@ -27,8 +26,5 @@ export default theme => ({
   },
   icon: {
     padding: 10,
-  },
-  borderBottom: {
-    borderBottom: '1px solid rgba(0,0,0,0.2)',
   },
 });
