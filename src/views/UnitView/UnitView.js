@@ -57,7 +57,7 @@ class UnitView extends React.Component {
           <div className="Content">
             {
                 unit.picture_url
-                && <img alt="Unit" src={unit.picture_url} />
+                && <img className={classes.image} alt="Unit" src={unit.picture_url} />
               }
 
             <Typography color="primary" variant="h3">
