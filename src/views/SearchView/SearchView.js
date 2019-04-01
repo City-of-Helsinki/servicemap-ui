@@ -1,21 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Paper, IconButton, InputBase, Divider, Icon, Typography, withStyles,
+  Paper, Divider, Typography, withStyles,
 } from '@material-ui/core';
-import { ArrowBack, Search } from '@material-ui/icons';
-import { withRouter } from 'react-router-dom';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import SearchList from './components/SearchList';
 import styles from './styles';
 import Loading from '../../components/Loading/Loading';
+import SearchBar from '../../components/SearchBar';
 
 class SearchView extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      search: '',
-    };
     this.searchFormRef = React.createRef();
   }
 
@@ -27,13 +23,8 @@ class SearchView extends React.Component {
     }
   }
 
-  onInputChange = (e) => {
-    this.setState({ search: e.currentTarget.value });
-  }
-
-  onSearchSubmit = (e) => {
+  onSearchSubmit = (e, search) => {
     e.preventDefault();
-    const { search } = this.state;
     const { fetchUnits } = this.props;
     console.log(`Search query = ${search}`);
     if (search && search !== '') {
@@ -42,9 +33,8 @@ class SearchView extends React.Component {
   }
 
   render() {
-    const { search } = this.state;
     const {
-      units, isFetching, classes, history, intl, count, max,
+      units, isFetching, classes, intl, count, max,
     } = this.props;
     const unitCount = units && units.length;
     const resultsShowing = !isFetching && unitCount > 0;
@@ -52,36 +42,10 @@ class SearchView extends React.Component {
 
     return (
       <div className="Search">
-        <form onSubmit={this.onSearchSubmit}>
-          <Paper className={classes.root} elevation={1} square>
-            <IconButton
-              className={classes.iconButton}
-              aria-label={intl.formatMessage({ id: 'general.back' })}
-              onClick={(e) => {
-                e.preventDefault();
-                if (history) {
-                  history.goBack();
-                }
-              }}
-            >
-              <ArrowBack />
-            </IconButton>
-
-            <InputBase
-              className={classes.input}
-              placeholder={intl && intl.formatMessage({ id: 'search.input.placeholder' })}
-              value={search}
-              onChange={this.onInputChange}
-              classes={{
-                focused: classes.cssFocused,
-              }}
-            />
-
-            <Icon className={classes.icon}>
-              <Search />
-            </Icon>
-          </Paper>
-        </form>
+        <SearchBar
+          onSubmit={this.onSearchSubmit}
+          placeholder={intl && intl.formatMessage({ id: 'search.input.placeholder' })}
+        />
         <Divider />
         <Paper className={classes.label} elevation={1} square>
           {
@@ -109,14 +73,13 @@ class SearchView extends React.Component {
     );
   }
 }
-export default injectIntl(withStyles(styles)(withRouter(SearchView)));
+export default injectIntl(withStyles(styles)(SearchView));
 
 // Typechecking
 SearchView.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   count: PropTypes.number,
   fetchUnits: PropTypes.func,
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
   intl: intlShape.isRequired,
   isFetching: PropTypes.bool,
   max: PropTypes.number,
