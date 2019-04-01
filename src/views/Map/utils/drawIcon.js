@@ -72,7 +72,7 @@ const getColor = (mapLayer, property) => stemColors[mapLayer][property];
 const drawBerry = (ctx, unit) => {
   const point = berryCenter(70 + (unit.id % 40));
   ctx.beginPath();
-  ctx.fillStyle = berryColors[unit.node];
+  ctx.fillStyle = berryColors[unit.root_service_nodes[0]];
   ctx.arc(...point, berryDefaults.radius * ratio, 0, 2 * Math.PI);
   ctx.fill();
   ctx.strokeStyle = 'rgba(0,0,0,1.0)';
@@ -123,8 +123,8 @@ const drawIcon = (unit, mapLayer) => {
   canvas.width = canvasSize.width;
 
   if (Array.isArray(unit)) {
-    drawStem(ctx, unit[0].id, mapLayer);
-    drawBerry(ctx, unit[0]);
+    drawStem(ctx, unit.id, mapLayer);
+    drawBerry(ctx, unit);
     drawNumber(ctx, unit.length);
   }
   drawStem(ctx, unit.id, mapLayer);

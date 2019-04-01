@@ -6,6 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import { fetchUnit, fetchUnits } from '../../redux/actions/unit';
 import { getSelectedUnit } from '../../redux/selectors/unit';
 import { changeSelectedUnit } from '../../redux/actions/filter';
+import queryBuilder from '../../utils/queryBuilder';
 import styles from './styles';
 
 // TODO: Add proper component's when ready
@@ -13,7 +14,10 @@ import styles from './styles';
 class UnitView extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      unitData: null,
+      isFetching: true,
+    };
   }
 
   componentDidMount() {
@@ -21,16 +25,28 @@ class UnitView extends React.Component {
     const { params } = match;
     if (params && params.unit) {
       const { unit } = params;
-      // fetchUnit(unit);
-      console.log('change selected unit to: ', unit);
       changeSelectedUnit(unit);
+      console.log('change selected unit to: ', unit);
+
+      /* TODO:  Instead of this fetch function, create appropriate redux fetch for unit
+                that updates the existing data of the unit */
+      this.setState({ isFetching: true });
+      queryBuilder.setType('unit', unit).run()
+        .then(response => response.json())
+        .then(data => this.setState({
+          unitData: data,
+          isFetching: false,
+        }));
     }
   }
 
   render() {
-    const { isFetching, unit, classes } = this.props;
-    console.log(unit);
-
+    const { classes } = this.props;
+    const { unitData, isFetching } = this.state;
+    let { unit } = this.props;
+    if (unitData) {
+      unit = unitData;
+    }
     if (isFetching) {
       return (
         <p>Loading unit data</p>
@@ -43,7 +59,7 @@ class UnitView extends React.Component {
           <div className="Content">
             {
                 unit.picture_url
-                && <img alt="Unit" src={unit.picture_url} />
+                && <img className={classes.image} alt="Unit" src={unit.picture_url} />
               }
 
             <Typography color="primary" variant="h3">
@@ -56,7 +72,9 @@ class UnitView extends React.Component {
               {unit.data_source && <FormattedMessage id="unit.data_source" defaultMessage={'Source: {data_source}'} values={{ data_source: unit.data_source }} />}
             </span>
             {
-                unit.contract_type && unit.contract_type.description && unit.contract_type.description.fi
+                unit.contract_type
+                && unit.contract_type.description
+                && unit.contract_type.description.fi
                 && <p className="text-small">{unit.contract_type.description.fi}</p>
               }
 
@@ -81,7 +99,6 @@ class UnitView extends React.Component {
 // Listen to redux state
 const mapStateToProps = state => ({
   unit: getSelectedUnit(state),
-  isFetching: state.units.isFetching,
 });
 
 export default withStyles(styles)(connect(
@@ -91,14 +108,13 @@ export default withStyles(styles)(connect(
 
 // Typechecking
 UnitView.propTypes = {
-  isFetching: PropTypes.bool,
   unit: PropTypes.objectOf(PropTypes.any),
-  unitsFetchData: PropTypes.func,
+  changeSelectedUnit: PropTypes.func.isRequired,
   match: PropTypes.objectOf(PropTypes.any),
+  classes: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 UnitView.defaultProps = {
-  isFetching: false,
-  unitsFetchData: undefined,
+  unit: null,
   match: {},
 };

@@ -6,6 +6,7 @@ import { getMapType } from '../../redux/selectors/map';
 import getDistricts from '../../redux/selectors/district';
 import { fetchDistrictsData } from '../../redux/actions/district';
 import MapView from './components/MapView';
+import { getSelectedUnit } from '../../redux/selectors/unit';
 import { getLocaleString } from '../../redux/selectors/locale';
 import CreateMap from './utils/createMap';
 import { mapOptions } from './constants/mapConstants';
@@ -106,8 +107,14 @@ class MapContainer extends React.Component {
 
   render() {
     const {
-      mapType, unitList, districts, getLocaleText,
+      mapType, districts, highlightedUnit, getLocaleText,
     } = this.props;
+    let { unitList } = this.props;
+
+    if (highlightedUnit) {
+      unitList = [highlightedUnit];
+    }
+
     const { initialMap, transitStops } = this.state;
     if (initialMap) {
       return (
@@ -133,12 +140,14 @@ class MapContainer extends React.Component {
 const mapStateToProps = (state) => {
   const mapType = getMapType(state);
   const districts = getDistricts(state);
+  const highlightedUnit = getSelectedUnit(state);
   const getLocaleText = textObject => getLocaleString(state, textObject);
   // const unitList = getUnitList(state);
   return {
     mapType,
     districts,
     state,
+    highlightedUnit,
     getLocaleText,
     // unitList,
   };
@@ -157,6 +166,7 @@ MapContainer.propTypes = {
   unitList: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.array])),
   locale: PropTypes.string,
   districts: PropTypes.arrayOf(PropTypes.object),
+  highlightedUnit: PropTypes.objectOf(PropTypes.any),
   fetchDistrictsData: PropTypes.func.isRequired,
   getLocaleText: PropTypes.func.isRequired,
 };
@@ -166,4 +176,5 @@ MapContainer.defaultProps = {
   unitList: [],
   locale: 'fi',
   districts: {},
+  highlightedUnit: null,
 };

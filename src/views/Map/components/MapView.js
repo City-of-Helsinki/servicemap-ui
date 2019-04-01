@@ -78,8 +78,8 @@ class MapView extends React.Component {
           />
           {unitList.map(unit => (
             <Marker
-              key={unit.id ? unit.id : unit[0].id}
-              position={unit.lat ? [unit.lat, unit.lng] : [unit[0].lat, unit[0].lng]}
+              key={unit.id}
+              position={[unit.location.coordinates[1], unit.location.coordinates[0]]}
               icon={drawIcon(unit, mapBase.options.name)}
             />
           ))}
@@ -106,13 +106,6 @@ class MapView extends React.Component {
               </Popup>
             </Marker>
           ) : null}
-          {unitList.map(unit => (
-            <Marker
-              key={unit.id ? unit.id : unit[0].id}
-              position={unit.lat ? [unit.lat, unit.lng] : [unit[0].lat, unit[0].lng]}
-              icon={drawIcon(unit, mapBase.options.name)}
-            />
-          ))}
           {transitStops.map(stop => (
             <Marker
               key={stop.name + stop.gtfsId}
