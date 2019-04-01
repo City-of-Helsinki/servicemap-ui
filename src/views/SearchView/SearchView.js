@@ -4,7 +4,7 @@ import {
   Paper, Divider, Typography, withStyles,
 } from '@material-ui/core';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
-import SearchList from './components/SearchList';
+import ResultList from '../../components/ResultList';
 import styles from './styles';
 import Loading from '../../components/Loading/Loading';
 import SearchBar from '../../components/SearchBar';
@@ -29,6 +29,17 @@ class SearchView extends React.Component {
     console.log(`Search query = ${search}`);
     if (search && search !== '') {
       fetchUnits([], null, search);
+    }
+  }
+
+  // onClick event for each ResultList's item
+  onItemClick = (e, item) => {
+    const { history, match } = this.props;
+    const { params } = match;
+    const lng = params && params.lng;
+    e.preventDefault();
+    if (history && item) {
+      history.push(`/${lng || 'fi'}/unit/${item.id}/`);
     }
   }
 
@@ -64,8 +75,11 @@ class SearchView extends React.Component {
         {
           resultsShowing
           && (
-          <SearchList
+          <ResultList
+            listId="search-list"
+            title={intl.formatMessage({ id: 'unit.plural' })}
             data={units}
+            onItemClick={this.onItemClick}
           />
           )
         }
@@ -82,6 +96,7 @@ SearchView.propTypes = {
   fetchUnits: PropTypes.func,
   intl: intlShape.isRequired,
   isFetching: PropTypes.bool,
+  match: PropTypes.objectOf(PropTypes.any).isRequired,
   max: PropTypes.number,
   units: PropTypes.arrayOf(PropTypes.any),
 };
