@@ -29,6 +29,11 @@ app.use(express.static(path.resolve(__dirname, 'src')));
 app.get(`/*`, makeLanguageHandler);
 app.use(`${baseURL}/unit`, makeUnitHandler);
 
+// Redirect root to finnish site
+app.get('/', (req, res) => {
+  res.redirect('/fi/');
+});
+
 app.get('/*', (req, res, next) => {
   // CSS for all rendered React components
   const css = new Set(); 

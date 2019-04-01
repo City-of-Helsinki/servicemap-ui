@@ -32,8 +32,8 @@
     "webpack-cli": "^3.2.3"
   },
   "scripts": {
-    "start": "webpack-dev-server --open --mode development",
-    "build": "webpack --mode production",
+    "start": "node dist",
+    "build": "NODE_ENV=production BABEL_ENV=production webpack --progress --mode production ",
     "test": "jest test",
     "eject": "react-scripts eject",
     "dev": "NODE_ENV=development BABEL_ENV=development webpack --watch --progress & nodemon dist",
