@@ -14,10 +14,7 @@ const searchQueryData = {
 };
 
 const unitQueryData = {
-  page: 1,
-  page_size: 200,
   include: 'service_nodes,services',
-  geometry: true,
 };
 
 class QueryBuilder {

@@ -28,6 +28,8 @@ class UnitView extends React.Component {
       changeSelectedUnit(unit);
       console.log('change selected unit to: ', unit);
 
+      /* TODO:  Instead of this fetch function, create appropriate redux fetch for unit
+                that updates the existing data of the unit */
       this.setState({ isFetching: true });
       queryBuilder.setType('unit', unit).run()
         .then(response => response.json())
