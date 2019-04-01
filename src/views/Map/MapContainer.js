@@ -107,7 +107,7 @@ class MapContainer extends React.Component {
 
   render() {
     const {
-      mapType, state, districts, highlightedUnit, getLocaleText,
+      mapType, districts, highlightedUnit, getLocaleText,
     } = this.props;
     let { unitList } = this.props;
 
