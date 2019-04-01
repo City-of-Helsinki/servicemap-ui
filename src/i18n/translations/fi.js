@@ -12,6 +12,13 @@ export default {
   'unit.data_source': 'Lähde: {data_source}', // TODO: Translate
   'unit.details.notFound': 'Toimipisteen tietoja ei saatavilla.',
 
+  'unit.contact.info': 'Yhteystiedot',
+  'unit.services': 'Palvelut toimipisteessä',
+  'unit.e.services': 'Sähköiset palvelut',
+  'unit.school.year': 'Lukuvuosi',
+  'unit.opens.new.tab': '(uusi välilehti)',
+  'unit.call.number': '(soita)',
+
   // Search
   'search': 'Hae',
   'search.info': `{count, plural,

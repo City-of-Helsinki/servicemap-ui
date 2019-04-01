@@ -30,4 +30,16 @@ export default theme => ({
   borderBottom: {
     borderBottom: '1px solid rgba(0,0,0,0.2)',
   },
+  title: {
+    float: 'left',
+    marginLeft: '15px',
+    marginTop: '12px',
+    marginBottom: '12px',
+    fontWeight: 700,
+    fontSize: '1.030em',
+    lineHeight: 1.5,
+  },
+  divider: {
+    marginLeft: '72px',
+  },
 });

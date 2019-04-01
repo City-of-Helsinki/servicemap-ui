@@ -12,6 +12,13 @@ export default {
   'unit.data_source': 'Source: {data_source}',
   'unit.details.notFound': 'Unit info not found.',
 
+  'unit.contact.info': 'Contact information',
+  'unit.services': 'Services',
+  'unit.e.services': 'Electronic services', // TODO: verify
+  'unit.school.year': 'School year',
+  'unit.opens.new.tab': '(new tab)',
+  'unit.call.number': '(call)',
+
   // Search
   'search': 'Search',
   'search.info': `{count, plural,

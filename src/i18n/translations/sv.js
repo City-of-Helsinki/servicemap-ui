@@ -11,6 +11,13 @@ export default {
   'unit.details.notFound': 'Unit info not found', // TODO: Translate
   'unit.data_source': 'Source: {data_source}', // TODO: Translate
 
+  'unit.contact.info': 'Contact information', // TODO: Translate
+  'unit.services': 'Services', // TODO: Translate
+  'unit.e.services': 'Electronic services', // TODO: Translate
+  'unit.school.year': 'Läsåret',
+  'unit.opens.new.tab': '(new tab)', // TODO: Translate
+  'unit.call.number': '(call)', // TODO: Translate
+
   // Search
   'search': 'Sök',
   'search.info': `{count, plural,

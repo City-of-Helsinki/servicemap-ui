@@ -6,7 +6,8 @@ import { FormattedMessage } from 'react-intl';
 import { fetchUnit, fetchUnits } from '../../redux/actions/unit';
 import { getSelectedUnit } from '../../redux/selectors/unit';
 import { changeSelectedUnit } from '../../redux/actions/filter';
-import styles from './styles';
+import InfoList from './components/InfoList';
+import styles from './styles/styles';
 
 // TODO: Add proper component's when ready
 
@@ -25,6 +26,35 @@ class UnitView extends React.Component {
       console.log('change selected unit to: ', unit);
       changeSelectedUnit(unit);
     }
+  }
+
+  // Filters connections by section
+  sectionFilter = (list, section) => {
+    const filteredList = [];
+    let i = 0;
+    list.forEach((item) => {
+      if (!item.section_type) {
+        filteredList.push({ type: section, value: item, id: i });
+      } else if (item.section_type === section) {
+        // Don't add duplicate elements
+        if (!filteredList.some(e => e.value.name.fi === item.name.fi)) {
+          filteredList.push({ type: section, value: item, id: i });
+          i += 1;
+        }
+      }
+    });
+    return filteredList;
+  }
+
+  getOpeningHours = (unit) => {
+    const value = unit.connections.filter(item => item.section_type === 'OPENING_HOURS')[0];
+    if (value) {
+      if (value.www) {
+        return { type: 'OPENING_HOURS_LINK', value };
+      }
+      return { type: 'OPENING_HOURS', value };
+    }
+    return {};
   }
 
   render() {
@@ -49,6 +79,26 @@ class UnitView extends React.Component {
             <Typography color="primary" variant="h3">
               {unit.name && unit.name.fi}
             </Typography>
+
+            <InfoList // Contact information
+              data={[
+                { type: 'ADDRESS', value: unit.street_address },
+                this.getOpeningHours(unit),
+                { type: 'PHONE', value: unit.phone },
+                { type: 'CONTACT', value: unit.connections.filter(item => item.section_type === 'PHONE_OR_EMAIL')[0] },
+              ]}
+              title={<FormattedMessage id="unit.contact.info" />}
+            />
+            <InfoList // E-services
+              data={[...this.sectionFilter(unit.connections, 'LINK'), ...this.sectionFilter(unit.connections, 'ESERVICE_LINK')]}
+              title={<FormattedMessage id="unit.e.services" />}
+            />
+            <InfoList // Unit services
+              data={this.sectionFilter(unit.services, 'SERVICE')}
+              title={<FormattedMessage id="unit.services" />}
+            />
+
+
             <span>
               {unit.provider && <FormattedMessage id="unit.data_source" defaultMessage={'Source: {data_source}'} values={{ data_source: unit.provider }} />}
             </span>
