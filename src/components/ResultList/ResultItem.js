@@ -85,6 +85,8 @@ const ResultItem = ({
   return (
     <>
       <ListItem
+        button
+        role="link"
         component="a"
         tabIndex={0}
         onClick={onClick}
