@@ -41,7 +41,7 @@ class MapView extends React.Component {
       mapBase,
       unitList,
       mapOptions,
-      districtList,
+      // districtList,
       style,
       fetchTransitStops,
       clearTransitStops,
@@ -78,8 +78,8 @@ class MapView extends React.Component {
           />
           {unitList.map(unit => (
             <Marker
-              key={unit.id ? unit.id : unit[0].id}
-              position={unit.lat ? [unit.lat, unit.lng] : [unit[0].lat, unit[0].lng]}
+              key={unit.id}
+              position={[unit.location.coordinates[1], unit.location.coordinates[0]]}
               icon={drawIcon(unit, mapBase.options.name)}
             />
           ))}
@@ -106,13 +106,6 @@ class MapView extends React.Component {
               </Popup>
             </Marker>
           ) : null}
-          {unitList.map(unit => (
-            <Marker
-              key={unit.id ? unit.id : unit[0].id}
-              position={unit.lat ? [unit.lat, unit.lng] : [unit[0].lat, unit[0].lng]}
-              icon={drawIcon(unit, mapBase.options.name)}
-            />
-          ))}
           {transitStops.map(stop => (
             <Marker
               key={stop.name + stop.gtfsId}
@@ -137,7 +130,7 @@ MapView.propTypes = {
   style: PropTypes.objectOf(PropTypes.any),
   mapBase: PropTypes.objectOf(PropTypes.any),
   unitList: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.array])),
-  districtList: PropTypes.arrayOf(PropTypes.object),
+  // districtList: PropTypes.arrayOf(PropTypes.object),
   mapOptions: PropTypes.objectOf(PropTypes.any),
   fetchTransitStops: PropTypes.func,
   clearTransitStops: PropTypes.func,
@@ -150,7 +143,7 @@ MapView.defaultProps = {
   mapBase: {},
   mapOptions: {},
   unitList: [],
-  districtList: [],
+  // districtList: [],
   fetchTransitStops: null,
   clearTransitStops: null,
   transitStops: [],

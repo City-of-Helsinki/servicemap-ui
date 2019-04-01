@@ -7,6 +7,7 @@ import getDistricts from '../../redux/selectors/district';
 import { fetchDistrictsData } from '../../redux/actions/district';
 import MapView from './components/MapView';
 import { getLocale, translate } from '../../redux/selectors/locale';
+import { getSelectedUnit } from '../../redux/selectors/unit';
 import CreateMap from './utils/createMap';
 import { mapOptions } from './constants/mapConstants';
 import fetchStops from './utils/fetchStops';
@@ -107,8 +108,14 @@ class MapContainer extends React.Component {
 
   render() {
     const {
-      mapType, unitList, state, districts,
+      mapType, state, districts, highlightedUnit,
     } = this.props;
+    let { unitList } = this.props;
+
+    if (highlightedUnit) {
+      unitList = [highlightedUnit];
+    }
+
     const { initialMap, transitStops } = this.state;
     if (initialMap) {
       return (
@@ -135,12 +142,14 @@ const mapStateToProps = (state) => {
   const mapType = getMapType(state);
   const locale = getLocale(state);
   const districts = getDistricts(state);
+  const highlightedUnit = getSelectedUnit(state);
   // const unitList = getUnitList(state);
   return {
     mapType,
     locale,
     districts,
     state,
+    highlightedUnit,
     // unitList,
   };
 };
@@ -159,6 +168,7 @@ MapContainer.propTypes = {
   locale: PropTypes.string,
   state: PropTypes.objectOf(PropTypes.any),
   districts: PropTypes.arrayOf(PropTypes.object),
+  highlightedUnit: PropTypes.objectOf(PropTypes.any),
   fetchDistrictsData: PropTypes.func,
 };
 
@@ -168,5 +178,6 @@ MapContainer.defaultProps = {
   locale: 'fi',
   state: {},
   districts: {},
+  highlightedUnit: null,
   fetchDistrictsData: null,
 };
