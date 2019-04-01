@@ -4,10 +4,11 @@ import PropTypes from 'prop-types';
 import DirectionsBus from '@material-ui/icons/DirectionsBus';
 import DirectionsRailway from '@material-ui/icons/DirectionsRailway';
 import DirectionsSubway from '@material-ui/icons/DirectionsSubway';
+import { FormattedMessage } from 'react-intl';
 
 // TODO: better styling + styling location
 const TransitStopInfo = (props) => {
-  const { stop, t } = props;
+  const { stop } = props;
   return (
     <div style={{ width: '230px' }}>
       <p style={{
@@ -75,7 +76,7 @@ const TransitStopInfo = (props) => {
               marginTop: '0px', marginBottom: '2px', width: '55%', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis', lineHeight: '20px', height: '20px',
             }}
             >
-              {arrival.pickupType === 'NONE' ? t('map.transit.endStation') : arrival.headsign}
+              {arrival.pickupType === 'NONE' ? <FormattedMessage id="map.transit.endStation" /> : arrival.headsign}
             </p>
           </div>
         );
@@ -88,10 +89,8 @@ export default TransitStopInfo;
 
 TransitStopInfo.propTypes = {
   stop: PropTypes.objectOf(PropTypes.any),
-  t: PropTypes.func,
 };
 
 TransitStopInfo.defaultProps = {
   stop: {},
-  t: null,
 };
