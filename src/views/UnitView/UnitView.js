@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import { fetchUnit, fetchUnits } from '../../redux/actions/unit';
 import { getSelectedUnit } from '../../redux/selectors/unit';
 import { changeSelectedUnit } from '../../redux/actions/filter';
-import LinkList from './components/LinkList';
+import InfoList from './components/InfoList';
 import styles from './styles/styles';
 
 // TODO: Add proper component's when ready
@@ -80,7 +80,7 @@ class UnitView extends React.Component {
               {unit.name && unit.name.fi}
             </Typography>
 
-            <LinkList // Contact information
+            <InfoList // Contact information
               data={[
                 { type: 'ADDRESS', value: unit.street_address },
                 this.getOpeningHours(unit),
@@ -89,11 +89,11 @@ class UnitView extends React.Component {
               ]}
               title={<FormattedMessage id="unit.contact.info" />}
             />
-            <LinkList // E-services
+            <InfoList // E-services
               data={[...this.sectionFilter(unit.connections, 'LINK'), ...this.sectionFilter(unit.connections, 'ESERVICE_LINK')]}
               title={<FormattedMessage id="unit.e.services" />}
             />
-            <LinkList // Unit services
+            <InfoList // Unit services
               data={this.sectionFilter(unit.services, 'SERVICE')}
               title={<FormattedMessage id="unit.services" />}
             />
