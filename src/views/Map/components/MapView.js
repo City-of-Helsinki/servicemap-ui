@@ -46,7 +46,7 @@ class MapView extends React.Component {
       fetchTransitStops,
       clearTransitStops,
       transitStops,
-      getLocaleString,
+      getLocaleText,
     } = this.props;
     const {
       Map, TileLayer, ZoomControl, Marker, Popup, Polygon, highlightedDistrict,
@@ -102,7 +102,7 @@ class MapView extends React.Component {
               icon={drawIcon(highlightedDistrict.unit, mapBase.options.name)}
             >
               <Popup autoPan={false}>
-                <p>{getLocaleString(highlightedDistrict.unit.name)}</p>
+                <p>{getLocaleText(highlightedDistrict.unit.name)}</p>
               </Popup>
             </Marker>
           ) : null}
@@ -142,7 +142,7 @@ MapView.propTypes = {
   fetchTransitStops: PropTypes.func,
   clearTransitStops: PropTypes.func,
   transitStops: PropTypes.arrayOf(PropTypes.object),
-  getLocaleString: PropTypes.func.isRequired,
+  getLocaleText: PropTypes.func.isRequired,
 };
 
 MapView.defaultProps = {
