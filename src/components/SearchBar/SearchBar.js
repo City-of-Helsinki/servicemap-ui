@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  InputBase, Paper, withStyles, Icon,
+  InputBase, Paper, withStyles, IconButton,
 } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
+import { injectIntl, intlShape } from 'react-intl';
 import BackButton from '../BackButton';
 
 const styles = theme => ({
@@ -69,7 +70,7 @@ class SearchBar extends React.Component {
 
   render() {
     const {
-      classes, placeholder,
+      classes, intl, placeholder,
     } = this.props;
     const { search, isActive } = this.state;
 
@@ -90,9 +91,13 @@ class SearchBar extends React.Component {
             onBlur={this.toggleAnimation}
           />
 
-          <Icon className={classes.icon}>
+          <IconButton
+            aria-label={intl.formatMessage({ id: 'search' })}
+            type="submit"
+            className={classes.icon}
+          >
             <Search />
-          </Icon>
+          </IconButton>
         </form>
       </Paper>
     );
@@ -101,9 +106,9 @@ class SearchBar extends React.Component {
 
 SearchBar.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
+  intl: intlShape.isRequired,
   onSubmit: PropTypes.func.isRequired,
   placeholder: PropTypes.string.isRequired,
-
 };
 
-export default withStyles(styles)(SearchBar);
+export default withStyles(styles)(injectIntl(SearchBar));
