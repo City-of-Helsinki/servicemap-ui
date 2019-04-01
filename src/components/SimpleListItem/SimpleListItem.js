@@ -13,10 +13,11 @@ const SimpleListItem = (props) => {
   return (
     <ListItem
       button={!!link}
+      role={link ? 'link' : null}
       component={link ? 'a' : null}
-      onClick={() => {
+      onClick={link ? () => {
         handleItemClick();
-      }}
+      } : null}
       classes={{
         root: classes.listItem,
       }}

@@ -53,7 +53,7 @@ class InfoList extends React.Component {
 
       return (
         <div>
-          <Typography className={classes.title} variant="h3">{title}</Typography>
+          <Typography className={classes.title} variant="h4">{title}</Typography>
           <List>
             {filteredData.map((data) => {
               const item = this.getItem(data.type);
