@@ -13,6 +13,13 @@ const searchQueryData = {
   geometry: true,
 };
 
+const unitQueryData = {
+  page: 1,
+  page_size: 200,
+  include: 'service_nodes,services',
+  geometry: true,
+};
+
 class QueryBuilder {
   constructor() {
     const { unit } = config;
@@ -40,7 +47,7 @@ class QueryBuilder {
       case 'search':
         return searchQueryData;
       case 'unit':
-        return null;
+        return unitQueryData;
       default:
         return searchQueryData;
     }
