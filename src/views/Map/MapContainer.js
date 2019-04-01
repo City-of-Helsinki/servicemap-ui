@@ -6,7 +6,7 @@ import { getMapType } from '../../redux/selectors/map';
 import getDistricts from '../../redux/selectors/district';
 import { fetchDistrictsData } from '../../redux/actions/district';
 import MapView from './components/MapView';
-import { getLocale, translate } from '../../redux/selectors/locale';
+import { getLocaleString } from '../../redux/selectors/locale';
 import CreateMap from './utils/createMap';
 import { mapOptions } from './constants/mapConstants';
 import fetchStops from './utils/fetchStops';
@@ -28,7 +28,6 @@ class MapContainer extends React.Component {
     };
     this.fetchMapDistricts(mockPosition);
   }
-
 
   initiateMap = () => {
     const initialMap = CreateMap('servicemap');
@@ -107,7 +106,7 @@ class MapContainer extends React.Component {
 
   render() {
     const {
-      mapType, unitList, state, districts,
+      mapType, unitList, districts, getLocaleText,
     } = this.props;
     const { initialMap, transitStops } = this.state;
     if (initialMap) {
@@ -121,7 +120,7 @@ class MapContainer extends React.Component {
           fetchTransitStops={this.fetchTransitStops}
           clearTransitStops={this.clearTransitStops}
           transitStops={transitStops}
-          t={id => translate(state, id)}
+          getLocaleText={textObject => getLocaleText(textObject)}
           // TODO: think about better styling location for map
           style={{ width: '100%', height: '100%', position: 'relative' }}
         />
@@ -133,14 +132,14 @@ class MapContainer extends React.Component {
 // Listen to redux state
 const mapStateToProps = (state) => {
   const mapType = getMapType(state);
-  const locale = getLocale(state);
   const districts = getDistricts(state);
+  const getLocaleText = textObject => getLocaleString(state, textObject);
   // const unitList = getUnitList(state);
   return {
     mapType,
-    locale,
     districts,
     state,
+    getLocaleText,
     // unitList,
   };
 };
@@ -157,16 +156,14 @@ MapContainer.propTypes = {
   mapType: PropTypes.oneOfType([PropTypes.objectOf(PropTypes.any), PropTypes.string]),
   unitList: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.array])),
   locale: PropTypes.string,
-  state: PropTypes.objectOf(PropTypes.any),
   districts: PropTypes.arrayOf(PropTypes.object),
-  fetchDistrictsData: PropTypes.func,
+  fetchDistrictsData: PropTypes.func.isRequired,
+  getLocaleText: PropTypes.func.isRequired,
 };
 
 MapContainer.defaultProps = {
   mapType: '',
   unitList: [],
   locale: 'fi',
-  state: {},
   districts: {},
-  fetchDistrictsData: null,
 };
