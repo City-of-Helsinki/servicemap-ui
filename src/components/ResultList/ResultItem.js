@@ -14,18 +14,13 @@ const styles = theme => ({
   },
   title: {
     textOverflow: 'ellipsis',
-    fontSize: 18,
     margin: 0,
   },
   secondaryContent: {
     marginRight: 8,
     textAlign: 'right',
   },
-  subtitle: {
-    margin: 0,
-  },
-  smallFont: {
-    fontSize: 14,
+  noMargin: {
     margin: 0,
   },
   itemTextContainer: {
@@ -106,8 +101,9 @@ const ResultItem = ({
           <div className={classes.topRow}>
             <Typography
               id={`${listId}-result-item-title-${id}`}
-              variant="h4"
               className={classes.title}
+              component="h3"
+              variant="subtitle1"
               aria-labelledby={`${listId}-result-item-title-${id} ${listId}-result-item-type-${id} ${listId}-result-item-distance-${id} ${listId}-result-item-accessibility-${id}`}
             >
               {
@@ -126,7 +122,12 @@ const ResultItem = ({
               distance
               && (
                 <div className={classes.rightColumn}>
-                  <Typography variant="body2" className={`${classes.smallFont} ${classes.marginLeft}`} aria-hidden="true">
+                  <Typography
+                    variant="caption"
+                    className={`${classes.smallFont} ${classes.marginLeft}`}
+                    component="p"
+                    aria-hidden="true"
+                  >
                     {distance}
                     m
                     <span id={`${listId}-result-item-distance-${id}`} className="sr-only" aria-hidden="true">{`${distance} metrin päässä`}</span>
@@ -141,8 +142,9 @@ const ResultItem = ({
             <div className={classes.bottomColumn}>
               <Typography
                 id={`${listId}-result-item-type-${id}`}
-                variant="h4"
-                className={`${classes.subtitle} ${classes.smallFont}`}
+                variant="caption"
+                className={`${classes.noMargin} ${classes.smallFont}`}
+                component="p"
                 aria-hidden="true"
               >
                 <FormattedMessage id={object_type} />
@@ -152,8 +154,9 @@ const ResultItem = ({
             <div className={`${classes.rightColumn} ${classes.bottomColumn}`}>
               <Typography
                 id={`${listId}-result-item-accessibility-${id}`}
-                variant="body2"
                 className={`${classes.smallFont} ${classes.marginLeft}`}
+                component="p"
+                variant="caption"
                 aria-hidden="true"
               >
                 {accessText}

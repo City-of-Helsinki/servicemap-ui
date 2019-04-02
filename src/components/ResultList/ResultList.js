@@ -19,16 +19,10 @@ const styles = theme => ({
   left: {
     float: 'left',
     margin: theme.spacing.unit,
-    fontWeight: 700,
-    fontSize: 18,
-    lineHeight: 1.5,
   },
   right: {
     float: 'right',
     margin: theme.spacing.unit,
-    fontWeight: 700,
-    fontSize: 14,
-    lineHeight: 1.7,
   },
   list: {
     maxHeight: '100%',
@@ -59,7 +53,8 @@ class ResultList extends React.Component {
             <Typography
               id={`${listId}-result-title`}
               className={classes.left}
-              variant="h3"
+              component="h3"
+              variant="subtitle1"
               aria-labelledby={`${listId}-result-title ${listId}-result-title-info`}
             >
               {title}
@@ -68,7 +63,8 @@ class ResultList extends React.Component {
             <Typography
               id={`${listId}-result-title-info`}
               className={classes.right}
-              variant="body1"
+              component="p"
+              variant="caption"
               aria-hidden="true"
             >
               <FormattedMessage id="search.results" values={{ count: data.length }} />
