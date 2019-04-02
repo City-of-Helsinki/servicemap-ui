@@ -2,10 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Search from '../SearchView';
 import UnitView from '../UnitView';
-
-const Test = () => (
-  <div> Temporary </div>
-);
+import HomeView from '../HomeView';
 
 class Sidebar extends React.Component {
   constructor(props) {
@@ -19,7 +16,7 @@ class Sidebar extends React.Component {
         <Switch>
           <Route path="/:lng/unit/:unit" component={UnitView} />
           <Route path="/:lng/search" component={Search} />
-          <Route path="/:lng/" component={Test} />
+          <Route path="/:lng/" component={HomeView} />
         </Switch>
       </div>
     );

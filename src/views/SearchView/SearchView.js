@@ -19,7 +19,7 @@ class SearchView extends React.Component {
     // TODO: Temp data to be removed
     const { fetchUnits } = this.props;
     if (fetchUnits) {
-      fetchUnits([], null, 'kallion kirjasto');
+      // fetchUnits([], null, 'kallion kirjasto');
     }
   }
 
