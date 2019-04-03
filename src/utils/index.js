@@ -33,7 +33,7 @@ export const uppercaseFirst = val => val.charAt(0).toUpperCase() + val.slice(1);
 // Function for parsing react router search params
 export const parseSearchParams = (searchParams) => {
   if (typeof searchParams !== 'string' || searchParams.length < 1) {
-    return null;
+    return {};
   }
 
   const searchQuery = searchParams.slice(1, searchParams.length).split('&');
