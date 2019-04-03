@@ -8,6 +8,7 @@ import styles from './styles';
 import Loading from '../../components/Loading/Loading';
 import SearchBar from '../../components/SearchBar';
 import ResultList from '../../components/Lists/ResultList';
+import { parseSearchParams } from '../../utils';
 
 class SearchView extends React.Component {
   constructor(props) {
@@ -19,13 +20,18 @@ class SearchView extends React.Component {
     if (changeSelectedUnit) {
       changeSelectedUnit(null);
     }
+    this.state = {
+      queryParam: null,
+    };
   }
 
   componentDidMount() {
     // TODO: Temp data to be removed
-    const { fetchUnits } = this.props;
-    if (fetchUnits) {
-      // fetchUnits([], null, 'kallion kirjasto');
+    const { fetchUnits, location } = this.props;
+    const searchParams = parseSearchParams(location.search);
+    if (searchParams.q && fetchUnits) {
+      fetchUnits([], null, searchParams.q);
+      this.setState({ queryParam: searchParams.q });
     }
     this.searchField.current.focus();
   }
@@ -43,6 +49,7 @@ class SearchView extends React.Component {
     const {
       units, isFetching, classes, intl, count, max,
     } = this.props;
+    const { queryParam } = this.state;
     const unitCount = units && units.length;
     const resultsShowing = !isFetching && unitCount > 0;
     const progress = (isFetching && count) ? Math.floor((count / max * 100)) : 0;
@@ -80,6 +87,7 @@ class SearchView extends React.Component {
           searchRef={this.searchField}
           onSubmit={this.onSearchSubmit}
           placeholder={intl && intl.formatMessage({ id: 'search.input.placeholder' })}
+          text={queryParam}
         />
         <Divider aria-hidden="true" />
         <Paper className={classes.label} elevation={1} square aria-live="polite" style={paperStyles}>
