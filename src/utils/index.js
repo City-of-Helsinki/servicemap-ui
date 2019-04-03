@@ -30,4 +30,27 @@ const tAttr = (attr) => {
 
 export const uppercaseFirst = val => val.charAt(0).toUpperCase() + val.slice(1);
 
+// Function for parsing react router search params
+export const parseSearchParams = (searchParams) => {
+  if (typeof searchParams !== 'string' || searchParams.length < 1) {
+    return null;
+  }
+
+  const searchQuery = searchParams.slice(1, searchParams.length).split('&');
+  const searchParamsObject = {};
+
+  searchQuery.forEach((element) => {
+    const keyValuePair = element.split('=');
+    try {
+      const key = decodeURIComponent(keyValuePair[0]);
+      const value = decodeURIComponent(keyValuePair[1]);
+      searchParamsObject[key] = value;
+    } catch (e) {
+      console.warn('Failed to decode URI component');
+    }
+  });
+
+  return searchParamsObject;
+};
+
 export default isClient;
