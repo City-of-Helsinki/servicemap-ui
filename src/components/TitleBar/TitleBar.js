@@ -28,7 +28,7 @@ const styles = theme => ({
 });
 
 const TitleBar = ({
-  classes, title,
+  classes, title, titleComponent,
 }) => (
   <Container paper>
     <div className={classes.container}>
@@ -38,6 +38,9 @@ const TitleBar = ({
 
       <Typography
         className={classes.title}
+        component={titleComponent}
+        text={title}
+        variant="h6"
       >
         {title}
       </Typography>
@@ -52,5 +55,10 @@ const TitleBar = ({
 TitleBar.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   title: PropTypes.string.isRequired,
+  titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']),
+};
+
+TitleBar.defaultProps = {
+  titleComponent: 'h3',
 };
 export default withStyles(styles)(TitleBar);
