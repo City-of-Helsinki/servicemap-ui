@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { IconButton } from '@material-ui/core';
-import { Home, Close } from '@material-ui/icons';
+import { Close } from '@material-ui/icons';
 import { intlShape } from 'react-intl';
 
 const HomeButton = (props) => {
