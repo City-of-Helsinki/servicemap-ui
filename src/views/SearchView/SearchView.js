@@ -8,7 +8,7 @@ import ResultList from '../../components/ResultList';
 import styles from './styles';
 import Loading from '../../components/Loading/Loading';
 import SearchBar from '../../components/SearchBar';
-import { generatePath } from '../../../config/appPaths';
+import { generatePath } from '../../../config/paths';
 
 class SearchView extends React.Component {
   constructor(props) {
