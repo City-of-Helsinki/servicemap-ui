@@ -24,7 +24,7 @@ const searchUnits = async (t) => {
     .pressKey('enter');
 
   // Get search list's data length
-  const searchList = await ReactSelector('SearchList');
+  const searchList = await ReactSelector('ResultList');
   const unitCount = await searchList.getReact(({props}) => props.data.length);
 
   return unitCount;
@@ -40,11 +40,12 @@ test('Search does list results', async (t) => {
 test('Navigate search results with keyboard', async (t) => {
   const unitCount = await searchUnits(t);
 
-  const firstSearchItems =  ReactSelector('SearchList SearchItem');
-  const secondSearchItems = ReactSelector('SearchList SearchItem').nth(1);
+  const firstSearchItems =  ReactSelector('ResultList ResultItem');
+  const secondSearchItems = ReactSelector('ResultList ResultItem').nth(1);
 
   await t
-    .pressKey('tab')
+    .pressKey('tab') // Tabs to search icon button
+    .pressKey('tab') // Tabs to first item in list
     .expect(firstSearchItems.focused).ok('Tab did move focus to first list item')
     .pressKey('tab')
     .expect(secondSearchItems.focused).ok('Tab did move focus to second list item')
