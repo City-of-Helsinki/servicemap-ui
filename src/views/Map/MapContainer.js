@@ -138,6 +138,10 @@ class MapContainer extends React.Component {
 }
 // Listen to redux state
 const mapStateToProps = (state) => {
+  const { units } = state;
+  const {
+    data,
+  } = units;
   const mapType = getMapType(state);
   const districts = getDistricts(state);
   const highlightedUnit = getSelectedUnit(state);
@@ -149,6 +153,7 @@ const mapStateToProps = (state) => {
     state,
     highlightedUnit,
     getLocaleText,
+    unitList: data,
     // unitList,
   };
 };
