@@ -12,7 +12,12 @@ import SearchBar from '../../components/SearchBar';
 class SearchView extends React.Component {
   constructor(props) {
     super(props);
-    this.searchFormRef = React.createRef();
+    const { changeSelectedUnit } = props
+    
+    // Reset selected unit on SearchView
+    if (changeSelectedUnit) {
+      changeSelectedUnit(null); 
+    }
   }
 
   componentDidMount() {

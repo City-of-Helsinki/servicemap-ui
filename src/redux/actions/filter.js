@@ -10,6 +10,6 @@ export const setSelectedUnit = id => ({
 
 export const changeSelectedUnit = unitId => async (dispatch) => {
   // Turn string to int
-  const parsedId = typeof unitId === 'number' ? unitId : parseInt(unitId, 10);
+  const parsedId = typeof unitId === 'string' ? parseInt(unitId, 10) : unitId;
   dispatch(setSelectedUnit(parsedId));
 };
