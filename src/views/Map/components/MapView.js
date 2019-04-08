@@ -76,13 +76,18 @@ class MapView extends React.Component {
             url={mapBase.options.url}
             attribution='&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors'
           />
-          {unitList.map(unit => (
-            <Marker
-              key={unit.id}
-              position={[unit.location.coordinates[1], unit.location.coordinates[0]]}
-              icon={drawIcon(unit, mapBase.options.name)}
-            />
-          ))}
+          {unitList.map(unit => {
+            // Show markers with location
+            if(unit && unit.location) {
+              return (
+                <Marker
+                  key={unit.id}
+                  position={[unit.location.coordinates[1], unit.location.coordinates[0]]}
+                  icon={drawIcon(unit, mapBase.options.name)}
+                />
+              );
+            }
+          })}
           {highlightedDistrict ? (
             <Polygon
               positions={[
