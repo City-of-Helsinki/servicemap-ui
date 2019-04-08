@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
@@ -15,6 +16,24 @@ class MobileBottomNavigation extends React.Component {
     value: 0,
   };
 
+  // Figure out initial selected value
+  componentDidMount() {
+    const { actions, location } = this.props;
+    const path = location.pathname;
+
+    actions.forEach((action, index) => {
+      // If home continue
+      if (action.path === '/') {
+        return;
+      }
+
+      // If pathname contains action.path
+      if (path.indexOf(action.path) === 3) {
+        this.setState({ value: index });
+      }
+    });
+  }
+
   handleChange = (event, value) => {
     const { actions } = this.props;
     const action = actions[value] && actions[value].onClick;
@@ -28,11 +47,14 @@ class MobileBottomNavigation extends React.Component {
   };
 
   render() {
-    const { classes, actions } = this.props;
+    const {
+      actions, classes, style,
+    } = this.props;
     const { value } = this.state;
 
     return (
       <BottomNavigation
+        style={style}
         value={value}
         onChange={this.handleChange}
         showLabels
@@ -41,7 +63,11 @@ class MobileBottomNavigation extends React.Component {
         {
           actions
           && actions.map(action => (
-            <BottomNavigationAction label={action.label} icon={action.icon} />
+            <BottomNavigationAction
+              key={action.label}
+              label={action.label}
+              icon={action.icon}
+            />
           ))
         }
       </BottomNavigation>
@@ -56,6 +82,12 @@ MobileBottomNavigation.propTypes = {
     onClick: PropTypes.func,
   })).isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
+  location: PropTypes.objectOf(PropTypes.any).isRequired,
+  style: PropTypes.objectOf(PropTypes.any),
 };
 
-export default withStyles(styles)(MobileBottomNavigation);
+MobileBottomNavigation.defaultProps = {
+  style: {},
+};
+
+export default withRouter(withStyles(styles)(MobileBottomNavigation));
