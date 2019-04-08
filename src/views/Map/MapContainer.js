@@ -129,7 +129,7 @@ class MapContainer extends React.Component {
           transitStops={transitStops}
           getLocaleText={textObject => getLocaleText(textObject)}
           // TODO: think about better styling location for map
-          style={{ width: '100%', height: '100%', position: 'relative' }}
+          style={{ flex: '1 0 auto' }}
         />
       );
     }
