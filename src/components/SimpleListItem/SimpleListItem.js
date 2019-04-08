@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import { withStyles } from '@material-ui/core';
-// import listStyles from '../../views/UnitView/styles/listStyles';
+import { withStyles, Typography } from '@material-ui/core';
 
 const SimpleListItem = (props) => {
   const {
@@ -27,42 +26,38 @@ const SimpleListItem = (props) => {
       </ListItemIcon>
 
       <ListItemText
-        classes={{
-          root: classes.textContainer,
-          primary: `${classes.listLinkText} ${link ? classes.link : null}`,
-        }}
-        primary={text}
-      />
+        classes={{ root: classes.textContainer }}
+      >
+        <Typography
+          variant="body2"
+          classes={{ root: link ? classes.link : null }}
+        >
+          {text}
+        </Typography>
+      </ListItemText>
     </ListItem>
   );
 };
 
-const listItemStyles = {
+const listItemStyles = theme => ({
   listItem: {
-    height: '56px',
-    paddingLeft: 0,
-    paddingRight: 0,
-    paddingTop: '7px',
-    paddingBottom: '9px',
+    height: '3.5rem',
+    padding: 0,
   },
   textContainer: {
     padding: 0,
-    marginLeft: '16px',
-    marginRight: '42px',
-  },
-  listLinkText: {
-    fontWeight: 400,
-    fontSize: '0.911em',
+    marginLeft: theme.spacing.unit * 2,
+    marginRight: theme.spacing.unit * 5.25,
   },
   link: {
     color: '#0000EE',
   },
   listIcon: {
-    width: '24px',
-    height: '24px',
-    margin: '16px',
+    width: '1.5rem',
+    height: '1.5rem',
+    margin: '1rem',
   },
-};
+});
 
 export default withStyles(listItemStyles)(SimpleListItem);
 
