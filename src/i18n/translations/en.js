@@ -5,6 +5,7 @@ export default {
 
   // General
   'general.back': 'Back',
+  'general.home': 'Home',
 
   // Map
   'map.transit.endStation': 'Terminus',

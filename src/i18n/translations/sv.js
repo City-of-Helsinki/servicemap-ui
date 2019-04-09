@@ -5,6 +5,7 @@ export default {
 
   // General
   'general.back': 'Tillbaka',
+  'general.home': 'Home', // TODO: Translate
 
   // Map
   'map.transit.endStation': 'Ändhållplats',

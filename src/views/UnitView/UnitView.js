@@ -10,6 +10,7 @@ import { changeSelectedUnit } from '../../redux/actions/filter';
 import InfoList from './components/InfoList';
 import styles from './styles/styles';
 import queryBuilder from '../../utils/queryBuilder';
+import TitleBar from '../../components/TitleBar/TitleBar';
 
 // TODO: Add proper component's when ready
 
@@ -88,6 +89,7 @@ class UnitView extends React.Component {
       return (
         <div className={classes.root}>
           <div className="Content">
+            <TitleBar title={unit.name && unit.name.fi} />
             {
                 unit.picture_url
                 && <img className={classes.image} alt="Unit" src={unit.picture_url} />
