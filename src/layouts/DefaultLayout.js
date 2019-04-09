@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import {
   Button, Grid, Typography, AppBar, Toolbar, withStyles,
 } from '@material-ui/core';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, intlShape, injectIntl } from 'react-intl';
 import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
 import { Home, Map } from '@material-ui/icons';
 import Sidebar from '../views/Sidebar';
@@ -62,7 +62,7 @@ const styles = {
 
 const DefaultLayout = (props) => {
   const {
-    classes, i18n, onLanguageChange, location, history, match,
+    classes, i18n, intl, onLanguageChange, location, history, match,
   } = props;
   const { params } = match;
   const lng = params && params.lng;
@@ -112,7 +112,7 @@ const DefaultLayout = (props) => {
           style={styles.mobileNav}
           actions={[
             {
-              label: 'Home',
+              label: intl.formatMessage({ id: 'general.home' }),
               onClick: () => {
                 if (history) {
                   // TODO: Add query text once functionality is ready for search view
@@ -123,7 +123,7 @@ const DefaultLayout = (props) => {
               path: 'home',
             },
             {
-              label: 'Map',
+              label: intl.formatMessage({ id: 'map' }),
               onClick: () => {
                 if (history) {
                   // TODO: Add query text once functionality is ready for search view
@@ -160,6 +160,7 @@ DefaultLayout.propTypes = {
   history: PropTypes.objectOf(PropTypes.any).isRequired,
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   i18n: PropTypes.instanceOf(I18n),
+  intl: intlShape.isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   onLanguageChange: PropTypes.func.isRequired,
 };
@@ -168,4 +169,4 @@ DefaultLayout.defaultProps = {
   i18n: null,
 };
 
-export default withRouter(withStyles(styles)(DefaultLayout));
+export default injectIntl(withRouter(withStyles(styles)(DefaultLayout)));

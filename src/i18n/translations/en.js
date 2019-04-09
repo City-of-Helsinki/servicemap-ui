@@ -5,8 +5,10 @@ export default {
 
   // General
   'general.back': 'Back',
+  'general.home': 'Home',
 
   // Map
+  'map': 'Map',
   'map.transit.endStation': 'Terminus',
 
   // Unit

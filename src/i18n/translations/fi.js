@@ -5,8 +5,10 @@ export default {
 
   // General
   'general.back': 'Takaisin',
+  'general.home': 'Koti',
 
   // Map
+  'map': 'Kartta',
   'map.transit.endStation': 'Päätepysäkki',
 
   // Units
