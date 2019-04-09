@@ -4,6 +4,7 @@ import { List, ListItem, ListItemText } from '@material-ui/core';
 import { injectIntl, intlShape } from 'react-intl';
 import Container from '../../components/Container';
 import SearchBar from '../../components/SearchBar';
+import { generatePath } from '../../../config/paths';
 
 // TODO: Fix close by events and services lists with actual data items once data is accessible
 
@@ -20,7 +21,7 @@ class HomeView extends React.Component {
 
     if (history) {
       // TODO: Add query text once functionality is ready for search view
-      history.push(`/${lng || 'fi'}/search/`);
+      history.push(generatePath('search', lng, search))
     }
 
     if (search && search !== '') {

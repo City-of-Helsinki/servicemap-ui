@@ -8,6 +8,7 @@ import ResultList from '../../components/ResultList';
 import styles from './styles';
 import Loading from '../../components/Loading/Loading';
 import SearchBar from '../../components/SearchBar';
+import { generatePath } from '../../../config/paths';
 
 class SearchView extends React.Component {
   constructor(props) {
@@ -44,7 +45,7 @@ class SearchView extends React.Component {
     const lng = params && params.lng;
     e.preventDefault();
     if (history && item) {
-      history.push(`/${lng || 'fi'}/unit/${item.id}/`);
+      history.push(generatePath('unit', lng, item.id));
     }
   }
 

@@ -10,5 +10,6 @@ export default {
   ],
   "unit": {
     "api_url": "https://api.hel.fi/servicemap/v2/"
-  }
+  },
+  "default_locale": 'fi',
 }
