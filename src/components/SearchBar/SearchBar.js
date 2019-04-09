@@ -70,7 +70,7 @@ class SearchBar extends React.Component {
 
   render() {
     const {
-      classes, intl, placeholder, hideBackButton,
+      backButtonTarget, classes, intl, placeholder, hideBackButton,
     } = this.props;
     const { search, isActive } = this.state;
 
@@ -80,7 +80,7 @@ class SearchBar extends React.Component {
         <form onSubmit={this.onSubmit} className={classes.container}>
           {
             !hideBackButton
-            && <BackButton className={classes.iconButton} />
+            && <BackButton className={classes.iconButton} target={backButtonTarget || null} />
           }
 
           <InputBase
@@ -106,14 +106,16 @@ class SearchBar extends React.Component {
 }
 
 SearchBar.propTypes = {
-  hideBackButton: PropTypes.bool,
+  backButtonTarget: PropTypes.string,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
+  hideBackButton: PropTypes.bool,
   intl: intlShape.isRequired,
   onSubmit: PropTypes.func.isRequired,
   placeholder: PropTypes.string.isRequired,
 };
 
 SearchBar.defaultProps = {
+  backButtonTarget: null,
   hideBackButton: false,
 };
 

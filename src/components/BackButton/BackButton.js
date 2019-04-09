@@ -7,7 +7,7 @@ import { injectIntl, intlShape } from 'react-intl';
 
 const BackButton = (props) => {
   const {
-    className, history, intl, style,
+    className, history, intl, style, target,
   } = props;
   return (
 
@@ -17,7 +17,9 @@ const BackButton = (props) => {
       aria-label={intl.formatMessage({ id: 'general.back' })}
       onClick={(e) => {
         e.preventDefault();
-        if (history) {
+        if (target) {
+          history.push(target);
+        } else if (history) {
           history.goBack();
         }
       }}
@@ -32,11 +34,13 @@ BackButton.propTypes = {
   history: PropTypes.objectOf(PropTypes.any).isRequired,
   intl: intlShape.isRequired,
   style: PropTypes.objectOf(PropTypes.any),
+  target: PropTypes.string,
 };
 
 BackButton.defaultProps = {
   className: '',
   style: {},
+  target: null,
 };
 
 export default injectIntl(withRouter(BackButton));
