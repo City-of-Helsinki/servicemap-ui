@@ -70,7 +70,7 @@ class SearchBar extends React.Component {
 
   render() {
     const {
-      classes, intl, placeholder,
+      classes, intl, placeholder, hideBackButton,
     } = this.props;
     const { search, isActive } = this.state;
 
@@ -78,9 +78,10 @@ class SearchBar extends React.Component {
     return (
       <Paper className={`${classes.root} ${isActive ? classes.rootFocused : ''}`} elevation={1} square>
         <form onSubmit={this.onSubmit} className={classes.container}>
-          <BackButton
-            className={classes.iconButton}
-          />
+          {
+            !hideBackButton
+            && <BackButton className={classes.iconButton} />
+          }
 
           <InputBase
             className={classes.input}
@@ -105,10 +106,15 @@ class SearchBar extends React.Component {
 }
 
 SearchBar.propTypes = {
+  hideBackButton: PropTypes.bool,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   intl: intlShape.isRequired,
   onSubmit: PropTypes.func.isRequired,
   placeholder: PropTypes.string.isRequired,
+};
+
+SearchBar.defaultProps = {
+  hideBackButton: false,
 };
 
 export default withStyles(styles)(injectIntl(SearchBar));

@@ -21,7 +21,7 @@ class HomeView extends React.Component {
 
     if (history) {
       // TODO: Add query text once functionality is ready for search view
-      history.push(generatePath('search', lng, search))
+      history.push(generatePath('search', lng, search));
     }
 
     if (search && search !== '') {
@@ -34,6 +34,7 @@ class HomeView extends React.Component {
     return (
       <>
         <SearchBar
+          hideBackButton
           onSubmit={this.onSearchSubmit}
           placeholder={intl.formatMessage({ id: 'search' })}
         />
