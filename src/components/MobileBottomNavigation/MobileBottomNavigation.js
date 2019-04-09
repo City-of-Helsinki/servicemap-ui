@@ -24,13 +24,8 @@ class MobileBottomNavigation extends React.Component {
     const path = location.pathname;
 
     actions.forEach((action, index) => {
-      // If home continue
-      if (action.path === '/') {
-        return;
-      }
-
       // If pathname contains action.path
-      if (path.indexOf(action.path) === 3) {
+      if (comparePath(action.path, path)) {
         this.setState({ value: index });
       }
     });
