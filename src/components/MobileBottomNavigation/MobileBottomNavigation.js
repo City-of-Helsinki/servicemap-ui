@@ -4,6 +4,8 @@ import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+import { MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
+import { comparePath } from '../../utils/path';
 
 const styles = {
   root: {
@@ -48,19 +50,32 @@ class MobileBottomNavigation extends React.Component {
 
   render() {
     const {
-      actions, classes, style,
+      actions, classes, style, location,
     } = this.props;
+    const path = location.pathname;
     const { value } = this.state;
+    let show = false;
+    // If current location equals action path show mobile navigation
+    actions.forEach((action) => {
+      if (comparePath(action.path, path)) {
+        show = true;
+      }
+    });
+
+    if (!show) {
+      return null;
+    }
 
     return (
-      <BottomNavigation
-        style={style}
-        value={value}
-        onChange={this.handleChange}
-        showLabels
-        className={classes.root}
-      >
-        {
+      <MobileComponent>
+        <BottomNavigation
+          style={style}
+          value={value}
+          onChange={this.handleChange}
+          showLabels
+          className={classes.root}
+        >
+          {
           actions
           && actions.map(action => (
             <BottomNavigationAction
@@ -70,7 +85,8 @@ class MobileBottomNavigation extends React.Component {
             />
           ))
         }
-      </BottomNavigation>
+        </BottomNavigation>
+      </MobileComponent>
     );
   }
 }

@@ -5,6 +5,7 @@ const paths = {
     regex: /\/[a-zA-Z]{2}\/$/
   },
   map: {
+    generate: () => `/map`,
     regex: /\/[a-zA-Z]{2}\/map/
   },
   search: {

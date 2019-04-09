@@ -11,9 +11,9 @@ import { Home, Map } from '@material-ui/icons';
 import Sidebar from '../views/Sidebar';
 import MapContainer from '../views/Map/MapContainer';
 import I18n from '../i18n';
-import { MobileComponent } from './WrapperComponents/WrapperComponents';
 import MobileBottomNavigation from '../components/MobileBottomNavigation/MobileBottomNavigation';
 import config from '../../config';
+import { generatePath } from '../utils/path';
 
 
 // eslint-disable-next-line camelcase
@@ -62,8 +62,10 @@ const styles = {
 
 const DefaultLayout = (props) => {
   const {
-    classes, i18n, onLanguageChange, location, history,
+    classes, i18n, onLanguageChange, location, history, match,
   } = props;
+  const { params } = match;
+  const lng = params && params.lng;
   const isMobile = useMediaQuery(`(max-width:${mobileBreakpoint}px)`);
   const mobileMapOnly = isMobile && location.pathname.indexOf('/map') > -1; // If mobile map view
   const styles = createContentStyles(isMobile, mobileMapOnly);
@@ -106,48 +108,46 @@ const DefaultLayout = (props) => {
         <div style={styles.map}>
           <MapContainer />
         </div>
-        <MobileComponent>
-          <MobileBottomNavigation
-            style={styles.mobileNav}
-            actions={[
-              {
-                label: 'Home',
-                onClick: () => {
-                  if (history) {
-                    // TODO: Add query text once functionality is ready for search view
-                    history.push('/fi/');
-                  }
-                },
-                icon: <Home />,
-                path: '/',
+        <MobileBottomNavigation
+          style={styles.mobileNav}
+          actions={[
+            {
+              label: 'Home',
+              onClick: () => {
+                if (history) {
+                  // TODO: Add query text once functionality is ready for search view
+                  history.push(generatePath('home', lng));
+                }
               },
-              {
-                label: 'Map',
-                onClick: () => {
-                  if (history) {
-                    // TODO: Add query text once functionality is ready for search view
-                    history.push('/fi/map/');
-                  }
-                },
-                icon: <Map />,
-                path: '/map',
+              icon: <Home />,
+              path: 'home',
+            },
+            {
+              label: 'Map',
+              onClick: () => {
+                if (history) {
+                  // TODO: Add query text once functionality is ready for search view
+                  history.push(generatePath('map'), lng);
+                }
               },
-              /*
-              {
-                label: 'Settings',
-                onClick: () => {
-                  if (history) {
-                    // TODO: Add query text once functionality is ready for search view
-                    // history.push('/fi/map/');
-                  }
-                },
-                icon: <Settings />,
-                path: '/settings',
+              icon: <Map />,
+              path: 'map',
+            },
+            /*
+            {
+              label: 'Settings',
+              onClick: () => {
+                if (history) {
+                  // TODO: Add query text once functionality is ready for search view
+                  // history.push('/fi/map/');
+                }
               },
-              */
-            ]}
-          />
-        </MobileComponent>
+              icon: <Settings />,
+              path: 'settings',
+            },
+            */
+          ]}
+        />
 
       </div>
     </>
@@ -158,6 +158,7 @@ const DefaultLayout = (props) => {
 DefaultLayout.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
+  match: PropTypes.objectOf(PropTypes.any).isRequired,
   i18n: PropTypes.instanceOf(I18n),
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   onLanguageChange: PropTypes.func.isRequired,
