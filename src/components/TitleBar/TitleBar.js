@@ -13,7 +13,6 @@ const styles = theme => ({
     display: 'flex',
     flex: '0 0 auto',
   },
-
   title: {
     flex: '1 1 auto',
   },
@@ -30,7 +29,7 @@ const styles = theme => ({
 const TitleBar = ({
   classes, title, titleComponent,
 }) => (
-  <Container paper>
+  <Container>
     <div className={classes.container}>
       <BackButton
         className={classes.iconButton}
