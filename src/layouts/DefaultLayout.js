@@ -27,6 +27,7 @@ const createContentStyles = (isMobile, mobileMapOnly) => {
     sidebar: {
       width: isMobile ? '100%' : 360,
       margin: 0,
+      overflow: 'auto',
     },
     map: {
       display: 'flex',
@@ -52,11 +53,11 @@ const createContentStyles = (isMobile, mobileMapOnly) => {
 
 const styles = {
   activeRoot: {
-    flexGrow: 1,
     margin: 0,
     width: '100%',
     display: 'flex',
-    flexWrap: 'wrap',
+    flexWrap: 'nowrap',
+    height: '99.5vh',
   },
 };
 
