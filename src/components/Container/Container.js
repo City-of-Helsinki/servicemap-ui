@@ -7,7 +7,8 @@ const styles = theme => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    margin: theme.spacing.unit,
+    marginTop: theme.spacing.unit,
+    marginBottom: theme.spacing.unit,
     padding: theme.spacing.unit,
   },
   title: {
