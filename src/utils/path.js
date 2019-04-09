@@ -2,11 +2,8 @@ import paths from '../../config/paths';
 import config from '../../config';
 
 export const comparePath = (path, location) => {
-  console.log('Path key: ', path);
-  console.log('Location: ', location);
-  if (paths.hasOwnProperty(path)) {
+  if (Object.prototype.hasOwnProperty.call(paths, path)) {
     const { regex } = paths[path];
-    console.log(regex, regex.exec(location));
     if (regex && regex.exec(location)) {
       return true;
     }
@@ -16,8 +13,9 @@ export const comparePath = (path, location) => {
 
 // Generate path for page
 export const generatePath = (path, locale = config.default_locale, data = null) => {
-  if (paths.hasOwnProperty(path)) {
+  if (Object.prototype.hasOwnProperty.call(paths, path)) {
     const pathString = paths[path].generate(data); // Create path string
     return `/${locale || config.default_locale}${pathString}`; // Return path with locale
   }
+  return null;
 };

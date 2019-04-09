@@ -8,7 +8,7 @@ export default {
   'general.home': 'Home', // TODO: Translate
 
   // Map
-  'map': 'Map',
+  'map': 'Map', // TODO: Translate
   'map.transit.endStation': 'Ändhållplats',
 
   // Units
