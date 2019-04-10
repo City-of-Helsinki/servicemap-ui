@@ -137,7 +137,7 @@ class UnitView extends React.Component {
             />
 
             {/* Unit description  TODO: Make this own component */}
-            {unit.description || this.sectionFilter(unit.connections, 'OTHER_INFO') ? (
+            {unit.description || this.sectionFilter(unit.connections, 'OTHER_INFO').length > 0 ? (
               <div className={classes.left}>
                 {/* Description title */}
                 <Typography className={classes.subtitle} variant="subtitle1">
@@ -155,11 +155,11 @@ class UnitView extends React.Component {
                   if (item.value.www) {
                     return (
                       <Typography
+                        key={item.id}
                         className={classes.paragraph}
-                        component="a"
                         variant="body2"
                       >
-                        <Link color="#2242C7" href={getLocaleText(item.value.www)} target="_blank">
+                        <Link className={classes.link} href={getLocaleText(item.value.www)} target="_blank">
                           {`${getLocaleText(item.value.name)} ${intl.formatMessage({ id: 'unit.opens.new.tab' })}`}
                         </Link>
 
@@ -167,8 +167,12 @@ class UnitView extends React.Component {
                     );
                   }
                   return (
-                    <Typography className={classes.paragraph} variant="body2">
-                      {item.value.name.fi}
+                    <Typography
+                      key={item.id}
+                      className={classes.paragraph}
+                      variant="body2"
+                    >
+                      {getLocaleText(item.value.name)}
                     </Typography>
                   );
                 })}

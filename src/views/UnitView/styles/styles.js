@@ -32,6 +32,9 @@ export default theme => ({
     borderBottom: '1px solid rgba(0,0,0,0.2)',
   },
 
+  link: {
+    color: '#0000EE',
+  },
   left: {
     textAlign: 'left',
     marginLeft: theme.spacing.unit * 2,
