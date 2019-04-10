@@ -140,7 +140,11 @@ class UnitView extends React.Component {
             {unit.description || this.sectionFilter(unit.connections, 'OTHER_INFO').length > 0 ? (
               <div className={classes.left}>
                 {/* Description title */}
-                <Typography className={classes.subtitle} variant="subtitle1">
+                <Typography
+                  className={classes.subtitle}
+                  component="h4"
+                  variant="subtitle1"
+                >
                   {<FormattedMessage id="unit.description" />}
                 </Typography>
                 <Divider />
