@@ -31,21 +31,29 @@ export default theme => ({
   borderBottom: {
     borderBottom: '1px solid rgba(0,0,0,0.2)',
   },
+
   left: {
     textAlign: 'left',
     marginLeft: theme.spacing.unit * 2,
+    marginRight: theme.spacing.unit * 2,
+  },
+  marginVertical: {
+    marginTop: theme.spacing.unit * 2,
+    marginBottom: theme.spacing.unit * 2,
   },
   title: {
     display: 'flex',
-    margin: theme.spacing.unit * 2,
-  },
-  titleIcon: {
-    display: 'flex',
-    marginRight: theme.spacing.unit * 2,
+    marginTop: theme.spacing.unit * 2,
+    marginBottom: theme.spacing.unit * 2,
   },
   subtitle: {
-    marginTop: theme.spacing.unit * 1.75,
-    marginBottom: theme.spacing.unit * 1.75,
+    marginTop: theme.spacing.unit * 2,
+    marginBottom: theme.spacing.unit * 2,
+  },
+  paragraph: {
+    marginTop: theme.spacing.unit * 2,
+    marginBottom: theme.spacing.unit * 2,
+    whiteSpace: 'pre-line',
   },
   divider: {
     marginLeft: theme.spacing.unit * 9,

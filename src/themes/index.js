@@ -21,6 +21,7 @@ const SMTheme = createMuiTheme({
     body1: {
       fontSize: '1.043rem',
       letterSpacing: '0.03125rem', // 0.5px
+      lineHeight: '1.75rem',
     },
     body2: {
       fontSize: '0.913rem',

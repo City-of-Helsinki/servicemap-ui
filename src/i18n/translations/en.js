@@ -19,6 +19,8 @@ export default {
   'unit.contact.info': 'Contact information',
   'unit.services': 'Services',
   'unit.e.services': 'Electronic services', // TODO: verify
+  'unit.homepage': 'Home page',
+  'unit.description': 'Unit description',
   'unit.school.year': 'School year',
   'unit.opens.new.tab': '(new tab)',
   'unit.call.number': '(call)',
