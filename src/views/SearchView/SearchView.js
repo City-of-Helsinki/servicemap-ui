@@ -8,16 +8,16 @@ import ResultList from '../../components/ResultList';
 import styles from './styles';
 import Loading from '../../components/Loading/Loading';
 import SearchBar from '../../components/SearchBar';
-import { generatePath } from '../../../config/paths';
+import { generatePath } from '../../utils/path';
 
 class SearchView extends React.Component {
   constructor(props) {
     super(props);
-    const { changeSelectedUnit } = props
-    
+    const { changeSelectedUnit } = props;
+
     // Reset selected unit on SearchView
     if (changeSelectedUnit) {
-      changeSelectedUnit(null); 
+      changeSelectedUnit(null);
     }
   }
 
@@ -97,6 +97,7 @@ export default injectIntl(withStyles(styles)(SearchView));
 
 // Typechecking
 SearchView.propTypes = {
+  changeSelectedUnit: PropTypes.func,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   count: PropTypes.number,
   fetchUnits: PropTypes.func,
@@ -108,6 +109,7 @@ SearchView.propTypes = {
 };
 
 SearchView.defaultProps = {
+  changeSelectedUnit: () => {},
   count: 0,
   fetchUnits: () => {},
   isFetching: false,

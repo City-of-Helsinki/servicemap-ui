@@ -8,6 +8,7 @@ export default {
   'general.home': 'Koti',
 
   // Map
+  'map': 'Kartta',
   'map.transit.endStation': 'Päätepysäkki',
 
   // Units
