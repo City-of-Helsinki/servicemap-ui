@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Divider, Typography, withStyles } from '@material-ui/core';
-import { FormattedMessage } from 'react-intl';
+import {
+  Divider, Typography, withStyles, Link,
+} from '@material-ui/core';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import AddressIcon from '@material-ui/icons/Place';
 import { fetchUnit, fetchUnits } from '../../redux/actions/unit';
 import { getSelectedUnit } from '../../redux/selectors/unit';
@@ -45,7 +47,7 @@ class UnitView extends React.Component {
     }
   }
 
-  // Filters connections by section
+  // Filters connections data by section
   sectionFilter = (list, section) => {
     const filteredList = [];
     let i = 0;
@@ -63,19 +65,8 @@ class UnitView extends React.Component {
     return filteredList;
   }
 
-  getOpeningHours = (unit) => {
-    const value = unit.connections.filter(item => item.section_type === 'OPENING_HOURS')[0];
-    if (value) {
-      if (value.www) {
-        return { type: 'OPENING_HOURS_LINK', value };
-      }
-      return { type: 'OPENING_HOURS', value };
-    }
-    return {};
-  }
-
   render() {
-    const { classes, getLocaleText } = this.props;
+    const { classes, getLocaleText, intl } = this.props;
     const { unitData, isFetching } = this.state;
     let { unit } = this.props;
     if (unitData) {
@@ -96,8 +87,10 @@ class UnitView extends React.Component {
                 unit.picture_url
                 && <img className={classes.image} alt="Unit" src={unit.picture_url} />
               }
+
+            {/* Unit title */}
             <div className={classes.title}>
-              <AddressIcon className={classes.titleIcon} />
+              <AddressIcon className={classes.left} />
               <Typography
                 className={classes.left}
                 component="h3"
@@ -108,27 +101,85 @@ class UnitView extends React.Component {
             </div>
             <Divider className={classes.divider} />
 
-            <InfoList // Contact information
-              getLocaleText={getLocaleText}
+            {/* Highlights */}
+            <div className={classes.marginVertical}>
+              {this.sectionFilter(unit.connections, 'HIGHLIGHT').map(item => (
+                <Typography
+                  key={item.id}
+                  className={classes.left}
+                  variant="body1"
+                >
+                  {getLocaleText(item.value.name)}
+                </Typography>
+              ))}
+            </div>
+
+            {/* Contact information */}
+            <InfoList
               data={[
                 { type: 'ADDRESS', value: unit.street_address },
-                this.getOpeningHours(unit),
-                { type: 'PHONE', value: unit.phone },
-                { type: 'CONTACT', value: unit.connections.filter(item => item.section_type === 'PHONE_OR_EMAIL')[0] },
+                ...this.sectionFilter(unit.connections, 'OPENING_HOURS'),
+                { type: 'PHONE', value: { phone: unit.phone } },
+                ...this.sectionFilter(unit.connections, 'PHONE_OR_EMAIL'),
               ]}
               title={<FormattedMessage id="unit.contact.info" />}
             />
-            <InfoList // E-services
-              getLocaleText={getLocaleText}
-              data={[...this.sectionFilter(unit.connections, 'LINK'), ...this.sectionFilter(unit.connections, 'ESERVICE_LINK')]}
+
+            {/* E-services */}
+            <InfoList
+              data={[
+                { type: 'LINK', value: unit.www ? { name: intl.formatMessage({ id: 'unit.homepage' }), www: unit.www } : null },
+                ...this.sectionFilter(unit.connections, 'LINK'),
+                ...this.sectionFilter(unit.connections, 'ESERVICE_LINK'),
+                // ...this.sectionFilter(unit.connections, 'OTHER_INFO'),
+              ]}
               title={<FormattedMessage id="unit.e.services" />}
             />
-            <InfoList // Unit services
-              getLocaleText={getLocaleText}
+
+            {/* Unit description  TODO: Make this own component */}
+            {unit.description || this.sectionFilter(unit.connections, 'OTHER_INFO') ? (
+              <div className={classes.left}>
+                {/* Description title */}
+                <Typography className={classes.subtitle} variant="subtitle1">
+                  {<FormattedMessage id="unit.description" />}
+                </Typography>
+                <Divider />
+                {/* Description text */}
+                {unit.description ? (
+                  <Typography className={classes.paragraph} variant="body2">
+                    {unit.description ? getLocaleText(unit.description) : null}
+                  </Typography>
+                ) : null}
+                {/* Other info texts + links */}
+                {this.sectionFilter(unit.connections, 'OTHER_INFO').map((item) => {
+                  if (item.value.www) {
+                    return (
+                      <Typography
+                        className={classes.paragraph}
+                        component="a"
+                        variant="body2"
+                      >
+                        <Link color="#2242C7" href={getLocaleText(item.value.www)} target="_blank">
+                          {`${getLocaleText(item.value.name)} ${intl.formatMessage({ id: 'unit.opens.new.tab' })}`}
+                        </Link>
+
+                      </Typography>
+                    );
+                  }
+                  return (
+                    <Typography className={classes.paragraph} variant="body2">
+                      {item.value.name.fi}
+                    </Typography>
+                  );
+                })}
+              </div>
+            ) : null}
+
+            {/* Unit services */}
+            <InfoList
               data={this.sectionFilter(unit.services, 'SERVICE')}
               title={<FormattedMessage id="unit.services" />}
             />
-
 
             <span>
               {unit.provider && <FormattedMessage id="unit.data_source" defaultMessage={'Source: {data_source}'} values={{ data_source: unit.provider }} />}
@@ -163,10 +214,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default withStyles(styles)(connect(
+export default injectIntl(withStyles(styles)(connect(
   mapStateToProps,
   { fetchUnit, fetchUnits, changeSelectedUnit },
-)(UnitView));
+)(UnitView)));
 
 // Typechecking
 UnitView.propTypes = {
@@ -175,6 +226,7 @@ UnitView.propTypes = {
   match: PropTypes.objectOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   getLocaleText: PropTypes.func.isRequired,
+  intl: intlShape.isRequired,
 };
 
 UnitView.defaultProps = {
