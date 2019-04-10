@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Typography, withStyles } from '@material-ui/core';
+import { Divider, Typography, withStyles } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
+import AddressIcon from '@material-ui/icons/Place';
 import { fetchUnit, fetchUnits } from '../../redux/actions/unit';
 import { getSelectedUnit } from '../../redux/selectors/unit';
+import { getLocaleString } from '../../redux/selectors/locale';
 import { changeSelectedUnit } from '../../redux/actions/filter';
 
 import InfoList from './components/InfoList';
@@ -73,7 +75,7 @@ class UnitView extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, getLocaleText } = this.props;
     const { unitData, isFetching } = this.state;
     let { unit } = this.props;
     if (unitData) {
@@ -94,12 +96,20 @@ class UnitView extends React.Component {
                 unit.picture_url
                 && <img className={classes.image} alt="Unit" src={unit.picture_url} />
               }
-
-            <Typography color="primary" variant="h3">
-              {unit.name && unit.name.fi}
-            </Typography>
+            <div className={classes.title}>
+              <AddressIcon className={classes.titleIcon} />
+              <Typography
+                className={classes.left}
+                component="h3"
+                variant="h6"
+              >
+                {unit.name && getLocaleText(unit.name)}
+              </Typography>
+            </div>
+            <Divider className={classes.divider} />
 
             <InfoList // Contact information
+              getLocaleText={getLocaleText}
               data={[
                 { type: 'ADDRESS', value: unit.street_address },
                 this.getOpeningHours(unit),
@@ -109,10 +119,12 @@ class UnitView extends React.Component {
               title={<FormattedMessage id="unit.contact.info" />}
             />
             <InfoList // E-services
+              getLocaleText={getLocaleText}
               data={[...this.sectionFilter(unit.connections, 'LINK'), ...this.sectionFilter(unit.connections, 'ESERVICE_LINK')]}
               title={<FormattedMessage id="unit.e.services" />}
             />
             <InfoList // Unit services
+              getLocaleText={getLocaleText}
               data={this.sectionFilter(unit.services, 'SERVICE')}
               title={<FormattedMessage id="unit.services" />}
             />
@@ -127,16 +139,8 @@ class UnitView extends React.Component {
             {
                 unit.contract_type
                 && unit.contract_type.description
-                && unit.contract_type.description.fi
-                && <p className="text-small">{unit.contract_type.description.fi}</p>
-              }
-
-            <p>{`${unit.street_address && unit.street_address.fi}, ${unit.address_zip} ${unit.municipality ? unit.municipality.charAt(0).toUpperCase() + unit.municipality.slice(1) : ''}`}</p>
-
-            {
-                unit.www && unit.www.fi
-                && <a href={unit.www.fi}><p>Kotisivu</p></a>
-              }
+                && <p className="text-small">{getLocaleText(unit.contract_type.description)}</p>
+            }
           </div>
         </div>
       );
@@ -150,9 +154,14 @@ class UnitView extends React.Component {
 }
 
 // Listen to redux state
-const mapStateToProps = state => ({
-  unit: getSelectedUnit(state),
-});
+const mapStateToProps = (state) => {
+  const unit = getSelectedUnit(state);
+  const getLocaleText = textObject => getLocaleString(state, textObject);
+  return {
+    unit,
+    getLocaleText,
+  };
+};
 
 export default withStyles(styles)(connect(
   mapStateToProps,
@@ -165,6 +174,7 @@ UnitView.propTypes = {
   changeSelectedUnit: PropTypes.func.isRequired,
   match: PropTypes.objectOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
+  getLocaleText: PropTypes.func.isRequired,
 };
 
 UnitView.defaultProps = {

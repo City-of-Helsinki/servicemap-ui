@@ -19,28 +19,47 @@ const SMTheme = createMuiTheme({
       'Lato',
     ].join(','),
     body1: {
-      fontSize: '1rem',
+      fontSize: '1.043rem',
+      letterSpacing: '0.03125rem', // 0.5px
+    },
+    body2: {
+      fontSize: '0.913rem',
+      letterSpacing: '0.015625rem', // 0.25px
+      lineHeight: '1.25rem',
     },
     subtitle1: {
-      fontSize: '1.2rem',
+      fontSize: '1.03rem',
+      fontWeight: 'bold',
+      letterSpacing: '0.00937rem', // 0.15px
+      lineHeight: '1.5rem',
     },
     h1: {
-      fontSize: '2.2rem',
+      fontSize: '6.259rem',
+      letterSpacing: '-0.09375em', // -1.5px
     },
     h2: {
-      fontSize: '2rem',
+      fontSize: '3.862rem',
+      fontWeight: 'bold',
+      letterSpacing: '-0.03125rem', // -0.5px
     },
     h3: {
-      fontSize: '1.8rem',
+      fontSize: '3.089rem',
+      fontWeight: 'bold',
+      letterSpacing: 0,
     },
     h4: {
-      fontSize: '1.6rem',
+      fontSize: '2.214rem',
+      letterSpacing: '0.015625rem', // 0.25px
     },
     h5: {
-      fontSize: '1.4rem',
+      fontSize: '1.564rem',
+      letterSpacing: 0,
     },
     h6: {
-      fontSize: '1.2rem',
+      fontSize: '1.288rem',
+      fontWeight: 'bold',
+      letterSpacing: '0.015625rem', // 0.25px
+      lineHeight: '1.5rem',
     },
   },
   spacing: {
