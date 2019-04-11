@@ -14,7 +14,9 @@ import I18n from '../i18n';
 import MobileBottomNavigation from '../components/MobileBottomNavigation/MobileBottomNavigation';
 import config from '../../config';
 import { generatePath } from '../utils/path';
+import HomeLogos from '../components/Logos/Home';
 
+const { HomeLogoLight } = HomeLogos;
 
 // eslint-disable-next-line camelcase
 const mobileBreakpoint = config.mobile_ui_breakpoint;
@@ -84,16 +86,21 @@ const DefaultLayout = (props) => {
               spacing={24}
             >
               <Grid item>
-                <Typography color="inherit" variant="body1">
-                  <FormattedMessage id="app.title" />
-                </Typography>
+                <a href={generatePath('home', lng)} style={{ display: 'inline-block' }} className="focus-dark-background">
+                  <div role="img" aria-hidden="true">
+                    <HomeLogoLight />
+                  </div>
+                  <Typography className="sr-only" color="inherit" component="h1" variant="body1">
+                    <FormattedMessage id="app.title" />
+                  </Typography>
+                </a>
               </Grid>
               <Grid item>
                 {
                   i18n.availableLocales
                     .filter(locale => locale !== i18n.locale)
                     .map(locale => (
-                      <Button key={locale} color="inherit" onClick={() => onLanguageChange(locale)}>{i18n.localeText(locale)}</Button>
+                      <Button className="focus-dark-background" key={locale} color="inherit" onClick={() => onLanguageChange(locale)}>{i18n.localeText(locale)}</Button>
                     ))
                 }
               </Grid>
