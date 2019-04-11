@@ -5,6 +5,8 @@ import { injectIntl, intlShape } from 'react-intl';
 import Container from '../../components/Container';
 import SearchBar from '../../components/SearchBar';
 import { generatePath } from '../../utils/path';
+import MobileComponent from '../../layouts/WrapperComponents/WrapperComponents';
+import HomeLogo from '../../components/Logos/HomeLogo';
 
 // TODO: Fix close by events and services lists with actual data items once data is accessible
 
@@ -33,6 +35,11 @@ class HomeView extends React.Component {
     const { intl } = this.props;
     return (
       <>
+        <MobileComponent>
+          <Container>
+            <HomeLogo dark aria-label={intl.formatMessage({ id: 'app.title' })} />
+          </Container>
+        </MobileComponent>
         <SearchBar
           hideBackButton
           onSubmit={this.onSearchSubmit}
