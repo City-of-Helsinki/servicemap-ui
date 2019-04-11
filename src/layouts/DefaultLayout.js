@@ -14,9 +14,7 @@ import I18n from '../i18n';
 import MobileBottomNavigation from '../components/MobileBottomNavigation/MobileBottomNavigation';
 import config from '../../config';
 import { generatePath } from '../utils/path';
-import HomeLogos from '../components/Logos/Home';
-
-const { HomeLogoLight } = HomeLogos;
+import HomeLogo from '../components/Logos/HomeLogo';
 
 // eslint-disable-next-line camelcase
 const mobileBreakpoint = config.mobile_ui_breakpoint;
@@ -87,9 +85,7 @@ const DefaultLayout = (props) => {
             >
               <Grid item>
                 <a href={generatePath('home', lng)} style={{ display: 'inline-block' }} className="focus-dark-background">
-                  <div role="img" aria-hidden="true">
-                    <HomeLogoLight />
-                  </div>
+                  <HomeLogo aria-hidden="true" />
                   <Typography className="sr-only" color="inherit" component="h1" variant="body1">
                     <FormattedMessage id="app.title" />
                   </Typography>
