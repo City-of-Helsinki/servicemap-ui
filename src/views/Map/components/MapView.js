@@ -51,6 +51,9 @@ class MapView extends React.Component {
     const {
       Map, TileLayer, ZoomControl, Marker, Popup, Polygon, highlightedDistrict,
     } = this.state;
+
+    const unitListFiltered = unitList.filter(unit => unit.object_type === 'unit');
+
     if (Map) {
       return (
         <Map
@@ -76,9 +79,9 @@ class MapView extends React.Component {
             url={mapBase.options.url}
             attribution='&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors'
           />
-          {unitList.map(unit => {
+          {unitListFiltered.map((unit) => {
             // Show markers with location
-            if(unit && unit.location) {
+            if (unit && unit.location) {
               return (
                 <Marker
                   key={unit.id}
@@ -86,7 +89,7 @@ class MapView extends React.Component {
                   icon={drawIcon(unit, mapBase.options.name)}
                 />
               );
-            }
+            } return null;
           })}
           {highlightedDistrict ? (
             <Polygon

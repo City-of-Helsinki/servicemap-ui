@@ -1,57 +1,63 @@
-/* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { injectIntl, intlShape } from 'react-intl';
 import { Divider, Typography } from '@material-ui/core';
 import List from '@material-ui/core/List';
 import SimpleListItem from '../../../components/SimpleListItem';
 import styles from '../styles/styles';
-import itemData from '../constants/itemData';
+import getItemIconData from '../constants/itemIconData';
+import { getLocaleString } from '../../../redux/selectors/locale';
 
 class InfoList extends React.Component {
-  getItem = id => itemData[id];
-
-  returnValue = (path, data) => {
+  handleItemClick = (data) => {
     const { getLocaleText } = this.props;
-    // Check if textfield requires multiple values
-    if (path.length > 1) {
-      let fullText = '';
-      path.forEach((item) => {
-        let text = item.reduce((obj, key) => obj[key], data.value);
-        if (typeof (text) === 'object') {
-          text = getLocaleText(text);
-        }
-        fullText += `${text}, `;
-      });
-      return fullText;
+    if (data.www) {
+      let url = data.www;
+      if (typeof (url) === 'object') {
+        url = getLocaleText(url);
+      }
+      window.open(url);
+    } else if (data.phone) {
+      console.log('call number: ', data.phone);
+    } else {
+      console.log('error');
     }
-    let value = path[0].reduce((obj, key) => obj[key], data.value);
-    // If school year
-    if (data.value.period && Array.isArray(value)) {
-      value = ` ${value[0]} - ${value[1]}`;
-    }
-
-    if (typeof (value) === 'object') {
-      value = getLocaleText(value);
-    }
-    return value;
   };
 
-  handleItemClick = (item, data) => {
+  formString = (data) => {
     const { getLocaleText } = this.props;
-    if (item.link) {
-      if (item.urlPath) {
-        let url = this.returnValue(item.urlPath, data);
-        if (typeof (url) === 'object') {
-          url = getLocaleText(url);
-        }
-        window.open(url);
+    const first = Object.keys(data)[0];
+    let fullText = '';
+
+    if (typeof data !== 'object') {
+      return data;
+    }
+    if (first === 'fi' || first === 'en' || first === 'sv') {
+      return getLocaleText(data);
+    }
+    if (data.name) {
+      if (typeof data.name === 'object') {
+        fullText += getLocaleText(data.name);
       } else {
-        console.log('call number');
+        fullText += data.name;
       }
     }
-  };
+    if (data.contact_person) {
+      fullText += `, ${data.contact_person}`;
+    }
+    if (data.phone) {
+      fullText += `, ${data.phone}`;
+    }
+    if (data.email) {
+      fullText += `, ${data.email}`;
+    }
+    if (fullText.charAt(0) === ',') {
+      fullText = fullText.slice(2);
+    }
+    return fullText;
+  }
 
   render() {
     const {
@@ -74,38 +80,44 @@ class InfoList extends React.Component {
             >
               {title}
             </Typography>
+
             <Divider className={classes.left} />
+
             <List disablePadding>
               {filteredData.map((data, i) => {
-                const item = this.getItem(data.type);
                 let text = '';
-
                 if (data.value && data.type) {
-                  text += `${this.returnValue(item.textPaths, data)} `;
-                  if (item.urlPath) {
-                    text += intl.formatMessage({ id: 'unit.opens.new.tab' });
+                  text = this.formString(data.value);
+
+                  // Add extra text
+                  if (data.value.www) {
+                    text += ` ${intl.formatMessage({ id: 'unit.opens.new.tab' })}`;
                   }
-                  if (!item.urlPath && item.link) {
-                    text += intl.formatMessage({ id: 'unit.call.number' });
+                  if (data.value.phone) {
+                    text += ` ${intl.formatMessage({ id: 'unit.call.number' })}`;
                   }
                   if (data.value.period) {
-                    text += intl.formatMessage({ id: 'unit.school.year' });
-                    text += this.returnValue(item.periodPath, data);
+                    text += ` ${intl.formatMessage({ id: 'unit.school.year' })}`;
+                    text += ` ${data.value.period[0]} - ${data.value.period[1]}`;
                   }
+
                   text = text.charAt(0).toUpperCase() + text.slice(1);
-                  return (
-                    <div key={data.type + data.id}>
-                      <SimpleListItem
-                        icon={item.icon}
-                        link={item.link}
-                        text={text}
-                        handleItemClick={() => this.handleItemClick(item, data)}
-                      />
-                      {i + 1 !== filteredData.length ? (
-                        <Divider className={classes.divider} />
-                      ) : null}
-                    </div>
-                  );
+
+                  if (text !== '') {
+                    return (
+                      <div key={data.type + data.id}>
+                        <SimpleListItem
+                          icon={getItemIconData(data.type, data.value)}
+                          link={!!data.value.www || !!data.value.phone}
+                          text={text}
+                          handleItemClick={() => this.handleItemClick(data.value)}
+                        />
+                        {i + 1 !== filteredData.length ? ( // Dont add divider if last item on list
+                          <Divider className={classes.divider} />
+                        ) : null}
+                      </div>
+                    );
+                  }
                 } return null;
               })}
             </List>
@@ -119,8 +131,17 @@ class InfoList extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  const getLocaleText = textObject => getLocaleString(state, textObject);
+  return {
+    getLocaleText,
+  };
+};
 
-export default injectIntl(withStyles(styles)(InfoList));
+
+export default injectIntl(withStyles(styles)(connect(
+  mapStateToProps,
+)(InfoList)));
 
 InfoList.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
