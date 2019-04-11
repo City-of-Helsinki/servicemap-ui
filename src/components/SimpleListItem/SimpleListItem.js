@@ -41,7 +41,8 @@ const SimpleListItem = (props) => {
 
 const listItemStyles = theme => ({
   listItem: {
-    height: '3.5rem',
+    height: '100%',
+    minHeight: '3.5rem',
     padding: 0,
   },
   textContainer: {
