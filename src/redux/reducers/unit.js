@@ -31,6 +31,18 @@ export default (state = initialState, action) => {
         count: 0,
         max: 0,
       };
+    case 'UNITS_UPDATE_FETCH_SUCCESS':
+      return {
+        ...state,
+        isFetching: false,
+        errorMessage: null,
+        data: state.data.map((unit) => {
+          if (unit.id === action.unit.id) {
+            return { ...unit, ...action.unit };
+          }
+          return { ...unit };
+        }),
+      };
     case 'UNITS_FETCH_PROGRESS_UPDATE':
       return {
         ...state,
