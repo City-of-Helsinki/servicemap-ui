@@ -36,6 +36,7 @@ export default (state = initialState, action) => {
         ...state,
         isFetching: false,
         errorMessage: null,
+        // This checks which unit on the list was updated and updates its data
         data: state.data.map((unit) => {
           if (unit.id === action.unit.id) {
             return { ...unit, ...action.unit };
