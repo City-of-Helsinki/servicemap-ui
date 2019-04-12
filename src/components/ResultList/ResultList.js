@@ -6,6 +6,7 @@ import {
 import { Menu } from '@material-ui/icons';
 import { FormattedMessage } from 'react-intl';
 import ResultItem from './ResultItem';
+import { drawIcon } from '../../views/Map/utils/drawIcon';
 
 const styles = theme => ({
   root: {
@@ -76,7 +77,21 @@ class ResultList extends React.Component {
           {
             data && data.length
             && data.map((item) => {
-              const { id } = item;
+              // eslint-disable-next-line camelcase
+              const { id, object_type } = item;
+              // Figure out correct icon for item
+              let icon = null;
+              // eslint-disable-next-line camelcase
+              switch (object_type) {
+                case 'unit':
+                  icon = <img alt="" src={drawIcon(item, null, true)} style={{ height: 24 }} aria-hidden="true" />;
+                  break;
+                case 'service':
+                  icon = <Menu />;
+                  break;
+                default:
+                  icon = false;
+              }
               if (item) {
                 return (
                   <ResultItem
@@ -85,7 +100,7 @@ class ResultList extends React.Component {
                       onItemClick(e, item);
                     }}
                     data={item}
-                    icon={<Menu />}
+                    icon={icon}
                     listId={listId}
                   />
                 );
