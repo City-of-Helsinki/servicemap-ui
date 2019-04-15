@@ -75,7 +75,7 @@ const ResultItem = ({
 
   // Distance text
   // TODO: Change to check data for distance once location info is available
-  const distance = '100';
+  const distance = null; // '100';
 
   return (
     <>
@@ -151,17 +151,22 @@ const ResultItem = ({
               </Typography>
             </div>
 
-            <div className={`${classes.rightColumn} ${classes.bottomColumn}`}>
-              <Typography
-                id={`${listId}-result-item-accessibility-${id}`}
-                className={`${classes.smallFont} ${classes.marginLeft}`}
-                component="p"
-                variant="caption"
-                aria-hidden="true"
-              >
-                {accessText}
-              </Typography>
-            </div>
+            {
+              accessText
+              && (
+              <div className={`${classes.rightColumn} ${classes.bottomColumn}`}>
+                <Typography
+                  id={`${listId}-result-item-accessibility-${id}`}
+                  className={`${classes.smallFont} ${classes.marginLeft}`}
+                  component="p"
+                  variant="caption"
+                  aria-hidden="true"
+                >
+                  {accessText}
+                </Typography>
+              </div>
+              )
+            }
 
           </div>
         </div>
