@@ -70,16 +70,6 @@ class SearchView extends React.Component {
           placeholder={intl && intl.formatMessage({ id: 'search.input.placeholder' })}
         />
         <Divider />
-<<<<<<< HEAD
-        {
-          isFetching
-          && (
-          <Paper className={classes.label} elevation={1} square>
-            <Loading text={intl && intl.formatMessage({ id: 'search.loading.units' }, { count, max })} progress={progress} />
-          </Paper>
-          )
-        }
-=======
         <Paper className={classes.label} elevation={1} square aria-live="polite" style={paperStyles}>
           {
             isFetching
@@ -109,7 +99,6 @@ class SearchView extends React.Component {
           </Typography>
 
         </Paper>
->>>>>>> Add live-area with appropriate srOnly texts to search view
         {
           resultsShowing
           && (
