@@ -1,3 +1,5 @@
+import { getAccesibilityColor, getDefaultAccessibilityColor } from '../../../utils/unitHelper';
+
 // This class draws the marker icon into canvas and returns it as png
 
 // Constants
@@ -22,6 +24,7 @@ const stemDefaults = {
   control: 1030,
 };
 
+const defaultStemColor = '#333';
 const stemColors = {
   servicemap: {
     strokeStyle: '#333',
@@ -37,6 +40,8 @@ const stemColors = {
   },
 };
 
+/*
+Old berry colors
 const berryColors = {
   // Housing and environment
   1400: 'rgb(77, 139, 0)',
@@ -57,6 +62,7 @@ const berryColors = {
   // Public safety
   1061: 'rgb(240, 66, 0)',
 };
+*/
 
 const berryCenter = (value) => {
   let rotation = value;
@@ -66,14 +72,18 @@ const berryCenter = (value) => {
   return [x, y];
 };
 
-const getColor = (mapLayer, property) => stemColors[mapLayer][property];
+const getColor = (mapLayer, property) => {
+  if (mapLayer && property) {
+    return stemColors[mapLayer][property];
+  }
+  return defaultStemColor;
+};
 
 // Draw functions
-const drawBerry = (ctx, unit) => {
-  const point = berryCenter(70 + (unit.id % 40));
+const drawBerry = (ctx, center, color) => {
   ctx.beginPath();
-  ctx.fillStyle = berryColors[unit.root_service_nodes[0]];
-  ctx.arc(...point, berryDefaults.radius * ratio, 0, 2 * Math.PI);
+  ctx.fillStyle = color;
+  ctx.arc(...center, berryDefaults.radius * ratio, 0, 2 * Math.PI);
   ctx.fill();
   ctx.strokeStyle = 'rgba(0,0,0,1.0)';
   const oldComposite = ctx.globalCompositeOperation;
@@ -83,14 +93,14 @@ const drawBerry = (ctx, unit) => {
   ctx.globalCompositeOperation = oldComposite;
   ctx.closePath();
   ctx.beginPath();
-  ctx.arc(...point, berryDefaults.radius * ratio - 1, 0, 2 * Math.PI);
+  ctx.arc(...center, berryDefaults.radius * ratio - 1, 0, 2 * Math.PI);
   ctx.strokeStyle = '#fcf7f5';
   ctx.lineWidth = 1;
   ctx.stroke();
   ctx.closePath();
 };
 
-const drawStem = (ctx, id, mapLayer) => {
+const drawStem = (ctx, berryCenter, mapLayer) => {
   ctx.strokeStyle = getColor(mapLayer, 'strokeStyle');
   ctx.lineWidth = ratio * stemDefaults.width;
   ctx.lineJoin = 'round';
@@ -103,7 +113,7 @@ const drawStem = (ctx, id, mapLayer) => {
   ctx.lineTo(...point);
   const controlPoint = point;
   controlPoint[1] -= ratio * stemDefaults.control;
-  point = berryCenter(70 + (id % 40));
+  point = berryCenter;
   ctx.quadraticCurveTo(...controlPoint, ...point);
   ctx.stroke();
   ctx.closePath();
@@ -115,24 +125,64 @@ const drawNumber = (ctx, number) => {
 };
 
 
-const drawIcon = (unit, mapLayer) => {
-  const L = require('leaflet'); // eslint-disable-line global-require
+export const drawIcon = (unit, mapLayer, withoutCurve = false) => {
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
   canvas.height = canvasSize.height;
   canvas.width = canvasSize.width;
 
+  // Berry calculation
+  let berryCenterPoint;
+  if (withoutCurve) {
+    berryCenterPoint = berryCenter(90); // Creates straight line
+  } else {
+    berryCenterPoint = berryCenter(70 + (unit.id % 40));
+  }
+  const berryColor = getAccesibilityColor(unit);
+
   if (Array.isArray(unit)) {
-    drawStem(ctx, unit.id, mapLayer);
-    drawBerry(ctx, unit);
+    drawStem(ctx, berryCenterPoint, mapLayer);
+    drawBerry(ctx, berryCenterPoint, berryColor);
     drawNumber(ctx, unit.length);
   }
-  drawStem(ctx, unit.id, mapLayer);
-  drawBerry(ctx, unit);
+  drawStem(ctx, berryCenterPoint, mapLayer);
+  drawBerry(ctx, berryCenterPoint, berryColor);
+
+  return canvas.toDataURL();
+};
+
+// TODO: Change to font icon once we have it
+// Temporary solution
+export const drawServiceIcon = (mapLayer) => {
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.height = canvasSize.height;
+  canvas.width = canvasSize.width;
+  const berryColor = 'gray';
+
+  // Berry calculation
+  let berryCenterPoint;
+  berryCenterPoint = berryCenter(90); // Creates straight line
+  drawStem(ctx, berryCenterPoint, mapLayer);
+  drawBerry(ctx, berryCenterPoint, berryColor);
+
+  berryCenterPoint = berryCenter(90 + 40);
+  drawStem(ctx, berryCenterPoint, mapLayer);
+  drawBerry(ctx, berryCenterPoint, berryColor);
+
+  berryCenterPoint = berryCenter(90 - 40);
+  drawStem(ctx, berryCenterPoint, mapLayer);
+  drawBerry(ctx, berryCenterPoint, berryColor);
+
+  return canvas.toDataURL();
+};
+
+export const drawMarkerIcon = (unit, mapLayer) => {
+  const L = require('leaflet'); // eslint-disable-line global-require
 
   // Return the drawn icon as lealfet icon
   const markerIcon = L.icon({
-    iconUrl: canvas.toDataURL(),
+    iconUrl: drawIcon(unit, mapLayer),
     iconSize: [40, 40],
     iconAnchor: [20, 37],
   });
@@ -140,4 +190,4 @@ const drawIcon = (unit, mapLayer) => {
   return markerIcon;
 };
 
-export default drawIcon;
+export default drawMarkerIcon;

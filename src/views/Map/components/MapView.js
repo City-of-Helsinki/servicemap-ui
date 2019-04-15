@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import TransitStopInfo from './TransitStopInfo';
-import drawIcon from '../utils/drawIcon';
+import { drawMarkerIcon } from '../utils/drawIcon';
 
 class MapView extends React.Component {
   constructor(props) {
@@ -86,7 +86,7 @@ class MapView extends React.Component {
                 <Marker
                   key={unit.id}
                   position={[unit.location.coordinates[1], unit.location.coordinates[0]]}
-                  icon={drawIcon(unit, mapBase.options.name)}
+                  icon={drawMarkerIcon(unit, mapBase.options.name)}
                 />
               );
             } return null;
@@ -107,7 +107,7 @@ class MapView extends React.Component {
                 highlightedDistrict.unit.location.coordinates[1],
                 highlightedDistrict.unit.location.coordinates[0],
               ]}
-              icon={drawIcon(highlightedDistrict.unit, mapBase.options.name)}
+              icon={drawMarkerIcon(highlightedDistrict.unit, mapBase.options.name)}
             >
               <Popup autoPan={false}>
                 <p>{getLocaleText(highlightedDistrict.unit.name)}</p>

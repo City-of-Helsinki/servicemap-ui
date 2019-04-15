@@ -15,6 +15,7 @@ const styles = theme => ({
       easing: theme.transitions.easing.easeIn,
       duration: theme.transitions.duration.complex,
     }),
+    border: '1px solid gray',
   },
   rootFocused: {
     margin: 0,

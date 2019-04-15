@@ -13,6 +13,13 @@ export default {
 
   // Units
   'unit': 'Toimipiste',
+  'unit.accessibility.noInfo': 'Ei esteettömyystietoja',
+  'unit.accessibility.ok': 'Esteetön',
+  'unit.accessibility.problems': `{count, plural,
+                                    =0 {Esteetön}
+                                    one {# esteettömyyspuute}
+                                    other {# esteettömyyspuutetta}
+                                  }`,
   'unit.data_source': 'Lähde: {data_source}', // TODO: Translate
   'unit.details.notFound': 'Toimipisteen tietoja ei saatavilla.',
   'unit.plural': 'Toimipisteet',

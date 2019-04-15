@@ -68,20 +68,14 @@ class SearchView extends React.Component {
           placeholder={intl && intl.formatMessage({ id: 'search.input.placeholder' })}
         />
         <Divider />
-        <Paper className={classes.label} elevation={1} square>
-          {
+        {
           isFetching
-          && <Loading text={intl && intl.formatMessage({ id: 'search.loading.units' }, { count, max })} progress={progress} />
-          }
-          {
-            !isFetching
-            && (
-            <Typography variant="h3" style={{ fontSize: '1.25rem', margin: 0, float: 'left' }}>
-              <FormattedMessage id="search.info" values={{ count: unitCount }} />
-            </Typography>
-            )
-          }
-        </Paper>
+          && (
+          <Paper className={classes.label} elevation={1} square>
+            <Loading text={intl && intl.formatMessage({ id: 'search.loading.units' }, { count, max })} progress={progress} />
+          </Paper>
+          )
+        }
         {
           resultsShowing
           && (
