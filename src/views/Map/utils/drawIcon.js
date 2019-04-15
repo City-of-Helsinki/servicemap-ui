@@ -1,4 +1,4 @@
-import { getAccesibilityColor } from '../../../utils/unitHelper';
+import { getAccesibilityColor, getDefaultAccessibilityColor } from '../../../utils/unitHelper';
 
 // This class draws the marker icon into canvas and returns it as png
 
@@ -145,6 +145,32 @@ export const drawIcon = (unit, mapLayer, withoutCurve = false) => {
     drawBerry(ctx, berryCenterPoint, berryColor);
     drawNumber(ctx, unit.length);
   }
+  drawStem(ctx, berryCenterPoint, mapLayer);
+  drawBerry(ctx, berryCenterPoint, berryColor);
+
+  return canvas.toDataURL();
+};
+
+// TODO: Change to font icon once we have it
+// Temporary solution
+export const drawServiceIcon = (mapLayer) => {
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.height = canvasSize.height;
+  canvas.width = canvasSize.width;
+  const berryColor = 'gray';
+
+  // Berry calculation
+  let berryCenterPoint;
+  berryCenterPoint = berryCenter(90); // Creates straight line
+  drawStem(ctx, berryCenterPoint, mapLayer);
+  drawBerry(ctx, berryCenterPoint, berryColor);
+
+  berryCenterPoint = berryCenter(90 + 40);
+  drawStem(ctx, berryCenterPoint, mapLayer);
+  drawBerry(ctx, berryCenterPoint, berryColor);
+
+  berryCenterPoint = berryCenter(90 - 40);
   drawStem(ctx, berryCenterPoint, mapLayer);
   drawBerry(ctx, berryCenterPoint, berryColor);
 

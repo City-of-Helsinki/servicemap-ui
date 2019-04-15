@@ -6,7 +6,7 @@ import {
 import { Menu } from '@material-ui/icons';
 import { FormattedMessage } from 'react-intl';
 import ResultItem from './ResultItem';
-import { drawIcon } from '../../views/Map/utils/drawIcon';
+import { drawIcon, drawServiceIcon } from '../../views/Map/utils/drawIcon';
 
 const styles = theme => ({
   root: {
@@ -87,7 +87,7 @@ class ResultList extends React.Component {
                   icon = <img alt="" src={drawIcon(item, null, true)} style={{ height: 24 }} aria-hidden="true" />;
                   break;
                 case 'service':
-                  icon = <Menu />;
+                  icon = <img alt="" src={drawServiceIcon()} style={{ height: 24 }} aria-hidden="true" />;
                   break;
                 default:
                   icon = false;
