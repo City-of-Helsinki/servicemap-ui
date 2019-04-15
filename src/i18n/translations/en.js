@@ -13,6 +13,13 @@ export default {
 
   // Unit
   'unit': 'Unit',
+  'unit.accessibility.noInfo': 'No accessibility information', // TODO: verify
+  'unit.accessibility.ok': 'No accessibility shortcomings', // TODO: verify
+  'unit.accessibility.problems': `{count, plural,
+                                    =0 {No accessibility shortcomings}
+                                    one {# accessibility shortcoming}
+                                    other {# accessibility shortcomings}
+                                  }`, // TODO: verify
   'unit.data_source': 'Source: {data_source}',
   'unit.details.notFound': 'Unit info not found.',
   'unit.plural': 'Units',
