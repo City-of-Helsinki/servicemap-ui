@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {
   ListItem, ListItemIcon, Typography, withStyles, Divider,
 } from '@material-ui/core';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 
 const styles = theme => ({
   cssFocused: {
@@ -52,7 +52,7 @@ const styles = theme => ({
 });
 
 const ResultItem = ({
-  data, classes, onClick, icon, listId,
+  data, classes, onClick, icon, intl, listId,
 }) => {
   const {
     id, name, object_type, street,
@@ -62,14 +62,14 @@ const ResultItem = ({
   // TODO: Change to check data once accessibility messages functionality has been added
   // TODO: Change texts to use translations once data is accessible
   const accessibilityProblems = null;
-  let accessText = 'Ei esteettömyystietoja';
+  let accessText = intl.formatMessage({ id: 'unit.accessibility.noInfo' });
   if (accessibilityProblems !== null && typeof accessibilityProblems !== 'undefined') {
     switch (accessibilityProblems) {
       case 0:
-        accessText = 'Esteetön';
+        accessText = intl.formatMessage({ id: 'unit.accessibility.ok' });
         break;
       default:
-        accessText = `${accessibilityProblems} esteettömyyspuutteita`;
+        accessText = intl.formatMessage({ id: 'unit.accessibility.problems' }, { count: accessibilityProblems });
     }
   }
 
@@ -178,7 +178,7 @@ const ResultItem = ({
   );
 };
 
-export default withStyles(styles)(ResultItem);
+export default injectIntl(withStyles(styles)(ResultItem));
 
 // Typechecking
 ResultItem.propTypes = {
@@ -187,6 +187,7 @@ ResultItem.propTypes = {
   icon: PropTypes.node,
   listId: PropTypes.string.isRequired,
   onClick: PropTypes.func,
+  intl: intlShape.isRequired,
 };
 
 ResultItem.defaultProps = {

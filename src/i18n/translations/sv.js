@@ -12,13 +12,20 @@ export default {
   'map.transit.endStation': 'Ändhållplats',
 
   // Units
-  'unit': 'Unit', // TODO: Translate
+  'unit': 'Verksamhetsställe',
+  'unit.accessibility.noInfo': 'Inga uppgifter', // TODO: Verify
+  'unit.accessibility.ok': 'Inga kända brister', // TODO: Verify
+  'unit.accessibility.problems': `{count, plural,
+                                    =0 {Inga kända brister}
+                                    one {# brist}
+                                    other {# brister}
+                                  }`, // TODO: Verify
   'unit.details.notFound': 'Unit info not found', // TODO: Translate
-  'unit.data_source': 'Source: {data_source}', // TODO: Translate
-  'unit.plural': 'Units', // TODO: Translate
+  'unit.data_source': 'Källa: {data_source}',
+  'unit.plural': 'Verksamhetsställen', // TODO: Verify
 
   'unit.contact.info': 'Contact information', // TODO: Translate
-  'unit.services': 'Services', // TODO: Translate
+  'unit.services': 'Tjänster',
   'unit.e.services': 'Electronic services', // TODO: Translate
   'unit.homepage': 'Hemsida',
   'unit.description': 'Unit description', // TODO: Translate
@@ -42,5 +49,5 @@ export default {
   'search.loading.units': 'Searching units {count} / {max}', // TODO: Translate
 
   // Service
-  'service': 'Service',
+  'service': 'Tjänst',
 };
