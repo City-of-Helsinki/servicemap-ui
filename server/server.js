@@ -73,7 +73,7 @@ const htmlTemplate = (reactDom, preloadedState, css) => `
 <html>
   <head>
     <meta charset="utf-8">
-    <title>React SSR</title>
+    <title>Palvelukartta</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
     integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
     crossorigin=""
