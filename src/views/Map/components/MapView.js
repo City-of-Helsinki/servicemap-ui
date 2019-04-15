@@ -1,7 +1,9 @@
 /* eslint-disable no-underscore-dangle, global-require */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import TransitStopInfo from './TransitStopInfo';
+import { generatePath } from '../../../utils/path';
 import { drawMarkerIcon } from '../utils/drawIcon';
 
 class MapView extends React.Component {
@@ -45,12 +47,16 @@ class MapView extends React.Component {
       style,
       fetchTransitStops,
       clearTransitStops,
+      history,
+      match,
       transitStops,
       getLocaleText,
     } = this.props;
     const {
       Map, TileLayer, ZoomControl, Marker, Popup, Polygon, highlightedDistrict,
     } = this.state;
+    const { params } = match;
+    const lng = params && params.lng;
 
     const unitListFiltered = unitList.filter(unit => unit.object_type === 'unit');
 
@@ -87,6 +93,7 @@ class MapView extends React.Component {
                   key={unit.id}
                   position={[unit.location.coordinates[1], unit.location.coordinates[0]]}
                   icon={drawMarkerIcon(unit, mapBase.options.name)}
+                  onClick={() => history.push(generatePath('unit', lng, unit.id))}
                 />
               );
             } return null;
@@ -131,7 +138,7 @@ class MapView extends React.Component {
     return <p>No map</p>;
   }
 }
-export default MapView;
+export default withRouter(MapView);
 
 // Typechecking
 MapView.propTypes = {
@@ -141,6 +148,8 @@ MapView.propTypes = {
   // districtList: PropTypes.arrayOf(PropTypes.object),
   mapOptions: PropTypes.objectOf(PropTypes.any),
   fetchTransitStops: PropTypes.func,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
+  match: PropTypes.objectOf(PropTypes.any).isRequired,
   clearTransitStops: PropTypes.func,
   transitStops: PropTypes.arrayOf(PropTypes.object),
   getLocaleText: PropTypes.func.isRequired,
