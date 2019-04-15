@@ -82,6 +82,7 @@ export const makeUnitHandler = (req, res, next) => {
     return httpResp.on('end', function() {
       console.log('Fetch end');
       unitInfo = JSON.parse(respData);
+      unitInfo.complete = true;
       clearTimeout(timeout);
       return sendResponse();
     });

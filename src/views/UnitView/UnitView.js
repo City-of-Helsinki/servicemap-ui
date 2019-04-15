@@ -6,14 +6,14 @@ import {
 } from '@material-ui/core';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import AddressIcon from '@material-ui/icons/Place';
-import { fetchUnit, fetchUnits } from '../../redux/actions/unit';
+
+import { fetchSelectedUnitData } from '../../redux/actions/unit';
 import { getSelectedUnit } from '../../redux/selectors/unit';
 import { getLocaleString } from '../../redux/selectors/locale';
 import { changeSelectedUnit } from '../../redux/actions/filter';
 
 import InfoList from './components/InfoList';
 import styles from './styles/styles';
-import queryBuilder from '../../utils/queryBuilder';
 import TitleBar from '../../components/TitleBar/TitleBar';
 
 // TODO: Add proper component's when ready
@@ -22,8 +22,7 @@ class UnitView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      unitData: null,
-      isFetching: true,
+      needUpdate: true,
     };
   }
 
@@ -33,18 +32,22 @@ class UnitView extends React.Component {
     if (params && params.unit) {
       const { unit } = params;
       changeSelectedUnit(unit);
-      console.log('change selected unit to: ', unit);
-
-      /* TODO:  Instead of this fetch function, create appropriate redux fetch for unit
-                that updates the existing data of the unit */
-      this.setState({ isFetching: true });
-      queryBuilder.setType('unit', unit).run()
-        .then(response => response.json())
-        .then(data => this.setState({
-          unitData: data,
-          isFetching: false,
-        }));
     }
+  }
+
+  componentDidUpdate() {
+    const { unit } = this.props;
+    const { needUpdate } = this.state;
+    // Fetch the rest of the unit data once the component receives redux data
+    if (unit && !unit.complete && needUpdate) {
+      this.updateUnitData(unit);
+    }
+  }
+
+  updateUnitData = (unit) => {
+    const { fetchSelectedUnitData } = this.props;
+    this.setState({ needUpdate: false });
+    fetchSelectedUnitData(unit.id);
   }
 
   // Filters connections data by section
@@ -66,19 +69,17 @@ class UnitView extends React.Component {
   }
 
   render() {
-    const { classes, getLocaleText, intl } = this.props;
-    const { unitData, isFetching } = this.state;
-    let { unit } = this.props;
-    if (unitData) {
-      unit = unitData;
-    }
-    if (isFetching) {
+    const {
+      classes, getLocaleText, intl, fetchState, unit,
+    } = this.props;
+
+    if (fetchState.isFetching) {
       return (
         <p>Loading unit data</p>
       );
     }
 
-    if (unit) {
+    if (unit && unit.complete) {
       return (
         <div className={classes.root}>
           <div className="Content">
@@ -215,22 +216,28 @@ class UnitView extends React.Component {
 // Listen to redux state
 const mapStateToProps = (state) => {
   const unit = getSelectedUnit(state);
+  const fetchState = state.units;
   const getLocaleText = textObject => getLocaleString(state, textObject);
   return {
     unit,
+    fetchState,
     getLocaleText,
   };
 };
 
 export default injectIntl(withStyles(styles)(connect(
   mapStateToProps,
-  { fetchUnit, fetchUnits, changeSelectedUnit },
+  {
+    changeSelectedUnit, fetchSelectedUnitData,
+  },
 )(UnitView)));
 
 // Typechecking
 UnitView.propTypes = {
   unit: PropTypes.objectOf(PropTypes.any),
+  fetchState: PropTypes.objectOf(PropTypes.any),
   changeSelectedUnit: PropTypes.func.isRequired,
+  fetchSelectedUnitData: PropTypes.func.isRequired,
   match: PropTypes.objectOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   getLocaleText: PropTypes.func.isRequired,
@@ -239,5 +246,6 @@ UnitView.propTypes = {
 
 UnitView.defaultProps = {
   unit: null,
+  fetchState: null,
   match: {},
 };
