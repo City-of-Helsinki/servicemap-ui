@@ -16,6 +16,10 @@ const paths = {
     generate: id => `/unit/${id || ''}`,
     regex: /\/[a-zA-Z]{2}\/unit\/([0-9]+)/
   },
+  service: {
+    generate: id => `/service/${id || ''}`,
+    regex: /\/[a-zA-Z]{2}\/service\/([0-9]+)/
+  },
 }
 
 export default paths;

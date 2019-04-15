@@ -45,7 +45,11 @@ class SearchView extends React.Component {
     const lng = params && params.lng;
     e.preventDefault();
     if (history && item) {
-      history.push(generatePath('unit', lng, item.id));
+      if (item.object_type === 'unit') {
+        history.push(generatePath('unit', lng, item.id));
+      } if (item.object_type === 'service') {
+        history.push(generatePath('service', lng, item.id));
+      }
     }
   }
 

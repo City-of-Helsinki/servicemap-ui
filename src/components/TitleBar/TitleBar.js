@@ -15,6 +15,7 @@ const styles = theme => ({
   },
   title: {
     flex: '1 1 auto',
+    textTransform: 'capitalize',
   },
   iconButton: {
     flex: '0 1 auto',

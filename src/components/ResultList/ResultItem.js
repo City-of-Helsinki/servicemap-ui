@@ -15,6 +15,7 @@ const styles = theme => ({
   title: {
     textOverflow: 'ellipsis',
     margin: 0,
+    marginBottom: theme.spacing.unit,
   },
   secondaryContent: {
     marginRight: 8,
@@ -48,6 +49,9 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-end',
+  },
+  caption: {
+    color: 'rgba(0,0,0,0.6)',
   },
 });
 
@@ -103,7 +107,7 @@ const ResultItem = ({
               id={`${listId}-result-item-title-${id}`}
               className={classes.title}
               component="h3"
-              variant="subtitle1"
+              variant="body2"
               aria-labelledby={`${listId}-result-item-title-${id} ${listId}-result-item-type-${id} ${listId}-result-item-distance-${id} ${listId}-result-item-accessibility-${id}`}
             >
               {
@@ -124,7 +128,7 @@ const ResultItem = ({
                 <div className={classes.rightColumn}>
                   <Typography
                     variant="caption"
-                    className={`${classes.smallFont} ${classes.marginLeft}`}
+                    className={`${classes.caption} ${classes.marginLeft}`}
                     component="p"
                     aria-hidden="true"
                   >
@@ -143,7 +147,7 @@ const ResultItem = ({
               <Typography
                 id={`${listId}-result-item-type-${id}`}
                 variant="caption"
-                className={`${classes.noMargin} ${classes.smallFont}`}
+                className={`${classes.noMargin} ${classes.caption}`}
                 component="p"
                 aria-hidden="true"
               >
@@ -154,7 +158,7 @@ const ResultItem = ({
             <div className={`${classes.rightColumn} ${classes.bottomColumn}`}>
               <Typography
                 id={`${listId}-result-item-accessibility-${id}`}
-                className={`${classes.smallFont} ${classes.marginLeft}`}
+                className={`${classes.caption} ${classes.marginLeft}`}
                 component="p"
                 variant="caption"
                 aria-hidden="true"
