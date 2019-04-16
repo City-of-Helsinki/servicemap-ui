@@ -13,6 +13,8 @@ const styles = theme => ({
     height: 'auto',
     overflowY: 'auto',
     flex: '1 1 auto',
+    maxWidth: '100%',
+    overflowX: 'hidden',
   },
   title: {
     width: '100%',

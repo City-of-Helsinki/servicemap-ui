@@ -34,6 +34,12 @@ const SMTheme = createMuiTheme({
       letterSpacing: '0.00937rem', // 0.15px
       lineHeight: '1.5rem',
     },
+    caption: {
+      fontSize: '0.7725rem',
+      fontWeight: 'bold',
+      letterSpacing: '0.025rem', // 0.4px
+      lineHeight: '1rem',
+    },
     h1: {
       fontSize: '6.259rem',
       letterSpacing: '-0.09375em', // -1.5px
