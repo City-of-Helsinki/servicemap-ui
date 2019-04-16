@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import SimpleListItem from '../../SimpleListItem';
 import { drawServiceIcon } from '../../../views/Map/utils/drawIcon';
 import { generatePath } from '../../../utils/path';
 import { getLocaleString } from '../../../redux/selectors/locale';
 import { uppercaseFirst } from '../../../utils';
+import SimpleListItem from '../SimpleListItem';
 
 class ServiceItem extends React.Component {
   state = {

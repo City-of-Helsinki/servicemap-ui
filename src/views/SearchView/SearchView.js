@@ -4,10 +4,10 @@ import {
   Paper, Divider, withStyles,
 } from '@material-ui/core';
 import { injectIntl, intlShape } from 'react-intl';
-import ResultList from '../../components/ResultList';
 import styles from './styles';
 import Loading from '../../components/Loading/Loading';
 import SearchBar from '../../components/SearchBar';
+import ResultList from '../../components/Lists/ResultList';
 
 class SearchView extends React.Component {
   constructor(props) {

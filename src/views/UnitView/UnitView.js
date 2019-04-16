@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
-  Divider, Typography, withStyles, Link, List,
+  Divider, Typography, withStyles, Link,
 } from '@material-ui/core';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import AddressIcon from '@material-ui/icons/Place';
@@ -15,8 +15,8 @@ import { changeSelectedUnit } from '../../redux/actions/filter';
 import InfoList from './components/InfoList';
 import styles from './styles/styles';
 import TitleBar from '../../components/TitleBar/TitleBar';
-import ServiceItem from '../../components/Lists/ServiceItem';
 import TitledList from '../../components/Lists/TitledList';
+import ServiceItem from '../../components/ListItems/ServiceItem';
 
 // TODO: Add proper component's when ready
 
@@ -74,7 +74,6 @@ class UnitView extends React.Component {
     const {
       classes, getLocaleText, intl, fetchState, unit,
     } = this.props;
-    console.log(unit);
 
     if (fetchState.isFetching) {
       return (

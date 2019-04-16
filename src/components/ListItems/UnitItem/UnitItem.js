@@ -6,9 +6,9 @@ import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
 import { generatePath } from '../../../utils/path';
 import { isValidUnit } from '../../../utils/unitHelper';
-import ResultItem from '../../ResultList/ResultItem';
 import { drawIcon } from '../../../views/Map/utils/drawIcon';
 import { getLocaleString } from '../../../redux/selectors/locale';
+import ResultItem from '../ResultItem';
 
 class UnitItem extends React.Component {
   state = {

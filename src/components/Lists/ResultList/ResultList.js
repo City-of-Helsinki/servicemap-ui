@@ -4,8 +4,8 @@ import {
   List, withStyles, Typography, Divider,
 } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
-import ServiceItem from '../Lists/ServiceItem';
-import UnitItem from '../Lists/UnitItem';
+import UnitItem from '../../ListItems/UnitItem';
+import ServiceItem from '../../ListItems/ServiceItem';
 
 const styles = theme => ({
   root: {
