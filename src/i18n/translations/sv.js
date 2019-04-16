@@ -3,9 +3,13 @@ export default {
   'app.title': 'Servicekarta',
   'address': 'Address', // TODO: Translate
 
+  // Event
+  'event.nearby': 'Nearby events', // TODO: Translate
+
   // General
   'general.back': 'Tillbaka',
   'general.home': 'Home', // TODO: Translate
+  'general.noData': 'No data available', // TODO: Translate
 
   // Map
   'map': 'Map', // TODO: Translate
@@ -50,4 +54,5 @@ export default {
 
   // Service
   'service': 'Tjänst',
+  'service.nearby': 'Nearby services',
 };

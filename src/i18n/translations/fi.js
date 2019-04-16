@@ -3,9 +3,13 @@ export default {
   'app.title': 'Palvelukartta',
   'address': 'Osoite',
 
+  // Event
+  'event.nearby': 'Lähellä olevat tapahtumat',
+
   // General
   'general.back': 'Takaisin',
   'general.home': 'Koti',
+  'general.noData': 'Tietoa ei saatavilla',
 
   // Map
   'map': 'Kartta',
@@ -50,4 +54,5 @@ export default {
 
   // Service
   'service': 'Palvelu',
+  'service.nearby': 'Lähellä olevat palvelut',
 };
