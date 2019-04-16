@@ -3,9 +3,13 @@ export default {
   'app.title': 'Service map',
   'address': 'Address',
 
+  // Event
+  'event.nearby': 'Nearby events',
+
   // General
   'general.back': 'Back',
   'general.home': 'Home',
+  'general.noData': 'No data available',
 
   // Map
   'map': 'Map',
@@ -52,4 +56,5 @@ export default {
 
   // Service
   'service': 'Service',
+  'service.nearby': 'Nearby services',
 };
