@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
-  Divider, Typography, withStyles, Link,
+  Divider, Typography, withStyles, Link, List,
 } from '@material-ui/core';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import AddressIcon from '@material-ui/icons/Place';
@@ -15,6 +15,8 @@ import { changeSelectedUnit } from '../../redux/actions/filter';
 import InfoList from './components/InfoList';
 import styles from './styles/styles';
 import TitleBar from '../../components/TitleBar/TitleBar';
+import ServiceItem from '../../components/Lists/ServiceItem';
+import TitledList from '../../components/Lists/TitledList';
 
 // TODO: Add proper component's when ready
 
@@ -72,6 +74,7 @@ class UnitView extends React.Component {
     const {
       classes, getLocaleText, intl, fetchState, unit,
     } = this.props;
+    console.log(unit);
 
     if (fetchState.isFetching) {
       return (
@@ -185,10 +188,13 @@ class UnitView extends React.Component {
             ) : null}
 
             {/* Unit services */}
-            <InfoList
-              data={this.sectionFilter(unit.services, 'SERVICE')}
-              title={<FormattedMessage id="unit.services" />}
-            />
+            <TitledList title={<FormattedMessage id="unit.services" />}>
+              {
+                unit.services.map(service => (
+                  <ServiceItem key={service.id} service={service} />
+                ))
+              }
+            </TitledList>
 
             <span>
               {unit.provider && <FormattedMessage id="unit.data_source" defaultMessage={'Source: {data_source}'} values={{ data_source: unit.provider }} />}
