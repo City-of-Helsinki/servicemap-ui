@@ -5,7 +5,7 @@ export default {
 
   // General
   'general.back': 'Back',
-  'general.home': 'Home',
+  'general.home': 'Back to frontpage',
 
   // Map
   'map': 'Map',

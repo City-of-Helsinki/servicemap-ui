@@ -5,7 +5,7 @@ export default {
 
   // General
   'general.back': 'Tillbaka',
-  'general.home': 'Home', // TODO: Translate
+  'general.home': 'Back to frontpage', // TODO: Translate
 
   // Map
   'map': 'Map', // TODO: Translate

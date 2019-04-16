@@ -13,6 +13,7 @@ import { generatePath } from '../../utils/path';
 class SearchView extends React.Component {
   constructor(props) {
     super(props);
+    this.searchField = React.createRef();
     const { changeSelectedUnit } = props;
 
     // Reset selected unit on SearchView
@@ -27,6 +28,7 @@ class SearchView extends React.Component {
     if (fetchUnits) {
       // fetchUnits([], null, 'kallion kirjasto');
     }
+    this.searchField.current.focus();
   }
 
   onSearchSubmit = (e, search) => {
@@ -60,6 +62,7 @@ class SearchView extends React.Component {
     return (
       <div className="Search">
         <SearchBar
+          searchRef={this.searchField}
           onSubmit={this.onSearchSubmit}
           placeholder={intl && intl.formatMessage({ id: 'search.input.placeholder' })}
         />

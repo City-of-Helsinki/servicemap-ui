@@ -3,39 +3,47 @@ import PropTypes from 'prop-types';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import { withStyles, Typography } from '@material-ui/core';
+import { withStyles, Typography, Divider } from '@material-ui/core';
 
 const SimpleListItem = (props) => {
   const {
-    text, classes, link, icon, handleItemClick,
+    text, classes, link, icon, handleItemClick, divider,
   } = props;
   return (
-    <ListItem
-      button={!!link}
-      role={link ? 'link' : null}
-      component={link ? 'a' : null}
-      onClick={link ? () => {
-        handleItemClick();
-      } : null}
-      classes={{
-        root: classes.listItem,
-      }}
-    >
-      <ListItemIcon className={`${classes.listIcon} ${link ? classes.link : null}`}>
-        {icon}
-      </ListItemIcon>
-
-      <ListItemText
-        classes={{ root: classes.textContainer }}
+    <React.Fragment>
+      <ListItem
+        button={!!link}
+        role={link ? 'link' : null}
+        // component={link ? 'a' : null}
+        component="li"
+        onClick={link ? () => {
+          handleItemClick();
+        } : null}
+        classes={{
+          root: classes.listItem,
+        }}
       >
-        <Typography
-          variant="body2"
-          classes={{ root: link ? classes.link : null }}
+        <ListItemIcon className={`${classes.listIcon} ${link ? classes.link : null}`}>
+          {icon}
+        </ListItemIcon>
+
+        <ListItemText
+          classes={{ root: classes.textContainer }}
         >
-          {text}
-        </Typography>
-      </ListItemText>
-    </ListItem>
+          <Typography
+            variant="body2"
+            classes={{ root: link ? classes.link : null }}
+          >
+            {text}
+          </Typography>
+        </ListItemText>
+      </ListItem>
+      {divider ? (
+        <li>
+          <Divider aria-hidden="true" className={classes.divider} />
+        </li>
+      ) : null}
+    </React.Fragment>
   );
 };
 
@@ -58,6 +66,9 @@ const listItemStyles = theme => ({
     height: '1.5rem',
     margin: '1rem',
   },
+  divider: {
+    marginLeft: theme.spacing.unit * 9,
+  },
 });
 
 export default withStyles(listItemStyles)(SimpleListItem);
@@ -68,10 +79,12 @@ SimpleListItem.propTypes = {
   link: PropTypes.bool,
   icon: PropTypes.objectOf(PropTypes.any),
   handleItemClick: PropTypes.func,
+  divider: PropTypes.bool,
 };
 
 SimpleListItem.defaultProps = {
   link: false,
   icon: null,
   handleItemClick: null,
+  divider: false,
 };
