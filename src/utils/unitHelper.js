@@ -5,7 +5,7 @@ const accessibilityColors = {
   hasShortcomings: 'red',
 };
 
-const isValidUnit = unit => unit && unit.object_type === 'unit';
+export const isValidUnit = unit => unit && unit.object_type === 'unit';
 
 export const getAccesibilityColor = (unit) => {
   if (isValidUnit(unit)) {
