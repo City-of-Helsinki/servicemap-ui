@@ -47,6 +47,8 @@ export default {
                 }`,
   'search.input.placeholder': 'Search units',
   'search.loading.units': 'Searching units {count} / {max}',
+  'search.loading.units.srInfo': 'Search loading {count} results',
+  'search.started': 'Search started',
 
   // Service
   'service': 'Service',

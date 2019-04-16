@@ -47,6 +47,8 @@ export default {
   }`,
   'search.input.placeholder': 'Hae toimipisteitä',
   'search.loading.units': 'Haetaan toimipisteitä {count} / {max}',
+  'search.loading.units.srInfo': 'Haetaan {count} toimipistettä',
+  'search.started': 'Haku aloitettu',
 
   // Service
   'service': 'Palvelu',
