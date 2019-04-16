@@ -26,7 +26,7 @@ const TitledList = ({ children, classes, title }) => (
 TitledList.propTypes = {
   children: PropTypes.node.isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
 };
 
 export default withStyles(styles)(TitledList);
