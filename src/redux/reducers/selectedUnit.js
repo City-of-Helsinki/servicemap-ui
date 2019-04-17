@@ -1,45 +1,35 @@
 const initialState = {
   isFetching: false,
   errorMessage: null,
-  data: [],
-  count: 0,
-  max: 0,
-  previousSearch: null,
+  data: null,
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case 'UNITS_IS_FETCHING':
+    case 'SELECTED_UNIT_IS_FETCHING':
       return {
         ...state,
         isFetching: true,
         errorMessage: null,
-        previousSearch: action.search,
       };
-    case 'UNITS_FETCH_HAS_ERRORED':
+    case 'SELECTED_UNIT_HAS_ERRORED':
       return {
         ...state,
         isFetching: false,
         errorMessage: action.errorMessage,
-        count: 0,
-        max: 0,
       };
-    case 'UNITS_FETCH_DATA_SUCCESS':
+    case 'SELECTED_UNIT_FETCH_DATA_SUCCESS':
       return {
         ...state,
         isFetching: false,
         errorMessage: null,
-        data: action.units,
-        count: 0,
-        max: 0,
+        data: action.unit,
       };
-    case 'UNITS_FETCH_PROGRESS_UPDATE':
+    case 'SET_SELECTED_UNIT':
       return {
         ...state,
-        count: action.count,
-        max: action.max,
+        data: action.unit,
       };
-
     default:
       return state;
   }
