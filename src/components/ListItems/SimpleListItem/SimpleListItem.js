@@ -14,7 +14,7 @@ const SimpleListItem = (props) => {
       button={!!link || button}
       role={link ? 'link' : role}
       component={link ? 'a' : component}
-      onClick={handleItemClick}
+      onClick={button || link ? handleItemClick : null}
       classes={{
         root: classes.listItem,
       }}
