@@ -5,10 +5,10 @@ import { withStyles } from '@material-ui/core/styles';
 import { injectIntl, intlShape } from 'react-intl';
 import { Divider, Typography } from '@material-ui/core';
 import List from '@material-ui/core/List';
-import SimpleListItem from '../../../components/SimpleListItem';
 import styles from '../styles/styles';
 import getItemIconData from '../constants/itemIconData';
 import { getLocaleString } from '../../../redux/selectors/locale';
+import SimpleListItem from '../../../components/ListItems/SimpleListItem';
 
 class InfoList extends React.Component {
   handleItemClick = (data) => {

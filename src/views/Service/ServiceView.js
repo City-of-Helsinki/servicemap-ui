@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import ResultList from '../../components/ResultList';
 import TitleBar from '../../components/TitleBar/TitleBar';
 import { generatePath } from '../../utils/path';
 import { getLocaleString } from '../../redux/selectors/locale';
 import { fetchServiceUnits } from '../../redux/actions/services';
+import ResultList from '../../components/Lists/ResultList';
 
 class ServiceView extends React.Component {
   componentDidMount() {

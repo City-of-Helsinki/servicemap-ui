@@ -7,16 +7,14 @@ import { withStyles, Typography } from '@material-ui/core';
 
 const SimpleListItem = (props) => {
   const {
-    text, classes, link, icon, handleItemClick,
+    button, component, text, classes, link, icon, handleItemClick, role,
   } = props;
   return (
     <ListItem
-      button={!!link}
-      role={link ? 'link' : null}
-      component={link ? 'a' : null}
-      onClick={link ? () => {
-        handleItemClick();
-      } : null}
+      button={!!link || button}
+      role={link ? 'link' : role}
+      component={link ? 'a' : component}
+      onClick={button || link ? handleItemClick : null}
       classes={{
         root: classes.listItem,
       }}
@@ -63,15 +61,21 @@ const listItemStyles = theme => ({
 export default withStyles(listItemStyles)(SimpleListItem);
 
 SimpleListItem.propTypes = {
+  button: PropTypes.bool,
+  component: PropTypes.string,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   text: PropTypes.string.isRequired,
   link: PropTypes.bool,
   icon: PropTypes.objectOf(PropTypes.any),
   handleItemClick: PropTypes.func,
+  role: PropTypes.string,
 };
 
 SimpleListItem.defaultProps = {
+  button: false,
+  component: null,
   link: false,
   icon: null,
   handleItemClick: null,
+  role: null,
 };

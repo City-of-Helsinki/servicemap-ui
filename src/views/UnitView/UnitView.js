@@ -15,6 +15,8 @@ import { changeSelectedUnit } from '../../redux/actions/filter';
 import InfoList from './components/InfoList';
 import styles from './styles/styles';
 import TitleBar from '../../components/TitleBar/TitleBar';
+import TitledList from '../../components/Lists/TitledList';
+import ServiceItem from '../../components/ListItems/ServiceItem';
 
 // TODO: Add proper component's when ready
 
@@ -185,10 +187,13 @@ class UnitView extends React.Component {
             ) : null}
 
             {/* Unit services */}
-            <InfoList
-              data={this.sectionFilter(unit.services, 'SERVICE')}
-              title={<FormattedMessage id="unit.services" />}
-            />
+            <TitledList title={<FormattedMessage id="unit.services" />}>
+              {
+                unit.services.map(service => (
+                  <ServiceItem key={service.id} service={service} />
+                ))
+              }
+            </TitledList>
 
             <span>
               {unit.provider && <FormattedMessage id="unit.data_source" defaultMessage={'Source: {data_source}'} values={{ data_source: unit.provider }} />}

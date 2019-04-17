@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 import {
   List, withStyles, Typography, Divider,
 } from '@material-ui/core';
-import { Menu } from '@material-ui/icons';
 import { FormattedMessage } from 'react-intl';
-import ResultItem from './ResultItem';
-import { drawIcon, drawServiceIcon } from '../../views/Map/utils/drawIcon';
+import UnitItem from '../../ListItems/UnitItem';
+import ServiceItem from '../../ListItems/ServiceItem';
 
 const styles = theme => ({
   root: {
@@ -41,7 +40,7 @@ class ResultList extends React.Component {
 
   render() {
     const {
-      classes, data, listId, onItemClick, title,
+      classes, data, listId, title,
     } = this.props;
 
     return (
@@ -82,30 +81,20 @@ class ResultList extends React.Component {
               // eslint-disable-next-line camelcase
               const { id, object_type } = item;
               // Figure out correct icon for item
-              let icon = null;
+              let itemComponent = null;
               // eslint-disable-next-line camelcase
               switch (object_type) {
                 case 'unit':
-                  icon = <img alt="" src={drawIcon(item, null, true)} style={{ height: 24 }} aria-hidden="true" />;
+                  itemComponent = <UnitItem key={`unit-${id}`} unit={item} listId={listId} />;
                   break;
                 case 'service':
-                  icon = <img alt="" src={drawServiceIcon()} style={{ height: 24 }} aria-hidden="true" />;
+                  itemComponent = <ServiceItem key={`service-${id}`} service={item} />;
                   break;
                 default:
-                  icon = false;
+                  itemComponent = null;
               }
               if (item) {
-                return (
-                  <ResultItem
-                    key={`${id}`}
-                    onClick={(e) => {
-                      onItemClick(e, item);
-                    }}
-                    data={item}
-                    icon={icon}
-                    listId={listId}
-                  />
-                );
+                return itemComponent;
               }
               return null;
             })
@@ -123,7 +112,6 @@ ResultList.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any),
   data: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)).isRequired,
   listId: PropTypes.string.isRequired,
-  onItemClick: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
 };
 
