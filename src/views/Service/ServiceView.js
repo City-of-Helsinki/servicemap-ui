@@ -20,6 +20,8 @@ class ServiceView extends React.Component {
     const { params } = match;
     if (`${unitData.id}` !== params.service) {
       fetchServiceUnits(params.service);
+    } else {
+      this.listTitle.current.focus();
     }
   }
 
