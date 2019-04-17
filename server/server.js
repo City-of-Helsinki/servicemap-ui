@@ -12,9 +12,8 @@ import config from '../config';
 import rootReducer from '../src/rootReducer';
 import App from '../src/App';
 import {makeLanguageHandler, makeUnitHandler} from './utils';
-import { unitsFetchDataSuccess } from '../src/redux/actions/unit';
-import { setSelectedUnit } from '../src/redux/actions/filter';
 import { setLocale } from '../src/redux/actions/locale';
+import { changeSelectedUnit } from '../src/redux/actions/unit';
 
 // Configure constants
 const app = express();
@@ -43,8 +42,7 @@ app.get('/*', (req, res, next) => {
 
   // Dispatch unit data to redux
   if (req._context) {
-    store.dispatch(setSelectedUnit(req._context.id));
-    store.dispatch(unitsFetchDataSuccess([req._context]));
+    store.dispatch(changeSelectedUnit(req._context));
     store.dispatch(setLocale(req.params[0].slice(0, 2)))
   }
   const jsx = (

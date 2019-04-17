@@ -5,10 +5,9 @@ import {
   Divider, Typography, withStyles, Link,
 } from '@material-ui/core';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
-import { fetchSelectedUnitData } from '../../redux/actions/unit';
+import { changeSelectedUnit, fetchSelectedUnit } from '../../redux/actions/unit';
 import { getSelectedUnit } from '../../redux/selectors/unit';
 import { getLocaleString } from '../../redux/selectors/locale';
-import { changeSelectedUnit } from '../../redux/actions/filter';
 
 import InfoList from './components/InfoList';
 import styles from './styles/styles';
@@ -28,28 +27,23 @@ class UnitView extends React.Component {
   }
 
   componentDidMount() {
-    const { match, changeSelectedUnit } = this.props;
+    const { match, fetchSelectedUnit, unit } = this.props;
     const { params } = match;
-    if (params && params.unit) {
-      const { unit } = params;
-      changeSelectedUnit(unit);
-    }
+
     this.unitTitle.current.focus();
-  }
 
-  componentDidUpdate() {
-    const { unit } = this.props;
-    const { needUpdate } = this.state;
-    // Fetch the rest of the unit data once the component receives redux data
-    if (unit && !unit.complete && needUpdate) {
-      this.updateUnitData(unit);
+    if (params && params.unit) {
+      const unitId = params.unit;
+      if (unit && unitId === `${unit.id}`) {
+        return;
+      }
+      fetchSelectedUnit(unitId);
     }
   }
 
-  updateUnitData = (unit) => {
-    const { fetchSelectedUnitData } = this.props;
-    this.setState({ needUpdate: false });
-    fetchSelectedUnitData(unit.id);
+  componentWillUnmount() {
+    const { changeSelectedUnit } = this.props;
+    changeSelectedUnit(null);
   }
 
   // Filters connections data by section
@@ -235,17 +229,15 @@ const mapStateToProps = (state) => {
 
 export default injectIntl(withStyles(styles)(connect(
   mapStateToProps,
-  {
-    changeSelectedUnit, fetchSelectedUnitData,
-  },
+  { changeSelectedUnit, fetchSelectedUnit },
 )(UnitView)));
 
 // Typechecking
 UnitView.propTypes = {
   unit: PropTypes.objectOf(PropTypes.any),
+  fetchSelectedUnit: PropTypes.func.isRequired,
   fetchState: PropTypes.objectOf(PropTypes.any),
   changeSelectedUnit: PropTypes.func.isRequired,
-  fetchSelectedUnitData: PropTypes.func.isRequired,
   match: PropTypes.objectOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   getLocaleText: PropTypes.func.isRequired,
