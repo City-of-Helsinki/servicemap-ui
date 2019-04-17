@@ -26,12 +26,12 @@ class SearchView extends React.Component {
   }
 
   componentDidMount() {
-    // TODO: Temp data to be removed
-    const { fetchUnits, location } = this.props;
+    const { fetchUnits, location, previousSearch } = this.props;
     const searchParams = parseSearchParams(location.search);
-    if (searchParams.q && fetchUnits) {
-      fetchUnits([], null, searchParams.q);
-      this.setState({ queryParam: searchParams.q });
+    const searchParam = searchParams.q || null;
+    if (searchParam && fetchUnits && searchParam !== previousSearch) {
+      fetchUnits([], null, searchParam);
+      this.setState({ queryParam: searchParam });
     }
     this.searchField.current.focus();
   }
@@ -121,7 +121,9 @@ SearchView.propTypes = {
   fetchUnits: PropTypes.func,
   intl: intlShape.isRequired,
   isFetching: PropTypes.bool,
+  location: PropTypes.objectOf(PropTypes.any).isRequired,
   max: PropTypes.number,
+  previousSearch: PropTypes.string,
   units: PropTypes.arrayOf(PropTypes.any),
 };
 
@@ -131,5 +133,6 @@ SearchView.defaultProps = {
   fetchUnits: () => {},
   isFetching: false,
   max: 0,
+  previousSearch: null,
   units: [],
 };
