@@ -6,7 +6,7 @@ const Loading = (props) => {
   const { text, progress } = props;
   return (
     <div>
-      <Typography variant="body2">{text}</Typography>
+      <Typography variant="body2" aria-hidden="true">{text}</Typography>
       <LinearProgress variant="determinate" value={Math.min(progress, 100)} />
     </div>
   );

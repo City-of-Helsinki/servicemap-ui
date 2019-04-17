@@ -46,35 +46,19 @@ class HomeView extends React.Component {
           onSubmit={this.onSearchSubmit}
           placeholder={intl.formatMessage({ id: 'search' })}
         />
-        <Container paper title="Lähellä olevat palvelut">
+        <Container paper title={intl.formatMessage({ id: 'service.nearby' })}>
           <List>
-            {
-              [
-                'Kirjasto',
-                'Koulu',
-                'test3',
-              ].map(service => (
-                <ListItem key={service}>
-                  <ListItemText primary={`${service}`} />
-                </ListItem>
-              ))
-            }
+            <ListItem>
+              <ListItemText primary={intl.formatMessage({ id: 'general.noData' })} />
+            </ListItem>
           </List>
         </Container>
 
-        <Container paper title="Lähellä olevat tapahtumat">
+        <Container paper title={intl.formatMessage({ id: 'event.nearby' })}>
           <List>
-            {
-              [
-                'Kirjaston käsityöpaja',
-                'Musiikkia',
-                'Jotain muuta',
-              ].map(service => (
-                <ListItem key={service}>
-                  <ListItemText primary={`${service}`} />
-                </ListItem>
-              ))
-            }
+            <ListItem>
+              <ListItemText primary={intl.formatMessage({ id: 'general.noData' })} />
+            </ListItem>
           </List>
         </Container>
       </>

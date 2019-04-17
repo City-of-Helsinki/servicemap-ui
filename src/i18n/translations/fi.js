@@ -3,10 +3,14 @@ export default {
   'app.title': 'Palvelukartta',
   'address': 'Osoite',
 
+  // Event
+  'event.nearby': 'Lähellä olevat tapahtumat',
+
   // General
   'general.back': 'Takaisin',
   'general.home': 'Koti',
   'general.back.home': 'Takaisin etusivulle',
+  'general.noData': 'Tietoa ei saatavilla',
 
   // Map
   'map': 'Kartta',
@@ -48,7 +52,10 @@ export default {
   }`,
   'search.input.placeholder': 'Hae toimipisteitä',
   'search.loading.units': 'Haetaan toimipisteitä {count} / {max}',
+  'search.loading.units.srInfo': 'Haetaan {count} toimipistettä',
+  'search.started': 'Haku aloitettu',
 
   // Service
   'service': 'Palvelu',
+  'service.nearby': 'Lähellä olevat palvelut',
 };

@@ -3,11 +3,15 @@ export default {
   'app.title': 'Service map',
   'address': 'Address',
 
+  // Event
+  'event.nearby': 'Nearby events',
+
   // General
   'general.back': 'Back',
   'general.home': 'Home',
   'general.back.home': 'Back to frontpage',
-
+  'general.noData': 'No data available',
+  
   // Map
   'map': 'Map',
   'map.transit.endStation': 'Terminus',
@@ -48,7 +52,10 @@ export default {
                 }`,
   'search.input.placeholder': 'Search units',
   'search.loading.units': 'Searching units {count} / {max}',
+  'search.loading.units.srInfo': 'Search loading {count} results',
+  'search.started': 'Search started',
 
   // Service
   'service': 'Service',
+  'service.nearby': 'Nearby services',
 };
