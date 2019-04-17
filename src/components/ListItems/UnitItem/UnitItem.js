@@ -67,8 +67,6 @@ class UnitItem extends React.Component {
         botRightText={accessText}
         distancePosition={distance}
         icon={icon}
-        itemId={id}
-        listId={listId}
         onClick={(e) => {
           e.preventDefault();
           if (onClick) {
