@@ -5,7 +5,8 @@ export default {
 
   // General
   'general.back': 'Takaisin',
-  'general.home': 'Takaisin etusivulle',
+  'general.home': 'Koti',
+  'general.back.home': 'Takaisin etusivulle',
 
   // Map
   'map': 'Kartta',

@@ -13,8 +13,9 @@ const HomeButton = (props) => {
   return (
 
     <IconButton
+      role="link"
       className={className}
-      aria-label={intl.formatMessage({ id: 'general.home' })}
+      aria-label={intl.formatMessage({ id: 'general.back.home' })}
       onClick={(e) => {
         e.preventDefault();
 
