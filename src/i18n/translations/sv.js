@@ -3,10 +3,14 @@ export default {
   'app.title': 'Servicekarta',
   'address': 'Address', // TODO: Translate
 
+  // Event
+  'event.nearby': 'Nearby events', // TODO: Translate
+
   // General
   'general.back': 'Tillbaka',
   'general.home': 'Home', // TODO: Translate
   'general.back.home': 'Back to frontpage', // TODO: Translate
+  'general.noData': 'No data available', // TODO: Translate
 
   // Map
   'map': 'Map', // TODO: Translate
@@ -48,7 +52,10 @@ export default {
                 }`, // TODO: Translate
   'search.input.placeholder': 'Search units', // TODO: Translate
   'search.loading.units': 'Searching units {count} / {max}', // TODO: Translate
+  'search.loading.units.srInfo': 'Search loading {count} results', // TODO: Translate
+  'search.started': 'Search started', // TODO: Translate
 
   // Service
   'service': 'Tjänst',
+  'service.nearby': 'Nearby services',
 };
