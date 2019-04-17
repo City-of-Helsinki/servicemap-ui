@@ -11,6 +11,7 @@ export default {
   'general.home': 'Home', // TODO: Translate
   'general.back.home': 'Back to frontpage', // TODO: Translate
   'general.noData': 'No data available', // TODO: Translate
+  'general.loading': 'Loading', // TODO: Translate
 
   // Map
   'map': 'Map', // TODO: Translate
