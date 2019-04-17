@@ -16,7 +16,6 @@ export const unitsFetchProgressUpdate = (count, max) => ({
   count,
   max,
 });
-
 export const setSelectedUnit = unit => ({
   type: 'SET_SELECTED_UNIT',
   unit,
@@ -54,8 +53,18 @@ export const fetchUnits = (allData = [], next = null, searchQuery = null) => asy
   }
 };
 
-export const changeSelectedUnit = id => async (dispatch) => {
-  if (id) {
+// Change selected unit to given unit
+export const changeSelectedUnit = unit => async (dispatch) => {
+  if (unit) {
+    dispatch(setSelectedUnit(unit));
+  } else {
+    dispatch(setSelectedUnit(null));
+  }
+};
+
+// Fetch new selected unit
+export const fetchSelectedUnit = id => async (dispatch) => {
+  try {
     // Fetch rest of the unit's data
     dispatch(fetchIsLoading());
     const response = await queryBuilder.setType('unit', id).run();
@@ -65,10 +74,11 @@ export const changeSelectedUnit = id => async (dispatch) => {
       data.object_type = 'unit';
       dispatch(setSelectedUnit(data));
     } else {
-      dispatch(fetchHasErrored());
+      throw new Error(response.statusText);
     }
-  } else {
-    dispatch(setSelectedUnit(null));
+  } catch (e) {
+    dispatch(fetchHasErrored(e.message));
+    console.warn('Error fetching selected unit');
   }
 };
 
