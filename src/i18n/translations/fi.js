@@ -9,6 +9,7 @@ export default {
   // General
   'general.back': 'Takaisin',
   'general.home': 'Koti',
+  'general.back.home': 'Takaisin etusivulle',
   'general.noData': 'Tietoa ei saatavilla',
 
   // Map

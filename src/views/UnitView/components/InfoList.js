@@ -5,10 +5,10 @@ import { withStyles } from '@material-ui/core/styles';
 import { injectIntl, intlShape } from 'react-intl';
 import { Divider, Typography } from '@material-ui/core';
 import List from '@material-ui/core/List';
-import SimpleListItem from '../../../components/SimpleListItem';
 import styles from '../styles/styles';
 import getItemIconData from '../constants/itemIconData';
 import { getLocaleString } from '../../../redux/selectors/locale';
+import SimpleListItem from '../../../components/ListItems/SimpleListItem';
 
 class InfoList extends React.Component {
   handleItemClick = (data) => {
@@ -81,7 +81,7 @@ class InfoList extends React.Component {
               {title}
             </Typography>
 
-            <Divider className={classes.left} />
+            <Divider aria-hidden="true" className={classes.left} />
 
             <List disablePadding>
               {filteredData.map((data, i) => {
@@ -105,17 +105,14 @@ class InfoList extends React.Component {
 
                   if (text !== '') {
                     return (
-                      <div key={data.type + data.id}>
-                        <SimpleListItem
-                          icon={getItemIconData(data.type, data.value)}
-                          link={!!data.value.www || !!data.value.phone}
-                          text={text}
-                          handleItemClick={() => this.handleItemClick(data.value)}
-                        />
-                        {i + 1 !== filteredData.length ? ( // Dont add divider if last item on list
-                          <Divider className={classes.divider} />
-                        ) : null}
-                      </div>
+                      <SimpleListItem
+                        key={data.type + data.id}
+                        icon={getItemIconData(data.type, data.value)}
+                        link={!!data.value.www || !!data.value.phone}
+                        text={text}
+                        handleItemClick={() => this.handleItemClick(data.value)}
+                        divider={i + 1 !== filteredData.length} // Dont add divider if last item
+                      />
                     );
                   }
                 } return null;

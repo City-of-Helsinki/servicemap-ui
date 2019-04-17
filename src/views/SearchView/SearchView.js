@@ -1,18 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Paper, Divider, Typography, withStyles,
+  Paper, Divider, withStyles, Typography,
 } from '@material-ui/core';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
-import ResultList from '../../components/ResultList';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import styles from './styles';
 import Loading from '../../components/Loading/Loading';
 import SearchBar from '../../components/SearchBar';
-import { generatePath } from '../../utils/path';
+import ResultList from '../../components/Lists/ResultList';
 
 class SearchView extends React.Component {
   constructor(props) {
     super(props);
+    this.searchField = React.createRef();
     const { changeSelectedUnit } = props;
 
     // Reset selected unit on SearchView
@@ -27,6 +27,7 @@ class SearchView extends React.Component {
     if (fetchUnits) {
       // fetchUnits([], null, 'kallion kirjasto');
     }
+    this.searchField.current.focus();
   }
 
   onSearchSubmit = (e, search) => {
@@ -35,21 +36,6 @@ class SearchView extends React.Component {
     console.log(`Search query = ${search}`);
     if (search && search !== '') {
       fetchUnits([], null, search);
-    }
-  }
-
-  // onClick event for each ResultList's item
-  onItemClick = (e, item) => {
-    const { history, match } = this.props;
-    const { params } = match;
-    const lng = params && params.lng;
-    e.preventDefault();
-    if (history && item) {
-      if (item.object_type === 'unit') {
-        history.push(generatePath('unit', lng, item.id));
-      } if (item.object_type === 'service') {
-        history.push(generatePath('service', lng, item.id));
-      }
     }
   }
 
@@ -70,6 +56,7 @@ class SearchView extends React.Component {
     return (
       <div className="Search">
         <SearchBar
+          searchRef={this.searchField}
           onSubmit={this.onSearchSubmit}
           placeholder={intl && intl.formatMessage({ id: 'search.input.placeholder' })}
         />
@@ -110,7 +97,6 @@ class SearchView extends React.Component {
             listId="search-list"
             title={intl.formatMessage({ id: 'unit.plural' })}
             data={units}
-            onItemClick={this.onItemClick}
           />
           )
         }
@@ -128,7 +114,6 @@ SearchView.propTypes = {
   fetchUnits: PropTypes.func,
   intl: intlShape.isRequired,
   isFetching: PropTypes.bool,
-  match: PropTypes.objectOf(PropTypes.any).isRequired,
   max: PropTypes.number,
   units: PropTypes.arrayOf(PropTypes.any),
 };

@@ -68,7 +68,7 @@ app.listen(serverConfig.port || 2048);
 
 const htmlTemplate = (reactDom, preloadedState, css) => `
 <!DOCTYPE html>
-<html>
+<html lang="fi">
   <head>
     <meta charset="utf-8">
     <title>Palvelukartta</title>

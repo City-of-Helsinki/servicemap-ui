@@ -12,6 +12,7 @@ const BackButton = (props) => {
   return (
 
     <IconButton
+      role="link"
       className={className}
       style={style}
       aria-label={intl.formatMessage({ id: 'general.back' })}

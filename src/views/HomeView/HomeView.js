@@ -35,6 +35,7 @@ class HomeView extends React.Component {
     const { intl } = this.props;
     return (
       <>
+        <span aria-live="polite" aria-label="Etusivu" />
         <MobileComponent>
           <Container>
             <HomeLogo dark aria-label={intl.formatMessage({ id: 'app.title' })} />

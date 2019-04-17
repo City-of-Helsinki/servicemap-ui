@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import {
   ListItem, ListItemIcon, Typography, withStyles, Divider,
 } from '@material-ui/core';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 
 const styles = theme => ({
   cssFocused: {
@@ -55,38 +54,21 @@ const styles = theme => ({
   },
 });
 
+// TODO: Complete distance calculations and related accessibility texts
+
 const ResultItem = ({
-  data, classes, onClick, icon, intl, listId,
+  bottomRightText, classes, onClick, icon, listId, itemId, subtitle, title, distancePosition,
 }) => {
-  const {
-    id, name, object_type, street,
-  } = data;
-
-  // Accessibility text
-  // TODO: Change to check data once accessibility messages functionality has been added
-  // TODO: Change texts to use translations once data is accessible
-  const accessibilityProblems = null;
-  let accessText = intl.formatMessage({ id: 'unit.accessibility.noInfo' });
-  if (accessibilityProblems !== null && typeof accessibilityProblems !== 'undefined') {
-    switch (accessibilityProblems) {
-      case 0:
-        accessText = intl.formatMessage({ id: 'unit.accessibility.ok' });
-        break;
-      default:
-        accessText = intl.formatMessage({ id: 'unit.accessibility.problems' }, { count: accessibilityProblems });
-    }
-  }
-
   // Distance text
   // TODO: Change to check data for distance once location info is available
-  const distance = null; // '100';
+  const distance = distancePosition; // '100';
 
   return (
     <>
       <ListItem
         button
         role="link"
-        component="a"
+        component="li"
         tabIndex={0}
         onClick={onClick}
         classes={{
@@ -104,22 +86,13 @@ const ResultItem = ({
         <div className={classes.itemTextContainer}>
           <div className={classes.topRow}>
             <Typography
-              id={`${listId}-result-item-title-${id}`}
+              id={`${listId}-result-item-title-${itemId}`}
               className={classes.title}
               component="h3"
               variant="body2"
-              aria-labelledby={`${listId}-result-item-title-${id} ${listId}-result-item-type-${id} ${listId}-result-item-distance-${id} ${listId}-result-item-accessibility-${id}`}
+              aria-labelledby={`${listId}-result-item-title-${itemId} ${listId}-result-item-type-${itemId} ${listId}-result-item-distance-${itemId} ${listId}-result-item-accessibility-${itemId}`}
             >
-              {
-                object_type === 'address'
-                && street.name.fi
-              }
-              {
-                object_type !== 'address'
-                && name
-                && name.fi
-              }
-              {}
+              {title}
             </Typography>
 
             {
@@ -134,43 +107,55 @@ const ResultItem = ({
                   >
                     {distance}
                     m
-                    <span id={`${listId}-result-item-distance-${id}`} className="sr-only" aria-hidden="true">{`${distance} metrin päässä`}</span>
+                    <span id={`${listId}-result-item-distance-${itemId}`} className="sr-only" aria-hidden="true">{`${distance} metrin päässä`}</span>
                   </Typography>
                 </div>
               )
             }
 
           </div>
-          <div className={classes.bottomRow}>
+          {
+            // Bottom row
+            (subtitle || bottomRightText)
+            && (
+              <div className={classes.bottomRow}>
+                {
+                  subtitle
+                  && (
+                    <div className={classes.bottomColumn}>
+                      <Typography
+                        id={`${listId}-result-item-type-${itemId}`}
+                        variant="caption"
+                        className={`${classes.noMargin} ${classes.smallFont}`}
+                        component="p"
+                        aria-hidden="true"
+                      >
+                        {subtitle}
+                      </Typography>
+                    </div>
+                  )
+                }
 
-            <div className={classes.bottomColumn}>
-              <Typography
-                id={`${listId}-result-item-type-${id}`}
-                variant="caption"
-                className={`${classes.noMargin} ${classes.caption}`}
-                component="p"
-                aria-hidden="true"
-              >
-                <FormattedMessage id={object_type} />
-              </Typography>
-            </div>
-            {
-              accessText
-              && (
-              <div className={`${classes.rightColumn} ${classes.bottomColumn}`}>
-                <Typography
-                  id={`${listId}-result-item-accessibility-${id}`}
-                  className={`${classes.caption} ${classes.marginLeft}`}
-                  component="p"
-                  variant="caption"
-                  aria-hidden="true"
-                >
-                  {accessText}
-                </Typography>
+                {
+                  bottomRightText
+                  && (
+                  <div className={`${classes.rightColumn} ${classes.bottomColumn}`}>
+                    <Typography
+                      id={`${listId}-result-item-accessibility-${itemId}`}
+                      className={`${classes.smallFont} ${classes.marginLeft}`}
+                      component="p"
+                      variant="caption"
+                      aria-hidden="true"
+                    >
+                      {bottomRightText}
+                    </Typography>
+                  </div>
+                  )
+                }
+
               </div>
-              )
-            }
-          </div>
+            )
+          }
         </div>
       </ListItem>
       <li>
@@ -180,21 +165,26 @@ const ResultItem = ({
   );
 };
 
-export default injectIntl(withStyles(styles)(ResultItem));
+export default withStyles(styles)(ResultItem);
 
 // Typechecking
 ResultItem.propTypes = {
+  bottomRightText: PropTypes.string,
   classes: PropTypes.objectOf(PropTypes.any),
-  data: PropTypes.objectOf(PropTypes.any),
   icon: PropTypes.node,
   listId: PropTypes.string.isRequired,
   onClick: PropTypes.func,
-  intl: intlShape.isRequired,
+  itemId: PropTypes.number.isRequired,
+  subtitle: PropTypes.string,
+  title: PropTypes.string.isRequired,
+  distancePosition: PropTypes.objectOf(PropTypes.any),
 };
 
 ResultItem.defaultProps = {
+  bottomRightText: null,
   classes: {},
-  data: {},
   icon: null,
   onClick: () => {},
+  subtitle: null,
+  distancePosition: null,
 };

@@ -9,6 +9,7 @@ export default {
   // General
   'general.back': 'Tillbaka',
   'general.home': 'Home', // TODO: Translate
+  'general.back.home': 'Back to frontpage', // TODO: Translate
   'general.noData': 'No data available', // TODO: Translate
 
   // Map

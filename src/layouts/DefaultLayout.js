@@ -107,7 +107,9 @@ const DefaultLayout = (props) => {
       }
       <div className={classes.activeRoot} style={styles.activeRoot}>
         <div style={styles.sidebar}>
-          <Sidebar />
+          <main>
+            <Sidebar />
+          </main>
         </div>
         <div style={styles.map}>
           <MapContainer />
