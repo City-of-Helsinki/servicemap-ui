@@ -14,13 +14,16 @@ import App from '../src/App';
 import {makeLanguageHandler, makeUnitHandler} from './utils';
 import { setLocale } from '../src/redux/actions/locale';
 import { changeSelectedUnit } from '../src/redux/actions/unit';
+import { SheetsRegistry } from 'jss';
+import { createGenerateClassName, MuiThemeProvider } from '@material-ui/core';
+import JssProvider from 'react-jss/lib/JssProvider';
+import themes from '../src/themes';
 
 // Configure constants
 const app = express();
 const serverConfig = config.server;
 const languages = config.supported_languages.join('|');
 const baseURL = `${serverConfig.url_prefix}(:lang(${languages})?)`;
-
 
 // Add static folder
 app.use(express.static(path.resolve(__dirname, 'src')));
@@ -40,38 +43,56 @@ app.get('/*', (req, res, next) => {
   const insertCss = (...styles) => styles.forEach(style => css.add(style._getCss()));
   const store = createStore(rootReducer, applyMiddleware(thunk));
 
+
+  // Create a sheetsRegistry instance.
+  const sheetsRegistry = new SheetsRegistry();
+
+  // Create a sheetsManager instance.
+  const sheetsManager = new Map();
+
+  // Create a new class name generator.
+  const generateClassName = createGenerateClassName();
+
+
   // Dispatch unit data to redux
   if (req._context) {
     store.dispatch(changeSelectedUnit(req._context));
     store.dispatch(setLocale(req.params[0].slice(0, 2)))
   }
   const jsx = (
-    <Provider store={store}>
-      <StaticRouter location={req.url} context={{}}>
-        <StyleContext.Provider value={{ insertCss }}>
-          <App />
-        </StyleContext.Provider>
-      </StaticRouter>
-    </Provider>
+    <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>
+      <MuiThemeProvider theme={themes.SMTheme} sheetsManager={sheetsManager}>
+        <Provider store={store}>
+          <StaticRouter location={req.url} context={{}}>
+            <StyleContext.Provider value={{ insertCss }}>
+              <App />
+            </StyleContext.Provider>
+          </StaticRouter>
+        </Provider>
+      </MuiThemeProvider>
+    </JssProvider>
   );
   const reactDom = renderToString(jsx);
+
+  const jss = sheetsRegistry.toString();
 
   const preloadedState = store.getState();
 
   res.writeHead(200, { 'Content-Type': 'text/html' });
-  res.end(htmlTemplate(reactDom, preloadedState, css));
+  res.end(htmlTemplate(reactDom, preloadedState, css, jss));
 });
 
 console.log(`Starting server on port ${serverConfig.port || 2048}`);
 app.listen(serverConfig.port || 2048);
 
-
-const htmlTemplate = (reactDom, preloadedState, css) => `
+const htmlTemplate = (reactDom, preloadedState, css, jss) => `
 <!DOCTYPE html>
 <html lang="fi">
   <head>
     <meta charset="utf-8">
     <title>Palvelukartta</title>
+    <!-- jss-insertion-point -->
+    <style id="jss-server-side">${jss}</style>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
     integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
     crossorigin=""
