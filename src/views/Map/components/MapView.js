@@ -94,6 +94,7 @@ class MapView extends React.Component {
                   position={[unit.location.coordinates[1], unit.location.coordinates[0]]}
                   icon={drawMarkerIcon(unit, mapBase.options.name)}
                   onClick={() => history.push(generatePath('unit', lng, unit.id))}
+                  keyboard={false}
                 />
               );
             } return null;
@@ -115,6 +116,7 @@ class MapView extends React.Component {
                 highlightedDistrict.unit.location.coordinates[0],
               ]}
               icon={drawMarkerIcon(highlightedDistrict.unit, mapBase.options.name)}
+              keyboard={false}
             >
               <Popup autoPan={false}>
                 <p>{getLocaleText(highlightedDistrict.unit.name)}</p>
@@ -125,13 +127,14 @@ class MapView extends React.Component {
             <Marker
               key={stop.name + stop.gtfsId}
               position={[stop.lat, stop.lon]}
+              keyboard={false}
             >
               <Popup autoPan={false}>
                 <TransitStopInfo stop={stop} />
               </Popup>
             </Marker>
           ))}
-          <ZoomControl position="bottomright" />
+          <ZoomControl position="bottomright" aria-hidden="true" />
         </Map>
       );
     }

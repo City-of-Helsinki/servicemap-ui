@@ -55,39 +55,38 @@ class SearchView extends React.Component {
 
     return (
       <div className="Search">
+        {
+          // Screen reader only information
+        }
+        <Typography variant="srOnly">
+          {
+            isFetching && max === 0
+            && <FormattedMessage id="search.started" />
+          }
+        </Typography>
+        <Typography variant="srOnly">
+          {
+            isFetching && max > 0
+              && <FormattedMessage id="search.loading.units.srInfo" values={{ count: max }} />
+          }
+        </Typography>
+        <Typography variant="srOnly">
+          {
+            !isFetching
+            && <FormattedMessage id="search.info" values={{ count: unitCount }} />
+          }
+        </Typography>
         <SearchBar
           searchRef={this.searchField}
           onSubmit={this.onSearchSubmit}
           placeholder={intl && intl.formatMessage({ id: 'search.input.placeholder' })}
         />
-        <Divider />
+        <Divider aria-hidden="true" />
         <Paper className={classes.label} elevation={1} square aria-live="polite" style={paperStyles}>
           {
             isFetching
             && <Loading text={intl && intl.formatMessage({ id: 'search.loading.units' }, { count, max })} progress={progress} />
           }
-
-          {
-            // Screen reader only information
-          }
-          <Typography variant="srOnly">
-            {
-              isFetching && max === 0
-              && <FormattedMessage id="search.started" />
-            }
-          </Typography>
-          <Typography variant="srOnly">
-            {
-              isFetching && max > 0
-                && <FormattedMessage id="search.loading.units.srInfo" values={{ count: max }} />
-            }
-          </Typography>
-          <Typography variant="srOnly">
-            {
-              !isFetching
-              && <FormattedMessage id="search.info" values={{ count: unitCount }} />
-            }
-          </Typography>
 
         </Paper>
         {

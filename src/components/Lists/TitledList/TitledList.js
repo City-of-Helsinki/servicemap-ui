@@ -15,7 +15,7 @@ const TitledList = ({ children, classes, title }) => (
       {title}
     </Typography>
 
-    <Divider className={classes.left} />
+    <Divider aria-hidden="true" className={classes.left} />
 
     <List disablePadding>
       {children}
