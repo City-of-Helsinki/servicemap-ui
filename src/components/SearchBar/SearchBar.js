@@ -47,7 +47,7 @@ const styles = theme => ({
 
 class SearchBar extends React.Component {
   state = {
-    search: '',
+    search: null,
     isActive: false,
   };
 
@@ -71,11 +71,11 @@ class SearchBar extends React.Component {
 
   render() {
     const {
-      backButtonTarget, classes, intl, placeholder, hideBackButton, searchRef, initialText,
+      backButtonTarget, classes, intl, placeholder, previousSearch, hideBackButton, searchRef,
     } = this.props;
     const { search, isActive } = this.state;
 
-    const inputValue = typeof search === 'string' && search !== '' ? search : initialText;
+    const inputValue = typeof search === 'string' ? search : previousSearch;
 
     return (
       <Paper className={`${classes.root} ${isActive ? classes.rootFocused : ''}`} elevation={1} square>
@@ -117,11 +117,10 @@ SearchBar.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   placeholder: PropTypes.string.isRequired,
   searchRef: PropTypes.objectOf(PropTypes.any),
-  initialText: PropTypes.string,
+  previousSearch: PropTypes.string,
 };
-
 SearchBar.defaultProps = {
-  initialText: null,
+  previousSearch: null,
 };
 
 SearchBar.defaultProps = {
