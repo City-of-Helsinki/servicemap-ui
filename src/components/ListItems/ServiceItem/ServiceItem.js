@@ -30,6 +30,7 @@ class ServiceItem extends React.Component {
         button
         text={uppercaseFirst(getLocaleText(service.name))}
         icon={icon}
+        divider
         handleItemClick={(e) => {
           e.preventDefault();
           if (history) {

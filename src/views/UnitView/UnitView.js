@@ -5,8 +5,6 @@ import {
   Divider, Typography, withStyles, Link,
 } from '@material-ui/core';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
-import AddressIcon from '@material-ui/icons/Place';
-
 import { fetchSelectedUnitData } from '../../redux/actions/unit';
 import { getSelectedUnit } from '../../redux/selectors/unit';
 import { getLocaleString } from '../../redux/selectors/locale';
@@ -23,6 +21,7 @@ import ServiceItem from '../../components/ListItems/ServiceItem';
 class UnitView extends React.Component {
   constructor(props) {
     super(props);
+    this.unitTitle = React.createRef();
     this.state = {
       needUpdate: true,
     };
@@ -35,6 +34,7 @@ class UnitView extends React.Component {
       const { unit } = params;
       changeSelectedUnit(unit);
     }
+    this.unitTitle.current.focus();
   }
 
   componentDidUpdate() {
@@ -75,9 +75,20 @@ class UnitView extends React.Component {
       classes, getLocaleText, intl, fetchState, unit,
     } = this.props;
 
+    const TopBar = (
+      <div>
+        <TitleBar titleRef={this.unitTitle} title={unit ? unit.name && unit.name.fi : ''} />
+      </div>
+    );
+
     if (fetchState.isFetching) {
       return (
-        <p>Loading unit data</p>
+        <div className={classes.root}>
+          <div className="Content">
+            {TopBar}
+            <p>Loading unit data</p>
+          </div>
+        </div>
       );
     }
 
@@ -85,24 +96,11 @@ class UnitView extends React.Component {
       return (
         <div className={classes.root}>
           <div className="Content">
-            <TitleBar title={unit.name && unit.name.fi} />
+            {TopBar}
             {
                 unit.picture_url
-                && <img className={classes.image} alt="Unit" src={unit.picture_url} />
-              }
-
-            {/* Unit title */}
-            <div className={classes.title}>
-              <AddressIcon className={classes.left} />
-              <Typography
-                className={classes.left}
-                component="h3"
-                variant="h6"
-              >
-                {unit.name && getLocaleText(unit.name)}
-              </Typography>
-            </div>
-            <Divider className={classes.divider} />
+                && <img aria-hidden className={classes.image} alt="Unit" src={unit.picture_url} />
+            }
 
             {/* Highlights */}
             <div className={classes.marginVertical}>
@@ -211,9 +209,14 @@ class UnitView extends React.Component {
       );
     }
     return (
-      <Typography color="primary" variant="body1">
-        <FormattedMessage id="unit.details.notFound" />
-      </Typography>
+      <div className={classes.root}>
+        <div className="Content">
+          {TopBar}
+          <Typography color="primary" variant="body1">
+            <FormattedMessage id="unit.details.notFound" />
+          </Typography>
+        </div>
+      </div>
     );
   }
 }

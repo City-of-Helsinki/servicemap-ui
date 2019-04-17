@@ -71,7 +71,7 @@ class SearchBar extends React.Component {
 
   render() {
     const {
-      backButtonTarget, classes, intl, placeholder, hideBackButton,
+      backButtonTarget, classes, intl, placeholder, hideBackButton, searchRef,
     } = this.props;
     const { search, isActive } = this.state;
 
@@ -85,6 +85,8 @@ class SearchBar extends React.Component {
           }
 
           <InputBase
+            id="searchInput"
+            inputRef={searchRef}
             className={classes.input}
             placeholder={placeholder}
             value={search}
@@ -113,11 +115,13 @@ SearchBar.propTypes = {
   intl: intlShape.isRequired,
   onSubmit: PropTypes.func.isRequired,
   placeholder: PropTypes.string.isRequired,
+  searchRef: PropTypes.objectOf(PropTypes.any),
 };
 
 SearchBar.defaultProps = {
   backButtonTarget: null,
   hideBackButton: false,
+  searchRef: {},
 };
 
 export default withStyles(styles)(injectIntl(SearchBar));

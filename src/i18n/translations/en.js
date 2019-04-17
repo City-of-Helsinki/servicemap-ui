@@ -9,6 +9,7 @@ export default {
   // General
   'general.back': 'Back',
   'general.home': 'Home',
+  'general.back.home': 'Back to frontpage',
   'general.noData': 'No data available',
 
   // Map

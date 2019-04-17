@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Paper, Divider, withStyles,
+  Paper, Divider, withStyles, Typography,
 } from '@material-ui/core';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import styles from './styles';
 import Loading from '../../components/Loading/Loading';
 import SearchBar from '../../components/SearchBar';
@@ -12,6 +12,7 @@ import ResultList from '../../components/Lists/ResultList';
 class SearchView extends React.Component {
   constructor(props) {
     super(props);
+    this.searchField = React.createRef();
     const { changeSelectedUnit } = props;
 
     // Reset selected unit on SearchView
@@ -26,6 +27,7 @@ class SearchView extends React.Component {
     if (fetchUnits) {
       // fetchUnits([], null, 'kallion kirjasto');
     }
+    this.searchField.current.focus();
   }
 
   onSearchSubmit = (e, search) => {
@@ -54,6 +56,7 @@ class SearchView extends React.Component {
     return (
       <div className="Search">
         <SearchBar
+          searchRef={this.searchField}
           onSubmit={this.onSearchSubmit}
           placeholder={intl && intl.formatMessage({ id: 'search.input.placeholder' })}
         />
