@@ -7,7 +7,7 @@ import {
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import AddressIcon from '@material-ui/icons/Place';
 
-import { changeSelectedUnit } from '../../redux/actions/unit';
+import { changeSelectedUnit, fetchSelectedUnit } from '../../redux/actions/unit';
 import { getSelectedUnit } from '../../redux/selectors/unit';
 import { getLocaleString } from '../../redux/selectors/locale';
 
@@ -19,11 +19,15 @@ import TitleBar from '../../components/TitleBar/TitleBar';
 
 class UnitView extends React.Component {
   componentDidMount() {
-    const { match, changeSelectedUnit } = this.props;
+    const { match, fetchSelectedUnit, unit } = this.props;
     const { params } = match;
+
     if (params && params.unit) {
-      const { unit } = params;
-      changeSelectedUnit(unit);
+      const unitId = params.unit;
+      if (unit && unitId === `${unit.id}`) {
+        return;
+      }
+      fetchSelectedUnit(unitId);
     }
   }
 
@@ -209,12 +213,13 @@ const mapStateToProps = (state) => {
 
 export default injectIntl(withStyles(styles)(connect(
   mapStateToProps,
-  { changeSelectedUnit },
+  { changeSelectedUnit, fetchSelectedUnit },
 )(UnitView)));
 
 // Typechecking
 UnitView.propTypes = {
   unit: PropTypes.objectOf(PropTypes.any),
+  fetchSelectedUnit: PropTypes.func.isRequired,
   fetchState: PropTypes.objectOf(PropTypes.any),
   changeSelectedUnit: PropTypes.func.isRequired,
   match: PropTypes.objectOf(PropTypes.any),
