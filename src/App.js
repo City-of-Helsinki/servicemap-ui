@@ -3,16 +3,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { IntlProvider } from 'react-intl';
 import { connect } from 'react-redux';
-import {
-  MuiThemeProvider,
-} from '@material-ui/core';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import {
   Switch, Route, BrowserRouter,
 } from 'react-router-dom';
 
 import I18n from './i18n';
-import themes from './themes';
 import styles from './index.css';
 import appStyles from './App.css';
 import isClient from './utils';
@@ -35,6 +31,14 @@ class App extends React.Component {
     this.state = {
       i18n,
     };
+  }
+
+  // Remove the server-side injected CSS.
+  componentDidMount() {
+    const jssStyles = document.getElementById('jss-server-side');
+    if (jssStyles && jssStyles.parentNode) {
+      jssStyles.parentNode.removeChild(jssStyles);
+    }
   }
 
   // Change locale of app
@@ -67,11 +71,9 @@ class App extends React.Component {
     const i18nData = i18n.data();
     return (
       <IntlProvider {...i18nData}>
-        <MuiThemeProvider theme={themes.SMTheme}>
-          <div className="App">
-            <DefaultLayout i18n={i18n} onLanguageChange={locale => this.changeLocale(locale)} />
-          </div>
-        </MuiThemeProvider>
+        <div className="App">
+          <DefaultLayout i18n={i18n} onLanguageChange={locale => this.changeLocale(locale)} />
+        </div>
       </IntlProvider>
     );
   }
