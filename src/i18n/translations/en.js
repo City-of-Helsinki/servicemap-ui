@@ -11,6 +11,7 @@ export default {
   'general.home': 'Home',
   'general.back.home': 'Back to frontpage',
   'general.noData': 'No data available',
+  'general.loading': 'Loading',
 
   // Map
   'map': 'Map',

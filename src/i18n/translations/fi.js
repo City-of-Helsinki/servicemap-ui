@@ -11,6 +11,7 @@ export default {
   'general.home': 'Koti',
   'general.back.home': 'Takaisin etusivulle',
   'general.noData': 'Tietoa ei saatavilla',
+  'general.loading': 'Ladataan',
 
   // Map
   'map': 'Kartta',
