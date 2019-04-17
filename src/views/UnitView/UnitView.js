@@ -7,10 +7,9 @@ import {
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import AddressIcon from '@material-ui/icons/Place';
 
-import { fetchSelectedUnitData } from '../../redux/actions/unit';
+import { changeSelectedUnit } from '../../redux/actions/unit';
 import { getSelectedUnit } from '../../redux/selectors/unit';
 import { getLocaleString } from '../../redux/selectors/locale';
-import { changeSelectedUnit } from '../../redux/actions/filter';
 
 import InfoList from './components/InfoList';
 import styles from './styles/styles';
@@ -19,13 +18,6 @@ import TitleBar from '../../components/TitleBar/TitleBar';
 // TODO: Add proper component's when ready
 
 class UnitView extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      needUpdate: true,
-    };
-  }
-
   componentDidMount() {
     const { match, changeSelectedUnit } = this.props;
     const { params } = match;
@@ -35,19 +27,9 @@ class UnitView extends React.Component {
     }
   }
 
-  componentDidUpdate() {
-    const { unit } = this.props;
-    const { needUpdate } = this.state;
-    // Fetch the rest of the unit data once the component receives redux data
-    if (unit && !unit.complete && needUpdate) {
-      this.updateUnitData(unit);
-    }
-  }
-
-  updateUnitData = (unit) => {
-    const { fetchSelectedUnitData } = this.props;
-    this.setState({ needUpdate: false });
-    fetchSelectedUnitData(unit.id);
+  componentWillUnmount() {
+    const { changeSelectedUnit } = this.props;
+    changeSelectedUnit(null);
   }
 
   // Filters connections data by section
@@ -227,9 +209,7 @@ const mapStateToProps = (state) => {
 
 export default injectIntl(withStyles(styles)(connect(
   mapStateToProps,
-  {
-    changeSelectedUnit, fetchSelectedUnitData,
-  },
+  { changeSelectedUnit },
 )(UnitView)));
 
 // Typechecking
@@ -237,7 +217,6 @@ UnitView.propTypes = {
   unit: PropTypes.objectOf(PropTypes.any),
   fetchState: PropTypes.objectOf(PropTypes.any),
   changeSelectedUnit: PropTypes.func.isRequired,
-  fetchSelectedUnitData: PropTypes.func.isRequired,
   match: PropTypes.objectOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   getLocaleText: PropTypes.func.isRequired,

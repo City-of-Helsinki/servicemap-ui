@@ -17,8 +17,8 @@ export const unitsFetchProgressUpdate = (count, max) => ({
   max,
 });
 
-export const unitsUpdateFetchSuccess = unit => ({
-  type: 'UNITS_UPDATE_FETCH_SUCCESS',
+export const setSelectedUnit = unit => ({
+  type: 'SET_SELECTED_UNIT',
   unit,
 });
 
@@ -54,15 +54,21 @@ export const fetchUnits = (allData = [], next = null, searchQuery = null) => asy
   }
 };
 
-export const fetchSelectedUnitData = id => async (dispatch) => {
-  dispatch(fetchIsLoading());
-  const response = await queryBuilder.setType('unit', id).run();
-  if (response.ok && response.status === 200) {
-    const data = await response.json();
-    data.complete = true;
-    dispatch(unitsUpdateFetchSuccess(data));
+export const changeSelectedUnit = id => async (dispatch) => {
+  if (id) {
+    // Fetch rest of the unit's data
+    dispatch(fetchIsLoading());
+    const response = await queryBuilder.setType('unit', id).run();
+    if (response.ok && response.status === 200) {
+      const data = await response.json();
+      data.complete = true;
+      data.object_type = 'unit';
+      dispatch(setSelectedUnit(data));
+    } else {
+      dispatch(fetchHasErrored());
+    }
   } else {
-    dispatch(fetchHasErrored());
+    dispatch(setSelectedUnit(null));
   }
 };
 
