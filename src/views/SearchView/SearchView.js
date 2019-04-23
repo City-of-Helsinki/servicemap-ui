@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import {
-  Paper, Divider, withStyles, Typography,
+  Paper, Divider, withStyles, Typography, Button,
 } from '@material-ui/core';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import styles from './styles';
@@ -11,6 +11,8 @@ import SearchBar from '../../components/SearchBar';
 import ResultList from '../../components/Lists/ResultList';
 import { parseSearchParams } from '../../utils';
 import { generatePath } from '../../utils/path';
+import BackButton from '../../components/BackButton';
+import Container from '../../components/Container/Container';
 
 class SearchView extends React.Component {
   constructor(props) {
@@ -111,6 +113,9 @@ class SearchView extends React.Component {
           />
           )
         }
+        <Container>
+          <BackButton />
+        </Container>
       </div>
     );
   }
