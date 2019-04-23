@@ -22,6 +22,9 @@ class UnitView extends React.Component {
   constructor(props) {
     super(props);
     this.unitTitle = React.createRef();
+    this.state = {
+      centered: false,
+    };
   }
 
   componentDidMount() {
@@ -36,6 +39,14 @@ class UnitView extends React.Component {
         return;
       }
       fetchSelectedUnit(unitId);
+    }
+  }
+
+  componentDidUpdate() {
+    const { map, unit } = this.props;
+    const { centered } = this.state;
+    if (unit && map && map._layersMaxZoom && !centered) {
+      this.centerMap(map, unit);
     }
   }
 
@@ -62,9 +73,17 @@ class UnitView extends React.Component {
     return filteredList;
   }
 
+  centerMap = (map, unit) => {
+    map.setView(
+      [unit.location.coordinates[1], unit.location.coordinates[0]],
+      map._layersMaxZoom - 1,
+    );
+    this.setState({ centered: true });
+  }
+
   render() {
     const {
-      classes, getLocaleText, intl, fetchState, unit, map,
+      classes, getLocaleText, intl, fetchState, unit,
     } = this.props;
 
     const TopBar = (
@@ -85,12 +104,6 @@ class UnitView extends React.Component {
     }
 
     if (unit && unit.complete) {
-      if (map) {
-        map.setView(
-          [unit.location.coordinates[1], unit.location.coordinates[0]],
-          map._layersMaxZoom - 1,
-        );
-      }
       return (
         <div className={classes.root}>
           <div className="Content">
@@ -241,7 +254,7 @@ export default injectIntl(withStyles(styles)(connect(
 // Typechecking
 UnitView.propTypes = {
   unit: PropTypes.objectOf(PropTypes.any),
-  map: PropTypes.objectOf(PropTypes.any).isRequired,
+  map: PropTypes.objectOf(PropTypes.any),
   fetchSelectedUnit: PropTypes.func.isRequired,
   fetchState: PropTypes.objectOf(PropTypes.any),
   changeSelectedUnit: PropTypes.func.isRequired,
@@ -255,4 +268,5 @@ UnitView.defaultProps = {
   unit: null,
   fetchState: null,
   match: {},
+  map: null,
 };
