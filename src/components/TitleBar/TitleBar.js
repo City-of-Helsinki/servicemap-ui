@@ -63,6 +63,6 @@ TitleBar.propTypes = {
 };
 
 TitleBar.defaultProps = {
-  titleComponent: 'h2',
+  titleComponent: 'h3',
 };
 export default withStyles(styles)(TitleBar);
