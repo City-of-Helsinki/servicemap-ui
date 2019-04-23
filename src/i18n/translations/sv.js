@@ -9,7 +9,7 @@ export default {
   // General
   'general.back': 'Tillbaka',
   'general.home': 'Home', // TODO: Translate
-  'general.back.home': 'Back to frontpage', // TODO: Translate
+  'general.back.home': 'Close search and return to beginning', // TODO: Translate
   'general.noData': 'No data available', // TODO: Translate
   'general.loading': 'Loading', // TODO: Translate
 

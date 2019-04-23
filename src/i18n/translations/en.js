@@ -9,7 +9,7 @@ export default {
   // General
   'general.back': 'Back',
   'general.home': 'Home',
-  'general.back.home': 'Back to frontpage',
+  'general.back.home': 'Close search and return to beginning',
   'general.noData': 'No data available',
   'general.loading': 'Loading',
 

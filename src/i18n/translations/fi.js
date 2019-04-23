@@ -7,9 +7,9 @@ export default {
   'event.nearby': 'Lähellä olevat tapahtumat',
 
   // General
-  'general.back': 'Takaisin',
+  'general.back': 'Palaa',
   'general.home': 'Koti',
-  'general.back.home': 'Takaisin etusivulle',
+  'general.back.home': 'Sulje haku ja palaa alkuun',
   'general.noData': 'Tietoa ei saatavilla',
   'general.loading': 'Ladataan',
 
