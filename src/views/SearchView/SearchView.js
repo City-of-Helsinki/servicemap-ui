@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
@@ -9,6 +10,7 @@ import styles from './styles';
 import Loading from '../../components/Loading/Loading';
 import SearchBar from '../../components/SearchBar';
 import ResultList from '../../components/Lists/ResultList';
+import { fitUnitsToMap } from '../Map/utils/mapActions';
 import { parseSearchParams } from '../../utils';
 import { generatePath } from '../../utils/path';
 
@@ -24,11 +26,14 @@ class SearchView extends React.Component {
     }
     this.state = {
       queryParam: null,
+      mapMoved: false,
     };
   }
 
   componentDidMount() {
-    const { fetchUnits, location, previousSearch, units, map } = this.props;
+    const {
+      fetchUnits, location, previousSearch, units, map,
+    } = this.props;
     const searchParams = parseSearchParams(location.search);
     const searchParam = searchParams.q || null;
     if (searchParam && fetchUnits && searchParam !== previousSearch) {
@@ -36,31 +41,21 @@ class SearchView extends React.Component {
       this.setState({ queryParam: searchParam });
     }
     this.searchField.current.focus();
-    if (units && map) {
-      // this.fitUnitsToMap(units, map);
-    }
+    this.focusMap(units, map);
   }
 
   componentDidUpdate() {
     const { units, map } = this.props;
-    if (units && map) {
-      // this.fitUnitsToMap(units, map);
-    }
+    this.focusMap(units, map);
   }
 
-  // Function to fit search results on map,
-  // not used currently since might not be needed and might be problematic in some search results
-  /* fitUnitsToMap = (units, map) => {
-    const bounds = [];
-    units.forEach((unit) => {
-      if (unit.object_type === 'unit' && unit.location && unit.location.coordinates) {
-        bounds.push([unit.location.coordinates[1], unit.location.coordinates[0]]);
-      }
-    });
-    if (bounds.length > 0) {
-      map.fitBounds(bounds, { padding: [15, 15], maxZoom: 14 });
+  focusMap = (units, map) => {
+    const { mapMoved } = this.state;
+    if (units && units.length > 0 && map && map._layersMaxZoom && !mapMoved) {
+      this.setState({ mapMoved: true });
+      fitUnitsToMap(units, map);
     }
-  } */
+  }
 
   onSearchSubmit = (e, search) => {
     e.preventDefault();

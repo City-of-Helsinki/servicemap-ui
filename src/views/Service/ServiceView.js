@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -7,32 +8,45 @@ import TitleBar from '../../components/TitleBar/TitleBar';
 import { generatePath } from '../../utils/path';
 import { getLocaleString } from '../../redux/selectors/locale';
 import { fetchServiceUnits } from '../../redux/actions/services';
+import { fitUnitsToMap } from '../Map/utils/mapActions';
 import ResultList from '../../components/Lists/ResultList';
 
 class ServiceView extends React.Component {
   constructor(props) {
     super(props);
     this.listTitle = React.createRef();
+    this.state = { mapMoved: false };
   }
 
   componentDidMount() {
-    const { match, fetchServiceUnits, unitData } = this.props;
+    const {
+      match, fetchServiceUnits, unitData, map,
+    } = this.props;
     const { params } = match;
     if (`${unitData.id}` !== params.service) {
       fetchServiceUnits(params.service);
     } else {
       this.listTitle.current.focus();
-      // this.fitUnitsToMap(unitData);
+      this.focusMap(unitData.units.results, map);
     }
   }
 
   componentDidUpdate() {
-    const { unitData, match } = this.props;
+    const { unitData, match, map } = this.props;
     const { params } = match;
     // Focus on title once units have been loaded
     if (unitData && unitData.id === params.service) {
       this.listTitle.current.focus();
-      // this.fitUnitsToMap(unitData);
+      // Focus map on unit
+      this.focusMap(unitData.units.results, map);
+    }
+  }
+
+  focusMap = (unit, map) => {
+    const { mapMoved } = this.state;
+    if (unit && map && map._layersMaxZoom && !mapMoved) {
+      this.setState({ mapMoved: true });
+      fitUnitsToMap(unit, map);
     }
   }
 
@@ -45,19 +59,6 @@ class ServiceView extends React.Component {
       history.push(generatePath('unit', locale, item.id));
     }
   }
-
-  // Function to fit service units on map,
-  // not used currently since might not be needed and might be problematic in some unti lists
-  /* fitUnitsToMap = (unitData) => {
-    const { map } = this.props;
-    const bounds = [];
-    unitData.units.results.forEach((unit) => {
-      if (unit.object_type === 'unit' && unit.location && unit.location.coordinates) {
-        bounds.push([unit.location.coordinates[1], unit.location.coordinates[0]]);
-      }
-    });
-    map.fitBounds(bounds);
-  } */
 
   render() {
     const {

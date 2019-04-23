@@ -10,6 +10,7 @@ import { fetchSelectedUnit, changeSelectedUnit } from '../../redux/actions/selec
 import { getSelectedUnit } from '../../redux/selectors/selectedUnit';
 import { getLocaleString } from '../../redux/selectors/locale';
 
+import { focusUnit } from '../Map/utils/mapActions';
 import InfoList from './components/InfoList';
 import styles from './styles/styles';
 import TitleBar from '../../components/TitleBar/TitleBar';
@@ -55,6 +56,11 @@ class UnitView extends React.Component {
     changeSelectedUnit(null);
   }
 
+  centerMap = (map, unit) => {
+    this.setState({ centered: true });
+    focusUnit(map, unit);
+  }
+
   // Filters connections data by section
   sectionFilter = (list, section) => {
     const filteredList = [];
@@ -71,14 +77,6 @@ class UnitView extends React.Component {
       }
     });
     return filteredList;
-  }
-
-  centerMap = (map, unit) => {
-    map.setView(
-      [unit.location.coordinates[1], unit.location.coordinates[0]],
-      map._layersMaxZoom - 1,
-    );
-    this.setState({ centered: true });
   }
 
   render() {
