@@ -66,7 +66,7 @@ class ServiceView extends React.Component {
           <ResultList
             listId="search-list"
             data={serviceUnits}
-            title=""
+            title={intl.formatMessage({ id: 'unit.plural' })}
             onItemClick={(e, item) => this.handleClick(e, item)}
           />
         </div>
