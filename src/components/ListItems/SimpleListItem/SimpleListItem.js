@@ -54,6 +54,7 @@ const listItemStyles = theme => ({
     padding: 0,
     marginLeft: theme.spacing.unit * 2,
     marginRight: theme.spacing.unit * 5.25,
+    whiteSpace: 'pre-line',
   },
   link: {
     color: '#0000EE',

@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -21,9 +22,6 @@ class UnitView extends React.Component {
   constructor(props) {
     super(props);
     this.unitTitle = React.createRef();
-    this.state = {
-      needUpdate: true,
-    };
   }
 
   componentDidMount() {
@@ -66,7 +64,7 @@ class UnitView extends React.Component {
 
   render() {
     const {
-      classes, getLocaleText, intl, fetchState, unit,
+      classes, getLocaleText, intl, fetchState, unit, map,
     } = this.props;
 
     const TopBar = (
@@ -87,6 +85,12 @@ class UnitView extends React.Component {
     }
 
     if (unit && unit.complete) {
+      if (map) {
+        map.setView(
+          [unit.location.coordinates[1], unit.location.coordinates[0]],
+          map._layersMaxZoom - 1,
+        );
+      }
       return (
         <div className={classes.root}>
           <div className="Content">
@@ -220,10 +224,12 @@ const mapStateToProps = (state) => {
   const unit = getSelectedUnit(state);
   const fetchState = state.units;
   const getLocaleText = textObject => getLocaleString(state, textObject);
+  const map = state.mapRef.leafletElement;
   return {
     unit,
     fetchState,
     getLocaleText,
+    map,
   };
 };
 
@@ -235,6 +241,7 @@ export default injectIntl(withStyles(styles)(connect(
 // Typechecking
 UnitView.propTypes = {
   unit: PropTypes.objectOf(PropTypes.any),
+  map: PropTypes.objectOf(PropTypes.any).isRequired,
   fetchSelectedUnit: PropTypes.func.isRequired,
   fetchState: PropTypes.objectOf(PropTypes.any),
   changeSelectedUnit: PropTypes.func.isRequired,

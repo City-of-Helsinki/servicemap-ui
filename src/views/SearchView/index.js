@@ -6,6 +6,7 @@ import { changeSelectedUnit } from '../../redux/actions/filter';
 // Listen to redux state
 // const unitList = getUnitList(state);
 const mapStateToProps = (state) => {
+  const map = state.mapRef.leafletElement;
   const { units } = state;
   const {
     data, isFetching, count, max,
@@ -16,6 +17,7 @@ const mapStateToProps = (state) => {
     isFetching,
     count,
     max,
+    map,
   };
 };
 

@@ -22,6 +22,7 @@ class ServiceView extends React.Component {
       fetchServiceUnits(params.service);
     } else {
       this.listTitle.current.focus();
+      // this.fitUnitsToMap(unitData);
     }
   }
 
@@ -31,6 +32,7 @@ class ServiceView extends React.Component {
     // Focus on title once units have been loaded
     if (unitData && unitData.id === params.service) {
       this.listTitle.current.focus();
+      // this.fitUnitsToMap(unitData);
     }
   }
 
@@ -43,6 +45,19 @@ class ServiceView extends React.Component {
       history.push(generatePath('unit', locale, item.id));
     }
   }
+
+  // Function to fit service units on map,
+  // not used currently since might not be needed and might be problematic in some unti lists
+  /* fitUnitsToMap = (unitData) => {
+    const { map } = this.props;
+    const bounds = [];
+    unitData.units.results.forEach((unit) => {
+      if (unit.object_type === 'unit' && unit.location && unit.location.coordinates) {
+        bounds.push([unit.location.coordinates[1], unit.location.coordinates[0]]);
+      }
+    });
+    map.fitBounds(bounds);
+  } */
 
   render() {
     const {
@@ -89,11 +104,13 @@ const mapStateToProps = (state) => {
   const error = state.service.errorMessage;
   const unitData = state.service.data;
   const getLocaleText = textObject => getLocaleString(state, textObject);
+  const map = state.mapRef.leafletElement;
   return {
     isLoading,
     unitData,
     getLocaleText,
     error,
+    map,
   };
 };
 
@@ -114,6 +131,7 @@ ServiceView.propTypes = {
   getLocaleText: PropTypes.func.isRequired,
   fetchServiceUnits: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
+  map: PropTypes.objectOf(PropTypes.any),
 };
 
 ServiceView.defaultProps = {
@@ -121,4 +139,5 @@ ServiceView.defaultProps = {
   history: {},
   unitData: {},
   error: null,
+  map: null,
 };

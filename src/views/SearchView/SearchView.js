@@ -22,13 +22,38 @@ class SearchView extends React.Component {
   }
 
   componentDidMount() {
+    const { units, map } = this.props;
     // TODO: Temp data to be removed
     const { fetchUnits } = this.props;
     if (fetchUnits) {
       // fetchUnits([], null, 'kallion kirjasto');
     }
     this.searchField.current.focus();
+    if (units && map) {
+      // this.fitUnitsToMap(units, map);
+    }
   }
+
+  componentDidUpdate() {
+    const { units, map } = this.props;
+    if (units && map) {
+      // this.fitUnitsToMap(units, map);
+    }
+  }
+
+  // Function to fit search results on map,
+  // not used currently since might not be needed and might be problematic in some search results
+  /* fitUnitsToMap = (units, map) => {
+    const bounds = [];
+    units.forEach((unit) => {
+      if (unit.object_type === 'unit' && unit.location && unit.location.coordinates) {
+        bounds.push([unit.location.coordinates[1], unit.location.coordinates[0]]);
+      }
+    });
+    if (bounds.length > 0) {
+      map.fitBounds(bounds, { padding: [15, 15], maxZoom: 14 });
+    }
+  } */
 
   onSearchSubmit = (e, search) => {
     e.preventDefault();
@@ -116,6 +141,7 @@ SearchView.propTypes = {
   isFetching: PropTypes.bool,
   max: PropTypes.number,
   units: PropTypes.arrayOf(PropTypes.any),
+  map: PropTypes.objectOf(PropTypes.any),
 };
 
 SearchView.defaultProps = {
@@ -125,4 +151,5 @@ SearchView.defaultProps = {
   isFetching: false,
   max: 0,
   units: [],
+  map: null,
 };
