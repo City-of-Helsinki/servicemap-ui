@@ -5,8 +5,8 @@ import {
   Divider, Typography, withStyles, Link,
 } from '@material-ui/core';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
-import { changeSelectedUnit, fetchSelectedUnit } from '../../redux/actions/unit';
-import { getSelectedUnit } from '../../redux/selectors/unit';
+import { fetchSelectedUnit, changeSelectedUnit } from '../../redux/actions/selectedUnit';
+import { getSelectedUnit } from '../../redux/selectors/selectedUnit';
 import { getLocaleString } from '../../redux/selectors/locale';
 
 import InfoList from './components/InfoList';

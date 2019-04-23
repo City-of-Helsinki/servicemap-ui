@@ -4,8 +4,9 @@ export const fetchHasErrored = errorMessage => ({
   type: 'UNITS_FETCH_HAS_ERRORED',
   errorMessage,
 });
-export const fetchIsLoading = () => ({
+export const fetchIsLoading = search => ({
   type: 'UNITS_IS_FETCHING',
+  search,
 });
 export const unitsFetchDataSuccess = units => ({
   type: 'UNITS_FETCH_DATA_SUCCESS',
@@ -16,14 +17,10 @@ export const unitsFetchProgressUpdate = (count, max) => ({
   count,
   max,
 });
-export const setSelectedUnit = unit => ({
-  type: 'SET_SELECTED_UNIT',
-  unit,
-});
 
 // Thunk fetch
 export const fetchUnits = (allData = [], next = null, searchQuery = null) => async (dispatch) => {
-  dispatch(fetchIsLoading());
+  dispatch(fetchIsLoading(searchQuery));
   try {
     let response = null;
     if (next) {
@@ -39,7 +36,7 @@ export const fetchUnits = (allData = [], next = null, searchQuery = null) => asy
     if (data.next) {
       // Fetch the next page if response has more than one page of results
       dispatch(unitsFetchProgressUpdate(newData.length, data.count));
-      dispatch(fetchUnits(newData, data.next));
+      dispatch(fetchUnits(newData, data.next, searchQuery));
     } else {
       // Filter out duplicate units
       const distinctData = Array.from(new Set(newData.map(x => x.id))).map((id) => {
@@ -50,46 +47,5 @@ export const fetchUnits = (allData = [], next = null, searchQuery = null) => asy
     }
   } catch (e) {
     dispatch(fetchHasErrored(e.message));
-  }
-};
-
-// Change selected unit to given unit
-export const changeSelectedUnit = unit => async (dispatch) => {
-  if (unit) {
-    dispatch(setSelectedUnit(unit));
-  } else {
-    dispatch(setSelectedUnit(null));
-  }
-};
-
-// Fetch new selected unit
-export const fetchSelectedUnit = id => async (dispatch) => {
-  try {
-    // Fetch rest of the unit's data
-    dispatch(fetchIsLoading());
-    const response = await queryBuilder.setType('unit', id).run();
-    if (response.ok && response.status === 200) {
-      const data = await response.json();
-      data.complete = true;
-      data.object_type = 'unit';
-      dispatch(setSelectedUnit(data));
-    } else {
-      throw new Error(response.statusText);
-    }
-  } catch (e) {
-    dispatch(fetchHasErrored(e.message));
-    console.warn('Error fetching selected unit');
-  }
-};
-
-// Is this used anymore?
-export const fetchUnit = id => async (dispatch) => {
-  dispatch(fetchIsLoading());
-  const response = await queryBuilder.setType('unit', id).run();
-  if (response.ok && response.status === 200) {
-    const data = await response.json();
-    dispatch(unitsFetchDataSuccess([data]));
-  } else {
-    dispatch(fetchHasErrored());
   }
 };
