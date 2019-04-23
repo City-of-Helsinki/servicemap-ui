@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import {
   Paper, Divider, withStyles, Typography,
 } from '@material-ui/core';
@@ -9,6 +10,7 @@ import Loading from '../../components/Loading/Loading';
 import SearchBar from '../../components/SearchBar';
 import ResultList from '../../components/Lists/ResultList';
 import { parseSearchParams } from '../../utils';
+import { generatePath } from '../../utils/path';
 
 class SearchView extends React.Component {
   constructor(props) {
@@ -38,10 +40,12 @@ class SearchView extends React.Component {
 
   onSearchSubmit = (e, search) => {
     e.preventDefault();
-    const { fetchUnits } = this.props;
-    console.log(`Search query = ${search}`);
+    const { fetchUnits, history, match } = this.props;
+    const { params } = match;
+    const lng = params && params.lng;
     if (search && search !== '') {
       fetchUnits([], null, search);
+      history.replace(generatePath('search', lng, search));
     }
   }
 
@@ -111,7 +115,7 @@ class SearchView extends React.Component {
     );
   }
 }
-export default injectIntl(withStyles(styles)(SearchView));
+export default withRouter(injectIntl(withStyles(styles)(SearchView)));
 
 // Typechecking
 SearchView.propTypes = {
@@ -119,9 +123,11 @@ SearchView.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   count: PropTypes.number,
   fetchUnits: PropTypes.func,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
   intl: intlShape.isRequired,
   isFetching: PropTypes.bool,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
+  match: PropTypes.objectOf(PropTypes.any).isRequired,
   max: PropTypes.number,
   previousSearch: PropTypes.string,
   units: PropTypes.arrayOf(PropTypes.any),
