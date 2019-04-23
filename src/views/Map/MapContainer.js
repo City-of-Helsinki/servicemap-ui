@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { getMapType } from '../../redux/selectors/map';
 import getDistricts from '../../redux/selectors/district';
 import { fetchDistrictsData } from '../../redux/actions/district';
+import { setMapRef } from '../../redux/actions/map';
 import MapView from './components/MapView';
 import { getSelectedUnit } from '../../redux/selectors/unit';
 import { getLocaleString } from '../../redux/selectors/locale';
@@ -105,6 +106,11 @@ class MapContainer extends React.Component {
     this.setState({ transitStops: [] });
   }
 
+  saveMapRef = (ref) => {
+    const { setMapRef } = this.props;
+    setMapRef(ref);
+  }
+
   render() {
     const {
       mapType, districts, highlightedUnit, getLocaleText,
@@ -123,6 +129,7 @@ class MapContainer extends React.Component {
           mapBase={mapType || initialMap}
           unitList={unitList}
           districtList={districts}
+          saveMapRef={this.saveMapRef}
           mapOptions={mapOptions}
           fetchTransitStops={this.fetchTransitStops}
           clearTransitStops={this.clearTransitStops}
@@ -139,9 +146,7 @@ class MapContainer extends React.Component {
 // Listen to redux state
 const mapStateToProps = (state) => {
   const { units } = state;
-  const {
-    data,
-  } = units;
+  const { data } = units;
   const mapType = getMapType(state);
   const districts = getDistricts(state);
   const highlightedUnit = getSelectedUnit(state);
@@ -160,8 +165,8 @@ const mapStateToProps = (state) => {
 
 export default connect(
   mapStateToProps,
-  // TODO: remove redux action from this class
-  { fetchDistrictsData },
+  // TODO: remove fetchDistrictsData from this class
+  { fetchDistrictsData, setMapRef },
 )(MapContainer);
 
 
@@ -174,6 +179,7 @@ MapContainer.propTypes = {
   highlightedUnit: PropTypes.objectOf(PropTypes.any),
   fetchDistrictsData: PropTypes.func.isRequired,
   getLocaleText: PropTypes.func.isRequired,
+  setMapRef: PropTypes.func.isRequired,
 };
 
 MapContainer.defaultProps = {

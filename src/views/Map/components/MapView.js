@@ -18,11 +18,25 @@ class MapView extends React.Component {
       Popup: undefined,
       Polygon: undefined,
       highlightedDistrict: null,
+      refSaved: false,
     };
   }
 
   componentDidMount() {
     this.initiateLeaflet();
+  }
+
+  componentDidUpdate() {
+    this.saveMapReference();
+  }
+
+  saveMapReference() {
+    const { saveMapRef } = this.props;
+    const { refSaved } = this.state;
+    if (this.mapRef.current && !refSaved) {
+      this.setState({ refSaved: true });
+      saveMapRef(this.mapRef.current);
+    }
   }
 
   initiateLeaflet() {
@@ -153,6 +167,7 @@ MapView.propTypes = {
   clearTransitStops: PropTypes.func,
   transitStops: PropTypes.arrayOf(PropTypes.object),
   getLocaleText: PropTypes.func.isRequired,
+  saveMapRef: PropTypes.func.isRequired,
 };
 
 MapView.defaultProps = {
