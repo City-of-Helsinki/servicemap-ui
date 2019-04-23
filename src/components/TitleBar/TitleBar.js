@@ -35,6 +35,7 @@ const TitleBar = ({
     <div className={classes.container}>
       <BackButton
         className={classes.iconButton}
+        variant="icon"
       />
       <RootRef rootRef={titleRef}>
         <Typography

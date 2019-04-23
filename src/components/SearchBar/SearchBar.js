@@ -82,7 +82,7 @@ class SearchBar extends React.Component {
         <form onSubmit={this.onSubmit} className={classes.container}>
           {
             !hideBackButton
-            && <BackButton className={classes.iconButton} target={backButtonTarget || null} />
+            && <BackButton className={classes.iconButton} target={backButtonTarget || null} variant="icon" />
           }
 
           <InputBase
