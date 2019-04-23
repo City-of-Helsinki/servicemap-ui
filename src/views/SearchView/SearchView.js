@@ -106,6 +106,7 @@ class SearchView extends React.Component {
           <ResultList
             listId="search-list"
             title={intl.formatMessage({ id: 'unit.plural' })}
+            titleComponent="h3"
             data={units}
           />
           )
