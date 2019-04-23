@@ -36,7 +36,7 @@ export const fetchUnits = (allData = [], next = null, searchQuery = null) => asy
     if (data.next) {
       // Fetch the next page if response has more than one page of results
       dispatch(unitsFetchProgressUpdate(newData.length, data.count));
-      dispatch(fetchUnits(newData, data.next));
+      dispatch(fetchUnits(newData, data.next, searchQuery));
     } else {
       // Filter out duplicate units
       const distinctData = Array.from(new Set(newData.map(x => x.id))).map((id) => {
