@@ -7,7 +7,7 @@ import getDistricts from '../../redux/selectors/district';
 import { fetchDistrictsData } from '../../redux/actions/district';
 import { setMapRef } from '../../redux/actions/map';
 import MapView from './components/MapView';
-import { getSelectedUnit } from '../../redux/selectors/unit';
+import { getSelectedUnit } from '../../redux/selectors/selectedUnit';
 import { getLocaleString } from '../../redux/selectors/locale';
 import CreateMap from './utils/createMap';
 import { mapOptions } from './constants/mapConstants';

@@ -6,8 +6,8 @@ import {
   Divider, Typography, withStyles, Link,
 } from '@material-ui/core';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
-import { changeSelectedUnit, fetchSelectedUnit } from '../../redux/actions/unit';
-import { getSelectedUnit } from '../../redux/selectors/unit';
+import { fetchSelectedUnit, changeSelectedUnit } from '../../redux/actions/selectedUnit';
+import { getSelectedUnit } from '../../redux/selectors/selectedUnit';
 import { getLocaleString } from '../../redux/selectors/locale';
 
 import InfoList from './components/InfoList';
@@ -159,7 +159,7 @@ class UnitView extends React.Component {
                 >
                   {<FormattedMessage id="unit.description" />}
                 </Typography>
-                <Divider />
+                <Divider aria-hidden="true" />
                 {/* Description text */}
                 {unit.description ? (
                   <Typography className={classes.paragraph} variant="body2">

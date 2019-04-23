@@ -73,7 +73,7 @@ class ResultList extends React.Component {
             </Typography>
           </div>
         </div>
-        <Divider />
+        <Divider aria-hidden="true" />
         <List className={classes.list} id={listId}>
           {
             data && data.length

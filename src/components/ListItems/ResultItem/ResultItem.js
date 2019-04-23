@@ -57,11 +57,14 @@ const styles = theme => ({
 // TODO: Complete distance calculations and related accessibility texts
 
 const ResultItem = ({
-  bottomRightText, classes, onClick, icon, listId, itemId, subtitle, title, distancePosition,
+  bottomRightText, classes, onClick, icon, subtitle, title, distancePosition,
 }) => {
   // Distance text
   // TODO: Change to check data for distance once location info is available
   const distance = distancePosition; // '100';
+
+  // Screen reader text
+  const srText = `${title || ''} ${subtitle || ''} ${distance ? `${distance} metrin päässä` : ''} ${bottomRightText || ''}`;
 
   return (
     <>
@@ -85,17 +88,32 @@ const ResultItem = ({
         }
         <div className={classes.itemTextContainer}>
           <div className={classes.topRow}>
+            {
+              // SROnly element with full readable text
+            }
             <Typography
-              id={`${listId}-result-item-title-${itemId}`}
               className={classes.title}
-              component="h3"
+              component="p"
+              variant="srOnly"
+            >
+              {srText}
+            </Typography>
+
+            {
+              // Title
+            }
+            <Typography
+              className={classes.title}
+              component="p"
+              role="textbox"
               variant="body2"
-              aria-labelledby={`${listId}-result-item-title-${itemId} ${listId}-result-item-type-${itemId} ${listId}-result-item-distance-${itemId} ${listId}-result-item-accessibility-${itemId}`}
+              aria-hidden="true"
             >
               {title}
             </Typography>
 
             {
+              // Distance text
               distance
               && (
                 <div className={classes.rightColumn}>
@@ -107,7 +125,6 @@ const ResultItem = ({
                   >
                     {distance}
                     m
-                    <span id={`${listId}-result-item-distance-${itemId}`} className="sr-only" aria-hidden="true">{`${distance} metrin päässä`}</span>
                   </Typography>
                 </div>
               )
@@ -124,7 +141,6 @@ const ResultItem = ({
                   && (
                     <div className={classes.bottomColumn}>
                       <Typography
-                        id={`${listId}-result-item-type-${itemId}`}
                         variant="caption"
                         className={`${classes.noMargin} ${classes.smallFont}`}
                         component="p"
@@ -141,7 +157,6 @@ const ResultItem = ({
                   && (
                   <div className={`${classes.rightColumn} ${classes.bottomColumn}`}>
                     <Typography
-                      id={`${listId}-result-item-accessibility-${itemId}`}
                       className={`${classes.smallFont} ${classes.marginLeft}`}
                       component="p"
                       variant="caption"
@@ -172,9 +187,7 @@ ResultItem.propTypes = {
   bottomRightText: PropTypes.string,
   classes: PropTypes.objectOf(PropTypes.any),
   icon: PropTypes.node,
-  listId: PropTypes.string.isRequired,
   onClick: PropTypes.func,
-  itemId: PropTypes.number.isRequired,
   subtitle: PropTypes.string,
   title: PropTypes.string.isRequired,
   distancePosition: PropTypes.objectOf(PropTypes.any),

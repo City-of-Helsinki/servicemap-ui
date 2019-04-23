@@ -4,7 +4,6 @@ import { HomeLogoDark, HomeLogoLight } from './HomeLogo';
 
 const HomeLogo = (props) => {
   const { dark, ...rest } = props;
-  console.log(rest);
   if (dark) {
     return (
       <div role="img" {...rest}>

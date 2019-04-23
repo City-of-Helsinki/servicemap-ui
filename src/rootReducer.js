@@ -5,6 +5,7 @@ import filters from './redux/reducers/filter';
 import locale from './redux/reducers/locale';
 import districts from './redux/reducers/district';
 import service from './redux/reducers/services';
+import selectedUnit from './redux/reducers/selectedUnit';
 
 // Export all redux reducers here
 export default combineReducers({
@@ -15,4 +16,5 @@ export default combineReducers({
   locale,
   districts,
   service,
+  selectedUnit,
 });
