@@ -84,7 +84,7 @@ const DefaultLayout = (props) => {
               spacing={24}
             >
               <Grid item>
-                <a href={generatePath('home', lng)} style={{ display: 'inline-block' }} className="focus-dark-background">
+                <a id="site-title" href={generatePath('home', lng)} style={{ display: 'inline-block' }} className="focus-dark-background">
                   <HomeLogo aria-hidden="true" />
                   <Typography className="sr-only" color="inherit" component="h1" variant="body1">
                     <FormattedMessage id="app.title" />
@@ -156,6 +156,11 @@ const DefaultLayout = (props) => {
         />
 
       </div>
+      <footer className="sr-only">
+        <a href="#site-title">
+          <FormattedMessage id="general.backToStart" />
+        </a>
+      </footer>
     </>
   );
 };

@@ -8,6 +8,7 @@ export default {
 
   // General
   'general.back': 'Palaa',
+  'general.backToStart': 'Palaa sivun alkuun',
   'general.home': 'Koti',
   'general.back.home': 'Sulje haku ja palaa alkuun',
   'general.noData': 'Tietoa ei saatavilla',
