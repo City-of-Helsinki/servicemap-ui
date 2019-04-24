@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
   Divider, Typography, withStyles, Link,
@@ -34,7 +35,7 @@ class UnitView extends React.Component {
 
     if (params && params.unit) {
       const unitId = params.unit;
-      if (unit && unitId === `${unit.id}`) {
+      if (unit && (unit.complete && unitId === `${unit.id}`)) {
         return;
       }
       fetchSelectedUnit(unitId);
@@ -66,7 +67,7 @@ class UnitView extends React.Component {
 
   render() {
     const {
-      classes, getLocaleText, intl, fetchState, unit,
+      classes, getLocaleText, intl, unit,
     } = this.props;
 
     const TopBar = (
@@ -75,12 +76,14 @@ class UnitView extends React.Component {
       </div>
     );
 
-    if (fetchState.isFetching) {
+    if (unit && !unit.complete) {
       return (
         <div className={classes.root}>
           <div className="Content">
             {TopBar}
-            <p>Loading unit data</p>
+            <p>
+              <FormattedMessage id="general.loading" />
+            </p>
           </div>
         </div>
       );
@@ -218,25 +221,22 @@ class UnitView extends React.Component {
 // Listen to redux state
 const mapStateToProps = (state) => {
   const unit = getSelectedUnit(state);
-  const fetchState = state.units;
   const getLocaleText = textObject => getLocaleString(state, textObject);
   return {
     unit,
-    fetchState,
     getLocaleText,
   };
 };
 
-export default injectIntl(withStyles(styles)(connect(
+export default withRouter(injectIntl(withStyles(styles)(connect(
   mapStateToProps,
   { changeSelectedUnit, fetchSelectedUnit },
-)(UnitView)));
+)(UnitView))));
 
 // Typechecking
 UnitView.propTypes = {
   unit: PropTypes.objectOf(PropTypes.any),
   fetchSelectedUnit: PropTypes.func.isRequired,
-  fetchState: PropTypes.objectOf(PropTypes.any),
   changeSelectedUnit: PropTypes.func.isRequired,
   match: PropTypes.objectOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -246,6 +246,5 @@ UnitView.propTypes = {
 
 UnitView.defaultProps = {
   unit: null,
-  fetchState: null,
   match: {},
 };

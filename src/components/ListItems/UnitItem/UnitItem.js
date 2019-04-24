@@ -8,6 +8,7 @@ import { generatePath } from '../../../utils/path';
 import { isValidUnit } from '../../../utils/unitHelper';
 import { drawIcon } from '../../../views/Map/utils/drawIcon';
 import { getLocaleString } from '../../../redux/selectors/locale';
+import { changeSelectedUnit } from '../../../redux/actions/selectedUnit';
 import ResultItem from '../ResultItem';
 
 class UnitItem extends React.Component {
@@ -22,7 +23,7 @@ class UnitItem extends React.Component {
 
   render() {
     const {
-      unit, onClick, getLocaleText, history, intl, listId, match,
+      unit, changeSelectedUnit, onClick, getLocaleText, history, intl, match,
     } = this.props;
     // Don't render if not valid unit
     if (!isValidUnit(unit)) {
@@ -72,6 +73,7 @@ class UnitItem extends React.Component {
           if (onClick) {
             onClick();
           } else if (history) {
+            changeSelectedUnit(unit);
             history.push(generatePath('unit', lng, id));
           }
         }}
@@ -90,15 +92,15 @@ const mapStateToProps = (state) => {
 
 export default withRouter(injectIntl(connect(
   mapStateToProps,
-  null,
+  { changeSelectedUnit },
 )(UnitItem)));
 
 // Typechecking
 UnitItem.propTypes = {
   unit: PropTypes.objectOf(PropTypes.any),
+  changeSelectedUnit: PropTypes.func.isRequired,
   getLocaleText: PropTypes.func.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
-  listId: PropTypes.string.isRequired,
   onClick: PropTypes.func,
   intl: intlShape.isRequired,
   match: PropTypes.objectOf(PropTypes.any).isRequired,
