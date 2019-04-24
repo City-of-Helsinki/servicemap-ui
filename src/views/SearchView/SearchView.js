@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import {
-  Paper, Divider, withStyles, Typography, Button,
+  Paper, Divider, withStyles, Typography,
 } from '@material-ui/core';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import styles from './styles';
@@ -17,7 +17,6 @@ import Container from '../../components/Container/Container';
 class SearchView extends React.Component {
   constructor(props) {
     super(props);
-    this.searchField = React.createRef();
     const { changeSelectedUnit } = props;
 
     // Reset selected unit on SearchView
@@ -37,7 +36,6 @@ class SearchView extends React.Component {
       fetchUnits([], null, searchParam);
       this.setState({ queryParam: searchParam });
     }
-    this.searchField.current.focus();
   }
 
   onSearchSubmit = (e, search) => {
@@ -69,7 +67,6 @@ class SearchView extends React.Component {
     return (
       <div className="Search">
         <SearchBar
-          searchRef={this.searchField}
           onSubmit={this.onSearchSubmit}
           placeholder={intl && intl.formatMessage({ id: 'search.input.placeholder' })}
           text={queryParam}

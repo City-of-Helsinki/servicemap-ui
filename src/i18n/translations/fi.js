@@ -12,6 +12,10 @@ export default {
   'general.back.home': 'Sulje haku ja palaa alkuun',
   'general.noData': 'Tietoa ei saatavilla',
   'general.loading': 'Ladataan',
+  'general.pageTitles.home': 'Aloitusnäkymä',
+  'general.pageTitles.search': 'Hakutulosnäkymä',
+  'general.pageTitles.unit': 'Toimipistenäkymä',
+  'general.pageTitles.service': 'Palvelunäkymä',
 
   // Map
   'map': 'Kartta',

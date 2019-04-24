@@ -10,27 +10,11 @@ import { fetchServiceUnits } from '../../redux/actions/services';
 import ResultList from '../../components/Lists/ResultList';
 
 class ServiceView extends React.Component {
-  constructor(props) {
-    super(props);
-    this.listTitle = React.createRef();
-  }
-
   componentDidMount() {
     const { match, fetchServiceUnits, unitData } = this.props;
     const { params } = match;
     if (`${unitData.id}` !== params.service) {
       fetchServiceUnits(params.service);
-    } else {
-      this.listTitle.current.focus();
-    }
-  }
-
-  componentDidUpdate() {
-    const { unitData, match } = this.props;
-    const { params } = match;
-    // Focus on title once units have been loaded
-    if (unitData && unitData.id === params.service) {
-      this.listTitle.current.focus();
     }
   }
 
@@ -62,7 +46,7 @@ class ServiceView extends React.Component {
       });
       return (
         <div>
-          <TitleBar titleRef={this.listTitle} title={getLocaleText(unitData.name)} />
+          <TitleBar title={getLocaleText(unitData.name)} />
           <ResultList
             listId="search-list"
             data={serviceUnits}

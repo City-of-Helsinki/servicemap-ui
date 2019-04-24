@@ -12,6 +12,10 @@ export default {
   'general.back.home': 'Close search and return to beginning',
   'general.noData': 'No data available',
   'general.loading': 'Loading',
+  'general.pageTitles.home': 'Home view',
+  'general.pageTitles.search': 'Search view',
+  'general.pageTitles.unit': 'Unit view',
+  'general.pageTitles.service': 'Service view',
 
   // Map
   'map': 'Map',

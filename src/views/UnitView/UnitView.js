@@ -21,7 +21,6 @@ import ServiceItem from '../../components/ListItems/ServiceItem';
 class UnitView extends React.Component {
   constructor(props) {
     super(props);
-    this.unitTitle = React.createRef();
     this.state = {
       needUpdate: true,
     };
@@ -30,8 +29,6 @@ class UnitView extends React.Component {
   componentDidMount() {
     const { match, fetchSelectedUnit, unit } = this.props;
     const { params } = match;
-
-    this.unitTitle.current.focus();
 
     if (params && params.unit) {
       const unitId = params.unit;
@@ -72,7 +69,7 @@ class UnitView extends React.Component {
 
     const TopBar = (
       <div>
-        <TitleBar titleRef={this.unitTitle} title={unit ? unit.name && unit.name.fi : ''} />
+        <TitleBar title={unit ? unit.name && unit.name.fi : ''} />
       </div>
     );
 

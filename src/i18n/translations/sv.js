@@ -12,6 +12,10 @@ export default {
   'general.back.home': 'Close search and return to beginning', // TODO: Translate
   'general.noData': 'No data available', // TODO: Translate
   'general.loading': 'Loading', // TODO: Translate
+  'general.pageTitles.home': 'Home view', // TODO: Translate
+  'general.pageTitles.search': 'Search view', // TODO: Translate
+  'general.pageTitles.unit': 'Unit view', // TODO: Translate
+  'general.pageTitles.service': 'Service view', // TODO: Translate
 
   // Map
   'map': 'Map', // TODO: Translate
