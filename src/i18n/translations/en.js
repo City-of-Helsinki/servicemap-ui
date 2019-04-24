@@ -8,6 +8,7 @@ export default {
 
   // General
   'general.back': 'Back',
+  'general.backToStart': 'Back to beginning of page',
   'general.home': 'Home',
   'general.back.home': 'Close search and return to beginning',
   'general.noData': 'No data available',

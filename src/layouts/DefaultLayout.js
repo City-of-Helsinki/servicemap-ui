@@ -186,6 +186,11 @@ const DefaultLayout = (props) => {
         />
 
       </div>
+      <footer className="sr-only">
+        <a href="#site-title">
+          <FormattedMessage id="general.backToStart" />
+        </a>
+      </footer>
     </>
   );
 };

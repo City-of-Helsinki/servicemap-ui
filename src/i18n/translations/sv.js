@@ -8,6 +8,7 @@ export default {
 
   // General
   'general.back': 'Tillbaka',
+  'general.backToStart': 'Back to beginning of page', // TODO: Translate
   'general.home': 'Home', // TODO: Translate
   'general.back.home': 'Close search and return to beginning', // TODO: Translate
   'general.noData': 'No data available', // TODO: Translate
