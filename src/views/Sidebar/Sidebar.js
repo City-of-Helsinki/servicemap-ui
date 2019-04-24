@@ -12,7 +12,7 @@ import MobileMapView from '../MobileMapView';
 const TitleWrapper = ({ children, messageId }) => (
   <>
 
-    <Typography id="view-title" variant="srOnly" component="h2" tabindex="-1">
+    <Typography id="view-title" variant="srOnly" component="h2" tabIndex="-1">
       <FormattedMessage id={messageId} />
     </Typography>
     {children}
