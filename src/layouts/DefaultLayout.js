@@ -71,6 +71,14 @@ const DefaultLayout = (props) => {
   const mobileMapOnly = isMobile && location.pathname.indexOf('/map') > -1; // If mobile map view
   const styles = createContentStyles(isMobile, mobileMapOnly);
 
+  // Focus user to page title's link element
+  const focusToPageTitle = () => {
+    const elem = document.getElementById('site-title');
+    if (elem) {
+      elem.focus();
+    }
+  };
+
   return (
     <>
       {
@@ -84,10 +92,21 @@ const DefaultLayout = (props) => {
               spacing={24}
             >
               <Grid item>
+                {
+                  // Home logo link to home view
+                }
                 <a id="site-title" href={generatePath('home', lng)} style={{ display: 'inline-block' }} className="focus-dark-background">
                   <HomeLogo aria-hidden="true" />
                   <Typography className="sr-only" color="inherit" component="h1" variant="body1">
                     <FormattedMessage id="app.title" />
+                  </Typography>
+                </a>
+                {
+                  // Jump link to main content for screenreaders
+                }
+                <a href="#view-title" className="sr-only">
+                  <Typography variant="srOnly">
+                    <FormattedMessage id="general.skipToContent" />
                   </Typography>
                 </a>
               </Grid>
@@ -96,7 +115,18 @@ const DefaultLayout = (props) => {
                   i18n.availableLocales
                     .filter(locale => locale !== i18n.locale)
                     .map(locale => (
-                      <Button className="focus-dark-background" key={locale} color="inherit" onClick={() => onLanguageChange(locale)}>{i18n.localeText(locale)}</Button>
+                      <Button
+                        className="focus-dark-background"
+                        role="link"
+                        key={locale}
+                        color="inherit"
+                        onClick={() => {
+                          onLanguageChange(locale);
+                          focusToPageTitle();
+                        }}
+                      >
+                        {i18n.localeText(locale)}
+                      </Button>
                     ))
                 }
               </Grid>

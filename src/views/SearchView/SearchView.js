@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
@@ -9,6 +10,7 @@ import styles from './styles';
 import Loading from '../../components/Loading/Loading';
 import SearchBar from '../../components/SearchBar';
 import ResultList from '../../components/Lists/ResultList';
+import { fitUnitsToMap } from '../Map/utils/mapActions';
 import { parseSearchParams } from '../../utils';
 import { generatePath } from '../../utils/path';
 import BackButton from '../../components/BackButton';
@@ -29,12 +31,30 @@ class SearchView extends React.Component {
   }
 
   componentDidMount() {
-    const { fetchUnits, location, previousSearch } = this.props;
+    const {
+      fetchUnits, location, previousSearch, units, map,
+    } = this.props;
     const searchParams = parseSearchParams(location.search);
     const searchParam = searchParams.q || null;
     if (searchParam && fetchUnits && searchParam !== previousSearch) {
       fetchUnits([], null, searchParam);
       this.setState({ queryParam: searchParam });
+    }
+    this.focusMap(units, map);
+  }
+
+  shouldComponentUpdate(nextProps) {
+    const { units, map } = this.props;
+    // If new search results, call map focus functio
+    if (nextProps.units.length > 0 && units !== nextProps.units) {
+      this.focusMap(nextProps.units, map);
+    }
+    return true;
+  }
+
+  focusMap = (units, map) => {
+    if (map && map._layersMaxZoom) {
+      fitUnitsToMap(units, map);
     }
   }
 
@@ -133,6 +153,7 @@ SearchView.propTypes = {
   max: PropTypes.number,
   previousSearch: PropTypes.string,
   units: PropTypes.arrayOf(PropTypes.any),
+  map: PropTypes.objectOf(PropTypes.any),
 };
 
 SearchView.defaultProps = {
@@ -143,4 +164,5 @@ SearchView.defaultProps = {
   max: 0,
   previousSearch: null,
   units: [],
+  map: null,
 };

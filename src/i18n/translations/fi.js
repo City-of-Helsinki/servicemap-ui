@@ -17,6 +17,7 @@ export default {
   'general.pageTitles.search': 'Hakutulosnäkymä',
   'general.pageTitles.unit': 'Toimipistenäkymä',
   'general.pageTitles.service': 'Palvelunäkymä',
+  'general.skipToContent': 'Siirry pääsisältöön',
 
   // Map
   'map': 'Kartta',
@@ -39,7 +40,13 @@ export default {
   'unit.services': 'Palvelut toimipisteessä',
   'unit.e.services': 'Sähköinen asiointi',
   'unit.homepage': 'Kotisivu',
+  'unit.picture': 'Kuva toimipisteestä: ',
   'unit.description': 'Tietoa toimipisteestä',
+  'unit.address': 'Osoite',
+  'unit.phone': 'Puhelinnumero',
+  'unit.opening.hours': 'Aukioloajat',
+  'unit.opening.hours.info': 'Lisätietoa aukioloajoista',
+  'unit.contact': 'Yhteyshenkilö',
   'unit.school.year': 'Lukuvuosi',
   'unit.opens.new.tab': '(uusi välilehti)',
   'unit.call.number': '(soita)',
