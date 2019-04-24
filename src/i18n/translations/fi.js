@@ -16,6 +16,7 @@ export default {
   'general.pageTitles.search': 'Hakutulosnäkymä',
   'general.pageTitles.unit': 'Toimipistenäkymä',
   'general.pageTitles.service': 'Palvelunäkymä',
+  'general.skipToContent': 'Siirry pääsisältöön',
 
   // Map
   'map': 'Kartta',
