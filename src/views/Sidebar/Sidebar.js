@@ -12,7 +12,7 @@ import MobileMapView from '../MobileMapView';
 const TitleWrapper = ({ children, messageId }) => (
   <>
 
-    <Typography id="view-title" variant="srOnly" component="h2">
+    <Typography id="view-title" variant="srOnly" component="h2" tabindex="-1">
       <FormattedMessage id={messageId} />
     </Typography>
     {children}
@@ -61,7 +61,7 @@ class Sidebar extends React.Component {
     this.setState({ initialLoad: false });
   }
 
-  componentWillUpdate() {
+  componentDidUpdate() {
     const { initialLoad } = this.state;
     if (!initialLoad) {
       const titleElem = document.getElementById('view-title');
