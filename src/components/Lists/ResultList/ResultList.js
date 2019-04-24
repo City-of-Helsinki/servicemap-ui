@@ -40,7 +40,7 @@ class ResultList extends React.Component {
 
   render() {
     const {
-      classes, data, listId, title,
+      classes, data, listId, title, titleComponent,
     } = this.props;
 
     return (
@@ -55,7 +55,7 @@ class ResultList extends React.Component {
             <Typography
               id={`${listId}-result-title`}
               className={classes.left}
-              component="h3"
+              component={titleComponent}
               variant="subtitle1"
               aria-labelledby={`${listId}-result-title ${listId}-result-title-info`}
             >
@@ -113,8 +113,10 @@ ResultList.propTypes = {
   data: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)).isRequired,
   listId: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
+  titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']),
 };
 
 ResultList.defaultProps = {
   classes: {},
+  titleComponent: 'h3',
 };

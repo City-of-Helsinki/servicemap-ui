@@ -1,21 +1,41 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { IconButton } from '@material-ui/core';
+import { IconButton, Button } from '@material-ui/core';
 import { ArrowBack } from '@material-ui/icons';
 import { injectIntl, intlShape } from 'react-intl';
 
 const BackButton = (props) => {
   const {
-    className, history, intl, style, target,
+    className, history, intl, style, target, variant,
   } = props;
-  return (
 
-    <IconButton
+  if (variant === 'icon') {
+    return (
+      <IconButton
+        role="link"
+        className={className}
+        style={style}
+        aria-label={intl.formatMessage({ id: 'general.back' })}
+        onClick={(e) => {
+          e.preventDefault();
+          if (target) {
+            history.push(target);
+          } else if (history) {
+            history.goBack();
+          }
+        }}
+      >
+        <ArrowBack />
+      </IconButton>
+    );
+  }
+
+  return (
+    <Button
       role="link"
-      className={className}
-      style={style}
-      aria-label={intl.formatMessage({ id: 'general.back' })}
+      variant="contained"
+      color="primary"
       onClick={(e) => {
         e.preventDefault();
         if (target) {
@@ -25,8 +45,9 @@ const BackButton = (props) => {
         }
       }}
     >
-      <ArrowBack />
-    </IconButton>
+      {intl.formatMessage({ id: 'general.back' })}
+
+    </Button>
   );
 };
 
@@ -36,12 +57,14 @@ BackButton.propTypes = {
   intl: intlShape.isRequired,
   style: PropTypes.objectOf(PropTypes.any),
   target: PropTypes.string,
+  variant: PropTypes.oneOf(['icon', null]),
 };
 
 BackButton.defaultProps = {
   className: '',
   style: {},
   target: null,
+  variant: null,
 };
 
 export default injectIntl(withRouter(BackButton));

@@ -13,11 +13,12 @@ import ResultList from '../../components/Lists/ResultList';
 import { fitUnitsToMap } from '../Map/utils/mapActions';
 import { parseSearchParams } from '../../utils';
 import { generatePath } from '../../utils/path';
+import BackButton from '../../components/BackButton';
+import Container from '../../components/Container/Container';
 
 class SearchView extends React.Component {
   constructor(props) {
     super(props);
-    this.searchField = React.createRef();
     const { changeSelectedUnit } = props;
 
     // Reset selected unit on SearchView
@@ -40,7 +41,6 @@ class SearchView extends React.Component {
       fetchUnits([], null, searchParam);
       this.setState({ queryParam: searchParam });
     }
-    this.searchField.current.focus();
     this.focusMap(units, map);
   }
 
@@ -86,7 +86,6 @@ class SearchView extends React.Component {
     return (
       <div className="Search">
         <SearchBar
-          searchRef={this.searchField}
           onSubmit={this.onSearchSubmit}
           placeholder={intl && intl.formatMessage({ id: 'search.input.placeholder' })}
           text={queryParam}
@@ -125,10 +124,14 @@ class SearchView extends React.Component {
           <ResultList
             listId="search-list"
             title={intl.formatMessage({ id: 'unit.plural' })}
+            titleComponent="h3"
             data={units}
           />
           )
         }
+        <Container>
+          <BackButton />
+        </Container>
       </div>
     );
   }

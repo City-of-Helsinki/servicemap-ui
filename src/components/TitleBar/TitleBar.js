@@ -29,24 +29,23 @@ const styles = theme => ({
 });
 
 const TitleBar = ({
-  classes, title, titleComponent, titleRef,
+  classes, title, titleComponent,
 }) => (
   <Container>
     <div className={classes.container}>
       <BackButton
         className={classes.iconButton}
+        variant="icon"
       />
-      <RootRef rootRef={titleRef}>
-        <Typography
-          className={classes.title}
-          component={titleComponent}
-          text={title}
-          variant="h6"
-          tabIndex="-1"
-        >
-          {title}
-        </Typography>
-      </RootRef>
+      <Typography
+        className={classes.title}
+        component={titleComponent}
+        text={title}
+        variant="h6"
+        tabIndex="-1"
+      >
+        {title}
+      </Typography>
 
       <HomeButton
         className={classes.icon}
@@ -59,7 +58,6 @@ TitleBar.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   title: PropTypes.string.isRequired,
   titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']),
-  titleRef: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 TitleBar.defaultProps = {

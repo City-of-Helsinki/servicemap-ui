@@ -1,11 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { List, ListItem, ListItemText } from '@material-ui/core';
+import { withRouter } from 'react-router-dom';
+import {
+  List, ListItem, ListItemText,
+} from '@material-ui/core';
 import { injectIntl, intlShape } from 'react-intl';
 import Container from '../../components/Container';
 import SearchBar from '../../components/SearchBar';
 import { generatePath } from '../../utils/path';
-import MobileComponent from '../../layouts/WrapperComponents/WrapperComponents';
+import { MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import HomeLogo from '../../components/Logos/HomeLogo';
 
 // TODO: Fix close by events and services lists with actual data items once data is accessible
@@ -35,7 +38,6 @@ class HomeView extends React.Component {
     const { intl } = this.props;
     return (
       <>
-        <span aria-live="polite" aria-label="Etusivu" />
         <MobileComponent>
           <Container>
             <HomeLogo dark aria-label={intl.formatMessage({ id: 'app.title' })} />
@@ -66,7 +68,7 @@ class HomeView extends React.Component {
   }
 }
 
-export default injectIntl(HomeView);
+export default withRouter(injectIntl(HomeView));
 
 // Typechecking
 HomeView.propTypes = {

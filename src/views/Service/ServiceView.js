@@ -26,7 +26,6 @@ class ServiceView extends React.Component {
     if (`${unitData.id}` !== params.service) {
       fetchServiceUnits(params.service);
     } else {
-      this.listTitle.current.focus();
       this.focusMap(unitData.units.results, map);
     }
   }
@@ -78,11 +77,11 @@ class ServiceView extends React.Component {
       });
       return (
         <div>
-          <TitleBar titleRef={this.listTitle} title={getLocaleText(unitData.name)} />
+          <TitleBar title={getLocaleText(unitData.name)} />
           <ResultList
             listId="search-list"
             data={serviceUnits}
-            title=""
+            title={intl.formatMessage({ id: 'unit.plural' })}
             onItemClick={(e, item) => this.handleClick(e, item)}
           />
         </div>

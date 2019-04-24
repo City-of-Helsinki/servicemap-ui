@@ -61,7 +61,7 @@ class InfoList extends React.Component {
 
   render() {
     const {
-      classes, data, title, intl,
+      classes, data, title, titleComponent, intl,
     } = this.props;
     if (data.length > 0) {
       const filteredData = data.filter(item => Object.keys(item).length > 0 && item.value);
@@ -75,7 +75,7 @@ class InfoList extends React.Component {
           <div>
             <Typography
               className={`${classes.subtitle} ${classes.left}`}
-              component="h4"
+              component={titleComponent}
               variant="subtitle1"
             >
               {title}
@@ -144,6 +144,11 @@ InfoList.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   title: PropTypes.objectOf(PropTypes.any).isRequired,
+  titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']),
   intl: intlShape.isRequired,
   getLocaleText: PropTypes.func.isRequired,
+};
+
+InfoList.defaultProps = {
+  titleComponent: 'h3',
 };
