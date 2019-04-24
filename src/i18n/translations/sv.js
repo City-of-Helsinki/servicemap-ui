@@ -39,7 +39,13 @@ export default {
   'unit.services': 'Tjänster',
   'unit.e.services': 'Electronic services', // TODO: Translate
   'unit.homepage': 'Hemsida',
+  'unit.picture': 'Kuva toimipisteestä: ', // TODO: Translate
   'unit.description': 'Unit description', // TODO: Translate
+  'unit.address': 'Osoite', // TODO: Translate
+  'unit.phone': 'Phone number', // TODO: Translate
+  'unit.opening.hours': 'Opening hours', // TODO: Translate
+  'unit.opening.hours.info': 'Lisätietoa aukioloajoista', // TODO: Translate
+  'unit.contact': 'Yhteyshenkilö', // TODO: translate
   'unit.school.year': 'Läsåret',
   'unit.opens.new.tab': '(new tab)', // TODO: Translate
   'unit.call.number': '(call)', // TODO: Translate

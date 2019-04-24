@@ -6,6 +6,7 @@ import { changeSelectedUnit } from '../../redux/actions/selectedUnit';
 // Listen to redux state
 // const unitList = getUnitList(state);
 const mapStateToProps = (state) => {
+  const map = state.mapRef.leafletElement;
   const { units } = state;
   const {
     data, isFetching, count, max, previousSearch,
@@ -16,6 +17,7 @@ const mapStateToProps = (state) => {
     isFetching,
     count,
     max,
+    map,
     previousSearch,
   };
 };
