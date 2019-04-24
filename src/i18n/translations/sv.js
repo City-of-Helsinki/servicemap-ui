@@ -16,6 +16,7 @@ export default {
   'general.pageTitles.search': 'Search view', // TODO: Translate
   'general.pageTitles.unit': 'Unit view', // TODO: Translate
   'general.pageTitles.service': 'Service view', // TODO: Translate
+  'general.skipToContent': 'Skip to content', // TODO: Translate
 
   // Map
   'map': 'Map', // TODO: Translate

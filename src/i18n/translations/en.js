@@ -16,6 +16,7 @@ export default {
   'general.pageTitles.search': 'Search view',
   'general.pageTitles.unit': 'Unit view',
   'general.pageTitles.service': 'Service view',
+  'general.skipToContent': 'Skip to content',
 
   // Map
   'map': 'Map',
