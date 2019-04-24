@@ -26,7 +26,7 @@ class InfoList extends React.Component {
     }
   };
 
-  formString = (data) => {
+  formString = (data, intl) => {
     const { getLocaleText } = this.props;
     const first = Object.keys(data)[0];
     let fullText = '';
@@ -56,7 +56,37 @@ class InfoList extends React.Component {
     if (fullText.charAt(0) === ',') {
       fullText = fullText.slice(2);
     }
+    // Add extra text
+    if (data.www) {
+      fullText += ` ${intl.formatMessage({ id: 'unit.opens.new.tab' })}`;
+    }
+    if (data.phone) {
+      fullText += ` ${intl.formatMessage({ id: 'unit.call.number' })}`;
+    }
+    if (data.period) {
+      fullText += ` ${intl.formatMessage({ id: 'unit.school.year' })}`;
+      fullText += ` ${data.value.period[0]} - ${data.value.period[1]}`;
+    }
+    fullText = fullText.charAt(0).toUpperCase() + fullText.slice(1);
     return fullText;
+  }
+
+  formSrString = (data, intl) => {
+    switch (data.type) {
+      case 'ADDRESS':
+        return intl.formatMessage({ id: 'unit.address' });
+      case 'PHONE':
+        return intl.formatMessage({ id: 'unit.phone' });
+      case 'OPENING_HOURS':
+        if (data.value.www) {
+          return intl.formatMessage({ id: 'unit.opening.hours.info' });
+        }
+        return intl.formatMessage({ id: 'unit.opening.hours' });
+      case 'PHONE_OR_EMAIL':
+        return intl.formatMessage({ id: 'unit.contact' });
+      default:
+        return null;
+    }
   }
 
   render() {
@@ -85,23 +115,9 @@ class InfoList extends React.Component {
 
             <List disablePadding>
               {filteredData.map((data, i) => {
-                let text = '';
                 if (data.value && data.type) {
-                  text = this.formString(data.value);
-
-                  // Add extra text
-                  if (data.value.www) {
-                    text += ` ${intl.formatMessage({ id: 'unit.opens.new.tab' })}`;
-                  }
-                  if (data.value.phone) {
-                    text += ` ${intl.formatMessage({ id: 'unit.call.number' })}`;
-                  }
-                  if (data.value.period) {
-                    text += ` ${intl.formatMessage({ id: 'unit.school.year' })}`;
-                    text += ` ${data.value.period[0]} - ${data.value.period[1]}`;
-                  }
-
-                  text = text.charAt(0).toUpperCase() + text.slice(1);
+                  const text = this.formString(data.value, intl);
+                  const srText = this.formSrString(data, intl);
 
                   if (text !== '') {
                     return (
@@ -110,6 +126,7 @@ class InfoList extends React.Component {
                         icon={getItemIconData(data.type, data.value)}
                         link={!!data.value.www || !!data.value.phone}
                         text={text}
+                        srText={srText}
                         handleItemClick={() => this.handleItemClick(data.value)}
                         divider={i + 1 !== filteredData.length} // Dont add divider if last item
                       />

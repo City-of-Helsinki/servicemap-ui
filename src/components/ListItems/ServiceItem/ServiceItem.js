@@ -22,13 +22,17 @@ class ServiceItem extends React.Component {
       service, getLocaleText, history, match,
     } = this.props;
     const { icon } = this.state;
-
     const { params } = match;
     const lng = params && params.lng;
+    let text = getLocaleText(service.name);
+
+    if (service.period) {
+      text += ` ${service.period[0]}-${service.period[1]}`;
+    }
     return (
       <SimpleListItem
         button
-        text={uppercaseFirst(getLocaleText(service.name))}
+        text={uppercaseFirst(text)}
         icon={icon}
         divider
         handleItemClick={(e) => {
