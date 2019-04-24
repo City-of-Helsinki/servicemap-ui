@@ -41,7 +41,7 @@ const Container = (props) => {
     <ContainerComponent className={classes.root}>
       {
         title
-        && <Title className={classes.title} component={titleComponent || 'h3'} text={title} variant="h6" />
+        && <Title className={classes.title} component={titleComponent} text={title} variant="h6" />
       }
       {children}
     </ContainerComponent>
@@ -59,7 +59,7 @@ Container.propTypes = {
 Container.defaultProps = {
   paper: false,
   title: null,
-  titleComponent: null,
+  titleComponent: 'h3',
 };
 
 export default withStyles(styles)(Container);
