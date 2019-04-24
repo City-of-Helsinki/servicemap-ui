@@ -7,7 +7,7 @@ import { withStyles, Typography, Divider } from '@material-ui/core';
 
 const SimpleListItem = (props) => {
   const {
-    button, component, text, classes, link, icon, handleItemClick, role, divider,
+    button, component, text, classes, link, icon, handleItemClick, role, divider, srText,
   } = props;
   return (
     <React.Fragment>
@@ -20,7 +20,7 @@ const SimpleListItem = (props) => {
           root: classes.listItem,
         }}
       >
-        <ListItemIcon className={`${classes.listIcon} ${link ? classes.link : null}`}>
+        <ListItemIcon aria-label={srText} className={`${classes.listIcon} ${link ? classes.link : null}`}>
           {icon}
         </ListItemIcon>
 
@@ -76,6 +76,7 @@ SimpleListItem.propTypes = {
   component: PropTypes.string,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   text: PropTypes.string.isRequired,
+  srText: PropTypes.string,
   link: PropTypes.bool,
   icon: PropTypes.objectOf(PropTypes.any),
   handleItemClick: PropTypes.func,
@@ -86,6 +87,7 @@ SimpleListItem.propTypes = {
 SimpleListItem.defaultProps = {
   button: false,
   component: null,
+  srText: null,
   link: false,
   icon: null,
   handleItemClick: null,
