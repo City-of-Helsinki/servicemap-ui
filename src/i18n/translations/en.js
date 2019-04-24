@@ -39,7 +39,7 @@ export default {
   'unit.address': 'Address',
   'unit.phone': 'Phone number',
   'unit.opening.hours': 'Opening hours',
-  'unit.opening.hours.info': 'Additional information about opening hours', // TODO
+  'unit.opening.hours.info': 'Additional information about opening hours', // TODO verify
   'unit.contact': 'Contact person',
   'unit.school.year': 'School year',
   'unit.opens.new.tab': '(new tab)',
