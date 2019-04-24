@@ -34,6 +34,7 @@ export default {
   'unit.services': 'Palvelut toimipisteessä',
   'unit.e.services': 'Sähköinen asiointi',
   'unit.homepage': 'Kotisivu',
+  'unit.picture': 'Kuva toimipisteestä: ',
   'unit.description': 'Tietoa toimipisteestä',
   'unit.address': 'Osoite',
   'unit.phone': 'Puhelinnumero',

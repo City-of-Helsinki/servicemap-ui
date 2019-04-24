@@ -93,7 +93,7 @@ class UnitView extends React.Component {
             {TopBar}
             {
                 unit.picture_url
-                && <img aria-hidden className={classes.image} alt="Unit" src={unit.picture_url} />
+                && <img className={classes.image} alt={`${intl.formatMessage({ id: 'unit.picture' })}${getLocaleText(unit.name)}`} src={unit.picture_url} />
             }
 
             {/* Highlights */}
