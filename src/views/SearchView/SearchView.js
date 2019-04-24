@@ -27,7 +27,6 @@ class SearchView extends React.Component {
     }
     this.state = {
       queryParam: null,
-      mapMoved: false,
     };
   }
 
@@ -44,15 +43,17 @@ class SearchView extends React.Component {
     this.focusMap(units, map);
   }
 
-  componentDidUpdate() {
+  shouldComponentUpdate(nextProps) {
     const { units, map } = this.props;
-    this.focusMap(units, map);
+    // If new search results, call map focus functio
+    if (nextProps.units.length > 0 && units !== nextProps.units) {
+      this.focusMap(nextProps.units, map);
+    }
+    return true;
   }
 
   focusMap = (units, map) => {
-    const { mapMoved } = this.state;
-    if (units && units.length > 0 && map && map._layersMaxZoom && !mapMoved) {
-      this.setState({ mapMoved: true });
+    if (map && map._layersMaxZoom) {
       fitUnitsToMap(units, map);
     }
   }

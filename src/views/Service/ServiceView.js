@@ -33,9 +33,7 @@ class ServiceView extends React.Component {
   componentDidUpdate() {
     const { unitData, match, map } = this.props;
     const { params } = match;
-    // Focus on title once units have been loaded
     if (unitData && unitData.id === params.service) {
-      this.listTitle.current.focus();
       // Focus map on unit
       this.focusMap(unitData.units.results, map);
     }
