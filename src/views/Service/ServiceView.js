@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -7,14 +8,42 @@ import TitleBar from '../../components/TitleBar/TitleBar';
 import { generatePath } from '../../utils/path';
 import { getLocaleString } from '../../redux/selectors/locale';
 import { fetchServiceUnits } from '../../redux/actions/services';
+import { fitUnitsToMap } from '../Map/utils/mapActions';
 import ResultList from '../../components/Lists/ResultList';
 
 class ServiceView extends React.Component {
+  constructor(props) {
+    super(props);
+    this.listTitle = React.createRef();
+    this.state = { mapMoved: false };
+  }
+
   componentDidMount() {
-    const { match, fetchServiceUnits, unitData } = this.props;
+    const {
+      match, fetchServiceUnits, unitData, map,
+    } = this.props;
     const { params } = match;
     if (`${unitData.id}` !== params.service) {
       fetchServiceUnits(params.service);
+    } else {
+      this.focusMap(unitData.units.results, map);
+    }
+  }
+
+  componentDidUpdate() {
+    const { unitData, match, map } = this.props;
+    const { params } = match;
+    if (unitData && unitData.id === params.service) {
+      // Focus map on unit
+      this.focusMap(unitData.units.results, map);
+    }
+  }
+
+  focusMap = (unit, map) => {
+    const { mapMoved } = this.state;
+    if (unit && map && map._layersMaxZoom && !mapMoved) {
+      this.setState({ mapMoved: true });
+      fitUnitsToMap(unit, map);
     }
   }
 
@@ -73,11 +102,13 @@ const mapStateToProps = (state) => {
   const error = state.service.errorMessage;
   const unitData = state.service.data;
   const getLocaleText = textObject => getLocaleString(state, textObject);
+  const map = state.mapRef.leafletElement;
   return {
     isLoading,
     unitData,
     getLocaleText,
     error,
+    map,
   };
 };
 
@@ -98,6 +129,7 @@ ServiceView.propTypes = {
   getLocaleText: PropTypes.func.isRequired,
   fetchServiceUnits: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
+  map: PropTypes.objectOf(PropTypes.any),
 };
 
 ServiceView.defaultProps = {
@@ -105,4 +137,5 @@ ServiceView.defaultProps = {
   history: {},
   unitData: {},
   error: null,
+  map: null,
 };

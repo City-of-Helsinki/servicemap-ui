@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
@@ -10,6 +11,7 @@ import { fetchSelectedUnit, changeSelectedUnit } from '../../redux/actions/selec
 import { getSelectedUnit } from '../../redux/selectors/selectedUnit';
 import { getLocaleString } from '../../redux/selectors/locale';
 
+import { focusUnit } from '../Map/utils/mapActions';
 import InfoList from './components/InfoList';
 import styles from './styles/styles';
 import TitleBar from '../../components/TitleBar/TitleBar';
@@ -22,7 +24,7 @@ class UnitView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      needUpdate: true,
+      centered: false,
     };
   }
 
@@ -39,9 +41,22 @@ class UnitView extends React.Component {
     }
   }
 
+  componentDidUpdate() {
+    const { map, unit } = this.props;
+    const { centered } = this.state;
+    if (unit && map && map._layersMaxZoom && !centered) {
+      this.centerMap(map, unit);
+    }
+  }
+
   componentWillUnmount() {
     const { changeSelectedUnit } = this.props;
     changeSelectedUnit(null);
+  }
+
+  centerMap = (map, unit) => {
+    this.setState({ centered: true });
+    focusUnit(map, unit);
   }
 
   // Filters connections data by section
@@ -219,9 +234,11 @@ class UnitView extends React.Component {
 const mapStateToProps = (state) => {
   const unit = getSelectedUnit(state);
   const getLocaleText = textObject => getLocaleString(state, textObject);
+  const map = state.mapRef.leafletElement;
   return {
     unit,
     getLocaleText,
+    map,
   };
 };
 
@@ -233,6 +250,7 @@ export default withRouter(injectIntl(withStyles(styles)(connect(
 // Typechecking
 UnitView.propTypes = {
   unit: PropTypes.objectOf(PropTypes.any),
+  map: PropTypes.objectOf(PropTypes.any),
   fetchSelectedUnit: PropTypes.func.isRequired,
   changeSelectedUnit: PropTypes.func.isRequired,
   match: PropTypes.objectOf(PropTypes.any),
@@ -244,4 +262,5 @@ UnitView.propTypes = {
 UnitView.defaultProps = {
   unit: null,
   match: {},
+  map: null,
 };

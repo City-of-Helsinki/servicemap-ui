@@ -1,6 +1,6 @@
 import CreateMap from '../../views/Map/utils/createMap';
 
-const setMapType = (mapType) => {
+export const setMapType = (mapType) => {
   const newMap = CreateMap(mapType);
   return {
     type: 'SET_MAPTYPE',
@@ -8,4 +8,7 @@ const setMapType = (mapType) => {
   };
 };
 
-export default setMapType;
+export const setMapRef = ref => ({
+  type: 'SET_MAP_REF',
+  mapRef: ref,
+});
