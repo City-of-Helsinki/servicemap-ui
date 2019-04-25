@@ -24,6 +24,7 @@ const fetchStops = async (bounds) => {
       body:
       `{ 
         stopsByBbox(minLat: ${fetchBounds._southWest.lat}, minLon: ${fetchBounds._southWest.lng}, maxLat: ${fetchBounds._northEast.lat}, maxLon: ${fetchBounds._northEast.lng} ) {
+          vehicleType
           gtfsId
           name
           stoptimesWithoutPatterns {
