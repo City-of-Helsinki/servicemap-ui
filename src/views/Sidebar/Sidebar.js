@@ -1,22 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
-import { Typography } from '@material-ui/core';
-import { FormattedMessage } from 'react-intl';
 import SearchView from '../SearchView';
 import UnitView from '../UnitView';
 import HomeView from '../HomeView';
 import ServiceView from '../Service/ServiceView';
 import MobileMapView from '../MobileMapView';
+import ViewTitle from '../components/ViewTitle/ViewTitle';
 
 const TitleWrapper = ({ children, messageId }) => (
   <>
-
-    <Typography id="view-title" variant="srOnly" component="h2" tabIndex="-1">
-      <FormattedMessage id={messageId} />
-    </Typography>
+    <ViewTitle messageId={messageId} />
     {children}
-
   </>
 );
 
@@ -52,24 +47,9 @@ const Service = () => (
 class Sidebar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      initialLoad: true,
-    };
+    this.state = {};
   }
 
-  componentDidMount() {
-    this.setState({ initialLoad: false });
-  }
-
-  componentDidUpdate() {
-    const { initialLoad } = this.state;
-    if (!initialLoad) {
-      const titleElem = document.getElementById('view-title');
-      if (titleElem) {
-        titleElem.focus();
-      }
-    }
-  }
 
   render() {
     return (

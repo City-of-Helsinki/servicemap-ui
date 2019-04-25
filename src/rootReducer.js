@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import { mapType, mapRef } from './redux/reducers/map';
 import units from './redux/reducers/unit';
 import filters from './redux/reducers/filter';
-import locale from './redux/reducers/locale';
+import user from './redux/reducers/user';
 import districts from './redux/reducers/district';
 import service from './redux/reducers/services';
 import selectedUnit from './redux/reducers/selectedUnit';
@@ -13,7 +13,7 @@ export default combineReducers({
   mapRef,
   units,
   filters,
-  locale,
+  user,
   districts,
   service,
   selectedUnit,

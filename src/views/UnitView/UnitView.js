@@ -29,7 +29,9 @@ class UnitView extends React.Component {
   }
 
   componentDidMount() {
-    const { match, fetchSelectedUnit, unit } = this.props;
+    const {
+      match, fetchSelectedUnit, unit,
+    } = this.props;
     const { params } = match;
 
     if (params && params.unit) {

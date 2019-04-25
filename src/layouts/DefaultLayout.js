@@ -3,7 +3,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
-  Button, Grid, Typography, AppBar, Toolbar, withStyles,
+  Button, Grid, Typography, AppBar, Toolbar,
 } from '@material-ui/core';
 import { FormattedMessage, intlShape, injectIntl } from 'react-intl';
 import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
@@ -23,6 +23,11 @@ const createContentStyles = (isMobile, mobileMapOnly) => {
   const styles = {
     activeRoot: {
       flexDirection: mobileMapOnly || isMobile ? 'column' : 'row',
+      margin: 0,
+      width: '100%',
+      display: 'flex',
+      flexWrap: 'nowrap',
+      height: isMobile ? '100%' : 'calc(100% - 64px)',
     },
     sidebar: {
       width: isMobile ? '100%' : 360,
@@ -51,19 +56,9 @@ const createContentStyles = (isMobile, mobileMapOnly) => {
   return styles;
 };
 
-const styles = {
-  activeRoot: {
-    margin: 0,
-    width: '100%',
-    display: 'flex',
-    flexWrap: 'nowrap',
-    height: '99.5vh',
-  },
-};
-
 const DefaultLayout = (props) => {
   const {
-    classes, i18n, intl, onLanguageChange, location, history, match,
+    i18n, intl, onLanguageChange, location, history, match,
   } = props;
   const { params } = match;
   const lng = params && params.lng;
@@ -135,7 +130,7 @@ const DefaultLayout = (props) => {
         </AppBar>
         )
       }
-      <div className={classes.activeRoot} style={styles.activeRoot}>
+      <div style={styles.activeRoot}>
         <div style={styles.sidebar}>
           <main>
             <Sidebar />
@@ -197,7 +192,6 @@ const DefaultLayout = (props) => {
 
 // Typechecking
 DefaultLayout.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   i18n: PropTypes.instanceOf(I18n),
@@ -210,4 +204,4 @@ DefaultLayout.defaultProps = {
   i18n: null,
 };
 
-export default injectIntl(withRouter(withStyles(styles)(DefaultLayout)));
+export default injectIntl(withRouter(DefaultLayout));

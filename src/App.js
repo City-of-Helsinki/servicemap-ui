@@ -13,7 +13,7 @@ import styles from './index.css';
 import appStyles from './App.css';
 import isClient from './utils';
 import { getLocale } from './redux/selectors/locale';
-import { changeLocaleAction } from './redux/actions/locale';
+import { changeLocaleAction } from './redux/actions/user';
 import DefaultLayout from './layouts';
 
 class App extends React.Component {

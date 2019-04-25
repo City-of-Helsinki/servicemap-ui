@@ -12,7 +12,7 @@ import config from '../config';
 import rootReducer from '../src/rootReducer';
 import App from '../src/App';
 import {makeLanguageHandler, makeUnitHandler} from './utils';
-import { setLocale } from '../src/redux/actions/locale';
+import { setLocale } from '../src/redux/actions/user';
 import { changeSelectedUnit } from '../src/redux/actions/selectedUnit';
 import { SheetsRegistry } from 'jss';
 import { createGenerateClassName, MuiThemeProvider } from '@material-ui/core';
