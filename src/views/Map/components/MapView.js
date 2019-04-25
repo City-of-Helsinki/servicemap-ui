@@ -73,7 +73,7 @@ class MapView extends React.Component {
           <span className={classes[className]}>{id}</span>
         </>,
       ),
-      iconSize: [transitIconSize * 1.2, transitIconSize + 1.2],
+      iconSize: [transitIconSize * 1.2, transitIconSize * 1.2],
     });
   }
 
@@ -208,37 +208,47 @@ class MapView extends React.Component {
 const styles = ({
   transitBackground: {
     zIndex: -1,
-    width: transitIconSize * 0.7,
-    height: transitIconSize * 0.7,
-    backgroundColor: '#ffffff',
+    width: '67%',
+    height: '67%',
+    backgroundColor: 'white',
     position: 'absolute',
-    top: transitIconSize / 2.5,
-    left: transitIconSize / 4,
+    top: '51%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    border: 'white',
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderRadius: 12,
   },
   busIcon: {
     fontFamily: 'hsl-piktoframe',
     color: '#007AC9',
     fontSize: transitIconSize,
+    lineHeight: '125%',
   },
   tramIcon: {
     fontFamily: 'hsl-piktoframe',
     color: '#00985F',
     fontSize: transitIconSize,
+    lineHeight: '125%',
   },
   trainIcon: {
     fontFamily: 'hsl-piktoframe',
     color: '#8C4799',
     fontSize: transitIconSize,
+    lineHeight: '125%',
   },
   metroIcon: {
     fontFamily: 'hsl-piktoframe',
     color: '#FF6319',
     fontSize: transitIconSize,
+    lineHeight: '125%',
   },
   ferryIcon: {
     fontFamily: 'hsl-piktoframe',
     color: '#00B9E4',
     fontSize: transitIconSize,
+    lineHeight: '125%',
   },
 });
 
