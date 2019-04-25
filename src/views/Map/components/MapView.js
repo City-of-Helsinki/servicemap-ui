@@ -8,6 +8,8 @@ import TransitStopInfo from './TransitStopInfo';
 import { generatePath } from '../../../utils/path';
 import { drawMarkerIcon } from '../utils/drawIcon';
 
+const transitIconSize = 30;
+
 class MapView extends React.Component {
   constructor(props) {
     super(props);
@@ -71,7 +73,7 @@ class MapView extends React.Component {
           <span className={classes[className]}>{id}</span>
         </>,
       ),
-      iconSize: [35, 35],
+      iconSize: [transitIconSize * 1.2, transitIconSize + 1.2],
     });
   }
 
@@ -203,42 +205,40 @@ class MapView extends React.Component {
   }
 }
 
-const iconSize = 30;
-
 const styles = ({
   transitBackground: {
     zIndex: -1,
-    width: iconSize * 0.666,
-    height: iconSize * 0.666,
-    backgroundColor: 'white',
+    width: transitIconSize * 0.7,
+    height: transitIconSize * 0.7,
+    backgroundColor: '#ffffff',
     position: 'absolute',
-    bottom: 3,
-    left: 7.5,
+    top: transitIconSize / 2.5,
+    left: transitIconSize / 4,
   },
   busIcon: {
     fontFamily: 'hsl-piktoframe',
     color: '#007AC9',
-    fontSize: iconSize,
+    fontSize: transitIconSize,
   },
   tramIcon: {
     fontFamily: 'hsl-piktoframe',
     color: '#00985F',
-    fontSize: iconSize,
+    fontSize: transitIconSize,
   },
   trainIcon: {
     fontFamily: 'hsl-piktoframe',
     color: '#8C4799',
-    fontSize: iconSize,
+    fontSize: transitIconSize,
   },
   metroIcon: {
     fontFamily: 'hsl-piktoframe',
     color: '#FF6319',
-    fontSize: iconSize,
+    fontSize: transitIconSize,
   },
   ferryIcon: {
     fontFamily: 'hsl-piktoframe',
     color: '#00B9E4',
-    fontSize: iconSize,
+    fontSize: transitIconSize,
   },
 });
 
