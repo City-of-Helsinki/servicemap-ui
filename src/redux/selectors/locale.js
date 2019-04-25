@@ -1,5 +1,5 @@
 
-const getLocale = store => store.locale;
+const getLocale = store => store.user.locale;
 
 // This returns correct string according to locale
 const getLocaleString = (state, obj) => {

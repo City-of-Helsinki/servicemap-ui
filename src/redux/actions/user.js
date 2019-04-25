@@ -4,8 +4,18 @@ export const setLocale = locale => ({
   locale,
 });
 
+export const setInitialLoad = () => ({
+  type: 'SET_INITIAL_LOAD',
+});
+
+
 export const changeLocaleAction = locale => async (dispatch) => {
   dispatch(setLocale(locale));
 };
+
+export const setInitialLoadAction = () => async (dispatch) => {
+  dispatch(setInitialLoad());
+};
+
 
 export default { setLocale, changeLocaleAction };
