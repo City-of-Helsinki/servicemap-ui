@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Typography, RootRef } from '@material-ui/core';
-import { setInitialLoadAction } from '../../../redux/actions/user';
+import { actionSetInitialLoad } from '../../../redux/actions/user';
 
 class ViewTitle extends React.Component {
   constructor(props) {
@@ -12,13 +12,13 @@ class ViewTitle extends React.Component {
   }
 
   componentDidMount() {
-    const { initialLoad, setInitialLoadAction } = this.props;
+    const { initialLoad, actionSetInitialLoad } = this.props;
     if (initialLoad) {
       if (this.titleRef.current) {
         this.titleRef.current.focus();
       }
     } else {
-      setInitialLoadAction();
+      actionSetInitialLoad();
       // Focus to site title on first load
       const siteTitle = document.getElementById('site-title');
       if (siteTitle) {
@@ -49,11 +49,11 @@ const mapStateToProps = (state) => {
 
 export default connect(
   mapStateToProps,
-  { setInitialLoadAction },
+  { actionSetInitialLoad },
 )(ViewTitle);
 
 ViewTitle.propTypes = {
   initialLoad: PropTypes.bool.isRequired,
   messageId: PropTypes.string.isRequired,
-  setInitialLoadAction: PropTypes.func.isRequired,
+  actionSetInitialLoad: PropTypes.func.isRequired,
 };

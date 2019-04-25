@@ -13,7 +13,7 @@ export const changeLocaleAction = locale => async (dispatch) => {
   dispatch(setLocale(locale));
 };
 
-export const setInitialLoadAction = () => async (dispatch) => {
+export const actionSetInitialLoad = () => async (dispatch) => {
   dispatch(setInitialLoad());
 };
 
