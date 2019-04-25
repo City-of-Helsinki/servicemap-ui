@@ -2,6 +2,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
+import { renderToStaticMarkup } from 'react-dom/server';
+import { withStyles } from '@material-ui/core';
 import TransitStopInfo from './TransitStopInfo';
 import { generatePath } from '../../../utils/path';
 import { drawMarkerIcon } from '../utils/drawIcon';
@@ -30,6 +32,49 @@ class MapView extends React.Component {
     this.saveMapReference();
   }
 
+  getTransitIcon = (type) => {
+    const { divIcon } = require('leaflet');
+    const { classes } = this.props;
+    let className = null;
+    let id = null;
+
+    switch (type) {
+      case 3: // Bus stops
+        className = 'busIcon';
+        id = 2;
+        break;
+      case 0: // Tram stops
+        className = 'tramIcon';
+        id = 3;
+        break;
+      case 109: // Train stops
+        className = 'trainIcon';
+        id = 4;
+        break;
+      case 1: // Subway stops
+        className = 'metroIcon';
+        id = 5;
+        break;
+      case -999: // Ferry stops
+        className = 'ferryIcon';
+        id = 6;
+        break;
+      default:
+        className = 'busIcon';
+        id = 2;
+        break;
+    }
+    return divIcon({
+      html: renderToStaticMarkup(
+        <>
+          <span className={classes.transitBackground}>&nbsp;</span>
+          <span className={classes[className]}>{id}</span>
+        </>,
+      ),
+      iconSize: [35, 35],
+    });
+  }
+
   saveMapReference() {
     const { saveMapRef } = this.props;
     const { refSaved } = this.state;
@@ -38,6 +83,7 @@ class MapView extends React.Component {
       saveMapRef(this.mapRef.current);
     }
   }
+
 
   initiateLeaflet() {
     // The leaflet map works only client-side so it needs to be imported here
@@ -139,6 +185,7 @@ class MapView extends React.Component {
           ) : null}
           {transitStops.map(stop => (
             <Marker
+              icon={this.getTransitIcon(stop.vehicleType)}
               key={stop.name + stop.gtfsId}
               position={[stop.lat, stop.lon]}
               keyboard={false}
@@ -155,7 +202,47 @@ class MapView extends React.Component {
     return <p>No map</p>;
   }
 }
-export default withRouter(MapView);
+
+const iconSize = 30;
+
+const styles = ({
+  transitBackground: {
+    zIndex: -1,
+    width: iconSize * 0.666,
+    height: iconSize * 0.666,
+    backgroundColor: 'white',
+    position: 'absolute',
+    bottom: 3,
+    left: 7.5,
+  },
+  busIcon: {
+    fontFamily: 'hsl-piktoframe',
+    color: '#007AC9',
+    fontSize: iconSize,
+  },
+  tramIcon: {
+    fontFamily: 'hsl-piktoframe',
+    color: '#00985F',
+    fontSize: iconSize,
+  },
+  trainIcon: {
+    fontFamily: 'hsl-piktoframe',
+    color: '#8C4799',
+    fontSize: iconSize,
+  },
+  metroIcon: {
+    fontFamily: 'hsl-piktoframe',
+    color: '#FF6319',
+    fontSize: iconSize,
+  },
+  ferryIcon: {
+    fontFamily: 'hsl-piktoframe',
+    color: '#00B9E4',
+    fontSize: iconSize,
+  },
+});
+
+export default withRouter(withStyles(styles)(MapView));
 
 // Typechecking
 MapView.propTypes = {
@@ -171,6 +258,7 @@ MapView.propTypes = {
   transitStops: PropTypes.arrayOf(PropTypes.object),
   getLocaleText: PropTypes.func.isRequired,
   saveMapRef: PropTypes.func.isRequired,
+  classes: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 MapView.defaultProps = {

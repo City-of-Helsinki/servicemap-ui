@@ -12,6 +12,13 @@ const js = {
   },
 };
 
+const fonts = {
+  test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+  use: [{
+    loader: 'url-loader',
+  }]
+};
+
 const css = {
   test: /\.css$/,
   exclude: /node_modules/,
@@ -36,7 +43,7 @@ const serverConfig = {
     'index.js': path.resolve(__dirname, 'server/server.js'),
   },
   module: {
-    rules: [js, css],
+    rules: [js, css, fonts],
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -51,7 +58,7 @@ const clientConfig = {
     'index.js': path.resolve(__dirname, 'src/client.js'),
   },
   module: {
-    rules: [js, css],
+    rules: [js, css, fonts],
   },
   output: {
     path: path.resolve(__dirname, 'dist/src'),

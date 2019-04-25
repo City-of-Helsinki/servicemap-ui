@@ -46,10 +46,10 @@ class MapContainer extends React.Component {
     fetchStops(bounds)
       .then(((data) => {
         const stops = data[0].data.stopsByBbox;
-        const subwayStations = stops.filter(stop => stop.patterns[0].route.mode === 'SUBWAY');
+        const subwayStations = stops.filter(stop => stop.vehicleType === 1);
 
         // Remove subwaystations from stops list since they will be replaced with subway entrances
-        const filteredStops = stops.filter(stop => stop.patterns[0].route.mode !== 'SUBWAY');
+        const filteredStops = stops.filter(stop => stop.vehicleType !== 1);
 
         const entrances = data[1].results;
 
@@ -95,6 +95,7 @@ class MapContainer extends React.Component {
             name: entrance.name[locale],
             patterns: closest.stop.patterns,
             stoptimesWithoutPatterns: arrivalTimes,
+            vehicleType: closest.stop.vehicleType,
           };
           filteredStops.push(newStop);
         });
