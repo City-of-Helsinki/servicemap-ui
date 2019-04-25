@@ -218,7 +218,7 @@ const styles = ({
     border: 'white',
     borderWidth: 1,
     borderStyle: 'solid',
-    borderRadius: 12,
+    borderRadius: '14%',
   },
   busIcon: {
     fontFamily: 'hsl-piktoframe',
