@@ -33,12 +33,12 @@ const DivWrapper = props => (
 
 const Container = (props) => {
   const {
-    children, classes, paper, title, titleComponent,
+    children, classes, paper, title, titleComponent, ...rest
   } = props;
 
   const ContainerComponent = paper ? Paper : DivWrapper;
   return (
-    <ContainerComponent className={classes.root}>
+    <ContainerComponent className={classes.root} {...rest}>
       {
         title
         && <Title className={classes.title} component={titleComponent} text={title} variant="h6" />
