@@ -106,6 +106,13 @@ const DefaultLayout = (props) => {
                 </a>
               </Grid>
               <Grid item>
+                <a href="https://forms.gle/roe9XNrZGQWBhMBJ7" rel="noopener noreferrer" target="_blank">
+                  <p style={{ color: 'white', textDecorationColor: 'white' }}>
+                    <FormattedMessage id="general.give.feedback" />
+                  </p>
+                </a>
+              </Grid>
+              <Grid item>
                 {
                   i18n.availableLocales
                     .filter(locale => locale !== i18n.locale)

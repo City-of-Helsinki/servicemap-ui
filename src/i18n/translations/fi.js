@@ -18,6 +18,7 @@ export default {
   'general.pageTitles.unit': 'Toimipistenäkymä',
   'general.pageTitles.service': 'Palvelunäkymä',
   'general.skipToContent': 'Siirry pääsisältöön',
+  'general.give.feedback': 'Anna palautetta Palvleukartan testiversiosta (linkki aukeaa uuteen välilehteen)',
 
   // Map
   'map': 'Kartta',
