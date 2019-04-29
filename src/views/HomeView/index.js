@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import HomeView from './HomeView';
 import { fetchUnits } from '../../redux/actions/unit';
+import { setCurrentPage } from '../../redux/actions/user';
 
 // Listen to redux state
 // const unitList = getUnitList(state);
@@ -20,5 +21,5 @@ const mapStateToProps = (state) => {
 
 export default connect(
   mapStateToProps,
-  { fetchUnits },
+  { fetchUnits, setCurrentPage },
 )(HomeView);

@@ -8,6 +8,7 @@ import TitleBar from '../../components/TitleBar/TitleBar';
 import { generatePath } from '../../utils/path';
 import { getLocaleString } from '../../redux/selectors/locale';
 import { fetchServiceUnits } from '../../redux/actions/services';
+import { setCurrentPage } from '../../redux/actions/user';
 import { fitUnitsToMap } from '../Map/utils/mapActions';
 import ResultList from '../../components/Lists/ResultList';
 
@@ -20,9 +21,10 @@ class ServiceView extends React.Component {
 
   componentDidMount() {
     const {
-      match, fetchServiceUnits, unitData, map,
+      match, fetchServiceUnits, unitData, map, setCurrentPage,
     } = this.props;
     const { params } = match;
+    setCurrentPage('service');
     if (`${unitData.id}` !== params.service) {
       fetchServiceUnits(params.service);
     } else {
@@ -114,7 +116,7 @@ const mapStateToProps = (state) => {
 
 export default withRouter(injectIntl(connect(
   mapStateToProps,
-  { fetchServiceUnits },
+  { fetchServiceUnits, setCurrentPage },
 )(ServiceView)));
 
 ServiceView.propTypes = {
@@ -130,6 +132,7 @@ ServiceView.propTypes = {
   fetchServiceUnits: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
   map: PropTypes.objectOf(PropTypes.any),
+  setCurrentPage: PropTypes.func.isRequired,
 };
 
 ServiceView.defaultProps = {

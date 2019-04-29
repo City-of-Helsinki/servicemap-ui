@@ -114,12 +114,21 @@ class MapContainer extends React.Component {
 
   render() {
     const {
-      mapType, districts, highlightedUnit, getLocaleText,
+      mapType, districts, highlightedUnit, getLocaleText, currentPage, unitList, serviceUnits, unitsLoading,
     } = this.props;
-    let { unitList } = this.props;
+
+    let mapUnits = [];
+
+    if (currentPage === 'search') {
+      mapUnits = unitList;
+    }
+
+    if (currentPage === 'service' && serviceUnits.units && !unitsLoading) {
+      mapUnits = serviceUnits.units.results;
+    }
 
     if (highlightedUnit) {
-      unitList = [highlightedUnit];
+      mapUnits = [highlightedUnit];
     }
 
     const { initialMap, transitStops } = this.state;
@@ -128,7 +137,7 @@ class MapContainer extends React.Component {
         <MapView
           key={mapType ? mapType.crs.code : initialMap.crs.code}
           mapBase={mapType || initialMap}
-          unitList={unitList}
+          unitList={mapUnits}
           districtList={districts}
           saveMapRef={this.saveMapRef}
           mapOptions={mapOptions}
@@ -148,9 +157,12 @@ class MapContainer extends React.Component {
 const mapStateToProps = (state) => {
   const { units } = state;
   const { data } = units;
+  const unitsLoading = state.service.isFetching;
+  const serviceUnits = state.service.data;
   const mapType = getMapType(state);
   const districts = getDistricts(state);
   const highlightedUnit = getSelectedUnit(state);
+  const currentPage = state.user.page;
   const getLocaleText = textObject => getLocaleString(state, textObject);
   // const unitList = getUnitList(state);
   return {
@@ -160,6 +172,9 @@ const mapStateToProps = (state) => {
     highlightedUnit,
     getLocaleText,
     unitList: data,
+    serviceUnits,
+    unitsLoading,
+    currentPage,
     // unitList,
   };
 };
@@ -175,9 +190,12 @@ export default connect(
 MapContainer.propTypes = {
   mapType: PropTypes.oneOfType([PropTypes.objectOf(PropTypes.any), PropTypes.string]),
   unitList: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.array])),
+  serviceUnits: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   locale: PropTypes.string,
+  unitsLoading: PropTypes.bool,
   districts: PropTypes.arrayOf(PropTypes.object),
   highlightedUnit: PropTypes.objectOf(PropTypes.any),
+  currentPage: PropTypes.string.isRequired,
   fetchDistrictsData: PropTypes.func.isRequired,
   getLocaleText: PropTypes.func.isRequired,
   setMapRef: PropTypes.func.isRequired,
@@ -186,7 +204,9 @@ MapContainer.propTypes = {
 MapContainer.defaultProps = {
   mapType: '',
   unitList: [],
+  serviceUnits: [],
   locale: 'fi',
+  unitsLoading: false,
   districts: {},
   highlightedUnit: null,
 };
