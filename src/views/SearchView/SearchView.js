@@ -9,12 +9,12 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import styles from './styles';
 import Loading from '../../components/Loading/Loading';
 import SearchBar from '../../components/SearchBar';
-import ResultList from '../../components/Lists/ResultList';
 import { fitUnitsToMap } from '../Map/utils/mapActions';
 import { parseSearchParams } from '../../utils';
 import { generatePath } from '../../utils/path';
 import BackButton from '../../components/BackButton';
 import Container from '../../components/Container/Container';
+import SearchResults from './components/SearchResults';
 
 class SearchView extends React.Component {
   constructor(props) {
@@ -122,12 +122,10 @@ class SearchView extends React.Component {
         {
           resultsShowing
           && (
-          <ResultList
-            listId="search-list"
-            title={intl.formatMessage({ id: 'unit.plural' })}
-            titleComponent="h3"
-            data={units}
-          />
+            <SearchResults
+              data={units}
+            />
+
           )
         }
         <Container>
