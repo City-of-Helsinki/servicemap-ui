@@ -10,6 +10,7 @@ const styles = theme => ({
     marginTop: theme.spacing.unit,
     marginBottom: theme.spacing.unit,
     padding: theme.spacing.unit,
+    position: 'relative',
   },
   title: {
     textAlign: 'left',
