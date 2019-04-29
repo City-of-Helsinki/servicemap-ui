@@ -54,10 +54,11 @@ class ResultList extends React.Component {
           >
             <Typography
               id={`${listId}-result-title`}
-              className={classes.left}
+              className={`${classes.left} SearchResultTitle`}
               component={titleComponent}
               variant="subtitle1"
               aria-labelledby={`${listId}-result-title ${listId}-result-title-info`}
+              tabIndex="-1"
             >
               {title}
 
