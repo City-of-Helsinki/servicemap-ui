@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import SearchView from './SearchView';
 import { fetchUnits } from '../../redux/actions/unit';
 import { changeSelectedUnit } from '../../redux/actions/selectedUnit';
+import { setCurrentPage } from '../../redux/actions/user';
 
 // Listen to redux state
 // const unitList = getUnitList(state);
@@ -24,5 +25,5 @@ const mapStateToProps = (state) => {
 
 export default connect(
   mapStateToProps,
-  { fetchUnits, changeSelectedUnit },
+  { fetchUnits, changeSelectedUnit, setCurrentPage },
 )(SearchView);

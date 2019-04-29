@@ -14,6 +14,11 @@ import HomeLogo from '../../components/Logos/HomeLogo';
 // TODO: Fix close by events and services lists with actual data items once data is accessible
 
 class HomeView extends React.Component {
+  componentDidMount() {
+    const { setCurrentPage } = this.props;
+    setCurrentPage('home');
+  }
+
   // Search submit functionality
   onSearchSubmit = (e, search) => {
     e.preventDefault();
@@ -73,6 +78,7 @@ export default withRouter(injectIntl(HomeView));
 // Typechecking
 HomeView.propTypes = {
   fetchUnits: PropTypes.func,
+  setCurrentPage: PropTypes.func.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
   intl: intlShape.isRequired,
   match: PropTypes.objectOf(PropTypes.any).isRequired,

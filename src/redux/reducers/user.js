@@ -2,6 +2,7 @@
 const initialState = {
   initialLoad: false,
   locale: 'fi',
+  page: 'home',
 };
 
 export default (state = initialState, action) => {
@@ -15,6 +16,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         initialLoad: true,
+      };
+    case 'SET_CURRENT_PAGE':
+      return {
+        ...state,
+        page: action.page,
       };
     default:
       return state;

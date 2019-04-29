@@ -8,6 +8,10 @@ export const setInitialLoad = () => ({
   type: 'SET_INITIAL_LOAD',
 });
 
+export const setPage = page => ({
+  type: 'SET_CURRENT_PAGE',
+  page,
+});
 
 export const changeLocaleAction = locale => async (dispatch) => {
   dispatch(setLocale(locale));
@@ -15,6 +19,10 @@ export const changeLocaleAction = locale => async (dispatch) => {
 
 export const actionSetInitialLoad = () => async (dispatch) => {
   dispatch(setInitialLoad());
+};
+
+export const setCurrentPage = page => async (dispatch) => {
+  dispatch(setPage(page));
 };
 
 

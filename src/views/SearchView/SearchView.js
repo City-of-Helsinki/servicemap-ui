@@ -32,8 +32,9 @@ class SearchView extends React.Component {
 
   componentDidMount() {
     const {
-      fetchUnits, location, previousSearch, units, map,
+      fetchUnits, location, previousSearch, units, map, setCurrentPage,
     } = this.props;
+    setCurrentPage('search');
     const searchParams = parseSearchParams(location.search);
     const searchParam = searchParams.q || null;
     if (searchParam && fetchUnits && searchParam !== previousSearch) {
@@ -154,6 +155,7 @@ SearchView.propTypes = {
   previousSearch: PropTypes.string,
   units: PropTypes.arrayOf(PropTypes.any),
   map: PropTypes.objectOf(PropTypes.any),
+  setCurrentPage: PropTypes.func.isRequired,
 };
 
 SearchView.defaultProps = {
