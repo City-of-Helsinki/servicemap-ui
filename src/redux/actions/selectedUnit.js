@@ -19,6 +19,7 @@ export const setSelectedUnit = unit => ({
 // Change selected unit to given unit
 export const changeSelectedUnit = unit => async (dispatch) => {
   if (unit) {
+    unit.object_type = 'unit';
     dispatch(setSelectedUnit(unit));
   } else {
     dispatch(setSelectedUnit(null));
