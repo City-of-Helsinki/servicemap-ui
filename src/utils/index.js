@@ -53,4 +53,20 @@ export const parseSearchParams = (searchParams) => {
   return searchParamsObject;
 };
 
+// Turn SearchParam object back to string
+export const stringifySearchParams = (searchParams) => {
+  if (typeof searchParams !== 'object') {
+    return '';
+  }
+
+  // TODO: Check if this needs alternative for IE and Edge mobile
+  const searchParamsObject = new URLSearchParams();
+
+  Object.entries(searchParams).forEach(([key, value]) => {
+    searchParamsObject.append(key, value);
+  });
+
+  return searchParamsObject.toString();
+};
+
 export default isClient;

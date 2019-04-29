@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { injectIntl } from 'react-intl';
 import ResultList from '../../../components/Lists/ResultList';
 import PaginationComponent from './PaginationComponent';
+import { parseSearchParams, stringifySearchParams } from '../../../utils';
 
 class SearchResults extends React.Component {
   // Options
@@ -15,9 +16,16 @@ class SearchResults extends React.Component {
 
   constructor(props) {
     super(props);
+    const { currentPage } = props;
+
+    const parsedCurrentPage = typeof currentPage === 'string' ? parseInt(currentPage, 10) : currentPage;
+    const pageCount = this.calculatePageCount();
+
+    const newCurrentPage = typeof parsedCurrentPage === 'number' && parsedCurrentPage <= pageCount ? parsedCurrentPage : 1;
+
     this.state = {
-      currentPage: 1,
-      pageCount: this.calculatePageCount(),
+      currentPage: newCurrentPage,
+      pageCount,
     };
   }
 
@@ -44,13 +52,24 @@ class SearchResults extends React.Component {
 
   // Handle page number changes
   handlePageChange = (pageNum) => {
-    const { location } = this.props;
+    const { history, location } = this.props;
     const { pageCount } = this.state;
     // console.log(pageCount);
-    // console.log('HandlePageChange location: ', location);
+
     if (pageNum >= 1 && pageNum <= pageCount) {
+      // Change page parameter in searchParams
+      const searchParams = parseSearchParams(location.search);
+      searchParams.p = pageNum;
+
+      // Get new search search params string
+      const searchString = stringifySearchParams(searchParams);
       this.setState({
         currentPage: pageNum,
+      });
+      // Update p(page) param to current history
+      history.replace({
+        ...location,
+        search: `?${searchString || ''}`,
       });
     }
   }
@@ -101,7 +120,9 @@ class SearchResults extends React.Component {
     // console.log('Show combined data: ', combinedData);
     // Figure out splice start and end indexes
     const startIndex = currentPage > 1 ? (currentPage - 1) * this.itemsPerPage : 0;
-    const endIndex = combinedData.length >= this.itemsPerPage ? currentPage * this.itemsPerPage : combinedData.length;
+    const endIndex = combinedData.length >= this.itemsPerPage
+      ? currentPage * this.itemsPerPage
+      : combinedData.length;
     const shownData = combinedData.slice(startIndex, endIndex);
 
     const groupedShownData = this.groupData(shownData);
@@ -167,8 +188,15 @@ class SearchResults extends React.Component {
 }
 
 SearchResults.propTypes = {
+  currentPage: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
+  location: PropTypes.objectOf(PropTypes.any).isRequired,
+};
+
+SearchResults.defaultProps = {
+  currentPage: 1,
 };
 
 export default withRouter(injectIntl(SearchResults));

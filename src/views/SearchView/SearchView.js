@@ -26,6 +26,7 @@ class SearchView extends React.Component {
       changeSelectedUnit(null);
     }
     this.state = {
+      currentPage: null,
       queryParam: null,
     };
   }
@@ -40,6 +41,13 @@ class SearchView extends React.Component {
       fetchUnits([], null, searchParam);
       this.setState({ queryParam: searchParam });
     }
+
+    const pageParam = searchParams.p || null;
+    if (pageParam) {
+      this.setState({ currentPage: pageParam });
+    }
+
+
     this.focusMap(units, map);
   }
 
@@ -73,7 +81,7 @@ class SearchView extends React.Component {
     const {
       units, isFetching, classes, intl, count, max,
     } = this.props;
-    const { queryParam } = this.state;
+    const { currentPage, queryParam } = this.state;
     const unitCount = units && units.length;
     const resultsShowing = !isFetching && unitCount > 0;
     const progress = (isFetching && count) ? Math.floor((count / max * 100)) : 0;
@@ -124,6 +132,7 @@ class SearchView extends React.Component {
           && (
             <SearchResults
               data={units}
+              currentPage={currentPage || null}
             />
 
           )

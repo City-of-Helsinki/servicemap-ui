@@ -32,6 +32,7 @@ const PageElement = ({
       component="p"
       style={{
         color: isActive ? 'red' : 'black',
+        cursor: isActive ? 'auto' : 'pointer',
         textDecoration: isActive ? 'underline' : 'none',
       }}
       role={!isActive ? 'link' : null}
@@ -158,6 +159,7 @@ PaginationComponent.propTypes = {
   pageCount: PropTypes.number.isRequired,
 };
 
+// Default props
 PaginationComponent.defaultProps = {
   maxShownPages: 8,
 };
