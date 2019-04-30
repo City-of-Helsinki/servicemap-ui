@@ -112,6 +112,7 @@ class PaginationComponent extends React.Component {
             disabled={current === 1}
             color={current !== 1 ? 'primary' : 'default'}
             variant="contained"
+            role="link"
           >
             <ArrowBackIos />
           </Button>
@@ -128,6 +129,7 @@ class PaginationComponent extends React.Component {
             disabled={current === pageCount}
             color={current !== pageCount ? 'primary' : 'default'}
             variant="contained"
+            role="link"
           >
             <ArrowForwardIos />
           </Button>
