@@ -7,6 +7,7 @@ import {
 } from '@material-ui/core';
 import { ArrowBackIos, ArrowForwardIos } from '@material-ui/icons';
 import Container from '../../../components/Container/Container';
+import { keyboardHandler } from '../../../utils';
 
 // Styles
 const styles = theme => ({
@@ -37,6 +38,7 @@ const PageElement = ({
       }}
       role={!isActive ? 'link' : null}
       onClick={!isActive ? onClick : null}
+      onKeyPress={!isActive ? keyboardHandler(onClick, ['space', 'enter']) : null}
       tabIndex={isActive ? null : '0'}
       {...rest}
     >
