@@ -84,7 +84,8 @@ class PaginationComponent extends React.Component {
     const pages = [];
     const maxVisible = pageCount < maxShownPages ? pageCount : maxShownPages;
     const min = current > maxShownPages ? current - maxShownPages + 1 : 1;
-    const max = current < maxVisible ? maxVisible : current;
+    let max = current < maxVisible ? maxVisible : (current + 1);
+    max = max > pageCount ? pageCount : max; // Don't allow anything above total page count
 
     for (let i = min; i <= max; i += 1) {
       pages.push(
@@ -165,7 +166,7 @@ PaginationComponent.propTypes = {
 
 // Default props
 PaginationComponent.defaultProps = {
-  maxShownPages: 8,
+  maxShownPages: 7,
 };
 
 export default withStyles(styles)(injectIntl(PaginationComponent));
