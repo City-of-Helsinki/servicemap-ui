@@ -17,6 +17,10 @@ export default {
   'general.pageTitles.search': 'Hakutulosnäkymä',
   'general.pageTitles.unit': 'Toimipistenäkymä',
   'general.pageTitles.service': 'Palvelunäkymä',
+  'general.pagination.previous': 'Aiempi sivu',
+  'general.pagination.next': 'Seuraava sivu',
+  'general.pagination.openPage': 'Avaa sivu {count}',
+  'general.pagination.currentlyOpenedPage': 'Sivu {count}, avattu',
   'general.skipToContent': 'Siirry pääsisältöön',
   'general.give.feedback': 'Anna palautetta Palvelukartan testiversiosta (linkki aukeaa uuteen välilehteen)',
 
