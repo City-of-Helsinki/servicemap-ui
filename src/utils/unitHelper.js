@@ -1,7 +1,7 @@
-
 const accessibilityColors = {
-  default: 'gray',
-  valid: 'blue',
+  // default: 'gray',
+  default: '#2242C7', // Blue
+  valid: '#2242C7', // Blue
   hasShortcomings: 'red',
 };
 

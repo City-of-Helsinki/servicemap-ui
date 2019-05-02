@@ -4,7 +4,7 @@ const SMTheme = createMuiTheme({
   // Color palette
   palette: {
     primary: {
-      main: '#1964e6',
+      main: '#2242C7',
     },
     secondary: {
       main: '#000000',
