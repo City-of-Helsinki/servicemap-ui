@@ -24,6 +24,9 @@ export default {
   'general.skipToContent': 'Siirry pääsisältöön',
   'general.give.feedback': 'Anna palautetta Palvelukartan testiversiosta (linkki aukeaa uuteen välilehteen)',
 
+  // Home
+  'home.example.search': 'Esimerkkihakuja',
+
   // Map
   'map': 'Kartta',
   'map.transit.endStation': 'Päätepysäkki',

@@ -5,11 +5,14 @@ import {
   List, ListItem, ListItemText,
 } from '@material-ui/core';
 import { injectIntl, intlShape } from 'react-intl';
+import { Search } from '@material-ui/icons';
 import Container from '../../components/Container';
 import SearchBar from '../../components/SearchBar';
 import { generatePath } from '../../utils/path';
 import { MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import HomeLogo from '../../components/Logos/HomeLogo';
+import TitledList from '../../components/Lists/TitledList/TitledList';
+import SimpleListItem from '../../components/ListItems/SimpleListItem/SimpleListItem';
 
 // TODO: Fix close by events and services lists with actual data items once data is accessible
 
@@ -39,6 +42,10 @@ class HomeView extends React.Component {
     }
   }
 
+  onExapmleItemClick = (e, searchText) => {
+    this.onSearchSubmit(e, searchText);
+  }
+
   render() {
     const { intl } = this.props;
     return (
@@ -53,7 +60,16 @@ class HomeView extends React.Component {
           onSubmit={this.onSearchSubmit}
           placeholder={intl.formatMessage({ id: 'search' })}
         />
-        <Container paper title={intl.formatMessage({ id: 'service.nearby' })}>
+        <Container paper>
+          <TitledList title={intl.formatMessage({ id: 'home.example.search' })}>
+            <SimpleListItem link icon={<Search />} handleItemClick={e => this.onExapmleItemClick(e, 'Kallion kirjasto')} text="Kallion kirjasto" />
+            <SimpleListItem link icon={<Search />} handleItemClick={e => this.onExapmleItemClick(e, 'Uimahallit')} text="Uimahallit" />
+            <SimpleListItem link icon={<Search />} handleItemClick={e => this.onExapmleItemClick(e, 'Terveysasemat Espoo')} text="Terveysasemat Espoo" />
+            <SimpleListItem link icon={<Search />} handleItemClick={e => this.onExapmleItemClick(e, 'Pysäköintilippuautomaatit')} text="Pysäköintilippuautomaatit" />
+          </TitledList>
+        </Container>
+
+        {/* <Container paper title={intl.formatMessage({ id: 'service.nearby' })}>
           <List>
             <ListItem>
               <ListItemText primary={intl.formatMessage({ id: 'general.noData' })} />
@@ -67,7 +83,7 @@ class HomeView extends React.Component {
               <ListItemText primary={intl.formatMessage({ id: 'general.noData' })} />
             </ListItem>
           </List>
-        </Container>
+    </Container> */}
       </>
     );
   }

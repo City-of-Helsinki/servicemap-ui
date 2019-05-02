@@ -23,6 +23,9 @@ export default {
   'general.pagination.currentlyOpenedPage': 'Page {count} currently opened', // TODO: Translate
   'general.skipToContent': 'Skip to content', // TODO: Translate
 
+  // Home
+  'home.example.search': 'Esimerkkihakuja', // TODO: Translate
+
   // Map
   'map': 'Map', // TODO: Translate
   'map.transit.endStation': 'Ändhållplats',
