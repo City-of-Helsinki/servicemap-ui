@@ -17,6 +17,8 @@ import styles from './styles/styles';
 import TitleBar from '../../components/TitleBar/TitleBar';
 import TitledList from '../../components/Lists/TitledList';
 import ServiceItem from '../../components/ListItems/ServiceItem';
+import Container from '../../components/Container';
+import { uppercaseFirst } from '../../utils';
 
 // TODO: Add proper component's when ready
 
@@ -204,17 +206,19 @@ class UnitView extends React.Component {
               }
             </TitledList>
 
-            <span>
-              {unit.provider && <FormattedMessage id="unit.data_source" defaultMessage={'Source: {data_source}'} values={{ data_source: unit.provider }} />}
-            </span>
-            <span>
-              {unit.data_source && <FormattedMessage id="unit.data_source" defaultMessage={'Source: {data_source}'} values={{ data_source: unit.data_source }} />}
-            </span>
-            {
-                unit.contract_type
-                && unit.contract_type.description
-                && <p className="text-small">{getLocaleText(unit.contract_type.description)}</p>
-            }
+            <Container margin text>
+              <Typography variant="body2">
+                {
+                  unit.contract_type
+                  && unit.contract_type.description
+                  && `${uppercaseFirst(getLocaleText(unit.contract_type.description))}. `
+                }
+                {
+                  unit.data_source
+                  && <FormattedMessage id="unit.data_source" defaultMessage={'Source: {data_source}'} values={{ data_source: unit.data_source }} />
+                }
+              </Typography>
+            </Container>
           </div>
         </div>
       );
