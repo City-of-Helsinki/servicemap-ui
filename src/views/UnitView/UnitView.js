@@ -86,7 +86,7 @@ class UnitView extends React.Component {
 
     const TopBar = (
       <div>
-        <TitleBar title={unit ? unit.name && unit.name.fi : ''} />
+        <TitleBar title={unit && unit.name ? getLocaleText(unit.name) : ''} />
       </div>
     );
 
