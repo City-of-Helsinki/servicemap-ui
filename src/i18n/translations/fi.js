@@ -25,7 +25,8 @@ export default {
   'general.give.feedback': 'Anna palautetta Palvelukartan testiversiosta (linkki aukeaa uuteen välilehteen)',
 
   // Home
-  'home.example.search': 'Esimerkkihakuja',
+  'home.example.title': 'Esimerkkihakuja',
+  'home.example.search': 'Hae hakusanalla',
 
   // Map
   'map': 'Kartta',

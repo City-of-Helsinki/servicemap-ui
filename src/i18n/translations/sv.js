@@ -24,7 +24,8 @@ export default {
   'general.skipToContent': 'Skip to content', // TODO: Translate
 
   // Home
-  'home.example.search': 'Esimerkkihakuja', // TODO: Translate
+  'home.example.title': 'Esimerkkihakuja', // TODO: Translate
+  'home.example.search': 'Hae hakusanalla', // TODO: Translate
 
   // Map
   'map': 'Map', // TODO: Translate

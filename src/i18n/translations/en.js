@@ -26,7 +26,8 @@ export default {
   'general.give.feedback': 'Give feedback on the Servicemap test version (link opens in a new tab)',
 
   // Home
-  'home.example.search': 'Example search phrases',
+  'home.example.title': 'Example search phrases',
+  'home.example.search': 'Search for',
 
   // Map
   'map': 'Map',
