@@ -43,7 +43,7 @@ const Container = (props) => {
 
   const ContainerComponent = paper ? Paper : DivWrapper;
   return (
-    <ContainerComponent className={[classes.root, paper ? classes.paper : null]} {...rest}>
+    <ContainerComponent className={`${classes.root} ${paper ? classes.paper : null}`} {...rest}>
       {
         title
         && <Title className={classes.title} component={titleComponent} text={title} variant="h6" />
