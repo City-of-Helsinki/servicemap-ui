@@ -59,7 +59,7 @@ export default theme => ({
     whiteSpace: 'pre-line',
   },
   divider: {
-    marginLeft: theme.spacing.unit * 9,
+    marginRight: 0,
   },
   image: {
     width: '100%',

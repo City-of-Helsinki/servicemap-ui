@@ -25,6 +25,10 @@ export default {
   'general.skipToContent': 'Skip to content',
   'general.give.feedback': 'Give feedback on the Servicemap test version (link opens in a new tab)',
 
+  // Home
+  'home.example.title': 'Example search phrases',
+  'home.example.search': 'Search for',
+
   // Map
   'map': 'Map',
   'map.transit.endStation': 'Terminus',
