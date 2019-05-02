@@ -111,7 +111,7 @@ class InfoList extends React.Component {
               {title}
             </Typography>
 
-            <Divider aria-hidden="true" className={classes.left} />
+            <Divider aria-hidden="true" className={`${classes.left} ${classes.divider}`} />
 
             <List disablePadding>
               {filteredData.map((data, i) => {

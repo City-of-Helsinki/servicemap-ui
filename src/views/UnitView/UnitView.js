@@ -159,7 +159,7 @@ class UnitView extends React.Component {
                 >
                   {<FormattedMessage id="unit.description" />}
                 </Typography>
-                <Divider aria-hidden="true" />
+                <Divider className={classes.divider} aria-hidden="true" />
                 {/* Description text */}
                 {unit.description ? (
                   <Typography className={classes.paragraph} variant="body2">

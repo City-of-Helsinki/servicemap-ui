@@ -61,7 +61,7 @@ class HomeView extends React.Component {
           placeholder={intl.formatMessage({ id: 'search' })}
         />
         <Container paper>
-          <TitledList title={intl.formatMessage({ id: 'home.example.title' })}>
+          <TitledList title={intl.formatMessage({ id: 'home.example.title' })} divider={false}>
             <SimpleListItem link icon={<Search />} handleItemClick={e => this.onExapmleItemClick(e, 'Kallion kirjasto')} text="Kallion kirjasto" srText={intl.formatMessage({ id: 'home.example.search' })} />
             <SimpleListItem link icon={<Search />} handleItemClick={e => this.onExapmleItemClick(e, 'Uimahallit')} text="Uimahallit" srText={intl.formatMessage({ id: 'home.example.search' })} />
             <SimpleListItem link icon={<Search />} handleItemClick={e => this.onExapmleItemClick(e, 'Terveysasemat Espoo')} text="Terveysasemat Espoo" srText={intl.formatMessage({ id: 'home.example.search' })} />
