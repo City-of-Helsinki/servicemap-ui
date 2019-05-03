@@ -11,7 +11,7 @@ const styles = theme => ({
   root: {
     margin: theme.spacing.unit,
     padding: theme.spacing.unit / 2,
-    transition: theme.transitions.create('margin', {
+    transition: theme.transitions.create(['margin', 'padding'], {
       easing: theme.transitions.easing.easeIn,
       duration: theme.transitions.duration.complex,
     }),
@@ -19,7 +19,9 @@ const styles = theme => ({
   },
   rootFocused: {
     margin: 0,
-    transition: theme.transitions.create('margin', {
+    // Margin is replaced with padding so height doesn't get affected
+    padding: theme.spacing.unit * 1.5,
+    transition: theme.transitions.create(['margin', 'padding'], {
       duration: theme.transitions.duration.complex,
     }),
   },
