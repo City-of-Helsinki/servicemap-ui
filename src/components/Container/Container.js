@@ -15,9 +15,12 @@ const styles = theme => ({
   title: {
     textAlign: 'left',
   },
-  paper: {
+  margin: {
     marginLeft: '8px',
     marginRight: '8px',
+  },
+  text: {
+    textAlign: 'left',
   },
 });
 
@@ -38,12 +41,12 @@ const DivWrapper = props => (
 
 const Container = (props) => {
   const {
-    children, classes, paper, title, titleComponent, ...rest
+    children, classes, margin, paper, text, title, titleComponent, ...rest
   } = props;
 
   const ContainerComponent = paper ? Paper : DivWrapper;
   return (
-    <ContainerComponent className={`${classes.root} ${paper ? classes.paper : null}`} {...rest}>
+    <ContainerComponent className={`${classes.root} ${paper || margin ? classes.margin : ''} ${text ? classes.text : ''}`} {...rest}>
       {
         title
         && <Title className={classes.title} component={titleComponent} text={title} variant="h6" />
@@ -56,13 +59,17 @@ const Container = (props) => {
 Container.propTypes = {
   children: PropTypes.node.isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
+  margin: PropTypes.bool,
   paper: PropTypes.bool,
+  text: PropTypes.bool,
   title: PropTypes.string,
   titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']),
 };
 
 Container.defaultProps = {
+  margin: false,
   paper: false,
+  text: false,
   title: null,
   titleComponent: 'h3',
 };
