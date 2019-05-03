@@ -18,8 +18,16 @@ import HomeLogo from '../components/Logos/HomeLogo';
 
 // eslint-disable-next-line camelcase
 const mobileBreakpoint = config.mobile_ui_breakpoint;
+const smallScreenBreakpoint = config.small_screen_breakpoint;
 
-const createContentStyles = (isMobile, mobileMapOnly) => {
+const createContentStyles = (isMobile, isSmallScreen, mobileMapOnly) => {
+  let width = 450;
+  if (isMobile) {
+    width = '100%';
+  } else if (isSmallScreen) {
+    width = '50%';
+  }
+
   const styles = {
     activeRoot: {
       flexDirection: mobileMapOnly || isMobile ? 'column' : 'row',
@@ -30,7 +38,7 @@ const createContentStyles = (isMobile, mobileMapOnly) => {
       height: isMobile ? '100%' : 'calc(100% - 64px)',
     },
     sidebar: {
-      width: isMobile ? '100%' : 360,
+      width,
       margin: 0,
       overflow: 'auto',
     },
@@ -63,8 +71,9 @@ const DefaultLayout = (props) => {
   const { params } = match;
   const lng = params && params.lng;
   const isMobile = useMediaQuery(`(max-width:${mobileBreakpoint}px)`);
+  const isSmallScreen = useMediaQuery(`(max-width:${smallScreenBreakpoint}px)`);
   const mobileMapOnly = isMobile && location.pathname.indexOf('/map') > -1; // If mobile map view
-  const styles = createContentStyles(isMobile, mobileMapOnly);
+  const styles = createContentStyles(isMobile, isSmallScreen, mobileMapOnly);
 
   // Focus user to page title's link element
   const focusToPageTitle = () => {
@@ -86,11 +95,11 @@ const DefaultLayout = (props) => {
               container
               spacing={24}
             >
-              <Grid item>
+              <Grid item xs>
                 {
                   // Home logo link to home view
                 }
-                <a id="site-title" href={generatePath('home', lng)} style={{ display: 'inline-block' }} className="focus-dark-background">
+                <a id="site-title" href={generatePath('home', lng)} style={{ float: 'left', display: 'inline-block' }} className="focus-dark-background">
                   <HomeLogo aria-hidden="true" />
                   <Typography className="sr-only" color="inherit" component="h1" variant="body1">
                     <FormattedMessage id="app.title" />
@@ -105,19 +114,20 @@ const DefaultLayout = (props) => {
                   </Typography>
                 </a>
               </Grid>
-              <Grid item>
+              <Grid item xs={6}>
                 <a href="https://forms.gle/roe9XNrZGQWBhMBJ7" rel="noopener noreferrer" target="_blank">
-                  <p style={{ color: 'white', textDecorationColor: 'white' }}>
+                  <p style={{ margin: 0, color: 'white', textDecorationColor: 'white' }}>
                     <FormattedMessage id="general.give.feedback" />
                   </p>
                 </a>
               </Grid>
-              <Grid item>
+              <Grid item xs>
                 {
                   i18n.availableLocales
                     .filter(locale => locale !== i18n.locale)
                     .map(locale => (
                       <Button
+                        style={{ float: 'right' }}
                         className="focus-dark-background"
                         role="link"
                         key={locale}
