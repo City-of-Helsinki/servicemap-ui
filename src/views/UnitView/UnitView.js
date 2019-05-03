@@ -143,7 +143,7 @@ class UnitView extends React.Component {
             <InfoList
               data={[
                 { type: 'LINK', value: unit.www ? { name: intl.formatMessage({ id: 'unit.homepage' }), www: unit.www } : null },
-                ...this.sectionFilter(unit.connections, 'LINK'),
+                // ...this.sectionFilter(unit.connections, 'LINK'),
                 ...this.sectionFilter(unit.connections, 'ESERVICE_LINK'),
                 // ...this.sectionFilter(unit.connections, 'OTHER_INFO'),
               ]}
