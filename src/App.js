@@ -72,7 +72,7 @@ class App extends React.Component {
     return (
       <IntlProvider {...i18nData}>
         <div className="App">
-          <DefaultLayout i18n={i18n} onLanguageChange={locale => this.changeLocale(locale)} />
+          <DefaultLayout i18n={i18n} />
         </div>
       </IntlProvider>
     );

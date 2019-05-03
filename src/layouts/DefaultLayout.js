@@ -58,21 +58,13 @@ const createContentStyles = (isMobile, mobileMapOnly) => {
 
 const DefaultLayout = (props) => {
   const {
-    i18n, intl, onLanguageChange, location, history, match,
+    i18n, intl, location, history, match,
   } = props;
   const { params } = match;
   const lng = params && params.lng;
   const isMobile = useMediaQuery(`(max-width:${mobileBreakpoint}px)`);
   const mobileMapOnly = isMobile && location.pathname.indexOf('/map') > -1; // If mobile map view
   const styles = createContentStyles(isMobile, mobileMapOnly);
-
-  // Focus user to page title's link element
-  const focusToPageTitle = () => {
-    const elem = document.getElementById('site-title');
-    if (elem) {
-      elem.focus();
-    }
-  };
 
   return (
     <>
@@ -123,8 +115,10 @@ const DefaultLayout = (props) => {
                         key={locale}
                         color="inherit"
                         onClick={() => {
-                          onLanguageChange(locale);
-                          focusToPageTitle();
+                          const newLocation = location;
+                          const newPath = location.pathname.replace(/^\/[a-zA-Z]{2}\//, `/${locale}/`);
+                          newLocation.pathname = newPath;
+                          window.location = `${newLocation.pathname}${newLocation.search}`;
                         }}
                       >
                         {i18n.localeText(locale)}
@@ -204,7 +198,6 @@ DefaultLayout.propTypes = {
   i18n: PropTypes.instanceOf(I18n),
   intl: intlShape.isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
-  onLanguageChange: PropTypes.func.isRequired,
 };
 
 DefaultLayout.defaultProps = {
