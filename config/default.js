@@ -1,5 +1,6 @@
 export default {
-  "mobile_ui_breakpoint": 719,
+  "small_screen_breakpoint": 899,
+  "mobile_ui_breakpoint": 699,
   "server": {
     "address": "127.0.0.1",
     "port": "2048",
