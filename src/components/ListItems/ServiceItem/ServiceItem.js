@@ -42,7 +42,6 @@ class ServiceItem extends React.Component {
           }
         }}
         role="link"
-        component="li"
       />
     );
   }

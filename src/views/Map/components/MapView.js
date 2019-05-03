@@ -152,6 +152,7 @@ class MapView extends React.Component {
             if (unit && unit.location) {
               return (
                 <Marker
+                  className="unitMarker"
                   key={unit.id}
                   position={[unit.location.coordinates[1], unit.location.coordinates[0]]}
                   icon={drawMarkerIcon(unit, mapBase.options.name)}
