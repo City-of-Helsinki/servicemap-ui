@@ -33,6 +33,6 @@ test('Unit marker is drawn on map', async (t) => {
   const markers = ReactSelector('Marker')
 
   await t
-    .expect(await markers.getReact(({props}) => props.id)).eql('unitMarker', 'marker with correct id is found on map')
+    .expect(await markers.getReact(({props}) => props.className)).eql('unitMarker', 'marker with correct class name is found on map')
     
 });
