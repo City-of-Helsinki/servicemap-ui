@@ -24,10 +24,13 @@ export default {
 
   'general.skipToContent': 'Skip to content',
   'general.give.feedback': 'Give feedback on the Servicemap test version (link opens in a new tab)',
+  'general.new.tab': 'Opens in new tab',
 
   // Home
   'home.example.title': 'Example search phrases',
   'home.example.search': 'Search for',
+  'home.message': 'Message from the developers',
+  'home.send.feedback': 'Send feedback',
 
   // Map
   'map': 'Map',

@@ -22,10 +22,13 @@ export default {
   'general.pagination.openPage': 'Open page {count}', // TODO: Translate
   'general.pagination.currentlyOpenedPage': 'Page {count} currently opened', // TODO: Translate
   'general.skipToContent': 'Skip to content', // TODO: Translate
+  'general.new.tab': 'Aukeaa uuteen välilehteen', // TODO: Translate
 
   // Home
   'home.example.title': 'Esimerkkihakuja', // TODO: Translate
   'home.example.search': 'Hae hakusanalla', // TODO: Translate
+  'home.message': 'Terveisiä palvelukartan kehittäjiltä', // TODO: Translate
+  'home.send.feedback': 'Lähetä palautetta', // TODO: Translate
 
   // Map
   'map': 'Map', // TODO: Translate

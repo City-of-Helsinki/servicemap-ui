@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import {
-  List, ListItem, ListItemText,
+  List, ListItem, ListItemText, Typography, withStyles, Button,
 } from '@material-ui/core';
 import { injectIntl, intlShape } from 'react-intl';
 import { Search } from '@material-ui/icons';
@@ -47,7 +47,7 @@ class HomeView extends React.Component {
   }
 
   render() {
-    const { intl } = this.props;
+    const { intl, classes } = this.props;
     return (
       <>
         <MobileComponent>
@@ -67,6 +67,32 @@ class HomeView extends React.Component {
             <SimpleListItem link icon={<Search />} handleItemClick={e => this.onExapmleItemClick(e, 'Terveysasemat Espoo')} text="Terveysasemat Espoo" srText={intl.formatMessage({ id: 'home.example.search' })} />
             <SimpleListItem link icon={<Search />} handleItemClick={e => this.onExapmleItemClick(e, 'Pysäköintilippuautomaatit')} text="Pysäköintilippuautomaatit" srText={intl.formatMessage({ id: 'home.example.search' })} />
           </TitledList>
+        </Container>
+
+        <Container paper>
+          <Typography
+            className={classes.left}
+            variant="subtitle1"
+            component="h3"
+          >
+            {intl.formatMessage({ id: 'home.message' })}
+          </Typography>
+          <Typography className={classes.left} variant="body2">
+            2.5.2019 - Olemme tänään julkistaneet Palvelukartan avoimen kehitysversion!
+            Ensimmäisessä versiossa keskitymme erityisesti hakukokemuksen parantamiseen.
+            Lisäämme kehitysversioon uusia ominaisuuksia viikottain
+            ja haluamme palautetta juuri sinulta.
+          </Typography>
+          <Button
+            className={classes.button}
+            role="link"
+            variant="contained"
+            color="primary"
+            onClick={() => window.open('https://forms.gle/roe9XNrZGQWBhMBJ7')}
+            aria-label={`${intl.formatMessage({ id: 'home.send.feedback' })}: ${intl.formatMessage({ id: 'general.new.tab' })}`}
+          >
+            {intl.formatMessage({ id: 'home.send.feedback' })}
+          </Button>
         </Container>
 
         {/* <Container paper title={intl.formatMessage({ id: 'service.nearby' })}>
@@ -89,7 +115,24 @@ class HomeView extends React.Component {
   }
 }
 
-export default withRouter(injectIntl(HomeView));
+const styles = theme => ({
+  left: {
+    textAlign: 'left',
+    marginLeft: theme.spacing.unit * 2,
+    marginRight: theme.spacing.unit * 2,
+    marginTop: theme.spacing.unit * 3,
+  },
+  button: {
+    marginLeft: '15%',
+    marginRight: '15%',
+    width: '70%',
+    marginTop: theme.spacing.unit * 3,
+    marginBottom: theme.spacing.unit * 3,
+  },
+});
+
+
+export default withRouter(injectIntl(withStyles(styles)(HomeView)));
 
 // Typechecking
 HomeView.propTypes = {
@@ -98,6 +141,7 @@ HomeView.propTypes = {
   history: PropTypes.objectOf(PropTypes.any).isRequired,
   intl: intlShape.isRequired,
   match: PropTypes.objectOf(PropTypes.any).isRequired,
+  classes: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 HomeView.defaultProps = {
