@@ -23,10 +23,13 @@ export default {
   'general.pagination.currentlyOpenedPage': 'Sivu {count}, avattu',
   'general.skipToContent': 'Siirry pääsisältöön',
   'general.give.feedback': 'Anna palautetta Palvelukartan testiversiosta (linkki aukeaa uuteen välilehteen)',
+  'general.new.tab': 'Aukeaa uuteen välilehteen',
 
   // Home
   'home.example.title': 'Esimerkkihakuja',
   'home.example.search': 'Hae hakusanalla',
+  'home.message': 'Terveisiä palvelukartan kehittäjiltä',
+  'home.send.feedback': 'Lähetä palautetta',
 
   // Map
   'map': 'Kartta',
