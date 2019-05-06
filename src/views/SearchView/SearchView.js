@@ -16,6 +16,8 @@ import BackButton from '../../components/BackButton';
 import Container from '../../components/Container/Container';
 import SearchResults from './components/SearchResults';
 
+import paths from '../../../config/paths';
+
 class SearchView extends React.Component {
   constructor(props) {
     super(props);
@@ -27,7 +29,6 @@ class SearchView extends React.Component {
     }
     this.state = {
       currentPage: null,
-      queryParam: null,
     };
   }
 
@@ -40,7 +41,6 @@ class SearchView extends React.Component {
     const searchParam = searchParams.q || null;
     if (searchParam && fetchUnits && searchParam !== previousSearch) {
       fetchUnits([], null, searchParam);
-      this.setState({ queryParam: searchParam });
     }
 
     const pageParam = searchParams.p || null;
@@ -81,15 +81,15 @@ class SearchView extends React.Component {
     const lng = params && params.lng;
     if (search && search !== '') {
       fetchUnits([], null, search);
-      history.replace(generatePath('search', lng, search));
+      history.push(generatePath('search', lng, search));
     }
   }
 
   render() {
     const {
-      units, isFetching, classes, intl, count, max,
+      classes, count, fetchUnits, history, intl, isFetching, max, previousSearch, units,
     } = this.props;
-    const { currentPage, queryParam } = this.state;
+    const { currentPage } = this.state;
     const unitCount = units && units.length;
     const resultsShowing = !isFetching && unitCount > 0;
     const progress = (isFetching && count) ? Math.floor((count / max * 100)) : 0;
@@ -103,9 +103,27 @@ class SearchView extends React.Component {
     return (
       <div className="Search">
         <SearchBar
+          backButtonEvent={(e) => {
+            e.preventDefault();
+            history.goBack();
+
+            // Listen history
+            const unlisten = history.listen((location) => {
+              // Get search params
+              const searchParams = parseSearchParams(location.search);
+              const searchParam = searchParams.q || null;
+
+              // If page is search
+              // and previousSearch is not current location's params
+              // then fetch units with location's search params
+              if (paths.search.regex.exec(location.pathname) && previousSearch !== searchParam) {
+                fetchUnits([], null, searchParam);
+              }
+              unlisten(); // Remove listener
+            });
+          }}
           onSubmit={this.onSearchSubmit}
           placeholder={intl && intl.formatMessage({ id: 'search.input.placeholder' })}
-          text={queryParam}
         />
         <Divider aria-hidden="true" />
         <Paper className={classes.label} elevation={1} square aria-live="polite" style={paperStyles}>
