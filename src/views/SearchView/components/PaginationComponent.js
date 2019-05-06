@@ -95,7 +95,7 @@ class PaginationComponent extends React.Component {
           number={i}
           intl={intl}
           isActive={current === i}
-          onClick={() => { handlePageChange(i); }}
+          onClick={() => { handlePageChange(i, pageCount); }}
         />,
       );
     }
@@ -108,7 +108,7 @@ class PaginationComponent extends React.Component {
             className={classes.button}
             onClick={(e) => {
               e.preventDefault();
-              handlePageChange(current - 1);
+              handlePageChange(current - 1, pageCount);
             }}
             disabled={current === 1}
             color={current !== 1 ? 'primary' : 'default'}
@@ -125,7 +125,7 @@ class PaginationComponent extends React.Component {
             className={classes.button}
             onClick={(e) => {
               e.preventDefault();
-              handlePageChange(current + 1);
+              handlePageChange(current + 1, pageCount);
             }}
             disabled={current === pageCount}
             color={current !== pageCount ? 'primary' : 'default'}
