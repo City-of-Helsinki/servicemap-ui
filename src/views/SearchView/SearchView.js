@@ -33,7 +33,7 @@ class SearchView extends React.Component {
 
   componentDidMount() {
     const {
-      fetchUnits, location, previousSearch, units, map, setCurrentPage,
+      fetchUnits, history, location, match, previousSearch, units, map, setCurrentPage,
     } = this.props;
     setCurrentPage('search');
     const searchParams = parseSearchParams(location.search);
@@ -46,6 +46,13 @@ class SearchView extends React.Component {
     const pageParam = searchParams.p || null;
     if (pageParam) {
       this.setState({ currentPage: pageParam });
+    }
+
+    // Update search query
+    const { params } = match;
+    const lng = params && params.lng;
+    if (previousSearch && previousSearch !== '') {
+      history.replace(generatePath('search', lng, previousSearch));
     }
 
 
