@@ -44,7 +44,7 @@ const mapTypes = {
   servicemap: {
     name: 'servicemap',
     layer: tileLayers.tms32,
-    url: 'https://geoserver.hel.fi/mapproxy/wmts/osm-sm-hq/etrs_tm35fin_hq/{z}/{x}/{y}.png',
+    url: 'https://tiles.hel.ninja/wmts/osm-sm-hq/etrs_tm35fin_hq/{z}/{x}/{y}.png',
     minZoom: 6,
     maxZoom: 15,
     zoom: 10,
