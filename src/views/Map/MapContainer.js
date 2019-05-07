@@ -114,7 +114,7 @@ class MapContainer extends React.Component {
 
   render() {
     const {
-      mapType, districts, highlightedUnit, getLocaleText, currentPage, unitList, serviceUnits, unitsLoading,
+      mapType, districts, highlightedUnit, getLocaleText, currentPage, unitList, serviceUnits, unitsLoading, isMobile,
     } = this.props;
 
     let mapUnits = [];
@@ -146,7 +146,7 @@ class MapContainer extends React.Component {
           transitStops={transitStops}
           getLocaleText={textObject => getLocaleText(textObject)}
           // TODO: think about better styling location for map
-          style={{ flex: '1 0 auto' }}
+          style={isMobile ? { height: '80%', flex: '1 1 auto' } : { height: '100%', flex: '1 1 auto' }}
         />
       );
     }
@@ -199,6 +199,7 @@ MapContainer.propTypes = {
   fetchDistrictsData: PropTypes.func.isRequired,
   getLocaleText: PropTypes.func.isRequired,
   setMapRef: PropTypes.func.isRequired,
+  isMobile: PropTypes.bool,
 };
 
 MapContainer.defaultProps = {
@@ -209,4 +210,5 @@ MapContainer.defaultProps = {
   unitsLoading: false,
   districts: {},
   highlightedUnit: null,
+  isMobile: false,
 };

@@ -35,20 +35,24 @@ const createContentStyles = (isMobile, isSmallScreen, mobileMapOnly) => {
       width: '100%',
       display: 'flex',
       flexWrap: 'nowrap',
-      height: isMobile ? '100%' : 'calc(100% - 64px)',
+      height: isMobile ? '100vh' : 'calc(100% - 64px)',
     },
     sidebar: {
       width,
       margin: 0,
       overflow: 'auto',
+      paddingBottom: isMobile ? '10%' : 0,
     },
     map: {
-      display: 'flex',
       margin: 0,
       flex: !isMobile || mobileMapOnly ? 1 : 0,
+      display: isMobile && !mobileMapOnly ? 'none' : 'flex',
+      height: mobileMapOnly ? '90vh' : '100%',
     },
     mobileNav: {
       flex: '0 1 auto',
+      position: 'fixed',
+      bottom: 0,
     },
   };
 
@@ -148,7 +152,7 @@ const DefaultLayout = (props) => {
           </main>
         </div>
         <div style={styles.map}>
-          <MapContainer />
+          <MapContainer isMobile={!!isMobile} />
         </div>
         <MobileBottomNavigation
           style={styles.mobileNav}
