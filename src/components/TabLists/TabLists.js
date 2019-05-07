@@ -50,8 +50,7 @@ class TabLists extends React.Component {
       try {
         firstListResult.focus();
       } catch (e) {
-        // If TabResultTitle can't be found focus to view title
-        focusToViewTitle();
+        console.warn('Unable to focus on list title');
       }
     }
   }
