@@ -132,11 +132,12 @@ class TabLists extends React.Component {
             data.map(item => (
               item.data
               && item.data.length > 0
-              && <Tab key={`${item.title} (${item.data.length})`} label={`${item.title} ${item.component ? '' : `(${item.data.length})`}`} />
+              && <Tab key={`${item.title} (${item.data.length})`} label={`${item.title} ${item.component ? '' : `(${item.data.length})`}`} aria-label={item.ariaLabel ? item.ariaLabel : null} />
             ))
           }
         </Tabs>
         {
+          // Create tab views from data
           data.map((item, index) => {
             // If component given use it instead
             if (item.component) {
@@ -204,6 +205,8 @@ class TabLists extends React.Component {
 
 TabLists.propTypes = {
   data: PropTypes.arrayOf(PropTypes.shape({
+    ariaLabel: PropTypes.string,
+    component: PropTypes.node,
     title: PropTypes.string,
     data: PropTypes.array,
     itemsPerPage: PropTypes.number,

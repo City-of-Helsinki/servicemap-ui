@@ -78,6 +78,16 @@ export default {
     one {# osuma}
     other {# osumaa}
   }`,
+  'search.results.units': `{count, plural,
+    =0 {ei toimipisteitä}
+    one {# toimipiste löydetty}
+    other {# toimipistettä löydetty}
+  }`,
+  'search.results.services': `{count, plural,
+    =0 {palveluita ei löydetty}
+    one {# palvelu löydetty}
+    other {# palvelua löydetty}
+  }`,
   'search.input.placeholder': 'Hae toimipisteitä',
   'search.loading.units': 'Haetaan toimipisteitä {count} / {max}',
   'search.loading.units.srInfo': 'Haetaan {count} toimipistettä',

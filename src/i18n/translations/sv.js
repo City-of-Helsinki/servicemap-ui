@@ -77,6 +77,18 @@ export default {
                   one {# result}
                   other {# results}
                 }`, // TODO: Translate
+  // TODO: Translate
+  'search.results.units': `{count, plural,
+    =0 {no units found}
+    one {# unit found}
+    other {# units found}
+  }`,
+  // TODO: Translate
+  'search.results.services': `{count, plural,
+    =0 {no services found}
+    one {# service found}
+    other {# services found}
+  }`,
   'search.input.placeholder': 'Search units', // TODO: Translate
   'search.loading.units': 'Searching units {count} / {max}', // TODO: Translate
   'search.loading.units.srInfo': 'Search loading {count} results', // TODO: Translate
