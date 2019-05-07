@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { Tabs, Tab, Typography } from '@material-ui/core';
 import { injectIntl, intlShape } from 'react-intl';
-import { parseSearchParams, stringifySearchParams, focusToViewTitle } from '../../utils';
+import { parseSearchParams, stringifySearchParams } from '../../utils';
 import ResultList from '../Lists/ResultList';
 import PaginationComponent from '../../views/SearchView/components/PaginationComponent';
 

@@ -32,7 +32,7 @@ class SearchView extends React.Component {
 
   componentDidMount() {
     const {
-      fetchUnits, history, location, match, previousSearch, units, map, setCurrentPage,
+      fetchUnits, location, previousSearch, units, map, setCurrentPage,
     } = this.props;
     setCurrentPage('search');
     const searchParams = parseSearchParams(location.search);
