@@ -17,10 +17,12 @@ export default {
   'general.pageTitles.search': 'Search view',
   'general.pageTitles.unit': 'Unit view',
   'general.pageTitles.service': 'Service view',
+  // General - Pagination
   'general.pagination.previous': 'Previous page',
   'general.pagination.next': 'Next page',
   'general.pagination.openPage': 'Open page {count}',
   'general.pagination.currentlyOpenedPage': 'Page {count} currently opened',
+  'general.pagination.pageCount': 'page {current} / {max}',
 
   'general.skipToContent': 'Skip to content',
   'general.give.feedback': 'Give feedback on the Servicemap test version (link opens in a new tab)',
