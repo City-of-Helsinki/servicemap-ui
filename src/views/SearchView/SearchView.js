@@ -14,7 +14,7 @@ import { parseSearchParams } from '../../utils';
 import { generatePath } from '../../utils/path';
 import BackButton from '../../components/BackButton';
 import Container from '../../components/Container/Container';
-import SearchResults from './components/SearchResults';
+import TabLists from '../../components/TabLists';
 
 class SearchView extends React.Component {
   constructor(props) {
@@ -26,7 +26,6 @@ class SearchView extends React.Component {
       changeSelectedUnit(null);
     }
     this.state = {
-      currentPage: null,
       queryParam: null,
     };
   }
@@ -42,19 +41,6 @@ class SearchView extends React.Component {
       fetchUnits([], null, searchParam);
       this.setState({ queryParam: searchParam });
     }
-
-    const pageParam = searchParams.p || null;
-    if (pageParam) {
-      this.setState({ currentPage: pageParam });
-    }
-
-    // Update search query
-    const { params } = match;
-    const lng = params && params.lng;
-    if (previousSearch && previousSearch !== '') {
-      history.replace(generatePath('search', lng, previousSearch));
-    }
-
 
     this.focusMap(units, map);
   }
@@ -85,14 +71,45 @@ class SearchView extends React.Component {
     }
   }
 
+  // Group data based on object types
+  groupData = (data) => {
+    const services = data.filter(obj => obj && obj.object_type === 'service');
+    const units = data.filter(obj => obj && obj.object_type === 'unit');
+
+    return {
+      services,
+      units,
+    };
+  }
+
   render() {
     const {
       units, isFetching, classes, intl, count, max,
     } = this.props;
-    const { currentPage, queryParam } = this.state;
+    const { queryParam } = this.state;
     const unitCount = units && units.length;
     const resultsShowing = !isFetching && unitCount > 0;
     const progress = (isFetching && count) ? Math.floor((count / max * 100)) : 0;
+
+
+    // Group data
+    const groupedData = this.groupData(units);
+
+    // Data for TabResults component
+    const searchResults = [
+      {
+        component: null,
+        data: groupedData.units,
+        itemsPerPage: 10,
+        title: intl.formatMessage({ id: 'unit.plural' }),
+      },
+      {
+        component: null,
+        data: groupedData.services,
+        itemsPerPage: 10,
+        title: intl.formatMessage({ id: 'unit.services' }),
+      },
+    ];
 
     // Hide paper padding when nothing is shown
     const paperStyles = {};
@@ -138,11 +155,7 @@ class SearchView extends React.Component {
         {
           resultsShowing
           && (
-            <SearchResults
-              data={units}
-              currentPage={currentPage || null}
-            />
-
+            <TabLists data={searchResults} />
           )
         }
         <Container>
