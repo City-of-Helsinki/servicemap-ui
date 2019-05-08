@@ -71,14 +71,19 @@ export default {
                   one {# unit}
                   other {# units}
                 } found`,
-  'search.results': `{count, plural,
+  'search.resultList': `{count, plural,
                   =0 {no results}
                   one {# result}
                   other {# results}
                 }`,
+  'search.results': `{count, plural,
+                  =0 {No results found with given search}
+                  one {# result found}
+                  other {# results found}
+                }`,
   'search.input.placeholder': 'Search units',
   'search.loading.units': 'Searching units {count} / {max}',
-  'search.loading.units.srInfo': 'Search loading {count} results',
+  'search.loading.units.srInfo': 'Search loading {count} units',
   'search.notFound': 'No results found with given search',
   'search.started': 'Search started',
 

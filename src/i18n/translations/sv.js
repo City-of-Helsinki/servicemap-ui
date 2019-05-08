@@ -69,14 +69,19 @@ export default {
                   one {# unit}
                   other {# units}
                 } found`, // TODO: Translate
-  'search.results': `{count, plural,
+  'search.resultList': `{count, plural,
                   =0 {no results}
                   one {# result}
                   other {# results}
                 }`, // TODO: Translate
+  'search.results': `{count, plural,
+                  =0 {No results found with given search}
+                  one {# result found}
+                  other {# results found}
+                }`, // TODO: Translate
   'search.input.placeholder': 'Search units', // TODO: Translate
   'search.loading.units': 'Searching units {count} / {max}', // TODO: Translate
-  'search.loading.units.srInfo': 'Search loading {count} results', // TODO: Translate
+  'search.loading.units.srInfo': 'Search loading {count} units', // TODO: Translate
   'search.notFound': 'No results found with given search', // TODO: Translate
   'search.started': 'Search started', // TODO: Translate
 

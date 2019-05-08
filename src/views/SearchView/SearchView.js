@@ -149,7 +149,7 @@ class SearchView extends React.Component {
           <Typography variant="srOnly">
             {
               !isFetching
-              && <FormattedMessage id="search.info" values={{ count: unitCount }} />
+              && <FormattedMessage id="search.results" values={{ count: unitCount }} />
             }
           </Typography>
         </Paper>
@@ -170,7 +170,7 @@ class SearchView extends React.Component {
           && (
             <Container>
               <Typography variant="caption" component="h3">
-                <FormattedMessage id="search.notFound" />
+                <FormattedMessage id="search.results" values={{ count: units.length }} />
               </Typography>
             </Container>
           )
