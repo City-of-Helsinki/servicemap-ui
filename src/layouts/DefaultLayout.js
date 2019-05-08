@@ -35,31 +35,39 @@ const createContentStyles = (isMobile, isSmallScreen, mobileMapOnly) => {
       width: '100%',
       display: 'flex',
       flexWrap: 'nowrap',
-      height: isMobile ? '100vh' : 'calc(100% - 64px)',
+      height: isMobile ? '100%' : 'calc(100% - 64px)',
     },
     sidebar: {
+      position: isMobile ? 'fixed' : null,
+      top: 0,
+      bottom: 0,
       width,
       margin: 0,
       overflow: 'auto',
-      paddingBottom: isMobile ? '10%' : 0,
+      paddingBottom: isMobile && !mobileMapOnly ? '35%' : 0,
     },
     map: {
+      position: isMobile ? 'fixed' : null,
+      bottom: 0,
       margin: 0,
       flex: !isMobile || mobileMapOnly ? 1 : 0,
       display: isMobile && !mobileMapOnly ? 'none' : 'flex',
       height: mobileMapOnly ? '90vh' : '100%',
+      width: '100%',
+      paddingBottom: isMobile ? '10vh' : 0,
     },
     mobileNav: {
-      flex: '0 1 auto',
       position: 'fixed',
+      height: '10vh',
       bottom: 0,
+      zIndex: 999999999,
     },
   };
 
   // Mobile map view styles
   if (mobileMapOnly) {
     styles.sidebar.position = 'fixed';
-    styles.sidebar.top = 0;
+    styles.sidebar.bottom = null;
     styles.sidebar.zIndex = 999999999;
   } else if (isMobile) {
     styles.sidebar.flex = '1 1 auto';
