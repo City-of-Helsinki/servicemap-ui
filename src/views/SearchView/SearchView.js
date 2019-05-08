@@ -163,6 +163,18 @@ class SearchView extends React.Component {
 
           )
         }
+        {
+          !isFetching
+          && units
+          && units.length === 0
+          && (
+            <Container>
+              <Typography variant="caption" component="h3">
+                <FormattedMessage id="search.notFound" />
+              </Typography>
+            </Container>
+          )
+        }
         <Container>
           <BackButton />
         </Container>

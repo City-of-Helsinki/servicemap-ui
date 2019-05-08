@@ -79,6 +79,7 @@ export default {
   'search.input.placeholder': 'Search units',
   'search.loading.units': 'Searching units {count} / {max}',
   'search.loading.units.srInfo': 'Search loading {count} results',
+  'search.notFound': 'No results found with given search',
   'search.started': 'Search started',
 
   // Service

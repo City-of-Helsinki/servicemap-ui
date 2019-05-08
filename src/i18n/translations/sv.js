@@ -77,6 +77,7 @@ export default {
   'search.input.placeholder': 'Search units', // TODO: Translate
   'search.loading.units': 'Searching units {count} / {max}', // TODO: Translate
   'search.loading.units.srInfo': 'Search loading {count} results', // TODO: Translate
+  'search.notFound': 'No results found with given search', // TODO: Translate
   'search.started': 'Search started', // TODO: Translate
 
   // Service
