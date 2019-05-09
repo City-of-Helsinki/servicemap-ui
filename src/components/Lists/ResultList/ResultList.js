@@ -73,7 +73,7 @@ class ResultList extends React.Component {
                   variant="caption"
                   aria-hidden="true"
                 >
-                  <FormattedMessage id="search.results" values={{ count: resultCount || data.length }} />
+                  <FormattedMessage id="search.resultList" values={{ count: resultCount || data.length }} />
                 </Typography>
               </div>
             </div>

@@ -74,11 +74,16 @@ export default {
                   one {# toimipiste löydetty}
                   other {# toimipistettä löydetty}
                 }`,
+  'search.resultList': `{count, plural,
+                  =0 {ei osumia}
+                  one {# osuma}
+                  other {# osumaa}
+                }`,
   'search.results': `{count, plural,
-    =0 {ei osumia}
-    one {# osuma}
-    other {# osumaa}
-  }`,
+                  =0 {Haulla ei löytynyt hakutuloksia}
+                  one {# hakutulos löydetty}
+                  other {# hakutulosta löydetty}
+                }`,
   'search.results.units': `{count, plural,
     =0 {ei toimipisteitä}
     one {# toimipiste löydetty}
@@ -92,6 +97,7 @@ export default {
   'search.input.placeholder': 'Hae toimipisteitä',
   'search.loading.units': 'Haetaan toimipisteitä {count} / {max}',
   'search.loading.units.srInfo': 'Haetaan {count} toimipistettä',
+  'search.notFound': 'Haulla ei löytynyt hakutuloksia',
   'search.started': 'Haku aloitettu',
 
   // Service
