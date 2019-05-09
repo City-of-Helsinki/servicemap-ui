@@ -24,6 +24,7 @@ export default {
   'general.pagination.currentlyOpenedPage': 'Sivu {count}, avattu',
   'general.pagination.pageCount': 'sivu {current} / {max}',
 
+  'general.return.viewTitle': 'Siirry pääsisällön alkuun',
   'general.skipToContent': 'Siirry pääsisältöön',
   'general.give.feedback': 'Anna palautetta Palvelukartan testiversiosta (linkki aukeaa uuteen välilehteen)',
   'general.new.tab': 'Aukeaa uuteen välilehteen',

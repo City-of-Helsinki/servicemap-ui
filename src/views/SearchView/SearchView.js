@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import {
-  Paper, Divider, withStyles, Typography,
+  Paper, Divider, withStyles, Typography, Link,
 } from '@material-ui/core';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import styles from './styles';
@@ -12,8 +12,6 @@ import SearchBar from '../../components/SearchBar';
 import { fitUnitsToMap } from '../Map/utils/mapActions';
 import { parseSearchParams } from '../../utils';
 import { generatePath } from '../../utils/path';
-import BackButton from '../../components/BackButton';
-import Container from '../../components/Container/Container';
 import TabLists from '../../components/TabLists';
 
 import paths from '../../../config/paths';
@@ -179,9 +177,11 @@ class SearchView extends React.Component {
             <TabLists data={searchResults} />
           )
         }
-        <Container>
-          <BackButton />
-        </Container>
+        <Typography variant="srOnly">
+          <Link href="#view-title">
+            <FormattedMessage id="general.return.viewTitle" />
+          </Link>
+        </Typography>
       </div>
     );
   }
