@@ -180,7 +180,7 @@ class SearchView extends React.Component {
           && units.length === 0
           && (
             <Container>
-              <Typography variant="caption" component="h3">
+              <Typography variant="subtitle1" component="h3">
                 <FormattedMessage id="search.results" values={{ count: units.length }} />
               </Typography>
             </Container>
