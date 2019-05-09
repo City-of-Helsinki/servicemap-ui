@@ -15,6 +15,7 @@ import { generatePath } from '../../utils/path';
 import TabLists from '../../components/TabLists';
 
 import paths from '../../../config/paths';
+import Container from '../../components/Container/Container';
 
 class SearchView extends React.Component {
   constructor(props) {
@@ -25,9 +26,6 @@ class SearchView extends React.Component {
     if (changeSelectedUnit) {
       changeSelectedUnit(null);
     }
-    this.state = {
-      queryParam: null,
-    };
   }
 
   componentDidMount() {
@@ -85,7 +83,6 @@ class SearchView extends React.Component {
     const {
       classes, count, fetchUnits, history, intl, isFetching, max, previousSearch, units,
     } = this.props;
-    const { queryParam } = this.state;
     const unitCount = units && units.length;
     const resultsShowing = !isFetching && unitCount > 0;
     const progress = (isFetching && count) ? Math.floor((count / max * 100)) : 0;

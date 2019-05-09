@@ -65,18 +65,20 @@ class ResultList extends React.Component {
                 >
                   {title}
 
-            </Typography>
-            <Typography
-              id={`${listId}-result-title-info`}
-              className={classes.right}
-              component="p"
-              variant="caption"
-              aria-hidden="true"
-            >
-              <FormattedMessage id="search.resultList" values={{ count: resultCount || data.length }} />
-            </Typography>
-          </div>
-        </div>
+                </Typography>
+                <Typography
+                  id={`${listId}-result-title-info`}
+                  className={classes.right}
+                  component="p"
+                  variant="caption"
+                  aria-hidden="true"
+                >
+                  <FormattedMessage id="search.resultList" values={{ count: resultCount || data.length }} />
+                </Typography>
+              </div>
+            </div>
+          )
+        }
         <Divider aria-hidden="true" />
         <List className={classes.list} id={listId}>
           {
