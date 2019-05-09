@@ -17,10 +17,12 @@ export default {
   'general.pageTitles.search': 'Search view',
   'general.pageTitles.unit': 'Unit view',
   'general.pageTitles.service': 'Service view',
+  // General - Pagination
   'general.pagination.previous': 'Previous page',
   'general.pagination.next': 'Next page',
   'general.pagination.openPage': 'Open page {count}',
   'general.pagination.currentlyOpenedPage': 'Page {count} currently opened',
+  'general.pagination.pageCount': 'page {current} / {max}',
 
   'general.skipToContent': 'Skip to content',
   'general.give.feedback': 'Give feedback on the Servicemap test version (link opens in a new tab)',
@@ -76,6 +78,16 @@ export default {
                   one {# result}
                   other {# results}
                 }`,
+  'search.results.units': `{count, plural,
+    =0 {no units found}
+    one {# unit found}
+    other {# units found}
+  }`,
+  'search.results.services': `{count, plural,
+    =0 {no services found}
+    one {# service found}
+    other {# services found}
+  }`,
   'search.input.placeholder': 'Search units',
   'search.loading.units': 'Searching units {count} / {max}',
   'search.loading.units.srInfo': 'Search loading {count} results',

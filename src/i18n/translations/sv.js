@@ -17,10 +17,13 @@ export default {
   'general.pageTitles.search': 'Search view', // TODO: Translate
   'general.pageTitles.unit': 'Unit view', // TODO: Translate
   'general.pageTitles.service': 'Service view', // TODO: Translate
+  // General - Pagination
   'general.pagination.previous': 'Previous page', // TODO: Translate
   'general.pagination.next': 'Next page', // TODO: Translate
   'general.pagination.openPage': 'Open page {count}', // TODO: Translate
   'general.pagination.currentlyOpenedPage': 'Page {count} currently opened', // TODO: Translate
+  'general.pagination.pageCount': 'page {current} / {max}', // TODO: Translate
+
   'general.skipToContent': 'Skip to content', // TODO: Translate
   'general.new.tab': 'Aukeaa uuteen välilehteen', // TODO: Translate
 
@@ -74,6 +77,18 @@ export default {
                   one {# result}
                   other {# results}
                 }`, // TODO: Translate
+  // TODO: Translate
+  'search.results.units': `{count, plural,
+    =0 {no units found}
+    one {# unit found}
+    other {# units found}
+  }`,
+  // TODO: Translate
+  'search.results.services': `{count, plural,
+    =0 {no services found}
+    one {# service found}
+    other {# services found}
+  }`,
   'search.input.placeholder': 'Search units', // TODO: Translate
   'search.loading.units': 'Searching units {count} / {max}', // TODO: Translate
   'search.loading.units.srInfo': 'Search loading {count} results', // TODO: Translate
