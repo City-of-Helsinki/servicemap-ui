@@ -178,7 +178,7 @@ class SearchView extends React.Component {
           )
         }
         <Typography variant="srOnly">
-          <Link href="#view-title">
+          <Link href="#view-title" tabIndex="-1">
             <FormattedMessage id="general.return.viewTitle" />
           </Link>
         </Typography>
