@@ -1,31 +1,12 @@
 const isClient = () => typeof window !== 'undefined';
 
-const tAttr = (attr) => {
-  let lang; let
-    len;
 
-  if (!attr) {
-    return attr;
+// Focus user to view title's link element
+export const focusToViewTitle = () => {
+  const elem = document.getElementById('view-title');
+  if (elem) {
+    elem.focus();
   }
-
-  if (!(attr instanceof Object)) {
-    console.error("translated attribute didn't get a translation object", attr);
-    return attr;
-  }
-
-  // Try primary choice first, fallback to whatever's available.
-  const languages = [].concat(SUPPORTED_LANGUAGES);
-
-  for (let i = 0, len = languages.length; i < len; i++) {
-    lang = languages[i];
-    if (lang in attr) {
-      return attr[lang];
-    }
-  }
-
-  console.error('no supported languages found', attr);
-
-  return null;
 };
 
 export const uppercaseFirst = val => val.charAt(0).toUpperCase() + val.slice(1);
@@ -68,5 +49,32 @@ export const stringifySearchParams = (searchParams) => {
 
   return searchParamsObject.toString();
 };
+
+// Keyboard handler
+export const keyboardHandler = (callback, keys) => {
+  // Map given keys to keycodes
+  const codes = keys.map((key) => {
+    switch (key) {
+      case 'enter':
+        return 13;
+      case 'space':
+        return 32;
+      case 'esc':
+        return 27;
+      default:
+    }
+    return null;
+  });
+  // Return function that runs callback if pressed keycode equals any given keycodes
+  return (event) => {
+    event.stopPropagation();
+    const ref = event.which;
+    if (ref && codes.indexOf(ref) >= 0) {
+      return callback(event);
+    }
+    return null;
+  };
+};
+
 
 export default isClient;

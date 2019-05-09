@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import {
-  Paper, Divider, withStyles, Typography,
+  Paper, Divider, withStyles, Typography, Link,
 } from '@material-ui/core';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import styles from './styles';
@@ -12,9 +12,7 @@ import SearchBar from '../../components/SearchBar';
 import { fitUnitsToMap } from '../Map/utils/mapActions';
 import { parseSearchParams } from '../../utils';
 import { generatePath } from '../../utils/path';
-import BackButton from '../../components/BackButton';
-import Container from '../../components/Container/Container';
-import SearchResults from './components/SearchResults';
+import TabLists from '../../components/TabLists';
 
 import paths from '../../../config/paths';
 
@@ -28,13 +26,13 @@ class SearchView extends React.Component {
       changeSelectedUnit(null);
     }
     this.state = {
-      currentPage: null,
+      queryParam: null,
     };
   }
 
   componentDidMount() {
     const {
-      fetchUnits, history, location, match, previousSearch, units, map, setCurrentPage,
+      fetchUnits, location, previousSearch, units, map, setCurrentPage,
     } = this.props;
     setCurrentPage('search');
     const searchParams = parseSearchParams(location.search);
@@ -42,19 +40,6 @@ class SearchView extends React.Component {
     if (searchParam && fetchUnits && searchParam !== previousSearch) {
       fetchUnits([], null, searchParam);
     }
-
-    const pageParam = searchParams.p || null;
-    if (pageParam) {
-      this.setState({ currentPage: pageParam });
-    }
-
-    // Update search query
-    const { params } = match;
-    const lng = params && params.lng;
-    if (previousSearch && previousSearch !== '') {
-      history.replace(generatePath('search', lng, previousSearch));
-    }
-
 
     this.focusMap(units, map);
   }
@@ -85,14 +70,47 @@ class SearchView extends React.Component {
     }
   }
 
+  // Group data based on object types
+  groupData = (data) => {
+    const services = data.filter(obj => obj && obj.object_type === 'service');
+    const units = data.filter(obj => obj && obj.object_type === 'unit');
+
+    return {
+      services,
+      units,
+    };
+  }
+
   render() {
     const {
       classes, count, fetchUnits, history, intl, isFetching, max, previousSearch, units,
     } = this.props;
-    const { currentPage } = this.state;
+    const { queryParam } = this.state;
     const unitCount = units && units.length;
     const resultsShowing = !isFetching && unitCount > 0;
     const progress = (isFetching && count) ? Math.floor((count / max * 100)) : 0;
+
+
+    // Group data
+    const groupedData = this.groupData(units);
+
+    // Data for TabResults component
+    const searchResults = [
+      {
+        ariaLabel: intl.formatMessage({ id: 'search.results.units' }, { count: groupedData.units.length }),
+        component: null,
+        data: groupedData.units,
+        itemsPerPage: 10,
+        title: intl.formatMessage({ id: 'unit.plural' }),
+      },
+      {
+        ariaLabel: intl.formatMessage({ id: 'search.results.services' }, { count: groupedData.services.length }),
+        component: null,
+        data: groupedData.services,
+        itemsPerPage: 10,
+        title: intl.formatMessage({ id: 'unit.services' }),
+      },
+    ];
 
     // Hide paper padding when nothing is shown
     const paperStyles = {};
@@ -156,11 +174,7 @@ class SearchView extends React.Component {
         {
           resultsShowing
           && (
-            <SearchResults
-              data={units}
-              currentPage={currentPage || null}
-            />
-
+            <TabLists data={searchResults} />
           )
         }
         {
@@ -175,9 +189,11 @@ class SearchView extends React.Component {
             </Container>
           )
         }
-        <Container>
-          <BackButton />
-        </Container>
+        <Typography variant="srOnly">
+          <Link href="#view-title" tabIndex="-1">
+            <FormattedMessage id="general.return.viewTitle" />
+          </Link>
+        </Typography>
       </div>
     );
   }

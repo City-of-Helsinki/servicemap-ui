@@ -7,6 +7,7 @@ import {
 } from '@material-ui/core';
 import { ArrowBackIos, ArrowForwardIos } from '@material-ui/icons';
 import Container from '../../../components/Container/Container';
+import { keyboardHandler } from '../../../utils';
 
 // Styles
 const styles = theme => ({
@@ -37,6 +38,7 @@ const PageElement = ({
       }}
       role={!isActive ? 'link' : null}
       onClick={!isActive ? onClick : null}
+      onKeyPress={!isActive ? keyboardHandler(onClick, ['space', 'enter']) : null}
       tabIndex={isActive ? null : '0'}
       {...rest}
     >
@@ -82,7 +84,8 @@ class PaginationComponent extends React.Component {
     const pages = [];
     const maxVisible = pageCount < maxShownPages ? pageCount : maxShownPages;
     const min = current > maxShownPages ? current - maxShownPages + 1 : 1;
-    const max = current < maxVisible ? maxVisible : current;
+    let max = current < maxVisible ? maxVisible : (current + 1);
+    max = max > pageCount ? pageCount : max; // Don't allow anything above total page count
 
     for (let i = min; i <= max; i += 1) {
       pages.push(
@@ -92,7 +95,7 @@ class PaginationComponent extends React.Component {
           number={i}
           intl={intl}
           isActive={current === i}
-          onClick={() => { handlePageChange(i); }}
+          onClick={() => { handlePageChange(i, pageCount); }}
         />,
       );
     }
@@ -105,11 +108,12 @@ class PaginationComponent extends React.Component {
             className={classes.button}
             onClick={(e) => {
               e.preventDefault();
-              handlePageChange(current - 1);
+              handlePageChange(current - 1, pageCount);
             }}
             disabled={current === 1}
             color={current !== 1 ? 'primary' : 'default'}
             variant="contained"
+            role="link"
           >
             <ArrowBackIos />
           </Button>
@@ -121,11 +125,12 @@ class PaginationComponent extends React.Component {
             className={classes.button}
             onClick={(e) => {
               e.preventDefault();
-              handlePageChange(current + 1);
+              handlePageChange(current + 1, pageCount);
             }}
             disabled={current === pageCount}
             color={current !== pageCount ? 'primary' : 'default'}
             variant="contained"
+            role="link"
           >
             <ArrowForwardIos />
           </Button>
@@ -161,7 +166,7 @@ PaginationComponent.propTypes = {
 
 // Default props
 PaginationComponent.defaultProps = {
-  maxShownPages: 8,
+  maxShownPages: 7,
 };
 
 export default withStyles(styles)(injectIntl(PaginationComponent));
