@@ -176,6 +176,7 @@ class SearchView extends React.Component {
         }
         {
           !isFetching
+          && previousSearch
           && units
           && units.length === 0
           && (
