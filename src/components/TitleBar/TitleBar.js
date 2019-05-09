@@ -3,10 +3,8 @@ import PropTypes from 'prop-types';
 import {
   withStyles, Typography,
 } from '@material-ui/core';
-import RootRef from '@material-ui/core/RootRef';
 import Container from '../Container/Container';
 import BackButton from '../BackButton';
-import HomeButton from '../HomeButton';
 
 const styles = theme => ({
   container: {
@@ -17,10 +15,14 @@ const styles = theme => ({
   title: {
     flex: '1 1 auto',
     textTransform: 'capitalize',
+    textAlign: 'left',
+    marginLeft: theme.spacing.unit * 2,
   },
   iconButton: {
     flex: '0 1 auto',
     padding: theme.spacing.unit,
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
   },
   icon: {
     flex: '0 1 auto',
@@ -46,10 +48,6 @@ const TitleBar = ({
       >
         {title}
       </Typography>
-
-      <HomeButton
-        className={classes.icon}
-      />
     </div>
   </Container>
 );
