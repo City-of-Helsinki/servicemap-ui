@@ -163,22 +163,17 @@ class TabLists extends React.Component {
               : 0;
             const shownData = item.data.slice(startIndex, endIndex);
 
+            const additionalText = `${intl.formatMessage({ id: 'general.pagination.pageCount' }, { current: adjustedCurrentPage, max: pageCount })}`;
+
             return (
               <div key={item.title}>
                 {
                   index === tabIndex
                   && (
                     <>
-                      {
-                        // Hide title if no pagination used
-                        pageCount > 1
-                        && (
-                          <Typography className="TabResultTitle" variant="srOnly" component="h3" tabIndex="-1">
-                            {`${item.title} ${intl.formatMessage({ id: 'general.pagination.pageCount' }, { current: adjustedCurrentPage, max: pageCount })}`}
-                          </Typography>
-
-                        )
-                      }
+                      <Typography className="TabResultTitle" variant="srOnly" component="p" tabIndex="-1">
+                        {`${item.title} ${additionalText}`}
+                      </Typography>
                       <ResultList
                         data={shownData}
                         listId={`${item.title}-results`}
