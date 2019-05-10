@@ -3,7 +3,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
-  Button, Grid, Typography, AppBar, Toolbar,
+  Button, Grid, Typography, AppBar, Toolbar, Link, withStyles,
 } from '@material-ui/core';
 import { FormattedMessage, intlShape, injectIntl } from 'react-intl';
 import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
@@ -15,6 +15,12 @@ import MobileBottomNavigation from '../components/MobileBottomNavigation/MobileB
 import config from '../../config';
 import { generatePath } from '../utils/path';
 import HomeLogo from '../components/Logos/HomeLogo';
+
+const styles = theme => ({
+  feedback: {
+    padding: `${theme.spacing.unit * 0.75}px ${theme.spacing.unit}px`,
+  },
+});
 
 // eslint-disable-next-line camelcase
 const mobileBreakpoint = config.mobile_ui_breakpoint;
@@ -66,7 +72,7 @@ const createContentStyles = (isMobile, isSmallScreen, mobileMapOnly) => {
 
 const DefaultLayout = (props) => {
   const {
-    i18n, intl, location, history, match,
+    classes, i18n, intl, location, history, match,
   } = props;
   const { params } = match;
   const lng = params && params.lng;
@@ -107,11 +113,11 @@ const DefaultLayout = (props) => {
                 </a>
               </Grid>
               <Grid item xs={6}>
-                <a href="https://forms.gle/roe9XNrZGQWBhMBJ7" rel="noopener noreferrer" target="_blank">
-                  <p style={{ margin: 0, color: 'white', textDecorationColor: 'white' }}>
+                <Typography className={classes.feedback} variant="body1" color="inherit">
+                  <Link href="https://forms.gle/roe9XNrZGQWBhMBJ7" rel="noopener noreferrer" target="_blank" color="inherit">
                     <FormattedMessage id="general.give.feedback" />
-                  </p>
-                </a>
+                  </Link>
+                </Typography>
               </Grid>
               <Grid item xs>
                 {
@@ -203,6 +209,7 @@ const DefaultLayout = (props) => {
 
 // Typechecking
 DefaultLayout.propTypes = {
+  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   i18n: PropTypes.instanceOf(I18n),
@@ -214,4 +221,4 @@ DefaultLayout.defaultProps = {
   i18n: null,
 };
 
-export default injectIntl(withRouter(DefaultLayout));
+export default withStyles(styles)(injectIntl(withRouter(DefaultLayout)));
