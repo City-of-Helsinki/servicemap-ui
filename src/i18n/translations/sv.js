@@ -95,6 +95,7 @@ export default {
     one {# service found}
     other {# services found}
   }`,
+  'search.results.title': 'Search results', // TODO: Translate
   'search.input.placeholder': 'Search units', // TODO: Translate
   'search.loading.units': 'Searching units {count} / {max}', // TODO: Translate
   'search.loading.units.srInfo': 'Search loading {count} units', // TODO: Translate

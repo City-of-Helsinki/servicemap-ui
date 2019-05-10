@@ -94,6 +94,7 @@ export default {
     one {# palvelu löydetty}
     other {# palvelua löydetty}
   }`,
+  'search.results.title': 'Hakutulokset',
   'search.input.placeholder': 'Hae toimipisteitä',
   'search.loading.units': 'Haetaan toimipisteitä {count} / {max}',
   'search.loading.units.srInfo': 'Haetaan {count} toimipistettä',

@@ -94,6 +94,7 @@ export default {
     one {# service found}
     other {# services found}
   }`,
+  'search.results.title': 'Search results',
   'search.input.placeholder': 'Search units',
   'search.loading.units': 'Searching units {count} / {max}',
   'search.loading.units.srInfo': 'Search loading {count} units',

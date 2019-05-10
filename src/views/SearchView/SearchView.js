@@ -146,29 +146,34 @@ class SearchView extends React.Component {
             isFetching
             && <Loading text={intl && intl.formatMessage({ id: 'search.loading.units' }, { count, max })} progress={progress} />
           }
+
           {
             // Screen reader only information
           }
-          <Typography variant="srOnly">
+          <Typography variant="srOnly" component="h3" tabIndex="-1">
+            {
+              !isFetching
+              && (
+                <FormattedMessage id="search.results.title" />
+              )
+            }
             {
               isFetching && max === 0
               && <FormattedMessage id="search.started" />
             }
-          </Typography>
-          <Typography variant="srOnly">
             {
               isFetching && max > 0
                 && <FormattedMessage id="search.loading.units.srInfo" values={{ count: max }} />
             }
-          </Typography>
-          <Typography variant="srOnly">
             {
               !isFetching
               && <FormattedMessage id="search.results" values={{ count: unitCount }} />
             }
           </Typography>
         </Paper>
+
         {
+          // Show results
           resultsShowing
           && (
             <TabLists data={searchResults} />
@@ -181,13 +186,17 @@ class SearchView extends React.Component {
           && units.length === 0
           && (
             <Container>
-              <Typography variant="subtitle1" component="h3">
+              <Typography variant="subtitle1" component="p" aria-hidden="true">
                 <FormattedMessage id="search.results" values={{ count: units.length }} />
               </Typography>
             </Container>
           )
         }
-        <Typography variant="srOnly">
+
+        {
+          // Jump link back to beginning of current page
+        }
+        <Typography variant="srOnly" component="h3">
           <Link href="#view-title" tabIndex="-1">
             <FormattedMessage id="general.return.viewTitle" />
           </Link>
