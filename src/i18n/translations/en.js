@@ -84,16 +84,21 @@ export default {
                   one {# result found}
                   other {# results found}
                 }`,
+  'search.results.short': `{count, plural,
+                  =0 {No results}
+                  one {# result}
+                  other {# results}
+                }`,
   'search.results.units': `{count, plural,
-    =0 {no units found}
-    one {# unit found}
-    other {# units found}
-  }`,
+                  =0 {no units found}
+                  one {# unit found}
+                  other {# units found}
+                }`,
   'search.results.services': `{count, plural,
-    =0 {no services found}
-    one {# service found}
-    other {# services found}
-  }`,
+                  =0 {no services found}
+                  one {# service found}
+                  other {# services found}
+                }`,
   'search.results.title': 'Search results',
   'search.input.placeholder': 'Search units',
   'search.loading.units': 'Searching units {count} / {max}',
@@ -103,5 +108,6 @@ export default {
 
   // Service
   'service': 'Service',
+  'service.plural': 'Services',
   'service.nearby': 'Nearby services',
 };

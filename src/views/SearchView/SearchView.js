@@ -94,18 +94,24 @@ class SearchView extends React.Component {
     // Data for TabResults component
     const searchResults = [
       {
-        ariaLabel: intl.formatMessage({ id: 'search.results.units' }, { count: groupedData.units.length }),
+        ariaLabel: `${intl.formatMessage({ id: 'unit.plural' })} ${intl.formatMessage({ id: 'search.results.short' }, {
+          count: groupedData
+            .units.length,
+        })}`,
         component: null,
         data: groupedData.units,
         itemsPerPage: 10,
         title: intl.formatMessage({ id: 'unit.plural' }),
       },
       {
-        ariaLabel: intl.formatMessage({ id: 'search.results.services' }, { count: groupedData.services.length }),
+        ariaLabel: `${intl.formatMessage({ id: 'service.plural' })} ${intl.formatMessage({ id: 'search.results.short' }, {
+          count: groupedData
+            .services.length,
+        })}`,
         component: null,
         data: groupedData.services,
         itemsPerPage: 10,
-        title: intl.formatMessage({ id: 'unit.services' }),
+        title: intl.formatMessage({ id: 'service.plural' }),
       },
     ];
 

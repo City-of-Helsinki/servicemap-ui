@@ -83,18 +83,21 @@ export default {
                   one {# result found}
                   other {# results found}
                 }`, // TODO: Translate
-  // TODO: Translate
+  'search.results.short': `{count, plural,
+                  =0 {No results}
+                  one {# result}
+                  other {# results}
+                }`, // TODO: Translate
   'search.results.units': `{count, plural,
-    =0 {no units found}
-    one {# unit found}
-    other {# units found}
-  }`,
-  // TODO: Translate
+                  =0 {no units found}
+                  one {# unit found}
+                  other {# units found}
+                }`, // TODO: Translate
   'search.results.services': `{count, plural,
-    =0 {no services found}
-    one {# service found}
-    other {# services found}
-  }`,
+                  =0 {no services found}
+                  one {# service found}
+                  other {# services found}
+                }`, // TODO: Translate
   'search.results.title': 'Search results', // TODO: Translate
   'search.input.placeholder': 'Search units', // TODO: Translate
   'search.loading.units': 'Searching units {count} / {max}', // TODO: Translate
@@ -104,5 +107,6 @@ export default {
 
   // Service
   'service': 'Tjänst',
+  'service.plural': 'Tjänster',
   'service.nearby': 'Nearby services',
 };
