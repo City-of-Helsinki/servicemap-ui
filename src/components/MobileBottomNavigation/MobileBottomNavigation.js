@@ -9,7 +9,14 @@ import { comparePath } from '../../utils/path';
 
 const styles = {
   root: {
+    color: 'rgba(255,255,255,0.54)',
     width: '100%',
+    '&$selected': {
+      color: '#ffffff',
+    },
+  },
+  selected: {
+    color: '#ffffff',
   },
 };
 
@@ -74,6 +81,10 @@ class MobileBottomNavigation extends React.Component {
           actions
           && actions.map(action => (
             <BottomNavigationAction
+              classes={{
+                root: classes.root,
+                selected: classes.selected,
+              }}
               key={action.label}
               label={action.label}
               icon={action.icon}

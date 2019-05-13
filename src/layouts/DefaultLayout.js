@@ -20,7 +20,9 @@ import HomeLogo from '../components/Logos/HomeLogo';
 const mobileBreakpoint = config.mobile_ui_breakpoint;
 const smallScreenBreakpoint = config.small_screen_breakpoint;
 
-const createContentStyles = (isMobile, isSmallScreen, mobileMapOnly) => {
+const createContentStyles = (
+  isMobile, isSmallScreen, landscape, mobileMapOnly, keyboardVisible,
+) => {
   let width = 450;
   if (isMobile) {
     width = '100%';
@@ -54,13 +56,14 @@ const createContentStyles = (isMobile, isSmallScreen, mobileMapOnly) => {
       display: isMobile && !mobileMapOnly ? 'none' : 'flex',
       height: mobileMapOnly ? '90vh' : '100%',
       width: '100%',
-      paddingBottom: isMobile ? '10vh' : 0,
+      paddingBottom: isMobile && !keyboardVisible ? '10vh' : 0,
     },
     mobileNav: {
       position: 'fixed',
       height: '10vh',
-      bottom: 0,
+      bottom: keyboardVisible ? -100 : 0,
       zIndex: 999999999,
+      backgroundColor: '#2242C7',
     },
   };
 
@@ -72,6 +75,13 @@ const createContentStyles = (isMobile, isSmallScreen, mobileMapOnly) => {
   } else if (isMobile) {
     styles.sidebar.flex = '1 1 auto';
   }
+
+  // Landscape orientation styles
+  if (landscape && isMobile) {
+    styles.map.paddingBottom = '10vw';
+    styles.mobileNav.height = '10vw';
+  }
+
 
   return styles;
 };
@@ -85,7 +95,14 @@ const DefaultLayout = (props) => {
   const isMobile = useMediaQuery(`(max-width:${mobileBreakpoint}px)`);
   const isSmallScreen = useMediaQuery(`(max-width:${smallScreenBreakpoint}px)`);
   const mobileMapOnly = isMobile && location.pathname.indexOf('/map') > -1; // If mobile map view
-  const styles = createContentStyles(isMobile, isSmallScreen, mobileMapOnly);
+  const landscape = useMediaQuery('(min-device-aspect-ratio: 1/1)');
+  const portrait = useMediaQuery('(max-device-aspect-ratio: 1/1)');
+  // This checks if the keyboard is up. Works on all tested mobile devices but should be replaced in the future.
+  const keyboardVisible = (landscape ? useMediaQuery('(max-height:200px)') : useMediaQuery('(max-height:500px)'));
+
+  const styles = createContentStyles(
+    isMobile, isSmallScreen, landscape, mobileMapOnly, keyboardVisible,
+  );
 
   return (
     <>
