@@ -1,11 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import {
   InputBase, Paper, withStyles, IconButton,
 } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
 import { injectIntl, intlShape } from 'react-intl';
 import BackButton from '../BackButton';
+import { generatePath } from '../../utils/path';
+import { fetchUnits } from '../../redux/actions/unit';
 
 const styles = theme => ({
   root: {
@@ -74,10 +78,22 @@ class SearchBar extends React.Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-    const { onSubmit } = this.props;
     const { search } = this.state;
-    if (onSubmit && search !== '') {
-      onSubmit(e, search);
+    this.handleSubmit(search);
+  }
+
+  handleSubmit = (search) => {
+    if (search && search !== '') {
+      const {
+        fetchUnits, history, match,
+      } = this.props;
+      const { params } = match;
+      const lng = params && params.lng;
+      if (history) {
+        history.push(generatePath('search', lng, search));
+      }
+
+      fetchUnits([], null, search);
     }
   }
 
@@ -129,9 +145,11 @@ class SearchBar extends React.Component {
 SearchBar.propTypes = {
   backButtonEvent: PropTypes.func,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
+  fetchUnits: PropTypes.func.isRequired,
   hideBackButton: PropTypes.bool,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
   intl: intlShape.isRequired,
-  onSubmit: PropTypes.func.isRequired,
+  match: PropTypes.objectOf(PropTypes.any).isRequired,
   placeholder: PropTypes.string.isRequired,
   searchRef: PropTypes.objectOf(PropTypes.any),
   previousSearch: PropTypes.string,
@@ -144,4 +162,7 @@ SearchBar.defaultProps = {
   searchRef: {},
 };
 
-export default withStyles(styles)(injectIntl(SearchBar));
+export default withRouter(withStyles(styles)(injectIntl(connect(
+  null,
+  { fetchUnits },
+)(SearchBar))));

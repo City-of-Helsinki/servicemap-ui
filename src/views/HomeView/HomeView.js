@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import {
-  List, ListItem, ListItemText, Typography, withStyles, Button,
+  Typography, withStyles, Button,
 } from '@material-ui/core';
 import { injectIntl, intlShape } from 'react-intl';
 import { Search } from '@material-ui/icons';
@@ -22,28 +22,21 @@ class HomeView extends React.Component {
     setCurrentPage('home');
   }
 
-  // Search submit functionality
-  onSearchSubmit = (e, search) => {
+  onExapmleItemClick = (e, searchText) => {
     e.preventDefault();
     const {
       fetchUnits, history, match,
     } = this.props;
     const { params } = match;
     const lng = params && params.lng;
-    console.log(`Search query = ${search}`);
-
     if (history) {
       // TODO: Add query text once functionality is ready for search view
-      history.push(generatePath('search', lng, search));
+      history.push(generatePath('search', lng, searchText));
     }
 
-    if (search && search !== '') {
-      fetchUnits([], null, search);
+    if (searchText && searchText !== '') {
+      fetchUnits([], null, searchText);
     }
-  }
-
-  onExapmleItemClick = (e, searchText) => {
-    this.onSearchSubmit(e, searchText);
   }
 
   render() {
@@ -57,7 +50,6 @@ class HomeView extends React.Component {
         </MobileComponent>
         <SearchBar
           hideBackButton
-          onSubmit={this.onSearchSubmit}
           placeholder={intl.formatMessage({ id: 'search' })}
         />
         <Container paper>
