@@ -7,7 +7,7 @@ import { injectIntl, intlShape } from 'react-intl';
 
 const BackButton = (props) => {
   const {
-    className, history, intl, style, target, variant,
+    className, history, intl, onClick, style, variant,
   } = props;
 
   if (variant === 'icon') {
@@ -19,8 +19,8 @@ const BackButton = (props) => {
         aria-label={intl.formatMessage({ id: 'general.back' })}
         onClick={(e) => {
           e.preventDefault();
-          if (target) {
-            history.push(target);
+          if (onClick) {
+            onClick(e);
           } else if (history) {
             history.goBack();
           }
@@ -38,8 +38,8 @@ const BackButton = (props) => {
       color="primary"
       onClick={(e) => {
         e.preventDefault();
-        if (target) {
-          history.push(target);
+        if (onClick) {
+          onClick(e);
         } else if (history) {
           history.goBack();
         }
@@ -56,14 +56,14 @@ BackButton.propTypes = {
   history: PropTypes.objectOf(PropTypes.any).isRequired,
   intl: intlShape.isRequired,
   style: PropTypes.objectOf(PropTypes.any),
-  target: PropTypes.string,
+  onClick: PropTypes.func,
   variant: PropTypes.oneOf(['icon', null]),
 };
 
 BackButton.defaultProps = {
   className: '',
   style: {},
-  target: null,
+  onClick: null,
   variant: null,
 };
 

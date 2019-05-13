@@ -17,11 +17,14 @@ export default {
   'general.pageTitles.search': 'Search view',
   'general.pageTitles.unit': 'Unit view',
   'general.pageTitles.service': 'Service view',
+  // General - Pagination
   'general.pagination.previous': 'Previous page',
   'general.pagination.next': 'Next page',
   'general.pagination.openPage': 'Open page {count}',
   'general.pagination.currentlyOpenedPage': 'Page {count} currently opened',
+  'general.pagination.pageCount': 'page {current} / {max}',
 
+  'general.return.viewTitle': 'Return to beginning of main content',
   'general.skipToContent': 'Skip to content',
   'general.give.feedback': 'Give feedback on the Servicemap test version (link opens in a new tab)',
   'general.new.tab': 'Opens in new tab',
@@ -71,17 +74,40 @@ export default {
                   one {# unit}
                   other {# units}
                 } found`,
-  'search.results': `{count, plural,
+  'search.resultList': `{count, plural,
                   =0 {no results}
                   one {# result}
                   other {# results}
                 }`,
+  'search.results': `{count, plural,
+                  =0 {No results found with given search}
+                  one {# result found}
+                  other {# results found}
+                }`,
+  'search.results.short': `{count, plural,
+                  =0 {No results}
+                  one {# result}
+                  other {# results}
+                }`,
+  'search.results.units': `{count, plural,
+                  =0 {no units found}
+                  one {# unit found}
+                  other {# units found}
+                }`,
+  'search.results.services': `{count, plural,
+                  =0 {no services found}
+                  one {# service found}
+                  other {# services found}
+                }`,
+  'search.results.title': 'Search results',
   'search.input.placeholder': 'Search units',
   'search.loading.units': 'Searching units {count} / {max}',
-  'search.loading.units.srInfo': 'Search loading {count} results',
+  'search.loading.units.srInfo': 'Search loading {count} units',
+  'search.notFound': 'No results found with given search',
   'search.started': 'Search started',
 
   // Service
   'service': 'Service',
+  'service.plural': 'Services',
   'service.nearby': 'Nearby services',
 };

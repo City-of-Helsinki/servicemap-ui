@@ -45,35 +45,40 @@ class ResultList extends React.Component {
 
     return (
       <div className={classes.root}>
-        <div className={classes.title}>
-          <div
-            style={{
-              width: '100%',
-              overflow: 'hidden',
-            }}
-          >
-            <Typography
-              id={`${listId}-result-title`}
-              className={`${classes.left} SearchResultTitle`}
-              component={titleComponent}
-              variant="subtitle1"
-              aria-labelledby={`${listId}-result-title ${listId}-result-title-info`}
-              tabIndex="-1"
-            >
-              {title}
+        {
+          title
+          && (
+            <div className={classes.title}>
+              <div
+                style={{
+                  width: '100%',
+                  overflow: 'hidden',
+                }}
+              >
+                <Typography
+                  id={`${listId}-result-title`}
+                  className={`${classes.left} SearchResultTitle`}
+                  component={titleComponent}
+                  variant="subtitle1"
+                  aria-labelledby={`${listId}-result-title ${listId}-result-title-info`}
+                  tabIndex="-1"
+                >
+                  {title}
 
-            </Typography>
-            <Typography
-              id={`${listId}-result-title-info`}
-              className={classes.right}
-              component="p"
-              variant="caption"
-              aria-hidden="true"
-            >
-              <FormattedMessage id="search.results" values={{ count: resultCount || data.length }} />
-            </Typography>
-          </div>
-        </div>
+                </Typography>
+                <Typography
+                  id={`${listId}-result-title-info`}
+                  className={classes.right}
+                  component="p"
+                  variant="caption"
+                  aria-hidden="true"
+                >
+                  <FormattedMessage id="search.resultList" values={{ count: resultCount || data.length }} />
+                </Typography>
+              </div>
+            </div>
+          )
+        }
         <Divider aria-hidden="true" />
         <List className={classes.list} id={listId}>
           {
@@ -114,12 +119,13 @@ ResultList.propTypes = {
   data: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)).isRequired,
   listId: PropTypes.string.isRequired,
   resultCount: PropTypes.number,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']),
 };
 
 ResultList.defaultProps = {
   classes: {},
   resultCount: null,
+  title: null,
   titleComponent: 'h3',
 };

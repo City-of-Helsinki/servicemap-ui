@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import {
-  Paper, Divider, withStyles, Typography,
+  Paper, Divider, withStyles, Typography, Link,
 } from '@material-ui/core';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import styles from './styles';
@@ -12,9 +12,10 @@ import SearchBar from '../../components/SearchBar';
 import { fitUnitsToMap } from '../Map/utils/mapActions';
 import { parseSearchParams } from '../../utils';
 import { generatePath } from '../../utils/path';
-import BackButton from '../../components/BackButton';
+import TabLists from '../../components/TabLists';
+
+import paths from '../../../config/paths';
 import Container from '../../components/Container/Container';
-import SearchResults from './components/SearchResults';
 
 class SearchView extends React.Component {
   constructor(props) {
@@ -25,36 +26,18 @@ class SearchView extends React.Component {
     if (changeSelectedUnit) {
       changeSelectedUnit(null);
     }
-    this.state = {
-      currentPage: null,
-      queryParam: null,
-    };
   }
 
   componentDidMount() {
     const {
-      fetchUnits, history, location, match, previousSearch, units, map, setCurrentPage,
+      fetchUnits, location, previousSearch, units, map, setCurrentPage,
     } = this.props;
     setCurrentPage('search');
     const searchParams = parseSearchParams(location.search);
     const searchParam = searchParams.q || null;
     if (searchParam && fetchUnits && searchParam !== previousSearch) {
       fetchUnits([], null, searchParam);
-      this.setState({ queryParam: searchParam });
     }
-
-    const pageParam = searchParams.p || null;
-    if (pageParam) {
-      this.setState({ currentPage: pageParam });
-    }
-
-    // Update search query
-    const { params } = match;
-    const lng = params && params.lng;
-    if (previousSearch && previousSearch !== '') {
-      history.replace(generatePath('search', lng, previousSearch));
-    }
-
 
     this.focusMap(units, map);
   }
@@ -81,18 +64,56 @@ class SearchView extends React.Component {
     const lng = params && params.lng;
     if (search && search !== '') {
       fetchUnits([], null, search);
-      history.replace(generatePath('search', lng, search));
+      history.push(generatePath('search', lng, search));
     }
+  }
+
+  // Group data based on object types
+  groupData = (data) => {
+    const services = data.filter(obj => obj && obj.object_type === 'service');
+    const units = data.filter(obj => obj && obj.object_type === 'unit');
+
+    return {
+      services,
+      units,
+    };
   }
 
   render() {
     const {
-      units, isFetching, classes, intl, count, max,
+      classes, count, fetchUnits, history, intl, isFetching, max, previousSearch, units,
     } = this.props;
-    const { currentPage, queryParam } = this.state;
     const unitCount = units && units.length;
     const resultsShowing = !isFetching && unitCount > 0;
     const progress = (isFetching && count) ? Math.floor((count / max * 100)) : 0;
+
+
+    // Group data
+    const groupedData = this.groupData(units);
+
+    // Data for TabResults component
+    const searchResults = [
+      {
+        ariaLabel: `${intl.formatMessage({ id: 'unit.plural' })} ${intl.formatMessage({ id: 'search.results.short' }, {
+          count: groupedData
+            .units.length,
+        })}`,
+        component: null,
+        data: groupedData.units,
+        itemsPerPage: 10,
+        title: intl.formatMessage({ id: 'unit.plural' }),
+      },
+      {
+        ariaLabel: `${intl.formatMessage({ id: 'service.plural' })} ${intl.formatMessage({ id: 'search.results.short' }, {
+          count: groupedData
+            .services.length,
+        })}`,
+        component: null,
+        data: groupedData.services,
+        itemsPerPage: 10,
+        title: intl.formatMessage({ id: 'service.plural' }),
+      },
+    ];
 
     // Hide paper padding when nothing is shown
     const paperStyles = {};
@@ -103,9 +124,27 @@ class SearchView extends React.Component {
     return (
       <div className="Search">
         <SearchBar
+          backButtonEvent={(e) => {
+            e.preventDefault();
+            history.goBack();
+
+            // Listen history
+            const unlisten = history.listen((location) => {
+              // Get search params
+              const searchParams = parseSearchParams(location.search);
+              const searchParam = searchParams.q || null;
+
+              // If page is search
+              // and previousSearch is not current location's params
+              // then fetch units with location's search params
+              if (paths.search.regex.exec(location.pathname) && previousSearch !== searchParam) {
+                fetchUnits([], null, searchParam);
+              }
+              unlisten(); // Remove listener
+            });
+          }}
           onSubmit={this.onSearchSubmit}
           placeholder={intl && intl.formatMessage({ id: 'search.input.placeholder' })}
-          text={queryParam}
         />
         <Divider aria-hidden="true" />
         <Paper className={classes.label} elevation={1} square aria-live="polite" style={paperStyles}>
@@ -113,41 +152,61 @@ class SearchView extends React.Component {
             isFetching
             && <Loading text={intl && intl.formatMessage({ id: 'search.loading.units' }, { count, max })} progress={progress} />
           }
+
           {
             // Screen reader only information
           }
-          <Typography variant="srOnly">
+          <Typography variant="srOnly" component="h3" tabIndex="-1">
+            {
+              !isFetching
+              && (
+                <FormattedMessage id="search.results.title" />
+              )
+            }
             {
               isFetching && max === 0
               && <FormattedMessage id="search.started" />
             }
-          </Typography>
-          <Typography variant="srOnly">
             {
               isFetching && max > 0
                 && <FormattedMessage id="search.loading.units.srInfo" values={{ count: max }} />
             }
-          </Typography>
-          <Typography variant="srOnly">
             {
               !isFetching
-              && <FormattedMessage id="search.info" values={{ count: unitCount }} />
+              && <FormattedMessage id="search.results" values={{ count: unitCount }} />
             }
           </Typography>
         </Paper>
+
         {
+          // Show results
           resultsShowing
           && (
-            <SearchResults
-              data={units}
-              currentPage={currentPage || null}
-            />
-
+            <TabLists data={searchResults} />
           )
         }
-        <Container>
-          <BackButton />
-        </Container>
+        {
+          !isFetching
+          && previousSearch
+          && units
+          && units.length === 0
+          && (
+            <Container>
+              <Typography variant="subtitle1" component="p" aria-hidden="true">
+                <FormattedMessage id="search.results" values={{ count: units.length }} />
+              </Typography>
+            </Container>
+          )
+        }
+
+        {
+          // Jump link back to beginning of current page
+        }
+        <Typography variant="srOnly" component="h3">
+          <Link href="#view-title" tabIndex="-1">
+            <FormattedMessage id="general.return.viewTitle" />
+          </Link>
+        </Typography>
       </div>
     );
   }

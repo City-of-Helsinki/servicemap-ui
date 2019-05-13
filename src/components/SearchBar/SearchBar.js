@@ -53,6 +53,21 @@ class SearchBar extends React.Component {
     isActive: false,
   };
 
+  shouldComponentUpdate(nextProps) {
+    const { previousSearch } = this.props;
+    // If previousSearch changes change current search text
+    if (
+      previousSearch
+      && nextProps
+      && nextProps.previousSearch
+      && previousSearch !== nextProps.previousSearch
+    ) {
+      this.setState({ search: nextProps.previousSearch });
+      return false;
+    }
+    return true;
+  }
+
   onInputChange = (e) => {
     this.setState({ search: e.currentTarget.value });
   }
@@ -73,7 +88,7 @@ class SearchBar extends React.Component {
 
   render() {
     const {
-      backButtonTarget, classes, intl, placeholder, previousSearch, hideBackButton, searchRef,
+      backButtonEvent, classes, intl, placeholder, previousSearch, hideBackButton, searchRef,
     } = this.props;
     const { search, isActive } = this.state;
 
@@ -84,7 +99,7 @@ class SearchBar extends React.Component {
         <form onSubmit={this.onSubmit} className={classes.container}>
           {
             !hideBackButton
-            && <BackButton className={classes.iconButton} target={backButtonTarget || null} variant="icon" />
+            && <BackButton className={classes.iconButton} onClick={backButtonEvent || null} variant="icon" />
           }
 
           <InputBase
@@ -112,7 +127,7 @@ class SearchBar extends React.Component {
 }
 
 SearchBar.propTypes = {
-  backButtonTarget: PropTypes.string,
+  backButtonEvent: PropTypes.func,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   hideBackButton: PropTypes.bool,
   intl: intlShape.isRequired,
@@ -121,12 +136,10 @@ SearchBar.propTypes = {
   searchRef: PropTypes.objectOf(PropTypes.any),
   previousSearch: PropTypes.string,
 };
-SearchBar.defaultProps = {
-  previousSearch: null,
-};
 
 SearchBar.defaultProps = {
-  backButtonTarget: null,
+  previousSearch: null,
+  backButtonEvent: null,
   hideBackButton: false,
   searchRef: {},
 };

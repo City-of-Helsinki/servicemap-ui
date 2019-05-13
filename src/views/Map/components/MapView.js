@@ -86,6 +86,11 @@ class MapView extends React.Component {
     }
   }
 
+  // Check if transit stops should be shown
+  showTransitStops() {
+    const { mapBase } = this.props;
+    return this.mapRef.current.leafletElement._zoom >= mapBase.options.transitZoom;
+  }
 
   initiateLeaflet() {
     // The leaflet map works only client-side so it needs to be imported here
@@ -137,7 +142,7 @@ class MapView extends React.Component {
           maxZoom={mapType.options.maxZoom}
           maxBounds={mapOptions.maxBounds}
           onMoveEnd={() => {
-            if (this.mapRef.current.leafletElement._zoom >= mapType.options.transitZoom) {
+            if (this.showTransitStops()) {
               fetchTransitStops(this.mapRef.current.leafletElement);
             } else if (transitStops.length > 0) {
               clearTransitStops();
@@ -187,18 +192,26 @@ class MapView extends React.Component {
               </Popup>
             </Marker>
           ) : null}
-          {transitStops.map(stop => (
-            <Marker
-              icon={this.getTransitIcon(stop.vehicleType)}
-              key={stop.name + stop.gtfsId}
-              position={[stop.lat, stop.lon]}
-              keyboard={false}
-            >
-              <Popup autoPan={false}>
-                <TransitStopInfo stop={stop} />
-              </Popup>
-            </Marker>
-          ))}
+          {
+            transitStops.map((stop) => {
+              // Draw transit markers if zoom is within allowed limits
+              if (this.showTransitStops()) {
+                return (
+                  <Marker
+                    icon={this.getTransitIcon(stop.vehicleType)}
+                    key={stop.name + stop.gtfsId}
+                    position={[stop.lat, stop.lon]}
+                    keyboard={false}
+                  >
+                    <Popup autoPan={false}>
+                      <TransitStopInfo stop={stop} />
+                    </Popup>
+                  </Marker>
+                );
+              }
+              return null;
+            })
+        }
           <ZoomControl position="bottomright" aria-hidden="true" />
         </Map>
       );

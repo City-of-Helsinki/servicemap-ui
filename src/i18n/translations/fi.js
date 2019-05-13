@@ -17,10 +17,14 @@ export default {
   'general.pageTitles.search': 'Hakutulosnäkymä',
   'general.pageTitles.unit': 'Toimipistenäkymä',
   'general.pageTitles.service': 'Palvelunäkymä',
+  // General - Pagination
   'general.pagination.previous': 'Aiempi sivu',
   'general.pagination.next': 'Seuraava sivu',
   'general.pagination.openPage': 'Avaa sivu {count}',
   'general.pagination.currentlyOpenedPage': 'Sivu {count}, avattu',
+  'general.pagination.pageCount': 'sivu {current} / {max}',
+
+  'general.return.viewTitle': 'Siirry pääsisällön alkuun',
   'general.skipToContent': 'Siirry pääsisältöön',
   'general.give.feedback': 'Anna palautetta Palvelukartan testiversiosta (linkki aukeaa uuteen välilehteen)',
   'general.new.tab': 'Aukeaa uuteen välilehteen',
@@ -70,17 +74,39 @@ export default {
                   one {# toimipiste löydetty}
                   other {# toimipistettä löydetty}
                 }`,
+  'search.resultList': `{count, plural,
+                  =0 {ei osumia}
+                  one {# osuma}
+                  other {# osumaa}
+                }`,
   'search.results': `{count, plural,
-    =0 {ei osumia}
-    one {# osuma}
-    other {# osumaa}
-  }`,
+                  =0 {Haulla ei löytynyt hakutuloksia}
+                  one {# hakutulos löydetty}
+                  other {# hakutulosta löydetty}
+                }`,
+  'search.results.short': `{count, plural,
+                  one {# osuma}
+                  other {# osumaa}
+                }`,
+  'search.results.units': `{count, plural,
+                  =0 {ei toimipisteitä}
+                  one {# toimipiste löydetty}
+                  other {# toimipistettä löydetty}
+                }`,
+  'search.results.services': `{count, plural,
+                =0 {palveluita ei löydetty}
+                one {# palvelu löydetty}
+                other {# palvelua löydetty}
+              }`,
+  'search.results.title': 'Hakutulokset',
   'search.input.placeholder': 'Hae toimipisteitä',
   'search.loading.units': 'Haetaan toimipisteitä {count} / {max}',
   'search.loading.units.srInfo': 'Haetaan {count} toimipistettä',
+  'search.notFound': 'Haulla ei löytynyt hakutuloksia',
   'search.started': 'Haku aloitettu',
 
   // Service
   'service': 'Palvelu',
+  'service.plural': 'Palvelut',
   'service.nearby': 'Lähellä olevat palvelut',
 };
