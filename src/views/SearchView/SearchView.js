@@ -79,6 +79,14 @@ class SearchView extends React.Component {
     };
   }
 
+  // Filter callback function for search results
+  sortCallback = (sortedData) => {
+    const { isFetching, setNewSearchData } = this.props;
+    if (!isFetching) {
+      setNewSearchData(sortedData);
+    }
+  }
+
   render() {
     const {
       classes, count, fetchUnits, history, intl, isFetching, max, previousSearch, units,
@@ -171,7 +179,7 @@ class SearchView extends React.Component {
         {
           resultsShowing
           && (
-            <TabLists data={searchResults} />
+            <TabLists data={searchResults} sortCallback={this.sortCallback} />
           )
         }
         {
@@ -214,6 +222,7 @@ SearchView.propTypes = {
   units: PropTypes.arrayOf(PropTypes.any),
   map: PropTypes.objectOf(PropTypes.any),
   setCurrentPage: PropTypes.func.isRequired,
+  setNewSearchData: PropTypes.func.isRequired,
 };
 
 SearchView.defaultProps = {
