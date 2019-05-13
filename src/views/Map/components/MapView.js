@@ -102,7 +102,7 @@ class MapView extends React.Component {
 
   render() {
     const {
-      mapBase,
+      mapType,
       unitList,
       mapOptions,
       // districtList,
@@ -113,6 +113,7 @@ class MapView extends React.Component {
       match,
       transitStops,
       getLocaleText,
+      mobile,
     } = this.props;
     const {
       Map, TileLayer, ZoomControl, Marker, Popup, Polygon, highlightedDistrict,
@@ -129,14 +130,14 @@ class MapView extends React.Component {
           keyboard={false}
           style={style}
           zoomControl={false}
-          crs={mapBase.crs}
+          crs={mapType.crs}
           center={mapOptions.initialPosition}
-          zoom={mapBase.options.zoom}
-          minZoom={mapBase.options.minZoom}
-          maxZoom={mapBase.options.maxZoom}
+          zoom={!mobile ? mapType.options.zoom : mapType.options.zoom - 1}
+          minZoom={mapType.options.minZoom}
+          maxZoom={mapType.options.maxZoom}
           maxBounds={mapOptions.maxBounds}
           onMoveEnd={() => {
-            if (this.mapRef.current.leafletElement._zoom >= mapBase.options.transitZoom) {
+            if (this.mapRef.current.leafletElement._zoom >= mapType.options.transitZoom) {
               fetchTransitStops(this.mapRef.current.leafletElement);
             } else if (transitStops.length > 0) {
               clearTransitStops();
@@ -144,7 +145,7 @@ class MapView extends React.Component {
           }}
         >
           <TileLayer
-            url={mapBase.options.url}
+            url={mapType.options.url}
             attribution='&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors'
           />
           {unitListFiltered.map((unit) => {
@@ -155,7 +156,7 @@ class MapView extends React.Component {
                   className="unitMarker"
                   key={unit.id}
                   position={[unit.location.coordinates[1], unit.location.coordinates[0]]}
-                  icon={drawMarkerIcon(unit, mapBase.options.name)}
+                  icon={drawMarkerIcon(unit, mapType.options.name)}
                   onClick={() => history.push(generatePath('unit', lng, unit.id))}
                   keyboard={false}
                 />
@@ -178,7 +179,7 @@ class MapView extends React.Component {
                 highlightedDistrict.unit.location.coordinates[1],
                 highlightedDistrict.unit.location.coordinates[0],
               ]}
-              icon={drawMarkerIcon(highlightedDistrict.unit, mapBase.options.name)}
+              icon={drawMarkerIcon(highlightedDistrict.unit, mapType.options.name)}
               keyboard={false}
             >
               <Popup autoPan={false}>
@@ -258,7 +259,7 @@ export default withRouter(withStyles(styles)(MapView));
 // Typechecking
 MapView.propTypes = {
   style: PropTypes.objectOf(PropTypes.any),
-  mapBase: PropTypes.objectOf(PropTypes.any),
+  mapType: PropTypes.objectOf(PropTypes.any),
   unitList: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.array])),
   // districtList: PropTypes.arrayOf(PropTypes.object),
   mapOptions: PropTypes.objectOf(PropTypes.any),
@@ -274,7 +275,7 @@ MapView.propTypes = {
 
 MapView.defaultProps = {
   style: { width: '100%', height: '100%' },
-  mapBase: {},
+  mapType: {},
   mapOptions: {},
   unitList: [],
   // districtList: [],
