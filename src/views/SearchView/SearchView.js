@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Redirect } from 'react-router-dom';
 import {
   Paper, Divider, withStyles, Typography, Link,
 } from '@material-ui/core';
@@ -30,12 +30,11 @@ class SearchView extends React.Component {
 
   componentDidMount() {
     const {
-      fetchUnits, location, previousSearch, units, map, setCurrentPage,
+      fetchUnits, units, map, setCurrentPage,
     } = this.props;
     setCurrentPage('search');
-    const searchParams = parseSearchParams(location.search);
-    const searchParam = searchParams.q || null;
-    if (searchParam && fetchUnits && searchParam !== previousSearch) {
+    const searchParam = this.getSearchParam();
+    if (this.shouldFetch()) {
       fetchUnits([], null, searchParam);
     }
 
@@ -49,6 +48,23 @@ class SearchView extends React.Component {
       this.focusMap(nextProps.units, map);
     }
     return true;
+  }
+
+  // Get search parameter from url
+  getSearchParam = () => {
+    const {
+      location,
+    } = this.props;
+    const searchParams = parseSearchParams(location.search);
+    const searchParam = searchParams.q || null;
+    return searchParam;
+  }
+
+  // Check if view will fetch data because search params has changed
+  shouldFetch = () => {
+    const { isFetching, previousSearch } = this.props;
+    const searchParam = this.getSearchParam();
+    return !isFetching && searchParam && searchParam !== previousSearch;
   }
 
   focusMap = (units, map) => {
@@ -81,12 +97,37 @@ class SearchView extends React.Component {
 
   render() {
     const {
-      classes, count, fetchUnits, history, intl, isFetching, max, previousSearch, units,
+      units, isFetching, classes, intl, count, fetchUnits, history, match, max, previousSearch,
     } = this.props;
     const unitCount = units && units.length;
     const resultsShowing = !isFetching && unitCount > 0;
     const progress = (isFetching && count) ? Math.floor((count / max * 100)) : 0;
 
+    // If not currently searching and view should not fetch new search
+    // and only 1 result found redirect directly to specific result page
+    if (!isFetching && !this.shouldFetch() && units && units.length === 1) {
+      // eslint-disable-next-line camelcase
+      const { id, object_type } = units[0];
+      let path = null;
+      // Parse language params
+      const { params } = match;
+      const lng = params && params.lng;
+
+      // eslint-disable-next-line camelcase
+      switch (object_type) {
+        case 'unit':
+          path = generatePath('unit', lng, id);
+          break;
+        case 'service':
+          path = generatePath('service', lng, id);
+          break;
+        default:
+      }
+
+      if (path) {
+        return <Redirect to={path} />;
+      }
+    }
 
     // Group data
     const groupedData = this.groupData(units);
@@ -145,6 +186,7 @@ class SearchView extends React.Component {
           }}
           onSubmit={this.onSearchSubmit}
           placeholder={intl && intl.formatMessage({ id: 'search.input.placeholder' })}
+          text={this.getSearchParam() || ''}
         />
         <Divider aria-hidden="true" />
         <Paper className={classes.label} elevation={1} square aria-live="polite" style={paperStyles}>
