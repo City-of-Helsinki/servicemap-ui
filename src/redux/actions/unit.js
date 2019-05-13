@@ -17,6 +17,14 @@ export const unitsFetchProgressUpdate = (count, max) => ({
   count,
   max,
 });
+export const setUnitData = data => ({
+  type: 'SET_NEW_UNITS',
+  data,
+});
+
+export const setNewUnitData = data => async (dispatch) => {
+  dispatch(setUnitData(data));
+};
 
 // Thunk fetch
 export const fetchUnits = (allData = [], next = null, searchQuery = null) => async (dispatch) => {
@@ -47,5 +55,12 @@ export const fetchUnits = (allData = [], next = null, searchQuery = null) => asy
     }
   } catch (e) {
     dispatch(fetchHasErrored(e.message));
+  }
+};
+
+export const setNewSearchData = data => async (dispatch) => {
+  console.log('NewData in sortSearchResults', data);
+  if (data) {
+    dispatch(setNewUnitData(data));
   }
 };

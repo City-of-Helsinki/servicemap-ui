@@ -39,7 +39,11 @@ export default (state = initialState, action) => {
         count: action.count,
         max: action.max,
       };
-
+    case 'SET_NEW_UNITS':
+      return {
+        ...state,
+        data: action.data,
+      };
     default:
       return state;
   }
