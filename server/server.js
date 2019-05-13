@@ -105,6 +105,7 @@ const htmlTemplate = (reactDom, preloadedState, css, jss) => `
     <style>
       @import url('https://fonts.googleapis.com/css?family=Lato');
     </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
 
   <body>
