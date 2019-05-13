@@ -27,4 +27,12 @@ export default theme => ({
   icon: {
     padding: 10,
   },
+  srTitle: {
+    position: 'fixed',
+    top: -10,
+  },
+  srLink: {
+    position: 'fixed',
+    bottom: 0,
+  },
 });

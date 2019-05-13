@@ -156,7 +156,7 @@ class SearchView extends React.Component {
           {
             // Screen reader only information
           }
-          <Typography variant="srOnly" component="h3" tabIndex="-1">
+          <Typography className={classes.srTitle} variant="srOnly" component="h3" tabIndex="-1">
             {
               !isFetching
               && (
@@ -202,7 +202,7 @@ class SearchView extends React.Component {
         {
           // Jump link back to beginning of current page
         }
-        <Typography variant="srOnly" component="h3">
+        <Typography className={classes.srLink} variant="srOnly" component="h3">
           <Link href="#view-title" tabIndex="-1">
             <FormattedMessage id="general.return.viewTitle" />
           </Link>

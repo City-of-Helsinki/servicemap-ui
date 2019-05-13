@@ -88,8 +88,9 @@ class MapView extends React.Component {
 
   // Check if transit stops should be shown
   showTransitStops() {
-    const { mapBase } = this.props;
-    return this.mapRef.current.leafletElement._zoom >= mapBase.options.transitZoom;
+    const { mapType, mobile } = this.props;
+    const transitZoom = !mobile ? mapType.options.transitZoom : mapType.options.transitZoom - 1;
+    return this.mapRef.current.leafletElement._zoom >= transitZoom;
   }
 
   initiateLeaflet() {
@@ -283,6 +284,7 @@ MapView.propTypes = {
   transitStops: PropTypes.arrayOf(PropTypes.object),
   getLocaleText: PropTypes.func.isRequired,
   saveMapRef: PropTypes.func.isRequired,
+  mobile: PropTypes.bool,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
@@ -295,4 +297,5 @@ MapView.defaultProps = {
   fetchTransitStops: null,
   clearTransitStops: null,
   transitStops: [],
+  mobile: false,
 };

@@ -20,11 +20,12 @@ const SimpleListItem = (props) => {
           root: classes.listItem,
         }}
       >
-        <ListItemIcon aria-label={srText} className={`${classes.listIcon} ${link ? classes.link : null}`}>
+        <ListItemIcon aria-label={`${srText || ''}: ${text}`} className={`${classes.listIcon} ${link ? classes.link : null}`}>
           {icon}
         </ListItemIcon>
 
         <ListItemText
+          aria-hidden
           classes={{ root: classes.textContainer }}
         >
           <Typography
@@ -46,7 +47,6 @@ const SimpleListItem = (props) => {
 
 const listItemStyles = theme => ({
   listItem: {
-    height: '100%',
     minHeight: '3.5rem',
     padding: 0,
   },

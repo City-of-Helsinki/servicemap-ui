@@ -200,7 +200,7 @@ MapContainer.propTypes = {
   fetchDistrictsData: PropTypes.func.isRequired,
   getLocaleText: PropTypes.func.isRequired,
   setMapRef: PropTypes.func.isRequired,
-  // isMobile: PropTypes.bool,
+  isMobile: PropTypes.bool,
 };
 
 MapContainer.defaultProps = {
@@ -211,5 +211,5 @@ MapContainer.defaultProps = {
   unitsLoading: false,
   districts: {},
   highlightedUnit: null,
-  // isMobile: false,
+  isMobile: false,
 };
