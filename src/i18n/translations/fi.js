@@ -6,6 +6,13 @@ export default {
   // Event
   'event.nearby': 'Lähellä olevat tapahtumat',
 
+  // Filter
+  'filter.label': 'Järjestys',
+  'filter.alphabetical.asc': 'Aakkosjärjestys nouseva',
+  'filter.alphabetical.desc': 'Aakkosjärjestys laskeva',
+  'filter.match.asc': 'Osuvuus nouseva',
+  'filter.match.desc': 'Osuvuus laskeva',
+
   // General
   'general.back': 'Palaa',
   'general.backToStart': 'Palaa sivun alkuun',

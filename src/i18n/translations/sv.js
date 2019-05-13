@@ -6,6 +6,13 @@ export default {
   // Event
   'event.nearby': 'Nearby events', // TODO: Translate
 
+  // Filter
+  'filter.label': 'Order', // TODO: Translate
+  'filter.alphabetical.asc': 'Alphabetical ascending', // TODO: Translate
+  'filter.alphabetical.desc': 'Alphabetical descending', // TODO: Translate
+  'filter.match.asc': 'Match ascending', // TODO: Translate
+  'filter.match.desc': 'Match descending', // TODO: Translate
+
   // General
   'general.back': 'Tillbaka',
   'general.backToStart': 'Back to beginning of page', // TODO: Translate

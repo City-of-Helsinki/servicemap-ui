@@ -6,6 +6,13 @@ export default {
   // Event
   'event.nearby': 'Nearby events',
 
+  // Filter
+  'filter.label': 'Order',
+  'filter.alphabetical.asc': 'Alphabetical ascending',
+  'filter.alphabetical.desc': 'Alphabetical descending',
+  'filter.match.asc': 'Match ascending',
+  'filter.match.desc': 'Match descending',
+
   // General
   'general.back': 'Back',
   'general.backToStart': 'Back to beginning of page',
