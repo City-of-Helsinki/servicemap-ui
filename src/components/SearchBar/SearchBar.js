@@ -52,10 +52,16 @@ const styles = theme => ({
 
 
 class SearchBar extends React.Component {
-  state = {
-    search: null,
-    isActive: false,
-  };
+  constructor(props) {
+    super(props);
+
+    const { previousSearch } = props;
+
+    this.state = {
+      search: previousSearch,
+      isActive: false,
+    };
+  }
 
   shouldComponentUpdate(nextProps) {
     const { previousSearch } = this.props;
