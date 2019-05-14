@@ -73,19 +73,19 @@ class ResultOrderer extends React.Component {
     return (
       <form className={`${classes.root} ${classes.primaryColor}`} autoComplete="off">
         <FormControl className={classes.formControl}>
-          <InputLabel htmlFor="result-filter"><FormattedMessage id="filter.label" /></InputLabel>
+          <InputLabel htmlFor="result-sorter"><FormattedMessage id="sorting.label" /></InputLabel>
           <Select
             value={`${order}-${direction}`}
             onChange={this.handleChange}
             inputProps={{
-              name: 'filter',
-              id: 'result-filter',
+              name: 'sorter',
+              id: 'result-sorter',
             }}
           >
-            <MenuItem value="match-desc"><FormattedMessage id="filter.match.desc" /></MenuItem>
-            <MenuItem value="match-asc"><FormattedMessage id="filter.match.asc" /></MenuItem>
-            <MenuItem value="alphabetical-desc"><FormattedMessage id="filter.alphabetical.desc" /></MenuItem>
-            <MenuItem value="alphabetical-asc"><FormattedMessage id="filter.alphabetical.asc" /></MenuItem>
+            <MenuItem value="match-desc"><FormattedMessage id="sorting.match.desc" /></MenuItem>
+            <MenuItem value="match-asc"><FormattedMessage id="sorting.match.asc" /></MenuItem>
+            <MenuItem value="alphabetical-desc"><FormattedMessage id="sorting.alphabetical.desc" /></MenuItem>
+            <MenuItem value="alphabetical-asc"><FormattedMessage id="sorting.alphabetical.asc" /></MenuItem>
           </Select>
         </FormControl>
       </form>

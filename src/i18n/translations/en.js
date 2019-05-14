@@ -6,12 +6,12 @@ export default {
   // Event
   'event.nearby': 'Nearby events',
 
-  // Filter
-  'filter.label': 'Order',
-  'filter.alphabetical.asc': 'Alphabetical ascending',
-  'filter.alphabetical.desc': 'Alphabetical descending',
-  'filter.match.asc': 'Match ascending',
-  'filter.match.desc': 'Match descending',
+  // Sorting
+  'sorting.label': 'Order search results',
+  'sorting.alphabetical.asc': 'Reversed alphabetical',
+  'sorting.alphabetical.desc': 'Alphabetical',
+  'sorting.match.asc': 'Most relevant',
+  'sorting.match.desc': 'Least relevant',
 
   // General
   'general.back': 'Back',

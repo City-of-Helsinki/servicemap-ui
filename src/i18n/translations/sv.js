@@ -6,12 +6,12 @@ export default {
   // Event
   'event.nearby': 'Nearby events', // TODO: Translate
 
-  // Filter
-  'filter.label': 'Order', // TODO: Translate
-  'filter.alphabetical.asc': 'Alphabetical ascending', // TODO: Translate
-  'filter.alphabetical.desc': 'Alphabetical descending', // TODO: Translate
-  'filter.match.asc': 'Match ascending', // TODO: Translate
-  'filter.match.desc': 'Match descending', // TODO: Translate
+  // Sorting
+  'sorting.label': 'Order search results', // TODO: Translate
+  'sorting.alphabetical.asc': 'Reversed alphabetical', // TODO: Translate
+  'sorting.alphabetical.desc': 'Alphabetical', // TODO: Translate
+  'sorting.match.asc': 'Most relevant', // TODO: Translate
+  'sorting.match.desc': 'Least relevant', // TODO: Translate
 
   // General
   'general.back': 'Tillbaka',
