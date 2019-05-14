@@ -78,10 +78,15 @@ class HomeView extends React.Component {
             {intl.formatMessage({ id: 'home.message' })}
           </Typography>
           <Typography className={classes.left} variant="body2">
-            2.5.2019 - Olemme tänään julkistaneet Palvelukartan avoimen kehitysversion!
+            <b>14.5.2019</b> - Olemme saaneet ensimmäisten viikkojen aikana ensimmäiset palautteet 
+            - kiitos niistä! Palautteen perusteella keskitymme seuraavaksi rakentamaan entistäkin 
+            paremman toimipisteen sivun, josta löydät kaikki toimipisteen tiedot esteettömyydestä 
+            ja tapahtumiin. <br/>
+            <br/>
+            <b>2.5.2019</b> - Olemme tänään julkistaneet Palvelukartan avoimen kehitysversion!
             Ensimmäisessä versiossa keskitymme erityisesti hakukokemuksen parantamiseen.
             Lisäämme kehitysversioon uusia ominaisuuksia viikottain
-            ja haluamme palautetta juuri sinulta.
+            ja haluamme palautetta juuri sinulta.<br/>
           </Typography>
           <Button
             className={classes.button}
