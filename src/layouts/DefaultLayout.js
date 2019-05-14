@@ -20,7 +20,9 @@ import HomeLogo from '../components/Logos/HomeLogo';
 const mobileBreakpoint = config.mobile_ui_breakpoint;
 const smallScreenBreakpoint = config.small_screen_breakpoint;
 
-const createContentStyles = (isMobile, isSmallScreen, mobileMapOnly) => {
+const createContentStyles = (
+  isMobile, isSmallScreen, landscape, mobileMapOnly, keyboardVisible,
+) => {
   let width = 450;
   if (isMobile) {
     width = '100%';
@@ -38,28 +40,48 @@ const createContentStyles = (isMobile, isSmallScreen, mobileMapOnly) => {
       height: isMobile ? '100%' : 'calc(100% - 64px)',
     },
     sidebar: {
+      position: isMobile ? 'fixed' : null,
+      top: 0,
+      bottom: 0,
       width,
       margin: 0,
       overflow: 'auto',
+      paddingBottom: isMobile && !mobileMapOnly ? '35%' : 0,
     },
     map: {
-      display: 'flex',
+      position: isMobile ? 'fixed' : null,
+      bottom: 0,
       margin: 0,
       flex: !isMobile || mobileMapOnly ? 1 : 0,
+      display: isMobile && !mobileMapOnly ? 'none' : 'flex',
+      height: mobileMapOnly ? '90vh' : '100%',
+      width: '100%',
+      paddingBottom: isMobile && !keyboardVisible ? '10vh' : 0,
     },
     mobileNav: {
-      flex: '0 1 auto',
+      position: 'fixed',
+      height: '10vh',
+      bottom: keyboardVisible ? -100 : 0,
+      zIndex: 999999999,
+      backgroundColor: '#2242C7',
     },
   };
 
   // Mobile map view styles
   if (mobileMapOnly) {
     styles.sidebar.position = 'fixed';
-    styles.sidebar.top = 0;
+    styles.sidebar.bottom = null;
     styles.sidebar.zIndex = 999999999;
   } else if (isMobile) {
     styles.sidebar.flex = '1 1 auto';
   }
+
+  // Landscape orientation styles
+  if (landscape && isMobile) {
+    styles.map.paddingBottom = '10vw';
+    styles.mobileNav.height = '10vw';
+  }
+
 
   return styles;
 };
@@ -73,7 +95,14 @@ const DefaultLayout = (props) => {
   const isMobile = useMediaQuery(`(max-width:${mobileBreakpoint}px)`);
   const isSmallScreen = useMediaQuery(`(max-width:${smallScreenBreakpoint}px)`);
   const mobileMapOnly = isMobile && location.pathname.indexOf('/map') > -1; // If mobile map view
-  const styles = createContentStyles(isMobile, isSmallScreen, mobileMapOnly);
+  const landscape = useMediaQuery('(min-device-aspect-ratio: 1/1)');
+  const portrait = useMediaQuery('(max-device-aspect-ratio: 1/1)');
+  // This checks if the keyboard is up. Works on all tested mobile devices but should be replaced in the future.
+  const keyboardVisible = (landscape ? useMediaQuery('(max-height:200px)') : useMediaQuery('(max-height:500px)'));
+
+  const styles = createContentStyles(
+    isMobile, isSmallScreen, landscape, mobileMapOnly, keyboardVisible,
+  );
 
   return (
     <>
@@ -148,7 +177,7 @@ const DefaultLayout = (props) => {
           </main>
         </div>
         <div style={styles.map}>
-          <MapContainer />
+          <MapContainer isMobile={!!isMobile} />
         </div>
         <MobileBottomNavigation
           style={styles.mobileNav}
