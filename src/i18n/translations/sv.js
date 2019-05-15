@@ -108,5 +108,6 @@ export default {
   // Service
   'service': 'Tjänst',
   'service.plural': 'Tjänster',
-  'service.nearby': 'Nearby services',
+  'service.nearby': 'Nearby services', // TODO: Translate
+  'service.units.empty': 'Service doesn\'t have units', // TODO: Translate
 };

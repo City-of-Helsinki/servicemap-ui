@@ -4,7 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import SearchView from '../SearchView';
 import UnitView from '../UnitView';
 import HomeView from '../HomeView';
-import ServiceView from '../Service/ServiceView';
+import ServiceView from '../ServiceView';
 import MobileMapView from '../MobileMapView';
 import ViewTitle from '../components/ViewTitle/ViewTitle';
 

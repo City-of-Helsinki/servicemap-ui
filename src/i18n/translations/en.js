@@ -110,4 +110,5 @@ export default {
   'service': 'Service',
   'service.plural': 'Services',
   'service.nearby': 'Nearby services',
+  'service.units.empty': 'Service doesn\'t have units',
 };

@@ -1,11 +1,22 @@
 const initialState = {
   isFetching: false,
   errorMessage: null,
-  data: [],
+  current: null,
+  count: 0,
+  max: 0,
+  units: [],
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case 'SERVICE_SET_CURRENT_SERVICE':
+      return {
+        ...state,
+        current: action.service,
+        errorMessage: null,
+        isFetching: false,
+        units: [],
+      };
     case 'SERVICE_UNITS_IS_FETCHING':
       return {
         ...state,
@@ -23,7 +34,13 @@ export default (state = initialState, action) => {
         ...state,
         isFetching: false,
         errorMessage: null,
-        data: action.units,
+        units: action.units,
+      };
+    case 'SERVICE_UNITS_FETCH_PROGRESS_UPDATE':
+      return {
+        ...state,
+        count: action.count,
+        max: action.max,
       };
     default:
       return state;
