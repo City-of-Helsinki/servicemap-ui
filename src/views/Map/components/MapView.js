@@ -118,7 +118,6 @@ class MapView extends React.Component {
       match,
       transitStops,
       getLocaleText,
-      fetchTransitStopData,
     } = this.props;
     const {
       Map, TileLayer, ZoomControl, Marker, Popup, Polygon, highlightedDistrict,
@@ -202,10 +201,9 @@ class MapView extends React.Component {
                     key={stop.name + stop.gtfsId}
                     position={[stop.lat, stop.lon]}
                     keyboard={false}
-                    onClick={() => fetchTransitStopData(stop)}
                   >
                     <Popup autoPan={false}>
-                      {/* <TransitStopInfo stop={stop} />*/}
+                      <TransitStopInfo stop={stop} />
                     </Popup>
                   </Marker>
                 );
