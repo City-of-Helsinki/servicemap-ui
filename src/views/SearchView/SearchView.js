@@ -11,7 +11,6 @@ import Loading from '../../components/Loading/Loading';
 import SearchBar from '../../components/SearchBar';
 import { fitUnitsToMap } from '../Map/utils/mapActions';
 import { parseSearchParams } from '../../utils';
-import { generatePath } from '../../utils/path';
 import TabLists from '../../components/TabLists';
 
 import paths from '../../../config/paths';
@@ -70,17 +69,6 @@ class SearchView extends React.Component {
   focusMap = (units, map) => {
     if (map && map._layersMaxZoom) {
       fitUnitsToMap(units, map);
-    }
-  }
-
-  onSearchSubmit = (e, search) => {
-    e.preventDefault();
-    const { fetchUnits, history, match } = this.props;
-    const { params } = match;
-    const lng = params && params.lng;
-    if (search && search !== '') {
-      fetchUnits([], null, search);
-      history.push(generatePath('search', lng, search));
     }
   }
 
@@ -184,7 +172,6 @@ class SearchView extends React.Component {
               unlisten(); // Remove listener
             });
           }}
-          onSubmit={this.onSearchSubmit}
           placeholder={intl && intl.formatMessage({ id: 'search.input.placeholder' })}
           text={this.getSearchParam() || ''}
         />
@@ -265,7 +252,6 @@ SearchView.propTypes = {
   intl: intlShape.isRequired,
   isFetching: PropTypes.bool,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
-  match: PropTypes.objectOf(PropTypes.any).isRequired,
   max: PropTypes.number,
   previousSearch: PropTypes.string,
   units: PropTypes.arrayOf(PropTypes.any),
