@@ -91,7 +91,7 @@ class SearchBar extends React.Component {
   handleSubmit = (search) => {
     if (search && search !== '') {
       const {
-        fetchUnits, history, match,
+        fetchUnits, history, match, previousSearch,
       } = this.props;
       const { params } = match;
       const lng = params && params.lng;
@@ -99,7 +99,9 @@ class SearchBar extends React.Component {
         history.push(generatePath('search', lng, search));
       }
 
-      fetchUnits([], null, search);
+      if (search !== previousSearch) {
+        fetchUnits([], null, search);
+      }
     }
   }
 
