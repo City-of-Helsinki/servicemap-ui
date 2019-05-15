@@ -118,20 +118,21 @@ const DefaultLayout = (props) => {
             >
               <Grid item xs>
                 {
+                  // Jump link to main content for screenreaders
+                  // Must be first interactable element on page
+                }
+                <a href="#view-title" className="sr-only">
+                  <Typography variant="srOnly">
+                    <FormattedMessage id="general.skipToContent" />
+                  </Typography>
+                </a>
+                {
                   // Home logo link to home view
                 }
                 <a id="site-title" href={generatePath('home', lng)} style={{ float: 'left', display: 'inline-block' }} className="focus-dark-background">
                   <HomeLogo aria-hidden="true" />
                   <Typography className="sr-only" color="inherit" component="h1" variant="body1">
                     <FormattedMessage id="app.title" />
-                  </Typography>
-                </a>
-                {
-                  // Jump link to main content for screenreaders
-                }
-                <a href="#view-title" className="sr-only">
-                  <Typography variant="srOnly">
-                    <FormattedMessage id="general.skipToContent" />
                   </Typography>
                 </a>
               </Grid>
