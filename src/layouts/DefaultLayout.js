@@ -97,7 +97,8 @@ const DefaultLayout = (props) => {
   const mobileMapOnly = isMobile && location.pathname.indexOf('/map') > -1; // If mobile map view
   const landscape = useMediaQuery('(min-device-aspect-ratio: 1/1)');
   const portrait = useMediaQuery('(max-device-aspect-ratio: 1/1)');
-  // This checks if the keyboard is up. Works on all tested mobile devices but should be replaced in the future.
+  // This checks if the keyboard is up.
+  // Works on all tested mobile devices but should be replaced in the future.
   const keyboardVisible = (landscape ? useMediaQuery('(max-height:200px)') : useMediaQuery('(max-height:500px)'));
 
   const styles = createContentStyles(
@@ -118,20 +119,21 @@ const DefaultLayout = (props) => {
             >
               <Grid item xs>
                 {
-                  // Home logo link to home view
+                  // Jump link to main content for screenreaders
+                  // Must be first interactable element on page
                 }
-                <a id="site-title" href={generatePath('home', lng)} style={{ float: 'left', display: 'inline-block' }} className="focus-dark-background">
-                  <HomeLogo aria-hidden="true" />
-                  <Typography className="sr-only" color="inherit" component="h1" variant="body1">
-                    <FormattedMessage id="app.title" />
+                <a id="site-title" href="#view-title" className="sr-only">
+                  <Typography variant="srOnly">
+                    <FormattedMessage id="general.skipToContent" />
                   </Typography>
                 </a>
                 {
-                  // Jump link to main content for screenreaders
+                  // Home logo link to home view
                 }
-                <a href="#view-title" className="sr-only">
-                  <Typography variant="srOnly">
-                    <FormattedMessage id="general.skipToContent" />
+                <a href={generatePath('home', lng)} style={{ float: 'left', display: 'inline-block' }} className="focus-dark-background">
+                  <HomeLogo aria-hidden="true" />
+                  <Typography className="sr-only" color="inherit" component="h1" variant="body1">
+                    <FormattedMessage id="app.title" />
                   </Typography>
                 </a>
               </Grid>
