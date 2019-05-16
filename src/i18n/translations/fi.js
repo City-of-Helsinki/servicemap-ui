@@ -109,4 +109,5 @@ export default {
   'service': 'Palvelu',
   'service.plural': 'Palvelut',
   'service.nearby': 'Lähellä olevat palvelut',
+  'service.units.empty': 'Palvelulla ei ole toimipisteitä',
 };

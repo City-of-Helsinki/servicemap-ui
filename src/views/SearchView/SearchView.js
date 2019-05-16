@@ -176,7 +176,7 @@ class SearchView extends React.Component {
           text={this.getSearchParam() || ''}
         />
         <Divider aria-hidden="true" />
-        <Paper className={classes.label} elevation={1} square aria-live="polite" style={paperStyles}>
+        <Paper elevation={1} square aria-live="polite" style={paperStyles}>
           {
             isFetching
             && <Loading text={intl && intl.formatMessage({ id: 'search.loading.units' }, { count, max })} progress={progress} />
