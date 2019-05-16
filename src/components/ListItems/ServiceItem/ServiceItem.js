@@ -38,7 +38,7 @@ class ServiceItem extends React.Component {
         divider
         handleItemClick={(e) => {
           e.preventDefault();
-          if (currentService.id !== service.id) {
+          if (!currentService || currentService.id !== service.id) {
             setNewCurrentService(service);
           }
           if (history) {
