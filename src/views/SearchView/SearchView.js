@@ -15,6 +15,7 @@ import TabLists from '../../components/TabLists';
 
 import paths from '../../../config/paths';
 import Container from '../../components/Container/Container';
+import { generatePath } from '../../utils/path';
 
 class SearchView extends React.Component {
   constructor(props) {
@@ -85,7 +86,7 @@ class SearchView extends React.Component {
 
   render() {
     const {
-      units, isFetching, classes, intl, count, fetchUnits, history, match, max, previousSearch,
+      units, isFetching, intl, count, fetchUnits, history, match, max, previousSearch,
     } = this.props;
     const unitCount = units && units.length;
     const resultsShowing = !isFetching && unitCount > 0;
@@ -245,7 +246,6 @@ export default withRouter(injectIntl(withStyles(styles)(SearchView)));
 // Typechecking
 SearchView.propTypes = {
   changeSelectedUnit: PropTypes.func,
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   count: PropTypes.number,
   fetchUnits: PropTypes.func,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -256,6 +256,7 @@ SearchView.propTypes = {
   previousSearch: PropTypes.string,
   units: PropTypes.arrayOf(PropTypes.any),
   map: PropTypes.objectOf(PropTypes.any),
+  match: PropTypes.objectOf(PropTypes.any).isRequired,
   setCurrentPage: PropTypes.func.isRequired,
 };
 
