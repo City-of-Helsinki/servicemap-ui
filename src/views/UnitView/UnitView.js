@@ -60,7 +60,9 @@ class UnitView extends React.Component {
 
   centerMap = (map, unit) => {
     this.setState({ centered: true });
-    focusUnit(map, unit);
+    if (unit.location && unit.location.coordinates) {
+      focusUnit(map, unit);
+    }
   }
 
   // Filters connections data by section
@@ -137,6 +139,7 @@ class UnitView extends React.Component {
                 ...this.sectionFilter(unit.connections, 'PHONE_OR_EMAIL'),
               ]}
               title={<FormattedMessage id="unit.contact.info" />}
+              titleComponent="h4"
             />
 
             {/* E-services */}
@@ -148,6 +151,7 @@ class UnitView extends React.Component {
                 // ...this.sectionFilter(unit.connections, 'OTHER_INFO'),
               ]}
               title={<FormattedMessage id="unit.e.services" />}
+              titleComponent="h4"
             />
 
             {/* Unit description  TODO: Make this own component */}
@@ -198,7 +202,10 @@ class UnitView extends React.Component {
             ) : null}
 
             {/* Unit services */}
-            <TitledList title={<FormattedMessage id="unit.services" />}>
+            <TitledList
+              title={<FormattedMessage id="unit.services" />}
+              titleComponent="h4"
+            >
               {
                 unit.services.map(service => (
                   <ServiceItem key={service.id} service={service} />
