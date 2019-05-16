@@ -20,15 +20,19 @@ const SimpleListItem = (props) => {
           root: classes.listItem,
         }}
       >
-        <ListItemIcon aria-label={`${srText || ''}: ${text}`} className={`${classes.listIcon} ${link ? classes.link : null}`}>
+        <ListItemIcon aria-hidden className={`${classes.listIcon} ${link ? classes.link : null}`}>
           {icon}
         </ListItemIcon>
 
         <ListItemText
-          aria-hidden
           classes={{ root: classes.textContainer }}
         >
+          <Typography variant="srOnly">
+            {`${srText || ''} ${text}`}
+          </Typography>
+
           <Typography
+            aria-hidden
             variant="body2"
             classes={{ root: link ? classes.link : null }}
           >
@@ -38,7 +42,7 @@ const SimpleListItem = (props) => {
       </ListItem>
       {divider ? (
         <li>
-          <Divider aria-hidden="true" className={classes.divider} />
+          <Divider aria-hidden className={classes.divider} />
         </li>
       ) : null}
     </React.Fragment>

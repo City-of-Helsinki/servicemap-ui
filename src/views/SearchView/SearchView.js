@@ -202,7 +202,7 @@ class SearchView extends React.Component {
         {
           // Jump link back to beginning of current page
         }
-        <Typography className={classes.srLink} variant="srOnly" component="h3">
+        <Typography variant="srOnly" component="h3">
           <Link href="#view-title" tabIndex="-1">
             <FormattedMessage id="general.return.viewTitle" />
           </Link>

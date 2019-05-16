@@ -221,11 +221,14 @@ const DefaultLayout = (props) => {
         />
 
       </div>
+      {!isMobile
+      && (
       <footer className="sr-only">
         <a href="#site-title">
           <FormattedMessage id="general.backToStart" />
         </a>
       </footer>
+      )}
     </>
   );
 };

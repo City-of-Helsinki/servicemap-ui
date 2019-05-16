@@ -89,7 +89,7 @@ class MapView extends React.Component {
   // Check if transit stops should be shown
   showTransitStops() {
     const { mapType, mobile } = this.props;
-    const transitZoom = !mobile ? mapType.options.transitZoom : mapType.options.transitZoom - 1;
+    const transitZoom = !mobile ? mapType.options.transitZoom : mapType.options.mobileTransitZoom;
     return this.mapRef.current.leafletElement._zoom >= transitZoom;
   }
 
@@ -138,7 +138,7 @@ class MapView extends React.Component {
           zoomControl={false}
           crs={mapType.crs}
           center={mapOptions.initialPosition}
-          zoom={!mobile ? mapType.options.zoom : mapType.options.zoom - 1}
+          zoom={!mobile ? mapType.options.zoom : mapType.options.mobileZoom}
           minZoom={mapType.options.minZoom}
           maxZoom={mapType.options.maxZoom}
           maxBounds={mapOptions.maxBounds}

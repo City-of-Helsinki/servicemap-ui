@@ -29,10 +29,6 @@ export default theme => ({
   },
   srTitle: {
     position: 'fixed',
-    top: -10,
-  },
-  srLink: {
-    position: 'fixed',
-    bottom: 0,
+    left: -100,
   },
 });
