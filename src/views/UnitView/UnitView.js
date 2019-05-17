@@ -60,9 +60,7 @@ class UnitView extends React.Component {
 
   centerMap = (map, unit) => {
     this.setState({ centered: true });
-    if (unit.location && unit.location.coordinates) {
-      focusUnit(map, unit);
-    }
+    focusUnit(map, unit);
   }
 
   // Filters connections data by section
