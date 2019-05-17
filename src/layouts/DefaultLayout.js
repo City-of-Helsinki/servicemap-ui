@@ -224,7 +224,7 @@ const DefaultLayout = (props) => {
 
       </div>
       <footer className="sr-only">
-        <a href="#site-title">
+        <a href={!isMobile ? '#site-title' : '#view-title'}>
           <FormattedMessage id="general.backToStart" />
         </a>
       </footer>
