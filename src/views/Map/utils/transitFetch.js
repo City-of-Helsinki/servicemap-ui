@@ -7,11 +7,11 @@ const fetchStops = async (bounds) => {
     height: Math.abs(fetchBounds._southWest.lat - fetchBounds._northEast.lat),
   };
 
-  // Widen the area of search to be three times the size of the view
-  fetchBounds._southWest.lat -= viewSize.height * 2;
-  fetchBounds._southWest.lng -= viewSize.width * 2;
-  fetchBounds._northEast.lat += viewSize.height * 2;
-  fetchBounds._northEast.lng += viewSize.width * 2;
+  // Widen the area of search
+  fetchBounds._southWest.lat -= viewSize.height;
+  fetchBounds._southWest.lng -= viewSize.width;
+  fetchBounds._northEast.lat += viewSize.height;
+  fetchBounds._northEast.lng += viewSize.width;
 
   // Bounds used in subway entrance fetch
   const fetchBox = `${fetchBounds.getWest()},${fetchBounds.getSouth()},${fetchBounds.getEast()},${fetchBounds.getNorth()}`;
