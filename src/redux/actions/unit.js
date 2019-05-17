@@ -59,7 +59,6 @@ export const fetchUnits = (allData = [], next = null, searchQuery = null) => asy
 };
 
 export const setNewSearchData = data => async (dispatch) => {
-  console.log('NewData in sortSearchResults', data);
   if (data) {
     dispatch(setNewUnitData(data));
   }
