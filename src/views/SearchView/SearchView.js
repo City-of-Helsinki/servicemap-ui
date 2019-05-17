@@ -185,8 +185,9 @@ class SearchView extends React.Component {
 
           {
             // Screen reader only information
+            // Move sr-only heading out of window for now, so it won't be on top of other elments
           }
-          <Typography variant="srOnly" component="h3" tabIndex="-1">
+          <Typography style={{ position: 'fixed', left: -100 }} variant="srOnly" component="h3" tabIndex="-1">
             {
               !isFetching
               && (
