@@ -102,8 +102,9 @@ class MapContainer extends React.Component {
 
   render() {
     const {
-      mapType, districts, highlightedUnit, getLocaleText, currentPage, unitList, serviceUnits, unitsLoading,
+      mapType, districts, highlightedUnit, getLocaleText, currentPage, unitList, serviceUnits, unitsLoading, isMobile,
     } = this.props;
+    const { initialMap, transitStops } = this.state;
 
     let mapUnits = [];
 
@@ -119,16 +120,16 @@ class MapContainer extends React.Component {
       mapUnits = [highlightedUnit];
     }
 
-    const { initialMap, transitStops } = this.state;
     if (initialMap) {
       return (
         <MapView
           key={mapType ? mapType.crs.code : initialMap.crs.code}
-          mapBase={mapType || initialMap}
+          mapType={mapType || initialMap}
           unitList={mapUnits}
           districtList={districts}
           saveMapRef={this.saveMapRef}
           mapOptions={mapOptions}
+          mobile={isMobile}
           fetchTransitStops={this.fetchTransitStops}
           clearTransitStops={this.clearTransitStops}
           transitStops={transitStops}
@@ -187,7 +188,7 @@ MapContainer.propTypes = {
   fetchDistrictsData: PropTypes.func.isRequired,
   getLocaleText: PropTypes.func.isRequired,
   setMapRef: PropTypes.func.isRequired,
-  // isMobile: PropTypes.bool,
+  isMobile: PropTypes.bool,
 };
 
 MapContainer.defaultProps = {
@@ -198,5 +199,5 @@ MapContainer.defaultProps = {
   unitsLoading: false,
   districts: {},
   highlightedUnit: null,
-  // isMobile: false,
+  isMobile: false,
 };

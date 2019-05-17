@@ -48,7 +48,9 @@ const mapTypes = {
     minZoom: 6,
     maxZoom: 15,
     zoom: 10,
+    mobileZoom: 9,
     transitZoom: 14,
+    mobileTransitZoom: 13,
   },
   ortoImage: {
     name: 'ortoImage',
@@ -58,7 +60,9 @@ const mapTypes = {
     minZoom: 2,
     maxZoom: 10,
     zoom: 5,
+    mobileZoom: 4,
     transitZoom: 9,
+    mobileTransitZoom: 8,
   },
   guideMap: {
     name: 'guideMap',
@@ -68,7 +72,9 @@ const mapTypes = {
     minZoom: 3,
     maxZoom: 10,
     zoom: 5,
+    mobileZoom: 4,
     transitZoom: 9,
+    mobileTransitZoom: 8,
   },
 };
 
