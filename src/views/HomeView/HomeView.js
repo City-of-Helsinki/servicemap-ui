@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import {
   Typography, withStyles, Button,
 } from '@material-ui/core';
@@ -39,10 +40,22 @@ class HomeView extends React.Component {
     }
   }
 
+
   render() {
     const { intl, classes } = this.props;
+
+    // Modify html head
+    const Head = (
+      <Helmet>
+        <title>{intl.formatMessage({ id: 'app.title' })}</title>
+        <meta name="theme-color" content="" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="" />
+      </Helmet>
+    );
+
     return (
       <>
+        {Head}
         <MobileComponent>
           <Container>
             <HomeLogo dark aria-label={intl.formatMessage({ id: 'app.title' })} />
@@ -70,9 +83,9 @@ class HomeView extends React.Component {
             {intl.formatMessage({ id: 'home.message' })}
           </Typography>
           <Typography className={classes.left} variant="body2">
-            <b>14.5.2019</b> - Olemme saaneet ensimmäisten viikkojen aikana ensimmäiset palautteet 
-            - kiitos niistä! Palautteen perusteella keskitymme seuraavaksi rakentamaan entistäkin 
-            paremman toimipisteen sivun, josta löydät kaikki toimipisteen tiedot esteettömyydestä 
+            <b>14.5.2019</b> - Olemme saaneet ensimmäisten viikkojen aikana ensimmäiset palautteet
+            - kiitos niistä! Palautteen perusteella keskitymme seuraavaksi rakentamaan entistäkin
+            paremman toimipisteen sivun, josta löydät kaikki toimipisteen tiedot esteettömyydestä
             tapahtumiin. <br/>
             <br/>
             <b>2.5.2019</b> - Olemme tänään julkistaneet Palvelukartan avoimen kehitysversion!

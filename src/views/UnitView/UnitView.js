@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Helmet } from 'react-helmet';
 import {
   Divider, Typography, withStyles, Link,
 } from '@material-ui/core';
@@ -10,7 +11,10 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { fetchSelectedUnit, changeSelectedUnit } from '../../redux/actions/selectedUnit';
 import { getSelectedUnit } from '../../redux/selectors/selectedUnit';
 import { getLocaleString } from '../../redux/selectors/locale';
+import { DesktopComponent } from '../../layouts/WrapperComponents/WrapperComponents';
+import { drawIcon } from '../Map/utils/drawIcon';
 
+import SearchBar from '../../components/SearchBar';
 import { focusUnit } from '../Map/utils/mapActions';
 import InfoList from './components/InfoList';
 import styles from './styles/styles';
@@ -28,6 +32,9 @@ class UnitView extends React.Component {
     this.state = {
       centered: false,
     };
+    this.state = {
+      icon: null,
+    };
   }
 
   componentDidMount() {
@@ -35,6 +42,10 @@ class UnitView extends React.Component {
       match, fetchSelectedUnit, unit,
     } = this.props;
     const { params } = match;
+
+    this.setState({
+      icon: <img alt="" src={drawIcon({ id: params.unit }, null, true)} style={{ height: 24, margin: 8, marginRight: 16 }} aria-hidden="true" />,
+    });
 
     if (params && params.unit) {
       const unitId = params.unit;
@@ -85,10 +96,25 @@ class UnitView extends React.Component {
     const {
       classes, getLocaleText, intl, unit,
     } = this.props;
+    const { icon } = this.state;
+
+    // Modify html head
+    const Head = (
+      <Helmet>
+        {unit && unit.name && (
+          <title>{getLocaleText(unit.name)}</title>
+        )}
+        <meta name="theme-color" content="#2242C7" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="#2242C7" />
+      </Helmet>
+    );
 
     const TopBar = (
       <div>
-        <TitleBar title={unit && unit.name ? getLocaleText(unit.name) : ''} />
+        <DesktopComponent>
+          <SearchBar placeholder={intl.formatMessage({ id: 'search' })} />
+        </DesktopComponent>
+        <TitleBar icon={icon} title={unit && unit.name ? getLocaleText(unit.name) : ''} />
       </div>
     );
 
@@ -96,6 +122,7 @@ class UnitView extends React.Component {
       return (
         <div className={classes.root}>
           <div className="Content">
+            {Head}
             {TopBar}
             <p>
               <FormattedMessage id="general.loading" />
@@ -109,6 +136,7 @@ class UnitView extends React.Component {
       return (
         <div className={classes.root}>
           <div className="Content">
+            {Head}
             {TopBar}
             {
                 unit.picture_url
@@ -120,7 +148,7 @@ class UnitView extends React.Component {
               {this.sectionFilter(unit.connections, 'HIGHLIGHT').map(item => (
                 <Typography
                   key={item.id}
-                  className={classes.left}
+                  className={`${classes.left} ${classes.paragraph}`}
                   variant="body1"
                 >
                   {getLocaleText(item.value.name)}
@@ -226,6 +254,7 @@ class UnitView extends React.Component {
     return (
       <div className={classes.root}>
         <div className="Content">
+          {Head}
           {TopBar}
           <Typography color="primary" variant="body1">
             <FormattedMessage id="unit.details.notFound" />
