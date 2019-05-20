@@ -1,28 +1,10 @@
 /* eslint-disable no-underscore-dangle */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import {
-  MenuItem, FormControl, InputLabel, Select, withStyles,
+  MenuItem, FormControl, InputLabel, Select,
 } from '@material-ui/core';
-import { getOrderedData } from '../../redux/selectors/results';
-
-const styles = theme => ({
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  formControl: {
-    margin: theme.spacing.unit,
-    flex: '1 0 auto',
-    flexWrap: 'nowrap',
-    textAlign: 'left',
-  },
-  selectEmpty: {
-    marginTop: theme.spacing.unit * 2,
-  },
-});
 
 const allowedDirections = [
   'asc',
@@ -100,19 +82,4 @@ ResultOrderer.propTypes = {
   orderingFunction: PropTypes.func.isRequired,
 };
 
-// Listen to redux state
-const mapStateToProps = (state) => {
-  const orderingFunction = (data, order, direction) => {
-    const orderedData = getOrderedData(state, data, order, direction);
-    return orderedData;
-  };
-
-  return {
-    orderingFunction,
-  };
-};
-
-export default withStyles(styles)(connect(
-  mapStateToProps,
-  null,
-)(ResultOrderer));
+export default ResultOrderer;
