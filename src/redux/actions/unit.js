@@ -22,10 +22,6 @@ export const setUnitData = data => ({
   data,
 });
 
-export const setNewUnitData = data => async (dispatch) => {
-  dispatch(setUnitData(data));
-};
-
 // Thunk fetch
 export const fetchUnits = (allData = [], next = null, searchQuery = null) => async (dispatch) => {
   dispatch(fetchIsLoading(searchQuery));
@@ -60,6 +56,6 @@ export const fetchUnits = (allData = [], next = null, searchQuery = null) => asy
 
 export const setNewSearchData = data => async (dispatch) => {
   if (data) {
-    dispatch(setNewUnitData(data));
+    dispatch(setUnitData(data));
   }
 };
