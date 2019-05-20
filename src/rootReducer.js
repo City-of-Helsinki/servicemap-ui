@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import breadcrumb from './redux/reducers/breadcrumb';
 import { mapType, mapRef } from './redux/reducers/map';
+import navigator from './redux/reducers/navigator';
 import units from './redux/reducers/unit';
 import user from './redux/reducers/user';
 import districts from './redux/reducers/district';
@@ -12,6 +13,7 @@ export default combineReducers({
   breadcrumb,
   mapType,
   mapRef,
+  navigator,
   units,
   user,
   districts,
