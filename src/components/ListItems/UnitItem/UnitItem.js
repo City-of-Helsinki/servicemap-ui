@@ -1,10 +1,8 @@
 /* eslint-disable camelcase */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
-import { generatePath } from '../../../utils/path';
 import { isValidUnit } from '../../../utils/unitHelper';
 import { drawIcon } from '../../../views/Map/utils/drawIcon';
 import { getLocaleString } from '../../../redux/selectors/locale';
@@ -23,7 +21,7 @@ class UnitItem extends React.Component {
 
   render() {
     const {
-      unit, changeSelectedUnit, onClick, getLocaleText, history, intl, match,
+      unit, changeSelectedUnit, onClick, getLocaleText, intl, navigator,
     } = this.props;
     // Don't render if not valid unit
     if (!isValidUnit(unit)) {
@@ -37,10 +35,6 @@ class UnitItem extends React.Component {
     const {
       id, name, object_type,
     } = unit;
-
-    // Prase language params
-    const { params } = match;
-    const lng = params && params.lng;
 
     // Accessibility text
     // TODO: Change to check data once accessibility messages functionality has been added
@@ -72,9 +66,9 @@ class UnitItem extends React.Component {
           e.preventDefault();
           if (onClick) {
             onClick();
-          } else if (history) {
+          } else if (navigator) {
             changeSelectedUnit(unit);
-            history.push(generatePath('unit', lng, id));
+            navigator.push('unit', id);
           }
         }}
       />
@@ -85,28 +79,30 @@ class UnitItem extends React.Component {
 // Listen to redux state
 const mapStateToProps = (state) => {
   const getLocaleText = textObject => getLocaleString(state, textObject);
+  const { navigator } = state;
   return {
     getLocaleText,
+    navigator,
   };
 };
 
-export default withRouter(injectIntl(connect(
+export default injectIntl(connect(
   mapStateToProps,
   { changeSelectedUnit },
-)(UnitItem)));
+)(UnitItem));
 
 // Typechecking
 UnitItem.propTypes = {
   unit: PropTypes.objectOf(PropTypes.any),
   changeSelectedUnit: PropTypes.func.isRequired,
   getLocaleText: PropTypes.func.isRequired,
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
   onClick: PropTypes.func,
   intl: intlShape.isRequired,
-  match: PropTypes.objectOf(PropTypes.any).isRequired,
+  navigator: PropTypes.objectOf(PropTypes.any),
 };
 
 UnitItem.defaultProps = {
   unit: {},
   onClick: null,
+  navigator: null,
 };

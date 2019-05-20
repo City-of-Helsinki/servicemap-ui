@@ -5,7 +5,6 @@ import { withRouter } from 'react-router-dom';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { withStyles } from '@material-ui/core';
 import TransitStopInfo from './TransitStopInfo';
-import { generatePath } from '../../../utils/path';
 import { drawMarkerIcon } from '../utils/drawIcon';
 
 const transitIconSize = 30;
@@ -114,16 +113,13 @@ class MapView extends React.Component {
       style,
       fetchTransitStops,
       clearTransitStops,
-      history,
-      match,
+      navigator,
       transitStops,
       getLocaleText,
     } = this.props;
     const {
       Map, TileLayer, ZoomControl, Marker, Popup, Polygon, highlightedDistrict,
     } = this.state;
-    const { params } = match;
-    const lng = params && params.lng;
 
     const unitListFiltered = unitList.filter(unit => unit.object_type === 'unit');
 
@@ -161,7 +157,11 @@ class MapView extends React.Component {
                   key={unit.id}
                   position={[unit.location.coordinates[1], unit.location.coordinates[0]]}
                   icon={drawMarkerIcon(unit, mapBase.options.name)}
-                  onClick={() => history.push(generatePath('unit', lng, unit.id))}
+                  onClick={() => {
+                    if (navigator) {
+                      navigator.push('unit', unit.id);
+                    }
+                  }}
                   keyboard={false}
                 />
               );
@@ -276,8 +276,7 @@ MapView.propTypes = {
   // districtList: PropTypes.arrayOf(PropTypes.object),
   mapOptions: PropTypes.objectOf(PropTypes.any),
   fetchTransitStops: PropTypes.func,
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
-  match: PropTypes.objectOf(PropTypes.any).isRequired,
+  navigator: PropTypes.objectOf(PropTypes.any),
   clearTransitStops: PropTypes.func,
   transitStops: PropTypes.arrayOf(PropTypes.object),
   getLocaleText: PropTypes.func.isRequired,
@@ -289,6 +288,7 @@ MapView.defaultProps = {
   style: { width: '100%', height: '100%' },
   mapBase: {},
   mapOptions: {},
+  navigator: null,
   unitList: [],
   // districtList: [],
   fetchTransitStops: null,

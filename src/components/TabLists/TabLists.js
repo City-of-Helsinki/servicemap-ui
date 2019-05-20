@@ -59,7 +59,7 @@ class TabLists extends React.Component {
 
   // Handle page number changes
   handlePageChange = (pageNum, pageCount) => {
-    const { history, location } = this.props;
+    const { location, navigator } = this.props;
 
     if (pageNum >= 1 && pageNum <= pageCount) {
       // Change page parameter in searchParams
@@ -72,17 +72,19 @@ class TabLists extends React.Component {
         currentPage: pageNum,
       });
       // Update p(page) param to current history
-      history.replace({
-        ...location,
-        search: `?${searchString || ''}`,
-      });
+      if (navigator) {
+        navigator.replace({
+          ...location,
+          search: `?${searchString || ''}`,
+        });
+      }
     }
   }
 
   // Handle tab change
   handleTabChange = (e, value) => {
     // Update p(page) param to current history
-    const { history, location } = this.props;
+    const { location, navigator } = this.props;
 
     // Change page parameter in searchParams
     const searchParams = parseSearchParams(location.search);
@@ -98,10 +100,12 @@ class TabLists extends React.Component {
     });
 
     // Update p(page) param to current history
-    history.replace({
-      ...location,
-      search: `?${searchString || ''}`,
-    });
+    if (navigator) {
+      navigator.replace({
+        ...location,
+        search: `?${searchString || ''}`,
+      });
+    }
   }
 
   // Calculate pageCount
@@ -216,9 +220,13 @@ TabLists.propTypes = {
     itemsPerPage: PropTypes.number,
   })).isRequired,
   sortCallback: PropTypes.func.isRequired,
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
   intl: intlShape.isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
+  navigator: PropTypes.objectOf(PropTypes.any),
+};
+
+TabLists.defaultProps = {
+  navigator: null,
 };
 
 export default injectIntl(withRouter(TabLists));
