@@ -10,8 +10,7 @@ export default {
   'sorting.label': 'Order search results', // TODO: Translate
   'sorting.alphabetical.asc': 'Reversed alphabetical', // TODO: Translate
   'sorting.alphabetical.desc': 'Alphabetical', // TODO: Translate
-  'sorting.match.asc': 'Most relevant', // TODO: Translate
-  'sorting.match.desc': 'Least relevant', // TODO: Translate
+  'sorting.match.desc': 'Relevance', // TODO: Translate
 
   // General
   'general.back': 'Tillbaka',

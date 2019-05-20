@@ -10,7 +10,6 @@ export default {
   'sorting.label': 'Järjestä hakutulokset',
   'sorting.alphabetical.asc': 'Käänteinen aakkosjärjestys',
   'sorting.alphabetical.desc': 'Aakkosjärjestys',
-  'sorting.match.asc': 'Osuvin viimeiseksi',
   'sorting.match.desc': 'Osuvin ensin',
 
   // General

@@ -10,8 +10,7 @@ export default {
   'sorting.label': 'Order search results',
   'sorting.alphabetical.asc': 'Reversed alphabetical',
   'sorting.alphabetical.desc': 'Alphabetical',
-  'sorting.match.asc': 'Most relevant',
-  'sorting.match.desc': 'Least relevant',
+  'sorting.match.desc': 'Relevance',
 
   // General
   'general.back': 'Back',
