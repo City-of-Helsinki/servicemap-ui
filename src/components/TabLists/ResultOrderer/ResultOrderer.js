@@ -65,7 +65,6 @@ class ResultOrderer extends React.Component {
             }}
           >
             <MenuItem value="match-desc"><FormattedMessage id="sorting.match.desc" /></MenuItem>
-            <MenuItem value="match-asc"><FormattedMessage id="sorting.match.asc" /></MenuItem>
             <MenuItem value="alphabetical-desc"><FormattedMessage id="sorting.alphabetical.desc" /></MenuItem>
             <MenuItem value="alphabetical-asc"><FormattedMessage id="sorting.alphabetical.asc" /></MenuItem>
           </Select>
