@@ -7,6 +7,7 @@ import { injectIntl, intlShape } from 'react-intl';
 import { parseSearchParams, stringifySearchParams } from '../../utils';
 import ResultList from '../Lists/ResultList';
 import PaginationComponent from '../../views/SearchView/components/PaginationComponent';
+import ResultOrderer from './ResultOrderer';
 
 class TabLists extends React.Component {
   // Options
@@ -114,11 +115,20 @@ class TabLists extends React.Component {
 
 
   render() {
-    const { data, intl } = this.props;
+    const { data, sortCallback, intl } = this.props;
     const { currentPage, tabIndex } = this.state;
+
+    let fullData = [];
+
+    data.forEach((element) => {
+      if (element.data) {
+        fullData = [...fullData, ...element.data];
+      }
+    });
 
     return (
       <>
+        <ResultOrderer data={fullData} sortCallback={sortCallback} />
         <Tabs
           value={tabIndex}
           onChange={this.handleTabChange}
@@ -205,6 +215,7 @@ TabLists.propTypes = {
     data: PropTypes.array,
     itemsPerPage: PropTypes.number,
   })).isRequired,
+  sortCallback: PropTypes.func.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
   intl: intlShape.isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,

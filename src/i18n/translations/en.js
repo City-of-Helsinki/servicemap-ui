@@ -6,6 +6,13 @@ export default {
   // Event
   'event.nearby': 'Nearby events',
 
+  // Sorting
+  'sorting.label': 'Order search results',
+  'sorting.alphabetical.asc': 'Reversed alphabetical',
+  'sorting.alphabetical.desc': 'Alphabetical',
+  'sorting.match.asc': 'Most relevant',
+  'sorting.match.desc': 'Least relevant',
+
   // General
   'general.back': 'Back',
   'general.backToStart': 'Back to beginning of page',
