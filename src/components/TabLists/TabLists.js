@@ -129,6 +129,7 @@ class TabLists extends React.Component {
         fullData = [...fullData, ...element.data];
       }
     });
+    const filteredData = data.filter(item => item.component || (item.data && item.data.length > 0));
 
     return (
       <>
@@ -142,7 +143,7 @@ class TabLists extends React.Component {
           scrollButtons="auto"
         >
           {
-            data.map(item => (
+            filteredData.map(item => (
               item.data
               && item.data.length > 0
               && <Tab key={`${item.title} (${item.data.length})`} label={`${item.title} ${item.component ? '' : `(${item.data.length})`}`} aria-label={item.ariaLabel ? item.ariaLabel : null} />
@@ -151,7 +152,7 @@ class TabLists extends React.Component {
         </Tabs>
         {
           // Create tab views from data
-          data.map((item, index) => {
+          filteredData.map((item, index) => {
             // If component given use it instead
             if (item.component) {
               return (
