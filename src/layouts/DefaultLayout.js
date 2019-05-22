@@ -15,6 +15,7 @@ import MobileBottomNavigation from '../components/MobileBottomNavigation/MobileB
 import config from '../../config';
 import { generatePath } from '../utils/path';
 import HomeLogo from '../components/Logos/HomeLogo';
+import { DesktopComponent } from './WrapperComponents/WrapperComponents';
 
 // eslint-disable-next-line camelcase
 const mobileBreakpoint = config.mobile_ui_breakpoint;
@@ -188,7 +189,7 @@ const DefaultLayout = (props) => {
               label: intl.formatMessage({ id: 'general.home' }),
               onClick: () => {
                 if (history) {
-                  // TODO: Add query text once functionality is ready for search view
+                // TODO: Add query text once functionality is ready for search view
                   history.push(generatePath('home', lng));
                 }
               },
@@ -199,14 +200,14 @@ const DefaultLayout = (props) => {
               label: intl.formatMessage({ id: 'map' }),
               onClick: () => {
                 if (history) {
-                  // TODO: Add query text once functionality is ready for search view
+                // TODO: Add query text once functionality is ready for search view
                   history.push(generatePath('map'), lng);
                 }
               },
               icon: <Map />,
               path: 'map',
             },
-            /*
+          /*
             {
               label: 'Settings',
               onClick: () => {
@@ -221,12 +222,13 @@ const DefaultLayout = (props) => {
             */
           ]}
         />
-
       </div>
-      <footer className="sr-only">
-        <a href={!isMobile ? '#site-title' : '#view-title'}>
-          <FormattedMessage id="general.backToStart" />
-        </a>
+      <footer role="contentinfo" className="sr-only">
+        <DesktopComponent>
+          <a href="#site-title">
+            <FormattedMessage id="general.backToStart" />
+          </a>
+        </DesktopComponent>
       </footer>
     </>
   );
