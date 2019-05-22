@@ -96,7 +96,6 @@ class SearchView extends React.Component {
       units, isFetching, intl, count, match, max, previousSearch,
     } = this.props;
     const unitCount = units && units.length;
-    const resultsShowing = !isFetching && unitCount > 0;
     const progress = (isFetching && count) ? Math.floor((count / max * 100)) : 0;
 
     // If not currently searching and view should not fetch new search
@@ -158,6 +157,10 @@ class SearchView extends React.Component {
       paperStyles.padding = 0;
     }
 
+    // Calculate showed elements
+    const showResults = !isFetching && unitCount > 0;
+    const showNotFoundText = !isFetching && previousSearch && units && units.length === 0;
+
     return (
       <div className="Search">
         <SearchBar
@@ -198,16 +201,13 @@ class SearchView extends React.Component {
 
         {
           // Show results
-          resultsShowing
+          showResults
           && (
             <TabLists data={searchResults} sortCallback={this.sortCallback} />
           )
         }
         {
-          !isFetching
-          && previousSearch
-          && units
-          && units.length === 0
+          showNotFoundText
           && (
             <Container>
               <Typography variant="subtitle1" component="p" aria-hidden="true">
