@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { drawServiceIcon } from '../../../views/Map/utils/drawIcon';
-import { generatePath } from '../../../utils/path';
 import { getLocaleString } from '../../../redux/selectors/locale';
 import { uppercaseFirst } from '../../../utils';
 import SimpleListItem from '../SimpleListItem';
@@ -20,11 +18,9 @@ class ServiceItem extends React.Component {
 
   render() {
     const {
-      currentService, service, getLocaleText, history, match, setNewCurrentService,
+      currentService, service, getLocaleText, navigator, setNewCurrentService,
     } = this.props;
     const { icon } = this.state;
-    const { params } = match;
-    const lng = params && params.lng;
     let text = getLocaleText(service.name);
 
     if (service.period) {
@@ -38,11 +34,12 @@ class ServiceItem extends React.Component {
         divider
         handleItemClick={(e) => {
           e.preventDefault();
+
           if (!currentService || currentService.id !== service.id) {
             setNewCurrentService(service);
           }
-          if (history) {
-            history.push(generatePath('service', lng, service.id));
+          if (navigator) {
+            navigator.push('service', service.id);
           }
         }}
         role="link"
@@ -55,26 +52,28 @@ class ServiceItem extends React.Component {
 const mapStateToProps = (state) => {
   const { current } = state.service;
   const getLocaleText = textObject => getLocaleString(state, textObject);
+  const { navigator } = state;
   return {
     currentService: current,
     getLocaleText,
+    navigator,
   };
 };
 
-export default withRouter(connect(
+export default connect(
   mapStateToProps,
   { setNewCurrentService },
-)(ServiceItem));
+)(ServiceItem);
 
 ServiceItem.propTypes = {
   currentService: PropTypes.objectOf(PropTypes.any),
   getLocaleText: PropTypes.func.isRequired,
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
-  match: PropTypes.objectOf(PropTypes.any).isRequired,
+  navigator: PropTypes.objectOf(PropTypes.any),
   service: PropTypes.objectOf(PropTypes.any).isRequired,
   setNewCurrentService: PropTypes.func.isRequired,
 };
 
 ServiceItem.defaultProps = {
   currentService: null,
+  navigator: null,
 };

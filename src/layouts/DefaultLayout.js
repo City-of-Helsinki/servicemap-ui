@@ -88,7 +88,7 @@ const createContentStyles = (
 
 const DefaultLayout = (props) => {
   const {
-    i18n, intl, location, history, match,
+    i18n, intl, location, match,
   } = props;
   const { params } = match;
   const lng = params && params.lng;
@@ -187,9 +187,8 @@ const DefaultLayout = (props) => {
             {
               label: intl.formatMessage({ id: 'general.home' }),
               onClick: () => {
-                if (history) {
-                  // TODO: Add query text once functionality is ready for search view
-                  history.push(generatePath('home', lng));
+                if (navigator) {
+                  navigator.push('home');
                 }
               },
               icon: <Home />,
@@ -198,9 +197,8 @@ const DefaultLayout = (props) => {
             {
               label: intl.formatMessage({ id: 'map' }),
               onClick: () => {
-                if (history) {
-                  // TODO: Add query text once functionality is ready for search view
-                  history.push(generatePath('map'), lng);
+                if (navigator) {
+                  navigator.push('map');
                 }
               },
               icon: <Map />,
@@ -234,7 +232,6 @@ const DefaultLayout = (props) => {
 
 // Typechecking
 DefaultLayout.propTypes = {
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   i18n: PropTypes.instanceOf(I18n),
   intl: intlShape.isRequired,

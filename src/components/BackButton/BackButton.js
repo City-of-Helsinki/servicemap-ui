@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { IconButton, Button } from '@material-ui/core';
 import { ArrowBack } from '@material-ui/icons';
 import { injectIntl, intlShape } from 'react-intl';
 
 const BackButton = (props) => {
   const {
-    className, history, intl, onClick, style, variant,
+    className, intl, onClick, style, variant, navigator,
   } = props;
 
   if (variant === 'icon') {
@@ -21,8 +21,8 @@ const BackButton = (props) => {
           e.preventDefault();
           if (onClick) {
             onClick(e);
-          } else if (history) {
-            history.goBack();
+          } else if (navigator) {
+            navigator.goBack();
           }
         }}
       >
@@ -40,8 +40,8 @@ const BackButton = (props) => {
         e.preventDefault();
         if (onClick) {
           onClick(e);
-        } else if (history) {
-          history.goBack();
+        } else if (navigator) {
+          navigator.goBack();
         }
       }}
     >
@@ -53,8 +53,8 @@ const BackButton = (props) => {
 
 BackButton.propTypes = {
   className: PropTypes.string,
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
   intl: intlShape.isRequired,
+  navigator: PropTypes.objectOf(PropTypes.any),
   style: PropTypes.objectOf(PropTypes.any),
   onClick: PropTypes.func,
   variant: PropTypes.oneOf(['icon', null]),
@@ -62,9 +62,21 @@ BackButton.propTypes = {
 
 BackButton.defaultProps = {
   className: '',
+  navigator: null,
   style: {},
   onClick: null,
   variant: null,
 };
 
-export default injectIntl(withRouter(BackButton));
+// Listen to redux state
+const mapStateToProps = (state) => {
+  const { navigator } = state;
+  return {
+    navigator,
+  };
+};
+
+export default injectIntl(connect(
+  mapStateToProps,
+  null,
+)(BackButton));

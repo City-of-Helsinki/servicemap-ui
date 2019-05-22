@@ -1,14 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import {
   InputBase, Paper, withStyles, IconButton,
 } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
 import { injectIntl, intlShape } from 'react-intl';
 import BackButton from '../BackButton';
-import { generatePath } from '../../utils/path';
 import { fetchUnits } from '../../redux/actions/unit';
 
 const styles = theme => ({
@@ -91,12 +89,10 @@ class SearchBar extends React.Component {
   handleSubmit = (search) => {
     if (search && search !== '') {
       const {
-        fetchUnits, history, match, previousSearch,
+        fetchUnits, navigator, previousSearch,
       } = this.props;
-      const { params } = match;
-      const lng = params && params.lng;
-      if (history) {
-        history.push(generatePath('search', lng, search));
+      if (navigator) {
+        navigator.push('search', search);
       }
 
       if (search !== previousSearch) {
@@ -155,9 +151,8 @@ SearchBar.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   fetchUnits: PropTypes.func.isRequired,
   hideBackButton: PropTypes.bool,
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
+  navigator: PropTypes.objectOf(PropTypes.any),
   intl: intlShape.isRequired,
-  match: PropTypes.objectOf(PropTypes.any).isRequired,
   placeholder: PropTypes.string.isRequired,
   searchRef: PropTypes.objectOf(PropTypes.any),
   previousSearch: PropTypes.string,
@@ -167,10 +162,19 @@ SearchBar.defaultProps = {
   previousSearch: null,
   backButtonEvent: null,
   hideBackButton: false,
+  navigator: null,
   searchRef: {},
 };
 
-export default withRouter(withStyles(styles)(injectIntl(connect(
-  null,
+// Listen to redux state
+const mapStateToProps = (state) => {
+  const { navigator } = state;
+  return {
+    navigator,
+  };
+};
+
+export default withStyles(styles)(injectIntl(connect(
+  mapStateToProps,
   { fetchUnits },
-)(SearchBar))));
+)(SearchBar)));
