@@ -1,4 +1,4 @@
-/* eslint-disable no-underscore-dangle, global-require */
+/* eslint-disable global-require */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
@@ -77,6 +77,10 @@ class MapView extends React.Component {
     });
   }
 
+  getMapRefElement() {
+    return this.mapRef.current.leafletElement;
+  }
+
   saveMapReference() {
     const { saveMapRef } = this.props;
     const { refSaved } = this.state;
@@ -89,8 +93,10 @@ class MapView extends React.Component {
   // Check if transit stops should be shown
   showTransitStops() {
     const { mapType, mobile } = this.props;
-    const transitZoom = !mobile ? mapType.options.transitZoom : mapType.options.mobileTransitZoom;
-    return this.mapRef.current.leafletElement._zoom >= transitZoom;
+    const transitZoom = mobile ? mapType.options.mobileTransitZoom : mapType.options.transitZoom;
+    const mapRefElement = this.getMapRefElement();
+    const currentZoom = mapRefElement.getZoom();
+    return currentZoom >= transitZoom;
   }
 
   initiateLeaflet() {
@@ -128,6 +134,7 @@ class MapView extends React.Component {
     const lng = params && params.lng;
 
     const unitListFiltered = unitList.filter(unit => unit.object_type === 'unit');
+    const zoomLevel = mobile ? mapType.options.mobileZoom : mapType.options.zoom;
 
     if (Map) {
       return (
@@ -138,13 +145,13 @@ class MapView extends React.Component {
           zoomControl={false}
           crs={mapType.crs}
           center={mapOptions.initialPosition}
-          zoom={!mobile ? mapType.options.zoom : mapType.options.mobileZoom}
+          zoom={zoomLevel}
           minZoom={mapType.options.minZoom}
           maxZoom={mapType.options.maxZoom}
           maxBounds={mapOptions.maxBounds}
           onMoveEnd={() => {
             if (this.showTransitStops()) {
-              fetchTransitStops(this.mapRef.current.leafletElement);
+              fetchTransitStops(this.getMapRefElement());
             } else if (transitStops.length > 0) {
               clearTransitStops();
             }
