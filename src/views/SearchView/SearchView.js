@@ -16,6 +16,7 @@ import TabLists from '../../components/TabLists';
 import paths from '../../../config/paths';
 import Container from '../../components/Container/Container';
 import { generatePath } from '../../utils/path';
+import { DesktopComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 
 class SearchView extends React.Component {
   constructor(props) {
@@ -233,11 +234,13 @@ class SearchView extends React.Component {
         {
           // Jump link back to beginning of current page
         }
-        <Typography variant="srOnly" component="h3">
-          <Link href="#view-title" tabIndex="-1">
-            <FormattedMessage id="general.return.viewTitle" />
-          </Link>
-        </Typography>
+        <DesktopComponent>
+          <Typography variant="srOnly" component="h3">
+            <Link href="#view-title" tabIndex="-1">
+              <FormattedMessage id="general.return.viewTitle" />
+            </Link>
+          </Typography>
+        </DesktopComponent>
       </div>
     );
   }
