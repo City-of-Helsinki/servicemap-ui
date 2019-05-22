@@ -61,6 +61,9 @@ class Navigator extends React.Component {
     }
   }
 
+  /**
+   * Push new value to breadcrumbs
+   */
   breadcrumbPush = (location) => {
     const { breadcrumb } = this.state;
     this.setState({
@@ -71,6 +74,9 @@ class Navigator extends React.Component {
     });
   }
 
+  /**
+   * Remove last location in breadcrumbs
+   */
   breadcrumbPop = () => {
     const { breadcrumb } = this.state;
     const newBreadcrumb = Array.from(breadcrumb);
@@ -80,6 +86,10 @@ class Navigator extends React.Component {
     });
   }
 
+  /**
+   * Replace current value in breadcrumbs
+   * @param location - Url string of path or object for history location
+   */
   breadcrumbReplace = (location) => {
     const { breadcrumb } = this.state;
     const newBreadcrumb = Array.from(breadcrumb);
@@ -92,6 +102,11 @@ class Navigator extends React.Component {
     });
   }
 
+  /**
+   * Generate url based on path string and data
+   * @param target - Key string for path config
+   * @param data - Data for path used if target is path key
+   */
   generatePath = (target, data) => {
     const { match } = this.props;
     const { params } = match;
@@ -100,6 +115,10 @@ class Navigator extends React.Component {
     return generatePath(target, locale, data);
   }
 
+
+  /**
+   * Go back in history if breadcrumbs has values otherwise return to home view
+   */
   goBack = () => {
     const {
       history,
@@ -116,6 +135,12 @@ class Navigator extends React.Component {
     }
   }
 
+
+  /**
+   * Push current location to history
+   * @param target - String key for path config or object for history location
+   * @param data - Data for path used if target is path key
+   */
   push = (target, data) => {
     const {
       history,
@@ -134,6 +159,11 @@ class Navigator extends React.Component {
     }
   }
 
+  /**
+   * Replace current location in history
+   * @param target - String key for path config or object for history location
+   * @param data - Data for path used if target is path key
+   */
   replace = (target, data) => {
     const {
       history,
