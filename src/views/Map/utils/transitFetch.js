@@ -1,20 +1,26 @@
-/* eslint-disable no-underscore-dangle */
-const fetchStops = async (bounds) => {
-  const fetchBounds = bounds.getBounds();
+/* eslint-disable global-require */
+const fetchStops = async (map) => {
+  const L = require('leaflet');
+
+  const fetchBounds = map.getBounds();
+  const cornerBottom = fetchBounds.getSouthWest();
+  const cornerTop = fetchBounds.getNorthEast();
 
   const viewSize = {
-    width: Math.abs(fetchBounds._southWest.lng - fetchBounds._northEast.lng),
-    height: Math.abs(fetchBounds._southWest.lat - fetchBounds._northEast.lat),
+    width: Math.abs(cornerBottom.lng - cornerTop.lng),
+    height: Math.abs(cornerBottom.lat - cornerTop.lat),
   };
 
-  // Widen the area of search
-  fetchBounds._southWest.lat -= viewSize.height;
-  fetchBounds._southWest.lng -= viewSize.width;
-  fetchBounds._northEast.lat += viewSize.height;
-  fetchBounds._northEast.lng += viewSize.width;
+  // Increase the search area by the amount of current view size
+  cornerBottom.lat -= viewSize.height;
+  cornerBottom.lng -= viewSize.width;
+  cornerTop.lat += viewSize.height;
+  cornerTop.lng += viewSize.width;
+
+  const wideBounds = L.latLngBounds(cornerTop, cornerBottom);
 
   // Bounds used in subway entrance fetch
-  const fetchBox = `${fetchBounds.getWest()},${fetchBounds.getSouth()},${fetchBounds.getEast()},${fetchBounds.getNorth()}`;
+  const fetchBox = `${wideBounds.getWest()},${wideBounds.getSouth()},${wideBounds.getEast()},${wideBounds.getNorth()}`;
 
   const data = await Promise.all([
     // Fetch for transit stops
@@ -23,7 +29,7 @@ const fetchStops = async (bounds) => {
       headers: { 'Content-Type': 'application/graphql' },
       body:
       `{
-        stopsByBbox(minLat: ${fetchBounds._southWest.lat}, minLon: ${fetchBounds._southWest.lng}, maxLat: ${fetchBounds._northEast.lat}, maxLon: ${fetchBounds._northEast.lng} ) {
+        stopsByBbox(minLat: ${wideBounds.getSouthWest().lat}, minLon: ${wideBounds.getSouthWest().lng}, maxLat: ${wideBounds.getNorthEast().lat}, maxLon: ${wideBounds.getNorthEast().lng} ) {
           vehicleType
           gtfsId
           name
