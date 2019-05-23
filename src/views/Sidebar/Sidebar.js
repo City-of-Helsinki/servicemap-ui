@@ -41,7 +41,7 @@ HeadWrapper.defaultProps = {
 
 const Home = () => (
   <TitleWrapper messageId="general.pageTitles.home">
-    <HeadWrapper headMsgId="app.title">
+    <HeadWrapper headMsgId="">
       <HomeView />
     </HeadWrapper>
   </TitleWrapper>

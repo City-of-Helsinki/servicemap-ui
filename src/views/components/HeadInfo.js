@@ -10,6 +10,7 @@ import { getLocaleString } from '../../redux/selectors/locale';
 const HeadInfo = ({
   intl, messageId, page, unit, service, getLocaleText,
 }) => {
+  const appTitle = ` | ${intl.formatMessage({ id: 'app.title' })}`;
   const message = messageId ? intl.formatMessage({ id: messageId }) : '';
   let pageMessage = '';
 
@@ -19,11 +20,12 @@ const HeadInfo = ({
   } if (page === 'service' && service && service.name) {
     pageMessage = getLocaleText(service.name);
   }
-  const title = `${message} ${uppercaseFirst(pageMessage)}`;
+
+  const title = `${message}${uppercaseFirst(pageMessage)}${appTitle}`;
 
   return (
     <Helmet>
-      {title && title.length > 1 && (
+      {title && title.length > appTitle.length && (
         <title>{title}</title>
       )}
     </Helmet>
