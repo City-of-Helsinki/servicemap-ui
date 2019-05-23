@@ -101,7 +101,7 @@ class MapContainer extends React.Component {
 
   render() {
     const {
-      mapType, navigator, districts, highlightedUnit, getLocaleText, currentPage, unitList, serviceUnits, unitsLoading,
+      mapType, navigator, districts, highlightedUnit, getLocaleText, currentPage, unitList, serviceUnits, unitsLoading, isMobile,
     } = this.props;
     const { initialMap, transitStops } = this.state;
 
