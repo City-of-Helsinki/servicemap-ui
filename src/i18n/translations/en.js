@@ -14,9 +14,14 @@ export default {
 
   // General
   'general.back': 'Back',
+  'general.back.address': 'Back to address view',
+  'general.back.home': 'Back to home view',
+  'general.back.search': 'Back to search view',
+  'general.back.service': 'Back to service view',
+  'general.back.unit': 'Back to unit view',
+  'general.backToHome': 'Close search and return to beginning',
   'general.backToStart': 'Back to beginning of page',
   'general.home': 'Home',
-  'general.back.home': 'Close search and return to beginning',
   'general.noData': 'No data available',
   'general.loading': 'Loading',
   'general.pageTitles.home': 'Home view',
