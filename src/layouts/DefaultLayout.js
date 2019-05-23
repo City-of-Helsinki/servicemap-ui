@@ -189,7 +189,6 @@ const DefaultLayout = (props) => {
               label: intl.formatMessage({ id: 'general.home' }),
               onClick: () => {
                 if (history) {
-                // TODO: Add query text once functionality is ready for search view
                   history.push(generatePath('home', lng));
                 }
               },
@@ -200,7 +199,6 @@ const DefaultLayout = (props) => {
               label: intl.formatMessage({ id: 'map' }),
               onClick: () => {
                 if (history) {
-                // TODO: Add query text once functionality is ready for search view
                   history.push(generatePath('map'), lng);
                 }
               },
