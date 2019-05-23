@@ -15,6 +15,7 @@ import TabLists from '../../components/TabLists';
 
 import Container from '../../components/Container/Container';
 import { generatePath } from '../../utils/path';
+import { DesktopComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 
 class SearchView extends React.Component {
   constructor(props) {
@@ -199,7 +200,7 @@ class SearchView extends React.Component {
     const unitCount = units && units.length;
 
     return (
-      <Typography variant="srOnly" component="h3" tabIndex="-1">
+      <Typography style={{ position: 'fixed', left: -100 }} variant="srOnly" component="h3" tabIndex="-1">
         {
           !isFetching
           && (
@@ -268,11 +269,13 @@ class SearchView extends React.Component {
         {
           // Jump link back to beginning of current page
         }
-        <Typography variant="srOnly" component="h3">
-          <Link href="#view-title" tabIndex="-1">
-            <FormattedMessage id="general.return.viewTitle" />
-          </Link>
-        </Typography>
+        <DesktopComponent>
+          <Typography variant="srOnly" component="h3">
+            <Link href="#view-title" tabIndex="-1">
+              <FormattedMessage id="general.return.viewTitle" />
+            </Link>
+          </Typography>
+        </DesktopComponent>
       </div>
     );
   }

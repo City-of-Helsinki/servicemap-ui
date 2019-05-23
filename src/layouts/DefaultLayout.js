@@ -14,6 +14,7 @@ import MobileBottomNavigation from '../components/MobileBottomNavigation/MobileB
 import config from '../../config';
 import { generatePath } from '../utils/path';
 import HomeLogo from '../components/Logos/HomeLogo';
+import { DesktopComponent } from './WrapperComponents/WrapperComponents';
 
 // eslint-disable-next-line camelcase
 const mobileBreakpoint = config.mobile_ui_breakpoint;
@@ -203,7 +204,7 @@ const DefaultLayout = (props) => {
               icon: <Map />,
               path: 'map',
             },
-            /*
+          /*
             {
               label: 'Settings',
               onClick: () => {
@@ -218,12 +219,13 @@ const DefaultLayout = (props) => {
             */
           ]}
         />
-
       </div>
-      <footer className="sr-only">
-        <a href="#site-title">
-          <FormattedMessage id="general.backToStart" />
-        </a>
+      <footer role="contentinfo" className="sr-only">
+        <DesktopComponent>
+          <a href="#site-title">
+            <FormattedMessage id="general.backToStart" />
+          </a>
+        </DesktopComponent>
       </footer>
     </>
   );

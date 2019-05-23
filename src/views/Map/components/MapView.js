@@ -1,4 +1,4 @@
-/* eslint-disable no-underscore-dangle, global-require */
+/* eslint-disable global-require */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
@@ -76,6 +76,10 @@ class MapView extends React.Component {
     });
   }
 
+  getMapRefElement() {
+    return this.mapRef.current.leafletElement;
+  }
+
   saveMapReference() {
     const { saveMapRef } = this.props;
     const { refSaved } = this.state;
@@ -87,8 +91,11 @@ class MapView extends React.Component {
 
   // Check if transit stops should be shown
   showTransitStops() {
-    const { mapBase } = this.props;
-    return this.mapRef.current.leafletElement._zoom >= mapBase.options.transitZoom;
+    const { mapType, mobile } = this.props;
+    const transitZoom = mobile ? mapType.options.mobileTransitZoom : mapType.options.transitZoom;
+    const mapRefElement = this.getMapRefElement();
+    const currentZoom = mapRefElement.getZoom();
+    return currentZoom >= transitZoom;
   }
 
   initiateLeaflet() {
@@ -106,7 +113,7 @@ class MapView extends React.Component {
 
   render() {
     const {
-      mapBase,
+      mapType,
       unitList,
       mapOptions,
       // districtList,
@@ -116,12 +123,14 @@ class MapView extends React.Component {
       navigator,
       transitStops,
       getLocaleText,
+      mobile,
     } = this.props;
     const {
       Map, TileLayer, ZoomControl, Marker, Popup, Polygon, highlightedDistrict,
     } = this.state;
 
     const unitListFiltered = unitList.filter(unit => unit.object_type === 'unit');
+    const zoomLevel = mobile ? mapType.options.mobileZoom : mapType.options.zoom;
 
     if (Map) {
       return (
@@ -130,22 +139,22 @@ class MapView extends React.Component {
           keyboard={false}
           style={style}
           zoomControl={false}
-          crs={mapBase.crs}
+          crs={mapType.crs}
           center={mapOptions.initialPosition}
-          zoom={mapBase.options.zoom}
-          minZoom={mapBase.options.minZoom}
-          maxZoom={mapBase.options.maxZoom}
+          zoom={zoomLevel}
+          minZoom={mapType.options.minZoom}
+          maxZoom={mapType.options.maxZoom}
           maxBounds={mapOptions.maxBounds}
           onMoveEnd={() => {
             if (this.showTransitStops()) {
-              fetchTransitStops(this.mapRef.current.leafletElement);
+              fetchTransitStops(this.getMapRefElement());
             } else if (transitStops.length > 0) {
               clearTransitStops();
             }
           }}
         >
           <TileLayer
-            url={mapBase.options.url}
+            url={mapType.options.url}
             attribution='&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors'
           />
           {unitListFiltered.map((unit) => {
@@ -156,7 +165,7 @@ class MapView extends React.Component {
                   className="unitMarker"
                   key={unit.id}
                   position={[unit.location.coordinates[1], unit.location.coordinates[0]]}
-                  icon={drawMarkerIcon(unit, mapBase.options.name)}
+                  icon={drawMarkerIcon(unit, mapType.options.name)}
                   onClick={() => {
                     if (navigator) {
                       navigator.push('unit', unit.id);
@@ -183,7 +192,7 @@ class MapView extends React.Component {
                 highlightedDistrict.unit.location.coordinates[1],
                 highlightedDistrict.unit.location.coordinates[0],
               ]}
-              icon={drawMarkerIcon(highlightedDistrict.unit, mapBase.options.name)}
+              icon={drawMarkerIcon(highlightedDistrict.unit, mapType.options.name)}
               keyboard={false}
             >
               <Popup autoPan={false}>
@@ -271,7 +280,7 @@ export default withRouter(withStyles(styles)(MapView));
 // Typechecking
 MapView.propTypes = {
   style: PropTypes.objectOf(PropTypes.any),
-  mapBase: PropTypes.objectOf(PropTypes.any),
+  mapType: PropTypes.objectOf(PropTypes.any),
   unitList: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.array])),
   // districtList: PropTypes.arrayOf(PropTypes.object),
   mapOptions: PropTypes.objectOf(PropTypes.any),
@@ -281,12 +290,13 @@ MapView.propTypes = {
   transitStops: PropTypes.arrayOf(PropTypes.object),
   getLocaleText: PropTypes.func.isRequired,
   saveMapRef: PropTypes.func.isRequired,
+  mobile: PropTypes.bool,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 MapView.defaultProps = {
   style: { width: '100%', height: '100%' },
-  mapBase: {},
+  mapType: {},
   mapOptions: {},
   navigator: null,
   unitList: [],
@@ -294,4 +304,5 @@ MapView.defaultProps = {
   fetchTransitStops: null,
   clearTransitStops: null,
   transitStops: [],
+  mobile: false,
 };

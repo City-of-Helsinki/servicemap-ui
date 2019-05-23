@@ -53,7 +53,7 @@ class MapContainer extends React.Component {
 
         const entrances = data[1].results;
 
-        // Add subway entrances to the list of stops and give them proper schedules
+        // Add subway entrances to the list of stops
         entrances.forEach((entrance) => {
           const closest = {
             distance: null,
@@ -74,8 +74,7 @@ class MapContainer extends React.Component {
           const otherStop = subwayStations.find(
             station => station.name === closest.stop.name && station.gtfsId !== closest.stop.gtfsId,
           );
-
-          // Create a new stop from the entrance, give it the arrival schedule of the corresponding station and add it to the list of stops
+          // Create a new stop from the entrance, give it the stop data of the corresponding station and add it to the list of stops
           const newStop = {
             gtfsId: closest.stop.gtfsId,
             secondaryId: otherStop.gtfsId,
@@ -102,8 +101,9 @@ class MapContainer extends React.Component {
 
   render() {
     const {
-      mapType, navigator, districts, highlightedUnit, getLocaleText, currentPage, unitList, serviceUnits, unitsLoading,
+      mapType, navigator, districts, highlightedUnit, getLocaleText, currentPage, unitList, serviceUnits, unitsLoading, isMobile,
     } = this.props;
+    const { initialMap, transitStops } = this.state;
 
     let mapUnits = [];
 
@@ -119,16 +119,16 @@ class MapContainer extends React.Component {
       mapUnits = [highlightedUnit];
     }
 
-    const { initialMap, transitStops } = this.state;
     if (initialMap) {
       return (
         <MapView
           key={mapType ? mapType.crs.code : initialMap.crs.code}
-          mapBase={mapType || initialMap}
+          mapType={mapType || initialMap}
           unitList={mapUnits}
           districtList={districts}
           saveMapRef={this.saveMapRef}
           mapOptions={mapOptions}
+          mobile={isMobile}
           navigator={navigator}
           fetchTransitStops={this.fetchTransitStops}
           clearTransitStops={this.clearTransitStops}
@@ -190,7 +190,7 @@ MapContainer.propTypes = {
   fetchDistrictsData: PropTypes.func.isRequired,
   getLocaleText: PropTypes.func.isRequired,
   setMapRef: PropTypes.func.isRequired,
-  // isMobile: PropTypes.bool,
+  isMobile: PropTypes.bool,
 };
 
 MapContainer.defaultProps = {
@@ -202,5 +202,5 @@ MapContainer.defaultProps = {
   unitsLoading: false,
   districts: {},
   highlightedUnit: null,
-  // isMobile: false,
+  isMobile: false,
 };
