@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchUnits } from '../../../redux/actions/unit';
+import { breadcrumbPush, breadcrumbPop, breadcrumbReplace } from '../../../redux/actions/breadcrumb';
 import { generatePath } from '../../path';
 import { parseSearchParams } from '../..';
 import paths from '../../../../config/paths';
@@ -16,37 +17,33 @@ class Navigator extends React.Component {
       history,
     } = props;
 
-    this.state = {
-      breadcrumb: [],
-    };
-
     // Listen history and handle changes
-    this.unlisten = history.listen((location, action) => {
+    this.unlisten = history.listen((newLocation, action) => {
       const {
-        fetchUnits, previousSearch,
+        breadcrumbPush, breadcrumbPop, breadcrumbReplace, fetchUnits, location, previousSearch,
       } = this.props;
 
       // Get search params
-      const searchParams = parseSearchParams(location.search);
+      const searchParams = parseSearchParams(newLocation.search);
       const searchParam = searchParams.q || null;
 
       // If page is search
-      // and previousSearch is not current location's params
-      // then fetch units with location's search params
-      if (paths.search.regex.exec(location.pathname) && previousSearch !== searchParam) {
+      // and previousSearch is not current new location's params
+      // then fetch units with new location's search params
+      if (paths.search.regex.exec(newLocation.pathname) && previousSearch !== searchParam) {
         fetchUnits([], null, searchParam);
       }
 
       // Update breadcrumbs
       switch (action) {
         case 'PUSH':
-          this.breadcrumbPush(location);
+          breadcrumbPush(location);
           break;
         case 'POP':
-          this.breadcrumbPop();
+          breadcrumbPop();
           break;
         case 'REPLACE':
-          this.breadcrumbReplace(location);
+          breadcrumbReplace(location);
           break;
         default:
       }
@@ -59,31 +56,6 @@ class Navigator extends React.Component {
     if (this.unlisten) {
       this.unlisten();
     }
-  }
-
-  /**
-   * Push new value to breadcrumbs
-   */
-  breadcrumbPush = (location) => {
-    const { breadcrumb } = this.state;
-    this.setState({
-      breadcrumb: [
-        ...breadcrumb,
-        location,
-      ],
-    });
-  }
-
-  /**
-   * Remove last location in breadcrumbs
-   */
-  breadcrumbPop = () => {
-    const { breadcrumb } = this.state;
-    const newBreadcrumb = Array.from(breadcrumb);
-    newBreadcrumb.pop();
-    this.setState({
-      breadcrumb: newBreadcrumb,
-    });
   }
 
   /**
@@ -121,11 +93,9 @@ class Navigator extends React.Component {
    */
   goBack = () => {
     const {
+      breadcrumb,
       history,
     } = this.props;
-    const {
-      breadcrumb,
-    } = this.state;
 
     // If breadcrumb has values go back else take user to home
     if (breadcrumb && breadcrumb.length > 0) {
@@ -186,8 +156,13 @@ class Navigator extends React.Component {
 }
 
 Navigator.propTypes = {
+  breadcrumb: PropTypes.arrayOf(PropTypes.any).isRequired,
+  breadcrumbPush: PropTypes.func.isRequired,
+  breadcrumbPop: PropTypes.func.isRequired,
+  breadcrumbReplace: PropTypes.func.isRequired,
   fetchUnits: PropTypes.func.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
+  location: PropTypes.objectOf(PropTypes.any).isRequired,
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   previousSearch: PropTypes.string,
 };
@@ -198,9 +173,10 @@ Navigator.defaultProps = {
 
 // Listen to redux state
 const mapStateToProps = (state) => {
-  const { units } = state;
+  const { breadcrumb, units } = state;
   const { previousSearch } = units;
   return {
+    breadcrumb,
     previousSearch,
   };
 };
@@ -208,7 +184,7 @@ const mapStateToProps = (state) => {
 export default connect(
   mapStateToProps,
   {
-    fetchUnits,
+    breadcrumbPush, breadcrumbPop, breadcrumbReplace, fetchUnits,
   },
   null,
   { forwardRef: true },
