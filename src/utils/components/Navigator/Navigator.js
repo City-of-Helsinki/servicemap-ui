@@ -59,22 +59,6 @@ class Navigator extends React.Component {
   }
 
   /**
-   * Replace current value in breadcrumbs
-   * @param location - Url string of path or object for history location
-   */
-  breadcrumbReplace = (location) => {
-    const { breadcrumb } = this.state;
-    const newBreadcrumb = Array.from(breadcrumb);
-    newBreadcrumb.pop();
-    this.setState({
-      breadcrumb: [
-        ...newBreadcrumb,
-        location,
-      ],
-    });
-  }
-
-  /**
    * Generate url based on path string and data
    * @param target - Key string for path config
    * @param data - Data for path used if target is path key
