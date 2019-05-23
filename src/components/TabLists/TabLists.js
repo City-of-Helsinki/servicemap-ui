@@ -6,7 +6,7 @@ import { Tabs, Tab, Typography } from '@material-ui/core';
 import { injectIntl, intlShape } from 'react-intl';
 import { parseSearchParams, stringifySearchParams } from '../../utils';
 import ResultList from '../Lists/ResultList';
-import PaginationComponent from '../../views/SearchView/components/PaginationComponent';
+import PaginationComponent from './PaginationComponent';
 import ResultOrderer from './ResultOrderer';
 
 class TabLists extends React.Component {

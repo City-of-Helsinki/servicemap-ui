@@ -111,8 +111,8 @@ class MapContainer extends React.Component {
       mapUnits = unitList;
     }
 
-    if (currentPage === 'service' && serviceUnits.units && !unitsLoading) {
-      mapUnits = serviceUnits.units.results;
+    if (currentPage === 'service' && serviceUnits && !unitsLoading) {
+      mapUnits = serviceUnits;
     }
 
     if (highlightedUnit) {
@@ -147,7 +147,7 @@ const mapStateToProps = (state) => {
   const { units, navigator } = state;
   const { data } = units;
   const unitsLoading = state.service.isFetching;
-  const serviceUnits = state.service.data;
+  const serviceUnits = state.service.units;
   const mapType = getMapType(state);
   const districts = getDistricts(state);
   const highlightedUnit = getSelectedUnit(state);

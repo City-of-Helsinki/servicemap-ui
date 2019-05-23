@@ -4,8 +4,11 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Paper, Typography } from '@material-ui/core';
+import SearchBar from '../../components/SearchBar';
 import TitleBar from '../../components/TitleBar/TitleBar';
+import { DesktopComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import { generatePath } from '../../utils/path';
+import { drawServiceIcon } from '../Map/utils/drawIcon';
 import { fitUnitsToMap } from '../Map/utils/mapActions';
 import ResultList from '../../components/Lists/ResultList';
 import Loading from '../../components/Loading/Loading';
@@ -15,22 +18,27 @@ class ServiceView extends React.Component {
   constructor(props) {
     super(props);
     this.listTitle = React.createRef();
-    this.state = { mapMoved: false };
+    this.state = {
+      mapMoved: false,
+      icon: null,
+    };
   }
 
   componentDidMount() {
     const {
-      current, match, fetchService, unitData, map, setCurrentPage,
+      current, match, fetchService, setCurrentPage,
     } = this.props;
     const { params } = match;
+
+    this.setState({
+      icon: <img alt="" src={drawServiceIcon()} style={{ height: 24, margin: 8, marginRight: 16 }} aria-hidden="true" />,
+    });
+
     // Set current page to this view
     setCurrentPage('service');
     // Fetch service if current is not same as url param's
-    // Otherwise focusMap
     if (!current || `${current.id}` !== params.service) {
       fetchService(params.service);
-    } else {
-      this.focusMap(unitData.units, map);
     }
   }
 
@@ -40,9 +48,9 @@ class ServiceView extends React.Component {
     } = this.props;
     const { params } = match;
     // Focus map if service is set and units exist
-    if (current && current.id === params.service && unitData && unitData.length > 0) {
+    if (current && `${current.id}` === params.service && unitData && unitData.length > 0) {
       // Focus map on unit
-      this.focusMap(unitData.units, map);
+      this.focusMap(unitData, map);
     }
   }
 
@@ -68,6 +76,7 @@ class ServiceView extends React.Component {
     const {
       count, current, unitData, isLoading, max, getLocaleText, intl,
     } = this.props;
+    const { icon } = this.state;
     const progress = (isLoading && count) ? Math.floor((count / max * 100)) : 0;
 
     let serviceUnits = null;
@@ -87,10 +96,13 @@ class ServiceView extends React.Component {
 
     return (
       <div>
+        <DesktopComponent>
+          <SearchBar placeholder={intl.formatMessage({ id: 'search' })} />
+        </DesktopComponent>
         {
           showTitle
           && (
-            <TitleBar title={getLocaleText(current.name)} />
+            <TitleBar icon={icon} title={getLocaleText(current.name)} />
           )
         }
         {

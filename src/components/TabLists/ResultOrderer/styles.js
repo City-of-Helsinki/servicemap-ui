@@ -12,6 +12,6 @@ export default theme => ({
     textAlign: 'left',
   },
   selectEmpty: {
-    marginTop: theme.spacing.unit * 2,
+    marginTop: theme.spacing.unitDouble,
   },
 });
