@@ -20,10 +20,12 @@ const fitUnitsToMap = (units, map) => {
 };
 
 const focusUnit = (map, unit) => {
-  map.setView(
-    [unit.location.coordinates[1], unit.location.coordinates[0]],
-    map._layersMaxZoom - 1,
-  );
+  if (unit.location && unit.location.coordinates) {
+    map.setView(
+      [unit.location.coordinates[1], unit.location.coordinates[0]],
+      map._layersMaxZoom - 1,
+    );
+  }
 };
 
 export {

@@ -11,7 +11,7 @@ import { getSelectedUnit } from '../../redux/selectors/selectedUnit';
 import { getLocaleString } from '../../redux/selectors/locale';
 import CreateMap from './utils/createMap';
 import { mapOptions } from './constants/mapConstants';
-import fetchStops from './utils/fetchStops';
+import { fetchStops } from './utils/transitFetch';
 
 class MapContainer extends React.Component {
   constructor(props) {
@@ -75,26 +75,14 @@ class MapContainer extends React.Component {
             station => station.name === closest.stop.name && station.gtfsId !== closest.stop.gtfsId,
           );
 
-          // Combine the arrival schedules to add them to the subway entrance info
-          let arrivalTimes = [
-            ...closest.stop.stoptimesWithoutPatterns,
-            ...otherStop.stoptimesWithoutPatterns,
-          ];
-
-          // Sort arrivals by time and shorten the list
-          arrivalTimes.sort(
-            (a, b) => (a.realtimeArrival + a.serviceDay) - (b.realtimeArrival + b.serviceDay),
-          );
-          arrivalTimes = arrivalTimes.slice(0, 5);
-
           // Create a new stop from the entrance, give it the arrival schedule of the corresponding station and add it to the list of stops
           const newStop = {
-            gtfsId: entrance.id,
+            gtfsId: closest.stop.gtfsId,
+            secondaryId: otherStop.gtfsId,
             lat: entrance.location.coordinates[1],
             lon: entrance.location.coordinates[0],
             name: entrance.name[locale],
             patterns: closest.stop.patterns,
-            stoptimesWithoutPatterns: arrivalTimes,
             vehicleType: closest.stop.vehicleType,
           };
           filteredStops.push(newStop);

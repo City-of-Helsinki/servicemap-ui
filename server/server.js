@@ -22,8 +22,8 @@ import themes from '../src/themes';
 // Configure constants
 const app = express();
 const serverConfig = config.server;
-const languages = config.supported_languages.join('|');
-const baseURL = `${serverConfig.url_prefix}(:lang(${languages})?)`;
+const supportedLanguages = config.supported_languages;
+const baseURL = `${serverConfig.url_prefix}(:lang(${supportedLanguages.join('|')})?)`;
 
 // Add static folder
 app.use(express.static(path.resolve(__dirname, 'src')));
@@ -53,11 +53,14 @@ app.get('/*', (req, res, next) => {
   // Create a new class name generator.
   const generateClassName = createGenerateClassName();
 
+  // Locale for page
+  const localeParam = req.params[0].slice(0, 2)
+  const locale = supportedLanguages.indexOf(localeParam > -1) ? localeParam : 'fi';
 
   // Dispatch unit data to redux
   if (req._context) {
     store.dispatch(changeSelectedUnit(req._context));
-    store.dispatch(setLocale(req.params[0].slice(0, 2)))
+    store.dispatch(setLocale(locale))
   }
   const jsx = (
     <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>
@@ -79,15 +82,15 @@ app.get('/*', (req, res, next) => {
   const preloadedState = store.getState();
 
   res.writeHead(200, { 'Content-Type': 'text/html' });
-  res.end(htmlTemplate(reactDom, preloadedState, css, jss));
+  res.end(htmlTemplate(reactDom, preloadedState, css, jss, locale));
 });
 
 console.log(`Starting server on port ${serverConfig.port || 2048}`);
 app.listen(serverConfig.port || 2048);
 
-const htmlTemplate = (reactDom, preloadedState, css, jss) => `
+const htmlTemplate = (reactDom, preloadedState, css, jss, locale) => `
 <!DOCTYPE html>
-<html lang="fi">
+<html lang="${locale || 'fi'}">
   <head>
     <meta charset="utf-8">
     <title>Palvelukartta</title>

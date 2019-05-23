@@ -13,7 +13,6 @@ import { fitUnitsToMap } from '../Map/utils/mapActions';
 import { parseSearchParams } from '../../utils';
 import TabLists from '../../components/TabLists';
 
-import paths from '../../../config/paths';
 import Container from '../../components/Container/Container';
 import { generatePath } from '../../utils/path';
 
@@ -84,9 +83,17 @@ class SearchView extends React.Component {
     };
   }
 
+  // Filter callback function for search results
+  sortCallback = (sortedData) => {
+    const { isFetching, setNewSearchData } = this.props;
+    if (!isFetching) {
+      setNewSearchData(sortedData);
+    }
+  }
+
   render() {
     const {
-      units, isFetching, intl, count, fetchUnits, history, match, max, previousSearch,
+      units, isFetching, intl, count, match, max, previousSearch,
     } = this.props;
     const unitCount = units && units.length;
     const resultsShowing = !isFetching && unitCount > 0;
@@ -154,25 +161,6 @@ class SearchView extends React.Component {
     return (
       <div className="Search">
         <SearchBar
-          backButtonEvent={(e) => {
-            e.preventDefault();
-            history.goBack();
-
-            // Listen history
-            const unlisten = history.listen((location) => {
-              // Get search params
-              const searchParams = parseSearchParams(location.search);
-              const searchParam = searchParams.q || null;
-
-              // If page is search
-              // and previousSearch is not current location's params
-              // then fetch units with location's search params
-              if (paths.search.regex.exec(location.pathname) && previousSearch !== searchParam) {
-                fetchUnits([], null, searchParam);
-              }
-              unlisten(); // Remove listener
-            });
-          }}
           placeholder={intl && intl.formatMessage({ id: 'search.input.placeholder' })}
           text={this.getSearchParam() || ''}
         />
@@ -212,7 +200,7 @@ class SearchView extends React.Component {
           // Show results
           resultsShowing
           && (
-            <TabLists data={searchResults} />
+            <TabLists data={searchResults} sortCallback={this.sortCallback} />
           )
         }
         {
@@ -248,7 +236,6 @@ SearchView.propTypes = {
   changeSelectedUnit: PropTypes.func,
   count: PropTypes.number,
   fetchUnits: PropTypes.func,
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
   intl: intlShape.isRequired,
   isFetching: PropTypes.bool,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -258,6 +245,7 @@ SearchView.propTypes = {
   map: PropTypes.objectOf(PropTypes.any),
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   setCurrentPage: PropTypes.func.isRequired,
+  setNewSearchData: PropTypes.func.isRequired,
 };
 
 SearchView.defaultProps = {

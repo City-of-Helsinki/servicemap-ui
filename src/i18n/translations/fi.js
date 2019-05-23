@@ -6,6 +6,12 @@ export default {
   // Event
   'event.nearby': 'Lähellä olevat tapahtumat',
 
+  // Sorting
+  'sorting.label': 'Järjestä hakutulokset',
+  'sorting.alphabetical.asc': 'Käänteinen aakkosjärjestys',
+  'sorting.alphabetical.desc': 'Aakkosjärjestys',
+  'sorting.match.desc': 'Osuvin ensin',
+
   // General
   'general.back': 'Palaa',
   'general.backToStart': 'Palaa sivun alkuun',

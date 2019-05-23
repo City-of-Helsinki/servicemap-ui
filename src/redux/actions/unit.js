@@ -17,6 +17,10 @@ export const unitsFetchProgressUpdate = (count, max) => ({
   count,
   max,
 });
+export const setUnitData = data => ({
+  type: 'SET_NEW_UNITS',
+  data,
+});
 
 // Thunk fetch
 export const fetchUnits = (allData = [], next = null, searchQuery = null) => async (dispatch) => {
@@ -47,5 +51,11 @@ export const fetchUnits = (allData = [], next = null, searchQuery = null) => asy
     }
   } catch (e) {
     dispatch(fetchHasErrored(e.message));
+  }
+};
+
+export const setNewSearchData = data => async (dispatch) => {
+  if (data) {
+    dispatch(setUnitData(data));
   }
 };

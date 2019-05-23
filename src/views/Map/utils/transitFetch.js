@@ -22,39 +22,22 @@ const fetchStops = async (bounds) => {
       method: 'post',
       headers: { 'Content-Type': 'application/graphql' },
       body:
-      `{ 
+      `{
         stopsByBbox(minLat: ${fetchBounds._southWest.lat}, minLon: ${fetchBounds._southWest.lng}, maxLat: ${fetchBounds._northEast.lat}, maxLon: ${fetchBounds._northEast.lng} ) {
           vehicleType
           gtfsId
           name
-          stoptimesWithoutPatterns {
-            scheduledArrival
-            realtimeArrival
-            arrivalDelay
-            scheduledDeparture
-            realtimeDeparture
-            departureDelay
-            realtime
-            realtimeState
-            serviceDay
-            pickupType
-            headsign
-            trip {
-              route {
-                mode
-                shortName
-              }
-            }
-          }
           lat
           lon
           patterns {
+            headsign
             route {
-              mode
+              gtfsId
+              shortName
             }
           }
-        } 
-        }`,
+        }
+      }`,
     }).then(response => response.json()),
     // Fetch for subway entrances
     fetch(`https://api.hel.fi/servicemap/v2/unit/?service=437&page_size=200&bbox=${fetchBox}`)
@@ -63,4 +46,54 @@ const fetchStops = async (bounds) => {
   return data;
 };
 
-export default fetchStops;
+const fetchStopData = async (stop) => {
+  const requestBody = id => (`{
+    stop(id: "${id}") {
+      name
+      wheelchairBoarding
+      stoptimesWithoutPatterns {
+        scheduledDeparture
+        realtimeDeparture
+        realtime
+        serviceDay
+        pickupType
+        headsign
+        trip {
+          route {
+            mode
+            shortName
+          }
+        }
+      }
+    }
+  }`);
+
+  const response = await fetch('https://api.digitransit.fi/routing/v1/routers/hsl/index/graphql', {
+    method: 'post',
+    headers: { 'Content-Type': 'application/graphql' },
+    body: requestBody(stop.gtfsId),
+  });
+  const data = await response.json();
+
+  if (stop.secondaryId) {
+    const response = await fetch('https://api.digitransit.fi/routing/v1/routers/hsl/index/graphql', {
+      method: 'post',
+      headers: { 'Content-Type': 'application/graphql' },
+      body: requestBody(stop.secondaryId),
+    });
+    const secondData = await response.json();
+    const combinedData = data;
+    combinedData.data.stop.stoptimesWithoutPatterns = [
+      ...combinedData.data.stop.stoptimesWithoutPatterns,
+      ...secondData.data.stop.stoptimesWithoutPatterns,
+    ];
+    return combinedData;
+  }
+
+  return data;
+};
+
+export {
+  fetchStops,
+  fetchStopData,
+};

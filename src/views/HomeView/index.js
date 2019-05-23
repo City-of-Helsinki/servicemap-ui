@@ -6,7 +6,7 @@ import { setCurrentPage } from '../../redux/actions/user';
 // Listen to redux state
 // const unitList = getUnitList(state);
 const mapStateToProps = (state) => {
-  const { units } = state;
+  const { units, navigator } = state;
   const {
     data, isFetching, count, max,
   } = units;
@@ -16,6 +16,7 @@ const mapStateToProps = (state) => {
     isFetching,
     count,
     max,
+    navigator,
   };
 };
 

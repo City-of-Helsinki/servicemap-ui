@@ -7,6 +7,7 @@ import { injectIntl, intlShape } from 'react-intl';
 import { parseSearchParams, stringifySearchParams } from '../../utils';
 import ResultList from '../Lists/ResultList';
 import PaginationComponent from '../../views/SearchView/components/PaginationComponent';
+import ResultOrderer from './ResultOrderer';
 
 class TabLists extends React.Component {
   // Options
@@ -58,7 +59,7 @@ class TabLists extends React.Component {
 
   // Handle page number changes
   handlePageChange = (pageNum, pageCount) => {
-    const { history, location } = this.props;
+    const { location, navigator } = this.props;
 
     if (pageNum >= 1 && pageNum <= pageCount) {
       // Change page parameter in searchParams
@@ -71,17 +72,19 @@ class TabLists extends React.Component {
         currentPage: pageNum,
       });
       // Update p(page) param to current history
-      history.replace({
-        ...location,
-        search: `?${searchString || ''}`,
-      });
+      if (navigator) {
+        navigator.replace({
+          ...location,
+          search: `?${searchString || ''}`,
+        });
+      }
     }
   }
 
   // Handle tab change
   handleTabChange = (e, value) => {
     // Update p(page) param to current history
-    const { history, location } = this.props;
+    const { location, navigator } = this.props;
 
     // Change page parameter in searchParams
     const searchParams = parseSearchParams(location.search);
@@ -97,10 +100,12 @@ class TabLists extends React.Component {
     });
 
     // Update p(page) param to current history
-    history.replace({
-      ...location,
-      search: `?${searchString || ''}`,
-    });
+    if (navigator) {
+      navigator.replace({
+        ...location,
+        search: `?${searchString || ''}`,
+      });
+    }
   }
 
   // Calculate pageCount
@@ -114,11 +119,21 @@ class TabLists extends React.Component {
 
 
   render() {
-    const { data, intl } = this.props;
+    const { data, sortCallback, intl } = this.props;
     const { currentPage, tabIndex } = this.state;
+
+    let fullData = [];
+
+    data.forEach((element) => {
+      if (element.data) {
+        fullData = [...fullData, ...element.data];
+      }
+    });
+    const filteredData = data.filter(item => item.component || (item.data && item.data.length > 0));
 
     return (
       <>
+        <ResultOrderer data={fullData} sortCallback={sortCallback} />
         <Tabs
           value={tabIndex}
           onChange={this.handleTabChange}
@@ -128,7 +143,7 @@ class TabLists extends React.Component {
           scrollButtons="auto"
         >
           {
-            data.map(item => (
+            filteredData.map(item => (
               item.data
               && item.data.length > 0
               && <Tab key={`${item.title} (${item.data.length})`} label={`${item.title} ${item.component ? '' : `(${item.data.length})`}`} aria-label={item.ariaLabel ? item.ariaLabel : null} />
@@ -137,7 +152,7 @@ class TabLists extends React.Component {
         </Tabs>
         {
           // Create tab views from data
-          data.map((item, index) => {
+          filteredData.map((item, index) => {
             // If component given use it instead
             if (item.component) {
               return (
@@ -205,9 +220,14 @@ TabLists.propTypes = {
     data: PropTypes.array,
     itemsPerPage: PropTypes.number,
   })).isRequired,
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
+  sortCallback: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
+  navigator: PropTypes.objectOf(PropTypes.any),
+};
+
+TabLists.defaultProps = {
+  navigator: null,
 };
 
 export default injectIntl(withRouter(TabLists));
