@@ -8,8 +8,8 @@ export default theme => ({
     margin: theme.spacing.unit,
   },
   label: {
-    paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2,
+    paddingTop: theme.spacing.unitDouble,
+    paddingBottom: theme.spacing.unitDouble,
   },
   cssFocused: {
     outlineStyle: 'solid',

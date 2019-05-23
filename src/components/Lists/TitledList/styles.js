@@ -1,11 +1,11 @@
 export default theme => ({
   left: {
     textAlign: 'left',
-    marginLeft: theme.spacing.unit * 2,
-    marginRight: theme.spacing.unit * 2,
+    marginLeft: theme.spacing.unitDouble,
+    marginRight: theme.spacing.unitDouble,
   },
   title: {
-    marginTop: theme.spacing.unit * 2,
-    marginBottom: theme.spacing.unit * 2,
+    marginTop: theme.spacing.unitDouble,
+    marginBottom: theme.spacing.unitDouble,
   },
 });

@@ -16,7 +16,7 @@ const styles = theme => ({
     flex: '1 1 auto',
     textTransform: 'capitalize',
     textAlign: 'left',
-    marginLeft: theme.spacing.unit * 2,
+    marginLeft: theme.spacing.unitDouble,
   },
   iconButton: {
     flex: '0 1 auto',

@@ -12,7 +12,7 @@ import { fetchUnits } from '../../redux/actions/unit';
 const styles = theme => ({
   root: {
     margin: theme.spacing.unit,
-    padding: theme.spacing.unit / 2,
+    padding: theme.spacing.unitHalf,
     transition: theme.transitions.create(['margin', 'padding'], {
       easing: theme.transitions.easing.easeIn,
       duration: theme.transitions.duration.complex,
