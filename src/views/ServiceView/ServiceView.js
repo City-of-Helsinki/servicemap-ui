@@ -20,17 +20,14 @@ class ServiceView extends React.Component {
 
   componentDidMount() {
     const {
-      current, match, fetchService, unitData, map, setCurrentPage,
+      current, match, fetchService, setCurrentPage,
     } = this.props;
     const { params } = match;
     // Set current page to this view
     setCurrentPage('service');
     // Fetch service if current is not same as url param's
-    // Otherwise focusMap
     if (!current || `${current.id}` !== params.service) {
       fetchService(params.service);
-    } else {
-      this.focusMap(unitData.units, map);
     }
   }
 
@@ -40,9 +37,9 @@ class ServiceView extends React.Component {
     } = this.props;
     const { params } = match;
     // Focus map if service is set and units exist
-    if (current && current.id === params.service && unitData && unitData.length > 0) {
+    if (current && `${current.id}` === params.service && unitData && unitData.length > 0) {
       // Focus map on unit
-      this.focusMap(unitData.units, map);
+      this.focusMap(unitData, map);
     }
   }
 
