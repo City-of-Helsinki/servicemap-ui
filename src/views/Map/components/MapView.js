@@ -165,7 +165,7 @@ class MapView extends React.Component {
                   className="unitMarker"
                   key={unit.id}
                   position={[unit.location.coordinates[1], unit.location.coordinates[0]]}
-                  icon={drawMarkerIcon(unit, mapBase.options.name)}
+                  icon={drawMarkerIcon(unit, mapType.options.name)}
                   onClick={() => {
                     if (navigator) {
                       navigator.push('unit', unit.id);

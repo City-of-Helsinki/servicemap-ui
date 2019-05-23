@@ -53,7 +53,7 @@ class MapContainer extends React.Component {
 
         const entrances = data[1].results;
 
-        // Add subway entrances to the list of stops and give them proper schedules
+        // Add subway entrances to the list of stops
         entrances.forEach((entrance) => {
           const closest = {
             distance: null,
@@ -74,8 +74,7 @@ class MapContainer extends React.Component {
           const otherStop = subwayStations.find(
             station => station.name === closest.stop.name && station.gtfsId !== closest.stop.gtfsId,
           );
-
-          // Create a new stop from the entrance, give it the arrival schedule of the corresponding station and add it to the list of stops
+          // Create a new stop from the entrance, give it the stop data of the corresponding station and add it to the list of stops
           const newStop = {
             gtfsId: closest.stop.gtfsId,
             secondaryId: otherStop.gtfsId,

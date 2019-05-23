@@ -21,7 +21,7 @@ class TransitStopInfo extends React.Component {
         if (stopData) {
           let departureTimes = stopData.data.stop.stoptimesWithoutPatterns;
           departureTimes.sort(
-            (a, b) => (a.realtimeArrival + a.serviceDay) - (b.realtimeArrival + b.serviceDay),
+            (a, b) => (a.realtimeDeparture + a.serviceDay) - (b.realtimeDeparture + b.serviceDay),
           );
           departureTimes = departureTimes.slice(0, 5);
 
