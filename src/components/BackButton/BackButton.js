@@ -12,28 +12,28 @@ const BackButton = (props) => {
   } = props;
 
   // Generate dynamic text
-  // Figure out correct aria suffix
-  let ariaSuffix = 'home';
+  // Figure out correct translation id suffix
+  let idSuffix = 'home';
   if (breadcrumb.length) {
     const previousEntry = breadcrumb[breadcrumb.length - 1];
     if (typeof previousEntry === 'string') {
       const suffix = getPathName(previousEntry);
       if (suffix) {
-        ariaSuffix = suffix;
+        idSuffix = suffix;
       }
     }
     if (typeof previousEntry === 'object' && previousEntry.pathname) {
       const suffix = getPathName(previousEntry.pathname);
       if (suffix) {
-        ariaSuffix = suffix;
+        idSuffix = suffix;
       }
     }
   }
 
   // Attempt to generate custom text
-  const ariaTextId = `general.back.${ariaSuffix}`;
+  const textId = `general.back.${idSuffix}`;
   const defaultMessage = intl.formatMessage({ id: 'general.back' });
-  const buttonText = intl.formatMessage({ id: ariaTextId, defaultMessage });
+  const buttonText = intl.formatMessage({ id: textId, defaultMessage });
 
 
   if (variant === 'icon') {
