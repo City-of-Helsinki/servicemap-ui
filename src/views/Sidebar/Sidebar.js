@@ -7,10 +7,18 @@ import HomeView from '../HomeView';
 import ServiceView from '../ServiceView';
 import MobileMapView from '../MobileMapView';
 import ViewTitle from '../components/ViewTitle/ViewTitle';
+import HeadInfo from '../components/HeadInfo';
 
 const TitleWrapper = ({ children, messageId }) => (
   <>
     <ViewTitle messageId={messageId} />
+    {children}
+  </>
+);
+
+const HeadWrapper = ({ children, headMsgId, page }) => (
+  <>
+    <HeadInfo messageId={headMsgId} page={page} />
     {children}
   </>
 );
@@ -20,27 +28,46 @@ TitleWrapper.propTypes = {
   messageId: PropTypes.string.isRequired,
 };
 
+HeadWrapper.propTypes = {
+  children: PropTypes.node.isRequired,
+  headMsgId: PropTypes.string,
+  page: PropTypes.string,
+};
+
+HeadWrapper.defaultProps = {
+  headMsgId: null,
+  page: null,
+};
+
 const Home = () => (
   <TitleWrapper messageId="general.pageTitles.home">
-    <HomeView />
+    <HeadWrapper headMsgId="app.title">
+      <HomeView />
+    </HeadWrapper>
   </TitleWrapper>
 );
 
 const Search = () => (
   <TitleWrapper messageId="general.pageTitles.search">
-    <SearchView />
+    <HeadWrapper headMsgId="search.results.title">
+      <SearchView />
+    </HeadWrapper>
   </TitleWrapper>
 );
 
 const Unit = () => (
   <TitleWrapper messageId="general.pageTitles.unit">
-    <UnitView />
+    <HeadWrapper headMsgId="" page="unit">
+      <UnitView />
+    </HeadWrapper>
   </TitleWrapper>
 );
 
 const Service = () => (
   <TitleWrapper messageId="general.pageTitles.service">
-    <ServiceView />
+    <HeadWrapper headMsgId="" page="service">
+      <ServiceView />
+    </HeadWrapper>
   </TitleWrapper>
 );
 
