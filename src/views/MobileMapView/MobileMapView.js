@@ -12,6 +12,7 @@ const MobileMapView = ({ intl, map }) => {
     // Reftesh map when changing mobile page initialize correct size
     map._onResize();
   }
+
   return (
     <>
       <MobileComponent>

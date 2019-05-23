@@ -10,7 +10,10 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { fetchSelectedUnit, changeSelectedUnit } from '../../redux/actions/selectedUnit';
 import { getSelectedUnit } from '../../redux/selectors/selectedUnit';
 import { getLocaleString } from '../../redux/selectors/locale';
+import { DesktopComponent } from '../../layouts/WrapperComponents/WrapperComponents';
+import { drawIcon } from '../Map/utils/drawIcon';
 
+import SearchBar from '../../components/SearchBar';
 import { focusUnit } from '../Map/utils/mapActions';
 import InfoList from './components/InfoList';
 import styles from './styles/styles';
@@ -27,6 +30,7 @@ class UnitView extends React.Component {
     super(props);
     this.state = {
       centered: false,
+      icon: null,
     };
   }
 
@@ -35,6 +39,10 @@ class UnitView extends React.Component {
       match, fetchSelectedUnit, unit,
     } = this.props;
     const { params } = match;
+
+    this.setState({
+      icon: <img alt="" src={drawIcon({ id: params.unit }, null, true)} style={{ height: 24, margin: 8, marginRight: 16 }} aria-hidden="true" />,
+    });
 
     if (params && params.unit) {
       const unitId = params.unit;
@@ -85,10 +93,15 @@ class UnitView extends React.Component {
     const {
       classes, getLocaleText, intl, unit,
     } = this.props;
+    const { icon } = this.state;
+    const title = unit && unit.name ? getLocaleText(unit.name) : '';
 
     const TopBar = (
       <div>
-        <TitleBar title={unit && unit.name ? getLocaleText(unit.name) : ''} />
+        <DesktopComponent>
+          <SearchBar placeholder={intl.formatMessage({ id: 'search' })} />
+        </DesktopComponent>
+        <TitleBar icon={icon} title={title} />
       </div>
     );
 
@@ -120,7 +133,7 @@ class UnitView extends React.Component {
               {this.sectionFilter(unit.connections, 'HIGHLIGHT').map(item => (
                 <Typography
                   key={item.id}
-                  className={classes.left}
+                  className={`${classes.left} ${classes.paragraph}`}
                   variant="body1"
                 >
                   {getLocaleText(item.value.name)}

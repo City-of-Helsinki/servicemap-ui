@@ -34,8 +34,10 @@ class HomeView extends React.Component {
     }
   }
 
+
   render() {
     const { intl, classes } = this.props;
+
     return (
       <>
         <MobileComponent>
