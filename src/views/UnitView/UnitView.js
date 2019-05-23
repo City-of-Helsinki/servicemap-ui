@@ -30,8 +30,6 @@ class UnitView extends React.Component {
     super(props);
     this.state = {
       centered: false,
-    };
-    this.state = {
       icon: null,
     };
   }

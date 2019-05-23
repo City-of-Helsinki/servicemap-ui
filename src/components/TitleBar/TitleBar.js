@@ -24,13 +24,13 @@ const styles = theme => ({
     flex: '1 1 auto',
     textTransform: 'capitalize',
     textAlign: 'left',
-    marginLeft: theme.spacing.unit * 2,
+    marginLeft: theme.spacing.unitDouble,
   },
   mobileTitle: {
     flex: '1 1 auto',
     textTransform: 'capitalize',
     textAlign: 'left',
-    marginLeft: theme.spacing.unit * 2,
+    marginLeft: theme.spacing.unitDouble,
     color: '#ffffff',
   },
   iconButton: {
