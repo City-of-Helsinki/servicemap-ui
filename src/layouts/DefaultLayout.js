@@ -1,11 +1,10 @@
 
 import React from 'react';
-import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
   Button, Grid, Typography, AppBar, Toolbar,
 } from '@material-ui/core';
-import { FormattedMessage, intlShape, injectIntl } from 'react-intl';
+import { FormattedMessage, intlShape } from 'react-intl';
 import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
 import { Home, Map } from '@material-ui/icons';
 import Sidebar from '../views/Sidebar';
@@ -88,7 +87,7 @@ const createContentStyles = (
 
 const DefaultLayout = (props) => {
   const {
-    i18n, intl, location, match,
+    i18n, intl, location, match, navigator,
   } = props;
   const { params } = match;
   const lng = params && params.lng;
@@ -232,14 +231,16 @@ const DefaultLayout = (props) => {
 
 // Typechecking
 DefaultLayout.propTypes = {
-  match: PropTypes.objectOf(PropTypes.any).isRequired,
-  i18n: PropTypes.instanceOf(I18n),
   intl: intlShape.isRequired,
+  i18n: PropTypes.instanceOf(I18n),
   location: PropTypes.objectOf(PropTypes.any).isRequired,
+  match: PropTypes.objectOf(PropTypes.any).isRequired,
+  navigator: PropTypes.objectOf(PropTypes.any),
 };
 
 DefaultLayout.defaultProps = {
   i18n: null,
+  navigator: null,
 };
 
-export default injectIntl(withRouter(DefaultLayout));
+export default DefaultLayout;

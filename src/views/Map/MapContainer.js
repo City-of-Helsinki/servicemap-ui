@@ -102,7 +102,7 @@ class MapContainer extends React.Component {
 
   render() {
     const {
-      mapType, districts, highlightedUnit, getLocaleText, currentPage, unitList, serviceUnits, unitsLoading,
+      mapType, navigator, districts, highlightedUnit, getLocaleText, currentPage, unitList, serviceUnits, unitsLoading,
     } = this.props;
 
     let mapUnits = [];
@@ -129,6 +129,7 @@ class MapContainer extends React.Component {
           districtList={districts}
           saveMapRef={this.saveMapRef}
           mapOptions={mapOptions}
+          navigator={navigator}
           fetchTransitStops={this.fetchTransitStops}
           clearTransitStops={this.clearTransitStops}
           transitStops={transitStops}
@@ -143,7 +144,7 @@ class MapContainer extends React.Component {
 }
 // Listen to redux state
 const mapStateToProps = (state) => {
-  const { units } = state;
+  const { units, navigator } = state;
   const { data } = units;
   const unitsLoading = state.service.isFetching;
   const serviceUnits = state.service.data;
@@ -155,6 +156,7 @@ const mapStateToProps = (state) => {
   // const unitList = getUnitList(state);
   return {
     mapType,
+    navigator,
     districts,
     state,
     highlightedUnit,
@@ -177,6 +179,7 @@ export default connect(
 // Typechecking
 MapContainer.propTypes = {
   mapType: PropTypes.oneOfType([PropTypes.objectOf(PropTypes.any), PropTypes.string]),
+  navigator: PropTypes.objectOf(PropTypes.any),
   unitList: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.array])),
   serviceUnits: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   locale: PropTypes.string,
@@ -192,6 +195,7 @@ MapContainer.propTypes = {
 
 MapContainer.defaultProps = {
   mapType: '',
+  navigator: null,
   unitList: [],
   serviceUnits: [],
   locale: 'fi',
