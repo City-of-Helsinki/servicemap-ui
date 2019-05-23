@@ -91,13 +91,13 @@ class SearchView extends React.Component {
     }
   }
 
-  render() {
+  /**
+   * Handles redirect if only single result is found
+   */
+  handleSingleResultRedirect() {
     const {
-      units, isFetching, intl, count, match, max, previousSearch,
+      units, isFetching, match,
     } = this.props;
-    const unitCount = units && units.length;
-    const resultsShowing = !isFetching && unitCount > 0;
-    const progress = (isFetching && count) ? Math.floor((count / max * 100)) : 0;
 
     // If not currently searching and view should not fetch new search
     // and only 1 result found redirect directly to specific result page
@@ -124,11 +124,45 @@ class SearchView extends React.Component {
         return <Redirect to={path} />;
       }
     }
+    return null;
+  }
+
+  /**
+   * What to render if no units are found with search
+   */
+  renderNotFound() {
+    const { isFetching, previousSearch, units } = this.props;
+
+    // These variables should be passed to this function
+    const shouldRender = !isFetching && previousSearch && units && !units.length;
+
+    return shouldRender && (
+      <Container>
+        <Typography variant="subtitle1" component="p" aria-hidden="true">
+          <FormattedMessage id="search.results" values={{ count: units.length }} />
+        </Typography>
+      </Container>
+    );
+  }
+
+  /**
+   * Render results
+   */
+  renderResults() {
+    const {
+      units, isFetching, intl,
+    } = this.props;
+
+    const showResults = !isFetching && units && units.length > 0;
+
+    if (!showResults) {
+      return null;
+    }
 
     // Group data
     const groupedData = this.groupData(units);
 
-    // Data for TabResults component
+    // Data for TabLists component
     const searchResults = [
       {
         ariaLabel: `${intl.formatMessage({ id: 'unit.plural' })} ${intl.formatMessage({ id: 'search.results.short' }, {
@@ -152,11 +186,60 @@ class SearchView extends React.Component {
       },
     ];
 
+    return <TabLists data={searchResults} sortCallback={this.sortCallback} />;
+  }
+
+  /**
+   * Render screen reader only information fields
+   */
+  renderScreenReaderInfo() {
+    const {
+      units, isFetching, max,
+    } = this.props;
+    const unitCount = units && units.length;
+
+    return (
+      <Typography variant="srOnly" component="h3" tabIndex="-1">
+        {
+          !isFetching
+          && (
+            <FormattedMessage id="search.results.title" />
+          )
+        }
+        {
+          isFetching && max === 0
+          && <FormattedMessage id="search.started" />
+        }
+        {
+          isFetching && max > 0
+            && <FormattedMessage id="search.loading.units.srInfo" values={{ count: max }} />
+        }
+        {
+          !isFetching
+          && <FormattedMessage id="search.results" values={{ count: unitCount }} />
+        }
+      </Typography>
+    );
+  }
+
+  render() {
+    const {
+      isFetching, intl, count, max,
+    } = this.props;
+    const progress = (isFetching && count) ? Math.floor((count / max * 100)) : 0;
+
+    const redirect = this.handleSingleResultRedirect();
+
+    if (redirect) {
+      return redirect;
+    }
+
     // Hide paper padding when nothing is shown
     const paperStyles = {};
     if (!isFetching) {
       paperStyles.padding = 0;
     }
+
 
     return (
       <div className="Search">
@@ -170,51 +253,16 @@ class SearchView extends React.Component {
             isFetching
             && <Loading text={intl && intl.formatMessage({ id: 'search.loading.units' }, { count, max })} progress={progress} />
           }
-
           {
-            // Screen reader only information
+            this.renderScreenReaderInfo()
           }
-          <Typography variant="srOnly" component="h3" tabIndex="-1">
-            {
-              !isFetching
-              && (
-                <FormattedMessage id="search.results.title" />
-              )
-            }
-            {
-              isFetching && max === 0
-              && <FormattedMessage id="search.started" />
-            }
-            {
-              isFetching && max > 0
-                && <FormattedMessage id="search.loading.units.srInfo" values={{ count: max }} />
-            }
-            {
-              !isFetching
-              && <FormattedMessage id="search.results" values={{ count: unitCount }} />
-            }
-          </Typography>
         </Paper>
 
         {
-          // Show results
-          resultsShowing
-          && (
-            <TabLists data={searchResults} sortCallback={this.sortCallback} />
-          )
+          this.renderResults()
         }
         {
-          !isFetching
-          && previousSearch
-          && units
-          && units.length === 0
-          && (
-            <Container>
-              <Typography variant="subtitle1" component="p" aria-hidden="true">
-                <FormattedMessage id="search.results" values={{ count: units.length }} />
-              </Typography>
-            </Container>
-          )
+          this.renderNotFound()
         }
 
         {

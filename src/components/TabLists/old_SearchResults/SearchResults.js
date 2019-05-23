@@ -3,8 +3,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { injectIntl } from 'react-intl';
-import ResultList from '../../../components/Lists/ResultList';
-import PaginationComponent from './PaginationComponent';
+import ResultList from '../../Lists/ResultList';
+import PaginationComponent from '../PaginationComponent';
 import { parseSearchParams, stringifySearchParams } from '../../../utils';
 
 class SearchResults extends React.Component {

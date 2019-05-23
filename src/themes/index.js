@@ -71,6 +71,8 @@ const SMTheme = createMuiTheme({
   },
   spacing: {
     unit: 8,
+    unitHalf: 4,
+    unitDouble: 16,
   },
 });
 

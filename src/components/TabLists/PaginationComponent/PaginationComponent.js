@@ -6,22 +6,9 @@ import {
   withStyles, Button, Typography,
 } from '@material-ui/core';
 import { ArrowBackIos, ArrowForwardIos } from '@material-ui/icons';
-import Container from '../../../components/Container/Container';
+import Container from '../../Container/Container';
 import { keyboardHandler } from '../../../utils';
-
-// Styles
-const styles = theme => ({
-  button: {
-    padding: `${theme.spacing.unit / 2}px ${theme.spacing.unit}px`,
-    margin: theme.spacing.unit / 2,
-    minWidth: 'auto',
-  },
-  pageItem: {
-    margin: 0,
-    marginLeft: theme.spacing.unit / 2,
-    marginRight: theme.spacing.unit / 2,
-  },
-});
+import styles from './styles';
 
 // Page number element
 const PageElement = ({

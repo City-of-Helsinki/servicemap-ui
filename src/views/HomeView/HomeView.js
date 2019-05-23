@@ -119,16 +119,16 @@ class HomeView extends React.Component {
 const styles = theme => ({
   left: {
     textAlign: 'left',
-    marginLeft: theme.spacing.unit * 2,
-    marginRight: theme.spacing.unit * 2,
-    marginTop: theme.spacing.unit * 3,
+    marginLeft: theme.spacing.unitDouble,
+    marginRight: theme.spacing.unitDouble,
+    marginTop: 24,
   },
   button: {
     marginLeft: '15%',
     marginRight: '15%',
     width: '70%',
-    marginTop: theme.spacing.unit * 3,
-    marginBottom: theme.spacing.unit * 3,
+    marginTop: 24,
+    marginBottom: 24,
   },
 });
 
