@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
 import {
   Typography, withStyles, Button,
 } from '@material-ui/core';
@@ -8,7 +7,6 @@ import { injectIntl, intlShape } from 'react-intl';
 import { Search } from '@material-ui/icons';
 import Container from '../../components/Container';
 import SearchBar from '../../components/SearchBar';
-import { generatePath } from '../../utils/path';
 import { MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import HomeLogo from '../../components/Logos/HomeLogo';
 import TitledList from '../../components/Lists/TitledList/TitledList';
@@ -25,13 +23,10 @@ class HomeView extends React.Component {
   onExapmleItemClick = (e, searchText) => {
     e.preventDefault();
     const {
-      fetchUnits, history, match,
+      fetchUnits, navigator,
     } = this.props;
-    const { params } = match;
-    const lng = params && params.lng;
-    if (history) {
-      // TODO: Add query text once functionality is ready for search view
-      history.push(generatePath('search', lng, searchText));
+    if (navigator) {
+      navigator.push('search', searchText);
     }
 
     if (searchText && searchText !== '') {
@@ -70,15 +65,22 @@ class HomeView extends React.Component {
             {intl.formatMessage({ id: 'home.message' })}
           </Typography>
           <Typography className={classes.left} variant="body2">
-            <b>14.5.2019</b> - Olemme saaneet ensimmäisten viikkojen aikana ensimmäiset palautteet 
-            - kiitos niistä! Palautteen perusteella keskitymme seuraavaksi rakentamaan entistäkin 
-            paremman toimipisteen sivun, josta löydät kaikki toimipisteen tiedot esteettömyydestä 
-            tapahtumiin. <br/>
-            <br/>
-            <b>2.5.2019</b> - Olemme tänään julkistaneet Palvelukartan avoimen kehitysversion!
+            <b>14.5.2019</b>
+            {' '}
+- Olemme saaneet ensimmäisten viikkojen aikana ensimmäiset palautteet
+            - kiitos niistä! Palautteen perusteella keskitymme seuraavaksi rakentamaan entistäkin
+            paremman toimipisteen sivun, josta löydät kaikki toimipisteen tiedot esteettömyydestä
+            tapahtumiin.
+            {' '}
+            <br />
+            <br />
+            <b>2.5.2019</b>
+            {' '}
+- Olemme tänään julkistaneet Palvelukartan avoimen kehitysversion!
             Ensimmäisessä versiossa keskitymme erityisesti hakukokemuksen parantamiseen.
             Lisäämme kehitysversioon uusia ominaisuuksia viikottain
-            ja haluamme palautetta juuri sinulta.<br/>
+            ja haluamme palautetta juuri sinulta.
+            <br />
           </Typography>
           <Button
             className={classes.button}
@@ -129,18 +131,18 @@ const styles = theme => ({
 });
 
 
-export default withRouter(injectIntl(withStyles(styles)(HomeView)));
+export default injectIntl(withStyles(styles)(HomeView));
 
 // Typechecking
 HomeView.propTypes = {
   fetchUnits: PropTypes.func,
   setCurrentPage: PropTypes.func.isRequired,
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
   intl: intlShape.isRequired,
-  match: PropTypes.objectOf(PropTypes.any).isRequired,
+  navigator: PropTypes.objectOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 HomeView.defaultProps = {
   fetchUnits: () => {},
+  navigator: null,
 };
