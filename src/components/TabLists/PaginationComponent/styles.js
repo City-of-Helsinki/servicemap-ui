@@ -2,13 +2,13 @@
 // Styles
 export default theme => ({
   button: {
-    padding: `${theme.spacing.unit / 2}px ${theme.spacing.unit}px`,
-    margin: theme.spacing.unit / 2,
+    padding: `${theme.spacing.unitHalf}px ${theme.spacing.unit}px`,
+    margin: theme.spacing.unitHalf,
     minWidth: 'auto',
   },
   pageItem: {
     margin: 0,
-    marginLeft: theme.spacing.unit / 2,
-    marginRight: theme.spacing.unit / 2,
+    marginLeft: theme.spacing.unitHalf,
+    marginRight: theme.spacing.unitHalf,
   },
 });
