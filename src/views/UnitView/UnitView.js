@@ -3,7 +3,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Helmet } from 'react-helmet';
 import {
   Divider, Typography, withStyles, Link,
 } from '@material-ui/core';
@@ -97,24 +96,14 @@ class UnitView extends React.Component {
       classes, getLocaleText, intl, unit,
     } = this.props;
     const { icon } = this.state;
-
-    // Modify html head
-    const Head = (
-      <Helmet>
-        {unit && unit.name && (
-          <title>{getLocaleText(unit.name)}</title>
-        )}
-        <meta name="theme-color" content="#2242C7" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="#2242C7" />
-      </Helmet>
-    );
+    const title = unit && unit.name ? getLocaleText(unit.name) : '';
 
     const TopBar = (
       <div>
         <DesktopComponent>
           <SearchBar placeholder={intl.formatMessage({ id: 'search' })} />
         </DesktopComponent>
-        <TitleBar icon={icon} title={unit && unit.name ? getLocaleText(unit.name) : ''} />
+        <TitleBar icon={icon} title={title} />
       </div>
     );
 
@@ -122,7 +111,6 @@ class UnitView extends React.Component {
       return (
         <div className={classes.root}>
           <div className="Content">
-            {Head}
             {TopBar}
             <p>
               <FormattedMessage id="general.loading" />
@@ -136,7 +124,6 @@ class UnitView extends React.Component {
       return (
         <div className={classes.root}>
           <div className="Content">
-            {Head}
             {TopBar}
             {
                 unit.picture_url
@@ -254,7 +241,6 @@ class UnitView extends React.Component {
     return (
       <div className={classes.root}>
         <div className="Content">
-          {Head}
           {TopBar}
           <Typography color="primary" variant="body1">
             <FormattedMessage id="unit.details.notFound" />

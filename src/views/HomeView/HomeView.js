@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 import {
   Typography, withStyles, Button,
 } from '@material-ui/core';
@@ -44,18 +43,8 @@ class HomeView extends React.Component {
   render() {
     const { intl, classes } = this.props;
 
-    // Modify html head
-    const Head = (
-      <Helmet>
-        <title>{intl.formatMessage({ id: 'app.title' })}</title>
-        <meta name="theme-color" content="" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="" />
-      </Helmet>
-    );
-
     return (
       <>
-        {Head}
         <MobileComponent>
           <Container>
             <HomeLogo dark aria-label={intl.formatMessage({ id: 'app.title' })} />

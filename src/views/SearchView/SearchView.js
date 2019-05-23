@@ -2,7 +2,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter, Redirect } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 import {
   Paper, Divider, withStyles, Typography, Link,
 } from '@material-ui/core';
@@ -152,18 +151,8 @@ class SearchView extends React.Component {
       paperStyles.padding = 0;
     }
 
-    // Modify html head
-    const Head = (
-      <Helmet>
-        <title>{intl.formatMessage({ id: 'search.results.title' })}</title>
-        <meta name="theme-color" content="" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="" />
-      </Helmet>
-    );
-
     return (
       <div className="Search">
-        {Head}
         <SearchBar
           backButtonEvent={(e) => {
             e.preventDefault();

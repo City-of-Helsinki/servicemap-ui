@@ -3,7 +3,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import { Helmet } from 'react-helmet';
 import { Paper, Typography } from '@material-ui/core';
 import SearchBar from '../../components/SearchBar';
 import TitleBar from '../../components/TitleBar/TitleBar';
@@ -98,20 +97,8 @@ class ServiceView extends React.Component {
     const showUnits = serviceUnits;
     const showServiceWithoutUnits = current && !isLoading && !serviceUnits;
 
-    // Modify html head
-    const Head = (
-      <Helmet>
-        {showTitle
-          && <title>{getLocaleText(current.name)}</title>
-        }
-        <meta name="theme-color" content="#2242C7" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="#2242C7" />
-      </Helmet>
-    );
-
     return (
       <div>
-        {Head}
         <DesktopComponent>
           <SearchBar placeholder={intl.formatMessage({ id: 'search' })} />
         </DesktopComponent>
