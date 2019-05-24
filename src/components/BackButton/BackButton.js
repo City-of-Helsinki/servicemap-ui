@@ -13,7 +13,7 @@ const BackButton = (props) => {
 
   // Generate dynamic text
   // Figure out correct translation id suffix
-  let idSuffix = 'home';
+  let idSuffix = 'goToHome';
   if (breadcrumb.length) {
     const previousEntry = breadcrumb[breadcrumb.length - 1];
     if (typeof previousEntry === 'string') {

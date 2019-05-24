@@ -16,6 +16,7 @@ export default {
   'general.back': 'Tillbaka',
   'general.back.address': 'Back to address view', // TODO: Translate
   'general.back.home': 'Back to home view', // TODO: Translate
+  'general.back.goToHome': 'Go to home view', // TODO: Translate
   'general.back.search': 'Back to search view', // TODO: Translate
   'general.back.service': 'Back to service view', // TODO: Translate
   'general.back.unit': 'Back to unit view', // TODO: Translate

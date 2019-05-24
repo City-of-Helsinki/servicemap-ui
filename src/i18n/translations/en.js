@@ -16,6 +16,7 @@ export default {
   'general.back': 'Back',
   'general.back.address': 'Back to address view',
   'general.back.home': 'Back to home view',
+  'general.back.goToHome': 'Go to home view',
   'general.back.search': 'Back to search view',
   'general.back.service': 'Back to service view',
   'general.back.unit': 'Back to unit view',

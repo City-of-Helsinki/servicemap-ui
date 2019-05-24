@@ -16,6 +16,7 @@ export default {
   'general.back': 'Palaa',
   'general.back.address': 'Palaa osoitenäkymään',
   'general.back.home': 'Palaa aloitusnäkymään',
+  'general.back.goToHome': 'Siirry aloitusnäkymään',
   'general.back.search': 'Palaa hakunäkymään',
   'general.back.service': 'Palaa palvelunäkymään',
   'general.back.unit': 'Palaa toimipistenäkymään',
