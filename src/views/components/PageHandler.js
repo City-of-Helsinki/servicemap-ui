@@ -7,7 +7,7 @@ import { uppercaseFirst } from '../../utils';
 import { setCurrentPage } from '../../redux/actions/user';
 import { getLocaleString } from '../../redux/selectors/locale';
 
-class HeadInfo extends React.Component {
+class PageHandler extends React.Component {
   componentDidMount() {
     const { page, setCurrentPage } = this.props;
     // Save current page to redux
@@ -58,10 +58,10 @@ const mapStateToProps = (state) => {
 export default injectIntl(connect(
   mapStateToProps,
   { setCurrentPage },
-)(HeadInfo));
+)(PageHandler));
 
 
-HeadInfo.propTypes = {
+PageHandler.propTypes = {
   intl: intlShape.isRequired,
   messageId: PropTypes.string,
   page: PropTypes.string,
@@ -71,7 +71,7 @@ HeadInfo.propTypes = {
   setCurrentPage: PropTypes.func.isRequired,
 };
 
-HeadInfo.defaultProps = {
+PageHandler.defaultProps = {
   messageId: 'app.title',
   page: null,
   unit: null,
