@@ -17,11 +17,12 @@ class NavigatorWrapper extends React.Component {
 
   render() {
     const {
-      history, match,
+      history, location, match,
     } = this.props;
     return (
       <Navigator
         history={history}
+        location={location}
         match={match}
         ref={this.saveNavigatorRef}
       />
@@ -31,6 +32,7 @@ class NavigatorWrapper extends React.Component {
 
 NavigatorWrapper.propTypes = {
   history: PropTypes.objectOf(PropTypes.any).isRequired,
+  location: PropTypes.objectOf(PropTypes.any).isRequired,
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   setNavigatorRef: PropTypes.func.isRequired,
 };

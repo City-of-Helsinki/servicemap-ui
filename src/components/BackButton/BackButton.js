@@ -4,11 +4,37 @@ import { connect } from 'react-redux';
 import { IconButton, Button } from '@material-ui/core';
 import { ArrowBack } from '@material-ui/icons';
 import { injectIntl, intlShape } from 'react-intl';
+import { getPathName } from '../../utils/path';
 
 const BackButton = (props) => {
   const {
-    className, intl, onClick, style, variant, navigator,
+    breadcrumb, className, intl, onClick, style, variant, navigator,
   } = props;
+
+  // Generate dynamic text
+  // Figure out correct translation id suffix
+  let idSuffix = 'goToHome';
+  if (breadcrumb.length) {
+    const previousEntry = breadcrumb[breadcrumb.length - 1];
+    if (typeof previousEntry === 'string') {
+      const suffix = getPathName(previousEntry);
+      if (suffix) {
+        idSuffix = suffix;
+      }
+    }
+    if (typeof previousEntry === 'object' && previousEntry.pathname) {
+      const suffix = getPathName(previousEntry.pathname);
+      if (suffix) {
+        idSuffix = suffix;
+      }
+    }
+  }
+
+  // Attempt to generate custom text
+  const textId = `general.back.${idSuffix}`;
+  const defaultMessage = intl.formatMessage({ id: 'general.back' });
+  const buttonText = intl.formatMessage({ id: textId, defaultMessage });
+
 
   if (variant === 'icon') {
     return (
@@ -16,7 +42,7 @@ const BackButton = (props) => {
         role="link"
         className={className}
         style={style}
-        aria-label={intl.formatMessage({ id: 'general.back' })}
+        aria-label={buttonText}
         onClick={(e) => {
           e.preventDefault();
           if (onClick) {
@@ -45,13 +71,14 @@ const BackButton = (props) => {
         }
       }}
     >
-      {intl.formatMessage({ id: 'general.back' })}
+      {buttonText}
 
     </Button>
   );
 };
 
 BackButton.propTypes = {
+  breadcrumb: PropTypes.arrayOf(PropTypes.any).isRequired,
   className: PropTypes.string,
   intl: intlShape.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
@@ -70,8 +97,9 @@ BackButton.defaultProps = {
 
 // Listen to redux state
 const mapStateToProps = (state) => {
-  const { navigator } = state;
+  const { breadcrumb, navigator } = state;
   return {
+    breadcrumb,
     navigator,
   };
 };
