@@ -25,9 +25,9 @@ const HeadInfo = ({
 
   return (
     <Helmet>
-      {title && title.length > appTitle.length && (
+      {title.length > appTitle.length ? (
         <title>{title}</title>
-      )}
+      ) : <title>{intl.formatMessage({ id: 'app.title' })}</title>}
     </Helmet>
   );
 };
