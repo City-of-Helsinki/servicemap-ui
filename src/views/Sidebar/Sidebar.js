@@ -41,7 +41,7 @@ HeadWrapper.defaultProps = {
 
 const Home = () => (
   <TitleWrapper messageId="general.pageTitles.home">
-    <HeadWrapper headMsgId="">
+    <HeadWrapper headMsgId="" page="home">
       <HomeView />
     </HeadWrapper>
   </TitleWrapper>
@@ -49,7 +49,7 @@ const Home = () => (
 
 const Search = () => (
   <TitleWrapper messageId="general.pageTitles.search">
-    <HeadWrapper headMsgId="search.results.title">
+    <HeadWrapper headMsgId="search.results.title" page="search">
       <SearchView />
     </HeadWrapper>
   </TitleWrapper>

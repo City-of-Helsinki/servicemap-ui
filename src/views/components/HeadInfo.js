@@ -4,33 +4,46 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
 import { uppercaseFirst } from '../../utils';
+import { setCurrentPage } from '../../redux/actions/user';
 import { getLocaleString } from '../../redux/selectors/locale';
 
-// This can be used to modify HTML head elements.
-const HeadInfo = ({
-  intl, messageId, page, unit, service, getLocaleText,
-}) => {
-  const appTitle = ` | ${intl.formatMessage({ id: 'app.title' })}`;
-  const message = messageId ? intl.formatMessage({ id: messageId }) : '';
-  let pageMessage = '';
-
-  // Add unit or service name to title if needed
-  if (page === 'unit' && unit && unit.name) {
-    pageMessage = getLocaleText(unit.name);
-  } if (page === 'service' && service && service.name) {
-    pageMessage = getLocaleText(service.name);
+class HeadInfo extends React.Component {
+  componentDidMount() {
+    const { page, setCurrentPage } = this.props;
+    // Save current page to redux
+    setCurrentPage(page);
   }
 
-  const title = `${message}${uppercaseFirst(pageMessage)}${appTitle}`;
+  // Modify html head
+  render() {
+    const {
+      intl, messageId, page, unit, service, getLocaleText,
+    } = this.props;
+    const message = messageId ? intl.formatMessage({ id: messageId }) : '';
+    let pageMessage = '';
 
-  return (
-    <Helmet>
-      {title.length > appTitle.length ? (
+    // Add unit or service name to title if needed
+    if (page === 'unit' && unit && unit.name) {
+      pageMessage = getLocaleText(unit.name);
+    } if (page === 'service' && service && service.name) {
+      pageMessage = getLocaleText(service.name);
+    }
+
+    let appTitle = intl.formatMessage({ id: 'app.title' });
+
+    if (message !== '' || pageMessage !== '') {
+      appTitle = ` | ${appTitle}`;
+    }
+
+    const title = `${message}${uppercaseFirst(pageMessage)}${appTitle}`;
+
+    return (
+      <Helmet>
         <title>{title}</title>
-      ) : <title>{intl.formatMessage({ id: 'app.title' })}</title>}
-    </Helmet>
-  );
-};
+      </Helmet>
+    );
+  }
+}
 
 const mapStateToProps = (state) => {
   const { selectedUnit, service } = state;
@@ -44,7 +57,7 @@ const mapStateToProps = (state) => {
 
 export default injectIntl(connect(
   mapStateToProps,
-  null,
+  { setCurrentPage },
 )(HeadInfo));
 
 
@@ -55,6 +68,7 @@ HeadInfo.propTypes = {
   unit: PropTypes.objectOf(PropTypes.any),
   service: PropTypes.objectOf(PropTypes.any),
   getLocaleText: PropTypes.func.isRequired,
+  setCurrentPage: PropTypes.func.isRequired,
 };
 
 HeadInfo.defaultProps = {
