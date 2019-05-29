@@ -34,6 +34,7 @@ export default {
   'general.skipToContent': 'Siirry pääsisältöön',
   'general.give.feedback': 'Anna palautetta Palvelukartan testiversiosta (linkki aukeaa uuteen välilehteen)',
   'general.new.tab': 'Aukeaa uuteen välilehteen',
+  'general.time.short': 'klo',
 
   // Home
   'home.example.title': 'Esimerkkihakuja',
@@ -61,6 +62,7 @@ export default {
   'unit.contact.info': 'Yhteystiedot',
   'unit.services': 'Palvelut toimipisteessä',
   'unit.e.services': 'Sähköinen asiointi',
+  'unit.events': 'Tapahtumat',
   'unit.homepage': 'Kotisivu',
   'unit.picture': 'Kuva toimipisteestä: ',
   'unit.description': 'Tietoa toimipisteestä',

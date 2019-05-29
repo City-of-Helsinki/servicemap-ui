@@ -7,11 +7,13 @@ import {
   Divider, Typography, withStyles, Link,
 } from '@material-ui/core';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { Event } from '@material-ui/icons';
 import { fetchSelectedUnit, changeSelectedUnit } from '../../redux/actions/selectedUnit';
 import { getSelectedUnit } from '../../redux/selectors/selectedUnit';
 import { getLocaleString } from '../../redux/selectors/locale';
 import { DesktopComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import { drawIcon } from '../Map/utils/drawIcon';
+import fetchUnitEvents from './utils/fetchUnitEvents';
 
 import SearchBar from '../../components/SearchBar';
 import { focusUnit } from '../Map/utils/mapActions';
@@ -20,6 +22,7 @@ import styles from './styles/styles';
 import TitleBar from '../../components/TitleBar/TitleBar';
 import TitledList from '../../components/Lists/TitledList';
 import ServiceItem from '../../components/ListItems/ServiceItem';
+import ResultItem from '../../components/ListItems/ResultItem';
 import Container from '../../components/Container';
 import { uppercaseFirst } from '../../utils';
 
@@ -31,6 +34,7 @@ class UnitView extends React.Component {
     this.state = {
       centered: false,
       icon: null,
+      events: null,
     };
   }
 
@@ -55,9 +59,13 @@ class UnitView extends React.Component {
 
   componentDidUpdate() {
     const { map, unit } = this.props;
-    const { centered } = this.state;
+    const { centered, events } = this.state;
     if (unit && map && map._layersMaxZoom && !centered) {
       this.centerMap(map, unit);
+    }
+    if (unit && events === null) {
+      fetchUnitEvents(unit.id)
+        .then(data => this.setState({ events: data.data }));
     }
   }
 
@@ -89,11 +97,39 @@ class UnitView extends React.Component {
     return filteredList;
   }
 
+  formatEventDate = (event) => {
+    const { intl } = this.props;
+    const timeString = intl.formatMessage({ id: 'general.time.short' });
+    const start = new Date(event.start_time);
+    const end = new Date(event.end_time);
+    const startDate = intl.formatDate(start, { month: 'numeric', day: 'numeric' });
+    const endDate = intl.formatDate(end, { month: 'numeric', day: 'numeric' });
+    const startTime = `${timeString} ${intl.formatTime(start)}`;
+    const startWeekDay = intl.formatDate(start, { weekday: 'short' });
+
+    if (startDate !== endDate) {
+      return `${startDate}–${endDate}`;
+    }
+
+    let dateString = `${startWeekDay} ${startDate} ${startTime}`;
+
+    // Check how many days to start of event. Returns number of days or "today"/"tomorrow"
+    const daysTo = intl.formatRelative(start, { units: 'day' });
+
+    // Check if string has numbers. If false, means that value is either "today" or "tomorrow"
+    if (!/\d/.test(daysTo)) {
+      // Instead of date, display "today" or "tomorrow"
+      dateString = `${daysTo} ${startTime}`;
+    }
+    return dateString;
+  }
+
   render() {
     const {
       classes, getLocaleText, intl, unit,
     } = this.props;
-    const { icon } = this.state;
+    const { icon, events } = this.state;
+
     const title = unit && unit.name ? getLocaleText(unit.name) : '';
 
     const TopBar = (
@@ -223,6 +259,27 @@ class UnitView extends React.Component {
                 ))
               }
             </TitledList>
+
+            {/* Events */}
+            {events && events.length > 0 ? (
+              <TitledList
+                title={<FormattedMessage id="unit.events" />}
+                titleComponent="h4"
+              >
+                {events.map((event) => {
+                  const dateString = this.formatEventDate(event);
+                  return (
+                    <ResultItem
+                      key={event.id}
+                      icon={<Event />}
+                      title={getLocaleText(event.name)}
+                      subtitle={dateString}
+                    />
+                  );
+                })}
+              </TitledList>
+            ) : null}
+
 
             <Container margin text>
               <Typography variant="body2">

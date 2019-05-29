@@ -13,5 +13,8 @@ export default {
   "unit": {
     "api_url": "https://api.hel.fi/servicemap/v2/"
   },
+  "events": {
+    "api_url": "https://api.hel.fi/linkedevents/v1/"
+  },
   "default_locale": 'fi',
 }

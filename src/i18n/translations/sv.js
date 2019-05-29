@@ -33,6 +33,7 @@ export default {
   'general.return.viewTitle': 'Return to beginning of main content', // TODO: Translate
   'general.skipToContent': 'Skip to content', // TODO: Translate
   'general.new.tab': 'Aukeaa uuteen välilehteen', // TODO: Translate
+  'general.time.short': 'kl',
 
   // Home
   'home.example.title': 'Esimerkkihakuja', // TODO: Translate
@@ -60,6 +61,7 @@ export default {
   'unit.contact.info': 'Contact information', // TODO: Translate
   'unit.services': 'Tjänster',
   'unit.e.services': 'Electronic services', // TODO: Translate
+  'unit.events': 'Evenemang',
   'unit.homepage': 'Hemsida',
   'unit.picture': 'Kuva toimipisteestä: ', // TODO: Translate
   'unit.description': 'Unit description', // TODO: Translate

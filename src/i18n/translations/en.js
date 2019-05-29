@@ -34,6 +34,7 @@ export default {
   'general.skipToContent': 'Skip to content',
   'general.give.feedback': 'Give feedback on the Servicemap test version (link opens in a new tab)',
   'general.new.tab': 'Opens in new tab',
+  'general.time.short': 'at',
 
   // Home
   'home.example.title': 'Example search phrases',
@@ -61,6 +62,7 @@ export default {
   'unit.contact.info': 'Contact information',
   'unit.services': 'Services',
   'unit.e.services': 'Electronic services', // TODO: verify
+  'unit.events': 'Events',
   'unit.homepage': 'Home page',
   'unit.picture': 'Picture of unit: ',
   'unit.description': 'Unit description',
