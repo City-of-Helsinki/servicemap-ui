@@ -115,7 +115,7 @@ class MapContainer extends React.Component {
       mapUnits = serviceUnits;
     }
 
-    if (highlightedUnit) {
+    if (currentPage === 'unit' && highlightedUnit) {
       mapUnits = [highlightedUnit];
     }
 

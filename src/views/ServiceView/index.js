@@ -2,7 +2,6 @@
 import { connect } from 'react-redux';
 import { getLocaleString } from '../../redux/selectors/locale';
 import { fetchService } from '../../redux/actions/services';
-import { setCurrentPage } from '../../redux/actions/user';
 import ServiceView from './ServiceView';
 
 const mapStateToProps = (state) => {
@@ -27,5 +26,5 @@ const mapStateToProps = (state) => {
 
 export default connect(
   mapStateToProps,
-  { fetchService, setCurrentPage },
+  { fetchService },
 )(ServiceView);

@@ -61,11 +61,6 @@ class UnitView extends React.Component {
     }
   }
 
-  componentWillUnmount() {
-    const { changeSelectedUnit } = this.props;
-    changeSelectedUnit(null);
-  }
-
   centerMap = (map, unit) => {
     this.setState({ centered: true });
     focusUnit(map, unit);
@@ -276,7 +271,6 @@ UnitView.propTypes = {
   unit: PropTypes.objectOf(PropTypes.any),
   map: PropTypes.objectOf(PropTypes.any),
   fetchSelectedUnit: PropTypes.func.isRequired,
-  changeSelectedUnit: PropTypes.func.isRequired,
   match: PropTypes.objectOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   getLocaleText: PropTypes.func.isRequired,

@@ -26,7 +26,7 @@ class ServiceView extends React.Component {
 
   componentDidMount() {
     const {
-      current, match, fetchService, setCurrentPage,
+      current, match, fetchService,
     } = this.props;
     const { params } = match;
 
@@ -34,8 +34,6 @@ class ServiceView extends React.Component {
       icon: <img alt="" src={drawServiceIcon()} style={{ height: 24, margin: 8, marginRight: 16 }} aria-hidden="true" />,
     });
 
-    // Set current page to this view
-    setCurrentPage('service');
     // Fetch service if current is not same as url param's
     if (!current || `${current.id}` !== params.service) {
       fetchService(params.service);
@@ -152,7 +150,6 @@ ServiceView.propTypes = {
   fetchService: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
   map: PropTypes.objectOf(PropTypes.any),
-  setCurrentPage: PropTypes.func.isRequired,
 };
 
 ServiceView.defaultProps = {
