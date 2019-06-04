@@ -3,6 +3,17 @@ export default {
   'app.title': 'Service map',
   'address': 'Address',
 
+  // Accessibility
+  'accessibility': 'Accessibility',
+  'accessibility.details': 'Accessibility details',
+  'accessibility.stamp': 'Accessibility acknowledged',
+  'accessibility.shortcomings': 'Shortcomings',
+  'accessibility.shortcomings.plural': `{count, plural,
+                                =0 {no shortcomings}
+                                one {# shortcoming}
+                                other {# shortcomings}
+                              }`,
+
   // Event
   'event.nearby': 'Nearby events',
   'event.description': 'Description',
@@ -28,6 +39,7 @@ export default {
   'general.back.event': 'Back to event view',
   'general.backToHome': 'Close search and return to beginning',
   'general.backToStart': 'Back to beginning of page',
+  'general.fetching': 'Loading data...',
   'general.home': 'Home',
   'general.noData': 'No data available',
   'general.loading': 'Loading',

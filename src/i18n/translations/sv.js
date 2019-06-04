@@ -3,6 +3,17 @@ export default {
   'app.title': 'Servicekarta',
   'address': 'Address', // TODO: Translate
 
+  // Accessibility
+  'accessibility': 'Tillgänglighet',
+  'accessibility.details': 'Noggrannare uppgifter',
+  'accessibility.stamp': 'Tillgängligheten beaktad',
+  'accessibility.shortcomings': 'Brister',
+  'accessibility.shortcomings.plural': `{count, plural,
+                                =0 {inga brister}
+                                one {# brist}
+                                other {# brister}
+                              }`,
+
   // Event
   'event.nearby': 'Nearby events', // TODO: Translate
   'event.description': 'Kuvaus', // TODO: Translate
@@ -28,6 +39,7 @@ export default {
   'general.back.event': 'Back to event view', // TODO: Translate
   'general.backToHome': 'Close search and return to beginning', // TODO: Translate
   'general.backToStart': 'Back to beginning of page', // TODO: Translate
+  'general.fetching': 'Ladataan tietoja...', // TODO: Translate
   'general.home': 'Home', // TODO: Translate
   'general.noData': 'No data available', // TODO: Translate
   'general.loading': 'Loading', // TODO: Translate

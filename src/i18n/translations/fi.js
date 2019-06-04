@@ -3,6 +3,17 @@ export default {
   'app.title': 'Palvelukartta',
   'address': 'Osoite',
 
+  // Accessibility
+  'accessibility': 'Esteettömyys',
+  'accessibility.details': 'Tarkemmat tiedot',
+  'accessibility.stamp': 'Esteettömyys huomioitu',
+  'accessibility.shortcomings': 'Puutteet',
+  'accessibility.shortcomings.plural': `{count, plural,
+                                =0 {Ei puutteita}
+                                one {# puute}
+                                other {# puutetta}
+                              }`,
+
   // Event
   'event.nearby': 'Lähellä olevat tapahtumat',
   'event.description': 'Kuvaus',
@@ -28,6 +39,7 @@ export default {
   'general.back.event': 'Palaa tapahtumanäkymään',
   'general.backToHome': 'Sulje haku ja palaa alkuun',
   'general.backToStart': 'Palaa sivun alkuun',
+  'general.fetching': 'Ladataan tietoja...',
   'general.home': 'Koti',
   'general.noData': 'Tietoa ei saatavilla',
   'general.loading': 'Ladataan',
