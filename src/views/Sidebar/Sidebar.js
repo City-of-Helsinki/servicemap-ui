@@ -66,8 +66,8 @@ const Unit = () => (
 );
 
 const UnitEvents = () => (
-  <TitleWrapper messageId="general.pageTitles.event">
-    <PageWrapper headMsgId="" page="event">
+  <TitleWrapper messageId="general.pageTitles.eventList">
+    <PageWrapper headMsgId="event.title" page="eventList">
       <UnitEventsView />
     </PageWrapper>
   </TitleWrapper>

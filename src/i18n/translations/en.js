@@ -9,6 +9,7 @@ export default {
   'event.more': 'Show all {count} events',
   'event.time': 'Date and time',
   'event.picture': 'Event picture',
+  'event.title': 'Events',
 
   // Sorting
   'sorting.label': 'Order search results',

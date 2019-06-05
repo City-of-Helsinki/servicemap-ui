@@ -9,6 +9,7 @@ export default {
   'event.more': 'Näytä kaikki {count} tapahtumaa', // TODO: Translate
   'event.time': 'Ajankohta', // TODO: Translate
   'event.picture': 'Tapahtuman kuva', // TODO: Translate
+  'event.title': 'Tapahtumat', // TODO: Translate
 
   // Sorting
   'sorting.label': 'Order search results', // TODO: Translate

@@ -9,6 +9,7 @@ export default {
   'event.more': 'Näytä kaikki {count} tapahtumaa',
   'event.time': 'Ajankohta',
   'event.picture': 'Tapahtuman kuva',
+  'event.title': 'Tapahtumat',
 
   // Sorting
   'sorting.label': 'Järjestä hakutulokset',
@@ -74,7 +75,7 @@ export default {
   'unit.contact.info': 'Yhteystiedot',
   'unit.services': 'Palvelut toimipisteessä',
   'unit.e.services': 'Sähköinen asiointi',
-  'unit.events': 'Tapahtumat',
+  'unit.events': 'Toimipisteen tapahtumat',
   'unit.homepage': 'Kotisivu',
   'unit.picture': 'Kuva toimipisteestä: ',
   'unit.description': 'Tietoa toimipisteestä',
