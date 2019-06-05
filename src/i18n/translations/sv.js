@@ -5,6 +5,10 @@ export default {
 
   // Event
   'event.nearby': 'Nearby events', // TODO: Translate
+  'event.description': 'Kuvaus', // TODO: Translate
+  'event.more': 'Näytä kaikki {count} tapahtumaa', // TODO: Translate
+  'event.time': 'Ajankohta', // TODO: Translate
+  'event.picture': 'Tapahtuman kuva', // TODO: Translate
 
   // Sorting
   'sorting.label': 'Order search results', // TODO: Translate
@@ -23,6 +27,8 @@ export default {
   'general.pageTitles.search': 'Search view', // TODO: Translate
   'general.pageTitles.unit': 'Unit view', // TODO: Translate
   'general.pageTitles.service': 'Service view', // TODO: Translate
+  'general.pageTitles.event': 'Tapahtumanäkymä', // TODO: Translate
+  'general.pageTitles.eventList': 'Tapahtumalistaus', // TODO: Translate
   // General - Pagination
   'general.pagination.previous': 'Previous page', // TODO: Translate
   'general.pagination.next': 'Next page', // TODO: Translate

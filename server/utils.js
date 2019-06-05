@@ -6,12 +6,14 @@ const serverConfig = config.server;
 const allowedUrls = [
   /^\/.{2,}\/$/,
   /^\/.{2,}\/unit\/\d+$/,
+  /^\/.{2,}\/unit\/\d+\/events$/,
   /^\/.{2,}\/unit$/,
   /^\/.{2,}\/search$/,
   /^\/.{2,}\/address\/[^\/]+\/[^\/]+\/[^\/]+$/,
   /^\/.{2,}\/division\/[^\/]+\/[^\/]+$/,
   /^\/.{2,}\/division$/,
   /^\/.{2,}\/area$/,
+  /^\/d+\/events$/,
 ];
 
 // Handle language change
@@ -44,7 +46,7 @@ export const makeLanguageHandler = (req, res, next) => {
 
 // Handle unit data fetching
 export const makeUnitHandler = (req, res, next) => {
-  const pattern = /^\/(\d+)\/?$/;
+  const pattern = /^\/(\d+)\/?$|^\/(\d+)\/events\/?$/
   const r = req.path.match(pattern);
   if(!r || r.length < 2) {
     res.redirect(serverConfig.url_prefix);
@@ -52,7 +54,7 @@ export const makeUnitHandler = (req, res, next) => {
   }
 
   // Handle unit data collection from api
-  const unitId = r[1];
+  const unitId = r[1] || r[2];
   const url = `${config.unit.api_url}unit/${unitId}/?include=services`;
   let unitInfo = null;
   let context = null;

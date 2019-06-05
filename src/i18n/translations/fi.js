@@ -5,6 +5,10 @@ export default {
 
   // Event
   'event.nearby': 'Lähellä olevat tapahtumat',
+  'event.description': 'Kuvaus',
+  'event.more': 'Näytä kaikki {count} tapahtumaa',
+  'event.time': 'Ajankohta',
+  'event.picture': 'Tapahtuman kuva',
 
   // Sorting
   'sorting.label': 'Järjestä hakutulokset',
@@ -23,6 +27,8 @@ export default {
   'general.pageTitles.search': 'Hakutulosnäkymä',
   'general.pageTitles.unit': 'Toimipistenäkymä',
   'general.pageTitles.service': 'Palvelunäkymä',
+  'general.pageTitles.event': 'Tapahtumanäkymä',
+  'general.pageTitles.eventList': 'Tapahtumalistaus',
   // General - Pagination
   'general.pagination.previous': 'Aiempi sivu',
   'general.pagination.next': 'Seuraava sivu',

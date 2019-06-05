@@ -5,6 +5,10 @@ export default {
 
   // Event
   'event.nearby': 'Nearby events',
+  'event.description': 'Description',
+  'event.more': 'Show all {count} events',
+  'event.time': 'Date and time',
+  'event.picture': 'Event picture',
 
   // Sorting
   'sorting.label': 'Order search results',
@@ -23,6 +27,8 @@ export default {
   'general.pageTitles.search': 'Search view',
   'general.pageTitles.unit': 'Unit view',
   'general.pageTitles.service': 'Service view',
+  'general.pageTitles.event': 'Event view',
+  'general.pageTitles.eventList': 'Event list',
   // General - Pagination
   'general.pagination.previous': 'Previous page',
   'general.pagination.next': 'Next page',
