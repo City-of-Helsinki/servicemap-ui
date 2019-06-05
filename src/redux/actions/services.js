@@ -22,40 +22,53 @@ export const serviceSetCurrent = service => ({
 });
 
 // Thunk fetch
-export const fetchServiceUnits = (serviceId, allData = [], next = null) => async (dispatch) => {
+export const fetchServiceUnits = (
+  serviceId,
+  allData = [],
+  next = null,
+) => async (dispatch, getState) => {
   // Fetch service data
   const { unit } = config;
   const url = unit.api_url;
 
-  dispatch(fetchIsLoading());
+  const { service } = getState();
+  const { isFetching } = service;
 
-  // Fetch service units
-  try {
-    let response = null;
-    if (next) {
-      response = await fetch(next);
-    } else {
-      response = await fetch(`${url}unit/?service=${serviceId}&page_size=100`);
+  // If not currently fetching init fetch
+  if (!isFetching) {
+    dispatch(fetchIsLoading());
+  }
+
+  // If getting next page or first fetch proceed to actual fetch
+  if (next || !isFetching) {
+    // Fetch service units
+    try {
+      let response = null;
+      if (next) {
+        response = await fetch(next);
+      } else {
+        response = await fetch(`${url}unit/?service=${serviceId}&page_size=100`);
+      }
+      if (!response.ok) {
+        throw Error(response.statusText);
+      }
+      const data = await response.json();
+      const newData = [...allData, ...data.results];
+      if (data.next) {
+        // Fetch the next page if response has more than one page of results
+        dispatch(serviceFetchProgressUpdate(newData.length, data.count));
+        dispatch(fetchServiceUnits(serviceId, newData, data.next));
+      } else {
+        // Filter out duplicate units
+        const distinctData = Array.from(new Set(newData.map(x => x.id))).map((id) => {
+          const obj = newData.find(s => id === s.id);
+          return obj;
+        });
+        dispatch(serviceFetchDataSuccess(distinctData));
+      }
+    } catch (e) {
+      dispatch(fetchHasErrored(e.message));
     }
-    if (!response.ok) {
-      throw Error(response.statusText);
-    }
-    const data = await response.json();
-    const newData = [...allData, ...data.results];
-    if (data.next) {
-      // Fetch the next page if response has more than one page of results
-      dispatch(serviceFetchProgressUpdate(newData.length, data.count));
-      dispatch(fetchServiceUnits(serviceId, newData, data.next));
-    } else {
-      // Filter out duplicate units
-      const distinctData = Array.from(new Set(newData.map(x => x.id))).map((id) => {
-        const obj = newData.find(s => id === s.id);
-        return obj;
-      });
-      dispatch(serviceFetchDataSuccess(distinctData));
-    }
-  } catch (e) {
-    dispatch(fetchHasErrored(e.message));
   }
 };
 

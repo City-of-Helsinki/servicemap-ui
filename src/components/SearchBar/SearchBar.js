@@ -87,7 +87,9 @@ class SearchBar extends React.Component {
   }
 
   handleSubmit = (search) => {
-    if (search && search !== '') {
+    const { isFetching } = this.props;
+
+    if (!isFetching && search && search !== '') {
       const {
         fetchUnits, navigator, previousSearch,
       } = this.props;
@@ -153,6 +155,7 @@ SearchBar.propTypes = {
   hideBackButton: PropTypes.bool,
   navigator: PropTypes.objectOf(PropTypes.any),
   intl: intlShape.isRequired,
+  isFetching: PropTypes.bool.isRequired,
   placeholder: PropTypes.string.isRequired,
   searchRef: PropTypes.objectOf(PropTypes.any),
   previousSearch: PropTypes.string,
@@ -168,8 +171,10 @@ SearchBar.defaultProps = {
 
 // Listen to redux state
 const mapStateToProps = (state) => {
-  const { navigator } = state;
+  const { navigator, units } = state;
+  const { isFetching } = units;
   return {
+    isFetching,
     navigator,
   };
 };

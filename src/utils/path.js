@@ -11,6 +11,24 @@ export const comparePath = (path, location) => {
   return false;
 };
 
+export const getPathName = (location) => {
+  let result;
+  Object.keys(paths).forEach((key) => {
+    if (result) {
+      return;
+    }
+
+    if (Object.prototype.hasOwnProperty.call(paths, key)) {
+      const { regex } = paths[key];
+      if (regex && regex.exec(location)) {
+        result = key;
+      }
+    }
+  });
+
+  return result;
+};
+
 // Generate path for page
 export const generatePath = (path, locale = config.default_locale, data = null) => {
   if (Object.prototype.hasOwnProperty.call(paths, path)) {

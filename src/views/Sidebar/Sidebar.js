@@ -8,8 +8,8 @@ import ServiceView from '../ServiceView';
 import EventDetailView from '../EventDetailView';
 import MobileMapView from '../MobileMapView';
 import ViewTitle from '../components/ViewTitle/ViewTitle';
-import HeadInfo from '../components/HeadInfo';
 import UnitEventsView from '../UnitView/UnitEventsView';
+import PageHandler from '../components/PageHandler';
 
 const TitleWrapper = ({ children, messageId }) => (
   <>
@@ -18,9 +18,9 @@ const TitleWrapper = ({ children, messageId }) => (
   </>
 );
 
-const HeadWrapper = ({ children, headMsgId, page }) => (
+const PageWrapper = ({ children, headMsgId, page }) => (
   <>
-    <HeadInfo messageId={headMsgId} page={page} />
+    <PageHandler messageId={headMsgId} page={page} />
     {children}
   </>
 );
@@ -30,38 +30,38 @@ TitleWrapper.propTypes = {
   messageId: PropTypes.string.isRequired,
 };
 
-HeadWrapper.propTypes = {
+PageWrapper.propTypes = {
   children: PropTypes.node.isRequired,
   headMsgId: PropTypes.string,
   page: PropTypes.string,
 };
 
-HeadWrapper.defaultProps = {
+PageWrapper.defaultProps = {
   headMsgId: null,
   page: null,
 };
 
 const Home = () => (
   <TitleWrapper messageId="general.pageTitles.home">
-    <HeadWrapper headMsgId="">
+    <PageWrapper headMsgId="" page="home">
       <HomeView />
-    </HeadWrapper>
+    </PageWrapper>
   </TitleWrapper>
 );
 
 const Search = () => (
   <TitleWrapper messageId="general.pageTitles.search">
-    <HeadWrapper headMsgId="search.results.title">
+    <PageWrapper headMsgId="search.results.title" page="search">
       <SearchView />
-    </HeadWrapper>
+    </PageWrapper>
   </TitleWrapper>
 );
 
 const Unit = () => (
   <TitleWrapper messageId="general.pageTitles.unit">
-    <HeadWrapper headMsgId="" page="unit">
+    <PageWrapper headMsgId="" page="unit">
       <UnitView />
-    </HeadWrapper>
+    </PageWrapper>
   </TitleWrapper>
 );
 
@@ -75,9 +75,9 @@ const UnitEvents = () => (
 
 const Service = () => (
   <TitleWrapper messageId="general.pageTitles.service">
-    <HeadWrapper headMsgId="" page="service">
+    <PageWrapper headMsgId="" page="service">
       <ServiceView />
-    </HeadWrapper>
+    </PageWrapper>
   </TitleWrapper>
 );
 

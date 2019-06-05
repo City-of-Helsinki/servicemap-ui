@@ -18,9 +18,15 @@ export default {
 
   // General
   'general.back': 'Palaa',
+  'general.back.address': 'Palaa osoitenäkymään',
+  'general.back.home': 'Palaa aloitusnäkymään',
+  'general.back.goToHome': 'Siirry aloitusnäkymään',
+  'general.back.search': 'Palaa hakunäkymään',
+  'general.back.service': 'Palaa palvelunäkymään',
+  'general.back.unit': 'Palaa toimipistenäkymään',
+  'general.backToHome': 'Sulje haku ja palaa alkuun',
   'general.backToStart': 'Palaa sivun alkuun',
   'general.home': 'Koti',
-  'general.back.home': 'Sulje haku ja palaa alkuun',
   'general.noData': 'Tietoa ei saatavilla',
   'general.loading': 'Ladataan',
   'general.pageTitles.home': 'Aloitusnäkymä',

@@ -30,9 +30,8 @@ class SearchView extends React.Component {
 
   componentDidMount() {
     const {
-      fetchUnits, units, map, setCurrentPage,
+      fetchUnits, units, map,
     } = this.props;
-    setCurrentPage('search');
     const searchParam = this.getSearchParam();
     if (this.shouldFetch()) {
       fetchUnits([], null, searchParam);
@@ -295,7 +294,6 @@ SearchView.propTypes = {
   units: PropTypes.arrayOf(PropTypes.any),
   map: PropTypes.objectOf(PropTypes.any),
   match: PropTypes.objectOf(PropTypes.any).isRequired,
-  setCurrentPage: PropTypes.func.isRequired,
   setNewSearchData: PropTypes.func.isRequired,
 };
 
