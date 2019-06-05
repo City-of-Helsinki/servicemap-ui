@@ -67,7 +67,9 @@ const TitleBar = ({
     <DesktopComponent>
       <Container>
         <div className={classes.container}>
-          {icon}
+          <div style={{ height: 24, margin: 8, marginRight: 16 }} aria-hidden="true">
+            {icon}
+          </div>
           <Typography
             className={classes.title}
             component={titleComponent}

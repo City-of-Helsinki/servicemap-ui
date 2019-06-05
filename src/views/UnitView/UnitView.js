@@ -42,7 +42,7 @@ class UnitView extends React.Component {
     const { params } = match;
 
     this.setState({
-      icon: <img alt="" src={drawIcon({ id: params.unit }, null, true)} style={{ height: 24, margin: 8, marginRight: 16 }} aria-hidden="true" />,
+      icon: <img alt="" src={drawIcon({ id: params.unit }, null, true)} style={{ height: 24 }} />,
     });
 
     if (params && params.unit) {

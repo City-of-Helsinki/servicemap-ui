@@ -5,7 +5,9 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
-import { AccessTime, Phone, LocationOn } from '@material-ui/icons';
+import {
+  AccessTime, Phone, LocationOn, Event,
+} from '@material-ui/icons';
 import { changeSelectedEvent } from '../../redux/actions/event';
 import DescriptionText from '../../components/DescriptionText';
 import SearchBar from '../../components/SearchBar';
@@ -71,7 +73,7 @@ class EventDetailView extends React.Component {
           <DesktopComponent>
             <SearchBar placeholder={intl.formatMessage({ id: 'search' })} />
           </DesktopComponent>
-          <TitleBar title={getLocaleText(event.name)} />
+          <TitleBar title={getLocaleText(event.name)} icon={<Event />} />
 
           {event.images && (
           <img
