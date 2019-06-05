@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Typography, withStyles, Button,
+  Typography, withStyles,
 } from '@material-ui/core';
 import { injectIntl, intlShape } from 'react-intl';
 import { Search } from '@material-ui/icons';
@@ -11,6 +11,7 @@ import { MobileComponent } from '../../layouts/WrapperComponents/WrapperComponen
 import HomeLogo from '../../components/Logos/HomeLogo';
 import TitledList from '../../components/Lists/TitledList/TitledList';
 import SimpleListItem from '../../components/ListItems/SimpleListItem/SimpleListItem';
+import BlueButton from '../../components/BlueButton';
 
 // TODO: Fix close by events and services lists with actual data items once data is accessible
 
@@ -84,16 +85,12 @@ class HomeView extends React.Component {
             ja haluamme palautetta juuri sinulta.
             <br />
           </Typography>
-          <Button
-            className={classes.button}
-            role="link"
-            variant="contained"
-            color="primary"
+          <BlueButton
             onClick={() => window.open('https://forms.gle/roe9XNrZGQWBhMBJ7')}
-            aria-label={`${intl.formatMessage({ id: 'home.send.feedback' })}: ${intl.formatMessage({ id: 'general.new.tab' })}`}
+            srText={`${intl.formatMessage({ id: 'home.send.feedback' })}: ${intl.formatMessage({ id: 'general.new.tab' })}`}
           >
             {intl.formatMessage({ id: 'home.send.feedback' })}
-          </Button>
+          </BlueButton>
         </Container>
 
         {/* <Container paper title={intl.formatMessage({ id: 'service.nearby' })}>
@@ -122,13 +119,6 @@ const styles = theme => ({
     marginLeft: theme.spacing.unitDouble,
     marginRight: theme.spacing.unitDouble,
     marginTop: 24,
-  },
-  button: {
-    marginLeft: '15%',
-    marginRight: '15%',
-    width: '70%',
-    marginTop: 24,
-    marginBottom: 24,
   },
 });
 
