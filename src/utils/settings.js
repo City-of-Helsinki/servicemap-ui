@@ -6,21 +6,24 @@ const ALLOWED = {
 
 const ACCESSIBILITY_MAPPING = {
   colorblind: 'colour_blind',
-  hearing: 'hearing_aid',
-  visual: 'visual_impairment',
+  hearingAid: 'hearing_aid',
+  visuallyImpaired: 'visual_impairment',
 };
 
-class SettingsUtillity {
+class SettingsUtility {
   static mobilitySettings = ALLOWED.mobility;
 
   static citySettings = ALLOWED.city;
 
-  static accessibilityImpairments = Object.keys(ACCESSIBILITY_MAPPING).map(
-    key => (ACCESSIBILITY_MAPPING[key]),
+  static accessibilityImpairmentKeys = Object.keys(ACCESSIBILITY_MAPPING).map(
+    key => (key),
   );
 
-  static isValidAccessibilityImpairment(key) {
-    return this.accessibilityImpairments.indexOf(key) > -1;
+  static isValidAccessibilitySenseImpairment(key) {
+    if (this.accessibilityImpairmentKeys.indexOf(key) < 0) {
+      throw new Error(`Invalid value for accessibility sense setting: ${key}`);
+    }
+    return true;
   }
 
   static isValidMobilitySetting(value) {
@@ -43,6 +46,17 @@ class SettingsUtillity {
     }
     return key;
   }
+
+  /**
+   * Transform key to valid api fetched accessibility data key
+   * @param {string} key
+   */
+  static getApiValidDataKey(key) {
+    if (Object.keys(ACCESSIBILITY_MAPPING).indexOf(key) < 0) {
+      throw new Error(`Invalid key for accessibility mapping: ${key}`);
+    }
+    return ACCESSIBILITY_MAPPING[key];
+  }
 }
 
-export default SettingsUtillity;
+export default SettingsUtility;

@@ -3,7 +3,7 @@ import SettingsUtility from '../../utils/settings';
 const setSingleSelection = (prefix, key) => async (dispatch, getState) => {
   const { settings } = getState();
   const settingsHasKey = Object.prototype.hasOwnProperty.call(settings, key);
-  const keyIsValid = SettingsUtility.isValidAccessibilityImpairment(key);
+  const keyIsValid = SettingsUtility.isValidAccessibilitySenseImpairment(key);
   if (settingsHasKey && keyIsValid) {
     const value = settings[key];
     dispatch({
@@ -25,10 +25,10 @@ const setMobilitySetting = setting => async (dispatch) => {
 };
 
 
-export const toggleHearingAid = () => setSingleSelection('HEARING', 'hearing_aid');
+export const toggleHearingAid = () => setSingleSelection('HEARING', 'hearingAid');
 
-export const toggleVisuallyImpaired = () => setSingleSelection('SIGHT', 'visually_impaired');
+export const toggleVisuallyImpaired = () => setSingleSelection('SIGHT', 'visuallyImpaired');
 
-export const toggleColorblind = () => setSingleSelection('COLOR', 'colorblind');
+export const toggleColorblind = () => setSingleSelection('COLORBLIND', 'colorblind');
 
 export const setMobility = value => setMobilitySetting(value);

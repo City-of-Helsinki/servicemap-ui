@@ -1,4 +1,4 @@
-const initialState = null;
+const initialState = false;
 
 const basicSelection = (state = initialState, action, prefix) => {
   switch (action.type) {
@@ -9,9 +9,9 @@ const basicSelection = (state = initialState, action, prefix) => {
   }
 };
 
-export const hearing = (state, action) => basicSelection(state, action, 'HEARING');
+export const hearingAid = (state, action) => basicSelection(state, action, 'HEARING');
 
-export const sight = (state, action) => basicSelection(state, action, 'SIGHT');
+export const visuallyImpaired = (state, action) => basicSelection(state, action, 'SIGHT');
 
 export const colorblind = (state, action) => basicSelection(state, action, 'COLORBLIND');
 

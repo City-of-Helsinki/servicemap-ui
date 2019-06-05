@@ -9,7 +9,7 @@ import service from './redux/reducers/services';
 import selectedUnit from './redux/reducers/selectedUnit';
 import event from './redux/reducers/event';
 import {
-  colorblind, hearing, mobility, sight,
+  colorblind, hearingAid, mobility, visuallyImpaired,
 } from './redux/reducers/settings';
 
 // Export all redux reducers here
@@ -26,8 +26,8 @@ export default combineReducers({
   event,
   settings: combineReducers({
     colorblind,
-    hearing_aid: hearing,
+    hearingAid,
     mobility,
-    visually_impaired: sight,
+    visuallyImpaired,
   }),
 });
