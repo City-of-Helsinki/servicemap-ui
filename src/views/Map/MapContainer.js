@@ -32,7 +32,8 @@ class MapContainer extends React.Component {
   }
 
   initiateMap = () => {
-    const initialMap = CreateMap('servicemap');
+    const { locale } = this.props;
+    const initialMap = CreateMap('servicemap', locale);
     this.setState({ initialMap });
   }
 
@@ -42,7 +43,7 @@ class MapContainer extends React.Component {
   }
 
   fetchTransitStops = (bounds) => {
-    const { locale } = this.props;
+    const { getLocaleText } = this.props;
     fetchStops(bounds)
       .then(((data) => {
         const stops = data[0].data.stopsByBbox;
@@ -80,7 +81,7 @@ class MapContainer extends React.Component {
             secondaryId: otherStop.gtfsId,
             lat: entrance.location.coordinates[1],
             lon: entrance.location.coordinates[0],
-            name: entrance.name[locale],
+            name: getLocaleText(entrance.name),
             patterns: closest.stop.patterns,
             vehicleType: closest.stop.vehicleType,
           };
@@ -152,6 +153,7 @@ const mapStateToProps = (state) => {
   const districts = getDistricts(state);
   const highlightedUnit = getSelectedUnit(state);
   const currentPage = state.user.page;
+  const { locale } = state.user;
   const getLocaleText = textObject => getLocaleString(state, textObject);
   // const unitList = getUnitList(state);
   return {
@@ -160,6 +162,7 @@ const mapStateToProps = (state) => {
     districts,
     state,
     highlightedUnit,
+    locale,
     getLocaleText,
     unitList: data,
     serviceUnits,

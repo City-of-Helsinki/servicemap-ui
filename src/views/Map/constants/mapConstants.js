@@ -1,3 +1,5 @@
+import { isRetina } from '../../../utils';
+
 // The maximum bounds of the map
 const mapBounds = {
   maxLat: 60.68260671624568,
@@ -43,14 +45,14 @@ const mapTypes = {
   // These define the map tiles and options of individual map types
   servicemap: {
     name: 'servicemap',
-    layer: tileLayers.tms32,
-    url: 'https://tiles.hel.ninja/wmts/osm-sm-hq/etrs_tm35fin_hq/{z}/{x}/{y}.png',
+    layer: null,
+    url: 'https://tiles.hel.ninja/styles/hel-osm-bright/{z}/{x}/{y}.png',
     minZoom: 6,
-    maxZoom: 15,
-    zoom: 10,
-    mobileZoom: 9,
-    transitZoom: 14,
-    mobileTransitZoom: 13,
+    maxZoom: 18,
+    zoom: 13,
+    mobileZoom: 12,
+    transitZoom: 17,
+    mobileTransitZoom: 16,
   },
   ortoImage: {
     name: 'ortoImage',
@@ -76,9 +78,38 @@ const mapTypes = {
     transitZoom: 9,
     mobileTransitZoom: 8,
   },
+  // tms32 implementation of default map, not used currently
+  /* servicemap: {
+    name: 'servicemap',
+    layer: tileLayers.tms32,
+    url: 'https://tiles.hel.ninja/wmts/osm-sm-hq/etrs_tm35fin_hq/{z}/{x}/{y}.png',
+    minZoom: 6,
+    maxZoom: 15,
+    zoom: 10,
+    mobileZoom: 9,
+    transitZoom: 14,
+    mobileTransitZoom: 13,
+  }, */
+};
+
+const createMapOptions = (type, locale) => {
+  const mapOptions = mapTypes[type];
+
+  if (type === 'servicemap') {
+    let suffix = '';
+    if (isRetina) {
+      suffix += '@2x';
+    }
+    if (locale === 'sv') {
+      suffix += '@sv';
+    }
+    mapOptions.url = `https://tiles.hel.ninja/styles/hel-osm-bright/{z}/{x}/{y}${suffix}.png`;
+  }
+
+  return mapOptions;
 };
 
 export {
   mapOptions,
-  mapTypes,
+  createMapOptions,
 };
