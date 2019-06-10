@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { injectIntl, intlShape } from 'react-intl';
 import { getMapType } from '../../redux/selectors/map';
 import getDistricts from '../../redux/selectors/district';
 import { fetchDistrictsData } from '../../redux/actions/district';
@@ -12,6 +13,8 @@ import { getLocaleString } from '../../redux/selectors/locale';
 import CreateMap from './utils/createMap';
 import { mapOptions } from './constants/mapConstants';
 import { fetchStops } from './utils/transitFetch';
+
+import SearchBar from '../../components/SearchBar';
 
 class MapContainer extends React.Component {
   constructor(props) {
@@ -101,7 +104,7 @@ class MapContainer extends React.Component {
 
   render() {
     const {
-      mapType, navigator, districts, highlightedUnit, getLocaleText, currentPage, unitList, serviceUnits, unitsLoading, isMobile,
+      mapType, navigator, districts, highlightedUnit, getLocaleText, currentPage, unitList, serviceUnits, unitsLoading, isMobile, intl,
     } = this.props;
     const { initialMap, transitStops } = this.state;
 
@@ -121,22 +124,34 @@ class MapContainer extends React.Component {
 
     if (initialMap) {
       return (
-        <MapView
-          key={mapType ? mapType.crs.code : initialMap.crs.code}
-          mapType={mapType || initialMap}
-          unitList={mapUnits}
-          districtList={districts}
-          saveMapRef={this.saveMapRef}
-          mapOptions={mapOptions}
-          mobile={isMobile}
-          navigator={navigator}
-          fetchTransitStops={this.fetchTransitStops}
-          clearTransitStops={this.clearTransitStops}
-          transitStops={transitStops}
-          getLocaleText={textObject => getLocaleText(textObject)}
+        <>
+          {isMobile && (
+          <div style={{
+            zIndex: 999999999999, position: 'fixed', top: 0, width: '100%',
+          }}
+          >
+            <SearchBar
+              placeholder={intl.formatMessage({ id: 'search' })}
+            />
+          </div>
+          )}
+          <MapView
+            key={mapType ? mapType.crs.code : initialMap.crs.code}
+            mapType={mapType || initialMap}
+            unitList={mapUnits}
+            districtList={districts}
+            saveMapRef={this.saveMapRef}
+            mapOptions={mapOptions}
+            mobile={isMobile}
+            navigator={navigator}
+            fetchTransitStops={this.fetchTransitStops}
+            clearTransitStops={this.clearTransitStops}
+            transitStops={transitStops}
+            getLocaleText={textObject => getLocaleText(textObject)}
           // TODO: think about better styling location for map
-          style={{ height: '100%', flex: '1 0 auto' }}
-        />
+            style={{ height: '100%', flex: '1 0 auto' }}
+          />
+        </>
       );
     }
     return null;
@@ -169,11 +184,11 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(
+export default injectIntl(connect(
   mapStateToProps,
   // TODO: remove fetchDistrictsData from this class
   { fetchDistrictsData, setMapRef },
-)(MapContainer);
+)(MapContainer));
 
 
 // Typechecking
@@ -191,6 +206,7 @@ MapContainer.propTypes = {
   getLocaleText: PropTypes.func.isRequired,
   setMapRef: PropTypes.func.isRequired,
   isMobile: PropTypes.bool,
+  intl: intlShape.isRequired,
 };
 
 MapContainer.defaultProps = {

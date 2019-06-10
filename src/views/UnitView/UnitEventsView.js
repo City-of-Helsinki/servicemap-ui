@@ -48,10 +48,10 @@ class UnitEventsView extends React.Component {
     );
     if (eventsData.events) {
       return (
-        <>
+        <div style={{ height: '100%', overflow: 'auto' }}>
           {topBar}
           <Events eventsData={eventsData} fullList />
-        </>
+        </div>
       );
     }
     return (
