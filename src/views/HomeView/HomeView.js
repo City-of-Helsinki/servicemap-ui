@@ -11,7 +11,7 @@ import { MobileComponent } from '../../layouts/WrapperComponents/WrapperComponen
 import HomeLogo from '../../components/Logos/HomeLogo';
 import TitledList from '../../components/Lists/TitledList/TitledList';
 import SimpleListItem from '../../components/ListItems/SimpleListItem/SimpleListItem';
-import BlueButton from '../../components/BlueButton';
+import ServiceMapButton from '../../components/ServiceMapButton';
 
 // TODO: Fix close by events and services lists with actual data items once data is accessible
 
@@ -85,12 +85,12 @@ class HomeView extends React.Component {
             ja haluamme palautetta juuri sinulta.
             <br />
           </Typography>
-          <BlueButton
+          <ServiceMapButton
             onClick={() => window.open('https://forms.gle/roe9XNrZGQWBhMBJ7')}
             srText={`${intl.formatMessage({ id: 'home.send.feedback' })}: ${intl.formatMessage({ id: 'general.new.tab' })}`}
           >
             {intl.formatMessage({ id: 'home.send.feedback' })}
-          </BlueButton>
+          </ServiceMapButton>
         </Container>
 
         {/* <Container paper title={intl.formatMessage({ id: 'service.nearby' })}>

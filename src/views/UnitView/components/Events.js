@@ -7,7 +7,7 @@ import { getLocaleString } from '../../../redux/selectors/locale';
 import { changeSelectedEvent } from '../../../redux/actions/event';
 import TitledList from '../../../components/Lists/TitledList';
 import ResultItem from '../../../components/ListItems/ResultItem';
-import BlueButton from '../../../components/BlueButton/BlueButton';
+import ServiceMapButton from '../../../components/ServiceMapButton/ServiceMapButton';
 
 const formatEventDate = (event, intl) => {
   const timeString = intl.formatMessage({ id: 'general.time.short' });
@@ -68,7 +68,7 @@ const Events = ({
             })}
           </TitledList>
           { !fullList && (
-          <BlueButton
+          <ServiceMapButton
             onClick={(e) => {
               e.preventDefault();
               if (navigator) {
@@ -77,7 +77,7 @@ const Events = ({
             }}
           >
             <FormattedMessage id="event.more" values={{ count: events.length }} />
-          </BlueButton>
+          </ServiceMapButton>
           )}
         </>
       );
