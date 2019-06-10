@@ -67,7 +67,7 @@ const Events = ({
               );
             })}
           </TitledList>
-          { !fullList && (
+          { !fullList && events.length > 5 && (
           <ServiceMapButton
             onClick={(e) => {
               e.preventDefault();
