@@ -1,3 +1,4 @@
+import LocalStorageUtility from './localStorage';
 
 const ALLOWED = {
   mobility: [null, 'wheelchair', 'reduced_mobility', 'rollator', 'stroller'],
@@ -56,6 +57,21 @@ class SettingsUtility {
       throw new Error(`Invalid key for accessibility mapping: ${key}`);
     }
     return ACCESSIBILITY_MAPPING[key];
+  }
+
+  /**
+   * Get redux compatible settings object from localStorage
+   */
+  static getSettingsFromLocalStorage() {
+    const mobility = LocalStorageUtility.getItem('mobility');
+    const settings = {
+      mobility: mobility === 'null' ? null : mobility,
+      colorblind: LocalStorageUtility.getItem('colorblind') === 'true',
+      visuallyImpaired: LocalStorageUtility.getItem('visuallyImpaired') === 'true',
+      hearingAid: LocalStorageUtility.getItem('hearingAid') === 'true',
+    };
+
+    return settings;
   }
 }
 
