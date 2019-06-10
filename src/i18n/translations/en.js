@@ -25,6 +25,7 @@ export default {
   'general.back.search': 'Back to search view',
   'general.back.service': 'Back to service view',
   'general.back.unit': 'Back to unit view',
+  'general.back.event': 'Back to event view',
   'general.backToHome': 'Close search and return to beginning',
   'general.backToStart': 'Back to beginning of page',
   'general.home': 'Home',

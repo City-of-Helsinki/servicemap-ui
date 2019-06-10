@@ -25,6 +25,7 @@ export default {
   'general.back.search': 'Back to search view', // TODO: Translate
   'general.back.service': 'Back to service view', // TODO: Translate
   'general.back.unit': 'Back to unit view', // TODO: Translate
+  'general.back.event': 'Back to event view', // TODO: Translate
   'general.backToHome': 'Close search and return to beginning', // TODO: Translate
   'general.backToStart': 'Back to beginning of page', // TODO: Translate
   'general.home': 'Home', // TODO: Translate

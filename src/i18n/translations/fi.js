@@ -25,6 +25,7 @@ export default {
   'general.back.search': 'Palaa hakunäkymään',
   'general.back.service': 'Palaa palvelunäkymään',
   'general.back.unit': 'Palaa toimipistenäkymään',
+  'general.back.event': 'Palaa tapahtumanäkymään',
   'general.backToHome': 'Sulje haku ja palaa alkuun',
   'general.backToStart': 'Palaa sivun alkuun',
   'general.home': 'Koti',
