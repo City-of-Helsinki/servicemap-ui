@@ -7,6 +7,7 @@ import user from './redux/reducers/user';
 import districts from './redux/reducers/district';
 import service from './redux/reducers/services';
 import selectedUnit from './redux/reducers/selectedUnit';
+import event from './redux/reducers/event';
 
 // Export all redux reducers here
 export default combineReducers({
@@ -19,4 +20,5 @@ export default combineReducers({
   districts,
   service,
   selectedUnit,
+  event,
 });

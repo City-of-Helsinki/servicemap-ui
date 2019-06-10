@@ -5,6 +5,11 @@ export default {
 
   // Event
   'event.nearby': 'Nearby events',
+  'event.description': 'Description',
+  'event.more': 'Show all {count} events',
+  'event.time': 'Date and time',
+  'event.picture': 'Event picture',
+  'event.title': 'Events',
 
   // Sorting
   'sorting.label': 'Order search results',
@@ -20,6 +25,7 @@ export default {
   'general.back.search': 'Back to search view',
   'general.back.service': 'Back to service view',
   'general.back.unit': 'Back to unit view',
+  'general.back.event': 'Back to event view',
   'general.backToHome': 'Close search and return to beginning',
   'general.backToStart': 'Back to beginning of page',
   'general.home': 'Home',
@@ -29,6 +35,8 @@ export default {
   'general.pageTitles.search': 'Search view',
   'general.pageTitles.unit': 'Unit view',
   'general.pageTitles.service': 'Service view',
+  'general.pageTitles.event': 'Event view',
+  'general.pageTitles.eventList': 'Event list',
   // General - Pagination
   'general.pagination.previous': 'Previous page',
   'general.pagination.next': 'Next page',
@@ -40,6 +48,7 @@ export default {
   'general.skipToContent': 'Skip to content',
   'general.give.feedback': 'Give feedback on the Servicemap test version (link opens in a new tab)',
   'general.new.tab': 'Opens in new tab',
+  'general.time.short': 'at',
 
   // Home
   'home.example.title': 'Example search phrases',
@@ -67,6 +76,7 @@ export default {
   'unit.contact.info': 'Contact information',
   'unit.services': 'Services',
   'unit.e.services': 'Electronic services', // TODO: verify
+  'unit.events': 'Events',
   'unit.homepage': 'Home page',
   'unit.picture': 'Picture of unit: ',
   'unit.description': 'Unit description',

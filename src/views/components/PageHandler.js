@@ -17,16 +17,18 @@ class PageHandler extends React.Component {
   // Modify html head
   render() {
     const {
-      intl, messageId, page, unit, service, getLocaleText,
+      intl, messageId, page, unit, service, event, getLocaleText,
     } = this.props;
     const message = messageId ? intl.formatMessage({ id: messageId }) : '';
     let pageMessage = '';
 
     // Add unit or service name to title if needed
-    if (page === 'unit' && unit && unit.name) {
+    if ((page === 'unit' || page === 'eventList') && unit && unit.name) {
       pageMessage = getLocaleText(unit.name);
     } if (page === 'service' && service && service.name) {
       pageMessage = getLocaleText(service.name);
+    } if (page === 'event' && event && event.name) {
+      pageMessage = getLocaleText(event.name);
     }
 
     let appTitle = intl.formatMessage({ id: 'app.title' });
@@ -35,7 +37,7 @@ class PageHandler extends React.Component {
       appTitle = ` | ${appTitle}`;
     }
 
-    const title = `${message}${uppercaseFirst(pageMessage)}${appTitle}`;
+    const title = `${uppercaseFirst(pageMessage)} ${message}${appTitle}`;
 
     return (
       <Helmet>
@@ -46,11 +48,12 @@ class PageHandler extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const { selectedUnit, service } = state;
+  const { selectedUnit, service, event } = state;
   const getLocaleText = textObject => getLocaleString(state, textObject);
   return {
     unit: selectedUnit.data,
     service: service.current,
+    event: event.selected,
     getLocaleText,
   };
 };
@@ -66,6 +69,7 @@ PageHandler.propTypes = {
   messageId: PropTypes.string,
   page: PropTypes.string,
   unit: PropTypes.objectOf(PropTypes.any),
+  event: PropTypes.objectOf(PropTypes.any),
   service: PropTypes.objectOf(PropTypes.any),
   getLocaleText: PropTypes.func.isRequired,
   setCurrentPage: PropTypes.func.isRequired,
@@ -76,4 +80,5 @@ PageHandler.defaultProps = {
   page: null,
   unit: null,
   service: null,
+  event: null,
 };

@@ -5,6 +5,11 @@ export default {
 
   // Event
   'event.nearby': 'Nearby events', // TODO: Translate
+  'event.description': 'Kuvaus', // TODO: Translate
+  'event.more': 'Näytä kaikki {count} tapahtumaa', // TODO: Translate
+  'event.time': 'Ajankohta', // TODO: Translate
+  'event.picture': 'Tapahtuman kuva', // TODO: Translate
+  'event.title': 'Tapahtumat', // TODO: Translate
 
   // Sorting
   'sorting.label': 'Order search results', // TODO: Translate
@@ -20,6 +25,7 @@ export default {
   'general.back.search': 'Back to search view', // TODO: Translate
   'general.back.service': 'Back to service view', // TODO: Translate
   'general.back.unit': 'Back to unit view', // TODO: Translate
+  'general.back.event': 'Back to event view', // TODO: Translate
   'general.backToHome': 'Close search and return to beginning', // TODO: Translate
   'general.backToStart': 'Back to beginning of page', // TODO: Translate
   'general.home': 'Home', // TODO: Translate
@@ -29,6 +35,8 @@ export default {
   'general.pageTitles.search': 'Search view', // TODO: Translate
   'general.pageTitles.unit': 'Unit view', // TODO: Translate
   'general.pageTitles.service': 'Service view', // TODO: Translate
+  'general.pageTitles.event': 'Tapahtumanäkymä', // TODO: Translate
+  'general.pageTitles.eventList': 'Tapahtumalistaus', // TODO: Translate
   // General - Pagination
   'general.pagination.previous': 'Previous page', // TODO: Translate
   'general.pagination.next': 'Next page', // TODO: Translate
@@ -39,6 +47,7 @@ export default {
   'general.return.viewTitle': 'Return to beginning of main content', // TODO: Translate
   'general.skipToContent': 'Skip to content', // TODO: Translate
   'general.new.tab': 'Aukeaa uuteen välilehteen', // TODO: Translate
+  'general.time.short': 'kl',
 
   // Home
   'home.example.title': 'Esimerkkihakuja', // TODO: Translate
@@ -66,6 +75,7 @@ export default {
   'unit.contact.info': 'Contact information', // TODO: Translate
   'unit.services': 'Tjänster',
   'unit.e.services': 'Electronic services', // TODO: Translate
+  'unit.events': 'Evenemang',
   'unit.homepage': 'Hemsida',
   'unit.picture': 'Kuva toimipisteestä: ', // TODO: Translate
   'unit.description': 'Unit description', // TODO: Translate

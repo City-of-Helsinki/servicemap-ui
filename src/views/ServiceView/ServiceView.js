@@ -31,7 +31,7 @@ class ServiceView extends React.Component {
     const { params } = match;
 
     this.setState({
-      icon: <img alt="" src={drawServiceIcon()} style={{ height: 24, margin: 8, marginRight: 16 }} aria-hidden="true" />,
+      icon: <img alt="" src={drawServiceIcon()} style={{ height: 24 }} />,
     });
 
     // Fetch service if current is not same as url param's

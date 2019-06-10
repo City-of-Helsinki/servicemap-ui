@@ -5,6 +5,11 @@ export default {
 
   // Event
   'event.nearby': 'Lähellä olevat tapahtumat',
+  'event.description': 'Kuvaus',
+  'event.more': 'Näytä kaikki {count} tapahtumaa',
+  'event.time': 'Ajankohta',
+  'event.picture': 'Tapahtuman kuva',
+  'event.title': 'Tapahtumat',
 
   // Sorting
   'sorting.label': 'Järjestä hakutulokset',
@@ -20,6 +25,7 @@ export default {
   'general.back.search': 'Palaa hakunäkymään',
   'general.back.service': 'Palaa palvelunäkymään',
   'general.back.unit': 'Palaa toimipistenäkymään',
+  'general.back.event': 'Palaa tapahtumanäkymään',
   'general.backToHome': 'Sulje haku ja palaa alkuun',
   'general.backToStart': 'Palaa sivun alkuun',
   'general.home': 'Koti',
@@ -29,6 +35,8 @@ export default {
   'general.pageTitles.search': 'Hakutulosnäkymä',
   'general.pageTitles.unit': 'Toimipistenäkymä',
   'general.pageTitles.service': 'Palvelunäkymä',
+  'general.pageTitles.event': 'Tapahtumanäkymä',
+  'general.pageTitles.eventList': 'Tapahtumalistaus',
   // General - Pagination
   'general.pagination.previous': 'Aiempi sivu',
   'general.pagination.next': 'Seuraava sivu',
@@ -40,6 +48,7 @@ export default {
   'general.skipToContent': 'Siirry pääsisältöön',
   'general.give.feedback': 'Anna palautetta Palvelukartan testiversiosta (linkki aukeaa uuteen välilehteen)',
   'general.new.tab': 'Aukeaa uuteen välilehteen',
+  'general.time.short': 'klo',
 
   // Home
   'home.example.title': 'Esimerkkihakuja',
@@ -67,6 +76,7 @@ export default {
   'unit.contact.info': 'Yhteystiedot',
   'unit.services': 'Palvelut toimipisteessä',
   'unit.e.services': 'Sähköinen asiointi',
+  'unit.events': 'Toimipisteen tapahtumat',
   'unit.homepage': 'Kotisivu',
   'unit.picture': 'Kuva toimipisteestä: ',
   'unit.description': 'Tietoa toimipisteestä',
