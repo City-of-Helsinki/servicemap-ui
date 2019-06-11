@@ -31,6 +31,7 @@ export default {
   'general.home': 'Koti',
   'general.noData': 'Tietoa ei saatavilla',
   'general.loading': 'Ladataan',
+  'general.showOnMap': 'Näytä kartalla',
   'general.pageTitles.home': 'Aloitusnäkymä',
   'general.pageTitles.search': 'Hakutulosnäkymä',
   'general.pageTitles.unit': 'Toimipistenäkymä',

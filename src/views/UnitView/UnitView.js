@@ -9,7 +9,7 @@ import { fetchUnitEvents } from '../../redux/actions/event';
 import { fetchSelectedUnit, changeSelectedUnit } from '../../redux/actions/selectedUnit';
 import { getSelectedUnit } from '../../redux/selectors/selectedUnit';
 import { getLocaleString } from '../../redux/selectors/locale';
-import { DesktopComponent } from '../../layouts/WrapperComponents/WrapperComponents';
+import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import { drawIcon } from '../Map/utils/drawIcon';
 
 import SearchBar from '../../components/SearchBar';
@@ -25,6 +25,7 @@ import ElectronicServices from './components/ElectronicServices';
 import Description from './components/Description';
 import Services from './components/Services';
 import Events from './components/Events';
+import ServiceMapButton from '../../components/ServiceMapButton';
 
 class UnitView extends React.Component {
   constructor(props) {
@@ -74,7 +75,7 @@ class UnitView extends React.Component {
 
   render() {
     const {
-      classes, getLocaleText, intl, unit, eventsData,
+      classes, getLocaleText, intl, unit, eventsData, navigator,
     } = this.props;
     const { icon } = this.state;
 
@@ -107,11 +108,34 @@ class UnitView extends React.Component {
         <div className={classes.root}>
           <div className="Content">
             {TopBar}
-            {
-                unit.picture_url
-                && <img className={classes.image} alt={`${intl.formatMessage({ id: 'unit.picture' })}${getLocaleText(unit.name)}`} src={unit.picture_url} />
+
+            {/* Unit image */}
+            {unit.picture_url
+              && (
+              <img
+                className={classes.image}
+                alt={`${intl.formatMessage({ id: 'unit.picture' })}${getLocaleText(unit.name)}`}
+                src={unit.picture_url}
+              />
+              )
             }
-            {/* View Ccomponents */}
+
+            {/* Show on map button for mobile */}
+            <MobileComponent>
+              <ServiceMapButton
+                onClick={(e) => {
+                  e.preventDefault();
+                  this.setState({ centered: false });
+                  if (navigator) {
+                    navigator.push('unitMap', unit.id);
+                  }
+                }}
+              >
+                <FormattedMessage id="general.showOnMap" />
+              </ServiceMapButton>
+            </MobileComponent>
+
+            {/* View Components */}
             <Highlights unit={unit} getLocaleText={getLocaleText} />
             <ContactInfo unit={unit} />
             <ElectronicServices unit={unit} />
@@ -156,12 +180,14 @@ const mapStateToProps = (state) => {
   const eventFetching = state.event.isFetching;
   const getLocaleText = textObject => getLocaleString(state, textObject);
   const map = state.mapRef.leafletElement;
+  const { navigator } = state;
   return {
     unit,
     eventsData,
     eventFetching,
     getLocaleText,
     map,
+    navigator,
   };
 };
 
@@ -182,6 +208,7 @@ UnitView.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   getLocaleText: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
+  navigator: PropTypes.objectOf(PropTypes.any),
 };
 
 UnitView.defaultProps = {
@@ -189,4 +216,5 @@ UnitView.defaultProps = {
   eventsData: { events: null, unit: null },
   match: {},
   map: null,
+  navigator: null,
 };
