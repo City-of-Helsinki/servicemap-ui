@@ -39,6 +39,9 @@ export default {
   'general.back.event': 'Back to event view',
   'general.backToHome': 'Close search and return to beginning',
   'general.backToStart': 'Back to beginning of page',
+  'general.cancel': 'Cancel',
+  'general.close': 'Close',
+  'general.closeSettings': 'Close settings',
   'general.fetching': 'Loading data...',
   'general.home': 'Home',
   'general.noData': 'No data available',
@@ -61,6 +64,7 @@ export default {
   'general.give.feedback': 'Give feedback on the Servicemap test version (link opens in a new tab)',
   'general.new.tab': 'Opens in new tab',
   'general.time.short': 'at',
+  'general.save': 'Save',
 
   // Home
   'home.example.title': 'Example search phrases',
@@ -145,4 +149,19 @@ export default {
   'service.plural': 'Services',
   'service.nearby': 'Nearby services',
   'service.units.empty': 'Service doesn\'t have units',
+
+  // Settings
+  'settings': 'Settings',
+  'settings.sense.title': 'Hearing and sight',
+  'settings.sense.hearing': 'I use a hearing aid',
+  'settings.sense.visual': 'I\'m visually impaired',
+  'settings.sense.colorblind': 'I have trouble distinguishing colours',
+  'settings.mobility.title': 'Mobility',
+  'settings.mobility.none': 'No mobility impairments',
+  'settings.mobility.wheelchair': 'I use a wheelchair',
+  'settings.mobility.reduced_mobility': 'I have reduced mobility',
+  'settings.mobility.rollator': 'I use a rollator',
+  'settings.mobility.stroller': 'I push a stroller',
+  'settings.aria.changed': 'Settings have changed. Remember to save',
+  'settings.aria.saved': 'Settings have been saved',
 };

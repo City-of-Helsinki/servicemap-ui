@@ -39,6 +39,9 @@ export default {
   'general.back.event': 'Back to event view', // TODO: Translate
   'general.backToHome': 'Close search and return to beginning', // TODO: Translate
   'general.backToStart': 'Back to beginning of page', // TODO: Translate
+  'general.cancel': 'Cancel', // TODO: Translate
+  'general.close': 'Close', // TODO: Translate
+  'general.closeSettings': 'Close settings', // TODO: Translate
   'general.fetching': 'Ladataan tietoja...', // TODO: Translate
   'general.home': 'Home', // TODO: Translate
   'general.noData': 'No data available', // TODO: Translate
@@ -60,6 +63,7 @@ export default {
   'general.skipToContent': 'Skip to content', // TODO: Translate
   'general.new.tab': 'Aukeaa uuteen välilehteen', // TODO: Translate
   'general.time.short': 'kl',
+  'general.save': 'Save', // TODO: Translate
 
   // Home
   'home.example.title': 'Esimerkkihakuja', // TODO: Translate
@@ -144,4 +148,19 @@ export default {
   'service.plural': 'Tjänster',
   'service.nearby': 'Nearby services', // TODO: Translate
   'service.units.empty': 'Service doesn\'t have units', // TODO: Translate
+
+  // Settings
+  'settings': 'Personifiera',
+  'settings.sense.title': 'Hörsel och syn',
+  'settings.sense.hearing': 'Jag använder hörapparat',
+  'settings.sense.visual': 'Jag är synskadad',
+  'settings.sense.colorblind': 'Jag är färgblind',
+  'settings.mobility.title': 'Att röra sig',
+  'settings.mobility.none': 'No mobility impairments', // TODO: Translate
+  'settings.mobility.wheelchair': 'Jag använder rullstol',
+  'settings.mobility.reduced_mobility': 'Jag är rörelsehindrad',
+  'settings.mobility.rollator': 'Jag använder rollator',
+  'settings.mobility.stroller': 'Jag går med barnvagn',
+  'settings.aria.changed': 'Settings have changed. Remember to save', // TODO: Translate
+  'settings.aria.saved': 'Settings have been saved', // TODO: Translate
 };
