@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import logoLight from '../../../../assets/images/service-map-logo-nega-fi_TEST.svg';
-import logoDark from '../../../../assets/images/service-map-logo-fi_TEST.svg';
+import logoLight from '../../../assets/images/service-map-logo-nega-fi_TEST.svg';
+import logoDark from '../../../assets/images/service-map-logo-fi_TEST.svg';
 
 const HomeLogo = (props) => {
   const { dark, ...rest } = props;
