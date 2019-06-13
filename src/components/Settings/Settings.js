@@ -33,9 +33,6 @@ const TitleHeader = injectIntl(withStyles(styles)(({
   classes, close, intl, titleID,
 }) => (
   <Container className={classes.titleContainer}>
-    <Typography component="h3" variant="caption" align="left" style={{ margin: 8, color: 'rgba(0,0,0,0.6)' }}>
-      <FormattedMessage id={titleID} />
-    </Typography>
     {
       close
       && (
@@ -50,6 +47,9 @@ const TitleHeader = injectIntl(withStyles(styles)(({
         </IconButton>
       )
     }
+    <Typography component="h2" variant="caption" align="left" style={{ margin: 8 }}>
+      <FormattedMessage id={titleID} />
+    </Typography>
   </Container>
 )));
 
@@ -333,13 +333,13 @@ class Settings extends React.Component {
       <Container>
         <TitleHeader close={() => this.toggleSettingsContainer()} titleID="settings.sense.title" />
         <FormGroup row>
-          <List className={classes.list} component="div">
+          <List className={classes.list}>
             {
               Object.keys(senseSettingList).map((key) => {
                 if (Object.prototype.hasOwnProperty.call(senseSettingList, key)) {
                   const item = senseSettingList[key];
                   return (
-                    <ListItem key={key} component="div">
+                    <ListItem key={key}>
                       <FormControlLabel
                         control={(
                           <Checkbox

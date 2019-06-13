@@ -52,7 +52,7 @@ export default theme => ({
     alignItems: 'center',
     display: 'flex',
     flex: '0 0 auto',
-    flexDirection: 'row',
+    flexDirection: 'row-reverse',
     justifyContent: 'space-between',
     paddingBottom: 0,
     marginTop: 0,
