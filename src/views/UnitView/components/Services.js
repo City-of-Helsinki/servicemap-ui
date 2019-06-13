@@ -1,24 +1,117 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, intlShape } from 'react-intl';
 import TitledList from '../../../components/Lists/TitledList';
 import ServiceItem from '../../../components/ListItems/ServiceItem';
 
-const Services = ({ unit }) => (
-  <TitledList
-    title={<FormattedMessage id="unit.services" />}
-    titleComponent="h4"
-  >
-    {
-      unit.services.map(service => (
-        <ServiceItem key={service.id} service={service} />
-      ))
+
+class Services extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      serviceList: [],
+      subjectList: [],
+      periodList: [],
+    };
+  }
+
+  componentDidMount() {
+    const { unit } = this.props;
+    if (unit.root_service_nodes.includes(1087)) {
+      // If unit has service node Education, form list of periods
+      this.formPeriodList();
+    } else {
+      // Else display services normally
+      this.sortName(unit.services);
+      this.setState({ serviceList: unit.services });
     }
-  </TitledList>
-);
+  }
+
+  formPeriodList = () => {
+    const { unit } = this.props;
+    const periodData = new Set();
+    // List of services that have period infomration
+    const subjectList = [];
+    // List of normal services without period infomration
+    const serviceList = [];
+
+    unit.services.forEach((service) => {
+      if (service.period && service.period.length > 1) {
+        const yearString = `${service.period[0]}–${service.period[1]}`;
+        periodData.add(yearString);
+        subjectList.push(service);
+      } else {
+        serviceList.push(service);
+      }
+    });
+
+    this.sortName(serviceList);
+    this.sortName(subjectList);
+
+    this.setState({
+      periodList: [...periodData],
+      serviceList,
+      subjectList,
+    });
+  };
+
+  sortName = (list) => {
+    const { getLocaleText } = this.props;
+    const compare = (a, b) => {
+      if (getLocaleText(a.name) < getLocaleText(b.name)) {
+        return -1;
+      }
+      if (getLocaleText(a.name) > getLocaleText(b.name)) {
+        return 1;
+      }
+      return 0;
+    };
+    list.sort(compare);
+  };
+
+  render() {
+    const { intl } = this.props;
+    const { serviceList, periodList, subjectList } = this.state;
+    return (
+      <>
+        {/* Services */}
+        {serviceList && serviceList.length > 0 && (
+        <TitledList
+          title={<FormattedMessage id="unit.services" />}
+          titleComponent="h4"
+        >
+          {serviceList.map(service => (
+            <ServiceItem key={service.id} service={service} />
+          ))}
+        </TitledList>
+        )}
+
+        {/* Education periods */}
+        {periodList.map(period => (
+          <TitledList
+            key={period[0]}
+            title={`${intl.formatMessage({ id: 'unit.school.year' })} ${period}`}
+            titleComponent="h4"
+          >
+            {subjectList.map((service) => {
+              if (service.period && `${service.period[0]}–${service.period[1]}` === period) {
+                return (
+                  <ServiceItem key={service.id} service={service} />
+                );
+              }
+              return null;
+            })}
+          </TitledList>
+        ))}
+      </>
+    );
+  }
+}
 
 Services.propTypes = {
   unit: PropTypes.objectOf(PropTypes.any).isRequired,
+  intl: intlShape.isRequired,
+  getLocaleText: PropTypes.func.isRequired,
 };
 
 export default Services;

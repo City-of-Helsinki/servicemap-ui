@@ -23,8 +23,8 @@ class ServiceItem extends React.Component {
     const { icon } = this.state;
     let text = getLocaleText(service.name);
 
-    if (service.period) {
-      text += ` ${service.period[0]}-${service.period[1]}`;
+    if (service.clarification) {
+      text += `: ${getLocaleText(service.clarification)}`;
     }
     return (
       <SimpleListItem
