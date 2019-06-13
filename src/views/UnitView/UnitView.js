@@ -127,7 +127,7 @@ class UnitView extends React.Component {
                   e.preventDefault();
                   this.setState({ centered: false });
                   if (navigator) {
-                    navigator.push('unitMap', unit.id);
+                    navigator.push('unit', { id: unit.id, query: '?map=true' });
                   }
                 }}
               >
