@@ -165,5 +165,8 @@ export default {
   'settings.mobility.rollator': 'Jag använder rollator',
   'settings.mobility.stroller': 'Jag går med barnvagn',
   'settings.aria.changed': 'Settings have changed. Remember to save', // TODO: Translate
+  'settings.aria.closed': 'Settings closed', // TODO: Translate
+  'settings.aria.open': 'Open settings', // TODO: Translate
+  'settings.aria.opened': 'Settings opened', // TODO: Translate
   'settings.aria.saved': 'Settings have been saved', // TODO: Translate
 };

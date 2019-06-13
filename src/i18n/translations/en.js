@@ -166,5 +166,8 @@ export default {
   'settings.mobility.rollator': 'I use a rollator',
   'settings.mobility.stroller': 'I push a stroller',
   'settings.aria.changed': 'Settings have changed. Remember to save',
+  'settings.aria.closed': 'Settings closed',
+  'settings.aria.open': 'Open settings',
+  'settings.aria.opened': 'Settings opened',
   'settings.aria.saved': 'Settings have been saved',
 };

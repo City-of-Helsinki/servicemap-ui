@@ -509,6 +509,8 @@ class Settings extends React.Component {
     return (
       <>
         <Button
+          aria-label={intl.formatMessage({ id: 'settings.aria.open' })}
+          aria-pressed={showContainer}
           className={`focus-dark-background ${classes.button}`}
           classes={{
             label: classes.buttonLabel,
