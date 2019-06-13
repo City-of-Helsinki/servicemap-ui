@@ -437,7 +437,7 @@ class Settings extends React.Component {
 
     return (
       <Container className={`SettingsConfirmation ${containerClasses}`} paper>
-        <Typography>Haluatko tallentaa muutokset?</Typography>
+        <Typography><FormattedMessage id="general.save.confirmation" /></Typography>
         <Button
           color="primary"
           onClick={() => this.resetCurrentSelections()}

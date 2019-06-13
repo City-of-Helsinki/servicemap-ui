@@ -66,6 +66,7 @@ export default {
   'general.time.short': 'at',
   'general.save': 'Save',
   'general.save.changes': 'Save changes',
+  'general.save.confirmation': 'Would you like to save changes?',
 
   // Home
   'home.example.title': 'Example search phrases',
