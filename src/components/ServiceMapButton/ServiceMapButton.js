@@ -4,7 +4,7 @@ import { Button, withStyles } from '@material-ui/core';
 
 
 const BlueButton = ({
-  children, classes, className, onClick, srText, style,
+  children, classes, className, onClick, srText, style, ...rest
 }) => (
   <Button
     className={`${classes.button} ${className}`}
@@ -14,6 +14,7 @@ const BlueButton = ({
     onClick={onClick}
     aria-label={srText}
     style={style}
+    {...rest}
   >
     {children}
   </Button>
