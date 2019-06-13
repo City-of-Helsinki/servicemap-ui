@@ -116,7 +116,7 @@ class UnitView extends React.Component {
             <ContactInfo unit={unit} />
             <ElectronicServices unit={unit} />
             <Description unit={unit} getLocaleText={getLocaleText} />
-            <Services unit={unit} />
+            <Services unit={unit} intl={intl} getLocaleText={getLocaleText} />
             <Events eventsData={eventsData} />
 
             <Container margin text>
