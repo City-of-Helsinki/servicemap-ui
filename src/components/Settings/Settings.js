@@ -162,14 +162,28 @@ class Settings extends React.Component {
     const { classes } = this.props;
 
     const scrollContainer = document.getElementById('SettingsContainer');
-    const container = document.getElementsByClassName('SettingsConfirmation')[0];
+    let container = document.getElementsByClassName('SettingsAlert')[0];
     const content = document.getElementsByClassName('SettingsContent')[0];
+    const isAlert = !!container;
+
+    if (!isAlert) {
+      // eslint-disable-next-line prefer-destructuring
+      container = document.getElementsByClassName('SettingsConfirmation')[0];
+      if (scrollContainer.scrollTop > 0) {
+        container.classList.add(classes.saveContainerFixed);
+        content.style.paddingTop = `${container.offsetHeight}px`;
+      } else {
+        container.classList.remove(classes.saveContainerFixed);
+        content.style.paddingTop = 0;
+      }
+      return;
+    }
 
     if (scrollContainer.scrollTop > 0) {
-      container.classList.add(classes.saveContainerFixed);
+      container.classList.remove(classes.alertContainerNonFixed);
       content.style.paddingTop = `${container.offsetHeight}px`;
     } else {
-      container.classList.remove(classes.saveContainerFixed);
+      container.classList.add(classes.alertContainerNonFixed);
       content.style.paddingTop = 0;
     }
   }
@@ -245,6 +259,7 @@ class Settings extends React.Component {
     this.resetConfirmationContainer();
     this.setState({
       currentSettings: previousSettings,
+      saved: false,
     });
   }
 
@@ -440,7 +455,7 @@ class Settings extends React.Component {
         <Typography className={classes.confirmationText}><FormattedMessage id="general.save.confirmation" /></Typography>
         <Container className={classes.confirmationButtonContainer}>
           <Button
-            className={classes.confirmationButton}
+            className={classes.flexBase}
             color="primary"
             onClick={() => this.resetCurrentSelections()}
             variant="text"
@@ -448,7 +463,7 @@ class Settings extends React.Component {
             <FormattedMessage id="general.cancel" />
           </Button>
           <Button
-            className={classes.confirmationButton}
+            className={classes.flexBase}
             color="primary"
             onClick={() => this.saveSettings()}
             variant="text"
@@ -456,6 +471,28 @@ class Settings extends React.Component {
             <FormattedMessage id="general.save" />
           </Button>
         </Container>
+      </Container>
+    );
+  }
+
+  renderSaveAlert(settingsHaveBeenSaved) {
+    const { classes } = this.props;
+
+    const containerClasses = `SettingsAlert ${settingsHaveBeenSaved ? classes.alert : classes.hidden}`;
+    const typographyClasses = `${classes.flexBase} ${classes.confirmationText}`;
+    const buttonClasses = `${classes.flexBase} ${classes.bold} ${classes.alertColor}`;
+
+    return (
+      <Container className={containerClasses} paper>
+        <Typography color="inherit" className={typographyClasses}><FormattedMessage id="general.save.changes.done" /></Typography>
+        <Button
+          className={buttonClasses}
+          color="primary"
+          onClick={() => this.toggleSettingsContainer()}
+          variant="text"
+        >
+          <FormattedMessage id="general.close" />
+        </Button>
       </Container>
     );
   }
@@ -491,7 +528,9 @@ class Settings extends React.Component {
           && (
             <>
               {
-                this.renderConfirmationBox(settingsHaveChanged)
+                settingsHaveBeenSaved
+                  ? this.renderSaveAlert(settingsHaveBeenSaved)
+                  : this.renderConfirmationBox(settingsHaveChanged)
               }
               <div className="SettingsContent">
                 {

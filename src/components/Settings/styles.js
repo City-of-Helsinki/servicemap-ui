@@ -1,4 +1,26 @@
 export default theme => ({
+  alert: {
+    backgroundColor: '#000',
+    color: '#fff',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    position: 'fixed',
+    width: 'inherit',
+    zIndex: 20,
+    padding: 0,
+    margin: 0,
+  },
+  alertContainerNonFixed: {
+    position: 'relative',
+    width: '100%',
+  },
+  alertColor: {
+    color: 'rgba(87,186,255, 1)',
+  },
+  bold: {
+    fontWeight: 'bold',
+  },
   button: {
     textTransform: 'none',
   },
@@ -22,6 +44,9 @@ export default theme => ({
   contentButton: {
     marginBottom: theme.spacing.unitDouble,
     marginTop: theme.spacing.unitDouble,
+  },
+  flexBase: {
+    flex: '0 0 auto',
   },
   titleContainer: {
     alignItems: 'center',

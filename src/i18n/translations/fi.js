@@ -66,6 +66,7 @@ export default {
   'general.time.short': 'klo',
   'general.save': 'Tallenna',
   'general.save.changes': 'Tallenna muutokset',
+  'general.save.changes.done': 'Muutokset tallennettu!',
   'general.save.confirmation': 'Haluatko tallentaa muutokset?',
 
   // Home

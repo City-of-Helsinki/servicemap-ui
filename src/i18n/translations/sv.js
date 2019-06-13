@@ -65,6 +65,7 @@ export default {
   'general.time.short': 'kl',
   'general.save': 'Save', // TODO: Translate
   'general.save.changes': 'Save changes', // TODO: Translate
+  'general.save.changes.done': 'Changes have been saved!', // TODO: Translate
   'general.save.confirmation': 'Would you like to save changes?', // TODO: Translate
 
   // Home
