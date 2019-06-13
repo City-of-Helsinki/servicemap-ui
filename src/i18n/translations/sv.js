@@ -74,7 +74,8 @@ export default {
 
   'unit.contact.info': 'Contact information', // TODO: Translate
   'unit.services': 'Tjänster',
-  'unit.e.services': 'Electronic services', // TODO: Translate
+  'unit.eServices': 'Electronic services', // TODO: Translate
+  'unit.reservations': 'Bokning', // TODO: Verify
   'unit.events': 'Evenemang',
   'unit.homepage': 'Hemsida',
   'unit.picture': 'Kuva toimipisteestä: ', // TODO: Translate

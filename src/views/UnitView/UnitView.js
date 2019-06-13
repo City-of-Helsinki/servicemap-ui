@@ -18,10 +18,12 @@ import styles from './styles/styles';
 import TitleBar from '../../components/TitleBar/TitleBar';
 import Container from '../../components/Container';
 import { uppercaseFirst } from '../../utils';
+import fetchUnitReservations from './utils/fetchUnitReservations';
 
 import ContactInfo from './components/ContactInfo';
 import Highlights from './components/Highlights';
 import ElectronicServices from './components/ElectronicServices';
+import Reservations from './components/Reservations';
 import Description from './components/Description';
 import Services from './components/Services';
 import Events from './components/Events';
@@ -32,6 +34,7 @@ class UnitView extends React.Component {
     this.state = {
       centered: false,
       icon: null,
+      reservations: null,
     };
   }
 
@@ -47,6 +50,10 @@ class UnitView extends React.Component {
 
     if (params && params.unit) {
       const unitId = params.unit;
+
+      fetchUnitReservations(unitId)
+        .then(data => this.setState({ reservations: data.results }));
+
       if (unit && (unit.complete && unitId === `${unit.id}`)) {
         return;
       }
@@ -76,7 +83,7 @@ class UnitView extends React.Component {
     const {
       classes, getLocaleText, intl, unit, eventsData,
     } = this.props;
-    const { icon } = this.state;
+    const { icon, reservations } = this.state;
 
     const title = unit && unit.name ? getLocaleText(unit.name) : '';
 
@@ -117,6 +124,7 @@ class UnitView extends React.Component {
             <ElectronicServices unit={unit} />
             <Description unit={unit} getLocaleText={getLocaleText} />
             <Services unit={unit} />
+            <Reservations unit={unit} reservations={reservations} />
             <Events eventsData={eventsData} />
 
             <Container margin text>

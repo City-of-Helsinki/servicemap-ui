@@ -75,7 +75,8 @@ export default {
 
   'unit.contact.info': 'Yhteystiedot',
   'unit.services': 'Palvelut toimipisteessä',
-  'unit.e.services': 'Sähköinen asiointi',
+  'unit.eServices': 'Sähköinen asiointi',
+  'unit.reservations': 'Varaukset',
   'unit.events': 'Toimipisteen tapahtumat',
   'unit.homepage': 'Kotisivu',
   'unit.picture': 'Kuva toimipisteestä: ',

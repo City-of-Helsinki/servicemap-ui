@@ -75,7 +75,8 @@ export default {
 
   'unit.contact.info': 'Contact information',
   'unit.services': 'Services',
-  'unit.e.services': 'Electronic services', // TODO: verify
+  'unit.eServices': 'Electronic services', // TODO: verify
+  'unit.reservations': 'Reservations',
   'unit.events': 'Events',
   'unit.homepage': 'Home page',
   'unit.picture': 'Picture of unit: ',

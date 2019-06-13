@@ -7,13 +7,14 @@ import PersonIcon from '@material-ui/icons/Person';
 import ServiceIcon from '@material-ui/icons/Reorder';
 import InfoIcon from '@material-ui/icons/PriorityHigh';
 import WarningIcon from '@material-ui/icons/Warning';
+import EventAvailable from '@material-ui/icons/EventAvailable';
 
 const getItemIconData = (type, data) => {
-  if (data.www) {
+  if (type === 'LINK' || (type === 'OPENING_HOURS' && data.www)) {
     return <OpenLinkIcon />;
   } if (type === 'ADDRESS') {
     return <AddressIcon />;
-  } if (type === 'OPENING_HOURS' || type === 'OPENING_HOURS_LINK') {
+  } if (type === 'OPENING_HOURS') {
     return <HoursIcon />;
   } if (type === 'PHONE') {
     return <PhoneIcon />;
@@ -23,6 +24,8 @@ const getItemIconData = (type, data) => {
     return <ServiceIcon />;
   } if (type === 'OTHER_INFO') {
     return <InfoIcon />;
+  } if (type === 'RESERVATION') {
+    return <EventAvailable />;
   }
   return <WarningIcon />;
 };
