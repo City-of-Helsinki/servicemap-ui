@@ -16,11 +16,42 @@ import {
   FormLabel,
   FormControl,
   IconButton,
+  withStyles,
 } from '@material-ui/core';
 import { Accessibility, Close } from '@material-ui/icons';
 import isClient from '../../utils';
 import SettingsUtility from '../../utils/settings';
 import Container from '../Container';
+import {
+  ColorblindIcon, HearingIcon, VisualImpairmentIcon, getIcon,
+} from '../SMIcon';
+import styles from './styles';
+import ServiceMapButton from '../ServiceMapButton';
+
+
+const TitleHeader = injectIntl(withStyles(styles)(({
+  classes, close, intl, titleID,
+}) => (
+  <Container className={classes.titleContainer}>
+    <Typography component="h3" variant="caption" align="left" style={{ margin: 8, color: 'rgba(0,0,0,0.6)' }}>
+      <FormattedMessage id={titleID} />
+    </Typography>
+    {
+      close
+      && (
+        <IconButton
+          aria-label={intl.formatMessage({ id: 'general.closeSettings' })}
+          className={classes.closeButton}
+          onClick={() => {
+            close();
+          }}
+        >
+          <Close />
+        </IconButton>
+      )
+    }
+  </Container>
+)));
 
 
 class Settings extends React.Component {
@@ -251,34 +282,23 @@ class Settings extends React.Component {
       colorblind: {
         labelId: 'settings.sense.colorblind',
         value: currentSettings.colorblind,
+        icon: <ColorblindIcon className={classes.icon} />,
       },
       hearingAid: {
         labelId: 'settings.sense.hearing',
         value: currentSettings.hearingAid,
+        icon: <HearingIcon className={classes.icon} />,
       },
       visuallyImpaired: {
         labelId: 'settings.sense.visual',
         value: currentSettings.visuallyImpaired,
+        icon: <VisualImpairmentIcon className={classes.icon} />,
       },
     };
 
     return (
-      <div>
-        <div className={classes.closeButtonContainer}>
-          <Typography component="h3" variant="body2" align="left">
-            <FormattedMessage id="settings.sense.title" />
-          </Typography>
-
-          <IconButton
-            aria-label={<FormattedMessage id="general.closeSettings" />}
-            className={classes.closeButton}
-            onClick={() => {
-              this.toggleSettingsContainer();
-            }}
-          >
-            <Close />
-          </IconButton>
-        </div>
+      <Container>
+        <TitleHeader close={() => this.toggleSettingsContainer()} titleID="settings.sense.title" />
         <FormGroup row>
           <List className={classes.list} component="div">
             {
@@ -297,7 +317,7 @@ class Settings extends React.Component {
                         )}
                         label={(
                           <>
-                            <Accessibility className={classes.icon} />
+                            {item.icon}
                             <FormattedMessage id={item.labelId} />
                           </>
                         )}
@@ -310,8 +330,7 @@ class Settings extends React.Component {
             }
           </List>
         </FormGroup>
-        <Divider />
-      </div>
+      </Container>
     );
   }
 
@@ -333,21 +352,24 @@ class Settings extends React.Component {
           action: () => setMobility(setting),
           labelId: `settings.mobility.${setting}`,
           value: setting,
+          icon: getIcon(setting, { className: classes.icon }),
         };
       } else if (setting === null) {
         mobilitySettings.none = {
           action: () => setMobility(null),
           labelId: 'settings.mobility.none',
           value: null,
+          icon: getIcon('foot', { className: classes.icon }),
         };
       }
     });
 
     return (
-      <div>
-        <FormControl component="fieldset" fullWidth margin="normal">
+      <Container>
+        <FormControl className={classes.noMargin} component="fieldset" fullWidth>
           <FormLabel component="legend" style={{ textAlign: 'left' }}>
-            <FormattedMessage id="settings.mobility.title" />
+
+            <TitleHeader titleID="settings.mobility.title" />
 
           </FormLabel>
           <RadioGroup
@@ -373,10 +395,8 @@ class Settings extends React.Component {
                         )}
                         label={(
                           <>
-                            <Typography>
-                              <Accessibility className={classes.icon} />
-                              <FormattedMessage id={item.labelId} />
-                            </Typography>
+                            {item.icon}
+                            <FormattedMessage id={item.labelId} />
                           </>
                         )}
                         labelPlacement="end"
@@ -389,7 +409,7 @@ class Settings extends React.Component {
               }
           </RadioGroup>
         </FormControl>
-      </div>
+      </Container>
     );
   }
 
@@ -398,7 +418,7 @@ class Settings extends React.Component {
     const containerClasses = ` ${settingsHaveChanged ? classes.saveContainer : classes.hidden}`;
 
     return (
-      <Container className={`SettingsConfirmation ${containerClasses}`} paper margin>
+      <Container className={`SettingsConfirmation ${containerClasses}`} paper>
         <Typography>Haluatko tallentaa muutokset?</Typography>
         <Button
           color="primary"
@@ -451,27 +471,27 @@ class Settings extends React.Component {
               {
                 this.renderConfirmationBox(settingsHaveChanged)
               }
-              <Container className="SettingsContent">
+              <div className="SettingsContent">
                 {
                   this.renderLanguageSettings()
                 }
+
                 {
                   this.renderSenseSettings()
                 }
+
+                <Divider aria-hidden="true" />
+
                 {
                   this.renderMobilitySettings()
                 }
-                <Container margin>
-                  <Button color="primary" variant="contained" onClick={() => this.saveSettings()} disabled={!settingsHaveChanged}>
-                    <FormattedMessage id="general.save" />
-                  </Button>
-                </Container>
-                <Container margin>
-                  <Button aria-label={intl.formatMessage({ id: 'general.closeSettings' })} color="primary" variant="contained" onClick={() => this.toggleSettingsContainer()}>
-                    <FormattedMessage id="general.close" />
-                  </Button>
-                </Container>
-              </Container>
+                <ServiceMapButton className={classes.contentButton} color="primary" variant="contained" onClick={() => this.saveSettings()} disabled={!settingsHaveChanged}>
+                  <FormattedMessage id="general.save.changes" />
+                </ServiceMapButton>
+                <ServiceMapButton aria-label={intl.formatMessage({ id: 'general.closeSettings' })} className={classes.contentButton} color="primary" variant="contained" onClick={() => this.toggleSettingsContainer()}>
+                  <FormattedMessage id="general.close" />
+                </ServiceMapButton>
+              </div>
 
               <Typography aria-live="polite" variant="srOnly">
                 {

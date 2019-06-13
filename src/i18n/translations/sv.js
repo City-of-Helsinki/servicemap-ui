@@ -64,6 +64,7 @@ export default {
   'general.new.tab': 'Aukeaa uuteen välilehteen', // TODO: Translate
   'general.time.short': 'kl',
   'general.save': 'Save', // TODO: Translate
+  'general.save.changes': 'Save changes', // TODO: Translate
 
   // Home
   'home.example.title': 'Esimerkkihakuja', // TODO: Translate

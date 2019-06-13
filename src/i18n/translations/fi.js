@@ -65,6 +65,7 @@ export default {
   'general.new.tab': 'Aukeaa uuteen välilehteen',
   'general.time.short': 'klo',
   'general.save': 'Tallenna',
+  'general.save.changes': 'Tallenna muutokset',
 
   // Home
   'home.example.title': 'Esimerkkihakuja',

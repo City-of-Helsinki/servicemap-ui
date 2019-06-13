@@ -65,6 +65,7 @@ export default {
   'general.new.tab': 'Opens in new tab',
   'general.time.short': 'at',
   'general.save': 'Save',
+  'general.save.changes': 'Save changes',
 
   // Home
   'home.example.title': 'Example search phrases',

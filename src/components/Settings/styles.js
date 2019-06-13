@@ -6,11 +6,19 @@ export default theme => ({
     display: 'flex',
     flexDirection: 'column',
   },
-  closeButtonContainer: {
+  contentButton: {
+    marginBottom: theme.spacing.unitDouble,
+    marginTop: theme.spacing.unitDouble,
+  },
+  titleContainer: {
     alignItems: 'center',
     display: 'flex',
     flex: '0 0 auto',
+    flexDirection: 'row',
     justifyContent: 'space-between',
+    paddingBottom: 0,
+    marginTop: 0,
+    marginBottom: 0,
   },
   closeButton: {
     margin: theme.spacing.unit,
@@ -32,6 +40,12 @@ export default theme => ({
     display: 'inline-block',
     verticalAlign: 'middle',
   },
+  list: {
+    paddingTop: 0,
+  },
+  noMargin: {
+    margin: 0,
+  },
   radioLabel: {
     margin: 0,
     paddingTop: 8,
@@ -44,6 +58,8 @@ export default theme => ({
     width: '100%',
     zIndex: 20,
     borderRadius: 0,
+    padding: 0,
+    margin: 0,
   },
   saveContainerFixed: {
     position: 'fixed',
