@@ -437,21 +437,25 @@ class Settings extends React.Component {
 
     return (
       <Container className={`SettingsConfirmation ${containerClasses}`} paper>
-        <Typography><FormattedMessage id="general.save.confirmation" /></Typography>
-        <Button
-          color="primary"
-          onClick={() => this.resetCurrentSelections()}
-          variant="text"
-        >
-          <FormattedMessage id="general.cancel" />
-        </Button>
-        <Button
-          color="primary"
-          onClick={() => this.saveSettings()}
-          variant="text"
-        >
-          <FormattedMessage id="general.save" />
-        </Button>
+        <Typography className={classes.confirmationText}><FormattedMessage id="general.save.confirmation" /></Typography>
+        <Container className={classes.confirmationButtonContainer}>
+          <Button
+            className={classes.confirmationButton}
+            color="primary"
+            onClick={() => this.resetCurrentSelections()}
+            variant="text"
+          >
+            <FormattedMessage id="general.cancel" />
+          </Button>
+          <Button
+            className={classes.confirmationButton}
+            color="primary"
+            onClick={() => this.saveSettings()}
+            variant="text"
+          >
+            <FormattedMessage id="general.save" />
+          </Button>
+        </Container>
       </Container>
     );
   }

@@ -6,6 +6,19 @@ export default theme => ({
     display: 'flex',
     flexDirection: 'column',
   },
+  confirmationButton: {
+    flex: '0 0 auto',
+  },
+  confirmationButtonContainer: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    flexDirection: 'row',
+    margin: 0,
+  },
+  confirmationText: {
+    textAlign: 'left',
+    padding: theme.spacing.unitDouble,
+  },
   contentButton: {
     marginBottom: theme.spacing.unitDouble,
     marginTop: theme.spacing.unitDouble,
