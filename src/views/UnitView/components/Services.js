@@ -4,6 +4,8 @@ import { FormattedMessage, intlShape } from 'react-intl';
 import TitledList from '../../../components/Lists/TitledList';
 import ServiceItem from '../../../components/ListItems/ServiceItem';
 
+// Teaching and education service node. Could be changed to exclude daycare centers etc.
+const educationNode = 1087;
 
 class Services extends React.Component {
   constructor(props) {
@@ -17,7 +19,7 @@ class Services extends React.Component {
 
   componentDidMount() {
     const { unit } = this.props;
-    if (unit.root_service_nodes.includes(1087)) {
+    if (unit.root_service_nodes.includes(educationNode)) {
       // If unit has service node Education, form list of periods
       this.formPeriodList();
     } else {
