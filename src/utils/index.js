@@ -76,5 +76,21 @@ export const keyboardHandler = (callback, keys) => {
   };
 };
 
+// Add event listener and return function to unlisten given event
+export const AddEventListener = (elem, event, handler) => {
+  if (!elem || !elem.addEventListener || typeof event !== 'string' || typeof handler !== 'function') {
+    return null;
+  }
+
+  try {
+    elem.addEventListener(event, handler);
+    return () => {
+      elem.removeEventListener(event, handler);
+    };
+  } catch (e) {
+    return null;
+  }
+};
+
 
 export default isClient;

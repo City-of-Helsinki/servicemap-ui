@@ -19,7 +19,7 @@ import {
   withStyles,
 } from '@material-ui/core';
 import { Accessibility, Close } from '@material-ui/icons';
-import isClient from '../../utils';
+import isClient, { AddEventListener } from '../../utils';
 import SettingsUtility from '../../utils/settings';
 import Container from '../Container';
 import {
@@ -55,6 +55,8 @@ const TitleHeader = injectIntl(withStyles(styles)(({
 
 
 class Settings extends React.Component {
+  events = [];
+
   constructor(props) {
     super(props);
     this.state = {
@@ -91,6 +93,9 @@ class Settings extends React.Component {
     this.addListeners();
   }
 
+  componentWillUnmount() {
+    this.removeListeners();
+  }
 
   /**
    * Check if settings have changed compared to redux settings
@@ -131,35 +136,42 @@ class Settings extends React.Component {
     });
   }
 
+  // Add event listeners
   addListeners() {
     if (!isClient()) {
       return;
     }
+
+    const scrollContainer = document.getElementById('SettingsContainer');
+    this.events.push(AddEventListener(scrollContainer, 'scroll', () => this.handleScroll()));
+
+    // Add resize event listener to update container styles
+    this.events.push(AddEventListener(window, 'resize', () => this.addContainerStyles()));
+  }
+
+  // Remove all event listeners
+  removeListeners() {
+    if (!this.events || !this.events.length) {
+      return;
+    }
+
+    this.events.forEach(unlisten => unlisten());
+  }
+
+  handleScroll() {
     const { classes } = this.props;
 
     const scrollContainer = document.getElementById('SettingsContainer');
+    const container = document.getElementsByClassName('SettingsConfirmation')[0];
+    const content = document.getElementsByClassName('SettingsContent')[0];
 
-    function handleScroll() {
-      const container = document.getElementsByClassName('SettingsConfirmation')[0];
-      const content = document.getElementsByClassName('SettingsContent')[0];
-
-      if (scrollContainer.scrollTop > 0) {
-        container.classList.add(classes.saveContainerFixed);
-        content.style.paddingTop = `${container.offsetHeight}px`;
-      } else {
-        container.classList.remove(classes.saveContainerFixed);
-        content.style.paddingTop = 0;
-      }
+    if (scrollContainer.scrollTop > 0) {
+      container.classList.add(classes.saveContainerFixed);
+      content.style.paddingTop = `${container.offsetHeight}px`;
+    } else {
+      container.classList.remove(classes.saveContainerFixed);
+      content.style.paddingTop = 0;
     }
-
-    scrollContainer.addEventListener('scroll', handleScroll);
-
-    // Add resize event listener to update container styles
-    window.addEventListener('resize', () => {
-      this.setState({
-        containerStyles: this.calculateContainerStyles(),
-      });
-    });
   }
 
   resetConfirmationContainer() {
@@ -171,6 +183,12 @@ class Settings extends React.Component {
     const content = document.getElementsByClassName('SettingsContent')[0];
     container.classList.remove(classes.saveContainerFixed);
     content.style.paddingTop = 0;
+  }
+
+  addContainerStyles() {
+    this.setState({
+      containerStyles: this.calculateContainerStyles(),
+    });
   }
 
   /**
