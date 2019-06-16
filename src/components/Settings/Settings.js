@@ -57,6 +57,8 @@ const TitleHeader = injectIntl(withStyles(styles)(({
 class Settings extends React.Component {
   events = [];
 
+  buttonID = 'SettingsButton';
+
   constructor(props) {
     super(props);
     this.state = {
@@ -228,10 +230,22 @@ class Settings extends React.Component {
    */
   toggleSettingsContainer() {
     const { showContainer } = this.state;
+    // Focus back to settings button if container will be closed
+    if (!showContainer === false) {
+      this.focusToBaseElement();
+    }
     this.setState({
       showContainer: !showContainer,
       saved: false,
     });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  focusToBaseElement() {
+    const elem = document.getElementById(this.buttonID);
+    if (elem) {
+      elem.focus();
+    }
   }
 
   /**
@@ -517,6 +531,7 @@ class Settings extends React.Component {
             label: classes.buttonLabel,
           }}
           color="inherit"
+          id={this.buttonID}
           variant="text"
           onClick={() => this.toggleSettingsContainer()}
         >
