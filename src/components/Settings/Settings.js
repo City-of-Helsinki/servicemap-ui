@@ -476,16 +476,17 @@ class Settings extends React.Component {
   }
 
   renderSaveAlert(settingsHaveBeenSaved) {
-    const { classes } = this.props;
+    const { classes, intl } = this.props;
 
     const containerClasses = `SettingsAlert ${settingsHaveBeenSaved ? classes.alert : classes.hidden}`;
     const typographyClasses = `${classes.flexBase} ${classes.confirmationText}`;
     const buttonClasses = `${classes.flexBase} ${classes.bold} ${classes.alertColor}`;
 
     return (
-      <Container className={containerClasses} paper>
+      <Container aria-hidden="true" className={containerClasses} paper>
         <Typography color="inherit" className={typographyClasses}><FormattedMessage id="general.save.changes.done" /></Typography>
         <Button
+          aria-label={intl.formatMessage({ id: 'general.closeSettings' })}
           className={buttonClasses}
           color="primary"
           onClick={() => this.toggleSettingsContainer()}
