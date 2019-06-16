@@ -15,44 +15,16 @@ import {
   Radio,
   FormLabel,
   FormControl,
-  IconButton,
-  withStyles,
 } from '@material-ui/core';
-import { Accessibility, Close } from '@material-ui/icons';
+import { Accessibility } from '@material-ui/icons';
 import isClient, { AddEventListener } from '../../utils';
 import SettingsUtility from '../../utils/settings';
 import Container from '../Container';
 import {
   ColorblindIcon, HearingIcon, VisualImpairmentIcon, getIcon,
 } from '../SMIcon';
-import styles from './styles';
 import ServiceMapButton from '../ServiceMapButton';
-
-
-const TitleHeader = injectIntl(withStyles(styles)(({
-  classes, close, intl, titleID,
-}) => (
-  <Container className={classes.titleContainer}>
-    {
-      close
-      && (
-        <IconButton
-          aria-label={intl.formatMessage({ id: 'general.closeSettings' })}
-          className={classes.closeButton}
-          onClick={() => {
-            close();
-          }}
-        >
-          <Close />
-        </IconButton>
-      )
-    }
-    <Typography component="h2" variant="caption" align="left" style={{ margin: 8 }}>
-      <FormattedMessage id={titleID} />
-    </Typography>
-  </Container>
-)));
-
+import SettingsTitle from './SettingsTitle';
 
 class Settings extends React.Component {
   events = [];
@@ -345,7 +317,7 @@ class Settings extends React.Component {
 
     return (
       <Container>
-        <TitleHeader close={() => this.toggleSettingsContainer()} titleID="settings.sense.title" />
+        <SettingsTitle close={() => this.toggleSettingsContainer()} titleID="settings.sense.title" />
         <FormGroup row>
           <List className={classes.list}>
             {
@@ -416,7 +388,7 @@ class Settings extends React.Component {
         <FormControl className={classes.noMargin} component="fieldset" fullWidth>
           <FormLabel component="legend" style={{ textAlign: 'left' }}>
 
-            <TitleHeader titleID="settings.mobility.title" />
+            <SettingsTitle titleID="settings.mobility.title" />
 
           </FormLabel>
           <RadioGroup
