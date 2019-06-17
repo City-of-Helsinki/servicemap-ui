@@ -6,7 +6,6 @@ export default {
   // Event
   'event.nearby': 'Nearby events',
   'event.description': 'Description',
-  'event.more': 'Show all {count} events',
   'event.time': 'Date and time',
   'event.picture': 'Event picture',
   'event.title': 'Events',
@@ -89,6 +88,9 @@ export default {
   'unit.school.year': 'School year',
   'unit.opens.new.tab': '(new tab)',
   'unit.call.number': '(call)',
+  'unit.moreReservations': 'Show all {count} reservations',
+  'unit.moreServices': 'Show all {count} services',
+  'unit.moreEvents': 'Show all {count} events',
 
   // Search
   'search': 'Search',

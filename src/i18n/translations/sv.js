@@ -6,7 +6,6 @@ export default {
   // Event
   'event.nearby': 'Nearby events', // TODO: Translate
   'event.description': 'Kuvaus', // TODO: Translate
-  'event.more': 'Näytä kaikki {count} tapahtumaa', // TODO: Translate
   'event.time': 'Ajankohta', // TODO: Translate
   'event.picture': 'Tapahtuman kuva', // TODO: Translate
   'event.title': 'Tapahtumat', // TODO: Translate
@@ -88,6 +87,9 @@ export default {
   'unit.school.year': 'Läsåret',
   'unit.opens.new.tab': '(new tab)', // TODO: Translate
   'unit.call.number': '(call)', // TODO: Translate
+  'unit.moreReservations': 'Näytä kaikki {count} varausta', // TODO: Translate
+  'unit.moreServices': 'Näytä kaikki {count} palvelua', // TODO: Translate
+  'unit.moreEvents': 'Näytä kaikki {count} tapahtumaa', // TODO: Translate
 
   // Search
   'search': 'Sök',

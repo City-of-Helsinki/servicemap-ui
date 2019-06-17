@@ -81,7 +81,7 @@ class UnitView extends React.Component {
 
   render() {
     const {
-      classes, getLocaleText, intl, unit, eventsData,
+      classes, getLocaleText, intl, unit, eventsData, navigator,
     } = this.props;
     const { icon, reservations } = this.state;
 
@@ -123,9 +123,15 @@ class UnitView extends React.Component {
             <ContactInfo unit={unit} />
             <ElectronicServices unit={unit} />
             <Description unit={unit} getLocaleText={getLocaleText} />
-            <Services unit={unit} />
-            <Reservations unit={unit} reservations={reservations} />
-            <Events eventsData={eventsData} />
+            <Services listLength={10} unit={unit} navigator={navigator} />
+            <Reservations
+              listLength={10}
+              unitId={unit.id}
+              reservations={reservations}
+              getLocaleText={getLocaleText}
+              navigator={navigator}
+            />
+            <Events listLength={5} eventsData={eventsData} />
 
             <Container margin text>
               <Typography variant="body2">
@@ -164,12 +170,14 @@ const mapStateToProps = (state) => {
   const eventFetching = state.event.isFetching;
   const getLocaleText = textObject => getLocaleString(state, textObject);
   const map = state.mapRef.leafletElement;
+  const { navigator } = state;
   return {
     unit,
     eventsData,
     eventFetching,
     getLocaleText,
     map,
+    navigator,
   };
 };
 
@@ -190,6 +198,7 @@ UnitView.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   getLocaleText: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
+  navigator: PropTypes.objectOf(PropTypes.any),
 };
 
 UnitView.defaultProps = {
@@ -197,4 +206,5 @@ UnitView.defaultProps = {
   eventsData: { events: null, unit: null },
   match: {},
   map: null,
+  navigator: null,
 };
