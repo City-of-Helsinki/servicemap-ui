@@ -5,15 +5,12 @@ export default theme => ({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    position: 'fixed',
-    width: 'inherit',
+    top: 0,
+    position: 'sticky',
     zIndex: 20,
+    borderRadius: 0,
     padding: 0,
     margin: 0,
-  },
-  alertContainerNonFixed: {
-    position: 'relative',
-    width: '100%',
   },
   alertColor: {
     color: 'rgba(87,186,255, 1)',
@@ -92,18 +89,14 @@ export default theme => ({
     paddingTop: 8,
     paddingBottom: 8,
   },
-  saveContainer: {
+  stickyContainer: {
     backgroundColor: '#fff',
     display: 'block',
-    position: 'relative',
-    width: '100%',
+    top: 0,
+    position: 'sticky',
     zIndex: 20,
     borderRadius: 0,
     padding: 0,
     margin: 0,
-  },
-  saveContainerFixed: {
-    position: 'fixed',
-    width: 'inherit',
   },
 });

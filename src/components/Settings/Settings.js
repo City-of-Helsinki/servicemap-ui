@@ -116,9 +116,6 @@ class Settings extends React.Component {
       return;
     }
 
-    const scrollContainer = document.getElementById('SettingsContainer');
-    this.events.push(AddEventListener(scrollContainer, 'scroll', () => this.handleScroll()));
-
     // Add resize event listener to update container styles
     this.events.push(AddEventListener(window, 'resize', () => this.addContainerStyles()));
   }
@@ -130,47 +127,6 @@ class Settings extends React.Component {
     }
 
     this.events.forEach(unlisten => unlisten());
-  }
-
-  handleScroll() {
-    const { classes } = this.props;
-
-    const scrollContainer = document.getElementById('SettingsContainer');
-    let container = document.getElementsByClassName('SettingsAlert')[0];
-    const content = document.getElementsByClassName('SettingsContent')[0];
-    const isAlert = !!container;
-
-    if (!isAlert) {
-      // eslint-disable-next-line prefer-destructuring
-      container = document.getElementsByClassName('SettingsConfirmation')[0];
-      if (scrollContainer.scrollTop > 0) {
-        container.classList.add(classes.saveContainerFixed);
-        content.style.paddingTop = `${container.offsetHeight}px`;
-      } else {
-        container.classList.remove(classes.saveContainerFixed);
-        content.style.paddingTop = 0;
-      }
-      return;
-    }
-
-    if (scrollContainer.scrollTop > 0) {
-      container.classList.remove(classes.alertContainerNonFixed);
-      content.style.paddingTop = `${container.offsetHeight}px`;
-    } else {
-      container.classList.add(classes.alertContainerNonFixed);
-      content.style.paddingTop = 0;
-    }
-  }
-
-  resetConfirmationContainer() {
-    if (!isClient()) {
-      return;
-    }
-    const { classes } = this.props;
-    const container = document.getElementsByClassName('SettingsConfirmation')[0];
-    const content = document.getElementsByClassName('SettingsContent')[0];
-    container.classList.remove(classes.saveContainerFixed);
-    content.style.paddingTop = 0;
   }
 
   addContainerStyles() {
@@ -242,7 +198,6 @@ class Settings extends React.Component {
    */
   resetCurrentSelections() {
     const { previousSettings } = this.state;
-    this.resetConfirmationContainer();
     this.setState({
       currentSettings: previousSettings,
       saved: false,
@@ -288,7 +243,6 @@ class Settings extends React.Component {
       console.error('Error while saving new settings: ', e);
     }
 
-    this.resetConfirmationContainer();
     // Set new settings as previous
     this.setNewPreviousSettings(currentSettings);
   }
@@ -432,7 +386,7 @@ class Settings extends React.Component {
 
   renderConfirmationBox(settingsHaveChanged) {
     const { classes } = this.props;
-    const containerClasses = ` ${settingsHaveChanged ? classes.saveContainer : classes.hidden}`;
+    const containerClasses = ` ${settingsHaveChanged ? classes.stickyContainer : classes.hidden}`;
 
     return (
       <Container className={`SettingsConfirmation ${containerClasses}`} paper>
