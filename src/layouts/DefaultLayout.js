@@ -76,7 +76,7 @@ const createContentStyles = (
       justifyContent: 'space-between',
     },
     topNavRight: {
-      flex: '1 0 auto',
+      flex: '1 1 auto',
     },
     toolbar: {
       padding: 0,
