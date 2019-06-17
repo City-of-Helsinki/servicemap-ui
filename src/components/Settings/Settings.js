@@ -444,13 +444,14 @@ class Settings extends React.Component {
     const { containerStyles, showContainer, saved } = this.state;
     const settingsHaveChanged = this.settingsHaveChanged();
     const settingsHaveBeenSaved = !settingsHaveChanged && saved;
+    const mainButtonClasses = `${showContainer ? classes.buttonActive : ''} focus-dark-background ${classes.button}`;
 
     return (
       <>
         <Button
           aria-label={intl.formatMessage({ id: 'settings.aria.open' })}
           aria-pressed={showContainer}
-          className={`focus-dark-background ${classes.button}`}
+          className={mainButtonClasses}
           classes={{
             label: classes.buttonLabel,
           }}

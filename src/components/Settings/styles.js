@@ -21,6 +21,9 @@ export default theme => ({
   button: {
     textTransform: 'none',
   },
+  buttonActive: {
+    backgroundColor: theme.palette.primary.light,
+  },
   buttonLabel: {
     display: 'flex',
     flexDirection: 'column',
