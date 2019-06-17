@@ -12,7 +12,7 @@ import Container from '../Container';
 import styles from './styles';
 
 const SettingsTitle = injectIntl(withStyles(styles)(({
-  classes, close, intl, titleID,
+  classes, close, intl, titleID, ...typography
 }) => (
   <Container className={classes.titleContainer}>
     {
@@ -29,7 +29,7 @@ const SettingsTitle = injectIntl(withStyles(styles)(({
         </IconButton>
       )
     }
-    <Typography component="h2" variant="caption" align="left" style={{ margin: 8 }}>
+    <Typography component="h3" variant="caption" align="left" style={{ margin: 8 }} {...typography}>
       <FormattedMessage id={titleID} />
     </Typography>
   </Container>

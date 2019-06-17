@@ -317,7 +317,7 @@ class Settings extends React.Component {
 
     return (
       <Container>
-        <SettingsTitle close={() => this.toggleSettingsContainer()} titleID="settings.sense.title" />
+        <SettingsTitle close={() => this.toggleSettingsContainer()} titleID="settings.sense.title" typography={{ component: 'h3' }} />
         <FormGroup row>
           <List className={classes.list}>
             {
@@ -386,10 +386,8 @@ class Settings extends React.Component {
     return (
       <Container>
         <FormControl className={classes.noMargin} component="fieldset" fullWidth>
-          <FormLabel component="legend" style={{ textAlign: 'left' }}>
-
+          <FormLabel component="legend">
             <SettingsTitle titleID="settings.mobility.title" />
-
           </FormLabel>
           <RadioGroup
             aria-label="mobility"
@@ -523,6 +521,9 @@ class Settings extends React.Component {
                   : this.renderConfirmationBox(settingsHaveChanged)
               }
               <div className="SettingsContent">
+                <Typography variant="srOnly" component="h2" tabIndex="-1">
+                  <FormattedMessage id="settings" />
+                </Typography>
                 {
                   this.renderLanguageSettings()
                 }
