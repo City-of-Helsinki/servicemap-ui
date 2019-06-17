@@ -361,7 +361,7 @@ class Settings extends React.Component {
 
   renderMobilitySettings() {
     const { currentSettings } = this.state;
-    const { classes, setMobility } = this.props;
+    const { classes, intl, setMobility } = this.props;
 
     const mobilitySettings = {};
 
@@ -390,7 +390,7 @@ class Settings extends React.Component {
             <SettingsTitle titleID="settings.mobility.title" />
           </FormLabel>
           <RadioGroup
-            aria-label="mobility"
+            aria-label={intl.formatMessage({ id: 'settings.mobility.title' })}
             name="mobility"
             value={currentSettings.mobility}
             onChange={(event, value) => {
