@@ -16,9 +16,9 @@ const paths = {
     generate: id => `/unit/${id || ''}`,
     regex: /\/[a-zA-Z]{2}\/unit\/([0-9]+)/
   },
-  unitEvents: {
-    generate: id => `/unit/${id || ''}/events`,
-    regex: /\/[a-zA-Z]{2}\/unit\/([0-9]+)\/events/
+  unitFullList: {
+    generate: data => `/unit/${data.id || ''}/${data.type}`,
+    regex: /\/[a-zA-Z]{2}\/unit\/([0-9]+)\/[a-zA-Z]+/
   },
   service: {
     generate: id => `/service/${id || ''}`,
