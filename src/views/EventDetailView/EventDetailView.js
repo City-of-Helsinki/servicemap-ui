@@ -102,7 +102,7 @@ class EventDetailView extends React.Component {
                 e.preventDefault();
                 if (navigator) {
                   // Event database precedes unit id with tprek:
-                  navigator.push('unit', unit.id.split(':').pop());
+                  navigator.push('unit', { id: unit.id.split(':').pop() });
                 }
               }}
             />

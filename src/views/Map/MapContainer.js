@@ -15,6 +15,7 @@ import { mapOptions } from './constants/mapConstants';
 import { fetchStops } from './utils/transitFetch';
 
 import SearchBar from '../../components/SearchBar';
+import TitleBar from '../../components/TitleBar/TitleBar';
 
 class MapContainer extends React.Component {
   constructor(props) {
@@ -108,6 +109,22 @@ class MapContainer extends React.Component {
     } = this.props;
     const { initialMap, transitStops } = this.state;
 
+    const topBar = (
+      <div style={{
+        zIndex: 99999999, position: 'fixed', top: 0, width: '100%',
+      }}
+      >
+        {isMobile && currentPage === 'map' && (
+          // If on root map page (/map) display search bar.
+          <SearchBar placeholder={intl.formatMessage({ id: 'search' })} />
+        )}
+        {isMobile && currentPage === 'unit' && highlightedUnit && (
+          // If on unit's map page (/unit?map=true) display title bar
+          <TitleBar title={getLocaleText(highlightedUnit.name)} />
+        )}
+      </div>
+    );
+
     let mapUnits = [];
 
     if (currentPage === 'search') {
@@ -125,16 +142,7 @@ class MapContainer extends React.Component {
     if (initialMap) {
       return (
         <>
-          {isMobile && (
-          <div style={{
-            zIndex: 999999999999, position: 'fixed', top: 0, width: '100%',
-          }}
-          >
-            <SearchBar
-              placeholder={intl.formatMessage({ id: 'search' })}
-            />
-          </div>
-          )}
+          {topBar}
           <MapView
             key={mapType ? mapType.crs.code : initialMap.crs.code}
             mapType={mapType || initialMap}

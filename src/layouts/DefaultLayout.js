@@ -21,7 +21,7 @@ const mobileBreakpoint = config.mobile_ui_breakpoint;
 const smallScreenBreakpoint = config.small_screen_breakpoint;
 
 const createContentStyles = (
-  isMobile, isSmallScreen, landscape, mobileMapOnly, keyboardVisible,
+  isMobile, isSmallScreen, landscape, mobileMapOnly, fullMobileMap, keyboardVisible,
 ) => {
   let width = 450;
   if (isMobile) {
@@ -46,6 +46,7 @@ const createContentStyles = (
       width,
       margin: 0,
       overflow: 'auto',
+      visibility: mobileMapOnly ? 'hidden' : null,
       paddingBottom: isMobile && !mobileMapOnly ? bottomBarHeight : 0,
     },
     map: {
@@ -67,19 +68,18 @@ const createContentStyles = (
     },
   };
 
-  // Mobile map view styles
-  if (mobileMapOnly) {
-    styles.sidebar.visibility = 'hidden';
-  } else if (isMobile) {
+  if (isMobile) {
     styles.sidebar.flex = '1 1 auto';
+    if (fullMobileMap && !landscape) {
+      styles.map.paddingBottom = 0;
+      styles.map.paddingTop = 56; // Titlebar height
+    }
+    // Landscape orientation styles
+    if (landscape) {
+      styles.map.paddingBottom = '10vw';
+      styles.mobileNav.height = '10vw';
+    }
   }
-
-  // Landscape orientation styles
-  if (landscape && isMobile) {
-    styles.map.paddingBottom = '10vw';
-    styles.mobileNav.height = '10vw';
-  }
-
 
   return styles;
 };
@@ -92,7 +92,8 @@ const DefaultLayout = (props) => {
   const lng = params && params.lng;
   const isMobile = useMediaQuery(`(max-width:${mobileBreakpoint}px)`);
   const isSmallScreen = useMediaQuery(`(max-width:${smallScreenBreakpoint}px)`);
-  const mobileMapOnly = isMobile && location.pathname.indexOf('/map') > -1; // If mobile map view
+  const fullMobileMap = new URLSearchParams(location.search).get('map'); // If mobile map without bottom navigation & searchbar
+  const mobileMapOnly = isMobile && (location.pathname.indexOf('/map') > -1 || fullMobileMap); // If mobile map view
   const landscape = useMediaQuery('(min-device-aspect-ratio: 1/1)');
   const portrait = useMediaQuery('(max-device-aspect-ratio: 1/1)');
   // This checks if the keyboard is up.
@@ -100,7 +101,7 @@ const DefaultLayout = (props) => {
   const keyboardVisible = (landscape ? useMediaQuery('(max-height:200px)') : useMediaQuery('(max-height:500px)'));
 
   const styles = createContentStyles(
-    isMobile, isSmallScreen, landscape, mobileMapOnly, keyboardVisible,
+    isMobile, isSmallScreen, landscape, mobileMapOnly, fullMobileMap, keyboardVisible,
   );
 
   return (
