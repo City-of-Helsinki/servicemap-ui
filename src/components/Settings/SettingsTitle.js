@@ -14,7 +14,7 @@ import styles from './styles';
 const SettingsTitle = injectIntl(withStyles(styles)(({
   classes, close, intl, titleID, ...typography
 }) => (
-  <Container className={classes.titleContainer}>
+  <Container className={`${classes.titleContainer} ${close ? classes.flexReverse : ''}`}>
     {
       close
       && (

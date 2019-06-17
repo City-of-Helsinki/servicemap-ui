@@ -386,7 +386,7 @@ class Settings extends React.Component {
     return (
       <Container>
         <FormControl className={classes.noMargin} component="fieldset" fullWidth>
-          <FormLabel component="legend">
+          <FormLabel>
             <SettingsTitle titleID="settings.mobility.title" />
           </FormLabel>
           <RadioGroup

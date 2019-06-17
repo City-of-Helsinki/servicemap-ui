@@ -52,11 +52,14 @@ export default theme => ({
     alignItems: 'center',
     display: 'flex',
     flex: '0 0 auto',
-    flexDirection: 'row-reverse',
     justifyContent: 'space-between',
+    flexDirection: 'row',
     paddingBottom: 0,
     marginTop: 0,
     marginBottom: 0,
+  },
+  flexReverse: {
+    flexDirection: 'row-reverse',
   },
   closeButton: {
     margin: theme.spacing.unit,
