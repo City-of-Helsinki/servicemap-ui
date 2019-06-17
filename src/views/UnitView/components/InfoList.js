@@ -1,14 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withStyles } from '@material-ui/core/styles';
 import { injectIntl, intlShape } from 'react-intl';
-import { Divider, Typography } from '@material-ui/core';
-import List from '@material-ui/core/List';
-import styles from '../styles/styles';
 import getItemIconData from '../constants/itemIconData';
 import { getLocaleString } from '../../../redux/selectors/locale';
 import SimpleListItem from '../../../components/ListItems/SimpleListItem';
+import TitledList from '../../../components/Lists/TitledList';
 
 class InfoList extends React.Component {
   handleItemClick = (data) => {
@@ -91,7 +88,7 @@ class InfoList extends React.Component {
 
   render() {
     const {
-      classes, data, title, titleComponent, intl,
+      data, title, titleComponent, intl,
     } = this.props;
     if (data.length > 0) {
       const filteredData = data.filter(item => Object.keys(item).length > 0 && item.value);
@@ -102,40 +99,28 @@ class InfoList extends React.Component {
       }
       if (filteredData.length > 0) {
         return (
-          <div>
-            <Typography
-              className={`${classes.subtitle} ${classes.left}`}
-              component={titleComponent}
-              variant="subtitle1"
-            >
-              {title}
-            </Typography>
+          <TitledList title={title} titleComponent={titleComponent}>
+            {filteredData.map((data, i) => {
+              if (data.value && data.type) {
+                const text = this.formString(data.value, intl);
+                const srText = this.formSrString(data, intl);
 
-            <Divider aria-hidden="true" className={`${classes.left} ${classes.divider}`} />
-
-            <List disablePadding>
-              {filteredData.map((data, i) => {
-                if (data.value && data.type) {
-                  const text = this.formString(data.value, intl);
-                  const srText = this.formSrString(data, intl);
-
-                  if (text !== '') {
-                    return (
-                      <SimpleListItem
-                        key={data.type + data.id}
-                        icon={getItemIconData(data.type, data.value)}
-                        link={!!data.value.www || !!data.value.phone}
-                        text={text}
-                        srText={srText}
-                        handleItemClick={() => this.handleItemClick(data.value)}
-                        divider={i + 1 !== filteredData.length} // Dont add divider if last item
-                      />
-                    );
-                  }
-                } return null;
-              })}
-            </List>
-          </div>
+                if (text !== '') {
+                  return (
+                    <SimpleListItem
+                      key={data.type + data.id}
+                      icon={getItemIconData(data.type, data.value)}
+                      link={!!data.value.www || !!data.value.phone}
+                      text={text}
+                      srText={srText}
+                      handleItemClick={() => this.handleItemClick(data.value)}
+                      divider={i + 1 !== filteredData.length} // Dont add divider if last item
+                    />
+                  );
+                }
+              } return null;
+            })}
+          </TitledList>
         );
       }
     }
@@ -153,12 +138,11 @@ const mapStateToProps = (state) => {
 };
 
 
-export default injectIntl(withStyles(styles)(connect(
+export default injectIntl(connect(
   mapStateToProps,
-)(InfoList)));
+)(InfoList));
 
 InfoList.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   title: PropTypes.objectOf(PropTypes.any).isRequired,
   titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']),
