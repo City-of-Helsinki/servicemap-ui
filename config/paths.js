@@ -13,7 +13,7 @@ const paths = {
     regex: /\/[a-zA-Z]{2}\/search/
   },
   unit: {
-    generate: id => `/unit/${id || ''}`,
+    generate: data => `/unit/${data.id || ''}${data.query || ''}`,
     regex: /\/[a-zA-Z]{2}\/unit\/([0-9]+)/
   },
   unitFullList: {

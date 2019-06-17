@@ -68,7 +68,7 @@ class UnitItem extends React.Component {
             onClick();
           } else if (navigator) {
             changeSelectedUnit(unit);
-            navigator.push('unit', id);
+            navigator.push('unit', { id });
           }
         }}
       />

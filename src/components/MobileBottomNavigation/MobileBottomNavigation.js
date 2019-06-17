@@ -21,23 +21,6 @@ const styles = {
 };
 
 class MobileBottomNavigation extends React.Component {
-  state = {
-    value: 0,
-  };
-
-  // Figure out initial selected value
-  componentDidMount() {
-    const { actions, location } = this.props;
-    const path = location.pathname;
-
-    actions.forEach((action, index) => {
-      // If pathname contains action.path
-      if (comparePath(action.path, path)) {
-        this.setState({ value: index });
-      }
-    });
-  }
-
   handleChange = (event, value) => {
     const { actions } = this.props;
     const action = actions[value] && actions[value].onClick;
@@ -46,8 +29,6 @@ class MobileBottomNavigation extends React.Component {
     if (action) {
       action(event);
     }
-
-    this.setState({ value });
   };
 
   render() {
@@ -55,7 +36,12 @@ class MobileBottomNavigation extends React.Component {
       actions, classes, style, location,
     } = this.props;
     const path = location.pathname;
-    const { value } = this.state;
+
+    let value = 0;
+    if (comparePath('map', path)) {
+      value = 1;
+    }
+
     let show = false;
     // If current location equals action path show mobile navigation
     actions.forEach((action) => {

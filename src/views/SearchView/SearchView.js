@@ -112,7 +112,7 @@ class SearchView extends React.Component {
       // eslint-disable-next-line camelcase
       switch (object_type) {
         case 'unit':
-          path = generatePath('unit', lng, id);
+          path = generatePath('unit', lng, { id });
           break;
         case 'service':
           path = generatePath('service', lng, id);
