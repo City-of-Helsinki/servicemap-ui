@@ -19,7 +19,7 @@ const Reservations = ({
           ? (e) => {
             e.preventDefault();
             if (navigator) {
-              navigator.push('unitFullList', { id: unitId, type: 'reservations' });
+              navigator.push('unit', { id: unitId, type: 'reservations' });
             }
           } : null}
       >

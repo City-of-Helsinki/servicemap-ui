@@ -53,11 +53,13 @@ class UnitFullListView extends React.Component {
   }
 
   getContent = () => {
-    const { getLocaleText, unit, eventsData } = this.props;
+    const {
+      getLocaleText, unit, eventsData, intl,
+    } = this.props;
     const { content, reservations } = this.state;
     switch (content) {
       case 'services':
-        return <Services unit={unit} />;
+        return <Services unit={unit} intl={intl} getLocaleText={getLocaleText} />;
       case 'events':
         return <Events eventsData={eventsData} />;
       case 'reservations':

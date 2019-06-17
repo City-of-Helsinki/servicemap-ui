@@ -47,7 +47,7 @@ const Events = ({
             ? (e) => {
               e.preventDefault();
               if (navigator) {
-                navigator.push('unitFullList', { id: unit.id, type: 'events' });
+                navigator.push('unit', { id: unit.id, type: 'events' });
               }
             } : null}
         >

@@ -147,7 +147,13 @@ class UnitView extends React.Component {
             <ContactInfo unit={unit} />
             <ElectronicServices unit={unit} />
             <Description unit={unit} getLocaleText={getLocaleText} />
-            <Services intl={intl}, listLength={10} unit={unit} navigator={navigator} />
+            <Services
+              intl={intl}
+              listLength={10}
+              unit={unit}
+              navigator={navigator}
+              getLocaleText={getLocaleText}
+            />
             <Reservations
               listLength={10}
               unitId={unit.id}
@@ -156,6 +162,7 @@ class UnitView extends React.Component {
               navigator={navigator}
             />
             <Events listLength={5} eventsData={eventsData} />
+
             <Container margin text>
               <Typography variant="body2">
                 {

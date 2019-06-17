@@ -72,8 +72,19 @@ class Services extends React.Component {
   };
 
   render() {
-    const { intl, unit, listLength, navigator } = this.props;
+    const {
+      intl, unit, listLength, navigator,
+    } = this.props;
     const { serviceList, periodList, subjectList } = this.state;
+
+    const showMoreOnClick = listLength
+      ? (e) => {
+        e.preventDefault();
+        if (navigator) {
+          navigator.push('unit', { id: unit.id, type: 'services' });
+        }
+      } : null;
+
     return (
       <>
         {/* Services */}
@@ -83,13 +94,7 @@ class Services extends React.Component {
           titleComponent="h4"
           listLength={listLength}
           buttonText={<FormattedMessage id="unit.moreServices" values={{ count: unit.services.length }} />}
-          showMoreOnClick={listLength
-            ? (e) => {
-              e.preventDefault();
-              if (navigator) {
-                navigator.push('unitFullList', { id: unit.id, type: 'services' });
-              }
-            } : null}
+          showMoreOnClick={showMoreOnClick}
         >
           {serviceList.map(service => (
             <ServiceItem key={service.id} service={service} />
@@ -105,13 +110,7 @@ class Services extends React.Component {
             titleComponent="h4"
             listLength={listLength}
             buttonText={<FormattedMessage id="unit.moreServices" values={{ count: unit.services.length }} />}
-            showMoreOnClick={listLength
-              ? (e) => {
-                e.preventDefault();
-                if (navigator) {
-                  navigator.push('unitFullList', { id: unit.id, type: 'services' });
-                }
-            } : null}
+            showMoreOnClick={showMoreOnClick}
           >
             {subjectList.map((service) => {
               if (service.period && `${service.period[0]}–${service.period[1]}` === period) {
@@ -133,6 +132,7 @@ Services.propTypes = {
   intl: intlShape.isRequired,
   listLength: PropTypes.number,
   navigator: PropTypes.objectOf(PropTypes.any),
+  getLocaleText: PropTypes.func.isRequired,
 };
 
 Services.defaultProps = {
