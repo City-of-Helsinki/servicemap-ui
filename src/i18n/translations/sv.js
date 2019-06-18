@@ -36,7 +36,7 @@ export default {
   'general.pageTitles.unit': 'Unit view', // TODO: Translate
   'general.pageTitles.service': 'Service view', // TODO: Translate
   'general.pageTitles.event': 'Tapahtumanäkymä', // TODO: Translate
-  'general.pageTitles.eventList': 'Tapahtumalistaus', // TODO: Translate
+  'general.pageTitles.fullList': 'Listanäkymä', // TODO: Translate
   // General - Pagination
   'general.pagination.previous': 'Previous page', // TODO: Translate
   'general.pagination.next': 'Next page', // TODO: Translate

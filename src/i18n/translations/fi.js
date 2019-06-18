@@ -36,7 +36,7 @@ export default {
   'general.pageTitles.unit': 'Toimipistenäkymä',
   'general.pageTitles.service': 'Palvelunäkymä',
   'general.pageTitles.event': 'Tapahtumanäkymä',
-  'general.pageTitles.eventList': 'Tapahtumalistaus',
+  'general.pageTitles.fullList': 'Listanäkymä',
   // General - Pagination
   'general.pagination.previous': 'Aiempi sivu',
   'general.pagination.next': 'Seuraava sivu',

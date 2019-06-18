@@ -36,7 +36,7 @@ export default {
   'general.pageTitles.unit': 'Unit view',
   'general.pageTitles.service': 'Service view',
   'general.pageTitles.event': 'Event view',
-  'general.pageTitles.eventList': 'Event list',
+  'general.pageTitles.fullList': 'List view',
   // General - Pagination
   'general.pagination.previous': 'Previous page',
   'general.pagination.next': 'Next page',
