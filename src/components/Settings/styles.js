@@ -36,10 +36,16 @@ export default theme => ({
     justifyContent: 'flex-end',
     flexDirection: 'row',
     margin: 0,
+    paddingTop: 0,
+    paddingBottom: theme.spacing.unit,
+    paddingLeft: theme.spacing.unit,
+    paddingRight: theme.spacing.unit,
   },
   confirmationText: {
     textAlign: 'left',
-    padding: theme.spacing.unitDouble,
+    paddingTop: theme.spacing.unitDouble,
+    paddingLeft: theme.spacing.unitDouble,
+    paddingRight: theme.spacing.unitDouble,
   },
   contentButton: {
     marginBottom: theme.spacing.unitDouble,
