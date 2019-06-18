@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { EventAvailable } from '@material-ui/icons';
 import TitledList from '../../../components/Lists/TitledList';
 import SimpleListItem from '../../../components/ListItems/SimpleListItem';
 
 const Reservations = ({
-  listLength, unitId, reservations, getLocaleText, navigator,
+  listLength, unitId, reservations, getLocaleText, navigator, intl,
 }) => {
   if (reservations && reservations.length > 0) {
     return (
@@ -28,7 +28,7 @@ const Reservations = ({
             key={item.id}
             icon={<EventAvailable />}
             link
-            text={getLocaleText(item.name)}
+            text={`${getLocaleText(item.name)} ${intl.formatMessage({ id: 'unit.opens.new.tab' })}`}
             divider
             handleItemClick={() => {
               window.open(`https://varaamo.hel.fi/resources/${item.id}`);
@@ -46,6 +46,7 @@ Reservations.propTypes = {
   listLength: PropTypes.number,
   unitId: PropTypes.number,
   navigator: PropTypes.objectOf(PropTypes.any),
+  intl: intlShape.isRequired,
 };
 
 Reservations.defaultProps = {
@@ -55,4 +56,4 @@ Reservations.defaultProps = {
   unitId: null,
 };
 
-export default Reservations;
+export default injectIntl(Reservations);

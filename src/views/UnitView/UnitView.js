@@ -148,7 +148,6 @@ class UnitView extends React.Component {
             <ElectronicServices unit={unit} />
             <Description unit={unit} getLocaleText={getLocaleText} />
             <Services
-              intl={intl}
               listLength={10}
               unit={unit}
               navigator={navigator}

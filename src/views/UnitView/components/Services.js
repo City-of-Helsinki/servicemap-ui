@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, intlShape } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import TitledList from '../../../components/Lists/TitledList';
 import ServiceItem from '../../../components/ListItems/ServiceItem';
 
@@ -140,4 +140,4 @@ Services.defaultProps = {
   navigator: null,
 };
 
-export default Services;
+export default injectIntl(Services);
