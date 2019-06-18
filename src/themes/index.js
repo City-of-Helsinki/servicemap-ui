@@ -9,6 +9,7 @@ const SMTheme = createMuiTheme({
     secondary: {
       main: '#000000',
     },
+    warning: '#AF0021',
   },
   // Typography
   typography: {
