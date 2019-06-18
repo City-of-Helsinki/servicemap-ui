@@ -41,12 +41,12 @@ const DivWrapper = props => (
 
 const Container = (props) => {
   const {
-    children, classes, margin, paper, text, title, titleComponent, ...rest
+    className, children, classes, margin, paper, text, title, titleComponent, ...rest
   } = props;
 
   const ContainerComponent = paper ? Paper : DivWrapper;
   return (
-    <ContainerComponent className={`${classes.root} ${paper || margin ? classes.margin : ''} ${text ? classes.text : ''}`} {...rest}>
+    <ContainerComponent className={`${classes.root} ${paper || margin ? classes.margin : ''} ${text ? classes.text : ''} ${className}`} {...rest}>
       {
         title
         && <Title className={classes.title} component={titleComponent} text={title} variant="h6" />
@@ -57,6 +57,7 @@ const Container = (props) => {
 };
 
 Container.propTypes = {
+  className: PropTypes.string,
   children: PropTypes.node.isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   margin: PropTypes.bool,
@@ -67,6 +68,7 @@ Container.propTypes = {
 };
 
 Container.defaultProps = {
+  className: '',
   margin: false,
   paper: false,
   text: false,

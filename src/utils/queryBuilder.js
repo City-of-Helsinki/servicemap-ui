@@ -14,6 +14,7 @@ const searchQueryData = {
 };
 
 const unitQueryData = {
+  accessibility_description: true,
   include: 'service_nodes,services',
 };
 

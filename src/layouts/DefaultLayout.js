@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Button, Grid, Typography, AppBar, Toolbar,
+  Button, Typography, AppBar, Toolbar,
 } from '@material-ui/core';
 import { FormattedMessage, intlShape } from 'react-intl';
 import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
@@ -15,6 +15,7 @@ import config from '../../config';
 import { generatePath } from '../utils/path';
 import HomeLogo from '../components/Logos/HomeLogo';
 import { DesktopComponent } from './WrapperComponents/WrapperComponents';
+import Settings from '../components/Settings';
 
 // eslint-disable-next-line camelcase
 const mobileBreakpoint = config.mobile_ui_breakpoint;
@@ -49,6 +50,9 @@ const createContentStyles = (
       visibility: mobileMapOnly ? 'hidden' : null,
       paddingBottom: isMobile && !mobileMapOnly ? bottomBarHeight : 0,
     },
+    logo: {
+      marginLeft: 8,
+    },
     map: {
       position: isMobile ? 'fixed' : null,
       bottom: 0,
@@ -65,6 +69,18 @@ const createContentStyles = (
       bottom: keyboardVisible ? -100 : 0,
       zIndex: 999999999,
       backgroundColor: '#2242C7',
+    },
+    topNavLeft: {
+      display: 'flex',
+      height: 64,
+      minWidth: width,
+      justifyContent: 'space-between',
+    },
+    topNavRight: {
+      flex: '1 1 auto',
+    },
+    toolbar: {
+      padding: 0,
     },
   };
 
@@ -110,50 +126,41 @@ const DefaultLayout = (props) => {
         !isMobile
         && (
         <AppBar position="relative" style={{ height: 64 }}>
-          <Toolbar>
-            <Grid
-              justify="space-between"
-              container
-              spacing={24}
+          <Toolbar style={styles.toolbar}>
+            <div
+              style={styles.topNavLeft}
             >
-              <Grid item xs>
+              <div style={{ flex: '1 0 auto', display: 'flex' }}>
                 {
-                  // Jump link to main content for screenreaders
-                  // Must be first interactable element on page
-                }
+                    // Jump link to main content for screenreaders
+                    // Must be first interactable element on page
+                  }
                 <a id="site-title" href="#view-title" className="sr-only">
                   <Typography variant="srOnly">
                     <FormattedMessage id="general.skipToContent" />
                   </Typography>
                 </a>
                 {
-                  // Home logo link to home view
-                }
-                <a href={generatePath('home', lng)} style={{ float: 'left', display: 'inline-block' }} className="focus-dark-background">
-                  <HomeLogo aria-hidden="true" />
+                    // Home logo link to home view
+                  }
+                <a href={generatePath('home', lng)} style={{ alignSelf: 'center' }} className="focus-dark-background">
+                  <HomeLogo aria-hidden="true" style={styles.logo} />
                   <Typography className="sr-only" color="inherit" component="h1" variant="body1">
                     <FormattedMessage id="app.title" />
                   </Typography>
                 </a>
-              </Grid>
-              <Grid item xs={6}>
-                <a href="https://forms.gle/roe9XNrZGQWBhMBJ7" rel="noopener noreferrer" target="_blank">
-                  <p style={{ margin: 0, color: 'white', textDecorationColor: 'white' }}>
-                    <FormattedMessage id="general.give.feedback" />
-                  </p>
-                </a>
-              </Grid>
-              <Grid item xs>
+              </div>
+              <div style={{ flex: '0 0 auto', display: 'flex' }}>
                 {
                   i18n.availableLocales
                     .filter(locale => locale !== i18n.locale)
                     .map(locale => (
                       <Button
-                        style={{ float: 'right' }}
                         className="focus-dark-background"
                         role="link"
                         key={locale}
                         color="inherit"
+                        variant="text"
                         onClick={() => {
                           const newLocation = location;
                           const newPath = location.pathname.replace(/^\/[a-zA-Z]{2}\//, `/${locale}/`);
@@ -161,18 +168,30 @@ const DefaultLayout = (props) => {
                           window.location = `${newLocation.pathname}${newLocation.search}`;
                         }}
                       >
-                        {i18n.localeText(locale)}
+                        <Typography color="inherit" variant="body2" style={{ textTransform: 'none' }}>
+                          {i18n.localeText(locale)}
+                        </Typography>
                       </Button>
                     ))
                 }
-              </Grid>
-            </Grid>
+                <Settings />
+              </div>
+
+
+            </div>
+            <div style={styles.topNavRight}>
+              <a href="https://forms.gle/roe9XNrZGQWBhMBJ7" rel="noopener noreferrer" target="_blank" style={{ display: 'inline-block' }}>
+                <p style={{ margin: 0, color: 'white', textDecorationColor: 'white' }}>
+                  <FormattedMessage id="general.give.feedback" />
+                </p>
+              </a>
+            </div>
           </Toolbar>
         </AppBar>
         )
       }
       <div style={styles.activeRoot}>
-        <div style={styles.sidebar}>
+        <div className="SidebarWrapper" style={styles.sidebar}>
           <main style={{ height: '100%' }}>
             <Sidebar />
           </main>

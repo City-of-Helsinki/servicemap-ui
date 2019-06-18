@@ -3,6 +3,17 @@ export default {
   'app.title': 'Service map',
   'address': 'Address',
 
+  // Accessibility
+  'accessibility': 'Accessibility',
+  'accessibility.details': 'Accessibility details',
+  'accessibility.stamp': 'Accessibility acknowledged',
+  'accessibility.shortcomings': 'Shortcomings',
+  'accessibility.shortcomings.plural': `{count, plural,
+                                =0 {no shortcomings}
+                                one {# shortcoming}
+                                other {# shortcomings}
+                              }`,
+
   // Event
   'event.nearby': 'Nearby events',
   'event.description': 'Description',
@@ -28,6 +39,10 @@ export default {
   'general.back.event': 'Back to event view',
   'general.backToHome': 'Close search and return to beginning',
   'general.backToStart': 'Back to beginning of page',
+  'general.cancel': 'Cancel',
+  'general.close': 'Close',
+  'general.closeSettings': 'Close settings',
+  'general.fetching': 'Loading data...',
   'general.home': 'Home',
   'general.noData': 'No data available',
   'general.loading': 'Loading',
@@ -50,6 +65,10 @@ export default {
   'general.give.feedback': 'Give feedback on the Servicemap test version (link opens in a new tab)',
   'general.new.tab': 'Opens in new tab',
   'general.time.short': 'at',
+  'general.save': 'Save',
+  'general.save.changes': 'Save changes',
+  'general.save.changes.done': 'Changes have been saved!',
+  'general.save.confirmation': 'Would you like to save changes?',
 
   // Home
   'home.example.title': 'Example search phrases',
@@ -134,4 +153,22 @@ export default {
   'service.plural': 'Services',
   'service.nearby': 'Nearby services',
   'service.units.empty': 'Service doesn\'t have units',
+
+  // Settings
+  'settings': 'Settings',
+  'settings.sense.title': 'Hearing and sight',
+  'settings.sense.hearing': 'I use a hearing aid',
+  'settings.sense.visual': 'I\'m visually impaired',
+  'settings.sense.colorblind': 'I have trouble distinguishing colours',
+  'settings.mobility.title': 'Mobility',
+  'settings.mobility.none': 'No mobility impairments',
+  'settings.mobility.wheelchair': 'I use a wheelchair',
+  'settings.mobility.reduced_mobility': 'I have reduced mobility',
+  'settings.mobility.rollator': 'I use a rollator',
+  'settings.mobility.stroller': 'I push a stroller',
+  'settings.aria.changed': 'Settings have changed. Remember to save',
+  'settings.aria.closed': 'Settings closed',
+  'settings.aria.open': 'Open settings',
+  'settings.aria.opened': 'Settings opened',
+  'settings.aria.saved': 'Settings have been saved',
 };

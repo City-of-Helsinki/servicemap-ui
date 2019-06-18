@@ -13,11 +13,21 @@ import {
 import rootReducer from './rootReducer';
 import App from './App';
 import themes from './themes';
+import SettingsUtility from './utils/settings';
 
-const preloadedState = window.PRELOADED_STATE;
+const getPreloadedState = () => {
+  const state = window.PRELOADED_STATE;
+  // Allow the passed state to be garbage-collected
+  delete window.PRELOADED_STATE;
 
-// Allow the passed state to be garbage-collected
-delete window.PRELOADED_STATE;
+  // Handle settings fetch from localStorage
+  const settings = SettingsUtility.getSettingsFromLocalStorage();
+  state.settings = settings;
+
+  return state;
+};
+
+const preloadedState = getPreloadedState();
 
 // Create Redux store with initial state
 const store = createStore(rootReducer, preloadedState, applyMiddleware(thunk));
