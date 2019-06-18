@@ -21,7 +21,9 @@ class AccessibilityInfo extends React.Component {
     this.supportedLanguages = config.supported_languages;
 
     this.state = {
-      isFetching: false,
+      // Set component initially to fetching accessibility sentences state
+      // This helps server and client to have same initial rendered states
+      isFetching: true,
       accessibilityDescriptions: null,
     };
   }
