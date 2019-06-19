@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
 import { withRouter } from 'react-router-dom';
+import { withStyles } from '@material-ui/core';
 import { fetchUnitEvents } from '../../redux/actions/event';
 import { DesktopComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import { drawIcon } from '../Map/utils/drawIcon';
@@ -13,6 +14,7 @@ import { getLocaleString } from '../../redux/selectors/locale';
 import Events from './components/Events';
 import Services from './components/Services';
 import Reservations from './components/Reservations';
+import styles from './styles/styles';
 
 class UnitFullListView extends React.Component {
   constructor(props) {
@@ -70,7 +72,9 @@ class UnitFullListView extends React.Component {
   }
 
   render() {
-    const { getLocaleText, unit, intl } = this.props;
+    const {
+      getLocaleText, unit, intl, classes,
+    } = this.props;
     const { icon } = this.state;
     const topBar = (
       unit && (
@@ -84,7 +88,7 @@ class UnitFullListView extends React.Component {
     );
 
     return (
-      <div style={{ height: '100%', overflow: 'auto' }}>
+      <div className={classes.fullListContent}>
         {topBar}
         {this.getContent()}
       </div>
@@ -110,6 +114,7 @@ UnitFullListView.propTypes = {
   getLocaleText: PropTypes.func.isRequired,
   fetchUnitEvents: PropTypes.func.isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
+  classes: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 UnitFullListView.defaultProps = {
@@ -117,7 +122,7 @@ UnitFullListView.defaultProps = {
   eventsData: { events: null, unit: null },
 };
 
-export default withRouter(injectIntl(connect(
+export default withStyles(styles)(withRouter(injectIntl(connect(
   mapStateToProps,
   { fetchUnitEvents },
-)(UnitFullListView)));
+)(UnitFullListView))));
