@@ -13,7 +13,7 @@ import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponen
 import { drawIcon } from '../Map/utils/drawIcon';
 
 import SearchBar from '../../components/SearchBar';
-import { focusUnit } from '../Map/utils/mapActions';
+import { focusUnit, focusDistrict } from '../Map/utils/mapActions';
 import styles from './styles/styles';
 import TitleBar from '../../components/TitleBar/TitleBar';
 import Container from '../../components/Container';
@@ -70,7 +70,12 @@ class UnitView extends React.Component {
 
   centerMap = (map, unit) => {
     this.setState({ centered: true });
-    focusUnit(map, unit);
+    const { geometry } = unit;
+    if (geometry && geometry.type === 'MultiLineString') {
+      focusDistrict(map, geometry.coordinates);
+    } else {
+      focusUnit(map, unit);
+    }
   }
 
   render() {
