@@ -76,6 +76,11 @@ const SMTheme = createMuiTheme({
     unitHalf: 4,
     unitDouble: 16,
   },
+  custom: {
+    body2light: {
+      color: 'rgba(0,0,0,0.7)',
+    },
+  },
 });
 
 export default { SMTheme };

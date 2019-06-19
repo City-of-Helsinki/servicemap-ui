@@ -7,6 +7,7 @@ export default theme => ({
     paddingLeft: theme.spacing.unit,
   },
   list: {
+    color: theme.custom.body2light.color,
     paddingLeft: theme.spacing.unit * 3,
   },
 });

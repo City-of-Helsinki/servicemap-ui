@@ -211,7 +211,7 @@ class AccessibilityInfo extends React.Component {
                       {
                         shortcomings.map(shortcoming => (
                           <li key={shortcoming} className={classes.listItem}>
-                            <Typography component="p" variant="body2">
+                            <Typography className={classes.colorLight} component="p" variant="body2">
                               {shortcoming}
                             </Typography>
                           </li>
@@ -265,7 +265,7 @@ class AccessibilityInfo extends React.Component {
                             const text = getLocaleText(sentence);
                             return (
                               <li key={text} className={classes.listItem}>
-                                <Typography component="p" variant="body2" align="left">
+                                <Typography className={classes.colorLight} component="p" variant="body2" align="left">
                                   {text}
                                 </Typography>
                               </li>
