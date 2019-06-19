@@ -18,6 +18,7 @@ import styles from './styles/styles';
 import TitleBar from '../../components/TitleBar/TitleBar';
 import Container from '../../components/Container';
 import { uppercaseFirst } from '../../utils';
+import AccessibilityInfo from './components/AccessibilityInfo';
 
 import ContactInfo from './components/ContactInfo';
 import Highlights from './components/Highlights';
@@ -142,6 +143,7 @@ class UnitView extends React.Component {
             <Description unit={unit} getLocaleText={getLocaleText} />
             <Services unit={unit} intl={intl} getLocaleText={getLocaleText} />
             <Events eventsData={eventsData} />
+            <AccessibilityInfo titleAlways headingLevel={4} />
 
             <Container margin text>
               <Typography variant="body2">

@@ -9,6 +9,7 @@ const SMTheme = createMuiTheme({
     secondary: {
       main: '#000000',
     },
+    warning: '#AF0021',
   },
   // Typography
   typography: {
@@ -74,6 +75,11 @@ const SMTheme = createMuiTheme({
     unit: 8,
     unitHalf: 4,
     unitDouble: 16,
+  },
+  custom: {
+    body2light: {
+      color: 'rgba(0,0,0,0.7)',
+    },
   },
 });
 
