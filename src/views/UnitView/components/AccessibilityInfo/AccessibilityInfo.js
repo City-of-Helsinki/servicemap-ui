@@ -207,11 +207,11 @@ class AccessibilityInfo extends React.Component {
                     <Typography component={heading} variant="subtitle1" align="left">
                       {title}
                     </Typography>
-                    <ul>
+                    <ul className={classes.list}>
                       {
                         shortcomings.map(shortcoming => (
-                          <li key={shortcoming}>
-                            <Typography component="p" variant="body1">
+                          <li key={shortcoming} className={classes.listItem}>
+                            <Typography component="p" variant="body2">
                               {shortcoming}
                             </Typography>
                           </li>
@@ -236,7 +236,7 @@ class AccessibilityInfo extends React.Component {
     }
 
     // Figure out heading levels
-    const { getLocaleText } = this.props;
+    const { classes, getLocaleText } = this.props;
     const { groups, sentences } = accessibilityDescriptions;
 
     return groups && sentences && (
@@ -259,13 +259,13 @@ class AccessibilityInfo extends React.Component {
                       <Typography component={heading} variant="subtitle2" align="left">
                         {title}
                       </Typography>
-                      <ul>
+                      <ul className={classes.list}>
                         {
                           groupSentences.map((sentence) => {
                             const text = getLocaleText(sentence);
                             return (
-                              <li key={text}>
-                                <Typography component="p" variant="body1" align="left">
+                              <li key={text} className={classes.listItem}>
+                                <Typography component="p" variant="body2" align="left">
                                   {text}
                                 </Typography>
                               </li>
