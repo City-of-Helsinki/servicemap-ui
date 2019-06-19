@@ -19,6 +19,7 @@ import TitleBar from '../../components/TitleBar/TitleBar';
 import Container from '../../components/Container';
 import { uppercaseFirst } from '../../utils';
 import fetchUnitReservations from './utils/fetchUnitReservations';
+import AccessibilityInfo from './components/AccessibilityInfo';
 
 import ContactInfo from './components/ContactInfo';
 import Highlights from './components/Highlights';
@@ -161,6 +162,7 @@ class UnitView extends React.Component {
               navigator={navigator}
             />
             <Events listLength={5} eventsData={eventsData} />
+            <AccessibilityInfo titleAlways headingLevel={4} />
 
             <Container margin text>
               <Typography variant="body2">

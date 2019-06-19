@@ -4,15 +4,17 @@ import { Button, withStyles } from '@material-ui/core';
 
 
 const BlueButton = ({
-  onClick, srText, classes, children,
+  children, classes, className, onClick, srText, style, ...rest
 }) => (
   <Button
-    className={classes.button}
+    className={`${classes.button} ${className}`}
     role="link"
     variant="contained"
     color="primary"
     onClick={onClick}
     aria-label={srText}
+    style={style}
+    {...rest}
   >
     {children}
   </Button>
@@ -29,14 +31,18 @@ const styles = () => ({
 });
 
 BlueButton.propTypes = {
+  className: PropTypes.string,
   onClick: PropTypes.func.isRequired,
   srText: PropTypes.string,
+  style: PropTypes.objectOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   children: PropTypes.node.isRequired,
 };
 
 BlueButton.defaultProps = {
+  className: '',
   srText: null,
+  style: null,
 };
 
 export default withStyles(styles)(BlueButton);

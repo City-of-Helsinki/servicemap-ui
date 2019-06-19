@@ -3,6 +3,17 @@ export default {
   'app.title': 'Palvelukartta',
   'address': 'Osoite',
 
+  // Accessibility
+  'accessibility': 'Esteettömyys',
+  'accessibility.details': 'Tarkemmat tiedot',
+  'accessibility.stamp': 'Esteettömyys huomioitu',
+  'accessibility.shortcomings': 'Puutteet',
+  'accessibility.shortcomings.plural': `{count, plural,
+                                =0 {Ei puutteita}
+                                one {# puute}
+                                other {# puutetta}
+                              }`,
+
   // Event
   'event.nearby': 'Lähellä olevat tapahtumat',
   'event.description': 'Kuvaus',
@@ -27,6 +38,10 @@ export default {
   'general.back.event': 'Palaa tapahtumanäkymään',
   'general.backToHome': 'Sulje haku ja palaa alkuun',
   'general.backToStart': 'Palaa sivun alkuun',
+  'general.cancel': 'Peruuta',
+  'general.close': 'Sulje',
+  'general.closeSettings': 'Sulje asetukset',
+  'general.fetching': 'Ladataan tietoja...',
   'general.home': 'Koti',
   'general.noData': 'Tietoa ei saatavilla',
   'general.loading': 'Ladataan',
@@ -51,6 +66,10 @@ export default {
   'general.give.feedback': 'Anna palautetta Palvelukartan testiversiosta (linkki aukeaa uuteen välilehteen)',
   'general.new.tab': 'Aukeaa uuteen välilehteen',
   'general.time.short': 'klo',
+  'general.save': 'Tallenna',
+  'general.save.changes': 'Tallenna muutokset',
+  'general.save.changes.done': 'Muutokset tallennettu!',
+  'general.save.confirmation': 'Haluatko tallentaa muutokset?',
 
   // Home
   'home.example.title': 'Esimerkkihakuja',
@@ -141,4 +160,22 @@ export default {
   'service.plural': 'Palvelut',
   'service.nearby': 'Lähellä olevat palvelut',
   'service.units.empty': 'Palvelulla ei ole toimipisteitä',
+
+  // Settings
+  'settings': 'Asetukset',
+  'settings.sense.title': 'Aistirajoitteet',
+  'settings.sense.hearing': 'Käytän kuulolaitetta',
+  'settings.sense.visual': 'Olen näkövammainen',
+  'settings.sense.colorblind': 'Minun on vaikea erottaa värejä',
+  'settings.mobility.title': 'Liikkumisrajoitteet',
+  'settings.mobility.none': 'Ei liikkumisrajoitteita',
+  'settings.mobility.wheelchair': 'Käytän pyörätuolia',
+  'settings.mobility.reduced_mobility': 'Olen liikkumisesteinen',
+  'settings.mobility.rollator': 'Käytän rollaattoria',
+  'settings.mobility.stroller': 'Työnnän rattaita',
+  'settings.aria.changed': 'Asetukset muutettu. Muista tallentaa',
+  'settings.aria.closed': 'Asetukset suljettu',
+  'settings.aria.open': 'Avaa asetukset',
+  'settings.aria.opened': 'Asetukset avattu',
+  'settings.aria.saved': 'Asetukset on tallennettu',
 };
