@@ -36,7 +36,9 @@ export default {
   'general.pageTitles.unit': 'Unit view', // TODO: Translate
   'general.pageTitles.service': 'Service view', // TODO: Translate
   'general.pageTitles.event': 'Tapahtumanäkymä', // TODO: Translate
-  'general.pageTitles.fullList': 'Listanäkymä', // TODO: Translate
+  'general.pageTitles.list.services': 'Service list ', // TODO: Translate
+  'general.pageTitles.list.events': 'Event list ', // TODO: Translate
+  'general.pageTitles.list.reservations': 'Reservation list ', // TODO: Translate
   // General - Pagination
   'general.pagination.previous': 'Previous page', // TODO: Translate
   'general.pagination.next': 'Next page', // TODO: Translate
@@ -91,6 +93,9 @@ export default {
   'unit.more.reservations': 'Näytä kaikki {count} varausta', // TODO: Translate
   'unit.more.services': 'Näytä kaikki {count} palvelua', // TODO: Translate
   'unit.more.events': 'Näytä kaikki {count} tapahtumaa', // TODO: Translate
+  'unit.list.services': 'Palvelut', // TODO: Translate
+  'unit.list.events': 'Tapahtumat', // TODO: Translate
+  'unit.list.reservations': 'Varaukset', // TODO: Translate
 
   // Search
   'search': 'Sök',

@@ -36,7 +36,9 @@ export default {
   'general.pageTitles.unit': 'Unit view',
   'general.pageTitles.service': 'Service view',
   'general.pageTitles.event': 'Event view',
-  'general.pageTitles.fullList': 'List view',
+  'general.pageTitles.list.services': 'Service list ',
+  'general.pageTitles.list.events': 'Event list ',
+  'general.pageTitles.list.reservations': 'Reservation list ',
   // General - Pagination
   'general.pagination.previous': 'Previous page',
   'general.pagination.next': 'Next page',
@@ -92,6 +94,9 @@ export default {
   'unit.more.reservations': 'Show all {count} reservations',
   'unit.more.services': 'Show all {count} services',
   'unit.more.events': 'Show all {count} events',
+  'unit.list.services': 'Services',
+  'unit.list.events': 'Events',
+  'unit.list.reservations': 'Reservations',
 
   // Search
   'search': 'Search',

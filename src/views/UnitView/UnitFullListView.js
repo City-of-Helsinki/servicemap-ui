@@ -15,6 +15,7 @@ import Events from './components/Events';
 import Services from './components/Services';
 import Reservations from './components/Reservations';
 import styles from './styles/styles';
+import HeadModifier from '../../utils/headModifier';
 
 class UnitFullListView extends React.Component {
   constructor(props) {
@@ -22,6 +23,7 @@ class UnitFullListView extends React.Component {
     this.state = {
       icon: null,
       content: null,
+      titleId: null,
       reservations: null,
     };
   }
@@ -34,16 +36,25 @@ class UnitFullListView extends React.Component {
     if (unit) {
       const path = location.pathname;
       if (path.indexOf('/services') > -1) {
-        this.setState({ content: 'services' });
+        this.setState({
+          content: 'services',
+          titleId: 'unit.list.services',
+        });
       }
       if (path.indexOf('/events') > -1) {
-        this.setState({ content: 'events' });
+        this.setState({
+          content: 'events',
+          titleId: 'unit.list.events',
+        });
         if (!eventsData.events) {
           fetchUnitEvents(unit.id);
         }
       }
       if (path.indexOf('/reservations') > -1) {
-        this.setState({ content: 'reservations' });
+        this.setState({
+          content: 'reservations',
+          titleId: 'unit.list.reservations',
+        });
         fetchUnitReservations(unit.id)
           .then(data => this.setState({ reservations: data.results }));
       }
@@ -75,7 +86,8 @@ class UnitFullListView extends React.Component {
     const {
       getLocaleText, unit, intl, classes,
     } = this.props;
-    const { icon } = this.state;
+    const { icon, titleId } = this.state;
+
     const topBar = (
       unit && (
         <>
@@ -86,12 +98,23 @@ class UnitFullListView extends React.Component {
         </>
       )
     );
+    const head = titleId && (
+      <HeadModifier>
+        <title>
+          {`${getLocaleText(unit.name)} 
+          ${intl.formatMessage({ id: titleId })} | ${intl.formatMessage({ id: 'app.title' })}`}
+        </title>
+      </HeadModifier>
+    );
 
     return (
-      <div className={classes.fullListContent}>
-        {topBar}
-        {this.getContent()}
-      </div>
+      <>
+        {head}
+        <div className={classes.fullListContent}>
+          {topBar}
+          {this.getContent()}
+        </div>
+      </>
     );
   }
 }

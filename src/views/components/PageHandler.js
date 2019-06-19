@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
 import { uppercaseFirst } from '../../utils';
 import { setCurrentPage } from '../../redux/actions/user';
 import { getLocaleString } from '../../redux/selectors/locale';
+import HeadModifier from '../../utils/headModifier';
 
 class PageHandler extends React.Component {
   componentDidMount() {
@@ -40,9 +40,9 @@ class PageHandler extends React.Component {
     const title = `${uppercaseFirst(pageMessage)} ${message}${appTitle}`;
 
     return (
-      <Helmet>
+      <HeadModifier>
         <title>{title}</title>
-      </Helmet>
+      </HeadModifier>
     );
   }
 }

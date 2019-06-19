@@ -36,7 +36,9 @@ export default {
   'general.pageTitles.unit': 'Toimipistenäkymä',
   'general.pageTitles.service': 'Palvelunäkymä',
   'general.pageTitles.event': 'Tapahtumanäkymä',
-  'general.pageTitles.fullList': 'Listanäkymä',
+  'general.pageTitles.list.services': 'Palvelulista ',
+  'general.pageTitles.list.events': 'Tapahtumalista ',
+  'general.pageTitles.list.reservations': 'Varauslista',
   // General - Pagination
   'general.pagination.previous': 'Aiempi sivu',
   'general.pagination.next': 'Seuraava sivu',
@@ -92,6 +94,9 @@ export default {
   'unit.more.reservations': 'Näytä kaikki {count} varausta',
   'unit.more.services': 'Näytä kaikki {count} palvelua',
   'unit.more.events': 'Näytä kaikki {count} tapahtumaa',
+  'unit.list.services': 'Palvelut',
+  'unit.list.events': 'Tapahtumat',
+  'unit.list.reservations': 'Varaukset',
 
   // Search
   'search': 'Hae',
