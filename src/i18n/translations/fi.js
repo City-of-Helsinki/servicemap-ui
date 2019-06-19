@@ -89,9 +89,9 @@ export default {
   'unit.school.year': 'Lukuvuosi',
   'unit.opens.new.tab': '(uusi välilehti)',
   'unit.call.number': '(soita)',
-  'unit.moreReservations': 'Näytä kaikki {count} varausta',
-  'unit.moreServices': 'Näytä kaikki {count} palvelua',
-  'unit.moreEvents': 'Näytä kaikki {count} tapahtumaa',
+  'unit.more.reservations': 'Näytä kaikki {count} varausta',
+  'unit.more.services': 'Näytä kaikki {count} palvelua',
+  'unit.more.events': 'Näytä kaikki {count} tapahtumaa',
 
   // Search
   'search': 'Hae',

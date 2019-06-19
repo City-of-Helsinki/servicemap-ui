@@ -89,9 +89,9 @@ export default {
   'unit.school.year': 'School year',
   'unit.opens.new.tab': '(new tab)',
   'unit.call.number': '(call)',
-  'unit.moreReservations': 'Show all {count} reservations',
-  'unit.moreServices': 'Show all {count} services',
-  'unit.moreEvents': 'Show all {count} events',
+  'unit.more.reservations': 'Show all {count} reservations',
+  'unit.more.services': 'Show all {count} services',
+  'unit.more.events': 'Show all {count} events',
 
   // Search
   'search': 'Search',

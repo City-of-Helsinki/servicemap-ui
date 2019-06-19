@@ -88,9 +88,9 @@ export default {
   'unit.school.year': 'Läsåret',
   'unit.opens.new.tab': '(new tab)', // TODO: Translate
   'unit.call.number': '(call)', // TODO: Translate
-  'unit.moreReservations': 'Näytä kaikki {count} varausta', // TODO: Translate
-  'unit.moreServices': 'Näytä kaikki {count} palvelua', // TODO: Translate
-  'unit.moreEvents': 'Näytä kaikki {count} tapahtumaa', // TODO: Translate
+  'unit.more.reservations': 'Näytä kaikki {count} varausta', // TODO: Translate
+  'unit.more.services': 'Näytä kaikki {count} palvelua', // TODO: Translate
+  'unit.more.events': 'Näytä kaikki {count} tapahtumaa', // TODO: Translate
 
   // Search
   'search': 'Sök',

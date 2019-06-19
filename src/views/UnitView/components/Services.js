@@ -93,7 +93,7 @@ class Services extends React.Component {
           title={<FormattedMessage id="unit.services" />}
           titleComponent="h4"
           listLength={listLength}
-          buttonText={<FormattedMessage id="unit.moreServices" values={{ count: unit.services.length }} />}
+          buttonText={<FormattedMessage id="unit.more.services" values={{ count: unit.services.length }} />}
           showMoreOnClick={showMoreOnClick}
         >
           {serviceList.map(service => (
@@ -109,7 +109,7 @@ class Services extends React.Component {
             title={`${intl.formatMessage({ id: 'unit.school.year' })} ${period}`}
             titleComponent="h4"
             listLength={listLength}
-            buttonText={<FormattedMessage id="unit.moreServices" values={{ count: unit.services.length }} />}
+            buttonText={<FormattedMessage id="unit.more.services" values={{ count: unit.services.length }} />}
             showMoreOnClick={showMoreOnClick}
           >
             {subjectList.map((service) => {
