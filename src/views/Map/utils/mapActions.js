@@ -25,11 +25,15 @@ const focusUnit = (map, unit) => {
       [unit.location.coordinates[1], unit.location.coordinates[0]],
       map._layersMaxZoom - 1,
     );
-    map._onResize();
   }
+};
+
+const focusDistrict = (map, coordinates) => {
+  map.fitBounds(coordinates);
 };
 
 export {
   fitUnitsToMap,
   focusUnit,
+  focusDistrict,
 };

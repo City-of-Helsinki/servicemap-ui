@@ -47,7 +47,7 @@ export const fetchServiceUnits = (
       if (next) {
         response = await fetch(next);
       } else {
-        response = await fetch(`${url}unit/?service=${serviceId}&page_size=100`);
+        response = await fetch(`${url}unit/?service=${serviceId}&geometry=true&page_size=100`);
       }
       if (!response.ok) {
         throw Error(response.statusText);
