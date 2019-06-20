@@ -10,8 +10,6 @@ import { fetchSelectedUnit, changeSelectedUnit } from '../../redux/actions/selec
 import { getSelectedUnit } from '../../redux/selectors/selectedUnit';
 import { getLocaleString } from '../../redux/selectors/locale';
 import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
-import { drawIcon } from '../Map/utils/drawIcon';
-
 import SearchBar from '../../components/SearchBar';
 import { focusUnit, focusDistrict } from '../Map/utils/mapActions';
 import styles from './styles/styles';
@@ -29,6 +27,7 @@ import Description from './components/Description';
 import Services from './components/Services';
 import Events from './components/Events';
 import ServiceMapButton from '../../components/ServiceMapButton';
+import UnitHelper from '../../utils/unitHelper';
 
 class UnitView extends React.Component {
   constructor(props) {
@@ -42,12 +41,12 @@ class UnitView extends React.Component {
 
   componentDidMount() {
     const {
-      match, fetchSelectedUnit, unit,
+      match, fetchSelectedUnit, unit, settings,
     } = this.props;
     const { params } = match;
 
     this.setState({
-      icon: <img alt="" src={drawIcon({ id: params.unit }, null, true)} style={{ height: 24 }} />,
+      icon: <img alt="" src={UnitHelper.getIcon(unit, settings, true)} style={{ height: 24 }} />,
     });
 
     if (params && params.unit) {
@@ -206,7 +205,7 @@ const mapStateToProps = (state) => {
   const eventFetching = state.event.isFetching;
   const getLocaleText = textObject => getLocaleString(state, textObject);
   const map = state.mapRef.leafletElement;
-  const { navigator } = state;
+  const { navigator, settings } = state;
   return {
     unit,
     eventsData,
@@ -214,6 +213,7 @@ const mapStateToProps = (state) => {
     getLocaleText,
     map,
     navigator,
+    settings,
   };
 };
 
@@ -235,6 +235,7 @@ UnitView.propTypes = {
   getLocaleText: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
+  settings: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 UnitView.defaultProps = {
