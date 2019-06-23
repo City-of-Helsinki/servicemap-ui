@@ -1,4 +1,4 @@
-// import UnitHelper from '../../../utils/unitHelper';
+import UnitHelper from '../../../utils/unitHelper';
 
 // This class draws the marker icon into canvas and returns it as png
 
@@ -167,12 +167,12 @@ export const drawServiceIcon = () => {
   return canvas.toDataURL();
 };
 
-export const drawMarkerIcon = () => { // (unit, settings, mapLayer) => {
+export const drawMarkerIcon = (unit, settings) => {
   const L = require('leaflet'); // eslint-disable-line global-require
 
   // Return the drawn icon as lealfet icon
   const markerIcon = L.icon({
-    iconUrl: drawUnitIcon('#2242C7'), // UnitHelper.getIcon(unit, settings, mapLayer),
+    iconUrl: UnitHelper.getIcon(unit, settings),
     iconSize: [40, 40],
     iconAnchor: [20, 37],
   });

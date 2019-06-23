@@ -28,25 +28,26 @@ import Services from './components/Services';
 import Events from './components/Events';
 import ServiceMapButton from '../../components/ServiceMapButton';
 import UnitHelper from '../../utils/unitHelper';
+import UnitIcon from '../../components/SMIcon/UnitIcon';
 
 class UnitView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       centered: false,
-      icon: null,
       reservations: null,
+      didMount: false,
     };
   }
 
   componentDidMount() {
     const {
-      match, fetchSelectedUnit, unit, settings,
+      match, fetchSelectedUnit, unit,
     } = this.props;
     const { params } = match;
 
     this.setState({
-      icon: <img alt="" src={UnitHelper.getIcon(unit, settings, true)} style={{ height: 24 }} />,
+      didMount: true,
     });
 
     if (params && params.unit) {
@@ -89,9 +90,10 @@ class UnitView extends React.Component {
     const {
       classes, getLocaleText, intl, unit, eventsData, navigator,
     } = this.props;
-    const { icon, reservations } = this.state;
+    const { didMount, reservations } = this.state;
 
     const title = unit && unit.name ? getLocaleText(unit.name) : '';
+    const icon = didMount ? <UnitIcon unit={unit} /> : null;
 
     const TopBar = (
       <div>
@@ -205,7 +207,7 @@ const mapStateToProps = (state) => {
   const eventFetching = state.event.isFetching;
   const getLocaleText = textObject => getLocaleString(state, textObject);
   const map = state.mapRef.leafletElement;
-  const { navigator, settings } = state;
+  const { navigator } = state;
   return {
     unit,
     eventsData,
@@ -213,7 +215,6 @@ const mapStateToProps = (state) => {
     getLocaleText,
     map,
     navigator,
-    settings,
   };
 };
 
@@ -235,7 +236,6 @@ UnitView.propTypes = {
   getLocaleText: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
-  settings: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 UnitView.defaultProps = {

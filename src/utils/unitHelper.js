@@ -81,7 +81,21 @@ class UnitHelper {
     this.accessibilityColors[this.getMarkerType(count)]
   )
 
+  static getDefaultIcon = (isStraight) => {
+    let iconIndex = 2;
+    if (!isStraight) {
+      iconIndex = Math.floor(Math.random() * 5);
+    }
+
+    const icon = this.markerIcons.default[iconIndex];
+
+    return icon;
+  }
+
   static getIcon = (unit, settings, isStraight = false) => {
+    if (!isClient()) {
+      return null;
+    }
     const shortcomingCount = this.getShortcomingCount(unit, settings);
     const markerType = this.getMarkerType(shortcomingCount);
 

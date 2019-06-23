@@ -51,7 +51,7 @@ class MapContainer extends React.Component {
 
   render() {
     const {
-      mapType, navigator, districts, highlightedUnit, getLocaleText, currentPage, unitList, serviceUnits, unitsLoading, isMobile, intl,
+      mapType, navigator, districts, highlightedUnit, getLocaleText, currentPage, unitList, serviceUnits, unitsLoading, isMobile, intl, settings,
     } = this.props;
     const { initialMap, transitStops } = this.state;
 
@@ -111,6 +111,7 @@ class MapContainer extends React.Component {
             getLocaleText={textObject => getLocaleText(textObject)}
           // TODO: think about better styling location for map
             style={{ height: '100%', flex: '1 0 auto' }}
+            settings={settings}
           />
         </>
       );
@@ -120,7 +121,7 @@ class MapContainer extends React.Component {
 }
 // Listen to redux state
 const mapStateToProps = (state) => {
-  const { units, navigator } = state;
+  const { units, navigator, settings } = state;
   const { data } = units;
   const unitsLoading = state.service.isFetching;
   const serviceUnits = state.service.units;
@@ -141,6 +142,7 @@ const mapStateToProps = (state) => {
     serviceUnits,
     unitsLoading,
     currentPage,
+    settings,
     // unitList,
   };
 };
@@ -167,6 +169,7 @@ MapContainer.propTypes = {
   setMapRef: PropTypes.func.isRequired,
   isMobile: PropTypes.bool,
   intl: intlShape.isRequired,
+  settings: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 MapContainer.defaultProps = {

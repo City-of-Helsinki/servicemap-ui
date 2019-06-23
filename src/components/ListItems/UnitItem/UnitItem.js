@@ -8,15 +8,18 @@ import { getLocaleString } from '../../../redux/selectors/locale';
 import { changeSelectedUnit } from '../../../redux/actions/selectedUnit';
 import ResultItem from '../ResultItem';
 import SettingsUtility from '../../../utils/settings';
+import UnitIcon from '../../SMIcon/UnitIcon';
 
 class UnitItem extends React.Component {
   state = {
-    icon: <img alt="" src={null} style={{ height: 24 }} aria-hidden="true" />,
-  };
+    didMount: false,
+  }
 
   componentDidMount() {
-    const { unit, settings } = this.props;
-    this.setState({ icon: <img alt="" src={UnitHelper.getIcon(unit, settings, true)} style={{ height: 24 }} aria-hidden="true" /> });
+    // Set didMount on client side to avoid ssr-client difference errors
+    this.setState({
+      didMount: true,
+    });
   }
 
   parseAccessibilityText() {
@@ -51,9 +54,9 @@ class UnitItem extends React.Component {
     if (!UnitHelper.isValidUnit(unit)) {
       return null;
     }
+    const { didMount } = this.state;
 
-    // Get icon
-    const { icon } = this.state;
+    const icon = didMount ? <UnitIcon unit={unit} /> : null;
 
     // Parse unit data
     const {
