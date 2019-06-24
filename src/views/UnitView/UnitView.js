@@ -27,7 +27,6 @@ import Description from './components/Description';
 import Services from './components/Services';
 import Events from './components/Events';
 import ServiceMapButton from '../../components/ServiceMapButton';
-import UnitHelper from '../../utils/unitHelper';
 import UnitIcon from '../../components/SMIcon/UnitIcon';
 
 class UnitView extends React.Component {

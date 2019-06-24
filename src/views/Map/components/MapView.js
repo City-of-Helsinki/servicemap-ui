@@ -226,6 +226,15 @@ class MapView extends React.Component {
             navigator={navigator}
             mapType={mapType}
           />
+
+          {unitGeometry ? (
+            <Polyline
+              positions={[
+                unitGeometry,
+              ]}
+              color="#ff8400"
+            />
+          ) : null}
           {highlightedDistrict ? (
             <Polygon
               positions={[
