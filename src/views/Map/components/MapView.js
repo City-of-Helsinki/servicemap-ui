@@ -176,7 +176,6 @@ class MapView extends React.Component {
       // districtList,
       unitGeometry,
       style,
-      navigator,
       getLocaleText,
       mobile,
       settings,
@@ -223,7 +222,6 @@ class MapView extends React.Component {
           <UnitMarkers
             data={unitList}
             Marker={Marker}
-            navigator={navigator}
             mapType={mapType}
           />
 
@@ -344,7 +342,6 @@ MapView.propTypes = {
   // districtList: PropTypes.arrayOf(PropTypes.object),
   mapOptions: PropTypes.objectOf(PropTypes.any),
   unitGeometry: PropTypes.arrayOf(PropTypes.any),
-  navigator: PropTypes.objectOf(PropTypes.any),
   getLocaleText: PropTypes.func.isRequired,
   saveMapRef: PropTypes.func.isRequired,
   mobile: PropTypes.bool,
@@ -357,7 +354,6 @@ MapView.defaultProps = {
   mapType: {},
   mapOptions: {},
   unitGeometry: null,
-  navigator: null,
   unitList: [],
   // districtList: [],
   mobile: false,

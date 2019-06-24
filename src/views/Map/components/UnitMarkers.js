@@ -32,7 +32,7 @@ class UnitMarkers extends React.Component {
                 icon={drawMarkerIcon(unit, settings)}
                 onClick={() => {
                   if (navigator) {
-                    navigator.push('unit', unit.id);
+                    navigator.push('unit', { id: unit.id });
                   }
                 }}
                 keyboard={false}
@@ -55,8 +55,9 @@ UnitMarkers.propTypes = {
 
 // Listen to redux state
 const mapStateToProps = (state) => {
-  const { settings } = state;
+  const { navigator, settings } = state;
   return {
+    navigator,
     settings,
   };
 };
