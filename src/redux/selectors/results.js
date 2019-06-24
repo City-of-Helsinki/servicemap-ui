@@ -22,7 +22,8 @@ export const getOrderedData = (state, data, direction, order) => {
     }
     // Ordering based on match score
     case 'match': {
-      results.sort((a, b) => (direction === 'asc' ? a.score - b.score : b.score - a.score));
+      // Using sort_index with assumption that default sort from API is relevance
+      results.sort((a, b) => (direction === 'asc' ? b.sort_index - a.sort_index : a.sort_index - b.sort_index));
       break;
     }
     default:
