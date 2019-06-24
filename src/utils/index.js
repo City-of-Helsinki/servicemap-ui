@@ -92,5 +92,24 @@ export const AddEventListener = (elem, event, handler) => {
   }
 };
 
+export const valuesHaveChanged = (obj1, obj2, keys = []) => {
+  let hasChanged = false;
+
+  keys.forEach((key) => {
+    if (hasChanged) return;
+
+    if (
+      Object.prototype.hasOwnProperty.call(obj1, key)
+      && Object.prototype.hasOwnProperty.call(obj2, key)
+    ) {
+      if (obj1[key] !== obj2[key]) {
+        hasChanged = true;
+      }
+    }
+  });
+
+  return hasChanged;
+};
+
 
 export default isClient;

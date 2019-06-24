@@ -51,7 +51,7 @@ class MapContainer extends React.Component {
 
   render() {
     const {
-      mapType, navigator, districts, highlightedUnit, getLocaleText, currentPage, unitList, serviceUnits, unitsLoading, isMobile, intl,
+      mapType, districts, highlightedUnit, getLocaleText, currentPage, unitList, serviceUnits, unitsLoading, isMobile, intl, settings,
     } = this.props;
     const { initialMap, transitStops } = this.state;
 
@@ -104,13 +104,13 @@ class MapContainer extends React.Component {
             saveMapRef={this.saveMapRef}
             mapOptions={mapOptions}
             mobile={isMobile}
-            navigator={navigator}
             fetchTransitStops={this.fetchTransitStops}
             clearTransitStops={this.clearTransitStops}
             transitStops={transitStops}
             getLocaleText={textObject => getLocaleText(textObject)}
           // TODO: think about better styling location for map
             style={{ height: '100%', flex: '1 0 auto' }}
+            settings={settings}
           />
         </>
       );
@@ -120,7 +120,7 @@ class MapContainer extends React.Component {
 }
 // Listen to redux state
 const mapStateToProps = (state) => {
-  const { units, navigator } = state;
+  const { units, settings } = state;
   const { data } = units;
   const unitsLoading = state.service.isFetching;
   const serviceUnits = state.service.units;
@@ -132,7 +132,6 @@ const mapStateToProps = (state) => {
   // const unitList = getUnitList(state);
   return {
     mapType,
-    navigator,
     districts,
     state,
     highlightedUnit,
@@ -141,6 +140,7 @@ const mapStateToProps = (state) => {
     serviceUnits,
     unitsLoading,
     currentPage,
+    settings,
     // unitList,
   };
 };
@@ -155,7 +155,6 @@ export default injectIntl(connect(
 // Typechecking
 MapContainer.propTypes = {
   mapType: PropTypes.oneOfType([PropTypes.objectOf(PropTypes.any), PropTypes.string]),
-  navigator: PropTypes.objectOf(PropTypes.any),
   unitList: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.array])),
   serviceUnits: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   unitsLoading: PropTypes.bool,
@@ -167,11 +166,11 @@ MapContainer.propTypes = {
   setMapRef: PropTypes.func.isRequired,
   isMobile: PropTypes.bool,
   intl: intlShape.isRequired,
+  settings: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 MapContainer.defaultProps = {
   mapType: '',
-  navigator: null,
   unitList: [],
   serviceUnits: [],
   unitsLoading: false,

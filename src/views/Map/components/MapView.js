@@ -7,6 +7,7 @@ import { withStyles } from '@material-ui/core';
 import TransitStopInfo from './TransitStopInfo';
 import { drawMarkerIcon } from '../utils/drawIcon';
 import { fetchStops } from '../utils/transitFetch';
+import UnitMarkers from './UnitMarkers';
 
 const transitIconSize = 30;
 
@@ -175,9 +176,9 @@ class MapView extends React.Component {
       // districtList,
       unitGeometry,
       style,
-      navigator,
       getLocaleText,
       mobile,
+      settings,
     } = this.props;
     const {
       Map,
@@ -191,7 +192,6 @@ class MapView extends React.Component {
       transitStops,
     } = this.state;
 
-    const unitListFiltered = unitList.filter(unit => unit.object_type === 'unit');
     const zoomLevel = mobile ? mapType.options.mobileZoom : mapType.options.zoom;
 
     if (Map) {
@@ -219,25 +219,12 @@ class MapView extends React.Component {
             url={mapType.options.url}
             attribution='&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors'
           />
-          {unitListFiltered.map((unit) => {
-            // Show markers with location
-            if (unit && unit.location) {
-              return (
-                <Marker
-                  className="unitMarker"
-                  key={unit.id}
-                  position={[unit.location.coordinates[1], unit.location.coordinates[0]]}
-                  icon={drawMarkerIcon(unit, mapType.options.name)}
-                  onClick={() => {
-                    if (navigator) {
-                      navigator.push('unit', { id: unit.id });
-                    }
-                  }}
-                  keyboard={false}
-                />
-              );
-            } return null;
-          })}
+          <UnitMarkers
+            data={unitList}
+            Marker={Marker}
+            mapType={mapType}
+          />
+
           {unitGeometry ? (
             <Polyline
               positions={[
@@ -262,7 +249,7 @@ class MapView extends React.Component {
                 highlightedDistrict.unit.location.coordinates[1],
                 highlightedDistrict.unit.location.coordinates[0],
               ]}
-              icon={drawMarkerIcon(highlightedDistrict.unit, mapType.options.name)}
+              icon={drawMarkerIcon(highlightedDistrict.unit, settings)}
               keyboard={false}
             >
               <Popup autoPan={false}>
@@ -355,11 +342,11 @@ MapView.propTypes = {
   // districtList: PropTypes.arrayOf(PropTypes.object),
   mapOptions: PropTypes.objectOf(PropTypes.any),
   unitGeometry: PropTypes.arrayOf(PropTypes.any),
-  navigator: PropTypes.objectOf(PropTypes.any),
   getLocaleText: PropTypes.func.isRequired,
   saveMapRef: PropTypes.func.isRequired,
   mobile: PropTypes.bool,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
+  settings: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 MapView.defaultProps = {
@@ -367,7 +354,6 @@ MapView.defaultProps = {
   mapType: {},
   mapOptions: {},
   unitGeometry: null,
-  navigator: null,
   unitList: [],
   // districtList: [],
   mobile: false,

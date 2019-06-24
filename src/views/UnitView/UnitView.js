@@ -10,8 +10,6 @@ import { fetchSelectedUnit, changeSelectedUnit } from '../../redux/actions/selec
 import { getSelectedUnit } from '../../redux/selectors/selectedUnit';
 import { getLocaleString } from '../../redux/selectors/locale';
 import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
-import { drawIcon } from '../Map/utils/drawIcon';
-
 import SearchBar from '../../components/SearchBar';
 import { focusUnit, focusDistrict } from '../Map/utils/mapActions';
 import styles from './styles/styles';
@@ -29,14 +27,15 @@ import Description from './components/Description';
 import Services from './components/Services';
 import Events from './components/Events';
 import ServiceMapButton from '../../components/ServiceMapButton';
+import UnitIcon from '../../components/SMIcon/UnitIcon';
 
 class UnitView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       centered: false,
-      icon: null,
       reservations: null,
+      didMount: false,
     };
   }
 
@@ -47,7 +46,7 @@ class UnitView extends React.Component {
     const { params } = match;
 
     this.setState({
-      icon: <img alt="" src={drawIcon({ id: params.unit }, null, true)} style={{ height: 24 }} />,
+      didMount: true,
     });
 
     if (params && params.unit) {
@@ -90,9 +89,10 @@ class UnitView extends React.Component {
     const {
       classes, getLocaleText, intl, unit, eventsData, navigator,
     } = this.props;
-    const { icon, reservations } = this.state;
+    const { didMount, reservations } = this.state;
 
     const title = unit && unit.name ? getLocaleText(unit.name) : '';
+    const icon = didMount && unit ? <UnitIcon unit={unit} /> : null;
 
     const TopBar = (
       <div>

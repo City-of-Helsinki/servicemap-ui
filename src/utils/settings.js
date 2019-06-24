@@ -73,6 +73,32 @@ class SettingsUtility {
 
     return settings;
   }
+
+  // Parse current accessibility settings to single shortcoming array
+  static parseShortcomingSettings(settings) {
+    if (!settings) {
+      return null;
+    }
+    const data = [];
+    const { mobility } = settings;
+    if (typeof mobility === 'string') {
+      data.push(mobility);
+    }
+
+    this.accessibilityImpairmentKeys.forEach((key) => {
+      if (Object.prototype.hasOwnProperty.call(settings, key) && settings[key]) {
+        data.push(ACCESSIBILITY_MAPPING[key]);
+      }
+    });
+
+    return data;
+  }
+
+  // Check accessibility settings have been activated
+  static hasActiveAccessibilitySettings(settings) {
+    const activeSettings = this.parseShortcomingSettings(settings);
+    return activeSettings && activeSettings.length;
+  }
 }
 
 export default SettingsUtility;
