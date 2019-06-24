@@ -92,7 +92,7 @@ class UnitView extends React.Component {
     const { didMount, reservations } = this.state;
 
     const title = unit && unit.name ? getLocaleText(unit.name) : '';
-    const icon = didMount ? <UnitIcon unit={unit} /> : null;
+    const icon = didMount && unit ? <UnitIcon unit={unit} /> : null;
 
     const TopBar = (
       <div>
