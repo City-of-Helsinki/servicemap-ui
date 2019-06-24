@@ -8,7 +8,7 @@ import ServiceView from '../ServiceView';
 import EventDetailView from '../EventDetailView';
 import MobileMapView from '../MobileMapView';
 import ViewTitle from '../components/ViewTitle/ViewTitle';
-import UnitEventsView from '../UnitView/UnitEventsView';
+import UnitFullListView from '../UnitView/UnitFullListView';
 import PageHandler from '../components/PageHandler';
 
 const TitleWrapper = ({ children, messageId }) => (
@@ -65,10 +65,10 @@ const Unit = () => (
   </TitleWrapper>
 );
 
-const UnitEvents = () => (
-  <TitleWrapper messageId="general.pageTitles.eventList">
-    <PageWrapper headMsgId="event.title" page="eventList">
-      <UnitEventsView />
+const UnitFullList = () => (
+  <TitleWrapper messageId="general.pageTitles.list.">
+    <PageWrapper headMsgId="" page="fullList">
+      <UnitFullListView />
     </PageWrapper>
   </TitleWrapper>
 );
@@ -101,7 +101,7 @@ class Sidebar extends React.Component {
       <div className="Sidebar" style={{ height: '100%' }}>
         <Switch>
           <Route exact path="/:lng/unit/:unit" component={Unit} />
-          <Route path="/:lng/unit/:unit/events" component={UnitEvents} />
+          <Route path="/:lng/unit/:unit/:type" component={UnitFullList} />
           <Route path="/:lng/search" component={Search} />
           <Route path="/:lng/service/:service" component={Service} />
           <Route path="/:lng/event/:event" component={Event} />

@@ -16,5 +16,8 @@ export default {
   "events": {
     "api_url": "https://api.hel.fi/linkedevents/v1/"
   },
+  "reservations": {
+    "api_url": "https://api.hel.fi/respa/v1/"
+  },
   "default_locale": 'fi',
 }

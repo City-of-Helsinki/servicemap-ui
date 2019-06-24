@@ -5,16 +5,14 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
-import {
-  AccessTime, Phone, LocationOn, Event,
-} from '@material-ui/icons';
+import { AccessTime, Phone, Event } from '@material-ui/icons';
 import { changeSelectedEvent } from '../../redux/actions/event';
 import DescriptionText from '../../components/DescriptionText';
 import SearchBar from '../../components/SearchBar';
 import TitleBar from '../../components/TitleBar/TitleBar';
 import { DesktopComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import SimpleListItem from '../../components/ListItems/SimpleListItem';
-import ResultItem from '../../components/ListItems/ResultItem';
+import UnitItem from '../../components/ListItems/UnitItem';
 import TitledList from '../../components/Lists/TitledList';
 
 class EventDetailView extends React.Component {
@@ -66,6 +64,7 @@ class EventDetailView extends React.Component {
     if (event) {
       const description = event.description || event.short_description;
       const unit = event.location;
+      unit.object_type = 'unit';
       const phoneNumber = unit.telephone ? getLocaleText(unit.telephone) : null;
       const time = this.formatDate(event);
       return (
@@ -93,13 +92,10 @@ class EventDetailView extends React.Component {
               srText={intl.formatMessage({ id: 'event.time' })}
               divider
             />
-            <ResultItem
+            <UnitItem
               key="unitInfo"
-              icon={<LocationOn />}
-              title={getLocaleText(unit.name)}
-              subtitle={intl.formatMessage({ id: 'unit' })}
-              onClick={(e) => {
-                e.preventDefault();
+              unit={unit}
+              onClick={() => {
                 if (navigator) {
                   // Event database precedes unit id with tprek:
                   navigator.push('unit', { id: unit.id.split(':').pop() });

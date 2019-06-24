@@ -67,4 +67,8 @@ export default theme => ({
     objectFit: 'contain',
     backgroundColor: 'rgba(0,0,0,0.15)',
   },
+  fullListContent: {
+    height: '100%',
+    overflow: 'auto',
+  },
 });

@@ -7,7 +7,6 @@ import { getLocaleString } from '../../../redux/selectors/locale';
 import { changeSelectedEvent } from '../../../redux/actions/event';
 import TitledList from '../../../components/Lists/TitledList';
 import ResultItem from '../../../components/ListItems/ResultItem';
-import ServiceMapButton from '../../../components/ServiceMapButton/ServiceMapButton';
 
 const formatEventDate = (event, intl) => {
   const timeString = intl.formatMessage({ id: 'general.time.short' });
@@ -33,55 +32,46 @@ const formatEventDate = (event, intl) => {
 };
 
 const Events = ({
-  unit, eventsData, fullList, navigator, getLocaleText, intl, changeSelectedEvent,
+  unit, eventsData, navigator, getLocaleText, intl, changeSelectedEvent, listLength,
 }) => {
   const { events } = eventsData;
-  if (events && events.length > 0) {
-    let eventList = events;
-    if (!fullList && events.length > 5) {
-      eventList = events.slice(0, 5);
-    }
-    if (unit && eventsData.unit === unit.id) {
-      return (
-        <>
-          <TitledList
-            title={<FormattedMessage id="unit.events" />}
-            titleComponent="h4"
-          >
-            {eventList.map((event) => {
-              const dateString = formatEventDate(event, intl);
-              return (
-                <ResultItem
-                  key={event.id}
-                  icon={<Event />}
-                  title={getLocaleText(event.name)}
-                  subtitle={dateString}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    if (navigator) {
-                      changeSelectedEvent(event);
-                      navigator.push('event', event.id);
-                    }
-                  }}
-                />
-              );
-            })}
-          </TitledList>
-          { !fullList && events.length > 5 && (
-          <ServiceMapButton
-            onClick={(e) => {
+  if (unit && events && events.length > 0 && eventsData.unit === unit.id) {
+    return (
+      <>
+        <TitledList
+          title={<FormattedMessage id="unit.events" />}
+          titleComponent="h4"
+          listLength={listLength}
+          buttonText={<FormattedMessage id="unit.more.events" values={{ count: events.length }} />}
+          showMoreOnClick={listLength
+            ? (e) => {
               e.preventDefault();
               if (navigator) {
-                navigator.push('unitEvents', unit.id);
+                navigator.push('unit', { id: unit.id, type: 'events' });
               }
-            }}
-          >
-            <FormattedMessage id="event.more" values={{ count: events.length }} />
-          </ServiceMapButton>
-          )}
-        </>
-      );
-    }
+            } : null}
+        >
+          {events.map((event) => {
+            const dateString = formatEventDate(event, intl);
+            return (
+              <ResultItem
+                key={event.id}
+                icon={<Event />}
+                title={getLocaleText(event.name)}
+                subtitle={dateString}
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (navigator) {
+                    changeSelectedEvent(event);
+                    navigator.push('event', event.id);
+                  }
+                }}
+              />
+            );
+          })}
+        </TitledList>
+      </>
+    );
   } return (
     null
   );
@@ -101,7 +91,7 @@ const mapStateToProps = (state) => {
 Events.propTypes = {
   eventsData: PropTypes.objectOf(PropTypes.any),
   unit: PropTypes.objectOf(PropTypes.any),
-  fullList: PropTypes.bool,
+  listLength: PropTypes.number,
   getLocaleText: PropTypes.func.isRequired,
   changeSelectedEvent: PropTypes.func.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
@@ -111,8 +101,8 @@ Events.propTypes = {
 Events.defaultProps = {
   eventsData: { events: null, unit: null },
   unit: null,
-  fullList: false,
   navigator: null,
+  listLength: null,
 };
 
 export default injectIntl(connect(
