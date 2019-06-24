@@ -46,10 +46,11 @@ const drawBerry = (ctx, center, color) => {
   ctx.stroke();
   ctx.globalCompositeOperation = oldComposite;
   ctx.closePath();
+  // Light border
   ctx.beginPath();
-  ctx.arc(...center, berryDefaults.radius * ratio - 1, 0, 2 * Math.PI);
+  ctx.arc(...center, berryDefaults.radius * ratio, 0, 2 * Math.PI);
   ctx.strokeStyle = '#fcf7f5';
-  ctx.lineWidth = 1;
+  ctx.lineWidth = 3;
   ctx.stroke();
   ctx.closePath();
 };
