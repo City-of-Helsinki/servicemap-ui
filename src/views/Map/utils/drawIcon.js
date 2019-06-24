@@ -1,6 +1,6 @@
 import UnitHelper from '../../../utils/unitHelper';
 
-// This class draws the marker icon into canvas and returns it as png
+// Functions draw the marker icon into canvas and returns it as png
 
 // Constants
 const referenceLength = 4500;

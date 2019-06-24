@@ -7,6 +7,7 @@ import { withStyles } from '@material-ui/core';
 import TransitStopInfo from './TransitStopInfo';
 import { drawMarkerIcon } from '../utils/drawIcon';
 import { fetchStops } from '../utils/transitFetch';
+import UnitMarkers from './UnitMarkers';
 
 const transitIconSize = 30;
 
@@ -178,6 +179,7 @@ class MapView extends React.Component {
       navigator,
       getLocaleText,
       mobile,
+      settings,
     } = this.props;
     const {
       Map,
@@ -191,7 +193,6 @@ class MapView extends React.Component {
       transitStops,
     } = this.state;
 
-    const unitListFiltered = unitList.filter(unit => unit.object_type === 'unit');
     const zoomLevel = mobile ? mapType.options.mobileZoom : mapType.options.zoom;
 
     if (Map) {
@@ -219,33 +220,12 @@ class MapView extends React.Component {
             url={mapType.options.url}
             attribution='&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors'
           />
-          {unitListFiltered.map((unit) => {
-            // Show markers with location
-            if (unit && unit.location) {
-              return (
-                <Marker
-                  className="unitMarker"
-                  key={unit.id}
-                  position={[unit.location.coordinates[1], unit.location.coordinates[0]]}
-                  icon={drawMarkerIcon(unit, mapType.options.name)}
-                  onClick={() => {
-                    if (navigator) {
-                      navigator.push('unit', { id: unit.id });
-                    }
-                  }}
-                  keyboard={false}
-                />
-              );
-            } return null;
-          })}
-          {unitGeometry ? (
-            <Polyline
-              positions={[
-                unitGeometry,
-              ]}
-              color="#ff8400"
-            />
-          ) : null}
+          <UnitMarkers
+            data={unitList}
+            Marker={Marker}
+            navigator={navigator}
+            mapType={mapType}
+          />
           {highlightedDistrict ? (
             <Polygon
               positions={[
@@ -262,7 +242,7 @@ class MapView extends React.Component {
                 highlightedDistrict.unit.location.coordinates[1],
                 highlightedDistrict.unit.location.coordinates[0],
               ]}
-              icon={drawMarkerIcon(highlightedDistrict.unit, mapType.options.name)}
+              icon={drawMarkerIcon(highlightedDistrict.unit, settings)}
               keyboard={false}
             >
               <Popup autoPan={false}>
@@ -360,6 +340,7 @@ MapView.propTypes = {
   saveMapRef: PropTypes.func.isRequired,
   mobile: PropTypes.bool,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
+  settings: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 MapView.defaultProps = {
