@@ -1,22 +1,20 @@
 import { withStyles } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { getOrderedData } from '../../../redux/selectors/results';
+import { setDirection, setOrder } from '../../../redux/actions/sort';
 import ResultOrderer from './ResultOrderer';
 import styles from './styles';
 
 // Listen to redux state
 const mapStateToProps = (state) => {
-  const orderingFunction = (data, order, direction) => {
-    const orderedData = getOrderedData(state, data, order, direction);
-    return orderedData;
-  };
+  const { direction, order } = state.sort;
 
   return {
-    orderingFunction,
+    direction,
+    order,
   };
 };
 
 export default withStyles(styles)(connect(
   mapStateToProps,
-  null,
+  { setDirection, setOrder },
 )(ResultOrderer));
