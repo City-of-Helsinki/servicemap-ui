@@ -14,7 +14,10 @@ export default theme => ({
   list: {
     paddingLeft: theme.spacing.unit * 3,
   },
-  noShortcomingsIcon: {
+  noInfoColor: {
+    color: config.accessibility_colors.missing_info,
+  },
+  noShortcomingsColor: {
     color: config.accessibility_colors.default,
   },
   title: {

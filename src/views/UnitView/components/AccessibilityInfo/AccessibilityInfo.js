@@ -295,29 +295,33 @@ class AccessibilityInfo extends React.Component {
   renderInfoText(noInfo, noShortcomings) {
     const { classes } = this.props;
 
-    if (!noInfo && !noShortcomings) {
-      return null;
+    if (noInfo) {
+      return (
+        <ListItem component="div">
+          <ListItemIcon>
+            <Warning className={classes.noInfoColor} />
+          </ListItemIcon>
+          <Typography component="p" variant="body2" align="left">
+            <FormattedMessage id="unit.accessibility.noInfo" />
+          </Typography>
+        </ListItem>
+      );
     }
 
-    return (
-      <ListItem component="div">
-        <ListItemIcon>
-          <VerifiedUser className={classes.noShortcomingsIcon} />
-        </ListItemIcon>
-        <Typography component="p" variant="body2" align="left">
-          {
-            noInfo
-            && <FormattedMessage id="unit.accessibility.noInfo" />
-          }
-          {
-            noShortcomings
-            && (
-              <FormattedMessage id="unit.accessibility.noShortcomings" />
-            )
-          }
-        </Typography>
-      </ListItem>
-    );
+    if (noShortcomings) {
+      return (
+        <ListItem component="div">
+          <ListItemIcon>
+            <VerifiedUser className={classes.noShortcomingsColor} />
+          </ListItemIcon>
+          <Typography component="p" variant="body2" align="left">
+            <FormattedMessage id="unit.accessibility.noShortcomings" />
+          </Typography>
+        </ListItem>
+      );
+    }
+
+    return null;
   }
 
   render() {
