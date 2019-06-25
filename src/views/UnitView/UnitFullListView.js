@@ -6,7 +6,6 @@ import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core';
 import { fetchUnitEvents } from '../../redux/actions/event';
 import { DesktopComponent } from '../../layouts/WrapperComponents/WrapperComponents';
-import { drawIcon } from '../Map/utils/drawIcon';
 import fetchUnitReservations from './utils/fetchUnitReservations';
 import TitleBar from '../../components/TitleBar/TitleBar';
 import SearchBar from '../../components/SearchBar';
@@ -16,6 +15,7 @@ import Services from './components/Services';
 import Reservations from './components/Reservations';
 import styles from './styles/styles';
 import HeadModifier from '../../utils/headModifier';
+import UnitIcon from '../../components/SMIcon/UnitIcon';
 
 class UnitFullListView extends React.Component {
   constructor(props) {
@@ -60,7 +60,7 @@ class UnitFullListView extends React.Component {
       }
 
       this.setState({
-        icon: <img alt="" src={drawIcon({ id: unit.id }, null, true)} style={{ height: 24 }} />,
+        icon: <UnitIcon unit={unit} />,
       });
     }
   }
