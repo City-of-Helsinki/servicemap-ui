@@ -97,7 +97,7 @@ class Services extends React.Component {
           showMoreOnClick={showMoreOnClick}
         >
           {serviceList.map(service => (
-            <ServiceItem key={service.id} service={service} />
+            <ServiceItem key={`${service.id}-${service.clarification ? service.clarification.fi : ''}`} service={service} />
           ))}
         </TitledList>
         )}
@@ -115,7 +115,7 @@ class Services extends React.Component {
             {subjectList.map((service) => {
               if (service.period && `${service.period[0]}–${service.period[1]}` === period) {
                 return (
-                  <ServiceItem key={service.id} service={service} />
+                  <ServiceItem key={`${service.id}-${service.clarification ? service.clarification.fi : ''}`} service={service} />
                 );
               }
               return null;
