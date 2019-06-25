@@ -84,6 +84,7 @@ export default {
   // Units
   'unit': 'Toimipiste',
   'unit.accessibility.noInfo': 'Ei esteettömyystietoja',
+  'unit.accessibility.noShortcomings': 'Ei tiedossa olevia puutteita',
   'unit.accessibility.ok': 'Esteetön',
   'unit.accessibility.problems': `{count, plural,
                                     =0 {Esteetön}

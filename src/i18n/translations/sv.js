@@ -83,6 +83,7 @@ export default {
   // Units
   'unit': 'Verksamhetsställe',
   'unit.accessibility.noInfo': 'Inga uppgifter', // TODO: Verify
+  'unit.accessibility.noShortcomings': 'Inga kända brister', // TODO: verify
   'unit.accessibility.ok': 'Inga kända brister', // TODO: Verify
   'unit.accessibility.problems': `{count, plural,
                                     =0 {Inga kända brister}

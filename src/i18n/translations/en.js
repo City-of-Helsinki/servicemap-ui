@@ -84,6 +84,7 @@ export default {
   // Unit
   'unit': 'Unit',
   'unit.accessibility.noInfo': 'No accessibility information', // TODO: verify
+  'unit.accessibility.noShortcomings': 'No accessibility shortcomings', // TODO: verify
   'unit.accessibility.ok': 'No accessibility shortcomings', // TODO: verify
   'unit.accessibility.problems': `{count, plural,
                                     =0 {No accessibility shortcomings}
