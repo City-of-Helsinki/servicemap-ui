@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import SearchView from './SearchView';
-import { fetchUnits, setNewSearchData } from '../../redux/actions/unit';
+import { fetchUnits } from '../../redux/actions/unit';
 import { changeSelectedUnit } from '../../redux/actions/selectedUnit';
 import { getOrderedData } from '../../redux/selectors/results';
 
@@ -27,6 +27,6 @@ const mapStateToProps = (state) => {
 export default connect(
   mapStateToProps,
   {
-    fetchUnits, changeSelectedUnit, setNewSearchData,
+    fetchUnits, changeSelectedUnit,
   },
 )(SearchView);

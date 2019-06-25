@@ -119,7 +119,7 @@ class TabLists extends React.Component {
 
 
   render() {
-    const { data, sortCallback, intl } = this.props;
+    const { data, intl } = this.props;
     const { currentPage, tabIndex } = this.state;
 
     let fullData = [];
@@ -133,7 +133,7 @@ class TabLists extends React.Component {
 
     return (
       <>
-        <ResultOrderer data={fullData} sortCallback={sortCallback} />
+        <ResultOrderer data={fullData} />
         <Tabs
           value={tabIndex}
           onChange={this.handleTabChange}
@@ -220,7 +220,6 @@ TabLists.propTypes = {
     data: PropTypes.array,
     itemsPerPage: PropTypes.number,
   })).isRequired,
-  sortCallback: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
