@@ -28,9 +28,10 @@ class TopBar extends React.Component {
 
           setTimeout(() => {
             const button = document.getElementById('SettingsButton');
-            const title = document.getElementsByClassName('SettingsContent')[0];
-            if (title) {
-              title.firstChild.focus();
+            const settings = document.getElementsByClassName('SettingsContent')[0];
+            if (settings) {
+              // Focus on settings title
+              settings.firstChild.focus();
             } else {
               button.focus();
             }
