@@ -1,9 +1,9 @@
 /* eslint-disable no-underscore-dangle */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import {
-  MenuItem, FormControl, InputLabel, Select,
+  FormControl, InputLabel, Select,
 } from '@material-ui/core';
 
 const allowedDirections = [
@@ -36,22 +36,25 @@ class ResultOrderer extends React.Component {
   };
 
   render() {
-    const { classes, direction, order } = this.props;
+    const {
+      classes, direction, intl, order,
+    } = this.props;
     return (
       <form className={`${classes.root} ${classes.primaryColor}`} autoComplete="off">
         <FormControl className={classes.formControl}>
           <InputLabel htmlFor="result-sorter"><FormattedMessage id="sorting.label" /></InputLabel>
           <Select
+            native
             value={`${order}-${direction}`}
             onChange={this.handleChange}
             inputProps={{
-              name: 'sorter',
+              name: 'result-sorter',
               id: 'result-sorter',
             }}
           >
-            <MenuItem value="match-desc"><FormattedMessage id="sorting.match.desc" /></MenuItem>
-            <MenuItem value="alphabetical-desc"><FormattedMessage id="sorting.alphabetical.desc" /></MenuItem>
-            <MenuItem value="alphabetical-asc"><FormattedMessage id="sorting.alphabetical.asc" /></MenuItem>
+            <option value="match-desc">{intl.formatMessage({ id: 'sorting.match.desc' })}</option>
+            <option value="alphabetical-desc">{intl.formatMessage({ id: 'sorting.alphabetical.desc' })}</option>
+            <option value="alphabetical-asc">{intl.formatMessage({ id: 'sorting.alphabetical.asc' })}</option>
           </Select>
         </FormControl>
       </form>
@@ -62,9 +65,10 @@ class ResultOrderer extends React.Component {
 ResultOrderer.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   direction: PropTypes.oneOf(allowedDirections).isRequired,
+  intl: intlShape.isRequired,
   order: PropTypes.oneOf(allowedOrders).isRequired,
   setDirection: PropTypes.func.isRequired,
   setOrder: PropTypes.func.isRequired,
 };
 
-export default ResultOrderer;
+export default injectIntl(ResultOrderer);
