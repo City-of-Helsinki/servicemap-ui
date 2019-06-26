@@ -81,7 +81,6 @@ const DefaultLayout = (props) => {
 
   // State update for function component with react hook
   const [settingsOpen, setToggle] = useState(false);
-  console.log('settings are open? ', settingsOpen);
 
   const styles = createContentStyles(
     isMobile, isSmallScreen, landscape, mobileMapOnly, fullMobileMap, settingsOpen,
@@ -100,7 +99,7 @@ const DefaultLayout = (props) => {
             </main>
           )}
         </div>
-        <div style={styles.map}>
+        <div aria-hidden tabIndex={-1} style={styles.map}>
           <MapContainer isMobile={!!isMobile} />
         </div>
       </div>

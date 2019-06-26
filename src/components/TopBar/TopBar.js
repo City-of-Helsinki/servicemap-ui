@@ -16,14 +16,25 @@ class TopBar extends React.Component {
     const { settingsOpen, toggleSettings, classes } = this.props;
     return (
       <Button
+        id="SettingsButton"
+        aria-pressed={settingsOpen}
         className={classes.button}
         classes={{ label: classes.buttonLabel }}
-        // This is used to change button active color on mobile
         style={settingsOpen ? { backgroundColor: '#4e67d2' } : null}
         color="inherit"
         onClick={(e) => {
           e.preventDefault();
           toggleSettings();
+
+          setTimeout(() => {
+            const button = document.getElementById('SettingsButton');
+            const title = document.getElementsByClassName('SettingsContent')[0];
+            if (title) {
+              title.firstChild.focus();
+            } else {
+              button.focus();
+            }
+          }, 1);
         }}
       >
         <Accessibility style={{ marginRight: 8 }} />
@@ -65,7 +76,7 @@ class TopBar extends React.Component {
 
           </div>
           <div className={classes.topNavRight}>
-            <a aria-hidden href="https://forms.gle/roe9XNrZGQWBhMBJ7" rel="noopener noreferrer" target="_blank" style={{ display: 'inline-block' }}>
+            <a href="https://forms.gle/roe9XNrZGQWBhMBJ7" rel="noopener noreferrer" target="_blank" style={{ display: 'inline-block' }}>
               <p style={{ margin: 0, color: 'white', textDecorationColor: 'white' }}>
                 <FormattedMessage id="general.give.feedback" />
               </p>
@@ -101,7 +112,6 @@ class TopBar extends React.Component {
               <Button
                 className={classes.button}
                 classes={{ label: classes.buttonLabel }}
-                // This is used to change button active color on mobile
                 style={mapPage && !settingsOpen ? { backgroundColor: '#4e67d2' } : null}
                 color="inherit"
                 onClick={(e) => {

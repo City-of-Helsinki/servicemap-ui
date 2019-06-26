@@ -161,11 +161,9 @@ class Settings extends React.Component {
    */
   toggleSettingsContainer() {
     const { toggleSettings } = this.props;
-    /*
-    TODO: Fix this
     // Focus back to settings button if container will be closed
-      this.focusToBaseElement();
-    } */
+    this.focusToBaseElement();
+
     this.setState({
       saved: false,
     });
@@ -174,10 +172,9 @@ class Settings extends React.Component {
 
   // eslint-disable-next-line class-methods-use-this
   focusToBaseElement() {
-    // TODO Make this work
-    const elem = document.getElementById(this.buttonID);
+    const elem = document.getElementById('SettingsButton');
     if (elem) {
-      elem.focus();
+      setTimeout(() => { elem.focus(); }, 1);
     }
   }
 
