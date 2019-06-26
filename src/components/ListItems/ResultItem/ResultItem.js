@@ -57,7 +57,7 @@ const styles = theme => ({
 // TODO: Complete distance calculations and related accessibility texts
 
 const ResultItem = ({
-  bottomRightText, classes, onClick, icon, subtitle, title, distancePosition,
+  bottomRightColor, bottomRightText, classes, onClick, icon, subtitle, title, distancePosition,
 }) => {
   // Distance text
   // TODO: Change to check data for distance once location info is available
@@ -65,6 +65,7 @@ const ResultItem = ({
 
   // Screen reader text
   const srText = `${title || ''} ${subtitle || ''} ${distance ? `${distance} metrin päässä` : ''} ${bottomRightText || ''}`;
+  const bottomRightStyles = { color: bottomRightColor };
 
   return (
     <>
@@ -161,6 +162,7 @@ const ResultItem = ({
                       component="p"
                       variant="caption"
                       aria-hidden="true"
+                      style={bottomRightStyles}
                     >
                       {bottomRightText}
                     </Typography>
@@ -184,6 +186,7 @@ export default withStyles(styles)(ResultItem);
 
 // Typechecking
 ResultItem.propTypes = {
+  bottomRightColor: PropTypes.string,
   bottomRightText: PropTypes.string,
   classes: PropTypes.objectOf(PropTypes.any),
   icon: PropTypes.node,
@@ -194,6 +197,7 @@ ResultItem.propTypes = {
 };
 
 ResultItem.defaultProps = {
+  bottomRightColor: null,
   bottomRightText: null,
   classes: {},
   icon: null,

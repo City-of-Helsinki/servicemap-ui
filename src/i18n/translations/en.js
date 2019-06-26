@@ -17,7 +17,6 @@ export default {
   // Event
   'event.nearby': 'Nearby events',
   'event.description': 'Description',
-  'event.more': 'Show all {count} events',
   'event.time': 'Date and time',
   'event.picture': 'Event picture',
   'event.title': 'Events',
@@ -52,7 +51,9 @@ export default {
   'general.pageTitles.unit': 'Unit view',
   'general.pageTitles.service': 'Service view',
   'general.pageTitles.event': 'Event view',
-  'general.pageTitles.eventList': 'Event list',
+  'general.pageTitles.list.services': 'Service list ',
+  'general.pageTitles.list.events': 'Event list ',
+  'general.pageTitles.list.reservations': 'Reservation list ',
   // General - Pagination
   'general.pagination.previous': 'Previous page',
   'general.pagination.next': 'Next page',
@@ -83,6 +84,7 @@ export default {
   // Unit
   'unit': 'Unit',
   'unit.accessibility.noInfo': 'No accessibility information', // TODO: verify
+  'unit.accessibility.noShortcomings': 'No accessibility shortcomings', // TODO: verify
   'unit.accessibility.ok': 'No accessibility shortcomings', // TODO: verify
   'unit.accessibility.problems': `{count, plural,
                                     =0 {No accessibility shortcomings}
@@ -95,7 +97,8 @@ export default {
 
   'unit.contact.info': 'Contact information',
   'unit.services': 'Services',
-  'unit.e.services': 'Electronic services', // TODO: verify
+  'unit.eServices': 'Electronic services', // TODO: verify
+  'unit.reservations': 'Reservations',
   'unit.events': 'Events',
   'unit.homepage': 'Home page',
   'unit.picture': 'Picture of unit: ',
@@ -108,6 +111,12 @@ export default {
   'unit.school.year': 'School year',
   'unit.opens.new.tab': '(new tab)',
   'unit.call.number': '(call)',
+  'unit.more.reservations': 'Show all {count} reservations',
+  'unit.more.services': 'Show all {count} services',
+  'unit.more.events': 'Show all {count} events',
+  'unit.list.services': 'Services',
+  'unit.list.events': 'Events',
+  'unit.list.reservations': 'Reservations',
 
   // Search
   'search': 'Search',

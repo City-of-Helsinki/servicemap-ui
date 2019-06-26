@@ -11,6 +11,9 @@ import event from './redux/reducers/event';
 import {
   colorblind, hearingAid, mobility, visuallyImpaired,
 } from './redux/reducers/settings';
+import {
+  direction, order,
+} from './redux/reducers/sort';
 
 // Export all redux reducers here
 export default combineReducers({
@@ -29,5 +32,9 @@ export default combineReducers({
     hearingAid,
     mobility,
     visuallyImpaired,
+  }),
+  sort: combineReducers({
+    direction,
+    order,
   }),
 });

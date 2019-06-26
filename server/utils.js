@@ -46,7 +46,7 @@ export const makeLanguageHandler = (req, res, next) => {
 
 // Handle unit data fetching
 export const makeUnitHandler = (req, res, next) => {
-  const pattern = /^\/(\d+)\/?$|^\/(\d+)\/events\/?$/
+  const pattern = /^\/(\d+)\/?$|^\/(\d+)\/(events|services|reservations)\/?$/
   const r = req.path.match(pattern);
   if(!r || r.length < 2) {
     res.redirect(serverConfig.url_prefix);
@@ -55,7 +55,7 @@ export const makeUnitHandler = (req, res, next) => {
 
   // Handle unit data collection from api
   const unitId = r[1] || r[2];
-  const url = `${config.unit.api_url}unit/${unitId}/?include=services&accessibility_description=true`;
+  const url = `${config.unit.api_url}unit/${unitId}/?include=services&accessibility_description=true&geometry=true`;
   let unitInfo = null;
   let context = null;
   

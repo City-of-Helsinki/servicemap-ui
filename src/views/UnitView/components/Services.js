@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, intlShape } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import TitledList from '../../../components/Lists/TitledList';
 import ServiceItem from '../../../components/ListItems/ServiceItem';
 
@@ -72,8 +72,19 @@ class Services extends React.Component {
   };
 
   render() {
-    const { intl } = this.props;
+    const {
+      intl, unit, listLength, navigator,
+    } = this.props;
     const { serviceList, periodList, subjectList } = this.state;
+
+    const showMoreOnClick = listLength
+      ? (e) => {
+        e.preventDefault();
+        if (navigator) {
+          navigator.push('unit', { id: unit.id, type: 'services' });
+        }
+      } : null;
+
     return (
       <>
         {/* Services */}
@@ -81,9 +92,12 @@ class Services extends React.Component {
         <TitledList
           title={<FormattedMessage id="unit.services" />}
           titleComponent="h4"
+          listLength={listLength}
+          buttonText={<FormattedMessage id="unit.more.services" values={{ count: unit.services.length }} />}
+          showMoreOnClick={showMoreOnClick}
         >
           {serviceList.map(service => (
-            <ServiceItem key={service.id} service={service} />
+            <ServiceItem key={`${service.id}-${service.clarification ? service.clarification.fi : ''}`} service={service} />
           ))}
         </TitledList>
         )}
@@ -94,11 +108,14 @@ class Services extends React.Component {
             key={period[0]}
             title={`${intl.formatMessage({ id: 'unit.school.year' })} ${period}`}
             titleComponent="h4"
+            listLength={listLength}
+            buttonText={<FormattedMessage id="unit.more.services" values={{ count: unit.services.length }} />}
+            showMoreOnClick={showMoreOnClick}
           >
             {subjectList.map((service) => {
               if (service.period && `${service.period[0]}–${service.period[1]}` === period) {
                 return (
-                  <ServiceItem key={service.id} service={service} />
+                  <ServiceItem key={`${service.id}-${service.clarification ? service.clarification.fi : ''}`} service={service} />
                 );
               }
               return null;
@@ -113,7 +130,14 @@ class Services extends React.Component {
 Services.propTypes = {
   unit: PropTypes.objectOf(PropTypes.any).isRequired,
   intl: intlShape.isRequired,
+  listLength: PropTypes.number,
+  navigator: PropTypes.objectOf(PropTypes.any),
   getLocaleText: PropTypes.func.isRequired,
 };
 
-export default Services;
+Services.defaultProps = {
+  listLength: null,
+  navigator: null,
+};
+
+export default injectIntl(Services);

@@ -11,8 +11,8 @@ import MapView from './components/MapView';
 import { getSelectedUnit } from '../../redux/selectors/selectedUnit';
 import { getLocaleString } from '../../redux/selectors/locale';
 import CreateMap from './utils/createMap';
+import swapCoordinates from './utils/swapCoordinates';
 import { mapOptions } from './constants/mapConstants';
-import { fetchStops } from './utils/transitFetch';
 
 import SearchBar from '../../components/SearchBar';
 import TitleBar from '../../components/TitleBar/TitleBar';
@@ -22,7 +22,6 @@ class MapContainer extends React.Component {
     super(props);
     this.state = {
       initialMap: null,
-      transitStops: [],
     };
   }
 
@@ -45,59 +44,6 @@ class MapContainer extends React.Component {
     fetchDistrictsData(position);
   }
 
-  fetchTransitStops = (bounds) => {
-    const { locale } = this.props;
-    fetchStops(bounds)
-      .then(((data) => {
-        const stops = data[0].data.stopsByBbox;
-        const subwayStations = stops.filter(stop => stop.vehicleType === 1);
-
-        // Remove subwaystations from stops list since they will be replaced with subway entrances
-        const filteredStops = stops.filter(stop => stop.vehicleType !== 1);
-
-        const entrances = data[1].results;
-
-        // Add subway entrances to the list of stops
-        entrances.forEach((entrance) => {
-          const closest = {
-            distance: null,
-            stop: null,
-          };
-          // Find the subwaystation closest to the entrance
-          subwayStations.forEach((stop) => {
-            const distance = Math.sqrt(
-              ((stop.lat - entrance.location.coordinates[1]) ** 2)
-              + ((stop.lon - entrance.location.coordinates[0]) ** 2),
-            );
-            if (!closest.distance || distance < closest.distance) {
-              closest.distance = distance;
-              closest.stop = stop;
-            }
-          });
-          // Get the same station's stop for other direction (west/east)
-          const otherStop = subwayStations.find(
-            station => station.name === closest.stop.name && station.gtfsId !== closest.stop.gtfsId,
-          );
-          // Create a new stop from the entrance, give it the stop data of the corresponding station and add it to the list of stops
-          const newStop = {
-            gtfsId: closest.stop.gtfsId,
-            secondaryId: otherStop.gtfsId,
-            lat: entrance.location.coordinates[1],
-            lon: entrance.location.coordinates[0],
-            name: entrance.name[locale],
-            patterns: closest.stop.patterns,
-            vehicleType: closest.stop.vehicleType,
-          };
-          filteredStops.push(newStop);
-        });
-        this.setState({ transitStops: filteredStops });
-      }));
-  }
-
-  clearTransitStops = () => {
-    this.setState({ transitStops: [] });
-  }
-
   saveMapRef = (ref) => {
     const { setMapRef } = this.props;
     setMapRef(ref);
@@ -105,7 +51,7 @@ class MapContainer extends React.Component {
 
   render() {
     const {
-      mapType, navigator, districts, highlightedUnit, getLocaleText, currentPage, unitList, serviceUnits, unitsLoading, isMobile, intl,
+      mapType, districts, highlightedUnit, getLocaleText, currentPage, unitList, serviceUnits, unitsLoading, isMobile, intl, settings,
     } = this.props;
     const { initialMap, transitStops } = this.state;
 
@@ -133,6 +79,7 @@ class MapContainer extends React.Component {
     );
 
     let mapUnits = [];
+    let unitGeometry = null;
 
     if (currentPage === 'search') {
       mapUnits = unitList;
@@ -144,6 +91,11 @@ class MapContainer extends React.Component {
 
     if (currentPage === 'unit' && highlightedUnit) {
       mapUnits = [highlightedUnit];
+      const { geometry } = highlightedUnit;
+      if (geometry && geometry.type === 'MultiLineString') {
+        const { coordinates } = geometry;
+        unitGeometry = swapCoordinates(coordinates);
+      }
     }
 
     if (initialMap) {
@@ -155,16 +107,17 @@ class MapContainer extends React.Component {
             mapType={mapType || initialMap}
             unitList={mapUnits}
             districtList={districts}
+            unitGeometry={unitGeometry}
             saveMapRef={this.saveMapRef}
             mapOptions={mapOptions}
             mobile={isMobile}
-            navigator={navigator}
             fetchTransitStops={this.fetchTransitStops}
             clearTransitStops={this.clearTransitStops}
             transitStops={transitStops}
             getLocaleText={textObject => getLocaleText(textObject)}
           // TODO: think about better styling location for map
             style={{ height: '100%', flex: '1 0 auto' }}
+            settings={settings}
           />
         </>
       );
@@ -174,7 +127,7 @@ class MapContainer extends React.Component {
 }
 // Listen to redux state
 const mapStateToProps = (state) => {
-  const { units, navigator } = state;
+  const { units, settings } = state;
   const { data } = units;
   const unitsLoading = state.service.isFetching;
   const serviceUnits = state.service.units;
@@ -186,7 +139,6 @@ const mapStateToProps = (state) => {
   // const unitList = getUnitList(state);
   return {
     mapType,
-    navigator,
     districts,
     state,
     highlightedUnit,
@@ -195,6 +147,7 @@ const mapStateToProps = (state) => {
     serviceUnits,
     unitsLoading,
     currentPage,
+    settings,
     // unitList,
   };
 };
@@ -209,10 +162,8 @@ export default injectIntl(connect(
 // Typechecking
 MapContainer.propTypes = {
   mapType: PropTypes.oneOfType([PropTypes.objectOf(PropTypes.any), PropTypes.string]),
-  navigator: PropTypes.objectOf(PropTypes.any),
   unitList: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.array])),
   serviceUnits: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  locale: PropTypes.string,
   unitsLoading: PropTypes.bool,
   districts: PropTypes.arrayOf(PropTypes.object),
   highlightedUnit: PropTypes.objectOf(PropTypes.any),
@@ -222,14 +173,13 @@ MapContainer.propTypes = {
   setMapRef: PropTypes.func.isRequired,
   isMobile: PropTypes.bool,
   intl: intlShape.isRequired,
+  settings: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 MapContainer.defaultProps = {
   mapType: '',
-  navigator: null,
   unitList: [],
   serviceUnits: [],
-  locale: 'fi',
   unitsLoading: false,
   districts: {},
   highlightedUnit: null,

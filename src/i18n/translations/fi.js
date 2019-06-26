@@ -17,7 +17,6 @@ export default {
   // Event
   'event.nearby': 'Lähellä olevat tapahtumat',
   'event.description': 'Kuvaus',
-  'event.more': 'Näytä kaikki {count} tapahtumaa',
   'event.time': 'Ajankohta',
   'event.picture': 'Tapahtuman kuva',
   'event.title': 'Tapahtumat',
@@ -52,7 +51,9 @@ export default {
   'general.pageTitles.unit': 'Toimipistenäkymä',
   'general.pageTitles.service': 'Palvelunäkymä',
   'general.pageTitles.event': 'Tapahtumanäkymä',
-  'general.pageTitles.eventList': 'Tapahtumalistaus',
+  'general.pageTitles.list.services': 'Palvelulista ',
+  'general.pageTitles.list.events': 'Tapahtumalista ',
+  'general.pageTitles.list.reservations': 'Varauslista',
   // General - Pagination
   'general.pagination.previous': 'Aiempi sivu',
   'general.pagination.next': 'Seuraava sivu',
@@ -83,6 +84,7 @@ export default {
   // Units
   'unit': 'Toimipiste',
   'unit.accessibility.noInfo': 'Ei esteettömyystietoja',
+  'unit.accessibility.noShortcomings': 'Ei tiedossa olevia puutteita',
   'unit.accessibility.ok': 'Esteetön',
   'unit.accessibility.problems': `{count, plural,
                                     =0 {Esteetön}
@@ -95,7 +97,8 @@ export default {
 
   'unit.contact.info': 'Yhteystiedot',
   'unit.services': 'Palvelut toimipisteessä',
-  'unit.e.services': 'Sähköinen asiointi',
+  'unit.eServices': 'Sähköinen asiointi',
+  'unit.reservations': 'Varaukset',
   'unit.events': 'Toimipisteen tapahtumat',
   'unit.homepage': 'Kotisivu',
   'unit.picture': 'Kuva toimipisteestä: ',
@@ -108,6 +111,12 @@ export default {
   'unit.school.year': 'Lukuvuosi',
   'unit.opens.new.tab': '(uusi välilehti)',
   'unit.call.number': '(soita)',
+  'unit.more.reservations': 'Näytä kaikki {count} varausta',
+  'unit.more.services': 'Näytä kaikki {count} palvelua',
+  'unit.more.events': 'Näytä kaikki {count} tapahtumaa',
+  'unit.list.services': 'Palvelut',
+  'unit.list.events': 'Tapahtumat',
+  'unit.list.reservations': 'Varaukset',
 
   // Search
   'search': 'Hae',

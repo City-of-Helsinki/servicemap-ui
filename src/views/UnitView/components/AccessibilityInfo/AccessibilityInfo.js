@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {
   Typography, List, ListItem, ListItemIcon, ListItemText,
 } from '@material-ui/core';
-import { Warning } from '@material-ui/icons';
+import { Warning, VerifiedUser } from '@material-ui/icons';
 import { FormattedMessage } from 'react-intl';
 import Container from '../../../../components/Container/Container';
 import config from '../../../../../config';
@@ -239,11 +239,18 @@ class AccessibilityInfo extends React.Component {
     const { classes, getLocaleText } = this.props;
     const { groups, sentences } = accessibilityDescriptions;
 
-    return groups && sentences && (
+    const groupArray = Object.keys(groups);
+    const sentenceArray = Object.keys(sentences);
+
+    if (!groupArray.length || !sentenceArray.length) {
+      return null;
+    }
+
+    return (
       <>
         <Container margin>
           {
-            Object.keys(groups).map((key) => {
+            groupArray.map((key) => {
               if (Object.prototype.hasOwnProperty.call(groups, key)) {
                 let groupSentences;
                 const group = groups[key];
@@ -285,9 +292,41 @@ class AccessibilityInfo extends React.Component {
     );
   }
 
+  renderInfoText(noInfo, noShortcomings) {
+    const { classes } = this.props;
+
+    if (noInfo) {
+      return (
+        <ListItem component="div">
+          <ListItemIcon>
+            <Warning className={classes.noInfoColor} />
+          </ListItemIcon>
+          <Typography component="p" variant="body2" align="left">
+            <FormattedMessage id="unit.accessibility.noInfo" />
+          </Typography>
+        </ListItem>
+      );
+    }
+
+    if (noShortcomings) {
+      return (
+        <ListItem component="div">
+          <ListItemIcon>
+            <VerifiedUser className={classes.noShortcomingsColor} />
+          </ListItemIcon>
+          <Typography component="p" variant="body2" align="left">
+            <FormattedMessage id="unit.accessibility.noShortcomings" />
+          </Typography>
+        </ListItem>
+      );
+    }
+
+    return null;
+  }
+
   render() {
     const { isFetching } = this.state;
-    const { titleAlways, headingLevel } = this.props;
+    const { classes, titleAlways, headingLevel } = this.props;
 
     if (isFetching) {
       return (
@@ -307,20 +346,29 @@ class AccessibilityInfo extends React.Component {
 
     const heading = `h${headingLevel}`;
     const listHeading = (titleAlways || shouldRenderTitle) ? `h${headingLevel + 1}` : heading;
+    const aShortcomings = this.renderAccessibilityShortcomings(listHeading, shortcomings);
+    const aDescriptions = this.renderAccessibilityDescriptions(listHeading);
 
+    const noInfo = !aDescriptions && !aShortcomings;
+    const noShortcomings = aDescriptions && !aShortcomings;
+
+    const infoText = this.renderInfoText(noInfo, noShortcomings);
 
     return (
-      <Container>
+      <Container margin>
         {
           (titleAlways || shouldRenderTitle)
           && (
-            <Typography variant="subtitle1" component={heading} align="left">
+            <Typography className={classes.title} variant="subtitle1" component={heading} align="left">
               <FormattedMessage id="accessibility" />
             </Typography>
           )
         }
         {
-          this.renderAccessibilityShortcomings(listHeading, shortcomings)
+          infoText
+        }
+        {
+          aShortcomings
         }
         {
           shouldRenderTitle
@@ -331,7 +379,7 @@ class AccessibilityInfo extends React.Component {
           )
         }
         {
-          this.renderAccessibilityDescriptions(listHeading)
+          aDescriptions
         }
       </Container>
     );

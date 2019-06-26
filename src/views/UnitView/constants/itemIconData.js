@@ -9,11 +9,11 @@ import InfoIcon from '@material-ui/icons/PriorityHigh';
 import WarningIcon from '@material-ui/icons/Warning';
 
 const getItemIconData = (type, data) => {
-  if (data.www) {
+  if (type === 'LINK' || (type === 'OPENING_HOURS' && data.www)) {
     return <OpenLinkIcon />;
   } if (type === 'ADDRESS') {
     return <AddressIcon />;
-  } if (type === 'OPENING_HOURS' || type === 'OPENING_HOURS_LINK') {
+  } if (type === 'OPENING_HOURS') {
     return <HoursIcon />;
   } if (type === 'PHONE') {
     return <PhoneIcon />;

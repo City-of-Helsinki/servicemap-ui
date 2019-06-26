@@ -6,6 +6,8 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { withStyles } from '@material-ui/core';
 import TransitStopInfo from './TransitStopInfo';
 import { drawMarkerIcon } from '../utils/drawIcon';
+import { fetchStops } from '../utils/transitFetch';
+import UnitMarkers from './UnitMarkers';
 
 const transitIconSize = 30;
 
@@ -22,6 +24,7 @@ class MapView extends React.Component {
       Polygon: undefined,
       highlightedDistrict: null,
       refSaved: false,
+      transitStops: [],
     };
   }
 
@@ -80,13 +83,58 @@ class MapView extends React.Component {
     return this.mapRef.current.leafletElement;
   }
 
-  saveMapReference() {
-    const { saveMapRef } = this.props;
-    const { refSaved } = this.state;
-    if (this.mapRef.current && !refSaved) {
-      this.setState({ refSaved: true });
-      saveMapRef(this.mapRef.current);
-    }
+  clearTransitStops = () => {
+    this.setState({ transitStops: [] });
+  }
+
+  fetchTransitStops = (bounds) => {
+    const { getLocaleText } = this.props;
+    fetchStops(bounds)
+      .then(((data) => {
+        const stops = data[0].data.stopsByBbox;
+        const subwayStations = stops.filter(stop => stop.vehicleType === 1);
+
+        // Remove subwaystations from stops list since they will be replaced with subway entrances
+        const filteredStops = stops.filter(stop => stop.vehicleType !== 1);
+
+        const entrances = data[1].results;
+
+        // Add subway entrances to the list of stops
+        entrances.forEach((entrance) => {
+          const closest = {
+            distance: null,
+            stop: null,
+          };
+          // Find the subwaystation closest to the entrance
+          subwayStations.forEach((stop) => {
+            const distance = Math.sqrt(
+              ((stop.lat - entrance.location.coordinates[1]) ** 2)
+              + ((stop.lon - entrance.location.coordinates[0]) ** 2),
+            );
+            if (!closest.distance || distance < closest.distance) {
+              closest.distance = distance;
+              closest.stop = stop;
+            }
+          });
+          // Get the same station's stop for other direction (west/east)
+          const otherStop = subwayStations.find(
+            station => station.name === closest.stop.name && station.gtfsId !== closest.stop.gtfsId,
+          );
+          // Create a new stop from the entrance
+          // Give it the stop data of the corresponding station and add it to the list of stops
+          const newStop = {
+            gtfsId: closest.stop.gtfsId,
+            secondaryId: otherStop.gtfsId,
+            lat: entrance.location.coordinates[1],
+            lon: entrance.location.coordinates[0],
+            name: getLocaleText(entrance.name),
+            patterns: closest.stop.patterns,
+            vehicleType: closest.stop.vehicleType,
+          };
+          filteredStops.push(newStop);
+        });
+        this.setState({ transitStops: filteredStops });
+      }));
   }
 
   // Check if transit stops should be shown
@@ -98,16 +146,25 @@ class MapView extends React.Component {
     return currentZoom >= transitZoom;
   }
 
+  saveMapReference() {
+    const { saveMapRef } = this.props;
+    const { refSaved } = this.state;
+    if (this.mapRef.current && !refSaved) {
+      this.setState({ refSaved: true });
+      saveMapRef(this.mapRef.current);
+    }
+  }
+
   initiateLeaflet() {
     // The leaflet map works only client-side so it needs to be imported here
     const leaflet = require('react-leaflet');
 
     const {
-      Map, TileLayer, ZoomControl, Marker, Popup, Polygon,
+      Map, TileLayer, ZoomControl, Marker, Popup, Polygon, Polyline,
     } = leaflet;
 
     this.setState({
-      Map, TileLayer, ZoomControl, Marker, Popup, Polygon,
+      Map, TileLayer, ZoomControl, Marker, Popup, Polygon, Polyline,
     });
   }
 
@@ -117,19 +174,24 @@ class MapView extends React.Component {
       unitList,
       mapOptions,
       // districtList,
+      unitGeometry,
       style,
-      fetchTransitStops,
-      clearTransitStops,
-      navigator,
-      transitStops,
       getLocaleText,
       mobile,
+      settings,
     } = this.props;
     const {
-      Map, TileLayer, ZoomControl, Marker, Popup, Polygon, highlightedDistrict,
+      Map,
+      TileLayer,
+      ZoomControl,
+      Marker,
+      Popup,
+      Polygon,
+      Polyline,
+      highlightedDistrict,
+      transitStops,
     } = this.state;
 
-    const unitListFiltered = unitList.filter(unit => unit.object_type === 'unit');
     const zoomLevel = mobile ? mapType.options.mobileZoom : mapType.options.zoom;
 
     if (Map) {
@@ -147,9 +209,9 @@ class MapView extends React.Component {
           maxBounds={mapOptions.maxBounds}
           onMoveEnd={() => {
             if (this.showTransitStops()) {
-              fetchTransitStops(this.getMapRefElement());
+              this.fetchTransitStops(this.getMapRefElement());
             } else if (transitStops.length > 0) {
-              clearTransitStops();
+              this.clearTransitStops();
             }
           }}
         >
@@ -157,25 +219,20 @@ class MapView extends React.Component {
             url={mapType.options.url}
             attribution='&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors'
           />
-          {unitListFiltered.map((unit) => {
-            // Show markers with location
-            if (unit && unit.location) {
-              return (
-                <Marker
-                  className="unitMarker"
-                  key={unit.id}
-                  position={[unit.location.coordinates[1], unit.location.coordinates[0]]}
-                  icon={drawMarkerIcon(unit, mapType.options.name)}
-                  onClick={() => {
-                    if (navigator) {
-                      navigator.push('unit', { id: unit.id });
-                    }
-                  }}
-                  keyboard={false}
-                />
-              );
-            } return null;
-          })}
+          <UnitMarkers
+            data={unitList}
+            Marker={Marker}
+            mapType={mapType}
+          />
+
+          {unitGeometry ? (
+            <Polyline
+              positions={[
+                unitGeometry,
+              ]}
+              color="#ff8400"
+            />
+          ) : null}
           {highlightedDistrict ? (
             <Polygon
               positions={[
@@ -192,7 +249,7 @@ class MapView extends React.Component {
                 highlightedDistrict.unit.location.coordinates[1],
                 highlightedDistrict.unit.location.coordinates[0],
               ]}
-              icon={drawMarkerIcon(highlightedDistrict.unit, mapType.options.name)}
+              icon={drawMarkerIcon(highlightedDistrict.unit, settings)}
               keyboard={false}
             >
               <Popup autoPan={false}>
@@ -284,25 +341,20 @@ MapView.propTypes = {
   unitList: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.array])),
   // districtList: PropTypes.arrayOf(PropTypes.object),
   mapOptions: PropTypes.objectOf(PropTypes.any),
-  fetchTransitStops: PropTypes.func,
-  navigator: PropTypes.objectOf(PropTypes.any),
-  clearTransitStops: PropTypes.func,
-  transitStops: PropTypes.arrayOf(PropTypes.object),
+  unitGeometry: PropTypes.arrayOf(PropTypes.any),
   getLocaleText: PropTypes.func.isRequired,
   saveMapRef: PropTypes.func.isRequired,
   mobile: PropTypes.bool,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
+  settings: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 MapView.defaultProps = {
   style: { width: '100%', height: '100%' },
   mapType: {},
   mapOptions: {},
-  navigator: null,
+  unitGeometry: null,
   unitList: [],
   // districtList: [],
-  fetchTransitStops: null,
-  clearTransitStops: null,
-  transitStops: [],
   mobile: false,
 };

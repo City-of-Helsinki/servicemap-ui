@@ -13,12 +13,8 @@ const paths = {
     regex: /\/[a-zA-Z]{2}\/search/
   },
   unit: {
-    generate: data => `/unit/${data.id || ''}${data.query || ''}`,
+    generate: data => `/unit/${data.id || ''}${data.type ? '/' + data.type : ''}${data.query || ''}`,
     regex: /\/[a-zA-Z]{2}\/unit\/([0-9]+)/
-  },
-  unitEvents: {
-    generate: id => `/unit/${id || ''}/events`,
-    regex: /\/[a-zA-Z]{2}\/unit\/([0-9]+)\/events/
   },
   service: {
     generate: id => `/service/${id || ''}`,

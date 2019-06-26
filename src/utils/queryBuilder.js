@@ -8,14 +8,14 @@ const allowedTypes = [
 const searchQueryData = {
   page: 1,
   page_size: 200,
-  only: 'unit.root_service_nodes,unit.services,unit.location,unit.name,unit.street_address,unit.contract_type,unit.municipality',
-  include: 'service_nodes,services',
+  only: 'unit.location,unit.name,unit.municipality,unit.accessibility_shortcoming_count',
   geometry: true,
 };
 
 const unitQueryData = {
   accessibility_description: true,
   include: 'service_nodes,services',
+  geometry: true,
 };
 
 class QueryBuilder {

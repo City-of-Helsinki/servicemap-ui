@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Typography, RootRef } from '@material-ui/core';
@@ -28,11 +29,13 @@ class ViewTitle extends React.Component {
   }
 
   render() {
-    const { messageId } = this.props;
+    const { messageId, match } = this.props;
+    const type = match.params.type || '';
+
     return (
       <RootRef rootRef={this.titleRef}>
         <Typography id="view-title" variant="srOnly" component="h2" tabIndex="-1">
-          <FormattedMessage id={messageId} />
+          <FormattedMessage id={messageId + type} />
         </Typography>
       </RootRef>
     );
@@ -47,13 +50,14 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   { actionSetInitialLoad },
-)(ViewTitle);
+)(ViewTitle));
 
 ViewTitle.propTypes = {
   initialLoad: PropTypes.bool.isRequired,
   messageId: PropTypes.string.isRequired,
   actionSetInitialLoad: PropTypes.func.isRequired,
+  match: PropTypes.objectOf(PropTypes.any).isRequired,
 };

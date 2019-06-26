@@ -17,7 +17,6 @@ export default {
   // Event
   'event.nearby': 'Nearby events', // TODO: Translate
   'event.description': 'Kuvaus', // TODO: Translate
-  'event.more': 'Näytä kaikki {count} tapahtumaa', // TODO: Translate
   'event.time': 'Ajankohta', // TODO: Translate
   'event.picture': 'Tapahtuman kuva', // TODO: Translate
   'event.title': 'Tapahtumat', // TODO: Translate
@@ -52,7 +51,9 @@ export default {
   'general.pageTitles.unit': 'Unit view', // TODO: Translate
   'general.pageTitles.service': 'Service view', // TODO: Translate
   'general.pageTitles.event': 'Tapahtumanäkymä', // TODO: Translate
-  'general.pageTitles.eventList': 'Tapahtumalistaus', // TODO: Translate
+  'general.pageTitles.list.services': 'Service list ', // TODO: Translate
+  'general.pageTitles.list.events': 'Event list ', // TODO: Translate
+  'general.pageTitles.list.reservations': 'Reservation list ', // TODO: Translate
   // General - Pagination
   'general.pagination.previous': 'Previous page', // TODO: Translate
   'general.pagination.next': 'Next page', // TODO: Translate
@@ -82,6 +83,7 @@ export default {
   // Units
   'unit': 'Verksamhetsställe',
   'unit.accessibility.noInfo': 'Inga uppgifter', // TODO: Verify
+  'unit.accessibility.noShortcomings': 'Inga kända brister', // TODO: verify
   'unit.accessibility.ok': 'Inga kända brister', // TODO: Verify
   'unit.accessibility.problems': `{count, plural,
                                     =0 {Inga kända brister}
@@ -94,7 +96,8 @@ export default {
 
   'unit.contact.info': 'Contact information', // TODO: Translate
   'unit.services': 'Tjänster',
-  'unit.e.services': 'Electronic services', // TODO: Translate
+  'unit.eServices': 'Electronic services', // TODO: Translate
+  'unit.reservations': 'Bokning', // TODO: Verify
   'unit.events': 'Evenemang',
   'unit.homepage': 'Hemsida',
   'unit.picture': 'Kuva toimipisteestä: ', // TODO: Translate
@@ -107,6 +110,12 @@ export default {
   'unit.school.year': 'Läsåret',
   'unit.opens.new.tab': '(new tab)', // TODO: Translate
   'unit.call.number': '(call)', // TODO: Translate
+  'unit.more.reservations': 'Näytä kaikki {count} varausta', // TODO: Translate
+  'unit.more.services': 'Näytä kaikki {count} palvelua', // TODO: Translate
+  'unit.more.events': 'Näytä kaikki {count} tapahtumaa', // TODO: Translate
+  'unit.list.services': 'Palvelut', // TODO: Translate
+  'unit.list.events': 'Tapahtumat', // TODO: Translate
+  'unit.list.reservations': 'Varaukset', // TODO: Translate
 
   // Search
   'search': 'Sök',

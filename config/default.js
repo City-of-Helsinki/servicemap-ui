@@ -1,6 +1,12 @@
 export default {
-  "small_screen_breakpoint": 899,
+  "accessibility_colors":  {
+    "default": "#2242C7",
+    "missing_info": "#4A4A4A",
+    "shortcomings": "#b00021",
+  },
+  "default_locale": 'fi',
   "mobile_ui_breakpoint": 699,
+  "small_screen_breakpoint": 899,
   "server": {
     "address": "127.0.0.1",
     "port": "2048",
@@ -16,5 +22,7 @@ export default {
   "events": {
     "api_url": "https://api.hel.fi/linkedevents/v1/"
   },
-  "default_locale": 'fi',
+  "reservations": {
+    "api_url": "https://api.hel.fi/respa/v1/"
+  },
 }
