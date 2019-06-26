@@ -38,27 +38,28 @@ class UnitHelper {
       const currentSettings = SettingsUtility.parseShortcomingSettings(settings);
       if (currentSettings.length) {
         // eslint-disable-next-line camelcase
-        const { accessibility_shortcoming_count } = unit;
-
+        const shortcomings = unit.accessibility_shortcoming_count;
         // Check if unit has shortcoming info
-        const shortcomingKeys = Object.keys(accessibility_shortcoming_count);
-        if (shortcomingKeys.length) {
-          let shortcomingCount = 0;
+        if (shortcomings) {
+          const shortcomingKeys = Object.keys(shortcomings);
+          if (shortcomingKeys.length) {
+            let shortcomingCount = 0;
 
-          if (currentSettings.length) {
-            // Loop through currentSetting keys and see if unit has shortcomings
-            currentSettings.forEach((settingKey) => {
-              if (
-                Object.prototype.hasOwnProperty.call(
-                  accessibility_shortcoming_count,
-                  settingKey,
-                )
-              ) {
-                shortcomingCount += accessibility_shortcoming_count[settingKey];
-              }
-            });
+            if (currentSettings.length) {
+              // Loop through currentSetting keys and see if unit has shortcomings
+              currentSettings.forEach((settingKey) => {
+                if (
+                  Object.prototype.hasOwnProperty.call(
+                    shortcomings,
+                    settingKey,
+                  )
+                ) {
+                  shortcomingCount += shortcomings[settingKey];
+                }
+              });
 
-            return shortcomingCount;
+              return shortcomingCount;
+            }
           }
         }
         return null;

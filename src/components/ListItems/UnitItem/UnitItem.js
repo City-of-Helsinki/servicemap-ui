@@ -29,7 +29,7 @@ class UnitItem extends React.Component {
     const accessSettingsSet = SettingsUtility.hasActiveAccessibilitySettings(settings);
     let accessText = null;
     let markerColor = null;
-    if (accessSettingsSet) {
+    if (accessSettingsSet && unit && settings) {
       const accessibilityProblems = UnitHelper.getShortcomingCount(unit, settings);
       markerColor = UnitHelper.getIconColor(accessibilityProblems);
       accessText = intl.formatMessage({ id: 'unit.accessibility.noInfo' });
