@@ -17,41 +17,26 @@ const allowedOrders = [
 ];
 
 class ResultOrderer extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      direction: 'desc',
-      order: 'match',
-    };
-  }
-
   isValidDirection = direction => direction && allowedDirections.indexOf(direction) > -1;
 
   isValidOrder = order => order && allowedOrders.indexOf(order) > -1;
 
   handleChange = (event) => {
     const {
-      data, sortCallback, orderingFunction,
+      setDirection, setOrder,
     } = this.props;
     const array = event.target.value.split('-');
     const direction = array[1];
     const order = array[0];
 
-    if (this.isValidDirection(direction) && this.isValidOrder(order) && data) {
-      const newData = orderingFunction(data, direction, order);
-      sortCallback(newData);
+    if (this.isValidDirection(direction) && this.isValidOrder(order)) {
+      setDirection(direction);
+      setOrder(order);
     }
-
-    this.setState({
-      direction,
-      order,
-    });
   };
 
   render() {
-    const { classes } = this.props;
-    const { direction, order } = this.state;
+    const { classes, direction, order } = this.props;
     return (
       <form className={`${classes.root} ${classes.primaryColor}`} autoComplete="off">
         <FormControl className={classes.formControl}>
@@ -76,9 +61,10 @@ class ResultOrderer extends React.Component {
 
 ResultOrderer.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  data: PropTypes.arrayOf(PropTypes.any).isRequired,
-  sortCallback: PropTypes.func.isRequired,
-  orderingFunction: PropTypes.func.isRequired,
+  direction: PropTypes.oneOf(allowedDirections).isRequired,
+  order: PropTypes.oneOf(allowedOrders).isRequired,
+  setDirection: PropTypes.func.isRequired,
+  setOrder: PropTypes.func.isRequired,
 };
 
 export default ResultOrderer;
