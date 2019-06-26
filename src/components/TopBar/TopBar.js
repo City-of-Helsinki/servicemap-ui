@@ -171,10 +171,14 @@ class TopBar extends React.Component {
     return (
       <>
         <MobileComponent>
-          {this.renderMobileBar()}
+          <>
+            {this.renderMobileBar()}
+          </>
         </MobileComponent>
         <DesktopComponent>
-          {this.renderDesktopBar()}
+          <>
+            {this.renderDesktopBar()}
+          </>
         </DesktopComponent>
       </>
     );
