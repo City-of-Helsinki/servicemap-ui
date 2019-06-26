@@ -16,7 +16,6 @@ import {
   FormLabel,
   FormControl,
 } from '@material-ui/core';
-import { Accessibility } from '@material-ui/icons';
 import isClient, { AddEventListener } from '../../utils';
 import SettingsUtility from '../../utils/settings';
 import Container from '../Container';
@@ -38,7 +37,6 @@ class Settings extends React.Component {
       currentSettings: {},
       previousSettings: null,
       saved: false,
-      showContainer: false,
     };
   }
 
@@ -140,15 +138,20 @@ class Settings extends React.Component {
    */
   // eslint-disable-next-line class-methods-use-this
   calculateContainerStyles() {
+    const { isMobile } = this.props;
     const styles = {};
+
     if (isClient()) {
       const sidebar = document.getElementsByClassName('SidebarWrapper')[0];
-      const rect = sidebar.getBoundingClientRect();
-      styles.position = 'absolute';
-      styles.top = rect.top;
-      styles.left = rect.left;
-      styles.width = rect.width;
-      styles.height = rect.height;
+      if (!isMobile) {
+        const rect = sidebar.getBoundingClientRect();
+        styles.position = 'absolute';
+        styles.top = rect.top;
+        styles.left = rect.left;
+        styles.width = rect.width;
+        styles.height = rect.height;
+        styles.overflow = 'auto';
+      }
     }
     return styles;
   }
@@ -157,19 +160,21 @@ class Settings extends React.Component {
    * Toggle settings container visible/hidden
    */
   toggleSettingsContainer() {
-    const { showContainer } = this.state;
+    const { toggleSettings } = this.props;
+    /*
+    TODO: Fix this
     // Focus back to settings button if container will be closed
-    if (!showContainer === false) {
       this.focusToBaseElement();
-    }
+    } */
     this.setState({
-      showContainer: !showContainer,
       saved: false,
     });
+    toggleSettings();
   }
 
   // eslint-disable-next-line class-methods-use-this
   focusToBaseElement() {
+    // TODO Make this work
     const elem = document.getElementById(this.buttonID);
     if (elem) {
       elem.focus();
@@ -317,41 +322,42 @@ class Settings extends React.Component {
     const { currentSettings } = this.state;
     const { classes, intl, setMobility } = this.props;
 
-    const mobilitySettings = {};
+    // Check that currentSettings isn't empty
+    if (Object.entries(currentSettings).length !== 0 && currentSettings.constructor === Object) {
+      const mobilitySettings = {};
+      SettingsUtility.mobilitySettings.forEach((setting) => {
+        if (typeof setting === 'string') {
+          mobilitySettings[setting] = {
+            action: () => setMobility(setting),
+            labelId: `settings.mobility.${setting}`,
+            value: setting,
+            icon: getIcon(setting, { className: classes.icon }),
+          };
+        } else if (setting === null) {
+          mobilitySettings.none = {
+            action: () => setMobility(null),
+            labelId: 'settings.mobility.none',
+            value: null,
+            icon: getIcon('foot', { className: classes.icon }),
+          };
+        }
+      });
 
-    SettingsUtility.mobilitySettings.forEach((setting) => {
-      if (typeof setting === 'string') {
-        mobilitySettings[setting] = {
-          action: () => setMobility(setting),
-          labelId: `settings.mobility.${setting}`,
-          value: setting,
-          icon: getIcon(setting, { className: classes.icon }),
-        };
-      } else if (setting === null) {
-        mobilitySettings.none = {
-          action: () => setMobility(null),
-          labelId: 'settings.mobility.none',
-          value: null,
-          icon: getIcon('foot', { className: classes.icon }),
-        };
-      }
-    });
-
-    return (
-      <Container>
-        <FormControl className={classes.noMargin} component="fieldset" fullWidth>
-          <FormLabel>
-            <SettingsTitle titleID="settings.mobility.title" />
-          </FormLabel>
-          <RadioGroup
-            aria-label={intl.formatMessage({ id: 'settings.mobility.title' })}
-            name="mobility"
-            value={currentSettings.mobility}
-            onChange={(event, value) => {
-              this.handleChange('mobility', value);
-            }}
-          >
-            {
+      return (
+        <Container>
+          <FormControl className={classes.noMargin} component="fieldset" fullWidth>
+            <FormLabel>
+              <SettingsTitle titleID="settings.mobility.title" />
+            </FormLabel>
+            <RadioGroup
+              aria-label={intl.formatMessage({ id: 'settings.mobility.title' })}
+              name="mobility"
+              value={currentSettings.mobility}
+              onChange={(event, value) => {
+                this.handleChange('mobility', value);
+              }}
+            >
+              {
                 Object.keys(mobilitySettings).map((key) => {
                   if (Object.prototype.hasOwnProperty.call(mobilitySettings, key)) {
                     const item = mobilitySettings[key];
@@ -378,15 +384,16 @@ class Settings extends React.Component {
                   return null;
                 })
               }
-          </RadioGroup>
-        </FormControl>
-      </Container>
-    );
+            </RadioGroup>
+          </FormControl>
+        </Container>
+      );
+    } return (null);
   }
 
   renderConfirmationBox(settingsHaveChanged) {
-    const { classes } = this.props;
-    const containerClasses = ` ${settingsHaveChanged ? classes.stickyContainer : classes.hidden}`;
+    const { classes, isMobile } = this.props;
+    const containerClasses = ` ${settingsHaveChanged ? classes.stickyContainer : classes.hidden} ${isMobile ? classes.stickyMobile : ''}`;
 
     return (
       <Container className={`SettingsConfirmation ${containerClasses}`} paper>
@@ -414,9 +421,9 @@ class Settings extends React.Component {
   }
 
   renderSaveAlert(settingsHaveBeenSaved) {
-    const { classes, intl } = this.props;
+    const { classes, intl, isMobile } = this.props;
 
-    const containerClasses = `SettingsAlert ${settingsHaveBeenSaved ? classes.alert : classes.hidden}`;
+    const containerClasses = `SettingsAlert ${settingsHaveBeenSaved ? classes.alert : classes.hidden} ${isMobile ? classes.stickyMobile : ''}`;
     const typographyClasses = `${classes.flexBase} ${classes.confirmationText}`;
     const buttonClasses = `${classes.flexBase} ${classes.bold} ${classes.alertColor}`;
 
@@ -441,82 +448,59 @@ class Settings extends React.Component {
       classes,
       intl,
     } = this.props;
-    const { containerStyles, showContainer, saved } = this.state;
+    const { containerStyles, saved } = this.state;
     const settingsHaveChanged = this.settingsHaveChanged();
     const settingsHaveBeenSaved = !settingsHaveChanged && saved;
-    const mainButtonClasses = `${showContainer ? classes.buttonActive : ''} focus-dark-background ${classes.button}`;
 
     return (
       <>
-        <Button
-          aria-label={intl.formatMessage({ id: 'settings.aria.open' })}
-          aria-pressed={showContainer}
-          className={mainButtonClasses}
-          classes={{
-            label: classes.buttonLabel,
-          }}
-          color="inherit"
-          id={this.buttonID}
-          variant="text"
-          onClick={() => this.toggleSettingsContainer()}
-        >
-          <Accessibility style={{ marginRight: 8 }} />
-          <Typography color="inherit" variant="body2">
-            <FormattedMessage id="settings" />
-          </Typography>
-        </Button>
-        <div id="SettingsContainer" className={`${classes.container} ${!showContainer ? classes.hidden : ''}`} style={containerStyles}>
-          {
-          showContainer
-          && (
-            <>
-              {
+        <div id="SettingsContainer" className={`${classes.container}`} style={containerStyles}>
+          <>
+            {
                 settingsHaveBeenSaved
                   ? this.renderSaveAlert(settingsHaveBeenSaved)
                   : this.renderConfirmationBox(settingsHaveChanged)
               }
-              <div className="SettingsContent">
-                <Typography variant="srOnly" component="h2" tabIndex="-1">
-                  <FormattedMessage id="settings" />
-                </Typography>
-                {
+            <div className="SettingsContent">
+              <Typography variant="srOnly" component="h2" tabIndex="-1">
+                <FormattedMessage id="settings" />
+              </Typography>
+              {
                   this.renderLanguageSettings()
                 }
 
-                {
+              {
                   this.renderSenseSettings()
                 }
 
-                <Divider aria-hidden="true" />
+              <Divider aria-hidden="true" />
 
-                {
+              {
                   this.renderMobilitySettings()
                 }
-                <ServiceMapButton className={classes.contentButton} color="primary" variant="contained" onClick={() => this.saveSettings()} disabled={!settingsHaveChanged}>
-                  <FormattedMessage id="general.save.changes" />
-                </ServiceMapButton>
-                <ServiceMapButton aria-label={intl.formatMessage({ id: 'general.closeSettings' })} className={classes.contentButton} color="primary" variant="contained" onClick={() => this.toggleSettingsContainer()}>
-                  <FormattedMessage id="general.close" />
-                </ServiceMapButton>
-              </div>
+              <ServiceMapButton className={classes.contentButton} color="primary" variant="contained" onClick={() => this.saveSettings()} disabled={!settingsHaveChanged}>
+                <FormattedMessage id="general.save.changes" />
+              </ServiceMapButton>
+              <ServiceMapButton aria-label={intl.formatMessage({ id: 'general.closeSettings' })} className={classes.contentButton} color="primary" variant="contained" onClick={() => this.toggleSettingsContainer()}>
+                <FormattedMessage id="general.close" />
+              </ServiceMapButton>
+            </div>
 
-              <Typography aria-live="polite" variant="srOnly">
-                {
+            <Typography aria-live="polite" variant="srOnly">
+              {
                   settingsHaveChanged
                   && (
                     <FormattedMessage id="settings.aria.changed" />
                   )
                 }
-                {
+              {
                   settingsHaveBeenSaved
                   && (
                     <FormattedMessage id="settings.aria.saved" />
                   )
                 }
-              </Typography>
-            </>
-          )
-        }
+            </Typography>
+          </>
         </div>
       </>
     );
@@ -531,10 +515,12 @@ Settings.propTypes = {
   toggleVisuallyImpaired: PropTypes.func.isRequired,
   setMobility: PropTypes.func.isRequired,
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
+  isMobile: PropTypes.bool,
+  toggleSettings: PropTypes.func.isRequired,
 };
 
 Settings.defaultProps = {
-
+  isMobile: false,
 };
 
 export default injectIntl(Settings);
