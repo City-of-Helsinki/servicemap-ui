@@ -129,7 +129,7 @@ class TopBar extends React.Component {
               >
                 <Map />
                 <Typography color="inherit" variant="body2">
-                  Kartta
+                  <FormattedMessage id="map" />
                 </Typography>
               </Button>
             </div>

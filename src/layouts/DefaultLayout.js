@@ -99,7 +99,7 @@ const DefaultLayout = (props) => {
             </main>
           )}
         </div>
-        <div aria-hidden tabIndex={-1} style={styles.map}>
+        <div aria-hidden style={styles.map}>
           <MapContainer isMobile={!!isMobile} />
         </div>
       </div>
