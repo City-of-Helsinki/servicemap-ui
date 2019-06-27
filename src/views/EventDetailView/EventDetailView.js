@@ -77,7 +77,7 @@ class EventDetailView extends React.Component {
 
   render() {
     const {
-      event, intl, getLocaleText, navigator, selectedUnit,
+      event, intl, getLocaleText, selectedUnit,
     } = this.props;
     if (event) {
       const description = event.description || event.short_description;
@@ -150,13 +150,11 @@ EventDetailView.propTypes = {
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   intl: intlShape.isRequired,
   getLocaleText: PropTypes.func.isRequired,
-  navigator: PropTypes.objectOf(PropTypes.any),
   selectedUnit: PropTypes.objectOf(PropTypes.any),
 };
 
 EventDetailView.defaultProps = {
   event: null,
-  navigator: null,
   selectedUnit: null,
 };
 
