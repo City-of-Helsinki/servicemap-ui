@@ -115,12 +115,6 @@ class EventDetailView extends React.Component {
             <UnitItem
               key="unitInfo"
               unit={unit}
-              onClick={() => {
-                if (navigator) {
-                  // Event database precedes unit id with tprek:
-                  navigator.push('unit', { id: unit.id.split(':').pop() });
-                }
-              }}
             />
             {
                phoneText
