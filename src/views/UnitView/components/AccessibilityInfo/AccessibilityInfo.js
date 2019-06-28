@@ -293,7 +293,11 @@ class AccessibilityInfo extends React.Component {
   }
 
   renderInfoText(noInfo, noShortcomings) {
-    const { classes } = this.props;
+    const { classes, settings } = this.props;
+
+    if (!SettingsUtility.hasActiveAccessibilitySettings(settings)) {
+      return null;
+    }
 
     if (noInfo) {
       return (
