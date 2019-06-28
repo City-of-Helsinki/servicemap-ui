@@ -22,12 +22,13 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     // Default state
-    const { match } = this.props;
+    const { changeLocaleAction, match } = this.props;
     const newLocale = match.params.lng;
     const i18n = new I18n();
 
     if (i18n.isValidLocale(newLocale)) {
       i18n.changeLocale(newLocale);
+      changeLocaleAction(newLocale);
     }
 
     this.state = {
@@ -40,31 +41,6 @@ class App extends React.Component {
     const jssStyles = document.getElementById('jss-server-side');
     if (jssStyles && jssStyles.parentNode) {
       jssStyles.parentNode.removeChild(jssStyles);
-    }
-  }
-
-  // Change locale of app
-  changeLocale = (locale) => {
-    if (locale) {
-      const { i18n } = this.state;
-      const { history, location, changeLocaleAction } = this.props;
-
-      // but you can use a location instead
-      if (history && location) {
-        const pathArray = location.pathname.split('/');
-        pathArray[1] = locale; // Change locale in path
-
-        // Change location
-        const newLocation = location;
-        newLocation.pathname = pathArray.join('/');
-
-        history.push(newLocation);
-        i18n.changeLocale(locale);
-        // this.setState({ i18n });
-        if (changeLocaleAction) {
-          changeLocaleAction(i18n.locale);
-        }
-      }
     }
   }
 
