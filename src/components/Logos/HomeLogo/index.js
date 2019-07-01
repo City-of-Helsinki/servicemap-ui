@@ -6,17 +6,17 @@ import logoMobile from '../../../assets/images/service-map-logo-nega-mobile.svg'
 
 const HomeLogo = (props) => {
   const { dark, mobile, ...rest } = props;
-  if (dark) {
-    return (
-      <div role="img" {...rest}>
-        <img src={logoDark} alt="" style={{ marginTop: 12, marginBottom: 12, height: 45 }} />
-      </div>
-    );
-  }
   if (mobile) {
     return (
       <div role="img" {...rest}>
         <img src={logoMobile} alt="" style={{ height: 45 }} />
+      </div>
+    );
+  }
+  if (dark) {
+    return (
+      <div role="img" {...rest}>
+        <img src={logoDark} alt="" style={{ marginTop: 12, marginBottom: 12, height: 45 }} />
       </div>
     );
   }
