@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {
   Button, Typography, AppBar, Toolbar,
 } from '@material-ui/core';
-import { Map, Accessibility } from '@material-ui/icons';
+import { Map, AccessibilityNew } from '@material-ui/icons';
 import { FormattedMessage } from 'react-intl';
 import I18n from '../../i18n';
 import { generatePath } from '../../utils/path';
@@ -38,7 +38,7 @@ class TopBar extends React.Component {
           }, 1);
         }}
       >
-        <Accessibility style={{ marginRight: 8 }} />
+        <AccessibilityNew style={{ marginRight: 8 }} />
         <Typography color="inherit" variant="body2">
           <FormattedMessage id="settings" />
         </Typography>
