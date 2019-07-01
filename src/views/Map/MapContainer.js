@@ -56,19 +56,26 @@ class MapContainer extends React.Component {
     const { initialMap, transitStops } = this.state;
 
     const topBar = (
-      <div style={{
-        zIndex: 99999999, position: 'fixed', top: 0, width: '100%',
-      }}
-      >
+      <>
         {isMobile && currentPage === 'map' && (
           // If on root map page (/map) display search bar.
-          <SearchBar placeholder={intl.formatMessage({ id: 'search' })} />
+          <div style={{
+            zIndex: 99999999, position: 'fixed', top: 64, width: '100%',
+          }}
+          >
+            <SearchBar hideBackButton placeholder={intl.formatMessage({ id: 'search' })} />
+          </div>
         )}
         {isMobile && currentPage === 'unit' && highlightedUnit && (
           // If on unit's map page (/unit?map=true) display title bar
-          <TitleBar title={getLocaleText(highlightedUnit.name)} />
+          <div style={{
+            zIndex: 99999999, position: 'fixed', top: 0, width: '100%',
+          }}
+          >
+            <TitleBar title={getLocaleText(highlightedUnit.name)} />
+          </div>
         )}
-      </div>
+      </>
     );
 
     let mapUnits = [];
