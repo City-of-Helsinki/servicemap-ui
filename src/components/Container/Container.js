@@ -22,6 +22,13 @@ const styles = theme => ({
   text: {
     textAlign: 'left',
   },
+  noMargin: {
+    margin: 0,
+    paddingLeft: theme.spacing.unit,
+    paddingRight: theme.spacing.unit,
+    paddingTop: theme.spacing.unitDouble,
+    paddingBottom: theme.spacing.unitDouble,
+  },
 });
 
 const Title = (props) => {
@@ -41,12 +48,12 @@ const DivWrapper = props => (
 
 const Container = (props) => {
   const {
-    className, children, classes, margin, paper, text, title, titleComponent, ...rest
+    className, children, classes, margin, noMargin, paper, text, title, titleComponent, ...rest
   } = props;
 
   const ContainerComponent = paper ? Paper : DivWrapper;
   return (
-    <ContainerComponent className={`${classes.root} ${paper || margin ? classes.margin : ''} ${text ? classes.text : ''} ${className}`} {...rest}>
+    <ContainerComponent className={`${classes.root} ${(!noMargin && (paper || margin)) ? classes.margin : ''} ${noMargin ? classes.noMargin : ''} ${text ? classes.text : ''} ${className}`} {...rest}>
       {
         title
         && <Title className={classes.title} component={titleComponent} text={title} variant="h6" />
@@ -61,6 +68,7 @@ Container.propTypes = {
   children: PropTypes.node.isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   margin: PropTypes.bool,
+  noMargin: PropTypes.bool,
   paper: PropTypes.bool,
   text: PropTypes.bool,
   title: PropTypes.string,
@@ -70,6 +78,7 @@ Container.propTypes = {
 Container.defaultProps = {
   className: '',
   margin: false,
+  noMargin: false,
   paper: false,
   text: false,
   title: null,
