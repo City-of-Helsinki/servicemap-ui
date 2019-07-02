@@ -46,6 +46,8 @@ const createContentStyles = (
       width: '100%',
     },
     sidebar: {
+      height: '100%',
+      position: 'relative',
       top: 0,
       bottom: 0,
       width,
@@ -90,15 +92,13 @@ const DefaultLayout = (props) => {
     <>
       <TopBar settingsOpen={settingsOpen} toggleSettings={() => setToggle(!settingsOpen)} topNav={styles.topNav} i18n={i18n} />
       <div style={styles.activeRoot}>
-        <div className="SidebarWrapper" style={styles.sidebar}>
+        <main className="SidebarWrapper" style={styles.sidebar}>
           {settingsOpen ? (
             <Settings toggleSettings={() => setToggle(false)} isMobile={!!isMobile} />
           ) : (
-            <main style={{ height: '100%' }}>
-              <Sidebar />
-            </main>
+            <Sidebar />
           )}
-        </div>
+        </main>
         <div aria-hidden style={styles.map}>
           <MapContainer isMobile={!!isMobile} />
         </div>
