@@ -25,20 +25,21 @@ const styles = theme => ({
     textTransform: 'capitalize',
     textAlign: 'left',
     marginLeft: theme.spacing.unitDouble,
+    color: theme.palette.primary.contrastText,
   },
   mobileTitle: {
     flex: '1 1 auto',
     textTransform: 'capitalize',
     textAlign: 'left',
     marginLeft: theme.spacing.unitDouble,
-    color: '#ffffff',
+    color: theme.palette.primary.contrastText,
   },
   iconButton: {
     flex: '0 1 auto',
     padding: theme.spacing.unit,
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    color: '#ffffff',
+    color: theme.palette.primary.contrastText,
   },
 });
 
@@ -66,7 +67,7 @@ const TitleBar = ({
     </MobileComponent>
 
     <DesktopComponent>
-      <Container>
+      <Container noMargin>
         <div className={classes.container}>
           <div style={{ height: 24, margin: 8, marginRight: 16 }} aria-hidden="true">
             {icon}
