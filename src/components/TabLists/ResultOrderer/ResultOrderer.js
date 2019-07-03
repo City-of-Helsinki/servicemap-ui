@@ -40,21 +40,26 @@ class ResultOrderer extends React.Component {
       classes, direction, intl, order,
     } = this.props;
     return (
-      <form className={`${classes.root} ${classes.primaryColor}`} autoComplete="off">
+      <form className={classes.root} autoComplete="off">
         <FormControl className={classes.formControl}>
-          <InputLabel htmlFor="result-sorter"><FormattedMessage id="sorting.label" /></InputLabel>
+          <InputLabel style={{ color: 'inherit' }} htmlFor="result-sorter"><FormattedMessage id="sorting.label" /></InputLabel>
           <Select
+            className={classes.select}
             native
             value={`${order}-${direction}`}
             onChange={this.handleChange}
             inputProps={{
               name: 'result-sorter',
               id: 'result-sorter',
+              classes: {
+                icon: classes.icon,
+              },
+              className: `${classes.input}`,
             }}
           >
-            <option value="match-desc">{intl.formatMessage({ id: 'sorting.match.desc' })}</option>
-            <option value="alphabetical-desc">{intl.formatMessage({ id: 'sorting.alphabetical.desc' })}</option>
-            <option value="alphabetical-asc">{intl.formatMessage({ id: 'sorting.alphabetical.asc' })}</option>
+            <option className={classes.black} value="match-desc">{intl.formatMessage({ id: 'sorting.match.desc' })}</option>
+            <option className={classes.black} value="alphabetical-desc">{intl.formatMessage({ id: 'sorting.alphabetical.desc' })}</option>
+            <option className={classes.black} value="alphabetical-asc">{intl.formatMessage({ id: 'sorting.alphabetical.asc' })}</option>
           </Select>
         </FormControl>
       </form>

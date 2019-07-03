@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter, Redirect } from 'react-router-dom';
 import {
-  Paper, Divider, withStyles, Typography, Link,
+  Paper, withStyles, Typography, Link,
 } from '@material-ui/core';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import styles from './styles';
@@ -178,7 +178,20 @@ class SearchView extends React.Component {
       },
     ];
 
-    return <TabLists data={searchResults} />;
+    return (
+      <TabLists
+        data={searchResults}
+        headerComponents={(
+          <>
+            <SearchBar
+              placeholder={intl && intl.formatMessage({ id: 'search.input.placeholder' })}
+              isSticky={0}
+              text={this.getSearchParam() || ''}
+            />
+          </>
+        )}
+      />
+    );
   }
 
   /**
@@ -216,7 +229,7 @@ class SearchView extends React.Component {
 
   render() {
     const {
-      isFetching, intl, count, max,
+      classes, isFetching, intl, count, max,
     } = this.props;
     const progress = (isFetching && count) ? Math.floor((count / max * 100)) : 0;
 
@@ -234,12 +247,9 @@ class SearchView extends React.Component {
 
 
     return (
-      <div className="Search">
-        <SearchBar
-          placeholder={intl && intl.formatMessage({ id: 'search.input.placeholder' })}
-          text={this.getSearchParam() || ''}
-        />
-        <Divider aria-hidden="true" />
+      <div
+        className={classes.root}
+      >
         <Paper elevation={1} square aria-live="polite" style={paperStyles}>
           {
             isFetching
@@ -249,7 +259,6 @@ class SearchView extends React.Component {
             this.renderScreenReaderInfo()
           }
         </Paper>
-
         {
           this.renderResults()
         }
@@ -275,6 +284,7 @@ export default withRouter(injectIntl(withStyles(styles)(SearchView)));
 
 // Typechecking
 SearchView.propTypes = {
+  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   changeSelectedUnit: PropTypes.func,
   count: PropTypes.number,
   fetchUnits: PropTypes.func,

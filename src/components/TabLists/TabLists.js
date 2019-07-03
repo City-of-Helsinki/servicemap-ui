@@ -2,12 +2,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { Tabs, Tab, Typography } from '@material-ui/core';
+import {
+  Tabs, Tab, Typography, withStyles,
+} from '@material-ui/core';
 import { injectIntl, intlShape } from 'react-intl';
 import { parseSearchParams, stringifySearchParams } from '../../utils';
 import ResultList from '../Lists/ResultList';
 import PaginationComponent from './PaginationComponent';
 import ResultOrderer from './ResultOrderer';
+import styles from './styles';
 
 class TabLists extends React.Component {
   // Options
@@ -27,19 +30,49 @@ class TabLists extends React.Component {
     const newCurrentPage = typeof parsedCurrentPage === 'number' ? parsedCurrentPage : 1;
     const newCurrentTab = typeof parsedCurrentTab === 'number' ? parsedCurrentTab : 0;
 
+    this.tabsRef = React.createRef();
     this.state = {
       currentPage: newCurrentPage,
       tabIndex: newCurrentTab,
+      styles: {},
     };
+  }
+
+  componentDidMount() {
+    // TODO: In materialUI 4.*
+    // Update height calculations and change <Tabs /> to use ref
+
+    // Calculate height by looping through Tabs root element's previous siblings
+    const tabsElem = this.tabsRef.tabsRef.parentNode.parentNode;
+    let distanceToTop = tabsElem.offsetTop;
+    let sibling = tabsElem;
+
+    while (sibling.previousSibling) {
+      sibling = sibling.previousSibling;
+
+      const pos = window.getComputedStyle(sibling, null).getPropertyValue('position');
+      if (pos !== 'sticky') {
+        distanceToTop -= sibling.offsetHeight;
+      }
+    }
+
+    if (typeof distanceToTop === 'number') {
+      this.setState({
+        styles: {
+          top: distanceToTop,
+        },
+      });
+    }
   }
 
   // Update only when data changes
   shouldComponentUpdate(nextProps, nextState) {
     const { data } = this.props;
-    const { currentPage, tabIndex } = this.state;
+    const { currentPage, tabIndex, styles } = this.state;
     return data !== nextProps.data
       || currentPage !== nextState.currentPage
-      || tabIndex !== nextState.tabIndex;
+      || tabIndex !== nextState.tabIndex
+      || styles !== nextState.styles;
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -119,8 +152,10 @@ class TabLists extends React.Component {
 
 
   render() {
-    const { data, intl } = this.props;
-    const { currentPage, tabIndex } = this.state;
+    const {
+      data, classes, headerComponents, intl,
+    } = this.props;
+    const { currentPage, tabIndex, styles } = this.state;
 
     let fullData = [];
 
@@ -133,22 +168,39 @@ class TabLists extends React.Component {
 
     return (
       <>
-        <ResultOrderer data={fullData} />
+        {
+          headerComponents
+        }
+        {
+          fullData.length > 0 && (
+            <ResultOrderer />
+          )
+        }
         <Tabs
+          // TODO: In materialUI 4.*
+          // Change to use ref and update height calculations in componentDidMount
+          innerRef={(ref) => { this.tabsRef = ref; }}
+          className={classes.root}
+          classes={{
+            indicator: classes.indicator,
+          }}
           value={tabIndex}
           onChange={this.handleTabChange}
-          indicatorColor="primary"
-          textColor="primary"
-          variant="scrollable"
-          scrollButtons="auto"
+          variant="fullWidth"
+          style={styles}
         >
           {
-            filteredData.map(item => (
-              item.data
-              && item.data.length > 0
-              && <Tab key={`${item.title} (${item.data.length})`} label={`${item.title} ${item.component ? '' : `(${item.data.length})`}`} aria-label={item.ariaLabel ? item.ariaLabel : null} />
-            ))
-          }
+              filteredData.map((item) => {
+                if (item.data && item.data.length > 0) {
+                  return (
+                    <Tab key={`${item.title} (${item.data.length})`} label={`${item.title} ${item.component ? '' : `(${item.data.length})`}`} aria-label={item.ariaLabel ? item.ariaLabel : null} />
+                  );
+                }
+                return (
+                  <Tab key={`${item.title}`} label={`${item.title}`} aria-label={item.ariaLabel ? item.ariaLabel : null} />
+                );
+              })
+            }
         </Tabs>
         {
           // Create tab views from data
@@ -181,7 +233,7 @@ class TabLists extends React.Component {
             const additionalText = `${intl.formatMessage({ id: 'general.pagination.pageCount' }, { current: adjustedCurrentPage, max: pageCount })}`;
 
             return (
-              <div key={item.title}>
+              <div className={classes.resultList} key={item.title}>
                 {
                   index === tabIndex
                   && (
@@ -213,6 +265,7 @@ class TabLists extends React.Component {
 }
 
 TabLists.propTypes = {
+  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   data: PropTypes.arrayOf(PropTypes.shape({
     ariaLabel: PropTypes.string,
     component: PropTypes.node,
@@ -220,13 +273,15 @@ TabLists.propTypes = {
     data: PropTypes.array,
     itemsPerPage: PropTypes.number,
   })).isRequired,
+  headerComponents: PropTypes.objectOf(PropTypes.any),
   intl: intlShape.isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
 };
 
 TabLists.defaultProps = {
+  headerComponents: null,
   navigator: null,
 };
 
-export default injectIntl(withRouter(TabLists));
+export default injectIntl(withRouter(withStyles(styles)(TabLists)));

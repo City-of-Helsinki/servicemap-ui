@@ -1,7 +1,8 @@
 export default theme => ({
   root: {
-    display: 'flex',
-    alignItems: 'center',
+    display: 'inline-block',
+    height: 'auto',
+    position: 'relative',
     width: '100%',
   },
   margin: {
