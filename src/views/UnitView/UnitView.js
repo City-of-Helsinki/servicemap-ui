@@ -29,10 +29,16 @@ import Events from './components/Events';
 import ServiceMapButton from '../../components/ServiceMapButton';
 import UnitIcon from '../../components/SMIcon/UnitIcon';
 import TabLists from '../../components/TabLists';
+import config from '../../../config';
 
 class UnitView extends React.Component {
   constructor(props) {
     super(props);
+
+    this.currentId = 0;
+    this.ids = {};
+    this.supportedLanguages = config.supported_languages;
+
     this.state = {
       centered: false,
       reservations: null,
@@ -47,6 +53,7 @@ class UnitView extends React.Component {
     const { params } = match;
 
     this.setState({
+      accessibilityInfoData: null,
       didMount: true,
     });
 
@@ -77,6 +84,7 @@ class UnitView extends React.Component {
     }
     if (unit && !eventFetching && (!eventsData.events || eventsData.unit !== unit.id)) {
       fetchUnitEvents(unit.id);
+      this.fetchAccessibilitySentences();
     }
   }
 
@@ -87,6 +95,92 @@ class UnitView extends React.Component {
       focusDistrict(map, geometry.coordinates);
     } else {
       focusUnit(map, unit.location.coordinates);
+    }
+  }
+
+  /**
+   * Transform object to language locales as keys for texts
+   * @param {object} data - object with texts
+   * @param {string} base - base text for data object's key ie. ${base}_fi = content_fi
+   */
+  buildTranslatedObject(data, base) {
+    const obj = {};
+    this.supportedLanguages.forEach((lang) => {
+      obj[lang] = data[`${base}_${lang}`];
+    });
+    return obj;
+  }
+
+  /**
+   * Parse accessibility sentences to more usable form
+   * @param {*} data - fetched data from server
+   */
+  parseAccessibilitySentences(data) {
+    if (data) {
+      const sentences = {};
+      const groups = {};
+
+      // Parse accessibility_sentences
+      data.accessibility_sentences.forEach((sentence) => {
+        const group = this.buildTranslatedObject(sentence, 'sentence_group');
+        const key = this.generateId(group.fi);
+        groups[key] = group;
+
+        if (!(key in sentences)) {
+          sentences[key] = [];
+        }
+        const builtSentence = this.buildTranslatedObject(sentence, 'sentence');
+        sentences[key].push(builtSentence);
+      });
+
+      return { sentences, groups };
+    }
+
+    return null;
+  }
+
+  /**
+   * Generate id using content text as key
+   * @param {string} content
+   */
+  generateId(content) {
+    if (!(content in this.ids)) {
+      const id = this.currentId;
+      this.ids[content] = id;
+      this.currentId += 1;
+    }
+
+    return this.ids[content];
+  }
+
+  /**
+   * Fetch accessibility sentences from old API
+   * AccessibilitySentences are fetched in UnitView to avoid multiple fetches
+   * by AccessibilityInfo
+   */
+  async fetchAccessibilitySentences() {
+    const BASE_URL = 'https://www.hel.fi/palvelukarttaws/rest/v4/unit/';
+    const { unit } = this.props;
+
+    if (!unit) {
+      return;
+    }
+
+    const url = `${BASE_URL}${unit.id}`;
+
+    try {
+      const response = await fetch(url);
+      if (response.ok && response.status === 200) {
+        const data = await response.json();
+        const parsedData = this.parseAccessibilitySentences(data);
+        this.setState({
+          accessibilityInfoData: parsedData,
+        });
+      } else {
+        throw new Error(response.statusText);
+      }
+    } catch (e) {
+      throw Error('Error fetching accessibility sentences', e.message);
     }
   }
 
@@ -137,13 +231,14 @@ class UnitView extends React.Component {
     const {
       unit,
     } = this.props;
+    const { accessibilityInfoData } = this.state;
 
-    if (!unit || !unit.complete) {
+    if (!unit || !unit.complete || !accessibilityInfoData) {
       return null;
     }
 
     return (
-      <AccessibilityInfo headingLevel={4} />
+      <AccessibilityInfo data={accessibilityInfoData} headingLevel={4} />
     );
   }
 
