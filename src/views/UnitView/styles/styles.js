@@ -66,9 +66,16 @@ export default theme => ({
     maxHeight: 300,
     objectFit: 'contain',
     backgroundColor: 'rgba(0,0,0,0.15)',
+    display: 'flex',
   },
   fullListContent: {
     height: '100%',
     overflow: 'auto',
+  },
+  topBar: {
+    backgroundColor: theme.palette.primary.main,
+    position: 'sticky',
+    top: 0,
+    zIndex: 50,
   },
 });

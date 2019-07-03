@@ -28,6 +28,7 @@ import Services from './components/Services';
 import Events from './components/Events';
 import ServiceMapButton from '../../components/ServiceMapButton';
 import UnitIcon from '../../components/SMIcon/UnitIcon';
+import TabLists from '../../components/TabLists';
 
 class UnitView extends React.Component {
   constructor(props) {
@@ -89,6 +90,98 @@ class UnitView extends React.Component {
     }
   }
 
+  renderDetailTab() {
+    const {
+      getLocaleText, eventsData, navigator, unit,
+    } = this.props;
+    const { reservations } = this.state;
+
+    if (!unit || !unit.complete) {
+      return null;
+    }
+
+    return (
+      <>
+        {/* Show on map button for mobile */}
+        <MobileComponent>
+          <ServiceMapButton
+            onClick={(e) => {
+              e.preventDefault();
+              this.setState({ centered: false });
+              if (navigator) {
+                navigator.push('unit', { id: unit.id, query: '?map=true' });
+              }
+            }}
+          >
+            <FormattedMessage id="general.showOnMap" />
+          </ServiceMapButton>
+        </MobileComponent>
+
+        {/* View Components */}
+        <Highlights unit={unit} getLocaleText={getLocaleText} />
+        <ContactInfo unit={unit} />
+        <ElectronicServices unit={unit} />
+        <Reservations
+          listLength={10}
+          unitId={unit.id}
+          reservations={reservations}
+          getLocaleText={getLocaleText}
+          navigator={navigator}
+        />
+        <Events listLength={5} eventsData={eventsData} />
+      </>
+    );
+  }
+
+  renderAccessibilityTab() {
+    const {
+      unit,
+    } = this.props;
+
+    if (!unit || !unit.complete) {
+      return null;
+    }
+
+    return (
+      <AccessibilityInfo headingLevel={4} />
+    );
+  }
+
+  renderServiceTab() {
+    const {
+      getLocaleText, navigator, unit,
+    } = this.props;
+
+    if (!unit || !unit.complete) {
+      return null;
+    }
+
+    return (
+      <>
+        <Description unit={unit} getLocaleText={getLocaleText} />
+        <Services
+          listLength={10}
+          unit={unit}
+          navigator={navigator}
+          getLocaleText={getLocaleText}
+        />
+        <Container margin text>
+          <Typography variant="body2">
+            {
+              unit.contract_type
+              && unit.contract_type.description
+              && `${uppercaseFirst(getLocaleText(unit.contract_type.description))}. `
+            }
+            {
+              unit.data_source
+              && <FormattedMessage id="unit.data_source" defaultMessage={'Source: {data_source}'} values={{ data_source: unit.data_source }} />
+            }
+          </Typography>
+        </Container>
+      </>
+    );
+  }
+
   render() {
     const {
       classes, getLocaleText, intl, unit, eventsData, navigator, match, unitFetching,
@@ -101,7 +194,7 @@ class UnitView extends React.Component {
     const icon = didMount && unit ? <UnitIcon unit={unit} /> : null;
 
     const TopBar = (
-      <div>
+      <div className={classes.topBar}>
         <DesktopComponent>
           <SearchBar placeholder={intl.formatMessage({ id: 'search' })} />
         </DesktopComponent>
@@ -119,6 +212,55 @@ class UnitView extends React.Component {
             </p>
           </div>
         </div>
+      );
+    }
+
+
+    if (unit && unit.complete) {
+      // NEW TAB FEATURE
+      const tabs = [
+        {
+          ariaLabel: 'Perustiedot',
+          component: this.renderDetailTab(),
+          data: null,
+          itemsPerPage: null,
+          title: 'Perustiedot',
+        },
+        {
+          ariaLabel: 'Esteettömyys',
+          component: this.renderAccessibilityTab(),
+          data: null,
+          itemsPerPage: null,
+          title: 'Esteettömyys',
+        },
+        {
+          ariaLabel: 'Palvelut',
+          component: this.renderServiceTab(),
+          data: null,
+          itemsPerPage: null,
+          title: 'Palvelut',
+        },
+      ];
+      return (
+        <TabLists
+          data={tabs}
+          headerComponents={(
+            <>
+              {TopBar}
+
+              {/* Unit image */}
+              {unit.picture_url
+                && (
+                <img
+                  className={classes.image}
+                  alt={`${intl.formatMessage({ id: 'unit.picture' })}${getLocaleText(unit.name)}`}
+                  src={unit.picture_url}
+                />
+                )
+              }
+            </>
+        )}
+        />
       );
     }
 
