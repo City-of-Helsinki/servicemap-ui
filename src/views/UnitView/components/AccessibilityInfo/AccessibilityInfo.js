@@ -361,7 +361,7 @@ class AccessibilityInfo extends React.Component {
     return (
       <Container margin>
         {
-          (titleAlways || shouldRenderTitle)
+          (titleAlways)
           && (
             <Typography className={classes.title} variant="subtitle1" component={heading} align="left">
               <FormattedMessage id="accessibility" />
