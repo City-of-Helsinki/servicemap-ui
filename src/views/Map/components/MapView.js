@@ -276,19 +276,42 @@ class MapView extends React.Component {
             />
           ) : null}
           {highlightedDistrict && highlightedDistrict.unit && highlightedDistrict.unit.location ? (
-            <Marker
-              position={[
-                highlightedDistrict.unit.location.coordinates[1],
-                highlightedDistrict.unit.location.coordinates[0],
-              ]}
-              icon={drawMarkerIcon(highlightedDistrict.unit, settings)}
-              keyboard={false}
-              onClick={() => {
-                if (navigator) {
-                  navigator.replace('unit', { id: highlightedDistrict.unit.id });
-                }
-              }}
-            />
+            <>
+              <Marker
+                position={[
+                  highlightedDistrict.unit.location.coordinates[1],
+                  highlightedDistrict.unit.location.coordinates[0],
+                ]}
+                icon={drawMarkerIcon(highlightedDistrict.unit, settings)}
+                keyboard={false}
+                onClick={() => {
+                  if (navigator) {
+                    if (mobile) {
+                      navigator.replace('unit', { id: highlightedDistrict.unit.id });
+                    } else {
+                      navigator.push('unit', { id: highlightedDistrict.unit.id });
+                    }
+                  }
+                }}
+              />
+              {/* Popup for the district unit name */}
+              <Popup
+                offset={[-1, -29]}
+                closeButton={false}
+                autoPan={false}
+                position={[
+                  highlightedDistrict.unit.location.coordinates[1],
+                  highlightedDistrict.unit.location.coordinates[0],
+                ]}
+              >
+                <Typography
+                  noWrap
+                  className={classes.popup}
+                >
+                  {getLocaleText(highlightedDistrict.unit.name)}
+                </Typography>
+              </Popup>
+            </>
           ) : null}
           {transitStops.map((stop) => {
             // Draw transit markers if zoom is within allowed limits
@@ -315,7 +338,7 @@ class MapView extends React.Component {
                   className={classes.addressPopup}
                 >
                   <Typography variant="body2">
-                    {`${address.street.name.fi} ${address.number}`}
+                    {`${getLocaleText(address.street.name)} ${address.number}`}
                   </Typography>
                   <ButtonBase
                     style={{ paddingTop: '9px', paddingBottom: 12 }}

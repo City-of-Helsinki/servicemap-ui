@@ -78,13 +78,13 @@ class MapContainer extends React.Component {
           </div>
         )}
         {isMobile && currentPage === 'address' && addressTitle && (
-          // If on address's map page (/address?map=true) display title bar
-           <div style={{
-            zIndex: 99999999, position: 'fixed', top: 64, width: '100%',
-          }}
-          >
-            <TitleBar title={addressTitle} />
-          </div>
+        // If on address's map page (/address?map=true) display title bar
+        <div style={{
+          zIndex: 99999999, position: 'fixed', top: 0, width: '100%',
+        }}
+        >
+          <TitleBar title={addressTitle} />
+        </div>
         )}
       </>
     );
