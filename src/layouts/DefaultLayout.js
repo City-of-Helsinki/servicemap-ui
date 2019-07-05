@@ -103,7 +103,7 @@ const createContentStyles = (
 
 const DefaultLayout = (props) => {
   const {
-    i18n, intl, location, match, navigator,
+    i18n, intl, location, match, navigator, setMobile,
   } = props;
   const { params } = match;
   const lng = params && params.lng;
@@ -120,6 +120,9 @@ const DefaultLayout = (props) => {
   const styles = createContentStyles(
     isMobile, isSmallScreen, landscape, mobileMapOnly, fullMobileMap, keyboardVisible,
   );
+
+  // TODO make this component class-component if possible and move this from render
+  setMobile(isMobile);
 
   return (
     <>
@@ -257,6 +260,7 @@ DefaultLayout.propTypes = {
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
+  setMobile: PropTypes.func.isRequired,
 };
 
 DefaultLayout.defaultProps = {
