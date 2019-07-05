@@ -187,6 +187,7 @@ class SearchView extends React.Component {
               placeholder={intl && intl.formatMessage({ id: 'search.input.placeholder' })}
               isSticky={0}
               text={this.getSearchParam() || ''}
+              primary
             />
           </>
         )}

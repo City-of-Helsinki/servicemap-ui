@@ -11,7 +11,6 @@ import { fetchUnits } from '../../redux/actions/unit';
 
 const styles = theme => ({
   root: {
-    backgroundColor: theme.palette.primary.main,
     display: 'flex',
   },
   wrapper: {
@@ -54,6 +53,9 @@ const styles = theme => ({
   sticky: {
     position: 'sticky',
     zIndex: 50,
+  },
+  primary: {
+    backgroundColor: theme.palette.primary.main,
   },
 });
 
@@ -127,11 +129,12 @@ class SearchBar extends React.Component {
       previousSearch,
       hideBackButton,
       searchRef,
+      primary,
     } = this.props;
     const { search, isActive } = this.state;
 
     const inputValue = typeof search === 'string' ? search : previousSearch;
-    const rootClasses = `${classes.root} ${typeof isSticky === 'number' ? classes.sticky : ''}`;
+    const rootClasses = `${classes.root} ${typeof isSticky === 'number' ? classes.sticky : ''} ${primary ? classes.primary : ''}`;
     const wrapperClasses = `${classes.wrapper} ${isActive ? classes.wrapperFocused : ''}`;
     const stickyStyles = typeof isSticky === 'number' ? { top: isSticky } : null;
 
@@ -181,6 +184,7 @@ SearchBar.propTypes = {
   placeholder: PropTypes.string.isRequired,
   searchRef: PropTypes.objectOf(PropTypes.any),
   previousSearch: PropTypes.string,
+  primary: PropTypes.bool,
 };
 
 SearchBar.defaultProps = {
@@ -190,6 +194,7 @@ SearchBar.defaultProps = {
   isSticky: null,
   navigator: null,
   searchRef: {},
+  primary: false,
 };
 
 // Listen to redux state
