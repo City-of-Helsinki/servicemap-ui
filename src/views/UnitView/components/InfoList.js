@@ -17,9 +17,7 @@ class InfoList extends React.Component {
       }
       window.open(url);
     } else if (data.phone) {
-      console.log('call number: ', data.phone);
-    } else {
-      console.log('error');
+      window.location.href = `tel:${data.phone}`;
     }
   };
 
