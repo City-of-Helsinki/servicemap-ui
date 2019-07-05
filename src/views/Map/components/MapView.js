@@ -3,7 +3,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { withStyles } from '@material-ui/core';
+import { withStyles, ButtonBase, Typography } from '@material-ui/core';
+import { FormattedMessage } from 'react-intl';
 import TransitStopInfo from './TransitStopInfo';
 import { drawMarkerIcon } from '../utils/drawIcon';
 import { fetchStops } from '../utils/transitFetch';
@@ -22,8 +23,9 @@ class MapView extends React.Component {
       Marker: undefined,
       Popup: undefined,
       Polygon: undefined,
-      highlightedDistrict: null,
       refSaved: false,
+      mapClickPoint: undefined,
+      address: undefined,
       transitStops: [],
     };
   }
@@ -83,8 +85,33 @@ class MapView extends React.Component {
     return this.mapRef.current.leafletElement;
   }
 
+  getAddress(ev) {
+    if (document.getElementsByClassName('popup').length > 0) {
+      this.mapRef.current.leafletElement.closePopup();
+    } else {
+      // Get address of clicked location
+      this.setState({ mapClickPoint: null });
+      this.setState({ mapClickPoint: ev.latlng, address: null });
+      this.fetchAddress(ev.latlng)
+        .then(data => this.setState({ address: data }));
+    }
+  }
+
   clearTransitStops = () => {
     this.setState({ transitStops: [] });
+  }
+
+  fetchAddress = async (latlng) => {
+    const addressData = await fetch(`https://api.hel.fi/servicemap/v2/address/?lat=${latlng.lat}&lon=${latlng.lng}&page_size=5`)
+      .then(response => response.json())
+      .then((data) => {
+        const address = data.results[0];
+        if (address.letter) {
+          address.number += address.letter;
+        }
+        return data;
+      });
+    return addressData.results[0];
   }
 
   fetchTransitStops = (bounds) => {
@@ -172,13 +199,16 @@ class MapView extends React.Component {
     const {
       mapType,
       unitList,
+      highlightedDistrict,
       mapOptions,
-      // districtList,
       unitGeometry,
       style,
       getLocaleText,
       mobile,
       settings,
+      navigator,
+      classes,
+      setAddressData,
     } = this.props;
     const {
       Map,
@@ -188,8 +218,9 @@ class MapView extends React.Component {
       Popup,
       Polygon,
       Polyline,
-      highlightedDistrict,
       transitStops,
+      mapClickPoint,
+      address,
     } = this.state;
 
     const zoomLevel = mobile ? mapType.options.mobileZoom : mapType.options.zoom;
@@ -207,6 +238,7 @@ class MapView extends React.Component {
           minZoom={mapType.options.minZoom}
           maxZoom={mapType.options.maxZoom}
           maxBounds={mapOptions.maxBounds}
+          onClick={(ev) => { this.getAddress(ev); }}
           onMoveEnd={() => {
             if (this.showTransitStops()) {
               this.fetchTransitStops(this.getMapRefElement());
@@ -243,7 +275,7 @@ class MapView extends React.Component {
               fillColor="#000"
             />
           ) : null}
-          {highlightedDistrict && highlightedDistrict.unit ? (
+          {highlightedDistrict && highlightedDistrict.unit && highlightedDistrict.unit.location ? (
             <Marker
               position={[
                 highlightedDistrict.unit.location.coordinates[1],
@@ -251,32 +283,72 @@ class MapView extends React.Component {
               ]}
               icon={drawMarkerIcon(highlightedDistrict.unit, settings)}
               keyboard={false}
-            >
-              <Popup autoPan={false}>
-                <p>{getLocaleText(highlightedDistrict.unit.name)}</p>
-              </Popup>
-            </Marker>
+              onClick={() => {
+                if (navigator) {
+                  navigator.replace('unit', { id: highlightedDistrict.unit.id });
+                }
+              }}
+            />
           ) : null}
-          {
-            transitStops.map((stop) => {
-              // Draw transit markers if zoom is within allowed limits
-              if (this.showTransitStops()) {
-                return (
-                  <Marker
-                    icon={this.getTransitIcon(stop.vehicleType)}
-                    key={stop.name + stop.gtfsId}
-                    position={[stop.lat, stop.lon]}
-                    keyboard={false}
+          {transitStops.map((stop) => {
+            // Draw transit markers if zoom is within allowed limits
+            if (this.showTransitStops()) {
+              return (
+                <Marker
+                  icon={this.getTransitIcon(stop.vehicleType)}
+                  key={stop.name + stop.gtfsId}
+                  position={[stop.lat, stop.lon]}
+                  keyboard={false}
+                >
+                  <Popup autoPan={false}>
+                    <TransitStopInfo stop={stop} />
+                  </Popup>
+                </Marker>
+              );
+            }
+            return null;
+          })}
+          {mapClickPoint && ( // Draw address popoup on mapclick to map
+            <Popup className="popup" closeButton={false} autoPan={false} position={[mapClickPoint.lat, mapClickPoint.lng]}>
+              {address ? (
+                <div
+                  className={classes.addressPopup}
+                >
+                  <Typography variant="body2">
+                    {`${address.street.name.fi} ${address.number}`}
+                  </Typography>
+                  <ButtonBase
+                    style={{ paddingTop: '9px', paddingBottom: 12 }}
+                    onClick={() => {
+                      if (navigator) {
+                        this.mapRef.current.leafletElement.closePopup();
+                        setAddressData({
+                          addressId: address.street.id,
+                          clickCoordinates: [mapClickPoint.lat, mapClickPoint.lng],
+                        });
+                        navigator.push('address', {
+                          municipality: address.street.municipality,
+                          street: getLocaleText(address.street.name),
+                          number: address.number,
+                        });
+                      }
+                    }}
                   >
-                    <Popup autoPan={false}>
-                      <TransitStopInfo stop={stop} />
-                    </Popup>
-                  </Marker>
-                );
-              }
-              return null;
-            })
-        }
+                    <Typography className={classes.addressLink} variant="button">
+                      <FormattedMessage id="map.address.info" />
+                    </Typography>
+                  </ButtonBase>
+                </div>
+
+              ) : (
+                <div className={classes.popup}>
+                  <Typography variant="body2">
+                    <FormattedMessage id="map.address.searching" />
+                  </Typography>
+                </div>
+              )}
+            </Popup>
+          )}
           <ZoomControl position="bottomright" aria-hidden="true" />
         </Map>
       );
@@ -285,7 +357,22 @@ class MapView extends React.Component {
   }
 }
 
-const styles = ({
+const styles = theme => ({
+  addressLink: {
+    color: theme.palette.primary.main,
+  },
+  popup: {
+    padding: 12,
+  },
+  addressPopup: {
+    lineHeight: '6px',
+    padding: 12,
+    paddingBottom: 0,
+    width: 'auto',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
   transitBackground: {
     zIndex: -1,
     width: '67%',
@@ -339,7 +426,7 @@ MapView.propTypes = {
   style: PropTypes.objectOf(PropTypes.any),
   mapType: PropTypes.objectOf(PropTypes.any),
   unitList: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.array])),
-  // districtList: PropTypes.arrayOf(PropTypes.object),
+  highlightedDistrict: PropTypes.objectOf(PropTypes.any),
   mapOptions: PropTypes.objectOf(PropTypes.any),
   unitGeometry: PropTypes.arrayOf(PropTypes.any),
   getLocaleText: PropTypes.func.isRequired,
@@ -347,6 +434,8 @@ MapView.propTypes = {
   mobile: PropTypes.bool,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
+  navigator: PropTypes.objectOf(PropTypes.any),
+  setAddressData: PropTypes.func.isRequired,
 };
 
 MapView.defaultProps = {
@@ -355,6 +444,7 @@ MapView.defaultProps = {
   mapOptions: {},
   unitGeometry: null,
   unitList: [],
-  // districtList: [],
+  highlightedDistrict: null,
   mobile: false,
+  navigator: null,
 };

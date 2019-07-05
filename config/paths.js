@@ -24,6 +24,10 @@ const paths = {
     generate: id => `/event/${id || ''}`,
     regex: /\/[a-zA-Z]{2}\/event\/([a-z:0-9]+)/
   },
+  address: {
+    generate: data => `/address/${data.municipality}/${data.street}/${data.number}${data.query || ''}`,
+    regex: /\/[a-zA-Z]{2}\/address\/([a-zA-Z]+)\/([a-zA-Z])+\/([a-z:0-9]+)/
+  },
 }
 
 export default paths;

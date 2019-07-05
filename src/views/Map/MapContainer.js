@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
 import { getMapType } from '../../redux/selectors/map';
-import getDistricts from '../../redux/selectors/district';
-import { fetchDistrictsData } from '../../redux/actions/district';
+import getHighlightedDistrict from '../../redux/selectors/district';
 import { setMapRef } from '../../redux/actions/map';
+import setAddressData from '../../redux/actions/address';
 import MapView from './components/MapView';
 import { getSelectedUnit } from '../../redux/selectors/selectedUnit';
 import { getLocaleString } from '../../redux/selectors/locale';
@@ -27,21 +27,11 @@ class MapContainer extends React.Component {
 
   componentDidMount() {
     this.initiateMap();
-    const mockPosition = {
-      lat: 60.1715997,
-      lng: 24.9381021,
-    };
-    this.fetchMapDistricts(mockPosition);
   }
 
   initiateMap = () => {
     const initialMap = CreateMap('servicemap');
     this.setState({ initialMap });
-  }
-
-  fetchMapDistricts = (position) => {
-    const { fetchDistrictsData } = this.props;
-    fetchDistrictsData(position);
   }
 
   saveMapRef = (ref) => {
@@ -51,7 +41,19 @@ class MapContainer extends React.Component {
 
   render() {
     const {
-      mapType, districts, highlightedUnit, getLocaleText, currentPage, unitList, serviceUnits, unitsLoading, isMobile, intl, settings,
+      mapType,
+      highlightedUnit,
+      highlightedDistrict,
+      getLocaleText, currentPage,
+      unitList,
+      serviceUnits,
+      unitsLoading,
+      isMobile,
+      intl,
+      settings,
+      navigator,
+      setAddressData,
+      addressTitle,
     } = this.props;
     const { initialMap, transitStops } = this.state;
 
@@ -67,6 +69,10 @@ class MapContainer extends React.Component {
         {isMobile && currentPage === 'unit' && highlightedUnit && (
           // If on unit's map page (/unit?map=true) display title bar
           <TitleBar title={getLocaleText(highlightedUnit.name)} />
+        )}
+        {isMobile && currentPage === 'address' && addressTitle && (
+          // If on address's map page (/address?map=true) display title bar
+          <TitleBar title={addressTitle} />
         )}
       </div>
     );
@@ -99,15 +105,18 @@ class MapContainer extends React.Component {
             key={mapType ? mapType.crs.code : initialMap.crs.code}
             mapType={mapType || initialMap}
             unitList={mapUnits}
-            districtList={districts}
+            highlightedDistrict={highlightedDistrict}
             unitGeometry={unitGeometry}
             saveMapRef={this.saveMapRef}
             mapOptions={mapOptions}
+            currentPage={currentPage}
             mobile={isMobile}
             fetchTransitStops={this.fetchTransitStops}
             clearTransitStops={this.clearTransitStops}
             transitStops={transitStops}
             getLocaleText={textObject => getLocaleText(textObject)}
+            navigator={navigator}
+            setAddressData={setAddressData}
           // TODO: think about better styling location for map
             style={{ height: '100%', flex: '1 0 auto' }}
             settings={settings}
@@ -125,15 +134,16 @@ const mapStateToProps = (state) => {
   const unitsLoading = state.service.isFetching;
   const serviceUnits = state.service.units;
   const mapType = getMapType(state);
-  const districts = getDistricts(state);
+  const highlightedDistrict = getHighlightedDistrict(state);
   const highlightedUnit = getSelectedUnit(state);
   const currentPage = state.user.page;
   const getLocaleText = textObject => getLocaleString(state, textObject);
-  // const unitList = getUnitList(state);
+  const { navigator } = state;
+  const { addressTitle } = state.address;
   return {
     mapType,
-    districts,
     state,
+    highlightedDistrict,
     highlightedUnit,
     getLocaleText,
     unitList: data,
@@ -141,14 +151,14 @@ const mapStateToProps = (state) => {
     unitsLoading,
     currentPage,
     settings,
-    // unitList,
+    navigator,
+    addressTitle,
   };
 };
 
 export default injectIntl(connect(
   mapStateToProps,
-  // TODO: remove fetchDistrictsData from this class
-  { fetchDistrictsData, setMapRef },
+  { setMapRef, setAddressData },
 )(MapContainer));
 
 
@@ -158,15 +168,17 @@ MapContainer.propTypes = {
   unitList: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.array])),
   serviceUnits: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   unitsLoading: PropTypes.bool,
-  districts: PropTypes.arrayOf(PropTypes.object),
   highlightedUnit: PropTypes.objectOf(PropTypes.any),
+  highlightedDistrict: PropTypes.objectOf(PropTypes.any),
   currentPage: PropTypes.string.isRequired,
-  fetchDistrictsData: PropTypes.func.isRequired,
   getLocaleText: PropTypes.func.isRequired,
   setMapRef: PropTypes.func.isRequired,
   isMobile: PropTypes.bool,
   intl: intlShape.isRequired,
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
+  navigator: PropTypes.objectOf(PropTypes.any),
+  setAddressData: PropTypes.func.isRequired,
+  addressTitle: PropTypes.string,
 };
 
 MapContainer.defaultProps = {
@@ -174,7 +186,9 @@ MapContainer.defaultProps = {
   unitList: [],
   serviceUnits: [],
   unitsLoading: false,
-  districts: {},
   highlightedUnit: null,
+  highlightedDistrict: null,
+  navigator: null,
   isMobile: false,
+  addressTitle: null,
 };
