@@ -73,7 +73,6 @@ export default theme => ({
   },
   container: {
     backgroundColor: '#fff',
-    overflow: 'auto',
   },
   fixedMargin: {
     marginTop: 60,
@@ -107,5 +106,8 @@ export default theme => ({
     borderRadius: 0,
     padding: 0,
     margin: 0,
+  },
+  stickyMobile: {
+    top: 64,
   },
 });

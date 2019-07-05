@@ -68,6 +68,15 @@ class HomeView extends React.Component {
             {intl.formatMessage({ id: 'home.message' })}
           </Typography>
           <Typography className={classes.left} variant="body2">
+            <b>28.6.2019</b>
+            {' '}
+- Olemme saaneet kesäkuun aikana lisättyä toimipisteen sivuille lisää tietoa esteettömyydestä,
+tapahtumista, tilavarauksista, ja lukukausitiedoista. Olemme myös lisänneet esteettömyysasetukset,
+joiden avulla pystyy näkemään toimipistekohtaiset esteettömyysongelmat. Uusien ominaisuuksien lisäksi
+kehitämme jatkuvasti saavutettavuutta ja käytettävyyttä.
+            {' '}
+            <br />
+            <br />
             <b>14.5.2019</b>
             {' '}
 - Olemme saaneet ensimmäisten viikkojen aikana ensimmäiset palautteet
