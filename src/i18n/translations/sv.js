@@ -97,7 +97,7 @@ export default {
   'unit.contact.info': 'Contact information', // TODO: Translate
   'unit.services': 'Tjänster',
   'unit.eServices': 'Electronic services', // TODO: Translate
-  'unit.reservations': 'Bokning', // TODO: Verify
+  'unit.reservations': 'Varattavat kohteet', // TODO: Translate
   'unit.events': 'Evenemang',
   'unit.homepage': 'Hemsida',
   'unit.picture': 'Kuva toimipisteestä: ', // TODO: Translate
@@ -110,12 +110,12 @@ export default {
   'unit.school.year': 'Läsåret',
   'unit.opens.new.tab': '(new tab)', // TODO: Translate
   'unit.call.number': '(call)', // TODO: Translate
-  'unit.more.reservations': 'Näytä kaikki {count} varausta', // TODO: Translate
+  'unit.more.reservations': 'Näytä kaikki {count} kohdetta', // TODO: Translate
   'unit.more.services': 'Näytä kaikki {count} palvelua', // TODO: Translate
   'unit.more.events': 'Näytä kaikki {count} tapahtumaa', // TODO: Translate
   'unit.list.services': 'Palvelut', // TODO: Translate
   'unit.list.events': 'Tapahtumat', // TODO: Translate
-  'unit.list.reservations': 'Varaukset', // TODO: Translate
+  'unit.list.reservations': 'Varattavat kohteet', // TODO: Translate
 
   // Search
   'search': 'Sök',
