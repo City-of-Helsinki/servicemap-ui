@@ -191,7 +191,7 @@ class UnitView extends React.Component {
     const { reservations } = this.state;
 
     if (!unit || !unit.complete) {
-      return null;
+      return <></>;
     }
 
     return (
@@ -234,7 +234,7 @@ class UnitView extends React.Component {
     const { accessibilityInfoData } = this.state;
 
     if (!unit || !unit.complete || !accessibilityInfoData) {
-      return null;
+      return <></>;
     }
 
     return (
@@ -248,7 +248,7 @@ class UnitView extends React.Component {
     } = this.props;
 
     if (!unit || !unit.complete) {
-      return null;
+      return <></>;
     }
 
     return (
@@ -292,8 +292,11 @@ class UnitView extends React.Component {
       <div className={classes.topBar}>
         <DesktopComponent>
           <SearchBar placeholder={intl.formatMessage({ id: 'search' })} />
+          <TitleBar icon={icon} title={title} primary />
         </DesktopComponent>
-        <TitleBar icon={icon} title={correctUnit ? title : ''} />
+        <MobileComponent>
+          <TitleBar icon={icon} title={correctUnit ? title : ''} primary backButton />
+        </MobileComponent>
       </div>
     );
 
@@ -312,7 +315,6 @@ class UnitView extends React.Component {
 
 
     if (unit && unit.complete) {
-      // NEW TAB FEATURE
       const tabs = [
         {
           ariaLabel: 'Perustiedot',
