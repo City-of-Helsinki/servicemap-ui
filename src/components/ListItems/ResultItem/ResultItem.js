@@ -57,7 +57,15 @@ const styles = theme => ({
 // TODO: Complete distance calculations and related accessibility texts
 
 const ResultItem = ({
-  bottomRightColor, bottomRightText, classes, onClick, icon, subtitle, title, distancePosition,
+  bottomRightColor,
+  bottomRightText,
+  classes,
+  onClick,
+  icon,
+  subtitle,
+  title,
+  distancePosition,
+  divider,
 }) => {
   // Distance text
   // TODO: Change to check data for distance once location info is available
@@ -175,9 +183,11 @@ const ResultItem = ({
           }
         </div>
       </ListItem>
+      {divider && (
       <li>
         <Divider aria-hidden="true" variant={icon && 'inset'} />
       </li>
+      )}
     </>
   );
 };
@@ -194,6 +204,7 @@ ResultItem.propTypes = {
   subtitle: PropTypes.string,
   title: PropTypes.string.isRequired,
   distancePosition: PropTypes.objectOf(PropTypes.any),
+  divider: PropTypes.bool,
 };
 
 ResultItem.defaultProps = {
@@ -204,4 +215,5 @@ ResultItem.defaultProps = {
   onClick: () => {},
   subtitle: null,
   distancePosition: null,
+  divider: true,
 };

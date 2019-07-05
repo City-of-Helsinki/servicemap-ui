@@ -18,7 +18,7 @@ class ServiceItem extends React.Component {
 
   render() {
     const {
-      currentService, service, getLocaleText, navigator, setNewCurrentService,
+      currentService, service, getLocaleText, navigator, setNewCurrentService, divider,
     } = this.props;
     const { icon } = this.state;
     let text = getLocaleText(service.name);
@@ -31,7 +31,7 @@ class ServiceItem extends React.Component {
         button
         text={uppercaseFirst(text)}
         icon={icon}
-        divider
+        divider={divider}
         handleItemClick={(e) => {
           e.preventDefault();
 
@@ -71,9 +71,11 @@ ServiceItem.propTypes = {
   navigator: PropTypes.objectOf(PropTypes.any),
   service: PropTypes.objectOf(PropTypes.any).isRequired,
   setNewCurrentService: PropTypes.func.isRequired,
+  divider: PropTypes.bool,
 };
 
 ServiceItem.defaultProps = {
   currentService: null,
   navigator: null,
+  divider: true,
 };

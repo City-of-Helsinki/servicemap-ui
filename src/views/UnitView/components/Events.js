@@ -51,7 +51,7 @@ const Events = ({
               }
             } : null}
         >
-          {events.map((event) => {
+          {events.map((event, i) => {
             const dateString = formatEventDate(event, intl);
             return (
               <ResultItem
@@ -59,6 +59,7 @@ const Events = ({
                 icon={<Event />}
                 title={getLocaleText(event.name)}
                 subtitle={dateString}
+                divider={!(i + 1 === events.length || i + 1 === listLength)}
                 onClick={(e) => {
                   e.preventDefault();
                   if (navigator) {
