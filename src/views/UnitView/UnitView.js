@@ -64,10 +64,14 @@ class UnitView extends React.Component {
 
   componentDidUpdate() {
     const {
-      map, unit, eventFetching, eventsData, fetchUnitEvents,
+      map, unit, eventFetching, eventsData, fetchUnitEvents, match,
     } = this.props;
     const { centered } = this.state;
-    if (unit && map && map._layersMaxZoom && !centered) {
+    if (unit
+      && unit.id === parseInt(match.params.unit, 10)
+      && map
+      && map._layersMaxZoom
+      && !centered) {
       this.centerMap(map, unit);
     }
     if (unit && !eventFetching && (!eventsData.events || eventsData.unit !== unit.id)) {
@@ -81,15 +85,17 @@ class UnitView extends React.Component {
     if (geometry && geometry.type === 'MultiLineString') {
       focusDistrict(map, geometry.coordinates);
     } else {
-      focusUnit(map, unit);
+      focusUnit(map, unit.location.coordinates);
     }
   }
 
   render() {
     const {
-      classes, getLocaleText, intl, unit, eventsData, navigator,
+      classes, getLocaleText, intl, unit, eventsData, navigator, match,
     } = this.props;
     const { didMount, reservations } = this.state;
+
+    const correctUnit = unit && unit.id === parseInt(match.params.unit, 10);
 
     const title = unit && unit.name ? getLocaleText(unit.name) : '';
     const icon = didMount && unit ? <UnitIcon unit={unit} /> : null;
@@ -99,11 +105,11 @@ class UnitView extends React.Component {
         <DesktopComponent>
           <SearchBar placeholder={intl.formatMessage({ id: 'search' })} />
         </DesktopComponent>
-        <TitleBar icon={icon} title={title} />
+        <TitleBar icon={icon} title={correctUnit ? title : ''} />
       </div>
     );
 
-    if (unit && !unit.complete) {
+    if (unit && (!correctUnit || !unit.complete)) {
       return (
         <div className={classes.root}>
           <div className="Content">

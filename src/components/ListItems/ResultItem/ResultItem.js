@@ -57,21 +57,30 @@ const styles = theme => ({
 // TODO: Complete distance calculations and related accessibility texts
 
 const ResultItem = ({
-  bottomRightColor, bottomRightText, classes, onClick, icon, subtitle, title, distancePosition,
+  bottomRightColor,
+  bottomRightText,
+  classes,
+  onClick,
+  icon,
+  subtitle,
+  title,
+  distancePosition,
+  role,
+  srLabel,
 }) => {
   // Distance text
   // TODO: Change to check data for distance once location info is available
   const distance = distancePosition; // '100';
 
   // Screen reader text
-  const srText = `${title || ''} ${subtitle || ''} ${distance ? `${distance} metrin päässä` : ''} ${bottomRightText || ''}`;
+  const srText = `${title || ''} ${subtitle || ''} ${distance ? `${distance} metrin päässä` : ''} ${bottomRightText || ''} ${srLabel || ''}`;
   const bottomRightStyles = { color: bottomRightColor };
 
   return (
     <>
       <ListItem
         button
-        role="link"
+        role={role || 'link'}
         component="li"
         tabIndex={0}
         onClick={onClick}
@@ -194,6 +203,8 @@ ResultItem.propTypes = {
   subtitle: PropTypes.string,
   title: PropTypes.string.isRequired,
   distancePosition: PropTypes.objectOf(PropTypes.any),
+  role: PropTypes.string,
+  srLabel: PropTypes.string,
 };
 
 ResultItem.defaultProps = {
@@ -204,4 +215,6 @@ ResultItem.defaultProps = {
   onClick: () => {},
   subtitle: null,
   distancePosition: null,
+  role: null,
+  srLabel: null,
 };
