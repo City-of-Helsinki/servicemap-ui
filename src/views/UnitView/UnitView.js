@@ -91,7 +91,7 @@ class UnitView extends React.Component {
 
   render() {
     const {
-      classes, getLocaleText, intl, unit, eventsData, navigator, match,
+      classes, getLocaleText, intl, unit, eventsData, navigator, match, unitFetching,
     } = this.props;
     const { didMount, reservations } = this.state;
 
@@ -109,7 +109,7 @@ class UnitView extends React.Component {
       </div>
     );
 
-    if (unit && (!correctUnit || !unit.complete)) {
+    if (unitFetching) {
       return (
         <div className={classes.root}>
           <div className="Content">
@@ -208,6 +208,7 @@ class UnitView extends React.Component {
 // Listen to redux state
 const mapStateToProps = (state) => {
   const unit = getSelectedUnit(state);
+  const unitFetching = state.selectedUnit.isFetching;
   const eventsData = state.event.data;
   const eventFetching = state.event.isFetching;
   const getLocaleText = textObject => getLocaleString(state, textObject);
@@ -215,6 +216,7 @@ const mapStateToProps = (state) => {
   const { navigator } = state;
   return {
     unit,
+    unitFetching,
     eventsData,
     eventFetching,
     getLocaleText,
@@ -234,6 +236,7 @@ UnitView.propTypes = {
   eventsData: PropTypes.objectOf(PropTypes.any),
   map: PropTypes.objectOf(PropTypes.any),
   fetchSelectedUnit: PropTypes.func.isRequired,
+  unitFetching: PropTypes.bool.isRequired,
   fetchUnitEvents: PropTypes.func.isRequired,
   eventFetching: PropTypes.bool.isRequired,
   match: PropTypes.objectOf(PropTypes.any),
