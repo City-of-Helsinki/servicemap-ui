@@ -86,11 +86,11 @@ class MapView extends React.Component {
   }
 
   getAddress(ev) {
+    this.setState({ mapClickPoint: null });
     if (document.getElementsByClassName('popup').length > 0) {
       this.mapRef.current.leafletElement.closePopup();
     } else {
       // Get address of clicked location
-      this.setState({ mapClickPoint: null });
       this.setState({ mapClickPoint: ev.latlng, address: null });
       this.fetchAddress(ev.latlng)
         .then(data => this.setState({ address: data }));
