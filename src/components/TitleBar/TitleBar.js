@@ -58,6 +58,7 @@ const TitleBar = ({
           text={title}
           variant="h6"
           tabIndex="-1"
+          noWrap
         >
           {title}
         </Typography>

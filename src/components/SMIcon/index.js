@@ -39,6 +39,20 @@ export const RollatorIcon = ({ ...rest }) => (
   <SMIcon icon="icon-icon-rollator" {...rest} />
 );
 
+/**
+ * General
+ */
+export const AreaIcon = ({ ...rest }) => (
+  <SMIcon icon="icon-icon-areas-and-districts" {...rest} />
+);
+export const AddressIcon = ({ ...rest }) => (
+  <SMIcon icon="icon-icon-address" {...rest} />
+);
+
+export const MapIcon = ({ ...rest }) => (
+  <SMIcon icon="icon-icon-map-options" {...rest} />
+);
+
 
 // Function to get right icon based on key mapping
 export const getIcon = (key, props) => {

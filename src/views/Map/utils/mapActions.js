@@ -19,13 +19,11 @@ const fitUnitsToMap = (units, map) => {
   }
 };
 
-const focusUnit = (map, unit) => {
-  if (unit.location && unit.location.coordinates) {
-    map.setView(
-      [unit.location.coordinates[1], unit.location.coordinates[0]],
-      map._layersMaxZoom - 1,
-    );
-  }
+const focusUnit = (map, coordinates) => {
+  map.setView(
+    [coordinates[1], coordinates[0]],
+    map._layersMaxZoom - 1,
+  );
 };
 
 const focusDistrict = (map, coordinates) => {

@@ -70,6 +70,13 @@ const SMTheme = createMuiTheme({
       letterSpacing: '0.015625rem', // 0.25px
       lineHeight: '1.5rem',
     },
+    button: {
+      fontSize: '0.90125rem', // 14.42px
+      fontWeight: 'bold',
+      letterSpacing: '0.078125rem', // 1.25px
+      lineHeight: '1rem', // 16px
+      color: '#ffffff',
+    },
   },
   spacing: {
     unit: 8,

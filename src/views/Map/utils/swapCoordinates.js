@@ -2,7 +2,7 @@
 // This changes list of coordinates from lng-lat to lat-lng
 const swapCoordinates = (data) => {
   const L = require('leaflet');
-  const districtData = data;
+  const coordinates = data;
   for (let i = 0; i < data.length; i += 1) {
     const geoJSONBounds = [];
     data[i].forEach((coordinate) => {
@@ -13,9 +13,9 @@ const swapCoordinates = (data) => {
         geoJSONBounds.push([geoJSONCoord.lng, geoJSONCoord.lat]);
       }
     });
-    districtData[i] = geoJSONBounds;
+    coordinates[i] = geoJSONBounds;
   }
-  return districtData;
+  return coordinates;
 };
 
 export default swapCoordinates;

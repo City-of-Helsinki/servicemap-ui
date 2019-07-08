@@ -24,7 +24,7 @@ const createContentStyles = (
   } else if (isSmallScreen) {
     width = '50%';
   }
-  const topBarHeight = 64;
+  const topBarHeight = '64px';
 
   const styles = {
     activeRoot: {
@@ -42,9 +42,8 @@ const createContentStyles = (
       flex: !isMobile || mobileMapOnly ? 1 : 0,
       display: 'flex',
       visibility: isMobile && (!mobileMapOnly || settingsOpen) ? 'hidden' : '',
-      height: '100%',
+      height: isMobile ? `calc(100% - ${topBarHeight})` : '100%',
       width: '100%',
-      paddingTop: isMobile ? topBarHeight : 0,
     },
     sidebar: {
       top: 0,
@@ -62,8 +61,8 @@ const createContentStyles = (
   if (isMobile) {
     styles.sidebar.flex = '1 1 auto';
     if (fullMobileMap && !landscape) {
-      styles.map.paddingBottom = 0;
-      styles.map.paddingTop = 56; // Titlebar height
+      // TODO change 56px to topBarHeight when we get new height for topbar/titlebar
+      styles.map.height = 'calc(100% - 56px)';
     }
   }
 
@@ -71,7 +70,7 @@ const createContentStyles = (
 };
 
 const DefaultLayout = (props) => {
-  const { i18n, location } = props;
+  const { i18n, location, setMobile } = props;
   const isMobile = useMediaQuery(`(max-width:${mobileBreakpoint}px)`);
   const isSmallScreen = useMediaQuery(`(max-width:${smallScreenBreakpoint}px)`);
   const fullMobileMap = new URLSearchParams(location.search).get('map'); // If mobile map without bottom navigation & searchbar
@@ -85,6 +84,9 @@ const DefaultLayout = (props) => {
   const styles = createContentStyles(
     isMobile, isSmallScreen, landscape, mobileMapOnly, fullMobileMap, settingsOpen,
   );
+
+  // TODO make this component class-component if possible and move this from render
+  setMobile(isMobile);
 
   return (
     <>
@@ -119,6 +121,7 @@ const DefaultLayout = (props) => {
 DefaultLayout.propTypes = {
   i18n: PropTypes.instanceOf(I18n),
   location: PropTypes.objectOf(PropTypes.any).isRequired,
+  setMobile: PropTypes.func.isRequired,
 };
 
 DefaultLayout.defaultProps = {

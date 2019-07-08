@@ -14,6 +14,28 @@ export default {
                                 other {# puutetta}
                               }`,
 
+  // Address
+  'address.show.area': 'Näytä alue kartalla',
+  'address.list.geographical': 'Maantieteellinen',
+  'address.list.protection': 'Väestönsuojelu',
+  'address.list.health': 'Terveys',
+  'address.list.education': 'Koulutus',
+  'address.list.neighborhood': 'Kaupunginosa',
+  'address.list.postcode_area': 'Postinumeroalue',
+  'address.list.rescue_area': 'Suojelupiiri',
+  'address.list.rescue_district': 'Suojelulohko',
+  'address.list.rescue_sub_district': 'Suojelualalohko',
+  'address.list.health_station_district': 'Terveysasema-alue',
+  'address.list.maternity_clinic_district': 'Neuvola-alue',
+  'address.list.lower_comprehensive_school_district_fi': 'Suomenkielinen ala-aste',
+  'address.list.lower_comprehensive_school_district_sv': 'Ruotsinkielinen ala-aste',
+  'address.list.upper_comprehensive_school_district_fi': 'Suomenkielinen ylä-aste',
+  'address.list.upper_comprehensive_school_district_sv': 'Ruotsinkielinen ylä-aste',
+  'address.list.preschool_education_fi': 'Suomenkielinen varhaiskasvatus',
+  'address.list.preschool_education_sv': 'Ruotsinkielinen varhaiskasvatus',
+  'address.error': 'Osoitetta ei löytynyt',
+  'address.nearby': 'Lähellä',
+
   // Event
   'event.nearby': 'Lähellä olevat tapahtumat',
   'event.description': 'Kuvaus',
@@ -51,6 +73,7 @@ export default {
   'general.pageTitles.unit': 'Toimipistenäkymä',
   'general.pageTitles.service': 'Palvelunäkymä',
   'general.pageTitles.event': 'Tapahtumanäkymä',
+  'general.pageTitles.address': 'Osoitenäkymä',
   'general.pageTitles.list.services': 'Palvelulista ',
   'general.pageTitles.list.events': 'Tapahtumalista ',
   'general.pageTitles.list.reservations': 'Varauslista',
@@ -80,6 +103,8 @@ export default {
   // Map
   'map': 'Kartta',
   'map.transit.endStation': 'Päätepysäkki',
+  'map.address.searching': 'Haetaan osoitetta...',
+  'map.address.info': 'Osoitteen tiedot',
 
   // Units
   'unit': 'Toimipiste',
