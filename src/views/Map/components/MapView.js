@@ -296,6 +296,7 @@ class MapView extends React.Component {
               />
               {/* Popup for the district unit name */}
               <Popup
+                className="popup"
                 offset={[-1, -29]}
                 closeButton={false}
                 autoPan={false}

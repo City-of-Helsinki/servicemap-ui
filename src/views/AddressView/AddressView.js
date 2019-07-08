@@ -72,11 +72,17 @@ class AddressView extends React.Component {
   }
 
   componentWillUnmount() {
-    const { setHighlightedDistrict, map } = this.props;
+    const {
+      setHighlightedDistrict, setAddressTitle, map, getLocaleText,
+    } = this.props;
+    const { addressData } = this.state;
     if (addressMarker) {
       map.removeLayer(addressMarker);
     }
     setHighlightedDistrict(null);
+    // Add addess name as title to redux, so that when returning to page, correct title is shown
+    const title = addressData && `${getLocaleText(addressData.street.name)} ${addressData.number}, ${addressData.street.municipality}`;
+    setAddressTitle(title);
   }
 
   addMarkerToMap = (coordinates, id) => {
@@ -103,7 +109,7 @@ class AddressView extends React.Component {
   }
 
   fetchData = (match) => {
-    const { intl } = this.props;
+    const { intl, setAddressTitle, getLocaleText } = this.props;
     const { districts, units, fetching } = this.state;
     if (districts || units) {
       // Remove old data before fetching new
@@ -121,6 +127,8 @@ class AddressView extends React.Component {
             address.number += address.letter;
           }
           this.setState({ addressData: address, fetching: false });
+          const addressName = `${getLocaleText(address.street.name)} ${address.number}, ${address.street.municipality}`;
+          setAddressTitle(addressName);
           const { coordinates } = address.location;
           this.addMarkerToMap(coordinates, address.street.id);
           this.fetchAddressDistricts(coordinates);
@@ -256,23 +264,25 @@ class AddressView extends React.Component {
             ))}
           </TitledList>
         )}
-        <MobileComponent>
-          <ServiceMapButton
-            className={classes.mapButton}
-            onClick={() => {
-              if (navigator) {
-                focusUnit(map, addressData.location.coordinates);
-                const title = `${getLocaleText(addressData.street.name)} ${addressData.number}, ${addressData.street.municipality}`;
-                this.showOnMap(title);
-              }
-            }}
-          >
-            <MapIcon className={classes.icon} />
-            <Typography variant="button">
-              <FormattedMessage id="general.showOnMap" />
-            </Typography>
-          </ServiceMapButton>
-        </MobileComponent>
+        {addressData && (
+          <MobileComponent>
+            <ServiceMapButton
+              className={classes.mapButton}
+              onClick={() => {
+                if (navigator) {
+                  focusUnit(map, addressData.location.coordinates);
+                  const title = `${getLocaleText(addressData.street.name)} ${addressData.number}, ${addressData.street.municipality}`;
+                  this.showOnMap(title);
+                }
+              }}
+            >
+              <MapIcon className={classes.icon} />
+              <Typography variant="button">
+                <FormattedMessage id="general.showOnMap" />
+              </Typography>
+            </ServiceMapButton>
+          </MobileComponent>
+        )}
       </div>
     );
   }
