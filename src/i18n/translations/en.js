@@ -124,7 +124,7 @@ export default {
   'unit.contact.info': 'Contact information',
   'unit.services': 'Services',
   'unit.eServices': 'Electronic services', // TODO: verify
-  'unit.reservations': 'Reservations',
+  'unit.reservations': 'Reservable objects', // TODO verify
   'unit.events': 'Events',
   'unit.homepage': 'Home page',
   'unit.picture': 'Picture of unit: ',
@@ -137,12 +137,12 @@ export default {
   'unit.school.year': 'School year',
   'unit.opens.new.tab': '(new tab)',
   'unit.call.number': '(call)',
-  'unit.more.reservations': 'Show all {count} reservations',
+  'unit.more.reservations': 'Show all {count} objects', // TODO verify
   'unit.more.services': 'Show all {count} services',
   'unit.more.events': 'Show all {count} events',
   'unit.list.services': 'Services',
   'unit.list.events': 'Events',
-  'unit.list.reservations': 'Reservations',
+  'unit.list.reservations': 'Reservable objects', // TODO verify
 
   // Search
   'search': 'Search',

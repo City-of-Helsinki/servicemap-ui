@@ -105,7 +105,7 @@ class MapContainer extends React.Component {
       mapUnits = serviceUnits;
     }
 
-    if (currentPage === 'unit' && highlightedUnit) {
+    if ((currentPage === 'unit' || currentPage === 'fullList') && highlightedUnit) {
       mapUnits = [highlightedUnit];
       const { geometry } = highlightedUnit;
       if (geometry && geometry.type === 'MultiLineString') {

@@ -123,7 +123,7 @@ export default {
   'unit.contact.info': 'Yhteystiedot',
   'unit.services': 'Palvelut toimipisteessä',
   'unit.eServices': 'Sähköinen asiointi',
-  'unit.reservations': 'Varaukset',
+  'unit.reservations': 'Varattavat kohteet',
   'unit.events': 'Toimipisteen tapahtumat',
   'unit.homepage': 'Kotisivu',
   'unit.picture': 'Kuva toimipisteestä: ',
@@ -136,12 +136,12 @@ export default {
   'unit.school.year': 'Lukuvuosi',
   'unit.opens.new.tab': '(uusi välilehti)',
   'unit.call.number': '(soita)',
-  'unit.more.reservations': 'Näytä kaikki {count} varausta',
+  'unit.more.reservations': 'Näytä kaikki {count} kohdetta',
   'unit.more.services': 'Näytä kaikki {count} palvelua',
   'unit.more.events': 'Näytä kaikki {count} tapahtumaa',
   'unit.list.services': 'Palvelut',
   'unit.list.events': 'Tapahtumat',
-  'unit.list.reservations': 'Varaukset',
+  'unit.list.reservations': 'Varattavat kohteet',
 
   // Search
   'search': 'Hae',
