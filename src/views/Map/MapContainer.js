@@ -6,7 +6,7 @@ import { injectIntl, intlShape } from 'react-intl';
 import { getMapType } from '../../redux/selectors/map';
 import getHighlightedDistrict from '../../redux/selectors/district';
 import { setMapRef } from '../../redux/actions/map';
-import setAddressData from '../../redux/actions/address';
+import { setAddressLocation } from '../../redux/actions/address';
 import MapView from './components/MapView';
 import { getSelectedUnit } from '../../redux/selectors/selectedUnit';
 import { getLocaleString } from '../../redux/selectors/locale';
@@ -52,8 +52,9 @@ class MapContainer extends React.Component {
       intl,
       settings,
       navigator,
-      setAddressData,
+      setAddressLocation,
       addressTitle,
+      addressUnits,
     } = this.props;
     const { initialMap, transitStops } = this.state;
 
@@ -96,6 +97,10 @@ class MapContainer extends React.Component {
       mapUnits = unitList;
     }
 
+    if (currentPage === 'address') {
+      mapUnits = addressUnits;
+    }
+
     if (currentPage === 'service' && serviceUnits && !unitsLoading) {
       mapUnits = serviceUnits;
     }
@@ -128,7 +133,7 @@ class MapContainer extends React.Component {
             transitStops={transitStops}
             getLocaleText={textObject => getLocaleText(textObject)}
             navigator={navigator}
-            setAddressData={setAddressData}
+            setAddressLocation={setAddressLocation}
           // TODO: think about better styling location for map
             style={{ height: '100%', flex: '1 0 auto' }}
             settings={settings}
@@ -151,7 +156,7 @@ const mapStateToProps = (state) => {
   const currentPage = state.user.page;
   const getLocaleText = textObject => getLocaleString(state, textObject);
   const { navigator } = state;
-  const { addressTitle } = state.address;
+  const { addressTitle, addressUnits } = state.address;
   return {
     mapType,
     state,
@@ -165,12 +170,13 @@ const mapStateToProps = (state) => {
     settings,
     navigator,
     addressTitle,
+    addressUnits,
   };
 };
 
 export default injectIntl(connect(
   mapStateToProps,
-  { setMapRef, setAddressData },
+  { setMapRef, setAddressLocation },
 )(MapContainer));
 
 
@@ -189,14 +195,16 @@ MapContainer.propTypes = {
   intl: intlShape.isRequired,
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
-  setAddressData: PropTypes.func.isRequired,
+  setAddressLocation: PropTypes.func.isRequired,
   addressTitle: PropTypes.string,
+  addressUnits: PropTypes.arrayOf(PropTypes.any),
 };
 
 MapContainer.defaultProps = {
   mapType: '',
   unitList: [],
   serviceUnits: [],
+  addressUnits: [],
   unitsLoading: false,
   highlightedUnit: null,
   highlightedDistrict: null,

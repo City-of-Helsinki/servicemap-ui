@@ -138,17 +138,19 @@ class AddressView extends React.Component {
   }
 
   fetchUnits = (lnglat) => {
+    const { setAddressUnits } = this.props;
     fetchAddressUnits(lnglat)
       .then((data) => {
         this.setState({ units: data.results });
+        setAddressUnits(data.results);
       });
   }
 
   showOnMap = (title) => {
-    const { match, navigator, setAddressData } = this.props;
+    const { match, navigator, setAddressTitle } = this.props;
     const { params } = match;
     // Set correct title (address or district name) for map title bar to display
-    setAddressData({ addressTitle: title });
+    setAddressTitle(title);
     navigator.push('address', {
       municipality: params.municipality,
       street: params.street,
@@ -285,7 +287,8 @@ AddressView.propTypes = {
   intl: intlShape.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   getLocaleText: PropTypes.func.isRequired,
-  setAddressData: PropTypes.func.isRequired,
+  setAddressUnits: PropTypes.func.isRequired,
+  setAddressTitle: PropTypes.func.isRequired,
   highlightedDistrict: PropTypes.objectOf(PropTypes.any),
   mobile: PropTypes.bool.isRequired,
   addressState: PropTypes.objectOf(PropTypes.any),

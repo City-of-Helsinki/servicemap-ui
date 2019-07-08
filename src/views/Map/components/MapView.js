@@ -208,7 +208,7 @@ class MapView extends React.Component {
       settings,
       navigator,
       classes,
-      setAddressData,
+      setAddressLocation,
     } = this.props;
     const {
       Map,
@@ -345,7 +345,7 @@ class MapView extends React.Component {
                     onClick={() => {
                       if (navigator) {
                         this.mapRef.current.leafletElement.closePopup();
-                        setAddressData({
+                        setAddressLocation({
                           addressId: address.street.id,
                           clickCoordinates: [mapClickPoint.lat, mapClickPoint.lng],
                         });
@@ -458,7 +458,7 @@ MapView.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
-  setAddressData: PropTypes.func.isRequired,
+  setAddressLocation: PropTypes.func.isRequired,
 };
 
 MapView.defaultProps = {
