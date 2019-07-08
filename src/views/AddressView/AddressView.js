@@ -10,7 +10,7 @@ import fetchDistricts from './utils/fetchDistricts';
 import { MobileComponent, DesktopComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import TitleBar from '../../components/TitleBar/TitleBar';
 import TitledList from '../../components/Lists/TitledList';
-import { AreaIcon, AddressIcon, MapIcon } from '../../components/SMIcon';
+import { AddressIcon, MapIcon } from '../../components/SMIcon';
 import UnitItem from '../../components/ListItems/UnitItem';
 import HeadModifier from '../../utils/headModifier';
 
@@ -244,7 +244,6 @@ class AddressView extends React.Component {
                   <DistritctItem
                     key={district.id}
                     district={district}
-                    icon={<AreaIcon />}
                     title={title}
                     period={period}
                     showDistrictOnMap={this.showDistrictOnMap}

@@ -3,16 +3,17 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
 import ResultItem from '../../../components/ListItems/ResultItem';
 import { MobileComponent, DesktopComponent } from '../../../layouts/WrapperComponents/WrapperComponents';
+import { AreaIcon } from '../../../components/SMIcon';
 
 const DistrictItem = ({
-  district, title, period, icon, showDistrictOnMap, intl,
+  district, title, period, showDistrictOnMap, intl,
 }) => (
   <>
     <MobileComponent>
       <ResultItem
         role="link"
         srLabel={intl.formatMessage({ id: 'address.show.area' })}
-        icon={icon}
+        icon={<AreaIcon />}
         title={title}
         subtitle={intl.formatMessage({ id: `address.list.${district.type}` })}
         bottomRightText={period}
@@ -23,7 +24,7 @@ const DistrictItem = ({
       <ResultItem
         role="button"
         srLabel={intl.formatMessage({ id: 'address.show.area' })}
-        icon={icon}
+        icon={<AreaIcon />}
         title={title}
         subtitle={intl.formatMessage({ id: `address.list.${district.type}` })}
         bottomRightText={period}
@@ -37,7 +38,6 @@ DistrictItem.propTypes = {
   district: PropTypes.objectOf(PropTypes.any).isRequired,
   title: PropTypes.string.isRequired,
   period: PropTypes.string,
-  icon: PropTypes.objectOf(PropTypes.any).isRequired,
   showDistrictOnMap: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
 };
