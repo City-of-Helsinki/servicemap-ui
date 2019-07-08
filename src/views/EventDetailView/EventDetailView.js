@@ -126,6 +126,9 @@ class EventDetailView extends React.Component {
                  srText={intl.formatMessage({ id: 'unit.phone' })}
                  link
                  divider={false}
+                 handleItemClick={() => {
+                   window.location.href = `tel:${unit.phone}`;
+                 }}
                />
                )
              }
