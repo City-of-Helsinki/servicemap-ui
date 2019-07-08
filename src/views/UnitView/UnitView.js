@@ -64,9 +64,11 @@ class UnitView extends React.Component {
         .then(data => this.setState({ reservations: data.results }));
 
       if (unit && (unit.complete && unitId === `${unit.id}`)) {
+        this.fetchAccessibilitySentences();
         return;
       }
       fetchSelectedUnit(unitId);
+      this.fetchAccessibilitySentences();
     }
   }
 
@@ -84,7 +86,6 @@ class UnitView extends React.Component {
     }
     if (unit && !eventFetching && (!eventsData.events || eventsData.unit !== unit.id)) {
       fetchUnitEvents(unit.id);
-      this.fetchAccessibilitySentences();
     }
   }
 
