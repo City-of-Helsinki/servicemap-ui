@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Typography } from '@material-ui/core';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { intlShape } from 'react-intl';
+import { intlShape, FormattedMessage } from 'react-intl';
 import SearchBar from '../../components/SearchBar';
 import { focusDistrict, focusUnit } from '../Map/utils/mapActions';
 import fetchDistricts from './utils/fetchDistricts';
@@ -269,7 +269,7 @@ class AddressView extends React.Component {
           >
             <MapIcon className={classes.icon} />
             <Typography variant="button">
-              {'Näytä kartalla'}
+              <FormattedMessage id="general.showOnMap" />
             </Typography>
           </ServiceMapButton>
         </MobileComponent>
