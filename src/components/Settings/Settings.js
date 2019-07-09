@@ -153,7 +153,7 @@ class Settings extends React.Component {
       if (!isMobile) {
         const rect = sidebar.getBoundingClientRect();
         styles.position = 'absolute';
-        styles.top = rect.top;
+        styles.top = 0; // rect.top;
         styles.left = rect.left;
         styles.width = rect.width;
         styles.height = rect.height;
