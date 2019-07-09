@@ -67,8 +67,7 @@ class UnitView extends React.Component {
         this.fetchAccessibilitySentences();
         return;
       }
-      fetchSelectedUnit(unitId);
-      this.fetchAccessibilitySentences();
+      fetchSelectedUnit(unitId, () => this.fetchAccessibilitySentences());
     }
   }
 
@@ -166,6 +165,7 @@ class UnitView extends React.Component {
     if (!unit) {
       return;
     }
+    console.log('Fetching accessiblity sentences');
 
     const url = `${BASE_URL}${unit.id}`;
 
