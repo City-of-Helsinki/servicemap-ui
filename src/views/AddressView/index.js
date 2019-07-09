@@ -14,14 +14,12 @@ const mapStateToProps = (state) => {
   const highlightedDistrict = state.districts.highlitedDistrict;
   const { navigator } = state;
   const addressState = state.address;
-  const { mobile } = state.user;
   return {
     map,
     getLocaleText,
     highlightedDistrict,
     navigator,
     addressState,
-    mobile,
   };
 };
 

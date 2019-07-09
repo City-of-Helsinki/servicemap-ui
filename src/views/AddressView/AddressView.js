@@ -10,14 +10,14 @@ import fetchDistricts from './utils/fetchDistricts';
 import { MobileComponent, DesktopComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import TitleBar from '../../components/TitleBar/TitleBar';
 import TitledList from '../../components/Lists/TitledList';
-import ResultItem from '../../components/ListItems/ResultItem';
-import { AreaIcon, AddressIcon, MapIcon } from '../../components/SMIcon';
+import { AddressIcon, MapIcon } from '../../components/SMIcon';
 import UnitItem from '../../components/ListItems/UnitItem';
 import HeadModifier from '../../utils/headModifier';
 
 import fetchAddressUnits from './utils/fetchAddressUnits';
 import fetchAddressData from './utils/fetchAddressData';
 import ServiceMapButton from '../../components/ServiceMapButton';
+import DistritctItem from './components/DistrictItem';
 
 let addressMarker = null;
 
@@ -167,14 +167,13 @@ class AddressView extends React.Component {
     });
   }
 
-  showDistrictOnMap = (district) => {
+  showDistrictOnMap = (district, mobile) => {
     const {
       map,
       setHighlightedDistrict,
       getLocaleText,
       intl,
       highlightedDistrict,
-      mobile,
     } = this.props;
 
     // On desktop mode if clicked on an already highlihted district, we want to toggle it off.
@@ -196,7 +195,7 @@ class AddressView extends React.Component {
 
   render() {
     const {
-      match, intl, getLocaleText, map, classes, mobile,
+      match, intl, getLocaleText, map, classes,
     } = this.props;
     const {
       addressData, districts, units, error,
@@ -242,15 +241,12 @@ class AddressView extends React.Component {
                   ? `${district.start.substring(0, 4)}-${district.end.substring(0, 4)}` : null;
 
                 return (
-                  <ResultItem
+                  <DistritctItem
                     key={district.id}
-                    role={mobile ? 'link' : 'button'}
-                    srLabel={intl.formatMessage({ id: 'address.show.area' })}
-                    icon={<AreaIcon />}
+                    district={district}
                     title={title}
-                    subtitle={intl.formatMessage({ id: `address.list.${district.type}` })}
-                    bottomRightText={period}
-                    onClick={() => { this.showDistrictOnMap(district); }}
+                    period={period}
+                    showDistrictOnMap={this.showDistrictOnMap}
                   />
                 );
               })}
@@ -300,7 +296,6 @@ AddressView.propTypes = {
   setAddressUnits: PropTypes.func.isRequired,
   setAddressTitle: PropTypes.func.isRequired,
   highlightedDistrict: PropTypes.objectOf(PropTypes.any),
-  mobile: PropTypes.bool.isRequired,
   addressState: PropTypes.objectOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
 };

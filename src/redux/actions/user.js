@@ -13,10 +13,6 @@ export const setPage = page => ({
   page,
 });
 
-export const setMobile = mobile => ({
-  type: 'SET_MOBILE',
-  mobile,
-});
 
 export const changeLocaleAction = locale => async (dispatch) => {
   dispatch(setLocale(locale));
@@ -31,4 +27,4 @@ export const setCurrentPage = page => async (dispatch) => {
 };
 
 
-export default { setLocale, changeLocaleAction, setMobile };
+export default { setLocale, changeLocaleAction };
