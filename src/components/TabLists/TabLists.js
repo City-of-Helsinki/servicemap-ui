@@ -24,6 +24,8 @@ class TabLists extends React.Component {
 
   tabTitleClass = 'TabResultTitle';
 
+  sidebarClass = 'SidebarWrapper';
+
   tabsRef = null;
 
   constructor(props) {
@@ -153,16 +155,16 @@ class TabLists extends React.Component {
     const { scrollDistance } = this.state;
 
     let scrollDistanceFromTop = scrollDistance;
-    const elem = document.getElementsByClassName('SidebarWrapper')[0];
+    const elem = document.getElementsByClassName(this.sidebarClass)[0];
     const elemOverflow = window.getComputedStyle(elem, null).getPropertyValue('overflow');
 
     // Adjust scroll to given number
     if (typeof scroll === 'number') {
       scrollDistanceFromTop = scroll;
       if (elemOverflow !== 'auto') {
-        window.scrollTo(0, 0);
+        window.scrollTo(0, scrollDistanceFromTop);
       } else {
-        elem.scrollTop = 0;
+        elem.scrollTop = scrollDistanceFromTop;
       }
       return;
     }
@@ -207,23 +209,19 @@ class TabLists extends React.Component {
   }
 
   calculateHeaderStylings() {
-    // TODO: In materialUI 4.*
-    // Update height calculations and change <Tabs /> to use ref
-
     if (!this.tabsRef) {
       return;
     }
 
     // Reset scroll to avoid scrolled sticky  elements having inconsistent offsetTop
-    const elem = document.getElementsByClassName('SidebarWrapper')[0];
+    const elem = document.getElementsByClassName(this.sidebarClass)[0];
     elem.scrollTop = 0;
 
     // Calculate height by looping through Tabs root element's previous siblings
     // Change sidebar scroll to match TabList header's sticky elements' combined height
     const tabsElem = this.tabsRef.tabsRef.parentNode.parentNode;
     const containerHeight = tabsElem.parentNode.clientHeight;
-
-    let distanceToTop = tabsElem.offsetTop;
+    const tabsDistanceFromTop = tabsElem.offsetTop;
     let sibling = tabsElem;
     let scrollDistance = 0;
 
@@ -231,19 +229,18 @@ class TabLists extends React.Component {
       sibling = sibling.previousSibling;
 
       const pos = window.getComputedStyle(sibling, null).getPropertyValue('position');
-      if (pos !== 'sticky') {
-        if (typeof sibling.clientHeight === 'number') {
-          distanceToTop -= sibling.clientHeight;
-          scrollDistance += sibling.clientHeight;
-        }
+      if (pos !== 'sticky' && typeof sibling.clientHeight === 'number') {
+        scrollDistance += sibling.clientHeight;
       }
     }
 
     if (typeof distanceToTop === 'number' && typeof containerHeight === 'number') {
-      const customTabHeight = containerHeight - distanceToTop;
+      // Adjust tabs min height to work with shorter contents
+      const customTabHeight = containerHeight - (tabsDistanceFromTop - scrollDistance);
+      // Set new styles and scrollDistance value to state
       this.setState({
         styles: {
-          top: distanceToTop,
+          top: tabsDistanceFromTop,
         },
         tabStyles: {
           minHeight: customTabHeight,

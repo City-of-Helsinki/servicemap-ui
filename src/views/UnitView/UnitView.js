@@ -165,7 +165,6 @@ class UnitView extends React.Component {
     if (!unit) {
       return;
     }
-    console.log('Fetching accessiblity sentences');
 
     const url = `${BASE_URL}${unit.id}`;
 
