@@ -16,7 +16,7 @@ export default theme => ({
   },
   tab: {
     minWidth: 0,
-    width: '33.3%',
+    flex: '1 1 auto',
     [theme.breakpoints.only('sm')]: {
       letterSpacing: 'normal',
     },
