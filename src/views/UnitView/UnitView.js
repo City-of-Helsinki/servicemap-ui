@@ -289,7 +289,7 @@ class UnitView extends React.Component {
     const icon = didMount && unit ? <UnitIcon unit={unit} /> : null;
 
     const TopBar = (
-      <div className={classes.topBar}>
+      <div className={`${classes.topBar} sticky`}>
         <DesktopComponent>
           <SearchBar placeholder={intl.formatMessage({ id: 'search' })} />
           <TitleBar icon={icon} title={title} primary />

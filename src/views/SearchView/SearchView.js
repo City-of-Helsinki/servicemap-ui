@@ -184,6 +184,7 @@ class SearchView extends React.Component {
         headerComponents={(
           <>
             <SearchBar
+              className="sticky"
               placeholder={intl && intl.formatMessage({ id: 'search.input.placeholder' })}
               isSticky={0}
               text={this.getSearchParam() || ''}

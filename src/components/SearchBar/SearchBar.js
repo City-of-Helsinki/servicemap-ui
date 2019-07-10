@@ -123,6 +123,7 @@ class SearchBar extends React.Component {
     const {
       backButtonEvent,
       classes,
+      className,
       intl,
       isSticky,
       placeholder,
@@ -134,7 +135,7 @@ class SearchBar extends React.Component {
     const { search, isActive } = this.state;
 
     const inputValue = typeof search === 'string' ? search : previousSearch;
-    const rootClasses = `${classes.root} ${typeof isSticky === 'number' ? classes.sticky : ''} ${primary ? classes.primary : ''}`;
+    const rootClasses = `${classes.root} ${typeof isSticky === 'number' ? classes.sticky : ''} ${primary ? classes.primary : ''} ${className}`;
     const wrapperClasses = `${classes.wrapper} ${isActive ? classes.wrapperFocused : ''}`;
     const stickyStyles = typeof isSticky === 'number' ? { top: isSticky } : null;
 
@@ -175,6 +176,7 @@ class SearchBar extends React.Component {
 SearchBar.propTypes = {
   backButtonEvent: PropTypes.func,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
+  className: PropTypes.string,
   fetchUnits: PropTypes.func.isRequired,
   hideBackButton: PropTypes.bool,
   navigator: PropTypes.objectOf(PropTypes.any),
@@ -190,6 +192,7 @@ SearchBar.propTypes = {
 SearchBar.defaultProps = {
   previousSearch: null,
   backButtonEvent: null,
+  className: '',
   hideBackButton: false,
   isSticky: null,
   navigator: null,

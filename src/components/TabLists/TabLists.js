@@ -220,32 +220,37 @@ class TabLists extends React.Component {
     // Calculate height by looping through Tabs root element's previous siblings
     // Change sidebar scroll to match TabList header's sticky elements' combined height
     const tabsElem = this.tabsRef.tabsRef.parentNode.parentNode;
+    const tabsHeight = tabsElem.clientHeight;
     const containerHeight = tabsElem.parentNode.clientHeight;
     const tabsDistanceFromTop = tabsElem.offsetTop;
     let sibling = tabsElem;
-    let scrollDistance = 0;
+    let stickyElementPadding = 0;
 
     while (sibling.previousSibling) {
       sibling = sibling.previousSibling;
-
-      const pos = window.getComputedStyle(sibling, null).getPropertyValue('position');
-      if (pos !== 'sticky' && typeof sibling.clientHeight === 'number') {
-        scrollDistance += sibling.clientHeight;
+      const classes = sibling.className;
+      if (classes.indexOf('sticky') > -1 && typeof sibling.clientHeight === 'number') {
+        stickyElementPadding += sibling.clientHeight;
       }
     }
 
-    if (typeof distanceToTop === 'number' && typeof containerHeight === 'number') {
+    if (
+      typeof stickyElementPadding === 'number'
+      && typeof tabsDistanceFromTop === 'number'
+      && typeof containerHeight === 'number'
+      && typeof tabsHeight === 'number'
+    ) {
       // Adjust tabs min height to work with shorter contents
-      const customTabHeight = containerHeight - (tabsDistanceFromTop - scrollDistance);
+      const customTabHeight = containerHeight - tabsHeight;
       // Set new styles and scrollDistance value to state
       this.setState({
         styles: {
-          top: tabsDistanceFromTop,
+          top: stickyElementPadding,
         },
         tabStyles: {
           minHeight: customTabHeight,
         },
-        scrollDistance,
+        scrollDistance: (tabsDistanceFromTop - stickyElementPadding),
       });
     }
   }
@@ -294,7 +299,7 @@ class TabLists extends React.Component {
           // TODO: In materialUI 4.*
           // Change to use ref and update height calculations in componentDidMount
           innerRef={(ref) => { this.tabsRef = ref; }}
-          className={classes.root}
+          className={`sticky ${classes.root}`}
           classes={{
             indicator: classes.indicator,
           }}
