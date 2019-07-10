@@ -89,31 +89,48 @@ class UnitView extends React.Component {
     }
   }
 
+  renderTitleContent = (correctUnit) => {
+    const {
+      getLocaleText, intl, unit, breadcrumb, navigator, match,
+    } = this.props;
+    const { didMount } = this.state;
+    const title = unit && unit.name ? getLocaleText(unit.name) : '';
+    const icon = didMount && unit ? <UnitIcon unit={unit} /> : null;
+
+    let backButtonEvent = null;
+    /* If breadcrumb history has only pages within this unit,
+    push straight to home instead of normal back functionality */
+    if (!breadcrumb.filter(page => page.pathname.indexOf(match.url) === -1).length) {
+      backButtonEvent = () => {
+        if (navigator) {
+          navigator.push('home');
+        }
+      };
+    }
+    return (
+      <div>
+        <DesktopComponent>
+          <SearchBar backButtonEvent={backButtonEvent} placeholder={intl.formatMessage({ id: 'search' })} />
+        </DesktopComponent>
+        <TitleBar backButtonEvent={backButtonEvent} icon={icon} title={correctUnit ? title : ''} />
+      </div>
+    );
+  }
+
   render() {
     const {
       classes, getLocaleText, intl, unit, eventsData, navigator, match,
     } = this.props;
-    const { didMount, reservations } = this.state;
+    const { reservations } = this.state;
 
     const correctUnit = unit && unit.id === parseInt(match.params.unit, 10);
-
-    const title = unit && unit.name ? getLocaleText(unit.name) : '';
-    const icon = didMount && unit ? <UnitIcon unit={unit} /> : null;
-
-    const TopBar = (
-      <div>
-        <DesktopComponent>
-          <SearchBar placeholder={intl.formatMessage({ id: 'search' })} />
-        </DesktopComponent>
-        <TitleBar icon={icon} title={correctUnit ? title : ''} />
-      </div>
-    );
+    const titleContent = this.renderTitleContent(correctUnit);
 
     if (unit && (!correctUnit || !unit.complete)) {
       return (
         <div className={classes.root}>
           <div className="Content">
-            {TopBar}
+            {titleContent}
             <p>
               <FormattedMessage id="general.loading" />
             </p>
@@ -126,7 +143,7 @@ class UnitView extends React.Component {
       return (
         <div className={classes.root}>
           <div className="Content">
-            {TopBar}
+            {titleContent}
 
             {/* Unit image */}
             {unit.picture_url
@@ -195,7 +212,7 @@ class UnitView extends React.Component {
     return (
       <div className={classes.root}>
         <div className="Content">
-          {TopBar}
+          {titleContent}
           <Typography color="primary" variant="body1">
             <FormattedMessage id="unit.details.notFound" />
           </Typography>
@@ -212,7 +229,7 @@ const mapStateToProps = (state) => {
   const eventFetching = state.event.isFetching;
   const getLocaleText = textObject => getLocaleString(state, textObject);
   const map = state.mapRef.leafletElement;
-  const { navigator } = state;
+  const { navigator, breadcrumb } = state;
   return {
     unit,
     eventsData,
@@ -220,6 +237,7 @@ const mapStateToProps = (state) => {
     getLocaleText,
     map,
     navigator,
+    breadcrumb,
   };
 };
 
@@ -241,6 +259,7 @@ UnitView.propTypes = {
   getLocaleText: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
+  breadcrumb: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 UnitView.defaultProps = {

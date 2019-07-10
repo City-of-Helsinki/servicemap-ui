@@ -12,7 +12,7 @@ const mapStateToProps = (state) => {
   const map = state.mapRef.leafletElement;
   const getLocaleText = textObject => getLocaleString(state, textObject);
   const highlightedDistrict = state.districts.highlitedDistrict;
-  const { navigator } = state;
+  const { navigator, breadcrumb } = state;
   const addressState = state.address;
   const { mobile } = state.user;
   return {
@@ -20,6 +20,7 @@ const mapStateToProps = (state) => {
     getLocaleText,
     highlightedDistrict,
     navigator,
+    breadcrumb,
     addressState,
     mobile,
   };

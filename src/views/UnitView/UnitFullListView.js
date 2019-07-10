@@ -82,22 +82,38 @@ class UnitFullListView extends React.Component {
     }
   }
 
+  renderTopBar = () => {
+    const {
+      getLocaleText, intl, unit, breadcrumb, navigator,
+    } = this.props;
+    const { icon } = this.state;
+
+    let backButtonEvent = null;
+
+    if (!breadcrumb.length) {
+      backButtonEvent = () => {
+        if (navigator) {
+          navigator.push('unit', { id: unit.id });
+        }
+      };
+    }
+
+    return (
+      <>
+        <DesktopComponent>
+          <SearchBar backButtonEvent={backButtonEvent} placeholder={intl.formatMessage({ id: 'search' })} />
+        </DesktopComponent>
+        <TitleBar backButtonEvent={backButtonEvent} icon={icon} title={getLocaleText(unit.name)} />
+      </>
+    );
+  }
+
   render() {
     const {
       getLocaleText, unit, intl, classes,
     } = this.props;
-    const { icon, titleId } = this.state;
+    const { titleId } = this.state;
 
-    const topBar = (
-      unit && (
-        <>
-          <DesktopComponent>
-            <SearchBar placeholder={intl.formatMessage({ id: 'search' })} />
-          </DesktopComponent>
-          <TitleBar icon={icon} title={getLocaleText(unit.name)} />
-        </>
-      )
-    );
     const head = titleId && (
       <HeadModifier>
         <title>
@@ -111,7 +127,7 @@ class UnitFullListView extends React.Component {
       <>
         {head}
         <div className={classes.fullListContent}>
-          {topBar}
+          {this.renderTopBar()}
           {this.getContent()}
         </div>
       </>
@@ -123,10 +139,13 @@ const mapStateToProps = (state) => {
   const getLocaleText = textObject => getLocaleString(state, textObject);
   const eventsData = state.event.data;
   const unit = state.selectedUnit.data;
+  const { breadcrumb, navigator } = state;
   return {
     getLocaleText,
     eventsData,
     unit,
+    breadcrumb,
+    navigator,
   };
 };
 
@@ -138,11 +157,14 @@ UnitFullListView.propTypes = {
   fetchUnitEvents: PropTypes.func.isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
+  breadcrumb: PropTypes.arrayOf(PropTypes.any).isRequired,
+  navigator: PropTypes.objectOf(PropTypes.any),
 };
 
 UnitFullListView.defaultProps = {
   unit: null,
   eventsData: { events: null, unit: null },
+  navigator: null,
 };
 
 export default withStyles(styles)(withRouter(injectIntl(connect(

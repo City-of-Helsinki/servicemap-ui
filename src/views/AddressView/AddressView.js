@@ -194,13 +194,38 @@ class AddressView extends React.Component {
     }
   }
 
+  renderTitleContent = (title) => {
+    const {
+      intl, breadcrumb, match, navigator,
+    } = this.props;
+    const { error } = this.state;
+
+    let backButtonEvent = null;
+    /* If breadcrumb history has only pages within this address,
+    push straight to home instead of normal back functionality */
+    if (!breadcrumb.filter(page => page.pathname.indexOf(match.url) === -1).length) {
+      backButtonEvent = () => {
+        if (navigator) {
+          navigator.push('home');
+        }
+      };
+    }
+
+    return (
+      <>
+        <DesktopComponent>
+          <SearchBar backButtonEvent={backButtonEvent} placeholder={intl.formatMessage({ id: 'search' })} />
+        </DesktopComponent>
+        <TitleBar backButtonEvent={backButtonEvent} icon={<AddressIcon />} title={error || title} />
+      </>
+    );
+  }
+
   render() {
     const {
       match, intl, getLocaleText, map, classes, mobile,
     } = this.props;
-    const {
-      addressData, districts, units, error,
-    } = this.state;
+    const { addressData, districts, units } = this.state;
 
     if (units) {
       units.forEach((unit) => {
@@ -219,19 +244,10 @@ class AddressView extends React.Component {
       </HeadModifier>
     );
 
-    const TopBar = (
-      <div>
-        <DesktopComponent>
-          <SearchBar placeholder={intl.formatMessage({ id: 'search' })} />
-        </DesktopComponent>
-        <TitleBar icon={<AddressIcon />} title={error || title} />
-      </div>
-    );
-
     return (
       <div>
         {head}
-        {TopBar}
+        {this.renderTitleContent(title)}
         {districts && Object.entries(districts).map(districtList => (
           districtList[1].length > 0 && (
             <TitledList title={intl.formatMessage({ id: `address.list.${districtList[0]}` })} titleComponent="h4" key={districtList[0]}>
@@ -303,6 +319,7 @@ AddressView.propTypes = {
   mobile: PropTypes.bool.isRequired,
   addressState: PropTypes.objectOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
+  breadcrumb: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 AddressView.defaultProps = {

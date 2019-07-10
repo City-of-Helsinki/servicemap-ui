@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { injectIntl, intlShape } from 'react-intl';
 import { getMapType } from '../../redux/selectors/map';
 import getHighlightedDistrict from '../../redux/selectors/district';
@@ -39,26 +40,18 @@ class MapContainer extends React.Component {
     setMapRef(ref);
   }
 
-  render() {
+  renderTitleContent = () => {
     const {
-      mapType,
-      highlightedUnit,
-      highlightedDistrict,
-      getLocaleText, currentPage,
-      unitList,
-      serviceUnits,
-      unitsLoading,
-      isMobile,
-      intl,
-      settings,
-      navigator,
-      setAddressLocation,
-      addressTitle,
-      addressUnits,
+      isMobile, currentPage, addressTitle, intl, getLocaleText, highlightedUnit, breadcrumb, history,
     } = this.props;
-    const { initialMap, transitStops } = this.state;
 
-    const topBar = (
+    let backButtonEvent = null;
+    if (!breadcrumb.length) {
+      // This removes ?map=true from url
+      backButtonEvent = () => history.push({ search: '' });
+    }
+
+    return (
       <>
         {isMobile && currentPage === 'map' && (
           // If on root map page (/map) display search bar.
@@ -70,13 +63,13 @@ class MapContainer extends React.Component {
           </div>
         )}
         {isMobile && currentPage === 'unit' && highlightedUnit && (
-          // If on unit's map page (/unit?map=true) display title bar
-          <div style={{
-            zIndex: 99999999, position: 'fixed', top: 0, width: '100%',
-          }}
-          >
-            <TitleBar title={getLocaleText(highlightedUnit.name)} />
-          </div>
+        // If on unit's map page (/unit?map=true) display title bar
+        <div style={{
+          zIndex: 99999999, position: 'fixed', top: 0, width: '100%',
+        }}
+        >
+          <TitleBar backButtonEvent={backButtonEvent} title={getLocaleText(highlightedUnit.name)} />
+        </div>
         )}
         {isMobile && currentPage === 'address' && addressTitle && (
         // If on address's map page (/address?map=true) display title bar
@@ -84,14 +77,35 @@ class MapContainer extends React.Component {
           zIndex: 99999999, position: 'fixed', top: 0, width: '100%',
         }}
         >
-          <TitleBar title={addressTitle} />
+          <TitleBar backButtonEvent={backButtonEvent} title={addressTitle} />
         </div>
         )}
       </>
     );
+  }
+
+  render() {
+    const {
+      mapType,
+      highlightedUnit,
+      highlightedDistrict,
+      getLocaleText,
+      currentPage,
+      unitList,
+      serviceUnits,
+      unitsLoading,
+      isMobile,
+      settings,
+      navigator,
+      setAddressLocation,
+      addressUnits,
+    } = this.props;
+    const { initialMap, transitStops } = this.state;
 
     let mapUnits = [];
     let unitGeometry = null;
+
+    const topBar = this.renderTitleContent();
 
     if (currentPage === 'search') {
       mapUnits = unitList;
@@ -155,7 +169,7 @@ const mapStateToProps = (state) => {
   const highlightedUnit = getSelectedUnit(state);
   const currentPage = state.user.page;
   const getLocaleText = textObject => getLocaleString(state, textObject);
-  const { navigator } = state;
+  const { navigator, breadcrumb } = state;
   const { addressTitle, addressUnits } = state.address;
   return {
     mapType,
@@ -169,15 +183,16 @@ const mapStateToProps = (state) => {
     currentPage,
     settings,
     navigator,
+    breadcrumb,
     addressTitle,
     addressUnits,
   };
 };
 
-export default injectIntl(connect(
+export default withRouter(injectIntl(connect(
   mapStateToProps,
   { setMapRef, setAddressLocation },
-)(MapContainer));
+)(MapContainer)));
 
 
 // Typechecking
@@ -198,6 +213,8 @@ MapContainer.propTypes = {
   setAddressLocation: PropTypes.func.isRequired,
   addressTitle: PropTypes.string,
   addressUnits: PropTypes.arrayOf(PropTypes.any),
+  breadcrumb: PropTypes.arrayOf(PropTypes.any).isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 MapContainer.defaultProps = {

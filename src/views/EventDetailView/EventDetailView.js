@@ -75,6 +75,18 @@ class EventDetailView extends React.Component {
     return time;
   }
 
+  renderTitleContent = () => {
+    const { event, intl, getLocaleText } = this.props;
+    return (
+      <>
+        <DesktopComponent>
+          <SearchBar placeholder={intl.formatMessage({ id: 'search' })} />
+        </DesktopComponent>
+        <TitleBar title={getLocaleText(event.name)} icon={<Event />} />
+      </>
+    );
+  }
+
   render() {
     const {
       event, intl, getLocaleText, selectedUnit,
@@ -89,11 +101,7 @@ class EventDetailView extends React.Component {
       const time = this.formatDate(event);
       return (
         <>
-          <DesktopComponent>
-            <SearchBar placeholder={intl.formatMessage({ id: 'search' })} />
-          </DesktopComponent>
-          <TitleBar title={getLocaleText(event.name)} icon={<Event />} />
-
+          {this.renderTitleContent()}
           {event.images && (
           <img
             style={{

@@ -43,12 +43,13 @@ const styles = theme => ({
 });
 
 const TitleBar = ({
-  classes, title, titleComponent, icon,
+  classes, title, titleComponent, icon, backButtonEvent,
 }) => (
   <>
     <MobileComponent>
       <div className={classes.mobileContainer}>
         <BackButton
+          onClick={backButtonEvent}
           className={classes.iconButton}
           variant="icon"
         />
@@ -91,10 +92,12 @@ TitleBar.propTypes = {
   title: PropTypes.string.isRequired,
   titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']),
   icon: PropTypes.objectOf(PropTypes.any),
+  backButtonEvent: PropTypes.func,
 };
 
 TitleBar.defaultProps = {
   titleComponent: 'h3',
   icon: null,
+  backButtonEvent: null,
 };
 export default withStyles(styles)(TitleBar);
