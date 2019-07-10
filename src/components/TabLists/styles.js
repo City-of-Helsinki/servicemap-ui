@@ -14,4 +14,15 @@ export default theme => ({
   resultList: {
     backgroundColor: 'white',
   },
+  tab: {
+    minWidth: 0,
+    width: '33.3%',
+    [theme.breakpoints.only('sm')]: {
+      letterSpacing: 'normal',
+    },
+  },
+  tabLabelContainer: {
+    paddingLeft: 0,
+    paddingRight: 0,
+  },
 });

@@ -312,11 +312,28 @@ class TabLists extends React.Component {
               filteredData.map((item) => {
                 if (item.data && item.data.length > 0) {
                   return (
-                    <Tab key={`${item.title} (${item.data.length})`} label={`${item.title} ${item.component ? '' : `(${item.data.length})`}`} aria-label={item.ariaLabel ? item.ariaLabel : null} />
+                    <Tab
+                      key={`${item.title} (${item.data.length})`}
+                      aria-label={item.ariaLabel ? item.ariaLabel : null}
+                      classes={{
+                        root: classes.tab,
+                        labelContainer: classes.tabLabelContainer,
+                      }}
+                      className={classes.tab}
+                      label={`${item.title} ${item.component ? '' : `(${item.data.length})`}`}
+                    />
                   );
                 }
                 return (
-                  <Tab key={`${item.title}`} label={`${item.title}`} aria-label={item.ariaLabel ? item.ariaLabel : null} />
+                  <Tab
+                    key={`${item.title}`}
+                    aria-label={item.ariaLabel ? item.ariaLabel : null}
+                    classes={{
+                      root: classes.tab,
+                      labelContainer: classes.tabLabelContainer,
+                    }}
+                    label={`${item.title}`}
+                  />
                 );
               })
             }
