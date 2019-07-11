@@ -317,25 +317,25 @@ class UnitView extends React.Component {
     if (unit && unit.complete) {
       const tabs = [
         {
-          ariaLabel: 'Perustiedot',
+          ariaLabel: intl.formatMessage({ id: 'unit.basicInfo' }),
           component: this.renderDetailTab(),
           data: null,
           itemsPerPage: null,
-          title: 'Perustiedot',
+          title: intl.formatMessage({ id: 'unit.basicInfo' }),
         },
         {
-          ariaLabel: 'Esteettömyys',
+          ariaLabel: intl.formatMessage({ id: 'accessibility' }),
           component: this.renderAccessibilityTab(),
           data: null,
           itemsPerPage: null,
-          title: 'Esteettömyys',
+          title: intl.formatMessage({ id: 'accessibility' }),
         },
         {
-          ariaLabel: 'Palvelut',
+          ariaLabel: intl.formatMessage({ id: 'service.plural' }),
           component: this.renderServiceTab(),
           data: null,
           itemsPerPage: null,
-          title: 'Palvelut',
+          title: intl.formatMessage({ id: 'service.plural' }),
         },
       ];
       return (
