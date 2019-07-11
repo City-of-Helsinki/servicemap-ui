@@ -293,6 +293,7 @@ class Settings extends React.Component {
                       <FormControlLabel
                         control={(
                           <Checkbox
+                            color="primary"
                             checked={!!item.value}
                             value={key}
                             onChange={() => {
