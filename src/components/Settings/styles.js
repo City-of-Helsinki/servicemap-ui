@@ -72,7 +72,7 @@ export default theme => ({
     flexDirection: 'row-reverse',
   },
   closeButton: {
-    margin: theme.spacing.unit,
+    margin: `0 ${theme.spacing.unit}px`,
     padding: theme.spacing.unitHalf,
   },
   container: {
