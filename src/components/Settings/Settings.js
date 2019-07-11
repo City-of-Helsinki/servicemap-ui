@@ -289,7 +289,7 @@ class Settings extends React.Component {
                 if (Object.prototype.hasOwnProperty.call(senseSettingList, key)) {
                   const item = senseSettingList[key];
                   return (
-                    <ListItem key={key}>
+                    <ListItem className={classes.checkbox} key={key}>
                       <FormControlLabel
                         control={(
                           <Checkbox
@@ -360,6 +360,9 @@ class Settings extends React.Component {
             </FormLabel>
             <RadioGroup
               aria-label={intl.formatMessage({ id: 'settings.mobility.title' })}
+              classes={{
+                root: classes.radioGroup,
+              }}
               name="mobility"
               value={currentSettings.mobility}
               onChange={(event, value) => {
