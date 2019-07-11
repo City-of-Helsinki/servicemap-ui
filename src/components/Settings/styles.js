@@ -15,6 +15,10 @@ export default theme => ({
   alertColor: {
     color: 'rgba(87,186,255, 1)',
   },
+  alertText: {
+    textAlign: 'left',
+    padding: theme.spacing.unitDouble,
+  },
   bold: {
     fontWeight: 'bold',
   },
