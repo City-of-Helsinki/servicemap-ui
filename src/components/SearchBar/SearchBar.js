@@ -1,4 +1,5 @@
 import React from 'react';
+
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
@@ -7,7 +8,9 @@ import {
 import { Search } from '@material-ui/icons';
 import { injectIntl, intlShape } from 'react-intl';
 import BackButton from '../BackButton';
+import { getLocaleString } from '../../redux/selectors/locale';
 import { fetchUnits } from '../../redux/actions/unit';
+import createSuggestions from './createSuggestions';
 
 const styles = theme => ({
   root: {
@@ -58,6 +61,7 @@ class SearchBar extends React.Component {
     this.state = {
       search: previousSearch,
       isActive: false,
+      suggestions: null,
     };
   }
 
@@ -77,7 +81,13 @@ class SearchBar extends React.Component {
   }
 
   onInputChange = (e) => {
+    const { getLocaleText } = this.props;
+    const query = e.currentTarget.value;
     this.setState({ search: e.currentTarget.value });
+    if (query.length > 2) {
+      createSuggestions(e.currentTarget.value, getLocaleText)
+        .then(result => this.setState({ suggestions: result }));
+    }
   }
 
   onSubmit = (e) => {
@@ -112,38 +122,54 @@ class SearchBar extends React.Component {
     const {
       backButtonEvent, classes, intl, placeholder, previousSearch, hideBackButton, searchRef,
     } = this.props;
-    const { search, isActive } = this.state;
+    const { search, isActive, suggestions } = this.state;
 
     const inputValue = typeof search === 'string' ? search : previousSearch;
 
     return (
-      <Paper className={`${classes.root} ${isActive ? classes.rootFocused : ''}`} elevation={1} square>
-        <form onSubmit={this.onSubmit} className={classes.container}>
-          {
+      <>
+        <Paper className={`${classes.root} ${isActive ? classes.rootFocused : ''}`} elevation={1} square>
+          <form onSubmit={this.onSubmit} className={classes.container}>
+            {
             !hideBackButton
             && <BackButton className={classes.iconButton} onClick={backButtonEvent || null} variant="icon" />
           }
 
-          <InputBase
-            id="searchInput"
-            inputRef={searchRef}
-            className={classes.input}
-            placeholder={placeholder}
-            value={inputValue || ''}
-            onChange={this.onInputChange}
-            onFocus={this.toggleAnimation}
-            onBlur={this.toggleAnimation}
-          />
+            <InputBase
+              id="searchInput"
+              inputRef={searchRef}
+              className={classes.input}
+              placeholder={placeholder}
+              value={inputValue || ''}
+              onChange={this.onInputChange}
+              onFocus={this.toggleAnimation}
+              onBlur={this.toggleAnimation}
+            />
 
-          <IconButton
-            aria-label={intl.formatMessage({ id: 'search' })}
-            type="submit"
-            className={classes.icon}
+            <IconButton
+              aria-label={intl.formatMessage({ id: 'search' })}
+              type="submit"
+              className={classes.icon}
+            >
+              <Search />
+            </IconButton>
+          </form>
+        </Paper>
+        {suggestions && (
+          <div style={{
+            position: 'fixed', zIndex: 999999, height: '100%', width: '450px', backgroundColor: '#ffffff',
+          }}
           >
-            <Search />
-          </IconButton>
-        </form>
-      </Paper>
+            <ul>
+              {suggestions.map(item => (
+                <li>
+                  <p>{`${item.query} ${item.count} tulosta`}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </>
     );
   }
 }
@@ -159,6 +185,7 @@ SearchBar.propTypes = {
   placeholder: PropTypes.string.isRequired,
   searchRef: PropTypes.objectOf(PropTypes.any),
   previousSearch: PropTypes.string,
+  getLocaleText: PropTypes.func.isRequired,
 };
 
 SearchBar.defaultProps = {
@@ -173,9 +200,11 @@ SearchBar.defaultProps = {
 const mapStateToProps = (state) => {
   const { navigator, units } = state;
   const { isFetching } = units;
+  const getLocaleText = textObject => getLocaleString(state, textObject);
   return {
     isFetching,
     navigator,
+    getLocaleText,
   };
 };
 
