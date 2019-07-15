@@ -238,7 +238,7 @@ class UnitView extends React.Component {
     }
 
     return (
-      <AccessibilityInfo data={accessibilityInfoData} headingLevel={4} />
+      <AccessibilityInfo titleAlways data={accessibilityInfoData} headingLevel={3} />
     );
   }
 
