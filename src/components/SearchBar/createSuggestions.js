@@ -1,6 +1,6 @@
 import { uppercaseFirst } from '../../utils';
 
-const pageSize = 20;
+const pageSize = 50;
 
 const createSuggestions = async (query, getLocaleText) => {
   let results = null;
@@ -9,17 +9,18 @@ const createSuggestions = async (query, getLocaleText) => {
     .then((data) => {
       const suggestions = [];
       // Form a list of suggestions from query results
-      for (let i = 0; suggestions.length < 5 && i < pageSize; i += 1) {
+      for (let i = 0; suggestions.length < 10 && i < pageSize && i < data.count; i += 1) {
         // Split result name strings words
         const words = getLocaleText(data.results[i].name).split(' ');
         let resultWord = null;
         // Find the word from result name that matches the original query
-        words.some((word) => {
-          resultWord = uppercaseFirst(word);
-          return word.toUpperCase().indexOf(query.toUpperCase()) !== -1;
+        words.forEach((word) => {
+          if (uppercaseFirst(word).indexOf(uppercaseFirst(query)) !== -1) {
+            resultWord = uppercaseFirst(word);
+          }
         });
         // Add the word to list of suggestions if it is not there already
-        if (suggestions.indexOf(uppercaseFirst(resultWord)) === -1) {
+        if (suggestions.indexOf(resultWord) === -1) {
           suggestions.push(resultWord);
         }
       }
@@ -37,10 +38,12 @@ const createSuggestions = async (query, getLocaleText) => {
         let query = suggestions[i];
         /* If only one result found with a a sugestion, add the whole original name of the result,
          instead of only the split word that matches the query */
-        if (res.count === 1) {
-          query = getLocaleText(res.results[0].name);
+        if (res.count > 0) {
+          if (res.count === 1) {
+            query = getLocaleText(res.results[0].name);
+          }
+          searchData.push({ query, count: res.count });
         }
-        searchData.push({ query, count: res.count });
       });
       results = searchData;
     })
