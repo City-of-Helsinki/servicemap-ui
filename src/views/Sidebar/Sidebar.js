@@ -7,6 +7,7 @@ import HomeView from '../HomeView';
 import ServiceView from '../ServiceView';
 import EventDetailView from '../EventDetailView';
 import MobileMapView from '../MobileMapView';
+import AddressView from '../AddressView';
 import ViewTitle from '../components/ViewTitle/ViewTitle';
 import UnitFullListView from '../UnitView/UnitFullListView';
 import PageHandler from '../components/PageHandler';
@@ -89,6 +90,14 @@ const Event = () => (
   </TitleWrapper>
 );
 
+const Address = () => (
+  <TitleWrapper messageId="general.pageTitles.address">
+    <PageWrapper headMsgId="" page="address">
+      <AddressView />
+    </PageWrapper>
+  </TitleWrapper>
+);
+
 class Sidebar extends React.Component {
   constructor(props) {
     super(props);
@@ -106,6 +115,7 @@ class Sidebar extends React.Component {
           <Route path="/:lng/service/:service" component={Service} />
           <Route path="/:lng/event/:event" component={Event} />
           <Route path="/:lng/map" component={MobileMapView} />
+          <Route path="/:lng/address/:municipality/:street/:number" component={Address} />
           <Route path="/:lng/" component={Home} />
         </Switch>
       </div>

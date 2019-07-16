@@ -14,6 +14,29 @@ export default {
                                 other {# shortcomings}
                               }`,
 
+  // Address
+  'address.show.area': 'Show area on map',
+  'address.list.geographical': 'Geographical',
+  'address.list.protection': 'Protection',
+  'address.list.health': 'Health',
+  'address.list.education': 'Education',
+  'address.list.neighborhood': 'Neighborhood',
+  'address.list.postcode_area': 'Postcode area',
+  'address.list.rescue_area': 'Rescue area',
+  'address.list.rescue_district': 'Rescue district',
+  'address.list.rescue_sub_district': 'Rescue subdistrict',
+  'address.list.health_station_district': 'Health station district',
+  'address.list.maternity_clinic_district': 'Maternity clinic district',
+  'address.list.lower_comprehensive_school_district_fi': 'Finnish elementary school',
+  'address.list.lower_comprehensive_school_district_sv': 'Swedish elementary school',
+  'address.list.upper_comprehensive_school_district_fi': 'Finnish secondary school',
+  'address.list.upper_comprehensive_school_district_sv': 'Swedish secondary school',
+  'address.list.preschool_education_fi': 'Finnish preschool education',
+  'address.list.preschool_education_sv': 'Swedish preschool education',
+  'address.error': 'No address found',
+  'address.nearby': 'Nearby',
+
+
   // Event
   'event.nearby': 'Nearby events',
   'event.description': 'Description',
@@ -51,6 +74,7 @@ export default {
   'general.pageTitles.unit': 'Unit view',
   'general.pageTitles.service': 'Service view',
   'general.pageTitles.event': 'Event view',
+  'general.pageTitles.address': 'Address view',
   'general.pageTitles.list.services': 'Service list ',
   'general.pageTitles.list.events': 'Event list ',
   'general.pageTitles.list.reservations': 'Reservation list ',
@@ -80,6 +104,8 @@ export default {
   // Map
   'map': 'Map',
   'map.transit.endStation': 'Terminus',
+  'map.address.searching': 'Retreiving address...',
+  'map.address.info': 'Address information',
 
   // Unit
   'unit': 'Unit',
@@ -98,7 +124,7 @@ export default {
   'unit.contact.info': 'Contact information',
   'unit.services': 'Services',
   'unit.eServices': 'Electronic services', // TODO: verify
-  'unit.reservations': 'Reservations',
+  'unit.reservations': 'Reservable objects', // TODO verify
   'unit.events': 'Events',
   'unit.homepage': 'Home page',
   'unit.picture': 'Picture of unit: ',
@@ -111,12 +137,12 @@ export default {
   'unit.school.year': 'School year',
   'unit.opens.new.tab': '(new tab)',
   'unit.call.number': '(call)',
-  'unit.more.reservations': 'Show all {count} reservations',
+  'unit.more.reservations': 'Show all {count} objects', // TODO verify
   'unit.more.services': 'Show all {count} services',
   'unit.more.events': 'Show all {count} events',
   'unit.list.services': 'Services',
   'unit.list.events': 'Events',
-  'unit.list.reservations': 'Reservations',
+  'unit.list.reservations': 'Reservable objects', // TODO verify
 
   // Search
   'search': 'Search',

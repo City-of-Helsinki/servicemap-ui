@@ -24,7 +24,7 @@ const createContentStyles = (
   } else if (isSmallScreen) {
     width = '50%';
   }
-  const topBarHeight = 64;
+  const topBarHeight = '64px';
 
   const styles = {
     activeRoot: {
@@ -42,9 +42,8 @@ const createContentStyles = (
       flex: !isMobile || mobileMapOnly ? 1 : 0,
       display: 'flex',
       visibility: isMobile && (!mobileMapOnly || settingsOpen) ? 'hidden' : '',
-      height: '100%',
+      height: isMobile ? `calc(100% - ${topBarHeight})` : '100%',
       width: '100%',
-      paddingTop: isMobile ? topBarHeight : 0,
     },
     sidebar: {
       top: 0,
@@ -62,8 +61,8 @@ const createContentStyles = (
   if (isMobile) {
     styles.sidebar.flex = '1 1 auto';
     if (fullMobileMap && !landscape) {
-      styles.map.paddingBottom = 0;
-      styles.map.paddingTop = 56; // Titlebar height
+      // TODO change 56px to topBarHeight when we get new height for topbar/titlebar
+      styles.map.height = 'calc(100% - 56px)';
     }
   }
 
@@ -85,6 +84,7 @@ const DefaultLayout = (props) => {
   const styles = createContentStyles(
     isMobile, isSmallScreen, landscape, mobileMapOnly, fullMobileMap, settingsOpen,
   );
+
 
   return (
     <>

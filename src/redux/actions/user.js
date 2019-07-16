@@ -13,6 +13,7 @@ export const setPage = page => ({
   page,
 });
 
+
 export const changeLocaleAction = locale => async (dispatch) => {
   dispatch(setLocale(locale));
 };

@@ -9,7 +9,7 @@ import InfoIcon from '@material-ui/icons/PriorityHigh';
 import WarningIcon from '@material-ui/icons/Warning';
 
 const getItemIconData = (type, data) => {
-  if (type === 'LINK' || (type === 'OPENING_HOURS' && data.www)) {
+  if (type === 'LINK' || type === 'ESERVICE_LINK' || (type === 'OPENING_HOURS' && data.www)) {
     return <OpenLinkIcon />;
   } if (type === 'ADDRESS') {
     return <AddressIcon />;

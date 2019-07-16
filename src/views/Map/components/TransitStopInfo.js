@@ -37,7 +37,7 @@ class TransitStopInfo extends React.Component {
     const { stop } = this.props;
     const { departureTimes } = this.state;
     return (
-      <div style={{ width: '230px' }}>
+      <div style={{ width: '230px', padding: 16 }}>
         <p style={{
           paddingBottom: ' 2%',
           marginBottom: '5%',

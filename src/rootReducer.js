@@ -8,6 +8,7 @@ import districts from './redux/reducers/district';
 import service from './redux/reducers/services';
 import selectedUnit from './redux/reducers/selectedUnit';
 import event from './redux/reducers/event';
+import address from './redux/reducers/address';
 import {
   colorblind, hearingAid, mobility, visuallyImpaired,
 } from './redux/reducers/settings';
@@ -27,6 +28,7 @@ export default combineReducers({
   service,
   selectedUnit,
   event,
+  address,
   settings: combineReducers({
     colorblind,
     hearingAid,

@@ -66,20 +66,22 @@ const ResultItem = ({
   title,
   distancePosition,
   divider,
+  role,
+  srLabel,
 }) => {
   // Distance text
   // TODO: Change to check data for distance once location info is available
   const distance = distancePosition; // '100';
 
   // Screen reader text
-  const srText = `${title || ''} ${subtitle || ''} ${distance ? `${distance} metrin päässä` : ''} ${bottomRightText || ''}`;
+  const srText = `${title || ''} ${subtitle || ''} ${distance ? `${distance} metrin päässä` : ''} ${bottomRightText || ''} ${srLabel || ''}`;
   const bottomRightStyles = { color: bottomRightColor };
 
   return (
     <>
       <ListItem
         button
-        role="link"
+        role={role || 'link'}
         component="li"
         tabIndex={0}
         onClick={onClick}
@@ -205,6 +207,8 @@ ResultItem.propTypes = {
   title: PropTypes.string.isRequired,
   distancePosition: PropTypes.objectOf(PropTypes.any),
   divider: PropTypes.bool,
+  role: PropTypes.string,
+  srLabel: PropTypes.string,
 };
 
 ResultItem.defaultProps = {
@@ -216,4 +220,6 @@ ResultItem.defaultProps = {
   subtitle: null,
   distancePosition: null,
   divider: true,
+  role: null,
+  srLabel: null,
 };

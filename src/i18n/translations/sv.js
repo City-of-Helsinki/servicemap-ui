@@ -14,6 +14,28 @@ export default {
                                 other {# brister}
                               }`,
 
+  // Address
+  'address.show.area': 'Näytä alue kartalla', // TODO: Translate
+  'address.list.geographical': 'Maantieteellinen', // TODO: Translate
+  'address.list.protection': 'Väestönsuojelu', // TODO: Translate
+  'address.list.health': 'Terveys', // TODO: Translate
+  'address.list.education': 'Koulutus', // TODO: Translate
+  'address.list.neighborhood': 'Stadsdel',
+  'address.list.postcode_area': 'Postnummerområde',
+  'address.list.rescue_area': 'Suojelupiiri', // TODO: Translate
+  'address.list.rescue_district': 'Suojelulohko', // TODO: Translate
+  'address.list.rescue_sub_district': 'Suojelualalohko', // TODO: Translate
+  'address.list.health_station_district': 'Hälsostationsområde',
+  'address.list.maternity_clinic_district': 'Rådgivningsområde',
+  'address.list.lower_comprehensive_school_district_fi': 'Finsk lågstadieskola',
+  'address.list.lower_comprehensive_school_district_sv': 'Svensk lågstadieskola',
+  'address.list.upper_comprehensive_school_district_fi': 'Finsk högstadieskola',
+  'address.list.upper_comprehensive_school_district_sv': 'Svensk högstadieskola',
+  'address.list.preschool_education_fi': 'Suomenkielinen varhaiskasvatus', // TODO: Translate
+  'address.list.preschool_education_sv': 'Ruotsinkielinen varhaiskasvatus', // TODO: Translate
+  'address.error': 'Osoitetta ei löytynyt', // TODO: Translate
+  'address.nearby': 'Lähellä', // TODO: Translate
+
   // Event
   'event.nearby': 'Nearby events', // TODO: Translate
   'event.description': 'Kuvaus', // TODO: Translate
@@ -51,6 +73,7 @@ export default {
   'general.pageTitles.unit': 'Unit view', // TODO: Translate
   'general.pageTitles.service': 'Service view', // TODO: Translate
   'general.pageTitles.event': 'Tapahtumanäkymä', // TODO: Translate
+  'general.pageTitles.address': 'Address view', // TODO: Translate
   'general.pageTitles.list.services': 'Service list ', // TODO: Translate
   'general.pageTitles.list.events': 'Event list ', // TODO: Translate
   'general.pageTitles.list.reservations': 'Reservation list ', // TODO: Translate
@@ -79,6 +102,8 @@ export default {
   // Map
   'map': 'Map', // TODO: Translate
   'map.transit.endStation': 'Ändhållplats',
+  'map.address.searching': 'Söker adress...',
+  'map.address.info': 'Osoitteen tiedot', // TODO: Translate
 
   // Units
   'unit': 'Verksamhetsställe',
@@ -97,7 +122,7 @@ export default {
   'unit.contact.info': 'Contact information', // TODO: Translate
   'unit.services': 'Tjänster',
   'unit.eServices': 'Electronic services', // TODO: Translate
-  'unit.reservations': 'Bokning', // TODO: Verify
+  'unit.reservations': 'Varattavat kohteet', // TODO: Translate
   'unit.events': 'Evenemang',
   'unit.homepage': 'Hemsida',
   'unit.picture': 'Kuva toimipisteestä: ', // TODO: Translate
@@ -110,12 +135,12 @@ export default {
   'unit.school.year': 'Läsåret',
   'unit.opens.new.tab': '(new tab)', // TODO: Translate
   'unit.call.number': '(call)', // TODO: Translate
-  'unit.more.reservations': 'Näytä kaikki {count} varausta', // TODO: Translate
+  'unit.more.reservations': 'Näytä kaikki {count} kohdetta', // TODO: Translate
   'unit.more.services': 'Näytä kaikki {count} palvelua', // TODO: Translate
   'unit.more.events': 'Näytä kaikki {count} tapahtumaa', // TODO: Translate
   'unit.list.services': 'Palvelut', // TODO: Translate
   'unit.list.events': 'Tapahtumat', // TODO: Translate
-  'unit.list.reservations': 'Varaukset', // TODO: Translate
+  'unit.list.reservations': 'Varattavat kohteet', // TODO: Translate
 
   // Search
   'search': 'Sök',
