@@ -6,125 +6,9 @@ import {
 import { Warning, VerifiedUser } from '@material-ui/icons';
 import { FormattedMessage } from 'react-intl';
 import Container from '../../../../components/Container/Container';
-import config from '../../../../../config';
 import SettingsUtility from '../../../../utils/settings';
 
-
-const BASE_URL = 'https://www.hel.fi/palvelukarttaws/rest/v4/unit/';
-
 class AccessibilityInfo extends React.Component {
-  constructor(props) {
-    super(props);
-    this.currentId = 0;
-
-    this.ids = {};
-    this.supportedLanguages = config.supported_languages;
-
-    this.state = {
-      // Set component initially to fetching accessibility sentences state
-      // This helps server and client to have same initial rendered states
-      isFetching: true,
-      accessibilityDescriptions: null,
-    };
-  }
-
-  componentDidMount() {
-    this.fetchAccessibilitySentences();
-  }
-
-  /**
-   * Transform object to language locales as keys for texts
-   * @param {object} data - object with texts
-   * @param {string} base - base text for data object's key ie. ${base}_fi = content_fi
-   */
-  buildTranslatedObject(data, base) {
-    const obj = {};
-    this.supportedLanguages.forEach((lang) => {
-      obj[lang] = data[`${base}_${lang}`];
-    });
-    return obj;
-  }
-
-  /**
-   * Generate id using content text as key
-   * @param {string} content
-   */
-  generateId(content) {
-    if (!(content in this.ids)) {
-      const id = this.currentId;
-      this.ids[content] = id;
-      this.currentId += 1;
-    }
-
-    return this.ids[content];
-  }
-
-  /**
-   * Parse accessibility sentences to more usable form
-   * @param {*} data - fetched data from server
-   */
-  parseAccessibilitySentences(data) {
-    if (data) {
-      const sentences = {};
-      const groups = {};
-
-      // Parse accessibility_sentences
-      data.accessibility_sentences.forEach((sentence) => {
-        const group = this.buildTranslatedObject(sentence, 'sentence_group');
-        const key = this.generateId(group.fi);
-        groups[key] = group;
-
-        if (!(key in sentences)) {
-          sentences[key] = [];
-        }
-        const builtSentence = this.buildTranslatedObject(sentence, 'sentence');
-        sentences[key].push(builtSentence);
-      });
-
-      return { sentences, groups };
-    }
-
-    return null;
-  }
-
-  /**
-   * Fetch accessibility sentences from old API
-   */
-  async fetchAccessibilitySentences() {
-    const { unit } = this.props;
-
-    if (!unit) {
-      return;
-    }
-    // Notify component to start fetch
-    this.setState({
-      isFetching: true,
-    });
-
-    const url = `${BASE_URL}${unit.id}`;
-
-    try {
-      const response = await fetch(url);
-      if (response.ok && response.status === 200) {
-        const data = await response.json();
-        const parsedData = this.parseAccessibilitySentences(data);
-        // Notify component that fetch has ended and set accessibility descriptions
-        this.setState({
-          isFetching: false,
-          accessibilityDescriptions: parsedData,
-        });
-      } else {
-        throw new Error(response.statusText);
-      }
-    } catch (e) {
-      // Notify component that fetch has ended
-      this.setState({
-        isFetching: false,
-      });
-      throw Error('Error fetching accessibility sentences', e.message);
-    }
-  }
-
   /**
    * Parse accessibility shortcomings to single array based on user's settings
    */
@@ -229,15 +113,15 @@ class AccessibilityInfo extends React.Component {
   }
 
   renderAccessibilityDescriptions(heading) {
-    const { accessibilityDescriptions } = this.state;
+    const { data } = this.props;
 
-    if (!accessibilityDescriptions) {
+    if (!data) {
       return null;
     }
 
     // Figure out heading levels
     const { classes, getLocaleText } = this.props;
-    const { groups, sentences } = accessibilityDescriptions;
+    const { groups, sentences } = data;
 
     const groupArray = Object.keys(groups);
     const sentenceArray = Object.keys(sentences);
@@ -329,16 +213,7 @@ class AccessibilityInfo extends React.Component {
   }
 
   render() {
-    const { isFetching } = this.state;
     const { classes, titleAlways, headingLevel } = this.props;
-
-    if (isFetching) {
-      return (
-        <Typography>
-          <FormattedMessage id="general.fetching" />
-        </Typography>
-      );
-    }
 
     if (headingLevel < 1 || headingLevel > 5) {
       throw Error('Heading level is invalid');
@@ -361,7 +236,7 @@ class AccessibilityInfo extends React.Component {
     return (
       <Container margin>
         {
-          (titleAlways || shouldRenderTitle)
+          (titleAlways)
           && (
             <Typography className={classes.title} variant="subtitle1" component={heading} align="left">
               <FormattedMessage id="accessibility" />
@@ -391,11 +266,15 @@ class AccessibilityInfo extends React.Component {
 }
 
 AccessibilityInfo.propTypes = {
-  titleAlways: PropTypes.bool,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
+  data: PropTypes.objectOf(PropTypes.shape({
+    sentences: PropTypes.any,
+    groups: PropTypes.any,
+  })).isRequired,
   headingLevel: PropTypes.oneOf([2, 3, 4, 5]).isRequired,
   getLocaleText: PropTypes.func.isRequired,
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
+  titleAlways: PropTypes.bool,
   unit: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 

@@ -75,7 +75,7 @@ class MapContainer extends React.Component {
             zIndex: 99999999, position: 'fixed', top: 0, width: '100%',
           }}
           >
-            <TitleBar title={getLocaleText(highlightedUnit.name)} />
+            <TitleBar title={getLocaleText(highlightedUnit.name)} primary backButton />
           </div>
         )}
         {isMobile && currentPage === 'address' && addressTitle && (

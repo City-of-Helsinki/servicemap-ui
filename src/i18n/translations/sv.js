@@ -115,6 +115,7 @@ export default {
                                     one {# brist}
                                     other {# brister}
                                   }`, // TODO: Verify
+  'unit.basicInfo': 'Perustiedot', // TODO: Translate
   'unit.details.notFound': 'Unit info not found', // TODO: Translate
   'unit.data_source': 'Källa: {data_source}',
   'unit.plural': 'Verksamhetsställen', // TODO: Verify

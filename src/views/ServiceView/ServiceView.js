@@ -6,7 +6,7 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Paper, Typography } from '@material-ui/core';
 import SearchBar from '../../components/SearchBar';
 import TitleBar from '../../components/TitleBar/TitleBar';
-import { DesktopComponent } from '../../layouts/WrapperComponents/WrapperComponents';
+import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import { generatePath } from '../../utils/path';
 import { drawServiceIcon } from '../Map/utils/drawIcon';
 import { fitUnitsToMap } from '../Map/utils/mapActions';
@@ -96,11 +96,19 @@ class ServiceView extends React.Component {
       <div>
         <DesktopComponent>
           <SearchBar placeholder={intl.formatMessage({ id: 'search' })} />
+          {
+            showTitle
+            && (
+              <TitleBar icon={icon} title={getLocaleText(current.name)} />
+            )
+          }
         </DesktopComponent>
         {
           showTitle
           && (
-            <TitleBar icon={icon} title={getLocaleText(current.name)} />
+            <MobileComponent>
+              <TitleBar icon={icon} title={getLocaleText(current.name)} primary backButton />
+            </MobileComponent>
           )
         }
         {

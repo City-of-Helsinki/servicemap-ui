@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import {
   withStyles, Typography,
 } from '@material-ui/core';
-import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
-import Container from '../Container/Container';
 import BackButton from '../BackButton';
 
 const styles = theme => ({
@@ -12,89 +10,81 @@ const styles = theme => ({
     alignItems: 'center',
     display: 'flex',
     flex: '0 0 auto',
-  },
-  mobileContainer: {
-    alignItems: 'center',
-    display: 'flex',
-    flex: '0 0 auto',
-    backgroundColor: theme.palette.primary.main,
-    height: 56,
+    height: 64,
+    padding: `0 ${theme.spacing.unit}px`,
   },
   title: {
+    color: 'inherit',
     flex: '1 1 auto',
     textTransform: 'capitalize',
     textAlign: 'left',
     marginLeft: theme.spacing.unitDouble,
-  },
-  mobileTitle: {
-    flex: '1 1 auto',
-    textTransform: 'capitalize',
-    textAlign: 'left',
-    marginLeft: theme.spacing.unitDouble,
-    color: '#ffffff',
   },
   iconButton: {
+    color: 'inherit',
     flex: '0 1 auto',
     padding: theme.spacing.unit,
-    marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    color: '#ffffff',
+  },
+  colorPrimary: {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.primary.contrastText,
+  },
+  colorLight: {
+    color: '#000',
   },
 });
 
 const TitleBar = ({
-  classes, title, titleComponent, icon,
+  backButton, classes, title, titleComponent, icon, primary,
 }) => (
   <>
-    <MobileComponent>
-      <div className={classes.mobileContainer}>
-        <BackButton
-          className={classes.iconButton}
-          variant="icon"
-        />
-        <Typography
-          className={classes.mobileTitle}
-          component={titleComponent}
-          text={title}
-          variant="h6"
-          tabIndex="-1"
-          noWrap
-        >
-          {title}
-        </Typography>
-      </div>
-    </MobileComponent>
+    <div className={`${classes.container} ${primary ? classes.colorPrimary : classes.colorLight}`}>
 
-    <DesktopComponent>
-      <Container>
-        <div className={classes.container}>
-          <div style={{ height: 24, margin: 8, marginRight: 16 }} aria-hidden="true">
+      {
+        backButton
+        && (
+          <BackButton
+            className={classes.iconButton}
+            variant="icon"
+          />
+        )
+      }
+      {
+        !backButton
+        && icon
+        && (
+          <div className={classes.iconButton} aria-hidden="true">
             {icon}
           </div>
-          <Typography
-            className={classes.title}
-            component={titleComponent}
-            text={title}
-            variant="h6"
-            tabIndex="-1"
-          >
-            {title}
-          </Typography>
-        </div>
-      </Container>
-    </DesktopComponent>
+        )
+      }
+      <Typography
+        className={classes.title}
+        component={titleComponent}
+        text={title}
+        variant="h6"
+        tabIndex="-1"
+      >
+        {title}
+      </Typography>
+    </div>
   </>
 );
 
 TitleBar.propTypes = {
+  backButton: PropTypes.bool,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   title: PropTypes.string.isRequired,
   titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']),
   icon: PropTypes.objectOf(PropTypes.any),
+  primary: PropTypes.bool,
 };
 
 TitleBar.defaultProps = {
+  backButton: false,
   titleComponent: 'h3',
   icon: null,
+  primary: false,
 };
 export default withStyles(styles)(TitleBar);

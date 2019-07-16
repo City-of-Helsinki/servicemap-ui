@@ -91,7 +91,7 @@ class Services extends React.Component {
         {serviceList && serviceList.length > 0 && (
         <TitledList
           title={<FormattedMessage id="unit.services" />}
-          titleComponent="h4"
+          titleComponent="h3"
           listLength={listLength}
           buttonText={<FormattedMessage id="unit.more.services" values={{ count: unit.services.length }} />}
           showMoreOnClick={showMoreOnClick}
@@ -111,7 +111,7 @@ class Services extends React.Component {
           <TitledList
             key={period[0]}
             title={`${intl.formatMessage({ id: 'unit.school.year' })} ${period}`}
-            titleComponent="h4"
+            titleComponent="h3"
             listLength={listLength}
             buttonText={<FormattedMessage id="unit.more.services" values={{ count: unit.services.length }} />}
             showMoreOnClick={showMoreOnClick}

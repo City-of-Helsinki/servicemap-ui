@@ -11,6 +11,10 @@ import { fetchUnits } from '../../redux/actions/unit';
 
 const styles = theme => ({
   root: {
+    display: 'flex',
+  },
+  wrapper: {
+    flex: 1,
     margin: theme.spacing.unit,
     padding: theme.spacing.unitHalf,
     transition: theme.transitions.create(['margin', 'padding'], {
@@ -19,7 +23,7 @@ const styles = theme => ({
     }),
     border: '1px solid gray',
   },
-  rootFocused: {
+  wrapperFocused: {
     margin: 0,
     // Margin is replaced with padding so height doesn't get affected
     padding: theme.spacing.unit * 1.5,
@@ -45,6 +49,13 @@ const styles = theme => ({
   icon: {
     flex: '0 1 auto',
     padding: theme.spacing.unit,
+  },
+  sticky: {
+    position: 'sticky',
+    zIndex: 50,
+  },
+  primary: {
+    backgroundColor: theme.palette.primary.main,
   },
 });
 
@@ -110,40 +121,54 @@ class SearchBar extends React.Component {
 
   render() {
     const {
-      backButtonEvent, classes, intl, placeholder, previousSearch, hideBackButton, searchRef,
+      backButtonEvent,
+      classes,
+      className,
+      intl,
+      isSticky,
+      placeholder,
+      previousSearch,
+      hideBackButton,
+      searchRef,
+      primary,
     } = this.props;
     const { search, isActive } = this.state;
 
     const inputValue = typeof search === 'string' ? search : previousSearch;
+    const rootClasses = `${classes.root} ${typeof isSticky === 'number' ? classes.sticky : ''} ${primary ? classes.primary : ''} ${className}`;
+    const wrapperClasses = `${classes.wrapper} ${isActive ? classes.wrapperFocused : ''}`;
+    const stickyStyles = typeof isSticky === 'number' ? { top: isSticky } : null;
 
     return (
-      <Paper className={`${classes.root} ${isActive ? classes.rootFocused : ''}`} elevation={1} square>
-        <form onSubmit={this.onSubmit} className={classes.container}>
-          {
-            !hideBackButton
-            && <BackButton className={classes.iconButton} onClick={backButtonEvent || null} variant="icon" />
-          }
+      <div className={rootClasses} style={stickyStyles}>
+        <Paper className={wrapperClasses} elevation={1} square>
+          <form onSubmit={this.onSubmit} className={classes.container}>
+            {
+              !hideBackButton
+              && <BackButton className={classes.iconButton} onClick={backButtonEvent || null} variant="icon" />
+            }
 
-          <InputBase
-            id="searchInput"
-            inputRef={searchRef}
-            className={classes.input}
-            placeholder={placeholder}
-            value={inputValue || ''}
-            onChange={this.onInputChange}
-            onFocus={this.toggleAnimation}
-            onBlur={this.toggleAnimation}
-          />
+            <InputBase
+              id="searchInput"
+              inputRef={searchRef}
+              className={classes.input}
+              placeholder={placeholder}
+              value={inputValue || ''}
+              onChange={this.onInputChange}
+              onFocus={this.toggleAnimation}
+              onBlur={this.toggleAnimation}
+            />
 
-          <IconButton
-            aria-label={intl.formatMessage({ id: 'search' })}
-            type="submit"
-            className={classes.icon}
-          >
-            <Search />
-          </IconButton>
-        </form>
-      </Paper>
+            <IconButton
+              aria-label={intl.formatMessage({ id: 'search' })}
+              type="submit"
+              className={classes.icon}
+            >
+              <Search />
+            </IconButton>
+          </form>
+        </Paper>
+      </div>
     );
   }
 }
@@ -151,22 +176,28 @@ class SearchBar extends React.Component {
 SearchBar.propTypes = {
   backButtonEvent: PropTypes.func,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
+  className: PropTypes.string,
   fetchUnits: PropTypes.func.isRequired,
   hideBackButton: PropTypes.bool,
   navigator: PropTypes.objectOf(PropTypes.any),
   intl: intlShape.isRequired,
+  isSticky: PropTypes.number,
   isFetching: PropTypes.bool.isRequired,
   placeholder: PropTypes.string.isRequired,
   searchRef: PropTypes.objectOf(PropTypes.any),
   previousSearch: PropTypes.string,
+  primary: PropTypes.bool,
 };
 
 SearchBar.defaultProps = {
   previousSearch: null,
   backButtonEvent: null,
+  className: '',
   hideBackButton: false,
+  isSticky: null,
   navigator: null,
   searchRef: {},
+  primary: false,
 };
 
 // Listen to redux state
