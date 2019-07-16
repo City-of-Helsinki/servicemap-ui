@@ -65,6 +65,7 @@ const ResultItem = ({
   subtitle,
   title,
   distancePosition,
+  divider,
   role,
   srLabel,
 }) => {
@@ -184,9 +185,11 @@ const ResultItem = ({
           }
         </div>
       </ListItem>
+      {divider && (
       <li>
         <Divider aria-hidden="true" variant={icon && 'inset'} />
       </li>
+      )}
     </>
   );
 };
@@ -203,6 +206,7 @@ ResultItem.propTypes = {
   subtitle: PropTypes.string,
   title: PropTypes.string.isRequired,
   distancePosition: PropTypes.objectOf(PropTypes.any),
+  divider: PropTypes.bool,
   role: PropTypes.string,
   srLabel: PropTypes.string,
 };
@@ -215,6 +219,7 @@ ResultItem.defaultProps = {
   onClick: () => {},
   subtitle: null,
   distancePosition: null,
+  divider: true,
   role: null,
   srLabel: null,
 };
