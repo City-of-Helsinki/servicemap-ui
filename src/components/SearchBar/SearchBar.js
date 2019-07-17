@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
-  InputBase, Paper, withStyles, IconButton,
+  InputBase, Paper, withStyles, IconButton, List, ListItem, Typography, Button, Divider,
 } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
 import { injectIntl, intlShape } from 'react-intl';
@@ -11,6 +11,9 @@ import BackButton from '../BackButton';
 import { getLocaleString } from '../../redux/selectors/locale';
 import { fetchUnits } from '../../redux/actions/unit';
 import createSuggestions from './createSuggestions';
+import UnitItem from '../ListItems/UnitItem';
+import ServiceMapButton from '../ServiceMapButton';
+import { SearchIcon } from '../SMIcon';
 
 const styles = theme => ({
   root: {
@@ -49,6 +52,33 @@ const styles = theme => ({
     flex: '0 1 auto',
     padding: theme.spacing.unit,
   },
+  suggestionSubtitle: {
+    display: 'flex',
+    backgroundColor: 'rgba(155,155,155,0.47)',
+    paddingLeft: '18px',
+  },
+  subtitleText: {
+    lineHeight: '32px',
+  },
+  suggestionButton: {
+    margin: 0,
+    width: 'auto',
+    textTransform: 'none',
+    borderRadius: 8,
+  },
+  expand: {
+    color: '#000000',
+    fontWeight: 'normal',
+  },
+  divider: {
+    marginLeft: 72,
+  },
+  listIcon: {
+    paddingRight: theme.spacing.unitDouble,
+    paddingTop: 8,
+    paddingBottom: 8,
+    color: 'rgba(0,0,0,0.54)',
+  },
 });
 
 
@@ -62,6 +92,7 @@ class SearchBar extends React.Component {
       search: previousSearch,
       isActive: false,
       suggestions: null,
+      expandedQueries: null,
     };
   }
 
@@ -80,13 +111,111 @@ class SearchBar extends React.Component {
     return true;
   }
 
+  expandFilter = async (item) => {
+    const { getLocaleText } = this.props;
+    const searchData = [];
+    // const pageSize = 200;
+    await fetch(`https://api.hel.fi/servicemap/v2/search/?q=${item.query}&only=unit.name,unit.services&include=unit.services&page_size=${item.count}&type=unit`)
+      .then(response => response.json())
+      .then((data) => {
+        const serviceList = [];
+        const serviceObjects = [];
+        for (let i = 0; serviceList.length < 5 && i < item.count; i += 1) {
+          const result = data.results[i];
+
+          result.services.forEach((service) => {
+            if (serviceList.indexOf(service.name.fi) === -1) {
+              serviceList.push(service.name.fi);
+              serviceObjects.push({ service: service.name.fi, units: [result] });
+            } else {
+              serviceObjects.forEach((item) => {
+                if (item.service === service.name.fi) {
+                  item.units.push(result);
+                }
+              });
+            }
+          });
+        }
+        serviceObjects.forEach((service) => {
+          searchData.push({ query: `${item.query} ${service.service}`, count: service.units.length, final: true });
+        });
+        this.setState({ expandedQueries: searchData });
+      });
+  }
+
+  expandSearch = async (item) => {
+    const { getLocaleText } = this.props;
+    // const pageSize = 200;
+    await fetch(`https://api.hel.fi/servicemap/v2/search/?q=${item.query}&only=unit.name,unit.services&include=unit.services&page_size=${item.count}&type=unit`)
+      .then(response => response.json())
+      .then((data) => {
+        const suggestions = [];
+        for (let i = 0; suggestions.length < 10 && i < item.count; i += 1) {
+          const result = data.results[i];
+
+          const phrase = `${item.query} ${getLocaleText(result.services[0].name)}`;
+          if (suggestions.indexOf(phrase) === -1) {
+            suggestions.push(phrase);
+          }
+
+          /* result.services.forEach((service) => {
+            const phrase = `${item.query} ${getLocaleText(service.name)}`;
+            if (suggestions.indexOf(phrase) === -1) {
+              suggestions.push(phrase);
+            }
+          }); */
+        }
+        return suggestions;
+      })
+      .then(async (suggestions) => {
+        const searchData = [];
+        // Add original query to expanded search as well
+        // searchData.push({ query: item.query, count: item.count, final: true });
+
+        // Fetch the result count of each suggestion
+        /* const data = await Promise.all(suggestions.map(word => fetch(`https://api.hel.fi/servicemap/v2/search/?q=${word}&only=unit.name&page_size=1&type=unit`)
+          .then(response => response.json()))); */
+
+        const data = await Promise.all(suggestions.map(word => fetch(`https://api.hel.fi/servicemap/v2/search/?q=${word}&only=unit.name,unit.services&page_size=100&type=unit`)
+          .then(response => response.json())));
+
+        // Add the query name and result count to an array
+        data.forEach((res, i) => {
+          let query = suggestions[i];
+          if (res.count > 0) {
+            // These should be removed once we get services from backend
+            const services = [];
+            res.results.forEach((result) => {
+              if (services.indexOf(result.services[0]) === -1) {
+                services.push(result.services[0]);
+              }
+            });
+            /* If only one result found with a a sugestion,
+              add the whole original name of the result,
+              instead of only the split word that matches the query */
+            if (res.count === 1) {
+              query = getLocaleText(res.results[0].name);
+            } else if (services.length === 1) {
+              searchData.push({ query, count: res.count, final: true });
+            /* } else if (res.count === item.count) {
+              console.log('count is same: ', res);
+              searchData.push({ query: item.query, count: res.count, final: true }); */
+            } else {
+              searchData.push({ query, count: res.count, final: true });
+            }
+          }
+        });
+        this.setState({ expandedQueries: searchData });
+      });
+  }
+
   onInputChange = (e) => {
     const { getLocaleText } = this.props;
     const query = e.currentTarget.value;
     this.setState({ search: e.currentTarget.value });
     if (query.length > 2) {
       createSuggestions(e.currentTarget.value, getLocaleText)
-        .then(result => this.setState({ suggestions: result }));
+        .then(result => this.setState({ expandedQueries: null, suggestions: result }));
     }
   }
 
@@ -113,6 +242,15 @@ class SearchBar extends React.Component {
     }
   }
 
+  suggestionBackEvent = () => {
+    const { expandedQueries } = this.state;
+    if (expandedQueries) {
+      this.setState({ expandedQueries: null });
+    } else {
+      this.setState({ suggestions: null });
+    }
+  };
+
   toggleAnimation = () => {
     const { isActive } = this.state;
     this.setState({ isActive: !isActive });
@@ -122,7 +260,11 @@ class SearchBar extends React.Component {
     const {
       backButtonEvent, classes, intl, placeholder, previousSearch, hideBackButton, searchRef,
     } = this.props;
-    const { search, isActive, suggestions } = this.state;
+    const {
+      search, isActive, suggestions, expandedQueries,
+    } = this.state;
+
+    const suggestionList = expandedQueries || (suggestions && suggestions[1]) || null;
 
     const inputValue = typeof search === 'string' ? search : previousSearch;
 
@@ -131,8 +273,8 @@ class SearchBar extends React.Component {
         <Paper className={`${classes.root} ${isActive ? classes.rootFocused : ''}`} elevation={1} square>
           <form onSubmit={this.onSubmit} className={classes.container}>
             {
-            !hideBackButton
-            && <BackButton className={classes.iconButton} onClick={backButtonEvent || null} variant="icon" />
+            (suggestionList || !hideBackButton)
+            && <BackButton className={classes.iconButton} onClick={suggestionList ? this.suggestionBackEvent : backButtonEvent || null} variant="icon" />
           }
 
             <InputBase
@@ -156,18 +298,65 @@ class SearchBar extends React.Component {
           </form>
         </Paper>
         {suggestions && (
-          <div style={{
-            position: 'fixed', zIndex: 999999, height: '100%', width: '450px', backgroundColor: '#ffffff',
-          }}
-          >
-            <ul>
-              {suggestions.map(item => (
-                <li>
-                  <p>{`${item.query} ${item.count} tulosta`}</p>
-                </li>
-              ))}
-            </ul>
+
+        <div style={{
+          position: 'fixed', zIndex: 999999, height: '100%', width: '450px', backgroundColor: '#ffffff',
+        }}
+        >
+          <div className={classes.suggestionSubtitle}>
+            <Typography className={classes.subtitleText} variant="overline">Tarkoititko..?</Typography>
           </div>
+          <List>
+            {suggestionList.map((item, i) => (
+              <>
+                <ListItem key={item.query}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+                    <div style={{ display: 'flex', flexDirection: 'row', width: '50%' }}>
+                      <Search className={classes.listIcon} />
+                      <div>
+                        <Typography variant="body2">{`${item.query}`}</Typography>
+                        <Typography variant="caption">{`${item.count} tulosta`}</Typography>
+                      </div>
+                    </div>
+                    <div style={{ width: '50%', display: 'contents', justifyContent: 'right' }}>
+                      {item.count > 1 && !item.final && (
+                      <Button
+                        variant="outlined"
+                        className={classes.suggestionButton}
+                        onClick={() => this.expandFilter(item)}
+                      >
+                        <Typography className={classes.expand} variant="body2">
+                          {'+ tarkenna'}
+                        </Typography>
+                      </Button>
+                      )}
+                      <ServiceMapButton
+                        className={classes.suggestionButton}
+                        onClick={() => this.handleSubmit(item.query)}
+                      >
+                        <Typography variant="button">
+                        Hae
+                        </Typography>
+                      </ServiceMapButton>
+                    </div>
+                  </div>
+                </ListItem>
+                {i !== suggestionList.length - 1 && (
+                  <Divider className={classes.divider} />
+                )}
+              </>
+            ))}
+          </List>
+          <div className={classes.suggestionSubtitle}>
+            <Typography className={classes.subtitleText} variant="overline">Ehdotuksia</Typography>
+          </div>
+          <List>
+            {suggestions[0].map(item => (
+              <UnitItem key={item.id} unit={item} />
+            ))}
+          </List>
+        </div>
+
         )}
       </>
     );

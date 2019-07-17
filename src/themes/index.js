@@ -36,7 +36,7 @@ const SMTheme = createMuiTheme({
       lineHeight: '1.5rem',
     },
     caption: {
-      fontSize: '0.7725rem',
+      fontSize: '0.7725rem', // 12.36px
       fontWeight: 'bold',
       letterSpacing: '0.025rem', // 0.4px
       lineHeight: '1rem',
@@ -76,6 +76,12 @@ const SMTheme = createMuiTheme({
       letterSpacing: '0.078125rem', // 1.25px
       lineHeight: '1rem', // 16px
       color: '#ffffff',
+    },
+    overline: {
+      fontSize: '0.7725rem', // 12.36px
+      fontWeight: 'bold',
+      letterSpacing: '0.125rem', // 2px
+      lineHeight: '1rem',
     },
   },
   spacing: {
