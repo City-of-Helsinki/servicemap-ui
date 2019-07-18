@@ -1,5 +1,4 @@
 import { waitForReact, ReactSelector } from 'testcafe-react-selectors';
-import { Selector } from 'testcafe';
 import config from '../../config';
 
 const { server } = config;
@@ -11,23 +10,6 @@ fixture`Unit page tests`
   .beforeEach(async () => {
     await waitForReact();
   });
-
-test('Unit page has unit information', async (t) => {
-  const content = Selector('.Content');
-  let nonEmptyElements = 0;
-
-  const divNumber = await content.child('div').count;
-
-  // Filter out empty info elements
-  for (let i = 0; i < divNumber; i++) {
-    if (await content.child('div').nth(i).child().count > 0) {
-      nonEmptyElements++;
-    }
-  }
-
-  await t
-    .expect(nonEmptyElements).gt(1, 'unit page has content in addition to title bar ')
-});
 
 test('Unit marker is drawn on map', async (t) => {
   const markers = ReactSelector('Marker')
