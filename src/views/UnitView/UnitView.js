@@ -90,11 +90,11 @@ class UnitView extends React.Component {
 
   centerMap = (map, unit) => {
     this.setState({ centered: true });
-    const { geometry } = unit;
+    const { geometry, location } = unit;
     if (geometry && geometry.type === 'MultiLineString') {
       focusDistrict(map, geometry.coordinates);
-    } else {
-      focusUnit(map, unit.location.coordinates);
+    } else if (location) {
+      focusUnit(map, location.coordinates);
     }
   }
 
