@@ -53,6 +53,10 @@ export const MapIcon = ({ ...rest }) => (
   <SMIcon icon="icon-icon-map-options" {...rest} />
 );
 
+export const SearchIcon = ({ ...rest }) => (
+  <SMIcon icon="icon-icon-search" {...rest} />
+);
+
 
 // Function to get right icon based on key mapping
 export const getIcon = (key, props) => {

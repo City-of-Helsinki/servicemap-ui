@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter, Redirect } from 'react-router-dom';
 import {
-  Paper, Divider, withStyles, Typography, Link,
+  Paper, withStyles, Typography, Link,
 } from '@material-ui/core';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import styles from './styles';
@@ -30,11 +30,20 @@ class SearchView extends React.Component {
 
   componentDidMount() {
     const {
-      fetchUnits, units, map,
+      fetchUnits, units, map, setNewFilters,
     } = this.props;
-    const searchParam = this.getSearchParam();
+    const searchParams = this.getSearchParams();
+    if (searchParams.services) {
+      fetch(`https://api.hel.fi/servicemap/v2/service/?page=1&page_size=100&id=${searchParams.services}&only=name`)
+        .then(res => res.json())
+        .then((res) => {
+          if (res && res.results && res.results.length > 0) {
+            setNewFilters({ service: res.results });
+          }
+        });
+    }
     if (this.shouldFetch()) {
-      fetchUnits([], null, searchParam);
+      fetchUnits([], null, searchParams.q);
     }
 
     this.focusMap(units, map);
@@ -50,20 +59,21 @@ class SearchView extends React.Component {
   }
 
   // Get search parameter from url
-  getSearchParam = () => {
+  getSearchParams = () => {
     const {
       location,
     } = this.props;
     const searchParams = parseSearchParams(location.search);
-    const searchParam = searchParams.q || null;
-    return searchParam;
+    return searchParams;
   }
 
   // Check if view will fetch data because search params has changed
   shouldFetch = () => {
     const { isFetching, previousSearch } = this.props;
-    const searchParam = this.getSearchParam();
-    return !isFetching && searchParam && searchParam !== previousSearch;
+    const searchParams = this.getSearchParams();
+    const query = searchParams.q || null;
+
+    return !isFetching && query && query !== previousSearch;
   }
 
   focusMap = (units, map) => {
@@ -216,7 +226,7 @@ class SearchView extends React.Component {
 
   render() {
     const {
-      isFetching, intl, count, max,
+      classes, filters, isFetching, intl, count, max, navigator, getLocaleText, setNewFilters,
     } = this.props;
     const progress = (isFetching && count) ? Math.floor((count / max * 100)) : 0;
 
@@ -237,9 +247,31 @@ class SearchView extends React.Component {
       <div className="Search">
         <SearchBar
           placeholder={intl && intl.formatMessage({ id: 'search.input.placeholder' })}
-          text={this.getSearchParam() || ''}
+          text={this.getSearchParams().q || ''}
         />
-        <Divider aria-hidden="true" />
+        {
+          filters
+          && filters.service
+          && (
+            <>
+              <Typography className={classes.margin} align="left">
+                {`Näytetään tulokset palvelulla ${filters.service.map(element => ` "${getLocaleText(element.name)}"`)}`}
+              </Typography>
+              <Typography
+                className={`${classes.margin} ${classes.link}`}
+                component="a"
+                align="left"
+                onClick={() => {
+                  navigator.replace('search', { query: this.getSearchParams().q });
+                  setNewFilters(null);
+                }}
+                role="link"
+              >
+                Näytä kaikki tulokset
+              </Typography>
+            </>
+          )
+        }
         <Paper elevation={1} square aria-live="polite" style={paperStyles}>
           {
             isFetching
@@ -275,9 +307,12 @@ export default withRouter(injectIntl(withStyles(styles)(SearchView)));
 
 // Typechecking
 SearchView.propTypes = {
+  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   changeSelectedUnit: PropTypes.func,
   count: PropTypes.number,
   fetchUnits: PropTypes.func,
+  filters: PropTypes.shape({ service: PropTypes.array }),
+  getLocaleText: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
   isFetching: PropTypes.bool,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -286,15 +321,19 @@ SearchView.propTypes = {
   units: PropTypes.arrayOf(PropTypes.any),
   map: PropTypes.objectOf(PropTypes.any),
   match: PropTypes.objectOf(PropTypes.any).isRequired,
+  navigator: PropTypes.objectOf(PropTypes.any),
+  setNewFilters: PropTypes.func.isRequired,
 };
 
 SearchView.defaultProps = {
   changeSelectedUnit: () => {},
   count: 0,
   fetchUnits: () => {},
+  filters: {},
   isFetching: false,
   max: 0,
   previousSearch: null,
   units: [],
   map: null,
+  navigator: null,
 };

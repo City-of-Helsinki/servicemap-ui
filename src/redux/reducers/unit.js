@@ -5,6 +5,7 @@ const initialState = {
   count: 0,
   max: 0,
   previousSearch: null,
+  filters: {},
 };
 
 export default (state = initialState, action) => {
@@ -43,6 +44,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         data: action.data,
+      };
+    case 'UNITS_SET_FILTER':
+      return {
+        ...state,
+        filters: action.filters,
       };
     default:
       return state;

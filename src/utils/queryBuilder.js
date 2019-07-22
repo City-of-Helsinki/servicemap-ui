@@ -8,7 +8,7 @@ const allowedTypes = [
 const searchQueryData = {
   page: 1,
   page_size: 200,
-  only: 'unit.location,unit.name,unit.municipality,unit.accessibility_shortcoming_count',
+  only: 'unit.location,unit.name,unit.municipality,unit.accessibility_shortcoming_count,unit.services',
   geometry: true,
 };
 
@@ -16,6 +16,20 @@ const unitQueryData = {
   accessibility_description: true,
   include: 'service_nodes,services',
   geometry: true,
+};
+
+export const encodeOptionsParameters = (options) => {
+  let encodedData = '';
+  if (options && typeof options === 'object') {
+    Object.keys(options).forEach((key) => {
+      const current = options[key];
+      if (current) {
+        encodedData += `&${key}=${encodeURIComponent(current)}`;
+      }
+    });
+  }
+  console.log('encodeOptionsParameters', encodedData);
+  return encodedData;
 };
 
 class QueryBuilder {
@@ -62,11 +76,12 @@ class QueryBuilder {
     } else {
       this.searchQuery = null;
     }
+
     return this;
   }
 
   // Build query to a URL
-  run = () => {
+  run = (options = null) => {
     let query = '';
     let fetchURL = null;
     let first = true;
@@ -94,7 +109,7 @@ class QueryBuilder {
         fetchURL = `${this.url}${this.type}/${this.data}/?${encodeURI(query)}`;
         break;
       default:
-        fetchURL = `${this.url}${this.type}/?${encodeURI(query)}`;
+        fetchURL = `${this.url}${this.type}/?${encodeURI(query)}${encodeOptionsParameters(options)}`;
     }
 
     return fetch(fetchURL);

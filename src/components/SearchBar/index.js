@@ -4,8 +4,9 @@ import SearchBar from './SearchBar';
 // Listen to redux state
 const mapStateToProps = (state) => {
   const { units } = state;
-  const { previousSearch } = units;
+  const { previousSearch, filters } = units;
   return {
+    filters,
     previousSearch,
   };
 };

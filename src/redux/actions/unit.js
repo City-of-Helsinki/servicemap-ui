@@ -21,24 +21,39 @@ export const setUnitData = data => ({
   type: 'SET_NEW_UNITS',
   data,
 });
+export const setFilters = filters => ({
+  type: 'UNITS_SET_FILTER',
+  filters,
+});
+
+export const setNewFilters = filters => async (dispatch) => {
+  dispatch(setFilters(filters));
+};
 
 // Thunk fetch
 export const fetchUnits = (
   allData = [],
   next = null,
   searchQuery = null,
+  options = null,
 ) => async (dispatch, getState)
 => {
   const { units } = getState();
   const { isFetching } = units;
 
+
   // If not currently fetching init fetch
   if (!isFetching) {
     dispatch(fetchIsLoading(searchQuery));
+    if (options) {
+      dispatch(setFilters({ service: options.service }));
+    }
   }
+
 
   // If getting next page or first fetch proceed to actual fetch
   if (next || !isFetching) {
+    console.log('Fetching');
     try {
       let response = null;
       if (next) {
@@ -64,6 +79,7 @@ export const fetchUnits = (
         dispatch(unitsFetchDataSuccess(distinctData));
       }
     } catch (e) {
+      console.error('Error fetching search results', e);
       dispatch(fetchHasErrored(e.message));
     }
   }

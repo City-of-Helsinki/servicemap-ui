@@ -6,10 +6,11 @@ const units = state => state.units.data;
 const direction = state => state.sort.direction;
 const order = state => state.sort.order;
 const locale = state => state.user.locale;
+const filters = state => state.units.filters;
 
 export const getOrderedData = createSelector(
-  [units, direction, order, locale],
-  (data, direction, order, locale) => {
+  [units, direction, order, locale, filters],
+  (data, direction, order, locale, filters) => {
     const results = Array.from(data);
 
     switch (order) {
@@ -36,6 +37,20 @@ export const getOrderedData = createSelector(
         break;
       }
       default:
+    }
+
+    if (filters && filters.service && filters.service.length) {
+      let filteredServices = results;
+      const services = filters.service;
+      services.forEach((filterService) => {
+        const { id } = filterService;
+        filteredServices = filteredServices.filter(
+          result => result
+          && result.services
+          && result.services.some(service => service === id),
+        );
+      });
+      return filteredServices;
     }
 
     return results;

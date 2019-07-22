@@ -27,4 +27,8 @@ export default theme => ({
   icon: {
     padding: 10,
   },
+  link: {
+    color: theme.palette.primary.main,
+    cursor: 'pointer',
+  },
 });
