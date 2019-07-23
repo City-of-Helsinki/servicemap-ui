@@ -12,6 +12,7 @@ const styles = theme => ({
     outlineWidth: 2,
   },
   title: {
+    flex: '1 1 auto',
     textOverflow: 'ellipsis',
     margin: 0,
     marginBottom: theme.spacing.unit,
