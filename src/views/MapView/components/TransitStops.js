@@ -102,7 +102,7 @@ class TransitStops extends React.Component {
           position={[stop.lat, stop.lon]}
           keyboard={false}
         >
-          <Popup autoPan={false}>
+          <Popup className="popup" autoPan={false}>
             <TransitStopInfo stop={stop} />
           </Popup>
         </Marker>
