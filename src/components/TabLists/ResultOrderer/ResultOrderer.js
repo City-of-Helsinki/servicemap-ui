@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage, intlShape } from 'react-intl';
 import {
   FormControl, InputLabel, Select,
 } from '@material-ui/core';
@@ -76,4 +76,4 @@ ResultOrderer.propTypes = {
   setOrder: PropTypes.func.isRequired,
 };
 
-export default injectIntl(ResultOrderer);
+export default ResultOrderer;
