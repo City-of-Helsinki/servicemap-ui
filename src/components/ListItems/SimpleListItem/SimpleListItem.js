@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import { withStyles, Typography, Divider } from '@material-ui/core';
+import { Typography, Divider } from '@material-ui/core';
 
 const SimpleListItem = (props) => {
   const {
@@ -49,31 +49,7 @@ const SimpleListItem = (props) => {
   );
 };
 
-const listItemStyles = theme => ({
-  listItem: {
-    minHeight: '3.5rem',
-    padding: 0,
-  },
-  textContainer: {
-    padding: 0,
-    marginLeft: theme.spacing.unitDouble,
-    marginRight: theme.spacing.unitDouble,
-    whiteSpace: 'pre-line',
-  },
-  link: {
-    color: '#0000EE',
-  },
-  listIcon: {
-    width: '1.5rem',
-    height: '1.5rem',
-    margin: '1rem',
-  },
-  divider: {
-    marginLeft: theme.spacing.unit * 9,
-  },
-});
-
-export default withStyles(listItemStyles)(SimpleListItem);
+export default SimpleListItem;
 
 SimpleListItem.propTypes = {
   button: PropTypes.bool,
