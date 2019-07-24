@@ -1,4 +1,4 @@
-export const mapType = (state = '', action) => {
+export const mapType = (state = 'servicemap', action) => {
   switch (action.type) {
     case 'SET_MAPTYPE':
       return action.mapType;
