@@ -8,7 +8,7 @@ import SearchBar from '../../components/SearchBar';
 import { focusDistrict, focusUnit } from '../MapView/utils/mapActions';
 import fetchDistricts from './utils/fetchDistricts';
 import { MobileComponent, DesktopComponent } from '../../layouts/WrapperComponents/WrapperComponents';
-import TitleBar from '../../components/TitleBar/TitleBar';
+import TitleBar from '../../components/TitleBar';
 import TitledList from '../../components/Lists/TitledList';
 import { AddressIcon, MapIcon } from '../../components/SMIcon';
 import UnitItem from '../../components/ListItems/UnitItem';

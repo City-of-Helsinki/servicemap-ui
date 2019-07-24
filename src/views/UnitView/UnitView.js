@@ -13,7 +13,7 @@ import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponen
 import SearchBar from '../../components/SearchBar';
 import { focusUnit, focusDistrict } from '../MapView/utils/mapActions';
 import styles from './styles/styles';
-import TitleBar from '../../components/TitleBar/TitleBar';
+import TitleBar from '../../components/TitleBar';
 import Container from '../../components/Container';
 import { uppercaseFirst } from '../../utils';
 import fetchUnitReservations from './utils/fetchUnitReservations';
