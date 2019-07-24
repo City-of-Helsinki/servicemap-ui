@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { drawServiceIcon } from '../../../views/Map/utils/drawIcon';
+import { drawServiceIcon } from '../../../views/MapView/utils/drawIcon';
 import { getLocaleString } from '../../../redux/selectors/locale';
 import { uppercaseFirst } from '../../../utils';
 import SimpleListItem from '../SimpleListItem';
