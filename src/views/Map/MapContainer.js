@@ -16,6 +16,7 @@ import { mapOptions } from './constants/mapConstants';
 
 import SearchBar from '../../components/SearchBar';
 import TitleBar from '../../components/TitleBar/TitleBar';
+import config from '../../../config';
 
 class MapContainer extends React.Component {
   constructor(props) {
@@ -63,7 +64,7 @@ class MapContainer extends React.Component {
         {isMobile && currentPage === 'map' && (
           // If on root map page (/map) display search bar.
           <div style={{
-            zIndex: 99999999, position: 'fixed', top: 64, width: '100%',
+            zIndex: 99999999, position: 'fixed', top: config.topBarHeight, width: '100%',
           }}
           >
             <SearchBar hideBackButton placeholder={intl.formatMessage({ id: 'search' })} />

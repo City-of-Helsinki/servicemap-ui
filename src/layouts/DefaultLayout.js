@@ -24,7 +24,7 @@ const createContentStyles = (
   } else if (isSmallScreen) {
     width = '50%';
   }
-  const topBarHeight = '64px';
+  const topBarHeight = `${config.topBarHeight}px`;
 
   const styles = {
     activeRoot: {
@@ -33,7 +33,7 @@ const createContentStyles = (
       width: '100%',
       display: 'flex',
       flexWrap: 'nowrap',
-      height: isMobile ? '100%' : 'calc(100vh - 64px)',
+      height: isMobile ? '100%' : `calc(100vh - ${topBarHeight})`,
     },
     map: {
       position: isMobile ? 'fixed' : null,

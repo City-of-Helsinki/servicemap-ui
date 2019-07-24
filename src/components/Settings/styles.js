@@ -1,3 +1,7 @@
+import config from '../../../config';
+
+const { topBarHeight } = config;
+
 export default theme => ({
   alert: {
     backgroundColor: '#000',
@@ -121,6 +125,6 @@ export default theme => ({
     margin: 0,
   },
   stickyMobile: {
-    top: 64,
+    top: topBarHeight,
   },
 });
