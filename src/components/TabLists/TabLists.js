@@ -1,15 +1,13 @@
 /* eslint-disable react/no-multi-comp */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
 import {
-  Typography, withStyles, Tabs, Tab,
+  Typography, Tabs, Tab,
 } from '@material-ui/core';
-import { injectIntl, intlShape } from 'react-intl';
+import { intlShape } from 'react-intl';
 import isClient, { parseSearchParams, stringifySearchParams, AddEventListener } from '../../utils';
 import ResultList from '../Lists/ResultList';
 import PaginationComponent from './PaginationComponent';
-import styles from './styles';
 import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import ResultOrderer from './ResultOrderer';
 import config from '../../../config';
@@ -457,4 +455,4 @@ TabLists.defaultProps = {
   navigator: null,
 };
 
-export default injectIntl(withRouter(withStyles(styles)(TabLists)));
+export default TabLists;
