@@ -137,6 +137,21 @@ class SearchView extends React.Component {
     );
   }
 
+  renderSearchBar() {
+    const {
+      intl,
+    } = this.props;
+    return (
+      <SearchBar
+        className="sticky"
+        placeholder={intl && intl.formatMessage({ id: 'search.input.placeholder' })}
+        isSticky={0}
+        text={this.getSearchParam() || ''}
+        primary
+      />
+    );
+  }
+
   /**
    * Render results
    */
@@ -181,17 +196,6 @@ class SearchView extends React.Component {
     return (
       <TabLists
         data={searchResults}
-        headerComponents={(
-          <>
-            <SearchBar
-              className="sticky"
-              placeholder={intl && intl.formatMessage({ id: 'search.input.placeholder' })}
-              isSticky={0}
-              text={this.getSearchParam() || ''}
-              primary
-            />
-          </>
-        )}
       />
     );
   }
@@ -254,15 +258,18 @@ class SearchView extends React.Component {
       >
         <Paper elevation={1} square aria-live="polite" style={paperStyles}>
           {
-            isFetching
-            && <Loading text={intl && intl.formatMessage({ id: 'search.loading.units' }, { count, max })} progress={progress} />
-          }
-          {
             this.renderScreenReaderInfo()
           }
         </Paper>
         {
+          this.renderSearchBar()
+        }
+        {
           this.renderResults()
+        }
+        {
+          isFetching
+          && <Loading text={intl && intl.formatMessage({ id: 'search.loading.units' }, { count, max })} progress={progress} />
         }
         {
           this.renderNotFound()
