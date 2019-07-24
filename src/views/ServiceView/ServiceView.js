@@ -12,7 +12,7 @@ import { drawServiceIcon } from '../MapView/utils/drawIcon';
 import { fitUnitsToMap } from '../MapView/utils/mapActions';
 import ResultList from '../../components/Lists/ResultList';
 import Loading from '../../components/Loading/Loading';
-import Container from '../../components/Container/Container';
+import Container from '../../components/Container';
 
 class ServiceView extends React.Component {
   constructor(props) {

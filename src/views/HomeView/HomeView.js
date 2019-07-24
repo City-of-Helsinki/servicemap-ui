@@ -10,7 +10,7 @@ import SearchBar from '../../components/SearchBar';
 import { MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import HomeLogo from '../../components/Logos/HomeLogo';
 import TitledList from '../../components/Lists/TitledList';
-import SimpleListItem from '../../components/ListItems/SimpleListItem/SimpleListItem';
+import SimpleListItem from '../../components/ListItems/SimpleListItem';
 import ServiceMapButton from '../../components/ServiceMapButton';
 
 // TODO: Fix close by events and services lists with actual data items once data is accessible

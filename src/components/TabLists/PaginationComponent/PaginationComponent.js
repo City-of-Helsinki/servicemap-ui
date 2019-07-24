@@ -6,7 +6,7 @@ import {
   withStyles, Button, Typography,
 } from '@material-ui/core';
 import { ArrowBackIos, ArrowForwardIos } from '@material-ui/icons';
-import Container from '../../Container/Container';
+import Container from '../../Container';
 import { keyboardHandler } from '../../../utils';
 import styles from './styles';
 
