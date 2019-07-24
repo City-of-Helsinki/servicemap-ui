@@ -1,3 +1,5 @@
-import ServiceMapButton from './ServiceMapButton';
+import { withStyles } from '@material-ui/core';
+import SMButton from './ServiceMapButton';
+import styles from './styles';
 
-export default ServiceMapButton;
+export default withStyles(styles)(SMButton);

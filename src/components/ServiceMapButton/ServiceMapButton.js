@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, withStyles } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 
-
-const BlueButton = ({
+// ServiceMapButton
+const SMButton = ({
   children, classes, className, onClick, srText, style, ...rest
 }) => (
   <Button
@@ -20,18 +20,7 @@ const BlueButton = ({
   </Button>
 );
 
-const styles = () => ({
-  button: {
-    marginLeft: '15%',
-    marginRight: '15%',
-    width: '70%',
-    height: 36,
-    marginTop: 24,
-    marginBottom: 24,
-  },
-});
-
-BlueButton.propTypes = {
+SMButton.propTypes = {
   className: PropTypes.string,
   onClick: PropTypes.func.isRequired,
   srText: PropTypes.string,
@@ -40,10 +29,10 @@ BlueButton.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-BlueButton.defaultProps = {
+SMButton.defaultProps = {
   className: '',
   srText: null,
   style: null,
 };
 
-export default withStyles(styles)(BlueButton);
+export default SMButton;
