@@ -5,7 +5,7 @@ import { drawMarkerIcon } from '../utils/drawIcon';
 import styles from '../styles';
 
 const Districts = ({
-  Polygon, Marker, Popup, highlightedDistrict, getLocaleText, settings, mapOptions, mobile, classes,
+  Polygon, Marker, Popup, highlightedDistrict, getLocaleText, settings, mapOptions, mobile, classes, navigator,
 }) => (
   <>
     {highlightedDistrict ? (
@@ -68,6 +68,7 @@ Districts.propTypes = {
   getLocaleText: PropTypes.func.isRequired,
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
   mapOptions: PropTypes.objectOf(PropTypes.any).isRequired,
+  navigator: PropTypes.objectOf(PropTypes.any).isRequired,
   mobile: PropTypes.bool,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
 };

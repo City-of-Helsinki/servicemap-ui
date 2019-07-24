@@ -187,6 +187,7 @@ class MapView extends React.Component {
               settings={settings}
               mapOptions={mapOptions}
               mobile={isMobile}
+              navigator={navigator}
             />
             <TransitStops
               Marker={Marker}
