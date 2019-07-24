@@ -9,7 +9,7 @@ import Container from '../../components/Container';
 import SearchBar from '../../components/SearchBar';
 import { MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import HomeLogo from '../../components/Logos/HomeLogo';
-import TitledList from '../../components/Lists/TitledList/TitledList';
+import TitledList from '../../components/Lists/TitledList';
 import SimpleListItem from '../../components/ListItems/SimpleListItem/SimpleListItem';
 import ServiceMapButton from '../../components/ServiceMapButton';
 
