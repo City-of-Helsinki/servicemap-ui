@@ -1,64 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import {
-  InputBase, Paper, withStyles, IconButton,
+  InputBase, Paper, IconButton,
 } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
-import { injectIntl, intlShape } from 'react-intl';
+import { intlShape } from 'react-intl';
 import BackButton from '../BackButton';
-import { fetchUnits } from '../../redux/actions/unit';
-
-const styles = theme => ({
-  root: {
-    display: 'flex',
-  },
-  wrapper: {
-    flex: 1,
-    margin: theme.spacing.unit,
-    padding: theme.spacing.unitHalf,
-    transition: theme.transitions.create(['margin', 'padding'], {
-      easing: theme.transitions.easing.easeIn,
-      duration: theme.transitions.duration.complex,
-    }),
-    border: '1px solid gray',
-  },
-  wrapperFocused: {
-    margin: 0,
-    // Margin is replaced with padding so height doesn't get affected
-    padding: theme.spacing.unit * 1.5,
-    transition: theme.transitions.create(['margin', 'padding'], {
-      duration: theme.transitions.duration.complex,
-    }),
-  },
-  container: {
-    alignItems: 'center',
-    display: 'flex',
-    flex: '0 0 auto',
-  },
-  input: {
-    flex: '1 1 auto',
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    padding: theme.spacing.unit,
-  },
-  iconButton: {
-    flex: '0 1 auto',
-    padding: theme.spacing.unit,
-  },
-  icon: {
-    flex: '0 1 auto',
-    padding: theme.spacing.unit,
-  },
-  sticky: {
-    position: 'sticky',
-    zIndex: 50,
-  },
-  primary: {
-    backgroundColor: theme.palette.primary.main,
-  },
-});
-
 
 class SearchBar extends React.Component {
   constructor(props) {
@@ -200,17 +147,4 @@ SearchBar.defaultProps = {
   primary: false,
 };
 
-// Listen to redux state
-const mapStateToProps = (state) => {
-  const { navigator, units } = state;
-  const { isFetching } = units;
-  return {
-    isFetching,
-    navigator,
-  };
-};
-
-export default withStyles(styles)(injectIntl(connect(
-  mapStateToProps,
-  { fetchUnits },
-)(SearchBar)));
+export default SearchBar;
