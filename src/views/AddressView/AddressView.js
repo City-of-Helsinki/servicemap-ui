@@ -1,5 +1,5 @@
 /* eslint-disable global-require */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Typography } from '@material-ui/core';
 import { renderToStaticMarkup } from 'react-dom/server';
@@ -21,23 +21,40 @@ import DistritctItem from './components/DistrictItem';
 
 let addressMarker = null;
 
-class AddressView extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      districts: null,
-      units: null,
-      addressData: null,
-      icon: null,
-      error: null,
-      fetching: null,
-    };
-  }
+const AddressView = (props) => {
+  const [districts, setDistricts] = useState(null);
+  const [units, setUnits] = useState(null);
+  const [addressData, setAddressData] = useState(null);
+  // const [icon, setIcon] = useState(null);
+  const [error, setError] = useState(null);
 
-  componentDidMount() {
-    const { match } = this.props;
+  const {
+    addressState,
+    classes,
+    highlightedDistrict,
+    intl,
+    match,
+    getLocaleText,
+    map,
+    setAddressTitle,
+    setHighlightedDistrict,
+    setAddressUnits,
+    navigator,
+  } = props;
+
+  const unmountCleanup = () => {
+    if (addressMarker) {
+      map.removeLayer(addressMarker);
+    }
+    setHighlightedDistrict(null);
+    // Add addess name as title to redux, so that when returning to page, correct title is shown
+    const title = addressData && `${getLocaleText(addressData.street.name)} ${addressData.number}, ${addressData.street.municipality}`;
+    setAddressTitle(title);
+  };
+
+  const addMarkerToMap = (coordinates, id) => {
     const { divIcon } = require('leaflet');
-    this.fetchData(match);
+    const { clickCoordinates, addressId } = addressState;
 
     // Create icon that can be added to map
     const addressIcon = divIcon({
@@ -47,51 +64,10 @@ class AddressView extends React.Component {
       iconSize: [45, 45],
       iconAnchor: [22, 42],
     });
-    this.setState({ icon: addressIcon });
-  }
 
-  componentDidUpdate() {
-    const {
-      match, setHighlightedDistrict, highlightedDistrict, getLocaleText,
-    } = this.props;
-    const { addressData, error, fetching } = this.state;
-    /* If new address is picked from the map while old address page is open,
-    new data needs to be fetched. Fetch if url params dont match component state data */
-    if (!fetching && !error && !(
-      addressData
-      && match.params.street === getLocaleText(addressData.street.name)
-      && match.params.number === addressData.number
-      && match.params.municipality === addressData.street.municipality)
-    ) {
-      this.fetchData(match);
-      if (highlightedDistrict) {
-        // Clear any drawn districts from map
-        setHighlightedDistrict(null);
-      }
-    }
-  }
-
-  componentWillUnmount() {
-    const {
-      setHighlightedDistrict, setAddressTitle, map, getLocaleText,
-    } = this.props;
-    const { addressData } = this.state;
-    if (addressMarker) {
-      map.removeLayer(addressMarker);
-    }
-    setHighlightedDistrict(null);
-    // Add addess name as title to redux, so that when returning to page, correct title is shown
-    const title = addressData && `${getLocaleText(addressData.street.name)} ${addressData.number}, ${addressData.street.municipality}`;
-    setAddressTitle(title);
-  }
-
-  addMarkerToMap = (coordinates, id) => {
-    const { map, addressState } = this.props;
-    const { icon } = this.state;
-    const { clickCoordinates, addressId } = addressState;
     if (map) {
       const L = require('leaflet');
-      /* If no user click location on redux or if the data is for old address,
+      /* If no user click location on redux, or if the data is for old address,
       use the exact coordinates of the address instead of the user's click location */
       const position = !clickCoordinates || addressId !== id
         ? [coordinates[1], coordinates[0]] : clickCoordinates;
@@ -101,22 +77,37 @@ class AddressView extends React.Component {
       }
       addressMarker = new L.Marker(
         position,
-        { icon },
+        { icon: addressIcon },
       ).addTo(map);
 
       focusUnit(map, [position[1], position[0]]);
     }
-  }
+  };
 
-  fetchData = (match) => {
-    const { intl, setAddressTitle, getLocaleText } = this.props;
-    const { districts, units, fetching } = this.state;
+  const fetchAddressDistricts = (lnglat) => {
+    setDistricts(null);
+    fetchDistricts(lnglat)
+      .then(response => setDistricts(response));
+  };
+
+  const fetchUnits = (lnglat) => {
+    fetchAddressUnits(lnglat)
+      .then((data) => {
+        const units = data.results;
+        units.forEach((unit) => {
+          // eslint-disable-next-line no-param-reassign
+          unit.object_type = 'unit';
+        });
+        setUnits(units);
+        setAddressUnits(data.results);
+      });
+  };
+
+  const fetchData = (match) => {
     if (districts || units) {
       // Remove old data before fetching new
-      this.setState({ districts: null, units: null });
-    }
-    if (!fetching) {
-      this.setState({ fetching: true });
+      setDistricts(null);
+      setUnits(null);
     }
     fetchAddressData(match)
       .then((data) => {
@@ -126,36 +117,20 @@ class AddressView extends React.Component {
           if (address.letter) {
             address.number += address.letter;
           }
-          this.setState({ addressData: address, fetching: false });
+          setAddressData(address);
           const addressName = `${getLocaleText(address.street.name)} ${address.number}, ${address.street.municipality}`;
           setAddressTitle(addressName);
           const { coordinates } = address.location;
-          this.addMarkerToMap(coordinates, address.street.id);
-          this.fetchAddressDistricts(coordinates);
-          this.fetchUnits(coordinates);
+          addMarkerToMap(coordinates, address.street.id);
+          fetchAddressDistricts(coordinates);
+          fetchUnits(coordinates);
         } else {
-          this.setState({ error: intl.formatMessage({ id: 'address.error' }), fetching: false });
+          setError(intl.formatMessage({ id: 'address.error' }));
         }
       });
-  }
+  };
 
-  fetchAddressDistricts = (lnglat) => {
-    this.setState({ districts: null });
-    fetchDistricts(lnglat)
-      .then(response => this.setState({ districts: response }));
-  }
-
-  fetchUnits = (lnglat) => {
-    const { setAddressUnits } = this.props;
-    fetchAddressUnits(lnglat)
-      .then((data) => {
-        this.setState({ units: data.results });
-        setAddressUnits(data.results);
-      });
-  }
-
-  showOnMap = (title) => {
-    const { match, navigator, setAddressTitle } = this.props;
+  const mobileShowOnMap = (title) => {
     const { params } = match;
     // Set correct title (address or district name) for map title bar to display
     setAddressTitle(title);
@@ -165,17 +140,9 @@ class AddressView extends React.Component {
       number: params.number,
       query: '?map=true',
     });
-  }
+  };
 
-  showDistrictOnMap = (district, mobile) => {
-    const {
-      map,
-      setHighlightedDistrict,
-      getLocaleText,
-      intl,
-      highlightedDistrict,
-    } = this.props;
-
+  const showDistrictOnMap = (district, mobile) => {
     // On desktop mode if clicked on an already highlihted district, we want to toggle it off.
     if (!mobile && highlightedDistrict && highlightedDistrict.id === district.id) {
       setHighlightedDistrict(null);
@@ -189,100 +156,100 @@ class AddressView extends React.Component {
     if (mobile && navigator) {
       const districtName = district.name || district.unit.name;
       const title = `${getLocaleText(districtName)} ${intl.formatMessage({ id: `address.list.${district.type}` })}`;
-      this.showOnMap(title);
+      mobileShowOnMap(title);
     }
-  }
+  };
 
-  render() {
-    const {
-      match, intl, getLocaleText, map, classes,
-    } = this.props;
-    const {
-      addressData, districts, units, error,
-    } = this.state;
+  const renderHead = (title) => {
+    if (addressData) {
+      return (
+        <HeadModifier>
+          <title>
+            {`${title} | ${intl.formatMessage({ id: 'app.title' })}`}
+          </title>
+        </HeadModifier>
+      );
+    } return null;
+  };
 
-    if (units) {
-      units.forEach((unit) => {
-        // eslint-disable-next-line no-param-reassign
-        unit.object_type = 'unit';
-      });
+  const renderTopBar = title => (
+    <div>
+      <DesktopComponent>
+        <SearchBar placeholder={intl.formatMessage({ id: 'search' })} />
+      </DesktopComponent>
+      <TitleBar icon={<AddressIcon />} title={error || title} />
+    </div>
+  );
+
+  // Clean up when component unmounts
+  useEffect(() => () => unmountCleanup(), []);
+
+  // Update view data when match props (url) change
+  useEffect(() => {
+    fetchData(match);
+    if (highlightedDistrict) {
+      // Clear any drawn districts from map
+      setHighlightedDistrict(null);
     }
+  }, [match]);
 
-    const title = addressData ? `${getLocaleText(addressData.street.name)} ${addressData.number}, ${match.params.municipality}` : '';
+  // Render component
+  const title = addressData ? `${getLocaleText(addressData.street.name)} ${addressData.number}, ${match.params.municipality}` : '';
+  return (
+    <div>
+      {renderHead(title)}
+      {renderTopBar(title)}
+      {districts && Object.entries(districts).map(districtList => (
+        districtList[1].length > 0 && (
+        <TitledList title={intl.formatMessage({ id: `address.list.${districtList[0]}` })} titleComponent="h4" key={districtList[0]}>
+          {districtList[1].map((district) => {
+            const title = district.name
+              ? getLocaleText(district.name) : getLocaleText(district.unit.name);
+            const period = district.unit && district.start && district.end
+              ? `${district.start.substring(0, 4)}-${district.end.substring(0, 4)}` : null;
 
-    const head = addressData && (
-      <HeadModifier>
-        <title>
-          {`${title} | ${intl.formatMessage({ id: 'app.title' })}`}
-        </title>
-      </HeadModifier>
-    );
-
-    const TopBar = (
-      <div>
-        <DesktopComponent>
-          <SearchBar placeholder={intl.formatMessage({ id: 'search' })} />
-        </DesktopComponent>
-        <TitleBar icon={<AddressIcon />} title={error || title} />
-      </div>
-    );
-
-    return (
-      <div>
-        {head}
-        {TopBar}
-        {districts && Object.entries(districts).map(districtList => (
-          districtList[1].length > 0 && (
-            <TitledList title={intl.formatMessage({ id: `address.list.${districtList[0]}` })} titleComponent="h4" key={districtList[0]}>
-              {districtList[1].map((district) => {
-                const title = district.name
-                  ? getLocaleText(district.name) : getLocaleText(district.unit.name);
-                const period = district.unit && district.start && district.end
-                  ? `${district.start.substring(0, 4)}-${district.end.substring(0, 4)}` : null;
-
-                return (
-                  <DistritctItem
-                    key={district.id}
-                    district={district}
-                    title={title}
-                    period={period}
-                    showDistrictOnMap={this.showDistrictOnMap}
-                  />
-                );
-              })}
-            </TitledList>
-          )
+            return (
+              <DistritctItem
+                key={district.id}
+                district={district}
+                title={title}
+                period={period}
+                showDistrictOnMap={showDistrictOnMap}
+              />
+            );
+          })}
+        </TitledList>
+        )
+      ))}
+      {units && (
+      <TitledList title={intl.formatMessage({ id: 'address.nearby' })} titleComponent="h4">
+        {units.map(unit => (
+          <UnitItem key={unit.id} unit={unit} />
         ))}
-        {units && (
-          <TitledList title={intl.formatMessage({ id: 'address.nearby' })} titleComponent="h4">
-            {units.map(unit => (
-              <UnitItem key={unit.id} unit={unit} />
-            ))}
-          </TitledList>
-        )}
-        {addressData && (
-          <MobileComponent>
-            <ServiceMapButton
-              className={classes.mapButton}
-              onClick={() => {
-                if (navigator) {
-                  focusUnit(map, addressData.location.coordinates);
-                  const title = `${getLocaleText(addressData.street.name)} ${addressData.number}, ${addressData.street.municipality}`;
-                  this.showOnMap(title);
-                }
-              }}
-            >
-              <MapIcon className={classes.icon} />
-              <Typography variant="button">
-                <FormattedMessage id="general.showOnMap" />
-              </Typography>
-            </ServiceMapButton>
-          </MobileComponent>
-        )}
-      </div>
-    );
-  }
-}
+      </TitledList>
+      )}
+      {addressData && (
+      <MobileComponent>
+        <ServiceMapButton
+          className={classes.mapButton}
+          onClick={() => {
+            if (navigator) {
+              focusUnit(map, addressData.location.coordinates);
+              const title = `${getLocaleText(addressData.street.name)} ${addressData.number}, ${addressData.street.municipality}`;
+              mobileShowOnMap(title);
+            }
+          }}
+        >
+          <MapIcon className={classes.icon} />
+          <Typography variant="button">
+            <FormattedMessage id="general.showOnMap" />
+          </Typography>
+        </ServiceMapButton>
+      </MobileComponent>
+      )}
+    </div>
+  );
+};
 
 export default AddressView;
 
