@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-underscore-dangle */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -94,14 +95,12 @@ class SearchView extends React.Component {
     // If not currently searching and view should not fetch new search
     // and only 1 result found redirect directly to specific result page
     if (!isFetching && !this.shouldFetch() && units && units.length === 1) {
-      // eslint-disable-next-line camelcase
       const { id, object_type } = units[0];
       let path = null;
       // Parse language params
       const { params } = match;
       const lng = params && params.lng;
 
-      // eslint-disable-next-line camelcase
       switch (object_type) {
         case 'unit':
           path = generatePath('unit', lng, { id });
