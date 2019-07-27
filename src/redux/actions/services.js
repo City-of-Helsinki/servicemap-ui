@@ -29,7 +29,7 @@ export const fetchServiceUnits = (
 ) => async (dispatch, getState) => {
   // Fetch service data
   const { unit } = config;
-  const url = unit.api_url;
+  const url = unit.apiUrl;
 
   const { service } = getState();
   const { isFetching } = service;
@@ -75,7 +75,7 @@ export const fetchServiceUnits = (
 export const fetchService = serviceId => async (dispatch) => {
   // Fetch service data
   const { unit } = config;
-  const url = unit.api_url;
+  const url = unit.apiUrl;
 
   dispatch(fetchIsLoading());
 

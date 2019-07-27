@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
 import config from '../../../config';
 
-// eslint-disable-next-line camelcase
-const mobileBreakpoint = config.mobile_ui_breakpoint;
+const mobileBreakpoint = config.mobileUiBreakpoint;
 
 // Content wrapped with this component show only on mobile widths
 export const MobileComponent = ({ children }) => {

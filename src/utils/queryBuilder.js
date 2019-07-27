@@ -21,7 +21,7 @@ const unitQueryData = {
 class QueryBuilder {
   constructor() {
     const { unit } = config;
-    this.url = unit && unit.api_url;
+    this.url = unit && unit.apiUrl;
     this.defaultType = 'search';
     this.searchQuery = null;
     this.data = null;

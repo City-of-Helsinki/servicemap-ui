@@ -20,7 +20,7 @@ export const setSelectedEvent = event => ({
 
 export const fetchUnitEvents = unitId => async (dispatch) => {
   const { events } = config;
-  const url = events.api_url;
+  const url = events.apiUrl;
 
   dispatch(fetchIsLoading());
   try {
