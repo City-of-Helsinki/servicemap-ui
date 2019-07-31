@@ -1,3 +1,5 @@
+import config from '../../../../config';
+
 // The maximum bounds of the map
 const mapBounds = {
   maxLat: 60.68260671624568,
@@ -7,7 +9,7 @@ const mapBounds = {
 };
 
 const mapOptions = {
-  initialPosition: [60.171631597530016, 24.906860323934886],
+  initialPosition: config.initialMapPosition,
   maxBounds: [
     [mapBounds.maxLat, mapBounds.minLng],
     [mapBounds.maxLat, mapBounds.maxLng],
