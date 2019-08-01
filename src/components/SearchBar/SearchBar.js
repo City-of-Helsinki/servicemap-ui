@@ -323,7 +323,7 @@ class SearchBar extends React.Component {
                       <Button
                         variant="outlined"
                         className={classes.suggestionButton}
-                        onClick={() => this.expandFilter(item)}
+                        onClick={() => this.expandSearch(item)}
                       >
                         <Typography className={classes.expand} variant="body2">
                           {'+ tarkenna'}
