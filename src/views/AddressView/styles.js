@@ -1,4 +1,4 @@
-const styles = ({
+export default theme => ({
   mapButton: {
     float: 'right',
     display: 'flex',
@@ -7,10 +7,21 @@ const styles = ({
     height: 48,
     width: 'auto',
   },
-  icon: {
+  mapIcon: {
     marginLeft: 0,
     marginRight: 12,
   },
+  titleIcon: {
+    fontSize: 28,
+    height: 24,
+    width: 24,
+    marginLeft: 0,
+    marginRight: 0,
+  },
+  topBar: {
+    backgroundColor: theme.palette.primary.main,
+    position: 'sticky',
+    top: 0,
+    zIndex: 50,
+  },
 });
-
-export default styles;

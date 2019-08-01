@@ -11,13 +11,13 @@ import { MobileComponent, DesktopComponent } from '../../layouts/WrapperComponen
 import TitleBar from '../../components/TitleBar/TitleBar';
 import TitledList from '../../components/Lists/TitledList';
 import { AddressIcon, MapIcon } from '../../components/SMIcon';
-import UnitItem from '../../components/ListItems/UnitItem';
 import HeadModifier from '../../utils/headModifier';
 
 import fetchAddressUnits from './utils/fetchAddressUnits';
 import fetchAddressData from './utils/fetchAddressData';
 import ServiceMapButton from '../../components/ServiceMapButton';
 import DistritctItem from './components/DistrictItem';
+import TabLists from '../../components/TabLists';
 
 let addressMarker = null;
 
@@ -25,7 +25,6 @@ const AddressView = (props) => {
   const [districts, setDistricts] = useState(null);
   const [units, setUnits] = useState(null);
   const [addressData, setAddressData] = useState(null);
-  // const [icon, setIcon] = useState(null);
   const [error, setError] = useState(null);
 
   const {
@@ -173,16 +172,59 @@ const AddressView = (props) => {
   };
 
   const renderTopBar = title => (
-    <div>
+    <div className={`${classes.topBar} sticky`}>
       <DesktopComponent>
         <SearchBar placeholder={intl.formatMessage({ id: 'search' })} />
+        <TitleBar icon={<AddressIcon className={classes.titleIcon} />} title={error || title} primary />
       </DesktopComponent>
-      <TitleBar icon={<AddressIcon />} title={error || title} />
+      <MobileComponent>
+        <TitleBar icon={<AddressIcon />} title={title} primary backButton />
+      </MobileComponent>
     </div>
   );
 
+  const renderNearbyList = () => {
+    if (!units) {
+      return <Typography><FormattedMessage id="general.loading" /></Typography>;
+    } if (units && !units.length) {
+      return <Typography><FormattedMessage id="general.noData" /></Typography>;
+    }
+    return null;
+  };
+
+
+  const renderDistrictsList = () => {
+    if (districts) {
+      if (Object.entries(districts).length !== 0) {
+        return (
+          Object.entries(districts).map(districtList => (
+            districtList[1].length > 0 && (
+            <TitledList title={intl.formatMessage({ id: `address.list.${districtList[0]}` })} titleComponent="h4" key={districtList[0]}>
+              {districtList[1].map((district) => {
+                const title = district.name
+                  ? getLocaleText(district.name) : getLocaleText(district.unit.name);
+                const period = district.unit && district.start && district.end
+                  ? `${district.start.substring(0, 4)}-${district.end.substring(0, 4)}` : null;
+
+                return (
+                  <DistritctItem
+                    key={district.id}
+                    district={district}
+                    title={title}
+                    period={period}
+                    showDistrictOnMap={showDistrictOnMap}
+                  />
+                );
+              })}
+            </TitledList>
+            )
+          )));
+      } return <Typography><FormattedMessage id="general.noData" /></Typography>;
+    } return <Typography><FormattedMessage id="general.loading" /></Typography>;
+  };
+
   // Clean up when component unmounts
-  useEffect(() => () => unmountCleanup(), []);
+  useEffect(() => () => unmountCleanup(), [map]);
 
   // Update view data when match props (url) change
   useEffect(() => {
@@ -191,44 +233,39 @@ const AddressView = (props) => {
       // Clear any drawn districts from map
       setHighlightedDistrict(null);
     }
-  }, [match]);
+  }, [match.url, map]);
 
   // Render component
   const title = addressData ? `${getLocaleText(addressData.street.name)} ${addressData.number}, ${match.params.municipality}` : '';
+  const tabs = [
+    {
+      ariaLabel: intl.formatMessage({ id: 'address.nearby' }),
+      component: renderNearbyList(),
+      data: units,
+      itemsPerPage: 10,
+      title: intl.formatMessage({ id: 'address.nearby' }),
+      noOrderer: true, // Remove this when we want result orderer for address unit list
+    },
+    {
+      ariaLabel: intl.formatMessage({ id: 'address.districts' }),
+      component: renderDistrictsList(),
+      data: null,
+      itemsPerPage: null,
+      title: intl.formatMessage({ id: 'address.districts' }),
+    },
+  ];
   return (
     <div>
       {renderHead(title)}
-      {renderTopBar(title)}
-      {districts && Object.entries(districts).map(districtList => (
-        districtList[1].length > 0 && (
-        <TitledList title={intl.formatMessage({ id: `address.list.${districtList[0]}` })} titleComponent="h4" key={districtList[0]}>
-          {districtList[1].map((district) => {
-            const title = district.name
-              ? getLocaleText(district.name) : getLocaleText(district.unit.name);
-            const period = district.unit && district.start && district.end
-              ? `${district.start.substring(0, 4)}-${district.end.substring(0, 4)}` : null;
-
-            return (
-              <DistritctItem
-                key={district.id}
-                district={district}
-                title={title}
-                period={period}
-                showDistrictOnMap={showDistrictOnMap}
-              />
-            );
-          })}
-        </TitledList>
-        )
-      ))}
-      {units && (
-      <TitledList title={intl.formatMessage({ id: 'address.nearby' })} titleComponent="h4">
-        {units.map(unit => (
-          <UnitItem key={unit.id} unit={unit} />
-        ))}
-      </TitledList>
-      )}
-      {addressData && (
+      <TabLists
+        data={tabs}
+        headerComponents={(
+          <>
+            {renderTopBar(title)}
+          </>
+        )}
+      />
+      {addressData && units && districts && (
       <MobileComponent>
         <ServiceMapButton
           className={classes.mapButton}
@@ -240,7 +277,7 @@ const AddressView = (props) => {
             }
           }}
         >
-          <MapIcon className={classes.icon} />
+          <MapIcon className={classes.mapIcon} />
           <Typography variant="button">
             <FormattedMessage id="general.showOnMap" />
           </Typography>

@@ -35,6 +35,7 @@ export default {
   'address.list.preschool_education_sv': 'Ruotsinkielinen varhaiskasvatus', // TODO: Translate
   'address.error': 'Osoitetta ei löytynyt', // TODO: Translate
   'address.nearby': 'Lähellä', // TODO: Translate
+  'address.districts': 'Alueet', // TODO: Translate
 
   // Event
   'event.nearby': 'Nearby events', // TODO: Translate

@@ -278,10 +278,12 @@ class TabLists extends React.Component {
     } = this.state;
 
     let fullData = [];
+    const tabsWithSort = [];
 
-    data.forEach((element) => {
-      if (element.data) {
+    data.forEach((element, i) => {
+      if (element.data && !element.noOrderer) {
         fullData = [...fullData, ...element.data];
+        tabsWithSort.push(i);
       }
     });
     const filteredData = this.filteredData();
@@ -292,7 +294,7 @@ class TabLists extends React.Component {
         }
         {
           fullData.length > 0 && (
-            <ResultOrderer />
+            <ResultOrderer disabled={!tabsWithSort.includes(tabIndex)} />
           )
         }
         <Tabs

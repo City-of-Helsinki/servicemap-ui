@@ -95,9 +95,18 @@ const fetchDistricts = async (lnglat) => {
         break;
     }
   });
-  const districtLists = {
-    geographical, protection, health, education,
-  };
+
+  const districtLists = {};
+
+  if (geographical.length) {
+    districtLists.geographical = geographical;
+  } if (protection.length) {
+    districtLists.protection = protection;
+  } if (health.length) {
+    districtLists.health = health;
+  } if (education.length) {
+    districtLists.education = education;
+  }
   return districtLists;
 };
 
