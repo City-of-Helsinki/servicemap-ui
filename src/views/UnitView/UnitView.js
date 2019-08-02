@@ -11,7 +11,7 @@ import { getSelectedUnit } from '../../redux/selectors/selectedUnit';
 import { getLocaleString } from '../../redux/selectors/locale';
 import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import SearchBar from '../../components/SearchBar';
-import { focusUnit, focusDistrict } from '../Map/utils/mapActions';
+import { focusUnit, focusDistrict } from '../MapView/utils/mapActions';
 import styles from './styles/styles';
 import TitleBar from '../../components/TitleBar/TitleBar';
 import Container from '../../components/Container';

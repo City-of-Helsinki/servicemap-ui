@@ -50,7 +50,7 @@ class TransitStopInfo extends React.Component {
           borderBottomColor: 'rgba(0, 0, 0, 0.12)',
         }}
         >
-          {stop.name}
+          {typeof stop.name === 'object' ? stop.name.fi : stop.name}
         </p>
 
         {departureTimes ? departureTimes.map((departure, index) => {

@@ -1,5 +1,5 @@
 /* eslint-disable global-require, no-underscore-dangle */
-import { mapOptions } from '../constants/mapConstants';
+import { mapOptions } from '../config/mapConfig';
 
 const fitUnitsToMap = (units, map) => {
   const L = require('leaflet');

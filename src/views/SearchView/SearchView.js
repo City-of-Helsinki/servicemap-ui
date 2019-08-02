@@ -9,7 +9,7 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import styles from './styles';
 import Loading from '../../components/Loading/Loading';
 import SearchBar from '../../components/SearchBar';
-import { fitUnitsToMap } from '../Map/utils/mapActions';
+import { fitUnitsToMap } from '../MapView/utils/mapActions';
 import { parseSearchParams } from '../../utils';
 import TabLists from '../../components/TabLists';
 

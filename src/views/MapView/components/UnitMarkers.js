@@ -14,10 +14,10 @@ class UnitMarkers extends React.Component {
 
   render() {
     const {
-      data, navigator, Marker, settings,
+      data, navigator, Marker, Polyline, settings,
     } = this.props;
 
-    const unitListFiltered = data.filter(unit => unit.object_type === 'unit');
+    const unitListFiltered = data.units.filter(unit => unit.object_type === 'unit');
 
     return (
       <>
@@ -40,18 +40,26 @@ class UnitMarkers extends React.Component {
             );
           } return null;
         })}
+        {data.unitGeometry && unitListFiltered.length === 1 && (
+          <Polyline
+            positions={[
+              data.unitGeometry,
+            ]}
+            color="#ff8400"
+          />
+        )}
       </>
     );
   }
 }
 
 UnitMarkers.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)).isRequired,
+  data: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.any)).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any).isRequired,
   Marker: PropTypes.objectOf(PropTypes.any).isRequired,
+  Polyline: PropTypes.objectOf(PropTypes.any).isRequired,
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
 };
-
 
 // Listen to redux state
 const mapStateToProps = (state) => {

@@ -1,5 +1,5 @@
 /* eslint-disable global-require */
-import { mapTypes } from '../constants/mapConstants';
+import { mapTypes } from '../config/mapConfig';
 
 let L;
 // Check if we are on client side because leafelt map works only on client side

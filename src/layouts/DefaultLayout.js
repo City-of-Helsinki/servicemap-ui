@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
 import Sidebar from '../views/Sidebar';
-import MapContainer from '../views/Map/MapContainer';
+import MapView from '../views/MapView';
 import I18n from '../i18n';
 import config from '../../config';
 import { DesktopComponent } from './WrapperComponents/WrapperComponents';
@@ -100,7 +100,7 @@ const DefaultLayout = (props) => {
           )}
         </main>
         <div aria-hidden style={styles.map}>
-          <MapContainer isMobile={!!isMobile} />
+          <MapView isMobile={!!isMobile} />
         </div>
       </div>
 

@@ -78,7 +78,10 @@ const mapTypes = {
   },
 };
 
+const transitIconSize = 30;
+
 export {
   mapOptions,
   mapTypes,
+  transitIconSize,
 };

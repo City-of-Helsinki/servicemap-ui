@@ -1,4 +1,5 @@
 /* eslint-disable global-require */
+// Fetch list of stops
 const fetchStops = async (map) => {
   const L = require('leaflet');
 
@@ -22,7 +23,9 @@ const fetchStops = async (map) => {
   // Bounds used in subway entrance fetch
   const fetchBox = `${wideBounds.getWest()},${wideBounds.getSouth()},${wideBounds.getEast()},${wideBounds.getNorth()}`;
 
-  const data = await Promise.all([
+  let stopData = null;
+
+  await Promise.all([
     // Fetch for transit stops
     fetch('https://api.digitransit.fi/routing/v1/routers/hsl/index/graphql', {
       method: 'post',
@@ -38,7 +41,6 @@ const fetchStops = async (map) => {
           patterns {
             headsign
             route {
-              gtfsId
               shortName
             }
           }
@@ -46,12 +48,61 @@ const fetchStops = async (map) => {
       }`,
     }).then(response => response.json()),
     // Fetch for subway entrances
-    fetch(`https://api.hel.fi/servicemap/v2/unit/?service=437&page_size=200&bbox=${fetchBox}`)
-      .then(response => response.json()).then(),
-  ]);
-  return data;
+    fetch(`https://api.hel.fi/servicemap/v2/unit/?service=437&page_size=50&bbox=${fetchBox}`)
+      .then(response => response.json()),
+  ])
+    .then((data) => {
+      // Handle subwaystops and return list of all stops
+      const stops = data[0].data.stopsByBbox;
+      const subwayStations = stops.filter(stop => stop.vehicleType === 1);
+
+      // Remove subwaystations from stops list since they will be replaced with subway entrances
+      const filteredStops = stops.filter(stop => stop.vehicleType !== 1);
+
+      const entrances = data[1].results;
+
+      // Add subway entrances to the list of stops
+      entrances.forEach((entrance) => {
+        const closest = {
+          distance: null,
+          stop: null,
+        };
+        if (subwayStations.length) {
+        // Find the subwaystation closest to the entrance
+          subwayStations.forEach((stop) => {
+            const distance = Math.sqrt(
+              ((stop.lat - entrance.location.coordinates[1]) ** 2)
+          + ((stop.lon - entrance.location.coordinates[0]) ** 2),
+            );
+            if (!closest.distance || distance < closest.distance) {
+              closest.distance = distance;
+              closest.stop = stop;
+            }
+          });
+          // Get the same station's stop for other direction (west/east)
+          const otherStop = subwayStations.find(
+            station => station.name === closest.stop.name && station.gtfsId !== closest.stop.gtfsId,
+          );
+          // Create a new stop from the entrance
+          // Give it the stop data of the corresponding station and add it to the list of stops
+          const newStop = {
+            gtfsId: closest.stop.gtfsId,
+            secondaryId: otherStop.gtfsId,
+            lat: entrance.location.coordinates[1],
+            lon: entrance.location.coordinates[0],
+            name: entrance.name,
+            patterns: closest.stop.patterns,
+            vehicleType: closest.stop.vehicleType,
+          };
+          filteredStops.push(newStop);
+        }
+      });
+      stopData = filteredStops;
+    });
+  return stopData;
 };
 
+// Fetch one stop data
 const fetchStopData = async (stop) => {
   const requestBody = id => (`{
     stop(id: "${id}") {
@@ -88,6 +139,7 @@ const fetchStopData = async (stop) => {
       body: requestBody(stop.secondaryId),
     });
     const secondData = await response.json();
+    // Combine both timetables into one.
     const combinedData = data;
     combinedData.data.stop.stoptimesWithoutPatterns = [
       ...combinedData.data.stop.stoptimesWithoutPatterns,

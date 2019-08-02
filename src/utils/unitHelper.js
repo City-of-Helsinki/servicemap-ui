@@ -1,4 +1,4 @@
-import { drawUnitIcon } from '../views/Map/utils/drawIcon';
+import { drawUnitIcon } from '../views/MapView/utils/drawIcon';
 import isClient from '.';
 import SettingsUtility from './settings';
 import config from '../../config';

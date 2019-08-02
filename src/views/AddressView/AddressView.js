@@ -5,7 +5,7 @@ import { Typography } from '@material-ui/core';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { intlShape, FormattedMessage } from 'react-intl';
 import SearchBar from '../../components/SearchBar';
-import { focusDistrict, focusUnit } from '../Map/utils/mapActions';
+import { focusDistrict, focusUnit } from '../MapView/utils/mapActions';
 import fetchDistricts from './utils/fetchDistricts';
 import { MobileComponent, DesktopComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import TitleBar from '../../components/TitleBar/TitleBar';
