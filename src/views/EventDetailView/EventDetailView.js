@@ -10,7 +10,7 @@ import { changeSelectedEvent } from '../../redux/actions/event';
 import { fetchSelectedUnit } from '../../redux/actions/selectedUnit';
 import DescriptionText from '../../components/DescriptionText';
 import SearchBar from '../../components/SearchBar';
-import TitleBar from '../../components/TitleBar/TitleBar';
+import TitleBar from '../../components/TitleBar';
 import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import SimpleListItem from '../../components/ListItems/SimpleListItem';
 import UnitItem from '../../components/ListItems/UnitItem';

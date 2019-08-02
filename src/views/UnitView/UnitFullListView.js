@@ -7,7 +7,7 @@ import { withStyles } from '@material-ui/core';
 import { fetchUnitEvents } from '../../redux/actions/event';
 import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import fetchUnitReservations from './utils/fetchUnitReservations';
-import TitleBar from '../../components/TitleBar/TitleBar';
+import TitleBar from '../../components/TitleBar';
 import SearchBar from '../../components/SearchBar';
 import { getLocaleString } from '../../redux/selectors/locale';
 import Events from './components/Events';

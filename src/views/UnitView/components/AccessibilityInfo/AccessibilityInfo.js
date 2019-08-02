@@ -5,7 +5,7 @@ import {
 } from '@material-ui/core';
 import { Warning, VerifiedUser } from '@material-ui/icons';
 import { FormattedMessage } from 'react-intl';
-import Container from '../../../../components/Container/Container';
+import Container from '../../../../components/Container';
 import SettingsUtility from '../../../../utils/settings';
 
 class AccessibilityInfo extends React.Component {

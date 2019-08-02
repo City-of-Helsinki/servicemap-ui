@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, intlShape, injectIntl } from 'react-intl';
+import { FormattedMessage, intlShape } from 'react-intl';
 import {
   Typography,
   Divider,
@@ -258,7 +258,7 @@ class Settings extends React.Component {
 
   renderSenseSettings() {
     const { currentSettings } = this.state;
-    const { classes } = this.props;
+    const { classes, intl } = this.props;
 
     const senseSettingList = {
       colorblind: {
@@ -280,7 +280,12 @@ class Settings extends React.Component {
 
     return (
       <Container>
-        <SettingsTitle close={() => this.toggleSettingsContainer()} titleID="settings.sense.title" typography={{ component: 'h3' }} />
+        <SettingsTitle
+          classes={classes}
+          close={() => this.toggleSettingsContainer()}
+          intl={intl}
+          titleID="settings.sense.title"
+        />
         <FormGroup row>
           <List className={classes.list}>
             {
@@ -355,7 +360,11 @@ class Settings extends React.Component {
         <Container>
           <FormControl className={classes.noMargin} component="fieldset" fullWidth>
             <FormLabel>
-              <SettingsTitle titleID="settings.mobility.title" />
+              <SettingsTitle
+                classes={classes}
+                titleID="settings.mobility.title"
+                intl={intl}
+              />
             </FormLabel>
             <RadioGroup
               aria-label={intl.formatMessage({ id: 'settings.mobility.title' })}
@@ -545,4 +554,4 @@ Settings.defaultProps = {
   isMobile: false,
 };
 
-export default injectIntl(Settings);
+export default Settings;

@@ -1,11 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { drawServiceIcon } from '../../../views/MapView/utils/drawIcon';
-import { getLocaleString } from '../../../redux/selectors/locale';
 import { uppercaseFirst } from '../../../utils';
 import SimpleListItem from '../SimpleListItem';
-import { setNewCurrentService } from '../../../redux/actions/services';
 
 class ServiceItem extends React.Component {
   state = {
@@ -48,22 +45,7 @@ class ServiceItem extends React.Component {
   }
 }
 
-// Listen to redux state
-const mapStateToProps = (state) => {
-  const { current } = state.service;
-  const getLocaleText = textObject => getLocaleString(state, textObject);
-  const { navigator } = state;
-  return {
-    currentService: current,
-    getLocaleText,
-    navigator,
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  { setNewCurrentService },
-)(ServiceItem);
+export default ServiceItem;
 
 ServiceItem.propTypes = {
   currentService: PropTypes.objectOf(PropTypes.any),

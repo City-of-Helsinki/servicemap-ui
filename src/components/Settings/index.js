@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core';
+import { injectIntl } from 'react-intl';
 import {
   toggleHearingAid, setMobility, toggleColorblind, toggleVisuallyImpaired,
 } from '../../redux/actions/settings';
@@ -18,4 +19,4 @@ export default withStyles(styles)(connect(
   {
     toggleHearingAid, setMobility, toggleColorblind, toggleVisuallyImpaired,
   },
-)(Settings));
+)(injectIntl(Settings)));

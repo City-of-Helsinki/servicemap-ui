@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Typography, Divider, withStyles } from '@material-ui/core';
+import { Typography, Divider } from '@material-ui/core';
 
 const DesciptionText = ({
   description, title, html, classes,
@@ -28,26 +28,6 @@ const DesciptionText = ({
   } return null;
 };
 
-const styles = theme => ({
-  divider: {
-    marginRight: 0,
-  },
-  left: {
-    textAlign: 'left',
-    marginLeft: theme.spacing.unit * 2,
-    marginRight: theme.spacing.unit * 2,
-  },
-  paragraph: {
-    marginTop: theme.spacing.unitDouble,
-    marginBottom: theme.spacing.unitDouble,
-    whiteSpace: 'pre-line',
-  },
-  subtitle: {
-    marginTop: theme.spacing.unitDouble,
-    marginBottom: theme.spacing.unitDouble,
-  },
-});
-
 DesciptionText.propTypes = {
   description: PropTypes.string,
   title: PropTypes.oneOfType([PropTypes.objectOf(PropTypes.any), PropTypes.string]),
@@ -62,4 +42,4 @@ DesciptionText.defaultProps = {
 };
 
 
-export default withStyles(styles)(DesciptionText);
+export default DesciptionText;

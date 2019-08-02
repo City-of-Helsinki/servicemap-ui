@@ -14,7 +14,7 @@ import { fitUnitsToMap } from '../MapView/utils/mapActions';
 import { parseSearchParams } from '../../utils';
 import TabLists from '../../components/TabLists';
 
-import Container from '../../components/Container/Container';
+import Container from '../../components/Container';
 import { generatePath } from '../../utils/path';
 import { DesktopComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 

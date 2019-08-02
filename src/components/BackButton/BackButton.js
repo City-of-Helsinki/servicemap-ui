@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { intlShape } from 'react-intl';
 import { IconButton, Button } from '@material-ui/core';
 import { ArrowBack } from '@material-ui/icons';
-import { injectIntl, intlShape } from 'react-intl';
 import { getPathName } from '../../utils/path';
 
 const BackButton = (props) => {
@@ -95,16 +94,4 @@ BackButton.defaultProps = {
   variant: null,
 };
 
-// Listen to redux state
-const mapStateToProps = (state) => {
-  const { breadcrumb, navigator } = state;
-  return {
-    breadcrumb,
-    navigator,
-  };
-};
-
-export default injectIntl(connect(
-  mapStateToProps,
-  null,
-)(BackButton));
+export default BackButton;
