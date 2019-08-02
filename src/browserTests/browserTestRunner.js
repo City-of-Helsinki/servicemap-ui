@@ -1,3 +1,4 @@
+// TODO: Move to use CLI to run tests
 const createTestCafe = require('testcafe');
 
 let testcafe = null;
@@ -9,10 +10,10 @@ createTestCafe('localhost')
 
     return runner
       .src([
-        'src/browserTests/browserTest.js',
         'src/browserTests/accessibilityTest.js',
+        'src/browserTests/browserTest.js',
         'src/browserTests/searchTest.js',
-        'src/browserTests/titleBarTest.js',
+        // 'src/browserTests/titleBarTest.js',
         'src/browserTests/unitPageTest.js',
         'src/browserTests/unitListPageTest.js',
       ])
