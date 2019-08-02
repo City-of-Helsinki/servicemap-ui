@@ -15,10 +15,10 @@ export default theme => ({
     paddingLeft: theme.spacing.unit * 3,
   },
   noInfoColor: {
-    color: config.accessibility_colors.missing_info,
+    color: config.accessibilityColors.missingInfo,
   },
   noShortcomingsColor: {
-    color: config.accessibility_colors.default,
+    color: config.accessibilityColors.default,
   },
   title: {
     marginBottom: theme.spacing.unitDouble,

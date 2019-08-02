@@ -37,7 +37,7 @@ class UnitView extends React.Component {
 
     this.currentId = 0;
     this.ids = {};
-    this.supportedLanguages = config.supported_languages;
+    this.supportedLanguages = config.supportedLanguages;
 
     this.state = {
       centered: false,

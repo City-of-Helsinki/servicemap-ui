@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -84,11 +85,9 @@ class ResultList extends React.Component {
           {
             data && data.length
             && data.map((item) => {
-              // eslint-disable-next-line camelcase
               const { id, object_type } = item;
               // Figure out correct icon for item
               let itemComponent = null;
-              // eslint-disable-next-line camelcase
               switch (object_type) {
                 case 'unit':
                   itemComponent = <UnitItem key={`unit-${id}`} unit={item} listId={listId} />;

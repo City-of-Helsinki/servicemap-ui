@@ -1,5 +1,4 @@
 /* eslint-disable react/no-multi-comp */
-/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
@@ -54,7 +53,7 @@ class TabLists extends React.Component {
   }
 
   componentDidMount() {
-    if (window.innerWidth <= config.mobile_ui_breakpoint) {
+    if (window.innerWidth <= config.mobileUiBreakpoint) {
       this.setState({ mobile: true });
     }
     this.addListeners();
@@ -183,8 +182,8 @@ class TabLists extends React.Component {
       return;
     }
 
-    const shouldUpdate = mobile => (mobile && window.innerWidth > config.mobile_ui_breakpoint)
-      || (!mobile && window.innerWidth <= config.mobile_ui_breakpoint);
+    const shouldUpdate = mobile => (mobile && window.innerWidth > config.mobileUiBreakpoint)
+      || (!mobile && window.innerWidth <= config.mobileUiBreakpoint);
 
     // Add resize event listener to update header tab styles
     this.events.push(AddEventListener(window, 'resize', () => {

@@ -11,9 +11,8 @@ import { DesktopComponent } from './WrapperComponents/WrapperComponents';
 import TopBar from '../components/TopBar';
 import Settings from '../components/Settings';
 
-// eslint-disable-next-line camelcase
-const mobileBreakpoint = config.mobile_ui_breakpoint;
-const smallScreenBreakpoint = config.small_screen_breakpoint;
+const mobileBreakpoint = config.mobileUiBreakpoint;
+const { smallScreenBreakpoint } = config;
 
 const createContentStyles = (
   isMobile, isSmallScreen, landscape, mobileMapOnly, fullMobileMap, settingsOpen,
