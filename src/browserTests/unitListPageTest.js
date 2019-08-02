@@ -32,7 +32,7 @@ pages.forEach(page => {
     .page(page)
     (`Page: ${page} displays unit on map`, async (t) => {
       const markers = ReactSelector('UnitMarkers');    
-      const markerList = await markers.getReact(({props}) => props.data);
+      const markerList = await markers.getReact(({props}) => props.data.units);
     
       await t
         .expect(markerList.length).gt(0, 'no unit marker on map')
