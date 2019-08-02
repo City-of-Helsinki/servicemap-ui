@@ -67,7 +67,7 @@ class TopBar extends React.Component {
               {/* Home logo link to home view */}
               <a href={generatePath('home', lng)} style={{ alignSelf: 'center' }} className="focus-dark-background">
                 <HomeLogo aria-hidden="true" className={classes.logo} />
-                <Typography className="sr-only" color="inherit" component="h1" variant="body1">
+                <Typography className="sr-only app-title" color="inherit" component="h1" variant="body1">
                   <FormattedMessage id="app.title" />
                 </Typography>
               </a>
