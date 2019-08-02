@@ -13,7 +13,7 @@ import Districts from './components/Districts';
 import TransitStops from './components/TransitStops';
 import AddressPopup from './components/AddressPopup';
 import SearchBar from '../../components/SearchBar';
-import TitleBar from '../../components/TitleBar/TitleBar';
+import TitleBar from '../../components/TitleBar';
 import config from '../../../config';
 
 
