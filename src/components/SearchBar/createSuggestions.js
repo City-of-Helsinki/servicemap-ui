@@ -6,7 +6,7 @@ const listLength = 5;
 const createSuggestions = async (query, getLocaleText) => {
   const results = [];
   await Promise.all([
-    fetch(`https://api.hel.fi/servicemap/v2/search/?input=${query}&only=unit.name&page_size=${pageSize}&type=unit`)
+    fetch(`https://api.hel.fi/servicemap/v2/search/?input=${query}&only=unit.name&page_size=${pageSize}&type=unit,service`)
       .then(response => response.json()),
     fetch(`https://api.hel.fi/servicemap/v2/search/?input=${query}&only=unit.location,unit.name,unit.municipality,unit.accessibility_shortcoming_count&page_size=5&type=unit`)
       .then(response => response.json())
@@ -18,7 +18,6 @@ const createSuggestions = async (query, getLocaleText) => {
       }),
   ])
     .then((data) => {
-      console.log('data is: ', data);
       const resultData = data[0];
       const suggestions = [];
       // Form a list of suggestions from query results
