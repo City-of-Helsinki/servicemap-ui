@@ -35,6 +35,7 @@ export default {
   'address.list.preschool_education_sv': 'Swedish preschool education',
   'address.error': 'No address found',
   'address.nearby': 'Nearby',
+  'address.districts': 'Areas',
 
 
   // Event

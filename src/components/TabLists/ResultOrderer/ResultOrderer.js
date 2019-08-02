@@ -37,17 +37,18 @@ class ResultOrderer extends React.Component {
 
   render() {
     const {
-      classes, direction, intl, order,
+      classes, direction, intl, order, disabled, handleChange,
     } = this.props;
     return (
       <form className={classes.root} autoComplete="off">
         <FormControl className={classes.formControl}>
           <InputLabel style={{ color: 'inherit' }} htmlFor="result-sorter"><FormattedMessage id="sorting.label" /></InputLabel>
           <Select
+            disabled={disabled}
             className={classes.select}
             native
             value={`${order}-${direction}`}
-            onChange={this.handleChange}
+            onChange={handleChange || this.handleChange}
             inputProps={{
               name: 'result-sorter',
               id: 'result-sorter',
@@ -74,6 +75,13 @@ ResultOrderer.propTypes = {
   order: PropTypes.oneOf(allowedOrders).isRequired,
   setDirection: PropTypes.func.isRequired,
   setOrder: PropTypes.func.isRequired,
+  disabled: PropTypes.bool,
+  handleChange: PropTypes.func,
+};
+
+ResultOrderer.defaultProps = {
+  disabled: false,
+  handleChange: null,
 };
 
 export default ResultOrderer;
