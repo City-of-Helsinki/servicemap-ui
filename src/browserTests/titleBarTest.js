@@ -1,4 +1,5 @@
 /* eslint-disable */
+/*
 import { Selector, ClientFunction } from 'testcafe';
 import { waitForReact, ReactSelector } from 'testcafe-react-selectors';
 
@@ -8,7 +9,7 @@ const { server } = config;
 // Unit id to test - using Kallion kirjasto
 const unitID = 8215;
 
-fixture`TitleBar tests`
+fixture`UnitPage`
   .page`http://${server.address}:${server.port}/fi/unit/${unitID}`
   .beforeEach(async () => {
     await waitForReact();
@@ -54,3 +55,4 @@ test('TitleBar home button works correctly', async (t) => {
     .expect(getLocation()).contains(`http://${server.address}:${server.port}/fi/`);
 
 });
+*/
