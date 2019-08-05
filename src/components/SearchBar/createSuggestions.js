@@ -1,4 +1,5 @@
 import { uppercaseFirst } from '../../utils';
+import suggestUnits from './suggestUnits';
 
 const pageSize = 50;
 const listLength = 5;
@@ -8,14 +9,7 @@ const createSuggestions = async (query, getLocaleText) => {
   await Promise.all([
     fetch(`https://api.hel.fi/servicemap/v2/search/?input=${query}&only=unit.name&page_size=${pageSize}&type=unit,service`)
       .then(response => response.json()),
-    fetch(`https://api.hel.fi/servicemap/v2/search/?input=${query}&only=unit.location,unit.name,unit.municipality,unit.accessibility_shortcoming_count&page_size=5&type=unit`)
-      .then(response => response.json())
-      .then((data) => {
-        data.results.forEach((unit) => {
-          unit.object_type = 'unit';
-        });
-        return data;
-      }),
+    suggestUnits(query, true),
   ])
     .then((data) => {
       const resultData = data[0];

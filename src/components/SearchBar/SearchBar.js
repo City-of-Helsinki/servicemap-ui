@@ -14,7 +14,7 @@ import createSuggestions from './createSuggestions';
 import expandSearch from './expandSearch';
 import UnitItem from '../ListItems/UnitItem';
 import ServiceMapButton from '../ServiceMapButton';
-import { SearchIcon } from '../SMIcon';
+import suggestUnits from './suggestUnits';
 
 const styles = theme => ({
   root: {
@@ -93,7 +93,7 @@ class SearchBar extends React.Component {
       search: previousSearch,
       isActive: false,
       suggestions: null,
-      expandedQueries: null,
+      searchQueries: null,
     };
   }
 
@@ -118,17 +118,20 @@ class SearchBar extends React.Component {
     this.setState({ search: e.currentTarget.value });
     if (query.length > 2) {
       createSuggestions(e.currentTarget.value, getLocaleText)
-        .then(result => this.setState({ expandedQueries: null, suggestions: result }));
+        .then(result => this.setState({ searchQueries: [result[1]], suggestions: result[0] }));
     }
   }
 
   onExpandSearch = (item) => {
     const { getLocaleText } = this.props;
+    const { searchQueries } = this.state;
     expandSearch(item, getLocaleText)
       .then(result => this.setState({
         search: result.search,
-        expandedQueries: result.expandedQueries,
+        searchQueries: [result.expandedQueries, ...searchQueries],
       }));
+    suggestUnits(item.query)
+      .then(data => this.setState({ suggestions: data.results }));
   }
 
   onSubmit = (e) => {
@@ -155,11 +158,11 @@ class SearchBar extends React.Component {
   }
 
   suggestionBackEvent = () => {
-    const { expandedQueries } = this.state;
-    if (expandedQueries) {
-      this.setState({ expandedQueries: null });
-    } else {
-      this.setState({ suggestions: null });
+    const { searchQueries } = this.state;
+    if (searchQueries) {
+      const queries = searchQueries;
+      queries.shift();
+      this.setState({ searchQueries: queries });
     }
   };
 
@@ -173,10 +176,10 @@ class SearchBar extends React.Component {
       backButtonEvent, classes, intl, placeholder, previousSearch, hideBackButton, searchRef,
     } = this.props;
     const {
-      search, isActive, suggestions, expandedQueries,
+      search, isActive, suggestions, searchQueries,
     } = this.state;
 
-    const suggestionList = expandedQueries || (suggestions && suggestions[1]) || null;
+    const suggestionList = searchQueries && searchQueries[0];
 
     const inputValue = typeof search === 'string' ? search : previousSearch;
 
@@ -209,10 +212,10 @@ class SearchBar extends React.Component {
             </IconButton>
           </form>
         </Paper>
-        {suggestions && (
+        {suggestions && suggestionList && (
 
         <div style={{
-          position: 'fixed', zIndex: 999999, height: '100%', width: '450px', backgroundColor: '#ffffff',
+          zIndex: 999999, height: '100%', width: '450px', backgroundColor: '#ffffff', overflow: 'auto',
         }}
         >
           <div className={classes.suggestionSubtitle}>
@@ -264,7 +267,7 @@ class SearchBar extends React.Component {
             <Typography className={classes.subtitleText} variant="overline">Ehdotuksia</Typography>
           </div>
           <List>
-            {suggestions[0].map(item => (
+            {suggestions.map(item => (
               <UnitItem key={item.id} unit={item} />
             ))}
           </List>

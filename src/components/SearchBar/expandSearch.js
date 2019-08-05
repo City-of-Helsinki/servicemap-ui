@@ -80,7 +80,6 @@ const expandSearch = async (item, getLocaleText) => {
         }
       });
       return ({ search: item.query, expandedQueries: searchData });
-      // this.setState({ search: item.query, expandedQueries: searchData });
     });
   return results;
 };
