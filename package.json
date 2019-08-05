@@ -40,6 +40,7 @@
     "test": "jest test",
     "eject": "react-scripts eject",
     "dev": "NODE_ENV=development BABEL_ENV=development webpack --watch --progress & nodemon dist",
+    "production": "NODE_ENV=production BABEL_ENV=production webpack --progress --mode production && node dist",
     "browserTest": "node src/browserTests/browserTestRunner.js"
   },
   "eslintConfig": {
