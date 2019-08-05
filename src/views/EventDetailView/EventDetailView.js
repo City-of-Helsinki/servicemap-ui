@@ -97,7 +97,7 @@ class EventDetailView extends React.Component {
             <TitleBar title={getLocaleText(event.name)} icon={<Event />} primary backButton />
           </MobileComponent>
 
-          {event.images && (
+          {event.images && event.images.length && (
           <img
             style={{
               width: '100%', maxHeight: 300, objectFit: 'contain', backgroundColor: 'rgba(0,0,0,0.15)',
