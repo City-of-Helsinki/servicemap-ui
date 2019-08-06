@@ -1,4 +1,4 @@
-/* eslint-disable global-require */
+/* eslint-disable global-require, max-len */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
@@ -94,7 +94,7 @@ class MapView extends React.Component {
             )}
             {currentPage === 'address' && addressTitle && (
             // If on address's map page (/address?map=true) display title bar
-            <TitleBar title={addressTitle} />
+            <TitleBar title={addressTitle} primary backButton />
             )}
           </div>
         </>

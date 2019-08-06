@@ -3,19 +3,15 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
 import { withRouter } from 'react-router-dom';
-import { withStyles } from '@material-ui/core';
 import { fetchUnitEvents } from '../../redux/actions/event';
-import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import fetchUnitReservations from './utils/fetchUnitReservations';
-import TitleBar from '../../components/TitleBar';
-import SearchBar from '../../components/SearchBar';
 import { getLocaleString } from '../../redux/selectors/locale';
 import Events from './components/Events';
 import Services from './components/Services';
 import Reservations from './components/Reservations';
-import styles from './styles/styles';
 import HeadModifier from '../../utils/headModifier';
 import UnitIcon from '../../components/SMIcon/UnitIcon';
+import TopArea from '../../components/TopArea';
 
 class UnitFullListView extends React.Component {
   constructor(props) {
@@ -84,23 +80,10 @@ class UnitFullListView extends React.Component {
 
   render() {
     const {
-      getLocaleText, unit, intl, classes,
+      getLocaleText, unit, intl,
     } = this.props;
     const { icon, titleId } = this.state;
 
-    const topBar = (
-      unit && (
-        <>
-          <DesktopComponent>
-            <SearchBar placeholder={intl.formatMessage({ id: 'search' })} />
-            <TitleBar icon={icon} title={getLocaleText(unit.name)} />
-          </DesktopComponent>
-          <MobileComponent>
-            <TitleBar icon={icon} title={getLocaleText(unit.name)} primary backButton />
-          </MobileComponent>
-        </>
-      )
-    );
     const head = titleId && (
       <HeadModifier>
         <title>
@@ -113,10 +96,16 @@ class UnitFullListView extends React.Component {
     return (
       <>
         {head}
-        <div className={classes.fullListContent}>
-          {topBar}
+        <>
+          {unit && (
+            <TopArea
+              icon={icon}
+              title={getLocaleText(unit.name)}
+              placeholder={intl.formatMessage({ id: 'search' })}
+            />
+          )}
           {this.getContent()}
-        </div>
+        </>
       </>
     );
   }
@@ -140,7 +129,6 @@ UnitFullListView.propTypes = {
   getLocaleText: PropTypes.func.isRequired,
   fetchUnitEvents: PropTypes.func.isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 UnitFullListView.defaultProps = {
@@ -148,7 +136,7 @@ UnitFullListView.defaultProps = {
   eventsData: { events: null, unit: null },
 };
 
-export default withStyles(styles)(withRouter(injectIntl(connect(
+export default withRouter(injectIntl(connect(
   mapStateToProps,
   { fetchUnitEvents },
-)(UnitFullListView))));
+)(UnitFullListView)));

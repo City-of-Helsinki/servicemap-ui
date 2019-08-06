@@ -4,15 +4,13 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Paper, Typography } from '@material-ui/core';
-import SearchBar from '../../components/SearchBar';
-import TitleBar from '../../components/TitleBar';
-import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import { generatePath } from '../../utils/path';
 import { drawServiceIcon } from '../MapView/utils/drawIcon';
 import { fitUnitsToMap } from '../MapView/utils/mapActions';
 import ResultList from '../../components/Lists/ResultList';
 import Loading from '../../components/Loading/Loading';
 import Container from '../../components/Container';
+import TopArea from '../../components/TopArea';
 
 class ServiceView extends React.Component {
   constructor(props) {
@@ -31,7 +29,7 @@ class ServiceView extends React.Component {
     const { params } = match;
 
     this.setState({
-      icon: <img alt="" src={drawServiceIcon()} style={{ height: 24 }} />,
+      icon: <img alt="" src={drawServiceIcon('primary')} style={{ height: 24 }} />,
     });
 
     // Fetch service if current is not same as url param's
@@ -94,50 +92,29 @@ class ServiceView extends React.Component {
 
     return (
       <div>
-        <DesktopComponent>
-          <SearchBar placeholder={intl.formatMessage({ id: 'search' })} />
-          {
-            showTitle
-            && (
-              <TitleBar icon={icon} title={getLocaleText(current.name)} />
-            )
-          }
-        </DesktopComponent>
-        {
-          showTitle
-          && (
-            <MobileComponent>
-              <TitleBar icon={icon} title={getLocaleText(current.name)} primary backButton />
-            </MobileComponent>
-          )
-        }
-        {
-          showLoading
-          && (
-            <Paper elevation={1} square aria-live="polite">
-              <Loading text={intl && intl.formatMessage({ id: 'search.loading.units' }, { count, max })} progress={progress} />
-            </Paper>
-          )
-        }
-        {
-          showUnits
-          && (
-            <ResultList
-              listId="search-list"
-              data={serviceUnits}
-              title={intl.formatMessage({ id: 'unit.plural' })}
-              onItemClick={(e, item) => this.handleClick(e, item)}
-            />
-          )
-        }
-        {
-          showServiceWithoutUnits
-          && (
-            <Container margin>
-              <Typography variant="body1" align="left"><FormattedMessage id="service.units.empty" /></Typography>
-            </Container>
-          )
-        }
+        <TopArea
+          icon={showTitle ? icon : null}
+          title={showTitle ? getLocaleText(current.name) : ''}
+          placeholder={intl.formatMessage({ id: 'search' })}
+        />
+        {showLoading && (
+          <Paper elevation={1} square aria-live="polite">
+            <Loading text={intl && intl.formatMessage({ id: 'search.loading.units' }, { count, max })} progress={progress} />
+          </Paper>
+        )}
+        {showUnits && (
+          <ResultList
+            listId="search-list"
+            data={serviceUnits}
+            title={intl.formatMessage({ id: 'unit.plural' })}
+            onItemClick={(e, item) => this.handleClick(e, item)}
+          />
+        )}
+        {showServiceWithoutUnits && (
+          <Container margin>
+            <Typography variant="body1" align="left"><FormattedMessage id="service.units.empty" /></Typography>
+          </Container>
+        )}
       </div>
     );
   }

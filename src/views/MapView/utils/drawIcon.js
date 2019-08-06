@@ -144,25 +144,26 @@ export const drawUnitIcon = (berryColor, curve) => {
 };
 
 // Temporary solution
-export const drawServiceIcon = () => {
+export const drawServiceIcon = (primary) => {
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
   canvas.height = canvasSize.height;
   canvas.width = canvasSize.width;
   const berryColor = 'gray';
+  const stemColor = primary ? '#fff' : undefined;
 
   // Berry calculation
   let berryCenterPoint;
   berryCenterPoint = berryCenter(90); // Creates straight line
-  drawStem(ctx, berryCenterPoint);
+  drawStem(ctx, berryCenterPoint, null, stemColor);
   drawBerry(ctx, berryCenterPoint, berryColor);
 
-  berryCenterPoint = berryCenter(90 + 40);
-  drawStem(ctx, berryCenterPoint);
+  berryCenterPoint = berryCenter(90 + 35);
+  drawStem(ctx, berryCenterPoint, null, stemColor);
   drawBerry(ctx, berryCenterPoint, berryColor);
 
-  berryCenterPoint = berryCenter(90 - 40);
-  drawStem(ctx, berryCenterPoint);
+  berryCenterPoint = berryCenter(90 - 35);
+  drawStem(ctx, berryCenterPoint, null, stemColor);
   drawBerry(ctx, berryCenterPoint, berryColor);
 
   return canvas.toDataURL();

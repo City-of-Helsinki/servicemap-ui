@@ -68,10 +68,6 @@ export default theme => ({
     backgroundColor: 'rgba(0,0,0,0.15)',
     display: 'flex',
   },
-  fullListContent: {
-    height: '100%',
-    overflow: 'auto',
-  },
   topBar: {
     backgroundColor: theme.palette.primary.main,
     position: 'sticky',

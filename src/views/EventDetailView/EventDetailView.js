@@ -9,13 +9,11 @@ import { AccessTime, Phone, Event } from '@material-ui/icons';
 import { changeSelectedEvent } from '../../redux/actions/event';
 import { fetchSelectedUnit } from '../../redux/actions/selectedUnit';
 import DescriptionText from '../../components/DescriptionText';
-import SearchBar from '../../components/SearchBar';
-import TitleBar from '../../components/TitleBar';
-import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import SimpleListItem from '../../components/ListItems/SimpleListItem';
 import UnitItem from '../../components/ListItems/UnitItem';
 import TitledList from '../../components/Lists/TitledList';
 import UnitHelper from '../../utils/unitHelper';
+import TopArea from '../../components/TopArea';
 
 class EventDetailView extends React.Component {
   componentDidMount() {
@@ -89,13 +87,11 @@ class EventDetailView extends React.Component {
       const time = this.formatDate(event);
       return (
         <>
-          <DesktopComponent>
-            <SearchBar placeholder={intl.formatMessage({ id: 'search' })} />
-            <TitleBar title={getLocaleText(event.name)} icon={<Event />} />
-          </DesktopComponent>
-          <MobileComponent>
-            <TitleBar title={getLocaleText(event.name)} icon={<Event />} primary backButton />
-          </MobileComponent>
+          <TopArea
+            icon={<Event />}
+            title={getLocaleText(event.name)}
+            placeholder={intl.formatMessage({ id: 'search' })}
+          />
 
           {event.images && event.images.length && (
           <img

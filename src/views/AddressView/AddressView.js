@@ -4,11 +4,9 @@ import PropTypes from 'prop-types';
 import { Typography } from '@material-ui/core';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { intlShape, FormattedMessage } from 'react-intl';
-import SearchBar from '../../components/SearchBar';
 import { focusDistrict, focusUnit } from '../MapView/utils/mapActions';
 import fetchDistricts from './utils/fetchDistricts';
-import { MobileComponent, DesktopComponent } from '../../layouts/WrapperComponents/WrapperComponents';
-import TitleBar from '../../components/TitleBar';
+import { MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import TitledList from '../../components/Lists/TitledList';
 import { AddressIcon, MapIcon } from '../../components/SMIcon';
 import HeadModifier from '../../utils/headModifier';
@@ -18,6 +16,7 @@ import fetchAddressData from './utils/fetchAddressData';
 import ServiceMapButton from '../../components/ServiceMapButton';
 import DistritctItem from './components/DistrictItem';
 import TabLists from '../../components/TabLists';
+import TopArea from '../../components/TopArea';
 
 let addressMarker = null;
 
@@ -171,18 +170,6 @@ const AddressView = (props) => {
     } return null;
   };
 
-  const renderTopBar = title => (
-    <div className={`${classes.topBar} sticky`}>
-      <DesktopComponent>
-        <SearchBar placeholder={intl.formatMessage({ id: 'search' })} />
-        <TitleBar icon={<AddressIcon className={classes.titleIcon} />} title={error || title} primary />
-      </DesktopComponent>
-      <MobileComponent>
-        <TitleBar icon={<AddressIcon />} title={title} primary backButton />
-      </MobileComponent>
-    </div>
-  );
-
   const renderNearbyList = () => {
     if (!units) {
       return <Typography><FormattedMessage id="general.loading" /></Typography>;
@@ -261,7 +248,11 @@ const AddressView = (props) => {
         data={tabs}
         headerComponents={(
           <>
-            {renderTopBar(title)}
+            <TopArea
+              icon={<AddressIcon className={classes.titleIcon} />}
+              title={error || title}
+              placeholder={intl.formatMessage({ id: 'search' })}
+            />
           </>
         )}
       />

@@ -9,11 +9,9 @@ import { fetchUnitEvents } from '../../redux/actions/event';
 import { fetchSelectedUnit, changeSelectedUnit } from '../../redux/actions/selectedUnit';
 import { getSelectedUnit } from '../../redux/selectors/selectedUnit';
 import { getLocaleString } from '../../redux/selectors/locale';
-import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
-import SearchBar from '../../components/SearchBar';
+import { MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import { focusUnit, focusDistrict } from '../MapView/utils/mapActions';
 import styles from './styles/styles';
-import TitleBar from '../../components/TitleBar';
 import Container from '../../components/Container';
 import { uppercaseFirst } from '../../utils';
 import fetchUnitReservations from './utils/fetchUnitReservations';
@@ -30,6 +28,7 @@ import ServiceMapButton from '../../components/ServiceMapButton';
 import UnitIcon from '../../components/SMIcon/UnitIcon';
 import TabLists from '../../components/TabLists';
 import config from '../../../config';
+import TopArea from '../../components/TopArea';
 
 class UnitView extends React.Component {
   constructor(props) {
@@ -289,15 +288,11 @@ class UnitView extends React.Component {
     const icon = didMount && unit ? <UnitIcon unit={unit} /> : null;
 
     const TopBar = (
-      <div className={`${classes.topBar} sticky`}>
-        <DesktopComponent>
-          <SearchBar placeholder={intl.formatMessage({ id: 'search' })} />
-          <TitleBar icon={icon} title={title} primary />
-        </DesktopComponent>
-        <MobileComponent>
-          <TitleBar icon={icon} title={correctUnit ? title : ''} primary backButton />
-        </MobileComponent>
-      </div>
+      <TopArea
+        icon={icon}
+        title={correctUnit ? title : ''}
+        placeholder={intl.formatMessage({ id: 'search' })}
+      />
     );
 
     if (unitFetching) {
