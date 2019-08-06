@@ -100,7 +100,7 @@ class EventDetailView extends React.Component {
           {event.images && event.images.length && (
           <img
             style={{
-              width: '100%', maxHeight: 300, objectFit: 'contain', backgroundColor: 'rgba(0,0,0,0.15)',
+              width: '100%', maxHeight: 160, objectFit: 'cover',
             }}
             alt={intl.formatMessage({ id: 'event.picture' })}
             src={event.images[0].url}
