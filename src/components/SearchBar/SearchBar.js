@@ -115,7 +115,7 @@ class SearchBar extends React.Component {
   onInputChange = (e) => {
     const { getLocaleText } = this.props;
     const query = e.currentTarget.value;
-    this.setState({ search: e.currentTarget.value });
+    this.setState({ search: e.currentTarget.value, searchQueries: [] });
     if (query.length > 2) {
       createSuggestions(e.currentTarget.value, getLocaleText)
         .then(result => this.setState({ searchQueries: [result[1]], suggestions: result[0] }));

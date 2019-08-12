@@ -1,5 +1,6 @@
 import { uppercaseFirst } from '../../utils';
 import suggestUnits from './suggestUnits';
+import expandSearch from './expandSearch';
 
 const pageSize = 50;
 const listLength = 5;
@@ -23,6 +24,10 @@ const createSuggestions = async (query, getLocaleText) => {
         words.forEach((word) => {
           if (uppercaseFirst(word).indexOf(uppercaseFirst(query)) !== -1) {
             resultWord = uppercaseFirst(word);
+            // TODO: better check
+            if (!resultWord.slice(-1).match(/[a-z]/i)) {
+              resultWord = resultWord.slice(0, -1);
+            }
           }
         });
         // Add the word to list of suggestions if it is not there already
@@ -52,6 +57,16 @@ const createSuggestions = async (query, getLocaleText) => {
         }
       });
       results.push(searchData);
+      /* if (results[1].length < listLength) {
+        const amount = listLength - results[1].length;
+        const index = 0;
+        await expandSearch(results[1][0], getLocaleText, amount)
+          .then((data) => {
+            data.expandedQueries.forEach((q) => {
+              results[1].splice(index + 1, 0, q);
+            });
+          });
+      } */
     })
     .catch(response => console.log('error:', response));
   return (results);
