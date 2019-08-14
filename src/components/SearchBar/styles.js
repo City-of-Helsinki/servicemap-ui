@@ -2,6 +2,7 @@
 export default theme => ({
   root: {
     display: 'flex',
+    flexDirection: 'column',
   },
   wrapper: {
     flex: 1,
@@ -46,5 +47,36 @@ export default theme => ({
   },
   primary: {
     backgroundColor: theme.palette.primary.main,
+  },
+  suggestionSubtitle: {
+    display: 'flex',
+    backgroundColor: 'rgba(155,155,155,0.47)',
+    paddingLeft: '18px',
+  },
+  subtitleText: {
+    lineHeight: '32px',
+  },
+  suggestionButton: {
+    margin: 0,
+    width: 'auto',
+    textTransform: 'none',
+    borderRadius: 8,
+  },
+  expand: {
+    color: '#000000',
+    fontWeight: 'normal',
+  },
+  divider: {
+    marginLeft: 56,
+  },
+  listIcon: {
+    paddingRight: theme.spacing.unitDouble,
+    paddingTop: 8,
+    paddingBottom: 8,
+    color: 'rgba(0,0,0,0.54)',
+  },
+  absolute: {
+    position: 'absolute',
+    zIndex: 99999,
   },
 });
