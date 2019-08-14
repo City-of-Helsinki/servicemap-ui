@@ -1,9 +1,9 @@
-import { drawUnitIcon } from '../views/Map/utils/drawIcon';
+import { drawUnitIcon } from '../views/MapView/utils/drawIcon';
 import isClient from '.';
 import SettingsUtility from './settings';
 import config from '../../config';
 
-const accessibilityColors = config.accessibility_colors;
+const { accessibilityColors } = config;
 
 const generateMarkerIcons = () => {
   if (!isClient()) {
@@ -75,7 +75,7 @@ class UnitHelper {
       }
       return 'default';
     }
-    return 'missing_info';
+    return 'missingInfo';
   }
 
   static getIconColor = count => (

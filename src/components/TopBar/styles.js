@@ -1,4 +1,6 @@
-const topBarHeight = 64;
+import config from '../../../config';
+
+const { topBarHeight } = config;
 
 const styles = () => ({
   button: {

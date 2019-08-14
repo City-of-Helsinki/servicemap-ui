@@ -40,17 +40,6 @@ code {
   border: 0;
 }
 
-@font-face {
-  font-family: 'hsl-piktoframe';
-  src: url('./assets/fonts/hsl-pikto-frame-webfont.eot');
-  src: url('./assets/fonts/hsl-pikto-frame-webfont.eot?#iefix') format('embedded-opentype'),
-       url('./assets/fonts/hsl-pikto-frame-webfont.woff2') format('woff2'),
-       url('./assets/fonts/hsl-pikto-frame-webfont.woff') format('woff'),
-       url('./assets/fonts/hsl-pikto-frame-webfont.ttf') format('truetype');
-  font-style: normal;
-  font-weight: normal;
-}
-
 .leaflet-div-icon {
   background: transparent;
   border: none;

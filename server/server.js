@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import express from 'express';
 import path from 'path';
 import React from 'react';
@@ -22,8 +21,8 @@ import themes from '../src/themes';
 // Configure constants
 const app = express();
 const serverConfig = config.server;
-const supportedLanguages = config.supported_languages;
-const baseURL = `${serverConfig.url_prefix}(:lang(${supportedLanguages.join('|')})?)`;
+const supportedLanguages = config.supportedLanguages;
+const baseURL = `${serverConfig.urlPrefix}(:lang(${supportedLanguages.join('|')})?)`;
 
 // Add static folder
 app.use(express.static(path.resolve(__dirname, 'src')));

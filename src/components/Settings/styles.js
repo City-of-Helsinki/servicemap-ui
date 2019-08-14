@@ -1,3 +1,7 @@
+import config from '../../../config';
+
+const { topBarHeight } = config;
+
 export default theme => ({
   alert: {
     backgroundColor: '#000',
@@ -15,6 +19,10 @@ export default theme => ({
   alertColor: {
     color: 'rgba(87,186,255, 1)',
   },
+  alertText: {
+    textAlign: 'left',
+    padding: theme.spacing.unitDouble,
+  },
   bold: {
     fontWeight: 'bold',
   },
@@ -27,6 +35,9 @@ export default theme => ({
   buttonLabel: {
     display: 'flex',
     flexDirection: 'column',
+  },
+  checkbox: {
+    padding: theme.spacing.unit,
   },
   confirmationButton: {
     flex: '0 0 auto',
@@ -60,15 +71,17 @@ export default theme => ({
     flex: '0 0 auto',
     justifyContent: 'space-between',
     flexDirection: 'row',
-    paddingBottom: 0,
-    marginTop: 0,
-    marginBottom: 0,
+    padding: 0,
+    margin: `0 ${theme.spacing.unit}px`,
+  },
+  titleText: {
+    margin: `${theme.spacing.unit}px 0`,
   },
   flexReverse: {
     flexDirection: 'row-reverse',
   },
   closeButton: {
-    margin: theme.spacing.unit,
+    margin: `0 ${theme.spacing.unit}px`,
     padding: theme.spacing.unitHalf,
   },
   container: {
@@ -92,10 +105,14 @@ export default theme => ({
   noMargin: {
     margin: 0,
   },
+  radioGroup: {
+    padding: 0,
+    margin: 0,
+  },
   radioLabel: {
     margin: 0,
-    paddingTop: 8,
-    paddingBottom: 8,
+    marginLeft: `-${theme.spacing.unitHalf}px`,
+    padding: `${theme.spacing.unit}px 0`,
   },
   stickyContainer: {
     backgroundColor: '#fff',
@@ -108,6 +125,6 @@ export default theme => ({
     margin: 0,
   },
   stickyMobile: {
-    top: 64,
+    top: topBarHeight,
   },
 });

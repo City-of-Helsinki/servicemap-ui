@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage, intlShape } from 'react-intl';
 import {
   FormControl, InputLabel, Select,
 } from '@material-ui/core';
@@ -37,24 +37,30 @@ class ResultOrderer extends React.Component {
 
   render() {
     const {
-      classes, direction, intl, order,
+      classes, direction, intl, order, disabled, handleChange,
     } = this.props;
     return (
-      <form className={`${classes.root} ${classes.primaryColor}`} autoComplete="off">
+      <form className={classes.root} autoComplete="off">
         <FormControl className={classes.formControl}>
-          <InputLabel htmlFor="result-sorter"><FormattedMessage id="sorting.label" /></InputLabel>
+          <InputLabel style={{ color: 'inherit' }} htmlFor="result-sorter"><FormattedMessage id="sorting.label" /></InputLabel>
           <Select
+            disabled={disabled}
+            className={classes.select}
             native
             value={`${order}-${direction}`}
-            onChange={this.handleChange}
+            onChange={handleChange || this.handleChange}
             inputProps={{
               name: 'result-sorter',
               id: 'result-sorter',
+              classes: {
+                icon: classes.icon,
+              },
+              className: `${classes.input}`,
             }}
           >
-            <option value="match-desc">{intl.formatMessage({ id: 'sorting.match.desc' })}</option>
-            <option value="alphabetical-desc">{intl.formatMessage({ id: 'sorting.alphabetical.desc' })}</option>
-            <option value="alphabetical-asc">{intl.formatMessage({ id: 'sorting.alphabetical.asc' })}</option>
+            <option className={classes.black} value="match-desc">{intl.formatMessage({ id: 'sorting.match.desc' })}</option>
+            <option className={classes.black} value="alphabetical-desc">{intl.formatMessage({ id: 'sorting.alphabetical.desc' })}</option>
+            <option className={classes.black} value="alphabetical-asc">{intl.formatMessage({ id: 'sorting.alphabetical.asc' })}</option>
           </Select>
         </FormControl>
       </form>
@@ -69,6 +75,13 @@ ResultOrderer.propTypes = {
   order: PropTypes.oneOf(allowedOrders).isRequired,
   setDirection: PropTypes.func.isRequired,
   setOrder: PropTypes.func.isRequired,
+  disabled: PropTypes.bool,
+  handleChange: PropTypes.func,
 };
 
-export default injectIntl(ResultOrderer);
+ResultOrderer.defaultProps = {
+  disabled: false,
+  handleChange: null,
+};
+
+export default ResultOrderer;

@@ -35,6 +35,7 @@ export default {
   'address.list.preschool_education_sv': 'Ruotsinkielinen varhaiskasvatus', // TODO: Translate
   'address.error': 'Osoitetta ei löytynyt', // TODO: Translate
   'address.nearby': 'Lähellä', // TODO: Translate
+  'address.districts': 'Alueet', // TODO: Translate
 
   // Event
   'event.nearby': 'Nearby events', // TODO: Translate
@@ -115,6 +116,7 @@ export default {
                                     one {# brist}
                                     other {# brister}
                                   }`, // TODO: Verify
+  'unit.basicInfo': 'Perustiedot', // TODO: Translate
   'unit.details.notFound': 'Unit info not found', // TODO: Translate
   'unit.data_source': 'Källa: {data_source}',
   'unit.plural': 'Verksamhetsställen', // TODO: Verify

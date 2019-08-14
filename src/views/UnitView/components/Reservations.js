@@ -12,7 +12,7 @@ const Reservations = ({
     return (
       <TitledList
         title={<FormattedMessage id="unit.reservations" />}
-        titleComponent="h4"
+        titleComponent="h3"
         listLength={listLength}
         buttonText={<FormattedMessage id="unit.more.reservations" values={{ count: reservations.length }} />}
         showMoreOnClick={listLength
@@ -23,13 +23,13 @@ const Reservations = ({
             }
           } : null}
       >
-        {reservations.map(item => (
+        {reservations.map((item, i) => (
           <SimpleListItem
             key={item.id}
             icon={<EventAvailable />}
             link
             text={`${getLocaleText(item.name)} ${intl.formatMessage({ id: 'unit.opens.new.tab' })}`}
-            divider
+            divider={!(i + 1 === reservations.length || i + 1 === listLength)}
             handleItemClick={() => {
               window.open(`https://varaamo.hel.fi/resources/${item.id}`);
             }}

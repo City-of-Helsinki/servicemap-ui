@@ -1,6 +1,15 @@
 import { createMuiTheme } from '@material-ui/core';
 
 const SMTheme = createMuiTheme({
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 700,
+      md: 900,
+      lg: 1280,
+      xl: 1920,
+    },
+  },
   // Color palette
   palette: {
     primary: {

@@ -1,28 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import { Paper, Typography } from '@material-ui/core';
-
-const styles = theme => ({
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    marginTop: theme.spacing.unit,
-    marginBottom: theme.spacing.unit,
-    padding: theme.spacing.unit,
-    position: 'relative',
-  },
-  title: {
-    textAlign: 'left',
-  },
-  margin: {
-    marginLeft: '8px',
-    marginRight: '8px',
-  },
-  text: {
-    textAlign: 'left',
-  },
-});
 
 const Title = (props) => {
   const { text } = props;
@@ -41,12 +19,12 @@ const DivWrapper = props => (
 
 const Container = (props) => {
   const {
-    className, children, classes, margin, paper, text, title, titleComponent, ...rest
+    className, children, classes, margin, noMargin, paper, text, title, titleComponent, ...rest
   } = props;
 
   const ContainerComponent = paper ? Paper : DivWrapper;
   return (
-    <ContainerComponent className={`${classes.root} ${paper || margin ? classes.margin : ''} ${text ? classes.text : ''} ${className}`} {...rest}>
+    <ContainerComponent className={`${classes.root} ${(!noMargin && (paper || margin)) ? classes.margin : ''} ${noMargin ? classes.noMargin : ''} ${text ? classes.text : ''} ${className}`} {...rest}>
       {
         title
         && <Title className={classes.title} component={titleComponent} text={title} variant="h6" />
@@ -61,6 +39,7 @@ Container.propTypes = {
   children: PropTypes.node.isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   margin: PropTypes.bool,
+  noMargin: PropTypes.bool,
   paper: PropTypes.bool,
   text: PropTypes.bool,
   title: PropTypes.string,
@@ -70,10 +49,11 @@ Container.propTypes = {
 Container.defaultProps = {
   className: '',
   margin: false,
+  noMargin: false,
   paper: false,
   text: false,
   title: null,
   titleComponent: 'h3',
 };
 
-export default withStyles(styles)(Container);
+export default Container;

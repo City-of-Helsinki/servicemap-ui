@@ -5,14 +5,14 @@ import { withRouter } from 'react-router-dom';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Paper, Typography } from '@material-ui/core';
 import SearchBar from '../../components/SearchBar';
-import TitleBar from '../../components/TitleBar/TitleBar';
-import { DesktopComponent } from '../../layouts/WrapperComponents/WrapperComponents';
+import TitleBar from '../../components/TitleBar';
+import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import { generatePath } from '../../utils/path';
-import { drawServiceIcon } from '../Map/utils/drawIcon';
-import { fitUnitsToMap } from '../Map/utils/mapActions';
+import { drawServiceIcon } from '../MapView/utils/drawIcon';
+import { fitUnitsToMap } from '../MapView/utils/mapActions';
 import ResultList from '../../components/Lists/ResultList';
 import Loading from '../../components/Loading/Loading';
-import Container from '../../components/Container/Container';
+import Container from '../../components/Container';
 
 class ServiceView extends React.Component {
   constructor(props) {
@@ -96,11 +96,19 @@ class ServiceView extends React.Component {
       <div>
         <DesktopComponent>
           <SearchBar placeholder={intl.formatMessage({ id: 'search' })} />
+          {
+            showTitle
+            && (
+              <TitleBar icon={icon} title={getLocaleText(current.name)} />
+            )
+          }
         </DesktopComponent>
         {
           showTitle
           && (
-            <TitleBar icon={icon} title={getLocaleText(current.name)} />
+            <MobileComponent>
+              <TitleBar icon={icon} title={getLocaleText(current.name)} primary backButton />
+            </MobileComponent>
           )
         }
         {

@@ -4,16 +4,15 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
 import Sidebar from '../views/Sidebar';
-import MapContainer from '../views/Map/MapContainer';
+import MapView from '../views/MapView';
 import I18n from '../i18n';
 import config from '../../config';
 import { DesktopComponent } from './WrapperComponents/WrapperComponents';
 import TopBar from '../components/TopBar';
 import Settings from '../components/Settings';
 
-// eslint-disable-next-line camelcase
-const mobileBreakpoint = config.mobile_ui_breakpoint;
-const smallScreenBreakpoint = config.small_screen_breakpoint;
+const mobileBreakpoint = config.mobileUiBreakpoint;
+const { smallScreenBreakpoint } = config;
 
 const createContentStyles = (
   isMobile, isSmallScreen, landscape, mobileMapOnly, fullMobileMap, settingsOpen,
@@ -24,7 +23,7 @@ const createContentStyles = (
   } else if (isSmallScreen) {
     width = '50%';
   }
-  const topBarHeight = '64px';
+  const topBarHeight = `${config.topBarHeight}px`;
 
   const styles = {
     activeRoot: {
@@ -33,7 +32,7 @@ const createContentStyles = (
       width: '100%',
       display: 'flex',
       flexWrap: 'nowrap',
-      height: isMobile ? '100%' : 'calc(100vh - 64px)',
+      height: isMobile ? '100%' : `calc(100vh - ${topBarHeight})`,
     },
     map: {
       position: isMobile ? 'fixed' : null,
@@ -46,6 +45,8 @@ const createContentStyles = (
       width: '100%',
     },
     sidebar: {
+      height: '100%',
+      position: 'relative',
       top: 0,
       bottom: 0,
       width,
@@ -90,17 +91,15 @@ const DefaultLayout = (props) => {
     <>
       <TopBar settingsOpen={settingsOpen} toggleSettings={() => setToggle(!settingsOpen)} topNav={styles.topNav} i18n={i18n} />
       <div style={styles.activeRoot}>
-        <div className="SidebarWrapper" style={styles.sidebar}>
+        <main className="SidebarWrapper" style={styles.sidebar}>
           {settingsOpen ? (
             <Settings toggleSettings={() => setToggle(false)} isMobile={!!isMobile} />
           ) : (
-            <main style={{ height: '100%' }}>
-              <Sidebar />
-            </main>
+            <Sidebar />
           )}
-        </div>
+        </main>
         <div aria-hidden style={styles.map}>
-          <MapContainer isMobile={!!isMobile} />
+          <MapView isMobile={!!isMobile} />
         </div>
       </div>
 

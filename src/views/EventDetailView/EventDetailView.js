@@ -10,8 +10,8 @@ import { changeSelectedEvent } from '../../redux/actions/event';
 import { fetchSelectedUnit } from '../../redux/actions/selectedUnit';
 import DescriptionText from '../../components/DescriptionText';
 import SearchBar from '../../components/SearchBar';
-import TitleBar from '../../components/TitleBar/TitleBar';
-import { DesktopComponent } from '../../layouts/WrapperComponents/WrapperComponents';
+import TitleBar from '../../components/TitleBar';
+import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import SimpleListItem from '../../components/ListItems/SimpleListItem';
 import UnitItem from '../../components/ListItems/UnitItem';
 import TitledList from '../../components/Lists/TitledList';
@@ -91,10 +91,13 @@ class EventDetailView extends React.Component {
         <>
           <DesktopComponent>
             <SearchBar placeholder={intl.formatMessage({ id: 'search' })} />
+            <TitleBar title={getLocaleText(event.name)} icon={<Event />} />
           </DesktopComponent>
-          <TitleBar title={getLocaleText(event.name)} icon={<Event />} />
+          <MobileComponent>
+            <TitleBar title={getLocaleText(event.name)} icon={<Event />} primary backButton />
+          </MobileComponent>
 
-          {event.images && (
+          {event.images && event.images.length && (
           <img
             style={{
               width: '100%', maxHeight: 300, objectFit: 'contain', backgroundColor: 'rgba(0,0,0,0.15)',

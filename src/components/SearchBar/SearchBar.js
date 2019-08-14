@@ -1,92 +1,15 @@
 import React from 'react';
 
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import {
-  InputBase, Paper, withStyles, IconButton, List, ListItem, Typography, Button, Divider,
+  InputBase, Paper, IconButton, List, ListItem, Typography, Button, Divider,
 } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
-import { injectIntl, intlShape } from 'react-intl';
+import { intlShape } from 'react-intl';
 import BackButton from '../BackButton';
-import { getLocaleString } from '../../redux/selectors/locale';
-import { fetchUnits } from '../../redux/actions/unit';
 import createSuggestions from './createSuggestions';
 import expandSearch from './expandSearch';
 
-const styles = theme => ({
-  root: {
-    margin: theme.spacing.unit,
-    padding: theme.spacing.unitHalf,
-    transition: theme.transitions.create(['margin', 'padding'], {
-      easing: theme.transitions.easing.easeIn,
-      duration: theme.transitions.duration.complex,
-    }),
-    border: '1px solid gray',
-  },
-  rootFocused: {
-    margin: 0,
-    // Margin is replaced with padding so height doesn't get affected
-    padding: theme.spacing.unit * 1.5,
-    transition: theme.transitions.create(['margin', 'padding'], {
-      duration: theme.transitions.duration.complex,
-    }),
-  },
-  container: {
-    alignItems: 'center',
-    display: 'flex',
-    flex: '0 0 auto',
-  },
-  input: {
-    flex: '1 1 auto',
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    padding: theme.spacing.unit,
-  },
-  iconButton: {
-    flex: '0 1 auto',
-    padding: theme.spacing.unit,
-  },
-  icon: {
-    flex: '0 1 auto',
-    padding: theme.spacing.unit,
-  },
-  suggestionSubtitle: {
-    display: 'flex',
-    backgroundColor: 'rgba(155,155,155,0.47)',
-    paddingLeft: '18px',
-  },
-  subtitleText: {
-    lineHeight: '32px',
-  },
-  suggestionButton: {
-    margin: 0,
-    width: 'auto',
-    textTransform: 'none',
-    borderRadius: 8,
-  },
-  expand: {
-    color: '#000000',
-    fontWeight: 'normal',
-  },
-  divider: {
-    marginLeft: 56,
-  },
-  listIcon: {
-    paddingRight: theme.spacing.unitDouble,
-    paddingTop: 8,
-    paddingBottom: 8,
-    color: 'rgba(0,0,0,0.54)',
-  },
-  absolute: {
-    display: 'grid',
-    position: 'absolute',
-    top: 64,
-    zIndex: 99999,
-  },
-  relative: {
-    display: 'grid',
-  },
-});
 
 let fetchController = null;
 
@@ -198,26 +121,37 @@ class SearchBar extends React.Component {
 
   render() {
     const {
-      backButtonEvent, classes, intl, placeholder, previousSearch, hideBackButton, searchRef, expand,
+      backButtonEvent,
+      classes,
+      className,
+      intl,
+      isSticky,
+      placeholder,
+      previousSearch,
+      hideBackButton,
+      searchRef,
+      primary,
+      expand,
     } = this.props;
     const {
       search, isActive, searchQueries, loading,
     } = this.state;
 
     const suggestionList = (searchQueries.length && searchQueries) || null;
+    const showSuggestions = isActive || loading || suggestionList;
     const inputValue = typeof search === 'string' ? search : previousSearch;
-
-    const showSuggestions = loading || suggestionList;
+    const rootClasses = `${classes.root} ${typeof isSticky === 'number' ? classes.sticky : ''} ${primary ? classes.primary : ''} ${showSuggestions ? classes.absolute : ''} ${className}`;
+    const wrapperClasses = `${classes.wrapper} ${isActive || showSuggestions ? classes.wrapperFocused : ''}`;
+    const stickyStyles = typeof isSticky === 'number' ? { top: isSticky } : null;
 
     return (
-      <div className={showSuggestions ? classes.absolute : classes.relative}>
-        <Paper className={`${classes.root} ${isActive || showSuggestions ? classes.rootFocused : ''}`} elevation={1} square>
+      <div className={rootClasses} style={stickyStyles}>
+        <Paper className={wrapperClasses} elevation={1} square>
           <form onSubmit={this.onSubmit} className={classes.container} autoComplete="off">
             {
-            !hideBackButton
-            && <BackButton className={classes.iconButton} onClick={suggestionList ? this.suggestionBackEvent : backButtonEvent || null} variant="icon" />
-          }
-
+              !hideBackButton
+              && <BackButton className={classes.iconButton} onClick={suggestionList ? this.suggestionBackEvent : backButtonEvent || null} variant="icon" />
+            }
             <InputBase
               id="searchInput"
               inputRef={searchRef}
@@ -239,26 +173,39 @@ class SearchBar extends React.Component {
           </form>
         </Paper>
         {expand && !showSuggestions && (
-        <Button
-          variant="outlined"
-          style={{ height: 36 }}
-          className={classes.suggestionButton}
-          onClick={() => this.onExpandSearch({ query: search, count: 50 })}
-        >
-          <Typography className={classes.expand} variant="body2">
-            {'+ tarkenna'}
-          </Typography>
-        </Button>
-        )}
-        {loading || (suggestionList && suggestionList.length) ? (
-          <div style={{
-            zIndex: 999999, height: 'calc(100vh - 76px - 64px)', width: '450px', backgroundColor: '#ffffff', overflow: 'auto',
-          }}
+          <Button
+            variant="outlined"
+            style={{
+              height: 36, backgroundColor: '#fff', width: 120, marginLeft: 'auto', marginRight: '8px',
+            }}
+            className={classes.suggestionButton}
+            onClick={() => this.onExpandSearch({ query: search, count: 50 })}
           >
-            {loading && (
-            <p style={{ marginTop: '200px' }}>Ladataan hakuehdotuksia</p>
-            )}
-            {!loading && (
+            <Typography className={classes.expand} variant="body2">
+              {'Tarkenna'}
+            </Typography>
+          </Button>
+        )}
+        {isActive || loading || (suggestionList && suggestionList.length) ? (
+          <Paper elevation={20}>
+            <div style={{
+              zIndex: 999999, minHeight: 'calc(100vh - 64px - 76px)', width: '450px', backgroundColor: '#ffffff', overflow: 'auto',
+            }}
+            >
+              {!loading && !suggestionList && (
+                <div className={classes.suggestionSubtitle}>
+                  <Typography className={classes.subtitleText} variant="overline">AIKAISEMMAT HAUT</Typography>
+                </div>
+              )}
+              {loading && (
+                <>
+                  <div className={classes.suggestionSubtitle}>
+                    <Typography className={classes.subtitleText} variant="overline">Tarkoititko..?</Typography>
+                  </div>
+                  <p style={{ marginTop: '25%', marginBottom: '25%' }}>Ladataan hakuehdotuksia</p>
+                </>
+              )}
+              {!loading && suggestionList && (
               <>
                 <div className={classes.suggestionSubtitle}>
                   <Typography className={classes.subtitleText} variant="overline">Tarkoititko..?</Typography>
@@ -287,8 +234,9 @@ class SearchBar extends React.Component {
                   ))}
                 </List>
               </>
-            )}
-          </div>
+              )}
+            </div>
+          </Paper>
         ) : null}
       </div>
     );
@@ -298,40 +246,30 @@ class SearchBar extends React.Component {
 SearchBar.propTypes = {
   backButtonEvent: PropTypes.func,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
+  className: PropTypes.string,
   fetchUnits: PropTypes.func.isRequired,
   hideBackButton: PropTypes.bool,
   navigator: PropTypes.objectOf(PropTypes.any),
   intl: intlShape.isRequired,
+  isSticky: PropTypes.number,
   isFetching: PropTypes.bool.isRequired,
   placeholder: PropTypes.string.isRequired,
   searchRef: PropTypes.objectOf(PropTypes.any),
   previousSearch: PropTypes.string,
-  getLocaleText: PropTypes.func.isRequired,
   expand: PropTypes.bool,
+  primary: PropTypes.bool,
 };
 
 SearchBar.defaultProps = {
   previousSearch: null,
   backButtonEvent: null,
+  className: '',
   hideBackButton: false,
+  isSticky: null,
   navigator: null,
   searchRef: {},
   expand: false,
+  primary: false,
 };
 
-// Listen to redux state
-const mapStateToProps = (state) => {
-  const { navigator, units } = state;
-  const { isFetching } = units;
-  const getLocaleText = textObject => getLocaleString(state, textObject);
-  return {
-    isFetching,
-    navigator,
-    getLocaleText,
-  };
-};
-
-export default withStyles(styles)(injectIntl(connect(
-  mapStateToProps,
-  { fetchUnits },
-)(SearchBar)));
+export default SearchBar;

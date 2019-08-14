@@ -1,61 +1,10 @@
-/* eslint-disable camelcase */
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  ListItem, ListItemIcon, Typography, withStyles, Divider,
+  ListItem, ListItemIcon, Typography, Divider,
 } from '@material-ui/core';
 
-const styles = theme => ({
-  cssFocused: {
-    outlineStyle: 'solid',
-    outlineColor: 'blue',
-    outlineWidth: 2,
-  },
-  title: {
-    textOverflow: 'ellipsis',
-    margin: 0,
-    marginBottom: theme.spacing.unit,
-  },
-  secondaryContent: {
-    marginRight: 8,
-    textAlign: 'right',
-  },
-  noMargin: {
-    margin: 0,
-  },
-  itemTextContainer: {
-    flex: '1 1 auto',
-    marginLeft: theme.spacing.unit,
-    paddingLeft: theme.spacing.unit,
-  },
-  topRow: {
-    display: 'flex',
-    width: '100%',
-    justifyContent: 'space-between',
-  },
-  bottomRow: {
-    display: 'flex',
-    width: '100%',
-    justifyContent: 'space-between',
-  },
-  marginLeft: {
-    marginLeft: theme.spacing.unit,
-  },
-  rightColumn: {
-    textAlign: 'right',
-  },
-  bottomColumn: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-end',
-  },
-  caption: {
-    color: 'rgba(0,0,0,0.6)',
-  },
-});
-
 // TODO: Complete distance calculations and related accessibility texts
-
 const ResultItem = ({
   bottomRightColor,
   bottomRightText,
@@ -65,6 +14,7 @@ const ResultItem = ({
   subtitle,
   title,
   distancePosition,
+  divider,
   role,
   srLabel,
 }) => {
@@ -184,14 +134,16 @@ const ResultItem = ({
           }
         </div>
       </ListItem>
+      {divider && (
       <li>
         <Divider aria-hidden="true" variant={icon && 'inset'} />
       </li>
+      )}
     </>
   );
 };
 
-export default withStyles(styles)(ResultItem);
+export default ResultItem;
 
 // Typechecking
 ResultItem.propTypes = {
@@ -203,6 +155,7 @@ ResultItem.propTypes = {
   subtitle: PropTypes.string,
   title: PropTypes.string.isRequired,
   distancePosition: PropTypes.objectOf(PropTypes.any),
+  divider: PropTypes.bool,
   role: PropTypes.string,
   srLabel: PropTypes.string,
 };
@@ -215,6 +168,7 @@ ResultItem.defaultProps = {
   onClick: () => {},
   subtitle: null,
   distancePosition: null,
+  divider: true,
   role: null,
   srLabel: null,
 };

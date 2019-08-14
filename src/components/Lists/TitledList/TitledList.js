@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  List, withStyles, Typography, Divider,
+  List, Typography, Divider,
 } from '@material-ui/core';
-import styles from './styles';
 import ServiceMapButton from '../../ServiceMapButton';
 
 const TitledList = ({
@@ -62,4 +61,4 @@ TitledList.defaultProps = {
   buttonText: null,
 };
 
-export default withStyles(styles)(TitledList);
+export default TitledList;

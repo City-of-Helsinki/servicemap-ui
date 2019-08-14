@@ -1,19 +1,20 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-underscore-dangle */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter, Redirect } from 'react-router-dom';
 import {
-  Paper, Divider, withStyles, Typography, Link,
+  Paper, withStyles, Typography, Link,
 } from '@material-ui/core';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import styles from './styles';
 import Loading from '../../components/Loading/Loading';
 import SearchBar from '../../components/SearchBar';
-import { fitUnitsToMap } from '../Map/utils/mapActions';
+import { fitUnitsToMap } from '../MapView/utils/mapActions';
 import { parseSearchParams } from '../../utils';
 import TabLists from '../../components/TabLists';
 
-import Container from '../../components/Container/Container';
+import Container from '../../components/Container';
 import { generatePath } from '../../utils/path';
 import { DesktopComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 
@@ -94,14 +95,12 @@ class SearchView extends React.Component {
     // If not currently searching and view should not fetch new search
     // and only 1 result found redirect directly to specific result page
     if (!isFetching && !this.shouldFetch() && units && units.length === 1) {
-      // eslint-disable-next-line camelcase
       const { id, object_type } = units[0];
       let path = null;
       // Parse language params
       const { params } = match;
       const lng = params && params.lng;
 
-      // eslint-disable-next-line camelcase
       switch (object_type) {
         case 'unit':
           path = generatePath('unit', lng, { id });
@@ -134,6 +133,22 @@ class SearchView extends React.Component {
           <FormattedMessage id="search.results" values={{ count: units.length }} />
         </Typography>
       </Container>
+    );
+  }
+
+  renderSearchBar() {
+    const {
+      intl,
+    } = this.props;
+    return (
+      <SearchBar
+        className="sticky"
+        expand
+        placeholder={intl && intl.formatMessage({ id: 'search.input.placeholder' })}
+        isSticky={0}
+        text={this.getSearchParam() || ''}
+        primary
+      />
     );
   }
 
@@ -178,7 +193,11 @@ class SearchView extends React.Component {
       },
     ];
 
-    return <TabLists data={searchResults} />;
+    return (
+      <TabLists
+        data={searchResults}
+      />
+    );
   }
 
   /**
@@ -216,7 +235,7 @@ class SearchView extends React.Component {
 
   render() {
     const {
-      isFetching, intl, count, max,
+      classes, isFetching, intl, count, max,
     } = this.props;
     const progress = (isFetching && count) ? Math.floor((count / max * 100)) : 0;
 
@@ -234,25 +253,24 @@ class SearchView extends React.Component {
 
 
     return (
-      <div className="Search">
-        <SearchBar
-          expand
-          placeholder={intl && intl.formatMessage({ id: 'search.input.placeholder' })}
-          text={this.getSearchParam() || ''}
-        />
-        <Divider aria-hidden="true" />
+      <div
+        className={classes.root}
+      >
+
         <Paper elevation={1} square aria-live="polite" style={paperStyles}>
-          {
-            isFetching
-            && <Loading text={intl && intl.formatMessage({ id: 'search.loading.units' }, { count, max })} progress={progress} />
-          }
           {
             this.renderScreenReaderInfo()
           }
         </Paper>
-
+        {
+          this.renderSearchBar()
+        }
         {
           this.renderResults()
+        }
+        {
+          isFetching
+          && <Loading text={intl && intl.formatMessage({ id: 'search.loading.units' }, { count, max })} progress={progress} />
         }
         {
           this.renderNotFound()
@@ -276,6 +294,7 @@ export default withRouter(injectIntl(withStyles(styles)(SearchView)));
 
 // Typechecking
 SearchView.propTypes = {
+  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   changeSelectedUnit: PropTypes.func,
   count: PropTypes.number,
   fetchUnits: PropTypes.func,

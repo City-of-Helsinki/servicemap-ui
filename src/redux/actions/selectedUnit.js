@@ -27,7 +27,7 @@ export const changeSelectedUnit = unit => async (dispatch) => {
 };
 
 // Fetch new selected unit
-export const fetchSelectedUnit = id => async (dispatch) => {
+export const fetchSelectedUnit = (id, callback) => async (dispatch) => {
   try {
     // Fetch rest of the unit's data
     dispatch(fetchIsLoading());
@@ -37,6 +37,9 @@ export const fetchSelectedUnit = id => async (dispatch) => {
       data.complete = true;
       data.object_type = 'unit';
       dispatch(fetchSuccess(data));
+      if (typeof callback === 'function') {
+        callback();
+      }
     } else {
       throw new Error(response.statusText);
     }

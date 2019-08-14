@@ -1,35 +1,12 @@
+/* eslint-disable camelcase */
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  List, withStyles, Typography, Divider,
+  List, Typography, Divider,
 } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
 import UnitItem from '../../ListItems/UnitItem';
 import ServiceItem from '../../ListItems/ServiceItem';
-
-const styles = theme => ({
-  root: {
-    height: 'auto',
-    overflowY: 'auto',
-    flex: '1 1 auto',
-    maxWidth: '100%',
-    overflowX: 'hidden',
-  },
-  title: {
-    width: '100%',
-  },
-  left: {
-    float: 'left',
-    margin: theme.spacing.unit,
-  },
-  right: {
-    float: 'right',
-    margin: theme.spacing.unit,
-  },
-  list: {
-    maxHeight: '100%',
-  },
-});
 
 class ResultList extends React.Component {
   // Update only when data changes
@@ -84,11 +61,9 @@ class ResultList extends React.Component {
           {
             data && data.length
             && data.map((item) => {
-              // eslint-disable-next-line camelcase
               const { id, object_type } = item;
               // Figure out correct icon for item
               let itemComponent = null;
-              // eslint-disable-next-line camelcase
               switch (object_type) {
                 case 'unit':
                   itemComponent = <UnitItem key={`unit-${id}`} unit={item} listId={listId} />;
@@ -111,7 +86,7 @@ class ResultList extends React.Component {
   }
 }
 
-export default withStyles(styles)(ResultList);
+export default ResultList;
 
 // Typechecking
 ResultList.propTypes = {

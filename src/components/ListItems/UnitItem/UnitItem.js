@@ -1,11 +1,8 @@
 /* eslint-disable camelcase */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { injectIntl, intlShape } from 'react-intl';
+import { intlShape } from 'react-intl';
 import UnitHelper from '../../../utils/unitHelper';
-import { getLocaleString } from '../../../redux/selectors/locale';
-import { changeSelectedUnit } from '../../../redux/actions/selectedUnit';
 import ResultItem from '../ResultItem';
 import SettingsUtility from '../../../utils/settings';
 import UnitIcon from '../../SMIcon/UnitIcon';
@@ -94,21 +91,7 @@ class UnitItem extends React.Component {
   }
 }
 
-// Listen to redux state
-const mapStateToProps = (state) => {
-  const getLocaleText = textObject => getLocaleString(state, textObject);
-  const { navigator, settings } = state;
-  return {
-    getLocaleText,
-    navigator,
-    settings,
-  };
-};
-
-export default injectIntl(connect(
-  mapStateToProps,
-  { changeSelectedUnit },
-)(UnitItem));
+export default UnitItem;
 
 // Typechecking
 UnitItem.propTypes = {

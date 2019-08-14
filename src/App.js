@@ -11,6 +11,7 @@ import {
 import I18n from './i18n';
 import styles from './index.css';
 import SMFonts from './service-map-icons.css';
+import HSLFonts from './hsl-icons.css';
 import appStyles from './App.css';
 import isClient from './utils';
 import { getLocale } from './redux/selectors/locale';
@@ -90,7 +91,7 @@ const LanguageWrapper = () => {
   );
 };
 
-export default withStyles(styles, appStyles, SMFonts)(LanguageWrapper);
+export default withStyles(styles, appStyles, SMFonts, HSLFonts)(LanguageWrapper);
 
 // Typechecking
 App.propTypes = {

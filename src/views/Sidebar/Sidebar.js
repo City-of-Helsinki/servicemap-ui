@@ -107,18 +107,16 @@ class Sidebar extends React.Component {
 
   render() {
     return (
-      <div className="Sidebar" style={{ height: '100%' }}>
-        <Switch>
-          <Route exact path="/:lng/unit/:unit" component={Unit} />
-          <Route path="/:lng/unit/:unit/:type" component={UnitFullList} />
-          <Route path="/:lng/search" component={Search} />
-          <Route path="/:lng/service/:service" component={Service} />
-          <Route path="/:lng/event/:event" component={Event} />
-          <Route path="/:lng/map" component={MobileMapView} />
-          <Route path="/:lng/address/:municipality/:street/:number" component={Address} />
-          <Route path="/:lng/" component={Home} />
-        </Switch>
-      </div>
+      <Switch>
+        <Route exact path="/:lng/unit/:unit" component={Unit} />
+        <Route path="/:lng/unit/:unit/:type" component={UnitFullList} />
+        <Route path="/:lng/search" component={Search} />
+        <Route path="/:lng/service/:service" component={Service} />
+        <Route path="/:lng/event/:event" component={Event} />
+        <Route path="/:lng/map" component={MobileMapView} />
+        <Route path="/:lng/address/:municipality/:street/:number" component={Address} />
+        <Route path="/:lng/" component={Home} />
+      </Switch>
     );
   }
 }

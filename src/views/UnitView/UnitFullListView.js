@@ -5,9 +5,9 @@ import { injectIntl, intlShape } from 'react-intl';
 import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core';
 import { fetchUnitEvents } from '../../redux/actions/event';
-import { DesktopComponent } from '../../layouts/WrapperComponents/WrapperComponents';
+import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import fetchUnitReservations from './utils/fetchUnitReservations';
-import TitleBar from '../../components/TitleBar/TitleBar';
+import TitleBar from '../../components/TitleBar';
 import SearchBar from '../../components/SearchBar';
 import { getLocaleString } from '../../redux/selectors/locale';
 import Events from './components/Events';
@@ -93,8 +93,11 @@ class UnitFullListView extends React.Component {
         <>
           <DesktopComponent>
             <SearchBar placeholder={intl.formatMessage({ id: 'search' })} />
+            <TitleBar icon={icon} title={getLocaleText(unit.name)} />
           </DesktopComponent>
-          <TitleBar icon={icon} title={getLocaleText(unit.name)} />
+          <MobileComponent>
+            <TitleBar icon={icon} title={getLocaleText(unit.name)} primary backButton />
+          </MobileComponent>
         </>
       )
     );

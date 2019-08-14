@@ -35,6 +35,7 @@ export default {
   'address.list.preschool_education_sv': 'Ruotsinkielinen varhaiskasvatus',
   'address.error': 'Osoitetta ei löytynyt',
   'address.nearby': 'Lähellä',
+  'address.districts': 'Alueet',
 
   // Event
   'event.nearby': 'Lähellä olevat tapahtumat',
@@ -116,6 +117,7 @@ export default {
                                     one {# esteettömyyspuute}
                                     other {# esteettömyyspuutetta}
                                   }`,
+  'unit.basicInfo': 'Perustiedot',
   'unit.data_source': 'Lähde: {data_source}', // TODO: Translate
   'unit.details.notFound': 'Toimipisteen tietoja ei saatavilla.',
   'unit.plural': 'Toimipisteet',

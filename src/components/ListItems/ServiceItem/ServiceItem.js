@@ -1,11 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { drawServiceIcon } from '../../../views/Map/utils/drawIcon';
-import { getLocaleString } from '../../../redux/selectors/locale';
+import { drawServiceIcon } from '../../../views/MapView/utils/drawIcon';
 import { uppercaseFirst } from '../../../utils';
 import SimpleListItem from '../SimpleListItem';
-import { setNewCurrentService } from '../../../redux/actions/services';
 
 class ServiceItem extends React.Component {
   state = {
@@ -18,7 +15,7 @@ class ServiceItem extends React.Component {
 
   render() {
     const {
-      currentService, service, getLocaleText, navigator, setNewCurrentService,
+      currentService, service, getLocaleText, navigator, setNewCurrentService, divider,
     } = this.props;
     const { icon } = this.state;
     let text = getLocaleText(service.name);
@@ -31,7 +28,7 @@ class ServiceItem extends React.Component {
         button
         text={uppercaseFirst(text)}
         icon={icon}
-        divider
+        divider={divider}
         handleItemClick={(e) => {
           e.preventDefault();
 
@@ -48,22 +45,7 @@ class ServiceItem extends React.Component {
   }
 }
 
-// Listen to redux state
-const mapStateToProps = (state) => {
-  const { current } = state.service;
-  const getLocaleText = textObject => getLocaleString(state, textObject);
-  const { navigator } = state;
-  return {
-    currentService: current,
-    getLocaleText,
-    navigator,
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  { setNewCurrentService },
-)(ServiceItem);
+export default ServiceItem;
 
 ServiceItem.propTypes = {
   currentService: PropTypes.objectOf(PropTypes.any),
@@ -71,9 +53,11 @@ ServiceItem.propTypes = {
   navigator: PropTypes.objectOf(PropTypes.any),
   service: PropTypes.objectOf(PropTypes.any).isRequired,
   setNewCurrentService: PropTypes.func.isRequired,
+  divider: PropTypes.bool,
 };
 
 ServiceItem.defaultProps = {
   currentService: null,
   navigator: null,
+  divider: true,
 };

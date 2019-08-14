@@ -1,7 +1,6 @@
-/* eslint-disable camelcase */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, intlShape, injectIntl } from 'react-intl';
+import { FormattedMessage, intlShape } from 'react-intl';
 import {
   Typography,
   Divider,
@@ -33,6 +32,7 @@ class Settings extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      alert: false,
       containerStyles: null,
       currentSettings: {},
       previousSettings: null,
@@ -108,6 +108,12 @@ class Settings extends React.Component {
     });
   }
 
+  setAlert(alert = false) {
+    this.setState({
+      alert,
+    });
+  }
+
   // Add event listeners
   addListeners() {
     if (!isClient()) {
@@ -146,7 +152,7 @@ class Settings extends React.Component {
       if (!isMobile) {
         const rect = sidebar.getBoundingClientRect();
         styles.position = 'absolute';
-        styles.top = rect.top;
+        styles.top = 0; // rect.top;
         styles.left = rect.left;
         styles.width = rect.width;
         styles.height = rect.height;
@@ -247,11 +253,12 @@ class Settings extends React.Component {
 
     // Set new settings as previous
     this.setNewPreviousSettings(currentSettings);
+    this.setAlert(true);
   }
 
   renderSenseSettings() {
     const { currentSettings } = this.state;
-    const { classes } = this.props;
+    const { classes, intl } = this.props;
 
     const senseSettingList = {
       colorblind: {
@@ -273,7 +280,12 @@ class Settings extends React.Component {
 
     return (
       <Container>
-        <SettingsTitle close={() => this.toggleSettingsContainer()} titleID="settings.sense.title" typography={{ component: 'h3' }} />
+        <SettingsTitle
+          classes={classes}
+          close={() => this.toggleSettingsContainer()}
+          intl={intl}
+          titleID="settings.sense.title"
+        />
         <FormGroup row>
           <List className={classes.list}>
             {
@@ -281,13 +293,17 @@ class Settings extends React.Component {
                 if (Object.prototype.hasOwnProperty.call(senseSettingList, key)) {
                   const item = senseSettingList[key];
                   return (
-                    <ListItem key={key}>
+                    <ListItem className={classes.checkbox} key={key}>
                       <FormControlLabel
                         control={(
                           <Checkbox
+                            color="primary"
                             checked={!!item.value}
                             value={key}
-                            onChange={() => this.handleChange(key, !item.value)}
+                            onChange={() => {
+                              this.setAlert(false);
+                              this.handleChange(key, !item.value);
+                            }}
                           />
                         )}
                         label={(
@@ -344,14 +360,22 @@ class Settings extends React.Component {
         <Container>
           <FormControl className={classes.noMargin} component="fieldset" fullWidth>
             <FormLabel>
-              <SettingsTitle titleID="settings.mobility.title" />
+              <SettingsTitle
+                classes={classes}
+                titleID="settings.mobility.title"
+                intl={intl}
+              />
             </FormLabel>
             <RadioGroup
               aria-label={intl.formatMessage({ id: 'settings.mobility.title' })}
+              classes={{
+                root: classes.radioGroup,
+              }}
               name="mobility"
               value={currentSettings.mobility}
               onChange={(event, value) => {
                 this.handleChange('mobility', value);
+                this.setAlert(false);
               }}
             >
               {
@@ -388,9 +412,9 @@ class Settings extends React.Component {
     } return (null);
   }
 
-  renderConfirmationBox(settingsHaveChanged) {
+  renderConfirmationBox() {
     const { classes, isMobile } = this.props;
-    const containerClasses = ` ${settingsHaveChanged ? classes.stickyContainer : classes.hidden} ${isMobile ? classes.stickyMobile : ''}`;
+    const containerClasses = ` ${this.settingsHaveChanged() ? classes.stickyContainer : classes.hidden} ${isMobile ? classes.stickyMobile : ''}`;
 
     return (
       <Container className={`SettingsConfirmation ${containerClasses}`} paper>
@@ -417,11 +441,11 @@ class Settings extends React.Component {
     );
   }
 
-  renderSaveAlert(settingsHaveBeenSaved) {
+  renderSaveAlert() {
     const { classes, intl, isMobile } = this.props;
 
-    const containerClasses = `SettingsAlert ${settingsHaveBeenSaved ? classes.alert : classes.hidden} ${isMobile ? classes.stickyMobile : ''}`;
-    const typographyClasses = `${classes.flexBase} ${classes.confirmationText}`;
+    const containerClasses = `SettingsAlert ${classes.alert} ${isMobile ? classes.stickyMobile : ''}`;
+    const typographyClasses = `${classes.flexBase} ${classes.alertText}`;
     const buttonClasses = `${classes.flexBase} ${classes.bold} ${classes.alertColor}`;
 
     return (
@@ -431,7 +455,9 @@ class Settings extends React.Component {
           aria-label={intl.formatMessage({ id: 'general.closeSettings' })}
           className={buttonClasses}
           color="primary"
-          onClick={() => this.toggleSettingsContainer()}
+          onClick={() => {
+            this.setAlert(false);
+          }}
           variant="text"
         >
           <FormattedMessage id="general.close" />
@@ -445,19 +471,27 @@ class Settings extends React.Component {
       classes,
       intl,
     } = this.props;
-    const { containerStyles, saved } = this.state;
+    const { alert, containerStyles, saved } = this.state;
     const settingsHaveChanged = this.settingsHaveChanged();
     const settingsHaveBeenSaved = !settingsHaveChanged && saved;
+    const showAlert = !settingsHaveChanged && alert;
 
     return (
       <>
         <div id="SettingsContainer" className={`${classes.container}`} style={containerStyles}>
           <>
             {
-                settingsHaveBeenSaved
-                  ? this.renderSaveAlert(settingsHaveBeenSaved)
-                  : this.renderConfirmationBox(settingsHaveChanged)
-              }
+              showAlert
+              && (
+                this.renderSaveAlert()
+              )
+            }
+            {
+              settingsHaveChanged
+              && (
+                this.renderConfirmationBox()
+              )
+            }
             <div className="SettingsContent">
               <Typography variant="srOnly" component="h2" tabIndex="-1">
                 <FormattedMessage id="settings" />
@@ -520,4 +554,4 @@ Settings.defaultProps = {
   isMobile: false,
 };
 
-export default injectIntl(Settings);
+export default Settings;
