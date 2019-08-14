@@ -1,4 +1,4 @@
-import queryBuilder from '../../utils/queryBuilder';
+import { selectedUnitFetch } from '../../utils/fetch';
 
 export const fetchHasErrored = errorMessage => ({
   type: 'SELECTED_UNIT_FETCH_HAS_ERRORED',
@@ -18,9 +18,10 @@ export const setSelectedUnit = unit => ({
 
 // Change selected unit to given unit
 export const changeSelectedUnit = unit => async (dispatch) => {
-  if (unit) {
-    unit.object_type = 'unit';
-    dispatch(setSelectedUnit(unit));
+  const newUnit = unit;
+  if (newUnit) {
+    newUnit.object_type = 'unit';
+    dispatch(setSelectedUnit(newUnit));
   } else {
     dispatch(setSelectedUnit(null));
   }
@@ -28,23 +29,18 @@ export const changeSelectedUnit = unit => async (dispatch) => {
 
 // Fetch new selected unit
 export const fetchSelectedUnit = (id, callback) => async (dispatch) => {
-  try {
-    // Fetch rest of the unit's data
-    dispatch(fetchIsLoading());
-    const response = await queryBuilder.setType('unit', id).run();
-    if (response.ok && response.status === 200) {
-      const data = await response.json();
-      data.complete = true;
-      data.object_type = 'unit';
-      dispatch(fetchSuccess(data));
-      if (typeof callback === 'function') {
-        callback();
-      }
-    } else {
-      throw new Error(response.statusText);
+  const onStart = () => dispatch(fetchIsLoading());
+  const onSuccess = (data) => {
+    const newData = data;
+    newData.complete = true;
+    newData.object_type = 'unit';
+    dispatch(fetchSuccess(newData));
+    if (typeof callback === 'function') {
+      callback();
     }
-  } catch (e) {
-    dispatch(fetchHasErrored(e.message));
-    console.warn('Error fetching selected unit');
-  }
+  };
+  const onError = e => dispatch(fetchHasErrored(e.message));
+
+  // Fetch data
+  selectedUnitFetch(null, onStart, onSuccess, onError, null, id);
 };
