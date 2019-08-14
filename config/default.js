@@ -15,6 +15,16 @@ export default {
   "reservations": {
     "apiUrl": "https://api.hel.fi/respa/v1/"
   },
+
+  "serviceMapAPI": {
+    "root": "https://api.hel.fi/servicemap/v2"
+  },
+  "eventsAPI": {
+    "root": "https://api.hel.fi/linkedevents/v1"
+  },
+  "reservationsAPI": {
+    "root": "https://api.hel.fi/respa/v1"
+  },
   // constants
   "accessibilityColors":  {
     "default": "#2242C7",
