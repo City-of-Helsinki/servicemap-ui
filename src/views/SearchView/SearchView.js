@@ -236,6 +236,7 @@ class SearchView extends React.Component {
     return (
       <div className="Search">
         <SearchBar
+          expand
           placeholder={intl && intl.formatMessage({ id: 'search.input.placeholder' })}
           text={this.getSearchParam() || ''}
         />

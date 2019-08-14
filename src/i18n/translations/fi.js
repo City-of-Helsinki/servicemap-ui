@@ -144,7 +144,7 @@ export default {
   'unit.list.reservations': 'Varattavat kohteet',
 
   // Search
-  'search': 'Hae',
+  'search': 'Hae toimpistettä tai palvelua',
   'search.info': `{count, plural,
                   =0 {Toimipisteitä ei löytynyt}
                   one {# toimipiste löydetty}

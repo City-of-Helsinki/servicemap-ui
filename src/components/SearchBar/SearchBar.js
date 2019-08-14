@@ -12,9 +12,6 @@ import { getLocaleString } from '../../redux/selectors/locale';
 import { fetchUnits } from '../../redux/actions/unit';
 import createSuggestions from './createSuggestions';
 import expandSearch from './expandSearch';
-import UnitItem from '../ListItems/UnitItem';
-import ServiceMapButton from '../ServiceMapButton';
-import suggestUnits from './suggestUnits';
 
 const styles = theme => ({
   root: {
@@ -72,7 +69,7 @@ const styles = theme => ({
     fontWeight: 'normal',
   },
   divider: {
-    marginLeft: 72,
+    marginLeft: 56,
   },
   listIcon: {
     paddingRight: theme.spacing.unitDouble,
@@ -80,10 +77,24 @@ const styles = theme => ({
     paddingBottom: 8,
     color: 'rgba(0,0,0,0.54)',
   },
+  absolute: {
+    display: 'grid',
+    position: 'absolute',
+    top: 64,
+    zIndex: 99999,
+  },
+  relative: {
+    display: 'grid',
+  },
 });
 
+let fetchController = null;
 
 class SearchBar extends React.Component {
+  suggestionDelay = 400;
+
+  timeout = null;
+
   constructor(props) {
     super(props);
 
@@ -92,8 +103,8 @@ class SearchBar extends React.Component {
     this.state = {
       search: previousSearch,
       isActive: false,
-      suggestions: null,
-      searchQueries: null,
+      searchQueries: [],
+      loading: false,
     };
   }
 
@@ -115,23 +126,41 @@ class SearchBar extends React.Component {
   onInputChange = (e) => {
     const { getLocaleText } = this.props;
     const query = e.currentTarget.value;
-    this.setState({ search: e.currentTarget.value, searchQueries: [] });
     if (query.length > 2) {
-      createSuggestions(e.currentTarget.value, getLocaleText)
-        .then(result => this.setState({ searchQueries: [result[1]], suggestions: result[0] }));
+      if (this.timeout) {
+        clearTimeout(this.timeout);
+      }
+      this.timeout = setTimeout(() => {
+        this.setState({ loading: true, searchQueries: [] });
+        if (fetchController) {
+          fetchController.abort();
+        }
+        fetchController = new AbortController();
+        const { signal } = fetchController;
+        createSuggestions(query, getLocaleText, signal)
+          .then((result) => {
+            if (result !== 'error') {
+              fetchController = null;
+              this.setState({ searchQueries: result, loading: false });
+            }
+          });
+      }, this.suggestionDelay);
+    } else {
+      this.setState({ searchQueries: [], loading: false });
+      if (fetchController) {
+        fetchController.abort();
+      }
     }
+    this.setState({ search: query });
   }
 
   onExpandSearch = (item) => {
     const { getLocaleText } = this.props;
-    const { searchQueries } = this.state;
     expandSearch(item, getLocaleText)
       .then(result => this.setState({
         search: result.search,
-        searchQueries: [result.expandedQueries, ...searchQueries],
+        searchQueries: result.expandedQueries,
       }));
-    suggestUnits(item.query)
-      .then(data => this.setState({ suggestions: data.results }));
   }
 
   onSubmit = (e) => {
@@ -154,16 +183,12 @@ class SearchBar extends React.Component {
       if (search !== previousSearch) {
         fetchUnits([], null, search);
       }
+      this.setState({ searchQueries: [] });
     }
   }
 
   suggestionBackEvent = () => {
-    const { searchQueries } = this.state;
-    if (searchQueries) {
-      const queries = searchQueries;
-      queries.shift();
-      this.setState({ searchQueries: queries });
-    }
+    this.setState({ searchQueries: [] });
   };
 
   toggleAnimation = () => {
@@ -173,22 +198,23 @@ class SearchBar extends React.Component {
 
   render() {
     const {
-      backButtonEvent, classes, intl, placeholder, previousSearch, hideBackButton, searchRef,
+      backButtonEvent, classes, intl, placeholder, previousSearch, hideBackButton, searchRef, expand,
     } = this.props;
     const {
-      search, isActive, suggestions, searchQueries,
+      search, isActive, searchQueries, loading,
     } = this.state;
 
-    const suggestionList = searchQueries && searchQueries[0];
-
+    const suggestionList = (searchQueries.length && searchQueries) || null;
     const inputValue = typeof search === 'string' ? search : previousSearch;
 
+    const showSuggestions = loading || suggestionList;
+
     return (
-      <>
-        <Paper className={`${classes.root} ${isActive ? classes.rootFocused : ''}`} elevation={1} square>
-          <form onSubmit={this.onSubmit} className={classes.container}>
+      <div className={showSuggestions ? classes.absolute : classes.relative}>
+        <Paper className={`${classes.root} ${isActive || showSuggestions ? classes.rootFocused : ''}`} elevation={1} square>
+          <form onSubmit={this.onSubmit} className={classes.container} autoComplete="off">
             {
-            (suggestionList || !hideBackButton)
+            !hideBackButton
             && <BackButton className={classes.iconButton} onClick={suggestionList ? this.suggestionBackEvent : backButtonEvent || null} variant="icon" />
           }
 
@@ -212,69 +238,59 @@ class SearchBar extends React.Component {
             </IconButton>
           </form>
         </Paper>
-        {suggestions && suggestionList && (
-
-        <div style={{
-          zIndex: 999999, height: '100%', width: '450px', backgroundColor: '#ffffff', overflow: 'auto',
-        }}
+        {expand && !showSuggestions && (
+        <Button
+          variant="outlined"
+          style={{ height: 36 }}
+          className={classes.suggestionButton}
+          onClick={() => this.onExpandSearch({ query: search, count: 50 })}
         >
-          <div className={classes.suggestionSubtitle}>
-            <Typography className={classes.subtitleText} variant="overline">Tarkoititko..?</Typography>
-          </div>
-          <List>
-            {suggestionList.map((item, i) => (
+          <Typography className={classes.expand} variant="body2">
+            {'+ tarkenna'}
+          </Typography>
+        </Button>
+        )}
+        {loading || (suggestionList && suggestionList.length) ? (
+          <div style={{
+            zIndex: 999999, height: 'calc(100vh - 76px - 64px)', width: '450px', backgroundColor: '#ffffff', overflow: 'auto',
+          }}
+          >
+            {loading && (
+            <p style={{ marginTop: '200px' }}>Ladataan hakuehdotuksia</p>
+            )}
+            {!loading && (
               <>
-                <ListItem key={item.query}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-                    <div style={{ display: 'flex', flexDirection: 'row', width: '50%' }}>
-                      <Search className={classes.listIcon} />
-                      <div>
-                        <Typography variant="body2">{`${item.query}`}</Typography>
-                        <Typography variant="caption">{`${item.count} tulosta`}</Typography>
-                      </div>
-                    </div>
-                    <div style={{ width: '50%', display: 'contents', justifyContent: 'right' }}>
-                      {item.count > 1 && !item.final && (
-                      <Button
-                        variant="outlined"
-                        style={{ height: 36 }}
-                        className={classes.suggestionButton}
-                        onClick={() => this.onExpandSearch(item)}
-                      >
-                        <Typography className={classes.expand} variant="body2">
-                          {'+ tarkenna'}
-                        </Typography>
-                      </Button>
-                      )}
-                      <ServiceMapButton
-                        className={classes.suggestionButton}
+                <div className={classes.suggestionSubtitle}>
+                  <Typography className={classes.subtitleText} variant="overline">Tarkoititko..?</Typography>
+                </div>
+                <List>
+                  {suggestionList.map((item, i) => (
+                    <>
+                      <ListItem
+                        key={item.query}
+                        button
+                        role="link"
                         onClick={() => this.handleSubmit(item.query)}
                       >
-                        <Typography variant="button">
-                        Hae
-                        </Typography>
-                      </ServiceMapButton>
-                    </div>
-                  </div>
-                </ListItem>
-                {i !== suggestionList.length - 1 && (
-                  <Divider className={classes.divider} />
-                )}
+                        <div style={{ display: 'flex', flexDirection: 'row' }}>
+                          <Search className={classes.listIcon} />
+                          <div>
+                            <Typography variant="body2">{`${item.query}`}</Typography>
+                            <Typography variant="caption">{`${item.count} tulosta`}</Typography>
+                          </div>
+                        </div>
+                      </ListItem>
+                      {i !== suggestionList.length - 1 && (
+                      <Divider className={classes.divider} />
+                      )}
+                    </>
+                  ))}
+                </List>
               </>
-            ))}
-          </List>
-          <div className={classes.suggestionSubtitle}>
-            <Typography className={classes.subtitleText} variant="overline">Ehdotuksia</Typography>
+            )}
           </div>
-          <List>
-            {suggestions.map(item => (
-              <UnitItem key={item.id} unit={item} />
-            ))}
-          </List>
-        </div>
-
-        )}
-      </>
+        ) : null}
+      </div>
     );
   }
 }
@@ -291,6 +307,7 @@ SearchBar.propTypes = {
   searchRef: PropTypes.objectOf(PropTypes.any),
   previousSearch: PropTypes.string,
   getLocaleText: PropTypes.func.isRequired,
+  expand: PropTypes.bool,
 };
 
 SearchBar.defaultProps = {
@@ -299,6 +316,7 @@ SearchBar.defaultProps = {
   hideBackButton: false,
   navigator: null,
   searchRef: {},
+  expand: false,
 };
 
 // Listen to redux state

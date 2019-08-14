@@ -143,7 +143,7 @@ export default {
   'unit.list.reservations': 'Varattavat kohteet', // TODO: Translate
 
   // Search
-  'search': 'Sök',
+  'search': 'Hae toimpistettä tai palvelua', // TODO: Translate
   'search.info': `{count, plural,
                   =0 {no units}
                   one {# unit}

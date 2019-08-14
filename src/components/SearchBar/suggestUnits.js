@@ -8,7 +8,7 @@ const suggestUnits = async (query, autosuggest) => {
       });
       return data;
     });
-  console.log(query, 'reurning: ', suggestions);
+  console.log(query, 'returning: ', suggestions);
   return suggestions;
 };
 
