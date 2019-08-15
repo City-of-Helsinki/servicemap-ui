@@ -50,7 +50,6 @@ const APIHandlers = {
     abortController: null,
     url: `${config.serviceMapAPI.root}/unit/`,
     options: {
-      geometry: true,
       page_size: 100,
     },
 
@@ -234,7 +233,7 @@ const fetchWrapper = async (data, onStart, onSuccess, onError, onNext, key, id) 
   }
 
   const fetchURL = functionWithID ? url(id) : url;
-  const fetchOptions = { ...data, ...options };
+  const fetchOptions = data || options;
   abortFetch(key);
   setNewAbortController(key);
   if (onStart) {
@@ -246,13 +245,15 @@ const fetchWrapper = async (data, onStart, onSuccess, onError, onNext, key, id) 
 
 export const searchFetch = async (data, onStart, onSuccess, onError, onNext) => {
   console.log('Search fetch', data);
-  const response = await fetchWrapper(data, onStart, onSuccess, onError, onNext, 'search');
+  const { options } = APIHandlers.search;
+  const response = await fetchWrapper({ ...options, ...data }, onStart, onSuccess, onError, onNext, 'search');
   return response;
 };
 
 export const unitEventsFetch = async (data, onStart, onSuccess, onError, onNext) => {
   console.log('Unit events fetch', data);
-  const response = await fetchWrapper(data, onStart, onSuccess, onError, onNext, 'unitEvents');
+  const { options } = APIHandlers.unitEvents;
+  const response = await fetchWrapper({ ...options, ...data }, onStart, onSuccess, onError, onNext, 'unitEvents');
   return response;
 };
 

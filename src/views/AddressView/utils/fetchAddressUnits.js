@@ -5,7 +5,7 @@ const fetchAddressUnits = async (lnglat) => {
     lat: `${lnglat[1]}`,
     lon: `${lnglat[0]}`,
     distance: 500,
-    only: 'name,location,accessibility_viewpoints',
+    only: 'name,location,accessibility_shortcoming_count,',
     page: 1,
     page_size: 500,
   };

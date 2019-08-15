@@ -1,4 +1,4 @@
-import { districtFetch } from '../../../utils/fetch';
+import { districtFetch, unitsFetch } from '../../../utils/fetch';
 
 /* eslint-disable global-require */
 const fetchDistricts = async (lnglat) => {
@@ -24,6 +24,7 @@ const fetchDistricts = async (lnglat) => {
     page: 1,
     page_size: 80,
     type: `${districts.join(',')}name,root_service_nodes,location,street_address`,
+    geometry: true,
   };
   const districtData = await districtFetch(options);
 
@@ -37,8 +38,12 @@ const fetchDistricts = async (lnglat) => {
 
   // Fetch the unit data with the received id's
   if (idList.length > 0) {
-    const unitData = await fetch(`https://api.hel.fi/servicemap/v2/unit/?id=${idList.join(',')}&only=name,location,&page_size=50`)
-      .then(response => response.json());
+    const unitOptions = {
+      id: idList.join(','),
+      only: 'name,location',
+      page_size: 50,
+    };
+    const unitData = await unitsFetch(unitOptions);
 
     districtData.results.forEach((district) => {
       unitData.results.forEach((unit) => {

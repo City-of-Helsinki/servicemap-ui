@@ -37,8 +37,14 @@ export const fetchServiceUnits = serviceId => async (dispatch) => {
     dispatch(serviceFetchProgressUpdate(resultTotal.length, response.count));
   };
 
+  const options = {
+    service: serviceId,
+    page_size: 50,
+    only: 'name,accessibility_shortcoming_count',
+  };
+
   // Fetch data
-  unitsFetch({ service: serviceId }, onStart, onSuccess, onError, onNext);
+  unitsFetch(options, onStart, onSuccess, onError, onNext);
 };
 
 export const fetchService = serviceId => async (dispatch) => {
