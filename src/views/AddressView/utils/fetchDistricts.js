@@ -1,6 +1,7 @@
+import { districtFetch } from '../../../utils/fetch';
+
 /* eslint-disable global-require */
 const fetchDistricts = async (lnglat) => {
-  const url = 'https://api.hel.fi/servicemap/v2/administrative_division/?geometry=true&';
   const districts = [
     'postcode_area',
     'neighborhood',
@@ -17,8 +18,14 @@ const fetchDistricts = async (lnglat) => {
     'preschool_education_fi',
     'preschool_education_sv',
   ];
-  const districtData = await fetch(`${url}lat=${lnglat[1]}&lon=${lnglat[0]}&page=1&page_size=80&type=${districts.join(',')}name,root_service_nodes,location,street_address`)
-    .then(response => response.json());
+  const options = {
+    lat: `${lnglat[1]}`,
+    lon: `${lnglat[0]}`,
+    page: 1,
+    page_size: 80,
+    type: `${districts.join(',')}name,root_service_nodes,location,street_address`,
+  };
+  const districtData = await districtFetch(options);
 
   // Find the districts with unit data and collect their id's for fetch
   const idList = [];

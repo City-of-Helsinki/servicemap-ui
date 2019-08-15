@@ -3,17 +3,22 @@ import { withStyles, ButtonBase, Typography } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import styles from '../styles';
+import { addressFetch } from '../../../utils/fetch';
 
 const fetchAddress = async (latlng) => {
-  const addressData = await fetch(`https://api.hel.fi/servicemap/v2/address/?lat=${latlng.lat}&lon=${latlng.lng}&page_size=5`)
-    .then(response => response.json())
-    .then((data) => {
-      const address = data.results[0];
-      if (address.letter) {
-        address.number += address.letter;
-      }
-      return data;
-    });
+  const options = {
+    lat: `${latlng.lat}`,
+    lon: `${latlng.lng}`,
+    page_size: 5,
+  };
+  const onSuccess = (data) => {
+    const address = data.results[0];
+    if (address.letter) {
+      address.number += address.letter;
+    }
+    return data;
+  };
+  const addressData = await addressFetch(options, null, onSuccess);
   return addressData.results[0];
 };
 

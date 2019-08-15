@@ -1,4 +1,4 @@
-import { serviceUnitsFetch, serviceFetch } from '../../utils/fetch';
+import { serviceFetch, unitsFetch } from '../../utils/fetch';
 
 export const fetchHasErrored = errorMessage => ({
   type: 'SERVICE_UNITS_FETCH_HAS_ERRORED',
@@ -38,7 +38,7 @@ export const fetchServiceUnits = serviceId => async (dispatch) => {
   };
 
   // Fetch data
-  serviceUnitsFetch({ service: serviceId }, onStart, onSuccess, onError, onNext);
+  unitsFetch({ service: serviceId }, onStart, onSuccess, onError, onNext);
 };
 
 export const fetchService = serviceId => async (dispatch) => {

@@ -8,6 +8,20 @@ import isClient from '.';
 
 // API handlers
 const APIHandlers = {
+  address: {
+    abortController: null,
+    url: `${config.serviceMapAPI.root}/address/`,
+    options: {
+      page_size: 5,
+    },
+  },
+  district: {
+    abortController: null,
+    url: `${config.serviceMapAPI.root}/administrative_division/`,
+    options: {
+      geometry: true,
+    },
+  },
   search: {
     abortController: null,
     url: `${config.serviceMapAPI.root}/search/`,
@@ -99,13 +113,14 @@ const fetchHandler = (res) => {
   }
   return responseToJson(res);
 };
-
+/*
 const testMiddleware = async (data) => {
   console.group('TestMiddleware: Logger');
   console.log(data);
   console.groupEnd('TestMiddleware: Logger');
   return data;
 };
+*/
 
 const handleNext = async (allData, response, onNext, fetchOptions) => {
   // console.group('HandleNext');
@@ -177,7 +192,7 @@ export const initiateFetch = async (url, options, onSuccess, onError, onNext, ha
   const signal = abortController ? abortController.signal : null;
   const fetchOptions = signal ? { signal } : {};
 
-  const data = fetch(`${url}${optionsAsString}`, fetchOptions)
+  const data = await fetch(`${url}${optionsAsString}`, fetchOptions)
     // Middlewares
     .then(fetchHandler)
     .then(async (res) => {
@@ -191,20 +206,23 @@ export const initiateFetch = async (url, options, onSuccess, onError, onNext, ha
     // Success handling
     .then(async (res) => {
       console.log('Response after fetchHandler', res);
-
-      onSuccess(res); // Success callback
       APIHandlers[handlerKey].abortController = null;
+      if (onSuccess) {
+        return onSuccess(res); // Success callback
+      }
       return res;
     })
     .catch((err) => {
       console.log('Error:', err);
-      onError(err); // Error callback
+      if (onError) {
+        onError(err); // Error callback
+      }
       APIHandlers[handlerKey].abortController = null;
     });
   return data;
 };
 
-const fetchWrapper = (data, onStart, onSuccess, onError, onNext, key, id) => {
+const fetchWrapper = async (data, onStart, onSuccess, onError, onNext, key, id) => {
   if (!Object.keys(APIHandlers).includes(key)) {
     throw new Error('Invalid key provided to fetchWrapper');
   }
@@ -219,31 +237,51 @@ const fetchWrapper = (data, onStart, onSuccess, onError, onNext, key, id) => {
   const fetchOptions = { ...data, ...options };
   abortFetch(key);
   setNewAbortController(key);
-  onStart();
-  return initiateFetch(fetchURL, fetchOptions, onSuccess, onError, onNext, key);
+  if (onStart) {
+    onStart();
+  }
+  const result = await initiateFetch(fetchURL, fetchOptions, onSuccess, onError, onNext, key);
+  return result;
 };
 
-export const searchFetch = (data, onStart, onSuccess, onError, onNext) => {
+export const searchFetch = async (data, onStart, onSuccess, onError, onNext) => {
   console.log('Search fetch', data);
-  return fetchWrapper(data, onStart, onSuccess, onError, onNext, 'search');
+  const response = await fetchWrapper(data, onStart, onSuccess, onError, onNext, 'search');
+  return response;
 };
 
-export const unitEventsFetch = (data, onStart, onSuccess, onError, onNext) => {
+export const unitEventsFetch = async (data, onStart, onSuccess, onError, onNext) => {
   console.log('Unit events fetch', data);
-  return fetchWrapper(data, onStart, onSuccess, onError, onNext, 'unitEvents');
+  const response = await fetchWrapper(data, onStart, onSuccess, onError, onNext, 'unitEvents');
+  return response;
 };
 
-export const selectedUnitFetch = (data, onStart, onSuccess, onError, onNext, id) => {
+export const selectedUnitFetch = async (data, onStart, onSuccess, onError, onNext, id) => {
   console.log('SelectedUnit fetch', data);
-  return fetchWrapper(data, onStart, onSuccess, onError, onNext, 'unit', id);
+  const response = await fetchWrapper(data, onStart, onSuccess, onError, onNext, 'unit', id);
+  return response;
 };
 
-export const serviceUnitsFetch = (data, onStart, onSuccess, onError, onNext) => {
-  console.log('ServiceUnits fetch', data);
-  return fetchWrapper(data, onStart, onSuccess, onError, onNext, 'units');
+export const unitsFetch = async (data, onStart, onSuccess, onError, onNext) => {
+  console.log('Units fetch', data);
+  const response = await fetchWrapper(data, onStart, onSuccess, onError, onNext, 'units');
+  return response;
 };
 
-export const serviceFetch = (data, onStart, onSuccess, onError, onNext, id) => {
+export const serviceFetch = async (data, onStart, onSuccess, onError, onNext, id) => {
   console.log('Service fetch', data);
-  return fetchWrapper(data, onStart, onSuccess, onError, onNext, 'service', id);
+  const response = fetchWrapper(data, onStart, onSuccess, onError, onNext, 'service', id);
+  return response;
+};
+
+export const addressFetch = async (data, onStart, onSuccess, onError, onNext) => {
+  console.log('Address fetch', data);
+  const response = fetchWrapper(data, onStart, onSuccess, onError, onNext, 'address');
+  return response;
+};
+
+export const districtFetch = async (data, onStart, onSuccess, onError, onNext) => {
+  console.log('District fetch', data);
+  const response = fetchWrapper(data, onStart, onSuccess, onError, onNext, 'district');
+  return response;
 };
