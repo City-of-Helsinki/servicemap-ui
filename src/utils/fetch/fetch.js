@@ -1,63 +1,5 @@
-/* eslint-disable no-await-in-loop */
-import config from '../../config';
+import { APIHandlers } from './constants';
 
-// *****************
-// CONFIGURATIONS
-// *****************
-
-// API handlers
-const APIHandlers = {
-  address: {
-    url: `${config.serviceMapAPI.root}/address/`,
-    options: {
-      page_size: 5,
-    },
-  },
-  district: {
-    url: `${config.serviceMapAPI.root}/administrative_division/`,
-    options: {
-      geometry: true,
-    },
-  },
-  search: {
-    url: `${config.serviceMapAPI.root}/search/`,
-    options: {
-      page: 1,
-      page_size: 200,
-      only: 'unit.location,unit.name,unit.municipality,unit.accessibility_shortcoming_count',
-      geometry: true,
-    },
-  },
-  service: {
-    url: id => `${config.serviceMapAPI.root}/service/${id}/`,
-    options: {},
-  },
-  unit: {
-    url: id => `${config.serviceMapAPI.root}/unit/${id}/`,
-    options: {
-      accessibility_description: true,
-      include: 'service_nodes,services',
-      geometry: true,
-    },
-  },
-  units: {
-    url: `${config.serviceMapAPI.root}/unit/`,
-    options: {
-      page_size: 100,
-    },
-
-  },
-  unitEvents: {
-    url: `${config.eventsAPI.root}/event/`,
-    options: {
-      type: 'event',
-      start: 'today',
-      sort: 'start_time',
-      include: 'location',
-    },
-  },
-};
-// const serviceURL = `${config.serviceMapAPI.root}/service/`;
 
 // *****************
 // MIDDLEWARES
@@ -77,14 +19,6 @@ const fetchHandler = (res) => {
   }
   return responseToJson(res);
 };
-/*
-const testMiddleware = async (data) => {
-  console.group('TestMiddleware: Logger');
-  console.log(data);
-  console.groupEnd('TestMiddleware: Logger');
-  return data;
-};
-*/
 
 const handleNext = async (allData, response, onNext, fetchOptions) => {
   if (response && response.next) {
@@ -139,11 +73,20 @@ const optionsToURLParam = (options = null) => {
   return urlParam;
 };
 
-export const initiateFetch = async (
+/**
+ * Handle fetch by creating url, adding middlewares and adding callbacks
+ * @param {string} url
+ * @param {object} options
+ * @param {function} onSuccess
+ * @param {function} onError
+ * @param {function} onNext
+ * @param {string} handlerKey
+ * @param {AbortController} abortController
+ */
+const handleFetch = async (
   url, options, onSuccess, onError, onNext, handlerKey, abortController,
 ) => {
   const optionsAsString = options ? `/?${optionsToURLParam(options)}` : '';
-  console.log('Fetch URL', `${url}${optionsAsString}`);
   const signal = abortController ? abortController.signal : null;
   const fetchOptions = signal ? { signal } : {};
 
@@ -169,7 +112,7 @@ export const initiateFetch = async (
       return res;
     })
     .catch((err) => {
-      console.log('Error:', err);
+      console.error('Error:', err);
       // eslint-disable-next-line no-param-reassign
       abortController = null;
       if (onError) {
@@ -178,7 +121,18 @@ export const initiateFetch = async (
     });
   return data;
 };
-
+/**
+ *  Fetch wrapper for handling fetch initialization
+ *
+ * @param {object} data - URL search params for fetch
+ * @param {function} onStart - callback to run just before fetch
+ * @param {function} onSuccess - callback for fetch success
+ * @param {function} onError - callback for fetch error
+ * @param {function} onNext - callback for fetch next (fetching next set of data)
+ * @param {string} key - key value to access apihandler object
+ * @param {number|string} id - optional id if url requires it
+ * @param {AbortController} abortController - AbortController for fetch
+ */
 const fetchWrapper = async (
   data, onStart, onSuccess, onError, onNext, key, id, abortController,
 ) => {
@@ -197,52 +151,10 @@ const fetchWrapper = async (
   if (onStart) {
     onStart();
   }
-  const result = await initiateFetch(
+  const result = await handleFetch(
     fetchURL, fetchOptions, onSuccess, onError, onNext, key, abortController,
   );
   return result;
 };
 
-export const searchFetch = async (data, onStart, onSuccess, onError, onNext, abortController) => {
-  console.log('Search fetch', data);
-  const { options } = APIHandlers.search;
-  const response = await fetchWrapper({ ...options, ...data }, onStart, onSuccess, onError, onNext, 'search', null, abortController);
-  return response;
-};
-
-export const unitEventsFetch = async (data, onStart, onSuccess, onError, onNext) => {
-  console.log('Unit events fetch', data);
-  const { options } = APIHandlers.unitEvents;
-  const response = await fetchWrapper({ ...options, ...data }, onStart, onSuccess, onError, onNext, 'unitEvents');
-  return response;
-};
-
-export const selectedUnitFetch = async (data, onStart, onSuccess, onError, onNext, id) => {
-  console.log('SelectedUnit fetch', data);
-  const response = await fetchWrapper(data, onStart, onSuccess, onError, onNext, 'unit', id);
-  return response;
-};
-
-export const unitsFetch = async (data, onStart, onSuccess, onError, onNext) => {
-  console.log('Units fetch', data);
-  const response = await fetchWrapper(data, onStart, onSuccess, onError, onNext, 'units');
-  return response;
-};
-
-export const serviceFetch = async (data, onStart, onSuccess, onError, onNext, id) => {
-  console.log('Service fetch', data);
-  const response = fetchWrapper(data, onStart, onSuccess, onError, onNext, 'service', id);
-  return response;
-};
-
-export const addressFetch = async (data, onStart, onSuccess, onError, onNext) => {
-  console.log('Address fetch', data);
-  const response = fetchWrapper(data, onStart, onSuccess, onError, onNext, 'address');
-  return response;
-};
-
-export const districtFetch = async (data, onStart, onSuccess, onError, onNext) => {
-  console.log('District fetch', data);
-  const response = fetchWrapper(data, onStart, onSuccess, onError, onNext, 'district');
-  return response;
-};
+export default fetchWrapper;
