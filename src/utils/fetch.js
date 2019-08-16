@@ -1,6 +1,5 @@
 /* eslint-disable no-await-in-loop */
 import config from '../../config';
-import isClient from '.';
 
 // *****************
 // CONFIGURATIONS
@@ -9,21 +8,18 @@ import isClient from '.';
 // API handlers
 const APIHandlers = {
   address: {
-    abortController: null,
     url: `${config.serviceMapAPI.root}/address/`,
     options: {
       page_size: 5,
     },
   },
   district: {
-    abortController: null,
     url: `${config.serviceMapAPI.root}/administrative_division/`,
     options: {
       geometry: true,
     },
   },
   search: {
-    abortController: null,
     url: `${config.serviceMapAPI.root}/search/`,
     options: {
       page: 1,
@@ -33,12 +29,10 @@ const APIHandlers = {
     },
   },
   service: {
-    abortController: null,
     url: id => `${config.serviceMapAPI.root}/service/${id}/`,
     options: {},
   },
   unit: {
-    abortController: null,
     url: id => `${config.serviceMapAPI.root}/unit/${id}/`,
     options: {
       accessibility_description: true,
@@ -47,7 +41,6 @@ const APIHandlers = {
     },
   },
   units: {
-    abortController: null,
     url: `${config.serviceMapAPI.root}/unit/`,
     options: {
       page_size: 100,
@@ -55,7 +48,6 @@ const APIHandlers = {
 
   },
   unitEvents: {
-    abortController: null,
     url: `${config.eventsAPI.root}/event/`,
     options: {
       type: 'event',
@@ -66,33 +58,6 @@ const APIHandlers = {
   },
 };
 // const serviceURL = `${config.serviceMapAPI.root}/service/`;
-
-// *****************
-// Abort controller
-// *****************
-const setNewAbortController = (handlerKey) => {
-  if (!handlerKey) {
-    return;
-  }
-  APIHandlers[handlerKey].abortController = isClient() ? new AbortController() : null;
-
-  const { abortController } = APIHandlers[handlerKey];
-  const { signal } = abortController;
-  signal.addEventListener('abort', () => {
-    // Logs true:
-    console.log('Abort event', signal.aborted);
-  });
-};
-
-export const abortFetch = (key) => {
-  if (!key || !Object.keys(APIHandlers).includes(key)) {
-    return;
-  }
-  const { abortController } = APIHandlers[key];
-  if (abortController) {
-    abortController.abort();
-  }
-};
 
 // *****************
 // MIDDLEWARES
@@ -122,29 +87,21 @@ const testMiddleware = async (data) => {
 */
 
 const handleNext = async (allData, response, onNext, fetchOptions) => {
-  // console.group('HandleNext');
-  // console.log(allData);
   if (response && response.next) {
     if (onNext) {
       onNext(allData, response);
     }
-    // console.log('Fetch options: ', APIHandlers[handlerKey].abortController);
-    // const { signal } = APIHandlers[handlerKey].abortController;
-    console.log('Next fetch options', fetchOptions);
     const newResponse = await fetch(response.next, fetchOptions)
       .then(responseToJson)
       .catch((e) => {
         console.log('Fetch next error', e);
         throw new Error('Problem in fetch next');
       });
-    const totalData = [...allData, ...newResponse.results];
-    // console.log(newResponse, totalData);
 
-    // console.groupEnd('HandleNext');
+    const totalData = [...allData, ...newResponse.results];
     const data = await handleNext(totalData, newResponse, onNext, fetchOptions);
     return data;
   }
-  // console.groupEnd('HandleNext');
 
   return allData;
 };
@@ -153,10 +110,8 @@ const handleNext = async (allData, response, onNext, fetchOptions) => {
  * Middleware to handle next fetching
  */
 const nextHandler = async (data, onNext, fetchOptions) => {
-  // console.log('NextHandler: ', data);
   if (data && data.next && data.results) {
     const newData = await handleNext(data.results, data, onNext, fetchOptions);
-    // console.log('Next new data', newData);
     return newData;
   }
   return data.results;
@@ -184,10 +139,11 @@ const optionsToURLParam = (options = null) => {
   return urlParam;
 };
 
-export const initiateFetch = async (url, options, onSuccess, onError, onNext, handlerKey) => {
+export const initiateFetch = async (
+  url, options, onSuccess, onError, onNext, handlerKey, abortController,
+) => {
   const optionsAsString = options ? `/?${optionsToURLParam(options)}` : '';
-  console.log('Search URL', `${url}${optionsAsString}`);
-  const { abortController } = APIHandlers[handlerKey];
+  console.log('Fetch URL', `${url}${optionsAsString}`);
   const signal = abortController ? abortController.signal : null;
   const fetchOptions = signal ? { signal } : {};
 
@@ -205,7 +161,8 @@ export const initiateFetch = async (url, options, onSuccess, onError, onNext, ha
     // Success handling
     .then(async (res) => {
       console.log('Response after fetchHandler', res);
-      APIHandlers[handlerKey].abortController = null;
+      // eslint-disable-next-line no-param-reassign
+      abortController = null;
       if (onSuccess) {
         return onSuccess(res); // Success callback
       }
@@ -213,15 +170,18 @@ export const initiateFetch = async (url, options, onSuccess, onError, onNext, ha
     })
     .catch((err) => {
       console.log('Error:', err);
+      // eslint-disable-next-line no-param-reassign
+      abortController = null;
       if (onError) {
         onError(err); // Error callback
       }
-      APIHandlers[handlerKey].abortController = null;
     });
   return data;
 };
 
-const fetchWrapper = async (data, onStart, onSuccess, onError, onNext, key, id) => {
+const fetchWrapper = async (
+  data, onStart, onSuccess, onError, onNext, key, id, abortController,
+) => {
   if (!Object.keys(APIHandlers).includes(key)) {
     throw new Error('Invalid key provided to fetchWrapper');
   }
@@ -234,19 +194,19 @@ const fetchWrapper = async (data, onStart, onSuccess, onError, onNext, key, id) 
 
   const fetchURL = functionWithID ? url(id) : url;
   const fetchOptions = data || options;
-  abortFetch(key);
-  setNewAbortController(key);
   if (onStart) {
     onStart();
   }
-  const result = await initiateFetch(fetchURL, fetchOptions, onSuccess, onError, onNext, key);
+  const result = await initiateFetch(
+    fetchURL, fetchOptions, onSuccess, onError, onNext, key, abortController,
+  );
   return result;
 };
 
-export const searchFetch = async (data, onStart, onSuccess, onError, onNext) => {
+export const searchFetch = async (data, onStart, onSuccess, onError, onNext, abortController) => {
   console.log('Search fetch', data);
   const { options } = APIHandlers.search;
-  const response = await fetchWrapper({ ...options, ...data }, onStart, onSuccess, onError, onNext, 'search');
+  const response = await fetchWrapper({ ...options, ...data }, onStart, onSuccess, onError, onNext, 'search', null, abortController);
   return response;
 };
 

@@ -25,6 +25,7 @@ export const setUnitData = data => ({
 // Thunk fetch
 export const fetchUnits = (
   searchQuery = null,
+  abortController = null,
 ) => async (dispatch)
 => {
   const onStart = () => dispatch(fetchIsLoading(searchQuery));
@@ -42,7 +43,7 @@ export const fetchUnits = (
   );
 
   // Fetch data
-  searchFetch({ q: searchQuery }, onStart, onSuccess, onError, onNext);
+  searchFetch({ q: searchQuery }, onStart, onSuccess, onError, onNext, abortController);
 };
 
 export const setNewSearchData = data => async (dispatch) => {
