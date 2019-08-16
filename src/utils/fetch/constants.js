@@ -4,7 +4,6 @@ import config from '../../../config';
 // *****************
 // CONFIGURATIONS
 // *****************
-
 // API handlers
 export const APIHandlers = {
   address: {

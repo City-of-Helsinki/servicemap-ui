@@ -12,7 +12,6 @@ const responseToJson = response => response.json();
  * @param {*} res
  */
 const fetchHandler = (res) => {
-  // console.log('Response:', res);
   if (res.status !== 200) {
     throw new Error(`Looks like there was a problem. Status Code: ${
       res.status}`);
@@ -28,8 +27,7 @@ const handleNext = async (allData, response, onNext, fetchOptions) => {
     const newResponse = await fetch(response.next, fetchOptions)
       .then(responseToJson)
       .catch((e) => {
-        console.log('Fetch next error', e);
-        throw new Error('Problem in fetch next');
+        throw new Error(`Error in fetch next: ${e.message}`);
       });
 
     const totalData = [...allData, ...newResponse.results];
@@ -103,7 +101,6 @@ const handleFetch = async (
     // .then(testMiddleware)
     // Success handling
     .then(async (res) => {
-      console.log('Response after fetchHandler', res);
       // eslint-disable-next-line no-param-reassign
       abortController = null;
       if (onSuccess) {
@@ -112,7 +109,7 @@ const handleFetch = async (
       return res;
     })
     .catch((err) => {
-      console.error('Error:', err);
+      console.error(`Error while fetching data: ${err.message}`);
       // eslint-disable-next-line no-param-reassign
       abortController = null;
       if (onError) {
