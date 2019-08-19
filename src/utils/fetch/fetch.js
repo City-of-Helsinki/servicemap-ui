@@ -84,7 +84,7 @@ const optionsToURLParam = (options = null) => {
 const handleFetch = async (
   url, options, onSuccess, onError, onNext, handlerKey, abortController,
 ) => {
-  const optionsAsString = options ? `/?${optionsToURLParam(options)}` : '';
+  const optionsAsString = options ? `?${optionsToURLParam(options)}` : '';
   const signal = abortController ? abortController.signal : null;
   const fetchOptions = signal ? { signal } : {};
 

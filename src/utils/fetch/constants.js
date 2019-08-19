@@ -55,6 +55,10 @@ export const APIHandlers = {
       include: 'location',
     },
   },
+  event: {
+    url: id => `${config.eventsAPI.root}/event/${id}/`,
+    options: {},
+  },
 };
 
 export default APIHandlers;
