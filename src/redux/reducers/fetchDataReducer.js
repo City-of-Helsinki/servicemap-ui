@@ -1,3 +1,4 @@
+// Reducers for fetching data sets
 const dataSetInitialState = {
   data: [],
   current: null,
@@ -57,7 +58,47 @@ const dataSetReducer = (state, action, prefix) => {
       return state;
   }
 };
+// Reducers for fetching single data
+const dataSingleInitialState = {
+  isFetching: false,
+  errorMessage: null,
+  data: null,
+};
 
+const dataSingle = (state, action, prefix) => {
+  switch (action.type) {
+    case `${prefix}_IS_FETCHING`:
+      return {
+        ...state,
+        isFetching: true,
+        errorMessage: null,
+      };
+    case `${prefix}_FETCH_HAS_ERRORED`:
+      return {
+        ...state,
+        isFetching: false,
+        errorMessage: action.errorMessage,
+      };
+    case `${prefix}_FETCH_SUCCESS`:
+      return {
+        ...state,
+        isFetching: false,
+        errorMessage: null,
+        data: action.data,
+      };
+    case `${prefix}_SET_DATA`:
+      return {
+        ...state,
+        data: action.data,
+      };
+    default:
+      return state;
+  }
+};
+
+
+// Fetch data set reducers
 export const units = (state = dataSetInitialState, action) => dataSetReducer(state, action, 'UNITS');
-
 export const service = (state = dataSetInitialState, action) => dataSetReducer(state, action, 'SERVICE');
+// Fetch data single reducers
+export const selectedUnit = (state = dataSingleInitialState, action) => dataSingle(state, action, 'SELECTED_UNIT');
