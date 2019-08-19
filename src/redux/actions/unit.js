@@ -43,7 +43,7 @@ export const fetchUnits = (
   );
 
   // Fetch data
-  searchFetch({ q: searchQuery }, onStart, onSuccess, onError, onNext, abortController);
+  searchFetch({ q: searchQuery }, onStart, onSuccess, onError, onNext, null, abortController);
 };
 
 export const setNewSearchData = data => async (dispatch) => {
