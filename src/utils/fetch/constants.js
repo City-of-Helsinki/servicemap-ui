@@ -18,6 +18,10 @@ export const APIHandlers = {
       geometry: true,
     },
   },
+  reservations: {
+    url: `${config.reservationsAPI.root}/resource/`,
+    options: {},
+  },
   search: {
     url: `${config.serviceMapAPI.root}/search/`,
     options: {

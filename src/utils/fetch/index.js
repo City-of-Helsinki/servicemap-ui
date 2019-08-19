@@ -25,3 +25,4 @@ export const serviceFetch = wrapperClosure('service');
 export const addressFetch = wrapperClosure('address');
 export const districtFetch = wrapperClosure('district');
 export const eventFetch = wrapperClosure('event');
+export const reservationsFetch = wrapperClosure('reservations');

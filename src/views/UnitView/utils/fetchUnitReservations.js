@@ -1,9 +1,12 @@
-import config from '../../../../config';
+import { reservationsFetch } from '../../../utils/fetch';
 
-const url = config.reservations.apiUrl;
-
-const fetchUnitReservations = async id => fetch(`${url}resource/?unit=tprek:${id}&page_size=100`)
-  .then(response => response.json())
-  .then(data => data);
+const fetchUnitReservations = async (id) => {
+  const options = {
+    unit: `tprek:${id}`,
+    page_size: 100,
+  };
+  const data = await reservationsFetch(options);
+  return data;
+};
 
 export default fetchUnitReservations;
