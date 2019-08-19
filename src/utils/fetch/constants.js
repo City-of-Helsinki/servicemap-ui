@@ -6,6 +6,10 @@ import config from '../../../config';
 // *****************
 // API handlers
 export const APIHandlers = {
+  accessibilitySentences: {
+    url: id => `${config.accessibilitySentenceAPI.root}/unit/${id}`,
+    options: {},
+  },
   address: {
     url: `${config.serviceMapAPI.root}/address/`,
     options: {

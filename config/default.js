@@ -16,6 +16,9 @@ export default {
     "apiUrl": "https://api.hel.fi/respa/v1/"
   },
 
+  "accessibilitySentenceAPI": {
+    "root": "https://www.hel.fi/palvelukarttaws/rest/v4"
+  },
   "serviceMapAPI": {
     "root": "https://api.hel.fi/servicemap/v2"
   },
