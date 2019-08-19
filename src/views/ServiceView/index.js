@@ -6,7 +6,7 @@ import ServiceView from './ServiceView';
 
 const mapStateToProps = (state) => {
   const {
-    count, current, errorMessage, isFetching, max, units,
+    count, current, errorMessage, isFetching, max, data,
   } = state.service;
 
   const getLocaleText = textObject => getLocaleString(state, textObject);
@@ -20,7 +20,7 @@ const mapStateToProps = (state) => {
     isLoading: isFetching,
     map,
     max,
-    unitData: units,
+    unitData: data,
   };
 };
 
