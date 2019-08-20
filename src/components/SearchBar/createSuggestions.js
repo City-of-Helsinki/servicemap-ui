@@ -16,21 +16,28 @@ const createSuggestions = async (query, getLocaleText, signal) => {
       // Form a list of suggestions from query results
       for (let i = 0; suggestions.length < listLength && i < pageSize && i < resultData.count; i += 1) {
         if (resultData.results[i].object_type === 'service') {
-          suggestions.push(getLocaleText(resultData.results[i].name));
+          suggestions.push(uppercaseFirst(getLocaleText(resultData.results[i].name)));
         } else {
-          // Split result name strings words
+          // Split result name string words
+          const queryWords = query.split(' ');
+          const queryWord = queryWords.length > 1 ? queryWords[1] : queryWords[0];
           const words = getLocaleText(resultData.results[i].name).split(' ');
           let resultWord = null;
           // Find the word from result name that matches the original query
           words.forEach((word) => {
-            if (uppercaseFirst(word).indexOf(uppercaseFirst(query)) !== -1) {
-              resultWord = uppercaseFirst(word);
+            if (uppercaseFirst(word).indexOf(uppercaseFirst(queryWord)) !== -1) {
+              resultWord = word;
               // TODO: better check
               if (!resultWord.slice(-1).match(/[a-z]/i)) {
                 resultWord = resultWord.slice(0, -1);
               }
             }
           });
+          if (queryWords.length > 1) {
+            // TODO: duplicate name check here
+            resultWord = `${queryWords[0]} ${resultWord}`;
+            resultWord = uppercaseFirst(resultWord);
+          }
           // Add the word to list of suggestions if it is not there already
           if (suggestions.indexOf(resultWord) === -1) {
             suggestions.push(resultWord);
@@ -38,6 +45,10 @@ const createSuggestions = async (query, getLocaleText, signal) => {
         }
       }
       return suggestions;
+    })
+    .catch((response) => {
+      // console.log('suggestion fetch error: ', response);
+      results = 'error';
     })
     .then(async (suggestions) => {
       const searchData = [];
@@ -75,8 +86,8 @@ const createSuggestions = async (query, getLocaleText, signal) => {
       }
     })
     .catch((response) => {
+      console.log('result counter error:', response);
       results = 'error';
-      console.log('error:', response);
     });
   return (results);
 };

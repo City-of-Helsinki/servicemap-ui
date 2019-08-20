@@ -76,7 +76,8 @@ export default theme => ({
     color: 'rgba(0,0,0,0.54)',
   },
   absolute: {
+    // top: 76,
     position: 'absolute',
-    zIndex: 99999,
+    zIndex: 99999999999,
   },
 });

@@ -76,6 +76,6 @@ export default theme => ({
     backgroundColor: theme.palette.primary.main,
     position: 'sticky',
     top: 0,
-    zIndex: 50,
+    zIndex: 51,
   },
 });

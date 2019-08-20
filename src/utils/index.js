@@ -61,6 +61,10 @@ export const keyboardHandler = (callback, keys) => {
         return 32;
       case 'esc':
         return 27;
+      case 'up':
+        return 38;
+      case 'down':
+        return 40;
       default:
     }
     return null;

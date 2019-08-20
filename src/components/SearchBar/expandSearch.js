@@ -23,7 +23,7 @@ const expandSearch = async (item, getLocaleText, amount, signal) => {
               if (!query.includes(serviceName)) {
                 let phrase = `${item.query} ${getLocaleText(service.name)}`;
                 if (serviceName.includes(query)) {
-                // Dont repeat same words in suggestion
+                  // Dont repeat same words in suggestion
                   phrase = uppercaseFirst(getLocaleText(service.name));
                 }
                 if (suggestions.indexOf(phrase) === -1 && suggestions.length < listLength) {
