@@ -1,7 +1,4 @@
-const setSelection = (prefix, selection) => ({
-  type: `${prefix}_SET_SELECTION`,
-  selection,
-});
+import setSelection from './simpleActions';
 
 export const setDirection = value => setSelection('DIRECTION', value);
 

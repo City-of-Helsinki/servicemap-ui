@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-import { mapType, mapRef } from './redux/reducers/map';
 import breadcrumb from './redux/reducers/breadcrumb';
 import navigator from './redux/reducers/navigator';
 import { units, service, selectedUnit } from './redux/reducers/fetchDataReducer';
@@ -11,8 +10,8 @@ import {
   colorblind, hearingAid, mobility, visuallyImpaired,
 } from './redux/reducers/settings';
 import {
-  direction, order,
-} from './redux/reducers/sort';
+  direction, order, mapRef, mapType,
+} from './redux/reducers/simpleReducers';
 
 // Export all redux reducers here
 export default combineReducers({
