@@ -1,9 +1,9 @@
 import CreateMap from '../../views/MapView/utils/createMap';
-import setSelection from './simpleActions';
+import simpleAction from './simpleActions';
 
 // Map
 export const setMapType = (value) => {
   const newMap = CreateMap(value);
-  return setSelection('MAPTYPE', newMap);
+  return simpleAction('MAPTYPE', newMap);
 };
-export const setMapRef = value => setSelection('MAPREF', value);
+export const setMapRef = value => simpleAction('MAPREF', value);

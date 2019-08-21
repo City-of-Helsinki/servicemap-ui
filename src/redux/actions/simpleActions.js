@@ -1,6 +1,6 @@
-const setSelection = (prefix, selection) => ({
+const simpleAction = (prefix, selection) => ({
   type: `${prefix}_SET_SELECTION`,
   selection,
 });
 
-export default setSelection;
+export default simpleAction;
