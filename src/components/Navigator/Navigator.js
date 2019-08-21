@@ -31,7 +31,7 @@ class Navigator extends React.Component {
       // and previousSearch is not current new location's params
       // then fetch units with new location's search params
       if (paths.search.regex.exec(newLocation.pathname) && previousSearch !== searchParam) {
-        fetchUnits([], null, searchParam);
+        // fetchUnits([], null, searchParam);
       }
 
       // Update breadcrumbs

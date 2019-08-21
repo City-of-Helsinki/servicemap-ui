@@ -31,7 +31,7 @@ class HomeView extends React.Component {
     }
 
     if (searchText && searchText !== '') {
-      fetchUnits([], null, searchText);
+      fetchUnits(searchText);
     }
   }
 

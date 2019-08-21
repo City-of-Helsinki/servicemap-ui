@@ -1,3 +1,5 @@
+import { unitsFetch } from '../../../utils/fetch';
+
 /* eslint-disable global-require */
 // Fetch list of stops
 const fetchStops = async (map) => {
@@ -48,8 +50,11 @@ const fetchStops = async (map) => {
       }`,
     }).then(response => response.json()),
     // Fetch for subway entrances
-    fetch(`https://api.hel.fi/servicemap/v2/unit/?service=437&page_size=50&bbox=${fetchBox}`)
-      .then(response => response.json()),
+    unitsFetch({
+      service: 437,
+      page_size: 50,
+      bbox: `${fetchBox}`,
+    }),
   ])
     .then((data) => {
       // Handle subwaystops and return list of all stops

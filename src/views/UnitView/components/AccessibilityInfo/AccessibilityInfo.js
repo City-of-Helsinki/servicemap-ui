@@ -16,6 +16,10 @@ class AccessibilityInfo extends React.Component {
     const { settings, unit } = this.props;
     const accessibilityShortcomings = unit.accessibility_description;
 
+    if (!accessibilityShortcomings) {
+      return null;
+    }
+
     // Create shortcoming array from current settings
     const shortcomingSettings = [];
     Object.keys(settings).forEach((key) => {
