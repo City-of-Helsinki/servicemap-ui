@@ -17,7 +17,7 @@ import isClient from './utils';
 import { getLocale } from './redux/selectors/locale';
 import { changeLocaleAction } from './redux/actions/user';
 import DefaultLayout from './layouts';
-import Navigator from './utils/components/Navigator';
+import Navigator from './components/Navigator';
 
 class App extends React.Component {
   constructor(props) {

@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchUnits } from '../../../redux/actions/unit';
-import { breadcrumbPush, breadcrumbPop, breadcrumbReplace } from '../../../redux/actions/breadcrumb';
-import { generatePath } from '../../path';
-import { parseSearchParams } from '../..';
-import paths from '../../../../config/paths';
+import { fetchUnits } from '../../redux/actions/unit';
+import { breadcrumbPush, breadcrumbPop, breadcrumbReplace } from '../../redux/actions/breadcrumb';
+import { generatePath } from '../../utils/path';
+import { parseSearchParams } from '../../utils';
+import paths from '../../../config/paths';
 
 class Navigator extends React.Component {
   unlisten = null;
