@@ -1,4 +1,7 @@
+const webpack = require('webpack'); //to access built-in plugins
 const path = require('path');
+const dotenv = require('dotenv');
+dotenv.config();
 
 const NODE_ENV = process.env.NODE_ENV;
 const isEnvProduction = NODE_ENV === 'production';
@@ -86,6 +89,9 @@ const serverConfig = {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name]',
   },
+  plugins: [
+    new webpack.EnvironmentPlugin(['PORT']),
+  ]
 };
 
 const clientConfig = {

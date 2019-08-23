@@ -2,7 +2,6 @@ import I18n from '../src/i18n';
 import config from '../config';
 import https from 'https';
 
-const serverConfig = config.server;
 const allowedUrls = [
   /^\/.{2,}\/$/,
   /^\/.{2,}\/unit\/\d+$/,
@@ -49,7 +48,7 @@ export const makeUnitHandler = (req, res, next) => {
   const pattern = /^\/(\d+)\/?$|^\/(\d+)\/(events|services|reservations)\/?$/
   const r = req.path.match(pattern);
   if(!r || r.length < 2) {
-    res.redirect(serverConfig.urlPrefix);
+    res.redirect('/');
     return;
   }
 

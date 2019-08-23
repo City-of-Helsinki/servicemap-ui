@@ -3,7 +3,6 @@ export default {
   "server": {
     "address": "127.0.0.1",
     "port": "2048",
-    "urlPrefix": "/"
   },
   // API
   "unit": {
