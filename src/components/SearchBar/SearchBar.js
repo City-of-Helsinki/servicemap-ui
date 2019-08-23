@@ -10,6 +10,7 @@ import BackButton from '../BackButton';
 import createSuggestions from './createSuggestions';
 import expandSearch from './expandSearch';
 import { keyboardHandler } from '../../utils';
+import PreviousSearches from './PreviousSearches';
 
 class SearchBar extends React.Component {
   suggestionDelay = 0;
@@ -94,8 +95,19 @@ class SearchBar extends React.Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-    const { search, focusedSuggestion, searchQueries } = this.state;
+    const {
+      search, focusedSuggestion, searchQueries, suggestionError,
+    } = this.state;
+
+    const suggestionList = (searchQueries.length && searchQueries) || null;
     if (focusedSuggestion) {
+      if (!suggestionError && !suggestionList) {
+        const { text } = this.listRef.current.props.children[focusedSuggestion].props;
+        if (text) {
+          this.handleSubmit(text);
+        }
+        return;
+      }
       this.handleSubmit(searchQueries[focusedSuggestion].query);
     } else {
       this.handleSubmit(search);
@@ -265,9 +277,11 @@ class SearchBar extends React.Component {
                 </>
               )}
               {!loading && !suggestionList && !suggestionError && (
-                <div className={classes.suggestionSubtitle}>
-                  <Typography className={classes.subtitleText} variant="overline">Aikaisemmat haut</Typography>
-                </div>
+                <PreviousSearches
+                  focusIndex={focusedSuggestion}
+                  listRef={this.listRef}
+                  onClick={val => this.handleSubmit(val)}
+                />
               )}
               {loading && (
                 <>

@@ -85,6 +85,7 @@ export default {
   'general.pagination.currentlyOpenedPage': 'Page {count} currently opened', // TODO: Translate
   'general.pagination.pageCount': 'page {current} / {max}', // TODO: Translate
 
+  'general.previousSearch': 'Previous searches', // TODO: Translate
   'general.return.viewTitle': 'Return to beginning of main content', // TODO: Translate
   'general.skipToContent': 'Skip to content', // TODO: Translate
   'general.new.tab': 'Aukeaa uuteen välilehteen', // TODO: Translate
