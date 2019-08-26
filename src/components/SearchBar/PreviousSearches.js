@@ -5,27 +5,19 @@ import {
 } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
 import { FormattedMessage } from 'react-intl';
-import { getPreviousSearches } from './previousSearchData';
 import styles from './styles';
 import SimpleListItem from '../ListItems/SimpleListItem';
 
 class PreviousSearches extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      history: getPreviousSearches(),
-    };
-  }
-
   renderList() {
-    const { history } = this.state;
     const {
-      focusIndex, listRef, onClick,
+      focusIndex, listRef, onClick, history,
     } = this.props;
-    return (
-      <List ref={listRef}>
-        {
+
+    if (history) {
+      return (
+        <List className="suggestionList" ref={listRef}>
+          {
           history.map((item, i) => (
             <SimpleListItem
               selected={i === focusIndex}
@@ -39,7 +31,11 @@ class PreviousSearches extends React.Component {
             />
           ))
         }
-      </List>
+        </List>
+      );
+    }
+    return (
+      <p aria-live="polite" style={{ marginTop: '25%', marginBottom: '25%' }}>Ei aikaisempia hakuja</p>
     );
   }
 
@@ -57,6 +53,7 @@ class PreviousSearches extends React.Component {
 }
 
 PreviousSearches.propTypes = {
+  history: PropTypes.arrayOf(PropTypes.string),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   focusIndex: PropTypes.number,
   listRef: PropTypes.objectOf(PropTypes.any),
@@ -64,6 +61,7 @@ PreviousSearches.propTypes = {
 };
 
 PreviousSearches.defaultProps = {
+  history: null,
   listRef: null,
   focusIndex: null,
 };

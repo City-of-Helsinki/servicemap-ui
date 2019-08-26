@@ -5,6 +5,8 @@ import {
   Paper, List, ListItem, Typography, Divider,
 } from '@material-ui/core';
 import expandSearch from '../expandSearch';
+import { getPreviousSearches } from '../previousSearchData';
+import PreviousSearches from '../PreviousSearches';
 import createSuggestions from '../createSuggestions';
 
 
@@ -15,6 +17,7 @@ const SuggestionBox = ({
   const [expandedQueries, setExpandedQueries] = useState(null);
   const [loading, setLoading] = useState(false);
   const [suggestionError, setSuggestionError] = useState(false);
+  const [history] = useState(getPreviousSearches());
 
   const listRef = useRef(null);
   const fetchController = useRef(null);
@@ -70,17 +73,25 @@ const SuggestionBox = ({
   };
 
   const setSearchBarText = () => {
-    if (searchQueries && searchQueries.length && focusedSuggestion !== null) {
-      setSearch(searchQueries[focusedSuggestion].query);
+    if (listRef && listRef.current) {
+      if (listRef.current.props.children.length && focusedSuggestion !== null) {
+        if (searchQueries) {
+          setSearch(searchQueries[focusedSuggestion].query);
+        } else if (history) {
+          setSearch(history[focusedSuggestion]);
+        }
+      }
     }
   };
 
   const renderSearchHistory = () => (
     <>
-      <div className={classes.suggestionSubtitle}>
-        <Typography className={classes.subtitleText} variant="overline">Aikaisemmat haut</Typography>
-      </div>
-      <p aria-live="polite" style={{ marginTop: '25%', marginBottom: '25%' }}>Ei aikaisempia hakuja</p>
+      <PreviousSearches
+        history={history}
+        focusIndex={focusedSuggestion}
+        listRef={listRef}
+        onClick={val => handleSubmit(val)}
+      />
     </>
   );
 
@@ -129,7 +140,7 @@ const SuggestionBox = ({
                   <div style={{ display: 'flex', flexDirection: 'row' }}>
                     <Search className={classes.listIcon} />
                     <div>
-                      <Typography className="suggestionItem" variant="body2">{`${item.query}`}</Typography>
+                      <Typography variant="body2">{`${item.query}`}</Typography>
                       <Typography variant="caption">{`${item.count} tulosta`}</Typography>
                     </div>
                   </div>

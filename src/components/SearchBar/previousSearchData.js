@@ -20,10 +20,12 @@ export const getPreviousSearches = () => {
   const history = LocalStorageUtility.getItem(key);
   const jsonHistory = toJson(history);
 
-  const historyKeys = Object.keys(jsonHistory).sort(sortHistory(jsonHistory));
-  const searchHistory = historyKeys.slice(0, historyCount);
-
-  return searchHistory;
+  if (jsonHistory) {
+    const historyKeys = Object.keys(jsonHistory).sort(sortHistory(jsonHistory));
+    const searchHistory = historyKeys.slice(0, historyCount);
+    return searchHistory;
+  }
+  return null;
 };
 
 export const saveSearchToHistory = (searchWord, results) => {

@@ -8,7 +8,6 @@ import { Search } from '@material-ui/icons';
 import { intlShape } from 'react-intl';
 import BackButton from '../BackButton';
 import { keyboardHandler } from '../../utils';
-import PreviousSearches from './PreviousSearches';
 import SuggestionBox from './components/SuggestionBox';
 
 class SearchBar extends React.Component {
@@ -88,22 +87,8 @@ class SearchBar extends React.Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-    const { search, focusedSuggestion, searchQueries, suggestionError, } = this.state;
-    const suggestionList = (searchQueries.length && searchQueries) || null;
-    if (focusedSuggestion !== null) {
-      if (!suggestionError && !suggestionList) {
-        const { text } = this.listRef.current.props.children[focusedSuggestion].props;
-        if (text) {
-          this.handleSubmit(text);
-        }
-        return;
-      } else {
-      const query = document.getElementsByClassName('suggestionItem')[focusedSuggestion].innerHTML;
-      this.handleSubmit(query);
-      }
-    } else {
-      this.handleSubmit(search);
-    }
+    const { search } = this.state;
+    this.handleSubmit(search);
   }
 
   handleSubmit = (search) => {
