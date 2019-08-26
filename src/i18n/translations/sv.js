@@ -146,7 +146,7 @@ export default {
   'unit.list.reservations': 'Varattavat kohteet', // TODO: Translate
 
   // Search
-  'search': 'Hae toimpistettä tai palvelua', // TODO: Translate
+  'search': 'Hae', // TODO: Translate
   'search.info': `{count, plural,
                   =0 {no units}
                   one {# unit}
