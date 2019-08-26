@@ -2,21 +2,22 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 import {
-  InputBase, Paper, IconButton, List, ListItem, Typography, Button, Divider,
+  InputBase, Paper, IconButton, Typography, Button,
 } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
 import { intlShape } from 'react-intl';
 import BackButton from '../BackButton';
-import createSuggestions from './createSuggestions';
-import expandSearch from './expandSearch';
 import { keyboardHandler } from '../../utils';
+import SuggestionBox from './components/SuggestionBox';
 
 class SearchBar extends React.Component {
-  suggestionDelay = 0;
+  suggestionDelay = 40;
 
   timeout = null;
 
   fetchController = null;
+
+  focusedItem = null;
 
   constructor(props) {
     super(props);
@@ -28,10 +29,8 @@ class SearchBar extends React.Component {
     this.state = {
       search: previousSearch,
       isActive: false,
-      searchQueries: [],
-      loading: false,
-      suggestionError: false,
       focusedSuggestion: null,
+      expandedQuery: null,
     };
   }
 
@@ -51,93 +50,16 @@ class SearchBar extends React.Component {
   }
 
   onInputChange = (e) => {
-    const { getLocaleText } = this.props;
     const query = typeof e === 'string' ? e : e.currentTarget.value;
-    if (query.length > 2) {
-      this.setState({
-        loading: true, searchQueries: [], suggestionError: false, focusedSuggestion: null,
-      });
-      if (this.fetchController) {
-        this.fetchController.abort();
-      }
-      this.fetchController = new AbortController();
-      const { signal } = this.fetchController;
-      createSuggestions(query, getLocaleText, signal)
-        .then((result) => {
-          if (result !== 'error') {
-            this.fetchController = null;
-            this.setState({ searchQueries: result, loading: false, suggestionError: false });
-          } else if (!this.fetchController) {
-            // TODO: not going here currently
-            this.setState({ suggestionError: true, loading: false });
-          }
-        });
-    } else {
-      this.setState({ searchQueries: [], loading: false, suggestionError: false });
-      if (this.fetchController) {
-        this.fetchController.abort();
-      }
-    }
-    this.setState({ search: query });
+    this.setState({ search: query, focusedSuggestion: null });
   }
-
-  onExpandSearch = (item) => {
-    const { getLocaleText } = this.props;
-    this.setState({ loading: true });
-    expandSearch(item, getLocaleText)
-      .then(result => this.setState({
-        search: result.search,
-        searchQueries: result.expandedQueries,
-        loading: !!this.fetchController,
-      }));
-  }
-
-  onSubmit = (e) => {
-    e.preventDefault();
-    const { search, focusedSuggestion, searchQueries } = this.state;
-    if (focusedSuggestion) {
-      this.handleSubmit(searchQueries[focusedSuggestion].query);
-    } else {
-      this.handleSubmit(search);
-    }
-  }
-
-  handleSubmit = (search) => {
-    const { isFetching } = this.props;
-    console.log(search);
-
-    if (!isFetching && search && search !== '') {
-      const {
-        fetchUnits, navigator, previousSearch,
-      } = this.props;
-      if (navigator) {
-        navigator.push('search', search);
-      }
-
-      if (search !== previousSearch) {
-        fetchUnits([], null, search);
-      }
-      this.setState({ searchQueries: [], isActive: false });
-    }
-  }
-
-  handleBlur = () => {
-    setTimeout(() => {
-      console.log('blur stuff');
-      this.setState({ isActive: false, focusedSuggestion: null });
-    }, 300);
-  }
-
-  suggestionBackEvent = () => {
-    this.setState({ searchQueries: [], isActive: false });
-  };
 
   keyHandler = (e) => {
     const { focusedSuggestion } = this.state;
-    const list = this.listRef.current;
-    if (list && (e.keyCode === 40 || e.keyCode === 38)) {
+    const list = document.getElementsByClassName('suggestionList')[0];
+    if (e.keyCode === 40 || e.keyCode === 38) {
       e.preventDefault();
-      const listEnd = list.props.children.length - 1;
+      const listEnd = (list.children.length + 1) / 2 - 1; // TODO: fix this calculation once we have correct list item component
       const increment = e.keyCode === 40;
       let index = focusedSuggestion;
 
@@ -159,25 +81,54 @@ class SearchBar extends React.Component {
     }
   }
 
-  toggleAnimation = () => {
-    const { search } = this.state;
-    // const { isActive } = this.state;
-    // this.setState({ isActive: !isActive });
-    /* if (search) {
-      console.log('box says: ', search);
-      this.onInputChanxge(search);
-    } */
-    this.setState({ isActive: true });
+  onExpandSearch = (item) => {
+    this.setState({ expandedQuery: item });
   }
 
-  showSuggestionBox = () => {
-    const {
-      search, isActive, searchQueries, loading, suggestionError,
-    } = this.state;
-
-    if (isActive || loading || searchQueries || suggestionError) {
-      // Show box
+  onSubmit = (e) => {
+    e.preventDefault();
+    const { search, focusedSuggestion } = this.state;
+    if (focusedSuggestion !== null) {
+      const query = document.getElementsByClassName('suggestionItem')[focusedSuggestion].innerHTML;
+      this.handleSubmit(query);
+    } else {
+      this.handleSubmit(search);
     }
+  }
+
+  handleSubmit = (search) => {
+    const { isFetching } = this.props;
+    if (!isFetching && search && search !== '') {
+      const {
+        fetchUnits, navigator, previousSearch,
+      } = this.props;
+      if (navigator) {
+        navigator.push('search', search);
+      }
+
+      if (search !== previousSearch) {
+        fetchUnits([], null, search);
+      }
+    }
+    this.setState({ isActive: false, expandedQuery: null, focusedSuggestion: null });
+  }
+
+  handleBlur = () => {
+    setTimeout(() => {
+      this.setState({ isActive: false });
+    }, 150);
+  }
+
+  suggestionBackEvent = () => {
+    this.setState({ expandedQuery: null, isActive: false });
+  };
+
+  toggleAnimation = () => {
+    const { search } = this.state;
+    if (search) {
+      this.onInputChange(search);
+    }
+    this.setState({ isActive: true, expandedQuery: null });
   }
 
   render() {
@@ -194,17 +145,16 @@ class SearchBar extends React.Component {
       primary,
       expand,
       isFetching,
+      getLocaleText,
     } = this.props;
     const {
-      search, isActive, searchQueries, loading, suggestionError, focusedSuggestion,
+      search, isActive, expandedQuery, focusedSuggestion,
     } = this.state;
 
-    const suggestionList = (searchQueries.length && searchQueries) || null;
-    // const showSuggestions = isActive || loading || suggestionList;
-    const showSuggestions = isActive || suggestionList || loading;
+    const showSuggestions = isActive || expandedQuery;
     const inputValue = typeof search === 'string' ? search : previousSearch;
-    const rootClasses = `${classes.root} ${typeof isSticky === 'number' ? classes.sticky : ''} ${primary ? classes.primary : ''} ${showSuggestions ? classes.absolute : ''}  ${className}`;
-    const wrapperClasses = `${classes.wrapper} ${isActive || showSuggestions ? classes.wrapperFocused : ''}`;
+    const rootClasses = `${classes.root} ${typeof isSticky === 'number' ? classes.sticky : ''} ${primary ? classes.primary : ''}  ${className}`;
+    const wrapperClasses = `${classes.wrapper} ${showSuggestions ? classes.wrapperFocused : ''}`;
     const stickyStyles = typeof isSticky === 'number' ? { top: isSticky } : null;
 
     return (
@@ -216,6 +166,9 @@ class SearchBar extends React.Component {
               && <BackButton className={classes.iconButton} onClick={showSuggestions ? this.suggestionBackEvent : backButtonEvent || null} variant="icon" />
             }
             <InputBase
+              // role="alert"
+              // aria-live="polite"
+              // aria-label={search}
               id="searchInput"
               inputRef={searchRef}
               className={classes.input}
@@ -224,7 +177,7 @@ class SearchBar extends React.Component {
               onChange={this.onInputChange}
               onFocus={this.toggleAnimation}
               onKeyDown={e => keyboardHandler(this.keyHandler(e), ['up, down'])}
-              // onBlur={this.handleBlur}
+              onBlur={this.handleBlur}
             />
 
             <IconButton
@@ -237,53 +190,30 @@ class SearchBar extends React.Component {
           </form>
         </Paper>
         {expand && !showSuggestions && !isFetching && (
-          <Button
-            variant="outlined"
-            style={{
-              height: 36, backgroundColor: '#fff', width: 180, /* marginLeft: 'auto', */ marginLeft: '8px',
-            }}
-            className={classes.suggestionButton}
-            onClick={() => this.onExpandSearch({ query: search, count: 50 })}
-          >
-            <Typography className={classes.expand} variant="body2">
-              {'Tarkenna hakua'}
-            </Typography>
-          </Button>
-        )}
-        {showSuggestions ? (
-          <Paper elevation={20}>
+          <>
+            <Button
+              variant="outlined"
+              style={{
+                height: 36, backgroundColor: '#fff', width: 180, marginLeft: '8px',
+              }}
+              className={classes.suggestionButton}
+              onClick={() => this.onExpandSearch({ query: search, count: 50 })}
+            >
+              <Typography className={classes.expand} variant="body2">
+                {'Tarkenna hakua'}
+              </Typography>
+            </Button>
+            {/* Another expand implementation
             <div style={{
-              zIndex: 999999, minHeight: 'calc(100vh - 64px - 76px)', width: '450px', backgroundColor: '#ffffff', overflow: 'auto',
+              margin: 5, maxHeight: '340px', backgroundColor: '#ffffff', overflow: 'auto',
             }}
             >
-              {!loading && suggestionError && (
-                <>
-                  <div className={classes.suggestionSubtitle}>
-                    <Typography className={classes.subtitleText} variant="overline">Tarkoititko..?</Typography>
-                  </div>
-                  <p style={{ marginTop: '25%', marginBottom: '25%' }}>Ei hakuehdotuksia</p>
-                </>
+              {showExpanded && loading && (
+                <p style={{ marginTop: '25%', marginBottom: '25%' }}>Ladataan hakuehdotuksia</p>
               )}
-              {!loading && !suggestionList && !suggestionError && (
-                <div className={classes.suggestionSubtitle}>
-                  <Typography className={classes.subtitleText} variant="overline">Aikaisemmat haut</Typography>
-                </div>
-              )}
-              {loading && (
-                <>
-                  <div className={classes.suggestionSubtitle}>
-                    <Typography className={classes.subtitleText} variant="overline">Tarkoititko..?</Typography>
-                  </div>
-                  <p style={{ marginTop: '25%', marginBottom: '25%' }}>Ladataan hakuehdotuksia</p>
-                </>
-              )}
-              {!loading && suggestionList && (
-              <>
-                <div className={classes.suggestionSubtitle}>
-                  <Typography className={classes.subtitleText} variant="overline">Tarkoititko..?</Typography>
-                </div>
+              {showExpanded && expandedQueries.length && (
                 <List ref={this.listRef}>
-                  {suggestionList.map((item, i) => (
+                  {expandedQueries.map((item, i) => (
                     <>
                       <ListItem
                         selected={i === focusedSuggestion}
@@ -292,7 +222,7 @@ class SearchBar extends React.Component {
                         key={item.query}
                         button
                         role="link"
-                        onClick={() => this.handleSubmit(item.query)}
+                        onClick={() => this.handleSubmit(item.query, 'click')}
                       >
                         <div style={{ display: 'flex', flexDirection: 'row' }}>
                           <Search className={classes.listIcon} />
@@ -302,17 +232,26 @@ class SearchBar extends React.Component {
                           </div>
                         </div>
                       </ListItem>
-                      {i !== suggestionList.length - 1 && (
+                      {i !== expandedQueries.length - 1 && (
                       <Divider className={classes.divider} />
                       )}
                     </>
                   ))}
                 </List>
-              </>
               )}
-            </div>
-          </Paper>
-        ) : null}
+            </div> */}
+          </>
+        )}
+        <SuggestionBox
+          visible={showSuggestions}
+          focusedSuggestion={focusedSuggestion}
+          expandedQuery={expandedQuery}
+          classes={classes}
+          searchQuery={search}
+          handleSubmit={this.handleSubmit}
+          getLocaleText={getLocaleText}
+          setSearch={value => this.setState({ search: value })}
+        />
       </div>
     );
   }

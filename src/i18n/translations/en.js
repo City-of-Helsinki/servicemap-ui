@@ -147,7 +147,7 @@ export default {
   'unit.list.reservations': 'Reservable objects', // TODO verify
 
   // Search
-  'search': 'Search for units or services',
+  'search': 'Search',
   'search.info': `{count, plural,
                   =0 {no units}
                   one {# unit}
