@@ -86,6 +86,7 @@ export default {
   'general.pagination.currentlyOpenedPage': 'Page {count} currently opened',
   'general.pagination.pageCount': 'page {current} / {max}',
 
+  'general.previousSearch': 'Previous searches',
   'general.return.viewTitle': 'Return to beginning of main content',
   'general.skipToContent': 'Skip to content',
   'general.give.feedback': 'Give feedback on the Servicemap test version (link opens in a new tab)',

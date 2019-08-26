@@ -7,7 +7,7 @@ import { Typography, Divider } from '@material-ui/core';
 
 const SimpleListItem = (props) => {
   const {
-    button, text, classes, link, icon, handleItemClick, role, divider, srText,
+    button, text, classes, link, icon, handleItemClick, role, divider, selected, srText,
   } = props;
   return (
     <React.Fragment>
@@ -19,6 +19,7 @@ const SimpleListItem = (props) => {
         classes={{
           root: classes.listItem,
         }}
+        selected={selected}
       >
         <ListItemIcon aria-hidden className={`${classes.listIcon} ${link ? classes.link : null}`}>
           {icon}
@@ -61,6 +62,7 @@ SimpleListItem.propTypes = {
   handleItemClick: PropTypes.func,
   role: PropTypes.string,
   divider: PropTypes.bool,
+  selected: PropTypes.bool,
 };
 
 SimpleListItem.defaultProps = {
@@ -71,4 +73,5 @@ SimpleListItem.defaultProps = {
   handleItemClick: null,
   role: null,
   divider: false,
+  selected: false,
 };

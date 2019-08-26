@@ -1,4 +1,5 @@
 import queryBuilder from '../../utils/queryBuilder';
+import { saveSearchToHistory } from '../../components/SearchBar/previousSearchData';
 
 export const fetchHasErrored = errorMessage => ({
   type: 'UNITS_FETCH_HAS_ERRORED',
@@ -62,6 +63,7 @@ export const fetchUnits = (
           return obj;
         });
         dispatch(unitsFetchDataSuccess(distinctData));
+        saveSearchToHistory(searchQuery, distinctData);
       }
     } catch (e) {
       dispatch(fetchHasErrored(e.message));

@@ -87,13 +87,8 @@ class SearchBar extends React.Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-    const { search, focusedSuggestion } = this.state;
-    if (focusedSuggestion !== null) {
-      const query = document.getElementsByClassName('suggestionItem')[focusedSuggestion].innerHTML;
-      this.handleSubmit(query);
-    } else {
-      this.handleSubmit(search);
-    }
+    const { search } = this.state;
+    this.handleSubmit(search);
   }
 
   handleSubmit = (search) => {
@@ -211,7 +206,27 @@ class SearchBar extends React.Component {
               {showExpanded && loading && (
                 <p style={{ marginTop: '25%', marginBottom: '25%' }}>Ladataan hakuehdotuksia</p>
               )}
-              {showExpanded && expandedQueries.length && (
+              {!loading && !suggestionList && !suggestionError && (
+                <PreviousSearches
+                  focusIndex={focusedSuggestion}
+                  listRef={this.listRef}
+                  onClick={val => this.handleSubmit(val)}
+                />
+              )}
+              {loading && (
+                <>
+                  <div className={classes.suggestionSubtitle}>
+                    <Typography className={classes.subtitleText} variant="overline">Tarkoititko..?</Typography>
+                  </div>
+                  <p style={{ marginTop: '25%', marginBottom: '25%' }}>Ladataan hakuehdotuksia</p>
+                </>
+              )}
+              {!loading && suggestionList && (
+              <>
+                <div className={classes.suggestionSubtitle}>
+                  <Typography className={classes.subtitleText} variant="overline">Tarkoititko..?</Typography>
+                </div>
+
                 <List ref={this.listRef}>
                   {expandedQueries.map((item, i) => (
                     <>
