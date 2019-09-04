@@ -26,7 +26,7 @@ const createSuggestions = async (query, getLocaleText, signal) => {
           // Find the word from result name that matches the original query
           words.forEach((word) => {
             if (uppercaseFirst(word).indexOf(uppercaseFirst(queryWord)) !== -1) {
-              resultWord = word;
+              resultWord = uppercaseFirst(word);
               // TODO: better check
               if (!resultWord.slice(-1).match(/[a-z]/i)) {
                 resultWord = resultWord.slice(0, -1);

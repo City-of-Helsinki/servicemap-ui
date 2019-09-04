@@ -17,6 +17,7 @@ const ResultItem = ({
   divider,
   role,
   srLabel,
+  selected,
 }) => {
   // Distance text
   // TODO: Change to check data for distance once location info is available
@@ -29,6 +30,7 @@ const ResultItem = ({
   return (
     <>
       <ListItem
+        selected={selected}
         button
         role={role || 'link'}
         component="li"
@@ -158,6 +160,7 @@ ResultItem.propTypes = {
   divider: PropTypes.bool,
   role: PropTypes.string,
   srLabel: PropTypes.string,
+  selected: PropTypes.bool,
 };
 
 ResultItem.defaultProps = {
@@ -171,4 +174,5 @@ ResultItem.defaultProps = {
   divider: true,
   role: null,
   srLabel: null,
+  selected: false,
 };

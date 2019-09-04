@@ -8,7 +8,7 @@ import { getOrderedData } from '../../redux/selectors/results';
 // const unitList = getUnitList(state);
 const mapStateToProps = (state) => {
   const map = state.mapRef.leafletElement;
-  const { units } = state;
+  const { units, settings } = state;
   const {
     isFetching, count, max, previousSearch,
   } = units;
@@ -21,6 +21,7 @@ const mapStateToProps = (state) => {
     max,
     map,
     previousSearch,
+    settings,
   };
 };
 

@@ -56,15 +56,22 @@ export default theme => ({
   subtitleText: {
     lineHeight: '32px',
   },
+  suggestionArea: {
+    zIndex: 51,
+    position: 'absolute',
+    minHeight: 'calc(100vh - 64px - 76px)',
+    width: '100%',
+    backgroundColor: '#fff',
+  },
   suggestionButton: {
     margin: 0,
-    width: 'auto',
-    textTransform: 'none',
+    width: 'fit-content',
+    height: 42,
+    borderColor: '#fff',
+    borderWidth: 1,
+    borderStyle: 'solid',
     borderRadius: 8,
-  },
-  expand: {
-    color: '#000000',
-    fontWeight: 'normal',
+    marginLeft: theme.spacing.unit,
   },
   divider: {
     marginLeft: 56,
@@ -79,5 +86,14 @@ export default theme => ({
     // top: 76,
     position: 'absolute',
     zIndex: 99999999999,
+  },
+  mobileBackdrop: {
+    zIndex: 1,
+    opacity: 0.2,
+    position: 'absolute',
+    top: 'auto',
+    height: '100%',
+    width: '100%',
+    backgroundColor: '#000',
   },
 });

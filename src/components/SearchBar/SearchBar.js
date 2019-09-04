@@ -2,35 +2,28 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 import {
-  InputBase, Paper, IconButton, Typography, Button,
+  InputBase, Paper, IconButton, Typography,
 } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
-import { intlShape } from 'react-intl';
+import { intlShape, FormattedMessage } from 'react-intl';
 import BackButton from '../BackButton';
 import { keyboardHandler } from '../../utils';
 import SuggestionBox from './components/SuggestionBox';
+import ServiceMapButton from '../ServiceMapButton';
 
 class SearchBar extends React.Component {
-  suggestionDelay = 40;
-
-  timeout = null;
-
-  fetchController = null;
-
-  focusedItem = null;
+  blurDelay = 150;
 
   constructor(props) {
     super(props);
-    this.listRef = React.createRef();
-    this.testRef = React.createRef();
-
+    // this.buttonRef = React.createRef();
     const { previousSearch } = props;
 
     this.state = {
       search: previousSearch,
       isActive: false,
       focusedSuggestion: null,
-      expandedQuery: null,
+      expandSearch: false,
     };
   }
 
@@ -59,7 +52,8 @@ class SearchBar extends React.Component {
     const list = document.getElementsByClassName('suggestionList')[0];
     if (e.keyCode === 40 || e.keyCode === 38) {
       e.preventDefault();
-      const listEnd = (list.children.length + 1) / 2 - 1; // TODO: fix this calculation once we have correct list item component
+      // TODO: fix calculation on next line when dividers are excluded from lists
+      const listEnd = (list.children.length + 1) / 2 - 1;
       const increment = e.keyCode === 40;
       let index = focusedSuggestion;
 
@@ -81,8 +75,8 @@ class SearchBar extends React.Component {
     }
   }
 
-  onExpandSearch = (item) => {
-    this.setState({ expandedQuery: item });
+  onExpandSearch = () => {
+    this.setState({ expandSearch: true });
   }
 
   onSubmit = (e) => {
@@ -105,25 +99,25 @@ class SearchBar extends React.Component {
         fetchUnits([], null, search);
       }
     }
-    this.setState({ isActive: false, expandedQuery: null, focusedSuggestion: null });
+    this.setState({ isActive: false, expandSearch: false, focusedSuggestion: null });
   }
 
   handleBlur = () => {
     setTimeout(() => {
-      this.setState({ isActive: false });
-    }, 150);
+      this.setState({ isActive: false, expandSearch: false });
+    }, this.blurDelay);
   }
 
   suggestionBackEvent = () => {
-    this.setState({ expandedQuery: null, isActive: false });
+    this.setState({ isActive: false, expandSearch: false });
   };
 
-  toggleAnimation = () => {
+  activateSearch = () => {
     const { search } = this.state;
     if (search) {
       this.onInputChange(search);
     }
-    this.setState({ isActive: true, expandedQuery: null });
+    this.setState({ isActive: true, expandSearch: false });
   }
 
   render() {
@@ -143,131 +137,75 @@ class SearchBar extends React.Component {
       getLocaleText,
     } = this.props;
     const {
-      search, isActive, expandedQuery, focusedSuggestion,
+      search, isActive, focusedSuggestion, expandSearch,
     } = this.state;
 
-    const showSuggestions = isActive || expandedQuery;
+    const showSuggestions = isActive || expandSearch;
     const inputValue = typeof search === 'string' ? search : previousSearch;
     const rootClasses = `${classes.root} ${typeof isSticky === 'number' ? classes.sticky : ''} ${primary ? classes.primary : ''}  ${className}`;
     const wrapperClasses = `${classes.wrapper} ${showSuggestions ? classes.wrapperFocused : ''}`;
     const stickyStyles = typeof isSticky === 'number' ? { top: isSticky } : null;
 
     return (
-      <div className={rootClasses} style={stickyStyles}>
-        <Paper className={wrapperClasses} elevation={1} square>
-          <form onSubmit={this.onSubmit} className={classes.container} autoComplete="off">
-            {
+      <>
+        <div className={rootClasses} style={stickyStyles}>
+          <Paper className={wrapperClasses} elevation={1} square>
+            <form onSubmit={this.onSubmit} className={classes.container} autoComplete="off">
+              {
               (!hideBackButton || showSuggestions)
-              && <BackButton className={classes.iconButton} onClick={showSuggestions ? this.suggestionBackEvent : backButtonEvent || null} variant="icon" />
+              && <BackButton className={classes.iconButton} onClick={showSuggestions ? this.suggestionBackEvent : backButtonEvent || null} variant="icon" srHidden={!!hideBackButton} />
             }
-            <InputBase
-              // role="alert"
-              // aria-live="polite"
-              // aria-label={search}
-              id="searchInput"
-              inputRef={searchRef}
-              className={classes.input}
-              placeholder={placeholder}
-              value={inputValue || ''}
-              onChange={this.onInputChange}
-              onFocus={this.toggleAnimation}
-              onKeyDown={e => keyboardHandler(this.keyHandler(e), ['up, down'])}
-              onBlur={this.handleBlur}
-            />
+              <InputBase
+                id="searchInput"
+                inputRef={searchRef}
+                className={classes.input}
+                placeholder={placeholder}
+                value={inputValue || ''}
+                onChange={this.onInputChange}
+                onFocus={this.activateSearch}
+                onKeyDown={e => keyboardHandler(this.keyHandler(e), ['up, down'])}
+                onBlur={this.handleBlur}
+              />
 
-            <IconButton
-              aria-label={intl.formatMessage({ id: 'search' })}
-              type="submit"
-              className={classes.icon}
-            >
-              <Search />
-            </IconButton>
-          </form>
-        </Paper>
-        {expand && !showSuggestions && !isFetching && (
+              <IconButton
+                aria-label={intl.formatMessage({ id: 'search' })}
+                type="submit"
+                className={classes.icon}
+              >
+                <Search />
+              </IconButton>
+            </form>
+          </Paper>
+        </div>
+        <div className={`${classes.primary} ${classes.root}`}>
+          {expand && !isFetching && (
           <>
-            <Button
-              variant="outlined"
-              style={{
-                height: 36, backgroundColor: '#fff', width: 180, marginLeft: '8px',
-              }}
-              className={classes.suggestionButton}
-              onClick={() => this.onExpandSearch({ query: search, count: 50 })}
+            <ServiceMapButton
+              ref={this.buttonRef}
+              role="button"
+              aria-pressed={!!expandSearch}
+              className={`${classes.suggestionButton} ${showSuggestions ? 'sr-only' : ''}`}
+              onClick={() => this.setState({ expandSearch: !expandSearch })}
             >
-              <Typography className={classes.expand} variant="body2">
-                {'Tarkenna hakua'}
+              <Typography variant="button" className={classes.expand}>
+                <FormattedMessage id="search.expand" />
               </Typography>
-            </Button>
-            {/* Another expand implementation
-            <div style={{
-              margin: 5, maxHeight: '340px', backgroundColor: '#ffffff', overflow: 'auto',
-            }}
-            >
-              {showExpanded && loading && (
-                <p style={{ marginTop: '25%', marginBottom: '25%' }}>Ladataan hakuehdotuksia</p>
-              )}
-              {!loading && !suggestionList && !suggestionError && (
-                <PreviousSearches
-                  focusIndex={focusedSuggestion}
-                  listRef={this.listRef}
-                  onClick={val => this.handleSubmit(val)}
-                />
-              )}
-              {loading && (
-                <>
-                  <div className={classes.suggestionSubtitle}>
-                    <Typography className={classes.subtitleText} variant="overline">Tarkoititko..?</Typography>
-                  </div>
-                  <p style={{ marginTop: '25%', marginBottom: '25%' }}>Ladataan hakuehdotuksia</p>
-                </>
-              )}
-              {!loading && suggestionList && (
-              <>
-                <div className={classes.suggestionSubtitle}>
-                  <Typography className={classes.subtitleText} variant="overline">Tarkoititko..?</Typography>
-                </div>
-
-                <List ref={this.listRef}>
-                  {expandedQueries.map((item, i) => (
-                    <>
-                      <ListItem
-                        selected={i === focusedSuggestion}
-                        className="suggestionItem"
-                        tabIndex="0"
-                        key={item.query}
-                        button
-                        role="link"
-                        onClick={() => this.handleSubmit(item.query, 'click')}
-                      >
-                        <div style={{ display: 'flex', flexDirection: 'row' }}>
-                          <Search className={classes.listIcon} />
-                          <div>
-                            <Typography variant="body2">{`${item.query}`}</Typography>
-                            <Typography variant="caption">{`${item.count} tulosta`}</Typography>
-                          </div>
-                        </div>
-                      </ListItem>
-                      {i !== expandedQueries.length - 1 && (
-                      <Divider className={classes.divider} />
-                      )}
-                    </>
-                  ))}
-                </List>
-              )}
-            </div> */}
+            </ServiceMapButton>
           </>
-        )}
-        <SuggestionBox
-          visible={showSuggestions}
-          focusedSuggestion={focusedSuggestion}
-          expandedQuery={expandedQuery}
-          classes={classes}
-          searchQuery={search}
-          handleSubmit={this.handleSubmit}
-          getLocaleText={getLocaleText}
-          setSearch={value => this.setState({ search: value })}
-        />
-      </div>
+          )}
+          <SuggestionBox
+            visible={showSuggestions}
+            focusedSuggestion={focusedSuggestion}
+            searchQuery={search || (searchRef.current && searchRef.current.value) || null}
+            showExpanded={expandSearch}
+            classes={classes}
+            intl={intl}
+            handleSubmit={this.handleSubmit}
+            getLocaleText={getLocaleText}
+            setSearch={value => this.setState({ search: value })}
+          />
+        </div>
+      </>
     );
   }
 }
@@ -287,6 +225,7 @@ SearchBar.propTypes = {
   previousSearch: PropTypes.string,
   expand: PropTypes.bool,
   primary: PropTypes.bool,
+  getLocaleText: PropTypes.func.isRequired,
 };
 
 SearchBar.defaultProps = {

@@ -183,6 +183,17 @@ export default {
   'search.loading.units.srInfo': 'Search loading {count} units', // TODO: Translate
   'search.notFound': 'No results found with given search', // TODO: Translate
   'search.started': 'Search started', // TODO: Translate
+  'search.infoText': 'Näytetään {count} hakutulosta sanalla: "{query}"', // TODO: Translate
+  'search.suggestions.suggest': 'Tarkoititko..?', // TODO: Translate
+  'search.suggestions.expand': 'Tarkenna hakua', // TODO: Translate
+  'search.suggestions.loading': 'Ladataan ehdotuksia', // TODO: Translate
+  'search.suggestions.error': 'Ei hakuehdotuksia', // TODO: Translate
+  'search.suggestions.suggestions': '{count} hakuehdotusta', // TODO: Translate
+  'search.suggestions.expandSuggestions': '{count} tarkennusehdotusta', // TODO: Translate
+  'search.suggestions.results': '{count} tulosta', // TODO: Translate
+  'search.suggestions.history': '{count} kohdetta hakuhistoriassa', // TODO: Translate
+  'search.suggestions.noHistory': 'Ei aikaisempia hakuja', // TODO: Translate
+  'search.expand': 'Tarkenna hakua', // TODO: Translate
 
   // Service
   'service': 'Tjänst',
@@ -196,6 +207,7 @@ export default {
   'settings.sense.hearing': 'Jag använder hörapparat',
   'settings.sense.visual': 'Jag är synskadad',
   'settings.sense.colorblind': 'Jag är färgblind',
+  'settings.sense.colorblindShort': 'Jag är färgblind',
   'settings.mobility.title': 'Att röra sig',
   'settings.mobility.none': 'No mobility impairments', // TODO: Translate
   'settings.mobility.wheelchair': 'Jag använder rullstol',

@@ -4,7 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter, Redirect } from 'react-router-dom';
 import {
-  Paper, withStyles, Typography, Link,
+  Paper, withStyles, Typography, Link, NoSsr,
 } from '@material-ui/core';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import styles from './styles';
@@ -17,6 +17,9 @@ import TabLists from '../../components/TabLists';
 import Container from '../../components/Container';
 import { generatePath } from '../../utils/path';
 import { DesktopComponent } from '../../layouts/WrapperComponents/WrapperComponents';
+import {
+  ColorblindIcon, HearingIcon, VisualImpairmentIcon, getIcon,
+} from '../../components/SMIcon';
 
 class SearchView extends React.Component {
   constructor(props) {
@@ -137,9 +140,7 @@ class SearchView extends React.Component {
   }
 
   renderSearchBar() {
-    const {
-      intl,
-    } = this.props;
+    const { intl } = this.props;
     return (
       <SearchBar
         className="sticky"
@@ -149,6 +150,53 @@ class SearchView extends React.Component {
         text={this.getSearchParam() || ''}
         primary
       />
+    );
+  }
+
+  renderSearchInfo = () => {
+    const {
+      units, settings, classes, isFetching,
+    } = this.props;
+    const {
+      colorblind, hearingAid, mobility, visuallyImpaired,
+    } = settings;
+    const query = this.getSearchParam();
+    const unitCount = units && units.length;
+
+    const appliedSettings = [
+      ...colorblind ? [{ text: <FormattedMessage id="settings.sense.colorblindShort" />, icon: <ColorblindIcon /> }] : [],
+      ...hearingAid ? [{ text: <FormattedMessage id="settings.sense.hearing" />, icon: <HearingIcon /> }] : [],
+      ...visuallyImpaired ? [{ text: <FormattedMessage id="settings.sense.visual" />, icon: <VisualImpairmentIcon /> }] : [],
+      ...mobility ? [{ text: <FormattedMessage id={`settings.mobility.${mobility}`} />, icon: getIcon(mobility) }] : [],
+    ];
+
+    return (
+      <NoSsr>
+        {!isFetching && unitCount && (
+          <div align="left" className={classes.searchInfo}>
+            <Typography className={classes.infoText}>
+              <FormattedMessage id="search.infoText" values={{ count: unitCount, query }} />
+            </Typography>
+
+            {appliedSettings.length ? (
+              <>
+                <Typography className={classes.infoText}>
+                  <FormattedMessage id="accessibility" />
+                  {':'}
+                </Typography>
+                <div className={classes.appliedSettings}>
+                  {appliedSettings.map(item => (
+                    <div key={item.text.props.id} className={classes.settingItem}>
+                      {item.icon}
+                      <Typography className={classes.settingItemText}>{item.text}</Typography>
+                    </div>
+                  ))}
+                </div>
+              </>
+            ) : null}
+          </div>
+        )}
+      </NoSsr>
     );
   }
 
@@ -266,6 +314,9 @@ class SearchView extends React.Component {
           this.renderSearchBar()
         }
         {
+          this.renderSearchInfo()
+        }
+        {
           this.renderResults()
         }
         {
@@ -306,6 +357,7 @@ SearchView.propTypes = {
   units: PropTypes.arrayOf(PropTypes.any),
   map: PropTypes.objectOf(PropTypes.any),
   match: PropTypes.objectOf(PropTypes.any).isRequired,
+  settings: PropTypes.objectOf(PropTypes.any),
 };
 
 SearchView.defaultProps = {
@@ -316,5 +368,6 @@ SearchView.defaultProps = {
   max: 0,
   previousSearch: null,
   units: [],
+  settings: null,
   map: null,
 };

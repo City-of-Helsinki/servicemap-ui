@@ -183,6 +183,18 @@ export default {
   'search.loading.units.srInfo': 'Haetaan {count} toimipistettä',
   'search.notFound': 'Haulla ei löytynyt hakutuloksia',
   'search.started': 'Haku aloitettu',
+  'search.infoText': 'Näytetään {count} hakutulosta sanalla: "{query}"',
+  'search.suggestions.suggest': 'Tarkoititko..?',
+  'search.suggestions.expand': 'Tarkenna hakua',
+  'search.suggestions.loading': 'Ladataan ehdotuksia',
+  'search.suggestions.error': 'Ei ehdotuksia',
+  'search.suggestions.suggestions': '{count} hakuehdotusta',
+  'search.suggestions.expandSuggestions': '{count} tarkennusehdotusta',
+  'search.suggestions.results': '{count} tulosta',
+  'search.suggestions.history': '{count} kohdetta hakuhistoriassa',
+  'search.suggestions.noHistory': 'Ei aikaisempia hakuja',
+  'search.expand': 'Tarkenna hakua',
+
 
   // Service
   'service': 'Palvelu',
@@ -196,6 +208,7 @@ export default {
   'settings.sense.hearing': 'Käytän kuulolaitetta',
   'settings.sense.visual': 'Olen näkövammainen',
   'settings.sense.colorblind': 'Minun on vaikea erottaa värejä',
+  'settings.sense.colorblindShort': 'Vaikea erottaa värejä',
   'settings.mobility.title': 'Liikkumisrajoitteet',
   'settings.mobility.none': 'Ei liikkumisrajoitteita',
   'settings.mobility.wheelchair': 'Käytän pyörätuolia',

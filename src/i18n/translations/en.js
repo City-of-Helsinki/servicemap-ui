@@ -185,6 +185,18 @@ export default {
   'search.loading.units.srInfo': 'Search loading {count} units',
   'search.notFound': 'No results found with given search',
   'search.started': 'Search started',
+  'search.infoText': 'Showing {count} results for search query: "{query}"',
+  'search.suggestions.suggest': 'Did you mean..?',
+  'search.suggestions.expand': 'Expand search',
+  'search.suggestions.loading': 'Loading suggestions',
+  'search.suggestions.error': 'No suggestions',
+  'search.suggestions.suggestions': '{count} suggestions',
+  'search.suggestions.expandSuggestions': '{count} suggestions',
+  'search.suggestions.results': '{count} results',
+  'search.suggestions.history': '{count} items in search history',
+  'search.suggestions.noHistory': 'No previous searches',
+  'search.expand': 'Expand search', // TODO: verify
+
 
   // Service
   'service': 'Service',
@@ -198,6 +210,7 @@ export default {
   'settings.sense.hearing': 'I use a hearing aid',
   'settings.sense.visual': 'I\'m visually impaired',
   'settings.sense.colorblind': 'I have trouble distinguishing colours',
+  'settings.sense.colorblindShort': 'Trouble distinguishing colours',
   'settings.mobility.title': 'Mobility',
   'settings.mobility.none': 'No mobility impairments',
   'settings.mobility.wheelchair': 'I use a wheelchair',

@@ -16,8 +16,13 @@ class PreviousSearches extends React.Component {
 
     if (history) {
       return (
-        <List className="suggestionList" ref={listRef}>
-          {
+        <>
+          <Typography aria-live="polite" className="sr-only">
+            <FormattedMessage id="search.suggestions.history" values={{ count: history.length }} />
+            {`${history.length} kohdetta hakuhistoriassa`}
+          </Typography>
+          <List className="suggestionList" ref={listRef}>
+            {
           history.map((item, i) => (
             <SimpleListItem
               selected={i === focusIndex}
@@ -31,11 +36,14 @@ class PreviousSearches extends React.Component {
             />
           ))
         }
-        </List>
+          </List>
+        </>
       );
     }
     return (
-      <p aria-live="polite" style={{ marginTop: '25%', marginBottom: '25%' }}>Ei aikaisempia hakuja</p>
+      <Typography aria-live="polite">
+        <FormattedMessage id="search.suggestions.noHistory" />
+      </Typography>
     );
   }
 

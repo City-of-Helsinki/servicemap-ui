@@ -1,10 +1,10 @@
 import { uppercaseFirst } from '../../utils';
 
-const expandSearch = async (item, getLocaleText, amount, signal) => {
+const expandSearch = async (searchQuery, getLocaleText, amount, signal) => {
   const listLength = amount || 10;
   const pageSize = 200;
 
-  const results = await fetch(`https://api.hel.fi/servicemap/v2/search/?q=${item.query}&only=unit.name,unit.services&include=unit.services&page_size=${pageSize}`, {
+  const results = await fetch(`https://api.hel.fi/servicemap/v2/search/?q=${searchQuery}&only=unit.name,unit.services&include=unit.services&page_size=${pageSize}`, {
     signal,
   })
     .then(response => response.json())
@@ -17,11 +17,11 @@ const expandSearch = async (item, getLocaleText, amount, signal) => {
         // Add extra words to original search query, based on services of the search results
           if (result.object_type === 'unit') {
             result.services.forEach((service) => {
-              const query = item.query.toUpperCase();
+              const query = searchQuery.toUpperCase();
               const serviceName = getLocaleText(service.name).toUpperCase();
               // Don't add the service if the original query already contains it
               if (!query.includes(serviceName)) {
-                let phrase = `${item.query} ${getLocaleText(service.name)}`;
+                let phrase = `${searchQuery} ${getLocaleText(service.name)}`;
                 if (serviceName.includes(query)) {
                   // Dont repeat same words in suggestion
                   phrase = uppercaseFirst(getLocaleText(service.name));
@@ -34,8 +34,8 @@ const expandSearch = async (item, getLocaleText, amount, signal) => {
             });
           } else if (result.object_type === 'service') {
           // Do the same thing with results that are services instead of units
-            if (!item.query.toUpperCase().includes(getLocaleText(result.name).toUpperCase())) {
-              const phrase = `${item.query} ${getLocaleText(result.name)}`;
+            if (!searchQuery.toUpperCase().includes(getLocaleText(result.name).toUpperCase())) {
+              const phrase = `${searchQuery} ${getLocaleText(result.name)}`;
               if (suggestions.indexOf(phrase) === -1) {
                 suggestions.push(phrase);
               }
@@ -74,7 +74,7 @@ const expandSearch = async (item, getLocaleText, amount, signal) => {
         }
       });
 
-      return ({ search: item.query, expandedQueries: searchData });
+      return ({ search: searchQuery, expandedQueries: searchData });
     });
   return results;
 };

@@ -28,4 +28,29 @@ export default theme => ({
   icon: {
     padding: 10,
   },
+  searchInfo: {
+    color: '#fff',
+    backgroundColor: theme.palette.primary.main,
+    padding: 12,
+    paddingLeft: theme.spacing.unitDouble,
+  },
+  infoText: {
+    color: 'inherit',
+    marginBottom: theme.spacing.unit,
+  },
+  appliedSettings: {
+    display: 'flex',
+    maxWidth: '100%',
+    flexWrap: 'wrap',
+    marginBottom: theme.spacing.unit,
+  },
+  settingItem: {
+    display: 'flex',
+    width: '50%',
+    marginBottom: theme.spacing.unit,
+  },
+  settingItemText: {
+    color: 'inherit',
+    alignSelf: 'center',
+  },
 });
