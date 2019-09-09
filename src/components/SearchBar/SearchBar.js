@@ -1,29 +1,24 @@
 import React from 'react';
 
 import PropTypes from 'prop-types';
-import {
-  InputBase, Paper, IconButton, Typography,
-} from '@material-ui/core';
+import { InputBase, Paper, IconButton } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
-import { intlShape, FormattedMessage } from 'react-intl';
+import { intlShape } from 'react-intl';
 import BackButton from '../BackButton';
 import { keyboardHandler } from '../../utils';
 import SuggestionBox from './components/SuggestionBox';
-import ServiceMapButton from '../ServiceMapButton';
 
 class SearchBar extends React.Component {
   blurDelay = 150;
 
   constructor(props) {
     super(props);
-    // this.buttonRef = React.createRef();
     const { previousSearch } = props;
 
     this.state = {
       search: previousSearch,
       isActive: false,
       focusedSuggestion: null,
-      expandSearch: false,
     };
   }
 
@@ -75,9 +70,6 @@ class SearchBar extends React.Component {
     }
   }
 
-  onExpandSearch = () => {
-    this.setState({ expandSearch: true });
-  }
 
   onSubmit = (e) => {
     e.preventDefault();
@@ -86,7 +78,7 @@ class SearchBar extends React.Component {
   }
 
   handleSubmit = (search) => {
-    const { isFetching } = this.props;
+    const { isFetching, closeExpandedSearch } = this.props;
     if (!isFetching && search && search !== '') {
       const {
         fetchUnits, navigator, previousSearch,
@@ -99,25 +91,32 @@ class SearchBar extends React.Component {
         fetchUnits([], null, search);
       }
     }
-    this.setState({ isActive: false, expandSearch: false, focusedSuggestion: null });
+    this.setState({ isActive: false, focusedSuggestion: null });
+    closeExpandedSearch();
   }
 
   handleBlur = () => {
+    const { closeExpandedSearch } = this.props;
     setTimeout(() => {
-      this.setState({ isActive: false, expandSearch: false });
+      this.setState({ isActive: false });
+      closeExpandedSearch();
     }, this.blurDelay);
   }
 
   suggestionBackEvent = () => {
-    this.setState({ isActive: false, expandSearch: false });
+    const { closeExpandedSearch } = this.props;
+    this.setState({ isActive: false });
+    closeExpandedSearch();
   };
 
   activateSearch = () => {
+    const { closeExpandedSearch } = this.props;
     const { search } = this.state;
     if (search) {
       this.onInputChange(search);
     }
-    this.setState({ isActive: true, expandSearch: false });
+    this.setState({ isActive: true });
+    closeExpandedSearch();
   }
 
   render() {
@@ -132,13 +131,11 @@ class SearchBar extends React.Component {
       hideBackButton,
       searchRef,
       primary,
-      expand,
-      isFetching,
       getLocaleText,
+      expandSearch,
+      closeExpandedSearch,
     } = this.props;
-    const {
-      search, isActive, focusedSuggestion, expandSearch,
-    } = this.state;
+    const { search, isActive, focusedSuggestion } = this.state;
 
     const showSuggestions = isActive || expandSearch;
     const inputValue = typeof search === 'string' ? search : previousSearch;
@@ -178,31 +175,17 @@ class SearchBar extends React.Component {
           </Paper>
         </div>
         <div className={`${classes.primary} ${classes.root}`}>
-          {expand && !isFetching && (
-          <>
-            <ServiceMapButton
-              ref={this.buttonRef}
-              role="button"
-              aria-pressed={!!expandSearch}
-              className={`${classes.suggestionButton} ${showSuggestions ? 'sr-only' : ''}`}
-              onClick={() => this.setState({ expandSearch: !expandSearch })}
-            >
-              <Typography variant="button" className={classes.expand}>
-                <FormattedMessage id="search.expand" />
-              </Typography>
-            </ServiceMapButton>
-          </>
-          )}
           <SuggestionBox
             visible={showSuggestions}
             focusedSuggestion={focusedSuggestion}
             searchQuery={search || (searchRef.current && searchRef.current.value) || null}
-            showExpanded={expandSearch}
+            expandQuery={expandSearch}
             classes={classes}
             intl={intl}
             handleSubmit={this.handleSubmit}
             getLocaleText={getLocaleText}
             setSearch={value => this.setState({ search: value })}
+            closeExpandedSearch={closeExpandedSearch}
           />
         </div>
       </>
@@ -223,9 +206,10 @@ SearchBar.propTypes = {
   placeholder: PropTypes.string.isRequired,
   searchRef: PropTypes.objectOf(PropTypes.any),
   previousSearch: PropTypes.string,
-  expand: PropTypes.bool,
+  expandSearch: PropTypes.string,
   primary: PropTypes.bool,
   getLocaleText: PropTypes.func.isRequired,
+  closeExpandedSearch: PropTypes.func,
 };
 
 SearchBar.defaultProps = {
@@ -236,8 +220,9 @@ SearchBar.defaultProps = {
   isSticky: null,
   navigator: null,
   searchRef: {},
-  expand: false,
+  expandSearch: null,
   primary: false,
+  closeExpandedSearch: (() => {}),
 };
 
 export default SearchBar;

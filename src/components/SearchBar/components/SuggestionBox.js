@@ -18,13 +18,14 @@ const SuggestionBox = (props) => {
   const {
     visible,
     searchQuery,
-    showExpanded,
     handleSubmit,
     classes,
     getLocaleText,
     focusedSuggestion,
     setSearch,
     intl,
+    expandQuery,
+    closeExpandedSearch,
   } = props;
 
   const [searchQueries, setSearchQueries] = useState(null);
@@ -74,21 +75,22 @@ const SuggestionBox = (props) => {
   };
 
   const handleExpandSearch = () => {
-    if (!searchQuery) {
-      if (expandedQueries) {
-        setExpandedQueries(null);
-      }
-    } else {
-      setLoading('expanded');
-      setSearchQueries(null);
-      expandSearch(searchQuery, getLocaleText)
-        .then((result) => {
-          setLoading(false);
-          setExpandedQueries(result.expandedQueries);
-        });
-    }
+    setLoading('expanded');
+    setSearchQueries(null);
+    expandSearch(expandQuery, getLocaleText)
+      .then((result) => {
+        setLoading(false);
+        setExpandedQueries(result.expandedQueries);
+      });
   };
 
+  const handleKeyPress = (e) => {
+    // Close suggestion box if tab is pressed in last list result
+    if (e.key === 'Tab' && !(e.shiftKey && e.key === 'Tab')) {
+      e.preventDefault();
+      closeExpandedSearch();
+    }
+  };
 
   const setSearchBarText = () => {
     if (listRef && listRef.current) {
@@ -165,6 +167,7 @@ const SuggestionBox = (props) => {
                 onClick={() => handleSubmit(item.query)}
                 selected={i === focusedSuggestion}
                 divider={i !== suggestionList.length - 1}
+                onKeyDown={i === suggestionList.length - 1 ? e => handleKeyPress(e) : null}
               />
             ))}
           </List>
@@ -173,6 +176,9 @@ const SuggestionBox = (props) => {
     } return null;
   };
 
+  /**
+  * Component updaters
+  */
   useEffect(() => { // Start generating suggestions when typing in searchbar
     if (searchQuery && focusedSuggestion === null) {
       generateSuggestions(searchQuery);
@@ -180,32 +186,38 @@ const SuggestionBox = (props) => {
   }, [searchQuery]);
 
   useEffect(() => { // Start expanded search when expand button is toggled on. Else clear data.
-    if (showExpanded) {
+    if (expandQuery) {
       handleExpandSearch();
     } else {
       setExpandedQueries(null);
     }
-  }, [showExpanded]);
+  }, [expandQuery]);
 
   useEffect(() => { // Change text of the searchbar when suggestion with keyboard focus changes
     setSearchBarText();
   }, [focusedSuggestion]);
 
-  const isMobile = useMediaQuery(`(max-width:${config.mobileUiBreakpoint}px)`);
-  const sidebar = typeof document !== 'undefined' ? document.getElementsByClassName('SidebarWrapper')[0] : null;
+  useEffect(() => { // Focus on list title when expanded queries appear
+    if (expandedQueries) {
+      document.getElementsByClassName('suggestionsTitle')[0].focus();
+    }
+  }, [expandedQueries]);
 
-  useEffect(() => { // Disable page scroll when suggestion box is open
+  const isMobile = useMediaQuery(`(max-width:${config.mobileUiBreakpoint}px)`);
+
+  useEffect(() => {
+    // Disable page scroll when suggestion box is open
+    const sidebar = document.getElementsByClassName('SidebarWrapper')[0];
     if (visible) {
       sidebar.style.overflow = 'hidden';
-    } else if (isMobile) {
-      sidebar.style.overflow = '';
     } else {
-      sidebar.style.overflow = 'auto';
+      sidebar.style.overflow = isMobile ? '' : 'auto';
     }
   }, [visible]);
 
-
-  // Render component
+  /**
+  * Render component
+  */
   if (visible) {
     let component = null;
     if (loading) {
@@ -233,9 +245,10 @@ const SuggestionBox = (props) => {
 };
 
 SuggestionBox.propTypes = {
-  visible: PropTypes.bool.isRequired,
+  visible: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   searchQuery: PropTypes.string,
-  showExpanded: PropTypes.bool,
+  expandQuery: PropTypes.string,
+  closeExpandedSearch: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   getLocaleText: PropTypes.func.isRequired,
@@ -245,8 +258,9 @@ SuggestionBox.propTypes = {
 };
 
 SuggestionBox.defaultProps = {
+  visible: false,
   searchQuery: null,
-  showExpanded: false,
+  expandQuery: null,
   focusedSuggestion: null,
 };
 

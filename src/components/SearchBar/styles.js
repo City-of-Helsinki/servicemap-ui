@@ -63,16 +63,6 @@ export default theme => ({
     width: '100%',
     backgroundColor: '#fff',
   },
-  suggestionButton: {
-    margin: 0,
-    width: 'fit-content',
-    height: 42,
-    borderColor: '#fff',
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderRadius: 8,
-    marginLeft: theme.spacing.unit,
-  },
   divider: {
     marginLeft: 56,
   },
@@ -83,7 +73,6 @@ export default theme => ({
     color: 'rgba(0,0,0,0.54)',
   },
   absolute: {
-    // top: 76,
     position: 'absolute',
     zIndex: 99999999999,
   },

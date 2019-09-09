@@ -69,6 +69,10 @@ class SettingsUtility {
       colorblind: LocalStorageUtility.getItem('colorblind') === 'true',
       visuallyImpaired: LocalStorageUtility.getItem('visuallyImpaired') === 'true',
       hearingAid: LocalStorageUtility.getItem('hearingAid') === 'true',
+      helsinki: LocalStorageUtility.getItem('helsinki') === 'true',
+      espoo: LocalStorageUtility.getItem('espoo') === 'true',
+      vantaa: LocalStorageUtility.getItem('vantaa') === 'true',
+      kauniainen: LocalStorageUtility.getItem('kauniainen') === 'true',
     };
 
     return settings;

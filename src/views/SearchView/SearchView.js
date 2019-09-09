@@ -20,11 +20,16 @@ import { DesktopComponent } from '../../layouts/WrapperComponents/WrapperCompone
 import {
   ColorblindIcon, HearingIcon, VisualImpairmentIcon, getIcon,
 } from '../../components/SMIcon';
+import ServiceMapButton from '../../components/ServiceMapButton';
 
 class SearchView extends React.Component {
   constructor(props) {
     super(props);
     const { changeSelectedUnit } = props;
+
+    this.state = {
+      expandSearch: null,
+    };
 
     // Reset selected unit on SearchView
     if (changeSelectedUnit) {
@@ -76,10 +81,35 @@ class SearchView extends React.Component {
     }
   }
 
+  filterByCity = (units) => {
+    // TODO: Do we want to filter in fetch or here?
+    const { settings } = this.props;
+    const {
+      helsinki, espoo, vantaa, kauniainen,
+    } = settings;
+
+    const cityFilters = [
+      ...helsinki ? ['helsinki'] : [],
+      ...vantaa ? ['vantaa'] : [],
+      ...espoo ? ['espoo'] : [],
+      ...kauniainen ? ['kauniainen'] : [],
+    ];
+
+    let filteredUnits = units;
+    if (cityFilters.length) {
+      // Filter by city settings
+      filteredUnits = units.filter(unit => cityFilters.includes(unit.municipality) || unit.object_type !== 'unit');
+    }
+
+    return filteredUnits;
+  }
+
   // Group data based on object types
   groupData = (data) => {
     const services = data.filter(obj => obj && obj.object_type === 'service');
-    const units = data.filter(obj => obj && obj.object_type === 'unit');
+    let units = data.filter(obj => obj && obj.object_type === 'unit');
+
+    units = this.filterByCity(units);
 
     return {
       services,
@@ -141,6 +171,7 @@ class SearchView extends React.Component {
 
   renderSearchBar() {
     const { intl } = this.props;
+    const { expandSearch } = this.state;
     return (
       <SearchBar
         className="sticky"
@@ -149,26 +180,43 @@ class SearchView extends React.Component {
         isSticky={0}
         text={this.getSearchParam() || ''}
         primary
+        expandSearch={expandSearch}
+        closeExpandedSearch={expandSearch ? () => this.setState({ expandSearch: null }) : () => {}}
       />
     );
   }
 
   renderSearchInfo = () => {
     const {
-      units, settings, classes, isFetching,
+      units, settings, classes, isFetching, intl,
     } = this.props;
     const {
-      colorblind, hearingAid, mobility, visuallyImpaired,
+      colorblind, hearingAid, mobility, visuallyImpaired, helsinki, espoo, vantaa, kauniainen,
     } = settings;
     const query = this.getSearchParam();
-    const unitCount = units && units.length;
 
-    const appliedSettings = [
+    const filteredUnits = this.filterByCity(units);
+    const unitCount = filteredUnits && filteredUnits.length;
+
+    const accessibilitySettings = [
       ...colorblind ? [{ text: <FormattedMessage id="settings.sense.colorblindShort" />, icon: <ColorblindIcon /> }] : [],
       ...hearingAid ? [{ text: <FormattedMessage id="settings.sense.hearing" />, icon: <HearingIcon /> }] : [],
       ...visuallyImpaired ? [{ text: <FormattedMessage id="settings.sense.visual" />, icon: <VisualImpairmentIcon /> }] : [],
       ...mobility ? [{ text: <FormattedMessage id={`settings.mobility.${mobility}`} />, icon: getIcon(mobility) }] : [],
     ];
+
+    let citySettings = [
+      ...helsinki ? [`"${intl.formatMessage({ id: 'settings.city.helsinki' })}"`] : [],
+      ...espoo ? [`"${intl.formatMessage({ id: 'settings.city.espoo' })}"`] : [],
+      ...vantaa ? [`"${intl.formatMessage({ id: 'settings.city.vantaa' })}"`] : [],
+      ...kauniainen ? [`"${intl.formatMessage({ id: 'settings.city.kauniainen' })}"`] : [],
+    ];
+
+    const cityString = citySettings.join(' ');
+
+    if (citySettings.length === 4) {
+      citySettings = [];
+    }
 
     return (
       <NoSsr>
@@ -178,14 +226,24 @@ class SearchView extends React.Component {
               <FormattedMessage id="search.infoText" values={{ count: unitCount, query }} />
             </Typography>
 
-            {appliedSettings.length ? (
-              <>
+            {citySettings.length ? (
+              <div className={classes.appliedSettings}>
                 <Typography className={classes.infoText}>
+                  <FormattedMessage id="settings.city.title" />
+                  {': '}
+                  {cityString}
+                </Typography>
+              </div>
+            ) : null}
+
+            {accessibilitySettings.length ? (
+              <>
+                <Typography className={classes.infoSubText}>
                   <FormattedMessage id="accessibility" />
                   {':'}
                 </Typography>
                 <div className={classes.appliedSettings}>
-                  {appliedSettings.map(item => (
+                  {accessibilitySettings.map(item => (
                     <div key={item.text.props.id} className={classes.settingItem}>
                       {item.icon}
                       <Typography className={classes.settingItemText}>{item.text}</Typography>
@@ -194,6 +252,16 @@ class SearchView extends React.Component {
                 </div>
               </>
             ) : null}
+            <ServiceMapButton
+              ref={this.buttonRef}
+              role="button"
+              className={`${classes.suggestionButton}`}
+              onClick={() => this.setState({ expandSearch: this.getSearchParam() })}
+            >
+              <Typography variant="button" className={classes.expand}>
+                <FormattedMessage id="search.expand" />
+              </Typography>
+            </ServiceMapButton>
           </div>
         )}
       </NoSsr>
@@ -285,6 +353,7 @@ class SearchView extends React.Component {
     const {
       classes, isFetching, intl, count, max,
     } = this.props;
+    const { expandSearch } = this.state;
     const progress = (isFetching && count) ? Math.floor((count / max * 100)) : 0;
 
     const redirect = this.handleSingleResultRedirect();
@@ -307,17 +376,17 @@ class SearchView extends React.Component {
 
         <Paper elevation={1} square aria-live="polite" style={paperStyles}>
           {
-            this.renderScreenReaderInfo()
+            !expandSearch && this.renderScreenReaderInfo()
           }
         </Paper>
         {
           this.renderSearchBar()
         }
         {
-          this.renderSearchInfo()
+          !expandSearch && this.renderSearchInfo()
         }
         {
-          this.renderResults()
+          !expandSearch && this.renderResults()
         }
         {
           isFetching

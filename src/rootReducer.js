@@ -10,7 +10,7 @@ import selectedUnit from './redux/reducers/selectedUnit';
 import event from './redux/reducers/event';
 import address from './redux/reducers/address';
 import {
-  colorblind, hearingAid, mobility, visuallyImpaired,
+  colorblind, hearingAid, mobility, visuallyImpaired, helsinki, espoo, vantaa, kauniainen,
 } from './redux/reducers/settings';
 import {
   direction, order,
@@ -34,6 +34,10 @@ export default combineReducers({
     hearingAid,
     mobility,
     visuallyImpaired,
+    helsinki,
+    espoo,
+    vantaa,
+    kauniainen,
   }),
   sort: combineReducers({
     direction,

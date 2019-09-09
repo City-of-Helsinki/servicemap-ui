@@ -10,6 +10,7 @@ const ResultItem = ({
   bottomRightText,
   classes,
   onClick,
+  onKeyDown,
   icon,
   subtitle,
   title,
@@ -36,6 +37,7 @@ const ResultItem = ({
         component="li"
         tabIndex={0}
         onClick={onClick}
+        onKeyDown={onKeyDown}
         classes={{
           focusVisible: classes.cssFocused,
         }}
@@ -154,6 +156,7 @@ ResultItem.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any),
   icon: PropTypes.node,
   onClick: PropTypes.func,
+  onKeyDown: PropTypes.func,
   subtitle: PropTypes.string,
   title: PropTypes.string.isRequired,
   distancePosition: PropTypes.objectOf(PropTypes.any),
@@ -169,6 +172,7 @@ ResultItem.defaultProps = {
   classes: {},
   icon: null,
   onClick: () => {},
+  onKeyDown: null,
   subtitle: null,
   distancePosition: null,
   divider: true,
