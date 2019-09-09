@@ -88,7 +88,7 @@ class SearchBar extends React.Component {
       }
 
       if (search !== previousSearch) {
-        fetchUnits([], null, search);
+        fetchUnits(search);
       }
     }
     this.setState({ isActive: false, focusedSuggestion: null });

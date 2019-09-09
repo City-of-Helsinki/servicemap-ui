@@ -228,10 +228,12 @@ const AddressView = (props) => {
 
   // Update view data when match props (url) change
   useEffect(() => {
-    fetchData(match);
-    if (highlightedDistrict) {
-      // Clear any drawn districts from map
-      setHighlightedDistrict(null);
+    if (map) {
+      fetchData(match);
+      if (highlightedDistrict) {
+        // Clear any drawn districts from map
+        setHighlightedDistrict(null);
+      }
     }
   }, [match.url, map]);
 
