@@ -134,6 +134,7 @@ class SearchBar extends React.Component {
       getLocaleText,
       expandSearch,
       closeExpandedSearch,
+      srHideInput,
     } = this.props;
     const { search, isActive, focusedSuggestion } = this.state;
 
@@ -145,7 +146,7 @@ class SearchBar extends React.Component {
 
     return (
       <>
-        <div className={rootClasses} style={stickyStyles}>
+        <div aria-hidden={srHideInput} className={rootClasses} style={stickyStyles}>
           <Paper className={wrapperClasses} elevation={1} square>
             <form onSubmit={this.onSubmit} className={classes.container} autoComplete="off">
               {
@@ -210,6 +211,7 @@ SearchBar.propTypes = {
   primary: PropTypes.bool,
   getLocaleText: PropTypes.func.isRequired,
   closeExpandedSearch: PropTypes.func,
+  srHideInput: PropTypes.bool,
 };
 
 SearchBar.defaultProps = {
@@ -223,6 +225,7 @@ SearchBar.defaultProps = {
   expandSearch: null,
   primary: false,
   closeExpandedSearch: (() => {}),
+  srHideInput: false,
 };
 
 export default SearchBar;

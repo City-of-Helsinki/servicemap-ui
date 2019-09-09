@@ -187,7 +187,7 @@ export default {
   'search.started': 'Search started',
   'search.infoText': 'Showing {count} results for search query: "{query}"',
   'search.suggestions.suggest': 'Did you mean..?',
-  'search.suggestions.expand': 'Expand search',
+  'search.suggestions.expand': 'Search suggestions',
   'search.suggestions.loading': 'Loading suggestions',
   'search.suggestions.error': 'No suggestions',
   'search.suggestions.suggestions': '{count} suggestions',
@@ -196,6 +196,7 @@ export default {
   'search.suggestions.history': '{count} items in search history',
   'search.suggestions.noHistory': 'No previous searches',
   'search.expand': 'Expand search', // TODO: verify
+  'search.closeExpand': 'Close expanded search',
 
 
   // Service

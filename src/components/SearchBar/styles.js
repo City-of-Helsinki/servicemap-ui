@@ -85,4 +85,10 @@ export default theme => ({
     width: '100%',
     backgroundColor: '#000',
   },
+  closeButton: {
+    margin: 0,
+    width: 'fit-content',
+    height: 42,
+    marginTop: 12,
+  },
 });

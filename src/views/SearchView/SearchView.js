@@ -174,6 +174,7 @@ class SearchView extends React.Component {
     const { expandSearch } = this.state;
     return (
       <SearchBar
+        srHideInput={!!expandSearch}
         className="sticky"
         expand
         placeholder={intl && intl.formatMessage({ id: 'search.input.placeholder' })}
@@ -254,7 +255,7 @@ class SearchView extends React.Component {
             ) : null}
             <ServiceMapButton
               ref={this.buttonRef}
-              role="button"
+              role="link"
               className={`${classes.suggestionButton}`}
               onClick={() => this.setState({ expandSearch: this.getSearchParam() })}
             >
@@ -323,7 +324,9 @@ class SearchView extends React.Component {
     const {
       units, isFetching, max,
     } = this.props;
-    const unitCount = units && units.length;
+
+    const filteredUnits = this.filterByCity(units);
+    const unitCount = filteredUnits && filteredUnits.length;
 
     return (
       <Typography style={{ position: 'fixed', left: -100 }} variant="srOnly" component="h3" tabIndex="-1">

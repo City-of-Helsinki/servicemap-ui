@@ -185,7 +185,7 @@ export default {
   'search.started': 'Search started', // TODO: Translate
   'search.infoText': 'Näytetään {count} hakutulosta sanalla: "{query}"', // TODO: Translate
   'search.suggestions.suggest': 'Tarkoititko..?', // TODO: Translate
-  'search.suggestions.expand': 'Tarkenna hakua', // TODO: Translate
+  'search.suggestions.expand': 'Hakuehdotukset', // TODO: Translate
   'search.suggestions.loading': 'Ladataan ehdotuksia', // TODO: Translate
   'search.suggestions.error': 'Ei hakuehdotuksia', // TODO: Translate
   'search.suggestions.suggestions': '{count} hakuehdotusta', // TODO: Translate
@@ -194,6 +194,7 @@ export default {
   'search.suggestions.history': '{count} kohdetta hakuhistoriassa', // TODO: Translate
   'search.suggestions.noHistory': 'Ei aikaisempia hakuja', // TODO: Translate
   'search.expand': 'Tarkenna hakua', // TODO: Translate
+  'search.closeExpand': 'Sulje tarkennettu haku', // TODO: Translate
 
   // Service
   'service': 'Tjänst',

@@ -12,6 +12,7 @@ import ResultItem from '../../ListItems/ResultItem/ResultItem';
 
 import config from '../../../../config';
 import { MobileComponent } from '../../../layouts/WrapperComponents/WrapperComponents';
+import ServiceMapButton from '../../ServiceMapButton';
 
 
 const SuggestionBox = (props) => {
@@ -122,7 +123,7 @@ const SuggestionBox = (props) => {
           <FormattedMessage id="search.suggestions.suggest" />
         </Typography>
       </div>
-      <Typography aria-live="polite">
+      <Typography>
         <FormattedMessage id="search.suggestions.error" />
       </Typography>
     </>
@@ -135,7 +136,7 @@ const SuggestionBox = (props) => {
           <FormattedMessage id={loading === 'suggestions' ? 'search.suggestions.suggest' : 'search.suggestions.expand'} />
         </Typography>
       </div>
-      <Typography aria-live="polite">
+      <Typography>
         <FormattedMessage id="search.suggestions.loading" />
       </Typography>
     </>
@@ -144,7 +145,6 @@ const SuggestionBox = (props) => {
   const renderSuggestionList = () => {
     const suggestionList = expandedQueries || searchQueries || null;
     const titleId = expandedQueries ? 'search.suggestions.expand' : 'search.suggestions.suggest';
-    const srTitle = expandedQueries ? 'search.suggestions.expandSuggestions' : 'search.suggestions.suggestions';
     if (suggestionList) {
       return (
         <>
@@ -153,9 +153,6 @@ const SuggestionBox = (props) => {
               <FormattedMessage id={titleId} />
             </Typography>
           </div>
-          <p aria-live={expandedQueries ? null : 'polite'} className="sr-only">
-            <FormattedMessage id={srTitle} values={{ count: suggestionList.length }} />
-          </p>
           <List className="suggestionList" ref={listRef}>
             {suggestionList.map((item, i) => (
               <ResultItem
@@ -171,6 +168,13 @@ const SuggestionBox = (props) => {
               />
             ))}
           </List>
+          {expandedQueries && (
+            <ServiceMapButton className={classes.closeButton} onClick={() => closeExpandedSearch()}>
+              <Typography variant="button">
+                <FormattedMessage id="search.closeExpand" />
+              </Typography>
+            </ServiceMapButton>
+          )}
         </>
       );
     } return null;
@@ -220,12 +224,17 @@ const SuggestionBox = (props) => {
   */
   if (visible) {
     let component = null;
+    let srText = null;
     if (loading) {
       component = renderLoading();
+      srText = null;
     } else if (searchQueries || expandedQueries) {
       component = renderSuggestionList();
+      const suggestionList = expandedQueries || searchQueries || null;
+      srText = intl.formatMessage({ id: 'search.suggestions.suggestions' }, { count: suggestionList.length });
     } else if (suggestionError) {
       component = renderNoResults();
+      srText = intl.formatMessage({ id: 'search.suggestions.error' });
     } else {
       component = renderSearchHistory();
     }
@@ -233,6 +242,7 @@ const SuggestionBox = (props) => {
     return (
       <>
         <Paper elevation={20} className={classes.suggestionArea}>
+          <p className="sr-only" aria-live="polite">{srText}</p>
           {component}
         </Paper>
         <MobileComponent>

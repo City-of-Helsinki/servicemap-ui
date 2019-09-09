@@ -185,15 +185,16 @@ export default {
   'search.started': 'Haku aloitettu',
   'search.infoText': 'Näytetään {count} hakutulosta sanalla: "{query}"',
   'search.suggestions.suggest': 'Tarkoititko..?',
-  'search.suggestions.expand': 'Tarkenna hakua',
+  'search.suggestions.expand': 'Hakuehdotukset',
   'search.suggestions.loading': 'Ladataan ehdotuksia',
   'search.suggestions.error': 'Ei ehdotuksia',
   'search.suggestions.suggestions': '{count} hakuehdotusta',
-  'search.suggestions.expandSuggestions': '{count} tarkennusehdotusta',
+  // 'search.suggestions.expandSuggestions': '{count} tarkennusehdotusta',
   'search.suggestions.results': '{count} tulosta',
   'search.suggestions.history': '{count} kohdetta hakuhistoriassa',
   'search.suggestions.noHistory': 'Ei aikaisempia hakuja',
   'search.expand': 'Tarkenna hakua',
+  'search.closeExpand': 'Sulje tarkennettu haku',
 
 
   // Service
