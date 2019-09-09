@@ -1,16 +1,16 @@
 export default {
   // API
   "accessibilitySentenceAPI": {
-    "root": process.env.ACCESSIBILITY_SENTENCE_API
+    "root": process.env.ACCESSIBILITY_SENTENCE_API || 'https://www.hel.fi/palvelukarttaws/rest/v4'
   },
   "serviceMapAPI": {
-    "root": process.env.SERVICEMAP_API
+    "root": process.env.SERVICEMAP_API || 'https://api.hel.fi/servicemap/v2'
   },
   "eventsAPI": {
-    "root": process.env.EVENTS_API
+    "root": process.env.EVENTS_API || 'https://api.hel.fi/linkedevents/v1',
   },
   "reservationsAPI": {
-    "root": process.env.RESERVATIONS_API
+    "root": process.env.RESERVATIONS_API || 'https://api.hel.fi/respa/v1',
   },
   // constants
   "accessibilityColors":  {
