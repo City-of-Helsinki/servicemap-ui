@@ -20,9 +20,8 @@ import themes from '../src/themes';
 
 // Configure constants
 const app = express();
-const serverConfig = config.server;
 const supportedLanguages = config.supportedLanguages;
-const baseURL = `${serverConfig.urlPrefix}(:lang(${supportedLanguages.join('|')})?)`;
+const baseURL = `/(:lang(${supportedLanguages.join('|')})?)`;
 
 // Add static folder
 app.use(express.static(path.resolve(__dirname, 'src')));
@@ -84,8 +83,8 @@ app.get('/*', (req, res, next) => {
   res.end(htmlTemplate(reactDom, preloadedState, css, jss, locale));
 });
 
-console.log(`Starting server on port ${serverConfig.port || 2048}`);
-app.listen(serverConfig.port || 2048);
+console.log(`Starting server on port ${process.env.PORT || 2048}`);
+app.listen(process.env.PORT || 2048);
 
 const htmlTemplate = (reactDom, preloadedState, css, jss, locale) => `
 <!DOCTYPE html>
