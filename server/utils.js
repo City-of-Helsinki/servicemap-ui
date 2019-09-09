@@ -54,7 +54,7 @@ export const makeUnitHandler = (req, res, next) => {
 
   // Handle unit data collection from api
   const unitId = r[1] || r[2];
-  const url = `${config.unit.apiUrl}unit/${unitId}/?include=services&accessibility_description=true&geometry=true`;
+  const url = `${config.serviceMapAPI.root}/unit/${unitId}/?include=services&accessibility_description=true&geometry=true`;
   let unitInfo = null;
   let context = null;
   

@@ -90,7 +90,13 @@ const serverConfig = {
     filename: '[name]',
   },
   plugins: [
-    new webpack.EnvironmentPlugin(['PORT']),
+    new webpack.EnvironmentPlugin([
+      'PORT',
+      'ACCESSIBILITY_SENTENCE_API',
+      'SERVICEMAP_API',
+      'EVENTS_API',
+      'RESERVATIONS_API'
+    ]),
   ]
 };
 
@@ -115,6 +121,14 @@ const clientConfig = {
     path: path.resolve(__dirname, 'dist/src'),
     filename: '[name]',
   },
+  plugins: [
+    new webpack.EnvironmentPlugin([
+      'ACCESSIBILITY_SENTENCE_API',
+      'SERVICEMAP_API',
+      'EVENTS_API',
+      'RESERVATIONS_API'
+    ]),
+  ]
 };
 
 module.exports = [serverConfig, clientConfig];
