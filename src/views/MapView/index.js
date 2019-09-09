@@ -13,7 +13,7 @@ const mapStateToProps = (state) => {
   const { units, settings } = state;
   const { data } = units;
   const unitsLoading = state.service.isFetching;
-  const serviceUnits = state.service.units;
+  const serviceUnits = state.service.data;
   const mapType = getMapType(state);
   const highlightedDistrict = getHighlightedDistrict(state);
   const highlightedUnit = getSelectedUnit(state);

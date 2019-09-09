@@ -1,8 +1,5 @@
-const setSelection = (prefix, selection) => ({
-  type: `${prefix}_SET_SELECTION`,
-  selection,
-});
+import simpleAction from './simpleActions';
 
-export const setDirection = value => setSelection('DIRECTION', value);
+export const setDirection = value => simpleAction('DIRECTION', value);
 
-export const setOrder = value => setSelection('ORDER', value);
+export const setOrder = value => simpleAction('ORDER', value);
