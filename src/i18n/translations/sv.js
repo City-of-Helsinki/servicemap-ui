@@ -95,6 +95,8 @@ export default {
   'general.save.confirmation': 'Would you like to save changes?', // TODO: Translate
 
   // Home
+  'home.buttons.settings': 'Accessibility and city settings', // TODO: Translate
+  'home.buttons.services': 'All services', // TODO: Translate
   'home.example.title': 'Esimerkkihakuja', // TODO: Translate
   'home.example.search': 'Hae hakusanalla', // TODO: Translate
   'home.message': 'Terveisiä palvelukartan kehittäjiltä', // TODO: Translate

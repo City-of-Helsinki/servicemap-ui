@@ -97,6 +97,8 @@ export default {
   'general.save.confirmation': 'Would you like to save changes?',
 
   // Home
+  'home.buttons.settings': 'Accessibility and city settings',
+  'home.buttons.services': 'All services',
   'home.example.title': 'Example search phrases',
   'home.example.search': 'Search for',
   'home.message': 'Message from the developers',
