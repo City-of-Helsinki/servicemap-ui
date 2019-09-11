@@ -1,5 +1,6 @@
 import SettingsUtility from '../../utils/settings';
 import LocalStorageUtility from '../../utils/localStorage';
+import simpleAction from './simpleActions';
 
 const setSingleSelection = (prefix, key) => async (dispatch, getState) => {
   const { settings } = getState();
@@ -35,3 +36,5 @@ export const toggleVisuallyImpaired = () => setSingleSelection('SIGHT', 'visuall
 export const toggleColorblind = () => setSingleSelection('COLORBLIND', 'colorblind');
 
 export const setMobility = value => setMobilitySetting(value);
+
+export const toggleSettings = value => simpleAction('SETTINGS_TOGGLE', value);

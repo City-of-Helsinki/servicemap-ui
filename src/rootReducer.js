@@ -10,7 +10,7 @@ import {
   colorblind, hearingAid, mobility, visuallyImpaired,
 } from './redux/reducers/settings';
 import {
-  direction, order, mapRef, mapType,
+  direction, order, mapRef, mapType, settingsToggled,
 } from './redux/reducers/simpleReducers';
 
 // Export all redux reducers here
@@ -27,6 +27,7 @@ export default combineReducers({
   event,
   address,
   settings: combineReducers({
+    toggled: settingsToggled,
     colorblind,
     hearingAid,
     mobility,
