@@ -36,8 +36,17 @@ class HomeView extends React.Component {
     const { classes, toggleSettings } = this.props;
     return (
       <div className={classes.iconContainer}>
-        <PaperButton text={<FormattedMessage id="home.buttons.settings" />} icon={<Accessibility />} onClick={() => toggleSettings(true)} />
-        <PaperButton text={<FormattedMessage id="home.buttons.services" />} icon={<List />} />
+        <PaperButton
+          text={<FormattedMessage id="home.buttons.settings" />}
+          icon={<Accessibility />}
+          link
+          onClick={() => toggleSettings(true)}
+        />
+        <PaperButton
+          text={<FormattedMessage id="home.buttons.services" />}
+          icon={<List />}
+          link
+        />
       </div>
     );
   }
