@@ -6,6 +6,20 @@ export default theme => ({
     margin: theme.spacing.unitHalf,
     minWidth: 'auto',
   },
+  buttonContainer: {
+    flexDirection: 'row',
+  },
+  list: {
+    display: 'inherit',
+    flexDirection: 'row',
+    listStyleType: 'none',
+    margin: 0,
+    padding: 0,
+  },
+  listContainer: {
+    flexDirection: 'row',
+    margin: 0,
+  },
   pageItem: {
     margin: 0,
     marginLeft: theme.spacing.unitHalf,

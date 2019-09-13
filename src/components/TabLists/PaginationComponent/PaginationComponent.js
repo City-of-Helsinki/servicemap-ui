@@ -43,7 +43,7 @@ class PaginationComponent extends React.Component {
       );
     }
     return (
-      <Container style={{ flexDirection: 'row' }}>
+      <Container className={classes.buttonContainer}>
         {
           // Button backwards one page
           <Button
@@ -80,15 +80,8 @@ class PaginationComponent extends React.Component {
         }
         {
           // Page numbers
-          <Container style={{ flexDirection: 'row', margin: 0 }}>
-            <ul style={{
-              display: 'inherit',
-              flexDirection: 'row',
-              listStyleType: 'none',
-              margin: 0,
-              padding: 0,
-            }}
-            >
+          <Container className={classes.listContainer}>
+            <ul className={classes.list}>
               {pages}
             </ul>
           </Container>
