@@ -40,7 +40,7 @@ export const fetchServiceUnits = serviceId => async (dispatch) => {
   const options = {
     service: serviceId,
     page_size: 50,
-    only: 'name,accessibility_shortcoming_count',
+    only: 'name,accessibility_shortcoming_count,location',
   };
 
   // Fetch data

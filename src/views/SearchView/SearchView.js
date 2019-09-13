@@ -44,9 +44,8 @@ class SearchView extends React.Component {
     const searchParam = this.getSearchParam();
     if (this.shouldFetch()) {
       fetchUnits(searchParam);
+      this.focusMap(units, map);
     }
-
-    this.focusMap(units, map);
   }
 
   shouldComponentUpdate(nextProps) {
