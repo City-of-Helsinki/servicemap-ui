@@ -42,7 +42,7 @@ const AddressPopup = ({
             {`${getLocaleText(address.street.name)} ${address.number}`}
           </Typography>
           <ButtonBase
-            style={{ paddingTop: '9px', paddingBottom: 12 }}
+            className={classes.addressPopupButton}
             onClick={() => {
               if (navigator) {
                 map.leafletElement.closePopup();
