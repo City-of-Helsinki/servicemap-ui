@@ -31,7 +31,7 @@ class HomeView extends React.Component {
     }
 
     if (searchText && searchText !== '') {
-      fetchUnits([], null, searchText);
+      fetchUnits(searchText);
     }
   }
 
@@ -68,6 +68,21 @@ class HomeView extends React.Component {
             {intl.formatMessage({ id: 'home.message' })}
           </Typography>
           <Typography className={classes.left} variant="body2">
+            <b>5.9.2019</b>
+            {' '}
+- Syyskuuta eletään. Palvelukartan pellin alla on tapahtunut paljon saavutettavuutta edistäviä asioita.
+Nyt hiomme hakutoiminnallisuutta ja kunhan se on testikunnossa, käytettävyystestaajat lähtevät liikkeelle.
+            {' '}
+            <br />
+            <br />
+            <b>22.8.2019</b>
+            {' '}
+- Kesä alkaa lähestyä loppuaan ja työt taas jatkuvat täydellä vauhdilla. Heinäkuun aikana olemme kehittäneet uutta hakua
+sekä korjanneet paljon pieniä ongelmia ja toiminnallisuutta koodin puolella. Nyt jatkamme uuden haun sekä hakukokemuksen
+parantamisen parissa.
+            {' '}
+            <br />
+            <br />
             <b>28.6.2019</b>
             {' '}
 - Olemme saaneet kesäkuun aikana lisättyä toimipisteen sivuille lisää tietoa esteettömyydestä,

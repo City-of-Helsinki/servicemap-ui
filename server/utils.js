@@ -2,7 +2,6 @@ import I18n from '../src/i18n';
 import config from '../config';
 import https from 'https';
 
-const serverConfig = config.server;
 const allowedUrls = [
   /^\/.{2,}\/$/,
   /^\/.{2,}\/unit\/\d+$/,
@@ -49,13 +48,13 @@ export const makeUnitHandler = (req, res, next) => {
   const pattern = /^\/(\d+)\/?$|^\/(\d+)\/(events|services|reservations)\/?$/
   const r = req.path.match(pattern);
   if(!r || r.length < 2) {
-    res.redirect(serverConfig.urlPrefix);
+    res.redirect('/');
     return;
   }
 
   // Handle unit data collection from api
   const unitId = r[1] || r[2];
-  const url = `${config.unit.apiUrl}unit/${unitId}/?include=services&accessibility_description=true&geometry=true`;
+  const url = `${config.serviceMapAPI.root}/unit/${unitId}/?include=services&accessibility_description=true&geometry=true`;
   let unitInfo = null;
   let context = null;
   

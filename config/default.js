@@ -1,19 +1,16 @@
 export default {
-  // server
-  "server": {
-    "address": "127.0.0.1",
-    "port": "2048",
-    "urlPrefix": "/"
-  },
   // API
-  "unit": {
-    "apiUrl": "https://api.hel.fi/servicemap/v2/"
+  "accessibilitySentenceAPI": {
+    "root": process.env.ACCESSIBILITY_SENTENCE_API,
   },
-  "events": {
-    "apiUrl": "https://api.hel.fi/linkedevents/v1/"
+  "serviceMapAPI": {
+    "root": process.env.SERVICEMAP_API,
   },
-  "reservations": {
-    "apiUrl": "https://api.hel.fi/respa/v1/"
+  "eventsAPI": {
+    "root": process.env.EVENTS_API,
+  },
+  "reservationsAPI": {
+    "root": process.env.RESERVATIONS_API,
   },
   // constants
   "accessibilityColors":  {

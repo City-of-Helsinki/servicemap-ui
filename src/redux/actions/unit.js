@@ -1,76 +1,37 @@
-import queryBuilder from '../../utils/queryBuilder';
+import { searchFetch } from '../../utils/fetch';
+import { units } from './fetchDataActions';
 
-export const fetchHasErrored = errorMessage => ({
-  type: 'UNITS_FETCH_HAS_ERRORED',
-  errorMessage,
-});
-export const fetchIsLoading = search => ({
-  type: 'UNITS_IS_FETCHING',
-  search,
-});
-export const unitsFetchDataSuccess = units => ({
-  type: 'UNITS_FETCH_DATA_SUCCESS',
-  units,
-});
-export const unitsFetchProgressUpdate = (count, max) => ({
-  type: 'UNITS_FETCH_PROGRESS_UPDATE',
-  count,
-  max,
-});
-export const setUnitData = data => ({
-  type: 'SET_NEW_UNITS',
-  data,
-});
+// Actions
+const {
+  isFetching, fetchSuccess, fetchError, fetchProgressUpdate, setNewData,
+} = units;
 
 // Thunk fetch
 export const fetchUnits = (
-  allData = [],
-  next = null,
   searchQuery = null,
-) => async (dispatch, getState)
+  abortController = null,
+) => async (dispatch)
 => {
-  const { units } = getState();
-  const { isFetching } = units;
+  const onStart = () => dispatch(isFetching(searchQuery));
+  const onSuccess = (results) => {
+    // Filter out duplicate units
+    const distinctData = Array.from(new Set(results.map(x => x.id))).map((id) => {
+      const obj = results.find(s => id === s.id);
+      return obj;
+    });
+    dispatch(fetchSuccess(distinctData));
+  };
+  const onError = e => dispatch(fetchError(e.message));
+  const onNext = (resultTotal, response) => dispatch(
+    fetchProgressUpdate(resultTotal.length, response.count),
+  );
 
-  // If not currently fetching init fetch
-  if (!isFetching) {
-    dispatch(fetchIsLoading(searchQuery));
-  }
-
-  // If getting next page or first fetch proceed to actual fetch
-  if (next || !isFetching) {
-    try {
-      let response = null;
-      if (next) {
-        response = await fetch(next);
-      } else {
-        response = await queryBuilder.search(searchQuery).run();
-      }
-      if (!response.ok) {
-        throw Error(response.statusText);
-      }
-      const data = await response.json();
-      const newData = [...allData, ...data.results];
-      if (data.next) {
-        // Fetch the next page if response has more than one page of results
-        dispatch(unitsFetchProgressUpdate(newData.length, data.count));
-        dispatch(fetchUnits(newData, data.next, searchQuery));
-      } else {
-        // Filter out duplicate units
-        const distinctData = Array.from(new Set(newData.map(x => x.id))).map((id) => {
-          const obj = newData.find(s => id === s.id);
-          return obj;
-        });
-        dispatch(unitsFetchDataSuccess(distinctData));
-      }
-    } catch (e) {
-      dispatch(fetchHasErrored(e.message));
-    }
-  }
+  // Fetch data
+  searchFetch({ q: searchQuery }, onStart, onSuccess, onError, onNext, null, abortController);
 };
 
 export const setNewSearchData = data => async (dispatch) => {
   if (data) {
-    dispatch(setUnitData(data));
+    dispatch(setNewData(data));
   }
 };

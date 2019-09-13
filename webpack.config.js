@@ -1,8 +1,17 @@
+const webpack = require('webpack'); //to access built-in plugins
 const path = require('path');
+const dotenv = require('dotenv');
+dotenv.config();
 
 const NODE_ENV = process.env.NODE_ENV;
 const isEnvProduction = NODE_ENV === 'production';
 const isEnvDevelopment = !isEnvProduction;
+
+// Default API paths if environment variables are not set
+const ACCESSIBILITY_SENTENCE_API = 'https://www.hel.fi/palvelukarttaws/rest/v4';
+const SERVICEMAP_API = 'https://api.hel.fi/servicemap/v2';
+const EVENTS_API = 'https://api.hel.fi/linkedevents/v1';
+const RESERVATIONS_API = 'https://api.hel.fi/respa/v1';
 
 const js = {
   
@@ -86,6 +95,15 @@ const serverConfig = {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name]',
   },
+  plugins: [
+    new webpack.EnvironmentPlugin({
+      'PORT': false,
+      'ACCESSIBILITY_SENTENCE_API': ACCESSIBILITY_SENTENCE_API,
+      'SERVICEMAP_API': SERVICEMAP_API,
+      'EVENTS_API': EVENTS_API,
+      'RESERVATIONS_API': RESERVATIONS_API
+    }),
+  ]
 };
 
 const clientConfig = {
@@ -109,6 +127,14 @@ const clientConfig = {
     path: path.resolve(__dirname, 'dist/src'),
     filename: '[name]',
   },
+  plugins: [
+    new webpack.EnvironmentPlugin({
+      'ACCESSIBILITY_SENTENCE_API': ACCESSIBILITY_SENTENCE_API,
+      'SERVICEMAP_API': SERVICEMAP_API,
+      'EVENTS_API': EVENTS_API,
+      'RESERVATIONS_API': RESERVATIONS_API
+    }),
+  ]
 };
 
 module.exports = [serverConfig, clientConfig];
