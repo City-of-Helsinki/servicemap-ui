@@ -1,4 +1,5 @@
 import { searchFetch } from '../../utils/fetch';
+import { saveSearchToHistory } from '../../components/SearchBar/previousSearchData';
 
 export const fetchHasErrored = errorMessage => ({
   type: 'UNITS_FETCH_HAS_ERRORED',
@@ -35,6 +36,7 @@ export const fetchUnits = (
       const obj = results.find(s => id === s.id);
       return obj;
     });
+    saveSearchToHistory(searchQuery, distinctData);
     dispatch(unitsFetchDataSuccess(distinctData));
   };
   const onError = e => dispatch(fetchHasErrored(e.message));
