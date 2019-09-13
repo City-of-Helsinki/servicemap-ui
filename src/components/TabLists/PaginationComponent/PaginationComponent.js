@@ -33,7 +33,6 @@ class PaginationComponent extends React.Component {
     for (let i = min; i <= max; i += 1) {
       pages.push(
         <PageElement
-          className={classes.pageItem}
           key={i}
           number={i}
           intl={intl}

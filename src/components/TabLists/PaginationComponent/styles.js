@@ -20,6 +20,16 @@ export default theme => ({
     flexDirection: 'row',
     margin: 0,
   },
+  pageElement: {
+    color: 'black',
+    cursor: 'pointer',
+    textDecoration: 'none',
+  },
+  pageElementActive: {
+    color: 'red',
+    cursor: 'auto',
+    textDecoration: 'underline',
+  },
   pageItem: {
     margin: 0,
     marginLeft: theme.spacing.unitHalf,
