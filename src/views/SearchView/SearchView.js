@@ -223,14 +223,11 @@ class SearchView extends React.Component {
       <NoSsr>
         {!isFetching && unitCount && (
           <div align="left" className={classes.searchInfo}>
-            <Typography variant="srOnly">
-              {`${intl.formatMessage({ id: 'search.infoText' }, { count: unitCount })} ${query}`}
-            </Typography>
-            <div aria-hidden className={classes.infoContainer}>
-              <Typography className={`${classes.infoText} ${classes.bold}`}>
+            <div aria-label={`${intl.formatMessage({ id: 'search.infoText' }, { count: unitCount })} ${query}`} className={classes.infoContainer}>
+              <Typography aria-hidden className={`${classes.infoText} ${classes.bold}`}>
                 <FormattedMessage id="search.infoText" values={{ count: unitCount }} />
               </Typography>
-              <Typography className={classes.infoText}>
+              <Typography aria-hidden className={classes.infoText}>
                 &nbsp;
                 {`"${query}"`}
               </Typography>
@@ -238,16 +235,13 @@ class SearchView extends React.Component {
 
             {citySettings.length ? (
               <>
-                <Typography variant="srOnly">
-                  {`${intl.formatMessage({ id: 'settings.city.info' }, { count: citySettings.length })}: ${cityString}`}
-                </Typography>
-                <div aria-hidden className={classes.infoContainer}>
-                  <Typography className={`${classes.infoText} ${classes.bold}`}>
+                <div aria-label={`${intl.formatMessage({ id: 'settings.city.info' }, { count: citySettings.length })}: ${cityString}`} className={classes.infoContainer}>
+                  <Typography aria-hidden className={`${classes.infoText} ${classes.bold}`}>
                     <FormattedMessage id="settings.city.info" values={{ count: citySettings.length }} />
                     {':'}
                   &nbsp;
                   </Typography>
-                  <Typography className={classes.infoText}>
+                  <Typography aria-hidden className={classes.infoText}>
                     {cityString}
                   </Typography>
                 </div>
