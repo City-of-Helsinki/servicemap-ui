@@ -63,7 +63,7 @@ export default theme => ({
   },
   image: {
     width: '100%',
-    height: 160,
+    height: 200,
     objectFit: 'cover',
     display: 'flex',
   },
