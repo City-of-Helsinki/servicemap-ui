@@ -92,7 +92,7 @@ class UnitFullListView extends React.Component {
       unit && (
         <>
           <DesktopComponent>
-            <SearchBar placeholder={intl.formatMessage({ id: 'search' })} />
+            <SearchBar placeholder={intl.formatMessage({ id: 'search.placeholder' })} />
             <TitleBar icon={icon} title={getLocaleText(unit.name)} />
           </DesktopComponent>
           <MobileComponent>

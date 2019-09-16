@@ -1,7 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Search } from '@material-ui/icons';
-import { Paper, List, Typography } from '@material-ui/core';
+import { Search, Close } from '@material-ui/icons';
+import {
+  Paper, List, Typography, IconButton,
+} from '@material-ui/core';
 import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
 import { FormattedMessage, intlShape } from 'react-intl';
 import expandSearch from '../expandSearch';
@@ -9,7 +11,6 @@ import { getPreviousSearches } from '../previousSearchData';
 import PreviousSearches from '../PreviousSearches';
 import createSuggestions from '../createSuggestions';
 import ResultItem from '../../ListItems/ResultItem/ResultItem';
-
 import config from '../../../../config';
 import { MobileComponent } from '../../../layouts/WrapperComponents/WrapperComponents';
 import ServiceMapButton from '../../ServiceMapButton';
@@ -131,11 +132,28 @@ const SuggestionBox = (props) => {
 
   const renderLoading = () => (
     <>
-      <div className={classes.suggestionSubtitle}>
-        <Typography className={classes.subtitleText} variant="overline">
-          <FormattedMessage id={loading === 'suggestions' ? 'search.suggestions.suggest' : 'search.suggestions.expand'} />
-        </Typography>
-      </div>
+      {expandQuery ? (
+        <div className={classes.expandSearchTop}>
+          <Typography tabIndex="0" component="h3" className={`${classes.expandTitle} suggestionsTitle`} variant="subtitle1">
+            <FormattedMessage id="search.suggestions.expand" />
+          </Typography>
+          <IconButton
+            aria-label={intl.formatMessage({ id: 'search.closeExpand' })}
+            className={classes.right}
+            onClick={() => closeExpandedSearch()}
+          >
+            <Close />
+          </IconButton>
+        </div>
+      )
+        : (
+          <div className={classes.suggestionSubtitle}>
+            <Typography className={classes.subtitleText} variant="overline">
+              <FormattedMessage id={loading === 'suggestions' ? 'search.suggestions.suggest' : 'search.suggestions.expand'} />
+            </Typography>
+          </div>
+        )
+              }
       <Typography>
         <FormattedMessage id="search.suggestions.loading" />
       </Typography>
@@ -148,11 +166,28 @@ const SuggestionBox = (props) => {
     if (suggestionList) {
       return (
         <>
-          <div className={classes.suggestionSubtitle}>
-            <Typography tabIndex="0" component="h3" className={`${classes.subtitleText} suggestionsTitle`} variant="overline">
-              <FormattedMessage id={titleId} />
-            </Typography>
-          </div>
+          {expandQuery ? (
+            <div className={classes.expandSearchTop}>
+              <Typography tabIndex="0" component="h3" className={`${classes.expandTitle} suggestionsTitle`} variant="subtitle1">
+                <FormattedMessage id={titleId} />
+              </Typography>
+              <IconButton
+                aria-label={intl.formatMessage({ id: 'search.closeExpand' })}
+                className={classes.right}
+                onClick={() => closeExpandedSearch()}
+              >
+                <Close />
+              </IconButton>
+            </div>
+          )
+            : (
+              <div className={classes.suggestionSubtitle}>
+                <Typography tabIndex="0" component="h3" className={`${classes.subtitleText} suggestionsTitle`} variant="overline">
+                  <FormattedMessage id={titleId} />
+                </Typography>
+              </div>
+            )
+          }
           <List className="suggestionList" ref={listRef}>
             {suggestionList.map((item, i) => (
               <ResultItem
@@ -164,12 +199,15 @@ const SuggestionBox = (props) => {
                 onClick={() => handleSubmit(item.query)}
                 selected={i === focusedSuggestion}
                 divider={i !== suggestionList.length - 1}
-                onKeyDown={i === suggestionList.length - 1 ? e => handleKeyPress(e) : null}
               />
             ))}
           </List>
           {expandedQueries && (
-            <ServiceMapButton className={classes.closeButton} onClick={() => closeExpandedSearch()}>
+            <ServiceMapButton
+              className={classes.closeButton}
+              onKeyDown={e => handleKeyPress(e)}
+              onClick={() => closeExpandedSearch()}
+            >
               <Typography variant="button">
                 <FormattedMessage id="search.closeExpand" />
               </Typography>
@@ -241,7 +279,7 @@ const SuggestionBox = (props) => {
 
     return (
       <>
-        <Paper elevation={20} className={classes.suggestionArea}>
+        <Paper elevation={20} className={`${classes.suggestionArea} ${expandQuery ? classes.expandHeight : ''}`}>
           <p className="sr-only" aria-live="polite">{srText}</p>
           {component}
         </Paper>

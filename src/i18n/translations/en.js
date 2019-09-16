@@ -149,6 +149,7 @@ export default {
 
   // Search
   'search': 'Search',
+  'search.placeholder': 'Search for services or units',
   'search.info': `{count, plural,
                   =0 {no units}
                   one {# unit}
@@ -179,13 +180,14 @@ export default {
                   one {# service found}
                   other {# services found}
                 }`,
+  'search.searchField': 'Search field',
   'search.results.title': 'Search results',
   'search.input.placeholder': 'Search units',
   'search.loading.units': 'Searching units {count} / {max}',
   'search.loading.units.srInfo': 'Search loading {count} units',
   'search.notFound': 'No results found with given search',
   'search.started': 'Search started',
-  'search.infoText': 'Showing {count} results for search query: "{query}"',
+  'search.infoText': 'Showing {count} results for search query: ',
   'search.suggestions.suggest': 'Did you mean..?',
   'search.suggestions.expand': 'Search suggestions',
   'search.suggestions.loading': 'Loading suggestions',
@@ -207,17 +209,21 @@ export default {
 
   // Settings
   'settings': 'Settings',
+  'settings.accessibility': 'My accessibility settings',
   'settings.sense.title': 'Hearing and sight',
   'settings.sense.hearing': 'I use a hearing aid',
   'settings.sense.visual': 'I\'m visually impaired',
   'settings.sense.colorblind': 'I have trouble distinguishing colours',
-  'settings.sense.colorblindShort': 'Trouble distinguishing colours',
   'settings.mobility.title': 'Mobility',
   'settings.mobility.none': 'No mobility impairments',
   'settings.mobility.wheelchair': 'I use a wheelchair',
   'settings.mobility.reduced_mobility': 'I have reduced mobility',
   'settings.mobility.rollator': 'I use a rollator',
   'settings.mobility.stroller': 'I push a stroller',
+  'settings.city.info': `{count, plural,
+    one {Chosen city}
+    other {Chosen cities}
+  }`,
   'settings.city.title': 'City',
   'settings.city.helsinki': 'Helsinki',
   'settings.city.espoo': 'Espoo',

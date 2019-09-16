@@ -200,7 +200,7 @@ class SearchView extends React.Component {
     const unitCount = filteredUnits && filteredUnits.length;
 
     const accessibilitySettings = [
-      ...colorblind ? [{ text: <FormattedMessage id="settings.sense.colorblindShort" />, icon: <ColorblindIcon /> }] : [],
+      ...colorblind ? [{ text: <FormattedMessage id="settings.sense.colorblind" />, icon: <ColorblindIcon /> }] : [],
       ...hearingAid ? [{ text: <FormattedMessage id="settings.sense.hearing" />, icon: <HearingIcon /> }] : [],
       ...visuallyImpaired ? [{ text: <FormattedMessage id="settings.sense.visual" />, icon: <VisualImpairmentIcon /> }] : [],
       ...mobility ? [{ text: <FormattedMessage id={`settings.mobility.${mobility}`} />, icon: getIcon(mobility) }] : [],
@@ -223,27 +223,44 @@ class SearchView extends React.Component {
       <NoSsr>
         {!isFetching && unitCount && (
           <div align="left" className={classes.searchInfo}>
-            <Typography className={classes.infoText}>
-              <FormattedMessage id="search.infoText" values={{ count: unitCount, query }} />
+            <Typography variant="srOnly">
+              {`${intl.formatMessage({ id: 'search.infoText' }, { count: unitCount })} ${query}`}
             </Typography>
+            <div aria-hidden className={classes.infoContainer}>
+              <Typography className={`${classes.infoText} ${classes.bold}`}>
+                <FormattedMessage id="search.infoText" values={{ count: unitCount }} />
+              </Typography>
+              <Typography className={classes.infoText}>
+                &nbsp;
+                {`"${query}"`}
+              </Typography>
+            </div>
 
             {citySettings.length ? (
-              <div className={classes.appliedSettings}>
-                <Typography className={classes.infoText}>
-                  <FormattedMessage id="settings.city.title" />
-                  {': '}
-                  {cityString}
+              <>
+                <Typography variant="srOnly">
+                  {`${intl.formatMessage({ id: 'settings.city.info' }, { count: citySettings.length })}: ${cityString}`}
                 </Typography>
-              </div>
+                <div aria-hidden className={classes.infoContainer}>
+                  <Typography className={`${classes.infoText} ${classes.bold}`}>
+                    <FormattedMessage id="settings.city.info" values={{ count: citySettings.length }} />
+                    {':'}
+                  &nbsp;
+                  </Typography>
+                  <Typography className={classes.infoText}>
+                    {cityString}
+                  </Typography>
+                </div>
+              </>
             ) : null}
 
             {accessibilitySettings.length ? (
-              <>
-                <Typography className={classes.infoSubText}>
-                  <FormattedMessage id="accessibility" />
+              <div role="group" aria-labelledby="groupTitle">
+                <Typography id="groupTitle" className={`${classes.infoSubText} ${classes.bold}`}>
+                  <FormattedMessage id="settings.accessibility" />
                   {':'}
                 </Typography>
-                <div className={classes.appliedSettings}>
+                <div className={classes.infoContainer}>
                   {accessibilitySettings.map(item => (
                     <div key={item.text.props.id} className={classes.settingItem}>
                       {item.icon}
@@ -251,7 +268,7 @@ class SearchView extends React.Component {
                     </div>
                   ))}
                 </div>
-              </>
+              </div>
             ) : null}
             <ServiceMapButton
               ref={this.buttonRef}
@@ -376,18 +393,17 @@ class SearchView extends React.Component {
       <div
         className={classes.root}
       >
-
-        <Paper elevation={1} square aria-live="polite" style={paperStyles}>
-          {
-            !expandSearch && this.renderScreenReaderInfo()
-          }
-        </Paper>
         {
           this.renderSearchBar()
         }
         {
           !expandSearch && this.renderSearchInfo()
         }
+        <Paper elevation={1} square aria-live="polite" style={paperStyles}>
+          {
+            !expandSearch && this.renderScreenReaderInfo()
+          }
+        </Paper>
         {
           !expandSearch && this.renderResults()
         }

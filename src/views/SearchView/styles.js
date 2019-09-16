@@ -42,7 +42,7 @@ export default theme => ({
     color: 'inherit',
     marginBottom: 4,
   },
-  appliedSettings: {
+  infoContainer: {
     display: 'flex',
     maxWidth: '100%',
     flexWrap: 'wrap',
@@ -65,5 +65,8 @@ export default theme => ({
     borderStyle: 'solid',
     borderRadius: 8,
     marginTop: 12,
+  },
+  bold: {
+    fontWeight: 'bold',
   },
 });

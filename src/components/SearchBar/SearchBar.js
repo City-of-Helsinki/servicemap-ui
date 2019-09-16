@@ -154,7 +154,12 @@ class SearchBar extends React.Component {
               && <BackButton className={classes.iconButton} onClick={showSuggestions ? this.suggestionBackEvent : backButtonEvent || null} variant="icon" srHidden={!!hideBackButton} />
             }
               <InputBase
-                id="searchInput"
+                inputProps={{
+                  role: 'combobox',
+                  type: 'text',
+                  'aria-haspopup': !!showSuggestions,
+                  'aria-label': intl.formatMessage({ id: 'search.searchField' }),
+                }}
                 inputRef={searchRef}
                 className={classes.input}
                 placeholder={placeholder}

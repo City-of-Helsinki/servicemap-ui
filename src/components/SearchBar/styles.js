@@ -63,6 +63,13 @@ export default theme => ({
     width: '100%',
     backgroundColor: '#fff',
   },
+  expandTitle: {
+    alignSelf: 'center',
+  },
+  expandHeight: {
+    top: 0,
+    minHeight: 'calc(100vh - 64px)',
+  },
   divider: {
     marginLeft: 56,
   },
@@ -90,5 +97,14 @@ export default theme => ({
     width: 'fit-content',
     height: 42,
     marginTop: 12,
+  },
+  expandSearchTop: {
+    display: 'flex',
+    paddingTop: theme.spacing.unit,
+    paddingLeft: theme.spacing.unitDouble,
+    paddingRight: theme.spacing.unitDouble,
+  },
+  right: {
+    marginLeft: 'auto',
   },
 });
