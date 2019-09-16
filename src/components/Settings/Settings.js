@@ -304,12 +304,13 @@ class Settings extends React.Component {
     return (
       <Container>
         <SettingsTitle
+          id="SenseSettings"
           classes={classes}
           close={() => this.toggleSettingsContainer()}
           intl={intl}
           titleID="settings.sense.title"
         />
-        <FormGroup row>
+        <FormGroup row role="group" aria-labelledby="SenseSettings">
           <List className={classes.list}>
             {
               Object.keys(senseSettingList).map((key) => {
@@ -467,9 +468,10 @@ class Settings extends React.Component {
         <SettingsTitle
           classes={classes}
           intl={intl}
+          id="CitySettings"
           titleID="settings.city.title"
         />
-        <FormGroup row>
+        <FormGroup row role="group" aria-labelledby="CitySettings">
           <List className={classes.list}>
             {
               Object.keys(citySettingsList).map((key) => {
