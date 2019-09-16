@@ -178,6 +178,7 @@ export default {
                 one {# palvelu löydetty}
                 other {# palvelua löydetty}
               }`,
+  'search.resultInfo': 'Hakutiedot',
   'search.searchField': 'Hakukenttä',
   'search.results.title': 'Hakutulokset',
   'search.input.placeholder': 'Hae toimipisteitä',

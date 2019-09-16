@@ -178,6 +178,7 @@ export default {
                   one {# service found}
                   other {# services found}
                 }`, // TODO: Translate
+  'search.resultInfo': 'Hakutiedot', // TODO: Translate
   'search.searchField': 'Hakukenttä', // TODO: Translate
   'search.results.title': 'Search results', // TODO: Translate
   'search.input.placeholder': 'Search units', // TODO: Translate
@@ -206,7 +207,7 @@ export default {
 
   // Settings
   'settings': 'Personifiera',
-  'settings.accessibility': 'Minua koskevat esteettömyystiedot',  // TODO: Translate
+  'settings.accessibility': 'Minua koskevat esteettömyystiedot', // TODO: Translate
   'settings.sense.title': 'Hörsel och syn',
   'settings.sense.hearing': 'Jag använder hörapparat',
   'settings.sense.visual': 'Jag är synskadad',

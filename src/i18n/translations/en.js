@@ -180,6 +180,7 @@ export default {
                   one {# service found}
                   other {# services found}
                 }`,
+  'search.resultInfo': 'Search information',
   'search.searchField': 'Search field',
   'search.results.title': 'Search results',
   'search.input.placeholder': 'Search units',
