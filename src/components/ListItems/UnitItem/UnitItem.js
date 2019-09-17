@@ -46,7 +46,7 @@ class UnitItem extends React.Component {
 
   render() {
     const {
-      unit, changeSelectedUnit, onClick, getLocaleText, intl, navigator,
+      unit, changeSelectedUnit, onClick, getLocaleText, navigator,
     } = this.props;
     // Don't render if not valid unit
     if (!UnitHelper.isValidUnit(unit)) {
