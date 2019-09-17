@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Search, Close } from '@material-ui/icons';
+import { Search, ArrowBack } from '@material-ui/icons';
 import {
   Paper, List, Typography, IconButton,
 } from '@material-ui/core';
@@ -28,6 +28,7 @@ const SuggestionBox = (props) => {
     intl,
     expandQuery,
     closeExpandedSearch,
+    settings,
   } = props;
 
   const [searchQueries, setSearchQueries] = useState(null);
@@ -39,6 +40,12 @@ const SuggestionBox = (props) => {
   const listRef = useRef(null);
   const fetchController = useRef(null);
 
+  const cities = [
+    ...settings.helsinki ? ['Helsinki'] : [],
+    ...settings.espoo ? ['Espoo'] : [],
+    ...settings.vantaa ? ['Vantaa'] : [],
+    ...settings.kauniainen ? ['Kauniainen'] : [],
+  ];
 
   const generateSuggestions = (query) => {
     setSearchQueries(null);
@@ -54,7 +61,7 @@ const SuggestionBox = (props) => {
       fetchController.current = new AbortController();
       const { signal } = fetchController.current;
 
-      createSuggestions(query, getLocaleText, signal)
+      createSuggestions(query, getLocaleText, signal, cities)
         .then((result) => {
           if (result !== 'error') {
             fetchController.current = null;
@@ -79,7 +86,7 @@ const SuggestionBox = (props) => {
   const handleExpandSearch = () => {
     setLoading('expanded');
     setSearchQueries(null);
-    expandSearch(expandQuery, getLocaleText)
+    expandSearch(expandQuery, getLocaleText, cities)
       .then((result) => {
         setLoading(false);
         setExpandedQueries(result.expandedQueries);
@@ -134,15 +141,16 @@ const SuggestionBox = (props) => {
     <>
       {expandQuery ? (
         <div className={classes.expandSearchTop}>
-          <Typography tabIndex="0" component="h3" className={`${classes.expandTitle} suggestionsTitle`} variant="subtitle1">
+          <Typography tabIndex="-1" component="h3" className={`${classes.expandTitle} suggestionsTitle`} variant="subtitle1">
             <FormattedMessage id="search.suggestions.expand" />
           </Typography>
           <IconButton
+            role="link"
             aria-label={intl.formatMessage({ id: 'search.closeExpand' })}
-            className={classes.right}
+            className={classes.backIcon}
             onClick={() => closeExpandedSearch()}
           >
-            <Close />
+            <ArrowBack />
           </IconButton>
         </div>
       )
@@ -168,21 +176,22 @@ const SuggestionBox = (props) => {
         <>
           {expandQuery ? (
             <div className={classes.expandSearchTop}>
-              <Typography tabIndex="0" component="h3" className={`${classes.expandTitle} suggestionsTitle`} variant="subtitle1">
+              <Typography tabIndex="-1" component="h3" className={`${classes.expandTitle} suggestionsTitle`} variant="subtitle1">
                 <FormattedMessage id={titleId} />
               </Typography>
               <IconButton
+                role="link"
                 aria-label={intl.formatMessage({ id: 'search.closeExpand' })}
-                className={classes.right}
+                className={classes.backIcon}
                 onClick={() => closeExpandedSearch()}
               >
-                <Close />
+                <ArrowBack />
               </IconButton>
             </div>
           )
             : (
               <div className={classes.suggestionSubtitle}>
-                <Typography tabIndex="0" component="h3" className={`${classes.subtitleText} suggestionsTitle`} variant="overline">
+                <Typography tabIndex="-1" component="h3" className={`${classes.subtitleText} suggestionsTitle`} variant="overline">
                   <FormattedMessage id={titleId} />
                 </Typography>
               </div>
@@ -204,6 +213,7 @@ const SuggestionBox = (props) => {
           </List>
           {expandedQueries && (
             <ServiceMapButton
+              role="link"
               className={classes.closeButton}
               onKeyDown={e => handleKeyPress(e)}
               onClick={() => closeExpandedSearch()}
@@ -277,9 +287,13 @@ const SuggestionBox = (props) => {
       component = renderSearchHistory();
     }
 
+    const containerStyles = isMobile
+      ? `${classes.suggestionAreaMobile} ${expandQuery ? classes.expandHeightMobile : ''}`
+      : `${classes.suggestionArea} ${expandQuery ? classes.expandHeight : ''}`;
+
     return (
       <>
-        <Paper elevation={20} className={`${classes.suggestionArea} ${expandQuery ? classes.expandHeight : ''}`}>
+        <Paper elevation={20} className={containerStyles}>
           <p className="sr-only" aria-live="polite">{srText}</p>
           {component}
         </Paper>
@@ -303,6 +317,7 @@ SuggestionBox.propTypes = {
   focusedSuggestion: PropTypes.number,
   setSearch: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
+  settings: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 SuggestionBox.defaultProps = {

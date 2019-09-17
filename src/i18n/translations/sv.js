@@ -197,7 +197,7 @@ export default {
   'search.suggestions.history': '{count} kohdetta hakuhistoriassa', // TODO: Translate
   'search.suggestions.noHistory': 'Ei aikaisempia hakuja', // TODO: Translate
   'search.expand': 'Tarkenna hakua', // TODO: Translate
-  'search.closeExpand': 'Sulje tarkennettu haku', // TODO: Translate
+  'search.closeExpand': 'Palaa hakuun', // TODO: Translate
 
   // Service
   'service': 'Tjänst',

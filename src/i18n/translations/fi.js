@@ -197,7 +197,7 @@ export default {
   'search.suggestions.history': '{count} kohdetta hakuhistoriassa',
   'search.suggestions.noHistory': 'Ei aikaisempia hakuja',
   'search.expand': 'Tarkenna hakua',
-  'search.closeExpand': 'Sulje tarkennettu haku',
+  'search.closeExpand': 'Palaa hakuun',
 
 
   // Service

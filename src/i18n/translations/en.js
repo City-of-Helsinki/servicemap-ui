@@ -199,7 +199,7 @@ export default {
   'search.suggestions.history': '{count} items in search history',
   'search.suggestions.noHistory': 'No previous searches',
   'search.expand': 'Expand search', // TODO: verify
-  'search.closeExpand': 'Close expanded search',
+  'search.closeExpand': 'Return to search',
 
 
   // Service

@@ -135,6 +135,7 @@ class SearchBar extends React.Component {
       expandSearch,
       closeExpandedSearch,
       srHideInput,
+      settings,
     } = this.props;
     const { search, isActive, focusedSuggestion } = this.state;
 
@@ -192,6 +193,7 @@ class SearchBar extends React.Component {
             getLocaleText={getLocaleText}
             setSearch={value => this.setState({ search: value })}
             closeExpandedSearch={closeExpandedSearch}
+            settings={settings}
           />
         </div>
       </>
@@ -217,6 +219,7 @@ SearchBar.propTypes = {
   getLocaleText: PropTypes.func.isRequired,
   closeExpandedSearch: PropTypes.func,
   srHideInput: PropTypes.bool,
+  settings: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 SearchBar.defaultProps = {
