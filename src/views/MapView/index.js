@@ -7,13 +7,15 @@ import { getLocaleString } from '../../redux/selectors/locale';
 import { setMapRef } from '../../redux/actions/map';
 import { setAddressLocation } from '../../redux/actions/address';
 import MapView from './MapView';
+import { getServiceUnits } from '../../redux/selectors/service';
+import { getProcessedData } from '../../redux/selectors/results';
 
 // Get redux states as props to component
 const mapStateToProps = (state) => {
-  const { units, settings } = state;
-  const { data } = units;
+  const { settings } = state;
+  const unitList = getProcessedData(state);
   const unitsLoading = state.service.isFetching;
-  const serviceUnits = state.service.units;
+  const serviceUnits = getServiceUnits(state);
   const mapType = getMapType(state);
   const highlightedDistrict = getHighlightedDistrict(state);
   const highlightedUnit = getSelectedUnit(state);
@@ -26,7 +28,7 @@ const mapStateToProps = (state) => {
     highlightedDistrict,
     highlightedUnit,
     getLocaleText,
-    unitList: data,
+    unitList,
     serviceUnits,
     unitsLoading,
     currentPage,
