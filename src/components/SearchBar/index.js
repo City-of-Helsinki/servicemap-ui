@@ -8,7 +8,7 @@ import { getLocaleString } from '../../redux/selectors/locale';
 
 // Listen to redux state
 const mapStateToProps = (state) => {
-  const { navigator, units } = state;
+  const { navigator, units, settings } = state;
   const { isFetching, previousSearch } = units;
   const getLocaleText = textObject => getLocaleString(state, textObject);
   return {
@@ -16,6 +16,7 @@ const mapStateToProps = (state) => {
     isFetching,
     navigator,
     getLocaleText,
+    settings,
   };
 };
 

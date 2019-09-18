@@ -287,7 +287,7 @@ class UnitView extends React.Component {
     const TopBar = (
       <div className={`${classes.topBar} sticky`}>
         <DesktopComponent>
-          <SearchBar placeholder={intl.formatMessage({ id: 'search' })} />
+          <SearchBar placeholder={intl.formatMessage({ id: 'search.placeholder' })} />
           <TitleBar icon={icon} title={title} primary />
         </DesktopComponent>
         <MobileComponent>

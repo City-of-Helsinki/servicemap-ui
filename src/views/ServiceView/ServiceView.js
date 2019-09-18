@@ -102,7 +102,7 @@ class ServiceView extends React.Component {
     return (
       <div>
         <DesktopComponent>
-          <SearchBar placeholder={intl.formatMessage({ id: 'search' })} />
+          <SearchBar placeholder={intl.formatMessage({ id: 'search.placeholder' })} />
           {
             showTitle
             && (

@@ -58,10 +58,35 @@ export default theme => ({
   },
   suggestionArea: {
     zIndex: 51,
-    position: 'absolute',
-    minHeight: 'calc(100vh - 64px - 76px)',
+    position: 'fixed',
+    height: 'calc(100% - 64px - 76px)',
+    width: '450px',
+    backgroundColor: '#fff',
+    overflow: 'auto',
+  },
+  suggestionAreaMobile: {
+    zIndex: 51,
+    position: 'fixed',
+    height: 'calc(100% - 76px)',
     width: '100%',
     backgroundColor: '#fff',
+    overflow: 'auto',
+  },
+  expandTitle: {
+    alignSelf: 'center',
+    marginRight: 'auto',
+    paddingLeft: theme.spacing.unitDouble,
+    '&:focus': {
+      boxShadow: 'none',
+    },
+  },
+  expandHeight: {
+    top: 64,
+    height: 'calc(100% - 64px)',
+  },
+  expandHeightMobile: {
+    top: 0,
+    height: '100%',
   },
   divider: {
     marginLeft: 56,
@@ -90,5 +115,17 @@ export default theme => ({
     width: 'fit-content',
     height: 42,
     marginTop: 12,
+    marginBottom: theme.spacing.unitDouble,
+  },
+  expandSearchTop: {
+    display: 'flex',
+    flexDirection: 'row-reverse',
+    paddingTop: theme.spacing.unit,
+    paddingLeft: theme.spacing.unitDouble,
+    paddingRight: theme.spacing.unitDouble,
+  },
+  backIcon: {
+    paddingLeft: 0,
+    paddingRight: theme.spacing.unitDouble,
   },
 });

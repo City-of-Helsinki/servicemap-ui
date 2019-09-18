@@ -48,7 +48,7 @@ class HomeView extends React.Component {
         </MobileComponent>
         <SearchBar
           hideBackButton
-          placeholder={intl.formatMessage({ id: 'search' })}
+          placeholder={intl.formatMessage({ id: 'search.placeholder' })}
         />
         <Container paper>
           <TitledList title={intl.formatMessage({ id: 'home.example.title' })} divider={false}>
