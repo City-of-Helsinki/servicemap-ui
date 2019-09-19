@@ -92,7 +92,7 @@ class SearchBar extends React.Component {
         fetchUnits, navigator, previousSearch,
       } = this.props;
       if (navigator) {
-        navigator.push('search', search);
+        navigator.push('search', { query: search });
       }
 
       if (search !== previousSearch) {

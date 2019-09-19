@@ -9,7 +9,7 @@ const paths = {
     regex: /\/[a-zA-Z]{2}\/map/
   },
   search: {
-    generate: query => `/search${query ? `?q=${query}` : ''}`,
+    generate: data => `/search${data.query ? `?q=${data.query}` : ''}${data.nodes ? `?nodes=${data.nodes.join()}`: ''}`,
     regex: /\/[a-zA-Z]{2}\/search/
   },
   unit: {
@@ -19,6 +19,10 @@ const paths = {
   service: {
     generate: id => `/service/${id || ''}`,
     regex: /\/[a-zA-Z]{2}\/service\/([0-9]+)/
+  },
+  serviceTree: {
+    generate: id => `/services`,
+    regex: /\/[a-zA-Z]{2}\/services/
   },
   event: {
     generate: id => `/event/${id || ''}`,

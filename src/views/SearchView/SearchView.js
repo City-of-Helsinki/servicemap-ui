@@ -36,9 +36,13 @@ class SearchView extends React.Component {
     const {
       fetchUnits, units, map,
     } = this.props;
-    const searchParam = this.getSearchParam();
+    const searchData = this.getSearchParam();
     if (this.shouldFetch()) {
-      fetchUnits([], null, searchParam);
+      if (searchData.type === 'search') {
+        fetchUnits([], null, searchData.query);
+      } else {
+        console.log('FETCH NODES HERE');
+      }
     }
 
     this.focusMap(units, map);
@@ -59,8 +63,12 @@ class SearchView extends React.Component {
       location,
     } = this.props;
     const searchParams = parseSearchParams(location.search);
-    const searchParam = searchParams.q || null;
-    return searchParam;
+    if (searchParams.q) {
+      return { type: 'search', query: searchParams.q };
+    } if (searchParams.nodes) {
+      return { type: 'node', query: searchParams.nodes };
+    }
+    return null;
   }
 
   // Check if view will fetch data because search params has changed
