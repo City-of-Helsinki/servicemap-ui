@@ -27,8 +27,10 @@ export const setUnitData = data => ({
 export const fetchUnits = (
   searchQuery = null,
   abortController = null,
-) => async (dispatch)
+) => async (dispatch, getState)
 => {
+  const { user } = getState();
+  const { locale } = user;
   const onStart = () => dispatch(fetchIsLoading(searchQuery));
   const onSuccess = (results) => {
     // Filter out duplicate units
@@ -45,7 +47,15 @@ export const fetchUnits = (
   );
 
   // Fetch data
-  searchFetch({ q: searchQuery }, onStart, onSuccess, onError, onNext, null, abortController);
+  searchFetch(
+    { q: searchQuery, language: locale || 'fi' },
+    onStart,
+    onSuccess,
+    onError,
+    onNext,
+    null,
+    abortController,
+  );
 };
 
 export const setNewSearchData = data => async (dispatch) => {
