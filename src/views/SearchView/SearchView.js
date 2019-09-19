@@ -80,35 +80,10 @@ class SearchView extends React.Component {
     }
   }
 
-  filterByCity = (units) => {
-    // TODO: Do we want to filter in fetch or here?
-    const { settings } = this.props;
-    const {
-      helsinki, espoo, vantaa, kauniainen,
-    } = settings;
-
-    const cityFilters = [
-      ...helsinki ? ['helsinki'] : [],
-      ...vantaa ? ['vantaa'] : [],
-      ...espoo ? ['espoo'] : [],
-      ...kauniainen ? ['kauniainen'] : [],
-    ];
-
-    let filteredUnits = units;
-    if (cityFilters.length) {
-      // Filter by city settings
-      filteredUnits = units.filter(unit => cityFilters.includes(unit.municipality) || unit.object_type !== 'unit');
-    }
-
-    return filteredUnits;
-  }
-
   // Group data based on object types
   groupData = (data) => {
     const services = data.filter(obj => obj && obj.object_type === 'service');
-    let units = data.filter(obj => obj && obj.object_type === 'unit');
-
-    units = this.filterByCity(units);
+    const units = data.filter(obj => obj && obj.object_type === 'unit');
 
     return {
       services,
@@ -195,8 +170,7 @@ class SearchView extends React.Component {
     } = settings;
     const query = this.getSearchParam();
 
-    const filteredUnits = this.filterByCity(units);
-    const unitCount = filteredUnits && filteredUnits.length;
+    const unitCount = units && units.length;
 
     const accessibilitySettings = [
       ...colorblind ? [{ text: intl.formatMessage({ id: 'settings.sense.colorblind' }), icon: <ColorblindIcon /> }] : [],
