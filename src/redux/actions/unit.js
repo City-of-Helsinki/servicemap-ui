@@ -48,7 +48,7 @@ export const fetchUnits = (
 
   // Fetch data
   searchFetch(
-    { q: searchQuery, language: locale },
+    { q: searchQuery, language: locale || 'fi' },
     onStart,
     onSuccess,
     onError,
