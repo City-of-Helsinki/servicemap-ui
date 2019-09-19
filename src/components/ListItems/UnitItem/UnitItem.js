@@ -6,6 +6,7 @@ import UnitHelper from '../../../utils/unitHelper';
 import ResultItem from '../ResultItem';
 import SettingsUtility from '../../../utils/settings';
 import UnitIcon from '../../SMIcon/UnitIcon';
+import { uppercaseFirst } from '../../../utils';
 
 class UnitItem extends React.Component {
   state = {
@@ -45,7 +46,7 @@ class UnitItem extends React.Component {
 
   render() {
     const {
-      unit, changeSelectedUnit, onClick, getLocaleText, intl, navigator,
+      unit, changeSelectedUnit, onClick, getLocaleText, navigator,
     } = this.props;
     // Don't render if not valid unit
     if (!UnitHelper.isValidUnit(unit)) {
@@ -57,7 +58,7 @@ class UnitItem extends React.Component {
 
     // Parse unit data
     const {
-      id, name, object_type,
+      contract_type, id, name,
     } = unit;
 
     // Accessibility text and color
@@ -69,10 +70,13 @@ class UnitItem extends React.Component {
     // TODO: Change to check data for distance once location info is available
     const distance = null; // '100';
 
+    // Contract type text
+    const contractType = contract_type && contract_type.description ? uppercaseFirst(getLocaleText(contract_type.description)) : '';
+
     return (
       <ResultItem
         title={getLocaleText(name)}
-        subtitle={intl.formatMessage({ id: object_type })}
+        subtitle={contractType}
         bottomRightText={accessText}
         bottomRightColor={accessColor}
         distancePosition={distance}
