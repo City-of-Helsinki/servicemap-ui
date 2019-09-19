@@ -1,10 +1,10 @@
 import { uppercaseFirst } from '../../utils';
 
-const expandSearch = async (searchQuery, getLocaleText, amount, signal) => {
+const expandSearch = async (searchQuery, getLocaleText, cities, amount, signal) => {
   const listLength = amount || 10;
   const pageSize = 200;
 
-  const results = await fetch(`https://api.hel.fi/servicemap/v2/search/?q=${searchQuery}&only=unit.name,unit.services&include=unit.services&page_size=${pageSize}`, {
+  const results = await fetch(`https://api.hel.fi/servicemap/v2/search/?q=${searchQuery}&municipality=${cities}&only=unit.name,unit.services&include=unit.services&page_size=${pageSize}`, {
     signal,
   })
     .then(response => response.json())
@@ -49,7 +49,7 @@ const expandSearch = async (searchQuery, getLocaleText, amount, signal) => {
       const searchData = [];
       /* Fetch the result count of each suggestion,
       this fetch can be used if we get unique service count from backend */
-      const data = await Promise.all(suggestions.map(word => fetch(`https://api.hel.fi/servicemap/v2/search/?q=${word}&only=unit.name&page_size=0&type=unit`)
+      const data = await Promise.all(suggestions.map(word => fetch(`https://api.hel.fi/servicemap/v2/search/?q=${word}&municipality=${cities}&only=unit.name&page_size=0&type=unit`)
         .then(response => response.json())));
 
       /* Fetch with each of the suggestions to find out the count and the number of unique services in the results

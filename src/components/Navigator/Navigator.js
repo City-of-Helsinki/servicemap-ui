@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchUnits } from '../../../redux/actions/unit';
-import { breadcrumbPush, breadcrumbPop, breadcrumbReplace } from '../../../redux/actions/breadcrumb';
-import { generatePath } from '../../path';
-import { parseSearchParams } from '../..';
-import paths from '../../../../config/paths';
+import { fetchUnits } from '../../redux/actions/unit';
+import { breadcrumbPush, breadcrumbPop, breadcrumbReplace } from '../../redux/actions/breadcrumb';
+import { generatePath } from '../../utils/path';
+import { parseSearchParams } from '../../utils';
+import paths from '../../../config/paths';
 
 class Navigator extends React.Component {
   unlisten = null;
@@ -31,7 +31,7 @@ class Navigator extends React.Component {
       // and previousSearch is not current new location's params
       // then fetch units with new location's search params
       if (paths.search.regex.exec(newLocation.pathname) && previousSearch !== searchParam) {
-        fetchUnits([], null, searchParam);
+        // fetchUnits([], null, searchParam);
       }
 
       // Update breadcrumbs

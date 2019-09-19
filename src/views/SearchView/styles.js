@@ -36,13 +36,16 @@ export default theme => ({
   },
   infoText: {
     color: 'inherit',
-    marginBottom: theme.spacing.unit,
+    marginBottom: 12,
   },
-  appliedSettings: {
+  infoSubText: {
+    color: 'inherit',
+    marginBottom: 4,
+  },
+  infoContainer: {
     display: 'flex',
     maxWidth: '100%',
     flexWrap: 'wrap',
-    marginBottom: theme.spacing.unit,
   },
   settingItem: {
     display: 'flex',
@@ -52,5 +55,18 @@ export default theme => ({
   settingItemText: {
     color: 'inherit',
     alignSelf: 'center',
+  },
+  suggestionButton: {
+    margin: 0,
+    width: 'fit-content',
+    height: 42,
+    borderColor: '#fff',
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderRadius: 8,
+    marginTop: 12,
+  },
+  bold: {
+    fontWeight: 'bold',
   },
 });

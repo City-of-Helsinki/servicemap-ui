@@ -20,7 +20,7 @@ const MobileMapView = ({ intl, map, setCurrentPage }) => {
     <>
       <MobileComponent>
         <SearchBar
-          placeholder={intl.formatMessage({ id: 'search' })}
+          placeholder={intl.formatMessage({ id: 'search.placeholder' })}
         />
       </MobileComponent>
       <DesktopComponent>

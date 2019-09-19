@@ -1,4 +1,4 @@
-import config from '../../../config';
+import { serviceFetch, unitsFetch } from '../../utils/fetch';
 
 export const fetchHasErrored = errorMessage => ({
   type: 'SERVICE_UNITS_FETCH_HAS_ERRORED',
@@ -22,77 +22,42 @@ export const serviceSetCurrent = service => ({
 });
 
 // Thunk fetch
-export const fetchServiceUnits = (
-  serviceId,
-  allData = [],
-  next = null,
-) => async (dispatch, getState) => {
-  // Fetch service data
-  const { unit } = config;
-  const url = unit.apiUrl;
+export const fetchServiceUnits = serviceId => async (dispatch) => {
+  const onStart = () => dispatch(fetchIsLoading());
+  const onSuccess = (data) => {
+    // Filter out duplicate units
+    const distinctData = Array.from(new Set(data.map(x => x.id))).map((id) => {
+      const obj = data.find(s => id === s.id);
+      return obj;
+    });
+    dispatch(serviceFetchDataSuccess(distinctData));
+  };
+  const onError = e => dispatch(fetchHasErrored(e.message));
+  const onNext = (resultTotal, response) => {
+    dispatch(serviceFetchProgressUpdate(resultTotal.length, response.count));
+  };
 
-  const { service } = getState();
-  const { isFetching } = service;
+  const options = {
+    service: serviceId,
+    page_size: 50,
+    only: 'name,accessibility_shortcoming_count,location',
+  };
 
-  // If not currently fetching init fetch
-  if (!isFetching) {
-    dispatch(fetchIsLoading());
-  }
-
-  // If getting next page or first fetch proceed to actual fetch
-  if (next || !isFetching) {
-    // Fetch service units
-    try {
-      let response = null;
-      if (next) {
-        response = await fetch(next);
-      } else {
-        response = await fetch(`${url}unit/?service=${serviceId}&geometry=true&page_size=100`);
-      }
-      if (!response.ok) {
-        throw Error(response.statusText);
-      }
-      const data = await response.json();
-      const newData = [...allData, ...data.results];
-      if (data.next) {
-        // Fetch the next page if response has more than one page of results
-        dispatch(serviceFetchProgressUpdate(newData.length, data.count));
-        dispatch(fetchServiceUnits(serviceId, newData, data.next));
-      } else {
-        // Filter out duplicate units
-        const distinctData = Array.from(new Set(newData.map(x => x.id))).map((id) => {
-          const obj = newData.find(s => id === s.id);
-          return obj;
-        });
-        dispatch(serviceFetchDataSuccess(distinctData));
-      }
-    } catch (e) {
-      dispatch(fetchHasErrored(e.message));
-    }
-  }
+  // Fetch data
+  unitsFetch(options, onStart, onSuccess, onError, onNext);
 };
 
 export const fetchService = serviceId => async (dispatch) => {
-  // Fetch service data
-  const { unit } = config;
-  const url = unit.apiUrl;
+  const onStart = () => dispatch(fetchIsLoading());
+  const onSuccess = (data) => {
+    dispatch(serviceSetCurrent(data));
+    dispatch(fetchServiceUnits(serviceId));
+  };
+  const onError = e => dispatch(fetchHasErrored(e.message));
+  const onNext = null;
 
-  dispatch(fetchIsLoading());
-
-  // Fetch service data
-  try {
-    const response = await fetch(`${url}service/${serviceId}`);
-
-    if (response.ok && response.status === 200) {
-      const service = await response.json();
-      dispatch(serviceSetCurrent(service));
-      dispatch(fetchServiceUnits(serviceId, []));
-    } else {
-      throw Error(response.statusText);
-    }
-  } catch (e) {
-    dispatch(fetchHasErrored(e.message));
-  }
+  // Fetch data
+  serviceFetch(null, onStart, onSuccess, onError, onNext, serviceId);
 };
 
 export const setNewCurrentService = service => async (dispatch) => {

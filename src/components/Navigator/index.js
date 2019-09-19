@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import Navigator from './Navigator';
-import { setNavigatorRef } from '../../../redux/actions/navigator';
+import { setNavigatorRef } from '../../redux/actions/navigator';
 
 /**
  * Wrapper component for Navigator for saving ref to redux state and forwarding

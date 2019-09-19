@@ -30,6 +30,7 @@ import ServiceMapButton from '../../components/ServiceMapButton';
 import UnitIcon from '../../components/SMIcon/UnitIcon';
 import TabLists from '../../components/TabLists';
 import config from '../../../config';
+import { accessibilitySentencesFetch } from '../../utils/fetch';
 
 class UnitView extends React.Component {
   constructor(props) {
@@ -159,29 +160,24 @@ class UnitView extends React.Component {
    * by AccessibilityInfo
    */
   async fetchAccessibilitySentences() {
-    const BASE_URL = 'https://www.hel.fi/palvelukarttaws/rest/v4/unit/';
     const { unit } = this.props;
 
     if (!unit) {
       return;
     }
 
-    const url = `${BASE_URL}${unit.id}`;
-
-    try {
-      const response = await fetch(url);
-      if (response.ok && response.status === 200) {
-        const data = await response.json();
-        const parsedData = this.parseAccessibilitySentences(data);
-        this.setState({
-          accessibilityInfoData: parsedData,
-        });
-      } else {
-        throw new Error(response.statusText);
-      }
-    } catch (e) {
+    // const url = `${BASE_URL}${unit.id}`;
+    const onSuccess = (data) => {
+      const parsedData = this.parseAccessibilitySentences(data);
+      this.setState({
+        accessibilityInfoData: parsedData,
+      });
+    };
+    const onError = (e) => {
       throw Error('Error fetching accessibility sentences', e.message);
-    }
+    };
+
+    accessibilitySentencesFetch({}, null, onSuccess, onError, null, unit.id);
   }
 
   renderDetailTab() {
@@ -291,7 +287,7 @@ class UnitView extends React.Component {
     const TopBar = (
       <div className={`${classes.topBar} sticky`}>
         <DesktopComponent>
-          <SearchBar placeholder={intl.formatMessage({ id: 'search' })} />
+          <SearchBar placeholder={intl.formatMessage({ id: 'search.placeholder' })} />
           <TitleBar icon={icon} title={title} primary />
         </DesktopComponent>
         <MobileComponent>

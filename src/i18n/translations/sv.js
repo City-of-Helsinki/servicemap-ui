@@ -147,6 +147,7 @@ export default {
 
   // Search
   'search': 'Hae', // TODO: Translate
+  'search.placeholder': 'Hae palvelua tai toimipistettä', // TODO: Translate
   'search.info': `{count, plural,
                   =0 {no units}
                   one {# unit}
@@ -177,15 +178,17 @@ export default {
                   one {# service found}
                   other {# services found}
                 }`, // TODO: Translate
+  'search.resultInfo': 'Hakutiedot', // TODO: Translate
+  'search.searchField': 'Hakukenttä', // TODO: Translate
   'search.results.title': 'Search results', // TODO: Translate
   'search.input.placeholder': 'Search units', // TODO: Translate
   'search.loading.units': 'Searching units {count} / {max}', // TODO: Translate
   'search.loading.units.srInfo': 'Search loading {count} units', // TODO: Translate
   'search.notFound': 'No results found with given search', // TODO: Translate
   'search.started': 'Search started', // TODO: Translate
-  'search.infoText': 'Näytetään {count} hakutulosta sanalla: "{query}"', // TODO: Translate
+  'search.infoText': 'Näytetään {count} hakutulosta sanalla: ', // TODO: Translate
   'search.suggestions.suggest': 'Tarkoititko..?', // TODO: Translate
-  'search.suggestions.expand': 'Tarkenna hakua', // TODO: Translate
+  'search.suggestions.expand': 'Hakuehdotukset', // TODO: Translate
   'search.suggestions.loading': 'Ladataan ehdotuksia', // TODO: Translate
   'search.suggestions.error': 'Ei hakuehdotuksia', // TODO: Translate
   'search.suggestions.suggestions': '{count} hakuehdotusta', // TODO: Translate
@@ -194,6 +197,7 @@ export default {
   'search.suggestions.history': '{count} kohdetta hakuhistoriassa', // TODO: Translate
   'search.suggestions.noHistory': 'Ei aikaisempia hakuja', // TODO: Translate
   'search.expand': 'Tarkenna hakua', // TODO: Translate
+  'search.closeExpand': 'Palaa hakuun', // TODO: Translate
 
   // Service
   'service': 'Tjänst',
@@ -203,17 +207,26 @@ export default {
 
   // Settings
   'settings': 'Personifiera',
+  'settings.accessibility': 'Minua koskevat esteettömyystiedot', // TODO: Translate
   'settings.sense.title': 'Hörsel och syn',
   'settings.sense.hearing': 'Jag använder hörapparat',
   'settings.sense.visual': 'Jag är synskadad',
   'settings.sense.colorblind': 'Jag är färgblind',
-  'settings.sense.colorblindShort': 'Jag är färgblind',
   'settings.mobility.title': 'Att röra sig',
   'settings.mobility.none': 'No mobility impairments', // TODO: Translate
   'settings.mobility.wheelchair': 'Jag använder rullstol',
   'settings.mobility.reduced_mobility': 'Jag är rörelsehindrad',
   'settings.mobility.rollator': 'Jag använder rollator',
   'settings.mobility.stroller': 'Jag går med barnvagn',
+  'settings.city.info': `{count, plural,
+    one {Valitsemani kaupunki} 
+    other {Valitsemani kaupungit}
+  }`, // TODO: Translate
+  'settings.city.title': 'Kaupunki', // TODO: Translate
+  'settings.city.helsinki': 'Helsinki',
+  'settings.city.espoo': 'Espoo',
+  'settings.city.vantaa': 'Vantaa',
+  'settings.city.kauniainen': 'Kauniainen',
   'settings.aria.changed': 'Settings have changed. Remember to save', // TODO: Translate
   'settings.aria.closed': 'Settings closed', // TODO: Translate
   'settings.aria.open': 'Open settings', // TODO: Translate

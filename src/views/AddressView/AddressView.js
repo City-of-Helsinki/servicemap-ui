@@ -174,7 +174,7 @@ const AddressView = (props) => {
   const renderTopBar = title => (
     <div className={`${classes.topBar} sticky`}>
       <DesktopComponent>
-        <SearchBar placeholder={intl.formatMessage({ id: 'search' })} />
+        <SearchBar placeholder={intl.formatMessage({ id: 'search.placeholder' })} />
         <TitleBar icon={<AddressIcon className={classes.titleIcon} />} title={error || title} primary />
       </DesktopComponent>
       <MobileComponent>
@@ -228,10 +228,12 @@ const AddressView = (props) => {
 
   // Update view data when match props (url) change
   useEffect(() => {
-    fetchData(match);
-    if (highlightedDistrict) {
-      // Clear any drawn districts from map
-      setHighlightedDistrict(null);
+    if (map) {
+      fetchData(match);
+      if (highlightedDistrict) {
+        // Clear any drawn districts from map
+        setHighlightedDistrict(null);
+      }
     }
   }, [match.url, map]);
 

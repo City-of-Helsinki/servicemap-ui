@@ -16,6 +16,7 @@ import SimpleListItem from '../../components/ListItems/SimpleListItem';
 import UnitItem from '../../components/ListItems/UnitItem';
 import TitledList from '../../components/Lists/TitledList';
 import UnitHelper from '../../utils/unitHelper';
+import { eventFetch } from '../../utils/fetch';
 
 class EventDetailView extends React.Component {
   componentDidMount() {
@@ -27,23 +28,25 @@ class EventDetailView extends React.Component {
     if (!event) {
       const { match } = this.props;
       if (match.params && match.params.event) {
-        fetch(`https://api.hel.fi/linkedevents/v1/event/${match.params.event}/?include=location,location.accessibility_shortcoming_count`)
-          .then(response => response.json())
-          .then((data) => {
-            changeSelectedEvent(data);
+        const options = {
+          include: 'location,location.accessibility_shortcoming_count',
+        };
+        const onSuccess = (data) => {
+          changeSelectedEvent(data);
 
-            // Attempt fetching selected unit if it doesn't exist or isn't correct one
-            const unit = data.location;
-            if (typeof unit === 'object' && unit.id) {
-              const unitId = unit.id.split(':').pop();
-              if (
-                !UnitHelper.isValidUnit(selectedUnit)
-                || parseInt(unitId, 10) !== selectedUnit.id
-              ) {
-                fetchSelectedUnit(unitId);
-              }
+          // Attempt fetching selected unit if it doesn't exist or isn't correct one
+          const unit = data.location;
+          if (typeof unit === 'object' && unit.id) {
+            const unitId = unit.id.split(':').pop();
+            if (
+              !UnitHelper.isValidUnit(selectedUnit)
+              || parseInt(unitId, 10) !== selectedUnit.id
+            ) {
+              fetchSelectedUnit(unitId);
             }
-          });
+          }
+        };
+        eventFetch(options, null, onSuccess, null, null, match.params.event);
       }
     }
   }
@@ -90,7 +93,7 @@ class EventDetailView extends React.Component {
       return (
         <>
           <DesktopComponent>
-            <SearchBar placeholder={intl.formatMessage({ id: 'search' })} />
+            <SearchBar placeholder={intl.formatMessage({ id: 'search.placeholder' })} />
             <TitleBar title={getLocaleText(event.name)} icon={<Event />} />
           </DesktopComponent>
           <MobileComponent>

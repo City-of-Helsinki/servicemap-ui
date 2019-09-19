@@ -9,7 +9,7 @@ import { Close } from '@material-ui/icons';
 import Container from '../Container';
 
 const SettingsTitle = ({
-  classes, close, intl, titleID, typography,
+  classes, close, id, intl, titleID, typography,
 }) => (
   <Container className={`${classes.titleContainer} ${close ? classes.flexReverse : ''}`}>
     {
@@ -26,7 +26,7 @@ const SettingsTitle = ({
         </IconButton>
       )
     }
-    <Typography className={classes.titleText} component="h3" variant="caption" align="left" {...typography}>
+    <Typography id={id} className={classes.titleText} component="h3" variant="caption" align="left" {...typography}>
       <FormattedMessage id={titleID} />
     </Typography>
   </Container>
@@ -35,6 +35,7 @@ const SettingsTitle = ({
 SettingsTitle.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   close: PropTypes.func,
+  id: PropTypes.string,
   intl: intlShape.isRequired,
   titleID: PropTypes.string.isRequired,
   typography: PropTypes.objectOf(PropTypes.any),
@@ -42,6 +43,7 @@ SettingsTitle.propTypes = {
 
 SettingsTitle.defaultProps = {
   close: null,
+  id: null,
   typography: { component: 'h3' },
 };
 

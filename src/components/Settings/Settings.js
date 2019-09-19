@@ -19,7 +19,14 @@ import isClient, { AddEventListener } from '../../utils';
 import SettingsUtility from '../../utils/settings';
 import Container from '../Container';
 import {
-  ColorblindIcon, HearingIcon, VisualImpairmentIcon, getIcon,
+  ColorblindIcon,
+  HearingIcon,
+  VisualImpairmentIcon,
+  HelsinkiIcon,
+  EspooIcon,
+  VantaaIcon,
+  KauniainenIcon,
+  getIcon,
 } from '../SMIcon';
 import ServiceMapButton from '../ServiceMapButton';
 import SettingsTitle from './SettingsTitle';
@@ -44,7 +51,7 @@ class Settings extends React.Component {
     const { current } = this.state;
     const { settings } = this.props;
     const {
-      colorblind, hearingAid, mobility, visuallyImpaired,
+      colorblind, hearingAid, mobility, visuallyImpaired, helsinki, espoo, vantaa, kauniainen,
     } = settings;
 
     // Create current settings from redux data
@@ -54,6 +61,10 @@ class Settings extends React.Component {
       hearingAid,
       mobility: mobility !== null ? mobility : 'none',
       visuallyImpaired,
+      helsinki,
+      espoo,
+      vantaa,
+      kauniainen,
     };
 
     this.setState({
@@ -218,7 +229,15 @@ class Settings extends React.Component {
   saveSettings() {
     const { currentSettings } = this.state;
     const {
-      toggleHearingAid, toggleColorblind, toggleVisuallyImpaired, setMobility, settings,
+      toggleHearingAid,
+      toggleColorblind,
+      toggleVisuallyImpaired,
+      setMobility,
+      toggleHelsinki,
+      toggleEspoo,
+      toggleVantaa,
+      toggleKauniainen,
+      settings,
     } = this.props;
 
     // Map redux actions with used setting keys
@@ -227,6 +246,10 @@ class Settings extends React.Component {
       hearingAid: toggleHearingAid,
       visuallyImpaired: toggleVisuallyImpaired,
       mobility: setMobility,
+      helsinki: toggleHelsinki,
+      espoo: toggleEspoo,
+      vantaa: toggleVantaa,
+      kauniainen: toggleKauniainen,
     };
 
     try {
@@ -281,12 +304,13 @@ class Settings extends React.Component {
     return (
       <Container>
         <SettingsTitle
+          id="SenseSettings"
           classes={classes}
           close={() => this.toggleSettingsContainer()}
           intl={intl}
           titleID="settings.sense.title"
         />
-        <FormGroup row>
+        <FormGroup row role="group" aria-labelledby="SenseSettings">
           <List className={classes.list}>
             {
               Object.keys(senseSettingList).map((key) => {
@@ -412,6 +436,80 @@ class Settings extends React.Component {
     } return (null);
   }
 
+  renderCitySettings = () => {
+    const { currentSettings } = this.state;
+    const { classes, intl } = this.props;
+
+    const citySettingsList = {
+      helsinki: {
+        labelId: 'settings.city.helsinki',
+        value: currentSettings.helsinki,
+        icon: <HelsinkiIcon className={classes.icon} />,
+      },
+      espoo: {
+        labelId: 'settings.city.espoo',
+        value: currentSettings.espoo,
+        icon: <EspooIcon className={classes.icon} />,
+      },
+      vantaa: {
+        labelId: 'settings.city.vantaa',
+        value: currentSettings.vantaa,
+        icon: <VantaaIcon className={classes.icon} />,
+      },
+      kauniainen: {
+        labelId: 'settings.city.kauniainen',
+        value: currentSettings.kauniainen,
+        icon: <KauniainenIcon className={classes.icon} />,
+      },
+    };
+
+    return (
+      <Container>
+        <SettingsTitle
+          classes={classes}
+          intl={intl}
+          id="CitySettings"
+          titleID="settings.city.title"
+        />
+        <FormGroup row role="group" aria-labelledby="CitySettings">
+          <List className={classes.list}>
+            {
+              Object.keys(citySettingsList).map((key) => {
+                if (Object.prototype.hasOwnProperty.call(citySettingsList, key)) {
+                  const item = citySettingsList[key];
+                  return (
+                    <ListItem className={classes.checkbox} key={key}>
+                      <FormControlLabel
+                        control={(
+                          <Checkbox
+                            color="primary"
+                            checked={!!item.value}
+                            value={key}
+                            onChange={() => {
+                              this.setAlert(false);
+                              this.handleChange(key, !item.value);
+                            }}
+                          />
+                        )}
+                        label={(
+                          <>
+                            {item.icon}
+                            <FormattedMessage id={item.labelId} />
+                          </>
+                        )}
+                      />
+                    </ListItem>
+                  );
+                }
+                return null;
+              })
+            }
+          </List>
+        </FormGroup>
+      </Container>
+    );
+  }
+
   renderConfirmationBox() {
     const { classes, isMobile } = this.props;
     const containerClasses = ` ${this.settingsHaveChanged() ? classes.stickyContainer : classes.hidden} ${isMobile ? classes.stickyMobile : ''}`;
@@ -509,6 +607,10 @@ class Settings extends React.Component {
               {
                   this.renderMobilitySettings()
                 }
+
+              {
+                this.renderCitySettings()
+              }
               <ServiceMapButton className={classes.contentButton} color="primary" variant="contained" onClick={() => this.saveSettings()} disabled={!settingsHaveChanged}>
                 <FormattedMessage id="general.save.changes" />
               </ServiceMapButton>
@@ -544,6 +646,10 @@ Settings.propTypes = {
   toggleColorblind: PropTypes.func.isRequired,
   toggleHearingAid: PropTypes.func.isRequired,
   toggleVisuallyImpaired: PropTypes.func.isRequired,
+  toggleHelsinki: PropTypes.func.isRequired,
+  toggleEspoo: PropTypes.func.isRequired,
+  toggleVantaa: PropTypes.func.isRequired,
+  toggleKauniainen: PropTypes.func.isRequired,
   setMobility: PropTypes.func.isRequired,
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
   isMobile: PropTypes.bool,

@@ -1,4 +1,7 @@
+const webpack = require('webpack'); //to access built-in plugins
 const path = require('path');
+const dotenv = require('dotenv');
+dotenv.config();
 
 const NODE_ENV = process.env.NODE_ENV;
 const isEnvProduction = NODE_ENV === 'production';
@@ -86,6 +89,15 @@ const serverConfig = {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name]',
   },
+  plugins: [
+    new webpack.EnvironmentPlugin([
+      'PORT',
+      'ACCESSIBILITY_SENTENCE_API',
+      'SERVICEMAP_API',
+      'EVENTS_API',
+      'RESERVATIONS_API'
+    ]),
+  ]
 };
 
 const clientConfig = {
@@ -109,6 +121,14 @@ const clientConfig = {
     path: path.resolve(__dirname, 'dist/src'),
     filename: '[name]',
   },
+  plugins: [
+    new webpack.EnvironmentPlugin([
+      'ACCESSIBILITY_SENTENCE_API',
+      'SERVICEMAP_API',
+      'EVENTS_API',
+      'RESERVATIONS_API'
+    ]),
+  ]
 };
 
 module.exports = [serverConfig, clientConfig];

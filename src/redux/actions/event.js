@@ -1,4 +1,4 @@
-import config from '../../../config';
+import { unitEventsFetch } from '../../utils/fetch';
 
 export const fetchIsLoading = () => ({
   type: 'EVENTS_IS_FETCHING',
@@ -19,22 +19,12 @@ export const setSelectedEvent = event => ({
 });
 
 export const fetchUnitEvents = unitId => async (dispatch) => {
-  const { events } = config;
-  const url = events.apiUrl;
+  const onStart = () => dispatch(fetchIsLoading());
+  const onSuccess = data => dispatch(eventFetchDataSuccess(data.data, unitId));
+  const onError = e => dispatch(fetchHasErrored(e.message));
 
-  dispatch(fetchIsLoading());
-  try {
-    const response = await fetch(`${url}event/?type=event&start=today&sort=start_time&include=location&location=tprek:${unitId}`);
-
-    if (response.ok && response.status === 200) {
-      const events = await response.json();
-      dispatch(eventFetchDataSuccess(events.data, unitId));
-    } else {
-      throw Error(response.statusText);
-    }
-  } catch (e) {
-    dispatch(fetchHasErrored(e.message));
-  }
+  // Fetch data
+  unitEventsFetch({ location: `tprek:${unitId}` }, onStart, onSuccess, onError);
 };
 
 export const changeSelectedEvent = event => async (dispatch) => {

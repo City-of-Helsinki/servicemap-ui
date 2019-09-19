@@ -148,6 +148,7 @@ export default {
 
   // Search
   'search': 'Hae',
+  'search.placeholder': 'Hae palvelua tai toimipistettä',
   'search.info': `{count, plural,
                   =0 {Toimipisteitä ei löytynyt}
                   one {# toimipiste löydetty}
@@ -177,23 +178,26 @@ export default {
                 one {# palvelu löydetty}
                 other {# palvelua löydetty}
               }`,
+  'search.resultInfo': 'Hakutiedot',
+  'search.searchField': 'Hakukenttä',
   'search.results.title': 'Hakutulokset',
   'search.input.placeholder': 'Hae toimipisteitä',
   'search.loading.units': 'Haetaan toimipisteitä {count} / {max}',
   'search.loading.units.srInfo': 'Haetaan {count} toimipistettä',
   'search.notFound': 'Haulla ei löytynyt hakutuloksia',
   'search.started': 'Haku aloitettu',
-  'search.infoText': 'Näytetään {count} hakutulosta sanalla: "{query}"',
+  'search.infoText': 'Näytetään {count} hakutulosta sanalla: ',
   'search.suggestions.suggest': 'Tarkoititko..?',
-  'search.suggestions.expand': 'Tarkenna hakua',
+  'search.suggestions.expand': 'Hakuehdotukset',
   'search.suggestions.loading': 'Ladataan ehdotuksia',
   'search.suggestions.error': 'Ei ehdotuksia',
   'search.suggestions.suggestions': '{count} hakuehdotusta',
-  'search.suggestions.expandSuggestions': '{count} tarkennusehdotusta',
+  // 'search.suggestions.expandSuggestions': '{count} tarkennusehdotusta',
   'search.suggestions.results': '{count} tulosta',
   'search.suggestions.history': '{count} kohdetta hakuhistoriassa',
   'search.suggestions.noHistory': 'Ei aikaisempia hakuja',
   'search.expand': 'Tarkenna hakua',
+  'search.closeExpand': 'Palaa hakuun',
 
 
   // Service
@@ -204,17 +208,26 @@ export default {
 
   // Settings
   'settings': 'Asetukset',
+  'settings.accessibility': 'Minua koskevat esteettömyystiedot',
   'settings.sense.title': 'Aistirajoitteet',
   'settings.sense.hearing': 'Käytän kuulolaitetta',
   'settings.sense.visual': 'Olen näkövammainen',
   'settings.sense.colorblind': 'Minun on vaikea erottaa värejä',
-  'settings.sense.colorblindShort': 'Vaikea erottaa värejä',
   'settings.mobility.title': 'Liikkumisrajoitteet',
   'settings.mobility.none': 'Ei liikkumisrajoitteita',
   'settings.mobility.wheelchair': 'Käytän pyörätuolia',
   'settings.mobility.reduced_mobility': 'Olen liikkumisesteinen',
   'settings.mobility.rollator': 'Käytän rollaattoria',
   'settings.mobility.stroller': 'Työnnän rattaita',
+  'settings.city.info': `{count, plural,
+    one {Valitsemani kaupunki}
+    other {Valitsemani kaupungit}
+  }`,
+  'settings.city.title': 'Kaupunki',
+  'settings.city.helsinki': 'Helsinki',
+  'settings.city.espoo': 'Espoo',
+  'settings.city.vantaa': 'Vantaa',
+  'settings.city.kauniainen': 'Kauniainen',
   'settings.aria.changed': 'Asetukset muutettu. Muista tallentaa',
   'settings.aria.closed': 'Asetukset suljettu',
   'settings.aria.open': 'Avaa asetukset',

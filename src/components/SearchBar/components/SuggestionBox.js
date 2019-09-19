@@ -1,7 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Search } from '@material-ui/icons';
-import { Paper, List, Typography } from '@material-ui/core';
+import { Search, ArrowBack } from '@material-ui/icons';
+import {
+  Paper, List, Typography, IconButton,
+} from '@material-ui/core';
 import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
 import { FormattedMessage, intlShape } from 'react-intl';
 import expandSearch from '../expandSearch';
@@ -9,22 +11,24 @@ import { getPreviousSearches } from '../previousSearchData';
 import PreviousSearches from '../PreviousSearches';
 import createSuggestions from '../createSuggestions';
 import ResultItem from '../../ListItems/ResultItem/ResultItem';
-
 import config from '../../../../config';
 import { MobileComponent } from '../../../layouts/WrapperComponents/WrapperComponents';
+import ServiceMapButton from '../../ServiceMapButton';
 
 
 const SuggestionBox = (props) => {
   const {
     visible,
     searchQuery,
-    showExpanded,
     handleSubmit,
     classes,
     getLocaleText,
     focusedSuggestion,
     setSearch,
     intl,
+    expandQuery,
+    closeExpandedSearch,
+    settings,
   } = props;
 
   const [searchQueries, setSearchQueries] = useState(null);
@@ -36,6 +40,12 @@ const SuggestionBox = (props) => {
   const listRef = useRef(null);
   const fetchController = useRef(null);
 
+  const cities = [
+    ...settings.helsinki ? ['Helsinki'] : [],
+    ...settings.espoo ? ['Espoo'] : [],
+    ...settings.vantaa ? ['Vantaa'] : [],
+    ...settings.kauniainen ? ['Kauniainen'] : [],
+  ];
 
   const generateSuggestions = (query) => {
     setSearchQueries(null);
@@ -51,7 +61,7 @@ const SuggestionBox = (props) => {
       fetchController.current = new AbortController();
       const { signal } = fetchController.current;
 
-      createSuggestions(query, getLocaleText, signal)
+      createSuggestions(query, getLocaleText, signal, cities)
         .then((result) => {
           if (result !== 'error') {
             fetchController.current = null;
@@ -74,21 +84,22 @@ const SuggestionBox = (props) => {
   };
 
   const handleExpandSearch = () => {
-    if (!searchQuery) {
-      if (expandedQueries) {
-        setExpandedQueries(null);
-      }
-    } else {
-      setLoading('expanded');
-      setSearchQueries(null);
-      expandSearch(searchQuery, getLocaleText)
-        .then((result) => {
-          setLoading(false);
-          setExpandedQueries(result.expandedQueries);
-        });
-    }
+    setLoading('expanded');
+    setSearchQueries(null);
+    expandSearch(expandQuery, getLocaleText, cities)
+      .then((result) => {
+        setLoading(false);
+        setExpandedQueries(result.expandedQueries);
+      });
   };
 
+  const handleKeyPress = (e) => {
+    // Close suggestion box if tab is pressed in last list result
+    if (e.key === 'Tab' && !(e.shiftKey && e.key === 'Tab')) {
+      e.preventDefault();
+      closeExpandedSearch();
+    }
+  };
 
   const setSearchBarText = () => {
     if (listRef && listRef.current) {
@@ -120,7 +131,7 @@ const SuggestionBox = (props) => {
           <FormattedMessage id="search.suggestions.suggest" />
         </Typography>
       </div>
-      <Typography aria-live="polite">
+      <Typography>
         <FormattedMessage id="search.suggestions.error" />
       </Typography>
     </>
@@ -128,12 +139,30 @@ const SuggestionBox = (props) => {
 
   const renderLoading = () => (
     <>
-      <div className={classes.suggestionSubtitle}>
-        <Typography className={classes.subtitleText} variant="overline">
-          <FormattedMessage id={loading === 'suggestions' ? 'search.suggestions.suggest' : 'search.suggestions.expand'} />
-        </Typography>
-      </div>
-      <Typography aria-live="polite">
+      {expandQuery ? (
+        <div className={classes.expandSearchTop}>
+          <Typography tabIndex="-1" component="h3" className={`${classes.expandTitle} suggestionsTitle`} variant="subtitle1">
+            <FormattedMessage id="search.suggestions.expand" />
+          </Typography>
+          <IconButton
+            role="link"
+            aria-label={intl.formatMessage({ id: 'search.closeExpand' })}
+            className={classes.backIcon}
+            onClick={() => closeExpandedSearch()}
+          >
+            <ArrowBack />
+          </IconButton>
+        </div>
+      )
+        : (
+          <div className={classes.suggestionSubtitle}>
+            <Typography className={classes.subtitleText} variant="overline">
+              <FormattedMessage id={loading === 'suggestions' ? 'search.suggestions.suggest' : 'search.suggestions.expand'} />
+            </Typography>
+          </div>
+        )
+              }
+      <Typography>
         <FormattedMessage id="search.suggestions.loading" />
       </Typography>
     </>
@@ -142,18 +171,32 @@ const SuggestionBox = (props) => {
   const renderSuggestionList = () => {
     const suggestionList = expandedQueries || searchQueries || null;
     const titleId = expandedQueries ? 'search.suggestions.expand' : 'search.suggestions.suggest';
-    const srTitle = expandedQueries ? 'search.suggestions.expandSuggestions' : 'search.suggestions.suggestions';
     if (suggestionList) {
       return (
         <>
-          <div className={classes.suggestionSubtitle}>
-            <Typography tabIndex="0" component="h3" className={`${classes.subtitleText} suggestionsTitle`} variant="overline">
-              <FormattedMessage id={titleId} />
-            </Typography>
-          </div>
-          <p aria-live={expandedQueries ? null : 'polite'} className="sr-only">
-            <FormattedMessage id={srTitle} values={{ count: suggestionList.length }} />
-          </p>
+          {expandQuery ? (
+            <div className={classes.expandSearchTop}>
+              <Typography tabIndex="-1" component="h3" className={`${classes.expandTitle} suggestionsTitle`} variant="subtitle1">
+                <FormattedMessage id={titleId} />
+              </Typography>
+              <IconButton
+                role="link"
+                aria-label={intl.formatMessage({ id: 'search.closeExpand' })}
+                className={classes.backIcon}
+                onClick={() => closeExpandedSearch()}
+              >
+                <ArrowBack />
+              </IconButton>
+            </div>
+          )
+            : (
+              <div className={classes.suggestionSubtitle}>
+                <Typography tabIndex="-1" component="h3" className={`${classes.subtitleText} suggestionsTitle`} variant="overline">
+                  <FormattedMessage id={titleId} />
+                </Typography>
+              </div>
+            )
+          }
           <List className="suggestionList" ref={listRef}>
             {suggestionList.map((item, i) => (
               <ResultItem
@@ -168,11 +211,26 @@ const SuggestionBox = (props) => {
               />
             ))}
           </List>
+          {expandedQueries && (
+            <ServiceMapButton
+              role="link"
+              className={classes.closeButton}
+              onKeyDown={e => handleKeyPress(e)}
+              onClick={() => closeExpandedSearch()}
+            >
+              <Typography variant="button">
+                <FormattedMessage id="search.closeExpand" />
+              </Typography>
+            </ServiceMapButton>
+          )}
         </>
       );
     } return null;
   };
 
+  /**
+  * Component updaters
+  */
   useEffect(() => { // Start generating suggestions when typing in searchbar
     if (searchQuery && focusedSuggestion === null) {
       generateSuggestions(searchQuery);
@@ -180,47 +238,63 @@ const SuggestionBox = (props) => {
   }, [searchQuery]);
 
   useEffect(() => { // Start expanded search when expand button is toggled on. Else clear data.
-    if (showExpanded) {
+    if (expandQuery) {
       handleExpandSearch();
     } else {
       setExpandedQueries(null);
     }
-  }, [showExpanded]);
+  }, [expandQuery]);
 
   useEffect(() => { // Change text of the searchbar when suggestion with keyboard focus changes
     setSearchBarText();
   }, [focusedSuggestion]);
 
-  const isMobile = useMediaQuery(`(max-width:${config.mobileUiBreakpoint}px)`);
-  const sidebar = typeof document !== 'undefined' ? document.getElementsByClassName('SidebarWrapper')[0] : null;
+  useEffect(() => { // Focus on list title when expanded queries appear
+    if (expandedQueries) {
+      document.getElementsByClassName('suggestionsTitle')[0].focus();
+    }
+  }, [expandedQueries]);
 
-  useEffect(() => { // Disable page scroll when suggestion box is open
+  const isMobile = useMediaQuery(`(max-width:${config.mobileUiBreakpoint}px)`);
+
+  useEffect(() => {
+    // Disable page scroll when suggestion box is open
+    const sidebar = document.getElementsByClassName('SidebarWrapper')[0];
     if (visible) {
-      sidebar.style.overflow = 'hidden';
-    } else if (isMobile) {
-      sidebar.style.overflow = '';
+      sidebar.style.overflow = isMobile ? '' : 'hidden';
     } else {
-      sidebar.style.overflow = 'auto';
+      sidebar.style.overflow = isMobile ? '' : 'auto';
     }
   }, [visible]);
 
-
-  // Render component
+  /**
+  * Render component
+  */
   if (visible) {
     let component = null;
+    let srText = null;
     if (loading) {
       component = renderLoading();
+      srText = null;
     } else if (searchQueries || expandedQueries) {
       component = renderSuggestionList();
+      const suggestionList = expandedQueries || searchQueries || null;
+      srText = intl.formatMessage({ id: 'search.suggestions.suggestions' }, { count: suggestionList.length });
     } else if (suggestionError) {
       component = renderNoResults();
+      srText = intl.formatMessage({ id: 'search.suggestions.error' });
     } else {
       component = renderSearchHistory();
     }
 
+    const containerStyles = isMobile
+      ? `${classes.suggestionAreaMobile} ${expandQuery ? classes.expandHeightMobile : ''}`
+      : `${classes.suggestionArea} ${expandQuery ? classes.expandHeight : ''}`;
+
     return (
       <>
-        <Paper elevation={20} className={classes.suggestionArea}>
+        <Paper elevation={20} className={containerStyles}>
+          <p className="sr-only" aria-live="polite">{srText}</p>
           {component}
         </Paper>
         <MobileComponent>
@@ -233,20 +307,23 @@ const SuggestionBox = (props) => {
 };
 
 SuggestionBox.propTypes = {
-  visible: PropTypes.bool.isRequired,
+  visible: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   searchQuery: PropTypes.string,
-  showExpanded: PropTypes.bool,
+  expandQuery: PropTypes.string,
+  closeExpandedSearch: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   getLocaleText: PropTypes.func.isRequired,
   focusedSuggestion: PropTypes.number,
   setSearch: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
+  settings: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 SuggestionBox.defaultProps = {
+  visible: false,
   searchQuery: null,
-  showExpanded: false,
+  expandQuery: null,
   focusedSuggestion: null,
 };
 

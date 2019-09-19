@@ -16,15 +16,23 @@ class AccessibilityInfo extends React.Component {
     const { settings, unit } = this.props;
     const accessibilityShortcomings = unit.accessibility_description;
 
+    if (!accessibilityShortcomings) {
+      return null;
+    }
+
+    const cities = ['helsinki', 'espoo', 'vantaa', 'kauniainen'];
+
     // Create shortcoming array from current settings
     const shortcomingSettings = [];
     Object.keys(settings).forEach((key) => {
-      if (Object.prototype.hasOwnProperty.call(settings, key)) {
-        const item = settings[key];
-        if (typeof item === 'string') {
-          shortcomingSettings.push(item);
-        } if (typeof item === 'boolean' && item === true) {
-          shortcomingSettings.push(SettingsUtility.getApiValidDataKey(key));
+      if (!cities.includes(key)) {
+        if (Object.prototype.hasOwnProperty.call(settings, key)) {
+          const item = settings[key];
+          if (typeof item === 'string') {
+            shortcomingSettings.push(item);
+          } if (typeof item === 'boolean' && item === true) {
+            shortcomingSettings.push(SettingsUtility.getApiValidDataKey(key));
+          }
         }
       }
     });

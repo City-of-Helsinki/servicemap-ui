@@ -20,11 +20,16 @@ import { DesktopComponent } from '../../layouts/WrapperComponents/WrapperCompone
 import {
   ColorblindIcon, HearingIcon, VisualImpairmentIcon, getIcon,
 } from '../../components/SMIcon';
+import ServiceMapButton from '../../components/ServiceMapButton';
 
 class SearchView extends React.Component {
   constructor(props) {
     super(props);
     const { changeSelectedUnit } = props;
+
+    this.state = {
+      expandSearch: null,
+    };
 
     // Reset selected unit on SearchView
     if (changeSelectedUnit) {
@@ -39,13 +44,12 @@ class SearchView extends React.Component {
     const searchData = this.getSearchParam();
     if (this.shouldFetch()) {
       if (searchData.type === 'search') {
-        fetchUnits([], null, searchData.query);
+        fetchUnits(searchData.query);
+        this.focusMap(units, map);
       } else {
         console.log('FETCH NODES HERE');
       }
     }
-
-    this.focusMap(units, map);
   }
 
   shouldComponentUpdate(nextProps) {
@@ -74,7 +78,7 @@ class SearchView extends React.Component {
   // Check if view will fetch data because search params has changed
   shouldFetch = () => {
     const { isFetching, previousSearch } = this.props;
-    const searchParam = this.getSearchParam();
+    const searchParam = this.getSearchParam().query;
     return !isFetching && searchParam && searchParam !== previousSearch;
   }
 
@@ -84,10 +88,35 @@ class SearchView extends React.Component {
     }
   }
 
+  filterByCity = (units) => {
+    // TODO: Do we want to filter in fetch or here?
+    const { settings } = this.props;
+    const {
+      helsinki, espoo, vantaa, kauniainen,
+    } = settings;
+
+    const cityFilters = [
+      ...helsinki ? ['helsinki'] : [],
+      ...vantaa ? ['vantaa'] : [],
+      ...espoo ? ['espoo'] : [],
+      ...kauniainen ? ['kauniainen'] : [],
+    ];
+
+    let filteredUnits = units;
+    if (cityFilters.length) {
+      // Filter by city settings
+      filteredUnits = units.filter(unit => cityFilters.includes(unit.municipality) || unit.object_type !== 'unit');
+    }
+
+    return filteredUnits;
+  }
+
   // Group data based on object types
   groupData = (data) => {
     const services = data.filter(obj => obj && obj.object_type === 'service');
-    const units = data.filter(obj => obj && obj.object_type === 'unit');
+    let units = data.filter(obj => obj && obj.object_type === 'unit');
+
+    units = this.filterByCity(units);
 
     return {
       services,
@@ -149,59 +178,113 @@ class SearchView extends React.Component {
 
   renderSearchBar() {
     const { intl } = this.props;
+    const { expandSearch } = this.state;
     return (
       <SearchBar
+        srHideInput={!!expandSearch}
         className="sticky"
         expand
         placeholder={intl && intl.formatMessage({ id: 'search.input.placeholder' })}
         isSticky={0}
-        text={this.getSearchParam() || ''}
+        text={this.getSearchParam().query || ''}
         primary
+        expandSearch={expandSearch}
+        closeExpandedSearch={expandSearch ? () => this.setState({ expandSearch: null }) : () => {}}
       />
     );
   }
 
   renderSearchInfo = () => {
     const {
-      units, settings, classes, isFetching,
+      units, settings, classes, isFetching, intl,
     } = this.props;
     const {
-      colorblind, hearingAid, mobility, visuallyImpaired,
+      colorblind, hearingAid, mobility, visuallyImpaired, helsinki, espoo, vantaa, kauniainen,
     } = settings;
-    const query = this.getSearchParam();
-    const unitCount = units && units.length;
+    const { query } = this.getSearchParam();
 
-    const appliedSettings = [
-      ...colorblind ? [{ text: <FormattedMessage id="settings.sense.colorblindShort" />, icon: <ColorblindIcon /> }] : [],
-      ...hearingAid ? [{ text: <FormattedMessage id="settings.sense.hearing" />, icon: <HearingIcon /> }] : [],
-      ...visuallyImpaired ? [{ text: <FormattedMessage id="settings.sense.visual" />, icon: <VisualImpairmentIcon /> }] : [],
-      ...mobility ? [{ text: <FormattedMessage id={`settings.mobility.${mobility}`} />, icon: getIcon(mobility) }] : [],
+    const filteredUnits = this.filterByCity(units);
+    const unitCount = filteredUnits && filteredUnits.length;
+
+    const accessibilitySettings = [
+      ...colorblind ? [{ text: intl.formatMessage({ id: 'settings.sense.colorblind' }), icon: <ColorblindIcon /> }] : [],
+      ...hearingAid ? [{ text: intl.formatMessage({ id: 'settings.sense.hearing' }), icon: <HearingIcon /> }] : [],
+      ...visuallyImpaired ? [{ text: intl.formatMessage({ id: 'settings.sense.visual' }), icon: <VisualImpairmentIcon /> }] : [],
+      ...mobility ? [{ text: intl.formatMessage({ id: `settings.mobility.${mobility}` }), icon: getIcon(mobility) }] : [],
     ];
+
+    let citySettings = [
+      ...helsinki ? [`"${intl.formatMessage({ id: 'settings.city.helsinki' })}"`] : [],
+      ...espoo ? [`"${intl.formatMessage({ id: 'settings.city.espoo' })}"`] : [],
+      ...vantaa ? [`"${intl.formatMessage({ id: 'settings.city.vantaa' })}"`] : [],
+      ...kauniainen ? [`"${intl.formatMessage({ id: 'settings.city.kauniainen' })}"`] : [],
+    ];
+
+    const cityString = citySettings.join(' ');
+    const accessibilityString = accessibilitySettings.map(e => e.text).join(' ');
+
+    if (citySettings.length === 4) {
+      citySettings = [];
+    }
 
     return (
       <NoSsr>
         {!isFetching && unitCount && (
           <div align="left" className={classes.searchInfo}>
-            <Typography className={classes.infoText}>
-              <FormattedMessage id="search.infoText" values={{ count: unitCount, query }} />
+            <Typography variant="srOnly" component="h3">
+              <FormattedMessage id="search.resultInfo" />
             </Typography>
+            <div aria-live="polite" aria-label={`${intl.formatMessage({ id: 'search.infoText' }, { count: unitCount })} ${query}`} className={classes.infoContainer}>
+              <Typography aria-hidden className={`${classes.infoText} ${classes.bold}`}>
+                <FormattedMessage id="search.infoText" values={{ count: unitCount }} />
+              </Typography>
+              <Typography aria-hidden className={classes.infoText}>
+                &nbsp;
+                {`"${query}"`}
+              </Typography>
+            </div>
 
-            {appliedSettings.length ? (
+            {citySettings.length ? (
               <>
-                <Typography className={classes.infoText}>
-                  <FormattedMessage id="accessibility" />
+                <div aria-label={`${intl.formatMessage({ id: 'settings.city.info' }, { count: citySettings.length })}: ${cityString}`} className={classes.infoContainer}>
+                  <Typography aria-hidden className={`${classes.infoText} ${classes.bold}`}>
+                    <FormattedMessage id="settings.city.info" values={{ count: citySettings.length }} />
+                    {':'}
+                  &nbsp;
+                  </Typography>
+                  <Typography aria-hidden className={classes.infoText}>
+                    {cityString}
+                  </Typography>
+                </div>
+              </>
+            ) : null}
+
+            {accessibilitySettings.length ? (
+              <div aria-label={`${intl.formatMessage({ id: 'settings.accessibility' })}: ${accessibilityString}`}>
+                <Typography aria-hidden className={`${classes.infoSubText} ${classes.bold}`}>
+                  <FormattedMessage id="settings.accessibility" />
                   {':'}
                 </Typography>
-                <div className={classes.appliedSettings}>
-                  {appliedSettings.map(item => (
-                    <div key={item.text.props.id} className={classes.settingItem}>
+                <div aria-hidden className={classes.infoContainer}>
+                  {accessibilitySettings.map(item => (
+                    <div key={item.text} className={classes.settingItem}>
                       {item.icon}
                       <Typography className={classes.settingItemText}>{item.text}</Typography>
                     </div>
                   ))}
                 </div>
-              </>
+              </div>
             ) : null}
+            <ServiceMapButton
+              ref={this.buttonRef}
+              role="link"
+              className={`${classes.suggestionButton}`}
+              onClick={() => this.setState({ expandSearch: this.getSearchParam().query })}
+            >
+              <Typography variant="button" className={classes.expand}>
+                <FormattedMessage id="search.expand" />
+              </Typography>
+            </ServiceMapButton>
           </div>
         )}
       </NoSsr>
@@ -260,13 +343,10 @@ class SearchView extends React.Component {
    * Render screen reader only information fields
    */
   renderScreenReaderInfo() {
-    const {
-      units, isFetching, max,
-    } = this.props;
-    const unitCount = units && units.length;
+    const { isFetching, max } = this.props;
 
     return (
-      <Typography style={{ position: 'fixed', left: -100 }} variant="srOnly" component="h3" tabIndex="-1">
+      <Typography style={{ position: 'fixed', left: -100 }} aria-live={isFetching ? 'polite' : ''} variant="srOnly" component="h3" tabIndex="-1">
         {
           !isFetching
           && (
@@ -281,10 +361,6 @@ class SearchView extends React.Component {
           isFetching && max > 0
             && <FormattedMessage id="search.loading.units.srInfo" values={{ count: max }} />
         }
-        {
-          !isFetching
-          && <FormattedMessage id="search.results" values={{ count: unitCount }} />
-        }
       </Typography>
     );
   }
@@ -293,6 +369,7 @@ class SearchView extends React.Component {
     const {
       classes, isFetching, intl, count, max,
     } = this.props;
+    const { expandSearch } = this.state;
     const progress = (isFetching && count) ? Math.floor((count / max * 100)) : 0;
 
     const redirect = this.handleSingleResultRedirect();
@@ -312,20 +389,19 @@ class SearchView extends React.Component {
       <div
         className={classes.root}
       >
-
-        <Paper elevation={1} square aria-live="polite" style={paperStyles}>
-          {
-            this.renderScreenReaderInfo()
-          }
-        </Paper>
         {
           this.renderSearchBar()
         }
         {
-          this.renderSearchInfo()
+          !expandSearch && this.renderSearchInfo()
         }
+        <Paper elevation={1} square style={paperStyles}>
+          {
+            !expandSearch && this.renderScreenReaderInfo()
+          }
+        </Paper>
         {
-          this.renderResults()
+          !expandSearch && this.renderResults()
         }
         {
           isFetching

@@ -10,6 +10,9 @@ const locale = state => state.user.locale;
 export const getOrderedData = createSelector(
   [units, direction, order, locale],
   (data, direction, order, locale) => {
+    if (!data) {
+      throw new Error('Invalid data provided to getOrderedData selector');
+    }
     const results = Array.from(data);
 
     switch (order) {
