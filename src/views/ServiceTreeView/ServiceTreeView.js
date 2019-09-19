@@ -73,7 +73,6 @@ const ServiceTreeView = ({ classes, intl, navigator }) => {
     if (typeof item === 'number') {
       child = selected.find(e => e.id === item);
     }
-    console.log('removing: ', child);
     if (opened.includes(child.id)) {
       if (child.children) {
         data.push(...child.children);
@@ -84,7 +83,6 @@ const ServiceTreeView = ({ classes, intl, navigator }) => {
     } return data;
   };
 
-  // const getChildNodes
 
   const handleExpand = (service, isOpen) => {
     const isChecked = selected.find(e => e.id === service.id);
@@ -125,10 +123,6 @@ const ServiceTreeView = ({ classes, intl, navigator }) => {
     }
   };
 
-  /* const checkIfContains = (array, item) => {
-    return array.filter(e => )
-  } */
-
   useEffect(() => {
     fetchInitialServices();
   }, []);
@@ -140,8 +134,6 @@ const ServiceTreeView = ({ classes, intl, navigator }) => {
     const icon = isOpen
       ? <ArrowDropDown className={classes.iconRight} />
       : <ArrowDropUp className={classes.iconRight} />;
-
-    const testChecker = selected.some(e => e.id === item.id) || selected.some(e => e.id === item.parent) || (document.getElementById(item.parent) && document.getElementById(item.parent).className === 'checked');
 
 
     return (
@@ -200,7 +192,6 @@ const ServiceTreeView = ({ classes, intl, navigator }) => {
       selectedList.push(e);
     }
   });
-  // const selectedLength = selected.filter(e => e.name).length;
 
   return (
     <>
