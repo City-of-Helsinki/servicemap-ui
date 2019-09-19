@@ -91,9 +91,7 @@ class SearchView extends React.Component {
     };
   }
 
-  /**
-   * Handles redirect if only single result is found
-   */
+  // Handles redirect if only single result is found
   handleSingleResultRedirect() {
     const {
       units, isFetching, match,
