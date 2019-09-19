@@ -4,7 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter, Redirect } from 'react-router-dom';
 import {
-  Paper, withStyles, Typography, Link, NoSsr,
+  Paper, withStyles, Typography, Link, NoSsr, Divider,
 } from '@material-ui/core';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import styles from './styles';
@@ -129,16 +129,29 @@ class SearchView extends React.Component {
    * What to render if no units are found with search
    */
   renderNotFound() {
-    const { isFetching, previousSearch, units } = this.props;
+    const {
+      classes, isFetching, previousSearch, units,
+    } = this.props;
 
     // These variables should be passed to this function
     const shouldRender = !isFetching && previousSearch && units && !units.length;
 
     return shouldRender && (
-      <Container>
-        <Typography variant="subtitle1" component="p" aria-hidden="true">
-          <FormattedMessage id="search.results" values={{ count: units.length }} />
-        </Typography>
+      <Container className={classes.noVerticalPadding}>
+        <Container className={classes.noVerticalPadding}>
+          <Typography align="left" variant="subtitle1" component="p" aria-hidden="true">
+            <FormattedMessage id="search.notFoundWith" values={{ query: previousSearch }} />
+          </Typography>
+        </Container>
+        <Divider />
+        <Container className={classes.noVerticalPadding}>
+          <Typography align="left" variant="subtitle1" component="p" aria-hidden="true">
+            <FormattedMessage id="search.tryAgain" />
+          </Typography>
+          <Typography align="left" variant="body2" component="p" aria-hidden="true">
+            <FormattedMessage id="search.tryAgainBody" values={{ br: <br /> }} />
+          </Typography>
+        </Container>
       </Container>
     );
   }
@@ -195,7 +208,7 @@ class SearchView extends React.Component {
 
     return (
       <NoSsr>
-        {!isFetching && unitCount && (
+        {!isFetching && (
           <div align="left" className={classes.searchInfo}>
             <Typography variant="srOnly" component="h3">
               <FormattedMessage id="search.resultInfo" />
@@ -241,16 +254,21 @@ class SearchView extends React.Component {
                 </div>
               </div>
             ) : null}
-            <ServiceMapButton
-              ref={this.buttonRef}
-              role="link"
-              className={`${classes.suggestionButton}`}
-              onClick={() => this.setState({ expandSearch: this.getSearchParam() })}
-            >
-              <Typography variant="button" className={classes.expand}>
-                <FormattedMessage id="search.expand" />
-              </Typography>
-            </ServiceMapButton>
+            {
+              !!unitCount
+              && (
+                <ServiceMapButton
+                  ref={this.buttonRef}
+                  role="link"
+                  className={`${classes.suggestionButton}`}
+                  onClick={() => this.setState({ expandSearch: this.getSearchParam() })}
+                >
+                  <Typography variant="button" className={classes.expand}>
+                    <FormattedMessage id="search.expand" />
+                  </Typography>
+                </ServiceMapButton>
+              )
+            }
           </div>
         )}
       </NoSsr>

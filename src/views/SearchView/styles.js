@@ -28,6 +28,10 @@ export default theme => ({
   icon: {
     padding: 10,
   },
+  noVerticalPadding: {
+    paddingTop: 0,
+    paddingBottom: 0,
+  },
   searchInfo: {
     color: '#fff',
     backgroundColor: theme.palette.primary.main,
