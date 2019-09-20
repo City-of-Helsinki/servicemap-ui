@@ -274,17 +274,18 @@ class SearchView extends React.Component {
               !!unitCount
               && searchParam.type === 'search'
               && (
-              <ServiceMapButton
-                ref={this.buttonRef}
-                role="link"
-                className={`${classes.suggestionButton}`}
-                onClick={() => this.setState({ expandSearch: searchParam.query })}
-              >
-                <Typography variant="button" className={classes.expand}>
-                  <FormattedMessage id="search.expand" />
-                </Typography>
-              </ServiceMapButton>
-            )}
+                <ServiceMapButton
+                  ref={this.buttonRef}
+                  role="link"
+                  className={`${classes.suggestionButton}`}
+                  onClick={() => this.setState({ expandSearch: searchParam.query })}
+                >
+                  <Typography variant="button" className={classes.expand}>
+                    <FormattedMessage id="search.expand" />
+                  </Typography>
+                </ServiceMapButton>
+              )
+            }
           </div>
         )}
       </NoSsr>
