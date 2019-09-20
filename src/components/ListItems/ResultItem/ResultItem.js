@@ -100,21 +100,16 @@ const ResultItem = ({
             (subtitle || bottomRightText)
             && (
               <div className={classes.bottomRow}>
-                {
-                  subtitle
-                  && (
-                    <div className={classes.bottomColumn}>
-                      <Typography
-                        variant="caption"
-                        className={`${classes.noMargin} ${classes.smallFont}`}
-                        component="p"
-                        aria-hidden="true"
-                      >
-                        {subtitle}
-                      </Typography>
-                    </div>
-                  )
-                }
+                <div className={classes.bottomColumn}>
+                  <Typography
+                    variant="caption"
+                    className={`${classes.noMargin} ${classes.smallFont}`}
+                    component="p"
+                    aria-hidden="true"
+                  >
+                    {subtitle || ''}
+                  </Typography>
+                </div>
 
                 {
                   bottomRightText

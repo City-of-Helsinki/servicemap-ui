@@ -87,10 +87,6 @@ class ServiceView extends React.Component {
     let serviceUnits = null;
     if (unitData && unitData.length > 0) {
       serviceUnits = unitData;
-      serviceUnits.forEach((unit) => {
-        // eslint-disable-next-line no-param-reassign
-        unit.object_type = 'unit';
-      });
     }
 
     // Calculate visible components

@@ -12,9 +12,12 @@ export const fetchUnits = (
   searchQuery = null,
   searchType = null,
   abortController = null,
-) => async (dispatch)
+) => async (dispatch, getState)
 => {
   const onStart = () => dispatch(isFetching(searchQuery));
+  const { user } = getState();
+  const { locale } = user;
+
   const onSuccess = (results) => {
     // Filter out duplicate units
     const distinctData = Array.from(new Set(results.map(x => x.id))).map((id) => {
@@ -38,9 +41,25 @@ export const fetchUnits = (
 
   // Fetch data
   if (searchType === 'node') {
-    nodeFetch({ service_node: searchQuery }, onStart, onSuccessNode, onError, onNext, null, abortController);
+    nodeFetch(
+      { service_node: searchQuery },
+      onStart,
+      onSuccessNode,
+      onError,
+      onNext,
+      null,
+      abortController
+);
   } else {
-    searchFetch({ q: searchQuery }, onStart, onSuccess, onError, onNext, null, abortController);
+    searchFetch(
+      { q: searchQuery, language: locale || 'fi' },
+      onStart,
+      onSuccess,
+      onError,
+      onNext,
+      null,
+      abortController,
+    );
   }
 };
 

@@ -252,6 +252,7 @@ const ServiceTreeView = ({
           </List>
         </Collapse>
         <ServiceMapButton
+          disabled={!selectedList.length}
           onClick={() => {
             setTreeState({ selected, opened });
             navigator.push('search', { nodes: ids });
