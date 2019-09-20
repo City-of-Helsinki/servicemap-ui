@@ -9,6 +9,7 @@ import service from './redux/reducers/services';
 import selectedUnit from './redux/reducers/selectedUnit';
 import event from './redux/reducers/event';
 import address from './redux/reducers/address';
+import serviceTree from './redux/reducers/serviceTree';
 import {
   colorblind, hearingAid, mobility, visuallyImpaired, helsinki, espoo, vantaa, kauniainen,
 } from './redux/reducers/settings';
@@ -29,6 +30,7 @@ export default combineReducers({
   selectedUnit,
   event,
   address,
+  serviceTree,
   settings: combineReducers({
     colorblind,
     hearingAid,

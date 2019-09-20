@@ -189,6 +189,7 @@ export default {
   'search.notFound': 'No results found with given search',
   'search.started': 'Search started',
   'search.infoText': 'Showing {count} results for search query: ',
+  'search.infoTextNode': 'Showing {count} results for services: ',
   'search.suggestions.suggest': 'Did you mean..?',
   'search.suggestions.expand': 'Search suggestions',
   'search.suggestions.loading': 'Loading suggestions',

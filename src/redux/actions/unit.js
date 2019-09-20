@@ -1,4 +1,4 @@
-import { searchFetch } from '../../utils/fetch';
+import { searchFetch, nodeFetch } from '../../utils/fetch';
 import { saveSearchToHistory } from '../../components/SearchBar/previousSearchData';
 
 export const fetchHasErrored = errorMessage => ({
@@ -26,6 +26,7 @@ export const setUnitData = data => ({
 // Thunk fetch
 export const fetchUnits = (
   searchQuery = null,
+  searchType = null,
   abortController = null,
 ) => async (dispatch)
 => {
@@ -39,13 +40,24 @@ export const fetchUnits = (
     saveSearchToHistory(searchQuery, distinctData);
     dispatch(unitsFetchDataSuccess(distinctData));
   };
+  const onSuccessNode = (results) => {
+    results.forEach((unit) => {
+      // eslint-disable-next-line no-param-reassign
+      unit.object_type = 'unit';
+    });
+    dispatch(unitsFetchDataSuccess(results));
+  };
   const onError = e => dispatch(fetchHasErrored(e.message));
   const onNext = (resultTotal, response) => dispatch(
     unitsFetchProgressUpdate(resultTotal.length, response.count),
   );
 
   // Fetch data
-  searchFetch({ q: searchQuery }, onStart, onSuccess, onError, onNext, null, abortController);
+  if (searchType === 'node') {
+    nodeFetch({ service_node: searchQuery }, onStart, onSuccessNode, onError, onNext, null, abortController);
+  } else {
+    searchFetch({ q: searchQuery }, onStart, onSuccess, onError, onNext, null, abortController);
+  }
 };
 
 export const setNewSearchData = data => async (dispatch) => {

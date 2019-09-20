@@ -187,6 +187,7 @@ export default {
   'search.notFound': 'Haulla ei löytynyt hakutuloksia',
   'search.started': 'Haku aloitettu',
   'search.infoText': 'Näytetään {count} hakutulosta sanalla: ',
+  'search.infoTextNode': 'Näytetään {count} hakutulosta palveluilla: ',
   'search.suggestions.suggest': 'Tarkoititko..?',
   'search.suggestions.expand': 'Hakuehdotukset',
   'search.suggestions.loading': 'Ladataan ehdotuksia',

@@ -8,10 +8,12 @@ import TitleBar from '../../components/TitleBar';
 import { MobileComponent, DesktopComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import ServiceMapButton from '../../components/ServiceMapButton';
 
-const ServiceTreeView = ({ classes, intl, navigator }) => {
+const ServiceTreeView = ({
+  classes, intl, navigator, setTreeState, prevSelected, prevOpened,
+}) => {
   const [services, setServices] = useState(null);
-  const [opened, setOpened] = useState([]);
-  const [selected, setSelected] = useState([]);
+  const [opened, setOpened] = useState([...prevOpened]);
+  const [selected, setSelected] = useState([...prevSelected]);
   const [selectedOpen, setSelectedOpen] = useState(false);
 
   const checkChildNodes = (node, nodes = []) => {
@@ -29,9 +31,27 @@ const ServiceTreeView = ({ classes, intl, navigator }) => {
   };
 
   const fetchInitialServices = () => {
+    /* const prevServices = prevOpened.map((i) => {
+      const { children } = i;
+      return children.map(e => e);
+    }); */
+    // console.log(' prev services are: ', prevServices);
+    /* Promise.all([
+      fetch('https://api.hel.fi/servicemap/v2/service_node/?level=0&page=1&page_size=1000').then(response => response.json()),
+      prevOpened.length
+      && Promise.all(prevOpened.map(id => fetch(`https://api.hel.fi/servicemap/v2/service_node/?parent=${id}&page=1&page_size=1000`)
+        .then(response => response.json())))
+        .then((data) => {
+          const combinedData = data.map(i => i.results);
+          console.log('combo is: ', combinedData);
+          return combinedData.map(i => i);
+        }),
+      // .then(data => data.join())
+    ]) */
     fetch('https://api.hel.fi/servicemap/v2/service_node/?level=0&page=1&page_size=1000')
       .then(response => response.json())
       .then((data) => {
+        // const fullData = [...data[0].results, ...data[1] ? data[1].results : []];
         const serviceData = data.results.map(service => (
           service
         ));
@@ -192,6 +212,7 @@ const ServiceTreeView = ({ classes, intl, navigator }) => {
       selectedList.push(e);
     }
   });
+  const ids = selectedList.map(i => i.id);
 
   return (
     <>
@@ -227,7 +248,10 @@ const ServiceTreeView = ({ classes, intl, navigator }) => {
           </List>
         </Collapse>
         <ServiceMapButton
-          onClick={() => navigator.push('search', { nodes: [1061, 1401] })}
+          onClick={() => {
+            setTreeState({ selected, opened });
+            navigator.push('search', { nodes: ids });
+          }}
           style={{
             width: 250,
             height: 46,
