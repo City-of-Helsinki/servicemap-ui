@@ -97,6 +97,8 @@ export default {
   'general.save.confirmation': 'Haluatko tallentaa muutokset?',
 
   // Home
+  'home.buttons.settings': 'Esteettömyys ja kaupunki asetukset',
+  'home.buttons.services': 'Kaikki palvelut',
   'home.example.title': 'Esimerkkihakuja',
   'home.example.search': 'Hae hakusanalla',
   'home.message': 'Terveisiä palvelukartan kehittäjiltä',
@@ -188,6 +190,7 @@ export default {
   'search.notFound': 'Haulla ei löytynyt hakutuloksia',
   'search.started': 'Haku aloitettu',
   'search.infoText': 'Näytetään {count} hakutulosta sanalla: ',
+  'search.infoTextNode': 'Näytetään {count} hakutulosta palveluilla: ',
   'search.suggestions.suggest': 'Tarkoititko..?',
   'search.suggestions.expand': 'Hakuehdotukset',
   'search.suggestions.loading': 'Ladataan ehdotuksia',
