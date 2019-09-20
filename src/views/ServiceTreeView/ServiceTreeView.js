@@ -11,9 +11,13 @@ import ServiceMapButton from '../../components/ServiceMapButton';
 const ServiceTreeView = ({
   classes, intl, navigator, setTreeState, prevSelected, prevOpened,
 }) => {
+
+  // const [opened, setOpened] = useState([...prevOpened]);
+  // const [selected, setSelected] = useState([...prevSelected]);
+
   const [services, setServices] = useState(null);
-  const [opened, setOpened] = useState([...prevOpened]);
-  const [selected, setSelected] = useState([...prevSelected]);
+  const [opened, setOpened] = useState([]);
+  const [selected, setSelected] = useState([]);
   const [selectedOpen, setSelectedOpen] = useState(false);
 
   const checkChildNodes = (node, nodes = []) => {

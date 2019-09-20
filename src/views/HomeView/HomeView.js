@@ -1,19 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Typography, withStyles,
+  Typography,
 } from '@material-ui/core';
-import { injectIntl, intlShape } from 'react-intl';
-import { Search } from '@material-ui/icons';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { Accessibility, List } from '@material-ui/icons';
 import Container from '../../components/Container';
 import SearchBar from '../../components/SearchBar';
 import { MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import HomeLogo from '../../components/Logos/HomeLogo';
-import TitledList from '../../components/Lists/TitledList';
-import SimpleListItem from '../../components/ListItems/SimpleListItem';
 import ServiceMapButton from '../../components/ServiceMapButton';
-
-// TODO: Fix close by events and services lists with actual data items once data is accessible
+import PaperButton from '../../components/PaperButton';
 
 class HomeView extends React.Component {
   componentDidMount() {
@@ -35,6 +32,25 @@ class HomeView extends React.Component {
     }
   }
 
+  renderNavigationOptions = () => {
+    const { classes, toggleSettings, navigator } = this.props;
+    return (
+      <div className={classes.iconContainer}>
+        <PaperButton
+          text={<FormattedMessage id="home.buttons.settings" />}
+          icon={<Accessibility />}
+          link
+          onClick={() => toggleSettings(true)}
+        />
+        <PaperButton
+          text={<FormattedMessage id="home.buttons.services" />}
+          icon={<List />}
+          link
+          onClick={() => navigator.push('serviceTree')}
+        />
+      </div>
+    );
+  }
 
   render() {
     const { intl, classes } = this.props;
@@ -50,14 +66,9 @@ class HomeView extends React.Component {
           hideBackButton
           placeholder={intl.formatMessage({ id: 'search.placeholder' })}
         />
-        <Container paper>
-          <TitledList title={intl.formatMessage({ id: 'home.example.title' })} divider={false}>
-            <SimpleListItem link icon={<Search />} handleItemClick={e => this.onExapmleItemClick(e, 'Kallion kirjasto')} text="Kallion kirjasto" srText={intl.formatMessage({ id: 'home.example.search' })} />
-            <SimpleListItem link icon={<Search />} handleItemClick={e => this.onExapmleItemClick(e, 'Uimahallit')} text="Uimahallit" srText={intl.formatMessage({ id: 'home.example.search' })} />
-            <SimpleListItem link icon={<Search />} handleItemClick={e => this.onExapmleItemClick(e, 'Terveysasemat Espoo')} text="Terveysasemat Espoo" srText={intl.formatMessage({ id: 'home.example.search' })} />
-            <SimpleListItem link icon={<Search />} handleItemClick={e => this.onExapmleItemClick(e, 'Pysäköintilippuautomaatit')} text="Pysäköintilippuautomaatit" srText={intl.formatMessage({ id: 'home.example.search' })} />
-          </TitledList>
-        </Container>
+        {
+          this.renderNavigationOptions()
+        }
 
         <Container paper>
           <Typography
@@ -116,38 +127,13 @@ kehitämme jatkuvasti saavutettavuutta ja käytettävyyttä.
             {intl.formatMessage({ id: 'home.send.feedback' })}
           </ServiceMapButton>
         </Container>
-
-        {/* <Container paper title={intl.formatMessage({ id: 'service.nearby' })}>
-          <List>
-            <ListItem>
-              <ListItemText primary={intl.formatMessage({ id: 'general.noData' })} />
-            </ListItem>
-          </List>
-        </Container>
-
-        <Container paper title={intl.formatMessage({ id: 'event.nearby' })}>
-          <List>
-            <ListItem>
-              <ListItemText primary={intl.formatMessage({ id: 'general.noData' })} />
-            </ListItem>
-          </List>
-    </Container> */}
       </>
     );
   }
 }
 
-const styles = theme => ({
-  left: {
-    textAlign: 'left',
-    marginLeft: theme.spacing.unitDouble,
-    marginRight: theme.spacing.unitDouble,
-    marginTop: 24,
-  },
-});
 
-
-export default injectIntl(withStyles(styles)(HomeView));
+export default injectIntl(HomeView);
 
 // Typechecking
 HomeView.propTypes = {
@@ -156,6 +142,7 @@ HomeView.propTypes = {
   intl: intlShape.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
+  toggleSettings: PropTypes.func.isRequired,
 };
 
 HomeView.defaultProps = {

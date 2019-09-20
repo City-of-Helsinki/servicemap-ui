@@ -97,6 +97,8 @@ export default {
   'general.save.confirmation': 'Haluatko tallentaa muutokset?',
 
   // Home
+  'home.buttons.settings': 'Esteettömyys ja kaupunki asetukset',
+  'home.buttons.services': 'Kaikki palvelut',
   'home.example.title': 'Esimerkkihakuja',
   'home.example.search': 'Hae hakusanalla',
   'home.message': 'Terveisiä palvelukartan kehittäjiltä',

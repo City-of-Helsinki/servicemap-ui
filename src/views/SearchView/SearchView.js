@@ -79,7 +79,6 @@ class SearchView extends React.Component {
   shouldFetch = () => {
     const { isFetching, previousSearch } = this.props;
     const searchParam = this.getSearchParam().query;
-    console.log('should fetch? ', !isFetching && searchParam && searchParam !== previousSearch);
     return !isFetching && searchParam && searchParam !== previousSearch;
   }
 

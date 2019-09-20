@@ -1,27 +1,11 @@
 import { searchFetch, nodeFetch } from '../../utils/fetch';
 import { saveSearchToHistory } from '../../components/SearchBar/previousSearchData';
+import { units } from './fetchDataActions';
 
-export const fetchHasErrored = errorMessage => ({
-  type: 'UNITS_FETCH_HAS_ERRORED',
-  errorMessage,
-});
-export const fetchIsLoading = search => ({
-  type: 'UNITS_IS_FETCHING',
-  search,
-});
-export const unitsFetchDataSuccess = units => ({
-  type: 'UNITS_FETCH_DATA_SUCCESS',
-  units,
-});
-export const unitsFetchProgressUpdate = (count, max) => ({
-  type: 'UNITS_FETCH_PROGRESS_UPDATE',
-  count,
-  max,
-});
-export const setUnitData = data => ({
-  type: 'SET_NEW_UNITS',
-  data,
-});
+// Actions
+const {
+  isFetching, fetchSuccess, fetchError, fetchProgressUpdate, setNewData,
+} = units;
 
 // Thunk fetch
 export const fetchUnits = (
@@ -30,7 +14,7 @@ export const fetchUnits = (
   abortController = null,
 ) => async (dispatch)
 => {
-  const onStart = () => dispatch(fetchIsLoading(searchQuery));
+  const onStart = () => dispatch(isFetching(searchQuery));
   const onSuccess = (results) => {
     // Filter out duplicate units
     const distinctData = Array.from(new Set(results.map(x => x.id))).map((id) => {
@@ -38,18 +22,18 @@ export const fetchUnits = (
       return obj;
     });
     saveSearchToHistory(searchQuery, distinctData);
-    dispatch(unitsFetchDataSuccess(distinctData));
+    dispatch(fetchSuccess(distinctData));
   };
   const onSuccessNode = (results) => {
     results.forEach((unit) => {
       // eslint-disable-next-line no-param-reassign
       unit.object_type = 'unit';
     });
-    dispatch(unitsFetchDataSuccess(results));
+    dispatch(fetchSuccess(results));
   };
-  const onError = e => dispatch(fetchHasErrored(e.message));
+  const onError = e => dispatch(fetchError(e.message));
   const onNext = (resultTotal, response) => dispatch(
-    unitsFetchProgressUpdate(resultTotal.length, response.count),
+    fetchProgressUpdate(resultTotal.length, response.count),
   );
 
   // Fetch data
@@ -62,6 +46,6 @@ export const fetchUnits = (
 
 export const setNewSearchData = data => async (dispatch) => {
   if (data) {
-    dispatch(setUnitData(data));
+    dispatch(setNewData(data));
   }
 };

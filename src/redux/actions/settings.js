@@ -1,5 +1,6 @@
 import SettingsUtility from '../../utils/settings';
 import LocalStorageUtility from '../../utils/localStorage';
+import simpleAction from './simpleActions';
 
 const setAccessibilitySelection = (prefix, key) => async (dispatch, getState) => {
   const { settings } = getState();
@@ -57,3 +58,5 @@ export const toggleEspoo = () => setCitySelection('ESPOO', 'espoo');
 export const toggleVantaa = () => setCitySelection('VANTAA', 'vantaa');
 
 export const toggleKauniainen = () => setCitySelection('KAUNIAINEN', 'kauniainen');
+
+export const toggleSettings = value => simpleAction('SETTINGS_TOGGLE', value);

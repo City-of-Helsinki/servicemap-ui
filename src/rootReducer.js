@@ -1,12 +1,9 @@
 import { combineReducers } from 'redux';
-import { mapType, mapRef } from './redux/reducers/map';
 import breadcrumb from './redux/reducers/breadcrumb';
 import navigator from './redux/reducers/navigator';
-import units from './redux/reducers/unit';
+import { units, service, selectedUnit } from './redux/reducers/fetchDataReducer';
 import user from './redux/reducers/user';
 import districts from './redux/reducers/district';
-import service from './redux/reducers/services';
-import selectedUnit from './redux/reducers/selectedUnit';
 import event from './redux/reducers/event';
 import address from './redux/reducers/address';
 import serviceTree from './redux/reducers/serviceTree';
@@ -14,8 +11,8 @@ import {
   colorblind, hearingAid, mobility, visuallyImpaired, helsinki, espoo, vantaa, kauniainen,
 } from './redux/reducers/settings';
 import {
-  direction, order,
-} from './redux/reducers/sort';
+  direction, order, mapRef, mapType, settingsToggled,
+} from './redux/reducers/simpleReducers';
 
 // Export all redux reducers here
 export default combineReducers({
@@ -32,6 +29,7 @@ export default combineReducers({
   address,
   serviceTree,
   settings: combineReducers({
+    toggled: settingsToggled,
     colorblind,
     hearingAid,
     mobility,
