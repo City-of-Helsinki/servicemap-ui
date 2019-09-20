@@ -1,37 +1,23 @@
-import { searchFetch } from '../../utils/fetch';
+import { searchFetch, nodeFetch } from '../../utils/fetch';
 import { saveSearchToHistory } from '../../components/SearchBar/previousSearchData';
+import { units } from './fetchDataActions';
 
-export const fetchHasErrored = errorMessage => ({
-  type: 'UNITS_FETCH_HAS_ERRORED',
-  errorMessage,
-});
-export const fetchIsLoading = search => ({
-  type: 'UNITS_IS_FETCHING',
-  search,
-});
-export const unitsFetchDataSuccess = units => ({
-  type: 'UNITS_FETCH_DATA_SUCCESS',
-  units,
-});
-export const unitsFetchProgressUpdate = (count, max) => ({
-  type: 'UNITS_FETCH_PROGRESS_UPDATE',
-  count,
-  max,
-});
-export const setUnitData = data => ({
-  type: 'SET_NEW_UNITS',
-  data,
-});
+// Actions
+const {
+  isFetching, fetchSuccess, fetchError, fetchProgressUpdate, setNewData,
+} = units;
 
 // Thunk fetch
 export const fetchUnits = (
   searchQuery = null,
+  searchType = null,
   abortController = null,
 ) => async (dispatch, getState)
 => {
+  const onStart = () => dispatch(isFetching(searchQuery));
   const { user } = getState();
   const { locale } = user;
-  const onStart = () => dispatch(fetchIsLoading(searchQuery));
+
   const onSuccess = (results) => {
     // Filter out duplicate units
     const distinctData = Array.from(new Set(results.map(x => x.id))).map((id) => {
@@ -39,27 +25,46 @@ export const fetchUnits = (
       return obj;
     });
     saveSearchToHistory(searchQuery, distinctData);
-    dispatch(unitsFetchDataSuccess(distinctData));
+    dispatch(fetchSuccess(distinctData));
   };
-  const onError = e => dispatch(fetchHasErrored(e.message));
+  const onSuccessNode = (results) => {
+    results.forEach((unit) => {
+      // eslint-disable-next-line no-param-reassign
+      unit.object_type = 'unit';
+    });
+    dispatch(fetchSuccess(results));
+  };
+  const onError = e => dispatch(fetchError(e.message));
   const onNext = (resultTotal, response) => dispatch(
-    unitsFetchProgressUpdate(resultTotal.length, response.count),
+    fetchProgressUpdate(resultTotal.length, response.count),
   );
 
   // Fetch data
-  searchFetch(
-    { q: searchQuery, language: locale || 'fi' },
-    onStart,
-    onSuccess,
-    onError,
-    onNext,
-    null,
-    abortController,
-  );
+  if (searchType === 'node') {
+    nodeFetch(
+      { service_node: searchQuery },
+      onStart,
+      onSuccessNode,
+      onError,
+      onNext,
+      null,
+      abortController
+);
+  } else {
+    searchFetch(
+      { q: searchQuery, language: locale || 'fi' },
+      onStart,
+      onSuccess,
+      onError,
+      onNext,
+      null,
+      abortController,
+    );
+  }
 };
 
 export const setNewSearchData = data => async (dispatch) => {
   if (data) {
-    dispatch(setUnitData(data));
+    dispatch(setNewData(data));
   }
 };

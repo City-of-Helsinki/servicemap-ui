@@ -96,6 +96,8 @@ export default {
   'general.save.confirmation': 'Would you like to save changes?', // TODO: Translate
 
   // Home
+  'home.buttons.settings': 'Accessibility and city settings', // TODO: Translate
+  'home.buttons.services': 'All services', // TODO: Translate
   'home.example.title': 'Esimerkkihakuja', // TODO: Translate
   'home.example.search': 'Hae hakusanalla', // TODO: Translate
   'home.message': 'Terveisiä palvelukartan kehittäjiltä', // TODO: Translate
@@ -187,6 +189,7 @@ export default {
   'search.notFound': 'No results found with given search', // TODO: Translate
   'search.started': 'Search started', // TODO: Translate
   'search.infoText': 'Näytetään {count} hakutulosta sanalla: ', // TODO: Translate
+  'search.infoTextNode': 'Näytetään {count} hakutulosta palveluilla: ', // TODO: Translate
   'search.suggestions.suggest': 'Tarkoititko..?', // TODO: Translate
   'search.suggestions.expand': 'Hakuehdotukset', // TODO: Translate
   'search.suggestions.loading': 'Ladataan ehdotuksia', // TODO: Translate

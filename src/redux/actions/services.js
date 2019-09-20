@@ -1,29 +1,14 @@
 import { serviceFetch, unitsFetch } from '../../utils/fetch';
+import { service } from './fetchDataActions';
 
-export const fetchHasErrored = errorMessage => ({
-  type: 'SERVICE_UNITS_FETCH_HAS_ERRORED',
-  errorMessage,
-});
-export const fetchIsLoading = () => ({
-  type: 'SERVICE_UNITS_IS_FETCHING',
-});
-export const serviceFetchDataSuccess = units => ({
-  type: 'SERVICE_UNITS_FETCH_DATA_SUCCESS',
-  units,
-});
-export const serviceFetchProgressUpdate = (count, max) => ({
-  type: 'SERVICE_UNITS_FETCH_PROGRESS_UPDATE',
-  count,
-  max,
-});
-export const serviceSetCurrent = service => ({
-  type: 'SERVICE_SET_CURRENT_SERVICE',
-  service,
-});
+// Actions
+const {
+  fetchError, isFetching, fetchSuccess, fetchProgressUpdate, setNewCurrent,
+} = service;
 
 // Thunk fetch
 export const fetchServiceUnits = serviceId => async (dispatch) => {
-  const onStart = () => dispatch(fetchIsLoading());
+  const onStart = () => dispatch(isFetching());
   const onSuccess = (data) => {
     // Filter out duplicate units
     const distinctData = Array.from(new Set(data.map(x => x.id))).map((id) => {
@@ -31,11 +16,11 @@ export const fetchServiceUnits = serviceId => async (dispatch) => {
       obj.object_type = 'unit';
       return obj;
     });
-    dispatch(serviceFetchDataSuccess(distinctData));
+    dispatch(fetchSuccess(distinctData));
   };
-  const onError = e => dispatch(fetchHasErrored(e.message));
+  const onError = e => dispatch(fetchError(e.message));
   const onNext = (resultTotal, response) => {
-    dispatch(serviceFetchProgressUpdate(resultTotal.length, response.count));
+    dispatch(fetchProgressUpdate(resultTotal.length, response.count));
   };
 
   const options = {
@@ -49,12 +34,12 @@ export const fetchServiceUnits = serviceId => async (dispatch) => {
 };
 
 export const fetchService = serviceId => async (dispatch) => {
-  const onStart = () => dispatch(fetchIsLoading());
+  const onStart = () => dispatch(isFetching());
   const onSuccess = (data) => {
-    dispatch(serviceSetCurrent(data));
+    dispatch(setNewCurrent(data));
     dispatch(fetchServiceUnits(serviceId));
   };
-  const onError = e => dispatch(fetchHasErrored(e.message));
+  const onError = e => dispatch(fetchError(e.message));
   const onNext = null;
 
   // Fetch data
@@ -63,7 +48,7 @@ export const fetchService = serviceId => async (dispatch) => {
 
 export const setNewCurrentService = service => async (dispatch) => {
   if (service) {
-    dispatch(serviceSetCurrent(service));
+    dispatch(setNewCurrent(service));
     dispatch(fetchServiceUnits(service.id, []));
   }
 };

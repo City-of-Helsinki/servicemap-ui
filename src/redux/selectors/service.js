@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 import { filterCities } from '../../utils/filters';
 
 
-const units = state => state.service.units;
+const units = state => state.service.data;
 const cities = state => [
   ...state.settings.helsinki ? ['helsinki'] : [],
   ...state.settings.vantaa ? ['vantaa'] : [],

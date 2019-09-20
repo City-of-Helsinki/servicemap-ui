@@ -98,6 +98,8 @@ export default {
   'general.save.confirmation': 'Would you like to save changes?',
 
   // Home
+  'home.buttons.settings': 'Accessibility and city settings',
+  'home.buttons.services': 'All services',
   'home.example.title': 'Example search phrases',
   'home.example.search': 'Search for',
   'home.message': 'Message from the developers',
@@ -189,6 +191,7 @@ export default {
   'search.notFound': 'No results found with given search',
   'search.started': 'Search started',
   'search.infoText': 'Showing {count} results for search query: ',
+  'search.infoTextNode': 'Showing {count} results for services: ',
   'search.suggestions.suggest': 'Did you mean..?',
   'search.suggestions.expand': 'Search suggestions',
   'search.suggestions.loading': 'Loading suggestions',

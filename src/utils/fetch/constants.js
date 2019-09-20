@@ -54,6 +54,16 @@ export const APIHandlers = {
     },
 
   },
+  node: {
+    url: `${config.serviceMapAPI.root}/unit/`,
+    options: {
+      page: 1,
+      page_size: 200,
+      only: 'location,name,municipality,accessibility_shortcoming_count,service_nodes',
+      geometry: true,
+      include: 'service_nodes',
+    },
+  },
   unitEvents: {
     url: `${config.eventsAPI.root}/event/`,
     options: {
