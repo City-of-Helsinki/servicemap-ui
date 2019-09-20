@@ -150,6 +150,7 @@ export default {
 
   // Search
   'search': 'Hae',
+  'search.notFoundWith': 'Ei osumia haulle "{query}".',
   'search.placeholder': 'Hae palvelua tai toimipistettä',
   'search.info': `{count, plural,
                   =0 {Toimipisteitä ei löytynyt}
@@ -199,6 +200,12 @@ export default {
   'search.suggestions.results': '{count} tulosta',
   'search.suggestions.history': '{count} kohdetta hakuhistoriassa',
   'search.suggestions.noHistory': 'Ei aikaisempia hakuja',
+  'search.tryAgain': 'Yritä hakea uudelleen',
+  'search.tryAgainBody.spelling': 'tarkista kirjoitusasu',
+  'search.tryAgainBody.city': 'tarkista kaupunkivalinnat',
+  'search.tryAgainBody.service': 'kirjoita palvelun nimi',
+  'search.tryAgainBody.address': 'kirjoita osoite, minkä läheltä etsit palvelua',
+  'search.tryAgainBody.keyword': 'kirjoita avainsanoja, esim. luontopolku, ruotsinkielinen päiväkoti',
   'search.expand': 'Tarkenna hakua',
   'search.closeExpand': 'Palaa hakuun',
 

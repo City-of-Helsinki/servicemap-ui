@@ -4,7 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter, Redirect } from 'react-router-dom';
 import {
-  Paper, withStyles, Typography, Link, NoSsr,
+  Paper, withStyles, Typography, Link, NoSsr, Divider,
 } from '@material-ui/core';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import styles from './styles';
@@ -135,16 +135,38 @@ class SearchView extends React.Component {
    * What to render if no units are found with search
    */
   renderNotFound() {
-    const { isFetching, previousSearch, units } = this.props;
+    const {
+      classes, isFetching, previousSearch, units,
+    } = this.props;
 
     // These variables should be passed to this function
     const shouldRender = !isFetching && previousSearch && units && !units.length;
+    const messageIDs = ['spelling', 'city', 'service', 'address', 'keyword'];
 
     return shouldRender && (
-      <Container>
-        <Typography variant="subtitle1" component="p" aria-hidden="true">
-          <FormattedMessage id="search.results" values={{ count: units.length }} />
-        </Typography>
+      <Container className={classes.noVerticalPadding}>
+        <Container className={classes.noVerticalPadding}>
+          <Typography align="left" variant="subtitle1" component="p">
+            <FormattedMessage id="search.notFoundWith" values={{ query: previousSearch }} />
+          </Typography>
+        </Container>
+        <Divider aria-hidden="true" />
+        <Container className={classes.noVerticalPadding}>
+          <Typography align="left" variant="subtitle1" component="p">
+            <FormattedMessage id="search.tryAgain" />
+          </Typography>
+          <Typography align="left" variant="body2" component="p">
+            <ul className={classes.list}>
+              {
+                messageIDs.map(id => (
+                  <li key={id}>
+                    <FormattedMessage id={`search.tryAgainBody.${id}`} />
+                  </li>
+                ))
+              }
+            </ul>
+          </Typography>
+        </Container>
       </Container>
     );
   }
@@ -202,7 +224,7 @@ class SearchView extends React.Component {
 
     return (
       <NoSsr>
-        {!isFetching && unitCount && (
+        {!isFetching && (
           <div align="left" className={classes.searchInfo}>
             <Typography variant="srOnly" component="h3">
               <FormattedMessage id="search.resultInfo" />
@@ -248,18 +270,22 @@ class SearchView extends React.Component {
                 </div>
               </div>
             ) : null}
-            {searchParam.type === 'search' && (
-              <ServiceMapButton
-                ref={this.buttonRef}
-                role="link"
-                className={`${classes.suggestionButton}`}
-                onClick={() => this.setState({ expandSearch: searchParam.query })}
-              >
-                <Typography variant="button" className={classes.expand}>
-                  <FormattedMessage id="search.expand" />
-                </Typography>
-              </ServiceMapButton>
-            )}
+            {
+              !!unitCount
+              && searchParam.type === 'search'
+              && (
+                <ServiceMapButton
+                  ref={this.buttonRef}
+                  role="link"
+                  className={`${classes.suggestionButton}`}
+                  onClick={() => this.setState({ expandSearch: searchParam.query })}
+                >
+                  <Typography variant="button" className={classes.expand}>
+                    <FormattedMessage id="search.expand" />
+                  </Typography>
+                </ServiceMapButton>
+              )
+            }
           </div>
         )}
       </NoSsr>
