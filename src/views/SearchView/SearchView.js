@@ -139,16 +139,16 @@ class SearchView extends React.Component {
     return shouldRender && (
       <Container className={classes.noVerticalPadding}>
         <Container className={classes.noVerticalPadding}>
-          <Typography align="left" variant="subtitle1" component="p" aria-hidden="true">
+          <Typography align="left" variant="subtitle1" component="p">
             <FormattedMessage id="search.notFoundWith" values={{ query: previousSearch }} />
           </Typography>
         </Container>
-        <Divider />
+        <Divider aria-hidden="true" />
         <Container className={classes.noVerticalPadding}>
-          <Typography align="left" variant="subtitle1" component="p" aria-hidden="true">
+          <Typography align="left" variant="subtitle1" component="p">
             <FormattedMessage id="search.tryAgain" />
           </Typography>
-          <Typography align="left" variant="body2" component="p" aria-hidden="true">
+          <Typography align="left" variant="body2" component="p">
             <FormattedMessage id="search.tryAgainBody" values={{ br: <br /> }} />
           </Typography>
         </Container>
