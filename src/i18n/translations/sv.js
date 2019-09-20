@@ -198,14 +198,11 @@ export default {
   'search.suggestions.history': '{count} kohdetta hakuhistoriassa', // TODO: Translate
   'search.suggestions.noHistory': 'Ei aikaisempia hakuja', // TODO: Translate
   'search.tryAgain': 'Yritä hakea uudelleen', // TODO: Translate
-  'search.tryAgainBody': `
-    - tarkista kirjoitusasu{br}
-    - tarkista kaupunkivalinnat{br}
-    - kirjoita palvelun nimi{br}
-    - kirjoita osoite, minkä läheltä etsit palvelua{br}
-    - kirjoita avainsanoja, esim. esteetön luontopolku,
-     ruotsinkielinen päiväkoti{br}
-  `, // TODO: Translate
+  'search.tryAgainBody.spelling': 'tarkista kirjoitusasu', // TODO: Translate
+  'search.tryAgainBody.city': 'tarkista kaupunkivalinnat', // TODO: Translate
+  'search.tryAgainBody.service': 'kirjoita palvelun nimi', // TODO: Translate
+  'search.tryAgainBody.address': 'kirjoita osoite, minkä läheltä etsit palvelua', // TODO: Translate
+  'search.tryAgainBody.keyword': 'kirjoita avainsanoja, esim. luontopolku, ruotsinkielinen päiväkoti', // TODO: Translate
   'search.expand': 'Tarkenna hakua', // TODO: Translate
   'search.closeExpand': 'Palaa hakuun', // TODO: Translate
 

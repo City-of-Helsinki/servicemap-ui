@@ -198,13 +198,11 @@ export default {
   'search.suggestions.history': '{count} kohdetta hakuhistoriassa',
   'search.suggestions.noHistory': 'Ei aikaisempia hakuja',
   'search.tryAgain': 'Yritä hakea uudelleen',
-  'search.tryAgainBody': `
-    - tarkista kirjoitusasu{br}
-    - tarkista kaupunkivalinnat{br}
-    - kirjoita palvelun nimi{br}
-    - kirjoita osoite, minkä läheltä etsit palvelua{br}
-    - kirjoita avainsanoja, esim. luontopolku, ruotsinkielinen päiväkoti{br}
-  `,
+  'search.tryAgainBody.spelling': 'tarkista kirjoitusasu',
+  'search.tryAgainBody.city': 'tarkista kaupunkivalinnat',
+  'search.tryAgainBody.service': 'kirjoita palvelun nimi',
+  'search.tryAgainBody.address': 'kirjoita osoite, minkä läheltä etsit palvelua',
+  'search.tryAgainBody.keyword': 'kirjoita avainsanoja, esim. luontopolku, ruotsinkielinen päiväkoti',
   'search.expand': 'Tarkenna hakua',
   'search.closeExpand': 'Palaa hakuun',
 

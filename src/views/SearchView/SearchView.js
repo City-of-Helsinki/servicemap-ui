@@ -135,6 +135,7 @@ class SearchView extends React.Component {
 
     // These variables should be passed to this function
     const shouldRender = !isFetching && previousSearch && units && !units.length;
+    const messageIDs = ['spelling', 'city', 'service', 'address', 'keyword'];
 
     return shouldRender && (
       <Container className={classes.noVerticalPadding}>
@@ -149,7 +150,15 @@ class SearchView extends React.Component {
             <FormattedMessage id="search.tryAgain" />
           </Typography>
           <Typography align="left" variant="body2" component="p">
-            <FormattedMessage id="search.tryAgainBody" values={{ br: <br /> }} />
+            <ul className={classes.list}>
+              {
+                messageIDs.map(id => (
+                  <li key={id}>
+                    <FormattedMessage id={`search.tryAgainBody.${id}`} />
+                  </li>
+                ))
+              }
+            </ul>
           </Typography>
         </Container>
       </Container>

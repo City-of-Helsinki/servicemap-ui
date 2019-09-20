@@ -51,6 +51,10 @@ export default theme => ({
     maxWidth: '100%',
     flexWrap: 'wrap',
   },
+  list: {
+    margin: `${theme.spacing.unit}px 0`,
+    padding: `0 0 0 ${theme.spacing.unitDouble}px`,
+  },
   settingItem: {
     display: 'flex',
     width: '50%',

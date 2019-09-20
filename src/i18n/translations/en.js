@@ -200,13 +200,11 @@ export default {
   'search.suggestions.history': '{count} items in search history',
   'search.suggestions.noHistory': 'No previous searches',
   'search.tryAgain': 'Try searching again',
-  'search.tryAgainBody': `
-    - check spelling{br}
-    - check city choices{br}
-    - write name of service{br}
-    - write address close to service you are looking for{br}
-    - write keywords
-  `,
+  'search.tryAgainBody.spelling': 'check spelling',
+  'search.tryAgainBody.city': 'check city choices',
+  'search.tryAgainBody.service': 'write name of service',
+  'search.tryAgainBody.address': 'write address close to service you are looking for',
+  'search.tryAgainBody.keyword': 'write keywords',
   'search.expand': 'Expand search', // TODO: verify
   'search.closeExpand': 'Return to search',
 
