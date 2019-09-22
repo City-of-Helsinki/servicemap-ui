@@ -6,11 +6,12 @@ import ServiceTreeView from './ServiceTreeView';
 import styles from './styles';
 
 const mapStateToProps = (state) => {
-  const { navigator, serviceTree } = state;
+  const { navigator, serviceTree, settings } = state;
   return {
     navigator,
     prevSelected: (serviceTree && serviceTree.selected) || [],
     prevOpened: (serviceTree && serviceTree.opened) || [],
+    settings,
   };
 };
 

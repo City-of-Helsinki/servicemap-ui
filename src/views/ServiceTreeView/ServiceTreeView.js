@@ -3,13 +3,14 @@ import {
   List, ListItem, Collapse, Checkbox, Typography, ButtonBase,
 } from '@material-ui/core';
 import { ArrowDropUp, ArrowDropDown } from '@material-ui/icons';
+import { FormattedMessage } from 'react-intl';
 import SearchBar from '../../components/SearchBar';
 import TitleBar from '../../components/TitleBar';
 import { MobileComponent, DesktopComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import ServiceMapButton from '../../components/ServiceMapButton';
 
 const ServiceTreeView = ({
-  classes, intl, navigator, setTreeState, prevSelected, prevOpened,
+  classes, intl, navigator, setTreeState, prevSelected, prevOpened, settings,
 }) => {
   const [services, setServices] = useState(null);
   const [opened, setOpened] = useState([...prevOpened]);
@@ -148,6 +149,10 @@ const ServiceTreeView = ({
       ? <ArrowDropDown className={classes.iconRight} />
       : <ArrowDropUp className={classes.iconRight} />;
 
+    const resultCount = (settings.helsinki ? item.unit_count.municipality.helsinki || 0 : 0)
+      + (settings.espoo ? item.unit_count.municipality.espoo || 0 : 0)
+      + (settings.vantaa ? item.unit_count.municipality.vantaa || 0 : 0)
+      + (settings.kauniainen ? item.unit_count.municipality.kauniainen || 0 : 0);
 
     return (
       <div key={item.id}>
@@ -172,7 +177,7 @@ const ServiceTreeView = ({
             onClick={hasChildren ? () => handleExpand(item, isOpen) : null}
           >
             <Typography align="left" className={`${classes.text} ${classes[`text${level}`]}`}>
-              {`${item.name.fi} (${item.unit_count.total})`}
+              {`${item.name.fi} (${resultCount})`}
             </Typography>
             {hasChildren ? icon : <span className={classes.iconRight} />}
           </ButtonBase>
@@ -207,28 +212,61 @@ const ServiceTreeView = ({
   });
   const ids = selectedList.map(i => i.id);
 
+  let citySettings = [
+    ...settings.helsinki ? ['Helsinki'] : [],
+    ...settings.espoo ? ['Espoo'] : [],
+    ...settings.vantaa ? ['Vantaa'] : [],
+    ...settings.kauniainen ? ['Kauniainen'] : [],
+  ];
+
+  if (citySettings.length === 4) {
+    citySettings = [];
+  }
+
+  const cityString = citySettings.join(', ');
+
   return (
     <>
       <div className={classes.topArea}>
         {TopBar}
-        <div style={{ display: 'flex' }}>
-          <ButtonBase disabled={!selectedList.length} onClick={() => setSelectedOpen(!selectedOpen)} style={{ display: 'flex' }}>
-            <Typography
-              style={{
-                paddingLeft: 16, paddingRight: 8, fontWeight: 'bold', color: '#fff',
-              }}
-              variant="body2"
-            >
-              {`Olet tehnyt (${selectedList.length}) valintaa`}
-            </Typography>
-            {selectedOpen ? <ArrowDropDown style={{ color: '#fff' }} /> : <ArrowDropUp style={{ color: '#fff' }} />}
-          </ButtonBase>
-          <ButtonBase disabled={!selectedList.length} onClick={() => setSelected([])} style={{ display: 'flex', marginLeft: 'auto' }}>
-            <Typography style={{ paddingRight: 16, color: '#fff' }} variant="body2">
-             Poista kaikki valinnat
-            </Typography>
-          </ButtonBase>
-        </div>
+        <>
+          <div style={{ color: '#fff', display: 'flex', paddingLeft: 16 }}>
+            {citySettings.length ? (
+              <>
+                {/* <div aria-label={`${intl.formatMessage({ id: 'settings.city.info' }, { count: citySettings.length })}: ${cityString}`} className={classes.infoContainer}> */}
+                <Typography aria-hidden className={`${classes.infoText} ${classes.bold}`}>
+                  <FormattedMessage id="settings.city.info" values={{ count: citySettings.length }} />
+                  {':'}
+                &nbsp;
+                </Typography>
+                <Typography aria-hidden className={classes.infoText}>
+                  {cityString}
+                </Typography>
+                {/* </div> */}
+              </>
+            ) : null}
+          </div>
+          <div style={{ display: 'flex' }}>
+            <ButtonBase disabled={!selectedList.length} onClick={() => setSelectedOpen(!selectedOpen)} style={{ display: 'flex' }}>
+              <Typography
+                style={{
+                  paddingLeft: 16, paddingRight: 8, fontWeight: 'bold', color: '#fff',
+                }}
+                variant="body2"
+              >
+                {`Olet tehnyt (${selectedList.length}) valintaa`}
+              </Typography>
+              {selectedOpen ? <ArrowDropDown style={{ color: '#fff' }} /> : <ArrowDropUp style={{ color: '#fff' }} />}
+            </ButtonBase>
+            {selectedList.length ? (
+              <ButtonBase disabled={!selectedList.length} onClick={() => setSelected([])} style={{ display: 'flex', marginLeft: 'auto' }}>
+                <Typography style={{ paddingRight: 16, color: '#fff' }} variant="body2">
+                Poista kaikki valinnat
+                </Typography>
+              </ButtonBase>
+            ) : null}
+          </div>
+        </>
         <Collapse in={selectedOpen}>
           <List>
             {selectedList.map(item => (

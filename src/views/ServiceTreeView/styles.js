@@ -53,4 +53,11 @@ export default theme => ({
   topArea: {
     backgroundColor: theme.palette.primary.main,
   },
+  bold: {
+    fontWeight: 'bold',
+  },
+  infoText: {
+    color: 'inherit',
+    marginBottom: 12,
+  },
 });
