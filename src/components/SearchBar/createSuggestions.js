@@ -4,9 +4,9 @@ import expandSearch from './expandSearch';
 const pageSize = 50;
 const listLength = 10;
 
-const createSuggestions = async (query, getLocaleText, signal, cities) => {
+const createSuggestions = async (query, getLocaleText, signal, cities, locale) => {
   let results = [];
-  await fetch(`https://api.hel.fi/servicemap/v2/search/?input=${query}&municipality=${cities}&only=unit.name&page_size=${pageSize}&type=unit,service`, {
+  await fetch(`https://api.hel.fi/servicemap/v2/search/?input=${query}&municipality=${cities}&language=${locale}&only=unit.name&page_size=${pageSize}&type=unit,service`, {
     signal,
   })
     .then(response => response.json())
@@ -53,7 +53,7 @@ const createSuggestions = async (query, getLocaleText, signal, cities) => {
     .then(async (suggestions) => {
       const searchData = [];
       // Fetch the result count of each suggestion
-      const data = await Promise.all(suggestions.map(word => fetch(`https://api.hel.fi/servicemap/v2/search/?q=${word}&municipality=${cities}&only=unit.name&page_size=1&type=unit`, {
+      const data = await Promise.all(suggestions.map(word => fetch(`https://api.hel.fi/servicemap/v2/search/?q=${word}&municipality=${cities}&language=${locale}&only=unit.name&page_size=1&type=unit,service`, {
         signal,
       })
         .then(response => response.json())));
@@ -75,7 +75,7 @@ const createSuggestions = async (query, getLocaleText, signal, cities) => {
         const amount = listLength - results.length;
         const largest = results.reduce((a, b) => (b.count > a.count ? b : a));
         const index = results.findIndex(item => item.query === largest.query);
-        await expandSearch(results[index], getLocaleText, amount, signal)
+        await expandSearch(results[index], getLocaleText, cities, locale, amount, signal)
           .then((data) => {
             data.expandedQueries.forEach((q) => {
               if (!results.some(e => e.query === q.query)) {

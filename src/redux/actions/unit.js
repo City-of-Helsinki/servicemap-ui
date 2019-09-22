@@ -15,6 +15,7 @@ export const fetchUnits = (
 ) => async (dispatch, getState)
 => {
   const onStart = () => dispatch(isFetching(searchQuery));
+  const onStartNode = () => dispatch(isFetching({ searchType, searchQuery }));
   const { user } = getState();
   const { locale } = user;
 
@@ -43,13 +44,13 @@ export const fetchUnits = (
   if (searchType === 'node') {
     nodeFetch(
       { service_node: searchQuery },
-      onStart,
+      onStartNode,
       onSuccessNode,
       onError,
       onNext,
       null,
-      abortController
-);
+      abortController,
+    );
   } else {
     searchFetch(
       { q: searchQuery, language: locale || 'fi' },

@@ -75,11 +75,14 @@ class SearchView extends React.Component {
     return null;
   }
 
-  // Check if view will fetch data because search params has changed
+  // Check if view will fetch data because sreach params has changed
   shouldFetch = () => {
     const { isFetching, previousSearch } = this.props;
-    const searchParam = this.getSearchParam().query;
-    return !isFetching && searchParam && searchParam !== previousSearch;
+    const searchParam = this.getSearchParam();
+    if (previousSearch && searchParam && searchParam.type === 'node') {
+      return !isFetching && searchParam && searchParam.query !== previousSearch.searchQuery;
+    }
+    return !isFetching && searchParam && searchParam.query !== previousSearch;
   }
 
   focusMap = (units, map) => {
@@ -168,7 +171,7 @@ class SearchView extends React.Component {
 
   renderSearchInfo = () => {
     const {
-      units, settings, classes, isFetching, intl,
+      units, settings, classes, isFetching, intl, serviceTree,
     } = this.props;
     const {
       colorblind, hearingAid, mobility, visuallyImpaired, helsinki, espoo, vantaa, kauniainen,
@@ -191,7 +194,7 @@ class SearchView extends React.Component {
       ...kauniainen ? [`"${intl.formatMessage({ id: 'settings.city.kauniainen' })}"`] : [],
     ];
 
-    const cityString = citySettings.join(' ');
+    const cityString = citySettings.join(', ');
     const accessibilityString = accessibilitySettings.map(e => e.text).join(' ');
 
     if (citySettings.length === 4) {
@@ -199,6 +202,7 @@ class SearchView extends React.Component {
     }
 
     const infoTextId = searchParam.type === 'search' ? 'search.infoText' : 'search.infoTextNode';
+    const nodeNames = serviceTree && serviceTree.selected.map(e => e.name.fi).join(', ');
 
     return (
       <NoSsr>
@@ -207,15 +211,17 @@ class SearchView extends React.Component {
             <Typography variant="srOnly" component="h3">
               <FormattedMessage id="search.resultInfo" />
             </Typography>
-            <div aria-live="polite" aria-label={`${intl.formatMessage({ id: infoTextId }, { count: unitCount })} ${searchParam.query}`} className={classes.infoContainer}>
-              <Typography aria-hidden className={`${classes.infoText} ${classes.bold}`}>
-                <FormattedMessage id={infoTextId} values={{ count: unitCount }} />
-              </Typography>
-              <Typography aria-hidden className={classes.infoText}>
-                &nbsp;
-                {`"${searchParam.query}"`}
-              </Typography>
-            </div>
+            {!(searchParam.type === 'node' && !nodeNames) && (
+              <div aria-live="polite" aria-label={`${intl.formatMessage({ id: infoTextId }, { count: unitCount })} ${searchParam.query}`} className={classes.infoContainer}>
+                <Typography aria-hidden className={`${classes.infoText} ${classes.bold}`}>
+                  <FormattedMessage id={infoTextId} values={{ count: unitCount }} />
+                </Typography>
+                <Typography aria-hidden className={classes.infoText}>
+                  &nbsp;
+                  {`${searchParam.type === 'search' ? searchParam.query : nodeNames}`}
+                </Typography>
+              </div>
+            )}
 
             {citySettings.length ? (
               <>
@@ -417,6 +423,7 @@ SearchView.propTypes = {
   map: PropTypes.objectOf(PropTypes.any),
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   settings: PropTypes.objectOf(PropTypes.any),
+  serviceTree: PropTypes.objectOf(PropTypes.any),
 };
 
 SearchView.defaultProps = {
@@ -429,4 +436,5 @@ SearchView.defaultProps = {
   units: [],
   settings: null,
   map: null,
+  serviceTree: null,
 };

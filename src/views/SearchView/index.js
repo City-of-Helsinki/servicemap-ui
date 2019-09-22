@@ -8,7 +8,7 @@ import { getProcessedData } from '../../redux/selectors/results';
 // const unitList = getUnitList(state);
 const mapStateToProps = (state) => {
   const map = state.mapRef.leafletElement;
-  const { units, settings } = state;
+  const { units, settings, serviceTree } = state;
   const {
     isFetching, count, max, previousSearch,
   } = units;
@@ -23,6 +23,7 @@ const mapStateToProps = (state) => {
     map,
     previousSearch,
     settings,
+    serviceTree,
   };
 };
 

@@ -29,6 +29,7 @@ const SuggestionBox = (props) => {
     expandQuery,
     closeExpandedSearch,
     settings,
+    locale,
   } = props;
 
   const [searchQueries, setSearchQueries] = useState(null);
@@ -61,7 +62,7 @@ const SuggestionBox = (props) => {
       fetchController.current = new AbortController();
       const { signal } = fetchController.current;
 
-      createSuggestions(query, getLocaleText, signal, cities)
+      createSuggestions(query, getLocaleText, signal, cities, locale)
         .then((result) => {
           if (result !== 'error') {
             fetchController.current = null;
@@ -86,7 +87,7 @@ const SuggestionBox = (props) => {
   const handleExpandSearch = () => {
     setLoading('expanded');
     setSearchQueries(null);
-    expandSearch(expandQuery, getLocaleText, cities)
+    expandSearch(expandQuery, getLocaleText, cities, locale)
       .then((result) => {
         setLoading(false);
         setExpandedQueries(result.expandedQueries);

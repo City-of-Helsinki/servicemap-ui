@@ -16,10 +16,22 @@ export default theme => ({
   level3: {
     backgroundColor: '#f5f5f5',
   },
+  text: {
+    fontSize: '15px',
+    lineHeight: '18px',
+  },
   text1: {
     // textTransform: 'uppercase',
-    // fontWeight: 'bold',
     paddingLeft: 8,
+    fontWeight: 'bold',
+    letterSpacing: -0.5,
+  },
+  text2: {
+    fontWeight: 'bold',
+    letterSpacing: -0.5,
+  },
+  text3: {
+    letterSpacing: 0.5,
   },
   iconRight: {
     marginLeft: 'auto',

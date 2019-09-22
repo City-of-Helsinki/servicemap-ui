@@ -11,13 +11,9 @@ import ServiceMapButton from '../../components/ServiceMapButton';
 const ServiceTreeView = ({
   classes, intl, navigator, setTreeState, prevSelected, prevOpened,
 }) => {
-
-  // const [opened, setOpened] = useState([...prevOpened]);
-  // const [selected, setSelected] = useState([...prevSelected]);
-
   const [services, setServices] = useState(null);
-  const [opened, setOpened] = useState([]);
-  const [selected, setSelected] = useState([]);
+  const [opened, setOpened] = useState([...prevOpened]);
+  const [selected, setSelected] = useState([...prevSelected]);
   const [selectedOpen, setSelectedOpen] = useState(false);
 
   const checkChildNodes = (node, nodes = []) => {
@@ -35,32 +31,27 @@ const ServiceTreeView = ({
   };
 
   const fetchInitialServices = () => {
-    /* const prevServices = prevOpened.map((i) => {
-      const { children } = i;
-      return children.map(e => e);
-    }); */
-    // console.log(' prev services are: ', prevServices);
-    /* Promise.all([
+    Promise.all([
       fetch('https://api.hel.fi/servicemap/v2/service_node/?level=0&page=1&page_size=1000').then(response => response.json()),
       prevOpened.length
       && Promise.all(prevOpened.map(id => fetch(`https://api.hel.fi/servicemap/v2/service_node/?parent=${id}&page=1&page_size=1000`)
         .then(response => response.json())))
         .then((data) => {
-          const combinedData = data.map(i => i.results);
-          console.log('combo is: ', combinedData);
+          const combinedData = [];
+          data.forEach((i) => {
+            i.results.forEach((e) => {
+              combinedData.push(e);
+            });
+          });
           return combinedData.map(i => i);
         }),
-      // .then(data => data.join())
-    ]) */
-    fetch('https://api.hel.fi/servicemap/v2/service_node/?level=0&page=1&page_size=1000')
-      .then(response => response.json())
-      .then((data) => {
-        // const fullData = [...data[0].results, ...data[1] ? data[1].results : []];
-        const serviceData = data.results.map(service => (
-          service
-        ));
-        setServices(serviceData);
-      });
+    ]).then((data) => {
+      const fullData = [...data[0].results, ...data[1] ? data[1] : []];
+      const serviceData = fullData.map(service => (
+        service
+      ));
+      setServices(serviceData);
+    });
   };
 
   const fetchChildServices = async (service) => {
@@ -97,13 +88,11 @@ const ServiceTreeView = ({
     if (typeof item === 'number') {
       child = selected.find(e => e.id === item);
     }
-    if (opened.includes(child.id)) {
-      if (child.children) {
-        data.push(...child.children);
-        child.children.forEach((c) => {
-          getSelectedChildNodes(c, data);
-        });
-      } return data;
+    if (child && child.children) {
+      data.push(...child.children);
+      child.children.forEach((c) => {
+        getSelectedChildNodes(c, data);
+      });
     } return data;
   };
 
@@ -163,7 +152,7 @@ const ServiceTreeView = ({
     return (
       <div key={item.id}>
         <ListItem
-          style={{ paddingLeft: 4 * level }}
+          style={{ paddingLeft: 8 * level }}
           key={item.id}
           disableGutters
           className={`${classes.listItem} ${classes[`level${level}`]}`}
@@ -182,8 +171,8 @@ const ServiceTreeView = ({
             disableTouchRipple
             onClick={hasChildren ? () => handleExpand(item, isOpen) : null}
           >
-            <Typography variant="body1" className={classes[`text${level}`]}>
-              {item.name.fi}
+            <Typography align="left" className={`${classes.text} ${classes[`text${level}`]}`}>
+              {`${item.name.fi} (${item.unit_count.total})`}
             </Typography>
             {hasChildren ? icon : <span className={classes.iconRight} />}
           </ButtonBase>
@@ -222,17 +211,24 @@ const ServiceTreeView = ({
     <>
       <div className={classes.topArea}>
         {TopBar}
-        <ButtonBase disabled={!selectedList.length} onClick={() => setSelectedOpen(!selectedOpen)} style={{ display: 'flex' }}>
-          <Typography
-            style={{
-              paddingLeft: 16, paddingRight: 8, fontWeight: 'bold', color: '#fff',
-            }}
-            variant="body2"
-          >
-            {`Olet tehnyt (${selectedList.length}) valintaa`}
-          </Typography>
-          {selectedOpen ? <ArrowDropDown style={{ color: '#fff' }} /> : <ArrowDropUp style={{ color: '#fff' }} />}
-        </ButtonBase>
+        <div style={{ display: 'flex' }}>
+          <ButtonBase disabled={!selectedList.length} onClick={() => setSelectedOpen(!selectedOpen)} style={{ display: 'flex' }}>
+            <Typography
+              style={{
+                paddingLeft: 16, paddingRight: 8, fontWeight: 'bold', color: '#fff',
+              }}
+              variant="body2"
+            >
+              {`Olet tehnyt (${selectedList.length}) valintaa`}
+            </Typography>
+            {selectedOpen ? <ArrowDropDown style={{ color: '#fff' }} /> : <ArrowDropUp style={{ color: '#fff' }} />}
+          </ButtonBase>
+          <ButtonBase disabled={!selectedList.length} onClick={() => setSelected([])} style={{ display: 'flex', marginLeft: 'auto' }}>
+            <Typography style={{ paddingRight: 16, color: '#fff' }} variant="body2">
+             Poista kaikki valinnat
+            </Typography>
+          </ButtonBase>
+        </div>
         <Collapse in={selectedOpen}>
           <List>
             {selectedList.map(item => (
@@ -254,7 +250,7 @@ const ServiceTreeView = ({
         <ServiceMapButton
           disabled={!selectedList.length}
           onClick={() => {
-            setTreeState({ selected, opened });
+            setTreeState({ selected: selectedList, opened });
             navigator.push('search', { nodes: ids });
           }}
           style={{

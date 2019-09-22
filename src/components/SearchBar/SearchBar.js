@@ -136,11 +136,14 @@ class SearchBar extends React.Component {
       closeExpandedSearch,
       srHideInput,
       settings,
+      locale,
     } = this.props;
     const { search, isActive, focusedSuggestion } = this.state;
 
+    const previousSearchText = typeof previousSearch === 'string' ? previousSearch : null;
+
     const showSuggestions = isActive || expandSearch;
-    const inputValue = typeof search === 'string' ? search : previousSearch;
+    const inputValue = typeof search === 'string' ? search : previousSearchText;
     const rootClasses = `${classes.root} ${typeof isSticky === 'number' ? classes.sticky : ''} ${primary ? classes.primary : ''}  ${className}`;
     const wrapperClasses = `${classes.wrapper} ${showSuggestions ? classes.wrapperFocused : ''}`;
     const stickyStyles = typeof isSticky === 'number' ? { top: isSticky } : null;
@@ -194,6 +197,7 @@ class SearchBar extends React.Component {
             setSearch={value => this.setState({ search: value })}
             closeExpandedSearch={closeExpandedSearch}
             settings={settings}
+            locale={locale}
           />
         </div>
       </>
@@ -220,6 +224,7 @@ SearchBar.propTypes = {
   closeExpandedSearch: PropTypes.func,
   srHideInput: PropTypes.bool,
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
+  locale: PropTypes.string.isRequired,
 };
 
 SearchBar.defaultProps = {
