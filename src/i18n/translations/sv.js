@@ -149,6 +149,7 @@ export default {
 
   // Search
   'search': 'Hae', // TODO: Translate
+  'search.notFoundWith': 'Ei osumia haulle "{query}".', // TODO: Translate
   'search.placeholder': 'Hae palvelua tai toimipistettä', // TODO: Translate
   'search.info': `{count, plural,
                   =0 {no units}
@@ -199,6 +200,12 @@ export default {
   'search.suggestions.results': '{count} tulosta', // TODO: Translate
   'search.suggestions.history': '{count} kohdetta hakuhistoriassa', // TODO: Translate
   'search.suggestions.noHistory': 'Ei aikaisempia hakuja', // TODO: Translate
+  'search.tryAgain': 'Yritä hakea uudelleen', // TODO: Translate
+  'search.tryAgainBody.spelling': 'tarkista kirjoitusasu', // TODO: Translate
+  'search.tryAgainBody.city': 'tarkista kaupunkivalinnat', // TODO: Translate
+  'search.tryAgainBody.service': 'kirjoita palvelun nimi', // TODO: Translate
+  'search.tryAgainBody.address': 'kirjoita osoite, minkä läheltä etsit palvelua', // TODO: Translate
+  'search.tryAgainBody.keyword': 'kirjoita avainsanoja, esim. luontopolku, ruotsinkielinen päiväkoti', // TODO: Translate
   'search.expand': 'Tarkenna hakua', // TODO: Translate
   'search.closeExpand': 'Palaa hakuun', // TODO: Translate
 

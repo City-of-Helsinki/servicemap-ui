@@ -57,7 +57,8 @@ class SearchBar extends React.Component {
           index = increment ? 0 : listEnd;
           break;
         case 0:
-          index = increment ? 1 : listEnd;
+          // Check that list has more than 1 element
+          index = listEnd && increment ? 1 : listEnd;
           break;
         case listEnd:
           index = increment ? 0 : listEnd - 1;

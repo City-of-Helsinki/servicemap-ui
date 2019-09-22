@@ -151,6 +151,7 @@ export default {
 
   // Search
   'search': 'Search',
+  'search.notFoundWith': 'No results for search "{query}".',
   'search.placeholder': 'Search for services or units',
   'search.info': `{count, plural,
                   =0 {no units}
@@ -201,6 +202,12 @@ export default {
   'search.suggestions.results': '{count} results',
   'search.suggestions.history': '{count} items in search history',
   'search.suggestions.noHistory': 'No previous searches',
+  'search.tryAgain': 'Try searching again',
+  'search.tryAgainBody.spelling': 'check spelling',
+  'search.tryAgainBody.city': 'check city choices',
+  'search.tryAgainBody.service': 'write name of service',
+  'search.tryAgainBody.address': 'write address close to service you are looking for',
+  'search.tryAgainBody.keyword': 'write keywords',
   'search.expand': 'Expand search', // TODO: verify
   'search.closeExpand': 'Return to search',
 

@@ -28,6 +28,10 @@ export default theme => ({
   icon: {
     padding: 10,
   },
+  noVerticalPadding: {
+    paddingTop: 0,
+    paddingBottom: 0,
+  },
   searchInfo: {
     color: '#fff',
     backgroundColor: theme.palette.primary.main,
@@ -46,6 +50,10 @@ export default theme => ({
     display: 'flex',
     maxWidth: '100%',
     flexWrap: 'wrap',
+  },
+  list: {
+    margin: `${theme.spacing.unit}px 0`,
+    padding: `0 0 0 ${theme.spacing.unitDouble}px`,
   },
   settingItem: {
     display: 'flex',
