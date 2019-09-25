@@ -41,7 +41,7 @@ const buildTranslatedObject = (data, base) => {
  * @param {*} data - fetched data from server
  */
 export const parseAccessibilitySentences = (data) => {
-  if (data) {
+  if (data && data.accessibility_sentences) {
     const sentences = {};
     const groups = {};
 
