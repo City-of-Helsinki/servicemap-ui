@@ -8,6 +8,7 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { fetchUnitEvents } from '../../redux/actions/event';
 import { fetchSelectedUnit, changeSelectedUnit } from '../../redux/actions/selectedUnit';
 import { fetchAccessibilitySentences } from '../../redux/actions/selectedUnitAccessibility';
+import { fetchReservations } from '../../redux/actions/selectedUnitReservations';
 import { getSelectedUnit } from '../../redux/selectors/selectedUnit';
 import { getLocaleString } from '../../redux/selectors/locale';
 import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
@@ -17,7 +18,6 @@ import styles from './styles/styles';
 import TitleBar from '../../components/TitleBar';
 import Container from '../../components/Container';
 import { uppercaseFirst } from '../../utils';
-import fetchUnitReservations from './utils/fetchUnitReservations';
 import AccessibilityInfo from './components/AccessibilityInfo';
 
 import ContactInfo from './components/ContactInfo';
@@ -37,14 +37,13 @@ class UnitView extends React.Component {
 
     this.state = {
       centered: false,
-      reservations: null,
       didMount: false,
     };
   }
 
   componentDidMount() {
     const {
-      match, fetchSelectedUnit, unit, fetchAccessibilitySentences,
+      match, fetchSelectedUnit, fetchReservations, unit, fetchAccessibilitySentences,
     } = this.props;
     const { params } = match;
 
@@ -55,8 +54,7 @@ class UnitView extends React.Component {
     if (params && params.unit) {
       const unitId = params.unit;
 
-      fetchUnitReservations(unitId)
-        .then(data => this.setState({ reservations: data.results }));
+      fetchReservations(unitId);
 
       if (unit && (unit.complete && unitId === `${unit.id}`)) {
         fetchAccessibilitySentences(unitId);
@@ -124,9 +122,8 @@ class UnitView extends React.Component {
 
   renderDetailTab() {
     const {
-      getLocaleText, eventsData, navigator, unit,
+      getLocaleText, eventsData, navigator, reservations, unit,
     } = this.props;
-    const { reservations } = this.state;
 
     if (!unit || !unit.complete) {
       return <></>;
@@ -217,9 +214,9 @@ class UnitView extends React.Component {
 
   render() {
     const {
-      classes, getLocaleText, intl, unit, eventsData, navigator, match, unitFetching,
+      classes, getLocaleText, intl, unit, eventsData, navigator, match, reservations, unitFetching,
     } = this.props;
-    const { didMount, reservations } = this.state;
+    const { didMount } = this.state;
 
     const correctUnit = unit && unit.id === parseInt(match.params.unit, 10);
 
@@ -392,6 +389,8 @@ const mapStateToProps = (state) => {
   const getLocaleText = textObject => getLocaleString(state, textObject);
   const map = state.mapRef.leafletElement;
   const { navigator } = state;
+  const reservations = state.selectedUnit.reservations.data;
+
   return {
     accessibilitySentences: accessibilitySentences.data,
     unit,
@@ -401,13 +400,18 @@ const mapStateToProps = (state) => {
     getLocaleText,
     map,
     navigator,
+    reservations,
   };
 };
 
 export default withRouter(injectIntl(withStyles(styles)(connect(
   mapStateToProps,
   {
-    changeSelectedUnit, fetchSelectedUnit, fetchUnitEvents, fetchAccessibilitySentences,
+    changeSelectedUnit,
+    fetchSelectedUnit,
+    fetchUnitEvents,
+    fetchAccessibilitySentences,
+    fetchReservations,
   },
 )(UnitView))));
 
@@ -418,6 +422,7 @@ UnitView.propTypes = {
   eventsData: PropTypes.objectOf(PropTypes.any),
   map: PropTypes.objectOf(PropTypes.any),
   fetchAccessibilitySentences: PropTypes.func.isRequired,
+  fetchReservations: PropTypes.func.isRequired,
   fetchSelectedUnit: PropTypes.func.isRequired,
   unitFetching: PropTypes.bool.isRequired,
   fetchUnitEvents: PropTypes.func.isRequired,
@@ -427,6 +432,7 @@ UnitView.propTypes = {
   getLocaleText: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
+  reservations: PropTypes.arrayOf(PropTypes.any),
 };
 
 UnitView.defaultProps = {
@@ -436,4 +442,5 @@ UnitView.defaultProps = {
   match: {},
   map: null,
   navigator: null,
+  reservations: null,
 };
