@@ -35,7 +35,7 @@ const Events = ({
   unit, eventsData, navigator, getLocaleText, intl, changeSelectedEvent, listLength,
 }) => {
   const { events } = eventsData;
-  if (unit && events && events.length > 0 && eventsData.unit === unit.id) {
+  if (unit && events && events.length > 0 && `${eventsData.unit}` === `${unit.id}`) {
     return (
       <>
         <TitledList
