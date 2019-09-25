@@ -48,6 +48,18 @@ class EventDetailView extends React.Component {
         };
         eventFetch(options, null, onSuccess, null, null, match.params.event);
       }
+    } else if (!selectedUnit) {
+      // Attempt fetching selected unit if it doesn't exist or isn't correct one
+      const unit = event.location;
+      if (typeof unit === 'object' && unit.id) {
+        const unitId = unit.id.split(':').pop();
+        if (
+          !UnitHelper.isValidUnit(selectedUnit)
+          || parseInt(unitId, 10) !== selectedUnit.id
+        ) {
+          fetchSelectedUnit(unitId);
+        }
+      }
     }
   }
 
@@ -85,10 +97,7 @@ class EventDetailView extends React.Component {
     if (event) {
       const description = event.description || event.short_description;
       const unit = selectedUnit;
-      if (!unit) {
-        return null;
-      }
-      const phoneText = unit.phone ? `${unit.phone} ${intl.formatMessage({ id: 'unit.call.number' })}` : null;
+      const phoneText = unit && unit.phone ? `${unit.phone} ${intl.formatMessage({ id: 'unit.call.number' })}` : null;
       const time = this.formatDate(event);
       return (
         <>
@@ -118,10 +127,15 @@ class EventDetailView extends React.Component {
               srText={intl.formatMessage({ id: 'event.time' })}
               divider
             />
-            <UnitItem
-              key="unitInfo"
-              unit={unit}
-            />
+            {
+              unit
+              && (
+                <UnitItem
+                  key="unitInfo"
+                  unit={unit}
+                />
+              )
+            }
             {
                phoneText
                && (
