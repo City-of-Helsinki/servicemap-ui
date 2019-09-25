@@ -19,6 +19,7 @@ import themes from '../src/themes';
 import fetch from 'node-fetch';
 import { fetchEventData, fetchSelectedUnitData } from './dataFetcher';
 import IntlPolyfill from 'intl';
+import paths from '../config/paths';
 
 const setupTests = () => {
   if (global.Intl) {
@@ -33,7 +34,6 @@ const setupTests = () => {
   }
 };
 setupTests();
-
 // Configure constants
 const app = express();
 const supportedLanguages = config.supportedLanguages;
@@ -47,6 +47,8 @@ app.use(`/*`, (req, res, next) => {
   req._context = store;
   next();
 })
+app.use(paths.event.regex, fetchEventData);
+app.use(paths.unit.regex, fetchSelectedUnitData);
 app.get(`/*`, makeLanguageHandler);
 
 // Redirect root to finnish site
