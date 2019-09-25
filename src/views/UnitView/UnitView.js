@@ -7,6 +7,7 @@ import { Typography, withStyles } from '@material-ui/core';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { fetchUnitEvents } from '../../redux/actions/event';
 import { fetchSelectedUnit, changeSelectedUnit } from '../../redux/actions/selectedUnit';
+import { fetchAccessibilitySentences } from '../../redux/actions/selectedUnitAccessibility';
 import { getSelectedUnit } from '../../redux/selectors/selectedUnit';
 import { getLocaleString } from '../../redux/selectors/locale';
 import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
@@ -29,16 +30,10 @@ import Events from './components/Events';
 import ServiceMapButton from '../../components/ServiceMapButton';
 import UnitIcon from '../../components/SMIcon/UnitIcon';
 import TabLists from '../../components/TabLists';
-import config from '../../../config';
-import { accessibilitySentencesFetch } from '../../utils/fetch';
 
 class UnitView extends React.Component {
   constructor(props) {
     super(props);
-
-    this.currentId = 0;
-    this.ids = {};
-    this.supportedLanguages = config.supportedLanguages;
 
     this.state = {
       centered: false,
@@ -49,12 +44,11 @@ class UnitView extends React.Component {
 
   componentDidMount() {
     const {
-      match, fetchSelectedUnit, unit,
+      match, fetchSelectedUnit, unit, fetchAccessibilitySentences,
     } = this.props;
     const { params } = match;
 
     this.setState({
-      accessibilityInfoData: null,
       didMount: true,
     });
 
@@ -65,10 +59,10 @@ class UnitView extends React.Component {
         .then(data => this.setState({ reservations: data.results }));
 
       if (unit && (unit.complete && unitId === `${unit.id}`)) {
-        this.fetchAccessibilitySentences();
+        fetchAccessibilitySentences(unitId);
         return;
       }
-      fetchSelectedUnit(unitId, () => this.fetchAccessibilitySentences());
+      fetchSelectedUnit(unitId, () => fetchAccessibilitySentences(unitId));
     }
   }
 
@@ -100,19 +94,6 @@ class UnitView extends React.Component {
   }
 
   /**
-   * Transform object to language locales as keys for texts
-   * @param {object} data - object with texts
-   * @param {string} base - base text for data object's key ie. ${base}_fi = content_fi
-   */
-  buildTranslatedObject(data, base) {
-    const obj = {};
-    this.supportedLanguages.forEach((lang) => {
-      obj[lang] = data[`${base}_${lang}`];
-    });
-    return obj;
-  }
-
-  /**
    * Parse accessibility sentences to more usable form
    * @param {*} data - fetched data from server
    */
@@ -140,45 +121,6 @@ class UnitView extends React.Component {
     return null;
   }
 
-  /**
-   * Generate id using content text as key
-   * @param {string} content
-   */
-  generateId(content) {
-    if (!(content in this.ids)) {
-      const id = this.currentId;
-      this.ids[content] = id;
-      this.currentId += 1;
-    }
-
-    return this.ids[content];
-  }
-
-  /**
-   * Fetch accessibility sentences from old API
-   * AccessibilitySentences are fetched in UnitView to avoid multiple fetches
-   * by AccessibilityInfo
-   */
-  async fetchAccessibilitySentences() {
-    const { unit } = this.props;
-
-    if (!unit) {
-      return;
-    }
-
-    // const url = `${BASE_URL}${unit.id}`;
-    const onSuccess = (data) => {
-      const parsedData = this.parseAccessibilitySentences(data);
-      this.setState({
-        accessibilityInfoData: parsedData,
-      });
-    };
-    const onError = (e) => {
-      throw Error('Error fetching accessibility sentences', e.message);
-    };
-
-    accessibilitySentencesFetch({}, null, onSuccess, onError, null, unit.id);
-  }
 
   renderDetailTab() {
     const {
@@ -225,16 +167,16 @@ class UnitView extends React.Component {
 
   renderAccessibilityTab() {
     const {
+      accessibilitySentences,
       unit,
     } = this.props;
-    const { accessibilityInfoData } = this.state;
 
-    if (!unit || !unit.complete || !accessibilityInfoData) {
+    if (!unit || !unit.complete || !accessibilitySentences) {
       return <></>;
     }
 
     return (
-      <AccessibilityInfo titleAlways data={accessibilityInfoData} headingLevel={3} />
+      <AccessibilityInfo titleAlways data={accessibilitySentences} headingLevel={3} />
     );
   }
 
@@ -443,13 +385,15 @@ class UnitView extends React.Component {
 // Listen to redux state
 const mapStateToProps = (state) => {
   const unit = getSelectedUnit(state);
-  const unitFetching = state.selectedUnit.isFetching;
+  const unitFetching = state.selectedUnit.unit.isFetching;
+  const { accessibilitySentences } = state.selectedUnit;
   const eventsData = state.event.data;
   const eventFetching = state.event.isFetching;
   const getLocaleText = textObject => getLocaleString(state, textObject);
   const map = state.mapRef.leafletElement;
   const { navigator } = state;
   return {
+    accessibilitySentences: accessibilitySentences.data,
     unit,
     unitFetching,
     eventsData,
@@ -462,14 +406,18 @@ const mapStateToProps = (state) => {
 
 export default withRouter(injectIntl(withStyles(styles)(connect(
   mapStateToProps,
-  { changeSelectedUnit, fetchSelectedUnit, fetchUnitEvents },
+  {
+    changeSelectedUnit, fetchSelectedUnit, fetchUnitEvents, fetchAccessibilitySentences,
+  },
 )(UnitView))));
 
 // Typechecking
 UnitView.propTypes = {
+  accessibilitySentences: PropTypes.objectOf(PropTypes.any),
   unit: PropTypes.objectOf(PropTypes.any),
   eventsData: PropTypes.objectOf(PropTypes.any),
   map: PropTypes.objectOf(PropTypes.any),
+  fetchAccessibilitySentences: PropTypes.func.isRequired,
   fetchSelectedUnit: PropTypes.func.isRequired,
   unitFetching: PropTypes.bool.isRequired,
   fetchUnitEvents: PropTypes.func.isRequired,
@@ -482,6 +430,7 @@ UnitView.propTypes = {
 };
 
 UnitView.defaultProps = {
+  accessibilitySentences: null,
   unit: null,
   eventsData: { events: null, unit: null },
   match: {},

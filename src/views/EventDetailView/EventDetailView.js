@@ -169,7 +169,7 @@ EventDetailView.defaultProps = {
 
 const mapStateToProps = (state) => {
   const event = state.event.selected;
-  const selectedUnit = state.selectedUnit.data;
+  const selectedUnit = state.selectedUnit.unit.data;
   return {
     event,
     selectedUnit,

@@ -79,7 +79,7 @@ const Events = ({
 };
 
 const mapStateToProps = (state) => {
-  const unit = state.selectedUnit.data;
+  const unit = state.selectedUnit.unit.data;
   const getLocaleText = textObject => getLocaleString(state, textObject);
   const { navigator } = state;
   return {
