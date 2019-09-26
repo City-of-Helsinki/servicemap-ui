@@ -68,6 +68,14 @@ class HomeView extends React.Component {
             {intl.formatMessage({ id: 'home.message' })}
           </Typography>
           <Typography className={classes.left} variant="body2">
+            <b>25.9.2019</b>
+            {' '}
+- Palvelukartan käytettävyystutkimus on käynnissä ajalla 23.9- 4.10.2019.
+Odotamme innolla tuloksia. Olemme tehneet syksyn ajan kovasti töitä ja nyt
+sitten katsotaan mitä mieltä porukka on!
+            {' '}
+            <br />
+            <br />
             <b>5.9.2019</b>
             {' '}
 - Syyskuuta eletään. Palvelukartan pellin alla on tapahtunut paljon saavutettavuutta edistäviä asioita.

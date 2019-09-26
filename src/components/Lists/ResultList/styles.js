@@ -9,6 +9,13 @@ export default theme => ({
   title: {
     width: '100%',
   },
+  titleContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
+    overflow: 'hidden',
+  },
   left: {
     float: 'left',
     margin: theme.spacing.unit,
