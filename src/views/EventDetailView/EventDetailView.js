@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -17,16 +18,23 @@ import UnitItem from '../../components/ListItems/UnitItem';
 import TitledList from '../../components/Lists/TitledList';
 import UnitHelper from '../../utils/unitHelper';
 import { eventFetch } from '../../utils/fetch';
+import { focusUnit } from '../MapView/utils/mapActions';
 
 class EventDetailView extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      centered: false,
+    };
+  }
+
   componentDidMount() {
     const {
-      event, changeSelectedEvent, fetchSelectedUnit, selectedUnit,
+      event, changeSelectedEvent, fetchSelectedUnit, match, selectedUnit,
     } = this.props;
 
     // TODO: move this first fetch to server side
     if (!event) {
-      const { match } = this.props;
       if (match.params && match.params.event) {
         const options = {
           include: 'location,location.accessibility_shortcoming_count',
@@ -42,12 +50,26 @@ class EventDetailView extends React.Component {
               !UnitHelper.isValidUnit(selectedUnit)
               || parseInt(unitId, 10) !== selectedUnit.id
             ) {
-              fetchSelectedUnit(unitId);
+              fetchSelectedUnit(unitId, (data) => {
+                this.centerMap(data);
+              });
             }
           }
         };
         eventFetch(options, null, onSuccess, null, null, match.params.event);
       }
+    }
+  }
+
+  centerMap = (unit) => {
+    const {
+      map,
+    } = this.props;
+    const { centered } = this.state;
+    if (unit && unit.location && map && map._layersMaxZoom && !centered) {
+      const { location } = unit;
+      this.setState({ centered: true });
+      focusUnit(map, location.coordinates);
     }
   }
 
@@ -155,6 +177,7 @@ EventDetailView.propTypes = {
   changeSelectedEvent: PropTypes.func.isRequired,
   event: PropTypes.objectOf(PropTypes.any),
   fetchSelectedUnit: PropTypes.func.isRequired,
+  map: PropTypes.objectOf(PropTypes.any),
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   intl: intlShape.isRequired,
   getLocaleText: PropTypes.func.isRequired,
@@ -163,14 +186,17 @@ EventDetailView.propTypes = {
 
 EventDetailView.defaultProps = {
   event: null,
+  map: null,
   selectedUnit: null,
 };
 
 const mapStateToProps = (state) => {
   const event = state.event.selected;
   const selectedUnit = state.selectedUnit.data;
+  const map = state.mapRef.leafletElement;
   return {
     event,
+    map,
     selectedUnit,
   };
 };

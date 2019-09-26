@@ -24,10 +24,9 @@ export const fetchSelectedUnit = (id, callback) => async (dispatch) => {
     const newData = data;
     newData.complete = true;
     newData.object_type = 'unit';
-    console.log(newData);
     dispatch(fetchSuccess(newData));
     if (typeof callback === 'function') {
-      callback();
+      callback(data);
     }
   };
   const onError = e => dispatch(fetchError(e.message));
