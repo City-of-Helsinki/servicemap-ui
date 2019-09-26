@@ -19,21 +19,6 @@ class SearchBar extends React.Component {
     };
   }
 
-  shouldComponentUpdate(nextProps) {
-    const { previousSearch } = this.props;
-    // If previousSearch changes change current search text
-    if (
-      previousSearch
-      && nextProps
-      && nextProps.previousSearch
-      && previousSearch !== nextProps.previousSearch
-    ) {
-      this.setState({ search: nextProps.previousSearch });
-      return false;
-    }
-    return true;
-  }
-
   onInputChange = (e) => {
     this.setState({ search: e.currentTarget.value });
   }
