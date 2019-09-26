@@ -80,7 +80,7 @@ class EventDetailView extends React.Component {
 
   render() {
     const {
-      event, intl, getLocaleText, selectedUnit,
+      classes, event, intl, getLocaleText, selectedUnit,
     } = this.props;
     if (event) {
       const description = event.description || event.short_description;
@@ -102,9 +102,7 @@ class EventDetailView extends React.Component {
 
           {event.images && event.images.length && (
           <img
-            style={{
-              width: '100%', maxHeight: 200, objectFit: 'cover',
-            }}
+            className={classes.eventImage}
             alt={intl.formatMessage({ id: 'event.picture' })}
             src={event.images[0].url}
           />
@@ -153,6 +151,7 @@ class EventDetailView extends React.Component {
 }
 
 EventDetailView.propTypes = {
+  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   changeSelectedEvent: PropTypes.func.isRequired,
   event: PropTypes.objectOf(PropTypes.any),
   fetchSelectedUnit: PropTypes.func.isRequired,

@@ -20,6 +20,10 @@ const styles = theme => ({
     flexDirection: 'column',
     alignItems: 'center',
   },
+  addressPopupButton: {
+    paddingTop: '9px',
+    paddingBottom: 12,
+  },
   transitBackground: {
     fontFamily: 'hsl-piktoframe',
     position: 'absolute',

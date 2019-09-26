@@ -58,7 +58,7 @@ const AddressView = (props) => {
     // Create icon that can be added to map
     const addressIcon = divIcon({
       html: renderToStaticMarkup(
-        <span style={{ fontSize: 36 }} className="icon-icon-address" />,
+        <span className={`${classes.addressIcon} icon-icon-address`} />,
       ),
       iconSize: [45, 45],
       iconAnchor: [22, 42],
