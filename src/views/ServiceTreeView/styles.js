@@ -1,10 +1,7 @@
 export default theme => ({
   listItem: {
-    alignSelf: 'center',
-    height: 60,
     border: '1px solid #fff',
-    display: 'flex',
-    flexDirection: 'row',
+    display: 'block',
     padding: 0,
   },
   level1: {
@@ -27,22 +24,23 @@ export default theme => ({
     letterSpacing: -0.5,
   },
   text2: {
+    paddingLeft: 8,
     fontWeight: 'bold',
     letterSpacing: -0.5,
   },
   text3: {
+    paddingLeft: 8,
     letterSpacing: 0.5,
   },
-  iconRight: {
-    marginLeft: 'auto',
-    marginRight: 16,
+  checkbox: {
+    paddingRight: theme.spacing.unitDouble,
   },
-  checkBox: {
-    // backgroundColor: '#fff',
-    paddingLeft: 16,
-    paddingRight: 16,
+  clickArea: {
+    width: '100%',
+    paddingTop: 8,
+    paddingBottom: 8,
   },
-  checkBoxIcon: {
+  checkboxIcon: {
     margin: 3,
     width: 14,
     height: 14,
@@ -56,8 +54,26 @@ export default theme => ({
   bold: {
     fontWeight: 'bold',
   },
-  infoText: {
-    color: 'inherit',
+  infoArea: {
+    display: 'flex',
+    paddingLeft: theme.spacing.unitDouble,
+    paddingRight: theme.spacing.unitDouble,
     marginBottom: 12,
+  },
+  infoText: {
+    color: '#fff',
+  },
+  right: {
+    marginLeft: 'auto',
+  },
+  nodeSearchButton: {
+    width: 250,
+    height: 46,
+    backgroundColor: '#fff',
+    color: '#000',
+    borderRadius: 5,
+    '&:disabled': {
+      backgroundColor: '#bdbdbd',
+    },
   },
 });

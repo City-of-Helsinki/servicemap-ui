@@ -217,7 +217,13 @@ export default {
   'service.plural': 'Services',
   'service.nearby': 'Nearby services',
   'service.units.empty': 'Service doesn\'t have units',
-
+  'services.search': 'Search',
+  'services.delete': 'Delete',
+  'services.deleteAll': 'Delete all selections',
+  'services.selectionAmount': `You have selected {count, plural,
+    one {# service}
+    other {# services}
+  }`,
   // Settings
   'settings': 'Settings',
   'settings.accessibility': 'My accessibility settings',

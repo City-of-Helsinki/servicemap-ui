@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  List, ListItem, Collapse, Checkbox, Typography, ButtonBase,
+  List, ListItem, Collapse, Checkbox, Typography, ButtonBase, NoSsr,
 } from '@material-ui/core';
 import { ArrowDropUp, ArrowDropDown } from '@material-ui/icons';
 import { FormattedMessage } from 'react-intl';
@@ -10,7 +10,7 @@ import { MobileComponent, DesktopComponent } from '../../layouts/WrapperComponen
 import ServiceMapButton from '../../components/ServiceMapButton';
 
 const ServiceTreeView = ({
-  classes, intl, navigator, setTreeState, prevSelected, prevOpened, settings,
+  classes, intl, navigator, setTreeState, prevSelected, prevOpened, settings, getLocaleText,
 }) => {
   const [services, setServices] = useState(null);
   const [opened, setOpened] = useState([...prevOpened]);
@@ -112,9 +112,8 @@ const ServiceTreeView = ({
 
 
   const handleCheckboxClick = (e, item) => {
-    // console.log('handling item: ', item);
     if (selected.some(element => element.id === item.id)) {
-      // Remove checkbox selections
+    // Remove checkbox selections
       const parentsToRemove = getSelectedParentNodes(item);
       const childrenToRemove = getSelectedChildNodes(item);
       const nodesToRemove = [...parentsToRemove || [], ...childrenToRemove || []];
@@ -127,7 +126,8 @@ const ServiceTreeView = ({
       } else {
         setSelected(selected.filter(element => element.id !== item.id));
       }
-    } else { // Add checkbox selections
+    } else {
+    // Add checkbox selections
       let newState = [item, ...checkChildNodes(item)];
       // Check duplicates
       newState = newState.filter(e => !selected.some(i => i.id === e.id));
@@ -137,17 +137,22 @@ const ServiceTreeView = ({
     }
   };
 
-  useEffect(() => {
+  useEffect(() => { // On mount
     fetchInitialServices();
   }, []);
 
-  const expandingComponent = (item, level) => {
-    const hasChildren = item.children.length;
+
+  // Render components
+
+  // Expanding list item representing a service node
+  const expandingListComponent = (item, level) => {
+    const visible = item.level === 0 || opened.includes(item.parent);
     const isOpen = opened.includes(item.id);
+    const hasChildren = item.children.length;
     const children = hasChildren ? services.filter(e => e.parent === item.id) : null;
     const icon = isOpen
-      ? <ArrowDropDown className={classes.iconRight} />
-      : <ArrowDropUp className={classes.iconRight} />;
+      ? <ArrowDropDown className={classes.right} />
+      : <ArrowDropUp className={classes.right} />;
 
     const resultCount = (settings.helsinki ? item.unit_count.municipality.helsinki || 0 : 0)
       + (settings.espoo ? item.unit_count.municipality.espoo || 0 : 0)
@@ -155,42 +160,146 @@ const ServiceTreeView = ({
       + (settings.kauniainen ? item.unit_count.municipality.kauniainen || 0 : 0);
 
     return (
-      <div key={item.id}>
-        <ListItem
-          style={{ paddingLeft: 8 * level }}
+      <ListItem
+        disableGutters
+        className={`${classes.listItem} ${classes[`level${level}`]}`}
+        role="group"
+        aria-label={`${getLocaleText(item.name)} (${resultCount})`}
+        key={item.id}
+      >
+        <div
           key={item.id}
-          disableGutters
-          className={`${classes.listItem} ${classes[`level${level}`]}`}
+          style={{
+            paddingLeft: 8 * level,
+            display: 'flex',
+            flexDirection: 'row',
+            alignSelf: 'center',
+            // width: '100%',
+            paddingRight: 16,
+            height: 60,
+          }}
         >
           <Checkbox
+            className={classes.checkbox}
+            id={`box${item.id}`}
+            tabIndex={visible ? '0' : '-1'}
             onClick={e => handleCheckboxClick(e, item)}
-            icon={<span className={classes.checkBoxIcon} />}
+            icon={<span className={classes.checkboxIcon} />}
             color="primary"
-            className={classes.checkBox}
             checked={selected.some(e => e.id === item.id)}
           />
-          <ButtonBase
-            style={{ width: '100%', paddingTop: 8, paddingBottom: 8 }}
+          <ButtonBase // Item expand click area
+            className={classes.clickArea}
+            aria-label={`${isOpen ? 'Sulje palvelu' : 'Avaa palvelu'} ${getLocaleText(item.name)}`}
+            aria-pressed={isOpen}
+            tabIndex={visible ? '0' : '-1'}
+            onClick={hasChildren ? () => handleExpand(item, isOpen) : null}
             disabled={!hasChildren}
             disableRipple
             disableTouchRipple
-            onClick={hasChildren ? () => handleExpand(item, isOpen) : null}
           >
             <Typography align="left" className={`${classes.text} ${classes[`text${level}`]}`}>
-              {`${item.name.fi} (${resultCount})`}
+              {`${getLocaleText(item.name)} (${resultCount})`}
             </Typography>
-            {hasChildren ? icon : <span className={classes.iconRight} />}
+            {hasChildren
+              ? icon
+              : <span className={classes.right} />}
           </ButtonBase>
-        </ListItem>
+        </div>
 
-        <Collapse aria-hidden={!isOpen} tabIndex={isOpen ? '0' : '-1'} in={isOpen}>
-          {children && children.length && children.map(child => (
-            expandingComponent(child, level + 1)
-          ))}
+        <Collapse // Expanding area
+          aria-hidden={!isOpen}
+          in={isOpen}
+        >
+          <List disablePadding>
+            {children && children.length && children.map(child => (
+              expandingListComponent(child, level + 1)
+            ))}
+          </List>
         </Collapse>
-      </div>
+      </ListItem>
     );
   };
+
+  const citySettingsInfo = () => {
+    let citySettings = [
+      ...settings.helsinki ? ['Helsinki'] : [],
+      ...settings.espoo ? ['Espoo'] : [],
+      ...settings.vantaa ? ['Vantaa'] : [],
+      ...settings.kauniainen ? ['Kauniainen'] : [],
+    ];
+    if (citySettings.length === 4) {
+      citySettings = [];
+    }
+
+    if (citySettings.length) {
+      return (
+        <div
+          className={classes.infoArea}
+          aria-label={`${intl.formatMessage({ id: 'settings.city.info' }, { count: citySettings.length })}: ${citySettings.join(', ')}`}
+        >
+          <Typography aria-hidden className={`${classes.infoText} ${classes.bold}`}>
+            <FormattedMessage id="settings.city.info" values={{ count: citySettings.length }} />
+            {':'}
+            &nbsp;
+          </Typography>
+          <Typography aria-hidden className={classes.infoText}>
+            {citySettings.join(', ')}
+          </Typography>
+        </div>
+      );
+    } return null;
+  };
+
+  const selectedItemsInfo = selectedItems => (
+    <div className={classes.infoArea}>
+      <ButtonBase disabled={!selectedItems.length} onClick={() => setSelectedOpen(!selectedOpen)}>
+        <Typography className={`${classes.infoText} ${classes.bold}`} variant="body2">
+          <FormattedMessage id="services.selectionAmount" values={{ count: selectedItems.length }} />
+        </Typography>
+        {selectedOpen
+          ? <ArrowDropDown className={classes.infoText} />
+          : <ArrowDropUp className={classes.infoText} />}
+      </ButtonBase>
+      {selectedItems.length ? (
+        <ButtonBase
+          className={classes.right}
+          disabled={!selectedItems.length}
+          onClick={() => setSelected([])}
+        >
+          <Typography className={classes.infoText} variant="body2">
+            <FormattedMessage id="services.deleteAll" />
+          </Typography>
+        </ButtonBase>
+      ) : null}
+    </div>
+  );
+
+  // List of items that the user has selected
+  const selectedItemsList = items => (
+    <Collapse in={selectedOpen}>
+      <List>
+        {items.map(item => (
+          item.name && (
+            <ListItem>
+              <Typography className={classes.infoText} variant="body2">
+                {getLocaleText(item.name)}
+              </Typography>
+              <ButtonBase
+                className={classes.right}
+                tabIndex={selectedOpen ? '0' : '-1'}
+                onClick={() => handleCheckboxClick(null, item)}
+              >
+                <Typography className={classes.infoText} variant="body2">
+                  <FormattedMessage id="services.delete" />
+                </Typography>
+              </ButtonBase>
+            </ListItem>
+          )
+        ))}
+      </List>
+    </Collapse>
+  );
 
   const TopBar = (
     <div>
@@ -199,113 +308,42 @@ const ServiceTreeView = ({
         { /* <TitleBar icon={icon} title={title} primary /> */}
       </DesktopComponent>
       <MobileComponent>
-        <TitleBar title="Kaikki palvelut" primary backButton />
+        <TitleBar title={intl.formatMessage({ id: 'home.buttons.services' })} primary backButton />
       </MobileComponent>
     </div>
   );
 
-  const selectedList = [];
-  selected.forEach((e) => {
-    if (!selected.some(i => i.id === e.parent)) {
-      selectedList.push(e);
-    }
-  });
-  const ids = selectedList.map(i => i.id);
 
-  let citySettings = [
-    ...settings.helsinki ? ['Helsinki'] : [],
-    ...settings.espoo ? ['Espoo'] : [],
-    ...settings.vantaa ? ['Vantaa'] : [],
-    ...settings.kauniainen ? ['Kauniainen'] : [],
-  ];
+  // Render
 
-  if (citySettings.length === 4) {
-    citySettings = [];
-  }
-
-  const cityString = citySettings.join(', ');
+  // Form list of selected services, filtering out services whose parents are already selected.
+  const selectedList = selected.filter(e => !selected.some(i => i.id === e.parent));
 
   return (
     <>
       <div className={classes.topArea}>
         {TopBar}
-        <>
-          <div style={{ color: '#fff', display: 'flex', paddingLeft: 16 }}>
-            {citySettings.length ? (
-              <>
-                {/* <div aria-label={`${intl.formatMessage({ id: 'settings.city.info' }, { count: citySettings.length })}: ${cityString}`} className={classes.infoContainer}> */}
-                <Typography aria-hidden className={`${classes.infoText} ${classes.bold}`}>
-                  <FormattedMessage id="settings.city.info" values={{ count: citySettings.length }} />
-                  {':'}
-                &nbsp;
-                </Typography>
-                <Typography aria-hidden className={classes.infoText}>
-                  {cityString}
-                </Typography>
-                {/* </div> */}
-              </>
-            ) : null}
-          </div>
-          <div style={{ display: 'flex' }}>
-            <ButtonBase disabled={!selectedList.length} onClick={() => setSelectedOpen(!selectedOpen)} style={{ display: 'flex' }}>
-              <Typography
-                style={{
-                  paddingLeft: 16, paddingRight: 8, fontWeight: 'bold', color: '#fff',
-                }}
-                variant="body2"
-              >
-                {`Olet tehnyt (${selectedList.length}) valintaa`}
-              </Typography>
-              {selectedOpen ? <ArrowDropDown style={{ color: '#fff' }} /> : <ArrowDropUp style={{ color: '#fff' }} />}
-            </ButtonBase>
-            {selectedList.length ? (
-              <ButtonBase disabled={!selectedList.length} onClick={() => setSelected([])} style={{ display: 'flex', marginLeft: 'auto' }}>
-                <Typography style={{ paddingRight: 16, color: '#fff' }} variant="body2">
-                Poista kaikki valinnat
-                </Typography>
-              </ButtonBase>
-            ) : null}
-          </div>
-        </>
-        <Collapse in={selectedOpen}>
-          <List>
-            {selectedList.map(item => (
-              item.name && (
-              <ListItem>
-                <Typography style={{ color: '#fff' }} variant="body2">
-                  {item.name.fi}
-                </Typography>
-                <ButtonBase onClick={() => handleCheckboxClick(null, item)} style={{ marginLeft: 'auto' }}>
-                  <Typography style={{ color: '#fff' }} variant="body2">
-                  Poista
-                  </Typography>
-                </ButtonBase>
-              </ListItem>
-              )
-            ))}
-          </List>
-        </Collapse>
+        <NoSsr>
+          {citySettingsInfo()}
+          {selectedItemsInfo(selectedList)}
+          {selectedItemsList(selectedList)}
+        </NoSsr>
+
         <ServiceMapButton
+          className={classes.nodeSearchButton}
           disabled={!selectedList.length}
           onClick={() => {
             setTreeState({ selected: selectedList, opened });
-            navigator.push('search', { nodes: ids });
-          }}
-          style={{
-            width: 250,
-            height: 46,
-            backgroundColor: '#fff',
-            color: '#000',
-            borderRadius: 5,
+            navigator.push('search', { nodes: selectedList.map(i => i.id) });
           }}
         >
-          Tee haku
+          <FormattedMessage id="services.search" />
         </ServiceMapButton>
       </div>
       <List disablePadding>
         {services && services.map(service => (
           !service.parent && (
-            expandingComponent(service, 1)
+            expandingListComponent(service, 1)
           )
         ))}
       </List>

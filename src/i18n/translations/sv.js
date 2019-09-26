@@ -214,6 +214,13 @@ export default {
   'service.plural': 'Tjänster',
   'service.nearby': 'Nearby services', // TODO: Translate
   'service.units.empty': 'Service doesn\'t have units', // TODO: Translate
+  'services.search': 'Tee haku', // TODO: Translate
+  'services.delete': 'Poista', // TODO: Translate
+  'services.deleteAll': 'Poista kaikki valinnat', // TODO: Translate
+  'services.selectionAmount': `Olet tehnyt {count, plural, 
+    one {# valinnan}
+    other {# valintaa}
+  }`, // TODO: Translate
 
   // Settings
   'settings': 'Personifiera',

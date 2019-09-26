@@ -215,6 +215,13 @@ export default {
   'service.plural': 'Palvelut',
   'service.nearby': 'Lähellä olevat palvelut',
   'service.units.empty': 'Palvelulla ei ole toimipisteitä',
+  'services.search': 'Tee haku',
+  'services.delete': 'Poista',
+  'services.deleteAll': 'Poista kaikki valinnat',
+  'services.selectionAmount': `Olet tehnyt {count, plural,
+    one {# valinnan}
+    other {# valintaa}
+  }`,
 
   // Settings
   'settings': 'Asetukset',
