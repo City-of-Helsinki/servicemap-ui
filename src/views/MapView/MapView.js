@@ -60,7 +60,7 @@ class MapView extends React.Component {
       mapUnits = addressUnits;
     } else if (currentPage === 'service' && serviceUnits && !unitsLoading) {
       mapUnits = serviceUnits;
-    } else if ((currentPage === 'unit' || currentPage === 'fullList') && highlightedUnit) {
+    } else if ((currentPage === 'unit' || currentPage === 'fullList' || currentPage === 'event') && highlightedUnit) {
       mapUnits = [highlightedUnit];
       const { geometry } = highlightedUnit;
       if (geometry && geometry.type === 'MultiLineString') {
