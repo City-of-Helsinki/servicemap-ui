@@ -1,26 +1,48 @@
 import { createSelector } from 'reselect';
 import { getLocaleString } from './locale';
 import { filterEmptyServices, filterCities } from '../../utils/filters';
+import UnitHelper from '../../utils/unitHelper';
 
 const isFetching = state => state.units.isFetching;
 const units = state => state.units.data;
 const direction = state => state.sort.direction;
 const order = state => state.sort.order;
 const locale = state => state.user.locale;
-const cities = state => [
-  ...state.settings.helsinki ? ['helsinki'] : [],
-  ...state.settings.vantaa ? ['vantaa'] : [],
-  ...state.settings.espoo ? ['espoo'] : [],
-  ...state.settings.kauniainen ? ['kauniainen'] : [],
-];
+const settings = state => state.settings;
 
-const getOrderedData = (data, direction, order, locale) => {
+const getOrderedData = (data, direction, order, locale, settings) => {
   if (!data) {
     throw new Error('Invalid data provided to getOrderedData selector');
   }
   const results = Array.from(data);
 
   switch (order) {
+    // Accessibility
+    case 'accessibility': {
+      results.forEach((element) => {
+        // eslint-disable-next-line no-param-reassign
+        element.shorcomingCount = UnitHelper.getShortcomingCount(element, settings);
+      });
+      results.sort((a, b) => {
+        if (a.object_type !== 'unit' || b.object_type !== 'unit') {
+          return 0;
+        }
+        const aSC = a.shorcomingCount;
+        const bSC = b.shorcomingCount;
+
+        if (aSC === null || (aSC === null && bSC === null)) { return -1; }
+        if (bSC === null) { return 1; }
+        if (aSC > bSC) { return -1; }
+        if (aSC < bSC) { return 1; }
+        return 0;
+      });
+
+      // If reversed alphabetical ordering
+      if (direction === 'desc') {
+        results.reverse();
+      }
+      break;
+    }
     // Alphabetical ordering
     case 'alphabetical': {
       results.sort((a, b) => {
@@ -50,16 +72,22 @@ const getOrderedData = (data, direction, order, locale) => {
 };
 
 export const getProcessedData = createSelector(
-  [units, isFetching, direction, order, locale, cities],
-  (data, isFetching, direction, order, locale, cities) => {
+  [units, isFetching, direction, order, locale, settings],
+  (data, isFetching, direction, order, locale, settings) => {
     // Prevent processing data if fetch is in process
     if (isFetching) {
       return [];
     }
+    const cities = [
+      ...settings.helsinki ? ['helsinki'] : [],
+      ...settings.vantaa ? ['vantaa'] : [],
+      ...settings.espoo ? ['espoo'] : [],
+      ...settings.kauniainen ? ['kauniainen'] : [],
+    ];
     const filteredData = data
       .filter(filterCities(cities))
       .filter(filterEmptyServices(cities));
-    const orderedData = getOrderedData(filteredData, direction, order, locale);
+    const orderedData = getOrderedData(filteredData, direction, order, locale, settings);
     return orderedData;
   },
 );

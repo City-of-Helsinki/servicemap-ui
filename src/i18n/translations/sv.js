@@ -46,6 +46,7 @@ export default {
 
   // Sorting
   'sorting.label': 'Order search results', // TODO: Translate
+  'sorting.accessibility.desc': 'Most accessible', // TODO: Translate
   'sorting.alphabetical.asc': 'Reversed alphabetical', // TODO: Translate
   'sorting.alphabetical.desc': 'Alphabetical', // TODO: Translate
   'sorting.match.desc': 'Relevance', // TODO: Translate

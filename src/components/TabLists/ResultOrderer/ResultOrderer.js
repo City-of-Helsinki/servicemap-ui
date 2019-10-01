@@ -14,6 +14,7 @@ const allowedDirections = [
 const allowedOrders = [
   'match',
   'alphabetical',
+  'accessibility',
 ];
 
 class ResultOrderer extends React.Component {
@@ -61,6 +62,7 @@ class ResultOrderer extends React.Component {
             <option className={classes.black} value="match-desc">{intl.formatMessage({ id: 'sorting.match.desc' })}</option>
             <option className={classes.black} value="alphabetical-desc">{intl.formatMessage({ id: 'sorting.alphabetical.desc' })}</option>
             <option className={classes.black} value="alphabetical-asc">{intl.formatMessage({ id: 'sorting.alphabetical.asc' })}</option>
+            <option className={classes.black} value="accessibility-desc">{intl.formatMessage({ id: 'sorting.accessibility.desc' })}</option>
           </Select>
         </FormControl>
       </form>

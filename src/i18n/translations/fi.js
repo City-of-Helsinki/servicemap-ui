@@ -46,6 +46,7 @@ export default {
 
   // Sorting
   'sorting.label': 'Järjestä hakutulokset',
+  'sorting.accessibility.desc': 'Esteettömin ensin',
   'sorting.alphabetical.asc': 'Käänteinen aakkosjärjestys',
   'sorting.alphabetical.desc': 'Aakkosjärjestys',
   'sorting.match.desc': 'Osuvin ensin',
