@@ -36,6 +36,7 @@ export default {
   'address.error': 'No address found',
   'address.nearby': 'Nearby',
   'address.districts': 'Areas',
+  'address.plural': 'Addresses',
 
 
   // Event

@@ -36,6 +36,7 @@ export default {
   'address.error': 'Osoitetta ei löytynyt',
   'address.nearby': 'Lähellä',
   'address.districts': 'Alueet',
+  'address.plural': 'Osoitteet',
 
   // Event
   'event.nearby': 'Lähellä olevat tapahtumat',

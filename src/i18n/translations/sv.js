@@ -36,6 +36,7 @@ export default {
   'address.error': 'Osoitetta ei löytynyt', // TODO: Translate
   'address.nearby': 'Lähellä', // TODO: Translate
   'address.districts': 'Alueet', // TODO: Translate
+  'address.plural': 'Osoitteet',
 
   // Event
   'event.nearby': 'Nearby events', // TODO: Translate
