@@ -1,9 +1,16 @@
 /* eslint-disable global-require, no-underscore-dangle */
-import { mapOptions } from '../config/mapConfig';
 
 const fitUnitsToMap = (units, map) => {
   const L = require('leaflet');
-  const mapBounds = new L.LatLngBounds(mapOptions.maxBounds);
+
+  const corner1 = map.options.maxBounds.getNorthWest();
+  const corner2 = map.options.maxBounds.getSouthEast();
+
+  const mapBounds = new L.LatLngBounds([
+    [corner1.lat, corner1.lng],
+    [corner2.lat, corner2.lng],
+  ]);
+
   const bounds = [];
   units.forEach((unit) => {
     if (unit.object_type === 'unit' && unit.location && unit.location.coordinates) {
