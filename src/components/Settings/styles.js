@@ -98,6 +98,8 @@ export default theme => ({
     marginRight: 32,
     display: 'inline-block',
     verticalAlign: 'middle',
+    height: 24,
+    width: 24,
   },
   list: {
     paddingTop: 0,
