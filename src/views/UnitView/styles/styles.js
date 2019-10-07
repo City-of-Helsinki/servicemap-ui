@@ -83,6 +83,9 @@ export default theme => ({
     letterSpacing: '1px',
     textShadow: '1px 1px black',
     textAlign: 'left',
+    backgroundColor: '',
+    backgroundImage: 'linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.9))',
+    paddingTop: 24,
   },
   fullListContent: {
     height: '100%',
