@@ -1,11 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Typography, Divider } from '@material-ui/core';
+import isClient from '../../utils';
 
 const DesciptionText = ({
   description, title, html, classes,
 }) => {
-  if (description) {
+  // Rendering only in client since dangerouslySetInnerHTML causes mismatch errors
+  // between server and client HTML and not rendering anything on client side
+  // TODO: Figure out a way to have server render description text identical to client
+  if (description && isClient()) {
     return (
       <div className={classes.left}>
         <Typography
