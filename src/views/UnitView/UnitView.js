@@ -279,15 +279,24 @@ class UnitView extends React.Component {
           headerComponents={(
             <>
               {TopBar}
-
               {/* Unit image */}
-              {unit.picture_url
+              {
+                unit.picture_url
                 && (
-                <img
-                  className={classes.image}
-                  alt={`${intl.formatMessage({ id: 'unit.picture' })}${getLocaleText(unit.name)}`}
-                  src={unit.picture_url}
-                />
+
+                  <div className={classes.imageContainer}>
+                    <img
+                      className={classes.image}
+                      alt={`${intl.formatMessage({ id: 'unit.picture' })}${getLocaleText(unit.name)}`}
+                      src={unit.picture_url}
+                    />
+                    {
+                      unit.picture_caption
+                      && (
+                        <Typography variant="body2" className={classes.imageCaption}>{getLocaleText(unit.picture_caption)}</Typography>
+                      )
+                    }
+                  </div>
                 )
               }
             </>

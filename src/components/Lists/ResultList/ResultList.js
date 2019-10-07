@@ -26,12 +26,7 @@ class ResultList extends React.Component {
           title
           && (
             <div className={classes.title}>
-              <div
-                style={{
-                  width: '100%',
-                  overflow: 'hidden',
-                }}
-              >
+              <div className={classes.titleContainer}>
                 <Typography
                   id={`${listId}-result-title`}
                   className={`${classes.left} SearchResultTitle`}

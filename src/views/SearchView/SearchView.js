@@ -204,12 +204,12 @@ class SearchView extends React.Component {
    */
   renderScreenReaderInfo() {
     const {
-      units, isFetching, max,
+      classes, units, isFetching, max,
     } = this.props;
     const unitCount = units && units.length;
 
     return (
-      <Typography style={{ position: 'fixed', left: -100 }} variant="srOnly" component="h3" tabIndex="-1">
+      <Typography className={classes.srOnly} variant="srOnly" component="h3" tabIndex="-1">
         {
           !isFetching
           && (
@@ -244,18 +244,11 @@ class SearchView extends React.Component {
       return redirect;
     }
 
-    // Hide paper padding when nothing is shown
-    const paperStyles = {};
-    if (!isFetching) {
-      paperStyles.padding = 0;
-    }
-
-
     return (
       <div
         className={classes.root}
       >
-        <Paper elevation={1} square aria-live="polite" style={paperStyles}>
+        <Paper className={!isFetching ? classes.noPadding : ''} elevation={1} square aria-live="polite">
           {
             this.renderScreenReaderInfo()
           }

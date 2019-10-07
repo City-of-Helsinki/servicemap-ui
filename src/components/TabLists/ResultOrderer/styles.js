@@ -30,8 +30,8 @@ export default theme => ({
       borderColor: theme.palette.primary.contrastText,
     },
   },
-  input: {
-
+  inputLabel: {
+    color: 'inherit !important',
   },
   icon: {
     color: 'inherit',

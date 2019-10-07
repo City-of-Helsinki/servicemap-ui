@@ -10,7 +10,8 @@ class ServiceItem extends React.Component {
   };
 
   componentDidMount() {
-    this.setState({ icon: <img alt="" src={drawServiceIcon()} style={{ height: 24 }} aria-hidden="true" /> });
+    const { classes } = this.props;
+    this.setState({ icon: <img alt="" src={drawServiceIcon()} className={classes.icon} aria-hidden="true" /> });
   }
 
   render() {
@@ -48,6 +49,7 @@ class ServiceItem extends React.Component {
 export default ServiceItem;
 
 ServiceItem.propTypes = {
+  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   currentService: PropTypes.objectOf(PropTypes.any),
   getLocaleText: PropTypes.func.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),

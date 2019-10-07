@@ -27,6 +27,13 @@ const setMobilitySetting = setting => async (dispatch) => {
   }
 };
 
+const setMapTypeSetting = setting => async (dispatch) => {
+  if (SettingsUtility.isValidMapSetting(setting)) {
+    dispatch(setRadioSelection('MAP_TYPE')(setting));
+    LocalStorageUtility.saveItem('mapType', setting); // Save value to localStorage
+  }
+};
+
 
 export const toggleHearingAid = () => setSingleSelection('HEARING', 'hearingAid');
 
@@ -35,3 +42,5 @@ export const toggleVisuallyImpaired = () => setSingleSelection('SIGHT', 'visuall
 export const toggleColorblind = () => setSingleSelection('COLORBLIND', 'colorblind');
 
 export const setMobility = value => setMobilitySetting(value);
+
+export const setMapType = value => setMapTypeSetting(value);

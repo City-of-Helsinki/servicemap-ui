@@ -9,16 +9,15 @@ import districts from './redux/reducers/district';
 import event from './redux/reducers/event';
 import address from './redux/reducers/address';
 import {
-  colorblind, hearingAid, mobility, visuallyImpaired,
+  colorblind, hearingAid, mobility, visuallyImpaired, mapType,
 } from './redux/reducers/settings';
 import {
-  direction, order, mapRef, mapType,
+  direction, order, mapRef,
 } from './redux/reducers/simpleReducers';
 
 // Export all redux reducers here
 export default combineReducers({
   breadcrumb,
-  mapType,
   mapRef,
   navigator,
   units,
@@ -37,6 +36,7 @@ export default combineReducers({
     hearingAid,
     mobility,
     visuallyImpaired,
+    mapType,
   }),
   sort: combineReducers({
     direction,

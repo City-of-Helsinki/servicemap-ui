@@ -3,8 +3,8 @@ export default theme => ({
     alignItems: 'center',
     display: 'flex',
     flex: '0 0 auto',
-    height: 64,
-    padding: `0 ${theme.spacing.unit}px`,
+    height: 'auto',
+    padding: theme.spacing.unit,
   },
   title: {
     color: 'inherit',
