@@ -202,6 +202,10 @@ export default {
   'settings.mobility.reduced_mobility': 'Jag är rörelsehindrad',
   'settings.mobility.rollator': 'Jag använder rollator',
   'settings.mobility.stroller': 'Jag går med barnvagn',
+  'settings.map.title': 'Karta',
+  'settings.map.servicemap': 'Servicekarta',
+  'settings.map.ortoImage': 'Flygbild',
+  'settings.map.guideMap': 'Guidekarta',
   'settings.aria.changed': 'Settings have changed. Remember to save', // TODO: Translate
   'settings.aria.closed': 'Settings closed', // TODO: Translate
   'settings.aria.open': 'Open settings', // TODO: Translate

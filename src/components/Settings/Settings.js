@@ -44,7 +44,7 @@ class Settings extends React.Component {
     const { current } = this.state;
     const { settings } = this.props;
     const {
-      colorblind, hearingAid, mobility, visuallyImpaired,
+      colorblind, hearingAid, mobility, visuallyImpaired, mapType,
     } = settings;
 
     // Create current settings from redux data
@@ -54,6 +54,7 @@ class Settings extends React.Component {
       hearingAid,
       mobility: mobility !== null ? mobility : 'none',
       visuallyImpaired,
+      mapType: mapType !== false ? mapType : 'servicemap',
     };
 
     this.setState({
@@ -218,7 +219,7 @@ class Settings extends React.Component {
   saveSettings() {
     const { currentSettings } = this.state;
     const {
-      toggleHearingAid, toggleColorblind, toggleVisuallyImpaired, setMobility, settings,
+      toggleHearingAid, toggleColorblind, toggleVisuallyImpaired, setMobility, setMapType, settings,
     } = this.props;
 
     // Map redux actions with used setting keys
@@ -227,6 +228,7 @@ class Settings extends React.Component {
       hearingAid: toggleHearingAid,
       visuallyImpaired: toggleVisuallyImpaired,
       mobility: setMobility,
+      mapType: setMapType,
     };
 
     try {
@@ -412,6 +414,71 @@ class Settings extends React.Component {
     } return (null);
   }
 
+  renderMapSettings = () => {
+    const { classes, intl, setMapType } = this.props;
+    const { currentSettings } = this.state;
+
+    // Check that currentSettings isn't empty
+    if (Object.entries(currentSettings).length !== 0 && currentSettings.constructor === Object) {
+      const mapSettings = {};
+      SettingsUtility.mapSettings.forEach((setting) => {
+        mapSettings[setting] = {
+          action: () => setMapType(setting),
+          labelId: `settings.map.${setting}`,
+          value: setting,
+          icon: getIcon(setting, { className: classes.icon }),
+        };
+      });
+
+      return (
+        <Container>
+          <FormControl className={classes.noMargin} component="fieldset" fullWidth>
+            <FormLabel>
+              <SettingsTitle
+                classes={classes}
+                titleID="settings.map.title"
+                intl={intl}
+              />
+            </FormLabel>
+            <RadioGroup
+              aria-label={intl.formatMessage({ id: 'settings.map.title' })}
+              classes={{
+                root: classes.radioGroup,
+              }}
+              name="mapType"
+              value={currentSettings.mapType}
+              onChange={(event, value) => {
+                this.handleChange('mapType', value);
+                this.setAlert(false);
+              }}
+            >
+              {Object.keys(mapSettings).map((key) => {
+                if (Object.prototype.hasOwnProperty.call(mapSettings, key)) {
+                  const item = mapSettings[key];
+                  return (
+                    <FormControlLabel
+                      className={classes.radioLabel}
+                      value={key}
+                      key={key}
+                      control={(<Radio color="primary" />)}
+                      labelPlacement="end"
+                      label={(
+                        <>
+                          {item.icon}
+                          {<FormattedMessage id={item.labelId} />}
+                        </>
+                    )}
+                    />
+                  );
+                } return null;
+              })}
+            </RadioGroup>
+          </FormControl>
+        </Container>
+      );
+    } return null;
+  }
+
   renderConfirmationBox() {
     const { classes, isMobile } = this.props;
     const containerClasses = ` ${this.settingsHaveChanged() ? classes.stickyContainer : classes.hidden} ${isMobile ? classes.stickyMobile : ''}`;
@@ -509,6 +576,9 @@ class Settings extends React.Component {
               {
                   this.renderMobilitySettings()
                 }
+              {
+                  this.renderMapSettings()
+                }
               <ServiceMapButton className={classes.contentButton} color="primary" variant="contained" onClick={() => this.saveSettings()} disabled={!settingsHaveChanged}>
                 <FormattedMessage id="general.save.changes" />
               </ServiceMapButton>
@@ -545,6 +615,7 @@ Settings.propTypes = {
   toggleHearingAid: PropTypes.func.isRequired,
   toggleVisuallyImpaired: PropTypes.func.isRequired,
   setMobility: PropTypes.func.isRequired,
+  setMapType: PropTypes.func.isRequired,
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
   isMobile: PropTypes.bool,
   toggleSettings: PropTypes.func.isRequired,
