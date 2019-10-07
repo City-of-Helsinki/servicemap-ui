@@ -118,6 +118,7 @@ export default {
                                     one {# accessibility shortcoming}
                                     other {# accessibility shortcomings}
                                   }`, // TODO: verify
+  'unit.accessibility.unitNoInfo': 'Unit has not delivered any accessibility information.', // TODO: verify
   'unit.basicInfo': 'Information',
   'unit.data_source': 'Source: {data_source}',
   'unit.details.notFound': 'Unit info not found.',
