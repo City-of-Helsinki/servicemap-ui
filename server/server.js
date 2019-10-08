@@ -10,25 +10,46 @@ import thunk from 'redux-thunk';
 import config from '../config';
 import rootReducer from '../src/rootReducer';
 import App from '../src/App';
-import {makeLanguageHandler, makeUnitHandler} from './utils';
+import {makeLanguageHandler} from './utils';
 import { setLocale } from '../src/redux/actions/user';
-import { changeSelectedUnit } from '../src/redux/actions/selectedUnit';
 import { SheetsRegistry } from 'jss';
 import { createGenerateClassName, MuiThemeProvider } from '@material-ui/core';
 import JssProvider from 'react-jss/lib/JssProvider';
 import themes from '../src/themes';
+import fetch from 'node-fetch';
+import { fetchEventData, fetchSelectedUnitData } from './dataFetcher';
+import IntlPolyfill from 'intl';
+import paths from '../config/paths';
 
+const setupTests = () => {
+  if (global.Intl) {
+    Intl.NumberFormat = IntlPolyfill.NumberFormat;
+    Intl.DateTimeFormat = IntlPolyfill.DateTimeFormat;
+  } else {
+    global.Intl = IntlPolyfill;
+  }
+
+  if (!global.fetch) {
+    global.fetch = fetch;
+  }
+};
+setupTests();
 // Configure constants
 const app = express();
 const supportedLanguages = config.supportedLanguages;
-const baseURL = `/(:lang(${supportedLanguages.join('|')})?)`;
 
 // Add static folder
 app.use(express.static(path.resolve(__dirname, 'src')));
 
 // Add middlewares
+app.use(`/*`, (req, res, next) => {
+  const store = createStore(rootReducer, applyMiddleware(thunk));
+  req._context = store;
+  next();
+})
+app.use(paths.event.regex, fetchEventData);
+app.use(paths.unit.regex, fetchSelectedUnitData);
 app.get(`/*`, makeLanguageHandler);
-app.use(`${baseURL}/unit`, makeUnitHandler);
 
 // Redirect root to finnish site
 app.get('/', (req, res) => {
@@ -39,7 +60,6 @@ app.get('/*', (req, res, next) => {
   // CSS for all rendered React components
   const css = new Set(); 
   const insertCss = (...styles) => styles.forEach(style => css.add(style._getCss()));
-  const store = createStore(rootReducer, applyMiddleware(thunk));
 
 
   // Create a sheetsRegistry instance.
@@ -55,11 +75,11 @@ app.get('/*', (req, res, next) => {
   const localeParam = req.params[0].slice(0, 2)
   const locale = supportedLanguages.indexOf(localeParam > -1) ? localeParam : 'fi';
 
-  // Dispatch unit data to redux
-  if (req._context) {
-    store.dispatch(changeSelectedUnit(req._context));
+  let store = req._context;
+  if (store && store.dispatch) {
     store.dispatch(setLocale(locale))
   }
+  
   const jsx = (
     <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>
       <MuiThemeProvider theme={themes.SMTheme} sheetsManager={sheetsManager}>

@@ -10,8 +10,10 @@ const educationNode = 1087;
 class Services extends React.Component {
   constructor(props) {
     super(props);
+    const { unit } = props;
+    const { services } = unit;
     this.state = {
-      serviceList: [],
+      serviceList: services || [],
       subjectList: [],
       periodList: [],
     };

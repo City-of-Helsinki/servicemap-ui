@@ -51,7 +51,7 @@ const mapStateToProps = (state) => {
   const { selectedUnit, service, event } = state;
   const getLocaleText = textObject => getLocaleString(state, textObject);
   return {
-    unit: selectedUnit.data,
+    unit: selectedUnit.unit.data,
     service: service.current,
     event: event.selected,
     getLocaleText,

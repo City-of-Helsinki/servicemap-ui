@@ -51,3 +51,5 @@ export const units = dataSet('UNITS');
 export const service = dataSet('SERVICE');
 // Data fetch single
 export const selectedUnit = dataSingle('SELECTED_UNIT');
+export const accessibilitySentences = dataSingle('SELECTED_UNIT_ACCESSIBILITY_SENTENCES');
+export const reservations = dataSingle('SELECTED_UNIT_RESERVATIONS');

@@ -98,6 +98,7 @@ const serverConfig = {
   plugins: [
     new webpack.EnvironmentPlugin({
       'PORT': false,
+      'SSR_FETCH_TIMEOUT': 2500,
       'ACCESSIBILITY_SENTENCE_API': ACCESSIBILITY_SENTENCE_API,
       'SERVICEMAP_API': SERVICEMAP_API,
       'EVENTS_API': EVENTS_API,
