@@ -8,13 +8,17 @@ import { mapOptions } from './config/mapConfig';
 import CreateMap from './utils/createMap';
 import swapCoordinates from './utils/swapCoordinates';
 import UnitMarkers from './components/UnitMarkers';
+import { focusUnit } from './utils/mapActions';
 import styles from './styles';
 import Districts from './components/Districts';
 import TransitStops from './components/TransitStops';
 import AddressPopup from './components/AddressPopup';
+import LocationButton from './components/LocationButton';
 import SearchBar from '../../components/SearchBar';
 import TitleBar from '../../components/TitleBar';
 import config from '../../../config';
+import UserMarker from './components/UserMarker';
+import fetchAddress from './utils/fetchAddress';
 
 
 class MapView extends React.Component {
@@ -32,8 +36,10 @@ class MapView extends React.Component {
   }
 
   componentDidMount() {
+    const { findUserLocation } = this.props;
     this.initializeLeaflet();
     this.initializeMap();
+    findUserLocation();
   }
 
   componentDidUpdate() {
@@ -127,10 +133,10 @@ class MapView extends React.Component {
 
   initializeLeaflet = () => {
     // The leaflet map works only client-side so it needs to be imported here
-    const leaflet = require('react-leaflet');
     const {
       Map, TileLayer, ZoomControl, Marker, Popup, Polygon, Polyline,
-    } = leaflet;
+    } = require('react-leaflet');
+
     this.setState({
       leaflet: {
         Map, TileLayer, ZoomControl, Marker, Popup, Polygon, Polyline,
@@ -138,10 +144,44 @@ class MapView extends React.Component {
     });
   }
 
+  focusOnUser = () => {
+    const {
+      userLocation, findUserLocation,
+    } = this.props;
+
+    if (userLocation) {
+      focusUnit(
+        this.mapRef.current.leafletElement,
+        [userLocation.longitude, userLocation.latitude],
+      );
+    } else {
+      findUserLocation();
+    }
+  }
+
+  navigateToAddress = (latLng) => {
+    const { getLocaleText, navigator } = this.props;
+    fetchAddress(latLng)
+      .then((data) => {
+        navigator.push('address', {
+          municipality: data.street.municipality,
+          street: getLocaleText(data.street.name),
+          number: data.number,
+        });
+      });
+  }
+
 
   render() {
     const {
-      highlightedDistrict, getLocaleText, isMobile, settings, navigator, setAddressLocation, classes,
+      highlightedDistrict,
+      getLocaleText,
+      isMobile,
+      settings,
+      navigator,
+      setAddressLocation,
+      classes,
+      userLocation,
     } = this.props;
     const {
       leaflet, transitStops, mapClickPoint, address, mapType,
@@ -209,8 +249,22 @@ class MapView extends React.Component {
                 navigator={navigator}
               />
             )}
+            {userLocation && (
+              <UserMarker
+                position={[userLocation.latitude, userLocation.longitude]}
+                classes={classes}
+                onClick={() => {
+                  this.navigateToAddress({ lat: userLocation.latitude, lng: userLocation.longitude });
+                }}
+              />
+            )}
 
             <ZoomControl position="bottomright" aria-hidden="true" />
+            <LocationButton
+              classes={classes}
+              position="bottomright"
+              handleClick={this.focusOnUser}
+            />
           </Map>
         </>
       );
@@ -236,10 +290,12 @@ MapView.propTypes = {
   navigator: PropTypes.objectOf(PropTypes.any),
   serviceUnits: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
   setAddressLocation: PropTypes.func.isRequired,
+  findUserLocation: PropTypes.func.isRequired,
   setMapRef: PropTypes.func.isRequired,
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
   unitList: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
   unitsLoading: PropTypes.bool,
+  userLocation: PropTypes.objectOf(PropTypes.any),
 };
 
 MapView.defaultProps = {
@@ -252,4 +308,5 @@ MapView.defaultProps = {
   serviceUnits: null,
   unitList: null,
   unitsLoading: false,
+  userLocation: null,
 };

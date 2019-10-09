@@ -68,6 +68,53 @@ const styles = theme => ({
     lineHeight: 1,
     textShadow: '1px 1px #fff, -1px 1px #fff, 1px -1px #fff, -1px -1px #fff',
   },
+  userMarker: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    '&:focus': {
+      boxShadow: 'none',
+    },
+  },
+  userMarkerForeground: {
+    height: '73%',
+    width: '73%',
+    color: '#fff',
+    position: 'absolute',
+    paddingBottom: '6%',
+  },
+  userMarkerBorder: {
+    height: '100%',
+    width: '100%',
+    color: theme.palette.primary.main,
+    position: 'absolute',
+  },
+  userMarkerBackground: {
+    position: 'absolute',
+    height: '33%',
+    width: '33%',
+    paddingBottom: '20%',
+    backgroundColor: theme.palette.primary.main,
+    borderRadius: 50,
+  },
+  showLocationButton: {
+    border: 'none',
+    cursor: 'pointer',
+    marginRight: '7px !important',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#2242C7',
+    width: 40,
+    height: 40,
+    borderRadius: '50%',
+    '&:hover': {
+      backgroundColor: '#1d39ad',
+    },
+  },
+  showLocationIcon: {
+    color: '#fff',
+  },
 });
 
 export default styles;
