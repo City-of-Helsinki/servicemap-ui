@@ -18,5 +18,5 @@ export const fetchReservations = id => async (dispatch) => {
   const onError = e => dispatch(fetchError(e.message));
 
   // Fetch data
-  reservationsFetch({}, onStart, onSuccess, onError, null, id);
+  reservationsFetch({ unit: `tprek:${id}` }, onStart, onSuccess, onError, null, id);
 };
