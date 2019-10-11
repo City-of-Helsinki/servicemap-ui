@@ -17,6 +17,7 @@ import isClient from './utils';
 import { getLocale } from './redux/selectors/locale';
 import { changeLocaleAction } from './redux/actions/user';
 import DefaultLayout from './layouts';
+import EmbedLayout from './layouts/EmbedLayout';
 import Navigator from './components/Navigator';
 
 class App extends React.Component {
@@ -51,7 +52,10 @@ class App extends React.Component {
     return (
       <IntlProvider {...i18nData}>
         <div className="App">
-          <DefaultLayout i18n={i18n} />
+          <Switch>
+            <Route path="*/embed" component={EmbedLayout} />
+            <Route render={() => <DefaultLayout i18n={i18n} />} />
+          </Switch>
           <Navigator />
         </div>
       </IntlProvider>
