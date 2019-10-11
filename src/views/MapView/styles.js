@@ -68,6 +68,10 @@ const styles = theme => ({
     lineHeight: 1,
     textShadow: '1px 1px #fff, -1px 1px #fff, 1px -1px #fff, -1px -1px #fff',
   },
+  unitTooltip: {
+    padding: theme.spacing.unitDouble,
+    textAlign: 'left',
+  },
 });
 
 export default styles;

@@ -15,6 +15,8 @@ import AddressPopup from './components/AddressPopup';
 import SearchBar from '../../components/SearchBar';
 import TitleBar from '../../components/TitleBar';
 import config from '../../../config';
+import { isEmbed } from '../../utils/path';
+import AddressMarker from './components/AddressMarker';
 
 
 const MapView = (props) => {
@@ -35,6 +37,7 @@ const MapView = (props) => {
     isMobile,
     setMapRef,
     navigator,
+    match,
   } = props;
 
   const mapRef = useRef(null);
@@ -124,11 +127,11 @@ const MapView = (props) => {
     // The leaflet map works only client-side so it needs to be imported here
     const leaflet = require('react-leaflet');
     const {
-      Map, TileLayer, ZoomControl, Marker, Popup, Polygon, Polyline,
+      Map, TileLayer, ZoomControl, Marker, Popup, Polygon, Polyline, Tooltip,
     } = leaflet;
 
     setLeaflet({
-      Map, TileLayer, ZoomControl, Marker, Popup, Polygon, Polyline,
+      Map, TileLayer, ZoomControl, Marker, Popup, Polygon, Polyline, Tooltip,
     });
   };
 
@@ -155,7 +158,7 @@ const MapView = (props) => {
   // Render
 
   const {
-    Map, TileLayer, ZoomControl, Marker, Popup, Polygon, Polyline,
+    Map, TileLayer, ZoomControl, Marker, Popup, Polygon, Polyline, Tooltip,
   } = leaflet || {};
 
   if (Map && mapObject) {
@@ -170,6 +173,7 @@ const MapView = (props) => {
         ? prevMap.viewport.zoom + zoomDifference
         : prevMap.props.zoom + zoomDifference;
     }
+    const embeded = isEmbed(match);
 
     return (
       <>
@@ -197,6 +201,8 @@ const MapView = (props) => {
             data={getMapUnits()}
             Marker={Marker}
             Polyline={Polyline}
+            Tooltip={Tooltip}
+            embeded={embeded}
           />
           <Districts
             Polygon={Polygon}
@@ -228,6 +234,35 @@ const MapView = (props) => {
               navigator={navigator}
             />
           )}
+          {!embeded
+            && (
+              <TransitStops
+                Marker={Marker}
+                Popup={Popup}
+                transitStops={transitStops}
+                map={mapRef.current}
+                isMobile={isMobile}
+              />
+            )
+          }
+          {!embeded && mapClickPoint && ( // Draw address popoup on mapclick to map
+            <AddressPopup
+              Popup={Popup}
+              mapClickPoint={mapClickPoint}
+              getLocaleText={getLocaleText}
+              map={mapRef.current}
+              setAddressLocation={setAddressLocation}
+              navigator={navigator}
+            />
+          )}
+
+          <AddressMarker
+            Marker={Marker}
+            Tooltip={Tooltip}
+            address={address}
+            getLocaleText={getLocaleText}
+            embeded={embeded}
+          />
 
           <ZoomControl position="bottomright" aria-hidden="true" />
         </Map>
@@ -250,6 +285,7 @@ MapView.propTypes = {
   highlightedUnit: PropTypes.objectOf(PropTypes.any),
   intl: intlShape.isRequired,
   isMobile: PropTypes.bool,
+  match: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   serviceUnits: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
   setAddressLocation: PropTypes.func.isRequired,
