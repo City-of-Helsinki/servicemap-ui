@@ -33,7 +33,11 @@ export const setCurrentPage = page => async (dispatch) => {
 
 export const findUserLocation = () => async (dispatch) => {
   const success = (position) => {
-    dispatch(setUserPosition(position.coords));
+    if (position.coords.accuracy < 10000) {
+      dispatch(setUserPosition(position.coords));
+    } else {
+      console.warn(`Position accuracy: ${position.coords.accuracy}. Max accuracy: 10000`);
+    }
   };
 
   const error = (err) => {

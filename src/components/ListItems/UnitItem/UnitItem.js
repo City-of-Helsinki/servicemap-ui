@@ -67,7 +67,17 @@ class UnitItem extends React.Component {
     const accessColor = accessData.color;
 
     // Distance
-    const distanceObject = calculateDistance(unit, userLocation, intl);
+    let distance = calculateDistance(unit, userLocation, intl);
+    if (distance) {
+      if (distance >= 1000) {
+        distance /= 1000; // Convert from m to km
+        distance = distance.toFixed(1); // Show only one decimal
+        distance = intl.formatNumber(distance); // Format distance according to locale
+        distance = { distance, type: 'km' };
+      } else {
+        distance = { distance, type: 'm' };
+      }
+    }
 
     return (
       <ResultItem
@@ -75,7 +85,7 @@ class UnitItem extends React.Component {
         subtitle={intl.formatMessage({ id: object_type })}
         bottomRightText={accessText}
         bottomRightColor={accessColor}
-        distance={distanceObject}
+        distance={distance}
         icon={icon}
         onClick={(e) => {
           e.preventDefault();

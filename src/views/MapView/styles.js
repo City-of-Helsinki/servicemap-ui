@@ -112,6 +112,16 @@ const styles = theme => ({
       backgroundColor: '#1d39ad',
     },
   },
+  locationDisabled: {
+    cursor: 'default',
+    backgroundColor: '#cccccc',
+    '&:hover': {
+      backgroundColor: '#cccccc',
+    },
+    '&:focus': {
+      boxShadow: 'none',
+    },
+  },
   showLocationIcon: {
     color: '#fff',
   },

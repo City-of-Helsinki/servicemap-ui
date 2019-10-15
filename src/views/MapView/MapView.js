@@ -201,6 +201,7 @@ class MapView extends React.Component {
             ref={this.mapRef}
             keyboard={false}
             zoomControl={false}
+            doubleClickZoom={false}
             crs={mapType.crs}
             center={mapOptions.initialPosition}
             zoom={zoomLevel}
@@ -261,9 +262,10 @@ class MapView extends React.Component {
 
             <ZoomControl position="bottomright" aria-hidden="true" />
             <LocationButton
+              disabled={!userLocation}
               classes={classes}
               position="bottomright"
-              handleClick={this.focusOnUser}
+              handleClick={userLocation ? this.focusOnUser : null}
             />
           </Map>
         </>

@@ -1,4 +1,4 @@
-const calculateDistance = (unit, user, intl) => {
+const calculateDistance = (unit, user) => {
   if (user) {
     const toRadians = (degree) => {
       const pi = Math.PI;
@@ -21,15 +21,9 @@ const calculateDistance = (unit, user, intl) => {
 
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-    let distance = Math.round(r * c);
+    const distance = Math.round(r * c);
 
-    if (distance >= 1000) {
-      distance /= 1000;
-      distance = distance.toFixed(1);
-      distance = intl.formatNumber(distance);
-      return { distance, type: 'km' };
-    }
-    return { distance, type: 'm' };
+    return distance;
   }
   return null;
 };

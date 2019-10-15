@@ -1,20 +1,29 @@
 /* eslint-disable global-require */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { MyLocation } from '@material-ui/icons';
 
-const LocationButton = ({ position, classes, handleClick }) => {
+const LocationButton = ({
+  position, classes, handleClick, disabled,
+}) => {
   const L = require('leaflet');
   const { useLeaflet } = require('react-leaflet');
   const { map } = useLeaflet();
 
+  const [button, setButton] = useState();
+
   const createLeafletElement = () => {
-    const TestButton = L.Control.extend({
+    if (button) {
+      // Remove old button before updating to new one
+      map.removeControl(button);
+    }
+
+    const LocationControlButton = L.Control.extend({
       options: {
         position,
       },
       onAdd: () => {
-        const buttonContainer = L.DomUtil.create('button', classes.showLocationButton);
+        const buttonContainer = L.DomUtil.create('button', `${classes.showLocationButton} ${disabled ? classes.locationDisabled : ''}`);
 
         const button = renderToStaticMarkup(
           <MyLocation className={classes.showLocationIcon} />,
@@ -24,19 +33,24 @@ const LocationButton = ({ position, classes, handleClick }) => {
 
         buttonContainer.onclick = ((ev) => {
           ev.stopPropagation();
-          ev.preventDefault();
-          handleClick();
+          if (handleClick) {
+            handleClick();
+          }
         });
+
 
         return buttonContainer;
       },
     });
-    map.addControl(new TestButton());
+    const locationControl = new LocationControlButton();
+    setButton(locationControl);
+
+    map.addControl(locationControl);
   };
 
   useEffect(() => {
     createLeafletElement();
-  }, []);
+  }, [disabled]);
 
   return null;
 };
