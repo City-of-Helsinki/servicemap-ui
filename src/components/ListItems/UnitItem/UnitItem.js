@@ -62,7 +62,7 @@ class UnitItem extends React.Component {
     } = unit;
 
     // Accessibility text and color
-    const accessData = this.parseAccessibilityText();
+    const accessData = didMount ? this.parseAccessibilityText() : 0;
     const accessText = accessData.text;
     const accessColor = accessData.color;
 

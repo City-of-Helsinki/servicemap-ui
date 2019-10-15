@@ -6,7 +6,7 @@ import styles from '../styles';
 import fetchAddress from '../utils/fetchAddress';
 
 const AddressPopup = ({
-  Popup, classes, mapClickPoint, getLocaleText, map, setAddressLocation, navigator,
+  Popup, classes, mapClickPoint, getLocaleText, map, navigator,
 }) => {
   const [address, setAddress] = useState(null);
 
@@ -29,10 +29,6 @@ const AddressPopup = ({
             onClick={() => {
               if (navigator) {
                 map.leafletElement.closePopup();
-                setAddressLocation({
-                  addressId: address.street.id,
-                  clickCoordinates: [mapClickPoint.lat, mapClickPoint.lng],
-                });
                 navigator.push('address', {
                   municipality: address.street.municipality,
                   street: getLocaleText(address.street.name),
@@ -64,7 +60,6 @@ AddressPopup.propTypes = {
   mapClickPoint: PropTypes.objectOf(PropTypes.any).isRequired,
   getLocaleText: PropTypes.func.isRequired,
   map: PropTypes.objectOf(PropTypes.any).isRequired,
-  setAddressLocation: PropTypes.func.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 

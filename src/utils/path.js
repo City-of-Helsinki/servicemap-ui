@@ -1,6 +1,8 @@
 import paths from '../../config/paths';
 import config from '../../config';
 
+export const isEmbed = match => match && match.url && !!paths.embed.regex.exec(match.url);
+
 export const comparePath = (path, location) => {
   if (Object.prototype.hasOwnProperty.call(paths, path)) {
     const { regex } = paths[path];

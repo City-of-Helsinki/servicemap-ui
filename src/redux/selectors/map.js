@@ -1,9 +1,9 @@
 import { createSelector } from 'reselect';
 
-const getMapType = store => store.mapType;
 const getUnits = store => store.unitList;
 
 // This gets units from redux and bundles units with same coordinates together
+// TODO: Not used currently, should be deleted when new bundling is implemented
 const getUnitList = createSelector(
   [getUnits],
   ((units) => {
@@ -35,7 +35,6 @@ const getUnitList = createSelector(
   }),
 );
 
-export {
-  getMapType,
+export default {
   getUnitList,
 };

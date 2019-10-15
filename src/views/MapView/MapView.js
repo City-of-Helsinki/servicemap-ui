@@ -1,5 +1,5 @@
 /* eslint-disable global-require */
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core';
@@ -19,44 +19,45 @@ import TitleBar from '../../components/TitleBar';
 import config from '../../../config';
 import UserMarker from './components/UserMarker';
 import fetchAddress from './utils/fetchAddress';
+import { isEmbed } from '../../utils/path';
+import AddressMarker from './components/AddressMarker';
 
 
-class MapView extends React.Component {
-  constructor(props) {
-    super(props);
-    this.mapRef = React.createRef();
-    this.state = {
-      mapType: null,
-      refSaved: false,
-      mapClickPoint: null,
-      address: null,
-      leaflet: null,
-      transitStops: [],
-    };
-  }
+const MapView = (props) => {
+  const {
+    classes,
+    currentPage,
+    getLocaleText,
+    intl,
+    settings,
+    addressTitle,
+    addressUnits,
+    setAddressLocation,
+    unitList,
+    unitsLoading,
+    serviceUnits,
+    highlightedUnit,
+    highlightedDistrict,
+    isMobile,
+    setMapRef,
+    navigator,
+    match,
+    findUserLocation,
+    userLocation,
+  } = props;
 
-  componentDidMount() {
-    const { findUserLocation } = this.props;
-    this.initializeLeaflet();
-    this.initializeMap();
-    findUserLocation();
-  }
 
-  componentDidUpdate() {
-    this.saveMapReference();
-  }
+  const mapRef = useRef(null);
 
-  getMapRefElement() {
-    if (this.mapRef.current) {
-      return this.mapRef.current.leafletElement;
-    }
-    return null;
-  }
+  // State
+  const [mapObject, setMapObject] = useState(null);
+  const [mapClickPoint, setMapClickPoint] = useState(null);
+  const [leaflet, setLeaflet] = useState(null);
+  const [refSaved, setRefSaved] = useState(false);
+  const [prevMap, setPrevMap] = useState(null);
 
-  getMapUnits = () => {
-    const {
-      currentPage, unitList, addressUnits, serviceUnits, unitsLoading, highlightedUnit,
-    } = this.props;
+
+  const getMapUnits = () => {
     let mapUnits = [];
     let unitGeometry = null;
 
@@ -75,12 +76,9 @@ class MapView extends React.Component {
       }
     }
     return { units: mapUnits, unitGeometry };
-  }
+  };
 
-  renderTopBar = () => {
-    const {
-      isMobile, currentPage, highlightedUnit, addressTitle, getLocaleText, intl,
-    } = this.props;
+  const renderTopBar = () => {
     if (isMobile) {
       const top = currentPage === 'map' ? config.topBarHeight : 0;
       return (
@@ -106,61 +104,55 @@ class MapView extends React.Component {
         </>
       );
     } return null;
-  }
+  };
 
-  setClickCoordinates = (ev) => {
-    this.setState({ mapClickPoint: null });
+  const setClickCoordinates = (ev) => {
+    setMapClickPoint(null);
     if (document.getElementsByClassName('popup').length > 0) {
-      this.mapRef.current.leafletElement.closePopup();
+      mapRef.current.leafletElement.closePopup();
     } else {
-      this.setState({ mapClickPoint: ev.latlng, address: null });
+      setMapClickPoint(ev.latlng);
     }
-  }
+  };
 
-  saveMapReference = () => {
-    const { setMapRef } = this.props;
-    const { refSaved } = this.state;
-    if (this.mapRef.current && !refSaved) {
-      this.setState({ refSaved: true });
-      setMapRef(this.mapRef.current);
+  const saveMapReference = () => {
+    setMapRef(mapRef.current);
+  };
+
+  const initializeMap = () => {
+    if (mapRef.current) {
+      // If changing map type, save current map viewport values before changing map
+      const map = mapRef.current;
+      map.defaultZoom = mapObject.options.zoom;
+      setPrevMap(map);
     }
-  }
+    const newMap = CreateMap(settings.mapType);
+    setMapObject(newMap);
+  };
 
-  initializeMap = () => {
-    const { mapType } = this.props;
-    this.setState({ mapType: CreateMap(mapType) });
-  }
-
-  initializeLeaflet = () => {
+  const initializeLeaflet = () => {
     // The leaflet map works only client-side so it needs to be imported here
     const {
-      Map, TileLayer, ZoomControl, Marker, Popup, Polygon, Polyline,
+      Map, TileLayer, ZoomControl, Marker, Popup, Polygon, Polyline, Tooltip,
     } = require('react-leaflet');
 
-    this.setState({
-      leaflet: {
-        Map, TileLayer, ZoomControl, Marker, Popup, Polygon, Polyline,
-      },
+    setLeaflet({
+      Map, TileLayer, ZoomControl, Marker, Popup, Polygon, Polyline, Tooltip,
     });
-  }
+  };
 
-  focusOnUser = () => {
-    const {
-      userLocation, findUserLocation,
-    } = this.props;
-
+  const focusOnUser = () => {
     if (userLocation) {
       focusUnit(
-        this.mapRef.current.leafletElement,
+        mapRef.current.leafletElement,
         [userLocation.longitude, userLocation.latitude],
       );
     } else {
       findUserLocation();
     }
-  }
+  };
 
-  navigateToAddress = (latLng) => {
-    const { getLocaleText, navigator } = this.props;
+  const navigateToAddress = (latLng) => {
     fetchAddress(latLng)
       .then((data) => {
         navigator.push('address', {
@@ -169,111 +161,145 @@ class MapView extends React.Component {
           number: data.number,
         });
       });
-  }
+  };
 
 
-  render() {
-    const {
-      highlightedDistrict,
-      getLocaleText,
-      isMobile,
-      settings,
-      navigator,
-      setAddressLocation,
-      classes,
-      userLocation,
-    } = this.props;
-    const {
-      leaflet, transitStops, mapClickPoint, address, mapType,
-    } = this.state;
-    const {
-      Map, TileLayer, ZoomControl, Marker, Popup, Polygon, Polyline,
-    } = leaflet || {};
+  useEffect(() => { // On map mount
+    initializeLeaflet();
+    initializeMap();
+    findUserLocation();
+  }, []);
 
-    if (Map && mapType) {
-      const zoomLevel = isMobile ? mapType.options.mobileZoom : mapType.options.zoom;
-      return (
-        <>
-          {this.renderTopBar()}
-          <Map
-            className={classes.map}
-            key={mapType.crs.code}
-            ref={this.mapRef}
-            keyboard={false}
-            zoomControl={false}
-            doubleClickZoom={false}
-            crs={mapType.crs}
-            center={mapOptions.initialPosition}
-            zoom={zoomLevel}
-            minZoom={mapType.options.minZoom}
-            maxZoom={mapType.options.maxZoom}
-            maxBounds={mapOptions.maxBounds}
-            onClick={(ev) => { this.setClickCoordinates(ev); }}
-          >
-            <TileLayer
-              url={mapType.options.url}
-              attribution='&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors'
-            />
-            <UnitMarkers
-              data={this.getMapUnits()}
-              Marker={Marker}
-              Polyline={Polyline}
-              mapType={mapType}
-            />
-            <Districts
-              Polygon={Polygon}
-              Marker={Marker}
+  useEffect(() => { // Set map ref to redux once map is rendered
+    if (!refSaved && mapRef.current) {
+      saveMapReference();
+      setRefSaved(true);
+    }
+  });
+
+  useEffect(() => { // On map type change
+    // Init new map and set new ref to redux
+    initializeMap();
+    setRefSaved(false);
+  }, [settings.mapType]);
+
+
+  // Render
+
+  const {
+    Map, TileLayer, ZoomControl, Marker, Popup, Polygon, Polyline, Tooltip,
+  } = leaflet || {};
+
+  if (Map && mapObject) {
+    let center = mapOptions.initialPosition;
+    let zoom = isMobile ? mapObject.options.mobileZoom : mapObject.options.zoom;
+    if (prevMap) { // If changing map type, use viewport values of previuous map
+      center = prevMap.viewport.center || prevMap.props.center;
+      /* Different map types have different zoom levels
+      Use the zoom difference to calculate the new zoom level */
+      const zoomDifference = mapObject.options.zoom - prevMap.defaultZoom;
+      zoom = prevMap.viewport.zoom
+        ? prevMap.viewport.zoom + zoomDifference
+        : prevMap.props.zoom + zoomDifference;
+    }
+    const embeded = isEmbed(match);
+
+    return (
+      <>
+        {renderTopBar()}
+        <Map
+          className={classes.map}
+          key={mapObject.crs.code}
+          ref={mapRef}
+          keyboard={false}
+          zoomControl={false}
+          doubleClickZoom={false}
+          crs={mapObject.crs}
+          center={center}
+          zoom={zoom}
+          minZoom={mapObject.options.minZoom}
+          maxZoom={mapObject.options.maxZoom}
+          maxBounds={mapObject.options.mapBounds || mapOptions.defaultMaxBounds}
+          maxBoundsViscosity={1.0}
+          onClick={(ev) => { setClickCoordinates(ev); }}
+        >
+          <TileLayer
+            url={mapObject.options.url}
+            attribution='&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors'
+          />
+          <UnitMarkers
+            data={getMapUnits()}
+            Marker={Marker}
+            Polyline={Polyline}
+            Tooltip={Tooltip}
+            embeded={embeded}
+          />
+          <Districts
+            Polygon={Polygon}
+            Marker={Marker}
+            Popup={Popup}
+            highlightedDistrict={highlightedDistrict}
+            getLocaleText={getLocaleText}
+            settings={settings}
+            mapOptions={mapOptions}
+            mobile={isMobile}
+            navigator={navigator}
+          />
+
+          {!embeded
+            && (
+              <TransitStops
+                Marker={Marker}
+                Popup={Popup}
+                map={mapRef.current}
+                mapObject={mapObject}
+                isMobile={isMobile}
+              />
+            )
+          }
+          {!embeded && mapClickPoint && ( // Draw address popoup on mapclick to map
+            <AddressPopup
               Popup={Popup}
-              highlightedDistrict={highlightedDistrict}
+              mapClickPoint={mapClickPoint}
               getLocaleText={getLocaleText}
-              settings={settings}
-              mapOptions={mapOptions}
-              mobile={isMobile}
+              map={mapRef.current}
+              setAddressLocation={setAddressLocation}
               navigator={navigator}
             />
-            <TransitStops
-              Marker={Marker}
-              Popup={Popup}
-              transitStops={transitStops}
-              map={this.mapRef.current}
-              mapType={mapType}
-              isMobile={isMobile}
-            />
-            {mapClickPoint && ( // Draw address popoup on mapclick to map
-              <AddressPopup
-                Popup={Popup}
-                address={address}
-                mapClickPoint={mapClickPoint}
-                getLocaleText={getLocaleText}
-                map={this.mapRef.current}
-                setAddressLocation={setAddressLocation}
-                navigator={navigator}
-              />
-            )}
-            {userLocation && (
-              <UserMarker
-                position={[userLocation.latitude, userLocation.longitude]}
-                classes={classes}
-                onClick={() => {
-                  this.navigateToAddress({ lat: userLocation.latitude, lng: userLocation.longitude });
-                }}
-              />
-            )}
+          )}
 
-            <ZoomControl position="bottomright" aria-hidden="true" />
-            <LocationButton
-              disabled={!userLocation}
-              classes={classes}
-              position="bottomright"
-              handleClick={userLocation ? this.focusOnUser : null}
+          {currentPage === 'address' && (
+            <AddressMarker
+              Marker={Marker}
+              Tooltip={Tooltip}
+              getLocaleText={getLocaleText}
+              embeded={embeded}
             />
-          </Map>
-        </>
-      );
-    }
-    return null;
+          )}
+
+          {userLocation && (
+            <UserMarker
+              position={[userLocation.latitude, userLocation.longitude]}
+              classes={classes}
+              onClick={() => {
+                navigateToAddress({ lat: userLocation.latitude, lng: userLocation.longitude });
+              }}
+            />
+          )}
+
+          <ZoomControl position="bottomright" aria-hidden="true" />
+          <LocationButton
+            disabled={!userLocation}
+            classes={classes}
+            position="bottomright"
+            handleClick={userLocation ? focusOnUser : null}
+          />
+        </Map>
+      </>
+    );
   }
-}
+  return null;
+};
 
 export default withRouter(withStyles(styles)(MapView));
 
@@ -288,7 +314,7 @@ MapView.propTypes = {
   highlightedUnit: PropTypes.objectOf(PropTypes.any),
   intl: intlShape.isRequired,
   isMobile: PropTypes.bool,
-  mapType: PropTypes.string.isRequired,
+  match: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   serviceUnits: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
   setAddressLocation: PropTypes.func.isRequired,

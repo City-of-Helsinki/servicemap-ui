@@ -181,11 +181,7 @@ class AccessibilityInfo extends React.Component {
   }
 
   renderInfoText(noInfo, noShortcomings) {
-    const { classes, settings } = this.props;
-
-    if (!SettingsUtility.hasActiveAccessibilitySettings(settings)) {
-      return null;
-    }
+    const { classes } = this.props;
 
     if (noInfo) {
       return (
@@ -194,7 +190,7 @@ class AccessibilityInfo extends React.Component {
             <Warning className={classes.noInfoColor} />
           </ListItemIcon>
           <Typography component="p" variant="body2" align="left">
-            <FormattedMessage id="unit.accessibility.noInfo" />
+            <FormattedMessage id="unit.accessibility.unitNoInfo" />
           </Typography>
         </ListItem>
       );

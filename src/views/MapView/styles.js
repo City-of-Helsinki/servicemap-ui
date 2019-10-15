@@ -125,6 +125,10 @@ const styles = theme => ({
   showLocationIcon: {
     color: '#fff',
   },
+  unitTooltip: {
+    padding: theme.spacing.unitDouble,
+    textAlign: 'left',
+  },
 });
 
 export default styles;
