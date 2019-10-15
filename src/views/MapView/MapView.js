@@ -239,7 +239,6 @@ const MapView = (props) => {
               <TransitStops
                 Marker={Marker}
                 Popup={Popup}
-                transitStops={transitStops}
                 map={mapRef.current}
                 isMobile={isMobile}
               />
@@ -259,7 +258,6 @@ const MapView = (props) => {
           <AddressMarker
             Marker={Marker}
             Tooltip={Tooltip}
-            address={address}
             getLocaleText={getLocaleText}
             embeded={embeded}
           />
