@@ -26,7 +26,7 @@ export const fetchServiceUnits = serviceId => async (dispatch) => {
   const options = {
     service: serviceId,
     page_size: 50,
-    only: 'name,accessibility_shortcoming_count,location,municipality',
+    only: 'name,accessibility_shortcoming_count,location,municipality,contract_type',
   };
 
   // Fetch data
