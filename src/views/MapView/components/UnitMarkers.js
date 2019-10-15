@@ -82,6 +82,7 @@ UnitMarkers.propTypes = {
   getLocaleText: PropTypes.func.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any).isRequired,
   Marker: PropTypes.objectOf(PropTypes.any).isRequired,
+  Tooltip: PropTypes.objectOf(PropTypes.any).isRequired,
   Polyline: PropTypes.objectOf(PropTypes.any).isRequired,
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
 };
