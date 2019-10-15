@@ -1,8 +1,10 @@
+/* eslint-disable camelcase */
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
   ListItem, ListItemIcon, Typography, Divider,
 } from '@material-ui/core';
+import { isSmallContentArea } from '../../../utils';
 
 // TODO: Complete distance calculations and related accessibility texts
 const ResultItem = ({
@@ -24,6 +26,9 @@ const ResultItem = ({
   // TODO: Change to check data for distance once location info is available
   const distance = distancePosition; // '100';
 
+  const isSmallContent = isSmallContentArea();
+  const classStyles = !isSmallContent ? classes : {};
+
   // Screen reader text
   const srText = `${title || ''} ${subtitle || ''} ${distance ? `${distance} metrin päässä` : ''} ${bottomRightText || ''} ${srLabel || ''}`;
   const bottomRightStyles = { color: bottomRightColor };
@@ -39,7 +44,7 @@ const ResultItem = ({
         onClick={onClick}
         onKeyDown={onKeyDown}
         classes={{
-          focusVisible: classes.cssFocused,
+          focusVisible: classStyles.cssFocused,
         }}
       >
         {
@@ -50,13 +55,13 @@ const ResultItem = ({
           </ListItemIcon>
           )
         }
-        <div className={classes.itemTextContainer}>
-          <div className={classes.topRow}>
+        <div className={classStyles.itemTextContainer || ''}>
+          <div className={classStyles.topRow || ''}>
             {
               // SROnly element with full readable text
             }
             <Typography
-              className={classes.title}
+              className={classStyles.title || ''}
               component="p"
               variant="srOnly"
             >
@@ -67,7 +72,7 @@ const ResultItem = ({
               // Title
             }
             <Typography
-              className={classes.title}
+              className={classStyles.title || ''}
               component="p"
               role="textbox"
               variant="body2"
@@ -80,10 +85,10 @@ const ResultItem = ({
               // Distance text
               distance
               && (
-                <div className={classes.rightColumn}>
+                <div className={classStyles.rightColumn || ''}>
                   <Typography
                     variant="caption"
-                    className={`${classes.caption} ${classes.marginLeft}`}
+                    className={`${classStyles.caption || ''} ${classStyles.marginLeft || ''}`}
                     component="p"
                     aria-hidden="true"
                   >
@@ -99,24 +104,23 @@ const ResultItem = ({
             // Bottom row
             (subtitle || bottomRightText)
             && (
-              <div className={classes.bottomRow}>
-                <div className={classes.bottomColumn}>
+              <div className={classStyles.bottomRow || ''}>
+                <div className={classStyles.bottomColumn || ''}>
                   <Typography
                     variant="caption"
-                    className={`${classes.noMargin} ${classes.smallFont}`}
+                    className={`${classStyles.noMargin || ''} ${classStyles.smallFont || ''}`}
                     component="p"
                     aria-hidden="true"
                   >
                     {subtitle || ''}
                   </Typography>
                 </div>
-
                 {
                   bottomRightText
                   && (
-                  <div className={`${classes.rightColumn} ${classes.bottomColumn}`}>
+                  <div className={`${classStyles.rightColumn || ''} ${classStyles.bottomColumn || ''}`}>
                     <Typography
-                      className={`${classes.smallFont} ${classes.marginLeft}`}
+                      className={`${classStyles.smallFont || ''} ${classStyles.marginLeft || ''}`}
                       component="p"
                       variant="caption"
                       aria-hidden="true"
