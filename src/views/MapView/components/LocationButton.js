@@ -19,26 +19,21 @@ const LocationButton = ({
     }
 
     const LocationControlButton = L.Control.extend({
-      options: {
-        position,
-      },
+      options: { position },
       onAdd: () => {
-        const buttonContainer = L.DomUtil.create('button', `${classes.showLocationButton} ${disabled ? classes.locationDisabled : ''}`);
-
-        const button = renderToStaticMarkup(
+        const buttonContainer = L.DomUtil.create(
+          'button',
+          `${classes.showLocationButton} ${disabled ? classes.locationDisabled : ''}`,
+        );
+        buttonContainer.innerHTML = renderToStaticMarkup(
           <MyLocation className={classes.showLocationIcon} />,
         );
-
-        buttonContainer.innerHTML = button;
-
         buttonContainer.onclick = ((ev) => {
           ev.stopPropagation();
           if (handleClick) {
             handleClick();
           }
         });
-
-
         return buttonContainer;
       },
     });
