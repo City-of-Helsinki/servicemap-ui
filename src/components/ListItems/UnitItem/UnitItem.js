@@ -61,9 +61,9 @@ class UnitItem extends React.Component {
     } = unit;
 
     // Accessibility text and color
-    const accessData = didMount ? this.parseAccessibilityText() : null;
-    const accessText = accessData && accessData.text;
-    const accessColor = accessData && accessData.color;
+    const accessData = didMount ? this.parseAccessibilityText() : 0;
+    const accessText = accessData.text;
+    const accessColor = accessData.color;
 
     // Distance text
     // TODO: Change to check data for distance once location info is available
