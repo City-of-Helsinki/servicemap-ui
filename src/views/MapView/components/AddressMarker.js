@@ -8,7 +8,7 @@ import styles from '../styles';
 const AddressMarker = ({
   Marker, Tooltip, address, classes, embeded,
 }) => {
-  if (!address || !address.clickCoordinates) {
+  if (!address || !address.addressCoordinates) {
     return null;
   }
   // eslint-disable-next-line global-require
@@ -24,8 +24,7 @@ const AddressMarker = ({
   return (
     <Marker
       className="addressMarker"
-      key={address.addressId}
-      position={[address.clickCoordinates[1], address.clickCoordinates[0]]}
+      position={[address.addressCoordinates[1], address.addressCoordinates[0]]}
       icon={addressIcon}
       keyboard={false}
     >

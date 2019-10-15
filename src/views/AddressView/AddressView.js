@@ -26,7 +26,6 @@ const AddressView = (props) => {
   const [error, setError] = useState(null);
 
   const {
-    addressState,
     classes,
     embed,
     highlightedDistrict,
@@ -79,23 +78,18 @@ const AddressView = (props) => {
     fetchAddressData(match)
       .then((data) => {
         const address = data;
-        const { clickCoordinates, addressId } = addressState;
         if (address) {
           // If address data has letters as well, combine them with address number
           if (address.letter) {
             address.number += address.letter;
           }
-          setAddressLocation({ addressId: address.street.id, clickCoordinates: address.location.coordinates });
+          setAddressLocation({ addressCoordinates: address.location.coordinates });
           setAddressData(address);
           const addressName = `${getLocaleText(address.street.name)} ${address.number}, ${address.street.municipality}`;
           setAddressTitle(addressName);
           const { coordinates } = address.location;
-          /* If no user click location on redux, or if the data is for old address,
-          use the exact coordinates of the address instead of the user's click location */
-          const position = !clickCoordinates || addressId !== address.street.id
-            ? [coordinates[1], coordinates[0]] : clickCoordinates;
 
-          focusUnit(map, [position[1], position[0]]);
+          focusUnit(map, [coordinates[0], coordinates[1]]);
           if (embed) {
             return;
           }
@@ -285,7 +279,6 @@ AddressView.propTypes = {
   setAddressUnits: PropTypes.func.isRequired,
   setAddressTitle: PropTypes.func.isRequired,
   highlightedDistrict: PropTypes.objectOf(PropTypes.any),
-  addressState: PropTypes.objectOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   embed: PropTypes.bool,
 };
@@ -295,6 +288,5 @@ AddressView.defaultProps = {
   map: null,
   navigator: null,
   highlightedDistrict: null,
-  addressState: null,
   embed: false,
 };

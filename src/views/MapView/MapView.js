@@ -216,30 +216,13 @@ const MapView = (props) => {
             navigator={navigator}
           />
 
-          <TransitStops
-            Marker={Marker}
-            Popup={Popup}
-            map={mapRef.current}
-            mapObject={mapObject}
-            isMobile={isMobile}
-          />
-
-          {mapClickPoint && ( // Draw address popoup on mapclick to map
-            <AddressPopup
-              Popup={Popup}
-              mapClickPoint={mapClickPoint}
-              getLocaleText={getLocaleText}
-              map={mapRef.current}
-              setAddressLocation={setAddressLocation}
-              navigator={navigator}
-            />
-          )}
           {!embeded
             && (
               <TransitStops
                 Marker={Marker}
                 Popup={Popup}
                 map={mapRef.current}
+                mapObject={mapObject}
                 isMobile={isMobile}
               />
             )
@@ -255,12 +238,14 @@ const MapView = (props) => {
             />
           )}
 
-          <AddressMarker
-            Marker={Marker}
-            Tooltip={Tooltip}
-            getLocaleText={getLocaleText}
-            embeded={embeded}
-          />
+          {currentPage === 'address' && (
+            <AddressMarker
+              Marker={Marker}
+              Tooltip={Tooltip}
+              getLocaleText={getLocaleText}
+              embeded={embeded}
+            />
+          )}
 
           <ZoomControl position="bottomright" aria-hidden="true" />
         </Map>
