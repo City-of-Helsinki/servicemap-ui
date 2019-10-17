@@ -12,7 +12,7 @@ const Reservations = ({
     return (
       <TitledList
         title={<FormattedMessage id="unit.reservations" />}
-        titleComponent="h3"
+        titleComponent="h4"
         listLength={listLength}
         buttonText={<FormattedMessage id="unit.more.reservations" values={{ count: reservations.length }} />}
         showMoreOnClick={listLength

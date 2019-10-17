@@ -40,7 +40,7 @@ const Events = ({
       <>
         <TitledList
           title={<FormattedMessage id="unit.events" />}
-          titleComponent="h3"
+          titleComponent="h4"
           listLength={listLength}
           buttonText={<FormattedMessage id="unit.more.events" values={{ count: events.length }} />}
           showMoreOnClick={listLength
