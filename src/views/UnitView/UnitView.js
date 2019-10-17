@@ -149,6 +149,7 @@ class UnitView extends React.Component {
         {/* View Components */}
         <Highlights unit={unit} getLocaleText={getLocaleText} />
         <ContactInfo unit={unit} />
+        <Description unit={unit} getLocaleText={getLocaleText} />
         <ElectronicServices unit={unit} />
         <Reservations
           listLength={10}
@@ -188,7 +189,6 @@ class UnitView extends React.Component {
 
     return (
       <>
-        <Description unit={unit} getLocaleText={getLocaleText} />
         <Services
           listLength={10}
           unit={unit}
