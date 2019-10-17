@@ -8,13 +8,17 @@ import { mapOptions } from './config/mapConfig';
 import CreateMap from './utils/createMap';
 import swapCoordinates from './utils/swapCoordinates';
 import UnitMarkers from './components/UnitMarkers';
+import { focusUnit } from './utils/mapActions';
 import styles from './styles';
 import Districts from './components/Districts';
 import TransitStops from './components/TransitStops';
 import AddressPopup from './components/AddressPopup';
+import LocationButton from './components/LocationButton';
 import SearchBar from '../../components/SearchBar';
 import TitleBar from '../../components/TitleBar';
 import config from '../../../config';
+import UserMarker from './components/UserMarker';
+import fetchAddress from './utils/fetchAddress';
 import { isEmbed } from '../../utils/path';
 import AddressMarker from './components/AddressMarker';
 
@@ -38,7 +42,10 @@ const MapView = (props) => {
     setMapRef,
     navigator,
     match,
+    findUserLocation,
+    userLocation,
   } = props;
+
 
   const mapRef = useRef(null);
 
@@ -125,20 +132,42 @@ const MapView = (props) => {
 
   const initializeLeaflet = () => {
     // The leaflet map works only client-side so it needs to be imported here
-    const leaflet = require('react-leaflet');
     const {
       Map, TileLayer, ZoomControl, Marker, Popup, Polygon, Polyline, Tooltip,
-    } = leaflet;
+    } = require('react-leaflet');
 
     setLeaflet({
       Map, TileLayer, ZoomControl, Marker, Popup, Polygon, Polyline, Tooltip,
     });
   };
 
+  const focusOnUser = () => {
+    if (userLocation) {
+      focusUnit(
+        mapRef.current.leafletElement,
+        [userLocation.longitude, userLocation.latitude],
+      );
+    } else {
+      findUserLocation();
+    }
+  };
+
+  const navigateToAddress = (latLng) => {
+    fetchAddress(latLng)
+      .then((data) => {
+        navigator.push('address', {
+          municipality: data.street.municipality,
+          street: getLocaleText(data.street.name),
+          number: data.number,
+        });
+      });
+  };
+
 
   useEffect(() => { // On map mount
     initializeLeaflet();
     initializeMap();
+    findUserLocation();
   }, []);
 
   useEffect(() => { // Set map ref to redux once map is rendered
@@ -184,6 +213,7 @@ const MapView = (props) => {
           ref={mapRef}
           keyboard={false}
           zoomControl={false}
+          doubleClickZoom={false}
           crs={mapObject.crs}
           center={center}
           zoom={zoom}
@@ -247,7 +277,23 @@ const MapView = (props) => {
             />
           )}
 
+          {userLocation && (
+            <UserMarker
+              position={[userLocation.latitude, userLocation.longitude]}
+              classes={classes}
+              onClick={() => {
+                navigateToAddress({ lat: userLocation.latitude, lng: userLocation.longitude });
+              }}
+            />
+          )}
+
           <ZoomControl position="bottomright" aria-hidden="true" />
+          <LocationButton
+            disabled={!userLocation}
+            classes={classes}
+            position="bottomright"
+            handleClick={userLocation ? focusOnUser : null}
+          />
         </Map>
       </>
     );
@@ -272,10 +318,12 @@ MapView.propTypes = {
   navigator: PropTypes.objectOf(PropTypes.any),
   serviceUnits: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
   setAddressLocation: PropTypes.func.isRequired,
+  findUserLocation: PropTypes.func.isRequired,
   setMapRef: PropTypes.func.isRequired,
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
   unitList: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
   unitsLoading: PropTypes.bool,
+  userLocation: PropTypes.objectOf(PropTypes.any),
 };
 
 MapView.defaultProps = {
@@ -288,4 +336,5 @@ MapView.defaultProps = {
   serviceUnits: null,
   unitList: null,
   unitsLoading: false,
+  userLocation: null,
 };

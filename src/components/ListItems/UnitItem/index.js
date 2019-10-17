@@ -8,11 +8,12 @@ import { changeSelectedUnit } from '../../../redux/actions/selectedUnit';
 // Listen to redux state
 const mapStateToProps = (state) => {
   const getLocaleText = textObject => getLocaleString(state, textObject);
-  const { navigator, settings } = state;
+  const { navigator, settings, user } = state;
   return {
     getLocaleText,
     navigator,
     settings,
+    userLocation: user.position,
   };
 };
 

@@ -93,6 +93,8 @@ export default {
   'general.save.changes': 'Save changes', // TODO: Translate
   'general.save.changes.done': 'Changes have been saved!', // TODO: Translate
   'general.save.confirmation': 'Would you like to save changes?', // TODO: Translate
+  'general.distance.meters': 'Metrin päässä', // TODO: Translate
+  'general.distance.kilometers': 'Kilometrin päässä', // TODO: Translate
 
   // Home
   'home.example.title': 'Esimerkkihakuja', // TODO: Translate
