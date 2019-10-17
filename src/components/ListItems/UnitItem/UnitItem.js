@@ -67,7 +67,7 @@ class UnitItem extends React.Component {
     const accessColor = accessData.color;
 
     // Distance
-    let distance = calculateDistance(unit, userLocation, intl);
+    let distance = calculateDistance(unit, userLocation);
     if (distance) {
       if (distance >= 1000) {
         distance /= 1000; // Convert from m to km
