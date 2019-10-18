@@ -13,6 +13,11 @@ export const setPage = page => ({
   page,
 });
 
+export const setUserPosition = position => ({
+  type: 'SET_POSITION',
+  position,
+});
+
 
 export const changeLocaleAction = locale => async (dispatch) => {
   dispatch(setLocale(locale));
@@ -24,6 +29,22 @@ export const actionSetInitialLoad = () => async (dispatch) => {
 
 export const setCurrentPage = page => async (dispatch) => {
   dispatch(setPage(page));
+};
+
+export const findUserLocation = () => async (dispatch) => {
+  const success = (position) => {
+    if (position.coords.accuracy < 10000) {
+      dispatch(setUserPosition(position.coords));
+    } else {
+      console.warn(`Position accuracy: ${position.coords.accuracy}. Max accuracy: 10000`);
+    }
+  };
+
+  const error = (err) => {
+    console.warn(`GeoLocation error:(${err.code}): ${err.message}`);
+  };
+
+  navigator.geolocation.getCurrentPosition(success, error);
 };
 
 

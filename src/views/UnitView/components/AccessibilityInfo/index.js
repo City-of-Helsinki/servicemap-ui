@@ -6,7 +6,7 @@ import styles from './styles';
 
 const mapStateToProps = (state) => {
   const { selectedUnit, settings } = state;
-  const { data } = selectedUnit;
+  const { data } = selectedUnit.unit;
   const getLocaleText = textObject => getLocaleString(state, textObject);
   return {
     getLocaleText,

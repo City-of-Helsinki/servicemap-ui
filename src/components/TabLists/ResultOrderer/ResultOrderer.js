@@ -42,7 +42,12 @@ class ResultOrderer extends React.Component {
     return (
       <form className={classes.root} autoComplete="off">
         <FormControl className={classes.formControl}>
-          <InputLabel style={{ color: 'inherit' }} htmlFor="result-sorter"><FormattedMessage id="sorting.label" /></InputLabel>
+          <InputLabel
+            className={classes.inputLabel}
+            htmlFor="result-sorter"
+          >
+            <FormattedMessage id="sorting.label" />
+          </InputLabel>
           <Select
             disabled={disabled}
             className={classes.select}

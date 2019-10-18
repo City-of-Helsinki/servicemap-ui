@@ -14,13 +14,13 @@ import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponen
 class TopBar extends React.Component {
   renderSettingsButton = () => {
     const { settingsOpen, toggleSettings, classes } = this.props;
+    const combinedClassName = `${classes.button}${settingsOpen ? ` ${classes.buttonSettings}` : ''}`;
     return (
       <Button
         id="SettingsButton"
         aria-pressed={settingsOpen}
-        className={classes.button}
+        className={combinedClassName}
         classes={{ label: classes.buttonLabel }}
-        style={settingsOpen ? { backgroundColor: '#4e67d2' } : null}
         color="inherit"
         onClick={(e) => {
           e.preventDefault();
@@ -38,7 +38,7 @@ class TopBar extends React.Component {
           }, 1);
         }}
       >
-        <AccessibilityNew style={{ marginRight: 8 }} />
+        <AccessibilityNew className={classes.buttonSettingsIcon} />
         <Typography color="inherit" variant="body2">
           <FormattedMessage id="settings" />
         </Typography>
@@ -55,7 +55,7 @@ class TopBar extends React.Component {
       <AppBar className={classes.desktopNav}>
         <Toolbar className={classes.toolbar}>
           <div style={topNav} className={classes.topNavLeft}>
-            <div style={{ flex: '1 0 auto', display: 'flex' }}>
+            <div className={classes.logoContainer}>
               {/* Jump link to main content for screenreaders
                   Must be first interactable element on page */}
               <a id="site-title" href="#view-title" className="sr-only">
@@ -65,7 +65,7 @@ class TopBar extends React.Component {
               </a>
 
               {/* Home logo link to home view */}
-              <a href={generatePath('home', lng)} style={{ alignSelf: 'center' }} className="focus-dark-background">
+              <a href={generatePath('home', lng)} className={`focus-dark-background ${classes.logoHomeLink}`}>
                 <HomeLogo aria-hidden="true" className={classes.logo} />
                 <Typography className="sr-only app-title" color="inherit" component="h1" variant="body1">
                   <FormattedMessage id="app.title" />
@@ -77,8 +77,8 @@ class TopBar extends React.Component {
 
           </div>
           <div className={classes.topNavRight}>
-            <a href="https://forms.gle/roe9XNrZGQWBhMBJ7" rel="noopener noreferrer" target="_blank" style={{ display: 'inline-block' }}>
-              <p style={{ margin: 0, color: 'white', textDecorationColor: 'white' }}>
+            <a href="https://forms.gle/roe9XNrZGQWBhMBJ7" rel="noopener noreferrer" target="_blank" className={classes.feedbackLink}>
+              <p className={classes.feedbackText}>
                 <FormattedMessage id="general.give.feedback" />
               </p>
             </a>
@@ -93,6 +93,7 @@ class TopBar extends React.Component {
       classes, location, navigator, settingsOpen, toggleSettings,
     } = this.props;
     const mapPage = location.pathname.indexOf('/map') > -1;
+    const mapButtonClass = `${classes.button} ${mapPage && !settingsOpen ? classes.buttonMap : ''}`;
 
     if (location.pathname.length < 5 || location.pathname.indexOf('/map') > -1) {
       return (
@@ -101,7 +102,7 @@ class TopBar extends React.Component {
 
             <div className={classes.topNavLeftMobile}>
               {/* TODO: remove this inline style once we get the correct icon */}
-              <div style={{ paddingTop: 8, alignSelf: 'center' }}>
+              <div className={classes.homeLogoContainer}>
                 <HomeLogo mobile aria-hidden="true" className={classes.logo} />
               </div>
               {this.renderLanguages()}
@@ -111,9 +112,8 @@ class TopBar extends React.Component {
               {this.renderSettingsButton()}
               {/* Map button */}
               <Button
-                className={classes.button}
+                className={mapButtonClass}
                 classes={{ label: classes.buttonLabel }}
-                style={mapPage && !settingsOpen ? { backgroundColor: '#4e67d2' } : null}
                 color="inherit"
                 onClick={(e) => {
                   e.preventDefault();
@@ -159,7 +159,7 @@ class TopBar extends React.Component {
                 window.location = `${newLocation.pathname}${newLocation.search}`;
               }}
             >
-              <Typography color="inherit" variant="body2" style={{ textTransform: 'none' }}>
+              <Typography color="inherit" variant="body2" className={classes.noTextTransform}>
                 {i18n.localeText(locale)}
               </Typography>
             </Button>

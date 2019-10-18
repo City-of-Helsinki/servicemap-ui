@@ -48,8 +48,8 @@ class TransitStops extends React.Component {
 
   // Check if transit stops should be shown
   showTransitStops = () => {
-    const { isMobile, mapType, map } = this.props;
-    const transitZoom = isMobile ? mapType.options.mobileTransitZoom : mapType.options.transitZoom;
+    const { isMobile, mapObject, map } = this.props;
+    const transitZoom = isMobile ? mapObject.options.mobileTransitZoom : mapObject.options.transitZoom;
     const currentZoom = map.leafletElement.getZoom();
     return currentZoom >= transitZoom;
   }
@@ -115,7 +115,7 @@ TransitStops.propTypes = {
   Marker: PropTypes.objectOf(PropTypes.any).isRequired,
   Popup: PropTypes.objectOf(PropTypes.any).isRequired,
   map: PropTypes.objectOf(PropTypes.any).isRequired,
-  mapType: PropTypes.objectOf(PropTypes.any).isRequired,
+  mapObject: PropTypes.objectOf(PropTypes.any).isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   isMobile: PropTypes.bool,
 };

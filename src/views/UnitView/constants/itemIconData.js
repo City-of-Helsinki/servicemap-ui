@@ -2,6 +2,7 @@ import React from 'react';
 import OpenLinkIcon from '@material-ui/icons/OpenInNew';
 import AddressIcon from '@material-ui/icons/LocationOn';
 import PhoneIcon from '@material-ui/icons/Phone';
+import EmailIcon from '@material-ui/icons/Email';
 import HoursIcon from '@material-ui/icons/AccessTime';
 import PersonIcon from '@material-ui/icons/Person';
 import ServiceIcon from '@material-ui/icons/Reorder';
@@ -17,6 +18,8 @@ const getItemIconData = (type, data) => {
     return <HoursIcon />;
   } if (type === 'PHONE') {
     return <PhoneIcon />;
+  } if (type === 'EMAIL') {
+    return <EmailIcon />;
   } if (type === 'PHONE_OR_EMAIL') {
     return <PersonIcon />;
   } if (type === 'SERVICE') {

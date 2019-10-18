@@ -1,7 +1,5 @@
-import config from '../../../../config';
-
-// The maximum bounds of the map
-const mapBounds = {
+// The default maximum bounds of the map
+const defaultMapBounds = {
   maxLat: 60.68260671624568,
   maxLng: 26.05329875808676,
   minLat: 59.695219623662894,
@@ -9,19 +7,19 @@ const mapBounds = {
 };
 
 const mapOptions = {
-  initialPosition: config.initialMapPosition,
-  maxBounds: [
-    [mapBounds.maxLat, mapBounds.minLng],
-    [mapBounds.maxLat, mapBounds.maxLng],
-    [mapBounds.minLat, mapBounds.maxLng],
-    [mapBounds.minLat, mapBounds.minLng],
+  initialPosition: [60.171631597530016, 24.906860323934886],
+  defaultMaxBounds: [
+    [defaultMapBounds.maxLat, defaultMapBounds.minLng],
+    [defaultMapBounds.maxLat, defaultMapBounds.maxLng],
+    [defaultMapBounds.minLat, defaultMapBounds.maxLng],
+    [defaultMapBounds.minLat, defaultMapBounds.minLng],
   ],
   // Make district polygon bounds slightly larger than max bounds, so the polygon borders are hidden
   polygonBounds: [
-    [mapBounds.maxLat + 10, mapBounds.minLng - 10],
-    [mapBounds.maxLat + 10, mapBounds.maxLng + 10],
-    [mapBounds.minLat - 10, mapBounds.maxLng + 10],
-    [mapBounds.minLat - 10, mapBounds.minLng - 10],
+    [defaultMapBounds.maxLat + 10, defaultMapBounds.minLng - 10],
+    [defaultMapBounds.maxLat + 10, defaultMapBounds.maxLng + 10],
+    [defaultMapBounds.minLat - 10, defaultMapBounds.maxLng + 10],
+    [defaultMapBounds.minLat - 10, defaultMapBounds.minLng - 10],
   ],
 };
 
@@ -59,12 +57,18 @@ const mapTypes = {
     layer: tileLayers.gk25,
     // TODO: maybe have map names and formats as variables from the URL, like in the old version
     url: 'https://kartta.hsy.fi/geoserver/gwc/service/wmts?layer=taustakartat_ja_aluejaot:Ortoilmakuva_2017&tilematrixset=ETRS-GK25&Service=WMTS&Request=GetTile&Version=1.0.0&TileMatrix=ETRS-GK25:{z}&TileCol={x}&TileRow={y}&Format=image/jpeg',
-    minZoom: 2,
+    minZoom: 3,
     maxZoom: 10,
     zoom: 5,
     mobileZoom: 4,
     transitZoom: 9,
     mobileTransitZoom: 8,
+    mapBounds: [
+      [60.590720832407364, 25.390521218333532],
+      [60.590720832407364, 24.276736721022225],
+      [59.8994284703215, 24.276736721022225],
+      [59.8994284703215, 25.390521218333532],
+    ],
   },
   guideMap: {
     name: 'guideMap',
@@ -77,13 +81,21 @@ const mapTypes = {
     mobileZoom: 4,
     transitZoom: 9,
     mobileTransitZoom: 8,
+    mapBounds: [
+      [60.402200415095926, 25.271114398151653],
+      [60.402200415095926, 24.49246149510767],
+      [60.00855312110063, 24.49246149510767],
+      [60.00855312110063, 25.271114398151653],
+    ],
   },
 };
 
 const transitIconSize = 30;
+const userIconSize = 50;
 
 export {
   mapOptions,
   mapTypes,
   transitIconSize,
+  userIconSize,
 };

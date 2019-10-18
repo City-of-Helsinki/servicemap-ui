@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { intlShape } from 'react-intl';
 import {
   ListItem, ListItemIcon, Typography, Divider,
 } from '@material-ui/core';
@@ -13,17 +14,25 @@ const ResultItem = ({
   icon,
   subtitle,
   title,
-  distancePosition,
+  distance,
   divider,
   role,
   srLabel,
+  intl,
 }) => {
-  // Distance text
-  // TODO: Change to check data for distance once location info is available
-  const distance = distancePosition; // '100';
-
   // Screen reader text
-  const srText = `${title || ''} ${subtitle || ''} ${distance ? `${distance} metrin päässä` : ''} ${bottomRightText || ''} ${srLabel || ''}`;
+  const srText = `
+    ${title || ''} 
+    ${subtitle || ''} 
+    ${distance
+    ? `${distance.distance} ${distance.type === 'm'
+      ? intl.formatMessage({ id: 'general.distance.meters' })
+      : intl.formatMessage({ id: 'general.distance.kilometers' })}`
+    : ''} 
+    ${bottomRightText || ''} 
+    ${srLabel || ''}
+  `;
+
   const bottomRightStyles = { color: bottomRightColor };
 
   return (
@@ -83,8 +92,8 @@ const ResultItem = ({
                     component="p"
                     aria-hidden="true"
                   >
-                    {distance}
-                    m
+                    {distance.distance}
+                    {distance.type}
                   </Typography>
                 </div>
               )
@@ -154,10 +163,11 @@ ResultItem.propTypes = {
   onClick: PropTypes.func,
   subtitle: PropTypes.string,
   title: PropTypes.string.isRequired,
-  distancePosition: PropTypes.objectOf(PropTypes.any),
+  distance: PropTypes.objectOf(PropTypes.any),
   divider: PropTypes.bool,
   role: PropTypes.string,
   srLabel: PropTypes.string,
+  intl: intlShape.isRequired,
 };
 
 ResultItem.defaultProps = {
@@ -167,7 +177,7 @@ ResultItem.defaultProps = {
   icon: null,
   onClick: () => {},
   subtitle: null,
-  distancePosition: null,
+  distance: null,
   divider: true,
   role: null,
   srLabel: null,

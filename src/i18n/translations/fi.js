@@ -94,6 +94,8 @@ export default {
   'general.save.changes': 'Tallenna muutokset',
   'general.save.changes.done': 'Muutokset tallennettu!',
   'general.save.confirmation': 'Haluatko tallentaa muutokset?',
+  'general.distance.meters': 'Metrin päässä',
+  'general.distance.kilometers': 'Kilometrin päässä',
 
   // Home
   'home.example.title': 'Esimerkkihakuja',
@@ -117,6 +119,7 @@ export default {
                                     one {# esteettömyyspuute}
                                     other {# esteettömyyspuutetta}
                                   }`,
+  'unit.accessibility.unitNoInfo': 'Toimipiste ei ole toimittanut esteettömyystietoja.',
   'unit.basicInfo': 'Perustiedot',
   'unit.data_source': 'Lähde: {data_source}', // TODO: Translate
   'unit.details.notFound': 'Toimipisteen tietoja ei saatavilla.',
@@ -132,6 +135,7 @@ export default {
   'unit.description': 'Tietoa toimipisteestä',
   'unit.address': 'Osoite',
   'unit.phone': 'Puhelinnumero',
+  'unit.email': 'Sähköpostiosoite',
   'unit.opening.hours': 'Aukioloajat',
   'unit.opening.hours.info': 'Lisätietoa aukioloajoista',
   'unit.contact': 'Yhteyshenkilö',
@@ -201,6 +205,10 @@ export default {
   'settings.mobility.reduced_mobility': 'Olen liikkumisesteinen',
   'settings.mobility.rollator': 'Käytän rollaattoria',
   'settings.mobility.stroller': 'Työnnän rattaita',
+  'settings.map.title': 'Karttapohja',
+  'settings.map.servicemap': 'Palvelukartta',
+  'settings.map.ortoImage': 'Ilmakuva',
+  'settings.map.guideMap': 'Opaskartta',
   'settings.aria.changed': 'Asetukset muutettu. Muista tallentaa',
   'settings.aria.closed': 'Asetukset suljettu',
   'settings.aria.open': 'Avaa asetukset',

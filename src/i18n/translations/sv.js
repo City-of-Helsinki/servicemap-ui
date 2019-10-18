@@ -93,6 +93,8 @@ export default {
   'general.save.changes': 'Save changes', // TODO: Translate
   'general.save.changes.done': 'Changes have been saved!', // TODO: Translate
   'general.save.confirmation': 'Would you like to save changes?', // TODO: Translate
+  'general.distance.meters': 'Metrin päässä', // TODO: Translate
+  'general.distance.kilometers': 'Kilometrin päässä', // TODO: Translate
 
   // Home
   'home.example.title': 'Esimerkkihakuja', // TODO: Translate
@@ -116,6 +118,7 @@ export default {
                                     one {# brist}
                                     other {# brister}
                                   }`, // TODO: Verify
+  'unit.accessibility.unitNoInfo': 'Unit has not delivered any accessibility information.', // TODO: translate
   'unit.basicInfo': 'Perustiedot', // TODO: Translate
   'unit.details.notFound': 'Unit info not found', // TODO: Translate
   'unit.data_source': 'Källa: {data_source}',
@@ -131,6 +134,7 @@ export default {
   'unit.description': 'Unit description', // TODO: Translate
   'unit.address': 'Osoite', // TODO: Translate
   'unit.phone': 'Phone number', // TODO: Translate
+  'unit.email': 'Sähköpostiosoite', // TODO: Translate
   'unit.opening.hours': 'Opening hours', // TODO: Translate
   'unit.opening.hours.info': 'Lisätietoa aukioloajoista', // TODO: Translate
   'unit.contact': 'Yhteyshenkilö', // TODO: translate
@@ -201,6 +205,10 @@ export default {
   'settings.mobility.reduced_mobility': 'Jag är rörelsehindrad',
   'settings.mobility.rollator': 'Jag använder rollator',
   'settings.mobility.stroller': 'Jag går med barnvagn',
+  'settings.map.title': 'Karta',
+  'settings.map.servicemap': 'Servicekarta',
+  'settings.map.ortoImage': 'Flygbild',
+  'settings.map.guideMap': 'Guidekarta',
   'settings.aria.changed': 'Settings have changed. Remember to save', // TODO: Translate
   'settings.aria.closed': 'Settings closed', // TODO: Translate
   'settings.aria.open': 'Open settings', // TODO: Translate

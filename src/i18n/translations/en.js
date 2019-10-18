@@ -95,6 +95,8 @@ export default {
   'general.save.changes': 'Save changes',
   'general.save.changes.done': 'Changes have been saved!',
   'general.save.confirmation': 'Would you like to save changes?',
+  'general.distance.meters': 'Meters away',
+  'general.distance.kilometers': 'Kilometers away',
 
   // Home
   'home.example.title': 'Example search phrases',
@@ -118,6 +120,7 @@ export default {
                                     one {# accessibility shortcoming}
                                     other {# accessibility shortcomings}
                                   }`, // TODO: verify
+  'unit.accessibility.unitNoInfo': 'Unit has not delivered any accessibility information.', // TODO: verify
   'unit.basicInfo': 'Information',
   'unit.data_source': 'Source: {data_source}',
   'unit.details.notFound': 'Unit info not found.',
@@ -133,6 +136,7 @@ export default {
   'unit.description': 'Unit description',
   'unit.address': 'Address',
   'unit.phone': 'Phone number',
+  'unit.email': 'Email',
   'unit.opening.hours': 'Opening hours',
   'unit.opening.hours.info': 'Additional information about opening hours', // TODO verify
   'unit.contact': 'Contact person',
@@ -203,6 +207,10 @@ export default {
   'settings.mobility.reduced_mobility': 'I have reduced mobility',
   'settings.mobility.rollator': 'I use a rollator',
   'settings.mobility.stroller': 'I push a stroller',
+  'settings.map.title': 'Background map',
+  'settings.map.servicemap': 'Service map',
+  'settings.map.ortoImage': 'Aerial view',
+  'settings.map.guideMap': 'Guide map',
   'settings.aria.changed': 'Settings have changed. Remember to save',
   'settings.aria.closed': 'Settings closed',
   'settings.aria.open': 'Open settings',
