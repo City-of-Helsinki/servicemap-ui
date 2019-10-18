@@ -7,6 +7,7 @@ import MapView from '../views/MapView';
 import PageHandler from '../views/components/PageHandler';
 import UnitFetcher from '../components/DataFetchers/UnitFetcher';
 import AddressView from '../views/AddressView';
+import EventDetailView from '../views/EventDetailView';
 
 const createContentStyles = (
   isSmallScreen, landscape, mobileMapOnly, fullMobileMap, settingsOpen,
@@ -59,6 +60,15 @@ const EmbedLayout = () => {
                 <>
                   <PageHandler page="unit" />
                   <UnitFetcher />
+                </>
+              )}
+            />
+            <Route
+              path="*/embed/event/:event"
+              render={() => (
+                <>
+                  <PageHandler page="event" />
+                  <EventDetailView embed />
                 </>
               )}
             />
