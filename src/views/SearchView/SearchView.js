@@ -376,9 +376,12 @@ class SearchView extends React.Component {
 
   render() {
     const {
-      classes, isFetching, intl, count, max,
+      classes, embed, isFetching, intl, count, max,
     } = this.props;
     const { expandSearch } = this.state;
+    if (embed) {
+      return null;
+    }
     const progress = (isFetching && count) ? Math.floor((count / max * 100)) : 0;
 
     const redirect = this.handleSingleResultRedirect();
@@ -434,6 +437,7 @@ SearchView.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   changeSelectedUnit: PropTypes.func,
   count: PropTypes.number,
+  embed: PropTypes.bool,
   fetchUnits: PropTypes.func,
   intl: intlShape.isRequired,
   isFetching: PropTypes.bool,
@@ -450,6 +454,7 @@ SearchView.propTypes = {
 SearchView.defaultProps = {
   changeSelectedUnit: () => {},
   count: 0,
+  embed: false,
   fetchUnits: () => {},
   isFetching: false,
   max: 0,

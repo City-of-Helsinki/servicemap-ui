@@ -34,14 +34,16 @@ class UnitMarkers extends React.Component {
                 position={[unit.location.coordinates[1], unit.location.coordinates[0]]}
                 icon={drawMarkerIcon(unit, settings)}
                 onClick={() => {
-                  if (navigator && !embeded) {
+                  if (navigator) {
                     navigator.push('unit', { id: unit.id });
                   }
                 }}
                 keyboard={false}
               >
                 {
+                  // Show tooltip if showing single unit in embeded mode
                   embeded
+                  && unitListFiltered.length === 1
                   && (
                     <Tooltip
                       className={classes.unitTooltip}

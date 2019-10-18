@@ -8,6 +8,7 @@ import PageHandler from '../views/components/PageHandler';
 import UnitFetcher from '../components/DataFetchers/UnitFetcher';
 import AddressView from '../views/AddressView';
 import EventDetailView from '../views/EventDetailView';
+import SearchView from '../views/SearchView';
 
 const createContentStyles = (
   isSmallScreen, landscape, mobileMapOnly, fullMobileMap, settingsOpen,
@@ -69,6 +70,15 @@ const EmbedLayout = () => {
                 <>
                   <PageHandler page="event" />
                   <EventDetailView embed />
+                </>
+              )}
+            />
+            <Route
+              path="*/embed/search"
+              render={() => (
+                <>
+                  <PageHandler page="search" />
+                  <SearchView embed />
                 </>
               )}
             />
