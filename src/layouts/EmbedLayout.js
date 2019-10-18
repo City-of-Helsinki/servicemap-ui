@@ -5,10 +5,10 @@ import {
 } from 'react-router-dom';
 import MapView from '../views/MapView';
 import PageHandler from '../views/components/PageHandler';
-import UnitFetcher from '../components/DataFetchers/UnitFetcher';
 import AddressView from '../views/AddressView';
 import EventDetailView from '../views/EventDetailView';
 import SearchView from '../views/SearchView';
+import UnitView from '../views/UnitView';
 
 const createContentStyles = (
   isSmallScreen, landscape, mobileMapOnly, fullMobileMap, settingsOpen,
@@ -60,7 +60,7 @@ const EmbedLayout = () => {
               render={() => (
                 <>
                   <PageHandler page="unit" />
-                  <UnitFetcher />
+                  <UnitView embed />
                 </>
               )}
             />

@@ -215,8 +215,19 @@ class UnitView extends React.Component {
 
   render() {
     const {
-      classes, getLocaleText, intl, unit, match, unitFetching,
+      classes,
+      embed,
+      getLocaleText,
+      intl,
+      unit,
+      match,
+      unitFetching,
     } = this.props;
+
+    if (embed) {
+      return null;
+    }
+
     const { didMount } = this.state;
 
     const correctUnit = unit && unit.id === parseInt(match.params.unit, 10);
@@ -359,6 +370,7 @@ export default withRouter(injectIntl(withStyles(styles)(connect(
 UnitView.propTypes = {
   accessibilitySentences: PropTypes.objectOf(PropTypes.any),
   unit: PropTypes.objectOf(PropTypes.any),
+  embed: PropTypes.bool,
   eventsData: PropTypes.objectOf(PropTypes.any),
   map: PropTypes.objectOf(PropTypes.any),
   fetchAccessibilitySentences: PropTypes.func.isRequired,
@@ -377,8 +389,9 @@ UnitView.propTypes = {
 
 UnitView.defaultProps = {
   accessibilitySentences: null,
-  unit: null,
+  embed: false,
   eventsData: { events: null, unit: null },
+  unit: null,
   match: {},
   map: null,
   navigator: null,
