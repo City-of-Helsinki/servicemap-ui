@@ -136,6 +136,7 @@ export default {
   'unit.description': 'Unit description',
   'unit.address': 'Address',
   'unit.phone': 'Phone number',
+  'unit.email': 'Email',
   'unit.opening.hours': 'Opening hours',
   'unit.opening.hours.info': 'Additional information about opening hours', // TODO verify
   'unit.contact': 'Contact person',

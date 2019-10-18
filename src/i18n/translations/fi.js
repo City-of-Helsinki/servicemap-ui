@@ -135,6 +135,7 @@ export default {
   'unit.description': 'Tietoa toimipisteestä',
   'unit.address': 'Osoite',
   'unit.phone': 'Puhelinnumero',
+  'unit.email': 'Sähköpostiosoite',
   'unit.opening.hours': 'Aukioloajat',
   'unit.opening.hours.info': 'Lisätietoa aukioloajoista',
   'unit.contact': 'Yhteyshenkilö',

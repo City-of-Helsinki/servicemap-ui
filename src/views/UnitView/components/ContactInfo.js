@@ -8,6 +8,7 @@ const ContactInfo = ({ unit }) => {
   const address = unit.street_address && { type: 'ADDRESS', value: unit.street_address };
   const hours = unitSectionFilter(unit.connections, 'OPENING_HOURS');
   const phone = unit.phone && { type: 'PHONE', value: { phone: unit.phone } };
+  const email = unit.email && { type: 'EMAIL', value: { email: unit.email } };
   const contact = unitSectionFilter(unit.connections, 'PHONE_OR_EMAIL');
 
   const data = [];
@@ -17,6 +18,8 @@ const ContactInfo = ({ unit }) => {
     data.push(...hours);
   } if (phone) {
     data.push(phone);
+  } if (email) {
+    data.push(email);
   } if (contact.length > 0) {
     data.push(...contact);
   }
