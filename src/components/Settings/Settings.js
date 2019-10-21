@@ -14,7 +14,9 @@ import {
   Radio,
   FormLabel,
   FormControl,
+  IconButton,
 } from '@material-ui/core';
+import { Close } from '@material-ui/icons';
 import isClient, { AddEventListener } from '../../utils';
 import SettingsUtility from '../../utils/settings';
 import Container from '../Container';
@@ -518,17 +520,15 @@ class Settings extends React.Component {
     return (
       <Container aria-hidden="true" className={containerClasses} paper>
         <Typography color="inherit" className={typographyClasses}><FormattedMessage id="general.save.changes.done" /></Typography>
-        <Button
+        <IconButton
           aria-label={intl.formatMessage({ id: 'general.closeSettings' })}
           className={buttonClasses}
-          color="primary"
           onClick={() => {
             this.setAlert(false);
           }}
-          variant="text"
         >
-          <FormattedMessage id="general.close" />
-        </Button>
+          <Close />
+        </IconButton>
       </Container>
     );
   }
