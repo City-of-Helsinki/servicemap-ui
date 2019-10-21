@@ -10,7 +10,7 @@ import thunk from 'redux-thunk';
 import config from '../config';
 import rootReducer from '../src/rootReducer';
 import App from '../src/App';
-import {makeLanguageHandler} from './utils';
+import { makeLanguageHandler, languageSubdomainRedirect } from './utils';
 import { setLocale } from '../src/redux/actions/user';
 import { SheetsRegistry } from 'jss';
 import { createGenerateClassName, MuiThemeProvider } from '@material-ui/core';
@@ -46,15 +46,11 @@ app.use(`/*`, (req, res, next) => {
   const store = createStore(rootReducer, applyMiddleware(thunk));
   req._context = store;
   next();
-})
+});
+app.use('/', languageSubdomainRedirect);
+app.use(`/`, makeLanguageHandler);
 app.use(paths.event.regex, fetchEventData);
 app.use(paths.unit.regex, fetchSelectedUnitData);
-app.get(`/*`, makeLanguageHandler);
-
-// Redirect root to finnish site
-app.get('/', (req, res) => {
-  res.redirect('/fi/');
-});
 
 app.get('/*', (req, res, next) => {
   // CSS for all rendered React components

@@ -1,42 +1,37 @@
-import I18n from '../src/i18n';
-
-const allowedUrls = [
-  /^\/.{2,}\/$/,
-  /^\/.{2,}\/unit\/\d+$/,
-  /^\/.{2,}\/unit\/\d+\/events$/,
-  /^\/.{2,}\/unit$/,
-  /^\/.{2,}\/search$/,
-  /^\/.{2,}\/address\/[^\/]+\/[^\/]+\/[^\/]+$/,
-  /^\/.{2,}\/division\/[^\/]+\/[^\/]+$/,
-  /^\/.{2,}\/division$/,
-  /^\/.{2,}\/area$/,
-  /^\/d+\/events$/,
-];
-
+const isValidLanguage = (path) => {
+  if(!path) {
+    return false;
+  }
+  const hasLanguage = path.match(/^\/(fi|se|en)/);
+  return hasLanguage && hasLanguage.index === 0;
+}
 // Handle language change
 export const makeLanguageHandler = (req, res, next) => {
-  // Check if request url is actual path
-  let match = false;
-  allowedUrls.forEach((url) => {
-    if (!match && req.path.match(url)) {
-      match = true;
-    }
-  });
 
-  if(!match) {
+  if(isValidLanguage(req.path)) {
     next();
     return;
   }
-
-  // Handle language check and redirect if language is changed to default
-  const i18n = new I18n();
-  const pathArray = req.url.split('/');
-  if (!i18n.isValidLocale(pathArray[1])) {
-    pathArray[1] = i18n.locale;
-    res.redirect(pathArray.join('/'));
-    return;
-  }
-
-  next();
+  res.redirect('/fi/');
   return;
 };
+
+// Redirect old language based domains to correct language
+export const languageSubdomainRedirect = (req, res, next) => {
+  if (!isValidLanguage(req.path) && req.subdomains.length === 1) {
+    if (req.subdomains[0].match(/^servicemap/)) {
+      const pathArray = req.url.split('/');
+      pathArray.splice(1, 0, 'en');
+      res.redirect(pathArray.join('/'));
+      return;
+    }
+    if (req.subdomains[0].match(/^servicekarta/)) {
+      const pathArray = req.url.split('/');
+      pathArray.splice(1, 0, 'se');
+      res.redirect(pathArray.join('/'));
+      return;
+    }
+  }
+  next();
+  return;
+}
