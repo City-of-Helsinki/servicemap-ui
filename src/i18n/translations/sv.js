@@ -109,6 +109,7 @@ export default {
 
   // Map
   'map': 'Map', // TODO: Translate
+  'map.ariaLabel': 'Karttanäkymä. Kartan tietoja voi tarkastella tällä hetkellä vain näönvaraisesti.', // TODO: translate
   'map.transit.endStation': 'Ändhållplats',
   'map.address.searching': 'Söker adress...',
   'map.address.info': 'Osoitteen tiedot', // TODO: Translate

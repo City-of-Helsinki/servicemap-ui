@@ -110,6 +110,7 @@ export default {
 
   // Map
   'map': 'Kartta',
+  'map.ariaLabel': 'Karttanäkymä. Kartan tietoja voi tarkastella tällä hetkellä vain näönvaraisesti.',
   'map.transit.endStation': 'Päätepysäkki',
   'map.address.searching': 'Haetaan osoitetta...',
   'map.address.info': 'Osoitteen tiedot',
