@@ -15,7 +15,7 @@ const ElectronicServices = ({ unit, intl }) => {
     <InfoList
       data={data}
       title={<FormattedMessage id="unit.eServices" />}
-      titleComponent="h3"
+      titleComponent="h4"
     />
   );
 };
