@@ -64,10 +64,11 @@ const SuggestionBox = (props) => {
 
       createSuggestions(query, getLocaleText, signal, cities, locale)
         .then((result) => {
+          console.log(result);
           if (result !== 'error') {
             fetchController.current = null;
-            if (result.length) {
-              setSearchQueries(result);
+            if (result.suggestions.length) {
+              setSearchQueries(result.suggestions);
               setLoading(false);
             } else {
               setSuggestionError(true);
@@ -127,11 +128,11 @@ const SuggestionBox = (props) => {
 
   const renderNoResults = () => (
     <>
-      <div className={classes.suggestionSubtitle}>
+      {/* <div className={classes.suggestionSubtitle}>
         <Typography className={classes.subtitleText} variant="overline">
           <FormattedMessage id="search.suggestions.suggest" />
         </Typography>
-      </div>
+      </div> */}
       <Typography>
         <FormattedMessage id="search.suggestions.error" />
       </Typography>
@@ -156,11 +157,12 @@ const SuggestionBox = (props) => {
         </div>
       )
         : (
-          <div className={classes.suggestionSubtitle}>
-            <Typography className={classes.subtitleText} variant="overline">
-              <FormattedMessage id={loading === 'suggestions' ? 'search.suggestions.suggest' : 'search.suggestions.expand'} />
-            </Typography>
-          </div>
+          <div />
+          // <div className={classes.suggestionSubtitle}>
+          //   <Typography className={classes.subtitleText} variant="overline">
+          //     <FormattedMessage id={loading === 'suggestions' ? 'search.suggestions.suggest' : 'search.suggestions.expand'} />
+          //   </Typography>
+          // </div>
         )
               }
       <Typography>
@@ -190,23 +192,23 @@ const SuggestionBox = (props) => {
               </IconButton>
             </div>
           )
-            : (
-              <div className={classes.suggestionSubtitle}>
-                <Typography tabIndex="-1" component="h3" className={`${classes.subtitleText} suggestionsTitle`} variant="overline">
-                  <FormattedMessage id={titleId} />
-                </Typography>
-              </div>
+            : (<div />
+          // <div className={classes.suggestionSubtitle}>
+          //   <Typography tabIndex="-1" component="h3" className={`${classes.subtitleText} suggestionsTitle`} variant="overline">
+          //     <FormattedMessage id={titleId} />
+          //   </Typography>
+          // </div>
             )
           }
           <List className="suggestionList" ref={listRef}>
             {suggestionList.map((item, i) => (
               <ResultItem
-                key={item.query}
+                key={item.suggestion}
                 icon={<Search className={classes.listIcon} />}
-                title={item.query}
+                title={item.suggestion}
                 subtitle={intl.formatMessage({ id: 'search.suggestions.results' }, { count: item.count })}
                 srLabel={intl.formatMessage({ id: 'search' })}
-                onClick={() => handleSubmit(item.query)}
+                onClick={() => handleSubmit(item.suggestion)}
                 selected={i === focusedSuggestion}
                 divider={i !== suggestionList.length - 1}
               />
@@ -294,7 +296,7 @@ const SuggestionBox = (props) => {
 
     return (
       <>
-        <Paper elevation={20} className={containerStyles}>
+        <Paper elevation={24} className={containerStyles}>
           <p className="sr-only" aria-live="polite">{srText}</p>
           {component}
         </Paper>

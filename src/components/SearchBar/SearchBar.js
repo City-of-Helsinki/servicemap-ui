@@ -97,11 +97,11 @@ class SearchBar extends React.Component {
   }
 
   handleBlur = () => {
-    const { closeExpandedSearch } = this.props;
+    /* const { closeExpandedSearch } = this.props;
     setTimeout(() => {
       this.setState({ isActive: false });
       closeExpandedSearch();
-    }, this.blurDelay);
+    }, this.blurDelay); */
   }
 
   suggestionBackEvent = () => {

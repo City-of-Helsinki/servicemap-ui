@@ -59,10 +59,12 @@ export default theme => ({
   suggestionArea: {
     zIndex: 51,
     position: 'fixed',
-    height: 'calc(100% - 64px - 76px)',
+    // height: 'calc(100% - 64px - 76px)',
+    height: '60%',
     width: '450px',
     backgroundColor: '#fff',
     overflow: 'auto',
+    borderRadius: '4px 4px 14px 14px',
   },
   suggestionAreaMobile: {
     zIndex: 51,

@@ -25,6 +25,7 @@ class PreviousSearches extends React.Component {
             {
           history.map((item, i) => (
             <SimpleListItem
+              compact
               selected={i === focusIndex}
               button
               key={item}
@@ -32,7 +33,7 @@ class PreviousSearches extends React.Component {
               role="link"
               text={item}
               handleItemClick={() => onClick(item)}
-              divider={i !== (history.length - 1)}
+              // divider={i !== (history.length - 1)}
             />
           ))
         }
@@ -51,9 +52,9 @@ class PreviousSearches extends React.Component {
     const { classes } = this.props;
     return (
       <>
-        <div className={classes.suggestionSubtitle}>
+        {/* <div className={classes.suggestionSubtitle}>
           <Typography className={classes.subtitleText} variant="overline"><FormattedMessage id="general.previousSearch" /></Typography>
-        </div>
+        </div> */}
         {this.renderList()}
       </>
     );

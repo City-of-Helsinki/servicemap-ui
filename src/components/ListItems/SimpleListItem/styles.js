@@ -3,6 +3,10 @@ export default theme => ({
     minHeight: '3.5rem',
     padding: 0,
   },
+  compactListItem: {
+    height: 50,
+    padding: 0,
+  },
   textContainer: {
     padding: 0,
     marginLeft: theme.spacing.unitDouble,

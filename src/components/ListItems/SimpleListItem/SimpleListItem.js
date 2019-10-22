@@ -7,7 +7,7 @@ import { Typography, Divider } from '@material-ui/core';
 
 const SimpleListItem = (props) => {
   const {
-    button, text, classes, link, icon, handleItemClick, role, divider, selected, srText,
+    button, text, classes, link, icon, handleItemClick, role, divider, selected, srText, compact,
   } = props;
   return (
     <React.Fragment>
@@ -17,7 +17,7 @@ const SimpleListItem = (props) => {
         component="li"
         onClick={button || link ? handleItemClick : null}
         classes={{
-          root: classes.listItem,
+          root: compact ? classes.compactListItem : classes.listItem,
         }}
         selected={selected}
       >

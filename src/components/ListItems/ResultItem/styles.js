@@ -47,4 +47,7 @@ export default theme => ({
   caption: {
     color: 'rgba(0,0,0,0.6)',
   },
+  compact: {
+    height: 20,
+  },
 });
