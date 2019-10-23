@@ -134,6 +134,12 @@ export default {
   'unit.eServices': 'Sähköinen asiointi',
   'unit.reservations': 'Varattavat kohteet',
   'unit.events': 'Toimipisteen tapahtumat',
+  'unit.events.count': `{count, plural,
+    =0 {}
+    one {# tapahtuma}
+    other {# tapahtumaa}
+  }`,
+  'unit.events.more': 'Näytä lisää tapahtumia',
   'unit.homepage': 'Kotisivu',
   'unit.picture': 'Kuva toimipisteestä: ',
   'unit.description': 'Tietoa toimipisteestä',
@@ -148,7 +154,6 @@ export default {
   'unit.call.number': '(soita)',
   'unit.more.reservations': 'Näytä kaikki {count} kohdetta',
   'unit.more.services': 'Näytä kaikki {count} palvelua',
-  'unit.more.events': 'Näytä kaikki {count} tapahtumaa',
   'unit.list.services': 'Palvelut',
   'unit.list.events': 'Tapahtumat',
   'unit.list.reservations': 'Varattavat kohteet',

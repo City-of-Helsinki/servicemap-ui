@@ -133,6 +133,13 @@ export default {
   'unit.eServices': 'Electronic services', // TODO: Translate
   'unit.reservations': 'Varattavat kohteet', // TODO: Translate
   'unit.events': 'Evenemang',
+  // TODO: Translate
+  'unit.events.count': `{count, plural,
+    =0 {}
+    one {# tapahtuma}
+    other {# tapahtumaa}
+  }`,
+  'unit.events.more': 'Näytä lisää tapahtumia', // TODO: translate
   'unit.homepage': 'Hemsida',
   'unit.picture': 'Kuva toimipisteestä: ', // TODO: Translate
   'unit.description': 'Unit description', // TODO: Translate
