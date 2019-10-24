@@ -4,6 +4,7 @@ import { injectIntl } from 'react-intl';
 import {
   toggleHearingAid,
   setMobility,
+  setMapType,
   toggleColorblind,
   toggleVisuallyImpaired,
   toggleHelsinki,
@@ -26,6 +27,7 @@ export default withStyles(styles)(connect(
   {
     toggleHearingAid,
     setMobility,
+    setMapType,
     toggleColorblind,
     toggleVisuallyImpaired,
     toggleHelsinki,

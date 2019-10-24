@@ -10,7 +10,7 @@ import expandSearch from '../expandSearch';
 import { getPreviousSearches } from '../previousSearchData';
 import PreviousSearches from '../PreviousSearches';
 import createSuggestions from '../createSuggestions';
-import ResultItem from '../../ListItems/ResultItem/ResultItem';
+import ResultItem from '../../ListItems/ResultItem';
 import config from '../../../../config';
 import { MobileComponent } from '../../../layouts/WrapperComponents/WrapperComponents';
 import ServiceMapButton from '../../ServiceMapButton';

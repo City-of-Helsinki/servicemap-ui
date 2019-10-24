@@ -7,6 +7,8 @@ import { Typography, withStyles } from '@material-ui/core';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { fetchUnitEvents } from '../../redux/actions/event';
 import { fetchSelectedUnit, changeSelectedUnit } from '../../redux/actions/selectedUnit';
+import { fetchAccessibilitySentences } from '../../redux/actions/selectedUnitAccessibility';
+import { fetchReservations } from '../../redux/actions/selectedUnitReservations';
 import { getSelectedUnit } from '../../redux/selectors/selectedUnit';
 import { getLocaleString } from '../../redux/selectors/locale';
 import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
@@ -16,7 +18,6 @@ import styles from './styles/styles';
 import TitleBar from '../../components/TitleBar';
 import Container from '../../components/Container';
 import { uppercaseFirst } from '../../utils';
-import fetchUnitReservations from './utils/fetchUnitReservations';
 import AccessibilityInfo from './components/AccessibilityInfo';
 
 import ContactInfo from './components/ContactInfo';
@@ -29,46 +30,38 @@ import Events from './components/Events';
 import ServiceMapButton from '../../components/ServiceMapButton';
 import UnitIcon from '../../components/SMIcon/UnitIcon';
 import TabLists from '../../components/TabLists';
-import config from '../../../config';
-import { accessibilitySentencesFetch } from '../../utils/fetch';
 
 class UnitView extends React.Component {
   constructor(props) {
     super(props);
 
-    this.currentId = 0;
-    this.ids = {};
-    this.supportedLanguages = config.supportedLanguages;
-
     this.state = {
       centered: false,
-      reservations: null,
       didMount: false,
+      startHeading: 3,
     };
   }
 
   componentDidMount() {
     const {
-      match, fetchSelectedUnit, unit,
+      match, fetchSelectedUnit, fetchReservations, unit, fetchAccessibilitySentences,
     } = this.props;
     const { params } = match;
 
     this.setState({
-      accessibilityInfoData: null,
       didMount: true,
     });
 
     if (params && params.unit) {
       const unitId = params.unit;
 
-      fetchUnitReservations(unitId)
-        .then(data => this.setState({ reservations: data.results }));
+      fetchReservations(unitId);
 
       if (unit && (unit.complete && unitId === `${unit.id}`)) {
-        this.fetchAccessibilitySentences();
+        fetchAccessibilitySentences(unitId);
         return;
       }
-      fetchSelectedUnit(unitId, () => this.fetchAccessibilitySentences());
+      fetchSelectedUnit(unitId, () => fetchAccessibilitySentences(unitId));
     }
   }
 
@@ -100,19 +93,6 @@ class UnitView extends React.Component {
   }
 
   /**
-   * Transform object to language locales as keys for texts
-   * @param {object} data - object with texts
-   * @param {string} base - base text for data object's key ie. ${base}_fi = content_fi
-   */
-  buildTranslatedObject(data, base) {
-    const obj = {};
-    this.supportedLanguages.forEach((lang) => {
-      obj[lang] = data[`${base}_${lang}`];
-    });
-    return obj;
-  }
-
-  /**
    * Parse accessibility sentences to more usable form
    * @param {*} data - fetched data from server
    */
@@ -140,51 +120,11 @@ class UnitView extends React.Component {
     return null;
   }
 
-  /**
-   * Generate id using content text as key
-   * @param {string} content
-   */
-  generateId(content) {
-    if (!(content in this.ids)) {
-      const id = this.currentId;
-      this.ids[content] = id;
-      this.currentId += 1;
-    }
-
-    return this.ids[content];
-  }
-
-  /**
-   * Fetch accessibility sentences from old API
-   * AccessibilitySentences are fetched in UnitView to avoid multiple fetches
-   * by AccessibilityInfo
-   */
-  async fetchAccessibilitySentences() {
-    const { unit } = this.props;
-
-    if (!unit) {
-      return;
-    }
-
-    // const url = `${BASE_URL}${unit.id}`;
-    const onSuccess = (data) => {
-      const parsedData = this.parseAccessibilitySentences(data);
-      this.setState({
-        accessibilityInfoData: parsedData,
-      });
-    };
-    const onError = (e) => {
-      throw Error('Error fetching accessibility sentences', e.message);
-    };
-
-    accessibilitySentencesFetch({}, null, onSuccess, onError, null, unit.id);
-  }
 
   renderDetailTab() {
     const {
-      getLocaleText, eventsData, navigator, unit,
+      getLocaleText, eventsData, navigator, reservations, unit,
     } = this.props;
-    const { reservations } = this.state;
 
     if (!unit || !unit.complete) {
       return <></>;
@@ -210,6 +150,7 @@ class UnitView extends React.Component {
         {/* View Components */}
         <Highlights unit={unit} getLocaleText={getLocaleText} />
         <ContactInfo unit={unit} />
+        <Description unit={unit} getLocaleText={getLocaleText} />
         <ElectronicServices unit={unit} />
         <Reservations
           listLength={10}
@@ -225,16 +166,16 @@ class UnitView extends React.Component {
 
   renderAccessibilityTab() {
     const {
+      accessibilitySentences,
       unit,
     } = this.props;
-    const { accessibilityInfoData } = this.state;
 
-    if (!unit || !unit.complete || !accessibilityInfoData) {
+    if (!unit || !unit.complete || !accessibilitySentences) {
       return <></>;
     }
 
     return (
-      <AccessibilityInfo titleAlways data={accessibilityInfoData} headingLevel={3} />
+      <AccessibilityInfo titleAlways data={accessibilitySentences} headingLevel={4} />
     );
   }
 
@@ -249,7 +190,6 @@ class UnitView extends React.Component {
 
     return (
       <>
-        <Description unit={unit} getLocaleText={getLocaleText} />
         <Services
           listLength={10}
           unit={unit}
@@ -275,9 +215,9 @@ class UnitView extends React.Component {
 
   render() {
     const {
-      classes, getLocaleText, intl, unit, eventsData, navigator, match, unitFetching,
+      classes, getLocaleText, intl, unit, match, unitFetching,
     } = this.props;
-    const { didMount, reservations } = this.state;
+    const { didMount } = this.state;
 
     const correctUnit = unit && unit.id === parseInt(match.params.unit, 10);
 
@@ -340,15 +280,24 @@ class UnitView extends React.Component {
           headerComponents={(
             <>
               {TopBar}
-
               {/* Unit image */}
-              {unit.picture_url
+              {
+                unit.picture_url
                 && (
-                <img
-                  className={classes.image}
-                  alt={`${intl.formatMessage({ id: 'unit.picture' })}${getLocaleText(unit.name)}`}
-                  src={unit.picture_url}
-                />
+
+                  <div className={classes.imageContainer}>
+                    <img
+                      className={classes.image}
+                      alt={`${intl.formatMessage({ id: 'unit.picture' })}${getLocaleText(unit.name)}`}
+                      src={unit.picture_url}
+                    />
+                    {
+                      unit.picture_caption
+                      && (
+                        <Typography variant="body2" className={classes.imageCaption}>{getLocaleText(unit.picture_caption)}</Typography>
+                      )
+                    }
+                  </div>
                 )
               }
             </>
@@ -357,76 +306,6 @@ class UnitView extends React.Component {
       );
     }
 
-    if (unit && unit.complete) {
-      return (
-        <div className={classes.root}>
-          <div className="Content">
-            {TopBar}
-
-            {/* Unit image */}
-            {unit.picture_url
-              && (
-              <img
-                className={classes.image}
-                alt={`${intl.formatMessage({ id: 'unit.picture' })}${getLocaleText(unit.name)}`}
-                src={unit.picture_url}
-              />
-              )
-            }
-
-            {/* Show on map button for mobile */}
-            <MobileComponent>
-              <ServiceMapButton
-                onClick={(e) => {
-                  e.preventDefault();
-                  this.setState({ centered: false });
-                  if (navigator) {
-                    navigator.push('unit', { id: unit.id, query: '?map=true' });
-                  }
-                }}
-              >
-                <FormattedMessage id="general.showOnMap" />
-              </ServiceMapButton>
-            </MobileComponent>
-
-            {/* View Components */}
-            <Highlights unit={unit} getLocaleText={getLocaleText} />
-            <ContactInfo unit={unit} />
-            <ElectronicServices unit={unit} />
-            <Description unit={unit} getLocaleText={getLocaleText} />
-            <Services
-              listLength={10}
-              unit={unit}
-              navigator={navigator}
-              getLocaleText={getLocaleText}
-            />
-            <Reservations
-              listLength={10}
-              unitId={unit.id}
-              reservations={reservations}
-              getLocaleText={getLocaleText}
-              navigator={navigator}
-            />
-            <Events listLength={5} eventsData={eventsData} />
-            <AccessibilityInfo titleAlways headingLevel={4} />
-
-            <Container margin text>
-              <Typography variant="body2">
-                {
-                  unit.contract_type
-                  && unit.contract_type.description
-                  && `${uppercaseFirst(getLocaleText(unit.contract_type.description))}. `
-                }
-                {
-                  unit.data_source
-                  && <FormattedMessage id="unit.data_source" defaultMessage={'Source: {data_source}'} values={{ data_source: unit.data_source }} />
-                }
-              </Typography>
-            </Container>
-          </div>
-        </div>
-      );
-    }
     return (
       <div className={classes.root}>
         <div className="Content">
@@ -443,13 +322,17 @@ class UnitView extends React.Component {
 // Listen to redux state
 const mapStateToProps = (state) => {
   const unit = getSelectedUnit(state);
-  const unitFetching = state.selectedUnit.isFetching;
+  const unitFetching = state.selectedUnit.unit.isFetching;
+  const { accessibilitySentences } = state.selectedUnit;
   const eventsData = state.event.data;
   const eventFetching = state.event.isFetching;
   const getLocaleText = textObject => getLocaleString(state, textObject);
   const map = state.mapRef.leafletElement;
   const { navigator } = state;
+  const reservations = state.selectedUnit.reservations.data;
+
   return {
+    accessibilitySentences: accessibilitySentences.data,
     unit,
     unitFetching,
     eventsData,
@@ -457,19 +340,29 @@ const mapStateToProps = (state) => {
     getLocaleText,
     map,
     navigator,
+    reservations,
   };
 };
 
 export default withRouter(injectIntl(withStyles(styles)(connect(
   mapStateToProps,
-  { changeSelectedUnit, fetchSelectedUnit, fetchUnitEvents },
+  {
+    changeSelectedUnit,
+    fetchSelectedUnit,
+    fetchUnitEvents,
+    fetchAccessibilitySentences,
+    fetchReservations,
+  },
 )(UnitView))));
 
 // Typechecking
 UnitView.propTypes = {
+  accessibilitySentences: PropTypes.objectOf(PropTypes.any),
   unit: PropTypes.objectOf(PropTypes.any),
   eventsData: PropTypes.objectOf(PropTypes.any),
   map: PropTypes.objectOf(PropTypes.any),
+  fetchAccessibilitySentences: PropTypes.func.isRequired,
+  fetchReservations: PropTypes.func.isRequired,
   fetchSelectedUnit: PropTypes.func.isRequired,
   unitFetching: PropTypes.bool.isRequired,
   fetchUnitEvents: PropTypes.func.isRequired,
@@ -479,12 +372,15 @@ UnitView.propTypes = {
   getLocaleText: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
+  reservations: PropTypes.arrayOf(PropTypes.any),
 };
 
 UnitView.defaultProps = {
+  accessibilitySentences: null,
   unit: null,
   eventsData: { events: null, unit: null },
   match: {},
   map: null,
   navigator: null,
+  reservations: null,
 };

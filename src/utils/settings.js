@@ -3,6 +3,7 @@ import LocalStorageUtility from './localStorage';
 const ALLOWED = {
   mobility: [null, 'wheelchair', 'reduced_mobility', 'rollator', 'stroller'],
   city: [null, 'helsinki', 'espoo', 'vantaa', 'kauniainen'],
+  map: ['servicemap', 'ortoImage', 'guideMap'],
 };
 
 const ACCESSIBILITY_MAPPING = {
@@ -15,6 +16,8 @@ class SettingsUtility {
   static mobilitySettings = ALLOWED.mobility;
 
   static citySettings = ALLOWED.city;
+
+  static mapSettings = ALLOWED.map;
 
   static accessibilityImpairmentKeys = Object.keys(ACCESSIBILITY_MAPPING).map(
     key => (key),
@@ -37,6 +40,13 @@ class SettingsUtility {
   static isValidCitySetting(value) {
     if (this.citySettings.indexOf(value) < 0) {
       throw new Error(`Invalid value for city setting: ${value}`);
+    }
+    return true;
+  }
+
+  static isValidMapSetting(value) {
+    if (this.mapSettings.indexOf(value) < 0) {
+      throw new Error(`Invalid value for map setting: ${value}`);
     }
     return true;
   }
@@ -64,8 +74,10 @@ class SettingsUtility {
    */
   static getSettingsFromLocalStorage() {
     const mobility = LocalStorageUtility.getItem('mobility');
+    const mapType = LocalStorageUtility.getItem('mapType');
     const settings = {
       mobility: mobility === 'null' ? null : mobility,
+      mapType: !mapType ? 'servicemap' : mapType,
       colorblind: LocalStorageUtility.getItem('colorblind') === 'true',
       visuallyImpaired: LocalStorageUtility.getItem('visuallyImpaired') === 'true',
       hearingAid: LocalStorageUtility.getItem('hearingAid') === 'true',

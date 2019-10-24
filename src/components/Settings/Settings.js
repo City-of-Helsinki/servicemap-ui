@@ -51,7 +51,15 @@ class Settings extends React.Component {
     const { current } = this.state;
     const { settings } = this.props;
     const {
-      colorblind, hearingAid, mobility, visuallyImpaired, helsinki, espoo, vantaa, kauniainen,
+      colorblind,
+      hearingAid,
+      mobility,
+      visuallyImpaired,
+      helsinki,
+      espoo,
+      vantaa,
+      kauniainen,
+      mapType,
     } = settings;
 
     // Create current settings from redux data
@@ -65,6 +73,7 @@ class Settings extends React.Component {
       espoo,
       vantaa,
       kauniainen,
+      mapType: mapType !== false ? mapType : 'servicemap',
     };
 
     this.setState({
@@ -233,6 +242,7 @@ class Settings extends React.Component {
       toggleColorblind,
       toggleVisuallyImpaired,
       setMobility,
+      setMapType,
       toggleHelsinki,
       toggleEspoo,
       toggleVantaa,
@@ -250,6 +260,7 @@ class Settings extends React.Component {
       espoo: toggleEspoo,
       vantaa: toggleVantaa,
       kauniainen: toggleKauniainen,
+      mapType: setMapType,
     };
 
     try {
@@ -508,6 +519,71 @@ class Settings extends React.Component {
         </FormGroup>
       </Container>
     );
+  };
+
+  renderMapSettings = () => {
+    const { classes, intl, setMapType } = this.props;
+    const { currentSettings } = this.state;
+
+    // Check that currentSettings isn't empty
+    if (Object.entries(currentSettings).length !== 0 && currentSettings.constructor === Object) {
+      const mapSettings = {};
+      SettingsUtility.mapSettings.forEach((setting) => {
+        mapSettings[setting] = {
+          action: () => setMapType(setting),
+          labelId: `settings.map.${setting}`,
+          value: setting,
+          icon: getIcon(setting, { className: classes.icon }),
+        };
+      });
+
+      return (
+        <Container>
+          <FormControl className={classes.noMargin} component="fieldset" fullWidth>
+            <FormLabel>
+              <SettingsTitle
+                classes={classes}
+                titleID="settings.map.title"
+                intl={intl}
+              />
+            </FormLabel>
+            <RadioGroup
+              aria-label={intl.formatMessage({ id: 'settings.map.title' })}
+              classes={{
+                root: classes.radioGroup,
+              }}
+              name="mapType"
+              value={currentSettings.mapType}
+              onChange={(event, value) => {
+                this.handleChange('mapType', value);
+                this.setAlert(false);
+              }}
+            >
+              {Object.keys(mapSettings).map((key) => {
+                if (Object.prototype.hasOwnProperty.call(mapSettings, key)) {
+                  const item = mapSettings[key];
+                  return (
+                    <FormControlLabel
+                      className={classes.radioLabel}
+                      value={key}
+                      key={key}
+                      control={(<Radio color="primary" />)}
+                      labelPlacement="end"
+                      label={(
+                        <>
+                          {item.icon}
+                          {<FormattedMessage id={item.labelId} />}
+                        </>
+                    )}
+                    />
+                  );
+                } return null;
+              })}
+            </RadioGroup>
+          </FormControl>
+        </Container>
+      );
+    } return null;
   }
 
   renderConfirmationBox() {
@@ -609,8 +685,11 @@ class Settings extends React.Component {
                 }
 
               {
-                this.renderCitySettings()
-              }
+                  this.renderCitySettings()
+                }
+              {
+                  this.renderMapSettings()
+                }
               <ServiceMapButton className={classes.contentButton} color="primary" variant="contained" onClick={() => this.saveSettings()} disabled={!settingsHaveChanged}>
                 <FormattedMessage id="general.save.changes" />
               </ServiceMapButton>
@@ -651,6 +730,7 @@ Settings.propTypes = {
   toggleVantaa: PropTypes.func.isRequired,
   toggleKauniainen: PropTypes.func.isRequired,
   setMobility: PropTypes.func.isRequired,
+  setMapType: PropTypes.func.isRequired,
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
   isMobile: PropTypes.bool,
   toggleSettings: PropTypes.func.isRequired,

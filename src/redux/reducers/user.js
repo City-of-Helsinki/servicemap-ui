@@ -3,6 +3,7 @@ const initialState = {
   initialLoad: false,
   locale: 'fi',
   page: 'home',
+  position: null,
 };
 
 export default (state = initialState, action) => {
@@ -21,6 +22,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         page: action.page,
+      };
+    case 'SET_POSITION':
+      return {
+        ...state,
+        position: action.position,
       };
     default:
       return state;

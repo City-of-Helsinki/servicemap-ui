@@ -125,7 +125,7 @@ class UnitFullListView extends React.Component {
 const mapStateToProps = (state) => {
   const getLocaleText = textObject => getLocaleString(state, textObject);
   const eventsData = state.event.data;
-  const unit = state.selectedUnit.data;
+  const unit = state.selectedUnit.unit.data;
   return {
     getLocaleText,
     eventsData,

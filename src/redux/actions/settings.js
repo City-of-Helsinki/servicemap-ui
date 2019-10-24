@@ -42,6 +42,13 @@ const setMobilitySetting = setting => async (dispatch) => {
   }
 };
 
+const setMapTypeSetting = setting => async (dispatch) => {
+  if (SettingsUtility.isValidMapSetting(setting)) {
+    dispatch(setRadioSelection('MAP_TYPE')(setting));
+    LocalStorageUtility.saveItem('mapType', setting); // Save value to localStorage
+  }
+};
+
 
 export const toggleHearingAid = () => setAccessibilitySelection('HEARING', 'hearingAid');
 
@@ -60,3 +67,5 @@ export const toggleVantaa = () => setCitySelection('VANTAA', 'vantaa');
 export const toggleKauniainen = () => setCitySelection('KAUNIAINEN', 'kauniainen');
 
 export const toggleSettings = value => simpleAction('SETTINGS_TOGGLE', value);
+
+export const setMapType = value => setMapTypeSetting(value);

@@ -100,5 +100,8 @@ const dataSingle = (state, action, prefix) => {
 // Fetch data set reducers
 export const units = (state = dataSetInitialState, action) => dataSetReducer(state, action, 'UNITS');
 export const service = (state = dataSetInitialState, action) => dataSetReducer(state, action, 'SERVICE');
+
 // Fetch data single reducers
 export const selectedUnit = (state = dataSingleInitialState, action) => dataSingle(state, action, 'SELECTED_UNIT');
+export const accessibilitySentences = (state = dataSingleInitialState, action) => dataSingle(state, action, 'SELECTED_UNIT_ACCESSIBILITY_SENTENCES');
+export const reservations = (state = dataSingleInitialState, action) => dataSingle(state, action, 'SELECTED_UNIT_RESERVATIONS');

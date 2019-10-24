@@ -5,6 +5,9 @@ export default theme => ({
     position: 'relative',
     width: '100%',
   },
+  noPadding: {
+    padding: 0,
+  },
   margin: {
     margin: theme.spacing.unit,
   },
@@ -76,5 +79,9 @@ export default theme => ({
   },
   bold: {
     fontWeight: 'bold',
+  },
+  srOnly: {
+    position: 'fixed',
+    left: -100,
   },
 });

@@ -1,4 +1,7 @@
 export default theme => ({
+  addressIcon: {
+    fontSize: 36,
+  },
   mapButton: {
     float: 'right',
     display: 'flex',

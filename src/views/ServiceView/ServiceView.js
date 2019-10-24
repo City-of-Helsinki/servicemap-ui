@@ -26,12 +26,12 @@ class ServiceView extends React.Component {
 
   componentDidMount() {
     const {
-      match, fetchService,
+      classes, match, fetchService,
     } = this.props;
     const { params } = match;
 
     this.setState({
-      icon: <img alt="" src={drawServiceIcon()} style={{ height: 24 }} />,
+      icon: <img alt="" src={drawServiceIcon()} className={classes.icon} />,
     });
 
     // Fetch service if current is not same as url param's
@@ -147,6 +147,7 @@ class ServiceView extends React.Component {
 }
 
 ServiceView.propTypes = {
+  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   count: PropTypes.number.isRequired,
   current: PropTypes.objectOf(PropTypes.any),
   match: PropTypes.objectOf(PropTypes.any),

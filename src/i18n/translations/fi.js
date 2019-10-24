@@ -96,6 +96,8 @@ export default {
   'general.save.changes': 'Tallenna muutokset',
   'general.save.changes.done': 'Muutokset tallennettu!',
   'general.save.confirmation': 'Haluatko tallentaa muutokset?',
+  'general.distance.meters': 'Metrin päässä',
+  'general.distance.kilometers': 'Kilometrin päässä',
 
   // Home
   'home.buttons.settings': 'Esteettömyys ja kaupunki asetukset',
@@ -121,6 +123,7 @@ export default {
                                     one {# esteettömyyspuute}
                                     other {# esteettömyyspuutetta}
                                   }`,
+  'unit.accessibility.unitNoInfo': 'Toimipiste ei ole toimittanut esteettömyystietoja.',
   'unit.basicInfo': 'Perustiedot',
   'unit.data_source': 'Lähde: {data_source}', // TODO: Translate
   'unit.details.notFound': 'Toimipisteen tietoja ei saatavilla.',
@@ -136,6 +139,7 @@ export default {
   'unit.description': 'Tietoa toimipisteestä',
   'unit.address': 'Osoite',
   'unit.phone': 'Puhelinnumero',
+  'unit.email': 'Sähköpostiosoite',
   'unit.opening.hours': 'Aukioloajat',
   'unit.opening.hours.info': 'Lisätietoa aukioloajoista',
   'unit.contact': 'Yhteyshenkilö',
@@ -239,6 +243,10 @@ export default {
   'settings.city.espoo': 'Espoo',
   'settings.city.vantaa': 'Vantaa',
   'settings.city.kauniainen': 'Kauniainen',
+  'settings.map.title': 'Karttapohja',
+  'settings.map.servicemap': 'Palvelukartta',
+  'settings.map.ortoImage': 'Ilmakuva',
+  'settings.map.guideMap': 'Opaskartta',
   'settings.aria.changed': 'Asetukset muutettu. Muista tallentaa',
   'settings.aria.closed': 'Asetukset suljettu',
   'settings.aria.open': 'Avaa asetukset',

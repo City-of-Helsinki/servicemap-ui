@@ -7,6 +7,7 @@ import ResultItem from '../ResultItem';
 import SettingsUtility from '../../../utils/settings';
 import UnitIcon from '../../SMIcon/UnitIcon';
 import { uppercaseFirst } from '../../../utils';
+import calculateDistance from '../../../utils/calculateDistance';
 
 class UnitItem extends React.Component {
   state = {
@@ -46,7 +47,7 @@ class UnitItem extends React.Component {
 
   render() {
     const {
-      unit, changeSelectedUnit, onClick, getLocaleText, navigator,
+      unit, changeSelectedUnit, onClick, getLocaleText, intl, navigator, userLocation,
     } = this.props;
     // Don't render if not valid unit
     if (!UnitHelper.isValidUnit(unit)) {
@@ -62,13 +63,22 @@ class UnitItem extends React.Component {
     } = unit;
 
     // Accessibility text and color
-    const accessData = this.parseAccessibilityText();
+    const accessData = didMount ? this.parseAccessibilityText() : 0;
     const accessText = accessData.text;
     const accessColor = accessData.color;
 
-    // Distance text
-    // TODO: Change to check data for distance once location info is available
-    const distance = null; // '100';
+    // Distance
+    let distance = calculateDistance(unit, userLocation);
+    if (distance) {
+      if (distance >= 1000) {
+        distance /= 1000; // Convert from m to km
+        distance = distance.toFixed(1); // Show only one decimal
+        distance = intl.formatNumber(distance); // Format distance according to locale
+        distance = { distance, type: 'km' };
+      } else {
+        distance = { distance, type: 'm' };
+      }
+    }
 
     // Contract type text
     const contractType = contract_type && contract_type.description ? uppercaseFirst(getLocaleText(contract_type.description)) : '';
@@ -79,7 +89,7 @@ class UnitItem extends React.Component {
         subtitle={contractType}
         bottomRightText={accessText}
         bottomRightColor={accessColor}
-        distancePosition={distance}
+        distance={distance}
         icon={icon}
         onClick={(e) => {
           e.preventDefault();
@@ -106,10 +116,12 @@ UnitItem.propTypes = {
   intl: intlShape.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
+  userLocation: PropTypes.objectOf(PropTypes.any),
 };
 
 UnitItem.defaultProps = {
   unit: {},
   onClick: null,
   navigator: null,
+  userLocation: null,
 };

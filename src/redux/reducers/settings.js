@@ -24,3 +24,5 @@ export const espoo = (state, action) => basicSelection(state, action, 'ESPOO');
 export const vantaa = (state, action) => basicSelection(state, action, 'VANTAA');
 
 export const kauniainen = (state, action) => basicSelection(state, action, 'KAUNIAINEN');
+
+export const mapType = (state, action) => basicSelection(state, action, 'MAP_TYPE');
