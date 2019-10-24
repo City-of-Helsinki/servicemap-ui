@@ -8,11 +8,12 @@ import user from './redux/reducers/user';
 import districts from './redux/reducers/district';
 import event from './redux/reducers/event';
 import address from './redux/reducers/address';
+import serviceTree from './redux/reducers/serviceTree';
 import {
-  colorblind, hearingAid, mobility, visuallyImpaired, mapType,
+  colorblind, hearingAid, mobility, mapType, visuallyImpaired, helsinki, espoo, vantaa, kauniainen,
 } from './redux/reducers/settings';
 import {
-  direction, order, mapRef,
+  direction, order, mapRef, settingsToggled,
 } from './redux/reducers/simpleReducers';
 
 // Export all redux reducers here
@@ -31,11 +32,17 @@ export default combineReducers({
   }),
   event,
   address,
+  serviceTree,
   settings: combineReducers({
+    toggled: settingsToggled,
     colorblind,
     hearingAid,
     mobility,
     visuallyImpaired,
+    helsinki,
+    espoo,
+    vantaa,
+    kauniainen,
     mapType,
   }),
   sort: combineReducers({

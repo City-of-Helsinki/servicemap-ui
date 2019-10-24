@@ -1,9 +1,11 @@
+/* eslint-disable camelcase */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { intlShape } from 'react-intl';
 import {
   ListItem, ListItemIcon, Typography, Divider,
 } from '@material-ui/core';
+import { isSmallContentArea } from '../../../utils';
 
 // TODO: Complete distance calculations and related accessibility texts
 const ResultItem = ({
@@ -11,6 +13,7 @@ const ResultItem = ({
   bottomRightText,
   classes,
   onClick,
+  onKeyDown,
   icon,
   subtitle,
   title,
@@ -19,7 +22,11 @@ const ResultItem = ({
   role,
   srLabel,
   intl,
+  selected,
 }) => {
+  const isSmallContent = isSmallContentArea();
+  const classStyles = !isSmallContent ? classes : {};
+
   // Screen reader text
   const srText = `
     ${title || ''} 
@@ -38,13 +45,15 @@ const ResultItem = ({
   return (
     <>
       <ListItem
+        selected={selected}
         button
         role={role || 'link'}
         component="li"
         tabIndex={0}
         onClick={onClick}
+        onKeyDown={onKeyDown}
         classes={{
-          focusVisible: classes.cssFocused,
+          focusVisible: classStyles.cssFocused,
         }}
       >
         {
@@ -55,13 +64,13 @@ const ResultItem = ({
           </ListItemIcon>
           )
         }
-        <div className={classes.itemTextContainer}>
-          <div className={classes.topRow}>
+        <div className={classStyles.itemTextContainer || ''}>
+          <div className={classStyles.topRow || ''}>
             {
               // SROnly element with full readable text
             }
             <Typography
-              className={classes.title}
+              className={classStyles.title || ''}
               component="p"
               variant="srOnly"
             >
@@ -72,7 +81,7 @@ const ResultItem = ({
               // Title
             }
             <Typography
-              className={classes.title}
+              className={classStyles.title || ''}
               component="p"
               role="textbox"
               variant="body2"
@@ -85,10 +94,10 @@ const ResultItem = ({
               // Distance text
               distance
               && (
-                <div className={classes.rightColumn}>
+                <div className={classStyles.rightColumn || ''}>
                   <Typography
                     variant="caption"
-                    className={`${classes.caption} ${classes.marginLeft}`}
+                    className={`${classStyles.caption || ''} ${classStyles.marginLeft || ''}`}
                     component="p"
                     aria-hidden="true"
                   >
@@ -104,29 +113,23 @@ const ResultItem = ({
             // Bottom row
             (subtitle || bottomRightText)
             && (
-              <div className={classes.bottomRow}>
-                {
-                  subtitle
-                  && (
-                    <div className={classes.bottomColumn}>
-                      <Typography
-                        variant="caption"
-                        className={`${classes.noMargin} ${classes.smallFont}`}
-                        component="p"
-                        aria-hidden="true"
-                      >
-                        {subtitle}
-                      </Typography>
-                    </div>
-                  )
-                }
-
+              <div className={classStyles.bottomRow || ''}>
+                <div className={classStyles.bottomColumn || ''}>
+                  <Typography
+                    variant="caption"
+                    className={`${classStyles.noMargin || ''} ${classStyles.smallFont || ''}`}
+                    component="p"
+                    aria-hidden="true"
+                  >
+                    {subtitle || ''}
+                  </Typography>
+                </div>
                 {
                   bottomRightText
                   && (
-                  <div className={`${classes.rightColumn} ${classes.bottomColumn}`}>
+                  <div className={`${classStyles.rightColumn || ''} ${classStyles.bottomColumn || ''}`}>
                     <Typography
-                      className={`${classes.smallFont} ${classes.marginLeft}`}
+                      className={`${classStyles.smallFont || ''} ${classStyles.marginLeft || ''}`}
                       component="p"
                       variant="caption"
                       aria-hidden="true"
@@ -161,12 +164,14 @@ ResultItem.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any),
   icon: PropTypes.node,
   onClick: PropTypes.func,
+  onKeyDown: PropTypes.func,
   subtitle: PropTypes.string,
   title: PropTypes.string.isRequired,
   distance: PropTypes.objectOf(PropTypes.any),
   divider: PropTypes.bool,
   role: PropTypes.string,
   srLabel: PropTypes.string,
+  selected: PropTypes.bool,
   intl: intlShape.isRequired,
 };
 
@@ -176,9 +181,11 @@ ResultItem.defaultProps = {
   classes: {},
   icon: null,
   onClick: () => {},
+  onKeyDown: null,
   subtitle: null,
   distance: null,
   divider: true,
   role: null,
   srLabel: null,
+  selected: false,
 };

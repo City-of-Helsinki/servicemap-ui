@@ -22,6 +22,7 @@ export const searchFetch = wrapperClosure('search', APIHandlers.search.options);
 export const unitEventsFetch = wrapperClosure('unitEvents', APIHandlers.unitEvents.options);
 export const selectedUnitFetch = wrapperClosure('unit', APIHandlers.unit.options);
 export const unitsFetch = wrapperClosure('units');
+export const nodeFetch = wrapperClosure('node', APIHandlers.node.options);
 export const serviceFetch = wrapperClosure('service');
 export const addressFetch = wrapperClosure('address');
 export const districtFetch = wrapperClosure('district');

@@ -46,6 +46,7 @@ export default {
 
   // Sorting
   'sorting.label': 'Order search results', // TODO: Translate
+  'sorting.accessibility.desc': 'Most accessible', // TODO: Translate
   'sorting.alphabetical.asc': 'Reversed alphabetical', // TODO: Translate
   'sorting.alphabetical.desc': 'Alphabetical', // TODO: Translate
   'sorting.match.desc': 'Relevance', // TODO: Translate
@@ -85,6 +86,7 @@ export default {
   'general.pagination.currentlyOpenedPage': 'Page {count} currently opened', // TODO: Translate
   'general.pagination.pageCount': 'page {current} / {max}', // TODO: Translate
 
+  'general.previousSearch': 'Previous searches', // TODO: Translate
   'general.return.viewTitle': 'Return to beginning of main content', // TODO: Translate
   'general.skipToContent': 'Skip to content', // TODO: Translate
   'general.new.tab': 'Aukeaa uuteen välilehteen', // TODO: Translate
@@ -97,6 +99,8 @@ export default {
   'general.distance.kilometers': 'Kilometrin päässä', // TODO: Translate
 
   // Home
+  'home.buttons.settings': 'Accessibility and city settings', // TODO: Translate
+  'home.buttons.services': 'All services', // TODO: Translate
   'home.example.title': 'Esimerkkihakuja', // TODO: Translate
   'home.example.search': 'Hae hakusanalla', // TODO: Translate
   'home.message': 'Terveisiä palvelukartan kehittäjiltä', // TODO: Translate
@@ -149,7 +153,9 @@ export default {
   'unit.list.reservations': 'Varattavat kohteet', // TODO: Translate
 
   // Search
-  'search': 'Sök',
+  'search': 'Hae', // TODO: Translate
+  'search.notFoundWith': 'Ei osumia haulle "{query}".', // TODO: Translate
+  'search.placeholder': 'Hae palvelua tai toimipistettä', // TODO: Translate
   'search.info': `{count, plural,
                   =0 {no units}
                   one {# unit}
@@ -180,12 +186,33 @@ export default {
                   one {# service found}
                   other {# services found}
                 }`, // TODO: Translate
+  'search.resultInfo': 'Hakutiedot', // TODO: Translate
+  'search.searchField': 'Hakukenttä', // TODO: Translate
   'search.results.title': 'Search results', // TODO: Translate
   'search.input.placeholder': 'Search units', // TODO: Translate
   'search.loading.units': 'Searching units {count} / {max}', // TODO: Translate
   'search.loading.units.srInfo': 'Search loading {count} units', // TODO: Translate
   'search.notFound': 'No results found with given search', // TODO: Translate
   'search.started': 'Search started', // TODO: Translate
+  'search.infoText': 'Näytetään {count} hakutulosta sanalla: ', // TODO: Translate
+  'search.infoTextNode': 'Näytetään {count} hakutulosta palveluilla: ', // TODO: Translate
+  'search.suggestions.suggest': 'Tarkoititko..?', // TODO: Translate
+  'search.suggestions.expand': 'Hakuehdotukset', // TODO: Translate
+  'search.suggestions.loading': 'Ladataan ehdotuksia', // TODO: Translate
+  'search.suggestions.error': 'Ei hakuehdotuksia', // TODO: Translate
+  'search.suggestions.suggestions': '{count} hakuehdotusta', // TODO: Translate
+  'search.suggestions.expandSuggestions': '{count} tarkennusehdotusta', // TODO: Translate
+  'search.suggestions.results': '{count} tulosta', // TODO: Translate
+  'search.suggestions.history': '{count} kohdetta hakuhistoriassa', // TODO: Translate
+  'search.suggestions.noHistory': 'Ei aikaisempia hakuja', // TODO: Translate
+  'search.tryAgain': 'Yritä hakea uudelleen', // TODO: Translate
+  'search.tryAgainBody.spelling': 'tarkista kirjoitusasu', // TODO: Translate
+  'search.tryAgainBody.city': 'tarkista kaupunkivalinnat', // TODO: Translate
+  'search.tryAgainBody.service': 'kirjoita palvelun nimi', // TODO: Translate
+  'search.tryAgainBody.address': 'kirjoita osoite, minkä läheltä etsit palvelua', // TODO: Translate
+  'search.tryAgainBody.keyword': 'kirjoita avainsanoja, esim. luontopolku, ruotsinkielinen päiväkoti', // TODO: Translate
+  'search.expand': 'Tarkenna hakua', // TODO: Translate
+  'search.closeExpand': 'Palaa hakuun', // TODO: Translate
 
   // Service
   'service': 'Tjänst',
@@ -195,6 +222,7 @@ export default {
 
   // Settings
   'settings': 'Personifiera',
+  'settings.accessibility': 'Minua koskevat esteettömyystiedot', // TODO: Translate
   'settings.sense.title': 'Hörsel och syn',
   'settings.sense.hearing': 'Jag använder hörapparat',
   'settings.sense.visual': 'Jag är synskadad',
@@ -205,6 +233,15 @@ export default {
   'settings.mobility.reduced_mobility': 'Jag är rörelsehindrad',
   'settings.mobility.rollator': 'Jag använder rollator',
   'settings.mobility.stroller': 'Jag går med barnvagn',
+  'settings.city.info': `{count, plural,
+    one {Valitsemani kaupunki} 
+    other {Valitsemani kaupungit}
+  }`, // TODO: Translate
+  'settings.city.title': 'Kaupunki', // TODO: Translate
+  'settings.city.helsinki': 'Helsinki',
+  'settings.city.espoo': 'Espoo',
+  'settings.city.vantaa': 'Vantaa',
+  'settings.city.kauniainen': 'Kauniainen',
   'settings.map.title': 'Karta',
   'settings.map.servicemap': 'Servicekarta',
   'settings.map.ortoImage': 'Flygbild',

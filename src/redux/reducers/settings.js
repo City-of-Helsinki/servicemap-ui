@@ -17,4 +17,12 @@ export const colorblind = (state, action) => basicSelection(state, action, 'COLO
 
 export const mobility = (state, action) => basicSelection(state, action, 'MOBILITY');
 
+export const helsinki = (state, action) => basicSelection(state, action, 'HELSINKI');
+
+export const espoo = (state, action) => basicSelection(state, action, 'ESPOO');
+
+export const vantaa = (state, action) => basicSelection(state, action, 'VANTAA');
+
+export const kauniainen = (state, action) => basicSelection(state, action, 'KAUNIAINEN');
+
 export const mapType = (state, action) => basicSelection(state, action, 'MAP_TYPE');
