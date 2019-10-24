@@ -9,7 +9,7 @@ const Reservations = ({
   listLength, reservations, getLocaleText, intl, showMoreCount,
 }) => {
   const [shownCount, setShownCount] = useState(listLength);
-  const [ref, setRef] = useState(listLength);
+  const [ref, setRef] = useState(null);
   if (reservations && reservations.length > 0) {
     return (
       <div ref={ref => setRef(ref)}>
