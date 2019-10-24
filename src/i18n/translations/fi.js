@@ -151,8 +151,13 @@ export default {
   'unit.contact': 'Yhteyshenkilö',
   'unit.school.year': 'Lukuvuosi',
   'unit.opens.new.tab': '(uusi välilehti)',
+  'unit.reservations.count': `{count, plural,
+    =0 {}
+    one {# varattava kohde}
+    other {# varattavaa kohdetta}
+  }`,
+  'unit.reservations.more': 'Näytä lisää varattavia kohteita',
   'unit.call.number': '(soita)',
-  'unit.more.reservations': 'Näytä kaikki {count} kohdetta',
   'unit.more.services': 'Näytä kaikki {count} palvelua',
   'unit.list.services': 'Palvelut',
   'unit.list.events': 'Tapahtumat',

@@ -38,7 +38,6 @@ class UnitView extends React.Component {
     this.state = {
       centered: false,
       didMount: false,
-      startHeading: 3,
     };
   }
 
@@ -153,11 +152,9 @@ class UnitView extends React.Component {
         <Description unit={unit} getLocaleText={getLocaleText} />
         <ElectronicServices unit={unit} />
         <Reservations
-          listLength={10}
-          unitId={unit.id}
+          listLength={3}
           reservations={reservations}
           getLocaleText={getLocaleText}
-          navigator={navigator}
         />
         <Events listLength={5} eventsData={eventsData} />
       </>

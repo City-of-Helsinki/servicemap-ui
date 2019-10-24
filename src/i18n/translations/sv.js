@@ -151,8 +151,14 @@ export default {
   'unit.contact': 'Yhteyshenkilö', // TODO: translate
   'unit.school.year': 'Läsåret',
   'unit.opens.new.tab': '(new tab)', // TODO: Translate
+  // TODO: Translate
+  'unit.reservations.count': `{count, plural,
+    =0 {}
+    one {# varattava kohde}
+    other {# varattavaa kohdetta}
+  }`,
+  'unit.reservations.more': 'Näytä lisää varattavia kohteita', // TODO: Translate
   'unit.call.number': '(call)', // TODO: Translate
-  'unit.more.reservations': 'Näytä kaikki {count} kohdetta', // TODO: Translate
   'unit.more.services': 'Näytä kaikki {count} palvelua', // TODO: Translate
   'unit.more.events': 'Näytä kaikki {count} tapahtumaa', // TODO: Translate
   'unit.list.services': 'Palvelut', // TODO: Translate

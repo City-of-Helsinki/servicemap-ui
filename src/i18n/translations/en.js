@@ -152,6 +152,13 @@ export default {
   'unit.contact': 'Contact person',
   'unit.school.year': 'School year',
   'unit.opens.new.tab': '(new tab)',
+  // TODO verify
+  'unit.reservations.count': `{count, plural,
+    =0 {}
+    one {# reservable object}
+    other {# reservable objects}
+  }`,
+  'unit.reservations.more': 'Show more reservables', // TODO verify
   'unit.call.number': '(call)',
   'unit.more.reservations': 'Show all {count} objects', // TODO verify
   'unit.more.services': 'Show all {count} services',
