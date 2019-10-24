@@ -121,7 +121,7 @@ class Services extends React.Component {
 
   renderPeriods() {
     const {
-      intl, unit, showMoreCount,
+      intl, showMoreCount,
     } = this.props;
     const {
       periodList, subjectList, periodShownCount,
@@ -141,7 +141,7 @@ class Services extends React.Component {
           <TitledList
             key={period[0]}
             title={`${intl.formatMessage({ id: 'unit.school.year' })} ${period}`}
-            subtitle={<FormattedMessage id="unit.services.count" values={{ count: unit.services.length }} />}
+            subtitle={<FormattedMessage id="unit.services.count" values={{ count: subjectList.length }} />}
             titleComponent="h3"
             listLength={periodShownCount}
             buttonText={<FormattedMessage id="unit.services.more" />}
