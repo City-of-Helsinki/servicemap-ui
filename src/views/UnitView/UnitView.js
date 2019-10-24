@@ -178,7 +178,7 @@ class UnitView extends React.Component {
 
   renderServiceTab() {
     const {
-      getLocaleText, navigator, unit,
+      getLocaleText, unit,
     } = this.props;
 
     if (!unit || !unit.complete) {
@@ -190,7 +190,6 @@ class UnitView extends React.Component {
         <Services
           listLength={10}
           unit={unit}
-          navigator={navigator}
           getLocaleText={getLocaleText}
         />
         <Container margin text>

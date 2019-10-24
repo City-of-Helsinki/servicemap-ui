@@ -130,7 +130,6 @@ export default {
   'unit.plural': 'Toimipisteet',
 
   'unit.contact.info': 'Yhteystiedot',
-  'unit.services': 'Palvelut toimipisteessä',
   'unit.eServices': 'Sähköinen asiointi',
   'unit.reservations': 'Varattavat kohteet',
   'unit.events': 'Toimipisteen tapahtumat',
@@ -158,10 +157,16 @@ export default {
   }`,
   'unit.reservations.more': 'Näytä lisää varattavia kohteita',
   'unit.call.number': '(soita)',
-  'unit.more.services': 'Näytä kaikki {count} palvelua',
   'unit.list.services': 'Palvelut',
   'unit.list.events': 'Tapahtumat',
   'unit.list.reservations': 'Varattavat kohteet',
+  'unit.services': 'Palvelut toimipisteessä',
+  'unit.services.more': 'Näytä lisää palveluja',
+  'unit.services.count': `{count, plural,
+    =0 {}
+    one {# palvelu}
+    other {# palvelua}
+  }`,
 
   // Search
   'search': 'Hae',

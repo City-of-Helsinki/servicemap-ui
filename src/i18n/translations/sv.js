@@ -129,7 +129,6 @@ export default {
   'unit.plural': 'Verksamhetsställen', // TODO: Verify
 
   'unit.contact.info': 'Contact information', // TODO: Translate
-  'unit.services': 'Tjänster',
   'unit.eServices': 'Electronic services', // TODO: Translate
   'unit.reservations': 'Varattavat kohteet', // TODO: Translate
   'unit.events': 'Evenemang',
@@ -159,11 +158,17 @@ export default {
   }`,
   'unit.reservations.more': 'Näytä lisää varattavia kohteita', // TODO: Translate
   'unit.call.number': '(call)', // TODO: Translate
-  'unit.more.services': 'Näytä kaikki {count} palvelua', // TODO: Translate
-  'unit.more.events': 'Näytä kaikki {count} tapahtumaa', // TODO: Translate
   'unit.list.services': 'Palvelut', // TODO: Translate
   'unit.list.events': 'Tapahtumat', // TODO: Translate
   'unit.list.reservations': 'Varattavat kohteet', // TODO: Translate
+  'unit.services': 'Tjänster',
+  'unit.services.more': 'Näytä lisää palveluja', // TODO: Translate
+  // TODO: Translate
+  'unit.services.count': `{count, plural,
+    =0 {}
+    one {# palvelu}
+    other {# palvelua}
+  }`,
 
   // Search
   'search': 'Hae', // TODO: Translate

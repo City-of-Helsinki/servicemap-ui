@@ -131,7 +131,6 @@ export default {
   'unit.plural': 'Units',
 
   'unit.contact.info': 'Contact information',
-  'unit.services': 'Services',
   'unit.eServices': 'Electronic services', // TODO: verify
   'unit.reservations': 'Reservable objects', // TODO verify
   'unit.events': 'Events',
@@ -161,10 +160,17 @@ export default {
   'unit.reservations.more': 'Show more reservables', // TODO verify
   'unit.call.number': '(call)',
   'unit.more.reservations': 'Show all {count} objects', // TODO verify
-  'unit.more.services': 'Show all {count} services',
   'unit.list.services': 'Services',
   'unit.list.events': 'Events',
   'unit.list.reservations': 'Reservable objects', // TODO verify
+  'unit.services': 'Services',
+  'unit.services.more': 'Show more services',
+  // TODO verify
+  'unit.services.count': `{count, plural,
+    =0 {}
+    one {# service}
+    other {# services}
+  }`,
 
   // Search
   'search': 'Search',
