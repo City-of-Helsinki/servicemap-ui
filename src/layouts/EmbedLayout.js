@@ -9,6 +9,7 @@ import AddressView from '../views/AddressView';
 import EventDetailView from '../views/EventDetailView';
 import SearchView from '../views/SearchView';
 import UnitView from '../views/UnitView';
+import ServiceView from '../views/ServiceView';
 
 const createContentStyles = (
   isSmallScreen, landscape, mobileMapOnly, fullMobileMap, settingsOpen,
@@ -79,6 +80,15 @@ const EmbedLayout = () => {
                 <>
                   <PageHandler page="search" />
                   <SearchView embed />
+                </>
+              )}
+            />
+            <Route
+              path="*/embed/service/:service"
+              render={() => (
+                <>
+                  <PageHandler page="service" />
+                  <ServiceView embed />
                 </>
               )}
             />

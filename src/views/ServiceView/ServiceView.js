@@ -79,10 +79,14 @@ class ServiceView extends React.Component {
 
   render() {
     const {
-      count, current, unitData, isLoading, max, getLocaleText, intl,
+      count, current, embed, unitData, isLoading, max, getLocaleText, intl,
     } = this.props;
     const { icon } = this.state;
     const progress = (isLoading && count) ? Math.floor((count / max * 100)) : 0;
+
+    if (embed) {
+      return null;
+    }
 
     let serviceUnits = null;
     if (unitData && unitData.length > 0) {
@@ -150,6 +154,7 @@ ServiceView.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   count: PropTypes.number.isRequired,
   current: PropTypes.objectOf(PropTypes.any),
+  embed: PropTypes.bool,
   match: PropTypes.objectOf(PropTypes.any),
   max: PropTypes.number.isRequired,
   history: PropTypes.objectOf(PropTypes.any),
@@ -166,6 +171,7 @@ ServiceView.propTypes = {
 
 ServiceView.defaultProps = {
   current: null,
+  embed: false,
   match: {},
   history: {},
   unitData: {},
