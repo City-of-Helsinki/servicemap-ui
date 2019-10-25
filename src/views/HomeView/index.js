@@ -5,21 +5,25 @@ import { fetchUnits } from '../../redux/actions/unit';
 import { setCurrentPage } from '../../redux/actions/user';
 import { toggleSettings } from '../../redux/actions/settings';
 import styles from './styles';
+import { getLocaleString } from '../../redux/selectors/locale';
 
 // Listen to redux state
 // const unitList = getUnitList(state);
 const mapStateToProps = (state) => {
-  const { units, navigator } = state;
+  const { units, user, navigator } = state;
   const {
     data, isFetching, count, max,
   } = units;
+  const getLocaleText = textObject => getLocaleString(state, textObject);
   return {
     unit: state.unit,
     units: data,
+    getLocaleText,
     isFetching,
     count,
     max,
     navigator,
+    userLocation: user.position,
   };
 };
 

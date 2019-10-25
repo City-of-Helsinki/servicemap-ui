@@ -102,6 +102,7 @@ export default {
   // Home
   'home.buttons.settings': 'Esteettömyys ja kaupunki asetukset',
   'home.buttons.services': 'Kaikki palvelut',
+  'home.buttons.closeByServices': 'Lähellä olevat palvelut',
   'home.example.title': 'Esimerkkihakuja',
   'home.example.search': 'Hae hakusanalla',
   'home.message': 'Terveisiä palvelukartan kehittäjiltä',

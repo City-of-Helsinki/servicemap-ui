@@ -4,13 +4,14 @@ import {
   Typography,
 } from '@material-ui/core';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import { Accessibility, List } from '@material-ui/icons';
+import { Accessibility, List, GpsFixed } from '@material-ui/icons';
 import Container from '../../components/Container';
 import SearchBar from '../../components/SearchBar';
 import { MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import HomeLogo from '../../components/Logos/HomeLogo';
 import ServiceMapButton from '../../components/ServiceMapButton';
 import PaperButton from '../../components/PaperButton';
+import fetchAddress from '../MapView/utils/fetchAddress';
 
 class HomeView extends React.Component {
   componentDidMount() {
@@ -33,7 +34,9 @@ class HomeView extends React.Component {
   }
 
   renderNavigationOptions = () => {
-    const { classes, toggleSettings, navigator } = this.props;
+    const {
+      classes, getLocaleText, toggleSettings, navigator, userLocation,
+    } = this.props;
     return (
       <div className={classes.iconContainer}>
         <PaperButton
@@ -47,6 +50,25 @@ class HomeView extends React.Component {
           icon={<List />}
           link
           onClick={() => navigator.push('serviceTree')}
+        />
+        <PaperButton
+          text={<FormattedMessage id="home.buttons.closeByServices" />}
+          icon={<GpsFixed />}
+          link
+          onClick={() => {
+            if (!userLocation || !userLocation.latitude || !userLocation.longitude) {
+              return;
+            }
+            const latLng = { lat: userLocation.latitude, lng: userLocation.longitude };
+            fetchAddress(latLng)
+              .then((data) => {
+                navigator.push('address', {
+                  municipality: data.street.municipality,
+                  street: getLocaleText(data.street.name),
+                  number: data.number,
+                });
+              });
+          }}
         />
       </div>
     );
@@ -147,13 +169,16 @@ export default injectIntl(HomeView);
 HomeView.propTypes = {
   fetchUnits: PropTypes.func,
   setCurrentPage: PropTypes.func.isRequired,
+  getLocaleText: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   toggleSettings: PropTypes.func.isRequired,
+  userLocation: PropTypes.objectOf(PropTypes.any),
 };
 
 HomeView.defaultProps = {
   fetchUnits: () => {},
   navigator: null,
+  userLocation: null,
 };
