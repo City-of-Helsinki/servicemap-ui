@@ -6,6 +6,7 @@ import UnitHelper from '../../../utils/unitHelper';
 import ResultItem from '../ResultItem';
 import SettingsUtility from '../../../utils/settings';
 import UnitIcon from '../../SMIcon/UnitIcon';
+import { uppercaseFirst } from '../../../utils';
 import calculateDistance from '../../../utils/calculateDistance';
 
 class UnitItem extends React.Component {
@@ -58,7 +59,7 @@ class UnitItem extends React.Component {
 
     // Parse unit data
     const {
-      id, name, object_type,
+      contract_type, id, name,
     } = unit;
 
     // Accessibility text and color
@@ -79,10 +80,13 @@ class UnitItem extends React.Component {
       }
     }
 
+    // Contract type text
+    const contractType = contract_type && contract_type.description ? uppercaseFirst(getLocaleText(contract_type.description)) : '';
+
     return (
       <ResultItem
         title={getLocaleText(name)}
-        subtitle={intl.formatMessage({ id: object_type })}
+        subtitle={contractType}
         bottomRightText={accessText}
         bottomRightColor={accessColor}
         distance={distance}

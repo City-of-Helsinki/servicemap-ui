@@ -39,6 +39,7 @@ class UnitView extends React.Component {
     this.state = {
       centered: false,
       didMount: false,
+      startHeading: 3,
     };
   }
 
@@ -189,7 +190,7 @@ class UnitView extends React.Component {
     }
 
     return (
-      <AccessibilityInfo titleAlways data={accessibilitySentences} headingLevel={3} />
+      <AccessibilityInfo titleAlways data={accessibilitySentences} headingLevel={4} />
     );
   }
 
@@ -229,16 +230,7 @@ class UnitView extends React.Component {
 
   render() {
     const {
-      classes,
-      getLocaleText,
-      intl,
-      unit,
-      eventsData,
-      navigator,
-      match,
-      reservations,
-      unitFetching,
-      userLocation,
+      classes, getLocaleText, intl, unit, match, unitFetching, userLocation,
     } = this.props;
 
     const { didMount } = this.state;
@@ -252,7 +244,7 @@ class UnitView extends React.Component {
     const TopBar = (
       <div className={`${classes.topBar} sticky`}>
         <DesktopComponent>
-          <SearchBar placeholder={intl.formatMessage({ id: 'search' })} />
+          <SearchBar placeholder={intl.formatMessage({ id: 'search.placeholder' })} />
           <TitleBar icon={icon} title={title} primary distance={distance} />
         </DesktopComponent>
         <MobileComponent>
@@ -331,76 +323,6 @@ class UnitView extends React.Component {
       );
     }
 
-    if (unit && unit.complete) {
-      return (
-        <div className={classes.root}>
-          <div className="Content">
-            {TopBar}
-
-            {/* Unit image */}
-            {unit.picture_url
-              && (
-              <img
-                className={classes.image}
-                alt={`${intl.formatMessage({ id: 'unit.picture' })}${getLocaleText(unit.name)}`}
-                src={unit.picture_url}
-              />
-              )
-            }
-
-            {/* Show on map button for mobile */}
-            <MobileComponent>
-              <ServiceMapButton
-                onClick={(e) => {
-                  e.preventDefault();
-                  this.setState({ centered: false });
-                  if (navigator) {
-                    navigator.push('unit', { id: unit.id, query: '?map=true' });
-                  }
-                }}
-              >
-                <FormattedMessage id="general.showOnMap" />
-              </ServiceMapButton>
-            </MobileComponent>
-
-            {/* View Components */}
-            <Highlights unit={unit} getLocaleText={getLocaleText} />
-            <ContactInfo unit={unit} />
-            <ElectronicServices unit={unit} />
-            <Description unit={unit} getLocaleText={getLocaleText} />
-            <Services
-              listLength={10}
-              unit={unit}
-              navigator={navigator}
-              getLocaleText={getLocaleText}
-            />
-            <Reservations
-              listLength={10}
-              unitId={unit.id}
-              reservations={reservations}
-              getLocaleText={getLocaleText}
-              navigator={navigator}
-            />
-            <Events listLength={5} eventsData={eventsData} />
-            <AccessibilityInfo titleAlways headingLevel={4} />
-
-            <Container margin text>
-              <Typography variant="body2">
-                {
-                  unit.contract_type
-                  && unit.contract_type.description
-                  && `${uppercaseFirst(getLocaleText(unit.contract_type.description))}. `
-                }
-                {
-                  unit.data_source
-                  && <FormattedMessage id="unit.data_source" defaultMessage={'Source: {data_source}'} values={{ data_source: unit.data_source }} />
-                }
-              </Typography>
-            </Container>
-          </div>
-        </div>
-      );
-    }
     return (
       <div className={classes.root}>
         <div className="Content">

@@ -1,3 +1,7 @@
+/* eslint-disable camelcase */
+import { unstable_useMediaQuery } from '@material-ui/core/useMediaQuery';
+import config from '../../config';
+
 const isClient = () => typeof window !== 'undefined';
 
 
@@ -61,6 +65,10 @@ export const keyboardHandler = (callback, keys) => {
         return 32;
       case 'esc':
         return 27;
+      case 'up':
+        return 38;
+      case 'down':
+        return 40;
       default:
     }
     return null;
@@ -109,6 +117,23 @@ export const valuesHaveChanged = (obj1, obj2, keys = []) => {
   });
 
   return hasChanged;
+};
+
+/**
+ * USE ONLY IN SIMPLE COMPONENTS because mediaquery hook
+ * Check if sidebar content is small
+ * Return true if smaller than smallContent treshold
+ * or smallscreen but not mobile
+ */
+export const isSmallContentArea = () => {
+  const { smallContentAreaBreakpoint, mobileUiBreakpoint, smallScreenBreakpoint } = config;
+  const smallContent = unstable_useMediaQuery(`(max-width:${smallContentAreaBreakpoint}px)`);
+  const smallScreen = unstable_useMediaQuery(`(max-width:${smallScreenBreakpoint}px)`);
+  const notMobile = unstable_useMediaQuery(`(min-width:${mobileUiBreakpoint}px)`);
+  return (
+    smallContent
+    || (smallScreen && notMobile)
+  );
 };
 
 

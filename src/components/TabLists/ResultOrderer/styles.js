@@ -10,6 +10,7 @@ export default theme => ({
     flex: '0 0 auto',
     backgroundColor: theme.palette.primary.main,
     color: theme.palette.primary.contrastText,
+    paddingLeft: theme.spacing.unit,
   },
   formControl: {
     margin: theme.spacing.unit,

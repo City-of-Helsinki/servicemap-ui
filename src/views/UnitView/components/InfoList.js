@@ -72,6 +72,8 @@ class InfoList extends React.Component {
         return intl.formatMessage({ id: 'unit.address' });
       case 'PHONE':
         return intl.formatMessage({ id: 'unit.phone' });
+      case 'EMAIL':
+        return intl.formatMessage({ id: 'unit.email' });
       case 'OPENING_HOURS':
         if (data.value.www) {
           return intl.formatMessage({ id: 'unit.opening.hours.info' });

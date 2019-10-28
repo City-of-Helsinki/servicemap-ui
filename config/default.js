@@ -18,6 +18,7 @@ export default {
     "missingInfo": "#4A4A4A",
     "shortcomings": "#b00021",
   },
+  "smallContentAreaBreakpoint": 449,
   "mobileUiBreakpoint": 699,
   "smallScreenBreakpoint": 899,
   "topBarHeight": 64,
