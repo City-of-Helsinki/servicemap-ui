@@ -95,10 +95,12 @@ class SearchView extends React.Component {
   groupData = (data) => {
     const services = data.filter(obj => obj && obj.object_type === 'service');
     const units = data.filter(obj => obj && obj.object_type === 'unit');
+    const addresses = data.filter(obj => obj && obj.object_type === 'address');
 
     return {
       services,
       units,
+      addresses,
     };
   }
 
@@ -336,6 +338,17 @@ class SearchView extends React.Component {
         data: groupedData.services,
         itemsPerPage: 10,
         title: intl.formatMessage({ id: 'service.plural' }),
+      },
+      {
+        ariaLabel: `${intl.formatMessage({ id: 'address.plural' })} ${intl.formatMessage({ id: 'search.results.short' }, {
+          count: groupedData
+            .addresses.length,
+        })}`,
+        component: null,
+        data: groupedData.addresses,
+        itemsPerPage: 10,
+        title: intl.formatMessage({ id: 'address.plural' }),
+        noOrderer: true,
       },
     ];
 
