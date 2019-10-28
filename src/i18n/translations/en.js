@@ -51,6 +51,7 @@ export default {
   'sorting.accessibility.desc': 'Most accessibile',
   'sorting.alphabetical.asc': 'Reversed alphabetical',
   'sorting.alphabetical.desc': 'Alphabetical',
+  'sorting.distance.asc': 'Closest',
   'sorting.match.desc': 'Relevance',
 
   // General

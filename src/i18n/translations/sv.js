@@ -46,11 +46,12 @@ export default {
   'event.title': 'Tapahtumat', // TODO: Translate
 
   // Sorting
-  'sorting.label': 'Order search results', // TODO: Translate
-  'sorting.accessibility.desc': 'Most accessible', // TODO: Translate
-  'sorting.alphabetical.asc': 'Reversed alphabetical', // TODO: Translate
-  'sorting.alphabetical.desc': 'Alphabetical', // TODO: Translate
-  'sorting.match.desc': 'Relevance', // TODO: Translate
+  'sorting.label': 'Järjestä hakutulokset', // TODO: Translate
+  'sorting.accessibility.desc': 'Esteettömin ensin', // TODO: Translate
+  'sorting.alphabetical.asc': 'Käänteinen aakkosjärjestys', // TODO: Translate
+  'sorting.alphabetical.desc': 'Aakkosjärjestys', // TODO: Translate
+  'sorting.distance.asc': 'Lähin ensin', // TODO: Translate
+  'sorting.match.desc': 'Osuvin ensin', // TODO: Translate
 
   // General
   'general.back': 'Tillbaka',
