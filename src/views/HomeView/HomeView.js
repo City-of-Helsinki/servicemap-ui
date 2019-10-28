@@ -37,6 +37,10 @@ class HomeView extends React.Component {
     const {
       classes, getLocaleText, toggleSettings, navigator, userLocation,
     } = this.props;
+    const disableCloseByServices = !userLocation
+      || !userLocation.latitude
+      || !userLocation.longitude;
+
     return (
       <div className={classes.iconContainer}>
         <PaperButton
@@ -52,11 +56,12 @@ class HomeView extends React.Component {
           onClick={() => navigator.push('serviceTree')}
         />
         <PaperButton
+          disabled={disableCloseByServices}
           text={<FormattedMessage id="home.buttons.closeByServices" />}
           icon={<GpsFixed />}
           link
           onClick={() => {
-            if (!userLocation || !userLocation.latitude || !userLocation.longitude) {
+            if (disableCloseByServices) {
               return;
             }
             const latLng = { lat: userLocation.latitude, lng: userLocation.longitude };
