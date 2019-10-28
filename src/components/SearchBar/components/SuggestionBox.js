@@ -62,12 +62,12 @@ const SuggestionBox = (props) => {
       fetchController.current = new AbortController();
       const { signal } = fetchController.current;
 
-      createSuggestions(query, getLocaleText, signal, cities, locale)
+      createSuggestions(query, signal)
         .then((result) => {
           if (result !== 'error') {
             fetchController.current = null;
-            if (result.length) {
-              setSearchQueries(result);
+            if (result.suggestions.length) {
+              setSearchQueries(result.suggestions);
               setLoading(false);
             } else {
               setSuggestionError(true);
@@ -201,12 +201,12 @@ const SuggestionBox = (props) => {
           <List className="suggestionList" ref={listRef}>
             {suggestionList.map((item, i) => (
               <ResultItem
-                key={item.query}
+                key={item.suggestion + item.count}
                 icon={<Search className={classes.listIcon} />}
-                title={item.query}
+                title={item.suggestion}
                 subtitle={intl.formatMessage({ id: 'search.suggestions.results' }, { count: item.count })}
                 srLabel={intl.formatMessage({ id: 'search' })}
-                onClick={() => handleSubmit(item.query)}
+                onClick={() => handleSubmit(item.suggestion)}
                 selected={i === focusedSuggestion}
                 divider={i !== suggestionList.length - 1}
               />
@@ -319,6 +319,7 @@ SuggestionBox.propTypes = {
   setSearch: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
+  locale: PropTypes.string.isRequired,
 };
 
 SuggestionBox.defaultProps = {

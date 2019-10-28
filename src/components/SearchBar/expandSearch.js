@@ -69,7 +69,7 @@ const expandSearch = async (searchQuery, getLocaleText, cities, locale, amount, 
 
           // Check for duplicates
           if (searchData && !searchData.some(e => e.query === query)) {
-            searchData.push({ query, count: res.count });
+            searchData.push({ suggestion: query, count: res.count });
           }
         }
       });
