@@ -20,15 +20,19 @@ class AccessibilityInfo extends React.Component {
       return null;
     }
 
+    const cities = ['helsinki', 'espoo', 'vantaa', 'kauniainen'];
+
     // Create shortcoming array from current settings
     const shortcomingSettings = [];
     Object.keys(settings).forEach((key) => {
-      if (Object.prototype.hasOwnProperty.call(settings, key)) {
-        const item = settings[key];
-        if (typeof item === 'string') {
-          shortcomingSettings.push(item);
-        } if (typeof item === 'boolean' && item === true) {
-          shortcomingSettings.push(SettingsUtility.getApiValidDataKey(key));
+      if (!cities.includes(key)) {
+        if (Object.prototype.hasOwnProperty.call(settings, key)) {
+          const item = settings[key];
+          if (typeof item === 'string') {
+            shortcomingSettings.push(item);
+          } if (typeof item === 'boolean' && item === true) {
+            shortcomingSettings.push(SettingsUtility.getApiValidDataKey(key));
+          }
         }
       }
     });
@@ -181,11 +185,7 @@ class AccessibilityInfo extends React.Component {
   }
 
   renderInfoText(noInfo, noShortcomings) {
-    const { classes, settings } = this.props;
-
-    if (!SettingsUtility.hasActiveAccessibilitySettings(settings)) {
-      return null;
-    }
+    const { classes } = this.props;
 
     if (noInfo) {
       return (
@@ -194,7 +194,7 @@ class AccessibilityInfo extends React.Component {
             <Warning className={classes.noInfoColor} />
           </ListItemIcon>
           <Typography component="p" variant="body2" align="left">
-            <FormattedMessage id="unit.accessibility.noInfo" />
+            <FormattedMessage id="unit.accessibility.unitNoInfo" />
           </Typography>
         </ListItem>
       );

@@ -10,8 +10,10 @@ const educationNode = 1087;
 class Services extends React.Component {
   constructor(props) {
     super(props);
+    const { unit } = props;
+    const { services } = unit;
     this.state = {
-      serviceList: [],
+      serviceList: services || [],
       subjectList: [],
       periodList: [],
     };
@@ -91,7 +93,7 @@ class Services extends React.Component {
         {serviceList && serviceList.length > 0 && (
         <TitledList
           title={<FormattedMessage id="unit.services" />}
-          titleComponent="h3"
+          titleComponent="h4"
           listLength={listLength}
           buttonText={<FormattedMessage id="unit.more.services" values={{ count: unit.services.length }} />}
           showMoreOnClick={showMoreOnClick}

@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Typography } from '@material-ui/core';
-import { renderToStaticMarkup } from 'react-dom/server';
 import { intlShape, FormattedMessage } from 'react-intl';
 import SearchBar from '../../components/SearchBar';
 import { focusDistrict, focusUnit } from '../MapView/utils/mapActions';
@@ -19,7 +18,6 @@ import ServiceMapButton from '../../components/ServiceMapButton';
 import DistritctItem from './components/DistrictItem';
 import TabLists from '../../components/TabLists';
 
-let addressMarker = null;
 
 const AddressView = (props) => {
   const [districts, setDistricts] = useState(null);
@@ -28,13 +26,14 @@ const AddressView = (props) => {
   const [error, setError] = useState(null);
 
   const {
-    addressState,
     classes,
+    embed,
     highlightedDistrict,
     intl,
     match,
     getLocaleText,
     map,
+    setAddressLocation,
     setAddressTitle,
     setHighlightedDistrict,
     setAddressUnits,
@@ -42,45 +41,10 @@ const AddressView = (props) => {
   } = props;
 
   const unmountCleanup = () => {
-    if (addressMarker) {
-      map.removeLayer(addressMarker);
-    }
     setHighlightedDistrict(null);
     // Add addess name as title to redux, so that when returning to page, correct title is shown
     const title = addressData && `${getLocaleText(addressData.street.name)} ${addressData.number}, ${addressData.street.municipality}`;
     setAddressTitle(title);
-  };
-
-  const addMarkerToMap = (coordinates, id) => {
-    const { divIcon } = require('leaflet');
-    const { clickCoordinates, addressId } = addressState;
-
-    // Create icon that can be added to map
-    const addressIcon = divIcon({
-      html: renderToStaticMarkup(
-        <span className={`${classes.addressIcon} icon-icon-address`} />,
-      ),
-      iconSize: [45, 45],
-      iconAnchor: [22, 42],
-    });
-
-    if (map) {
-      const L = require('leaflet');
-      /* If no user click location on redux, or if the data is for old address,
-      use the exact coordinates of the address instead of the user's click location */
-      const position = !clickCoordinates || addressId !== id
-        ? [coordinates[1], coordinates[0]] : clickCoordinates;
-
-      if (addressMarker) {
-        map.removeLayer(addressMarker);
-      }
-      addressMarker = new L.Marker(
-        position,
-        { icon: addressIcon },
-      ).addTo(map);
-
-      focusUnit(map, [position[1], position[0]]);
-    }
   };
 
   const fetchAddressDistricts = (lnglat) => {
@@ -90,6 +54,9 @@ const AddressView = (props) => {
   };
 
   const fetchUnits = (lnglat) => {
+    if (embed) {
+      return;
+    }
     fetchAddressUnits(lnglat)
       .then((data) => {
         const units = data.results;
@@ -116,11 +83,16 @@ const AddressView = (props) => {
           if (address.letter) {
             address.number += address.letter;
           }
+          setAddressLocation({ addressCoordinates: address.location.coordinates });
           setAddressData(address);
           const addressName = `${getLocaleText(address.street.name)} ${address.number}, ${address.street.municipality}`;
           setAddressTitle(addressName);
           const { coordinates } = address.location;
-          addMarkerToMap(coordinates, address.street.id);
+
+          focusUnit(map, [coordinates[0], coordinates[1]]);
+          if (embed) {
+            return;
+          }
           fetchAddressDistricts(coordinates);
           fetchUnits(coordinates);
         } else {
@@ -174,7 +146,7 @@ const AddressView = (props) => {
   const renderTopBar = title => (
     <div className={`${classes.topBar} sticky`}>
       <DesktopComponent>
-        <SearchBar placeholder={intl.formatMessage({ id: 'search' })} />
+        <SearchBar placeholder={intl.formatMessage({ id: 'search.placeholder' })} />
         <TitleBar icon={<AddressIcon className={classes.titleIcon} />} title={error || title} primary />
       </DesktopComponent>
       <MobileComponent>
@@ -236,6 +208,10 @@ const AddressView = (props) => {
       }
     }
   }, [match.url, map]);
+
+  if (embed) {
+    return null;
+  }
 
   // Render component
   const title = addressData ? `${getLocaleText(addressData.street.name)} ${addressData.number}, ${match.params.municipality}` : '';
@@ -299,11 +275,12 @@ AddressView.propTypes = {
   intl: intlShape.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   getLocaleText: PropTypes.func.isRequired,
+  setAddressLocation: PropTypes.func.isRequired,
   setAddressUnits: PropTypes.func.isRequired,
   setAddressTitle: PropTypes.func.isRequired,
   highlightedDistrict: PropTypes.objectOf(PropTypes.any),
-  addressState: PropTypes.objectOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
+  embed: PropTypes.bool,
 };
 
 AddressView.defaultProps = {
@@ -311,5 +288,5 @@ AddressView.defaultProps = {
   map: null,
   navigator: null,
   highlightedDistrict: null,
-  addressState: null,
+  embed: false,
 };

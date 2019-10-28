@@ -1,5 +1,8 @@
 import React from 'react';
 import SMIcon from './SMIcon';
+import defaulMapIcon from '../../assets/images/iconDefaultMap.svg';
+import aerialMapIcon from '../../assets/images/iconAerialMap.svg';
+import guideMapIcon from '../../assets/images/iconGuideMap.svg';
 
 /**
  * Senses
@@ -38,6 +41,39 @@ export const WheelchairIcon = ({ ...rest }) => (
 export const RollatorIcon = ({ ...rest }) => (
   <SMIcon icon="icon-icon-rollator" {...rest} />
 );
+/**
+ * Cities
+ */
+export const HelsinkiIcon = ({ ...rest }) => (
+  <SMIcon icon="icon-icon-coat-of-arms-helsinki" {...rest} />
+);
+
+export const EspooIcon = ({ ...rest }) => (
+  <SMIcon icon="icon-icon-coat-of-arms-espoo" {...rest} />
+);
+
+export const VantaaIcon = ({ ...rest }) => (
+  <SMIcon icon="icon-icon-coat-of-arms-vantaa" {...rest} />
+);
+
+export const KauniainenIcon = ({ ...rest }) => (
+  <SMIcon icon="icon-icon-coat-of-arms-kauniainen" {...rest} />
+);
+
+/**
+ * Map types
+ */
+export const DefaultMapIcon = ({ ...rest }) => (
+  <img aria-hidden alt="" {...rest} src={defaulMapIcon} />
+);
+
+export const AerialMapIcon = ({ ...rest }) => (
+  <img aria-hidden alt="" {...rest} src={aerialMapIcon} />
+);
+
+export const GuideMapIcon = ({ ...rest }) => (
+  <img aria-hidden alt="" {...rest} src={guideMapIcon} />
+);
 
 /**
  * General
@@ -53,6 +89,9 @@ export const MapIcon = ({ ...rest }) => (
   <SMIcon icon="icon-icon-map-options" {...rest} />
 );
 
+export const SearchIcon = ({ ...rest }) => (
+  <SMIcon icon="icon-icon-search" {...rest} />
+);
 
 // Function to get right icon based on key mapping
 export const getIcon = (key, props) => {
@@ -73,6 +112,12 @@ export const getIcon = (key, props) => {
       return <WheelchairIcon {...props} />;
     case 'stroller':
       return <StrollerIcon {...props} />;
+    case 'servicemap':
+      return <DefaultMapIcon {...props} />;
+    case 'ortoImage':
+      return <AerialMapIcon {...props} />;
+    case 'guideMap':
+      return <GuideMapIcon {...props} />;
     default:
       return null;
   }

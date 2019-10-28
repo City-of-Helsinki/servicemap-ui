@@ -7,7 +7,7 @@ import { getPathName } from '../../utils/path';
 
 const BackButton = (props) => {
   const {
-    breadcrumb, className, intl, onClick, style, variant, navigator,
+    breadcrumb, className, intl, onClick, style, variant, navigator, srHidden,
   } = props;
 
   // Generate dynamic text
@@ -41,6 +41,7 @@ const BackButton = (props) => {
         role="link"
         className={className}
         style={style}
+        aria-hidden={srHidden}
         aria-label={buttonText}
         onClick={(e) => {
           e.preventDefault();
@@ -84,6 +85,7 @@ BackButton.propTypes = {
   style: PropTypes.objectOf(PropTypes.any),
   onClick: PropTypes.func,
   variant: PropTypes.oneOf(['icon', null]),
+  srHidden: PropTypes.bool,
 };
 
 BackButton.defaultProps = {
@@ -92,6 +94,7 @@ BackButton.defaultProps = {
   style: {},
   onClick: null,
   variant: null,
+  srHidden: false,
 };
 
 export default BackButton;

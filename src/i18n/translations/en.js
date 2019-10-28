@@ -48,6 +48,7 @@ export default {
 
   // Sorting
   'sorting.label': 'Order search results',
+  'sorting.accessibility.desc': 'Most accessibile',
   'sorting.alphabetical.asc': 'Reversed alphabetical',
   'sorting.alphabetical.desc': 'Alphabetical',
   'sorting.match.desc': 'Relevance',
@@ -87,6 +88,7 @@ export default {
   'general.pagination.currentlyOpenedPage': 'Page {count} currently opened',
   'general.pagination.pageCount': 'page {current} / {max}',
 
+  'general.previousSearch': 'Previous searches',
   'general.return.viewTitle': 'Return to beginning of main content',
   'general.skipToContent': 'Skip to content',
   'general.give.feedback': 'Give feedback on the Servicemap test version (link opens in a new tab)',
@@ -96,8 +98,12 @@ export default {
   'general.save.changes': 'Save changes',
   'general.save.changes.done': 'Changes have been saved!',
   'general.save.confirmation': 'Would you like to save changes?',
+  'general.distance.meters': 'Meters away',
+  'general.distance.kilometers': 'Kilometers away',
 
   // Home
+  'home.buttons.settings': 'Accessibility and city settings',
+  'home.buttons.services': 'All services',
   'home.example.title': 'Example search phrases',
   'home.example.search': 'Search for',
   'home.message': 'Message from the developers',
@@ -119,6 +125,7 @@ export default {
                                     one {# accessibility shortcoming}
                                     other {# accessibility shortcomings}
                                   }`, // TODO: verify
+  'unit.accessibility.unitNoInfo': 'Unit has not delivered any accessibility information.', // TODO: verify
   'unit.basicInfo': 'Information',
   'unit.data_source': 'Source: {data_source}',
   'unit.details.notFound': 'Unit info not found.',
@@ -134,6 +141,7 @@ export default {
   'unit.description': 'Unit description',
   'unit.address': 'Address',
   'unit.phone': 'Phone number',
+  'unit.email': 'Email',
   'unit.opening.hours': 'Opening hours',
   'unit.opening.hours.info': 'Additional information about opening hours', // TODO verify
   'unit.contact': 'Contact person',
@@ -149,6 +157,8 @@ export default {
 
   // Search
   'search': 'Search',
+  'search.notFoundWith': 'No results for search "{query}".',
+  'search.placeholder': 'Search for services or units',
   'search.info': `{count, plural,
                   =0 {no units}
                   one {# unit}
@@ -179,12 +189,34 @@ export default {
                   one {# service found}
                   other {# services found}
                 }`,
+  'search.resultInfo': 'Search information',
+  'search.searchField': 'Search field',
   'search.results.title': 'Search results',
   'search.input.placeholder': 'Search units',
   'search.loading.units': 'Searching units {count} / {max}',
   'search.loading.units.srInfo': 'Search loading {count} units',
   'search.notFound': 'No results found with given search',
   'search.started': 'Search started',
+  'search.infoText': 'Showing {count} results for search query: ',
+  'search.infoTextNode': 'Showing {count} results for services: ',
+  'search.suggestions.suggest': 'Did you mean..?',
+  'search.suggestions.expand': 'Search suggestions',
+  'search.suggestions.loading': 'Loading suggestions',
+  'search.suggestions.error': 'No suggestions',
+  'search.suggestions.suggestions': '{count} suggestions',
+  'search.suggestions.expandSuggestions': '{count} suggestions',
+  'search.suggestions.results': '{count} results',
+  'search.suggestions.history': '{count} items in search history',
+  'search.suggestions.noHistory': 'No previous searches',
+  'search.tryAgain': 'Try searching again',
+  'search.tryAgainBody.spelling': 'check spelling',
+  'search.tryAgainBody.city': 'check city choices',
+  'search.tryAgainBody.service': 'write name of service',
+  'search.tryAgainBody.address': 'write address close to service you are looking for',
+  'search.tryAgainBody.keyword': 'write keywords',
+  'search.expand': 'Expand search', // TODO: verify
+  'search.closeExpand': 'Return to search',
+
 
   // Service
   'service': 'Service',
@@ -194,6 +226,7 @@ export default {
 
   // Settings
   'settings': 'Settings',
+  'settings.accessibility': 'My accessibility settings',
   'settings.sense.title': 'Hearing and sight',
   'settings.sense.hearing': 'I use a hearing aid',
   'settings.sense.visual': 'I\'m visually impaired',
@@ -204,6 +237,19 @@ export default {
   'settings.mobility.reduced_mobility': 'I have reduced mobility',
   'settings.mobility.rollator': 'I use a rollator',
   'settings.mobility.stroller': 'I push a stroller',
+  'settings.city.info': `{count, plural,
+    one {Chosen city}
+    other {Chosen cities}
+  }`,
+  'settings.city.title': 'City',
+  'settings.city.helsinki': 'Helsinki',
+  'settings.city.espoo': 'Espoo',
+  'settings.city.vantaa': 'Vantaa',
+  'settings.city.kauniainen': 'Kauniainen',
+  'settings.map.title': 'Background map',
+  'settings.map.servicemap': 'Service map',
+  'settings.map.ortoImage': 'Aerial view',
+  'settings.map.guideMap': 'Guide map',
   'settings.aria.changed': 'Settings have changed. Remember to save',
   'settings.aria.closed': 'Settings closed',
   'settings.aria.open': 'Open settings',

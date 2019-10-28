@@ -4,7 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter, Redirect } from 'react-router-dom';
 import {
-  Paper, withStyles, Typography, Link,
+  Paper, withStyles, Typography, Link, NoSsr, Divider,
 } from '@material-ui/core';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import styles from './styles';
@@ -17,11 +17,19 @@ import TabLists from '../../components/TabLists';
 import Container from '../../components/Container';
 import { generatePath } from '../../utils/path';
 import { DesktopComponent } from '../../layouts/WrapperComponents/WrapperComponents';
+import {
+  ColorblindIcon, HearingIcon, VisualImpairmentIcon, getIcon,
+} from '../../components/SMIcon';
+import ServiceMapButton from '../../components/ServiceMapButton';
 
 class SearchView extends React.Component {
   constructor(props) {
     super(props);
     const { changeSelectedUnit } = props;
+
+    this.state = {
+      expandSearch: null,
+    };
 
     // Reset selected unit on SearchView
     if (changeSelectedUnit) {
@@ -33,12 +41,15 @@ class SearchView extends React.Component {
     const {
       fetchUnits, units, map,
     } = this.props;
-    const searchParam = this.getSearchParam();
+    const searchData = this.getSearchParam();
     if (this.shouldFetch()) {
-      fetchUnits(searchParam);
+      if (searchData.type === 'search') {
+        fetchUnits(searchData.query);
+      } else {
+        fetchUnits(searchData.query, searchData.type);
+      }
+      this.focusMap(units, map);
     }
-
-    this.focusMap(units, map);
   }
 
   shouldComponentUpdate(nextProps) {
@@ -56,15 +67,22 @@ class SearchView extends React.Component {
       location,
     } = this.props;
     const searchParams = parseSearchParams(location.search);
-    const searchParam = searchParams.q || null;
-    return searchParam;
+    if (searchParams.q) {
+      return { type: 'search', query: searchParams.q };
+    } if (searchParams.nodes) {
+      return { type: 'node', query: searchParams.nodes };
+    }
+    return null;
   }
 
-  // Check if view will fetch data because search params has changed
+  // Check if view will fetch data because sreach params has changed
   shouldFetch = () => {
     const { isFetching, previousSearch } = this.props;
     const searchParam = this.getSearchParam();
-    return !isFetching && searchParam && searchParam !== previousSearch;
+    if (previousSearch && searchParam && searchParam.type === 'node') {
+      return !isFetching && searchParam && searchParam.query !== previousSearch.searchQuery;
+    }
+    return !isFetching && searchParam && searchParam.query !== previousSearch;
   }
 
   focusMap = (units, map) => {
@@ -86,9 +104,7 @@ class SearchView extends React.Component {
     };
   }
 
-  /**
-   * Handles redirect if only single result is found
-   */
+  // Handles redirect if only single result is found
   handleSingleResultRedirect() {
     const {
       units, isFetching, match,
@@ -124,32 +140,163 @@ class SearchView extends React.Component {
    * What to render if no units are found with search
    */
   renderNotFound() {
-    const { isFetching, previousSearch, units } = this.props;
+    const {
+      classes, isFetching, previousSearch, units,
+    } = this.props;
 
     // These variables should be passed to this function
     const shouldRender = !isFetching && previousSearch && units && !units.length;
+    const messageIDs = ['spelling', 'city', 'service', 'address', 'keyword'];
 
     return shouldRender && (
-      <Container>
-        <Typography variant="subtitle1" component="p" aria-hidden="true">
-          <FormattedMessage id="search.results" values={{ count: units.length }} />
-        </Typography>
+      <Container className={classes.noVerticalPadding}>
+        <Container className={classes.noVerticalPadding}>
+          <Typography align="left" variant="subtitle1" component="p">
+            <FormattedMessage id="search.notFoundWith" values={{ query: previousSearch }} />
+          </Typography>
+        </Container>
+        <Divider aria-hidden="true" />
+        <Container className={classes.noVerticalPadding}>
+          <Typography align="left" variant="subtitle1" component="p">
+            <FormattedMessage id="search.tryAgain" />
+          </Typography>
+          <Typography align="left" variant="body2" component="p">
+            <ul className={classes.list}>
+              {
+                messageIDs.map(id => (
+                  <li key={id}>
+                    <FormattedMessage id={`search.tryAgainBody.${id}`} />
+                  </li>
+                ))
+              }
+            </ul>
+          </Typography>
+        </Container>
       </Container>
     );
   }
 
   renderSearchBar() {
-    const {
-      intl,
-    } = this.props;
+    const { intl } = this.props;
+    const { expandSearch } = this.state;
     return (
       <SearchBar
+        srHideInput={!!expandSearch}
         className="sticky"
+        expand
         placeholder={intl && intl.formatMessage({ id: 'search.input.placeholder' })}
         isSticky={0}
-        text={this.getSearchParam() || ''}
         primary
+        expandSearch={expandSearch}
+        closeExpandedSearch={expandSearch ? () => this.setState({ expandSearch: null }) : () => {}}
       />
+    );
+  }
+
+  renderSearchInfo = () => {
+    const {
+      units, settings, classes, isFetching, intl, serviceTree,
+    } = this.props;
+    const {
+      colorblind, hearingAid, mobility, visuallyImpaired, helsinki, espoo, vantaa, kauniainen,
+    } = settings;
+    const searchParam = this.getSearchParam();
+
+    const unitCount = units && units.length;
+
+    const accessibilitySettings = [
+      ...colorblind ? [{ text: intl.formatMessage({ id: 'settings.sense.colorblind' }), icon: <ColorblindIcon /> }] : [],
+      ...hearingAid ? [{ text: intl.formatMessage({ id: 'settings.sense.hearing' }), icon: <HearingIcon /> }] : [],
+      ...visuallyImpaired ? [{ text: intl.formatMessage({ id: 'settings.sense.visual' }), icon: <VisualImpairmentIcon /> }] : [],
+      ...mobility ? [{ text: intl.formatMessage({ id: `settings.mobility.${mobility}` }), icon: getIcon(mobility) }] : [],
+    ];
+
+    let citySettings = [
+      ...helsinki ? [`"${intl.formatMessage({ id: 'settings.city.helsinki' })}"`] : [],
+      ...espoo ? [`"${intl.formatMessage({ id: 'settings.city.espoo' })}"`] : [],
+      ...vantaa ? [`"${intl.formatMessage({ id: 'settings.city.vantaa' })}"`] : [],
+      ...kauniainen ? [`"${intl.formatMessage({ id: 'settings.city.kauniainen' })}"`] : [],
+    ];
+
+    const cityString = citySettings.join(', ');
+    const accessibilityString = accessibilitySettings.map(e => e.text).join(' ');
+
+    if (citySettings.length === 4) {
+      citySettings = [];
+    }
+
+    const infoTextId = searchParam.type === 'search' ? 'search.infoText' : 'search.infoTextNode';
+    const nodeNames = serviceTree && serviceTree.selected.map(e => e.name.fi).join(', ');
+
+    return (
+      <NoSsr>
+        {!isFetching && (
+          <div align="left" className={classes.searchInfo}>
+            <Typography variant="srOnly" component="h3">
+              <FormattedMessage id="search.resultInfo" />
+            </Typography>
+            {!(searchParam.type === 'node' && !nodeNames) && (
+              <div aria-live="polite" aria-label={`${intl.formatMessage({ id: infoTextId }, { count: unitCount })} ${searchParam.query}`} className={classes.infoContainer}>
+                <Typography aria-hidden className={`${classes.infoText} ${classes.bold}`}>
+                  <FormattedMessage id={infoTextId} values={{ count: unitCount }} />
+                </Typography>
+                <Typography aria-hidden className={classes.infoText}>
+                  &nbsp;
+                  {`${searchParam.type === 'search' ? searchParam.query : nodeNames}`}
+                </Typography>
+              </div>
+            )}
+
+            {citySettings.length ? (
+              <>
+                <div aria-label={`${intl.formatMessage({ id: 'settings.city.info' }, { count: citySettings.length })}: ${cityString}`} className={classes.infoContainer}>
+                  <Typography aria-hidden className={`${classes.infoText} ${classes.bold}`}>
+                    <FormattedMessage id="settings.city.info" values={{ count: citySettings.length }} />
+                    {':'}
+                  &nbsp;
+                  </Typography>
+                  <Typography aria-hidden className={classes.infoText}>
+                    {cityString}
+                  </Typography>
+                </div>
+              </>
+            ) : null}
+
+            {accessibilitySettings.length ? (
+              <div aria-label={`${intl.formatMessage({ id: 'settings.accessibility' })}: ${accessibilityString}`}>
+                <Typography aria-hidden className={`${classes.infoSubText} ${classes.bold}`}>
+                  <FormattedMessage id="settings.accessibility" />
+                  {':'}
+                </Typography>
+                <div aria-hidden className={classes.infoContainer}>
+                  {accessibilitySettings.map(item => (
+                    <div key={item.text} className={classes.settingItem}>
+                      {item.icon}
+                      <Typography className={classes.settingItemText}>{item.text}</Typography>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : null}
+            {
+              !!unitCount
+              && searchParam.type === 'search'
+              && (
+                <ServiceMapButton
+                  ref={this.buttonRef}
+                  role="link"
+                  className={`${classes.suggestionButton}`}
+                  onClick={() => this.setState({ expandSearch: searchParam.query })}
+                >
+                  <Typography variant="button" className={classes.expand}>
+                    <FormattedMessage id="search.expand" />
+                  </Typography>
+                </ServiceMapButton>
+              )
+            }
+          </div>
+        )}
+      </NoSsr>
     );
   }
 
@@ -217,9 +364,8 @@ class SearchView extends React.Component {
    */
   renderScreenReaderInfo() {
     const {
-      classes, units, isFetching, max,
+      classes, isFetching, max,
     } = this.props;
-    const unitCount = units && units.length;
 
     return (
       <Typography className={classes.srOnly} variant="srOnly" component="h3" tabIndex="-1">
@@ -237,10 +383,6 @@ class SearchView extends React.Component {
           isFetching && max > 0
             && <FormattedMessage id="search.loading.units.srInfo" values={{ count: max }} />
         }
-        {
-          !isFetching
-          && <FormattedMessage id="search.results" values={{ count: unitCount }} />
-        }
       </Typography>
     );
   }
@@ -249,6 +391,7 @@ class SearchView extends React.Component {
     const {
       classes, isFetching, intl, count, max,
     } = this.props;
+    const { expandSearch } = this.state;
     const progress = (isFetching && count) ? Math.floor((count / max * 100)) : 0;
 
     const redirect = this.handleSingleResultRedirect();
@@ -263,14 +406,17 @@ class SearchView extends React.Component {
       >
         <Paper className={!isFetching ? classes.noPadding : ''} elevation={1} square aria-live="polite">
           {
-            this.renderScreenReaderInfo()
+           !expandSearch && this.renderScreenReaderInfo()
           }
         </Paper>
         {
           this.renderSearchBar()
         }
         {
-          this.renderResults()
+          !expandSearch && this.renderSearchInfo()
+        }
+        {
+          !expandSearch && this.renderResults()
         }
         {
           isFetching
@@ -310,6 +456,8 @@ SearchView.propTypes = {
   units: PropTypes.arrayOf(PropTypes.any),
   map: PropTypes.objectOf(PropTypes.any),
   match: PropTypes.objectOf(PropTypes.any).isRequired,
+  settings: PropTypes.objectOf(PropTypes.any),
+  serviceTree: PropTypes.objectOf(PropTypes.any),
 };
 
 SearchView.defaultProps = {
@@ -320,5 +468,7 @@ SearchView.defaultProps = {
   max: 0,
   previousSearch: null,
   units: [],
+  settings: null,
   map: null,
+  serviceTree: null,
 };

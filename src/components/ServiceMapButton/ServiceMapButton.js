@@ -4,11 +4,11 @@ import { Button } from '@material-ui/core';
 
 // ServiceMapButton
 const SMButton = ({
-  children, classes, className, onClick, srText, style, ...rest
+  children, classes, className, onClick, srText, style, role, ...rest
 }) => (
   <Button
     className={`${classes.button} ${className}`}
-    role="link"
+    role={role || 'link'}
     variant="contained"
     color="primary"
     onClick={onClick}
@@ -27,12 +27,14 @@ SMButton.propTypes = {
   style: PropTypes.objectOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   children: PropTypes.node.isRequired,
+  role: PropTypes.string,
 };
 
 SMButton.defaultProps = {
   className: '',
   srText: null,
   style: null,
+  role: null,
 };
 
 export default SMButton;

@@ -47,6 +47,7 @@ export default {
 
   // Sorting
   'sorting.label': 'Järjestä hakutulokset',
+  'sorting.accessibility.desc': 'Esteettömin ensin',
   'sorting.alphabetical.asc': 'Käänteinen aakkosjärjestys',
   'sorting.alphabetical.desc': 'Aakkosjärjestys',
   'sorting.match.desc': 'Osuvin ensin',
@@ -86,6 +87,7 @@ export default {
   'general.pagination.currentlyOpenedPage': 'Sivu {count}, avattu',
   'general.pagination.pageCount': 'sivu {current} / {max}',
 
+  'general.previousSearch': 'Aikaisemmat haut',
   'general.return.viewTitle': 'Siirry pääsisällön alkuun',
   'general.skipToContent': 'Siirry pääsisältöön',
   'general.give.feedback': 'Anna palautetta Palvelukartan testiversiosta (linkki aukeaa uuteen välilehteen)',
@@ -95,8 +97,12 @@ export default {
   'general.save.changes': 'Tallenna muutokset',
   'general.save.changes.done': 'Muutokset tallennettu!',
   'general.save.confirmation': 'Haluatko tallentaa muutokset?',
+  'general.distance.meters': 'Metrin päässä',
+  'general.distance.kilometers': 'Kilometrin päässä',
 
   // Home
+  'home.buttons.settings': 'Esteettömyys ja kaupunki asetukset',
+  'home.buttons.services': 'Kaikki palvelut',
   'home.example.title': 'Esimerkkihakuja',
   'home.example.search': 'Hae hakusanalla',
   'home.message': 'Terveisiä palvelukartan kehittäjiltä',
@@ -118,6 +124,7 @@ export default {
                                     one {# esteettömyyspuute}
                                     other {# esteettömyyspuutetta}
                                   }`,
+  'unit.accessibility.unitNoInfo': 'Toimipiste ei ole toimittanut esteettömyystietoja.',
   'unit.basicInfo': 'Perustiedot',
   'unit.data_source': 'Lähde: {data_source}', // TODO: Translate
   'unit.details.notFound': 'Toimipisteen tietoja ei saatavilla.',
@@ -133,6 +140,7 @@ export default {
   'unit.description': 'Tietoa toimipisteestä',
   'unit.address': 'Osoite',
   'unit.phone': 'Puhelinnumero',
+  'unit.email': 'Sähköpostiosoite',
   'unit.opening.hours': 'Aukioloajat',
   'unit.opening.hours.info': 'Lisätietoa aukioloajoista',
   'unit.contact': 'Yhteyshenkilö',
@@ -148,6 +156,8 @@ export default {
 
   // Search
   'search': 'Hae',
+  'search.notFoundWith': 'Ei osumia haulle "{query}".',
+  'search.placeholder': 'Hae palvelua tai toimipistettä',
   'search.info': `{count, plural,
                   =0 {Toimipisteitä ei löytynyt}
                   one {# toimipiste löydetty}
@@ -177,12 +187,34 @@ export default {
                 one {# palvelu löydetty}
                 other {# palvelua löydetty}
               }`,
+  'search.resultInfo': 'Hakutiedot',
+  'search.searchField': 'Hakukenttä',
   'search.results.title': 'Hakutulokset',
   'search.input.placeholder': 'Hae toimipisteitä',
   'search.loading.units': 'Haetaan toimipisteitä {count} / {max}',
   'search.loading.units.srInfo': 'Haetaan {count} toimipistettä',
   'search.notFound': 'Haulla ei löytynyt hakutuloksia',
   'search.started': 'Haku aloitettu',
+  'search.infoText': 'Näytetään {count} hakutulosta sanalla: ',
+  'search.infoTextNode': 'Näytetään {count} hakutulosta palveluilla: ',
+  'search.suggestions.suggest': 'Tarkoititko..?',
+  'search.suggestions.expand': 'Hakuehdotukset',
+  'search.suggestions.loading': 'Ladataan ehdotuksia',
+  'search.suggestions.error': 'Ei ehdotuksia',
+  'search.suggestions.suggestions': '{count} hakuehdotusta',
+  // 'search.suggestions.expandSuggestions': '{count} tarkennusehdotusta',
+  'search.suggestions.results': '{count} tulosta',
+  'search.suggestions.history': '{count} kohdetta hakuhistoriassa',
+  'search.suggestions.noHistory': 'Ei aikaisempia hakuja',
+  'search.tryAgain': 'Yritä hakea uudelleen',
+  'search.tryAgainBody.spelling': 'tarkista kirjoitusasu',
+  'search.tryAgainBody.city': 'tarkista kaupunkivalinnat',
+  'search.tryAgainBody.service': 'kirjoita palvelun nimi',
+  'search.tryAgainBody.address': 'kirjoita osoite, minkä läheltä etsit palvelua',
+  'search.tryAgainBody.keyword': 'kirjoita avainsanoja, esim. luontopolku, ruotsinkielinen päiväkoti',
+  'search.expand': 'Tarkenna hakua',
+  'search.closeExpand': 'Palaa hakuun',
+
 
   // Service
   'service': 'Palvelu',
@@ -192,6 +224,7 @@ export default {
 
   // Settings
   'settings': 'Asetukset',
+  'settings.accessibility': 'Minua koskevat esteettömyystiedot',
   'settings.sense.title': 'Aistirajoitteet',
   'settings.sense.hearing': 'Käytän kuulolaitetta',
   'settings.sense.visual': 'Olen näkövammainen',
@@ -202,6 +235,19 @@ export default {
   'settings.mobility.reduced_mobility': 'Olen liikkumisesteinen',
   'settings.mobility.rollator': 'Käytän rollaattoria',
   'settings.mobility.stroller': 'Työnnän rattaita',
+  'settings.city.info': `{count, plural,
+    one {Valitsemani kaupunki}
+    other {Valitsemani kaupungit}
+  }`,
+  'settings.city.title': 'Kaupunki',
+  'settings.city.helsinki': 'Helsinki',
+  'settings.city.espoo': 'Espoo',
+  'settings.city.vantaa': 'Vantaa',
+  'settings.city.kauniainen': 'Kauniainen',
+  'settings.map.title': 'Karttapohja',
+  'settings.map.servicemap': 'Palvelukartta',
+  'settings.map.ortoImage': 'Ilmakuva',
+  'settings.map.guideMap': 'Opaskartta',
   'settings.aria.changed': 'Asetukset muutettu. Muista tallentaa',
   'settings.aria.closed': 'Asetukset suljettu',
   'settings.aria.open': 'Avaa asetukset',

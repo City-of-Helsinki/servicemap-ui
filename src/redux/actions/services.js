@@ -13,6 +13,7 @@ export const fetchServiceUnits = serviceId => async (dispatch) => {
     // Filter out duplicate units
     const distinctData = Array.from(new Set(data.map(x => x.id))).map((id) => {
       const obj = data.find(s => id === s.id);
+      obj.object_type = 'unit';
       return obj;
     });
     dispatch(fetchSuccess(distinctData));
@@ -25,7 +26,7 @@ export const fetchServiceUnits = serviceId => async (dispatch) => {
   const options = {
     service: serviceId,
     page_size: 50,
-    only: 'name,accessibility_shortcoming_count',
+    only: 'name,accessibility_shortcoming_count,location,municipality,contract_type',
   };
 
   // Fetch data
