@@ -26,4 +26,12 @@ export default theme => ({
   colorLight: {
     color: '#000',
   },
+  distance: {
+    marginLeft: 'auto',
+    paddingLeft: theme.spacing.unit,
+    paddingTop: 4,
+    marginRight: theme.spacing.unitDouble,
+    color: '#fff',
+    fontWeight: 'bold',
+  },
 });
