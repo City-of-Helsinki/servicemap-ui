@@ -1,7 +1,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
 import Sidebar from '../views/Sidebar';
 import MapView from '../views/MapView';
@@ -72,7 +72,7 @@ const createContentStyles = (
 
 const DefaultLayout = (props) => {
   const {
-    i18n, location, settingsToggled, toggleSettings,
+    i18n, intl, location, settingsToggled, toggleSettings,
   } = props;
   const isMobile = useMediaQuery(`(max-width:${mobileBreakpoint}px)`);
   const isSmallScreen = useMediaQuery(`(max-width:${smallScreenBreakpoint}px)`);
@@ -97,8 +97,10 @@ const DefaultLayout = (props) => {
             <Sidebar />
           )}
         </main>
-        <div aria-hidden style={styles.map}>
-          <MapView isMobile={!!isMobile} />
+        <div aria-label={intl.formatMessage({ id: 'map.ariaLabel' })} tabIndex="-1" style={styles.map}>
+          <div aria-hidden="true" style={styles.map}>
+            <MapView isMobile={!!isMobile} />
+          </div>
         </div>
       </div>
 
@@ -116,6 +118,7 @@ const DefaultLayout = (props) => {
 // Typechecking
 DefaultLayout.propTypes = {
   i18n: PropTypes.instanceOf(I18n),
+  intl: intlShape.isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   settingsToggled: PropTypes.bool.isRequired,
   toggleSettings: PropTypes.func.isRequired,
@@ -125,4 +128,4 @@ DefaultLayout.defaultProps = {
   i18n: null,
 };
 
-export default DefaultLayout;
+export default injectIntl(DefaultLayout);

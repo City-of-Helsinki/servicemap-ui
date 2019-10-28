@@ -111,6 +111,7 @@ export default {
 
   // Map
   'map': 'Map',
+  'map.ariaLabel': 'Map. Currently map information is only accessible visually.', // TODO: verify
   'map.transit.endStation': 'Terminus',
   'map.address.searching': 'Retreiving address...',
   'map.address.info': 'Address information',
