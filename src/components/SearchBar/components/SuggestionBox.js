@@ -106,7 +106,7 @@ const SuggestionBox = (props) => {
     if (listRef && listRef.current) {
       if (listRef.current.props.children.length && focusedSuggestion !== null) {
         if (searchQueries) {
-          setSearch(searchQueries[focusedSuggestion].query);
+          setSearch(searchQueries[focusedSuggestion].suggestion);
         } else if (history) {
           setSearch(history[focusedSuggestion]);
         }
