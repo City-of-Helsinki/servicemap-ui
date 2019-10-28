@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Event } from '@material-ui/icons';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
@@ -32,23 +32,25 @@ const formatEventDate = (event, intl) => {
 };
 
 const Events = ({
-  unit, eventsData, navigator, getLocaleText, intl, changeSelectedEvent, listLength,
+  unit, eventsData, navigator, getLocaleText, intl, changeSelectedEvent, listLength, showMoreCount,
 }) => {
+  const [shownCount, setShownCount] = useState(listLength);
+  const [ref, setRef] = useState(listLength);
   const { events } = eventsData;
   if (unit && events && events.length > 0 && `${eventsData.unit}` === `${unit.id}`) {
     return (
-      <>
+      <div ref={ref => setRef(ref)}>
         <TitledList
           title={<FormattedMessage id="unit.events" />}
+          subtitle={<FormattedMessage id="unit.events.count" values={{ count: events.length }} />}
           titleComponent="h4"
-          listLength={listLength}
-          buttonText={<FormattedMessage id="unit.more.events" values={{ count: events.length }} />}
+          listLength={shownCount}
+          buttonText={<FormattedMessage id="unit.events.more" />}
           showMoreOnClick={listLength
-            ? (e) => {
-              e.preventDefault();
-              if (navigator) {
-                navigator.push('unit', { id: unit.id, type: 'events' });
-              }
+            ? () => {
+              const lastListItem = ref.querySelector('li:last-of-type');
+              lastListItem.focus();
+              setShownCount(shownCount + showMoreCount);
             } : null}
         >
           {events.map((event, i) => {
@@ -59,7 +61,7 @@ const Events = ({
                 icon={<Event />}
                 title={getLocaleText(event.name)}
                 subtitle={dateString}
-                divider={!(i + 1 === events.length || i + 1 === listLength)}
+                divider={!(i + 1 === events.length || i + 1 === shownCount)}
                 onClick={(e) => {
                   e.preventDefault();
                   if (navigator) {
@@ -71,7 +73,7 @@ const Events = ({
             );
           })}
         </TitledList>
-      </>
+      </div>
     );
   } return (
     null
@@ -97,6 +99,7 @@ Events.propTypes = {
   changeSelectedEvent: PropTypes.func.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   intl: intlShape.isRequired,
+  showMoreCount: PropTypes.number,
 };
 
 Events.defaultProps = {
@@ -104,6 +107,7 @@ Events.defaultProps = {
   unit: null,
   navigator: null,
   listLength: null,
+  showMoreCount: 10,
 };
 
 export default injectIntl(connect(

@@ -39,7 +39,6 @@ class UnitView extends React.Component {
     this.state = {
       centered: false,
       didMount: false,
-      startHeading: 3,
     };
   }
 
@@ -169,10 +168,8 @@ class UnitView extends React.Component {
         <ElectronicServices unit={unit} />
         <Reservations
           listLength={10}
-          unitId={unit.id}
           reservations={reservations}
           getLocaleText={getLocaleText}
-          navigator={navigator}
         />
         <Events listLength={5} eventsData={eventsData} />
       </>
@@ -196,7 +193,7 @@ class UnitView extends React.Component {
 
   renderServiceTab() {
     const {
-      getLocaleText, navigator, unit,
+      getLocaleText, unit,
     } = this.props;
 
     if (!unit || !unit.complete) {
@@ -208,7 +205,6 @@ class UnitView extends React.Component {
         <Services
           listLength={10}
           unit={unit}
-          navigator={navigator}
           getLocaleText={getLocaleText}
         />
         <Container margin text>

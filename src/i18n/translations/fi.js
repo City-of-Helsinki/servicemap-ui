@@ -131,10 +131,15 @@ export default {
   'unit.plural': 'Toimipisteet',
 
   'unit.contact.info': 'Yhteystiedot',
-  'unit.services': 'Palvelut toimipisteessä',
   'unit.eServices': 'Sähköinen asiointi',
   'unit.reservations': 'Varattavat kohteet',
   'unit.events': 'Toimipisteen tapahtumat',
+  'unit.events.count': `{count, plural,
+    =0 {}
+    one {# tapahtuma}
+    other {# tapahtumaa}
+  }`,
+  'unit.events.more': 'Näytä lisää tapahtumia',
   'unit.homepage': 'Kotisivu',
   'unit.picture': 'Kuva toimipisteestä: ',
   'unit.description': 'Tietoa toimipisteestä',
@@ -146,13 +151,23 @@ export default {
   'unit.contact': 'Yhteyshenkilö',
   'unit.school.year': 'Lukuvuosi',
   'unit.opens.new.tab': '(uusi välilehti)',
+  'unit.reservations.count': `{count, plural,
+    =0 {}
+    one {# varattava kohde}
+    other {# varattavaa kohdetta}
+  }`,
+  'unit.reservations.more': 'Näytä lisää varattavia kohteita',
   'unit.call.number': '(soita)',
-  'unit.more.reservations': 'Näytä kaikki {count} kohdetta',
-  'unit.more.services': 'Näytä kaikki {count} palvelua',
-  'unit.more.events': 'Näytä kaikki {count} tapahtumaa',
   'unit.list.services': 'Palvelut',
   'unit.list.events': 'Tapahtumat',
   'unit.list.reservations': 'Varattavat kohteet',
+  'unit.services': 'Palvelut toimipisteessä',
+  'unit.services.more': 'Näytä lisää palveluja',
+  'unit.services.count': `{count, plural,
+    =0 {}
+    one {# palvelu}
+    other {# palvelua}
+  }`,
 
   // Search
   'search': 'Hae',

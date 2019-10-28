@@ -130,10 +130,16 @@ export default {
   'unit.plural': 'Verksamhetsställen', // TODO: Verify
 
   'unit.contact.info': 'Contact information', // TODO: Translate
-  'unit.services': 'Tjänster',
   'unit.eServices': 'Electronic services', // TODO: Translate
   'unit.reservations': 'Varattavat kohteet', // TODO: Translate
   'unit.events': 'Evenemang',
+  // TODO: Translate
+  'unit.events.count': `{count, plural,
+    =0 {}
+    one {# tapahtuma}
+    other {# tapahtumaa}
+  }`,
+  'unit.events.more': 'Näytä lisää tapahtumia', // TODO: translate
   'unit.homepage': 'Hemsida',
   'unit.picture': 'Kuva toimipisteestä: ', // TODO: Translate
   'unit.description': 'Unit description', // TODO: Translate
@@ -145,13 +151,25 @@ export default {
   'unit.contact': 'Yhteyshenkilö', // TODO: translate
   'unit.school.year': 'Läsåret',
   'unit.opens.new.tab': '(new tab)', // TODO: Translate
+  // TODO: Translate
+  'unit.reservations.count': `{count, plural,
+    =0 {}
+    one {# varattava kohde}
+    other {# varattavaa kohdetta}
+  }`,
+  'unit.reservations.more': 'Näytä lisää varattavia kohteita', // TODO: Translate
   'unit.call.number': '(call)', // TODO: Translate
-  'unit.more.reservations': 'Näytä kaikki {count} kohdetta', // TODO: Translate
-  'unit.more.services': 'Näytä kaikki {count} palvelua', // TODO: Translate
-  'unit.more.events': 'Näytä kaikki {count} tapahtumaa', // TODO: Translate
   'unit.list.services': 'Palvelut', // TODO: Translate
   'unit.list.events': 'Tapahtumat', // TODO: Translate
   'unit.list.reservations': 'Varattavat kohteet', // TODO: Translate
+  'unit.services': 'Tjänster',
+  'unit.services.more': 'Näytä lisää palveluja', // TODO: Translate
+  // TODO: Translate
+  'unit.services.count': `{count, plural,
+    =0 {}
+    one {# palvelu}
+    other {# palvelua}
+  }`,
 
   // Search
   'search': 'Hae', // TODO: Translate
