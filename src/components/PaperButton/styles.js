@@ -6,6 +6,7 @@ export default theme => ({
   iconButton: {
     flex: '1 0 auto',
     padding: theme.spacing.unit,
+    color: theme.palette.primary.main,
   },
   iconButtonLabel: {
     display: 'flex',
@@ -16,9 +17,12 @@ export default theme => ({
   },
   icon: {
     alignSelf: 'center',
-    color: theme.palette.primary.main,
+    color: 'inherit',
     fontSize: 48,
     margin: theme.spacing.unit,
+  },
+  iconButtonDisabled: {
+    color: 'inherit',
   },
   text: {
     textTransform: 'none',

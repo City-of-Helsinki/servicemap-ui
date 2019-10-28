@@ -13,7 +13,8 @@ export default theme => ({
     flexDirection: 'column',
   },
   iconContainer: {
-    display: 'flex',
+    display: 'grid',
+    gridTemplateColumns: '50% 50%',
   },
   icon: {
     alignSelf: 'center',

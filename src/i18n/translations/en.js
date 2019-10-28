@@ -104,6 +104,7 @@ export default {
   // Home
   'home.buttons.settings': 'Accessibility and city settings',
   'home.buttons.services': 'All services',
+  'home.buttons.closeByServices': 'Nearby services',
   'home.example.title': 'Example search phrases',
   'home.example.search': 'Search for',
   'home.message': 'Message from the developers',
