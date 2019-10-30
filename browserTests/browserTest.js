@@ -46,10 +46,6 @@ test('Language does change', async (t) => {
   testFinnish(t);
 });
 
-
-// TODO: Add swedish test once language is in use
-
-
 fixture`Map tests`
   .page`http://${server.address}:${server.port}/fi`
   .beforeEach(async () => {
@@ -61,7 +57,7 @@ test('Transit marker visible after zoom', async (t) => {
   const markers = ReactSelector('Marker');
   
   // Zoom in to make transit markers visible
-  for(let i = 0; i < 4; i++) {
+  for(let i = 0; i < 6; i++) {
     await t 
       .click(zoomIn)
       .wait(100)
