@@ -30,6 +30,7 @@ import Events from './components/Events';
 import ServiceMapButton from '../../components/ServiceMapButton';
 import UnitIcon from '../../components/SMIcon/UnitIcon';
 import TabLists from '../../components/TabLists';
+import calculateDistance from '../../utils/calculateDistance';
 
 class UnitView extends React.Component {
   constructor(props) {
@@ -89,6 +90,20 @@ class UnitView extends React.Component {
     } else if (location) {
       focusUnit(map, location.coordinates);
     }
+  }
+
+  formatDistanceString = (meters) => {
+    const { intl } = this.props;
+    let distance = meters;
+    if (distance) {
+      if (distance >= 1000) {
+        distance /= 1000; // Convert from m to km
+        distance = distance.toFixed(1); // Show only one decimal
+        distance = intl.formatNumber(distance); // Format distance according to locale
+        return `${distance}km`;
+      }
+      return `${distance}m`;
+    } return null;
   }
 
   /**
@@ -153,10 +168,8 @@ class UnitView extends React.Component {
         <ElectronicServices unit={unit} />
         <Reservations
           listLength={10}
-          unitId={unit.id}
           reservations={reservations}
           getLocaleText={getLocaleText}
-          navigator={navigator}
         />
         <Events listLength={5} eventsData={eventsData} />
       </>
@@ -174,13 +187,13 @@ class UnitView extends React.Component {
     }
 
     return (
-      <AccessibilityInfo titleAlways data={accessibilitySentences} headingLevel={3} />
+      <AccessibilityInfo titleAlways data={accessibilitySentences} headingLevel={4} />
     );
   }
 
   renderServiceTab() {
     const {
-      getLocaleText, navigator, unit,
+      getLocaleText, unit,
     } = this.props;
 
     if (!unit || !unit.complete) {
@@ -192,7 +205,6 @@ class UnitView extends React.Component {
         <Services
           listLength={10}
           unit={unit}
-          navigator={navigator}
           getLocaleText={getLocaleText}
         />
         <Container margin text>
@@ -214,20 +226,22 @@ class UnitView extends React.Component {
 
   render() {
     const {
-      classes, getLocaleText, intl, unit, eventsData, navigator, match, reservations, unitFetching,
+      classes, getLocaleText, intl, unit, match, unitFetching, userLocation,
     } = this.props;
+
     const { didMount } = this.state;
 
     const correctUnit = unit && unit.id === parseInt(match.params.unit, 10);
 
     const title = unit && unit.name ? getLocaleText(unit.name) : '';
     const icon = didMount && unit ? <UnitIcon unit={unit} /> : null;
+    const distance = this.formatDistanceString(calculateDistance(unit, userLocation));
 
     const TopBar = (
       <div className={`${classes.topBar} sticky`}>
         <DesktopComponent>
-          <SearchBar placeholder={intl.formatMessage({ id: 'search' })} />
-          <TitleBar icon={icon} title={title} primary />
+          <SearchBar placeholder={intl.formatMessage({ id: 'search.placeholder' })} />
+          <TitleBar icon={icon} title={title} primary distance={distance} />
         </DesktopComponent>
         <MobileComponent>
           <TitleBar icon={icon} title={correctUnit ? title : ''} primary backButton />
@@ -305,76 +319,6 @@ class UnitView extends React.Component {
       );
     }
 
-    if (unit && unit.complete) {
-      return (
-        <div className={classes.root}>
-          <div className="Content">
-            {TopBar}
-
-            {/* Unit image */}
-            {unit.picture_url
-              && (
-              <img
-                className={classes.image}
-                alt={`${intl.formatMessage({ id: 'unit.picture' })}${getLocaleText(unit.name)}`}
-                src={unit.picture_url}
-              />
-              )
-            }
-
-            {/* Show on map button for mobile */}
-            <MobileComponent>
-              <ServiceMapButton
-                onClick={(e) => {
-                  e.preventDefault();
-                  this.setState({ centered: false });
-                  if (navigator) {
-                    navigator.push('unit', { id: unit.id, query: '?map=true' });
-                  }
-                }}
-              >
-                <FormattedMessage id="general.showOnMap" />
-              </ServiceMapButton>
-            </MobileComponent>
-
-            {/* View Components */}
-            <Highlights unit={unit} getLocaleText={getLocaleText} />
-            <ContactInfo unit={unit} />
-            <ElectronicServices unit={unit} />
-            <Description unit={unit} getLocaleText={getLocaleText} />
-            <Services
-              listLength={10}
-              unit={unit}
-              navigator={navigator}
-              getLocaleText={getLocaleText}
-            />
-            <Reservations
-              listLength={10}
-              unitId={unit.id}
-              reservations={reservations}
-              getLocaleText={getLocaleText}
-              navigator={navigator}
-            />
-            <Events listLength={5} eventsData={eventsData} />
-            <AccessibilityInfo titleAlways headingLevel={4} />
-
-            <Container margin text>
-              <Typography variant="body2">
-                {
-                  unit.contract_type
-                  && unit.contract_type.description
-                  && `${uppercaseFirst(getLocaleText(unit.contract_type.description))}. `
-                }
-                {
-                  unit.data_source
-                  && <FormattedMessage id="unit.data_source" defaultMessage={'Source: {data_source}'} values={{ data_source: unit.data_source }} />
-                }
-              </Typography>
-            </Container>
-          </div>
-        </div>
-      );
-    }
     return (
       <div className={classes.root}>
         <div className="Content">
@@ -399,6 +343,7 @@ const mapStateToProps = (state) => {
   const map = state.mapRef.leafletElement;
   const { navigator } = state;
   const reservations = state.selectedUnit.reservations.data;
+  const { user } = state;
 
   return {
     accessibilitySentences: accessibilitySentences.data,
@@ -410,6 +355,7 @@ const mapStateToProps = (state) => {
     map,
     navigator,
     reservations,
+    userLocation: user.position,
   };
 };
 
@@ -442,6 +388,7 @@ UnitView.propTypes = {
   intl: intlShape.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   reservations: PropTypes.arrayOf(PropTypes.any),
+  userLocation: PropTypes.objectOf(PropTypes.any),
 };
 
 UnitView.defaultProps = {
@@ -452,4 +399,5 @@ UnitView.defaultProps = {
   map: null,
   navigator: null,
   reservations: null,
+  userLocation: null,
 };

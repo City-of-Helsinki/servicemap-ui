@@ -19,6 +19,7 @@ export default {
     "shortcomings": "#b00021",
   },
   "initialMapPosition": [60.170377597530016, 24.941309323934886],
+  "smallContentAreaBreakpoint": 449,
   "mobileUiBreakpoint": 699,
   "smallScreenBreakpoint": 899,
   "topBarHeight": 64,

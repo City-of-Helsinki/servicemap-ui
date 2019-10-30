@@ -7,6 +7,7 @@ import {
 import { FormattedMessage } from 'react-intl';
 import UnitItem from '../../ListItems/UnitItem';
 import ServiceItem from '../../ListItems/ServiceItem';
+import AddressItem from '../../ListItems/AddressItem';
 
 class ResultList extends React.Component {
   // Update only when data changes
@@ -56,7 +57,7 @@ class ResultList extends React.Component {
           {
             data && data.length
             && data.map((item) => {
-              const { id, object_type } = item;
+              const { id, object_type, sort_index } = item;
               // Figure out correct icon for item
               let itemComponent = null;
               switch (object_type) {
@@ -65,6 +66,9 @@ class ResultList extends React.Component {
                   break;
                 case 'service':
                   itemComponent = <ServiceItem key={`service-${id}`} service={item} />;
+                  break;
+                case 'address':
+                  itemComponent = <AddressItem key={`address-${sort_index}`} address={item} />;
                   break;
                 default:
                   itemComponent = null;

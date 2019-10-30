@@ -26,7 +26,7 @@ class ServiceView extends React.Component {
 
   componentDidMount() {
     const {
-      classes, current, match, fetchService,
+      classes, match, fetchService,
     } = this.props;
     const { params } = match;
 
@@ -35,24 +35,31 @@ class ServiceView extends React.Component {
     });
 
     // Fetch service if current is not same as url param's
-    if (!current || `${current.id}` !== params.service) {
+    if (this.shouldFetch()) {
       fetchService(params.service);
     }
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(nextProps) {
     const {
-      current, unitData, match, map,
+      unitData,
     } = this.props;
-    const { params } = match;
     // Focus map if service is set and units exist
-    if (current && `${current.id}` === params.service && unitData && unitData.length > 0) {
+    if (unitData.length > 0 && unitData !== nextProps.unitData) {
       // Focus map on unit
-      this.focusMap(unitData, map);
+      this.focusMap(unitData);
     }
   }
 
-  focusMap = (unit, map) => {
+  // Check if view will fetch data because search params has changed
+  shouldFetch = () => {
+    const { current, isLoading, match } = this.props;
+    const { params } = match;
+    return !isLoading && (!current || `${current.id}` !== params.service);
+  }
+
+  focusMap = (unit) => {
+    const { map } = this.props;
     const { mapMoved } = this.state;
     if (unit && map && map._layersMaxZoom && !mapMoved) {
       this.setState({ mapMoved: true });
@@ -80,10 +87,6 @@ class ServiceView extends React.Component {
     let serviceUnits = null;
     if (unitData && unitData.length > 0) {
       serviceUnits = unitData;
-      serviceUnits.forEach((unit) => {
-        // eslint-disable-next-line no-param-reassign
-        unit.object_type = 'unit';
-      });
     }
 
     // Calculate visible components
@@ -95,7 +98,7 @@ class ServiceView extends React.Component {
     return (
       <div>
         <DesktopComponent>
-          <SearchBar placeholder={intl.formatMessage({ id: 'search' })} />
+          <SearchBar placeholder={intl.formatMessage({ id: 'search.placeholder' })} />
           {
             showTitle
             && (

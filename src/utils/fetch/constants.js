@@ -31,7 +31,7 @@ export const APIHandlers = {
     options: {
       page: 1,
       page_size: 200,
-      only: 'unit.location,unit.name,unit.municipality,unit.accessibility_shortcoming_count',
+      only: 'unit.location,unit.name,unit.municipality,unit.accessibility_shortcoming_count,unit.contract_type',
       geometry: true,
     },
   },
@@ -53,6 +53,16 @@ export const APIHandlers = {
       page_size: 100,
     },
 
+  },
+  node: {
+    url: `${config.serviceMapAPI.root}/unit/`,
+    options: {
+      page: 1,
+      page_size: 200,
+      only: 'location,name,municipality,accessibility_shortcoming_count,service_nodes',
+      geometry: true,
+      include: 'service_nodes',
+    },
   },
   unitEvents: {
     url: `${config.eventsAPI.root}/event/`,
