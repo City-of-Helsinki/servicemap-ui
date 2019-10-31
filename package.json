@@ -41,7 +41,7 @@
   "scripts": {
     "start": "node dist",
     "build": "NODE_ENV=production BABEL_ENV=production webpack --mode production ",
-    "testBuild": "webpack --mode development",
+    "testBuild": "NODE_ENV=development BABEL_ENV=development webpack --mode development",
     "test": "jest test",
     "eject": "react-scripts eject",
     "dev": "NODE_ENV=development BABEL_ENV=development webpack --watch --progress & nodemon dist",
