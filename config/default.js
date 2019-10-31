@@ -20,6 +20,7 @@ export default {
   },
   "initialMapPosition": [60.170377597530016, 24.941309323934886],
   "mobileUiBreakpoint": 699,
+  "productionPrefix": process.env.PRODUCTION_PREFIX,
   "smallScreenBreakpoint": 899,
   "topBarHeight": 64,
   // locales
