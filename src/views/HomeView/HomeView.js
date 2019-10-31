@@ -106,6 +106,18 @@ class HomeView extends React.Component {
             {intl.formatMessage({ id: 'home.message' })}
           </Typography>
           <Typography className={classes.left} variant="body2">
+            <b>31.10.2019</b>
+            {' '}
+- Käytettävyystutkimus on tehty ja tulokset analysoitu.
+Olemme tällä hetkellä toteuttamassa käyttäjien huomioita ja meille on
+esimerkiksi tulossa vaihtoehtoisesti valittavaksi mustavalkoinen käyttöliittymä.
+Olemme parantamassa asetusten löydettävyyttä sekä hakutoiminnallisuutta.
+Oli hienoa saada testaukseen monenlaisia käyttäjiä. Kiitos heille kaikille.
+Turusta on tulossa uusi suurikontrastinen karttapohja parantamaan palvelun
+käytettävyyttä heikkonäköisille.
+            {' '}
+            <br />
+            <br />
             <b>25.9.2019</b>
             {' '}
 - Palvelukartan käytettävyystutkimus on käynnissä ajalla 23.9- 4.10.2019.
