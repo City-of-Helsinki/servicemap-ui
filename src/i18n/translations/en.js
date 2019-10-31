@@ -132,12 +132,17 @@ export default {
   'unit.reservations': 'Reservable objects', // TODO verify
   'unit.events': 'Events',
   'unit.homepage': 'Home page',
+  'unit.homepage.missing': 'No home page provided',
   'unit.picture': 'Picture of unit: ',
   'unit.description': 'Unit description',
   'unit.address': 'Address',
+  'unit.address.missing': 'No address provided',
   'unit.phone': 'Phone number',
+  'unit.phone.missing': 'No phone number provided',
   'unit.email': 'Email',
+  'unit.email.missing': 'No email provided',
   'unit.opening.hours': 'Opening hours',
+  'unit.opening.hours.missing': 'No opening hours provided',
   'unit.opening.hours.info': 'Additional information about opening hours', // TODO verify
   'unit.contact': 'Contact person',
   'unit.school.year': 'School year',

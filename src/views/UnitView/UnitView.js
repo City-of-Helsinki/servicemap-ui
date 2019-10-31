@@ -122,7 +122,7 @@ class UnitView extends React.Component {
 
   renderDetailTab() {
     const {
-      getLocaleText, eventsData, navigator, reservations, unit,
+      getLocaleText, intl, eventsData, navigator, reservations, unit,
     } = this.props;
 
     if (!unit || !unit.complete) {
@@ -148,7 +148,7 @@ class UnitView extends React.Component {
 
         {/* View Components */}
         <Highlights unit={unit} getLocaleText={getLocaleText} />
-        <ContactInfo unit={unit} />
+        <ContactInfo unit={unit} intl={intl} />
         <Description unit={unit} getLocaleText={getLocaleText} />
         <ElectronicServices unit={unit} />
         <Reservations

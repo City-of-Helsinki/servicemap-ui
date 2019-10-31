@@ -4,6 +4,7 @@ const unitSectionFilter = (list, section) => {
   let i = 0;
   list.forEach((item) => {
     if (!item.section_type) {
+      // TODO: is this used?
       filteredList.push({ type: section, value: item, id: i });
     } else if (item.section_type === section) {
       // Don't add duplicate elements

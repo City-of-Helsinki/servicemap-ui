@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import InfoList from './InfoList';
 import unitSectionFilter from '../utils/unitSectionFilter';
 
-const ElectronicServices = ({ unit, intl }) => {
+const ElectronicServices = ({ unit }) => {
   // List data: Homepage link and e-service links
   const data = [
-    { type: 'LINK', value: unit.www ? { name: intl.formatMessage({ id: 'unit.homepage' }), www: unit.www } : null },
     ...unitSectionFilter(unit.connections, 'ESERVICE_LINK'),
   ];
 
@@ -22,7 +21,6 @@ const ElectronicServices = ({ unit, intl }) => {
 
 ElectronicServices.propTypes = {
   unit: PropTypes.objectOf(PropTypes.any).isRequired,
-  intl: intlShape.isRequired,
 };
 
 export default injectIntl(ElectronicServices);
