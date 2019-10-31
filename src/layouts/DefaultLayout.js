@@ -1,7 +1,7 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
 import Sidebar from '../views/Sidebar';
 import MapView from '../views/MapView';
@@ -71,7 +71,9 @@ const createContentStyles = (
 };
 
 const DefaultLayout = (props) => {
-  const { i18n, location } = props;
+  const {
+    i18n, intl, location, settingsToggled, toggleSettings,
+  } = props;
   const isMobile = useMediaQuery(`(max-width:${mobileBreakpoint}px)`);
   const isSmallScreen = useMediaQuery(`(max-width:${smallScreenBreakpoint}px)`);
   const fullMobileMap = new URLSearchParams(location.search).get('map'); // If mobile map without bottom navigation & searchbar
@@ -79,27 +81,26 @@ const DefaultLayout = (props) => {
   const landscape = useMediaQuery('(min-device-aspect-ratio: 1/1)');
   const portrait = useMediaQuery('(max-device-aspect-ratio: 1/1)');
 
-  // State update for function component with react hook
-  const [settingsOpen, setToggle] = useState(false);
-
   const styles = createContentStyles(
-    isMobile, isSmallScreen, landscape, mobileMapOnly, fullMobileMap, settingsOpen,
+    isMobile, isSmallScreen, landscape, mobileMapOnly, fullMobileMap, settingsToggled,
   );
 
 
   return (
     <>
-      <TopBar settingsOpen={settingsOpen} toggleSettings={() => setToggle(!settingsOpen)} topNav={styles.topNav} i18n={i18n} />
+      <TopBar settingsOpen={settingsToggled} toggleSettings={() => toggleSettings(!settingsToggled)} topNav={styles.topNav} i18n={i18n} />
       <div style={styles.activeRoot}>
         <main className="SidebarWrapper" style={styles.sidebar}>
-          {settingsOpen ? (
-            <Settings toggleSettings={() => setToggle(false)} isMobile={!!isMobile} />
+          {settingsToggled ? (
+            <Settings toggleSettings={() => toggleSettings(false)} isMobile={!!isMobile} />
           ) : (
             <Sidebar />
           )}
         </main>
-        <div aria-hidden style={styles.map}>
-          <MapView isMobile={!!isMobile} />
+        <div aria-label={intl.formatMessage({ id: 'map.ariaLabel' })} tabIndex="-1" style={styles.map}>
+          <div aria-hidden="true" style={styles.map}>
+            <MapView isMobile={!!isMobile} />
+          </div>
         </div>
       </div>
 
@@ -117,11 +118,14 @@ const DefaultLayout = (props) => {
 // Typechecking
 DefaultLayout.propTypes = {
   i18n: PropTypes.instanceOf(I18n),
+  intl: intlShape.isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
+  settingsToggled: PropTypes.bool.isRequired,
+  toggleSettings: PropTypes.func.isRequired,
 };
 
 DefaultLayout.defaultProps = {
   i18n: null,
 };
 
-export default DefaultLayout;
+export default injectIntl(DefaultLayout);

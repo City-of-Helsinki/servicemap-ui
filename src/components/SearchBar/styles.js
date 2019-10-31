@@ -2,6 +2,7 @@
 export default theme => ({
   root: {
     display: 'flex',
+    flexDirection: 'column',
   },
   wrapper: {
     flex: 1,
@@ -46,5 +47,85 @@ export default theme => ({
   },
   primary: {
     backgroundColor: theme.palette.primary.main,
+  },
+  suggestionSubtitle: {
+    display: 'flex',
+    backgroundColor: 'rgba(155,155,155,0.47)',
+    paddingLeft: '18px',
+  },
+  subtitleText: {
+    lineHeight: '32px',
+  },
+  suggestionArea: {
+    zIndex: 51,
+    position: 'fixed',
+    height: 'calc(100% - 64px - 76px)',
+    width: '450px',
+    backgroundColor: '#fff',
+    overflow: 'auto',
+  },
+  suggestionAreaMobile: {
+    zIndex: 51,
+    position: 'fixed',
+    height: 'calc(100% - 76px)',
+    width: '100%',
+    backgroundColor: '#fff',
+    overflow: 'auto',
+  },
+  expandTitle: {
+    alignSelf: 'center',
+    marginRight: 'auto',
+    paddingLeft: theme.spacing.unitDouble,
+    '&:focus': {
+      boxShadow: 'none',
+    },
+  },
+  expandHeight: {
+    top: 64,
+    height: 'calc(100% - 64px)',
+  },
+  expandHeightMobile: {
+    top: 0,
+    height: '100%',
+  },
+  divider: {
+    marginLeft: 56,
+  },
+  listIcon: {
+    paddingRight: theme.spacing.unitDouble,
+    paddingTop: 8,
+    paddingBottom: 8,
+    color: 'rgba(0,0,0,0.54)',
+  },
+  absolute: {
+    position: 'absolute',
+    zIndex: 99999999999,
+  },
+  mobileBackdrop: {
+    zIndex: 1,
+    opacity: 0.2,
+    position: 'absolute',
+    top: 'auto',
+    height: '100%',
+    width: '100%',
+    backgroundColor: '#000',
+  },
+  closeButton: {
+    margin: 0,
+    width: 'fit-content',
+    height: 42,
+    marginTop: 12,
+    marginBottom: theme.spacing.unitDouble,
+  },
+  expandSearchTop: {
+    display: 'flex',
+    flexDirection: 'row-reverse',
+    paddingTop: theme.spacing.unit,
+    paddingLeft: theme.spacing.unitDouble,
+    paddingRight: theme.spacing.unitDouble,
+  },
+  backIcon: {
+    paddingLeft: 0,
+    paddingRight: theme.spacing.unitDouble,
   },
 });

@@ -90,7 +90,7 @@ const MapView = (props) => {
           >
             {currentPage === 'map' && (
             // If on root map page (/map) display search bar.
-            <SearchBar hideBackButton placeholder={intl.formatMessage({ id: 'search' })} />
+            <SearchBar hideBackButton placeholder={intl.formatMessage({ id: 'search.placeholder' })} />
             )}
             {currentPage === 'unit' && highlightedUnit && (
             // If on unit's map page (/unit?map=true) display title bar

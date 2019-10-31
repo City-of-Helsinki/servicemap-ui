@@ -41,6 +41,24 @@ export const WheelchairIcon = ({ ...rest }) => (
 export const RollatorIcon = ({ ...rest }) => (
   <SMIcon icon="icon-icon-rollator" {...rest} />
 );
+/**
+ * Cities
+ */
+export const HelsinkiIcon = ({ ...rest }) => (
+  <SMIcon icon="icon-icon-coat-of-arms-helsinki" {...rest} />
+);
+
+export const EspooIcon = ({ ...rest }) => (
+  <SMIcon icon="icon-icon-coat-of-arms-espoo" {...rest} />
+);
+
+export const VantaaIcon = ({ ...rest }) => (
+  <SMIcon icon="icon-icon-coat-of-arms-vantaa" {...rest} />
+);
+
+export const KauniainenIcon = ({ ...rest }) => (
+  <SMIcon icon="icon-icon-coat-of-arms-kauniainen" {...rest} />
+);
 
 /**
  * Map types
@@ -71,6 +89,9 @@ export const MapIcon = ({ ...rest }) => (
   <SMIcon icon="icon-icon-map-options" {...rest} />
 );
 
+export const SearchIcon = ({ ...rest }) => (
+  <SMIcon icon="icon-icon-search" {...rest} />
+);
 
 // Function to get right icon based on key mapping
 export const getIcon = (key, props) => {

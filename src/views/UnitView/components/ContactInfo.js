@@ -28,7 +28,7 @@ const ContactInfo = ({ unit }) => {
     <InfoList
       data={data}
       title={<FormattedMessage id="unit.contact.info" />}
-      titleComponent="h3"
+      titleComponent="h4"
     />
   );
 };
