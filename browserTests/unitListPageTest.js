@@ -1,9 +1,10 @@
+/* eslint-disable */
+/*
 import { waitForReact, ReactSelector } from 'testcafe-react-selectors';
 import config from './config';
 
 const { server } = config;
 
-/* eslint-disable */
 
 const pages = [
   `http://${server.address}:${server.port}/fi/unit/8215/events`,
@@ -107,3 +108,4 @@ test('Page has list of reservations', async (t) => {
       .expect(reservationsData).notEql(undefined, 'data error')
   }
 })
+*/

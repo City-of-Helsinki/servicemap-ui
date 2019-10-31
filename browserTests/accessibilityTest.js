@@ -31,9 +31,6 @@ test('Automated accessibility testing', async (t) => {
   await axeCheckHandler(t);
 });
 
-fixture`TestCafe Axe test: unit list page`
-  .page`http://${server.address}:${server.port}/fi/unit/8215/events`;
-
 test('Automated accessibility testing', async (t) => {
   await axeCheckHandler(t);
 });
