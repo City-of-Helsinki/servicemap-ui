@@ -65,13 +65,15 @@
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.12.4",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "^24.5.0"
+    "jest": "^24.5.0",
+    "jest-canvas-mock": "^2.1.2"
   },
   "jest": {
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
       "\\.(css|less)$": "identity-obj-proxy",
       "isomorphic-style-loader/withStyles": "<rootDir>/__mocks__/withStyles.js"
-    }
+    },
+    "setupFiles": ["jest-canvas-mock"]
   }
 }
