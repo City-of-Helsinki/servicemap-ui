@@ -39,7 +39,7 @@ class ResultOrderer extends React.Component {
 
   render() {
     const {
-      classes, direction, intl, order, disabled, handleChange,
+      classes, direction, intl, order, disabled, handleChange, userLocation,
     } = this.props;
     return (
       <form className={classes.root} autoComplete="off">
@@ -69,7 +69,12 @@ class ResultOrderer extends React.Component {
             <option className={classes.black} value="alphabetical-desc">{intl.formatMessage({ id: 'sorting.alphabetical.desc' })}</option>
             <option className={classes.black} value="alphabetical-asc">{intl.formatMessage({ id: 'sorting.alphabetical.asc' })}</option>
             <option className={classes.black} value="accessibility-desc">{intl.formatMessage({ id: 'sorting.accessibility.desc' })}</option>
-            <option className={classes.black} value="distance-asc">{intl.formatMessage({ id: 'sorting.distance.asc' })}</option>
+            {
+              userLocation
+              && (
+                <option className={classes.black} value="distance-asc">{intl.formatMessage({ id: 'sorting.distance.asc' })}</option>
+              )
+            }
           </Select>
         </FormControl>
       </form>
@@ -86,11 +91,13 @@ ResultOrderer.propTypes = {
   setOrder: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
   handleChange: PropTypes.func,
+  userLocation: PropTypes.objectOf(PropTypes.any),
 };
 
 ResultOrderer.defaultProps = {
   disabled: false,
   handleChange: null,
+  userLocation: null,
 };
 
 export default ResultOrderer;

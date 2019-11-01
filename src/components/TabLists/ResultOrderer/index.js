@@ -8,10 +8,12 @@ import styles from './styles';
 // Listen to redux state
 const mapStateToProps = (state) => {
   const { direction, order } = state.sort;
+  const { position } = state.user;
 
   return {
     direction,
     order,
+    userLocation: position,
   };
 };
 
