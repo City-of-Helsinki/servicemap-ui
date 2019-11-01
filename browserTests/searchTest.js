@@ -33,27 +33,28 @@ const searchUnits = async (t, search = 'uimastadion') => {
 
 test('Navigate search view ', async (t) => {
   // Test result orderer navigation
+  const unitCount = await searchUnits(t);
   const input = ReactSelector('InputBase');
   let select =  ReactSelector('ResultOrderer Select');
 
   await t
-    .click(input)
+    .typeText(input, 'kirjasto')
     .pressKey('tab') // Tabs to search icon button
+    .pressKey('tab') // Narrow search
     .pressKey('tab') // Result orderer
     .expect(select.getReact(({props}) => props.value)).eql('match-desc')
     .pressKey('down')
     .expect(select.getReact(({props}) => props.value)).eql('alphabetical-desc')
     .pressKey('up')
     .expect(select.getReact(({props}) => props.value)).eql('match-desc');
-
   // Test result list navigation
-  // const unitCount = await searchUnits(t);
   const firstSearchItems =  ReactSelector('TabLists ResultItem');
   const secondSearchItems = firstSearchItems.nth(1);
 
   await t
-    .click(input)
+    .typeText(input, 'kirjasto')
     .pressKey('tab') // Tabs to search icon button
+    .pressKey('tab') // Narrow search
     .pressKey('tab') // Result orderer
     .pressKey('tab') // First tab
     .pressKey('tab') // Tabs to first item in list
@@ -94,7 +95,6 @@ test('Navigate search view ', async (t) => {
   await t // Check that units exist
     .expect(units.count).gt(1)
 });
-
 test('Search does list results', async (t) => {
   // const unitCount = await searchUnits(t);
   const searchView = ReactSelector('SearchView')
