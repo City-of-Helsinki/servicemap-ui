@@ -3,12 +3,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // TODO Remove this when redux selected event is used
-import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { injectIntl, intlShape } from 'react-intl';
+import { intlShape } from 'react-intl';
 import { AccessTime, Phone, Event } from '@material-ui/icons';
-import { changeSelectedEvent } from '../../redux/actions/event';
-import { fetchSelectedUnit } from '../../redux/actions/selectedUnit';
 import DescriptionText from '../../components/DescriptionText';
 import SearchBar from '../../components/SearchBar';
 import TitleBar from '../../components/TitleBar';
@@ -204,18 +200,4 @@ EventDetailView.defaultProps = {
   selectedUnit: null,
 };
 
-const mapStateToProps = (state) => {
-  const event = state.event.selected;
-  const selectedUnit = state.selectedUnit.unit.data;
-  const map = state.mapRef.leafletElement;
-  return {
-    event,
-    map,
-    selectedUnit,
-  };
-};
-
-export default withRouter(injectIntl(connect(
-  mapStateToProps,
-  { changeSelectedEvent, fetchSelectedUnit },
-)(EventDetailView)));
+export default EventDetailView;

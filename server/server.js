@@ -69,7 +69,9 @@ app.get('/*', (req, res, next) => {
   const sheetsManager = new Map();
 
   // Create a new class name generator.
-  const generateClassName = createGenerateClassName();
+  const generateClassName = createGenerateClassName({
+    productionPrefix: config.productionPrefix,
+  });
 
   // Locale for page
   const localeParam = req.params[0].slice(0, 2)
