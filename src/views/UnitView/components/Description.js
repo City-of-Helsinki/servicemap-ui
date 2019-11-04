@@ -7,7 +7,12 @@ import DescriptionText from '../../../components/DescriptionText';
 import styles from '../styles/styles';
 
 const Description = ({ unit, getLocaleText, classes }) => {
-  if (unit.description || unitSectionFilter(unit.connections, 'OTHER_INFO').length > 0) {
+  const additionalInfo = [
+    ...unitSectionFilter(unit.connections, 'OTHER_INFO'),
+    ...unitSectionFilter(unit.connections, 'TOPICAL'),
+  ];
+
+  if (unit.description || additionalInfo.length) {
     return (
       <div>
         {/* Description */}
@@ -18,7 +23,7 @@ const Description = ({ unit, getLocaleText, classes }) => {
           />
         )}
         {/* Other info texts + links */}
-        {unitSectionFilter(unit.connections, 'OTHER_INFO').map((item) => {
+        {additionalInfo.map((item) => {
           if (item.value.www) {
             return (
               <Typography
