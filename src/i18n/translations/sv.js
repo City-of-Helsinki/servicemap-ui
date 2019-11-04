@@ -144,12 +144,17 @@ export default {
   }`,
   'unit.events.more': 'Näytä lisää tapahtumia', // TODO: translate
   'unit.homepage': 'Hemsida',
+  'unit.homepage.missing': 'Kotisivua ei ilmoitettu', // TODO: Translate
   'unit.picture': 'Kuva toimipisteestä: ', // TODO: Translate
   'unit.description': 'Unit description', // TODO: Translate
   'unit.address': 'Osoite', // TODO: Translate
+  'unit.address.missing': 'Osoitetta ei ilmoitettu', // TODO: Translate
   'unit.phone': 'Phone number', // TODO: Translate
+  'unit.phone.missing': 'Puhelinnumeroa ei ilmoitettu', // TODO: Translate
   'unit.email': 'Sähköpostiosoite', // TODO: Translate
+  'unit.email.missing': 'Sähköpostiosoitetta ei ilmoitettu', // TODO: Translate
   'unit.opening.hours': 'Opening hours', // TODO: Translate
+  'unit.opening.hours.missing': 'Aukioloaikoja ei ilmoitettu', // TODO: Translate
   'unit.opening.hours.info': 'Lisätietoa aukioloajoista', // TODO: Translate
   'unit.contact': 'Yhteyshenkilö', // TODO: translate
   'unit.school.year': 'Läsåret',
