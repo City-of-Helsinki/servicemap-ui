@@ -50,6 +50,7 @@ export default {
   'sorting.accessibility.desc': 'Esteettömin ensin',
   'sorting.alphabetical.asc': 'Käänteinen aakkosjärjestys',
   'sorting.alphabetical.desc': 'Aakkosjärjestys',
+  'sorting.distance.asc': 'Lähin ensin',
   'sorting.match.desc': 'Osuvin ensin',
 
   // General
