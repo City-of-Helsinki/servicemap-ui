@@ -20,13 +20,8 @@ export const fetchUnits = (
   const { locale } = user;
 
   const onSuccess = (results) => {
-    // Filter out duplicate units
-    const distinctData = Array.from(new Set(results.map(x => x.id))).map((id) => {
-      const obj = results.find(s => id === s.id);
-      return obj;
-    });
-    saveSearchToHistory(searchQuery, distinctData);
-    dispatch(fetchSuccess(distinctData));
+    saveSearchToHistory(searchQuery, results);
+    dispatch(fetchSuccess(results));
   };
   const onSuccessNode = (results) => {
     results.forEach((unit) => {
