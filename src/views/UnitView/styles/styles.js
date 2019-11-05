@@ -72,6 +72,7 @@ export default theme => ({
     position: 'relative',
   },
   imageCaption: {
+    width: '100%',
     fontSize: '60%',
     position: 'absolute',
     bottom: 0,
