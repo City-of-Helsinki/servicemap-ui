@@ -162,8 +162,8 @@ class UnitView extends React.Component {
         </MobileComponent>
 
         {/* View Components */}
-        <Highlights unit={unit} getLocaleText={getLocaleText} />
         <ContactInfo unit={unit} intl={intl} />
+        <Highlights unit={unit} getLocaleText={getLocaleText} />
         <Description unit={unit} getLocaleText={getLocaleText} />
         <ElectronicServices unit={unit} />
       </>
