@@ -280,11 +280,11 @@ class UnitView extends React.Component {
           title: intl.formatMessage({ id: 'accessibility' }),
         },
         {
-          ariaLabel: intl.formatMessage({ id: 'service.plural' }),
+          ariaLabel: intl.formatMessage({ id: 'service.tab' }),
           component: this.renderServiceTab(),
           data: null,
           itemsPerPage: null,
-          title: intl.formatMessage({ id: 'service.plural' }),
+          title: intl.formatMessage({ id: 'service.tab' }),
         },
       ];
       return (

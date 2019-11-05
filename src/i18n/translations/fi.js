@@ -244,6 +244,7 @@ export default {
   'service.plural': 'Palvelut',
   'service.nearby': 'Lähellä olevat palvelut',
   'service.units.empty': 'Palvelulla ei ole toimipisteitä',
+  'service.tab': 'Palvelut ja tapahtumat',
 
   // Settings
   'settings': 'Asetukset',

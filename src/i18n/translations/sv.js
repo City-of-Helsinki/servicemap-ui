@@ -246,6 +246,7 @@ export default {
   'service.plural': 'Tjänster',
   'service.nearby': 'Nearby services', // TODO: Translate
   'service.units.empty': 'Service doesn\'t have units', // TODO: Translate
+  'service.tab': 'Palvelut ja tapahtumat', // TODO: Translate
 
   // Settings
   'settings': 'Personifiera',
