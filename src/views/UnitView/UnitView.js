@@ -166,12 +166,6 @@ class UnitView extends React.Component {
         <ContactInfo unit={unit} intl={intl} />
         <Description unit={unit} getLocaleText={getLocaleText} />
         <ElectronicServices unit={unit} />
-        <Reservations
-          listLength={10}
-          reservations={reservations}
-          getLocaleText={getLocaleText}
-        />
-        <Events listLength={5} eventsData={eventsData} />
       </>
     );
   }
@@ -193,7 +187,7 @@ class UnitView extends React.Component {
 
   renderServiceTab() {
     const {
-      getLocaleText, unit,
+      eventsData, getLocaleText, reservations, unit,
     } = this.props;
 
     if (!unit || !unit.complete) {
@@ -207,6 +201,12 @@ class UnitView extends React.Component {
           unit={unit}
           getLocaleText={getLocaleText}
         />
+        <Reservations
+          listLength={10}
+          reservations={reservations}
+          getLocaleText={getLocaleText}
+        />
+        <Events listLength={5} eventsData={eventsData} />
         <Container margin text>
           <Typography variant="body2">
             {
