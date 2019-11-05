@@ -137,7 +137,7 @@ class UnitView extends React.Component {
 
   renderDetailTab() {
     const {
-      getLocaleText, intl, eventsData, navigator, reservations, unit,
+      getLocaleText, intl, navigator, unit,
     } = this.props;
 
     if (!unit || !unit.complete) {
@@ -160,6 +160,20 @@ class UnitView extends React.Component {
             <FormattedMessage id="general.showOnMap" />
           </ServiceMapButton>
         </MobileComponent>
+        {/* Contract type */}
+        <Container margin text>
+          <Typography variant="body2">
+            {
+              unit.contract_type
+              && unit.contract_type.description
+              && `${uppercaseFirst(getLocaleText(unit.contract_type.description))}. `
+            }
+            {
+              unit.data_source
+              && <FormattedMessage id="unit.data_source" defaultMessage={'Source: {data_source}'} values={{ data_source: unit.data_source }} />
+            }
+          </Typography>
+        </Container>
 
         {/* View Components */}
         <ContactInfo unit={unit} intl={intl} />
@@ -207,19 +221,6 @@ class UnitView extends React.Component {
           getLocaleText={getLocaleText}
         />
         <Events listLength={5} eventsData={eventsData} />
-        <Container margin text>
-          <Typography variant="body2">
-            {
-              unit.contract_type
-              && unit.contract_type.description
-              && `${uppercaseFirst(getLocaleText(unit.contract_type.description))}. `
-            }
-            {
-              unit.data_source
-              && <FormattedMessage id="unit.data_source" defaultMessage={'Source: {data_source}'} values={{ data_source: unit.data_source }} />
-            }
-          </Typography>
-        </Container>
       </>
     );
   }
