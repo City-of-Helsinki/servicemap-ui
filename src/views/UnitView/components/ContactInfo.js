@@ -29,11 +29,11 @@ const ContactInfo = ({ unit, intl }) => {
   // Form data array
   const data = [
     address,
-    ...hours.length ? hours : [{ type: 'OPENING_HOURS', value: intl.formatMessage({ id: 'unit.opening.hours.missing' }) }],
     phone,
     email,
     website,
     ...contact.length ? contact : [],
+    ...hours.length ? hours : [{ type: 'OPENING_HOURS', value: intl.formatMessage({ id: 'unit.opening.hours.missing' }) }],
   ];
 
   return (
