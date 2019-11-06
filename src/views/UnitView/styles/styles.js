@@ -34,6 +34,7 @@ export default theme => ({
 
   link: {
     color: '#0000EE',
+    textDecoration: 'underline',
   },
   left: {
     textAlign: 'left',
@@ -72,6 +73,7 @@ export default theme => ({
     position: 'relative',
   },
   imageCaption: {
+    width: '100%',
     fontSize: '60%',
     position: 'absolute',
     bottom: 0,

@@ -16,7 +16,7 @@ export default theme => ({
   },
   tab: {
     minWidth: 0,
-    flex: '1 1 auto',
+    flex: '1 1',
     [theme.breakpoints.only('sm')]: {
       letterSpacing: 'normal',
     },
@@ -24,5 +24,7 @@ export default theme => ({
   tabLabelContainer: {
     paddingLeft: 0,
     paddingRight: 0,
+    marginTop: theme.spacing.unit,
+    marginBottom: theme.spacing.unit,
   },
 });

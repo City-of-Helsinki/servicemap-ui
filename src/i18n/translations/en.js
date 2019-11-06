@@ -249,6 +249,7 @@ export default {
   'service.plural': 'Services',
   'service.nearby': 'Nearby services',
   'service.units.empty': 'Service doesn\'t have units',
+  'service.tab': 'Services and events',
 
   // Settings
   'settings': 'Settings',
