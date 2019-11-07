@@ -54,6 +54,8 @@ export default {
   'sorting.match.desc': 'Osuvin ensin', // TODO: Translate
 
   // General
+  'general.frontPage': 'Etusivu', // TODO: Translate
+  'general.menu': 'Valikko', // TODO: Translate
   'general.back': 'Tillbaka',
   'general.back.address': 'Back to address view', // TODO: Translate
   'general.back.home': 'Back to home view', // TODO: Translate

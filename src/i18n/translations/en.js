@@ -55,6 +55,8 @@ export default {
   'sorting.match.desc': 'Relevance',
 
   // General
+  'general.frontPage': 'Front page',
+  'general.menu': 'Menu',
   'general.back': 'Back',
   'general.back.address': 'Back to address view',
   'general.back.home': 'Back to home view',

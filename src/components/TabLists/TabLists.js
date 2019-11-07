@@ -209,6 +209,8 @@ class TabLists extends React.Component {
     if (!this.tabsRef) {
       return;
     }
+    const { mobile } = this.state;
+    const appBarHeight = mobile ? config.topBarHeightMobile : config.topBarHeight;
 
     // Reset scroll to avoid scrolled sticky  elements having inconsistent offsetTop
     const elem = document.getElementsByClassName(this.sidebarClass)[0];
@@ -242,7 +244,7 @@ class TabLists extends React.Component {
       // Set new styles and scrollDistance value to state
       this.setState({
         styles: {
-          top: stickyElementPadding,
+          top: Math.max(appBarHeight, stickyElementPadding),
         },
         tabStyles: {
           minHeight: customTabHeight,

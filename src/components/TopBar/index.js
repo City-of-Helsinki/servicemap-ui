@@ -7,9 +7,10 @@ import TopBar from './TopBar';
 
 // Listen to redux state
 const mapStateToProps = (state) => {
-  const { navigator } = state;
+  const { navigator, user } = state;
   return {
     navigator,
+    currentPage: user.page,
   };
 };
 

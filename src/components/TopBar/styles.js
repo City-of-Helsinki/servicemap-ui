@@ -1,91 +1,70 @@
 import config from '../../../config';
 
-const { topBarHeight } = config;
+const { topBarHeight, topBarHeightMobile } = config;
 
 const styles = () => ({
-  button: {
-    textTransform: 'none',
-    paddingRight: 16,
-    paddingLeft: 16,
-  },
   buttonLabel: {
     display: 'flex',
     flexDirection: 'column',
   },
-  buttonSettings: {
-    backgroundColor: '#4e67d2',
-  },
-  buttonSettingsIcon: {
-    marginRight: 8,
-  },
-  buttonMap: {
-    backgroundColor: '#4e67d2',
-  },
-  desktopNav: {
-    position: 'relative',
-    height: topBarHeight,
-  },
-  feedbackLink: {
-    display: 'inline-block',
-  },
-  feedbackText: {
-    margin: 0,
-    color: 'white',
-    textDecorationColor: 'white',
-  },
+  // feedbackLink: {
+  //   display: 'inline-block',
+  // },
+  // feedbackText: {
+  //   margin: 0,
+  //   color: 'white',
+  //   textDecorationColor: 'white',
+  // },
   homeLogoContainer: {
     paddingTop: 8,
     alignSelf: 'center',
   },
-  languages: {
-    flex: '0 0 auto',
-    display: 'flex',
-  },
   logo: {
-    marginLeft: 8,
+    marginLeft: 4,
+    marginRight: 16,
   },
-  logoContainer: {
-    flex: '1 0 auto',
-    display: 'flex',
-  },
-  logoHomeLink: {
-    alignSelf: 'center',
-  },
-  noTextTransform: {
-    textTransform: 'none',
-  },
-  mobileNav: {
-    position: 'sticky',
-    height: topBarHeight,
-    top: 0,
-    zIndex: 999999999,
-    backgroundColor: '#2242C7',
-  },
-  toolbar: {
+  toolbarBlack: {
+    minHeight: 28,
+    height: 28,
+    backgroundColor: '#141823',
     padding: 0,
-    display: 'flex',
+    paddingLeft: 8,
+  },
+  toolbarBlackContainer: {
     justifyContent: 'space-around',
-  },
-  topNavLeft: {
     display: 'flex',
-    height: topBarHeight,
-    justifyContent: 'space-between',
+    width: 450,
+    color: '#fff',
   },
-  topNavLeftMobile: {
-    display: 'flex',
-    height: topBarHeight,
-    justifyContent: 'flex-start',
-    width: '60%',
-    marginLeft: 8,
+  greyText: {
+    color: '#CCCBCB',
   },
-  topNavRight: {
-    flex: '1 1 auto',
+  toolbarWhite: {
+    height: 70,
+    backgroundColor: '#fff',
   },
-  topNavRightMobile: {
-    display: 'flex',
+  toolbarWhiteMobile: {
+    minHeight: 60,
+    height: 60,
+    backgroundColor: '#fff',
+  },
+  buttonPressed: {
+    backgroundColor: '#e6e6e6',
+  },
+  toolbarButton: {
+    textTransform: 'none',
+    color: '#000',
+    marginLeft: 4,
+    marginRight: 4,
+  },
+  mobileButtonContainer: {
+    marginLeft: 'auto',
+  },
+  aligner: {
     height: topBarHeight,
-    justifyContent: 'flex-end',
-    width: '40%',
+  },
+  alignerMobile: {
+    height: topBarHeightMobile,
   },
 });
 
