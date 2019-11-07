@@ -47,9 +47,18 @@ const styles = () => ({
     minHeight: 60,
     height: 60,
     backgroundColor: '#fff',
+    paddingRight: 0,
   },
-  buttonPressed: {
-    backgroundColor: '#e6e6e6',
+  toolbarButtonPressed: {
+    textTransform: 'none',
+    backgroundColor: '#353638',
+    color: '#fff',
+    marginLeft: 4,
+    marginRight: 4,
+    borderRadius: 0,
+    '&:hover': {
+      backgroundColor: '#353638',
+    },
   },
   toolbarButton: {
     textTransform: 'none',

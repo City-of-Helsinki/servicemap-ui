@@ -18,7 +18,7 @@ class TopBar extends React.Component {
     const mapPage = location.pathname.indexOf('/map') > -1;
     return (
       <Button
-        className={classes.toolbarButton}
+        className={mapPage ? classes.toolbarButtonPressed : classes.toolbarButton}
         classes={{ label: classes.buttonLabel }}
         onClick={(e) => {
           e.preventDefault();
