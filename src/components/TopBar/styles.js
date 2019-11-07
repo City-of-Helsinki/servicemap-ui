@@ -65,6 +65,7 @@ const styles = () => ({
     color: '#000',
     marginLeft: 4,
     marginRight: 4,
+    borderRadius: 0,
   },
   mobileButtonContainer: {
     marginLeft: 'auto',
