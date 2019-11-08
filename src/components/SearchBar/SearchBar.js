@@ -117,7 +117,6 @@ class SearchBar extends React.Component {
       hideBackButton,
       searchRef,
       primary,
-      getLocaleText,
       expandSearch,
       closeExpandedSearch,
       srHideInput,
@@ -179,7 +178,6 @@ class SearchBar extends React.Component {
             classes={classes}
             intl={intl}
             handleSubmit={this.handleSubmit}
-            getLocaleText={getLocaleText}
             setSearch={value => this.setState({ search: value })}
             closeExpandedSearch={closeExpandedSearch}
             settings={settings}
@@ -206,7 +204,6 @@ SearchBar.propTypes = {
   previousSearch: PropTypes.string,
   expandSearch: PropTypes.string,
   primary: PropTypes.bool,
-  getLocaleText: PropTypes.func.isRequired,
   closeExpandedSearch: PropTypes.func,
   srHideInput: PropTypes.bool,
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
