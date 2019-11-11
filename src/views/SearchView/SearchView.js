@@ -177,14 +177,12 @@ class SearchView extends React.Component {
   }
 
   renderSearchBar() {
-    const { intl } = this.props;
     const { expandSearch } = this.state;
     return (
       <SearchBar
         srHideInput={!!expandSearch}
         className="sticky"
         expand
-        placeholder={intl && intl.formatMessage({ id: 'search.input.placeholder' })}
         isSticky={0}
         primary
         expandSearch={expandSearch}
