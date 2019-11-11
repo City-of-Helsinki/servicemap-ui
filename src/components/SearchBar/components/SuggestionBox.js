@@ -6,7 +6,6 @@ import {
 } from '@material-ui/core';
 import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
 import { FormattedMessage, intlShape } from 'react-intl';
-import expandSearch from '../expandSearch';
 import { getPreviousSearches } from '../previousSearchData';
 import PreviousSearches from '../PreviousSearches';
 import createSuggestions from '../createSuggestions';
@@ -22,7 +21,6 @@ const SuggestionBox = (props) => {
     searchQuery,
     handleSubmit,
     classes,
-    getLocaleText,
     focusedSuggestion,
     setSearch,
     intl,
@@ -87,10 +85,10 @@ const SuggestionBox = (props) => {
   const handleExpandSearch = () => {
     setLoading('expanded');
     setSearchQueries(null);
-    expandSearch(expandQuery, getLocaleText, cities, locale)
+    createSuggestions(expandQuery)
       .then((result) => {
         setLoading(false);
-        setExpandedQueries(result.expandedQueries);
+        setExpandedQueries(result.suggestions);
       });
   };
 
@@ -314,7 +312,6 @@ SuggestionBox.propTypes = {
   closeExpandedSearch: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  getLocaleText: PropTypes.func.isRequired,
   focusedSuggestion: PropTypes.number,
   setSearch: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
