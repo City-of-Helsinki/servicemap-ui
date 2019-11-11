@@ -9,6 +9,8 @@ export default theme => ({
     flex: '1 1 auto',
     textOverflow: 'ellipsis',
     margin: 0,
+  },
+  marginBottom: {
     marginBottom: theme.spacing.unit,
   },
   secondaryContent: {
