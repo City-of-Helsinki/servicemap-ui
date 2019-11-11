@@ -104,9 +104,9 @@ class TopBar extends React.Component {
                   <FormattedMessage id="general.frontPage" />
                 </Typography>
               </ButtonBase>
-              <Typography color="inherit">|</Typography>
+              <Typography aria-hidden color="inherit">|</Typography>
               {this.renderLanguages()}
-              <Typography color="inherit">|</Typography>
+              <Typography aria-hidden color="inherit">|</Typography>
               {/* Contrast button implementation
                 <ButtonBase role="link" onClick={() => console.log('change contrast')}>
                   <Typography color="inherit">Kontrasti</Typography>
