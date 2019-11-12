@@ -9,10 +9,9 @@ import { FormattedMessage, intlShape } from 'react-intl';
 import { getPreviousSearches } from '../previousSearchData';
 import PreviousSearches from '../PreviousSearches';
 import createSuggestions from '../createSuggestions';
-import ResultItem from '../../ListItems/ResultItem';
 import config from '../../../../config';
-import { MobileComponent } from '../../../layouts/WrapperComponents/WrapperComponents';
 import ServiceMapButton from '../../ServiceMapButton';
+import SuggestionItem from '../../ListItems/SuggestionItem';
 
 
 const SuggestionBox = (props) => {
@@ -35,6 +34,7 @@ const SuggestionBox = (props) => {
   const [loading, setLoading] = useState(false);
   const [suggestionError, setSuggestionError] = useState(false);
   const [history] = useState(getPreviousSearches());
+  const isMobile = useMediaQuery(`(max-width:${config.mobileUiBreakpoint}px)`);
 
   const listRef = useRef(null);
   const fetchController = useRef(null);
@@ -115,6 +115,7 @@ const SuggestionBox = (props) => {
   const renderSearchHistory = () => (
     <>
       <PreviousSearches
+        handleArrowClick={suggestion => setSearch(suggestion)}
         history={history}
         focusIndex={focusedSuggestion}
         listRef={listRef}
@@ -138,29 +139,24 @@ const SuggestionBox = (props) => {
 
   const renderLoading = () => (
     <>
-      {expandQuery ? (
-        <div className={classes.expandSearchTop}>
-          <Typography tabIndex="-1" component="h3" className={`${classes.expandTitle} suggestionsTitle`} variant="subtitle1">
-            <FormattedMessage id="search.suggestions.expand" />
-          </Typography>
-          <IconButton
-            role="link"
-            aria-label={intl.formatMessage({ id: 'search.closeExpand' })}
-            className={classes.backIcon}
-            onClick={() => closeExpandedSearch()}
-          >
-            <ArrowBack />
-          </IconButton>
-        </div>
-      )
-        : (
-          <div className={classes.suggestionSubtitle}>
-            <Typography className={classes.subtitleText} variant="overline">
-              <FormattedMessage id={loading === 'suggestions' ? 'search.suggestions.suggest' : 'search.suggestions.expand'} />
+      {
+        expandQuery
+        && (
+          <div className={classes.expandSearchTop}>
+            <Typography tabIndex="-1" component="h3" className={`${classes.expandTitle} suggestionsTitle`} variant="subtitle1">
+              <FormattedMessage id="search.suggestions.expand" />
             </Typography>
+            <IconButton
+              role="link"
+              aria-label={intl.formatMessage({ id: 'search.closeExpand' })}
+              className={classes.backIcon}
+              onClick={() => closeExpandedSearch()}
+            >
+              <ArrowBack />
+            </IconButton>
           </div>
         )
-              }
+      }
       <Typography>
         <FormattedMessage id="search.suggestions.loading" />
       </Typography>
@@ -168,45 +164,46 @@ const SuggestionBox = (props) => {
   );
 
   const renderSuggestionList = () => {
-    const suggestionList = expandedQueries || searchQueries || null;
+    let suggestionList = expandedQueries || searchQueries || null;
+    if (suggestionList && suggestionList.length) {
+      suggestionList = suggestionList.slice(0, 10);
+    }
     const titleId = expandedQueries ? 'search.suggestions.expand' : 'search.suggestions.suggest';
     if (suggestionList) {
       return (
         <>
-          {expandQuery ? (
-            <div className={classes.expandSearchTop}>
-              <Typography tabIndex="-1" component="h3" className={`${classes.expandTitle} suggestionsTitle`} variant="subtitle1">
-                <FormattedMessage id={titleId} />
-              </Typography>
-              <IconButton
-                role="link"
-                aria-label={intl.formatMessage({ id: 'search.closeExpand' })}
-                className={classes.backIcon}
-                onClick={() => closeExpandedSearch()}
-              >
-                <ArrowBack />
-              </IconButton>
-            </div>
-          )
-            : (
-              <div className={classes.suggestionSubtitle}>
-                <Typography tabIndex="-1" component="h3" className={`${classes.subtitleText} suggestionsTitle`} variant="overline">
+          {
+            expandQuery
+            && (
+              <div className={classes.expandSearchTop}>
+                <Typography tabIndex="-1" component="h3" className={`${classes.expandTitle} suggestionsTitle`} variant="subtitle1">
                   <FormattedMessage id={titleId} />
                 </Typography>
+                <IconButton
+                  role="link"
+                  aria-label={intl.formatMessage({ id: 'search.closeExpand' })}
+                  className={classes.backIcon}
+                  onClick={() => closeExpandedSearch()}
+                >
+                  <ArrowBack />
+                </IconButton>
               </div>
             )
           }
           <List className="suggestionList" ref={listRef}>
             {suggestionList.map((item, i) => (
-              <ResultItem
-                key={item.suggestion + item.count}
-                icon={<Search className={classes.listIcon} />}
-                title={item.suggestion}
-                subtitle={intl.formatMessage({ id: 'search.suggestions.results' }, { count: item.count })}
-                srLabel={intl.formatMessage({ id: 'search' })}
-                onClick={() => handleSubmit(item.suggestion)}
+              <SuggestionItem
                 selected={i === focusedSuggestion}
+                button
+                key={item.suggestion + item.count}
+                icon={<Search />}
+                role="link"
+                text={item.suggestion}
+                handleArrowClick={suggestion => setSearch(suggestion)}
+                handleItemClick={() => handleSubmit(item.suggestion)}
                 divider={i !== suggestionList.length - 1}
+                subtitle={intl.formatMessage({ id: 'search.suggestions.results' }, { count: item.count })}
+                isMobile
               />
             ))}
           </List>
@@ -254,7 +251,6 @@ const SuggestionBox = (props) => {
     }
   }, [expandedQueries]);
 
-  const isMobile = useMediaQuery(`(max-width:${config.mobileUiBreakpoint}px)`);
 
   useEffect(() => {
     // Disable page scroll when suggestion box is open
@@ -296,9 +292,6 @@ const SuggestionBox = (props) => {
           <p className="sr-only" aria-live="polite">{srText}</p>
           {component}
         </Paper>
-        <MobileComponent>
-          <div className={classes.mobileBackdrop} />
-        </MobileComponent>
       </>
     );
   }
