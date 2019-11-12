@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -26,12 +26,17 @@ const SuggestionItem = (props) => {
     subtitle,
   } = props;
 
+  const [mouseDown, setMouseDown] = useState(false);
+
   const isMobile = useMediaQuery(`(max-width:${config.mobileUiBreakpoint}px)`);
 
   const onClick = (button || link) && handleItemClick
     ? (e) => {
       e.preventDefault();
-      handleItemClick();
+      if (!mouseDown) {
+        handleItemClick();
+        setMouseDown(true);
+      }
     } : null;
   return (
     <React.Fragment>
@@ -46,7 +51,10 @@ const SuggestionItem = (props) => {
         <span
           className={classes.container}
           onClick={onClick}
-          onKeyPress={onClick}
+          onMouseDown={onClick}
+          onMouseUp={() => setMouseDown(false)}
+          onKeyDown={onClick}
+          onKeyUp={() => setMouseDown(false)}
           type="submit"
           role="link"
           tabIndex="-1"
