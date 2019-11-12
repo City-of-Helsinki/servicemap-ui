@@ -21,7 +21,6 @@ const SuggestionItem = (props) => {
     handleArrowClick,
     icon,
     link,
-    role,
     selected,
     srText,
     subtitle,
@@ -32,7 +31,6 @@ const SuggestionItem = (props) => {
   const onClick = (button || link) && handleItemClick
     ? (e) => {
       e.preventDefault();
-      console.log('SuggestionItem onClick event');
       handleItemClick();
     } : null;
   return (
@@ -128,7 +126,6 @@ SuggestionItem.propTypes = {
   icon: PropTypes.objectOf(PropTypes.any),
   handleArrowClick: PropTypes.func,
   handleItemClick: PropTypes.func,
-  role: PropTypes.string,
   divider: PropTypes.bool,
   selected: PropTypes.bool,
   subtitle: PropTypes.string,
@@ -141,7 +138,6 @@ SuggestionItem.defaultProps = {
   icon: null,
   handleArrowClick: null,
   handleItemClick: null,
-  role: null,
   divider: false,
   selected: false,
   subtitle: null,
