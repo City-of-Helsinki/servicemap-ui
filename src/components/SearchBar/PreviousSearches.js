@@ -6,14 +6,12 @@ import {
 import { Search } from '@material-ui/icons';
 import { FormattedMessage } from 'react-intl';
 import styles from './styles';
-import SimpleListItem from '../ListItems/SimpleListItem';
+import SuggestionItem from '../ListItems/SuggestionItem';
 
-class PreviousSearches extends React.Component {
-  renderList() {
-    const {
-      focusIndex, listRef, onClick, history,
-    } = this.props;
-
+const PreviousSearches = ({
+  focusIndex, listRef, onClick, history, handleArrowClick,
+}) => {
+  const renderList = () => {
     if (history) {
       return (
         <>
@@ -24,13 +22,14 @@ class PreviousSearches extends React.Component {
           <List className="suggestionList" ref={listRef}>
             {
           history.map((item, i) => (
-            <SimpleListItem
+            <SuggestionItem
               selected={i === focusIndex}
               button
               key={item}
               icon={<Search />}
               role="link"
               text={item}
+              handleArrowClick={handleArrowClick}
               handleItemClick={() => onClick(item)}
               divider={i !== (history.length - 1)}
             />
@@ -45,20 +44,10 @@ class PreviousSearches extends React.Component {
         <FormattedMessage id="search.suggestions.noHistory" />
       </Typography>
     );
-  }
+  };
 
-  render() {
-    const { classes } = this.props;
-    return (
-      <>
-        <div className={classes.suggestionSubtitle}>
-          <Typography className={classes.subtitleText} variant="overline"><FormattedMessage id="general.previousSearch" /></Typography>
-        </div>
-        {this.renderList()}
-      </>
-    );
-  }
-}
+  return renderList();
+};
 
 PreviousSearches.propTypes = {
   history: PropTypes.arrayOf(PropTypes.string),
