@@ -15,10 +15,6 @@ const PreviousSearches = ({
     if (history) {
       return (
         <>
-          <Typography aria-live="polite" className="sr-only">
-            <FormattedMessage id="search.suggestions.history" values={{ count: history.length }} />
-            {`${history.length} kohdetta hakuhistoriassa`}
-          </Typography>
           <List className="suggestionList" ref={listRef}>
             {
           history.map((item, i) => (
