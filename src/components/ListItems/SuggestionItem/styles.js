@@ -12,9 +12,6 @@ export default theme => ({
     marginRight: theme.spacing.unitDouble,
     whiteSpace: 'pre-line',
   },
-  link: {
-    color: '#0000EE',
-  },
   listIcon: {
     width: '1.5rem',
     height: '1.5rem',
@@ -27,6 +24,11 @@ export default theme => ({
   },
   suggestIconLabel: {
     padding: theme.spacing.unit,
+  },
+  subtitle: {
+    fontSize: '10px',
+    fontWeight: 'none',
+    lineHeight: '18px',
   },
   divider: {
     marginLeft: theme.spacing.unit * 9,

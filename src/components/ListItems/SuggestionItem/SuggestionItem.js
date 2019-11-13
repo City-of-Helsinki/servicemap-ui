@@ -82,8 +82,8 @@ const SuggestionItem = (props) => {
             && (
               <Typography
                 aria-hidden
-                variant="caption"
-                classes={{ root: link ? classes.link : null }}
+                variant="body2"
+                className={classes.subtitle}
               >
                 {subtitle}
               </Typography>
