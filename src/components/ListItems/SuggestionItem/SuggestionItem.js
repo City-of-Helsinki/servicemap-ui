@@ -75,7 +75,7 @@ const SuggestionItem = (props) => {
               variant="body2"
               classes={{ root: link ? classes.link : null }}
             >
-              {uppercaseFirst(text)}
+              {text}
             </Typography>
             {
             subtitle
@@ -128,7 +128,7 @@ export default SuggestionItem;
 SuggestionItem.propTypes = {
   button: PropTypes.bool,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  text: PropTypes.string.isRequired,
+  text: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
   srText: PropTypes.string,
   link: PropTypes.bool,
   icon: PropTypes.objectOf(PropTypes.any),

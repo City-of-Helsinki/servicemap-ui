@@ -162,6 +162,7 @@ class SearchBar extends React.Component {
         settings={settings}
         locale={locale}
         isMobile
+        query={search}
       />
     );
   }

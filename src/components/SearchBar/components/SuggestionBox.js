@@ -12,6 +12,7 @@ import createSuggestions from '../createSuggestions';
 import config from '../../../../config';
 import ServiceMapButton from '../../ServiceMapButton';
 import SuggestionItem from '../../ListItems/SuggestionItem';
+import BoldedText from '../../../utils/BoldedText';
 
 
 const SuggestionBox = (props) => {
@@ -27,6 +28,7 @@ const SuggestionBox = (props) => {
     closeExpandedSearch,
     settings,
     locale,
+    query,
   } = props;
 
   const [searchQueries, setSearchQueries] = useState(null);
@@ -198,7 +200,7 @@ const SuggestionBox = (props) => {
                 key={item.suggestion + item.count}
                 icon={<Search />}
                 role="link"
-                text={item.suggestion}
+                text={<BoldedText text={item.suggestion} shouldBeBold={query} />}
                 handleArrowClick={suggestion => setSearch(suggestion)}
                 handleItemClick={() => handleSubmit(item.suggestion)}
                 divider={i !== suggestionList.length - 1}
@@ -310,6 +312,7 @@ SuggestionBox.propTypes = {
   intl: intlShape.isRequired,
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
   locale: PropTypes.string.isRequired,
+  query: PropTypes.string,
 };
 
 SuggestionBox.defaultProps = {
@@ -317,6 +320,7 @@ SuggestionBox.defaultProps = {
   searchQuery: null,
   expandQuery: null,
   focusedSuggestion: null,
+  query: null,
 };
 
 export default SuggestionBox;
