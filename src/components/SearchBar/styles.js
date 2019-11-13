@@ -34,13 +34,14 @@ export default theme => ({
   },
   input: {
     flex: '1 1 auto',
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    padding: theme.spacing.unit,
+    paddingTop: theme.spacing.unit,
+    paddingRight: theme.spacing.unit,
+    paddingBottom: theme.spacing.unit,
   },
   iconButton: {
     flex: '0 1 auto',
     padding: theme.spacing.unit,
+    margin: theme.spacing.unit,
   },
   iconButtonSearch: {
     flex: '0 0 auto',
