@@ -53,7 +53,17 @@ class SearchView extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    const { units, map } = this.props;
+    const { fetchUnits, units, map } = this.props;
+    const searchData = this.getSearchParam(nextProps);
+    if (this.shouldFetch(nextProps)) {
+      if (searchData.type === 'search') {
+        fetchUnits(searchData.query);
+      } else {
+        fetchUnits(searchData.query, searchData.type);
+      }
+      this.focusMap(units, map);
+      return true;
+    }
     // If new search results, call map focus functio
     if (nextProps.units.length > 0 && units !== nextProps.units) {
       this.focusMap(nextProps.units, map);
@@ -62,10 +72,10 @@ class SearchView extends React.Component {
   }
 
   // Get search parameter from url
-  getSearchParam = () => {
+  getSearchParam = (props) => {
     const {
       location,
-    } = this.props;
+    } = props || this.props;
     const searchParams = parseSearchParams(location.search);
     if (searchParams.q) {
       return { type: 'search', query: searchParams.q };
@@ -76,9 +86,9 @@ class SearchView extends React.Component {
   }
 
   // Check if view will fetch data because sreach params has changed
-  shouldFetch = () => {
-    const { isFetching, previousSearch } = this.props;
-    const searchParam = this.getSearchParam();
+  shouldFetch = (props) => {
+    const { isFetching, previousSearch } = props || this.props;
+    const searchParam = this.getSearchParam(props);
     if (previousSearch && searchParam && searchParam.type === 'node') {
       return !isFetching && searchParam && searchParam.query !== previousSearch.searchQuery;
     }
@@ -448,7 +458,6 @@ SearchView.propTypes = {
   fetchUnits: PropTypes.func,
   intl: intlShape.isRequired,
   isFetching: PropTypes.bool,
-  location: PropTypes.objectOf(PropTypes.any).isRequired,
   max: PropTypes.number,
   previousSearch: PropTypes.string,
   units: PropTypes.arrayOf(PropTypes.any),
@@ -456,6 +465,7 @@ SearchView.propTypes = {
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   settings: PropTypes.objectOf(PropTypes.any),
   serviceTree: PropTypes.objectOf(PropTypes.any),
+  query: PropTypes.string,
 };
 
 SearchView.defaultProps = {
@@ -469,4 +479,5 @@ SearchView.defaultProps = {
   settings: null,
   map: null,
   serviceTree: null,
+  query: null,
 };
