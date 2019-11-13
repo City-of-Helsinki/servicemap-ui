@@ -52,6 +52,9 @@ class SearchBar extends React.Component {
     const list = document.getElementsByClassName('suggestionList')[0];
     if (e.keyCode === 40 || e.keyCode === 38) {
       e.preventDefault();
+      if (!list || !list.children || !list.children.length) {
+        return;
+      }
       // TODO: fix calculation on next line when dividers are excluded from lists
       const listEnd = (list.children.length + 1) / 2 - 1;
       const increment = e.keyCode === 40;
