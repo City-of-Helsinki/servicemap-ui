@@ -188,6 +188,7 @@ class SearchView extends React.Component {
 
   renderSearchBar() {
     const { expandSearch } = this.state;
+    const { query } = this.props;
     return (
       <SearchBar
         srHideInput={!!expandSearch}
@@ -196,6 +197,7 @@ class SearchView extends React.Component {
         isSticky={0}
         primary
         expandSearch={expandSearch}
+        initialValue={query}
         closeExpandedSearch={expandSearch ? () => this.setState({ expandSearch: null }) : () => {}}
       />
     );

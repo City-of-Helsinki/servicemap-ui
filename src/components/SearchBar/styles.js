@@ -1,31 +1,36 @@
+import config from '../../../config';
 
 export default theme => ({
   root: {
+    color: theme.palette.primary.contrastText,
     display: 'flex',
     flexDirection: 'column',
+    backgroundColor: theme.palette.primary.main,
+    padding: theme.spacing.unitTriple,
+  },
+  mobileRoot: {
+    paddingLeft: 0,
+    paddingRight: 0,
+    top: config.topBarHeight,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    position: 'fixed',
+    zIndex: 51,
   },
   wrapper: {
     flex: 1,
-    margin: theme.spacing.unit,
-    padding: theme.spacing.unitHalf,
-    transition: theme.transitions.create(['margin', 'padding'], {
-      easing: theme.transitions.easing.easeIn,
-      duration: theme.transitions.duration.complex,
-    }),
-    border: '1px solid gray',
-  },
-  wrapperFocused: {
-    margin: 0,
-    // Margin is replaced with padding so height doesn't get affected
-    padding: theme.spacing.unit * 1.5,
-    transition: theme.transitions.create(['margin', 'padding'], {
-      duration: theme.transitions.duration.complex,
-    }),
+    border: '1px solid #ACACAC',
+    borderRadius: theme.spacing.unitHalf,
   },
   container: {
     alignItems: 'center',
     display: 'flex',
     flex: '0 0 auto',
+    borderRadius: theme.spacing.unitHalf,
+  },
+  infoText: {
+    paddingBottom: theme.spacing.unitHalf,
   },
   input: {
     flex: '1 1 auto',
@@ -37,13 +42,26 @@ export default theme => ({
     flex: '0 1 auto',
     padding: theme.spacing.unit,
   },
+  iconButtonSearch: {
+    flex: '0 0 auto',
+    borderRadius: 0,
+    padding: theme.spacing.unit,
+    textTransform: 'none',
+  },
+  iconButtonSearchLabel: {
+    flexDirection: 'column',
+  },
   icon: {
     flex: '0 1 auto',
     padding: theme.spacing.unit,
   },
   sticky: {
     position: 'sticky',
-    zIndex: 50,
+    zIndex: 51,
+  },
+  headerText: {
+    fontWeight: 'bold',
+    marginBottom: theme.spacing.unitDouble,
   },
   primary: {
     backgroundColor: theme.palette.primary.main,
@@ -57,20 +75,28 @@ export default theme => ({
     lineHeight: '32px',
   },
   suggestionArea: {
-    zIndex: 51,
-    position: 'fixed',
-    height: 'calc(100% - 64px - 76px)',
-    width: '450px',
+    position: 'absolute',
+    right: theme.spacing.unitTriple,
+    left: theme.spacing.unitTriple,
+    zIndex: 10000,
     backgroundColor: '#fff',
     overflow: 'auto',
+    borderRadius: 0,
+    borderBottomLeftRadius: theme.spacing.unitHalf,
+    borderBottomRightRadius: theme.spacing.unitHalf,
   },
   suggestionAreaMobile: {
+    position: 'absolute',
+    right: 0,
+    left: 0,
+    top: 56,
+    bottom: 0,
     zIndex: 51,
-    position: 'fixed',
-    height: 'calc(100% - 76px)',
-    width: '100%',
     backgroundColor: '#fff',
     overflow: 'auto',
+    borderRadius: 0,
+    borderBottomLeftRadius: theme.spacing.unitHalf,
+    borderBottomRightRadius: theme.spacing.unitHalf,
   },
   expandTitle: {
     alignSelf: 'center',
@@ -127,5 +153,7 @@ export default theme => ({
   backIcon: {
     paddingLeft: 0,
     paddingRight: theme.spacing.unitDouble,
+    color: '#757575',
+    marginLeft: theme.spacing.unit,
   },
 });
