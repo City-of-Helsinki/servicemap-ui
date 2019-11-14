@@ -2,10 +2,10 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 import {
-  InputBase, Paper, Typography, Button,
+  InputBase, Paper, Typography, Button, IconButton,
 } from '@material-ui/core';
 import {
-  Search,
+  Search, Cancel,
 } from '@material-ui/icons';
 import { intlShape } from 'react-intl';
 import BackButton from '../BackButton';
@@ -157,7 +157,7 @@ class SearchBar extends React.Component {
       <SuggestionBox
         visible={showSuggestions}
         focusedSuggestion={focusedSuggestion}
-        searchQuery={search || (this.searchRef && this.searchRef.value) || null}
+        searchQuery={search}
         expandQuery={expandSearch}
         classes={classes}
         intl={intl}
@@ -191,7 +191,7 @@ class SearchBar extends React.Component {
     return (
       <form onSubmit={this.onSubmit} className={classes.container} autoComplete="off">
         {
-          (!hideBackButton || showSuggestions)
+          !hideBackButton
           && <BackButton className={classes.iconButton} onClick={backButtonEvent || null} variant="icon" srHidden={!!hideBackButton} />
         }
         <InputBase
@@ -208,6 +208,25 @@ class SearchBar extends React.Component {
           onFocus={this.activateSearch}
           onKeyDown={e => keyboardHandler(this.keyHandler(e), ['up, down'])}
           onBlur={this.handleBlur}
+          endAdornment={
+            inputValue
+            && inputValue !== ''
+            && (
+              <IconButton
+                aria-hidden
+                onClick={() => {
+                  if (this.searchRef) {
+                    // Clear blur timeout to keep suggestion box active
+                    clearTimeout(this.blurTimeout);
+                    this.searchRef.focus();
+                  }
+                  this.setState({ search: '' });
+                }}
+              >
+                <Cancel />
+              </IconButton>
+            )
+          }
         />
 
         <Button

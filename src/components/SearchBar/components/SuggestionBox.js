@@ -48,10 +48,14 @@ const SuggestionBox = (props) => {
     ...settings.kauniainen ? ['Kauniainen'] : [],
   ];
 
-  const generateSuggestions = (query) => {
+  const resetSuggestions = () => {
     setSearchQueries(null);
     setExpandedQueries(null);
     setSuggestionError(false);
+  };
+
+  const generateSuggestions = (query) => {
+    resetSuggestions();
 
     if (query && query.length > 2) {
       setLoading('suggestions');
@@ -231,6 +235,10 @@ const SuggestionBox = (props) => {
   * Component updaters
   */
   useEffect(() => { // Start generating suggestions when typing in searchbar
+    if (!searchQuery) {
+      setSuggestionQuery(null);
+      resetSuggestions();
+    }
     if (searchQuery && focusedSuggestion === null) {
       setSuggestionQuery(searchQuery);
       generateSuggestions(searchQuery);

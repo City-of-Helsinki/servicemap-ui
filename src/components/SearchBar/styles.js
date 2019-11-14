@@ -34,9 +34,12 @@ export default theme => ({
   },
   input: {
     flex: '1 1 auto',
-    paddingTop: theme.spacing.unit,
+    paddingLeft: theme.spacing.unit,
     paddingRight: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit,
+  },
+  inputFocused: {
+    paddingLeft: 0,
+    paddingRight: theme.spacing.unit,
   },
   iconButton: {
     flex: '0 1 auto',
