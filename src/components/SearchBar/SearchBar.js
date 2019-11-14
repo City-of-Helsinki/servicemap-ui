@@ -4,7 +4,9 @@ import PropTypes from 'prop-types';
 import {
   InputBase, Paper, Typography, Button,
 } from '@material-ui/core';
-import { Search } from '@material-ui/icons';
+import {
+  Search,
+} from '@material-ui/icons';
 import { intlShape } from 'react-intl';
 import BackButton from '../BackButton';
 import { keyboardHandler } from '../../utils';
@@ -16,9 +18,13 @@ class SearchBar extends React.Component {
 
   blurTimeout = null;
 
+  searchRef = null;
+
   constructor(props) {
     super(props);
     const { initialValue, previousSearch } = props;
+
+    this.searchRef = React.createRef();
 
     this.state = {
       search: initialValue || previousSearch || '',
@@ -135,10 +141,7 @@ class SearchBar extends React.Component {
     const {
       classes,
       intl,
-      searchRef,
-      primary,
       expandSearch,
-      getLocaleText,
       closeExpandedSearch,
       settings,
       locale,
@@ -154,7 +157,7 @@ class SearchBar extends React.Component {
       <SuggestionBox
         visible={showSuggestions}
         focusedSuggestion={focusedSuggestion}
-        searchQuery={search || (searchRef.current && searchRef.current.value) || null}
+        searchQuery={search || (this.searchRef && this.searchRef.value) || null}
         expandQuery={expandSearch}
         classes={classes}
         intl={intl}
@@ -165,7 +168,6 @@ class SearchBar extends React.Component {
         settings={settings}
         locale={locale}
         isMobile
-        query={search}
       />
     );
   }
@@ -177,7 +179,6 @@ class SearchBar extends React.Component {
       hideBackButton,
       intl,
       previousSearch,
-      searchRef,
       expandSearch,
     } = this.props;
     const { search, isActive } = this.state;
@@ -200,7 +201,7 @@ class SearchBar extends React.Component {
             'aria-haspopup': !!showSuggestions,
             'aria-label': intl.formatMessage({ id: 'search.searchField' }),
           }}
-          inputRef={searchRef}
+          inputRef={(ref) => { this.searchRef = ref; }}
           className={classes.input}
           value={inputValue || ''}
           onChange={this.onInputChange}

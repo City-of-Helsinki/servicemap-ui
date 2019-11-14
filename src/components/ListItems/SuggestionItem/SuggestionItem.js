@@ -8,8 +8,8 @@ import {
 } from '@material-ui/core';
 import { ArrowUpward } from '@material-ui/icons';
 import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
-import { uppercaseFirst } from '../../../utils';
 import config from '../../../../config';
+import BoldedText from '../../../utils/BoldedText';
 
 const SuggestionItem = (props) => {
   const {
@@ -24,12 +24,11 @@ const SuggestionItem = (props) => {
     selected,
     srText,
     subtitle,
+    query,
   } = props;
 
   const [mouseDown, setMouseDown] = useState(false);
-
   const isMobile = useMediaQuery(`(max-width:${config.mobileUiBreakpoint}px)`);
-
   const onClick = (button || link) && handleItemClick
     ? (e) => {
       e.preventDefault();
@@ -38,6 +37,7 @@ const SuggestionItem = (props) => {
         setMouseDown(true);
       }
     } : null;
+
   return (
     <React.Fragment>
       <ListItem
@@ -75,7 +75,15 @@ const SuggestionItem = (props) => {
               variant="body2"
               classes={{ root: link ? classes.link : null }}
             >
-              {text}
+              {
+                query
+                  ? (
+                    <BoldedText
+                      text={text}
+                      shouldBeBold={query}
+                    />
+                  ) : text
+              }
             </Typography>
             {
             subtitle
@@ -105,7 +113,8 @@ const SuggestionItem = (props) => {
               onMouseDown={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                handleArrowClick(text);
+                const value = text.props ? text.props.text : text;
+                handleArrowClick(value);
                 return false;
               }}
             >
@@ -137,6 +146,7 @@ SuggestionItem.propTypes = {
   divider: PropTypes.bool,
   selected: PropTypes.bool,
   subtitle: PropTypes.string,
+  query: PropTypes.string,
 };
 
 SuggestionItem.defaultProps = {
@@ -149,4 +159,5 @@ SuggestionItem.defaultProps = {
   divider: false,
   selected: false,
   subtitle: null,
+  query: null,
 };

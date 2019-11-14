@@ -12,7 +12,6 @@ import createSuggestions from '../createSuggestions';
 import config from '../../../../config';
 import ServiceMapButton from '../../ServiceMapButton';
 import SuggestionItem from '../../ListItems/SuggestionItem';
-import BoldedText from '../../../utils/BoldedText';
 
 
 const SuggestionBox = (props) => {
@@ -28,7 +27,6 @@ const SuggestionBox = (props) => {
     closeExpandedSearch,
     settings,
     locale,
-    query,
   } = props;
 
   const [searchQueries, setSearchQueries] = useState(null);
@@ -36,6 +34,8 @@ const SuggestionBox = (props) => {
   const [loading, setLoading] = useState(false);
   const [suggestionError, setSuggestionError] = useState(false);
   const [history] = useState(getPreviousSearches());
+  // Query word on which suggestion list is based
+  const [suggestionQuery, setSuggestionQuery] = useState(null);
   const isMobile = useMediaQuery(`(max-width:${config.mobileUiBreakpoint}px)`);
 
   const listRef = useRef(null);
@@ -200,12 +200,13 @@ const SuggestionBox = (props) => {
                 key={item.suggestion + item.count}
                 icon={<Search />}
                 role="link"
-                text={<BoldedText text={item.suggestion} shouldBeBold={query} />}
+                text={item.suggestion}
                 handleArrowClick={suggestion => setSearch(suggestion)}
                 handleItemClick={() => handleSubmit(item.suggestion)}
                 divider={i !== suggestionList.length - 1}
                 subtitle={intl.formatMessage({ id: 'search.suggestions.results' }, { count: item.count })}
                 isMobile
+                query={suggestionQuery}
               />
             ))}
           </List>
@@ -231,6 +232,7 @@ const SuggestionBox = (props) => {
   */
   useEffect(() => { // Start generating suggestions when typing in searchbar
     if (searchQuery && focusedSuggestion === null) {
+      setSuggestionQuery(searchQuery);
       generateSuggestions(searchQuery);
     }
   }, [searchQuery]);
@@ -312,7 +314,6 @@ SuggestionBox.propTypes = {
   intl: intlShape.isRequired,
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
   locale: PropTypes.string.isRequired,
-  query: PropTypes.string,
 };
 
 SuggestionBox.defaultProps = {
@@ -320,7 +321,6 @@ SuggestionBox.defaultProps = {
   searchQuery: null,
   expandQuery: null,
   focusedSuggestion: null,
-  query: null,
 };
 
 export default SuggestionBox;
