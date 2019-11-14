@@ -21,6 +21,7 @@ import {
   ColorblindIcon, HearingIcon, VisualImpairmentIcon, getIcon,
 } from '../../components/SMIcon';
 import ServiceMapButton from '../../components/ServiceMapButton';
+import SuggestionBox from '../../components/SearchBar/components/SuggestionBox';
 
 class SearchView extends React.Component {
   constructor(props) {
@@ -187,18 +188,14 @@ class SearchView extends React.Component {
   }
 
   renderSearchBar() {
-    const { expandSearch } = this.state;
     const { query } = this.props;
     return (
       <SearchBar
-        srHideInput={!!expandSearch}
         className="sticky"
         expand
         isSticky={0}
         primary
-        expandSearch={expandSearch}
         initialValue={query}
-        closeExpandedSearch={expandSearch ? () => this.setState({ expandSearch: null }) : () => {}}
       />
     );
   }

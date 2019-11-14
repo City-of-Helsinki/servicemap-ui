@@ -6,12 +6,12 @@ import {
 } from '@material-ui/core';
 import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
 import { FormattedMessage, intlShape } from 'react-intl';
-import { getPreviousSearches } from '../previousSearchData';
-import PreviousSearches from '../PreviousSearches';
-import createSuggestions from '../createSuggestions';
-import config from '../../../../config';
-import ServiceMapButton from '../../ServiceMapButton';
-import SuggestionItem from '../../ListItems/SuggestionItem';
+import { getPreviousSearches } from '../../previousSearchData';
+import PreviousSearches from '../../PreviousSearches';
+import createSuggestions from '../../createSuggestions';
+import config from '../../../../../config';
+import ServiceMapButton from '../../../ServiceMapButton';
+import SuggestionItem from '../../../ListItems/SuggestionItem';
 
 
 const SuggestionBox = (props) => {
@@ -25,12 +25,9 @@ const SuggestionBox = (props) => {
     intl,
     expandQuery,
     closeExpandedSearch,
-    settings,
-    locale,
   } = props;
 
   const [searchQueries, setSearchQueries] = useState(null);
-  const [expandedQueries, setExpandedQueries] = useState(null);
   const [loading, setLoading] = useState(false);
   const [suggestionError, setSuggestionError] = useState(false);
   const [history] = useState(getPreviousSearches());
@@ -41,16 +38,17 @@ const SuggestionBox = (props) => {
   const listRef = useRef(null);
   const fetchController = useRef(null);
 
+  /* TODO: Utilize city information with search queries
   const cities = [
     ...settings.helsinki ? ['Helsinki'] : [],
     ...settings.espoo ? ['Espoo'] : [],
     ...settings.vantaa ? ['Vantaa'] : [],
     ...settings.kauniainen ? ['Kauniainen'] : [],
   ];
+  */
 
   const resetSuggestions = () => {
     setSearchQueries(null);
-    setExpandedQueries(null);
     setSuggestionError(false);
   };
 
@@ -86,16 +84,6 @@ const SuggestionBox = (props) => {
         fetchController.current.abort();
       }
     }
-  };
-
-  const handleExpandSearch = () => {
-    setLoading('expanded');
-    setSearchQueries(null);
-    createSuggestions(expandQuery)
-      .then((result) => {
-        setLoading(false);
-        setExpandedQueries(result.suggestions);
-      });
   };
 
   const handleKeyPress = (e) => {
@@ -170,11 +158,11 @@ const SuggestionBox = (props) => {
   );
 
   const renderSuggestionList = () => {
-    let suggestionList = expandedQueries || searchQueries || null;
+    let suggestionList = searchQueries || null;
     if (suggestionList && suggestionList.length) {
       suggestionList = suggestionList.slice(0, 10);
     }
-    const titleId = expandedQueries ? 'search.suggestions.expand' : 'search.suggestions.suggest';
+    const titleId = expandQuery ? 'search.suggestions.expand' : 'search.suggestions.suggest';
     if (suggestionList) {
       return (
         <>
@@ -214,7 +202,7 @@ const SuggestionBox = (props) => {
               />
             ))}
           </List>
-          {expandedQueries && (
+          {expandQuery && (
             <ServiceMapButton
               role="link"
               className={classes.closeButton}
@@ -245,24 +233,9 @@ const SuggestionBox = (props) => {
     }
   }, [searchQuery]);
 
-  useEffect(() => { // Start expanded search when expand button is toggled on. Else clear data.
-    if (expandQuery) {
-      handleExpandSearch();
-    } else {
-      setExpandedQueries(null);
-    }
-  }, [expandQuery]);
-
   useEffect(() => { // Change text of the searchbar when suggestion with keyboard focus changes
     setSearchBarText();
   }, [focusedSuggestion]);
-
-  useEffect(() => { // Focus on list title when expanded queries appear
-    if (expandedQueries) {
-      document.getElementsByClassName('suggestionsTitle')[0].focus();
-    }
-  }, [expandedQueries]);
-
 
   useEffect(() => {
     // Disable page scroll when suggestion box is open
@@ -283,9 +256,9 @@ const SuggestionBox = (props) => {
     if (loading) {
       component = renderLoading();
       srText = null;
-    } else if (searchQueries || expandedQueries) {
+    } else if (searchQueries) {
       component = renderSuggestionList();
-      const suggestionList = expandedQueries || searchQueries || null;
+      const suggestionList = searchQueries || null;
       srText = intl.formatMessage({ id: 'search.suggestions.suggestions' }, { count: suggestionList.length });
     } else if (suggestionError) {
       component = renderNoResults();
@@ -295,8 +268,8 @@ const SuggestionBox = (props) => {
     }
 
     const containerStyles = isMobile
-      ? `${classes.suggestionAreaMobile} ${expandQuery ? classes.expandHeightMobile : ''}`
-      : `${classes.suggestionArea} ${expandQuery ? classes.expandHeight : ''}`;
+      ? `${expandQuery ? classes.expandHeightMobile : classes.suggestionAreaMobile}`
+      : `${expandQuery ? classes.expandHeight : classes.suggestionArea}`;
 
     return (
       <>
@@ -313,15 +286,13 @@ const SuggestionBox = (props) => {
 SuggestionBox.propTypes = {
   visible: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   searchQuery: PropTypes.string,
-  expandQuery: PropTypes.string,
+  expandQuery: PropTypes.bool,
   closeExpandedSearch: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   focusedSuggestion: PropTypes.number,
-  setSearch: PropTypes.func.isRequired,
+  setSearch: PropTypes.func,
   intl: intlShape.isRequired,
-  settings: PropTypes.objectOf(PropTypes.any).isRequired,
-  locale: PropTypes.string.isRequired,
 };
 
 SuggestionBox.defaultProps = {
@@ -329,6 +300,7 @@ SuggestionBox.defaultProps = {
   searchQuery: null,
   expandQuery: null,
   focusedSuggestion: null,
+  setSearch: null,
 };
 
 export default SuggestionBox;

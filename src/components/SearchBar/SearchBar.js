@@ -139,16 +139,11 @@ class SearchBar extends React.Component {
 
   renderSuggestionBox = () => {
     const {
-      classes,
-      intl,
-      expandSearch,
       closeExpandedSearch,
-      settings,
-      locale,
     } = this.props;
     const { search, isActive, focusedSuggestion } = this.state;
 
-    const showSuggestions = isActive || expandSearch;
+    const showSuggestions = isActive;
     if (!showSuggestions) {
       return null;
     }
@@ -158,15 +153,9 @@ class SearchBar extends React.Component {
         visible={showSuggestions}
         focusedSuggestion={focusedSuggestion}
         searchQuery={search}
-        expandQuery={expandSearch}
-        classes={classes}
-        intl={intl}
         handleSubmit={this.handleSubmit}
-        getLocaleText={getLocaleText}
         setSearch={value => this.setState({ search: value })}
         closeExpandedSearch={closeExpandedSearch}
-        settings={settings}
-        locale={locale}
         isMobile
       />
     );
@@ -179,13 +168,12 @@ class SearchBar extends React.Component {
       hideBackButton,
       intl,
       previousSearch,
-      expandSearch,
     } = this.props;
     const { search, isActive } = this.state;
 
     const previousSearchText = typeof previousSearch === 'string' ? previousSearch : null;
 
-    const showSuggestions = isActive || expandSearch;
+    const showSuggestions = isActive;
     const inputValue = typeof search === 'string' ? search : previousSearchText;
 
     return (
@@ -357,14 +345,10 @@ SearchBar.propTypes = {
   intl: intlShape.isRequired,
   isSticky: PropTypes.number,
   isFetching: PropTypes.bool.isRequired,
-  searchRef: PropTypes.objectOf(PropTypes.any),
   previousSearch: PropTypes.string,
-  expandSearch: PropTypes.string,
   primary: PropTypes.bool,
   closeExpandedSearch: PropTypes.func,
   srHideInput: PropTypes.bool,
-  settings: PropTypes.objectOf(PropTypes.any).isRequired,
-  locale: PropTypes.string.isRequired,
 };
 
 SearchBar.defaultProps = {
@@ -376,8 +360,6 @@ SearchBar.defaultProps = {
   initialValue: null,
   isSticky: null,
   navigator: null,
-  searchRef: {},
-  expandSearch: null,
   primary: false,
   closeExpandedSearch: (() => {}),
   srHideInput: false,
