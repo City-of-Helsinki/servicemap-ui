@@ -7,14 +7,6 @@ const styles = () => ({
     display: 'flex',
     flexDirection: 'column',
   },
-  // feedbackLink: {
-  //   display: 'inline-block',
-  // },
-  // feedbackText: {
-  //   margin: 0,
-  //   color: 'white',
-  //   textDecorationColor: 'white',
-  // },
   homeLogoContainer: {
     paddingTop: 8,
     alignSelf: 'center',
@@ -33,13 +25,30 @@ const styles = () => ({
   toolbarBlackContainer: {
     justifyContent: 'space-around',
     display: 'flex',
-    width: 450,
+    width: 300,
     color: '#fff',
   },
   greyText: {
     color: '#CCCBCB',
   },
+  settingsButton: {
+    textTransform: 'none',
+    alignItems: 'flex-start',
+    marginLeft: '3%',
+    marginRight: '3%',
+    borderRadius: 0,
+  },
+  settingsButtonPressed: {
+    textTransform: 'none',
+    alignItems: 'flex-start',
+    marginLeft: '3%',
+    marginRight: '3%',
+    marginBottom: -2,
+    borderBottom: '2px solid',
+    borderRadius: 0,
+  },
   toolbarWhite: {
+    width: '100%',
     height: 70,
     backgroundColor: '#fff',
   },
@@ -49,7 +58,7 @@ const styles = () => ({
     backgroundColor: '#fff',
     paddingRight: 0,
   },
-  toolbarButtonPressed: {
+  iconButtonPressed: {
     textTransform: 'none',
     backgroundColor: '#353638',
     color: '#fff',
@@ -60,15 +69,28 @@ const styles = () => ({
       backgroundColor: '#353638',
     },
   },
-  toolbarButton: {
+  iconButton: {
     textTransform: 'none',
     color: '#000',
     marginLeft: 4,
     marginRight: 4,
     borderRadius: 0,
   },
+  iconTextContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  smallIcon: {
+    height: 14,
+    marginRight: 4,
+  },
   mobileButtonContainer: {
     marginLeft: 'auto',
+  },
+  settingsButtonContainer: {
+    width: '70%',
+    display: 'flex',
   },
   aligner: {
     height: topBarHeight,
