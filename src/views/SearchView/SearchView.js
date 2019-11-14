@@ -147,6 +147,21 @@ class SearchView extends React.Component {
     return null;
   }
 
+  closeExpandedSearch() {
+    this.setState({ expandSearch: false });
+  }
+
+  handleSubmit(query) {
+    const { isFetching, navigator } = this.props;
+    if (!isFetching && query && query !== '') {
+      this.closeExpandedSearch();
+
+      if (navigator) {
+        navigator.push('search', { query });
+      }
+    }
+  }
+
   /**
    * What to render if no units are found with search
    */
@@ -188,7 +203,13 @@ class SearchView extends React.Component {
   }
 
   renderSearchBar() {
+    const { expandSearch } = this.state;
     const { query } = this.props;
+
+    if (expandSearch) {
+      return null;
+    }
+
     return (
       <SearchBar
         className="sticky"
@@ -196,6 +217,24 @@ class SearchView extends React.Component {
         isSticky={0}
         primary
         initialValue={query}
+      />
+    );
+  }
+
+  renderSuggestions() {
+    const { expandSearch } = this.state;
+    const { query } = this.props;
+    if (!expandSearch) {
+      return null;
+    }
+    return (
+      <SuggestionBox
+        closeExpandedSearch={() => this.closeExpandedSearch()}
+        visible={expandSearch}
+        searchQuery={query}
+        expandQuery={expandSearch}
+        handleSubmit={query => this.handleSubmit(query)}
+        isMobile
       />
     );
   }
@@ -293,7 +332,7 @@ class SearchView extends React.Component {
                   ref={this.buttonRef}
                   role="link"
                   className={`${classes.suggestionButton}`}
-                  onClick={() => this.setState({ expandSearch: searchParam.query })}
+                  onClick={() => this.setState({ expandSearch: true })}
                 >
                   <Typography variant="button" className={classes.expand}>
                     <FormattedMessage id="search.expand" />
@@ -420,6 +459,9 @@ class SearchView extends React.Component {
           this.renderSearchBar()
         }
         {
+          this.renderSuggestions()
+        }
+        {
           !expandSearch && this.renderSearchInfo()
         }
         {
@@ -462,6 +504,7 @@ SearchView.propTypes = {
   units: PropTypes.arrayOf(PropTypes.any),
   map: PropTypes.objectOf(PropTypes.any),
   match: PropTypes.objectOf(PropTypes.any).isRequired,
+  navigator: PropTypes.objectOf(PropTypes.any),
   settings: PropTypes.objectOf(PropTypes.any),
   serviceTree: PropTypes.objectOf(PropTypes.any),
   query: PropTypes.string,
@@ -477,6 +520,7 @@ SearchView.defaultProps = {
   units: [],
   settings: null,
   map: null,
+  navigator: null,
   serviceTree: null,
   query: null,
 };

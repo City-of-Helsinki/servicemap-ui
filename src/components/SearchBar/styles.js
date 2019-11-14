@@ -112,11 +112,13 @@ export default theme => ({
   },
   expandHeight: {
     top: 64,
-    height: 'calc(100% - 64px)',
+    height: '100%',
+    overflow: 'auto',
   },
   expandHeightMobile: {
     top: 0,
     height: '100%',
+    overflow: 'auto',
   },
   divider: {
     marginLeft: 56,
@@ -155,8 +157,7 @@ export default theme => ({
     paddingRight: theme.spacing.unitDouble,
   },
   backIcon: {
-    paddingLeft: 0,
-    paddingRight: theme.spacing.unitDouble,
+    padding: theme.spacing.unit,
     color: '#757575',
     marginLeft: theme.spacing.unit,
   },

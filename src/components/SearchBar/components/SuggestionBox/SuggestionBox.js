@@ -163,6 +163,8 @@ const SuggestionBox = (props) => {
       suggestionList = suggestionList.slice(0, 10);
     }
     const titleId = expandQuery ? 'search.suggestions.expand' : 'search.suggestions.suggest';
+    const handleArrowClick = setSearch ? suggestion => setSearch(suggestion) : null;
+
     if (suggestionList) {
       return (
         <>
@@ -193,7 +195,7 @@ const SuggestionBox = (props) => {
                 icon={<Search />}
                 role="link"
                 text={item.suggestion}
-                handleArrowClick={suggestion => setSearch(suggestion)}
+                handleArrowClick={handleArrowClick}
                 handleItemClick={() => handleSubmit(item.suggestion)}
                 divider={i !== suggestionList.length - 1}
                 subtitle={intl.formatMessage({ id: 'search.suggestions.results' }, { count: item.count })}

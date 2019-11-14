@@ -1,7 +1,7 @@
 export default theme => ({
   root: {
     display: 'inline-block',
-    height: 'auto',
+    height: '100%',
     position: 'relative',
     width: '100%',
   },
