@@ -23,7 +23,7 @@ const createContentStyles = (
   } else if (isSmallScreen) {
     width = '50%';
   }
-  const topBarHeight = `${config.topBarHeight}px`;
+  const topBarHeight = isMobile ? `${config.topBarHeightMobile}px` : `${config.topBarHeight}px`;
 
   const styles = {
     activeRoot: {
@@ -53,9 +53,6 @@ const createContentStyles = (
       margin: 0,
       overflow: !isMobile ? 'auto' : '',
       visibility: mobileMapOnly && !settingsOpen ? 'hidden' : null,
-    },
-    topNav: {
-      minWidth: width,
     },
   };
 
@@ -88,7 +85,15 @@ const DefaultLayout = (props) => {
 
   return (
     <>
-      <TopBar settingsOpen={settingsToggled} toggleSettings={() => toggleSettings(!settingsToggled)} topNav={styles.topNav} i18n={i18n} />
+      <h1 id="app-title" tabIndex="-1" className="sr-only app-title" component="h1">
+        <FormattedMessage id="app.title" />
+      </h1>
+      {/* Jump link to main content for screenreaders
+        Must be first interactable element on page */}
+      <a href="#view-title" className="sr-only">
+        <FormattedMessage id="general.skipToContent" />
+      </a>
+      <TopBar settingsOpen={settingsToggled} toggleSettings={type => (!type || type === settingsToggled ? toggleSettings(false) : toggleSettings(type))} i18n={i18n} />
       <div style={styles.activeRoot}>
         <main className="SidebarWrapper" style={styles.sidebar}>
           {settingsToggled ? (
@@ -106,7 +111,7 @@ const DefaultLayout = (props) => {
 
       <footer role="contentinfo" className="sr-only">
         <DesktopComponent>
-          <a href="#site-title">
+          <a href="#app-title">
             <FormattedMessage id="general.backToStart" />
           </a>
         </DesktopComponent>

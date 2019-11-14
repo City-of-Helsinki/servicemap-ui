@@ -8,6 +8,6 @@ export default () => ({
     height: 45,
   },
   iconMobile: {
-    height: 45,
+    height: 40,
   },
 });

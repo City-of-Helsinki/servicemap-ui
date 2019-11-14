@@ -19,7 +19,7 @@ const getLocation = ClientFunction(() => document.location.href);
 const testFinnish = async (t) => {
   const languageButtons = ReactSelector('Button');
   const title = Selector('.app-title').textContent;
-  const text = await languageButtons.nth(0).innerText.then(s => s.toLocaleLowerCase());
+  const text = await languageButtons.nth(1).innerText.then(s => s.toLocaleLowerCase());
 
   await t
     .expect(getLocation()).contains(`http://${server.address}:${server.port}/en`)
@@ -27,20 +27,20 @@ const testFinnish = async (t) => {
     .expect(text).contains('suomi')
     
     
-    .click(languageButtons.nth(0))
+    .click(languageButtons.nth(1))
     .navigateTo(`http://${server.address}:${server.port}/fi`);
 };
 
 test('Language does change', async (t) => {
-  const languageButtons = ReactSelector('Button');
+  const languageButtons = ReactSelector('ButtonBase');
   const title = Selector('.app-title').textContent;
-  const text = await languageButtons.nth(0).innerText.then(s => s.toLocaleLowerCase());
+  const text = await languageButtons.nth(2).innerText.then(s => s.toLocaleLowerCase());
 
   await t
     .expect(getLocation()).contains(`http://${server.address}:${server.port}/fi`)
     .expect(title).eql('Palvelukartta')
-    .expect(text).contains('english')    
-    .click(languageButtons.nth(0))
+    .expect(text).contains('in english')    
+    .click(languageButtons.nth(2))
     .navigateTo(`http://${server.address}:${server.port}/en`);
 
   testFinnish(t);

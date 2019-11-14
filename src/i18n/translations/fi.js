@@ -54,6 +54,8 @@ export default {
   'sorting.match.desc': 'Osuvin ensin',
 
   // General
+  'general.frontPage': 'Etusivu',
+  'general.menu': 'Valikko',
   'general.back': 'Palaa',
   'general.back.address': 'Palaa osoitenäkymään',
   'general.back.home': 'Palaa aloitusnäkymään',

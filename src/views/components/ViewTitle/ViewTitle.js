@@ -21,9 +21,9 @@ class ViewTitle extends React.Component {
     } else {
       actionSetInitialLoad();
       // Focus to site title on first load
-      const siteTitle = document.getElementById('site-title');
-      if (siteTitle) {
-        siteTitle.focus();
+      const appTitle = document.getElementById('app-title');
+      if (appTitle) {
+        appTitle.focus();
       }
     }
   }
