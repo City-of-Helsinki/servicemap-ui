@@ -1,10 +1,11 @@
 export default theme => ({
   container: {
     display: 'flex',
-    flex: '0 1 auto',
+    flex: '1 1 auto',
+    padding: `${theme.spacing.unit}px 0`,
   },
   listItem: {
-    padding: `${theme.spacing.unit}px 0`,
+    padding: '0',
   },
   textContainer: {
     padding: 0,
