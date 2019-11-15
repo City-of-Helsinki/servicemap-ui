@@ -88,6 +88,7 @@ export default theme => ({
     borderRadius: 0,
     borderBottomLeftRadius: theme.spacing.unitHalf,
     borderBottomRightRadius: theme.spacing.unitHalf,
+    maxHeight: `calc(80vh - ${config.topBarHeight}px)`,
   },
   suggestionAreaMobile: {
     position: 'absolute',
@@ -101,6 +102,7 @@ export default theme => ({
     borderRadius: 0,
     borderBottomLeftRadius: theme.spacing.unitHalf,
     borderBottomRightRadius: theme.spacing.unitHalf,
+    maxHeight: `calc(80vh - ${config.topBarHeight}px)`,
   },
   expandTitle: {
     alignSelf: 'center',

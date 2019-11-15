@@ -160,7 +160,7 @@ const SuggestionBox = (props) => {
   const renderSuggestionList = () => {
     let suggestionList = searchQueries || null;
     if (suggestionList && suggestionList.length) {
-      suggestionList = suggestionList.slice(0, 10);
+      suggestionList = suggestionList.slice(0, 8);
     }
     const titleId = expandQuery ? 'search.suggestions.expand' : 'search.suggestions.suggest';
     const handleArrowClick = setSearch ? suggestion => setSearch(suggestion) : null;

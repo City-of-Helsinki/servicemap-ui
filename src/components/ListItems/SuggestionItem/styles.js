@@ -1,7 +1,7 @@
 export default theme => ({
   container: {
     display: 'flex',
-    flex: '1 0 auto',
+    flex: '0 1 auto',
   },
   listItem: {
     padding: `${theme.spacing.unit}px 0`,
