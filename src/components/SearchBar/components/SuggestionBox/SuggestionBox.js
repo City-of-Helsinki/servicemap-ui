@@ -243,7 +243,7 @@ const SuggestionBox = (props) => {
     // Disable page scroll when suggestion box is open
     const sidebar = document.getElementsByClassName('SidebarWrapper')[0];
     if (visible) {
-      sidebar.style.overflow = isMobile ? '' : 'hidden';
+      sidebar.style.overflow = isMobile ? 'hidden' : 'hidden';
     } else {
       sidebar.style.overflow = isMobile ? '' : 'auto';
     }

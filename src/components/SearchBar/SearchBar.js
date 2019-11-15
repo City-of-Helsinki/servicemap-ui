@@ -2,7 +2,7 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 import {
-  InputBase, Paper, Typography, Button, IconButton,
+  InputBase, Paper, Typography, Button, IconButton, Divider,
 } from '@material-ui/core';
 import {
   Search, Cancel,
@@ -175,9 +175,10 @@ class SearchBar extends React.Component {
 
     const showSuggestions = isActive;
     const inputValue = typeof search === 'string' ? search : previousSearchText;
+    const containerStyles = `${classes.container} ${isActive ? classes.containerSticky : ''}`;
 
     return (
-      <form onSubmit={this.onSubmit} className={classes.container} autoComplete="off">
+      <form onSubmit={this.onSubmit} className={containerStyles} autoComplete="off">
         {
           !hideBackButton
           && <BackButton className={classes.iconButton} onClick={backButtonEvent || null} variant="icon" srHidden={!!hideBackButton} />
@@ -238,6 +239,11 @@ class SearchBar extends React.Component {
     const {
       classes,
     } = this.props;
+    const { isActive } = this.state;
+
+    if (isActive) {
+      return null;
+    }
 
     return (
       <Typography align="left" className={classes.infoText} color="inherit" variant="body2">Hae palveluita, toimipisteitä tai osoitteita</Typography>
@@ -256,7 +262,7 @@ class SearchBar extends React.Component {
     const { isActive } = this.state;
 
     const rootClasses = `${isActive ? classes.mobileRoot : classes.root} ${!isActive && typeof isSticky === 'number' ? classes.sticky : ''} ${primary ? classes.primary : ''}  ${className}`;
-    const wrapperClasses = isActive ? classes.mobileWrapper : classes.wrapper;
+    const wrapperClasses = `${isActive ? classes.mobileWrapper : classes.wrapper}`;
     const stickyStyles = typeof isSticky === 'number' ? { top: isSticky } : null;
 
     return (
@@ -270,15 +276,13 @@ class SearchBar extends React.Component {
             )
           }
           {
-            !isActive
-            && (
-              this.renderText()
-            )
+            this.renderText()
           }
           <Paper className={wrapperClasses} elevation={1} square>
             {
               this.renderInput()
             }
+            <Divider aria-hidden />
             {
               this.renderSuggestionBox()
             }

@@ -49,6 +49,13 @@ const styles = () => ({
     backgroundColor: '#fff',
     paddingRight: 0,
   },
+  mobileNav: {
+    position: 'sticky',
+    height: topBarHeight,
+    top: 0,
+    zIndex: 100,
+    backgroundColor: '#2242C7',
+  },
   toolbarButtonPressed: {
     textTransform: 'none',
     backgroundColor: '#353638',
