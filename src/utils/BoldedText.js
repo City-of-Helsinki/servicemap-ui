@@ -31,7 +31,7 @@ const BoldedText = ({ text, shouldBeBold }) => {
               {index !== textArray.length - 1 && (
                 <b>
                   {
-                    index === 0
+                    index === 0 && item === ''
                       ? uppercaseFirst(processedShouldBeBold)
                       : processedShouldBeBold
                   }
