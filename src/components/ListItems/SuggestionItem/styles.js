@@ -17,6 +17,7 @@ export default theme => ({
     width: '1.5rem',
     height: '1.5rem',
     margin: '0.5rem 1rem',
+    alignSelf: 'center',
   },
   suggestIcon: {
     height: 'auto',
