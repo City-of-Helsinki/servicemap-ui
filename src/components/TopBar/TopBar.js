@@ -1,16 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Button, Typography, AppBar, Toolbar, ButtonBase,
+  Button, Typography, AppBar, Toolbar, ButtonBase, Drawer, ClickAwayListener,
 } from '@material-ui/core';
-import { Map, Menu } from '@material-ui/icons';
-import { FormattedMessage } from 'react-intl';
+import {
+  Map, Menu, Close, GpsFixed, FormatListBulleted, Accessibility,
+} from '@material-ui/icons';
+import { FormattedMessage, intlShape } from 'react-intl';
 import I18n from '../../i18n';
 import HomeLogo from '../Logos/HomeLogo';
 import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
+import fetchAddress from '../../views/MapView/utils/fetchAddress';
 
 
 class TopBar extends React.Component {
+  state={ drawerOpen: false }
+
   renderMapButton = () => {
     const {
       classes, navigator, location, settingsOpen, toggleSettings,
@@ -42,15 +47,28 @@ class TopBar extends React.Component {
 
   renderMenuButton = () => {
     const { classes } = this.props;
+    const { drawerOpen } = this.state;
     return (
       <Button
-        className={classes.toolbarButton}
+        className={drawerOpen ? classes.toolbarButtonPressed : classes.toolbarButton}
         classes={{ label: classes.buttonLabel }}
+        onClick={() => this.toggleDrawerMenu()}
       >
-        <Menu />
-        <Typography color="inherit" variant="body2">
-          <FormattedMessage id="general.menu" />
-        </Typography>
+        {drawerOpen ? (
+          <>
+            <Close />
+            <Typography color="inherit" variant="body2">
+              <FormattedMessage id="general.close" />
+            </Typography>
+          </>
+        ) : (
+          <>
+            <Menu />
+            <Typography color="inherit" variant="body2">
+              <FormattedMessage id="general.menu" />
+            </Typography>
+          </>
+        )}
       </Button>
     );
   }
@@ -81,25 +99,133 @@ class TopBar extends React.Component {
     );
   }
 
-  navigateHome = () => {
-    const { currentPage, navigator } = this.props;
-    if (currentPage !== 'home') {
-      navigator.push('home');
-    } else {
-      document.getElementById('view-title').focus();
+  renderDrawerMenu = (pageType) => {
+    const {
+      classes, toggleSettings, userLocation, findUserLocation, intl,
+    } = this.props;
+    const { drawerOpen } = this.state;
+
+    const menuContent = [
+      {
+        name: intl.formatMessage({ id: 'home.buttons.closeByServices' }),
+        disabled: !userLocation.coordinates,
+        subText: userLocation.allowed
+          ? intl.formatMessage({ id: 'location.notFound' })
+          : intl.formatMessage({ id: 'location.notAllowed' }),
+        icon: <GpsFixed />,
+        clickEvent: () => {
+          if (!userLocation.coordinates) {
+            findUserLocation();
+          } else {
+            this.handleNavigation('address', userLocation.coordinates);
+            this.setState({ drawerOpen: false });
+          }
+        },
+      },
+      {
+        name: intl.formatMessage({ id: 'home.buttons.services' }),
+        icon: <FormatListBulleted />,
+        clickEvent: () => {
+          this.handleNavigation('services');
+          this.setState({ drawerOpen: false });
+        },
+      },
+      {
+        name: intl.formatMessage({ id: 'home.buttons.settings' }),
+        icon: <Accessibility />,
+        clickEvent: () => {
+          toggleSettings('all');
+          this.setState({ drawerOpen: false });
+        },
+      },
+      // {
+      //   name: 'Vinkkejä Palvelukartan käyttöön',
+      //   icon: <ThumbUp />,
+      //   clickEvent: () => {
+      //     this.setState({ drawerOpen: false });
+      //   },
+      // },
+    ];
+
+    return (
+      <ClickAwayListener onClickAway={drawerOpen ? () => this.toggleDrawerMenu() : () => {}}>
+        <Drawer
+          variant="persistent"
+          anchor="right"
+          open={drawerOpen}
+          classes={{ paper: pageType === 'mobile' ? classes.drawerContainerMobile : classes.drawerContainer }}
+        >
+          {menuContent.map(item => (
+            <ButtonBase
+              disableRipple
+              key={item.name}
+              tabIndex={drawerOpen ? 0 : -1}
+              role="link"
+              aria-hidden={!drawerOpen}
+              onClick={item.clickEvent}
+              className={classes.drawerButton}
+            >
+              <div className={`${classes.drawerIcon} ${item.disabled ? classes.disabled : ''}`}>
+                {item.icon}
+              </div>
+              <span className={classes.buttonLabel}>
+                <Typography className={`${classes.drawerButtonText} ${item.disabled ? classes.disabled : ''}`} variant="body1">{item.name}</Typography>
+                {item.disabled && <Typography className={classes.drawerButtonText} variant="caption">{item.subText}</Typography>}
+              </span>
+            </ButtonBase>
+          ))}
+        </Drawer>
+      </ClickAwayListener>
+    );
+  }
+
+  handleNavigation = (target, data) => {
+    const {
+      getLocaleText, navigator, currentPage, toggleSettings,
+    } = this.props;
+
+    toggleSettings();
+
+    if (target === 'home') {
+      if (currentPage !== 'home') {
+        navigator.push('home');
+      } else {
+        setTimeout(() => {
+          document.getElementById('view-title').focus();
+        }, 1);
+      }
+    } else if (target === 'address') {
+      const latLng = { lat: data.latitude, lng: data.longitude };
+      fetchAddress(latLng)
+        .then((data) => {
+          navigator.push('address', {
+            municipality: data.street.municipality,
+            street: getLocaleText(data.street.name),
+            number: data.number,
+          });
+        });
+    } else if (target === 'services') {
+      navigator.push('serviceTree');
     }
   }
 
-  renderTopBar = (type) => {
-    const { classes } = this.props;
 
+  toggleDrawerMenu = () => {
+    const { drawerOpen } = this.state;
+    setTimeout(() => {
+      this.setState({ drawerOpen: !drawerOpen });
+    }, 1);
+  }
+
+  renderTopBar = (pageType) => {
+    const { classes } = this.props;
     return (
       <>
         <AppBar>
           {/* Toolbar black area */}
           <Toolbar className={classes.toolbarBlack}>
             <div className={classes.toolbarBlackContainer}>
-              <ButtonBase role="link" onClick={() => this.navigateHome()}>
+              <ButtonBase role="link" onClick={() => this.handleNavigation('home')}>
                 <Typography color="inherit">
                   <FormattedMessage id="general.frontPage" />
                 </Typography>
@@ -115,20 +241,21 @@ class TopBar extends React.Component {
           </Toolbar>
 
           {/* Toolbar white area */}
-          <Toolbar className={type === 'mobile' ? classes.toolbarWhiteMobile : classes.toolbarWhite}>
+          <Toolbar className={pageType === 'mobile' ? classes.toolbarWhiteMobile : classes.toolbarWhite}>
             <div className={classes.homeLogoContainer}>
-              <HomeLogo mobile={type === 'mobile'} dark aria-hidden="true" className={classes.logo} />
+              <HomeLogo mobile={pageType === 'mobile'} dark aria-hidden="true" className={classes.logo} />
             </div>
             <MobileComponent>
               <div className={classes.mobileButtonContainer}>
                 {this.renderMapButton()}
-                {/* {this.renderMenuButton()} */}
+                {this.renderMenuButton()}
               </div>
+              {this.renderDrawerMenu(pageType)}
             </MobileComponent>
           </Toolbar>
         </AppBar>
         {/* This empty toolbar fixes the issue where App bar hides the top page content */}
-        <Toolbar className={type === 'mobile' ? classes.alignerMobile : classes.aligner} />
+        <Toolbar className={pageType === 'mobile' ? classes.alignerMobile : classes.aligner} />
       </>
     );
   }
@@ -160,6 +287,10 @@ TopBar.propTypes = {
   settingsOpen: PropTypes.bool,
   toggleSettings: PropTypes.func.isRequired,
   currentPage: PropTypes.string.isRequired,
+  userLocation: PropTypes.objectOf(PropTypes.any).isRequired,
+  findUserLocation: PropTypes.func.isRequired,
+  getLocaleText: PropTypes.func.isRequired,
+  intl: intlShape.isRequired,
 };
 
 TopBar.defaultProps = {

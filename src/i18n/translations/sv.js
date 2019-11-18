@@ -103,13 +103,17 @@ export default {
   'general.distance.kilometers': 'Kilometrin päässä', // TODO: Translate
 
   // Home
-  'home.buttons.settings': 'Accessibility and city settings', // TODO: Translate
-  'home.buttons.services': 'All services', // TODO: Translate
+  'home.buttons.settings': 'Kaupunki-, kartta- ja esteettömyysasetukset', // TODO: Translate
+  'home.buttons.services': 'Palveluluettelo', // TODO: Translate
   'home.buttons.closeByServices': 'Lähellä olevat palvelut', // TODO: Translate
   'home.example.title': 'Esimerkkihakuja', // TODO: Translate
   'home.example.search': 'Hae hakusanalla', // TODO: Translate
   'home.message': 'Terveisiä palvelukartan kehittäjiltä', // TODO: Translate
   'home.send.feedback': 'Lähetä palautetta', // TODO: Translate
+
+  // Location
+  'location.notFound': 'Sijaintia ei löytynyt', // TODO: Translate
+  'location.notAllowed': 'Sijaintia ei sallittu', // TODO: Translate
 
   // Map
   'map': 'Map', // TODO: Translate

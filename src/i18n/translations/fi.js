@@ -104,13 +104,17 @@ export default {
   'general.distance.kilometers': 'Kilometrin päässä',
 
   // Home
-  'home.buttons.settings': 'Esteettömyys ja kaupunki asetukset',
-  'home.buttons.services': 'Kaikki palvelut',
+  'home.buttons.settings': 'Kaupunki-, kartta- ja esteettömyysasetukset',
+  'home.buttons.services': 'Palveluluettelo',
   'home.buttons.closeByServices': 'Lähellä olevat palvelut',
   'home.example.title': 'Esimerkkihakuja',
   'home.example.search': 'Hae hakusanalla',
   'home.message': 'Terveisiä palvelukartan kehittäjiltä',
   'home.send.feedback': 'Lähetä palautetta',
+
+  // Location
+  'location.notFound': 'Sijaintia ei löytynyt',
+  'location.notAllowed': 'Sijaintia ei sallittu',
 
   // Map
   'map': 'Kartta',

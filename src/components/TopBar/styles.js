@@ -50,21 +50,21 @@ const styles = () => ({
     paddingRight: 0,
   },
   toolbarButtonPressed: {
+    width: 66,
     textTransform: 'none',
     backgroundColor: '#353638',
     color: '#fff',
     marginLeft: 4,
-    marginRight: 4,
     borderRadius: 0,
     '&:hover': {
       backgroundColor: '#353638',
     },
   },
   toolbarButton: {
+    width: 66,
     textTransform: 'none',
     color: '#000',
     marginLeft: 4,
-    marginRight: 4,
     borderRadius: 0,
   },
   mobileButtonContainer: {
@@ -75,6 +75,54 @@ const styles = () => ({
   },
   alignerMobile: {
     height: topBarHeightMobile,
+  },
+  drawerContainer: {
+    top: topBarHeight,
+    backgroundColor: '#353638',
+    maxWidth: 350,
+    padding: 2,
+  },
+  drawerContainerMobile: {
+    top: topBarHeightMobile,
+    backgroundColor: '#353638',
+    maxWidth: 350,
+    padding: 2,
+  },
+  drawerButton: {
+    color: '#fff',
+    height: 80,
+    textTransform: 'none',
+    justifyContent: 'left',
+    textAlign: 'left',
+    paddingLeft: 25,
+    paddingRight: 25,
+    borderBottom: '1px solid rgba(255, 255, 255, 0.24)',
+    '&:active': {
+      backgroundColor: '#000',
+    },
+    '&:focus': {
+      outline: '2px solid transparent',
+      boxShadow: '0 0 0 2px #fff',
+      transition: 'all .4s ease-in-out',
+    },
+  },
+  drawerButtonText: {
+    lineHeight: '18px',
+    color: 'inherit',
+  },
+  drawerIcon: {
+    height: 40,
+    width: 40,
+    borderRadius: '50%',
+    backgroundColor: '#6C6C6C',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 25,
+    flexShrink: 0,
+  },
+  disabled: {
+    color: 'rgba(255, 255, 255, 0.55)',
   },
 });
 
