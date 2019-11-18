@@ -78,9 +78,9 @@ export default {
   'general.pageTitles.search': 'Search view', // TODO: Translate
   'general.pageTitles.unit': 'Unit view', // TODO: Translate
   'general.pageTitles.service': 'Service view', // TODO: Translate
+  'general.pageTitles.serviceTree': 'Palveluluettelo', // TODO: Translate
   'general.pageTitles.event': 'Tapahtumanäkymä', // TODO: Translate
   'general.pageTitles.address': 'Address view', // TODO: Translate
-  'general.pageTitles.list.services': 'Service list ', // TODO: Translate
   'general.pageTitles.list.events': 'Event list ', // TODO: Translate
   'general.pageTitles.list.reservations': 'Reservation list ', // TODO: Translate
   // General - Pagination

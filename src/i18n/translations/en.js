@@ -79,9 +79,9 @@ export default {
   'general.pageTitles.search': 'Search view',
   'general.pageTitles.unit': 'Unit view',
   'general.pageTitles.service': 'Service view',
+  'general.pageTitles.serviceTree': 'Service list',
   'general.pageTitles.event': 'Event view',
   'general.pageTitles.address': 'Address view',
-  'general.pageTitles.list.services': 'Service list ',
   'general.pageTitles.list.events': 'Event list ',
   'general.pageTitles.list.reservations': 'Reservation list ',
   // General - Pagination

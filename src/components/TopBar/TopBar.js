@@ -23,6 +23,7 @@ class TopBar extends React.Component {
     const mapPage = location.pathname.indexOf('/map') > -1;
     return (
       <Button
+        aria-hidden
         className={mapPage ? classes.toolbarButtonPressed : classes.toolbarButton}
         classes={{ label: classes.buttonLabel }}
         onClick={(e) => {

@@ -78,9 +78,9 @@ export default {
   'general.pageTitles.search': 'Hakutulosnäkymä',
   'general.pageTitles.unit': 'Toimipistenäkymä',
   'general.pageTitles.service': 'Palvelunäkymä',
+  'general.pageTitles.serviceTree': 'Palveluluettelo',
   'general.pageTitles.event': 'Tapahtumanäkymä',
   'general.pageTitles.address': 'Osoitenäkymä',
-  'general.pageTitles.list.services': 'Palvelulista ',
   'general.pageTitles.list.events': 'Tapahtumalista ',
   'general.pageTitles.list.reservations': 'Varauslista',
   // General - Pagination
