@@ -1,5 +1,5 @@
 const calculateDistance = (unit, user) => {
-  if (user && unit && unit.location) {
+  if (user && user.latitude && user.longitude && unit && unit.location) {
     const toRadians = (degree) => {
       const pi = Math.PI;
       return degree * (pi / 180);

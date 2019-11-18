@@ -20,7 +20,7 @@ const mapStateToProps = (state) => {
   const highlightedDistrict = getHighlightedDistrict(state);
   const highlightedUnit = getSelectedUnit(state);
   const currentPage = state.user.page;
-  const userLocation = state.user.position;
+  const userLocation = state.user.position.coordinates;
   const getLocaleText = textObject => getLocaleString(state, textObject);
   const { navigator } = state;
   const { addressTitle, addressUnits } = state.address;
