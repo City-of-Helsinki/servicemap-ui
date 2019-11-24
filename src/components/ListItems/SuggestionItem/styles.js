@@ -2,16 +2,20 @@ export default theme => ({
   container: {
     display: 'flex',
     flex: '1 1 auto',
-    padding: `${theme.spacing.unit}px 0`,
+    padding: `${theme.spacing.unitHalf}px 0`,
   },
   listItem: {
     padding: '0',
+    paddingTop: theme.spacing.unitHalf,
   },
   textContainer: {
     padding: 0,
     marginLeft: theme.spacing.unitDouble,
     marginRight: theme.spacing.unitDouble,
     whiteSpace: 'pre-line',
+    '& p': {
+      lineHeight: '18px',
+    },
   },
   listIcon: {
     width: '1.5rem',
