@@ -21,6 +21,7 @@ export default theme => ({
     width: '1.5rem',
     height: '1.5rem',
     margin: '0.5rem 1rem',
+    marginRight: 0,
     alignSelf: 'center',
   },
   suggestIcon: {
@@ -37,6 +38,6 @@ export default theme => ({
     lineHeight: '18px',
   },
   divider: {
-    marginLeft: theme.spacing.unit * 9,
+    marginLeft: theme.spacing.unit * 6,
   },
 });
