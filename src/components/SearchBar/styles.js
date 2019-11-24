@@ -43,6 +43,9 @@ export default theme => ({
     zIndex: 51,
     top: 0,
   },
+  darkBlue: {
+    color: '#2242C7',
+  },
   infoText: {
     paddingBottom: theme.spacing.unitHalf,
   },
@@ -96,7 +99,7 @@ export default theme => ({
     position: 'absolute',
     right: theme.spacing.unitTriple,
     left: theme.spacing.unitTriple,
-    zIndex: 10000,
+    zIndex: 110,
     backgroundColor: '#fff',
     overflow: 'auto',
     borderRadius: 0,
@@ -109,7 +112,7 @@ export default theme => ({
     left: 0,
     top: 56,
     bottom: 0,
-    zIndex: 51,
+    zIndex: 110,
     backgroundColor: '#fff',
     overflow: 'auto',
     borderRadius: 0,

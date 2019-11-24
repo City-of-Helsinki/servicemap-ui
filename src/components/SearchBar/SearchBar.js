@@ -173,6 +173,7 @@ class SearchBar extends React.Component {
 
     const previousSearchText = typeof previousSearch === 'string' ? previousSearch : null;
 
+    const backButtonStyles = `${classes.iconButton} ${classes.darkBlue}`;
     const showSuggestions = isActive;
     const inputValue = typeof search === 'string' ? search : previousSearchText;
     const containerStyles = `${classes.container} ${isActive ? classes.containerSticky : ''}`;
@@ -181,7 +182,14 @@ class SearchBar extends React.Component {
       <form onSubmit={this.onSubmit} className={containerStyles} autoComplete="off">
         {
           !hideBackButton
-          && <BackButton className={classes.iconButton} onClick={backButtonEvent || null} variant="icon" srHidden={!!hideBackButton} />
+          && (
+            <BackButton
+              className={backButtonStyles}
+              onClick={backButtonEvent || null}
+              variant="icon"
+              srHidden={!!hideBackButton}
+            />
+          )
         }
         <InputBase
           inputProps={{
