@@ -211,6 +211,7 @@ class SearchBar extends React.Component {
             && (
               <IconButton
                 aria-hidden
+                className={classes.cancelButton}
                 onClick={() => {
                   if (this.searchRef) {
                     // Clear blur timeout to keep suggestion box active

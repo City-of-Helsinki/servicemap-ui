@@ -159,6 +159,11 @@ export default theme => ({
     width: '100%',
     backgroundColor: '#000',
   },
+  cancelButton: {
+    '& svg': {
+      fontSize: 14,
+    },
+  },
   closeButton: {
     margin: 0,
     width: 'fit-content',
