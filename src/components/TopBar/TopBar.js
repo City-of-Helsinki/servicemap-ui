@@ -95,7 +95,7 @@ class TopBar extends React.Component {
 
     return (
       <>
-        <AppBar>
+        <AppBar className={classes.appBar}>
           {/* Toolbar black area */}
           <Toolbar className={classes.toolbarBlack}>
             <div className={classes.toolbarBlackContainer}>

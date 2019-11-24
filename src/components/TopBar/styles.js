@@ -3,6 +3,15 @@ import config from '../../../config';
 const { topBarHeight, topBarHeightMobile } = config;
 
 const styles = () => ({
+  aligner: {
+    height: topBarHeight,
+  },
+  alignerMobile: {
+    height: topBarHeightMobile,
+  },
+  appBar: {
+    zIndex: 100,
+  },
   buttonLabel: {
     display: 'flex',
     flexDirection: 'column',
@@ -42,19 +51,14 @@ const styles = () => ({
   toolbarWhite: {
     height: 70,
     backgroundColor: '#fff',
+    zIndex: 100,
   },
   toolbarWhiteMobile: {
     minHeight: 60,
     height: 60,
     backgroundColor: '#fff',
     paddingRight: 0,
-  },
-  mobileNav: {
-    position: 'sticky',
-    height: topBarHeight,
-    top: 0,
     zIndex: 100,
-    backgroundColor: '#2242C7',
   },
   toolbarButtonPressed: {
     textTransform: 'none',
@@ -76,12 +80,6 @@ const styles = () => ({
   },
   mobileButtonContainer: {
     marginLeft: 'auto',
-  },
-  aligner: {
-    height: topBarHeight,
-  },
-  alignerMobile: {
-    height: topBarHeightMobile,
   },
 });
 
