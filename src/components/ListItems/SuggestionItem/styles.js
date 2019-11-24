@@ -25,6 +25,7 @@ export default theme => ({
     alignSelf: 'center',
   },
   suggestIcon: {
+    color: '#757575',
     height: 'auto',
     margin: 0,
     padding: 0,
