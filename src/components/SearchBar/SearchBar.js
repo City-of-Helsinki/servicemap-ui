@@ -7,7 +7,7 @@ import {
 import {
   Search, Cancel,
 } from '@material-ui/icons';
-import { intlShape } from 'react-intl';
+import { intlShape, FormattedMessage } from 'react-intl';
 import BackButton from '../BackButton';
 import { keyboardHandler } from '../../utils';
 import SuggestionBox from './components/SuggestionBox';
@@ -238,7 +238,7 @@ class SearchBar extends React.Component {
           variant="contained"
         >
           <Search />
-          <Typography variant="caption" color="inherit">Tee haku</Typography>
+          <Typography variant="caption" color="inherit"><FormattedMessage id="general.search" /></Typography>
         </Button>
       </form>
     );

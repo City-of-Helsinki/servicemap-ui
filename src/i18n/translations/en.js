@@ -101,6 +101,7 @@ export default {
   'general.save.changes': 'Save changes',
   'general.save.changes.done': 'Changes have been saved!',
   'general.save.confirmation': 'Would you like to save changes?',
+  'general.search': 'Search',
   'general.distance.meters': 'Meters away',
   'general.distance.kilometers': 'Kilometers away',
 

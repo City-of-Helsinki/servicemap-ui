@@ -100,6 +100,7 @@ export default {
   'general.save.changes': 'Tallenna muutokset',
   'general.save.changes.done': 'Muutokset tallennettu!',
   'general.save.confirmation': 'Haluatko tallentaa muutokset?',
+  'general.search': 'Hae',
   'general.distance.meters': 'Metrin päässä',
   'general.distance.kilometers': 'Kilometrin päässä',
 

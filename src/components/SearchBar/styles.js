@@ -68,6 +68,9 @@ export default theme => ({
     borderRadius: 0,
     padding: theme.spacing.unit,
     textTransform: 'none',
+    '& svg': {
+      fontSize: 28,
+    },
   },
   iconButtonSearchLabel: {
     flexDirection: 'column',
