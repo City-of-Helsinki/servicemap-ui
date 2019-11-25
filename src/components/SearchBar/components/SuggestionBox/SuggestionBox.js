@@ -242,11 +242,20 @@ const SuggestionBox = (props) => {
   useEffect(() => {
     // Disable page scroll when suggestion box is open
     const sidebar = document.getElementsByClassName('SidebarWrapper')[0];
+    const app = document.getElementsByClassName('App')[0];
     if (visible) {
       sidebar.style.overflow = isMobile ? 'hidden' : 'hidden';
-    } else {
-      sidebar.style.overflow = isMobile ? '' : 'auto';
+      if (app) {
+        app.style.height = '100%';
+      }
     }
+
+    return () => {
+      sidebar.style.overflow = isMobile ? 'auto' : 'auto';
+      if (app) {
+        app.style.height = null;
+      }
+    };
   }, [visible]);
 
   /**
