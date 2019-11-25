@@ -212,9 +212,7 @@ class SearchView extends React.Component {
 
     return (
       <SearchBar
-        className="sticky"
         expand
-        isSticky={0}
         primary
         initialValue={query}
       />

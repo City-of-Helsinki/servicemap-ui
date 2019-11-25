@@ -251,7 +251,7 @@ const SuggestionBox = (props) => {
     }
 
     return () => {
-      sidebar.style.overflow = isMobile ? 'auto' : 'auto';
+      sidebar.style.overflow = isMobile ? '' : 'auto';
       if (app) {
         app.style.height = null;
       }
