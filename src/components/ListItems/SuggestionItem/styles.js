@@ -9,6 +9,7 @@ export default theme => ({
     paddingTop: theme.spacing.unitHalf,
   },
   textContainer: {
+    display: 'flex',
     padding: 0,
     marginLeft: theme.spacing.unitDouble,
     marginRight: theme.spacing.unitDouble,
@@ -40,5 +41,8 @@ export default theme => ({
   },
   divider: {
     marginLeft: theme.spacing.unit * 6,
+  },
+  text: {
+    alignSelf: 'center',
   },
 });

@@ -64,6 +64,7 @@ const SuggestionItem = (props) => {
           </ListItemIcon>
 
           <ListItemText
+            className={classes.text}
             classes={{ root: classes.textContainer }}
           >
             <Typography variant="srOnly">
