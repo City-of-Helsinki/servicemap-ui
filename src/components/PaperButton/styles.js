@@ -7,18 +7,15 @@ export default theme => ({
     flex: '1 0 auto',
     padding: theme.spacing.unit,
     color: theme.palette.primary.main,
-  },
-  iconButtonLabel: {
-    display: 'flex',
-    flexDirection: 'column',
+    justifyContent: 'left',
+    textAlign: 'left',
+    border: 'rgba(25,100,230,0.50) solid 0.5px',
   },
   iconContainer: {
     display: 'flex',
   },
   icon: {
-    alignSelf: 'center',
     color: 'inherit',
-    fontSize: 48,
     margin: theme.spacing.unit,
   },
   iconButtonDisabled: {
@@ -26,5 +23,6 @@ export default theme => ({
   },
   text: {
     textTransform: 'none',
+    lineHeight: '18px',
   },
 });

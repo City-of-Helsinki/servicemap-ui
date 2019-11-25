@@ -1,17 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Typography,
-} from '@material-ui/core';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import { Accessibility, List, GpsFixed } from '@material-ui/icons';
 import Container from '../../components/Container';
 import SearchBar from '../../components/SearchBar';
 import { MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import HomeLogo from '../../components/Logos/HomeLogo';
-import ServiceMapButton from '../../components/ServiceMapButton';
 import PaperButton from '../../components/PaperButton';
 import fetchAddress from '../MapView/utils/fetchAddress';
+import { getIcon } from '../../components/SMIcon';
 
 class HomeView extends React.Component {
   componentDidMount() {
@@ -44,21 +40,9 @@ class HomeView extends React.Component {
     return (
       <div className={classes.iconContainer}>
         <PaperButton
-          text={<FormattedMessage id="home.buttons.settings" />}
-          icon={<Accessibility />}
-          link
-          onClick={() => toggleSettings(true)}
-        />
-        <PaperButton
-          text={<FormattedMessage id="home.buttons.services" />}
-          icon={<List />}
-          link
-          onClick={() => navigator.push('serviceTree')}
-        />
-        <PaperButton
           disabled={disableCloseByServices}
           text={<FormattedMessage id="home.buttons.closeByServices" />}
-          icon={<GpsFixed />}
+          icon={getIcon('location', { className: classes.icon })}
           link
           onClick={() => {
             if (disableCloseByServices) {
@@ -75,12 +59,32 @@ class HomeView extends React.Component {
               });
           }}
         />
+        <MobileComponent>
+          <PaperButton
+            text={<FormattedMessage id="home.buttons.settings" />}
+            icon={getIcon('accessibility', { className: classes.icon })}
+            link
+            onClick={() => toggleSettings('all')}
+          />
+        </MobileComponent>
+        <PaperButton
+          text={<FormattedMessage id="home.buttons.services" />}
+          icon={getIcon('serviceList', { className: classes.icon })}
+          link
+          onClick={() => navigator.push('serviceTree')}
+        />
+        <PaperButton
+          text={<FormattedMessage id="home.send.feedback" />}
+          icon={getIcon('feedback', { className: classes.icon })}
+          link
+          onClick={() => window.open('https://forms.gle/roe9XNrZGQWBhMBJ7')}
+        />
       </div>
     );
   }
 
   render() {
-    const { intl, classes } = this.props;
+    const { intl } = this.props;
 
     return (
       <>
@@ -97,7 +101,7 @@ class HomeView extends React.Component {
           this.renderNavigationOptions()
         }
 
-        <Container paper>
+        {/* <Container paper>
           <Typography
             className={classes.left}
             variant="subtitle1"
@@ -167,13 +171,7 @@ kehitämme jatkuvasti saavutettavuutta ja käytettävyyttä.
             ja haluamme palautetta juuri sinulta.
             <br />
           </Typography>
-          <ServiceMapButton
-            onClick={() => window.open('https://forms.gle/roe9XNrZGQWBhMBJ7')}
-            srText={`${intl.formatMessage({ id: 'home.send.feedback' })}: ${intl.formatMessage({ id: 'general.new.tab' })}`}
-          >
-            {intl.formatMessage({ id: 'home.send.feedback' })}
-          </ServiceMapButton>
-        </Container>
+        </Container> */}
       </>
     );
   }

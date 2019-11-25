@@ -13,13 +13,17 @@ export default theme => ({
     flexDirection: 'column',
   },
   iconContainer: {
-    display: 'grid',
-    gridTemplateColumns: '50% 50%',
+    paddingLeft: 25,
+    paddingRight: 25,
+    paddingTop: 20,
+    display: 'flex',
+    flexDirection: 'column',
   },
   icon: {
-    alignSelf: 'center',
-    fontSize: 48,
+    height: 40,
+    width: 40,
     margin: theme.spacing.unit,
+    marginRight: theme.spacing.unitDouble,
   },
   left: {
     textAlign: 'left',
