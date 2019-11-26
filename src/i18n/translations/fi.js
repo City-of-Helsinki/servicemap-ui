@@ -68,6 +68,8 @@ export default {
   'general.backToStart': 'Palaa sivun alkuun',
   'general.cancel': 'Peruuta',
   'general.close': 'Sulje',
+  'general.yes': 'Kyllä',
+  'general.no': 'Ei',
   'general.closeSettings': 'Sulje asetukset',
   'general.fetching': 'Ladataan tietoja...',
   'general.home': 'Koti',
@@ -97,7 +99,7 @@ export default {
   'general.new.tab': 'Aukeaa uuteen välilehteen',
   'general.time.short': 'klo',
   'general.save': 'Tallenna',
-  'general.save.changes': 'Tallenna muutokset',
+  'general.save.changes': 'Tallenna asetukset',
   'general.save.changes.done': 'Muutokset tallennettu!',
   'general.save.confirmation': 'Haluatko tallentaa muutokset?',
   'general.distance.meters': 'Metrin päässä',
@@ -250,6 +252,17 @@ export default {
 
   // Settings
   'settings': 'Asetukset',
+  'settings.citySettings': 'Kaupunki',
+  'settings.citySettings.long': 'Kaupunkiasetukset',
+  'settings.mapSettings': 'Karttapohja',
+  'settings.mapSettings.long': 'Kartta-asetukset',
+  'settings.accessibilitySettings': 'Esteettömyysasetukset',
+  'settings.accessibilitySettings.long': 'Esteettömyysasetukset',
+  'settings.all.long': 'Asetukset',
+  'settings.amount': `{count, plural,
+    one {# valinta}
+    other {# valintaa}
+  }`,
   'settings.accessibility': 'Minua koskevat esteettömyystiedot',
   'settings.sense.title': 'Aistirajoitteet',
   'settings.sense.hearing': 'Käytän kuulolaitetta',

@@ -69,6 +69,8 @@ export default {
   'general.backToStart': 'Back to beginning of page',
   'general.cancel': 'Cancel',
   'general.close': 'Close',
+  'general.yes': 'Yes',
+  'general.no': 'No',
   'general.closeSettings': 'Close settings',
   'general.fetching': 'Loading data...',
   'general.home': 'Home',
@@ -98,7 +100,7 @@ export default {
   'general.new.tab': 'Opens in new tab',
   'general.time.short': 'at',
   'general.save': 'Save',
-  'general.save.changes': 'Save changes',
+  'general.save.changes': 'Save settings',
   'general.save.changes.done': 'Changes have been saved!',
   'general.save.confirmation': 'Would you like to save changes?',
   'general.distance.meters': 'Meters away',
@@ -255,6 +257,17 @@ export default {
 
   // Settings
   'settings': 'Settings',
+  'settings.citySettings': 'City',
+  'settings.citySettings.long': 'City settings',
+  'settings.mapSettings': 'Map setttings',
+  'settings.mapSettings.long': 'Map setttings',
+  'settings.accessibilitySettings': 'Accessibility settings',
+  'settings.accessibilitySettings.long': 'Accessibility settings',
+  'settings.all.long': 'Settings',
+  'settings.amount': `{count, plural,
+    one {# chosen}
+    other {# chosen}
+  }`,
   'settings.accessibility': 'My accessibility settings',
   'settings.sense.title': 'Hearing and sight',
   'settings.sense.hearing': 'I use a hearing aid',

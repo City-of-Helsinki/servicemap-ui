@@ -5,6 +5,7 @@ import {
   Typography,
   Button,
 } from '@material-ui/core';
+import { Close } from '@material-ui/icons';
 import Container from '../Container';
 
 const SettingsTitle = ({
@@ -16,13 +17,13 @@ const SettingsTitle = ({
       && (
         <Button
           aria-label={intl.formatMessage({ id: 'general.closeSettings' })}
-          className={`${classes.flexBase}`}
-          color="primary"
+          className={`${classes.flexBase} ${classes.button}`}
+          classes={{ label: classes.buttonLabel }}
           onClick={() => {
             close();
           }}
-          variant="text"
         >
+          <Close />
           <FormattedMessage id="general.close" />
         </Button>
       )
