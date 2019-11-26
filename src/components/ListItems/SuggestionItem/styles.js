@@ -21,9 +21,10 @@ export default theme => ({
   listIcon: {
     width: '1.5rem',
     height: '1.5rem',
-    margin: '0.5rem 1rem',
+    margin: `${theme.spacing.unitHalf}px ${theme.spacing.unit}px`,
     marginRight: 0,
     alignSelf: 'center',
+    padding: theme.spacing.unitHalf,
   },
   suggestIcon: {
     color: '#757575',
