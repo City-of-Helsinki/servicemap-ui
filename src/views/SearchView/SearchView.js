@@ -21,7 +21,7 @@ import {
   ColorblindIcon, HearingIcon, VisualImpairmentIcon, getIcon,
 } from '../../components/SMIcon';
 import ServiceMapButton from '../../components/ServiceMapButton';
-import SuggestionBox from '../../components/SearchBar/components/SuggestionBox';
+import ExpandedSuggestions from '../../components/ExpandedSuggestions';
 
 class SearchView extends React.Component {
   constructor(props) {
@@ -226,13 +226,10 @@ class SearchView extends React.Component {
       return null;
     }
     return (
-      <SuggestionBox
+      <ExpandedSuggestions
         closeExpandedSearch={() => this.closeExpandedSearch()}
-        visible={expandSearch}
         searchQuery={query}
-        expandQuery={expandSearch}
         handleSubmit={query => this.handleSubmit(query)}
-        isMobile
       />
     );
   }

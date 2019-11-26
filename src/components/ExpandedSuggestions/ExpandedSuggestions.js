@@ -1,27 +1,27 @@
 import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Search } from '@material-ui/icons';
+import { Search, ArrowBack } from '@material-ui/icons';
 import {
-  Paper, List, Typography,
+  Paper, List, Typography, IconButton,
 } from '@material-ui/core';
 import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
 import { FormattedMessage, intlShape } from 'react-intl';
-import { getPreviousSearches } from '../../previousSearchData';
-import PreviousSearches from '../../PreviousSearches';
-import createSuggestions from '../../createSuggestions';
-import config from '../../../../../config';
-import SuggestionItem from '../../../ListItems/SuggestionItem';
+import { getPreviousSearches } from '../SearchBar/previousSearchData';
+import createSuggestions from '../SearchBar/createSuggestions';
+import config from '../../../config';
+import ServiceMapButton from '../ServiceMapButton';
+import SuggestionItem from '../ListItems/SuggestionItem';
 
 
-const SuggestionBox = (props) => {
+const ExpandedSuggestions = (props) => {
   const {
-    visible,
     searchQuery,
     handleSubmit,
     classes,
     focusedSuggestion,
     setSearch,
     intl,
+    closeExpandedSearch,
   } = props;
 
   const [searchQueries, setSearchQueries] = useState(null);
@@ -83,6 +83,14 @@ const SuggestionBox = (props) => {
     }
   };
 
+  const handleKeyPress = (e) => {
+    // Close suggestion box if tab is pressed in last list result
+    if (e.key === 'Tab' && !(e.shiftKey && e.key === 'Tab')) {
+      e.preventDefault();
+      closeExpandedSearch();
+    }
+  };
+
   const setSearchBarText = () => {
     if (listRef && listRef.current) {
       if (listRef.current.props.children.length && focusedSuggestion !== null) {
@@ -95,18 +103,6 @@ const SuggestionBox = (props) => {
     }
   };
 
-  const renderSearchHistory = () => (
-    <>
-      <PreviousSearches
-        handleArrowClick={suggestion => setSearch(suggestion)}
-        history={history}
-        focusIndex={focusedSuggestion}
-        listRef={listRef}
-        onClick={val => handleSubmit(val)}
-      />
-    </>
-  );
-
   const renderNoResults = () => (
     <>
       <Typography>
@@ -117,6 +113,19 @@ const SuggestionBox = (props) => {
 
   const renderLoading = () => (
     <>
+      <div className={classes.expandSearchTop}>
+        <Typography tabIndex="-1" component="h3" className={`${classes.expandTitle} suggestionsTitle`} variant="subtitle1">
+          <FormattedMessage id="search.suggestions.expand" />
+        </Typography>
+        <IconButton
+          role="link"
+          aria-label={intl.formatMessage({ id: 'search.closeExpand' })}
+          className={classes.backIcon}
+          onClick={() => closeExpandedSearch()}
+        >
+          <ArrowBack />
+        </IconButton>
+      </div>
       <Typography>
         <FormattedMessage id="search.suggestions.loading" />
       </Typography>
@@ -133,6 +142,19 @@ const SuggestionBox = (props) => {
     if (suggestionList) {
       return (
         <>
+          <div className={classes.expandSearchTop}>
+            <Typography tabIndex="-1" component="h3" className={`${classes.expandTitle} suggestionsTitle`} variant="subtitle1">
+              <FormattedMessage id="search.suggestions.expand" />
+            </Typography>
+            <IconButton
+              role="link"
+              aria-label={intl.formatMessage({ id: 'search.closeExpand' })}
+              className={classes.backIcon}
+              onClick={() => closeExpandedSearch()}
+            >
+              <ArrowBack />
+            </IconButton>
+          </div>
           <List className="suggestionList" ref={listRef}>
             {suggestionList.map((item, i) => (
               <SuggestionItem
@@ -151,6 +173,16 @@ const SuggestionBox = (props) => {
               />
             ))}
           </List>
+          <ServiceMapButton
+            role="link"
+            className={classes.closeButton}
+            onKeyDown={e => handleKeyPress(e)}
+            onClick={() => closeExpandedSearch()}
+          >
+            <Typography variant="button">
+              <FormattedMessage id="search.closeExpand" />
+            </Typography>
+          </ServiceMapButton>
         </>
       );
     } return null;
@@ -174,64 +206,40 @@ const SuggestionBox = (props) => {
     setSearchBarText();
   }, [focusedSuggestion]);
 
-  useEffect(() => {
-    // Disable page scroll when suggestion box is open
-    const sidebar = document.getElementsByClassName('SidebarWrapper')[0];
-    const app = document.getElementsByClassName('App')[0];
-    if (visible) {
-      sidebar.style.overflow = isMobile ? 'hidden' : 'hidden';
-      if (app) {
-        app.style.height = '100%';
-      }
-    }
-
-    return () => {
-      sidebar.style.overflow = isMobile ? '' : 'auto';
-      if (app) {
-        app.style.height = null;
-      }
-    };
-  }, [visible]);
-
   /**
   * Render component
   */
-  if (visible) {
-    let component = null;
-    let srText = null;
-    if (searchQueries) {
-      component = renderSuggestionList();
-      const suggestionList = searchQueries || null;
-      srText = intl.formatMessage({ id: 'search.suggestions.suggestions' }, { count: suggestionList.length });
-    } else if (loading) {
-      component = renderLoading();
-      srText = null;
-    } else if (suggestionError) {
-      component = renderNoResults();
-      srText = intl.formatMessage({ id: 'search.suggestions.error' });
-    } else {
-      component = renderSearchHistory();
-    }
-
-    const containerStyles = isMobile
-      ? `${classes.suggestionAreaMobile}`
-      : `${classes.suggestionArea}`;
-
-    return (
-      <>
-        <Paper elevation={20} className={containerStyles}>
-          <p className="sr-only" aria-live="polite">{srText}</p>
-          {component}
-        </Paper>
-      </>
-    );
+  let component = null;
+  let srText = null;
+  if (loading) {
+    component = renderLoading();
+    srText = null;
+  } else if (searchQueries) {
+    component = renderSuggestionList();
+    const suggestionList = searchQueries || null;
+    srText = intl.formatMessage({ id: 'search.suggestions.suggestions' }, { count: suggestionList.length });
+  } else if (suggestionError) {
+    component = renderNoResults();
+    srText = intl.formatMessage({ id: 'search.suggestions.error' });
   }
-  return <></>;
+
+  const containerStyles = isMobile
+    ? `${classes.containerMobile}`
+    : `${classes.container}`;
+
+  return (
+    <>
+      <Paper elevation={20} className={containerStyles}>
+        <p className="sr-only" aria-live="polite">{srText}</p>
+        {component}
+      </Paper>
+    </>
+  );
 };
 
-SuggestionBox.propTypes = {
-  visible: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+ExpandedSuggestions.propTypes = {
   searchQuery: PropTypes.string,
+  closeExpandedSearch: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   focusedSuggestion: PropTypes.number,
@@ -239,11 +247,10 @@ SuggestionBox.propTypes = {
   intl: intlShape.isRequired,
 };
 
-SuggestionBox.defaultProps = {
-  visible: false,
+ExpandedSuggestions.defaultProps = {
   searchQuery: null,
   focusedSuggestion: null,
   setSearch: null,
 };
 
-export default SuggestionBox;
+export default ExpandedSuggestions;
