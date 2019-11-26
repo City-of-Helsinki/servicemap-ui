@@ -1,16 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Button, Typography, AppBar, Toolbar, ButtonBase, Drawer, ClickAwayListener,
+  Button, Typography, AppBar, Toolbar, ButtonBase,
 } from '@material-ui/core';
-import {
-  Map, Menu, Close, GpsFixed, FormatListBulleted, Accessibility,
-} from '@material-ui/icons';
-import { FormattedMessage, intlShape } from 'react-intl';
+import { Map, Menu, Close } from '@material-ui/icons';
+import { FormattedMessage } from 'react-intl';
 import I18n from '../../i18n';
 import HomeLogo from '../Logos/HomeLogo';
 import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import fetchAddress from '../../views/MapView/utils/fetchAddress';
+import DrawerMenu from '../DrawerMenu';
 
 
 class TopBar extends React.Component {
@@ -101,82 +100,17 @@ class TopBar extends React.Component {
   }
 
   renderDrawerMenu = (pageType) => {
-    const {
-      classes, toggleSettings, userLocation, findUserLocation, intl,
-    } = this.props;
     const { drawerOpen } = this.state;
-
-    const menuContent = [
-      {
-        name: intl.formatMessage({ id: 'home.buttons.closeByServices' }),
-        disabled: !userLocation.coordinates,
-        subText: userLocation.allowed
-          ? intl.formatMessage({ id: 'location.notFound' })
-          : intl.formatMessage({ id: 'location.notAllowed' }),
-        icon: <GpsFixed />,
-        clickEvent: () => {
-          if (!userLocation.coordinates) {
-            findUserLocation();
-          } else {
-            this.handleNavigation('address', userLocation.coordinates);
-            this.setState({ drawerOpen: false });
-          }
-        },
-      },
-      {
-        name: intl.formatMessage({ id: 'home.buttons.services' }),
-        icon: <FormatListBulleted />,
-        clickEvent: () => {
-          this.handleNavigation('services');
-          this.setState({ drawerOpen: false });
-        },
-      },
-      {
-        name: intl.formatMessage({ id: 'home.buttons.settings' }),
-        icon: <Accessibility />,
-        clickEvent: () => {
-          toggleSettings('all');
-          this.setState({ drawerOpen: false });
-        },
-      },
-      // {
-      //   name: 'Vinkkejä Palvelukartan käyttöön',
-      //   icon: <ThumbUp />,
-      //   clickEvent: () => {
-      //     this.setState({ drawerOpen: false });
-      //   },
-      // },
-    ];
-
+    const { toggleSettings, settingsOpen } = this.props;
     return (
-      <ClickAwayListener onClickAway={drawerOpen ? () => this.toggleDrawerMenu() : () => {}}>
-        <Drawer
-          variant="persistent"
-          anchor="right"
-          open={drawerOpen}
-          classes={{ paper: pageType === 'mobile' ? classes.drawerContainerMobile : classes.drawerContainer }}
-        >
-          {menuContent.map(item => (
-            <ButtonBase
-              disableRipple
-              key={item.name}
-              tabIndex={drawerOpen ? 0 : -1}
-              role="link"
-              aria-hidden={!drawerOpen}
-              onClick={item.clickEvent}
-              className={classes.drawerButton}
-            >
-              <div className={`${classes.drawerIcon} ${item.disabled ? classes.disabled : ''}`}>
-                {item.icon}
-              </div>
-              <span className={classes.buttonLabel}>
-                <Typography className={`${classes.drawerButtonText} ${item.disabled ? classes.disabled : ''}`} variant="body1">{item.name}</Typography>
-                {item.disabled && <Typography className={classes.drawerButtonText} variant="caption">{item.subText}</Typography>}
-              </span>
-            </ButtonBase>
-          ))}
-        </Drawer>
-      </ClickAwayListener>
+      <DrawerMenu
+        isOpen={drawerOpen}
+        pageType={pageType}
+        toggleDrawerMenu={this.toggleDrawerMenu}
+        toggleSettings={toggleSettings}
+        settingsOpen={settingsOpen}
+        handleNavigation={this.handleNavigation}
+      />
     );
   }
 
@@ -205,7 +139,7 @@ class TopBar extends React.Component {
             number: data.number,
           });
         });
-    } else if (target === 'services') {
+    } else if (target === 'services' && currentPage !== 'serviceTree') {
       navigator.push('serviceTree');
     }
   }
@@ -243,9 +177,7 @@ class TopBar extends React.Component {
 
           {/* Toolbar white area */}
           <Toolbar className={pageType === 'mobile' ? classes.toolbarWhiteMobile : classes.toolbarWhite}>
-            <div className={classes.homeLogoContainer}>
-              <HomeLogo mobile={pageType === 'mobile'} dark aria-hidden="true" className={classes.logo} />
-            </div>
+            <HomeLogo dark aria-hidden="true" className={classes.logo} />
             <MobileComponent>
               <div className={classes.mobileButtonContainer}>
                 {this.renderMapButton()}
@@ -288,10 +220,7 @@ TopBar.propTypes = {
   settingsOpen: PropTypes.bool,
   toggleSettings: PropTypes.func.isRequired,
   currentPage: PropTypes.string.isRequired,
-  userLocation: PropTypes.objectOf(PropTypes.any).isRequired,
-  findUserLocation: PropTypes.func.isRequired,
   getLocaleText: PropTypes.func.isRequired,
-  intl: intlShape.isRequired,
 };
 
 TopBar.defaultProps = {

@@ -1,9 +1,7 @@
 import { connect } from 'react-redux';
-import { injectIntl } from 'react-intl';
 import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core';
 import { getLocaleString } from '../../redux/selectors/locale';
-import { findUserLocation } from '../../redux/actions/user';
 import styles from './styles';
 import TopBar from './TopBar';
 
@@ -14,12 +12,10 @@ const mapStateToProps = (state) => {
   return {
     navigator,
     currentPage: user.page,
-    userLocation: user.position,
     getLocaleText,
   };
 };
 
-export default injectIntl(withRouter(withStyles(styles)(connect(
+export default withRouter(withStyles(styles)(connect(
   mapStateToProps,
-  { findUserLocation },
-)(TopBar))));
+)(TopBar)));
