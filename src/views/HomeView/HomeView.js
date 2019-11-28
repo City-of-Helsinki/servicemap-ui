@@ -47,7 +47,7 @@ class HomeView extends React.Component {
           text={<FormattedMessage id="home.buttons.settings" />}
           icon={<Accessibility />}
           link
-          onClick={() => toggleSettings(true)}
+          onClick={() => toggleSettings('all')}
         />
         <PaperButton
           text={<FormattedMessage id="home.buttons.services" />}

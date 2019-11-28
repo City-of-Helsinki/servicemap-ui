@@ -1,16 +1,75 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Button, Typography, AppBar, Toolbar, ButtonBase,
+  Button, Typography, AppBar, Toolbar, ButtonBase, NoSsr,
 } from '@material-ui/core';
 import { Map, Menu } from '@material-ui/icons';
 import { FormattedMessage } from 'react-intl';
 import I18n from '../../i18n';
 import HomeLogo from '../Logos/HomeLogo';
 import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
+import { getIcon } from '../SMIcon';
 
 
 class TopBar extends React.Component {
+  renderSettingsButtons = () => {
+    const {
+      settingsOpen, classes, toggleSettings, settings,
+    } = this.props;
+
+    const settingsCategories = [
+      { type: 'citySettings', settings: [settings.helsinki, settings.espoo, settings.vantaa, settings.kauniainen] },
+      { type: 'mapSettings', settings: settings.mapType },
+      { type: 'accessibilitySettings', settings: [settings.mobility, settings.colorblind, settings.hearingAid, settings.visuallyImpaired] },
+    ];
+
+    return (
+      settingsCategories.map(category => (
+        <Button
+          id={`SettingsButton${category.type}`}
+          key={`SettingsButton${category.type}`}
+          aria-pressed={settingsOpen === category.type}
+          disableFocusRipple
+          className={settingsOpen === category.type
+            ? classes.settingsButtonPressed
+            : classes.settingsButton
+                      }
+          classes={{ label: classes.buttonLabel }}
+          onClick={() => {
+            toggleSettings(category.type);
+            setTimeout(() => {
+              const button = document.getElementById(`SettingsButton${category.type}`);
+              const settings = document.getElementsByClassName('SettingsTitle')[0];
+              if (settings) {
+                // Focus on settings title
+                settings.firstChild.focus();
+              } else {
+                button.focus();
+              }
+            }, 1);
+          }}
+        >
+          <Typography variant="subtitle1" style={{ color: 'inherit' }}>
+            <FormattedMessage id={`settings.${category.type}`} />
+          </Typography>
+          {category.type === 'mapSettings'
+            ? (
+              <span className={classes.iconTextContainer}>
+                {getIcon(category.settings, { className: classes.smallIcon })}
+                <Typography>
+                  <FormattedMessage id={`settings.map.${category.settings}`} />
+                </Typography>
+              </span>
+            )
+            : (
+              <Typography>
+                <FormattedMessage id="settings.amount" values={{ count: category.settings.filter(i => i !== false).length }} />
+              </Typography>
+            )}
+        </Button>
+      )));
+  }
+
   renderMapButton = () => {
     const {
       classes, navigator, location, settingsOpen, toggleSettings,
@@ -18,7 +77,7 @@ class TopBar extends React.Component {
     const mapPage = location.pathname.indexOf('/map') > -1;
     return (
       <Button
-        className={mapPage ? classes.toolbarButtonPressed : classes.toolbarButton}
+        className={mapPage ? classes.iconButtonPressed : classes.iconButton}
         classes={{ label: classes.buttonLabel }}
         onClick={(e) => {
           e.preventDefault();
@@ -44,7 +103,7 @@ class TopBar extends React.Component {
     const { classes } = this.props;
     return (
       <Button
-        className={classes.toolbarButton}
+        className={classes.iconButton}
         classes={{ label: classes.buttonLabel }}
       >
         <Menu />
@@ -82,17 +141,18 @@ class TopBar extends React.Component {
   }
 
   navigateHome = () => {
-    const { currentPage, navigator } = this.props;
+    const { currentPage, navigator, toggleSettings } = this.props;
+    toggleSettings();
+    const viewTitle = document.getElementById('view-title');
     if (currentPage !== 'home') {
       navigator.push('home');
-    } else {
-      document.getElementById('view-title').focus();
+    } else if (viewTitle) {
+      viewTitle.focus();
     }
   }
 
   renderTopBar = (type) => {
-    const { classes } = this.props;
-
+    const { classes, smallScreen } = this.props;
     return (
       <>
         <AppBar className={classes.appBar}>
@@ -125,6 +185,19 @@ class TopBar extends React.Component {
                 {/* {this.renderMenuButton()} */}
               </div>
             </MobileComponent>
+            <DesktopComponent>
+              <NoSsr>
+                {!smallScreen ? (
+                  <div className={classes.settingsButtonContainer}>
+                    { this.renderSettingsButtons()}
+                  </div>
+                ) : (
+                  <div className={classes.mobileButtonContainer}>
+                    {/* {this.renderMenuButton()} */}
+                  </div>
+                )}
+              </NoSsr>
+            </DesktopComponent>
           </Toolbar>
         </AppBar>
         {/* This empty toolbar fixes the issue where App bar hides the top page content */}
@@ -157,9 +230,11 @@ TopBar.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
-  settingsOpen: PropTypes.bool,
+  settingsOpen: PropTypes.string,
+  settings: PropTypes.objectOf(PropTypes.any).isRequired,
   toggleSettings: PropTypes.func.isRequired,
   currentPage: PropTypes.string.isRequired,
+  smallScreen: PropTypes.bool.isRequired,
 };
 
 TopBar.defaultProps = {
