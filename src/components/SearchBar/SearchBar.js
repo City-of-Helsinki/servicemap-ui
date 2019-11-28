@@ -221,7 +221,7 @@ class SearchBar extends React.Component {
                     clearTimeout(this.blurTimeout);
                     this.searchRef.focus();
                   }
-                  this.setState({ search: '' });
+                  this.setState({ search: '', searchQuery: '' });
                 }}
               >
                 <Cancel />
