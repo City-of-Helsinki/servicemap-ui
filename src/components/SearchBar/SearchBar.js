@@ -249,17 +249,13 @@ class SearchBar extends React.Component {
     );
   }
 
-  renderText = () => {
+  renderText = (isMobile = false) => {
     const {
       classes,
     } = this.props;
     const { isActive } = this.state;
 
-    if (isActive) {
-      return null;
-    }
-
-    const textClasses = `${classes.infoText} ${isActive ? classes.infoTextSticky : ''}`;
+    const textClasses = `${classes.infoText} ${isActive && isMobile ? classes.infoTextSticky : ''}`;
 
     return (
       <Typography align="left" className={textClasses} color="inherit" variant="body2"><FormattedMessage id="search.searchbar.infoText" /></Typography>
@@ -299,7 +295,7 @@ class SearchBar extends React.Component {
           }
           <div className={wrapperClasses}>
             {
-              this.renderText()
+              this.renderText(true)
             }
             <div className={classes.inputContainer}>
               {
