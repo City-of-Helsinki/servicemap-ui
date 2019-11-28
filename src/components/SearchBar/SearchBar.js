@@ -28,6 +28,7 @@ class SearchBar extends React.Component {
 
     this.state = {
       search: initialValue || previousSearch || '',
+      searchQuery: '',
       isActive: false,
       focusedSuggestion: null,
     };
@@ -50,7 +51,8 @@ class SearchBar extends React.Component {
 
   onInputChange = (e) => {
     const query = typeof e === 'string' ? e : e.currentTarget.value;
-    this.setState({ search: query, focusedSuggestion: null });
+    const searchQuery = query[query.length - 1] === ' ' ? query.slice(0, -1) : query;
+    this.setState({ search: query, focusedSuggestion: null, searchQuery });
   }
 
   keyHandler = (e) => {
@@ -141,7 +143,7 @@ class SearchBar extends React.Component {
     const {
       closeExpandedSearch,
     } = this.props;
-    const { search, isActive, focusedSuggestion } = this.state;
+    const { searchQuery, isActive, focusedSuggestion } = this.state;
 
     const showSuggestions = isActive;
     if (!showSuggestions) {
@@ -154,7 +156,7 @@ class SearchBar extends React.Component {
         <SuggestionBox
           visible={showSuggestions}
           focusedSuggestion={focusedSuggestion}
-          searchQuery={search}
+          searchQuery={searchQuery}
           handleSubmit={this.handleSubmit}
           setSearch={value => this.setState({ search: value })}
           closeExpandedSearch={closeExpandedSearch}
