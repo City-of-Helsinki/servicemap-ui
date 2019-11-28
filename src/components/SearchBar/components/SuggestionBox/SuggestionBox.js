@@ -118,7 +118,7 @@ const SuggestionBox = (props) => {
 
   const renderNoResults = () => (
     <>
-      <Typography>
+      <Typography align="left" className={classes.infoText}>
         <FormattedMessage id="search.suggestions.error" />
       </Typography>
     </>
@@ -126,7 +126,7 @@ const SuggestionBox = (props) => {
 
   const renderLoading = () => (
     <>
-      <Typography>
+      <Typography align="left" className={classes.infoText}>
         <FormattedMessage id="search.suggestions.loading" />
       </Typography>
     </>

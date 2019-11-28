@@ -1,5 +1,3 @@
-import config from '../../../config';
-
 export default theme => ({
   root: {
     color: theme.palette.primary.contrastText,
@@ -55,12 +53,13 @@ export default theme => ({
     justifyContent: 'center',
     display: 'flex',
     flexDirection: 'column',
-    padding: '8px 4px',
+    padding: `${theme.spacing.unit}px ${theme.spacing.unitHalf}px`,
   },
   infoTextSticky: {
     position: 'sticky',
     top: 0,
     zIndex: 1100,
+    paddingTop: `${theme.spacing.unitDouble}px`,
   },
   input: {
     flex: '1 1 auto',
@@ -116,33 +115,6 @@ export default theme => ({
   },
   subtitleText: {
     lineHeight: '32px',
-  },
-  suggestionArea: {
-    position: 'absolute',
-    right: theme.spacing.unitTriple,
-    left: theme.spacing.unitTriple,
-    zIndex: 110,
-    backgroundColor: '#fff',
-    overflow: 'auto',
-    borderRadius: 0,
-    borderBottomLeftRadius: theme.spacing.unitHalf,
-    borderBottomRightRadius: theme.spacing.unitHalf,
-    maxHeight: `calc(80vh - ${config.topBarHeight}px)`,
-  },
-  suggestionAreaMobile: {
-    right: 0,
-    left: 0,
-    top: 0,
-    bottom: 0,
-    zIndex: 110,
-    backgroundColor: '#fff',
-    overflow: 'auto',
-    borderRadius: 0,
-    borderBottomLeftRadius: theme.spacing.unitHalf,
-    borderBottomRightRadius: theme.spacing.unitHalf,
-    display: 'flex',
-    flexDirection: 'column',
-    boxShadow: 'none',
   },
   expandTitle: {
     alignSelf: 'center',
