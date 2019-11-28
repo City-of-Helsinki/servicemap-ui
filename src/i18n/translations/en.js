@@ -228,6 +228,8 @@ export default {
   'search.started': 'Search started',
   'search.infoText': 'Showing {count} results for search query: ',
   'search.infoTextNode': 'Showing {count} results for services: ',
+  'search.searchbar.headerText': 'Pääkaupunkiseudun kaikki julkiset palvelut ulottuvillasi', // TODO: Translate
+  'search.searchbar.infoText': 'Search for services, units or addresses', // TODO: Verify
   'search.suggestions.suggest': 'Did you mean..?',
   'search.suggestions.expand': 'Search suggestions',
   'search.suggestions.loading': 'Loading suggestions',

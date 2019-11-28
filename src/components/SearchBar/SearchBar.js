@@ -149,15 +149,18 @@ class SearchBar extends React.Component {
     }
 
     return (
-      <SuggestionBox
-        visible={showSuggestions}
-        focusedSuggestion={focusedSuggestion}
-        searchQuery={search}
-        handleSubmit={this.handleSubmit}
-        setSearch={value => this.setState({ search: value })}
-        closeExpandedSearch={closeExpandedSearch}
-        isMobile
-      />
+      <>
+        <Divider aria-hidden />
+        <SuggestionBox
+          visible={showSuggestions}
+          focusedSuggestion={focusedSuggestion}
+          searchQuery={search}
+          handleSubmit={this.handleSubmit}
+          setSearch={value => this.setState({ search: value })}
+          closeExpandedSearch={closeExpandedSearch}
+          isMobile
+        />
+      </>
     );
   }
 
@@ -176,7 +179,7 @@ class SearchBar extends React.Component {
     const backButtonStyles = `${classes.iconButton} ${classes.darkBlue}`;
     const showSuggestions = isActive;
     const inputValue = typeof search === 'string' ? search : previousSearchText;
-    const containerStyles = `${classes.container} ${isActive ? classes.containerSticky : ''}`;
+    const containerStyles = `${isActive ? classes.containerSticky : classes.containerInactive} ${classes.container}`;
 
     return (
       <form onSubmit={this.onSubmit} className={containerStyles} autoComplete="off">
@@ -254,8 +257,21 @@ class SearchBar extends React.Component {
       return null;
     }
 
+    const textClasses = `${classes.infoText} ${isActive ? classes.infoTextSticky : ''}`;
+
     return (
-      <Typography align="left" className={classes.infoText} color="inherit" variant="body2">Hae palveluita, toimipisteitä tai osoitteita</Typography>
+      <Typography align="left" className={textClasses} color="inherit" variant="body2"><FormattedMessage id="search.searchbar.infoText" /></Typography>
+    );
+  }
+
+  renderHeaderText = (isMobile = false) => {
+    const { isActive } = this.state;
+    const { classes, header } = this.props;
+    if (!header || (isMobile && isActive)) {
+      return null;
+    }
+    return (
+      <Typography align="left" className={classes.headerText} variant="h5" component="p" color="inherit"><FormattedMessage id="search.searchbar.headerText" /></Typography>
     );
   }
 
@@ -263,7 +279,6 @@ class SearchBar extends React.Component {
     const {
       classes,
       className,
-      header,
       isSticky,
       primary,
       srHideInput,
@@ -278,24 +293,21 @@ class SearchBar extends React.Component {
       <>
         <div aria-hidden={srHideInput} className={rootClasses} style={stickyStyles}>
           {
-            !isActive
-            && header
-            && (
-              <Typography align="left" className={classes.headerText} variant="h5" component="p" color="inherit">Pääkaupunkiseudun kaikki julkiset palvelut ulottuvillasi</Typography>
-            )
+            this.renderHeaderText(true)
           }
-          {
-            this.renderText()
-          }
-          <Paper className={wrapperClasses} elevation={1} square>
+          <div className={wrapperClasses}>
             {
-              this.renderInput()
+              this.renderText()
             }
-            <Divider aria-hidden />
-            {
-              this.renderSuggestionBox()
-            }
-          </Paper>
+            <div className={classes.inputContainer}>
+              {
+                this.renderInput()
+              }
+              {
+                this.renderSuggestionBox()
+              }
+            </div>
+          </div>
         </div>
       </>
     );
@@ -305,7 +317,6 @@ class SearchBar extends React.Component {
     const {
       classes,
       className,
-      header,
       isSticky,
       primary,
       srHideInput,
@@ -323,10 +334,7 @@ class SearchBar extends React.Component {
         <DesktopComponent>
           <div aria-hidden={srHideInput} className={rootClasses} style={stickyStyles}>
             {
-              header
-              && (
-                <Typography align="left" className={classes.headerText} variant="h5" component="p" color="inherit">Pääkaupunkiseudun kaikki julkiset palvelut ulottuvillasi</Typography>
-              )
+              this.renderHeaderText()
             }
             {
               this.renderText()

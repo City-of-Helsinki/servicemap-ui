@@ -223,6 +223,8 @@ export default {
   'search.started': 'Haku aloitettu',
   'search.infoText': 'Näytetään {count} hakutulosta sanalla: ',
   'search.infoTextNode': 'Näytetään {count} hakutulosta palveluilla: ',
+  'search.searchbar.headerText': 'Pääkaupunkiseudun kaikki julkiset palvelut ulottuvillasi.',
+  'search.searchbar.infoText': 'Hae palveluita, toimipisteitä tai osoitteita',
   'search.suggestions.suggest': 'Tarkoititko..?',
   'search.suggestions.expand': 'Hakuehdotukset',
   'search.suggestions.loading': 'Ladataan ehdotuksia',

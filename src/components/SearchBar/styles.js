@@ -7,6 +7,7 @@ export default theme => ({
     flexDirection: 'column',
     backgroundColor: theme.palette.primary.main,
     padding: theme.spacing.unitTriple,
+    paddingTop: 0,
   },
   mobileRoot: {
     backgroundColor: theme.palette.primary.main,
@@ -23,31 +24,43 @@ export default theme => ({
   },
   wrapper: {
     flex: '0 1 auto',
-    border: '1px solid #ACACAC',
-    borderRadius: theme.spacing.unitHalf,
   },
   mobileWrapper: {
     flex: '0 1 auto',
-    border: '1px solid #ACACAC',
-    borderRadius: theme.spacing.unitHalf,
+    display: 'flex',
+    flexDirection: 'column',
   },
   container: {
     alignItems: 'center',
     display: 'flex',
     flex: '0 0 auto',
-    borderRadius: theme.spacing.unitHalf,
     backgroundColor: '#fff',
+    border: '1px solid #ACACAC',
+    borderTopLeftRadius: theme.spacing.unitHalf,
+    borderTopRightRadius: theme.spacing.unitHalf,
+  },
+  containerInactive: {
+    borderRadius: theme.spacing.unitHalf,
   },
   containerSticky: {
     position: 'sticky',
-    zIndex: 51,
-    top: 0,
+    top: 36,
+    zIndex: 1100,
   },
   darkBlue: {
     color: '#2242C7',
   },
   infoText: {
-    paddingBottom: theme.spacing.unitHalf,
+    backgroundColor: theme.palette.primary.main,
+    justifyContent: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    padding: '8px 4px',
+  },
+  infoTextSticky: {
+    position: 'sticky',
+    top: 0,
+    zIndex: 1100,
   },
   input: {
     flex: '1 1 auto',
@@ -61,12 +74,12 @@ export default theme => ({
   iconButton: {
     flex: '0 1 auto',
     padding: theme.spacing.unit,
-    margin: theme.spacing.unit,
+    margin: theme.spacing.unitHalf,
   },
   iconButtonSearch: {
     flex: '0 0 auto',
     borderRadius: 0,
-    padding: theme.spacing.unit,
+    padding: `${theme.spacing.unitHalf}px 0`,
     textTransform: 'none',
     '& svg': {
       fontSize: 28,
@@ -79,13 +92,19 @@ export default theme => ({
     flex: '0 1 auto',
     padding: theme.spacing.unit,
   },
+  inputContainer: {
+    backgroundColor: '#fff',
+    display: 'flex',
+    flexDirection: 'column',
+    borderRadius: theme.spacing.unitHalf,
+  },
   sticky: {
     position: 'sticky',
     zIndex: 51,
   },
   headerText: {
     fontWeight: 'bold',
-    marginBottom: theme.spacing.unitDouble,
+    margin: `${theme.spacing.unitTriple}px ${theme.spacing.unitHalf}px ${theme.spacing.unit}px ${theme.spacing.unitHalf}px`,
   },
   primary: {
     backgroundColor: theme.palette.primary.main,
@@ -113,7 +132,7 @@ export default theme => ({
   suggestionAreaMobile: {
     right: 0,
     left: 0,
-    top: 56,
+    top: 0,
     bottom: 0,
     zIndex: 110,
     backgroundColor: '#fff',
@@ -121,6 +140,9 @@ export default theme => ({
     borderRadius: 0,
     borderBottomLeftRadius: theme.spacing.unitHalf,
     borderBottomRightRadius: theme.spacing.unitHalf,
+    display: 'flex',
+    flexDirection: 'column',
+    boxShadow: 'none',
   },
   expandTitle: {
     alignSelf: 'center',

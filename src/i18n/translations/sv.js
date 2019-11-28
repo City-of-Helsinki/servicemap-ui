@@ -226,6 +226,8 @@ export default {
   'search.started': 'Search started', // TODO: Translate
   'search.infoText': 'Näytetään {count} hakutulosta sanalla: ', // TODO: Translate
   'search.infoTextNode': 'Näytetään {count} hakutulosta palveluilla: ', // TODO: Translate
+  'search.searchbar.headerText': 'Pääkaupunkiseudun kaikki julkiset palvelut ulottuvillasi', // TODO: Translate
+  'search.searchbar.infoText': 'Hae palveluita, toimipisteitä tai osoitteita', // TODO: Translate
   'search.suggestions.suggest': 'Tarkoititko..?', // TODO: Translate
   'search.suggestions.expand': 'Hakuehdotukset', // TODO: Translate
   'search.suggestions.loading': 'Ladataan ehdotuksia', // TODO: Translate
