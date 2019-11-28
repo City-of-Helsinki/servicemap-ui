@@ -7,13 +7,16 @@ import TopBar from './TopBar';
 
 // Listen to redux state
 const mapStateToProps = (state) => {
-  const { navigator, user, breadcrumb } = state;
+  const {
+    navigator, user, breadcrumb, settings,
+  } = state;
   const getLocaleText = textObject => getLocaleString(state, textObject);
   return {
     navigator,
     currentPage: user.page,
     getLocaleText,
     breadcrumb,
+    settings,
   };
 };
 

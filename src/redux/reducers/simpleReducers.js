@@ -13,4 +13,4 @@ export const mapRef = (state = '', action) => basicReducer(state, action, 'MAPRE
 export const direction = (state = 'desc', action) => basicReducer(state, action, 'DIRECTION');
 export const order = (state = 'match', action) => basicReducer(state, action, 'ORDER');
 // Settings toggling
-export const settingsToggled = (state = false, action) => basicReducer(state, action, 'SETTINGS_TOGGLE');
+export const settingsToggled = (state = null, action) => basicReducer(state, action, 'SETTINGS_TOGGLE');

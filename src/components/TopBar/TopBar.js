@@ -1,19 +1,77 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Button, Typography, AppBar, Toolbar, ButtonBase,
+  Button, Typography, AppBar, Toolbar, ButtonBase, NoSsr,
 } from '@material-ui/core';
 import { Map, Menu, Close } from '@material-ui/icons';
 import { FormattedMessage } from 'react-intl';
 import I18n from '../../i18n';
 import HomeLogo from '../Logos/HomeLogo';
 import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
+import { getIcon } from '../SMIcon';
 import fetchAddress from '../../views/MapView/utils/fetchAddress';
 import DrawerMenu from '../DrawerMenu';
 
-
 class TopBar extends React.Component {
   state={ drawerOpen: false }
+
+  renderSettingsButtons = () => {
+    const {
+      settingsOpen, classes, toggleSettings, settings,
+    } = this.props;
+
+    const settingsCategories = [
+      { type: 'citySettings', settings: [settings.helsinki, settings.espoo, settings.vantaa, settings.kauniainen] },
+      { type: 'mapSettings', settings: settings.mapType },
+      { type: 'accessibilitySettings', settings: [settings.mobility, settings.colorblind, settings.hearingAid, settings.visuallyImpaired] },
+    ];
+
+    return (
+      settingsCategories.map(category => (
+        <Button
+          id={`SettingsButton${category.type}`}
+          key={`SettingsButton${category.type}`}
+          aria-pressed={settingsOpen === category.type}
+          disableFocusRipple
+          className={settingsOpen === category.type
+            ? classes.settingsButtonPressed
+            : classes.settingsButton
+                      }
+          classes={{ label: classes.buttonLabel }}
+          onClick={() => {
+            toggleSettings(category.type);
+            setTimeout(() => {
+              const button = document.getElementById(`SettingsButton${category.type}`);
+              const settings = document.getElementsByClassName('SettingsTitle')[0];
+              if (settings) {
+                // Focus on settings title
+                settings.firstChild.focus();
+              } else {
+                button.focus();
+              }
+            }, 1);
+          }}
+        >
+          <Typography variant="subtitle1" style={{ color: 'inherit' }}>
+            <FormattedMessage id={`settings.${category.type}`} />
+          </Typography>
+          {category.type === 'mapSettings'
+            ? (
+              <span className={classes.iconTextContainer}>
+                {getIcon(category.settings, { className: classes.smallIcon })}
+                <Typography>
+                  <FormattedMessage id={`settings.map.${category.settings}`} />
+                </Typography>
+              </span>
+            )
+            : (
+              <Typography>
+                <FormattedMessage id="settings.amount" values={{ count: category.settings.filter(i => i !== false).length }} />
+              </Typography>
+            )}
+        </Button>
+      )));
+  }
 
   renderMapButton = () => {
     const {
@@ -167,7 +225,7 @@ class TopBar extends React.Component {
   }
 
   renderTopBar = (pageType) => {
-    const { classes } = this.props;
+    const { classes, smallScreen } = this.props;
     return (
       <>
         <AppBar>
@@ -190,7 +248,7 @@ class TopBar extends React.Component {
           </Toolbar>
 
           {/* Toolbar white area */}
-          <Toolbar className={pageType === 'mobile' ? classes.toolbarWhiteMobile : classes.toolbarWhite}>
+          <Toolbar disableGutters className={pageType === 'mobile' ? classes.toolbarWhiteMobile : classes.toolbarWhite}>
             <HomeLogo dark aria-hidden="true" className={classes.logo} />
             <MobileComponent>
               <div className={classes.mobileButtonContainer}>
@@ -199,6 +257,22 @@ class TopBar extends React.Component {
               </div>
               {this.renderDrawerMenu(pageType)}
             </MobileComponent>
+            <DesktopComponent>
+              <NoSsr>
+                {!smallScreen ? (
+                  <div className={classes.settingsButtonContainer}>
+                    { this.renderSettingsButtons()}
+                  </div>
+                ) : (
+                  <>
+                    <div className={classes.mobileButtonContainer}>
+                      {this.renderMenuButton()}
+                    </div>
+                    {this.renderDrawerMenu(pageType)}
+                  </>
+                )}
+              </NoSsr>
+            </DesktopComponent>
           </Toolbar>
         </AppBar>
         {/* This empty toolbar fixes the issue where App bar hides the top page content */}
@@ -231,11 +305,13 @@ TopBar.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
-  settingsOpen: PropTypes.bool,
+  settingsOpen: PropTypes.string,
+  settings: PropTypes.objectOf(PropTypes.any).isRequired,
   toggleSettings: PropTypes.func.isRequired,
   currentPage: PropTypes.string.isRequired,
   getLocaleText: PropTypes.func.isRequired,
   breadcrumb: PropTypes.arrayOf(PropTypes.any).isRequired,
+  smallScreen: PropTypes.bool.isRequired,
 };
 
 TopBar.defaultProps = {

@@ -68,6 +68,8 @@ export default {
   'general.backToStart': 'Back to beginning of page', // TODO: Translate
   'general.cancel': 'Cancel', // TODO: Translate
   'general.close': 'Close', // TODO: Translate
+  'general.yes': 'Ja',
+  'general.no': 'Nej',
   'general.closeSettings': 'Close settings', // TODO: Translate
   'general.fetching': 'Ladataan tietoja...', // TODO: Translate
   'general.home': 'Home', // TODO: Translate
@@ -96,7 +98,7 @@ export default {
   'general.new.tab': 'Aukeaa uuteen välilehteen', // TODO: Translate
   'general.time.short': 'kl',
   'general.save': 'Save', // TODO: Translate
-  'general.save.changes': 'Save changes', // TODO: Translate
+  'general.save.changes': 'Save settings', // TODO: Translate
   'general.save.changes.done': 'Changes have been saved!', // TODO: Translate
   'general.save.confirmation': 'Would you like to save changes?', // TODO: Translate
   'general.distance.meters': 'Metrin päässä', // TODO: Translate
@@ -256,6 +258,17 @@ export default {
 
   // Settings
   'settings': 'Personifiera',
+  'settings.citySettings': 'Kaupunki', // TODO: Translate
+  'settings.citySettings.long': 'Kaupunkiasetukset', // TODO: Translate
+  'settings.mapSettings': 'Karttapohja', // TODO: Translate
+  'settings.mapSettings.long': 'Kartta-asetukset', // TODO: Translate
+  'settings.accessibilitySettings': 'Esteettömyysasetukset', // TODO: Translate
+  'settings.accessibilitySettings.long': 'Esteettömyysasetukset', // TODO: Translate
+  'settings.all.long': 'Personifiera',
+  'settings.amount': `{count, plural,
+    one {# valinta} 
+    other {# valintaa}
+  }`, // TODO: Translate
   'settings.accessibility': 'Minua koskevat esteettömyystiedot', // TODO: Translate
   'settings.sense.title': 'Hörsel och syn',
   'settings.sense.hearing': 'Jag använder hörapparat',
