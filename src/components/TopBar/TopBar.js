@@ -317,7 +317,7 @@ TopBar.propTypes = {
 TopBar.defaultProps = {
   i18n: null,
   navigator: null,
-  settingsOpen: false,
+  settingsOpen: null,
 };
 
 export default TopBar;

@@ -107,11 +107,15 @@ DrawerMenu.propTypes = {
   userLocation: PropTypes.objectOf(PropTypes.any).isRequired,
   findUserLocation: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
-  settingsOpen: PropTypes.bool.isRequired,
+  settingsOpen: PropTypes.string,
   pageType: PropTypes.string.isRequired,
   isOpen: PropTypes.bool.isRequired,
   toggleDrawerMenu: PropTypes.func.isRequired,
   handleNavigation: PropTypes.func.isRequired,
+};
+
+DrawerMenu.defaultProps = {
+  settingsOpen: null,
 };
 
 export default DrawerMenu;
