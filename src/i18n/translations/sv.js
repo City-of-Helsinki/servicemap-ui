@@ -184,6 +184,7 @@ export default {
 
   // Search
   'search': 'Hae', // TODO: Translate
+  'search.cancelText': 'Tyhjennä hakukenttä', // TODO: Translate
   'search.notFoundWith': 'Ei osumia haulle "{query}".', // TODO: Translate
   'search.placeholder': 'Hae palvelua tai toimipistettä', // TODO: Translate
   'search.info': `{count, plural,

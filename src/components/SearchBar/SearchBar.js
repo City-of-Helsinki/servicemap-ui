@@ -49,6 +49,10 @@ class SearchBar extends React.Component {
     clearTimeout(this.blurTimeout);
   }
 
+  setInactive = () => {
+    this.setState({ isActive: false, focusedSuggestion: null });
+  }
+
   onInputChange = (e) => {
     const query = typeof e === 'string' ? e : e.currentTarget.value;
     const searchQuery = query[query.length - 1] === ' ' ? query.slice(0, -1) : query;
@@ -95,13 +99,12 @@ class SearchBar extends React.Component {
   }
 
   handleSubmit = (search) => {
-    const { isFetching, closeExpandedSearch } = this.props;
+    const { isFetching } = this.props;
     if (!isFetching && search && search !== '') {
       const {
         fetchUnits, navigator, previousSearch,
       } = this.props;
-      this.setState({ isActive: false, focusedSuggestion: null });
-      closeExpandedSearch();
+      this.setInactive();
 
       if (search !== previousSearch) {
         this.setState({ search }); // Change current search text to new one
@@ -115,34 +118,25 @@ class SearchBar extends React.Component {
   }
 
   handleBlur = () => {
-    const { closeExpandedSearch } = this.props;
     this.blurTimeout = setTimeout(() => {
-      this.setState({ isActive: false });
-      closeExpandedSearch();
+      this.setInactive();
       clearTimeout(this.blurTimeout);
     }, this.blurDelay);
   }
 
   suggestionBackEvent = () => {
-    const { closeExpandedSearch } = this.props;
-    this.setState({ isActive: false });
-    closeExpandedSearch();
+    this.setInactive();
   };
 
   activateSearch = () => {
-    const { closeExpandedSearch } = this.props;
     const { search } = this.state;
     if (search) {
       this.onInputChange(search);
     }
     this.setState({ isActive: true });
-    closeExpandedSearch();
   }
 
   renderSuggestionBox = () => {
-    const {
-      closeExpandedSearch,
-    } = this.props;
     const { searchQuery, isActive, focusedSuggestion } = this.state;
 
     const showSuggestions = isActive;
@@ -159,16 +153,14 @@ class SearchBar extends React.Component {
           searchQuery={searchQuery}
           handleSubmit={this.handleSubmit}
           setSearch={value => this.setState({ search: value })}
-          closeExpandedSearch={closeExpandedSearch}
           isMobile
         />
       </>
     );
   }
 
-  renderInput = () => {
+  renderInput = (isMobile = false) => {
     const {
-      backButtonEvent,
       classes,
       hideBackButton,
       intl,
@@ -177,7 +169,13 @@ class SearchBar extends React.Component {
     const { search, isActive } = this.state;
 
     const previousSearchText = typeof previousSearch === 'string' ? previousSearch : null;
+    const backButtonEvent = isActive && isMobile
+      ? () => {
+        this.setInactive();
+      }
+      : null;
 
+    // Style classes
     const backButtonStyles = `${classes.iconButton} ${classes.darkBlue}`;
     const showSuggestions = isActive;
     const inputValue = typeof search === 'string' ? search : previousSearchText;
@@ -190,7 +188,7 @@ class SearchBar extends React.Component {
           && (
             <BackButton
               className={backButtonStyles}
-              onClick={backButtonEvent || null}
+              onClick={backButtonEvent}
               variant="icon"
               srHidden={!!hideBackButton}
             />
@@ -215,10 +213,10 @@ class SearchBar extends React.Component {
             && inputValue !== ''
             && (
               <IconButton
-                aria-hidden
+                aria-label={intl.formatMessage({ id: 'search.cancelText' })}
                 className={classes.cancelButton}
                 onClick={() => {
-                  if (this.searchRef) {
+                  if (isActive && this.searchRef) {
                     // Clear blur timeout to keep suggestion box active
                     clearTimeout(this.blurTimeout);
                     this.searchRef.focus();
@@ -299,7 +297,7 @@ class SearchBar extends React.Component {
             }
             <div className={classes.inputContainer}>
               {
-                this.renderInput()
+                this.renderInput(true)
               }
               {
                 this.renderSuggestionBox()
@@ -353,7 +351,6 @@ class SearchBar extends React.Component {
 }
 
 SearchBar.propTypes = {
-  backButtonEvent: PropTypes.func,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   className: PropTypes.string,
   fetchUnits: PropTypes.func.isRequired,
@@ -366,13 +363,11 @@ SearchBar.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   previousSearch: PropTypes.string,
   primary: PropTypes.bool,
-  closeExpandedSearch: PropTypes.func,
   srHideInput: PropTypes.bool,
 };
 
 SearchBar.defaultProps = {
   previousSearch: null,
-  backButtonEvent: null,
   className: '',
   header: false,
   hideBackButton: false,
@@ -380,7 +375,6 @@ SearchBar.defaultProps = {
   isSticky: null,
   navigator: null,
   primary: false,
-  closeExpandedSearch: (() => {}),
   srHideInput: false,
 };
 

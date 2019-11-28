@@ -34,6 +34,7 @@ const SuggestionBox = (props) => {
 
   const listRef = useRef(null);
   const fetchController = useRef(null);
+  const maxSuggestionCount = 8;
 
   /* TODO: Utilize city information with search queries
   const cities = [
@@ -43,6 +44,14 @@ const SuggestionBox = (props) => {
     ...settings.kauniainen ? ['Kauniainen'] : [],
   ];
   */
+
+  const slicedSuggestions = () => {
+    let suggestionList = searchQueries || null;
+    if (suggestionList && suggestionList.length) {
+      suggestionList = suggestionList.slice(0, maxSuggestionCount);
+    }
+    return suggestionList;
+  };
 
   const resetSuggestions = () => {
     setSearchQueries(null);
@@ -124,10 +133,7 @@ const SuggestionBox = (props) => {
   );
 
   const renderSuggestionList = () => {
-    let suggestionList = searchQueries || null;
-    if (suggestionList && suggestionList.length) {
-      suggestionList = suggestionList.slice(0, 8);
-    }
+    const suggestionList = slicedSuggestions();
     const handleArrowClick = setSearch ? suggestion => setSearch(suggestion) : null;
 
     if (suggestionList) {
@@ -201,7 +207,7 @@ const SuggestionBox = (props) => {
     let srText = null;
     if (searchQueries) {
       component = renderSuggestionList();
-      const suggestionList = searchQueries || null;
+      const suggestionList = slicedSuggestions();
       srText = intl.formatMessage({ id: 'search.suggestions.suggestions' }, { count: suggestionList.length });
     } else if (loading) {
       component = renderLoading();

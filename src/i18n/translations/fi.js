@@ -182,6 +182,7 @@ export default {
 
   // Search
   'search': 'Hae',
+  'search.cancelText': 'Tyhjennä hakukenttä',
   'search.notFoundWith': 'Ei osumia haulle "{query}".',
   'search.placeholder': 'Hae palvelua tai toimipistettä',
   'search.info': `{count, plural,
