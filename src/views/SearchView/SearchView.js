@@ -186,17 +186,17 @@ class SearchView extends React.Component {
           <Typography align="left" variant="subtitle1" component="p">
             <FormattedMessage id="search.tryAgain" />
           </Typography>
-          <Typography align="left" variant="body2" component="p">
-            <ul className={classes.list}>
-              {
-                messageIDs.map(id => (
-                  <li key={id}>
+          <ul className={classes.list}>
+            {
+              messageIDs.map(id => (
+                <li key={id}>
+                  <Typography align="left" variant="body2" component="p">
                     <FormattedMessage id={`search.tryAgainBody.${id}`} />
-                  </li>
-                ))
-              }
-            </ul>
-          </Typography>
+                  </Typography>
+                </li>
+              ))
+            }
+          </ul>
         </Container>
       </Container>
     );
