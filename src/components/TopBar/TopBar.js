@@ -17,9 +17,9 @@ class TopBar extends React.Component {
 
   renderMapButton = () => {
     const {
-      classes, navigator, location, settingsOpen, toggleSettings,
+      classes, navigator, location, settingsOpen, toggleSettings, breadcrumb,
     } = this.props;
-    const mapPage = location.pathname.indexOf('/map') > -1;
+    const mapPage = location.search.indexOf('map=true') > -1;
     return (
       <Button
         aria-hidden
@@ -29,11 +29,11 @@ class TopBar extends React.Component {
           e.preventDefault();
           if (settingsOpen) {
             toggleSettings();
-            navigator.push('map');
-          } else if (mapPage) {
-            navigator.goBack('home');
+          }
+          if (mapPage) {
+            navigator.closeMap(breadcrumb.length ? 'replace' : null);
           } else {
-            navigator.push('map');
+            navigator.openMap();
           }
         }}
       >
@@ -116,31 +116,45 @@ class TopBar extends React.Component {
 
   handleNavigation = (target, data) => {
     const {
-      getLocaleText, navigator, currentPage, toggleSettings,
+      getLocaleText, navigator, currentPage, toggleSettings, location,
     } = this.props;
 
+    // Hide settings and map if open
     toggleSettings();
+    if (location.search.indexOf('map=true') > -1) {
+      navigator.closeMap();
+    }
 
-    if (target === 'home') {
-      if (currentPage !== 'home') {
-        navigator.push('home');
-      } else {
-        setTimeout(() => {
-          document.getElementById('view-title').focus();
-        }, 1);
-      }
-    } else if (target === 'address') {
-      const latLng = { lat: data.latitude, lng: data.longitude };
-      fetchAddress(latLng)
-        .then((data) => {
-          navigator.push('address', {
-            municipality: data.street.municipality,
-            street: getLocaleText(data.street.name),
-            number: data.number,
+    switch (target) {
+      case 'home':
+        if (currentPage !== 'home') {
+          navigator.push('home');
+        } else {
+          setTimeout(() => {
+            document.getElementById('view-title').focus();
+          }, 1);
+        }
+        break;
+
+      case 'address':
+        fetchAddress({ lat: data.latitude, lng: data.longitude })
+          .then((data) => {
+            navigator.push('address', {
+              municipality: data.street.municipality,
+              street: getLocaleText(data.street.name),
+              number: data.number,
+            });
           });
-        });
-    } else if (target === 'services' && currentPage !== 'serviceTree') {
-      navigator.push('serviceTree');
+        break;
+
+      case 'services':
+        if (currentPage !== 'serviceTree') {
+          navigator.push('serviceTree');
+        }
+        break;
+
+      default:
+        break;
     }
   }
 
@@ -221,6 +235,7 @@ TopBar.propTypes = {
   toggleSettings: PropTypes.func.isRequired,
   currentPage: PropTypes.string.isRequired,
   getLocaleText: PropTypes.func.isRequired,
+  breadcrumb: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 TopBar.defaultProps = {

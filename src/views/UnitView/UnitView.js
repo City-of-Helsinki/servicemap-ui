@@ -152,9 +152,7 @@ class UnitView extends React.Component {
             onClick={(e) => {
               e.preventDefault();
               this.setState({ centered: false });
-              if (navigator) {
-                navigator.push('unit', { id: unit.id, query: '?map=true' });
-              }
+              navigator.openMap();
             }}
           >
             <FormattedMessage id="general.showOnMap" />

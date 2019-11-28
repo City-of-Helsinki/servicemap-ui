@@ -1,5 +1,4 @@
 const initialState = {
-  addressTitle: null,
   addressUnits: [],
   addressCoordinates: null,
 };
@@ -10,11 +9,6 @@ export default (state = initialState, action) => {
       return {
         ...state,
         addressCoordinates: action.location.addressCoordinates,
-      };
-    case 'SET_ADDRESS_TITLE':
-      return {
-        ...state,
-        addressTitle: action.title,
       };
     case 'SET_ADDRESS_UNITS':
       return {

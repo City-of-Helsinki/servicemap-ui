@@ -136,6 +136,24 @@ class Navigator extends React.Component {
     }
   }
 
+  // Add map param to url
+  openMap = () => {
+    const { history, location } = this.props;
+    const url = location.search ? `${location.search}&map=true` : '?map=true';
+    history.push(url);
+  }
+
+  // Remove map param from url
+  closeMap = (replace) => {
+    const { history, location } = this.props;
+    const url = location.pathname + location.search.replace('?map=true', '').replace('&map=true', '');
+    if (replace) {
+      history.goBack();
+    } else {
+      history.push(url);
+    }
+  }
+
   render = () => null;
 }
 
