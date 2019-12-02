@@ -2,11 +2,8 @@ import config from '../../../config';
 
 export default theme => ({
   container: {
-    top: config.topBarHeight,
-    left: 0,
-    right: 0,
-    bottom: 0,
     overflow: 'auto',
+    height: '100%',
   },
   containerMobile: {
     top: config.topBarHeightMobile,
@@ -14,6 +11,7 @@ export default theme => ({
     right: 0,
     bottom: 0,
     overflow: 'auto',
+    position: 'fixed',
   },
   infoText: {
     paddingBottom: theme.spacing.unitHalf,

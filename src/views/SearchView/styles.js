@@ -3,6 +3,7 @@ export default theme => ({
     display: 'inline-block',
     position: 'relative',
     width: '100%',
+    height: '100%',
   },
   noPadding: {
     padding: 0,
