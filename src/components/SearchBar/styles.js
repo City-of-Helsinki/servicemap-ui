@@ -4,7 +4,7 @@ export default theme => ({
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: theme.palette.primary.main,
-    padding: theme.spacing.unitTriple,
+    padding: `${theme.spacing.unit}px ${theme.spacing.unitTriple}px`,
     paddingTop: 0,
   },
   mobileRoot: {

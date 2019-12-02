@@ -236,37 +236,13 @@ class SearchView extends React.Component {
 
   renderSearchInfo = () => {
     const {
-      units, settings, classes, isFetching, intl, serviceTree,
+      units, classes, isFetching, intl, serviceTree,
     } = this.props;
-    const {
-      colorblind, hearingAid, mobility, visuallyImpaired, helsinki, espoo, vantaa, kauniainen,
-    } = settings;
     const searchParam = this.getSearchParam();
 
     const unitCount = units && units.length;
 
-    const accessibilitySettings = [
-      ...colorblind ? [{ text: intl.formatMessage({ id: 'settings.sense.colorblind' }), icon: <ColorblindIcon /> }] : [],
-      ...hearingAid ? [{ text: intl.formatMessage({ id: 'settings.sense.hearing' }), icon: <HearingIcon /> }] : [],
-      ...visuallyImpaired ? [{ text: intl.formatMessage({ id: 'settings.sense.visual' }), icon: <VisualImpairmentIcon /> }] : [],
-      ...mobility ? [{ text: intl.formatMessage({ id: `settings.mobility.${mobility}` }), icon: getIcon(mobility) }] : [],
-    ];
-
-    let citySettings = [
-      ...helsinki ? [`"${intl.formatMessage({ id: 'settings.city.helsinki' })}"`] : [],
-      ...espoo ? [`"${intl.formatMessage({ id: 'settings.city.espoo' })}"`] : [],
-      ...vantaa ? [`"${intl.formatMessage({ id: 'settings.city.vantaa' })}"`] : [],
-      ...kauniainen ? [`"${intl.formatMessage({ id: 'settings.city.kauniainen' })}"`] : [],
-    ];
-
-    const cityString = citySettings.join(', ');
-    const accessibilityString = accessibilitySettings.map(e => e.text).join(' ');
-
-    if (citySettings.length === 4) {
-      citySettings = [];
-    }
-
-    const infoTextId = searchParam.type === 'search' ? 'search.infoText' : 'search.infoTextNode';
+    const infoTextId = searchParam.type === 'search' ? 'search.infoTextSR' : 'search.infoTextNodeSR';
     const nodeNames = serviceTree && serviceTree.selected.map(e => e.name.fi).join(', ');
 
     return (
@@ -279,65 +255,40 @@ class SearchView extends React.Component {
             {!(searchParam.type === 'node' && !nodeNames) && (
               <div aria-live="polite" aria-label={`${intl.formatMessage({ id: infoTextId }, { count: unitCount })} ${searchParam.query}`} className={classes.infoContainer}>
                 <Typography aria-hidden className={`${classes.infoText} ${classes.bold}`}>
-                  <FormattedMessage id={infoTextId} values={{ count: unitCount }} />
-                </Typography>
-                <Typography aria-hidden className={classes.infoText}>
-                  &nbsp;
-                  {`${searchParam.type === 'search' ? searchParam.query : nodeNames}`}
+                  <FormattedMessage id="search.infoText" values={{ count: unitCount }} />
                 </Typography>
               </div>
             )}
-
-            {citySettings.length ? (
-              <>
-                <div aria-label={`${intl.formatMessage({ id: 'settings.city.info' }, { count: citySettings.length })}: ${cityString}`} className={classes.infoContainer}>
-                  <Typography aria-hidden className={`${classes.infoText} ${classes.bold}`}>
-                    <FormattedMessage id="settings.city.info" values={{ count: citySettings.length }} />
-                    {':'}
-                  &nbsp;
-                  </Typography>
-                  <Typography aria-hidden className={classes.infoText}>
-                    {cityString}
-                  </Typography>
-                </div>
-              </>
-            ) : null}
-
-            {accessibilitySettings.length ? (
-              <div aria-label={`${intl.formatMessage({ id: 'settings.accessibility' })}: ${accessibilityString}`}>
-                <Typography aria-hidden className={`${classes.infoSubText} ${classes.bold}`}>
-                  <FormattedMessage id="settings.accessibility" />
-                  {':'}
-                </Typography>
-                <div aria-hidden className={classes.infoContainer}>
-                  {accessibilitySettings.map(item => (
-                    <div key={item.text} className={classes.settingItem}>
-                      {item.icon}
-                      <Typography className={classes.settingItemText}>{item.text}</Typography>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ) : null}
-            {
-              !!unitCount
-              && searchParam.type === 'search'
-              && (
-                <ServiceMapButton
-                  ref={this.buttonRef}
-                  role="link"
-                  className={`${classes.suggestionButton}`}
-                  onClick={() => this.setState({ expandSearch: true })}
-                >
-                  <Typography variant="button" className={classes.expand}>
-                    <FormattedMessage id="search.expand" />
-                  </Typography>
-                </ServiceMapButton>
-              )
-            }
           </div>
         )}
       </NoSsr>
+    );
+  }
+
+  renderExpandedSearchButton = () => {
+    const {
+      units, classes,
+    } = this.props;
+    const searchParam = this.getSearchParam();
+
+    const unitCount = units && units.length;
+
+    if (!unitCount || searchParam.type !== 'search') {
+      return null;
+    }
+
+
+    return (
+      <ServiceMapButton
+        ref={this.buttonRef}
+        role="link"
+        className={`${classes.suggestionButton}`}
+        onClick={() => this.setState({ expandSearch: true })}
+      >
+        <Typography variant="button" className={classes.expand}>
+          <FormattedMessage id="search.expand" />
+        </Typography>
+      </ServiceMapButton>
     );
   }
 
@@ -454,7 +405,7 @@ class SearchView extends React.Component {
           this.renderSearchBar()
         }
         {
-          this.renderSuggestions()
+          // this.renderSuggestions()
         }
         {
           !expandSearch && this.renderSearchInfo()

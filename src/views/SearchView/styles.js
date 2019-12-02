@@ -38,12 +38,10 @@ export default theme => ({
   searchInfo: {
     color: '#fff',
     backgroundColor: theme.palette.primary.main,
-    padding: 12,
-    paddingLeft: theme.spacing.unitDouble,
+    padding: `${theme.spacing.unit}px ${theme.spacing.unitTriple}px`,
   },
   infoText: {
     color: 'inherit',
-    marginBottom: 12,
   },
   infoSubText: {
     color: 'inherit',

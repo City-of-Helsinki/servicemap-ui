@@ -227,8 +227,9 @@ export default {
   'search.loading.units.srInfo': 'Search loading {count} units', // TODO: Translate
   'search.notFound': 'No results found with given search', // TODO: Translate
   'search.started': 'Search started', // TODO: Translate
-  'search.infoText': 'Näytetään {count} hakutulosta sanalla: ', // TODO: Translate
-  'search.infoTextNode': 'Näytetään {count} hakutulosta palveluilla: ', // TODO: Translate
+  'search.infoText': '{count} Hakutulosta', // TODO: Translate
+  'search.infoTextSR': 'Näytetään {count} hakutulosta sanalla: ', // TODO: Translate
+  'search.infoTextSRNode': 'Näytetään {count} hakutulosta palveluilla: ', // TODO: Translate
   'search.searchbar.headerText': 'Pääkaupunkiseudun kaikki julkiset palvelut ulottuvillasi', // TODO: Translate
   'search.searchbar.infoText': 'Hae palveluita, toimipisteitä tai osoitteita', // TODO: Translate
   'search.suggestions.suggest': 'Tarkoititko..?', // TODO: Translate

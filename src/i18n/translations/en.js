@@ -229,8 +229,9 @@ export default {
   'search.loading.units.srInfo': 'Search loading {count} units',
   'search.notFound': 'No results found with given search',
   'search.started': 'Search started',
-  'search.infoText': 'Showing {count} results for search query: ',
-  'search.infoTextNode': 'Showing {count} results for services: ',
+  'search.infoText': '{count} Search results',
+  'search.infoTextSR': 'Showing {count} results for search query: ',
+  'search.infoTextSRNode': 'Showing {count} results for services: ',
   'search.searchbar.headerText': 'Pääkaupunkiseudun kaikki julkiset palvelut ulottuvillasi', // TODO: Translate
   'search.searchbar.infoText': 'Search for services, units or addresses', // TODO: Verify
   'search.suggestions.suggest': 'Did you mean..?',
