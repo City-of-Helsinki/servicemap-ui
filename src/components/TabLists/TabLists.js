@@ -321,6 +321,7 @@ class TabLists extends React.Component {
                       classes={{
                         root: classes.tab,
                         labelContainer: classes.tabLabelContainer,
+                        selected: classes.selected,
                       }}
                       className={classes.tab}
                       label={label}
@@ -334,6 +335,7 @@ class TabLists extends React.Component {
                     classes={{
                       root: classes.tab,
                       labelContainer: classes.tabLabelContainer,
+                      selected: classes.selected,
                     }}
                     label={`${item.title}`}
                   />
@@ -348,7 +350,7 @@ class TabLists extends React.Component {
 
   render() {
     const {
-      classes, intl,
+      beforePagination, classes, intl,
     } = this.props;
     const {
       currentPage, tabIndex, tabStyles,
@@ -421,6 +423,9 @@ class TabLists extends React.Component {
                         resultCount={item.data.length}
                         titleComponent="h3"
                       />
+                      {
+                        beforePagination
+                      }
                       <PaginationComponent
                         current={adjustedCurrentPage}
                         pageCount={pageCount}
@@ -439,6 +444,7 @@ class TabLists extends React.Component {
 }
 
 TabLists.propTypes = {
+  beforePagination: PropTypes.node,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   data: PropTypes.arrayOf(PropTypes.shape({
     ariaLabel: PropTypes.string,
@@ -454,6 +460,7 @@ TabLists.propTypes = {
 };
 
 TabLists.defaultProps = {
+  beforePagination: null,
   headerComponents: null,
   navigator: null,
 };

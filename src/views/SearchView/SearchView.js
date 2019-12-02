@@ -347,6 +347,7 @@ class SearchView extends React.Component {
     return (
       <TabLists
         data={searchResults}
+        beforePagination={this.renderExpandedSearchButton()}
       />
     );
   }
@@ -405,7 +406,7 @@ class SearchView extends React.Component {
           this.renderSearchBar()
         }
         {
-          // this.renderSuggestions()
+          this.renderSuggestions()
         }
         {
           !expandSearch && this.renderSearchInfo()
