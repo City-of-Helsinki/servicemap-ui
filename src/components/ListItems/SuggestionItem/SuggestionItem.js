@@ -102,8 +102,7 @@ const SuggestionItem = (props) => {
           </ListItemText>
         </span>
         {
-          isMobile
-          && handleArrowClick
+          handleArrowClick
           && (
             <Button
               aria-hidden
