@@ -46,7 +46,7 @@ export default {
   'event.title': 'Tapahtumat',
 
   // Sorting
-  'sorting.label': 'Järjestä hakutulokset',
+  'sorting.label': 'Järjestä hakutulokset:',
   'sorting.accessibility.desc': 'Esteettömin ensin',
   'sorting.alphabetical.asc': 'Käänteinen aakkosjärjestys',
   'sorting.alphabetical.desc': 'Aakkosjärjestys',

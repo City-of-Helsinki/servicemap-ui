@@ -46,7 +46,7 @@ export default {
   'event.title': 'Tapahtumat', // TODO: Translate
 
   // Sorting
-  'sorting.label': 'Järjestä hakutulokset', // TODO: Translate
+  'sorting.label': 'Järjestä hakutulokset:', // TODO: Translate
   'sorting.accessibility.desc': 'Esteettömin ensin', // TODO: Translate
   'sorting.alphabetical.asc': 'Käänteinen aakkosjärjestys', // TODO: Translate
   'sorting.alphabetical.desc': 'Aakkosjärjestys', // TODO: Translate

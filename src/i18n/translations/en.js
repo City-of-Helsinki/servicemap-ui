@@ -47,7 +47,7 @@ export default {
   'event.title': 'Events',
 
   // Sorting
-  'sorting.label': 'Order search results',
+  'sorting.label': 'Order search results:',
   'sorting.accessibility.desc': 'Most accessibile',
   'sorting.alphabetical.asc': 'Reversed alphabetical',
   'sorting.alphabetical.desc': 'Alphabetical',
