@@ -13,10 +13,10 @@ const SMTheme = createMuiTheme({
   // Color palette
   palette: {
     primary: {
-      main: '#2242C7',
+      main: '#1964E6',
     },
     secondary: {
-      main: '#000000',
+      main: 'rgba(20,24,35,0.9)',
     },
     warning: '#AF0021',
   },
@@ -97,6 +97,7 @@ const SMTheme = createMuiTheme({
     unit: 8,
     unitHalf: 4,
     unitDouble: 16,
+    unitTriple: 24,
   },
   custom: {
     body2light: {

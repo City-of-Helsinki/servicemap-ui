@@ -21,6 +21,7 @@ import {
   ColorblindIcon, HearingIcon, VisualImpairmentIcon, getIcon,
 } from '../../components/SMIcon';
 import ServiceMapButton from '../../components/ServiceMapButton';
+import ExpandedSuggestions from '../../components/ExpandedSuggestions';
 
 class SearchView extends React.Component {
   constructor(props) {
@@ -53,7 +54,17 @@ class SearchView extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    const { units, map } = this.props;
+    const { fetchUnits, units, map } = this.props;
+    const searchData = this.getSearchParam(nextProps);
+    if (this.shouldFetch(nextProps)) {
+      if (searchData.type === 'search') {
+        fetchUnits(searchData.query);
+      } else {
+        fetchUnits(searchData.query, searchData.type);
+      }
+      this.focusMap(units, map);
+      return true;
+    }
     // If new search results, call map focus functio
     if (nextProps.units.length > 0 && units !== nextProps.units) {
       this.focusMap(nextProps.units, map);
@@ -62,10 +73,10 @@ class SearchView extends React.Component {
   }
 
   // Get search parameter from url
-  getSearchParam = () => {
+  getSearchParam = (props) => {
     const {
       location,
-    } = this.props;
+    } = props || this.props;
     const searchParams = parseSearchParams(location.search);
     if (searchParams.q) {
       return { type: 'search', query: searchParams.q };
@@ -76,9 +87,9 @@ class SearchView extends React.Component {
   }
 
   // Check if view will fetch data because sreach params has changed
-  shouldFetch = () => {
-    const { isFetching, previousSearch } = this.props;
-    const searchParam = this.getSearchParam();
+  shouldFetch = (props) => {
+    const { isFetching, previousSearch } = props || this.props;
+    const searchParam = this.getSearchParam(props);
     if (previousSearch && searchParam && searchParam.type === 'node') {
       return !isFetching && searchParam && searchParam.query !== previousSearch.searchQuery;
     }
@@ -136,6 +147,21 @@ class SearchView extends React.Component {
     return null;
   }
 
+  closeExpandedSearch() {
+    this.setState({ expandSearch: false });
+  }
+
+  handleSubmit(query) {
+    const { isFetching, navigator } = this.props;
+    if (!isFetching && query && query !== '') {
+      this.closeExpandedSearch();
+
+      if (navigator) {
+        navigator.push('search', { query });
+      }
+    }
+  }
+
   /**
    * What to render if no units are found with search
    */
@@ -160,35 +186,50 @@ class SearchView extends React.Component {
           <Typography align="left" variant="subtitle1" component="p">
             <FormattedMessage id="search.tryAgain" />
           </Typography>
-          <Typography align="left" variant="body2" component="p">
-            <ul className={classes.list}>
-              {
-                messageIDs.map(id => (
-                  <li key={id}>
+          <ul className={classes.list}>
+            {
+              messageIDs.map(id => (
+                <li key={id}>
+                  <Typography align="left" variant="body2" component="p">
                     <FormattedMessage id={`search.tryAgainBody.${id}`} />
-                  </li>
-                ))
-              }
-            </ul>
-          </Typography>
+                  </Typography>
+                </li>
+              ))
+            }
+          </ul>
         </Container>
       </Container>
     );
   }
 
   renderSearchBar() {
-    const { intl } = this.props;
     const { expandSearch } = this.state;
+    const { query } = this.props;
+
+    if (expandSearch) {
+      return null;
+    }
+
     return (
       <SearchBar
-        srHideInput={!!expandSearch}
-        className="sticky"
         expand
-        placeholder={intl && intl.formatMessage({ id: 'search.input.placeholder' })}
-        isSticky={0}
         primary
-        expandSearch={expandSearch}
-        closeExpandedSearch={expandSearch ? () => this.setState({ expandSearch: null }) : () => {}}
+        initialValue={query}
+      />
+    );
+  }
+
+  renderSuggestions() {
+    const { expandSearch } = this.state;
+    const { query } = this.props;
+    if (!expandSearch) {
+      return null;
+    }
+    return (
+      <ExpandedSuggestions
+        closeExpandedSearch={() => this.closeExpandedSearch()}
+        searchQuery={query}
+        handleSubmit={query => this.handleSubmit(query)}
       />
     );
   }
@@ -286,7 +327,7 @@ class SearchView extends React.Component {
                   ref={this.buttonRef}
                   role="link"
                   className={`${classes.suggestionButton}`}
-                  onClick={() => this.setState({ expandSearch: searchParam.query })}
+                  onClick={() => this.setState({ expandSearch: true })}
                 >
                   <Typography variant="button" className={classes.expand}>
                     <FormattedMessage id="search.expand" />
@@ -413,6 +454,9 @@ class SearchView extends React.Component {
           this.renderSearchBar()
         }
         {
+          this.renderSuggestions()
+        }
+        {
           !expandSearch && this.renderSearchInfo()
         }
         {
@@ -450,14 +494,15 @@ SearchView.propTypes = {
   fetchUnits: PropTypes.func,
   intl: intlShape.isRequired,
   isFetching: PropTypes.bool,
-  location: PropTypes.objectOf(PropTypes.any).isRequired,
   max: PropTypes.number,
   previousSearch: PropTypes.string,
   units: PropTypes.arrayOf(PropTypes.any),
   map: PropTypes.objectOf(PropTypes.any),
   match: PropTypes.objectOf(PropTypes.any).isRequired,
+  navigator: PropTypes.objectOf(PropTypes.any),
   settings: PropTypes.objectOf(PropTypes.any),
   serviceTree: PropTypes.objectOf(PropTypes.any),
+  query: PropTypes.string,
 };
 
 SearchView.defaultProps = {
@@ -470,5 +515,7 @@ SearchView.defaultProps = {
   units: [],
   settings: null,
   map: null,
+  navigator: null,
   serviceTree: null,
+  query: null,
 };

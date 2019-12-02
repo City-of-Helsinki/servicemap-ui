@@ -101,6 +101,7 @@ export default {
   'general.save.changes': 'Save settings', // TODO: Translate
   'general.save.changes.done': 'Changes have been saved!', // TODO: Translate
   'general.save.confirmation': 'Would you like to save changes?', // TODO: Translate
+  'general.search': 'Hae', // TODO: Translate
   'general.distance.meters': 'Metrin päässä', // TODO: Translate
   'general.distance.kilometers': 'Kilometrin päässä', // TODO: Translate
 
@@ -185,6 +186,7 @@ export default {
 
   // Search
   'search': 'Hae', // TODO: Translate
+  'search.cancelText': 'Tyhjennä hakukenttä', // TODO: Translate
   'search.notFoundWith': 'Ei osumia haulle "{query}".', // TODO: Translate
   'search.placeholder': 'Hae palvelua tai toimipistettä', // TODO: Translate
   'search.info': `{count, plural,
@@ -227,6 +229,8 @@ export default {
   'search.started': 'Search started', // TODO: Translate
   'search.infoText': 'Näytetään {count} hakutulosta sanalla: ', // TODO: Translate
   'search.infoTextNode': 'Näytetään {count} hakutulosta palveluilla: ', // TODO: Translate
+  'search.searchbar.headerText': 'Pääkaupunkiseudun kaikki julkiset palvelut ulottuvillasi', // TODO: Translate
+  'search.searchbar.infoText': 'Hae palveluita, toimipisteitä tai osoitteita', // TODO: Translate
   'search.suggestions.suggest': 'Tarkoititko..?', // TODO: Translate
   'search.suggestions.expand': 'Hakuehdotukset', // TODO: Translate
   'search.suggestions.loading': 'Ladataan ehdotuksia', // TODO: Translate
