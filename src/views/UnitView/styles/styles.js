@@ -108,6 +108,9 @@ export default theme => ({
     top: 0,
     zIndex: 51,
   },
+  topPadding: {
+    height: 4,
+  },
   mobileButtonArea: {
     display: 'flex',
     height: 62,

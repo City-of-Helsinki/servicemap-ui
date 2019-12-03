@@ -259,6 +259,7 @@ class UnitView extends React.Component {
       <div className={`${classes.topArea} sticky`}>
         <DesktopComponent>
           <SearchBar />
+          <div className={classes.topPadding} />
           <TitleBar icon={<AddressIcon className={classes.icon} />} title={title} distance={distance} />
         </DesktopComponent>
         <MobileComponent>
