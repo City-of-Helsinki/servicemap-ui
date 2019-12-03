@@ -16,7 +16,7 @@ const DistrictItem = ({
         icon={<AreaIcon />}
         title={title}
         subtitle={intl.formatMessage({ id: `address.list.${district.type}` })}
-        bottomRightText={period}
+        bottomText={period}
         onClick={() => { showDistrictOnMap(district, true); }}
       />
     </MobileComponent>
@@ -27,7 +27,7 @@ const DistrictItem = ({
         icon={<AreaIcon />}
         title={title}
         subtitle={intl.formatMessage({ id: `address.list.${district.type}` })}
-        bottomRightText={period}
+        bottomText={period}
         onClick={() => { showDistrictOnMap(district, false); }}
       />
     </DesktopComponent>

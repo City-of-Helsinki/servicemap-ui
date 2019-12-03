@@ -27,10 +27,9 @@ class UnitItem extends React.Component {
     } = this.props;
     const accessSettingsSet = SettingsUtility.hasActiveAccessibilitySettings(settings);
     let accessText = null;
-    let markerColor = null;
+    let accessibilityProblems = null;
     if (accessSettingsSet && unit && settings) {
-      const accessibilityProblems = UnitHelper.getShortcomingCount(unit, settings);
-      markerColor = UnitHelper.getIconColor(accessibilityProblems);
+      accessibilityProblems = UnitHelper.getShortcomingCount(unit, settings);
       accessText = intl.formatMessage({ id: 'unit.accessibility.noInfo' });
       if (accessibilityProblems !== null && typeof accessibilityProblems !== 'undefined') {
         switch (accessibilityProblems) {
@@ -42,12 +41,12 @@ class UnitItem extends React.Component {
         }
       }
     }
-    return { text: accessText, color: markerColor };
+    return { text: accessText, problemCount: accessibilityProblems };
   }
 
   render() {
     const {
-      unit, changeSelectedUnit, onClick, getLocaleText, intl, navigator, userLocation,
+      classes, unit, changeSelectedUnit, onClick, getLocaleText, intl, navigator, userLocation,
     } = this.props;
     // Don't render if not valid unit
     if (!UnitHelper.isValidUnit(unit)) {
@@ -65,7 +64,7 @@ class UnitItem extends React.Component {
     // Accessibility text and color
     const accessData = didMount ? this.parseAccessibilityText() : 0;
     const accessText = accessData.text;
-    const accessColor = accessData.color;
+    const { problemCount } = accessData;
 
     // Distance
     let distance = calculateDistance(unit, userLocation);
@@ -87,8 +86,13 @@ class UnitItem extends React.Component {
       <ResultItem
         title={getLocaleText(name)}
         subtitle={contractType}
-        bottomRightText={accessText}
-        bottomRightColor={accessColor}
+        bottomText={accessText}
+        bottomHighlight={problemCount !== null && typeof problemCount !== 'undefined'}
+        extendedClasses={{
+          typography: {
+            title: classes.title,
+          },
+        }}
         distance={distance}
         icon={icon}
         onClick={(e) => {
@@ -109,6 +113,7 @@ export default UnitItem;
 
 // Typechecking
 UnitItem.propTypes = {
+  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   unit: PropTypes.objectOf(PropTypes.any),
   changeSelectedUnit: PropTypes.func.isRequired,
   getLocaleText: PropTypes.func.isRequired,
