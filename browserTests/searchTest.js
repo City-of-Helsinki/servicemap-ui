@@ -39,6 +39,7 @@ test('Navigate search view ', async (t) => {
 
   await t
     .typeText(input, 'kirjasto')
+    .pressKey('tab') // Tabs to cancel button
     .pressKey('tab') // Tabs to search icon button
     .pressKey('tab') // Narrow search
     .pressKey('tab') // Result orderer
@@ -53,6 +54,7 @@ test('Navigate search view ', async (t) => {
 
   await t
     .typeText(input, 'kirjasto')
+    .pressKey('tab') // Tabs to cancel button
     .pressKey('tab') // Tabs to search icon button
     .pressKey('tab') // Narrow search
     .pressKey('tab') // Result orderer

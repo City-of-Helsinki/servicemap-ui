@@ -33,6 +33,7 @@ const createContentStyles = (
       display: 'flex',
       flexWrap: 'nowrap',
       height: isMobile ? '100%' : `calc(100vh - ${topBarHeight})`,
+      flex: '1 1 auto',
     },
     map: {
       position: isMobile ? 'fixed' : null,

@@ -1,9 +1,9 @@
 export default theme => ({
   root: {
     display: 'inline-block',
-    height: 'auto',
     position: 'relative',
     width: '100%',
+    height: '100%',
   },
   noPadding: {
     padding: 0,

@@ -129,7 +129,7 @@ const AddressView = (props) => {
   const renderTopBar = title => (
     <div className={`${classes.topBar} sticky`}>
       <DesktopComponent>
-        <SearchBar placeholder={intl.formatMessage({ id: 'search.placeholder' })} />
+        <SearchBar />
         <TitleBar icon={<AddressIcon className={classes.titleIcon} />} title={error || title} primary />
       </DesktopComponent>
       <MobileComponent>

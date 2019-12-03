@@ -120,7 +120,7 @@ class EventDetailView extends React.Component {
       return (
         <>
           <DesktopComponent>
-            <SearchBar placeholder={intl.formatMessage({ id: 'search.placeholder' })} />
+            <SearchBar />
             <TitleBar title={getLocaleText(event.name)} icon={<Event />} />
           </DesktopComponent>
           <MobileComponent>

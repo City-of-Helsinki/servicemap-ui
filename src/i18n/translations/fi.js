@@ -102,6 +102,7 @@ export default {
   'general.save.changes': 'Tallenna asetukset',
   'general.save.changes.done': 'Muutokset tallennettu!',
   'general.save.confirmation': 'Haluatko tallentaa muutokset?',
+  'general.search': 'Hae',
   'general.distance.meters': 'Metrin päässä',
   'general.distance.kilometers': 'Kilometrin päässä',
 
@@ -187,6 +188,7 @@ export default {
 
   // Search
   'search': 'Hae',
+  'search.cancelText': 'Tyhjennä hakukenttä',
   'search.notFoundWith': 'Ei osumia haulle "{query}".',
   'search.placeholder': 'Hae palvelua tai toimipistettä',
   'search.info': `{count, plural,
@@ -228,6 +230,8 @@ export default {
   'search.started': 'Haku aloitettu',
   'search.infoText': 'Näytetään {count} hakutulosta sanalla: ',
   'search.infoTextNode': 'Näytetään {count} hakutulosta palveluilla: ',
+  'search.searchbar.headerText': 'Pääkaupunkiseudun kaikki julkiset palvelut ulottuvillasi.',
+  'search.searchbar.infoText': 'Hae palveluita, toimipisteitä tai osoitteita',
   'search.suggestions.suggest': 'Tarkoititko..?',
   'search.suggestions.expand': 'Hakuehdotukset',
   'search.suggestions.loading': 'Ladataan ehdotuksia',

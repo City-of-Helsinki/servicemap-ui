@@ -103,6 +103,7 @@ export default {
   'general.save.changes': 'Save settings',
   'general.save.changes.done': 'Changes have been saved!',
   'general.save.confirmation': 'Would you like to save changes?',
+  'general.search': 'Search',
   'general.distance.meters': 'Meters away',
   'general.distance.kilometers': 'Kilometers away',
 
@@ -191,6 +192,7 @@ export default {
 
   // Search
   'search': 'Search',
+  'search.cancelText': 'Clear search text',
   'search.notFoundWith': 'No results for search "{query}".',
   'search.placeholder': 'Search for services or units',
   'search.info': `{count, plural,
@@ -233,6 +235,8 @@ export default {
   'search.started': 'Search started',
   'search.infoText': 'Showing {count} results for search query: ',
   'search.infoTextNode': 'Showing {count} results for services: ',
+  'search.searchbar.headerText': 'Pääkaupunkiseudun kaikki julkiset palvelut ulottuvillasi', // TODO: Translate
+  'search.searchbar.infoText': 'Search for services, units or addresses', // TODO: Verify
   'search.suggestions.suggest': 'Did you mean..?',
   'search.suggestions.expand': 'Search suggestions',
   'search.suggestions.loading': 'Loading suggestions',
