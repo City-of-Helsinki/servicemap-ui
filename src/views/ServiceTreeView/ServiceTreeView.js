@@ -195,7 +195,7 @@ const ServiceTreeView = ({
   const TopBar = (
     <div>
       <DesktopComponent>
-        <SearchBar placeholder={intl.formatMessage({ id: 'search' })} />
+        <SearchBar />
         { /* <TitleBar icon={icon} title={title} primary /> */}
       </DesktopComponent>
       <MobileComponent>

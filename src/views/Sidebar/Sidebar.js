@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, withRouter } from 'react-router-dom';
 import SearchView from '../SearchView';
 import UnitView from '../UnitView';
 import HomeView from '../HomeView';
@@ -50,13 +50,16 @@ const Home = () => (
   </TitleWrapper>
 );
 
-const Search = () => (
-  <TitleWrapper messageId="general.pageTitles.search">
-    <PageWrapper headMsgId="search.results.title" page="search">
-      <SearchView />
-    </PageWrapper>
-  </TitleWrapper>
-);
+const Search = withRouter(({ location }) => {
+  const query = new URLSearchParams(location.search).get('q'); // Get query parameter
+  return (
+    <TitleWrapper messageId="general.pageTitles.search">
+      <PageWrapper headMsgId="search.results.title" page="search">
+        <SearchView query={query} />
+      </PageWrapper>
+    </TitleWrapper>
+  );
+});
 
 const Unit = () => (
   <TitleWrapper messageId="general.pageTitles.unit">

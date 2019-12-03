@@ -91,7 +91,7 @@ class HomeView extends React.Component {
         </MobileComponent>
         <SearchBar
           hideBackButton
-          placeholder={intl.formatMessage({ id: 'search.placeholder' })}
+          header
         />
         {
           this.renderNavigationOptions()
