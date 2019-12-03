@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Typography, withStyles } from '@material-ui/core';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { Map } from '@material-ui/icons';
 import { fetchUnitEvents } from '../../redux/actions/event';
 import { fetchSelectedUnit, changeSelectedUnit } from '../../redux/actions/selectedUnit';
 import { fetchAccessibilitySentences } from '../../redux/actions/selectedUnitAccessibility';
@@ -31,6 +32,7 @@ import ServiceMapButton from '../../components/ServiceMapButton';
 import UnitIcon from '../../components/SMIcon/UnitIcon';
 import TabLists from '../../components/TabLists';
 import calculateDistance from '../../utils/calculateDistance';
+import { AddressIcon } from '../../components/SMIcon';
 
 class UnitView extends React.Component {
   constructor(props) {
@@ -137,7 +139,7 @@ class UnitView extends React.Component {
 
   renderDetailTab() {
     const {
-      getLocaleText, intl, navigator, unit,
+      getLocaleText, intl, unit, classes,
     } = this.props;
 
     if (!unit || !unit.complete) {
@@ -145,21 +147,7 @@ class UnitView extends React.Component {
     }
 
     return (
-      <>
-        {/* Show on map button for mobile */}
-        <MobileComponent>
-          <ServiceMapButton
-            onClick={(e) => {
-              e.preventDefault();
-              this.setState({ centered: false });
-              if (navigator) {
-                navigator.push('unit', { id: unit.id, query: '?map=true' });
-              }
-            }}
-          >
-            <FormattedMessage id="general.showOnMap" />
-          </ServiceMapButton>
-        </MobileComponent>
+      <div className={classes.content}>
         {/* Contract type */}
         <Container margin text>
           <Typography variant="body2">
@@ -180,7 +168,7 @@ class UnitView extends React.Component {
         <Highlights unit={unit} getLocaleText={getLocaleText} />
         <Description unit={unit} getLocaleText={getLocaleText} />
         <ElectronicServices unit={unit} />
-      </>
+      </div>
     );
   }
 
@@ -188,6 +176,7 @@ class UnitView extends React.Component {
     const {
       accessibilitySentences,
       unit,
+      classes,
     } = this.props;
 
     if (!unit || !unit.complete || !accessibilitySentences) {
@@ -195,13 +184,15 @@ class UnitView extends React.Component {
     }
 
     return (
-      <AccessibilityInfo titleAlways data={accessibilitySentences} headingLevel={4} />
+      <div className={classes.content}>
+        <AccessibilityInfo titleAlways data={accessibilitySentences} headingLevel={4} />
+      </div>
     );
   }
 
   renderServiceTab() {
     const {
-      eventsData, getLocaleText, reservations, unit,
+      eventsData, getLocaleText, reservations, unit, classes,
     } = this.props;
 
     if (!unit || !unit.complete) {
@@ -209,7 +200,7 @@ class UnitView extends React.Component {
     }
 
     return (
-      <>
+      <div className={classes.content}>
         <Services
           listLength={10}
           unit={unit}
@@ -221,7 +212,33 @@ class UnitView extends React.Component {
           getLocaleText={getLocaleText}
         />
         <Events listLength={5} eventsData={eventsData} />
-      </>
+      </div>
+    );
+  }
+
+  renderMobileButtons = () => {
+    const { navigator, unit, classes } = this.props;
+    return (
+      <MobileComponent>
+        <div className={classes.mobileButtonArea}>
+          <ServiceMapButton
+            text={<FormattedMessage id="general.showOnMap" />}
+            icon={<Map />}
+            onClick={(e) => {
+              e.preventDefault();
+              this.setState({ centered: false });
+              if (navigator) {
+                navigator.push('unit', { id: unit.id, query: '?map=true' });
+              }
+            }}
+          />
+          {/* Feedback button
+          <ServiceMapButton
+            text={<FormattedMessage id="home.send.feedback" />}
+            icon={<Mail />}
+          /> */}
+        </div>
+      </MobileComponent>
     );
   }
 
@@ -238,14 +255,14 @@ class UnitView extends React.Component {
     const icon = didMount && unit ? <UnitIcon unit={unit} /> : null;
     const distance = this.formatDistanceString(calculateDistance(unit, userLocation));
 
-    const TopBar = (
-      <div className={`${classes.topBar} sticky`}>
+    const TopArea = (
+      <div className={`${classes.topArea} sticky`}>
         <DesktopComponent>
           <SearchBar placeholder={intl.formatMessage({ id: 'search.placeholder' })} />
-          <TitleBar icon={icon} title={title} primary distance={distance} />
+          <TitleBar icon={<AddressIcon className={classes.icon} />} title={title} distance={distance} />
         </DesktopComponent>
         <MobileComponent>
-          <TitleBar icon={icon} title={correctUnit ? title : ''} primary backButton />
+          <TitleBar icon={icon} title={correctUnit ? title : ''} backButton />
         </MobileComponent>
       </div>
     );
@@ -254,7 +271,7 @@ class UnitView extends React.Component {
       return (
         <div className={classes.root}>
           <div className="Content">
-            {TopBar}
+            {TopArea}
             <p>
               <FormattedMessage id="general.loading" />
             </p>
@@ -293,7 +310,7 @@ class UnitView extends React.Component {
           data={tabs}
           headerComponents={(
             <>
-              {TopBar}
+              {TopArea}
               {/* Unit image */}
               {
                 unit.picture_url
@@ -314,8 +331,9 @@ class UnitView extends React.Component {
                   </div>
                 )
               }
+              {this.renderMobileButtons()}
             </>
-        )}
+          )}
         />
       );
     }
@@ -323,7 +341,7 @@ class UnitView extends React.Component {
     return (
       <div className={classes.root}>
         <div className="Content">
-          {TopBar}
+          {TopArea}
           <Typography color="primary" variant="body1">
             <FormattedMessage id="unit.details.notFound" />
           </Typography>
