@@ -11,8 +11,8 @@ export default theme => ({
     textAlign: 'left',
   },
   margin: {
-    marginLeft: '8px',
-    marginRight: '8px',
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
   },
   text: {
     textAlign: 'left',
