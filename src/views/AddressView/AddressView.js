@@ -3,13 +3,14 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Typography } from '@material-ui/core';
 import { intlShape, FormattedMessage } from 'react-intl';
+import { Map } from '@material-ui/icons';
 import SearchBar from '../../components/SearchBar';
 import { focusDistrict, focusUnit } from '../MapView/utils/mapActions';
 import fetchDistricts from './utils/fetchDistricts';
 import { MobileComponent, DesktopComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import TitleBar from '../../components/TitleBar';
 import TitledList from '../../components/Lists/TitledList';
-import { AddressIcon, MapIcon } from '../../components/SMIcon';
+import { AddressIcon } from '../../components/SMIcon';
 import HeadModifier from '../../utils/headModifier';
 
 import fetchAddressUnits from './utils/fetchAddressUnits';
@@ -246,6 +247,8 @@ const AddressView = (props) => {
       {addressData && units && districts && (
       <MobileComponent>
         <ServiceMapButton
+          text={<FormattedMessage id="general.showOnMap" />}
+          icon={<Map />}
           className={classes.mapButton}
           onClick={() => {
             if (navigator) {
@@ -254,12 +257,7 @@ const AddressView = (props) => {
               mobileShowOnMap(title);
             }
           }}
-        >
-          <MapIcon className={classes.mapIcon} />
-          <Typography variant="button">
-            <FormattedMessage id="general.showOnMap" />
-          </Typography>
-        </ServiceMapButton>
+        />
       </MobileComponent>
       )}
     </div>

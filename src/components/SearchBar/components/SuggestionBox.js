@@ -212,15 +212,12 @@ const SuggestionBox = (props) => {
           </List>
           {expandedQueries && (
             <ServiceMapButton
+              text={<FormattedMessage id="search.closeExpand" />}
               role="link"
               className={classes.closeButton}
               onKeyDown={e => handleKeyPress(e)}
               onClick={() => closeExpandedSearch()}
-            >
-              <Typography variant="button">
-                <FormattedMessage id="search.closeExpand" />
-              </Typography>
-            </ServiceMapButton>
+            />
           )}
         </>
       );

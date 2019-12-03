@@ -1,40 +1,46 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from '@material-ui/core';
+import { ButtonBase, Typography } from '@material-ui/core';
 
 // ServiceMapButton
-const SMButton = ({
-  children, classes, className, onClick, srText, style, role, ...rest
-}) => (
-  <Button
-    className={`${classes.button} ${className}`}
-    role={role || 'link'}
-    variant="contained"
-    color="primary"
-    onClick={onClick}
-    aria-label={srText}
-    style={style}
-    {...rest}
-  >
-    {children}
-  </Button>
-);
+const ServiceMapButton = ({
+  classes, text, icon, className, onClick, srText, style, role, ...rest
+}) => {
+  const buttonIcon = icon ? React.cloneElement(icon, { className: classes.buttonIcon }) : null;
+  return (
+    <ButtonBase
+      className={`${classes.button} ${className}`}
+      role={role || 'link'}
+      onClick={onClick}
+      aria-label={srText}
+      style={style}
+      {...rest}
+    >
+      {buttonIcon}
+      <Typography className={classes.buttonText}>
+        {text}
+      </Typography>
+    </ButtonBase>
+  );
+};
 
-SMButton.propTypes = {
+ServiceMapButton.propTypes = {
+  text: PropTypes.oneOfType([PropTypes.string, PropTypes.objectOf(PropTypes.any)]).isRequired,
+  icon: PropTypes.objectOf(PropTypes.any),
   className: PropTypes.string,
   onClick: PropTypes.func.isRequired,
   srText: PropTypes.string,
   style: PropTypes.objectOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  children: PropTypes.node.isRequired,
   role: PropTypes.string,
 };
 
-SMButton.defaultProps = {
+ServiceMapButton.defaultProps = {
   className: '',
+  icon: null,
   srText: null,
   style: null,
   role: null,
 };
 
-export default SMButton;
+export default ServiceMapButton;
