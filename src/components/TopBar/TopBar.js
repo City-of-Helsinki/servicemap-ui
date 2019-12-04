@@ -228,7 +228,7 @@ class TopBar extends React.Component {
     const { classes, smallScreen } = this.props;
     return (
       <>
-        <AppBar>
+        <AppBar className={classes.appBar}>
           {/* Toolbar black area */}
           <Toolbar className={classes.toolbarBlack}>
             <div className={classes.toolbarBlackContainer}>
