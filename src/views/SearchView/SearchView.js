@@ -20,7 +20,7 @@ import { DesktopComponent } from '../../layouts/WrapperComponents/WrapperCompone
 import {
   ColorblindIcon, HearingIcon, VisualImpairmentIcon, getIcon,
 } from '../../components/SMIcon';
-import ServiceMapButton from '../../components/ServiceMapButton';
+import SMButton from '../../components/ServiceMapButton';
 import ExpandedSuggestions from '../../components/ExpandedSuggestions';
 
 class SearchView extends React.Component {
@@ -267,7 +267,7 @@ class SearchView extends React.Component {
 
   renderExpandedSearchButton = () => {
     const {
-      units, classes,
+      classes, units,
     } = this.props;
     const searchParam = this.getSearchParam();
 
@@ -277,18 +277,14 @@ class SearchView extends React.Component {
       return null;
     }
 
-
     return (
-      <ServiceMapButton
-        ref={this.buttonRef}
-        role="link"
-        className={`${classes.suggestionButton}`}
-        onClick={() => this.setState({ expandSearch: true })}
-      >
-        <Typography variant="button" className={classes.expand}>
-          <FormattedMessage id="search.expand" />
-        </Typography>
-      </ServiceMapButton>
+      <div className={classes.suggestionButtonContainer}>
+        <SMButton
+          role="link"
+          onClick={() => this.setState({ expandSearch: true })}
+          messageID="search.expand"
+        />
+      </div>
     );
   }
 

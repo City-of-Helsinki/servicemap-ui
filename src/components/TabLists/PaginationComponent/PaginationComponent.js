@@ -1,12 +1,10 @@
 /* eslint-disable no-underscore-dangle */
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Button,
-} from '@material-ui/core';
 import { ArrowBackIos, ArrowForwardIos } from '@material-ui/icons';
 import Container from '../../Container';
 import PageElement from './PageElement';
+import SMButton from '../../ServiceMapButton';
 
 class PaginationComponent extends React.Component {
   constructor(props) {
@@ -45,7 +43,7 @@ class PaginationComponent extends React.Component {
       <Container className={classes.buttonContainer}>
         {
           // Button backwards one page
-          <Button
+          <SMButton
             aria-label={intl.formatMessage({ id: 'general.pagination.previous' })}
             className={classes.button}
             onClick={(e) => {
@@ -58,11 +56,11 @@ class PaginationComponent extends React.Component {
             role="link"
           >
             <ArrowBackIos />
-          </Button>
+          </SMButton>
         }
         {
           // Button forward one page
-          <Button
+          <SMButton
             aria-label={intl.formatMessage({ id: 'general.pagination.next' })}
             className={classes.button}
             onClick={(e) => {
@@ -75,7 +73,7 @@ class PaginationComponent extends React.Component {
             role="link"
           >
             <ArrowForwardIos />
-          </Button>
+          </SMButton>
         }
         {
           // Page numbers

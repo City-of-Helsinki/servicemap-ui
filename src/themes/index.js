@@ -21,6 +21,8 @@ const SMTheme = createMuiTheme({
     warning: '#AF0021',
     white: {
       main: '#FFFFFF',
+      dark: 'rgba(0, 0, 0, 0.15)',
+      contrastText: '#000',
     },
   },
   // Typography

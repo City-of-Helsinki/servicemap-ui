@@ -65,15 +65,9 @@ export default theme => ({
     color: 'inherit',
     alignSelf: 'center',
   },
-  suggestionButton: {
-    margin: 0,
-    width: 'fit-content',
-    height: 42,
-    borderColor: '#fff',
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderRadius: 8,
-    marginTop: 12,
+  suggestionButtonContainer: {
+    display: 'flex',
+    margin: `${theme.spacing.unitDouble}px ${theme.spacing.unit}px`,
   },
   bold: {
     fontWeight: 'bold',

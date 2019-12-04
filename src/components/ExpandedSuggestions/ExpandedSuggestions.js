@@ -9,7 +9,7 @@ import { FormattedMessage, intlShape } from 'react-intl';
 import { getPreviousSearches } from '../SearchBar/previousSearchData';
 import createSuggestions from '../SearchBar/createSuggestions';
 import config from '../../../config';
-import ServiceMapButton from '../ServiceMapButton';
+import SMButton from '../ServiceMapButton';
 import SuggestionItem from '../ListItems/SuggestionItem';
 
 
@@ -173,16 +173,13 @@ const ExpandedSuggestions = (props) => {
               />
             ))}
           </List>
-          <ServiceMapButton
+          <SMButton
             role="link"
             className={classes.closeButton}
             onKeyDown={e => handleKeyPress(e)}
             onClick={() => closeExpandedSearch()}
-          >
-            <Typography variant="button">
-              <FormattedMessage id="search.closeExpand" />
-            </Typography>
-          </ServiceMapButton>
+            messageID="search.closeExpand"
+          />
         </>
       );
     } return null;
