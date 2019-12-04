@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import SearchBar from '../../components/SearchBar';
 import { MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import PaperButton from '../../components/PaperButton';
@@ -37,26 +37,27 @@ class HomeView extends React.Component {
 
     return (
       <div className={classes.buttonContainer}>
-        <PaperButton
-          disabled={disableCloseByServices}
-          text={<FormattedMessage id="home.buttons.closeByServices" />}
-          icon={getIcon('location', { className: classes.icon })}
-          link
-          onClick={() => {
-            if (disableCloseByServices) {
-              return;
-            }
-            const latLng = { lat: userLocation.latitude, lng: userLocation.longitude };
-            fetchAddress(latLng)
-              .then((data) => {
-                navigator.push('address', {
-                  municipality: data.street.municipality,
-                  street: getLocaleText(data.street.name),
-                  number: data.number,
+        {!disableCloseByServices && (
+          <PaperButton
+            text={<FormattedMessage id="home.buttons.closeByServices" />}
+            icon={getIcon('location', { className: classes.icon })}
+            link
+            onClick={() => {
+              if (disableCloseByServices) {
+                return;
+              }
+              const latLng = { lat: userLocation.latitude, lng: userLocation.longitude };
+              fetchAddress(latLng)
+                .then((data) => {
+                  navigator.push('address', {
+                    municipality: data.street.municipality,
+                    street: getLocaleText(data.street.name),
+                    number: data.number,
+                  });
                 });
-              });
-          }}
-        />
+            }}
+          />
+        )}
         <PaperButton
           text={<FormattedMessage id="home.buttons.services" />}
           icon={getIcon('serviceList', { className: classes.icon })}
@@ -82,8 +83,6 @@ class HomeView extends React.Component {
   }
 
   render() {
-    const { intl } = this.props;
-
     return (
       <>
         <SearchBar
@@ -171,14 +170,13 @@ kehitämme jatkuvasti saavutettavuutta ja käytettävyyttä.
 }
 
 
-export default injectIntl(HomeView);
+export default HomeView;
 
 // Typechecking
 HomeView.propTypes = {
   fetchUnits: PropTypes.func,
   setCurrentPage: PropTypes.func.isRequired,
   getLocaleText: PropTypes.func.isRequired,
-  intl: intlShape.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   toggleSettings: PropTypes.func.isRequired,

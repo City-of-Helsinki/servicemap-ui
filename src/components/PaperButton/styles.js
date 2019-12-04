@@ -7,7 +7,9 @@ export default theme => ({
   },
   iconButton: {
     flex: '1 0 auto',
-    padding: theme.spacing.unit,
+    height: 66,
+    padding: 0,
+    paddingLeft: theme.spacing.unit,
     paddingRight: theme.spacing.unitDouble,
     justifyContent: 'left',
     textAlign: 'left',
