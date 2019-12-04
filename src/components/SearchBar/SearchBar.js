@@ -151,6 +151,7 @@ class SearchBar extends React.Component {
           visible={showSuggestions}
           focusedSuggestion={focusedSuggestion}
           searchQuery={searchQuery}
+          handleArrowClick={value => this.onInputChange(value)}
           handleSubmit={this.handleSubmit}
           setSearch={value => this.setState({ search: value })}
           isMobile

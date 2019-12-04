@@ -17,6 +17,7 @@ const SuggestionBox = (props) => {
   const {
     visible,
     searchQuery,
+    handleArrowClick,
     handleSubmit,
     classes,
     focusedSuggestion,
@@ -107,7 +108,7 @@ const SuggestionBox = (props) => {
   const renderSearchHistory = () => (
     <>
       <PreviousSearches
-        handleArrowClick={suggestion => setSearch(suggestion)}
+        handleArrowClick={handleArrowClick}
         history={history}
         focusIndex={focusedSuggestion}
         listRef={listRef}
@@ -134,7 +135,6 @@ const SuggestionBox = (props) => {
 
   const renderSuggestionList = () => {
     const suggestionList = slicedSuggestions();
-    const handleArrowClick = setSearch ? suggestion => setSearch(suggestion) : null;
 
     if (suggestionList) {
       return (
@@ -238,6 +238,7 @@ const SuggestionBox = (props) => {
 SuggestionBox.propTypes = {
   visible: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   searchQuery: PropTypes.string,
+  handleArrowClick: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   focusedSuggestion: PropTypes.number,
