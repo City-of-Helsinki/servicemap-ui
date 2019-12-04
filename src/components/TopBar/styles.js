@@ -3,6 +3,15 @@ import config from '../../../config';
 const { topBarHeight, topBarHeightMobile } = config;
 
 const styles = () => ({
+  aligner: {
+    height: topBarHeight,
+  },
+  alignerMobile: {
+    height: topBarHeightMobile,
+  },
+  appBar: {
+    zIndex: 100,
+  },
   buttonLabel: {
     display: 'flex',
     flexDirection: 'column',
@@ -15,13 +24,9 @@ const styles = () => ({
   //   color: 'white',
   //   textDecorationColor: 'white',
   // },
-  homeLogoContainer: {
-    paddingTop: 8,
-    alignSelf: 'center',
-  },
   logo: {
-    marginLeft: 4,
-    marginRight: 16,
+    height: 29,
+    marginLeft: 16,
   },
   toolbarBlack: {
     minHeight: 28,
@@ -33,21 +38,40 @@ const styles = () => ({
   toolbarBlackContainer: {
     justifyContent: 'space-around',
     display: 'flex',
-    width: 450,
+    width: 300,
     color: '#fff',
   },
   greyText: {
     color: '#CCCBCB',
   },
+  settingsButton: {
+    textTransform: 'none',
+    alignItems: 'flex-start',
+    marginLeft: '3%',
+    marginRight: '3%',
+    borderRadius: 0,
+  },
+  settingsButtonPressed: {
+    textTransform: 'none',
+    alignItems: 'flex-start',
+    marginLeft: '3%',
+    marginRight: '3%',
+    marginBottom: -2,
+    borderBottom: '2px solid',
+    borderRadius: 0,
+  },
   toolbarWhite: {
+    width: '100%',
     height: 70,
     backgroundColor: '#fff',
+    zIndex: 100,
   },
   toolbarWhiteMobile: {
     minHeight: 60,
     height: 60,
     backgroundColor: '#fff',
     paddingRight: 0,
+    zIndex: 100,
   },
   toolbarButtonPressed: {
     width: 66,
@@ -67,62 +91,21 @@ const styles = () => ({
     marginLeft: 4,
     borderRadius: 0,
   },
+  iconTextContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  smallIcon: {
+    height: 14,
+    marginRight: 4,
+  },
   mobileButtonContainer: {
     marginLeft: 'auto',
   },
-  aligner: {
-    height: topBarHeight,
-  },
-  alignerMobile: {
-    height: topBarHeightMobile,
-  },
-  drawerContainer: {
-    top: topBarHeight,
-    backgroundColor: '#353638',
-    maxWidth: 350,
-    padding: 2,
-  },
-  drawerContainerMobile: {
-    top: topBarHeightMobile,
-    backgroundColor: '#353638',
-    maxWidth: 350,
-    padding: 2,
-  },
-  drawerButton: {
-    color: '#fff',
-    height: 80,
-    textTransform: 'none',
-    justifyContent: 'left',
-    textAlign: 'left',
-    paddingLeft: 25,
-    paddingRight: 25,
-    borderBottom: '1px solid rgba(255, 255, 255, 0.24)',
-    '&:active': {
-      backgroundColor: '#000',
-    },
-    '&:focus': {
-      outline: '2px solid transparent',
-      boxShadow: '0 0 0 2px #fff',
-      transition: 'all .4s ease-in-out',
-    },
-  },
-  drawerButtonText: {
-    lineHeight: '18px',
-    color: 'inherit',
-  },
-  drawerIcon: {
-    height: 40,
-    width: 40,
-    borderRadius: '50%',
-    backgroundColor: '#6C6C6C',
+  settingsButtonContainer: {
+    width: '70%',
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 25,
-    flexShrink: 0,
-  },
-  disabled: {
-    color: 'rgba(255, 255, 255, 0.55)',
   },
 });
 

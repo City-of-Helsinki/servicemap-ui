@@ -88,7 +88,7 @@ class HomeView extends React.Component {
       <>
         <SearchBar
           hideBackButton
-          placeholder={intl.formatMessage({ id: 'search.placeholder' })}
+          header
         />
         {
           this.renderNavigationOptions()

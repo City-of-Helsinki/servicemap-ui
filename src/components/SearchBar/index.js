@@ -8,15 +8,13 @@ import { fetchUnits } from '../../redux/actions/unit';
 // Listen to redux state
 const mapStateToProps = (state) => {
   const {
-    navigator, units, settings, user,
+    navigator, units,
   } = state;
   const { isFetching, previousSearch } = units;
   return {
     previousSearch,
     isFetching,
     navigator,
-    settings,
-    locale: user.locale,
   };
 };
 

@@ -1,49 +1,110 @@
-
 export default theme => ({
   root: {
+    color: theme.palette.primary.contrastText,
     display: 'flex',
     flexDirection: 'column',
+    backgroundColor: theme.palette.primary.main,
+    padding: theme.spacing.unitTriple,
+    paddingTop: 0,
+  },
+  mobileRoot: {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.primary.contrastText,
+    padding: `${theme.spacing.unit}px ${theme.spacing.unit}px`,
+    paddingTop: 0,
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    position: 'fixed',
+    zIndex: 101,
+    overflow: 'auto',
   },
   wrapper: {
-    flex: 1,
-    margin: theme.spacing.unit,
-    padding: theme.spacing.unitHalf,
-    transition: theme.transitions.create(['margin', 'padding'], {
-      easing: theme.transitions.easing.easeIn,
-      duration: theme.transitions.duration.complex,
-    }),
-    border: '1px solid gray',
+    flex: '0 1 auto',
   },
-  wrapperFocused: {
-    margin: 0,
-    // Margin is replaced with padding so height doesn't get affected
-    padding: theme.spacing.unit * 1.5,
-    transition: theme.transitions.create(['margin', 'padding'], {
-      duration: theme.transitions.duration.complex,
-    }),
+  mobileWrapper: {
+    flex: '0 1 auto',
+    display: 'flex',
+    flexDirection: 'column',
   },
   container: {
     alignItems: 'center',
     display: 'flex',
     flex: '0 0 auto',
+    backgroundColor: '#fff',
+    border: '1px solid #ACACAC',
+    borderTopLeftRadius: theme.spacing.unitHalf,
+    borderTopRightRadius: theme.spacing.unitHalf,
+  },
+  containerInactive: {
+    borderRadius: theme.spacing.unitHalf,
+  },
+  containerSticky: {
+    position: 'sticky',
+    top: 44,
+    zIndex: 1100,
+  },
+  darkBlue: {
+    color: '#2242C7',
+  },
+  infoText: {
+    backgroundColor: theme.palette.primary.main,
+    justifyContent: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    padding: `${theme.spacing.unit}px ${theme.spacing.unitHalf}px`,
+  },
+  infoTextSticky: {
+    position: 'sticky',
+    top: 0,
+    zIndex: 1100,
+    paddingTop: `${theme.spacing.unitDouble}px`,
   },
   input: {
     flex: '1 1 auto',
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    padding: theme.spacing.unit,
+    paddingLeft: theme.spacing.unit,
+    paddingRight: theme.spacing.unit,
+  },
+  inputFocused: {
+    paddingLeft: 0,
+    paddingRight: theme.spacing.unit,
   },
   iconButton: {
     flex: '0 1 auto',
     padding: theme.spacing.unit,
+    margin: theme.spacing.unitHalf,
+  },
+  iconButtonSearch: {
+    flex: '0 0 auto',
+    borderRadius: 0,
+    boxShadow: 'none',
+    padding: `${theme.spacing.unitHalf}px 0`,
+    textTransform: 'none',
+    '& svg': {
+      fontSize: 28,
+    },
+  },
+  iconButtonSearchLabel: {
+    flexDirection: 'column',
   },
   icon: {
     flex: '0 1 auto',
     padding: theme.spacing.unit,
   },
+  inputContainer: {
+    backgroundColor: '#fff',
+    display: 'flex',
+    flexDirection: 'column',
+    borderRadius: theme.spacing.unitHalf,
+  },
   sticky: {
     position: 'sticky',
-    zIndex: 50,
+    zIndex: 51,
+  },
+  headerText: {
+    fontWeight: 'bold',
+    margin: `${theme.spacing.unitTriple}px ${theme.spacing.unitHalf}px ${theme.spacing.unit}px ${theme.spacing.unitHalf}px`,
   },
   primary: {
     backgroundColor: theme.palette.primary.main,
@@ -56,22 +117,6 @@ export default theme => ({
   subtitleText: {
     lineHeight: '32px',
   },
-  suggestionArea: {
-    zIndex: 51,
-    position: 'fixed',
-    height: 'calc(100% - 64px - 76px)',
-    width: '450px',
-    backgroundColor: '#fff',
-    overflow: 'auto',
-  },
-  suggestionAreaMobile: {
-    zIndex: 51,
-    position: 'fixed',
-    height: 'calc(100% - 76px)',
-    width: '100%',
-    backgroundColor: '#fff',
-    overflow: 'auto',
-  },
   expandTitle: {
     alignSelf: 'center',
     marginRight: 'auto',
@@ -82,11 +127,13 @@ export default theme => ({
   },
   expandHeight: {
     top: 64,
-    height: 'calc(100% - 64px)',
+    height: '100%',
+    overflow: 'auto',
   },
   expandHeightMobile: {
     top: 0,
     height: '100%',
+    overflow: 'auto',
   },
   divider: {
     marginLeft: 56,
@@ -110,6 +157,11 @@ export default theme => ({
     width: '100%',
     backgroundColor: '#000',
   },
+  cancelButton: {
+    '& svg': {
+      fontSize: 14,
+    },
+  },
   closeButton: {
     margin: 0,
     width: 'fit-content',
@@ -125,7 +177,8 @@ export default theme => ({
     paddingRight: theme.spacing.unitDouble,
   },
   backIcon: {
-    paddingLeft: 0,
-    paddingRight: theme.spacing.unitDouble,
+    padding: theme.spacing.unit,
+    color: '#757575',
+    marginLeft: theme.spacing.unit,
   },
 });

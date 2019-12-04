@@ -1,30 +1,62 @@
 import React from 'react';
 
 import PropTypes from 'prop-types';
-import { InputBase, Paper, IconButton } from '@material-ui/core';
-import { Search } from '@material-ui/icons';
-import { intlShape } from 'react-intl';
+import {
+  InputBase, Paper, Typography, Button, IconButton, Divider,
+} from '@material-ui/core';
+import {
+  Search, Cancel,
+} from '@material-ui/icons';
+import { intlShape, FormattedMessage } from 'react-intl';
 import BackButton from '../BackButton';
 import { keyboardHandler } from '../../utils';
 import SuggestionBox from './components/SuggestionBox';
+import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 
 class SearchBar extends React.Component {
   blurDelay = 150;
 
+  blurTimeout = null;
+
+  searchRef = null;
+
   constructor(props) {
     super(props);
-    const { previousSearch } = props;
+    const { initialValue, previousSearch } = props;
+
+    this.searchRef = React.createRef();
 
     this.state = {
-      search: previousSearch,
+      search: initialValue || previousSearch || '',
+      searchQuery: '',
       isActive: false,
       focusedSuggestion: null,
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { initialValue } = nextProps;
+    // eslint-disable-next-line react/destructuring-assignment
+    const oldInitialValue = this.props.initialValue;
+
+    if (oldInitialValue !== initialValue) {
+      this.setState({ search: initialValue });
+    }
+    return true;
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.blurTimeout);
+  }
+
+  setInactive = () => {
+    this.setState({ isActive: false, focusedSuggestion: null });
+  }
+
   onInputChange = (e) => {
     const query = typeof e === 'string' ? e : e.currentTarget.value;
-    this.setState({ search: query, focusedSuggestion: null });
+    const searchQuery = query[query.length - 1] === ' ' ? query.slice(0, -1) : query;
+    this.setState({ search: query, focusedSuggestion: null, searchQuery });
   }
 
   keyHandler = (e) => {
@@ -32,6 +64,9 @@ class SearchBar extends React.Component {
     const list = document.getElementsByClassName('suggestionList')[0];
     if (e.keyCode === 40 || e.keyCode === 38) {
       e.preventDefault();
+      if (!list || !list.children || !list.children.length) {
+        return;
+      }
       // TODO: fix calculation on next line when dividers are excluded from lists
       const listEnd = (list.children.length + 1) / 2 - 1;
       const increment = e.keyCode === 40;
@@ -64,163 +99,283 @@ class SearchBar extends React.Component {
   }
 
   handleSubmit = (search) => {
-    const { isFetching, closeExpandedSearch } = this.props;
+    const { isFetching } = this.props;
     if (!isFetching && search && search !== '') {
       const {
         fetchUnits, navigator, previousSearch,
       } = this.props;
+      this.setInactive();
+
+      if (search !== previousSearch) {
+        this.setState({ search }); // Change current search text to new one
+        fetchUnits(search);
+      }
+
       if (navigator) {
         navigator.push('search', { query: search });
       }
-
-      if (search !== previousSearch) {
-        fetchUnits(search);
-      }
     }
-    this.setState({ isActive: false, focusedSuggestion: null });
-    closeExpandedSearch();
   }
 
   handleBlur = () => {
-    const { closeExpandedSearch } = this.props;
-    setTimeout(() => {
-      this.setState({ isActive: false });
-      closeExpandedSearch();
+    this.blurTimeout = setTimeout(() => {
+      this.setInactive();
+      clearTimeout(this.blurTimeout);
     }, this.blurDelay);
   }
 
   suggestionBackEvent = () => {
-    const { closeExpandedSearch } = this.props;
-    this.setState({ isActive: false });
-    closeExpandedSearch();
+    this.setInactive();
   };
 
   activateSearch = () => {
-    const { closeExpandedSearch } = this.props;
     const { search } = this.state;
     if (search) {
       this.onInputChange(search);
     }
     this.setState({ isActive: true });
-    closeExpandedSearch();
   }
 
-  render() {
+  renderSuggestionBox = () => {
+    const { searchQuery, isActive, focusedSuggestion } = this.state;
+
+    const showSuggestions = isActive;
+    if (!showSuggestions) {
+      return null;
+    }
+
+    return (
+      <>
+        <Divider aria-hidden />
+        <SuggestionBox
+          visible={showSuggestions}
+          focusedSuggestion={focusedSuggestion}
+          searchQuery={searchQuery}
+          handleArrowClick={value => this.onInputChange(value)}
+          handleSubmit={this.handleSubmit}
+          setSearch={value => this.setState({ search: value })}
+          isMobile
+        />
+      </>
+    );
+  }
+
+  renderInput = (isMobile = false) => {
     const {
-      backButtonEvent,
       classes,
-      className,
-      intl,
-      isSticky,
-      placeholder,
-      previousSearch,
       hideBackButton,
-      searchRef,
-      primary,
-      expandSearch,
-      closeExpandedSearch,
-      srHideInput,
-      settings,
-      locale,
+      intl,
+      previousSearch,
     } = this.props;
-    const { search, isActive, focusedSuggestion } = this.state;
+    const { search, isActive } = this.state;
 
     const previousSearchText = typeof previousSearch === 'string' ? previousSearch : null;
+    const backButtonEvent = isActive && isMobile
+      ? () => {
+        this.setInactive();
+      }
+      : null;
 
-    const showSuggestions = isActive || expandSearch;
+    // Style classes
+    const backButtonStyles = `${classes.iconButton} ${classes.darkBlue}`;
+    const showSuggestions = isActive;
     const inputValue = typeof search === 'string' ? search : previousSearchText;
-    const rootClasses = `${classes.root} ${typeof isSticky === 'number' ? classes.sticky : ''} ${primary ? classes.primary : ''}  ${className}`;
-    const wrapperClasses = `${classes.wrapper} ${showSuggestions ? classes.wrapperFocused : ''}`;
+    const containerStyles = `${isActive ? classes.containerSticky : classes.containerInactive} ${classes.container}`;
+
+    return (
+      <form onSubmit={this.onSubmit} className={containerStyles} autoComplete="off">
+        {
+          (!hideBackButton || (isActive && isMobile))
+          && (
+            <BackButton
+              className={backButtonStyles}
+              onClick={backButtonEvent}
+              variant="icon"
+              srHidden={!!hideBackButton}
+            />
+          )
+        }
+        <InputBase
+          inputProps={{
+            role: 'combobox',
+            type: 'text',
+            'aria-haspopup': !!showSuggestions,
+            'aria-label': intl.formatMessage({ id: 'search.searchField' }),
+          }}
+          inputRef={(ref) => { this.searchRef = ref; }}
+          className={classes.input}
+          value={inputValue || ''}
+          onChange={this.onInputChange}
+          onFocus={this.activateSearch}
+          onKeyDown={e => keyboardHandler(this.keyHandler(e), ['up, down'])}
+          onBlur={this.handleBlur}
+          endAdornment={
+            inputValue
+            && inputValue !== ''
+            && (
+              <IconButton
+                aria-label={intl.formatMessage({ id: 'search.cancelText' })}
+                className={classes.cancelButton}
+                onClick={() => {
+                  if (this.searchRef) {
+                    // Clear blur timeout to keep suggestion box active
+                    clearTimeout(this.blurTimeout);
+                    this.searchRef.focus();
+                  }
+                  this.setState({ search: '', searchQuery: '' });
+                }}
+              >
+                <Cancel />
+              </IconButton>
+            )
+          }
+        />
+
+        <Button
+          aria-label={intl.formatMessage({ id: 'search' })}
+          type="submit"
+          className={classes.iconButtonSearch}
+          classes={{
+            label: classes.iconButtonSearchLabel,
+          }}
+          color="secondary"
+          variant="contained"
+        >
+          <Search />
+          <Typography variant="caption" color="inherit"><FormattedMessage id="general.search" /></Typography>
+        </Button>
+      </form>
+    );
+  }
+
+  renderText = (isMobile = false) => {
+    const {
+      classes,
+    } = this.props;
+    const { isActive } = this.state;
+
+    const textClasses = `${classes.infoText} ${isActive && isMobile ? classes.infoTextSticky : ''}`;
+
+    return (
+      <Typography align="left" className={textClasses} color="inherit" variant="body2"><FormattedMessage id="search.searchbar.infoText" /></Typography>
+    );
+  }
+
+  renderHeaderText = (isMobile = false) => {
+    const { isActive } = this.state;
+    const { classes, header } = this.props;
+    if (!header || (isMobile && isActive)) {
+      return null;
+    }
+    return (
+      <Typography align="left" className={classes.headerText} variant="h5" component="p" color="inherit"><FormattedMessage id="search.searchbar.headerText" /></Typography>
+    );
+  }
+
+  renderMobile = () => {
+    const {
+      classes,
+      className,
+      isSticky,
+      primary,
+      srHideInput,
+    } = this.props;
+    const { isActive } = this.state;
+
+    const rootClasses = `${isActive ? classes.mobileRoot : classes.root} ${!isActive && typeof isSticky === 'number' ? classes.sticky : ''} ${primary ? classes.primary : ''}  ${className}`;
+    const wrapperClasses = `${isActive ? classes.mobileWrapper : classes.wrapper}`;
     const stickyStyles = typeof isSticky === 'number' ? { top: isSticky } : null;
 
     return (
       <>
         <div aria-hidden={srHideInput} className={rootClasses} style={stickyStyles}>
-          <Paper className={wrapperClasses} elevation={1} square>
-            <form onSubmit={this.onSubmit} className={classes.container} autoComplete="off">
-              {
-              (!hideBackButton || showSuggestions)
-              && <BackButton className={classes.iconButton} onClick={showSuggestions ? this.suggestionBackEvent : backButtonEvent || null} variant="icon" srHidden={!!hideBackButton} />
+          {
+            this.renderHeaderText(true)
+          }
+          <div className={wrapperClasses}>
+            {
+              this.renderText(true)
             }
-              <InputBase
-                inputProps={{
-                  role: 'combobox',
-                  type: 'text',
-                  'aria-haspopup': !!showSuggestions,
-                  'aria-label': intl.formatMessage({ id: 'search.searchField' }),
-                }}
-                inputRef={searchRef}
-                className={classes.input}
-                placeholder={placeholder}
-                value={inputValue || ''}
-                onChange={this.onInputChange}
-                onFocus={this.activateSearch}
-                onKeyDown={e => keyboardHandler(this.keyHandler(e), ['up, down'])}
-                onBlur={this.handleBlur}
-              />
+            <div className={classes.inputContainer}>
+              {
+                this.renderInput(true)
+              }
+              {
+                this.renderSuggestionBox()
+              }
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  }
 
-              <IconButton
-                aria-label={intl.formatMessage({ id: 'search' })}
-                type="submit"
-                className={classes.icon}
-              >
-                <Search />
-              </IconButton>
-            </form>
-          </Paper>
-        </div>
-        <div className={`${classes.primary} ${classes.root}`}>
-          <SuggestionBox
-            visible={showSuggestions}
-            focusedSuggestion={focusedSuggestion}
-            searchQuery={search || (searchRef.current && searchRef.current.value) || null}
-            expandQuery={expandSearch}
-            classes={classes}
-            intl={intl}
-            handleSubmit={this.handleSubmit}
-            setSearch={value => this.setState({ search: value })}
-            closeExpandedSearch={closeExpandedSearch}
-            settings={settings}
-            locale={locale}
-          />
-        </div>
+  render() {
+    const {
+      classes,
+      className,
+      isSticky,
+      primary,
+      srHideInput,
+    } = this.props;
+
+    const rootClasses = `${classes.root} ${typeof isSticky === 'number' ? classes.sticky : ''} ${primary ? classes.primary : ''}  ${className}`;
+    const wrapperClasses = classes.wrapper;
+    const stickyStyles = typeof isSticky === 'number' ? { top: isSticky } : null;
+
+    return (
+      <>
+        <MobileComponent>
+          {this.renderMobile()}
+        </MobileComponent>
+        <DesktopComponent>
+          <div aria-hidden={srHideInput} className={rootClasses} style={stickyStyles}>
+            {
+              this.renderHeaderText()
+            }
+            {
+              this.renderText()
+            }
+            <Paper className={wrapperClasses} elevation={1} square>
+              {
+                this.renderInput()
+              }
+              {
+                this.renderSuggestionBox()
+              }
+            </Paper>
+          </div>
+        </DesktopComponent>
       </>
     );
   }
 }
 
 SearchBar.propTypes = {
-  backButtonEvent: PropTypes.func,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   className: PropTypes.string,
   fetchUnits: PropTypes.func.isRequired,
+  header: PropTypes.bool,
   hideBackButton: PropTypes.bool,
   navigator: PropTypes.objectOf(PropTypes.any),
+  initialValue: PropTypes.string,
   intl: intlShape.isRequired,
   isSticky: PropTypes.number,
   isFetching: PropTypes.bool.isRequired,
-  placeholder: PropTypes.string.isRequired,
-  searchRef: PropTypes.objectOf(PropTypes.any),
   previousSearch: PropTypes.string,
-  expandSearch: PropTypes.string,
   primary: PropTypes.bool,
-  closeExpandedSearch: PropTypes.func,
   srHideInput: PropTypes.bool,
-  settings: PropTypes.objectOf(PropTypes.any).isRequired,
-  locale: PropTypes.string.isRequired,
 };
 
 SearchBar.defaultProps = {
   previousSearch: null,
-  backButtonEvent: null,
   className: '',
+  header: false,
   hideBackButton: false,
+  initialValue: null,
   isSticky: null,
   navigator: null,
-  searchRef: {},
-  expandSearch: null,
   primary: false,
-  closeExpandedSearch: (() => {}),
   srHideInput: false,
 };
 

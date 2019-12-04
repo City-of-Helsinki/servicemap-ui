@@ -33,6 +33,7 @@ const createContentStyles = (
       display: 'flex',
       flexWrap: 'nowrap',
       height: isMobile ? '100%' : `calc(100vh - ${topBarHeight})`,
+      flex: '1 1 auto',
     },
     map: {
       position: isMobile ? 'fixed' : null,
@@ -82,6 +83,13 @@ const DefaultLayout = (props) => {
     isMobile, isSmallScreen, landscape, mobileMapOnly, fullMobileMap, settingsToggled,
   );
 
+  const setSettingsPage = (type) => {
+    if (!type || type === settingsToggled) {
+      toggleSettings(null);
+    } else {
+      toggleSettings(type);
+    }
+  };
 
   return (
     <>
@@ -93,11 +101,11 @@ const DefaultLayout = (props) => {
       <a href="#view-title" className="sr-only">
         <FormattedMessage id="general.skipToContent" />
       </a>
-      <TopBar settingsOpen={settingsToggled} toggleSettings={type => (!type || type === settingsToggled ? toggleSettings(false) : toggleSettings(type))} i18n={i18n} />
+      <TopBar settingsOpen={settingsToggled} toggleSettings={type => setSettingsPage(type)} smallScreen={isSmallScreen} i18n={i18n} />
       <div style={styles.activeRoot}>
         <main className="SidebarWrapper" style={styles.sidebar}>
           {settingsToggled ? (
-            <Settings toggleSettings={() => toggleSettings(false)} isMobile={!!isMobile} />
+            <Settings key={settingsToggled} toggleSettings={() => setSettingsPage()} isMobile={!!isMobile} />
           ) : (
             <Sidebar />
           )}
@@ -125,12 +133,13 @@ DefaultLayout.propTypes = {
   i18n: PropTypes.instanceOf(I18n),
   intl: intlShape.isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
-  settingsToggled: PropTypes.bool.isRequired,
+  settingsToggled: PropTypes.string,
   toggleSettings: PropTypes.func.isRequired,
 };
 
 DefaultLayout.defaultProps = {
   i18n: null,
+  settingsToggled: null,
 };
 
 export default injectIntl(DefaultLayout);

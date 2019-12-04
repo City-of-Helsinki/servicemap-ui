@@ -4,33 +4,27 @@ const { topBarHeight } = config;
 
 export default theme => ({
   alert: {
-    backgroundColor: '#000',
+    backgroundColor: '#353638',
     color: '#fff',
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    alignItems: 'center',
+    height: 57,
     top: 0,
     position: 'sticky',
     zIndex: 20,
     borderRadius: 0,
     padding: 0,
+    paddingLeft: 46,
+    paddingRight: theme.spacing.unitDouble,
     margin: 0,
   },
-  alertColor: {
-    color: 'rgba(87,186,255, 1)',
-  },
   alertText: {
-    textAlign: 'left',
-    padding: theme.spacing.unitDouble,
-  },
-  bold: {
     fontWeight: 'bold',
   },
   button: {
     textTransform: 'none',
-  },
-  buttonActive: {
-    backgroundColor: theme.palette.primary.light,
+    fontSize: 12,
   },
   buttonLabel: {
     display: 'flex',
@@ -39,24 +33,24 @@ export default theme => ({
   checkbox: {
     padding: theme.spacing.unit,
   },
-  confirmationButton: {
-    flex: '0 0 auto',
-  },
   confirmationButtonContainer: {
     display: 'flex',
-    justifyContent: 'flex-end',
     flexDirection: 'row',
-    margin: 0,
-    paddingTop: 0,
-    paddingBottom: theme.spacing.unit,
-    paddingLeft: theme.spacing.unit,
-    paddingRight: theme.spacing.unit,
+    padding: '16px 0px 16px 46px',
   },
-  confirmationText: {
-    textAlign: 'left',
-    paddingTop: theme.spacing.unitDouble,
-    paddingLeft: theme.spacing.unitDouble,
-    paddingRight: theme.spacing.unitDouble,
+  confirmationButton: {
+    height: 32,
+    minWidth: 52,
+    marginRight: 16,
+    padding: 8,
+  },
+  primary: {
+    color: '#fff',
+    backgroundColor: '#1964E6',
+  },
+  secondary: {
+    color: '#000',
+    border: '1px solid',
   },
   contentButton: {
     marginBottom: theme.spacing.unitDouble,
@@ -64,6 +58,9 @@ export default theme => ({
   },
   flexBase: {
     flex: '0 0 auto',
+  },
+  formContainer: {
+    paddingLeft: 38,
   },
   titleContainer: {
     alignItems: 'center',
@@ -87,9 +84,6 @@ export default theme => ({
   container: {
     backgroundColor: '#fff',
   },
-  fixedMargin: {
-    marginTop: 60,
-  },
   hidden: {
     display: 'none',
   },
@@ -107,6 +101,17 @@ export default theme => ({
   noMargin: {
     margin: 0,
   },
+  pageTitleContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    height: 57,
+    paddingLeft: 46,
+    background: 'linear-gradient(to right, #1964E6, #146CE8, #0B7BED)',
+  },
+  pageTitleText: {
+    fontSize: 18,
+    color: '#fff',
+  },
   radioGroup: {
     padding: 0,
     margin: 0,
@@ -118,7 +123,11 @@ export default theme => ({
   },
   stickyContainer: {
     backgroundColor: '#fff',
-    display: 'block',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: 57,
+    paddingLeft: 46,
     top: 0,
     position: 'sticky',
     zIndex: 20,
@@ -128,5 +137,12 @@ export default theme => ({
   },
   stickyMobile: {
     top: topBarHeight,
+  },
+  disabled: {
+    backgroundColor: 'rgba(0, 0, 0, 0.12)',
+    color: 'rgba(0, 0, 0, 0.26)',
+  },
+  right: {
+    marginLeft: 'auto',
   },
 });

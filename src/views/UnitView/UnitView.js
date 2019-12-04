@@ -152,9 +152,7 @@ class UnitView extends React.Component {
             onClick={(e) => {
               e.preventDefault();
               this.setState({ centered: false });
-              if (navigator) {
-                navigator.push('unit', { id: unit.id, query: '?map=true' });
-              }
+              navigator.openMap();
             }}
           >
             <FormattedMessage id="general.showOnMap" />
@@ -241,7 +239,7 @@ class UnitView extends React.Component {
     const TopBar = (
       <div className={`${classes.topBar} sticky`}>
         <DesktopComponent>
-          <SearchBar placeholder={intl.formatMessage({ id: 'search.placeholder' })} />
+          <SearchBar />
           <TitleBar icon={icon} title={title} primary distance={distance} />
         </DesktopComponent>
         <MobileComponent>

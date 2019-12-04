@@ -23,7 +23,7 @@ const mapStateToProps = (state) => {
   const userLocation = state.user.position.coordinates;
   const getLocaleText = textObject => getLocaleString(state, textObject);
   const { navigator } = state;
-  const { addressTitle, addressUnits } = state.address;
+  const { addressUnits } = state.address;
   return {
     highlightedDistrict,
     highlightedUnit,
@@ -35,7 +35,6 @@ const mapStateToProps = (state) => {
     userLocation,
     settings,
     navigator,
-    addressTitle,
     addressUnits,
   };
 };

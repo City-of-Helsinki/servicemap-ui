@@ -69,6 +69,8 @@ export default {
   'general.backToStart': 'Back to beginning of page',
   'general.cancel': 'Cancel',
   'general.close': 'Close',
+  'general.yes': 'Yes',
+  'general.no': 'No',
   'general.closeSettings': 'Close settings',
   'general.fetching': 'Loading data...',
   'general.home': 'Home',
@@ -98,9 +100,10 @@ export default {
   'general.new.tab': 'Opens in new tab',
   'general.time.short': 'at',
   'general.save': 'Save',
-  'general.save.changes': 'Save changes',
+  'general.save.changes': 'Save settings',
   'general.save.changes.done': 'Changes have been saved!',
   'general.save.confirmation': 'Would you like to save changes?',
+  'general.search': 'Search',
   'general.distance.meters': 'Meters away',
   'general.distance.kilometers': 'Kilometers away',
 
@@ -189,6 +192,8 @@ export default {
 
   // Search
   'search': 'Search',
+  'search.arrowLabel': 'Expand', // TODO verify
+  'search.cancelText': 'Clear search text',
   'search.notFoundWith': 'No results for search "{query}".',
   'search.placeholder': 'Search for services or units',
   'search.info': `{count, plural,
@@ -231,6 +236,8 @@ export default {
   'search.started': 'Search started',
   'search.infoText': 'Showing {count} results for search query: ',
   'search.infoTextNode': 'Showing {count} results for services: ',
+  'search.searchbar.headerText': 'Pääkaupunkiseudun kaikki julkiset palvelut ulottuvillasi', // TODO: Translate
+  'search.searchbar.infoText': 'Search for services, units or addresses', // TODO: Verify
   'search.suggestions.suggest': 'Did you mean..?',
   'search.suggestions.expand': 'Search suggestions',
   'search.suggestions.loading': 'Loading suggestions',
@@ -259,6 +266,17 @@ export default {
 
   // Settings
   'settings': 'Settings',
+  'settings.citySettings': 'City',
+  'settings.citySettings.long': 'City settings',
+  'settings.mapSettings': 'Map setttings',
+  'settings.mapSettings.long': 'Map setttings',
+  'settings.accessibilitySettings': 'Accessibility settings',
+  'settings.accessibilitySettings.long': 'Accessibility settings',
+  'settings.all.long': 'Settings',
+  'settings.amount': `{count, plural,
+    one {# chosen}
+    other {# chosen}
+  }`,
   'settings.accessibility': 'My accessibility settings',
   'settings.sense.title': 'Hearing and sight',
   'settings.sense.hearing': 'I use a hearing aid',
