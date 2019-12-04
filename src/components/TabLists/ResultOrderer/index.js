@@ -13,7 +13,7 @@ const mapStateToProps = (state) => {
   return {
     direction,
     order,
-    userLocation: position,
+    userLocation: position.coordinates,
   };
 };
 

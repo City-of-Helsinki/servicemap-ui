@@ -8,6 +8,7 @@ import {
 } from '@material-ui/core';
 import { ArrowUpward } from '@material-ui/icons';
 import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
+import { intlShape } from 'react-intl';
 import config from '../../../../config';
 import BoldedText from '../../../utils/BoldedText';
 
@@ -20,6 +21,7 @@ const SuggestionItem = (props) => {
     handleItemClick,
     handleArrowClick,
     icon,
+    intl,
     link,
     selected,
     srText,
@@ -102,10 +104,11 @@ const SuggestionItem = (props) => {
           </ListItemText>
         </span>
         {
-          handleArrowClick
+          isMobile
+          && handleArrowClick
           && (
             <Button
-              aria-hidden
+              aria-label={intl.formatMessage({ id: 'search.arrowLabel' })}
               className={`${classes.suggestIcon} ${link ? classes.link : null}`}
               classes={{
                 label: classes.suggestIconLabel,
@@ -139,6 +142,7 @@ SuggestionItem.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   text: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
   srText: PropTypes.string,
+  intl: intlShape.isRequired,
   link: PropTypes.bool,
   icon: PropTypes.objectOf(PropTypes.any),
   handleArrowClick: PropTypes.func,

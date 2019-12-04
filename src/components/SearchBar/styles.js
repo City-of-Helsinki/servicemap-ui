@@ -43,7 +43,7 @@ export default theme => ({
   },
   containerSticky: {
     position: 'sticky',
-    top: 36,
+    top: 44,
     zIndex: 1100,
   },
   darkBlue: {
@@ -78,6 +78,7 @@ export default theme => ({
   iconButtonSearch: {
     flex: '0 0 auto',
     borderRadius: 0,
+    boxShadow: 'none',
     padding: `${theme.spacing.unitHalf}px 0`,
     textTransform: 'none',
     '& svg': {

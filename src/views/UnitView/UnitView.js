@@ -375,7 +375,7 @@ const mapStateToProps = (state) => {
     map,
     navigator,
     reservations,
-    userLocation: user.position,
+    userLocation: user.position.coordinates,
   };
 };
 
