@@ -90,7 +90,6 @@ class SearchView extends React.Component {
   shouldFetch = (props) => {
     const { isFetching, previousSearch } = props || this.props;
     const searchParam = this.getSearchParam(props);
-    console.log(previousSearch, 'vs', searchParam.query);
     if (previousSearch && searchParam && searchParam.type === 'node') {
       return !isFetching && searchParam && searchParam.query !== previousSearch.searchQuery;
     }
