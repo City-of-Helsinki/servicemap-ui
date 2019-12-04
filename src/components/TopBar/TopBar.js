@@ -3,15 +3,18 @@ import PropTypes from 'prop-types';
 import {
   Button, Typography, AppBar, Toolbar, ButtonBase, NoSsr,
 } from '@material-ui/core';
-import { Map, Menu } from '@material-ui/icons';
+import { Map, Menu, Close } from '@material-ui/icons';
 import { FormattedMessage } from 'react-intl';
 import I18n from '../../i18n';
 import HomeLogo from '../Logos/HomeLogo';
 import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import { getIcon } from '../SMIcon';
-
+import fetchAddress from '../../views/MapView/utils/fetchAddress';
+import DrawerMenu from '../DrawerMenu';
 
 class TopBar extends React.Component {
+  state={ drawerOpen: false }
+
   renderSettingsButtons = () => {
     const {
       settingsOpen, classes, toggleSettings, settings,
@@ -72,22 +75,23 @@ class TopBar extends React.Component {
 
   renderMapButton = () => {
     const {
-      classes, navigator, location, settingsOpen, toggleSettings,
+      classes, navigator, location, settingsOpen, toggleSettings, breadcrumb,
     } = this.props;
-    const mapPage = location.pathname.indexOf('/map') > -1;
+    const mapPage = location.search.indexOf('map=true') > -1;
     return (
       <Button
-        className={mapPage ? classes.iconButtonPressed : classes.iconButton}
+        aria-hidden
+        className={mapPage ? classes.toolbarButtonPressed : classes.toolbarButton}
         classes={{ label: classes.buttonLabel }}
         onClick={(e) => {
           e.preventDefault();
           if (settingsOpen) {
             toggleSettings();
-            navigator.push('map');
-          } else if (mapPage) {
-            navigator.goBack('home');
+          }
+          if (mapPage) {
+            navigator.closeMap(breadcrumb.length ? 'replace' : null);
           } else {
-            navigator.push('map');
+            navigator.openMap();
           }
         }}
       >
@@ -101,15 +105,28 @@ class TopBar extends React.Component {
 
   renderMenuButton = () => {
     const { classes } = this.props;
+    const { drawerOpen } = this.state;
     return (
       <Button
-        className={classes.iconButton}
+        className={drawerOpen ? classes.toolbarButtonPressed : classes.toolbarButton}
         classes={{ label: classes.buttonLabel }}
+        onClick={() => this.toggleDrawerMenu()}
       >
-        <Menu />
-        <Typography color="inherit" variant="body2">
-          <FormattedMessage id="general.menu" />
-        </Typography>
+        {drawerOpen ? (
+          <>
+            <Close />
+            <Typography color="inherit" variant="body2">
+              <FormattedMessage id="general.close" />
+            </Typography>
+          </>
+        ) : (
+          <>
+            <Menu />
+            <Typography color="inherit" variant="body2">
+              <FormattedMessage id="general.menu" />
+            </Typography>
+          </>
+        )}
       </Button>
     );
   }
@@ -140,18 +157,74 @@ class TopBar extends React.Component {
     );
   }
 
-  navigateHome = () => {
-    const { currentPage, navigator, toggleSettings } = this.props;
+  renderDrawerMenu = (pageType) => {
+    const { drawerOpen } = this.state;
+    const { toggleSettings, settingsOpen } = this.props;
+    return (
+      <DrawerMenu
+        isOpen={drawerOpen}
+        pageType={pageType}
+        toggleDrawerMenu={this.toggleDrawerMenu}
+        toggleSettings={toggleSettings}
+        settingsOpen={settingsOpen}
+        handleNavigation={this.handleNavigation}
+      />
+    );
+  }
+
+  handleNavigation = (target, data) => {
+    const {
+      getLocaleText, navigator, currentPage, toggleSettings, location,
+    } = this.props;
+
+    // Hide settings and map if open
     toggleSettings();
-    const viewTitle = document.getElementById('view-title');
-    if (currentPage !== 'home') {
-      navigator.push('home');
-    } else if (viewTitle) {
-      viewTitle.focus();
+    if (location.search.indexOf('map=true') > -1) {
+      navigator.closeMap();
+    }
+
+    switch (target) {
+      case 'home':
+        if (currentPage !== 'home') {
+          navigator.push('home');
+        } else {
+          setTimeout(() => {
+            document.getElementById('view-title').focus();
+          }, 1);
+        }
+        break;
+
+      case 'address':
+        fetchAddress({ lat: data.latitude, lng: data.longitude })
+          .then((data) => {
+            navigator.push('address', {
+              municipality: data.street.municipality,
+              street: getLocaleText(data.street.name),
+              number: data.number,
+            });
+          });
+        break;
+
+      case 'services':
+        if (currentPage !== 'serviceTree') {
+          navigator.push('serviceTree');
+        }
+        break;
+
+      default:
+        break;
     }
   }
 
-  renderTopBar = (type) => {
+
+  toggleDrawerMenu = () => {
+    const { drawerOpen } = this.state;
+    setTimeout(() => {
+      this.setState({ drawerOpen: !drawerOpen });
+    }, 1);
+  }
+
+  renderTopBar = (pageType) => {
     const { classes, smallScreen } = this.props;
     return (
       <>
@@ -159,7 +232,7 @@ class TopBar extends React.Component {
           {/* Toolbar black area */}
           <Toolbar className={classes.toolbarBlack}>
             <div className={classes.toolbarBlackContainer}>
-              <ButtonBase role="link" onClick={() => this.navigateHome()}>
+              <ButtonBase role="link" onClick={() => this.handleNavigation('home')}>
                 <Typography color="inherit">
                   <FormattedMessage id="general.frontPage" />
                 </Typography>
@@ -175,15 +248,14 @@ class TopBar extends React.Component {
           </Toolbar>
 
           {/* Toolbar white area */}
-          <Toolbar className={type === 'mobile' ? classes.toolbarWhiteMobile : classes.toolbarWhite}>
-            <div className={classes.homeLogoContainer}>
-              <HomeLogo mobile={type === 'mobile'} dark aria-hidden="true" className={classes.logo} />
-            </div>
+          <Toolbar disableGutters className={pageType === 'mobile' ? classes.toolbarWhiteMobile : classes.toolbarWhite}>
+            <HomeLogo dark aria-hidden="true" className={classes.logo} />
             <MobileComponent>
               <div className={classes.mobileButtonContainer}>
                 {this.renderMapButton()}
-                {/* {this.renderMenuButton()} */}
+                {this.renderMenuButton()}
               </div>
+              {this.renderDrawerMenu(pageType)}
             </MobileComponent>
             <DesktopComponent>
               <NoSsr>
@@ -192,16 +264,19 @@ class TopBar extends React.Component {
                     { this.renderSettingsButtons()}
                   </div>
                 ) : (
-                  <div className={classes.mobileButtonContainer}>
-                    {/* {this.renderMenuButton()} */}
-                  </div>
+                  <>
+                    <div className={classes.mobileButtonContainer}>
+                      {this.renderMenuButton()}
+                    </div>
+                    {this.renderDrawerMenu(pageType)}
+                  </>
                 )}
               </NoSsr>
             </DesktopComponent>
           </Toolbar>
         </AppBar>
         {/* This empty toolbar fixes the issue where App bar hides the top page content */}
-        <Toolbar className={type === 'mobile' ? classes.alignerMobile : classes.aligner} />
+        <Toolbar className={pageType === 'mobile' ? classes.alignerMobile : classes.aligner} />
       </>
     );
   }
@@ -234,13 +309,15 @@ TopBar.propTypes = {
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
   toggleSettings: PropTypes.func.isRequired,
   currentPage: PropTypes.string.isRequired,
+  getLocaleText: PropTypes.func.isRequired,
+  breadcrumb: PropTypes.arrayOf(PropTypes.any).isRequired,
   smallScreen: PropTypes.bool.isRequired,
 };
 
 TopBar.defaultProps = {
   i18n: null,
   navigator: null,
-  settingsOpen: false,
+  settingsOpen: null,
 };
 
 export default TopBar;

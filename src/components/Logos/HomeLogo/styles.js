@@ -3,9 +3,7 @@ export default () => ({
     height: 36,
   },
   iconDark: {
-    marginTop: 12,
-    marginBottom: 12,
-    height: 45,
+    height: 'inherit',
   },
   iconMobile: {
     height: 40,

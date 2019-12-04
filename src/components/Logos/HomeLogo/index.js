@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core';
 import logoLight from '../../../assets/images/service-map-logo-nega-fi_TEST.svg';
-import logoDark from '../../../assets/images/service-map-logo-fi_TEST.svg';
+import logoDark from '../../../assets/images/service-map-logo-fi.svg';
 // import logoMobile from '../../../assets/images/service-map-logo-nega-mobile.svg';
 import styles from './styles';
 

@@ -151,6 +151,7 @@ class SearchBar extends React.Component {
           visible={showSuggestions}
           focusedSuggestion={focusedSuggestion}
           searchQuery={searchQuery}
+          handleArrowClick={value => this.onInputChange(value)}
           handleSubmit={this.handleSubmit}
           setSearch={value => this.setState({ search: value })}
           isMobile
@@ -216,7 +217,7 @@ class SearchBar extends React.Component {
                 aria-label={intl.formatMessage({ id: 'search.cancelText' })}
                 className={classes.cancelButton}
                 onClick={() => {
-                  if (isActive && this.searchRef) {
+                  if (this.searchRef) {
                     // Clear blur timeout to keep suggestion box active
                     clearTimeout(this.blurTimeout);
                     this.searchRef.focus();

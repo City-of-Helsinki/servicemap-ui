@@ -10,7 +10,7 @@ const direction = state => state.sort.direction;
 const order = state => state.sort.order;
 const locale = state => state.user.locale;
 const settings = state => state.settings;
-const userLocation = state => state.user.position;
+const userLocation = state => state.user.position.coordinates;
 
 const getOrderedData = (data, direction, order, locale, settings, userLocation) => {
   if (!data) {

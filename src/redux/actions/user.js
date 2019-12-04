@@ -34,14 +34,20 @@ export const setCurrentPage = page => async (dispatch) => {
 export const findUserLocation = () => async (dispatch) => {
   const success = (position) => {
     if (position.coords.accuracy < 10000) {
-      dispatch(setUserPosition(position.coords));
+      dispatch(setUserPosition({ coordinates: position.coords, allowed: true }));
     } else {
       console.warn(`Position accuracy: ${position.coords.accuracy}. Max accuracy: 10000`);
+      dispatch(setUserPosition({ coordinates: null, allowed: true }));
     }
   };
 
   const error = (err) => {
     console.warn(`GeoLocation error:(${err.code}): ${err.message}`);
+    if (err.code === 1) {
+      dispatch(setUserPosition({ coordinates: null, allowed: false }));
+    } else {
+      dispatch(setUserPosition({ coordinates: null, allowed: true }));
+    }
   };
 
   navigator.geolocation.getCurrentPosition(success, error);

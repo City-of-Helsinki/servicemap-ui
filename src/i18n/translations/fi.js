@@ -80,9 +80,9 @@ export default {
   'general.pageTitles.search': 'Hakutulosnäkymä',
   'general.pageTitles.unit': 'Toimipistenäkymä',
   'general.pageTitles.service': 'Palvelunäkymä',
+  'general.pageTitles.serviceTree': 'Palveluluettelo',
   'general.pageTitles.event': 'Tapahtumanäkymä',
   'general.pageTitles.address': 'Osoitenäkymä',
-  'general.pageTitles.list.services': 'Palvelulista ',
   'general.pageTitles.list.events': 'Tapahtumalista ',
   'general.pageTitles.list.reservations': 'Varauslista',
   // General - Pagination
@@ -107,13 +107,17 @@ export default {
   'general.distance.kilometers': 'Kilometrin päässä',
 
   // Home
-  'home.buttons.settings': 'Esteettömyys ja kaupunki asetukset',
-  'home.buttons.services': 'Kaikki palvelut',
+  'home.buttons.settings': 'Kaupunki-, kartta- ja esteettömyysasetukset',
+  'home.buttons.services': 'Palveluluettelo',
   'home.buttons.closeByServices': 'Lähellä olevat palvelut',
   'home.example.title': 'Esimerkkihakuja',
   'home.example.search': 'Hae hakusanalla',
   'home.message': 'Terveisiä palvelukartan kehittäjiltä',
   'home.send.feedback': 'Lähetä palautetta',
+
+  // Location
+  'location.notFound': 'Sijaintia ei löytynyt',
+  'location.notAllowed': 'Sijaintia ei sallittu',
 
   // Map
   'map': 'Kartta',
@@ -184,6 +188,7 @@ export default {
 
   // Search
   'search': 'Hae',
+  'search.arrowLabel': 'Tarkenna',
   'search.cancelText': 'Tyhjennä hakukenttä',
   'search.notFoundWith': 'Ei osumia haulle "{query}".',
   'search.placeholder': 'Hae palvelua tai toimipistettä',
