@@ -3,7 +3,7 @@
 export default theme => ({
   button: {
     minHeight: 36,
-    margin: `0 ${theme.spacing.unitDouble}px`,
+    marginRight: theme.spacing.unitDouble,
     boxSizing: 'border-box',
     borderRadius: 2,
     '&:disabled': {

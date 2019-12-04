@@ -67,7 +67,7 @@ export default theme => ({
   },
   suggestionButtonContainer: {
     display: 'flex',
-    margin: `${theme.spacing.unitDouble}px ${theme.spacing.unit}px`,
+    margin: `${theme.spacing.unitDouble}px ${theme.spacing.unitTriple}px`,
   },
   bold: {
     fontWeight: 'bold',
