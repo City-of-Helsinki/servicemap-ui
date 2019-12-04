@@ -3,11 +3,6 @@ const setAddressLocation = location => ({
   location,
 });
 
-const setAddressTitle = title => ({
-  type: 'SET_ADDRESS_TITLE',
-  title,
-});
-
 const setAddressUnits = units => ({
   type: 'SET_ADDRESS_UNITS',
   units,
@@ -15,6 +10,5 @@ const setAddressUnits = units => ({
 
 export {
   setAddressLocation,
-  setAddressTitle,
   setAddressUnits,
 };

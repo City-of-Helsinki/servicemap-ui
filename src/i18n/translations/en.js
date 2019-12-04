@@ -81,9 +81,9 @@ export default {
   'general.pageTitles.search': 'Search view',
   'general.pageTitles.unit': 'Unit view',
   'general.pageTitles.service': 'Service view',
+  'general.pageTitles.serviceTree': 'Service list',
   'general.pageTitles.event': 'Event view',
   'general.pageTitles.address': 'Address view',
-  'general.pageTitles.list.services': 'Service list ',
   'general.pageTitles.list.events': 'Event list ',
   'general.pageTitles.list.reservations': 'Reservation list ',
   // General - Pagination
@@ -108,13 +108,17 @@ export default {
   'general.distance.kilometers': 'Kilometers away',
 
   // Home
-  'home.buttons.settings': 'Accessibility and city settings',
-  'home.buttons.services': 'All services',
+  'home.buttons.settings': 'City, map and accessibility settings',
+  'home.buttons.services': 'Service list',
   'home.buttons.closeByServices': 'Nearby services',
   'home.example.title': 'Example search phrases',
   'home.example.search': 'Search for',
   'home.message': 'Message from the developers',
   'home.send.feedback': 'Send feedback',
+
+  // Location
+  'location.notFound': 'Location not found',
+  'location.notAllowed': 'Location not allowed',
 
   // Map
   'map': 'Map',

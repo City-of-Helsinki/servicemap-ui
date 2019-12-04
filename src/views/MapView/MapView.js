@@ -15,8 +15,6 @@ import TransitStops from './components/TransitStops';
 import AddressPopup from './components/AddressPopup';
 import LocationButton from './components/LocationButton';
 import SearchBar from '../../components/SearchBar';
-import TitleBar from '../../components/TitleBar';
-import config from '../../../config';
 import UserMarker from './components/UserMarker';
 import fetchAddress from './utils/fetchAddress';
 import { isEmbed } from '../../utils/path';
@@ -30,7 +28,6 @@ const MapView = (props) => {
     getLocaleText,
     intl,
     settings,
-    addressTitle,
     addressUnits,
     setAddressLocation,
     unitList,
@@ -80,28 +77,10 @@ const MapView = (props) => {
 
   const renderTopBar = () => {
     if (isMobile) {
-      const top = currentPage === 'map' ? config.topBarHeight : 0;
       return (
-        <>
-          <div
-            style={{
-              zIndex: 99999999, position: 'fixed', top, width: '100%',
-            }}
-          >
-            {currentPage === 'map' && (
-            // If on root map page (/map) display search bar.
-            <SearchBar hideBackButton placeholder={intl.formatMessage({ id: 'search.placeholder' })} />
-            )}
-            {currentPage === 'unit' && highlightedUnit && (
-            // If on unit's map page (/unit?map=true) display title bar
-            <TitleBar title={getLocaleText(highlightedUnit.name)} primary backButton />
-            )}
-            {currentPage === 'address' && addressTitle && (
-            // If on address's map page (/address?map=true) display title bar
-            <TitleBar title={addressTitle} />
-            )}
-          </div>
-        </>
+        <div className={classes.topArea}>
+          <SearchBar hideBackButton placeholder={intl.formatMessage({ id: 'search.placeholder' })} />
+        </div>
       );
     } return null;
   };
@@ -305,7 +284,6 @@ export default withRouter(withStyles(styles)(MapView));
 
 // Typechecking
 MapView.propTypes = {
-  addressTitle: PropTypes.string,
   addressUnits: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   currentPage: PropTypes.string.isRequired,
@@ -327,7 +305,6 @@ MapView.propTypes = {
 };
 
 MapView.defaultProps = {
-  addressTitle: null,
   addressUnits: null,
   highlightedDistrict: null,
   highlightedUnit: null,

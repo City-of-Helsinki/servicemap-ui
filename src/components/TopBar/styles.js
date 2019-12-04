@@ -16,13 +16,17 @@ const styles = () => ({
     display: 'flex',
     flexDirection: 'column',
   },
-  homeLogoContainer: {
-    paddingTop: 8,
-    alignSelf: 'center',
-  },
+  // feedbackLink: {
+  //   display: 'inline-block',
+  // },
+  // feedbackText: {
+  //   margin: 0,
+  //   color: 'white',
+  //   textDecorationColor: 'white',
+  // },
   logo: {
-    marginLeft: 4,
-    marginRight: 16,
+    height: 29,
+    marginLeft: 16,
   },
   toolbarBlack: {
     minHeight: 28,
@@ -69,22 +73,22 @@ const styles = () => ({
     paddingRight: 0,
     zIndex: 100,
   },
-  iconButtonPressed: {
+  toolbarButtonPressed: {
+    width: 66,
     textTransform: 'none',
     backgroundColor: '#353638',
     color: '#fff',
     marginLeft: 4,
-    marginRight: 4,
     borderRadius: 0,
     '&:hover': {
       backgroundColor: '#353638',
     },
   },
-  iconButton: {
+  toolbarButton: {
+    width: 66,
     textTransform: 'none',
     color: '#000',
     marginLeft: 4,
-    marginRight: 4,
     borderRadius: 0,
   },
   iconTextContainer: {
