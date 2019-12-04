@@ -12,18 +12,20 @@ export default theme => ({
     display: 'flex',
     flexDirection: 'column',
   },
-  iconContainer: {
+  buttonContainer: {
     paddingLeft: 25,
     paddingRight: 25,
     paddingTop: 20,
     display: 'flex',
     flexDirection: 'column',
+    alignItems: 'center',
   },
   icon: {
     height: 40,
     width: 40,
     margin: theme.spacing.unit,
     marginRight: theme.spacing.unitDouble,
+    backgroundColor: 'blue',
   },
   left: {
     textAlign: 'left',

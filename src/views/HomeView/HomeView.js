@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import Container from '../../components/Container';
 import SearchBar from '../../components/SearchBar';
 import { MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
-import HomeLogo from '../../components/Logos/HomeLogo';
 import PaperButton from '../../components/PaperButton';
 import fetchAddress from '../MapView/utils/fetchAddress';
 import { getIcon } from '../../components/SMIcon';
@@ -38,7 +36,7 @@ class HomeView extends React.Component {
       || !userLocation.longitude;
 
     return (
-      <div className={classes.iconContainer}>
+      <div className={classes.buttonContainer}>
         <PaperButton
           disabled={disableCloseByServices}
           text={<FormattedMessage id="home.buttons.closeByServices" />}
@@ -59,6 +57,12 @@ class HomeView extends React.Component {
               });
           }}
         />
+        <PaperButton
+          text={<FormattedMessage id="home.buttons.services" />}
+          icon={getIcon('serviceList', { className: classes.icon })}
+          link
+          onClick={() => navigator.push('serviceTree')}
+        />
         <MobileComponent>
           <PaperButton
             text={<FormattedMessage id="home.buttons.settings" />}
@@ -67,12 +71,6 @@ class HomeView extends React.Component {
             onClick={() => toggleSettings('all')}
           />
         </MobileComponent>
-        <PaperButton
-          text={<FormattedMessage id="home.buttons.services" />}
-          icon={getIcon('serviceList', { className: classes.icon })}
-          link
-          onClick={() => navigator.push('serviceTree')}
-        />
         <PaperButton
           text={<FormattedMessage id="home.send.feedback" />}
           icon={getIcon('feedback', { className: classes.icon })}
@@ -88,11 +86,6 @@ class HomeView extends React.Component {
 
     return (
       <>
-        <MobileComponent>
-          <Container>
-            <HomeLogo dark aria-label={intl.formatMessage({ id: 'app.title' })} />
-          </Container>
-        </MobileComponent>
         <SearchBar
           hideBackButton
           placeholder={intl.formatMessage({ id: 'search.placeholder' })}
