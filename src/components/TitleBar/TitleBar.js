@@ -50,7 +50,7 @@ const TitleBar = ({
 TitleBar.propTypes = {
   backButton: PropTypes.bool,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.objectOf(PropTypes.any)]).isRequired,
+  title: PropTypes.node.isRequired,
   titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']),
   icon: PropTypes.objectOf(PropTypes.any),
   className: PropTypes.string,
