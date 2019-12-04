@@ -184,6 +184,7 @@ export default {
 
   // Search
   'search': 'Hae',
+  'search.arrowLabel': 'Tarkenna',
   'search.cancelText': 'Tyhjennä hakukenttä',
   'search.notFoundWith': 'Ei osumia haulle "{query}".',
   'search.placeholder': 'Hae palvelua tai toimipistettä',
