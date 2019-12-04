@@ -142,7 +142,9 @@ class Navigator extends React.Component {
     const url = new URL(window.location);
 
     url.searchParams.set('map', 'true');
-    history.push(url.pathname + url.search);
+    // TODO: better way to normalize spaces in url
+    const searchString = url.search.replace('+', ' ');
+    history.push(url.pathname + searchString);
   }
 
   // Remove map param from url
