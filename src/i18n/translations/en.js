@@ -188,6 +188,7 @@ export default {
 
   // Search
   'search': 'Search',
+  'search.arrowLabel': 'Expand', // TODO verify
   'search.cancelText': 'Clear search text',
   'search.notFoundWith': 'No results for search "{query}".',
   'search.placeholder': 'Search for services or units',
