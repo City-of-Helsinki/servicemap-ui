@@ -30,6 +30,7 @@ import {
   getIcon,
 } from '../SMIcon';
 import SettingsTitle from './SettingsTitle';
+import TitleBar from '../TitleBar';
 
 class Settings extends React.Component {
   events = [];
@@ -697,11 +698,7 @@ class Settings extends React.Component {
 
     return (
       <div id="SettingsContainer" className={`${classes.container}`} style={containerStyles}>
-        <div className={`${classes.pageTitleContainer} SettingsTitle`}>
-          <Typography className={classes.pageTitleText} component="h2" tabIndex="-1">
-            <FormattedMessage id={`settings.${settingsPage}.long`} />
-          </Typography>
-        </div>
+        <TitleBar className="SettingsTitle" titleComponent="h2" title={<FormattedMessage id={`settings.${settingsPage}.long`} />} />
         <>
           {showAlert && (
             this.renderSaveAlert()

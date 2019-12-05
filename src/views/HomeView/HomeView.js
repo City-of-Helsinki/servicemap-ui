@@ -168,11 +168,10 @@ kehitämme jatkuvasti saavutettavuutta ja käytettävyyttä.
             <br />
           </Typography>
           <ServiceMapButton
+            text={intl.formatMessage({ id: 'home.send.feedback' })}
             onClick={() => window.open('https://forms.gle/roe9XNrZGQWBhMBJ7')}
             srText={`${intl.formatMessage({ id: 'home.send.feedback' })}: ${intl.formatMessage({ id: 'general.new.tab' })}`}
-          >
-            {intl.formatMessage({ id: 'home.send.feedback' })}
-          </ServiceMapButton>
+          />
         </Container>
       </>
     );

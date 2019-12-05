@@ -245,7 +245,8 @@ class TabLists extends React.Component {
       // Set new styles and scrollDistance value to state
       this.setState({
         styles: {
-          top: Math.max(appBarHeight, stickyElementPadding),
+          // TODO figure better way to calculate top
+          top: mobile ? Math.max(appBarHeight, stickyElementPadding) : stickyElementPadding,
         },
         tabStyles: {
           minHeight: customTabHeight,
@@ -321,6 +322,7 @@ class TabLists extends React.Component {
                       classes={{
                         root: classes.tab,
                         labelContainer: classes.tabLabelContainer,
+                        selected: classes.selected,
                       }}
                       className={classes.tab}
                       label={label}
@@ -334,6 +336,7 @@ class TabLists extends React.Component {
                     classes={{
                       root: classes.tab,
                       labelContainer: classes.tabLabelContainer,
+                      selected: classes.selected,
                     }}
                     label={`${item.title}`}
                   />
