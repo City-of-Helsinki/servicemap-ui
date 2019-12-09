@@ -5,26 +5,44 @@ import { FormattedMessage } from 'react-intl';
 
 // ServiceMapButton
 const SMButton = ({
-  children, classes, className, color, messageID, onClick, srText, style, role, ...rest
+  children,
+  classes,
+  className,
+  color,
+  icon,
+  messageID,
+  onClick,
+  margin,
+  srText,
+  style,
+  role,
+  ...rest
 }) => {
   const colorStyle = classes[color] || '';
+  const buttonIcon = icon ? React.cloneElement(icon, { className: classes.buttonIcon }) : null;
+  const buttonClasses = `${classes.button} ${margin ? classes.margin : classes.marginRight} ${className} ${colorStyle}`;
+  const textClasses = `${classes.typography} ${margin ? classes.bigText : ''}`;
 
   return (
     <ButtonBase
-      className={`${classes.button} ${className} ${colorStyle}`}
-      role={role || 'link'}
-      variant="contained"
-      onClick={onClick}
       aria-label={srText}
+      className={buttonClasses}
+      icon={buttonIcon}
+      onClick={onClick}
+      role={role || 'link'}
       style={{
         ...style,
       }}
+      variant="contained"
       {...rest}
     >
       {
+        icon
+      }
+      {
         messageID
         && (
-          <Typography color="inherit" component="p" variant="caption" className={classes.typography}>
+          <Typography color="inherit" component="p" variant="caption" className={textClasses}>
             <FormattedMessage id={messageID} />
           </Typography>
         )
@@ -38,10 +56,10 @@ const SMButton = ({
 };
 
 SMButton.propTypes = {
-  text: PropTypes.oneOfType([PropTypes.string, PropTypes.objectOf(PropTypes.any)]).isRequired,
   icon: PropTypes.objectOf(PropTypes.any),
   className: PropTypes.string,
   color: PropTypes.oneOf(['primary', 'secondary', 'default']),
+  margin: PropTypes.bool,
   messageID: PropTypes.string,
   onClick: PropTypes.func.isRequired,
   srText: PropTypes.string,
@@ -55,6 +73,8 @@ SMButton.defaultProps = {
   children: null,
   className: '',
   color: 'default',
+  icon: null,
+  margin: false,
   messageID: null,
   srText: null,
   style: null,

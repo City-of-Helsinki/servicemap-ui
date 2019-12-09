@@ -113,7 +113,6 @@ export default theme => ({
   },
   mobileButtonArea: {
     display: 'flex',
-    height: 62,
     justifyContent: 'space-evenly',
     alignItems: 'end',
     paddingLeft: theme.spacing.unitDouble,

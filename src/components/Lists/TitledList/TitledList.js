@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import {
   List, Typography, Divider,
 } from '@material-ui/core';
-import ServiceMapButton from '../../ServiceMapButton';
+import SMButton from '../../ServiceMapButton';
 
 const TitledList = ({
   children,
   classes,
-  buttonText,
+  buttonMessageID,
   title,
   titleComponent,
   divider,
@@ -56,12 +56,13 @@ const TitledList = ({
         {list}
       </List>
       {shortened && showMoreOnClick && (
-        <ServiceMapButton
-          text={buttonText}
+        <SMButton
+          messageID={buttonMessageID}
           onClick={(e) => {
             e.preventDefault();
             showMoreOnClick();
           }}
+          margin
         />
       )}
     </>
@@ -77,7 +78,7 @@ TitledList.propTypes = {
   titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']),
   showMoreOnClick: PropTypes.func,
   listLength: PropTypes.number,
-  buttonText: PropTypes.objectOf(PropTypes.any),
+  buttonMessageID: PropTypes.string,
 };
 
 TitledList.defaultProps = {
@@ -86,7 +87,7 @@ TitledList.defaultProps = {
   showMoreOnClick: null,
   listLength: null,
   subtitle: null,
-  buttonText: null,
+  buttonMessageID: null,
 };
 
 export default TitledList;

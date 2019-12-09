@@ -15,7 +15,7 @@ import HeadModifier from '../../utils/headModifier';
 
 import fetchAddressUnits from './utils/fetchAddressUnits';
 import fetchAddressData from './utils/fetchAddressData';
-import ServiceMapButton from '../../components/ServiceMapButton';
+import SMButton from '../../components/ServiceMapButton';
 import DistritctItem from './components/DistrictItem';
 import TabLists from '../../components/TabLists';
 
@@ -108,8 +108,6 @@ const AddressView = (props) => {
     focusDistrict(map, coordinates);
     // On mobile, show map when a district is clicked on the list
     if (mobile && navigator) {
-      const districtName = district.name || district.unit.name;
-      const title = `${getLocaleText(districtName)} ${intl.formatMessage({ id: `address.list.${district.type}` })}`;
       // mobileShowOnMap(title);
       navigator.openMap();
     }
@@ -229,8 +227,8 @@ const AddressView = (props) => {
       />
       {addressData && units && districts && (
       <MobileComponent>
-        <ServiceMapButton
-          text={<FormattedMessage id="general.showOnMap" />}
+        <SMButton
+          messageID="general.showOnMap"
           icon={<Map />}
           className={classes.mapButton}
           onClick={() => {

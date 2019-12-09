@@ -1,14 +1,19 @@
 export default theme => ({
+  bigText: {
+    fontSize: 14,
+  },
   button: {
     minHeight: 36,
-    marginRight: theme.spacing.unitDouble,
+    padding: '0 11px',
     boxSizing: 'border-box',
     borderRadius: 2,
-    '&:disabled': {
-      backgroundColor: 'rgba(0, 0, 0, 0.12)',
-      border: 'none',
-      color: 'rgba(0, 0, 0, 0.26)',
-    },
+  },
+  margin: {
+    marginTop: theme.spacing.unitDouble,
+    marginBottom: theme.spacing.unitDouble,
+  },
+  marginRight: {
+    marginRight: theme.spacing.unitDouble,
   },
   primary: {
     color: theme.palette.primary.contrastText,
@@ -16,6 +21,11 @@ export default theme => ({
     border: `0.5px solid ${theme.palette.primary.contrastText}`,
     '&:hover': {
       backgroundColor: theme.palette.primary.light,
+    },
+    '&:disabled': {
+      backgroundColor: theme.palette.primary.light,
+      border: 'none',
+      color: 'rgba(0, 0, 0, 0.5)',
     },
   },
   secondary: {
@@ -25,6 +35,11 @@ export default theme => ({
     '&:hover': {
       backgroundColor: theme.palette.secondary.light,
     },
+    '&:disabled': {
+      backgroundColor: theme.palette.secondary.light,
+      border: 'none',
+      color: 'rgba(0, 0, 0, 0.5)',
+    },
   },
   default: {
     color: theme.palette.white.contrastText,
@@ -32,6 +47,11 @@ export default theme => ({
     border: `0.5px solid ${theme.palette.white.contrastText}`,
     '&:hover': {
       backgroundColor: theme.palette.white.dark,
+    },
+    '&:disabled': {
+      // backgroundColor: theme.palette.white.dark,
+      border: theme.palette.white.dark,
+      color: 'rgba(0, 0, 0, 0.5)',
     },
   },
   typography: {

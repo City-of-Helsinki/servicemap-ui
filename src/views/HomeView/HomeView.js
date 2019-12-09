@@ -9,7 +9,7 @@ import Container from '../../components/Container';
 import SearchBar from '../../components/SearchBar';
 import { MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import HomeLogo from '../../components/Logos/HomeLogo';
-import ServiceMapButton from '../../components/ServiceMapButton';
+import SMButton from '../../components/ServiceMapButton';
 import PaperButton from '../../components/PaperButton';
 import fetchAddress from '../MapView/utils/fetchAddress';
 
@@ -167,8 +167,8 @@ kehitämme jatkuvasti saavutettavuutta ja käytettävyyttä.
             ja haluamme palautetta juuri sinulta.
             <br />
           </Typography>
-          <ServiceMapButton
-            text={intl.formatMessage({ id: 'home.send.feedback' })}
+          <SMButton
+            messageID="home.send.feedback"
             onClick={() => window.open('https://forms.gle/roe9XNrZGQWBhMBJ7')}
             srText={`${intl.formatMessage({ id: 'home.send.feedback' })}: ${intl.formatMessage({ id: 'general.new.tab' })}`}
           />
