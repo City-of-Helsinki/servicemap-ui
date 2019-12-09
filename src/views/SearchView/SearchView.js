@@ -17,11 +17,9 @@ import TabLists from '../../components/TabLists';
 import Container from '../../components/Container';
 import { generatePath } from '../../utils/path';
 import { DesktopComponent } from '../../layouts/WrapperComponents/WrapperComponents';
-import {
-  ColorblindIcon, HearingIcon, VisualImpairmentIcon, getIcon,
-} from '../../components/SMIcon';
 import SMButton from '../../components/ServiceMapButton';
 import ExpandedSuggestions from '../../components/ExpandedSuggestions';
+import SettingsInfo from '../../components/SettingsInfo';
 
 class SearchView extends React.Component {
   constructor(props) {
@@ -413,6 +411,9 @@ class SearchView extends React.Component {
         {
           isFetching
           && <Loading text={intl && intl.formatMessage({ id: 'search.loading.units' }, { count, max })} progress={progress} />
+        }
+        {
+          <SettingsInfo />
         }
         {
           this.renderNotFound()

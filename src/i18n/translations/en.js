@@ -283,6 +283,7 @@ export default {
   'settings.sense.hearing': 'I use a hearing aid',
   'settings.sense.visual': 'I\'m visually impaired',
   'settings.sense.colorblind': 'I have trouble distinguishing colours',
+  'settings.info.title': 'Your selected settings will effect search results', // TODO: verify
   'settings.mobility.title': 'Mobility',
   'settings.mobility.none': 'No mobility impairments',
   'settings.mobility.wheelchair': 'I use a wheelchair',

@@ -278,6 +278,7 @@ export default {
   'settings.sense.hearing': 'Käytän kuulolaitetta',
   'settings.sense.visual': 'Olen näkövammainen',
   'settings.sense.colorblind': 'Minun on vaikea erottaa värejä',
+  'settings.info.title': 'Valitsemasi asetukset vaikuttavat hakutulokseen',
   'settings.mobility.title': 'Liikkumisrajoitteet',
   'settings.mobility.none': 'Ei liikkumisrajoitteita',
   'settings.mobility.wheelchair': 'Käytän pyörätuolia',

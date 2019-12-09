@@ -280,6 +280,7 @@ export default {
   'settings.sense.hearing': 'Jag använder hörapparat',
   'settings.sense.visual': 'Jag är synskadad',
   'settings.sense.colorblind': 'Jag är färgblind',
+  'settings.info.title': 'Valitsemasi asetukset vaikuttavat hakutulokseen', // TODO: Translate
   'settings.mobility.title': 'Att röra sig',
   'settings.mobility.none': 'No mobility impairments', // TODO: Translate
   'settings.mobility.wheelchair': 'Jag använder rullstol',
