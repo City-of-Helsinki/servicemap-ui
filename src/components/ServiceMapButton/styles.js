@@ -24,7 +24,6 @@ export default theme => ({
     },
     '&:disabled': {
       backgroundColor: theme.palette.primary.light,
-      border: 'none',
       color: 'rgba(0, 0, 0, 0.5)',
     },
   },
@@ -37,7 +36,6 @@ export default theme => ({
     },
     '&:disabled': {
       backgroundColor: theme.palette.secondary.light,
-      border: 'none',
       color: 'rgba(0, 0, 0, 0.5)',
     },
   },
@@ -46,11 +44,11 @@ export default theme => ({
     backgroundColor: theme.palette.white.main,
     border: `0.5px solid ${theme.palette.white.contrastText}`,
     '&:hover': {
-      backgroundColor: theme.palette.white.dark,
+      backgroundColor: theme.palette.white.light,
     },
     '&:disabled': {
       // backgroundColor: theme.palette.white.dark,
-      border: theme.palette.white.dark,
+      borderColor: theme.palette.white.dark,
       color: 'rgba(0, 0, 0, 0.5)',
     },
   },

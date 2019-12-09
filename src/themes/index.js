@@ -20,8 +20,9 @@ const SMTheme = createMuiTheme({
     },
     warning: '#AF0021',
     white: {
+      light: '#f2f2f2',
       main: '#FFFFFF',
-      dark: '#f2f2f2',
+      dark: '#979797',
       contrastText: '#000',
     },
   },
