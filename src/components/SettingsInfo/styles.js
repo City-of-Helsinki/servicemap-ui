@@ -25,6 +25,9 @@ export default theme => ({
     textDecoration: 'underline',
     cursor: 'pointer',
     marginBottom: theme.spacing.unitDouble,
+    '&:hover': {
+      opacity: '0.7',
+    },
   },
   verticalDivider: {
     backgroundColor: theme.palette.primary.main,
