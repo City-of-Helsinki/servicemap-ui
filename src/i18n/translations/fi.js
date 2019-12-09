@@ -260,6 +260,15 @@ export default {
   'service.units.empty': 'Palvelulla ei ole toimipisteitä',
   'service.tab': 'Palvelut ja tapahtumat',
 
+  // Service tree
+  'services': 'Palveluluettelo',
+  'services.selections': `{count, plural,
+    one {Olet thenyt (#) valinnan}
+    other {Olet thenyt (#) valintaa}
+  }`,
+  'services.selections.delete': 'Poista kaikki valinnat',
+  'services.search': 'Tee haku',
+
   // Settings
   'settings': 'Asetukset',
   'settings.citySettings': 'Kaupunki',

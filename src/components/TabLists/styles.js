@@ -19,16 +19,17 @@ export default theme => ({
   },
   tab: {
     minWidth: 0,
+    fontWeight: 'normal',
     flex: '1 1',
+    borderBottom: '6px solid #DEDEDE',
     [theme.breakpoints.only('sm')]: {
       letterSpacing: 'normal',
     },
-    fontWeight: 'normal',
   },
   tabLabelContainer: {
     paddingLeft: 0,
     paddingRight: 0,
-    marginTop: theme.spacing.unit,
-    marginBottom: theme.spacing.unit,
+    marginTop: theme.spacing.unitDouble,
+    marginBottom: theme.spacing.unitDouble,
   },
 });

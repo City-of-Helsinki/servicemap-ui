@@ -1,5 +1,3 @@
-
-
 export default theme => ({
   button: {
     minHeight: 36,

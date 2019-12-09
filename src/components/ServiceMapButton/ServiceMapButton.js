@@ -38,6 +38,8 @@ const SMButton = ({
 };
 
 SMButton.propTypes = {
+  text: PropTypes.oneOfType([PropTypes.string, PropTypes.objectOf(PropTypes.any)]).isRequired,
+  icon: PropTypes.objectOf(PropTypes.any),
   className: PropTypes.string,
   color: PropTypes.oneOf(['primary', 'secondary', 'default']),
   messageID: PropTypes.string,

@@ -449,7 +449,6 @@ SearchView.propTypes = {
   map: PropTypes.objectOf(PropTypes.any),
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
-  settings: PropTypes.objectOf(PropTypes.any),
   serviceTree: PropTypes.objectOf(PropTypes.any),
   query: PropTypes.string,
 };
@@ -462,7 +461,6 @@ SearchView.defaultProps = {
   max: 0,
   previousSearch: null,
   units: [],
-  settings: null,
   map: null,
   navigator: null,
   serviceTree: null,
