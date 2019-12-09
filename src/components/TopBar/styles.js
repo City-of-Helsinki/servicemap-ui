@@ -26,14 +26,13 @@ const styles = () => ({
   // },
   logo: {
     height: 29,
-    marginLeft: 16,
   },
   toolbarBlack: {
     minHeight: 28,
     height: 28,
     backgroundColor: '#141823',
     padding: 0,
-    paddingLeft: 8,
+    paddingLeft: 19,
   },
   toolbarBlackContainer: {
     justifyContent: 'space-around',
@@ -41,32 +40,44 @@ const styles = () => ({
     width: 300,
     color: '#fff',
   },
+  bold: {
+    fontWeight: 'bold',
+  },
   greyText: {
     color: '#CCCBCB',
+  },
+  settingsButtonsContainer: {
+    paddingLeft: 50,
+    width: '70%',
+    display: 'flex',
   },
   settingsButton: {
     textTransform: 'none',
     alignItems: 'flex-start',
-    marginLeft: '3%',
-    marginRight: '3%',
+    marginRight: '4%',
     borderRadius: 0,
   },
   settingsButtonPressed: {
     textTransform: 'none',
     alignItems: 'flex-start',
-    marginLeft: '3%',
-    marginRight: '3%',
+    marginRight: '4%',
     marginBottom: -2,
     borderBottom: '2px solid',
     borderRadius: 0,
   },
+  settingsButtonText: {
+    color: 'inherit',
+    lineHeight: 1,
+  },
   toolbarWhite: {
+    paddingLeft: 28,
     width: '100%',
     height: 70,
     backgroundColor: '#fff',
     zIndex: 100,
   },
   toolbarWhiteMobile: {
+    paddingLeft: 28,
     minHeight: 60,
     height: 60,
     backgroundColor: '#fff',
@@ -102,10 +113,6 @@ const styles = () => ({
   },
   mobileButtonContainer: {
     marginLeft: 'auto',
-  },
-  settingsButtonContainer: {
-    width: '70%',
-    display: 'flex',
   },
 });
 

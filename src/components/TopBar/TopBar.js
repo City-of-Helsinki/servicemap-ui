@@ -52,7 +52,7 @@ class TopBar extends React.Component {
             }, 1);
           }}
         >
-          <Typography variant="subtitle1" style={{ color: 'inherit' }}>
+          <Typography variant="subtitle1" className={classes.settingsButtonText}>
             <FormattedMessage id={`settings.${category.type}`} />
           </Typography>
           {category.type === 'mapSettings'
@@ -139,7 +139,6 @@ class TopBar extends React.Component {
           .map(locale => (
             <ButtonBase
               role="link"
-              className={locale !== i18n.locale ? classes.greyText : ''}
               key={locale}
               onClick={() => {
                 const newLocation = location;
@@ -148,7 +147,7 @@ class TopBar extends React.Component {
                 window.location = `${newLocation.pathname}${newLocation.search}`;
               }}
             >
-              <Typography color="inherit">
+              <Typography className={locale === i18n.locale ? classes.bold : classes.greyText} color="inherit">
                 {i18n.localeText(locale)}
               </Typography>
             </ButtonBase>
@@ -249,7 +248,9 @@ class TopBar extends React.Component {
 
           {/* Toolbar white area */}
           <Toolbar disableGutters className={pageType === 'mobile' ? classes.toolbarWhiteMobile : classes.toolbarWhite}>
-            <HomeLogo dark aria-hidden="true" className={classes.logo} />
+            <ButtonBase aria-hidden onClick={() => this.handleNavigation('home')}>
+              <HomeLogo aria-hidden dark className={classes.logo} />
+            </ButtonBase>
             <MobileComponent>
               <div className={classes.mobileButtonContainer}>
                 {this.renderMapButton()}
@@ -260,7 +261,7 @@ class TopBar extends React.Component {
             <DesktopComponent>
               <NoSsr>
                 {!smallScreen ? (
-                  <div className={classes.settingsButtonContainer}>
+                  <div className={classes.settingsButtonsContainer}>
                     { this.renderSettingsButtons()}
                   </div>
                 ) : (
