@@ -4,9 +4,8 @@ import {
 } from '@material-ui/core';
 import { ArrowDropUp, ArrowDropDown } from '@material-ui/icons';
 import { FormattedMessage } from 'react-intl';
-import SearchBar from '../../components/SearchBar';
 import TitleBar from '../../components/TitleBar';
-import { MobileComponent, DesktopComponent } from '../../layouts/WrapperComponents/WrapperComponents';
+import { MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import ServiceMapButton from '../../components/ServiceMapButton';
 
 const ServiceTreeView = ({
@@ -110,9 +109,46 @@ const ServiceTreeView = ({
     }
   };
 
+  const drawInnerLines = (isOpen, level) => {
+    const paths = [];
+    let strokeColor = '#000';
+
+    if (isOpen) {
+      paths.push('M 20 38 V 60');
+    }
+    if (level > 0) {
+      strokeColor = '#323232';
+      paths.push('M 0 30 H 12');
+    }
+
+    return (
+      <svg style={{
+        height: 'inherit', width: 'inherit', position: 'absolute',
+      }}
+      >
+        {paths.map(line => (
+          <path d={line} stroke={strokeColor} fill="transparent" />
+        ))}
+      </svg>
+    );
+  };
+
+  const generateDrawPath = (last, bottom, i) => {
+    const currentLast = last.includes(i);
+    if (!bottom && currentLast) {
+      return null;
+    }
+    if (bottom && currentLast) {
+      return <path d="M 20 0 V 30 H 26" stroke="black" fill="transparent" />;
+    }
+    if (bottom && !currentLast) {
+      return <path d="M 20 0 V 60 M 20 30 H 26" stroke="black" fill="transparent" />;
+    }
+    return <path d="M 20 0 V 60" stroke="black" fill="transparent" />;
+  };
+
 
   const handleCheckboxClick = (e, item) => {
-    // console.log('handling item: ', item);
     if (selected.some(element => element.id === item.id)) {
       // Remove checkbox selections
       const parentsToRemove = getSelectedParentNodes(item);
@@ -141,13 +177,13 @@ const ServiceTreeView = ({
     fetchInitialServices();
   }, []);
 
-  const expandingComponent = (item, level) => {
+  const expandingComponent = (item, level, last = []) => {
     const hasChildren = item.children.length;
     const isOpen = opened.includes(item.id);
     const children = hasChildren ? services.filter(e => e.parent === item.id) : null;
     const icon = isOpen
-      ? <ArrowDropDown className={classes.iconRight} />
-      : <ArrowDropUp className={classes.iconRight} />;
+      ? <ArrowDropUp className={classes.iconRight} />
+      : <ArrowDropDown className={classes.iconRight} />;
 
     const resultCount = (settings.helsinki ? item.unit_count.municipality.helsinki || 0 : 0)
       + (settings.espoo ? item.unit_count.municipality.espoo || 0 : 0)
@@ -157,18 +193,33 @@ const ServiceTreeView = ({
     return (
       <div key={item.id}>
         <ListItem
-          style={{ paddingLeft: 8 * level }}
+          style={level === 0 ? { paddingLeft: 12 } : { paddingLeft: 12 }}
           key={item.id}
           disableGutters
           className={`${classes.listItem} ${classes[`level${level}`]}`}
         >
-          <Checkbox
-            onClick={e => handleCheckboxClick(e, item)}
-            icon={<span className={classes.checkBoxIcon} />}
-            color="primary"
-            className={classes.checkBox}
-            checked={selected.some(e => e.id === item.id)}
-          />
+
+          {level > 0 && (
+            [...Array(level)].map((test, i) => (
+              <svg style={{ height: '100%', width: 26, flexShrink: 0 }}>
+                {generateDrawPath(last, level === i + 1, i)}
+              </svg>
+            ))
+          )}
+
+          <div style={{
+            width: 40, height: '100%', alignItems: 'center', justifyContent: 'center', display: 'flex', position: 'relative', flexShrink: 0,
+          }}
+          >
+            {drawInnerLines(isOpen, level)}
+            <Checkbox
+              onClick={e => handleCheckboxClick(e, item)}
+              icon={<span className={classes.checkBoxIcon} />}
+              color="primary"
+              className={classes.checkBox}
+              checked={selected.some(e => e.id === item.id)}
+            />
+          </div>
           <ButtonBase
             style={{ width: '100%', paddingTop: 8, paddingBottom: 8 }}
             disabled={!hasChildren}
@@ -184,8 +235,8 @@ const ServiceTreeView = ({
         </ListItem>
 
         <Collapse aria-hidden={!isOpen} tabIndex={isOpen ? '0' : '-1'} in={isOpen}>
-          {children && children.length && children.map(child => (
-            expandingComponent(child, level + 1)
+          {children && children.length && children.map((child, i) => (
+            expandingComponent(child, level + 1, i + 1 === children.length ? [...last, level] : last)
           ))}
         </Collapse>
       </div>
@@ -194,10 +245,6 @@ const ServiceTreeView = ({
 
   const TopBar = (
     <div>
-      <DesktopComponent>
-        <SearchBar placeholder={intl.formatMessage({ id: 'search' })} />
-        { /* <TitleBar icon={icon} title={title} primary /> */}
-      </DesktopComponent>
       <MobileComponent>
         <TitleBar title="Kaikki palvelut" primary backButton />
       </MobileComponent>
@@ -256,7 +303,7 @@ const ServiceTreeView = ({
               >
                 {`Olet tehnyt (${selectedList.length}) valintaa`}
               </Typography>
-              {selectedOpen ? <ArrowDropDown style={{ color: '#fff' }} /> : <ArrowDropUp style={{ color: '#fff' }} />}
+              {selectedOpen ? <ArrowDropUp style={{ color: '#fff' }} /> : <ArrowDropDown style={{ color: '#fff' }} />}
             </ButtonBase>
             {selectedList.length ? (
               <ButtonBase disabled={!selectedList.length} onClick={() => setSelected([])} style={{ display: 'flex', marginLeft: 'auto' }}>
@@ -305,7 +352,7 @@ const ServiceTreeView = ({
       <List disablePadding>
         {services && services.map(service => (
           !service.parent && (
-            expandingComponent(service, 1)
+            expandingComponent(service, 0)
           )
         ))}
       </List>
