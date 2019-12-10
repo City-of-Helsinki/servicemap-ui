@@ -220,14 +220,13 @@ class SearchView extends React.Component {
   renderSuggestions() {
     const { expandSearch } = this.state;
     const { query } = this.props;
-    if (!expandSearch) {
-      return null;
-    }
+
     return (
       <ExpandedSuggestions
         closeExpandedSearch={() => this.closeExpandedSearch()}
         searchQuery={query}
         handleSubmit={query => this.handleSubmit(query)}
+        visible={expandSearch}
       />
     );
   }

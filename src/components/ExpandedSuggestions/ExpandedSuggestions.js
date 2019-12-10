@@ -22,6 +22,7 @@ const ExpandedSuggestions = (props) => {
     setSearch,
     intl,
     closeExpandedSearch,
+    visible,
   } = props;
 
   const [searchQueries, setSearchQueries] = useState(null);
@@ -203,6 +204,30 @@ const ExpandedSuggestions = (props) => {
     setSearchBarText();
   }, [focusedSuggestion]);
 
+
+  useEffect(() => {
+    // Disable page scroll when suggestion box is open
+    const sidebar = document.getElementsByClassName('SidebarWrapper')[0];
+    const app = document.getElementsByClassName('App')[0];
+    if (visible) {
+      sidebar.style.overflow = isMobile ? 'hidden' : 'hidden';
+      if (app) {
+        app.style.height = '100%';
+      }
+    }
+
+    return () => {
+      sidebar.style.overflow = isMobile ? '' : 'auto';
+      if (app) {
+        app.style.height = null;
+      }
+    };
+  }, [visible]);
+
+  if (!visible) {
+    return null;
+  }
+
   /**
   * Render component
   */
@@ -242,12 +267,14 @@ ExpandedSuggestions.propTypes = {
   focusedSuggestion: PropTypes.number,
   setSearch: PropTypes.func,
   intl: intlShape.isRequired,
+  visible: PropTypes.bool,
 };
 
 ExpandedSuggestions.defaultProps = {
   searchQuery: null,
   focusedSuggestion: null,
   setSearch: null,
+  visible: false,
 };
 
 export default ExpandedSuggestions;

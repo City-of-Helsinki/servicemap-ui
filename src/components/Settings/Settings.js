@@ -33,15 +33,12 @@ import SettingsTitle from './SettingsTitle';
 import TitleBar from '../TitleBar';
 
 class Settings extends React.Component {
-  events = [];
-
   buttonID = 'SettingsButton';
 
   constructor(props) {
     super(props);
     this.state = {
       alert: false,
-      containerStyles: null,
       currentSettings: {},
       previousSettings: null,
       saved: false,
@@ -78,16 +75,12 @@ class Settings extends React.Component {
     };
 
     this.setState({
-      containerStyles: this.calculateContainerStyles(),
       currentSettings: newCurrent,
       previousSettings: newCurrent,
     });
-
-    this.addListeners();
   }
 
   componentWillUnmount() {
-    this.removeListeners();
   }
 
   /**
@@ -154,54 +147,6 @@ class Settings extends React.Component {
     this.setState({
       alert,
     });
-  }
-
-  // Add event listeners
-  addListeners() {
-    if (!isClient()) {
-      return;
-    }
-
-    // Add resize event listener to update container styles
-    this.events.push(AddEventListener(window, 'resize', () => this.addContainerStyles()));
-  }
-
-  // Remove all event listeners
-  removeListeners() {
-    if (!this.events || !this.events.length) {
-      return;
-    }
-
-    this.events.forEach(unlisten => unlisten());
-  }
-
-  addContainerStyles() {
-    this.setState({
-      containerStyles: this.calculateContainerStyles(),
-    });
-  }
-
-  /**
-   * Get style object for container
-   */
-  // eslint-disable-next-line class-methods-use-this
-  calculateContainerStyles() {
-    const { isMobile } = this.props;
-    const styles = {};
-
-    if (isClient()) {
-      const sidebar = document.getElementsByClassName('SidebarWrapper')[0];
-      if (!isMobile) {
-        const rect = sidebar.getBoundingClientRect();
-        styles.position = 'absolute';
-        styles.top = 0; // rect.top;
-        styles.left = rect.left;
-        styles.width = rect.width;
-        styles.height = rect.height;
-        styles.overflow = 'auto';
-      }
-    }
-    return styles;
   }
 
   /**
@@ -668,7 +613,7 @@ class Settings extends React.Component {
 
   render() {
     const { classes, settings } = this.props;
-    const { alert, containerStyles, saved } = this.state;
+    const { alert, saved } = this.state;
     const settingsPage = settings.toggled;
     const settingsHaveChanged = this.settingsHaveChanged();
     const settingsHaveBeenSaved = !settingsHaveChanged && saved;
@@ -697,7 +642,7 @@ class Settings extends React.Component {
     }
 
     return (
-      <div id="SettingsContainer" className={`${classes.container}`} style={containerStyles}>
+      <div id="SettingsContainer" className={`${classes.container}`}>
         <TitleBar className="SettingsTitle" titleComponent="h2" title={<FormattedMessage id={`settings.${settingsPage}.long`} />} />
         <>
           {showAlert && (
