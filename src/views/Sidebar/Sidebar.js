@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, withRouter } from 'react-router-dom';
 import SearchView from '../SearchView';
 import UnitView from '../UnitView';
 import HomeView from '../HomeView';
 import ServiceView from '../ServiceView';
 import EventDetailView from '../EventDetailView';
-import MobileMapView from '../MobileMapView';
 import AddressView from '../AddressView';
 import ServiceTreeView from '../ServiceTreeView';
 import ViewTitle from '../components/ViewTitle/ViewTitle';
@@ -50,13 +49,16 @@ const Home = () => (
   </TitleWrapper>
 );
 
-const Search = () => (
-  <TitleWrapper messageId="general.pageTitles.search">
-    <PageWrapper headMsgId="search.results.title" page="search">
-      <SearchView />
-    </PageWrapper>
-  </TitleWrapper>
-);
+const Search = withRouter(({ location }) => {
+  const query = new URLSearchParams(location.search).get('q'); // Get query parameter
+  return (
+    <TitleWrapper messageId="general.pageTitles.search">
+      <PageWrapper headMsgId="search.results.title" page="search">
+        <SearchView query={query} />
+      </PageWrapper>
+    </TitleWrapper>
+  );
+});
 
 const Unit = () => (
   <TitleWrapper messageId="general.pageTitles.unit">
@@ -114,7 +116,6 @@ class Sidebar extends React.Component {
         <Route path="/:lng/services" component={ServiceTree} />
         <Route path="/:lng/service/:service" component={Service} />
         <Route path="/:lng/event/:event" component={Event} />
-        <Route path="/:lng/map" component={MobileMapView} />
         <Route path="/:lng/address/:municipality/:street/:number" component={Address} />
         <Route path="/:lng/" component={Home} />
       </Switch>

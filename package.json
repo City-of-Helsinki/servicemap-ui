@@ -40,12 +40,14 @@
   },
   "scripts": {
     "start": "node dist",
-    "build": "NODE_ENV=production BABEL_ENV=production webpack --progress --mode production ",
+    "build": "NODE_ENV=production BABEL_ENV=production webpack --mode production ",
+    "testBuild": "NODE_ENV=development BABEL_ENV=development webpack --mode development",
     "test": "jest test",
     "eject": "react-scripts eject",
     "dev": "NODE_ENV=development BABEL_ENV=development webpack --watch --progress & nodemon dist",
-    "production": "NODE_ENV=production BABEL_ENV=production webpack --progress --mode production && node dist",
-    "browserTest": "node src/browserTests/browserTestRunner.js"
+    "browserTest": "node browserTests/browserTestRunner.js",
+    "browserTestCLI": "testcafe chrome:headless browserTests/*Test.js --app \"node dist\"",
+    "production": "NODE_ENV=production BABEL_ENV=production webpack --progress --mode production && node dist"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -63,13 +65,15 @@
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.12.4",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "^24.5.0"
+    "jest": "^24.5.0",
+    "jest-canvas-mock": "^2.1.2"
   },
   "jest": {
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
       "\\.(css|less)$": "identity-obj-proxy",
       "isomorphic-style-loader/withStyles": "<rootDir>/__mocks__/withStyles.js"
-    }
+    },
+    "setupFiles": ["jest-canvas-mock"]
   }
 }

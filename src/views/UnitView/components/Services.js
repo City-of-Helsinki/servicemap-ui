@@ -111,6 +111,7 @@ class Services extends React.Component {
               key={`${service.id}-${service.clarification ? service.clarification.fi : ''}`}
               service={service}
               divider={!(i + 1 === serviceList.length || i + 1 === serviceShownCount)}
+              link={false}
             />
           ))}
         </TitledList>

@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core';
 import logoLight from '../../../assets/images/service-map-logo-nega-fi_TEST.svg';
-import logoDark from '../../../assets/images/service-map-logo-fi_TEST.svg';
-import logoMobile from '../../../assets/images/service-map-logo-nega-mobile.svg';
+import logoDark from '../../../assets/images/service-map-logo-fi.svg';
+// import logoMobile from '../../../assets/images/service-map-logo-nega-mobile.svg';
 import styles from './styles';
 
 const HomeLogo = (props) => {
@@ -13,7 +13,7 @@ const HomeLogo = (props) => {
   if (mobile) {
     return (
       <div role="img" {...rest}>
-        <img src={logoMobile} alt="" className={classes.iconMobile} />
+        <img src={logoDark} alt="" className={classes.iconMobile} />
       </div>
     );
   }

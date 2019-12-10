@@ -57,6 +57,11 @@ export const fetchEventData = (req, res, next) => {
     const {controller, timeout} = abortTimeout(next);
     const store = req._context;
     const response = sendResponse(2, next, timeout);
+
+    const onError = () => {
+      response();
+      return;
+    }
   
     // FETCH END
     const fetchEnd = (data) => {
@@ -78,7 +83,7 @@ export const fetchEventData = (req, res, next) => {
         }
         // Attempt fetching selected unit if it doesn't exist or isn't correct one
         const unitId = unit.id.split(':').pop();
-        selectedUnitFetch(null, null, fetchSuccess, fetchSuccess, null, unitId, controller);
+        selectedUnitFetch(null, null, fetchSuccess, onError, null, unitId, controller);
       }
     }
   
@@ -86,7 +91,7 @@ export const fetchEventData = (req, res, next) => {
     const options = {
       include: 'location,location.accessibility_shortcoming_count',
     };
-    eventFetch(options, null, fetchEnd, fetchEnd, null, id, controller);
+    eventFetch(options, null, fetchEnd, onError, null, id, controller);
 
   } catch (e) {
     console.log('Error in fetchEventData', e.message);
@@ -106,6 +111,11 @@ export const fetchSelectedUnitData = (req, res, next) => {
     const { controller, timeout } = abortTimeout(next);
     const response = sendResponse(4, next, timeout);
 
+    const fetchOnError = () => {
+      response();
+      return;
+    }
+
     // Fetch unit view data
     const selectedUnitFetchEnd = (data) => {
       if (!store || !store.dispatch || !data) {
@@ -116,7 +126,7 @@ export const fetchSelectedUnitData = (req, res, next) => {
       store.dispatch(changeSelectedUnit(data));
       response();
     }
-    selectedUnitFetch(null, null, selectedUnitFetchEnd, selectedUnitFetchEnd, null, id, controller);
+    selectedUnitFetch(null, null, selectedUnitFetchEnd, fetchOnError, null, id, controller);
 
     // Fetch events for unit
     const eventFetchEnd = (data) => {
@@ -127,7 +137,7 @@ export const fetchSelectedUnitData = (req, res, next) => {
       store.dispatch(eventFetchDataSuccess(data.data, id));
       response();
     }
-    unitEventsFetch({ location: `tprek:${id}` }, null, eventFetchEnd, eventFetchEnd, null, null, controller);
+    unitEventsFetch({ location: `tprek:${id}` }, null, eventFetchEnd, fetchOnError, null, null, controller);
 
     // Fetch accessibility sentences for unit
     const accessibilitySentenceFetchEnd = (data) => {
@@ -138,7 +148,7 @@ export const fetchSelectedUnitData = (req, res, next) => {
       store.dispatch(changeAccessibilitySentences(data));
       response();
     }
-    accessibilitySentencesFetch(null, null, accessibilitySentenceFetchEnd, accessibilitySentenceFetchEnd, null, id, controller);
+    accessibilitySentencesFetch(null, null, accessibilitySentenceFetchEnd, fetchOnError, null, id, controller);
 
     // Fetch reservations for unit
     const reservationFetchEnd = (data) => {
@@ -149,7 +159,7 @@ export const fetchSelectedUnitData = (req, res, next) => {
       store.dispatch(changeReservations(data.results));
       response();
     }
-    reservationsFetch(null, null, reservationFetchEnd, reservationFetchEnd, null, id, controller)
+    reservationsFetch(null, null, reservationFetchEnd, fetchOnError, null, id, controller)
 
   } catch(e) {
     console.log('Error in fetchSelectedUnitData', e.message);

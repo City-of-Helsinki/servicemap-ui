@@ -5,7 +5,7 @@ import {
 import { ArrowDropUp, ArrowDropDown } from '@material-ui/icons';
 import { FormattedMessage } from 'react-intl';
 import TitleBar from '../../components/TitleBar';
-import { MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
+import { MobileComponent, DesktopComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import ServiceMapButton from '../../components/ServiceMapButton';
 
 const ServiceTreeView = ({
@@ -246,7 +246,7 @@ const ServiceTreeView = ({
   const TopBar = (
     <div>
       <MobileComponent>
-        <TitleBar title="Kaikki palvelut" primary backButton />
+        <TitleBar title="Palveluluettelo" primary backButton />
       </MobileComponent>
     </div>
   );
@@ -332,23 +332,15 @@ const ServiceTreeView = ({
             ))}
           </List>
         </Collapse>
-        <ServiceMapButton
-          disabled={!selectedList.length}
-          onClick={() => {
-            setTreeState({ selected: selectedList, opened });
-            navigator.push('search', { nodes: ids });
-          }}
-          style={{
-            width: 250,
-            height: 46,
-            backgroundColor: '#fff',
-            color: '#000',
-            borderRadius: 5,
-          }}
-        >
-          Tee haku
-        </ServiceMapButton>
       </div>
+      <ServiceMapButton
+        text="Tee haku"
+        disabled={!selectedList.length}
+        onClick={() => {
+          setTreeState({ selected: selectedList, opened });
+          navigator.push('search', { nodes: ids });
+        }}
+      />
       <List disablePadding>
         {services && services.map(service => (
           !service.parent && (

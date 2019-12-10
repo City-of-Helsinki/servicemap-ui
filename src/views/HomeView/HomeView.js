@@ -47,7 +47,7 @@ class HomeView extends React.Component {
           text={<FormattedMessage id="home.buttons.settings" />}
           icon={<Accessibility />}
           link
-          onClick={() => toggleSettings(true)}
+          onClick={() => toggleSettings('all')}
         />
         <PaperButton
           text={<FormattedMessage id="home.buttons.services" />}
@@ -91,7 +91,7 @@ class HomeView extends React.Component {
         </MobileComponent>
         <SearchBar
           hideBackButton
-          placeholder={intl.formatMessage({ id: 'search.placeholder' })}
+          header
         />
         {
           this.renderNavigationOptions()
@@ -106,6 +106,18 @@ class HomeView extends React.Component {
             {intl.formatMessage({ id: 'home.message' })}
           </Typography>
           <Typography className={classes.left} variant="body2">
+            <b>31.10.2019</b>
+            {' '}
+- Käytettävyystutkimus on tehty ja tulokset analysoitu.
+Olemme tällä hetkellä toteuttamassa käyttäjien huomioita ja meille on
+esimerkiksi tulossa vaihtoehtoisesti valittavaksi mustavalkoinen käyttöliittymä.
+Olemme parantamassa asetusten löydettävyyttä sekä hakutoiminnallisuutta.
+Oli hienoa saada testaukseen monenlaisia käyttäjiä. Kiitos heille kaikille.
+Turusta on tulossa uusi suurikontrastinen karttapohja parantamaan palvelun
+käytettävyyttä heikkonäköisille.
+            {' '}
+            <br />
+            <br />
             <b>25.9.2019</b>
             {' '}
 - Palvelukartan käytettävyystutkimus on käynnissä ajalla 23.9- 4.10.2019.
@@ -156,11 +168,10 @@ kehitämme jatkuvasti saavutettavuutta ja käytettävyyttä.
             <br />
           </Typography>
           <ServiceMapButton
+            text={intl.formatMessage({ id: 'home.send.feedback' })}
             onClick={() => window.open('https://forms.gle/roe9XNrZGQWBhMBJ7')}
             srText={`${intl.formatMessage({ id: 'home.send.feedback' })}: ${intl.formatMessage({ id: 'general.new.tab' })}`}
-          >
-            {intl.formatMessage({ id: 'home.send.feedback' })}
-          </ServiceMapButton>
+          />
         </Container>
       </>
     );

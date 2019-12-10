@@ -16,7 +16,7 @@ class ServiceItem extends React.Component {
 
   render() {
     const {
-      currentService, service, getLocaleText, navigator, setNewCurrentService, divider,
+      currentService, service, getLocaleText, navigator, setNewCurrentService, divider, link,
     } = this.props;
     const { icon } = this.state;
     let text = getLocaleText(service.name);
@@ -24,23 +24,25 @@ class ServiceItem extends React.Component {
     if (service.clarification) {
       text += `: ${getLocaleText(service.clarification)}`;
     }
+
+    const onClick = link ? (e) => {
+      e.preventDefault();
+
+      if (!currentService || currentService.id !== service.id) {
+        setNewCurrentService(service);
+      }
+      if (navigator) {
+        navigator.push('service', service.id);
+      }
+    } : null;
+
     return (
       <SimpleListItem
-        button
+        button={link}
         text={uppercaseFirst(text)}
         icon={icon}
         divider={divider}
-        handleItemClick={(e) => {
-          e.preventDefault();
-
-          if (!currentService || currentService.id !== service.id) {
-            setNewCurrentService(service);
-          }
-          if (navigator) {
-            navigator.push('service', service.id);
-          }
-        }}
-        role="link"
+        handleItemClick={onClick}
       />
     );
   }
@@ -56,10 +58,12 @@ ServiceItem.propTypes = {
   service: PropTypes.objectOf(PropTypes.any).isRequired,
   setNewCurrentService: PropTypes.func.isRequired,
   divider: PropTypes.bool,
+  link: PropTypes.bool,
 };
 
 ServiceItem.defaultProps = {
   currentService: null,
   navigator: null,
   divider: true,
+  link: true,
 };

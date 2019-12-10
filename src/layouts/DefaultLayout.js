@@ -23,7 +23,7 @@ const createContentStyles = (
   } else if (isSmallScreen) {
     width = '50%';
   }
-  const topBarHeight = `${config.topBarHeight}px`;
+  const topBarHeight = isMobile ? `${config.topBarHeightMobile}px` : `${config.topBarHeight}px`;
 
   const styles = {
     activeRoot: {
@@ -33,6 +33,7 @@ const createContentStyles = (
       display: 'flex',
       flexWrap: 'nowrap',
       height: isMobile ? '100%' : `calc(100vh - ${topBarHeight})`,
+      flex: '1 1 auto',
     },
     map: {
       position: isMobile ? 'fixed' : null,
@@ -53,9 +54,6 @@ const createContentStyles = (
       margin: 0,
       overflow: !isMobile ? 'auto' : '',
       visibility: mobileMapOnly && !settingsOpen ? 'hidden' : null,
-    },
-    topNav: {
-      minWidth: width,
     },
   };
 
@@ -85,14 +83,29 @@ const DefaultLayout = (props) => {
     isMobile, isSmallScreen, landscape, mobileMapOnly, fullMobileMap, settingsToggled,
   );
 
+  const setSettingsPage = (type) => {
+    if (!type || type === settingsToggled) {
+      toggleSettings(null);
+    } else {
+      toggleSettings(type);
+    }
+  };
 
   return (
     <>
-      <TopBar settingsOpen={settingsToggled} toggleSettings={() => toggleSettings(!settingsToggled)} topNav={styles.topNav} i18n={i18n} />
+      <h1 id="app-title" tabIndex="-1" className="sr-only app-title" component="h1">
+        <FormattedMessage id="app.title" />
+      </h1>
+      {/* Jump link to main content for screenreaders
+        Must be first interactable element on page */}
+      <a href="#view-title" className="sr-only">
+        <FormattedMessage id="general.skipToContent" />
+      </a>
+      <TopBar settingsOpen={settingsToggled} toggleSettings={type => setSettingsPage(type)} smallScreen={isSmallScreen} i18n={i18n} />
       <div style={styles.activeRoot}>
         <main className="SidebarWrapper" style={styles.sidebar}>
           {settingsToggled ? (
-            <Settings toggleSettings={() => toggleSettings(false)} isMobile={!!isMobile} />
+            <Settings key={settingsToggled} toggleSettings={() => setSettingsPage()} isMobile={!!isMobile} />
           ) : (
             <Sidebar />
           )}
@@ -106,7 +119,7 @@ const DefaultLayout = (props) => {
 
       <footer role="contentinfo" className="sr-only">
         <DesktopComponent>
-          <a href="#site-title">
+          <a href="#app-title">
             <FormattedMessage id="general.backToStart" />
           </a>
         </DesktopComponent>
@@ -120,12 +133,13 @@ DefaultLayout.propTypes = {
   i18n: PropTypes.instanceOf(I18n),
   intl: intlShape.isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
-  settingsToggled: PropTypes.bool.isRequired,
+  settingsToggled: PropTypes.string,
   toggleSettings: PropTypes.func.isRequired,
 };
 
 DefaultLayout.defaultProps = {
   i18n: null,
+  settingsToggled: null,
 };
 
 export default injectIntl(DefaultLayout);

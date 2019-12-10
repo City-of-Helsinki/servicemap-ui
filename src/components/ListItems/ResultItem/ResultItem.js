@@ -25,7 +25,6 @@ const ResultItem = ({
   selected,
 }) => {
   const isSmallContent = isSmallContentArea();
-  const classStyles = !isSmallContent ? classes : {};
 
   // Screen reader text
   const srText = `
@@ -53,7 +52,7 @@ const ResultItem = ({
         onClick={onClick}
         onKeyDown={onKeyDown}
         classes={{
-          focusVisible: classStyles.cssFocused,
+          focusVisible: classes.cssFocused,
         }}
       >
         {
@@ -64,13 +63,13 @@ const ResultItem = ({
           </ListItemIcon>
           )
         }
-        <div className={classStyles.itemTextContainer || ''}>
-          <div className={classStyles.topRow || ''}>
+        <div className={classes.itemTextContainer || ''}>
+          <div className={classes.topRow || ''}>
             {
               // SROnly element with full readable text
             }
             <Typography
-              className={classStyles.title || ''}
+              className={`${classes.title || ''} ${(!isSmallContent && classes.marginBottom) || ''}`}
               component="p"
               variant="srOnly"
             >
@@ -81,7 +80,7 @@ const ResultItem = ({
               // Title
             }
             <Typography
-              className={classStyles.title || ''}
+              className={classes.title || ''}
               component="p"
               role="textbox"
               variant="body2"
@@ -94,10 +93,10 @@ const ResultItem = ({
               // Distance text
               distance
               && (
-                <div className={classStyles.rightColumn || ''}>
+                <div className={classes.rightColumn || ''}>
                   <Typography
                     variant="caption"
-                    className={`${classStyles.caption || ''} ${classStyles.marginLeft || ''}`}
+                    className={`${classes.caption || ''} ${classes.marginLeft || ''}`}
                     component="p"
                     aria-hidden="true"
                   >
@@ -113,11 +112,11 @@ const ResultItem = ({
             // Bottom row
             (subtitle || bottomRightText)
             && (
-              <div className={classStyles.bottomRow || ''}>
-                <div className={classStyles.bottomColumn || ''}>
+              <div className={(!isSmallContent && classes.bottomRow) || ''}>
+                <div className={classes.bottomColumn || ''}>
                   <Typography
                     variant="caption"
-                    className={`${classStyles.noMargin || ''} ${classStyles.smallFont || ''}`}
+                    className={`${classes.noMargin || ''} ${classes.smallFont || ''}`}
                     component="p"
                     aria-hidden="true"
                   >
@@ -127,9 +126,9 @@ const ResultItem = ({
                 {
                   bottomRightText
                   && (
-                  <div className={`${classStyles.rightColumn || ''} ${classStyles.bottomColumn || ''}`}>
+                  <div className={`${(!isSmallContent && classes.rightColumn) || ''} ${classes.bottomColumn || ''}`}>
                     <Typography
-                      className={`${classStyles.smallFont || ''} ${classStyles.marginLeft || ''}`}
+                      className={`${classes.smallFont || ''} ${(!isSmallContent && classes.marginLeft) || ''}`}
                       component="p"
                       variant="caption"
                       aria-hidden="true"

@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Typography, withStyles } from '@material-ui/core';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { Map } from '@material-ui/icons';
 import { fetchUnitEvents } from '../../redux/actions/event';
 import { fetchSelectedUnit, changeSelectedUnit } from '../../redux/actions/selectedUnit';
 import { fetchAccessibilitySentences } from '../../redux/actions/selectedUnitAccessibility';
@@ -31,6 +32,7 @@ import ServiceMapButton from '../../components/ServiceMapButton';
 import UnitIcon from '../../components/SMIcon/UnitIcon';
 import TabLists from '../../components/TabLists';
 import calculateDistance from '../../utils/calculateDistance';
+import { AddressIcon } from '../../components/SMIcon';
 
 class UnitView extends React.Component {
   constructor(props) {
@@ -137,7 +139,7 @@ class UnitView extends React.Component {
 
   renderDetailTab() {
     const {
-      getLocaleText, eventsData, navigator, reservations, unit,
+      getLocaleText, intl, unit, classes,
     } = this.props;
 
     if (!unit || !unit.complete) {
@@ -145,68 +147,8 @@ class UnitView extends React.Component {
     }
 
     return (
-      <>
-        {/* Show on map button for mobile */}
-        <MobileComponent>
-          <ServiceMapButton
-            onClick={(e) => {
-              e.preventDefault();
-              this.setState({ centered: false });
-              if (navigator) {
-                navigator.push('unit', { id: unit.id, query: '?map=true' });
-              }
-            }}
-          >
-            <FormattedMessage id="general.showOnMap" />
-          </ServiceMapButton>
-        </MobileComponent>
-
-        {/* View Components */}
-        <Highlights unit={unit} getLocaleText={getLocaleText} />
-        <ContactInfo unit={unit} />
-        <Description unit={unit} getLocaleText={getLocaleText} />
-        <ElectronicServices unit={unit} />
-        <Reservations
-          listLength={10}
-          reservations={reservations}
-          getLocaleText={getLocaleText}
-        />
-        <Events listLength={5} eventsData={eventsData} />
-      </>
-    );
-  }
-
-  renderAccessibilityTab() {
-    const {
-      accessibilitySentences,
-      unit,
-    } = this.props;
-
-    if (!unit || !unit.complete || !accessibilitySentences) {
-      return <></>;
-    }
-
-    return (
-      <AccessibilityInfo titleAlways data={accessibilitySentences} headingLevel={4} />
-    );
-  }
-
-  renderServiceTab() {
-    const {
-      getLocaleText, unit,
-    } = this.props;
-
-    if (!unit || !unit.complete) {
-      return <></>;
-    }
-
-    return (
-      <>
-        <Services
-          listLength={10}
-          unit={unit}
-          getLocaleText={getLocaleText}
-        />
+      <div className={classes.content}>
+        {/* Contract type */}
         <Container margin text>
           <Typography variant="body2">
             {
@@ -220,7 +162,83 @@ class UnitView extends React.Component {
             }
           </Typography>
         </Container>
-      </>
+
+        {/* View Components */}
+        <ContactInfo unit={unit} intl={intl} />
+        <Highlights unit={unit} getLocaleText={getLocaleText} />
+        <Description unit={unit} getLocaleText={getLocaleText} />
+        <ElectronicServices unit={unit} />
+      </div>
+    );
+  }
+
+  renderAccessibilityTab() {
+    const {
+      accessibilitySentences,
+      unit,
+      classes,
+    } = this.props;
+
+    if (!unit || !unit.complete || !accessibilitySentences) {
+      return <></>;
+    }
+
+    return (
+      <div className={classes.content}>
+        <AccessibilityInfo titleAlways data={accessibilitySentences} headingLevel={4} />
+      </div>
+    );
+  }
+
+  renderServiceTab() {
+    const {
+      eventsData, getLocaleText, reservations, unit, classes,
+    } = this.props;
+
+    if (!unit || !unit.complete) {
+      return <></>;
+    }
+
+    return (
+      <div className={classes.content}>
+        <Services
+          listLength={10}
+          unit={unit}
+          getLocaleText={getLocaleText}
+        />
+        <Reservations
+          listLength={10}
+          reservations={reservations}
+          getLocaleText={getLocaleText}
+        />
+        <Events listLength={5} eventsData={eventsData} />
+      </div>
+    );
+  }
+
+  renderMobileButtons = () => {
+    const { navigator, unit, classes } = this.props;
+    return (
+      <MobileComponent>
+        <div className={classes.mobileButtonArea}>
+          <ServiceMapButton
+            text={<FormattedMessage id="general.showOnMap" />}
+            icon={<Map />}
+            onClick={(e) => {
+              e.preventDefault();
+              this.setState({ centered: false });
+              if (navigator) {
+                navigator.openMap();
+              }
+            }}
+          />
+          {/* Feedback button
+          <ServiceMapButton
+            text={<FormattedMessage id="home.send.feedback" />}
+            icon={<Mail />}
+          /> */}
+        </div>
+      </MobileComponent>
     );
   }
 
@@ -237,14 +255,15 @@ class UnitView extends React.Component {
     const icon = didMount && unit ? <UnitIcon unit={unit} /> : null;
     const distance = this.formatDistanceString(calculateDistance(unit, userLocation));
 
-    const TopBar = (
-      <div className={`${classes.topBar} sticky`}>
+    const TopArea = (
+      <div className={`${classes.topArea} sticky`}>
         <DesktopComponent>
-          <SearchBar placeholder={intl.formatMessage({ id: 'search.placeholder' })} />
-          <TitleBar icon={icon} title={title} primary distance={distance} />
+          <SearchBar />
+          <div className={classes.topPadding} />
+          <TitleBar icon={<AddressIcon className={classes.icon} />} title={title} distance={distance} />
         </DesktopComponent>
         <MobileComponent>
-          <TitleBar icon={icon} title={correctUnit ? title : ''} primary backButton />
+          <TitleBar icon={icon} title={correctUnit ? title : ''} backButton />
         </MobileComponent>
       </div>
     );
@@ -253,7 +272,7 @@ class UnitView extends React.Component {
       return (
         <div className={classes.root}>
           <div className="Content">
-            {TopBar}
+            {TopArea}
             <p>
               <FormattedMessage id="general.loading" />
             </p>
@@ -280,11 +299,11 @@ class UnitView extends React.Component {
           title: intl.formatMessage({ id: 'accessibility' }),
         },
         {
-          ariaLabel: intl.formatMessage({ id: 'service.plural' }),
+          ariaLabel: intl.formatMessage({ id: 'service.tab' }),
           component: this.renderServiceTab(),
           data: null,
           itemsPerPage: null,
-          title: intl.formatMessage({ id: 'service.plural' }),
+          title: intl.formatMessage({ id: 'service.tab' }),
         },
       ];
       return (
@@ -292,7 +311,7 @@ class UnitView extends React.Component {
           data={tabs}
           headerComponents={(
             <>
-              {TopBar}
+              {TopArea}
               {/* Unit image */}
               {
                 unit.picture_url
@@ -313,8 +332,9 @@ class UnitView extends React.Component {
                   </div>
                 )
               }
+              {this.renderMobileButtons()}
             </>
-        )}
+          )}
         />
       );
     }
@@ -322,7 +342,7 @@ class UnitView extends React.Component {
     return (
       <div className={classes.root}>
         <div className="Content">
-          {TopBar}
+          {TopArea}
           <Typography color="primary" variant="body1">
             <FormattedMessage id="unit.details.notFound" />
           </Typography>
@@ -355,7 +375,7 @@ const mapStateToProps = (state) => {
     map,
     navigator,
     reservations,
-    userLocation: user.position,
+    userLocation: user.position.coordinates,
   };
 };
 

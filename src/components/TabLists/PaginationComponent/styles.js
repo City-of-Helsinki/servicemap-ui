@@ -26,7 +26,7 @@ export default theme => ({
     textDecoration: 'none',
   },
   pageElementActive: {
-    color: 'red',
+    color: 'rgb(176, 0, 33)',
     cursor: 'auto',
     textDecoration: 'underline',
   },

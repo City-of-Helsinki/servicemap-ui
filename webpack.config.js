@@ -13,6 +13,8 @@ const SERVICEMAP_API = 'https://api.hel.fi/servicemap/v2';
 const EVENTS_API = 'https://api.hel.fi/linkedevents/v1';
 const RESERVATIONS_API = 'https://api.hel.fi/respa/v1';
 
+const PRODUCTION_PREFIX = 'SM';
+
 const js = {
   
   test: /\.(js|mjs|jsx|ts|tsx)$/,
@@ -102,7 +104,8 @@ const serverConfig = {
       'ACCESSIBILITY_SENTENCE_API': ACCESSIBILITY_SENTENCE_API,
       'SERVICEMAP_API': SERVICEMAP_API,
       'EVENTS_API': EVENTS_API,
-      'RESERVATIONS_API': RESERVATIONS_API
+      'RESERVATIONS_API': RESERVATIONS_API,
+      'PRODUCTION_PREFIX': PRODUCTION_PREFIX,
     }),
   ]
 };
@@ -133,7 +136,8 @@ const clientConfig = {
       'ACCESSIBILITY_SENTENCE_API': ACCESSIBILITY_SENTENCE_API,
       'SERVICEMAP_API': SERVICEMAP_API,
       'EVENTS_API': EVENTS_API,
-      'RESERVATIONS_API': RESERVATIONS_API
+      'RESERVATIONS_API': RESERVATIONS_API,
+      'PRODUCTION_PREFIX': PRODUCTION_PREFIX,
     }),
   ]
 };

@@ -50,9 +50,12 @@ export default {
   'sorting.accessibility.desc': 'Esteettömin ensin',
   'sorting.alphabetical.asc': 'Käänteinen aakkosjärjestys',
   'sorting.alphabetical.desc': 'Aakkosjärjestys',
+  'sorting.distance.asc': 'Lähin ensin',
   'sorting.match.desc': 'Osuvin ensin',
 
   // General
+  'general.frontPage': 'Etusivu',
+  'general.menu': 'Valikko',
   'general.back': 'Palaa',
   'general.back.address': 'Palaa osoitenäkymään',
   'general.back.home': 'Palaa aloitusnäkymään',
@@ -65,6 +68,8 @@ export default {
   'general.backToStart': 'Palaa sivun alkuun',
   'general.cancel': 'Peruuta',
   'general.close': 'Sulje',
+  'general.yes': 'Kyllä',
+  'general.no': 'Ei',
   'general.closeSettings': 'Sulje asetukset',
   'general.fetching': 'Ladataan tietoja...',
   'general.home': 'Koti',
@@ -75,9 +80,9 @@ export default {
   'general.pageTitles.search': 'Hakutulosnäkymä',
   'general.pageTitles.unit': 'Toimipistenäkymä',
   'general.pageTitles.service': 'Palvelunäkymä',
+  'general.pageTitles.serviceTree': 'Palveluluettelo',
   'general.pageTitles.event': 'Tapahtumanäkymä',
   'general.pageTitles.address': 'Osoitenäkymä',
-  'general.pageTitles.list.services': 'Palvelulista ',
   'general.pageTitles.list.events': 'Tapahtumalista ',
   'general.pageTitles.list.reservations': 'Varauslista',
   // General - Pagination
@@ -94,20 +99,25 @@ export default {
   'general.new.tab': 'Aukeaa uuteen välilehteen',
   'general.time.short': 'klo',
   'general.save': 'Tallenna',
-  'general.save.changes': 'Tallenna muutokset',
+  'general.save.changes': 'Tallenna asetukset',
   'general.save.changes.done': 'Muutokset tallennettu!',
   'general.save.confirmation': 'Haluatko tallentaa muutokset?',
+  'general.search': 'Hae',
   'general.distance.meters': 'Metrin päässä',
   'general.distance.kilometers': 'Kilometrin päässä',
 
   // Home
-  'home.buttons.settings': 'Esteettömyys ja kaupunki asetukset',
-  'home.buttons.services': 'Kaikki palvelut',
+  'home.buttons.settings': 'Kaupunki-, kartta- ja esteettömyysasetukset',
+  'home.buttons.services': 'Palveluluettelo',
   'home.buttons.closeByServices': 'Lähellä olevat palvelut',
   'home.example.title': 'Esimerkkihakuja',
   'home.example.search': 'Hae hakusanalla',
   'home.message': 'Terveisiä palvelukartan kehittäjiltä',
   'home.send.feedback': 'Lähetä palautetta',
+
+  // Location
+  'location.notFound': 'Sijaintia ei löytynyt',
+  'location.notAllowed': 'Sijaintia ei sallittu',
 
   // Map
   'map': 'Kartta',
@@ -143,12 +153,17 @@ export default {
   }`,
   'unit.events.more': 'Näytä lisää tapahtumia',
   'unit.homepage': 'Kotisivu',
+  'unit.homepage.missing': 'Kotisivua ei ilmoitettu',
   'unit.picture': 'Kuva toimipisteestä: ',
   'unit.description': 'Tietoa toimipisteestä',
   'unit.address': 'Osoite',
+  'unit.address.missing': 'Osoitetta ei ilmoitettu',
   'unit.phone': 'Puhelinnumero',
+  'unit.phone.missing': 'Puhelinnumeroa ei ilmoitettu',
   'unit.email': 'Sähköpostiosoite',
+  'unit.email.missing': 'Sähköpostiosoitetta ei ilmoitettu',
   'unit.opening.hours': 'Aukioloajat',
+  'unit.opening.hours.missing': 'Aukioloaikoja ei ilmoitettu',
   'unit.opening.hours.info': 'Lisätietoa aukioloajoista',
   'unit.contact': 'Yhteyshenkilö',
   'unit.school.year': 'Lukuvuosi',
@@ -173,6 +188,8 @@ export default {
 
   // Search
   'search': 'Hae',
+  'search.arrowLabel': 'Tarkenna',
+  'search.cancelText': 'Tyhjennä hakukenttä',
   'search.notFoundWith': 'Ei osumia haulle "{query}".',
   'search.placeholder': 'Hae palvelua tai toimipistettä',
   'search.info': `{count, plural,
@@ -214,6 +231,8 @@ export default {
   'search.started': 'Haku aloitettu',
   'search.infoText': 'Näytetään {count} hakutulosta sanalla: ',
   'search.infoTextNode': 'Näytetään {count} hakutulosta palveluilla: ',
+  'search.searchbar.headerText': 'Pääkaupunkiseudun kaikki julkiset palvelut ulottuvillasi.',
+  'search.searchbar.infoText': 'Hae palveluita, toimipisteitä tai osoitteita',
   'search.suggestions.suggest': 'Tarkoititko..?',
   'search.suggestions.expand': 'Hakuehdotukset',
   'search.suggestions.loading': 'Ladataan ehdotuksia',
@@ -238,9 +257,30 @@ export default {
   'service.plural': 'Palvelut',
   'service.nearby': 'Lähellä olevat palvelut',
   'service.units.empty': 'Palvelulla ei ole toimipisteitä',
+  'service.tab': 'Palvelut ja tapahtumat',
+
+  // Service tree
+  'services': 'Palveluluettelo',
+  'services.selections': `{count, plural,
+    one {Olet thenyt (#) valinnan}
+    other {Olet thenyt (#) valintaa}
+  }`,
+  'services.selections.delete': 'Poista kaikki valinnat',
+  'services.search': 'Tee haku',
 
   // Settings
   'settings': 'Asetukset',
+  'settings.citySettings': 'Kaupunki',
+  'settings.citySettings.long': 'Kaupunkiasetukset',
+  'settings.mapSettings': 'Karttapohja',
+  'settings.mapSettings.long': 'Kartta-asetukset',
+  'settings.accessibilitySettings': 'Esteettömyysasetukset',
+  'settings.accessibilitySettings.long': 'Esteettömyysasetukset',
+  'settings.all.long': 'Asetukset',
+  'settings.amount': `{count, plural,
+    one {# valinta}
+    other {# valintaa}
+  }`,
   'settings.accessibility': 'Minua koskevat esteettömyystiedot',
   'settings.sense.title': 'Aistirajoitteet',
   'settings.sense.hearing': 'Käytän kuulolaitetta',

@@ -1,157 +1,146 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Button, Typography, AppBar, Toolbar,
+  Button, Typography, AppBar, Toolbar, ButtonBase, NoSsr,
 } from '@material-ui/core';
-import { Map, AccessibilityNew } from '@material-ui/icons';
+import { Map, Menu, Close } from '@material-ui/icons';
 import { FormattedMessage } from 'react-intl';
 import I18n from '../../i18n';
-import { generatePath } from '../../utils/path';
 import HomeLogo from '../Logos/HomeLogo';
 import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
-
+import { getIcon } from '../SMIcon';
+import fetchAddress from '../../views/MapView/utils/fetchAddress';
+import DrawerMenu from '../DrawerMenu';
 
 class TopBar extends React.Component {
-  renderSettingsButton = () => {
-    const { settingsOpen, toggleSettings, classes } = this.props;
-    const combinedClassName = `${classes.button}${settingsOpen ? ` ${classes.buttonSettings}` : ''}`;
+  state={ drawerOpen: false }
+
+  renderSettingsButtons = () => {
+    const {
+      settingsOpen, classes, toggleSettings, settings,
+    } = this.props;
+
+    const settingsCategories = [
+      { type: 'citySettings', settings: [settings.helsinki, settings.espoo, settings.vantaa, settings.kauniainen] },
+      { type: 'mapSettings', settings: settings.mapType },
+      { type: 'accessibilitySettings', settings: [settings.mobility, settings.colorblind, settings.hearingAid, settings.visuallyImpaired] },
+    ];
+
+    return (
+      settingsCategories.map(category => (
+        <Button
+          id={`SettingsButton${category.type}`}
+          key={`SettingsButton${category.type}`}
+          aria-pressed={settingsOpen === category.type}
+          disableFocusRipple
+          className={settingsOpen === category.type
+            ? classes.settingsButtonPressed
+            : classes.settingsButton
+                      }
+          classes={{ label: classes.buttonLabel }}
+          onClick={() => {
+            toggleSettings(category.type);
+            setTimeout(() => {
+              const button = document.getElementById(`SettingsButton${category.type}`);
+              const settings = document.getElementsByClassName('SettingsTitle')[0];
+              if (settings) {
+                // Focus on settings title
+                settings.firstChild.focus();
+              } else {
+                button.focus();
+              }
+            }, 1);
+          }}
+        >
+          <Typography variant="subtitle1" style={{ color: 'inherit' }}>
+            <FormattedMessage id={`settings.${category.type}`} />
+          </Typography>
+          {category.type === 'mapSettings'
+            ? (
+              <span className={classes.iconTextContainer}>
+                {getIcon(category.settings, { className: classes.smallIcon })}
+                <Typography>
+                  <FormattedMessage id={`settings.map.${category.settings}`} />
+                </Typography>
+              </span>
+            )
+            : (
+              <Typography>
+                <FormattedMessage id="settings.amount" values={{ count: category.settings.filter(i => i !== false).length }} />
+              </Typography>
+            )}
+        </Button>
+      )));
+  }
+
+  renderMapButton = () => {
+    const {
+      classes, navigator, location, settingsOpen, toggleSettings, breadcrumb,
+    } = this.props;
+    const mapPage = location.search.indexOf('map=true') > -1;
     return (
       <Button
-        id="SettingsButton"
-        aria-pressed={settingsOpen}
-        className={combinedClassName}
+        aria-hidden
+        className={mapPage ? classes.toolbarButtonPressed : classes.toolbarButton}
         classes={{ label: classes.buttonLabel }}
-        color="inherit"
         onClick={(e) => {
           e.preventDefault();
-          toggleSettings();
-
-          setTimeout(() => {
-            const button = document.getElementById('SettingsButton');
-            const settings = document.getElementsByClassName('SettingsContent')[0];
-            if (settings) {
-              // Focus on settings title
-              settings.firstChild.focus();
-            } else {
-              button.focus();
-            }
-          }, 1);
+          if (settingsOpen) {
+            toggleSettings();
+          }
+          if (mapPage) {
+            navigator.closeMap(breadcrumb.length ? 'replace' : null);
+          } else {
+            navigator.openMap();
+          }
         }}
       >
-        <AccessibilityNew className={classes.buttonSettingsIcon} />
+        <Map />
         <Typography color="inherit" variant="body2">
-          <FormattedMessage id="settings" />
+          <FormattedMessage id="map" />
         </Typography>
       </Button>
     );
   }
 
-  renderDesktopBar = () => {
-    const { classes, match, topNav } = this.props;
-    const { params } = match;
-    const lng = params && params.lng;
-
+  renderMenuButton = () => {
+    const { classes } = this.props;
+    const { drawerOpen } = this.state;
     return (
-      <AppBar className={classes.desktopNav}>
-        <Toolbar className={classes.toolbar}>
-          <div style={topNav} className={classes.topNavLeft}>
-            <div className={classes.logoContainer}>
-              {/* Jump link to main content for screenreaders
-                  Must be first interactable element on page */}
-              <a id="site-title" href="#view-title" className="sr-only">
-                <Typography variant="srOnly">
-                  <FormattedMessage id="general.skipToContent" />
-                </Typography>
-              </a>
-
-              {/* Home logo link to home view */}
-              <a href={generatePath('home', lng)} className={`focus-dark-background ${classes.logoHomeLink}`}>
-                <HomeLogo aria-hidden="true" className={classes.logo} />
-                <Typography className="sr-only" color="inherit" component="h1" variant="body1">
-                  <FormattedMessage id="app.title" />
-                </Typography>
-              </a>
-            </div>
-            {this.renderLanguages()}
-            {this.renderSettingsButton()}
-
-          </div>
-          <div className={classes.topNavRight}>
-            <a href="https://forms.gle/roe9XNrZGQWBhMBJ7" rel="noopener noreferrer" target="_blank" className={classes.feedbackLink}>
-              <p className={classes.feedbackText}>
-                <FormattedMessage id="general.give.feedback" />
-              </p>
-            </a>
-          </div>
-        </Toolbar>
-      </AppBar>
+      <Button
+        className={drawerOpen ? classes.toolbarButtonPressed : classes.toolbarButton}
+        classes={{ label: classes.buttonLabel }}
+        onClick={() => this.toggleDrawerMenu()}
+      >
+        {drawerOpen ? (
+          <>
+            <Close />
+            <Typography color="inherit" variant="body2">
+              <FormattedMessage id="general.close" />
+            </Typography>
+          </>
+        ) : (
+          <>
+            <Menu />
+            <Typography color="inherit" variant="body2">
+              <FormattedMessage id="general.menu" />
+            </Typography>
+          </>
+        )}
+      </Button>
     );
-  };
-
-  renderMobileBar = () => {
-    const {
-      classes, location, navigator, settingsOpen, toggleSettings,
-    } = this.props;
-    const mapPage = location.pathname.indexOf('/map') > -1;
-    const mapButtonClass = `${classes.button} ${mapPage && !settingsOpen ? classes.buttonMap : ''}`;
-
-    if (location.pathname.length < 5 || location.pathname.indexOf('/map') > -1) {
-      return (
-        <AppBar className={classes.mobileNav}>
-          <Toolbar className={classes.toolbar}>
-
-            <div className={classes.topNavLeftMobile}>
-              {/* TODO: remove this inline style once we get the correct icon */}
-              <div className={classes.homeLogoContainer}>
-                <HomeLogo mobile aria-hidden="true" className={classes.logo} />
-              </div>
-              {this.renderLanguages()}
-            </div>
-
-            <div className={classes.topNavRightMobile}>
-              {this.renderSettingsButton()}
-              {/* Map button */}
-              <Button
-                className={mapButtonClass}
-                classes={{ label: classes.buttonLabel }}
-                color="inherit"
-                onClick={(e) => {
-                  e.preventDefault();
-                  if (settingsOpen) {
-                    toggleSettings();
-                    navigator.push('map');
-                  } else if (mapPage) {
-                    navigator.push('home');
-                  } else {
-                    navigator.push('map');
-                  }
-                }}
-              >
-                <Map />
-                <Typography color="inherit" variant="body2">
-                  <FormattedMessage id="map" />
-                </Typography>
-              </Button>
-            </div>
-
-          </Toolbar>
-        </AppBar>
-      );
-    } return (null);
-  };
+  }
 
   renderLanguages = () => {
     const { classes, i18n, location } = this.props;
     return (
-      <div className={classes.languages}>
+      <>
         {i18n.availableLocales
-          .filter(locale => locale !== i18n.locale)
           .map(locale => (
-            <Button
+            <ButtonBase
               role="link"
+              className={locale !== i18n.locale ? classes.greyText : ''}
               key={locale}
-              color="inherit"
-              variant="text"
               onClick={() => {
                 const newLocation = location;
                 const newPath = location.pathname.replace(/^\/[a-zA-Z]{2}\//, `/${locale}/`);
@@ -159,26 +148,151 @@ class TopBar extends React.Component {
                 window.location = `${newLocation.pathname}${newLocation.search}`;
               }}
             >
-              <Typography color="inherit" variant="body2" className={classes.noTextTransform}>
+              <Typography color="inherit">
                 {i18n.localeText(locale)}
               </Typography>
-            </Button>
+            </ButtonBase>
           ))}
-      </div>
+      </>
     );
   }
+
+  renderDrawerMenu = (pageType) => {
+    const { drawerOpen } = this.state;
+    const { toggleSettings, settingsOpen } = this.props;
+    return (
+      <DrawerMenu
+        isOpen={drawerOpen}
+        pageType={pageType}
+        toggleDrawerMenu={this.toggleDrawerMenu}
+        toggleSettings={toggleSettings}
+        settingsOpen={settingsOpen}
+        handleNavigation={this.handleNavigation}
+      />
+    );
+  }
+
+  handleNavigation = (target, data) => {
+    const {
+      getLocaleText, navigator, currentPage, toggleSettings, location,
+    } = this.props;
+
+    // Hide settings and map if open
+    toggleSettings();
+    if (location.search.indexOf('map=true') > -1) {
+      navigator.closeMap();
+    }
+
+    switch (target) {
+      case 'home':
+        if (currentPage !== 'home') {
+          navigator.push('home');
+        } else {
+          setTimeout(() => {
+            document.getElementById('view-title').focus();
+          }, 1);
+        }
+        break;
+
+      case 'address':
+        fetchAddress({ lat: data.latitude, lng: data.longitude })
+          .then((data) => {
+            navigator.push('address', {
+              municipality: data.street.municipality,
+              street: getLocaleText(data.street.name),
+              number: data.number,
+            });
+          });
+        break;
+
+      case 'services':
+        if (currentPage !== 'serviceTree') {
+          navigator.push('serviceTree');
+        }
+        break;
+
+      default:
+        break;
+    }
+  }
+
+
+  toggleDrawerMenu = () => {
+    const { drawerOpen } = this.state;
+    setTimeout(() => {
+      this.setState({ drawerOpen: !drawerOpen });
+    }, 1);
+  }
+
+  renderTopBar = (pageType) => {
+    const { classes, smallScreen } = this.props;
+    return (
+      <>
+        <AppBar className={classes.appBar}>
+          {/* Toolbar black area */}
+          <Toolbar className={classes.toolbarBlack}>
+            <div className={classes.toolbarBlackContainer}>
+              <ButtonBase role="link" onClick={() => this.handleNavigation('home')}>
+                <Typography color="inherit">
+                  <FormattedMessage id="general.frontPage" />
+                </Typography>
+              </ButtonBase>
+              <Typography aria-hidden color="inherit">|</Typography>
+              {this.renderLanguages()}
+              <Typography aria-hidden color="inherit">|</Typography>
+              {/* Contrast button implementation
+                <ButtonBase role="link" onClick={() => console.log('change contrast')}>
+                  <Typography color="inherit">Kontrasti</Typography>
+                </ButtonBase> */}
+            </div>
+          </Toolbar>
+
+          {/* Toolbar white area */}
+          <Toolbar disableGutters className={pageType === 'mobile' ? classes.toolbarWhiteMobile : classes.toolbarWhite}>
+            <HomeLogo dark aria-hidden="true" className={classes.logo} />
+            <MobileComponent>
+              <div className={classes.mobileButtonContainer}>
+                {this.renderMapButton()}
+                {this.renderMenuButton()}
+              </div>
+              {this.renderDrawerMenu(pageType)}
+            </MobileComponent>
+            <DesktopComponent>
+              <NoSsr>
+                {!smallScreen ? (
+                  <div className={classes.settingsButtonContainer}>
+                    { this.renderSettingsButtons()}
+                  </div>
+                ) : (
+                  <>
+                    <div className={classes.mobileButtonContainer}>
+                      {this.renderMenuButton()}
+                    </div>
+                    {this.renderDrawerMenu(pageType)}
+                  </>
+                )}
+              </NoSsr>
+            </DesktopComponent>
+          </Toolbar>
+        </AppBar>
+        {/* This empty toolbar fixes the issue where App bar hides the top page content */}
+        <Toolbar className={pageType === 'mobile' ? classes.alignerMobile : classes.aligner} />
+      </>
+    );
+  }
+
 
   render() {
     return (
       <>
         <MobileComponent>
           <>
-            {this.renderMobileBar()}
+            {this.renderTopBar('mobile')}
           </>
         </MobileComponent>
         <DesktopComponent>
           <>
-            {this.renderDesktopBar()}
+            {this.renderTopBar('desktop')}
           </>
         </DesktopComponent>
       </>
@@ -190,17 +304,20 @@ TopBar.propTypes = {
   i18n: PropTypes.instanceOf(I18n),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
-  match: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
-  topNav: PropTypes.objectOf(PropTypes.any).isRequired,
-  settingsOpen: PropTypes.bool,
+  settingsOpen: PropTypes.string,
+  settings: PropTypes.objectOf(PropTypes.any).isRequired,
   toggleSettings: PropTypes.func.isRequired,
+  currentPage: PropTypes.string.isRequired,
+  getLocaleText: PropTypes.func.isRequired,
+  breadcrumb: PropTypes.arrayOf(PropTypes.any).isRequired,
+  smallScreen: PropTypes.bool.isRequired,
 };
 
 TopBar.defaultProps = {
   i18n: null,
   navigator: null,
-  settingsOpen: false,
+  settingsOpen: null,
 };
 
 export default TopBar;
