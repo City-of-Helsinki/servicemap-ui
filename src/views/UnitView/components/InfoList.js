@@ -98,20 +98,20 @@ class InfoList extends React.Component {
       if (data.length > 0) {
         return (
           <TitledList title={title} titleComponent={titleComponent}>
-            {data.map((data, i) => {
-              if (data.value && data.type) {
-                const text = this.formString(data.value, intl);
-                const srText = this.formSrString(data, intl);
+            {data.map((item, i) => {
+              if (item.value && item.type) {
+                const text = this.formString(item.value, intl);
+                const srText = this.formSrString(item, intl);
 
                 if (text !== '') {
                   return (
                     <SimpleListItem
-                      key={data.type + data.id}
-                      icon={getItemIconData(data.type, data.value)}
-                      link={!!data.value.www || !!data.value.phone}
+                      key={item.type + item.id}
+                      icon={getItemIconData(item.type, item.value)}
+                      link={!!item.value.www || !!item.value.phone}
                       text={text}
                       srText={srText}
-                      handleItemClick={() => this.handleItemClick(data.value)}
+                      handleItemClick={() => this.handleItemClick(item.value)}
                       divider={i + 1 !== data.length} // Dont add divider if last item
                     />
                   );

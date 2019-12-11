@@ -52,7 +52,7 @@ const ExpandedSuggestions = (props) => {
   const generateSuggestions = (query) => {
     resetSuggestions();
 
-    if (query && query.length > 2) {
+    if (query && query.length > 1) {
       setLoading('suggestions');
 
       if (fetchController.current) {

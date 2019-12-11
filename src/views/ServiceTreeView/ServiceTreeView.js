@@ -286,6 +286,7 @@ const ServiceTreeView = ({
           </List>
         </Collapse>
         <ServiceMapButton
+          text="Tee haku"
           disabled={!selectedList.length}
           onClick={() => {
             setTreeState({ selected: selectedList, opened });
@@ -298,9 +299,7 @@ const ServiceTreeView = ({
             color: '#000',
             borderRadius: 5,
           }}
-        >
-          Tee haku
-        </ServiceMapButton>
+        />
       </div>
       <List disablePadding>
         {services && services.map(service => (

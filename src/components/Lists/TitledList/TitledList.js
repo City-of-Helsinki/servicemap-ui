@@ -49,20 +49,20 @@ const TitledList = ({
         }
       </div>
       {divider ? (
-        <Divider aria-hidden="true" className={classes.marginHorizontal} />
+        <Divider aria-hidden="true" />
       ) : null }
 
       <List disablePadding>
         {list}
       </List>
       {shortened && showMoreOnClick && (
-        <ServiceMapButton onClick={(e) => {
-          e.preventDefault();
-          showMoreOnClick();
-        }}
-        >
-          {buttonText}
-        </ServiceMapButton>
+        <ServiceMapButton
+          text={buttonText}
+          onClick={(e) => {
+            e.preventDefault();
+            showMoreOnClick();
+          }}
+        />
       )}
     </>
   );

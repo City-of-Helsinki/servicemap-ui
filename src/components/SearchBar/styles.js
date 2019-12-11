@@ -3,9 +3,10 @@ export default theme => ({
     color: theme.palette.primary.contrastText,
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor: theme.palette.primary.main,
+    background: 'linear-gradient(340.58deg, #0B7BED 0%, #146CE8 67.04%, #1964E6 100%)',
     padding: theme.spacing.unitTriple,
     paddingTop: 0,
+    boxShadow: '0 2px 4px 0 rgba(0,0,0,0.5)',
   },
   mobileRoot: {
     backgroundColor: theme.palette.primary.main,
@@ -49,7 +50,6 @@ export default theme => ({
     color: '#2242C7',
   },
   infoText: {
-    backgroundColor: theme.palette.primary.main,
     justifyContent: 'center',
     display: 'flex',
     flexDirection: 'column',

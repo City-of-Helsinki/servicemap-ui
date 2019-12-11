@@ -264,6 +264,15 @@ export default {
   'service.units.empty': 'Service doesn\'t have units',
   'service.tab': 'Services and events',
 
+  // Service tree
+  'services': 'Palveluluettelo', // TODO: translate
+  'services.selections': `{count, plural,
+      one {Olet thenyt (#) valinnan}
+      other {Olet thenyt (#) valintaa}
+    }`, // TODO: translate
+  'services.selections.delete': 'Poista kaikki valinnat', // TODO: translate
+  'services.search': 'Tee haku', // TODO: translate
+
   // Settings
   'settings': 'Settings',
   'settings.citySettings': 'City',
