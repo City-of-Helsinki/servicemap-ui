@@ -50,9 +50,8 @@ export const APIHandlers = {
   units: {
     url: `${config.serviceMapAPI.root}/unit/`,
     options: {
-      page_size: 100,
+      page_size: 200,
     },
-
   },
   node: {
     url: `${config.serviceMapAPI.root}/unit/`,
