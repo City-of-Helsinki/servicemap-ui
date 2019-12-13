@@ -51,12 +51,23 @@ class UnitMarkers extends React.Component {
                       offset={[0, -36]}
                       permanent
                     >
-                      <Typography variant="subtitle1">
-                        {getLocaleText(unit.name)}
-                      </Typography>
-                      <Typography variant="body2">
-                        {getLocaleText(unit.street_address)}
-                      </Typography>
+                      {
+                        unit.name
+                        && (
+                          <Typography variant="subtitle1">
+                            {getLocaleText(unit.name)}
+                          </Typography>
+
+                        )
+                      }
+                      {
+                        unit.street_address
+                        && (
+                          <Typography variant="body2">
+                            {getLocaleText(unit.street_address)}
+                          </Typography>
+                        )
+                      }
                     </Tooltip>
                   )
                 }
