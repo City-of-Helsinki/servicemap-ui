@@ -9,7 +9,7 @@ if (typeof window !== 'undefined') {
 }
 
 const CreateMap = (mapType) => {
-  const options = mapTypes[mapType];
+  const options = mapTypes[mapType] ? mapTypes[mapType] : mapTypes.servicemap;
 
   // Functions for leaflet crs generation
   const bounds = L.bounds(

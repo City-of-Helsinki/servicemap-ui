@@ -3,7 +3,7 @@ import LocalStorageUtility from './localStorage';
 const ALLOWED = {
   mobility: [null, 'wheelchair', 'reduced_mobility', 'rollator', 'stroller'],
   city: [null, 'helsinki', 'espoo', 'vantaa', 'kauniainen'],
-  map: ['servicemap', 'ortoImage', 'guideMap'],
+  map: ['servicemap', 'ortographic', 'guideMap'],
 };
 
 const ACCESSIBILITY_MAPPING = {

@@ -306,7 +306,7 @@ export default {
   'settings.city.kauniainen': 'Kauniainen',
   'settings.map.title': 'Karta',
   'settings.map.servicemap': 'Servicekarta',
-  'settings.map.ortoImage': 'Flygbild',
+  'settings.map.ortographic': 'Flygbild',
   'settings.map.guideMap': 'Guidekarta',
   'settings.aria.changed': 'Settings have changed. Remember to save', // TODO: Translate
   'settings.aria.closed': 'Settings closed', // TODO: Translate
