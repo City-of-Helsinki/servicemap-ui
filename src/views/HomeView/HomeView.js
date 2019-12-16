@@ -13,11 +13,6 @@ import ServiceMapButton from '../../components/ServiceMapButton';
 import PaperButton from '../../components/PaperButton';
 
 class HomeView extends React.Component {
-  componentDidMount() {
-    const { setCurrentPage } = this.props;
-    setCurrentPage('home');
-  }
-
   onExapmleItemClick = (e, searchText) => {
     e.preventDefault();
     const {
@@ -146,7 +141,6 @@ export default injectIntl(HomeView);
 // Typechecking
 HomeView.propTypes = {
   fetchUnits: PropTypes.func,
-  setCurrentPage: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
