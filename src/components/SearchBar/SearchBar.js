@@ -203,7 +203,7 @@ SearchBar.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   placeholder: PropTypes.string.isRequired,
   searchRef: PropTypes.objectOf(PropTypes.any),
-  previousSearch: PropTypes.string,
+  previousSearch: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   expandSearch: PropTypes.string,
   primary: PropTypes.bool,
   getLocaleText: PropTypes.func.isRequired,
