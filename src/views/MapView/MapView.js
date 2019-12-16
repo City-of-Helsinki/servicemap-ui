@@ -21,6 +21,7 @@ import UserMarker from './components/UserMarker';
 import fetchAddress from './utils/fetchAddress';
 import { isEmbed } from '../../utils/path';
 import AddressMarker from './components/AddressMarker';
+import { parseSearchParams } from '../../utils';
 
 
 const MapView = (props) => {
@@ -29,6 +30,7 @@ const MapView = (props) => {
     currentPage,
     getLocaleText,
     intl,
+    location,
     settings,
     addressTitle,
     addressUnits,
@@ -126,7 +128,10 @@ const MapView = (props) => {
       map.defaultZoom = mapObject.options.zoom;
       setPrevMap(map);
     }
-    const newMap = CreateMap(settings.mapType);
+    // Search param map value
+    const spMap = parseSearchParams(location.search).map || false;
+
+    const newMap = CreateMap(spMap || settings.mapType);
     setMapObject(newMap);
   };
 
@@ -314,6 +319,7 @@ MapView.propTypes = {
   highlightedUnit: PropTypes.objectOf(PropTypes.any),
   intl: intlShape.isRequired,
   isMobile: PropTypes.bool,
+  location: PropTypes.objectOf(PropTypes.any).isRequired,
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   serviceUnits: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
