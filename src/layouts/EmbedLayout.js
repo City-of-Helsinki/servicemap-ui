@@ -10,6 +10,7 @@ import EventDetailView from '../views/EventDetailView';
 import SearchView from '../views/SearchView';
 import UnitView from '../views/UnitView';
 import ServiceView from '../views/ServiceView';
+import DivisionView from '../views/DivisionView';
 
 const createContentStyles = (
   isSmallScreen, landscape, mobileMapOnly, fullMobileMap, settingsOpen,
@@ -98,6 +99,15 @@ const EmbedLayout = () => {
                 <>
                   <PageHandler page="address" />
                   <AddressView embed />
+                </>
+              )}
+            />
+            <Route
+              path="*/embed/division/:city/:area"
+              render={() => (
+                <>
+                  <PageHandler page="division" />
+                  <DivisionView />
                 </>
               )}
             />

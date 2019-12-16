@@ -63,7 +63,7 @@ const MapView = (props) => {
     let mapUnits = [];
     let unitGeometry = null;
 
-    if (currentPage === 'search') {
+    if (currentPage === 'search' || currentPage === 'division') {
       mapUnits = unitList;
     } else if (currentPage === 'address') {
       mapUnits = addressUnits;
