@@ -9,7 +9,7 @@ const paths = {
     regex: /\/[a-zA-Z]{2}\/map/
   },
   search: {
-    generate: data => `/search${data.query ? `?q=${data.query}` : ''}${data.nodes ? `?nodes=${data.nodes.join()}`: ''}`,
+    generate: data => `/search${data.query ? `?q=${data.query}` : ''}${data.service_node ? `?service_node=${data.service_node.join(',')}`: ''}`,
     regex: /\/[a-zA-Z]{2}\/search/
   },
   unit: {

@@ -289,7 +289,7 @@ const ServiceTreeView = ({
           disabled={!selectedList.length}
           onClick={() => {
             setTreeState({ selected: selectedList, opened });
-            navigator.push('search', { nodes: ids });
+            navigator.push('search', { service_node: ids });
           }}
           style={{
             width: 250,

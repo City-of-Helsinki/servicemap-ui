@@ -42,6 +42,68 @@ class SearchView extends React.Component {
       fetchUnits, units, map,
     } = this.props;
     const searchData = this.getSearchParam();
+    const {
+      location,
+    } = this.props;
+    const searchParams = parseSearchParams(location.search);
+
+    const {
+      category,
+      municipality,
+      service,
+      service_node,
+    } = searchParams;
+
+    const options = {};
+
+    // Parse service
+    if (service) {
+      options.service = service;
+    }
+
+    // Parse service_node
+    if (service_node) {
+      options.service_node = service_node;
+    }
+
+    // Parse municipality
+    if (municipality) {
+      options.municipality = municipality;
+    }
+
+    if (category) {
+      const data = category.split(',');
+
+      // Parse services
+      const services = data.reduce((result, item) => {
+        if (item.indexOf('service:') === 0) {
+          result.push(item.split(':')[1]);
+        }
+        return result;
+      }, []);
+
+      if (services.length) {
+        options.service = services.join(',');
+      }
+
+      // Parse serviceNodes
+      const serviceNodes = data.reduce((result, item) => {
+        if (item.indexOf('service_node:') === 0) {
+          result.push(item.split(':')[1]);
+        }
+        return result;
+      }, []);
+
+      if (serviceNodes.length) {
+        options.service_node = serviceNodes.join(',');
+      }
+    }
+
+    if (Object.keys(options).length) {
+      const search = Object.keys(options).map(key => (options[key]));
+      fetchUnits(search.join(','), 'params', null, options);
+    }
+
     if (this.shouldFetch()) {
       if (searchData.type === 'search') {
         fetchUnits(searchData.query);
@@ -69,10 +131,8 @@ class SearchView extends React.Component {
     const searchParams = parseSearchParams(location.search);
     if (searchParams.q) {
       return { type: 'search', query: searchParams.q };
-    } if (searchParams.nodes) {
-      return { type: 'node', query: searchParams.nodes };
     }
-    return null;
+    return { type: 'params', query: null };
   }
 
   // Check if view will fetch data because sreach params has changed
@@ -150,7 +210,7 @@ class SearchView extends React.Component {
       <Container className={classes.noVerticalPadding}>
         <Container className={classes.noVerticalPadding}>
           <Typography align="left" variant="subtitle1" component="p">
-            <FormattedMessage id="search.notFoundWith" values={{ query: previousSearch }} />
+            <FormattedMessage id={typeof previousSearch === 'string' ? 'search.notFoundWith' : 'search.notFound'} values={{ query: previousSearch }} />
           </Typography>
         </Container>
         <Divider aria-hidden="true" />
@@ -233,7 +293,7 @@ class SearchView extends React.Component {
             <Typography variant="srOnly" component="h3">
               <FormattedMessage id="search.resultInfo" />
             </Typography>
-            {!(searchParam.type === 'node' && !nodeNames) && (
+            {!((searchParam.type === 'params') && !nodeNames) && (
               <div aria-live="polite" aria-label={`${intl.formatMessage({ id: infoTextId }, { count: unitCount })} ${searchParam.query}`} className={classes.infoContainer}>
                 <Typography aria-hidden className={`${classes.infoText} ${classes.bold}`}>
                   <FormattedMessage id={infoTextId} values={{ count: unitCount }} />
@@ -443,7 +503,7 @@ SearchView.propTypes = {
   isFetching: PropTypes.bool,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   max: PropTypes.number,
-  previousSearch: PropTypes.string,
+  previousSearch: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   units: PropTypes.arrayOf(PropTypes.any),
   map: PropTypes.objectOf(PropTypes.any),
   match: PropTypes.objectOf(PropTypes.any).isRequired,

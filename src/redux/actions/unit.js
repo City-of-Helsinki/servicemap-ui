@@ -1,4 +1,4 @@
-import { searchFetch, nodeFetch } from '../../utils/fetch';
+import { searchFetch, unitsFetch } from '../../utils/fetch';
 import { saveSearchToHistory } from '../../components/SearchBar/previousSearchData';
 import { units } from './fetchDataActions';
 
@@ -12,6 +12,7 @@ export const fetchUnits = (
   searchQuery = null,
   searchType = null,
   abortController = null,
+  options = null,
 ) => async (dispatch, getState)
 => {
   const onStart = () => dispatch(isFetching(searchQuery));
@@ -41,9 +42,9 @@ export const fetchUnits = (
   );
 
   // Fetch data
-  if (searchType === 'node') {
-    nodeFetch(
-      { service_node: searchQuery },
+  if (searchType === 'params') {
+    unitsFetch(
+      options,
       onStartNode,
       onSuccessNode,
       onError,
@@ -51,17 +52,17 @@ export const fetchUnits = (
       null,
       abortController,
     );
-  } else {
-    searchFetch(
-      { q: searchQuery, language: locale || 'fi' },
-      onStart,
-      onSuccess,
-      onError,
-      onNext,
-      null,
-      abortController,
-    );
+    return;
   }
+  searchFetch(
+    { q: searchQuery, language: locale || 'fi' },
+    onStart,
+    onSuccess,
+    onError,
+    onNext,
+    null,
+    abortController,
+  );
 };
 
 export const setNewSearchData = data => async (dispatch) => {
