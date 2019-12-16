@@ -91,30 +91,28 @@ class InfoList extends React.Component {
       data, title, titleComponent, intl,
     } = this.props;
     if (data.length > 0) {
-      const filteredData = data.filter(item => Object.keys(item).length > 0 && item.value);
-
       // Assign id for each item
-      for (let i = 0; i < filteredData.length; i += 1) {
-        filteredData[i].id = i;
+      for (let i = 0; i < data.length; i += 1) {
+        data[i].id = i;
       }
-      if (filteredData.length > 0) {
+      if (data.length > 0) {
         return (
           <TitledList title={title} titleComponent={titleComponent}>
-            {filteredData.map((data, i) => {
-              if (data.value && data.type) {
-                const text = this.formString(data.value, intl);
-                const srText = this.formSrString(data, intl);
+            {data.map((item, i) => {
+              if (item.value && item.type) {
+                const text = this.formString(item.value, intl);
+                const srText = this.formSrString(item, intl);
 
                 if (text !== '') {
                   return (
                     <SimpleListItem
-                      key={data.type + data.id}
-                      icon={getItemIconData(data.type, data.value)}
-                      link={!!data.value.www || !!data.value.phone}
+                      key={item.type + item.id}
+                      icon={getItemIconData(item.type, item.value)}
+                      link={!!item.value.www || !!item.value.phone}
                       text={text}
                       srText={srText}
-                      handleItemClick={() => this.handleItemClick(data.value)}
-                      divider={i + 1 !== filteredData.length} // Dont add divider if last item
+                      handleItemClick={() => this.handleItemClick(item.value)}
+                      divider={i + 1 !== data.length} // Dont add divider if last item
                     />
                   );
                 }

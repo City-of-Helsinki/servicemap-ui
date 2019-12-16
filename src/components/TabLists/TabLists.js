@@ -209,6 +209,9 @@ class TabLists extends React.Component {
     if (!this.tabsRef) {
       return;
     }
+    const { mobile } = this.state;
+    // Sticky relation is different on mobile (root relation) and desktop (current content relation)
+    const appBarHeight = mobile ? config.topBarHeightMobile : 0;
 
     // Reset scroll to avoid scrolled sticky  elements having inconsistent offsetTop
     const elem = document.getElementsByClassName(this.sidebarClass)[0];
@@ -242,7 +245,8 @@ class TabLists extends React.Component {
       // Set new styles and scrollDistance value to state
       this.setState({
         styles: {
-          top: stickyElementPadding,
+          // TODO figure better way to calculate top
+          top: mobile ? Math.max(appBarHeight, stickyElementPadding) : stickyElementPadding,
         },
         tabStyles: {
           minHeight: customTabHeight,
@@ -275,12 +279,10 @@ class TabLists extends React.Component {
     } = this.state;
 
     let fullData = [];
-    const tabsWithSort = [];
 
-    data.forEach((element, i) => {
+    data.forEach((element) => {
       if (element.data && !element.noOrderer) {
         fullData = [...fullData, ...element.data];
-        tabsWithSort.push(i);
       }
     });
     const filteredData = this.filteredData();
@@ -291,7 +293,7 @@ class TabLists extends React.Component {
         }
         {
           fullData.length > 0 && (
-            <ResultOrderer disabled={!tabsWithSort.includes(tabIndex)} />
+            <ResultOrderer disabled={filteredData[tabIndex].noOrderer} />
           )
         }
         <Tabs
@@ -320,6 +322,7 @@ class TabLists extends React.Component {
                       classes={{
                         root: classes.tab,
                         labelContainer: classes.tabLabelContainer,
+                        selected: classes.selected,
                       }}
                       className={classes.tab}
                       label={label}
@@ -333,6 +336,7 @@ class TabLists extends React.Component {
                     classes={{
                       root: classes.tab,
                       labelContainer: classes.tabLabelContainer,
+                      selected: classes.selected,
                     }}
                     label={`${item.title}`}
                   />

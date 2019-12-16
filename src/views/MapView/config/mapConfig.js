@@ -1,3 +1,5 @@
+import config from '../../../../config';
+
 // The default maximum bounds of the map
 const defaultMapBounds = {
   maxLat: 60.68260671624568,
@@ -7,7 +9,7 @@ const defaultMapBounds = {
 };
 
 const mapOptions = {
-  initialPosition: [60.171631597530016, 24.906860323934886],
+  initialPosition: config.initialMapPosition,
   defaultMaxBounds: [
     [defaultMapBounds.maxLat, defaultMapBounds.minLng],
     [defaultMapBounds.maxLat, defaultMapBounds.maxLng],

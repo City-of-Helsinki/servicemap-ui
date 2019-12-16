@@ -3,13 +3,14 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Typography } from '@material-ui/core';
 import { intlShape, FormattedMessage } from 'react-intl';
+import { Map } from '@material-ui/icons';
 import SearchBar from '../../components/SearchBar';
 import { focusDistrict, focusUnit } from '../MapView/utils/mapActions';
 import fetchDistricts from './utils/fetchDistricts';
 import { MobileComponent, DesktopComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import TitleBar from '../../components/TitleBar';
 import TitledList from '../../components/Lists/TitledList';
-import { AddressIcon, MapIcon } from '../../components/SMIcon';
+import { AddressIcon } from '../../components/SMIcon';
 import HeadModifier from '../../utils/headModifier';
 
 import fetchAddressUnits from './utils/fetchAddressUnits';
@@ -34,7 +35,6 @@ const AddressView = (props) => {
     getLocaleText,
     map,
     setAddressLocation,
-    setAddressTitle,
     setHighlightedDistrict,
     setAddressUnits,
     navigator,
@@ -42,9 +42,6 @@ const AddressView = (props) => {
 
   const unmountCleanup = () => {
     setHighlightedDistrict(null);
-    // Add addess name as title to redux, so that when returning to page, correct title is shown
-    const title = addressData && `${getLocaleText(addressData.street.name)} ${addressData.number}, ${addressData.street.municipality}`;
-    setAddressTitle(title);
   };
 
   const fetchAddressDistricts = (lnglat) => {
@@ -85,8 +82,6 @@ const AddressView = (props) => {
           }
           setAddressLocation({ addressCoordinates: address.location.coordinates });
           setAddressData(address);
-          const addressName = `${getLocaleText(address.street.name)} ${address.number}, ${address.street.municipality}`;
-          setAddressTitle(addressName);
           const { coordinates } = address.location;
 
           focusUnit(map, [coordinates[0], coordinates[1]]);
@@ -99,18 +94,6 @@ const AddressView = (props) => {
           setError(intl.formatMessage({ id: 'address.error' }));
         }
       });
-  };
-
-  const mobileShowOnMap = (title) => {
-    const { params } = match;
-    // Set correct title (address or district name) for map title bar to display
-    setAddressTitle(title);
-    navigator.push('address', {
-      municipality: params.municipality,
-      street: params.street,
-      number: params.number,
-      query: '?map=true',
-    });
   };
 
   const showDistrictOnMap = (district, mobile) => {
@@ -127,7 +110,8 @@ const AddressView = (props) => {
     if (mobile && navigator) {
       const districtName = district.name || district.unit.name;
       const title = `${getLocaleText(districtName)} ${intl.formatMessage({ id: `address.list.${district.type}` })}`;
-      mobileShowOnMap(title);
+      // mobileShowOnMap(title);
+      navigator.openMap();
     }
   };
 
@@ -146,7 +130,7 @@ const AddressView = (props) => {
   const renderTopBar = title => (
     <div className={`${classes.topBar} sticky`}>
       <DesktopComponent>
-        <SearchBar placeholder={intl.formatMessage({ id: 'search.placeholder' })} />
+        <SearchBar />
         <TitleBar icon={<AddressIcon className={classes.titleIcon} />} title={error || title} primary />
       </DesktopComponent>
       <MobileComponent>
@@ -246,20 +230,16 @@ const AddressView = (props) => {
       {addressData && units && districts && (
       <MobileComponent>
         <ServiceMapButton
+          text={<FormattedMessage id="general.showOnMap" />}
+          icon={<Map />}
           className={classes.mapButton}
           onClick={() => {
             if (navigator) {
               focusUnit(map, addressData.location.coordinates);
-              const title = `${getLocaleText(addressData.street.name)} ${addressData.number}, ${addressData.street.municipality}`;
-              mobileShowOnMap(title);
+              navigator.openMap();
             }
           }}
-        >
-          <MapIcon className={classes.mapIcon} />
-          <Typography variant="button">
-            <FormattedMessage id="general.showOnMap" />
-          </Typography>
-        </ServiceMapButton>
+        />
       </MobileComponent>
       )}
     </div>
@@ -277,7 +257,6 @@ AddressView.propTypes = {
   getLocaleText: PropTypes.func.isRequired,
   setAddressLocation: PropTypes.func.isRequired,
   setAddressUnits: PropTypes.func.isRequired,
-  setAddressTitle: PropTypes.func.isRequired,
   highlightedDistrict: PropTypes.objectOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   embed: PropTypes.bool,

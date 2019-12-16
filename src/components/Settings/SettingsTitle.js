@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, intlShape } from 'react-intl';
 import {
   Typography,
-  IconButton,
+  Button,
 } from '@material-ui/core';
 import { Close } from '@material-ui/icons';
 import Container from '../Container';
@@ -15,15 +15,17 @@ const SettingsTitle = ({
     {
       close
       && (
-        <IconButton
+        <Button
           aria-label={intl.formatMessage({ id: 'general.closeSettings' })}
-          className={classes.closeButton}
+          className={`${classes.flexBase} ${classes.button}`}
+          classes={{ label: classes.buttonLabel }}
           onClick={() => {
             close();
           }}
         >
           <Close />
-        </IconButton>
+          <FormattedMessage id="general.close" />
+        </Button>
       )
     }
     <Typography id={id} className={classes.titleText} component="h3" variant="caption" align="left" {...typography}>

@@ -1,16 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Typography,
-} from '@material-ui/core';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import { Accessibility, List } from '@material-ui/icons';
-import Container from '../../components/Container';
+import { FormattedMessage } from 'react-intl';
 import SearchBar from '../../components/SearchBar';
 import { MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
-import HomeLogo from '../../components/Logos/HomeLogo';
-import ServiceMapButton from '../../components/ServiceMapButton';
 import PaperButton from '../../components/PaperButton';
+import fetchAddress from '../MapView/utils/fetchAddress';
+import { getIcon } from '../../components/SMIcon';
 
 class HomeView extends React.Component {
   onExapmleItemClick = (e, searchText) => {
@@ -28,44 +23,72 @@ class HomeView extends React.Component {
   }
 
   renderNavigationOptions = () => {
-    const { classes, toggleSettings, navigator } = this.props;
+    const {
+      classes, getLocaleText, toggleSettings, navigator, userLocation,
+    } = this.props;
+    const disableCloseByServices = !userLocation
+      || !userLocation.latitude
+      || !userLocation.longitude;
+
     return (
-      <div className={classes.iconContainer}>
-        <PaperButton
-          text={<FormattedMessage id="home.buttons.settings" />}
-          icon={<Accessibility />}
-          link
-          onClick={() => toggleSettings(true)}
-        />
+      <div className={classes.buttonContainer}>
+        {!disableCloseByServices && (
+          <PaperButton
+            text={<FormattedMessage id="home.buttons.closeByServices" />}
+            icon={getIcon('location', { className: classes.icon })}
+            link
+            onClick={() => {
+              if (disableCloseByServices) {
+                return;
+              }
+              const latLng = { lat: userLocation.latitude, lng: userLocation.longitude };
+              fetchAddress(latLng)
+                .then((data) => {
+                  navigator.push('address', {
+                    municipality: data.street.municipality,
+                    street: getLocaleText(data.street.name),
+                    number: data.number,
+                  });
+                });
+            }}
+          />
+        )}
         <PaperButton
           text={<FormattedMessage id="home.buttons.services" />}
-          icon={<List />}
+          icon={getIcon('serviceList', { className: classes.icon })}
           link
           onClick={() => navigator.push('serviceTree')}
+        />
+        <MobileComponent>
+          <PaperButton
+            text={<FormattedMessage id="home.buttons.settings" />}
+            icon={getIcon('accessibility', { className: classes.icon })}
+            link
+            onClick={() => toggleSettings('all')}
+          />
+        </MobileComponent>
+        <PaperButton
+          text={<FormattedMessage id="home.send.feedback" />}
+          icon={getIcon('feedback', { className: classes.icon })}
+          link
+          onClick={() => window.open('https://forms.gle/roe9XNrZGQWBhMBJ7')}
         />
       </div>
     );
   }
 
   render() {
-    const { intl, classes } = this.props;
-
     return (
       <>
-        <MobileComponent>
-          <Container>
-            <HomeLogo dark aria-label={intl.formatMessage({ id: 'app.title' })} />
-          </Container>
-        </MobileComponent>
         <SearchBar
           hideBackButton
-          placeholder={intl.formatMessage({ id: 'search.placeholder' })}
+          header
         />
         {
           this.renderNavigationOptions()
         }
 
-        <Container paper>
+        {/* <Container paper>
           <Typography
             className={classes.left}
             variant="subtitle1"
@@ -74,6 +97,18 @@ class HomeView extends React.Component {
             {intl.formatMessage({ id: 'home.message' })}
           </Typography>
           <Typography className={classes.left} variant="body2">
+            <b>31.10.2019</b>
+            {' '}
+- Käytettävyystutkimus on tehty ja tulokset analysoitu.
+Olemme tällä hetkellä toteuttamassa käyttäjien huomioita ja meille on
+esimerkiksi tulossa vaihtoehtoisesti valittavaksi mustavalkoinen käyttöliittymä.
+Olemme parantamassa asetusten löydettävyyttä sekä hakutoiminnallisuutta.
+Oli hienoa saada testaukseen monenlaisia käyttäjiä. Kiitos heille kaikille.
+Turusta on tulossa uusi suurikontrastinen karttapohja parantamaan palvelun
+käytettävyyttä heikkonäköisille.
+            {' '}
+            <br />
+            <br />
             <b>25.9.2019</b>
             {' '}
 - Palvelukartan käytettävyystutkimus on käynnissä ajalla 23.9- 4.10.2019.
@@ -123,31 +158,27 @@ kehitämme jatkuvasti saavutettavuutta ja käytettävyyttä.
             ja haluamme palautetta juuri sinulta.
             <br />
           </Typography>
-          <ServiceMapButton
-            onClick={() => window.open('https://forms.gle/roe9XNrZGQWBhMBJ7')}
-            srText={`${intl.formatMessage({ id: 'home.send.feedback' })}: ${intl.formatMessage({ id: 'general.new.tab' })}`}
-          >
-            {intl.formatMessage({ id: 'home.send.feedback' })}
-          </ServiceMapButton>
-        </Container>
+        </Container> */}
       </>
     );
   }
 }
 
 
-export default injectIntl(HomeView);
+export default HomeView;
 
 // Typechecking
 HomeView.propTypes = {
   fetchUnits: PropTypes.func,
-  intl: intlShape.isRequired,
+  getLocaleText: PropTypes.func.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   toggleSettings: PropTypes.func.isRequired,
+  userLocation: PropTypes.objectOf(PropTypes.any),
 };
 
 HomeView.defaultProps = {
   fetchUnits: () => {},
   navigator: null,
+  userLocation: null,
 };

@@ -1,91 +1,118 @@
 import config from '../../../config';
 
-const { topBarHeight } = config;
+const { topBarHeight, topBarHeightMobile } = config;
 
 const styles = () => ({
-  button: {
-    textTransform: 'none',
-    paddingRight: 16,
-    paddingLeft: 16,
+  aligner: {
+    height: topBarHeight,
+  },
+  alignerMobile: {
+    height: topBarHeightMobile,
+  },
+  appBar: {
+    zIndex: 100,
   },
   buttonLabel: {
     display: 'flex',
     flexDirection: 'column',
   },
-  buttonSettings: {
-    backgroundColor: '#4e67d2',
-  },
-  buttonSettingsIcon: {
-    marginRight: 8,
-  },
-  buttonMap: {
-    backgroundColor: '#4e67d2',
-  },
-  desktopNav: {
-    position: 'relative',
-    height: topBarHeight,
-  },
-  feedbackLink: {
-    display: 'inline-block',
-  },
-  feedbackText: {
-    margin: 0,
-    color: 'white',
-    textDecorationColor: 'white',
-  },
-  homeLogoContainer: {
-    paddingTop: 8,
-    alignSelf: 'center',
-  },
-  languages: {
-    flex: '0 0 auto',
-    display: 'flex',
-  },
+  // feedbackLink: {
+  //   display: 'inline-block',
+  // },
+  // feedbackText: {
+  //   margin: 0,
+  //   color: 'white',
+  //   textDecorationColor: 'white',
+  // },
   logo: {
-    marginLeft: 8,
+    height: 29,
   },
-  logoContainer: {
-    flex: '1 0 auto',
-    display: 'flex',
-  },
-  logoHomeLink: {
-    alignSelf: 'center',
-  },
-  noTextTransform: {
-    textTransform: 'none',
-  },
-  mobileNav: {
-    position: 'sticky',
-    height: topBarHeight,
-    top: 0,
-    zIndex: 999999999,
-    backgroundColor: '#2242C7',
-  },
-  toolbar: {
+  toolbarBlack: {
+    minHeight: 28,
+    height: 28,
+    backgroundColor: '#141823',
     padding: 0,
-    display: 'flex',
+    paddingLeft: 19,
+  },
+  toolbarBlackContainer: {
     justifyContent: 'space-around',
-  },
-  topNavLeft: {
     display: 'flex',
-    height: topBarHeight,
-    justifyContent: 'space-between',
+    width: 300,
+    color: '#fff',
   },
-  topNavLeftMobile: {
+  bold: {
+    fontWeight: 'bold',
+  },
+  greyText: {
+    color: '#CCCBCB',
+  },
+  settingsButtonsContainer: {
+    paddingLeft: 50,
+    width: '70%',
     display: 'flex',
-    height: topBarHeight,
-    justifyContent: 'flex-start',
-    width: '60%',
-    marginLeft: 8,
   },
-  topNavRight: {
-    flex: '1 1 auto',
+  settingsButton: {
+    textTransform: 'none',
+    alignItems: 'flex-start',
+    marginRight: '4%',
+    borderRadius: 0,
   },
-  topNavRightMobile: {
+  settingsButtonPressed: {
+    textTransform: 'none',
+    alignItems: 'flex-start',
+    marginRight: '4%',
+    marginBottom: -2,
+    borderBottom: '2px solid',
+    borderRadius: 0,
+  },
+  settingsButtonText: {
+    color: 'inherit',
+    lineHeight: 1,
+  },
+  toolbarWhite: {
+    paddingLeft: 28,
+    width: '100%',
+    height: 70,
+    backgroundColor: '#fff',
+    zIndex: 100,
+  },
+  toolbarWhiteMobile: {
+    paddingLeft: 28,
+    minHeight: 60,
+    height: 60,
+    backgroundColor: '#fff',
+    paddingRight: 0,
+    zIndex: 100,
+  },
+  toolbarButtonPressed: {
+    width: 66,
+    textTransform: 'none',
+    backgroundColor: '#353638',
+    color: '#fff',
+    marginLeft: 4,
+    borderRadius: 0,
+    '&:hover': {
+      backgroundColor: '#353638',
+    },
+  },
+  toolbarButton: {
+    width: 66,
+    textTransform: 'none',
+    color: '#000',
+    marginLeft: 4,
+    borderRadius: 0,
+  },
+  iconTextContainer: {
     display: 'flex',
-    height: topBarHeight,
-    justifyContent: 'flex-end',
-    width: '40%',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  smallIcon: {
+    height: 14,
+    marginRight: 4,
+  },
+  mobileButtonContainer: {
+    marginLeft: 'auto',
   },
 });
 

@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core';
 import { injectIntl } from 'react-intl';
 import setHighlightedDistrict from '../../redux/actions/district';
-import { setAddressTitle, setAddressUnits, setAddressLocation } from '../../redux/actions/address';
+import { setAddressUnits, setAddressLocation } from '../../redux/actions/address';
 import { getLocaleString } from '../../redux/selectors/locale';
 import styles from './styles';
 import AddressView from './AddressView';
@@ -27,6 +27,6 @@ const mapStateToProps = (state) => {
 export default withRouter(withStyles(styles)(injectIntl(connect(
   mapStateToProps,
   {
-    setHighlightedDistrict, setAddressTitle, setAddressUnits, setAddressLocation,
+    setHighlightedDistrict, setAddressUnits, setAddressLocation,
   },
 )(AddressView))));

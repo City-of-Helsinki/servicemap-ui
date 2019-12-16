@@ -13,7 +13,7 @@ const mapStateToProps = (state) => {
     getLocaleText,
     navigator,
     settings,
-    userLocation: user.position,
+    userLocation: user.position.coordinates,
   };
 };
 

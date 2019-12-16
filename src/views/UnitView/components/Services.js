@@ -8,14 +8,20 @@ import ServiceItem from '../../../components/ListItems/ServiceItem';
 const educationNode = 1087;
 
 class Services extends React.Component {
+  serviceRef = null;
+
+  periodRef = null;
+
   constructor(props) {
     super(props);
-    const { unit } = props;
+    const { unit, listLength } = props;
     const { services } = unit;
     this.state = {
       serviceList: services || [],
       subjectList: [],
       periodList: [],
+      serviceShownCount: listLength,
+      periodShownCount: listLength,
     };
   }
 
@@ -73,49 +79,73 @@ class Services extends React.Component {
     list.sort(compare);
   };
 
-  render() {
+  renderServices() {
     const {
-      intl, unit, listLength, navigator,
+      showMoreCount,
     } = this.props;
-    const { serviceList, periodList, subjectList } = this.state;
+    const {
+      serviceList, serviceShownCount,
+    } = this.state;
 
-    const showMoreOnClick = listLength
-      ? (e) => {
-        e.preventDefault();
-        if (navigator) {
-          navigator.push('unit', { id: unit.id, type: 'services' });
-        }
+    const showMoreOnClick = serviceShownCount
+      ? () => {
+        const lastListItem = this.serviceRef.querySelector('li:last-of-type');
+        lastListItem.focus();
+        this.setState({ serviceShownCount: serviceShownCount + showMoreCount });
       } : null;
 
     return (
-      <>
+      <div ref={(ref) => { this.serviceRef = ref; }}>
         {/* Services */}
         {serviceList && serviceList.length > 0 && (
         <TitledList
           title={<FormattedMessage id="unit.services" />}
+          subtitle={<FormattedMessage id="unit.services.count" values={{ count: serviceList.length }} />}
           titleComponent="h4"
-          listLength={listLength}
-          buttonText={<FormattedMessage id="unit.more.services" values={{ count: unit.services.length }} />}
+          listLength={serviceShownCount}
+          buttonText={<FormattedMessage id="unit.services.more" />}
           showMoreOnClick={showMoreOnClick}
         >
           {serviceList.map((service, i) => (
             <ServiceItem
               key={`${service.id}-${service.clarification ? service.clarification.fi : ''}`}
               service={service}
-              divider={!(i + 1 === serviceList.length || i + 1 === listLength)}
+              divider={!(i + 1 === serviceList.length || i + 1 === serviceShownCount)}
+              link={false}
             />
           ))}
         </TitledList>
         )}
+      </div>
+    );
+  }
 
+  renderPeriods() {
+    const {
+      intl, showMoreCount,
+    } = this.props;
+    const {
+      periodList, subjectList, periodShownCount,
+    } = this.state;
+
+    const showMoreOnClick = periodShownCount
+      ? () => {
+        const lastListItem = this.periodRef.querySelector('li:last-of-type');
+        lastListItem.focus();
+        this.setState({ periodShownCount: periodShownCount + showMoreCount });
+      } : null;
+
+    return (
+      <div ref={(ref) => { this.periodRef = ref; }}>
         {/* Education periods */}
         {periodList.map(period => (
           <TitledList
             key={period[0]}
             title={`${intl.formatMessage({ id: 'unit.school.year' })} ${period}`}
+            subtitle={<FormattedMessage id="unit.services.count" values={{ count: subjectList.length }} />}
             titleComponent="h3"
-            listLength={listLength}
-            buttonText={<FormattedMessage id="unit.more.services" values={{ count: unit.services.length }} />}
+            listLength={periodShownCount}
+            buttonText={<FormattedMessage id="unit.services.more" />}
             showMoreOnClick={showMoreOnClick}
           >
             {subjectList.filter(subject => subject.period && `${subject.period[0]}–${subject.period[1]}` === period)
@@ -123,11 +153,25 @@ class Services extends React.Component {
                 <ServiceItem
                   key={`${service.id}-${service.clarification ? service.clarification.fi : ''}`}
                   service={service}
-                  divider={!(i + 1 === subjectList.length || i + 1 === listLength)}
+                  divider={!(i + 1 === subjectList.length || i + 1 === periodShownCount)}
                 />
               ))}
           </TitledList>
         ))}
+      </div>
+    );
+  }
+
+  render() {
+    return (
+      <>
+        {
+          this.renderServices()
+        }
+
+        {
+          this.renderPeriods()
+        }
       </>
     );
   }
@@ -137,13 +181,13 @@ Services.propTypes = {
   unit: PropTypes.objectOf(PropTypes.any).isRequired,
   intl: intlShape.isRequired,
   listLength: PropTypes.number,
-  navigator: PropTypes.objectOf(PropTypes.any),
   getLocaleText: PropTypes.func.isRequired,
+  showMoreCount: PropTypes.number,
 };
 
 Services.defaultProps = {
   listLength: null,
-  navigator: null,
+  showMoreCount: 10,
 };
 
 export default injectIntl(Services);

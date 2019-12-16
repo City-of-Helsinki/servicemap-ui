@@ -1,29 +1,45 @@
 export default theme => ({
   container: {
-    alignItems: 'center',
     display: 'flex',
-    flex: '0 0 auto',
-    height: 'auto',
-    padding: theme.spacing.unit,
+    alignItems: 'center',
+    height: 60,
+    background: 'linear-gradient(to right, #1964E6, #146CE8, #0B7BED)',
+    boxShadow: '0 2px 4px 0 rgba(0,0,0,0.5)',
+    color: '#fff',
+    paddingLeft: theme.spacing.unit,
+    paddingRight: theme.spacing.unit,
+  },
+  textBar: {
+    paddingLeft: 36,
   },
   title: {
+    fontSize: 18,
     color: 'inherit',
     flex: '1 1 auto',
     textTransform: 'capitalize',
     textAlign: 'left',
-    marginLeft: theme.spacing.unitDouble,
+    marginLeft: 10,
   },
   iconButton: {
+    display: 'flex',
     color: 'inherit',
     flex: '0 1 auto',
     padding: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
+    marginLeft: theme.spacing.unit,
   },
   colorPrimary: {
-    backgroundColor: theme.palette.primary.main,
+    background: 'linear-gradient(to right, #1964E6, #146CE8, #0B7BED)',
     color: theme.palette.primary.contrastText,
   },
   colorLight: {
     color: '#000',
+  },
+  distance: {
+    fontSize: 18,
+    color: 'inherit',
+    marginLeft: 'auto',
+    paddingLeft: theme.spacing.unit,
+    paddingTop: 4,
+    marginRight: theme.spacing.unitDouble,
   },
 });

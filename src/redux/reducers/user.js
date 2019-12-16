@@ -3,7 +3,10 @@ const initialState = {
   initialLoad: false,
   locale: 'fi',
   page: 'home',
-  position: null,
+  position: {
+    coordinates: null,
+    allowed: false,
+  },
 };
 
 export default (state = initialState, action) => {

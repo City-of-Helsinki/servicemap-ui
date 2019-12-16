@@ -14,6 +14,7 @@ import {
   Radio,
   FormLabel,
   FormControl,
+  ButtonBase,
 } from '@material-ui/core';
 import isClient, { AddEventListener } from '../../utils';
 import SettingsUtility from '../../utils/settings';
@@ -28,8 +29,8 @@ import {
   KauniainenIcon,
   getIcon,
 } from '../SMIcon';
-import ServiceMapButton from '../ServiceMapButton';
 import SettingsTitle from './SettingsTitle';
+import TitleBar from '../TitleBar';
 
 class Settings extends React.Component {
   events = [];
@@ -96,17 +97,38 @@ class Settings extends React.Component {
     const { currentSettings } = this.state;
     const { settings } = this.props;
     let changed = false;
+    let settingsByType = currentSettings;
 
-    Object.keys(currentSettings).forEach((key) => {
+    if (settings.toggled === 'citySettings') {
+      settingsByType = {
+        helsinki: currentSettings.helsinki,
+        espoo: currentSettings.espoo,
+        vantaa: currentSettings.vantaa,
+        kauniainen: currentSettings.kauniainen,
+      };
+    } else if (settings.toggled === 'mapSettings') {
+      settingsByType = {
+        mapType: currentSettings.mapType,
+      };
+    } else if (settings.toggled === 'accessibilitySettings') {
+      settingsByType = {
+        colorblind: currentSettings.colorblind,
+        hearingAid: currentSettings.hearingAid,
+        mobility: currentSettings.mobility,
+        visuallyImpaired: currentSettings.visuallyImpaired,
+      };
+    }
+
+    Object.keys(settingsByType).forEach((key) => {
       if (changed) {
         return;
       }
 
       const settingsHasKey = Object.prototype.hasOwnProperty.call(settings, key);
-      const currentHasKey = Object.prototype.hasOwnProperty.call(currentSettings, key);
+      const currentHasKey = Object.prototype.hasOwnProperty.call(settingsByType, key);
       if (settingsHasKey && currentHasKey) {
         const a = settings[key];
-        let b = currentSettings[key];
+        let b = settingsByType[key];
         // Handle comparison with no mobility settings set
         if (key === 'mobility' && b === 'none') {
           b = null;
@@ -198,7 +220,8 @@ class Settings extends React.Component {
 
   // eslint-disable-next-line class-methods-use-this
   focusToBaseElement() {
-    const elem = document.getElementById('SettingsButton');
+    const { settings } = this.props;
+    const elem = document.getElementById(`SettingsButton${settings.toggled}`);
     if (elem) {
       setTimeout(() => { elem.focus(); }, 1);
     }
@@ -290,7 +313,7 @@ class Settings extends React.Component {
     this.setAlert(true);
   }
 
-  renderSenseSettings() {
+  renderSenseSettings(close) {
     const { currentSettings } = this.state;
     const { classes, intl } = this.props;
 
@@ -313,17 +336,18 @@ class Settings extends React.Component {
     };
 
     return (
-      <Container>
-        <SettingsTitle
-          id="SenseSettings"
-          classes={classes}
-          close={() => this.toggleSettingsContainer()}
-          intl={intl}
-          titleID="settings.sense.title"
-        />
-        <FormGroup row role="group" aria-labelledby="SenseSettings">
-          <List className={classes.list}>
-            {
+      <>
+        <Container className={classes.formContainer}>
+          <SettingsTitle
+            id="SenseSettings"
+            classes={classes}
+            close={close ? () => this.toggleSettingsContainer() : null}
+            intl={intl}
+            titleID="settings.sense.title"
+          />
+          <FormGroup row role="group" aria-labelledby="SenseSettings">
+            <List className={classes.list}>
+              {
               Object.keys(senseSettingList).map((key) => {
                 if (Object.prototype.hasOwnProperty.call(senseSettingList, key)) {
                   const item = senseSettingList[key];
@@ -354,9 +378,11 @@ class Settings extends React.Component {
                 return null;
               })
             }
-          </List>
-        </FormGroup>
-      </Container>
+            </List>
+          </FormGroup>
+        </Container>
+        <Divider aria-hidden="true" />
+      </>
     );
   }
 
@@ -366,7 +392,7 @@ class Settings extends React.Component {
     return null;
   }
 
-  renderMobilitySettings() {
+  renderMobilitySettings(close) {
     const { currentSettings } = this.state;
     const { classes, intl, setMobility } = this.props;
 
@@ -392,28 +418,30 @@ class Settings extends React.Component {
       });
 
       return (
-        <Container>
-          <FormControl className={classes.noMargin} component="fieldset" fullWidth>
-            <FormLabel>
-              <SettingsTitle
-                classes={classes}
-                titleID="settings.mobility.title"
-                intl={intl}
-              />
-            </FormLabel>
-            <RadioGroup
-              aria-label={intl.formatMessage({ id: 'settings.mobility.title' })}
-              classes={{
-                root: classes.radioGroup,
-              }}
-              name="mobility"
-              value={currentSettings.mobility}
-              onChange={(event, value) => {
-                this.handleChange('mobility', value);
-                this.setAlert(false);
-              }}
-            >
-              {
+        <>
+          <Container className={classes.formContainer}>
+            <FormControl className={classes.noMargin} component="fieldset" fullWidth>
+              <FormLabel>
+                <SettingsTitle
+                  classes={classes}
+                  titleID="settings.mobility.title"
+                  intl={intl}
+                  close={close ? () => this.toggleSettingsContainer() : null}
+                />
+              </FormLabel>
+              <RadioGroup
+                aria-label={intl.formatMessage({ id: 'settings.mobility.title' })}
+                classes={{
+                  root: classes.radioGroup,
+                }}
+                name="mobility"
+                value={currentSettings.mobility}
+                onChange={(event, value) => {
+                  this.handleChange('mobility', value);
+                  this.setAlert(false);
+                }}
+              >
+                {
                 Object.keys(mobilitySettings).map((key) => {
                   if (Object.prototype.hasOwnProperty.call(mobilitySettings, key)) {
                     const item = mobilitySettings[key];
@@ -440,14 +468,16 @@ class Settings extends React.Component {
                   return null;
                 })
               }
-            </RadioGroup>
-          </FormControl>
-        </Container>
+              </RadioGroup>
+            </FormControl>
+          </Container>
+          <Divider aria-hidden="true" />
+        </>
       );
     } return (null);
   }
 
-  renderCitySettings = () => {
+  renderCitySettings = (close) => {
     const { currentSettings } = this.state;
     const { classes, intl } = this.props;
 
@@ -475,16 +505,18 @@ class Settings extends React.Component {
     };
 
     return (
-      <Container>
-        <SettingsTitle
-          classes={classes}
-          intl={intl}
-          id="CitySettings"
-          titleID="settings.city.title"
-        />
-        <FormGroup row role="group" aria-labelledby="CitySettings">
-          <List className={classes.list}>
-            {
+      <>
+        <Container className={classes.formContainer}>
+          <SettingsTitle
+            classes={classes}
+            intl={intl}
+            close={close ? () => this.toggleSettingsContainer() : null}
+            id="CitySettings"
+            titleID="settings.city.title"
+          />
+          <FormGroup row role="group" aria-labelledby="CitySettings">
+            <List className={classes.list}>
+              {
               Object.keys(citySettingsList).map((key) => {
                 if (Object.prototype.hasOwnProperty.call(citySettingsList, key)) {
                   const item = citySettingsList[key];
@@ -515,13 +547,15 @@ class Settings extends React.Component {
                 return null;
               })
             }
-          </List>
-        </FormGroup>
-      </Container>
+            </List>
+          </FormGroup>
+        </Container>
+        <Divider aria-hidden="true" />
+      </>
     );
   };
 
-  renderMapSettings = () => {
+  renderMapSettings = (close) => {
     const { classes, intl, setMapType } = this.props;
     const { currentSettings } = this.state;
 
@@ -538,50 +572,54 @@ class Settings extends React.Component {
       });
 
       return (
-        <Container>
-          <FormControl className={classes.noMargin} component="fieldset" fullWidth>
-            <FormLabel>
-              <SettingsTitle
-                classes={classes}
-                titleID="settings.map.title"
-                intl={intl}
-              />
-            </FormLabel>
-            <RadioGroup
-              aria-label={intl.formatMessage({ id: 'settings.map.title' })}
-              classes={{
-                root: classes.radioGroup,
-              }}
-              name="mapType"
-              value={currentSettings.mapType}
-              onChange={(event, value) => {
-                this.handleChange('mapType', value);
-                this.setAlert(false);
-              }}
-            >
-              {Object.keys(mapSettings).map((key) => {
-                if (Object.prototype.hasOwnProperty.call(mapSettings, key)) {
-                  const item = mapSettings[key];
-                  return (
-                    <FormControlLabel
-                      className={classes.radioLabel}
-                      value={key}
-                      key={key}
-                      control={(<Radio color="primary" />)}
-                      labelPlacement="end"
-                      label={(
-                        <>
-                          {item.icon}
-                          {<FormattedMessage id={item.labelId} />}
-                        </>
+        <>
+          <Container className={classes.formContainer}>
+            <FormControl className={classes.noMargin} component="fieldset" fullWidth>
+              <FormLabel>
+                <SettingsTitle
+                  classes={classes}
+                  titleID="settings.map.title"
+                  close={close ? () => this.toggleSettingsContainer() : null}
+                  intl={intl}
+                />
+              </FormLabel>
+              <RadioGroup
+                aria-label={intl.formatMessage({ id: 'settings.map.title' })}
+                classes={{
+                  root: classes.radioGroup,
+                }}
+                name="mapType"
+                value={currentSettings.mapType}
+                onChange={(event, value) => {
+                  this.handleChange('mapType', value);
+                  this.setAlert(false);
+                }}
+              >
+                {Object.keys(mapSettings).map((key) => {
+                  if (Object.prototype.hasOwnProperty.call(mapSettings, key)) {
+                    const item = mapSettings[key];
+                    return (
+                      <FormControlLabel
+                        className={classes.radioLabel}
+                        value={key}
+                        key={key}
+                        control={(<Radio color="primary" />)}
+                        labelPlacement="end"
+                        label={(
+                          <>
+                            {item.icon}
+                            {<FormattedMessage id={item.labelId} />}
+                          </>
                     )}
-                    />
-                  );
-                } return null;
-              })}
-            </RadioGroup>
-          </FormControl>
-        </Container>
+                      />
+                    );
+                  } return null;
+                })}
+              </RadioGroup>
+            </FormControl>
+          </Container>
+          <Divider aria-hidden="true" />
+        </>
       );
     } return null;
   }
@@ -592,48 +630,36 @@ class Settings extends React.Component {
 
     return (
       <Container className={`SettingsConfirmation ${containerClasses}`} paper>
-        <Typography className={classes.confirmationText}><FormattedMessage id="general.save.confirmation" /></Typography>
-        <Container className={classes.confirmationButtonContainer}>
-          <Button
-            className={classes.flexBase}
-            color="primary"
-            onClick={() => this.resetCurrentSelections()}
-            variant="text"
-          >
-            <FormattedMessage id="general.cancel" />
-          </Button>
-          <Button
-            className={classes.flexBase}
-            color="primary"
+        <Typography>
+          <FormattedMessage id="general.save.changes" />
+        </Typography>
+        <Container className={`${classes.confirmationButtonContainer} ${classes.right}`}>
+          <ButtonBase
+            className={`${classes.button} ${classes.confirmationButton} ${classes.primary} ${classes.flexBase}`}
             onClick={() => this.saveSettings()}
-            variant="text"
           >
-            <FormattedMessage id="general.save" />
-          </Button>
+            <Typography color="inherit" variant="caption"><FormattedMessage id="general.yes" /></Typography>
+          </ButtonBase>
+          <ButtonBase
+            className={`${classes.button} ${classes.confirmationButton} ${classes.secondary} ${classes.flexBase}`}
+            onClick={() => this.resetCurrentSelections()}
+          >
+            <Typography color="inherit" variant="caption"><FormattedMessage id="general.no" /></Typography>
+          </ButtonBase>
         </Container>
       </Container>
     );
   }
 
   renderSaveAlert() {
-    const { classes, intl, isMobile } = this.props;
-
+    const { classes, isMobile } = this.props;
     const containerClasses = `SettingsAlert ${classes.alert} ${isMobile ? classes.stickyMobile : ''}`;
     const typographyClasses = `${classes.flexBase} ${classes.alertText}`;
-    const buttonClasses = `${classes.flexBase} ${classes.bold} ${classes.alertColor}`;
 
     return (
       <Container aria-hidden="true" className={containerClasses} paper>
         <Typography color="inherit" className={typographyClasses}><FormattedMessage id="general.save.changes.done" /></Typography>
-        <Button
-          aria-label={intl.formatMessage({ id: 'general.closeSettings' })}
-          className={buttonClasses}
-          color="primary"
-          onClick={() => {
-            this.setAlert(false);
-          }}
-          variant="text"
-        >
+        <Button onClick={() => this.setAlert(false)} className={classes.right} color="inherit" variant="text">
           <FormattedMessage id="general.close" />
         </Button>
       </Container>
@@ -641,80 +667,79 @@ class Settings extends React.Component {
   }
 
   render() {
-    const {
-      classes,
-      intl,
-    } = this.props;
+    const { classes, settings } = this.props;
     const { alert, containerStyles, saved } = this.state;
+    const settingsPage = settings.toggled;
     const settingsHaveChanged = this.settingsHaveChanged();
     const settingsHaveBeenSaved = !settingsHaveChanged && saved;
     const showAlert = !settingsHaveChanged && alert;
 
-    return (
+    let pageContent = (
       <>
-        <div id="SettingsContainer" className={`${classes.container}`} style={containerStyles}>
-          <>
-            {
-              showAlert
-              && (
-                this.renderSaveAlert()
-              )
-            }
-            {
-              settingsHaveChanged
-              && (
-                this.renderConfirmationBox()
-              )
-            }
-            <div className="SettingsContent">
-              <Typography variant="srOnly" component="h2" tabIndex="-1">
-                <FormattedMessage id="settings" />
-              </Typography>
-              {
-                  this.renderLanguageSettings()
-                }
-
-              {
-                  this.renderSenseSettings()
-                }
-
-              <Divider aria-hidden="true" />
-
-              {
-                  this.renderMobilitySettings()
-                }
-
-              {
-                  this.renderCitySettings()
-                }
-              {
-                  this.renderMapSettings()
-                }
-              <ServiceMapButton className={classes.contentButton} color="primary" variant="contained" onClick={() => this.saveSettings()} disabled={!settingsHaveChanged}>
-                <FormattedMessage id="general.save.changes" />
-              </ServiceMapButton>
-              <ServiceMapButton aria-label={intl.formatMessage({ id: 'general.closeSettings' })} className={classes.contentButton} color="primary" variant="contained" onClick={() => this.toggleSettingsContainer()}>
-                <FormattedMessage id="general.close" />
-              </ServiceMapButton>
-            </div>
-
-            <Typography aria-live="polite" variant="srOnly">
-              {
-                  settingsHaveChanged
-                  && (
-                    <FormattedMessage id="settings.aria.changed" />
-                  )
-                }
-              {
-                  settingsHaveBeenSaved
-                  && (
-                    <FormattedMessage id="settings.aria.saved" />
-                  )
-                }
-            </Typography>
-          </>
-        </div>
+        {this.renderSenseSettings('close')}
+        {this.renderMobilitySettings()}
+        {this.renderCitySettings()}
+        {this.renderMapSettings()}
       </>
+    );
+
+    if (settingsPage === 'citySettings') {
+      pageContent = this.renderCitySettings('close');
+    } else if (settingsPage === 'mapSettings') {
+      pageContent = this.renderMapSettings('close');
+    } else if (settingsPage === 'accessibilitySettings') {
+      pageContent = (
+        <>
+          {this.renderSenseSettings('close')}
+          {this.renderMobilitySettings()}
+        </>
+      );
+    }
+
+    return (
+      <div id="SettingsContainer" className={`${classes.container}`} style={containerStyles}>
+        <TitleBar className="SettingsTitle" titleComponent="h2" title={<FormattedMessage id={`settings.${settingsPage}.long`} />} />
+        <>
+          {showAlert && (
+            this.renderSaveAlert()
+          )}
+
+          {settingsHaveChanged && (
+            this.renderConfirmationBox()
+          )}
+
+          {pageContent}
+          <Container className={`${classes.confirmationButtonContainer}`}>
+            <ButtonBase
+              disabled={!settingsHaveChanged}
+              className={`${classes.button} ${classes.confirmationButton} ${settingsHaveChanged ? classes.primary : classes.disabled} ${classes.flexBase}`}
+              onClick={() => this.saveSettings()}
+            >
+              <Typography color="inherit" variant="caption">
+                <FormattedMessage id="general.save.changes" />
+              </Typography>
+            </ButtonBase>
+            <ButtonBase
+              className={`${classes.button} ${classes.confirmationButton} ${classes.secondary} ${classes.flexBase}`}
+              onClick={() => this.toggleSettingsContainer()}
+            >
+              {/* <FormattedMessage id="general.cancel" /> */}
+              <Typography color="inherit" variant="caption">
+                <FormattedMessage id="general.close" />
+              </Typography>
+            </ButtonBase>
+          </Container>
+
+          <Typography aria-live="polite" variant="srOnly">
+            {settingsHaveChanged && (
+              <FormattedMessage id="settings.aria.changed" />
+            )}
+            {settingsHaveBeenSaved && (
+              <FormattedMessage id="settings.aria.saved" />
+            )}
+          </Typography>
+        </>
+      </div>
     );
   }
 }

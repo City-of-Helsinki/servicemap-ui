@@ -17,6 +17,7 @@ import rootReducer from './rootReducer';
 import App from './App';
 import themes from './themes';
 import SettingsUtility from './utils/settings';
+import config from '../config';
 
 const getPreloadedState = () => {
   const state = window.PRELOADED_STATE;
@@ -38,7 +39,9 @@ const store = createStore(rootReducer, preloadedState, applyMiddleware(thunk));
 const app = document.getElementById('app');
 
 // Create a new class name generator.
-const generateClassName = createGenerateClassName();
+const generateClassName = createGenerateClassName({
+  productionPrefix: config.productionPrefix,
+});
 
 const insertCss = (...styles) => {
   const removeCss = styles.map(style => style._insertCss());

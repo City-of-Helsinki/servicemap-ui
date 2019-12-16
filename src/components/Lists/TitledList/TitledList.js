@@ -6,7 +6,15 @@ import {
 import ServiceMapButton from '../../ServiceMapButton';
 
 const TitledList = ({
-  children, classes, title, titleComponent, divider, showMoreOnClick, listLength, buttonText,
+  children,
+  classes,
+  buttonText,
+  title,
+  titleComponent,
+  divider,
+  showMoreOnClick,
+  listLength,
+  subtitle,
 }) => {
   let shortened = false;
   let list = children;
@@ -19,24 +27,42 @@ const TitledList = ({
 
   return (
     <>
-      <Typography
-        className={`${classes.title} ${classes.left}`}
-        component={titleComponent}
-        variant="subtitle1"
-      >
-        {title}
-      </Typography>
+      <div className={`${classes.titleContainer} ${classes.marginHorizontal}`}>
+        <Typography
+          className={`${classes.left} ${classes.marginVertical}`}
+          component={titleComponent}
+          variant="subtitle1"
+        >
+          {title}
+        </Typography>
+        {
+          subtitle
+          && (
+            <Typography
+              className={`${classes.right} ${classes.marginVertical}`}
+              component="p"
+              variant="caption"
+            >
+              {subtitle}
+            </Typography>
+          )
+        }
+      </div>
       {divider ? (
-        <Divider aria-hidden="true" className={classes.left} />
+        <Divider aria-hidden="true" />
       ) : null }
 
       <List disablePadding>
         {list}
       </List>
       {shortened && showMoreOnClick && (
-        <ServiceMapButton onClick={showMoreOnClick}>
-          {buttonText}
-        </ServiceMapButton>
+        <ServiceMapButton
+          text={buttonText}
+          onClick={(e) => {
+            e.preventDefault();
+            showMoreOnClick();
+          }}
+        />
       )}
     </>
   );
@@ -45,6 +71,7 @@ const TitledList = ({
 TitledList.propTypes = {
   children: PropTypes.node.isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
+  subtitle: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
   divider: PropTypes.bool,
   titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']),
@@ -58,6 +85,7 @@ TitledList.defaultProps = {
   divider: true,
   showMoreOnClick: null,
   listLength: null,
+  subtitle: null,
   buttonText: null,
 };
 

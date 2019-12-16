@@ -3,6 +3,7 @@ import React from 'react';
 import {
   Switch, Route,
 } from 'react-router-dom';
+import { injectIntl, intlShape } from 'react-intl';
 import MapView from '../views/MapView';
 import PageHandler from '../views/components/PageHandler';
 import AddressView from '../views/AddressView';
@@ -49,7 +50,7 @@ const createContentStyles = (
   return styles;
 };
 
-const EmbedLayout = () => {
+const EmbedLayout = ({ intl }) => {
   const styles = createContentStyles();
 
   return (
@@ -113,12 +114,18 @@ const EmbedLayout = () => {
             />
           </Switch>
         </div>
-        <div aria-hidden style={styles.map}>
-          <MapView />
+        <div aria-label={intl.formatMessage({ id: 'map.ariaLabel' })} tabIndex="-1" style={styles.map}>
+          <div aria-hidden="true" style={styles.map}>
+            <MapView />
+          </div>
         </div>
       </div>
     </>
   );
 };
 
-export default EmbedLayout;
+EmbedLayout.propTypes = {
+  intl: intlShape.isRequired,
+};
+
+export default injectIntl(EmbedLayout);

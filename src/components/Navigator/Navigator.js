@@ -136,6 +136,30 @@ class Navigator extends React.Component {
     }
   }
 
+  // Add map param to url
+  openMap = () => {
+    const { history } = this.props;
+    const url = new URL(window.location);
+
+    url.searchParams.set('map', 'true');
+    // TODO: better way to normalize spaces in url
+    const searchString = url.search.replace('+', ' ');
+    history.push(url.pathname + searchString);
+  }
+
+  // Remove map param from url
+  closeMap = (replace) => {
+    const { history } = this.props;
+    const url = new URL(window.location);
+
+    url.searchParams.delete('map');
+    if (replace) {
+      history.goBack();
+    } else {
+      history.push(url.pathname + url.search);
+    }
+  }
+
   render = () => null;
 }
 

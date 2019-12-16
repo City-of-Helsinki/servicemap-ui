@@ -62,7 +62,7 @@ export const APIHandlers = {
     options: {
       type: 'event',
       start: 'today',
-      sort: 'start_time',
+      sort: 'end_time',
       include: 'location',
     },
   },

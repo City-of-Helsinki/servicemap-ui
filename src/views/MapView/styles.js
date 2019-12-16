@@ -1,4 +1,5 @@
 import { transitIconSize } from './config/mapConfig';
+import config from '../../../config';
 
 const styles = theme => ({
   map: {
@@ -124,6 +125,12 @@ const styles = theme => ({
   },
   showLocationIcon: {
     color: '#fff',
+  },
+  topArea: {
+    zIndex: 99999999,
+    position: 'fixed',
+    top: config.topBarHeight,
+    width: '100%',
   },
   unitTooltip: {
     padding: theme.spacing.unitDouble,

@@ -2,6 +2,7 @@ import { createSelector } from 'reselect';
 import { getLocaleString } from './locale';
 import { filterEmptyServices, filterCities } from '../../utils/filters';
 import UnitHelper from '../../utils/unitHelper';
+import calculateDistance from '../../utils/calculateDistance';
 
 const isFetching = state => state.units.isFetching;
 const units = state => state.units.data;
@@ -9,8 +10,9 @@ const direction = state => state.sort.direction;
 const order = state => state.sort.order;
 const locale = state => state.user.locale;
 const settings = state => state.settings;
+const userLocation = state => state.user.position.coordinates;
 
-const getOrderedData = (data, direction, order, locale, settings) => {
+const getOrderedData = (data, direction, order, locale, settings, userLocation) => {
   if (!data) {
     throw new Error('Invalid data provided to getOrderedData selector');
   }
@@ -59,6 +61,25 @@ const getOrderedData = (data, direction, order, locale, settings) => {
       }
       break;
     }
+    case 'distance': {
+      results.forEach((element) => {
+        // eslint-disable-next-line no-param-reassign
+        element.distanceFromUser = calculateDistance(element, userLocation);
+      });
+      results.sort((a, b) => {
+        const aDistance = a.distanceFromUser;
+        const bDistance = b.distanceFromUser;
+        if (aDistance < bDistance) return -1;
+        if (aDistance > bDistance) return 1;
+        return 0;
+      });
+
+      // If reversed distance ordering
+      if (direction === 'desc') {
+        results.reverse();
+      }
+      break;
+    }
     // Ordering based on match score
     case 'match': {
       // Using sort_index with assumption that default sort from API is relevance
@@ -72,8 +93,8 @@ const getOrderedData = (data, direction, order, locale, settings) => {
 };
 
 export const getProcessedData = (state, options = {}) => createSelector(
-  [units, isFetching, direction, order, locale, settings],
-  (data, isFetching, direction, order, locale, settings) => {
+  [units, isFetching, direction, order, locale, settings, userLocation],
+  (data, isFetching, direction, order, locale, settings, userLocation) => {
     // Prevent processing data if fetch is in process
     if (isFetching) {
       return [];
@@ -92,7 +113,9 @@ export const getProcessedData = (state, options = {}) => createSelector(
       filteredData = filteredData.filter(filterCities(cities));
     }
 
-    const orderedData = getOrderedData(filteredData, direction, order, locale, settings);
+    const orderedData = getOrderedData(
+      filteredData, direction, order, locale, settings, userLocation,
+    );
     return orderedData;
   },
 )(state);
