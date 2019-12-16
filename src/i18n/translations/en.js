@@ -156,6 +156,7 @@ export default {
 
   // Search
   'search': 'Search',
+  'search.notFound': 'No results for search',
   'search.notFoundWith': 'No results for search "{query}".',
   'search.placeholder': 'Search for services or units',
   'search.info': `{count, plural,
