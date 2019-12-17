@@ -119,7 +119,7 @@ class Sidebar extends React.Component {
         <Route path="/:lng/event/:event" component={Event} />
         <Route path="/:lng/address/:municipality/:street/:number" component={Address} />
         <Route
-          path="/:lng/division/:city/:area"
+          path="/:lng/division/:city?/:area?"
           render={() => (
             <>
               <PageHandler page="division" />

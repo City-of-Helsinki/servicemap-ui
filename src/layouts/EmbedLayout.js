@@ -104,7 +104,7 @@ const EmbedLayout = ({ intl }) => {
               )}
             />
             <Route
-              path="*/embed/division/:city/:area"
+              path="*/embed/division/:city?/:area?"
               render={() => (
                 <>
                   <PageHandler page="division" />
