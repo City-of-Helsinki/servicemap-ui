@@ -293,7 +293,7 @@ MapView.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   currentPage: PropTypes.string.isRequired,
   getLocaleText: PropTypes.func.isRequired,
-  highlightedDistrict: PropTypes.objectOf(PropTypes.any),
+  highlightedDistrict: PropTypes.arrayOf(PropTypes.any),
   highlightedUnit: PropTypes.objectOf(PropTypes.any),
   intl: intlShape.isRequired,
   isMobile: PropTypes.bool,

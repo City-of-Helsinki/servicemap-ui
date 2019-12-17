@@ -101,7 +101,7 @@ const AddressView = (props) => {
     if (!mobile && highlightedDistrict && highlightedDistrict.id === district.id) {
       setHighlightedDistrict(null);
     } else {
-      setHighlightedDistrict(district);
+      setHighlightedDistrict([district]);
     }
 
     const { coordinates } = district.boundary;
@@ -257,7 +257,7 @@ AddressView.propTypes = {
   getLocaleText: PropTypes.func.isRequired,
   setAddressLocation: PropTypes.func.isRequired,
   setAddressUnits: PropTypes.func.isRequired,
-  highlightedDistrict: PropTypes.objectOf(PropTypes.any),
+  highlightedDistrict: PropTypes.arrayOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   embed: PropTypes.bool,
 };
