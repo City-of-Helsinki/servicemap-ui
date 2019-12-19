@@ -17,6 +17,7 @@ import {
 } from '../SMIcon';
 import constants from './constants';
 import SettingsInfoItem from './SettingsInfoItem';
+import isClient from '../../utils';
 
 const SettingsInfo = ({
   classes,
@@ -48,7 +49,8 @@ const SettingsInfo = ({
 
   let totalItems = 0;
 
-  const titleText = accessibilitySettings.length === 0
+  const titleText = isClient()
+    && accessibilitySettings.length === 0
     && citySettings.length === 0
     ? 'settings.info.title.noSettings' : 'settings.info.title';
 
