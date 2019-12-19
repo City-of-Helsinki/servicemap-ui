@@ -20,7 +20,9 @@ const PaperButton = ({
         role={role}
         disabled={disabled}
       >
-        {clonedIcon}
+        <div className={classes.iconContainer}>
+          {clonedIcon}
+        </div>
         <Typography variant="body2" className={classes.text}>
           {text}
         </Typography>

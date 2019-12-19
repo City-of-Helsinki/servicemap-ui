@@ -106,9 +106,9 @@ export default {
   'general.distance.kilometers': 'Kilometrin päässä', // TODO: Translate
 
   // Home
-  'home.buttons.settings': 'Kaupunki-, kartta- ja esteettömyysasetukset', // TODO: Translate
-  'home.buttons.services': 'Palveluluettelo', // TODO: Translate
-  'home.buttons.closeByServices': 'Lähellä olevat palvelut', // TODO: Translate
+  'home.buttons.settings': 'Tallenna omat kaupunki- ja esteettömyysasetuksesi', // TODO: Translate
+  'home.buttons.services': 'Tutustu palveluihin palveluluettelon avulla', // TODO: Translate
+  'home.buttons.closeByServices': 'Näytä lähellä olevat palvelut', // TODO: Translate
   'home.example.title': 'Esimerkkihakuja', // TODO: Translate
   'home.example.search': 'Hae hakusanalla', // TODO: Translate
   'home.message': 'Terveisiä palvelukartan kehittäjiltä', // TODO: Translate

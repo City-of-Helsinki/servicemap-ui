@@ -108,9 +108,9 @@ export default {
   'general.distance.kilometers': 'Kilometers away',
 
   // Home
-  'home.buttons.settings': 'City, map and accessibility settings',
-  'home.buttons.services': 'Service list',
-  'home.buttons.closeByServices': 'Nearby services',
+  'home.buttons.settings': 'Set city and accessibility settings',
+  'home.buttons.services': 'Explore services with service list',
+  'home.buttons.closeByServices': 'Show nearby services',
   'home.example.title': 'Example search phrases',
   'home.example.search': 'Search for',
   'home.message': 'Message from the developers',
