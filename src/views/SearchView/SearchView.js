@@ -43,69 +43,12 @@ class SearchView extends React.Component {
       fetchUnits, units, map,
     } = this.props;
     const searchData = this.getSearchParam();
-    const {
-      location,
-    } = this.props;
-    const searchParams = parseSearchParams(location.search);
 
-    const {
-      category,
-      municipality,
-      service,
-      service_node,
-    } = searchParams;
-
-    const options = {};
-
-    // Parse service
-    if (service) {
-      options.service = service;
-    }
-
-    // Parse service_node
-    if (service_node) {
-      options.service_node = service_node;
-    }
-
-    // Parse municipality
-    if (municipality) {
-      options.municipality = municipality;
-    }
-
-    if (category) {
-      const data = category.split(',');
-
-      // Parse services
-      const services = data.reduce((result, item) => {
-        if (item.indexOf('service:') === 0) {
-          result.push(item.split(':')[1]);
-        }
-        return result;
-      }, []);
-
-      if (services.length) {
-        options.service = services.join(',');
-      }
-
-      // Parse serviceNodes
-      const serviceNodes = data.reduce((result, item) => {
-        if (item.indexOf('service_node:') === 0) {
-          result.push(item.split(':')[1]);
-        }
-        return result;
-      }, []);
-
-      if (serviceNodes.length) {
-        options.service_node = serviceNodes.join(',');
-      }
-    }
+    const options = this.parseQueryDataFromSearchParams();
 
     if (Object.keys(options).length) {
-      const search = Object.keys(options).map(key => (options[key]));
-      fetchUnits(search.join(','), 'params', null, options);
-    }
-
-    if (this.shouldFetch()) {
+      fetchUnits(this.stringifySearchQuery(options), 'params', null, options);
+    } else if (this.shouldFetch()) {
       if (searchData.type === 'search') {
         fetchUnits(searchData.query);
       } else {
@@ -143,15 +86,86 @@ class SearchView extends React.Component {
     if (searchParams.q) {
       return { type: 'search', query: searchParams.q };
     }
-    return { type: 'params', query: null };
+    return { type: 'params', query: searchParams };
+  }
+
+  stringifySearchQuery = (data) => {
+    try {
+      const search = Object.keys(data).map(key => (`${key}:${data[key]}`));
+      return search.join(',');
+    } catch (e) {
+      return '';
+    }
+  }
+
+  parseQueryDataFromSearchParams = (props = null) => {
+    const {
+      location,
+    } = props || this.props;
+    const searchParams = parseSearchParams(location.search);
+
+    const {
+      category,
+      city,
+      municipality,
+      service,
+      service_node,
+    } = searchParams;
+
+    const options = {};
+    // Parse service
+    if (service) {
+      options.service = service;
+    }
+
+    // Parse service_node
+    if (service_node) {
+      options.service_node = service_node;
+    }
+
+    // Parse municipality
+    if (municipality || city) {
+      options.municipality = municipality || city;
+    }
+
+    if (category) {
+      const data = category.split(',');
+
+      // Parse services
+      const services = data.reduce((result, item) => {
+        if (item.indexOf('service:') === 0) {
+          result.push(item.split(':')[1]);
+        }
+        return result;
+      }, []);
+
+      if (services.length) {
+        options.service = services.join(',');
+      }
+
+      // Parse serviceNodes
+      const serviceNodes = data.reduce((result, item) => {
+        if (item.indexOf('service_node:') === 0) {
+          result.push(item.split(':')[1]);
+        }
+        return result;
+      }, []);
+
+      if (serviceNodes.length) {
+        options.service_node = serviceNodes.join(',');
+      }
+    }
+
+    return options;
   }
 
   // Check if view will fetch data because sreach params has changed
   shouldFetch = (props) => {
     const { isFetching, previousSearch } = props || this.props;
     const searchParam = this.getSearchParam(props);
-    if (previousSearch && searchParam && searchParam.type === 'node') {
-      return !isFetching && searchParam && searchParam.query !== previousSearch.searchQuery;
+
+    if (previousSearch && searchParam && searchParam.type === 'params') {
+      return !isFetching && searchParam && this.stringifySearchQuery(this.parseQueryDataFromSearchParams(props)) !== previousSearch.searchQuery;
     }
     return !isFetching && searchParam && searchParam.query !== previousSearch;
   }
