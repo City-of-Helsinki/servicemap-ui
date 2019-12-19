@@ -41,6 +41,7 @@ const MapView = (props) => {
     match,
     findUserLocation,
     userLocation,
+    locale,
   } = props;
 
 
@@ -105,7 +106,7 @@ const MapView = (props) => {
       map.defaultZoom = mapObject.options.zoom;
       setPrevMap(map);
     }
-    const newMap = CreateMap(settings.mapType);
+    const newMap = CreateMap(settings.mapType, locale);
     setMapObject(newMap);
   };
 
@@ -188,7 +189,7 @@ const MapView = (props) => {
         {renderTopBar()}
         <Map
           className={classes.map}
-          key={mapObject.crs.code}
+          key={mapObject.options.name}
           ref={mapRef}
           keyboard={false}
           zoomControl={false}
@@ -302,6 +303,7 @@ MapView.propTypes = {
   unitList: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
   unitsLoading: PropTypes.bool,
   userLocation: PropTypes.objectOf(PropTypes.any),
+  locale: PropTypes.string.isRequired,
 };
 
 MapView.defaultProps = {

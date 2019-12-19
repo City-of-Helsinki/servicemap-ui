@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
 import config from '../../../../config';
+import { isRetina } from '../../../utils';
 
 // The default maximum bounds of the map
 const defaultMapBounds = {
@@ -54,7 +55,7 @@ const mapTypes = {
   servicemap: {
     name: 'servicemap',
     layer: tileLayers.tms32,
-    url: 'https://tiles.hel.ninja/wmts/osm-sm-hq/etrs_tm35fin_hq/{z}/{x}/{y}.png',
+    url: null, // This is generated on getMapOptions
     minZoom: 6,
     maxZoom: 15,
     zoom: 10,
@@ -82,7 +83,7 @@ const mapTypes = {
   },
   guideMap: {
     name: 'guideMap',
-    layer: tileLayers.gk25,
+    layer: tileLayers.guideMapLayer,
     // TODO: maybe have map names and formats as variables from the URL, like in the old version
     url: 'https://kartta.hel.fi/ws/geoserver/avoindata/gwc/service/wmts?layer=avoindata:Karttasarja_PKS&tilematrixset=ETRS-GK25&Service=WMTS&Request=GetTile&Version=1.0.0&TileMatrix=ETRS-GK25:{z}&TileCol={x}&TileRow={y}&Format=image%2Fpng',
     minZoom: 8,
@@ -100,12 +101,33 @@ const mapTypes = {
   },
 };
 
+const getMapOptions = (type, locale) => {
+  const mapOptions = mapTypes[type];
+  // For servicemap, use retina and/or swedish url if needed
+  if (type === 'servicemap') {
+    let stylePath = 'osm-sm/etrs_tm35fin';
+    if (isRetina) {
+      if (locale === 'sv') {
+        stylePath = 'osm-sm-sv-hq/etrs_tm35fin_hq';
+      } else {
+        stylePath = 'osm-sm-hq/etrs_tm35fin_hq';
+      }
+    } else if (locale === 'sv') {
+      stylePath = 'osm-sm-sv/etrs_tm35fin';
+    }
+    // Set new url for servicemap
+    mapOptions.url = `https://tiles.hel.ninja/wmts/${stylePath}/{z}/{x}/{y}.png`;
+  }
+
+  return mapOptions;
+};
+
 const transitIconSize = 30;
 const userIconSize = 50;
 
 export {
   mapOptions,
-  mapTypes,
+  getMapOptions,
   transitIconSize,
   userIconSize,
 };
