@@ -38,9 +38,7 @@ export default {
   'address.districts': 'Areas',
   'address.plural': 'Addresses',
 
-
   // Event
-  'event.nearby': 'Nearby events',
   'event.description': 'Description',
   'event.time': 'Date and time',
   'event.picture': 'Event picture',
@@ -67,6 +65,7 @@ export default {
   'general.back.event': 'Back to event view',
   'general.backToHome': 'Close search and return to beginning',
   'general.backToStart': 'Back to beginning of page',
+  'general.back.serviceTree': 'Back to service list page',
   'general.cancel': 'Cancel',
   'general.close': 'Close',
   'general.yes': 'Yes',
@@ -177,7 +176,6 @@ export default {
   }`,
   'unit.reservations.more': 'Show more reservables', // TODO verify
   'unit.call.number': '(call)',
-  'unit.more.reservations': 'Show all {count} objects', // TODO verify
   'unit.list.services': 'Services',
   'unit.list.events': 'Events',
   'unit.list.reservations': 'Reservable objects', // TODO verify
@@ -256,7 +254,6 @@ export default {
   'search.expand': 'Expand search', // TODO: verify
   'search.closeExpand': 'Return to search',
 
-
   // Service
   'service': 'Service',
   'service.plural': 'Services',
@@ -265,13 +262,18 @@ export default {
   'service.tab': 'Services and events',
 
   // Service tree
-  'services': 'Palveluluettelo', // TODO: translate
+  'services': 'Service list',
   'services.selections': `{count, plural,
-      one {Olet thenyt (#) valinnan}
-      other {Olet thenyt (#) valintaa}
-    }`, // TODO: translate
-  'services.selections.delete': 'Poista kaikki valinnat', // TODO: translate
-  'services.search': 'Tee haku', // TODO: translate
+      one {You have selected (#) service}
+      other {You have selected (#) services}
+    }`,
+  'services.selections.delete': 'Delete',
+  'services.selections.delete.all': 'Clear all selections',
+  'services.selections.delete.selection': 'Delete selection {service}',
+  'services.search': 'Search',
+  'services.search.sr': 'Search with the selected services',
+  'services.search.sr.selected': 'Search with services: {services}',
+
 
   // Settings
   'settings': 'Settings',
@@ -281,7 +283,6 @@ export default {
   'settings.mapSettings.long': 'Map setttings',
   'settings.accessibilitySettings': 'Accessibility settings',
   'settings.accessibilitySettings.long': 'Accessibility settings',
-  'settings.all.long': 'Settings',
   'settings.amount': `{count, plural,
     one {# chosen}
     other {# chosen}

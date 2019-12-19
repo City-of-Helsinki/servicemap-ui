@@ -1,4 +1,21 @@
 export default theme => ({
+  title: {
+    fontSize: 18,
+    color: '#fff',
+    flex: '1 1 auto',
+    textTransform: 'capitalize',
+    textAlign: 'left',
+    paddingBottom: 8,
+  },
+  topArea: {
+    background: 'linear-gradient(340.58deg, #0B7BED 0%, #146CE8 67.04%, #1964E6 100%)',
+    paddingTop: 23,
+    paddingLeft: 21,
+    paddingBottom: 16,
+  },
+  mainContent: {
+    textAlign: 'left',
+  },
   listItem: {
     alignSelf: 'center',
     height: 60,
@@ -6,6 +23,7 @@ export default theme => ({
     display: 'flex',
     flexDirection: 'row',
     padding: 0,
+    paddingLeft: 12,
   },
   level0: {
     backgroundColor: '#fff',
@@ -22,7 +40,7 @@ export default theme => ({
   },
   text0: {
     // textTransform: 'uppercase',
-    paddingLeft: 8,
+    paddingLeft: theme.spacing.unit,
     fontWeight: 'bold',
     // letterSpacing: -0.5,
   },
@@ -36,13 +54,16 @@ export default theme => ({
   iconRight: {
     marginLeft: 'auto',
     marginRight: 16,
-    fontSize: 36,
+    fontSize: 30,
   },
   checkBox: {
-    padding: 0,
-    // backgroundColor: '#fff',
-    // paddingLeft: 0,
-    // paddingRight: 16,
+    width: 40,
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    display: 'flex',
+    position: 'relative',
+    flexShrink: 0,
   },
   checkBoxIcon: {
     margin: -1,
@@ -52,15 +73,55 @@ export default theme => ({
     border: '1px solid #323232;',
     borderRadius: 1,
   },
-  topArea: {
-    backgroundColor: theme.palette.primary.main,
-    paddingTop: 16,
+  checkBoxLines: {
+    height: 'inherit',
+    width: 'inherit',
+    position: 'absolute',
+  },
+  outerLines: {
+    height: '100%',
+    width: 26,
+    flexShrink: 0,
+  },
+  listClickArea: {
+    width: '100%',
+    paddingTop: 8,
+    paddingBottom: 8,
+  },
+  searchButton: {
+    marginTop: 16,
+    marginBottom: 10,
+    marginLeft: 21,
+  },
+  selectionText: {
+    fontSize: 12,
+    paddingRight: theme.spacing.unitDouble,
+    color: '#fff',
+  },
+  deleteText: {
+    fontSize: 10,
+    paddingRight: theme.spacing.unitDouble,
+    color: '#fff',
   },
   bold: {
     fontWeight: 'bold',
   },
+  white: {
+    color: '#fff',
+  },
+  right: {
+    marginLeft: 'auto',
+  },
+  infoContainer: {
+    color: '#fff',
+    display: 'flex',
+  },
   infoText: {
     color: 'inherit',
     marginBottom: 12,
+    marginTop: 12,
+  },
+  selectionsButton: {
+    display: 'flex',
   },
 });

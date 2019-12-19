@@ -39,7 +39,6 @@ export default {
   'address.plural': 'Osoitteet', // TODO: Translate
 
   // Event
-  'event.nearby': 'Nearby events', // TODO: Translate
   'event.description': 'Kuvaus', // TODO: Translate
   'event.time': 'Ajankohta', // TODO: Translate
   'event.picture': 'Tapahtuman kuva', // TODO: Translate
@@ -66,6 +65,7 @@ export default {
   'general.back.event': 'Back to event view', // TODO: Translate
   'general.backToHome': 'Close search and return to beginning', // TODO: Translate
   'general.backToStart': 'Back to beginning of page', // TODO: Translate
+  'general.back.serviceTree': 'Palaa palvelulistausnäkymään', // TODO: Translate
   'general.cancel': 'Cancel', // TODO: Translate
   'general.close': 'Close', // TODO: Translate
   'general.yes': 'Ja',
@@ -267,8 +267,12 @@ export default {
         one {Olet thenyt (#) valinnan}
         other {Olet thenyt (#) valintaa}
       }`, // TODO: translate
-  'services.selections.delete': 'Poista kaikki valinnat', // TODO: translate
+  'services.selections.delete': 'Poista', // TODO: translate
+  'services.selections.delete.all': 'Poista kaikki valinnat', // TODO: translate
+  'services.selections.delete.selection': 'Poista valinta: ', // TODO: translate
   'services.search': 'Tee haku', // TODO: translate
+  'services.search.sr': 'Tee haku valituilla palveluilla', // TODO: translate
+  'services.search.sr.selected': 'Tee haku palveluilla: {services}', // TODO: translate
 
 
   // Settings
@@ -279,7 +283,6 @@ export default {
   'settings.mapSettings.long': 'Kartta-asetukset', // TODO: Translate
   'settings.accessibilitySettings': 'Esteettömyysasetukset', // TODO: Translate
   'settings.accessibilitySettings.long': 'Esteettömyysasetukset', // TODO: Translate
-  'settings.all.long': 'Personifiera',
   'settings.amount': `{count, plural,
     one {# valinta} 
     other {# valintaa}
