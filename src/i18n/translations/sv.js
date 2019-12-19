@@ -252,7 +252,7 @@ export default {
   'search.tryAgainBody.service': 'kirjoita palvelun nimi', // TODO: Translate
   'search.tryAgainBody.address': 'kirjoita osoite, minkä läheltä etsit palvelua', // TODO: Translate
   'search.tryAgainBody.keyword': 'kirjoita avainsanoja, esim. luontopolku, ruotsinkielinen päiväkoti', // TODO: Translate
-  'search.expand': 'Tarkenna hakua', // TODO: Translate
+  'search.expand': 'Hae tarkempia hakuehdotuksia', // TODO: Translate
   'search.closeExpand': 'Palaa hakuun', // TODO: Translate
 
   // Service

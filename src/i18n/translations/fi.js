@@ -249,7 +249,7 @@ export default {
   'search.tryAgainBody.service': 'kirjoita palvelun nimi',
   'search.tryAgainBody.address': 'kirjoita osoite, minkä läheltä etsit palvelua',
   'search.tryAgainBody.keyword': 'kirjoita avainsanoja, esim. luontopolku, ruotsinkielinen päiväkoti',
-  'search.expand': 'Tarkenna hakua',
+  'search.expand': 'Hae tarkempia hakuehdotuksia',
   'search.closeExpand': 'Palaa hakuun',
 
 

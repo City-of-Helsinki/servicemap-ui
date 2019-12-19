@@ -254,7 +254,7 @@ export default {
   'search.tryAgainBody.service': 'write name of service',
   'search.tryAgainBody.address': 'write address close to service you are looking for',
   'search.tryAgainBody.keyword': 'write keywords',
-  'search.expand': 'Expand search', // TODO: verify
+  'search.expand': 'Refine search word', // TODO: verify
   'search.closeExpand': 'Return to search',
 
 
