@@ -86,14 +86,6 @@ const ExpandedSuggestions = (props) => {
     }
   };
 
-  const handleKeyPress = (e) => {
-    // Close suggestion box if tab is pressed in last list result
-    if (e.key === 'Tab' && !(e.shiftKey && e.key === 'Tab')) {
-      e.preventDefault();
-      closeExpandedSearch();
-    }
-  };
-
   const setSearchBarText = () => {
     if (listRef && listRef.current) {
       if (listRef.current.props.children.length && focusedSuggestion !== null) {

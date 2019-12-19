@@ -145,8 +145,38 @@ class SearchView extends React.Component {
     return null;
   }
 
+  toggleExpanded() {
+    const {
+      location,
+      navigator,
+    } = this.props;
+    const searchParams = parseSearchParams(location.search);
+
+    navigator.replace('search', {
+      ...searchParams,
+      expand: this.expandSearchVisible() ? 0 : 1,
+    });
+  }
+
+  expandSearchVisible() {
+    const {
+      location,
+    } = this.props;
+    const searchParams = parseSearchParams(location.search);
+
+    return !!(searchParams.expand && searchParams.expand === '1');
+  }
+
   closeExpandedSearch() {
-    this.setState({ expandSearch: false });
+    if (this.expandSearchVisible()) {
+      this.toggleExpanded();
+    }
+  }
+
+  openExpandedSearch() {
+    if (!this.expandSearchVisible()) {
+      this.toggleExpanded();
+    }
   }
 
   handleSubmit(query) {
@@ -155,7 +185,7 @@ class SearchView extends React.Component {
       this.closeExpandedSearch();
 
       if (navigator) {
-        navigator.push('search', { query });
+        navigator.push('search', { q: query });
       }
     }
   }
@@ -201,10 +231,9 @@ class SearchView extends React.Component {
   }
 
   renderSearchBar() {
-    const { expandSearch } = this.state;
     const { query } = this.props;
 
-    if (expandSearch) {
+    if (this.expandSearchVisible()) {
       return null;
     }
 
@@ -218,7 +247,6 @@ class SearchView extends React.Component {
   }
 
   renderSuggestions() {
-    const { expandSearch } = this.state;
     const { query } = this.props;
 
     return (
@@ -226,7 +254,7 @@ class SearchView extends React.Component {
         closeExpandedSearch={() => this.closeExpandedSearch()}
         searchQuery={query}
         handleSubmit={query => this.handleSubmit(query)}
-        visible={expandSearch}
+        visible={this.expandSearchVisible()}
       />
     );
   }
@@ -275,7 +303,7 @@ class SearchView extends React.Component {
       <div className={classes.suggestionButtonContainer}>
         <SMButton
           role="link"
-          onClick={() => this.setState({ expandSearch: true })}
+          onClick={() => { this.openExpandedSearch(); }}
           messageID="search.expand"
         />
       </div>
@@ -383,6 +411,10 @@ class SearchView extends React.Component {
       return redirect;
     }
 
+    if (this.expandSearchVisible()) {
+      return this.renderSuggestions();
+    }
+
     return (
       <div
         className={classes.root}
@@ -439,6 +471,7 @@ SearchView.propTypes = {
   fetchUnits: PropTypes.func,
   intl: intlShape.isRequired,
   isFetching: PropTypes.bool,
+  location: PropTypes.objectOf(PropTypes.any).isRequired,
   max: PropTypes.number,
   previousSearch: PropTypes.string,
   units: PropTypes.arrayOf(PropTypes.any),

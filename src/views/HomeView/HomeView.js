@@ -25,7 +25,7 @@ class HomeView extends React.Component {
       fetchUnits, navigator,
     } = this.props;
     if (navigator) {
-      navigator.push('search', { query: searchText });
+      navigator.push('search', { q: searchText });
     }
 
     if (searchText && searchText !== '') {
