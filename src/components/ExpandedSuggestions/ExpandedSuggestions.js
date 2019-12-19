@@ -35,15 +35,17 @@ const ExpandedSuggestions = (props) => {
 
   const listRef = useRef(null);
   const fetchController = useRef(null);
+  const titleRef = useRef(null);
 
-  /* TODO: Utilize city information with search queries
-  const cities = [
-    ...settings.helsinki ? ['Helsinki'] : [],
-    ...settings.espoo ? ['Espoo'] : [],
-    ...settings.vantaa ? ['Vantaa'] : [],
-    ...settings.kauniainen ? ['Kauniainen'] : [],
-  ];
-  */
+  useEffect(() => {
+    if (!visible) {
+      return;
+    }
+    const title = document.getElementsByClassName('ExpandedSuggestions-title')[0];
+    if (title) {
+      title.focus();
+    }
+  }, [visible]);
 
   const resetSuggestions = () => {
     setSearchQueries(null);
@@ -115,7 +117,7 @@ const ExpandedSuggestions = (props) => {
   const renderLoading = () => (
     <>
       <div className={classes.expandSearchTop}>
-        <Typography tabIndex="-1" component="h3" className={`${classes.expandTitle} suggestionsTitle`} variant="subtitle1">
+        <Typography tabIndex="-1" component="h3" className={`${classes.expandTitle} ExpandedSuggestions-title`} variant="subtitle1">
           <FormattedMessage id="search.suggestions.expand" />
         </Typography>
         <IconButton
@@ -144,7 +146,7 @@ const ExpandedSuggestions = (props) => {
       return (
         <>
           <div className={classes.expandSearchTop}>
-            <Typography tabIndex="-1" component="h3" className={`${classes.expandTitle} suggestionsTitle`} variant="subtitle1">
+            <Typography tabIndex="-1" component="h3" className={`${classes.expandTitle} ExpandedSuggestions-title`} variant="subtitle1">
               <FormattedMessage id="search.suggestions.expand" />
             </Typography>
             <IconButton
