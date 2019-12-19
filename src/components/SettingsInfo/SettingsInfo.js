@@ -50,7 +50,7 @@ const SettingsInfo = ({
 
   return (
     <>
-      <Divider />
+      <Divider aria-hidden="true" />
       <Container className={classes.container}>
         <Typography
           align="left"
