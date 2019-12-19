@@ -48,19 +48,32 @@ const SettingsInfo = ({
 
   let totalItems = 0;
 
+  const titleText = accessibilitySettings.length === 0
+    && citySettings.length === 0
+    ? 'settings.info.title.noSettings' : 'settings.info.title';
+
   return (
     <>
+      <Typography component="h3" variant="srOnly">
+        <FormattedMessage id="settings.info.heading" />
+      </Typography>
       <Divider aria-hidden="true" />
       <Container className={classes.container}>
         <Typography
           align="left"
+          aria-labelledby="SettingsInfo-srTitle"
           className={classes.title}
-          component="p"
+          component="h3"
           variant="body2"
           onClick={() => toggleSettings('all')}
           role="link"
+          tabIndex="0"
         >
-          <FormattedMessage id="settings.info.title" />
+          <FormattedMessage id={titleText} />
+        </Typography>
+        <Typography id="SettingsInfo-srTitle" variant="srOnly">
+          <FormattedMessage id={titleText} />
+          <FormattedMessage id="settings.aria.open" />
         </Typography>
         <div className={classes.infoItemContainer}>
           {citySettings.length ? citySettings.map((city) => {

@@ -246,9 +246,6 @@ class SearchView extends React.Component {
       <NoSsr>
         {!isFetching && (
           <div align="left" className={classes.searchInfo}>
-            <Typography variant="srOnly" component="h3">
-              <FormattedMessage id="search.resultInfo" />
-            </Typography>
             {!(searchParam.type === 'node' && !nodeNames) && (
               <div aria-live="polite" aria-label={`${intl.formatMessage({ id: infoTextId }, { count: unitCount })} ${searchParam.query}`} className={classes.infoContainer}>
                 <Typography aria-hidden className={`${classes.infoText} ${classes.bold}`}>
@@ -390,11 +387,6 @@ class SearchView extends React.Component {
       <div
         className={classes.root}
       >
-        <Paper className={!isFetching ? classes.noPadding : ''} elevation={1} square aria-live="polite">
-          {
-           !expandSearch && this.renderScreenReaderInfo()
-          }
-        </Paper>
         {
           this.renderSearchBar()
         }
@@ -404,6 +396,11 @@ class SearchView extends React.Component {
         {
           !expandSearch && this.renderSearchInfo()
         }
+        <Paper className={!isFetching ? classes.noPadding : ''} elevation={1} square aria-live="polite">
+          {
+           !expandSearch && this.renderScreenReaderInfo()
+          }
+        </Paper>
         {
           !expandSearch && this.renderResults()
         }
