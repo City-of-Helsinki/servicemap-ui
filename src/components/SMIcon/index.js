@@ -143,7 +143,7 @@ export const getIcon = (key, props) => {
       return <StrollerIcon {...props} />;
     case 'servicemap':
       return <DefaultMapIcon {...props} />;
-    case 'ortoImage':
+    case 'orthoImage':
       return <AerialMapIcon {...props} />;
     case 'guideMap':
       return <GuideMapIcon {...props} />;
