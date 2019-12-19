@@ -25,6 +25,11 @@ const SettingsInfo = ({
   settings,
   toggleSettings,
 }) => {
+  // Don't render on server since settings can't be utilized server side
+  if (!isClient()) {
+    return null;
+  }
+
   const {
     colorblind, hearingAid, mobility, visuallyImpaired, helsinki, espoo, vantaa, kauniainen,
   } = settings;
@@ -49,8 +54,7 @@ const SettingsInfo = ({
 
   let totalItems = 0;
 
-  const titleText = isClient()
-    && accessibilitySettings.length === 0
+  const titleText = accessibilitySettings.length === 0
     && citySettings.length === 0
     ? 'settings.info.title.noSettings' : 'settings.info.title';
 
