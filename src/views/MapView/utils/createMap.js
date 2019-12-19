@@ -13,10 +13,11 @@ const CreateMap = (mapType) => {
 
   // Functions for leaflet crs generation
   const bounds = L.bounds(
-    L.point(options.layer.boundsPoints[0]),
-    L.point(options.layer.boundsPoints[1]),
+    L.point(options.layer.boundPoints[0]),
+    L.point(options.layer.boundPoints[1]),
   );
   const crsOpts = {
+    origin: options.layer.origin,
     resolutions: options.layer.resolutions,
     bounds,
     transformation: new L.Transformation(1, -bounds.min.x, -1, bounds.max.y),
