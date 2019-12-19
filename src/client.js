@@ -4,6 +4,7 @@ import 'regenerator-runtime/runtime';
 import 'whatwg-fetch';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Helmet } from 'react-helmet';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
@@ -18,6 +19,7 @@ import App from './App';
 import themes from './themes';
 import SettingsUtility from './utils/settings';
 import config from '../config';
+import favicon from './assets/icons/favicon.ico';
 
 const getPreloadedState = () => {
   const state = window.PRELOADED_STATE;
@@ -52,6 +54,12 @@ ReactDOM.hydrate(
     <StyleContext.Provider value={{ insertCss }}>
       <JssProvider generateClassName={generateClassName}>
         <MuiThemeProvider theme={themes.SMTheme}>
+          {
+            // HTML head tags
+          }
+          <Helmet>
+            <link rel="shortcut icon" href={favicon} />
+          </Helmet>
           <App />
         </MuiThemeProvider>
       </JssProvider>

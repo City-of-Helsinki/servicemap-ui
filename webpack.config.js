@@ -59,6 +59,19 @@ const fonts = (isClient = true) => ({
     }]
 });
 
+const icons = (isClient = true) => ({
+  test: /\.(ico)(\?v=\d+\.\d+\.\d+)?$/,
+  use: [{
+      loader: 'file-loader',
+      options: {
+        emitFile: isClient,
+        name: `[name].[hash:8].[ext]`,
+        outputPath: `/assets/icons`,
+        publicPath: '/assets/icons'
+      },
+  }]
+});
+
 const css = {
   test: /\.css$/,
   exclude: /node_modules/,
@@ -123,6 +136,7 @@ const clientConfig = {
           js,
           fonts(),
           css,
+          icons(),
         ],
       }
     ],
