@@ -9,6 +9,7 @@ export default theme => ({
     paddingLeft: theme.spacing.unitDouble,
     paddingRight: theme.spacing.unitDouble,
     paddingBottom: theme.spacing.unitDouble,
+    textAlign: 'left',
   },
   bold: {
     fontWeight: 'bold',
@@ -119,5 +120,8 @@ export default theme => ({
     paddingLeft: theme.spacing.unitDouble,
     paddingRight: theme.spacing.unitDouble,
     marginBottom: theme.spacing.unit,
+  },
+  feedbackButton: {
+    marginLeft: theme.spacing.unitDouble,
   },
 });

@@ -45,6 +45,23 @@ export default {
   'event.picture': 'Tapahtuman kuva',
   'event.title': 'Tapahtumat',
 
+  // Feedback
+  'feedback.back': 'Palaa takaisin',
+  'feedback.title': 'Anna palautetta tästä verkkopalvelusta',
+  'feedback.title.unit': 'Anna palautetta toimipisteelle {unit}',
+  'feedback.email': 'Sähköposti',
+  'feedback.email.info': 'Jos haluat, että vastaamme palautteeseesi, ole ystävällinen ja anna sähköpostiosoitteesi.',
+  'feedback.feedback': 'Palautteesi (pakollinen)',
+  'feedback.feedback.info': 'Kerro mahdollisimman yksityiskohtaisesti mitä palautetta haluat antaa.',
+  'feedback.permission': 'Palautteeni saa jukaista (tarkastuksen jälkeen). Sähköpostiosoitetta ei julkaista.',
+  'feedback.additionalInfo': 'Antamasi palaute ohjautuu Helsingin kaupungin palautejärjestelmään.',
+  'feedback.additionalInfo.link': 'Tietoja ja ohjeita palautteen antamisesta(linkki avautuu uuteen välilehteen).',
+  'feedback.send': 'Lähetä palautetta',
+  'feedback.error.required': 'Pakollinen kenttä',
+  'feedback.modal.confirm': 'OK',
+  'feedback.modal.leave': 'Haluatko varmasti poistua tältä sivulta?',
+  'feedback.modal.success': 'Kiitos palautteestasi!',
+
   // Sorting
   'sorting.label': 'Järjestä hakutulokset',
   'sorting.accessibility.desc': 'Esteettömin ensin',
@@ -85,6 +102,7 @@ export default {
   'general.pageTitles.address': 'Osoitenäkymä',
   'general.pageTitles.list.events': 'Tapahtumalista ',
   'general.pageTitles.list.reservations': 'Varauslista',
+  'general.pageTitles.feedback': 'Palautenäkymä',
   // General - Pagination
   'general.pagination.previous': 'Aiempi sivu',
   'general.pagination.next': 'Seuraava sivu',
@@ -113,7 +131,7 @@ export default {
   'home.example.title': 'Esimerkkihakuja',
   'home.example.search': 'Hae hakusanalla',
   'home.message': 'Terveisiä palvelukartan kehittäjiltä',
-  'home.send.feedback': 'Anna palautetta',
+  'home.send.feedback': 'Lähetä palautetta',
 
   // Location
   'location.notFound': 'Sijaintia ei löytynyt',

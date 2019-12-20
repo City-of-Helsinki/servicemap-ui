@@ -46,6 +46,23 @@ export default {
   'event.picture': 'Event picture',
   'event.title': 'Events',
 
+  // Feedback
+  'feedback.back': 'Go back',
+  'feedback.title': 'Anna palautetta tästä verkkopalvelusta', // TODO: translate
+  'feedback.title.unit': 'Anna palautetta toimipisteelle {unit}', // TODO: translate
+  'feedback.email': 'Email',
+  'feedback.email.info': 'Jos haluat, että vastaamme palautteeseesi, ole ystävällinen ja anna sähköpostiosoitteesi.', // TODO: translate
+  'feedback.feedback': 'Feedback (required)',
+  'feedback.feedback.info': 'Kerro mahdollisimman yksityiskohtaisesti mitä palautetta haluat antaa.', // TODO: translate
+  'feedback.permission': 'Palautteeni saa jukaista (tarkastuksen jälkeen). Sähköpostiosoitetta ei julkaista.', // TODO: translate
+  'feedback.additionalInfo': 'Antamasi palaute ohjautuu Helsingin kaupungin palautejärjestelmään.', // TODO: translate
+  'feedback.additionalInfo.link': 'Tietoja ja ohjeita palautteen antamisesta(linkki avautuu uuteen välilehteen).', // TODO: translate
+  'feedback.send': 'Send feedback',
+  'feedback.error.required': 'Required field',
+  'feedback.modal.confirm': 'OK',
+  'feedback.modal.leave': 'Are you sure you want to leave the page?',
+  'feedback.modal.success': 'Thank you for the feedback!',
+
   // Sorting
   'sorting.label': 'Order search results',
   'sorting.accessibility.desc': 'Most accessibile',
@@ -86,6 +103,7 @@ export default {
   'general.pageTitles.address': 'Address view',
   'general.pageTitles.list.events': 'Event list ',
   'general.pageTitles.list.reservations': 'Reservation list ',
+  'general.pageTitles.feedback': 'Feedback view',
   // General - Pagination
   'general.pagination.previous': 'Previous page',
   'general.pagination.next': 'Next page',

@@ -45,6 +45,23 @@ export default {
   'event.picture': 'Tapahtuman kuva', // TODO: Translate
   'event.title': 'Tapahtumat', // TODO: Translate
 
+  // Feedback
+  'feedback.back': 'Palaa takaisin', // TODO: Translate
+  'feedback.title': 'Anna palautetta tästä verkkopalvelusta', // TODO: Translate
+  'feedback.title.unit': 'Anna palautetta toimipisteelle {unit}', // TODO: Translate
+  'feedback.email': 'Email',
+  'feedback.email.info': 'Jos haluat, että vastaamme palautteeseesi, ole ystävällinen ja anna sähköpostiosoitteesi.', // TODO: Translate
+  'feedback.feedback': 'Palautteesi (pakollinen)', // TODO: Translate
+  'feedback.feedback.info': 'Kerro mahdollisimman yksityiskohtaisesti mitä palautetta haluat antaa.', // TODO: Translate
+  'feedback.permission': 'Palautteeni saa jukaista (tarkastuksen jälkeen). Sähköpostiosoitetta ei julkaista.', // TODO: Translate
+  'feedback.additionalInfo': 'Antamasi palaute ohjautuu Helsingin kaupungin palautejärjestelmään.', // TODO: Translate
+  'feedback.additionalInfo.link': 'Tietoja ja ohjeita palautteen antamisesta(linkki avautuu uuteen välilehteen).', // TODO: Translate
+  'feedback.send': 'Lähetä palautetta', // TODO: Translate
+  'feedback.error.required': 'Pakollinen kenttä', // TODO: Translate
+  'feedback.modal.confirm': 'OK',
+  'feedback.modal.leave': 'Haluatko varmasti poistua tältä sivulta?', // TODO: Translate
+  'feedback.modal.success': 'Kiitos palautteestasi!', // TODO: Translate
+
   // Sorting
   'sorting.label': 'Järjestä hakutulokset', // TODO: Translate
   'sorting.accessibility.desc': 'Esteettömin ensin', // TODO: Translate
@@ -85,6 +102,7 @@ export default {
   'general.pageTitles.address': 'Address view', // TODO: Translate
   'general.pageTitles.list.events': 'Event list ', // TODO: Translate
   'general.pageTitles.list.reservations': 'Reservation list ', // TODO: Translate
+  'general.pageTitles.feedback': 'Palautenäkymä', // TODO: Translate
   // General - Pagination
   'general.pagination.previous': 'Previous page', // TODO: Translate
   'general.pagination.next': 'Next page', // TODO: Translate

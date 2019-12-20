@@ -160,6 +160,14 @@ class Navigator extends React.Component {
     }
   }
 
+
+  openFeedback = () => {
+    const { history } = this.props;
+    const url = new URL(window.location);
+    url.searchParams.set('feedback', 'true');
+    history.push(url.pathname + url.search);
+  }
+
   render = () => null;
 }
 

@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Typography, withStyles } from '@material-ui/core';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
-import { Map } from '@material-ui/icons';
+import { Map, Mail } from '@material-ui/icons';
 import { fetchUnitEvents } from '../../redux/actions/event';
 import { fetchSelectedUnit, changeSelectedUnit } from '../../redux/actions/selectedUnit';
 import { fetchAccessibilitySentences } from '../../redux/actions/selectedUnitAccessibility';
@@ -33,6 +33,7 @@ import UnitIcon from '../../components/SMIcon/UnitIcon';
 import TabLists from '../../components/TabLists';
 import calculateDistance from '../../utils/calculateDistance';
 import { AddressIcon } from '../../components/SMIcon';
+import FeedbackView from '../FeedbackView';
 
 class UnitView extends React.Component {
   constructor(props) {
@@ -139,7 +140,7 @@ class UnitView extends React.Component {
 
   renderDetailTab() {
     const {
-      getLocaleText, intl, unit, classes,
+      getLocaleText, intl, unit, classes, navigator,
     } = this.props;
 
     if (!unit || !unit.complete) {
@@ -168,6 +169,12 @@ class UnitView extends React.Component {
         <Highlights unit={unit} getLocaleText={getLocaleText} />
         <Description unit={unit} getLocaleText={getLocaleText} />
         <ElectronicServices unit={unit} />
+        <ServiceMapButton
+          className={classes.feedbackButton}
+          text={<FormattedMessage id="home.send.feedback" />}
+          icon={<Mail />}
+          onClick={() => navigator.openFeedback()}
+        />
       </div>
     );
   }
@@ -217,7 +224,7 @@ class UnitView extends React.Component {
   }
 
   renderMobileButtons = () => {
-    const { navigator, unit, classes } = this.props;
+    const { navigator, classes } = this.props;
     return (
       <MobileComponent>
         <div className={classes.mobileButtonArea}>
@@ -232,11 +239,11 @@ class UnitView extends React.Component {
               }
             }}
           />
-          {/* Feedback button
           <ServiceMapButton
             text={<FormattedMessage id="home.send.feedback" />}
             icon={<Mail />}
-          /> */}
+            onClick={() => navigator.openFeedback()}
+          />
         </div>
       </MobileComponent>
     );
@@ -244,7 +251,7 @@ class UnitView extends React.Component {
 
   render() {
     const {
-      classes, getLocaleText, intl, unit, match, unitFetching, userLocation,
+      classes, getLocaleText, intl, unit, match, unitFetching, userLocation, location,
     } = this.props;
 
     const { didMount } = this.state;
@@ -260,7 +267,11 @@ class UnitView extends React.Component {
         <DesktopComponent>
           <SearchBar />
           <div className={classes.topPadding} />
-          <TitleBar icon={<AddressIcon className={classes.icon} />} title={title} distance={distance} />
+          <TitleBar
+            icon={<AddressIcon className={classes.icon} />}
+            title={title}
+            distance={distance}
+          />
         </DesktopComponent>
         <MobileComponent>
           <TitleBar icon={icon} title={correctUnit ? title : ''} backButton />
@@ -281,6 +292,11 @@ class UnitView extends React.Component {
       );
     }
 
+    if (location.search.includes('feedback=true')) {
+      return (
+        <FeedbackView />
+      );
+    }
 
     if (unit && unit.complete) {
       const tabs = [
@@ -409,6 +425,7 @@ UnitView.propTypes = {
   navigator: PropTypes.objectOf(PropTypes.any),
   reservations: PropTypes.arrayOf(PropTypes.any),
   userLocation: PropTypes.objectOf(PropTypes.any),
+  location: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 UnitView.defaultProps = {
