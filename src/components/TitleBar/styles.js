@@ -1,22 +1,39 @@
 export default theme => ({
   container: {
     display: 'flex',
-    alignItems: 'center',
-    height: 60,
+    flexWrap: 'wrap',
     background: 'linear-gradient(to right, #1964E6, #146CE8, #0B7BED)',
-    boxShadow: '0 2px 4px 0 rgba(0,0,0,0.5)',
+    color: '#fff',
+    boxShadow: '0 2px 0 0 rgba(0,0,0,0.5)',
+    minHeight: 60,
+  },
+  large: {
+    paddingBottom: 20,
+  },
+  titleContainer: {
+    display: 'flex',
+    alignItems: 'center',
     color: '#fff',
     paddingLeft: theme.spacing.unit,
     paddingRight: theme.spacing.unit,
   },
   textBar: {
-    paddingLeft: 36,
+    paddingLeft: 16,
+  },
+  backTextContainer: {
+    flexBasis: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    paddingLeft: 6,
+  },
+  backText: {
+    fontSize: 12,
+    fontWeight: 'bold',
   },
   title: {
     fontSize: 18,
     color: 'inherit',
     flex: '1 1 auto',
-    textTransform: 'capitalize',
     textAlign: 'left',
     marginLeft: 10,
   },

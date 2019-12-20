@@ -22,4 +22,8 @@ export default () => ({
     fontSize: 14,
     fontWeight: 'bold',
   },
+  disabled: {
+    backgroundColor: 'rgba(0, 0, 0, 0.12)',
+    color: 'rgba(0, 0, 0, 0.26)',
+  },
 });
