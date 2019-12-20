@@ -308,7 +308,7 @@ export default {
   'settings.city.kauniainen': 'Kauniainen',
   'settings.map.title': 'Background map',
   'settings.map.servicemap': 'Service map',
-  'settings.map.ortoImage': 'Aerial view',
+  'settings.map.orthoImage': 'Aerial view',
   'settings.map.guideMap': 'Guide map',
   'settings.aria.changed': 'Settings have changed. Remember to save',
   'settings.aria.closed': 'Settings closed',
