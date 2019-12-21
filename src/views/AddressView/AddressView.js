@@ -108,8 +108,9 @@ const AddressView = (props) => {
     focusDistrict(map, coordinates);
     // On mobile, show map when a district is clicked on the list
     if (mobile && navigator) {
-      const districtName = district.name || district.unit.name;
-      const title = `${getLocaleText(districtName)} ${intl.formatMessage({ id: `address.list.${district.type}` })}`;
+      // Use this code if we want to show district title on mobile map
+      // const districtName = district.name || district.unit.name;
+      // const title = `${getLocaleText(districtName)} ${intl.formatMessage({ id: `address.list.${district.type}` })}`;
       // mobileShowOnMap(title);
       navigator.openMap();
     }
@@ -131,6 +132,7 @@ const AddressView = (props) => {
     <div className={`${classes.topBar} sticky`}>
       <DesktopComponent>
         <SearchBar />
+        <div className={classes.topPadding} />
         <TitleBar icon={<AddressIcon className={classes.titleIcon} />} title={error || title} primary />
       </DesktopComponent>
       <MobileComponent>
@@ -222,26 +224,26 @@ const AddressView = (props) => {
       <TabLists
         data={tabs}
         headerComponents={(
-          <>
+          <div className={classes.topArea}>
             {renderTopBar(title)}
-          </>
+            {addressData && units && districts && (
+            <MobileComponent>
+              <ServiceMapButton
+                text={<FormattedMessage id="general.showOnMap" />}
+                icon={<Map />}
+                className={classes.mapButton}
+                onClick={() => {
+                  if (navigator) {
+                    focusUnit(map, addressData.location.coordinates);
+                    navigator.openMap();
+                  }
+                }}
+              />
+            </MobileComponent>
+            )}
+          </div>
         )}
       />
-      {addressData && units && districts && (
-      <MobileComponent>
-        <ServiceMapButton
-          text={<FormattedMessage id="general.showOnMap" />}
-          icon={<Map />}
-          className={classes.mapButton}
-          onClick={() => {
-            if (navigator) {
-              focusUnit(map, addressData.location.coordinates);
-              navigator.openMap();
-            }
-          }}
-        />
-      </MobileComponent>
-      )}
     </div>
   );
 };

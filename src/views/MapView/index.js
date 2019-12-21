@@ -25,6 +25,7 @@ const mapStateToProps = (state) => {
   const getLocaleText = textObject => getLocaleString(state, textObject);
   const { navigator } = state;
   const { addressUnits } = state.address;
+  const { locale } = state.user;
   return {
     highlightedDistrict,
     highlightedUnit,
@@ -37,6 +38,7 @@ const mapStateToProps = (state) => {
     settings,
     navigator,
     addressUnits,
+    locale,
   };
 };
 

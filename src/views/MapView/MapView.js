@@ -43,6 +43,7 @@ const MapView = (props) => {
     match,
     findUserLocation,
     userLocation,
+    locale,
   } = props;
 
 
@@ -110,7 +111,7 @@ const MapView = (props) => {
     // Search param map value
     const spMap = parseSearchParams(location.search).map || false;
 
-    const newMap = CreateMap(spMap || settings.mapType);
+    const newMap = CreateMap(spMap || settings.mapType, locale);
     setMapObject(newMap);
   };
 
@@ -193,7 +194,7 @@ const MapView = (props) => {
         {renderTopBar()}
         <Map
           className={classes.map}
-          key={mapObject.crs.code}
+          key={mapObject.options.name}
           ref={mapRef}
           keyboard={false}
           zoomControl={false}
@@ -308,6 +309,7 @@ MapView.propTypes = {
   unitList: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
   unitsLoading: PropTypes.bool,
   userLocation: PropTypes.objectOf(PropTypes.any),
+  locale: PropTypes.string.isRequired,
 };
 
 MapView.defaultProps = {
