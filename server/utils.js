@@ -1,3 +1,27 @@
+const redirectables = [
+  {
+    check: /^\/(fi|se|en)\/embed\/unit\?(.+)=/,
+    redirectTo: (item, req) => {
+      try {
+        let queryString = null;
+        if (req.query) {
+          queryString = Object.keys(req.query).map(key => `${key}=${req.query[key]}`).join('&');
+        }
+
+        // Replace unit with search
+        const pathArray = req.path.split('/');
+        const index = pathArray.indexOf('unit');
+        pathArray.splice(index, 1, 'search');
+        const pathName = pathArray.join('/');
+  
+        return pathName + `${queryString ? `?${queryString}` : ''}`;
+      } catch (e) {
+        return null;
+      }
+    },
+  }
+];
+
 const isValidLanguage = (path) => {
   if(!path) {
     return false;
@@ -32,6 +56,31 @@ export const languageSubdomainRedirect = (req, res, next) => {
       return;
     }
   }
+  next();
+  return;
+}
+
+export const unitRedirect = (req, res, next) => {
+  let redirecting = false;
+  redirectables.forEach(item => {
+    if(redirecting) {
+      return;
+    }
+
+    if (req.url.match(item.check)) {
+      const redirectTo = item.redirectTo(item, req);
+      if (redirectTo) {
+        redirecting = true;
+        res.redirect(redirectTo);
+        return;
+      }
+    }
+  });
+
+  if (redirecting) {
+    return;
+  }
+
   next();
   return;
 }
