@@ -307,7 +307,7 @@ export default {
   'settings.city.kauniainen': 'Kauniainen',
   'settings.map.title': 'Karttapohja',
   'settings.map.servicemap': 'Palvelukartta',
-  'settings.map.ortoImage': 'Ilmakuva',
+  'settings.map.orthoImage': 'Ilmakuva',
   'settings.map.guideMap': 'Opaskartta',
   'settings.aria.changed': 'Asetukset muutettu. Muista tallentaa',
   'settings.aria.closed': 'Asetukset suljettu',

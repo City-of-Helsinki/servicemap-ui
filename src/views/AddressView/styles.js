@@ -1,14 +1,16 @@
-export default theme => ({
+export default () => ({
   addressIcon: {
     fontSize: 36,
   },
+  topArea: {
+    textAlign: 'left',
+  },
+  topPadding: {
+    height: 4,
+  },
   mapButton: {
-    float: 'right',
-    display: 'flex',
-    marginRight: 8,
-    padding: '0px 20px 0px 12px',
-    height: 48,
-    width: 'auto',
+    marginLeft: 24,
+    marginBottom: 8,
   },
   mapIcon: {
     marginLeft: 0,
@@ -22,7 +24,6 @@ export default theme => ({
     marginRight: 0,
   },
   topBar: {
-    backgroundColor: theme.palette.primary.main,
     position: 'sticky',
     top: 0,
     zIndex: 50,
