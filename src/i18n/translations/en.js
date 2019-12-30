@@ -56,6 +56,7 @@ export default {
 
   // General
   'general.frontPage': 'Front page',
+  'general.contrast': 'Contrast',
   'general.menu': 'Menu',
   'general.back': 'Back',
   'general.back.address': 'Back to address view',

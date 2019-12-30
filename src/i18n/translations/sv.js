@@ -55,6 +55,7 @@ export default {
 
   // General
   'general.frontPage': 'Etusivu', // TODO: Translate
+  'general.contrast': 'Kontrasti', // TODO: Translate
   'general.menu': 'Valikko', // TODO: Translate
   'general.back': 'Tillbaka',
   'general.back.address': 'Back to address view', // TODO: Translate
