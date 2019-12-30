@@ -27,9 +27,15 @@ export default theme => ({
   },
   level0: {
     backgroundColor: '#fff',
+    '& p': {
+      fontWeight: 'bold',
+    },
   },
   level1: {
-    backgroundColor: '#e3f3ff;',
+    backgroundColor: '#e3f3ff',
+    '& p': {
+      fontWeight: 'bold',
+    },
   },
   level2: {
     backgroundColor: '#f5f5f5',
@@ -37,19 +43,6 @@ export default theme => ({
   text: {
     fontSize: '15px',
     lineHeight: '18px',
-  },
-  text0: {
-    // textTransform: 'uppercase',
-    paddingLeft: theme.spacing.unit,
-    fontWeight: 'bold',
-    // letterSpacing: -0.5,
-  },
-  text1: {
-    fontWeight: 'bold',
-    // letterSpacing: -0.5,
-  },
-  text2: {
-    // letterSpacing: 0.5,
   },
   iconRight: {
     marginLeft: 'auto',
