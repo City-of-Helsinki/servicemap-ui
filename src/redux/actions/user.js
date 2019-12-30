@@ -1,3 +1,4 @@
+import LocalStorageUtility from '../../utils/localStorage';
 
 export const setLocale = locale => ({
   type: 'SET_LOCALE',
@@ -18,6 +19,11 @@ export const setUserPosition = position => ({
   position,
 });
 
+const setTheme = theme => ({
+  type: 'SET_THEME',
+  theme,
+});
+
 
 export const changeLocaleAction = locale => async (dispatch) => {
   dispatch(setLocale(locale));
@@ -29,6 +35,11 @@ export const actionSetInitialLoad = () => async (dispatch) => {
 
 export const setCurrentPage = page => async (dispatch) => {
   dispatch(setPage(page));
+};
+
+export const changeTheme = theme => async (dispatch) => {
+  dispatch(setTheme(theme));
+  LocalStorageUtility.saveItem('theme', theme);
 };
 
 export const findUserLocation = () => async (dispatch) => {
