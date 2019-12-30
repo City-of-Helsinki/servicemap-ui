@@ -17,18 +17,18 @@ export default {
   // Address
   'address.show.area': 'Show area on map',
   'address.list.geographical': 'Geographical',
-  'address.list.protection': 'Protection',
+  'address.list.protection': 'Civil defence',
   'address.list.health': 'Health',
   'address.list.education': 'Education',
   'address.list.neighborhood': 'Neighborhood',
   'address.list.postcode_area': 'Postcode area',
-  'address.list.rescue_area': 'Rescue area',
-  'address.list.rescue_district': 'Rescue district',
-  'address.list.rescue_sub_district': 'Rescue subdistrict',
-  'address.list.health_station_district': 'Health station district',
-  'address.list.maternity_clinic_district': 'Maternity clinic district',
-  'address.list.lower_comprehensive_school_district_fi': 'Finnish elementary school',
-  'address.list.lower_comprehensive_school_district_sv': 'Swedish elementary school',
+  'address.list.rescue_area': 'Civil defence district',
+  'address.list.rescue_district': 'Civil defence section',
+  'address.list.rescue_sub_district': 'Civil defence subsection',
+  'address.list.health_station_district': 'Health station area',
+  'address.list.maternity_clinic_district': 'Maternity clinic area',
+  'address.list.lower_comprehensive_school_district_fi': 'Finnish primary school',
+  'address.list.lower_comprehensive_school_district_sv': 'Swedish primary school',
   'address.list.upper_comprehensive_school_district_fi': 'Finnish secondary school',
   'address.list.upper_comprehensive_school_district_sv': 'Swedish secondary school',
   'address.list.preschool_education_fi': 'Finnish preschool education',
@@ -45,12 +45,12 @@ export default {
   'event.title': 'Events',
 
   // Sorting
-  'sorting.label': 'Order search results',
-  'sorting.accessibility.desc': 'Most accessibile',
-  'sorting.alphabetical.asc': 'Reversed alphabetical',
-  'sorting.alphabetical.desc': 'Alphabetical',
-  'sorting.distance.asc': 'Closest',
-  'sorting.match.desc': 'Relevance',
+  'sorting.label': 'Sort search results',
+  'sorting.accessibility.desc': 'Most accessibile first',
+  'sorting.alphabetical.asc': 'Reversed alphabetical order',
+  'sorting.alphabetical.desc': 'Alphabetical order',
+  'sorting.distance.asc': 'Closest first',
+  'sorting.match.desc': 'Most relevant first',
 
   // General
   'general.frontPage': 'Front page',
@@ -77,14 +77,15 @@ export default {
   'general.loading': 'Loading',
   'general.showOnMap': 'Show on map',
   'general.pageTitles.home': 'Home view',
-  'general.pageTitles.search': 'Search view',
+  'general.pageTitles.search': 'Search results view',
   'general.pageTitles.unit': 'Unit view',
   'general.pageTitles.service': 'Service view',
-  'general.pageTitles.serviceTree': 'Service list',
+  'general.pageTitles.serviceTree': 'Services list',
   'general.pageTitles.event': 'Event view',
   'general.pageTitles.address': 'Address view',
   'general.pageTitles.list.events': 'Event list ',
   'general.pageTitles.list.reservations': 'Reservation list ',
+
   // General - Pagination
   'general.pagination.previous': 'Previous page',
   'general.pagination.next': 'Next page',
@@ -95,7 +96,6 @@ export default {
   'general.previousSearch': 'Previous searches',
   'general.return.viewTitle': 'Return to beginning of main content',
   'general.skipToContent': 'Skip to content',
-  'general.give.feedback': 'Give feedback on the Servicemap test version (link opens in a new tab)',
   'general.new.tab': 'Opens in new tab',
   'general.time.short': 'at',
   'general.save': 'Save',
@@ -107,10 +107,10 @@ export default {
   'general.distance.kilometers': 'Kilometers away',
 
   // Home
-  'home.buttons.settings': 'City, map and accessibility settings',
-  'home.buttons.services': 'Service list',
-  'home.buttons.closeByServices': 'Nearby services',
-  'home.example.title': 'Example search phrases',
+  'home.buttons.settings': 'Save your own city and accessibility options',
+  'home.buttons.services': 'Get to know the services using the Services list',
+  'home.buttons.closeByServices': 'Show nearby services',
+  'home.buttons.instructions': 'Tips for using the service map',
   'home.example.search': 'Search for',
   'home.message': 'Message from the developers',
   'home.send.feedback': 'Send feedback',
@@ -121,30 +121,30 @@ export default {
 
   // Map
   'map': 'Map',
-  'map.ariaLabel': 'Map. Currently map information is only accessible visually.', // TODO: verify
+  'map.ariaLabel': 'Map. Currently map information is only accessible visually.',
   'map.transit.endStation': 'Terminus',
   'map.address.searching': 'Retreiving address...',
   'map.address.info': 'Address information',
 
-  // Unit
+  // Units
   'unit': 'Unit',
-  'unit.accessibility.noInfo': 'No accessibility information', // TODO: verify
-  'unit.accessibility.noShortcomings': 'No accessibility shortcomings', // TODO: verify
-  'unit.accessibility.ok': 'No accessibility shortcomings', // TODO: verify
+  'unit.accessibility.noInfo': 'No accessibility information',
+  'unit.accessibility.noShortcomings': 'No known shortcomings',
+  'unit.accessibility.ok': 'Accessible',
   'unit.accessibility.problems': `{count, plural,
-                                    =0 {No accessibility shortcomings}
+                                    =0 {Accessible}
                                     one {# accessibility shortcoming}
                                     other {# accessibility shortcomings}
-                                  }`, // TODO: verify
+                                  }`,
   'unit.accessibility.unitNoInfo': 'Unit has not delivered any accessibility information.', // TODO: verify
   'unit.basicInfo': 'Information',
   'unit.data_source': 'Source: {data_source}',
-  'unit.details.notFound': 'Unit info not found.',
+  'unit.details.notFound': 'Unit info not available.',
   'unit.plural': 'Units',
 
   'unit.contact.info': 'Contact information',
-  'unit.eServices': 'Electronic services', // TODO: verify
-  'unit.reservations': 'Reservable objects', // TODO verify
+  'unit.eServices': 'Electronic services',
+  'unit.reservations': 'Reservable objects',
   'unit.events': 'Events',
   'unit.events.count': `{count, plural,
     =0 {}
@@ -168,20 +168,18 @@ export default {
   'unit.contact': 'Contact person',
   'unit.school.year': 'School year',
   'unit.opens.new.tab': '(new tab)',
-  // TODO verify
   'unit.reservations.count': `{count, plural,
     =0 {}
     one {# reservable object}
     other {# reservable objects}
   }`,
-  'unit.reservations.more': 'Show more reservables', // TODO verify
+  'unit.reservations.more': 'Show more reservable objects',
   'unit.call.number': '(call)',
   'unit.list.services': 'Services',
   'unit.list.events': 'Events',
-  'unit.list.reservations': 'Reservable objects', // TODO verify
+  'unit.list.reservations': 'Reservable objects',
   'unit.services': 'Services',
   'unit.services.more': 'Show more services',
-  // TODO verify
   'unit.services.count': `{count, plural,
     =0 {}
     one {# service}
@@ -190,19 +188,19 @@ export default {
 
   // Search
   'search': 'Search',
-  'search.arrowLabel': 'Expand', // TODO verify
+  'search.arrowLabel': 'Refine',
   'search.cancelText': 'Clear search text',
   'search.notFoundWith': 'No results for search "{query}".',
   'search.placeholder': 'Search for services or units',
   'search.info': `{count, plural,
-                  =0 {no units}
-                  one {# unit}
-                  other {# units}
-                } found`,
+                  =0 {No units were found}
+                  one {# unit found}
+                  other {# units found}
+                }`,
   'search.resultList': `{count, plural,
-                  =0 {no results}
-                  one {# result}
-                  other {# results}
+                  =0 {no matches}
+                  one {# match}
+                  other {# matches}
                 }`,
   'search.results': `{count, plural,
                   =0 {No results found with given search}
@@ -210,9 +208,9 @@ export default {
                   other {# results found}
                 }`,
   'search.results.short': `{count, plural,
-                  =0 {No results}
-                  one {# result}
-                  other {# results}
+                  =0 {No matches}
+                  one {# match}
+                  other {# matches}
                 }`,
   'search.results.units': `{count, plural,
                   =0 {no units found}
@@ -229,19 +227,18 @@ export default {
   'search.results.title': 'Search results',
   'search.input.placeholder': 'Search units',
   'search.loading.units': 'Searching units {count} / {max}',
-  'search.loading.units.srInfo': 'Search loading {count} units',
+  'search.loading.units.srInfo': 'Searching {count} unit(s)',
   'search.notFound': 'No results found with given search',
   'search.started': 'Search started',
   'search.infoText': 'Showing {count} results for search query: ',
-  'search.infoTextNode': 'Showing {count} results for services: ',
-  'search.searchbar.headerText': 'Pääkaupunkiseudun kaikki julkiset palvelut ulottuvillasi', // TODO: Translate
-  'search.searchbar.infoText': 'Search for services, units or addresses', // TODO: Verify
+  'search.searchbar.headerText': 'All the services in the metropolitan area within your reach.',
+  'search.searchbar.infoText': 'Search for services units or addresses',
   'search.suggestions.suggest': 'Did you mean..?',
   'search.suggestions.expand': 'Search suggestions',
   'search.suggestions.loading': 'Loading suggestions',
   'search.suggestions.error': 'No suggestions',
-  'search.suggestions.suggestions': '{count} suggestions',
-  'search.suggestions.expandSuggestions': '{count} suggestions',
+  'search.suggestions.suggestions': '{count} search suggestions',
+  // 'search.suggestions.expandSuggestions': '{count} refinement suggestions',
   'search.suggestions.results': '{count} results',
   'search.suggestions.history': '{count} items in search history',
   'search.suggestions.noHistory': 'No previous searches',
@@ -250,49 +247,48 @@ export default {
   'search.tryAgainBody.city': 'check city choices',
   'search.tryAgainBody.service': 'write name of service',
   'search.tryAgainBody.address': 'write address close to service you are looking for',
-  'search.tryAgainBody.keyword': 'write keywords',
-  'search.expand': 'Expand search', // TODO: verify
+  'search.tryAgainBody.keyword': 'write keywords, e.g. nature trail, Swedish day-care centre',
+  'search.expand': 'Refine search',
   'search.closeExpand': 'Return to search',
 
   // Service
   'service': 'Service',
   'service.plural': 'Services',
   'service.nearby': 'Nearby services',
-  'service.units.empty': 'Service doesn\'t have units',
+  'service.units.empty': 'Service does not have units',
   'service.tab': 'Services and events',
 
   // Service tree
-  'services': 'Service list',
+  'services': 'Services list',
   'services.selections': `{count, plural,
-      one {You have selected (#) service}
-      other {You have selected (#) services}
+      one {You have made (#) selection}
+      other {You have made (#) selections}
     }`,
-  'services.selections.delete': 'Delete',
-  'services.selections.delete.all': 'Clear all selections',
-  'services.selections.delete.selection': 'Delete selection {service}',
-  'services.search': 'Search',
-  'services.search.sr': 'Search with the selected services',
-  'services.search.sr.selected': 'Search with services: {services}',
-
+  'services.selections.delete': 'Remove',
+  'services.selections.delete.all': 'Remove all selections',
+  'services.selections.delete.selection': 'Remove selection {service}',
+  'services.search': 'Perform search',
+  'services.search.sr': 'Perform search with the selected services',
+  'services.search.sr.selected': 'Perform search with services: {services}',
 
   // Settings
   'settings': 'Settings',
   'settings.citySettings': 'City',
   'settings.citySettings.long': 'City settings',
-  'settings.mapSettings': 'Map setttings',
+  'settings.mapSettings': 'Background map',
   'settings.mapSettings.long': 'Map setttings',
   'settings.accessibilitySettings': 'Accessibility settings',
   'settings.accessibilitySettings.long': 'Accessibility settings',
   'settings.amount': `{count, plural,
-    one {# chosen}
-    other {# chosen}
+    one {# selection}
+    other {# selections}
   }`,
   'settings.accessibility': 'My accessibility settings',
   'settings.sense.title': 'Hearing and sight',
   'settings.sense.hearing': 'I use a hearing aid',
-  'settings.sense.visual': 'I\'m visually impaired',
-  'settings.sense.colorblind': 'I have trouble distinguishing colours',
-  'settings.mobility.title': 'Mobility',
+  'settings.sense.visual': 'I am visually impaired',
+  'settings.sense.colorblind': 'I have color vision deficiency',
+  'settings.mobility.title': 'Mobility impairments',
   'settings.mobility.none': 'No mobility impairments',
   'settings.mobility.wheelchair': 'I use a wheelchair',
   'settings.mobility.reduced_mobility': 'I have reduced mobility',
@@ -309,11 +305,11 @@ export default {
   'settings.city.kauniainen': 'Kauniainen',
   'settings.map.title': 'Background map',
   'settings.map.servicemap': 'Service map',
-  'settings.map.ortoImage': 'Aerial view',
+  'settings.map.orthoImage': 'Aerial view',
   'settings.map.guideMap': 'Guide map',
   'settings.aria.changed': 'Settings have changed. Remember to save',
   'settings.aria.closed': 'Settings closed',
   'settings.aria.open': 'Open settings',
-  'settings.aria.opened': 'Settings opened',
+  'settings.aria.opened': 'Settings have been opened',
   'settings.aria.saved': 'Settings have been saved',
 };

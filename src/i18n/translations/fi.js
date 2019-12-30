@@ -85,6 +85,7 @@ export default {
   'general.pageTitles.address': 'Osoitenäkymä',
   'general.pageTitles.list.events': 'Tapahtumalista ',
   'general.pageTitles.list.reservations': 'Varauslista',
+
   // General - Pagination
   'general.pagination.previous': 'Aiempi sivu',
   'general.pagination.next': 'Seuraava sivu',
@@ -95,7 +96,6 @@ export default {
   'general.previousSearch': 'Aikaisemmat haut',
   'general.return.viewTitle': 'Siirry pääsisällön alkuun',
   'general.skipToContent': 'Siirry pääsisältöön',
-  'general.give.feedback': 'Anna palautetta Palvelukartan testiversiosta (linkki aukeaa uuteen välilehteen)',
   'general.new.tab': 'Aukeaa uuteen välilehteen',
   'general.time.short': 'klo',
   'general.save': 'Tallenna',
@@ -107,13 +107,13 @@ export default {
   'general.distance.kilometers': 'Kilometrin päässä',
 
   // Home
-  'home.buttons.settings': 'Kaupunki-, kartta- ja esteettömyysasetukset',
-  'home.buttons.services': 'Palveluluettelo',
-  'home.buttons.closeByServices': 'Lähellä olevat palvelut',
-  'home.example.title': 'Esimerkkihakuja',
+  'home.buttons.settings': 'Tallenna omat kaupunki- ja esteettömyysasetuksesi',
+  'home.buttons.services': 'Tutustu palveluihin palveluluettelon avulla',
+  'home.buttons.closeByServices': 'Näytä lähellä olevat palvelut',
+  'home.buttons.instructions': 'Vinkkejä Palvelukartan käyttöön',
   'home.example.search': 'Hae hakusanalla',
   'home.message': 'Terveisiä palvelukartan kehittäjiltä',
-  'home.send.feedback': 'Lähetä palautetta',
+  'home.send.feedback': 'Anna palautetta',
 
   // Location
   'location.notFound': 'Sijaintia ei löytynyt',
@@ -138,7 +138,7 @@ export default {
                                   }`,
   'unit.accessibility.unitNoInfo': 'Toimipiste ei ole toimittanut esteettömyystietoja.',
   'unit.basicInfo': 'Perustiedot',
-  'unit.data_source': 'Lähde: {data_source}', // TODO: Translate
+  'unit.data_source': 'Lähde: {data_source}',
   'unit.details.notFound': 'Toimipisteen tietoja ei saatavilla.',
   'unit.plural': 'Toimipisteet',
 
@@ -208,6 +208,7 @@ export default {
                   other {# hakutulosta löydetty}
                 }`,
   'search.results.short': `{count, plural,
+                  =0 {ei osumia}
                   one {# osuma}
                   other {# osumaa}
                 }`,
@@ -230,7 +231,6 @@ export default {
   'search.notFound': 'Haulla ei löytynyt hakutuloksia',
   'search.started': 'Haku aloitettu',
   'search.infoText': 'Näytetään {count} hakutulosta sanalla: ',
-  'search.infoTextNode': 'Näytetään {count} hakutulosta palveluilla: ',
   'search.searchbar.headerText': 'Pääkaupunkiseudun kaikki julkiset palvelut ulottuvillasi.',
   'search.searchbar.infoText': 'Hae palveluita, toimipisteitä tai osoitteita',
   'search.suggestions.suggest': 'Tarkoititko..?',
@@ -305,7 +305,7 @@ export default {
   'settings.city.kauniainen': 'Kauniainen',
   'settings.map.title': 'Karttapohja',
   'settings.map.servicemap': 'Palvelukartta',
-  'settings.map.ortoImage': 'Ilmakuva',
+  'settings.map.orthoImage': 'Ilmakuva',
   'settings.map.guideMap': 'Opaskartta',
   'settings.aria.changed': 'Asetukset muutettu. Muista tallentaa',
   'settings.aria.closed': 'Asetukset suljettu',

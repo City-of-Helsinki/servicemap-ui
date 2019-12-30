@@ -3,6 +3,11 @@ import SMIcon from './SMIcon';
 import defaulMapIcon from '../../assets/images/iconDefaultMap.svg';
 import aerialMapIcon from '../../assets/images/iconAerialMap.svg';
 import guideMapIcon from '../../assets/images/iconGuideMap.svg';
+import locationIcon from '../../assets/images/iconLocation.svg';
+import accessibilityIcon from '../../assets/images/iconAccessibility.svg';
+import serviceListIcon from '../../assets/images/iconServiceList.svg';
+import feedbackIcon from '../../assets/images/iconFeedback.svg';
+import helpIcon from '../../assets/images/iconHelp.svg';
 
 /**
  * Senses
@@ -76,6 +81,30 @@ export const GuideMapIcon = ({ ...rest }) => (
 );
 
 /**
+ * Front page
+ */
+
+export const LocationIcon = ({ ...rest }) => (
+  <img aria-hidden alt="" {...rest} src={locationIcon} />
+);
+
+export const AccessibilityIcon = ({ ...rest }) => (
+  <img aria-hidden alt="" {...rest} src={accessibilityIcon} />
+);
+
+export const ServiceListIcon = ({ ...rest }) => (
+  <img aria-hidden alt="" {...rest} src={serviceListIcon} />
+);
+
+export const FeedbackIcon = ({ ...rest }) => (
+  <img aria-hidden alt="" {...rest} src={feedbackIcon} />
+);
+
+export const HelpIcon = ({ ...rest }) => (
+  <img aria-hidden alt="" {...rest} src={helpIcon} />
+);
+
+/**
  * General
  */
 export const AreaIcon = ({ ...rest }) => (
@@ -114,10 +143,20 @@ export const getIcon = (key, props) => {
       return <StrollerIcon {...props} />;
     case 'servicemap':
       return <DefaultMapIcon {...props} />;
-    case 'ortoImage':
+    case 'orthoImage':
       return <AerialMapIcon {...props} />;
     case 'guideMap':
       return <GuideMapIcon {...props} />;
+    case 'location':
+      return <LocationIcon {...props} />;
+    case 'accessibility':
+      return <AccessibilityIcon {...props} />;
+    case 'serviceList':
+      return <ServiceListIcon {...props} />;
+    case 'feedback':
+      return <FeedbackIcon {...props} />;
+    case 'help':
+      return <HelpIcon {...props} />;
     default:
       return null;
   }

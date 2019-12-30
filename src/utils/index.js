@@ -4,6 +4,12 @@ import config from '../../config';
 
 const isClient = () => typeof window !== 'undefined';
 
+export const isRetina = () => {
+  if (isClient && window.devicePixelRatio > 1) {
+    return true;
+  }
+  return false;
+};
 
 // Focus user to view title's link element
 export const focusToViewTitle = () => {

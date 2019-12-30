@@ -16,57 +16,60 @@ const styles = () => ({
     display: 'flex',
     flexDirection: 'column',
   },
-  // feedbackLink: {
-  //   display: 'inline-block',
-  // },
-  // feedbackText: {
-  //   margin: 0,
-  //   color: 'white',
-  //   textDecorationColor: 'white',
-  // },
   logo: {
     height: 29,
-    marginLeft: 16,
+  },
+  bold: {
+    fontWeight: 'bold',
+  },
+  greyText: {
+    color: '#CCCBCB',
+  },
+  settingsButtonsContainer: {
+    paddingLeft: 50,
+    width: '70%',
+    display: 'flex',
+  },
+  settingsButton: {
+    textTransform: 'none',
+    alignItems: 'flex-start',
+    marginRight: '4%',
+    borderRadius: 0,
+  },
+  settingsButtonPressed: {
+    textTransform: 'none',
+    alignItems: 'flex-start',
+    marginRight: '4%',
+    marginBottom: -2,
+    borderBottom: '2px solid',
+    borderRadius: 0,
+  },
+  settingsButtonText: {
+    color: 'inherit',
+    lineHeight: 1,
   },
   toolbarBlack: {
     minHeight: 28,
     height: 28,
     backgroundColor: '#141823',
     padding: 0,
-    paddingLeft: 8,
+    paddingLeft: 19,
   },
   toolbarBlackContainer: {
     justifyContent: 'space-around',
     display: 'flex',
-    width: 300,
+    width: 400,
     color: '#fff',
   },
-  greyText: {
-    color: '#CCCBCB',
-  },
-  settingsButton: {
-    textTransform: 'none',
-    alignItems: 'flex-start',
-    marginLeft: '3%',
-    marginRight: '3%',
-    borderRadius: 0,
-  },
-  settingsButtonPressed: {
-    textTransform: 'none',
-    alignItems: 'flex-start',
-    marginLeft: '3%',
-    marginRight: '3%',
-    marginBottom: -2,
-    borderBottom: '2px solid',
-    borderRadius: 0,
-  },
   toolbarWhite: {
+    paddingLeft: 28,
     width: '100%',
     height: 70,
     backgroundColor: '#fff',
     zIndex: 100,
   },
   toolbarWhiteMobile: {
+    paddingLeft: 28,
     minHeight: 60,
     height: 60,
     backgroundColor: '#fff',
@@ -102,10 +105,6 @@ const styles = () => ({
   },
   mobileButtonContainer: {
     marginLeft: 'auto',
-  },
-  settingsButtonContainer: {
-    width: '70%',
-    display: 'flex',
   },
 });
 
