@@ -105,12 +105,12 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#2242C7',
+    backgroundColor: theme.palette.primary.main,
     width: 40,
     height: 40,
     borderRadius: '50%',
     '&:hover': {
-      backgroundColor: '#1d39ad',
+      backgroundColor: theme.palette.secondary.hover,
     },
   },
   locationDisabled: {

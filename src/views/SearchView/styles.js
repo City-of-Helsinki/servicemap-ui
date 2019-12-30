@@ -37,7 +37,7 @@ export default theme => ({
   },
   searchInfo: {
     color: '#fff',
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.background.main,
     padding: 12,
     paddingLeft: theme.spacing.unitDouble,
   },

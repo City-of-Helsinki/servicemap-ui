@@ -16,14 +16,6 @@ const styles = () => ({
     display: 'flex',
     flexDirection: 'column',
   },
-  // feedbackLink: {
-  //   display: 'inline-block',
-  // },
-  // feedbackText: {
-  //   margin: 0,
-  //   color: 'white',
-  //   textDecorationColor: 'white',
-  // },
   logo: {
     height: 29,
   },
@@ -37,7 +29,7 @@ const styles = () => ({
   toolbarBlackContainer: {
     justifyContent: 'space-around',
     display: 'flex',
-    width: 300,
+    width: 450,
     color: '#fff',
   },
   bold: {

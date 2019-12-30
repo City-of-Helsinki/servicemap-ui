@@ -7,7 +7,7 @@ export default theme => ({
     boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
   },
   indicator: {
-    backgroundColor: '#1964E6',
+    backgroundColor: theme.palette.primary.main,
     height: 6,
   },
   resultList: {

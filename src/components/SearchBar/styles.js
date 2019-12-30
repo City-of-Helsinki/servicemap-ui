@@ -3,13 +3,13 @@ export default theme => ({
     color: theme.palette.primary.contrastText,
     display: 'flex',
     flexDirection: 'column',
-    background: 'linear-gradient(340.58deg, #0B7BED 0%, #146CE8 67.04%, #1964E6 100%)',
+    background: theme.palette.background.main,
     padding: theme.spacing.unitTriple,
     paddingTop: 0,
     boxShadow: '0 2px 4px 0 rgba(0,0,0,0.5)',
   },
   mobileRoot: {
-    backgroundColor: theme.palette.primary.main,
+    background: theme.palette.background.main,
     color: theme.palette.primary.contrastText,
     padding: `${theme.spacing.unit}px ${theme.spacing.unit}px`,
     paddingTop: 0,
@@ -45,9 +45,6 @@ export default theme => ({
     position: 'sticky',
     top: 44,
     zIndex: 1100,
-  },
-  darkBlue: {
-    color: '#2242C7',
   },
   infoText: {
     justifyContent: 'center',
@@ -106,8 +103,8 @@ export default theme => ({
     fontWeight: 'bold',
     margin: `${theme.spacing.unitTriple}px ${theme.spacing.unitHalf}px ${theme.spacing.unit}px ${theme.spacing.unitHalf}px`,
   },
-  primary: {
-    backgroundColor: theme.palette.primary.main,
+  headerBackground: {
+    background: theme.palette.background.front,
   },
   suggestionSubtitle: {
     display: 'flex',

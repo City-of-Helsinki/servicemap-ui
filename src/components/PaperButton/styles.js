@@ -18,7 +18,7 @@ export default theme => ({
   iconContainer: {
     display: 'flex',
     flexShrink: 0,
-    backgroundColor: '#1964E6',
+    backgroundColor: theme.palette.primary.main,
     justifyContent: 'center',
     width: 40,
     height: 40,

@@ -213,7 +213,6 @@ class SearchView extends React.Component {
     return (
       <SearchBar
         expand
-        primary
         initialValue={query}
       />
     );

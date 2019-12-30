@@ -8,7 +8,7 @@ export default theme => ({
     display: 'flex',
     flexWrap: 'wrap',
     flex: '0 0 auto',
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.background.main,
     color: theme.palette.primary.contrastText,
     paddingLeft: theme.spacing.unit,
   },

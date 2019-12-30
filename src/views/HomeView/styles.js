@@ -20,13 +20,6 @@ export default theme => ({
     flexDirection: 'column',
     alignItems: 'center',
   },
-  icon: {
-    height: 40,
-    width: 40,
-    margin: theme.spacing.unit,
-    marginRight: theme.spacing.unitDouble,
-    backgroundColor: 'blue',
-  },
   left: {
     textAlign: 'left',
     marginLeft: theme.spacing.unitDouble,

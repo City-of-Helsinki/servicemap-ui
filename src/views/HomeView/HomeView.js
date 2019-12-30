@@ -40,7 +40,7 @@ class HomeView extends React.Component {
         {!disableCloseByServices && (
           <PaperButton
             text={<FormattedMessage id="home.buttons.closeByServices" />}
-            icon={getIcon('location', { className: classes.icon })}
+            icon={getIcon('location')}
             link
             onClick={() => {
               if (disableCloseByServices) {
@@ -60,21 +60,21 @@ class HomeView extends React.Component {
         )}
         <PaperButton
           text={<FormattedMessage id="home.buttons.services" />}
-          icon={getIcon('serviceList', { className: classes.icon })}
+          icon={getIcon('serviceList')}
           link
           onClick={() => navigator.push('serviceTree')}
         />
         <MobileComponent>
           <PaperButton
             text={<FormattedMessage id="home.buttons.settings" />}
-            icon={getIcon('accessibility', { className: classes.icon })}
+            icon={getIcon('accessibility')}
             link
             onClick={() => toggleSettings('all')}
           />
         </MobileComponent>
         <PaperButton
           text={<FormattedMessage id="home.send.feedback" />}
-          icon={getIcon('feedback', { className: classes.icon })}
+          icon={getIcon('feedback')}
           link
           onClick={() => window.open('https://forms.gle/roe9XNrZGQWBhMBJ7')}
         />
