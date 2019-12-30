@@ -171,6 +171,12 @@ class TopBar extends React.Component {
     );
   }
 
+  handleContrastChange = () => {
+    const { changeTheme, theme } = this.props;
+    changeTheme(theme === 'default' ? 'dark' : 'default');
+    window.location.reload();
+  }
+
   handleNavigation = (target, data) => {
     const {
       getLocaleText, navigator, currentPage, toggleSettings, location,
@@ -224,7 +230,7 @@ class TopBar extends React.Component {
   }
 
   renderTopBar = (pageType) => {
-    const { classes, smallScreen } = this.props;
+    const { classes, smallScreen, theme } = this.props;
     return (
       <>
         <AppBar className={classes.appBar}>
@@ -239,17 +245,18 @@ class TopBar extends React.Component {
               <Typography aria-hidden color="inherit">|</Typography>
               {this.renderLanguages()}
               <Typography aria-hidden color="inherit">|</Typography>
-              {/* Contrast button implementation
-                <ButtonBase role="link" onClick={() => console.log('change contrast')}>
-                  <Typography color="inherit">Kontrasti</Typography>
-                </ButtonBase> */}
+              <ButtonBase role="link" onClick={() => this.handleContrastChange()}>
+                <Typography color="inherit"><FormattedMessage id="general.contrast" /></Typography>
+              </ButtonBase>
             </div>
           </Toolbar>
 
           {/* Toolbar white area */}
           <Toolbar disableGutters className={pageType === 'mobile' ? classes.toolbarWhiteMobile : classes.toolbarWhite}>
             <ButtonBase aria-hidden onClick={() => this.handleNavigation('home')}>
-              <HomeLogo aria-hidden dark className={classes.logo} />
+              <NoSsr>
+                <HomeLogo aria-hidden contrast={theme === 'dark'} className={classes.logo} />
+              </NoSsr>
             </ButtonBase>
             <MobileComponent>
               <div className={classes.mobileButtonContainer}>
@@ -313,6 +320,8 @@ TopBar.propTypes = {
   getLocaleText: PropTypes.func.isRequired,
   breadcrumb: PropTypes.arrayOf(PropTypes.any).isRequired,
   smallScreen: PropTypes.bool.isRequired,
+  changeTheme: PropTypes.func.isRequired,
+  theme: PropTypes.string.isRequired,
 };
 
 TopBar.defaultProps = {
