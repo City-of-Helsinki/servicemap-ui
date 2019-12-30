@@ -266,7 +266,7 @@ export default {
       }`,
   'services.selections.delete': 'Poista', // TODO: translate
   'services.selections.delete.all': 'Ta bort alla val',
-  'services.selections.delete.selection': 'Poista valinta: ', // TODO: translate
+  'services.selections.delete.sr': 'Poista valinta: ', // TODO: translate
   'services.search': 'Gör sökning',
   'services.search.sr': 'Tee haku valituilla palveluilla', // TODO: translate
   'services.search.sr.selected': 'Tee haku palveluilla: {services}', // TODO: translate

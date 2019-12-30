@@ -266,7 +266,7 @@ export default {
   }`,
   'services.selections.delete': 'Poista',
   'services.selections.delete.all': 'Poista kaikki valinnat',
-  'services.selections.delete.selection': 'Poista valinta: ',
+  'services.selections.delete.sr': 'Poista valinta: ',
   'services.search': 'Tee haku',
   'services.search.sr': 'Tee haku valituilla palveluilla',
   'services.search.sr.selected': 'Tee haku palveluilla: {services}',

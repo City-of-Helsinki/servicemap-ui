@@ -351,7 +351,7 @@ const ServiceTreeView = (props) => {
                 </Typography>
                 <ButtonBase
                   className={classes.right}
-                  aria-label={intl.formatMessage({ id: 'services.selections.delete.selection' }, { service: getLocaleText(item.name) })}
+                  aria-label={intl.formatMessage({ id: 'services.selections.delete.sr' }, { service: getLocaleText(item.name) })}
                   onClick={() => handleCheckboxClick(null, item)}
                 >
                   <Typography className={classes.deleteText} variant="body2">
