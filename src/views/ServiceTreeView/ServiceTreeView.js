@@ -8,12 +8,23 @@ import { FormattedMessage, intlShape } from 'react-intl';
 import { MobileComponent, DesktopComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import ServiceMapButton from '../../components/ServiceMapButton';
 
-const ServiceTreeView = ({
-  classes, navigator, intl, setTreeState, prevSelected, prevOpened, settings, getLocaleText,
-}) => {
-  const [services, setServices] = useState(null);
-  const [opened, setOpened] = useState([...prevOpened]);
-  const [selected, setSelected] = useState([...prevSelected]);
+const ServiceTreeView = (props) => {
+  const {
+    classes,
+    navigator,
+    intl,
+    setTreeState,
+    prevServices,
+    prevSelected,
+    prevOpened,
+    settings,
+    getLocaleText,
+  } = props;
+
+  // State
+  const [services, setServices] = useState(prevServices);
+  const [opened, setOpened] = useState(prevOpened);
+  const [selected, setSelected] = useState(prevSelected);
   const [selectedOpen, setSelectedOpen] = useState(false);
 
   let citySettings = [
@@ -50,34 +61,10 @@ const ServiceTreeView = ({
       .then(data => data.results)
   );
 
-  const fetchPreviouslyOpenedNodes = () => {
-    // If coming back to page, fetch also the child nodes of all the nodes that were opened before
-    if (prevOpened.length) {
-      return (
-        Promise.all(prevOpened.map(id => fetch(`https://api.hel.fi/servicemap/v2/service_node/?parent=${id}&page=1&page_size=1000`)
-          .then(response => response.json())))
-          .then((data) => {
-            const combinedData = [];
-            data.forEach((i) => {
-              i.results.forEach((e) => {
-                combinedData.push(e);
-              });
-            });
-            return combinedData.map(i => i);
-          })
-      );
-    } return [];
-  };
-
   const setInitialServices = () => {
-    // Fetch initially shown service nodes when first entering the page
-    Promise.all([
-      fetchRootNodes(),
-      fetchPreviouslyOpenedNodes(),
-    ]).then((data) => {
-      const serviceData = [...data[0], ...data[1]];
-      setServices(serviceData);
-    });
+    // Fetch initially shown service nodes when first entering the pag
+    fetchRootNodes()
+      .then(data => setServices(data));
   };
 
   const fetchChildServices = async (service) => {
@@ -205,7 +192,9 @@ const ServiceTreeView = ({
   );
 
   useEffect(() => {
-    setInitialServices();
+    if (!services.length) {
+      setInitialServices();
+    }
   }, []);
 
   const expandingComponent = (item, level, last = []) => {
@@ -256,7 +245,7 @@ const ServiceTreeView = ({
             disableTouchRipple
             onClick={hasChildren ? () => handleExpand(item, isOpen) : null}
           >
-            <Typography align="left" className={`${classes.text} ${classes[`text${level}`]}`}>
+            <Typography align="left" className={classes.text}>
               {`${getLocaleText(item.name)} (${resultCount})`}
             </Typography>
             {hasChildren ? icon : <span className={classes.iconRight} />}
@@ -356,7 +345,7 @@ const ServiceTreeView = ({
         <List disablePadding>
           {selectedList.map(item => (
             item.name && (
-              <ListItem disableGutters>
+              <ListItem key={item.id} disableGutters>
                 <Typography className={classes.selectionText} aria-hidden variant="body2">
                   {getLocaleText(item.name)}
                 </Typography>
@@ -390,7 +379,7 @@ const ServiceTreeView = ({
           ? intl.formatMessage({ id: 'services.search.sr.selected' }, { services: selectedString })
           : intl.formatMessage({ id: 'services.search.sr' })}
         onClick={() => {
-          setTreeState({ selected, opened });
+          setTreeState({ services, selected, opened });
           navigator.push('search', { nodes: ids });
         }}
       />
@@ -426,6 +415,7 @@ ServiceTreeView.propTypes = {
   navigator: PropTypes.objectOf(PropTypes.any),
   intl: intlShape.isRequired,
   setTreeState: PropTypes.func.isRequired,
+  prevServices: PropTypes.arrayOf(PropTypes.any),
   prevSelected: PropTypes.arrayOf(PropTypes.any),
   prevOpened: PropTypes.arrayOf(PropTypes.any),
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -434,6 +424,7 @@ ServiceTreeView.propTypes = {
 
 ServiceTreeView.defaultProps = {
   navigator: null,
+  prevServices: [],
   prevSelected: [],
   prevOpened: [],
 };

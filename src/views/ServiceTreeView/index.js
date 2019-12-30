@@ -11,6 +11,7 @@ const mapStateToProps = (state) => {
   const getLocaleText = textObject => getLocaleString(state, textObject);
   return {
     navigator,
+    prevServices: (serviceTree && serviceTree.services) || [],
     prevSelected: (serviceTree && serviceTree.selected) || [],
     prevOpened: (serviceTree && serviceTree.opened) || [],
     settings,
