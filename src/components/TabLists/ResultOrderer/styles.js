@@ -10,20 +10,26 @@ export default theme => ({
     flex: '0 0 auto',
     backgroundColor: theme.palette.background.main,
     color: theme.palette.primary.contrastText,
-    paddingLeft: theme.spacing.unit,
+    padding: `0 ${theme.spacing.unitTriple}px ${theme.spacing.unitTriple}px ${theme.spacing.unitTriple}px`,
   },
   formControl: {
-    margin: theme.spacing.unit,
+    display: 'flex',
+    flexDirection: 'row',
     flex: '1 0 auto',
     flexWrap: 'nowrap',
     textAlign: 'left',
     color: 'inherit',
+    alignItems: 'center',
   },
   selectEmpty: {
-    marginTop: theme.spacing.unitDouble,
+    marginTop: 0,
   },
   select: {
     color: 'inherit',
+    flex: '1 0 auto',
+    fontSize: 12,
+    lineHeight: `${15}px`,
+    marginTop: 0,
     '&:before': {
       borderColor: theme.palette.primary.contrastText,
     },
@@ -33,6 +39,9 @@ export default theme => ({
   },
   inputLabel: {
     color: 'inherit !important',
+    flex: '0 1 auto',
+    position: 'inherit',
+    marginRight: theme.spacing.unitDouble,
   },
   icon: {
     color: 'inherit',

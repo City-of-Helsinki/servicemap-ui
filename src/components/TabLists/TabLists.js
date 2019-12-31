@@ -211,7 +211,7 @@ class TabLists extends React.Component {
     }
     const { mobile } = this.state;
     // Sticky relation is different on mobile (root relation) and desktop (current content relation)
-    const appBarHeight = mobile ? config.topBarHeightMobile : 0;
+    const appBarHeight = mobile ? config.topBarHeightMobile : config.topBarHeight;
 
     // Reset scroll to avoid scrolled sticky  elements having inconsistent offsetTop
     const elem = document.getElementsByClassName(this.sidebarClass)[0];
@@ -351,7 +351,7 @@ class TabLists extends React.Component {
 
   render() {
     const {
-      classes, intl,
+      beforePagination, classes, intl,
     } = this.props;
     const {
       currentPage, tabIndex, tabStyles,
@@ -361,17 +361,9 @@ class TabLists extends React.Component {
 
     return (
       <>
-        <MobileComponent>
-          {
-            this.renderHeader()
-          }
-        </MobileComponent>
-
-        <DesktopComponent>
-          {
-            this.renderHeader()
-          }
-        </DesktopComponent>
+        {
+          this.renderHeader()
+        }
 
         {
           // Create tab views from data
@@ -424,6 +416,9 @@ class TabLists extends React.Component {
                         resultCount={item.data.length}
                         titleComponent="h3"
                       />
+                      {
+                        beforePagination
+                      }
                       <PaginationComponent
                         current={adjustedCurrentPage}
                         pageCount={pageCount}
@@ -442,6 +437,7 @@ class TabLists extends React.Component {
 }
 
 TabLists.propTypes = {
+  beforePagination: PropTypes.node,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   data: PropTypes.arrayOf(PropTypes.shape({
     ariaLabel: PropTypes.string,
@@ -457,6 +453,7 @@ TabLists.propTypes = {
 };
 
 TabLists.defaultProps = {
+  beforePagination: null,
   headerComponents: null,
   navigator: null,
 };

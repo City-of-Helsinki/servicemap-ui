@@ -53,6 +53,7 @@ export default theme => ({
     padding: `${theme.spacing.unit}px ${theme.spacing.unitHalf}px`,
   },
   infoTextSticky: {
+    backgroundColor: theme.palette.primary.main,
     position: 'sticky',
     top: 0,
     zIndex: 1100,

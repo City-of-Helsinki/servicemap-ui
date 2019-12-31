@@ -61,6 +61,19 @@ const styles = () => ({
     color: 'inherit',
     lineHeight: 1,
   },
+  // toolbarBlack: {
+  //   minHeight: 28,
+  //   height: 28,
+  //   backgroundColor: '#141823',
+  //   padding: 0,
+  //   paddingLeft: 19,
+  // },
+  // toolbarBlackContainer: {
+  //   justifyContent: 'space-around',
+  //   display: 'flex',
+  //   width: 400,
+  //   color: '#fff',
+  // },
   toolbarWhite: {
     paddingLeft: 28,
     width: '100%',

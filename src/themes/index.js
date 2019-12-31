@@ -109,6 +109,12 @@ const paletteDefault = {
     main: 'linear-gradient(340.58deg, #0B7BED 0%, #146CE8 67.04%, #1964E6 100%)',
     front: 'linear-gradient(340.58deg, #0B7BED 0%, #146CE8 67.04%, #1964E6 100%)',
   },
+  white: {
+    light: '#f2f2f2',
+    main: '#FFFFFF',
+    dark: '#979797',
+    contrastText: '#000',
+  },
   warning: '#AF0021',
 };
 
@@ -124,6 +130,12 @@ const paletteDark = {
   background: {
     main: '#4A4A4C',
     front: 'linear-gradient(326.21deg, rgba(0, 0, 0, 0.79) 0%, rgba(71, 71, 71, 0.79) 100%)',
+  },
+  white: {
+    light: '#f2f2f2',
+    main: '#FFFFFF',
+    dark: '#979797',
+    contrastText: '#000',
   },
   warning: '#AF0021',
 };

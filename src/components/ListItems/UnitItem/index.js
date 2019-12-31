@@ -1,9 +1,11 @@
 
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
+import { withStyles } from '@material-ui/core';
 import UnitItem from './UnitItem';
 import { getLocaleString } from '../../../redux/selectors/locale';
 import { changeSelectedUnit } from '../../../redux/actions/selectedUnit';
+import styles from './styles';
 
 // Listen to redux state
 const mapStateToProps = (state) => {
@@ -17,7 +19,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default injectIntl(connect(
+export default injectIntl(withStyles(styles)(connect(
   mapStateToProps,
   { changeSelectedUnit },
-)(UnitItem));
+)(UnitItem)));

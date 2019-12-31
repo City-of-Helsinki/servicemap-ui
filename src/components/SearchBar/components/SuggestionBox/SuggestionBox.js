@@ -108,6 +108,7 @@ const SuggestionBox = (props) => {
   const renderSearchHistory = () => (
     <>
       <PreviousSearches
+        className={classes.infoText}
         handleArrowClick={handleArrowClick}
         history={history}
         focusIndex={focusedSuggestion}

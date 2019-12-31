@@ -17,11 +17,9 @@ import TabLists from '../../components/TabLists';
 import Container from '../../components/Container';
 import { generatePath } from '../../utils/path';
 import { DesktopComponent } from '../../layouts/WrapperComponents/WrapperComponents';
-import {
-  ColorblindIcon, HearingIcon, VisualImpairmentIcon, getIcon,
-} from '../../components/SMIcon';
-import ServiceMapButton from '../../components/ServiceMapButton';
+import SMButton from '../../components/ServiceMapButton';
 import ExpandedSuggestions from '../../components/ExpandedSuggestions';
+import SettingsInfo from '../../components/SettingsInfo';
 
 class SearchView extends React.Component {
   constructor(props) {
@@ -147,8 +145,38 @@ class SearchView extends React.Component {
     return null;
   }
 
+  toggleExpanded() {
+    const {
+      location,
+      navigator,
+    } = this.props;
+    const searchParams = parseSearchParams(location.search);
+
+    navigator.replace('search', {
+      ...searchParams,
+      expand: this.expandSearchVisible() ? 0 : 1,
+    });
+  }
+
+  expandSearchVisible() {
+    const {
+      location,
+    } = this.props;
+    const searchParams = parseSearchParams(location.search);
+
+    return !!(searchParams.expand && searchParams.expand === '1');
+  }
+
   closeExpandedSearch() {
-    this.setState({ expandSearch: false });
+    if (this.expandSearchVisible()) {
+      this.toggleExpanded();
+    }
+  }
+
+  openExpandedSearch() {
+    if (!this.expandSearchVisible()) {
+      this.toggleExpanded();
+    }
   }
 
   handleSubmit(query) {
@@ -157,7 +185,7 @@ class SearchView extends React.Component {
       this.closeExpandedSearch();
 
       if (navigator) {
-        navigator.push('search', { query });
+        navigator.push('search', { q: query });
       }
     }
   }
@@ -203,10 +231,9 @@ class SearchView extends React.Component {
   }
 
   renderSearchBar() {
-    const { expandSearch } = this.state;
     const { query } = this.props;
 
-    if (expandSearch) {
+    if (this.expandSearchVisible()) {
       return null;
     }
 
@@ -219,121 +246,57 @@ class SearchView extends React.Component {
   }
 
   renderSuggestions() {
-    const { expandSearch } = this.state;
     const { query } = this.props;
-    if (!expandSearch) {
-      return null;
-    }
+
     return (
       <ExpandedSuggestions
         closeExpandedSearch={() => this.closeExpandedSearch()}
         searchQuery={query}
         handleSubmit={query => this.handleSubmit(query)}
+        visible={this.expandSearchVisible()}
       />
     );
   }
 
   renderSearchInfo = () => {
-    const {
-      units, settings, classes, isFetching, intl, serviceTree,
-    } = this.props;
-    const {
-      colorblind, hearingAid, mobility, visuallyImpaired, helsinki, espoo, vantaa, kauniainen,
-    } = settings;
-    const searchParam = this.getSearchParam();
-
+    const { units, classes, isFetching } = this.props;
     const unitCount = units && units.length;
-
-    const accessibilitySettings = [
-      ...colorblind ? [{ text: intl.formatMessage({ id: 'settings.sense.colorblind' }), icon: <ColorblindIcon /> }] : [],
-      ...hearingAid ? [{ text: intl.formatMessage({ id: 'settings.sense.hearing' }), icon: <HearingIcon /> }] : [],
-      ...visuallyImpaired ? [{ text: intl.formatMessage({ id: 'settings.sense.visual' }), icon: <VisualImpairmentIcon /> }] : [],
-      ...mobility ? [{ text: intl.formatMessage({ id: `settings.mobility.${mobility}` }), icon: getIcon(mobility) }] : [],
-    ];
-
-    let citySettings = [
-      ...helsinki ? [`"${intl.formatMessage({ id: 'settings.city.helsinki' })}"`] : [],
-      ...espoo ? [`"${intl.formatMessage({ id: 'settings.city.espoo' })}"`] : [],
-      ...vantaa ? [`"${intl.formatMessage({ id: 'settings.city.vantaa' })}"`] : [],
-      ...kauniainen ? [`"${intl.formatMessage({ id: 'settings.city.kauniainen' })}"`] : [],
-    ];
-
-    const cityString = citySettings.join(', ');
-    const accessibilityString = accessibilitySettings.map(e => e.text).join(' ');
-
-    if (citySettings.length === 4) {
-      citySettings = [];
-    }
-
-    const infoTextId = searchParam.type === 'search' ? 'search.infoText' : 'search.infoTextNode';
-    const nodeNames = serviceTree && serviceTree.selected.map(e => e.name.fi).join(', ');
 
     return (
       <NoSsr>
         {!isFetching && (
           <div align="left" className={classes.searchInfo}>
-            <Typography variant="srOnly" component="h3">
-              <FormattedMessage id="search.resultInfo" />
-            </Typography>
-            {!(searchParam.type === 'node' && !nodeNames) && (
-              <div aria-live="polite" aria-label={`${intl.formatMessage({ id: infoTextId }, { count: unitCount })} ${searchParam.query}`} className={classes.infoContainer}>
-                <Typography aria-hidden className={`${classes.infoText} ${classes.bold}`}>
-                  <FormattedMessage id={infoTextId} values={{ count: unitCount }} />
-                </Typography>
-                <Typography aria-hidden className={classes.infoText}>
-                  &nbsp;
-                  {`${searchParam.type === 'search' ? searchParam.query : nodeNames}`}
-                </Typography>
-              </div>
-            )}
-
-            {citySettings.length ? (
-              <>
-                <div aria-label={`${intl.formatMessage({ id: 'settings.city.info' }, { count: citySettings.length })}: ${cityString}`} className={classes.infoContainer}>
-                  <Typography aria-hidden className={`${classes.infoText} ${classes.bold}`}>
-                    <FormattedMessage id="settings.city.info" values={{ count: citySettings.length }} />
-                    {':'}
-                  &nbsp;
-                  </Typography>
-                  <Typography aria-hidden className={classes.infoText}>
-                    {cityString}
-                  </Typography>
-                </div>
-              </>
-            ) : null}
-
-            {accessibilitySettings.length ? (
-              <div aria-label={`${intl.formatMessage({ id: 'settings.accessibility' })}: ${accessibilityString}`}>
-                <Typography aria-hidden className={`${classes.infoSubText} ${classes.bold}`}>
-                  <FormattedMessage id="settings.accessibility" />
-                  {':'}
-                </Typography>
-                <div aria-hidden className={classes.infoContainer}>
-                  {accessibilitySettings.map(item => (
-                    <div key={item.text} className={classes.settingItem}>
-                      {item.icon}
-                      <Typography className={classes.settingItemText}>{item.text}</Typography>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ) : null}
-            {
-              !!unitCount
-              && searchParam.type === 'search'
-              && (
-                <ServiceMapButton
-                  text={<FormattedMessage id="search.expand" />}
-                  ref={this.buttonRef}
-                  role="link"
-                  className={`${classes.suggestionButton}`}
-                  onClick={() => this.setState({ expandSearch: true })}
-                />
-              )
-            }
+            <div aria-live="polite" className={classes.infoContainer}>
+              <Typography className={`${classes.infoText} ${classes.bold}`}>
+                <FormattedMessage id="search.infoText" values={{ count: unitCount }} />
+              </Typography>
+            </div>
           </div>
         )}
       </NoSsr>
+    );
+  }
+
+  renderExpandedSearchButton = () => {
+    const {
+      classes, units,
+    } = this.props;
+    const searchParam = this.getSearchParam();
+
+    const unitCount = units && units.length;
+
+    if (!unitCount || searchParam.type !== 'search') {
+      return null;
+    }
+
+    return (
+      <div className={classes.suggestionButtonContainer}>
+        <SMButton
+          role="link"
+          onClick={() => { this.openExpandedSearch(); }}
+          messageID="search.expand"
+        />
+      </div>
     );
   }
 
@@ -392,6 +355,7 @@ class SearchView extends React.Component {
     return (
       <TabLists
         data={searchResults}
+        beforePagination={this.renderExpandedSearchButton()}
       />
     );
   }
@@ -437,15 +401,14 @@ class SearchView extends React.Component {
       return redirect;
     }
 
+    if (this.expandSearchVisible()) {
+      return this.renderSuggestions();
+    }
+
     return (
       <div
         className={classes.root}
       >
-        <Paper className={!isFetching ? classes.noPadding : ''} elevation={1} square aria-live="polite">
-          {
-           !expandSearch && this.renderScreenReaderInfo()
-          }
-        </Paper>
         {
           this.renderSearchBar()
         }
@@ -455,12 +418,20 @@ class SearchView extends React.Component {
         {
           !expandSearch && this.renderSearchInfo()
         }
+        <Paper className={!isFetching ? classes.noPadding : ''} elevation={1} square aria-live="polite">
+          {
+           !expandSearch && this.renderScreenReaderInfo()
+          }
+        </Paper>
         {
           !expandSearch && this.renderResults()
         }
         {
           isFetching
           && <Loading text={intl && intl.formatMessage({ id: 'search.loading.units' }, { count, max })} progress={progress} />
+        }
+        {
+          <SettingsInfo />
         }
         {
           this.renderNotFound()
@@ -490,14 +461,13 @@ SearchView.propTypes = {
   fetchUnits: PropTypes.func,
   intl: intlShape.isRequired,
   isFetching: PropTypes.bool,
+  location: PropTypes.objectOf(PropTypes.any).isRequired,
   max: PropTypes.number,
-  previousSearch: PropTypes.string,
+  previousSearch: PropTypes.oneOfType([PropTypes.string, PropTypes.objectOf(PropTypes.any)]),
   units: PropTypes.arrayOf(PropTypes.any),
   map: PropTypes.objectOf(PropTypes.any),
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
-  settings: PropTypes.objectOf(PropTypes.any),
-  serviceTree: PropTypes.objectOf(PropTypes.any),
   query: PropTypes.string,
 };
 
@@ -509,9 +479,7 @@ SearchView.defaultProps = {
   max: 0,
   previousSearch: null,
   units: [],
-  settings: null,
   map: null,
   navigator: null,
-  serviceTree: null,
   query: null,
 };

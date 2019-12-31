@@ -41,7 +41,6 @@ test('Navigate search view ', async (t) => {
     .typeText(input, 'kirjasto')
     .pressKey('tab') // Tabs to cancel button
     .pressKey('tab') // Tabs to search icon button
-    .pressKey('tab') // Narrow search
     .pressKey('tab') // Result orderer
     .expect(select.getReact(({props}) => props.value)).eql('match-desc')
     .pressKey('down')
@@ -56,7 +55,6 @@ test('Navigate search view ', async (t) => {
     .typeText(input, 'kirjasto')
     .pressKey('tab') // Tabs to cancel button
     .pressKey('tab') // Tabs to search icon button
-    .pressKey('tab') // Narrow search
     .pressKey('tab') // Result orderer
     .pressKey('tab') // First tab
     .pressKey('tab') // Tabs to first item in list

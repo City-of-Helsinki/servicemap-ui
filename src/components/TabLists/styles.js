@@ -2,8 +2,9 @@ export default theme => ({
   root: {
     position: 'sticky',
     zIndex: 50,
-    backgroundColor: '#fff',
-    borderColor: theme.palette.primary.contrastText,
+    backgroundColor: theme.palette.white.main,
+    borderColor: theme.palette.white.contrastText,
+    color: theme.palette.white.contrastText,
     boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
   },
   indicator: {
@@ -13,6 +14,9 @@ export default theme => ({
   resultList: {
     backgroundColor: 'white',
   },
+  selected: {
+    fontWeight: '700 !important',
+  },
   tab: {
     minWidth: 0,
     fontWeight: 'normal',
@@ -21,9 +25,6 @@ export default theme => ({
     [theme.breakpoints.only('sm')]: {
       letterSpacing: 'normal',
     },
-  },
-  selected: {
-    fontWeight: 'bold',
   },
   tabLabelContainer: {
     paddingLeft: 0,

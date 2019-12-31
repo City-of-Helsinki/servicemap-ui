@@ -103,7 +103,7 @@ class Services extends React.Component {
           subtitle={<FormattedMessage id="unit.services.count" values={{ count: serviceList.length }} />}
           titleComponent="h4"
           listLength={serviceShownCount}
-          buttonText={<FormattedMessage id="unit.services.more" />}
+          buttonMessageID="unit.services.more"
           showMoreOnClick={showMoreOnClick}
         >
           {serviceList.map((service, i) => (
@@ -145,7 +145,7 @@ class Services extends React.Component {
             subtitle={<FormattedMessage id="unit.services.count" values={{ count: subjectList.length }} />}
             titleComponent="h3"
             listLength={periodShownCount}
-            buttonText={<FormattedMessage id="unit.services.more" />}
+            buttonMessageID="unit.services.more"
             showMoreOnClick={showMoreOnClick}
           >
             {subjectList.filter(subject => subject.period && `${subject.period[0]}–${subject.period[1]}` === period)

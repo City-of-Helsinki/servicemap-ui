@@ -112,7 +112,7 @@ class SearchBar extends React.Component {
       }
 
       if (navigator) {
-        navigator.push('search', { query: search });
+        navigator.push('search', { q: search });
       }
     }
   }
@@ -362,7 +362,7 @@ SearchBar.propTypes = {
   intl: intlShape.isRequired,
   isSticky: PropTypes.number,
   isFetching: PropTypes.bool.isRequired,
-  previousSearch: PropTypes.string,
+  previousSearch: PropTypes.oneOfType([PropTypes.string, PropTypes.objectOf(PropTypes.any)]),
   srHideInput: PropTypes.bool,
 };
 
