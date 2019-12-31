@@ -65,6 +65,7 @@ export default {
   'general.back.event': 'Back to event view',
   'general.backToHome': 'Close search and return to beginning',
   'general.backToStart': 'Back to beginning of page',
+  'general.back.serviceTree': 'Back to service list page',
   'general.cancel': 'Cancel',
   'general.close': 'Close',
   'general.yes': 'Yes',
@@ -263,8 +264,12 @@ export default {
       one {You have made (#) selection}
       other {You have made (#) selections}
     }`,
-  'services.selections.delete': 'Remove all selections',
+  'services.selections.delete': 'Remove',
+  'services.selections.delete.all': 'Remove all selections',
+  'services.selections.delete.sr': 'Remove selection {service}',
   'services.search': 'Perform search',
+  'services.search.sr': 'Perform search with the selected services',
+  'services.search.sr.selected': 'Perform search with services: {services}',
 
   // Settings
   'settings': 'Settings',
@@ -274,7 +279,6 @@ export default {
   'settings.mapSettings.long': 'Map setttings',
   'settings.accessibilitySettings': 'Accessibility settings',
   'settings.accessibilitySettings.long': 'Accessibility settings',
-  'settings.all.long': 'Settings',
   'settings.amount': `{count, plural,
     one {# selection}
     other {# selections}

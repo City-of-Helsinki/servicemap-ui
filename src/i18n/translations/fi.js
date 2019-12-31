@@ -65,6 +65,7 @@ export default {
   'general.back.event': 'Palaa tapahtumanäkymään',
   'general.backToHome': 'Sulje haku ja palaa alkuun',
   'general.backToStart': 'Palaa sivun alkuun',
+  'general.back.serviceTree': 'Palaa palvelulistausnäkymään',
   'general.cancel': 'Peruuta',
   'general.close': 'Sulje',
   'general.yes': 'Kyllä',
@@ -245,7 +246,7 @@ export default {
   'search.tryAgainBody.spelling': 'tarkista kirjoitusasu',
   'search.tryAgainBody.city': 'tarkista kaupunkivalinnat',
   'search.tryAgainBody.service': 'kirjoita palvelun nimi',
-  'search.tryAgainBody.address': 'kirjoita osoite, minkä läheltä etsit palvelua',
+  'search.tryAgainBody.address': 'kirjoita osoite, jonka läheltä etsit palvelua',
   'search.tryAgainBody.keyword': 'kirjoita avainsanoja, esim. luontopolku, ruotsinkielinen päiväkoti',
   'search.expand': 'Hae tarkempia hakuehdotuksia',
   'search.closeExpand': 'Palaa hakuun',
@@ -263,8 +264,12 @@ export default {
     one {Olet thenyt (#) valinnan}
     other {Olet thenyt (#) valintaa}
   }`,
-  'services.selections.delete': 'Poista kaikki valinnat',
+  'services.selections.delete': 'Poista',
+  'services.selections.delete.all': 'Poista kaikki valinnat',
+  'services.selections.delete.sr': 'Poista valinta: ',
   'services.search': 'Tee haku',
+  'services.search.sr': 'Tee haku valituilla palveluilla',
+  'services.search.sr.selected': 'Tee haku palveluilla: {services}',
 
   // Settings
   'settings': 'Asetukset',
@@ -274,7 +279,6 @@ export default {
   'settings.mapSettings.long': 'Kartta-asetukset',
   'settings.accessibilitySettings': 'Esteettömyysasetukset',
   'settings.accessibilitySettings.long': 'Esteettömyysasetukset',
-  'settings.all.long': 'Asetukset',
   'settings.amount': `{count, plural,
     one {# valinta}
     other {# valintaa}

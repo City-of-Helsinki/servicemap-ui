@@ -65,6 +65,7 @@ export default {
   'general.back.event': 'Gå tillbaka till evenemangsvyn',
   'general.backToHome': 'Stäng sökningen och gå tillbaka till början',
   'general.backToStart': 'Gå tillbaka till början av sidan',
+  'general.back.serviceTree': 'Palaa palvelulistausnäkymään', // TODO: Translate
   'general.cancel': 'Ångra',
   'general.close': 'Stäng',
   'general.yes': 'Ja',
@@ -263,8 +264,12 @@ export default {
         one {Du har gjort (#) val}
         other {Du har gjort (#) val}
       }`,
-  'services.selections.delete': 'Ta bort alla val',
+  'services.selections.delete': 'Poista', // TODO: translate
+  'services.selections.delete.all': 'Ta bort alla val',
+  'services.selections.delete.sr': 'Poista valinta: ', // TODO: translate
   'services.search': 'Gör sökning',
+  'services.search.sr': 'Tee haku valituilla palveluilla', // TODO: translate
+  'services.search.sr.selected': 'Tee haku palveluilla: {services}', // TODO: translate
 
   // Settings
   'settings': 'Inställningar',
