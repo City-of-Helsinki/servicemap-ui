@@ -7,7 +7,7 @@ import { FormattedMessage } from 'react-intl';
 import SearchBar from '../../components/SearchBar';
 import TitleBar from '../../components/TitleBar';
 import { MobileComponent, DesktopComponent } from '../../layouts/WrapperComponents/WrapperComponents';
-import ServiceMapButton from '../../components/ServiceMapButton';
+import SMButton from '../../components/ServiceMapButton';
 
 const ServiceTreeView = ({
   classes, intl, navigator, setTreeState, prevSelected, prevOpened, settings,
@@ -285,8 +285,7 @@ const ServiceTreeView = ({
             ))}
           </List>
         </Collapse>
-        <ServiceMapButton
-          text="Tee haku"
+        <SMButton
           disabled={!selectedList.length}
           onClick={() => {
             setTreeState({ selected: selectedList, opened });
@@ -295,11 +294,12 @@ const ServiceTreeView = ({
           style={{
             width: 250,
             height: 46,
-            backgroundColor: '#fff',
-            color: '#000',
             borderRadius: 5,
           }}
-        />
+          margin
+        >
+          Tee haku
+        </SMButton>
       </div>
       <List disablePadding>
         {services && services.map(service => (

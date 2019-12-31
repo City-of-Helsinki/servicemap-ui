@@ -112,7 +112,7 @@ class SearchBar extends React.Component {
       }
 
       if (navigator) {
-        navigator.push('search', { query: search });
+        navigator.push('search', { q: search });
       }
     }
   }

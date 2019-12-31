@@ -15,7 +15,7 @@ import HeadModifier from '../../utils/headModifier';
 
 import fetchAddressUnits from './utils/fetchAddressUnits';
 import fetchAddressData from './utils/fetchAddressData';
-import ServiceMapButton from '../../components/ServiceMapButton';
+import SMButton from '../../components/ServiceMapButton';
 import DistritctItem from './components/DistrictItem';
 import TabLists from '../../components/TabLists';
 
@@ -244,6 +244,21 @@ const AddressView = (props) => {
           </div>
         )}
       />
+      {addressData && units && districts && (
+      <MobileComponent>
+        <SMButton
+          messageID="general.showOnMap"
+          icon={<Map />}
+          className={classes.mapButton}
+          onClick={() => {
+            if (navigator) {
+              focusUnit(map, addressData.location.coordinates);
+              navigator.openMap();
+            }
+          }}
+        />
+      </MobileComponent>
+      )}
     </div>
   );
 };

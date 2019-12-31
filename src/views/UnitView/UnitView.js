@@ -28,7 +28,7 @@ import Reservations from './components/Reservations';
 import Description from './components/Description';
 import Services from './components/Services';
 import Events from './components/Events';
-import ServiceMapButton from '../../components/ServiceMapButton';
+import SMButton from '../../components/ServiceMapButton';
 import UnitIcon from '../../components/SMIcon/UnitIcon';
 import TabLists from '../../components/TabLists';
 import calculateDistance from '../../utils/calculateDistance';
@@ -217,12 +217,12 @@ class UnitView extends React.Component {
   }
 
   renderMobileButtons = () => {
-    const { navigator, unit, classes } = this.props;
+    const { navigator, classes } = this.props;
     return (
       <MobileComponent>
         <div className={classes.mobileButtonArea}>
-          <ServiceMapButton
-            text={<FormattedMessage id="general.showOnMap" />}
+          <SMButton
+            messageID="general.showOnMap"
             icon={<Map />}
             onClick={(e) => {
               e.preventDefault();
@@ -231,9 +231,10 @@ class UnitView extends React.Component {
                 navigator.openMap();
               }
             }}
+            margin
           />
           {/* Feedback button
-          <ServiceMapButton
+          <SMButton
             text={<FormattedMessage id="home.send.feedback" />}
             icon={<Mail />}
           /> */}
@@ -260,7 +261,11 @@ class UnitView extends React.Component {
         <DesktopComponent>
           <SearchBar />
           <div className={classes.topPadding} />
-          <TitleBar icon={<AddressIcon className={classes.icon} />} title={title} distance={distance} />
+          <TitleBar
+            icon={<AddressIcon className={classes.icon} />}
+            title={title}
+            distance={distance}
+          />
         </DesktopComponent>
         <MobileComponent>
           <TitleBar icon={icon} title={correctUnit ? title : ''} backButton />

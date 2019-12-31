@@ -1,46 +1,84 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ButtonBase, Typography } from '@material-ui/core';
+import { FormattedMessage } from 'react-intl';
 
 // ServiceMapButton
-const ServiceMapButton = ({
-  classes, text, icon, className, onClick, srText, style, role, ...rest
+const SMButton = ({
+  children,
+  classes,
+  className,
+  color,
+  icon,
+  messageID,
+  onClick,
+  margin,
+  srText,
+  style,
+  role,
+  ...rest
 }) => {
+  const colorStyle = classes[color] || '';
   const buttonIcon = icon ? React.cloneElement(icon, { className: classes.buttonIcon }) : null;
+  const buttonClasses = `${classes.button} ${margin ? classes.margin : classes.marginRight} ${className} ${colorStyle}`;
+  const textClasses = `${classes.typography} ${margin ? classes.bigText : ''}`;
+
   return (
     <ButtonBase
-      className={`${classes.button} ${className}`}
-      role={role || 'link'}
-      onClick={onClick}
       aria-label={srText}
-      style={style}
+      className={buttonClasses}
+      icon={buttonIcon}
+      onClick={onClick}
+      role={role || 'link'}
+      style={{
+        ...style,
+      }}
+      variant="contained"
       {...rest}
     >
-      {buttonIcon}
-      <Typography className={classes.buttonText}>
-        {text}
-      </Typography>
+      {
+        icon
+      }
+      {
+        messageID
+        && (
+          <Typography color="inherit" component="p" variant="caption" className={textClasses}>
+            <FormattedMessage id={messageID} />
+          </Typography>
+        )
+      }
+      {
+        !messageID
+        && children
+      }
     </ButtonBase>
   );
 };
 
-ServiceMapButton.propTypes = {
-  text: PropTypes.oneOfType([PropTypes.string, PropTypes.objectOf(PropTypes.any)]).isRequired,
+SMButton.propTypes = {
   icon: PropTypes.objectOf(PropTypes.any),
   className: PropTypes.string,
+  color: PropTypes.oneOf(['primary', 'secondary', 'default']),
+  margin: PropTypes.bool,
+  messageID: PropTypes.string,
   onClick: PropTypes.func.isRequired,
   srText: PropTypes.string,
   style: PropTypes.objectOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
+  children: PropTypes.node,
   role: PropTypes.string,
 };
 
-ServiceMapButton.defaultProps = {
+SMButton.defaultProps = {
+  children: null,
   className: '',
+  color: 'default',
   icon: null,
+  margin: false,
+  messageID: null,
   srText: null,
   style: null,
   role: null,
 };
 
-export default ServiceMapButton;
+export default SMButton;

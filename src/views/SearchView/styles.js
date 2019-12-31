@@ -3,7 +3,6 @@ export default theme => ({
     display: 'inline-block',
     position: 'relative',
     width: '100%',
-    height: '100%',
   },
   noPadding: {
     padding: 0,
@@ -38,12 +37,10 @@ export default theme => ({
   searchInfo: {
     color: '#fff',
     backgroundColor: theme.palette.primary.main,
-    padding: 12,
-    paddingLeft: theme.spacing.unitDouble,
+    padding: `${theme.spacing.unit}px ${theme.spacing.unitTriple}px`,
   },
   infoText: {
     color: 'inherit',
-    marginBottom: 12,
   },
   infoSubText: {
     color: 'inherit',
@@ -67,15 +64,9 @@ export default theme => ({
     color: 'inherit',
     alignSelf: 'center',
   },
-  suggestionButton: {
-    margin: 0,
-    width: 'fit-content',
-    height: 42,
-    borderColor: '#fff',
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderRadius: 8,
-    marginTop: 12,
+  suggestionButtonContainer: {
+    display: 'flex',
+    margin: `${theme.spacing.unitDouble}px ${theme.spacing.unitTriple}px`,
   },
   bold: {
     fontWeight: 'bold',

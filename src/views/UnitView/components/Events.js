@@ -45,7 +45,7 @@ const Events = ({
           subtitle={<FormattedMessage id="unit.events.count" values={{ count: events.length }} />}
           titleComponent="h4"
           listLength={shownCount}
-          buttonText={<FormattedMessage id="unit.events.more" />}
+          buttonMessageID="unit.events.more"
           showMoreOnClick={listLength
             ? () => {
               const lastListItem = ref.querySelector('li:last-of-type');

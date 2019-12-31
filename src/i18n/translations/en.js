@@ -229,7 +229,7 @@ export default {
   'search.loading.units.srInfo': 'Searching {count} unit(s)',
   'search.notFound': 'No results found with given search',
   'search.started': 'Search started',
-  'search.infoText': 'Showing {count} results for search query: ',
+  'search.infoText': '{count} Search results',
   'search.searchbar.headerText': 'All the services in the metropolitan area within your reach.',
   'search.searchbar.infoText': 'Search for services units or addresses',
   'search.suggestions.suggest': 'Did you mean..?',
@@ -284,6 +284,9 @@ export default {
   'settings.sense.hearing': 'I use a hearing aid',
   'settings.sense.visual': 'I am visually impaired',
   'settings.sense.colorblind': 'I have color vision deficiency',
+  'settings.info.heading': 'Settings info', // TODO: verify
+  'settings.info.title': 'Your selected settings will effect search results', // TODO: verify
+  'settings.info.title.noSettings': 'Change search or accessibility settings', // TODO: verify
   'settings.mobility.title': 'Mobility impairments',
   'settings.mobility.none': 'No mobility impairments',
   'settings.mobility.wheelchair': 'I use a wheelchair',

@@ -3,7 +3,7 @@ export default theme => ({
     color: theme.palette.primary.contrastText,
     display: 'flex',
     flexDirection: 'column',
-    background: 'linear-gradient(340.58deg, #0B7BED 0%, #146CE8 67.04%, #1964E6 100%)',
+    background: 'linear-gradient(#0B7BED 0%, #146CE8 67.04%, #1964E6 100%)',
     padding: theme.spacing.unitTriple,
     paddingTop: 0,
     boxShadow: '0 2px 4px 0 rgba(0,0,0,0.5)',
@@ -56,6 +56,7 @@ export default theme => ({
     padding: `${theme.spacing.unit}px ${theme.spacing.unitHalf}px`,
   },
   infoTextSticky: {
+    backgroundColor: theme.palette.primary.main,
     position: 'sticky',
     top: 0,
     zIndex: 1100,
