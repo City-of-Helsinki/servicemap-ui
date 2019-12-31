@@ -35,7 +35,7 @@ const ExpandedSuggestions = (props) => {
 
   const listRef = useRef(null);
   const fetchController = useRef(null);
-  const titleRef = useRef(null);
+  // const titleRef = useRef(null);
 
   useEffect(() => {
     if (!visible) {
@@ -171,7 +171,7 @@ const ExpandedSuggestions = (props) => {
           <SMButton
             role="link"
             className={classes.closeButton}
-            onKeyDown={e => handleKeyPress(e)}
+            // onKeyDown={e => handleKeyPress(e)}
             onClick={() => closeExpandedSearch()}
             messageID="search.closeExpand"
           />

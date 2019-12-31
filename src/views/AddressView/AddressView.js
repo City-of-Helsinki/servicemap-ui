@@ -228,8 +228,8 @@ const AddressView = (props) => {
             {renderTopBar(title)}
             {addressData && units && districts && (
             <MobileComponent>
-              <ServiceMapButton
-                text={<FormattedMessage id="general.showOnMap" />}
+              <SMButton
+                messageID="general.showOnMap"
                 icon={<Map />}
                 className={classes.mapButton}
                 onClick={() => {
