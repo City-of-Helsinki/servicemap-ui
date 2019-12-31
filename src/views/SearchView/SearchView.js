@@ -464,7 +464,7 @@ SearchView.propTypes = {
   isFetching: PropTypes.bool,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   max: PropTypes.number,
-  previousSearch: PropTypes.string,
+  previousSearch: PropTypes.oneOfType([PropTypes.string, PropTypes.objectOf(PropTypes.any)]),
   units: PropTypes.arrayOf(PropTypes.any),
   map: PropTypes.objectOf(PropTypes.any),
   match: PropTypes.objectOf(PropTypes.any).isRequired,
