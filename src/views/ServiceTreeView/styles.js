@@ -8,7 +8,7 @@ export default theme => ({
     paddingBottom: 8,
   },
   topArea: {
-    background: 'linear-gradient(340.58deg, #0B7BED 0%, #146CE8 67.04%, #1964E6 100%)',
+    background: theme.palette.background.main,
     paddingTop: 23,
     paddingLeft: 21,
     paddingBottom: 16,
