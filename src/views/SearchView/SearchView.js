@@ -260,27 +260,18 @@ class SearchView extends React.Component {
   }
 
   renderSearchInfo = () => {
-    const {
-      units, classes, isFetching, intl, serviceTree,
-    } = this.props;
-    const searchParam = this.getSearchParam();
-
+    const { units, classes, isFetching } = this.props;
     const unitCount = units && units.length;
-
-    const infoTextId = searchParam.type === 'search' ? 'search.infoTextSR' : 'search.infoTextNodeSR';
-    const nodeNames = serviceTree && serviceTree.selected.map(e => e.name.fi).join(', ');
 
     return (
       <NoSsr>
         {!isFetching && (
           <div align="left" className={classes.searchInfo}>
-            {!(searchParam.type === 'node' && !nodeNames) && (
-              <div aria-live="polite" aria-label={`${intl.formatMessage({ id: infoTextId }, { count: unitCount })} ${searchParam.query}`} className={classes.infoContainer}>
-                <Typography aria-hidden className={`${classes.infoText} ${classes.bold}`}>
-                  <FormattedMessage id="search.infoText" values={{ count: unitCount }} />
-                </Typography>
-              </div>
-            )}
+            <div aria-live="polite" className={classes.infoContainer}>
+              <Typography className={`${classes.infoText} ${classes.bold}`}>
+                <FormattedMessage id="search.infoText" values={{ count: unitCount }} />
+              </Typography>
+            </div>
           </div>
         )}
       </NoSsr>
@@ -478,7 +469,6 @@ SearchView.propTypes = {
   map: PropTypes.objectOf(PropTypes.any),
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
-  serviceTree: PropTypes.objectOf(PropTypes.any),
   query: PropTypes.string,
 };
 
@@ -492,6 +482,5 @@ SearchView.defaultProps = {
   units: [],
   map: null,
   navigator: null,
-  serviceTree: null,
   query: null,
 };
