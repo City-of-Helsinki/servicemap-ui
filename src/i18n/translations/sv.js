@@ -229,7 +229,7 @@ export default {
   'search.loading.units.srInfo': 'Söker {count} verksamhetsställe(n)',
   'search.notFound': 'Inga sökresultat hittades med sökningen',
   'search.started': 'Sökningen har börjat',
-  'search.infoText': '{count} sökresultat,
+  'search.infoText': '{count} sökresultat',
   'search.searchbar.headerText': 'Alla tjänster i huvudstadsregionen inom ditt räckhåll.',
   'search.searchbar.infoText': 'Sök tjänster, verksamhetsställen eller adresser',
   'search.suggestions.suggest': 'Menade du..?',
