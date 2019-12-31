@@ -39,7 +39,6 @@ export default {
   'address.plural': 'Osoitteet',
 
   // Event
-  'event.nearby': 'Lähellä olevat tapahtumat',
   'event.description': 'Kuvaus',
   'event.time': 'Ajankohta',
   'event.picture': 'Tapahtuman kuva',
@@ -85,6 +84,7 @@ export default {
   'general.pageTitles.address': 'Osoitenäkymä',
   'general.pageTitles.list.events': 'Tapahtumalista ',
   'general.pageTitles.list.reservations': 'Varauslista',
+
   // General - Pagination
   'general.pagination.previous': 'Aiempi sivu',
   'general.pagination.next': 'Seuraava sivu',
@@ -95,7 +95,6 @@ export default {
   'general.previousSearch': 'Aikaisemmat haut',
   'general.return.viewTitle': 'Siirry pääsisällön alkuun',
   'general.skipToContent': 'Siirry pääsisältöön',
-  'general.give.feedback': 'Anna palautetta Palvelukartan testiversiosta (linkki aukeaa uuteen välilehteen)',
   'general.new.tab': 'Aukeaa uuteen välilehteen',
   'general.time.short': 'klo',
   'general.save': 'Tallenna',
@@ -110,7 +109,7 @@ export default {
   'home.buttons.settings': 'Tallenna omat kaupunki- ja esteettömyysasetuksesi',
   'home.buttons.services': 'Tutustu palveluihin palveluluettelon avulla',
   'home.buttons.closeByServices': 'Näytä lähellä olevat palvelut',
-  'home.example.title': 'Esimerkkihakuja',
+  'home.buttons.instructions': 'Vinkkejä Palvelukartan käyttöön',
   'home.example.search': 'Hae hakusanalla',
   'home.message': 'Terveisiä palvelukartan kehittäjiltä',
   'home.send.feedback': 'Anna palautetta',
@@ -138,7 +137,7 @@ export default {
                                   }`,
   'unit.accessibility.unitNoInfo': 'Toimipiste ei ole toimittanut esteettömyystietoja.',
   'unit.basicInfo': 'Perustiedot',
-  'unit.data_source': 'Lähde: {data_source}', // TODO: Translate
+  'unit.data_source': 'Lähde: {data_source}',
   'unit.details.notFound': 'Toimipisteen tietoja ei saatavilla.',
   'unit.plural': 'Toimipisteet',
 
@@ -208,6 +207,7 @@ export default {
                   other {# hakutulosta löydetty}
                 }`,
   'search.results.short': `{count, plural,
+                  =0 {ei osumia}
                   one {# osuma}
                   other {# osumaa}
                 }`,
@@ -230,8 +230,6 @@ export default {
   'search.notFound': 'Haulla ei löytynyt hakutuloksia',
   'search.started': 'Haku aloitettu',
   'search.infoText': '{count} Hakutulosta',
-  'search.infoTextSR': 'Näytetään {count} hakutulosta sanalla: ',
-  'search.infoTextSRNode': 'Näytetään {count} hakutulosta palveluilla: ',
   'search.searchbar.headerText': 'Pääkaupunkiseudun kaikki julkiset palvelut ulottuvillasi.',
   'search.searchbar.infoText': 'Hae palveluita, toimipisteitä tai osoitteita',
   'search.suggestions.suggest': 'Tarkoititko..?',
@@ -251,7 +249,6 @@ export default {
   'search.tryAgainBody.keyword': 'kirjoita avainsanoja, esim. luontopolku, ruotsinkielinen päiväkoti',
   'search.expand': 'Hae tarkempia hakuehdotuksia',
   'search.closeExpand': 'Palaa hakuun',
-
 
   // Service
   'service': 'Palvelu',
