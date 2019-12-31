@@ -1,5 +1,18 @@
 
 export default theme => ({
+  bottomContainer: {
+    display: 'inline-block',
+    marginTop: '6px',
+    '& p': {
+      fontWeight: 'normal',
+    },
+  },
+  bottomHighlight: {
+    backgroundColor: '#323232',
+    color: '#FFF',
+    padding: '0 8px',
+    marginBottom: '2px',
+  },
   cssFocused: {
     outlineStyle: 'solid',
     outlineColor: 'blue',
@@ -10,20 +23,11 @@ export default theme => ({
     textOverflow: 'ellipsis',
     margin: 0,
   },
-  marginBottom: {
-    marginBottom: theme.spacing.unit,
-  },
-  secondaryContent: {
-    marginRight: 8,
-    textAlign: 'right',
-  },
   noMargin: {
     margin: 0,
   },
   itemTextContainer: {
     flex: '1 1 auto',
-    marginLeft: theme.spacing.unit,
-    paddingLeft: theme.spacing.unit,
   },
   topRow: {
     display: 'flex',
@@ -41,12 +45,11 @@ export default theme => ({
   rightColumn: {
     textAlign: 'right',
   },
-  bottomColumn: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-end',
-  },
   caption: {
     color: 'rgba(0,0,0,0.6)',
+  },
+  text: {
+    color: '#000',
+    fontWeight: 'normal',
   },
 });

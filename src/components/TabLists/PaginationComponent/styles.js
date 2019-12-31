@@ -1,13 +1,26 @@
 
 // Styles
 export default theme => ({
+  arrowIcon: {
+    fontSize: 18,
+  },
+  arrowFlip: {
+    transform: 'scaleX(-1)',
+  },
+  borderBlack: {
+    border: '1px solid #000000',
+  },
   button: {
-    padding: `${theme.spacing.unitHalf}px ${theme.spacing.unit}px`,
     margin: theme.spacing.unitHalf,
-    minWidth: 'auto',
+    height: 32,
+    width: 32,
+    minHeight: 32,
+    minWidth: 32,
   },
   buttonContainer: {
     flexDirection: 'row',
+    margin: `${theme.spacing.unit}px ${theme.spacing.unitDouble}px`,
+    padding: theme.spacing.unitHalf,
   },
   list: {
     display: 'inherit',
@@ -23,11 +36,12 @@ export default theme => ({
   pageElement: {
     color: 'black',
     cursor: 'pointer',
+    fontWeight: 'normal',
     textDecoration: 'none',
   },
   pageElementActive: {
-    color: 'rgb(176, 0, 33)',
     cursor: 'auto',
+    fontWeight: 'normal',
     textDecoration: 'underline',
   },
   pageItem: {

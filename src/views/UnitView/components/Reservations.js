@@ -18,7 +18,7 @@ const Reservations = ({
           subtitle={<FormattedMessage id="unit.reservations.count" values={{ count: reservations.length }} />}
           titleComponent="h4"
           listLength={shownCount}
-          buttonText={<FormattedMessage id="unit.reservations.more" />}
+          buttonMessageID="unit.reservations.more"
           showMoreOnClick={listLength
             ? () => {
               const lastListItem = ref.querySelector('li:last-of-type');

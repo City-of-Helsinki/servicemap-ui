@@ -9,7 +9,7 @@ import { FormattedMessage, intlShape } from 'react-intl';
 import { getPreviousSearches } from '../SearchBar/previousSearchData';
 import createSuggestions from '../SearchBar/createSuggestions';
 import config from '../../../config';
-import ServiceMapButton from '../ServiceMapButton';
+import SMButton from '../ServiceMapButton';
 import SuggestionItem from '../ListItems/SuggestionItem';
 
 
@@ -22,6 +22,7 @@ const ExpandedSuggestions = (props) => {
     setSearch,
     intl,
     closeExpandedSearch,
+    visible,
   } = props;
 
   const [searchQueries, setSearchQueries] = useState(null);
@@ -34,15 +35,17 @@ const ExpandedSuggestions = (props) => {
 
   const listRef = useRef(null);
   const fetchController = useRef(null);
+  // const titleRef = useRef(null);
 
-  /* TODO: Utilize city information with search queries
-  const cities = [
-    ...settings.helsinki ? ['Helsinki'] : [],
-    ...settings.espoo ? ['Espoo'] : [],
-    ...settings.vantaa ? ['Vantaa'] : [],
-    ...settings.kauniainen ? ['Kauniainen'] : [],
-  ];
-  */
+  useEffect(() => {
+    if (!visible) {
+      return;
+    }
+    const title = document.getElementsByClassName('ExpandedSuggestions-title')[0];
+    if (title) {
+      title.focus();
+    }
+  }, [visible]);
 
   const resetSuggestions = () => {
     setSearchQueries(null);
@@ -83,14 +86,6 @@ const ExpandedSuggestions = (props) => {
     }
   };
 
-  const handleKeyPress = (e) => {
-    // Close suggestion box if tab is pressed in last list result
-    if (e.key === 'Tab' && !(e.shiftKey && e.key === 'Tab')) {
-      e.preventDefault();
-      closeExpandedSearch();
-    }
-  };
-
   const setSearchBarText = () => {
     if (listRef && listRef.current) {
       if (listRef.current.props.children.length && focusedSuggestion !== null) {
@@ -114,7 +109,7 @@ const ExpandedSuggestions = (props) => {
   const renderLoading = () => (
     <>
       <div className={classes.expandSearchTop}>
-        <Typography tabIndex="-1" component="h3" className={`${classes.expandTitle} suggestionsTitle`} variant="subtitle1">
+        <Typography tabIndex="-1" component="h3" className={`${classes.expandTitle} ExpandedSuggestions-title`} variant="subtitle1">
           <FormattedMessage id="search.suggestions.expand" />
         </Typography>
         <IconButton
@@ -143,7 +138,7 @@ const ExpandedSuggestions = (props) => {
       return (
         <>
           <div className={classes.expandSearchTop}>
-            <Typography tabIndex="-1" component="h3" className={`${classes.expandTitle} suggestionsTitle`} variant="subtitle1">
+            <Typography tabIndex="-1" component="h3" className={`${classes.expandTitle} ExpandedSuggestions-title`} variant="subtitle1">
               <FormattedMessage id="search.suggestions.expand" />
             </Typography>
             <IconButton
@@ -173,16 +168,13 @@ const ExpandedSuggestions = (props) => {
               />
             ))}
           </List>
-          <ServiceMapButton
+          <SMButton
             role="link"
             className={classes.closeButton}
-            onKeyDown={e => handleKeyPress(e)}
+            // onKeyDown={e => handleKeyPress(e)}
             onClick={() => closeExpandedSearch()}
-          >
-            <Typography variant="button">
-              <FormattedMessage id="search.closeExpand" />
-            </Typography>
-          </ServiceMapButton>
+            messageID="search.closeExpand"
+          />
         </>
       );
     } return null;
@@ -205,6 +197,30 @@ const ExpandedSuggestions = (props) => {
   useEffect(() => { // Change text of the searchbar when suggestion with keyboard focus changes
     setSearchBarText();
   }, [focusedSuggestion]);
+
+
+  useEffect(() => {
+    // Disable page scroll when suggestion box is open
+    const sidebar = document.getElementsByClassName('SidebarWrapper')[0];
+    const app = document.getElementsByClassName('App')[0];
+    if (visible) {
+      sidebar.style.overflow = isMobile ? 'hidden' : 'hidden';
+      if (app) {
+        app.style.height = '100%';
+      }
+    }
+
+    return () => {
+      sidebar.style.overflow = isMobile ? '' : 'auto';
+      if (app) {
+        app.style.height = null;
+      }
+    };
+  }, [visible]);
+
+  if (!visible) {
+    return null;
+  }
 
   /**
   * Render component
@@ -245,12 +261,14 @@ ExpandedSuggestions.propTypes = {
   focusedSuggestion: PropTypes.number,
   setSearch: PropTypes.func,
   intl: intlShape.isRequired,
+  visible: PropTypes.bool,
 };
 
 ExpandedSuggestions.defaultProps = {
   searchQuery: null,
   focusedSuggestion: null,
   setSearch: null,
+  visible: false,
 };
 
 export default ExpandedSuggestions;

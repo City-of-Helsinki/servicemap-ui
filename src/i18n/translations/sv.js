@@ -230,7 +230,7 @@ export default {
   'search.loading.units.srInfo': 'Söker {count} verksamhetsställe(n)',
   'search.notFound': 'Inga sökresultat hittades med sökningen',
   'search.started': 'Sökningen har börjat',
-  'search.infoText': 'Visar {count} sökresultat för ordet: ',
+  'search.infoText': '{count} sökresultat',
   'search.searchbar.headerText': 'Alla tjänster i huvudstadsregionen inom ditt räckhåll.',
   'search.searchbar.infoText': 'Sök tjänster, verksamhetsställen eller adresser',
   'search.suggestions.suggest': 'Menade du..?',
@@ -289,6 +289,9 @@ export default {
   'settings.sense.hearing': 'Jag använder hörapparat',
   'settings.sense.visual': 'Jag är synskadad',
   'settings.sense.colorblind': 'Jag är färgblind',
+  'settings.info.heading': 'Asetustiedot', // TODO: Translate
+  'settings.info.title': 'Valitsemasi asetukset vaikuttavat hakutulokseen', // TODO: Translate
+  'settings.info.title.noSettings': 'Muuta haku- tai esteettömyysasetuksia', // TODO: Translate
   'settings.mobility.title': 'Rörelsebegränsningar',
   'settings.mobility.none': 'Inga rörelsebegränsningar',
   'settings.mobility.wheelchair': 'Jag använder rullstol',

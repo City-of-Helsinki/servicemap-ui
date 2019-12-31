@@ -54,11 +54,11 @@ const createContentStyles = (
       margin: 0,
       overflow: !isMobile ? 'auto' : '',
       visibility: mobileMapOnly && !settingsOpen ? 'hidden' : null,
+      flex: '0 1 auto',
     },
   };
 
   if (isMobile) {
-    styles.sidebar.flex = '1 1 auto';
     if (fullMobileMap && !landscape) {
       // TODO change 56px to topBarHeight when we get new height for topbar/titlebar
       styles.map.height = 'calc(100% - 56px)';

@@ -45,7 +45,7 @@ export default {
   'event.title': 'Tapahtumat',
 
   // Sorting
-  'sorting.label': 'Järjestä hakutulokset',
+  'sorting.label': 'Järjestä hakutulokset:',
   'sorting.accessibility.desc': 'Esteettömin ensin',
   'sorting.alphabetical.asc': 'Käänteinen aakkosjärjestys',
   'sorting.alphabetical.desc': 'Aakkosjärjestys',
@@ -230,7 +230,7 @@ export default {
   'search.loading.units.srInfo': 'Haetaan {count} toimipistettä',
   'search.notFound': 'Haulla ei löytynyt hakutuloksia',
   'search.started': 'Haku aloitettu',
-  'search.infoText': 'Näytetään {count} hakutulosta sanalla: ',
+  'search.infoText': '{count} Hakutulosta',
   'search.searchbar.headerText': 'Pääkaupunkiseudun kaikki julkiset palvelut ulottuvillasi.',
   'search.searchbar.infoText': 'Hae palveluita, toimipisteitä tai osoitteita',
   'search.suggestions.suggest': 'Tarkoititko..?',
@@ -248,7 +248,7 @@ export default {
   'search.tryAgainBody.service': 'kirjoita palvelun nimi',
   'search.tryAgainBody.address': 'kirjoita osoite, jonka läheltä etsit palvelua',
   'search.tryAgainBody.keyword': 'kirjoita avainsanoja, esim. luontopolku, ruotsinkielinen päiväkoti',
-  'search.expand': 'Tarkenna hakua',
+  'search.expand': 'Hae tarkempia hakuehdotuksia',
   'search.closeExpand': 'Palaa hakuun',
 
   // Service
@@ -288,6 +288,9 @@ export default {
   'settings.sense.hearing': 'Käytän kuulolaitetta',
   'settings.sense.visual': 'Olen näkövammainen',
   'settings.sense.colorblind': 'Minun on vaikea erottaa värejä',
+  'settings.info.heading': 'Asetustiedot', // TODO: verify
+  'settings.info.title': 'Valitsemasi asetukset vaikuttavat hakutulokseen',
+  'settings.info.title.noSettings': 'Muuta haku- tai esteettömyysasetuksia',
   'settings.mobility.title': 'Liikkumisrajoitteet',
   'settings.mobility.none': 'Ei liikkumisrajoitteita',
   'settings.mobility.wheelchair': 'Käytän pyörätuolia',

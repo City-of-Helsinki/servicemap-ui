@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
-  List, ListItem, Collapse, Checkbox, Typography, ButtonBase,
+  List, ListItem, Collapse, Checkbox, Typography, ButtonBase, NoSsr,
 } from '@material-ui/core';
 import { ArrowDropUp, ArrowDropDown, Search } from '@material-ui/icons';
 import { FormattedMessage, intlShape } from 'react-intl';
 import { MobileComponent, DesktopComponent } from '../../layouts/WrapperComponents/WrapperComponents';
-import ServiceMapButton from '../../components/ServiceMapButton';
+import SMButton from '../../components/ServiceMapButton';
 
 const ServiceTreeView = (props) => {
   const {
@@ -294,20 +294,22 @@ const ServiceTreeView = (props) => {
   const renderSelectedCities = () => {
     const cityString = citySettings.join(', ');
     return (
-      <div className={classes.infoContainer}>
-        {citySettings.length ? (
-          <>
-            <Typography className={`${classes.infoText} ${classes.bold}`}>
-              <FormattedMessage id="settings.city.info" values={{ count: citySettings.length }} />
-              {':'}
+      <NoSsr>
+        <div className={classes.infoContainer}>
+          {citySettings.length ? (
+            <>
+              <Typography className={`${classes.infoText} ${classes.bold}`}>
+                <FormattedMessage id="settings.city.info" values={{ count: citySettings.length }} />
+                {':'}
                 &nbsp;
-            </Typography>
-            <Typography className={classes.infoText}>
-              {cityString}
-            </Typography>
-          </>
-        ) : null}
-      </div>
+              </Typography>
+              <Typography className={classes.infoText}>
+                {cityString}
+              </Typography>
+            </>
+          ) : null}
+        </div>
+      </NoSsr>
     );
   };
 
@@ -370,11 +372,11 @@ const ServiceTreeView = (props) => {
     const ids = selectedList.map(i => i.id);
     const selectedString = selectedList.map(i => getLocaleText(i.name)).join(', ');
     return (
-      <ServiceMapButton
+      <SMButton
         className={classes.searchButton}
         disabled={!selectedList.length}
         icon={<Search />}
-        text={intl.formatMessage({ id: 'services.search' })}
+        messageID="services.search"
         srText={selectedList.length
           ? intl.formatMessage({ id: 'services.search.sr.selected' }, { services: selectedString })
           : intl.formatMessage({ id: 'services.search.sr' })}
