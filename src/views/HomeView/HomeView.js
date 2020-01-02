@@ -31,22 +31,19 @@ class HomeView extends React.Component {
     const {
       classes, getLocaleText, toggleSettings, navigator, userLocation,
     } = this.props;
-    const disableCloseByServices = !userLocation
+    const noUserLocation = !userLocation
       || !userLocation.latitude
       || !userLocation.longitude;
 
     return (
       <div className={classes.background}>
         <div className={classes.buttonContainer}>
-          {!disableCloseByServices && (
           <PaperButton
             text={<FormattedMessage id="home.buttons.closeByServices" />}
             icon={getIcon('location')}
             link
+            disabled={noUserLocation}
             onClick={() => {
-              if (disableCloseByServices) {
-                return;
-              }
               const latLng = { lat: userLocation.latitude, lng: userLocation.longitude };
               fetchAddress(latLng)
                 .then((data) => {
@@ -58,7 +55,6 @@ class HomeView extends React.Component {
                 });
             }}
           />
-          )}
           <PaperButton
             text={<FormattedMessage id="home.buttons.services" />}
             icon={getIcon('serviceList')}
@@ -73,6 +69,13 @@ class HomeView extends React.Component {
               onClick={() => toggleSettings('all')}
             />
           </MobileComponent>
+          <PaperButton
+            text={<FormattedMessage id="home.buttons.instructions" />}
+            icon={getIcon('help')}
+            link
+            onClick={() => {}}
+            disabled
+          />
           <PaperButton
             text={<FormattedMessage id="home.send.feedback" />}
             icon={getIcon('feedback')}

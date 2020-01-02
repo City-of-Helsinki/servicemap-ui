@@ -31,11 +31,14 @@ export default theme => ({
   icon: {
     color: 'inherit',
   },
-  iconButtonDisabled: {
-    color: 'inherit',
+  iconDisabled: {
+    backgroundColor: 'rgba(0, 0, 0, 0.26)',
   },
   text: {
     textTransform: 'none',
     lineHeight: '18px',
+  },
+  textDisabled: {
+    color: 'rgba(0, 0, 0, 0.50)',
   },
 });
