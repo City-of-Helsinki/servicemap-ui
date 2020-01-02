@@ -54,6 +54,7 @@ export default {
 
   // General
   'general.frontPage': 'Etusivu',
+  'general.contrast': 'Kontrasti',
   'general.menu': 'Valikko',
   'general.back': 'Palaa',
   'general.back.address': 'Palaa osoitenäkymään',

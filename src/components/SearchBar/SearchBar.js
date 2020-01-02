@@ -177,7 +177,7 @@ class SearchBar extends React.Component {
       : null;
 
     // Style classes
-    const backButtonStyles = `${classes.iconButton} ${classes.darkBlue}`;
+    const backButtonStyles = `${classes.iconButton}`;
     const showSuggestions = isActive;
     const inputValue = typeof search === 'string' ? search : previousSearchText;
     const containerStyles = `${isActive ? classes.containerSticky : classes.containerInactive} ${classes.container}`;
@@ -277,12 +277,12 @@ class SearchBar extends React.Component {
       classes,
       className,
       isSticky,
-      primary,
+      header,
       srHideInput,
     } = this.props;
     const { isActive } = this.state;
 
-    const rootClasses = `${isActive ? classes.mobileRoot : classes.root} ${!isActive && typeof isSticky === 'number' ? classes.sticky : ''} ${primary ? classes.primary : ''}  ${className}`;
+    const rootClasses = `${isActive ? classes.mobileRoot : classes.root} ${!isActive && typeof isSticky === 'number' ? classes.sticky : ''} ${header ? classes.headerBackground : ''}  ${className}`;
     const wrapperClasses = `${isActive ? classes.mobileWrapper : classes.wrapper}`;
     const stickyStyles = typeof isSticky === 'number' ? { top: isSticky } : null;
 
@@ -315,11 +315,11 @@ class SearchBar extends React.Component {
       classes,
       className,
       isSticky,
-      primary,
+      header,
       srHideInput,
     } = this.props;
 
-    const rootClasses = `${classes.root} ${typeof isSticky === 'number' ? classes.sticky : ''} ${primary ? classes.primary : ''}  ${className}`;
+    const rootClasses = `${classes.root} ${typeof isSticky === 'number' ? classes.sticky : ''} ${header ? classes.headerBackground : ''}  ${className}`;
     const wrapperClasses = classes.wrapper;
     const stickyStyles = typeof isSticky === 'number' ? { top: isSticky } : null;
 
@@ -363,7 +363,6 @@ SearchBar.propTypes = {
   isSticky: PropTypes.number,
   isFetching: PropTypes.bool.isRequired,
   previousSearch: PropTypes.oneOfType([PropTypes.string, PropTypes.objectOf(PropTypes.any)]),
-  primary: PropTypes.bool,
   srHideInput: PropTypes.bool,
 };
 
@@ -375,7 +374,6 @@ SearchBar.defaultProps = {
   initialValue: null,
   isSticky: null,
   navigator: null,
-  primary: false,
   srHideInput: false,
 };
 

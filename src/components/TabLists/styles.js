@@ -8,8 +8,8 @@ export default theme => ({
     boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
   },
   indicator: {
-    backgroundColor: theme.palette.primary.main,
-    height: 4,
+    backgroundColor: theme.palette.detail.main,
+    height: 6,
   },
   resultList: {
     backgroundColor: 'white',

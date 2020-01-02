@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core';
 import { getLocaleString } from '../../redux/selectors/locale';
 import styles from './styles';
 import TopBar from './TopBar';
+import { changeTheme } from '../../redux/actions/user';
 
 // Listen to redux state
 const mapStateToProps = (state) => {
@@ -17,9 +18,11 @@ const mapStateToProps = (state) => {
     getLocaleText,
     breadcrumb,
     settings,
+    theme: user.theme,
   };
 };
 
 export default withRouter(withStyles(styles)(connect(
   mapStateToProps,
+  { changeTheme },
 )(TopBar)));

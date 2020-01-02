@@ -3,6 +3,7 @@ const initialState = {
   initialLoad: false,
   locale: 'fi',
   page: 'home',
+  theme: 'default',
   position: {
     coordinates: null,
     allowed: false,
@@ -30,6 +31,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         position: action.position,
+      };
+    case 'SET_THEME':
+      return {
+        ...state,
+        theme: action.theme,
       };
     default:
       return state;

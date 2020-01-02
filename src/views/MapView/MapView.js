@@ -270,7 +270,6 @@ const MapView = (props) => {
           <ZoomControl position="bottomright" aria-hidden="true" />
           <LocationButton
             disabled={!userLocation}
-            classes={classes}
             position="bottomright"
             handleClick={userLocation ? focusOnUser : null}
           />

@@ -19,6 +19,20 @@ const styles = () => ({
   logo: {
     height: 29,
   },
+  toolbarBlack: {
+    minHeight: 30,
+    height: 30,
+    backgroundColor: '#141823',
+    padding: 0,
+    paddingLeft: 6,
+    paddingRight: 6,
+  },
+  toolbarBlackContainer: {
+    justifyContent: 'space-around',
+    display: 'flex',
+    width: 450,
+    color: '#fff',
+  },
   bold: {
     fontWeight: 'bold',
   },
@@ -47,19 +61,6 @@ const styles = () => ({
   settingsButtonText: {
     color: 'inherit',
     lineHeight: 1,
-  },
-  toolbarBlack: {
-    minHeight: 28,
-    height: 28,
-    backgroundColor: '#141823',
-    padding: 0,
-    paddingLeft: 19,
-  },
-  toolbarBlackContainer: {
-    justifyContent: 'space-around',
-    display: 'flex',
-    width: 400,
-    color: '#fff',
   },
   toolbarWhite: {
     paddingLeft: 28,

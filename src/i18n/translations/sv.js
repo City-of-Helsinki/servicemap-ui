@@ -54,6 +54,7 @@ export default {
 
   // General
   'general.frontPage': 'Första sidan',
+  'general.contrast': 'Kontrasti', // TODO: Translate
   'general.menu': 'Meny',
   'general.back': 'Tillbaka',
   'general.back.address': 'Gå tillbaka till adressvyn',

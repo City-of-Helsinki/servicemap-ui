@@ -18,6 +18,7 @@ import rootReducer from './rootReducer';
 import App from './App';
 import themes from './themes';
 import SettingsUtility from './utils/settings';
+import LocalStorageUtility from './utils/localStorage';
 import config from '../config';
 import favicon from './assets/icons/favicon.ico';
 
@@ -29,6 +30,9 @@ const getPreloadedState = () => {
   // Handle settings fetch from localStorage
   const settings = SettingsUtility.getSettingsFromLocalStorage();
   state.settings = settings;
+
+  // Set correct theme from localStorage
+  state.user.theme = LocalStorageUtility.getItem('theme');
 
   return state;
 };
@@ -49,11 +53,15 @@ const insertCss = (...styles) => {
   const removeCss = styles.map(style => style._insertCss());
   return () => removeCss.forEach(dispose => dispose());
 };
+
+// Get correct theme setting from store
+const uiTheme = store.getState().user.theme === 'dark' ? themes.SMThemeDark : themes.SMTheme;
+
 ReactDOM.hydrate(
   <Provider store={store}>
     <StyleContext.Provider value={{ insertCss }}>
       <JssProvider generateClassName={generateClassName}>
-        <MuiThemeProvider theme={themes.SMTheme}>
+        <MuiThemeProvider theme={uiTheme}>
           {
             // HTML head tags
           }

@@ -3,7 +3,7 @@ export default theme => ({
     display: 'flex',
     alignItems: 'center',
     height: 60,
-    background: 'linear-gradient(to right, #1964E6, #146CE8, #0B7BED)',
+    background: theme.palette.background.main,
     boxShadow: '0 2px 4px 0 rgba(0,0,0,0.5)',
     color: '#fff',
     paddingLeft: theme.spacing.unit,
@@ -26,10 +26,6 @@ export default theme => ({
     flex: '0 1 auto',
     padding: theme.spacing.unit,
     marginLeft: theme.spacing.unit,
-  },
-  colorPrimary: {
-    background: 'linear-gradient(to right, #1964E6, #146CE8, #0B7BED)',
-    color: theme.palette.primary.contrastText,
   },
   colorLight: {
     color: '#000',
