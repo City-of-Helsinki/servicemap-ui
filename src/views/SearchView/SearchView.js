@@ -231,7 +231,7 @@ class SearchView extends React.Component {
   }
 
   renderSearchBar() {
-    const { query } = this.props;
+    const { query, classes } = this.props;
 
     if (this.expandSearchVisible()) {
       return null;
@@ -241,6 +241,7 @@ class SearchView extends React.Component {
       <SearchBar
         expand
         initialValue={query}
+        className={classes.searchbarPlain}
       />
     );
   }

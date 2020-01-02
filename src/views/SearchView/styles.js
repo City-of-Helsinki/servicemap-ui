@@ -10,6 +10,9 @@ export default theme => ({
   margin: {
     margin: theme.spacing.unit,
   },
+  searchbarPlain: {
+    background: theme.palette.background.plain,
+  },
   label: {
     paddingTop: theme.spacing.unitDouble,
     paddingBottom: theme.spacing.unitDouble,
@@ -36,7 +39,7 @@ export default theme => ({
   },
   searchInfo: {
     color: '#fff',
-    backgroundColor: theme.palette.background.main,
+    background: theme.palette.background.plain,
     padding: `${theme.spacing.unit}px ${theme.spacing.unitTriple}px`,
   },
   infoText: {
