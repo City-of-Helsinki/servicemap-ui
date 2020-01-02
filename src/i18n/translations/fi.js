@@ -280,6 +280,7 @@ export default {
   'settings.mapSettings.long': 'Kartta-asetukset',
   'settings.accessibilitySettings': 'Esteettömyysasetukset',
   'settings.accessibilitySettings.long': 'Esteettömyysasetukset',
+  'settings.all.long': 'Asetukset',
   'settings.amount': `{count, plural,
     one {# valinta}
     other {# valintaa}

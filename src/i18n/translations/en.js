@@ -280,6 +280,7 @@ export default {
   'settings.mapSettings.long': 'Map setttings',
   'settings.accessibilitySettings': 'Accessibility settings',
   'settings.accessibilitySettings.long': 'Accessibility settings',
+  'settings.all.long': 'Settings',
   'settings.amount': `{count, plural,
     one {# selection}
     other {# selections}
