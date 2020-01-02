@@ -36,8 +36,9 @@ class HomeView extends React.Component {
       || !userLocation.longitude;
 
     return (
-      <div className={classes.buttonContainer}>
-        {!disableCloseByServices && (
+      <div className={classes.background}>
+        <div className={classes.buttonContainer}>
+          {!disableCloseByServices && (
           <PaperButton
             text={<FormattedMessage id="home.buttons.closeByServices" />}
             icon={getIcon('location')}
@@ -57,34 +58,35 @@ class HomeView extends React.Component {
                 });
             }}
           />
-        )}
-        <PaperButton
-          text={<FormattedMessage id="home.buttons.services" />}
-          icon={getIcon('serviceList')}
-          link
-          onClick={() => navigator.push('serviceTree')}
-        />
-        <MobileComponent>
+          )}
           <PaperButton
-            text={<FormattedMessage id="home.buttons.settings" />}
-            icon={getIcon('accessibility')}
+            text={<FormattedMessage id="home.buttons.services" />}
+            icon={getIcon('serviceList')}
             link
-            onClick={() => toggleSettings('all')}
+            onClick={() => navigator.push('serviceTree')}
           />
-        </MobileComponent>
-        <PaperButton
-          text={<FormattedMessage id="home.send.feedback" />}
-          icon={getIcon('feedback')}
-          link
-          onClick={() => window.open('https://forms.gle/roe9XNrZGQWBhMBJ7')}
-        />
+          <MobileComponent>
+            <PaperButton
+              text={<FormattedMessage id="home.buttons.settings" />}
+              icon={getIcon('accessibility')}
+              link
+              onClick={() => toggleSettings('all')}
+            />
+          </MobileComponent>
+          <PaperButton
+            text={<FormattedMessage id="home.send.feedback" />}
+            icon={getIcon('feedback')}
+            link
+            onClick={() => window.open('https://forms.gle/roe9XNrZGQWBhMBJ7')}
+          />
+        </div>
       </div>
     );
   }
 
   render() {
     return (
-      <>
+      <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
         <SearchBar
           hideBackButton
           header
@@ -164,7 +166,7 @@ kehitämme jatkuvasti saavutettavuutta ja käytettävyyttä.
             <br />
           </Typography>
         </Container> */}
-      </>
+      </div>
     );
   }
 }
