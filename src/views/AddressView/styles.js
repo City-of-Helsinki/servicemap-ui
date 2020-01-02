@@ -1,4 +1,4 @@
-export default () => ({
+export default theme => ({
   addressIcon: {
     fontSize: 36,
   },
@@ -9,8 +9,9 @@ export default () => ({
     height: 4,
   },
   mapButton: {
-    marginLeft: 24,
-    marginBottom: 8,
+    marginTop: theme.spacing.unitTriple,
+    marginLeft: theme.spacing.unitTriple,
+    marginBottom: theme.spacing.unit,
   },
   mapIcon: {
     marginLeft: 0,

@@ -229,6 +229,7 @@ const AddressView = (props) => {
             {addressData && units && districts && (
             <MobileComponent>
               <SMButton
+                margin
                 messageID="general.showOnMap"
                 icon={<Map />}
                 className={classes.mapButton}

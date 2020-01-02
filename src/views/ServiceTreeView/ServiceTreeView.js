@@ -373,6 +373,7 @@ const ServiceTreeView = (props) => {
     const selectedString = selectedList.map(i => getLocaleText(i.name)).join(', ');
     return (
       <SMButton
+        margin
         className={classes.searchButton}
         disabled={!selectedList.length}
         icon={<Search />}
