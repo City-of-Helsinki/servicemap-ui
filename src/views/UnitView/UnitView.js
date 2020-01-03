@@ -64,9 +64,9 @@ const UnitView = (props) => {
         distance /= 1000; // Convert from m to km
         distance = distance.toFixed(1); // Show only one decimal
         distance = intl.formatNumber(distance); // Format distance according to locale
-        return `${distance}km`;
+        return `${distance} km`;
       }
-      return `${distance}m`;
+      return `${distance} m`;
     } return null;
   };
 

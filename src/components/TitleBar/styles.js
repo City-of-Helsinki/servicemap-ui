@@ -31,7 +31,7 @@ export default theme => ({
     color: '#000',
   },
   distance: {
-    fontSize: 18,
+    fontSize: 16,
     color: 'inherit',
     marginLeft: 'auto',
     paddingLeft: theme.spacing.unit,
