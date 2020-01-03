@@ -61,7 +61,7 @@ const Events = ({
               setShownCount(shownCount + showMoreCount);
             } : null}
         >
-          {events.map((event, i) => {
+          {events.map((event) => {
             const dateString = formatEventDate(event, intl);
             return (
               <ResultItem
@@ -69,7 +69,7 @@ const Events = ({
                 icon={<Event className={classes.eventIcon} />}
                 title={getLocaleText(event.name)}
                 subtitle={dateString}
-                divider={!(i + 1 === events.length || i + 1 === shownCount)}
+                divider
                 onClick={(e) => {
                   e.preventDefault();
                   if (navigator) {
