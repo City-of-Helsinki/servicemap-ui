@@ -293,6 +293,7 @@ class SearchView extends React.Component {
     return (
       <div className={classes.suggestionButtonContainer}>
         <SMButton
+          small
           role="link"
           onClick={() => { this.openExpandedSearch(); }}
           messageID="search.expand"

@@ -23,6 +23,7 @@ export default theme => ({
   },
   wrapper: {
     flex: '0 1 auto',
+    borderRadius: 4,
   },
   mobileWrapper: {
     flex: '0 1 auto',
@@ -76,6 +77,8 @@ export default theme => ({
   iconButtonSearch: {
     flex: '0 0 auto',
     borderRadius: 0,
+    borderTopRightRadius: 4,
+    borderBottomRightRadius: 4,
     boxShadow: 'none',
     padding: `${theme.spacing.unitHalf}px 0`,
     textTransform: 'none',
@@ -99,6 +102,9 @@ export default theme => ({
   sticky: {
     position: 'sticky',
     zIndex: 51,
+  },
+  bottomMargin: {
+    marginBottom: 4,
   },
   headerText: {
     fontWeight: 'bold',

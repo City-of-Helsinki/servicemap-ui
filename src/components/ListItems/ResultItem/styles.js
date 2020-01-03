@@ -52,4 +52,7 @@ export default theme => ({
     color: '#000',
     fontWeight: 'normal',
   },
+  divider: {
+    marginRight: -theme.spacing.unitDouble,
+  },
 });

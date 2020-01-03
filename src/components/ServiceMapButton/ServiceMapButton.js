@@ -8,6 +8,7 @@ const SMButton = ({
   children,
   classes,
   className,
+  small,
   color,
   icon,
   messageID,
@@ -20,8 +21,8 @@ const SMButton = ({
 }) => {
   const colorStyle = classes[color] || '';
   const buttonIcon = icon ? React.cloneElement(icon, { className: classes.buttonIcon }) : null;
-  const buttonClasses = `${classes.button} ${margin ? classes.margin : classes.marginRight} ${className} ${colorStyle}`;
-  const textClasses = `${classes.typography} ${margin ? classes.bigText : ''}`;
+  const buttonClasses = `${classes.button} ${small ? classes.smallButton : ''} ${margin ? classes.margin : classes.marginRight} ${className} ${colorStyle}`;
+  const textClasses = classes.typography;
 
   return (
     <ButtonBase
@@ -60,6 +61,7 @@ SMButton.propTypes = {
   className: PropTypes.string,
   color: PropTypes.oneOf(['primary', 'secondary', 'default']),
   margin: PropTypes.bool,
+  small: PropTypes.bool,
   messageID: PropTypes.string,
   onClick: PropTypes.func.isRequired,
   srText: PropTypes.string,
@@ -72,6 +74,7 @@ SMButton.propTypes = {
 SMButton.defaultProps = {
   children: null,
   className: '',
+  small: false,
   color: 'default',
   icon: null,
   margin: false,

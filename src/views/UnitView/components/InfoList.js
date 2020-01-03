@@ -98,7 +98,7 @@ class InfoList extends React.Component {
       if (data.length > 0) {
         return (
           <TitledList title={title} titleComponent={titleComponent}>
-            {data.map((item, i) => {
+            {data.map((item) => {
               if (item.value && item.type) {
                 const text = this.formString(item.value, intl);
                 const srText = this.formSrString(item, intl);
@@ -112,7 +112,7 @@ class InfoList extends React.Component {
                       text={text}
                       srText={srText}
                       handleItemClick={() => this.handleItemClick(item.value)}
-                      divider={i + 1 !== data.length} // Dont add divider if last item
+                      divider
                     />
                   );
                 }

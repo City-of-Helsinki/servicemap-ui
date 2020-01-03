@@ -31,5 +31,6 @@ export default theme => ({
     paddingRight: 0,
     marginTop: theme.spacing.unitDouble,
     marginBottom: theme.spacing.unitDouble,
+    fontSize: 14,
   },
 });

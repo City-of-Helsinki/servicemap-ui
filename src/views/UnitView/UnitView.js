@@ -64,9 +64,9 @@ const UnitView = (props) => {
         distance /= 1000; // Convert from m to km
         distance = distance.toFixed(1); // Show only one decimal
         distance = intl.formatNumber(distance); // Format distance according to locale
-        return `${distance}km`;
+        return `${distance} km`;
       }
-      return `${distance}m`;
+      return `${distance} m`;
     } return null;
   };
 
@@ -162,7 +162,7 @@ const UnitView = (props) => {
           reservations={reservations}
           getLocaleText={getLocaleText}
         />
-        <Events listLength={5} eventsData={eventsData} />
+        <Events classes={classes} listLength={5} eventsData={eventsData} />
       </div>
     );
   };
@@ -201,8 +201,7 @@ const UnitView = (props) => {
     const TopArea = (
       <div className={`${classes.topArea} sticky`}>
         <DesktopComponent>
-          <SearchBar />
-          <div className={classes.topPadding} />
+          <SearchBar margin />
           <TitleBar
             icon={<AddressIcon className={classes.icon} />}
             title={title}

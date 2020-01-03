@@ -151,7 +151,7 @@ const SuggestionBox = (props) => {
                 text={item.suggestion}
                 handleArrowClick={handleArrowClick}
                 handleItemClick={() => handleSubmit(item.suggestion)}
-                divider={i !== suggestionList.length - 1}
+                divider
                 subtitle={intl.formatMessage({ id: 'search.suggestions.results' }, { count: item.count })}
                 isMobile
                 query={suggestionQuery}

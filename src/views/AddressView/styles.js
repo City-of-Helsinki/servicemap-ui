@@ -5,9 +5,6 @@ export default theme => ({
   topArea: {
     textAlign: 'left',
   },
-  topPadding: {
-    height: 4,
-  },
   mapButton: {
     marginTop: theme.spacing.unitTriple,
     marginLeft: theme.spacing.unitTriple,
@@ -28,5 +25,9 @@ export default theme => ({
     position: 'sticky',
     top: 0,
     zIndex: 50,
+  },
+  districtListcontainer: {
+    paddingLeft: theme.spacing.unitDouble,
+    paddingRight: theme.spacing.unitDouble,
   },
 });

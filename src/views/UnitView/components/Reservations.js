@@ -26,13 +26,13 @@ const Reservations = ({
               setShownCount(shownCount + showMoreCount);
             } : null}
         >
-          {reservations.map((item, i) => (
+          {reservations.map(item => (
             <SimpleListItem
               key={item.id}
               icon={<EventAvailable />}
               link
               text={`${getLocaleText(item.name)} ${intl.formatMessage({ id: 'unit.opens.new.tab' })}`}
-              divider={!(i + 1 === reservations.length || i + 1 === shownCount)}
+              divider
               handleItemClick={() => {
                 window.open(`https://varaamo.hel.fi/resources/${item.id}`);
               }}

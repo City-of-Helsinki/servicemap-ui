@@ -98,7 +98,7 @@ class ServiceView extends React.Component {
     return (
       <div>
         <DesktopComponent>
-          <SearchBar />
+          <SearchBar margin />
           {
             showTitle
             && (

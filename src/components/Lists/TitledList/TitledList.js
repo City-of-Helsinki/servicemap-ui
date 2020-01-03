@@ -49,7 +49,7 @@ const TitledList = ({
         }
       </div>
       {divider ? (
-        <Divider aria-hidden="true" />
+        <Divider className={classes.divider} aria-hidden="true" />
       ) : null }
 
       <List disablePadding>

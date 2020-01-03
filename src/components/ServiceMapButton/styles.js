@@ -1,12 +1,13 @@
 export default theme => ({
-  bigText: {
-    fontSize: 14,
-  },
   button: {
-    minHeight: 36,
+    height: 38,
     padding: '0 11px',
     boxSizing: 'border-box',
     borderRadius: 2,
+  },
+  smallButton: {
+    height: 34,
+    padding: '0 4px',
   },
   margin: {
     marginTop: theme.spacing.unitDouble,
@@ -18,18 +19,17 @@ export default theme => ({
   primary: {
     color: theme.palette.primary.contrastText,
     backgroundColor: theme.palette.primary.main,
-    border: `0.5px solid ${theme.palette.primary.contrastText}`,
     '&:hover': {
       backgroundColor: theme.palette.primary.light,
     },
     '&:disabled': {
-      backgroundColor: theme.palette.primary.light,
+      backgroundColor: '#cccccc',
       color: 'rgba(0, 0, 0, 0.5)',
     },
   },
   secondary: {
     color: theme.palette.secondary.contrastText,
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: '#353638',
     border: `0.5px solid ${theme.palette.secondary.contrastText}`,
     '&:hover': {
       backgroundColor: theme.palette.secondary.light,
@@ -55,5 +55,6 @@ export default theme => ({
   typography: {
     textTransform: 'none',
     margin: theme.spacing.unit,
+    fontSize: 14,
   },
 });

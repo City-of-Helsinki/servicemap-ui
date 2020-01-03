@@ -32,7 +32,15 @@ const formatEventDate = (event, intl) => {
 };
 
 const Events = ({
-  unit, eventsData, navigator, getLocaleText, intl, changeSelectedEvent, listLength, showMoreCount,
+  unit,
+  eventsData,
+  navigator,
+  classes,
+  getLocaleText,
+  intl,
+  changeSelectedEvent,
+  listLength,
+  showMoreCount,
 }) => {
   const [shownCount, setShownCount] = useState(listLength);
   const [ref, setRef] = useState(listLength);
@@ -53,15 +61,15 @@ const Events = ({
               setShownCount(shownCount + showMoreCount);
             } : null}
         >
-          {events.map((event, i) => {
+          {events.map((event) => {
             const dateString = formatEventDate(event, intl);
             return (
               <ResultItem
                 key={event.id}
-                icon={<Event />}
+                icon={<Event className={classes.eventIcon} />}
                 title={getLocaleText(event.name)}
                 subtitle={dateString}
-                divider={!(i + 1 === events.length || i + 1 === shownCount)}
+                divider
                 onClick={(e) => {
                   e.preventDefault();
                   if (navigator) {
@@ -97,6 +105,7 @@ Events.propTypes = {
   listLength: PropTypes.number,
   getLocaleText: PropTypes.func.isRequired,
   changeSelectedEvent: PropTypes.func.isRequired,
+  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   intl: intlShape.isRequired,
   showMoreCount: PropTypes.number,
