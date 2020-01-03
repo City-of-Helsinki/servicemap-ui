@@ -162,7 +162,7 @@ const UnitView = (props) => {
           reservations={reservations}
           getLocaleText={getLocaleText}
         />
-        <Events listLength={5} eventsData={eventsData} />
+        <Events classes={classes} listLength={5} eventsData={eventsData} />
       </div>
     );
   };

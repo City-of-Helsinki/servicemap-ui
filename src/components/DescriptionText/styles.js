@@ -1,7 +1,8 @@
 
 export default theme => ({
   divider: {
-    marginRight: 0,
+    marginLeft: -theme.spacing.unitDouble,
+    marginRight: -theme.spacing.unitDouble,
   },
   left: {
     textAlign: 'left',

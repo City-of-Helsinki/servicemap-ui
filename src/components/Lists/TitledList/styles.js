@@ -22,4 +22,8 @@ export default theme => ({
     overflow: 'hidden',
     lineHeight: `${24}px`,
   },
+  divider: {
+    marginLeft: -theme.spacing.unitDouble,
+    marginRight: -theme.spacing.unitDouble,
+  },
 });

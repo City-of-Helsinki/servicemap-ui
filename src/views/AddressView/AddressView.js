@@ -156,24 +156,26 @@ const AddressView = (props) => {
         return (
           Object.entries(districts).map(districtList => (
             districtList[1].length > 0 && (
-            <TitledList title={intl.formatMessage({ id: `address.list.${districtList[0]}` })} titleComponent="h4" key={districtList[0]}>
-              {districtList[1].map((district) => {
-                const title = district.name
-                  ? getLocaleText(district.name) : getLocaleText(district.unit.name);
-                const period = district.unit && district.start && district.end
-                  ? `${district.start.substring(0, 4)}-${district.end.substring(0, 4)}` : null;
+              <div className={classes.districtListcontainer}>
+                <TitledList title={intl.formatMessage({ id: `address.list.${districtList[0]}` })} titleComponent="h4" key={districtList[0]}>
+                  {districtList[1].map((district) => {
+                    const title = district.name
+                      ? getLocaleText(district.name) : getLocaleText(district.unit.name);
+                    const period = district.unit && district.start && district.end
+                      ? `${district.start.substring(0, 4)}-${district.end.substring(0, 4)}` : null;
 
-                return (
-                  <DistritctItem
-                    key={district.id}
-                    district={district}
-                    title={title}
-                    period={period}
-                    showDistrictOnMap={showDistrictOnMap}
-                  />
-                );
-              })}
-            </TitledList>
+                    return (
+                      <DistritctItem
+                        key={district.id}
+                        district={district}
+                        title={title}
+                        period={period}
+                        showDistrictOnMap={showDistrictOnMap}
+                      />
+                    );
+                  })}
+                </TitledList>
+              </div>
             )
           )));
       } return <Typography><FormattedMessage id="general.noData" /></Typography>;

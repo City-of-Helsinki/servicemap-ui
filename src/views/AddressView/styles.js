@@ -26,4 +26,8 @@ export default theme => ({
     top: 0,
     zIndex: 50,
   },
+  districtListcontainer: {
+    paddingLeft: theme.spacing.unitDouble,
+    paddingRight: theme.spacing.unitDouble,
+  },
 });

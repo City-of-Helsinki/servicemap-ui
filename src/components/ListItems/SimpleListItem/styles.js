@@ -19,5 +19,6 @@ export default theme => ({
   },
   divider: {
     marginLeft: theme.spacing.unit * 9,
+    marginRight: -theme.spacing.unitDouble,
   },
 });

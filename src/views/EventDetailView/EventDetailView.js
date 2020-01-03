@@ -134,16 +134,16 @@ class EventDetailView extends React.Component {
             src={event.images[0].url}
           />
           )}
-
-          <TitledList titleComponent="h4" title={intl.formatMessage({ id: 'unit.contact.info' })}>
-            <SimpleListItem
-              key="eventHours"
-              icon={<AccessTime />}
-              text={time}
-              srText={intl.formatMessage({ id: 'event.time' })}
-              divider
-            />
-            {
+          <div className={classes.content}>
+            <TitledList titleComponent="h4" title={intl.formatMessage({ id: 'unit.contact.info' })}>
+              <SimpleListItem
+                key="eventHours"
+                icon={<AccessTime />}
+                text={time}
+                srText={intl.formatMessage({ id: 'event.time' })}
+                divider
+              />
+              {
               unit
               && (
                 <UnitItem
@@ -152,7 +152,7 @@ class EventDetailView extends React.Component {
                 />
               )
             }
-            {
+              {
                phoneText
                && (
                <SimpleListItem
@@ -168,13 +168,14 @@ class EventDetailView extends React.Component {
                />
                )
              }
-          </TitledList>
+            </TitledList>
 
-          <DescriptionText
-            description={getLocaleText(description)}
-            title={intl.formatMessage({ id: 'event.description' })}
-            html
-          />
+            <DescriptionText
+              description={getLocaleText(description)}
+              title={intl.formatMessage({ id: 'event.description' })}
+              html
+            />
+          </div>
         </>
       );
     }

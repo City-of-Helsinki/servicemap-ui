@@ -37,6 +37,9 @@ export default theme => ({
     fontSize: 24,
     margin: 0,
   },
+  eventIcon: {
+    marginRight: theme.spacing.unitDouble,
+  },
   borderBottom: {
     borderBottom: '1px solid rgba(0,0,0,0.2)',
   },
@@ -116,4 +119,5 @@ export default theme => ({
     paddingRight: theme.spacing.unitDouble,
     marginBottom: theme.spacing.unit,
   },
+
 });
