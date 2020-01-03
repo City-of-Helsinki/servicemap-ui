@@ -201,8 +201,7 @@ const UnitView = (props) => {
     const TopArea = (
       <div className={`${classes.topArea} sticky`}>
         <DesktopComponent>
-          <SearchBar />
-          <div className={classes.topPadding} />
+          <SearchBar margin />
           <TitleBar
             icon={<AddressIcon className={classes.icon} />}
             title={title}

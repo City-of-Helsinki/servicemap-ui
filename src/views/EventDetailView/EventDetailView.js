@@ -120,7 +120,7 @@ class EventDetailView extends React.Component {
       return (
         <>
           <DesktopComponent>
-            <SearchBar />
+            <SearchBar margin />
             <TitleBar title={getLocaleText(event.name)} icon={<Event />} />
           </DesktopComponent>
           <MobileComponent>

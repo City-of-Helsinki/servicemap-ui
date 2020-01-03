@@ -5,9 +5,6 @@ export default theme => ({
   topArea: {
     textAlign: 'left',
   },
-  topPadding: {
-    height: 4,
-  },
   mapButton: {
     marginTop: theme.spacing.unitTriple,
     marginLeft: theme.spacing.unitTriple,

@@ -100,6 +100,9 @@ export default theme => ({
     position: 'sticky',
     zIndex: 51,
   },
+  bottomMargin: {
+    marginBottom: 4,
+  },
   headerText: {
     fontWeight: 'bold',
     margin: `${theme.spacing.unitTriple}px ${theme.spacing.unitHalf}px ${theme.spacing.unit}px ${theme.spacing.unitHalf}px`,

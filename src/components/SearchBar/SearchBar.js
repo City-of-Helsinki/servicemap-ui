@@ -317,9 +317,10 @@ class SearchBar extends React.Component {
       isSticky,
       header,
       srHideInput,
+      margin,
     } = this.props;
 
-    const rootClasses = `${classes.root} ${typeof isSticky === 'number' ? classes.sticky : ''} ${header ? classes.headerBackground : ''}  ${className}`;
+    const rootClasses = `${classes.root} ${typeof isSticky === 'number' ? classes.sticky : ''} ${margin ? classes.bottomMargin : ''} ${header ? classes.headerBackground : ''}  ${className}`;
     const wrapperClasses = classes.wrapper;
     const stickyStyles = typeof isSticky === 'number' ? { top: isSticky } : null;
 
@@ -364,6 +365,7 @@ SearchBar.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   previousSearch: PropTypes.oneOfType([PropTypes.string, PropTypes.objectOf(PropTypes.any)]),
   srHideInput: PropTypes.bool,
+  margin: PropTypes.bool,
 };
 
 SearchBar.defaultProps = {
@@ -375,6 +377,7 @@ SearchBar.defaultProps = {
   isSticky: null,
   navigator: null,
   srHideInput: false,
+  margin: false,
 };
 
 export default SearchBar;
