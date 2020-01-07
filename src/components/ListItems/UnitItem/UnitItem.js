@@ -46,7 +46,7 @@ class UnitItem extends React.Component {
 
   render() {
     const {
-      classes, unit, changeSelectedUnit, onClick, getLocaleText, intl, navigator, userLocation,
+      classes, unit, onClick, getLocaleText, intl, navigator, userLocation,
     } = this.props;
     // Don't render if not valid unit
     if (!UnitHelper.isValidUnit(unit)) {
@@ -100,7 +100,6 @@ class UnitItem extends React.Component {
           if (onClick) {
             onClick();
           } else if (navigator) {
-            changeSelectedUnit(unit);
             navigator.push('unit', { id });
           }
         }}
@@ -115,7 +114,6 @@ export default UnitItem;
 UnitItem.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   unit: PropTypes.objectOf(PropTypes.any),
-  changeSelectedUnit: PropTypes.func.isRequired,
   getLocaleText: PropTypes.func.isRequired,
   onClick: PropTypes.func,
   intl: intlShape.isRequired,
