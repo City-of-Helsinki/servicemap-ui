@@ -3,7 +3,11 @@ export default theme => ({
     fontSize: 36,
   },
   topArea: {
+    backgroundColor: '#fff',
+    position: 'sticky',
     textAlign: 'left',
+    top: 0,
+    zIndex: theme.zIndex.infront,
   },
   mapButton: {
     marginTop: theme.spacing.unitTriple,
@@ -20,11 +24,6 @@ export default theme => ({
     width: 24,
     marginLeft: 0,
     marginRight: 0,
-  },
-  topBar: {
-    position: 'sticky',
-    top: 0,
-    zIndex: 50,
   },
   districtListcontainer: {
     paddingLeft: theme.spacing.unitDouble,

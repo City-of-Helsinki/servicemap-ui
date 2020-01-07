@@ -129,7 +129,7 @@ const AddressView = (props) => {
   };
 
   const renderTopBar = title => (
-    <div className={`${classes.topBar} sticky`}>
+    <div>
       <DesktopComponent>
         <SearchBar margin />
         <TitleBar icon={<AddressIcon className={classes.titleIcon} />} title={error || title} primary />
@@ -225,7 +225,7 @@ const AddressView = (props) => {
       <TabLists
         data={tabs}
         headerComponents={(
-          <div className={classes.topArea}>
+          <div className={`${classes.topArea} sticky`}>
             {renderTopBar(title)}
             {addressData && units && districts && (
             <MobileComponent>
