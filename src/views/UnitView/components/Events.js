@@ -44,8 +44,10 @@ const Events = ({
 }) => {
   const [shownCount, setShownCount] = useState(listLength);
   const [ref, setRef] = useState(listLength);
-  const { events } = eventsData;
-  if (unit && events && events.length > 0 && `${eventsData.unit}` === `${unit.id}`) {
+  const events = eventsData.data;
+  const { isFetching } = eventsData;
+
+  if (unit && !isFetching && events && events.length) {
     return (
       <div ref={ref => setRef(ref)}>
         <TitledList
@@ -100,7 +102,7 @@ const mapStateToProps = (state) => {
 };
 
 Events.propTypes = {
-  eventsData: PropTypes.objectOf(PropTypes.any),
+  eventsData: PropTypes.objectOf(PropTypes.any).isRequired,
   unit: PropTypes.objectOf(PropTypes.any),
   listLength: PropTypes.number,
   getLocaleText: PropTypes.func.isRequired,
@@ -112,7 +114,6 @@ Events.propTypes = {
 };
 
 Events.defaultProps = {
-  eventsData: { events: null, unit: null },
   unit: null,
   navigator: null,
   listLength: null,

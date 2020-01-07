@@ -6,11 +6,14 @@ import TitledList from '../../../components/Lists/TitledList';
 import SimpleListItem from '../../../components/ListItems/SimpleListItem';
 
 const Reservations = ({
-  listLength, reservations, getLocaleText, intl, showMoreCount,
+  listLength, reservationsData, getLocaleText, intl, showMoreCount,
 }) => {
   const [shownCount, setShownCount] = useState(listLength);
   const [ref, setRef] = useState(null);
-  if (reservations && reservations.length > 0) {
+  const reservations = reservationsData.data;
+  const { isFetching } = reservationsData;
+
+  if (reservations && !isFetching && reservations.length > 0) {
     return (
       <div ref={ref => setRef(ref)}>
         <TitledList
@@ -45,7 +48,7 @@ const Reservations = ({
 };
 
 Reservations.propTypes = {
-  reservations: PropTypes.arrayOf(PropTypes.any),
+  reservationsData: PropTypes.objectOf(PropTypes.any).isRequired,
   getLocaleText: PropTypes.func.isRequired,
   listLength: PropTypes.number,
   intl: intlShape.isRequired,
@@ -53,7 +56,6 @@ Reservations.propTypes = {
 };
 
 Reservations.defaultProps = {
-  reservations: [],
   listLength: null,
   showMoreCount: 10,
 };
