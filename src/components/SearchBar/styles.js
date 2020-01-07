@@ -18,7 +18,7 @@ export default theme => ({
     left: 0,
     right: 0,
     position: 'fixed',
-    zIndex: 101,
+    zIndex: theme.zIndex.modal,
     overflow: 'auto',
   },
   wrapper: {
@@ -45,7 +45,7 @@ export default theme => ({
   containerSticky: {
     position: 'sticky',
     top: 44,
-    zIndex: 1100,
+    zIndex: theme.zIndex.infront,
   },
   infoText: {
     justifyContent: 'center',
@@ -57,7 +57,7 @@ export default theme => ({
     backgroundColor: theme.palette.primary.main,
     position: 'sticky',
     top: 0,
-    zIndex: 1100,
+    zIndex: theme.zIndex.sticky,
     paddingTop: `${theme.spacing.unitDouble}px`,
   },
   input: {
@@ -101,7 +101,7 @@ export default theme => ({
   },
   sticky: {
     position: 'sticky',
-    zIndex: 51,
+    zIndex: theme.zIndex.sticky,
   },
   bottomMargin: {
     marginBottom: 4,
@@ -148,12 +148,8 @@ export default theme => ({
     paddingBottom: 8,
     color: 'rgba(0,0,0,0.54)',
   },
-  absolute: {
-    position: 'absolute',
-    zIndex: 99999999999,
-  },
   mobileBackdrop: {
-    zIndex: 1,
+    zIndex: theme.zIndex.forward,
     opacity: 0.2,
     position: 'absolute',
     top: 'auto',

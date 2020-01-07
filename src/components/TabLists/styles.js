@@ -1,7 +1,7 @@
 export default theme => ({
   root: {
     position: 'sticky',
-    zIndex: 50,
+    zIndex: theme.zIndex.sticky,
     backgroundColor: theme.palette.white.main,
     borderColor: theme.palette.white.contrastText,
     color: theme.palette.white.contrastText,

@@ -29,7 +29,7 @@ const styles = theme => ({
     fontFamily: 'hsl-piktoframe',
     position: 'absolute',
     lineHeight: 0,
-    zIndex: -1,
+    zIndex: theme.zIndex.behind,
     color: 'white',
     fontSize: transitIconSize,
   },
@@ -127,10 +127,10 @@ const styles = theme => ({
     color: '#fff',
   },
   topArea: {
-    zIndex: 99999999,
     position: 'fixed',
     top: config.topBarHeight,
     width: '100%',
+    zIndex: theme.zIndex.modal,
   },
   unitTooltip: {
     padding: theme.spacing.unitDouble,

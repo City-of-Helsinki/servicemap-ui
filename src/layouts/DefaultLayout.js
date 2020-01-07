@@ -44,6 +44,10 @@ const createContentStyles = (
       visibility: isMobile && (!mobileMapOnly || settingsOpen) ? 'hidden' : '',
       height: isMobile ? `calc(100% - ${topBarHeight})` : '100%',
       width: '100%',
+      zIndex: 1300,
+    },
+    mapWrapper: {
+      width: '100%',
     },
     sidebar: {
       height: '100%',
@@ -111,7 +115,7 @@ const DefaultLayout = (props) => {
           )}
         </main>
         <div aria-label={intl.formatMessage({ id: 'map.ariaLabel' })} tabIndex="-1" style={styles.map}>
-          <div aria-hidden="true" style={styles.map}>
+          <div aria-hidden="true" style={styles.mapWrapper}>
             <MapView isMobile={!!isMobile} />
           </div>
         </div>
