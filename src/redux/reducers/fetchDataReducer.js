@@ -105,3 +105,4 @@ export const service = (state = dataSetInitialState, action) => dataSetReducer(s
 export const selectedUnit = (state = dataSingleInitialState, action) => dataSingle(state, action, 'SELECTED_UNIT');
 export const accessibilitySentences = (state = dataSingleInitialState, action) => dataSingle(state, action, 'SELECTED_UNIT_ACCESSIBILITY_SENTENCES');
 export const reservations = (state = dataSingleInitialState, action) => dataSingle(state, action, 'SELECTED_UNIT_RESERVATIONS');
+export const unitEvents = (state = dataSingleInitialState, action) => dataSingle(state, action, 'SELECTED_UNIT_EVENTS');
