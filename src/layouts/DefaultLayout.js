@@ -44,7 +44,7 @@ const createContentStyles = (
       visibility: isMobile && (!mobileMapOnly || settingsOpen) ? 'hidden' : '',
       height: isMobile ? `calc(100% - ${topBarHeight})` : '100%',
       width: '100%',
-      zIndex: 1300,
+      zIndex: 900,
     },
     mapWrapper: {
       width: '100%',
