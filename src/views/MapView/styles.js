@@ -130,7 +130,7 @@ const styles = theme => ({
     position: 'fixed',
     top: config.topBarHeight,
     width: '100%',
-    zIndex: theme.zIndex.modal,
+    zIndex: theme.zIndex.infront,
   },
   unitTooltip: {
     padding: theme.spacing.unitDouble,
