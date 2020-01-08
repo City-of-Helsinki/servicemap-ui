@@ -140,7 +140,7 @@ class AccessibilityInfo extends React.Component {
 
     return (
       <>
-        <List className="test">
+        <List>
           {
             groupArray.map((key) => {
               if (Object.prototype.hasOwnProperty.call(groups, key)) {
