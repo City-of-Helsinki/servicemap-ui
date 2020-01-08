@@ -5,6 +5,7 @@ export default {
 
   // Accessibility
   'accessibility': 'Accessibility',
+  'accessibility.info': 'Accessibility details',
   'accessibility.details': 'Accessibility details',
   'accessibility.stamp': 'Accessibility acknowledged',
   'accessibility.shortcomings': 'Shortcomings',

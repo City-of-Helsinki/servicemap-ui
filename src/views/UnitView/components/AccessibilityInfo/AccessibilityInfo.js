@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Typography, List, ListItem, ListItemIcon, ListItemText,
+  Typography, List, ListItem, ListItemIcon, ListItemText, Divider,
 } from '@material-ui/core';
 import { Warning, VerifiedUser } from '@material-ui/icons';
 import { FormattedMessage } from 'react-intl';
@@ -91,12 +91,12 @@ class AccessibilityInfo extends React.Component {
                 }
               });
               return (
-                <ListItem key={title}>
+                <ListItem key={title} className={classes.adjustLeft}>
                   <ListItemIcon className={classes.listIcon}>
                     <Warning />
                   </ListItemIcon>
                   <ListItemText>
-                    <Typography component={heading} variant="subtitle1" align="left">
+                    <Typography className={classes.listTitle} component={heading} variant="body2" align="left">
                       {title}
                     </Typography>
                     <ul className={classes.list}>
@@ -140,7 +140,7 @@ class AccessibilityInfo extends React.Component {
 
     return (
       <>
-        <Container margin>
+        <List className="test">
           {
             groupArray.map((key) => {
               if (Object.prototype.hasOwnProperty.call(groups, key)) {
@@ -154,32 +154,34 @@ class AccessibilityInfo extends React.Component {
 
                 if (groupSentences && groupSentences.length > 1) {
                   return (
-                    <div key={title}>
-                      <Typography component={heading} variant="subtitle2" align="left">
-                        {title}
-                      </Typography>
-                      <ul className={classes.list}>
-                        {
-                          groupSentences.map((sentence) => {
-                            const text = getLocaleText(sentence);
-                            return (
-                              <li key={text} className={classes.listItem}>
-                                <Typography className={classes.colorLight} component="p" variant="body2" align="left">
-                                  {text}
-                                </Typography>
-                              </li>
-                            );
-                          })
-                          }
-                      </ul>
-                    </div>
+                    <ListItem key={title}>
+                      <ListItemText>
+                        <Typography className={classes.listTitle} component={heading} variant="body2" align="left">
+                          {title}
+                        </Typography>
+                        <ul className={classes.list}>
+                          {
+                            groupSentences.map((sentence) => {
+                              const text = getLocaleText(sentence);
+                              return (
+                                <li key={text} className={classes.listItem}>
+                                  <Typography className={classes.colorLight} component="p" variant="body2" align="left">
+                                    {text}
+                                  </Typography>
+                                </li>
+                              );
+                            })
+                            }
+                        </ul>
+                      </ListItemText>
+                    </ListItem>
                   );
                 }
               }
               return null;
             })
           }
-        </Container>
+        </List>
       </>
     );
   }
@@ -238,15 +240,16 @@ class AccessibilityInfo extends React.Component {
     const infoText = this.renderInfoText(noInfo, noShortcomings);
 
     return (
-      <Container margin>
+      <Container>
         {
           (titleAlways)
           && (
             <Typography className={classes.title} variant="subtitle1" component={heading} align="left">
-              <FormattedMessage id="accessibility" />
+              <FormattedMessage id="accessibility.info" />
             </Typography>
           )
         }
+        <Divider className={classes.divider} aria-hidden="true" />
         {
           infoText
         }
@@ -256,9 +259,12 @@ class AccessibilityInfo extends React.Component {
         {
           shouldRenderTitle
           && (
-            <Typography component={heading} variant="subtitle1" align="left">
-              <FormattedMessage id="accessibility.details" />
-            </Typography>
+            <>
+              <Typography className={classes.title} component={heading} variant="subtitle1" align="left">
+                <FormattedMessage id="accessibility.details" />
+              </Typography>
+              <Divider className={classes.divider} aria-hidden="true" />
+            </>
           )
         }
         {
