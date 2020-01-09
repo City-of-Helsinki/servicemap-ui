@@ -8,7 +8,6 @@ import { intlShape } from 'react-intl';
 import isClient, { parseSearchParams, stringifySearchParams, AddEventListener } from '../../utils';
 import ResultList from '../Lists/ResultList';
 import PaginationComponent from './PaginationComponent';
-import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import ResultOrderer from './ResultOrderer';
 import config from '../../../config';
 
@@ -326,6 +325,7 @@ class TabLists extends React.Component {
                       }}
                       className={classes.tab}
                       label={label}
+                      onClick={item.onClick || null}
                     />
                   );
                 }
@@ -339,6 +339,7 @@ class TabLists extends React.Component {
                       selected: classes.selected,
                     }}
                     label={`${item.title}`}
+                    onClick={item.onClick || null}
                   />
                 );
               })
