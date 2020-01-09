@@ -156,8 +156,8 @@ const AddressView = (props) => {
         return (
           Object.entries(districts).map(districtList => (
             districtList[1].length > 0 && (
-              <div className={classes.districtListcontainer}>
-                <TitledList title={intl.formatMessage({ id: `address.list.${districtList[0]}` })} titleComponent="h4" key={districtList[0]}>
+              <div key={districtList[0]} className={classes.districtListcontainer}>
+                <TitledList title={intl.formatMessage({ id: `address.list.${districtList[0]}` })} titleComponent="h4">
                   {districtList[1].map((district) => {
                     const title = district.name
                       ? getLocaleText(district.name) : getLocaleText(district.unit.name);
@@ -210,6 +210,11 @@ const AddressView = (props) => {
       itemsPerPage: 10,
       title: intl.formatMessage({ id: 'address.nearby' }),
       noOrderer: true, // Remove this when we want result orderer for address unit list
+      onClick: () => {
+        if (highlightedDistrict) {
+          setHighlightedDistrict(null);
+        }
+      },
     },
     {
       ariaLabel: intl.formatMessage({ id: 'address.districts' }),
