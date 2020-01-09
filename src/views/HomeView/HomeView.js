@@ -70,17 +70,17 @@ class HomeView extends React.Component {
             />
           </MobileComponent>
           <PaperButton
+            text={<FormattedMessage id="home.send.feedback" />}
+            icon={getIcon('feedback')}
+            link
+            onClick={() => window.open('https://forms.gle/roe9XNrZGQWBhMBJ7')}
+          />
+          <PaperButton
             text={<FormattedMessage id="home.buttons.instructions" />}
             icon={getIcon('help')}
             link
             onClick={() => {}}
             disabled
-          />
-          <PaperButton
-            text={<FormattedMessage id="home.send.feedback" />}
-            icon={getIcon('feedback')}
-            link
-            onClick={() => window.open('https://forms.gle/roe9XNrZGQWBhMBJ7')}
           />
         </div>
       </div>
