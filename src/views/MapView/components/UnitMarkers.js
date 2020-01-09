@@ -21,6 +21,7 @@ class UnitMarkers extends React.Component {
     } = this.props;
 
     const unitListFiltered = data.units.filter(unit => unit.object_type === 'unit');
+    const singleUnit = unitListFiltered.length === 1;
 
     return (
       <>
@@ -41,7 +42,7 @@ class UnitMarkers extends React.Component {
                 keyboard={false}
               >
                 {
-                  embeded
+                  singleUnit
                   && (
                     <Tooltip
                       className={classes.unitTooltip}
@@ -50,10 +51,10 @@ class UnitMarkers extends React.Component {
                       permanent
                     >
                       <Typography variant="subtitle1">
-                        {getLocaleText(unit.name)}
+                        {unit.name && getLocaleText(unit.name)}
                       </Typography>
                       <Typography variant="body2">
-                        {getLocaleText(unit.street_address)}
+                        {unit.street_address && getLocaleText(unit.street_address)}
                       </Typography>
                     </Tooltip>
                   )
