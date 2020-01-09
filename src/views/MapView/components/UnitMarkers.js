@@ -42,13 +42,12 @@ class UnitMarkers extends React.Component {
                 keyboard={false}
               >
                 {
-                  singleUnit
-                  && (
+                  (
                     <Tooltip
                       className={classes.unitTooltip}
                       direction="top"
                       offset={[0, -36]}
-                      permanent
+                      permanent={singleUnit}
                     >
                       <Typography variant="subtitle1">
                         {unit.name && getLocaleText(unit.name)}
