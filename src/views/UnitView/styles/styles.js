@@ -109,7 +109,7 @@ export default theme => ({
     backgroundColor: '#fff',
     position: 'sticky',
     top: 0,
-    zIndex: 51,
+    zIndex: theme.zIndex.sticky,
   },
   mobileButtonArea: {
     display: 'flex',

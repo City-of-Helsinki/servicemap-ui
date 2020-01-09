@@ -23,6 +23,13 @@ const custom = {
   },
 };
 
+const zIndex = {
+  behind: -1,
+  forward: 50,
+  sticky: 51,
+  infront: 900,
+};
+
 const typography = {
   useNextVariants: true,
   fontSize: 16,
@@ -157,6 +164,7 @@ const SMTheme = createMuiTheme({
   spacing,
   custom,
   palette: paletteDefault,
+  zIndex,
 });
 
 const SMThemeDark = createMuiTheme({
@@ -165,6 +173,7 @@ const SMThemeDark = createMuiTheme({
   spacing,
   custom,
   palette: paletteDark,
+  zIndex,
 });
 
 
