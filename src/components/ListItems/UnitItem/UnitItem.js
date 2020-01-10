@@ -48,6 +48,7 @@ class UnitItem extends React.Component {
     const {
       address,
       classes,
+      currentPage,
       unit,
       changeSelectedUnit,
       onClick,
@@ -79,7 +80,7 @@ class UnitItem extends React.Component {
     let latLng = null;
     try {
       const addCoords = address && address.addressCoordinates;
-      latLng = addCoords ? { latitude: addCoords[1], longitude: addCoords[0] } : userLocation;
+      latLng = addCoords && currentPage === 'address' ? { latitude: addCoords[1], longitude: addCoords[0] } : userLocation;
     } catch (e) {
       latLng = userLocation;
     }
@@ -133,6 +134,7 @@ export default UnitItem;
 UnitItem.propTypes = {
   address: PropTypes.objectOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
+  currentPage: PropTypes.string.isRequired,
   unit: PropTypes.objectOf(PropTypes.any),
   changeSelectedUnit: PropTypes.func.isRequired,
   getLocaleText: PropTypes.func.isRequired,

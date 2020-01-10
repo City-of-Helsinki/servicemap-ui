@@ -15,6 +15,7 @@ const mapStateToProps = (state) => {
   } = state;
   return {
     address,
+    currentPage: user.page,
     getLocaleText,
     navigator,
     settings,
