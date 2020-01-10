@@ -126,9 +126,6 @@ const styles = theme => ({
   showLocationIcon: {
     color: '#fff',
   },
-  backButton: {
-    zIndex: 0,
-  },
   colorInherit: {
     color: 'inherit',
   },
@@ -139,11 +136,6 @@ const styles = theme => ({
     top: config.topBarHeightMobile,
     width: '100%',
     zIndex: theme.zIndex.infront,
-  },
-  flexRow: {
-    alignItems: 'center',
-    display: 'flex',
-    flexDirection: 'row',
   },
   unitTooltip: {
     padding: theme.spacing.unitDouble,
