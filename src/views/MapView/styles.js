@@ -126,11 +126,24 @@ const styles = theme => ({
   showLocationIcon: {
     color: '#fff',
   },
+  backButton: {
+    zIndex: 0,
+  },
+  colorInherit: {
+    color: 'inherit',
+  },
   topArea: {
+    background: theme.palette.background.main,
+    color: theme.palette.primary.contrastText,
     position: 'fixed',
-    top: config.topBarHeight,
+    top: config.topBarHeightMobile,
     width: '100%',
     zIndex: theme.zIndex.infront,
+  },
+  flexRow: {
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'row',
   },
   unitTooltip: {
     padding: theme.spacing.unitDouble,

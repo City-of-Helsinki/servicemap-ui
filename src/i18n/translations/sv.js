@@ -64,6 +64,7 @@ export default {
   'general.back.service': 'Gå tillbaka till tjänstevyn',
   'general.back.unit': 'Gå tillbaka till vyn för verksamhetsställen',
   'general.back.event': 'Gå tillbaka till evenemangsvyn',
+  'general.backTo': 'Palaa takaisin', // TODO: Translate
   'general.backToHome': 'Stäng sökningen och gå tillbaka till början',
   'general.backToStart': 'Gå tillbaka till början av sidan',
   'general.back.serviceTree': 'Palaa palvelulistausnäkymään', // TODO: Translate

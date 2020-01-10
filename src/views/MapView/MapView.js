@@ -2,8 +2,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { withStyles } from '@material-ui/core';
-import { intlShape } from 'react-intl';
+import { withStyles, Typography } from '@material-ui/core';
+import { intlShape, FormattedMessage } from 'react-intl';
 import { mapOptions } from './config/mapConfig';
 import CreateMap from './utils/createMap';
 import swapCoordinates from './utils/swapCoordinates';
@@ -19,6 +19,7 @@ import UserMarker from './components/UserMarker';
 import fetchAddress from './utils/fetchAddress';
 import { isEmbed } from '../../utils/path';
 import AddressMarker from './components/AddressMarker';
+import BackButton from '../../components/BackButton';
 
 
 const MapView = (props) => {
@@ -80,7 +81,11 @@ const MapView = (props) => {
     if (isMobile) {
       return (
         <div className={classes.topArea}>
-          <SearchBar hideBackButton placeholder={intl.formatMessage({ id: 'search.placeholder' })} />
+          <div className={classes.flexRow}>
+            <BackButton className={`${classes.colorInherit} ${classes.backButton}`} variant="icon" />
+            <Typography color="inherit" variant="body2"><FormattedMessage id="general.backTo" /></Typography>
+          </div>
+          <SearchBar background="none" placeholder={intl.formatMessage({ id: 'search.placeholder' })} />
         </div>
       );
     } return null;
