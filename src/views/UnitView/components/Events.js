@@ -64,7 +64,7 @@ const Events = ({
           showMoreOnClick={listLength
             ? () => {
               if (!isFetchingMore) {
-                const lastListItem = ref.querySelector('li:last-of-type');
+                const lastListItem = ref.querySelector('li:nth-last-of-type(2)');
                 lastListItem.focus();
                 if (events.length < showMoreCount) {
                   fetchUnitEvents(unit.id, showMoreCount, true);
