@@ -44,7 +44,7 @@ const Reservations = ({
                 if (reservations.length < showMoreCount) {
                   fetchReservations(unit.id, showMoreCount, true);
                 } else {
-                  fetchAdditionalReservations(unit.id, showMoreCount, next);
+                  fetchAdditionalReservations(next);
                 }
               }
             } : null}

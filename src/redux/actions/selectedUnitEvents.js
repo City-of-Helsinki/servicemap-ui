@@ -19,12 +19,12 @@ export const fetchUnitEvents = (unitId, pageSize, more) => async (dispatch) => {
 };
 
 
-export const fetchAdditionalEvents = (unitId, pageSize, next) => async (dispatch) => {
+export const fetchAdditionalEvents = next => async (dispatch) => {
   // fetch additional data that is added to previous data
   const onStart = () => dispatch(isFetchingMore());
   const onSuccess = data => dispatch(fetchMoreSuccess(data.data, data.meta));
   const onError = e => dispatch(fetchError(e.message));
 
   // Fetch data
-  unitEventsFetch({ location: `tprek:${unitId}`, page_size: pageSize }, onStart, onSuccess, onError, null, null, null, next);
+  unitEventsFetch(null, onStart, onSuccess, onError, null, null, null, next);
 };

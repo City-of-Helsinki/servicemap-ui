@@ -69,7 +69,7 @@ const Events = ({
                 if (events.length < showMoreCount) {
                   fetchUnitEvents(unit.id, showMoreCount, true);
                 } else {
-                  fetchAdditionalEvents(unit.id, showMoreCount, next);
+                  fetchAdditionalEvents(next);
                 }
               }
             } : null}

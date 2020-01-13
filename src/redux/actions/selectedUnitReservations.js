@@ -22,7 +22,7 @@ export const fetchReservations = (id, pageSize, more) => async (dispatch) => {
 };
 
 
-export const fetchAdditionalReservations = (id, pageSize, next) => async (dispatch) => {
+export const fetchAdditionalReservations = next => async (dispatch) => {
   // fetch additional data that is added to previous data
   const onStart = () => dispatch(isFetchingMore());
   const onSuccess = (data) => {
@@ -31,5 +31,5 @@ export const fetchAdditionalReservations = (id, pageSize, next) => async (dispat
   const onError = e => dispatch(fetchError(e.message));
 
   // Fetch data
-  reservationsFetch({ unit: `tprek:${id}`, page_size: pageSize }, onStart, onSuccess, onError, null, null, null, next);
+  reservationsFetch(null, onStart, onSuccess, onError, null, null, null, next);
 };
