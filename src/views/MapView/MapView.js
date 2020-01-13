@@ -207,13 +207,18 @@ const MapView = (props) => {
             url={mapObject.options.url}
             attribution='&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors'
           />
-          <UnitMarkers
-            data={getMapUnits()}
-            Marker={Marker}
-            Polyline={Polyline}
-            Tooltip={Tooltip}
-            embeded={embeded}
-          />
+          {
+            !highlightedDistrict
+            && (
+              <UnitMarkers
+                data={getMapUnits()}
+                Marker={Marker}
+                Polyline={Polyline}
+                Tooltip={Tooltip}
+                embeded={embeded}
+              />
+            )
+          }
           <Districts
             Polygon={Polygon}
             Marker={Marker}

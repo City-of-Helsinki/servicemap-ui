@@ -8,7 +8,6 @@ import { intlShape } from 'react-intl';
 import isClient, { parseSearchParams, stringifySearchParams, AddEventListener } from '../../utils';
 import ResultList from '../Lists/ResultList';
 import PaginationComponent from './PaginationComponent';
-import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import ResultOrderer from './ResultOrderer';
 import config from '../../../config';
 
@@ -326,6 +325,7 @@ class TabLists extends React.Component {
                       }}
                       className={classes.tab}
                       label={label}
+                      onClick={item.onClick || null}
                     />
                   );
                 }
@@ -339,6 +339,7 @@ class TabLists extends React.Component {
                       selected: classes.selected,
                     }}
                     label={`${item.title}`}
+                    onClick={item.onClick || null}
                   />
                 );
               })
@@ -351,7 +352,7 @@ class TabLists extends React.Component {
 
   render() {
     const {
-      beforePagination, classes, intl,
+      classes, intl,
     } = this.props;
     const {
       currentPage, tabIndex, tabStyles,
@@ -417,7 +418,7 @@ class TabLists extends React.Component {
                         titleComponent="h3"
                       />
                       {
-                        beforePagination
+                        item.beforePagination || null
                       }
                       <PaginationComponent
                         current={adjustedCurrentPage}
@@ -437,10 +438,10 @@ class TabLists extends React.Component {
 }
 
 TabLists.propTypes = {
-  beforePagination: PropTypes.node,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   data: PropTypes.arrayOf(PropTypes.shape({
     ariaLabel: PropTypes.string,
+    beforePagination: PropTypes.node,
     component: PropTypes.node,
     title: PropTypes.string,
     data: PropTypes.array,

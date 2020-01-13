@@ -320,6 +320,7 @@ class SearchView extends React.Component {
           count: groupedData
             .units.length,
         })}`,
+        beforePagination: this.renderExpandedSearchButton(),
         component: null,
         data: groupedData.units,
         itemsPerPage: 10,
@@ -351,7 +352,6 @@ class SearchView extends React.Component {
     return (
       <TabLists
         data={searchResults}
-        beforePagination={this.renderExpandedSearchButton()}
       />
     );
   }

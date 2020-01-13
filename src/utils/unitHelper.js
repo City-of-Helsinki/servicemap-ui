@@ -3,6 +3,8 @@ import isClient from '.';
 import SettingsUtility from './settings';
 import config from '../../config';
 
+// TODO: If berries are not used anymore, clean this class
+
 const { accessibilityColors } = config;
 
 const generateMarkerIcons = () => {

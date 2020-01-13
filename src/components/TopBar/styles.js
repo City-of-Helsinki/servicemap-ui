@@ -2,7 +2,7 @@ import config from '../../../config';
 
 const { topBarHeight, topBarHeightMobile } = config;
 
-const styles = () => ({
+const styles = theme => ({
   aligner: {
     height: topBarHeight,
   },
@@ -10,7 +10,7 @@ const styles = () => ({
     height: topBarHeightMobile,
   },
   appBar: {
-    zIndex: 100,
+    zIndex: theme.zIndex.appBar,
   },
   buttonLabel: {
     display: 'flex',
@@ -67,7 +67,7 @@ const styles = () => ({
     width: '100%',
     height: 70,
     backgroundColor: '#fff',
-    zIndex: 100,
+    zIndex: theme.zIndex.infront,
   },
   toolbarWhiteMobile: {
     paddingLeft: 28,
@@ -75,7 +75,7 @@ const styles = () => ({
     height: 60,
     backgroundColor: '#fff',
     paddingRight: 0,
-    zIndex: 100,
+    zIndex: theme.zIndex.infront,
   },
   toolbarButtonPressed: {
     width: 66,
