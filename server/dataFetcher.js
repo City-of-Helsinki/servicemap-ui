@@ -135,7 +135,7 @@ export const fetchSelectedUnitData = (req, res, next) => {
         response();
         return;
       }
-      store.dispatch(changeUnitEvents(data.data));
+      store.dispatch(changeUnitEvents(data.data, data.meta));
       response();
     }
     unitEventsFetch({ location: `tprek:${id}` }, null, eventFetchEnd, fetchOnError, null, null, controller);
@@ -157,7 +157,7 @@ export const fetchSelectedUnitData = (req, res, next) => {
         response();
         return;
       }
-      store.dispatch(changeReservations(data.results));
+      store.dispatch(changeReservations(data.results, { count: data.count, next: data.next }));
       response();
     }
     reservationsFetch({ unit: `tprek:${id}` }, null, reservationFetchEnd, fetchOnError, null, null, controller)
