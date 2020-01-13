@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Typography, List, ListItem, ListItemIcon, ListItemText, Divider,
+  Typography, List, ListItem, ListItemIcon, ListItemText, Divider, NoSsr,
 } from '@material-ui/core';
 import { Warning, VerifiedUser } from '@material-ui/icons';
 import { FormattedMessage } from 'react-intl';
@@ -250,12 +250,14 @@ class AccessibilityInfo extends React.Component {
           )
         }
         <Divider className={classes.divider} aria-hidden="true" />
-        {
-          infoText
-        }
-        {
-          aShortcomings
-        }
+        <NoSsr>
+          {
+            infoText
+          }
+          {
+            aShortcomings
+          }
+        </NoSsr>
         {
           shouldRenderTitle
           && (
