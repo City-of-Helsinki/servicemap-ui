@@ -47,11 +47,9 @@ const Events = ({
 }) => {
   const [ref, setRef] = useState(listLength);
   const events = eventsData.data;
-  const {
-    isFetching, count, isFetchingMore, next,
-  } = eventsData;
+  const { isFetching, count, next } = eventsData;
 
-  if (unit && !isFetching && events && events.length) {
+  if (unit && events && events.length) {
     return (
       <div ref={ref => setRef(ref)}>
         <TitledList
@@ -60,10 +58,10 @@ const Events = ({
           titleComponent="h4"
           shortened={events.length < count}
           buttonMessageID="unit.events.more"
-          loading={isFetchingMore}
+          loading={isFetching}
           showMoreOnClick={listLength
             ? () => {
-              if (!isFetchingMore) {
+              if (!isFetching) {
                 const lastListItem = ref.querySelector('li:nth-last-of-type(2)');
                 lastListItem.focus();
                 if (events.length < showMoreCount) {

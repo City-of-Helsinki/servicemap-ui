@@ -21,12 +21,10 @@ const Reservations = ({
 }) => {
   const [ref, setRef] = useState(null);
   const reservations = reservationsData.data;
-  const {
-    isFetching, count, isFetchingMore, next,
-  } = reservationsData;
+  const { isFetching, count, next } = reservationsData;
 
 
-  if (reservations && !isFetching && reservations.length) {
+  if (reservations && reservations.length) {
     return (
       <div ref={ref => setRef(ref)}>
         <TitledList
@@ -34,11 +32,11 @@ const Reservations = ({
           subtitle={<FormattedMessage id="unit.reservations.count" values={{ count }} />}
           titleComponent="h4"
           shortened={reservations.length < count}
-          loading={isFetchingMore}
+          loading={isFetching}
           buttonMessageID="unit.reservations.more"
           showMoreOnClick={listLength
             ? () => {
-              if (!isFetchingMore) {
+              if (!isFetching) {
                 const lastListItem = ref.querySelector('li:nth-last-of-type(2)');
                 lastListItem.focus();
                 if (reservations.length < showMoreCount) {

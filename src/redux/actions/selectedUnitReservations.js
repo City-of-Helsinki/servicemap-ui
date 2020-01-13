@@ -2,7 +2,7 @@ import { reservations } from './fetchDataActions';
 import { reservationsFetch } from '../../utils/fetch';
 
 const {
-  setNewData, isFetching, isFetchingMore, fetchSuccess, fetchMoreSuccess, fetchError,
+  setNewData, isFetching, fetchSuccess, fetchMoreSuccess, fetchError,
 } = reservations;
 
 // Change selected unit's reservations
@@ -11,7 +11,12 @@ export const changeReservations = (data, meta) => async (dispatch) => {
 };
 
 export const fetchReservations = (id, pageSize, more) => async (dispatch) => {
-  const onStart = () => dispatch(more ? isFetchingMore() : isFetching());
+  const onStart = () => {
+    if (!more) {
+      dispatch(setNewData([]));
+    }
+    dispatch(isFetching());
+  };
   const onSuccess = (data) => {
     dispatch(fetchSuccess(data.results, { count: data.count, next: data.next }));
   };
@@ -24,7 +29,7 @@ export const fetchReservations = (id, pageSize, more) => async (dispatch) => {
 
 export const fetchAdditionalReservations = next => async (dispatch) => {
   // fetch additional data that is added to previous data
-  const onStart = () => dispatch(isFetchingMore());
+  const onStart = () => dispatch(isFetching());
   const onSuccess = (data) => {
     dispatch(fetchMoreSuccess(data.results, { count: data.count, next: data.next }));
   };

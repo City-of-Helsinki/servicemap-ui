@@ -32,9 +32,6 @@ const dataSingle = prefix => ({
   isFetching: () => ({
     type: `${prefix}_IS_FETCHING`,
   }),
-  isFetchingMore: () => ({
-    type: `${prefix}_IS_FETCHING_MORE`,
-  }),
   fetchError: errorMessage => ({
     type: `${prefix}_FETCH_HAS_ERRORED`,
     errorMessage,

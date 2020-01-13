@@ -2,7 +2,7 @@ import { events } from './fetchDataActions';
 import { unitEventsFetch } from '../../utils/fetch';
 
 const {
-  setNewData, isFetching, isFetchingMore, fetchSuccess, fetchMoreSuccess, fetchError,
+  setNewData, isFetching, fetchSuccess, fetchMoreSuccess, fetchError,
 } = events;
 
 export const changeUnitEvents = (events, meta) => async (dispatch) => {
@@ -10,7 +10,12 @@ export const changeUnitEvents = (events, meta) => async (dispatch) => {
 };
 
 export const fetchUnitEvents = (unitId, pageSize, more) => async (dispatch) => {
-  const onStart = () => dispatch(more ? isFetchingMore() : isFetching());
+  const onStart = () => {
+    if (!more) {
+      dispatch(setNewData([]));
+    }
+    dispatch(isFetching());
+  };
   const onSuccess = data => dispatch(fetchSuccess(data.data, data.meta));
   const onError = e => dispatch(fetchError(e.message));
 
@@ -21,7 +26,7 @@ export const fetchUnitEvents = (unitId, pageSize, more) => async (dispatch) => {
 
 export const fetchAdditionalEvents = next => async (dispatch) => {
   // fetch additional data that is added to previous data
-  const onStart = () => dispatch(isFetchingMore());
+  const onStart = () => dispatch(isFetching());
   const onSuccess = data => dispatch(fetchMoreSuccess(data.data, data.meta));
   const onError = e => dispatch(fetchError(e.message));
 
