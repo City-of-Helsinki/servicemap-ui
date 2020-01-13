@@ -10,8 +10,12 @@ import styles from './styles';
 // Listen to redux state
 const mapStateToProps = (state) => {
   const getLocaleText = textObject => getLocaleString(state, textObject);
-  const { navigator, settings, user } = state;
+  const {
+    address, navigator, settings, user,
+  } = state;
   return {
+    address,
+    currentPage: user.page,
     getLocaleText,
     navigator,
     settings,

@@ -46,8 +46,18 @@ class UnitItem extends React.Component {
 
   render() {
     const {
-      classes, unit, changeSelectedUnit, onClick, getLocaleText, intl, navigator, userLocation,
+      address,
+      classes,
+      currentPage,
+      unit,
+      changeSelectedUnit,
+      onClick,
+      getLocaleText,
+      intl,
+      navigator,
+      userLocation,
     } = this.props;
+
     // Don't render if not valid unit
     if (!UnitHelper.isValidUnit(unit)) {
       return null;
@@ -66,8 +76,17 @@ class UnitItem extends React.Component {
     const accessText = accessData.text;
     const { problemCount } = accessData;
 
+    // Use address if possible or user location to figure out distance
+    let latLng = null;
+    try {
+      const addCoords = address && address.addressCoordinates;
+      latLng = addCoords && currentPage === 'address' ? { latitude: addCoords[1], longitude: addCoords[0] } : userLocation;
+    } catch (e) {
+      latLng = userLocation;
+    }
+
     // Distance
-    let distance = calculateDistance(unit, userLocation);
+    let distance = calculateDistance(unit, latLng);
     if (distance) {
       if (distance >= 1000) {
         distance /= 1000; // Convert from m to km
@@ -113,7 +132,9 @@ export default UnitItem;
 
 // Typechecking
 UnitItem.propTypes = {
+  address: PropTypes.objectOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
+  currentPage: PropTypes.string.isRequired,
   unit: PropTypes.objectOf(PropTypes.any),
   changeSelectedUnit: PropTypes.func.isRequired,
   getLocaleText: PropTypes.func.isRequired,
@@ -125,6 +146,7 @@ UnitItem.propTypes = {
 };
 
 UnitItem.defaultProps = {
+  address: null,
   unit: {},
   onClick: null,
   navigator: null,
