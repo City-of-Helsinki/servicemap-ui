@@ -177,7 +177,7 @@ export const drawMarkerIcon = () => {
   const markerIcon = L.icon({
     iconUrl: berryIcon,
     iconSize: [25, 25],
-    iconAnchor: [13, 25],
+    iconAnchor: [13, 33],
   });
 
   return markerIcon;
