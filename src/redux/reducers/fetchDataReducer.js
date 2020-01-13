@@ -61,8 +61,10 @@ const dataSetReducer = (state, action, prefix) => {
 // Reducers for fetching single data
 const dataSingleInitialState = {
   isFetching: false,
+  isFetchingMore: false,
   errorMessage: null,
   data: null,
+  count: 0,
 };
 
 const dataSingle = (state, action, prefix) => {
@@ -71,6 +73,12 @@ const dataSingle = (state, action, prefix) => {
       return {
         ...state,
         isFetching: true,
+        errorMessage: null,
+      };
+    case `${prefix}_IS_FETCHING_MORE`:
+      return {
+        ...state,
+        isFetchingMore: true,
         errorMessage: null,
       };
     case `${prefix}_FETCH_HAS_ERRORED`:
@@ -83,13 +91,25 @@ const dataSingle = (state, action, prefix) => {
       return {
         ...state,
         isFetching: false,
+        isFetchingMore: false,
         errorMessage: null,
         data: action.data,
+        count: action.count,
+        next: action.next,
+      };
+    case `${prefix}_FETCH_MORE_SUCCESS`:
+      return {
+        ...state,
+        isFetchingMore: false,
+        errorMessage: null,
+        data: [...state.data, ...action.data],
+        next: action.next,
       };
     case `${prefix}_SET_DATA`:
       return {
         ...state,
         data: action.data,
+        count: action.count,
       };
     default:
       return state;
