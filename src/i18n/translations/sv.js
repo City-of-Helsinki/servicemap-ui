@@ -186,6 +186,8 @@ export default {
     one {# tjänst}
     other {# tjänster}
   }`,
+  'unit.route': 'Katso reitti tänne', // TODO: translate
+  'unit.route.extra': '(Uusi välilehti. Reittiopas ei ole saavutettava palvelu)', // TODO: translate
 
   // Search
   'search': 'Sök',

@@ -19,7 +19,24 @@ const ContactInfo = ({ unit, intl }) => {
   };
   const website = {
     type: 'LINK',
-    value: unit.www ? { www: unit.www, name: intl.formatMessage({ id: 'unit.homepage' }) } : intl.formatMessage({ id: 'unit.homepage.missing' }),
+    value: unit.www ? {
+      www: unit.www,
+      name: intl.formatMessage({ id: 'unit.homepage' }),
+    } : intl.formatMessage({ id: 'unit.homepage.missing' }),
+  };
+
+  // Temporary link implementation for route info
+  const { locale } = intl;
+  const url = 'https://reittiopas.hsl.fi/reitti/%20/';
+  const routeUrl = `${url}${unit.name[locale]}, ${unit.municipality}::${unit.location.coordinates[1]},${unit.location.coordinates[0]}?locale=${intl.locale}`;
+
+  const route = {
+    type: 'ROUTE',
+    value: {
+      www: routeUrl,
+      name: intl.formatMessage({ id: 'unit.route' }),
+      extraText: intl.formatMessage({ id: 'unit.route.extra' }),
+    },
   };
 
   // For infomration that is in data's connections array, use unitSectionFilter
@@ -34,6 +51,7 @@ const ContactInfo = ({ unit, intl }) => {
     website,
     ...contact.length ? contact : [],
     ...hours.length ? hours : [{ type: 'OPENING_HOURS', value: intl.formatMessage({ id: 'unit.opening.hours.missing' }) }],
+    route,
   ];
 
   return (

@@ -53,10 +53,10 @@ class InfoList extends React.Component {
     }
     // Add extra text
     if (data.www) {
-      fullText += ` ${intl.formatMessage({ id: 'unit.opens.new.tab' })}`;
+      fullText += ` ${data.extraText || intl.formatMessage({ id: 'unit.opens.new.tab' })}`;
     }
     if (data.phone) {
-      fullText += ` ${intl.formatMessage({ id: 'unit.call.number' })}`;
+      fullText += ` ${data.extraText || intl.formatMessage({ id: 'unit.call.number' })}`;
     }
     if (data.period) {
       fullText += ` ${intl.formatMessage({ id: 'unit.school.year' })}`;

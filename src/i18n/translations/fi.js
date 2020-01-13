@@ -186,6 +186,8 @@ export default {
     one {# palvelu}
     other {# palvelua}
   }`,
+  'unit.route': 'Katso reitti tänne',
+  'unit.route.extra': '(Uusi välilehti. Reittiopas ei ole saavutettava palvelu)',
 
   // Search
   'search': 'Hae',
