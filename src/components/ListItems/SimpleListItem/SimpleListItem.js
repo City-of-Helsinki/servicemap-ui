@@ -41,11 +41,9 @@ const SimpleListItem = (props) => {
           </Typography>
         </ListItemText>
       </ListItem>
-      {divider ? (
-        <li>
-          <Divider aria-hidden className={classes.divider} />
-        </li>
-      ) : null}
+      {divider && (
+        <Divider aria-hidden className={classes.divider} />
+      )}
     </React.Fragment>
   );
 };
