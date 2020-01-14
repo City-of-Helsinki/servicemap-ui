@@ -186,6 +186,7 @@ export default {
     one {# service}
     other {# services}
   }`,
+  'unit.socialMedia.title': 'Toimipiste sosiaalisessa mediassa', // TODO: tranaslate
 
   // Search
   'search': 'Search',

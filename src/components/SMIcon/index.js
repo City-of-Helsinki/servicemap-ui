@@ -8,6 +8,13 @@ import accessibilityIcon from '../../assets/images/iconAccessibility.svg';
 import serviceListIcon from '../../assets/images/iconServiceList.svg';
 import feedbackIcon from '../../assets/images/iconFeedback.svg';
 import helpIcon from '../../assets/images/iconHelp.svg';
+import facebookIcon from '../../assets/images/facebook_icon.svg';
+import instagramIcon from '../../assets/images/insta_icon.svg';
+import pinterestIcon from '../../assets/images/pinterest_icon.svg';
+import snapchatIcon from '../../assets/images/snap_icon.svg';
+import twitterIcon from '../../assets/images/twitter_icon.svg';
+import youtubeIcon from '../../assets/images/youtube_icon.svg';
+import vimeoIcon from '../../assets/images/vimeo_icon.svg';
 
 /**
  * Senses
@@ -105,6 +112,38 @@ export const HelpIcon = ({ ...rest }) => (
 );
 
 /**
+ * Social media links
+ */
+export const FacebookIcon = ({ ...rest }) => (
+  <img aria-hidden alt="" {...rest} src={facebookIcon} />
+);
+
+export const InstagramIcon = ({ ...rest }) => (
+  <img aria-hidden alt="" {...rest} src={instagramIcon} />
+);
+
+export const PinterestIcon = ({ ...rest }) => (
+  <img aria-hidden alt="" {...rest} src={pinterestIcon} />
+);
+
+export const SnapchatIcon = ({ ...rest }) => (
+  <img aria-hidden alt="" {...rest} src={snapchatIcon} />
+);
+
+export const TwitterIcon = ({ ...rest }) => (
+  <img aria-hidden alt="" {...rest} src={twitterIcon} />
+);
+
+export const YoutubeIcon = ({ ...rest }) => (
+  <img aria-hidden alt="" {...rest} src={youtubeIcon} />
+);
+
+export const VimeoIcon = ({ ...rest }) => (
+  <img aria-hidden alt="" {...rest} src={vimeoIcon} />
+);
+
+
+/**
  * General
  */
 export const AreaIcon = ({ ...rest }) => (
@@ -157,6 +196,20 @@ export const getIcon = (key, props) => {
       return <FeedbackIcon {...props} />;
     case 'help':
       return <HelpIcon {...props} />;
+    case 'facebook':
+      return <FacebookIcon {...props} />;
+    case 'instagram':
+      return <InstagramIcon {...props} />;
+    case 'pinterest':
+      return <PinterestIcon {...props} />;
+    case 'snapchat':
+      return <SnapchatIcon {...props} />;
+    case 'twitter':
+      return <TwitterIcon {...props} />;
+    case 'youtube':
+      return <YoutubeIcon {...props} />;
+    case 'vimeo':
+      return <VimeoIcon {...props} />;
     default:
       return null;
   }
