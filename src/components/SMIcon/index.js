@@ -73,77 +73,6 @@ export const KauniainenIcon = ({ ...rest }) => (
 );
 
 /**
- * Map types
- */
-export const DefaultMapIcon = ({ ...rest }) => (
-  <img aria-hidden alt="" {...rest} src={defaulMapIcon} />
-);
-
-export const AerialMapIcon = ({ ...rest }) => (
-  <img aria-hidden alt="" {...rest} src={aerialMapIcon} />
-);
-
-export const GuideMapIcon = ({ ...rest }) => (
-  <img aria-hidden alt="" {...rest} src={guideMapIcon} />
-);
-
-/**
- * Front page
- */
-
-export const LocationIcon = ({ ...rest }) => (
-  <img aria-hidden alt="" {...rest} src={locationIcon} />
-);
-
-export const AccessibilityIcon = ({ ...rest }) => (
-  <img aria-hidden alt="" {...rest} src={accessibilityIcon} />
-);
-
-export const ServiceListIcon = ({ ...rest }) => (
-  <img aria-hidden alt="" {...rest} src={serviceListIcon} />
-);
-
-export const FeedbackIcon = ({ ...rest }) => (
-  <img aria-hidden alt="" {...rest} src={feedbackIcon} />
-);
-
-export const HelpIcon = ({ ...rest }) => (
-  <img aria-hidden alt="" {...rest} src={helpIcon} />
-);
-
-/**
- * Social media links
- */
-export const FacebookIcon = ({ ...rest }) => (
-  <img aria-hidden alt="" {...rest} src={facebookIcon} />
-);
-
-export const InstagramIcon = ({ ...rest }) => (
-  <img aria-hidden alt="" {...rest} src={instagramIcon} />
-);
-
-export const PinterestIcon = ({ ...rest }) => (
-  <img aria-hidden alt="" {...rest} src={pinterestIcon} />
-);
-
-export const SnapchatIcon = ({ ...rest }) => (
-  <img aria-hidden alt="" {...rest} src={snapchatIcon} />
-);
-
-export const TwitterIcon = ({ ...rest }) => (
-  <img aria-hidden alt="" {...rest} src={twitterIcon} />
-);
-
-export const YoutubeIcon = ({ ...rest }) => (
-  <img aria-hidden alt="" {...rest} src={youtubeIcon} />
-);
-
-export const VimeoIcon = ({ ...rest }) => (
-  <img aria-hidden alt="" {...rest} src={vimeoIcon} />
-);
-
-
-/**
  * General
  */
 export const AreaIcon = ({ ...rest }) => (
@@ -180,36 +109,43 @@ export const getIcon = (key, props) => {
       return <WheelchairIcon {...props} />;
     case 'stroller':
       return <StrollerIcon {...props} />;
+
+    // Map types
     case 'servicemap':
-      return <DefaultMapIcon {...props} />;
+      return <img aria-hidden alt="" src={defaulMapIcon} {...props} />;
     case 'orthoImage':
-      return <AerialMapIcon {...props} />;
+      return <img aria-hidden alt="" src={aerialMapIcon} {...props} />;
     case 'guideMap':
-      return <GuideMapIcon {...props} />;
+      return <img aria-hidden alt="" src={guideMapIcon} {...props} />;
+
+    // Front page buttons
     case 'location':
-      return <LocationIcon {...props} />;
+      return <img aria-hidden alt="" src={locationIcon} {...props} />;
     case 'accessibility':
-      return <AccessibilityIcon {...props} />;
+      return <img aria-hidden alt="" src={accessibilityIcon} {...props} />;
     case 'serviceList':
-      return <ServiceListIcon {...props} />;
+      return <img aria-hidden alt="" src={serviceListIcon} {...props} />;
     case 'feedback':
-      return <FeedbackIcon {...props} />;
+      return <img aria-hidden alt="" src={feedbackIcon} {...props} />;
     case 'help':
-      return <HelpIcon {...props} />;
+      return <img aria-hidden alt="" src={helpIcon} {...props} />;
+
+    // Social media links
     case 'facebook':
-      return <FacebookIcon {...props} />;
+      return <img aria-hidden alt="" src={facebookIcon} {...props} />;
     case 'instagram':
-      return <InstagramIcon {...props} />;
+      return <img aria-hidden alt="" src={instagramIcon} {...props} />;
     case 'pinterest':
-      return <PinterestIcon {...props} />;
+      return <img aria-hidden alt="" src={pinterestIcon} {...props} />;
     case 'snapchat':
-      return <SnapchatIcon {...props} />;
+      return <img aria-hidden alt="" src={snapchatIcon} {...props} />;
     case 'twitter':
-      return <TwitterIcon {...props} />;
+      return <img aria-hidden alt="" src={twitterIcon} {...props} />;
     case 'youtube':
-      return <YoutubeIcon {...props} />;
+      return <img aria-hidden alt="" src={youtubeIcon} {...props} />;
     case 'vimeo':
-      return <VimeoIcon {...props} />;
+      return <img aria-hidden alt="" src={vimeoIcon} {...props} />;
+
     default:
       return null;
   }
