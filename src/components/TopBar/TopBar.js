@@ -66,7 +66,7 @@ class TopBar extends React.Component {
             )
             : (
               <Typography>
-                <FormattedMessage id="settings.amount" values={{ count: category.settings.filter(i => i !== false).length }} />
+                <FormattedMessage id="settings.amount" values={{ count: category.settings.filter(i => (i !== false && i !== null)).length }} />
               </Typography>
             )}
         </Button>
