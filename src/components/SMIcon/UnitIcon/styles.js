@@ -1,6 +1,5 @@
-export default theme => ({
+export default () => ({
   icon: {
     height: 24,
-    margin: theme.spacing.unit,
   },
 });

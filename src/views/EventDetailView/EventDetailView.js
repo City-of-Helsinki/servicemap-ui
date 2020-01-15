@@ -148,6 +148,7 @@ class EventDetailView extends React.Component {
               && (
                 <UnitItem
                   key="unitInfo"
+                  single
                   unit={unit}
                 />
               )

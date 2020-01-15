@@ -54,6 +54,7 @@ class UnitItem extends React.Component {
       onClick,
       getLocaleText,
       intl,
+      single,
       navigator,
       userLocation,
     } = this.props;
@@ -123,6 +124,7 @@ class UnitItem extends React.Component {
             navigator.push('unit', { id });
           }
         }}
+        single={single}
       />
     );
   }
@@ -143,6 +145,7 @@ UnitItem.propTypes = {
   navigator: PropTypes.objectOf(PropTypes.any),
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
   userLocation: PropTypes.objectOf(PropTypes.any),
+  single: PropTypes.bool,
 };
 
 UnitItem.defaultProps = {
@@ -151,4 +154,5 @@ UnitItem.defaultProps = {
   onClick: null,
   navigator: null,
   userLocation: null,
+  single: false,
 };
