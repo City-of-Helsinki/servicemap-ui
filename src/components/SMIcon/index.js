@@ -1,13 +1,15 @@
 import React from 'react';
 import SMIcon from './SMIcon';
+import SVGIcon from './SVGIcon';
 import defaulMapIcon from '../../assets/images/iconDefaultMap.svg';
 import aerialMapIcon from '../../assets/images/iconAerialMap.svg';
 import guideMapIcon from '../../assets/images/iconGuideMap.svg';
-import locationIcon from '../../assets/images/iconLocation.svg';
-import accessibilityIcon from '../../assets/images/iconAccessibility.svg';
-import serviceListIcon from '../../assets/images/iconServiceList.svg';
 import feedbackIcon from '../../assets/images/iconFeedback.svg';
-import helpIcon from '../../assets/images/iconHelp.svg';
+import IconLocation from './Icons/IconLocation';
+import IconAccessibility from './Icons/IconAccessibility';
+import IconServiceList from './Icons/IconServiceList';
+import IconFeedback from './Icons/IconFeedback';
+import IconHelp from './Icons/IconHelp';
 
 /**
  * Senses
@@ -85,23 +87,28 @@ export const GuideMapIcon = ({ ...rest }) => (
  */
 
 export const LocationIcon = ({ ...rest }) => (
-  <img aria-hidden alt="" {...rest} src={locationIcon} />
+  <SVGIcon {...rest}><IconLocation /></SVGIcon>
+  // <img aria-hidden alt="" {...rest} src={locationIcon} />
 );
 
 export const AccessibilityIcon = ({ ...rest }) => (
-  <img aria-hidden alt="" {...rest} src={accessibilityIcon} />
+  <SVGIcon {...rest}><IconAccessibility /></SVGIcon>
+  // <img aria-hidden alt="" {...rest} src={accessibilityIcon} />
 );
 
 export const ServiceListIcon = ({ ...rest }) => (
-  <img aria-hidden alt="" {...rest} src={serviceListIcon} />
+  <SVGIcon {...rest}><IconServiceList /></SVGIcon>
+  // <img aria-hidden alt="" {...rest} src={serviceListIcon} />
 );
 
 export const FeedbackIcon = ({ ...rest }) => (
+  // <SVGIcon {...rest}><IconFeedback /></SVGIcon>
   <img aria-hidden alt="" {...rest} src={feedbackIcon} />
 );
 
 export const HelpIcon = ({ ...rest }) => (
-  <img aria-hidden alt="" {...rest} src={helpIcon} />
+  <SVGIcon {...rest}><IconHelp /></SVGIcon>
+  // <img aria-hidden alt="" {...rest} src={helpIcon} />
 );
 
 /**

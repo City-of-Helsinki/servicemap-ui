@@ -4,7 +4,9 @@ import { intlShape } from 'react-intl';
 import {
   Typography, ButtonBase, Drawer, ClickAwayListener,
 } from '@material-ui/core';
-import { getIcon } from '../SMIcon';
+import {
+  FeedbackIcon, HelpIcon, AccessibilityIcon, ServiceListIcon, LocationIcon,
+} from '../SMIcon';
 
 const DrawerMenu = (props) => {
   const {
@@ -21,15 +23,18 @@ const DrawerMenu = (props) => {
     handleNavigation,
   } = props;
 
+  const locationActive = currentPage === 'address' && !settingsOpen;
+  const serviceTreeActive = currentPage === 'serviceTree' && !settingsOpen;
+
   const menuContent = [
     { // Nearby services button
       name: intl.formatMessage({ id: 'home.buttons.closeByServices' }),
-      active: currentPage === 'address' && !settingsOpen,
+      active: locationActive,
       disabled: !userLocation.coordinates,
       subText: userLocation.allowed
         ? intl.formatMessage({ id: 'location.notFound' })
         : intl.formatMessage({ id: 'location.notAllowed' }),
-      icon: getIcon('location'),
+      icon: <LocationIcon className={locationActive ? classes.contrastColor : ''} />,
       clickEvent: () => {
         if (!userLocation.coordinates) {
           findUserLocation();
@@ -41,8 +46,8 @@ const DrawerMenu = (props) => {
     },
     { // Service list button
       name: intl.formatMessage({ id: 'home.buttons.services' }),
-      active: currentPage === 'serviceTree' && !settingsOpen,
-      icon: getIcon('serviceList'),
+      active: serviceTreeActive,
+      icon: <ServiceListIcon className={serviceTreeActive ? classes.contrastColor : ''} />,
       clickEvent: () => {
         handleNavigation('services');
         toggleDrawerMenu();
@@ -51,7 +56,7 @@ const DrawerMenu = (props) => {
     { // Settings button
       name: intl.formatMessage({ id: 'home.buttons.settings' }),
       active: settingsOpen,
-      icon: getIcon('accessibility'),
+      icon: <AccessibilityIcon className={settingsOpen ? classes.contrastColor : ''} />,
       clickEvent: () => {
         if (settingsOpen !== 'all') {
           toggleSettings('all');
@@ -62,12 +67,12 @@ const DrawerMenu = (props) => {
     { // Instructions button
       name: intl.formatMessage({ id: 'home.buttons.instructions' }),
       disabled: true,
-      icon: getIcon('help'),
+      icon: <HelpIcon />,
       clickEvent: () => {},
     },
     { // Feedback button
       name: intl.formatMessage({ id: 'home.send.feedback' }),
-      icon: getIcon('feedback'),
+      icon: <FeedbackIcon />,
       clickEvent: () => window.open('https://forms.gle/roe9XNrZGQWBhMBJ7'),
     },
   ];

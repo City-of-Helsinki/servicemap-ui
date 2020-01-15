@@ -55,6 +55,11 @@ const styles = () => ({
   disabled: {
     color: 'rgba(255, 255, 255, 0.55)',
   },
+  contrastColor: {
+    '& g': {
+      fill: 'black',
+    },
+  },
 });
 
 export default styles;
