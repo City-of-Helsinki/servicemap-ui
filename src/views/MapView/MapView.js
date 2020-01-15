@@ -19,6 +19,7 @@ import UserMarker from './components/UserMarker';
 import fetchAddress from './utils/fetchAddress';
 import { isEmbed } from '../../utils/path';
 import AddressMarker from './components/AddressMarker';
+import BackButton from '../../components/BackButton';
 
 
 const MapView = (props) => {
@@ -80,7 +81,7 @@ const MapView = (props) => {
     if (isMobile) {
       return (
         <div className={classes.topArea}>
-          <SearchBar hideBackButton placeholder={intl.formatMessage({ id: 'search.placeholder' })} />
+          <SearchBar background="none" placeholder={intl.formatMessage({ id: 'search.placeholder' })} />
         </div>
       );
     } return null;

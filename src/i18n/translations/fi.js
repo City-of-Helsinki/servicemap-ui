@@ -64,6 +64,7 @@ export default {
   'general.back.service': 'Palaa palvelunäkymään',
   'general.back.unit': 'Palaa toimipistenäkymään',
   'general.back.event': 'Palaa tapahtumanäkymään',
+  'general.backTo': 'Palaa takaisin',
   'general.backToHome': 'Sulje haku ja palaa alkuun',
   'general.backToStart': 'Palaa sivun alkuun',
   'general.back.serviceTree': 'Palaa palvelulistausnäkymään',
