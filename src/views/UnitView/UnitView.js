@@ -125,7 +125,12 @@ const UnitView = (props) => {
         </Container>
 
         {/* View Components */}
-        <ContactInfo unit={unit} intl={intl} />
+        <ContactInfo
+          unit={unit}
+          userLocation={userLocation}
+          getLocaleText={getLocaleText}
+          intl={intl}
+        />
         <Highlights unit={unit} getLocaleText={getLocaleText} />
         <Description unit={unit} getLocaleText={getLocaleText} />
         <ElectronicServices unit={unit} />
@@ -196,7 +201,7 @@ const UnitView = (props) => {
 
     const title = unit && unit.name ? getLocaleText(unit.name) : '';
     const icon = unit ? <UnitIcon unit={unit} /> : null;
-    const distance = formatDistanceString(calculateDistance(unit, userLocation));
+    const distance = formatDistanceString(calculateDistance(unit, userLocation.coordinates));
 
     const TopArea = (
       <div className={`${classes.topArea} sticky`}>

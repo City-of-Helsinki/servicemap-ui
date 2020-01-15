@@ -4,7 +4,9 @@ import { FormattedMessage, intlShape } from 'react-intl';
 import InfoList from './InfoList';
 import unitSectionFilter from '../utils/unitSectionFilter';
 
-const ContactInfo = ({ unit, intl }) => {
+const ContactInfo = ({
+  unit, userLocation, getLocaleText, intl,
+}) => {
   const address = {
     type: 'ADDRESS',
     value: unit.street_address ? unit.street_address : intl.formatMessage({ id: 'unit.address.missing' }),
@@ -25,10 +27,24 @@ const ContactInfo = ({ unit, intl }) => {
     } : intl.formatMessage({ id: 'unit.homepage.missing' }),
   };
 
+  // For infomration that is in data's connections array, use unitSectionFilter
+  const hours = unitSectionFilter(unit.connections, 'OPENING_HOURS');
+  const contact = unitSectionFilter(unit.connections, 'PHONE_OR_EMAIL');
+
   // Temporary link implementation for route info
-  const { locale } = intl;
-  const url = 'https://reittiopas.hsl.fi/reitti/%20/';
-  const routeUrl = `${url}${unit.name[locale]}, ${unit.municipality}::${unit.location.coordinates[1]},${unit.location.coordinates[0]}?locale=${intl.locale}`;
+  const url = 'https://reittiopas.hsl.fi/reitti/';
+  let currentLocationString = ' ';
+  const destinationString = `${getLocaleText(unit.name)}, ${unit.municipality}::${unit.location.coordinates[1]},${unit.location.coordinates[0]}`;
+
+  if (userLocation && userLocation.addressData) {
+    const { street, number } = userLocation.addressData;
+    const { latitude, longitude } = userLocation.coordinates;
+
+    const userAddress = `${getLocaleText(street.name)} ${number}, ${street.municipality}`;
+    currentLocationString = `${userAddress}::${latitude},${longitude}`;
+  }
+
+  const routeUrl = `${url}${currentLocationString}/${destinationString}?locale=${intl.locale}`;
 
   const route = {
     type: 'ROUTE',
@@ -38,10 +54,6 @@ const ContactInfo = ({ unit, intl }) => {
       extraText: intl.formatMessage({ id: 'unit.route.extra' }),
     },
   };
-
-  // For infomration that is in data's connections array, use unitSectionFilter
-  const hours = unitSectionFilter(unit.connections, 'OPENING_HOURS');
-  const contact = unitSectionFilter(unit.connections, 'PHONE_OR_EMAIL');
 
   // Form data array
   const data = [
@@ -66,6 +78,12 @@ const ContactInfo = ({ unit, intl }) => {
 ContactInfo.propTypes = {
   unit: PropTypes.objectOf(PropTypes.any).isRequired,
   intl: intlShape.isRequired,
+  getLocaleText: PropTypes.func.isRequired,
+  userLocation: PropTypes.objectOf(PropTypes.any),
+};
+
+ContactInfo.defaultProps = {
+  userLocation: null,
 };
 
 export default ContactInfo;
