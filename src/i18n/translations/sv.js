@@ -5,6 +5,7 @@ export default {
 
   // Accessibility
   'accessibility': 'Tillgänglighet',
+  'accessibility.info': 'Esteettömyystiedot', // TODO: Translate
   'accessibility.details': 'Noggrannare uppgifter',
   'accessibility.stamp': 'Tillgängligheten beaktad',
   'accessibility.shortcomings': 'Brister',

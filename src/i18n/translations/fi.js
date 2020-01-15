@@ -5,6 +5,7 @@ export default {
 
   // Accessibility
   'accessibility': 'Esteettömyys',
+  'accessibility.info': 'Esteettömyystiedot',
   'accessibility.details': 'Tarkemmat tiedot',
   'accessibility.stamp': 'Esteettömyys huomioitu',
   'accessibility.shortcomings': 'Puutteet',
