@@ -19,14 +19,13 @@ const SocialMediaLinks = ({ unit, getLocaleText, classes }) => {
         <Typography className={classes.someTitle}><FormattedMessage id="unit.socialMedia.title" /></Typography>
         <List className={classes.someList}>
           {links.map((link, i) => (
-            <>
+            <React.Fragment key={link.id}>
               <ListItem
                 disableGutters
                 button
                 role="link"
                 component="li"
                 onClick={() => link.value.www && window.open(getLocaleText(link.value.www))}
-                key={link.id}
                 className={classes.someItem}
               >
                 {getIcon(link.value.name.fi.toLowerCase())
@@ -43,7 +42,7 @@ const SocialMediaLinks = ({ unit, getLocaleText, classes }) => {
                   </ListItem>
                 )
               }
-            </>
+            </React.Fragment>
           ))}
         </List>
         <Divider aria-hidden className={classes.someDivider} />
