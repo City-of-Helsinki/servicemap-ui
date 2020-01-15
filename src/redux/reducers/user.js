@@ -7,6 +7,7 @@ const initialState = {
   position: {
     coordinates: null,
     allowed: false,
+    addressData: null,
   },
 };
 

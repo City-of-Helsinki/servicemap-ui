@@ -34,7 +34,7 @@ const DrawerMenu = (props) => {
         if (!userLocation.coordinates) {
           findUserLocation();
         } else {
-          handleNavigation('address', userLocation.coordinates);
+          handleNavigation('address', userLocation.addressData);
           toggleDrawerMenu();
         }
       },
