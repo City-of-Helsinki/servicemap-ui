@@ -160,15 +160,6 @@ class SearchView extends React.Component {
     return !!(searchParams.expand && searchParams.expand === '1');
   }
 
-  handleSubmit(query) {
-    const { isFetching, navigator } = this.props;
-    if (!isFetching && query && query !== '') {
-      if (navigator) {
-        navigator.push('search', { q: query });
-      }
-    }
-  }
-
   /**
    * What to render if no units are found with search
    */
@@ -246,13 +237,13 @@ class SearchView extends React.Component {
 
   renderExpandedSearchButton = () => {
     const {
-      classes, units, query,
+      classes, isFetching, units, query,
     } = this.props;
     const searchParam = this.getSearchParam();
 
     const unitCount = units && units.length;
 
-    if (!unitCount || searchParam.type !== 'search') {
+    if (isFetching || !unitCount || searchParam.type !== 'search') {
       return null;
     }
 
@@ -260,7 +251,6 @@ class SearchView extends React.Component {
       <div className={classes.suggestionButtonContainer}>
         <ExpandedSuggestions
           searchQuery={query}
-          handleSubmit={query => this.handleSubmit(query)}
         />
       </div>
     );

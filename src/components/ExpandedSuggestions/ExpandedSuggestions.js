@@ -17,7 +17,6 @@ import { parseSearchParams } from '../../utils';
 const ExpandedSuggestions = (props) => {
   const {
     searchQuery,
-    handleSubmit,
     classes,
     focusedSuggestion,
     setSearch,
@@ -91,6 +90,12 @@ const ExpandedSuggestions = (props) => {
       if (fetchController.current) {
         fetchController.current.abort();
       }
+    }
+  };
+
+  const suggestionClick = (query) => {
+    if (query && query !== '' && navigator) {
+      navigator.push('search', { q: query });
     }
   };
 
@@ -182,7 +187,7 @@ const ExpandedSuggestions = (props) => {
                 handleArrowClick={handleArrowClick}
                 handleItemClick={() => {
                   setVisible(false);
-                  handleSubmit(item.suggestion);
+                  suggestionClick(item.suggestion);
                 }}
                 divider
                 subtitle={intl.formatMessage({ id: 'search.suggestions.results' }, { count: item.count })}
@@ -295,7 +300,6 @@ const ExpandedSuggestions = (props) => {
 
 ExpandedSuggestions.propTypes = {
   searchQuery: PropTypes.string,
-  handleSubmit: PropTypes.func.isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   focusedSuggestion: PropTypes.number,
   setSearch: PropTypes.func,
