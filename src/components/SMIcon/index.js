@@ -80,6 +80,10 @@ export const GuideMapIcon = ({ ...rest }) => (
   <img aria-hidden alt="" {...rest} src={guideMapIcon} />
 );
 
+export const ContrastMapIcon = ({ ...rest }) => (
+  <img aria-hidden alt="" {...rest} src={defaulMapIcon} />
+);
+
 /**
  * Front page
  */
@@ -147,6 +151,8 @@ export const getIcon = (key, props) => {
       return <AerialMapIcon {...props} />;
     case 'guideMap':
       return <GuideMapIcon {...props} />;
+    case 'contrastMap':
+      return <DefaultMapIcon {...props} />;
     case 'location':
       return <LocationIcon {...props} />;
     case 'accessibility':

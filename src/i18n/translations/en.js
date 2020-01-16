@@ -314,6 +314,7 @@ export default {
   'settings.map.servicemap': 'Service map',
   'settings.map.orthoImage': 'Aerial view',
   'settings.map.guideMap': 'Guide map',
+  'settings.map.contrastMap': 'High contrast map', // TODO: verify
   'settings.aria.changed': 'Settings have changed. Remember to save',
   'settings.aria.closed': 'Settings closed',
   'settings.aria.open': 'Open settings',
