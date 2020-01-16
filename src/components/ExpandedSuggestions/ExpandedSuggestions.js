@@ -11,6 +11,7 @@ import createSuggestions from '../SearchBar/createSuggestions';
 import config from '../../../config';
 import SMButton from '../ServiceMapButton';
 import SuggestionItem from '../ListItems/SuggestionItem';
+import { parseSearchParams } from '../../utils';
 
 
 const ExpandedSuggestions = (props) => {
@@ -21,9 +22,14 @@ const ExpandedSuggestions = (props) => {
     focusedSuggestion,
     setSearch,
     intl,
-    closeExpandedSearch,
-    visible,
+    location,
+    navigator,
   } = props;
+  const expandSearchVisible = () => {
+    const searchParams = parseSearchParams(location.search);
+
+    return !!(searchParams.expand && searchParams.expand === '1');
+  };
 
   const [searchQueries, setSearchQueries] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -31,6 +37,7 @@ const ExpandedSuggestions = (props) => {
   const [history] = useState(getPreviousSearches());
   // Query word on which suggestion list is based
   const [suggestionQuery, setSuggestionQuery] = useState(null);
+  const [visible, setVisible] = useState(expandSearchVisible());
   const isMobile = useMediaQuery(`(max-width:${config.mobileUiBreakpoint}px)`);
 
   const listRef = useRef(null);
@@ -98,6 +105,18 @@ const ExpandedSuggestions = (props) => {
     }
   };
 
+  const setVisibility = (visibility = null) => {
+    const searchParams = parseSearchParams(location.search);
+    const newVisibility = visibility !== null ? visibility : !visible;
+
+    setVisible(newVisibility);
+
+    navigator.replace('search', {
+      ...searchParams,
+      expand: newVisibility ? 1 : 0,
+    });
+  };
+
   const renderNoResults = () => (
     <>
       <Typography>
@@ -116,7 +135,7 @@ const ExpandedSuggestions = (props) => {
           role="link"
           aria-label={intl.formatMessage({ id: 'search.closeExpand' })}
           className={classes.backIcon}
-          onClick={() => closeExpandedSearch()}
+          onClick={() => setVisibility(false)}
         >
           <ArrowBack />
         </IconButton>
@@ -145,7 +164,7 @@ const ExpandedSuggestions = (props) => {
               role="link"
               aria-label={intl.formatMessage({ id: 'search.closeExpand' })}
               className={classes.backIcon}
-              onClick={() => closeExpandedSearch()}
+              onClick={() => setVisibility(false)}
             >
               <ArrowBack />
             </IconButton>
@@ -160,7 +179,10 @@ const ExpandedSuggestions = (props) => {
                 role="link"
                 text={item.suggestion}
                 handleArrowClick={handleArrowClick}
-                handleItemClick={() => handleSubmit(item.suggestion)}
+                handleItemClick={() => {
+                  setVisible(false);
+                  handleSubmit(item.suggestion);
+                }}
                 divider
                 subtitle={intl.formatMessage({ id: 'search.suggestions.results' }, { count: item.count })}
                 isMobile
@@ -172,7 +194,7 @@ const ExpandedSuggestions = (props) => {
             role="link"
             className={classes.closeButton}
             // onKeyDown={e => handleKeyPress(e)}
-            onClick={() => closeExpandedSearch()}
+            onClick={() => setVisibility(false)}
             messageID="search.closeExpand"
           />
         </>
@@ -225,7 +247,14 @@ const ExpandedSuggestions = (props) => {
   }, [visible]);
 
   if (!visible) {
-    return null;
+    return (
+      <SMButton
+        small
+        role="link"
+        onClick={() => { setVisibility(true); }}
+        messageID="search.expand"
+      />
+    );
   }
 
   /**
@@ -261,20 +290,20 @@ const ExpandedSuggestions = (props) => {
 
 ExpandedSuggestions.propTypes = {
   searchQuery: PropTypes.string,
-  closeExpandedSearch: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   focusedSuggestion: PropTypes.number,
   setSearch: PropTypes.func,
   intl: intlShape.isRequired,
-  visible: PropTypes.bool,
+  location: PropTypes.objectOf(PropTypes.any).isRequired,
+  navigator: PropTypes.objectOf(PropTypes.any),
 };
 
 ExpandedSuggestions.defaultProps = {
   searchQuery: null,
   focusedSuggestion: null,
   setSearch: null,
-  visible: false,
+  navigator: null,
 };
 
 export default ExpandedSuggestions;
