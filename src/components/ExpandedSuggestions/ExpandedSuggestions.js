@@ -79,6 +79,7 @@ const ExpandedSuggestions = (props) => {
               setSearchQueries(result.suggestions);
               setLoading(false);
             } else {
+              setSearchQueries([]);
               setSuggestionError(true);
               setLoading(false);
             }
@@ -247,6 +248,10 @@ const ExpandedSuggestions = (props) => {
   }, [visible]);
 
   if (!visible) {
+    if (searchQueries && searchQueries.length < 1) {
+      return null;
+    }
+
     return (
       <SMButton
         small
