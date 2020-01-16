@@ -9,18 +9,17 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import StyleContext from 'isomorphic-style-loader/StyleContext';
-import { MuiThemeProvider } from '@material-ui/core';
 import JssProvider from 'react-jss/lib/JssProvider';
 import {
   createGenerateClassName,
 } from '@material-ui/core/styles';
 import rootReducer from './rootReducer';
 import App from './App';
-import themes from './themes';
 import SettingsUtility from './utils/settings';
 import LocalStorageUtility from './utils/localStorage';
 import config from '../config';
 import favicon from './assets/icons/favicon.ico';
+import ThemeWrapper from './utils/ThemeWrapper';
 
 const getPreloadedState = () => {
   const state = window.PRELOADED_STATE;
@@ -32,7 +31,10 @@ const getPreloadedState = () => {
   state.settings = settings;
 
   // Set correct theme from localStorage
-  state.user.theme = LocalStorageUtility.getItem('theme');
+  const theme = LocalStorageUtility.getItem('theme');
+  if (theme) {
+    state.user.theme = theme;
+  }
 
   return state;
 };
@@ -54,14 +56,12 @@ const insertCss = (...styles) => {
   return () => removeCss.forEach(dispose => dispose());
 };
 
-// Get correct theme setting from store
-const uiTheme = store.getState().user.theme === 'dark' ? themes.SMThemeDark : themes.SMTheme;
 
 ReactDOM.hydrate(
   <Provider store={store}>
     <StyleContext.Provider value={{ insertCss }}>
       <JssProvider generateClassName={generateClassName}>
-        <MuiThemeProvider theme={uiTheme}>
+        <ThemeWrapper>
           {
             // HTML head tags
           }
@@ -69,7 +69,7 @@ ReactDOM.hydrate(
             <link rel="shortcut icon" href={favicon} />
           </Helmet>
           <App />
-        </MuiThemeProvider>
+        </ThemeWrapper>
       </JssProvider>
     </StyleContext.Provider>
   </Provider>, app,
