@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
-  List, ListItem, Collapse, Checkbox, Typography, ButtonBase, NoSsr,
+  List, ListItem, Collapse, Checkbox, Typography, ButtonBase, NoSsr, Divider,
 } from '@material-ui/core';
-import { ArrowDropUp, ArrowDropDown, Search } from '@material-ui/icons';
+import {
+  ArrowDropUp, ArrowDropDown, Search, Cancel,
+} from '@material-ui/icons';
 import { FormattedMessage, intlShape } from 'react-intl';
 import { MobileComponent, DesktopComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import SMButton from '../../components/ServiceMapButton';
@@ -322,7 +324,7 @@ const ServiceTreeView = (props) => {
           onClick={() => setSelectedOpen(!selectedOpen)}
           className={classes.selectionsButton}
         >
-          <Typography className={`${classes.selectionText} ${classes.bold}`} variant="body2">
+          <Typography className={`${classes.selectionText} ${classes.bold}`}>
             <FormattedMessage id="services.selections" values={{ count: selectedList.length }} />
           </Typography>
           {selectedOpen
@@ -336,18 +338,20 @@ const ServiceTreeView = (props) => {
             disabled={!selectedList.length}
             onClick={() => setSelected([])}
           >
-            <Typography className={classes.deleteText} variant="body2">
+            <Typography className={classes.deleteText}>
               <FormattedMessage id="services.selections.delete.all" />
             </Typography>
+            <Cancel className={classes.deleteIcon} />
           </ButtonBase>
         ) : null}
       </div>
+      <Divider aria-hidden className={classes.whiteDivider} />
 
       <Collapse aria-hidden={!selectedOpen} tabIndex={selectedOpen ? '0' : '-1'} in={selectedOpen}>
-        <List disablePadding>
+        <List className={classes.seleectionList} disablePadding>
           {selectedList.map(item => (
             item.name && (
-              <ListItem key={item.id} disableGutters>
+              <ListItem dense key={item.id} disableGutters>
                 <Typography className={classes.selectionText} aria-hidden variant="body2">
                   {getLocaleText(item.name)}
                 </Typography>
@@ -359,11 +363,13 @@ const ServiceTreeView = (props) => {
                   <Typography className={classes.deleteText} variant="body2">
                     <FormattedMessage id="services.selections.delete" />
                   </Typography>
+                  <Cancel className={classes.deleteIcon} />
                 </ButtonBase>
               </ListItem>
             )
           ))}
         </List>
+        {selectedList.length ? <Divider aria-hidden className={classes.whiteDivider} /> : null}
       </Collapse>
     </>
   );

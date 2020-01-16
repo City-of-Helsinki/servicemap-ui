@@ -267,9 +267,9 @@ export default {
     one {Olet thenyt (#) valinnan}
     other {Olet thenyt (#) valintaa}
   }`,
-  'services.selections.delete': 'Poista',
+  'services.selections.delete': 'Poista valinta',
   'services.selections.delete.all': 'Poista kaikki valinnat',
-  'services.selections.delete.sr': 'Poista valinta: ',
+  'services.selections.delete.sr': 'Poista valinta: {service}',
   'services.search': 'Tee haku',
   'services.search.sr': 'Tee haku valituilla palveluilla',
   'services.search.sr.selected': 'Tee haku palveluilla: {services}',
