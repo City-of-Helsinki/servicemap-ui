@@ -11,7 +11,7 @@ export default theme => ({
     boxShadow: '0 2px 2px 0 rgba(0,0,0,0.5)',
     flex: '1 0 auto',
   },
-  mobileRoot: {
+  mobileActiveRoot: {
     color: theme.palette.primary.contrastText,
     padding: `${theme.spacing.unit}px ${theme.spacing.unit}px`,
     paddingTop: 0,
