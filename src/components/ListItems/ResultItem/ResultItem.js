@@ -22,7 +22,7 @@ const ResultItem = ({
   srLabel,
   intl,
   selected,
-  single,
+  padded,
   extendedClasses,
 }) => {
   // Screen reader text
@@ -39,8 +39,8 @@ const ResultItem = ({
   `;
 
   const typographyClasses = (extendedClasses && extendedClasses.typography) || {};
-  const listItemClasses = single ? classes.singleItem : classes.listItem;
-  const textContainerClasses = single ? classes.itemTextContainerSingle : classes.itemTextContainer;
+  const listItemClasses = padded ? classes.paddedItem : classes.listItem;
+  const listItemIconClasses = padded ? classes.listItemIconPadded : classes.listItemIcon;
 
   return (
     <>
@@ -60,12 +60,12 @@ const ResultItem = ({
         {
           icon
           && (
-          <ListItemIcon className={classes.listItemIcon}>
+          <ListItemIcon className={listItemIconClasses}>
             {icon}
           </ListItemIcon>
           )
         }
-        <div className={textContainerClasses}>
+        <div className={classes.itemTextContainer}>
           <div className={classes.topRow || ''}>
             {
               // SROnly element with full readable text
@@ -181,7 +181,7 @@ ResultItem.propTypes = {
   role: PropTypes.string,
   srLabel: PropTypes.string,
   selected: PropTypes.bool,
-  single: PropTypes.bool,
+  padded: PropTypes.bool,
   intl: intlShape.isRequired,
 };
 
@@ -199,5 +199,5 @@ ResultItem.defaultProps = {
   role: null,
   srLabel: null,
   selected: false,
-  single: false,
+  padded: false,
 };

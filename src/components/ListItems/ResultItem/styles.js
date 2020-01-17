@@ -1,12 +1,17 @@
 
 export default theme => ({
-  singleItem: {
-    paddingLeft: 0,
-    paddingRight: 0,
+  listItemPadded: {
+    padding: theme.spacing.unitDouble,
+  },
+  listItem: {
+    padding: theme.spacing.unit,
   },
   listItemIcon: {
     margin: theme.spacing.unit,
-    marginRight: theme.spacing.unitTriple,
+    marginRight: theme.spacing.unitDouble,
+  },
+  listItemIconPadded: {
+    margin: theme.spacing.unit,
   },
   bottomContainer: {
     display: 'inline-block',
@@ -35,10 +40,6 @@ export default theme => ({
     margin: 0,
   },
   itemTextContainer: {
-    flex: '1 1 auto',
-    margin: 0,
-  },
-  itemTextContainerSingle: {
     flex: '1 1 auto',
     margin: 0,
     marginLeft: theme.spacing.unitDouble,
