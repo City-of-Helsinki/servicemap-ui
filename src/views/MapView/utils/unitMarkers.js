@@ -25,7 +25,7 @@ const createMarkerClusterLayer = (leaflet, map, classes, settings, getLocaleText
   const createClusterCustomIcon = function (cluster) {
     const icon = divIcon({
       html: `<span>${cluster.getChildCount()}</span>`,
-      className: 'marker-cluster-custom',
+      className: classes.unitClusterMarker,
       iconSize: point(40, 40, true),
     });
     return icon;
@@ -71,6 +71,7 @@ const createMarkerClusterLayer = (leaflet, map, classes, settings, getLocaleText
     // eslint-disable-next-line no-underscore-dangle
     if (map.leafletElement._zoom >= maxZoom) {
       const list = document.createElement('ul');
+      list.className = classes.unitPopupList;
 
       units.forEach((unit) => {
         const listItem = document.createElement('li');
@@ -82,7 +83,7 @@ const createMarkerClusterLayer = (leaflet, map, classes, settings, getLocaleText
 
         let content = '';
         if (unit && unit.name) {
-          content += `<p class="${classes.unitTooltipTitle}">${getLocaleText(unit.name)}</p>`;
+          content += `<p class="${classes.unitPopupTitle}">${getLocaleText(unit.name)}</p>`;
         }
         listItem.innerHTML = content;
         list.appendChild(listItem);
@@ -109,7 +110,7 @@ const renderUnitMarkers = (
     marker,
   } = leaflet || {};
   if (!data || !marker || !clusterLayer || !classes) {
-    return null;
+    return;
   }
   console.log('Adding markers');
   // Handle unit markers

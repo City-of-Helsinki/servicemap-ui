@@ -136,6 +136,25 @@ const styles = theme => ({
     padding: theme.spacing.unitDouble,
     textAlign: 'left',
   },
+  unitClusterMarker: {
+    borderRadius: '50%',
+    backgroundColor: 'black',
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: '18px',
+    marginLeft: -20,
+    marginTop: -20,
+    width: 30,
+    height: 30,
+    transform: 'translate3d(415px, 460px, 0px)',
+    zIndex: 460,
+    opacity: 1,
+    outline: 'none',
+    border: 'solid white',
+    justifyContent: 'center',
+    alignItems: 'center',
+    display: 'flex',
+  },
   unitTooltipContainer: {
     padding: theme.spacing.unit,
     textAlign: 'left',
@@ -148,6 +167,22 @@ const styles = theme => ({
   unitTooltipSubtitle: {
     ...theme.typography.body2,
     margin: `${theme.spacing.unitHalf}px ${theme.spacing.unit}px`,
+  },
+  unitPopupList: {
+    listStyleType: 'none',
+    padding: 0,
+    '& li': {
+      padding: `${theme.spacing.unit}px ${theme.spacing.unitDouble}px`,
+      '&:hover': {
+        cursor: 'pointer',
+        backgroundColor: theme.palette.white.light,
+      },
+    },
+  },
+  unitPopupTitle: {
+    ...theme.typography.body2,
+    margin: `${theme.spacing.unitHalf}px ${theme.spacing.unit}px`,
+    fontWeight: 'bold',
   },
 });
 
