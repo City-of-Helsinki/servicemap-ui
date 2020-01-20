@@ -210,10 +210,7 @@ const ServiceTreeView = (props) => {
     let resultCount;
 
     if (!citySettings.length || citySettings.length === 4) {
-      resultCount = item.unit_count.municipality.helsinki || 0
-        + item.unit_count.municipality.espoo || 0
-        + item.unit_count.municipality.vantaa || 0
-        + item.unit_count.municipality.kauniainen || 0;
+      resultCount = item.unit_count.total;
     } else {
       resultCount = (settings.helsinki ? item.unit_count.municipality.helsinki || 0 : 0)
       + (settings.espoo ? item.unit_count.municipality.espoo || 0 : 0)
@@ -255,8 +252,8 @@ const ServiceTreeView = (props) => {
 
         </ListItem>
 
-        <Collapse role="list" aria-hidden={!isOpen} tabIndex={isOpen ? '0' : '-1'} in={isOpen}>
-          {children && children.length && children.map((child, i) => (
+        <Collapse role="list" aria-hidden={!isOpen} in={isOpen}>
+          {isOpen && children && children.length && children.map((child, i) => (
             expandingComponent(
               child, // child service node
               level + 1, // child node level
@@ -347,7 +344,8 @@ const ServiceTreeView = (props) => {
       </div>
       <Divider aria-hidden className={classes.whiteDivider} />
 
-      <Collapse aria-hidden={!selectedOpen} tabIndex={selectedOpen ? '0' : '-1'} in={selectedOpen}>
+      <Collapse aria-hidden={!selectedOpen} in={selectedOpen}>
+        {selectedOpen && (
         <List className={classes.seleectionList} disablePadding>
           {selectedList.map(item => (
             item.name && (
@@ -369,6 +367,7 @@ const ServiceTreeView = (props) => {
             )
           ))}
         </List>
+        )}
         {selectedList.length ? <Divider aria-hidden className={classes.whiteDivider} /> : null}
       </Collapse>
     </>
