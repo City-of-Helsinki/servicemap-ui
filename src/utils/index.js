@@ -57,7 +57,9 @@ export const stringifySearchParams = (searchParams) => {
     searchParamsObject.append(key, value);
   });
 
-  return searchParamsObject.toString();
+  const string = searchParamsObject.toString().replace(/[+]/g, ' ');
+
+  return string;
 };
 
 // Keyboard handler
