@@ -174,7 +174,6 @@ class TopBar extends React.Component {
   handleContrastChange = () => {
     const { changeTheme, theme } = this.props;
     changeTheme(theme === 'default' ? 'dark' : 'default');
-    window.location.reload();
   }
 
   handleNavigation = (target, data) => {
