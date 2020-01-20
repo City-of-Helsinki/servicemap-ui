@@ -192,6 +192,12 @@ const ExpandedSuggestions = (props) => {
       setSuggestionQuery(searchQuery);
       generateSuggestions(searchQuery);
     }
+    return () => {
+      // On unmount abort fetches to avoid memory leak
+      if (fetchController && fetchController.current) {
+        fetchController.current.abort();
+      }
+    };
   }, [searchQuery]);
 
   useEffect(() => { // Change text of the searchbar when suggestion with keyboard focus changes

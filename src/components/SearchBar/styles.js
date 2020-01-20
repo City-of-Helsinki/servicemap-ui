@@ -1,15 +1,16 @@
 export default theme => ({
+  background: {
+    background: theme.palette.background.main,
+  },
   root: {
     color: theme.palette.primary.contrastText,
     display: 'flex',
     flexDirection: 'column',
-    background: theme.palette.background.main,
     padding: theme.spacing.unitTriple,
     paddingTop: 0,
-    boxShadow: '0 2px 4px 0 rgba(0,0,0,0.5)',
+    boxShadow: '0 2px 2px 0 rgba(0,0,0,0.5)',
   },
   mobileRoot: {
-    background: theme.palette.background.main,
     color: theme.palette.primary.contrastText,
     padding: `${theme.spacing.unit}px ${theme.spacing.unit}px`,
     paddingTop: 0,
