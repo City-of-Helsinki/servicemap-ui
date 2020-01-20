@@ -264,8 +264,8 @@ export default {
   // Service tree
   'services': 'Palveluluettelo',
   'services.selections': `{count, plural,
-    one {Olet thenyt (#) valinnan}
-    other {Olet thenyt (#) valintaa}
+    one {Olet tehnyt (#) valinnan}
+    other {Olet tehnyt (#) valintaa}
   }`,
   'services.selections.delete': 'Poista valinta',
   'services.selections.delete.all': 'Poista kaikki valinnat',
