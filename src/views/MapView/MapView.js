@@ -19,11 +19,13 @@ import UserMarker from './components/UserMarker';
 import fetchAddress from './utils/fetchAddress';
 import { isEmbed } from '../../utils/path';
 import AddressMarker from './components/AddressMarker';
+import isClient from '../../utils';
 
 
 const MapView = (props) => {
   const {
     classes,
+    createMarkerClusterLayer,
     currentPage,
     getLocaleText,
     intl,
@@ -53,6 +55,7 @@ const MapView = (props) => {
   const [leaflet, setLeaflet] = useState(null);
   const [refSaved, setRefSaved] = useState(false);
   const [prevMap, setPrevMap] = useState(null);
+  const [markerCluster, setMarkerCluster] = useState(null);
 
 
   const getMapUnits = () => {
@@ -116,9 +119,31 @@ const MapView = (props) => {
       Map, TileLayer, ZoomControl, Marker, Popup, Polygon, Polyline, Tooltip,
     } = require('react-leaflet');
 
+    const L = require('leaflet');
+    require('leaflet.markercluster');
+
+    const {
+      divIcon, point, marker, markerClusterGroup,
+    } = L;
+
     setLeaflet({
-      Map, TileLayer, ZoomControl, Marker, Popup, Polygon, Polyline, Tooltip,
+      divIcon, point, Map, marker, markerClusterGroup, TileLayer, ZoomControl, Marker, Popup, Polygon, Polyline, Tooltip,
     });
+  };
+
+  // Markercluster initializer
+  const initializeMarkerClusterLayer = () => {
+    const map = mapRef && mapRef.current ? mapRef.current : null;
+
+    if (map && createMarkerClusterLayer && isClient()) {
+      // eslint-disable-next-line no-underscore-dangle
+      const cluster = createMarkerClusterLayer(leaflet, map, classes);
+      console.log('Initializing marker cluster: ', cluster);
+      if (cluster) {
+        map.leafletElement.addLayer(cluster);
+        setMarkerCluster(cluster);
+      }
+    }
   };
 
   const focusOnUser = () => {
@@ -163,6 +188,9 @@ const MapView = (props) => {
     setRefSaved(false);
   }, [settings.mapType]);
 
+  useEffect(() => {
+    initializeMarkerClusterLayer();
+  }, [mapRef, leaflet]);
 
   // Render
 
@@ -291,6 +319,7 @@ export default withRouter(withStyles(styles)(MapView));
 MapView.propTypes = {
   addressUnits: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
+  createMarkerClusterLayer: PropTypes.func.isRequired,
   currentPage: PropTypes.string.isRequired,
   getLocaleText: PropTypes.func.isRequired,
   highlightedDistrict: PropTypes.objectOf(PropTypes.any),

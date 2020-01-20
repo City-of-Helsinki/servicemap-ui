@@ -102,6 +102,7 @@ const mapTypes = {
 };
 
 const getMapOptions = (type, locale) => {
+  // TODO: Have default return. Now if type is something that doesn't exist mapOptions is null and returned breaking MapView
   const mapOptions = mapTypes[type];
   // For servicemap, use retina and/or swedish url if needed
   if (type === 'servicemap') {
@@ -127,6 +128,7 @@ const userIconSize = 50;
 
 export {
   mapOptions,
+  mapTypes,
   getMapOptions,
   transitIconSize,
   userIconSize,
