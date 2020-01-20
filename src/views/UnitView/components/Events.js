@@ -66,7 +66,7 @@ const Events = ({
             return (
               <ResultItem
                 key={event.id}
-                icon={<Event className={classes.eventIcon} />}
+                icon={<Event />}
                 title={getLocaleText(event.name)}
                 subtitle={dateString}
                 divider
