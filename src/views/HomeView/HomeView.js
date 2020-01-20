@@ -31,9 +31,14 @@ class HomeView extends React.Component {
     const {
       classes, getLocaleText, toggleSettings, navigator, userLocation,
     } = this.props;
-    const noUserLocation = !userLocation
-      || !userLocation.latitude
-      || !userLocation.longitude;
+    const userCoords = userLocation && userLocation.coordinates;
+    const noUserLocation = !userCoords
+      || !userCoords.latitude
+      || !userCoords.longitude;
+
+    const notFoundText = noUserLocation ? 'location.notFound' : null;
+    const subtitleID = userLocation && userLocation.allowed ? notFoundText
+      : 'location.notAllowed';
 
     return (
       <div className={classes.background}>
@@ -44,7 +49,7 @@ class HomeView extends React.Component {
             link
             disabled={noUserLocation}
             onClick={() => {
-              const latLng = { lat: userLocation.latitude, lng: userLocation.longitude };
+              const latLng = { lat: userCoords.latitude, lng: userCoords.longitude };
               fetchAddress(latLng)
                 .then((data) => {
                   navigator.push('address', {
@@ -54,6 +59,7 @@ class HomeView extends React.Component {
                   });
                 });
             }}
+            subtitle={subtitleID && <FormattedMessage id={subtitleID} />}
           />
           <PaperButton
             text={<FormattedMessage id="home.buttons.services" />}
