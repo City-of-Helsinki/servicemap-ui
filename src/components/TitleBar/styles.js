@@ -25,7 +25,7 @@ export default theme => ({
     color: 'inherit',
     flex: '0 1 auto',
     padding: theme.spacing.unit,
-    marginLeft: theme.spacing.unit,
+    marginLeft: theme.spacing.unitHalf,
   },
   colorLight: {
     color: '#000',

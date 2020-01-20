@@ -12,6 +12,7 @@ import config from '../../../config';
 import SMButton from '../ServiceMapButton';
 import SuggestionItem from '../ListItems/SuggestionItem';
 import { parseSearchParams } from '../../utils';
+import TitleBar from '../TitleBar';
 
 
 const ExpandedSuggestions = (props) => {
@@ -162,19 +163,13 @@ const ExpandedSuggestions = (props) => {
     if (suggestionList) {
       return (
         <>
-          <div className={classes.expandSearchTop}>
-            <Typography tabIndex="-1" component="h3" className={`${classes.expandTitle} ExpandedSuggestions-title`} variant="subtitle1">
-              <FormattedMessage id="search.suggestions.expand" />
-            </Typography>
-            <IconButton
-              role="link"
-              aria-label={intl.formatMessage({ id: 'search.closeExpand' })}
-              className={classes.backIcon}
-              onClick={() => setVisibility(false)}
-            >
-              <ArrowBack />
-            </IconButton>
-          </div>
+          <TitleBar
+            backButton
+            backButtonOnClick={() => setVisibility(false)}
+            className={`${classes.titleBar} ExpandedSuggestions-title`}
+            titleComponent="h3"
+            title={<FormattedMessage id="search.suggestions.expand" />}
+          />
           <List className="suggestionList" ref={listRef}>
             {suggestionList.map((item, i) => (
               <SuggestionItem
@@ -196,13 +191,15 @@ const ExpandedSuggestions = (props) => {
               />
             ))}
           </List>
-          <SMButton
-            role="link"
-            className={classes.closeButton}
-            // onKeyDown={e => handleKeyPress(e)}
-            onClick={() => setVisibility(false)}
-            messageID="search.closeExpand"
-          />
+          <div className={classes.bottomContent}>
+            <SMButton
+              role="link"
+              className={classes.closeButton}
+              // onKeyDown={e => handleKeyPress(e)}
+              onClick={() => setVisibility(false)()}
+              messageID="search.closeExpand"
+            />
+          </div>
         </>
       );
     } return null;
