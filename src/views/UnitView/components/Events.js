@@ -7,6 +7,7 @@ import { getLocaleString } from '../../../redux/selectors/locale';
 import { changeSelectedEvent } from '../../../redux/actions/event';
 import TitledList from '../../../components/Lists/TitledList';
 import ResultItem from '../../../components/ListItems/ResultItem';
+import { fetchUnitEvents, fetchAdditionalEvents } from '../../../redux/actions/selectedUnitEvents';
 
 const formatEventDate = (event, intl) => {
   const timeString = intl.formatMessage({ id: 'general.time.short' });
@@ -41,24 +42,34 @@ const Events = ({
   changeSelectedEvent,
   listLength,
   showMoreCount,
+  fetchUnitEvents,
+  fetchAdditionalEvents,
 }) => {
-  const [shownCount, setShownCount] = useState(listLength);
   const [ref, setRef] = useState(listLength);
-  const { events } = eventsData;
-  if (unit && events && events.length > 0 && `${eventsData.unit}` === `${unit.id}`) {
+  const events = eventsData.data;
+  const { isFetching, count, next } = eventsData;
+
+  if (unit && events && events.length) {
     return (
       <div ref={ref => setRef(ref)}>
         <TitledList
           title={<FormattedMessage id="unit.events" />}
-          subtitle={<FormattedMessage id="unit.events.count" values={{ count: events.length }} />}
+          subtitle={<FormattedMessage id="unit.events.count" values={{ count }} />}
           titleComponent="h4"
-          listLength={shownCount}
+          shortened={events.length < count}
           buttonMessageID="unit.events.more"
+          loading={isFetching}
           showMoreOnClick={listLength
             ? () => {
-              const lastListItem = ref.querySelector('li:last-of-type');
-              lastListItem.focus();
-              setShownCount(shownCount + showMoreCount);
+              if (!isFetching) {
+                const lastListItem = ref.querySelector('li:nth-last-of-type(2)');
+                lastListItem.focus();
+                if (events.length < showMoreCount) {
+                  fetchUnitEvents(unit.id, showMoreCount, true);
+                } else {
+                  fetchAdditionalEvents(next);
+                }
+              }
             } : null}
         >
           {events.map((event) => {
@@ -100,7 +111,7 @@ const mapStateToProps = (state) => {
 };
 
 Events.propTypes = {
-  eventsData: PropTypes.objectOf(PropTypes.any),
+  eventsData: PropTypes.objectOf(PropTypes.any).isRequired,
   unit: PropTypes.objectOf(PropTypes.any),
   listLength: PropTypes.number,
   getLocaleText: PropTypes.func.isRequired,
@@ -109,17 +120,18 @@ Events.propTypes = {
   navigator: PropTypes.objectOf(PropTypes.any),
   intl: intlShape.isRequired,
   showMoreCount: PropTypes.number,
+  fetchUnitEvents: PropTypes.func.isRequired,
+  fetchAdditionalEvents: PropTypes.func.isRequired,
 };
 
 Events.defaultProps = {
-  eventsData: { events: null, unit: null },
   unit: null,
   navigator: null,
   listLength: null,
-  showMoreCount: 10,
+  showMoreCount: 15,
 };
 
 export default injectIntl(connect(
   mapStateToProps,
-  { changeSelectedEvent },
+  { changeSelectedEvent, fetchUnitEvents, fetchAdditionalEvents },
 )(Events));

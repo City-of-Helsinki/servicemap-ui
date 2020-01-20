@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {
   List, Typography, Divider,
 } from '@material-ui/core';
+import { FormattedMessage } from 'react-intl';
 import SMButton from '../../ServiceMapButton';
 
 const TitledList = ({
@@ -13,17 +14,11 @@ const TitledList = ({
   titleComponent,
   divider,
   showMoreOnClick,
-  listLength,
+  shortened,
+  loading,
   subtitle,
 }) => {
-  let shortened = false;
-  let list = children;
-
-  if (listLength && children.length > listLength) {
-    // TODO: instead of slicing the fullList, fetch only the amount needed.
-    list = children.slice(0, listLength);
-    shortened = true;
-  }
+  const list = children;
 
   return (
     <>
@@ -55,8 +50,9 @@ const TitledList = ({
       <List disablePadding>
         {list}
       </List>
-      {shortened && showMoreOnClick && (
+      {shortened && showMoreOnClick && !loading && (
         <SMButton
+          role="button"
           messageID={buttonMessageID}
           onClick={(e) => {
             e.preventDefault();
@@ -64,6 +60,11 @@ const TitledList = ({
           }}
           margin
         />
+      )}
+      {loading && (
+        <Typography aria-live="polite" className={classes.loadingText}>
+          <FormattedMessage id="general.loading" />
+        </Typography>
       )}
     </>
   );
@@ -77,17 +78,19 @@ TitledList.propTypes = {
   divider: PropTypes.bool,
   titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']),
   showMoreOnClick: PropTypes.func,
-  listLength: PropTypes.number,
   buttonMessageID: PropTypes.string,
+  loading: PropTypes.bool,
+  shortened: PropTypes.bool,
 };
 
 TitledList.defaultProps = {
   titleComponent: 'h3',
   divider: true,
   showMoreOnClick: null,
-  listLength: null,
   subtitle: null,
   buttonMessageID: null,
+  loading: false,
+  shortened: false,
 };
 
 export default TitledList;

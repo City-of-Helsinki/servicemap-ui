@@ -10,7 +10,7 @@ import styles from './styles';
 
 const mapStateToProps = (state) => {
   const getLocaleText = textObject => getLocaleString(state, textObject);
-  const event = state.event.selected;
+  const { event } = state;
   const selectedUnit = state.selectedUnit.unit.data;
   const map = state.mapRef.leafletElement;
   const { navigator } = state;

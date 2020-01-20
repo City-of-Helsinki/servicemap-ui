@@ -148,9 +148,9 @@ const ResultItem = ({
         </div>
       </ListItem>
       {divider && (
-      <li>
-        <Divider className={classes.divider} aria-hidden="true" variant="inset" />
-      </li>
+        <li aria-hidden>
+          <Divider className={classes.divider} variant="inset" />
+        </li>
       )}
     </>
   );

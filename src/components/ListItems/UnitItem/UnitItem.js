@@ -50,7 +50,6 @@ class UnitItem extends React.Component {
       classes,
       currentPage,
       unit,
-      changeSelectedUnit,
       onClick,
       getLocaleText,
       intl,
@@ -120,7 +119,6 @@ class UnitItem extends React.Component {
           if (onClick) {
             onClick();
           } else if (navigator) {
-            changeSelectedUnit(unit);
             navigator.push('unit', { id });
           }
         }}
@@ -138,7 +136,6 @@ UnitItem.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   currentPage: PropTypes.string.isRequired,
   unit: PropTypes.objectOf(PropTypes.any),
-  changeSelectedUnit: PropTypes.func.isRequired,
   getLocaleText: PropTypes.func.isRequired,
   onClick: PropTypes.func,
   intl: intlShape.isRequired,

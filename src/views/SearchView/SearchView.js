@@ -23,16 +23,10 @@ import SettingsInfo from '../../components/SettingsInfo';
 class SearchView extends React.Component {
   constructor(props) {
     super(props);
-    const { changeSelectedUnit } = props;
 
     this.state = {
       expandSearch: null,
     };
-
-    // Reset selected unit on SearchView
-    if (changeSelectedUnit) {
-      changeSelectedUnit(null);
-    }
   }
 
   componentDidMount() {
@@ -405,7 +399,6 @@ export default withRouter(injectIntl(withStyles(styles)(SearchView)));
 // Typechecking
 SearchView.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  changeSelectedUnit: PropTypes.func,
   count: PropTypes.number,
   fetchUnits: PropTypes.func,
   getLocaleText: PropTypes.func.isRequired,
@@ -422,7 +415,6 @@ SearchView.propTypes = {
 };
 
 SearchView.defaultProps = {
-  changeSelectedUnit: () => {},
   count: 0,
   fetchUnits: () => {},
   isFetching: false,
