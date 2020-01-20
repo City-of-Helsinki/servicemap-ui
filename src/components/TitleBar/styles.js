@@ -35,6 +35,7 @@ export default theme => ({
     marginLeft: 'auto',
     paddingLeft: theme.spacing.unit,
     paddingTop: 4,
-    marginRight: theme.spacing.unitDouble,
+    marginRight: theme.spacing.unit,
+    minWidth: 50,
   },
 });
