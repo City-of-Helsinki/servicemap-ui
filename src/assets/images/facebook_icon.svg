@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="25px" height="25px" viewBox="0 0 25 25" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61.2 (89653) - https://sketch.com -->
+    <title>fc</title>
+    <desc>Created with Sketch.</desc>
+    <g id="fc" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="facebook">
+            <rect id="Rectangle" x="0" y="0" width="25" height="25"></rect>
+            <circle id="Oval" stroke="#2242C7" stroke-width="2" fill="#FFFFFF" cx="12.5" cy="12.5" r="11.5"></circle>
+            <path d="M13.2469919,19.8863636 L10.4757055,19.8863636 L10.4757055,13.3514479 L9.09090909,13.3514479 L9.09090909,11.0997352 L10.4757055,11.0997352 L10.4757055,9.74788277 C10.4757055,7.91104605 11.2572201,6.81818182 13.4789908,6.81818182 L15.3282084,6.81818182 L15.3282084,9.07071934 L14.1724474,9.07071934 C13.3075317,9.07071934 13.2503787,9.38538176 13.2503787,9.97264164 L13.2465685,11.0997352 L15.3409091,11.0997352 L15.0957861,13.3514479 L13.2465685,13.3514479 L13.2465685,19.8863636 L13.2469919,19.8863636 Z" id="Shape" fill="#2242C7"></path>
+        </g>
+    </g>
+</svg>

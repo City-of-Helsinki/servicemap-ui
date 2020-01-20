@@ -188,6 +188,7 @@ export default {
     one {# palvelu}
     other {# palvelua}
   }`,
+  'unit.socialMedia.title': 'Toimipiste sosiaalisessa mediassa',
 
   // Search
   'search': 'Hae',

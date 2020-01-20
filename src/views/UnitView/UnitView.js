@@ -24,6 +24,7 @@ import UnitIcon from '../../components/SMIcon/UnitIcon';
 import TabLists from '../../components/TabLists';
 import calculateDistance from '../../utils/calculateDistance';
 import { AddressIcon } from '../../components/SMIcon';
+import SocialMediaLinks from './components/SocialMediaLinks';
 
 const UnitView = (props) => {
   const [centered, setCentered] = useState(false);
@@ -126,6 +127,7 @@ const UnitView = (props) => {
 
         {/* View Components */}
         <ContactInfo unit={unit} intl={intl} />
+        <SocialMediaLinks unit={unit} getLocaleText={getLocaleText} />
         <Highlights unit={unit} getLocaleText={getLocaleText} />
         <Description unit={unit} getLocaleText={getLocaleText} />
         <ElectronicServices unit={unit} />
