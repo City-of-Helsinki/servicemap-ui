@@ -17,7 +17,6 @@ import TabLists from '../../components/TabLists';
 import Container from '../../components/Container';
 import { generatePath } from '../../utils/path';
 import { DesktopComponent } from '../../layouts/WrapperComponents/WrapperComponents';
-import SMButton from '../../components/ServiceMapButton';
 import ExpandedSuggestions from '../../components/ExpandedSuggestions';
 import SettingsInfo from '../../components/SettingsInfo';
 
@@ -152,19 +151,6 @@ class SearchView extends React.Component {
     return null;
   }
 
-  toggleExpanded() {
-    const {
-      location,
-      navigator,
-    } = this.props;
-    const searchParams = parseSearchParams(location.search);
-
-    navigator.replace('search', {
-      ...searchParams,
-      expand: this.expandSearchVisible() ? 0 : 1,
-    });
-  }
-
   expandSearchVisible() {
     const {
       location,
@@ -172,29 +158,6 @@ class SearchView extends React.Component {
     const searchParams = parseSearchParams(location.search);
 
     return !!(searchParams.expand && searchParams.expand === '1');
-  }
-
-  closeExpandedSearch() {
-    if (this.expandSearchVisible()) {
-      this.toggleExpanded();
-    }
-  }
-
-  openExpandedSearch() {
-    if (!this.expandSearchVisible()) {
-      this.toggleExpanded();
-    }
-  }
-
-  handleSubmit(query) {
-    const { isFetching, navigator } = this.props;
-    if (!isFetching && query && query !== '') {
-      this.closeExpandedSearch();
-
-      if (navigator) {
-        navigator.push('search', { q: query });
-      }
-    }
   }
 
   /**
@@ -253,19 +216,6 @@ class SearchView extends React.Component {
     );
   }
 
-  renderSuggestions() {
-    const { query } = this.props;
-
-    return (
-      <ExpandedSuggestions
-        closeExpandedSearch={() => this.closeExpandedSearch()}
-        searchQuery={query}
-        handleSubmit={query => this.handleSubmit(query)}
-        visible={this.expandSearchVisible()}
-      />
-    );
-  }
-
   renderSearchInfo = () => {
     const { units, classes, isFetching } = this.props;
     const unitCount = units && units.length;
@@ -287,23 +237,20 @@ class SearchView extends React.Component {
 
   renderExpandedSearchButton = () => {
     const {
-      classes, units,
+      classes, isFetching, units, query,
     } = this.props;
     const searchParam = this.getSearchParam();
 
     const unitCount = units && units.length;
 
-    if (!unitCount || searchParam.type !== 'search') {
+    if (isFetching || !unitCount || searchParam.type !== 'search') {
       return null;
     }
 
     return (
       <div className={classes.suggestionButtonContainer}>
-        <SMButton
-          small
-          role="link"
-          onClick={() => { this.openExpandedSearch(); }}
-          messageID="search.expand"
+        <ExpandedSuggestions
+          searchQuery={query}
         />
       </div>
     );
@@ -410,19 +357,12 @@ class SearchView extends React.Component {
       return redirect;
     }
 
-    if (this.expandSearchVisible()) {
-      return this.renderSuggestions();
-    }
-
     return (
       <div
         className={classes.root}
       >
         {
           this.renderSearchBar()
-        }
-        {
-          this.renderSuggestions()
         }
         {
           !expandSearch && this.renderSearchInfo()
