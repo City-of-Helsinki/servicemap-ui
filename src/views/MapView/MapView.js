@@ -38,6 +38,7 @@ const MapView = (props) => {
     highlightedUnit,
     highlightedDistrict,
     isMobile,
+    renderUnitMarkers,
     setMapRef,
     navigator,
     match,
@@ -194,6 +195,9 @@ const MapView = (props) => {
 
   // Render
 
+  const embeded = isEmbed(match);
+  renderUnitMarkers(leaflet, getMapUnits(), classes, markerCluster, embeded);
+
   const {
     Map, TileLayer, ZoomControl, Marker, Popup, Polygon, Polyline, Tooltip,
   } = leaflet || {};
@@ -210,7 +214,6 @@ const MapView = (props) => {
         ? prevMap.viewport.zoom + zoomDifference
         : prevMap.props.zoom + zoomDifference;
     }
-    const embeded = isEmbed(match);
 
     return (
       <>
@@ -331,6 +334,7 @@ MapView.propTypes = {
   serviceUnits: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
   setAddressLocation: PropTypes.func.isRequired,
   findUserLocation: PropTypes.func.isRequired,
+  renderUnitMarkers: PropTypes.func.isRequired,
   setMapRef: PropTypes.func.isRequired,
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
   unitList: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),

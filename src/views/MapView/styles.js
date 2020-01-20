@@ -136,6 +136,19 @@ const styles = theme => ({
     padding: theme.spacing.unitDouble,
     textAlign: 'left',
   },
+  unitTooltipContainer: {
+    padding: theme.spacing.unit,
+    textAlign: 'left',
+  },
+  unitTooltipTitle: {
+    ...theme.typography.body2,
+    margin: `${theme.spacing.unitHalf}px ${theme.spacing.unit}px`,
+    fontWeight: 'bold',
+  },
+  unitTooltipSubtitle: {
+    ...theme.typography.body2,
+    margin: `${theme.spacing.unitHalf}px ${theme.spacing.unit}px`,
+  },
 });
 
 export default styles;
