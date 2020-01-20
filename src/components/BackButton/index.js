@@ -1,6 +1,8 @@
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
+import { withStyles } from '@material-ui/core';
 import BackButton from './BackButton';
+import styles from './styles';
 
 // Listen to redux state
 const mapStateToProps = (state) => {
@@ -11,7 +13,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default injectIntl(connect(
+export default injectIntl(withStyles(styles)(connect(
   mapStateToProps,
   null,
-)(BackButton));
+)(BackButton)));

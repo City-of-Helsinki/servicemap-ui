@@ -5,6 +5,7 @@ export default {
 
   // Accessibility
   'accessibility': 'Accessibility',
+  'accessibility.info': 'Accessibility details',
   'accessibility.details': 'Accessibility details',
   'accessibility.stamp': 'Accessibility acknowledged',
   'accessibility.shortcomings': 'Shortcomings',
@@ -64,6 +65,7 @@ export default {
   'general.back.service': 'Back to service view',
   'general.back.unit': 'Back to unit view',
   'general.back.event': 'Back to event view',
+  'general.backTo': 'Return back', // TODO: verify
   'general.backToHome': 'Close search and return to beginning',
   'general.backToStart': 'Back to beginning of page',
   'general.back.serviceTree': 'Back to service list page',

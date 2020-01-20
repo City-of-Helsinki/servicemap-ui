@@ -116,19 +116,26 @@ class SearchView extends React.Component {
   // Handles redirect if only single result is found
   handleSingleResultRedirect() {
     const {
-      units, isFetching, match,
+      units, getLocaleText, isFetching, match,
     } = this.props;
 
     // If not currently searching and view should not fetch new search
     // and only 1 result found redirect directly to specific result page
     if (!isFetching && !this.shouldFetch() && units && units.length === 1) {
-      const { id, object_type } = units[0];
+      const {
+        id, object_type, number, street,
+      } = units[0];
       let path = null;
       // Parse language params
       const { params } = match;
       const lng = params && params.lng;
+      const { name, municipality } = street || {};
+      const streetName = name ? getLocaleText(name) : null;
 
       switch (object_type) {
+        case 'address':
+          path = generatePath('address', lng, { number, municipality, street: streetName });
+          break;
         case 'unit':
           path = generatePath('unit', lng, { id });
           break;
@@ -461,6 +468,7 @@ SearchView.propTypes = {
   changeSelectedUnit: PropTypes.func,
   count: PropTypes.number,
   fetchUnits: PropTypes.func,
+  getLocaleText: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
   isFetching: PropTypes.bool,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
