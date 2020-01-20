@@ -8,13 +8,11 @@ const createMarkerClusterLayer = (leaflet, map, classes, settings, getLocaleText
     divIcon, point, markerClusterGroup,
   } = leaflet || {};
 
-  console.group('createMarkerClusterLayer');
   if (
     !divIcon || !point || !markerClusterGroup
     || !map || !classes || !settings || !getLocaleText
     || !navigator || !isClient()
   ) {
-    console.log('Failed');
     return null;
   }
 
@@ -92,7 +90,6 @@ const createMarkerClusterLayer = (leaflet, map, classes, settings, getLocaleText
     }
   });
 
-  console.groupEnd('createMarkerClusterLayer');
   return markers;
 };
 
@@ -112,7 +109,6 @@ const renderUnitMarkers = (
   if (!data || !marker || !clusterLayer || !classes) {
     return;
   }
-  console.log('Adding markers');
   // Handle unit markers
 
   const tooltipOptions = (unit, markerCount) => ({

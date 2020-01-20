@@ -137,9 +137,7 @@ const MapView = (props) => {
     const map = mapRef && mapRef.current ? mapRef.current : null;
 
     if (map && createMarkerClusterLayer && isClient()) {
-      // eslint-disable-next-line no-underscore-dangle
       const cluster = createMarkerClusterLayer(leaflet, map, classes);
-      console.log('Initializing marker cluster: ', cluster);
       if (cluster) {
         map.leafletElement.addLayer(cluster);
         setMarkerCluster(cluster);
