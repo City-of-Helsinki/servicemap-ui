@@ -24,12 +24,8 @@ const ExpandedSuggestions = (props) => {
     intl,
     location,
     navigator,
+    isVisible,
   } = props;
-  const expandSearchVisible = () => {
-    const searchParams = parseSearchParams(location.search);
-
-    return !!(searchParams.expand && searchParams.expand === '1');
-  };
 
   const [searchQueries, setSearchQueries] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -37,7 +33,7 @@ const ExpandedSuggestions = (props) => {
   const [history] = useState(getPreviousSearches());
   // Query word on which suggestion list is based
   const [suggestionQuery, setSuggestionQuery] = useState(null);
-  const [visible, setVisible] = useState(expandSearchVisible());
+  const [visible, setVisible] = useState(false);
   const isMobile = useMediaQuery(`(max-width:${config.mobileUiBreakpoint}px)`);
 
   const listRef = useRef(null);
