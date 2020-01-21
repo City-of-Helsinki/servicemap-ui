@@ -7,7 +7,7 @@ import {
 import { intlShape, FormattedMessage } from 'react-intl';
 import { Prompt } from 'react-router-dom';
 import TitleBar from '../../components/TitleBar';
-import ServiceMapButton from '../../components/ServiceMapButton';
+import SMButton from '../../components/ServiceMapButton';
 
 const FeedbackView = ({
   classes, navigator, intl, location, selectedUnit, getLocaleText,
@@ -58,13 +58,14 @@ const FeedbackView = ({
       <Dialog open={!!modalOpen}>
         <div className={classes.modalContainer}>
           <Typography className={classes.modalTitle}><FormattedMessage id="feedback.modal.success" /></Typography>
-          <ServiceMapButton
+          <SMButton
             className={classes.modalButton}
-            text={intl.formatMessage({ id: 'feedback.modal.confirm' })}
+            messageID="feedback.modal.confirm"
             onClick={() => {
               setModalOpen(false);
               navigator.goBack();
             }}
+            margin
           />
         </div>
       </Dialog>
@@ -133,10 +134,11 @@ const FeedbackView = ({
           <Typography className={classes.infoText}>
             <Link href="stuff"><FormattedMessage id="feedback.additionalInfo.link" /></Link>
           </Typography>
-          <ServiceMapButton
+          <SMButton
             disabled={!feedback || errorMessage}
             onClick={() => handleSend()}
-            text={intl.formatMessage({ id: 'feedback.send' })}
+            messageID="feedback.send"
+            margin
           />
         </div>
       </form>

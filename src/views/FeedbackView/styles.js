@@ -83,13 +83,10 @@ export default theme => ({
     paddingTop: 14,
   },
   modalContainer: {
-    width: 340,
-    height: 135,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: 24,
     display: 'flex',
     flexDirection: 'column',
+    alignItems: 'center',
+    padding: 24,
   },
   modalButton: {
     width: 135,
