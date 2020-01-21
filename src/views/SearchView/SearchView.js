@@ -151,15 +151,6 @@ class SearchView extends React.Component {
     return null;
   }
 
-  expandSearchVisible() {
-    const {
-      location,
-    } = this.props;
-    const searchParams = parseSearchParams(location.search);
-
-    return !!(searchParams.expand && searchParams.expand === '1');
-  }
-
   /**
    * What to render if no units are found with search
    */
@@ -202,10 +193,6 @@ class SearchView extends React.Component {
 
   renderSearchBar() {
     const { query, classes } = this.props;
-
-    if (this.expandSearchVisible()) {
-      return null;
-    }
 
     return (
       <SearchBar
@@ -417,7 +404,6 @@ SearchView.propTypes = {
   units: PropTypes.arrayOf(PropTypes.any),
   map: PropTypes.objectOf(PropTypes.any),
   match: PropTypes.objectOf(PropTypes.any).isRequired,
-  navigator: PropTypes.objectOf(PropTypes.any),
   query: PropTypes.string,
 };
 
@@ -430,6 +416,5 @@ SearchView.defaultProps = {
   previousSearch: null,
   units: [],
   map: null,
-  navigator: null,
   query: null,
 };
