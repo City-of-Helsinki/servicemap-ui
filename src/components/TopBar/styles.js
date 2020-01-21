@@ -10,6 +10,7 @@ const styles = theme => ({
     height: topBarHeightMobile,
   },
   appBar: {
+    boxShadow: 'none',
     zIndex: theme.zIndex.appBar,
   },
   buttonLabel: {

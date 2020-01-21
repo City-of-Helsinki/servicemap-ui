@@ -284,7 +284,7 @@ class SearchBar extends React.Component {
     const { isActive } = this.state;
 
     const rootClasses = `${
-      isActive ? classes.mobileRoot : classes.root
+      isActive ? classes.mobileActiveRoot : classes.root
     } ${
       !isActive && typeof isSticky === 'number' ? classes.sticky : ''
     } ${

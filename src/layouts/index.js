@@ -6,9 +6,10 @@ import { toggleSettings } from '../redux/actions/settings';
 
 // Listen to redux state
 const mapStateToProps = (state) => {
-  const { navigator, settings } = state;
+  const { navigator, settings, user } = state;
   const { toggled } = settings;
   return {
+    currentPage: user.page,
     settingsToggled: toggled,
     navigator,
   };

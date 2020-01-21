@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getSelectedUnit } from '../../redux/selectors/selectedUnit';
-import { fetchUnitEvents } from '../../redux/actions/event';
+import { fetchUnitEvents } from '../../redux/actions/selectedUnitEvents';
 import { fetchSelectedUnit, changeSelectedUnit } from '../../redux/actions/selectedUnit';
 import { fetchAccessibilitySentences } from '../../redux/actions/selectedUnitAccessibility';
 import { fetchReservations } from '../../redux/actions/selectedUnitReservations';
@@ -18,8 +18,8 @@ class UnitFetcher extends React.Component {
 
     if (params && params.unit) {
       const unitId = params.unit;
-
       fetchReservations(unitId);
+      fetchUnitEvents(unitId);
 
       if (unit && (unit.complete && unitId === `${unit.id}`)) {
         fetchAccessibilitySentences(unitId);

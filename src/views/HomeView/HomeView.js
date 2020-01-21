@@ -34,6 +34,10 @@ class HomeView extends React.Component {
       || !userLocation.coordinates
       || !userLocation.addressData;
 
+    const notFoundText = noUserLocation ? 'location.notFound' : null;
+    const subtitleID = userLocation && userLocation.allowed ? notFoundText
+      : 'location.notAllowed';
+
     return (
       <div className={classes.background}>
         <div className={classes.buttonContainer}>
@@ -49,6 +53,7 @@ class HomeView extends React.Component {
                 number: userLocation.addressData.number,
               });
             }}
+            subtitle={subtitleID && <FormattedMessage id={subtitleID} />}
           />
           <PaperButton
             text={<FormattedMessage id="home.buttons.services" />}

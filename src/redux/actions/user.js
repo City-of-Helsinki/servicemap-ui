@@ -39,8 +39,8 @@ export const setCurrentPage = page => async (dispatch) => {
 };
 
 export const changeTheme = theme => async (dispatch) => {
-  dispatch(setTheme(theme));
   LocalStorageUtility.saveItem('theme', theme);
+  dispatch(setTheme(theme));
 };
 
 export const findUserLocation = () => async (dispatch) => {
