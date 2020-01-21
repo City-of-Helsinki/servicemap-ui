@@ -1,4 +1,5 @@
 import LocalStorageUtility from '../../utils/localStorage';
+import fetchAddress from '../../views/MapView/utils/fetchAddress';
 
 export const setLocale = locale => ({
   type: 'SET_LOCALE',
@@ -45,19 +46,26 @@ export const changeTheme = theme => async (dispatch) => {
 export const findUserLocation = () => async (dispatch) => {
   const success = (position) => {
     if (position.coords.accuracy < 10000) {
-      dispatch(setUserPosition({ coordinates: position.coords, allowed: true }));
+      fetchAddress({ lat: position.coords.latitude, lng: position.coords.longitude })
+        .then((data) => {
+          dispatch(setUserPosition({
+            coordinates: position.coords,
+            allowed: true,
+            addressData: data,
+          }));
+        });
     } else {
       console.warn(`Position accuracy: ${position.coords.accuracy}. Max accuracy: 10000`);
-      dispatch(setUserPosition({ coordinates: null, allowed: true }));
+      dispatch(setUserPosition({ coordinates: null, allowed: true, addressData: null }));
     }
   };
 
   const error = (err) => {
     console.warn(`GeoLocation error:(${err.code}): ${err.message}`);
     if (err.code === 1) {
-      dispatch(setUserPosition({ coordinates: null, allowed: false }));
+      dispatch(setUserPosition({ coordinates: null, allowed: false, addressData: null }));
     } else {
-      dispatch(setUserPosition({ coordinates: null, allowed: true }));
+      dispatch(setUserPosition({ coordinates: null, allowed: true, addressData: null }));
     }
   };
 

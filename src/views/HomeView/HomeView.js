@@ -4,7 +4,6 @@ import { FormattedMessage } from 'react-intl';
 import SearchBar from '../../components/SearchBar';
 import { MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import PaperButton from '../../components/PaperButton';
-import fetchAddress from '../MapView/utils/fetchAddress';
 import { getIcon } from '../../components/SMIcon';
 
 class HomeView extends React.Component {
@@ -31,10 +30,9 @@ class HomeView extends React.Component {
     const {
       classes, getLocaleText, toggleSettings, navigator, userLocation,
     } = this.props;
-    const userCoords = userLocation && userLocation.coordinates;
-    const noUserLocation = !userCoords
-      || !userCoords.latitude
-      || !userCoords.longitude;
+    const noUserLocation = !userLocation
+      || !userLocation.coordinates
+      || !userLocation.addressData;
 
     const notFoundText = noUserLocation ? 'location.notFound' : null;
     const subtitleID = userLocation && userLocation.allowed ? notFoundText
@@ -49,15 +47,11 @@ class HomeView extends React.Component {
             link
             disabled={noUserLocation}
             onClick={() => {
-              const latLng = { lat: userCoords.latitude, lng: userCoords.longitude };
-              fetchAddress(latLng)
-                .then((data) => {
-                  navigator.push('address', {
-                    municipality: data.street.municipality,
-                    street: getLocaleText(data.street.name),
-                    number: data.number,
-                  });
-                });
+              navigator.push('address', {
+                municipality: userLocation.addressData.street.municipality,
+                street: getLocaleText(userLocation.addressData.street.name),
+                number: userLocation.addressData.number,
+              });
             }}
             subtitle={subtitleID && <FormattedMessage id={subtitleID} />}
           />
