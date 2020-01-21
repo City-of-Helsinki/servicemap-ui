@@ -24,6 +24,7 @@ import UnitIcon from '../../components/SMIcon/UnitIcon';
 import TabLists from '../../components/TabLists';
 import calculateDistance from '../../utils/calculateDistance';
 import { AddressIcon } from '../../components/SMIcon';
+import swapCoordinates from '../MapView/utils/swapCoordinates';
 
 const UnitView = (props) => {
   const [centered, setCentered] = useState(false);
@@ -51,7 +52,7 @@ const UnitView = (props) => {
     setCentered(true);
     const { geometry, location } = unit;
     if (geometry && geometry.type === 'MultiLineString') {
-      focusDistrict(map, geometry.coordinates);
+      focusDistrict(map, swapCoordinates(geometry.coordinates));
     } else if (location) {
       focusUnit(map, location.coordinates);
     }

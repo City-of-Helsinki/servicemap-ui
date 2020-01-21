@@ -74,7 +74,7 @@ const MapView = (props) => {
       const { geometry } = highlightedUnit;
       if (geometry && geometry.type === 'MultiLineString') {
         const { coordinates } = geometry;
-        unitGeometry = swapCoordinates(coordinates);
+        unitGeometry = coordinates;
       }
     }
     return { units: mapUnits, unitGeometry };
@@ -194,7 +194,8 @@ const MapView = (props) => {
   // Render
 
   const embeded = isEmbed(match);
-  renderUnitMarkers(leaflet, getMapUnits(), classes, markerCluster, embeded);
+  const mapUnits = getMapUnits();
+  renderUnitMarkers(leaflet, mapUnits, classes, markerCluster, embeded);
 
   const {
     Map, TileLayer, ZoomControl, Marker, Popup, Polygon, Polyline, Tooltip,
@@ -240,7 +241,7 @@ const MapView = (props) => {
             !highlightedDistrict
             && (
               <UnitMarkers
-                data={getMapUnits()}
+                data={mapUnits}
                 Marker={Marker}
                 Polyline={Polyline}
                 Tooltip={Tooltip}
