@@ -194,8 +194,6 @@ const MapView = (props) => {
   // Render
 
   const embeded = isEmbed(match);
-  const mapUnits = getMapUnits();
-  renderUnitMarkers(leaflet, mapUnits, classes, markerCluster, embeded);
 
   const {
     Map, TileLayer, ZoomControl, Marker, Popup, Polygon, Polyline, Tooltip,
@@ -241,11 +239,9 @@ const MapView = (props) => {
             !highlightedDistrict
             && (
               <UnitMarkers
-                data={mapUnits}
-                Marker={Marker}
+                data={getMapUnits()}
                 Polyline={Polyline}
-                Tooltip={Tooltip}
-                embeded={embeded}
+                createUnitMarkers={mapUnits => renderUnitMarkers(leaflet, mapUnits, classes, markerCluster, embeded)}
               />
             )
           }
