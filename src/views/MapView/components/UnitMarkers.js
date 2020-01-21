@@ -12,21 +12,16 @@ const componentUpdatingProps = ['data'];
 
 class UnitMarkers extends React.Component {
   shouldComponentUpdate(nextProps) {
-    const { data } = this.props;
-    const { units, unitGeometry } = data;
-    const isSameData = arraysEqual(units, nextProps.data.units)
-                        && unitGeometry === nextProps.data.unitGeometry;
-    return !isSameData && valuesHaveChanged(this.props, nextProps, componentUpdatingProps);
+    return valuesHaveChanged(this.props, nextProps, componentUpdatingProps);
   }
 
   render() {
     const {
-      data, createUnitMarkers, Polyline,
+      data, Polyline,
     } = this.props;
 
     const unitListFiltered = data.units.filter(unit => unit.object_type === 'unit');
     // Show markers with location
-    createUnitMarkers(data);
     return (
       <>
         {data.unitGeometry && unitListFiltered.length === 1 && (
@@ -43,7 +38,6 @@ class UnitMarkers extends React.Component {
 }
 
 UnitMarkers.propTypes = {
-  createUnitMarkers: PropTypes.func.isRequired,
   data: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.any)).isRequired,
   Polyline: PropTypes.objectOf(PropTypes.any).isRequired,
 };

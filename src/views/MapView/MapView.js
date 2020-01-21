@@ -6,7 +6,6 @@ import { withStyles } from '@material-ui/core';
 import { intlShape } from 'react-intl';
 import { mapOptions } from './config/mapConfig';
 import CreateMap from './utils/createMap';
-import swapCoordinates from './utils/swapCoordinates';
 import UnitMarkers from './components/UnitMarkers';
 import { focusUnit } from './utils/mapActions';
 import styles from './styles';
@@ -191,9 +190,17 @@ const MapView = (props) => {
     initializeMarkerClusterLayer();
   }, [mapRef, leaflet]);
 
+  const embeded = isEmbed(match);
+
+  // Attempt to render unit markers on page change or unitList change
+  useEffect(() => {
+    if (markerCluster) {
+      renderUnitMarkers(leaflet, getMapUnits(), classes, markerCluster, embeded);
+    }
+  }, [unitList, highlightedUnit, markerCluster]);
+
   // Render
 
-  const embeded = isEmbed(match);
 
   const {
     Map, TileLayer, ZoomControl, Marker, Popup, Polygon, Polyline, Tooltip,
@@ -241,7 +248,6 @@ const MapView = (props) => {
               <UnitMarkers
                 data={getMapUnits()}
                 Polyline={Polyline}
-                createUnitMarkers={mapUnits => renderUnitMarkers(leaflet, mapUnits, classes, markerCluster, embeded)}
               />
             )
           }
