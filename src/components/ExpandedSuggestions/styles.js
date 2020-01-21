@@ -65,6 +65,9 @@ export default theme => ({
     fontWeight: 'bold',
     marginBottom: theme.spacing.unitDouble,
   },
+  padding: {
+    padding: theme.spacing.unitDouble,
+  },
   primary: {
     backgroundColor: theme.palette.primary.main,
   },

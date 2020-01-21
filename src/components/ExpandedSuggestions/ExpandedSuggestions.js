@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Search, ArrowBack } from '@material-ui/icons';
+import { Search } from '@material-ui/icons';
 import {
-  Paper, List, Typography, IconButton,
+  Paper, List, Typography,
 } from '@material-ui/core';
 import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
 import { FormattedMessage, intlShape } from 'react-intl';
@@ -132,22 +132,22 @@ const ExpandedSuggestions = (props) => {
     </>
   );
 
+  const renderTitleBar = () => (
+    <TitleBar
+      backButton
+      backButtonOnClick={() => setVisibility(false)}
+      className={`${classes.titleBar} ExpandedSuggestions-title`}
+      titleComponent="h3"
+      title={<FormattedMessage id="search.suggestions.expand" />}
+    />
+  );
+
   const renderLoading = () => (
     <>
-      <div className={classes.expandSearchTop}>
-        <Typography tabIndex="-1" component="h3" className={`${classes.expandTitle} ExpandedSuggestions-title`} variant="subtitle1">
-          <FormattedMessage id="search.suggestions.expand" />
-        </Typography>
-        <IconButton
-          role="link"
-          aria-label={intl.formatMessage({ id: 'search.closeExpand' })}
-          className={classes.backIcon}
-          onClick={() => setVisibility(false)}
-        >
-          <ArrowBack />
-        </IconButton>
-      </div>
-      <Typography>
+      {
+        renderTitleBar()
+      }
+      <Typography className={classes.padding}>
         <FormattedMessage id="search.suggestions.loading" />
       </Typography>
     </>
@@ -163,13 +163,9 @@ const ExpandedSuggestions = (props) => {
     if (suggestionList) {
       return (
         <>
-          <TitleBar
-            backButton
-            backButtonOnClick={() => setVisibility(false)}
-            className={`${classes.titleBar} ExpandedSuggestions-title`}
-            titleComponent="h3"
-            title={<FormattedMessage id="search.suggestions.expand" />}
-          />
+          {
+            renderTitleBar()
+          }
           <List className="suggestionList" ref={listRef}>
             {suggestionList.map((item, i) => (
               <SuggestionItem
