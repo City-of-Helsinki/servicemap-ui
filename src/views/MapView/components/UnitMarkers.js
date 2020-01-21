@@ -2,11 +2,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withStyles, Typography } from '@material-ui/core';
-import { drawMarkerIcon } from '../utils/drawIcon';
+import { withStyles } from '@material-ui/core';
 import { valuesHaveChanged } from '../../../utils';
 import styles from '../styles';
 import { getLocaleString } from '../../../redux/selectors/locale';
+import swapCoordinates from '../utils/swapCoordinates';
 
 const componentUpdatingProps = ['data', 'settings'];
 
@@ -22,10 +22,8 @@ class UnitMarkers extends React.Component {
 
     const unitListFiltered = data.units.filter(unit => unit.object_type === 'unit');
 
-    return (
-      <>
-        {unitListFiltered.map((unit) => {
-          // Show markers with location
+    // Show markers with location
+    /*
           if (unit && unit.location) {
             return (
               <Marker
@@ -60,12 +58,13 @@ class UnitMarkers extends React.Component {
                 }
               </Marker>
             );
-          } return null;
-        })}
+          } return null; */
+    return (
+      <>
         {data.unitGeometry && unitListFiltered.length === 1 && (
           <Polyline
             positions={[
-              data.unitGeometry,
+              swapCoordinates(data.unitGeometry),
             ]}
             color="#ff8400"
           />
