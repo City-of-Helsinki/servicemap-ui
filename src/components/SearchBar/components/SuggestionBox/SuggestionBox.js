@@ -108,6 +108,7 @@ const SuggestionBox = (props) => {
   const renderSearchHistory = () => (
     <>
       <PreviousSearches
+        className={classes.infoText}
         handleArrowClick={handleArrowClick}
         history={history}
         focusIndex={focusedSuggestion}
@@ -150,7 +151,7 @@ const SuggestionBox = (props) => {
                 text={item.suggestion}
                 handleArrowClick={handleArrowClick}
                 handleItemClick={() => handleSubmit(item.suggestion)}
-                divider={i !== suggestionList.length - 1}
+                divider
                 subtitle={intl.formatMessage({ id: 'search.suggestions.results' }, { count: item.count })}
                 isMobile
                 query={suggestionQuery}

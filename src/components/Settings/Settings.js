@@ -4,7 +4,6 @@ import { FormattedMessage, intlShape } from 'react-intl';
 import {
   Typography,
   Divider,
-  Button,
   List,
   ListItem,
   FormGroup,
@@ -14,9 +13,7 @@ import {
   Radio,
   FormLabel,
   FormControl,
-  ButtonBase,
 } from '@material-ui/core';
-import isClient, { AddEventListener } from '../../utils';
 import SettingsUtility from '../../utils/settings';
 import Container from '../Container';
 import {
@@ -31,17 +28,15 @@ import {
 } from '../SMIcon';
 import SettingsTitle from './SettingsTitle';
 import TitleBar from '../TitleBar';
+import SMButton from '../ServiceMapButton';
 
 class Settings extends React.Component {
-  events = [];
-
   buttonID = 'SettingsButton';
 
   constructor(props) {
     super(props);
     this.state = {
       alert: false,
-      containerStyles: null,
       currentSettings: {},
       previousSettings: null,
       saved: false,
@@ -78,16 +73,12 @@ class Settings extends React.Component {
     };
 
     this.setState({
-      containerStyles: this.calculateContainerStyles(),
       currentSettings: newCurrent,
       previousSettings: newCurrent,
     });
-
-    this.addListeners();
   }
 
   componentWillUnmount() {
-    this.removeListeners();
   }
 
   /**
@@ -154,54 +145,6 @@ class Settings extends React.Component {
     this.setState({
       alert,
     });
-  }
-
-  // Add event listeners
-  addListeners() {
-    if (!isClient()) {
-      return;
-    }
-
-    // Add resize event listener to update container styles
-    this.events.push(AddEventListener(window, 'resize', () => this.addContainerStyles()));
-  }
-
-  // Remove all event listeners
-  removeListeners() {
-    if (!this.events || !this.events.length) {
-      return;
-    }
-
-    this.events.forEach(unlisten => unlisten());
-  }
-
-  addContainerStyles() {
-    this.setState({
-      containerStyles: this.calculateContainerStyles(),
-    });
-  }
-
-  /**
-   * Get style object for container
-   */
-  // eslint-disable-next-line class-methods-use-this
-  calculateContainerStyles() {
-    const { isMobile } = this.props;
-    const styles = {};
-
-    if (isClient()) {
-      const sidebar = document.getElementsByClassName('SidebarWrapper')[0];
-      if (!isMobile) {
-        const rect = sidebar.getBoundingClientRect();
-        styles.position = 'absolute';
-        styles.top = 0; // rect.top;
-        styles.left = rect.left;
-        styles.width = rect.width;
-        styles.height = rect.height;
-        styles.overflow = 'auto';
-      }
-    }
-    return styles;
   }
 
   /**
@@ -634,18 +577,17 @@ class Settings extends React.Component {
           <FormattedMessage id="general.save.changes" />
         </Typography>
         <Container className={`${classes.confirmationButtonContainer} ${classes.right}`}>
-          <ButtonBase
-            className={`${classes.button} ${classes.confirmationButton} ${classes.primary} ${classes.flexBase}`}
+          <SMButton
+            small
+            messageID="general.save"
             onClick={() => this.saveSettings()}
-          >
-            <Typography color="inherit" variant="caption"><FormattedMessage id="general.yes" /></Typography>
-          </ButtonBase>
-          <ButtonBase
-            className={`${classes.button} ${classes.confirmationButton} ${classes.secondary} ${classes.flexBase}`}
+            color="primary"
+          />
+          <SMButton
+            small
+            messageID="general.cancel"
             onClick={() => this.resetCurrentSelections()}
-          >
-            <Typography color="inherit" variant="caption"><FormattedMessage id="general.no" /></Typography>
-          </ButtonBase>
+          />
         </Container>
       </Container>
     );
@@ -659,16 +601,20 @@ class Settings extends React.Component {
     return (
       <Container aria-hidden="true" className={containerClasses} paper>
         <Typography color="inherit" className={typographyClasses}><FormattedMessage id="general.save.changes.done" /></Typography>
-        <Button onClick={() => this.setAlert(false)} className={classes.right} color="inherit" variant="text">
-          <FormattedMessage id="general.close" />
-        </Button>
+        <SMButton
+          small
+          messageID="general.close"
+          onClick={() => this.setAlert(false)}
+          className={classes.right}
+          color="secondary"
+        />
       </Container>
     );
   }
 
   render() {
     const { classes, settings } = this.props;
-    const { alert, containerStyles, saved } = this.state;
+    const { alert, saved } = this.state;
     const settingsPage = settings.toggled;
     const settingsHaveChanged = this.settingsHaveChanged();
     const settingsHaveBeenSaved = !settingsHaveChanged && saved;
@@ -697,7 +643,7 @@ class Settings extends React.Component {
     }
 
     return (
-      <div id="SettingsContainer" className={`${classes.container}`} style={containerStyles}>
+      <div id="SettingsContainer" className={`${classes.container}`}>
         <TitleBar className="SettingsTitle" titleComponent="h2" title={<FormattedMessage id={`settings.${settingsPage}.long`} />} />
         <>
           {showAlert && (
@@ -710,24 +656,18 @@ class Settings extends React.Component {
 
           {pageContent}
           <Container className={`${classes.confirmationButtonContainer}`}>
-            <ButtonBase
+            <SMButton
+              small
               disabled={!settingsHaveChanged}
-              className={`${classes.button} ${classes.confirmationButton} ${settingsHaveChanged ? classes.primary : classes.disabled} ${classes.flexBase}`}
               onClick={() => this.saveSettings()}
-            >
-              <Typography color="inherit" variant="caption">
-                <FormattedMessage id="general.save.changes" />
-              </Typography>
-            </ButtonBase>
-            <ButtonBase
-              className={`${classes.button} ${classes.confirmationButton} ${classes.secondary} ${classes.flexBase}`}
+              messageID="general.save.changes"
+              color="primary"
+            />
+            <SMButton
+              small
               onClick={() => this.toggleSettingsContainer()}
-            >
-              {/* <FormattedMessage id="general.cancel" /> */}
-              <Typography color="inherit" variant="caption">
-                <FormattedMessage id="general.close" />
-              </Typography>
-            </ButtonBase>
+              messageID="general.close"
+            />
           </Container>
 
           <Typography aria-live="polite" variant="srOnly">

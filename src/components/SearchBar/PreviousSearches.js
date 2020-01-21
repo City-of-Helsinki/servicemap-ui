@@ -9,7 +9,7 @@ import styles from './styles';
 import SuggestionItem from '../ListItems/SuggestionItem';
 
 const PreviousSearches = ({
-  focusIndex, listRef, onClick, history, handleArrowClick,
+  className, focusIndex, listRef, onClick, history, handleArrowClick,
 }) => {
   const renderList = () => {
     if (history) {
@@ -36,7 +36,7 @@ const PreviousSearches = ({
       );
     }
     return (
-      <Typography aria-live="polite">
+      <Typography align="left" aria-live="polite" className={className}>
         <FormattedMessage id="search.suggestions.noHistory" />
       </Typography>
     );

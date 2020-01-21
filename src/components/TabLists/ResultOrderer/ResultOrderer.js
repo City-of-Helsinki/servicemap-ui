@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, intlShape } from 'react-intl';
 import {
-  FormControl, InputLabel, Select,
+  FormControl, Select, Typography,
 } from '@material-ui/core';
 
 const allowedDirections = [
@@ -44,12 +44,9 @@ class ResultOrderer extends React.Component {
     return (
       <form className={classes.root} autoComplete="off">
         <FormControl className={classes.formControl}>
-          <InputLabel
-            className={classes.inputLabel}
-            htmlFor="result-sorter"
-          >
+          <Typography color="inherit" variant="caption" className={classes.inputLabel}>
             <FormattedMessage id="sorting.label" />
-          </InputLabel>
+          </Typography>
           <Select
             disabled={disabled}
             className={classes.select}

@@ -13,17 +13,16 @@ const PaperButton = ({
       <Button
         classes={{
           label: classes.iconButtonLabel,
-          disabled: classes.iconButtonDisabled,
         }}
         className={classes.iconButton}
         onClick={onClick}
         role={role}
         disabled={disabled}
       >
-        <div className={classes.iconContainer}>
+        <div className={`${classes.iconContainer} ${disabled ? classes.iconDisabled : ''}`}>
           {clonedIcon}
         </div>
-        <Typography variant="body2" className={classes.text}>
+        <Typography variant="body2" className={`${classes.text} ${disabled ? classes.textDisabled : ''}`}>
           {text}
         </Typography>
       </Button>

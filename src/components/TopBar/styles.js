@@ -2,7 +2,7 @@ import config from '../../../config';
 
 const { topBarHeight, topBarHeightMobile } = config;
 
-const styles = () => ({
+const styles = theme => ({
   aligner: {
     height: topBarHeight,
   },
@@ -10,34 +10,28 @@ const styles = () => ({
     height: topBarHeightMobile,
   },
   appBar: {
-    zIndex: 100,
+    boxShadow: 'none',
+    zIndex: theme.zIndex.appBar,
   },
   buttonLabel: {
     display: 'flex',
     flexDirection: 'column',
   },
-  // feedbackLink: {
-  //   display: 'inline-block',
-  // },
-  // feedbackText: {
-  //   margin: 0,
-  //   color: 'white',
-  //   textDecorationColor: 'white',
-  // },
   logo: {
     height: 29,
   },
   toolbarBlack: {
-    minHeight: 28,
-    height: 28,
+    minHeight: 30,
+    height: 30,
     backgroundColor: '#141823',
     padding: 0,
-    paddingLeft: 19,
+    paddingLeft: 6,
+    paddingRight: 6,
   },
   toolbarBlackContainer: {
     justifyContent: 'space-around',
     display: 'flex',
-    width: 300,
+    width: 450,
     color: '#fff',
   },
   bold: {
@@ -71,10 +65,9 @@ const styles = () => ({
   },
   toolbarWhite: {
     paddingLeft: 28,
-    width: '100%',
     height: 70,
     backgroundColor: '#fff',
-    zIndex: 100,
+    zIndex: theme.zIndex.infront,
   },
   toolbarWhiteMobile: {
     paddingLeft: 28,
@@ -82,7 +75,7 @@ const styles = () => ({
     height: 60,
     backgroundColor: '#fff',
     paddingRight: 0,
-    zIndex: 100,
+    zIndex: theme.zIndex.infront,
   },
   toolbarButtonPressed: {
     width: 66,

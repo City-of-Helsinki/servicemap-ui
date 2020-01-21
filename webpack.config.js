@@ -47,7 +47,7 @@ const js = {
 };
 
 const fonts = (isClient = true) => ({
-    test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+    test: /\.(woff(2)?|ttf|eot|svg|png)(\?v=\d+\.\d+\.\d+)?$/,
     use: [{
         loader: 'file-loader',
         options: {
@@ -57,6 +57,19 @@ const fonts = (isClient = true) => ({
           publicPath: '/assets'
         },
     }]
+});
+
+const icons = (isClient = true) => ({
+  test: /\.(ico)(\?v=\d+\.\d+\.\d+)?$/,
+  use: [{
+      loader: 'file-loader',
+      options: {
+        emitFile: isClient,
+        name: `[name].[hash:8].[ext]`,
+        outputPath: `/assets/icons`,
+        publicPath: '/assets/icons'
+      },
+  }]
 });
 
 const css = {
@@ -123,6 +136,7 @@ const clientConfig = {
           js,
           fonts(),
           css,
+          icons(),
         ],
       }
     ],

@@ -15,7 +15,7 @@ const mobileBreakpoint = config.mobileUiBreakpoint;
 const { smallScreenBreakpoint } = config;
 
 const createContentStyles = (
-  isMobile, isSmallScreen, landscape, mobileMapOnly, fullMobileMap, settingsOpen,
+  isMobile, isSmallScreen, landscape, mobileMapOnly, fullMobileMap, settingsOpen, currentPage,
 ) => {
   let width = 450;
   if (isMobile) {
@@ -32,7 +32,7 @@ const createContentStyles = (
       width: '100%',
       display: 'flex',
       flexWrap: 'nowrap',
-      height: isMobile ? '100%' : `calc(100vh - ${topBarHeight})`,
+      height: `calc(100vh - ${topBarHeight})`,
       flex: '1 1 auto',
     },
     map: {
@@ -44,6 +44,10 @@ const createContentStyles = (
       visibility: isMobile && (!mobileMapOnly || settingsOpen) ? 'hidden' : '',
       height: isMobile ? `calc(100% - ${topBarHeight})` : '100%',
       width: '100%',
+      zIndex: 900,
+    },
+    mapWrapper: {
+      width: '100%',
     },
     sidebar: {
       height: '100%',
@@ -54,15 +58,17 @@ const createContentStyles = (
       margin: 0,
       overflow: !isMobile ? 'auto' : '',
       visibility: mobileMapOnly && !settingsOpen ? 'hidden' : null,
+      flex: '0 1 auto',
     },
   };
 
   if (isMobile) {
-    styles.sidebar.flex = '1 1 auto';
     if (fullMobileMap && !landscape) {
       // TODO change 56px to topBarHeight when we get new height for topbar/titlebar
       styles.map.height = 'calc(100% - 56px)';
     }
+  } else if (currentPage === 'home') {
+    styles.sidebar.borderRight = '8px solid transparent';
   }
 
   return styles;
@@ -70,7 +76,7 @@ const createContentStyles = (
 
 const DefaultLayout = (props) => {
   const {
-    i18n, intl, location, settingsToggled, toggleSettings,
+    currentPage, i18n, intl, location, settingsToggled, toggleSettings,
   } = props;
   const isMobile = useMediaQuery(`(max-width:${mobileBreakpoint}px)`);
   const isSmallScreen = useMediaQuery(`(max-width:${smallScreenBreakpoint}px)`);
@@ -80,7 +86,7 @@ const DefaultLayout = (props) => {
   const portrait = useMediaQuery('(max-device-aspect-ratio: 1/1)');
 
   const styles = createContentStyles(
-    isMobile, isSmallScreen, landscape, mobileMapOnly, fullMobileMap, settingsToggled,
+    isMobile, isSmallScreen, landscape, mobileMapOnly, fullMobileMap, settingsToggled, currentPage,
   );
 
   const setSettingsPage = (type) => {
@@ -111,7 +117,7 @@ const DefaultLayout = (props) => {
           )}
         </main>
         <div aria-label={intl.formatMessage({ id: 'map.ariaLabel' })} tabIndex="-1" style={styles.map}>
-          <div aria-hidden="true" style={styles.map}>
+          <div aria-hidden="true" style={styles.mapWrapper}>
             <MapView isMobile={!!isMobile} />
           </div>
         </div>
@@ -130,6 +136,7 @@ const DefaultLayout = (props) => {
 
 // Typechecking
 DefaultLayout.propTypes = {
+  currentPage: PropTypes.string,
   i18n: PropTypes.instanceOf(I18n),
   intl: intlShape.isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -138,6 +145,7 @@ DefaultLayout.propTypes = {
 };
 
 DefaultLayout.defaultProps = {
+  currentPage: null,
   i18n: null,
   settingsToggled: null,
 };

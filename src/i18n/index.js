@@ -4,15 +4,13 @@ import localeSv from 'react-intl/locale-data/sv';
 import { addLocaleData } from 'react-intl';
 import messagesFi from './translations/fi';
 import messagesEn from './translations/en';
-// TODO: Add swedish language back once translations are done
-// import messagesSv from './translations/sv';
+import messagesSv from './translations/sv';
 
 // Translation messages for React Intl
 export const messages = {
   fi: { text: 'Suomeksi', messages: messagesFi },
   en: { text: 'In English', messages: messagesEn },
-  // TODO: Add swedish language back once translations are done
-  // sv: { text: 'På svenska', messages: messagesSv },
+  sv: { text: 'På svenska', messages: messagesSv },
 };
 
 // Mutable class keys

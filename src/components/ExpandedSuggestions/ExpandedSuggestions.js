@@ -9,20 +9,26 @@ import { FormattedMessage, intlShape } from 'react-intl';
 import { getPreviousSearches } from '../SearchBar/previousSearchData';
 import createSuggestions from '../SearchBar/createSuggestions';
 import config from '../../../config';
-import ServiceMapButton from '../ServiceMapButton';
+import SMButton from '../ServiceMapButton';
 import SuggestionItem from '../ListItems/SuggestionItem';
+import { parseSearchParams } from '../../utils';
 
 
 const ExpandedSuggestions = (props) => {
   const {
     searchQuery,
-    handleSubmit,
     classes,
     focusedSuggestion,
     setSearch,
     intl,
-    closeExpandedSearch,
+    location,
+    navigator,
   } = props;
+  const expandSearchVisible = () => {
+    const searchParams = parseSearchParams(location.search);
+
+    return !!(searchParams.expand && searchParams.expand === '1');
+  };
 
   const [searchQueries, setSearchQueries] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -30,19 +36,22 @@ const ExpandedSuggestions = (props) => {
   const [history] = useState(getPreviousSearches());
   // Query word on which suggestion list is based
   const [suggestionQuery, setSuggestionQuery] = useState(null);
+  const [visible, setVisible] = useState(expandSearchVisible());
   const isMobile = useMediaQuery(`(max-width:${config.mobileUiBreakpoint}px)`);
 
   const listRef = useRef(null);
   const fetchController = useRef(null);
+  // const titleRef = useRef(null);
 
-  /* TODO: Utilize city information with search queries
-  const cities = [
-    ...settings.helsinki ? ['Helsinki'] : [],
-    ...settings.espoo ? ['Espoo'] : [],
-    ...settings.vantaa ? ['Vantaa'] : [],
-    ...settings.kauniainen ? ['Kauniainen'] : [],
-  ];
-  */
+  useEffect(() => {
+    if (!visible) {
+      return;
+    }
+    const title = document.getElementsByClassName('ExpandedSuggestions-title')[0];
+    if (title) {
+      title.focus();
+    }
+  }, [visible]);
 
   const resetSuggestions = () => {
     setSearchQueries(null);
@@ -69,6 +78,7 @@ const ExpandedSuggestions = (props) => {
               setSearchQueries(result.suggestions);
               setLoading(false);
             } else {
+              setSearchQueries([]);
               setSuggestionError(true);
               setLoading(false);
             }
@@ -83,11 +93,9 @@ const ExpandedSuggestions = (props) => {
     }
   };
 
-  const handleKeyPress = (e) => {
-    // Close suggestion box if tab is pressed in last list result
-    if (e.key === 'Tab' && !(e.shiftKey && e.key === 'Tab')) {
-      e.preventDefault();
-      closeExpandedSearch();
+  const suggestionClick = (query) => {
+    if (query && query !== '' && navigator) {
+      navigator.push('search', { q: query });
     }
   };
 
@@ -103,6 +111,18 @@ const ExpandedSuggestions = (props) => {
     }
   };
 
+  const setVisibility = (visibility = null) => {
+    const searchParams = parseSearchParams(location.search);
+    const newVisibility = visibility !== null ? visibility : !visible;
+
+    setVisible(newVisibility);
+
+    navigator.replace('search', {
+      ...searchParams,
+      expand: newVisibility ? 1 : 0,
+    });
+  };
+
   const renderNoResults = () => (
     <>
       <Typography>
@@ -114,14 +134,14 @@ const ExpandedSuggestions = (props) => {
   const renderLoading = () => (
     <>
       <div className={classes.expandSearchTop}>
-        <Typography tabIndex="-1" component="h3" className={`${classes.expandTitle} suggestionsTitle`} variant="subtitle1">
+        <Typography tabIndex="-1" component="h3" className={`${classes.expandTitle} ExpandedSuggestions-title`} variant="subtitle1">
           <FormattedMessage id="search.suggestions.expand" />
         </Typography>
         <IconButton
           role="link"
           aria-label={intl.formatMessage({ id: 'search.closeExpand' })}
           className={classes.backIcon}
-          onClick={() => closeExpandedSearch()}
+          onClick={() => setVisibility(false)}
         >
           <ArrowBack />
         </IconButton>
@@ -143,14 +163,14 @@ const ExpandedSuggestions = (props) => {
       return (
         <>
           <div className={classes.expandSearchTop}>
-            <Typography tabIndex="-1" component="h3" className={`${classes.expandTitle} suggestionsTitle`} variant="subtitle1">
+            <Typography tabIndex="-1" component="h3" className={`${classes.expandTitle} ExpandedSuggestions-title`} variant="subtitle1">
               <FormattedMessage id="search.suggestions.expand" />
             </Typography>
             <IconButton
               role="link"
               aria-label={intl.formatMessage({ id: 'search.closeExpand' })}
               className={classes.backIcon}
-              onClick={() => closeExpandedSearch()}
+              onClick={() => setVisibility(false)}
             >
               <ArrowBack />
             </IconButton>
@@ -165,24 +185,24 @@ const ExpandedSuggestions = (props) => {
                 role="link"
                 text={item.suggestion}
                 handleArrowClick={handleArrowClick}
-                handleItemClick={() => handleSubmit(item.suggestion)}
-                divider={i !== suggestionList.length - 1}
+                handleItemClick={() => {
+                  setVisible(false);
+                  suggestionClick(item.suggestion);
+                }}
+                divider
                 subtitle={intl.formatMessage({ id: 'search.suggestions.results' }, { count: item.count })}
                 isMobile
                 query={suggestionQuery}
               />
             ))}
           </List>
-          <ServiceMapButton
+          <SMButton
             role="link"
             className={classes.closeButton}
-            onKeyDown={e => handleKeyPress(e)}
-            onClick={() => closeExpandedSearch()}
-          >
-            <Typography variant="button">
-              <FormattedMessage id="search.closeExpand" />
-            </Typography>
-          </ServiceMapButton>
+            // onKeyDown={e => handleKeyPress(e)}
+            onClick={() => setVisibility(false)}
+            messageID="search.closeExpand"
+          />
         </>
       );
     } return null;
@@ -200,11 +220,52 @@ const ExpandedSuggestions = (props) => {
       setSuggestionQuery(searchQuery);
       generateSuggestions(searchQuery);
     }
+    return () => {
+      // On unmount abort fetches to avoid memory leak
+      if (fetchController && fetchController.current) {
+        fetchController.current.abort();
+      }
+    };
   }, [searchQuery]);
 
   useEffect(() => { // Change text of the searchbar when suggestion with keyboard focus changes
     setSearchBarText();
   }, [focusedSuggestion]);
+
+
+  useEffect(() => {
+    // Disable page scroll when suggestion box is open
+    const sidebar = document.getElementsByClassName('SidebarWrapper')[0];
+    const app = document.getElementsByClassName('App')[0];
+    if (visible) {
+      sidebar.style.overflow = isMobile ? 'hidden' : 'hidden';
+      if (app) {
+        app.style.height = '100%';
+      }
+    }
+
+    return () => {
+      sidebar.style.overflow = isMobile ? '' : 'auto';
+      if (app) {
+        app.style.height = null;
+      }
+    };
+  }, [visible]);
+
+  if (!visible) {
+    if (searchQueries && searchQueries.length < 1) {
+      return null;
+    }
+
+    return (
+      <SMButton
+        small
+        role="link"
+        onClick={() => { setVisibility(true); }}
+        messageID="search.expand"
+      />
+    );
+  }
 
   /**
   * Render component
@@ -239,18 +300,19 @@ const ExpandedSuggestions = (props) => {
 
 ExpandedSuggestions.propTypes = {
   searchQuery: PropTypes.string,
-  closeExpandedSearch: PropTypes.func.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   focusedSuggestion: PropTypes.number,
   setSearch: PropTypes.func,
   intl: intlShape.isRequired,
+  location: PropTypes.objectOf(PropTypes.any).isRequired,
+  navigator: PropTypes.objectOf(PropTypes.any),
 };
 
 ExpandedSuggestions.defaultProps = {
   searchQuery: null,
   focusedSuggestion: null,
   setSearch: null,
+  navigator: null,
 };
 
 export default ExpandedSuggestions;

@@ -1,7 +1,7 @@
 export default theme => ({
   listItem: {
     minHeight: '3.5rem',
-    padding: 0,
+    padding: theme.spacing.unit,
   },
   textContainer: {
     padding: 0,
@@ -15,9 +15,11 @@ export default theme => ({
   listIcon: {
     width: '1.5rem',
     height: '1.5rem',
-    margin: '1rem',
+    margin: theme.spacing.unit,
+    marginRight: theme.spacing.unitDouble,
   },
   divider: {
     marginLeft: theme.spacing.unit * 9,
+    marginRight: -theme.spacing.unitDouble,
   },
 });

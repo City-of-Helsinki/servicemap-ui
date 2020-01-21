@@ -53,7 +53,7 @@ const mapStateToProps = (state) => {
   return {
     unit: selectedUnit.unit.data,
     service: service.current,
-    event: event.selected,
+    event,
     getLocaleText,
   };
 };

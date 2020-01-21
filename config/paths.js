@@ -5,7 +5,10 @@ const paths = {
     regex: /\/[a-zA-Z]{2}\/$/
   },
   search: {
-    generate: data => `/search${data.query ? `?q=${data.query}` : ''}${data.nodes ? `?nodes=${data.nodes.join()}`: ''}`,
+    generate: data => {
+      const params = Object.keys(data).map(key => (`${key}=${data[key]}`));
+      return `/search${params.length ? `?${params.join('&')}` : ''}`;
+    },
     regex: /\/[a-zA-Z]{2}\/search/
   },
   unit: {

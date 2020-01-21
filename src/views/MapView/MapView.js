@@ -19,6 +19,7 @@ import UserMarker from './components/UserMarker';
 import fetchAddress from './utils/fetchAddress';
 import { isEmbed } from '../../utils/path';
 import AddressMarker from './components/AddressMarker';
+import BackButton from '../../components/BackButton';
 
 
 const MapView = (props) => {
@@ -41,6 +42,7 @@ const MapView = (props) => {
     match,
     findUserLocation,
     userLocation,
+    locale,
   } = props;
 
 
@@ -79,7 +81,7 @@ const MapView = (props) => {
     if (isMobile) {
       return (
         <div className={classes.topArea}>
-          <SearchBar hideBackButton placeholder={intl.formatMessage({ id: 'search.placeholder' })} />
+          <SearchBar background="none" placeholder={intl.formatMessage({ id: 'search.placeholder' })} />
         </div>
       );
     } return null;
@@ -105,7 +107,7 @@ const MapView = (props) => {
       map.defaultZoom = mapObject.options.zoom;
       setPrevMap(map);
     }
-    const newMap = CreateMap(settings.mapType);
+    const newMap = CreateMap(settings.mapType, locale);
     setMapObject(newMap);
   };
 
@@ -188,7 +190,7 @@ const MapView = (props) => {
         {renderTopBar()}
         <Map
           className={classes.map}
-          key={mapObject.crs.code}
+          key={mapObject.options.name}
           ref={mapRef}
           keyboard={false}
           zoomControl={false}
@@ -206,13 +208,18 @@ const MapView = (props) => {
             url={mapObject.options.url}
             attribution='&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors'
           />
-          <UnitMarkers
-            data={getMapUnits()}
-            Marker={Marker}
-            Polyline={Polyline}
-            Tooltip={Tooltip}
-            embeded={embeded}
-          />
+          {
+            !highlightedDistrict
+            && (
+              <UnitMarkers
+                data={getMapUnits()}
+                Marker={Marker}
+                Polyline={Polyline}
+                Tooltip={Tooltip}
+                embeded={embeded}
+              />
+            )
+          }
           <Districts
             Polygon={Polygon}
             Marker={Marker}
@@ -269,7 +276,6 @@ const MapView = (props) => {
           <ZoomControl position="bottomright" aria-hidden="true" />
           <LocationButton
             disabled={!userLocation}
-            classes={classes}
             position="bottomright"
             handleClick={userLocation ? focusOnUser : null}
           />
@@ -302,6 +308,7 @@ MapView.propTypes = {
   unitList: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
   unitsLoading: PropTypes.bool,
   userLocation: PropTypes.objectOf(PropTypes.any),
+  locale: PropTypes.string.isRequired,
 };
 
 MapView.defaultProps = {

@@ -13,12 +13,12 @@ export default theme => ({
     paddingRight: theme.spacing.unitDouble,
     justifyContent: 'left',
     textAlign: 'left',
-    border: 'rgba(25,100,230,0.50) solid 0.5px',
+    border: `${theme.palette.detail.alpha} solid 0.5px`,
   },
   iconContainer: {
     display: 'flex',
     flexShrink: 0,
-    backgroundColor: '#1964E6',
+    backgroundColor: theme.palette.primary.main,
     justifyContent: 'center',
     width: 40,
     height: 40,
@@ -26,16 +26,19 @@ export default theme => ({
     margin: theme.spacing.unit,
     marginRight: 11,
     marginLeft: 12,
-    boxShadow: '0 4px 8px 0 rgba(59,72,238,0.3)',
+    boxShadow: `0 4px 8px 0 ${theme.palette.detail.alpha}`,
   },
   icon: {
     color: 'inherit',
   },
-  iconButtonDisabled: {
-    color: 'inherit',
+  iconDisabled: {
+    backgroundColor: 'rgba(0, 0, 0, 0.26)',
   },
   text: {
     textTransform: 'none',
     lineHeight: '18px',
+  },
+  textDisabled: {
+    color: 'rgba(0, 0, 0, 0.50)',
   },
 });

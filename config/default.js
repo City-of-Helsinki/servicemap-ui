@@ -23,8 +23,8 @@ export default {
   "mobileUiBreakpoint": 699,
   "productionPrefix": process.env.PRODUCTION_PREFIX,
   "smallScreenBreakpoint": 899,
-  "topBarHeight": 98,
-  "topBarHeightMobile": 88,
+  "topBarHeight": 100,
+  "topBarHeightMobile": 90,
   // locales
   "defaultLocale": 'fi',
   "streetAddressLanguages": ["fi", "sv"],

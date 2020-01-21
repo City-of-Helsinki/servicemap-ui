@@ -4,7 +4,7 @@ import { intlShape } from 'react-intl';
 import {
   Typography, ButtonBase, Drawer, ClickAwayListener,
 } from '@material-ui/core';
-import { GpsFixed, FormatListBulleted, Accessibility } from '@material-ui/icons';
+import { getIcon } from '../SMIcon';
 
 const DrawerMenu = (props) => {
   const {
@@ -22,14 +22,14 @@ const DrawerMenu = (props) => {
   } = props;
 
   const menuContent = [
-    {
+    { // Nearby services button
       name: intl.formatMessage({ id: 'home.buttons.closeByServices' }),
       active: currentPage === 'address' && !settingsOpen,
       disabled: !userLocation.coordinates,
       subText: userLocation.allowed
         ? intl.formatMessage({ id: 'location.notFound' })
         : intl.formatMessage({ id: 'location.notAllowed' }),
-      icon: <GpsFixed />,
+      icon: getIcon('location'),
       clickEvent: () => {
         if (!userLocation.coordinates) {
           findUserLocation();
@@ -39,19 +39,19 @@ const DrawerMenu = (props) => {
         }
       },
     },
-    {
+    { // Service list button
       name: intl.formatMessage({ id: 'home.buttons.services' }),
       active: currentPage === 'serviceTree' && !settingsOpen,
-      icon: <FormatListBulleted />,
+      icon: getIcon('serviceList'),
       clickEvent: () => {
         handleNavigation('services');
         toggleDrawerMenu();
       },
     },
-    {
+    { // Settings button
       name: intl.formatMessage({ id: 'home.buttons.settings' }),
       active: settingsOpen,
-      icon: <Accessibility />,
+      icon: getIcon('accessibility'),
       clickEvent: () => {
         if (settingsOpen !== 'all') {
           toggleSettings('all');
@@ -59,13 +59,17 @@ const DrawerMenu = (props) => {
         toggleDrawerMenu();
       },
     },
-    // {
-    //   name: 'Vinkkejä Palvelukartan käyttöön',
-    //   icon: <ThumbUp />,
-    //   clickEvent: () => {
-    //     this.setState({ drawerOpen: false });
-    //   },
-    // },
+    { // Instructions button
+      name: intl.formatMessage({ id: 'home.buttons.instructions' }),
+      disabled: true,
+      icon: getIcon('help'),
+      clickEvent: () => {},
+    },
+    { // Feedback button
+      name: intl.formatMessage({ id: 'home.send.feedback' }),
+      icon: getIcon('feedback'),
+      clickEvent: () => window.open('https://forms.gle/roe9XNrZGQWBhMBJ7'),
+    },
   ];
 
   return (

@@ -29,7 +29,7 @@ const styles = theme => ({
     fontFamily: 'hsl-piktoframe',
     position: 'absolute',
     lineHeight: 0,
-    zIndex: -1,
+    zIndex: theme.zIndex.behind,
     color: 'white',
     fontSize: transitIconSize,
   },
@@ -105,12 +105,12 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#2242C7',
+    backgroundColor: theme.palette.primary.main,
     width: 40,
     height: 40,
     borderRadius: '50%',
     '&:hover': {
-      backgroundColor: '#1d39ad',
+      backgroundColor: theme.palette.secondary.hover,
     },
   },
   locationDisabled: {
@@ -126,11 +126,16 @@ const styles = theme => ({
   showLocationIcon: {
     color: '#fff',
   },
+  colorInherit: {
+    color: 'inherit',
+  },
   topArea: {
-    zIndex: 99999999,
+    background: theme.palette.background.main,
+    color: theme.palette.primary.contrastText,
     position: 'fixed',
-    top: config.topBarHeight,
+    top: config.topBarHeightMobile,
     width: '100%',
+    zIndex: theme.zIndex.infront,
   },
   unitTooltip: {
     padding: theme.spacing.unitDouble,

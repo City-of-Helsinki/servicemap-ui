@@ -3,7 +3,13 @@ import config from '../../../config';
 export default theme => ({
   container: {
     overflow: 'auto',
-    height: '100%',
+    position: 'absolute',
+    left: 0,
+    bottom: 0,
+    top: 0,
+    right: 0,
+    minHeight: `calc(100vh - ${config.topBarHeight}px)`,
+    zIndex: theme.zIndex.infront,
   },
   containerMobile: {
     top: config.topBarHeightMobile,
@@ -12,6 +18,7 @@ export default theme => ({
     bottom: 0,
     overflow: 'auto',
     position: 'fixed',
+    zIndex: theme.zIndex.infront,
   },
   infoText: {
     paddingBottom: theme.spacing.unitHalf,
@@ -48,7 +55,7 @@ export default theme => ({
   },
   sticky: {
     position: 'sticky',
-    zIndex: 51,
+    zIndex: theme.zIndex.sticky,
   },
   headerText: {
     fontWeight: 'bold',
@@ -73,10 +80,6 @@ export default theme => ({
     paddingTop: 8,
     paddingBottom: 8,
     color: 'rgba(0,0,0,0.54)',
-  },
-  absolute: {
-    position: 'absolute',
-    zIndex: 99999999999,
   },
   closeButton: {
     margin: 0,

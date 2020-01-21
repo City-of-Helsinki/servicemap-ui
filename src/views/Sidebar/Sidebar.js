@@ -95,7 +95,7 @@ const Address = () => (
 
 const ServiceTree = () => (
   <TitleWrapper messageId="general.pageTitles.serviceTree">
-    <PageWrapper headMsgId="" page="serviceTree">
+    <PageWrapper headMsgId="general.pageTitles.serviceTree" page="serviceTree">
       <ServiceTreeView />
     </PageWrapper>
   </TitleWrapper>

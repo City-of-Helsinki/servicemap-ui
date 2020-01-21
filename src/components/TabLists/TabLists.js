@@ -8,7 +8,6 @@ import { intlShape } from 'react-intl';
 import isClient, { parseSearchParams, stringifySearchParams, AddEventListener } from '../../utils';
 import ResultList from '../Lists/ResultList';
 import PaginationComponent from './PaginationComponent';
-import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import ResultOrderer from './ResultOrderer';
 import config from '../../../config';
 
@@ -211,7 +210,7 @@ class TabLists extends React.Component {
     }
     const { mobile } = this.state;
     // Sticky relation is different on mobile (root relation) and desktop (current content relation)
-    const appBarHeight = mobile ? config.topBarHeightMobile : 0;
+    const appBarHeight = mobile ? config.topBarHeightMobile : config.topBarHeight;
 
     // Reset scroll to avoid scrolled sticky  elements having inconsistent offsetTop
     const elem = document.getElementsByClassName(this.sidebarClass)[0];
@@ -326,6 +325,7 @@ class TabLists extends React.Component {
                       }}
                       className={classes.tab}
                       label={label}
+                      onClick={item.onClick || null}
                     />
                   );
                 }
@@ -339,6 +339,7 @@ class TabLists extends React.Component {
                       selected: classes.selected,
                     }}
                     label={`${item.title}`}
+                    onClick={item.onClick || null}
                   />
                 );
               })
@@ -361,17 +362,9 @@ class TabLists extends React.Component {
 
     return (
       <>
-        <MobileComponent>
-          {
-            this.renderHeader()
-          }
-        </MobileComponent>
-
-        <DesktopComponent>
-          {
-            this.renderHeader()
-          }
-        </DesktopComponent>
+        {
+          this.renderHeader()
+        }
 
         {
           // Create tab views from data
@@ -424,6 +417,9 @@ class TabLists extends React.Component {
                         resultCount={item.data.length}
                         titleComponent="h3"
                       />
+                      {
+                        item.beforePagination || null
+                      }
                       <PaginationComponent
                         current={adjustedCurrentPage}
                         pageCount={pageCount}
@@ -445,6 +441,7 @@ TabLists.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   data: PropTypes.arrayOf(PropTypes.shape({
     ariaLabel: PropTypes.string,
+    beforePagination: PropTypes.node,
     component: PropTypes.node,
     title: PropTypes.string,
     data: PropTypes.array,
@@ -457,6 +454,7 @@ TabLists.propTypes = {
 };
 
 TabLists.defaultProps = {
+  beforePagination: null,
   headerComponents: null,
   navigator: null,
 };

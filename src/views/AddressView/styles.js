@@ -2,13 +2,17 @@ export default theme => ({
   addressIcon: {
     fontSize: 36,
   },
+  topArea: {
+    backgroundColor: '#fff',
+    position: 'sticky',
+    textAlign: 'left',
+    top: 0,
+    zIndex: theme.zIndex.infront,
+  },
   mapButton: {
-    float: 'right',
-    display: 'flex',
-    marginRight: 8,
-    padding: '0px 20px 0px 12px',
-    height: 48,
-    width: 'auto',
+    marginTop: theme.spacing.unitTriple,
+    marginLeft: theme.spacing.unitTriple,
+    marginBottom: theme.spacing.unit,
   },
   mapIcon: {
     marginLeft: 0,
@@ -21,10 +25,8 @@ export default theme => ({
     marginLeft: 0,
     marginRight: 0,
   },
-  topBar: {
-    backgroundColor: theme.palette.primary.main,
-    position: 'sticky',
-    top: 0,
-    zIndex: 50,
+  districtListcontainer: {
+    paddingLeft: theme.spacing.unitDouble,
+    paddingRight: theme.spacing.unitDouble,
   },
 });

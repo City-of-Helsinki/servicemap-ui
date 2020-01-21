@@ -15,7 +15,7 @@ import HeadModifier from '../../utils/headModifier';
 
 import fetchAddressUnits from './utils/fetchAddressUnits';
 import fetchAddressData from './utils/fetchAddressData';
-import ServiceMapButton from '../../components/ServiceMapButton';
+import SMButton from '../../components/ServiceMapButton';
 import DistritctItem from './components/DistrictItem';
 import TabLists from '../../components/TabLists';
 
@@ -108,8 +108,9 @@ const AddressView = (props) => {
     focusDistrict(map, coordinates);
     // On mobile, show map when a district is clicked on the list
     if (mobile && navigator) {
-      const districtName = district.name || district.unit.name;
-      const title = `${getLocaleText(districtName)} ${intl.formatMessage({ id: `address.list.${district.type}` })}`;
+      // Use this code if we want to show district title on mobile map
+      // const districtName = district.name || district.unit.name;
+      // const title = `${getLocaleText(districtName)} ${intl.formatMessage({ id: `address.list.${district.type}` })}`;
       // mobileShowOnMap(title);
       navigator.openMap();
     }
@@ -128,9 +129,9 @@ const AddressView = (props) => {
   };
 
   const renderTopBar = title => (
-    <div className={`${classes.topBar} sticky`}>
+    <div>
       <DesktopComponent>
-        <SearchBar />
+        <SearchBar margin />
         <TitleBar icon={<AddressIcon className={classes.titleIcon} />} title={error || title} primary />
       </DesktopComponent>
       <MobileComponent>
@@ -155,24 +156,26 @@ const AddressView = (props) => {
         return (
           Object.entries(districts).map(districtList => (
             districtList[1].length > 0 && (
-            <TitledList title={intl.formatMessage({ id: `address.list.${districtList[0]}` })} titleComponent="h4" key={districtList[0]}>
-              {districtList[1].map((district) => {
-                const title = district.name
-                  ? getLocaleText(district.name) : getLocaleText(district.unit.name);
-                const period = district.unit && district.start && district.end
-                  ? `${district.start.substring(0, 4)}-${district.end.substring(0, 4)}` : null;
+              <div key={districtList[0]} className={classes.districtListcontainer}>
+                <TitledList title={intl.formatMessage({ id: `address.list.${districtList[0]}` })} titleComponent="h4">
+                  {districtList[1].map((district) => {
+                    const title = district.name
+                      ? getLocaleText(district.name) : getLocaleText(district.unit.name);
+                    const period = district.unit && district.start && district.end
+                      ? `${district.start.substring(0, 4)}-${district.end.substring(0, 4)}` : null;
 
-                return (
-                  <DistritctItem
-                    key={district.id}
-                    district={district}
-                    title={title}
-                    period={period}
-                    showDistrictOnMap={showDistrictOnMap}
-                  />
-                );
-              })}
-            </TitledList>
+                    return (
+                      <DistritctItem
+                        key={district.id}
+                        district={district}
+                        title={title}
+                        period={period}
+                        showDistrictOnMap={showDistrictOnMap}
+                      />
+                    );
+                  })}
+                </TitledList>
+              </div>
             )
           )));
       } return <Typography><FormattedMessage id="general.noData" /></Typography>;
@@ -207,6 +210,11 @@ const AddressView = (props) => {
       itemsPerPage: 10,
       title: intl.formatMessage({ id: 'address.nearby' }),
       noOrderer: true, // Remove this when we want result orderer for address unit list
+      onClick: () => {
+        if (highlightedDistrict) {
+          setHighlightedDistrict(null);
+        }
+      },
     },
     {
       ariaLabel: intl.formatMessage({ id: 'address.districts' }),
@@ -222,15 +230,31 @@ const AddressView = (props) => {
       <TabLists
         data={tabs}
         headerComponents={(
-          <>
+          <div className={`${classes.topArea} sticky`}>
             {renderTopBar(title)}
-          </>
+            {addressData && units && districts && (
+            <MobileComponent>
+              <SMButton
+                margin
+                messageID="general.showOnMap"
+                icon={<Map />}
+                className={classes.mapButton}
+                onClick={() => {
+                  if (navigator) {
+                    focusUnit(map, addressData.location.coordinates);
+                    navigator.openMap();
+                  }
+                }}
+              />
+            </MobileComponent>
+            )}
+          </div>
         )}
       />
       {addressData && units && districts && (
       <MobileComponent>
-        <ServiceMapButton
-          text={<FormattedMessage id="general.showOnMap" />}
+        <SMButton
+          messageID="general.showOnMap"
           icon={<Map />}
           className={classes.mapButton}
           onClick={() => {

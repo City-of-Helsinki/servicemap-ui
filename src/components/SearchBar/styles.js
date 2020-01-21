@@ -1,15 +1,17 @@
 export default theme => ({
+  background: {
+    background: theme.palette.background.main,
+  },
   root: {
     color: theme.palette.primary.contrastText,
     display: 'flex',
     flexDirection: 'column',
-    background: 'linear-gradient(340.58deg, #0B7BED 0%, #146CE8 67.04%, #1964E6 100%)',
     padding: theme.spacing.unitTriple,
     paddingTop: 0,
-    boxShadow: '0 2px 4px 0 rgba(0,0,0,0.5)',
+    boxShadow: '0 2px 2px 0 rgba(0,0,0,0.5)',
+    flex: '1 0 auto',
   },
-  mobileRoot: {
-    backgroundColor: theme.palette.primary.main,
+  mobileActiveRoot: {
     color: theme.palette.primary.contrastText,
     padding: `${theme.spacing.unit}px ${theme.spacing.unit}px`,
     paddingTop: 0,
@@ -18,11 +20,12 @@ export default theme => ({
     left: 0,
     right: 0,
     position: 'fixed',
-    zIndex: 101,
+    zIndex: theme.zIndex.modal,
     overflow: 'auto',
   },
   wrapper: {
     flex: '0 1 auto',
+    borderRadius: 4,
   },
   mobileWrapper: {
     flex: '0 1 auto',
@@ -44,10 +47,7 @@ export default theme => ({
   containerSticky: {
     position: 'sticky',
     top: 44,
-    zIndex: 1100,
-  },
-  darkBlue: {
-    color: '#2242C7',
+    zIndex: theme.zIndex.infront,
   },
   infoText: {
     justifyContent: 'center',
@@ -56,9 +56,10 @@ export default theme => ({
     padding: `${theme.spacing.unit}px ${theme.spacing.unitHalf}px`,
   },
   infoTextSticky: {
+    backgroundColor: theme.palette.primary.main,
     position: 'sticky',
     top: 0,
-    zIndex: 1100,
+    zIndex: theme.zIndex.sticky,
     paddingTop: `${theme.spacing.unitDouble}px`,
   },
   input: {
@@ -78,6 +79,8 @@ export default theme => ({
   iconButtonSearch: {
     flex: '0 0 auto',
     borderRadius: 0,
+    borderTopRightRadius: 4,
+    borderBottomRightRadius: 4,
     boxShadow: 'none',
     padding: `${theme.spacing.unitHalf}px 0`,
     textTransform: 'none',
@@ -100,14 +103,17 @@ export default theme => ({
   },
   sticky: {
     position: 'sticky',
-    zIndex: 51,
+    zIndex: theme.zIndex.sticky,
+  },
+  bottomMargin: {
+    marginBottom: 4,
   },
   headerText: {
     fontWeight: 'bold',
     margin: `${theme.spacing.unitTriple}px ${theme.spacing.unitHalf}px ${theme.spacing.unit}px ${theme.spacing.unitHalf}px`,
   },
-  primary: {
-    backgroundColor: theme.palette.primary.main,
+  headerBackground: {
+    background: theme.palette.background.front,
   },
   suggestionSubtitle: {
     display: 'flex',
@@ -144,12 +150,8 @@ export default theme => ({
     paddingBottom: 8,
     color: 'rgba(0,0,0,0.54)',
   },
-  absolute: {
-    position: 'absolute',
-    zIndex: 99999999999,
-  },
   mobileBackdrop: {
-    zIndex: 1,
+    zIndex: theme.zIndex.forward,
     opacity: 0.2,
     position: 'absolute',
     top: 'auto',
