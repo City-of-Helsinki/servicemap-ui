@@ -109,8 +109,8 @@ const renderUnitMarkers = (
   if (!data || !marker || !clusterLayer || !classes) {
     return;
   }
-  // Handle unit markers
 
+  // Handle unit markers
   const tooltipOptions = (unit, markerCount) => ({
     className: classes.unitTooltipContainer,
     direction: 'top',
@@ -126,7 +126,7 @@ const renderUnitMarkers = (
     unitListFiltered.forEach((unit) => {
       // Show markers with location
       if (unit && unit.location) {
-        clusterLayer.addLayer(marker(
+        const markerElem = marker(
           [unit.location.coordinates[1], unit.location.coordinates[0]],
           {
             icon: drawMarkerIcon(unit, settings),
@@ -134,14 +134,20 @@ const renderUnitMarkers = (
             alt: unit.street_address && getLocaleText(unit.street_address),
             customUnitData: unit,
           },
-        ).on('click', () => {
-          if (navigator && !embeded) {
-            navigator.push('unit', { id: unit.id });
-          }
-        }).bindTooltip(
+        ).bindTooltip(
           `<p class="${classes.unitTooltipTitle}">${unit.name && getLocaleText(unit.name)}</p>${unit.street_address ? `<p  class="${classes.unitTooltipSubtitle}">${getLocaleText(unit.street_address)}</p>` : ''}`,
           tooltipOptions(unit, unitListFiltered.length),
-        ));
+        );
+
+        if (unitListFiltered.length > 1) {
+          markerElem.on('click', () => {
+            if (navigator && !embeded) {
+              navigator.push('unit', { id: unit.id });
+            }
+          });
+        }
+
+        clusterLayer.addLayer(markerElem);
       }
     });
   }
