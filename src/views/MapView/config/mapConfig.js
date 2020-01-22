@@ -63,8 +63,8 @@ const mapTypes = {
     transitZoom: 17,
     mobileTransitZoom: 16,
   },
-  contrastMap: {
-    name: 'contrastMap',
+  accessible_map: {
+    name: 'accessible_map',
     url: 'https://tiles.hel.ninja/styles/turku-osm-high-contrast-pattern/{z}/{x}/{y}.png',
     minZoom: 9,
     maxZoom: 18,

@@ -151,7 +151,7 @@ export const getIcon = (key, props) => {
       return <AerialMapIcon {...props} />;
     case 'guideMap':
       return <GuideMapIcon {...props} />;
-    case 'contrastMap':
+    case 'accessible_map':
       return <DefaultMapIcon {...props} />;
     case 'location':
       return <LocationIcon {...props} />;
