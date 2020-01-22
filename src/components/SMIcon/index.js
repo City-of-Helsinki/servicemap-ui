@@ -8,6 +8,13 @@ import accessibilityIcon from '../../assets/images/iconAccessibility.svg';
 import serviceListIcon from '../../assets/images/iconServiceList.svg';
 import feedbackIcon from '../../assets/images/iconFeedback.svg';
 import helpIcon from '../../assets/images/iconHelp.svg';
+import facebookIcon from '../../assets/images/facebook_icon.svg';
+import instagramIcon from '../../assets/images/insta_icon.svg';
+import pinterestIcon from '../../assets/images/pinterest_icon.svg';
+import snapchatIcon from '../../assets/images/snap_icon.svg';
+import twitterIcon from '../../assets/images/twitter_icon.svg';
+import youtubeIcon from '../../assets/images/youtube_icon.svg';
+import vimeoIcon from '../../assets/images/vimeo_icon.svg';
 
 /**
  * Senses
@@ -66,49 +73,6 @@ export const KauniainenIcon = ({ ...rest }) => (
 );
 
 /**
- * Map types
- */
-export const DefaultMapIcon = ({ ...rest }) => (
-  <img aria-hidden alt="" {...rest} src={defaulMapIcon} />
-);
-
-export const AerialMapIcon = ({ ...rest }) => (
-  <img aria-hidden alt="" {...rest} src={aerialMapIcon} />
-);
-
-export const GuideMapIcon = ({ ...rest }) => (
-  <img aria-hidden alt="" {...rest} src={guideMapIcon} />
-);
-
-export const ContrastMapIcon = ({ ...rest }) => (
-  <img aria-hidden alt="" {...rest} src={defaulMapIcon} />
-);
-
-/**
- * Front page
- */
-
-export const LocationIcon = ({ ...rest }) => (
-  <img aria-hidden alt="" {...rest} src={locationIcon} />
-);
-
-export const AccessibilityIcon = ({ ...rest }) => (
-  <img aria-hidden alt="" {...rest} src={accessibilityIcon} />
-);
-
-export const ServiceListIcon = ({ ...rest }) => (
-  <img aria-hidden alt="" {...rest} src={serviceListIcon} />
-);
-
-export const FeedbackIcon = ({ ...rest }) => (
-  <img aria-hidden alt="" {...rest} src={feedbackIcon} />
-);
-
-export const HelpIcon = ({ ...rest }) => (
-  <img aria-hidden alt="" {...rest} src={helpIcon} />
-);
-
-/**
  * General
  */
 export const AreaIcon = ({ ...rest }) => (
@@ -145,24 +109,45 @@ export const getIcon = (key, props) => {
       return <WheelchairIcon {...props} />;
     case 'stroller':
       return <StrollerIcon {...props} />;
+
+    // Map types
     case 'servicemap':
-      return <DefaultMapIcon {...props} />;
+      return <img aria-hidden alt="" src={defaulMapIcon} {...props} />;
     case 'orthoImage':
-      return <AerialMapIcon {...props} />;
+      return <img aria-hidden alt="" src={aerialMapIcon} {...props} />;
     case 'guideMap':
-      return <GuideMapIcon {...props} />;
+      return <img aria-hidden alt="" src={guideMapIcon} {...props} />;
     case 'accessible_map':
-      return <DefaultMapIcon {...props} />;
+      return <img aria-hidden alt="" src={defaulMapIcon} {...props} />;
+
+    // Front page buttons
     case 'location':
-      return <LocationIcon {...props} />;
+      return <img aria-hidden alt="" src={locationIcon} {...props} />;
     case 'accessibility':
-      return <AccessibilityIcon {...props} />;
+      return <img aria-hidden alt="" src={accessibilityIcon} {...props} />;
     case 'serviceList':
-      return <ServiceListIcon {...props} />;
+      return <img aria-hidden alt="" src={serviceListIcon} {...props} />;
     case 'feedback':
-      return <FeedbackIcon {...props} />;
+      return <img aria-hidden alt="" src={feedbackIcon} {...props} />;
     case 'help':
-      return <HelpIcon {...props} />;
+      return <img aria-hidden alt="" src={helpIcon} {...props} />;
+
+    // Social media links
+    case 'facebook':
+      return <img aria-hidden alt="" src={facebookIcon} {...props} />;
+    case 'instagram':
+      return <img aria-hidden alt="" src={instagramIcon} {...props} />;
+    case 'pinterest':
+      return <img aria-hidden alt="" src={pinterestIcon} {...props} />;
+    case 'snapchat':
+      return <img aria-hidden alt="" src={snapchatIcon} {...props} />;
+    case 'twitter':
+      return <img aria-hidden alt="" src={twitterIcon} {...props} />;
+    case 'youtube':
+      return <img aria-hidden alt="" src={youtubeIcon} {...props} />;
+    case 'vimeo':
+      return <img aria-hidden alt="" src={vimeoIcon} {...props} />;
+
     default:
       return null;
   }

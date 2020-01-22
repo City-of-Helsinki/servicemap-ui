@@ -2,12 +2,11 @@ export default theme => ({
   container: {
     display: 'flex',
     alignItems: 'center',
-    height: 60,
+    minHeight: 44,
     background: theme.palette.background.main,
     boxShadow: '0 2px 4px 0 rgba(0,0,0,0.5)',
     color: '#fff',
-    paddingLeft: theme.spacing.unit,
-    paddingRight: theme.spacing.unit,
+    padding: theme.spacing.unit,
   },
   textBar: {
     paddingLeft: 36,
@@ -36,6 +35,7 @@ export default theme => ({
     marginLeft: 'auto',
     paddingLeft: theme.spacing.unit,
     paddingTop: 4,
-    marginRight: theme.spacing.unitDouble,
+    marginRight: theme.spacing.unit,
+    minWidth: 50,
   },
 });

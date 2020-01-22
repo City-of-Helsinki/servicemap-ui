@@ -36,13 +36,21 @@ const dataSingle = prefix => ({
     type: `${prefix}_FETCH_HAS_ERRORED`,
     errorMessage,
   }),
-  fetchSuccess: data => ({
+  fetchSuccess: (data, meta) => ({
     type: `${prefix}_FETCH_SUCCESS`,
     data,
+    count: meta && meta.count,
+    next: meta && meta.next,
   }),
-  setNewData: data => ({
+  fetchMoreSuccess: (data, meta) => ({
+    type: `${prefix}_FETCH_MORE_SUCCESS`,
+    data,
+    next: meta && meta.next,
+  }),
+  setNewData: (data, meta) => ({
     type: `${prefix}_SET_DATA`,
     data,
+    count: meta && meta.count,
   }),
 });
 
@@ -53,3 +61,4 @@ export const service = dataSet('SERVICE');
 export const selectedUnit = dataSingle('SELECTED_UNIT');
 export const accessibilitySentences = dataSingle('SELECTED_UNIT_ACCESSIBILITY_SENTENCES');
 export const reservations = dataSingle('SELECTED_UNIT_RESERVATIONS');
+export const events = dataSingle('SELECTED_UNIT_EVENTS');

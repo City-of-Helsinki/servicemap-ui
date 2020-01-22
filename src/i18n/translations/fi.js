@@ -28,12 +28,12 @@ export default {
   'address.list.rescue_sub_district': 'Suojelualalohko',
   'address.list.health_station_district': 'Terveysasema-alue',
   'address.list.maternity_clinic_district': 'Neuvola-alue',
-  'address.list.lower_comprehensive_school_district_fi': 'Suomenkielinen ala-aste',
-  'address.list.lower_comprehensive_school_district_sv': 'Ruotsinkielinen ala-aste',
-  'address.list.upper_comprehensive_school_district_fi': 'Suomenkielinen ylä-aste',
-  'address.list.upper_comprehensive_school_district_sv': 'Ruotsinkielinen ylä-aste',
-  'address.list.preschool_education_fi': 'Suomenkielinen varhaiskasvatus',
-  'address.list.preschool_education_sv': 'Ruotsinkielinen varhaiskasvatus',
+  'address.list.lower_comprehensive_school_district_fi': 'Suomenkielinen ala-astealue',
+  'address.list.lower_comprehensive_school_district_sv': 'Ruotsinkielinen ala-astealue',
+  'address.list.upper_comprehensive_school_district_fi': 'Suomenkielinen ylä-astealue',
+  'address.list.upper_comprehensive_school_district_sv': 'Ruotsinkielinen ylä-astealue',
+  'address.list.preschool_education_fi': 'Suomenkielinen varhaiskasvatusalue',
+  'address.list.preschool_education_sv': 'Ruotsinkielinen varhaiskasvatusalue',
   'address.error': 'Osoitetta ei löytynyt',
   'address.nearby': 'Lähellä',
   'address.districts': 'Alueet',
@@ -188,6 +188,9 @@ export default {
     one {# palvelu}
     other {# palvelua}
   }`,
+  'unit.route': 'Katso reitti tänne',
+  'unit.route.extra': '(Uusi välilehti. Reittiopas ei ole saavutettava palvelu)',
+  'unit.socialMedia.title': 'Toimipiste sosiaalisessa mediassa',
 
   // Search
   'search': 'Hae',

@@ -10,7 +10,8 @@ addons:
     sources:
      - google-chrome
     packages:
-     - google-chrome-stable fluxbox
+     - google-chrome-stable --allow-unauthenticated
+     - fluxbox
 branches:
   only:
    - develop
