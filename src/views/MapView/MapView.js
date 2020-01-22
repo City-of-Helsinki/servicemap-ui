@@ -83,7 +83,7 @@ const MapView = (props) => {
     if (isMobile) {
       return (
         <div className={classes.topArea}>
-          <SearchBar hideBackButton placeholder={intl.formatMessage({ id: 'search.placeholder' })} />
+          <SearchBar background="none" placeholder={intl.formatMessage({ id: 'search.placeholder' })} />
         </div>
       );
     } return null;

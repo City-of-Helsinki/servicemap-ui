@@ -274,6 +274,7 @@ class SearchBar extends React.Component {
 
   renderMobile = () => {
     const {
+      background,
       classes,
       className,
       isSticky,
@@ -282,7 +283,17 @@ class SearchBar extends React.Component {
     } = this.props;
     const { isActive } = this.state;
 
-    const rootClasses = `${isActive ? classes.mobileRoot : classes.root} ${!isActive && typeof isSticky === 'number' ? classes.sticky : ''} ${header ? classes.headerBackground : ''}  ${className}`;
+    const rootClasses = `${
+      isActive ? classes.mobileActiveRoot : classes.root
+    } ${
+      !isActive && typeof isSticky === 'number' ? classes.sticky : ''
+    } ${
+      header ? classes.headerBackground : ''
+    } ${
+      background === 'default' ? classes.background : ''
+    }  ${
+      className
+    }`;
     const wrapperClasses = `${isActive ? classes.mobileWrapper : classes.wrapper}`;
     const stickyStyles = typeof isSticky === 'number' ? { top: isSticky } : null;
 
@@ -312,6 +323,7 @@ class SearchBar extends React.Component {
 
   render() {
     const {
+      background,
       classes,
       className,
       isSticky,
@@ -320,7 +332,19 @@ class SearchBar extends React.Component {
       margin,
     } = this.props;
 
-    const rootClasses = `${classes.root} ${typeof isSticky === 'number' ? classes.sticky : ''} ${margin ? classes.bottomMargin : ''} ${header ? classes.headerBackground : ''}  ${className}`;
+    const rootClasses = `${
+      classes.root
+    } ${
+      typeof isSticky === 'number' ? classes.sticky : ''
+    } ${
+      margin ? classes.bottomMargin : ''
+    } ${
+      header ? classes.headerBackground : ''
+    } ${
+      background === 'default' ? classes.background : ''
+    } ${
+      className
+    }`;
     const wrapperClasses = classes.wrapper;
     const stickyStyles = typeof isSticky === 'number' ? { top: isSticky } : null;
 
@@ -353,6 +377,7 @@ class SearchBar extends React.Component {
 }
 
 SearchBar.propTypes = {
+  background: PropTypes.oneOf(['default', 'none']),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   className: PropTypes.string,
   fetchUnits: PropTypes.func.isRequired,
@@ -369,6 +394,7 @@ SearchBar.propTypes = {
 };
 
 SearchBar.defaultProps = {
+  background: 'default',
   previousSearch: null,
   className: '',
   header: false,

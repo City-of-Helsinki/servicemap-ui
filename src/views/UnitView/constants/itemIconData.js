@@ -8,6 +8,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import ServiceIcon from '@material-ui/icons/Reorder';
 import InfoIcon from '@material-ui/icons/PriorityHigh';
 import WarningIcon from '@material-ui/icons/Warning';
+import RouteIcon from '@material-ui/icons/DirectionsBus';
 
 const getItemIconData = (type, data) => {
   if (type === 'LINK' || type === 'ESERVICE_LINK' || (type === 'OPENING_HOURS' && data.www)) {
@@ -26,6 +27,8 @@ const getItemIconData = (type, data) => {
     return <ServiceIcon />;
   } if (type === 'OTHER_INFO') {
     return <InfoIcon />;
+  } if (type === 'ROUTE') {
+    return <RouteIcon />;
   }
   return <WarningIcon />;
 };

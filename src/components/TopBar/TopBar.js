@@ -9,7 +9,6 @@ import I18n from '../../i18n';
 import HomeLogo from '../Logos/HomeLogo';
 import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import { getIcon } from '../SMIcon';
-import fetchAddress from '../../views/MapView/utils/fetchAddress';
 import DrawerMenu from '../DrawerMenu';
 
 class TopBar extends React.Component {
@@ -66,7 +65,7 @@ class TopBar extends React.Component {
             )
             : (
               <Typography>
-                <FormattedMessage id="settings.amount" values={{ count: category.settings.filter(i => i !== false).length }} />
+                <FormattedMessage id="settings.amount" values={{ count: category.settings.filter(i => (i !== false && i !== null)).length }} />
               </Typography>
             )}
         </Button>
@@ -174,7 +173,6 @@ class TopBar extends React.Component {
   handleContrastChange = () => {
     const { changeTheme, theme } = this.props;
     changeTheme(theme === 'default' ? 'dark' : 'default');
-    window.location.reload();
   }
 
   handleNavigation = (target, data) => {
@@ -200,14 +198,11 @@ class TopBar extends React.Component {
         break;
 
       case 'address':
-        fetchAddress({ lat: data.latitude, lng: data.longitude })
-          .then((data) => {
-            navigator.push('address', {
-              municipality: data.street.municipality,
-              street: getLocaleText(data.street.name),
-              number: data.number,
-            });
-          });
+        navigator.push('address', {
+          municipality: data.street.municipality,
+          street: getLocaleText(data.street.name),
+          number: data.number,
+        });
         break;
 
       case 'services':

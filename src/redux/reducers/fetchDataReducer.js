@@ -63,6 +63,7 @@ const dataSingleInitialState = {
   isFetching: false,
   errorMessage: null,
   data: null,
+  count: 0,
 };
 
 const dataSingle = (state, action, prefix) => {
@@ -85,11 +86,22 @@ const dataSingle = (state, action, prefix) => {
         isFetching: false,
         errorMessage: null,
         data: action.data,
+        count: action.count,
+        next: action.next,
+      };
+    case `${prefix}_FETCH_MORE_SUCCESS`:
+      return {
+        ...state,
+        isFetching: false,
+        errorMessage: null,
+        data: [...state.data, ...action.data],
+        next: action.next,
       };
     case `${prefix}_SET_DATA`:
       return {
         ...state,
         data: action.data,
+        count: action.count,
       };
     default:
       return state;
@@ -105,3 +117,4 @@ export const service = (state = dataSetInitialState, action) => dataSetReducer(s
 export const selectedUnit = (state = dataSingleInitialState, action) => dataSingle(state, action, 'SELECTED_UNIT');
 export const accessibilitySentences = (state = dataSingleInitialState, action) => dataSingle(state, action, 'SELECTED_UNIT_ACCESSIBILITY_SENTENCES');
 export const reservations = (state = dataSingleInitialState, action) => dataSingle(state, action, 'SELECTED_UNIT_RESERVATIONS');
+export const unitEvents = (state = dataSingleInitialState, action) => dataSingle(state, action, 'SELECTED_UNIT_EVENTS');

@@ -20,17 +20,15 @@ import Description from './components/Description';
 import Services from './components/Services';
 import Events from './components/Events';
 import SMButton from '../../components/ServiceMapButton';
-import UnitIcon from '../../components/SMIcon/UnitIcon';
 import TabLists from '../../components/TabLists';
 import calculateDistance from '../../utils/calculateDistance';
 import { AddressIcon } from '../../components/SMIcon';
 import swapCoordinates from '../MapView/utils/swapCoordinates';
+import SocialMediaLinks from './components/SocialMediaLinks';
 
 const UnitView = (props) => {
-  const [centered, setCentered] = useState(false);
-
   const {
-    unit,
+    stateUnit,
     map,
     intl,
     classes,
@@ -43,18 +41,23 @@ const UnitView = (props) => {
     fetchAccessibilitySentences,
     accessibilitySentences,
     eventsData,
-    reservations,
+    reservationsData,
     unitFetching,
     userLocation,
   } = props;
 
-  const centerMap = (map, unit) => {
-    setCentered(true);
-    const { geometry, location } = unit;
-    if (geometry && geometry.type === 'MultiLineString') {
-      focusDistrict(map, swapCoordinates(geometry.coordinates));
-    } else if (location) {
-      focusUnit(map, location.coordinates);
+  const checkCorrectUnit = unit => unit && unit.id === parseInt(match.params.unit, 10);
+
+  const [unit, setUnit] = useState(checkCorrectUnit(stateUnit) ? stateUnit : null);
+
+  const centerMap = () => {
+    if (unit && map) {
+      const { geometry, location } = unit;
+      if (geometry && geometry.type === 'MultiLineString') {
+        focusDistrict(map, swapCoordinates(geometry.coordinates));
+      } else if (location) {
+        focusUnit(map, location.coordinates);
+      }
     }
   };
 
@@ -71,37 +74,42 @@ const UnitView = (props) => {
     } return null;
   };
 
+  const intializeUnitData = () => {
+    const { params } = match;
+    const unitId = params.unit;
+    // If no selected unit data, or selected unit data is old, fetch new data
+    if (!stateUnit || !checkCorrectUnit(stateUnit) || !stateUnit.complete) {
+      fetchSelectedUnit(unitId, unit => setUnit(unit));
+      fetchAccessibilitySentences(unitId);
+      fetchReservations(unitId);
+      fetchUnitEvents(unitId);
+    } else {
+      // If selected unit data is correct, but some info is missing, fetch them
+      if (!accessibilitySentences) {
+        fetchAccessibilitySentences(unitId);
+      }
+      if (!reservationsData.data) {
+        fetchReservations(unitId);
+      }
+      if (!eventsData.data) {
+        fetchUnitEvents(unitId);
+      }
+    }
+  };
 
   useEffect(() => { // On mount
-    const { params } = match;
-    if (params && params.unit) {
-      const unitId = params.unit;
-      fetchReservations(unitId);
-
-      if (unit && (unit.complete && unitId === `${unit.id}`)) {
-        fetchAccessibilitySentences(unitId);
-        return;
-      }
-      fetchSelectedUnit(unitId, () => fetchAccessibilitySentences(unitId));
-    }
+    intializeUnitData();
   }, []);
 
-  useEffect(() => {
+  useEffect(() => { // If unit changes without the component unmounting, update data
     if (unit) {
-      if (map && !centered) {
-        centerMap(map, unit);
-      }
-      fetchUnitEvents(unit.id);
+      intializeUnitData();
     }
-  }, [unit]);
+  }, [match.params.unit]);
 
   useEffect(() => {
-    // If page is loaded before map, center map to unit after map is rendered
-    if (map && unit && !centered) {
-      centerMap(map, unit);
-    }
-  }, [map]);
-
+    centerMap();
+  }, [unit, map]);
 
   const renderDetailTab = () => {
     if (!unit || !unit.complete) {
@@ -126,7 +134,13 @@ const UnitView = (props) => {
         </Container>
 
         {/* View Components */}
-        <ContactInfo unit={unit} intl={intl} />
+        <ContactInfo
+          unit={unit}
+          userLocation={userLocation}
+          getLocaleText={getLocaleText}
+          intl={intl}
+        />
+        <SocialMediaLinks unit={unit} getLocaleText={getLocaleText} />
         <Highlights unit={unit} getLocaleText={getLocaleText} />
         <Description unit={unit} getLocaleText={getLocaleText} />
         <ElectronicServices unit={unit} />
@@ -160,8 +174,7 @@ const UnitView = (props) => {
         />
         <Reservations
           listLength={10}
-          reservations={reservations}
-          getLocaleText={getLocaleText}
+          reservationsData={reservationsData}
         />
         <Events classes={classes} listLength={5} eventsData={eventsData} />
       </div>
@@ -176,7 +189,6 @@ const UnitView = (props) => {
           icon={<Map />}
           onClick={(e) => {
             e.preventDefault();
-            setCentered(false);
             if (navigator) {
               navigator.openMap();
             }
@@ -193,11 +205,8 @@ const UnitView = (props) => {
   );
 
   const render = () => {
-    const correctUnit = unit && unit.id === parseInt(match.params.unit, 10);
-
     const title = unit && unit.name ? getLocaleText(unit.name) : '';
-    const icon = unit ? <UnitIcon unit={unit} /> : null;
-    const distance = formatDistanceString(calculateDistance(unit, userLocation));
+    const distance = formatDistanceString(calculateDistance(unit, userLocation.coordinates));
 
     const TopArea = (
       <div className={`${classes.topArea} sticky`}>
@@ -210,7 +219,11 @@ const UnitView = (props) => {
           />
         </DesktopComponent>
         <MobileComponent>
-          <TitleBar icon={icon} title={correctUnit ? title : ''} backButton />
+          <TitleBar
+            title={title}
+            backButton
+            distance={distance}
+          />
         </MobileComponent>
       </div>
     );
@@ -314,7 +327,6 @@ UnitView.propTypes = {
   fetchSelectedUnit: PropTypes.func.isRequired,
   unitFetching: PropTypes.bool.isRequired,
   fetchUnitEvents: PropTypes.func.isRequired,
-  eventFetching: PropTypes.bool.isRequired,
   match: PropTypes.objectOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   getLocaleText: PropTypes.func.isRequired,

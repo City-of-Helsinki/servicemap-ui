@@ -26,4 +26,8 @@ export default theme => ({
     marginLeft: -theme.spacing.unitDouble,
     marginRight: -theme.spacing.unitDouble,
   },
+  loadingText: {
+    margin: 20,
+    height: 34,
+  },
 });

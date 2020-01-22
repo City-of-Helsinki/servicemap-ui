@@ -5,6 +5,7 @@ export default {
 
   // Accessibility
   'accessibility': 'Tillgänglighet',
+  'accessibility.info': 'Esteettömyystiedot', // TODO: Translate
   'accessibility.details': 'Noggrannare uppgifter',
   'accessibility.stamp': 'Tillgängligheten beaktad',
   'accessibility.shortcomings': 'Brister',
@@ -27,12 +28,12 @@ export default {
   'address.list.rescue_sub_district': 'Skyddsunderavsnitt',
   'address.list.health_station_district': 'Hälsostationsområde',
   'address.list.maternity_clinic_district': 'Rådgivningsområde',
-  'address.list.lower_comprehensive_school_district_fi': 'Finsk lågstadieskola',
-  'address.list.lower_comprehensive_school_district_sv': 'Svensk lågstadieskola',
-  'address.list.upper_comprehensive_school_district_fi': 'Finsk högstadieskola',
-  'address.list.upper_comprehensive_school_district_sv': 'Svensk högstadieskola',
-  'address.list.preschool_education_fi': 'Finsk småbarnspedagogik',
-  'address.list.preschool_education_sv': 'Svensk småbarnspedagogik',
+  'address.list.lower_comprehensive_school_district_fi': 'Finsk lågstadieskolaområde', // TODO: Translate
+  'address.list.lower_comprehensive_school_district_sv': 'Svensk lågstadieskolaområde', // TODO: Translate
+  'address.list.upper_comprehensive_school_district_fi': 'Finsk högstadieskolaområde', // TODO: Translate
+  'address.list.upper_comprehensive_school_district_sv': 'Svensk högstadieskolaområde', // TODO: Translate
+  'address.list.preschool_education_fi': 'Finsk småbarnspedagogikområde', // TODO: Translate
+  'address.list.preschool_education_sv': 'Svensk småbarnspedagogikområde', // TODO: Translate
   'address.error': 'Addressen kunde inte hittas',
   'address.nearby': 'Nära',
   'address.districts': 'Områden',
@@ -64,6 +65,7 @@ export default {
   'general.back.service': 'Gå tillbaka till tjänstevyn',
   'general.back.unit': 'Gå tillbaka till vyn för verksamhetsställen',
   'general.back.event': 'Gå tillbaka till evenemangsvyn',
+  'general.backTo': 'Palaa takaisin', // TODO: Translate
   'general.backToHome': 'Stäng sökningen och gå tillbaka till början',
   'general.backToStart': 'Gå tillbaka till början av sidan',
   'general.back.serviceTree': 'Palaa palvelulistausnäkymään', // TODO: Translate
@@ -186,6 +188,9 @@ export default {
     one {# tjänst}
     other {# tjänster}
   }`,
+  'unit.route': 'Katso reitti tänne', // TODO: translate
+  'unit.route.extra': '(Uusi välilehti. Reittiopas ei ole saavutettava palvelu)', // TODO: translate
+  'unit.socialMedia.title': 'Toimipiste sosiaalisessa mediassa', // TODO: tranaslate
 
   // Search
   'search': 'Sök',

@@ -10,6 +10,7 @@ const styles = theme => ({
     height: topBarHeightMobile,
   },
   appBar: {
+    boxShadow: 'none',
     zIndex: theme.zIndex.appBar,
   },
   buttonLabel: {
@@ -64,7 +65,6 @@ const styles = theme => ({
   },
   toolbarWhite: {
     paddingLeft: 28,
-    width: '100%',
     height: 70,
     backgroundColor: '#fff',
     zIndex: theme.zIndex.infront,

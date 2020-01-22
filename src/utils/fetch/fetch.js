@@ -131,7 +131,7 @@ const handleFetch = async (
  * @param {AbortController} abortController - AbortController for fetch
  */
 const fetchWrapper = async (
-  data, onStart, onSuccess, onError, onNext, key, id, abortController,
+  data, onStart, onSuccess, onError, onNext, key, id, abortController, overrideUrl,
 ) => {
   if (!Object.keys(APIHandlers).includes(key)) {
     throw new Error('Invalid key provided to fetchWrapper');
@@ -143,8 +143,8 @@ const fetchWrapper = async (
     throw new Error('Invalid data given to fetchWrapper');
   }
 
-  const fetchURL = functionWithID ? url(id) : url;
-  const fetchOptions = data || options;
+  const fetchURL = overrideUrl || (functionWithID ? url(id) : url);
+  const fetchOptions = overrideUrl ? null : (data || options);
   if (onStart) {
     onStart();
   }

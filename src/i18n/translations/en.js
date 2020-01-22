@@ -5,6 +5,7 @@ export default {
 
   // Accessibility
   'accessibility': 'Accessibility',
+  'accessibility.info': 'Accessibility details',
   'accessibility.details': 'Accessibility details',
   'accessibility.stamp': 'Accessibility acknowledged',
   'accessibility.shortcomings': 'Shortcomings',
@@ -27,12 +28,12 @@ export default {
   'address.list.rescue_sub_district': 'Civil defence subsection',
   'address.list.health_station_district': 'Health station area',
   'address.list.maternity_clinic_district': 'Maternity clinic area',
-  'address.list.lower_comprehensive_school_district_fi': 'Finnish primary school',
-  'address.list.lower_comprehensive_school_district_sv': 'Swedish primary school',
-  'address.list.upper_comprehensive_school_district_fi': 'Finnish secondary school',
-  'address.list.upper_comprehensive_school_district_sv': 'Swedish secondary school',
-  'address.list.preschool_education_fi': 'Finnish preschool education',
-  'address.list.preschool_education_sv': 'Swedish preschool education',
+  'address.list.lower_comprehensive_school_district_fi': 'Finnish primary school area', // TODO: Translate
+  'address.list.lower_comprehensive_school_district_sv': 'Swedish primary school area', // TODO: Translate
+  'address.list.upper_comprehensive_school_district_fi': 'Finnish secondary school area', // TODO: Translate
+  'address.list.upper_comprehensive_school_district_sv': 'Swedish secondary school area', // TODO: Translate
+  'address.list.preschool_education_fi': 'Finnish preschool education area', // TODO: Translate
+  'address.list.preschool_education_sv': 'Swedish preschool education area', // TODO: Translate
   'address.error': 'No address found',
   'address.nearby': 'Nearby',
   'address.districts': 'Areas',
@@ -64,6 +65,7 @@ export default {
   'general.back.service': 'Back to service view',
   'general.back.unit': 'Back to unit view',
   'general.back.event': 'Back to event view',
+  'general.backTo': 'Return back', // TODO: verify
   'general.backToHome': 'Close search and return to beginning',
   'general.backToStart': 'Back to beginning of page',
   'general.back.serviceTree': 'Back to service list page',
@@ -186,6 +188,9 @@ export default {
     one {# service}
     other {# services}
   }`,
+  'unit.route': 'Katso reitti tänne', // TODO: translate
+  'unit.route.extra': '(Uusi välilehti. Reittiopas ei ole saavutettava palvelu)', // TODO: translate
+  'unit.socialMedia.title': 'Toimipiste sosiaalisessa mediassa', // TODO: tranaslate
 
   // Search
   'search': 'Search',

@@ -1,5 +1,18 @@
 
 export default theme => ({
+  listItemPadded: {
+    padding: theme.spacing.unitDouble,
+  },
+  listItem: {
+    padding: theme.spacing.unit,
+  },
+  listItemIcon: {
+    margin: theme.spacing.unit,
+    marginRight: theme.spacing.unitDouble,
+  },
+  listItemIconPadded: {
+    margin: theme.spacing.unit,
+  },
   bottomContainer: {
     display: 'inline-block',
     marginTop: '6px',
@@ -28,6 +41,8 @@ export default theme => ({
   },
   itemTextContainer: {
     flex: '1 1 auto',
+    margin: 0,
+    marginLeft: theme.spacing.unitDouble,
   },
   topRow: {
     display: 'flex',

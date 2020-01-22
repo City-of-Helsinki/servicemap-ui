@@ -15,7 +15,7 @@ const mobileBreakpoint = config.mobileUiBreakpoint;
 const { smallScreenBreakpoint } = config;
 
 const createContentStyles = (
-  isMobile, isSmallScreen, landscape, mobileMapOnly, fullMobileMap, settingsOpen,
+  isMobile, isSmallScreen, landscape, mobileMapOnly, fullMobileMap, settingsOpen, currentPage,
 ) => {
   let width = 450;
   if (isMobile) {
@@ -67,6 +67,8 @@ const createContentStyles = (
       // TODO change 56px to topBarHeight when we get new height for topbar/titlebar
       styles.map.height = 'calc(100% - 56px)';
     }
+  } else if (currentPage === 'home') {
+    styles.sidebar.borderRight = '8px solid transparent';
   }
 
   return styles;
@@ -74,7 +76,7 @@ const createContentStyles = (
 
 const DefaultLayout = (props) => {
   const {
-    i18n, intl, location, settingsToggled, toggleSettings,
+    currentPage, i18n, intl, location, settingsToggled, toggleSettings,
   } = props;
   const isMobile = useMediaQuery(`(max-width:${mobileBreakpoint}px)`);
   const isSmallScreen = useMediaQuery(`(max-width:${smallScreenBreakpoint}px)`);
@@ -84,7 +86,7 @@ const DefaultLayout = (props) => {
   const portrait = useMediaQuery('(max-device-aspect-ratio: 1/1)');
 
   const styles = createContentStyles(
-    isMobile, isSmallScreen, landscape, mobileMapOnly, fullMobileMap, settingsToggled,
+    isMobile, isSmallScreen, landscape, mobileMapOnly, fullMobileMap, settingsToggled, currentPage,
   );
 
   const setSettingsPage = (type) => {
@@ -134,6 +136,7 @@ const DefaultLayout = (props) => {
 
 // Typechecking
 DefaultLayout.propTypes = {
+  currentPage: PropTypes.string,
   i18n: PropTypes.instanceOf(I18n),
   intl: intlShape.isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -142,6 +145,7 @@ DefaultLayout.propTypes = {
 };
 
 DefaultLayout.defaultProps = {
+  currentPage: null,
   i18n: null,
   settingsToggled: null,
 };

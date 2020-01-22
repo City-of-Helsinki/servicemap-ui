@@ -1,10 +1,11 @@
 import AbortController from 'abort-controller';
 import paths from '../config/paths';
 import { eventFetch, selectedUnitFetch, unitEventsFetch, accessibilitySentencesFetch, reservationsFetch } from '../src/utils/fetch';
-import { changeSelectedEvent, eventFetchDataSuccess } from '../src/redux/actions/event';
+import { changeSelectedEvent } from '../src/redux/actions/event';
 import { changeSelectedUnit } from '../src/redux/actions/selectedUnit';
 import { changeAccessibilitySentences } from '../src/redux/actions/selectedUnitAccessibility';
 import { changeReservations } from '../src/redux/actions/selectedUnitReservations';
+import { changeUnitEvents } from '../src/redux/actions/selectedUnitEvents';
 
 const timeoutTimer = process.env.SSR_FETCH_TIMEOUT;
 
@@ -134,7 +135,7 @@ export const fetchSelectedUnitData = (req, res, next) => {
         response();
         return;
       }
-      store.dispatch(eventFetchDataSuccess(data.data, id));
+      store.dispatch(changeUnitEvents(data.data, data.meta));
       response();
     }
     unitEventsFetch({ location: `tprek:${id}` }, null, eventFetchEnd, fetchOnError, null, null, controller);
@@ -156,10 +157,10 @@ export const fetchSelectedUnitData = (req, res, next) => {
         response();
         return;
       }
-      store.dispatch(changeReservations(data.results));
+      store.dispatch(changeReservations(data.results, { count: data.count, next: data.next }));
       response();
     }
-    reservationsFetch(null, null, reservationFetchEnd, fetchOnError, null, id, controller)
+    reservationsFetch({ unit: `tprek:${id}` }, null, reservationFetchEnd, fetchOnError, null, null, controller)
 
   } catch(e) {
     console.log('Error in fetchSelectedUnitData', e.message);

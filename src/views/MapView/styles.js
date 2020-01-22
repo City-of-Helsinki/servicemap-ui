@@ -126,9 +126,14 @@ const styles = theme => ({
   showLocationIcon: {
     color: '#fff',
   },
+  colorInherit: {
+    color: 'inherit',
+  },
   topArea: {
+    background: theme.palette.background.main,
+    color: theme.palette.primary.contrastText,
     position: 'fixed',
-    top: config.topBarHeight,
+    top: config.topBarHeightMobile,
     width: '100%',
     zIndex: theme.zIndex.infront,
   },

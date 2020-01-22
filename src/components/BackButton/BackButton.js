@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { intlShape } from 'react-intl';
-import { IconButton, Button } from '@material-ui/core';
+import { intlShape, FormattedMessage } from 'react-intl';
+import { IconButton, Typography, Button } from '@material-ui/core';
 import { ArrowBack } from '@material-ui/icons';
 import { getPathName } from '../../utils/path';
 
 const BackButton = (props) => {
   const {
-    breadcrumb, className, intl, onClick, style, variant, navigator, srHidden,
+    breadcrumb, classes, className, intl, onClick, style, variant, navigator, srHidden,
   } = props;
 
   // Generate dynamic text
@@ -57,6 +57,31 @@ const BackButton = (props) => {
     );
   }
 
+  if (variant === 'container') {
+    return (
+      <div className={`${classes.flexRow} ${classes.container}`}>
+        <IconButton
+          role="link"
+          className={`${classes.containerButton} ${className}`}
+          style={style}
+          aria-hidden={srHidden}
+          aria-label={buttonText}
+          onClick={(e) => {
+            e.preventDefault();
+            if (onClick) {
+              onClick(e);
+            } else if (navigator) {
+              navigator.goBack();
+            }
+          }}
+        >
+          <ArrowBack />
+        </IconButton>
+        <Typography aria-hidden className={`${classes.containerText}`} color="inherit" variant="body2"><FormattedMessage id="general.backTo" /></Typography>
+      </div>
+    );
+  }
+
   return (
     <Button
       role="link"
@@ -74,17 +99,19 @@ const BackButton = (props) => {
       {buttonText}
 
     </Button>
+
   );
 };
 
 BackButton.propTypes = {
   breadcrumb: PropTypes.arrayOf(PropTypes.any).isRequired,
+  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   className: PropTypes.string,
   intl: intlShape.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   style: PropTypes.objectOf(PropTypes.any),
   onClick: PropTypes.func,
-  variant: PropTypes.oneOf(['icon', null]),
+  variant: PropTypes.oneOf(['container', 'icon', null]),
   srHidden: PropTypes.bool,
 };
 
