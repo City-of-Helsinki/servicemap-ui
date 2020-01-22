@@ -3,7 +3,15 @@ import { mapTypes } from '../config/mapConfig';
 import { drawMarkerIcon } from './drawIcon';
 
 
-const createMarkerClusterLayer = (leaflet, map, classes, settings, getLocaleText, navigator) => {
+const createMarkerClusterLayer = (
+  leaflet,
+  map,
+  classes,
+  popupTitle,
+  settings,
+  getLocaleText,
+  navigator,
+) => {
   const {
     divIcon, point, markerClusterGroup,
   } = leaflet || {};
@@ -22,7 +30,7 @@ const createMarkerClusterLayer = (leaflet, map, classes, settings, getLocaleText
   // eslint-disable-next-line
   const createClusterCustomIcon = function (cluster) {
     const icon = divIcon({
-      html: `<span>${cluster.getChildCount()}</span>`,
+      html: `<span aria-hidden="true" tabindex="-1">${cluster.getChildCount()}</span>`,
       className: classes.unitClusterMarker,
       iconSize: point(40, 40, true),
     });
@@ -68,9 +76,22 @@ const createMarkerClusterLayer = (leaflet, map, classes, settings, getLocaleText
     const { maxZoom } = mapTypes[settings.mapType || 'servicemap'];
     // eslint-disable-next-line no-underscore-dangle
     if (map.leafletElement._zoom >= maxZoom) {
+      const hideNodeFromSR = (node) => {
+        node.setAttribute('aria-hidden', 'true');
+      };
+      // Create container and title
+      const container = document.createElement('div');
+      hideNodeFromSR(container);
+      const title = document.createElement('p');
+      title.innerText = popupTitle;
+      title.className = classes.unitPopupTitle;
+      container.appendChild(title);
+
+      // Add list element
       const list = document.createElement('ul');
       list.className = classes.unitPopupList;
 
+      // Add list items to list
       units.forEach((unit) => {
         const listItem = document.createElement('li');
         listItem.onclick = () => {
@@ -81,12 +102,24 @@ const createMarkerClusterLayer = (leaflet, map, classes, settings, getLocaleText
 
         let content = '';
         if (unit && unit.name) {
-          content += `<p class="${classes.unitPopupTitle}">${getLocaleText(unit.name)}</p>`;
+          content += `<p class="${classes.unitPopupItem}">${getLocaleText(unit.name)}</p>`;
         }
         listItem.innerHTML = content;
         list.appendChild(listItem);
+        // Divider element
+        const divider = document.createElement('li');
+        hideNodeFromSR(divider);
+        divider.className = 'popup-divider';
+        divider.innerHTML = '<hr />';
+        list.appendChild(divider);
       });
-      a.layer.bindPopup(list).openPopup();
+      container.appendChild(list);
+
+      // Bind and open popup with content to cluster
+      a.layer.bindPopup(container, {
+        closeButton: false,
+        offset: [4, -14],
+      }).openPopup();
     }
   });
 
@@ -156,9 +189,9 @@ const renderUnitMarkers = (
 
 // Connector (closure) function used to add state values in redux connect
 export const markerClusterConnector = (settings, getLocaleText, navigator) => (
-  leaflet, map, classes,
+  leaflet, map, classes, popupTitle,
 ) => (
-  createMarkerClusterLayer(leaflet, map, classes, settings, getLocaleText, navigator)
+  createMarkerClusterLayer(leaflet, map, classes, popupTitle, settings, getLocaleText, navigator)
 );
 
 // Connector (closure) function used to add state values in redux connect

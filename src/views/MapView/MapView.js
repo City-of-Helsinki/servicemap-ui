@@ -135,8 +135,9 @@ const MapView = (props) => {
   const initializeMarkerClusterLayer = () => {
     const map = mapRef && mapRef.current ? mapRef.current : null;
 
-    if (map && createMarkerClusterLayer && isClient()) {
-      const cluster = createMarkerClusterLayer(leaflet, map, classes);
+    if (map && leaflet && createMarkerClusterLayer && isClient()) {
+      const popupTitle = intl.formatMessage({ id: 'unit.plural' });
+      const cluster = createMarkerClusterLayer(leaflet, map, classes, popupTitle);
       if (cluster) {
         map.leafletElement.addLayer(cluster);
         setMarkerCluster(cluster);

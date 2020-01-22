@@ -171,15 +171,34 @@ const styles = theme => ({
   unitPopupList: {
     listStyleType: 'none',
     padding: 0,
+    overflow: 'auto',
+    maxHeight: '25vh',
     '& li': {
       padding: `${theme.spacing.unit}px ${theme.spacing.unitDouble}px`,
+      '& hr': {
+        height: 1,
+        margin: 0,
+        border: 'none',
+        backgroundColor: 'rgba(0, 0, 0, 0.12)',
+      },
       '&:hover': {
         cursor: 'pointer',
         backgroundColor: theme.palette.white.light,
       },
     },
+    '& .popup-divider': {
+      cursor: 'unset',
+      paddingTop: 0,
+      paddingBottom: 0,
+    },
   },
   unitPopupTitle: {
+    ...theme.typography.subtitle1,
+    margin: `${theme.spacing.unit}px ${theme.spacing.unitDouble}px !important`,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  unitPopupItem: {
     ...theme.typography.body2,
     margin: `${theme.spacing.unitHalf}px ${theme.spacing.unit}px`,
     fontWeight: 'bold',
