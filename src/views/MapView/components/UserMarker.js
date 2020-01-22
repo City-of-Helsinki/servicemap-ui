@@ -2,8 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { Room } from '@material-ui/icons/';
-import { userIconSize } from '../config/mapConfig';
+import { getIcon } from '../../../components/SMIcon';
 
 const UserMarker = ({ position, classes, onClick }) => {
   const { Marker } = require('react-leaflet');
@@ -11,14 +10,8 @@ const UserMarker = ({ position, classes, onClick }) => {
 
   const icon = divIcon({
     className: classes.userMarker,
-    iconSize: [userIconSize, userIconSize],
-    iconAnchor: [userIconSize / 2, userIconSize * 0.92],
     html: renderToStaticMarkup(
-      <>
-        <span className={classes.userMarkerBackground} />
-        <Room className={classes.userMarkerBorder} />
-        <Room className={classes.userMarkerForeground} />
-      </>,
+      getIcon('locationMarker'),
     ),
   });
 

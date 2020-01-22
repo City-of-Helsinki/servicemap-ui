@@ -73,30 +73,6 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    '&:focus': {
-      boxShadow: 'none',
-    },
-  },
-  userMarkerForeground: {
-    height: '73%',
-    width: '73%',
-    color: '#fff',
-    position: 'absolute',
-    paddingBottom: '6%',
-  },
-  userMarkerBorder: {
-    height: '100%',
-    width: '100%',
-    color: theme.palette.primary.main,
-    position: 'absolute',
-  },
-  userMarkerBackground: {
-    position: 'absolute',
-    height: '33%',
-    width: '33%',
-    paddingBottom: '20%',
-    backgroundColor: theme.palette.primary.main,
-    borderRadius: 50,
   },
   showLocationButton: {
     border: 'none',
