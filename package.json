@@ -15,6 +15,7 @@
     "intl": "^1.2.5",
     "isomorphic-style-loader": "^5.0.1",
     "leaflet": "^1.4.0",
+    "leaflet.markercluster": "^1.4.1",
     "node-fetch": "^2.6.0",
     "nodemon": "^1.18.10",
     "proj4leaflet": "^1.0.2",
@@ -74,6 +75,8 @@
       "\\.(css|less)$": "identity-obj-proxy",
       "isomorphic-style-loader/withStyles": "<rootDir>/__mocks__/withStyles.js"
     },
-    "setupFiles": ["jest-canvas-mock"]
+    "setupFiles": [
+      "jest-canvas-mock"
+    ]
   }
 }

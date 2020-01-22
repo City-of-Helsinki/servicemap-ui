@@ -2,13 +2,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withStyles, Typography } from '@material-ui/core';
-import { drawMarkerIcon } from '../utils/drawIcon';
+import { withStyles } from '@material-ui/core';
 import { valuesHaveChanged } from '../../../utils';
 import styles from '../styles';
 import { getLocaleString } from '../../../redux/selectors/locale';
 
-const componentUpdatingProps = ['data', 'settings'];
+const componentUpdatingProps = ['data'];
 
 class UnitMarkers extends React.Component {
   shouldComponentUpdate(nextProps) {
@@ -17,51 +16,13 @@ class UnitMarkers extends React.Component {
 
   render() {
     const {
-      classes, data, embeded, getLocaleText, navigator, Marker, Polyline, settings, Tooltip,
+      data, Polyline,
     } = this.props;
 
     const unitListFiltered = data.units.filter(unit => unit.object_type === 'unit');
-
+    // Show markers with location
     return (
       <>
-        {unitListFiltered.map((unit) => {
-          // Show markers with location
-          if (unit && unit.location) {
-            return (
-              <Marker
-                className="unitMarker"
-                key={unit.id}
-                position={[unit.location.coordinates[1], unit.location.coordinates[0]]}
-                icon={drawMarkerIcon(unit, settings)}
-                onClick={() => {
-                  if (navigator && !embeded) {
-                    navigator.push('unit', { id: unit.id });
-                  }
-                }}
-                keyboard={false}
-              >
-                {
-                  embeded
-                  && (
-                    <Tooltip
-                      className={classes.unitTooltip}
-                      direction="top"
-                      offset={[0, -36]}
-                      permanent
-                    >
-                      <Typography variant="subtitle1">
-                        {getLocaleText(unit.name)}
-                      </Typography>
-                      <Typography variant="body2">
-                        {getLocaleText(unit.street_address)}
-                      </Typography>
-                    </Tooltip>
-                  )
-                }
-              </Marker>
-            );
-          } return null;
-        })}
         {data.unitGeometry && unitListFiltered.length === 1 && (
           <Polyline
             positions={[
@@ -76,19 +37,11 @@ class UnitMarkers extends React.Component {
 }
 
 UnitMarkers.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   data: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.any)).isRequired,
-  embeded: PropTypes.bool,
-  getLocaleText: PropTypes.func.isRequired,
-  navigator: PropTypes.objectOf(PropTypes.any).isRequired,
-  Marker: PropTypes.objectOf(PropTypes.any).isRequired,
-  Tooltip: PropTypes.objectOf(PropTypes.any).isRequired,
   Polyline: PropTypes.objectOf(PropTypes.any).isRequired,
-  settings: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 UnitMarkers.defaultProps = {
-  embeded: false,
 };
 
 // Listen to redux state
