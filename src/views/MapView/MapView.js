@@ -203,10 +203,19 @@ const MapView = (props) => {
 
   // Attempt to render unit markers on page change or unitList change
   useEffect(() => {
-    if (markerCluster) {
-      renderUnitMarkers(leaflet, getMapUnits(), classes, markerCluster, embeded);
+    if (!markerCluster) {
+      return;
     }
-  }, [unitList, highlightedUnit, markerCluster]);
+
+    const data = getMapUnits();
+    // Clear layers if no units currently set for data
+    // caused by while fetching
+    if (!data.units.length) {
+      markerCluster.clearLayers();
+      return;
+    }
+    renderUnitMarkers(leaflet, data, classes, markerCluster, embeded);
+  }, [unitList, highlightedUnit, markerCluster, addressUnits, serviceUnits]);
 
   // Render
 
