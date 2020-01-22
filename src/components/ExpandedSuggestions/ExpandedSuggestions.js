@@ -6,34 +6,29 @@ import {
 } from '@material-ui/core';
 import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
 import { FormattedMessage, intlShape } from 'react-intl';
-import { getPreviousSearches } from '../SearchBar/previousSearchData';
 import createSuggestions from '../SearchBar/createSuggestions';
 import config from '../../../config';
 import SMButton from '../ServiceMapButton';
 import SuggestionItem from '../ListItems/SuggestionItem';
-import { parseSearchParams } from '../../utils';
 import TitleBar from '../TitleBar';
 
 
 const ExpandedSuggestions = (props) => {
   const {
+    button,
     searchQuery,
     classes,
-    focusedSuggestion,
-    setSearch,
     intl,
-    location,
     navigator,
+    onClick,
     isVisible,
   } = props;
 
   const [searchQueries, setSearchQueries] = useState(null);
   const [loading, setLoading] = useState(false);
   const [suggestionError, setSuggestionError] = useState(false);
-  const [history] = useState(getPreviousSearches());
   // Query word on which suggestion list is based
   const [suggestionQuery, setSuggestionQuery] = useState(null);
-  const [visible, setVisible] = useState(false);
   const isMobile = useMediaQuery(`(max-width:${config.mobileUiBreakpoint}px)`);
 
   const listRef = useRef(null);
@@ -41,14 +36,14 @@ const ExpandedSuggestions = (props) => {
   // const titleRef = useRef(null);
 
   useEffect(() => {
-    if (!visible) {
+    if (!isVisible) {
       return;
     }
     const title = document.getElementsByClassName('ExpandedSuggestions-title')[0];
     if (title) {
       title.focus();
     }
-  }, [visible]);
+  }, [isVisible]);
 
   const resetSuggestions = () => {
     setSearchQueries(null);
@@ -92,32 +87,11 @@ const ExpandedSuggestions = (props) => {
 
   const suggestionClick = (query) => {
     if (query && query !== '' && navigator) {
+      if (onClick) {
+        onClick();
+      }
       navigator.push('search', { q: query });
     }
-  };
-
-  const setSearchBarText = () => {
-    if (listRef && listRef.current) {
-      if (listRef.current.props.children.length && focusedSuggestion !== null) {
-        if (searchQueries) {
-          setSearch(searchQueries[focusedSuggestion].suggestion);
-        } else if (history) {
-          setSearch(history[focusedSuggestion]);
-        }
-      }
-    }
-  };
-
-  const setVisibility = (visibility = null) => {
-    const searchParams = parseSearchParams(location.search);
-    const newVisibility = visibility !== null ? visibility : !visible;
-
-    setVisible(newVisibility);
-
-    navigator.replace('search', {
-      ...searchParams,
-      expand: newVisibility ? 1 : 0,
-    });
   };
 
   const renderNoResults = () => (
@@ -131,7 +105,7 @@ const ExpandedSuggestions = (props) => {
   const renderTitleBar = () => (
     <TitleBar
       backButton
-      backButtonOnClick={() => setVisibility(false)}
+      backButtonOnClick={onClick}
       className={`${classes.titleBar} ExpandedSuggestions-title`}
       titleComponent="h3"
       title={<FormattedMessage id="search.suggestions.expand" />}
@@ -154,7 +128,6 @@ const ExpandedSuggestions = (props) => {
     if (suggestionList && suggestionList.length) {
       suggestionList = suggestionList.slice(0, 8);
     }
-    const handleArrowClick = setSearch ? suggestion => setSearch(suggestion) : null;
 
     if (suggestionList) {
       return (
@@ -163,22 +136,18 @@ const ExpandedSuggestions = (props) => {
             renderTitleBar()
           }
           <List className="suggestionList" ref={listRef}>
-            {suggestionList.map((item, i) => (
+            {suggestionList.map(item => (
               <SuggestionItem
-                selected={i === focusedSuggestion}
                 button
                 key={item.suggestion + item.count}
                 icon={<Search />}
                 role="link"
                 text={item.suggestion}
-                handleArrowClick={handleArrowClick}
                 handleItemClick={() => {
-                  setVisible(false);
                   suggestionClick(item.suggestion);
                 }}
                 divider
                 subtitle={intl.formatMessage({ id: 'search.suggestions.results' }, { count: item.count })}
-                isMobile
                 query={suggestionQuery}
               />
             ))}
@@ -187,8 +156,7 @@ const ExpandedSuggestions = (props) => {
             <SMButton
               role="link"
               className={classes.closeButton}
-              // onKeyDown={e => handleKeyPress(e)}
-              onClick={() => setVisibility(false)()}
+              onClick={onClick}
               messageID="search.closeExpand"
             />
           </div>
@@ -205,7 +173,7 @@ const ExpandedSuggestions = (props) => {
       setSuggestionQuery(null);
       resetSuggestions();
     }
-    if (searchQuery && focusedSuggestion === null) {
+    if (searchQuery) {
       setSuggestionQuery(searchQuery);
       generateSuggestions(searchQuery);
     }
@@ -217,16 +185,11 @@ const ExpandedSuggestions = (props) => {
     };
   }, [searchQuery]);
 
-  useEffect(() => { // Change text of the searchbar when suggestion with keyboard focus changes
-    setSearchBarText();
-  }, [focusedSuggestion]);
-
-
   useEffect(() => {
     // Disable page scroll when suggestion box is open
     const sidebar = document.getElementsByClassName('SidebarWrapper')[0];
     const app = document.getElementsByClassName('App')[0];
-    if (visible) {
+    if (isVisible) {
       sidebar.style.overflow = isMobile ? 'hidden' : 'hidden';
       if (app) {
         app.style.height = '100%';
@@ -239,10 +202,10 @@ const ExpandedSuggestions = (props) => {
         app.style.height = null;
       }
     };
-  }, [visible]);
+  }, [isVisible]);
 
-  if (!visible) {
-    if (searchQueries && searchQueries.length < 1) {
+  if (button) {
+    if (!searchQueries || searchQueries.length < 1) {
       return null;
     }
 
@@ -250,7 +213,7 @@ const ExpandedSuggestions = (props) => {
       <SMButton
         small
         role="link"
-        onClick={() => { setVisibility(true); }}
+        onClick={onClick}
         messageID="search.expand"
       />
     );
@@ -288,20 +251,20 @@ const ExpandedSuggestions = (props) => {
 };
 
 ExpandedSuggestions.propTypes = {
-  searchQuery: PropTypes.string,
+  button: PropTypes.bool,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  focusedSuggestion: PropTypes.number,
-  setSearch: PropTypes.func,
   intl: intlShape.isRequired,
-  location: PropTypes.objectOf(PropTypes.any).isRequired,
+  isVisible: PropTypes.bool,
   navigator: PropTypes.objectOf(PropTypes.any),
+  onClick: PropTypes.func.isRequired,
+  searchQuery: PropTypes.string,
 };
 
 ExpandedSuggestions.defaultProps = {
+  button: false,
   searchQuery: null,
-  focusedSuggestion: null,
-  setSearch: null,
   navigator: null,
+  isVisible: false,
 };
 
 export default ExpandedSuggestions;
