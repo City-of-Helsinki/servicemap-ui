@@ -172,7 +172,7 @@ Navigator.propTypes = {
   history: PropTypes.objectOf(PropTypes.any).isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   match: PropTypes.objectOf(PropTypes.any).isRequired,
-  previousSearch: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  previousSearch: PropTypes.oneOfType([PropTypes.string, PropTypes.objectOf(PropTypes.any)]),
 };
 
 Navigator.defaultProps = {

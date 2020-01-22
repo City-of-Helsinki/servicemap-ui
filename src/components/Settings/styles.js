@@ -12,7 +12,7 @@ export default theme => ({
     height: 57,
     top: 0,
     position: 'sticky',
-    zIndex: 20,
+    zIndex: theme.zIndex.forward,
     borderRadius: 0,
     padding: 0,
     paddingLeft: 46,
@@ -46,7 +46,7 @@ export default theme => ({
   },
   primary: {
     color: '#fff',
-    backgroundColor: '#1964E6',
+    backgroundColor: theme.palette.primary.main,
   },
   secondary: {
     color: '#000',
@@ -106,7 +106,7 @@ export default theme => ({
     alignItems: 'center',
     height: 57,
     paddingLeft: 46,
-    background: 'linear-gradient(to right, #1964E6, #146CE8, #0B7BED)',
+    background: theme.palette.background.main,
   },
   pageTitleText: {
     fontSize: 18,
@@ -130,7 +130,7 @@ export default theme => ({
     paddingLeft: 46,
     top: 0,
     position: 'sticky',
-    zIndex: 20,
+    zIndex: theme.zIndex.sticky,
     borderRadius: 0,
     padding: 0,
     margin: 0,

@@ -53,10 +53,10 @@ class InfoList extends React.Component {
     }
     // Add extra text
     if (data.www) {
-      fullText += ` ${intl.formatMessage({ id: 'unit.opens.new.tab' })}`;
+      fullText += ` ${data.extraText || intl.formatMessage({ id: 'unit.opens.new.tab' })}`;
     }
     if (data.phone) {
-      fullText += ` ${intl.formatMessage({ id: 'unit.call.number' })}`;
+      fullText += ` ${data.extraText || intl.formatMessage({ id: 'unit.call.number' })}`;
     }
     if (data.period) {
       fullText += ` ${intl.formatMessage({ id: 'unit.school.year' })}`;
@@ -98,7 +98,7 @@ class InfoList extends React.Component {
       if (data.length > 0) {
         return (
           <TitledList title={title} titleComponent={titleComponent}>
-            {data.map((item, i) => {
+            {data.map((item) => {
               if (item.value && item.type) {
                 const text = this.formString(item.value, intl);
                 const srText = this.formSrString(item, intl);
@@ -112,7 +112,7 @@ class InfoList extends React.Component {
                       text={text}
                       srText={srText}
                       handleItemClick={() => this.handleItemClick(item.value)}
-                      divider={i + 1 !== data.length} // Dont add divider if last item
+                      divider
                     />
                   );
                 }

@@ -24,7 +24,9 @@ export const APIHandlers = {
   },
   reservations: {
     url: `${config.reservationsAPI.root}/resource/`,
-    options: {},
+    options: {
+      page_size: 5,
+    },
   },
   search: {
     url: `${config.serviceMapAPI.root}/search/`,
@@ -60,6 +62,7 @@ export const APIHandlers = {
   unitEvents: {
     url: `${config.eventsAPI.root}/event/`,
     options: {
+      page_size: 5,
       type: 'event',
       start: 'today',
       sort: 'end_time',

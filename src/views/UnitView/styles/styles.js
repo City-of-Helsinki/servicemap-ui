@@ -37,6 +37,9 @@ export default theme => ({
     fontSize: 24,
     margin: 0,
   },
+  eventIcon: {
+    marginRight: theme.spacing.unitDouble,
+  },
   borderBottom: {
     borderBottom: '1px solid rgba(0,0,0,0.2)',
   },
@@ -106,18 +109,15 @@ export default theme => ({
     backgroundColor: '#fff',
     position: 'sticky',
     top: 0,
-    zIndex: 51,
-  },
-  topPadding: {
-    height: 4,
+    zIndex: theme.zIndex.sticky,
   },
   mobileButtonArea: {
     display: 'flex',
-    height: 62,
     justifyContent: 'space-evenly',
     alignItems: 'end',
     paddingLeft: theme.spacing.unitDouble,
     paddingRight: theme.spacing.unitDouble,
     marginBottom: theme.spacing.unit,
   },
+
 });

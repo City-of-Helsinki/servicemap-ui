@@ -5,7 +5,11 @@ const paths = {
     regex: /\/[a-zA-Z]{2}\/$/
   },
   search: {
-    generate: data => `/search${data.query ? `?q=${data.query}` : ''}${data.service_node ? `?service_node=${data.service_node.join(',')}`: ''}`,
+    // generate: data => `/search${data.query ? `?q=${data.query}` : ''}${data.service_node ? `?service_node=${data.service_node.join(',')}`: ''}`,
+    generate: data => {
+      const params = Object.keys(data).map(key => (`${key}=${data[key]}`));
+      return `/search${params.length ? `?${params.join('&')}` : ''}`;
+    },
     regex: /\/[a-zA-Z]{2}\/search/
   },
   unit: {

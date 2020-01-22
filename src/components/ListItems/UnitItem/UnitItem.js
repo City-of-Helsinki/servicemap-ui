@@ -27,10 +27,9 @@ class UnitItem extends React.Component {
     } = this.props;
     const accessSettingsSet = SettingsUtility.hasActiveAccessibilitySettings(settings);
     let accessText = null;
-    let markerColor = null;
+    let accessibilityProblems = null;
     if (accessSettingsSet && unit && settings) {
-      const accessibilityProblems = UnitHelper.getShortcomingCount(unit, settings);
-      markerColor = UnitHelper.getIconColor(accessibilityProblems);
+      accessibilityProblems = UnitHelper.getShortcomingCount(unit, settings);
       accessText = intl.formatMessage({ id: 'unit.accessibility.noInfo' });
       if (accessibilityProblems !== null && typeof accessibilityProblems !== 'undefined') {
         switch (accessibilityProblems) {
@@ -42,13 +41,23 @@ class UnitItem extends React.Component {
         }
       }
     }
-    return { text: accessText, color: markerColor };
+    return { text: accessText, problemCount: accessibilityProblems };
   }
 
   render() {
     const {
-      unit, changeSelectedUnit, onClick, getLocaleText, intl, navigator, userLocation,
+      address,
+      classes,
+      currentPage,
+      unit,
+      onClick,
+      getLocaleText,
+      intl,
+      padded,
+      navigator,
+      userLocation,
     } = this.props;
+
     // Don't render if not valid unit
     if (!UnitHelper.isValidUnit(unit)) {
       return null;
@@ -65,10 +74,19 @@ class UnitItem extends React.Component {
     // Accessibility text and color
     const accessData = didMount ? this.parseAccessibilityText() : 0;
     const accessText = accessData.text;
-    const accessColor = accessData.color;
+    const { problemCount } = accessData;
+
+    // Use address if possible or user location to figure out distance
+    let latLng = null;
+    try {
+      const addCoords = address && address.addressCoordinates;
+      latLng = addCoords && currentPage === 'address' ? { latitude: addCoords[1], longitude: addCoords[0] } : userLocation;
+    } catch (e) {
+      latLng = userLocation;
+    }
 
     // Distance
-    let distance = calculateDistance(unit, userLocation);
+    let distance = calculateDistance(unit, latLng);
     if (distance) {
       if (distance >= 1000) {
         distance /= 1000; // Convert from m to km
@@ -87,8 +105,13 @@ class UnitItem extends React.Component {
       <ResultItem
         title={getLocaleText(name)}
         subtitle={contractType}
-        bottomRightText={accessText}
-        bottomRightColor={accessColor}
+        bottomText={accessText}
+        bottomHighlight={problemCount !== null && typeof problemCount !== 'undefined'}
+        extendedClasses={{
+          typography: {
+            title: classes.title,
+          },
+        }}
         distance={distance}
         icon={icon}
         onClick={(e) => {
@@ -96,10 +119,10 @@ class UnitItem extends React.Component {
           if (onClick) {
             onClick();
           } else if (navigator) {
-            changeSelectedUnit(unit);
             navigator.push('unit', { id });
           }
         }}
+        padded={padded}
       />
     );
   }
@@ -109,19 +132,24 @@ export default UnitItem;
 
 // Typechecking
 UnitItem.propTypes = {
+  address: PropTypes.objectOf(PropTypes.any),
+  classes: PropTypes.objectOf(PropTypes.any).isRequired,
+  currentPage: PropTypes.string.isRequired,
   unit: PropTypes.objectOf(PropTypes.any),
-  changeSelectedUnit: PropTypes.func.isRequired,
   getLocaleText: PropTypes.func.isRequired,
   onClick: PropTypes.func,
   intl: intlShape.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
   userLocation: PropTypes.objectOf(PropTypes.any),
+  padded: PropTypes.bool,
 };
 
 UnitItem.defaultProps = {
+  address: null,
   unit: {},
   onClick: null,
   navigator: null,
   userLocation: null,
+  padded: false,
 };

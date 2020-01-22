@@ -6,7 +6,7 @@ import { AddressIcon } from '../../SMIcon';
 
 const AddressItem = (props) => {
   const {
-    getLocaleText, navigator, divider, address, classes,
+    getLocaleText, navigator, address, classes,
   } = props;
 
   const number = `${address.number ? address.number : ''}${address.letter ? address.letter : ''}`;
@@ -17,7 +17,7 @@ const AddressItem = (props) => {
       button
       text={uppercaseFirst(text)}
       icon={<AddressIcon className={classes.icon} />}
-      divider={divider}
+      divider
       handleItemClick={(e) => {
         e.preventDefault();
         if (navigator) {
@@ -41,10 +41,8 @@ AddressItem.propTypes = {
   getLocaleText: PropTypes.func.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   address: PropTypes.objectOf(PropTypes.any).isRequired,
-  divider: PropTypes.bool,
 };
 
 AddressItem.defaultProps = {
   navigator: null,
-  divider: true,
 };

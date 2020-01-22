@@ -1,4 +1,11 @@
+import mapBackground from '../../assets/images/front-page-map-bg.png';
+
 export default theme => ({
+  background: {
+    backgroundImage: `url(${mapBackground})`,
+    backgroundSize: 'cover',
+    flex: '1 1 auto',
+  },
   container: {
     flex: 1,
     padding: 0,
@@ -19,13 +26,6 @@ export default theme => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-  },
-  icon: {
-    height: 40,
-    width: 40,
-    margin: theme.spacing.unit,
-    marginRight: theme.spacing.unitDouble,
-    backgroundColor: 'blue',
   },
   left: {
     textAlign: 'left',

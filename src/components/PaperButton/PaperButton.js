@@ -4,7 +4,7 @@ import { Button, Typography } from '@material-ui/core';
 import Container from '../Container';
 
 const PaperButton = ({
-  classes, disabled, text, onClick, icon, link,
+  classes, disabled, text, onClick, icon, link, subtitle,
 }) => {
   const clonedIcon = icon ? React.cloneElement(icon, { className: classes.icon }) : null;
   const role = link ? 'link' : 'button';
@@ -13,19 +13,28 @@ const PaperButton = ({
       <Button
         classes={{
           label: classes.iconButtonLabel,
-          disabled: classes.iconButtonDisabled,
         }}
         className={classes.iconButton}
         onClick={onClick}
         role={role}
         disabled={disabled}
       >
-        <div className={classes.iconContainer}>
+        <div className={`${classes.iconContainer} ${disabled ? classes.iconDisabled : ''}`}>
           {clonedIcon}
         </div>
-        <Typography variant="body2" className={classes.text}>
-          {text}
-        </Typography>
+        <div>
+          <Typography variant="body2" className={`${classes.text} ${disabled ? classes.textDisabled : ''}`}>
+            {text}
+          </Typography>
+          {
+            subtitle
+            && (
+              <Typography variant="caption" className={`${classes.text} ${disabled ? classes.textDisabled : ''}`}>
+                {subtitle}
+              </Typography>
+            )
+          }
+        </div>
       </Button>
     </Container>
   );
@@ -38,6 +47,7 @@ PaperButton.propTypes = {
   link: PropTypes.bool,
   onClick: PropTypes.func,
   text: PropTypes.oneOfType([PropTypes.node, PropTypes.string]).isRequired,
+  subtitle: PropTypes.node,
 };
 
 PaperButton.defaultProps = {
@@ -45,6 +55,7 @@ PaperButton.defaultProps = {
   icon: null,
   link: false,
   onClick: null,
+  subtitle: null,
 };
 
 

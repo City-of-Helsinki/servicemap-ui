@@ -2,7 +2,7 @@ import { APIHandlers } from './constants';
 import fetchWrapper from './fetch';
 
 const wrapperClosure = (key, options = {}) => async (
-  data, onStart, onSuccess, onError, onNext, id, abortController,
+  data, onStart, onSuccess, onError, onNext, id, abortController, url,
 ) => {
   const response = await fetchWrapper(
     { ...options, ...data },
@@ -13,6 +13,7 @@ const wrapperClosure = (key, options = {}) => async (
     key,
     id,
     abortController,
+    url,
   );
   return response;
 };
@@ -26,4 +27,4 @@ export const serviceFetch = wrapperClosure('service');
 export const addressFetch = wrapperClosure('address');
 export const districtFetch = wrapperClosure('district');
 export const eventFetch = wrapperClosure('event');
-export const reservationsFetch = wrapperClosure('reservations');
+export const reservationsFetch = wrapperClosure('reservations', APIHandlers.reservations.options);

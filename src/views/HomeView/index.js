@@ -22,7 +22,7 @@ const mapStateToProps = (state) => {
     count,
     max,
     navigator,
-    userLocation: user.position.coordinates,
+    userLocation: user.position,
   };
 };
 

@@ -3,6 +3,8 @@ import isClient from '.';
 import SettingsUtility from './settings';
 import config from '../../config';
 
+// TODO: If berries are not used anymore, clean this class
+
 const { accessibilityColors } = config;
 
 const generateMarkerIcons = () => {
@@ -68,6 +70,9 @@ class UnitHelper {
     return 0;
   }
 
+  // Currently only default markers are used
+  static getMarkerType = () => 'default';
+  /*
   static getMarkerType = (count) => {
     if (typeof count === 'number') {
       if (count > 0) {
@@ -77,6 +82,7 @@ class UnitHelper {
     }
     return 'missingInfo';
   }
+  */
 
   static getIconColor = count => (
     this.accessibilityColors[this.getMarkerType(count)]

@@ -1,10 +1,11 @@
 /* eslint-disable quote-props */
 export default {
   'app.title': 'Servicekarta',
-  'address': 'Address', // TODO: Translate
+  'address': 'Adress',
 
   // Accessibility
   'accessibility': 'Tillgänglighet',
+  'accessibility.info': 'Esteettömyystiedot', // TODO: Translate
   'accessibility.details': 'Noggrannare uppgifter',
   'accessibility.stamp': 'Tillgängligheten beaktad',
   'accessibility.shortcomings': 'Brister',
@@ -15,302 +16,310 @@ export default {
                               }`,
 
   // Address
-  'address.show.area': 'Näytä alue kartalla', // TODO: Translate
-  'address.list.geographical': 'Maantieteellinen', // TODO: Translate
-  'address.list.protection': 'Väestönsuojelu', // TODO: Translate
-  'address.list.health': 'Terveys', // TODO: Translate
-  'address.list.education': 'Koulutus', // TODO: Translate
+  'address.show.area': 'Visa området på kartan',
+  'address.list.geographical': 'Geografisk',
+  'address.list.protection': 'Befolkningsskydd',
+  'address.list.health': 'Hälsa',
+  'address.list.education': 'Utbildning',
   'address.list.neighborhood': 'Stadsdel',
   'address.list.postcode_area': 'Postnummerområde',
-  'address.list.rescue_area': 'Suojelupiiri', // TODO: Translate
-  'address.list.rescue_district': 'Suojelulohko', // TODO: Translate
-  'address.list.rescue_sub_district': 'Suojelualalohko', // TODO: Translate
+  'address.list.rescue_area': 'Skyddsdistrikt',
+  'address.list.rescue_district': 'Skyddsavsnitt',
+  'address.list.rescue_sub_district': 'Skyddsunderavsnitt',
   'address.list.health_station_district': 'Hälsostationsområde',
   'address.list.maternity_clinic_district': 'Rådgivningsområde',
-  'address.list.lower_comprehensive_school_district_fi': 'Finsk lågstadieskola',
-  'address.list.lower_comprehensive_school_district_sv': 'Svensk lågstadieskola',
-  'address.list.upper_comprehensive_school_district_fi': 'Finsk högstadieskola',
-  'address.list.upper_comprehensive_school_district_sv': 'Svensk högstadieskola',
-  'address.list.preschool_education_fi': 'Suomenkielinen varhaiskasvatus', // TODO: Translate
-  'address.list.preschool_education_sv': 'Ruotsinkielinen varhaiskasvatus', // TODO: Translate
-  'address.error': 'Osoitetta ei löytynyt', // TODO: Translate
-  'address.nearby': 'Lähellä', // TODO: Translate
-  'address.districts': 'Alueet', // TODO: Translate
-  'address.plural': 'Osoitteet', // TODO: Translate
+  'address.list.lower_comprehensive_school_district_fi': 'Finsk lågstadieskolaområde', // TODO: Translate
+  'address.list.lower_comprehensive_school_district_sv': 'Svensk lågstadieskolaområde', // TODO: Translate
+  'address.list.upper_comprehensive_school_district_fi': 'Finsk högstadieskolaområde', // TODO: Translate
+  'address.list.upper_comprehensive_school_district_sv': 'Svensk högstadieskolaområde', // TODO: Translate
+  'address.list.preschool_education_fi': 'Finsk småbarnspedagogikområde', // TODO: Translate
+  'address.list.preschool_education_sv': 'Svensk småbarnspedagogikområde', // TODO: Translate
+  'address.error': 'Addressen kunde inte hittas',
+  'address.nearby': 'Nära',
+  'address.districts': 'Områden',
+  'address.plural': 'Adresser',
 
   // Event
-  'event.nearby': 'Nearby events', // TODO: Translate
-  'event.description': 'Kuvaus', // TODO: Translate
-  'event.time': 'Ajankohta', // TODO: Translate
-  'event.picture': 'Tapahtuman kuva', // TODO: Translate
-  'event.title': 'Tapahtumat', // TODO: Translate
+  'event.description': 'Beskrivning',
+  'event.time': 'Tidpunkt',
+  'event.picture': 'Bild på evenemanget',
+  'event.title': 'Evenemang',
 
   // Sorting
-  'sorting.label': 'Järjestä hakutulokset', // TODO: Translate
-  'sorting.accessibility.desc': 'Esteettömin ensin', // TODO: Translate
-  'sorting.alphabetical.asc': 'Käänteinen aakkosjärjestys', // TODO: Translate
-  'sorting.alphabetical.desc': 'Aakkosjärjestys', // TODO: Translate
-  'sorting.distance.asc': 'Lähin ensin', // TODO: Translate
-  'sorting.match.desc': 'Osuvin ensin', // TODO: Translate
+  'sorting.label': 'Ordna sökresultaten',
+  'sorting.accessibility.desc': 'Tillgängligaste först',
+  'sorting.alphabetical.asc': 'Omvänd alfabetisk ordning',
+  'sorting.alphabetical.desc': 'Alfabetisk ordning',
+  'sorting.distance.asc': 'Närmast först',
+  'sorting.match.desc': 'Bästa träffarna först',
 
   // General
-  'general.frontPage': 'Etusivu', // TODO: Translate
-  'general.menu': 'Valikko', // TODO: Translate
+  'general.frontPage': 'Första sidan',
+  'general.contrast': 'Kontrasti', // TODO: Translate
+  'general.menu': 'Meny',
   'general.back': 'Tillbaka',
-  'general.back.address': 'Back to address view', // TODO: Translate
-  'general.back.home': 'Back to home view', // TODO: Translate
-  'general.back.goToHome': 'Go to home view', // TODO: Translate
-  'general.back.search': 'Back to search view', // TODO: Translate
-  'general.back.service': 'Back to service view', // TODO: Translate
-  'general.back.unit': 'Back to unit view', // TODO: Translate
-  'general.back.event': 'Back to event view', // TODO: Translate
-  'general.backToHome': 'Close search and return to beginning', // TODO: Translate
-  'general.backToStart': 'Back to beginning of page', // TODO: Translate
-  'general.cancel': 'Cancel', // TODO: Translate
-  'general.close': 'Close', // TODO: Translate
+  'general.back.address': 'Gå tillbaka till adressvyn',
+  'general.back.home': 'Gå tillbaka till startvyn',
+  'general.back.goToHome': 'Gå till startvyn',
+  'general.back.search': 'Gå tillbaka till sökvyn',
+  'general.back.service': 'Gå tillbaka till tjänstevyn',
+  'general.back.unit': 'Gå tillbaka till vyn för verksamhetsställen',
+  'general.back.event': 'Gå tillbaka till evenemangsvyn',
+  'general.backTo': 'Palaa takaisin', // TODO: Translate
+  'general.backToHome': 'Stäng sökningen och gå tillbaka till början',
+  'general.backToStart': 'Gå tillbaka till början av sidan',
+  'general.back.serviceTree': 'Palaa palvelulistausnäkymään', // TODO: Translate
+  'general.cancel': 'Ångra',
+  'general.close': 'Stäng',
   'general.yes': 'Ja',
   'general.no': 'Nej',
-  'general.closeSettings': 'Close settings', // TODO: Translate
-  'general.fetching': 'Ladataan tietoja...', // TODO: Translate
-  'general.home': 'Home', // TODO: Translate
-  'general.noData': 'No data available', // TODO: Translate
-  'general.loading': 'Loading', // TODO: Translate
-  'general.showOnMap': 'Show on map', // TODO: Translate
-  'general.pageTitles.home': 'Home view', // TODO: Translate
-  'general.pageTitles.search': 'Search view', // TODO: Translate
-  'general.pageTitles.unit': 'Unit view', // TODO: Translate
-  'general.pageTitles.service': 'Service view', // TODO: Translate
-  'general.pageTitles.serviceTree': 'Palveluluettelo', // TODO: Translate
-  'general.pageTitles.event': 'Tapahtumanäkymä', // TODO: Translate
-  'general.pageTitles.address': 'Address view', // TODO: Translate
-  'general.pageTitles.list.events': 'Event list ', // TODO: Translate
-  'general.pageTitles.list.reservations': 'Reservation list ', // TODO: Translate
-  // General - Pagination
-  'general.pagination.previous': 'Previous page', // TODO: Translate
-  'general.pagination.next': 'Next page', // TODO: Translate
-  'general.pagination.openPage': 'Open page {count}', // TODO: Translate
-  'general.pagination.currentlyOpenedPage': 'Page {count} currently opened', // TODO: Translate
-  'general.pagination.pageCount': 'page {current} / {max}', // TODO: Translate
+  'general.closeSettings': 'Stäng inställningarna',
+  'general.fetching': 'Laddar data...',
+  'general.home': 'Hem',
+  'general.noData': 'Data finns inte',
+  'general.loading': 'Laddar',
+  'general.showOnMap': 'Visa på kartan',
+  'general.pageTitles.home': 'Hemvy',
+  'general.pageTitles.search': 'Sökresultatsvy',
+  'general.pageTitles.unit': 'Vy med verksamhetsställen',
+  'general.pageTitles.service': 'Tjänstevy',
+  'general.pageTitles.serviceTree': 'Förteckning över tjänster',
+  'general.pageTitles.event': 'Evenemangsvy',
+  'general.pageTitles.address': 'Adressvy',
+  'general.pageTitles.list.events': 'Förteckning över evenemang ',
+  'general.pageTitles.list.reservations': 'Förteckning över reserveringar ',
 
-  'general.previousSearch': 'Previous searches', // TODO: Translate
-  'general.return.viewTitle': 'Return to beginning of main content', // TODO: Translate
-  'general.skipToContent': 'Skip to content', // TODO: Translate
-  'general.new.tab': 'Aukeaa uuteen välilehteen', // TODO: Translate
-  'general.time.short': 'kl',
-  'general.save': 'Save', // TODO: Translate
-  'general.save.changes': 'Save settings', // TODO: Translate
-  'general.save.changes.done': 'Changes have been saved!', // TODO: Translate
-  'general.save.confirmation': 'Would you like to save changes?', // TODO: Translate
-  'general.search': 'Hae', // TODO: Translate
-  'general.distance.meters': 'Metrin päässä', // TODO: Translate
-  'general.distance.kilometers': 'Kilometrin päässä', // TODO: Translate
+  // General - Pagination
+  'general.pagination.previous': 'Föregående sida',
+  'general.pagination.next': 'Följande sida',
+  'general.pagination.openPage': 'Öppna sida {count}',
+  'general.pagination.currentlyOpenedPage': 'Sida {count} öppnad',
+  'general.pagination.pageCount': 'sida {current} / {max}',
+
+  'general.previousSearch': 'Föregående sökningar',
+  'general.return.viewTitle': 'Gå till början av huvudinnehållet',
+  'general.skipToContent': 'Gå till huvudinnehållet',
+  'general.new.tab': 'Öppnas i en ny flik',
+  'general.time.short': 'kl.',
+  'general.save': 'Spara',
+  'general.save.changes': 'Spara inställningar',
+  'general.save.changes.done': 'Ändringarna har sparats!',
+  'general.save.confirmation': 'Vill du spara ändringarna?',
+  'general.search': 'Sök',
+  'general.distance.meters': 'Meters avstånd',
+  'general.distance.kilometers': 'Kilometers avstånd',
 
   // Home
-  'home.buttons.settings': 'Tallenna omat kaupunki- ja esteettömyysasetuksesi', // TODO: Translate
-  'home.buttons.services': 'Tutustu palveluihin palveluluettelon avulla', // TODO: Translate
-  'home.buttons.closeByServices': 'Näytä lähellä olevat palvelut', // TODO: Translate
-  'home.example.title': 'Esimerkkihakuja', // TODO: Translate
-  'home.example.search': 'Hae hakusanalla', // TODO: Translate
-  'home.message': 'Terveisiä palvelukartan kehittäjiltä', // TODO: Translate
-  'home.send.feedback': 'Lähetä palautetta', // TODO: Translate
+  'home.buttons.settings': 'Spara dina egna stads- och tillgänglighetsinställningar',
+  'home.buttons.services': 'Bekanta dig med tjänster med hjälp av förteckningen över tjänster',
+  'home.buttons.closeByServices': 'Närtjänster', // TODO: Translate again
+  'home.buttons.instructions': 'Tips för användning av servicekartan',
+  'home.example.search': 'Sök med sökord',
+  'home.message': 'Hälsningar av servicekartans utvecklare',
+  'home.send.feedback': 'Skicka respons',
 
   // Location
-  'location.notFound': 'Sijaintia ei löytynyt', // TODO: Translate
-  'location.notAllowed': 'Sijaintia ei sallittu', // TODO: Translate
+  'location.notFound': 'Positionen hittades inte',
+  'location.notAllowed': 'Positionen tilläts inte',
 
   // Map
-  'map': 'Map', // TODO: Translate
-  'map.ariaLabel': 'Karttanäkymä. Kartan tietoja voi tarkastella tällä hetkellä vain näönvaraisesti.', // TODO: translate
+  'map': 'Karta',
+  'map.ariaLabel': 'Kartvy. Kartans uppgifter kan i nuläget granskas endast visuellt.',
   'map.transit.endStation': 'Ändhållplats',
   'map.address.searching': 'Söker adress...',
-  'map.address.info': 'Osoitteen tiedot', // TODO: Translate
+  'map.address.info': 'Adressens uppgifter',
 
   // Units
   'unit': 'Verksamhetsställe',
-  'unit.accessibility.noInfo': 'Inga uppgifter', // TODO: Verify
-  'unit.accessibility.noShortcomings': 'Inga kända brister', // TODO: verify
-  'unit.accessibility.ok': 'Inga kända brister', // TODO: Verify
+  'unit.accessibility.noInfo': 'Inga tillgänglighetsuppgifter',
+  'unit.accessibility.noShortcomings': 'Inga igenkända brister',
+  'unit.accessibility.ok': 'Tillänglig',
   'unit.accessibility.problems': `{count, plural,
-                                    =0 {Inga kända brister}
-                                    one {# brist}
-                                    other {# brister}
-                                  }`, // TODO: Verify
-  'unit.accessibility.unitNoInfo': 'Unit has not delivered any accessibility information.', // TODO: translate
-  'unit.basicInfo': 'Perustiedot', // TODO: Translate
-  'unit.details.notFound': 'Unit info not found', // TODO: Translate
+                                    =0 {Tillänglig}
+                                    one {# tillgänglighetsbrist}
+                                    other {# tillgänglighetsbrister}
+                                  }`,
+  'unit.accessibility.unitNoInfo': 'Verksamhetsstället har inte meddelat tillgänglighetsuppgifter.',
+  'unit.basicInfo': 'Grunduppgifter',
   'unit.data_source': 'Källa: {data_source}',
-  'unit.plural': 'Verksamhetsställen', // TODO: Verify
+  'unit.details.notFound': 'Verksamhetsställets uppgifter finns inte att tillgå.',
+  'unit.plural': 'Verksamhetsställen',
 
-  'unit.contact.info': 'Contact information', // TODO: Translate
-  'unit.eServices': 'Electronic services', // TODO: Translate
-  'unit.reservations': 'Varattavat kohteet', // TODO: Translate
+  'unit.contact.info': 'Kontaktuppgifter',
+  'unit.eServices': 'E-tjänster',
+  'unit.reservations': 'Objekt som kan reserveras',
   'unit.events': 'Evenemang',
-  // TODO: Translate
   'unit.events.count': `{count, plural,
     =0 {}
-    one {# tapahtuma}
-    other {# tapahtumaa}
+    one {# evenemang}
+    other {# evenemang}
   }`,
-  'unit.events.more': 'Näytä lisää tapahtumia', // TODO: translate
+  'unit.events.more': 'Visa fler evenemang',
   'unit.homepage': 'Hemsida',
-  'unit.homepage.missing': 'Kotisivua ei ilmoitettu', // TODO: Translate
-  'unit.picture': 'Kuva toimipisteestä: ', // TODO: Translate
-  'unit.description': 'Unit description', // TODO: Translate
-  'unit.address': 'Osoite', // TODO: Translate
-  'unit.address.missing': 'Osoitetta ei ilmoitettu', // TODO: Translate
-  'unit.phone': 'Phone number', // TODO: Translate
-  'unit.phone.missing': 'Puhelinnumeroa ei ilmoitettu', // TODO: Translate
-  'unit.email': 'Sähköpostiosoite', // TODO: Translate
-  'unit.email.missing': 'Sähköpostiosoitetta ei ilmoitettu', // TODO: Translate
-  'unit.opening.hours': 'Opening hours', // TODO: Translate
-  'unit.opening.hours.missing': 'Aukioloaikoja ei ilmoitettu', // TODO: Translate
-  'unit.opening.hours.info': 'Lisätietoa aukioloajoista', // TODO: Translate
-  'unit.contact': 'Yhteyshenkilö', // TODO: translate
+  'unit.homepage.missing': 'Ingen hemsida har meddelats',
+  'unit.picture': 'Bild av verksamhetsstället',
+  'unit.description': 'Information om verksamhetsstället',
+  'unit.address': 'Adress',
+  'unit.address.missing': 'Ingen adress har meddelats',
+  'unit.phone': 'Telefonnummer',
+  'unit.phone.missing': 'Telefonnummer har inte meddelats',
+  'unit.email': 'E-postadress',
+  'unit.email.missing': 'E-postadress har inte meddelats',
+  'unit.opening.hours': 'Öppettider',
+  'unit.opening.hours.missing': 'Öppettider har inte meddelats',
+  'unit.opening.hours.info': 'Mer om öppettiderna',
+  'unit.contact': 'Kontaktperson',
   'unit.school.year': 'Läsåret',
-  'unit.opens.new.tab': '(new tab)', // TODO: Translate
-  // TODO: Translate
+  'unit.opens.new.tab': '(ny flik)',
   'unit.reservations.count': `{count, plural,
     =0 {}
-    one {# varattava kohde}
-    other {# varattavaa kohdetta}
+    one {# objekt som kan reserveras}
+    other {# objekt som kan reserveras}
   }`,
-  'unit.reservations.more': 'Näytä lisää varattavia kohteita', // TODO: Translate
-  'unit.call.number': '(call)', // TODO: Translate
-  'unit.list.services': 'Palvelut', // TODO: Translate
-  'unit.list.events': 'Tapahtumat', // TODO: Translate
-  'unit.list.reservations': 'Varattavat kohteet', // TODO: Translate
+  'unit.reservations.more': 'Visa fler objekt som kan reserveras',
+  'unit.call.number': '(ring)',
+  'unit.list.services': 'Tjänster',
+  'unit.list.events': 'Evenemang',
+  'unit.list.reservations': 'Objekt som kan reserveras',
   'unit.services': 'Tjänster',
-  'unit.services.more': 'Näytä lisää palveluja', // TODO: Translate
-  // TODO: Translate
+  'unit.services.more': 'Visa fler tjänster',
   'unit.services.count': `{count, plural,
     =0 {}
-    one {# palvelu}
-    other {# palvelua}
+    one {# tjänst}
+    other {# tjänster}
   }`,
+  'unit.route': 'Katso reitti tänne', // TODO: translate
+  'unit.route.extra': '(Uusi välilehti. Reittiopas ei ole saavutettava palvelu)', // TODO: translate
+  'unit.socialMedia.title': 'Toimipiste sosiaalisessa mediassa', // TODO: tranaslate
 
   // Search
-  'search': 'Hae', // TODO: Translate
-  'search.arrowLabel': 'Tarkenna', // TODO: Translate
-  'search.cancelText': 'Tyhjennä hakukenttä', // TODO: Translate
-  'search.notFoundWith': 'Ei osumia haulle "{query}".', // TODO: Translate
-  'search.placeholder': 'Hae palvelua tai toimipistettä', // TODO: Translate
+  'search': 'Sök',
+  'search.arrowLabel': 'Precisera',
+  'search.cancelText': 'Töm sökfältet',
+  'search.notFoundWith': 'Inga träffar för sökningen "{query}".',
+  'search.placeholder': 'Sök tjänst eller verksamhetsställe',
   'search.info': `{count, plural,
-                  =0 {no units}
-                  one {# unit}
-                  other {# units}
-                } found`, // TODO: Translate
+                  =0 {Inga verksamhetsställen hittades}
+                  one {# verksamhetsställe hittades}
+                  other {# verksamhetsställen hittades}
+                }`,
   'search.resultList': `{count, plural,
-                  =0 {no results}
-                  one {# result}
-                  other {# results}
-                }`, // TODO: Translate
+                  =0 {inga träffar}
+                  one {# träff}
+                  other {# träffar}
+                }`,
   'search.results': `{count, plural,
-                  =0 {No results found with given search}
-                  one {# result found}
-                  other {# results found}
-                }`, // TODO: Translate
+                  =0 {Inga sökresultat hittades med sökningen}
+                  one {# sökresultat hittades}
+                  other {# sökresultat hittades}
+                }`,
   'search.results.short': `{count, plural,
-                  =0 {No results}
-                  one {# result}
-                  other {# results}
-                }`, // TODO: Translate
+                  =0 {inga träffar}
+                  one {# träff}
+                  other {# träffar}
+                }`,
   'search.results.units': `{count, plural,
-                  =0 {no units found}
-                  one {# unit found}
-                  other {# units found}
-                }`, // TODO: Translate
+                  =0 {inga verksamhetsställen hittades}
+                  one {# verksamhetsställe hittades}
+                  other {# verksamhetsställen hittades}
+                }`,
   'search.results.services': `{count, plural,
-                  =0 {no services found}
-                  one {# service found}
-                  other {# services found}
-                }`, // TODO: Translate
-  'search.resultInfo': 'Hakutiedot', // TODO: Translate
-  'search.searchField': 'Hakukenttä', // TODO: Translate
-  'search.results.title': 'Search results', // TODO: Translate
-  'search.input.placeholder': 'Search units', // TODO: Translate
-  'search.loading.units': 'Searching units {count} / {max}', // TODO: Translate
-  'search.loading.units.srInfo': 'Search loading {count} units', // TODO: Translate
-  'search.notFound': 'No results found with given search', // TODO: Translate
-  'search.started': 'Search started', // TODO: Translate
-  'search.infoText': 'Näytetään {count} hakutulosta sanalla: ', // TODO: Translate
-  'search.infoTextNode': 'Näytetään {count} hakutulosta palveluilla: ', // TODO: Translate
-  'search.searchbar.headerText': 'Pääkaupunkiseudun kaikki julkiset palvelut ulottuvillasi', // TODO: Translate
-  'search.searchbar.infoText': 'Hae palveluita, toimipisteitä tai osoitteita', // TODO: Translate
-  'search.suggestions.suggest': 'Tarkoititko..?', // TODO: Translate
-  'search.suggestions.expand': 'Hakuehdotukset', // TODO: Translate
-  'search.suggestions.loading': 'Ladataan ehdotuksia', // TODO: Translate
-  'search.suggestions.error': 'Ei hakuehdotuksia', // TODO: Translate
-  'search.suggestions.suggestions': '{count} hakuehdotusta', // TODO: Translate
-  'search.suggestions.expandSuggestions': '{count} tarkennusehdotusta', // TODO: Translate
-  'search.suggestions.results': '{count} tulosta', // TODO: Translate
-  'search.suggestions.history': '{count} kohdetta hakuhistoriassa', // TODO: Translate
-  'search.suggestions.noHistory': 'Ei aikaisempia hakuja', // TODO: Translate
-  'search.tryAgain': 'Yritä hakea uudelleen', // TODO: Translate
-  'search.tryAgainBody.spelling': 'tarkista kirjoitusasu', // TODO: Translate
-  'search.tryAgainBody.city': 'tarkista kaupunkivalinnat', // TODO: Translate
-  'search.tryAgainBody.service': 'kirjoita palvelun nimi', // TODO: Translate
-  'search.tryAgainBody.address': 'kirjoita osoite, minkä läheltä etsit palvelua', // TODO: Translate
-  'search.tryAgainBody.keyword': 'kirjoita avainsanoja, esim. luontopolku, ruotsinkielinen päiväkoti', // TODO: Translate
-  'search.expand': 'Tarkenna hakua', // TODO: Translate
-  'search.closeExpand': 'Palaa hakuun', // TODO: Translate
+                  =0 {inga tjänster hittades}
+                  one {# tjänst hittades}
+                  other {# tjänster hittades}
+                }`,
+  'search.resultInfo': 'Sökdata',
+  'search.searchField': 'Sökfält',
+  'search.results.title': 'Sökresultat',
+  'search.input.placeholder': 'Sök verksamhetsställen',
+  'search.loading.units': 'Söker verksamhetsställen {count} / {max}',
+  'search.loading.units.srInfo': 'Söker {count} verksamhetsställe(n)',
+  'search.notFound': 'Inga sökresultat hittades med sökningen',
+  'search.started': 'Sökningen har börjat',
+  'search.infoText': '{count} sökresultat',
+  'search.searchbar.headerText': 'Alla tjänster i huvudstadsregionen inom ditt räckhåll.',
+  'search.searchbar.infoText': 'Sök tjänster, verksamhetsställen eller adresser',
+  'search.suggestions.suggest': 'Menade du..?',
+  'search.suggestions.expand': 'Sökförslag',
+  'search.suggestions.loading': 'Laddar förslag',
+  'search.suggestions.error': 'Inga förslag',
+  'search.suggestions.suggestions': '{count} sökförslag',
+  // 'search.suggestions.expandSuggestions': '{count} preciseringsförslag',
+  'search.suggestions.results': '{count} resultat',
+  'search.suggestions.history': '{count} objekt i sökhistorien',
+  'search.suggestions.noHistory': 'Inga tidigare sökningar',
+  'search.tryAgain': 'Försök att söka på nytt',
+  'search.tryAgainBody.spelling': 'kontrollera stavningen',
+  'search.tryAgainBody.city': 'kontrollera stadsvalen',
+  'search.tryAgainBody.service': 'skriv tjänstens namn',
+  'search.tryAgainBody.address': 'skriv adressen i närheten av vilken du söker en tjänst',
+  'search.tryAgainBody.keyword': 'skriv nyckelord, t.ex. naturstig, svenskt daghem',
+  'search.expand': 'Precisera sökningen',
+  'search.closeExpand': 'Gå tillbaka till sökningen',
 
   // Service
   'service': 'Tjänst',
   'service.plural': 'Tjänster',
-  'service.nearby': 'Nearby services', // TODO: Translate
-  'service.units.empty': 'Service doesn\'t have units', // TODO: Translate
-  'service.tab': 'Palvelut ja tapahtumat', // TODO: Translate
+  'service.nearby': 'Närtjänster',
+  'service.units.empty': 'Tjänsten har inga verksamhetsställen',
+  'service.tab': 'Tjänster och evenemang',
 
   // Service tree
-  'services': 'Palveluluettelo', // TODO: translate
+  'services': 'Förteckning över tjänster',
   'services.selections': `{count, plural,
-        one {Olet thenyt (#) valinnan}
-        other {Olet thenyt (#) valintaa}
-      }`, // TODO: translate
-  'services.selections.delete': 'Poista kaikki valinnat', // TODO: translate
-  'services.search': 'Tee haku', // TODO: translate
-
+        one {Du har gjort (#) val}
+        other {Du har gjort (#) val}
+      }`,
+  'services.selections.delete': 'Poista', // TODO: translate
+  'services.selections.delete.all': 'Ta bort alla val',
+  'services.selections.delete.sr': 'Poista valinta: ', // TODO: translate
+  'services.search': 'Gör sökning',
+  'services.search.sr': 'Tee haku valituilla palveluilla', // TODO: translate
+  'services.search.sr.selected': 'Tee haku palveluilla: {services}', // TODO: translate
 
   // Settings
-  'settings': 'Personifiera',
-  'settings.citySettings': 'Kaupunki', // TODO: Translate
-  'settings.citySettings.long': 'Kaupunkiasetukset', // TODO: Translate
-  'settings.mapSettings': 'Karttapohja', // TODO: Translate
-  'settings.mapSettings.long': 'Kartta-asetukset', // TODO: Translate
-  'settings.accessibilitySettings': 'Esteettömyysasetukset', // TODO: Translate
-  'settings.accessibilitySettings.long': 'Esteettömyysasetukset', // TODO: Translate
-  'settings.all.long': 'Personifiera',
+  'settings': 'Inställningar',
+  'settings.citySettings': 'Stad',
+  'settings.citySettings.long': 'Stadsinställningar',
+  'settings.mapSettings': 'Kartbotten',
+  'settings.mapSettings.long': 'Kartinställningar',
+  'settings.accessibilitySettings': 'Tillgänglighetsinställningar',
+  'settings.accessibilitySettings.long': 'Tillgänglighetsinställningar',
+  'settings.all.long': 'Inställningar',
   'settings.amount': `{count, plural,
-    one {# valinta} 
-    other {# valintaa}
-  }`, // TODO: Translate
-  'settings.accessibility': 'Minua koskevat esteettömyystiedot', // TODO: Translate
+    one {# val} 
+    other {# val}
+  }`,
+  'settings.accessibility': 'Tillgänglighetsuppgifter som gäller mig',
   'settings.sense.title': 'Hörsel och syn',
   'settings.sense.hearing': 'Jag använder hörapparat',
   'settings.sense.visual': 'Jag är synskadad',
   'settings.sense.colorblind': 'Jag är färgblind',
-  'settings.mobility.title': 'Att röra sig',
-  'settings.mobility.none': 'No mobility impairments', // TODO: Translate
+  'settings.info.heading': 'Asetustiedot', // TODO: Translate
+  'settings.info.title': 'Valitsemasi asetukset vaikuttavat hakutulokseen', // TODO: Translate
+  'settings.info.title.noSettings': 'Muuta haku- tai esteettömyysasetuksia', // TODO: Translate
+  'settings.mobility.title': 'Rörelsebegränsningar',
+  'settings.mobility.none': 'Inga rörelsebegränsningar',
   'settings.mobility.wheelchair': 'Jag använder rullstol',
   'settings.mobility.reduced_mobility': 'Jag är rörelsehindrad',
   'settings.mobility.rollator': 'Jag använder rollator',
   'settings.mobility.stroller': 'Jag går med barnvagn',
   'settings.city.info': `{count, plural,
-    one {Valitsemani kaupunki} 
-    other {Valitsemani kaupungit}
-  }`, // TODO: Translate
-  'settings.city.title': 'Kaupunki', // TODO: Translate
-  'settings.city.helsinki': 'Helsinki',
-  'settings.city.espoo': 'Espoo',
-  'settings.city.vantaa': 'Vantaa',
-  'settings.city.kauniainen': 'Kauniainen',
-  'settings.map.title': 'Karta',
+    one {Staden jag valt} 
+    other {Städerna jag valt}
+  }`,
+  'settings.city.title': 'Stad',
+  'settings.city.helsinki': 'Helsingfors',
+  'settings.city.espoo': 'Esbo',
+  'settings.city.vantaa': 'Vanda',
+  'settings.city.kauniainen': 'Grankulla',
+  'settings.map.title': 'Kartbotten',
   'settings.map.servicemap': 'Servicekarta',
   'settings.map.ortographic': 'Flygbild',
   'settings.map.guideMap': 'Guidekarta',
-  'settings.aria.changed': 'Settings have changed. Remember to save', // TODO: Translate
-  'settings.aria.closed': 'Settings closed', // TODO: Translate
-  'settings.aria.open': 'Open settings', // TODO: Translate
-  'settings.aria.opened': 'Settings opened', // TODO: Translate
-  'settings.aria.saved': 'Settings have been saved', // TODO: Translate
+  'settings.aria.changed': 'Inställningarna har ändrats. Kom ihåg att spara.',
+  'settings.aria.closed': 'Inställningarna har stängts',
+  'settings.aria.open': 'Öppna inställningarna',
+  'settings.aria.opened': 'Inställningarna har öppnats',
+  'settings.aria.saved': 'Inställningarna har sparats',
 };

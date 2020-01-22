@@ -4,7 +4,6 @@ import { FormattedMessage } from 'react-intl';
 import SearchBar from '../../components/SearchBar';
 import { MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import PaperButton from '../../components/PaperButton';
-import fetchAddress from '../MapView/utils/fetchAddress';
 import { getIcon } from '../../components/SMIcon';
 
 class HomeView extends React.Component {
@@ -14,7 +13,7 @@ class HomeView extends React.Component {
       fetchUnits, navigator,
     } = this.props;
     if (navigator) {
-      navigator.push('search', { query: searchText });
+      navigator.push('search', { q: searchText });
     }
 
     if (searchText && searchText !== '') {
@@ -26,60 +25,66 @@ class HomeView extends React.Component {
     const {
       classes, getLocaleText, toggleSettings, navigator, userLocation,
     } = this.props;
-    const disableCloseByServices = !userLocation
-      || !userLocation.latitude
-      || !userLocation.longitude;
+    const noUserLocation = !userLocation
+      || !userLocation.coordinates
+      || !userLocation.addressData;
+
+    const notFoundText = noUserLocation ? 'location.notFound' : null;
+    const subtitleID = userLocation && userLocation.allowed ? notFoundText
+      : 'location.notAllowed';
 
     return (
-      <div className={classes.buttonContainer}>
-        {!disableCloseByServices && (
+      <div className={classes.background}>
+        <div className={classes.buttonContainer}>
           <PaperButton
             text={<FormattedMessage id="home.buttons.closeByServices" />}
-            icon={getIcon('location', { className: classes.icon })}
+            icon={getIcon('location')}
             link
+            disabled={noUserLocation}
             onClick={() => {
-              if (disableCloseByServices) {
-                return;
-              }
-              const latLng = { lat: userLocation.latitude, lng: userLocation.longitude };
-              fetchAddress(latLng)
-                .then((data) => {
-                  navigator.push('address', {
-                    municipality: data.street.municipality,
-                    street: getLocaleText(data.street.name),
-                    number: data.number,
-                  });
-                });
+              navigator.push('address', {
+                municipality: userLocation.addressData.street.municipality,
+                street: getLocaleText(userLocation.addressData.street.name),
+                number: userLocation.addressData.number,
+              });
             }}
+            subtitle={subtitleID && <FormattedMessage id={subtitleID} />}
           />
-        )}
-        <PaperButton
-          text={<FormattedMessage id="home.buttons.services" />}
-          icon={getIcon('serviceList', { className: classes.icon })}
-          link
-          onClick={() => navigator.push('serviceTree')}
-        />
-        <MobileComponent>
           <PaperButton
-            text={<FormattedMessage id="home.buttons.settings" />}
-            icon={getIcon('accessibility', { className: classes.icon })}
+            text={<FormattedMessage id="home.buttons.services" />}
+            icon={getIcon('serviceList')}
             link
-            onClick={() => toggleSettings('all')}
+            onClick={() => navigator.push('serviceTree')}
           />
-        </MobileComponent>
-        <PaperButton
-          text={<FormattedMessage id="home.send.feedback" />}
-          icon={getIcon('feedback', { className: classes.icon })}
-          link
-          onClick={() => window.open('https://forms.gle/roe9XNrZGQWBhMBJ7')}
-        />
+          <MobileComponent>
+            <PaperButton
+              text={<FormattedMessage id="home.buttons.settings" />}
+              icon={getIcon('accessibility')}
+              link
+              onClick={() => toggleSettings('all')}
+            />
+          </MobileComponent>
+          <PaperButton
+            text={<FormattedMessage id="home.send.feedback" />}
+            icon={getIcon('feedback')}
+            link
+            onClick={() => window.open('https://forms.gle/roe9XNrZGQWBhMBJ7')}
+          />
+          <PaperButton
+            text={<FormattedMessage id="home.buttons.instructions" />}
+            icon={getIcon('help')}
+            link
+            onClick={() => {}}
+            disabled
+          />
+        </div>
       </div>
     );
   }
 
   render() {
     return (
-      <>
+      <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
         <SearchBar
           hideBackButton
           header
@@ -159,7 +164,7 @@ kehitämme jatkuvasti saavutettavuutta ja käytettävyyttä.
             <br />
           </Typography>
         </Container> */}
-      </>
+      </div>
     );
   }
 }

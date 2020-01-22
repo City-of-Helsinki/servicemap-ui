@@ -27,7 +27,7 @@ class SearchBar extends React.Component {
     this.searchRef = React.createRef();
 
     this.state = {
-      search: initialValue || previousSearch || '',
+      search: previousSearch || initialValue || '',
       searchQuery: '',
       isActive: false,
       focusedSuggestion: null,
@@ -112,7 +112,7 @@ class SearchBar extends React.Component {
       }
 
       if (navigator) {
-        navigator.push('search', { query: search });
+        navigator.push('search', { q: search });
       }
     }
   }
@@ -177,7 +177,7 @@ class SearchBar extends React.Component {
       : null;
 
     // Style classes
-    const backButtonStyles = `${classes.iconButton} ${classes.darkBlue}`;
+    const backButtonStyles = `${classes.iconButton}`;
     const showSuggestions = isActive;
     const inputValue = typeof search === 'string' ? search : previousSearchText;
     const containerStyles = `${isActive ? classes.containerSticky : classes.containerInactive} ${classes.container}`;
@@ -274,15 +274,26 @@ class SearchBar extends React.Component {
 
   renderMobile = () => {
     const {
+      background,
       classes,
       className,
       isSticky,
-      primary,
+      header,
       srHideInput,
     } = this.props;
     const { isActive } = this.state;
 
-    const rootClasses = `${isActive ? classes.mobileRoot : classes.root} ${!isActive && typeof isSticky === 'number' ? classes.sticky : ''} ${primary ? classes.primary : ''}  ${className}`;
+    const rootClasses = `${
+      isActive ? classes.mobileActiveRoot : classes.root
+    } ${
+      !isActive && typeof isSticky === 'number' ? classes.sticky : ''
+    } ${
+      header ? classes.headerBackground : ''
+    } ${
+      background === 'default' ? classes.background : ''
+    }  ${
+      className
+    }`;
     const wrapperClasses = `${isActive ? classes.mobileWrapper : classes.wrapper}`;
     const stickyStyles = typeof isSticky === 'number' ? { top: isSticky } : null;
 
@@ -312,14 +323,28 @@ class SearchBar extends React.Component {
 
   render() {
     const {
+      background,
       classes,
       className,
       isSticky,
-      primary,
+      header,
       srHideInput,
+      margin,
     } = this.props;
 
-    const rootClasses = `${classes.root} ${typeof isSticky === 'number' ? classes.sticky : ''} ${primary ? classes.primary : ''}  ${className}`;
+    const rootClasses = `${
+      classes.root
+    } ${
+      typeof isSticky === 'number' ? classes.sticky : ''
+    } ${
+      margin ? classes.bottomMargin : ''
+    } ${
+      header ? classes.headerBackground : ''
+    } ${
+      background === 'default' ? classes.background : ''
+    } ${
+      className
+    }`;
     const wrapperClasses = classes.wrapper;
     const stickyStyles = typeof isSticky === 'number' ? { top: isSticky } : null;
 
@@ -352,6 +377,7 @@ class SearchBar extends React.Component {
 }
 
 SearchBar.propTypes = {
+  background: PropTypes.oneOf(['default', 'none']),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   className: PropTypes.string,
   fetchUnits: PropTypes.func.isRequired,
@@ -362,12 +388,14 @@ SearchBar.propTypes = {
   intl: intlShape.isRequired,
   isSticky: PropTypes.number,
   isFetching: PropTypes.bool.isRequired,
-  previousSearch: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  previousSearch: PropTypes.oneOfType([PropTypes.string, PropTypes.objectOf(PropTypes.any)]),
   primary: PropTypes.bool,
   srHideInput: PropTypes.bool,
+  margin: PropTypes.bool,
 };
 
 SearchBar.defaultProps = {
+  background: 'default',
   previousSearch: null,
   className: '',
   header: false,
@@ -375,8 +403,8 @@ SearchBar.defaultProps = {
   initialValue: null,
   isSticky: null,
   navigator: null,
-  primary: false,
   srHideInput: false,
+  margin: false,
 };
 
 export default SearchBar;
