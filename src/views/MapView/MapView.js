@@ -19,6 +19,7 @@ import fetchAddress from './utils/fetchAddress';
 import { isEmbed } from '../../utils/path';
 import AddressMarker from './components/AddressMarker';
 import isClient from '../../utils';
+import swapCoordinates from './utils/swapCoordinates';
 
 
 const MapView = (props) => {
@@ -76,7 +77,14 @@ const MapView = (props) => {
         unitGeometry = coordinates;
       }
     }
-    return { units: mapUnits, unitGeometry };
+
+    const data = { units: mapUnits, unitGeometry };
+
+    if (data.unitGeometry) {
+      data.unitGeometry = swapCoordinates(data.unitGeometry);
+    }
+
+    return data;
   };
 
   const renderTopBar = () => {

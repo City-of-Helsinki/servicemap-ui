@@ -23,7 +23,6 @@ import SMButton from '../../components/ServiceMapButton';
 import TabLists from '../../components/TabLists';
 import calculateDistance from '../../utils/calculateDistance';
 import { AddressIcon } from '../../components/SMIcon';
-import swapCoordinates from '../MapView/utils/swapCoordinates';
 import SocialMediaLinks from './components/SocialMediaLinks';
 
 const UnitView = (props) => {
@@ -54,7 +53,7 @@ const UnitView = (props) => {
     if (unit && map) {
       const { geometry, location } = unit;
       if (geometry && geometry.type === 'MultiLineString') {
-        focusDistrict(map, swapCoordinates(geometry.coordinates));
+        focusDistrict(map, geometry.coordinates);
       } else if (location) {
         focusUnit(map, location.coordinates);
       }

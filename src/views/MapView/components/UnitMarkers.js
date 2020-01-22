@@ -3,10 +3,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core';
-import { valuesHaveChanged, arraysEqual } from '../../../utils';
+import { valuesHaveChanged } from '../../../utils';
 import styles from '../styles';
 import { getLocaleString } from '../../../redux/selectors/locale';
-import swapCoordinates from '../utils/swapCoordinates';
 
 const componentUpdatingProps = ['data'];
 
@@ -27,7 +26,7 @@ class UnitMarkers extends React.Component {
         {data.unitGeometry && unitListFiltered.length === 1 && (
           <Polyline
             positions={[
-              swapCoordinates(data.unitGeometry),
+              data.unitGeometry,
             ]}
             color="#ff8400"
           />
