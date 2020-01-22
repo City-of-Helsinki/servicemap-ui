@@ -163,8 +163,6 @@ const renderUnitMarkers = (
           [unit.location.coordinates[1], unit.location.coordinates[0]],
           {
             icon: drawMarkerIcon(unit, settings),
-            title: unit.name && getLocaleText(unit.name),
-            alt: unit.street_address && getLocaleText(unit.street_address),
             customUnitData: unit,
           },
         ).bindTooltip(
@@ -197,4 +195,13 @@ export const markerClusterConnector = (settings, getLocaleText, navigator) => (
 // Connector (closure) function used to add state values in redux connect
 export const renderMarkerConnector = (settings, getLocaleText, navigator) => (
   leaflet, data, classes, clusterLayer, embeded,
-) => renderUnitMarkers(settings, getLocaleText, navigator, leaflet, data, classes, clusterLayer, embeded);
+) => renderUnitMarkers(
+  settings,
+  getLocaleText,
+  navigator,
+  leaflet,
+  data,
+  classes,
+  clusterLayer,
+  embeded,
+);
