@@ -123,11 +123,9 @@ const getMapOptions = (type, locale) => {
 };
 
 const transitIconSize = 30;
-const userIconSize = 50;
 
 export {
   mapOptions,
   getMapOptions,
   transitIconSize,
-  userIconSize,
 };
