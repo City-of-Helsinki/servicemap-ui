@@ -28,5 +28,5 @@ const mapStateToProps = (state) => {
 
 export default connect(
   mapStateToProps,
-  { fetchUnits, toggleSettings },
+  { toggleSettings },
 )(withStyles(styles)(HomeView));
