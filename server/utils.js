@@ -1,6 +1,6 @@
 const redirectables = [
   {
-    check: /^\/(fi|se|en)\/embed\/unit\?(.+)=/,
+    check: /^\/(fi|sv|en)\/embed\/unit\?(.+)=/,
     redirectTo: (item, req) => {
       try {
         let queryString = null;
@@ -26,7 +26,7 @@ const isValidLanguage = (path) => {
   if(!path) {
     return false;
   }
-  const hasLanguage = path.match(/^\/(fi|se|en)/);
+  const hasLanguage = path.match(/^\/(fi|sv|en)/);
   return hasLanguage && hasLanguage.index === 0;
 }
 // Handle language change
