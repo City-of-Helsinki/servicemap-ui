@@ -273,6 +273,9 @@ export default {
   'services.search': 'Gör sökning',
   'services.search.sr': 'Tee haku valituilla palveluilla', // TODO: translate
   'services.search.sr.selected': 'Tee haku palveluilla: {services}', // TODO: translate
+  'services.category.select': 'Alla',
+  'services.category.open': 'Öppna kategori',
+  'services.tree.level': 'Nivå',
 
   // Settings
   'settings': 'Inställningar',

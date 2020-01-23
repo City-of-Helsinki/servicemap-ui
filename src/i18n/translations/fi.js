@@ -273,6 +273,9 @@ export default {
   'services.search': 'Tee haku',
   'services.search.sr': 'Tee haku valituilla palveluilla',
   'services.search.sr.selected': 'Tee haku palveluilla: {services}',
+  'services.category.select': 'Kaikki',
+  'services.category.open': 'Avaa kategoria',
+  'services.tree.level': 'Taso',
 
   // Settings
   'settings': 'Asetukset',

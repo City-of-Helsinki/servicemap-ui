@@ -273,6 +273,9 @@ export default {
   'services.search': 'Perform search',
   'services.search.sr': 'Perform search with the selected services',
   'services.search.sr.selected': 'Perform search with services: {services}',
+  'services.category.select': 'All',
+  'services.category.open': 'Open category',
+  'services.tree.level': 'Level',
 
   // Settings
   'settings': 'Settings',

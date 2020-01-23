@@ -7,7 +7,7 @@ import {
   ArrowDropUp, ArrowDropDown, Search, Cancel,
 } from '@material-ui/icons';
 import { FormattedMessage, intlShape } from 'react-intl';
-import { MobileComponent, DesktopComponent } from '../../layouts/WrapperComponents/WrapperComponents';
+import config from '../../../config';
 import SMButton from '../../components/ServiceMapButton';
 
 const ServiceTreeView = (props) => {
@@ -58,7 +58,7 @@ const ServiceTreeView = (props) => {
 
   const fetchRootNodes = () => (
     // Fetch all top level 0 nodes (root nodes)
-    fetch('https://api.hel.fi/servicemap/v2/service_node/?level=0&page=1&page_size=100')
+    fetch(`${config.serviceMapAPI.root}/service_node/?level=0&page=1&page_size=100`)
       .then(response => response.json())
       .then(data => data.results)
   );
@@ -71,7 +71,7 @@ const ServiceTreeView = (props) => {
 
   const fetchChildServices = async (service) => {
     // Fetch and set to state the child nodes of the opened node
-    fetch(`https://api.hel.fi/servicemap/v2/service_node/?parent=${service}&page=1&page_size=1000`)
+    fetch(`${config.serviceMapAPI.root}/service_node/?parent=${service}&page=1&page_size=1000`)
       .then(response => response.json())
       .then((data) => {
         setServices([...services, ...data.results]);
@@ -218,8 +218,11 @@ const ServiceTreeView = (props) => {
       + (settings.kauniainen ? item.unit_count.municipality.kauniainen || 0 : 0);
     }
 
+    const checkboxSrTitle = ` ${getLocaleText(item.name)} ${intl.formatMessage({ id: 'services.tree.level' })} ${level + 1} ${intl.formatMessage({ id: 'services.category.select' })}`;
+    const itemSrTitle = `${getLocaleText(item.name)} (${resultCount}) ${intl.formatMessage({ id: 'services.category.open' })}`;
+
     return (
-      <div role="listitem" aria-label={getLocaleText(item.name)} key={item.id}>
+      <div key={item.id}>
         <ListItem
           disableGutters
           className={`${classes.listItem} ${classes[`level${level}`]}`}
@@ -229,6 +232,7 @@ const ServiceTreeView = (props) => {
           <div className={classes.checkBox}>
             {drawCheckboxLines(isOpen, level, item.id)}
             <Checkbox
+              inputProps={{ title: checkboxSrTitle }}
               onClick={e => handleCheckboxClick(e, item)}
               icon={<span className={classes.checkBoxIcon} />}
               color="primary"
@@ -243,6 +247,7 @@ const ServiceTreeView = (props) => {
             disableRipple
             disableTouchRipple
             onClick={hasChildren ? () => handleExpand(item, isOpen) : null}
+            aria-label={itemSrTitle}
           >
             <Typography align="left" className={classes.text}>
               {`${getLocaleText(item.name)} (${resultCount})`}
@@ -252,7 +257,7 @@ const ServiceTreeView = (props) => {
 
         </ListItem>
 
-        <Collapse role="list" aria-hidden={!isOpen} in={isOpen}>
+        <Collapse aria-hidden={!isOpen} in={isOpen}>
           {isOpen && children && children.length && children.map((child, i) => (
             expandingComponent(
               child, // child service node
@@ -265,18 +270,6 @@ const ServiceTreeView = (props) => {
       </div>
     );
   };
-
-  const TopBar = (
-    <div>
-      <DesktopComponent>
-        <Typography className={classes.title}><FormattedMessage id="services" /></Typography>
-      </DesktopComponent>
-      <MobileComponent>
-        <Typography className={classes.title}><FormattedMessage id="services" /></Typography>
-      </MobileComponent>
-    </div>
-  );
-
 
   // Render components:
 
@@ -406,7 +399,7 @@ const ServiceTreeView = (props) => {
   return (
     <>
       <div className={classes.topArea}>
-        {TopBar}
+        <Typography aria-hidden className={classes.title}><FormattedMessage id="services" /></Typography>
         {renderSelectedCities()}
         {renderSelectionList(selectedList)}
       </div>
