@@ -20,6 +20,7 @@ import fetch from 'node-fetch';
 import { fetchEventData, fetchSelectedUnitData } from './dataFetcher';
 import IntlPolyfill from 'intl';
 import paths from '../config/paths';
+import legacyRedirector from './legacyRedirector';
 
 const setupTests = () => {
   if (global.Intl) {
@@ -47,6 +48,7 @@ app.use(`/*`, (req, res, next) => {
   req._context = store;
   next();
 });
+app.use(`/rdr`, legacyRedirector);
 app.use('/', languageSubdomainRedirect);
 app.use(`/`, makeLanguageHandler);
 app.use('/', unitRedirect);
