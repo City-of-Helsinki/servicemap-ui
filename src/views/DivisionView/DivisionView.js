@@ -36,7 +36,7 @@ const DivisionView = ({
     }
 
     if (options) {
-      fetchUnits(null, 'params', null, options);
+      fetchUnits(options);
       fetchDivisionDistrict(options.division)
         .then((data) => {
           setHighlightedDistrict(data);

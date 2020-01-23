@@ -108,7 +108,7 @@ class SearchBar extends React.Component {
 
       if (search !== previousSearch) {
         this.setState({ search }); // Change current search text to new one
-        fetchUnits(search);
+        fetchUnits({ q: search });
       }
 
       if (navigator) {

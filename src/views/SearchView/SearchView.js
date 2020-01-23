@@ -26,10 +26,12 @@ class SearchView extends React.Component {
 
     this.state = {
       expandSearch: null,
+      /*
       serviceRedirect: {
         service: null,
         wasHandled: false,
       },
+      */
     };
   }
 
@@ -37,40 +39,32 @@ class SearchView extends React.Component {
     const {
       fetchUnits, units, map,
     } = this.props;
-    const searchData = this.getSearchParam();
-
-    const options = this.parseQueryDataFromSearchParams();
+    const options = this.searchParamData();
     // Handle old service value redirects
+    /*
     const handlingRedirect = this.handleServiceRedirect();
     if (handlingRedirect) {
       return;
     }
+    */
 
     if (Object.keys(options).length) {
-      fetchUnits(this.stringifySearchQuery(options), 'params', null, options);
-    } else if (this.shouldFetch()) {
-      if (searchData.type === 'search') {
-        fetchUnits(searchData.query);
-      } else {
-        fetchUnits(searchData.query, searchData.type);
-      }
+      fetchUnits(options);
       this.focusMap(units, map);
     }
   }
 
   shouldComponentUpdate(nextProps) {
     const { fetchUnits, units, map } = this.props;
-    const searchData = this.getSearchParam(nextProps);
     if (this.shouldFetch(nextProps)) {
+      /*
       const handlingRedirect = this.handleServiceRedirect();
       if (handlingRedirect) {
         return false;
       }
-      if (searchData.type === 'search') {
-        fetchUnits(searchData.query);
-      } else {
-        fetchUnits(searchData.query, searchData.type);
-      }
+      */
+      const searchData = this.searchParamData();
+      fetchUnits(searchData);
       this.focusMap(units, map);
       return true;
     }
@@ -81,25 +75,27 @@ class SearchView extends React.Component {
     return true;
   }
 
+  /*
   // Handle service redirect for old service parameters if given
   // Will fetch new service_node from redirect endpoint with service parameter
   handleServiceRedirect = () => {
     const {
-      fetchUnits, fetchRedirectService,
+      fetchUnits, fetchRedirectService, isRedirectFetching,
     } = this.props;
     const {
       serviceRedirect,
     } = this.state;
-    const options = this.parseQueryDataFromSearchParams();
-
+    if (isRedirectFetching) {
+      return true;
+    }
+    const options = this.searchParamData();
     if (options.service && serviceRedirect.service !== options.service) {
       // Set new state object for serviceRedirect
       const obj = {
-        service: options.service,
+        service: null,
         wasHandled: false,
       };
       this.setState({ serviceRedirect: obj });
-
       // Fetch service_node for given old service data
       fetchRedirectService({ service: options.service }, (data) => {
         // Success
@@ -111,7 +107,7 @@ class SearchView extends React.Component {
           options.service_node = data.service_node;
 
           // Set serviceRedirect to wasHandled
-          this.setState({ serviceRedirect: { ...obj, wasHandled: true } });
+          this.setState({ serviceRedirect: { service: options.service, wasHandled: true } });
           fetchUnits(searchParams, 'params', null, options);
         }
       });
@@ -119,18 +115,7 @@ class SearchView extends React.Component {
     }
     return false;
   }
-
-  // Get search parameter from url
-  getSearchParam = (props) => {
-    const {
-      location,
-    } = props || this.props;
-    const searchParams = parseSearchParams(location.search);
-    if (searchParams.q) {
-      return { type: 'search', query: searchParams.q };
-    }
-    return { type: 'params', query: searchParams };
-  }
+  */
 
   stringifySearchQuery = (data) => {
     try {
@@ -141,13 +126,14 @@ class SearchView extends React.Component {
     }
   }
 
-  parseQueryDataFromSearchParams = (props = null) => {
+  searchParamData = (props = null) => {
     const {
       location,
     } = props || this.props;
     const searchParams = parseSearchParams(location.search);
 
     const {
+      q,
       category,
       city,
       municipality,
@@ -156,14 +142,46 @@ class SearchView extends React.Component {
     } = searchParams;
 
     const options = {};
-    // Parse service
-    if (service) {
-      options.service = service;
-    }
+    if (q) {
+      options.q = q;
+    } else {
+      // Parse service
+      if (service) {
+        options.service = service;
+      }
 
-    // Parse service_node
-    if (service_node) {
-      options.service_node = service_node;
+      // Parse service_node
+      if (service_node) {
+        options.service_node = service_node;
+      }
+
+      if (category) {
+        const data = category.split(',');
+
+        // Parse services
+        const services = data.reduce((result, item) => {
+          if (item.indexOf('service:') === 0) {
+            result.push(item.split(':')[1]);
+          }
+          return result;
+        }, []);
+
+        if (services.length) {
+          options.service = services.join(',');
+        }
+
+        // Parse serviceNodes
+        const serviceNodes = data.reduce((result, item) => {
+          if (item.indexOf('service_node:') === 0) {
+            result.push(item.split(':')[1]);
+          }
+          return result;
+        }, []);
+
+        if (serviceNodes.length) {
+          options.service_node = serviceNodes.join(',');
+        }
+      }
     }
 
     // Parse municipality
@@ -171,56 +189,29 @@ class SearchView extends React.Component {
       options.municipality = municipality || city;
     }
 
-    if (category) {
-      const data = category.split(',');
-
-      // Parse services
-      const services = data.reduce((result, item) => {
-        if (item.indexOf('service:') === 0) {
-          result.push(item.split(':')[1]);
-        }
-        return result;
-      }, []);
-
-      if (services.length) {
-        options.service = services.join(',');
-      }
-
-      // Parse serviceNodes
-      const serviceNodes = data.reduce((result, item) => {
-        if (item.indexOf('service_node:') === 0) {
-          result.push(item.split(':')[1]);
-        }
-        return result;
-      }, []);
-
-      if (serviceNodes.length) {
-        options.service_node = serviceNodes.join(',');
-      }
-    }
 
     return options;
   }
 
   // Check if view will fetch data because sreach params has changed
   shouldFetch = (props) => {
-    const { isFetching, isRedirectFetching, previousSearch } = props || this.props;
-    const searchParam = this.getSearchParam(props);
-
-    if (isRedirectFetching) {
-      return false;
+    const { isFetching, previousSearch } = props || this.props;
+    if (previousSearch && !this.isInputSearch()) {
+      return !isFetching && this.stringifySearchQuery(this.searchParamData(props)) !== previousSearch;
     }
-
-    if (previousSearch && searchParam && searchParam.type === 'params') {
-      return !isFetching && searchParam && this.stringifySearchQuery(this.parseQueryDataFromSearchParams(props)) !== previousSearch.searchQuery;
-    }
-    return !isFetching && searchParam && searchParam.query !== previousSearch;
+    return !isFetching && this.searchParamData(props).q !== previousSearch;
   }
 
   focusMap = (units, map) => {
     if (map && map._layersMaxZoom) {
       fitUnitsToMap(units, map);
     }
+  }
+
+  // Figure out if we are using search query or parameterized search
+  isInputSearch = () => {
+    const searchParam = this.searchParamData();
+    return !!searchParam.q;
   }
 
   // Group data based on object types
@@ -363,11 +354,10 @@ class SearchView extends React.Component {
     const {
       classes, isFetching, units, query,
     } = this.props;
-    const searchParam = this.getSearchParam();
 
     const unitCount = units && units.length;
 
-    if (isFetching || !unitCount || searchParam.type !== 'search') {
+    if (isFetching || !unitCount || this.isInputSearch()) {
       return null;
     }
 
@@ -535,7 +525,6 @@ SearchView.propTypes = {
   count: PropTypes.number,
   embed: PropTypes.bool,
   fetchUnits: PropTypes.func,
-  fetchRedirectService: PropTypes.func.isRequired,
   getLocaleText: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
   isFetching: PropTypes.bool,
