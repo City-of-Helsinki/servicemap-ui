@@ -218,7 +218,7 @@ const ServiceTreeView = (props) => {
       + (settings.kauniainen ? item.unit_count.municipality.kauniainen || 0 : 0);
     }
 
-    const checkboxSrTitle = ` ${getLocaleText(item.name)} ${intl.formatMessage({ id: 'services.tree.level' })} ${level + 1} ${intl.formatMessage({ id: 'services.category.select' })}`;
+    const checkboxSrTitle = `${intl.formatMessage({ id: 'services.tree.level' })} ${level + 1} ${getLocaleText(item.name)} ${intl.formatMessage({ id: 'services.category.select' })}`;
     const itemSrTitle = `${getLocaleText(item.name)} (${resultCount}) ${intl.formatMessage({ id: 'services.category.open' })}`;
 
     return (
