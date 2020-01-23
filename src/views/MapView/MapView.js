@@ -197,7 +197,7 @@ const MapView = (props) => {
 
   useEffect(() => {
     initializeMarkerClusterLayer();
-  }, [mapRef, leaflet]);
+  }, [mapObject, leaflet]);
 
   const embeded = isEmbed(match);
 
