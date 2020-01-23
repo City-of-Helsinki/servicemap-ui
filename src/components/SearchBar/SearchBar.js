@@ -68,7 +68,7 @@ class SearchBar extends React.Component {
         return;
       }
       // TODO: fix calculation on next line when dividers are excluded from lists
-      const listEnd = (list.children.length + 1) / 2 - 1;
+      const listEnd = list.querySelectorAll('#suggestion').length - 1;
       const increment = e.keyCode === 40;
       let index = focusedSuggestion;
 
