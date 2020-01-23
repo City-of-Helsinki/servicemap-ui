@@ -118,3 +118,4 @@ export const selectedUnit = (state = dataSingleInitialState, action) => dataSing
 export const accessibilitySentences = (state = dataSingleInitialState, action) => dataSingle(state, action, 'SELECTED_UNIT_ACCESSIBILITY_SENTENCES');
 export const reservations = (state = dataSingleInitialState, action) => dataSingle(state, action, 'SELECTED_UNIT_RESERVATIONS');
 export const unitEvents = (state = dataSingleInitialState, action) => dataSingle(state, action, 'SELECTED_UNIT_EVENTS');
+export const redirectService = (state = dataSetInitialState, action) => dataSingle(state, action, 'REDIRECT_SERVICE');

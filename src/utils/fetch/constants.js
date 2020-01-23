@@ -41,6 +41,10 @@ export const APIHandlers = {
     url: id => `${config.serviceMapAPI.root}/service/${id}/`,
     options: {},
   },
+  serviceRedirect: {
+    url: `${config.serviceMapAPI.root}/redirect/unit/`,
+    options: {},
+  },
   unit: {
     url: id => `${config.serviceMapAPI.root}/unit/${id}/`,
     options: {
