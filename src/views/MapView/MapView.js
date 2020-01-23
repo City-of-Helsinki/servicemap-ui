@@ -210,12 +210,12 @@ const MapView = (props) => {
     const data = getMapUnits();
     // Clear layers if no units currently set for data
     // caused by while fetching
-    if (!data.units.length) {
+    if (!data.units.length || highlightedDistrict) {
       markerCluster.clearLayers();
       return;
     }
     renderUnitMarkers(leaflet, data, classes, markerCluster, embeded);
-  }, [unitList, highlightedUnit, markerCluster, addressUnits, serviceUnits]);
+  }, [unitList, highlightedUnit, markerCluster, addressUnits, serviceUnits, highlightedDistrict]);
 
   // Render
 
