@@ -173,9 +173,7 @@ class TopBar extends React.Component {
   handleContrastChange = () => {
     const { changeTheme, theme, setMapType } = this.props;
     changeTheme(theme === 'default' ? 'dark' : 'default');
-    if (theme === 'default') {
-      setMapType('accessible_map');
-    }
+    setMapType(theme === 'default' ? 'accessible_map' : 'servicemap');
   }
 
   handleNavigation = (target, data) => {
