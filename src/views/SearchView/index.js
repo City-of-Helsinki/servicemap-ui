@@ -35,7 +35,6 @@ const mapStateToProps = (state) => {
     getLocaleText,
     max,
     map,
-    navigator,
     previousSearch,
     settings,
     serviceTree,

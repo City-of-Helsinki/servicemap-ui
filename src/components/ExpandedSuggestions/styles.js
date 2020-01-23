@@ -1,6 +1,10 @@
 import config from '../../../config';
 
 export default theme => ({
+  bottomContent: {
+    display: 'flex',
+    padding: `${theme.spacing.unit}px ${theme.spacing.unitTriple}px`,
+  },
   container: {
     overflow: 'auto',
     position: 'absolute',
@@ -61,25 +65,14 @@ export default theme => ({
     fontWeight: 'bold',
     marginBottom: theme.spacing.unitDouble,
   },
+  padding: {
+    padding: theme.spacing.unitDouble,
+  },
   primary: {
     backgroundColor: theme.palette.primary.main,
   },
   subtitleText: {
     lineHeight: '32px',
-  },
-  expandTitle: {
-    alignSelf: 'center',
-    marginRight: 'auto',
-    paddingLeft: theme.spacing.unitDouble,
-    '&:focus': {
-      boxShadow: 'none',
-    },
-  },
-  listIcon: {
-    paddingRight: theme.spacing.unitDouble,
-    paddingTop: 8,
-    paddingBottom: 8,
-    color: 'rgba(0,0,0,0.54)',
   },
   closeButton: {
     margin: 0,
@@ -94,10 +87,5 @@ export default theme => ({
     paddingTop: theme.spacing.unit,
     paddingLeft: theme.spacing.unitDouble,
     paddingRight: theme.spacing.unitDouble,
-  },
-  backIcon: {
-    padding: theme.spacing.unit,
-    color: '#757575',
-    marginLeft: theme.spacing.unit,
   },
 });

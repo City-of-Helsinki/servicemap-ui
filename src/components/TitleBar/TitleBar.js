@@ -6,7 +6,7 @@ import {
 import BackButton from '../BackButton';
 
 const TitleBar = ({
-  backButton, classes, title, titleComponent, icon, distance, className,
+  backButton, backButtonOnClick, classes, title, titleComponent, icon, distance, className,
 }) => (
   <>
     <div className={`${className} ${classes.container} ${!backButton && !icon ? classes.textBar : ''}`}>
@@ -15,6 +15,7 @@ const TitleBar = ({
         backButton
         && (
           <BackButton
+            onClick={backButtonOnClick}
             className={classes.iconButton}
             variant="icon"
           />
@@ -49,6 +50,7 @@ const TitleBar = ({
 
 TitleBar.propTypes = {
   backButton: PropTypes.bool,
+  backButtonOnClick: PropTypes.func,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   title: PropTypes.node.isRequired,
   titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']),
@@ -59,6 +61,7 @@ TitleBar.propTypes = {
 
 TitleBar.defaultProps = {
   backButton: false,
+  backButtonOnClick: null,
   titleComponent: 'h3',
   icon: null,
   className: null,

@@ -25,11 +25,11 @@ class SearchView extends React.Component {
     super(props);
 
     this.state = {
-      expandSearch: null,
       serviceRedirect: {
         service: null,
         wasHandled: false,
       },
+      expandVisible: null,
     };
   }
 
@@ -274,15 +274,6 @@ class SearchView extends React.Component {
     return null;
   }
 
-  expandSearchVisible() {
-    const {
-      location,
-    } = this.props;
-    const searchParams = parseSearchParams(location.search);
-
-    return !!(searchParams.expand && searchParams.expand === '1');
-  }
-
   /**
    * What to render if no units are found with search
    */
@@ -326,10 +317,6 @@ class SearchView extends React.Component {
   renderSearchBar() {
     const { query, classes } = this.props;
 
-    if (this.expandSearchVisible()) {
-      return null;
-    }
-
     return (
       <SearchBar
         expand
@@ -359,8 +346,21 @@ class SearchView extends React.Component {
   }
 
   renderExpandedSearchButton = () => {
+    const { classes, query } = this.props;
+    return (
+      <div className={classes.suggestionButtonContainer}>
+        <ExpandedSuggestions
+          button
+          searchQuery={query}
+          onClick={() => { this.setState({ expandVisible: true }); }}
+        />
+      </div>
+    );
+  }
+
+  renderExpandedSearch = () => {
     const {
-      classes, isFetching, units, query,
+      isFetching, units, query,
     } = this.props;
 
     const unitCount = units && units.length;
@@ -370,11 +370,11 @@ class SearchView extends React.Component {
     }
 
     return (
-      <div className={classes.suggestionButtonContainer}>
-        <ExpandedSuggestions
-          searchQuery={query}
-        />
-      </div>
+      <ExpandedSuggestions
+        searchQuery={query}
+        onClick={() => { this.setState({ expandVisible: false }); }}
+        isVisible
+      />
     );
   }
 
@@ -470,16 +470,17 @@ class SearchView extends React.Component {
     const {
       classes, embed, isFetching, intl, count, max,
     } = this.props;
-    const { expandSearch } = this.state;
-    if (embed) {
-      return null;
-    }
+    const { expandVisible } = this.state;
     const progress = (isFetching && count) ? Math.floor((count / max * 100)) : 0;
 
     const redirect = this.handleSingleResultRedirect();
 
     if (redirect) {
       return redirect;
+    }
+
+    if (expandVisible) {
+      return this.renderExpandedSearch();
     }
 
     return (
@@ -490,15 +491,15 @@ class SearchView extends React.Component {
           this.renderSearchBar()
         }
         {
-          !expandSearch && this.renderSearchInfo()
+          this.renderSearchInfo()
         }
         <Paper className={!isFetching ? classes.noPadding : ''} elevation={1} square aria-live="polite">
           {
-           !expandSearch && this.renderScreenReaderInfo()
+            this.renderScreenReaderInfo()
           }
         </Paper>
         {
-          !expandSearch && this.renderResults()
+          this.renderResults()
         }
         {
           isFetching
@@ -538,6 +539,7 @@ SearchView.propTypes = {
   intl: intlShape.isRequired,
   isFetching: PropTypes.bool,
   isRedirectFetching: PropTypes.bool,
+  // eslint-disable-next-line react/no-unused-prop-types
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   max: PropTypes.number,
   previousSearch: PropTypes.oneOfType([PropTypes.string, PropTypes.objectOf(PropTypes.any)]),
