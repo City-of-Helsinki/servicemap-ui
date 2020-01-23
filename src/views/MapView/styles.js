@@ -73,30 +73,6 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    '&:focus': {
-      boxShadow: 'none',
-    },
-  },
-  userMarkerForeground: {
-    height: '73%',
-    width: '73%',
-    color: '#fff',
-    position: 'absolute',
-    paddingBottom: '6%',
-  },
-  userMarkerBorder: {
-    height: '100%',
-    width: '100%',
-    color: theme.palette.primary.main,
-    position: 'absolute',
-  },
-  userMarkerBackground: {
-    position: 'absolute',
-    height: '33%',
-    width: '33%',
-    paddingBottom: '20%',
-    backgroundColor: theme.palette.primary.main,
-    borderRadius: 50,
   },
   showLocationButton: {
     border: 'none',
@@ -140,6 +116,73 @@ const styles = theme => ({
   unitTooltip: {
     padding: theme.spacing.unitDouble,
     textAlign: 'left',
+  },
+  unitClusterMarker: {
+    borderRadius: '50%',
+    backgroundColor: 'black',
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: '18px',
+    marginLeft: -20,
+    marginTop: -20,
+    width: 30,
+    height: 30,
+    transform: 'translate3d(415px, 460px, 0px)',
+    zIndex: 460,
+    opacity: 1,
+    outline: 'none',
+    border: 'solid white',
+    justifyContent: 'center',
+    alignItems: 'center',
+    display: 'flex',
+  },
+  unitTooltipContainer: {
+    padding: theme.spacing.unit,
+    textAlign: 'left',
+  },
+  unitTooltipTitle: {
+    ...theme.typography.body2,
+    margin: `${theme.spacing.unitHalf}px ${theme.spacing.unit}px`,
+    fontWeight: 'bold',
+  },
+  unitTooltipSubtitle: {
+    ...theme.typography.body2,
+    margin: `${theme.spacing.unitHalf}px ${theme.spacing.unit}px`,
+  },
+  unitPopupList: {
+    listStyleType: 'none',
+    padding: 0,
+    overflow: 'auto',
+    maxHeight: '25vh',
+    '& li': {
+      padding: `${theme.spacing.unit}px ${theme.spacing.unitDouble}px`,
+      '& hr': {
+        height: 1,
+        margin: 0,
+        border: 'none',
+        backgroundColor: 'rgba(0, 0, 0, 0.12)',
+      },
+      '&:hover': {
+        cursor: 'pointer',
+        backgroundColor: theme.palette.white.light,
+      },
+    },
+    '& .popup-divider': {
+      cursor: 'unset',
+      paddingTop: 0,
+      paddingBottom: 0,
+    },
+  },
+  unitPopupTitle: {
+    ...theme.typography.subtitle1,
+    margin: `${theme.spacing.unit}px ${theme.spacing.unitDouble}px !important`,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  unitPopupItem: {
+    ...theme.typography.body2,
+    margin: `${theme.spacing.unitHalf}px ${theme.spacing.unit}px`,
+    fontWeight: 'bold',
   },
 });
 

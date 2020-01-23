@@ -55,7 +55,7 @@ const mapTypes = {
   // These define the map tiles and options of individual map types
   servicemap: {
     name: 'servicemap',
-    url: null, // This is generated on getMapOptions
+    url: 'https://tiles.hel.ninja/styles/hel-osm-bright/{z}/{x}/{y}.png',
     minZoom: 9,
     maxZoom: 18,
     zoom: 13,
@@ -112,7 +112,7 @@ const mapTypes = {
 };
 
 const getMapOptions = (type /* , locale */) => {
-  const mapOptions = mapTypes[type];
+  const mapOptions = mapTypes[type] || mapTypes.servicemap;
   // For servicemap, use retina and/or swedish url if needed
   if (type === 'servicemap') {
     const stylePath = 'hel-osm-bright';
@@ -134,11 +134,10 @@ const getMapOptions = (type /* , locale */) => {
 };
 
 const transitIconSize = 30;
-const userIconSize = 50;
 
 export {
   mapOptions,
+  mapTypes,
   getMapOptions,
   transitIconSize,
-  userIconSize,
 };

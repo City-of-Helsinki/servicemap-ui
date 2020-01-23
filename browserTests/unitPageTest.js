@@ -1,5 +1,6 @@
-import { waitForReact, ReactSelector } from 'testcafe-react-selectors';
+import { waitForReact } from 'testcafe-react-selectors';
 import config from './config';
+import { Selector } from 'testcafe';
 
 const { server } = config;
 
@@ -12,9 +13,10 @@ fixture`Unit page tests`
   });
 
 test('Unit marker is drawn on map', async (t) => {
-  const markers = ReactSelector('Marker')
+  const markers = Selector('.leaflet-marker-icon').count;
 
   await t
-    .expect(await markers.getReact(({props}) => props.className)).eql('unitMarker', 'marker with correct class name is found on map')
+    .expect(markers).gt(0, 'no marker found')
+    .expect(markers).eql(1, 'multiple markers found, expected single marker');
     
 });

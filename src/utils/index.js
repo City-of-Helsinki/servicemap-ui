@@ -57,7 +57,9 @@ export const stringifySearchParams = (searchParams) => {
     searchParamsObject.append(key, value);
   });
 
-  return searchParamsObject.toString();
+  const string = searchParamsObject.toString().replace(/[+]/g, ' ');
+
+  return string;
 };
 
 // Keyboard handler
@@ -125,6 +127,17 @@ export const valuesHaveChanged = (obj1, obj2, keys = []) => {
   return hasChanged;
 };
 
+export const arraysEqual = (a, b) => {
+  if (a === b) return true;
+  if (a == null || b == null) return false;
+  if (a.length !== b.length) return false;
+
+
+  for (let i = 0; i < a.length; i + 1) {
+    if (a[i] !== b[i]) return false;
+  }
+  return true;
+};
 /**
  * USE ONLY IN SIMPLE COMPONENTS because mediaquery hook
  * Check if sidebar content is small

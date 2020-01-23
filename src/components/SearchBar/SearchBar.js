@@ -27,7 +27,7 @@ class SearchBar extends React.Component {
     this.searchRef = React.createRef();
 
     this.state = {
-      search: initialValue || previousSearch || '',
+      search: previousSearch || initialValue || '',
       searchQuery: '',
       isActive: false,
       focusedSuggestion: null,
