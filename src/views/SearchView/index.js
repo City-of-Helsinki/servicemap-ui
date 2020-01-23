@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import SearchView from './SearchView';
 import { fetchUnits } from '../../redux/actions/unit';
-import { fetchRedirectService } from '../../redux/actions/redirectService';
+import fetchRedirectService from '../../redux/actions/redirectService';
 import { changeSelectedUnit } from '../../redux/actions/selectedUnit';
 import { getProcessedData } from '../../redux/selectors/results';
 import isClient from '../../utils';

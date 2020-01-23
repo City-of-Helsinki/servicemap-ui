@@ -26,12 +26,10 @@ class SearchView extends React.Component {
 
     this.state = {
       expandSearch: null,
-      /*
       serviceRedirect: {
         service: null,
         wasHandled: false,
       },
-      */
     };
   }
 
@@ -40,13 +38,12 @@ class SearchView extends React.Component {
       fetchUnits, units, map,
     } = this.props;
     const options = this.searchParamData();
+
     // Handle old service value redirects
-    /*
     const handlingRedirect = this.handleServiceRedirect();
     if (handlingRedirect) {
       return;
     }
-    */
 
     if (Object.keys(options).length) {
       fetchUnits(options);
@@ -55,18 +52,18 @@ class SearchView extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    const { fetchUnits, units, map } = this.props;
+    const {
+      fetchUnits, isRedirectFetching, units, map,
+    } = this.props;
+    if (isRedirectFetching) {
+      return false;
+    }
+
     if (this.shouldFetch(nextProps)) {
-      /*
-      const handlingRedirect = this.handleServiceRedirect();
-      if (handlingRedirect) {
-        return false;
-      }
-      */
-      const searchData = this.searchParamData();
+      const searchData = this.searchParamData(nextProps);
       fetchUnits(searchData);
       this.focusMap(units, map);
-      return true;
+      return false;
     }
     // If new search results, call map focus functio
     if (nextProps.units.length > 0 && units !== nextProps.units) {
@@ -75,7 +72,6 @@ class SearchView extends React.Component {
     return true;
   }
 
-  /*
   // Handle service redirect for old service parameters if given
   // Will fetch new service_node from redirect endpoint with service parameter
   handleServiceRedirect = () => {
@@ -88,7 +84,7 @@ class SearchView extends React.Component {
     if (isRedirectFetching) {
       return true;
     }
-    const options = this.searchParamData();
+    const options = this.searchParamData(null, true);
     if (options.service && serviceRedirect.service !== options.service) {
       // Set new state object for serviceRedirect
       const obj = {
@@ -102,20 +98,18 @@ class SearchView extends React.Component {
         if (data.service_node) {
           // Need to stringify current search params for unit fetch
           // Otherwise componentDidMount shouldFetch will compare previous searches incorrectly
-          const searchParams = this.stringifySearchQuery(options);
           delete options.service;
-          options.service_node = data.service_node;
+          options.service_node = `${(options.service_node ? `${options.service_node},` : '')}${data.service_node}`;
 
           // Set serviceRedirect to wasHandled
-          this.setState({ serviceRedirect: { service: options.service, wasHandled: true } });
-          fetchUnits(searchParams, 'params', null, options);
+          this.setState({ serviceRedirect: { service: options.service_node, wasHandled: true } });
+          fetchUnits(options);
         }
       });
       return true;
     }
     return false;
   }
-  */
 
   stringifySearchQuery = (data) => {
     try {
@@ -126,10 +120,12 @@ class SearchView extends React.Component {
     }
   }
 
-  searchParamData = (props = null) => {
+  searchParamData = (props = null, includeService = false) => {
     const {
       location,
     } = props || this.props;
+    const { serviceRedirect } = this.state;
+    const redirectNode = serviceRedirect.service;
     const searchParams = parseSearchParams(location.search);
 
     const {
@@ -146,13 +142,16 @@ class SearchView extends React.Component {
       options.q = q;
     } else {
       // Parse service
-      if (service) {
+      if (includeService && service) {
         options.service = service;
       }
 
       // Parse service_node
       if (service_node) {
         options.service_node = service_node;
+      }
+      if (!includeService && redirectNode) {
+        options.service_node = redirectNode;
       }
 
       if (category) {
@@ -195,11 +194,20 @@ class SearchView extends React.Component {
 
   // Check if view will fetch data because sreach params has changed
   shouldFetch = (props) => {
-    const { isFetching, previousSearch } = props || this.props;
-    if (previousSearch && !this.isInputSearch()) {
-      return !isFetching && this.stringifySearchQuery(this.searchParamData(props)) !== previousSearch;
+    const { isFetching, isRedirectFetching, previousSearch } = props || this.props;
+
+    if (isFetching || isRedirectFetching) {
+      return false;
     }
-    return !isFetching && this.searchParamData(props).q !== previousSearch;
+    const data = this.searchParamData(props);
+
+    // Should fetch if previousSearch has changed and data has required parameters
+    if (previousSearch) {
+      if (data.q !== previousSearch && this.stringifySearchQuery(data) !== previousSearch) {
+        return !!(data.q || data.service || data.service_node);
+      }
+    }
+    return false;
   }
 
   focusMap = (units, map) => {
@@ -525,9 +533,11 @@ SearchView.propTypes = {
   count: PropTypes.number,
   embed: PropTypes.bool,
   fetchUnits: PropTypes.func,
+  fetchRedirectService: PropTypes.func,
   getLocaleText: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
   isFetching: PropTypes.bool,
+  isRedirectFetching: PropTypes.bool,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   max: PropTypes.number,
   previousSearch: PropTypes.oneOfType([PropTypes.string, PropTypes.objectOf(PropTypes.any)]),
@@ -541,7 +551,9 @@ SearchView.defaultProps = {
   count: 0,
   embed: false,
   fetchUnits: () => {},
+  fetchRedirectService: () => {},
   isFetching: false,
+  isRedirectFetching: false,
   max: 0,
   previousSearch: null,
   units: [],
