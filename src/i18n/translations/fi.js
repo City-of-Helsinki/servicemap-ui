@@ -267,15 +267,18 @@ export default {
   // Service tree
   'services': 'Palveluluettelo',
   'services.selections': `{count, plural,
-    one {Olet thenyt (#) valinnan}
-    other {Olet thenyt (#) valintaa}
+    one {Olet tehnyt (#) valinnan}
+    other {Olet tehnyt (#) valintaa}
   }`,
-  'services.selections.delete': 'Poista',
+  'services.selections.delete': 'Poista valinta',
   'services.selections.delete.all': 'Poista kaikki valinnat',
-  'services.selections.delete.sr': 'Poista valinta: ',
+  'services.selections.delete.sr': 'Poista valinta: {service}',
   'services.search': 'Tee haku',
   'services.search.sr': 'Tee haku valituilla palveluilla',
   'services.search.sr.selected': 'Tee haku palveluilla: {services}',
+  'services.category.select': 'Kaikki',
+  'services.category.open': 'Avaa kategoria',
+  'services.tree.level': 'Taso',
 
   // Settings
   'settings': 'Asetukset',

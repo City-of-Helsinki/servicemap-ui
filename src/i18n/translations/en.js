@@ -270,12 +270,15 @@ export default {
       one {You have made (#) selection}
       other {You have made (#) selections}
     }`,
-  'services.selections.delete': 'Remove',
+  'services.selections.delete': 'Remove selection',
   'services.selections.delete.all': 'Remove all selections',
   'services.selections.delete.sr': 'Remove selection {service}',
   'services.search': 'Perform search',
   'services.search.sr': 'Perform search with the selected services',
   'services.search.sr.selected': 'Perform search with services: {services}',
+  'services.category.select': 'All',
+  'services.category.open': 'Open category',
+  'services.tree.level': 'Level',
 
   // Settings
   'settings': 'Settings',

@@ -270,12 +270,15 @@ export default {
         one {Du har gjort (#) val}
         other {Du har gjort (#) val}
       }`,
-  'services.selections.delete': 'Poista', // TODO: translate
+  'services.selections.delete': 'Poista valinta:', // TODO: translate
   'services.selections.delete.all': 'Ta bort alla val',
-  'services.selections.delete.sr': 'Poista valinta: ', // TODO: translate
+  'services.selections.delete.sr': 'Poista valinta: {service}', // TODO: translate
   'services.search': 'Gör sökning',
   'services.search.sr': 'Tee haku valituilla palveluilla', // TODO: translate
   'services.search.sr.selected': 'Tee haku palveluilla: {services}', // TODO: translate
+  'services.category.select': 'Alla',
+  'services.category.open': 'Öppna kategori',
+  'services.tree.level': 'Nivå',
 
   // Settings
   'settings': 'Inställningar',
