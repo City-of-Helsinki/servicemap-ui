@@ -317,6 +317,7 @@ export default {
   'settings.map.servicemap': 'Palvelukartta',
   'settings.map.orthoImage': 'Ilmakuva',
   'settings.map.guideMap': 'Opaskartta',
+  'settings.map.accessible_map': 'Korkeakontrastinen kartta',
   'settings.aria.changed': 'Asetukset muutettu. Muista tallentaa',
   'settings.aria.closed': 'Asetukset suljettu',
   'settings.aria.open': 'Avaa asetukset',

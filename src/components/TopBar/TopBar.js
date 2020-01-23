@@ -171,8 +171,9 @@ class TopBar extends React.Component {
   }
 
   handleContrastChange = () => {
-    const { changeTheme, theme } = this.props;
+    const { changeTheme, theme, setMapType } = this.props;
     changeTheme(theme === 'default' ? 'dark' : 'default');
+    setMapType(theme === 'default' ? 'accessible_map' : 'servicemap');
   }
 
   handleNavigation = (target, data) => {
@@ -316,6 +317,7 @@ TopBar.propTypes = {
   breadcrumb: PropTypes.arrayOf(PropTypes.any).isRequired,
   smallScreen: PropTypes.bool.isRequired,
   changeTheme: PropTypes.func.isRequired,
+  setMapType: PropTypes.func.isRequired,
   theme: PropTypes.string.isRequired,
 };
 

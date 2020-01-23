@@ -118,6 +118,8 @@ export const getIcon = (key, props) => {
       return <img aria-hidden alt="" src={aerialMapIcon} {...props} />;
     case 'guideMap':
       return <img aria-hidden alt="" src={guideMapIcon} {...props} />;
+    case 'accessible_map':
+      return <img aria-hidden alt="" src={defaulMapIcon} {...props} />;
 
     // Front page buttons
     case 'location':

@@ -317,6 +317,7 @@ export default {
   'settings.map.servicemap': 'Servicekarta',
   'settings.map.orthoImage': 'Flygbild',
   'settings.map.guideMap': 'Guidekarta',
+  'settings.map.accessible_map': 'Korkeakontrastinen kartta', // TODO: Translate
   'settings.aria.changed': 'Inställningarna har ändrats. Kom ihåg att spara.',
   'settings.aria.closed': 'Inställningarna har stängts',
   'settings.aria.open': 'Öppna inställningarna',
