@@ -5,12 +5,11 @@ export default theme => ({
     padding: `${theme.spacing.unitHalf}px 0`,
   },
   listItem: {
-    padding: '0',
-    paddingTop: theme.spacing.unitHalf,
+    padding: `0 ${theme.spacing.unit}px`,
   },
   textContainer: {
     display: 'flex',
-    padding: 0,
+    padding: `${theme.spacing.unit}px 0`,
     marginLeft: theme.spacing.unitDouble,
     marginRight: theme.spacing.unitDouble,
     whiteSpace: 'pre-line',
@@ -41,7 +40,8 @@ export default theme => ({
     lineHeight: '18px',
   },
   divider: {
-    marginLeft: theme.spacing.unit * 6,
+    marginLeft: theme.spacing.unit * 8,
+    marginRight: -theme.spacing.unitDouble,
   },
   text: {
     alignSelf: 'center',
