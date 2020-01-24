@@ -11,6 +11,7 @@ import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMe
 import { intlShape } from 'react-intl';
 import config from '../../../../config';
 import BoldedText from '../../../utils/BoldedText';
+import { keyboardHandler } from '../../../utils';
 
 const SuggestionItem = (props) => {
   const {
@@ -50,14 +51,16 @@ const SuggestionItem = (props) => {
         }}
         selected={selected}
         className="suggestion"
+        onClick={onClick}
+        onMouseDown={onClick}
+        onMouseUp={() => setMouseDown(false)}
+        onKeyDown={() => {
+          keyboardHandler(onClick, ['space', 'enter']);
+        }}
+        onKeyUp={() => setMouseDown(false)}
       >
         <span
           className={classes.container}
-          onClick={onClick}
-          onMouseDown={onClick}
-          onMouseUp={() => setMouseDown(false)}
-          onKeyDown={onClick}
-          onKeyUp={() => setMouseDown(false)}
           type="submit"
           role="link"
           tabIndex="-1"
