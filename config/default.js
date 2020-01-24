@@ -1,17 +1,29 @@
+function getSettings() {
+  if (typeof window !== 'undefined') {
+    return window.nodeEnvSettings;
+  }
+  else {
+    return process.env;
+  }
+}
+
+const settings = getSettings();
+
 export default {
   // API
   "accessibilitySentenceAPI": {
-    "root": process.env.ACCESSIBILITY_SENTENCE_API,
+    "root": settings.ACCESSIBILITY_SENTENCE_API,
   },
   "serviceMapAPI": {
-    "root": process.env.SERVICEMAP_API,
+    "root": settings.SERVICEMAP_API,
   },
   "eventsAPI": {
-    "root": process.env.EVENTS_API,
+    "root": settings.EVENTS_API,
   },
   "reservationsAPI": {
-    "root": process.env.RESERVATIONS_API,
+    "root": settings.RESERVATIONS_API,
   },
+  "productionPrefix": settings.PRODUCTION_PREFIX,
   // constants
   "accessibilityColors":  {
     "default": "#2242C7",
@@ -21,7 +33,6 @@ export default {
   "initialMapPosition": [60.170377597530016, 24.941309323934886],
   "smallContentAreaBreakpoint": 449,
   "mobileUiBreakpoint": 699,
-  "productionPrefix": process.env.PRODUCTION_PREFIX,
   "smallScreenBreakpoint": 899,
   "topBarHeight": 100,
   "topBarHeightMobile": 90,

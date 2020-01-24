@@ -110,17 +110,9 @@ const serverConfig = {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name]',
   },
-  plugins: [
-    new webpack.EnvironmentPlugin({
-      'PORT': false,
-      'SSR_FETCH_TIMEOUT': 2500,
-      'ACCESSIBILITY_SENTENCE_API': ACCESSIBILITY_SENTENCE_API,
-      'SERVICEMAP_API': SERVICEMAP_API,
-      'EVENTS_API': EVENTS_API,
-      'RESERVATIONS_API': RESERVATIONS_API,
-      'PRODUCTION_PREFIX': PRODUCTION_PREFIX,
-    }),
-  ]
+  optimization: {
+    'minimize': false,
+  }
 };
 
 const clientConfig = {
@@ -145,15 +137,9 @@ const clientConfig = {
     path: path.resolve(__dirname, 'dist/src'),
     filename: '[name]',
   },
-  plugins: [
-    new webpack.EnvironmentPlugin({
-      'ACCESSIBILITY_SENTENCE_API': ACCESSIBILITY_SENTENCE_API,
-      'SERVICEMAP_API': SERVICEMAP_API,
-      'EVENTS_API': EVENTS_API,
-      'RESERVATIONS_API': RESERVATIONS_API,
-      'PRODUCTION_PREFIX': PRODUCTION_PREFIX,
-    }),
-  ]
+  optimization: {
+    'minimize': false,
+  }
 };
 
 module.exports = [serverConfig, clientConfig];
