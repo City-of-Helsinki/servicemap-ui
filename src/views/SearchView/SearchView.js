@@ -45,7 +45,7 @@ class SearchView extends React.Component {
       return;
     }
 
-    if (Object.keys(options).length) {
+    if (this.shouldFetch() && Object.keys(options).length) {
       fetchUnits(options);
       this.focusMap(units, map);
     }
@@ -195,7 +195,6 @@ class SearchView extends React.Component {
   // Check if view will fetch data because sreach params has changed
   shouldFetch = (props) => {
     const { isFetching, isRedirectFetching, previousSearch } = props || this.props;
-
     if (isFetching || isRedirectFetching) {
       return false;
     }
@@ -206,6 +205,9 @@ class SearchView extends React.Component {
       if (data.q !== previousSearch && this.stringifySearchQuery(data) !== previousSearch) {
         return !!(data.q || data.service || data.service_node);
       }
+    } else {
+      // Should fetch if no previous searches but search parameters exist
+      return !!(data.q || data.service || data.service_node);
     }
     return false;
   }
