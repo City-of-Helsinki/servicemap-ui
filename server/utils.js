@@ -55,6 +55,12 @@ export const languageSubdomainRedirect = (req, res, next) => {
       res.redirect(pathArray.join('/'));
       return;
     }
+    if (req.subdomains[0].match(/^palvelukartta/)) {
+      const pathArray = req.url.split('/');
+      pathArray.splice(1, 0, 'fi');
+      res.redirect(pathArray.join('/'));
+      return;
+    }
   }
   next();
   return;
