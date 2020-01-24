@@ -49,7 +49,7 @@ const SuggestionItem = (props) => {
           root: classes.listItem,
         }}
         selected={selected}
-        id="suggestion"
+        className="suggestion"
       >
         <span
           className={classes.container}
