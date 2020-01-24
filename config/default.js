@@ -1,10 +1,10 @@
 function getSettings() {
-  if (typeof window !== 'undefined') {
-    return window.nodeEnvSettings;
+  if (typeof window !== 'undefined' && typeof window.nodeEnvSettings !== 'undefined') {
+      // Needed in browser run context
+      return window.nodeEnvSettings;
   }
-  else {
-    return process.env;
-  }
+  // Needed in server run context and with jest tests
+  return process.env;
 }
 
 const settings = getSettings();
