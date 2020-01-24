@@ -18,6 +18,7 @@ import UserMarker from './components/UserMarker';
 import fetchAddress from './utils/fetchAddress';
 import { isEmbed } from '../../utils/path';
 import AddressMarker from './components/AddressMarker';
+import { parseSearchParams } from '../../utils';
 import isClient from '../../utils';
 import swapCoordinates from './utils/swapCoordinates';
 
@@ -29,6 +30,7 @@ const MapView = (props) => {
     currentPage,
     getLocaleText,
     intl,
+    location,
     settings,
     addressUnits,
     setAddressLocation,
@@ -63,7 +65,7 @@ const MapView = (props) => {
     let mapUnits = [];
     let unitGeometry = null;
 
-    if (currentPage === 'search') {
+    if (currentPage === 'search' || currentPage === 'division') {
       mapUnits = unitList;
     } else if (currentPage === 'address') {
       mapUnits = addressUnits;
@@ -117,7 +119,10 @@ const MapView = (props) => {
       map.defaultZoom = mapObject.options.zoom;
       setPrevMap(map);
     }
-    const newMap = CreateMap(settings.mapType, locale);
+    // Search param map value
+    const spMap = parseSearchParams(location.search).map || false;
+
+    const newMap = CreateMap(spMap || settings.mapType, locale);
     setMapObject(newMap);
   };
 
@@ -344,10 +349,11 @@ MapView.propTypes = {
   createMarkerClusterLayer: PropTypes.func.isRequired,
   currentPage: PropTypes.string.isRequired,
   getLocaleText: PropTypes.func.isRequired,
-  highlightedDistrict: PropTypes.objectOf(PropTypes.any),
+  highlightedDistrict: PropTypes.arrayOf(PropTypes.any),
   highlightedUnit: PropTypes.objectOf(PropTypes.any),
   intl: intlShape.isRequired,
   isMobile: PropTypes.bool,
+  location: PropTypes.objectOf(PropTypes.any).isRequired,
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   serviceUnits: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),

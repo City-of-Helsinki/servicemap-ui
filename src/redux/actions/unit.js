@@ -1,4 +1,4 @@
-import { searchFetch, nodeFetch } from '../../utils/fetch';
+import { searchFetch, unitsFetch } from '../../utils/fetch';
 import { saveSearchToHistory } from '../../components/SearchBar/previousSearchData';
 import { units } from './fetchDataActions';
 
@@ -9,25 +9,34 @@ const {
 
 // Thunk fetch
 export const fetchUnits = (
-  searchQuery = null,
+  // searchQuery = null,
+  options = null,
   searchType = null,
   abortController = null,
 ) => async (dispatch, getState)
 => {
+  const stringifySearchQuery = (data) => {
+    try {
+      const search = Object.keys(data).map(key => (`${key}:${data[key]}`));
+      return search.join(',');
+    } catch (e) {
+      return '';
+    }
+  };
+  const searchQuery = options.q ? options.q : stringifySearchQuery(options);
   const onStart = () => dispatch(isFetching(searchQuery));
-  const onStartNode = () => dispatch(isFetching({ searchType, searchQuery }));
   const { user } = getState();
   const { locale } = user;
 
   const onSuccess = (results) => {
-    saveSearchToHistory(searchQuery, results);
-    dispatch(fetchSuccess(results));
-  };
-  const onSuccessNode = (results) => {
-    results.forEach((unit) => {
-      // eslint-disable-next-line no-param-reassign
-      unit.object_type = 'unit';
-    });
+    if (options.q) {
+      saveSearchToHistory(searchQuery, results);
+    } else {
+      results.forEach((unit) => {
+        // eslint-disable-next-line no-param-reassign
+        unit.object_type = 'unit';
+      });
+    }
     dispatch(fetchSuccess(results));
   };
   const onError = e => dispatch(fetchError(e.message));
@@ -36,19 +45,21 @@ export const fetchUnits = (
   );
 
   // Fetch data
-  if (searchType === 'node') {
-    nodeFetch(
-      { service_node: searchQuery },
-      onStartNode,
-      onSuccessNode,
+  const data = options;
+  if (data.q) {
+    data.language = locale || 'fi';
+    searchFetch(
+      data,
+      onStart,
+      onSuccess,
       onError,
       onNext,
       null,
       abortController,
     );
   } else {
-    searchFetch(
-      { q: searchQuery, language: locale || 'fi' },
+    unitsFetch(
+      data,
       onStart,
       onSuccess,
       onError,

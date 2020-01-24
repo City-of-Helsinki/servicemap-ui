@@ -41,6 +41,10 @@ export const APIHandlers = {
     url: id => `${config.serviceMapAPI.root}/service/${id}/`,
     options: {},
   },
+  serviceRedirect: {
+    url: `${config.serviceMapAPI.root}/redirect/unit/`,
+    options: {},
+  },
   unit: {
     url: id => `${config.serviceMapAPI.root}/unit/${id}/`,
     options: {
@@ -52,18 +56,11 @@ export const APIHandlers = {
   units: {
     url: `${config.serviceMapAPI.root}/unit/`,
     options: {
-      page_size: 100,
-    },
-
-  },
-  node: {
-    url: `${config.serviceMapAPI.root}/unit/`,
-    options: {
       page: 1,
       page_size: 200,
       only: 'location,name,municipality,accessibility_shortcoming_count,service_nodes',
       geometry: true,
-      include: 'service_nodes',
+      include: 'service_nodes,services,accessibility_properties',
     },
   },
   unitEvents: {

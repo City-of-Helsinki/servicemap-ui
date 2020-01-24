@@ -62,3 +62,4 @@ export const selectedUnit = dataSingle('SELECTED_UNIT');
 export const accessibilitySentences = dataSingle('SELECTED_UNIT_ACCESSIBILITY_SENTENCES');
 export const reservations = dataSingle('SELECTED_UNIT_RESERVATIONS');
 export const events = dataSingle('SELECTED_UNIT_EVENTS');
+export const redirectService = dataSingle('REDIRECT_SERVICE');

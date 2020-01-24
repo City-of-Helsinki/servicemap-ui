@@ -7,25 +7,6 @@ import PaperButton from '../../components/PaperButton';
 import { getIcon } from '../../components/SMIcon';
 
 class HomeView extends React.Component {
-  componentDidMount() {
-    const { setCurrentPage } = this.props;
-    setCurrentPage('home');
-  }
-
-  onExapmleItemClick = (e, searchText) => {
-    e.preventDefault();
-    const {
-      fetchUnits, navigator,
-    } = this.props;
-    if (navigator) {
-      navigator.push('search', { q: searchText });
-    }
-
-    if (searchText && searchText !== '') {
-      fetchUnits(searchText);
-    }
-  }
-
   renderNavigationOptions = () => {
     const {
       classes, getLocaleText, toggleSettings, navigator, userLocation,
@@ -179,8 +160,6 @@ export default HomeView;
 
 // Typechecking
 HomeView.propTypes = {
-  fetchUnits: PropTypes.func,
-  setCurrentPage: PropTypes.func.isRequired,
   getLocaleText: PropTypes.func.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -189,7 +168,6 @@ HomeView.propTypes = {
 };
 
 HomeView.defaultProps = {
-  fetchUnits: () => {},
   navigator: null,
   userLocation: null,
 };

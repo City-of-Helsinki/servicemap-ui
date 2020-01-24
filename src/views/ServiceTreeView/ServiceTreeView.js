@@ -381,7 +381,7 @@ const ServiceTreeView = (props) => {
           : intl.formatMessage({ id: 'services.search.sr' })}
         onClick={() => {
           setTreeState({ services, selected, opened });
-          navigator.push('search', { nodes: ids });
+          navigator.push('search', { service_node: ids });
         }}
       />
     );

@@ -319,6 +319,7 @@ export default UnitView;
 UnitView.propTypes = {
   accessibilitySentences: PropTypes.objectOf(PropTypes.any),
   unit: PropTypes.objectOf(PropTypes.any),
+  embed: PropTypes.bool,
   eventsData: PropTypes.objectOf(PropTypes.any),
   map: PropTypes.objectOf(PropTypes.any),
   fetchAccessibilitySentences: PropTypes.func.isRequired,
@@ -337,8 +338,9 @@ UnitView.propTypes = {
 
 UnitView.defaultProps = {
   accessibilitySentences: null,
-  unit: null,
+  embed: false,
   eventsData: { events: null, unit: null },
+  unit: null,
   match: {},
   map: null,
   navigator: null,

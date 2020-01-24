@@ -108,7 +108,7 @@ class SearchBar extends React.Component {
 
       if (search !== previousSearch) {
         this.setState({ search }); // Change current search text to new one
-        fetchUnits(search);
+        fetchUnits({ q: search });
       }
 
       if (navigator) {
@@ -389,6 +389,7 @@ SearchBar.propTypes = {
   isSticky: PropTypes.number,
   isFetching: PropTypes.bool.isRequired,
   previousSearch: PropTypes.oneOfType([PropTypes.string, PropTypes.objectOf(PropTypes.any)]),
+  primary: PropTypes.bool,
   srHideInput: PropTypes.bool,
   margin: PropTypes.bool,
 };

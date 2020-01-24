@@ -73,8 +73,8 @@ const mapTypes = {
     transitZoom: 17,
     mobileTransitZoom: 16,
   },
-  orthoImage: {
-    name: 'orthoImage',
+  ortographic: {
+    name: 'ortographic',
     layer: tileLayers.orthoImageLayer,
     // TODO: maybe have map names and formats as variables from the URL, like in the old version
     url: 'https://kartta.hsy.fi/geoserver/gwc/service/wmts?layer=taustakartat_ja_aluejaot:Ortoilmakuva_2017&tilematrixset=ETRS-GK25&Service=WMTS&Request=GetTile&Version=1.0.0&TileMatrix=ETRS-GK25:{z}&TileCol={x}&TileRow={y}&Format=image/jpeg',
@@ -109,6 +109,7 @@ const mapTypes = {
       [60.00855312110063, 25.271114398151653],
     ],
   },
+  // TODO: Add "accessible_map"
 };
 
 const getMapOptions = (type /* , locale */) => {

@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
+import { withRouter } from 'react-router-dom';
 import getHighlightedDistrict from '../../redux/selectors/district';
 import { getSelectedUnit } from '../../redux/selectors/selectedUnit';
 import { getLocaleString } from '../../redux/selectors/locale';
@@ -44,7 +45,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default injectIntl(connect(
+export default withRouter(injectIntl(connect(
   mapStateToProps,
   { setMapRef, setAddressLocation, findUserLocation },
-)(MapView));
+)(MapView)));

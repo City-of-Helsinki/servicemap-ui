@@ -318,7 +318,7 @@ export default {
   'settings.city.kauniainen': 'Grankulla',
   'settings.map.title': 'Kartbotten',
   'settings.map.servicemap': 'Servicekarta',
-  'settings.map.orthoImage': 'Flygbild',
+  'settings.map.ortographic': 'Flygbild',
   'settings.map.guideMap': 'Guidekarta',
   'settings.map.accessible_map': 'Korkeakontrastinen kartta', // TODO: Translate
   'settings.aria.changed': 'Inställningarna har ändrats. Kom ihåg att spara.',
