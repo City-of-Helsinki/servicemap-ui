@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
+import { withRouter } from 'react-router-dom';
 import getHighlightedDistrict from '../../redux/selectors/district';
 import { getSelectedUnit } from '../../redux/selectors/selectedUnit';
 import { getLocaleString } from '../../redux/selectors/locale';
@@ -9,6 +10,7 @@ import { findUserLocation } from '../../redux/actions/user';
 import MapView from './MapView';
 import { getServiceUnits } from '../../redux/selectors/service';
 import { getProcessedData } from '../../redux/selectors/results';
+import { markerClusterConnector, renderMarkerConnector } from './utils/unitMarkers';
 
 // Get redux states as props to component
 const mapStateToProps = (state) => {
@@ -26,6 +28,8 @@ const mapStateToProps = (state) => {
   const { addressUnits } = state.address;
   const { locale } = state.user;
   return {
+    createMarkerClusterLayer: markerClusterConnector(settings, getLocaleText, navigator),
+    renderUnitMarkers: renderMarkerConnector(settings, getLocaleText, navigator),
     highlightedDistrict,
     highlightedUnit,
     getLocaleText,
@@ -41,7 +45,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default injectIntl(connect(
+export default withRouter(injectIntl(connect(
   mapStateToProps,
   { setMapRef, setAddressLocation, findUserLocation },
-)(MapView));
+)(MapView)));

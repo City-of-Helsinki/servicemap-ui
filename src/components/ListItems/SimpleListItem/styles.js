@@ -4,7 +4,7 @@ export default theme => ({
     padding: theme.spacing.unit,
   },
   textContainer: {
-    padding: 0,
+    padding: `${theme.spacing.unit}px 0`,
     marginLeft: theme.spacing.unitDouble,
     marginRight: theme.spacing.unitDouble,
     whiteSpace: 'pre-line',

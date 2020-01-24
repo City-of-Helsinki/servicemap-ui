@@ -92,7 +92,7 @@ const getOrderedData = (data, direction, order, locale, settings, userLocation) 
   return results;
 };
 
-export const getProcessedData = createSelector(
+export const getProcessedData = (state, options = {}) => createSelector(
   [units, isFetching, direction, order, locale, settings, userLocation],
   (data, isFetching, direction, order, locale, settings, userLocation) => {
     // Prevent processing data if fetch is in process
@@ -105,13 +105,20 @@ export const getProcessedData = createSelector(
       ...settings.espoo ? ['espoo'] : [],
       ...settings.kauniainen ? ['kauniainen'] : [],
     ];
-    const filteredData = data
-      .filter(filterCities(cities))
+    let filteredData = data
       .filter(filterEmptyServices(cities));
-    const orderedData = getOrderedData(filteredData, direction, order, locale, settings, userLocation);
+    if (options.municipality) {
+      filteredData = filteredData.filter(filterCities(options.municipality.split(',')));
+    } else {
+      filteredData = filteredData.filter(filterCities(cities));
+    }
+
+    const orderedData = getOrderedData(
+      filteredData, direction, order, locale, settings, userLocation,
+    );
     return orderedData;
   },
-);
+)(state);
 
 export default {
   getProcessedData,

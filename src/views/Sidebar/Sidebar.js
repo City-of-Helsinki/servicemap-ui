@@ -11,6 +11,7 @@ import ServiceTreeView from '../ServiceTreeView';
 import ViewTitle from '../components/ViewTitle/ViewTitle';
 import PageHandler from '../components/PageHandler';
 import FeedbackView from '../FeedbackView';
+import DivisionView from '../DivisionView';
 
 const TitleWrapper = ({ children, messageId }) => (
   <>
@@ -126,6 +127,16 @@ class Sidebar extends React.Component {
         <Route path="/:lng/event/:event" component={Event} />
         <Route path="/:lng/address/:municipality/:street/:number" component={Address} />
         <Route exact path="/:lng/feedback/" component={Feedback} />
+        <Route
+          path="/:lng/division/:city?/:area?"
+          render={() => (
+            <>
+              <PageHandler page="division" />
+              <DivisionView />
+              <HomeView />
+            </>
+          )}
+        />
         <Route path="/:lng/" component={Home} />
       </Switch>
     );

@@ -6,7 +6,6 @@ import { withStyles } from '@material-ui/core';
 import { intlShape } from 'react-intl';
 import { mapOptions } from './config/mapConfig';
 import CreateMap from './utils/createMap';
-import swapCoordinates from './utils/swapCoordinates';
 import UnitMarkers from './components/UnitMarkers';
 import { focusUnit } from './utils/mapActions';
 import styles from './styles';
@@ -19,15 +18,19 @@ import UserMarker from './components/UserMarker';
 import fetchAddress from './utils/fetchAddress';
 import { isEmbed } from '../../utils/path';
 import AddressMarker from './components/AddressMarker';
-import BackButton from '../../components/BackButton';
+import { parseSearchParams } from '../../utils';
+import isClient from '../../utils';
+import swapCoordinates from './utils/swapCoordinates';
 
 
 const MapView = (props) => {
   const {
     classes,
+    createMarkerClusterLayer,
     currentPage,
     getLocaleText,
     intl,
+    location,
     settings,
     addressUnits,
     setAddressLocation,
@@ -37,6 +40,7 @@ const MapView = (props) => {
     highlightedUnit,
     highlightedDistrict,
     isMobile,
+    renderUnitMarkers,
     setMapRef,
     navigator,
     match,
@@ -54,13 +58,14 @@ const MapView = (props) => {
   const [leaflet, setLeaflet] = useState(null);
   const [refSaved, setRefSaved] = useState(false);
   const [prevMap, setPrevMap] = useState(null);
+  const [markerCluster, setMarkerCluster] = useState(null);
 
 
   const getMapUnits = () => {
     let mapUnits = [];
     let unitGeometry = null;
 
-    if (currentPage === 'search') {
+    if (currentPage === 'search' || currentPage === 'division') {
       mapUnits = unitList;
     } else if (currentPage === 'address') {
       mapUnits = addressUnits;
@@ -71,10 +76,17 @@ const MapView = (props) => {
       const { geometry } = highlightedUnit;
       if (geometry && geometry.type === 'MultiLineString') {
         const { coordinates } = geometry;
-        unitGeometry = swapCoordinates(coordinates);
+        unitGeometry = coordinates;
       }
     }
-    return { units: mapUnits, unitGeometry };
+
+    const data = { units: mapUnits, unitGeometry };
+
+    if (data.unitGeometry) {
+      data.unitGeometry = swapCoordinates(data.unitGeometry);
+    }
+
+    return data;
   };
 
   const renderTopBar = () => {
@@ -107,7 +119,10 @@ const MapView = (props) => {
       map.defaultZoom = mapObject.options.zoom;
       setPrevMap(map);
     }
-    const newMap = CreateMap(settings.mapType, locale);
+    // Search param map value
+    const spMap = parseSearchParams(location.search).map || false;
+
+    const newMap = CreateMap(spMap || settings.mapType, locale);
     setMapObject(newMap);
   };
 
@@ -117,9 +132,30 @@ const MapView = (props) => {
       Map, TileLayer, ZoomControl, Marker, Popup, Polygon, Polyline, Tooltip,
     } = require('react-leaflet');
 
+    const L = require('leaflet');
+    require('leaflet.markercluster');
+
+    const {
+      divIcon, point, marker, markerClusterGroup,
+    } = L;
+
     setLeaflet({
-      Map, TileLayer, ZoomControl, Marker, Popup, Polygon, Polyline, Tooltip,
+      divIcon, point, Map, marker, markerClusterGroup, TileLayer, ZoomControl, Marker, Popup, Polygon, Polyline, Tooltip,
     });
+  };
+
+  // Markercluster initializer
+  const initializeMarkerClusterLayer = () => {
+    const map = mapRef && mapRef.current ? mapRef.current : null;
+
+    if (map && leaflet && createMarkerClusterLayer && isClient()) {
+      const popupTitle = intl.formatMessage({ id: 'unit.plural' });
+      const cluster = createMarkerClusterLayer(leaflet, map, classes, popupTitle);
+      if (cluster) {
+        map.leafletElement.addLayer(cluster);
+        setMarkerCluster(cluster);
+      }
+    }
   };
 
   const focusOnUser = () => {
@@ -164,8 +200,30 @@ const MapView = (props) => {
     setRefSaved(false);
   }, [settings.mapType]);
 
+  useEffect(() => {
+    initializeMarkerClusterLayer();
+  }, [mapObject, leaflet]);
+
+  const embeded = isEmbed(match);
+
+  // Attempt to render unit markers on page change or unitList change
+  useEffect(() => {
+    if (!markerCluster) {
+      return;
+    }
+
+    const data = getMapUnits();
+    // Clear layers if no units currently set for data
+    // caused by while fetching
+    if (!data.units.length || highlightedDistrict) {
+      markerCluster.clearLayers();
+      return;
+    }
+    renderUnitMarkers(leaflet, data, classes, markerCluster, embeded);
+  }, [unitList, highlightedUnit, markerCluster, addressUnits, serviceUnits, highlightedDistrict]);
 
   // Render
+
 
   const {
     Map, TileLayer, ZoomControl, Marker, Popup, Polygon, Polyline, Tooltip,
@@ -183,7 +241,6 @@ const MapView = (props) => {
         ? prevMap.viewport.zoom + zoomDifference
         : prevMap.props.zoom + zoomDifference;
     }
-    const embeded = isEmbed(match);
 
     return (
       <>
@@ -213,10 +270,7 @@ const MapView = (props) => {
             && (
               <UnitMarkers
                 data={getMapUnits()}
-                Marker={Marker}
                 Polyline={Polyline}
-                Tooltip={Tooltip}
-                embeded={embeded}
               />
             )
           }
@@ -292,17 +346,20 @@ export default withRouter(withStyles(styles)(MapView));
 MapView.propTypes = {
   addressUnits: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
+  createMarkerClusterLayer: PropTypes.func.isRequired,
   currentPage: PropTypes.string.isRequired,
   getLocaleText: PropTypes.func.isRequired,
-  highlightedDistrict: PropTypes.objectOf(PropTypes.any),
+  highlightedDistrict: PropTypes.arrayOf(PropTypes.any),
   highlightedUnit: PropTypes.objectOf(PropTypes.any),
   intl: intlShape.isRequired,
   isMobile: PropTypes.bool,
+  location: PropTypes.objectOf(PropTypes.any).isRequired,
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   serviceUnits: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
   setAddressLocation: PropTypes.func.isRequired,
   findUserLocation: PropTypes.func.isRequired,
+  renderUnitMarkers: PropTypes.func.isRequired,
   setMapRef: PropTypes.func.isRequired,
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
   unitList: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),

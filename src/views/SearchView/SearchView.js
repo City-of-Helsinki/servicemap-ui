@@ -25,7 +25,11 @@ class SearchView extends React.Component {
     super(props);
 
     this.state = {
-      expandSearch: null,
+      serviceRedirect: {
+        service: null,
+        wasHandled: false,
+      },
+      expandVisible: null,
     };
   }
 
@@ -33,28 +37,33 @@ class SearchView extends React.Component {
     const {
       fetchUnits, units, map,
     } = this.props;
-    const searchData = this.getSearchParam();
-    if (this.shouldFetch()) {
-      if (searchData.type === 'search') {
-        fetchUnits(searchData.query);
-      } else {
-        fetchUnits(searchData.query, searchData.type);
-      }
+    const options = this.searchParamData();
+
+    // Handle old service value redirects
+    const handlingRedirect = this.handleServiceRedirect();
+    if (handlingRedirect) {
+      return;
+    }
+
+    if (this.shouldFetch() && Object.keys(options).length) {
+      fetchUnits(options);
       this.focusMap(units, map);
     }
   }
 
   shouldComponentUpdate(nextProps) {
-    const { fetchUnits, units, map } = this.props;
-    const searchData = this.getSearchParam(nextProps);
+    const {
+      fetchUnits, isRedirectFetching, units, map,
+    } = this.props;
+    if (isRedirectFetching) {
+      return false;
+    }
+
     if (this.shouldFetch(nextProps)) {
-      if (searchData.type === 'search') {
-        fetchUnits(searchData.query);
-      } else {
-        fetchUnits(searchData.query, searchData.type);
-      }
+      const searchData = this.searchParamData(nextProps);
+      fetchUnits(searchData);
       this.focusMap(units, map);
-      return true;
+      return false;
     }
     // If new search results, call map focus functio
     if (nextProps.units.length > 0 && units !== nextProps.units) {
@@ -63,34 +72,156 @@ class SearchView extends React.Component {
     return true;
   }
 
-  // Get search parameter from url
-  getSearchParam = (props) => {
+  // Handle service redirect for old service parameters if given
+  // Will fetch new service_node from redirect endpoint with service parameter
+  handleServiceRedirect = () => {
+    const {
+      fetchUnits, fetchRedirectService, isRedirectFetching,
+    } = this.props;
+    const {
+      serviceRedirect,
+    } = this.state;
+    if (isRedirectFetching) {
+      return true;
+    }
+    const options = this.searchParamData(null, true);
+    if (options.service && serviceRedirect.service !== options.service) {
+      // Set new state object for serviceRedirect
+      const obj = {
+        service: null,
+        wasHandled: false,
+      };
+      this.setState({ serviceRedirect: obj });
+      // Fetch service_node for given old service data
+      fetchRedirectService({ service: options.service }, (data) => {
+        // Success
+        if (data.service_node) {
+          // Need to stringify current search params for unit fetch
+          // Otherwise componentDidMount shouldFetch will compare previous searches incorrectly
+          delete options.service;
+          options.service_node = `${(options.service_node ? `${options.service_node},` : '')}${data.service_node}`;
+
+          // Set serviceRedirect to wasHandled
+          this.setState({ serviceRedirect: { service: options.service_node, wasHandled: true } });
+          fetchUnits(options);
+        }
+      });
+      return true;
+    }
+    return false;
+  }
+
+  stringifySearchQuery = (data) => {
+    try {
+      const search = Object.keys(data).map(key => (`${key}:${data[key]}`));
+      return search.join(',');
+    } catch (e) {
+      return '';
+    }
+  }
+
+  searchParamData = (props = null, includeService = false) => {
     const {
       location,
     } = props || this.props;
+    const { serviceRedirect } = this.state;
+    const redirectNode = serviceRedirect.service;
     const searchParams = parseSearchParams(location.search);
-    if (searchParams.q) {
-      return { type: 'search', query: searchParams.q };
-    } if (searchParams.nodes) {
-      return { type: 'node', query: searchParams.nodes };
+
+    const {
+      q,
+      category,
+      city,
+      municipality,
+      service,
+      service_node,
+    } = searchParams;
+
+    const options = {};
+    if (q) {
+      options.q = q;
+    } else {
+      // Parse service
+      if (includeService && service) {
+        options.service = service;
+      }
+
+      // Parse service_node
+      if (service_node) {
+        options.service_node = service_node;
+      }
+      if (!includeService && redirectNode) {
+        options.service_node = redirectNode;
+      }
+
+      if (category) {
+        const data = category.split(',');
+
+        // Parse services
+        const services = data.reduce((result, item) => {
+          if (item.indexOf('service:') === 0) {
+            result.push(item.split(':')[1]);
+          }
+          return result;
+        }, []);
+
+        if (services.length) {
+          options.service = services.join(',');
+        }
+
+        // Parse serviceNodes
+        const serviceNodes = data.reduce((result, item) => {
+          if (item.indexOf('service_node:') === 0) {
+            result.push(item.split(':')[1]);
+          }
+          return result;
+        }, []);
+
+        if (serviceNodes.length) {
+          options.service_node = serviceNodes.join(',');
+        }
+      }
     }
-    return null;
+
+    // Parse municipality
+    if (municipality || city) {
+      options.municipality = municipality || city;
+    }
+
+
+    return options;
   }
 
   // Check if view will fetch data because sreach params has changed
   shouldFetch = (props) => {
-    const { isFetching, previousSearch } = props || this.props;
-    const searchParam = this.getSearchParam(props);
-    if (previousSearch && searchParam && searchParam.type === 'node') {
-      return !isFetching && searchParam && searchParam.query !== previousSearch.searchQuery;
+    const { isFetching, isRedirectFetching, previousSearch } = props || this.props;
+    if (isFetching || isRedirectFetching) {
+      return false;
     }
-    return !isFetching && searchParam && searchParam.query !== previousSearch;
+    const data = this.searchParamData(props);
+
+    // Should fetch if previousSearch has changed and data has required parameters
+    if (previousSearch) {
+      if (data.q !== previousSearch && this.stringifySearchQuery(data) !== previousSearch) {
+        return !!(data.q || data.service || data.service_node);
+      }
+    } else {
+      // Should fetch if no previous searches but search parameters exist
+      return !!(data.q || data.service || data.service_node);
+    }
+    return false;
   }
 
   focusMap = (units, map) => {
     if (map && map._layersMaxZoom) {
       fitUnitsToMap(units, map);
     }
+  }
+
+  // Figure out if we are using search query or parameterized search
+  isInputSearch = () => {
+    const searchParam = this.searchParamData();
+    return !!searchParam.q;
   }
 
   // Group data based on object types
@@ -145,15 +276,6 @@ class SearchView extends React.Component {
     return null;
   }
 
-  expandSearchVisible() {
-    const {
-      location,
-    } = this.props;
-    const searchParams = parseSearchParams(location.search);
-
-    return !!(searchParams.expand && searchParams.expand === '1');
-  }
-
   /**
    * What to render if no units are found with search
    */
@@ -170,7 +292,7 @@ class SearchView extends React.Component {
       <Container className={classes.noVerticalPadding}>
         <Container className={classes.noVerticalPadding}>
           <Typography align="left" variant="subtitle1" component="p">
-            <FormattedMessage id="search.notFoundWith" values={{ query: previousSearch }} />
+            <FormattedMessage id={typeof previousSearch === 'string' ? 'search.notFoundWith' : 'search.notFound'} values={{ query: previousSearch }} />
           </Typography>
         </Container>
         <Divider aria-hidden="true" />
@@ -196,10 +318,6 @@ class SearchView extends React.Component {
 
   renderSearchBar() {
     const { query, classes } = this.props;
-
-    if (this.expandSearchVisible()) {
-      return null;
-    }
 
     return (
       <SearchBar
@@ -230,23 +348,35 @@ class SearchView extends React.Component {
   }
 
   renderExpandedSearchButton = () => {
+    const { classes, query } = this.props;
+    return (
+      <div className={classes.suggestionButtonContainer}>
+        <ExpandedSuggestions
+          button
+          searchQuery={query}
+          onClick={() => { this.setState({ expandVisible: true }); }}
+        />
+      </div>
+    );
+  }
+
+  renderExpandedSearch = () => {
     const {
-      classes, isFetching, units, query,
+      isFetching, units, query,
     } = this.props;
-    const searchParam = this.getSearchParam();
 
     const unitCount = units && units.length;
 
-    if (isFetching || !unitCount || searchParam.type !== 'search') {
+    if (isFetching || !unitCount || this.isInputSearch()) {
       return null;
     }
 
     return (
-      <div className={classes.suggestionButtonContainer}>
-        <ExpandedSuggestions
-          searchQuery={query}
-        />
-      </div>
+      <ExpandedSuggestions
+        searchQuery={query}
+        onClick={() => { this.setState({ expandVisible: false }); }}
+        isVisible
+      />
     );
   }
 
@@ -342,13 +472,17 @@ class SearchView extends React.Component {
     const {
       classes, isFetching, intl, count, max,
     } = this.props;
-    const { expandSearch } = this.state;
+    const { expandVisible } = this.state;
     const progress = (isFetching && count) ? Math.floor((count / max * 100)) : 0;
 
     const redirect = this.handleSingleResultRedirect();
 
     if (redirect) {
       return redirect;
+    }
+
+    if (expandVisible) {
+      return this.renderExpandedSearch();
     }
 
     return (
@@ -359,15 +493,15 @@ class SearchView extends React.Component {
           this.renderSearchBar()
         }
         {
-          !expandSearch && this.renderSearchInfo()
+          this.renderSearchInfo()
         }
         <Paper className={!isFetching ? classes.noPadding : ''} elevation={1} square aria-live="polite">
           {
-           !expandSearch && this.renderScreenReaderInfo()
+            this.renderScreenReaderInfo()
           }
         </Paper>
         {
-          !expandSearch && this.renderResults()
+          this.renderResults()
         }
         {
           isFetching
@@ -401,27 +535,30 @@ SearchView.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   count: PropTypes.number,
   fetchUnits: PropTypes.func,
+  fetchRedirectService: PropTypes.func,
   getLocaleText: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
   isFetching: PropTypes.bool,
+  isRedirectFetching: PropTypes.bool,
+  // eslint-disable-next-line react/no-unused-prop-types
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   max: PropTypes.number,
   previousSearch: PropTypes.oneOfType([PropTypes.string, PropTypes.objectOf(PropTypes.any)]),
   units: PropTypes.arrayOf(PropTypes.any),
   map: PropTypes.objectOf(PropTypes.any),
   match: PropTypes.objectOf(PropTypes.any).isRequired,
-  navigator: PropTypes.objectOf(PropTypes.any),
   query: PropTypes.string,
 };
 
 SearchView.defaultProps = {
   count: 0,
   fetchUnits: () => {},
+  fetchRedirectService: () => {},
   isFetching: false,
+  isRedirectFetching: false,
   max: 0,
   previousSearch: null,
   units: [],
   map: null,
-  navigator: null,
   query: null,
 };

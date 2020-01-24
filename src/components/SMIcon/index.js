@@ -15,6 +15,7 @@ import snapchatIcon from '../../assets/images/snap_icon.svg';
 import twitterIcon from '../../assets/images/twitter_icon.svg';
 import youtubeIcon from '../../assets/images/youtube_icon.svg';
 import vimeoIcon from '../../assets/images/vimeo_icon.svg';
+import userLocationIcon from '../../assets/images/userLocation.svg';
 
 /**
  * Senses
@@ -117,6 +118,8 @@ export const getIcon = (key, props) => {
       return <img aria-hidden alt="" src={aerialMapIcon} {...props} />;
     case 'guideMap':
       return <img aria-hidden alt="" src={guideMapIcon} {...props} />;
+    case 'accessible_map':
+      return <img aria-hidden alt="" src={defaulMapIcon} {...props} />;
 
     // Front page buttons
     case 'location':
@@ -145,6 +148,9 @@ export const getIcon = (key, props) => {
       return <img aria-hidden alt="" src={youtubeIcon} {...props} />;
     case 'vimeo':
       return <img aria-hidden alt="" src={vimeoIcon} {...props} />;
+
+    case 'locationMarker':
+      return <img aria-hidden alt="" src={userLocationIcon} {...props} />;
 
     default:
       return null;

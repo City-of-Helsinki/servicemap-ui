@@ -28,12 +28,12 @@ export default {
   'address.list.rescue_sub_district': 'Suojelualalohko',
   'address.list.health_station_district': 'Terveysasema-alue',
   'address.list.maternity_clinic_district': 'Neuvola-alue',
-  'address.list.lower_comprehensive_school_district_fi': 'Suomenkielinen ala-aste',
-  'address.list.lower_comprehensive_school_district_sv': 'Ruotsinkielinen ala-aste',
-  'address.list.upper_comprehensive_school_district_fi': 'Suomenkielinen ylä-aste',
-  'address.list.upper_comprehensive_school_district_sv': 'Ruotsinkielinen ylä-aste',
-  'address.list.preschool_education_fi': 'Suomenkielinen varhaiskasvatus',
-  'address.list.preschool_education_sv': 'Ruotsinkielinen varhaiskasvatus',
+  'address.list.lower_comprehensive_school_district_fi': 'Suomenkielinen ala-astealue',
+  'address.list.lower_comprehensive_school_district_sv': 'Ruotsinkielinen ala-astealue',
+  'address.list.upper_comprehensive_school_district_fi': 'Suomenkielinen ylä-astealue',
+  'address.list.upper_comprehensive_school_district_sv': 'Ruotsinkielinen ylä-astealue',
+  'address.list.preschool_education_fi': 'Suomenkielinen varhaiskasvatusalue',
+  'address.list.preschool_education_sv': 'Ruotsinkielinen varhaiskasvatusalue',
   'address.error': 'Osoitetta ei löytynyt',
   'address.nearby': 'Lähellä',
   'address.districts': 'Alueet',
@@ -207,6 +207,8 @@ export default {
     one {# palvelu}
     other {# palvelua}
   }`,
+  'unit.route': 'Katso reitti tänne',
+  'unit.route.extra': '(Uusi välilehti. Reittiopas ei ole saavutettava palvelu)',
   'unit.socialMedia.title': 'Toimipiste sosiaalisessa mediassa',
 
   // Search
@@ -284,15 +286,18 @@ export default {
   // Service tree
   'services': 'Palveluluettelo',
   'services.selections': `{count, plural,
-    one {Olet thenyt (#) valinnan}
-    other {Olet thenyt (#) valintaa}
+    one {Olet tehnyt (#) valinnan}
+    other {Olet tehnyt (#) valintaa}
   }`,
-  'services.selections.delete': 'Poista',
+  'services.selections.delete': 'Poista valinta',
   'services.selections.delete.all': 'Poista kaikki valinnat',
-  'services.selections.delete.sr': 'Poista valinta: ',
+  'services.selections.delete.sr': 'Poista valinta: {service}',
   'services.search': 'Tee haku',
   'services.search.sr': 'Tee haku valituilla palveluilla',
   'services.search.sr.selected': 'Tee haku palveluilla: {services}',
+  'services.category.select': 'Kaikki',
+  'services.category.open': 'Avaa kategoria',
+  'services.tree.level': 'Taso',
 
   // Settings
   'settings': 'Asetukset',
@@ -332,8 +337,9 @@ export default {
   'settings.city.kauniainen': 'Kauniainen',
   'settings.map.title': 'Karttapohja',
   'settings.map.servicemap': 'Palvelukartta',
-  'settings.map.orthoImage': 'Ilmakuva',
+  'settings.map.ortographic': 'Ilmakuva',
   'settings.map.guideMap': 'Opaskartta',
+  'settings.map.accessible_map': 'Korkeakontrastinen kartta',
   'settings.aria.changed': 'Asetukset muutettu. Muista tallentaa',
   'settings.aria.closed': 'Asetukset suljettu',
   'settings.aria.open': 'Avaa asetukset',

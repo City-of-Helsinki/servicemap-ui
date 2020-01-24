@@ -11,6 +11,7 @@ export default theme => ({
     background: theme.palette.background.main,
     paddingTop: 23,
     paddingLeft: 21,
+    paddingRight: 21,
     paddingBottom: 16,
   },
   mainContent: {
@@ -19,13 +20,13 @@ export default theme => ({
   listItem: {
     alignSelf: 'center',
     height: 60,
-    borderBottom: '0.5px solid rgba(151, 151, 151, 0.5)',
     display: 'flex',
     flexDirection: 'row',
     padding: 0,
     paddingLeft: 12,
   },
   level0: {
+    borderBottom: '0.5px solid rgba(151, 151, 151, 0.5)',
     backgroundColor: '#fff',
     '& p': {
       fontWeight: 'bold',
@@ -33,11 +34,13 @@ export default theme => ({
   },
   level1: {
     backgroundColor: '#e3f3ff',
+    borderBottom: '0.5px solid #fff',
     '& p': {
       fontWeight: 'bold',
     },
   },
   level2: {
+    borderBottom: '0.5px solid #fff',
     backgroundColor: '#f5f5f5',
   },
   text: {
@@ -86,15 +89,24 @@ export default theme => ({
     marginBottom: 10,
     marginLeft: 21,
   },
+  seleectionList: {
+    marginTop: 8,
+    marginBottom: 8,
+  },
   selectionText: {
     fontSize: 12,
     paddingRight: theme.spacing.unitDouble,
     color: '#fff',
   },
   deleteText: {
-    fontSize: 10,
-    paddingRight: theme.spacing.unitDouble,
+    fontSize: 12,
+    paddingRight: theme.spacing.unit,
     color: '#fff',
+  },
+  deleteIcon: {
+    color: '#fff',
+    height: 14,
+    width: 14,
   },
   bold: {
     fontWeight: 'bold',
@@ -116,5 +128,8 @@ export default theme => ({
   },
   selectionsButton: {
     display: 'flex',
+  },
+  whiteDivider: {
+    backgroundColor: '#fff',
   },
 });

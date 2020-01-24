@@ -30,7 +30,7 @@ const mapStateToProps = (state) => {
     map,
     navigator,
     reservationsData: reservations,
-    userLocation: user.position.coordinates,
+    userLocation: user.position,
   };
 };
 

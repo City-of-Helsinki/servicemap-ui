@@ -1,39 +1,21 @@
 export default theme => ({
   container: {
     display: 'flex',
-    flexWrap: 'wrap',
-    color: '#fff',
-    background: theme.palette.background.main,
-    boxShadow: '0 2px 0 0 rgba(0,0,0,0.5)',
-    minHeight: 60,
-  },
-  titleContainer: {
-    display: 'flex',
     alignItems: 'center',
+    minHeight: 44,
+    background: theme.palette.background.main,
+    boxShadow: '0 2px 4px 0 rgba(0,0,0,0.5)',
     color: '#fff',
-    paddingLeft: theme.spacing.unit,
-    paddingRight: theme.spacing.unit,
-  },
-  large: {
-    paddingBottom: 20,
+    padding: theme.spacing.unit,
   },
   textBar: {
-    paddingLeft: 16,
-  },
-  backTextContainer: {
-    flexBasis: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    paddingLeft: 6,
-  },
-  backText: {
-    fontSize: 12,
-    fontWeight: 'bold',
+    paddingLeft: 36,
   },
   title: {
     fontSize: 18,
     color: 'inherit',
     flex: '1 1 auto',
+    textTransform: 'capitalize',
     textAlign: 'left',
     marginLeft: 10,
   },
@@ -42,7 +24,7 @@ export default theme => ({
     color: 'inherit',
     flex: '0 1 auto',
     padding: theme.spacing.unit,
-    marginLeft: theme.spacing.unit,
+    marginLeft: theme.spacing.unitHalf,
   },
   colorLight: {
     color: '#000',
@@ -53,6 +35,7 @@ export default theme => ({
     marginLeft: 'auto',
     paddingLeft: theme.spacing.unit,
     paddingTop: 4,
-    marginRight: theme.spacing.unitDouble,
+    marginRight: theme.spacing.unit,
+    minWidth: 50,
   },
 });

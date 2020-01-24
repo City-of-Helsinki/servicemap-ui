@@ -110,8 +110,12 @@ class EventDetailView extends React.Component {
 
   render() {
     const {
-      classes, event, intl, getLocaleText, selectedUnit,
+      classes, embed, event, intl, getLocaleText, selectedUnit,
     } = this.props;
+
+    if (embed) {
+      return null;
+    }
     if (event) {
       const description = event.description || event.short_description;
       const unit = selectedUnit;
@@ -186,6 +190,7 @@ class EventDetailView extends React.Component {
 EventDetailView.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   changeSelectedEvent: PropTypes.func.isRequired,
+  embed: PropTypes.bool,
   event: PropTypes.objectOf(PropTypes.any),
   fetchSelectedUnit: PropTypes.func.isRequired,
   map: PropTypes.objectOf(PropTypes.any),
@@ -196,6 +201,7 @@ EventDetailView.propTypes = {
 };
 
 EventDetailView.defaultProps = {
+  embed: false,
   event: null,
   map: null,
   selectedUnit: null,

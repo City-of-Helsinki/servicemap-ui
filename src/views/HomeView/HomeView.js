@@ -4,36 +4,20 @@ import { FormattedMessage } from 'react-intl';
 import SearchBar from '../../components/SearchBar';
 import { MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import PaperButton from '../../components/PaperButton';
-import fetchAddress from '../MapView/utils/fetchAddress';
 import { getIcon } from '../../components/SMIcon';
 
 class HomeView extends React.Component {
-  componentDidMount() {
-    const { setCurrentPage } = this.props;
-    setCurrentPage('home');
-  }
-
-  onExapmleItemClick = (e, searchText) => {
-    e.preventDefault();
-    const {
-      fetchUnits, navigator,
-    } = this.props;
-    if (navigator) {
-      navigator.push('search', { q: searchText });
-    }
-
-    if (searchText && searchText !== '') {
-      fetchUnits(searchText);
-    }
-  }
-
   renderNavigationOptions = () => {
     const {
       classes, getLocaleText, toggleSettings, navigator, userLocation,
     } = this.props;
     const noUserLocation = !userLocation
-      || !userLocation.latitude
-      || !userLocation.longitude;
+      || !userLocation.coordinates
+      || !userLocation.addressData;
+
+    const notFoundText = noUserLocation ? 'location.notFound' : null;
+    const subtitleID = userLocation && userLocation.allowed ? notFoundText
+      : 'location.notAllowed';
 
     return (
       <div className={classes.background}>
@@ -44,16 +28,13 @@ class HomeView extends React.Component {
             link
             disabled={noUserLocation}
             onClick={() => {
-              const latLng = { lat: userLocation.latitude, lng: userLocation.longitude };
-              fetchAddress(latLng)
-                .then((data) => {
-                  navigator.push('address', {
-                    municipality: data.street.municipality,
-                    street: getLocaleText(data.street.name),
-                    number: data.number,
-                  });
-                });
+              navigator.push('address', {
+                municipality: userLocation.addressData.street.municipality,
+                street: getLocaleText(userLocation.addressData.street.name),
+                number: userLocation.addressData.number,
+              });
             }}
+            subtitle={subtitleID && <FormattedMessage id={subtitleID} />}
           />
           <PaperButton
             text={<FormattedMessage id="home.buttons.services" />}
@@ -179,8 +160,6 @@ export default HomeView;
 
 // Typechecking
 HomeView.propTypes = {
-  fetchUnits: PropTypes.func,
-  setCurrentPage: PropTypes.func.isRequired,
   getLocaleText: PropTypes.func.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -189,7 +168,6 @@ HomeView.propTypes = {
 };
 
 HomeView.defaultProps = {
-  fetchUnits: () => {},
   navigator: null,
   userLocation: null,
 };

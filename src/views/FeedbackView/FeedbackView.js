@@ -122,7 +122,7 @@ const FeedbackView = ({
       </Dialog>
 
       <form>
-        <TitleBar backText title={feedbackTitle} />
+        <TitleBar backButton backButtonOnClick={() => navigator.goBack()} title={feedbackTitle} />
         <div className={classes.contentArea}>
           {/* Email field */}
           <FormControl>

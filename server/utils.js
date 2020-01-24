@@ -1,42 +1,92 @@
-import I18n from '../src/i18n';
+const redirectables = [
+  {
+    check: /^\/(fi|sv|en)(|\/embed)\/unit\?(.+)=/,
+    redirectTo: (item, req) => {
+      try {
+        let queryString = null;
+        if (req.query) {
+          queryString = Object.keys(req.query).map(key => `${key}=${req.query[key]}`).join('&');
+        }
 
-const allowedUrls = [
-  /^\/.{2,}\/$/,
-  /^\/.{2,}\/unit\/\d+$/,
-  /^\/.{2,}\/unit\/\d+\/events$/,
-  /^\/.{2,}\/unit$/,
-  /^\/.{2,}\/search$/,
-  /^\/.{2,}\/address\/[^\/]+\/[^\/]+\/[^\/]+$/,
-  /^\/.{2,}\/division\/[^\/]+\/[^\/]+$/,
-  /^\/.{2,}\/division$/,
-  /^\/.{2,}\/area$/,
-  /^\/d+\/events$/,
+        // Replace unit with search
+        const pathArray = req.path.split('/');
+        const index = pathArray.indexOf('unit');
+        pathArray.splice(index, 1, 'search');
+        const pathName = pathArray.join('/');
+  
+        return pathName + `${queryString ? `?${queryString}` : ''}`;
+      } catch (e) {
+        return null;
+      }
+    },
+  }
 ];
 
+const isValidLanguage = (path) => {
+  if(!path) {
+    return false;
+  }
+  const hasLanguage = path.match(/^\/(fi|sv|en)/);
+  return hasLanguage && hasLanguage.index === 0;
+}
 // Handle language change
 export const makeLanguageHandler = (req, res, next) => {
-  // Check if request url is actual path
-  let match = false;
-  allowedUrls.forEach((url) => {
-    if (!match && req.path.match(url)) {
-      match = true;
-    }
-  });
 
-  if(!match) {
+  if(isValidLanguage(req.path)) {
     next();
     return;
   }
+  res.redirect('/fi/');
+  return;
+};
 
-  // Handle language check and redirect if language is changed to default
-  const i18n = new I18n();
-  const pathArray = req.url.split('/');
-  if (!i18n.isValidLocale(pathArray[1])) {
-    pathArray[1] = i18n.locale;
-    res.redirect(pathArray.join('/'));
+// Redirect old language based domains to correct language
+export const languageSubdomainRedirect = (req, res, next) => {
+  if (!isValidLanguage(req.path) && req.subdomains.length === 1) {
+    if (req.subdomains[0].match(/^servicemap/)) {
+      const pathArray = req.url.split('/');
+      pathArray.splice(1, 0, 'en');
+      res.redirect(pathArray.join('/'));
+      return;
+    }
+    if (req.subdomains[0].match(/^servicekarta/)) {
+      const pathArray = req.url.split('/');
+      pathArray.splice(1, 0, 'se');
+      res.redirect(pathArray.join('/'));
+      return;
+    }
+    if (req.subdomains[0].match(/^palvelukartta/)) {
+      const pathArray = req.url.split('/');
+      pathArray.splice(1, 0, 'fi');
+      res.redirect(pathArray.join('/'));
+      return;
+    }
+  }
+  next();
+  return;
+}
+
+export const unitRedirect = (req, res, next) => {
+  let redirecting = false;
+  redirectables.forEach(item => {
+    if(redirecting) {
+      return;
+    }
+
+    if (req.url.match(item.check)) {
+      const redirectTo = item.redirectTo(item, req);
+      if (redirectTo) {
+        redirecting = true;
+        res.redirect(redirectTo);
+        return;
+      }
+    }
+  });
+
+  if (redirecting) {
     return;
   }
 
   next();
   return;
-};
+}

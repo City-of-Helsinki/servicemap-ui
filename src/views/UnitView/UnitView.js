@@ -147,7 +147,12 @@ const UnitView = (props) => {
         </Container>
 
         {/* View Components */}
-        <ContactInfo unit={unit} intl={intl} />
+        <ContactInfo
+          unit={unit}
+          userLocation={userLocation}
+          getLocaleText={getLocaleText}
+          intl={intl}
+        />
         <SocialMediaLinks unit={unit} getLocaleText={getLocaleText} />
         <Highlights unit={unit} getLocaleText={getLocaleText} />
         <Description unit={unit} getLocaleText={getLocaleText} />
@@ -221,7 +226,7 @@ const UnitView = (props) => {
 
   const render = () => {
     const title = unit && unit.name ? getLocaleText(unit.name) : '';
-    const distance = formatDistanceString(calculateDistance(unit, userLocation));
+    const distance = formatDistanceString(calculateDistance(unit, userLocation.coordinates));
 
     const TopArea = (
       <div className={`${classes.topArea} sticky`}>
@@ -340,6 +345,7 @@ export default UnitView;
 UnitView.propTypes = {
   accessibilitySentences: PropTypes.objectOf(PropTypes.any),
   unit: PropTypes.objectOf(PropTypes.any),
+  embed: PropTypes.bool,
   eventsData: PropTypes.objectOf(PropTypes.any),
   map: PropTypes.objectOf(PropTypes.any),
   fetchAccessibilitySentences: PropTypes.func.isRequired,
@@ -359,8 +365,9 @@ UnitView.propTypes = {
 
 UnitView.defaultProps = {
   accessibilitySentences: null,
-  unit: null,
+  embed: false,
   eventsData: { events: null, unit: null },
+  unit: null,
   match: {},
   map: null,
   navigator: null,
