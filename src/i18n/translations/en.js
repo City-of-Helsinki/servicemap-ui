@@ -61,6 +61,7 @@ export default {
   'feedback.modal.confirm': 'OK',
   'feedback.modal.leave': 'Are you sure you want to leave the page?',
   'feedback.modal.success': 'Thank you for the feedback!',
+  'feedback.modal.error': 'Failed to send. Try again later',
 
   // Sorting
   'sorting.label': 'Sort search results',

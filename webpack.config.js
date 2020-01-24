@@ -12,6 +12,7 @@ const ACCESSIBILITY_SENTENCE_API = 'https://www.hel.fi/palvelukarttaws/rest/v4';
 const SERVICEMAP_API = 'https://api.hel.fi/servicemap/v2';
 const EVENTS_API = 'https://api.hel.fi/linkedevents/v1';
 const RESERVATIONS_API = 'https://api.hel.fi/respa/v1';
+const FEEDBACK_URL = "https://api.hel.fi/servicemap/open311/";
 
 const PRODUCTION_PREFIX = 'SM';
 
@@ -118,6 +119,7 @@ const serverConfig = {
       'SERVICEMAP_API': SERVICEMAP_API,
       'EVENTS_API': EVENTS_API,
       'RESERVATIONS_API': RESERVATIONS_API,
+      'FEEDBACK_URL' : FEEDBACK_URL,
       'PRODUCTION_PREFIX': PRODUCTION_PREFIX,
     }),
   ]
@@ -151,6 +153,7 @@ const clientConfig = {
       'SERVICEMAP_API': SERVICEMAP_API,
       'EVENTS_API': EVENTS_API,
       'RESERVATIONS_API': RESERVATIONS_API,
+      'FEEDBACK_URL' : FEEDBACK_URL,
       'PRODUCTION_PREFIX': PRODUCTION_PREFIX,
     }),
   ]

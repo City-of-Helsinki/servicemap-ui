@@ -61,6 +61,7 @@ export default {
   'feedback.modal.confirm': 'OK',
   'feedback.modal.leave': 'Haluatko varmasti poistua tältä sivulta?', // TODO: Translate
   'feedback.modal.success': 'Kiitos palautteestasi!', // TODO: Translate
+  'feedback.modal.error': 'Lähetys epäonnistui. Yritä uudestaan myöhemmin', // TODO: Translate
 
   // Sorting
   'sorting.label': 'Ordna sökresultaten',

@@ -96,5 +96,6 @@ export default theme => ({
   modalTitle: {
     fontSize: 16,
     fontWeight: 'bold',
+    textAlign: 'center',
   },
 });

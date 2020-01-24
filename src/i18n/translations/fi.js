@@ -61,6 +61,7 @@ export default {
   'feedback.modal.confirm': 'OK',
   'feedback.modal.leave': 'Haluatko varmasti poistua tältä sivulta?',
   'feedback.modal.success': 'Kiitos palautteestasi!',
+  'feedback.modal.error': 'Lähetys epäonnistui. Yritä uudestaan myöhemmin',
 
   // Sorting
   'sorting.label': 'Järjestä hakutulokset:',

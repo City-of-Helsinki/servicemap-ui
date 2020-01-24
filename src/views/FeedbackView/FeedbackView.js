@@ -8,6 +8,7 @@ import { intlShape, FormattedMessage } from 'react-intl';
 import { Prompt } from 'react-router-dom';
 import TitleBar from '../../components/TitleBar';
 import SMButton from '../../components/ServiceMapButton';
+import config from '../../../config';
 
 const FeedbackView = ({
   classes, navigator, intl, location, selectedUnit, getLocaleText,
@@ -25,9 +26,16 @@ const FeedbackView = ({
   const feedbackFull = feedbackLength >= feedbackMaxLength;
   const errorMessage = fbFieldVisited && feedbackLength === 0 ? intl.formatMessage({ id: 'feedback.error.required' }) : null;
 
-  const feedbackTitle = feedbackType === 'unit'
+  const feedbackTitle = feedbackType === 'unit' && selectedUnit
     ? intl.formatMessage({ id: 'feedback.title.unit' }, { unit: getLocaleText(selectedUnit.name) })
     : intl.formatMessage({ id: 'feedback.title' });
+
+  const resetForm = () => {
+    setEmail(null);
+    setFbFieldVisited(false);
+    setFeedback(null);
+    setPermission(false);
+  };
 
   const handleChange = (type, event) => {
     if (type === 'email') {
@@ -38,13 +46,52 @@ const FeedbackView = ({
   };
 
   const handleSend = () => {
-    const message = {
-      email,
-      feedback,
-      permission,
-    };
-    console.log(message);
-    setModalOpen('send');
+    let body;
+
+    if (feedbackType === 'unit') {
+      // When accessibility options are added to feedback, different service codes will be used
+      const serviceCode = 1363;
+      body = new URLSearchParams({
+        description: feedback,
+        email,
+        can_be_published: permission,
+        service_code: serviceCode,
+        service_object_id: selectedUnit.id,
+        service_object_type: 'http://www.hel.fi/servicemap/v2',
+        service_request_type: 'OTHER',
+      }).toString();
+    } else if (feedbackType === 'general') {
+      const serviceCode = 1363;
+      body = new URLSearchParams({
+        description: feedback,
+        email,
+        internal_feedback: true,
+        can_be_published: permission,
+        service_code: serviceCode,
+        service_request_type: 'OTHER',
+      }).toString();
+    }
+
+    const url = config.feedbackURL.root;
+
+
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body,
+    }).then((response) => {
+      if (response.ok) {
+        resetForm();
+        setModalOpen('send');
+      } else {
+        setModalOpen('error');
+      }
+    }).catch((e) => {
+      console.warn(e);
+      setModalOpen('error');
+    });
   };
 
   return (
@@ -57,13 +104,17 @@ const FeedbackView = ({
       {/* Confirm dialog */}
       <Dialog open={!!modalOpen}>
         <div className={classes.modalContainer}>
-          <Typography className={classes.modalTitle}><FormattedMessage id="feedback.modal.success" /></Typography>
+          <Typography className={classes.modalTitle}>
+            <FormattedMessage id={modalOpen === 'send' ? 'feedback.modal.success' : 'feedback.modal.error'} />
+          </Typography>
           <SMButton
             className={classes.modalButton}
             messageID="feedback.modal.confirm"
             onClick={() => {
               setModalOpen(false);
-              navigator.goBack();
+              if (modalOpen === 'send') {
+                navigator.goBack();
+              }
             }}
             margin
           />
@@ -132,7 +183,9 @@ const FeedbackView = ({
         <div className={classes.bottomArea}>
           <Typography className={classes.infoText}><FormattedMessage id="feedback.additionalInfo" /></Typography>
           <Typography className={classes.infoText}>
-            <Link href="stuff"><FormattedMessage id="feedback.additionalInfo.link" /></Link>
+            <Link href="https://www.hel.fi/helsinki/fi/kaupunki-ja-hallinto/osallistu-ja-vaikuta/palaute/ohjeita-palautteesta">
+              <FormattedMessage id="feedback.additionalInfo.link" />
+            </Link>
           </Typography>
           <SMButton
             disabled={!feedback || errorMessage}

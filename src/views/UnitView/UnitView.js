@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Typography } from '@material-ui/core';
 import { FormattedMessage, intlShape } from 'react-intl';
-import { Map } from '@material-ui/icons';
+import { Map, Mail } from '@material-ui/icons';
 import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import SearchBar from '../../components/SearchBar';
 import { focusUnit, focusDistrict } from '../MapView/utils/mapActions';
@@ -98,6 +98,18 @@ const UnitView = (props) => {
     }
   };
 
+  const handleFeedbackClick = () => {
+    if (unit.municipality === 'espoo') {
+      window.open('https://easiointi.espoo.fi/efeedback/');
+    } else if (unit.municipality === 'vantaa') {
+      window.open('https://asiointi.vantaa.fi/anna-palautetta');
+    } else if (unit.municipality === 'kauniainen') {
+      window.open('https://www.kauniainen.fi/kaupunki_ja_paatoksenteko/osallistu_ja_vaikuta');
+    } else {
+      navigator.openFeedback();
+    }
+  };
+
   useEffect(() => { // On mount
     intializeUnitData();
   }, []);
@@ -140,6 +152,12 @@ const UnitView = (props) => {
         <Highlights unit={unit} getLocaleText={getLocaleText} />
         <Description unit={unit} getLocaleText={getLocaleText} />
         <ElectronicServices unit={unit} />
+        <SMButton
+          messageID="home.send.feedback"
+          icon={<Mail />}
+          onClick={() => handleFeedbackClick()}
+          margin
+        />
       </div>
     );
   };
@@ -191,12 +209,12 @@ const UnitView = (props) => {
           }}
           margin
         />
-        {/* <SMButton
+        <SMButton
           messageID="home.send.feedback"
           icon={<Mail />}
-          onClick={() => navigator.openFeedback()}
+          onClick={() => handleFeedbackClick()}
           margin
-        /> */}
+        />
       </div>
     </MobileComponent>
   );

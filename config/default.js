@@ -12,6 +12,9 @@ export default {
   "reservationsAPI": {
     "root": process.env.RESERVATIONS_API,
   },
+  "feedbackURL": {
+    "root": process.env.FEEDBACK_URL,
+  },
   // constants
   "accessibilityColors":  {
     "default": "#2242C7",
