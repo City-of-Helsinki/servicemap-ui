@@ -1,6 +1,6 @@
 const redirectables = [
   {
-    check: /^\/(fi|sv|en)\/embed\/unit\?(.+)=/,
+    check: /^\/(fi|sv|en)(|\/embed)\/unit\?(.+)=/,
     redirectTo: (item, req) => {
       try {
         let queryString = null;
