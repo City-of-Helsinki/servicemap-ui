@@ -1,6 +1,6 @@
 export default theme => ({
   container: {
-    flex: 1,
+    flex: '0 0 auto',
     padding: 0,
     width: '88%',
     maxWidth: 356,
@@ -11,7 +11,7 @@ export default theme => ({
     padding: 0,
     paddingLeft: theme.spacing.unit,
     paddingRight: theme.spacing.unitDouble,
-    justifyContent: 'left',
+    justifyContent: 'flex-start',
     textAlign: 'left',
     border: `${theme.palette.detail.alpha} solid 0.5px`,
   },
@@ -30,6 +30,8 @@ export default theme => ({
   },
   icon: {
     color: 'inherit',
+    height: 'inherit',
+    width: 24,
   },
   iconDisabled: {
     backgroundColor: 'rgba(0, 0, 0, 0.26)',
