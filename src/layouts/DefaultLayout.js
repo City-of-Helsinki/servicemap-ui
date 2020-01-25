@@ -62,12 +62,7 @@ const createContentStyles = (
     },
   };
 
-  if (isMobile) {
-    if (fullMobileMap && !landscape) {
-      // TODO change 56px to topBarHeight when we get new height for topbar/titlebar
-      styles.map.height = 'calc(100% - 56px)';
-    }
-  } else if (currentPage === 'home') {
+  if (currentPage === 'home') {
     styles.sidebar.borderRight = '8px solid transparent';
   }
 
