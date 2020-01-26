@@ -7,14 +7,6 @@ const NODE_ENV = process.env.NODE_ENV;
 const isEnvProduction = NODE_ENV === 'production';
 const isEnvDevelopment = !isEnvProduction;
 
-// Default API paths if environment variables are not set
-const ACCESSIBILITY_SENTENCE_API = 'https://www.hel.fi/palvelukarttaws/rest/v4';
-const SERVICEMAP_API = 'https://api.hel.fi/servicemap/v2';
-const EVENTS_API = 'https://api.hel.fi/linkedevents/v1';
-const RESERVATIONS_API = 'https://api.hel.fi/respa/v1';
-
-const PRODUCTION_PREFIX = 'SM';
-
 const js = {
   
   test: /\.(js|mjs|jsx|ts|tsx)$/,
@@ -120,6 +112,12 @@ const clientConfig = {
   target: 'web',
   entry: {
     'index.js': path.resolve(__dirname, 'src/client.js'),
+  },
+  node: {
+    // Needed to enable importing dotenv in the browser.  Although
+    // dotenv is not used there, the code is shared with the server,
+    // where dotenv *is* used.
+    fs: 'empty'
   },
   module: {
     rules: [
