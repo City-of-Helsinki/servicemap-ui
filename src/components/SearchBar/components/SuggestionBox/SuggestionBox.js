@@ -11,6 +11,8 @@ import PreviousSearches from '../../PreviousSearches';
 import createSuggestions from '../../createSuggestions';
 import config from '../../../../../config';
 import SuggestionItem from '../../../ListItems/SuggestionItem';
+import AddressItem from '../../../ListItems/AddressItem';
+import { uppercaseFirst } from '../../../../utils';
 
 
 const SuggestionBox = (props) => {
@@ -21,6 +23,7 @@ const SuggestionBox = (props) => {
     handleSubmit,
     classes,
     focusedSuggestion,
+    getLocaleText,
     setSearch,
     intl,
   } = props;
@@ -36,6 +39,15 @@ const SuggestionBox = (props) => {
   const listRef = useRef(null);
   const fetchController = useRef(null);
   const maxSuggestionCount = 8;
+
+  // Component mount action
+  useEffect(() => (
+    // Component unmount actions
+    () => {
+      if (fetchController && fetchController.current) {
+        fetchController.current.abort();
+      }
+    }), []);
 
   /* TODO: Utilize city information with search queries
   const cities = [
@@ -72,16 +84,17 @@ const SuggestionBox = (props) => {
       const { signal } = fetchController.current;
 
       createSuggestions(query, signal)
-        .then((result) => {
-          if (result !== 'error') {
-            fetchController.current = null;
-            if (result.suggestions.length) {
-              setSearchQueries(result.suggestions);
-              setLoading(false);
-            } else {
-              setSuggestionError(true);
-              setLoading(false);
-            }
+        .then((suggestions) => {
+          if (suggestions === 'error') {
+            return;
+          }
+          fetchController.current = null;
+          if (suggestions.length) {
+            setSearchQueries(suggestions);
+            setLoading(false);
+          } else {
+            setSuggestionError(true);
+            setLoading(false);
           }
         });
     } else {
@@ -93,11 +106,24 @@ const SuggestionBox = (props) => {
     }
   };
 
+  const getAddressText = (item) => {
+    const number = `${item.number ? item.number : ''}${item.letter ? item.letter : ''}`;
+    const text = `${getLocaleText(item.street.name)} ${number}, ${uppercaseFirst(item.street.municipality)}`;
+    return text;
+  };
+
   const setSearchBarText = () => {
     if (listRef && listRef.current) {
       if (listRef.current.props.children.length && focusedSuggestion !== null) {
         if (searchQueries) {
-          setSearch(searchQueries[focusedSuggestion].suggestion);
+          const focused = searchQueries[focusedSuggestion];
+          if (focused.object_type === 'suggestion') {
+            setSearch(focused.suggestion);
+            return;
+          }
+          if (focused.object_type === 'address') {
+            setSearch(getAddressText(focused));
+          }
         } else if (history) {
           setSearch(history[focusedSuggestion]);
         }
@@ -141,22 +167,37 @@ const SuggestionBox = (props) => {
       return (
         <>
           <List className="suggestionList" ref={listRef}>
-            {suggestionList.map((item, i) => (
-              <SuggestionItem
-                selected={i === focusedSuggestion}
-                button
-                key={item.suggestion + item.count}
-                icon={<Search />}
-                role="link"
-                text={item.suggestion}
-                handleArrowClick={handleArrowClick}
-                handleItemClick={() => handleSubmit(item.suggestion)}
-                divider
-                subtitle={intl.formatMessage({ id: 'search.suggestions.results' }, { count: item.count })}
-                isMobile
-                query={suggestionQuery}
-              />
-            ))}
+            {suggestionList.map((item, i) => {
+              if (item.object_type === 'suggestion') {
+                return (
+                  <SuggestionItem
+                    selected={i === focusedSuggestion}
+                    button
+                    key={`suggestion-${item.suggestion + item.count}`}
+                    icon={<Search />}
+                    role="link"
+                    text={item.suggestion}
+                    handleArrowClick={handleArrowClick}
+                    handleItemClick={() => handleSubmit(item.suggestion)}
+                    divider
+                    subtitle={intl.formatMessage({ id: 'search.suggestions.results' }, { count: item.count })}
+                    isMobile
+                    query={suggestionQuery}
+                  />
+                );
+              }
+              if (item.object_type === 'address') {
+                const sortIndex = item.sort_index;
+                return (
+                  <AddressItem
+                    selected={i === focusedSuggestion}
+                    key={`address-${sortIndex}`}
+                    address={item}
+                  />
+                );
+              }
+              return null;
+            })}
           </List>
         </>
       );
@@ -237,6 +278,7 @@ const SuggestionBox = (props) => {
 };
 
 SuggestionBox.propTypes = {
+  getLocaleText: PropTypes.func.isRequired,
   visible: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   searchQuery: PropTypes.string,
   handleArrowClick: PropTypes.func.isRequired,

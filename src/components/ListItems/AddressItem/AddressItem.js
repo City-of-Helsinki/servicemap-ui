@@ -6,7 +6,7 @@ import { AddressIcon } from '../../SMIcon';
 
 const AddressItem = (props) => {
   const {
-    getLocaleText, navigator, address, classes,
+    getLocaleText, navigator, address, classes, selected,
   } = props;
 
   const number = `${address.number ? address.number : ''}${address.letter ? address.letter : ''}`;
@@ -29,6 +29,7 @@ const AddressItem = (props) => {
         }
       }}
       role="link"
+      selected={selected}
     />
   );
 };
@@ -41,8 +42,10 @@ AddressItem.propTypes = {
   getLocaleText: PropTypes.func.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   address: PropTypes.objectOf(PropTypes.any).isRequired,
+  selected: PropTypes.bool,
 };
 
 AddressItem.defaultProps = {
   navigator: null,
+  selected: false,
 };
