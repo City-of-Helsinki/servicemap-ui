@@ -13,6 +13,7 @@ import JssProvider from 'react-jss/lib/JssProvider';
 import {
   createGenerateClassName,
 } from '@material-ui/core/styles';
+import ac from 'abortcontroller-polyfill';
 import rootReducer from './rootReducer';
 import App from './App';
 import SettingsUtility from './utils/settings';
@@ -20,6 +21,10 @@ import LocalStorageUtility from './utils/localStorage';
 import config from '../config';
 import favicon from './assets/icons/favicon.ico';
 import ThemeWrapper from './utils/ThemeWrapper';
+
+if (!global.AbortController) {
+  global.AbortController = ac.AbortController;
+}
 
 const getPreloadedState = () => {
   const state = window.PRELOADED_STATE;
