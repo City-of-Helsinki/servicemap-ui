@@ -11,6 +11,7 @@ import config from '../../../config';
 import SMButton from '../ServiceMapButton';
 import SuggestionItem from '../ListItems/SuggestionItem';
 import TitleBar from '../TitleBar';
+import AddressItem from '../ListItems/AddressItem';
 
 
 const ExpandedSuggestions = (props) => {
@@ -63,17 +64,17 @@ const ExpandedSuggestions = (props) => {
       const { signal } = fetchController.current;
 
       createSuggestions(query, signal)
-        .then((result) => {
-          if (result !== 'error') {
-            fetchController.current = null;
-            if (result.suggestions.length) {
-              setSearchQueries(result.suggestions);
-              setLoading(false);
-            } else {
-              setSearchQueries([]);
-              setSuggestionError(true);
-              setLoading(false);
-            }
+        .then((suggestions) => {
+          if (suggestions === 'error') {
+            return;
+          }
+          fetchController.current = null;
+          if (suggestions.length) {
+            setSearchQueries(suggestions);
+            setLoading(false);
+          } else {
+            setSuggestionError(true);
+            setLoading(false);
           }
         });
     } else {
@@ -136,21 +137,32 @@ const ExpandedSuggestions = (props) => {
             renderTitleBar()
           }
           <List className="suggestionList" ref={listRef}>
-            {suggestionList.map(item => (
-              <SuggestionItem
-                button
-                key={item.suggestion + item.count}
-                icon={<Search />}
-                role="link"
-                text={item.suggestion}
-                handleItemClick={() => {
-                  suggestionClick(item.suggestion);
-                }}
-                divider
-                subtitle={intl.formatMessage({ id: 'search.suggestions.results' }, { count: item.count })}
-                query={suggestionQuery}
-              />
-            ))}
+            {suggestionList.map((item) => {
+              if (item.object_type === 'suggestion') {
+                return (
+                  <SuggestionItem
+                    button
+                    key={item.suggestion + item.count}
+                    icon={<Search />}
+                    role="link"
+                    text={item.suggestion}
+                    handleItemClick={() => {
+                      suggestionClick(item.suggestion);
+                    }}
+                    divider
+                    subtitle={intl.formatMessage({ id: 'search.suggestions.results' }, { count: item.count })}
+                    query={suggestionQuery}
+                  />
+                );
+              }
+              if (item.object_type === 'address') {
+                const sortIndex = item.sort_index;
+                return (
+                  <AddressItem key={`address-${sortIndex}`} address={item} />
+                );
+              }
+              return null;
+            })}
           </List>
           <div className={classes.bottomContent}>
             <SMButton

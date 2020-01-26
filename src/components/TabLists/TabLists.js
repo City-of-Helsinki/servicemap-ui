@@ -240,7 +240,7 @@ class TabLists extends React.Component {
       && typeof tabsHeight === 'number'
     ) {
       // Adjust tabs min height to work with shorter contents
-      const customTabHeight = containerHeight - tabsHeight;
+      // const customTabHeight = containerHeight - tabsHeight;
       // Set new styles and scrollDistance value to state
       this.setState({
         styles: {
@@ -248,7 +248,8 @@ class TabLists extends React.Component {
           top: mobile ? Math.max(appBarHeight, stickyElementPadding) : stickyElementPadding,
         },
         tabStyles: {
-          minHeight: customTabHeight,
+          // TODO: disabeld temporarily for causing problems that break the layout
+          // minHeight: customTabHeight,
         },
         scrollDistance: (tabsDistanceFromTop - stickyElementPadding),
       });
