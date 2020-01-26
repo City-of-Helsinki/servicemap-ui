@@ -13,14 +13,14 @@ const HomeLogo = (props) => {
     contrast, classes, ...rest
   } = props;
 
-  const getLogo = (environment, contrast = false) => {
-    if (environment === 'production') {
+  const getLogo = (production = false, contrast = false) => {
+    if (production) {
       return contrast ? logoContrast : logoNormal;
     }
     return contrast ? logoContrastDev : logoNormalDev;
   };
 
-  const logo = getLogo(config.environment, contrast);
+  const logo = getLogo(config.production, contrast);
 
   return (
     <div role="img" {...rest}>
