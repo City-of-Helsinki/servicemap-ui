@@ -101,9 +101,6 @@ const serverConfig = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name]',
-  },
-  optimization: {
-    'minimize': false,
   }
 };
 
@@ -134,9 +131,6 @@ const clientConfig = {
   output: {
     path: path.resolve(__dirname, 'dist/src'),
     filename: '[name]',
-  },
-  optimization: {
-    'minimize': false,
   }
 };
 
