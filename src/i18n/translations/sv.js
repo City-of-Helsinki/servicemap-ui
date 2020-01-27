@@ -46,7 +46,7 @@ export default {
   'event.title': 'Evenemang',
 
   // Feedback
-  'feedback.back': 'Tillbaka', // TODO: Translate
+  'feedback.back': 'Gå tillbaka',
   'feedback.title': 'Ge respons om den här nättjänsten',
   'feedback.title.unit': 'Ge respons om verksamhetsstället {unit}',
   'feedback.email': 'Email',
@@ -61,7 +61,7 @@ export default {
   'feedback.modal.confirm': 'OK',
   'feedback.modal.leave': 'Är du säker på att du vill lämna den här sidan?',
   'feedback.modal.success': 'Tack för din respons!',
-  'feedback.modal.error': 'Lähetys epäonnistui. Yritä uudestaan myöhemmin', // TODO: Translate
+  'feedback.modal.error': 'Det gick inte att skicka.  Försök på nytt senare',
 
   // Sorting
   'sorting.label': 'Ordna sökresultaten',
