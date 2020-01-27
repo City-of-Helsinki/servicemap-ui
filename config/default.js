@@ -43,6 +43,9 @@ export default {
   "digitransitAPI": {
     "root": settings.DIGITRANSIT_API,
   },
+  "feedbackURL": {
+    "root": settings.FEEDBACK_URL,
+  },
   // constants
   "accessibilityColors":  {
     "default": "#2242C7",

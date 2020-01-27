@@ -119,5 +119,7 @@ export default theme => ({
     paddingRight: theme.spacing.unitDouble,
     marginBottom: theme.spacing.unit,
   },
-
+  feedbackButton: {
+    marginLeft: theme.spacing.unitDouble,
+  },
 });

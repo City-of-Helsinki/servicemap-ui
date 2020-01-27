@@ -10,6 +10,7 @@ import AddressView from '../AddressView';
 import ServiceTreeView from '../ServiceTreeView';
 import ViewTitle from '../components/ViewTitle/ViewTitle';
 import PageHandler from '../components/PageHandler';
+import FeedbackView from '../FeedbackView';
 import DivisionView from '../DivisionView';
 
 const TitleWrapper = ({ children, messageId }) => (
@@ -101,6 +102,14 @@ const ServiceTree = () => (
   </TitleWrapper>
 );
 
+const Feedback = () => (
+  <TitleWrapper messageId="general.pageTitles.feedback">
+    <PageWrapper headMsgId="" page="feedback">
+      <FeedbackView />
+    </PageWrapper>
+  </TitleWrapper>
+);
+
 class Sidebar extends React.Component {
   constructor(props) {
     super(props);
@@ -117,6 +126,7 @@ class Sidebar extends React.Component {
         <Route path="/:lng/service/:service" component={Service} />
         <Route path="/:lng/event/:event" component={Event} />
         <Route path="/:lng/address/:municipality/:street/:number" component={Address} />
+        <Route exact path="/:lng/feedback/" component={Feedback} />
         <Route
           path="/:lng/division/:city?/:area?"
           render={() => (

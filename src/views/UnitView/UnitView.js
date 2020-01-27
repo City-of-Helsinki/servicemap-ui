@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Typography } from '@material-ui/core';
 import { FormattedMessage, intlShape } from 'react-intl';
-import { Map } from '@material-ui/icons';
+import { Map, Mail } from '@material-ui/icons';
 import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import SearchBar from '../../components/SearchBar';
 import { focusUnit, focusDistrict } from '../MapView/utils/mapActions';
@@ -23,6 +23,7 @@ import SMButton from '../../components/ServiceMapButton';
 import TabLists from '../../components/TabLists';
 import calculateDistance from '../../utils/calculateDistance';
 import { AddressIcon } from '../../components/SMIcon';
+import FeedbackView from '../FeedbackView';
 import SocialMediaLinks from './components/SocialMediaLinks';
 
 const UnitView = (props) => {
@@ -43,6 +44,7 @@ const UnitView = (props) => {
     reservationsData,
     unitFetching,
     userLocation,
+    location,
   } = props;
 
   const checkCorrectUnit = unit => unit && unit.id === parseInt(match.params.unit, 10);
@@ -96,6 +98,18 @@ const UnitView = (props) => {
     }
   };
 
+  const handleFeedbackClick = () => {
+    if (unit.municipality === 'espoo') {
+      window.open('https://easiointi.espoo.fi/efeedback/');
+    } else if (unit.municipality === 'vantaa') {
+      window.open('https://asiointi.vantaa.fi/anna-palautetta');
+    } else if (unit.municipality === 'kauniainen') {
+      window.open('https://www.kauniainen.fi/kaupunki_ja_paatoksenteko/osallistu_ja_vaikuta');
+    } else {
+      navigator.openFeedback();
+    }
+  };
+
   useEffect(() => { // On mount
     intializeUnitData();
   }, []);
@@ -143,6 +157,12 @@ const UnitView = (props) => {
         <Highlights unit={unit} getLocaleText={getLocaleText} />
         <Description unit={unit} getLocaleText={getLocaleText} />
         <ElectronicServices unit={unit} />
+        <SMButton
+          messageID="home.send.feedback"
+          icon={<Mail />}
+          onClick={() => handleFeedbackClick()}
+          margin
+        />
       </div>
     );
   };
@@ -194,11 +214,12 @@ const UnitView = (props) => {
           }}
           margin
         />
-        {/* Feedback button
-          <SMButton
-            text={<FormattedMessage id="home.send.feedback" />}
-            icon={<Mail />}
-          /> */}
+        <SMButton
+          messageID="home.send.feedback"
+          icon={<Mail />}
+          onClick={() => handleFeedbackClick()}
+          margin
+        />
       </div>
     </MobileComponent>
   );
@@ -240,6 +261,11 @@ const UnitView = (props) => {
       );
     }
 
+    if (location.search.includes('feedback=true')) {
+      return (
+        <FeedbackView />
+      );
+    }
 
     if (unit && unit.complete) {
       const tabs = [
@@ -336,6 +362,7 @@ UnitView.propTypes = {
   navigator: PropTypes.objectOf(PropTypes.any),
   reservations: PropTypes.arrayOf(PropTypes.any),
   userLocation: PropTypes.objectOf(PropTypes.any),
+  location: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 UnitView.defaultProps = {
