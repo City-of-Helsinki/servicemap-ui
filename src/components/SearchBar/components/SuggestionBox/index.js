@@ -10,6 +10,7 @@ const mapStateToProps = (state) => {
   const getLocaleText = textObject => getLocaleString(state, textObject);
   return {
     getLocaleText,
+    locale: state.user.locale
   };
 };
 
