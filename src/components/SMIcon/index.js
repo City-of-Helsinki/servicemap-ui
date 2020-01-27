@@ -114,7 +114,7 @@ export const getIcon = (key, props) => {
     // Map types
     case 'servicemap':
       return <img aria-hidden alt="" src={defaulMapIcon} {...props} />;
-    case 'orthoImage':
+    case 'ortographic':
       return <img aria-hidden alt="" src={aerialMapIcon} {...props} />;
     case 'guideMap':
       return <img aria-hidden alt="" src={guideMapIcon} {...props} />;
