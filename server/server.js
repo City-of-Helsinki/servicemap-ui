@@ -135,6 +135,15 @@ const htmlTemplate = (reactDom, preloadedState, css, jss, locale) => `
     <div id="app">${reactDom}</div>
     <style>${[...css].join('')}</style>
     <script>
+        window.nodeEnvSettings = {};
+        window.nodeEnvSettings.ACCESSIBILITY_SENTENCE_API = "${process.env.ACCESSIBILITY_SENTENCE_API}";
+        window.nodeEnvSettings.SERVICEMAP_API = "${process.env.SERVICEMAP_API}";
+        window.nodeEnvSettings.EVENTS_API = "${process.env.EVENTS_API}";
+        window.nodeEnvSettings.RESERVATIONS_API = "${process.env.RESERVATIONS_API}";
+        window.nodeEnvSettings.PRODUCTION_PREFIX = "${process.env.PRODUCTION_PREFIX}";
+        window.nodeEnvSettings.DIGITRANSIT_API = "${process.env.DIGITRANSIT_API}";
+    </script>
+    <script>
       // WARNING: See the following for security issues around embedding JSON in HTML:
       // http://redux.js.org/recipes/ServerRendering.html#security-considerations
       window.PRELOADED_STATE = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')}

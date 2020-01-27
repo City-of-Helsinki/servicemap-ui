@@ -193,6 +193,7 @@ const SuggestionBox = (props) => {
                     selected={i === focusedSuggestion}
                     key={`address-${sortIndex}`}
                     address={item}
+                    className="suggestion"
                   />
                 );
               }

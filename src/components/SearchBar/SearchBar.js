@@ -389,7 +389,6 @@ SearchBar.propTypes = {
   isSticky: PropTypes.number,
   isFetching: PropTypes.bool.isRequired,
   previousSearch: PropTypes.oneOfType([PropTypes.string, PropTypes.objectOf(PropTypes.any)]),
-  primary: PropTypes.bool,
   srHideInput: PropTypes.bool,
   margin: PropTypes.bool,
 };

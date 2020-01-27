@@ -6,7 +6,7 @@ import { AddressIcon } from '../../SMIcon';
 
 const AddressItem = (props) => {
   const {
-    getLocaleText, navigator, address, classes, selected,
+    getLocaleText, navigator, address, classes, selected, className,
   } = props;
 
   const number = `${address.number ? address.number : ''}${address.letter ? address.letter : ''}`;
@@ -14,6 +14,7 @@ const AddressItem = (props) => {
 
   return (
     <SimpleListItem
+      className={className}
       button
       text={uppercaseFirst(text)}
       icon={<AddressIcon className={classes.icon} />}
@@ -43,9 +44,11 @@ AddressItem.propTypes = {
   navigator: PropTypes.objectOf(PropTypes.any),
   address: PropTypes.objectOf(PropTypes.any).isRequired,
   selected: PropTypes.bool,
+  className: PropTypes.string,
 };
 
 AddressItem.defaultProps = {
   navigator: null,
   selected: false,
+  className: null,
 };
