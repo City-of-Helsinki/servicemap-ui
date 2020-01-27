@@ -77,7 +77,7 @@ const AddressView = (props) => {
       municipality: `${match.params.municipality}`,
       street: `${match.params.street}`,
       number: `${match.params.number}`,
-      language: match.params.lng,
+      language: match.params.lng === 'sv' ? 'sv' : 'fi',
     } : {};
 
     fetchAddressData(options)
