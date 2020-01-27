@@ -44,7 +44,7 @@ export default {
     "root": settings.DIGITRANSIT_API,
   },
   "feedbackURL": {
-    "root": process.env.FEEDBACK_URL,
+    "root": settings.FEEDBACK_URL,
   },
   // constants
   "accessibilityColors":  {
