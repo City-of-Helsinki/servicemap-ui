@@ -16,7 +16,7 @@ const InfoView = ({
 
   const renderTitlebar = () => (
     <TitleBar
-      aria-hidden
+      ariaHidden
       backButton
       className="ExpandedSuggestions-title"
       title={<FormattedMessage id="info.title" />}

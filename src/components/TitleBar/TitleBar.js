@@ -6,7 +6,7 @@ import {
 import BackButton from '../BackButton';
 
 const TitleBar = ({
-  backButton, backButtonOnClick, classes, title, titleComponent, icon, distance, className,
+  backButton, backButtonOnClick, classes, title, titleComponent, icon, distance, className, ariaHidden,
 }) => (
   <>
     <div className={`${className} ${classes.container} ${!backButton && !icon ? classes.textBar : ''}`}>
@@ -31,9 +31,9 @@ const TitleBar = ({
         )
       }
       <Typography
+        aria-hidden={ariaHidden}
         className={classes.title}
         component={titleComponent}
-        text={title}
         tabIndex="-1"
       >
         {title}
@@ -57,6 +57,7 @@ TitleBar.propTypes = {
   icon: PropTypes.objectOf(PropTypes.any),
   className: PropTypes.string,
   distance: PropTypes.string,
+  ariaHidden: PropTypes.bool,
 };
 
 TitleBar.defaultProps = {
@@ -66,6 +67,7 @@ TitleBar.defaultProps = {
   icon: null,
   className: null,
   distance: null,
+  ariaHidden: false,
 };
 
 export default TitleBar;
