@@ -1,4 +1,5 @@
 import { unitsFetch } from '../../../utils/fetch';
+import config from '../../../../config';
 
 /* eslint-disable global-require */
 // Fetch list of stops
@@ -29,7 +30,7 @@ const fetchStops = async (map) => {
 
   await Promise.all([
     // Fetch for transit stops
-    fetch('https://api.digitransit.fi/routing/v1/routers/hsl/index/graphql', {
+    fetch(`${config.digitransitAPI.root}`, {
       method: 'post',
       headers: { 'Content-Type': 'application/graphql' },
       body:
@@ -130,7 +131,7 @@ const fetchStopData = async (stop) => {
     }
   }`);
 
-  const response = await fetch('https://api.digitransit.fi/routing/v1/routers/hsl/index/graphql', {
+  const response = await fetch(`${config.digitransitAPI.root}`, {
     method: 'post',
     headers: { 'Content-Type': 'application/graphql' },
     body: requestBody(stop.gtfsId),
@@ -138,7 +139,7 @@ const fetchStopData = async (stop) => {
   const data = await response.json();
 
   if (stop.secondaryId) {
-    const response = await fetch('https://api.digitransit.fi/routing/v1/routers/hsl/index/graphql', {
+    const response = await fetch(`${config.digitransitAPI.root}`, {
       method: 'post',
       headers: { 'Content-Type': 'application/graphql' },
       body: requestBody(stop.secondaryId),

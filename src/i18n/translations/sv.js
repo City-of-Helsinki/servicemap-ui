@@ -5,7 +5,7 @@ export default {
 
   // Accessibility
   'accessibility': 'Tillgänglighet',
-  'accessibility.info': 'Esteettömyystiedot', // TODO: Translate
+  'accessibility.info': 'Tillgänglighetsuppgifter', // TODO: Verify
   'accessibility.details': 'Noggrannare uppgifter',
   'accessibility.stamp': 'Tillgängligheten beaktad',
   'accessibility.shortcomings': 'Brister',
@@ -28,12 +28,12 @@ export default {
   'address.list.rescue_sub_district': 'Skyddsunderavsnitt',
   'address.list.health_station_district': 'Hälsostationsområde',
   'address.list.maternity_clinic_district': 'Rådgivningsområde',
-  'address.list.lower_comprehensive_school_district_fi': 'Finsk lågstadieskolaområde', // TODO: Translate
-  'address.list.lower_comprehensive_school_district_sv': 'Svensk lågstadieskolaområde', // TODO: Translate
-  'address.list.upper_comprehensive_school_district_fi': 'Finsk högstadieskolaområde', // TODO: Translate
-  'address.list.upper_comprehensive_school_district_sv': 'Svensk högstadieskolaområde', // TODO: Translate
-  'address.list.preschool_education_fi': 'Finsk småbarnspedagogikområde', // TODO: Translate
-  'address.list.preschool_education_sv': 'Svensk småbarnspedagogikområde', // TODO: Translate
+  'address.list.lower_comprehensive_school_district_fi': 'Finskt grundskoleområde, lågklasserna',
+  'address.list.lower_comprehensive_school_district_sv': 'Svenskt grundskoleområde, lågklasserna',
+  'address.list.upper_comprehensive_school_district_fi': 'Finskt grundskoleområde, högklasserna',
+  'address.list.upper_comprehensive_school_district_sv': 'Svenskt grundskoleområde, högklasserna',
+  'address.list.preschool_education_fi': 'Finskt småbarnspedagogikområde',
+  'address.list.preschool_education_sv': 'Svenskt småbarnspedagogikområde',
   'address.error': 'Addressen kunde inte hittas',
   'address.nearby': 'Nära',
   'address.districts': 'Områden',
@@ -73,7 +73,7 @@ export default {
 
   // General
   'general.frontPage': 'Första sidan',
-  'general.contrast': 'Kontrasti', // TODO: Translate
+  'general.contrast': 'Kontrast',
   'general.menu': 'Meny',
   'general.back': 'Tillbaka',
   'general.back.address': 'Gå tillbaka till adressvyn',
@@ -87,7 +87,7 @@ export default {
   'general.backTo': 'Gå tillbaka',
   'general.backToHome': 'Stäng sökningen och gå tillbaka till början',
   'general.backToStart': 'Gå tillbaka till början av sidan',
-  'general.back.serviceTree': 'Palaa palvelulistausnäkymään', // TODO: Translate
+  'general.back.serviceTree': 'Gå tillbaka', // TODO: Translate
   'general.cancel': 'Ångra',
   'general.close': 'Stäng',
   'general.yes': 'Ja',
@@ -208,9 +208,9 @@ export default {
     one {# tjänst}
     other {# tjänster}
   }`,
-  'unit.route': 'Katso reitti tänne', // TODO: translate
-  'unit.route.extra': '(Uusi välilehti. Reittiopas ei ole saavutettava palvelu)', // TODO: translate
-  'unit.socialMedia.title': 'Toimipiste sosiaalisessa mediassa', // TODO: tranaslate
+  'unit.route': 'Se vägen till det här stället',
+  'unit.route.extra': '(Ny flik. Reseplaneraren är inte en tillgänglig tjänst)',
+  'unit.socialMedia.title': 'Verksamhetsstället på sociala medier',
 
   // Search
   'search': 'Sök',
@@ -290,12 +290,12 @@ export default {
         one {Du har gjort (#) val}
         other {Du har gjort (#) val}
       }`,
-  'services.selections.delete': 'Poista valinta:', // TODO: translate
+  'services.selections.delete': 'Ta bort val:',
   'services.selections.delete.all': 'Ta bort alla val',
-  'services.selections.delete.sr': 'Poista valinta: {service}', // TODO: translate
+  'services.selections.delete.sr': 'Ta bort val: {service}',
   'services.search': 'Gör sökning',
-  'services.search.sr': 'Tee haku valituilla palveluilla', // TODO: translate
-  'services.search.sr.selected': 'Tee haku palveluilla: {services}', // TODO: translate
+  'services.search.sr': 'Sök med de valda tjänsterna',
+  'services.search.sr.selected': 'Sök med tjänsterna: {services}',
   'services.category.select': 'Alla',
   'services.category.open': 'Öppna kategori',
   'services.tree.level': 'Nivå',
@@ -318,9 +318,9 @@ export default {
   'settings.sense.hearing': 'Jag använder hörapparat',
   'settings.sense.visual': 'Jag är synskadad',
   'settings.sense.colorblind': 'Jag är färgblind',
-  'settings.info.heading': 'Asetustiedot', // TODO: Translate
-  'settings.info.title': 'Valitsemasi asetukset vaikuttavat hakutulokseen', // TODO: Translate
-  'settings.info.title.noSettings': 'Muuta haku- tai esteettömyysasetuksia', // TODO: Translate
+  'settings.info.heading': 'Inställningsuppgifter',
+  'settings.info.title': 'Dina valda inställningar påverkar sökresultatet',
+  'settings.info.title.noSettings': 'Ändra sök- eller tillgänglighetsinställningar',
   'settings.mobility.title': 'Rörelsebegränsningar',
   'settings.mobility.none': 'Inga rörelsebegränsningar',
   'settings.mobility.wheelchair': 'Jag använder rullstol',
@@ -340,7 +340,7 @@ export default {
   'settings.map.servicemap': 'Servicekarta',
   'settings.map.ortographic': 'Flygbild',
   'settings.map.guideMap': 'Guidekarta',
-  'settings.map.accessible_map': 'Korkeakontrastinen kartta', // TODO: Translate
+  'settings.map.accessible_map': 'Karta med stor kontrast', // TODO: Verify
   'settings.aria.changed': 'Inställningarna har ändrats. Kom ihåg att spara.',
   'settings.aria.closed': 'Inställningarna har stängts',
   'settings.aria.open': 'Öppna inställningarna',

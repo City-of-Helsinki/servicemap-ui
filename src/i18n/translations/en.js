@@ -28,12 +28,12 @@ export default {
   'address.list.rescue_sub_district': 'Civil defence subsection',
   'address.list.health_station_district': 'Health station area',
   'address.list.maternity_clinic_district': 'Maternity clinic area',
-  'address.list.lower_comprehensive_school_district_fi': 'Finnish primary school area', // TODO: Translate
-  'address.list.lower_comprehensive_school_district_sv': 'Swedish primary school area', // TODO: Translate
-  'address.list.upper_comprehensive_school_district_fi': 'Finnish secondary school area', // TODO: Translate
-  'address.list.upper_comprehensive_school_district_sv': 'Swedish secondary school area', // TODO: Translate
-  'address.list.preschool_education_fi': 'Finnish preschool education area', // TODO: Translate
-  'address.list.preschool_education_sv': 'Swedish preschool education area', // TODO: Translate
+  'address.list.lower_comprehensive_school_district_fi': 'Finnish primary school area',
+  'address.list.lower_comprehensive_school_district_sv': 'Swedish primary school area',
+  'address.list.upper_comprehensive_school_district_fi': 'Finnish secondary school area',
+  'address.list.upper_comprehensive_school_district_sv': 'Swedish secondary school area',
+  'address.list.preschool_education_fi': 'Finnish preschool education area',
+  'address.list.preschool_education_sv': 'Swedish preschool education area',
   'address.error': 'No address found',
   'address.nearby': 'Nearby',
   'address.districts': 'Areas',
@@ -208,9 +208,9 @@ export default {
     one {# service}
     other {# services}
   }`,
-  'unit.route': 'Katso reitti tänne', // TODO: translate
-  'unit.route.extra': '(Uusi välilehti. Reittiopas ei ole saavutettava palvelu)', // TODO: translate
-  'unit.socialMedia.title': 'Toimipiste sosiaalisessa mediassa', // TODO: tranaslate
+  'unit.route': 'Look at the route to this place',
+  'unit.route.extra': '(New tab. The Journey Planner is not an accessible service)',
+  'unit.socialMedia.title': 'The service unit on social media',
 
   // Search
   'search': 'Search',
@@ -318,9 +318,9 @@ export default {
   'settings.sense.hearing': 'I use a hearing aid',
   'settings.sense.visual': 'I am visually impaired',
   'settings.sense.colorblind': 'I have color vision deficiency',
-  'settings.info.heading': 'Settings info', // TODO: verify
-  'settings.info.title': 'Your selected settings will effect search results', // TODO: verify
-  'settings.info.title.noSettings': 'Change search or accessibility settings', // TODO: verify
+  'settings.info.heading': 'Settings info',
+  'settings.info.title': 'Your selected settings will effect search results',
+  'settings.info.title.noSettings': 'Change search or accessibility settings',
   'settings.mobility.title': 'Mobility impairments',
   'settings.mobility.none': 'No mobility impairments',
   'settings.mobility.wheelchair': 'I use a wheelchair',

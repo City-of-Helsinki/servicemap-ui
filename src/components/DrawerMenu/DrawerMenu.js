@@ -13,7 +13,7 @@ const DrawerMenu = (props) => {
     userLocation,
     findUserLocation,
     intl,
-    currentPage,
+    // currentPage,
     settingsOpen,
     pageType,
     isOpen,
@@ -24,7 +24,7 @@ const DrawerMenu = (props) => {
   const menuContent = [
     { // Nearby services button
       name: intl.formatMessage({ id: 'home.buttons.closeByServices' }),
-      active: currentPage === 'address' && !settingsOpen,
+      // active: currentPage === 'address' && !settingsOpen,
       disabled: !userLocation.coordinates,
       subText: userLocation.allowed
         ? intl.formatMessage({ id: 'location.notFound' })
@@ -41,7 +41,7 @@ const DrawerMenu = (props) => {
     },
     { // Service list button
       name: intl.formatMessage({ id: 'home.buttons.services' }),
-      active: currentPage === 'serviceTree' && !settingsOpen,
+      // active: currentPage === 'serviceTree' && !settingsOpen,
       icon: getIcon('serviceList'),
       clickEvent: () => {
         handleNavigation('services');
@@ -50,7 +50,7 @@ const DrawerMenu = (props) => {
     },
     { // Settings button
       name: intl.formatMessage({ id: 'home.buttons.settings' }),
-      active: settingsOpen,
+      // active: settingsOpen,
       icon: getIcon('accessibility'),
       clickEvent: () => {
         if (settingsOpen !== 'all') {
@@ -107,7 +107,7 @@ const DrawerMenu = (props) => {
 DrawerMenu.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   toggleSettings: PropTypes.func.isRequired,
-  currentPage: PropTypes.string.isRequired,
+  // currentPage: PropTypes.string.isRequired,
   userLocation: PropTypes.objectOf(PropTypes.any).isRequired,
   findUserLocation: PropTypes.func.isRequired,
   intl: intlShape.isRequired,

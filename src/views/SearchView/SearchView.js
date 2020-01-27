@@ -247,7 +247,7 @@ class SearchView extends React.Component {
     // and only 1 result found redirect directly to specific result page
     if (!isFetching && !this.shouldFetch() && units && units.length === 1) {
       const {
-        id, object_type, number, street,
+        id, object_type, letter, number, street,
       } = units[0];
       let path = null;
       // Parse language params
@@ -258,7 +258,7 @@ class SearchView extends React.Component {
 
       switch (object_type) {
         case 'address':
-          path = generatePath('address', lng, { number, municipality, street: streetName });
+          path = generatePath('address', lng, { number: `${number}${letter || ''}`, municipality, street: streetName });
           break;
         case 'unit':
           path = generatePath('unit', lng, { id });
@@ -366,8 +366,7 @@ class SearchView extends React.Component {
     } = this.props;
 
     const unitCount = units && units.length;
-
-    if (isFetching || !unitCount || this.isInputSearch()) {
+    if (isFetching || !unitCount || !this.isInputSearch()) {
       return null;
     }
 

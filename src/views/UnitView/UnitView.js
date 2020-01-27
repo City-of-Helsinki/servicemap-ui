@@ -292,13 +292,14 @@ const UnitView = (props) => {
         },
       ];
       return (
-        <TabLists
-          data={tabs}
-          headerComponents={(
-            <>
-              {TopArea}
-              {/* Unit image */}
-              {
+        <div>
+          <TabLists
+            data={tabs}
+            headerComponents={(
+              <>
+                {TopArea}
+                {/* Unit image */}
+                {
                 unit.picture_url
                 && (
 
@@ -317,10 +318,11 @@ const UnitView = (props) => {
                   </div>
                 )
               }
-              {renderMobileButtons()}
-            </>
+                {renderMobileButtons()}
+              </>
           )}
-        />
+          />
+        </div>
       );
     }
 

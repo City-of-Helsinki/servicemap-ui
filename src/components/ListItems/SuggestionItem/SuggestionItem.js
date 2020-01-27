@@ -50,6 +50,7 @@ const SuggestionItem = (props) => {
           root: classes.listItem,
         }}
         selected={selected}
+        className="suggestion"
         onClick={onClick}
         onMouseDown={onClick}
         onMouseUp={() => setMouseDown(false)}
