@@ -55,7 +55,7 @@ export default {
   'feedback.feedback.info': 'Kerro mahdollisimman yksityiskohtaisesti mitä palautetta haluat antaa.',
   'feedback.permission': 'Palautteeni saa jukaista (tarkastuksen jälkeen). Sähköpostiosoitetta ei julkaista.',
   'feedback.additionalInfo': 'Antamasi palaute ohjautuu Helsingin kaupungin palautejärjestelmään.',
-  'feedback.additionalInfo.link': 'Tietoja ja ohjeita palautteen antamisesta(linkki avautuu uuteen välilehteen).',
+  'feedback.additionalInfo.link': 'Tietoja ja ohjeita palautteen antamisesta (linkki avautuu uuteen välilehteen).',
   'feedback.send': 'Lähetä palautetta',
   'feedback.error.required': 'Pakollinen kenttä',
   'feedback.modal.confirm': 'OK',

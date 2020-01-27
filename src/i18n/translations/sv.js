@@ -46,21 +46,21 @@ export default {
   'event.title': 'Evenemang',
 
   // Feedback
-  'feedback.back': 'Palaa takaisin', // TODO: Translate
-  'feedback.title': 'Anna palautetta tästä verkkopalvelusta', // TODO: Translate
-  'feedback.title.unit': 'Anna palautetta toimipisteelle {unit}', // TODO: Translate
+  'feedback.back': 'Tillbaka', // TODO: Translate
+  'feedback.title': 'Ge respons om den här nättjänsten',
+  'feedback.title.unit': 'Ge respons om verksamhetsstället {unit}',
   'feedback.email': 'Email',
-  'feedback.email.info': 'Jos haluat, että vastaamme palautteeseesi, ole ystävällinen ja anna sähköpostiosoitteesi.', // TODO: Translate
-  'feedback.feedback': 'Palautteesi (pakollinen)', // TODO: Translate
-  'feedback.feedback.info': 'Kerro mahdollisimman yksityiskohtaisesti mitä palautetta haluat antaa.', // TODO: Translate
-  'feedback.permission': 'Palautteeni saa jukaista (tarkastuksen jälkeen). Sähköpostiosoitetta ei julkaista.', // TODO: Translate
-  'feedback.additionalInfo': 'Antamasi palaute ohjautuu Helsingin kaupungin palautejärjestelmään.', // TODO: Translate
-  'feedback.additionalInfo.link': 'Tietoja ja ohjeita palautteen antamisesta(linkki avautuu uuteen välilehteen).', // TODO: Translate
-  'feedback.send': 'Lähetä palautetta', // TODO: Translate
-  'feedback.error.required': 'Pakollinen kenttä', // TODO: Translate
+  'feedback.email.info': 'Om du vill att vi svarar på din respons, vänligen uppge din e-postadress.',
+  'feedback.feedback': 'Din respons (obligatorisk)',
+  'feedback.feedback.info': 'Berätta så detaljerat som möjligt hurdan respons du vill ge.',
+  'feedback.permission': 'Min respons får publiceras (efter kontroll). E-postadressen publiceras inte.',
+  'feedback.additionalInfo': 'Din respons skickas vidare till Helsingfors stads responssystem.',
+  'feedback.additionalInfo.link': 'Information och anvisningar om att ge respons (länken öppnas i en ny flik).',
+  'feedback.send': 'Skicka respons',
+  'feedback.error.required': 'Obligatoriskt fält',
   'feedback.modal.confirm': 'OK',
-  'feedback.modal.leave': 'Haluatko varmasti poistua tältä sivulta?', // TODO: Translate
-  'feedback.modal.success': 'Kiitos palautteestasi!', // TODO: Translate
+  'feedback.modal.leave': 'Är du säker på att du vill lämna den här sidan?',
+  'feedback.modal.success': 'Tack för din respons!',
   'feedback.modal.error': 'Lähetys epäonnistui. Yritä uudestaan myöhemmin', // TODO: Translate
 
   // Sorting

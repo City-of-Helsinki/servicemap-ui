@@ -47,20 +47,20 @@ export default {
 
   // Feedback
   'feedback.back': 'Go back',
-  'feedback.title': 'Anna palautetta tästä verkkopalvelusta', // TODO: translate
-  'feedback.title.unit': 'Anna palautetta toimipisteelle {unit}', // TODO: translate
+  'feedback.title': 'Give feedback on this web service',
+  'feedback.title.unit': 'Give feedback on the service unit {unit}',
   'feedback.email': 'Email',
-  'feedback.email.info': 'Jos haluat, että vastaamme palautteeseesi, ole ystävällinen ja anna sähköpostiosoitteesi.', // TODO: translate
-  'feedback.feedback': 'Feedback (required)',
-  'feedback.feedback.info': 'Kerro mahdollisimman yksityiskohtaisesti mitä palautetta haluat antaa.', // TODO: translate
-  'feedback.permission': 'Palautteeni saa jukaista (tarkastuksen jälkeen). Sähköpostiosoitetta ei julkaista.', // TODO: translate
-  'feedback.additionalInfo': 'Antamasi palaute ohjautuu Helsingin kaupungin palautejärjestelmään.', // TODO: translate
-  'feedback.additionalInfo.link': 'Tietoja ja ohjeita palautteen antamisesta(linkki avautuu uuteen välilehteen).', // TODO: translate
+  'feedback.email.info': 'If you want us to answer the feedback, please provide your e-mail address.',
+  'feedback.feedback': 'Your feedback (required)',
+  'feedback.feedback.info': 'Tell as precisely as possible, what kind of feedback you want to give.',
+  'feedback.permission': 'My feedback may be published (after checking). The e-mail address will not be published.',
+  'feedback.additionalInfo': 'Your feedback is forwarded to the city of Helsinki\'s feedback system.',
+  'feedback.additionalInfo.link': 'Information and instructions on giving feedback (link opens in new tab).',
   'feedback.send': 'Send feedback',
-  'feedback.error.required': 'Required field',
+  'feedback.error.required': 'Mandatory field',
   'feedback.modal.confirm': 'OK',
   'feedback.modal.leave': 'Are you sure you want to leave the page?',
-  'feedback.modal.success': 'Thank you for the feedback!',
+  'feedback.modal.success': 'Thank you for your feedback!',
   'feedback.modal.error': 'Failed to send. Try again later',
 
   // Sorting
