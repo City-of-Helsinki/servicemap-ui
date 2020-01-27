@@ -3,14 +3,24 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core';
 import logoNormal from '../../../assets/images/service-map-logo-fi.svg';
 import logoContrast from '../../../assets/images/service-map-logo-contrast.svg';
+import logoNormalDev from '../../../assets/images/service-map-logo-fi-dev.svg';
+import logoContrastDev from '../../../assets/images/service-map-logo-contrast-dev.svg';
 import styles from './styles';
+import config from '../../../../config';
 
 const HomeLogo = (props) => {
   const {
     contrast, classes, ...rest
   } = props;
 
-  const logo = contrast ? logoContrast : logoNormal;
+  const getLogo = (production = false, contrast = false) => {
+    if (production) {
+      return contrast ? logoContrast : logoNormal;
+    }
+    return contrast ? logoContrastDev : logoNormalDev;
+  };
+
+  const logo = getLogo(config.production, contrast);
 
   return (
     <div role="img" {...rest}>
