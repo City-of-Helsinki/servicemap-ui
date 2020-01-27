@@ -83,6 +83,7 @@ export default {
   'general.back.service': 'Back to service view',
   'general.back.unit': 'Back to unit view',
   'general.back.event': 'Back to event view',
+  'general.back.info': 'Return back',
   'general.back.feedback': 'Return back',
   'general.backTo': 'Return back', // TODO: verify
   'general.backToHome': 'Close search and return to beginning',
@@ -107,6 +108,7 @@ export default {
   'general.pageTitles.address': 'Address view',
   'general.pageTitles.list.events': 'Event list ',
   'general.pageTitles.list.reservations': 'Reservation list ',
+  'general.pageTitles.info': 'Info view',
   'general.pageTitles.feedback': 'Feedback view',
 
   // General - Pagination
@@ -346,4 +348,7 @@ export default {
   'settings.aria.open': 'Open settings',
   'settings.aria.opened': 'Settings have been opened',
   'settings.aria.saved': 'Settings have been saved',
+
+  'info.title': 'About the service',
+  'info.statement': 'Accessibility statement',
 };

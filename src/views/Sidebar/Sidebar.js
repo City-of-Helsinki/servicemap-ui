@@ -12,6 +12,7 @@ import ViewTitle from '../components/ViewTitle/ViewTitle';
 import PageHandler from '../components/PageHandler';
 import FeedbackView from '../FeedbackView';
 import DivisionView from '../DivisionView';
+import InfoView from '../InfoView';
 
 const TitleWrapper = ({ children, messageId }) => (
   <>
@@ -102,6 +103,14 @@ const ServiceTree = () => (
   </TitleWrapper>
 );
 
+const Info = () => (
+  <TitleWrapper messageId="general.pageTitles.info">
+    <PageWrapper headMsgId="" page="info">
+      <InfoView />
+    </PageWrapper>
+  </TitleWrapper>
+);
+
 const Feedback = () => (
   <TitleWrapper messageId="general.pageTitles.feedback">
     <PageWrapper headMsgId="" page="feedback">
@@ -137,6 +146,7 @@ class Sidebar extends React.Component {
             </>
           )}
         />
+        <Route path="/:lng/info/:page?" component={Info} />
         <Route path="/:lng/" component={Home} />
       </Switch>
     );

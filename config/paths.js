@@ -35,6 +35,10 @@ const paths = {
     generate: data => `/address/${data.municipality}/${data.street}/${data.number}`,
     regex: /\/[a-zA-Z]{2}\/address\/([a-zA-Z]+)\/([a-zA-Z])+\/([a-z:0-9]+)/
   },
+  info: {
+    generate: () => `/info`,
+    regex: /\/[a-zA-Z]{2}\/info/
+  },
   feedback: {
     generate: () => '/feedback',
     regex: /\/[a-zA-Z]{2}\/feedback/

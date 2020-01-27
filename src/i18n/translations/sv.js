@@ -85,6 +85,7 @@ export default {
   'general.back.event': 'Gå tillbaka till evenemangsvyn',
   'general.back.feedback': 'Gå tillbaka',
   'general.backTo': 'Gå tillbaka',
+  'general.back.info': 'Gå tillbaka',
   'general.backToHome': 'Stäng sökningen och gå tillbaka till början',
   'general.backToStart': 'Gå tillbaka till början av sidan',
   'general.back.serviceTree': 'Gå tillbaka', // TODO: Translate
@@ -107,6 +108,7 @@ export default {
   'general.pageTitles.address': 'Adressvy',
   'general.pageTitles.list.events': 'Förteckning över evenemang ',
   'general.pageTitles.list.reservations': 'Förteckning över reserveringar ',
+  'general.pageTitles.info': 'Infovy',
   'general.pageTitles.feedback': 'Palautenäkymä', // TODO: Translate
 
   // General - Pagination
@@ -346,4 +348,7 @@ export default {
   'settings.aria.open': 'Öppna inställningarna',
   'settings.aria.opened': 'Inställningarna har öppnats',
   'settings.aria.saved': 'Inställningarna har sparats',
+
+  'info.title': 'Om tjänsten',
+  'info.statement': 'Tillgänglighetsredogörelsen',
 };

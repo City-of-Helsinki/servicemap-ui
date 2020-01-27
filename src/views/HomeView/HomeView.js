@@ -57,11 +57,10 @@ class HomeView extends React.Component {
             onClick={() => navigator.push('feedback')}
           />
           <PaperButton
-            text={<FormattedMessage id="home.buttons.instructions" />}
+            text={<FormattedMessage id="info.title" />}
             icon={getIcon('help')}
             link
-            onClick={() => {}}
-            disabled
+            onClick={() => navigator.push('info')}
           />
         </div>
       </div>
