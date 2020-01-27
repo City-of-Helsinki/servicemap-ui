@@ -7,11 +7,12 @@ import { Typography, Divider } from '@material-ui/core';
 
 const SimpleListItem = (props) => {
   const {
-    button, text, classes, link, icon, handleItemClick, role, divider, selected, srText,
+    button, text, classes, link, icon, handleItemClick, role, divider, selected, srText, className,
   } = props;
   return (
     <React.Fragment>
       <ListItem
+        className={className}
         button={!!link || button}
         role={link ? 'link' : role}
         component="li"
@@ -63,6 +64,7 @@ SimpleListItem.propTypes = {
   role: PropTypes.string,
   divider: PropTypes.bool,
   selected: PropTypes.bool,
+  className: PropTypes.string,
 };
 
 SimpleListItem.defaultProps = {
@@ -74,4 +76,5 @@ SimpleListItem.defaultProps = {
   role: null,
   divider: false,
   selected: false,
+  className: null,
 };
