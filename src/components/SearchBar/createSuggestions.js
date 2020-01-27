@@ -1,3 +1,5 @@
+import config from '../../../config';
+
 // TODO: need city (and locale?) parameters to new search fetch
 
 const createSuggestions = async (query, signal) => {
@@ -8,7 +10,7 @@ const createSuggestions = async (query, signal) => {
         console.log('error:', res);
         return 'error';
       }),
-    fetch(`https://api.hel.fi/servicemap/v2/search/?input=${query}&language=fi&page=1&page_size=3&type=address`, { signal })
+    fetch(`${config.serviceMapAPI.root}/search/?input=${query}&language=fi&page=1&page_size=3&type=address`, { signal })
       .then(res => res.json())
       .catch((res) => {
         console.log('error:', res);
