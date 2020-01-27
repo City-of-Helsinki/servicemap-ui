@@ -183,7 +183,10 @@ const FeedbackView = ({
         <div className={classes.bottomArea}>
           <Typography className={classes.infoText}><FormattedMessage id="feedback.additionalInfo" /></Typography>
           <Typography className={classes.infoText}>
-            <Link href="https://www.hel.fi/helsinki/fi/kaupunki-ja-hallinto/osallistu-ja-vaikuta/palaute/ohjeita-palautteesta">
+            <Link
+              href="https://www.hel.fi/helsinki/fi/kaupunki-ja-hallinto/osallistu-ja-vaikuta/palaute/ohjeita-palautteesta"
+              target="_blank"
+            >
               <FormattedMessage id="feedback.additionalInfo.link" />
             </Link>
           </Typography>
