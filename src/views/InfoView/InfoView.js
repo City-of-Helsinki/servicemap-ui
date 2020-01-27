@@ -496,7 +496,7 @@ const InfoView = ({
       <Typography component="h3" variant="body2">Accessibility statement</Typography>
       <Typography className={classes.text} variant="body2">
         This accessibility statement applies to the website Servicemap of the City of
-        Helsinki. The site address is https://servicemap.hel.fi/ .
+        Helsinki. The site address is https://servicemap.hel.fi/.
       </Typography>
       <Typography component="h4" variant="body2">Statutory provisions applicable to the website</Typography>
       <Typography className={classes.text} variant="body2">
@@ -778,9 +778,121 @@ const InfoView = ({
     </div>
   );
 
-  const renderSwedishA11y = () => {
+  const renderSwedishA11y = () => (
+    <div className={classes.textContainer}>
+      <Typography component="h3" variant="body2">Tillgänglighetsutlåtande</Typography>
+      <Typography className={classes.text} variant="body2">
+        Detta tillgänglighetsutlåtande gäller Helsingfors stads webbplats Servicekarta.
+        Webbplatsens adress är https://servicekarta.hel.fi.
+      </Typography>
+      <Typography component="h4" variant="body2">Lagbestämmelser som gäller webbplatsen</Typography>
+      <Typography className={classes.text} variant="body2">
+        Denna webbplats har offentliggjorts efter 23.9.2018. Webbplatsen ska uppfylla
+        lagens krav på tillgänglighet.
+      </Typography>
+      <Typography component="h4" variant="body2">Stadens mål</Typography>
+      <Typography className={classes.text} variant="body2">
+        När det gäller tillgänglighet till digitala tjänster har Helsingfors stad som mål att
+        uppnå minst nivå AA eller bättre enligt WCAG-anvisningarna, om det är rimligt.
+      </Typography>
+      <Typography component="h4" variant="body2">Fullgörandestatus</Typography>
+      <Typography className={classes.text} variant="body2">
+        Denna webbplats uppfyller lagstadgade kritiska tillgänglighetskrav enligt nivå AA i
+        WCAG v2.1 med följande observerade brister.
+      </Typography>
+      <Typography component="h4" variant="body2">Icke tillgängligt innehåll</Typography>
+      <Typography className={classes.text} variant="body2">
+        Nedan angivet innehåll uppfyller ännu ej alla lagstadgade tillgänglighetskrav.
+      </Typography>
+      <Typography component="h3" variant="body2">Observerade brister</Typography>
+      <Typography className={classes.text} variant="body2">
+        Brist på tillgänglighet för den första produktionsversionen:
+        Mindre kontrastfel
+        Det finns mindre brister i sökningsordningen
+      </Typography>
+      <Typography component="h4" variant="body2">Rättning av brister</Typography>
+      <Typography className={classes.text} variant="body2">
+        Bristerna korrigeras senast 14.2.2020.
+        Arbetet utförs tillsammans med Annanpura Oy.
+      </Typography>
+      <Typography component="h4" variant="body2">Få uppgifter i tillgänglig form</Typography>
+      <Typography className={classes.text} variant="body2">
+        {`Innehåll som inte kan nås på grund av nämnda brister kan begäras från upprätthållaren av denna webbplats.
 
-  };
+        Stadskansliet
+        mirjam.heikkinen@hel.fi och henna.niemi@hel.fi`}
+      </Typography>
+      <Typography component="h4" variant="body2">Utarbetande av tillgänglighetsutlåtande</Typography>
+      <Typography className={classes.text} variant="body2">Detta utlåtande har utarbetats 27.1.2020</Typography>
+      <Typography component="h4" variant="body2">Bedömning av tillgänglighet</Typography>
+      <Typography className={classes.text} variant="body2">
+        Vid bedömning av tillgänglighet har följts Helsingfors stads arbetsanvisning och
+        metoder som siktar till att säkerställa webbplatsens tillgänglighet i alla arbetsfaser.
+      </Typography>
+      <Typography className={classes.text} variant="body2">
+         Tillgängligheten är kontrollerad genom revision av en extern expert samt som egen
+        edömning.
+        Tillgängligheten är kontrollerad med hjälp av automatisk tillgänglighetskontroll samt
+        manuell kontroll av webbplatsen och innehållet. Automatiska kontroller har utförts
+        med användning av bedömningsverktyget Lighthouse i webbläsaren Google
+        Chrome, webbläsartillägget axe från Deque Systems Inc. samt webbläsartillägget
+        Siteimprove.
+      </Typography>
+      <Typography className={classes.text} variant="body2">
+        Missförhållanden som bedömningsverktygen rapporterat har kontrollerats och vid
+        behov korrigerats.
+      </Typography>
+      <Typography className={classes.text} variant="body2">
+        {`Den externa expertrevisionen har utförts av Annanpura Oy Revisionsrapporten kan
+          laddas ner från: https://www.hel.fi/static/liitteet-
+          2019/Helsinki/Saavutettavuusselosteet/Palvelukartta-auditointiraportti.pdf (på
+          finska)`}
+      </Typography>
+      <Typography component="h4" variant="body2">Uppdatering av tillgänglighetsutlåtande</Typography>
+      <Typography className={classes.text} variant="body2">
+        Webbplatsens tillgänglighet kontrolleras genom kontinuerlig tillsyn när tekniken eller
+        innehållet förändras, samt granskning med regelbundna intervall. Detta utlåtande
+        uppdateras i samband med ändringar av webbplatsen samt granskningar av
+        tillgänglighet.
+      </Typography>
+      <Typography component="h3" variant="body2">Återkoppling och kontaktuppgifter</Typography>
+      <Typography className={classes.text} variant="body2">
+        {`För webbplatsens tillgänglighet svarar
+
+          Stadskansliet
+          mirjam.heikkinen@hel.fi och henna.niemi@hel.fi`}
+      </Typography>
+      <Typography component="h4" variant="body2">Anmälan om ej tillgängligt innehåll</Typography>
+      <Typography className={classes.text} variant="body2">
+        {`Om användaren upplever att kraven på tillgänglighet ändå inte uppfylls kan detta
+          anmälas per e-post helsinki.palaute@hel.fi eller med responsformulär på
+          www.hel.fi/palaute .`}
+      </Typography>
+      <Typography component="h4" variant="body2">Begäran om uppgifter i tillgänglig form</Typography>
+      <Typography className={classes.text} variant="body2">
+        Om användaren inte upplever sig få webbplatsens innehåll i tillgänglig form, kan
+        användaren begära dessa uppgifter per e-post helsinki.palaute@hel.fi eller med
+        responsformulär på www.hel.fi/palaute . Strävan är att svara på förfrågan inom
+        rimlig tid.
+      </Typography>
+      <Typography component="h3" variant="body2">Rättsskydd för tillgänglighet, Verkställighetsförfarande</Typography>
+      <Typography className={classes.text} variant="body2">
+        Om en person upplever att svar inte har erhållits på hans eller hennes anmälan
+        eller förfrågan, eller om svaret inte är tillfredsställande, kan saken anmälas till
+        regionförvaltningsverket i Södra Finland. På webbplatsen för
+        regionförvaltningsverket i Södra Finland finns detaljerad information om hur saken
+        behandlas.
+      </Typography>
+      <Typography className={classes.text} variant="body2">
+        {`Regionförvaltningsverket i Södra Finland
+          Enheten för tillgänglighetstillsyn
+          www.saavutettavuusvaatimukset.fi
+          saavutettavuus@avi.fi
+          Telefonväxel +358 295 016 000
+          Öppet: må–fr kl. 8.00–16.15`}
+      </Typography>
+    </div>
+  );
 
   return (
     <div className={classes.pageContainer}>
@@ -800,7 +912,7 @@ const InfoView = ({
       {locale === 'sv' && (
         content === 'generalInfo'
           ? renderSwedishInfo()
-          : renderFinnishA11y()
+          : renderSwedishA11y()
       )}
     </div>
   );
