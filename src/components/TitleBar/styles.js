@@ -15,7 +15,7 @@ export default theme => ({
     fontSize: 18,
     color: 'inherit',
     flex: '1 1 auto',
-    textTransform: 'capitalize',
+    textTransform: 'none',
     textAlign: 'left',
     marginLeft: 10,
   },

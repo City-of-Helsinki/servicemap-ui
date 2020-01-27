@@ -39,6 +39,9 @@ setupTests();
 const app = express();
 const supportedLanguages = config.supportedLanguages;
 
+// This is required for proxy setups to work in production
+app.set('trust proxy', true);
+
 // Add static folder
 app.use(express.static(path.resolve(__dirname, 'src')));
 
@@ -142,6 +145,7 @@ const htmlTemplate = (reactDom, preloadedState, css, jss, locale) => `
         window.nodeEnvSettings.RESERVATIONS_API = "${process.env.RESERVATIONS_API}";
         window.nodeEnvSettings.PRODUCTION_PREFIX = "${process.env.PRODUCTION_PREFIX}";
         window.nodeEnvSettings.DIGITRANSIT_API = "${process.env.DIGITRANSIT_API}";
+        window.nodeEnvSettings.FEEDBACK_URL = "${process.env.FEEDBACK_URL}";
         window.nodeEnvSettings.MODE = "${process.env.MODE}"
     </script>
     <script>

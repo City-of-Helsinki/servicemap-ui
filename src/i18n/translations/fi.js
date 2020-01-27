@@ -45,6 +45,24 @@ export default {
   'event.picture': 'Tapahtuman kuva',
   'event.title': 'Tapahtumat',
 
+  // Feedback
+  'feedback.back': 'Palaa takaisin',
+  'feedback.title': 'Anna palautetta tästä verkkopalvelusta',
+  'feedback.title.unit': 'Anna palautetta toimipisteelle {unit}',
+  'feedback.email': 'Sähköposti',
+  'feedback.email.info': 'Jos haluat, että vastaamme palautteeseesi, ole ystävällinen ja anna sähköpostiosoitteesi.',
+  'feedback.feedback': 'Palautteesi (pakollinen)',
+  'feedback.feedback.info': 'Kerro mahdollisimman yksityiskohtaisesti mitä palautetta haluat antaa.',
+  'feedback.permission': 'Palautteeni saa jukaista (tarkastuksen jälkeen). Sähköpostiosoitetta ei julkaista.',
+  'feedback.additionalInfo': 'Antamasi palaute ohjautuu Helsingin kaupungin palautejärjestelmään.',
+  'feedback.additionalInfo.link': 'Tietoja ja ohjeita palautteen antamisesta (linkki avautuu uuteen välilehteen).',
+  'feedback.send': 'Lähetä palautetta',
+  'feedback.error.required': 'Pakollinen kenttä',
+  'feedback.modal.confirm': 'OK',
+  'feedback.modal.leave': 'Haluatko varmasti poistua tältä sivulta?',
+  'feedback.modal.success': 'Kiitos palautteestasi!',
+  'feedback.modal.error': 'Lähetys epäonnistui. Yritä uudestaan myöhemmin',
+
   // Sorting
   'sorting.label': 'Järjestä hakutulokset:',
   'sorting.accessibility.desc': 'Esteettömin ensin',
@@ -65,6 +83,8 @@ export default {
   'general.back.service': 'Palaa palvelunäkymään',
   'general.back.unit': 'Palaa toimipistenäkymään',
   'general.back.event': 'Palaa tapahtumanäkymään',
+  'general.back.info': 'Palaa takaisin',
+  'general.back.feedback': 'Palaa takaisin',
   'general.backTo': 'Palaa takaisin',
   'general.backToHome': 'Sulje haku ja palaa alkuun',
   'general.backToStart': 'Palaa sivun alkuun',
@@ -88,6 +108,8 @@ export default {
   'general.pageTitles.address': 'Osoitenäkymä',
   'general.pageTitles.list.events': 'Tapahtumalista ',
   'general.pageTitles.list.reservations': 'Varauslista',
+  'general.pageTitles.info': 'Tietoa palvelusta',
+  'general.pageTitles.feedback': 'Palautenäkymä',
 
   // General - Pagination
   'general.pagination.previous': 'Aiempi sivu',
@@ -116,7 +138,7 @@ export default {
   'home.buttons.instructions': 'Vinkkejä Palvelukartan käyttöön',
   'home.example.search': 'Hae hakusanalla',
   'home.message': 'Terveisiä palvelukartan kehittäjiltä',
-  'home.send.feedback': 'Anna palautetta',
+  'home.send.feedback': 'Lähetä palautetta',
 
   // Location
   'location.notFound': 'Sijaintia ei löytynyt',
@@ -326,4 +348,7 @@ export default {
   'settings.aria.open': 'Avaa asetukset',
   'settings.aria.opened': 'Asetukset avattu',
   'settings.aria.saved': 'Asetukset on tallennettu',
+
+  'info.title': 'Tietoa palvelusta',
+  'info.statement': 'Saavutettavuusseloste',
 };
