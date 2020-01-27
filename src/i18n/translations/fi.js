@@ -65,6 +65,7 @@ export default {
   'general.back.service': 'Palaa palvelunäkymään',
   'general.back.unit': 'Palaa toimipistenäkymään',
   'general.back.event': 'Palaa tapahtumanäkymään',
+  'general.back.info': 'Palaa takaisin',
   'general.backTo': 'Palaa takaisin',
   'general.backToHome': 'Sulje haku ja palaa alkuun',
   'general.backToStart': 'Palaa sivun alkuun',
@@ -88,6 +89,7 @@ export default {
   'general.pageTitles.address': 'Osoitenäkymä',
   'general.pageTitles.list.events': 'Tapahtumalista ',
   'general.pageTitles.list.reservations': 'Varauslista',
+  'general.pageTitles.info': 'Tietoa palvelusta',
 
   // General - Pagination
   'general.pagination.previous': 'Aiempi sivu',
@@ -326,4 +328,7 @@ export default {
   'settings.aria.open': 'Avaa asetukset',
   'settings.aria.opened': 'Asetukset avattu',
   'settings.aria.saved': 'Asetukset on tallennettu',
+
+  'info.title': 'Tietoa palvelusta',
+  'info.statement': 'Saavutettavuusseloste',
 };

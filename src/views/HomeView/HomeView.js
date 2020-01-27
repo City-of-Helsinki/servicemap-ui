@@ -57,11 +57,10 @@ class HomeView extends React.Component {
             onClick={() => window.open('https://forms.gle/roe9XNrZGQWBhMBJ7')}
           />
           <PaperButton
-            text={<FormattedMessage id="home.buttons.instructions" />}
+            text={<FormattedMessage id="info.title" />}
             icon={getIcon('help')}
             link
-            onClick={() => {}}
-            disabled
+            onClick={() => navigator.push('info')}
           />
         </div>
       </div>
