@@ -39,6 +39,9 @@ setupTests();
 const app = express();
 const supportedLanguages = config.supportedLanguages;
 
+// This is required for proxy setups to work in production
+app.set('trust proxy', true);
+
 // Add static folder
 app.use(express.static(path.resolve(__dirname, 'src')));
 
