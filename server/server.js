@@ -141,6 +141,7 @@ const htmlTemplate = (reactDom, preloadedState, css, jss, locale) => `
         window.nodeEnvSettings.EVENTS_API = "${process.env.EVENTS_API}";
         window.nodeEnvSettings.RESERVATIONS_API = "${process.env.RESERVATIONS_API}";
         window.nodeEnvSettings.PRODUCTION_PREFIX = "${process.env.PRODUCTION_PREFIX}";
+        window.nodeEnvSettings.DIGITRANSIT_API = "${process.env.DIGITRANSIT_API}";
     </script>
     <script>
       // WARNING: See the following for security issues around embedding JSON in HTML:

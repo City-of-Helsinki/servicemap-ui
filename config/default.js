@@ -40,6 +40,9 @@ export default {
     "root": settings.RESERVATIONS_API,
   },
   "productionPrefix": settings.PRODUCTION_PREFIX,
+  "digitransitAPI": {
+    "root": settings.DIGITRANSIT_API,
+  },
   // constants
   "accessibilityColors":  {
     "default": "#2242C7",
