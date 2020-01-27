@@ -26,6 +26,7 @@ const SuggestionBox = (props) => {
     getLocaleText,
     setSearch,
     intl,
+    locale
   } = props;
 
   const [searchQueries, setSearchQueries] = useState(null);
@@ -83,7 +84,7 @@ const SuggestionBox = (props) => {
       fetchController.current = new AbortController();
       const { signal } = fetchController.current;
 
-      createSuggestions(query, signal)
+      createSuggestions(query, signal, locale)
         .then((suggestions) => {
           if (suggestions === 'error') {
             return;
@@ -288,6 +289,7 @@ SuggestionBox.propTypes = {
   focusedSuggestion: PropTypes.number,
   setSearch: PropTypes.func,
   intl: intlShape.isRequired,
+  locale: PropTypes.string.isRequired
 };
 
 SuggestionBox.defaultProps = {

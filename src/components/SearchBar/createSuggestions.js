@@ -2,15 +2,15 @@ import config from '../../../config';
 
 // TODO: need city (and locale?) parameters to new search fetch
 
-const createSuggestions = async (query, signal) => {
+const createSuggestions = async (query, signal, locale) => {
   const data = await Promise.all([
-    fetch(`https://servicemap-api-wip.dev.hel.ninja/servicemap/v2/suggest/?q=${query}`, { signal })
+    fetch(`https://servicemap-api-wip.dev.hel.ninja/servicemap/v2/suggest/?q=${query}&language=${locale}`, { signal })
       .then(res => res.json())
       .catch((res) => {
         console.log('error:', res);
         return 'error';
       }),
-    fetch(`${config.serviceMapAPI.root}/search/?input=${query}&language=fi&page=1&page_size=3&type=address`, { signal })
+    fetch(`${config.serviceMapAPI.root}/search/?input=${query}&language=${locale}&page=1&page_size=3&type=address`, { signal })
       .then(res => res.json())
       .catch((res) => {
         console.log('error:', res);
