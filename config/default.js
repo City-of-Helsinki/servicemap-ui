@@ -52,6 +52,7 @@ export default {
     "missingInfo": "#4A4A4A",
     "shortcomings": "#b00021",
   },
+  "production": settings.MODE === 'production',
   "initialMapPosition": [60.170377597530016, 24.941309323934886],
   "smallContentAreaBreakpoint": 449,
   "mobileUiBreakpoint": 699,
