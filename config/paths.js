@@ -38,6 +38,10 @@ const paths = {
   info: {
     generate: () => `/info`,
     regex: /\/[a-zA-Z]{2}\/info/
+  },
+  feedback: {
+    generate: () => '/feedback',
+    regex: /\/[a-zA-Z]{2}\/feedback/
   }
 }
 

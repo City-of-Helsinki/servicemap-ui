@@ -57,4 +57,8 @@ export default theme => ({
     margin: theme.spacing.unit,
     fontSize: 14,
   },
+  disabled: {
+    backgroundColor: 'rgba(0, 0, 0, 0.12)',
+    color: 'rgba(0, 0, 0, 0.26)',
+  },
 });

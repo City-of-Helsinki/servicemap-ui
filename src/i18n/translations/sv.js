@@ -45,6 +45,24 @@ export default {
   'event.picture': 'Bild på evenemanget',
   'event.title': 'Evenemang',
 
+  // Feedback
+  'feedback.back': 'Gå tillbaka',
+  'feedback.title': 'Ge respons om den här nättjänsten',
+  'feedback.title.unit': 'Ge respons om verksamhetsstället {unit}',
+  'feedback.email': 'Email',
+  'feedback.email.info': 'Om du vill att vi svarar på din respons, vänligen uppge din e-postadress.',
+  'feedback.feedback': 'Din respons (obligatorisk)',
+  'feedback.feedback.info': 'Berätta så detaljerat som möjligt hurdan respons du vill ge.',
+  'feedback.permission': 'Min respons får publiceras (efter kontroll). E-postadressen publiceras inte.',
+  'feedback.additionalInfo': 'Din respons skickas vidare till Helsingfors stads responssystem.',
+  'feedback.additionalInfo.link': 'Information och anvisningar om att ge respons (länken öppnas i en ny flik).',
+  'feedback.send': 'Skicka respons',
+  'feedback.error.required': 'Obligatoriskt fält',
+  'feedback.modal.confirm': 'OK',
+  'feedback.modal.leave': 'Är du säker på att du vill lämna den här sidan?',
+  'feedback.modal.success': 'Tack för din respons!',
+  'feedback.modal.error': 'Det gick inte att skicka.  Försök på nytt senare',
+
   // Sorting
   'sorting.label': 'Ordna sökresultaten',
   'sorting.accessibility.desc': 'Tillgängligaste först',
@@ -65,6 +83,7 @@ export default {
   'general.back.service': 'Gå tillbaka till tjänstevyn',
   'general.back.unit': 'Gå tillbaka till vyn för verksamhetsställen',
   'general.back.event': 'Gå tillbaka till evenemangsvyn',
+  'general.back.feedback': 'Gå tillbaka',
   'general.backTo': 'Gå tillbaka',
   'general.back.info': 'Gå tillbaka',
   'general.backToHome': 'Stäng sökningen och gå tillbaka till början',
@@ -90,6 +109,7 @@ export default {
   'general.pageTitles.list.events': 'Förteckning över evenemang ',
   'general.pageTitles.list.reservations': 'Förteckning över reserveringar ',
   'general.pageTitles.info': 'Infovy',
+  'general.pageTitles.feedback': 'Palautenäkymä', // TODO: Translate
 
   // General - Pagination
   'general.pagination.previous': 'Föregående sida',

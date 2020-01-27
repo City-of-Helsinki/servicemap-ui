@@ -69,6 +69,7 @@ SMButton.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   children: PropTypes.node,
   role: PropTypes.string,
+  disabled: PropTypes.bool,
 };
 
 SMButton.defaultProps = {
@@ -82,6 +83,7 @@ SMButton.defaultProps = {
   srText: null,
   style: null,
   role: null,
+  disabled: false,
 };
 
 export default SMButton;

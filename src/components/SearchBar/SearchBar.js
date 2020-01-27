@@ -179,7 +179,10 @@ class SearchBar extends React.Component {
     // Style classes
     const backButtonStyles = `${classes.iconButton}`;
     const showSuggestions = isActive;
-    const inputValue = typeof search === 'string' ? search : previousSearchText;
+    let inputValue = typeof search === 'string' ? search : previousSearchText;
+    if (inputValue.includes('service_node')) {
+      inputValue = null;
+    }
     const containerStyles = `${isActive ? classes.containerSticky : classes.containerInactive} ${classes.container}`;
 
     return (
@@ -389,7 +392,6 @@ SearchBar.propTypes = {
   isSticky: PropTypes.number,
   isFetching: PropTypes.bool.isRequired,
   previousSearch: PropTypes.oneOfType([PropTypes.string, PropTypes.objectOf(PropTypes.any)]),
-  primary: PropTypes.bool,
   srHideInput: PropTypes.bool,
   margin: PropTypes.bool,
 };

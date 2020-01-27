@@ -45,6 +45,24 @@ export default {
   'event.picture': 'Event picture',
   'event.title': 'Events',
 
+  // Feedback
+  'feedback.back': 'Go back',
+  'feedback.title': 'Give feedback on this web service',
+  'feedback.title.unit': 'Give feedback on the service unit {unit}',
+  'feedback.email': 'Email',
+  'feedback.email.info': 'If you want us to answer the feedback, please provide your e-mail address.',
+  'feedback.feedback': 'Your feedback (required)',
+  'feedback.feedback.info': 'Tell as precisely as possible, what kind of feedback you want to give.',
+  'feedback.permission': 'My feedback may be published (after checking). The e-mail address will not be published.',
+  'feedback.additionalInfo': 'Your feedback is forwarded to the city of Helsinki\'s feedback system.',
+  'feedback.additionalInfo.link': 'Information and instructions on giving feedback (link opens in new tab).',
+  'feedback.send': 'Send feedback',
+  'feedback.error.required': 'Mandatory field',
+  'feedback.modal.confirm': 'OK',
+  'feedback.modal.leave': 'Are you sure you want to leave the page?',
+  'feedback.modal.success': 'Thank you for your feedback!',
+  'feedback.modal.error': 'Failed to send. Try again later',
+
   // Sorting
   'sorting.label': 'Sort search results',
   'sorting.accessibility.desc': 'Most accessibile first',
@@ -66,6 +84,7 @@ export default {
   'general.back.unit': 'Back to unit view',
   'general.back.event': 'Back to event view',
   'general.back.info': 'Return back',
+  'general.back.feedback': 'Return back',
   'general.backTo': 'Return back', // TODO: verify
   'general.backToHome': 'Close search and return to beginning',
   'general.backToStart': 'Back to beginning of page',
@@ -90,6 +109,7 @@ export default {
   'general.pageTitles.list.events': 'Event list ',
   'general.pageTitles.list.reservations': 'Reservation list ',
   'general.pageTitles.info': 'Info view',
+  'general.pageTitles.feedback': 'Feedback view',
 
   // General - Pagination
   'general.pagination.previous': 'Previous page',

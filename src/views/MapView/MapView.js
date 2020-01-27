@@ -92,9 +92,11 @@ const MapView = (props) => {
   const renderTopBar = () => {
     if (isMobile) {
       return (
-        <div className={classes.topArea}>
-          <SearchBar background="none" placeholder={intl.formatMessage({ id: 'search.placeholder' })} />
-        </div>
+        // TODO: search bar disabled from map until it is fixed
+        // <div className={classes.topArea}>
+        //   <SearchBar background="none" />
+        // </div>
+        null
       );
     } return null;
   };

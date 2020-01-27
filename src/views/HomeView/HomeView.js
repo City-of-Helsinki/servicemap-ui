@@ -54,7 +54,7 @@ class HomeView extends React.Component {
             text={<FormattedMessage id="home.send.feedback" />}
             icon={getIcon('feedback')}
             link
-            onClick={() => window.open('https://forms.gle/roe9XNrZGQWBhMBJ7')}
+            onClick={() => navigator.push('feedback')}
           />
           <PaperButton
             text={<FormattedMessage id="info.title" />}
