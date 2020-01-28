@@ -1,63 +1,73 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  withStyles, Typography,
+  Typography,
 } from '@material-ui/core';
-import Container from '../Container/Container';
 import BackButton from '../BackButton';
-import HomeButton from '../HomeButton';
-
-const styles = theme => ({
-  container: {
-    alignItems: 'center',
-    display: 'flex',
-    flex: '0 0 auto',
-  },
-  title: {
-    flex: '1 1 auto',
-  },
-  iconButton: {
-    flex: '0 1 auto',
-    padding: theme.spacing.unit,
-  },
-  icon: {
-    flex: '0 1 auto',
-    padding: theme.spacing.unit,
-  },
-});
 
 const TitleBar = ({
-  classes, title, titleComponent,
+  backButton, backButtonOnClick, classes, title, titleComponent, icon, distance, className, ariaHidden,
 }) => (
-  <Container>
-    <div className={classes.container}>
-      <BackButton
-        className={classes.iconButton}
-      />
+  <>
+    <div className={`${className} ${classes.container} ${!backButton && !icon ? classes.textBar : ''}`}>
 
+      {
+        backButton
+        && (
+          <BackButton
+            onClick={backButtonOnClick}
+            className={classes.iconButton}
+            variant="icon"
+          />
+        )
+      }
+      {
+        !backButton
+        && icon
+        && (
+          <div className={classes.iconButton} aria-hidden="true">
+            {icon}
+          </div>
+        )
+      }
       <Typography
+        aria-hidden={ariaHidden}
         className={classes.title}
         component={titleComponent}
-        text={title}
-        variant="h6"
+        tabIndex="-1"
       >
         {title}
       </Typography>
 
-      <HomeButton
-        className={classes.icon}
-      />
+      {distance && (
+        <Typography className={classes.distance}>
+          {distance}
+        </Typography>
+      )}
     </div>
-  </Container>
+  </>
 );
 
 TitleBar.propTypes = {
+  backButton: PropTypes.bool,
+  backButtonOnClick: PropTypes.func,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.node.isRequired,
   titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']),
+  icon: PropTypes.objectOf(PropTypes.any),
+  className: PropTypes.string,
+  distance: PropTypes.string,
+  ariaHidden: PropTypes.bool,
 };
 
 TitleBar.defaultProps = {
+  backButton: false,
+  backButtonOnClick: null,
   titleComponent: 'h3',
+  icon: null,
+  className: null,
+  distance: null,
+  ariaHidden: false,
 };
-export default withStyles(styles)(TitleBar);
+
+export default TitleBar;

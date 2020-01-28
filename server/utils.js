@@ -1,93 +1,92 @@
-import I18n from '../src/i18n';
-import config from '../config';
-import https from 'https';
+const redirectables = [
+  {
+    check: /^\/(fi|sv|en)(|\/embed)\/unit\?(.+)=/,
+    redirectTo: (item, req) => {
+      try {
+        let queryString = null;
+        if (req.query) {
+          queryString = Object.keys(req.query).map(key => `${key}=${req.query[key]}`).join('&');
+        }
 
-const serverConfig = config.server;
-const allowedUrls = [
-  /^\/.{2,}\/$/,
-  /^\/.{2,}\/unit\/\d+$/,
-  /^\/.{2,}\/unit$/,
-  /^\/.{2,}\/search$/,
-  /^\/.{2,}\/address\/[^\/]+\/[^\/]+\/[^\/]+$/,
-  /^\/.{2,}\/division\/[^\/]+\/[^\/]+$/,
-  /^\/.{2,}\/division$/,
-  /^\/.{2,}\/area$/,
+        // Replace unit with search
+        const pathArray = req.path.split('/');
+        const index = pathArray.indexOf('unit');
+        pathArray.splice(index, 1, 'search');
+        const pathName = pathArray.join('/');
+  
+        return pathName + `${queryString ? `?${queryString}` : ''}`;
+      } catch (e) {
+        return null;
+      }
+    },
+  }
 ];
 
+const isValidLanguage = (path) => {
+  if(!path) {
+    return false;
+  }
+  const hasLanguage = path.match(/^\/(fi|sv|en)/);
+  return hasLanguage && hasLanguage.index === 0;
+}
 // Handle language change
 export const makeLanguageHandler = (req, res, next) => {
-  // Check if request url is actual path
-  let match = false;
-  allowedUrls.forEach((url) => {
-    if (!match && req.path.match(url)) {
-      match = true;
-    }
-  });
 
-  if(!match) {
+  if(isValidLanguage(req.path)) {
     next();
     return;
   }
+  res.redirect('/fi/');
+  return;
+};
 
-  // Handle language check and redirect if language is changed to default
-  const i18n = new I18n();
-  const pathArray = req.url.split('/');
-  if (!i18n.isValidLocale(pathArray[1])) {
-    pathArray[1] = i18n.locale;
-    res.redirect(pathArray.join('/'));
+// Redirect old language based domains to correct language
+export const languageSubdomainRedirect = (req, res, next) => {
+  if (!isValidLanguage(req.path) && req.subdomains.length === 1) {
+    if (req.subdomains[0].match(/^servicemap/)) {
+      const pathArray = req.url.split('/');
+      pathArray.splice(1, 0, 'en');
+      res.redirect(pathArray.join('/'));
+      return;
+    }
+    if (req.subdomains[0].match(/^servicekarta/)) {
+      const pathArray = req.url.split('/');
+      pathArray.splice(1, 0, 'sv');
+      res.redirect(pathArray.join('/'));
+      return;
+    }
+    if (req.subdomains[0].match(/^palvelukartta/)) {
+      const pathArray = req.url.split('/');
+      pathArray.splice(1, 0, 'fi');
+      res.redirect(pathArray.join('/'));
+      return;
+    }
+  }
+  next();
+  return;
+}
+
+export const unitRedirect = (req, res, next) => {
+  let redirecting = false;
+  redirectables.forEach(item => {
+    if(redirecting) {
+      return;
+    }
+
+    if (req.url.match(item.check)) {
+      const redirectTo = item.redirectTo(item, req);
+      if (redirectTo) {
+        redirecting = true;
+        res.redirect(redirectTo);
+        return;
+      }
+    }
+  });
+
+  if (redirecting) {
     return;
   }
 
   next();
   return;
-};
-
-// Handle unit data fetching
-export const makeUnitHandler = (req, res, next) => {
-  const pattern = /^\/(\d+)\/?$/;
-  const r = req.path.match(pattern);
-  if(!r || r.length < 2) {
-    res.redirect(serverConfig.url_prefix);
-    return;
-  }
-
-  // Handle unit data collection from api
-  const unitId = r[1];
-  const url = `${config.unit.api_url}unit/${unitId}/?include=services`;
-  let unitInfo = null;
-  let context = null;
-  
-  const sendResponse = () => {
-    if (unitInfo && unitInfo.name) {
-      context = unitInfo;
-    }
-
-    req._context = context; // Add unit data to request 
-    next();
-  };
-  
-  const timeout = setTimeout(sendResponse, 2000); //
-  console.log(`Fetching unit data from: ${url}`)
-  const request = https.get(url, function(httpResp) {
-    if (httpResp.statusCode !== 200) {
-      console.log(`Fetch failed with code: ${httpResp.statusCode}`);
-      clearTimeout(timeout);
-      sendResponse();
-      return;
-    }
-    let respData = '';
-    httpResp.on('data', function(data) {
-      return respData += data;
-    });
-    return httpResp.on('end', function() {
-      console.log('Fetch end');
-      unitInfo = JSON.parse(respData);
-      clearTimeout(timeout);
-      return sendResponse();
-    });
-  });
-
-  request.on('error', (error) => {
-    return console.error('Error making API request', error);
-  });
 }

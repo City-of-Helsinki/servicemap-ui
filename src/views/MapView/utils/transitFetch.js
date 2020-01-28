@@ -1,0 +1,163 @@
+import { unitsFetch } from '../../../utils/fetch';
+import config from '../../../../config';
+
+/* eslint-disable global-require */
+// Fetch list of stops
+const fetchStops = async (map) => {
+  const L = require('leaflet');
+
+  const fetchBounds = map.getBounds();
+  const cornerBottom = fetchBounds.getSouthWest();
+  const cornerTop = fetchBounds.getNorthEast();
+
+  const viewSize = {
+    width: Math.abs(cornerBottom.lng - cornerTop.lng),
+    height: Math.abs(cornerBottom.lat - cornerTop.lat),
+  };
+
+  // Increase the search area by the amount of current view size
+  cornerBottom.lat -= viewSize.height;
+  cornerBottom.lng -= viewSize.width;
+  cornerTop.lat += viewSize.height;
+  cornerTop.lng += viewSize.width;
+
+  const wideBounds = L.latLngBounds(cornerTop, cornerBottom);
+
+  // Bounds used in subway entrance fetch
+  const fetchBox = `${wideBounds.getWest()},${wideBounds.getSouth()},${wideBounds.getEast()},${wideBounds.getNorth()}`;
+
+  let stopData = null;
+
+  await Promise.all([
+    // Fetch for transit stops
+    fetch(`${config.digitransitAPI.root}`, {
+      method: 'post',
+      headers: { 'Content-Type': 'application/graphql' },
+      body:
+      `{
+        stopsByBbox(minLat: ${wideBounds.getSouthWest().lat}, minLon: ${wideBounds.getSouthWest().lng}, maxLat: ${wideBounds.getNorthEast().lat}, maxLon: ${wideBounds.getNorthEast().lng} ) {
+          vehicleType
+          gtfsId
+          name
+          lat
+          lon
+          patterns {
+            headsign
+            route {
+              shortName
+            }
+          }
+        }
+      }`,
+    }).then(response => response.json()),
+    // Fetch for subway entrances
+    unitsFetch({
+      service: 437,
+      page_size: 50,
+      bbox: `${fetchBox}`,
+    }),
+  ])
+    .then((data) => {
+      // Handle subwaystops and return list of all stops
+      const stops = data[0].data.stopsByBbox;
+      const subwayStations = stops.filter(stop => stop.vehicleType === 1);
+
+      // Remove subwaystations from stops list since they will be replaced with subway entrances
+      const filteredStops = stops.filter(stop => stop.vehicleType !== 1);
+
+      const entrances = data[1].results;
+
+      // Add subway entrances to the list of stops
+      entrances.forEach((entrance) => {
+        const closest = {
+          distance: null,
+          stop: null,
+        };
+        if (subwayStations.length) {
+        // Find the subwaystation closest to the entrance
+          subwayStations.forEach((stop) => {
+            const distance = Math.sqrt(
+              ((stop.lat - entrance.location.coordinates[1]) ** 2)
+          + ((stop.lon - entrance.location.coordinates[0]) ** 2),
+            );
+            if (!closest.distance || distance < closest.distance) {
+              closest.distance = distance;
+              closest.stop = stop;
+            }
+          });
+          // Get the same station's stop for other direction (west/east)
+          const otherStop = subwayStations.find(
+            station => station.name === closest.stop.name && station.gtfsId !== closest.stop.gtfsId,
+          );
+          // Create a new stop from the entrance
+          // Give it the stop data of the corresponding station and add it to the list of stops
+          const newStop = {
+            gtfsId: closest.stop.gtfsId,
+            secondaryId: otherStop.gtfsId,
+            lat: entrance.location.coordinates[1],
+            lon: entrance.location.coordinates[0],
+            name: entrance.name,
+            patterns: closest.stop.patterns,
+            vehicleType: closest.stop.vehicleType,
+          };
+          filteredStops.push(newStop);
+        }
+      });
+      stopData = filteredStops;
+    });
+  return stopData;
+};
+
+// Fetch one stop data
+const fetchStopData = async (stop) => {
+  const requestBody = id => (`{
+    stop(id: "${id}") {
+      name
+      wheelchairBoarding
+      stoptimesWithoutPatterns {
+        scheduledDeparture
+        realtimeDeparture
+        realtime
+        serviceDay
+        pickupType
+        headsign
+        trip {
+          route {
+            mode
+            shortName
+          }
+        }
+      }
+    }
+  }`);
+
+  const response = await fetch(`${config.digitransitAPI.root}`, {
+    method: 'post',
+    headers: { 'Content-Type': 'application/graphql' },
+    body: requestBody(stop.gtfsId),
+  });
+  const data = await response.json();
+
+  if (stop.secondaryId) {
+    const response = await fetch(`${config.digitransitAPI.root}`, {
+      method: 'post',
+      headers: { 'Content-Type': 'application/graphql' },
+      body: requestBody(stop.secondaryId),
+    });
+    const secondData = await response.json();
+    // Combine both timetables into one.
+    const combinedData = data;
+    combinedData.data.stop.stoptimesWithoutPatterns = [
+      ...combinedData.data.stop.stoptimesWithoutPatterns,
+      ...secondData.data.stop.stoptimesWithoutPatterns,
+    ];
+    return combinedData;
+  }
+
+  return data;
+};
+
+export {
+  fetchStops,
+  fetchStopData,
+};

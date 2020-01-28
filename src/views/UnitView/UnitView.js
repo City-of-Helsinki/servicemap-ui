@@ -1,243 +1,380 @@
-import React from 'react';
+/* eslint-disable no-underscore-dangle */
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import {
-  Divider, Typography, withStyles, Link,
-} from '@material-ui/core';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
-import AddressIcon from '@material-ui/icons/Place';
-import { fetchUnit, fetchUnits } from '../../redux/actions/unit';
-import { getSelectedUnit } from '../../redux/selectors/unit';
-import { getLocaleString } from '../../redux/selectors/locale';
-import { changeSelectedUnit } from '../../redux/actions/filter';
+import { Typography } from '@material-ui/core';
+import { FormattedMessage, intlShape } from 'react-intl';
+import { Map, Mail } from '@material-ui/icons';
+import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
+import SearchBar from '../../components/SearchBar';
+import { focusUnit, focusDistrict } from '../MapView/utils/mapActions';
+import TitleBar from '../../components/TitleBar';
+import Container from '../../components/Container';
+import { uppercaseFirst } from '../../utils';
+import AccessibilityInfo from './components/AccessibilityInfo';
 
-import InfoList from './components/InfoList';
-import styles from './styles/styles';
-import queryBuilder from '../../utils/queryBuilder';
-import TitleBar from '../../components/TitleBar/TitleBar';
+import ContactInfo from './components/ContactInfo';
+import Highlights from './components/Highlights';
+import ElectronicServices from './components/ElectronicServices';
+import Reservations from './components/Reservations';
+import Description from './components/Description';
+import Services from './components/Services';
+import Events from './components/Events';
+import SMButton from '../../components/ServiceMapButton';
+import TabLists from '../../components/TabLists';
+import calculateDistance from '../../utils/calculateDistance';
+import { AddressIcon } from '../../components/SMIcon';
+import FeedbackView from '../FeedbackView';
+import SocialMediaLinks from './components/SocialMediaLinks';
 
-// TODO: Add proper component's when ready
+const UnitView = (props) => {
+  const {
+    stateUnit,
+    map,
+    intl,
+    classes,
+    getLocaleText,
+    navigator,
+    match,
+    fetchSelectedUnit,
+    fetchUnitEvents,
+    fetchReservations,
+    fetchAccessibilitySentences,
+    accessibilitySentences,
+    eventsData,
+    reservationsData,
+    unitFetching,
+    userLocation,
+    location,
+  } = props;
 
-class UnitView extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      unitData: null,
-      isFetching: true,
-    };
-  }
+  const checkCorrectUnit = unit => unit && unit.id === parseInt(match.params.unit, 10);
 
-  componentDidMount() {
-    const { match, changeSelectedUnit } = this.props;
-    const { params } = match;
-    if (params && params.unit) {
-      const { unit } = params;
-      changeSelectedUnit(unit);
-      console.log('change selected unit to: ', unit);
+  const [unit, setUnit] = useState(checkCorrectUnit(stateUnit) ? stateUnit : null);
 
-      /* TODO:  Instead of this fetch function, create appropriate redux fetch for unit
-                that updates the existing data of the unit */
-      this.setState({ isFetching: true });
-      queryBuilder.setType('unit', unit).run()
-        .then(response => response.json())
-        .then(data => this.setState({
-          unitData: data,
-          isFetching: false,
-        }));
-    }
-  }
-
-  // Filters connections data by section
-  sectionFilter = (list, section) => {
-    const filteredList = [];
-    let i = 0;
-    list.forEach((item) => {
-      if (!item.section_type) {
-        filteredList.push({ type: section, value: item, id: i });
-      } else if (item.section_type === section) {
-        // Don't add duplicate elements
-        if (!filteredList.some(e => e.value.name.fi === item.name.fi)) {
-          filteredList.push({ type: section, value: item, id: i });
-          i += 1;
-        }
+  const centerMap = () => {
+    if (unit && map) {
+      const { geometry, location } = unit;
+      if (geometry && geometry.type === 'MultiLineString') {
+        focusDistrict(map, geometry.coordinates);
+      } else if (location) {
+        focusUnit(map, location.coordinates);
       }
-    });
-    return filteredList;
-  }
-
-  render() {
-    const { classes, getLocaleText, intl } = this.props;
-    const { unitData, isFetching } = this.state;
-    let { unit } = this.props;
-    if (unitData) {
-      unit = unitData;
     }
-    if (isFetching) {
-      return (
-        <p>Loading unit data</p>
-      );
-    }
+  };
 
+  const formatDistanceString = (meters) => {
+    let distance = meters;
+    if (distance) {
+      if (distance >= 1000) {
+        distance /= 1000; // Convert from m to km
+        distance = distance.toFixed(1); // Show only one decimal
+        distance = intl.formatNumber(distance); // Format distance according to locale
+        return `${distance} km`;
+      }
+      return `${distance} m`;
+    } return null;
+  };
+
+  const intializeUnitData = () => {
+    const { params } = match;
+    const unitId = params.unit;
+    // If no selected unit data, or selected unit data is old, fetch new data
+    if (!stateUnit || !checkCorrectUnit(stateUnit) || !stateUnit.complete) {
+      fetchSelectedUnit(unitId, unit => setUnit(unit));
+      fetchAccessibilitySentences(unitId);
+      fetchReservations(unitId);
+      fetchUnitEvents(unitId);
+    } else {
+      // If selected unit data is correct, but some info is missing, fetch them
+      if (!accessibilitySentences) {
+        fetchAccessibilitySentences(unitId);
+      }
+      if (!reservationsData.data) {
+        fetchReservations(unitId);
+      }
+      if (!eventsData.data) {
+        fetchUnitEvents(unitId);
+      }
+    }
+  };
+
+  const handleFeedbackClick = () => {
+    if (unit.municipality === 'espoo') {
+      window.open('https://easiointi.espoo.fi/efeedback/');
+    } else if (unit.municipality === 'vantaa') {
+      window.open('https://asiointi.vantaa.fi/anna-palautetta');
+    } else if (unit.municipality === 'kauniainen') {
+      window.open('https://www.kauniainen.fi/kaupunki_ja_paatoksenteko/osallistu_ja_vaikuta');
+    } else {
+      navigator.openFeedback();
+    }
+  };
+
+  useEffect(() => { // On mount
+    intializeUnitData();
+  }, []);
+
+  useEffect(() => { // If unit changes without the component unmounting, update data
     if (unit) {
+      intializeUnitData();
+    }
+  }, [match.params.unit]);
+
+  useEffect(() => {
+    centerMap();
+  }, [unit, map]);
+
+  const renderDetailTab = () => {
+    if (!unit || !unit.complete) {
+      return <></>;
+    }
+
+    return (
+      <div className={classes.content}>
+        {/* Contract type */}
+        <Container margin text>
+          <Typography variant="body2">
+            {
+              unit.contract_type
+              && unit.contract_type.description
+              && `${uppercaseFirst(getLocaleText(unit.contract_type.description))}. `
+            }
+            {
+              unit.data_source
+              && <FormattedMessage id="unit.data_source" defaultMessage={'Source: {data_source}'} values={{ data_source: unit.data_source }} />
+            }
+          </Typography>
+        </Container>
+
+        {/* View Components */}
+        <ContactInfo
+          unit={unit}
+          userLocation={userLocation}
+          getLocaleText={getLocaleText}
+          intl={intl}
+        />
+        <SocialMediaLinks unit={unit} getLocaleText={getLocaleText} />
+        <Highlights unit={unit} getLocaleText={getLocaleText} />
+        <Description unit={unit} getLocaleText={getLocaleText} />
+        <ElectronicServices unit={unit} />
+        <DesktopComponent>
+          <SMButton
+            messageID="home.send.feedback"
+            icon={<Mail />}
+            onClick={() => handleFeedbackClick()}
+            margin
+          />
+        </DesktopComponent>
+      </div>
+    );
+  };
+
+  const renderAccessibilityTab = () => {
+    if (!unit || !unit.complete || !accessibilitySentences) {
+      return <></>;
+    }
+
+    return (
+      <div className={classes.content}>
+        <AccessibilityInfo titleAlways data={accessibilitySentences} headingLevel={4} />
+      </div>
+    );
+  };
+
+  const renderServiceTab = () => {
+    if (!unit || !unit.complete) {
+      return <></>;
+    }
+
+    return (
+      <div className={classes.content}>
+        <Services
+          listLength={10}
+          unit={unit}
+          getLocaleText={getLocaleText}
+        />
+        <Reservations
+          listLength={10}
+          reservationsData={reservationsData}
+        />
+        <Events classes={classes} listLength={5} eventsData={eventsData} />
+      </div>
+    );
+  };
+
+  const renderMobileButtons = () => (
+    <MobileComponent>
+      <div className={classes.mobileButtonArea}>
+        <SMButton
+          messageID="general.showOnMap"
+          icon={<Map />}
+          onClick={(e) => {
+            e.preventDefault();
+            if (navigator) {
+              navigator.openMap();
+            }
+          }}
+          margin
+        />
+        <SMButton
+          messageID="home.send.feedback"
+          icon={<Mail />}
+          onClick={() => handleFeedbackClick()}
+          margin
+        />
+      </div>
+    </MobileComponent>
+  );
+
+  const render = () => {
+    const title = unit && unit.name ? getLocaleText(unit.name) : '';
+    const distance = formatDistanceString(calculateDistance(unit, userLocation.coordinates));
+
+    const TopArea = (
+      <div className={`${classes.topArea} sticky`}>
+        <DesktopComponent>
+          <SearchBar margin />
+          <TitleBar
+            icon={<AddressIcon className={classes.icon} />}
+            title={title}
+            distance={distance}
+          />
+        </DesktopComponent>
+        <MobileComponent>
+          <TitleBar
+            title={title}
+            backButton
+            distance={distance}
+          />
+        </MobileComponent>
+      </div>
+    );
+
+    if (unitFetching) {
       return (
         <div className={classes.root}>
           <div className="Content">
-            <TitleBar title={unit.name && unit.name.fi} />
-            {
-                unit.picture_url
-                && <img className={classes.image} alt="Unit" src={unit.picture_url} />
-              }
-
-            {/* Unit title */}
-            <div className={classes.title}>
-              <AddressIcon className={classes.left} />
-              <Typography
-                className={classes.left}
-                component="h3"
-                variant="h6"
-              >
-                {unit.name && getLocaleText(unit.name)}
-              </Typography>
-            </div>
-            <Divider className={classes.divider} />
-
-            {/* Highlights */}
-            <div className={classes.marginVertical}>
-              {this.sectionFilter(unit.connections, 'HIGHLIGHT').map(item => (
-                <Typography
-                  key={item.id}
-                  className={classes.left}
-                  variant="body1"
-                >
-                  {getLocaleText(item.value.name)}
-                </Typography>
-              ))}
-            </div>
-
-            {/* Contact information */}
-            <InfoList
-              data={[
-                { type: 'ADDRESS', value: unit.street_address },
-                ...this.sectionFilter(unit.connections, 'OPENING_HOURS'),
-                { type: 'PHONE', value: { phone: unit.phone } },
-                ...this.sectionFilter(unit.connections, 'PHONE_OR_EMAIL'),
-              ]}
-              title={<FormattedMessage id="unit.contact.info" />}
-            />
-
-            {/* E-services */}
-            <InfoList
-              data={[
-                { type: 'LINK', value: unit.www ? { name: intl.formatMessage({ id: 'unit.homepage' }), www: unit.www } : null },
-                ...this.sectionFilter(unit.connections, 'LINK'),
-                ...this.sectionFilter(unit.connections, 'ESERVICE_LINK'),
-                // ...this.sectionFilter(unit.connections, 'OTHER_INFO'),
-              ]}
-              title={<FormattedMessage id="unit.e.services" />}
-            />
-
-            {/* Unit description  TODO: Make this own component */}
-            {unit.description || this.sectionFilter(unit.connections, 'OTHER_INFO').length > 0 ? (
-              <div className={classes.left}>
-                {/* Description title */}
-                <Typography
-                  className={classes.subtitle}
-                  component="h4"
-                  variant="subtitle1"
-                >
-                  {<FormattedMessage id="unit.description" />}
-                </Typography>
-                <Divider />
-                {/* Description text */}
-                {unit.description ? (
-                  <Typography className={classes.paragraph} variant="body2">
-                    {unit.description ? getLocaleText(unit.description) : null}
-                  </Typography>
-                ) : null}
-                {/* Other info texts + links */}
-                {this.sectionFilter(unit.connections, 'OTHER_INFO').map((item) => {
-                  if (item.value.www) {
-                    return (
-                      <Typography
-                        key={item.id}
-                        className={classes.paragraph}
-                        variant="body2"
-                      >
-                        <Link className={classes.link} href={getLocaleText(item.value.www)} target="_blank">
-                          {`${getLocaleText(item.value.name)} ${intl.formatMessage({ id: 'unit.opens.new.tab' })}`}
-                        </Link>
-
-                      </Typography>
-                    );
-                  }
-                  return (
-                    <Typography
-                      key={item.id}
-                      className={classes.paragraph}
-                      variant="body2"
-                    >
-                      {getLocaleText(item.value.name)}
-                    </Typography>
-                  );
-                })}
-              </div>
-            ) : null}
-
-            {/* Unit services */}
-            <InfoList
-              data={this.sectionFilter(unit.services, 'SERVICE')}
-              title={<FormattedMessage id="unit.services" />}
-            />
-
-            <span>
-              {unit.provider && <FormattedMessage id="unit.data_source" defaultMessage={'Source: {data_source}'} values={{ data_source: unit.provider }} />}
-            </span>
-            <span>
-              {unit.data_source && <FormattedMessage id="unit.data_source" defaultMessage={'Source: {data_source}'} values={{ data_source: unit.data_source }} />}
-            </span>
-            {
-                unit.contract_type
-                && unit.contract_type.description
-                && <p className="text-small">{getLocaleText(unit.contract_type.description)}</p>
-            }
+            {TopArea}
+            <p>
+              <FormattedMessage id="general.loading" />
+            </p>
           </div>
         </div>
       );
     }
-    return (
-      <Typography color="primary" variant="body1">
-        <FormattedMessage id="unit.details.notFound" />
-      </Typography>
-    );
-  }
-}
 
-// Listen to redux state
-const mapStateToProps = (state) => {
-  const unit = getSelectedUnit(state);
-  const getLocaleText = textObject => getLocaleString(state, textObject);
-  return {
-    unit,
-    getLocaleText,
+    if (location.search.includes('feedback=true')) {
+      return (
+        <FeedbackView />
+      );
+    }
+
+    if (unit && unit.complete) {
+      const tabs = [
+        {
+          ariaLabel: intl.formatMessage({ id: 'unit.basicInfo' }),
+          component: renderDetailTab(),
+          data: null,
+          itemsPerPage: null,
+          title: intl.formatMessage({ id: 'unit.basicInfo' }),
+        },
+        {
+          ariaLabel: intl.formatMessage({ id: 'accessibility' }),
+          component: renderAccessibilityTab(),
+          data: null,
+          itemsPerPage: null,
+          title: intl.formatMessage({ id: 'accessibility' }),
+        },
+        {
+          ariaLabel: intl.formatMessage({ id: 'service.tab' }),
+          component: renderServiceTab(),
+          data: null,
+          itemsPerPage: null,
+          title: intl.formatMessage({ id: 'service.tab' }),
+        },
+      ];
+      return (
+        <div>
+          <TabLists
+            data={tabs}
+            headerComponents={(
+              <>
+                {TopArea}
+                {/* Unit image */}
+                {
+                unit.picture_url
+                && (
+
+                  <div className={classes.imageContainer}>
+                    <img
+                      className={classes.image}
+                      alt={`${intl.formatMessage({ id: 'unit.picture' })}${getLocaleText(unit.name)}`}
+                      src={unit.picture_url}
+                    />
+                    {
+                      unit.picture_caption
+                      && (
+                        <Typography variant="body2" className={classes.imageCaption}>{getLocaleText(unit.picture_caption)}</Typography>
+                      )
+                    }
+                  </div>
+                )
+              }
+                {renderMobileButtons()}
+              </>
+          )}
+          />
+        </div>
+      );
+    }
+
+    return (
+      <div className={classes.root}>
+        <div className="Content">
+          {TopArea}
+          <Typography color="primary" variant="body1">
+            <FormattedMessage id="unit.details.notFound" />
+          </Typography>
+        </div>
+      </div>
+    );
   };
+
+  return render();
 };
 
-export default injectIntl(withStyles(styles)(connect(
-  mapStateToProps,
-  { fetchUnit, fetchUnits, changeSelectedUnit },
-)(UnitView)));
+export default UnitView;
 
 // Typechecking
 UnitView.propTypes = {
+  accessibilitySentences: PropTypes.objectOf(PropTypes.any),
   unit: PropTypes.objectOf(PropTypes.any),
-  changeSelectedUnit: PropTypes.func.isRequired,
+  embed: PropTypes.bool,
+  eventsData: PropTypes.objectOf(PropTypes.any),
+  map: PropTypes.objectOf(PropTypes.any),
+  fetchAccessibilitySentences: PropTypes.func.isRequired,
+  fetchReservations: PropTypes.func.isRequired,
+  fetchSelectedUnit: PropTypes.func.isRequired,
+  unitFetching: PropTypes.bool.isRequired,
+  fetchUnitEvents: PropTypes.func.isRequired,
   match: PropTypes.objectOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   getLocaleText: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
+  navigator: PropTypes.objectOf(PropTypes.any),
+  reservations: PropTypes.arrayOf(PropTypes.any),
+  userLocation: PropTypes.objectOf(PropTypes.any),
+  location: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 UnitView.defaultProps = {
+  accessibilitySentences: null,
+  embed: false,
+  eventsData: { events: null, unit: null },
   unit: null,
   match: {},
+  map: null,
+  navigator: null,
+  reservations: null,
+  userLocation: null,
 };

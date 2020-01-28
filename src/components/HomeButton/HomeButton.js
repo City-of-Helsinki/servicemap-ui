@@ -6,20 +6,19 @@ import { intlShape } from 'react-intl';
 
 const HomeButton = (props) => {
   const {
-    className, history, match, intl,
+    className, intl, navigator,
   } = props;
-  const { params } = match;
-  const lng = params && params.lng;
   return (
 
     <IconButton
+      role="link"
       className={className}
-      aria-label={intl.formatMessage({ id: 'general.home' })}
+      aria-label={intl.formatMessage({ id: 'general.backToHome' })}
       onClick={(e) => {
         e.preventDefault();
 
-        if (history) {
-          history.push(`/${lng || 'fi'}/`);
+        if (navigator) {
+          navigator.push('home');
         }
       }}
     >
@@ -30,13 +29,13 @@ const HomeButton = (props) => {
 
 HomeButton.propTypes = {
   className: PropTypes.string,
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
+  navigator: PropTypes.objectOf(PropTypes.any),
   intl: intlShape.isRequired,
-  match: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 HomeButton.defaultProps = {
   className: '',
+  navigator: null,
 };
 
 export default HomeButton;

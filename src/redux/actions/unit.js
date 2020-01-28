@@ -1,62 +1,77 @@
-import queryBuilder from '../../utils/queryBuilder';
+import { searchFetch, unitsFetch } from '../../utils/fetch';
+import { saveSearchToHistory } from '../../components/SearchBar/previousSearchData';
+import { units } from './fetchDataActions';
 
-export const fetchHasErrored = errorMessage => ({
-  type: 'UNITS_FETCH_HAS_ERRORED',
-  errorMessage,
-});
-export const fetchIsLoading = () => ({
-  type: 'UNITS_IS_FETCHING',
-});
-export const unitsFetchDataSuccess = units => ({
-  type: 'UNITS_FETCH_DATA_SUCCESS',
-  units,
-});
-export const unitsFetchProgressUpdate = (count, max) => ({
-  type: 'UNITS_FETCH_PROGRESS_UPDATE',
-  count,
-  max,
-});
+// Actions
+const {
+  isFetching, fetchSuccess, fetchError, fetchProgressUpdate, setNewData,
+} = units;
 
 // Thunk fetch
-export const fetchUnits = (allData = [], next = null, searchQuery = null) => async (dispatch) => {
-  dispatch(fetchIsLoading());
-  try {
-    let response = null;
-    if (next) {
-      response = await fetch(next);
-    } else {
-      response = await queryBuilder.search(searchQuery).run();
+export const fetchUnits = (
+  // searchQuery = null,
+  options = null,
+  searchType = null,
+  abortController = null,
+) => async (dispatch, getState)
+=> {
+  const stringifySearchQuery = (data) => {
+    try {
+      const search = Object.keys(data).map(key => (`${key}:${data[key]}`));
+      return search.join(',');
+    } catch (e) {
+      return '';
     }
-    if (!response.ok) {
-      throw Error(response.statusText);
-    }
-    const data = await response.json();
-    const newData = [...allData, ...data.results];
-    if (data.next) {
-      // Fetch the next page if response has more than one page of results
-      dispatch(unitsFetchProgressUpdate(newData.length, data.count));
-      dispatch(fetchUnits(newData, data.next));
+  };
+  const searchQuery = options.q ? options.q : stringifySearchQuery(options);
+  const onStart = () => dispatch(isFetching(searchQuery));
+  const { user } = getState();
+  const { locale } = user;
+
+  const onSuccess = (results) => {
+    if (options.q) {
+      saveSearchToHistory(searchQuery, results);
     } else {
-      // Filter out duplicate units
-      const distinctData = Array.from(new Set(newData.map(x => x.id))).map((id) => {
-        const obj = newData.find(s => id === s.id);
-        return obj;
+      results.forEach((unit) => {
+        // eslint-disable-next-line no-param-reassign
+        unit.object_type = 'unit';
       });
-      dispatch(unitsFetchDataSuccess(distinctData));
     }
-  } catch (e) {
-    dispatch(fetchHasErrored(e.message));
+    dispatch(fetchSuccess(results));
+  };
+  const onError = e => dispatch(fetchError(e.message));
+  const onNext = (resultTotal, response) => dispatch(
+    fetchProgressUpdate(resultTotal.length, response.count),
+  );
+
+  // Fetch data
+  const data = options;
+  if (data.q) {
+    data.language = locale || 'fi';
+    searchFetch(
+      data,
+      onStart,
+      onSuccess,
+      onError,
+      onNext,
+      null,
+      abortController,
+    );
+  } else {
+    unitsFetch(
+      data,
+      onStart,
+      onSuccess,
+      onError,
+      onNext,
+      null,
+      abortController,
+    );
   }
 };
 
-
-export const fetchUnit = id => async (dispatch) => {
-  dispatch(fetchIsLoading());
-  const response = await queryBuilder.setType('unit', id).run();
-  if (response.ok && response.status === 200) {
-    const data = await response.json();
-    dispatch(unitsFetchDataSuccess([data]));
-  } else {
-    dispatch(fetchHasErrored());
+export const setNewSearchData = data => async (dispatch) => {
+  if (data) {
+    dispatch(setNewData(data));
   }
 };

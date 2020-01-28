@@ -8,9 +8,9 @@ import messagesSv from './translations/sv';
 
 // Translation messages for React Intl
 export const messages = {
-  fi: { text: 'Suomi', messages: messagesFi },
-  en: { text: 'English', messages: messagesEn },
-  sv: { text: 'Svenska', messages: messagesSv },
+  fi: { text: 'Suomeksi', messages: messagesFi },
+  en: { text: 'In English', messages: messagesEn },
+  sv: { text: 'På svenska', messages: messagesSv },
 };
 
 // Mutable class keys
