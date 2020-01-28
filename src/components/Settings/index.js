@@ -14,6 +14,7 @@ import {
 } from '../../redux/actions/settings';
 import Settings from './Settings';
 import styles from './styles';
+import { changeTheme } from '../../redux/actions/user';
 
 const mapStateToProps = (state) => {
   const { settings } = state;
@@ -34,5 +35,6 @@ export default withStyles(styles)(connect(
     toggleEspoo,
     toggleVantaa,
     toggleKauniainen,
+    changeTheme,
   },
 )(injectIntl(Settings)));

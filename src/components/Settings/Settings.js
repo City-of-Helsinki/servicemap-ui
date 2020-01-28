@@ -213,8 +213,43 @@ class Settings extends React.Component {
       toggleEspoo,
       toggleVantaa,
       toggleKauniainen,
+      changeTheme,
       settings,
     } = this.props;
+
+    // Check if theme and map should be changed based on settings
+
+    if (currentSettings.colorblind) {
+      if (!settings.colorblind) {
+        changeTheme('dark');
+        if (settings.mapType === currentSettings.mapType) {
+          currentSettings.mapType = 'accessible_map';
+        }
+      }
+    } else if (settings.colorblind && !currentSettings.colorblind) {
+      if (!currentSettings.visuallyImpaired) {
+        changeTheme('default');
+        if (settings.mapType === currentSettings.mapType) {
+          currentSettings.mapType = 'servicemap';
+        }
+      }
+    }
+
+    if (currentSettings.visuallyImpaired) {
+      if (!settings.visuallyImpaired) {
+        changeTheme('dark');
+        if (settings.mapType === currentSettings.mapType) {
+          currentSettings.mapType = 'accessible_map';
+        }
+      }
+    } else if (settings.visuallyImpaired && !currentSettings.visuallyImpaired) {
+      if (!currentSettings.colorblind) {
+        changeTheme('default');
+        if (settings.mapType === currentSettings.mapType) {
+          currentSettings.mapType = 'servicemap';
+        }
+      }
+    }
 
     // Map redux actions with used setting keys
     const actions = {
@@ -699,6 +734,7 @@ Settings.propTypes = {
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
   isMobile: PropTypes.bool,
   toggleSettings: PropTypes.func.isRequired,
+  changeTheme: PropTypes.func.isRequired,
 };
 
 Settings.defaultProps = {
