@@ -221,26 +221,34 @@ class Settings extends React.Component {
 
     if (currentSettings.colorblind) {
       // Dont force map change if user has manually changed map settings as well
-      if (!settings.colorblind && settings.mapType === currentSettings.mapType) {
-        currentSettings.mapType = 'accessible_map';
+      if (!settings.colorblind) {
         changeTheme('dark');
+        if (settings.mapType === currentSettings.mapType) {
+          currentSettings.mapType = 'accessible_map';
+        }
       }
     } else if (settings.colorblind && !currentSettings.colorblind) {
       if (!currentSettings.visuallyImpaired) {
-        currentSettings.mapType = 'servicemap';
         changeTheme('default');
+        if (settings.mapType === currentSettings.mapType) {
+          currentSettings.mapType = 'servicemap';
+        }
       }
     }
 
     if (currentSettings.visuallyImpaired) {
-      if (!settings.visuallyImpaired && settings.mapType === currentSettings.mapType) {
-        currentSettings.mapType = 'accessible_map';
+      if (!settings.visuallyImpaired) {
         changeTheme('dark');
+        if (settings.mapType === currentSettings.mapType) {
+          currentSettings.mapType = 'accessible_map';
+        }
       }
     } else if (settings.visuallyImpaired && !currentSettings.visuallyImpaired) {
       if (!currentSettings.colorblind) {
-        currentSettings.mapType = 'servicemap';
         changeTheme('default');
+        if (settings.mapType === currentSettings.mapType) {
+          currentSettings.mapType = 'servicemap';
+        }
       }
     }
 
