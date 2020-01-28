@@ -157,12 +157,14 @@ const UnitView = (props) => {
         <Highlights unit={unit} getLocaleText={getLocaleText} />
         <Description unit={unit} getLocaleText={getLocaleText} />
         <ElectronicServices unit={unit} />
-        <SMButton
-          messageID="home.send.feedback"
-          icon={<Mail />}
-          onClick={() => handleFeedbackClick()}
-          margin
-        />
+        <DesktopComponent>
+          <SMButton
+            messageID="home.send.feedback"
+            icon={<Mail />}
+            onClick={() => handleFeedbackClick()}
+            margin
+          />
+        </DesktopComponent>
       </div>
     );
   };
