@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { uppercaseFirst } from '../../../utils';
 import SimpleListItem from '../SimpleListItem';
 import { AddressIcon } from '../../SMIcon';
+import { getAddressText } from '../../../utils/address';
 
 const AddressItem = (props) => {
   const {
@@ -10,7 +11,7 @@ const AddressItem = (props) => {
   } = props;
 
   const number = `${address.number ? address.number : ''}${address.letter ? address.letter : ''}`;
-  const text = `${getLocaleText(address.street.name)} ${number}, ${uppercaseFirst(address.street.municipality)}`;
+  const text = getAddressText(address, getLocaleText);
 
   return (
     <SimpleListItem

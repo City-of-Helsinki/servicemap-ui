@@ -18,6 +18,7 @@ import fetchAddressData from './utils/fetchAddressData';
 import SMButton from '../../components/ServiceMapButton';
 import DistritctItem from './components/DistrictItem';
 import TabLists from '../../components/TabLists';
+import { getAddressText } from '../../utils/address';
 
 
 const AddressView = (props) => {
@@ -222,7 +223,7 @@ const AddressView = (props) => {
   }
 
   // Render component
-  const title = addressData ? `${getLocaleText(addressData.street.name)} ${addressData.number}, ${match.params.municipality}` : '';
+  const title = getAddressText(addressData, getLocaleText);
   const tabs = [
     {
       ariaLabel: intl.formatMessage({ id: 'address.nearby' }),
