@@ -4,6 +4,7 @@ import { intlShape } from 'react-intl';
 import {
   Typography, ButtonBase, Drawer,
 } from '@material-ui/core';
+import { Map } from '@material-ui/icons';
 import { getIcon } from '../SMIcon';
 
 const DrawerMenu = (props) => {
@@ -19,6 +20,7 @@ const DrawerMenu = (props) => {
     isOpen,
     toggleDrawerMenu,
     handleNavigation,
+    getLocaleText,
   } = props;
 
   const menuContent = [
@@ -75,6 +77,17 @@ const DrawerMenu = (props) => {
         toggleDrawerMenu();
       },
     },
+    { // Link to old
+      name: intl.formatMessage({ id: 'home.old.link' }),
+      icon: <Map />,
+      clickEvent: () => {
+        window.open(getLocaleText({
+          fi: 'https://palvelukartta-vanha.hel.fi/?lang=fi',
+          sv: 'https://palvelukartta-vanha.hel.fi/?lang=sv',
+          en: 'https://palvelukartta-vanha.hel.fi/?lang=en',
+        }));
+      },
+    },
   ];
 
   return (
@@ -121,6 +134,7 @@ DrawerMenu.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   toggleDrawerMenu: PropTypes.func.isRequired,
   handleNavigation: PropTypes.func.isRequired,
+  getLocaleText: PropTypes.func.isRequired,
 };
 
 DrawerMenu.defaultProps = {

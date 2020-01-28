@@ -139,6 +139,7 @@ export default {
   'home.example.search': 'Sök med sökord',
   'home.message': 'Hälsningar av servicekartans utvecklare',
   'home.send.feedback': 'Skicka respons',
+  'home.old.link': 'Gamla Servicekartan',
 
   // Location
   'location.notFound': 'Positionen hittades inte',
