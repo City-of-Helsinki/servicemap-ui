@@ -26,7 +26,7 @@ const SuggestionBox = (props) => {
     getLocaleText,
     setSearch,
     intl,
-    locale
+    locale,
   } = props;
 
   const [searchQueries, setSearchQueries] = useState(null);
@@ -289,7 +289,7 @@ SuggestionBox.propTypes = {
   focusedSuggestion: PropTypes.number,
   setSearch: PropTypes.func,
   intl: intlShape.isRequired,
-  locale: PropTypes.string.isRequired
+  locale: PropTypes.string.isRequired,
 };
 
 SuggestionBox.defaultProps = {
