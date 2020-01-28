@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { intlShape } from 'react-intl';
 import {
-  Typography, ButtonBase, Drawer, ClickAwayListener,
+  Typography, ButtonBase, Drawer,
 } from '@material-ui/core';
 import { getIcon } from '../SMIcon';
 
@@ -60,47 +60,52 @@ const DrawerMenu = (props) => {
       },
     },
     { // Instructions button
-      name: intl.formatMessage({ id: 'home.buttons.instructions' }),
-      disabled: true,
+      name: intl.formatMessage({ id: 'info.title' }),
       icon: getIcon('help'),
-      clickEvent: () => {},
+      clickEvent: () => {
+        handleNavigation('info');
+        toggleDrawerMenu();
+      },
     },
     { // Feedback button
       name: intl.formatMessage({ id: 'home.send.feedback' }),
       icon: getIcon('feedback'),
-      clickEvent: () => window.open('https://forms.gle/roe9XNrZGQWBhMBJ7'),
+      clickEvent: () => {
+        handleNavigation('feedback');
+        toggleDrawerMenu();
+      },
     },
   ];
 
   return (
-    <ClickAwayListener onClickAway={isOpen ? () => toggleDrawerMenu() : () => {}}>
-      <Drawer
-        variant="persistent"
-        anchor="right"
-        open={isOpen}
-        classes={{ paper: pageType === 'mobile' ? classes.drawerContainerMobile : classes.drawerContainer }}
-      >
-        {menuContent.map(item => (
-          <ButtonBase
-            disableRipple
-            key={item.name}
-            tabIndex={isOpen ? 0 : -1}
-            role="link"
-            aria-hidden={!isOpen}
-            onClick={item.clickEvent}
-            className={`${classes.drawerButton} ${item.active ? classes.drawerButtonActive : ''}`}
-          >
-            <div className={`${classes.drawerIcon} ${item.active ? classes.drawerIconActive : ''} ${item.disabled ? classes.disabled : ''}`}>
-              {item.icon}
-            </div>
-            <span className={classes.buttonLabel}>
-              <Typography className={`${classes.drawerButtonText} ${item.disabled ? classes.disabled : ''}`} variant="body1">{item.name}</Typography>
-              {item.disabled && <Typography className={classes.drawerButtonText} variant="caption">{item.subText}</Typography>}
-            </span>
-          </ButtonBase>
-        ))}
-      </Drawer>
-    </ClickAwayListener>
+  // <ClickAwayListener onClickAway={isOpen ? () => toggleDrawerMenu() : () => {}}>
+    <Drawer
+      variant="persistent"
+      anchor="right"
+      open={isOpen}
+      classes={{ paper: pageType === 'mobile' ? classes.drawerContainerMobile : classes.drawerContainer }}
+    >
+      {menuContent.map(item => (
+        <ButtonBase
+          disableRipple
+          key={item.name}
+          tabIndex={isOpen ? 0 : -1}
+          role="link"
+          aria-hidden={!isOpen}
+          onClick={item.clickEvent}
+          className={`${classes.drawerButton} ${item.active ? classes.drawerButtonActive : ''}`}
+        >
+          <div className={`${classes.drawerIcon} ${item.active ? classes.drawerIconActive : ''} ${item.disabled ? classes.disabled : ''}`}>
+            {item.icon}
+          </div>
+          <span className={classes.buttonLabel}>
+            <Typography className={`${classes.drawerButtonText} ${item.disabled ? classes.disabled : ''}`} variant="body1">{item.name}</Typography>
+            {item.disabled && <Typography className={classes.drawerButtonText} variant="caption">{item.subText}</Typography>}
+          </span>
+        </ButtonBase>
+      ))}
+    </Drawer>
+  // </ClickAwayListener>
   );
 };
 
