@@ -62,7 +62,7 @@ const createContentStyles = (
     },
   };
 
-  if (currentPage === 'home') {
+  if (currentPage === 'home' && !isMobile) {
     styles.sidebar.borderRight = '8px solid transparent';
   }
 
