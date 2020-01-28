@@ -162,7 +162,7 @@ class TopBar extends React.Component {
       <DrawerMenu
         isOpen={drawerOpen}
         pageType={pageType}
-        toggleDrawerMenu={this.toggleDrawerMenu}
+        toggleDrawerMenu={() => this.toggleDrawerMenu()}
         toggleSettings={toggleSettings}
         settingsOpen={settingsOpen}
         handleNavigation={this.handleNavigation}
@@ -210,6 +210,14 @@ class TopBar extends React.Component {
         if (currentPage !== 'serviceTree') {
           navigator.push('serviceTree');
         }
+        break;
+
+      case 'feedback':
+        navigator.push('feedback');
+        break;
+
+      case 'info':
+        navigator.push('info');
         break;
 
       default:
