@@ -32,7 +32,7 @@ const paths = {
     regex: /\/[a-zA-Z]{2}\/event\/([a-z:0-9]+)/
   },
   address: {
-    generate: data => `/address/${data.municipality}/${data.street}/${data.number}`,
+    generate: data => `${data.embed ? '/embed/address/' : '/address/'}${data.municipality}/${data.street}/${data.number}`,
     regex: /\/[a-zA-Z]{2}\/address\/([a-zA-Z]+)\/([a-zA-Z])+\/([a-z:0-9]+)/
   },
   info: {

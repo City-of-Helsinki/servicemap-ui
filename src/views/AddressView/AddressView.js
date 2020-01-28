@@ -87,11 +87,13 @@ const AddressView = (props) => {
           // Check if address data is in different language
           // and move navigation to address page with correct language
           const { params } = match;
-          if (params.street !== getLocaleText(address.street.name)) {
+
+          if (params.street.toLowerCase() !== getLocaleText(address.street.name).toLowerCase()) {
             navigator.replace('address', {
               municipality: address.street.municipality,
               street: getLocaleText(address.street.name),
               number: `${address.number}${address.letter || ''}`,
+              embed,
             });
             return;
           }
