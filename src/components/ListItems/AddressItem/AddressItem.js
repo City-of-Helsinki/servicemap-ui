@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 import { uppercaseFirst } from '../../../utils';
 import SimpleListItem from '../SimpleListItem';
 import { AddressIcon } from '../../SMIcon';
-import { getAddressText } from '../../../utils/address';
+import { getAddressText, getAddressNavigatorParams } from '../../../utils/address';
 
 const AddressItem = (props) => {
   const {
     getLocaleText, navigator, address, classes, selected, className,
   } = props;
 
-  const number = `${address.number ? address.number : ''}${address.letter ? address.letter : ''}`;
   const text = getAddressText(address, getLocaleText);
 
   return (
@@ -23,11 +22,7 @@ const AddressItem = (props) => {
       handleItemClick={(e) => {
         e.preventDefault();
         if (navigator) {
-          navigator.push('address', {
-            municipality: address.street.municipality,
-            street: getLocaleText(address.street.name),
-            number: `${number}`,
-          });
+          navigator.push('address', getAddressNavigatorParams(address, getLocaleText));
         }
       }}
       role="link"

@@ -19,6 +19,7 @@ import { generatePath } from '../../utils/path';
 import { DesktopComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import ExpandedSuggestions from '../../components/ExpandedSuggestions';
 import SettingsInfo from '../../components/SettingsInfo';
+import { getAddressNavigatorParams } from '../../utils/address';
 
 class SearchView extends React.Component {
   constructor(props) {
@@ -247,18 +248,16 @@ class SearchView extends React.Component {
     // and only 1 result found redirect directly to specific result page
     if (!isFetching && !this.shouldFetch() && units && units.length === 1) {
       const {
-        id, object_type, letter, number, street,
+        id, object_type,
       } = units[0];
       let path = null;
       // Parse language params
       const { params } = match;
       const lng = params && params.lng;
-      const { name, municipality } = street || {};
-      const streetName = name ? getLocaleText(name) : null;
 
       switch (object_type) {
         case 'address':
-          path = generatePath('address', lng, { number: `${number}${letter || ''}`, municipality, street: streetName });
+          path = generatePath('address', lng, getAddressNavigatorParams(units[0], getLocaleText));
           break;
         case 'unit':
           path = generatePath('unit', lng, { id });

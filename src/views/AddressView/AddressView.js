@@ -18,7 +18,7 @@ import fetchAddressData from './utils/fetchAddressData';
 import SMButton from '../../components/ServiceMapButton';
 import DistritctItem from './components/DistrictItem';
 import TabLists from '../../components/TabLists';
-import { getAddressText } from '../../utils/address';
+import { getAddressText, getAddressNavigatorParams } from '../../utils/address';
 
 
 const AddressView = (props) => {
@@ -91,9 +91,7 @@ const AddressView = (props) => {
 
           if (params.street.toLowerCase() !== getLocaleText(address.street.name).toLowerCase()) {
             navigator.replace('address', {
-              municipality: address.street.municipality,
-              street: getLocaleText(address.street.name),
-              number: `${address.number}${address.letter || ''}`,
+              ...getAddressNavigatorParams(address, getLocaleText),
               embed,
             });
             return;

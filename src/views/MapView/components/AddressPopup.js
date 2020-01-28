@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import styles from '../styles';
 import fetchAddress from '../utils/fetchAddress';
+import { getAddressNavigatorParams } from '../../../utils/address';
 
 const AddressPopup = ({
   Popup, classes, mapClickPoint, getLocaleText, map, navigator,
@@ -29,11 +30,7 @@ const AddressPopup = ({
             onClick={() => {
               if (navigator) {
                 map.leafletElement.closePopup();
-                navigator.push('address', {
-                  municipality: address.street.municipality,
-                  street: getLocaleText(address.street.name),
-                  number: address.number,
-                });
+                navigator.push('address', getAddressNavigatorParams(address, getLocaleText));
               }
             }}
           >
