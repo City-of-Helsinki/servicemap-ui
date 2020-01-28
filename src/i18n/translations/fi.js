@@ -139,6 +139,7 @@ export default {
   'home.example.search': 'Hae hakusanalla',
   'home.message': 'Terveisiä palvelukartan kehittäjiltä',
   'home.send.feedback': 'Lähetä palautetta',
+  'home.old.link': 'Linkki vanhaan Palvelukarttaan',
 
   // Location
   'location.notFound': 'Sijaintia ei löytynyt',

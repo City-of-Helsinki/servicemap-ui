@@ -29,7 +29,7 @@ export default theme => ({
     boxShadow: `0 4px 8px 0 ${theme.palette.detail.alpha}`,
   },
   icon: {
-    color: 'inherit',
+    color: '#fff',
     height: 'inherit',
     width: 24,
   },

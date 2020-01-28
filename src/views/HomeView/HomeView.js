@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { Map } from '@material-ui/icons';
 import SearchBar from '../../components/SearchBar';
 import { MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import PaperButton from '../../components/PaperButton';
@@ -61,6 +62,18 @@ class HomeView extends React.Component {
             icon={getIcon('help')}
             link
             onClick={() => navigator.push('info')}
+          />
+          <PaperButton
+            text={<FormattedMessage id="home.old.link" />}
+            icon={<Map />}
+            link
+            onClick={() => {
+              window.open(getLocaleText({
+                fi: 'https://palvelukartta-vanha.hel.fi/?lang=fi',
+                sv: 'https://palvelukartta-vanha.hel.fi/?lang=sv',
+                en: 'https://palvelukartta-vanha.hel.fi/?lang=en',
+              }));
+            }}
           />
         </div>
       </div>

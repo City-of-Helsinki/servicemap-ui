@@ -4,12 +4,15 @@ import { withStyles } from '@material-ui/core';
 import DrawerMenu from './DrawerMenu';
 import { findUserLocation } from '../../redux/actions/user';
 import styles from './styles';
+import { getLocaleString } from '../../redux/selectors/locale';
 
 const mapStateToProps = (state) => {
   const { user } = state;
+  const getLocaleText = textObject => getLocaleString(state, textObject);
   return {
     currentPage: user.page,
     userLocation: user.position,
+    getLocaleText,
   };
 };
 

@@ -139,6 +139,7 @@ export default {
   'home.example.search': 'Search for',
   'home.message': 'Message from the developers',
   'home.send.feedback': 'Send feedback',
+  'home.old.link': 'Old version of Servicemap',
 
   // Location
   'location.notFound': 'Location not found',
