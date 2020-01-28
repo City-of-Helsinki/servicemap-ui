@@ -10,10 +10,11 @@ import ExpandedSuggestions from './ExpandedSuggestions';
 // const unitList = getUnitList(state);
 const mapStateToProps = (state) => {
   const {
-    navigator,
+    navigator, user,
   } = state;
 
   return {
+    locale: user.locale,
     navigator,
   };
 };
