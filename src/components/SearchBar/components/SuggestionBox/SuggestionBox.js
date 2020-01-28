@@ -289,7 +289,7 @@ SuggestionBox.propTypes = {
   focusedSuggestion: PropTypes.number,
   setSearch: PropTypes.func,
   intl: intlShape.isRequired,
-  locale: PropTypes.string.isRequired,
+  locale: PropTypes.oneOf(config.supportedLanguages).isRequired,
 };
 
 SuggestionBox.defaultProps = {
