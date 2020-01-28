@@ -23,6 +23,7 @@ const ExpandedSuggestions = (props) => {
     navigator,
     onClick,
     isVisible,
+    locale,
   } = props;
 
   const [searchQueries, setSearchQueries] = useState(null);
@@ -63,7 +64,7 @@ const ExpandedSuggestions = (props) => {
       fetchController.current = new AbortController();
       const { signal } = fetchController.current;
 
-      createSuggestions(query, signal)
+      createSuggestions(query, signal, locale)
         .then((suggestions) => {
           if (suggestions === 'error') {
             return;
@@ -270,6 +271,7 @@ ExpandedSuggestions.propTypes = {
   navigator: PropTypes.objectOf(PropTypes.any),
   onClick: PropTypes.func.isRequired,
   searchQuery: PropTypes.string,
+  locale: PropTypes.oneOf(config.supportedLanguages).isRequired,
 };
 
 ExpandedSuggestions.defaultProps = {
