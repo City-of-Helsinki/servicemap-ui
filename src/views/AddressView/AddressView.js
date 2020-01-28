@@ -66,16 +66,35 @@ const AddressView = (props) => {
       });
   };
 
-  const fetchData = (match) => {
+  const fetchData = () => {
     if (districts || units) {
       // Remove old data before fetching new
       setDistricts(null);
       setUnits(null);
     }
-    fetchAddressData(match)
+
+    const options = match ? {
+      municipality: `${match.params.municipality}`,
+      street: `${match.params.street}`,
+      number: `${match.params.number}`,
+      language: match.params.lng === 'sv' ? 'sv' : 'fi',
+    } : {};
+
+    fetchAddressData(options)
       .then((data) => {
         const address = data;
         if (address) {
+          // Check if address data is in different language
+          // and move navigation to address page with correct language
+          const { params } = match;
+          if (params.street !== getLocaleText(address.street.name)) {
+            navigator.replace('address', {
+              municipality: address.street.municipality,
+              street: getLocaleText(address.street.name),
+              number: `${address.number}${address.letter || ''}`,
+            });
+            return;
+          }
           // If address data has letters as well, combine them with address number
           if (address.letter) {
             address.number += address.letter;
@@ -188,7 +207,7 @@ const AddressView = (props) => {
   // Update view data when match props (url) change
   useEffect(() => {
     if (map) {
-      fetchData(match);
+      fetchData();
       if (highlightedDistrict) {
         // Clear any drawn districts from map
         setHighlightedDistrict(null);
