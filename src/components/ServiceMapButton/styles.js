@@ -1,17 +1,19 @@
 export default theme => ({
   button: {
-    height: 38,
+    minHeight: 38,
     padding: '0 11px',
     boxSizing: 'border-box',
     borderRadius: 2,
   },
   smallButton: {
-    height: 34,
+    minHeight: 34,
     padding: '0 4px',
   },
   margin: {
     marginTop: theme.spacing.unitDouble,
     marginBottom: theme.spacing.unitDouble,
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
   },
   marginRight: {
     marginRight: theme.spacing.unitDouble,
