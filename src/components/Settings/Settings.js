@@ -220,7 +220,6 @@ class Settings extends React.Component {
     // Check if theme and map should be changed based on settings
 
     if (currentSettings.colorblind) {
-      // Dont force map change if user has manually changed map settings as well
       if (!settings.colorblind) {
         changeTheme('dark');
         if (settings.mapType === currentSettings.mapType) {
