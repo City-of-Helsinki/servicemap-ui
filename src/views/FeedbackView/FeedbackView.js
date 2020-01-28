@@ -116,7 +116,6 @@ const FeedbackView = ({
                 navigator.goBack();
               }
             }}
-            margin
           />
         </div>
       </Dialog>

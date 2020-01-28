@@ -12,6 +12,8 @@ export default theme => ({
   margin: {
     marginTop: theme.spacing.unitDouble,
     marginBottom: theme.spacing.unitDouble,
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
   },
   marginRight: {
     marginRight: theme.spacing.unitDouble,
