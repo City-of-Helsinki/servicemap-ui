@@ -51,7 +51,7 @@ export const languageSubdomainRedirect = (req, res, next) => {
     }
     if (req.subdomains[0].match(/^servicekarta/)) {
       const pathArray = req.url.split('/');
-      pathArray.splice(1, 0, 'se');
+      pathArray.splice(1, 0, 'sv');
       res.redirect(pathArray.join('/'));
       return;
     }
