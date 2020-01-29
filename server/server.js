@@ -21,6 +21,7 @@ import { fetchEventData, fetchSelectedUnitData } from './dataFetcher';
 import IntlPolyfill from 'intl';
 import paths from '../config/paths';
 import legacyRedirector from './legacyRedirector';
+import matomoTrackingCode from './analytics';
 
 const setupTests = () => {
   if (global.Intl) {
@@ -122,7 +123,7 @@ const htmlTemplate = (reactDom, preloadedState, css, jss, locale) => `
     integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
     crossorigin=""
       />
-    <script 
+    <script
       src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
       integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
       crossorigin="">
@@ -154,6 +155,7 @@ const htmlTemplate = (reactDom, preloadedState, css, jss, locale) => `
       window.PRELOADED_STATE = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')}
     </script>
     <script src="/index.js"></script>
+    ${matomoTrackingCode(process.env.MATOMO_URL, process.env.MATOMO_SITE_ID)}
   </body>
 </html>
 `;
