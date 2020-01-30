@@ -23,7 +23,7 @@ const fetchDistricts = async (lnglat) => {
     lon: `${lnglat[0]}`,
     page: 1,
     page_size: 80,
-    type: `${districts.join(',')}name,root_service_nodes,location,street_address`,
+    type: `${districts.join(',')}`,
     geometry: true,
   };
   const districtData = await districtFetch(options);
