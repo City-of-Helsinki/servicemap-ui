@@ -91,17 +91,7 @@ const fetchDistricts = async (lnglat) => {
         : case 'upper_comprehensive_school_district_sv'
         : case 'preschool_education_fi'
         : case 'preschool_education_sv':
-        if (district.name || district.unit) {
-          let duplicate = false;
-          education.forEach((item) => {
-            if (item.service_point_id === district.service_point_id) {
-              duplicate = true;
-            }
-          });
-          if (!duplicate) {
-            education.push(district);
-          }
-        }
+        education.push(district);
         break;
       default:
         break;
