@@ -139,6 +139,7 @@ class TopBar extends React.Component {
             <ButtonBase
               role="link"
               key={locale}
+              lang={locale}
               onClick={() => {
                 const newLocation = location;
                 const newPath = location.pathname.replace(/^\/[a-zA-Z]{2}\//, `/${locale}/`);
