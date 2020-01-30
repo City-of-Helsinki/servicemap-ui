@@ -23,7 +23,7 @@ const fetchDistricts = async (lnglat) => {
     lon: `${lnglat[0]}`,
     page: 1,
     page_size: 80,
-    type: `${districts.join(',')}name,root_service_nodes,location,street_address`,
+    type: `${districts.join(',')}`,
     geometry: true,
   };
   const districtData = await districtFetch(options);
@@ -91,17 +91,7 @@ const fetchDistricts = async (lnglat) => {
         : case 'upper_comprehensive_school_district_sv'
         : case 'preschool_education_fi'
         : case 'preschool_education_sv':
-        if (district.name || district.unit) {
-          let duplicate = false;
-          education.forEach((item) => {
-            if (item.service_point_id === district.service_point_id) {
-              duplicate = true;
-            }
-          });
-          if (!duplicate) {
-            education.push(district);
-          }
-        }
+        education.push(district);
         break;
       default:
         break;

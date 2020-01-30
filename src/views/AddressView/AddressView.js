@@ -181,8 +181,8 @@ const AddressView = (props) => {
                 <TitledList title={intl.formatMessage({ id: `address.list.${districtList[0]}` })} titleComponent="h4">
                   {districtList[1].map((district) => {
                     const title = district.name
-                      ? getLocaleText(district.name) : getLocaleText(district.unit.name);
-                    const period = district.unit && district.start && district.end
+                      ? getLocaleText(district.name) : (district.unit ? getLocaleText(district.unit.name) : '?');
+                    const period = district.start && district.end
                       ? `${district.start.substring(0, 4)}-${district.end.substring(0, 4)}` : null;
 
                     return (
