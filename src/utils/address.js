@@ -1,4 +1,35 @@
+/* eslint-disable prefer-destructuring */
 import { uppercaseFirst } from '.';
+
+export const addressMatchParamsToFetchOptions = (match) => {
+  if (!match) {
+    return null;
+  }
+  const data = {
+    municipality: `${match.params.municipality}`,
+    street: `${match.params.street}`,
+    language: match.params.lng === 'sv' ? 'sv' : 'fi',
+  };
+
+  const { number } = match.params;
+  const numberParam = number;
+
+  if (numberParam.indexOf('-') > -1) {
+    const parts = number.split('-');
+    data.number = parts[0];
+    if (parts.length === 2) {
+      if (parts[1] !== '' && !Number.isNaN(Number(parts[1]))) {
+        data.number_end = parts[1];
+      } else {
+        data.letter = parts[1];
+      }
+    }
+  } else {
+    data.number = numberParam;
+  }
+
+  return data;
+};
 
 export const getAddressNavigatorParams = (address, getLocaleText) => {
   if (!address || !address.number || !address.street.name || !address.street.municipality) {
