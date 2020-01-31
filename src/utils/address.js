@@ -7,7 +7,7 @@ export const addressMatchParamsToFetchOptions = (match) => {
     return null;
   }
   const data = {
-    municipality: `${match.params.municipality}`,
+    municipality_name: `${match.params.municipality}`,
     street: `${match.params.street}`,
     language: match.params.lng === 'sv' ? 'sv' : 'fi',
   };
