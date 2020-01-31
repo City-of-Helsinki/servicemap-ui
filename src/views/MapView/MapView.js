@@ -21,6 +21,7 @@ import AddressMarker from './components/AddressMarker';
 import { parseSearchParams } from '../../utils';
 import isClient from '../../utils';
 import swapCoordinates from './utils/swapCoordinates';
+import { getAddressNavigatorParams } from '../../utils/address';
 
 
 const MapView = (props) => {
@@ -174,11 +175,7 @@ const MapView = (props) => {
   const navigateToAddress = (latLng) => {
     fetchAddress(latLng)
       .then((data) => {
-        navigator.push('address', {
-          municipality: data.street.municipality,
-          street: getLocaleText(data.street.name),
-          number: data.number,
-        });
+        navigator.push('address', getAddressNavigatorParams(data, getLocaleText));
       });
   };
 

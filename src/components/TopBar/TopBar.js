@@ -10,6 +10,7 @@ import HomeLogo from '../Logos/HomeLogo';
 import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import { getIcon } from '../SMIcon';
 import DrawerMenu from '../DrawerMenu';
+import { getAddressNavigatorParams } from '../../utils/address';
 
 class TopBar extends React.Component {
   state={ drawerOpen: false }
@@ -199,11 +200,7 @@ class TopBar extends React.Component {
         break;
 
       case 'address':
-        navigator.push('address', {
-          municipality: data.street.municipality,
-          street: getLocaleText(data.street.name),
-          number: data.number,
-        });
+        navigator.push('address', getAddressNavigatorParams(data, getLocaleText));
         break;
 
       case 'services':
