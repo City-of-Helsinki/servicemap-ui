@@ -28,13 +28,15 @@ const fetchAddressData = async (options) => {
     const data = response.results;
 
     if (data.length > 0) {
-      if (options.letter) {
-        data.forEach((result) => {
-          if (result.letter === options.letter) {
-            address = result;
-          }
-        });
-      } else {
+      data.forEach((result) => {
+        if (
+          result.letter === options.letter
+          || (!result.letter && !options.letter)
+        ) {
+          address = result;
+        }
+      });
+      if (!address) {
         // eslint-disable-next-line prefer-destructuring
         address = data[0];
       }
