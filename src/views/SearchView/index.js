@@ -6,13 +6,14 @@ import { changeSelectedUnit } from '../../redux/actions/selectedUnit';
 import { getProcessedData } from '../../redux/selectors/results';
 import isClient from '../../utils';
 import { getLocaleString } from '../../redux/selectors/locale';
+import { getAddressNavigatorParamsConnector } from '../../utils/address';
 
 // Listen to redux state
 // const unitList = getUnitList(state);
 const mapStateToProps = (state) => {
   const map = state.mapRef.leafletElement;
   const {
-    units, settings, serviceTree, navigator, redirectService,
+    units, user, settings, serviceTree, redirectService,
   } = state;
   const {
     isFetching, count, max, previousSearch,
@@ -25,6 +26,7 @@ const mapStateToProps = (state) => {
   }
   const unitData = getProcessedData(state, options);
   const getLocaleText = textObject => getLocaleString(state, textObject);
+  const getAddressNavigatorParams = getAddressNavigatorParamsConnector(getLocaleText, user.locale);
 
   return {
     unit: state.unit,
@@ -32,7 +34,7 @@ const mapStateToProps = (state) => {
     isFetching,
     isRedirectFetching,
     count,
-    getLocaleText,
+    getAddressNavigatorParams,
     max,
     map,
     previousSearch,

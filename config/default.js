@@ -56,6 +56,26 @@ export default {
   "initialMapPosition": [60.170377597530016, 24.941309323934886],
   "smallContentAreaBreakpoint": 449,
   "mobileUiBreakpoint": 699,
+  "municipality": {
+    fi: {
+      espoo: 'Espoo',
+      helsinki: 'Helsinki',
+      kauniainen: 'Kauniainen',
+      vantaa: 'Vantaa'
+    },
+    en: {
+      espoo: 'Espoo',
+      helsinki: 'Helsinki',
+      kauniainen: 'Kauniainen',
+      vantaa: 'Vantaa'
+    },
+    sv: {
+      espoo: 'Esbo',
+      helsinki: 'Helsingfors',
+      kauniainen: 'Grankulla',
+      vantaa: 'Vanda'
+    }
+  },
   "smallScreenBreakpoint": 899,
   "topBarHeight": 100,
   "topBarHeightMobile": 90,

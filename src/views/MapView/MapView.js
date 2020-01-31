@@ -13,7 +13,6 @@ import Districts from './components/Districts';
 import TransitStops from './components/TransitStops';
 import AddressPopup from './components/AddressPopup';
 import LocationButton from './components/LocationButton';
-import SearchBar from '../../components/SearchBar';
 import UserMarker from './components/UserMarker';
 import fetchAddress from './utils/fetchAddress';
 import { isEmbed } from '../../utils/path';
@@ -21,7 +20,6 @@ import AddressMarker from './components/AddressMarker';
 import { parseSearchParams } from '../../utils';
 import isClient from '../../utils';
 import swapCoordinates from './utils/swapCoordinates';
-import { getAddressNavigatorParams } from '../../utils/address';
 
 
 const MapView = (props) => {
@@ -29,6 +27,7 @@ const MapView = (props) => {
     classes,
     createMarkerClusterLayer,
     currentPage,
+    getAddressNavigatorParams,
     getLocaleText,
     intl,
     location,
@@ -175,7 +174,7 @@ const MapView = (props) => {
   const navigateToAddress = (latLng) => {
     fetchAddress(latLng)
       .then((data) => {
-        navigator.push('address', getAddressNavigatorParams(data, getLocaleText));
+        navigator.push('address', getAddressNavigatorParams(data));
       });
   };
 
@@ -300,6 +299,7 @@ const MapView = (props) => {
             <AddressPopup
               Popup={Popup}
               mapClickPoint={mapClickPoint}
+              getAddressNavigatorParams={getAddressNavigatorParams}
               getLocaleText={getLocaleText}
               map={mapRef.current}
               setAddressLocation={setAddressLocation}
@@ -347,6 +347,7 @@ MapView.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   createMarkerClusterLayer: PropTypes.func.isRequired,
   currentPage: PropTypes.string.isRequired,
+  getAddressNavigatorParams: PropTypes.func.isRequired,
   getLocaleText: PropTypes.func.isRequired,
   highlightedDistrict: PropTypes.arrayOf(PropTypes.any),
   highlightedUnit: PropTypes.objectOf(PropTypes.any),

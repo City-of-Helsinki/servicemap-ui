@@ -1,5 +1,6 @@
 /* eslint-disable prefer-destructuring */
 import { uppercaseFirst } from '.';
+import config from '../../config';
 
 export const addressMatchParamsToFetchOptions = (match) => {
   if (!match) {
@@ -31,12 +32,19 @@ export const addressMatchParamsToFetchOptions = (match) => {
   return data;
 };
 
-export const getAddressNavigatorParams = (address, getLocaleText) => {
+export const getAddressNavigatorParamsConnector = (getLocaleText, locale) => (address) => {
   if (!address || !address.number || !address.street.name || !address.street.municipality) {
     return null;
   }
   if (typeof getLocaleText !== 'function') {
-    throw Error('getAddressText requires getLocaleText function');
+    throw Error('getAddressNavigatorParams requires getLocaleText function');
+  }
+  if (Object.keys(config.municipality).indexOf(locale) === -1) {
+    throw Error(`getAddressNavigatorParams locale parameter must be one of ${Object.keys(config.municipality).toString()}`);
+  }
+  let municipality = config.municipality[locale][address.street.municipality];
+  if (municipality && typeof municipality === 'string') {
+    municipality = municipality.toLowerCase(); // Transform to lowercase
   }
 
   const nStart = address.number;
@@ -44,7 +52,7 @@ export const getAddressNavigatorParams = (address, getLocaleText) => {
   const letter = address.letter ? `-${address.letter}` : '';
   const fullNumber = `${nStart}${nEnd}${letter}`;
   const data = {
-    municipality: address.street.municipality,
+    municipality,
     street: getLocaleText(address.street.name),
     number: fullNumber,
   };

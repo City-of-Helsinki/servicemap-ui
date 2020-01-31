@@ -19,7 +19,6 @@ import { generatePath } from '../../utils/path';
 import { DesktopComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import ExpandedSuggestions from '../../components/ExpandedSuggestions';
 import SettingsInfo from '../../components/SettingsInfo';
-import { getAddressNavigatorParams } from '../../utils/address';
 
 class SearchView extends React.Component {
   constructor(props) {
@@ -241,7 +240,7 @@ class SearchView extends React.Component {
   // Handles redirect if only single result is found
   handleSingleResultRedirect() {
     const {
-      units, getLocaleText, isFetching, match,
+      units, getAddressNavigatorParams, isFetching, match,
     } = this.props;
 
     // If not currently searching and view should not fetch new search
@@ -254,10 +253,9 @@ class SearchView extends React.Component {
       // Parse language params
       const { params } = match;
       const lng = params && params.lng;
-
       switch (object_type) {
         case 'address':
-          path = generatePath('address', lng, getAddressNavigatorParams(units[0], getLocaleText));
+          path = generatePath('address', lng, getAddressNavigatorParams(units[0]));
           break;
         case 'unit':
           path = generatePath('unit', lng, { id });
@@ -534,7 +532,7 @@ SearchView.propTypes = {
   count: PropTypes.number,
   fetchUnits: PropTypes.func,
   fetchRedirectService: PropTypes.func,
-  getLocaleText: PropTypes.func.isRequired,
+  getAddressNavigatorParams: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
   isFetching: PropTypes.bool,
   isRedirectFetching: PropTypes.bool,

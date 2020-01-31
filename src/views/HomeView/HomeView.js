@@ -6,12 +6,11 @@ import SearchBar from '../../components/SearchBar';
 import { MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import PaperButton from '../../components/PaperButton';
 import { getIcon } from '../../components/SMIcon';
-import { getAddressNavigatorParams } from '../../utils/address';
 
 class HomeView extends React.Component {
   renderNavigationOptions = () => {
     const {
-      classes, getLocaleText, toggleSettings, navigator, userLocation,
+      classes, getAddressNavigatorParams, getLocaleText, toggleSettings, navigator, userLocation,
     } = this.props;
     const noUserLocation = !userLocation
       || !userLocation.coordinates
@@ -30,7 +29,7 @@ class HomeView extends React.Component {
             link
             disabled={noUserLocation}
             onClick={() => {
-              navigator.push('address', getAddressNavigatorParams(userLocation.addressData, getLocaleText));
+              navigator.push('address', getAddressNavigatorParams(userLocation.addressData));
             }}
             subtitle={subtitleID && <FormattedMessage id={subtitleID} />}
           />
@@ -169,6 +168,7 @@ export default HomeView;
 
 // Typechecking
 HomeView.propTypes = {
+  getAddressNavigatorParams: PropTypes.func.isRequired,
   getLocaleText: PropTypes.func.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
