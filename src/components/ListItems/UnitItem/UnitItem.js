@@ -87,7 +87,7 @@ class UnitItem extends React.Component {
 
     // Distance
     let distance = calculateDistance(unit, latLng);
-    if (distance) {
+    if (typeof distance === 'number') {
       if (distance >= 1000) {
         distance /= 1000; // Convert from m to km
         distance = distance.toFixed(1); // Show only one decimal
