@@ -18,7 +18,7 @@ import fetchAddressData from './utils/fetchAddressData';
 import SMButton from '../../components/ServiceMapButton';
 import DistritctItem from './components/DistrictItem';
 import TabLists from '../../components/TabLists';
-import { getAddressText, getAddressNavigatorParams, addressMatchParamsToFetchOptions } from '../../utils/address';
+import { getAddressText, addressMatchParamsToFetchOptions } from '../../utils/address';
 
 
 const AddressView = (props) => {
@@ -33,6 +33,7 @@ const AddressView = (props) => {
     highlightedDistrict,
     intl,
     match,
+    getAddressNavigatorParams,
     getLocaleText,
     map,
     setAddressLocation,
@@ -86,10 +87,9 @@ const AddressView = (props) => {
 
           if (params.street.toLowerCase() !== getLocaleText(address.street.name).toLowerCase()) {
             navigator.replace('address', {
-              ...getAddressNavigatorParams(address, getLocaleText),
+              ...getAddressNavigatorParams(address),
               embed,
             });
-            return;
           }
           setAddressLocation({ addressCoordinates: address.location.coordinates });
           setAddressData(address);
@@ -289,6 +289,7 @@ AddressView.propTypes = {
   map: PropTypes.objectOf(PropTypes.any),
   intl: intlShape.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
+  getAddressNavigatorParams: PropTypes.func.isRequired,
   getLocaleText: PropTypes.func.isRequired,
   setAddressLocation: PropTypes.func.isRequired,
   setAddressUnits: PropTypes.func.isRequired,

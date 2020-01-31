@@ -3,12 +3,12 @@ import { addressFetch } from '../../../utils/fetch';
 
 const fetchAddressData = async (options) => {
   const data = {};
-  if (!options.municipality || !options.street || !options.number) {
+  if (!options.municipality_name || !options.street || !options.number) {
     return null;
   }
 
   data.street = options.street;
-  data.municipality = options.municipality;
+  data.municipality_name = options.municipality_name;
   data.number = options.number;
   if (options.number_end) {
     data.number_end = options.number_end;
