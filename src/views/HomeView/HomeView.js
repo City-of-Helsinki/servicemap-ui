@@ -6,6 +6,7 @@ import SearchBar from '../../components/SearchBar';
 import { MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import PaperButton from '../../components/PaperButton';
 import { getIcon } from '../../components/SMIcon';
+import { getAddressNavigatorParams } from '../../utils/address';
 
 class HomeView extends React.Component {
   renderNavigationOptions = () => {
@@ -29,11 +30,7 @@ class HomeView extends React.Component {
             link
             disabled={noUserLocation}
             onClick={() => {
-              navigator.push('address', {
-                municipality: userLocation.addressData.street.municipality,
-                street: getLocaleText(userLocation.addressData.street.name),
-                number: userLocation.addressData.number,
-              });
+              navigator.push('address', getAddressNavigatorParams(userLocation.addressData, getLocaleText));
             }}
             subtitle={subtitleID && <FormattedMessage id={subtitleID} />}
           />

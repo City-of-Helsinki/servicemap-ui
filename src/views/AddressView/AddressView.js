@@ -18,6 +18,7 @@ import fetchAddressData from './utils/fetchAddressData';
 import SMButton from '../../components/ServiceMapButton';
 import DistritctItem from './components/DistrictItem';
 import TabLists from '../../components/TabLists';
+import { getAddressText, getAddressNavigatorParams, addressMatchParamsToFetchOptions } from '../../utils/address';
 
 
 const AddressView = (props) => {
@@ -73,12 +74,7 @@ const AddressView = (props) => {
       setUnits(null);
     }
 
-    const options = match ? {
-      municipality: `${match.params.municipality}`,
-      street: `${match.params.street}`,
-      number: `${match.params.number}`,
-      language: match.params.lng === 'sv' ? 'sv' : 'fi',
-    } : {};
+    const options = match ? addressMatchParamsToFetchOptions(match) : {};
 
     fetchAddressData(options)
       .then((data) => {
@@ -90,16 +86,10 @@ const AddressView = (props) => {
 
           if (params.street.toLowerCase() !== getLocaleText(address.street.name).toLowerCase()) {
             navigator.replace('address', {
-              municipality: address.street.municipality,
-              street: getLocaleText(address.street.name),
-              number: `${address.number}${address.letter || ''}`,
+              ...getAddressNavigatorParams(address, getLocaleText),
               embed,
             });
             return;
-          }
-          // If address data has letters as well, combine them with address number
-          if (address.letter) {
-            address.number += address.letter;
           }
           setAddressLocation({ addressCoordinates: address.location.coordinates });
           setAddressData(address);
@@ -222,7 +212,7 @@ const AddressView = (props) => {
   }
 
   // Render component
-  const title = addressData ? `${getLocaleText(addressData.street.name)} ${addressData.number}, ${match.params.municipality}` : '';
+  const title = getAddressText(addressData, getLocaleText);
   const tabs = [
     {
       ariaLabel: intl.formatMessage({ id: 'address.nearby' }),
