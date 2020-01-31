@@ -29,9 +29,17 @@ const fetchAddressData = async (options) => {
 
     if (data.length > 0) {
       data.forEach((result) => {
-        if (
-          result.letter === options.letter
-          || (!result.letter && !options.letter)
+        if (options.number_end || options.letter) {
+          if (
+            result.letter === options.letter
+            || result.number_end === options.number_end
+          ) {
+            address = result;
+          }
+          return;
+        }
+        if ((!result.letter && !options.letter)
+          || (!result.number_end && !options.number_end)
         ) {
           address = result;
         }
