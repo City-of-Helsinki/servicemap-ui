@@ -5,6 +5,7 @@ import { fetchUnits } from '../../redux/actions/unit';
 import { toggleSettings } from '../../redux/actions/settings';
 import styles from './styles';
 import { getLocaleString } from '../../redux/selectors/locale';
+import { getAddressNavigatorParamsConnector } from '../../utils/address';
 
 // Listen to redux state
 // const unitList = getUnitList(state);
@@ -14,9 +15,11 @@ const mapStateToProps = (state) => {
     data, isFetching, count, max,
   } = units;
   const getLocaleText = textObject => getLocaleString(state, textObject);
+  const getAddressNavigatorParams = getAddressNavigatorParamsConnector(getLocaleText, user.locale);
   return {
     unit: state.unit,
     units: data,
+    getAddressNavigatorParams,
     getLocaleText,
     isFetching,
     count,

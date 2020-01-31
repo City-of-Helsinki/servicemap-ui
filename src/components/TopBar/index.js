@@ -6,6 +6,7 @@ import styles from './styles';
 import TopBar from './TopBar';
 import { setMapType } from '../../redux/actions/settings';
 import { changeTheme } from '../../redux/actions/user';
+import { getAddressNavigatorParamsConnector } from '../../utils/address';
 
 // Listen to redux state
 const mapStateToProps = (state) => {
@@ -13,7 +14,9 @@ const mapStateToProps = (state) => {
     navigator, user, breadcrumb, settings,
   } = state;
   const getLocaleText = textObject => getLocaleString(state, textObject);
+  const getAddressNavigatorParams = getAddressNavigatorParamsConnector(getLocaleText, user.locale);
   return {
+    getAddressNavigatorParams,
     navigator,
     currentPage: user.page,
     getLocaleText,

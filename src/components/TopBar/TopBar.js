@@ -10,7 +10,6 @@ import HomeLogo from '../Logos/HomeLogo';
 import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import { getIcon } from '../SMIcon';
 import DrawerMenu from '../DrawerMenu';
-import { getAddressNavigatorParams } from '../../utils/address';
 
 class TopBar extends React.Component {
   state={ drawerOpen: false }
@@ -179,7 +178,7 @@ class TopBar extends React.Component {
 
   handleNavigation = (target, data) => {
     const {
-      getLocaleText, navigator, currentPage, toggleSettings, location,
+      getAddressNavigatorParams, navigator, currentPage, toggleSettings, location,
     } = this.props;
 
     // Hide settings and map if open
@@ -200,7 +199,7 @@ class TopBar extends React.Component {
         break;
 
       case 'address':
-        navigator.push('address', getAddressNavigatorParams(data, getLocaleText));
+        navigator.push('address', getAddressNavigatorParams(data));
         break;
 
       case 'services':
@@ -318,7 +317,7 @@ TopBar.propTypes = {
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
   toggleSettings: PropTypes.func.isRequired,
   currentPage: PropTypes.string.isRequired,
-  getLocaleText: PropTypes.func.isRequired,
+  getAddressNavigatorParams: PropTypes.func.isRequired,
   breadcrumb: PropTypes.arrayOf(PropTypes.any).isRequired,
   smallScreen: PropTypes.bool.isRequired,
   changeTheme: PropTypes.func.isRequired,
