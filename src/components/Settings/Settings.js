@@ -35,6 +35,7 @@ class Settings extends React.Component {
 
   constructor(props) {
     super(props);
+    this.dialogRef = React.createRef();
     this.state = {
       alert: false,
       currentSettings: {},
@@ -145,6 +146,18 @@ class Settings extends React.Component {
     this.setState({
       alert,
     });
+  }
+
+  focusToFirstElement = () => {
+    const dialog = this.dialogRef.current;
+    const buttons = dialog.querySelectorAll('button');
+    buttons[0].focus();
+  }
+
+  focusToLastElement = () => {
+    const dialog = this.dialogRef.current;
+    const buttons = dialog.querySelectorAll('button');
+    buttons[buttons.length - 1].focus();
   }
 
   /**
@@ -614,12 +627,14 @@ class Settings extends React.Component {
         <Container className={`${classes.confirmationButtonContainer} ${classes.right}`}>
           <SMButton
             small
+            role="button"
             messageID="general.save"
             onClick={() => this.saveSettings()}
             color="primary"
           />
           <SMButton
             small
+            role="button"
             messageID="general.cancel"
             onClick={() => this.resetCurrentSelections()}
           />
@@ -678,8 +693,11 @@ class Settings extends React.Component {
     }
 
     return (
-      <div id="SettingsContainer" className={`${classes.container}`}>
-        <TitleBar className="SettingsTitle" titleComponent="h2" title={<FormattedMessage id={`settings.${settingsPage}.long`} />} />
+      <div id="SettingsContainer" className={`${classes.container}`} ref={this.dialogRef}>
+        {/* Empty element that makes keyboard focus loop in dialog */}
+        <Typography variant="srOnly" aria-hidden tabIndex="0" onFocus={() => this.focusToLastElement()} />
+
+        <TitleBar id="SettingsTitle" className="SettingsTitle" titleComponent="h2" title={<FormattedMessage id={`settings.${settingsPage}.long`} />} />
         <>
           {showAlert && (
             this.renderSaveAlert()
@@ -693,6 +711,7 @@ class Settings extends React.Component {
           <Container className={`${classes.confirmationButtonContainer}`}>
             <SMButton
               small
+              role="button"
               disabled={!settingsHaveChanged}
               onClick={() => this.saveSettings()}
               messageID="general.save.changes"
@@ -714,6 +733,8 @@ class Settings extends React.Component {
             )}
           </Typography>
         </>
+        {/* Empty element that makes keyboard focus loop in dialog */}
+        <Typography variant="srOnly" aria-hidden tabIndex="0" onFocus={() => this.focusToFirstElement()} />
       </div>
     );
   }
