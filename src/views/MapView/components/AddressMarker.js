@@ -4,9 +4,16 @@ import { withStyles, Typography } from '@material-ui/core';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import styles from '../styles';
+import { getLocaleString } from '../../../redux/selectors/locale';
+import { getAddressText } from '../../../utils/address';
 
 const AddressMarker = ({
-  Marker, Tooltip, address, classes, embeded,
+  Marker,
+  Tooltip,
+  address,
+  classes,
+  embeded,
+  getLocaleText,
 }) => {
   if (!address || !address.addressCoordinates) {
     return null;
@@ -21,10 +28,13 @@ const AddressMarker = ({
     iconAnchor: [22, 42],
   });
 
+  const { addressCoordinates, addressData } = address;
+  const tooltipText = getAddressText(addressData, getLocaleText);
+
   return (
     <Marker
       className="addressMarker"
-      position={[address.addressCoordinates[1], address.addressCoordinates[0]]}
+      position={[addressCoordinates[1], addressCoordinates[0]]}
       icon={addressIcon}
       keyboard={false}
     >
@@ -38,7 +48,7 @@ const AddressMarker = ({
             permanent
           >
             <Typography variant="body2">
-              {address.addressTitle}
+              {tooltipText}
             </Typography>
           </Tooltip>
         )
@@ -53,6 +63,7 @@ AddressMarker.propTypes = {
   address: PropTypes.objectOf(PropTypes.any).isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   embeded: PropTypes.bool,
+  getLocaleText: PropTypes.func.isRequired,
 };
 
 AddressMarker.defaultProps = {
@@ -63,8 +74,10 @@ AddressMarker.defaultProps = {
 // Listen to redux state
 const mapStateToProps = (state) => {
   const { address } = state;
+  const getLocaleText = textObject => getLocaleString(state, textObject);
   return {
     address,
+    getLocaleText,
   };
 };
 
