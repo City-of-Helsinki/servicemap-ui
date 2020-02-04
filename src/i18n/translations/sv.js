@@ -138,7 +138,7 @@ export default {
   'home.buttons.instructions': 'Tips för användning av servicekartan',
   'home.example.search': 'Sök med sökord',
   'home.message': 'Hälsningar av servicekartans utvecklare',
-  'home.send.feedback': 'Skicka respons',
+  'home.send.feedback': 'Skicka respons', // TODO: Translate again lähetä palautetta => anna palautetta
   'home.old.link': 'Gamla Servicekartan',
 
   // Location
