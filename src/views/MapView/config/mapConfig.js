@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import config from '../../../../config';
-// import { isRetina } from '../../../utils';
+import { isRetina } from '../../../utils';
 
 // The default maximum bounds of the map
 const defaultMapBounds = {
@@ -112,23 +112,19 @@ const mapTypes = {
   // TODO: Add "accessible_map"
 };
 
-const getMapOptions = (type /* , locale */) => {
+const getMapOptions = (type, locale) => {
   const mapOptions = mapTypes[type] || mapTypes.servicemap;
   // For servicemap, use retina and/or swedish url if needed
   if (type === 'servicemap') {
-    const stylePath = 'hel-osm-bright';
-    // Use this when we get the swedish version of new servicemap style
-    // if (isRetina) {
-    //   if (locale === 'sv') {
-    //     stylePath = 'osm-sm-sv-hq/etrs_tm35fin_hq';
-    //   } else {
-    //     stylePath = 'osm-sm-hq/etrs_tm35fin_hq';
-    //   }
-    // } else if (locale === 'sv') {
-    //   stylePath = 'osm-sm-sv/etrs_tm35fin';
-    // }
+    let suffix = '';
+    if (isRetina) {
+      suffix += '@2x';
+    }
+    if (locale === 'sv') {
+      suffix += '@sv';
+    }
     // Set new url for servicemap
-    mapOptions.url = `https://tiles.hel.ninja/styles/${stylePath}/{z}/{x}/{y}.png`;
+    mapOptions.url = `https://tiles.hel.ninja/styles/hel-osm-bright/{z}/{x}/{y}${suffix}.png`;
   }
 
   return mapOptions;
