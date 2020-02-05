@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import styles from '../styles';
 import fetchAddress from '../utils/fetchAddress';
+import { getAddressText } from '../../../utils/address';
 
 const AddressPopup = ({
   Popup, classes, mapClickPoint, getAddressNavigatorParams, getLocaleText, map, navigator,
@@ -15,6 +16,8 @@ const AddressPopup = ({
       .then(data => setAddress(data));
   }, []);
 
+  const popupText = address ? `${getAddressText(address, getLocaleText)}` : '';
+
   return (
     <Popup className="popup" closeButton={false} autoPan={false} position={[mapClickPoint.lat, mapClickPoint.lng]}>
       {address ? (
@@ -22,7 +25,7 @@ const AddressPopup = ({
           className={classes.addressPopup}
         >
           <Typography variant="body2">
-            {`${getLocaleText(address.street.name)} ${address.number}`}
+            {popupText}
           </Typography>
           <ButtonBase
             className={classes.addressPopupButton}
