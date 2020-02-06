@@ -14,6 +14,11 @@ export const fetchUnits = (
   abortController = null,
 ) => async (dispatch, getState)
 => {
+  const { units, user } = getState();
+  const { locale } = user;
+  if (units.isFetching) {
+    throw Error('Unable to fetch units because previous fetch is still active');
+  }
   const stringifySearchQuery = (data) => {
     try {
       const search = Object.keys(data).map(key => (`${key}:${data[key]}`));
@@ -24,8 +29,6 @@ export const fetchUnits = (
   };
   const searchQuery = options.q ? options.q : stringifySearchQuery(options);
   const onStart = () => dispatch(isFetching(searchQuery));
-  const { user } = getState();
-  const { locale } = user;
 
   const onSuccess = (results) => {
     if (options.q) {
