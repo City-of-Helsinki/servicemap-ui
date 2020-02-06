@@ -25,6 +25,7 @@ import calculateDistance from '../../utils/calculateDistance';
 import { AddressIcon } from '../../components/SMIcon';
 import FeedbackView from '../FeedbackView';
 import SocialMediaLinks from './components/SocialMediaLinks';
+import UnitLinks from './components/UnitLinks';
 
 const UnitView = (props) => {
   const {
@@ -156,6 +157,7 @@ const UnitView = (props) => {
         <SocialMediaLinks unit={unit} getLocaleText={getLocaleText} />
         <Highlights unit={unit} getLocaleText={getLocaleText} />
         <Description unit={unit} getLocaleText={getLocaleText} />
+        <UnitLinks unit={unit} />
         <ElectronicServices unit={unit} />
         <DesktopComponent>
           <SMButton
