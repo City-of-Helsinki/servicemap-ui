@@ -1,7 +1,13 @@
 /* eslint-disable camelcase */
 import { parseSearchParams } from '../../utils';
 
-export const searchParamData = (location, redirectNode, includeService = false) => {
+
+export const reverseBBoxCoordinates = (bbox) => {
+  const bboxParts = bbox.split(',');
+  return [bboxParts[1], bboxParts[0], bboxParts[3], bboxParts[2]];
+};
+
+export const searchParamFetchOptions = (location, redirectNode, includeService = false) => {
   const searchParams = parseSearchParams(location.search);
 
   const {
@@ -16,22 +22,10 @@ export const searchParamData = (location, redirectNode, includeService = false) 
   } = searchParams;
 
   const options = {};
+
   if (q) {
     options.q = q;
   } else {
-    // Handle bbox and level
-    if (bbox) {
-      const nLevel = level || 'customer_service'; // Taken from old servicemap
-      if (nLevel === 'none') {
-        return null;
-      }
-      options.level = nLevel;
-      // Swapping latLngs
-      const bboxParts = bbox.split(',');
-      options.bbox = [bboxParts[1], bboxParts[0], bboxParts[3], bboxParts[2]].join(',');
-      options.bbox_srid = 4326;
-      return options;
-    }
     // Parse service
     if (includeService && service) {
       options.service = service;
@@ -72,6 +66,22 @@ export const searchParamData = (location, redirectNode, includeService = false) 
         options.service_node = serviceNodes.join(',');
       }
     }
+
+    if (options.service || options.service_node) {
+      return options;
+    }
+
+    // Handle bbox and level
+    if (bbox) {
+      const nLevel = level || 'customer_service'; // Taken from old servicemap
+      if (nLevel === 'none') {
+        return null;
+      }
+      options.level = nLevel;
+      // Swapping latLngs
+      options.bbox = reverseBBoxCoordinates(bbox).join(',');
+      options.bbox_srid = 4326;
+    }
   }
 
   // Parse municipality
@@ -79,11 +89,5 @@ export const searchParamData = (location, redirectNode, includeService = false) 
     options.municipality = municipality || city;
   }
 
-
   return options;
-};
-
-export const reverseBBoxCoordinates = (bbox) => {
-  const bboxParts = bbox.split(',');
-  return [bboxParts[1], bboxParts[0], bboxParts[3], bboxParts[2]];
 };

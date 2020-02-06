@@ -4,7 +4,8 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchUnits } from '../../redux/actions/unit';
 import { fitBbox } from '../../views/MapView/utils/mapActions';
-import { reverseBBoxCoordinates, searchParamData } from './helpers';
+import { searchParamFetchOptions } from './helpers';
+import { getSearchParam } from '../../utils';
 
 const DataFetcher = ({
   currentPage,
@@ -20,16 +21,20 @@ const DataFetcher = ({
       return false;
     }
 
-    const options = searchParamData(location);
-    if (options.q || options.service_node || options.service) {
-      return false;
+    const bbox = getSearchParam(location, 'bbox');
+    if (bbox) {
+      fitBbox(map, bbox.split(','));
     }
-    if (!options.bbox || !options.bbox_srid || !options.level) {
+
+    const options = searchParamFetchOptions(location, null, true);
+    if (
+      !options.bbox || !options.bbox_srid || !options.level
+      || options.q || options.service_node || options.service
+    ) {
       return false;
     }
 
     fetchUnits(options);
-    fitBbox(map, reverseBBoxCoordinates(options.bbox));
     return true;
   };
 
