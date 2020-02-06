@@ -169,6 +169,7 @@ export default {
   'unit.plural': 'Units',
 
   'unit.contact.info': 'Contact information',
+  'unit.links': 'Web sites', // TODO: verify
   'unit.eServices': 'Electronic services',
   'unit.reservations': 'Reservable objects',
   'unit.events': 'Events',
