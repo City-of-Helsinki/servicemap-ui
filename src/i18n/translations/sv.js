@@ -169,6 +169,7 @@ export default {
   'unit.plural': 'Verksamhetsställen',
 
   'unit.contact.info': 'Kontaktuppgifter',
+  'unit.links': 'På webben', // TODO: verify
   'unit.eServices': 'E-tjänster',
   'unit.reservations': 'Objekt som kan reserveras',
   'unit.events': 'Evenemang',
