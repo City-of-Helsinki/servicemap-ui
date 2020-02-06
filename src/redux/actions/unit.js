@@ -11,7 +11,6 @@ const {
 export const fetchUnits = (
   // searchQuery = null,
   options = null,
-  searchType = null,
   abortController = null,
 ) => async (dispatch, getState)
 => {
