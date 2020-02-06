@@ -19,6 +19,7 @@ import { changeLocaleAction } from './redux/actions/user';
 import DefaultLayout from './layouts';
 import EmbedLayout from './layouts/EmbedLayout';
 import Navigator from './components/Navigator';
+import DataFetcher from './components/DataFetchers/DataFetcher';
 
 class App extends React.Component {
   constructor(props) {
@@ -57,6 +58,7 @@ class App extends React.Component {
             <Route render={() => <DefaultLayout i18n={i18n} />} />
           </Switch>
           <Navigator />
+          <DataFetcher />
         </div>
       </IntlProvider>
     );
