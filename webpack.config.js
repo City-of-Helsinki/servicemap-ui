@@ -11,12 +11,12 @@ const js = {
   
   test: /\.(js|mjs|jsx|ts|tsx)$/,
   exclude: /node_modules/,
-  loader: require.resolve('babel-loader'),
+  loader: 'babel-loader',
   options: {
     customize: require.resolve(
       'babel-preset-react-app/webpack-overrides'
     ),
-    
+
     plugins: [
       [
         require.resolve('babel-plugin-named-asset-import'),
