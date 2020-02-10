@@ -636,13 +636,6 @@ class Settings extends React.Component {
     return (
       <Container aria-hidden="true" className={containerClasses} paper>
         <Typography color="inherit" className={typographyClasses}><FormattedMessage id="general.save.changes.done" /></Typography>
-        <SMButton
-          small
-          messageID="general.close"
-          onClick={() => this.setAlert(false)}
-          className={classes.right}
-          color="secondary"
-        />
       </Container>
     );
   }
