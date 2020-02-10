@@ -26,11 +26,6 @@ export default theme => ({
     padding: '0 8px',
     marginBottom: '2px',
   },
-  cssFocused: {
-    outlineStyle: 'solid',
-    outlineColor: 'blue',
-    outlineWidth: 2,
-  },
   title: {
     flex: '1 1 auto',
     textOverflow: 'ellipsis',

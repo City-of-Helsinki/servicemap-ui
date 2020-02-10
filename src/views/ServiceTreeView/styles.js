@@ -12,7 +12,7 @@ export default theme => ({
     paddingTop: 23,
     paddingLeft: 21,
     paddingRight: 21,
-    paddingBottom: 16,
+    paddingBottom: theme.spacing.unitDouble,
   },
   mainContent: {
     textAlign: 'left',
@@ -49,7 +49,7 @@ export default theme => ({
   },
   iconRight: {
     marginLeft: 'auto',
-    marginRight: 16,
+    marginRight: theme.spacing.unitDouble,
     fontSize: 30,
   },
   checkBox: {
@@ -74,6 +74,9 @@ export default theme => ({
     width: 'inherit',
     position: 'absolute',
   },
+  checkboxPadding: {
+    padding: theme.spacing.unitHalf,
+  },
   outerLines: {
     height: '100%',
     width: 26,
@@ -81,17 +84,18 @@ export default theme => ({
   },
   listClickArea: {
     width: '100%',
-    paddingTop: 8,
-    paddingBottom: 8,
+    paddingTop: theme.spacing.unit,
+    paddingBottom: theme.spacing.unit,
+    marginRight: theme.spacing.unitHalf,
   },
   searchButton: {
-    marginTop: 16,
+    marginTop: theme.spacing.unitDouble,
     marginBottom: 10,
     marginLeft: 21,
   },
   seleectionList: {
-    marginTop: 8,
-    marginBottom: 8,
+    marginTop: theme.spacing.unit,
+    marginBottom: theme.spacing.unit,
   },
   selectionText: {
     fontSize: 12,

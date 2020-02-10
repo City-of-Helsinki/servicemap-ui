@@ -46,4 +46,8 @@ export default theme => ({
   text: {
     alignSelf: 'center',
   },
+  itemFocus: {
+    outline: '2px solid transparent',
+    boxShadow: `0 0 0 4px ${theme.palette.focusBorder}`,
+  },
 });

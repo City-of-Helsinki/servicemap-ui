@@ -19,6 +19,7 @@ const SimpleListItem = (props) => {
         onClick={button || link ? handleItemClick : null}
         classes={{
           root: classes.listItem,
+          selected: classes.itemFocus,
         }}
         selected={selected}
       >
