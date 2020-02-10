@@ -37,7 +37,19 @@ const focusDistrict = (map, coordinates) => {
   map.fitBounds(coordinates);
 };
 
+const fitBbox = (map, bbox) => {
+  if (!map || !bbox || bbox.length !== 4) {
+    return;
+  }
+  const L = require('leaflet');
+  const sw = L.latLng(bbox.slice(0, 2));
+  const ne = L.latLng(bbox.slice(2, 4));
+  const bounds = L.latLngBounds(sw, ne);
+  map.fitBounds(bounds);
+};
+
 export {
+  fitBbox,
   fitUnitsToMap,
   focusUnit,
   focusDistrict,
