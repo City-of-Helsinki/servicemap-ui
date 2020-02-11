@@ -177,7 +177,7 @@ export const drawMarkerIcon = (contrast = false) => {
   // Generate marker icon
   const markerIcon = L.icon({
     iconUrl: contrast ? berryIconContrast : berryIcon,
-    iconSize: [25, 25],
+    iconSize: [30, 30],
     iconAnchor: [13, 25],
   });
 
