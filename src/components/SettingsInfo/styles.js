@@ -19,6 +19,9 @@ export default theme => ({
     fontSize: 11,
     lineHeight: '13px',
   },
+  settingsLink: {
+    justifyContent: 'left',
+  },
   title: {
     fontWeight: 'bold',
     padding: `0 ${theme.spacing.unitDouble}px`,
