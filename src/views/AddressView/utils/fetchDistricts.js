@@ -55,18 +55,6 @@ const fetchDistricts = async (lnglat) => {
     });
   }
 
-  // Change district coordinates from lnglat to latlng before returning data
-  const data = districtData.results;
-  const districtList = data;
-  for (let i = 0; i < data.length; i += 1) {
-    const L = require('leaflet');
-    const geoJSONBounds = [];
-    data[i].boundary.coordinates[0][0].forEach((coordinate) => {
-      const geoJSONCoord = L.GeoJSON.coordsToLatLng(coordinate);
-      geoJSONBounds.push([geoJSONCoord.lat, geoJSONCoord.lng]);
-    });
-    districtList[i].boundary.coordinates[0][0] = geoJSONBounds;
-  }
 
   // Organize district to lists depending on district type
   const geographical = [];
@@ -74,7 +62,7 @@ const fetchDistricts = async (lnglat) => {
   const health = [];
   const education = [];
 
-  districtList.forEach((district) => {
+  districtData.results.forEach((district) => {
     switch (district.type) {
       case 'neighborhood': case 'postcode_area':
         geographical.push(district);

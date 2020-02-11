@@ -1,3 +1,5 @@
+import swapCoordinates from './swapCoordinates';
+
 /* eslint-disable global-require, no-underscore-dangle */
 
 const fitUnitsToMap = (units, map) => {
@@ -34,7 +36,8 @@ const focusUnit = (map, coordinates) => {
 };
 
 const focusDistrict = (map, coordinates) => {
-  map.fitBounds(coordinates);
+  const bounds = coordinates.map(area => swapCoordinates(area));
+  map.fitBounds(bounds);
 };
 
 const fitBbox = (map, bbox) => {

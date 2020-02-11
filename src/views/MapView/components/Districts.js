@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles, Typography } from '@material-ui/core';
 import { drawMarkerIcon } from '../utils/drawIcon';
 import styles from '../styles';
+import swapCoordinates from '../utils/swapCoordinates';
 
 const Districts = ({
   Polygon,
@@ -72,14 +73,15 @@ const Districts = ({
       return null;
     }
 
-    const districtPositions = highlightedDistrict
-      .map(district => (district.boundary.coordinates[0]));
+    const areas = highlightedDistrict[0].boundary.coordinates.map(
+      coords => swapCoordinates(coords),
+    );
 
     return (
       <Polygon
         positions={[
           [mapOptions.polygonBounds],
-          [districtPositions],
+          [areas],
         ]}
         color="#ff8400"
         fillColor="#000"
