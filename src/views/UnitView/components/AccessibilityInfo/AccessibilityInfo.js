@@ -152,7 +152,7 @@ class AccessibilityInfo extends React.Component {
                   groupSentences = sentences[key];
                 }
 
-                if (groupSentences && groupSentences.length > 1) {
+                if (groupSentences && groupSentences.length > 0) {
                   return (
                     <ListItem key={title}>
                       <ListItemText>
