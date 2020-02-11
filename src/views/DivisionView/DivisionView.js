@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import fetchDivisionDistrict from './fetchDivisionDistrict';
 import { focusDistrict } from '../MapView/utils/mapActions';
@@ -39,16 +39,16 @@ const DivisionView = ({
       fetchUnits(options);
       fetchDivisionDistrict(options.division)
         .then((data) => {
-          setHighlightedDistrict(data);
+          setHighlightedDistrict(data[0]);
         });
     }
   }, []);
 
   useEffect(() => {
-    if (!highlightedDistrict || !highlightedDistrict.length) {
+    if (!highlightedDistrict) {
       return;
     }
-    const coordinates = highlightedDistrict.map(district => (district.boundary.coordinates));
+    const { coordinates } = highlightedDistrict.boundary;
     if (map && coordinates) {
       focusDistrict(map, coordinates);
     }
@@ -63,7 +63,7 @@ export default DivisionView;
 // Typechecking
 DivisionView.propTypes = {
   fetchUnits: PropTypes.func.isRequired,
-  highlightedDistrict: PropTypes.arrayOf(PropTypes.any),
+  highlightedDistrict: PropTypes.objectOf(PropTypes.any),
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   map: PropTypes.objectOf(PropTypes.any),
   match: PropTypes.objectOf(PropTypes.any).isRequired,

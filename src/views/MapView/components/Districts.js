@@ -18,24 +18,24 @@ const Districts = ({
   navigator,
 }) => {
   const renderDistrictMarkers = () => {
-    if (highlightedDistrict && highlightedDistrict.length) {
-      return highlightedDistrict.map(district => (
-        <React.Fragment key={district.id}>
-          {district && district.unit && district.unit.location ? (
+    if (highlightedDistrict) {
+      return (
+        <React.Fragment key={highlightedDistrict.id}>
+          {highlightedDistrict && highlightedDistrict.unit && highlightedDistrict.unit.location ? (
             <>
               <Marker
                 position={[
-                  district.unit.location.coordinates[1],
-                  district.unit.location.coordinates[0],
+                  highlightedDistrict.unit.location.coordinates[1],
+                  highlightedDistrict.unit.location.coordinates[0],
                 ]}
-                icon={drawMarkerIcon(district.unit, settings)}
+                icon={drawMarkerIcon(highlightedDistrict.unit, settings)}
                 keyboard={false}
                 onClick={() => {
                   if (navigator) {
                     if (mobile) {
-                      navigator.replace('unit', { id: district.unit.id });
+                      navigator.replace('unit', { id: highlightedDistrict.unit.id });
                     } else {
-                      navigator.push('unit', { id: district.unit.id });
+                      navigator.push('unit', { id: highlightedDistrict.unit.id });
                     }
                   }
                 }}
@@ -47,15 +47,15 @@ const Districts = ({
                 closeButton={false}
                 autoPan={false}
                 position={[
-                  district.unit.location.coordinates[1],
-                  district.unit.location.coordinates[0],
+                  highlightedDistrict.unit.location.coordinates[1],
+                  highlightedDistrict.unit.location.coordinates[0],
                 ]}
               >
                 <Typography
                   noWrap
                   className={classes.popup}
                 >
-                  {getLocaleText(district.unit.name)}
+                  {getLocaleText(highlightedDistrict.unit.name)}
                 </Typography>
               </Popup>
             </>
@@ -63,17 +63,17 @@ const Districts = ({
             : null
           }
         </React.Fragment>
-      ));
+      );
     }
     return null;
   };
 
   const renderDistricts = () => {
-    if (!highlightedDistrict || !highlightedDistrict.length) {
+    if (!highlightedDistrict) {
       return null;
     }
 
-    const areas = highlightedDistrict[0].boundary.coordinates.map(
+    const areas = highlightedDistrict.boundary.coordinates.map(
       coords => swapCoordinates(coords),
     );
 
@@ -106,7 +106,7 @@ Districts.propTypes = {
   Polygon: PropTypes.objectOf(PropTypes.any).isRequired,
   Marker: PropTypes.objectOf(PropTypes.any).isRequired,
   Popup: PropTypes.objectOf(PropTypes.any).isRequired,
-  highlightedDistrict: PropTypes.arrayOf(PropTypes.any),
+  highlightedDistrict: PropTypes.objectOf(PropTypes.any),
   getLocaleText: PropTypes.func.isRequired,
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
   mapOptions: PropTypes.objectOf(PropTypes.any).isRequired,
