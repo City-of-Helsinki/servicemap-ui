@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles, Typography } from '@material-ui/core';
 import { drawMarkerIcon } from '../utils/drawIcon';
 import styles from '../styles';
+import swapCoordinates from '../utils/swapCoordinates';
 
 const Districts = ({
   Polygon,
@@ -17,24 +18,24 @@ const Districts = ({
   navigator,
 }) => {
   const renderDistrictMarkers = () => {
-    if (highlightedDistrict && highlightedDistrict.length) {
-      return highlightedDistrict.map(district => (
-        <React.Fragment key={district.id}>
-          {district && district.unit && district.unit.location ? (
+    if (highlightedDistrict) {
+      return (
+        <React.Fragment key={highlightedDistrict.id}>
+          {highlightedDistrict && highlightedDistrict.unit && highlightedDistrict.unit.location ? (
             <>
               <Marker
                 position={[
-                  district.unit.location.coordinates[1],
-                  district.unit.location.coordinates[0],
+                  highlightedDistrict.unit.location.coordinates[1],
+                  highlightedDistrict.unit.location.coordinates[0],
                 ]}
-                icon={drawMarkerIcon(district.unit, settings)}
+                icon={drawMarkerIcon(highlightedDistrict.unit, settings)}
                 keyboard={false}
                 onClick={() => {
                   if (navigator) {
                     if (mobile) {
-                      navigator.replace('unit', { id: district.unit.id });
+                      navigator.replace('unit', { id: highlightedDistrict.unit.id });
                     } else {
-                      navigator.push('unit', { id: district.unit.id });
+                      navigator.push('unit', { id: highlightedDistrict.unit.id });
                     }
                   }
                 }}
@@ -42,19 +43,19 @@ const Districts = ({
               {/* Popup for the district unit name */}
               <Popup
                 className="popup"
-                offset={[-1, -29]}
+                offset={[-0.5, -20]}
                 closeButton={false}
                 autoPan={false}
                 position={[
-                  district.unit.location.coordinates[1],
-                  district.unit.location.coordinates[0],
+                  highlightedDistrict.unit.location.coordinates[1],
+                  highlightedDistrict.unit.location.coordinates[0],
                 ]}
               >
                 <Typography
                   noWrap
                   className={classes.popup}
                 >
-                  {getLocaleText(district.unit.name)}
+                  {getLocaleText(highlightedDistrict.unit.name)}
                 </Typography>
               </Popup>
             </>
@@ -62,24 +63,25 @@ const Districts = ({
             : null
           }
         </React.Fragment>
-      ));
+      );
     }
     return null;
   };
 
   const renderDistricts = () => {
-    if (!highlightedDistrict || !highlightedDistrict.length) {
+    if (!highlightedDistrict) {
       return null;
     }
 
-    const districtPositions = highlightedDistrict
-      .map(district => (district.boundary.coordinates[0]));
+    const areas = highlightedDistrict.boundary.coordinates.map(
+      coords => swapCoordinates(coords),
+    );
 
     return (
       <Polygon
         positions={[
           [mapOptions.polygonBounds],
-          [districtPositions],
+          [areas],
         ]}
         color="#ff8400"
         fillColor="#000"
@@ -104,7 +106,7 @@ Districts.propTypes = {
   Polygon: PropTypes.objectOf(PropTypes.any).isRequired,
   Marker: PropTypes.objectOf(PropTypes.any).isRequired,
   Popup: PropTypes.objectOf(PropTypes.any).isRequired,
-  highlightedDistrict: PropTypes.arrayOf(PropTypes.any),
+  highlightedDistrict: PropTypes.objectOf(PropTypes.any),
   getLocaleText: PropTypes.func.isRequired,
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
   mapOptions: PropTypes.objectOf(PropTypes.any).isRequired,

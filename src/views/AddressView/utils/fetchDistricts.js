@@ -1,4 +1,4 @@
-import { districtFetch, unitsFetch } from '../../../utils/fetch';
+import { districtFetch } from '../../../utils/fetch';
 
 /* eslint-disable global-require */
 const fetchDistricts = async (lnglat) => {
@@ -25,6 +25,7 @@ const fetchDistricts = async (lnglat) => {
     page_size: 80,
     type: `${districts.join(',')}`,
     geometry: true,
+    unit_include: 'name,location',
   };
   const districtData = await districtFetch(options);
 
@@ -36,37 +37,6 @@ const fetchDistricts = async (lnglat) => {
     }
   });
 
-  // Fetch the unit data with the received id's
-  if (idList.length > 0) {
-    const unitOptions = {
-      id: idList.join(','),
-      only: 'name,location',
-      page_size: 50,
-    };
-    const unitData = await unitsFetch(unitOptions);
-
-    districtData.results.forEach((district) => {
-      unitData.results.forEach((unit) => {
-        if (unit.id === parseInt(district.service_point_id, 10)) {
-        // Combine the unit data to the correct district
-          district.unit = unit; // eslint-disable-line no-param-reassign
-        }
-      });
-    });
-  }
-
-  // Change district coordinates from lnglat to latlng before returning data
-  const data = districtData.results;
-  const districtList = data;
-  for (let i = 0; i < data.length; i += 1) {
-    const L = require('leaflet');
-    const geoJSONBounds = [];
-    data[i].boundary.coordinates[0][0].forEach((coordinate) => {
-      const geoJSONCoord = L.GeoJSON.coordsToLatLng(coordinate);
-      geoJSONBounds.push([geoJSONCoord.lat, geoJSONCoord.lng]);
-    });
-    districtList[i].boundary.coordinates[0][0] = geoJSONBounds;
-  }
 
   // Organize district to lists depending on district type
   const geographical = [];
@@ -74,7 +44,7 @@ const fetchDistricts = async (lnglat) => {
   const health = [];
   const education = [];
 
-  districtList.forEach((district) => {
+  districtData.results.forEach((district) => {
     switch (district.type) {
       case 'neighborhood': case 'postcode_area':
         geographical.push(district);
