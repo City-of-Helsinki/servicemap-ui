@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { intlShape } from 'react-intl';
-import { Typography, withStyles } from '@material-ui/core';
-import { keyboardHandler } from '../../../utils';
+import { Typography, withStyles, ButtonBase } from '@material-ui/core';
 import styles from './styles';
 
 // Page number element
@@ -12,27 +11,30 @@ const PageElement = ({
   const newClassName = `${className} ${classes.pageItem} ${isActive ? classes.pageElementActive : classes.pageElement}`;
   return (
     <li>
-      <Typography
-        variant="subtitle1"
-        component="p"
-        className={newClassName}
-        role={!isActive ? 'link' : null}
-        onClick={!isActive ? onClick : null}
-        onKeyPress={!isActive ? keyboardHandler(onClick, ['space', 'enter']) : null}
+      <ButtonBase
+        role="link"
+        disabled={isActive}
+        onClick={onClick}
         tabIndex={isActive ? null : '0'}
-        {...rest}
       >
-        <Typography variant="srOnly">
-          {
+        <Typography
+          variant="subtitle1"
+          component="p"
+          className={newClassName}
+          {...rest}
+        >
+          <Typography variant="srOnly">
+            {
             isActive
               ? intl.formatMessage({ id: 'general.pagination.currentlyOpenedPage' }, { count: number })
               : intl.formatMessage({ id: 'general.pagination.openPage' }, { count: number })
           }
+          </Typography>
+          <span aria-hidden="true">
+            {number}
+          </span>
         </Typography>
-        <span aria-hidden="true">
-          {number}
-        </span>
-      </Typography>
+      </ButtonBase>
     </li>
   );
 };
