@@ -4,6 +4,7 @@ export default theme => ({
     padding: 0,
     width: '88%',
     maxWidth: 356,
+    border: `${theme.palette.detail.alpha} solid 0.5px`,
     '&:hover': {
       backgroundColor: theme.palette.primary.main,
       '& $text': {
@@ -20,9 +21,10 @@ export default theme => ({
       },
     },
   },
-  disabled: {
+  buttonDisabled: {
     pointerEvents: 'none',
     backgroundColor: '#efefef',
+    border: '#898989 solid 0.5px',
   },
   iconButton: {
     flex: '1 0 auto',
@@ -32,7 +34,6 @@ export default theme => ({
     paddingRight: theme.spacing.unitDouble,
     justifyContent: 'flex-start',
     textAlign: 'left',
-    border: `${theme.palette.detail.alpha} solid 0.5px`,
   },
   iconContainer: {
     display: 'flex',
@@ -57,10 +58,12 @@ export default theme => ({
     },
   },
   iconDisabled: {
-    backgroundColor: 'rgba(0, 0, 0, 0.26)',
+    backgroundColor: '#898989',
+    boxShadow: '0 4px 8px 0 #898989',
   },
   text: {
     textTransform: 'none',
     lineHeight: '18px',
+    color: 'rgba(0, 0, 0, 0.87)',
   },
 });
