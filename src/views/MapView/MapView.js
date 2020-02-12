@@ -213,7 +213,7 @@ const MapView = (props) => {
     const data = getMapUnits();
     // Clear layers if no units currently set for data
     // caused by while fetching
-    if (!data.units.length || highlightedDistrict) {
+    if (!data.units.length || (currentPage === 'address' && highlightedDistrict)) {
       markerCluster.clearLayers();
       return;
     }

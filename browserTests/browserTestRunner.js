@@ -12,6 +12,7 @@ createTestCafe('localhost')
       .src([
         'browserTests/accessibilityTest.js',
         'browserTests/browserTest.js',
+        'browserTests/divisionTest.js',
         'browserTests/searchTest.js',
         // 'browserTests/titleBarTest.js',
         'browserTests/unitPageTest.js',
