@@ -46,4 +46,9 @@ export default theme => ({
   icon: {
     color: 'inherit',
   },
+  elementFocus: {
+    '&:focus': {
+      boxShadow: '0 0 0 3px #fff',
+    },
+  },
 });
