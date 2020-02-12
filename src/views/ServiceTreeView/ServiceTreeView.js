@@ -74,6 +74,7 @@ const ServiceTreeView = (props) => {
     fetch(`${config.serviceMapAPI.root}/service_node/?parent=${service}&page=1&page_size=1000`)
       .then(response => response.json())
       .then((data) => {
+        data.results.sort((a, b) => a.id - b.id);
         setServices([...services, ...data.results]);
         // Expand the opened parent node once the child nodes have been fetched
         setOpened([...opened, service]);
