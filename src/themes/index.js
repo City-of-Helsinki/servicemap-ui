@@ -107,6 +107,7 @@ const typography = {
 const paletteDefault = {
   primary: {
     main: '#1964E6',
+    contrastText: '#fff',
   },
   secondary: {
     main: 'rgba(20,24,35,0.9)',
@@ -127,6 +128,10 @@ const paletteDefault = {
     main: '#1964E6',
     alpha: 'rgba(25,100,230,0.5)',
   },
+  disabled: {
+    main: '#efefef',
+    strong: '#898989',
+  },
   warning: '#AF0021',
 };
 
@@ -134,6 +139,7 @@ const paletteDefault = {
 const paletteDark = {
   primary: {
     main: '#353638',
+    contrastText: '#fff',
   },
   secondary: {
     main: 'rgba(20,24,35,0.9)',
@@ -153,6 +159,10 @@ const paletteDark = {
   detail: {
     main: '#585B63',
     alpha: 'rgba(88,91,99,0.5)',
+  },
+  disabled: {
+    main: '#efefef',
+    strong: '#898989',
   },
   warning: '#AF0021',
 };

@@ -8,10 +8,10 @@ export default theme => ({
     '&:hover': {
       backgroundColor: theme.palette.primary.main,
       '& $text': {
-        color: '#fff',
+        color: theme.palette.primary.contrastText,
       },
       '& $iconContainer': {
-        backgroundColor: '#fff',
+        backgroundColor: theme.palette.primary.contrastText,
       },
       '& $icon': {
         color: theme.palette.primary.main,
@@ -23,8 +23,8 @@ export default theme => ({
   },
   buttonDisabled: {
     pointerEvents: 'none',
-    backgroundColor: '#efefef',
-    border: '#898989 solid 0.5px',
+    backgroundColor: theme.palette.disabled.main,
+    border: `${theme.palette.disabled.strong} solid 0.5px`,
   },
   iconButton: {
     flex: '1 0 auto',
@@ -50,16 +50,16 @@ export default theme => ({
     boxShadow: `0 4px 8px 0 ${theme.palette.detail.alpha}`,
   },
   icon: {
-    color: '#fff',
+    color: theme.palette.primary.contrastText,
     height: 16,
     width: 16,
     '& g': {
-      fill: '#fff',
+      fill: theme.palette.primary.contrastText,
     },
   },
   iconDisabled: {
-    backgroundColor: '#898989',
-    boxShadow: '0 4px 8px 0 #898989',
+    backgroundColor: theme.palette.disabled.strong,
+    boxShadow: `0 4px 8px 0 ${theme.palette.disabled.strong}`,
   },
   text: {
     textTransform: 'none',
