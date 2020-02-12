@@ -1,4 +1,4 @@
-import { districtFetch, unitsFetch } from '../../../utils/fetch';
+import { districtFetch } from '../../../utils/fetch';
 
 /* eslint-disable global-require */
 const fetchDistricts = async (lnglat) => {
@@ -25,6 +25,7 @@ const fetchDistricts = async (lnglat) => {
     page_size: 80,
     type: `${districts.join(',')}`,
     geometry: true,
+    unit_include: 'name,location',
   };
   const districtData = await districtFetch(options);
 
@@ -35,25 +36,6 @@ const fetchDistricts = async (lnglat) => {
       idList.push(district.service_point_id);
     }
   });
-
-  // Fetch the unit data with the received id's
-  if (idList.length > 0) {
-    const unitOptions = {
-      id: idList.join(','),
-      only: 'name,location',
-      page_size: 50,
-    };
-    const unitData = await unitsFetch(unitOptions);
-
-    districtData.results.forEach((district) => {
-      unitData.results.forEach((unit) => {
-        if (unit.id === parseInt(district.service_point_id, 10)) {
-        // Combine the unit data to the correct district
-          district.unit = unit; // eslint-disable-line no-param-reassign
-        }
-      });
-    });
-  }
 
 
   // Organize district to lists depending on district type

@@ -43,7 +43,7 @@ const Districts = ({
               {/* Popup for the district unit name */}
               <Popup
                 className="popup"
-                offset={[-1, -29]}
+                offset={[-0.5, -20]}
                 closeButton={false}
                 autoPan={false}
                 position={[
