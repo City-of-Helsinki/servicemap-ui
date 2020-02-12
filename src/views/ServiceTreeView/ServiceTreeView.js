@@ -66,7 +66,10 @@ const ServiceTreeView = (props) => {
   const setInitialServices = () => {
     // Fetch initially shown service nodes when first entering the pag
     fetchRootNodes()
-      .then(data => setServices(data));
+      .then((data) => {
+        data.sort((a, b) => a.id - b.id);
+        setServices(data);
+      });
   };
 
   const fetchChildServices = async (service) => {
