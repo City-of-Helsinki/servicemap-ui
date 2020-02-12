@@ -56,7 +56,7 @@ const UnitView = (props) => {
     if (unit && map) {
       const { geometry, location } = unit;
       if (geometry && geometry.type === 'MultiLineString') {
-        focusDistrict(map, geometry.coordinates);
+        focusDistrict(map, [geometry.coordinates]);
       } else if (location) {
         focusUnit(map, location.coordinates);
       }
