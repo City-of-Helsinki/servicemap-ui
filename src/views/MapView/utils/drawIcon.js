@@ -1,4 +1,4 @@
-import berryIcon from '../../../assets/images/berryIcon.png';
+import berryIcon from '../../../assets/images/berryIcon.svg';
 import berryIconContrast from '../../../assets/images/berryIconContrast.svg';
 
 // TODO: If berries are not used anymore, clean unused functionalities here
