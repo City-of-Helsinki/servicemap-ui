@@ -233,7 +233,7 @@ const UnitView = (props) => {
     const distance = formatDistanceString(calculateDistance(unit, userLocation.coordinates));
 
     const TopArea = (
-      <div className={`${classes.topArea} sticky`}>
+      <div className={`${classes.topArea}`}>
         <DesktopComponent>
           <SearchBar margin />
           <TitleBar
