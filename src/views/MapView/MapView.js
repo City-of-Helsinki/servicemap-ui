@@ -65,7 +65,7 @@ const MapView = (props) => {
     let mapUnits = [];
     let unitGeometry = null;
 
-    if (currentPage === 'search' || currentPage === 'division') {
+    if (currentPage === 'home' || currentPage === 'search' || currentPage === 'division') {
       mapUnits = unitList;
     } else if (currentPage === 'address') {
       mapUnits = addressUnits;
@@ -213,7 +213,7 @@ const MapView = (props) => {
     const data = getMapUnits();
     // Clear layers if no units currently set for data
     // caused by while fetching
-    if (!data.units.length || highlightedDistrict) {
+    if (!data.units.length || (currentPage === 'address' && highlightedDistrict)) {
       markerCluster.clearLayers();
       return;
     }
@@ -349,7 +349,7 @@ MapView.propTypes = {
   currentPage: PropTypes.string.isRequired,
   getAddressNavigatorParams: PropTypes.func.isRequired,
   getLocaleText: PropTypes.func.isRequired,
-  highlightedDistrict: PropTypes.arrayOf(PropTypes.any),
+  highlightedDistrict: PropTypes.objectOf(PropTypes.any),
   highlightedUnit: PropTypes.objectOf(PropTypes.any),
   intl: intlShape.isRequired,
   isMobile: PropTypes.bool,

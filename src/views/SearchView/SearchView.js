@@ -11,7 +11,7 @@ import styles from './styles';
 import Loading from '../../components/Loading/Loading';
 import SearchBar from '../../components/SearchBar';
 import { fitUnitsToMap } from '../MapView/utils/mapActions';
-import { parseSearchParams } from '../../utils';
+import { parseSearchParams, getSearchParam } from '../../utils';
 import TabLists from '../../components/TabLists';
 
 import Container from '../../components/Container';
@@ -102,8 +102,8 @@ class SearchView extends React.Component {
           options.service_node = `${(options.service_node ? `${options.service_node},` : '')}${data.service_node}`;
 
           // Set serviceRedirect to wasHandled
-          this.setState({ serviceRedirect: { service: options.service_node, wasHandled: true } });
           fetchUnits(options);
+          this.setState({ serviceRedirect: { service: options.service_node, wasHandled: true } });
         }
       });
       return true;
@@ -141,6 +141,10 @@ class SearchView extends React.Component {
     if (q) {
       options.q = q;
     } else {
+      // Parse municipality
+      if (municipality || city) {
+        options.municipality = municipality || city;
+      }
       // Parse service
       if (includeService && service) {
         options.service = service;
@@ -183,11 +187,6 @@ class SearchView extends React.Component {
       }
     }
 
-    // Parse municipality
-    if (municipality || city) {
-      options.municipality = municipality || city;
-    }
-
 
     return options;
   }
@@ -213,6 +212,10 @@ class SearchView extends React.Component {
   }
 
   focusMap = (units, map) => {
+    const { location } = this.props;
+    if (getSearchParam(location, 'bbox')) {
+      return;
+    }
     if (map && map._layersMaxZoom) {
       fitUnitsToMap(units, map);
     }

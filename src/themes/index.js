@@ -143,6 +143,7 @@ const typography = {
 const paletteDefault = {
   primary: {
     main: '#1964E6',
+    highContrast: '#fff',
   },
   secondary: {
     main: 'rgba(20,24,35,0.9)',
@@ -171,6 +172,7 @@ const paletteDefault = {
 const paletteDark = {
   primary: {
     main: '#353638',
+    highContrast: '#fff',
   },
   secondary: {
     main: 'rgba(20,24,35,0.9)',

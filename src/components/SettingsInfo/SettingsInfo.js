@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Typography, Divider,
+  Typography, Divider, ButtonBase,
 } from '@material-ui/core';
 import { intlShape, FormattedMessage } from 'react-intl';
 import Container from '../Container';
@@ -65,19 +65,22 @@ const SettingsInfo = ({
       </Typography>
       <Divider aria-hidden="true" />
       <Container className={classes.container}>
-        <Typography
-          align="left"
+        <ButtonBase
           aria-labelledby="SettingsInfo-srTitle"
-          className={classes.title}
-          component="h3"
-          variant="body2"
-          onClick={() => toggleSettings('all')}
           role="link"
-          tabIndex="0"
+          onClick={() => toggleSettings('all')}
+          className={classes.settingsLink}
         >
-          <FormattedMessage id={titleText} />
-        </Typography>
-        <Typography id="SettingsInfo-srTitle" variant="srOnly">
+          <Typography
+            aria-hidden
+            align="left"
+            className={classes.title}
+            variant="body2"
+          >
+            <FormattedMessage id={titleText} />
+          </Typography>
+        </ButtonBase>
+        <Typography aria-hidden id="SettingsInfo-srTitle" variant="srOnly">
           <FormattedMessage id={titleText} />
           <FormattedMessage id="settings.aria.open" />
         </Typography>

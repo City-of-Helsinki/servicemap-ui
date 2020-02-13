@@ -9,7 +9,7 @@ export default theme => ({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    height: 57,
+    height: 40,
     top: 0,
     position: 'sticky',
     zIndex: theme.zIndex.forward,

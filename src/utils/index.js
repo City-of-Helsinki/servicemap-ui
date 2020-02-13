@@ -155,5 +155,11 @@ export const isSmallContentArea = () => {
   );
 };
 
+export const getSearchParam = (location, key) => {
+  const searchParams = parseSearchParams(location.search);
+  const param = searchParams[key];
+  return param;
+};
+
 
 export default isClient;
