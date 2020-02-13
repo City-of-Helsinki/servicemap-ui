@@ -42,6 +42,13 @@ const styles = () => ({
     justifyContent: 'center',
     marginRight: 25,
     flexShrink: 0,
+    '& svg': {
+      height: 16,
+      width: 16,
+    },
+    '& g': {
+      fill: '#fff',
+    },
   },
   drawerIconActive: {
     backgroundColor: '#fff',

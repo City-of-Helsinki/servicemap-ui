@@ -164,6 +164,10 @@ const paletteDefault = {
     main: '#1964E6',
     alpha: 'rgba(25,100,230,0.5)',
   },
+  disabled: {
+    main: '#efefef',
+    strong: '#898989',
+  },
   focusBorder: 'rgba(25, 100, 230, 0.8)',
   warning: '#AF0021',
 };
@@ -192,6 +196,10 @@ const paletteDark = {
   detail: {
     main: '#585B63',
     alpha: 'rgba(88,91,99,0.5)',
+  },
+  disabled: {
+    main: '#efefef',
+    strong: '#898989',
   },
   warning: '#AF0021',
   focusBorder: '#000',

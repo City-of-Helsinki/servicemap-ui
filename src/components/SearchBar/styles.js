@@ -3,7 +3,7 @@ export default theme => ({
     background: theme.palette.background.main,
   },
   root: {
-    color: theme.palette.primary.contrastText,
+    color: theme.palette.primary.highContrast,
     display: 'flex',
     flexDirection: 'column',
     padding: theme.spacing.unitTriple,
@@ -12,7 +12,7 @@ export default theme => ({
     flex: '0 0 auto',
   },
   mobileActiveRoot: {
-    color: theme.palette.primary.contrastText,
+    color: theme.palette.primary.highContrast,
     padding: `${theme.spacing.unit}px ${theme.spacing.unit}px`,
     paddingTop: 0,
     top: 0,

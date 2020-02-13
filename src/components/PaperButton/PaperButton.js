@@ -9,7 +9,7 @@ const PaperButton = ({
   const clonedIcon = icon ? React.cloneElement(icon, { className: classes.icon }) : null;
   const role = link ? 'link' : 'button';
   return (
-    <Container paper className={classes.container}>
+    <Container paper className={`${classes.container} ${disabled ? classes.buttonDisabled : ''}`}>
       <Button
         classes={{
           label: classes.iconButtonLabel,
@@ -23,13 +23,13 @@ const PaperButton = ({
           {clonedIcon}
         </div>
         <div>
-          <Typography variant="body2" className={`${classes.text} ${disabled ? classes.textDisabled : ''}`}>
+          <Typography variant="body2" className={classes.text}>
             {text}
           </Typography>
           {
             subtitle
             && (
-              <Typography variant="caption" className={`${classes.text} ${disabled ? classes.textDisabled : ''}`}>
+              <Typography variant="caption" className={classes.text}>
                 {subtitle}
               </Typography>
             )
