@@ -28,7 +28,7 @@ const Districts = ({
                   highlightedDistrict.unit.location.coordinates[1],
                   highlightedDistrict.unit.location.coordinates[0],
                 ]}
-                icon={drawMarkerIcon(highlightedDistrict.unit, settings)}
+                icon={drawMarkerIcon()}
                 keyboard={false}
                 onClick={() => {
                   if (navigator) {
