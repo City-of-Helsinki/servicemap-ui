@@ -32,7 +32,7 @@ const createMarkerClusterLayer = (
     const icon = divIcon({
       html: `<span aria-hidden="true" tabindex="-1">${cluster.getChildCount()}</span>`,
       className: classes.unitClusterMarker,
-      iconSize: point(40, 40, true),
+      iconSize: point(30, 30, true),
     });
     return icon;
   };
@@ -130,6 +130,7 @@ const renderUnitMarkers = (
   settings,
   getLocaleText,
   navigator,
+  theme,
   leaflet,
   data,
   classes,
@@ -142,6 +143,8 @@ const renderUnitMarkers = (
   if (!data || !marker || !clusterLayer || !classes) {
     return;
   }
+
+  const useContrast = theme === 'dark';
 
   // Handle unit markers
   const tooltipOptions = (unit, markerCount) => ({
@@ -162,7 +165,7 @@ const renderUnitMarkers = (
         const markerElem = marker(
           [unit.location.coordinates[1], unit.location.coordinates[0]],
           {
-            icon: drawMarkerIcon(unit, settings),
+            icon: drawMarkerIcon(useContrast),
             customUnitData: unit,
           },
         ).bindTooltip(
@@ -193,12 +196,13 @@ export const markerClusterConnector = (settings, getLocaleText, navigator) => (
 );
 
 // Connector (closure) function used to add state values in redux connect
-export const renderMarkerConnector = (settings, getLocaleText, navigator) => (
+export const renderMarkerConnector = (settings, getLocaleText, navigator, theme) => (
   leaflet, data, classes, clusterLayer, embeded,
 ) => renderUnitMarkers(
   settings,
   getLocaleText,
   navigator,
+  theme,
   leaflet,
   data,
   classes,

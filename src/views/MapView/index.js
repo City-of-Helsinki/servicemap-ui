@@ -27,11 +27,11 @@ const mapStateToProps = (state) => {
   const getLocaleText = textObject => getLocaleString(state, textObject);
   const { navigator } = state;
   const { addressUnits } = state.address;
-  const { locale } = state.user;
+  const { locale, theme } = state.user;
   const getAddressNavigatorParams = getAddressNavigatorParamsConnector(getLocaleText, locale);
   return {
     createMarkerClusterLayer: markerClusterConnector(settings, getLocaleText, navigator),
-    renderUnitMarkers: renderMarkerConnector(settings, getLocaleText, navigator),
+    renderUnitMarkers: renderMarkerConnector(settings, getLocaleText, navigator, theme),
     highlightedDistrict,
     highlightedUnit,
     getAddressNavigatorParams,
