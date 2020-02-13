@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { withStyles, Typography } from '@material-ui/core';
 import { drawMarkerIcon } from '../utils/drawIcon';
 import styles from '../styles';
@@ -11,12 +12,14 @@ const Districts = ({
   Popup,
   highlightedDistrict,
   getLocaleText,
-  settings,
+  theme,
   mapOptions,
   mobile,
   classes,
   navigator,
 }) => {
+  const useContrast = theme === 'dark';
+
   const renderDistrictMarkers = () => {
     if (highlightedDistrict) {
       return (
@@ -28,7 +31,7 @@ const Districts = ({
                   highlightedDistrict.unit.location.coordinates[1],
                   highlightedDistrict.unit.location.coordinates[0],
                 ]}
-                icon={drawMarkerIcon(highlightedDistrict.unit, settings)}
+                icon={drawMarkerIcon(useContrast)}
                 keyboard={false}
                 onClick={() => {
                   if (navigator) {
@@ -108,11 +111,11 @@ Districts.propTypes = {
   Popup: PropTypes.objectOf(PropTypes.any).isRequired,
   highlightedDistrict: PropTypes.objectOf(PropTypes.any),
   getLocaleText: PropTypes.func.isRequired,
-  settings: PropTypes.objectOf(PropTypes.any).isRequired,
   mapOptions: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any).isRequired,
   mobile: PropTypes.bool,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
+  theme: PropTypes.oneOf(['default', 'dark']).isRequired,
 };
 
 Districts.defaultProps = {
@@ -120,4 +123,8 @@ Districts.defaultProps = {
   mobile: false,
 };
 
-export default withStyles(styles)(Districts);
+const mapStateToProps = state => ({
+  theme: state.user.theme,
+});
+
+export default withStyles(styles)(connect(mapStateToProps)(Districts));
