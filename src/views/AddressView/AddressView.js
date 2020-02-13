@@ -216,6 +216,13 @@ const AddressView = (props) => {
   const title = getAddressText(addressData, getLocaleText);
   const tabs = [
     {
+      ariaLabel: intl.formatMessage({ id: 'address.districts' }),
+      component: renderDistrictsList(),
+      data: null,
+      itemsPerPage: null,
+      title: intl.formatMessage({ id: 'address.districts' }),
+    },
+    {
       ariaLabel: intl.formatMessage({ id: 'address.nearby' }),
       component: renderNearbyList(),
       data: units,
@@ -227,13 +234,6 @@ const AddressView = (props) => {
           setHighlightedDistrict(null);
         }
       },
-    },
-    {
-      ariaLabel: intl.formatMessage({ id: 'address.districts' }),
-      component: renderDistrictsList(),
-      data: null,
-      itemsPerPage: null,
-      title: intl.formatMessage({ id: 'address.districts' }),
     },
   ];
   return (
