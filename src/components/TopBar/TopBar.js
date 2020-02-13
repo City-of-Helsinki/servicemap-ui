@@ -51,22 +51,26 @@ class TopBar extends React.Component {
             }, 1);
           }}
         >
-          <Typography variant="subtitle1" className={classes.settingsButtonText}>
+          <Typography component="p" variant="subtitle1" className={classes.settingsButtonText}>
             <FormattedMessage id={`settings.${category.type}`} />
           </Typography>
           {category.type === 'mapSettings'
             ? (
-              <span className={classes.iconTextContainer}>
-                {getIcon(category.settings, { className: classes.smallIcon })}
-                <Typography>
-                  <FormattedMessage id={`settings.map.${category.settings}`} />
-                </Typography>
-              </span>
+              <NoSsr>
+                <span className={classes.iconTextContainer}>
+                  {getIcon(category.settings, { className: classes.smallIcon })}
+                  <Typography>
+                    <FormattedMessage id={`settings.map.${category.settings}`} />
+                  </Typography>
+                </span>
+              </NoSsr>
             )
             : (
-              <Typography>
-                <FormattedMessage id="settings.amount" values={{ count: category.settings.filter(i => (i !== false && i !== null)).length }} />
-              </Typography>
+              <NoSsr>
+                <Typography>
+                  <FormattedMessage id="settings.amount" values={{ count: category.settings.filter(i => (i !== false && i !== null)).length }} />
+                </Typography>
+              </NoSsr>
             )}
         </Button>
       )));
@@ -139,6 +143,7 @@ class TopBar extends React.Component {
             <ButtonBase
               role="link"
               key={locale}
+              lang={locale}
               onClick={() => {
                 const newLocation = location;
                 const newPath = location.pathname.replace(/^\/[a-zA-Z]{2}\//, `/${locale}/`);
@@ -266,20 +271,21 @@ class TopBar extends React.Component {
               {this.renderDrawerMenu(pageType)}
             </MobileComponent>
             <DesktopComponent>
-              <NoSsr>
-                {!smallScreen ? (
-                  <div className={classes.settingsButtonsContainer}>
-                    { this.renderSettingsButtons()}
+              {!smallScreen ? (
+                <div className={classes.settingsButtonsContainer}>
+                  <Typography component="h2" variant="srOnly">
+                    <FormattedMessage id="settings" />
+                  </Typography>
+                  {this.renderSettingsButtons()}
+                </div>
+              ) : (
+                <>
+                  <div className={classes.mobileButtonContainer}>
+                    {this.renderMenuButton()}
                   </div>
-                ) : (
-                  <>
-                    <div className={classes.mobileButtonContainer}>
-                      {this.renderMenuButton()}
-                    </div>
-                    {this.renderDrawerMenu(pageType)}
-                  </>
-                )}
-              </NoSsr>
+                  {this.renderDrawerMenu(pageType)}
+                </>
+              )}
             </DesktopComponent>
           </Toolbar>
         </AppBar>
