@@ -22,4 +22,8 @@ export default theme => ({
     marginLeft: theme.spacing.unit * 9,
     marginRight: -theme.spacing.unitDouble,
   },
+  itemFocus: {
+    outline: '2px solid transparent',
+    boxShadow: `0 0 0 4px ${theme.palette.focusBorder}`,
+  },
 });

@@ -53,6 +53,7 @@ class ResultOrderer extends React.Component {
             native
             value={`${order}-${direction}`}
             onChange={handleChange || this.handleChange}
+            classes={{ select: classes.elementFocus }}
             inputProps={{
               name: 'result-sorter',
               id: 'result-sorter',

@@ -53,9 +53,6 @@ const ResultItem = ({
         onClick={onClick}
         onKeyDown={onKeyDown}
         className={listItemClasses}
-        classes={{
-          focusVisible: classes.cssFocused,
-        }}
       >
         {
           icon

@@ -24,11 +24,6 @@ const styles = () => ({
     paddingLeft: 25,
     paddingRight: 25,
     borderBottom: '1px solid rgba(255, 255, 255, 0.24)',
-    '&:focus': {
-      outline: '2px solid transparent',
-      boxShadow: '0 0 0 2px #fff',
-      transition: 'all .4s ease-in-out',
-    },
   },
   drawerButtonActive: {
     backgroundColor: '#141823',
@@ -54,6 +49,10 @@ const styles = () => ({
   },
   disabled: {
     color: 'rgba(255, 255, 255, 0.55)',
+  },
+  itemFocus: {
+    outline: '2px solid transparent',
+    boxShadow: '0 0 0 4px #fff',
   },
 });
 

@@ -33,6 +33,10 @@ export default theme => ({
   checkbox: {
     padding: theme.spacing.unit,
   },
+  boxFocus: {
+    boxShadow: 'none',
+    outline: `4px solid ${theme.palette.focusBorder}`,
+  },
   confirmationButtonContainer: {
     display: 'flex',
     flexDirection: 'row',

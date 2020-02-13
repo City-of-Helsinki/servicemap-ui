@@ -107,6 +107,7 @@ const DrawerMenu = (props) => {
           aria-hidden={!isOpen}
           onClick={item.clickEvent}
           className={`${classes.drawerButton} ${item.active ? classes.drawerButtonActive : ''}`}
+          focusVisibleClassName={classes.itemFocus}
         >
           <div className={`${classes.drawerIcon} ${item.active ? classes.drawerIconActive : ''} ${item.disabled ? classes.disabled : ''}`}>
             {item.icon}

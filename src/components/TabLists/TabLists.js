@@ -327,6 +327,7 @@ class TabLists extends React.Component {
                       className={classes.tab}
                       label={label}
                       onClick={item.onClick || null}
+                      focusVisibleClassName={classes.tabFocus}
                     />
                   );
                 }
@@ -341,6 +342,7 @@ class TabLists extends React.Component {
                     }}
                     label={`${item.title}`}
                     onClick={item.onClick || null}
+                    focusVisibleClassName={classes.tabFocus}
                   />
                 );
               })
@@ -455,7 +457,6 @@ TabLists.propTypes = {
 };
 
 TabLists.defaultProps = {
-  beforePagination: null,
   headerComponents: null,
   navigator: null,
 };

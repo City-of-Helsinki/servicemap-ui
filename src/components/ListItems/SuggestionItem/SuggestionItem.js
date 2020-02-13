@@ -48,6 +48,7 @@ const SuggestionItem = (props) => {
         component="li"
         classes={{
           root: classes.listItem,
+          selected: classes.itemFocus,
         }}
         selected={selected}
         className="suggestion"
