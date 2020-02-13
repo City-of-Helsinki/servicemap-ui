@@ -278,7 +278,6 @@ const MapView = (props) => {
             Popup={Popup}
             highlightedDistrict={highlightedDistrict}
             getLocaleText={getLocaleText}
-            settings={settings}
             mapOptions={mapOptions}
             mobile={isMobile}
             navigator={navigator}
