@@ -13,6 +13,7 @@ import App from '../src/App';
 import { makeLanguageHandler, languageSubdomainRedirect, unitRedirect } from './utils';
 import { setLocale } from '../src/redux/actions/user';
 import { SheetsRegistry } from 'jss';
+import { Helmet } from 'react-helmet';
 import { createGenerateClassName, MuiThemeProvider } from '@material-ui/core';
 import JssProvider from 'react-jss/lib/JssProvider';
 import themes from '../src/themes';
@@ -99,6 +100,7 @@ app.get('/*', (req, res, next) => {
     </JssProvider>
   );
   const reactDom = renderToString(jsx);
+  const helmet = Helmet.renderStatic();
 
   const jss = sheetsRegistry.toString();
 
