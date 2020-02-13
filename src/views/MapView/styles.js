@@ -107,7 +107,7 @@ const styles = theme => ({
   },
   topArea: {
     background: theme.palette.background.main,
-    color: theme.palette.primary.contrastText,
+    color: theme.palette.primary.highContrast,
     position: 'fixed',
     top: config.topBarHeightMobile,
     width: '100%',
@@ -119,8 +119,8 @@ const styles = theme => ({
   },
   unitClusterMarker: {
     borderRadius: '50%',
-    backgroundColor: 'black',
-    color: 'white',
+    backgroundColor: theme.palette.primary.highContrast,
+    color: theme.palette.primary.main,
     fontWeight: 'bold',
     fontSize: '18px',
     marginLeft: -20,
@@ -131,7 +131,7 @@ const styles = theme => ({
     zIndex: 460,
     opacity: 1,
     outline: 'none',
-    border: 'solid white',
+    border: `solid ${theme.palette.primary.main}`,
     justifyContent: 'center',
     alignItems: 'center',
     display: 'flex',

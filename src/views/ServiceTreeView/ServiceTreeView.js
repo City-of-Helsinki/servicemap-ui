@@ -232,6 +232,7 @@ const ServiceTreeView = (props) => {
           <div className={classes.checkBox}>
             {drawCheckboxLines(isOpen, level, item.id)}
             <Checkbox
+              className={classes.checkboxPadding}
               inputProps={{ title: checkboxSrTitle }}
               onClick={e => handleCheckboxClick(e, item)}
               icon={<span className={classes.checkBoxIcon} />}

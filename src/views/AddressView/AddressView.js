@@ -24,10 +24,10 @@ import { getAddressText, addressMatchParamsToFetchOptions } from '../../utils/ad
 const AddressView = (props) => {
   const [districts, setDistricts] = useState(null);
   const [units, setUnits] = useState(null);
-  const [addressData, setAddressData] = useState(null);
   const [error, setError] = useState(null);
 
   const {
+    addressData,
     classes,
     embed,
     highlightedDistrict,
@@ -36,6 +36,7 @@ const AddressView = (props) => {
     getAddressNavigatorParams,
     getLocaleText,
     map,
+    setAddressData,
     setAddressLocation,
     setHighlightedDistrict,
     setAddressUnits,
@@ -91,8 +92,8 @@ const AddressView = (props) => {
               embed,
             });
           }
-          setAddressLocation({ addressCoordinates: address.location.coordinates });
           setAddressData(address);
+          setAddressLocation({ addressCoordinates: address.location.coordinates });
           const { coordinates } = address.location;
 
           focusUnit(map, [coordinates[0], coordinates[1]]);
@@ -112,7 +113,7 @@ const AddressView = (props) => {
     if (!mobile && highlightedDistrict && highlightedDistrict.id === district.id) {
       setHighlightedDistrict(null);
     } else {
-      setHighlightedDistrict([district]);
+      setHighlightedDistrict(district);
     }
 
     const { coordinates } = district.boundary;
@@ -284,6 +285,7 @@ const AddressView = (props) => {
 export default AddressView;
 
 AddressView.propTypes = {
+  addressData: PropTypes.objectOf(PropTypes.any),
   match: PropTypes.objectOf(PropTypes.any),
   setHighlightedDistrict: PropTypes.func.isRequired,
   map: PropTypes.objectOf(PropTypes.any),
@@ -291,14 +293,16 @@ AddressView.propTypes = {
   navigator: PropTypes.objectOf(PropTypes.any),
   getAddressNavigatorParams: PropTypes.func.isRequired,
   getLocaleText: PropTypes.func.isRequired,
+  setAddressData: PropTypes.func.isRequired,
   setAddressLocation: PropTypes.func.isRequired,
   setAddressUnits: PropTypes.func.isRequired,
-  highlightedDistrict: PropTypes.arrayOf(PropTypes.any),
+  highlightedDistrict: PropTypes.objectOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   embed: PropTypes.bool,
 };
 
 AddressView.defaultProps = {
+  addressData: null,
   match: {},
   map: null,
   navigator: null,

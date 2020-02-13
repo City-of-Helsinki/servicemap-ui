@@ -8,10 +8,10 @@ export default theme => ({
     '&:hover': {
       backgroundColor: theme.palette.primary.main,
       '& $text': {
-        color: theme.palette.primary.contrastText,
+        color: theme.palette.primary.highContrast,
       },
       '& $iconContainer': {
-        backgroundColor: theme.palette.primary.contrastText,
+        backgroundColor: theme.palette.primary.highContrast,
       },
       '& $icon': {
         color: theme.palette.primary.main,
@@ -50,11 +50,11 @@ export default theme => ({
     boxShadow: `0 4px 8px 0 ${theme.palette.detail.alpha}`,
   },
   icon: {
-    color: theme.palette.primary.contrastText,
+    color: theme.palette.primary.highContrast,
     height: 16,
     width: 16,
     '& g': {
-      fill: theme.palette.primary.contrastText,
+      fill: theme.palette.primary.highContrast,
     },
   },
   iconDisabled: {

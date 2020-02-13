@@ -9,7 +9,7 @@ export default theme => ({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    height: 57,
+    height: 40,
     top: 0,
     position: 'sticky',
     zIndex: theme.zIndex.forward,
@@ -32,6 +32,10 @@ export default theme => ({
   },
   checkbox: {
     padding: theme.spacing.unit,
+  },
+  boxFocus: {
+    boxShadow: 'none',
+    outline: `4px solid ${theme.palette.focusBorder}`,
   },
   confirmationButtonContainer: {
     display: 'flex',

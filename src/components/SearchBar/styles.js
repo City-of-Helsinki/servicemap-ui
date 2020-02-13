@@ -3,7 +3,7 @@ export default theme => ({
     background: theme.palette.background.main,
   },
   root: {
-    color: theme.palette.primary.contrastText,
+    color: theme.palette.primary.highContrast,
     display: 'flex',
     flexDirection: 'column',
     padding: theme.spacing.unitTriple,
@@ -12,7 +12,7 @@ export default theme => ({
     flex: '0 0 auto',
   },
   mobileActiveRoot: {
-    color: theme.palette.primary.contrastText,
+    color: theme.palette.primary.highContrast,
     padding: `${theme.spacing.unit}px ${theme.spacing.unit}px`,
     paddingTop: 0,
     top: 0,
@@ -46,7 +46,7 @@ export default theme => ({
   },
   containerSticky: {
     position: 'sticky',
-    top: 44,
+    top: 35,
     zIndex: theme.zIndex.infront,
   },
   infoText: {
@@ -64,12 +64,18 @@ export default theme => ({
   },
   input: {
     flex: '1 1 auto',
-    paddingLeft: theme.spacing.unit,
-    paddingRight: theme.spacing.unit,
+    paddingLeft: theme.spacing.unitHalf,
+    paddingRight: theme.spacing.unitHalf,
+    marginLeft: theme.spacing.unitHalf,
+    marginRight: theme.spacing.unitHalf,
   },
   inputFocused: {
     paddingLeft: 0,
     paddingRight: theme.spacing.unit,
+  },
+  fieldFocus: {
+    outline: '2px solid transparent',
+    boxShadow: `inset 0 0 0 4px ${theme.palette.focusBorder}`,
   },
   iconButton: {
     flex: '0 1 auto',
@@ -87,6 +93,9 @@ export default theme => ({
     '& svg': {
       fontSize: 28,
     },
+  },
+  searchButtonFocus: {
+    boxShadow: '0 0 0 3px #fff !important',
   },
   iconButtonSearchLabel: {
     flexDirection: 'column',

@@ -9,7 +9,7 @@ export default theme => ({
     flexWrap: 'wrap',
     flex: '0 0 auto',
     background: theme.palette.background.plain,
-    color: theme.palette.primary.contrastText,
+    color: theme.palette.primary.highContrast,
     padding: `0 ${theme.spacing.unitTriple}px ${theme.spacing.unitTriple}px ${theme.spacing.unitTriple}px`,
   },
   formControl: {
@@ -31,10 +31,10 @@ export default theme => ({
     lineHeight: `${15}px`,
     marginTop: 0,
     '&:before': {
-      borderColor: theme.palette.primary.contrastText,
+      borderColor: theme.palette.primary.highContrast,
     },
     '&:after': {
-      borderColor: theme.palette.primary.contrastText,
+      borderColor: theme.palette.primary.highContrast,
     },
   },
   inputLabel: {
@@ -45,5 +45,10 @@ export default theme => ({
   },
   icon: {
     color: 'inherit',
+  },
+  elementFocus: {
+    '&:focus': {
+      boxShadow: '0 0 0 3px #fff',
+    },
   },
 });

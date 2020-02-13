@@ -208,6 +208,7 @@ class SearchBar extends React.Component {
           inputRef={(ref) => { this.searchRef = ref; }}
           className={classes.input}
           value={inputValue || ''}
+          classes={{ focused: classes.fieldFocus }}
           onChange={this.onInputChange}
           onFocus={this.activateSearch}
           onKeyDown={e => keyboardHandler(this.keyHandler(e), ['up, down'])}
@@ -238,8 +239,11 @@ class SearchBar extends React.Component {
           aria-label={intl.formatMessage({ id: 'search' })}
           type="submit"
           className={classes.iconButtonSearch}
+          disableRipple
+          disableFocusRipple
           classes={{
             label: classes.iconButtonSearchLabel,
+            focusVisible: classes.searchButtonFocus,
           }}
           color="secondary"
           variant="contained"
