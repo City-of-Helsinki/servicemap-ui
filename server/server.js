@@ -23,6 +23,15 @@ import paths from '../config/paths';
 import legacyRedirector from './legacyRedirector';
 import matomoTrackingCode from './analytics';
 
+// Get sentry dsn from environtment variables
+const sentryDSN = process.env.SENTRY_DSN_SERVER;
+let Sentry = null
+
+if (sentryDSN) {
+  Sentry = require('@sentry/node');
+  Sentry.init({ dsn: process.env.SENTRY_DSN });
+}
+
 const setupTests = () => {
   if (global.Intl) {
     Intl.NumberFormat = IntlPolyfill.NumberFormat;
@@ -43,6 +52,10 @@ const supportedLanguages = config.supportedLanguages;
 // This is required for proxy setups to work in production
 app.set('trust proxy', true);
 
+// The request handler must be the first middleware on the app
+if (Sentry) {
+  app.use(Sentry.Handlers.requestHandler());
+}
 // Add static folder
 app.use(express.static(path.resolve(__dirname, 'src')));
 
@@ -58,6 +71,11 @@ app.use(`/`, makeLanguageHandler);
 app.use('/', unitRedirect);
 app.use(paths.event.regex, fetchEventData);
 app.use(paths.unit.regex, fetchSelectedUnitData);
+
+// The error handler must be before any other error middleware
+if (Sentry) {
+  app.use(Sentry.Handlers.errorHandler());
+}
 
 app.get('/*', (req, res, next) => {
   // CSS for all rendered React components
