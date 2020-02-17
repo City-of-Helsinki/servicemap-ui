@@ -26,6 +26,9 @@ export default theme => ({
       letterSpacing: 'normal',
     },
   },
+  tabFocus: {
+    boxShadow: `inset 0 0 0 4px ${theme.palette.focusBorder}`,
+  },
   tabLabelContainer: {
     paddingLeft: 0,
     paddingRight: 0,

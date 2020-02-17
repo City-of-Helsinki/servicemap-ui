@@ -19,7 +19,7 @@ export default theme => ({
     marginRight: theme.spacing.unitDouble,
   },
   primary: {
-    color: theme.palette.primary.contrastText,
+    color: theme.palette.primary.highContrast,
     backgroundColor: theme.palette.primary.main,
     '&:hover': {
       backgroundColor: theme.palette.primary.light,

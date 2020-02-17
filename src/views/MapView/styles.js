@@ -107,7 +107,7 @@ const styles = theme => ({
   },
   topArea: {
     background: theme.palette.background.main,
-    color: theme.palette.primary.contrastText,
+    color: theme.palette.primary.highContrast,
     position: 'fixed',
     top: config.topBarHeightMobile,
     width: '100%',

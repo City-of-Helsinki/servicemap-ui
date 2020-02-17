@@ -43,7 +43,7 @@ const extractLanguage = function(req, isEmbed) {
 const extractServices = function(req) {
   var services;
   services = req.query.theme;
-  if (!services) {
+  if (!services || !(services instanceof String)) {
     return null;
   }
   services = services.split(' ');
@@ -92,6 +92,9 @@ const extractMunicipality = function(req) {
     } else {
       return null;
     }
+  }
+  if (!(region instanceof String)) {
+    return null;
   }
   switch (region.toLowerCase()) {
     case 'c91':
@@ -231,7 +234,7 @@ const getMunicipalityFromGeocoder = function(address, language, callback) {
   timeout = setTimeout((function() {
     return callback(null);
   }), 3000);
-  url = `${config.serviceMapAPI}/address/?language=${language}&number=${address.number}&street=${address.street}&page_size=1`;
+  url = `${config.serviceMapAPI.root}/address/?language=${language}&number=${address.number}&street=${address.street}&page_size=1`;
   request = https.get(url, function(apiResponse) {
     var respData;
     if (apiResponse.statusCode !== 200) {

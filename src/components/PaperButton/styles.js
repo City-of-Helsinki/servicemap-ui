@@ -4,6 +4,27 @@ export default theme => ({
     padding: 0,
     width: '88%',
     maxWidth: 356,
+    border: `${theme.palette.detail.alpha} solid 0.5px`,
+    '&:hover': {
+      backgroundColor: theme.palette.primary.main,
+      '& $text': {
+        color: theme.palette.primary.highContrast,
+      },
+      '& $iconContainer': {
+        backgroundColor: theme.palette.primary.highContrast,
+      },
+      '& $icon': {
+        color: theme.palette.primary.main,
+        '& g': {
+          fill: theme.palette.primary.main,
+        },
+      },
+    },
+  },
+  buttonDisabled: {
+    pointerEvents: 'none',
+    backgroundColor: theme.palette.disabled.main,
+    border: `${theme.palette.disabled.strong} solid 0.5px`,
   },
   iconButton: {
     flex: '1 0 auto',
@@ -13,13 +34,13 @@ export default theme => ({
     paddingRight: theme.spacing.unitDouble,
     justifyContent: 'flex-start',
     textAlign: 'left',
-    border: `${theme.palette.detail.alpha} solid 0.5px`,
   },
   iconContainer: {
     display: 'flex',
     flexShrink: 0,
     backgroundColor: theme.palette.primary.main,
     justifyContent: 'center',
+    alignItems: 'center',
     width: 40,
     height: 40,
     borderRadius: '50%',
@@ -29,18 +50,20 @@ export default theme => ({
     boxShadow: `0 4px 8px 0 ${theme.palette.detail.alpha}`,
   },
   icon: {
-    color: '#fff',
-    height: 'inherit',
-    width: 24,
+    color: theme.palette.primary.highContrast,
+    height: 16,
+    width: 16,
+    '& g': {
+      fill: theme.palette.primary.highContrast,
+    },
   },
   iconDisabled: {
-    backgroundColor: 'rgba(0, 0, 0, 0.26)',
+    backgroundColor: theme.palette.disabled.strong,
+    boxShadow: `0 4px 8px 0 ${theme.palette.disabled.strong}`,
   },
   text: {
     textTransform: 'none',
     lineHeight: '18px',
-  },
-  textDisabled: {
-    color: 'rgba(0, 0, 0, 0.50)',
+    color: 'rgba(0, 0, 0, 0.87)',
   },
 });

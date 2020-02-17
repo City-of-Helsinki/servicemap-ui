@@ -3,11 +3,11 @@ import SMIcon from './SMIcon';
 import defaulMapIcon from '../../assets/images/iconDefaultMap.svg';
 import aerialMapIcon from '../../assets/images/iconAerialMap.svg';
 import guideMapIcon from '../../assets/images/iconGuideMap.svg';
-import locationIcon from '../../assets/images/iconLocation.svg';
-import accessibilityIcon from '../../assets/images/iconAccessibility.svg';
-import serviceListIcon from '../../assets/images/iconServiceList.svg';
-import feedbackIcon from '../../assets/images/iconFeedback.svg';
-import helpIcon from '../../assets/images/iconHelp.svg';
+import locationIcon from '../../assets/icons/inlineSVGs/iconLocation';
+import accessibilityIcon from '../../assets/icons/inlineSVGs/iconAccessibility';
+import serviceListIcon from '../../assets/icons/inlineSVGs/iconServiceList';
+import feedbackIcon from '../../assets/icons/inlineSVGs/iconFeedback';
+import helpIcon from '../../assets/icons/inlineSVGs/iconHelp';
 import facebookIcon from '../../assets/images/facebook_icon.svg';
 import instagramIcon from '../../assets/images/insta_icon.svg';
 import pinterestIcon from '../../assets/images/pinterest_icon.svg';
@@ -123,15 +123,15 @@ export const getIcon = (key, props) => {
 
     // Front page buttons
     case 'location':
-      return <img aria-hidden alt="" src={locationIcon} {...props} />;
+      return locationIcon();
     case 'accessibility':
-      return <img aria-hidden alt="" src={accessibilityIcon} {...props} />;
+      return accessibilityIcon();
     case 'serviceList':
-      return <img aria-hidden alt="" src={serviceListIcon} {...props} />;
+      return serviceListIcon();
     case 'feedback':
-      return <img aria-hidden alt="" src={feedbackIcon} {...props} />;
+      return feedbackIcon();
     case 'help':
-      return <img aria-hidden alt="" src={helpIcon} {...props} />;
+      return helpIcon();
 
     // Social media links
     case 'facebook':

@@ -94,31 +94,48 @@ const DefaultLayout = (props) => {
 
   return (
     <>
-      <h1 id="app-title" tabIndex="-1" className="sr-only app-title" component="h1">
-        <FormattedMessage id="app.title" />
-      </h1>
-      {/* Jump link to main content for screenreaders
+      <div id="topArea" aria-hidden={!!settingsToggled}>
+        <h1 id="app-title" tabIndex="-1" className="sr-only app-title" component="h1">
+          <FormattedMessage id="app.title" />
+        </h1>
+        {/* Jump link to main content for screenreaders
         Must be first interactable element on page */}
-      <a href="#view-title" className="sr-only">
-        <FormattedMessage id="general.skipToContent" />
-      </a>
-      <TopBar settingsOpen={settingsToggled} toggleSettings={type => setSettingsPage(type)} smallScreen={isSmallScreen} i18n={i18n} />
-      <div style={styles.activeRoot}>
-        <main className="SidebarWrapper" style={styles.sidebar}>
+        <a href="#view-title" className="sr-only">
+          <FormattedMessage id="general.skipToContent" />
+        </a>
+        <TopBar
+          settingsOpen={settingsToggled}
+          toggleSettings={type => setSettingsPage(type)}
+          smallScreen={isSmallScreen}
+          i18n={i18n}
+        />
+      </div>
+
+      <div id="activeRoot" style={styles.activeRoot}>
+        <main role={settingsToggled && 'dialog'} className="SidebarWrapper" style={styles.sidebar}>
           {settingsToggled ? (
-            <Settings key={settingsToggled} toggleSettings={() => setSettingsPage()} isMobile={!!isMobile} />
+            <Settings
+              key={settingsToggled}
+              toggleSettings={() => setSettingsPage()}
+              isMobile={!!isMobile}
+            />
           ) : (
             <Sidebar />
           )}
         </main>
-        <div aria-label={intl.formatMessage({ id: 'map.ariaLabel' })} tabIndex="-1" style={styles.map}>
+        <div
+          aria-label={intl.formatMessage({ id: 'map.ariaLabel' })}
+          aria-hidden={!!settingsToggled}
+          tabIndex="-1"
+          style={styles.map}
+        >
           <div aria-hidden="true" style={styles.mapWrapper}>
             <MapView isMobile={!!isMobile} />
           </div>
         </div>
       </div>
 
-      <footer role="contentinfo" className="sr-only">
+      <footer role="contentinfo" aria-hidden={!!settingsToggled} className="sr-only">
         <DesktopComponent>
           <a href="#app-title">
             <FormattedMessage id="general.backToStart" />

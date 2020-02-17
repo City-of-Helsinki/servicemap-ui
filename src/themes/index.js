@@ -1,5 +1,41 @@
 import { createMuiTheme } from '@material-ui/core';
 
+const focusIndicator = {
+  outline: '2px solid transparent',
+  boxShadow: '0 0 0 4px rgba(25, 100, 230, 0.8)',
+};
+
+const focusIndicatorDark = {
+  outline: '2px solid transparent',
+  boxShadow: '0 0 0 4px #000',
+};
+
+const props = {
+  // Globally disable all default mui focus effects
+  MuiButtonBase: {
+    disableRipple: true,
+  },
+  MuiButton: {
+    disableRipple: true,
+    disableFocusRipple: true,
+  },
+};
+
+const overrides = theme => ({
+  MuiButtonBase: {
+    // Default keyboard focus indicator
+    focusVisible: theme === 'dark' ? focusIndicatorDark : focusIndicator,
+  },
+  MuiIconButton: {
+    // Replace IconButton padding with margin, so that keyboard focus indicator looks better
+    // This affects checkboxes and radio buttons.
+    root: {
+      padding: 0,
+      margin: 12,
+    },
+  },
+});
+
 const breakpoints = {
   values: {
     xs: 0,
@@ -128,6 +164,11 @@ const paletteDefault = {
     main: '#1964E6',
     alpha: 'rgba(25,100,230,0.5)',
   },
+  disabled: {
+    main: '#efefef',
+    strong: '#898989',
+  },
+  focusBorder: 'rgba(25, 100, 230, 0.8)',
   warning: '#AF0021',
 };
 
@@ -156,11 +197,18 @@ const paletteDark = {
     main: '#585B63',
     alpha: 'rgba(88,91,99,0.5)',
   },
+  disabled: {
+    main: '#efefef',
+    strong: '#898989',
+  },
   warning: '#AF0021',
+  focusBorder: '#000',
 };
 
 // Themes
 const SMTheme = createMuiTheme({
+  props,
+  overrides: overrides('default'),
   breakpoints,
   typography,
   spacing,
@@ -170,6 +218,8 @@ const SMTheme = createMuiTheme({
 });
 
 const SMThemeDark = createMuiTheme({
+  props,
+  overrides: overrides('dark'),
   breakpoints,
   typography,
   spacing,
