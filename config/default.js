@@ -44,6 +44,7 @@ export default {
   "feedbackURL": {
     "root": settings.FEEDBACK_URL,
   },
+  "sentryDSN": settings.SENTRY_DSN_CLIENT,
   // constants
   "accessibilityColors":  {
     "default": "#2242C7",

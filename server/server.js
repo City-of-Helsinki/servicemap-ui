@@ -165,7 +165,8 @@ const htmlTemplate = (reactDom, preloadedState, css, jss, locale) => `
         window.nodeEnvSettings.PRODUCTION_PREFIX = "${process.env.PRODUCTION_PREFIX}";
         window.nodeEnvSettings.DIGITRANSIT_API = "${process.env.DIGITRANSIT_API}";
         window.nodeEnvSettings.FEEDBACK_URL = "${process.env.FEEDBACK_URL}";
-        window.nodeEnvSettings.MODE = "${process.env.MODE}"
+        window.nodeEnvSettings.MODE = "${process.env.MODE}";
+        window.nodeEnvSettings.SENTRY_DSN_CLIENT = "${process.env.SENTRY_DSN_CLIENT}";
     </script>
     <script>
       // WARNING: See the following for security issues around embedding JSON in HTML:

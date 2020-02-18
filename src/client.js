@@ -2,6 +2,7 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import 'whatwg-fetch';
+import * as Sentry from '@sentry/browser';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Helmet } from 'react-helmet';
@@ -24,6 +25,12 @@ import ThemeWrapper from './utils/ThemeWrapper';
 
 if (!global.AbortController) {
   global.AbortController = ac.AbortController;
+}
+
+if (config.sentryDSN) {
+  Sentry.init({
+    dsn: config.sentryDSN,
+  });
 }
 
 const getPreloadedState = () => {
