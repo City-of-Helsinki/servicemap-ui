@@ -177,10 +177,17 @@ class Settings extends React.Component {
   // eslint-disable-next-line class-methods-use-this
   focusToBaseElement() {
     const { settings } = this.props;
-    const elem = document.getElementById(`SettingsButton${settings.toggled}`);
-    if (elem) {
-      setTimeout(() => { elem.focus(); }, 1);
-    }
+    setTimeout(() => {
+      let elem;
+      if (settings.toggled === 'all') {
+        elem = document.getElementById('SettingsLink');
+      } else {
+        elem = document.getElementById(`SettingsButton${settings.toggled}`);
+      }
+      if (elem) {
+        elem.focus();
+      }
+    }, 1);
   }
 
   /**
@@ -656,7 +663,7 @@ class Settings extends React.Component {
   }
 
   render() {
-    const { classes, settings } = this.props;
+    const { classes, settings, intl } = this.props;
     const { alert, saved } = this.state;
     const settingsPage = settings.toggled;
     const settingsHaveChanged = this.settingsHaveChanged();
@@ -714,6 +721,7 @@ class Settings extends React.Component {
               small
               onClick={() => this.toggleSettingsContainer()}
               messageID="general.close"
+              srText={intl.formatMessage({ id: 'general.closeSettings' })}
             />
           </Container>
 

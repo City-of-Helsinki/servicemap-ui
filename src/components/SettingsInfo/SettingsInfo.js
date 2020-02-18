@@ -66,9 +66,19 @@ const SettingsInfo = ({
       <Divider aria-hidden="true" />
       <Container className={classes.container}>
         <ButtonBase
+          id="SettingsLink"
           aria-labelledby="SettingsInfo-srTitle"
           role="link"
-          onClick={() => toggleSettings('all')}
+          onClick={() => {
+            toggleSettings('all');
+            setTimeout(() => {
+              const settings = document.getElementsByClassName('SettingsTitle')[0];
+              if (settings) {
+                // Focus on settings title
+                settings.firstChild.focus();
+              }
+            }, 1);
+          }}
           className={classes.settingsLink}
         >
           <Typography

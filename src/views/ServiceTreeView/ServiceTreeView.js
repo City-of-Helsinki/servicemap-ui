@@ -143,6 +143,13 @@ const ServiceTreeView = (props) => {
     } else {
       // Select all visible child nodes as well
       let newState = [item, ...checkChildNodes(item)];
+
+      // If all other sibling nodes are selected too, select parent node as well
+      const parent = services.find(service => service.id === item.parent);
+      if (parent && parent.children.every(child => [...selected, item].some(i => i.id === child))) {
+        newState = [...newState, parent];
+      }
+
       // Filter duplicates
       newState = newState.filter(e => !selected.some(i => i.id === e.id));
       setSelected([...selected, ...newState]);
@@ -221,6 +228,12 @@ const ServiceTreeView = (props) => {
     const checkboxSrTitle = `${intl.formatMessage({ id: 'services.tree.level' })} ${level + 1} ${getLocaleText(item.name)} ${intl.formatMessage({ id: 'services.category.select' })}`;
     const itemSrTitle = `${getLocaleText(item.name)} (${resultCount}) ${intl.formatMessage({ id: 'services.category.open' })}`;
 
+    const isSelected = selected.some(e => e.id === item.id);
+
+    // Check if any child grandchild node is checked, so we can display indeterminate mark.
+    const childIsSelected = checkChildNodes(item)
+      .some(node => selected.some(item => item.id === node.id));
+
     return (
       <div key={item.id}>
         <ListItem
@@ -237,7 +250,8 @@ const ServiceTreeView = (props) => {
               onClick={e => handleCheckboxClick(e, item)}
               icon={<span className={classes.checkBoxIcon} />}
               color="primary"
-              checked={selected.some(e => e.id === item.id)}
+              checked={isSelected}
+              indeterminate={childIsSelected && !isSelected}
             />
           </div>
 
