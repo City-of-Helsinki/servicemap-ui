@@ -72,11 +72,6 @@ app.use('/', unitRedirect);
 app.use(paths.event.regex, fetchEventData);
 app.use(paths.unit.regex, fetchSelectedUnitData);
 
-// The error handler must be before any other error middleware
-if (Sentry) {
-  app.use(Sentry.Handlers.errorHandler());
-}
-
 app.get('/*', (req, res, next) => {
   // CSS for all rendered React components
   const css = new Set(); 
@@ -125,6 +120,11 @@ app.get('/*', (req, res, next) => {
   res.writeHead(200, { 'Content-Type': 'text/html' });
   res.end(htmlTemplate(reactDom, preloadedState, css, jss, locale));
 });
+
+// The error handler must be before any other error middleware
+if (Sentry) {
+  app.use(Sentry.Handlers.errorHandler());
+}
 
 console.log(`Starting server on port ${process.env.PORT || 2048}`);
 app.listen(process.env.PORT || 2048);
