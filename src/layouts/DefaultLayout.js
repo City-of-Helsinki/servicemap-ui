@@ -56,9 +56,14 @@ const createContentStyles = (
       bottom: 0,
       width,
       margin: 0,
-      overflow: !isMobile ? 'auto' : '',
+      // eslint-disable-next-line no-nested-ternary
+      overflow: settingsOpen ? 'hidden'
+        : isMobile ? '' : 'auto',
       visibility: mobileMapOnly && !settingsOpen ? 'hidden' : null,
       flex: '0 1 auto',
+    },
+    sidebarContent: {
+      height: '100%',
     },
   };
 
@@ -113,15 +118,16 @@ const DefaultLayout = (props) => {
 
       <div id="activeRoot" style={styles.activeRoot}>
         <main role={settingsToggled && 'dialog'} className="SidebarWrapper" style={styles.sidebar}>
-          {settingsToggled ? (
+          {settingsToggled && (
             <Settings
               key={settingsToggled}
               toggleSettings={() => setSettingsPage()}
               isMobile={!!isMobile}
             />
-          ) : (
-            <Sidebar />
           )}
+          <div style={styles.sidebarContent} aria-hidden={!!settingsToggled}>
+            <Sidebar />
+          </div>
         </main>
         <div
           aria-label={intl.formatMessage({ id: 'map.ariaLabel' })}

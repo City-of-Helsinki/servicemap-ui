@@ -87,6 +87,12 @@ export default theme => ({
   },
   container: {
     backgroundColor: '#fff',
+    position: 'absolute',
+    top: 0,
+    zIndex: theme.zIndex.infront,
+    height: '100%',
+    width: '100%',
+    overflow: 'auto',
   },
   hidden: {
     display: 'none',
@@ -140,7 +146,7 @@ export default theme => ({
     margin: 0,
   },
   stickyMobile: {
-    top: topBarHeight,
+    top: 0,
   },
   disabled: {
     backgroundColor: 'rgba(0, 0, 0, 0.12)',
