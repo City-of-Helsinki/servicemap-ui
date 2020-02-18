@@ -29,7 +29,7 @@ let Sentry = null
 
 if (sentryDSN) {
   Sentry = require('@sentry/node');
-  Sentry.init({ dsn: process.env.SENTRY_DSN });
+  Sentry.init({ dsn: sentryDSN });
 }
 
 const setupTests = () => {
