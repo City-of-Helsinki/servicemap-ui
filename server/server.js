@@ -125,7 +125,7 @@ app.get('/*', (req, res, next) => {
   const preloadedState = store.getState();
 
   res.writeHead(200, { 'Content-Type': 'text/html' });
-  res.end(htmlTemplate(reactDom, preloadedState, css, jss, locale));
+  res.end(htmlTemplate(reactDom, preloadedState, css, jss, locale, helmet));
 });
 
 // The error handler must be before any other error middleware
@@ -136,12 +136,12 @@ if (Sentry) {
 console.log(`Starting server on port ${process.env.PORT || 2048}`);
 app.listen(process.env.PORT || 2048);
 
-const htmlTemplate = (reactDom, preloadedState, css, jss, locale) => `
+const htmlTemplate = (reactDom, preloadedState, css, jss, locale, helmet) => `
 <!DOCTYPE html>
 <html lang="${locale || 'fi'}">
   <head>
     <meta charset="utf-8">
-    <title>Palvelukartta</title>
+    ${helmet.title.toString()}
     <!-- jss-insertion-point -->
     <style id="jss-server-side">${jss}</style>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
