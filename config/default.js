@@ -10,7 +10,16 @@ function getSettings() {
   return process.env;
 }
 
+function getVersion() {
+  if (typeof window !== 'undefined' && typeof window.nodeEnvSettings !== 'undefined') {
+      return window.appVersion;
+  }
+  return {};
+}
+
 const settings = getSettings();
+const version = getVersion();
+
 
 if (typeof settings.PRODUCTION_PREFIX === 'undefined') {
     // This is the correct way to set fail-safe defaults for
@@ -24,6 +33,8 @@ if (typeof settings.PRODUCTION_PREFIX === 'undefined') {
 }
 
 export default {
+  "version": version.tag,
+  "commit": version.commit,
   // API
   "accessibilitySentenceAPI": {
     "root": settings.ACCESSIBILITY_SENTENCE_API,
