@@ -2,8 +2,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { withStyles } from '@material-ui/core';
+import { withStyles, ButtonBase } from '@material-ui/core';
 import { intlShape } from 'react-intl';
+import { MyLocation, LocationDisabled } from '@material-ui/icons';
 import { mapOptions } from './config/mapConfig';
 import CreateMap from './utils/createMap';
 import UnitMarkers from './components/UnitMarkers';
@@ -12,13 +13,11 @@ import styles from './styles';
 import Districts from './components/Districts';
 import TransitStops from './components/TransitStops';
 import AddressPopup from './components/AddressPopup';
-import LocationButton from './components/LocationButton';
 import UserMarker from './components/UserMarker';
 import fetchAddress from './utils/fetchAddress';
 import { isEmbed } from '../../utils/path';
 import AddressMarker from './components/AddressMarker';
-import { parseSearchParams } from '../../utils';
-import isClient from '../../utils';
+import isClient, { parseSearchParams } from '../../utils';
 import swapCoordinates from './utils/swapCoordinates';
 
 
@@ -134,6 +133,8 @@ const MapView = (props) => {
       Map, TileLayer, ZoomControl, Marker, Popup, Polygon, Polyline, Tooltip,
     } = require('react-leaflet');
 
+    const Control = require('react-leaflet-control');
+
     const L = require('leaflet');
     require('leaflet.markercluster');
 
@@ -142,7 +143,19 @@ const MapView = (props) => {
     } = L;
 
     setLeaflet({
-      divIcon, point, Map, marker, markerClusterGroup, TileLayer, ZoomControl, Marker, Popup, Polygon, Polyline, Tooltip,
+      divIcon,
+      point,
+      Map,
+      marker,
+      markerClusterGroup,
+      TileLayer,
+      ZoomControl,
+      Marker,
+      Popup,
+      Polygon,
+      Polyline,
+      Tooltip,
+      Control: Control.default,
     });
   };
 
@@ -224,7 +237,7 @@ const MapView = (props) => {
 
 
   const {
-    Map, TileLayer, ZoomControl, Marker, Popup, Polygon, Polyline, Tooltip,
+    Map, TileLayer, ZoomControl, Marker, Popup, Polygon, Polyline, Tooltip, Control,
   } = leaflet || {};
 
   if (Map && mapObject) {
@@ -326,11 +339,21 @@ const MapView = (props) => {
           )}
 
           <ZoomControl position="bottomright" aria-hidden="true" />
-          <LocationButton
-            disabled={!userLocation}
-            position="bottomright"
-            handleClick={userLocation ? focusOnUser : null}
-          />
+
+          {/* Custom user location map button */}
+          <Control position="bottomright">
+            <ButtonBase
+              disabled={!userLocation}
+              className={`${classes.showLocationButton} ${!userLocation ? classes.locationDisabled : ''}`}
+              onClick={() => focusOnUser()}
+              focusVisibleClassName={classes.locationButtonFocus}
+            >
+              {userLocation
+                ? <MyLocation className={classes.showLocationIcon} />
+                : <LocationDisabled className={classes.showLocationIcon} />
+              }
+            </ButtonBase>
+          </Control>
         </Map>
       </>
     );

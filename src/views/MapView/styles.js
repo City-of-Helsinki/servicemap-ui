@@ -75,29 +75,24 @@ const styles = theme => ({
     justifyContent: 'center',
   },
   showLocationButton: {
-    border: 'none',
-    cursor: 'pointer',
-    marginRight: '7px !important',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    marginRight: -3,
     backgroundColor: theme.palette.primary.main,
     width: 40,
     height: 40,
     borderRadius: '50%',
     '&:hover': {
-      backgroundColor: theme.palette.secondary.hover,
+      backgroundColor: theme.palette.primary.highContrast,
+      '& svg': {
+        color: theme.palette.primary.main,
+      },
     },
   },
+  locationButtonFocus: {
+    outline: '2px solid transparent',
+    boxShadow: `0 0 0 3px ${theme.palette.primary.highContrast}, 0 0 0 4px ${theme.palette.focusBorder}`,
+  },
   locationDisabled: {
-    cursor: 'default',
-    backgroundColor: '#cccccc',
-    '&:hover': {
-      backgroundColor: '#cccccc',
-    },
-    '&:focus': {
-      boxShadow: 'none',
-    },
+    backgroundColor: theme.palette.disabled.strong,
   },
   showLocationIcon: {
     color: '#fff',
