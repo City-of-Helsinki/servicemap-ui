@@ -104,6 +104,7 @@ const serverConfig = {
   },
   optimization: {
     minimize: false,
+    concatenateModules: false,
   }
 };
 
