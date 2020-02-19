@@ -18,6 +18,9 @@ export default theme => ({
     textTransform: 'none',
     textAlign: 'left',
     marginLeft: 10,
+    '&:focus': {
+      outlineStyle: 'none',
+    },
   },
   iconButton: {
     display: 'flex',
