@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Typography, ButtonBase, Link } from '@material-ui/core';
 import TitleBar from '../../components/TitleBar';
+import config from '../../../config';
 
 const InfoView = ({
   classes, history, location, locale,
@@ -894,6 +895,10 @@ const InfoView = ({
     </div>
   );
 
+  const version = config.version || '';
+  const commit = config.commit ? `${config.commit}` : '';
+  const versionText = `Version: ${version} ${(config.version && config.commit) ? '-' : ''} ${commit}`;
+
   return (
     <div className={classes.pageContainer}>
       {
@@ -914,6 +919,12 @@ const InfoView = ({
           ? renderSwedishInfo()
           : renderSwedishA11y()
       )}
+      {
+        config.version || config.commit
+          ? (
+            <Typography align="left" aria-hidden="true" className={classes.text}>{versionText}</Typography>
+          ) : null
+      }
     </div>
   );
 };

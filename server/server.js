@@ -23,6 +23,7 @@ import IntlPolyfill from 'intl';
 import paths from '../config/paths';
 import legacyRedirector from './legacyRedirector';
 import matomoTrackingCode from './analytics';
+import { getLastCommit, getVersion } from './version';
 
 const setupTests = () => {
   if (global.Intl) {
@@ -40,6 +41,9 @@ setupTests();
 // Configure constants
 const app = express();
 const supportedLanguages = config.supportedLanguages;
+
+const versionTag = getVersion();
+const versionCommit = getLastCommit();
 
 // This is required for proxy setups to work in production
 app.set('trust proxy', true);
@@ -149,7 +153,11 @@ const htmlTemplate = (reactDom, preloadedState, css, jss, locale) => `
         window.nodeEnvSettings.PRODUCTION_PREFIX = "${process.env.PRODUCTION_PREFIX}";
         window.nodeEnvSettings.DIGITRANSIT_API = "${process.env.DIGITRANSIT_API}";
         window.nodeEnvSettings.FEEDBACK_URL = "${process.env.FEEDBACK_URL}";
-        window.nodeEnvSettings.MODE = "${process.env.MODE}"
+        window.nodeEnvSettings.MODE = "${process.env.MODE}";
+        
+        window.appVersion = {};
+        window.appVersion.tag = "${versionTag}";
+        window.appVersion.commit = "${versionCommit}";
     </script>
     <script>
       // WARNING: See the following for security issues around embedding JSON in HTML:
