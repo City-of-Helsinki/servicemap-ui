@@ -27,11 +27,12 @@ import { getLastCommit, getVersion } from './version';
 
 // Get sentry dsn from environtment variables
 const sentryDSN = process.env.SENTRY_DSN_SERVER;
-let Sentry = null
+let Sentry = null;
 
 if (sentryDSN) {
   Sentry = require('@sentry/node');
   Sentry.init({ dsn: sentryDSN });
+  console.log(`Initialized Sentry client with DSN ${sentryDSN}`);
 }
 
 const setupTests = () => {
