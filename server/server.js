@@ -119,7 +119,6 @@ const htmlTemplate = (reactDom, preloadedState, css, jss, locale, helmet) => `
   <head>
     <meta charset="utf-8">
     ${helmet.title.toString()}
-    ${helmet.link.toString()}
     <!-- jss-insertion-point -->
     <style id="jss-server-side">${jss}</style>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
