@@ -15,7 +15,7 @@ import { parseSearchParams, getSearchParam } from '../../utils';
 import TabLists from '../../components/TabLists';
 
 import Container from '../../components/Container';
-import { generatePath, isEmbed } from '../../utils/path';
+import { generatePath } from '../../utils/path';
 import { DesktopComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import ExpandedSuggestions from '../../components/ExpandedSuggestions';
 import SettingsInfo from '../../components/SettingsInfo';
@@ -243,7 +243,7 @@ class SearchView extends React.Component {
   // Handles redirect if only single result is found
   handleSingleResultRedirect() {
     const {
-      units, getAddressNavigatorParams, isFetching, match,
+      embed, units, getAddressNavigatorParams, isFetching, match,
     } = this.props;
 
     // If not currently searching and view should not fetch new search
@@ -256,7 +256,6 @@ class SearchView extends React.Component {
       // Parse language params
       const { params } = match;
       const lng = params && params.lng;
-      const embed = isEmbed(match);
       switch (object_type) {
         case 'address':
           path = generatePath('address', lng, getAddressNavigatorParams(units[0]), embed);
