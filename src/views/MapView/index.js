@@ -12,6 +12,7 @@ import { getServiceUnits } from '../../redux/selectors/service';
 import { getProcessedData } from '../../redux/selectors/results';
 import { markerClusterConnector, renderMarkerConnector } from './utils/unitMarkers';
 import { getAddressNavigatorParamsConnector } from '../../utils/address';
+import { generatePath } from '../../utils/path';
 
 // Get redux states as props to component
 const mapStateToProps = (state) => {
@@ -29,9 +30,10 @@ const mapStateToProps = (state) => {
   const { addressUnits } = state.address;
   const { locale, theme } = state.user;
   const getAddressNavigatorParams = getAddressNavigatorParamsConnector(getLocaleText, locale);
+  const getPath = (id, data) => generatePath(id, locale, data);
   return {
     createMarkerClusterLayer: markerClusterConnector(settings, getLocaleText, navigator),
-    renderUnitMarkers: renderMarkerConnector(settings, getLocaleText, navigator, theme),
+    renderUnitMarkers: renderMarkerConnector(settings, getLocaleText, navigator, theme, getPath),
     highlightedDistrict,
     highlightedUnit,
     getAddressNavigatorParams,

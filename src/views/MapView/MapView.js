@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { withStyles, Tooltip as MUITooltip } from '@material-ui/core';
+import { withStyles, Tooltip as MUITooltip, ButtonBase } from '@material-ui/core';
 import { intlShape } from 'react-intl';
 import { mapOptions } from './config/mapConfig';
 import CreateMap from './utils/createMap';
@@ -20,6 +20,7 @@ import AddressMarker from './components/AddressMarker';
 import { parseSearchParams } from '../../utils';
 import isClient from '../../utils';
 import swapCoordinates from './utils/swapCoordinates';
+import HomeLogo from '../../components/Logos/HomeLogo';
 
 
 const MapView = (props) => {
@@ -60,6 +61,7 @@ const MapView = (props) => {
   const [prevMap, setPrevMap] = useState(null);
   const [markerCluster, setMarkerCluster] = useState(null);
 
+  const embeded = isEmbed(match);
 
   const getMapUnits = () => {
     let mapUnits = [];
@@ -152,7 +154,7 @@ const MapView = (props) => {
 
     if (map && leaflet && createMarkerClusterLayer && isClient()) {
       const popupTitle = intl.formatMessage({ id: 'unit.plural' });
-      const cluster = createMarkerClusterLayer(leaflet, map, classes, popupTitle);
+      const cluster = createMarkerClusterLayer(leaflet, map, classes, popupTitle, embeded);
       if (cluster) {
         map.leafletElement.addLayer(cluster);
         setMarkerCluster(cluster);
@@ -202,8 +204,6 @@ const MapView = (props) => {
     initializeMarkerClusterLayer();
   }, [mapObject, leaflet]);
 
-  const embeded = isEmbed(match);
-
   // Attempt to render unit markers on page change or unitList change
   useEffect(() => {
     if (!markerCluster) {
@@ -232,14 +232,9 @@ const MapView = (props) => {
     };
     return (
       <MUITooltip title={intl.formatMessage({ id: 'embed.click_prompt_move' })}>
-        <div
-          aria-label={intl.formatMessage({ id: 'embed.click_prompt_move' })}
-          tabIndex="-1"
-          role="link"
-          onClick={openApp}
-          onKeyDown={() => {}}
-          className={classes.embedOverlay}
-        />
+        <ButtonBase onClick={openApp}>
+          <HomeLogo aria-hidden className={classes.embedLogo} />
+        </ButtonBase>
       </MUITooltip>
     );
   };

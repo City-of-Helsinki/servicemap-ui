@@ -25,15 +25,12 @@ const styles = theme => ({
     paddingTop: '9px',
     paddingBottom: 12,
   },
-  embedOverlay: {
-    position: 'absolute',
-    top: 0,
+  embedLogo: {
     bottom: 0,
     left: 0,
-    right: 0,
-    backgroundColor: 'transparent',
-    zIndex: 790,
-    cursor: 'pointer',
+    height: 'auto',
+    position: 'fixed',
+    zIndex: 1000,
   },
   transitBackground: {
     fontFamily: 'hsl-piktoframe',
