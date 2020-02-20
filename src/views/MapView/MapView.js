@@ -260,7 +260,6 @@ const MapView = (props) => {
           className={classes.map}
           key={mapObject.options.name}
           ref={mapRef}
-          keyboard={false}
           zoomControl={false}
           doubleClickZoom={false}
           crs={mapObject.crs}

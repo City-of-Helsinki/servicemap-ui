@@ -24,7 +24,7 @@ const createMarkerClusterLayer = (
     return null;
   }
 
-  // Function for creating custom icon for clustere group
+  // Function for creating custom icon for cluster group
   // https://github.com/Leaflet/Leaflet.markercluster#customising-the-clustered-markers
   // NOTE: iconCreateFunction is running by leaflet, which is not support ES6 arrow func syntax
   // eslint-disable-next-line
@@ -167,6 +167,7 @@ const renderUnitMarkers = (
           {
             icon: drawMarkerIcon(useContrast),
             customUnitData: unit,
+            keyboard: false,
           },
         ).bindTooltip(
           `<p class="${classes.unitTooltipTitle}">${unit.name && getLocaleText(unit.name)}</p>${unit.street_address ? `<p  class="${classes.unitTooltipSubtitle}">${getLocaleText(unit.street_address)}</p>` : ''}`,

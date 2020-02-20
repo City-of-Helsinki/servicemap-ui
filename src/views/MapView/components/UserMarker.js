@@ -20,6 +20,7 @@ const UserMarker = ({ position, classes, onClick }) => {
       onClick={onClick}
       position={position}
       icon={icon}
+      keyboard={false}
     />
   );
 };
