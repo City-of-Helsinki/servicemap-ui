@@ -23,14 +23,16 @@ import IntlPolyfill from 'intl';
 import paths from '../config/paths';
 import legacyRedirector from './legacyRedirector';
 import matomoTrackingCode from './analytics';
+import { getLastCommit, getVersion } from './version';
 
 // Get sentry dsn from environtment variables
 const sentryDSN = process.env.SENTRY_DSN_SERVER;
-let Sentry = null
+let Sentry = null;
 
 if (sentryDSN) {
   Sentry = require('@sentry/node');
   Sentry.init({ dsn: sentryDSN });
+  console.log(`Initialized Sentry client with DSN ${sentryDSN}`);
 }
 
 const setupTests = () => {
@@ -49,6 +51,9 @@ setupTests();
 // Configure constants
 const app = express();
 const supportedLanguages = config.supportedLanguages;
+
+const versionTag = getVersion();
+const versionCommit = getLastCommit();
 
 // This is required for proxy setups to work in production
 app.set('trust proxy', true);
@@ -120,7 +125,7 @@ app.get('/*', (req, res, next) => {
   const preloadedState = store.getState();
 
   res.writeHead(200, { 'Content-Type': 'text/html' });
-  res.end(htmlTemplate(reactDom, preloadedState, css, jss, locale));
+  res.end(htmlTemplate(reactDom, preloadedState, css, jss, locale, helmet));
 });
 
 // The error handler must be before any other error middleware
@@ -131,12 +136,12 @@ if (Sentry) {
 console.log(`Starting server on port ${process.env.PORT || 2048}`);
 app.listen(process.env.PORT || 2048);
 
-const htmlTemplate = (reactDom, preloadedState, css, jss, locale) => `
+const htmlTemplate = (reactDom, preloadedState, css, jss, locale, helmet) => `
 <!DOCTYPE html>
 <html lang="${locale || 'fi'}">
   <head>
     <meta charset="utf-8">
-    <title>Palvelukartta</title>
+    ${helmet.title.toString()}
     <!-- jss-insertion-point -->
     <style id="jss-server-side">${jss}</style>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
@@ -167,7 +172,11 @@ const htmlTemplate = (reactDom, preloadedState, css, jss, locale) => `
         window.nodeEnvSettings.PRODUCTION_PREFIX = "${process.env.PRODUCTION_PREFIX}";
         window.nodeEnvSettings.DIGITRANSIT_API = "${process.env.DIGITRANSIT_API}";
         window.nodeEnvSettings.FEEDBACK_URL = "${process.env.FEEDBACK_URL}";
-        window.nodeEnvSettings.MODE = "${process.env.MODE}"
+        window.nodeEnvSettings.MODE = "${process.env.MODE}";
+        
+        window.appVersion = {};
+        window.appVersion.tag = "${versionTag}";
+        window.appVersion.commit = "${versionCommit}";
     </script>
     <script>
       // WARNING: See the following for security issues around embedding JSON in HTML:

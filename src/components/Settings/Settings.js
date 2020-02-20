@@ -636,14 +636,20 @@ class Settings extends React.Component {
             small
             role="button"
             messageID="general.save"
-            onClick={() => this.saveSettings()}
+            onClick={() => {
+              this.saveSettings();
+              this.dialogRef.current.querySelector('h2').focus();
+            }}
             color="primary"
           />
           <SMButton
             small
             role="button"
             messageID="general.cancel"
-            onClick={() => this.resetCurrentSelections()}
+            onClick={() => {
+              this.resetCurrentSelections();
+              this.dialogRef.current.querySelector('h2').focus();
+            }}
           />
         </Container>
       </Container>
@@ -719,6 +725,7 @@ class Settings extends React.Component {
             />
             <SMButton
               small
+              role="button"
               onClick={() => this.toggleSettingsContainer()}
               messageID="general.close"
               srText={intl.formatMessage({ id: 'general.closeSettings' })}

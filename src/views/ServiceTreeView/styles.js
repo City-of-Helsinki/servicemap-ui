@@ -133,6 +133,9 @@ export default theme => ({
   selectionsButton: {
     display: 'flex',
   },
+  selectionFocus: {
+    boxShadow: `0 0 0 4px ${theme.palette.primary.highContrast}`,
+  },
   whiteDivider: {
     backgroundColor: '#fff',
   },

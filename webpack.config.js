@@ -101,6 +101,10 @@ const serverConfig = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name]',
+  },
+  optimization: {
+    minimize: false,
+    concatenateModules: false,
   }
 };
 
