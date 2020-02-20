@@ -46,7 +46,7 @@ export default {
   'event.title': 'Tapahtumat',
 
   // Embed
-  'embed.click_prompt_move': 'Klikkaa siirtyäksesi palvelukartalle',
+  'embed.click_prompt_move': 'Klikkaa siirtyäksesi Palvelukartalle',
 
   // Feedback
   'feedback.back': 'Palaa takaisin',
