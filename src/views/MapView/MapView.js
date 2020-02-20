@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { withStyles } from '@material-ui/core';
+import { withStyles, Tooltip as MUITooltip } from '@material-ui/core';
 import { intlShape } from 'react-intl';
 import { mapOptions } from './config/mapConfig';
 import CreateMap from './utils/createMap';
@@ -222,6 +222,28 @@ const MapView = (props) => {
 
   // Render
 
+  const renderEmbedOverlay = () => {
+    if (!embeded) {
+      return null;
+    }
+    const openApp = () => {
+      const url = window.location.href;
+      window.open(url.replace('/embed', ''));
+    };
+    return (
+      <MUITooltip title={intl.formatMessage({ id: 'embed.click_prompt_move' })}>
+        <div
+          aria-label={intl.formatMessage({ id: 'embed.click_prompt_move' })}
+          tabIndex="-1"
+          role="link"
+          onClick={openApp}
+          onKeyDown={() => {}}
+          className={classes.embedOverlay}
+        />
+      </MUITooltip>
+    );
+  };
+
 
   const {
     Map, TileLayer, ZoomControl, Marker, Popup, Polygon, Polyline, Tooltip,
@@ -243,6 +265,7 @@ const MapView = (props) => {
     return (
       <>
         {renderTopBar()}
+        {renderEmbedOverlay()}
         <Map
           className={classes.map}
           key={mapObject.options.name}
@@ -326,11 +349,16 @@ const MapView = (props) => {
           )}
 
           <ZoomControl position="bottomright" aria-hidden="true" />
-          <LocationButton
-            disabled={!userLocation}
-            position="bottomright"
-            handleClick={userLocation ? focusOnUser : null}
-          />
+          {
+            !embeded
+            && (
+              <LocationButton
+                disabled={!userLocation}
+                position="bottomright"
+                handleClick={userLocation ? focusOnUser : null}
+              />
+            )
+          }
         </Map>
       </>
     );
