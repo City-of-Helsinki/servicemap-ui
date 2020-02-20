@@ -231,11 +231,11 @@ const MapView = (props) => {
       window.open(url.replace('/embed', ''));
     };
     return (
-      <MUITooltip title={intl.formatMessage({ id: 'embed.click_prompt_move' })}>
-        <ButtonBase onClick={openApp}>
+      <ButtonBase onClick={openApp}>
+        <MUITooltip title={intl.formatMessage({ id: 'embed.click_prompt_move' })}>
           <HomeLogo aria-hidden className={classes.embedLogo} />
-        </ButtonBase>
-      </MUITooltip>
+        </MUITooltip>
+      </ButtonBase>
     );
   };
 
