@@ -59,6 +59,7 @@ const createMarkerClusterLayer = (
     iconCreateFunction: createClusterCustomIcon,
     maxClusterRadius,
     removeOutsideVisibleBounds: true,
+    zoomToBoundsOnClick: !embeded,
   });
 
   // Cluster click event
