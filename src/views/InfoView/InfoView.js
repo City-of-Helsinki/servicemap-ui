@@ -233,17 +233,12 @@ const InfoView = ({
       </Typography>
       <Typography component="h3" variant="body2">Havaitut puutteet</Typography>
       <Typography className={classes.text} variant="body2">
-        Sivuston visuaalinen ilme ei täytä kaikilta osilta määriteltyjä vaatimuksia.
         Tiettyjen elementtien värien kontrastiero jää alle vaadittujen raja-arvojen.
-        Saavutettavuuden tekninen toteutus on osittain puutteellinen
-        ruudunlukijan kohdistuksen osalta.
-        Asetussivun kanssa vuorovaikuttaminen ruudunlukijalla ei vielä täytä kaikkia vaatimuksia.
-        Myös muutamassa elementissä on vielä puuttelliset kuvaukset.
-        Sivuston saavutettavuus mobiililla tarkastetaan ja korjastaan tulevien viikkojen aikana.
+        Sivuston saavutettavuus mobiililla tarkastetaan ja korjataan tulevien viikkojen aikana.
       </Typography>
       <Typography component="h4" variant="body2">Puutteiden korjaus</Typography>
       <Typography className={classes.text} variant="body2">
-        Puutteet korjataan 14.2.2020 mennessä.
+        Puutteet korjataan 28.2.2020 mennessä.
         Työtä tehdään yhdessä Annanpura Oy:n kanssa.
       </Typography>
       <Typography component="h4" variant="body2">Tiedon saanti saavutettavassa muodossa</Typography>
@@ -523,12 +518,11 @@ const InfoView = ({
       <Typography component="h3" variant="body2">Deficiencies found</Typography>
       <Typography className={classes.text} variant="body2">
         Minor contrast deficiencies
-        Minor flaws in the browsing order
         Mobile version not checked yet
       </Typography>
       <Typography component="h4" variant="body2">Correcting deficiencies</Typography>
       <Typography className={classes.text} variant="body2">
-        The shortcomings will be corrected by 14.2.2020.
+        The shortcomings will be corrected by 28.2.2020.
         The work is done together with Annanpura Oy.
       </Typography>
       <Typography component="h4" variant="body2">Obtaining information in an accessible form</Typography>
@@ -809,11 +803,10 @@ const InfoView = ({
       <Typography className={classes.text} variant="body2">
         Brist på tillgänglighet för den första produktionsversionen:
         Mindre kontrastfel
-        Det finns mindre brister i sökningsordningen
       </Typography>
       <Typography component="h4" variant="body2">Rättning av brister</Typography>
       <Typography className={classes.text} variant="body2">
-        Bristerna korrigeras senast 14.2.2020.
+        Bristerna korrigeras senast 28.2.2020.
         Arbetet utförs tillsammans med Annanpura Oy.
       </Typography>
       <Typography component="h4" variant="body2">Få uppgifter i tillgänglig form</Typography>
