@@ -243,7 +243,7 @@ class SearchView extends React.Component {
   // Handles redirect if only single result is found
   handleSingleResultRedirect() {
     const {
-      units, getAddressNavigatorParams, isFetching, match,
+      embed, units, getAddressNavigatorParams, isFetching, match,
     } = this.props;
 
     // If not currently searching and view should not fetch new search
@@ -258,13 +258,13 @@ class SearchView extends React.Component {
       const lng = params && params.lng;
       switch (object_type) {
         case 'address':
-          path = generatePath('address', lng, getAddressNavigatorParams(units[0]));
+          path = generatePath('address', lng, getAddressNavigatorParams(units[0]), embed);
           break;
         case 'unit':
-          path = generatePath('unit', lng, { id });
+          path = generatePath('unit', lng, { id }, embed);
           break;
         case 'service':
-          path = generatePath('service', lng, id);
+          path = generatePath('service', lng, id, embed);
           break;
         default:
       }
@@ -469,7 +469,7 @@ class SearchView extends React.Component {
 
   render() {
     const {
-      classes, isFetching, intl, count, max,
+      classes, isFetching, intl, count, max, embed,
     } = this.props;
     const { expandVisible } = this.state;
     const progress = (isFetching && count) ? Math.floor((count / max * 100)) : 0;
@@ -478,6 +478,10 @@ class SearchView extends React.Component {
 
     if (redirect) {
       return redirect;
+    }
+
+    if (embed) {
+      return null;
     }
 
     if (expandVisible) {
@@ -533,6 +537,7 @@ export default withRouter(injectIntl(withStyles(styles)(SearchView)));
 SearchView.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   count: PropTypes.number,
+  embed: PropTypes.bool,
   fetchUnits: PropTypes.func,
   fetchRedirectService: PropTypes.func,
   getAddressNavigatorParams: PropTypes.func.isRequired,
@@ -551,6 +556,7 @@ SearchView.propTypes = {
 
 SearchView.defaultProps = {
   count: 0,
+  embed: false,
   fetchUnits: () => {},
   fetchRedirectService: () => {},
   isFetching: false,

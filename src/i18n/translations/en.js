@@ -45,6 +45,9 @@ export default {
   'event.picture': 'Event picture',
   'event.title': 'Events',
 
+  // Embed
+  'embed.click_prompt_move': 'Click to open the Service Map',
+
   // Feedback
   'feedback.back': 'Go back',
   'feedback.title': 'Give feedback on this web service',
