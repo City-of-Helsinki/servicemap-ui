@@ -11,6 +11,7 @@ const createMarkerClusterLayer = (
   settings,
   getLocaleText,
   navigator,
+  embeded,
 ) => {
   const {
     divIcon, point, markerClusterGroup,
@@ -58,10 +59,15 @@ const createMarkerClusterLayer = (
     iconCreateFunction: createClusterCustomIcon,
     maxClusterRadius,
     removeOutsideVisibleBounds: true,
+    zoomToBoundsOnClick: !embeded,
   });
 
   // Cluster click event
   markers.on('clusterclick', (a) => {
+    if (embeded) {
+      window.open(window.location.href.replace('/embed', ''));
+      return;
+    }
     // a.layer is actually a cluster
     const clusterMarkers = a.layer.getAllChildMarkers();
     const units = clusterMarkers.map((marker) => {
@@ -136,6 +142,7 @@ const renderUnitMarkers = (
   classes,
   clusterLayer,
   embeded,
+  generatePath,
 ) => {
   const {
     marker,
@@ -173,9 +180,15 @@ const renderUnitMarkers = (
           tooltipOptions(unit, unitListFiltered.length),
         );
 
-        if (unitListFiltered.length > 1) {
+        if (unitListFiltered.length > 1 || embeded) {
           markerElem.on('click', () => {
-            if (navigator && !embeded) {
+            if (embeded) {
+              const { origin } = window.location;
+              const path = generatePath('unit', { id: unit.id });
+              window.open(`${origin}${path}`);
+              return;
+            }
+            if (navigator) {
               navigator.push('unit', { id: unit.id });
             }
           });
@@ -190,13 +203,22 @@ const renderUnitMarkers = (
 
 // Connector (closure) function used to add state values in redux connect
 export const markerClusterConnector = (settings, getLocaleText, navigator) => (
-  leaflet, map, classes, popupTitle,
+  leaflet, map, classes, popupTitle, embeded,
 ) => (
-  createMarkerClusterLayer(leaflet, map, classes, popupTitle, settings, getLocaleText, navigator)
+  createMarkerClusterLayer(
+    leaflet,
+    map,
+    classes,
+    popupTitle,
+    settings,
+    getLocaleText,
+    navigator,
+    embeded,
+  )
 );
 
 // Connector (closure) function used to add state values in redux connect
-export const renderMarkerConnector = (settings, getLocaleText, navigator, theme) => (
+export const renderMarkerConnector = (settings, getLocaleText, navigator, theme, generatePath) => (
   leaflet, data, classes, clusterLayer, embeded,
 ) => renderUnitMarkers(
   settings,
@@ -208,4 +230,5 @@ export const renderMarkerConnector = (settings, getLocaleText, navigator, theme)
   classes,
   clusterLayer,
   embeded,
+  generatePath,
 );
