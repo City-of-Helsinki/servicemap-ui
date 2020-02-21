@@ -34,7 +34,6 @@ const ContactInfo = ({
   // Temporary link implementation for route info
   const url = 'https://reittiopas.hsl.fi/reitti/';
   let currentLocationString = ' ';
-  const destinationString = `${getLocaleText(unit.name)}, ${unit.municipality}::${unit.location.coordinates[1]},${unit.location.coordinates[0]}`;
 
   if (userLocation && userLocation.addressData) {
     const { street, number } = userLocation.addressData;
@@ -44,17 +43,6 @@ const ContactInfo = ({
     currentLocationString = `${userAddress}::${latitude},${longitude}`;
   }
 
-  const routeUrl = `${url}${currentLocationString}/${destinationString}?locale=${intl.locale}`;
-
-  const route = {
-    type: 'ROUTE',
-    value: {
-      www: routeUrl,
-      name: intl.formatMessage({ id: 'unit.route' }),
-      extraText: intl.formatMessage({ id: 'unit.route.extra' }),
-    },
-  };
-
   // Form data array
   const data = [
     address,
@@ -63,8 +51,25 @@ const ContactInfo = ({
     website,
     ...contact.length ? contact : [],
     ...hours.length ? hours : [{ type: 'OPENING_HOURS', value: intl.formatMessage({ id: 'unit.opening.hours.missing' }) }],
-    route,
   ];
+
+  // Add route info to data in location exists
+  const { location } = unit;
+
+  if (location && location.coordinates) {
+    const destinationString = `${getLocaleText(unit.name)}, ${unit.municipality}::${unit.location.coordinates[1]},${unit.location.coordinates[0]}`;
+    const routeUrl = `${url}${currentLocationString}/${destinationString}?locale=${intl.locale}`;
+
+    const route = {
+      type: 'ROUTE',
+      value: {
+        www: routeUrl,
+        name: intl.formatMessage({ id: 'unit.route' }),
+        extraText: intl.formatMessage({ id: 'unit.route.extra' }),
+      },
+    };
+    data.push(route);
+  }
 
   return (
     <InfoList
