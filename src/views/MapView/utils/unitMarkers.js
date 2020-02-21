@@ -180,7 +180,7 @@ const renderUnitMarkers = (
           tooltipOptions(unit, unitListFiltered.length),
         );
 
-        if (unitListFiltered.length > 1) {
+        if (unitListFiltered.length > 1 || embeded) {
           markerElem.on('click', () => {
             if (embeded) {
               const { origin } = window.location;
