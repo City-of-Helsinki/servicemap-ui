@@ -1,4 +1,8 @@
 export default theme => ({
+  container: {
+    height: '100%',
+    backgroundColor: '#EEEEEE',
+  },
   contentArea: {
     paddingLeft: 28,
     paddingRight: 28,
@@ -7,9 +11,13 @@ export default theme => ({
   noPadding: {
     padding: 0,
   },
-  input: {
+  inputField: {
+    backgroundColor: '#fff',
     marginTop: 4,
     marginBottom: 4,
+    padding: 0,
+  },
+  input: {
     fontSize: 12,
     lineHeight: '20px',
     padding: 10,
@@ -65,14 +73,22 @@ export default theme => ({
     display: 'flex',
     paddingTop: 16,
     paddingBottom: 32,
-    marginLeft: theme.spacing.unit,
     alignItems: 'center',
     '&:focus': {
       border: '1px solid #1964E6',
     },
   },
   box: {
-    marginLeft: -12,
+    marginLeft: -8,
+    padding: 8,
+    marginRight: 8,
+  },
+  checkBoxIcon: {
+    width: 15,
+    height: 15,
+    backgroundColor: '#fff',
+    border: `1px solid ${theme.palette.primary.main};`,
+    borderRadius: 1,
   },
   bottomArea: {
     paddingTop: 8,

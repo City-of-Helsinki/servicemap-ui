@@ -127,14 +127,15 @@ const FeedbackView = ({
         </div>
       </Dialog>
 
-      <form>
-        <TitleBar backButton backButtonOnClick={() => navigator.goBack()} title={feedbackTitle} />
+      <form className={classes.container}>
+        <TitleBar backButton title={feedbackTitle} />
         <div className={classes.contentArea}>
           {/* Email field */}
           <FormControl>
             <Typography className={classes.title}><FormattedMessage id="feedback.email.info" /></Typography>
             <Typography id="emailTitle" className={classes.subtitle}><FormattedMessage id="feedback.email" /></Typography>
             <InputBase
+              className={classes.inputField}
               aria-describedby="emailTitle"
               classes={{ input: classes.input }}
               onChange={e => handleChange('email', e)}
@@ -146,13 +147,14 @@ const FeedbackView = ({
             <Typography className={classes.title}><FormattedMessage id="feedback.feedback.info" /></Typography>
             <Typography id="feedbackTitle" className={classes.subtitle}><FormattedMessage id="feedback.feedback" /></Typography>
             <InputBase
+              className={classes.inputField}
               aria-describedby={!errorMessage ? 'feedbackTitle' : 'srError'}
               multiline
               rows="5"
               classes={{ input: `${classes.input} ${errorMessage ? classes.errorField : ''}` }}
               onChange={e => handleChange('feedback', e)}
               onBlur={!fbFieldVisited ? () => setFbFieldVisited(true) : null}
-              inputProps={{ maxLength: feedbackMaxLength, ariaInvalid: true }}
+              inputProps={{ maxLength: feedbackMaxLength, 'aria-invalid': !!errorMessage }}
             />
             <div className={classes.inputInfo}>
               {errorMessage && (
@@ -179,6 +181,7 @@ const FeedbackView = ({
           <FormControl>
             <div className={classes.checkbox}>
               <Checkbox
+                icon={<span className={classes.checkBoxIcon} />}
                 size="small"
                 color="primary"
                 onChange={() => setPermission(!permission)}
@@ -206,6 +209,7 @@ const FeedbackView = ({
             aria-label={!feedback || errorMessage ? intl.formatMessage({ id: 'feedback.send.error' }) : null}
             onClick={() => handleSend()}
             messageID={sending ? 'feedback.sending' : 'feedback.send'}
+            color="primary"
           />
         </div>
       </form>
