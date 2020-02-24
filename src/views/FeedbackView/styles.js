@@ -19,7 +19,8 @@ export default theme => ({
     borderRadius: 2,
     border: '1px solid #000',
     '&:focus': {
-      border: '1px solid #1964E6',
+      outline: '2px solid transparent',
+      boxShadow: `0 0 0 4px ${theme.palette.focusBorder}`,
     },
   },
   inputInfo: {
@@ -28,7 +29,7 @@ export default theme => ({
   errorContainer: {
     display: 'flex',
     alignItems: 'center',
-    color: '#b50000',
+    color: `${theme.palette.warning}`,
   },
   errorIcon: {
     fontSize: 16,
@@ -38,7 +39,8 @@ export default theme => ({
     margin: 0,
   },
   errorField: {
-    border: '1px solid #b50000',
+    border: `1px solid ${theme.palette.warning}`,
+    boxShadow: `0 0 0 1px ${theme.palette.warning}`,
   },
   characterInfo: {
     color: '#000',
@@ -46,7 +48,7 @@ export default theme => ({
     marginLeft: 'auto',
   },
   characterInfoError: {
-    color: '#b50000',
+    color: `${theme.palette.warning}`,
   },
   title: {
     paddingTop: 16,
@@ -63,6 +65,7 @@ export default theme => ({
     display: 'flex',
     paddingTop: 16,
     paddingBottom: 32,
+    marginLeft: theme.spacing.unit,
     alignItems: 'center',
     '&:focus': {
       border: '1px solid #1964E6',
@@ -79,8 +82,13 @@ export default theme => ({
     paddingRight: 28,
   },
   infoText: {
-    fontSize: 14,
-    paddingTop: 14,
+    marginTop: 14,
+  },
+  link: {
+    marginTop: 14,
+    marginBottom: 26,
+    textAlign: 'left',
+    textDecoration: 'underline',
   },
   modalContainer: {
     display: 'flex',
@@ -91,7 +99,6 @@ export default theme => ({
   modalButton: {
     width: 135,
     color: '#fff',
-    backgroundColor: theme.palette.primary.main,
   },
   modalTitle: {
     fontSize: 16,

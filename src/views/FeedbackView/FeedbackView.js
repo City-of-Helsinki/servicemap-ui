@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Warning } from '@material-ui/icons';
 import {
-  Typography, InputBase, Checkbox, FormControl, Link, Dialog,
+  Typography, InputBase, Checkbox, FormControl, Dialog, ButtonBase,
 } from '@material-ui/core';
 import { intlShape, FormattedMessage } from 'react-intl';
 import { Prompt } from 'react-router-dom';
@@ -19,6 +19,7 @@ const FeedbackView = ({
   const [permission, setPermission] = useState(false);
   const [fbFieldVisited, setFbFieldVisited] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [sending, setSending] = useState(false);
 
   const feedbackMaxLength = 5000;
   const feedbackType = location.pathname.includes('unit') ? 'unit' : 'general';
@@ -46,6 +47,8 @@ const FeedbackView = ({
   };
 
   const handleSend = () => {
+    setSending(true);
+
     let body;
 
     if (feedbackType === 'unit') {
@@ -74,7 +77,6 @@ const FeedbackView = ({
 
     const url = config.feedbackURL.root;
 
-
     fetch(url, {
       method: 'POST',
       headers: {
@@ -82,6 +84,7 @@ const FeedbackView = ({
       },
       body,
     }).then((response) => {
+      setSending(false);
       if (response.ok) {
         resetForm();
         setModalOpen('send');
@@ -91,6 +94,7 @@ const FeedbackView = ({
     }).catch((e) => {
       console.warn(e);
       setModalOpen('error');
+      setSending(false);
     });
   };
 
@@ -108,8 +112,11 @@ const FeedbackView = ({
             <FormattedMessage id={modalOpen === 'send' ? 'feedback.modal.success' : 'feedback.modal.error'} />
           </Typography>
           <SMButton
+            margin
+            role="button"
             className={classes.modalButton}
             messageID="feedback.modal.confirm"
+            color="primary"
             onClick={() => {
               setModalOpen(false);
               if (modalOpen === 'send') {
@@ -139,13 +146,13 @@ const FeedbackView = ({
             <Typography className={classes.title}><FormattedMessage id="feedback.feedback.info" /></Typography>
             <Typography id="feedbackTitle" className={classes.subtitle}><FormattedMessage id="feedback.feedback" /></Typography>
             <InputBase
-              aria-describedby="feedbackTitle"
+              aria-describedby={!errorMessage ? 'feedbackTitle' : 'srError'}
               multiline
               rows="5"
               classes={{ input: `${classes.input} ${errorMessage ? classes.errorField : ''}` }}
               onChange={e => handleChange('feedback', e)}
               onBlur={!fbFieldVisited ? () => setFbFieldVisited(true) : null}
-              inputProps={{ maxLength: feedbackMaxLength }}
+              inputProps={{ maxLength: feedbackMaxLength, ariaInvalid: true }}
             />
             <div className={classes.inputInfo}>
               {errorMessage && (
@@ -156,6 +163,11 @@ const FeedbackView = ({
                     {errorMessage}
                   </Typography>
                 </div>
+              )}
+              {!feedbackLength && (
+                <Typography id="srError" role="alert" variant="srOnly">
+                  <FormattedMessage id="feedback.srError.required" />
+                </Typography>
               )}
               <Typography aria-hidden className={`${classes.characterInfo} ${feedbackFull ? classes.characterInfoError : ''}`}>
                 {`${feedbackLength}/${feedbackMaxLength}`}
@@ -181,19 +193,19 @@ const FeedbackView = ({
 
         <div className={classes.bottomArea}>
           <Typography className={classes.infoText}><FormattedMessage id="feedback.additionalInfo" /></Typography>
-          <Typography className={classes.infoText}>
-            <Link
-              href="https://www.hel.fi/helsinki/fi/kaupunki-ja-hallinto/osallistu-ja-vaikuta/palaute/ohjeita-palautteesta"
-              target="_blank"
-            >
-              <FormattedMessage id="feedback.additionalInfo.link" />
-            </Link>
-          </Typography>
+          <ButtonBase
+            className={classes.link}
+            role="link"
+            onClick={() => window.open('https://www.hel.fi/helsinki/fi/kaupunki-ja-hallinto/osallistu-ja-vaikuta/palaute/ohjeita-palautteesta')}
+          >
+            <Typography><FormattedMessage id="feedback.additionalInfo.link" /></Typography>
+          </ButtonBase>
           <SMButton
-            disabled={!feedback || errorMessage}
+            role="button"
+            disabled={!feedback || errorMessage || sending}
+            aria-label={!feedback || errorMessage ? intl.formatMessage({ id: 'feedback.send.error' }) : null}
             onClick={() => handleSend()}
-            messageID="feedback.send"
-            margin
+            messageID={sending ? 'feedback.sending' : 'feedback.send'}
           />
         </div>
       </form>
