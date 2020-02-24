@@ -123,6 +123,14 @@ const createMarkerClusterLayer = (
     }
   });
 
+  // Hide clusters and markers from keyboard after clustering animations are done
+  markers.on('animationend', () => {
+    document.querySelectorAll('.leaflet-marker-icon').forEach((item) => {
+      item.setAttribute('tabindex', '-1');
+      item.setAttribute('aria-hidden', 'true');
+    });
+  });
+
   return markers;
 };
 
