@@ -1,5 +1,6 @@
 const webpack = require('webpack'); //to access built-in plugins
 const path = require('path');
+const nodeExternals = require('webpack-node-externals');
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -87,6 +88,10 @@ const serverConfig = {
   entry: {
     'index.js': path.resolve(__dirname, 'server/server.js'),
   },
+  externals: [nodeExternals({
+    // excluding material ui from the build breaks the page styles
+    whitelist: [/^@material-ui.*/]
+  })],
   module: {
     rules: [
       {

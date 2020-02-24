@@ -18,6 +18,9 @@ export default theme => ({
     textTransform: 'none',
     textAlign: 'left',
     marginLeft: 10,
+    '&:focus': {
+      outlineStyle: 'none',
+    },
   },
   iconButton: {
     display: 'flex',
@@ -25,6 +28,10 @@ export default theme => ({
     flex: '0 1 auto',
     padding: theme.spacing.unit,
     marginLeft: theme.spacing.unitHalf,
+  },
+  buttonFocus: {
+    outline: '2px solid transparent',
+    boxShadow: `0 0 0 4px ${theme.palette.primary.highContrast}`,
   },
   colorLight: {
     color: '#000',

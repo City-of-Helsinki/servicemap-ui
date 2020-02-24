@@ -6,7 +6,15 @@ import {
 import BackButton from '../BackButton';
 
 const TitleBar = ({
-  backButton, backButtonOnClick, classes, title, titleComponent, icon, distance, className, ariaHidden,
+  backButton,
+  backButtonOnClick,
+  classes,
+  title,
+  titleComponent,
+  icon,
+  distance,
+  className,
+  ariaHidden,
 }) => (
   <>
     <div className={`${className} ${classes.container} ${!backButton && !icon ? classes.textBar : ''}`}>
@@ -18,6 +26,7 @@ const TitleBar = ({
             onClick={backButtonOnClick}
             className={classes.iconButton}
             variant="icon"
+            focusVisibleClassName={classes.buttonFocus}
           />
         )
       }

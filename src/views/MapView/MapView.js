@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { withStyles, ButtonBase } from '@material-ui/core';
+import { withStyles, Tooltip as MUITooltip, ButtonBase } from '@material-ui/core';
 import { intlShape } from 'react-intl';
 import { MyLocation, LocationDisabled } from '@material-ui/icons';
 import { mapOptions } from './config/mapConfig';
@@ -19,6 +19,7 @@ import { isEmbed } from '../../utils/path';
 import AddressMarker from './components/AddressMarker';
 import isClient, { parseSearchParams } from '../../utils';
 import swapCoordinates from './utils/swapCoordinates';
+import HomeLogo from '../../components/Logos/HomeLogo';
 
 
 const MapView = (props) => {
@@ -59,6 +60,7 @@ const MapView = (props) => {
   const [prevMap, setPrevMap] = useState(null);
   const [markerCluster, setMarkerCluster] = useState(null);
 
+  const embeded = isEmbed(match);
 
   const getMapUnits = () => {
     let mapUnits = [];
@@ -165,7 +167,7 @@ const MapView = (props) => {
 
     if (map && leaflet && createMarkerClusterLayer && isClient()) {
       const popupTitle = intl.formatMessage({ id: 'unit.plural' });
-      const cluster = createMarkerClusterLayer(leaflet, map, classes, popupTitle);
+      const cluster = createMarkerClusterLayer(leaflet, map, classes, popupTitle, embeded);
       if (cluster) {
         map.leafletElement.addLayer(cluster);
         setMarkerCluster(cluster);
@@ -215,8 +217,6 @@ const MapView = (props) => {
     initializeMarkerClusterLayer();
   }, [mapObject, leaflet]);
 
-  const embeded = isEmbed(match);
-
   // Attempt to render unit markers on page change or unitList change
   useEffect(() => {
     if (!markerCluster) {
@@ -234,6 +234,23 @@ const MapView = (props) => {
   }, [unitList, highlightedUnit, markerCluster, addressUnits, serviceUnits, highlightedDistrict]);
 
   // Render
+
+  const renderEmbedOverlay = () => {
+    if (!embeded) {
+      return null;
+    }
+    const openApp = () => {
+      const url = window.location.href;
+      window.open(url.replace('/embed', ''));
+    };
+    return (
+      <ButtonBase onClick={openApp}>
+        <MUITooltip title={intl.formatMessage({ id: 'embed.click_prompt_move' })}>
+          <HomeLogo aria-hidden className={classes.embedLogo} />
+        </MUITooltip>
+      </ButtonBase>
+    );
+  };
 
 
   const {
@@ -256,6 +273,7 @@ const MapView = (props) => {
     return (
       <>
         {renderTopBar()}
+        {renderEmbedOverlay()}
         <Map
           className={classes.map}
           key={mapObject.options.name}
@@ -338,21 +356,25 @@ const MapView = (props) => {
           )}
 
           <ZoomControl position="bottomright" aria-hidden="true" />
-
-          {/* Custom user location map button */}
-          <Control position="bottomright">
-            <ButtonBase
-              disabled={!userLocation}
-              className={`${classes.showLocationButton} ${!userLocation ? classes.locationDisabled : ''}`}
-              onClick={() => focusOnUser()}
-              focusVisibleClassName={classes.locationButtonFocus}
-            >
-              {userLocation
-                ? <MyLocation className={classes.showLocationIcon} />
-                : <LocationDisabled className={classes.showLocationIcon} />
-              }
-            </ButtonBase>
-          </Control>
+          {
+            !embeded
+            && (
+              /* Custom user location map button */
+              <Control position="bottomright">
+                <ButtonBase
+                  disabled={!userLocation}
+                  className={`${classes.showLocationButton} ${!userLocation ? classes.locationDisabled : ''}`}
+                  onClick={() => focusOnUser()}
+                  focusVisibleClassName={classes.locationButtonFocus}
+                >
+                  {userLocation
+                    ? <MyLocation className={classes.showLocationIcon} />
+                    : <LocationDisabled className={classes.showLocationIcon} />
+                }
+                </ButtonBase>
+              </Control>
+            )
+          }
         </Map>
       </>
     );

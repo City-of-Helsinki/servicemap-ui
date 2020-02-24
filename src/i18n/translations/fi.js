@@ -45,6 +45,9 @@ export default {
   'event.picture': 'Tapahtuman kuva',
   'event.title': 'Tapahtumat',
 
+  // Embed
+  'embed.click_prompt_move': 'Klikkaa siirtyäksesi Palvelukartalle',
+
   // Feedback
   'feedback.back': 'Palaa takaisin',
   'feedback.title': 'Anna palautetta tästä verkkopalvelusta',

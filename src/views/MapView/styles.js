@@ -25,6 +25,13 @@ const styles = theme => ({
     paddingTop: '9px',
     paddingBottom: 12,
   },
+  embedLogo: {
+    bottom: 0,
+    left: 0,
+    height: 'auto',
+    position: 'fixed',
+    zIndex: 1000,
+  },
   transitBackground: {
     fontFamily: 'hsl-piktoframe',
     position: 'absolute',

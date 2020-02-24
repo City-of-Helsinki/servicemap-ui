@@ -45,6 +45,9 @@ export default {
   'event.picture': 'Bild på evenemanget',
   'event.title': 'Evenemang',
 
+  // Embed
+  'embed.click_prompt_move': 'Klicka för att öppna Servicekartan',
+
   // Feedback
   'feedback.back': 'Gå tillbaka',
   'feedback.title': 'Ge respons om den här nättjänsten',

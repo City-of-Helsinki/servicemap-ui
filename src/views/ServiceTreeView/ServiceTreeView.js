@@ -328,6 +328,7 @@ const ServiceTreeView = (props) => {
           disabled={!selectedList.length}
           onClick={() => setSelectedOpen(!selectedOpen)}
           className={classes.selectionsButton}
+          focusVisibleClassName={classes.selectionFocus}
         >
           <Typography className={`${classes.selectionText} ${classes.bold}`}>
             <FormattedMessage id="services.selections" values={{ count: selectedList.length }} />
@@ -342,6 +343,7 @@ const ServiceTreeView = (props) => {
             className={classes.right}
             disabled={!selectedList.length}
             onClick={() => setSelected([])}
+            focusVisibleClassName={classes.selectionFocus}
           >
             <Typography className={classes.deleteText}>
               <FormattedMessage id="services.selections.delete.all" />
@@ -365,6 +367,7 @@ const ServiceTreeView = (props) => {
                   className={classes.right}
                   aria-label={intl.formatMessage({ id: 'services.selections.delete.sr' }, { service: getLocaleText(item.name) })}
                   onClick={() => handleCheckboxClick(null, item)}
+                  focusVisibleClassName={classes.selectionFocus}
                 >
                   <Typography className={classes.deleteText} variant="body2">
                     <FormattedMessage id="services.selections.delete" />
