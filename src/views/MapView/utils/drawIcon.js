@@ -179,6 +179,7 @@ export const drawMarkerIcon = (contrast = false) => {
     iconUrl: contrast ? berryIconContrast : berryIcon,
     iconSize: [30, 30],
     iconAnchor: [13, 25],
+    className: 'unitMarker',
   });
 
   return markerIcon;
