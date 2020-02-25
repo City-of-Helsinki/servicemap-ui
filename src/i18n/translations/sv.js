@@ -148,6 +148,12 @@ export default {
   'location.notFound': 'Positionen hittades inte',
   'location.notAllowed': 'Positionen tilläts inte',
 
+  // Loading
+  'loading.events': 'Söker evenemangen {count} / {max}', // TODO: Translate
+  'loading.events.srInfo': 'Söker {count} evenemange(n)', // TODO: Translate
+  'search.loading.units': 'Söker verksamhetsställen {count} / {max}',
+  'search.loading.units.srInfo': 'Söker {count} verksamhetsställe(n)',
+
   // Map
   'map': 'Karta',
   'map.ariaLabel': 'Kartvy. Kartans uppgifter kan i nuläget granskas endast visuellt.',
@@ -259,8 +265,6 @@ export default {
   'search.searchField': 'Sökfält',
   'search.results.title': 'Sökresultat',
   'search.input.placeholder': 'Sök verksamhetsställen',
-  'search.loading.units': 'Söker verksamhetsställen {count} / {max}',
-  'search.loading.units.srInfo': 'Söker {count} verksamhetsställe(n)',
   'search.notFound': 'Inga sökresultat hittades med sökningen',
   'search.started': 'Sökningen har börjat',
   'search.infoText': '{count} sökresultat',

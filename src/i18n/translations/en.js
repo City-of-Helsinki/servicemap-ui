@@ -148,6 +148,12 @@ export default {
   'location.notFound': 'Location not found',
   'location.notAllowed': 'Location not allowed',
 
+  // Loading texts
+  'loading.events': 'Loading events {count} / {max}',
+  'loading.events.srInfo': 'Loading {count} event(s)',
+  'search.loading.units': 'Searching units {count} / {max}',
+  'search.loading.units.srInfo': 'Searching {count} unit(s)',
+
   // Map
   'map': 'Map',
   'map.ariaLabel': 'Map. Currently map information is only accessible visually.',
@@ -259,8 +265,6 @@ export default {
   'search.searchField': 'Search field',
   'search.results.title': 'Search results',
   'search.input.placeholder': 'Search units',
-  'search.loading.units': 'Searching units {count} / {max}',
-  'search.loading.units.srInfo': 'Searching {count} unit(s)',
   'search.notFound': 'No results found with given search',
   'search.started': 'Search started',
   'search.infoText': '{count} Search results',

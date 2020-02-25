@@ -19,6 +19,10 @@ export default withStyles(styles)(Loading);
 // Typechecking
 Loading.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  text: PropTypes.string.isRequired,
+  text: PropTypes.string,
   progress: PropTypes.number.isRequired,
+};
+
+Loading.defaultProps = {
+  text: null,
 };

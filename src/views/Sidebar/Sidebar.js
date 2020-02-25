@@ -129,7 +129,7 @@ class Sidebar extends React.Component {
   render() {
     return (
       <Switch>
-        <Route exact path="/:lng/unit/:unit" component={Unit} />
+        <Route exact path="/:lng/unit/:unit/:page?" component={Unit} />
         <Route path="/:lng/search" component={Search} />
         <Route path="/:lng/services" component={ServiceTree} />
         <Route path="/:lng/service/:service" component={Service} />

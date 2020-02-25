@@ -148,6 +148,12 @@ export default {
   'location.notFound': 'Sijaintia ei löytynyt',
   'location.notAllowed': 'Sijaintia ei sallittu',
 
+  // Loading
+  'loading.events': 'Haetaan tapahtumia {count} / {max}',
+  'loading.events.srInfo': 'Haetaan {count} tapahtumaa',
+  'search.loading.units': 'Haetaan toimipisteitä {count} / {max}',
+  'search.loading.units.srInfo': 'Haetaan {count} toimipistettä',
+
   // Map
   'map': 'Kartta',
   'map.ariaLabel': 'Karttanäkymä. Kartan tietoja voi tarkastella tällä hetkellä vain näönvaraisesti.',
@@ -259,8 +265,6 @@ export default {
   'search.searchField': 'Hakukenttä',
   'search.results.title': 'Hakutulokset',
   'search.input.placeholder': 'Hae toimipisteitä',
-  'search.loading.units': 'Haetaan toimipisteitä {count} / {max}',
-  'search.loading.units.srInfo': 'Haetaan {count} toimipistettä',
   'search.notFound': 'Haulla ei löytynyt hakutuloksia',
   'search.started': 'Haku aloitettu',
   'search.infoText': '{count} Hakutulosta',
