@@ -1,48 +1,47 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { getLocaleString } from '../../../redux/selectors/locale';
 import TitledList from '../../../components/Lists/TitledList';
-import { fetchUnitEvents, fetchAdditionalEvents } from '../../../redux/actions/selectedUnitEvents';
+import { fetchUnitEvents } from '../../../redux/actions/selectedUnitEvents';
 import EventItem from '../../../components/ListItems/EventItem';
 
 const Events = ({
   unit,
   eventsData,
   listLength,
-  showMoreCount,
-  fetchUnitEvents,
-  fetchAdditionalEvents,
+  navigator,
 }) => {
-  const [ref, setRef] = useState(listLength);
-  const events = eventsData.data;
-  const { isFetching, count, next } = eventsData;
+  const {
+    data, isFetching, max,
+  } = eventsData;
 
-  if (unit && events && events.length) {
+  if (!data) {
+    return null;
+  }
+
+  const endIndex = listLength > data.length ? data.length : listLength;
+  const shownData = data && data.length ? data.slice(0, endIndex) : null;
+
+  if (unit && shownData && shownData.length) {
     return (
-      <div ref={ref => setRef(ref)}>
+      <div>
         <TitledList
           title={<FormattedMessage id="unit.events" />}
-          subtitle={<FormattedMessage id="unit.events.count" values={{ count }} />}
+          subtitle={<FormattedMessage id="unit.events.count" values={{ count: max }} />}
           titleComponent="h4"
-          shortened={events.length < count}
+          shortened={max > listLength}
           buttonMessageID="unit.events.more"
           loading={isFetching}
           showMoreOnClick={listLength
             ? () => {
-              if (!isFetching) {
-                const lastListItem = ref.querySelector('li:nth-last-of-type(2)');
-                lastListItem.focus();
-                if (events.length < showMoreCount) {
-                  fetchUnitEvents(unit.id, showMoreCount, true);
-                } else {
-                  fetchAdditionalEvents(next);
-                }
+              if (navigator) {
+                navigator.push('unit', { id: unit.id, type: 'events' });
               }
             } : null}
         >
-          {events.map(event => (
+          {shownData.map(event => (
             <EventItem key={event.id} event={event} />
           ))}
         </TitledList>
@@ -68,18 +67,16 @@ Events.propTypes = {
   eventsData: PropTypes.objectOf(PropTypes.any).isRequired,
   unit: PropTypes.objectOf(PropTypes.any),
   listLength: PropTypes.number,
-  showMoreCount: PropTypes.number,
-  fetchUnitEvents: PropTypes.func.isRequired,
-  fetchAdditionalEvents: PropTypes.func.isRequired,
+  navigator: PropTypes.objectOf(PropTypes.any),
 };
 
 Events.defaultProps = {
+  navigator: null,
   unit: null,
-  listLength: null,
-  showMoreCount: 15,
+  listLength: 5,
 };
 
 export default connect(
   mapStateToProps,
-  { fetchUnitEvents, fetchAdditionalEvents },
+  { fetchUnitEvents },
 )(Events);

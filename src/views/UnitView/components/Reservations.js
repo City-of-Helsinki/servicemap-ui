@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
@@ -7,47 +7,44 @@ import { connect } from 'react-redux';
 import TitledList from '../../../components/Lists/TitledList';
 import SimpleListItem from '../../../components/ListItems/SimpleListItem';
 import { getLocaleString } from '../../../redux/selectors/locale';
-import { fetchReservations, fetchAdditionalReservations, changeReservations } from '../../../redux/actions/selectedUnitReservations';
 
 const Reservations = ({
   listLength,
   reservationsData,
   getLocaleText,
   intl,
-  showMoreCount,
+  navigator,
   unit,
-  fetchReservations,
-  fetchAdditionalReservations,
 }) => {
-  const [ref, setRef] = useState(null);
-  const reservations = reservationsData.data;
-  const { isFetching, count, next } = reservationsData;
+  const {
+    data, isFetching, max,
+  } = reservationsData;
 
+  if (!data) {
+    return null;
+  }
 
-  if (reservations && reservations.length) {
+  const endIndex = listLength > data.length ? data.length : listLength;
+  const shownData = data.slice(0, endIndex);
+
+  if (shownData && shownData.length) {
     return (
-      <div ref={ref => setRef(ref)}>
+      <div>
         <TitledList
           title={<FormattedMessage id="unit.reservations" />}
-          subtitle={<FormattedMessage id="unit.reservations.count" values={{ count }} />}
+          subtitle={<FormattedMessage id="unit.reservations.count" values={{ count: max }} />}
           titleComponent="h4"
-          shortened={reservations.length < count}
+          shortened={max > listLength}
           loading={isFetching}
           buttonMessageID="unit.reservations.more"
           showMoreOnClick={listLength
             ? () => {
-              if (!isFetching) {
-                const lastListItem = ref.querySelector('li:nth-last-of-type(2)');
-                lastListItem.focus();
-                if (reservations.length < showMoreCount) {
-                  fetchReservations(unit.id, showMoreCount, true);
-                } else {
-                  fetchAdditionalReservations(next);
-                }
+              if (navigator) {
+                navigator.push('unit', { id: unit.id, type: 'reservations' });
               }
             } : null}
         >
-          {reservations.map(item => (
+          {shownData.map(item => (
             <SimpleListItem
               key={item.id}
               icon={<EventAvailable />}
@@ -70,28 +67,28 @@ Reservations.propTypes = {
   getLocaleText: PropTypes.func.isRequired,
   listLength: PropTypes.number,
   intl: intlShape.isRequired,
-  showMoreCount: PropTypes.number,
-  fetchReservations: PropTypes.func.isRequired,
-  fetchAdditionalReservations: PropTypes.func.isRequired,
+  navigator: PropTypes.objectOf(PropTypes.any),
   unit: PropTypes.objectOf(PropTypes.any),
 };
 
 Reservations.defaultProps = {
   unit: null,
-  listLength: null,
-  showMoreCount: 15,
+  listLength: 5,
+  navigator: null,
 };
 
 const mapStateToProps = (state) => {
-  const unit = state.selectedUnit.unit.data;
+  const { navigator, selectedUnit } = state;
+  const unit = selectedUnit.unit.data;
   const getLocaleText = textObject => getLocaleString(state, textObject);
   return {
     unit,
     getLocaleText,
+    navigator,
   };
 };
 
 export default injectIntl(connect(
   mapStateToProps,
-  { changeReservations, fetchReservations, fetchAdditionalReservations },
+  null,
 )(Reservations));

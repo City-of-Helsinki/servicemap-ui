@@ -2,34 +2,32 @@ import { events } from './fetchDataActions';
 import { unitEventsFetch } from '../../utils/fetch';
 
 const {
-  setNewData, isFetching, fetchSuccess, fetchMoreSuccess, fetchError,
+  setNewData, isFetching, fetchSuccess, fetchError, fetchProgressUpdate,
 } = events;
 
 export const changeUnitEvents = (events, meta) => async (dispatch) => {
   dispatch(setNewData(events, meta));
 };
 
-export const fetchUnitEvents = (unitId, pageSize, more) => async (dispatch) => {
+export const fetchUnitEvents = (unitId, pageSize, all = false) => async (dispatch) => {
   const onStart = () => {
-    if (!more) {
-      dispatch(setNewData([]));
-    }
     dispatch(isFetching());
   };
-  const onSuccess = data => dispatch(fetchSuccess(data.data, data.meta));
+  const onSuccess = (data) => {
+    if (data && data.length) {
+      dispatch(fetchSuccess(data));
+      return;
+    }
+    if (data.data && data.meta) {
+      dispatch(fetchProgressUpdate(data.data.length, data.meta.count, data.meta.next));
+      dispatch(fetchSuccess(data.data));
+    }
+  };
   const onError = e => dispatch(fetchError(e.message));
+  const onNext = all ? (resultTotal, response) => {
+    dispatch(fetchProgressUpdate(resultTotal.length, response.meta.count));
+  } : null;
 
   // Fetch data
-  unitEventsFetch({ location: `tprek:${unitId}`, page_size: pageSize || 5 }, onStart, onSuccess, onError);
-};
-
-
-export const fetchAdditionalEvents = next => async (dispatch) => {
-  // fetch additional data that is added to previous data
-  const onStart = () => dispatch(isFetching());
-  const onSuccess = data => dispatch(fetchMoreSuccess(data.data, data.meta));
-  const onError = e => dispatch(fetchError(e.message));
-
-  // Fetch data
-  unitEventsFetch(null, onStart, onSuccess, onError, null, null, null, next);
+  unitEventsFetch({ location: `tprek:${unitId}`, page_size: pageSize || 5 }, onStart, onSuccess, onError, onNext);
 };

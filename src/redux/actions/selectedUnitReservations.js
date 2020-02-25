@@ -2,28 +2,28 @@ import { reservations } from './fetchDataActions';
 import { reservationsFetch } from '../../utils/fetch';
 
 const {
-  setNewData, isFetching, fetchSuccess, fetchMoreSuccess, fetchError,
+  isFetching, fetchSuccess, fetchMoreSuccess, fetchError, fetchProgressUpdate,
 } = reservations;
 
-// Change selected unit's reservations
-export const changeReservations = (data, meta) => async (dispatch) => {
-  dispatch(setNewData(data, meta));
-};
-
-export const fetchReservations = (id, pageSize, more) => async (dispatch) => {
+export const fetchReservations = (id, pageSize, all = false) => async (dispatch) => {
   const onStart = () => {
-    if (!more) {
-      dispatch(setNewData([]));
-    }
     dispatch(isFetching());
   };
   const onSuccess = (data) => {
+    if (data && data.length) {
+      dispatch(fetchSuccess(data));
+      return;
+    }
+    dispatch(fetchProgressUpdate(data.results.length, data.count, data.next));
     dispatch(fetchSuccess(data.results, { count: data.count, next: data.next }));
   };
   const onError = e => dispatch(fetchError(e.message));
+  const onNext = all ? (resultTotal, response) => {
+    dispatch(fetchProgressUpdate(resultTotal.length, response.count));
+  } : null;
 
   // Fetch data
-  reservationsFetch({ unit: `tprek:${id}`, page_size: pageSize || 5 }, onStart, onSuccess, onError);
+  reservationsFetch({ unit: `tprek:${id}`, page_size: pageSize || 5 }, onStart, onSuccess, onError, onNext);
 };
 
 
