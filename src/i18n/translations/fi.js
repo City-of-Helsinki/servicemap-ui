@@ -78,6 +78,8 @@ export default {
   'general.frontPage': 'Etusivu',
   'general.contrast': 'Kontrasti',
   'general.menu': 'Valikko',
+  'general.menu.open': 'Avaa valikko',
+  'general.menu.close': 'Sulje valikko',
   'general.back': 'Palaa',
   'general.back.address': 'Palaa osoitenäkymään',
   'general.back.home': 'Palaa aloitusnäkymään',

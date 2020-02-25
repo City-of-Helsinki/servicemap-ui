@@ -78,6 +78,8 @@ export default {
   'general.frontPage': 'Första sidan',
   'general.contrast': 'Kontrast',
   'general.menu': 'Meny',
+  'general.menu.open': 'Öppna menyn', // TODO: vereify
+  'general.menu.close': 'Stäng menyn', // TODO: vereify
   'general.back': 'Tillbaka',
   'general.back.address': 'Gå tillbaka till adressvyn',
   'general.back.home': 'Gå tillbaka till startvyn',

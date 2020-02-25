@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core';
+import { injectIntl } from 'react-intl';
 import { getLocaleString } from '../../redux/selectors/locale';
 import styles from './styles';
 import TopBar from './TopBar';
@@ -26,7 +27,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default withRouter(withStyles(styles)(connect(
+export default injectIntl(withRouter(withStyles(styles)(connect(
   mapStateToProps,
   { changeTheme, setMapType },
-)(TopBar)));
+)(TopBar))));

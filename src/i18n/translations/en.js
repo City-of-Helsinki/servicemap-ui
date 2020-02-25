@@ -78,6 +78,8 @@ export default {
   'general.frontPage': 'Front page',
   'general.contrast': 'Contrast',
   'general.menu': 'Menu',
+  'general.menu.open': 'Open menu',
+  'general.menu.close': 'Close menu',
   'general.back': 'Back',
   'general.back.address': 'Back to address view',
   'general.back.home': 'Back to home view',

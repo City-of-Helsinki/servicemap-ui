@@ -4,7 +4,7 @@ import {
   Button, Typography, AppBar, Toolbar, ButtonBase, NoSsr,
 } from '@material-ui/core';
 import { Map, Menu, Close } from '@material-ui/icons';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, intlShape } from 'react-intl';
 import I18n from '../../i18n';
 import HomeLogo from '../Logos/HomeLogo';
 import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
@@ -107,10 +107,12 @@ class TopBar extends React.Component {
   }
 
   renderMenuButton = () => {
-    const { classes } = this.props;
+    const { classes, intl } = this.props;
     const { drawerOpen } = this.state;
     return (
       <Button
+        aria-label={intl.formatMessage({ id: drawerOpen ? 'general.menu.close' : 'general.menu.open' })}
+        aria-pressed={drawerOpen}
         className={drawerOpen ? classes.toolbarButtonPressed : classes.toolbarButton}
         classes={{ label: classes.buttonLabel }}
         onClick={() => this.toggleDrawerMenu()}
@@ -330,6 +332,7 @@ TopBar.propTypes = {
   changeTheme: PropTypes.func.isRequired,
   setMapType: PropTypes.func.isRequired,
   theme: PropTypes.string.isRequired,
+  intl: intlShape.isRequired,
 };
 
 TopBar.defaultProps = {
