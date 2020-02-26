@@ -206,6 +206,11 @@ const renderUnitMarkers = (
         clusterLayer.addLayer(markerElem);
       }
     });
+
+    document.querySelectorAll('.leaflet-marker-icon').forEach((item) => {
+      item.setAttribute('tabindex', '-1');
+      item.setAttribute('aria-hidden', 'true');
+    });
   }
 };
 
