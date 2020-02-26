@@ -6,6 +6,7 @@ import EventItem from '../../../../components/ListItems/EventItem';
 import PaginatedList from '../../../../components/Lists/PaginatedList';
 import TitleBar from '../../../../components/TitleBar';
 import Loading from '../../../../components/Loading/Loading';
+import ReservationItem from '../../../../components/ListItems/ReservationItem';
 
 const ExtendedData = ({
   events, fetchReservations, fetchUnitEvents, reservations, intl,
@@ -19,7 +20,7 @@ const ExtendedData = ({
           fetchUnitEvents(unit, 50, true);
           break;
         case 'reservations':
-          // fetchReservations(unit);
+          fetchReservations(unit, 20, true);
           break;
         default:
       }
@@ -58,13 +59,42 @@ const ExtendedData = ({
     );
   };
 
-  // const renderReservations = () => 'Rendering reservations';
+  const renderReservations = () => {
+    const {
+      count, data, isFetching, max,
+    } = reservations;
 
+    const renderLoader = () => {
+      if (isFetching) {
+        const progress = count ? Math.floor((count / max * 100)) : 0;
+        const loadingText = intl && max ? intl.formatMessage({ id: 'loading.events' }, { count, max }) : null;
+        return <Loading text={loadingText} progress={progress} />;
+      }
+      return null;
+    };
+    return (
+      <>
+        <TitleBar title={<FormattedMessage id="unit.reservations" />} backButton />
+        <PaginatedList
+          id="reservations"
+          data={data || []}
+          customComponent={item => (
+            <ReservationItem key={item.id} reservation={item} />
+          )}
+          titleComponent="h3"
+        />
+        {
+          isFetching
+          && renderLoader()
+        }
+      </>
+    );
+  };
   switch (page) {
     case 'events':
       return renderEvents();
     case 'reservations':
-      // return renderReservations();
+      return renderReservations();
     default:
   }
   return null;
