@@ -19,7 +19,7 @@ const dataSet = prefix => ({
     next,
   }),
   setNewData: data => ({
-    type: `${prefix}_SET_DATA`,
+    type: `${prefix}_SET_NEW_DATA`,
     data,
   }),
   setNewCurrent: current => ({

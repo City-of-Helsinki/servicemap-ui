@@ -4,8 +4,12 @@ import { eventFetch, selectedUnitFetch, unitEventsFetch, accessibilitySentencesF
 import { changeSelectedEvent } from '../src/redux/actions/event';
 import { changeSelectedUnit } from '../src/redux/actions/selectedUnit';
 import { changeAccessibilitySentences } from '../src/redux/actions/selectedUnitAccessibility';
-import { changeReservations } from '../src/redux/actions/selectedUnitReservations';
 import { changeUnitEvents } from '../src/redux/actions/selectedUnitEvents';
+import { reservations } from '../src/redux/actions/fetchDataActions';
+
+const {
+  fetchSuccess, fetchProgressUpdate,
+} = reservations;
 
 const timeoutTimer = process.env.SSR_FETCH_TIMEOUT;
 
@@ -157,7 +161,8 @@ export const fetchSelectedUnitData = (req, res, next) => {
         response();
         return;
       }
-      store.dispatch(changeReservations(data.results, { count: data.count, next: data.next }));
+      store.dispatch(fetchProgressUpdate(data.results.length, data.count));
+      store.dispatch(fetchSuccess(data.results));
       response();
     }
     reservationsFetch({ unit: `tprek:${id}` }, null, reservationFetchEnd, fetchOnError, null, null, controller)
