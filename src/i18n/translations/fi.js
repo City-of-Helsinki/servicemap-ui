@@ -105,6 +105,8 @@ export default {
   'general.pageTitles.home': 'Aloitusnäkymä',
   'general.pageTitles.search': 'Hakutulosnäkymä',
   'general.pageTitles.unit': 'Toimipistenäkymä',
+  'general.pageTitles.unit.events': 'Toimipisteen tapahtumat',
+  'general.pageTitles.unit.reservations': 'Toimipisteen varattavat kohteet',
   'general.pageTitles.service': 'Palvelunäkymä',
   'general.pageTitles.serviceTree': 'Palveluluettelo',
   'general.pageTitles.event': 'Tapahtumanäkymä',

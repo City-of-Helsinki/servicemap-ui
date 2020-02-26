@@ -26,7 +26,6 @@ import { AddressIcon } from '../../components/SMIcon';
 import FeedbackView from '../FeedbackView';
 import SocialMediaLinks from './components/SocialMediaLinks';
 import UnitLinks from './components/UnitLinks';
-import ExtendedData from './components/ExtendedData';
 
 const UnitView = (props) => {
   const {
@@ -48,14 +47,6 @@ const UnitView = (props) => {
     userLocation,
     location,
   } = props;
-
-
-  const { params } = match;
-  const { page } = params;
-
-  if (page) {
-    return <ExtendedData />;
-  }
 
   const checkCorrectUnit = unit => unit && unit.id === parseInt(match.params.unit, 10);
 

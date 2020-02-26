@@ -9,13 +9,17 @@ import Loading from '../../../../components/Loading/Loading';
 import ReservationItem from '../../../../components/ListItems/ReservationItem';
 
 const ExtendedData = ({
-  events, fetchReservations, fetchUnitEvents, reservations, intl,
+  currentUnit, events, fetchSelectedUnit, fetchReservations, fetchUnitEvents, getLocaleText, reservations, intl, type,
 }) => {
-  const { page, unit } = useParams();
+  const { unit } = useParams();
+  const title = currentUnit && currentUnit.name ? getLocaleText(currentUnit.name) : '';
 
   useEffect(() => {
-    if (unit && page) {
-      switch (page) {
+    if (!currentUnit || !currentUnit.id) {
+      fetchSelectedUnit(unit);
+    }
+    if (unit && type) {
+      switch (type) {
         case 'events':
           fetchUnitEvents(unit, 50, true);
           break;
@@ -42,7 +46,15 @@ const ExtendedData = ({
     };
     return (
       <>
-        <TitleBar title={<FormattedMessage id="unit.events" />} backButton />
+        <TitleBar
+          title={(
+            <>
+              {`${title} - `}
+              <FormattedMessage id="unit.events" />
+            </>
+          )}
+          backButton
+        />
         <PaginatedList
           id="events"
           data={data || []}
@@ -74,7 +86,15 @@ const ExtendedData = ({
     };
     return (
       <>
-        <TitleBar title={<FormattedMessage id="unit.reservations" />} backButton />
+        <TitleBar
+          title={(
+            <>
+              {`${title} - `}
+              <FormattedMessage id="unit.reservations" />
+            </>
+          )}
+          backButton
+        />
         <PaginatedList
           id="reservations"
           data={data || []}
@@ -90,7 +110,7 @@ const ExtendedData = ({
       </>
     );
   };
-  switch (page) {
+  switch (type) {
     case 'events':
       return renderEvents();
     case 'reservations':

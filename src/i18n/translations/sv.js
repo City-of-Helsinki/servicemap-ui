@@ -105,6 +105,8 @@ export default {
   'general.pageTitles.home': 'Hemvy',
   'general.pageTitles.search': 'Sökresultatsvy',
   'general.pageTitles.unit': 'Vy med verksamhetsställen',
+  'general.pageTitles.unit.events': 'Toimipisteen tapahtumat', // TODO: Translate
+  'general.pageTitles.unit.reservations': 'Toimipisteen varattavat kohteet', // TODO: Translate
   'general.pageTitles.service': 'Tjänstevy',
   'general.pageTitles.serviceTree': 'Förteckning över tjänster',
   'general.pageTitles.event': 'Evenemangsvy',

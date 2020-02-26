@@ -105,6 +105,8 @@ export default {
   'general.pageTitles.home': 'Home view',
   'general.pageTitles.search': 'Search results view',
   'general.pageTitles.unit': 'Unit view',
+  'general.pageTitles.unit.events': 'Units events',
+  'general.pageTitles.unit.reservations': 'Units reservable object',
   'general.pageTitles.service': 'Service view',
   'general.pageTitles.serviceTree': 'Services list',
   'general.pageTitles.event': 'Event view',
