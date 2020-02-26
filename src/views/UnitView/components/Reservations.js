@@ -1,18 +1,14 @@
 import React from 'react';
 
 import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
-import { EventAvailable } from '@material-ui/icons';
+import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import TitledList from '../../../components/Lists/TitledList';
-import SimpleListItem from '../../../components/ListItems/SimpleListItem';
-import { getLocaleString } from '../../../redux/selectors/locale';
+import ReservationItem from '../../../components/ListItems/ReservationItem';
 
 const Reservations = ({
   listLength,
   reservationsData,
-  getLocaleText,
-  intl,
   navigator,
   unit,
 }) => {
@@ -45,16 +41,7 @@ const Reservations = ({
             } : null}
         >
           {shownData.map(item => (
-            <SimpleListItem
-              key={item.id}
-              icon={<EventAvailable />}
-              link
-              text={`${getLocaleText(item.name)} ${intl.formatMessage({ id: 'unit.opens.new.tab' })}`}
-              divider
-              handleItemClick={() => {
-                window.open(`https://varaamo.hel.fi/resources/${item.id}`);
-              }}
-            />
+            <ReservationItem key={item.id} reservation={item} />
           ))}
         </TitledList>
       </div>
@@ -64,9 +51,7 @@ const Reservations = ({
 
 Reservations.propTypes = {
   reservationsData: PropTypes.objectOf(PropTypes.any).isRequired,
-  getLocaleText: PropTypes.func.isRequired,
   listLength: PropTypes.number,
-  intl: intlShape.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   unit: PropTypes.objectOf(PropTypes.any),
 };
@@ -80,15 +65,13 @@ Reservations.defaultProps = {
 const mapStateToProps = (state) => {
   const { navigator, selectedUnit } = state;
   const unit = selectedUnit.unit.data;
-  const getLocaleText = textObject => getLocaleString(state, textObject);
   return {
     unit,
-    getLocaleText,
     navigator,
   };
 };
 
-export default injectIntl(connect(
+export default connect(
   mapStateToProps,
   null,
-)(Reservations));
+)(Reservations);
