@@ -377,12 +377,21 @@ class TabLists extends React.Component {
             // If component given use it instead
             if (item.component) {
               const activeTab = index === tabIndex;
-              if (!activeTab) return null;
+              if (!activeTab) {
+                return (
+                  <div
+                    id={`tab-content-${index}`}
+                    role="tabpanel"
+                    key={item.title}
+                    style={{ display: 'none' }}
+                  />
+                );
+              }
 
               return (
                 <div
                   className="active"
-                  id={`tab-content-${tabIndex}`}
+                  id={`tab-content-${index}`}
                   role="tabpanel"
                   key={item.title}
                   style={activeTab ? tabStyles : null}
@@ -410,7 +419,11 @@ class TabLists extends React.Component {
             const additionalText = `${intl.formatMessage({ id: 'general.pagination.pageCount' }, { current: adjustedCurrentPage, max: pageCount })}`;
 
             return (
-              <div className={classes.resultList} key={item.title}>
+              <div
+                id={`tab-content-${index}`}
+                className={classes.resultList}
+                key={item.title}
+              >
                 {
                   index === tabIndex
                   && (
