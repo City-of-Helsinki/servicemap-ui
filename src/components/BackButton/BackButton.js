@@ -16,6 +16,7 @@ const BackButton = (props) => {
     variant,
     navigator,
     srHidden,
+    srText,
     focusVisibleClassName,
   } = props;
 
@@ -41,7 +42,7 @@ const BackButton = (props) => {
   // Attempt to generate custom text
   const textId = `general.back.${idSuffix}`;
   const defaultMessage = intl.formatMessage({ id: 'general.back' });
-  const buttonText = intl.formatMessage({ id: textId, defaultMessage });
+  const buttonText = srText || intl.formatMessage({ id: textId, defaultMessage });
 
 
   if (variant === 'icon') {
@@ -123,6 +124,7 @@ BackButton.propTypes = {
   onClick: PropTypes.func,
   variant: PropTypes.oneOf(['container', 'icon', null]),
   srHidden: PropTypes.bool,
+  srText: PropTypes.string,
   focusVisibleClassName: PropTypes.objectOf(PropTypes.any),
 };
 
@@ -133,6 +135,7 @@ BackButton.defaultProps = {
   onClick: null,
   variant: null,
   srHidden: false,
+  srText: null,
   focusVisibleClassName: null,
 };
 

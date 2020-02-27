@@ -13,7 +13,7 @@ import SearchBar from '../../components/SearchBar';
 import { fitUnitsToMap } from '../MapView/utils/mapActions';
 import { parseSearchParams, getSearchParam } from '../../utils';
 import TabLists from '../../components/TabLists';
-
+import SMButton from '../../components/ServiceMapButton';
 import Container from '../../components/Container';
 import { generatePath } from '../../utils/path';
 import { DesktopComponent } from '../../layouts/WrapperComponents/WrapperComponents';
@@ -348,13 +348,15 @@ class SearchView extends React.Component {
   }
 
   renderExpandedSearchButton = () => {
-    const { classes, query } = this.props;
+    const { classes } = this.props;
     return (
       <div className={classes.suggestionButtonContainer}>
-        <ExpandedSuggestions
-          button
-          searchQuery={query}
-          onClick={() => { this.setState({ expandVisible: true }); }}
+        <SMButton
+          id="ExpandSuggestions"
+          small
+          role="link"
+          onClick={() => this.setState({ expandVisible: true })}
+          messageID="search.expand"
         />
       </div>
     );
@@ -373,7 +375,12 @@ class SearchView extends React.Component {
     return (
       <ExpandedSuggestions
         searchQuery={query}
-        onClick={() => { this.setState({ expandVisible: false }); }}
+        onClick={() => {
+          this.setState({ expandVisible: false });
+          setTimeout(() => {
+            document.getElementById('ExpandSuggestions').focus();
+          }, 1);
+        }}
         isVisible
       />
     );
