@@ -7,7 +7,7 @@ const createMarkerClusterLayer = (
   leaflet,
   map,
   classes,
-  popupTitle,
+  popupTexts,
   settings,
   getLocaleText,
   navigator,
@@ -38,7 +38,7 @@ const createMarkerClusterLayer = (
     return icon;
   };
 
-  const { maxZoom, minZoom } = mapTypes[settings.mapType || 'servicemap'];
+  const { clusterPopupVisibility, maxZoom, minZoom } = mapTypes[settings.mapType || 'servicemap'];
   const maxClusterRadius = (zoom) => {
     const normalizedZoom = (zoom - minZoom) / (maxZoom - minZoom);
     return Math.round(100 * (1 - normalizedZoom));
@@ -62,13 +62,74 @@ const createMarkerClusterLayer = (
     zoomToBoundsOnClick: !embeded,
   });
 
-  // Cluster click event
-  markers.on('clusterclick', (a) => {
+  // eslint-disable-next-line no-underscore-dangle
+  const showListOfUnits = () => (map.leafletElement._zoom > clusterPopupVisibility);
+
+  // Generate popup content element
+  const createPopupContent = (units) => {
+    const hideNodeFromSR = (node) => {
+      node.setAttribute('aria-hidden', 'true');
+    };
+    // Create container and title
+    const container = document.createElement('div');
+    container.className = classes.unitTooltipContainer;
+
+    // Render simple info popup
+    if (!showListOfUnits()) {
+      const title = document.createElement('p');
+      title.innerText = popupTexts.info(units.length);
+      title.className = classes.unitTooltipTitle;
+      container.appendChild(title);
+
+      return container;
+    }
+
+    /**
+     * Create element with list of units in cluster
+     * */
+    hideNodeFromSR(container);
+    const title = document.createElement('p');
+    title.innerText = popupTexts.title;
+    title.className = classes.unitPopupTitle;
+    container.appendChild(title);
+
+    // Add list element
+    const list = document.createElement('ul');
+    list.className = classes.unitPopupList;
+
+    // Add list items to list
+    units.forEach((unit) => {
+      const listItem = document.createElement('li');
+      listItem.onclick = () => {
+        if (onClusterItemClick) {
+          onClusterItemClick(unit);
+        }
+      };
+
+      let content = '';
+      if (unit && unit.name) {
+        content += `<p class="${classes.unitPopupItem}">${getLocaleText(unit.name)}</p>`;
+      }
+      listItem.innerHTML = content;
+      list.appendChild(listItem);
+      // Divider element
+      const divider = document.createElement('li');
+      hideNodeFromSR(divider);
+      divider.className = 'popup-divider';
+      divider.innerHTML = '<hr />';
+      list.appendChild(divider);
+    });
+    container.appendChild(list);
+    return container;
+  };
+
+  /**
+   * Events
+   */
+  markers.on('clustermouseover', (a) => {
     if (embeded) {
-      window.open(window.location.href.replace('/embed', ''));
       return;
     }
-    // a.layer is actually a cluster
     const clusterMarkers = a.layer.getAllChildMarkers();
     const units = clusterMarkers.map((marker) => {
       if (marker && marker.options && marker.options.customUnitData) {
@@ -78,56 +139,27 @@ const createMarkerClusterLayer = (
       return null;
     });
 
-    // Bind and open popup from marker if on max zoom level
-    const { maxZoom } = mapTypes[settings.mapType || 'servicemap'];
-    // eslint-disable-next-line no-underscore-dangle
-    if (map.leafletElement._zoom >= maxZoom) {
-      const hideNodeFromSR = (node) => {
-        node.setAttribute('aria-hidden', 'true');
-      };
-      // Create container and title
-      const container = document.createElement('div');
-      hideNodeFromSR(container);
-      const title = document.createElement('p');
-      title.innerText = popupTitle;
-      title.className = classes.unitPopupTitle;
-      container.appendChild(title);
-
-      // Add list element
-      const list = document.createElement('ul');
-      list.className = classes.unitPopupList;
-
-      // Add list items to list
-      units.forEach((unit) => {
-        const listItem = document.createElement('li');
-        listItem.onclick = () => {
-          if (onClusterItemClick) {
-            onClusterItemClick(unit);
-          }
-        };
-
-        let content = '';
-        if (unit && unit.name) {
-          content += `<p class="${classes.unitPopupItem}">${getLocaleText(unit.name)}</p>`;
-        }
-        listItem.innerHTML = content;
-        list.appendChild(listItem);
-        // Divider element
-        const divider = document.createElement('li');
-        hideNodeFromSR(divider);
-        divider.className = 'popup-divider';
-        divider.innerHTML = '<hr />';
-        list.appendChild(divider);
-      });
-      container.appendChild(list);
-
-      // Bind and open popup with content to cluster
-      a.layer.bindPopup(container, {
-        closeButton: false,
-        offset: [4, -14],
-      }).openPopup();
-    }
-  });
+    // Create popuelement and add events
+    const elem = createPopupContent(units);
+    // Bind and open popup with content to cluster
+    a.layer.bindPopup(elem, {
+      closeButton: showListOfUnits(),
+      offset: [4, -14],
+    }).openPopup();
+  })
+    .on('clustermouseout', () => {
+      if (embeded) {
+        return;
+      }
+      if (!showListOfUnits()) {
+        map.leafletElement.closePopup();
+      }
+    })
+    .on('clusterclick', () => {
+      if (embeded) {
+        window.open(window.location.href.replace('/embed', ''));
+      }
+    });
 
   return markers;
 };
@@ -203,13 +235,13 @@ const renderUnitMarkers = (
 
 // Connector (closure) function used to add state values in redux connect
 export const markerClusterConnector = (settings, getLocaleText, navigator) => (
-  leaflet, map, classes, popupTitle, embeded,
+  leaflet, map, classes, popupTexts, embeded,
 ) => (
   createMarkerClusterLayer(
     leaflet,
     map,
     classes,
-    popupTitle,
+    popupTexts,
     settings,
     getLocaleText,
     navigator,

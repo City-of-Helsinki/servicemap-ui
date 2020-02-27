@@ -43,3 +43,7 @@ code {
   margin: 0;
 }
 
+.leaflet-popup-close-button {
+  font-size: 24px !important;
+}
+

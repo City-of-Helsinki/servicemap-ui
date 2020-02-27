@@ -153,8 +153,11 @@ const MapView = (props) => {
     const map = mapRef && mapRef.current ? mapRef.current : null;
 
     if (map && leaflet && createMarkerClusterLayer && isClient()) {
-      const popupTitle = intl.formatMessage({ id: 'unit.plural' });
-      const cluster = createMarkerClusterLayer(leaflet, map, classes, popupTitle, embeded);
+      const popupTexts = {
+        title: intl.formatMessage({ id: 'unit.plural' }),
+        info: count => intl.formatMessage({ id: 'map.unit.cluster.popup.info' }, { count }),
+      };
+      const cluster = createMarkerClusterLayer(leaflet, map, classes, popupTexts, embeded);
       if (cluster) {
         map.leafletElement.addLayer(cluster);
         setMarkerCluster(cluster);
