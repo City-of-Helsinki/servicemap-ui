@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
 import { Map } from '@material-ui/icons';
 import SearchBar from '../../components/SearchBar';
 import { MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
@@ -24,43 +23,43 @@ class HomeView extends React.Component {
       <div className={classes.background}>
         <div className={classes.buttonContainer}>
           <PaperButton
-            text={<FormattedMessage id="home.buttons.closeByServices" />}
+            messageID="home.buttons.closeByServices"
             icon={getIcon('location')}
             link
             disabled={noUserLocation}
             onClick={() => {
               navigator.push('address', getAddressNavigatorParams(userLocation.addressData));
             }}
-            subtitle={subtitleID && <FormattedMessage id={subtitleID} />}
+            subtitleID={subtitleID && subtitleID}
           />
           <PaperButton
-            text={<FormattedMessage id="home.buttons.services" />}
+            messageID="home.buttons.services"
             icon={getIcon('serviceList')}
             link
             onClick={() => navigator.push('serviceTree')}
           />
           <MobileComponent>
             <PaperButton
-              text={<FormattedMessage id="home.buttons.settings" />}
+              messageID="home.buttons.settings"
               icon={getIcon('accessibility')}
               link
               onClick={() => toggleSettings('all')}
             />
           </MobileComponent>
           <PaperButton
-            text={<FormattedMessage id="home.send.feedback" />}
+            messageID="home.send.feedback"
             icon={getIcon('feedback')}
             link
             onClick={() => navigator.push('feedback')}
           />
           <PaperButton
-            text={<FormattedMessage id="info.title" />}
+            messageID="info.title"
             icon={getIcon('help')}
             link
             onClick={() => navigator.push('info')}
           />
           <PaperButton
-            text={<FormattedMessage id="home.old.link" />}
+            messageID="home.old.link"
             icon={<Map />}
             link
             onClick={() => {

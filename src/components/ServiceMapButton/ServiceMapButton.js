@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ButtonBase, Typography } from '@material-ui/core';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, intlShape } from 'react-intl';
 
 // ServiceMapButton
 const SMButton = ({
   children,
   classes,
+  intl,
   className,
   small,
   color,
@@ -24,9 +25,17 @@ const SMButton = ({
   const buttonClasses = `${classes.button} ${small ? classes.smallButton : ''} ${margin ? classes.margin : classes.marginRight} ${className} ${colorStyle}`;
   const textClasses = classes.typography;
 
+  let buttonTitle = null;
+
+  if (srText) {
+    buttonTitle = srText;
+  } else if (messageID) {
+    buttonTitle = intl.formatMessage({ id: messageID });
+  }
+
   return (
     <ButtonBase
-      aria-label={srText}
+      aria-label={buttonTitle}
       className={buttonClasses}
       icon={buttonIcon}
       onClick={onClick}
@@ -43,7 +52,7 @@ const SMButton = ({
       {
         messageID
         && (
-          <Typography color="inherit" component="p" variant="caption" className={textClasses}>
+          <Typography aria-hidden color="inherit" component="p" variant="caption" className={textClasses}>
             <FormattedMessage id={messageID} />
           </Typography>
         )
@@ -70,6 +79,7 @@ SMButton.propTypes = {
   children: PropTypes.node,
   role: PropTypes.string,
   disabled: PropTypes.bool,
+  intl: intlShape.isRequired,
 };
 
 SMButton.defaultProps = {
