@@ -111,6 +111,7 @@ class TopBar extends React.Component {
     const { drawerOpen } = this.state;
     return (
       <Button
+        id="MenuButton"
         aria-label={intl.formatMessage({ id: drawerOpen ? 'general.menu.close' : 'general.menu.open' })}
         aria-pressed={drawerOpen}
         className={drawerOpen ? classes.toolbarButtonPressed : classes.toolbarButton}

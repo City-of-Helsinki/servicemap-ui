@@ -70,7 +70,7 @@ const SettingsInfo = ({
           aria-labelledby="SettingsInfo-srTitle"
           role="link"
           onClick={() => {
-            toggleSettings('all');
+            toggleSettings('search');
             setTimeout(() => {
               const settings = document.getElementsByClassName('SettingsTitle')[0];
               if (settings) {

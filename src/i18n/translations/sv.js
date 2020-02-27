@@ -317,7 +317,8 @@ export default {
   'settings.mapSettings.long': 'Kartinställningar',
   'settings.accessibilitySettings': 'Tillgänglighetsinställningar',
   'settings.accessibilitySettings.long': 'Tillgänglighetsinställningar',
-  'settings.all.long': 'Inställningar',
+  'settings.mobile.long': 'Inställningar',
+  'settings.search.long': 'Inställningar',
   'settings.amount': `{count, plural,
     one {# val} 
     other {# val}

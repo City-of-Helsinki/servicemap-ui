@@ -43,7 +43,7 @@ class HomeView extends React.Component {
               messageID="home.buttons.settings"
               icon={getIcon('accessibility')}
               link
-              onClick={() => toggleSettings('all')}
+              onClick={() => toggleSettings('mobile')}
             />
           </MobileComponent>
           <PaperButton

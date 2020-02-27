@@ -55,9 +55,7 @@ const DrawerMenu = (props) => {
       // active: settingsOpen,
       icon: getIcon('accessibility'),
       clickEvent: () => {
-        if (settingsOpen !== 'all') {
-          toggleSettings('all');
-        }
+        toggleSettings('mobile');
         toggleDrawerMenu();
       },
     },
