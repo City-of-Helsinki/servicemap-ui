@@ -37,14 +37,21 @@ const ExpandedSuggestions = (props) => {
   const fetchController = useRef(null);
   // const titleRef = useRef(null);
 
+  let suggestionList = searchQueries || null;
+  if (suggestionList && suggestionList.length) {
+    suggestionList = suggestionList.slice(0, 8);
+  }
+
   useEffect(() => {
     if (!isVisible) {
       return;
     }
-    const title = document.getElementsByClassName('ExpandedSuggestions-title')[0];
-    if (title) {
-      title.focus();
-    }
+    setTimeout(() => {
+      const title = document.getElementsByClassName('ExpandedSuggestions-title')[0];
+      if (title) {
+        title.firstChild.focus();
+      }
+    }, 1);
   }, [isVisible]);
 
   const resetSuggestions = () => {
@@ -108,6 +115,7 @@ const ExpandedSuggestions = (props) => {
     <TitleBar
       backButton
       backButtonOnClick={onClick}
+      backButtonSrText={intl.formatMessage({ id: 'search.closeExpand' })}
       className={`${classes.titleBar} ExpandedSuggestions-title`}
       titleComponent="h3"
       title={<FormattedMessage id="search.suggestions.expand" />}
@@ -126,11 +134,6 @@ const ExpandedSuggestions = (props) => {
   );
 
   const renderSuggestionList = () => {
-    let suggestionList = searchQueries || null;
-    if (suggestionList && suggestionList.length) {
-      suggestionList = suggestionList.slice(0, 8);
-    }
-
     if (suggestionList) {
       return (
         <>
@@ -222,14 +225,7 @@ const ExpandedSuggestions = (props) => {
       return null;
     }
 
-    return (
-      <SMButton
-        small
-        role="link"
-        onClick={onClick}
-        messageID="search.expand"
-      />
-    );
+    return null;
   }
 
   /**
@@ -242,7 +238,6 @@ const ExpandedSuggestions = (props) => {
     srText = null;
   } else if (searchQueries) {
     component = renderSuggestionList();
-    const suggestionList = searchQueries || null;
     srText = intl.formatMessage({ id: 'search.suggestions.suggestions' }, { count: suggestionList.length });
   } else if (suggestionError) {
     component = renderNoResults();

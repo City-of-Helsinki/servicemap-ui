@@ -19,7 +19,6 @@ const InfoView = ({
     <TitleBar
       ariaHidden
       backButton
-      className="ExpandedSuggestions-title"
       title={<FormattedMessage id="info.title" />}
     />
   );
