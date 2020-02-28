@@ -60,7 +60,10 @@ export default {
   'feedback.additionalInfo': 'Din respons skickas vidare till Helsingfors stads responssystem.',
   'feedback.additionalInfo.link': 'Information och anvisningar om att ge respons (länken öppnas i en ny flik).',
   'feedback.send': 'Skicka respons',
+  'feedback.sending': 'Laddar...', // TODO: translate to "Sending..."
+  'feedback.send.error': 'Skicka respons', // TODO: translate full
   'feedback.error.required': 'Obligatoriskt fält',
+  'feedback.srError.required': 'Respons obligatorisk', // TODO: verify
   'feedback.modal.confirm': 'OK',
   'feedback.modal.leave': 'Är du säker på att du vill lämna den här sidan?',
   'feedback.modal.success': 'Tack för din respons!',

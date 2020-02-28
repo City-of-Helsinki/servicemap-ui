@@ -36,6 +36,7 @@ const SMButton = ({
       }}
       variant="contained"
       {...rest}
+      focusVisibleClassName={color === 'primary' ? classes.primaryFocus : null}
     >
       {
         icon

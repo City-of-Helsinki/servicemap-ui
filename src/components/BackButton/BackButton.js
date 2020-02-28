@@ -125,7 +125,7 @@ BackButton.propTypes = {
   variant: PropTypes.oneOf(['container', 'icon', null]),
   srHidden: PropTypes.bool,
   srText: PropTypes.string,
-  focusVisibleClassName: PropTypes.objectOf(PropTypes.any),
+  focusVisibleClassName: PropTypes.string,
 };
 
 BackButton.defaultProps = {

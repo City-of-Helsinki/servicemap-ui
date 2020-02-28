@@ -310,7 +310,7 @@ class TabLists extends React.Component {
           style={styles}
         >
           {
-              filteredData.map((item) => {
+              filteredData.map((item, index) => {
                 if (item.data && item.data.length > 0) {
                   const label = `${item.title} ${item.component ? '' : `(${item.data.length})`}`;
                   const tabId = `${item.title}-${item.data.length}`;
@@ -318,6 +318,7 @@ class TabLists extends React.Component {
                     <Tab
                       id={tabId}
                       key={tabId}
+                      aria-controls={`tab-content-${index}`}
                       aria-label={item.ariaLabel ? item.ariaLabel : null}
                       classes={{
                         root: classes.tab,
@@ -334,6 +335,7 @@ class TabLists extends React.Component {
                 return (
                   <Tab
                     key={`${item.title}`}
+                    aria-controls={`tab-content-${index}`}
                     aria-label={item.ariaLabel ? item.ariaLabel : null}
                     classes={{
                       root: classes.tab,
@@ -375,11 +377,22 @@ class TabLists extends React.Component {
             // If component given use it instead
             if (item.component) {
               const activeTab = index === tabIndex;
-              if (!activeTab) return null;
+              if (!activeTab) {
+                return (
+                  <div
+                    id={`tab-content-${index}`}
+                    role="tabpanel"
+                    key={item.title}
+                    style={{ display: 'none' }}
+                  />
+                );
+              }
 
               return (
                 <div
                   className="active"
+                  id={`tab-content-${index}`}
+                  role="tabpanel"
                   key={item.title}
                   style={activeTab ? tabStyles : null}
                 >
@@ -406,7 +419,11 @@ class TabLists extends React.Component {
             const additionalText = `${intl.formatMessage({ id: 'general.pagination.pageCount' }, { current: adjustedCurrentPage, max: pageCount })}`;
 
             return (
-              <div className={classes.resultList} key={item.title}>
+              <div
+                id={`tab-content-${index}`}
+                className={classes.resultList}
+                key={item.title}
+              >
                 {
                   index === tabIndex
                   && (
