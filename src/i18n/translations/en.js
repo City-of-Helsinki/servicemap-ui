@@ -81,6 +81,8 @@ export default {
   'general.frontPage': 'Front page',
   'general.contrast': 'Contrast',
   'general.menu': 'Menu',
+  'general.menu.open': 'Open menu',
+  'general.menu.close': 'Close menu',
   'general.back': 'Back',
   'general.back.address': 'Back to address view',
   'general.back.home': 'Back to home view',
@@ -318,7 +320,8 @@ export default {
   'settings.mapSettings.long': 'Map setttings',
   'settings.accessibilitySettings': 'Accessibility settings',
   'settings.accessibilitySettings.long': 'Accessibility settings',
-  'settings.all.long': 'Settings',
+  'settings.mobile.long': 'Settings',
+  'settings.search.long': 'Settings',
   'settings.amount': `{count, plural,
     one {# selection}
     other {# selections}

@@ -81,6 +81,8 @@ export default {
   'general.frontPage': 'Första sidan',
   'general.contrast': 'Kontrast',
   'general.menu': 'Meny',
+  'general.menu.open': 'Öppna menyn', // TODO: vereify
+  'general.menu.close': 'Stäng menyn', // TODO: vereify
   'general.back': 'Tillbaka',
   'general.back.address': 'Gå tillbaka till adressvyn',
   'general.back.home': 'Gå tillbaka till startvyn',
@@ -318,7 +320,8 @@ export default {
   'settings.mapSettings.long': 'Kartinställningar',
   'settings.accessibilitySettings': 'Tillgänglighetsinställningar',
   'settings.accessibilitySettings.long': 'Tillgänglighetsinställningar',
-  'settings.all.long': 'Inställningar',
+  'settings.mobile.long': 'Inställningar',
+  'settings.search.long': 'Inställningar',
   'settings.amount': `{count, plural,
     one {# val} 
     other {# val}

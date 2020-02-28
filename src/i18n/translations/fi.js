@@ -81,6 +81,8 @@ export default {
   'general.frontPage': 'Etusivu',
   'general.contrast': 'Kontrasti',
   'general.menu': 'Valikko',
+  'general.menu.open': 'Avaa valikko',
+  'general.menu.close': 'Sulje valikko',
   'general.back': 'Palaa',
   'general.back.address': 'Palaa osoitenäkymään',
   'general.back.home': 'Palaa aloitusnäkymään',
@@ -318,7 +320,8 @@ export default {
   'settings.mapSettings.long': 'Kartta-asetukset',
   'settings.accessibilitySettings': 'Esteettömyysasetukset',
   'settings.accessibilitySettings.long': 'Esteettömyysasetukset',
-  'settings.all.long': 'Asetukset',
+  'settings.mobile.long': 'Asetukset',
+  'settings.search.long': 'Asetukset',
   'settings.amount': `{count, plural,
     one {# valinta}
     other {# valintaa}
