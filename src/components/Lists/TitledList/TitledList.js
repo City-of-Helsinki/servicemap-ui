@@ -52,7 +52,7 @@ const TitledList = ({
       </List>
       {shortened && showMoreOnClick && !loading && (
         <SMButton
-          role="button"
+          role="link"
           messageID={buttonMessageID}
           onClick={(e) => {
             e.preventDefault();
