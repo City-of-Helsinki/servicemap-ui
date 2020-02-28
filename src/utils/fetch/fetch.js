@@ -67,6 +67,9 @@ const nextHandler = async (data, onNext, fetchOptions) => {
     const newData = await handleNext(data.results, data, onNext, fetchOptions);
     return newData;
   }
+  if (onNext) {
+    onNext(data.results, data);
+  }
   return data.results;
 };
 

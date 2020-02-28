@@ -28,7 +28,7 @@ const Reservations = ({
       <div>
         <TitledList
           title={<FormattedMessage id="unit.reservations" />}
-          subtitle={<FormattedMessage id="unit.reservations.count" values={{ count: max }} />}
+          subtitle={<FormattedMessage id="unit.reservations.count" values={{ count: max || 0 }} />}
           titleComponent="h4"
           shortened={max > listLength}
           loading={isFetching}
