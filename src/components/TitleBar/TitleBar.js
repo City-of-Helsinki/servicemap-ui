@@ -17,8 +17,7 @@ const TitleBar = ({
   ariaHidden,
 }) => (
   <>
-    <div className={`${className} ${classes.container} ${!backButton && !icon ? classes.textBar : ''}`}>
-
+    <div className={`${className || ''} ${classes.container} ${!backButton && !icon ? classes.textBar : ''}`}>
       {
         backButton
         && (
