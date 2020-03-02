@@ -29,7 +29,27 @@ const ExtendedData = ({
         default:
       }
     }
+
+    const title = document.getElementsByClassName('ExtendedData-title')[0];
+    try {
+      title.firstChild.focus();
+    } catch (e) {
+      console.error('ExtendedData component: Unable to focus to title button');
+    }
   }, []);
+
+  const renderTitleBar = messageID => (
+    <TitleBar
+      title={(
+        <>
+          {`${title} - `}
+          <FormattedMessage id={messageID} />
+        </>
+      )}
+      backButton
+      className="ExtendedData-title"
+    />
+  );
 
   const renderEvents = () => {
     const {
@@ -46,15 +66,9 @@ const ExtendedData = ({
     };
     return (
       <>
-        <TitleBar
-          title={(
-            <>
-              {`${title} - `}
-              <FormattedMessage id="unit.events" />
-            </>
-          )}
-          backButton
-        />
+        {
+          renderTitleBar('unit.events')
+        }
         <PaginatedList
           id="events"
           data={data || []}
@@ -86,15 +100,9 @@ const ExtendedData = ({
     };
     return (
       <>
-        <TitleBar
-          title={(
-            <>
-              {`${title} - `}
-              <FormattedMessage id="unit.reservations" />
-            </>
-          )}
-          backButton
-        />
+        {
+          renderTitleBar('unit.reservations')
+        }
         <PaginatedList
           id="reservations"
           data={data || []}
