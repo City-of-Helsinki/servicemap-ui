@@ -55,9 +55,7 @@ const DrawerMenu = (props) => {
       // active: settingsOpen,
       icon: getIcon('accessibility'),
       clickEvent: () => {
-        if (settingsOpen !== 'all') {
-          toggleSettings('all');
-        }
+        toggleSettings('mobile');
         toggleDrawerMenu();
       },
     },
@@ -105,6 +103,7 @@ const DrawerMenu = (props) => {
           tabIndex={isOpen ? 0 : -1}
           role="link"
           aria-hidden={!isOpen}
+          aria-label={`${item.name} ${item.disabled ? item.subText : ''}`}
           onClick={item.clickEvent}
           className={`${classes.drawerButton} ${item.active ? classes.drawerButtonActive : ''}`}
           focusVisibleClassName={classes.itemFocus}
@@ -112,7 +111,7 @@ const DrawerMenu = (props) => {
           <div className={`${classes.drawerIcon} ${item.active ? classes.drawerIconActive : ''} ${item.disabled ? classes.disabled : ''}`}>
             {item.icon}
           </div>
-          <span className={classes.buttonLabel}>
+          <span aria-hidden className={classes.buttonLabel}>
             <Typography className={`${classes.drawerButtonText} ${item.disabled ? classes.disabled : ''}`} variant="body1">{item.name}</Typography>
             {item.disabled && <Typography className={classes.drawerButtonText} variant="caption">{item.subText}</Typography>}
           </span>

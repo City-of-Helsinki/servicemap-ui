@@ -26,14 +26,6 @@ const overrides = theme => ({
     // Default keyboard focus indicator
     focusVisible: theme === 'dark' ? focusIndicatorDark : focusIndicator,
   },
-  MuiIconButton: {
-    // Replace IconButton padding with margin, so that keyboard focus indicator looks better
-    // This affects checkboxes and radio buttons.
-    root: {
-      padding: 0,
-      margin: 12,
-    },
-  },
 });
 
 const breakpoints = {

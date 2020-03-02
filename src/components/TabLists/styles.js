@@ -21,6 +21,7 @@ export default theme => ({
     minWidth: 0,
     fontWeight: 'normal',
     flex: '1 1',
+    opacity: 1,
     borderBottom: '6px solid #DEDEDE',
     [theme.breakpoints.only('sm')]: {
       letterSpacing: 'normal',
@@ -30,6 +31,7 @@ export default theme => ({
     outline: `4px solid ${theme.palette.primary.highContrast}`,
     outlineOffset: -1,
     boxShadow: `inset 0 0 0 4px ${theme.palette.focusBorder}`,
+    backgroundColor: 'rgba(0, 0, 0, 0.08)',
   },
   tabLabelContainer: {
     paddingLeft: 0,

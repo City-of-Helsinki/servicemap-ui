@@ -60,7 +60,10 @@ export default {
   'feedback.additionalInfo': 'Your feedback is forwarded to the city of Helsinki\'s feedback system.',
   'feedback.additionalInfo.link': 'Information and instructions on giving feedback (link opens in new tab).',
   'feedback.send': 'Send feedback',
+  'feedback.sending': 'Sending...',
+  'feedback.send.error': 'Send feedback. Mandatory field is empty', // TODO: verify
   'feedback.error.required': 'Mandatory field',
+  'feedback.srError.required': 'Feedback is required', // TODO: verify
   'feedback.modal.confirm': 'OK',
   'feedback.modal.leave': 'Are you sure you want to leave the page?',
   'feedback.modal.success': 'Thank you for your feedback!',
@@ -78,6 +81,8 @@ export default {
   'general.frontPage': 'Front page',
   'general.contrast': 'Contrast',
   'general.menu': 'Menu',
+  'general.menu.open': 'Open menu',
+  'general.menu.close': 'Close menu',
   'general.back': 'Back',
   'general.back.address': 'Back to address view',
   'general.back.home': 'Back to home view',
@@ -315,7 +320,8 @@ export default {
   'settings.mapSettings.long': 'Map setttings',
   'settings.accessibilitySettings': 'Accessibility settings',
   'settings.accessibilitySettings.long': 'Accessibility settings',
-  'settings.all.long': 'Settings',
+  'settings.mobile.long': 'Settings',
+  'settings.search.long': 'Settings',
   'settings.amount': `{count, plural,
     one {# selection}
     other {# selections}

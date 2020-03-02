@@ -13,7 +13,7 @@ fixture`Unit page tests`
   });
 
 test('Unit marker is drawn on map', async (t) => {
-  const markers = await Selector('.leaflet-marker-icon').count;
+  const markers = await Selector('.unitMarker').count;
 
   await t
     .expect(markers).gt(0, 'no marker found')

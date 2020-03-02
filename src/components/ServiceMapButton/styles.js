@@ -25,8 +25,7 @@ export default theme => ({
       backgroundColor: theme.palette.primary.light,
     },
     '&:disabled': {
-      backgroundColor: '#cccccc',
-      color: 'rgba(0, 0, 0, 0.5)',
+      backgroundColor: theme.palette.disabled.strong,
     },
   },
   secondary: {
@@ -59,8 +58,8 @@ export default theme => ({
     margin: theme.spacing.unit,
     fontSize: 14,
   },
-  disabled: {
-    backgroundColor: 'rgba(0, 0, 0, 0.12)',
-    color: 'rgba(0, 0, 0, 0.26)',
+  primaryFocus: {
+    outline: '2px solid transparent',
+    boxShadow: `0 0 0 3px ${theme.palette.primary.highContrast}, 0 0 0 6px ${theme.palette.focusBorder}`,
   },
 });

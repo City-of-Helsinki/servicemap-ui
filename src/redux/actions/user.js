@@ -45,7 +45,7 @@ export const changeTheme = theme => async (dispatch) => {
 
 export const findUserLocation = () => async (dispatch) => {
   const success = (position) => {
-    if (position.coords.accuracy < 10000) {
+    if (position.coords.accuracy < 1000) {
       fetchAddress({ lat: position.coords.latitude, lng: position.coords.longitude })
         .then((data) => {
           dispatch(setUserPosition({
@@ -55,7 +55,7 @@ export const findUserLocation = () => async (dispatch) => {
           }));
         });
     } else {
-      console.warn(`Position accuracy: ${position.coords.accuracy}. Max accuracy: 10000`);
+      console.warn(`Position accuracy: ${position.coords.accuracy}. Max accuracy: 1000`);
       dispatch(setUserPosition({ coordinates: null, allowed: true, addressData: null }));
     }
   };
@@ -69,7 +69,7 @@ export const findUserLocation = () => async (dispatch) => {
     }
   };
 
-  navigator.geolocation.getCurrentPosition(success, error);
+  navigator.geolocation.getCurrentPosition(success, error, { enableHighAccuracy: true });
 };
 
 

@@ -208,6 +208,7 @@ const UnitView = (props) => {
     <MobileComponent>
       <div className={classes.mobileButtonArea}>
         <SMButton
+          aria-hidden
           messageID="general.showOnMap"
           icon={<Map />}
           onClick={(e) => {

@@ -19,7 +19,6 @@ const InfoView = ({
     <TitleBar
       ariaHidden
       backButton
-      className="ExpandedSuggestions-title"
       title={<FormattedMessage id="info.title" />}
     />
   );
@@ -27,11 +26,11 @@ const InfoView = ({
     <div className={classes.textContainer}>
       <Typography component="h3" variant="body2"><FormattedMessage id="app.title" /></Typography>
       <Typography className={classes.text} variant="body2">
-        {`Palvelukartalta löydät Espoon, Helsingin, Kauniaisten, Vantaan julkiset toimipisteet ja niiden palvelut.
-          Esimerkiksi koulut, päiväkodit, terveysasemat. Palvelukartalta löytyy myös muitakin palveluja, esimerkiksi
-          HUSin (esimerkiksi röntgenit), HSY:n (esimerkiksi kierrätyspisteet), Aalto-yliopiston ja muita valtion
-          palveluja. Yksityisiä palveluja, esimerkiksi turistikohteita (esimerkiksi ravintoloita) tulee palvelukartalle
-          MyHelsinki-rajapinnan kautta.`}
+        Palvelukartalta löydät Espoon, Helsingin, Kauniaisten, Vantaan julkiset toimipisteet ja niiden palvelut.
+        Esimerkiksi koulut, päiväkodit, terveysasemat. Palvelukartalta löytyy myös muitakin palveluja, esimerkiksi
+        HUSin (esimerkiksi röntgenit), HSY:n (esimerkiksi kierrätyspisteet), Aalto-yliopiston ja muita valtion
+        palveluja. Yksityisiä palveluja, esimerkiksi turistikohteita (esimerkiksi ravintoloita) tulee palvelukartalle
+        MyHelsinki-rajapinnan kautta.
       </Typography>
       {
         // Haku
@@ -56,15 +55,16 @@ const InfoView = ({
         <li><Typography variant="body2">osoitteita</Typography></li>
       </ul>
       <Typography className={classes.text} variant="body2">
-        {`Kirjoita palvelukartan hakukenttään haluamasi sana. Saat hakuehdotuksia, joista voit valita itsellesi sopivan.
-          Voit myös kirjoittaa hakemasi sanan loppuun ja painaa Hae –painiketta tai Enter näppäimistöltä. Jos
-          hakutulos ei ollut hyvä, voit tarkentaa hakua Tarkenna –painikkeella. Voit hakea myös usean sanan
-          yhdistelmällä, esimerkiksi ”koulu espanja”.
-
-          Jos hakutulos on tyhjä, tarkista kirjoitusasu ja kaupunkivalinnat. Kirjoita osoite, minkä läheltä etsit palvelua.
-          Kirjoita avainsanoja, esim ”luontopolku”, ”ruotsinkielinen päiväkoti”. Hakukentässä on ruksi, jota
-          painamalla voit tyhjentää haun. Palvelukartan hakukentän nuolipainikkeella voit palata edelliseen
-          näkymään.`}
+        Kirjoita palvelukartan hakukenttään haluamasi sana. Saat hakuehdotuksia, joista voit valita itsellesi sopivan.
+        Voit myös kirjoittaa hakemasi sanan loppuun ja painaa Hae –painiketta tai Enter näppäimistöltä. Jos
+        hakutulos ei ollut hyvä, voit tarkentaa hakua Tarkenna –painikkeella. Voit hakea myös usean sanan
+        yhdistelmällä, esimerkiksi ”koulu espanja”.
+      </Typography>
+      <Typography className={classes.text} variant="body2">
+        Jos hakutulos on tyhjä, tarkista kirjoitusasu ja kaupunkivalinnat. Kirjoita osoite, minkä läheltä etsit palvelua.
+        Kirjoita avainsanoja, esim ”luontopolku”, ”ruotsinkielinen päiväkoti”. Hakukentässä on ruksi, jota
+        painamalla voit tyhjentää haun. Palvelukartan hakukentän nuolipainikkeella voit palata edelliseen
+        näkymään.
       </Typography>
       <Typography component="h4" variant="body2">Voit järjestää hakutulokset:</Typography>
       <ul>
@@ -77,8 +77,8 @@ const InfoView = ({
       {/* </Typography> */}
       <Typography component="h3" variant="body2">Osoitehaku</Typography>
       <Typography className={classes.text} variant="body2">
-        {`Voit kirjoittaa hakukenttään myös osoitteen, josta haluat etsiä palveluja. Haku antaa sinulle osoite- ja alue-
-          ehdotuksia. Voit myös kirjoittaa osoitteen loppuun saakka.`}
+        Voit kirjoittaa hakukenttään myös osoitteen, josta haluat etsiä palveluja. Haku antaa sinulle osoite- ja alue-
+        ehdotuksia. Voit myös kirjoittaa osoitteen loppuun saakka.
       </Typography>
       <Typography component="h4" variant="body2">Näet välilehdellä ”Alueet”, seuraavat palvelut:</Typography>
       <ul>
@@ -227,19 +227,15 @@ const InfoView = ({
         Tämä verkkosivusto täyttää lain asettamat kriittiset saavutettavuusvaatimukset
          WCAG v2.1 -tason AA mukaisesti seuraavin havaituin puuttein.
       </Typography>
-      <Typography component="h4" variant="body2">Ei-saavutettava sisältö</Typography>
-      <Typography className={classes.text} variant="body2">
-        Jäljempänä mainittu sisältö ei vielä täytä kaikkia lain asettamia saavutettavuusvaatimuksia.
-      </Typography>
       <Typography component="h3" variant="body2">Havaitut puutteet</Typography>
       <Typography className={classes.text} variant="body2">
-        Tiettyjen elementtien värien kontrastiero jää alle vaadittujen raja-arvojen.
-        Sivuston saavutettavuus mobiililla tarkastetaan ja korjataan tulevien viikkojen aikana.
+        Palvelukartta.hel.fi sivusto on saavutettava siltä osin, kuin saavutettavuuslaki sitä edellyttää.
+        Saavutettavuuslain ulkopuolella ovat kartat, joten tässä palvelussa oleva kartta ei ole saavutettava
       </Typography>
       <Typography component="h4" variant="body2">Puutteiden korjaus</Typography>
       <Typography className={classes.text} variant="body2">
-        Puutteet korjataan 28.2.2020 mennessä.
-        Työtä tehdään yhdessä Annanpura Oy:n kanssa.
+        Karttanäkymää ei tehdä saavutettavaksi. Ruudunlukijalta kartta on piilotettu.
+        Näppäimistöllä pääsee lähentämään ja loitontamaan karttaa, mutta ei pääse kartalla oleviin toimipisteeseen.
       </Typography>
       <Typography component="h4" variant="body2">Tiedon saanti saavutettavassa muodossa</Typography>
       <Typography className={classes.text} variant="body2">
@@ -319,12 +315,12 @@ const InfoView = ({
     <div className={classes.textContainer}>
       <Typography component="h3" variant="body2"><FormattedMessage id="app.title" /></Typography>
       <Typography className={classes.text} variant="body2">
-        {`On the Service Map, you can find the public services units of the cities of Espoo, Helsinki, Kauniainen and
-          Vantaa, and their services – for example, schools, day-care centres and health stations.
-          On the Service Map, there are other public services as well, such as HUS's services (for example, X-
-          rays), Helsinki Region Environmental Services Authority’s services (e.g. recycling sites), Aalto University’s
-          services as well as other governmental services. Individual services such as tourist attractions (for example
-          restaurants) are added to the Service Map through the MyHelsinki API.`}
+        On the Service Map, you can find the public services units of the cities of Espoo, Helsinki, Kauniainen and
+        Vantaa, and their services – for example, schools, day-care centres and health stations.
+        On the Service Map, there are other public services as well, such as HUS's services (for example, X-
+        rays), Helsinki Region Environmental Services Authority’s services (e.g. recycling sites), Aalto University’s
+        services as well as other governmental services. Individual services such as tourist attractions (for example
+        restaurants) are added to the Service Map through the MyHelsinki API.
       </Typography>
       {
         // Haku
@@ -349,14 +345,16 @@ const InfoView = ({
         <li><Typography variant="body2">street addresses</Typography></li>
       </ul>
       <Typography className={classes.text} variant="body2">
-        {`Write a word in the search field of the Service Map. You get search suggestions, from which you can choose
-          one of your liking. You can also write your search word at the end and press the Search button or the enter
-          key on the keyboard If there are too many search results, you can refine your search by clicking the
-          “Refine” button. You can also search using a multi-word combination, for example “school Spanish”.
-          If there are not adequate search results, check the spelling and city choices. Write the address around
-          which you are looking for a service. Write keywords, such as “nature trail” or “Day-care centre English”. The
-          search field has a cross that clears the search. You can use the arrow in the search field of the Service Map
-          to return to the previous view.`}
+        Write a word in the search field of the Service Map. You get search suggestions, from which you can choose
+        one of your liking. You can also write your search word at the end and press the Search button or the enter
+        key on the keyboard If there are too many search results, you can refine your search by clicking the
+        “Refine” button. You can also search using a multi-word combination, for example “school Spanish”.
+      </Typography>
+      <Typography className={classes.text} variant="body2">
+        If there are not adequate search results, check the spelling and city choices. Write the address around
+        which you are looking for a service. Write keywords, such as “nature trail” or “Day-care centre English”. The
+        search field has a cross that clears the search. You can use the arrow in the search field of the Service Map
+        to return to the previous view.
       </Typography>
       <Typography component="h4" variant="body2">You can arrange the search results:</Typography>
       <ul>
@@ -368,9 +366,8 @@ const InfoView = ({
       </ul>
       <Typography component="h3" variant="body2">Address search</Typography>
       <Typography className={classes.text} variant="body2">
-        {`In the search field, you can also write an address, from which you want to look for services. The search also
-          gives you address and area suggestions. You can also write the address until the end.
-          `}
+        In the search field, you can also write an address, from which you want to look for services. The search also
+        gives you address and area suggestions. You can also write the address until the end.
       </Typography>
       <Typography component="h4" variant="body2">On the “Areas” tab, you can see the following services:</Typography>
       <ul>
@@ -433,11 +430,11 @@ const InfoView = ({
         <li><Typography variant="body2">Aerial map</Typography></li>
         <li><Typography variant="body2">Aerial map</Typography></li>
       </ul>
-      {/* <Typography className={classes.text} variant="body2">
+      <Typography className={classes.text} variant="body2">
         in the accessibility settings you have chosen “I am visually impaired” or “I have color vision deficiency”,
         then the background map will automatically change into a high-contrast background map. You can change
         the background map in the settings.
-      </Typography> */}
+      </Typography>
       <Typography component="h3" variant="body2">Accessibility of the Service Map</Typography>
       <ButtonBase className={classes.linkButton} role="link" onClick={() => handleClick()}>
         <Typography color="inherit" variant="body2"><FormattedMessage id="info.statement" /></Typography>
@@ -478,6 +475,8 @@ const InfoView = ({
         OpenStreetMap service’s data, whose copyright belongs to the makers of OpenStreetMap.
         The file descriptions collection can be found on the hel.fi website. Check “Pääkaupunkiseudun toimipiste- ja
         palvelurekisteri” and “Osallisuuden ja palautteiden rekisteri”.
+      </Typography>
+      <Typography className={classes.text} variant="body2">
         The service has been developed at the ICT Management unit of the Helsinki City Executive Office.
       </Typography>
       <Typography component="h3" variant="body2">Other</Typography>
@@ -608,11 +607,11 @@ const InfoView = ({
     <div className={classes.textContainer}>
       <Typography component="h3" variant="body2"><FormattedMessage id="app.title" /></Typography>
       <Typography className={classes.text} variant="body2">
-        {`På Servicekartan hittar du offentliga verksamhetsställen och service i Esbo, Grankulla, Helsingfors och
-          Vanda stad - exempelvis skolor, daghem och hälsostationer.
-          På Servicekartan finns även andra offentliga tjänster, såsom HUS service (t.ex. röntgen), HRM:s tjänster
-          (t.ex. återvinningsstationer), Aalto-universitetets tjänster samt diverse statliga tjänster. Privata tjänster
-          såsom turistobjekt (t.ex. restauranger) kommer till Servicekartan via MyHelsinki-gränssnittet.`}
+        På Servicekartan hittar du offentliga verksamhetsställen och service i Esbo, Grankulla, Helsingfors och
+        Vanda stad - exempelvis skolor, daghem och hälsostationer.
+        På Servicekartan finns även andra offentliga tjänster, såsom HUS service (t.ex. röntgen), HRM:s tjänster
+        (t.ex. återvinningsstationer), Aalto-universitetets tjänster samt diverse statliga tjänster. Privata tjänster
+        såsom turistobjekt (t.ex. restauranger) kommer till Servicekartan via MyHelsinki-gränssnittet.
       </Typography>
       <Typography component="h3" variant="body2">Sökning</Typography>
       <Typography component="h4" variant="body2">På Servicekartan kan du söka exempelvis:</Typography>
@@ -633,15 +632,15 @@ const InfoView = ({
         <li><Typography variant="body2">gatuadresser</Typography></li>
       </ul>
       <Typography className={classes.text} variant="body2">
-        {`Skriv valfritt sökord i Servicekartans sökfält. Tjänsten ger dig förslag av vilka du kan välja det lämpligaste. Du
-          kan också skriva hela sökordet och klicka på Sök eller använda tangenten enter. Om det visas för många
-          resultat från sökningen kan du begränsa sökningen genom att klicka på ”Precisera”. Du kan också söka med
-          flera ord, t.ex. ”skola spanska”.
-          
-          Om du inte får lämpliga sökresultat, kolla rättstavningen och valet av stad. Ange en adress i närheten av var
-          du söker service. Ange nyckelord såsom ”naturstig” eller ”svenskspråkigt daghem” I sökfältet finns ett kryss
-          med vilket du kan rensa sökningen. Med pilen i Servicekartans sökfält återvänder du till föregående vy.
-          `}
+        Skriv valfritt sökord i Servicekartans sökfält. Tjänsten ger dig förslag av vilka du kan välja det lämpligaste. Du
+        kan också skriva hela sökordet och klicka på Sök eller använda tangenten enter. Om det visas för många
+        resultat från sökningen kan du begränsa sökningen genom att klicka på ”Precisera”. Du kan också söka med
+        flera ord, t.ex. ”skola spanska”.
+      </Typography>
+      <Typography className={classes.text} variant="body2">
+        Om du inte får lämpliga sökresultat, kolla rättstavningen och valet av stad. Ange en adress i närheten av var
+        du söker service. Ange nyckelord såsom ”naturstig” eller ”svenskspråkigt daghem” I sökfältet finns ett kryss
+        med vilket du kan rensa sökningen. Med pilen i Servicekartans sökfält återvänder du till föregående vy.
       </Typography>
       <Typography component="h4" variant="body2">Du kan ordna sökresultaten enligt följande:</Typography>
       <ul>
@@ -654,8 +653,8 @@ const InfoView = ({
       {/* </Typography> */}
       <Typography component="h3" variant="body2">Adressökning</Typography>
       <Typography className={classes.text} variant="body2">
-        {`Du kan också söka med en adress där du vill hitta service. Sökningen föreslår dig adresser och områden. Du
-          kan också skriva hela adressen.`}
+        Du kan också söka med en adress där du vill hitta service. Sökningen föreslår dig adresser och områden. Du
+        kan också skriva hela adressen.
       </Typography>
       <Typography component="h4" variant="body2">På fliken ”Områden” finns följande tjänster:</Typography>
       <ul>
@@ -754,17 +753,18 @@ const InfoView = ({
         </li>
       </ul>
       <Typography className={classes.text} variant="body2">
-        {`Tjänsternas och verksamhetsställenas uppgifter är öppna data som kan användas via gränssnittet
-          REST, som producerar Servicekartans serverapplikation. Servicekartans information kan fritt
-          användas, förutom fotografier av statyer och offentlig konst. Dessa skyddas av upphovsrätten och får inte
-          användas för kommersiella ändamål. 
-          Kartunderlaget ”Servicekartan” och ”Karta med stora kontraster” bildas från den öppna tjänstens
-          data, vars upphovsrätt tillhör tillverkarna av OpenStreetMap.  
-          Registerbeskrivningarna har samlats på stadens webbplats.
-          Läs mer under ”Huvudstadsregionens register över verksamhetsställen och service” och ”Register över
-          delaktighet och respons”.
-
-          Servicen har utarbetats vid Helsingfors stadskanslis informationsförvaltningsenhet.`}
+        Tjänsternas och verksamhetsställenas uppgifter är öppna data som kan användas via gränssnittet
+        REST, som producerar Servicekartans serverapplikation. Servicekartans information kan fritt
+        användas, förutom fotografier av statyer och offentlig konst. Dessa skyddas av upphovsrätten och får inte
+        användas för kommersiella ändamål.
+        Kartunderlaget ”Servicekartan” och ”Karta med stora kontraster” bildas från den öppna tjänstens
+        data, vars upphovsrätt tillhör tillverkarna av OpenStreetMap.
+        Registerbeskrivningarna har samlats på stadens webbplats.
+        Läs mer under ”Huvudstadsregionens register över verksamhetsställen och service” och ”Register över
+        delaktighet och respons”.
+      </Typography>
+      <Typography className={classes.text} variant="body2">
+          Servicen har utarbetats vid Helsingfors stadskanslis informationsförvaltningsenhet.
       </Typography>
       <Typography component="h3" variant="body2">Övrigt</Typography>
       <Typography className={classes.text} variant="body2">
