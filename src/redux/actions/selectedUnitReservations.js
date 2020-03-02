@@ -5,9 +5,18 @@ const {
   isFetching, fetchSuccess, fetchMoreSuccess, fetchError, fetchProgressUpdate,
 } = reservations;
 
-export const fetchReservations = (id, pageSize, all = false) => async (dispatch) => {
+export const fetchReservations = (id, pageSize, all = false) => async (dispatch, getState) => {
+  const { selectedUnit } = getState();
+  const { reservations } = selectedUnit;
+  const previousFetch = reservations.previousSearch;
+  if (previousFetch) {
+    const parts = previousFetch.split('-');
+    if (parts[0] === id && parts[1] === 'all') {
+      return;
+    }
+  }
   const onStart = () => {
-    dispatch(isFetching());
+    dispatch(isFetching(`${id}-${all ? 'all' : 'partial'}`));
   };
   const onSuccess = (data) => {
     if (data && data.length) {
