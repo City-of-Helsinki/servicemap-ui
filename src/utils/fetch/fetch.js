@@ -51,6 +51,9 @@ const handleNext = async (allData, response, onNext, fetchOptions) => {
     return data;
   }
 
+  if (onNext) {
+    onNext(allData, response);
+  }
   return allData;
 };
 
