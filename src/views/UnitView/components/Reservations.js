@@ -1,6 +1,6 @@
 import React from 'react';
-
 import PropTypes from 'prop-types';
+import { useLocation } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import TitledList from '../../../components/Lists/TitledList';
@@ -20,6 +20,8 @@ const Reservations = ({
     return null;
   }
 
+  const location = useLocation();
+
   const endIndex = listLength > data.length ? data.length : listLength;
   const shownData = data.slice(0, endIndex);
 
@@ -32,10 +34,15 @@ const Reservations = ({
           titleComponent="h4"
           shortened={max > listLength}
           loading={isFetching}
+          buttonID="UnitReservationButton"
           buttonMessageID="unit.reservations.more"
           showMoreOnClick={listLength
             ? () => {
               if (navigator) {
+                navigator.replace({
+                  ...location,
+                  hash: 'UnitReservationButton',
+                });
                 navigator.push('unit', { id: unit.id, type: 'reservations' });
               }
             } : null}

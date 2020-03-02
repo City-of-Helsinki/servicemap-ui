@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useLocation } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { getLocaleString } from '../../../redux/selectors/locale';
@@ -21,6 +22,8 @@ const Events = ({
     return null;
   }
 
+  const location = useLocation();
+
   const endIndex = listLength > data.length ? data.length : listLength;
   const shownData = data && data.length ? data.slice(0, endIndex) : null;
 
@@ -34,9 +37,14 @@ const Events = ({
           shortened={max > listLength}
           buttonMessageID="unit.events.more"
           loading={isFetching}
+          buttonID="UnitEventsButton"
           showMoreOnClick={listLength
             ? () => {
               if (navigator) {
+                navigator.replace({
+                  ...location,
+                  hash: 'UnitEventsButton',
+                });
                 navigator.push('unit', { id: unit.id, type: 'events' });
               }
             } : null}
