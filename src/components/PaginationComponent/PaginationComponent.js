@@ -2,9 +2,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ArrowForwardIos } from '@material-ui/icons';
-import Container from '../../Container';
+import Container from '../Container';
 import PageElement from './PageElement';
-import SMButton from '../../ServiceMapButton';
+import SMButton from '../ServiceMapButton';
 
 class PaginationComponent extends React.Component {
   constructor(props) {

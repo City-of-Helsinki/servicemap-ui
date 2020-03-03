@@ -110,6 +110,8 @@ export default {
   'general.pageTitles.home': 'Hemvy',
   'general.pageTitles.search': 'Sökresultatsvy',
   'general.pageTitles.unit': 'Vy med verksamhetsställen',
+  'general.pageTitles.unit.events': 'Toimipisteen tapahtumat', // TODO: Translate
+  'general.pageTitles.unit.reservations': 'Toimipisteen varattavat kohteet', // TODO: Translate
   'general.pageTitles.service': 'Tjänstevy',
   'general.pageTitles.serviceTree': 'Förteckning över tjänster',
   'general.pageTitles.event': 'Evenemangsvy',
@@ -152,6 +154,12 @@ export default {
   // Location
   'location.notFound': 'Positionen hittades inte',
   'location.notAllowed': 'Positionen tilläts inte',
+
+  // Loading
+  'loading.events': 'Söker evenemangen {count} / {max}', // TODO: Translate
+  'loading.events.srInfo': 'Söker {count} evenemange(n)', // TODO: Translate
+  'search.loading.units': 'Söker verksamhetsställen {count} / {max}',
+  'search.loading.units.srInfo': 'Söker {count} verksamhetsställe(n)',
 
   // Map
   'map': 'Karta',
@@ -264,8 +272,6 @@ export default {
   'search.searchField': 'Sökfält',
   'search.results.title': 'Sökresultat',
   'search.input.placeholder': 'Sök verksamhetsställen',
-  'search.loading.units': 'Söker verksamhetsställen {count} / {max}',
-  'search.loading.units.srInfo': 'Söker {count} verksamhetsställe(n)',
   'search.notFound': 'Inga sökresultat hittades med sökningen',
   'search.started': 'Sökningen har börjat',
   'search.infoText': '{count} sökresultat',

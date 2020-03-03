@@ -196,7 +196,7 @@ const UnitView = (props) => {
           getLocaleText={getLocaleText}
         />
         <Reservations
-          listLength={10}
+          listLength={5}
           reservationsData={reservationsData}
         />
         <Events classes={classes} listLength={5} eventsData={eventsData} />

@@ -7,7 +7,7 @@ import {
 import { intlShape } from 'react-intl';
 import isClient, { parseSearchParams, stringifySearchParams, AddEventListener } from '../../utils';
 import ResultList from '../Lists/ResultList';
-import PaginationComponent from './PaginationComponent';
+import PaginationComponent from '../PaginationComponent';
 import ResultOrderer from './ResultOrderer';
 import config from '../../../config';
 
