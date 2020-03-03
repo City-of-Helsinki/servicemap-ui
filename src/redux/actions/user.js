@@ -20,6 +20,11 @@ export const setUserPosition = position => ({
   position,
 });
 
+export const setCustomPosition = customPosition => ({
+  type: 'SET_CUSTOM_POSITION',
+  customPosition,
+});
+
 const setTheme = theme => ({
   type: 'SET_THEME',
   theme,
@@ -70,6 +75,21 @@ export const findUserLocation = () => async (dispatch) => {
   };
 
   navigator.geolocation.getCurrentPosition(success, error, { enableHighAccuracy: true });
+};
+
+export const changeCustomUserLocation = customPosition => async (dispatch) => {
+  if (customPosition && customPosition[0] && customPosition[1]) {
+    dispatch(setCustomPosition({
+      coordinates: {
+        latitude: customPosition[0],
+        longitude: customPosition[1],
+      },
+    }));
+    return;
+  }
+  dispatch(setCustomPosition({
+    coordinates: null,
+  }));
 };
 
 
