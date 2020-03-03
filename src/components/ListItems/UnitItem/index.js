@@ -13,13 +13,15 @@ const mapStateToProps = (state) => {
   const {
     address, navigator, settings, user,
   } = state;
+  const { customPosition, position } = state.user;
+  const coordinates = customPosition.coordinates || position.coordinates;
   return {
     address,
     currentPage: user.page,
     getLocaleText,
     navigator,
     settings,
-    userLocation: user.position.coordinates,
+    userLocation: coordinates,
   };
 };
 
