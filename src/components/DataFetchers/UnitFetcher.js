@@ -7,7 +7,7 @@ import { fetchUnitEvents } from '../../redux/actions/selectedUnitEvents';
 import { fetchSelectedUnit, changeSelectedUnit } from '../../redux/actions/selectedUnit';
 import { fetchAccessibilitySentences } from '../../redux/actions/selectedUnitAccessibility';
 import { fetchReservations } from '../../redux/actions/selectedUnitReservations';
-import { focusUnit } from '../../views/MapView/utils/mapActions';
+import { focusToPosition } from '../../views/MapView/utils/mapActions';
 
 class UnitFetcher extends React.Component {
   componentDidMount() {
@@ -37,7 +37,7 @@ class UnitFetcher extends React.Component {
     const { map, unit } = this.props;
     const { location } = unit;
     if (location && location.coordinates && map) {
-      focusUnit(map, location.coordinates);
+      focusToPosition(map, location.coordinates);
     }
   }
 

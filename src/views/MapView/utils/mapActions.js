@@ -28,7 +28,7 @@ const fitUnitsToMap = (units, map) => {
   }
 };
 
-const focusUnit = (map, coordinates) => {
+const focusToPosition = (map, coordinates) => {
   map.setView(
     [coordinates[1], coordinates[0]],
     map._layersMaxZoom - 1,
@@ -54,6 +54,6 @@ const fitBbox = (map, bbox) => {
 export {
   fitBbox,
   fitUnitsToMap,
-  focusUnit,
+  focusToPosition,
   focusDistrict,
 };

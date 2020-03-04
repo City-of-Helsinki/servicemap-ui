@@ -8,7 +8,7 @@ import { MyLocation, LocationDisabled } from '@material-ui/icons';
 import { mapOptions } from './config/mapConfig';
 import CreateMap from './utils/createMap';
 import UnitMarkers from './components/UnitMarkers';
-import { focusUnit } from './utils/mapActions';
+import { focusToPosition } from './utils/mapActions';
 import styles from './styles';
 import Districts from './components/Districts';
 import TransitStops from './components/TransitStops';
@@ -177,7 +177,7 @@ const MapView = (props) => {
 
   const focusOnUser = () => {
     if (userLocation) {
-      focusUnit(
+      focusToPosition(
         mapRef.current.leafletElement,
         [userLocation.longitude, userLocation.latitude],
       );
