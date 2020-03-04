@@ -107,7 +107,7 @@ class ServiceView extends React.Component {
 
   render() {
     const {
-      classes, count, current, embed, unitData, isLoading, max, getLocaleText, intl,
+      classes, count, current, customPosition, embed, unitData, isLoading, max, getLocaleText, intl,
     } = this.props;
     const { icon } = this.state;
     const progress = (isLoading && count) ? Math.floor((count / max * 100)) : 0;
@@ -126,6 +126,8 @@ class ServiceView extends React.Component {
     const showTitle = current && current.name;
     const showUnits = serviceUnits;
     const showServiceWithoutUnits = current && !isLoading && !serviceUnits;
+
+    const initialOrder = customPosition ? 'distance-asc' : null;
 
     return (
       <div>
@@ -168,7 +170,7 @@ class ServiceView extends React.Component {
           showUnits
           && (
             <>
-              <ResultOrderer />
+              <ResultOrderer initialOrder={initialOrder} />
               <PaginatedList
                 id="events"
                 data={serviceUnits || []}
