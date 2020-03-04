@@ -28,10 +28,12 @@ const fitUnitsToMap = (units, map) => {
   }
 };
 
-const focusToPosition = (map, coordinates) => {
+
+const focusToPosition = (map, coordinates, zoomOption) => {
+  const zoom = typeof zoomOption === 'number' ? zoomOption : map._layersMaxZoom - 1;
   map.setView(
     [coordinates[1], coordinates[0]],
-    map._layersMaxZoom - 1,
+    zoom,
   );
 };
 
