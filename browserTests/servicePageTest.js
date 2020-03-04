@@ -7,7 +7,7 @@ const coordinates = ['60.281936', '24.949933'];
 
 /* eslint-disable */
 fixture`Service page tests`
-  .page`http://${server.address}:${server.port}/fi/service/813?latLng=${coordinates[0]},${coordinates[1]}`
+  .page`http://${server.address}:${server.port}/fi/service/813?lat=${coordinates[0]}&lon=${coordinates[1]}`
   .beforeEach(async () => {
     await waitForReact();
   });

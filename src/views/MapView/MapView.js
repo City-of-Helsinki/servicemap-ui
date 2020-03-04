@@ -37,6 +37,7 @@ const MapView = (props) => {
     unitList,
     unitsLoading,
     serviceUnits,
+    hideUserMarker,
     highlightedUnit,
     highlightedDistrict,
     isMobile,
@@ -345,7 +346,7 @@ const MapView = (props) => {
             />
           )}
 
-          {userLocation && (
+          { !hideUserMarker && userLocation && (
             <UserMarker
               position={[userLocation.latitude, userLocation.longitude]}
               classes={classes}
@@ -392,6 +393,7 @@ MapView.propTypes = {
   currentPage: PropTypes.string.isRequired,
   getAddressNavigatorParams: PropTypes.func.isRequired,
   getLocaleText: PropTypes.func.isRequired,
+  hideUserMarker: PropTypes.bool,
   highlightedDistrict: PropTypes.objectOf(PropTypes.any),
   highlightedUnit: PropTypes.objectOf(PropTypes.any),
   intl: intlShape.isRequired,
@@ -413,6 +415,7 @@ MapView.propTypes = {
 
 MapView.defaultProps = {
   addressUnits: null,
+  hideUserMarker: false,
   highlightedDistrict: null,
   highlightedUnit: null,
   isMobile: false,

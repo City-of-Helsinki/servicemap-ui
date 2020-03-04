@@ -45,6 +45,7 @@ const mapStateToProps = (state) => {
     unitsLoading,
     currentPage: page,
     userLocation: coordinates,
+    hideUserMarker: customPosition.hideMarker,
     settings,
     navigator,
     addressUnits,

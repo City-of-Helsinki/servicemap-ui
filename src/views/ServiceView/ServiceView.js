@@ -44,7 +44,7 @@ class ServiceView extends React.Component {
 
     const customLocation = new CustomLocation(location);
     if (customLocation.coords) {
-      changeCustomUserLocation(customLocation.coords);
+      changeCustomUserLocation(customLocation.coords, customLocation.hideMarker);
       return;
     }
     changeCustomUserLocation(null);
@@ -85,7 +85,6 @@ class ServiceView extends React.Component {
       focusToPosition(
         map,
         [customPosition.longitude, customPosition.latitude],
-        map._layersMaxZoom - 3,
       );
       return;
     }
