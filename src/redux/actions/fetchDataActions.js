@@ -12,13 +12,14 @@ const dataSet = prefix => ({
     type: `${prefix}_FETCH_DATA_SUCCESS`,
     data,
   }),
-  fetchProgressUpdate: (count, max) => ({
+  fetchProgressUpdate: (count, max, next) => ({
     type: `${prefix}_FETCH_PROGRESS_UPDATE`,
     count,
     max,
+    next,
   }),
   setNewData: data => ({
-    type: `${prefix}_SET_DATA`,
+    type: `${prefix}_SET_NEW_DATA`,
     data,
   }),
   setNewCurrent: current => ({
@@ -47,19 +48,19 @@ const dataSingle = prefix => ({
     data,
     next: meta && meta.next,
   }),
-  setNewData: (data, meta) => ({
+  setNewData: data => ({
     type: `${prefix}_SET_DATA`,
     data,
-    count: meta && meta.count,
   }),
 });
 
 // Data fetch multiple
 export const units = dataSet('UNITS');
 export const service = dataSet('SERVICE');
+export const events = dataSet('SELECTED_UNIT_EVENTS');
+export const reservations = dataSet('SELECTED_UNIT_RESERVATIONS');
+
 // Data fetch single
 export const selectedUnit = dataSingle('SELECTED_UNIT');
 export const accessibilitySentences = dataSingle('SELECTED_UNIT_ACCESSIBILITY_SENTENCES');
-export const reservations = dataSingle('SELECTED_UNIT_RESERVATIONS');
-export const events = dataSingle('SELECTED_UNIT_EVENTS');
 export const redirectService = dataSingle('REDIRECT_SERVICE');

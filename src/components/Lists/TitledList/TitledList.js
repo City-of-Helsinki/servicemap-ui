@@ -10,6 +10,7 @@ const TitledList = ({
   children,
   classes,
   buttonMessageID,
+  buttonID,
   title,
   titleComponent,
   divider,
@@ -52,7 +53,8 @@ const TitledList = ({
       </List>
       {shortened && showMoreOnClick && !loading && (
         <SMButton
-          role="button"
+          id={buttonID}
+          role="link"
           messageID={buttonMessageID}
           onClick={(e) => {
             e.preventDefault();
@@ -71,6 +73,7 @@ const TitledList = ({
 };
 
 TitledList.propTypes = {
+  buttonID: PropTypes.string,
   children: PropTypes.node.isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   subtitle: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
@@ -84,6 +87,7 @@ TitledList.propTypes = {
 };
 
 TitledList.defaultProps = {
+  buttonID: null,
   titleComponent: 'h3',
   divider: true,
   showMoreOnClick: null,

@@ -5,7 +5,7 @@ import { Typography } from '@material-ui/core';
 import { intlShape, FormattedMessage } from 'react-intl';
 import { Map } from '@material-ui/icons';
 import SearchBar from '../../components/SearchBar';
-import { focusDistrict, focusUnit } from '../MapView/utils/mapActions';
+import { focusDistrict, focusToPosition } from '../MapView/utils/mapActions';
 import fetchDistricts from './utils/fetchDistricts';
 import { MobileComponent, DesktopComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import TitleBar from '../../components/TitleBar';
@@ -96,7 +96,7 @@ const AddressView = (props) => {
           setAddressLocation({ addressCoordinates: address.location.coordinates });
           const { coordinates } = address.location;
 
-          focusUnit(map, [coordinates[0], coordinates[1]]);
+          focusToPosition(map, [coordinates[0], coordinates[1]]);
           if (embed) {
             return;
           }
@@ -253,7 +253,7 @@ const AddressView = (props) => {
                 className={classes.mapButton}
                 onClick={() => {
                   if (navigator) {
-                    focusUnit(map, addressData.location.coordinates);
+                    focusToPosition(map, addressData.location.coordinates);
                     navigator.openMap();
                   }
                 }}
@@ -271,7 +271,7 @@ const AddressView = (props) => {
           className={classes.mapButton}
           onClick={() => {
             if (navigator) {
-              focusUnit(map, addressData.location.coordinates);
+              focusToPosition(map, addressData.location.coordinates);
               navigator.openMap();
             }
           }}

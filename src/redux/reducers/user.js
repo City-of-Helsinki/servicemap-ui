@@ -9,6 +9,9 @@ const initialState = {
     allowed: false,
     addressData: null,
   },
+  customPosition: {
+    coordinates: null,
+  },
 };
 
 export default (state = initialState, action) => {
@@ -32,6 +35,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         position: action.position,
+      };
+    case 'SET_CUSTOM_POSITION':
+      return {
+        ...state,
+        customPosition: action.customPosition,
       };
     case 'SET_THEME':
       return {

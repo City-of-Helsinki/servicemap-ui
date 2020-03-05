@@ -14,7 +14,7 @@ import UnitItem from '../../components/ListItems/UnitItem';
 import TitledList from '../../components/Lists/TitledList';
 import UnitHelper from '../../utils/unitHelper';
 import { eventFetch } from '../../utils/fetch';
-import { focusUnit } from '../MapView/utils/mapActions';
+import { focusToPosition } from '../MapView/utils/mapActions';
 
 class EventDetailView extends React.Component {
   constructor(props) {
@@ -77,7 +77,7 @@ class EventDetailView extends React.Component {
     if (unit && unit.location && map && map._layersMaxZoom && !centered) {
       const { location } = unit;
       this.setState({ centered: true });
-      focusUnit(map, location.coordinates);
+      focusToPosition(map, location.coordinates);
     }
   }
 

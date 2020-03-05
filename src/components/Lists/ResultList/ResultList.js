@@ -18,7 +18,7 @@ class ResultList extends React.Component {
 
   render() {
     const {
-      classes, data, listId, resultCount, title, titleComponent,
+      classes, data, customComponent, listId, resultCount, title, titleComponent,
     } = this.props;
 
     return (
@@ -71,8 +71,13 @@ class ResultList extends React.Component {
                   itemComponent = <AddressItem key={`address-${sort_index}`} address={item} />;
                   break;
                 default:
-                  itemComponent = null;
+                  if (customComponent && item) {
+                    itemComponent = customComponent(item);
+                  } else {
+                    itemComponent = null;
+                  }
               }
+
               if (item) {
                 return itemComponent;
               }
@@ -90,6 +95,7 @@ export default ResultList;
 // Typechecking
 ResultList.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any),
+  customComponent: PropTypes.func,
   data: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)).isRequired,
   listId: PropTypes.string.isRequired,
   resultCount: PropTypes.number,
@@ -99,6 +105,7 @@ ResultList.propTypes = {
 
 ResultList.defaultProps = {
   classes: {},
+  customComponent: null,
   resultCount: null,
   title: null,
   titleComponent: 'h3',
