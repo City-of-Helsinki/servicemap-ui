@@ -78,7 +78,7 @@ export default {
   'sorting.match.desc': 'Bästa träffarna först',
 
   // General
-  'general.frontPage': 'Första sidan',
+  'general.frontPage': 'Framsidan',
   'general.contrast': 'Kontrast',
   'general.menu': 'Meny',
   'general.menu.open': 'Öppna menyn', // TODO: vereify
@@ -113,7 +113,7 @@ export default {
   'general.pageTitles.unit.events': 'Toimipisteen tapahtumat', // TODO: Translate
   'general.pageTitles.unit.reservations': 'Toimipisteen varattavat kohteet', // TODO: Translate
   'general.pageTitles.service': 'Tjänstevy',
-  'general.pageTitles.serviceTree': 'Förteckning över tjänster',
+  'general.pageTitles.serviceTree': 'Servicekatalog',
   'general.pageTitles.event': 'Evenemangsvy',
   'general.pageTitles.address': 'Adressvy',
   'general.pageTitles.list.events': 'Förteckning över evenemang ',
@@ -143,7 +143,7 @@ export default {
 
   // Home
   'home.buttons.settings': 'Spara dina egna stads- och tillgänglighetsinställningar',
-  'home.buttons.services': 'Bekanta dig med tjänster med hjälp av förteckningen över tjänster',
+  'home.buttons.services': 'Läs mer om tjänsterna i servicekatalogen',
   'home.buttons.closeByServices': 'Närtjänster', // TODO: Translate again
   'home.buttons.instructions': 'Tips för användning av servicekartan',
   'home.example.search': 'Sök med sökord',
@@ -275,7 +275,7 @@ export default {
   'search.notFound': 'Inga sökresultat hittades med sökningen',
   'search.started': 'Sökningen har börjat',
   'search.infoText': '{count} sökresultat',
-  'search.searchbar.headerText': 'Alla tjänster i huvudstadsregionen inom ditt räckhåll.',
+  'search.searchbar.headerText': 'Alla tjänster i huvudstadsregionen inom räckhåll.',
   'search.searchbar.infoText': 'Sök tjänster, verksamhetsställen eller adresser',
   'search.suggestions.suggest': 'Menade du..?',
   'search.suggestions.expand': 'Sökförslag',
@@ -322,7 +322,7 @@ export default {
   'settings': 'Inställningar',
   'settings.citySettings': 'Stad',
   'settings.citySettings.long': 'Stadsinställningar',
-  'settings.mapSettings': 'Kartbotten',
+  'settings.mapSettings': 'Kartunderlag',
   'settings.mapSettings.long': 'Kartinställningar',
   'settings.accessibilitySettings': 'Tillgänglighetsinställningar',
   'settings.accessibilitySettings.long': 'Tillgänglighetsinställningar',
@@ -336,26 +336,26 @@ export default {
   'settings.sense.title': 'Hörsel och syn',
   'settings.sense.hearing': 'Jag använder hörapparat',
   'settings.sense.visual': 'Jag är synskadad',
-  'settings.sense.colorblind': 'Jag är färgblind',
+  'settings.sense.colorblind': 'Jag har svårt att urskilja förger',
   'settings.info.heading': 'Inställningsuppgifter',
   'settings.info.title': 'Dina valda inställningar påverkar sökresultatet',
   'settings.info.title.noSettings': 'Ändra sök- eller tillgänglighetsinställningar',
-  'settings.mobility.title': 'Rörelsebegränsningar',
-  'settings.mobility.none': 'Inga rörelsebegränsningar',
+  'settings.mobility.title': 'Rörelsehinder',
+  'settings.mobility.none': 'Inga rörelsehinder',
   'settings.mobility.wheelchair': 'Jag använder rullstol',
-  'settings.mobility.reduced_mobility': 'Jag är rörelsehindrad',
+  'settings.mobility.reduced_mobility': 'Jag har rörelsehinder',
   'settings.mobility.rollator': 'Jag använder rollator',
   'settings.mobility.stroller': 'Jag går med barnvagn',
   'settings.city.info': `{count, plural,
-    one {Staden jag valt} 
-    other {Städerna jag valt}
+    one {Vald stad} 
+    other {Vald städer}
   }`,
   'settings.city.title': 'Stad',
   'settings.city.helsinki': 'Helsingfors',
   'settings.city.espoo': 'Esbo',
   'settings.city.vantaa': 'Vanda',
   'settings.city.kauniainen': 'Grankulla',
-  'settings.map.title': 'Kartbotten',
+  'settings.map.title': 'Kartunderlag',
   'settings.map.servicemap': 'Servicekarta',
   'settings.map.ortographic': 'Flygbild',
   'settings.map.guideMap': 'Guidekarta',
