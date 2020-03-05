@@ -72,6 +72,9 @@ const TransitStopInfo = ({ stop, classes, getLocaleText }) => {
             <Typography className={classes.routeName}>
               {departure.pickupType === 'NONE' ? <FormattedMessage id="map.transit.endStation" /> : departure.headsign}
             </Typography>
+            {departure.trip.wheelchairAccessible === 'POSSIBLE' ? (
+              <Accessible className={classes.transitIconInfo} />
+            ) : null}
           </div>
         );
       });
