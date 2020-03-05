@@ -172,11 +172,12 @@ const styles = theme => ({
   tranistInfoContainer: {
     width: 230,
     padding: theme.spacing.unitDouble,
+    display: 'flex',
+    flexDirection: 'column',
   },
   transitInfoTitle: {
     fontWeight: 'bold',
     marginBottom: '5%',
-    marginTop: '5%',
     borderBottomStyle: 'solid',
     borderBottomWidth: '1px',
     borderBottomColor: 'rgba(0, 0, 0, 0.30)',
@@ -206,6 +207,13 @@ const styles = theme => ({
     overflow: 'hidden',
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
+  },
+  closeButton: {
+    marginLeft: 'auto',
+  },
+  closeText: {
+    fontSize: 12,
+    color: 'rgba(0,0,0,0.6)',
   },
   busIconColor: {
     color: '#007AC9',

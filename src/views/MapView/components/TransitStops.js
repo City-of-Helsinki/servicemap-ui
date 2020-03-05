@@ -92,6 +92,11 @@ class TransitStops extends React.Component {
     });
   }
 
+  closePopup = () => {
+    const { map } = this.props;
+    map.leafletElement.closePopup();
+  }
+
   render() {
     const { Marker, Popup, getLocaleText } = this.props;
     const { transitStops } = this.state;
@@ -106,8 +111,12 @@ class TransitStops extends React.Component {
             position={[stop.lat, stop.lon]}
             keyboard={false}
           >
-            <Popup className="popup" autoPan={false}>
-              <TransitStopInfo getLocaleText={getLocaleText} stop={stop} />
+            <Popup closeButton={false} className="popup" autoPan={false}>
+              <TransitStopInfo
+                stop={stop}
+                onCloseClick={() => this.closePopup()}
+                getLocaleText={getLocaleText}
+              />
             </Popup>
           </Marker>
         );

@@ -3,12 +3,25 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Accessible from '@material-ui/icons/Accessible';
 import { FormattedMessage } from 'react-intl';
-import { withStyles, Typography } from '@material-ui/core';
+import { withStyles, Typography, ButtonBase } from '@material-ui/core';
+import { Close } from '@material-ui/icons';
 import { fetchStopData } from '../utils/transitFetch';
 import styles from '../styles';
+import { getIcon } from '../../../components/SMIcon';
 
-const TransitStopInfo = ({ stop, classes, getLocaleText }) => {
+const TransitStopInfo = ({
+  stop, onCloseClick, classes, getLocaleText,
+}) => {
   const [stopData, setStopData] = useState({ departureTimes: null, wheelchair: null });
+
+  const getAccessibilityIcon = (value) => {
+    if (value === 'POSSIBLE') {
+      return <Accessible className={classes.transitIconInfo} />;
+    } if (value === 'NOT_POSSIBLE') {
+      return getIcon('noWheelchair', { className: classes.transitIconInfo });
+    }
+    return null;
+  };
 
   useEffect(() => {
     fetchStopData(stop)
@@ -72,24 +85,25 @@ const TransitStopInfo = ({ stop, classes, getLocaleText }) => {
             <Typography className={classes.routeName}>
               {departure.pickupType === 'NONE' ? <FormattedMessage id="map.transit.endStation" /> : departure.headsign}
             </Typography>
-            {departure.trip.wheelchairAccessible === 'POSSIBLE' ? (
-              <Accessible className={classes.transitIconInfo} />
-            ) : <span className={classes.transitIconInfo} />}
+            {getAccessibilityIcon(departure.trip.wheelchairAccessible)}
           </div>
         );
       });
     } return null;
   };
 
+
   return (
     <div className={classes.tranistInfoContainer}>
+      <ButtonBase onClick={() => onCloseClick()} className={classes.closeButton}>
+        <Typography className={classes.closeText}><FormattedMessage id="general.close" /></Typography>
+        <Close className={classes.transitIconInfo} />
+      </ButtonBase>
       <div className={classes.transitInfoTitle}>
         <Typography className={classes.bold}>
           {typeof stop.name === 'object' ? getLocaleText(stop.name) : stop.name}
         </Typography>
-        {stopData.wheelchair === 'POSSIBLE' ? (
-          <Accessible className={classes.transitIconInfo} />
-        ) : null}
+        {getAccessibilityIcon(stopData.wheelchair)}
       </div>
       {renderDepartureTimes()}
     </div>
@@ -100,6 +114,7 @@ export default withStyles(styles)(TransitStopInfo);
 
 TransitStopInfo.propTypes = {
   stop: PropTypes.objectOf(PropTypes.any),
+  onCloseClick: PropTypes.func.isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   getLocaleText: PropTypes.func.isRequired,
 };

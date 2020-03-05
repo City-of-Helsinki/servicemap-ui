@@ -16,6 +16,7 @@ import twitterIcon from '../../assets/images/twitter_icon.svg';
 import youtubeIcon from '../../assets/images/youtube_icon.svg';
 import vimeoIcon from '../../assets/images/vimeo_icon.svg';
 import userLocationIcon from '../../assets/images/userLocation.svg';
+import noWheelchairIcon from '../../assets/images/wheelchair.svg';
 
 /**
  * Senses
@@ -151,6 +152,9 @@ export const getIcon = (key, props) => {
 
     case 'locationMarker':
       return <img aria-hidden alt="" src={userLocationIcon} {...props} />;
+
+    case 'noWheelchair':
+      return <img aria-hidden alt="" src={noWheelchairIcon} {...props} />;
 
     default:
       return null;
