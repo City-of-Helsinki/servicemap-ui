@@ -111,6 +111,19 @@ const UnitView = (props) => {
     }
   };
 
+  const feedbackButton = () => {
+    if (unit.provider_type === 'SELF_PRODUCED') {
+      return (
+        <SMButton
+          messageID="home.send.feedback"
+          icon={<Mail />}
+          onClick={() => handleFeedbackClick()}
+          margin
+        />
+      );
+    } return null;
+  };
+
   useEffect(() => { // On mount
     intializeUnitData();
   }, []);
@@ -160,12 +173,7 @@ const UnitView = (props) => {
         <UnitLinks unit={unit} />
         <ElectronicServices unit={unit} />
         <DesktopComponent>
-          <SMButton
-            messageID="home.send.feedback"
-            icon={<Mail />}
-            onClick={() => handleFeedbackClick()}
-            margin
-          />
+          {feedbackButton()}
         </DesktopComponent>
       </div>
     );
@@ -219,12 +227,7 @@ const UnitView = (props) => {
           }}
           margin
         />
-        <SMButton
-          messageID="home.send.feedback"
-          icon={<Mail />}
-          onClick={() => handleFeedbackClick()}
-          margin
-        />
+        {feedbackButton()}
       </div>
     </MobileComponent>
   );
