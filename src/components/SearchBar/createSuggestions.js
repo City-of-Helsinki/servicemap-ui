@@ -4,7 +4,7 @@ import config from '../../../config';
 
 const createSuggestions = async (query, signal, locale) => {
   const data = await Promise.all([
-    fetch(`https://servicemap-api-wip.dev.hel.ninja/servicemap/v2/suggest/?q=${query}&language=${locale}`, { signal })
+    fetch(`${config.serviceMapAPI.root}/suggestion/?q=${query}&language=${locale}`, { signal })
       .then((res) => {
         if (res.status === 200) {
           return res.json();
