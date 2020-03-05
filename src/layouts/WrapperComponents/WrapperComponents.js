@@ -21,7 +21,11 @@ export const MobileComponent = ({ children }) => {
 };
 
 MobileComponent.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
+};
+
+MobileComponent.defaultProps = {
+  children: null,
 };
 
 // Content wrapped with this component show only on Desktop widths
@@ -40,7 +44,11 @@ export const DesktopComponent = ({ children }) => {
 };
 
 DesktopComponent.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
+};
+
+DesktopComponent.defaultProps = {
+  children: null,
 };
 
 export default MobileComponent;
