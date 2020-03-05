@@ -163,8 +163,9 @@ const styles = theme => ({
   },
   transitIconInfo: {
     fontSize: 18,
+    width: 18,
     height: 18,
-    lineHeight: 1,
+    lineHeight: '21px',
     marginLeft: 6,
     marginRight: 4,
   },
@@ -189,10 +190,10 @@ const styles = theme => ({
   },
   departureTime: {
     width: '15%',
-    fontSize: 12,
+    fontSize: 13,
   },
   departureVehicle: {
-    width: '30%',
+    width: '38%',
     display: 'flex',
   },
   vehicleName: {

@@ -59,7 +59,7 @@ const TransitStopInfo = ({ stop, classes, getLocaleText }) => {
 
         return (
           <div key={index} className={classes.departureItem}>
-            <Typography>
+            <Typography className={classes.departureTime}>
               {/* This adds 0 before single digit times */}
               {`${hours < 10 ? `0${hours}` : hours}:${minutes < 10 ? `0${minutes}` : minutes}`}
             </Typography>
@@ -74,7 +74,7 @@ const TransitStopInfo = ({ stop, classes, getLocaleText }) => {
             </Typography>
             {departure.trip.wheelchairAccessible === 'POSSIBLE' ? (
               <Accessible className={classes.transitIconInfo} />
-            ) : null}
+            ) : <span className={classes.transitIconInfo} />}
           </div>
         );
       });
