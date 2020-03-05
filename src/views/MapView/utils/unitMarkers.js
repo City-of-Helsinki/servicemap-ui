@@ -8,18 +8,22 @@ const createMarkerClusterLayer = (
   map,
   classes,
   popupTexts,
-  settings,
-  getLocaleText,
-  navigator,
   embeded,
+  intl,
+  calculateDistance,
+  state,
+  getLocaleText,
 ) => {
   const {
     divIcon, point, markerClusterGroup,
   } = leaflet || {};
 
+  const {
+    navigator, settings,
+  } = state;
   if (
     !divIcon || !point || !markerClusterGroup
-    || !map || !classes || !settings || !getLocaleText
+    || !map || !classes || !getLocaleText
     || !navigator || !isClient()
   ) {
     return null;
@@ -109,6 +113,24 @@ const createMarkerClusterLayer = (
       let content = '';
       if (unit && unit.name) {
         content += `<p class="${classes.unitPopupItem}">${getLocaleText(unit.name)}</p>`;
+      }
+
+      // Distance
+      let distance = calculateDistance(unit);
+      if (typeof distance === 'number') {
+        if (distance >= 1000) {
+          distance /= 1000; // Convert from m to km
+          distance = distance.toFixed(1); // Show only one decimal
+          distance = intl.formatNumber(distance); // Format distance according to locale
+          distance = { distance, type: 'km' };
+        } else {
+          distance = { distance, type: 'm' };
+        }
+      }
+      // console.log(unit, distance);
+
+      if (distance) {
+        content += `<p class="${classes.unitPopupItem} popup-distance">${distance.distance}${distance.type}</p>`;
       }
       listItem.innerHTML = content;
       list.appendChild(listItem);
@@ -234,18 +256,19 @@ const renderUnitMarkers = (
 
 
 // Connector (closure) function used to add state values in redux connect
-export const markerClusterConnector = (settings, getLocaleText, navigator) => (
-  leaflet, map, classes, popupTexts, embeded,
+export const markerClusterConnector = (state, getLocaleText) => (
+  leaflet, map, classes, popupTexts, embeded, intl, calculateDistance,
 ) => (
   createMarkerClusterLayer(
     leaflet,
     map,
     classes,
     popupTexts,
-    settings,
-    getLocaleText,
-    navigator,
     embeded,
+    intl,
+    calculateDistance,
+    state,
+    getLocaleText,
   )
 );
 

@@ -161,7 +161,12 @@ const styles = theme => ({
     padding: 0,
     overflow: 'auto',
     maxHeight: '25vh',
+    '& .popup-distance': {
+      color: 'gray',
+    },
     '& li': {
+      display: 'flex',
+      justifyContent: 'space-between',
       padding: `${theme.spacing.unit}px ${theme.spacing.unitDouble}px`,
       '& hr': {
         height: 1,

@@ -21,6 +21,7 @@ import { parseSearchParams } from '../../utils';
 import isClient from '../../utils';
 import swapCoordinates from './utils/swapCoordinates';
 import HomeLogo from '../../components/Logos/HomeLogo';
+import calculateDistance from '../../utils/calculateDistance';
 
 
 const MapView = (props) => {
@@ -62,6 +63,8 @@ const MapView = (props) => {
   const [markerCluster, setMarkerCluster] = useState(null);
 
   const embeded = isEmbed(match);
+
+  const customCalculateDistance = unit => (calculateDistance(unit, userLocation));
 
   const getMapUnits = () => {
     let mapUnits = [];
@@ -157,7 +160,7 @@ const MapView = (props) => {
         title: intl.formatMessage({ id: 'unit.plural' }),
         info: count => intl.formatMessage({ id: 'map.unit.cluster.popup.info' }, { count }),
       };
-      const cluster = createMarkerClusterLayer(leaflet, map, classes, popupTexts, embeded);
+      const cluster = createMarkerClusterLayer(leaflet, map, classes, popupTexts, embeded, intl, customCalculateDistance);
       if (cluster) {
         map.leafletElement.addLayer(cluster);
         setMarkerCluster(cluster);
