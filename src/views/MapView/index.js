@@ -32,8 +32,20 @@ const mapStateToProps = (state) => {
   const getAddressNavigatorParams = getAddressNavigatorParamsConnector(getLocaleText, locale);
   const getPath = (id, data) => generatePath(id, locale, data);
   return {
-    createMarkerClusterLayer: markerClusterConnector(state, getLocaleText),
-    renderUnitMarkers: renderMarkerConnector(settings, getLocaleText, navigator, theme, getPath),
+    createMarkerClusterLayer: markerClusterConnector(
+      navigator,
+      settings,
+      userLocation,
+      getLocaleText,
+    ),
+    renderUnitMarkers: renderMarkerConnector(
+      settings,
+      userLocation,
+      getLocaleText,
+      navigator,
+      theme,
+      getPath,
+    ),
     highlightedDistrict,
     highlightedUnit,
     getAddressNavigatorParams,

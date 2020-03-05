@@ -64,8 +64,6 @@ const MapView = (props) => {
 
   const embeded = isEmbed(match);
 
-  const customCalculateDistance = unit => (calculateDistance(unit, userLocation));
-
   const getMapUnits = () => {
     let mapUnits = [];
     let unitGeometry = null;
@@ -160,7 +158,8 @@ const MapView = (props) => {
         title: intl.formatMessage({ id: 'unit.plural' }),
         info: count => intl.formatMessage({ id: 'map.unit.cluster.popup.info' }, { count }),
       };
-      const cluster = createMarkerClusterLayer(leaflet, map, classes, popupTexts, embeded, intl, customCalculateDistance);
+      console.log('Initializing markerclusterlayer');
+      const cluster = createMarkerClusterLayer(leaflet, map, classes, popupTexts, embeded, intl);
       if (cluster) {
         map.leafletElement.addLayer(cluster);
         setMarkerCluster(cluster);
@@ -208,7 +207,7 @@ const MapView = (props) => {
 
   useEffect(() => {
     initializeMarkerClusterLayer();
-  }, [mapObject, leaflet]);
+  }, [mapObject, leaflet, userLocation]);
 
   // Attempt to render unit markers on page change or unitList change
   useEffect(() => {
@@ -225,7 +224,7 @@ const MapView = (props) => {
       return;
     }
     if (map) {
-      renderUnitMarkers(leaflet, map, data, classes, markerCluster, embeded);
+      renderUnitMarkers(leaflet, map, data, classes, markerCluster, embeded, intl);
     }
   }, [unitList, highlightedUnit, markerCluster, addressUnits, serviceUnits, highlightedDistrict]);
 

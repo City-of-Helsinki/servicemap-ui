@@ -1,6 +1,7 @@
 import isClient from '../../../utils';
 import { mapTypes } from '../config/mapConfig';
 import { drawMarkerIcon } from './drawIcon';
+import calculateDistance from '../../../utils/calculateDistance';
 
 
 const createMarkerClusterLayer = (
@@ -10,17 +11,15 @@ const createMarkerClusterLayer = (
   popupTexts,
   embeded,
   intl,
-  calculateDistance,
-  state,
+  navigator,
+  settings,
+  userLocation,
   getLocaleText,
 ) => {
   const {
     divIcon, point, markerClusterGroup,
   } = leaflet || {};
 
-  const {
-    navigator, settings,
-  } = state;
   if (
     !divIcon || !point || !markerClusterGroup
     || !map || !classes || !getLocaleText
@@ -116,7 +115,7 @@ const createMarkerClusterLayer = (
       }
 
       // Distance
-      let distance = calculateDistance(unit);
+      let distance = calculateDistance(unit, userLocation);
       if (typeof distance === 'number') {
         if (distance >= 1000) {
           distance /= 1000; // Convert from m to km
@@ -127,10 +126,9 @@ const createMarkerClusterLayer = (
           distance = { distance, type: 'm' };
         }
       }
-      // console.log(unit, distance);
 
       if (distance) {
-        content += `<p class="${classes.unitPopupItem} popup-distance">${distance.distance}${distance.type}</p>`;
+        content += `<p class="${classes.unitPopupDistance} popup-distance">${distance.distance}${distance.type}</p>`;
       }
       listItem.innerHTML = content;
       list.appendChild(listItem);
@@ -188,6 +186,7 @@ const createMarkerClusterLayer = (
 
 const renderUnitMarkers = (
   settings,
+  userLocation,
   getLocaleText,
   navigator,
   theme,
@@ -197,6 +196,7 @@ const renderUnitMarkers = (
   classes,
   clusterLayer,
   embeded,
+  intl,
   generatePath,
 ) => {
   const {
@@ -209,7 +209,7 @@ const renderUnitMarkers = (
   const useContrast = theme === 'dark';
 
   // Handle unit markers
-  const tooltipOptions = (unit, markerCount) => ({
+  const tooltipOptions = markerCount => ({
     className: classes.unitTooltipContainer,
     direction: 'top',
     permanent: markerCount === 1,
@@ -224,6 +224,29 @@ const renderUnitMarkers = (
     unitListFiltered.forEach((unit) => {
       // Show markers with location
       if (unit && unit.location) {
+        // Distance
+        let distance = calculateDistance(unit, userLocation);
+        if (typeof distance === 'number') {
+          if (distance >= 1000) {
+            distance /= 1000; // Convert from m to km
+            distance = distance.toFixed(1); // Show only one decimal
+            distance = intl.formatNumber(distance); // Format distance according to locale
+            distance = { distance, type: 'km' };
+          } else {
+            distance = { distance, type: 'm' };
+          }
+        }
+        // Add title
+        let tooltipContent = `<p class="${classes.unitTooltipTitle}">${unit.name && getLocaleText(unit.name)}</p>`;
+        tooltipContent += `<div class="${classes.unitTooltipSubContainer}">`;
+        // Add address subtitle
+        tooltipContent += `${unit.street_address ? `<p  class="${classes.unitTooltipSubtitle}">${getLocaleText(unit.street_address)}</p>` : ''}`;
+        // Add distance subtitle
+        if (distance) {
+          tooltipContent += `<p class="${classes.unitTooltipSubtitle}">${distance.distance}${distance.type}</p>`;
+        }
+        tooltipContent += '</div>';
+
         const markerElem = marker(
           [unit.location.coordinates[1], unit.location.coordinates[0]],
           {
@@ -231,8 +254,8 @@ const renderUnitMarkers = (
             customUnitData: unit,
           },
         ).bindTooltip(
-          `<p class="${classes.unitTooltipTitle}">${unit.name && getLocaleText(unit.name)}</p>${unit.street_address ? `<p  class="${classes.unitTooltipSubtitle}">${getLocaleText(unit.street_address)}</p>` : ''}`,
-          tooltipOptions(unit, unitListFiltered.length),
+          tooltipContent,
+          tooltipOptions(unitListFiltered.length),
         );
 
         if (unitListFiltered.length > 1 || embeded) {
@@ -260,8 +283,13 @@ const renderUnitMarkers = (
 
 
 // Connector (closure) function used to add state values in redux connect
-export const markerClusterConnector = (state, getLocaleText) => (
-  leaflet, map, classes, popupTexts, embeded, intl, calculateDistance,
+export const markerClusterConnector = (
+  navigator,
+  settings,
+  userLocation,
+  getLocaleText,
+) => (
+  leaflet, map, classes, popupTexts, embeded, intl,
 ) => (
   createMarkerClusterLayer(
     leaflet,
@@ -270,17 +298,21 @@ export const markerClusterConnector = (state, getLocaleText) => (
     popupTexts,
     embeded,
     intl,
-    calculateDistance,
-    state,
+    navigator,
+    settings,
+    userLocation,
     getLocaleText,
   )
 );
 
 // Connector (closure) function used to add state values in redux connect
-export const renderMarkerConnector = (settings, getLocaleText, navigator, theme, generatePath) => (
-  leaflet, map, data, classes, clusterLayer, embeded,
+export const renderMarkerConnector = (
+  settings, userLocation, getLocaleText, navigator, theme, generatePath,
+) => (
+  leaflet, map, data, classes, clusterLayer, embeded, intl,
 ) => renderUnitMarkers(
   settings,
+  userLocation,
   getLocaleText,
   navigator,
   theme,
@@ -290,5 +322,6 @@ export const renderMarkerConnector = (settings, getLocaleText, navigator, theme,
   classes,
   clusterLayer,
   embeded,
+  intl,
   generatePath,
 );
