@@ -192,6 +192,7 @@ const renderUnitMarkers = (
   navigator,
   theme,
   leaflet,
+  map,
   data,
   classes,
   clusterLayer,
@@ -245,7 +246,10 @@ const renderUnitMarkers = (
             if (navigator) {
               navigator.push('unit', { id: unit.id });
             }
-          });
+          })
+            .on('mouseover', () => {
+              map.closePopup();
+            });
         }
 
         clusterLayer.addLayer(markerElem);
@@ -274,13 +278,14 @@ export const markerClusterConnector = (state, getLocaleText) => (
 
 // Connector (closure) function used to add state values in redux connect
 export const renderMarkerConnector = (settings, getLocaleText, navigator, theme, generatePath) => (
-  leaflet, data, classes, clusterLayer, embeded,
+  leaflet, map, data, classes, clusterLayer, embeded,
 ) => renderUnitMarkers(
   settings,
   getLocaleText,
   navigator,
   theme,
   leaflet,
+  map,
   data,
   classes,
   clusterLayer,
