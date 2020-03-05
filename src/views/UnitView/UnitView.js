@@ -6,7 +6,7 @@ import { FormattedMessage, intlShape } from 'react-intl';
 import { Map, Mail } from '@material-ui/icons';
 import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import SearchBar from '../../components/SearchBar';
-import { focusUnit, focusDistrict } from '../MapView/utils/mapActions';
+import { focusToPosition, focusDistrict } from '../MapView/utils/mapActions';
 import TitleBar from '../../components/TitleBar';
 import Container from '../../components/Container';
 import { uppercaseFirst } from '../../utils';
@@ -58,7 +58,7 @@ const UnitView = (props) => {
       if (geometry && geometry.type === 'MultiLineString') {
         focusDistrict(map, [geometry.coordinates]);
       } else if (location) {
-        focusUnit(map, location.coordinates);
+        focusToPosition(map, location.coordinates);
       }
     }
   };

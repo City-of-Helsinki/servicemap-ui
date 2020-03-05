@@ -8,7 +8,7 @@ import { MyLocation, LocationDisabled } from '@material-ui/icons';
 import { mapOptions } from './config/mapConfig';
 import CreateMap from './utils/createMap';
 import UnitMarkers from './components/UnitMarkers';
-import { focusUnit } from './utils/mapActions';
+import { focusToPosition } from './utils/mapActions';
 import styles from './styles';
 import Districts from './components/Districts';
 import TransitStops from './components/TransitStops';
@@ -37,6 +37,7 @@ const MapView = (props) => {
     unitList,
     unitsLoading,
     serviceUnits,
+    hideUserMarker,
     highlightedUnit,
     highlightedDistrict,
     isMobile,
@@ -177,7 +178,7 @@ const MapView = (props) => {
 
   const focusOnUser = () => {
     if (userLocation) {
-      focusUnit(
+      focusToPosition(
         mapRef.current.leafletElement,
         [userLocation.longitude, userLocation.latitude],
       );
@@ -345,7 +346,7 @@ const MapView = (props) => {
             />
           )}
 
-          {userLocation && (
+          { !hideUserMarker && userLocation && (
             <UserMarker
               position={[userLocation.latitude, userLocation.longitude]}
               classes={classes}
@@ -392,6 +393,7 @@ MapView.propTypes = {
   currentPage: PropTypes.string.isRequired,
   getAddressNavigatorParams: PropTypes.func.isRequired,
   getLocaleText: PropTypes.func.isRequired,
+  hideUserMarker: PropTypes.bool,
   highlightedDistrict: PropTypes.objectOf(PropTypes.any),
   highlightedUnit: PropTypes.objectOf(PropTypes.any),
   intl: intlShape.isRequired,
@@ -413,6 +415,7 @@ MapView.propTypes = {
 
 MapView.defaultProps = {
   addressUnits: null,
+  hideUserMarker: false,
   highlightedDistrict: null,
   highlightedUnit: null,
   isMobile: false,

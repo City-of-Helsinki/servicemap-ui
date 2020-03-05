@@ -16,21 +16,23 @@ import { generatePath } from '../../utils/path';
 
 // Get redux states as props to component
 const mapStateToProps = (state) => {
-  const { settings } = state;
+  const {
+    address, navigator, settings, user,
+  } = state;
   const unitList = getProcessedData(state);
   const unitsLoading = state.service.isFetching;
   const serviceUnits = getServiceUnits(state);
   // const serviceUnits = state.service.data;
   const highlightedDistrict = getHighlightedDistrict(state);
   const highlightedUnit = getSelectedUnit(state);
-  const currentPage = state.user.page;
-  const userLocation = state.user.position.coordinates;
+  const {
+    customPosition, locale, page, position, theme,
+  } = user;
   const getLocaleText = textObject => getLocaleString(state, textObject);
-  const { navigator } = state;
-  const { addressUnits } = state.address;
-  const { locale, theme } = state.user;
+  const { addressUnits } = address;
   const getAddressNavigatorParams = getAddressNavigatorParamsConnector(getLocaleText, locale);
   const getPath = (id, data) => generatePath(id, locale, data);
+  const coordinates = customPosition.coordinates || position.coordinates;
   return {
     createMarkerClusterLayer: markerClusterConnector(settings, getLocaleText, navigator),
     renderUnitMarkers: renderMarkerConnector(settings, getLocaleText, navigator, theme, getPath),
@@ -41,8 +43,9 @@ const mapStateToProps = (state) => {
     unitList,
     serviceUnits,
     unitsLoading,
-    currentPage,
-    userLocation,
+    currentPage: page,
+    userLocation: coordinates,
+    hideUserMarker: customPosition.hideMarker,
     settings,
     navigator,
     addressUnits,
