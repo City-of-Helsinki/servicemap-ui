@@ -173,6 +173,7 @@ class ServiceView extends React.Component {
               <PaginatedList
                 id="events"
                 data={serviceUnits || []}
+                title={intl.formatMessage({ id: 'unit.plural' })}
                 titleComponent="h3"
               />
             </>
