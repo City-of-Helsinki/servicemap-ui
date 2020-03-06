@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Typography } from '@material-ui/core';
 import { FormattedMessage, intlShape } from 'react-intl';
-import { Map, Mail } from '@material-ui/icons';
+import { Map, Mail, Hearing } from '@material-ui/icons';
 import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import SearchBar from '../../components/SearchBar';
 import { focusToPosition, focusDistrict } from '../MapView/utils/mapActions';
@@ -26,6 +26,8 @@ import { AddressIcon } from '../../components/SMIcon';
 import FeedbackView from '../FeedbackView';
 import SocialMediaLinks from './components/SocialMediaLinks';
 import UnitLinks from './components/UnitLinks';
+import SimpleListItem from '../../components/ListItems/SimpleListItem';
+import TitledList from '../../components/Lists/TitledList';
 
 const UnitView = (props) => {
   const {
@@ -40,9 +42,11 @@ const UnitView = (props) => {
     fetchUnitEvents,
     fetchReservations,
     fetchAccessibilitySentences,
+    fetchHearingMaps,
     accessibilitySentences,
     eventsData,
     reservationsData,
+    hearingMaps,
     unitFetching,
     userLocation,
     location,
@@ -83,6 +87,7 @@ const UnitView = (props) => {
     if (!stateUnit || !checkCorrectUnit(stateUnit) || !stateUnit.complete) {
       fetchSelectedUnit(unitId, unit => setUnit(unit));
       fetchAccessibilitySentences(unitId);
+      fetchHearingMaps(unitId);
       fetchReservations(unitId);
       fetchUnitEvents(unitId);
     } else {
@@ -178,6 +183,21 @@ const UnitView = (props) => {
 
     return (
       <div className={classes.content}>
+        {hearingMaps && (
+          <TitledList title="Kuulokartat">
+            {hearingMaps.map(item => (
+              <SimpleListItem
+                role="link"
+                link
+                divider
+                icon={<Hearing />}
+                key={item.name}
+                text={item.name}
+                handleItemClick={() => window.open(item.url)}
+              />
+            ))}
+          </TitledList>
+        )}
         <AccessibilityInfo titleAlways data={accessibilitySentences} headingLevel={4} />
       </div>
     );

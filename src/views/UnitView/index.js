@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core';
 import { injectIntl } from 'react-intl';
 import { fetchSelectedUnit, changeSelectedUnit } from '../../redux/actions/selectedUnit';
 import { fetchAccessibilitySentences } from '../../redux/actions/selectedUnitAccessibility';
+import { fetchHearingMaps } from '../../redux/actions/selectedUnitHearingMaps';
 import { fetchUnitEvents } from '../../redux/actions/selectedUnitEvents';
 import { fetchReservations } from '../../redux/actions/selectedUnitReservations';
 import { getLocaleString } from '../../redux/selectors/locale';
@@ -15,7 +16,9 @@ import styles from './styles/styles';
 const mapStateToProps = (state) => {
   const stateUnit = state.selectedUnit.unit.data;
   const unitFetching = state.selectedUnit.unit.isFetching;
-  const { accessibilitySentences, events, reservations } = state.selectedUnit;
+  const {
+    accessibilitySentences, events, reservations, hearingMaps,
+  } = state.selectedUnit;
   const getLocaleText = textObject => getLocaleString(state, textObject);
   const map = state.mapRef.leafletElement;
   const { navigator } = state;
@@ -31,6 +34,7 @@ const mapStateToProps = (state) => {
     navigator,
     reservationsData: reservations,
     userLocation: user.position,
+    hearingMaps: hearingMaps.data,
   };
 };
 
@@ -42,5 +46,6 @@ export default withRouter(injectIntl(withStyles(styles)(connect(
     fetchUnitEvents,
     fetchAccessibilitySentences,
     fetchReservations,
+    fetchHearingMaps,
   },
 )(UnitView))));

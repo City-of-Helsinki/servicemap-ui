@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import breadcrumb from './redux/reducers/breadcrumb';
 import navigator from './redux/reducers/navigator';
 import {
-  units, service, selectedUnit, accessibilitySentences, redirectService, reservations, unitEvents,
+  units, service, selectedUnit, accessibilitySentences, redirectService, reservations, unitEvents, hearingMaps
 } from './redux/reducers/fetchDataReducer';
 import user from './redux/reducers/user';
 import districts from './redux/reducers/district';
@@ -30,6 +30,7 @@ export default combineReducers({
     unit: selectedUnit,
     reservations,
     events: unitEvents,
+    hearingMaps,
   }),
   event,
   address,

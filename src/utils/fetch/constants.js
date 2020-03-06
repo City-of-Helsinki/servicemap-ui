@@ -77,6 +77,9 @@ export const APIHandlers = {
     url: id => `${config.eventsAPI.root}/event/${id}/`,
     options: {},
   },
+  hearingMaps: {
+    url: id => `${config.hearingMapAPI.root}/${id}`,
+  },
 };
 
 export default APIHandlers;
