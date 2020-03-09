@@ -1,16 +1,18 @@
 import { createSelector } from 'reselect';
 import { getLocaleString } from './locale';
 import UnitHelper from '../../utils/unitHelper';
-import calculateDistance from '../../utils/calculateDistance';
+import calculateDistance from './unit';
 
 const direction = state => state.sort.direction;
 const order = state => state.sort.order;
 const locale = state => state.user.locale;
 const settings = state => state.settings;
+// Return function that accepts unit as parameter
+const calculateDistanceFunc = state => calculateDistance(state);
 
-const getOrderedData = (data, location) => createSelector(
-  [direction, order, locale, settings],
-  (direction, order, locale, settings) => {
+const getOrderedData = data => createSelector(
+  [calculateDistanceFunc, direction, order, locale, settings],
+  (calculateDistanceFunc, direction, order, locale, settings) => {
     if (!data) {
       throw new Error('Invalid data provided to getOrderedData selector');
     }
@@ -62,7 +64,7 @@ const getOrderedData = (data, location) => createSelector(
       case 'distance': {
         results.forEach((element) => {
         // eslint-disable-next-line no-param-reassign
-          element.distanceFromUser = calculateDistance(element, location);
+          element.distanceFromUser = calculateDistanceFunc(element);
         });
         results.sort((a, b) => {
           const aDistance = a.distanceFromUser;
