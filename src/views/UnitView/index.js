@@ -10,9 +10,12 @@ import { getLocaleString } from '../../redux/selectors/locale';
 
 import UnitView from './UnitView';
 import styles from './styles/styles';
+import calculateDistance from '../../redux/selectors/unit';
+import { formatDistanceObject } from '../../utils';
 
 // Listen to redux state
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, props) => {
+  const { intl } = props;
   const stateUnit = state.selectedUnit.unit.data;
   const unitFetching = state.selectedUnit.unit.isFetching;
   const { accessibilitySentences, events, reservations } = state.selectedUnit;
@@ -23,6 +26,7 @@ const mapStateToProps = (state) => {
 
   return {
     accessibilitySentences: accessibilitySentences.data,
+    distance: formatDistanceObject(intl, calculateDistance(state)(stateUnit)),
     stateUnit,
     unitFetching,
     eventsData: events,
