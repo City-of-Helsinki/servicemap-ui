@@ -13,9 +13,14 @@ import { getProcessedData } from '../../redux/selectors/results';
 import { markerClusterConnector, renderMarkerConnector } from './utils/unitMarkers';
 import { getAddressNavigatorParamsConnector } from '../../utils/address';
 import { generatePath } from '../../utils/path';
+import calculateDistance from '../../redux/selectors/unit';
+import { formatDistanceObject } from '../../utils';
 
 // Get redux states as props to component
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, props) => {
+  const {
+    intl,
+  } = props;
   const {
     address, navigator, settings, user,
   } = state;
@@ -33,20 +38,23 @@ const mapStateToProps = (state) => {
   const getAddressNavigatorParams = getAddressNavigatorParamsConnector(getLocaleText, locale);
   const getPath = (id, data) => generatePath(id, locale, data);
   const coordinates = customPosition.coordinates || position.coordinates;
+  const getDistance = unit => formatDistanceObject(intl, calculateDistance(state)(unit));
   return {
     createMarkerClusterLayer: markerClusterConnector(
       navigator,
       settings,
-      userLocation,
+      coordinates,
       getLocaleText,
+      getDistance,
     ),
     renderUnitMarkers: renderMarkerConnector(
       settings,
-      userLocation,
+      coordinates,
       getLocaleText,
       navigator,
       theme,
       getPath,
+      getDistance,
     ),
     highlightedDistrict,
     highlightedUnit,

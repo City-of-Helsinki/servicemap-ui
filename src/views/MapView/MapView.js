@@ -20,7 +20,6 @@ import AddressMarker from './components/AddressMarker';
 import isClient, { parseSearchParams } from '../../utils';
 import swapCoordinates from './utils/swapCoordinates';
 import HomeLogo from '../../components/Logos/HomeLogo';
-import calculateDistance from '../../utils/calculateDistance';
 
 
 const MapView = (props) => {

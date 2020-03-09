@@ -1,7 +1,6 @@
 import isClient from '../../../utils';
 import { mapTypes } from '../config/mapConfig';
 import { drawMarkerIcon } from './drawIcon';
-import calculateDistance from '../../../utils/calculateDistance';
 
 
 const createMarkerClusterLayer = (
@@ -15,6 +14,7 @@ const createMarkerClusterLayer = (
   settings,
   userLocation,
   getLocaleText,
+  getDistance,
 ) => {
   const {
     divIcon, point, markerClusterGroup,
@@ -115,17 +115,7 @@ const createMarkerClusterLayer = (
       }
 
       // Distance
-      let distance = calculateDistance(unit, userLocation);
-      if (typeof distance === 'number') {
-        if (distance >= 1000) {
-          distance /= 1000; // Convert from m to km
-          distance = distance.toFixed(1); // Show only one decimal
-          distance = intl.formatNumber(distance); // Format distance according to locale
-          distance = { distance, type: 'km' };
-        } else {
-          distance = { distance, type: 'm' };
-        }
-      }
+      const distance = getDistance(unit);
 
       if (distance) {
         content += `<p class="${classes.unitPopupDistance} popup-distance">${distance.distance}${distance.type}</p>`;
@@ -206,6 +196,7 @@ const renderUnitMarkers = (
   embeded,
   intl,
   generatePath,
+  getDistance,
 ) => {
   const {
     marker,
@@ -233,17 +224,7 @@ const renderUnitMarkers = (
       // Show markers with location
       if (unit && unit.location) {
         // Distance
-        let distance = calculateDistance(unit, userLocation);
-        if (typeof distance === 'number') {
-          if (distance >= 1000) {
-            distance /= 1000; // Convert from m to km
-            distance = distance.toFixed(1); // Show only one decimal
-            distance = intl.formatNumber(distance); // Format distance according to locale
-            distance = { distance, type: 'km' };
-          } else {
-            distance = { distance, type: 'm' };
-          }
-        }
+        const distance = getDistance(unit);
         // Add title
         let tooltipContent = `<p class="${classes.unitTooltipTitle}">${unit.name && getLocaleText(unit.name)}</p>`;
         tooltipContent += `<div class="${classes.unitTooltipSubContainer}">`;
@@ -302,6 +283,7 @@ export const markerClusterConnector = (
   settings,
   userLocation,
   getLocaleText,
+  getDistance,
 ) => (
   leaflet, map, classes, popupTexts, embeded, intl,
 ) => (
@@ -316,12 +298,13 @@ export const markerClusterConnector = (
     settings,
     userLocation,
     getLocaleText,
+    getDistance,
   )
 );
 
 // Connector (closure) function used to add state values in redux connect
 export const renderMarkerConnector = (
-  settings, userLocation, getLocaleText, navigator, theme, generatePath,
+  settings, userLocation, getLocaleText, navigator, theme, generatePath, getDistance,
 ) => (
   leaflet, map, data, classes, clusterLayer, embeded, intl,
 ) => renderUnitMarkers(
@@ -338,4 +321,5 @@ export const renderMarkerConnector = (
   embeded,
   intl,
   generatePath,
+  getDistance,
 );
