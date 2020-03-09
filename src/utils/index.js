@@ -161,5 +161,34 @@ export const getSearchParam = (location, key) => {
   return param;
 };
 
+export const formatDistanceString = (intl, distance) => {
+  let adjustedDistance = distance;
+  if (distance && intl) {
+    if (distance >= 1000) {
+      adjustedDistance /= 1000; // Convert from m to km
+      adjustedDistance = distance.toFixed(1); // Show only one decimal
+      adjustedDistance = intl.formatNumber(distance); // Format distance according to locale
+      return `${adjustedDistance} km`;
+    }
+    return `${adjustedDistance} m`;
+  } return null;
+};
+
+export const formatDistanceObject = (intl, distance) => {
+  let adjustedDistance = distance;
+  if (typeof adjustedDistance === 'number' && intl) {
+    if (adjustedDistance >= 1000) {
+      adjustedDistance /= 1000; // Convert from m to km
+      adjustedDistance = adjustedDistance.toFixed(1); // Show only one decimal
+      adjustedDistance = intl.formatNumber(adjustedDistance); // Format distance according to locale
+      adjustedDistance = { distance: adjustedDistance, type: 'km' };
+    } else {
+      adjustedDistance = { distance, type: 'm' };
+    }
+    return adjustedDistance;
+  }
+  return null;
+}
+
 
 export default isClient;

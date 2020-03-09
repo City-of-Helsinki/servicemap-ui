@@ -7,19 +7,16 @@ import ResultItem from '../ResultItem';
 import SettingsUtility from '../../../utils/settings';
 import UnitIcon from '../../SMIcon/UnitIcon';
 import isClient, { uppercaseFirst } from '../../../utils';
-import calculateDistance from '../../../utils/calculateDistance';
 
 const UnitItem = ({
-  address,
   classes,
-  currentPage,
+  distance,
   unit,
   onClick,
   getLocaleText,
   intl,
   padded,
   navigator,
-  userLocation,
   settings,
 }) => {
   const parseAccessibilityText = () => {
@@ -59,28 +56,6 @@ const UnitItem = ({
   const accessText = accessData.text;
   const { problemCount } = accessData;
 
-  // Use address if possible or user location to figure out distance
-  let latLng = null;
-  try {
-    const addCoords = address && address.addressCoordinates;
-    latLng = addCoords && currentPage === 'address' ? { latitude: addCoords[1], longitude: addCoords[0] } : userLocation;
-  } catch (e) {
-    latLng = userLocation;
-  }
-
-  // Distance
-  let distance = calculateDistance(unit, latLng);
-  if (typeof distance === 'number') {
-    if (distance >= 1000) {
-      distance /= 1000; // Convert from m to km
-      distance = distance.toFixed(1); // Show only one decimal
-      distance = intl.formatNumber(distance); // Format distance according to locale
-      distance = { distance, type: 'km' };
-    } else {
-      distance = { distance, type: 'm' };
-    }
-  }
-
   // Contract type text
   const contractType = contract_type && contract_type.description ? uppercaseFirst(getLocaleText(contract_type.description)) : '';
 
@@ -114,24 +89,21 @@ export default UnitItem;
 
 // Typechecking
 UnitItem.propTypes = {
-  address: PropTypes.objectOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  currentPage: PropTypes.string.isRequired,
+  distance: PropTypes.string,
   unit: PropTypes.objectOf(PropTypes.any),
   getLocaleText: PropTypes.func.isRequired,
   onClick: PropTypes.func,
   intl: intlShape.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
-  userLocation: PropTypes.objectOf(PropTypes.any),
   padded: PropTypes.bool,
 };
 
 UnitItem.defaultProps = {
-  address: null,
+  distance: null,
   unit: {},
   onClick: null,
   navigator: null,
-  userLocation: null,
   padded: false,
 };
