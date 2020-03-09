@@ -90,7 +90,11 @@ export default UnitItem;
 // Typechecking
 UnitItem.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  distance: PropTypes.string,
+  distance: PropTypes.shape({
+    distance: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    type: PropTypes.oneOf(['m', 'km']),
+    text: PropTypes.string,
+  }),
   unit: PropTypes.objectOf(PropTypes.any),
   getLocaleText: PropTypes.func.isRequired,
   onClick: PropTypes.func,

@@ -161,20 +161,11 @@ export const getSearchParam = (location, key) => {
   return param;
 };
 
-export const formatDistanceString = (intl, distance) => {
-  let adjustedDistance = distance;
-  if (adjustedDistance && intl) {
-    if (adjustedDistance >= 1000) {
-      adjustedDistance /= 1000; // Convert from m to km
-      adjustedDistance = adjustedDistance.toFixed(1); // Show only one decimal
-      adjustedDistance = intl.formatNumber(adjustedDistance); // Format distance according to locale
-      return `${adjustedDistance} km`;
-    }
-    return `${adjustedDistance} m`;
-  }
-  return null;
-};
-
+/**
+ * Transform distance number to distance object
+ * @param {*} intl - Intl object to format number text 
+ * @param {number,string} distance - Calculated distance
+ */
 export const formatDistanceObject = (intl, distance) => {
   let adjustedDistance = distance;
   if (typeof adjustedDistance === 'number' && intl) {
@@ -182,9 +173,9 @@ export const formatDistanceObject = (intl, distance) => {
       adjustedDistance /= 1000; // Convert from m to km
       adjustedDistance = adjustedDistance.toFixed(1); // Show only one decimal
       adjustedDistance = intl.formatNumber(adjustedDistance); // Format distance according to locale
-      adjustedDistance = { distance: adjustedDistance, type: 'km' };
+      adjustedDistance = { distance: adjustedDistance, type: 'km', text: `${adjustedDistance} km` };
     } else {
-      adjustedDistance = { distance, type: 'm' };
+      adjustedDistance = { distance, type: 'm', text: `${adjustedDistance} m` };
     }
     return adjustedDistance;
   }

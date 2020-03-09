@@ -226,14 +226,14 @@ const UnitView = (props) => {
           <TitleBar
             icon={<AddressIcon className={classes.icon} />}
             title={title}
-            distance={distance}
+            distance={distance && distance.text}
           />
         </DesktopComponent>
         <MobileComponent>
           <TitleBar
             title={title}
             backButton
-            distance={distance}
+            distance={distance && distance.text}
           />
         </MobileComponent>
       </div>
@@ -337,7 +337,11 @@ export default UnitView;
 // Typechecking
 UnitView.propTypes = {
   accessibilitySentences: PropTypes.objectOf(PropTypes.any),
-  distance: PropTypes.string,
+  distance: PropTypes.shape({
+    distance: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    type: PropTypes.oneOf(['m', 'km']),
+    text: PropTypes.string,
+  }),
   unit: PropTypes.objectOf(PropTypes.any),
   embed: PropTypes.bool,
   eventsData: PropTypes.objectOf(PropTypes.any),

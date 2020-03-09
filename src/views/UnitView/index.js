@@ -11,7 +11,7 @@ import { getLocaleString } from '../../redux/selectors/locale';
 import UnitView from './UnitView';
 import styles from './styles/styles';
 import calculateDistance from '../../redux/selectors/unit';
-import { formatDistanceString } from '../../utils';
+import { formatDistanceObject } from '../../utils';
 
 // Listen to redux state
 const mapStateToProps = (state, props) => {
@@ -26,7 +26,7 @@ const mapStateToProps = (state, props) => {
 
   return {
     accessibilitySentences: accessibilitySentences.data,
-    distance: formatDistanceString(intl, calculateDistance(state)(stateUnit)),
+    distance: formatDistanceObject(intl, calculateDistance(state)(stateUnit)),
     stateUnit,
     unitFetching,
     eventsData: events,
