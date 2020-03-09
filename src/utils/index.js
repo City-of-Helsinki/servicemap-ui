@@ -163,15 +163,16 @@ export const getSearchParam = (location, key) => {
 
 export const formatDistanceString = (intl, distance) => {
   let adjustedDistance = distance;
-  if (distance && intl) {
-    if (distance >= 1000) {
+  if (adjustedDistance && intl) {
+    if (adjustedDistance >= 1000) {
       adjustedDistance /= 1000; // Convert from m to km
-      adjustedDistance = distance.toFixed(1); // Show only one decimal
-      adjustedDistance = intl.formatNumber(distance); // Format distance according to locale
+      adjustedDistance = adjustedDistance.toFixed(1); // Show only one decimal
+      adjustedDistance = intl.formatNumber(adjustedDistance); // Format distance according to locale
       return `${adjustedDistance} km`;
     }
     return `${adjustedDistance} m`;
-  } return null;
+  }
+  return null;
 };
 
 export const formatDistanceObject = (intl, distance) => {

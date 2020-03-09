@@ -21,7 +21,6 @@ import Services from './components/Services';
 import Events from './components/Events';
 import SMButton from '../../components/ServiceMapButton';
 import TabLists from '../../components/TabLists';
-import calculateDistance from '../../utils/calculateDistance';
 import { AddressIcon } from '../../components/SMIcon';
 import FeedbackView from '../FeedbackView';
 import SocialMediaLinks from './components/SocialMediaLinks';
@@ -29,6 +28,7 @@ import UnitLinks from './components/UnitLinks';
 
 const UnitView = (props) => {
   const {
+    distance,
     stateUnit,
     map,
     intl,
@@ -61,19 +61,6 @@ const UnitView = (props) => {
         focusToPosition(map, location.coordinates);
       }
     }
-  };
-
-  const formatDistanceString = (meters) => {
-    let distance = meters;
-    if (distance) {
-      if (distance >= 1000) {
-        distance /= 1000; // Convert from m to km
-        distance = distance.toFixed(1); // Show only one decimal
-        distance = intl.formatNumber(distance); // Format distance according to locale
-        return `${distance} km`;
-      }
-      return `${distance} m`;
-    } return null;
   };
 
   const intializeUnitData = () => {
@@ -231,7 +218,6 @@ const UnitView = (props) => {
 
   const render = () => {
     const title = unit && unit.name ? getLocaleText(unit.name) : '';
-    const distance = formatDistanceString(calculateDistance(unit, userLocation.coordinates));
 
     const TopArea = (
       <div className={`${classes.topArea}`}>
@@ -351,6 +337,7 @@ export default UnitView;
 // Typechecking
 UnitView.propTypes = {
   accessibilitySentences: PropTypes.objectOf(PropTypes.any),
+  distance: PropTypes.string,
   unit: PropTypes.objectOf(PropTypes.any),
   embed: PropTypes.bool,
   eventsData: PropTypes.objectOf(PropTypes.any),
@@ -372,6 +359,7 @@ UnitView.propTypes = {
 
 UnitView.defaultProps = {
   accessibilitySentences: null,
+  distance: null,
   embed: false,
   eventsData: { events: null, unit: null },
   unit: null,
