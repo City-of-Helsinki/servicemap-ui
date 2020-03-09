@@ -12,7 +12,10 @@ const calculateDistance = state => (unit) => {
   const address = getAddress(state);
   const currentPage = getCurrentPage(state);
 
-  const addressPosition = currentPage === 'address' && address ? address.location.coordinates : null;
+  const addressPosition = currentPage === 'address' && address && address.addressCoordinates ? {
+    latitude: address.addressCoordinates[1],
+    longitude: address.addressCoordinates[0],
+  } : null;
 
   const usedPosition = customPosition || addressPosition || userPosition;
   if (!usedPosition || !usedPosition.latitude || !usedPosition.longitude) {
