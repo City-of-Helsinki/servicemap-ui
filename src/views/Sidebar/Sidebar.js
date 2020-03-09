@@ -13,6 +13,7 @@ import PageHandler from '../components/PageHandler';
 import FeedbackView from '../FeedbackView';
 import DivisionView from '../DivisionView';
 import InfoView from '../InfoView';
+import ExtendedData from '../UnitView/components/ExtendedData';
 
 const TitleWrapper = ({ children, messageId }) => (
   <>
@@ -67,6 +68,21 @@ const Unit = () => (
   <TitleWrapper messageId="general.pageTitles.unit">
     <PageWrapper headMsgId="" page="unit">
       <UnitView />
+    </PageWrapper>
+  </TitleWrapper>
+);
+
+const UnitEvents = () => (
+  <TitleWrapper messageId="general.pageTitles.unit.events">
+    <PageWrapper headMsgId="" page="unit">
+      <ExtendedData type="events" />
+    </PageWrapper>
+  </TitleWrapper>
+);
+const UnitReservations = () => (
+  <TitleWrapper messageId="general.pageTitles.unit.reservations">
+    <PageWrapper headMsgId="" page="unit">
+      <ExtendedData type="reservations" />
     </PageWrapper>
   </TitleWrapper>
 );
@@ -129,6 +145,8 @@ class Sidebar extends React.Component {
   render() {
     return (
       <Switch>
+        <Route exact path="/:lng/unit/:unit/events" component={UnitEvents} />
+        <Route exact path="/:lng/unit/:unit/reservations" component={UnitReservations} />
         <Route exact path="/:lng/unit/:unit" component={Unit} />
         <Route path="/:lng/search" component={Search} />
         <Route path="/:lng/services" component={ServiceTree} />

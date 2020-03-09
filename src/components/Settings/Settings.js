@@ -77,6 +77,11 @@ class Settings extends React.Component {
       currentSettings: newCurrent,
       previousSettings: newCurrent,
     });
+
+    setTimeout(() => {
+      const settings = document.getElementsByClassName('SettingsTitle')[0];
+      settings.firstChild.focus();
+    }, 1);
   }
 
   componentWillUnmount() {
@@ -179,8 +184,10 @@ class Settings extends React.Component {
     const { settings } = this.props;
     setTimeout(() => {
       let elem;
-      if (settings.toggled === 'all') {
+      if (settings.toggled === 'search') {
         elem = document.getElementById('SettingsLink');
+      } else if (settings.toggled === 'mobile') {
+        elem = document.getElementById('MenuButton');
       } else {
         elem = document.getElementById(`SettingsButton${settings.toggled}`);
       }

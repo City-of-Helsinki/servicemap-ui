@@ -28,7 +28,7 @@ const createMarkerClusterLayer = (
     return null;
   }
 
-  // Function for creating custom icon for clustere group
+  // Function for creating custom icon for cluster group
   // https://github.com/Leaflet/Leaflet.markercluster#customising-the-clustered-markers
   // NOTE: iconCreateFunction is running by leaflet, which is not support ES6 arrow func syntax
   // eslint-disable-next-line
@@ -181,6 +181,14 @@ const createMarkerClusterLayer = (
       }
     });
 
+  // Hide clusters and markers from keyboard after clustering animations are done
+  markers.on('animationend', () => {
+    document.querySelectorAll('.leaflet-marker-icon').forEach((item) => {
+      item.setAttribute('tabindex', '-1');
+      item.setAttribute('aria-hidden', 'true');
+    });
+  });
+
   return markers;
 };
 
@@ -252,6 +260,7 @@ const renderUnitMarkers = (
           {
             icon: drawMarkerIcon(useContrast),
             customUnitData: unit,
+            keyboard: false,
           },
         ).bindTooltip(
           tooltipContent,
@@ -277,6 +286,11 @@ const renderUnitMarkers = (
 
         clusterLayer.addLayer(markerElem);
       }
+    });
+
+    document.querySelectorAll('.leaflet-marker-icon').forEach((item) => {
+      item.setAttribute('tabindex', '-1');
+      item.setAttribute('aria-hidden', 'true');
     });
   }
 };

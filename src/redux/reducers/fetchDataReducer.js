@@ -6,6 +6,7 @@ const dataSetInitialState = {
   errorMessage: null,
   isFetching: false,
   max: 0,
+  next: null,
   previousSearch: null,
 };
 
@@ -17,6 +18,9 @@ const dataSetReducer = (state, action, prefix) => {
         isFetching: true,
         errorMessage: null,
         previousSearch: action.search,
+        count: 0,
+        max: 0,
+        next: null,
       };
     case `${prefix}_FETCH_HAS_ERRORED`:
       return {
@@ -32,14 +36,14 @@ const dataSetReducer = (state, action, prefix) => {
         isFetching: false,
         errorMessage: null,
         data: action.data,
-        count: 0,
-        max: 0,
+        count: action.data ? action.data.length : 0,
       };
     case `${prefix}_FETCH_PROGRESS_UPDATE`:
       return {
         ...state,
         count: action.count,
         max: action.max,
+        next: action.next,
       };
     case `${prefix}_SET_NEW_DATA`:
       return {
@@ -112,10 +116,10 @@ const dataSingle = (state, action, prefix) => {
 // Fetch data set reducers
 export const units = (state = dataSetInitialState, action) => dataSetReducer(state, action, 'UNITS');
 export const service = (state = dataSetInitialState, action) => dataSetReducer(state, action, 'SERVICE');
+export const unitEvents = (state = dataSingleInitialState, action) => dataSetReducer(state, action, 'SELECTED_UNIT_EVENTS');
+export const reservations = (state = dataSingleInitialState, action) => dataSetReducer(state, action, 'SELECTED_UNIT_RESERVATIONS');
 
 // Fetch data single reducers
 export const selectedUnit = (state = dataSingleInitialState, action) => dataSingle(state, action, 'SELECTED_UNIT');
 export const accessibilitySentences = (state = dataSingleInitialState, action) => dataSingle(state, action, 'SELECTED_UNIT_ACCESSIBILITY_SENTENCES');
-export const reservations = (state = dataSingleInitialState, action) => dataSingle(state, action, 'SELECTED_UNIT_RESERVATIONS');
-export const unitEvents = (state = dataSingleInitialState, action) => dataSingle(state, action, 'SELECTED_UNIT_EVENTS');
 export const redirectService = (state = dataSetInitialState, action) => dataSingle(state, action, 'REDIRECT_SERVICE');

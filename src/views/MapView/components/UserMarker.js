@@ -20,12 +20,13 @@ const UserMarker = ({ position, classes, onClick }) => {
       onClick={onClick}
       position={position}
       icon={icon}
+      keyboard={false}
     />
   );
 };
 
 UserMarker.propTypes = {
-  position: PropTypes.arrayOf(PropTypes.number).isRequired,
+  position: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])).isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   onClick: PropTypes.func.isRequired,
 };

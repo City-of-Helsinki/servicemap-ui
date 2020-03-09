@@ -1,4 +1,8 @@
 export default theme => ({
+  container: {
+    height: '100%',
+    backgroundColor: '#EEEEEE',
+  },
   contentArea: {
     paddingLeft: 28,
     paddingRight: 28,
@@ -7,9 +11,13 @@ export default theme => ({
   noPadding: {
     padding: 0,
   },
-  input: {
+  inputField: {
+    backgroundColor: '#fff',
     marginTop: 4,
     marginBottom: 4,
+    padding: 0,
+  },
+  input: {
     fontSize: 12,
     lineHeight: '20px',
     padding: 10,
@@ -19,7 +27,8 @@ export default theme => ({
     borderRadius: 2,
     border: '1px solid #000',
     '&:focus': {
-      border: '1px solid #1964E6',
+      outline: '2px solid transparent',
+      boxShadow: `0 0 0 4px ${theme.palette.focusBorder}`,
     },
   },
   inputInfo: {
@@ -28,7 +37,7 @@ export default theme => ({
   errorContainer: {
     display: 'flex',
     alignItems: 'center',
-    color: '#b50000',
+    color: `${theme.palette.warning}`,
   },
   errorIcon: {
     fontSize: 16,
@@ -38,7 +47,8 @@ export default theme => ({
     margin: 0,
   },
   errorField: {
-    border: '1px solid #b50000',
+    border: `1px solid ${theme.palette.warning}`,
+    boxShadow: `0 0 0 1px ${theme.palette.warning}`,
   },
   characterInfo: {
     color: '#000',
@@ -46,7 +56,7 @@ export default theme => ({
     marginLeft: 'auto',
   },
   characterInfoError: {
-    color: '#b50000',
+    color: `${theme.palette.warning}`,
   },
   title: {
     paddingTop: 16,
@@ -69,7 +79,16 @@ export default theme => ({
     },
   },
   box: {
-    marginLeft: -12,
+    marginLeft: -8,
+    padding: 8,
+    marginRight: 8,
+  },
+  checkBoxIcon: {
+    width: 15,
+    height: 15,
+    backgroundColor: '#fff',
+    border: `1px solid ${theme.palette.primary.main};`,
+    borderRadius: 1,
   },
   bottomArea: {
     paddingTop: 8,
@@ -79,8 +98,13 @@ export default theme => ({
     paddingRight: 28,
   },
   infoText: {
-    fontSize: 14,
-    paddingTop: 14,
+    marginTop: 14,
+  },
+  link: {
+    marginTop: 14,
+    marginBottom: 26,
+    textAlign: 'left',
+    textDecoration: 'underline',
   },
   modalContainer: {
     display: 'flex',
@@ -91,7 +115,6 @@ export default theme => ({
   modalButton: {
     width: 135,
     color: '#fff',
-    backgroundColor: theme.palette.primary.main,
   },
   modalTitle: {
     fontSize: 16,

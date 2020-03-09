@@ -8,12 +8,13 @@ import styles from './styles';
 // Listen to redux state
 const mapStateToProps = (state) => {
   const { direction, order } = state.sort;
-  const { position } = state.user;
+  const { customPosition, position } = state.user;
+  const coordinates = customPosition.coordinates || position.coordinates;
 
   return {
     direction,
     order,
-    userLocation: position.coordinates,
+    userLocation: coordinates,
   };
 };
 

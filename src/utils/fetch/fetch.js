@@ -20,6 +20,22 @@ const fetchHandler = (res) => {
 };
 
 const handleNext = async (allData, response, onNext, fetchOptions) => {
+  // Event fetch next handling
+  if (response && response.meta && response.meta.next) {
+    if (onNext) {
+      onNext(allData, response);
+    }
+    const newResponse = await fetch(response.meta.next, fetchOptions)
+      .then(responseToJson)
+      .catch((e) => {
+        throw new Error(`Error in fetch next: ${e.message}`);
+      });
+
+    const totalData = [...allData, ...newResponse.data];
+    const data = await handleNext(totalData, newResponse, onNext, fetchOptions);
+    return data;
+  }
+
   if (response && response.next) {
     if (onNext) {
       onNext(allData, response);
@@ -35,6 +51,9 @@ const handleNext = async (allData, response, onNext, fetchOptions) => {
     return data;
   }
 
+  if (onNext) {
+    onNext(allData, response);
+  }
   return allData;
 };
 
@@ -42,9 +61,17 @@ const handleNext = async (allData, response, onNext, fetchOptions) => {
  * Middleware to handle next fetching
  */
 const nextHandler = async (data, onNext, fetchOptions) => {
+  // Event fetch next handling
+  if (data && data.meta && data.data) {
+    const newData = await handleNext(data.data, data, onNext, fetchOptions);
+    return newData;
+  }
   if (data && data.next && data.results) {
     const newData = await handleNext(data.results, data, onNext, fetchOptions);
     return newData;
+  }
+  if (onNext) {
+    onNext(data.results, data);
   }
   return data.results;
 };
@@ -98,7 +125,6 @@ const handleFetch = async (
       }
       return data;
     })
-    // .then(testMiddleware)
     // Success handling
     .then(async (res) => {
       // eslint-disable-next-line no-param-reassign

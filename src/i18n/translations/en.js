@@ -60,7 +60,10 @@ export default {
   'feedback.additionalInfo': 'Your feedback is forwarded to the city of Helsinki\'s feedback system.',
   'feedback.additionalInfo.link': 'Information and instructions on giving feedback (link opens in new tab).',
   'feedback.send': 'Send feedback',
+  'feedback.sending': 'Sending...',
+  'feedback.send.error': 'Send feedback. Mandatory field is empty', // TODO: verify
   'feedback.error.required': 'Mandatory field',
+  'feedback.srError.required': 'Feedback is required', // TODO: verify
   'feedback.modal.confirm': 'OK',
   'feedback.modal.leave': 'Are you sure you want to leave the page?',
   'feedback.modal.success': 'Thank you for your feedback!',
@@ -78,6 +81,8 @@ export default {
   'general.frontPage': 'Front page',
   'general.contrast': 'Contrast',
   'general.menu': 'Menu',
+  'general.menu.open': 'Open menu',
+  'general.menu.close': 'Close menu',
   'general.back': 'Back',
   'general.back.address': 'Back to address view',
   'general.back.home': 'Back to home view',
@@ -105,6 +110,8 @@ export default {
   'general.pageTitles.home': 'Home view',
   'general.pageTitles.search': 'Search results view',
   'general.pageTitles.unit': 'Unit view',
+  'general.pageTitles.unit.events': 'Units events',
+  'general.pageTitles.unit.reservations': 'Units reservable object',
   'general.pageTitles.service': 'Service view',
   'general.pageTitles.serviceTree': 'Services list',
   'general.pageTitles.event': 'Event view',
@@ -147,6 +154,12 @@ export default {
   // Location
   'location.notFound': 'Location not found',
   'location.notAllowed': 'Location not allowed',
+
+  // Loading texts
+  'loading.events': 'Loading events {count} / {max}',
+  'loading.events.srInfo': 'Loading {count} event(s)',
+  'search.loading.units': 'Searching units {count} / {max}',
+  'search.loading.units.srInfo': 'Searching {count} unit(s)',
 
   // Map
   'map': 'Map',
@@ -260,8 +273,6 @@ export default {
   'search.searchField': 'Search field',
   'search.results.title': 'Search results',
   'search.input.placeholder': 'Search units',
-  'search.loading.units': 'Searching units {count} / {max}',
-  'search.loading.units.srInfo': 'Searching {count} unit(s)',
   'search.notFound': 'No results found with given search',
   'search.started': 'Search started',
   'search.infoText': '{count} Search results',
@@ -316,7 +327,8 @@ export default {
   'settings.mapSettings.long': 'Map setttings',
   'settings.accessibilitySettings': 'Accessibility settings',
   'settings.accessibilitySettings.long': 'Accessibility settings',
-  'settings.all.long': 'Settings',
+  'settings.mobile.long': 'Settings',
+  'settings.search.long': 'Settings',
   'settings.amount': `{count, plural,
     one {# selection}
     other {# selections}

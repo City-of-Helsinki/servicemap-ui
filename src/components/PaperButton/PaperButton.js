@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage, intlShape } from 'react-intl';
 import { Button, Typography } from '@material-ui/core';
 import Container from '../Container';
 
 const PaperButton = ({
-  classes, disabled, text, onClick, icon, link, subtitle,
+  classes, intl, disabled, messageID, onClick, icon, link, subtitleID,
 }) => {
   const clonedIcon = icon ? React.cloneElement(icon, { className: classes.icon }) : null;
   const role = link ? 'link' : 'button';
@@ -18,19 +19,20 @@ const PaperButton = ({
         onClick={onClick}
         role={role}
         disabled={disabled}
+        aria-label={`${intl.formatMessage({ id: messageID })} ${subtitleID ? intl.formatMessage({ id: subtitleID }) : ''}`}
       >
         <div className={`${classes.iconContainer} ${disabled ? classes.iconDisabled : ''}`}>
           {clonedIcon}
         </div>
         <div>
-          <Typography variant="body2" className={classes.text}>
-            {text}
+          <Typography aria-hidden variant="body2" className={classes.text}>
+            <FormattedMessage id={messageID} />
           </Typography>
           {
-            subtitle
+            subtitleID
             && (
-              <Typography variant="caption" className={classes.text}>
-                {subtitle}
+              <Typography aria-hidden variant="caption" className={classes.text}>
+                <FormattedMessage id={subtitleID} />
               </Typography>
             )
           }
@@ -46,8 +48,9 @@ PaperButton.propTypes = {
   icon: PropTypes.node,
   link: PropTypes.bool,
   onClick: PropTypes.func,
-  text: PropTypes.oneOfType([PropTypes.node, PropTypes.string]).isRequired,
-  subtitle: PropTypes.node,
+  messageID: PropTypes.string.isRequired,
+  subtitleID: PropTypes.string,
+  intl: intlShape.isRequired,
 };
 
 PaperButton.defaultProps = {
@@ -55,7 +58,7 @@ PaperButton.defaultProps = {
   icon: null,
   link: false,
   onClick: null,
-  subtitle: null,
+  subtitleID: null,
 };
 
 
