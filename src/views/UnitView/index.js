@@ -10,7 +10,7 @@ import { getLocaleString } from '../../redux/selectors/locale';
 
 import UnitView from './UnitView';
 import styles from './styles/styles';
-import calculateDistance from '../../redux/selectors/unit';
+import { calculateDistance } from '../../redux/selectors/unit';
 import { formatDistanceObject } from '../../utils';
 
 // Listen to redux state

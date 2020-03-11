@@ -13,7 +13,7 @@ import { getProcessedData } from '../../redux/selectors/results';
 import { markerClusterConnector, renderMarkerConnector } from './utils/unitMarkers';
 import { getAddressNavigatorParamsConnector } from '../../utils/address';
 import { generatePath } from '../../utils/path';
-import calculateDistance from '../../redux/selectors/unit';
+import { calculateDistance, getCurrentlyUsedPosition } from '../../redux/selectors/unit';
 import { formatDistanceObject } from '../../utils';
 
 // Get redux states as props to component
@@ -37,19 +37,18 @@ const mapStateToProps = (state, props) => {
   const { addressUnits } = address;
   const getAddressNavigatorParams = getAddressNavigatorParamsConnector(getLocaleText, locale);
   const getPath = (id, data) => generatePath(id, locale, data);
-  const coordinates = customPosition.coordinates || position.coordinates;
+  const distanceCoordinates = getCurrentlyUsedPosition(state);
+  const userLocation = customPosition.coordinates || position.coordinates;
   const getDistance = unit => formatDistanceObject(intl, calculateDistance(state)(unit));
   return {
     createMarkerClusterLayer: markerClusterConnector(
       navigator,
       settings,
-      coordinates,
       getLocaleText,
       getDistance,
     ),
+    distanceCoordinates,
     renderUnitMarkers: renderMarkerConnector(
-      settings,
-      coordinates,
       getLocaleText,
       navigator,
       theme,
@@ -64,7 +63,7 @@ const mapStateToProps = (state, props) => {
     serviceUnits,
     unitsLoading,
     currentPage: page,
-    userLocation: coordinates,
+    userLocation,
     hideUserMarker: customPosition.hideMarker,
     settings,
     navigator,

@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 import { getLocaleString } from './locale';
 import UnitHelper from '../../utils/unitHelper';
-import calculateDistance from './unit';
+import { calculateDistance } from './unit';
 
 const direction = state => state.sort.direction;
 const order = state => state.sort.order;
