@@ -113,31 +113,6 @@ export const drawUnitIcon = (berryColor, curve) => {
   return canvas.toDataURL();
 };
 
-// Temporary solution
-export const drawServiceIcon = () => {
-  const canvas = document.createElement('canvas');
-  const ctx = canvas.getContext('2d');
-  canvas.height = canvasSize.height;
-  canvas.width = canvasSize.width;
-  const berryColor = 'gray';
-
-  // Berry calculation
-  let berryCenterPoint;
-  berryCenterPoint = berryCenter(90); // Creates straight line
-  drawStem(ctx, berryCenterPoint);
-  drawBerry(ctx, berryCenterPoint, berryColor);
-
-  berryCenterPoint = berryCenter(90 + 40);
-  drawStem(ctx, berryCenterPoint);
-  drawBerry(ctx, berryCenterPoint, berryColor);
-
-  berryCenterPoint = berryCenter(90 - 40);
-  drawStem(ctx, berryCenterPoint);
-  drawBerry(ctx, berryCenterPoint, berryColor);
-
-  return canvas.toDataURL();
-};
-
 export const drawMarkerIcon = (contrast = false) => {
   const L = require('leaflet'); // eslint-disable-line global-require
 

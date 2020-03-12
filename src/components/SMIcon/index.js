@@ -17,6 +17,7 @@ import youtubeIcon from '../../assets/images/youtube_icon.svg';
 import vimeoIcon from '../../assets/images/vimeo_icon.svg';
 import userLocationIcon from '../../assets/images/userLocation.svg';
 import serviceIcon from '../../assets/images/serviceIcon.svg';
+import serviceIconDark from '../../assets/images/serviceIconDark.svg';
 
 /**
  * Senses
@@ -152,6 +153,9 @@ export const getIcon = (key, props) => {
 
     case 'service':
       return <img aria-hidden alt="" src={serviceIcon} {...props} />;
+
+    case 'serviceDark':
+      return <img aria-hidden alt="" src={serviceIconDark} {...props} />;
     case 'locationMarker':
       return <img aria-hidden alt="" src={userLocationIcon} {...props} />;
 
