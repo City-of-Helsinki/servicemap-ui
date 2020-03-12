@@ -60,10 +60,10 @@ export default {
   'feedback.additionalInfo': 'Din respons skickas vidare till Helsingfors stads responssystem.',
   'feedback.additionalInfo.link': 'Information och anvisningar om att ge respons (länken öppnas i en ny flik).',
   'feedback.send': 'Skicka respons',
-  'feedback.sending': 'Laddar...', // TODO: translate to "Sending..."
-  'feedback.send.error': 'Skicka respons', // TODO: translate full
+  'feedback.sending': 'Sänder...',
+  'feedback.send.error': 'Skicka respons. Obligatoriska fält måste fyllas i',
   'feedback.error.required': 'Obligatoriskt fält',
-  'feedback.srError.required': 'Respons obligatorisk', // TODO: verify
+  'feedback.srError.required': 'Respons måste fyllas i',
   'feedback.modal.confirm': 'OK',
   'feedback.modal.leave': 'Är du säker på att du vill lämna den här sidan?',
   'feedback.modal.success': 'Tack för din respons!',
@@ -81,8 +81,8 @@ export default {
   'general.frontPage': 'Framsidan',
   'general.contrast': 'Kontrast',
   'general.menu': 'Meny',
-  'general.menu.open': 'Öppna menyn', // TODO: vereify
-  'general.menu.close': 'Stäng menyn', // TODO: vereify
+  'general.menu.open': 'Öppna menyn',
+  'general.menu.close': 'Stäng menyn',
   'general.back': 'Tillbaka',
   'general.back.address': 'Gå tillbaka till adressvyn',
   'general.back.home': 'Gå tillbaka till startvyn',
@@ -96,7 +96,7 @@ export default {
   'general.back.info': 'Gå tillbaka',
   'general.backToHome': 'Stäng sökningen och gå tillbaka till början',
   'general.backToStart': 'Gå tillbaka till början av sidan',
-  'general.back.serviceTree': 'Gå tillbaka', // TODO: Translate
+  'general.back.serviceTree': 'Gå tillbaka till servicekatalogen',
   'general.cancel': 'Ångra',
   'general.close': 'Stäng',
   'general.yes': 'Ja',
@@ -110,8 +110,8 @@ export default {
   'general.pageTitles.home': 'Hemvy',
   'general.pageTitles.search': 'Sökresultatsvy',
   'general.pageTitles.unit': 'Vy med verksamhetsställen',
-  'general.pageTitles.unit.events': 'Toimipisteen tapahtumat', // TODO: Translate
-  'general.pageTitles.unit.reservations': 'Toimipisteen varattavat kohteet', // TODO: Translate
+  'general.pageTitles.unit.events': 'Verksamhetsställets evenemang',
+  'general.pageTitles.unit.reservations': 'Verksamhetsställets platser som kan reserveras',
   'general.pageTitles.service': 'Tjänstevy',
   'general.pageTitles.serviceTree': 'Servicekatalog',
   'general.pageTitles.event': 'Evenemangsvy',
@@ -119,7 +119,7 @@ export default {
   'general.pageTitles.list.events': 'Förteckning över evenemang ',
   'general.pageTitles.list.reservations': 'Förteckning över reserveringar ',
   'general.pageTitles.info': 'Infovy',
-  'general.pageTitles.feedback': 'Palautenäkymä', // TODO: Translate
+  'general.pageTitles.feedback': 'Responsvy',
 
   // General - Pagination
   'general.pagination.previous': 'Föregående sida',
@@ -144,11 +144,11 @@ export default {
   // Home
   'home.buttons.settings': 'Spara dina egna stads- och tillgänglighetsinställningar',
   'home.buttons.services': 'Läs mer om tjänsterna i servicekatalogen',
-  'home.buttons.closeByServices': 'Närtjänster', // TODO: Translate again
+  'home.buttons.closeByServices': 'Visa närtjänster',
   'home.buttons.instructions': 'Tips för användning av servicekartan',
   'home.example.search': 'Sök med sökord',
   'home.message': 'Hälsningar av servicekartans utvecklare',
-  'home.send.feedback': 'Skicka respons', // TODO: Translate again lähetä palautetta => anna palautetta
+  'home.send.feedback': 'Skicka respons',
   'home.old.link': 'Gamla Servicekartan',
 
   // Location
@@ -156,8 +156,8 @@ export default {
   'location.notAllowed': 'Positionen tilläts inte',
 
   // Loading
-  'loading.events': 'Söker evenemangen {count} / {max}', // TODO: Translate
-  'loading.events.srInfo': 'Söker {count} evenemange(n)', // TODO: Translate
+  'loading.events': 'Söker evenemang {count} / {max}',
+  'loading.events.srInfo': 'Söker {count} evenemange(n)',
   'search.loading.units': 'Söker verksamhetsställen {count} / {max}',
   'search.loading.units.srInfo': 'Söker {count} verksamhetsställe(n)',
 
@@ -185,7 +185,7 @@ export default {
   'unit.plural': 'Verksamhetsställen',
 
   'unit.contact.info': 'Kontaktuppgifter',
-  'unit.links': 'På webben', // TODO: verify
+  'unit.links': 'På webben',
   'unit.eServices': 'E-tjänster',
   'unit.reservations': 'Objekt som kan reserveras',
   'unit.events': 'Evenemang',
@@ -359,7 +359,7 @@ export default {
   'settings.map.servicemap': 'Servicekarta',
   'settings.map.ortographic': 'Flygbild',
   'settings.map.guideMap': 'Guidekarta',
-  'settings.map.accessible_map': 'Karta med stor kontrast', // TODO: Verify
+  'settings.map.accessible_map': 'Karta med stor kontrast',
   'settings.aria.changed': 'Inställningarna har ändrats. Kom ihåg att spara.',
   'settings.aria.closed': 'Inställningarna har stängts',
   'settings.aria.open': 'Öppna inställningarna',

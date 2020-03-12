@@ -61,9 +61,9 @@ export default {
   'feedback.additionalInfo.link': 'Information and instructions on giving feedback (link opens in new tab).',
   'feedback.send': 'Send feedback',
   'feedback.sending': 'Sending...',
-  'feedback.send.error': 'Send feedback. Mandatory field is empty', // TODO: verify
+  'feedback.send.error': 'Send feedback. Mandatory field is empty',
   'feedback.error.required': 'Mandatory field',
-  'feedback.srError.required': 'Feedback is required', // TODO: verify
+  'feedback.srError.required': 'Feedback is required',
   'feedback.modal.confirm': 'OK',
   'feedback.modal.leave': 'Are you sure you want to leave the page?',
   'feedback.modal.success': 'Thank you for your feedback!',
@@ -110,8 +110,8 @@ export default {
   'general.pageTitles.home': 'Home view',
   'general.pageTitles.search': 'Search results view',
   'general.pageTitles.unit': 'Unit view',
-  'general.pageTitles.unit.events': 'Units events',
-  'general.pageTitles.unit.reservations': 'Units reservable object',
+  'general.pageTitles.unit.events': 'Units\' events',
+  'general.pageTitles.unit.reservations': 'Units\' reservable objects',
   'general.pageTitles.service': 'Service view',
   'general.pageTitles.serviceTree': 'Services list',
   'general.pageTitles.event': 'Event view',
@@ -185,7 +185,7 @@ export default {
   'unit.plural': 'Units',
 
   'unit.contact.info': 'Contact information',
-  'unit.links': 'Web sites', // TODO: verify
+  'unit.links': 'Web sites',
   'unit.eServices': 'Electronic services',
   'unit.reservations': 'Reservable objects',
   'unit.events': 'Events',
@@ -359,7 +359,7 @@ export default {
   'settings.map.servicemap': 'Service map',
   'settings.map.ortographic': 'Aerial view',
   'settings.map.guideMap': 'Guide map',
-  'settings.map.accessible_map': 'High contrast map', // TODO: verify
+  'settings.map.accessible_map': 'High contrast map',
   'settings.aria.changed': 'Settings have changed. Remember to save',
   'settings.aria.closed': 'Settings closed',
   'settings.aria.open': 'Open settings',
