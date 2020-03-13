@@ -167,6 +167,7 @@ export default {
   'map.transit.endStation': 'Ändhållplats',
   'map.address.searching': 'Söker adress...',
   'map.address.info': 'Adressens uppgifter',
+  'map.unit.cluster.popup.info': '{count} verksamhetsställen', // TODO: Verify
 
   // Units
   'unit': 'Verksamhetsställe',

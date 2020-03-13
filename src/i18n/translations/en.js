@@ -167,6 +167,7 @@ export default {
   'map.transit.endStation': 'Terminus',
   'map.address.searching': 'Retreiving address...',
   'map.address.info': 'Address information',
+  'map.unit.cluster.popup.info': '{count} units',
 
   // Units
   'unit': 'Unit',

@@ -167,6 +167,7 @@ export default {
   'map.transit.endStation': 'Päätepysäkki',
   'map.address.searching': 'Haetaan osoitetta...',
   'map.address.info': 'Osoitteen tiedot',
+  'map.unit.cluster.popup.info': '{count} toimipistettä',
 
   // Units
   'unit': 'Toimipiste',
