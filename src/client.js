@@ -7,6 +7,7 @@ import ReactDOM from 'react-dom';
 import { Helmet } from 'react-helmet';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import { loadableReady } from '@loadable/component';
 import thunk from 'redux-thunk';
 import StyleContext from 'isomorphic-style-loader/StyleContext';
 import JssProvider from 'react-jss/lib/JssProvider';
@@ -61,21 +62,22 @@ const insertCss = (...styles) => {
   return () => removeCss.forEach(dispose => dispose());
 };
 
-
-ReactDOM.hydrate(
-  <Provider store={store}>
-    <StyleContext.Provider value={{ insertCss }}>
-      <JssProvider generateClassName={generateClassName}>
-        <ThemeWrapper>
-          {
+loadableReady(() => {
+  ReactDOM.hydrate(
+    <Provider store={store}>
+      <StyleContext.Provider value={{ insertCss }}>
+        <JssProvider generateClassName={generateClassName}>
+          <ThemeWrapper>
+            {
             // HTML head tags
           }
-          <Helmet>
-            <link rel="shortcut icon" href={favicon} />
-          </Helmet>
-          <App />
-        </ThemeWrapper>
-      </JssProvider>
-    </StyleContext.Provider>
-  </Provider>, app,
-);
+            <Helmet>
+              <link rel="shortcut icon" href={favicon} />
+            </Helmet>
+            <App />
+          </ThemeWrapper>
+        </JssProvider>
+      </StyleContext.Provider>
+    </Provider>, app,
+  );
+});

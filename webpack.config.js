@@ -1,6 +1,8 @@
 const webpack = require('webpack'); //to access built-in plugins
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const LoadablePlugin = require('@loadable/webpack-plugin')
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -9,7 +11,6 @@ const isEnvProduction = NODE_ENV === 'production';
 const isEnvDevelopment = !isEnvProduction;
 
 const js = {
-  
   test: /\.(js|mjs|jsx|ts|tsx)$/,
   exclude: /node_modules/,
   loader: 'babel-loader',
@@ -40,7 +41,7 @@ const js = {
 };
 
 const fonts = (isClient = true) => ({
-    test: /\.(woff(2)?|ttf|eot|svg|png)(\?v=\d+\.\d+\.\d+)?$/,
+    test: /\.(woff(2)?|ttf|eot|svg|jpg)(\?v=\d+\.\d+\.\d+)?$/,
     use: [{
         loader: 'file-loader',
         options: {
@@ -85,12 +86,10 @@ const serverConfig = {
   node: {
     __dirname: false,
   },
-  entry: {
-    'index.js': path.resolve(__dirname, 'server/server.js'),
-  },
+  entry: path.resolve(__dirname, 'server/server.js'),
   externals: [nodeExternals({
-    // excluding material ui from the build breaks the page styles
-    whitelist: [/^@material-ui.*/]
+      // excluding material ui from the build breaks the page styles
+      whitelist: [/^@material-ui.*/]
   })],
   module: {
     rules: [
@@ -103,9 +102,12 @@ const serverConfig = {
       },
     ],
   },
+
+  plugins: [new LoadablePlugin()],
+
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name]',
+    filename: '[name].js',
   },
   optimization: {
     minimize: false,
@@ -116,9 +118,7 @@ const serverConfig = {
 const clientConfig = {
   mode: isEnvProduction ? 'production' : 'development',
   target: 'web',
-  entry: {
-    'index.js': path.resolve(__dirname, 'src/client.js'),
-  },
+  entry: path.resolve(__dirname, 'src/client.js'),
   node: {
     // Needed to enable importing dotenv in the browser.  Although
     // dotenv is not used there, the code is shared with the server,
@@ -137,9 +137,15 @@ const clientConfig = {
       }
     ],
   },
+
+  plugins: [
+    new LoadablePlugin(), 
+    // new BundleAnalyzerPlugin() Use this to display bundle stats
+  ],
+
   output: {
     path: path.resolve(__dirname, 'dist/src'),
-    filename: '[name]',
+    filename: '[name].js',
   }
 };
 
