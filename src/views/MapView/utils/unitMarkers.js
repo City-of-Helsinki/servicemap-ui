@@ -172,7 +172,9 @@ const renderUnitMarkers = (
 
   const unitListFiltered = data.units.filter(unit => unit.object_type === 'unit');
   if (marker && unitListFiltered.length) {
-    clusterLayer.clearLayers();
+    if (clusterLayer.getLayers().length) {
+      clusterLayer.clearLayers();
+    }
     // Add unit markers to clusterlayer
     unitListFiltered.forEach((unit) => {
       // Show markers with location

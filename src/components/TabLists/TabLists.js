@@ -152,7 +152,7 @@ class TabLists extends React.Component {
 
     let scrollDistanceFromTop = scrollDistance;
     const elem = document.getElementsByClassName(this.sidebarClass)[0];
-    const elemOverflow = window.getComputedStyle(elem, null).getPropertyValue('overflow');
+    const elemOverflow = elem ? window.getComputedStyle(elem, null).getPropertyValue('overflow') : null;
 
     // Adjust scroll to given number
     if (typeof scroll === 'number') {
