@@ -1,19 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route, withRouter } from 'react-router-dom';
-import SearchView from '../SearchView';
-import UnitView from '../UnitView';
-import HomeView from '../HomeView';
-import ServiceView from '../ServiceView';
-import EventDetailView from '../EventDetailView';
-import AddressView from '../AddressView';
-import ServiceTreeView from '../ServiceTreeView';
+import loadable from '@loadable/component';
 import ViewTitle from '../components/ViewTitle/ViewTitle';
 import PageHandler from '../components/PageHandler';
-import FeedbackView from '../FeedbackView';
-import DivisionView from '../DivisionView';
-import InfoView from '../InfoView';
 import ExtendedData from '../UnitView/components/ExtendedData';
+
+const SearchView = loadable(() => import(/* webpackChunkName: "views" */'../SearchView'));
+const UnitView = loadable(() => import(/* webpackChunkName: "views" */'../UnitView'));
+const HomeView = loadable(() => import(/* webpackChunkName: "views" */'../HomeView'));
+const ServiceView = loadable(() => import(/* webpackChunkName: "views" */'../ServiceView'));
+const EventDetailView = loadable(() => import(/* webpackChunkName: "views" */'../EventDetailView'));
+const AddressView = loadable(() => import(/* webpackChunkName: "views" */'../AddressView'));
+const ServiceTreeView = loadable(() => import(/* webpackChunkName: "views" */'../ServiceTreeView'));
+const FeedbackView = loadable(() => import(/* webpackChunkName: "views" */'../FeedbackView'));
+const DivisionView = loadable(() => import(/* webpackChunkName: "views" */'../DivisionView'));
+const InfoView = loadable(() => import(/* webpackChunkName: "views" */'../InfoView'));
 
 const TitleWrapper = ({ children, messageId }) => (
   <>

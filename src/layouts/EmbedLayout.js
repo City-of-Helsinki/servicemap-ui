@@ -4,14 +4,17 @@ import {
   Switch, Route,
 } from 'react-router-dom';
 import { injectIntl, intlShape } from 'react-intl';
-import MapView from '../views/MapView';
-import PageHandler from '../views/components/PageHandler';
-import AddressView from '../views/AddressView';
-import EventDetailView from '../views/EventDetailView';
-import SearchView from '../views/SearchView';
-import UnitView from '../views/UnitView';
-import ServiceView from '../views/ServiceView';
-import DivisionView from '../views/DivisionView';
+import loadable from '@loadable/component';
+
+const MapView = loadable(() => import(/* webpackChunkName: "views" */'../views/MapView'));
+const PageHandler = loadable(() => import(/* webpackChunkName: "views" */'../views/components/PageHandler'));
+const AddressView = loadable(() => import(/* webpackChunkName: "views" */'../views/AddressView'));
+const EventDetailView = loadable(() => import(/* webpackChunkName: "views" */'../views/EventDetailView'));
+const SearchView = loadable(() => import(/* webpackChunkName: "views" */'../views/SearchView'));
+const UnitView = loadable(() => import(/* webpackChunkName: "views" */'../views/UnitView'));
+const ServiceView = loadable(() => import(/* webpackChunkName: "views" */'../views/ServiceView'));
+const DivisionView = loadable(() => import(/* webpackChunkName: "views" */'../views/DivisionView'));
+
 
 const createContentStyles = (
   isSmallScreen, landscape, mobileMapOnly, fullMobileMap, settingsOpen,

@@ -1,9 +1,11 @@
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core';
 import { injectIntl } from 'react-intl';
-import SearchBar from './SearchBar';
+import loadable from '@loadable/component';
 import styles from './styles';
 import { fetchUnits } from '../../redux/actions/unit';
+
+const SearchBar = loadable(() => import(/* webpackChunkName: "components" */'./SearchBar'));
 
 // Listen to redux state
 const mapStateToProps = (state) => {

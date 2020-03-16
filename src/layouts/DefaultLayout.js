@@ -2,14 +2,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import loadable from '@loadable/component';
 import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
 import Sidebar from '../views/Sidebar';
-import MapView from '../views/MapView';
 import I18n from '../i18n';
 import config from '../../config';
 import { DesktopComponent } from './WrapperComponents/WrapperComponents';
 import TopBar from '../components/TopBar';
 import Settings from '../components/Settings';
+
+const MapView = loadable(() => import(/* webpackChunkName: "views" */'../views/MapView'));
 
 const mobileBreakpoint = config.mobileUiBreakpoint;
 const { smallScreenBreakpoint } = config;
