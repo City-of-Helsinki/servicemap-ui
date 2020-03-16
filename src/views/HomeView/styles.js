@@ -1,4 +1,4 @@
-import mapBackground from '../../assets/images/front-page-map-bg.png';
+import mapBackground from '../../assets/images/front-page-map-bg.jpg';
 
 export default theme => ({
   background: {
