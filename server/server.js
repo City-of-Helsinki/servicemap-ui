@@ -181,7 +181,6 @@ const htmlTemplate = (reactDom, preloadedState, css, jss, locale, helmet, extrac
 
   <body>
     <div id="app">${reactDom}</div>
-    ${extractor.getScriptTags()} 
     <style>${[...css].join('')}</style>
     <script>
         window.nodeEnvSettings = {};
@@ -203,6 +202,7 @@ const htmlTemplate = (reactDom, preloadedState, css, jss, locale, helmet, extrac
       // http://redux.js.org/recipes/ServerRendering.html#security-considerations
       window.PRELOADED_STATE = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')}
     </script>
+    ${extractor.getScriptTags()} 
     ${matomoTrackingCode(process.env.MATOMO_URL, process.env.MATOMO_SITE_ID)}
   </body>
 </html>
