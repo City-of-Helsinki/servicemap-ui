@@ -140,8 +140,14 @@ const clientConfig = {
 
   plugins: [
     new LoadablePlugin(), 
-    // new BundleAnalyzerPlugin() Use this to display bundle stats
+    // Use this to display bundle stats
+    // new BundleAnalyzerPlugin(),
   ],
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+    },
+  },
 
   output: {
     path: path.resolve(__dirname, 'dist/src'),
