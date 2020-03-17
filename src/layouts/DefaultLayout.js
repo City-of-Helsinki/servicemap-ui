@@ -9,7 +9,7 @@ import config from '../../config';
 import { DesktopComponent } from './WrapperComponents/WrapperComponents';
 import TopBar from '../components/TopBar';
 import Settings from '../components/Settings';
-import ViewRouter from '../views/ViewRouter';
+import ViewRouter from './ViewRouter';
 
 const mobileBreakpoint = config.mobileUiBreakpoint;
 const { smallScreenBreakpoint } = config;
