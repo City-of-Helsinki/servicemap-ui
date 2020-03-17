@@ -157,10 +157,9 @@ const htmlTemplate = (reactDom, preloadedState, css, jss, locale, helmet, extrac
     ${helmet.title.toString()}
     <!-- jss-insertion-point -->
     <style id="jss-server-side">${jss}</style>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
-      integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" 
+      integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" 
       crossorigin="" 
-      async
     />
     <script
       src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
@@ -170,7 +169,7 @@ const htmlTemplate = (reactDom, preloadedState, css, jss, locale, helmet, extrac
     >
     </script>
     <style>
-      @import url('https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i');
+      @import url('https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i&display=swap');
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#141823" />
