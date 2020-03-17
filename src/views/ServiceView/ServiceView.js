@@ -8,13 +8,13 @@ import SearchBar from '../../components/SearchBar';
 import TitleBar from '../../components/TitleBar';
 import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import { generatePath } from '../../utils/path';
-import { drawServiceIcon } from '../MapView/utils/drawIcon';
 import { fitUnitsToMap, focusToPosition } from '../MapView/utils/mapActions';
 import Loading from '../../components/Loading/Loading';
 import Container from '../../components/Container';
 import PaginatedList from '../../components/Lists/PaginatedList';
 import ResultOrderer from '../../components/TabLists/ResultOrderer';
 import CustomLocation from '../../utils/customLocation';
+import { getIcon } from '../../components/SMIcon';
 
 class ServiceView extends React.Component {
   constructor(props) {
@@ -33,7 +33,7 @@ class ServiceView extends React.Component {
     const { params } = match;
 
     this.setState({
-      icon: <img alt="" src={drawServiceIcon()} className={classes.icon} />,
+      icon: getIcon('service', { className: classes.icon }),
     });
 
     // Fetch service if current is not same as url param's
@@ -173,7 +173,8 @@ class ServiceView extends React.Component {
               <PaginatedList
                 id="events"
                 data={serviceUnits || []}
-                titleComponent="h3"
+                title={intl.formatMessage({ id: 'unit.plural' })}
+                titleComponent="h4"
               />
             </>
           )

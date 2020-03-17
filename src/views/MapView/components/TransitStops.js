@@ -49,7 +49,8 @@ class TransitStops extends React.Component {
   // Check if transit stops should be shown
   showTransitStops = () => {
     const { isMobile, mapObject, map } = this.props;
-    const transitZoom = isMobile ? mapObject.options.mobileTransitZoom : mapObject.options.transitZoom;
+    const transitZoom = isMobile
+      ? mapObject.options.mobileTransitZoom : mapObject.options.transitZoom;
     const currentZoom = map.leafletElement.getZoom();
     return currentZoom >= transitZoom;
   }
@@ -57,56 +58,69 @@ class TransitStops extends React.Component {
   getTransitIcon = (type) => {
     const { divIcon } = require('leaflet');
     const { classes } = this.props;
-    let className = null;
+    let icon;
 
     switch (type) {
       case 3: // Bus stops
-        className = `${classes.busIcon} icon-icon-hsl-bus`;
+        icon = <span className={`${classes.transitIconMap} ${classes.busIconColor} icon-icon-hsl-bus`} />;
         break;
       case 0: // Tram stops
-        className = `${classes.tramIcon} icon-icon-hsl-tram`;
+        icon = <span className={`${classes.transitIconMap} ${classes.tramIconColor} icon-icon-hsl-tram`} />;
         break;
       case 109: // Train stops
-        className = `${classes.trainIcon} icon-icon-hsl-train`;
+        icon = <span className={`${classes.transitIconMap} ${classes.trainIconColor} icon-icon-hsl-train`} />;
         break;
       case 1: // Subway stops
-        className = `${classes.metroIcon} icon-icon-hsl-metro`;
+        icon = <span className={`${classes.transitIconMap} ${classes.metroIconColor} icon-icon-hsl-metro`} />;
         break;
-      case -999: // Ferry stops
-        className = `${classes.ferryIcon} icon-icon-hsl-ferry`;
+      case -999: case 4: // Ferry stops
+        icon = <span className={`${classes.transitIconMap} ${classes.ferryIconColor} icon-icon-hsl-ferry`} />;
         break;
       default:
-        className = `${classes.busIcon} icon-icon-hsl-bus`;
+        icon = <span className={`${classes.transitIconMap} ${classes.busIconColor} icon-icon-hsl-bus`} />;
         break;
     }
+
     return divIcon({
       html: renderToStaticMarkup(
         <>
           <span className={`${classes.transitBackground} icon-icon-hsl-background`} />
-          <span className={className} />
+          {icon}
         </>,
       ),
       iconSize: [transitIconSize, transitIconSize],
     });
   }
 
+  closePopup = () => {
+    const { map } = this.props;
+    map.leafletElement.closePopup();
+  }
+
   render() {
-    const { Marker, Popup } = this.props;
+    const { Marker, Popup, getLocaleText } = this.props;
     const { transitStops } = this.state;
 
     return (
-      transitStops.map(stop => (
-        <Marker
-          icon={this.getTransitIcon(stop.vehicleType)}
-          key={stop.name.fi + stop.gtfsId}
-          position={[stop.lat, stop.lon]}
-          keyboard={false}
-        >
-          <Popup className="popup" autoPan={false}>
-            <TransitStopInfo stop={stop} />
-          </Popup>
-        </Marker>
-      ))
+      transitStops.map((stop) => {
+        const icon = this.getTransitIcon(stop.vehicleType);
+        return (
+          <Marker
+            icon={icon}
+            key={stop.name.fi + stop.gtfsId}
+            position={[stop.lat, stop.lon]}
+            keyboard={false}
+          >
+            <Popup closeButton={false} className="popup" autoPan={false}>
+              <TransitStopInfo
+                stop={stop}
+                onCloseClick={() => this.closePopup()}
+                getLocaleText={getLocaleText}
+              />
+            </Popup>
+          </Marker>
+        );
+      })
     );
   }
 }
@@ -114,6 +128,7 @@ class TransitStops extends React.Component {
 TransitStops.propTypes = {
   Marker: PropTypes.objectOf(PropTypes.any).isRequired,
   Popup: PropTypes.objectOf(PropTypes.any).isRequired,
+  getLocaleText: PropTypes.func.isRequired,
   map: PropTypes.objectOf(PropTypes.any).isRequired,
   mapObject: PropTypes.objectOf(PropTypes.any).isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,

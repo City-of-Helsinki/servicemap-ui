@@ -10,15 +10,12 @@ const cities = state => [
   ...state.settings.espoo ? ['espoo'] : [],
   ...state.settings.kauniainen ? ['kauniainen'] : [],
 ];
-const userLocation = state => state.user.position.coordinates;
-const customLocation = state => state.user.customPosition.coordinates;
 
 export const getServiceUnits = state => createSelector(
-  [units, cities, userLocation, customLocation],
-  (units, cities, userLocation, customLocation) => {
+  [units, cities],
+  (units, cities) => {
     const filteredUnits = units.filter(filterCities(cities, true));
-    const location = customLocation || userLocation || null;
-    const orderedUnits = getOrderedData(filteredUnits, location)(state);
+    const orderedUnits = getOrderedData(filteredUnits)(state);
     return orderedUnits;
   },
 )(state);

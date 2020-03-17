@@ -30,7 +30,7 @@ class ResultList extends React.Component {
               <div className={classes.titleContainer}>
                 <Typography
                   id={`${listId}-result-title`}
-                  className={`${classes.left} SearchResultTitle`}
+                  className={`${classes.titleText} ${classes.left} SearchResultTitle`}
                   component={titleComponent}
                   variant="subtitle1"
                   aria-labelledby={`${listId}-result-title ${listId}-result-title-info`}
