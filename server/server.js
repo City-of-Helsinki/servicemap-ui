@@ -16,7 +16,7 @@ import { SheetsRegistry } from 'jss';
 import { Helmet } from 'react-helmet';
 import { createGenerateClassName, MuiThemeProvider } from '@material-ui/core';
 import JssProvider from 'react-jss/lib/JssProvider';
-import themes from '../src/themes';
+import themes from '../themes';
 import fetch from 'node-fetch';
 import { fetchEventData, fetchSelectedUnitData } from './dataFetcher';
 import IntlPolyfill from 'intl';

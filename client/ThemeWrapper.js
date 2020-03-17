@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { MuiThemeProvider } from '@material-ui/core';
-import themes from '../src/themes';
+import themes from '../themes';
 
 const mapStateToProps = (state) => {
   const { user } = state;
