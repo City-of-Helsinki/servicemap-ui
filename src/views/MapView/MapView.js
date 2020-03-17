@@ -347,6 +347,7 @@ const MapView = (props) => {
           {!embeded
             && (
               <TransitStops
+                getLocaleText={getLocaleText}
                 Marker={Marker}
                 Popup={Popup}
                 map={mapRef.current}
