@@ -6,20 +6,23 @@ import UnitItem from './UnitItem';
 import { getLocaleString } from '../../../redux/selectors/locale';
 import { changeSelectedUnit } from '../../../redux/actions/selectedUnit';
 import styles from './styles';
+import { calculateDistance } from '../../../redux/selectors/unit';
+import { formatDistanceObject } from '../../../utils';
 
 // Listen to redux state
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, props) => {
+  const {
+    intl, unit,
+  } = props;
   const getLocaleText = textObject => getLocaleString(state, textObject);
   const {
-    address, navigator, settings, user,
+    navigator, settings,
   } = state;
   return {
-    address,
-    currentPage: user.page,
+    distance: formatDistanceObject(intl, calculateDistance(state)(unit)),
     getLocaleText,
     navigator,
     settings,
-    userLocation: user.position.coordinates,
   };
 };
 

@@ -110,6 +110,8 @@ export default {
   'general.pageTitles.home': 'Aloitusnäkymä',
   'general.pageTitles.search': 'Hakutulosnäkymä',
   'general.pageTitles.unit': 'Toimipistenäkymä',
+  'general.pageTitles.unit.events': 'Toimipisteen tapahtumat',
+  'general.pageTitles.unit.reservations': 'Toimipisteen varattavat kohteet',
   'general.pageTitles.service': 'Palvelunäkymä',
   'general.pageTitles.serviceTree': 'Palveluluettelo',
   'general.pageTitles.event': 'Tapahtumanäkymä',
@@ -153,12 +155,19 @@ export default {
   'location.notFound': 'Sijaintia ei löytynyt',
   'location.notAllowed': 'Sijaintia ei sallittu',
 
+  // Loading
+  'loading.events': 'Haetaan tapahtumia {count} / {max}',
+  'loading.events.srInfo': 'Haetaan {count} tapahtumaa',
+  'search.loading.units': 'Haetaan toimipisteitä {count} / {max}',
+  'search.loading.units.srInfo': 'Haetaan {count} toimipistettä',
+
   // Map
   'map': 'Kartta',
   'map.ariaLabel': 'Karttanäkymä. Kartan tietoja voi tarkastella tällä hetkellä vain näönvaraisesti.',
   'map.transit.endStation': 'Päätepysäkki',
   'map.address.searching': 'Haetaan osoitetta...',
   'map.address.info': 'Osoitteen tiedot',
+  'map.unit.cluster.popup.info': '{count} toimipistettä',
 
   // Units
   'unit': 'Toimipiste',
@@ -177,7 +186,7 @@ export default {
   'unit.plural': 'Toimipisteet',
 
   'unit.contact.info': 'Yhteystiedot',
-  'unit.links': 'Verkossa', // TODO: verify
+  'unit.links': 'Verkossa',
   'unit.eServices': 'Sähköinen asiointi',
   'unit.reservations': 'Varattavat kohteet',
   'unit.events': 'Toimipisteen tapahtumat',
@@ -264,8 +273,6 @@ export default {
   'search.searchField': 'Hakukenttä',
   'search.results.title': 'Hakutulokset',
   'search.input.placeholder': 'Hae toimipisteitä',
-  'search.loading.units': 'Haetaan toimipisteitä {count} / {max}',
-  'search.loading.units.srInfo': 'Haetaan {count} toimipistettä',
   'search.notFound': 'Haulla ei löytynyt hakutuloksia',
   'search.started': 'Haku aloitettu',
   'search.infoText': '{count} Hakutulosta',

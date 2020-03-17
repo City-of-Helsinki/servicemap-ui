@@ -13,7 +13,14 @@ class ViewTitle extends React.Component {
   }
 
   componentDidMount() {
-    const { initialLoad, actionSetInitialLoad } = this.props;
+    const { initialLoad, actionSetInitialLoad, location } = this.props;
+    if (location.hash && location.hash !== '') {
+      const elem = document.querySelector(location.hash);
+      if (elem) {
+        elem.focus();
+        return;
+      }
+    }
     if (initialLoad) {
       if (this.titleRef.current) {
         this.titleRef.current.focus();
@@ -57,6 +64,7 @@ export default withRouter(connect(
 
 ViewTitle.propTypes = {
   initialLoad: PropTypes.bool.isRequired,
+  location: PropTypes.objectOf(PropTypes.any).isRequired,
   messageId: PropTypes.string.isRequired,
   actionSetInitialLoad: PropTypes.func.isRequired,
   match: PropTypes.objectOf(PropTypes.any).isRequired,

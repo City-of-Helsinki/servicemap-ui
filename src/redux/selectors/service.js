@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 import { filterCities } from '../../utils/filters';
+import getOrderedData from './ordering';
 
 
 const units = state => state.service.data;
@@ -10,12 +11,13 @@ const cities = state => [
   ...state.settings.kauniainen ? ['kauniainen'] : [],
 ];
 
-export const getServiceUnits = createSelector(
+export const getServiceUnits = state => createSelector(
   [units, cities],
   (units, cities) => {
     const filteredUnits = units.filter(filterCities(cities, true));
-    return filteredUnits;
+    const orderedUnits = getOrderedData(filteredUnits)(state);
+    return orderedUnits;
   },
-);
+)(state);
 
 export default { getServiceUnits };

@@ -1,63 +1,54 @@
-import React, { useState } from 'react';
-
+import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
-import { EventAvailable } from '@material-ui/icons';
+import { useLocation } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import TitledList from '../../../components/Lists/TitledList';
-import SimpleListItem from '../../../components/ListItems/SimpleListItem';
-import { getLocaleString } from '../../../redux/selectors/locale';
-import { fetchReservations, fetchAdditionalReservations, changeReservations } from '../../../redux/actions/selectedUnitReservations';
+import ReservationItem from '../../../components/ListItems/ReservationItem';
 
 const Reservations = ({
   listLength,
   reservationsData,
-  getLocaleText,
-  intl,
-  showMoreCount,
+  navigator,
   unit,
-  fetchReservations,
-  fetchAdditionalReservations,
 }) => {
-  const [ref, setRef] = useState(null);
-  const reservations = reservationsData.data;
-  const { isFetching, count, next } = reservationsData;
+  const {
+    data, isFetching, max,
+  } = reservationsData;
 
+  if (!data) {
+    return null;
+  }
 
-  if (reservations && reservations.length) {
+  const location = useLocation();
+
+  const endIndex = listLength > data.length ? data.length : listLength;
+  const shownData = data.slice(0, endIndex);
+
+  if (shownData && shownData.length) {
     return (
-      <div ref={ref => setRef(ref)}>
+      <div>
         <TitledList
           title={<FormattedMessage id="unit.reservations" />}
-          subtitle={<FormattedMessage id="unit.reservations.count" values={{ count }} />}
+          subtitle={<FormattedMessage id="unit.reservations.count" values={{ count: max || 0 }} />}
           titleComponent="h4"
-          shortened={reservations.length < count}
+          shortened={max > listLength}
           loading={isFetching}
+          buttonID="UnitReservationButton"
           buttonMessageID="unit.reservations.more"
           showMoreOnClick={listLength
             ? () => {
-              if (!isFetching) {
-                const lastListItem = ref.querySelector('li:nth-last-of-type(2)');
-                lastListItem.focus();
-                if (reservations.length < showMoreCount) {
-                  fetchReservations(unit.id, showMoreCount, true);
-                } else {
-                  fetchAdditionalReservations(next);
-                }
+              if (navigator) {
+                navigator.replace({
+                  ...location,
+                  hash: 'UnitReservationButton',
+                });
+                navigator.push('unit', { id: unit.id, type: 'reservations' });
               }
             } : null}
         >
-          {reservations.map(item => (
-            <SimpleListItem
-              key={item.id}
-              icon={<EventAvailable />}
-              link
-              text={`${getLocaleText(item.name)} ${intl.formatMessage({ id: 'unit.opens.new.tab' })}`}
-              divider
-              handleItemClick={() => {
-                window.open(`https://varaamo.hel.fi/resources/${item.id}`);
-              }}
-            />
+          {shownData.map(item => (
+            <ReservationItem key={item.id} reservation={item} />
           ))}
         </TitledList>
       </div>
@@ -67,31 +58,27 @@ const Reservations = ({
 
 Reservations.propTypes = {
   reservationsData: PropTypes.objectOf(PropTypes.any).isRequired,
-  getLocaleText: PropTypes.func.isRequired,
   listLength: PropTypes.number,
-  intl: intlShape.isRequired,
-  showMoreCount: PropTypes.number,
-  fetchReservations: PropTypes.func.isRequired,
-  fetchAdditionalReservations: PropTypes.func.isRequired,
+  navigator: PropTypes.objectOf(PropTypes.any),
   unit: PropTypes.objectOf(PropTypes.any),
 };
 
 Reservations.defaultProps = {
   unit: null,
-  listLength: null,
-  showMoreCount: 15,
+  listLength: 5,
+  navigator: null,
 };
 
 const mapStateToProps = (state) => {
-  const unit = state.selectedUnit.unit.data;
-  const getLocaleText = textObject => getLocaleString(state, textObject);
+  const { navigator, selectedUnit } = state;
+  const unit = selectedUnit.unit.data;
   return {
     unit,
-    getLocaleText,
+    navigator,
   };
 };
 
-export default injectIntl(connect(
+export default connect(
   mapStateToProps,
-  { changeReservations, fetchReservations, fetchAdditionalReservations },
-)(Reservations));
+  null,
+)(Reservations);

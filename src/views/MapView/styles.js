@@ -95,30 +95,46 @@ const styles = theme => ({
     display: 'flex',
   },
   unitTooltipContainer: {
-    padding: theme.spacing.unit,
+    padding: theme.spacing.unitDouble,
     textAlign: 'left',
   },
   unitTooltipTitle: {
-    ...theme.typography.body2,
+    ...theme.typography.subtitle1,
     margin: `${theme.spacing.unitHalf}px ${theme.spacing.unit}px`,
     fontWeight: 'bold',
   },
+  unitTooltipSubContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
   unitTooltipSubtitle: {
     ...theme.typography.body2,
-    margin: `${theme.spacing.unitHalf}px ${theme.spacing.unit}px`,
+    margin: `0 ${theme.spacing.unit}px`,
   },
   unitPopupList: {
     listStyleType: 'none',
     padding: 0,
     overflow: 'auto',
     maxHeight: '25vh',
+    '& .popup-distance': {
+      fontWeight: 'normal',
+      fontSize: '14px',
+    },
     '& li': {
-      padding: `${theme.spacing.unit}px ${theme.spacing.unitDouble}px`,
+      display: 'flex',
+      justifyContent: 'space-between',
+      padding: `${theme.spacing.unit}px ${theme.spacing.unit}px`,
+      '& p': {
+        margin: `0 ${theme.spacing.unit}px`,
+      },
       '& hr': {
         height: 1,
         margin: 0,
         border: 'none',
         backgroundColor: 'rgba(0, 0, 0, 0.12)',
+        paddingTop: 0,
+        paddingBottom: 0,
+        width: '100%',
       },
       '&:hover': {
         cursor: 'pointer',
@@ -127,8 +143,7 @@ const styles = theme => ({
     },
     '& .popup-divider': {
       cursor: 'unset',
-      paddingTop: 0,
-      paddingBottom: 0,
+      padding: `0 ${theme.spacing.unitDouble}px`,
     },
   },
   unitPopupTitle: {
@@ -138,6 +153,12 @@ const styles = theme => ({
     textAlign: 'center',
   },
   unitPopupItem: {
+    ...theme.typography.body2,
+    margin: `${theme.spacing.unitHalf}px ${theme.spacing.unit}px`,
+    fontWeight: 'bold',
+    wordBreak: 'break-word',
+  },
+  unitPopupDistance: {
     ...theme.typography.body2,
     margin: `${theme.spacing.unitHalf}px ${theme.spacing.unit}px`,
     fontWeight: 'bold',

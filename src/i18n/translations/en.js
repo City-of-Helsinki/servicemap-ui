@@ -61,9 +61,9 @@ export default {
   'feedback.additionalInfo.link': 'Information and instructions on giving feedback (link opens in new tab).',
   'feedback.send': 'Send feedback',
   'feedback.sending': 'Sending...',
-  'feedback.send.error': 'Send feedback. Mandatory field is empty', // TODO: verify
+  'feedback.send.error': 'Send feedback. Mandatory field is empty',
   'feedback.error.required': 'Mandatory field',
-  'feedback.srError.required': 'Feedback is required', // TODO: verify
+  'feedback.srError.required': 'Feedback is required',
   'feedback.modal.confirm': 'OK',
   'feedback.modal.leave': 'Are you sure you want to leave the page?',
   'feedback.modal.success': 'Thank you for your feedback!',
@@ -110,6 +110,8 @@ export default {
   'general.pageTitles.home': 'Home view',
   'general.pageTitles.search': 'Search results view',
   'general.pageTitles.unit': 'Unit view',
+  'general.pageTitles.unit.events': 'Units\' events',
+  'general.pageTitles.unit.reservations': 'Units\' reservable objects',
   'general.pageTitles.service': 'Service view',
   'general.pageTitles.serviceTree': 'Services list',
   'general.pageTitles.event': 'Event view',
@@ -153,12 +155,19 @@ export default {
   'location.notFound': 'Location not found',
   'location.notAllowed': 'Location not allowed',
 
+  // Loading texts
+  'loading.events': 'Loading events {count} / {max}',
+  'loading.events.srInfo': 'Loading {count} event(s)',
+  'search.loading.units': 'Searching units {count} / {max}',
+  'search.loading.units.srInfo': 'Searching {count} unit(s)',
+
   // Map
   'map': 'Map',
   'map.ariaLabel': 'Map. Currently map information is only accessible visually.',
   'map.transit.endStation': 'Terminus',
   'map.address.searching': 'Retreiving address...',
   'map.address.info': 'Address information',
+  'map.unit.cluster.popup.info': '{count} units',
 
   // Units
   'unit': 'Unit',
@@ -177,7 +186,7 @@ export default {
   'unit.plural': 'Units',
 
   'unit.contact.info': 'Contact information',
-  'unit.links': 'Web sites', // TODO: verify
+  'unit.links': 'Web sites',
   'unit.eServices': 'Electronic services',
   'unit.reservations': 'Reservable objects',
   'unit.events': 'Events',
@@ -264,8 +273,6 @@ export default {
   'search.searchField': 'Search field',
   'search.results.title': 'Search results',
   'search.input.placeholder': 'Search units',
-  'search.loading.units': 'Searching units {count} / {max}',
-  'search.loading.units.srInfo': 'Searching {count} unit(s)',
   'search.notFound': 'No results found with given search',
   'search.started': 'Search started',
   'search.infoText': '{count} Search results',
@@ -353,7 +360,7 @@ export default {
   'settings.map.servicemap': 'Service map',
   'settings.map.ortographic': 'Aerial view',
   'settings.map.guideMap': 'Guide map',
-  'settings.map.accessible_map': 'High contrast map', // TODO: verify
+  'settings.map.accessible_map': 'High contrast map',
   'settings.aria.changed': 'Settings have changed. Remember to save',
   'settings.aria.closed': 'Settings closed',
   'settings.aria.open': 'Open settings',

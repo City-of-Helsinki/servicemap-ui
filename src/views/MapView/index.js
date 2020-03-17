@@ -13,27 +13,48 @@ import { getProcessedData } from '../../redux/selectors/results';
 import { markerClusterConnector, renderMarkerConnector } from './utils/unitMarkers';
 import { getAddressNavigatorParamsConnector } from '../../utils/address';
 import { generatePath } from '../../utils/path';
+import { calculateDistance, getCurrentlyUsedPosition } from '../../redux/selectors/unit';
+import { formatDistanceObject } from '../../utils';
 
 // Get redux states as props to component
-const mapStateToProps = (state) => {
-  const { settings } = state;
+const mapStateToProps = (state, props) => {
+  const {
+    intl,
+  } = props;
+  const {
+    address, navigator, settings, user,
+  } = state;
   const unitList = getProcessedData(state);
   const unitsLoading = state.service.isFetching;
   const serviceUnits = getServiceUnits(state);
   // const serviceUnits = state.service.data;
   const highlightedDistrict = getHighlightedDistrict(state);
   const highlightedUnit = getSelectedUnit(state);
-  const currentPage = state.user.page;
-  const userLocation = state.user.position.coordinates;
+  const {
+    customPosition, locale, page, position, theme,
+  } = user;
   const getLocaleText = textObject => getLocaleString(state, textObject);
-  const { navigator } = state;
-  const { addressUnits } = state.address;
-  const { locale, theme } = state.user;
+  const { addressUnits } = address;
   const getAddressNavigatorParams = getAddressNavigatorParamsConnector(getLocaleText, locale);
   const getPath = (id, data) => generatePath(id, locale, data);
+  const distanceCoordinates = getCurrentlyUsedPosition(state);
+  const userLocation = customPosition.coordinates || position.coordinates;
+  const getDistance = unit => formatDistanceObject(intl, calculateDistance(state)(unit));
   return {
-    createMarkerClusterLayer: markerClusterConnector(settings, getLocaleText, navigator),
-    renderUnitMarkers: renderMarkerConnector(settings, getLocaleText, navigator, theme, getPath),
+    createMarkerClusterLayer: markerClusterConnector(
+      navigator,
+      settings,
+      getLocaleText,
+      getDistance,
+    ),
+    distanceCoordinates,
+    renderUnitMarkers: renderMarkerConnector(
+      getLocaleText,
+      navigator,
+      theme,
+      getPath,
+      getDistance,
+    ),
     highlightedDistrict,
     highlightedUnit,
     getAddressNavigatorParams,
@@ -41,8 +62,9 @@ const mapStateToProps = (state) => {
     unitList,
     serviceUnits,
     unitsLoading,
-    currentPage,
+    currentPage: page,
     userLocation,
+    hideUserMarker: customPosition.hideMarker,
     settings,
     navigator,
     addressUnits,

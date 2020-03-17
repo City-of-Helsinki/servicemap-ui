@@ -8,11 +8,13 @@ import SearchBar from '../../components/SearchBar';
 import TitleBar from '../../components/TitleBar';
 import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import { generatePath } from '../../utils/path';
-import { drawServiceIcon } from '../MapView/utils/drawIcon';
-import { fitUnitsToMap } from '../MapView/utils/mapActions';
-import ResultList from '../../components/Lists/ResultList';
+import { fitUnitsToMap, focusToPosition } from '../MapView/utils/mapActions';
 import Loading from '../../components/Loading/Loading';
 import Container from '../../components/Container';
+import PaginatedList from '../../components/Lists/PaginatedList';
+import ResultOrderer from '../../components/TabLists/ResultOrderer';
+import CustomLocation from '../../utils/customLocation';
+import { getIcon } from '../../components/SMIcon';
 
 class ServiceView extends React.Component {
   constructor(props) {
@@ -31,13 +33,21 @@ class ServiceView extends React.Component {
     const { params } = match;
 
     this.setState({
-      icon: <img alt="" src={drawServiceIcon()} className={classes.icon} />,
+      icon: getIcon('service', { className: classes.icon }),
     });
 
     // Fetch service if current is not same as url param's
     if (this.shouldFetch()) {
       fetchService(params.service);
     }
+    const { changeCustomUserLocation, location } = this.props;
+
+    const customLocation = new CustomLocation(location);
+    if (customLocation.coords) {
+      changeCustomUserLocation(customLocation.coords, customLocation.hideMarker);
+      return;
+    }
+    changeCustomUserLocation(null);
   }
 
   componentDidUpdate(nextProps) {
@@ -51,6 +61,11 @@ class ServiceView extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    const { changeCustomUserLocation } = this.props;
+    changeCustomUserLocation(null);
+  }
+
   // Check if view will fetch data because search params has changed
   shouldFetch = () => {
     const { current, isLoading, match } = this.props;
@@ -59,9 +74,21 @@ class ServiceView extends React.Component {
   }
 
   focusMap = (unit) => {
-    const { map } = this.props;
+    const { customPosition, map } = this.props;
     const { mapMoved } = this.state;
-    if (unit && map && map._layersMaxZoom && !mapMoved) {
+    if (!map || !map._layersMaxZoom || mapMoved) {
+      return;
+    }
+
+    if (customPosition) {
+      this.setState({ mapMoved: true });
+      focusToPosition(
+        map,
+        [customPosition.longitude, customPosition.latitude],
+      );
+      return;
+    }
+    if (unit) {
       this.setState({ mapMoved: true });
       fitUnitsToMap(unit, map);
     }
@@ -79,7 +106,7 @@ class ServiceView extends React.Component {
 
   render() {
     const {
-      count, current, embed, unitData, isLoading, max, getLocaleText, intl,
+      classes, count, current, customPosition, embed, unitData, isLoading, max, getLocaleText, intl,
     } = this.props;
     const { icon } = this.state;
     const progress = (isLoading && count) ? Math.floor((count / max * 100)) : 0;
@@ -99,6 +126,8 @@ class ServiceView extends React.Component {
     const showUnits = serviceUnits;
     const showServiceWithoutUnits = current && !isLoading && !serviceUnits;
 
+    const initialOrder = customPosition ? 'distance-asc' : null;
+
     return (
       <div>
         <DesktopComponent>
@@ -106,7 +135,11 @@ class ServiceView extends React.Component {
           {
             showTitle
             && (
-              <TitleBar icon={icon} title={getLocaleText(current.name)} />
+              <TitleBar
+                className={classes.titlebar}
+                icon={icon}
+                title={getLocaleText(current.name)}
+              />
             )
           }
         </DesktopComponent>
@@ -114,7 +147,13 @@ class ServiceView extends React.Component {
           showTitle
           && (
             <MobileComponent>
-              <TitleBar icon={icon} title={getLocaleText(current.name)} primary backButton />
+              <TitleBar
+                className={classes.titlebar}
+                icon={icon}
+                title={getLocaleText(current.name)}
+                primary
+                backButton
+              />
             </MobileComponent>
           )
         }
@@ -129,12 +168,15 @@ class ServiceView extends React.Component {
         {
           showUnits
           && (
-            <ResultList
-              listId="search-list"
-              data={serviceUnits}
-              title={intl.formatMessage({ id: 'unit.plural' })}
-              onItemClick={(e, item) => this.handleClick(e, item)}
-            />
+            <>
+              <ResultOrderer initialOrder={initialOrder} />
+              <PaginatedList
+                id="events"
+                data={serviceUnits || []}
+                title={intl.formatMessage({ id: 'unit.plural' })}
+                titleComponent="h4"
+              />
+            </>
           )
         }
         {
@@ -151,9 +193,14 @@ class ServiceView extends React.Component {
 }
 
 ServiceView.propTypes = {
+  changeCustomUserLocation: PropTypes.func.isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   count: PropTypes.number.isRequired,
   current: PropTypes.objectOf(PropTypes.any),
+  customPosition: PropTypes.shape({
+    latitude: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    longitude: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  }),
   embed: PropTypes.bool,
   match: PropTypes.objectOf(PropTypes.any),
   max: PropTypes.number.isRequired,
@@ -166,11 +213,13 @@ ServiceView.propTypes = {
   getLocaleText: PropTypes.func.isRequired,
   fetchService: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
+  location: PropTypes.objectOf(PropTypes.any).isRequired,
   map: PropTypes.objectOf(PropTypes.any),
 };
 
 ServiceView.defaultProps = {
   current: null,
+  customPosition: null,
   embed: false,
   match: {},
   history: {},
