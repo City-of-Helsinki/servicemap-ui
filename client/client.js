@@ -14,13 +14,13 @@ import {
   createGenerateClassName,
 } from '@material-ui/core/styles';
 import ac from 'abortcontroller-polyfill';
-import rootReducer from './rootReducer';
-import App from './App';
-import SettingsUtility from './utils/settings';
-import LocalStorageUtility from './utils/localStorage';
+import rootReducer from '../src/rootReducer';
+import App from '../src/App';
+import SettingsUtility from '../src/utils/settings';
+import LocalStorageUtility from '../src/utils/localStorage';
 import config from '../config';
-import favicon from './assets/icons/favicon.ico';
-import ThemeWrapper from './utils/ThemeWrapper';
+import favicon from '../src/assets/icons/favicon.ico';
+import ThemeWrapper from './ThemeWrapper';
 
 if (!global.AbortController) {
   global.AbortController = ac.AbortController;
