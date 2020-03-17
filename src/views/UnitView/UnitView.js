@@ -48,6 +48,9 @@ const UnitView = (props) => {
     location,
   } = props;
 
+  // Display feedback button only for units with these contract types
+  const allowFeedbackIDs = ['municipal_service', 'purchased_service'];
+
   const checkCorrectUnit = unit => unit && unit.id === parseInt(match.params.unit, 10);
 
   const [unit, setUnit] = useState(checkCorrectUnit(stateUnit) ? stateUnit : null);
@@ -112,7 +115,7 @@ const UnitView = (props) => {
   };
 
   const feedbackButton = () => {
-    if (unit.provider_type === 'SELF_PRODUCED') {
+    if (allowFeedbackIDs.includes(unit.contract_type.id)) {
       return (
         <SMButton
           messageID="home.send.feedback"
