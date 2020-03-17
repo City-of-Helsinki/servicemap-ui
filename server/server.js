@@ -8,7 +8,7 @@ import { StaticRouter } from 'react-router-dom';
 import StyleContext from 'isomorphic-style-loader/StyleContext';
 import thunk from 'redux-thunk';
 import config from '../config';
-import rootReducer from '../src/rootReducer';
+import rootReducer from '../src/redux/rootReducer';
 import App from '../src/App';
 import { makeLanguageHandler, languageSubdomainRedirect, unitRedirect } from './utils';
 import { setLocale } from '../src/redux/actions/user';

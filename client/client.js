@@ -14,7 +14,7 @@ import {
   createGenerateClassName,
 } from '@material-ui/core/styles';
 import ac from 'abortcontroller-polyfill';
-import rootReducer from '../src/rootReducer';
+import rootReducer from '../src/redux/rootReducer';
 import App from '../src/App';
 import SettingsUtility from '../src/utils/settings';
 import LocalStorageUtility from '../src/utils/localStorage';
