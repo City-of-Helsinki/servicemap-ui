@@ -135,7 +135,7 @@ const Feedback = () => (
   </TitleWrapper>
 );
 
-class Sidebar extends React.Component {
+class ViewRouter extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -171,4 +171,4 @@ class Sidebar extends React.Component {
   }
 }
 
-export default Sidebar;
+export default ViewRouter;
