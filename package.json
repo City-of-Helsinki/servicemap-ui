@@ -54,9 +54,9 @@
     "testBuild": "NODE_ENV=development BABEL_ENV=development webpack --mode development",
     "test": "jest test",
     "eject": "react-scripts eject",
-    "dev": "NODE_ENV=development BABEL_ENV=development webpack --watch --progress & nodemon dist",
+    "dev": "NODE_ENV=development BABEL_ENV=development webpack --watch --progress & nodemon dist/main.js",
     "browserTest": "node browserTests/browserTestRunner.js",
-    "browserTestCLI": "testcafe chrome:headless browserTests/*Test.js --app \"node dist\"",
+    "browserTestCLI": "testcafe chrome:headless browserTests/*Test.js --app \"node dist/main.js\"",
     "production": "NODE_ENV=production BABEL_ENV=production webpack --progress --mode production && node dist/main.js"
   },
   "eslintConfig": {
