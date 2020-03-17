@@ -225,8 +225,13 @@ const MapView = (props) => {
 
   // Set distance position used for redrawing markecluster layer
   useEffect(() => {
+    if (!distanceCoordinates && distancePosition) {
+      setDistancePosition(null);
+      return;
+    }
     if (!distancePosition && distanceCoordinates) {
       setDistancePosition(distanceCoordinates);
+      return;
     }
     if (
       distanceCoordinates
