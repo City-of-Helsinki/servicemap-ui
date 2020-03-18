@@ -16,7 +16,7 @@ import twitterIcon from '../../assets/icons/twitter_icon.svg';
 import youtubeIcon from '../../assets/icons/youtube_icon.svg';
 import vimeoIcon from '../../assets/icons/vimeo_icon.svg';
 import userLocationIcon from '../../assets/icons/userLocation.svg';
-import noWheelchairIcon from '../../assets/images/wheelchair.svg';
+import noWheelchairIcon from '../../assets/icons/wheelchair.svg';
 import serviceIcon from '../../assets/icons/serviceIcon.svg';
 import serviceIconDark from '../../assets/icons/serviceIconDark.svg';
 
