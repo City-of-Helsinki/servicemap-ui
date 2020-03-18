@@ -1,10 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { injectIntl, intlShape } from 'react-intl';
+import { intlShape } from 'react-intl';
 import { uppercaseFirst } from '../../utils';
-import { setCurrentPage } from '../../redux/actions/user';
-import { getLocaleString } from '../../redux/selectors/locale';
 import HeadModifier from '../../utils/headModifier';
 
 class PageHandler extends React.Component {
@@ -47,23 +44,6 @@ class PageHandler extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  const { selectedUnit, service, event } = state;
-  const getLocaleText = textObject => getLocaleString(state, textObject);
-  return {
-    unit: selectedUnit.unit.data,
-    service: service.current,
-    event,
-    getLocaleText,
-  };
-};
-
-export default injectIntl(connect(
-  mapStateToProps,
-  { setCurrentPage },
-)(PageHandler));
-
-
 PageHandler.propTypes = {
   intl: intlShape.isRequired,
   messageId: PropTypes.string,
@@ -82,3 +62,5 @@ PageHandler.defaultProps = {
   service: null,
   event: null,
 };
+
+export default PageHandler;
