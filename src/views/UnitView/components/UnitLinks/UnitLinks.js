@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import InfoList from '../InfoList/InfoList';
+import InfoList from '../InfoList';
 import unitSectionFilter from '../../utils/unitSectionFilter';
 
 const UnitLinks = ({ unit }) => {
