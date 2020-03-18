@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, intlShape } from 'react-intl';
-import InfoList from './InfoList';
-import unitSectionFilter from '../utils/unitSectionFilter';
+import InfoList from '../InfoList/InfoList';
+import unitSectionFilter from '../../utils/unitSectionFilter';
 
 const ContactInfo = ({
   unit, userLocation, getLocaleText, intl,

@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { withStyles, Typography, Link } from '@material-ui/core';
-import unitSectionFilter from '../utils/unitSectionFilter';
-import DescriptionText from '../../../components/DescriptionText';
-import styles from '../styles/styles';
+import { Typography, Link } from '@material-ui/core';
+import unitSectionFilter from '../../utils/unitSectionFilter';
+import DescriptionText from '../../../../components/DescriptionText';
 
 const Description = ({ unit, getLocaleText, classes }) => {
   const additionalInfo = [
@@ -64,4 +63,4 @@ Description.propTypes = {
   getLocaleText: PropTypes.func.isRequired,
 };
 
-export default withStyles(styles)(Description);
+export default Description;

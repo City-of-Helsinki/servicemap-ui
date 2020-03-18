@@ -2,11 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux';
-import { getLocaleString } from '../../../redux/selectors/locale';
-import TitledList from '../../../components/Lists/TitledList';
-import { fetchUnitEvents } from '../../../redux/actions/selectedUnitEvents';
-import EventItem from '../../../components/ListItems/EventItem';
+import TitledList from '../../../../components/Lists/TitledList';
+import EventItem from '../../../../components/ListItems/EventItem';
 
 const Events = ({
   unit,
@@ -60,17 +57,6 @@ const Events = ({
   );
 };
 
-const mapStateToProps = (state) => {
-  const unit = state.selectedUnit.unit.data;
-  const getLocaleText = textObject => getLocaleString(state, textObject);
-  const { navigator } = state;
-  return {
-    unit,
-    getLocaleText,
-    navigator,
-  };
-};
-
 Events.propTypes = {
   eventsData: PropTypes.objectOf(PropTypes.any).isRequired,
   unit: PropTypes.objectOf(PropTypes.any),
@@ -84,7 +70,4 @@ Events.defaultProps = {
   listLength: 5,
 };
 
-export default connect(
-  mapStateToProps,
-  { fetchUnitEvents },
-)(Events);
+export default Events;

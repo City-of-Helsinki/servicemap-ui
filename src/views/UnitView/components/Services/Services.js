@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
-import TitledList from '../../../components/Lists/TitledList';
-import ServiceItem from '../../../components/ListItems/ServiceItem';
+import { FormattedMessage, intlShape } from 'react-intl';
+import TitledList from '../../../../components/Lists/TitledList';
+import ServiceItem from '../../../../components/ListItems/ServiceItem';
 
 // Teaching and education service node. Could be changed to exclude daycare centers etc.
 const educationNode = 1087;
@@ -188,4 +188,4 @@ Services.defaultProps = {
   showMoreCount: 10,
 };
 
-export default injectIntl(Services);
+export default Services;

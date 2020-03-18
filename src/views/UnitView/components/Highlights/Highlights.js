@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles, Typography, Link } from '@material-ui/core';
+import { Typography, Link } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
-import styles from '../styles/styles';
-import unitSectionFilter from '../utils/unitSectionFilter';
+import unitSectionFilter from '../../utils/unitSectionFilter';
 
 const Highlights = ({ unit, classes, getLocaleText }) => {
   const connections = unitSectionFilter(unit.connections, 'HIGHLIGHT');
@@ -43,4 +42,4 @@ Highlights.propTypes = {
   getLocaleText: PropTypes.func.isRequired,
 };
 
-export default withStyles(styles)(Highlights);
+export default Highlights;

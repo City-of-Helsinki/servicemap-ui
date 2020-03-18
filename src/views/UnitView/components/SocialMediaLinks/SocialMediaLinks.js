@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  List, ListItem, withStyles, Divider, Typography,
+  List, ListItem, Divider, Typography,
 } from '@material-ui/core';
 import DefaultIcon from '@material-ui/icons/Public';
 import { FormattedMessage } from 'react-intl';
-import unitSectionFilter from '../utils/unitSectionFilter';
-import { getIcon } from '../../../components/SMIcon';
-import socialMediaLinksStyles from '../styles/socialMediaLinksStyles';
+import unitSectionFilter from '../../utils/unitSectionFilter';
+import { getIcon } from '../../../../components/SMIcon';
 
 const SocialMediaLinks = ({ unit, getLocaleText, classes }) => {
   const links = unitSectionFilter(unit.connections, 'SOCIAL_MEDIA_LINK');
@@ -60,5 +59,4 @@ SocialMediaLinks.propTypes = {
 SocialMediaLinks.defaultProps = {
 };
 
-
-export default withStyles(socialMediaLinksStyles)(SocialMediaLinks);
+export default SocialMediaLinks;

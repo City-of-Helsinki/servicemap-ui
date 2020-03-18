@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { injectIntl, intlShape } from 'react-intl';
-import getItemIconData from '../constants/itemIconData';
-import { getLocaleString } from '../../../redux/selectors/locale';
-import SimpleListItem from '../../../components/ListItems/SimpleListItem';
-import TitledList from '../../../components/Lists/TitledList';
+import { intlShape } from 'react-intl';
+import getItemIconData from '../../constants/itemIconData';
+import SimpleListItem from '../../../../components/ListItems/SimpleListItem';
+import TitledList from '../../../../components/Lists/TitledList';
 
 class InfoList extends React.Component {
   handleItemClick = (data) => {
@@ -128,17 +126,7 @@ class InfoList extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  const getLocaleText = textObject => getLocaleString(state, textObject);
-  return {
-    getLocaleText,
-  };
-};
-
-
-export default injectIntl(connect(
-  mapStateToProps,
-)(InfoList));
+export default InfoList;
 
 InfoList.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object).isRequired,

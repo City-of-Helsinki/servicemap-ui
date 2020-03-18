@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl } from 'react-intl';
-import InfoList from './InfoList';
-import unitSectionFilter from '../utils/unitSectionFilter';
+import { FormattedMessage } from 'react-intl';
+import InfoList from '../InfoList/InfoList';
+import unitSectionFilter from '../../utils/unitSectionFilter';
 
 const ElectronicServices = ({ unit }) => {
   // List data: Homepage link and e-service links
@@ -23,4 +23,4 @@ ElectronicServices.propTypes = {
   unit: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
-export default injectIntl(ElectronicServices);
+export default ElectronicServices;

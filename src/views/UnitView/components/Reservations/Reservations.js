@@ -2,9 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux';
-import TitledList from '../../../components/Lists/TitledList';
-import ReservationItem from '../../../components/ListItems/ReservationItem';
+import TitledList from '../../../../components/Lists/TitledList';
+import ReservationItem from '../../../../components/ListItems/ReservationItem';
 
 const Reservations = ({
   listLength,
@@ -69,16 +68,4 @@ Reservations.defaultProps = {
   navigator: null,
 };
 
-const mapStateToProps = (state) => {
-  const { navigator, selectedUnit } = state;
-  const unit = selectedUnit.unit.data;
-  return {
-    unit,
-    navigator,
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  null,
-)(Reservations);
+export default Reservations;

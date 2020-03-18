@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { injectIntl } from 'react-intl';
 import { fetchReservations } from '../../../../redux/actions/selectedUnitReservations';
 import { fetchUnitEvents } from '../../../../redux/actions/selectedUnitEvents';
 import { fetchSelectedUnit } from '../../../../redux/actions/selectedUnit';
@@ -17,8 +18,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, {
+export default injectIntl(connect(mapStateToProps, {
   fetchSelectedUnit,
   fetchUnitEvents,
   fetchReservations,
-})(ExtendedData);
+})(ExtendedData));
