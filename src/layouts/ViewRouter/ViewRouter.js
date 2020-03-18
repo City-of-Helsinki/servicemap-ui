@@ -8,7 +8,7 @@ import ServiceView from '../../views/ServiceView';
 import EventDetailView from '../../views/EventDetailView';
 import AddressView from '../../views/AddressView';
 import ServiceTreeView from '../../views/ServiceTreeView';
-import ViewTitle from '../../views/components/ViewTitle/ViewTitle';
+import ViewTitle from './ViewTitle';
 import PageHandler from '../../views/components/PageHandler';
 import FeedbackView from '../../views/FeedbackView';
 import DivisionView from '../../views/DivisionView';

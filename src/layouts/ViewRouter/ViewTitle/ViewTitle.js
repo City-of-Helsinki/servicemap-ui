@@ -1,10 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Typography, RootRef } from '@material-ui/core';
-import { actionSetInitialLoad } from '../../../redux/actions/user';
 
 class ViewTitle extends React.Component {
   constructor(props) {
@@ -49,19 +46,6 @@ class ViewTitle extends React.Component {
   }
 }
 
-// State mapping to props
-const mapStateToProps = (state) => {
-  const { user } = state;
-  return {
-    initialLoad: user.initialLoad,
-  };
-};
-
-export default withRouter(connect(
-  mapStateToProps,
-  { actionSetInitialLoad },
-)(ViewTitle));
-
 ViewTitle.propTypes = {
   initialLoad: PropTypes.bool.isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -69,3 +53,5 @@ ViewTitle.propTypes = {
   actionSetInitialLoad: PropTypes.func.isRequired,
   match: PropTypes.objectOf(PropTypes.any).isRequired,
 };
+
+export default ViewTitle;
