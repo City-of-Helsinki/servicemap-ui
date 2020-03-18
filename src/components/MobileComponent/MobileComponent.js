@@ -6,7 +6,7 @@ import config from '../../../config';
 const mobileBreakpoint = config.mobileUiBreakpoint;
 
 // Content wrapped with this component show only on mobile widths
-export const MobileComponent = ({ children }) => {
+const MobileComponent = ({ children }) => {
   const isMobile = useMediaQuery(`(max-width:${mobileBreakpoint}px)`);
   if (isMobile && children) {
     return (
@@ -21,25 +21,6 @@ export const MobileComponent = ({ children }) => {
 };
 
 MobileComponent.propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
-// Content wrapped with this component show only on Desktop widths
-export const DesktopComponent = ({ children }) => {
-  const isMobile = useMediaQuery(`(max-width:${mobileBreakpoint}px)`);
-  if (!isMobile && children) {
-    return (
-      <>
-        {
-          children
-        }
-      </>
-    );
-  }
-  return null;
-};
-
-DesktopComponent.propTypes = {
   children: PropTypes.node.isRequired,
 };
 

@@ -6,10 +6,10 @@ import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMe
 import MapView from '../views/MapView';
 import I18n from '../i18n';
 import config from '../../config';
-import { DesktopComponent } from './WrapperComponents/WrapperComponents';
 import TopBar from '../components/TopBar';
 import Settings from '../components/Settings';
 import ViewRouter from './ViewRouter';
+import DesktopComponent from '../components/DesktopComponent';
 
 const mobileBreakpoint = config.mobileUiBreakpoint;
 const { smallScreenBreakpoint } = config;
