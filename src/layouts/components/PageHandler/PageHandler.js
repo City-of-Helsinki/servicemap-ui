@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { intlShape } from 'react-intl';
-import { uppercaseFirst } from '../../utils';
-import HeadModifier from '../../utils/headModifier';
+import { uppercaseFirst } from '../../../utils';
+import HeadModifier from '../../../utils/headModifier';
 
 class PageHandler extends React.Component {
   componentDidMount() {

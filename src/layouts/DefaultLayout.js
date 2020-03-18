@@ -8,7 +8,7 @@ import I18n from '../i18n';
 import config from '../../config';
 import TopBar from '../components/TopBar';
 import Settings from '../components/Settings';
-import ViewRouter from './ViewRouter';
+import ViewRouter from './components/ViewRouter';
 import DesktopComponent from '../components/DesktopComponent';
 
 const mobileBreakpoint = config.mobileUiBreakpoint;

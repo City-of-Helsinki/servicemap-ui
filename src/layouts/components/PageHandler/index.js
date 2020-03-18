@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
-import { setCurrentPage } from '../../redux/actions/user';
-import { getLocaleString } from '../../redux/selectors/locale';
+import { setCurrentPage } from '../../../redux/actions/user';
+import { getLocaleString } from '../../../redux/selectors/locale';
 import PageHandler from './PageHandler';
 
 const mapStateToProps = (state) => {

@@ -1,19 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route, withRouter } from 'react-router-dom';
-import SearchView from '../../views/SearchView';
-import UnitView from '../../views/UnitView';
-import HomeView from '../../views/HomeView';
-import ServiceView from '../../views/ServiceView';
-import EventDetailView from '../../views/EventDetailView';
-import AddressView from '../../views/AddressView';
-import ServiceTreeView from '../../views/ServiceTreeView';
+import SearchView from '../../../views/SearchView';
+import UnitView from '../../../views/UnitView';
+import HomeView from '../../../views/HomeView';
+import ServiceView from '../../../views/ServiceView';
+import EventDetailView from '../../../views/EventDetailView';
+import AddressView from '../../../views/AddressView';
+import ServiceTreeView from '../../../views/ServiceTreeView';
 import ViewTitle from './ViewTitle';
 import PageHandler from '../PageHandler';
-import FeedbackView from '../../views/FeedbackView';
-import DivisionView from '../../views/DivisionView';
-import InfoView from '../../views/InfoView';
-import ExtendedData from '../../views/UnitView/components/ExtendedData';
+import FeedbackView from '../../../views/FeedbackView';
+import DivisionView from '../../../views/DivisionView';
+import InfoView from '../../../views/InfoView';
+import ExtendedData from '../../../views/UnitView/components/ExtendedData';
 
 const TitleWrapper = ({ children, messageId }) => (
   <>

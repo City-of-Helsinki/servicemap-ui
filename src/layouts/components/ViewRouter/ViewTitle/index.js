@@ -1,7 +1,7 @@
 
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { actionSetInitialLoad } from '../../../redux/actions/user';
+import { actionSetInitialLoad } from '../../../../redux/actions/user';
 import ViewTitle from './ViewTitle';
 
 // State mapping to props
