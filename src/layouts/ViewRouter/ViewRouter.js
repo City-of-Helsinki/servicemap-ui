@@ -1,19 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route, withRouter } from 'react-router-dom';
-import SearchView from '../SearchView';
-import UnitView from '../UnitView';
-import HomeView from '../HomeView';
-import ServiceView from '../ServiceView';
-import EventDetailView from '../EventDetailView';
-import AddressView from '../AddressView';
-import ServiceTreeView from '../ServiceTreeView';
-import ViewTitle from '../components/ViewTitle/ViewTitle';
-import PageHandler from '../components/PageHandler';
-import FeedbackView from '../FeedbackView';
-import DivisionView from '../DivisionView';
-import InfoView from '../InfoView';
-import ExtendedData from '../UnitView/components/ExtendedData';
+import SearchView from '../../views/SearchView';
+import UnitView from '../../views/UnitView';
+import HomeView from '../../views/HomeView';
+import ServiceView from '../../views/ServiceView';
+import EventDetailView from '../../views/EventDetailView';
+import AddressView from '../../views/AddressView';
+import ServiceTreeView from '../../views/ServiceTreeView';
+import ViewTitle from '../../views/components/ViewTitle/ViewTitle';
+import PageHandler from '../../views/components/PageHandler';
+import FeedbackView from '../../views/FeedbackView';
+import DivisionView from '../../views/DivisionView';
+import InfoView from '../../views/InfoView';
+import ExtendedData from '../../views/UnitView/components/ExtendedData';
 
 const TitleWrapper = ({ children, messageId }) => (
   <>
@@ -135,7 +135,7 @@ const Feedback = () => (
   </TitleWrapper>
 );
 
-class Sidebar extends React.Component {
+class ViewRouter extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -171,4 +171,4 @@ class Sidebar extends React.Component {
   }
 }
 
-export default Sidebar;
+export default ViewRouter;

@@ -1,20 +1,20 @@
 import { combineReducers } from 'redux';
-import breadcrumb from './redux/reducers/breadcrumb';
-import navigator from './redux/reducers/navigator';
+import breadcrumb from './reducers/breadcrumb';
+import navigator from './reducers/navigator';
 import {
   units, service, selectedUnit, accessibilitySentences, redirectService, reservations, unitEvents,
-} from './redux/reducers/fetchDataReducer';
-import user from './redux/reducers/user';
-import districts from './redux/reducers/district';
-import event from './redux/reducers/event';
-import address from './redux/reducers/address';
-import serviceTree from './redux/reducers/serviceTree';
+} from './reducers/fetchDataReducer';
+import user from './reducers/user';
+import districts from './reducers/district';
+import event from './reducers/event';
+import address from './reducers/address';
+import serviceTree from './reducers/serviceTree';
 import {
   colorblind, hearingAid, mobility, mapType, visuallyImpaired, helsinki, espoo, vantaa, kauniainen,
-} from './redux/reducers/settings';
+} from './reducers/settings';
 import {
   direction, order, mapRef, settingsToggled,
-} from './redux/reducers/simpleReducers';
+} from './reducers/simpleReducers';
 
 // Export all redux reducers here
 export default combineReducers({
