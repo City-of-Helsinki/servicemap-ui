@@ -32,50 +32,6 @@ const styles = theme => ({
     position: 'fixed',
     zIndex: 1000,
   },
-  transitBackground: {
-    fontFamily: 'hsl-piktoframe',
-    position: 'absolute',
-    lineHeight: 0,
-    zIndex: theme.zIndex.behind,
-    color: 'white',
-    fontSize: transitIconSize,
-  },
-  busIcon: {
-    fontFamily: 'hsl-piktoframe',
-    color: '#007AC9',
-    fontSize: transitIconSize,
-    lineHeight: 1,
-    textShadow: '1px 1px #fff, -1px 1px #fff, 1px -1px #fff, -1px -1px #fff',
-  },
-  tramIcon: {
-    fontFamily: 'hsl-piktoframe',
-    color: '#00985F',
-    fontSize: transitIconSize,
-    lineHeight: 1,
-    textShadow: '1px 1px #fff, -1px 1px #fff, 1px -1px #fff, -1px -1px #fff',
-  },
-  trainIcon: {
-    fontFamily: 'hsl-piktoframe',
-    color: '#8C4799',
-    fontSize: transitIconSize,
-    lineHeight: 1,
-    textShadow: '1px 1px #fff, -1px 1px #fff, 1px -1px #fff, -1px -1px #fff',
-  },
-  metroIcon: {
-    fontFamily: 'hsl-piktoframe',
-    color: '#FF6319',
-    fontSize: transitIconSize,
-    lineHeight: 1,
-    textShadow: '1px 1px #fff, -1px 1px #fff, 1px -1px #fff, -1px -1px #fff',
-
-  },
-  ferryIcon: {
-    fontFamily: 'hsl-piktoframe',
-    color: '#00B9E4',
-    fontSize: transitIconSize,
-    lineHeight: 1,
-    textShadow: '1px 1px #fff, -1px 1px #fff, 1px -1px #fff, -1px -1px #fff',
-  },
   userMarker: {
     display: 'flex',
     alignItems: 'center',
@@ -206,6 +162,94 @@ const styles = theme => ({
     ...theme.typography.body2,
     margin: `${theme.spacing.unitHalf}px ${theme.spacing.unit}px`,
     fontWeight: 'bold',
+  },
+  bold: {
+    fontWeight: 'bold',
+  },
+
+  // Transit stops
+  transitBackground: {
+    fontFamily: 'hsl-piktoframe',
+    position: 'absolute',
+    lineHeight: 0,
+    zIndex: theme.zIndex.behind,
+    color: 'white',
+    fontSize: transitIconSize,
+  },
+  transitIconMap: {
+    fontSize: transitIconSize,
+    height: transitIconSize,
+    margin: 0,
+    lineHeight: 1,
+  },
+  transitIconInfo: {
+    fontSize: 18,
+    width: 18,
+    height: 18,
+    lineHeight: '21px',
+    marginLeft: 6,
+    marginRight: 4,
+  },
+  tranistInfoContainer: {
+    width: 230,
+    padding: theme.spacing.unitDouble,
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  transitInfoTitle: {
+    fontWeight: 'bold',
+    marginBottom: '5%',
+    borderBottomStyle: 'solid',
+    borderBottomWidth: '1px',
+    borderBottomColor: 'rgba(0, 0, 0, 0.30)',
+    display: 'flex',
+    paddingBottom: ' 2%',
+  },
+  departureItem: {
+    marginBottom: 3,
+    display: 'flex',
+    alignItems: 'center',
+  },
+  departureTime: {
+    width: '15%',
+    fontSize: 13,
+  },
+  departureVehicle: {
+    width: '38%',
+    display: 'flex',
+  },
+  vehicleName: {
+    display: 'inline',
+    fontWeight: 'bold',
+  },
+  routeName: {
+    fontSize: 12,
+    width: '55%',
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+  },
+  closeButton: {
+    marginLeft: 'auto',
+  },
+  closeText: {
+    fontSize: 12,
+    color: 'rgba(0,0,0,0.6)',
+  },
+  busIconColor: {
+    color: '#007AC9',
+  },
+  tramIconColor: {
+    color: '#00985F',
+  },
+  trainIconColor: {
+    color: '#8C4799',
+  },
+  metroIconColor: {
+    color: '#FF6319',
+  },
+  ferryIconColor: {
+    color: '#00B9E4',
   },
 });
 

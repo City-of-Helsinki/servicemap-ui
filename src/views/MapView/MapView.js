@@ -225,8 +225,13 @@ const MapView = (props) => {
 
   // Set distance position used for redrawing markecluster layer
   useEffect(() => {
+    if (!distanceCoordinates && distancePosition) {
+      setDistancePosition(null);
+      return;
+    }
     if (!distancePosition && distanceCoordinates) {
       setDistancePosition(distanceCoordinates);
+      return;
     }
     if (
       distanceCoordinates
@@ -347,6 +352,7 @@ const MapView = (props) => {
           {!embeded
             && (
               <TransitStops
+                getLocaleText={getLocaleText}
                 Marker={Marker}
                 Popup={Popup}
                 map={mapRef.current}

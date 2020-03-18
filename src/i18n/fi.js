@@ -186,7 +186,7 @@ export default {
   'unit.plural': 'Toimipisteet',
 
   'unit.contact.info': 'Yhteystiedot',
-  'unit.links': 'Verkossa', // TODO: verify
+  'unit.links': 'Verkossa',
   'unit.eServices': 'Sähköinen asiointi',
   'unit.reservations': 'Varattavat kohteet',
   'unit.events': 'Toimipisteen tapahtumat',
