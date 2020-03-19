@@ -1,5 +1,5 @@
 import { withStyles } from '@material-ui/core';
 import SocialMediaLinks from './SocialMediaLinks';
-import socialMediaLinksStyles from '../../styles/socialMediaLinksStyles';
+import styles from './styles';
 
-export default withStyles(socialMediaLinksStyles)(SocialMediaLinks);
+export default withStyles(styles)(SocialMediaLinks);
