@@ -1,11 +1,7 @@
 /* eslint-disable react/prefer-stateless-function */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { withStyles } from '@material-ui/core';
-import { valuesHaveChanged } from '../../../utils';
-import styles from '../styles';
-import { getLocaleString } from '../../../redux/selectors/locale';
+import { valuesHaveChanged } from '../../../../utils';
 
 const componentUpdatingProps = ['data'];
 
@@ -44,17 +40,4 @@ UnitMarkers.propTypes = {
 UnitMarkers.defaultProps = {
 };
 
-// Listen to redux state
-const mapStateToProps = (state) => {
-  const { navigator, settings } = state;
-  const getLocaleText = textObject => getLocaleString(state, textObject);
-  return {
-    getLocaleText,
-    navigator,
-    settings,
-  };
-};
-
-export default withStyles(styles)(connect(
-  mapStateToProps,
-)(UnitMarkers));
+export default UnitMarkers;

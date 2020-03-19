@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { withStyles, ButtonBase, Typography } from '@material-ui/core';
+import { ButtonBase, Typography } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
-import styles from '../styles';
-import fetchAddress from '../utils/fetchAddress';
-import { getAddressText } from '../../../utils/address';
+import fetchAddress from '../../utils/fetchAddress';
+import { getAddressText } from '../../../../utils/address';
 
 const AddressPopup = ({
   Popup, classes, mapClickPoint, getAddressNavigatorParams, getLocaleText, map, navigator,
@@ -63,4 +62,4 @@ AddressPopup.propTypes = {
   navigator: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
-export default withStyles(styles)(AddressPopup);
+export default AddressPopup;

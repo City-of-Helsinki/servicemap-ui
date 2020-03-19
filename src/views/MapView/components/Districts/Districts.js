@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { withStyles, Typography } from '@material-ui/core';
-import { drawMarkerIcon } from '../utils/drawIcon';
-import styles from '../styles';
-import swapCoordinates from '../utils/swapCoordinates';
+import { Typography } from '@material-ui/core';
+import { drawMarkerIcon } from '../../utils/drawIcon';
+import swapCoordinates from '../../utils/swapCoordinates';
 
 const Districts = ({
   Polygon,
@@ -123,8 +121,4 @@ Districts.defaultProps = {
   mobile: false,
 };
 
-const mapStateToProps = state => ({
-  theme: state.user.theme,
-});
-
-export default withStyles(styles)(connect(mapStateToProps)(Districts));
+export default Districts;

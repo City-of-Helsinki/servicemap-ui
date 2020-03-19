@@ -1,11 +1,8 @@
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { withStyles, Typography } from '@material-ui/core';
-import { connect } from 'react-redux';
+import { Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import styles from '../styles';
-import { getLocaleString } from '../../../redux/selectors/locale';
-import { getAddressText } from '../../../utils/address';
+import { getAddressText } from '../../../../utils/address';
 
 const AddressMarker = ({
   Marker,
@@ -70,19 +67,4 @@ AddressMarker.defaultProps = {
   embeded: false,
 };
 
-
-// Listen to redux state
-const mapStateToProps = (state) => {
-  const { address } = state;
-  const getLocaleText = textObject => getLocaleString(state, textObject);
-  return {
-    address,
-    getLocaleText,
-  };
-};
-
-
-export default withStyles(styles)(connect(
-  mapStateToProps,
-  null,
-)(AddressMarker));
+export default AddressMarker;

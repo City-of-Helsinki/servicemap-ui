@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { getIcon } from '../../../components/SMIcon';
+import { getIcon } from '../../../../components/SMIcon';
 
 const UserMarker = ({ position, classes, onClick }) => {
   const { Marker } = require('react-leaflet');

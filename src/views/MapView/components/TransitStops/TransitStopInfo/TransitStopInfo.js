@@ -3,11 +3,10 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Accessible from '@material-ui/icons/Accessible';
 import { FormattedMessage } from 'react-intl';
-import { withStyles, Typography, ButtonBase } from '@material-ui/core';
+import { Typography, ButtonBase } from '@material-ui/core';
 import { Close } from '@material-ui/icons';
-import { fetchStopData } from '../utils/transitFetch';
-import styles from '../styles';
-import { getIcon } from '../../../components/SMIcon';
+import { fetchStopData } from '../../../utils/transitFetch';
+import { getIcon } from '../../../../../components/SMIcon';
 
 const TransitStopInfo = ({
   stop, onCloseClick, classes, getLocaleText,
@@ -110,8 +109,6 @@ const TransitStopInfo = ({
   );
 };
 
-export default withStyles(styles)(TransitStopInfo);
-
 TransitStopInfo.propTypes = {
   stop: PropTypes.objectOf(PropTypes.any),
   onCloseClick: PropTypes.func.isRequired,
@@ -122,3 +119,5 @@ TransitStopInfo.propTypes = {
 TransitStopInfo.defaultProps = {
   stop: {},
 };
+
+export default TransitStopInfo;

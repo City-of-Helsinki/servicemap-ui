@@ -2,11 +2,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { withStyles } from '@material-ui/core';
-import TransitStopInfo from './TransitStopInfo';
-import { fetchStops } from '../utils/transitFetch';
-import { transitIconSize } from '../config/mapConfig';
-import styles from '../styles';
+import TransitStopInfo from './TransitStopInfo/TransitStopInfo';
+import { fetchStops } from '../../utils/transitFetch';
+import { transitIconSize } from '../../config/mapConfig';
 
 class TransitStops extends React.Component {
   constructor(props) {
@@ -139,4 +137,4 @@ TransitStops.defaultProps = {
   isMobile: false,
 };
 
-export default withStyles(styles)(TransitStops);
+export default TransitStops;
