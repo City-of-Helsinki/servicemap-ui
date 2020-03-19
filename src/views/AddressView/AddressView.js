@@ -10,7 +10,7 @@ import fetchDistricts from './utils/fetchDistricts';
 import TitleBar from '../../components/TitleBar';
 import TitledList from '../../components/Lists/TitledList';
 import { AddressIcon } from '../../components/SMIcon';
-import HeadModifier from '../../utils/headModifier';
+import HeadModifier from '../../components/HeadModifier';
 
 import fetchAddressUnits from './utils/fetchAddressUnits';
 import fetchAddressData from './utils/fetchAddressData';

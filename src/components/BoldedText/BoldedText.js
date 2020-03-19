@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { uppercaseFirst } from '.';
+import { uppercaseFirst } from '../../utils';
 
 const BoldedText = ({ text, shouldBeBold }) => {
   if (!text) {
