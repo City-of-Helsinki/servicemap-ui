@@ -7,9 +7,10 @@ import { Map, Menu, Close } from '@material-ui/icons';
 import { FormattedMessage, intlShape } from 'react-intl';
 import I18n from '../../i18n';
 import HomeLogo from '../Logos/HomeLogo';
-import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import { getIcon } from '../SMIcon';
 import DrawerMenu from '../DrawerMenu';
+import DesktopComponent from '../DesktopComponent';
+import MobileComponent from '../MobileComponent';
 
 class TopBar extends React.Component {
   state={ drawerOpen: false }

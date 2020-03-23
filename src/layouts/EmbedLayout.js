@@ -5,7 +5,7 @@ import {
 } from 'react-router-dom';
 import { injectIntl, intlShape } from 'react-intl';
 import MapView from '../views/MapView';
-import PageHandler from '../views/components/PageHandler';
+import PageHandler from './components/PageHandler';
 import AddressView from '../views/AddressView';
 import EventDetailView from '../views/EventDetailView';
 import SearchView from '../views/SearchView';

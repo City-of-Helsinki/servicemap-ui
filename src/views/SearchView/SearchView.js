@@ -16,9 +16,9 @@ import TabLists from '../../components/TabLists';
 import SMButton from '../../components/ServiceMapButton';
 import Container from '../../components/Container';
 import { generatePath } from '../../utils/path';
-import { DesktopComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import ExpandedSuggestions from '../../components/ExpandedSuggestions';
 import SettingsInfo from '../../components/SettingsInfo';
+import DesktopComponent from '../../components/DesktopComponent';
 
 class SearchView extends React.Component {
   constructor(props) {

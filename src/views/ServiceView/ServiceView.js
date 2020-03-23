@@ -6,7 +6,6 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Paper, Typography } from '@material-ui/core';
 import SearchBar from '../../components/SearchBar';
 import TitleBar from '../../components/TitleBar';
-import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import { generatePath } from '../../utils/path';
 import { fitUnitsToMap, focusToPosition } from '../MapView/utils/mapActions';
 import Loading from '../../components/Loading/Loading';
@@ -15,6 +14,8 @@ import PaginatedList from '../../components/Lists/PaginatedList';
 import ResultOrderer from '../../components/TabLists/ResultOrderer';
 import CustomLocation from '../../utils/customLocation';
 import { getIcon } from '../../components/SMIcon';
+import DesktopComponent from '../../components/DesktopComponent';
+import MobileComponent from '../../components/MobileComponent';
 
 class ServiceView extends React.Component {
   constructor(props) {
