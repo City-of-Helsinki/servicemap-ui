@@ -59,6 +59,7 @@ const SuggestionItem = (props) => {
           keyboardHandler(onClick, ['space', 'enter']);
         }}
         onKeyUp={() => setMouseDown(false)}
+        role="link"
       >
         <span
           className={classes.container}
@@ -166,6 +167,7 @@ SuggestionItem.defaultProps = {
   handleArrowClick: null,
   handleItemClick: null,
   divider: false,
+  role: 'button',
   selected: false,
   subtitle: null,
   query: null,

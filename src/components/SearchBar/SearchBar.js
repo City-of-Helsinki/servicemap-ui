@@ -186,7 +186,7 @@ class SearchBar extends React.Component {
     const containerStyles = `${isActive ? classes.containerSticky : classes.containerInactive} ${classes.container}`;
 
     return (
-      <form action="" onSubmit={this.onSubmit} className={containerStyles} autoComplete="off">
+      <form id="SearchBar" action="" onSubmit={this.onSubmit} className={containerStyles} autoComplete="off">
         {
           (!hideBackButton || (isActive && isMobile))
           && (
