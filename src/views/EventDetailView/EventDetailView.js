@@ -8,13 +8,14 @@ import { AccessTime, Phone, Event } from '@material-ui/icons';
 import DescriptionText from '../../components/DescriptionText';
 import SearchBar from '../../components/SearchBar';
 import TitleBar from '../../components/TitleBar';
-import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import SimpleListItem from '../../components/ListItems/SimpleListItem';
 import UnitItem from '../../components/ListItems/UnitItem';
 import TitledList from '../../components/Lists/TitledList';
 import UnitHelper from '../../utils/unitHelper';
 import { eventFetch } from '../../utils/fetch';
 import { focusToPosition } from '../MapView/utils/mapActions';
+import DesktopComponent from '../../components/DesktopComponent';
+import MobileComponent from '../../components/MobileComponent';
 
 class EventDetailView extends React.Component {
   constructor(props) {

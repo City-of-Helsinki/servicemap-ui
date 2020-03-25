@@ -173,7 +173,11 @@ ResultItem.propTypes = {
   onKeyDown: PropTypes.func,
   subtitle: PropTypes.string,
   title: PropTypes.string.isRequired,
-  distance: PropTypes.objectOf(PropTypes.any),
+  distance: PropTypes.shape({
+    distance: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    type: PropTypes.oneOf(['m', 'km']),
+    text: PropTypes.string,
+  }),
   divider: PropTypes.bool,
   role: PropTypes.string,
   srLabel: PropTypes.string,

@@ -122,6 +122,7 @@ const fetchStopData = async (stop) => {
         pickupType
         headsign
         trip {
+          wheelchairAccessible
           route {
             mode
             shortName

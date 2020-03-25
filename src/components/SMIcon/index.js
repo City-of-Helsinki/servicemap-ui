@@ -1,21 +1,24 @@
 import React from 'react';
 import SMIcon from './SMIcon';
-import defaulMapIcon from '../../assets/images/iconDefaultMap.svg';
-import aerialMapIcon from '../../assets/images/iconAerialMap.svg';
-import guideMapIcon from '../../assets/images/iconGuideMap.svg';
+import defaulMapIcon from '../../assets/icons/iconDefaultMap.svg';
+import aerialMapIcon from '../../assets/icons/iconAerialMap.svg';
+import guideMapIcon from '../../assets/icons/iconGuideMap.svg';
 import locationIcon from '../../assets/icons/inlineSVGs/iconLocation';
 import accessibilityIcon from '../../assets/icons/inlineSVGs/iconAccessibility';
 import serviceListIcon from '../../assets/icons/inlineSVGs/iconServiceList';
 import feedbackIcon from '../../assets/icons/inlineSVGs/iconFeedback';
 import helpIcon from '../../assets/icons/inlineSVGs/iconHelp';
-import facebookIcon from '../../assets/images/facebook_icon.svg';
-import instagramIcon from '../../assets/images/insta_icon.svg';
-import pinterestIcon from '../../assets/images/pinterest_icon.svg';
-import snapchatIcon from '../../assets/images/snap_icon.svg';
-import twitterIcon from '../../assets/images/twitter_icon.svg';
-import youtubeIcon from '../../assets/images/youtube_icon.svg';
-import vimeoIcon from '../../assets/images/vimeo_icon.svg';
-import userLocationIcon from '../../assets/images/userLocation.svg';
+import facebookIcon from '../../assets/icons/facebook_icon.svg';
+import instagramIcon from '../../assets/icons/insta_icon.svg';
+import pinterestIcon from '../../assets/icons/pinterest_icon.svg';
+import snapchatIcon from '../../assets/icons/snap_icon.svg';
+import twitterIcon from '../../assets/icons/twitter_icon.svg';
+import youtubeIcon from '../../assets/icons/youtube_icon.svg';
+import vimeoIcon from '../../assets/icons/vimeo_icon.svg';
+import userLocationIcon from '../../assets/icons/userLocation.svg';
+import noWheelchairIcon from '../../assets/icons/wheelchair.svg';
+import serviceIcon from '../../assets/icons/serviceIcon.svg';
+import serviceIconDark from '../../assets/icons/serviceIconDark.svg';
 
 /**
  * Senses
@@ -149,8 +152,16 @@ export const getIcon = (key, props) => {
     case 'vimeo':
       return <img aria-hidden alt="" src={vimeoIcon} {...props} />;
 
+    case 'service':
+      return <img aria-hidden alt="" src={serviceIcon} {...props} />;
+
+    case 'serviceDark':
+      return <img aria-hidden alt="" src={serviceIconDark} {...props} />;
     case 'locationMarker':
       return <img aria-hidden alt="" src={userLocationIcon} {...props} />;
+
+    case 'noWheelchair':
+      return <img aria-hidden alt="" src={noWheelchairIcon} {...props} />;
 
     default:
       return null;

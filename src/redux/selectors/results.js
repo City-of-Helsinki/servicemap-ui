@@ -10,13 +10,10 @@ const cities = state => [
   ...state.settings.espoo ? ['espoo'] : [],
   ...state.settings.kauniainen ? ['kauniainen'] : [],
 ];
-const settings = state => state.settings;
-const userLocation = state => state.user.position.coordinates;
-const customLocation = state => state.user.customPosition.coordinates;
 
 export const getProcessedData = (state, options = {}) => createSelector(
-  [units, isFetching, cities, settings, userLocation, customLocation],
-  (data, isFetching, cities, settings, userLocation, customLocation) => {
+  [units, isFetching, cities],
+  (data, isFetching, cities) => {
     // Prevent processing data if fetch is in process
     if (isFetching) {
       return [];
@@ -28,9 +25,8 @@ export const getProcessedData = (state, options = {}) => createSelector(
     } else {
       filteredData = filteredData.filter(filterCities(cities));
     }
-    const location = customLocation || userLocation;
 
-    const orderedData = getOrderedData(filteredData, location)(state);
+    const orderedData = getOrderedData(filteredData)(state);
     return orderedData;
   },
 )(state);

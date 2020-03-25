@@ -11,7 +11,8 @@ import { intlShape, FormattedMessage } from 'react-intl';
 import BackButton from '../BackButton';
 import { keyboardHandler } from '../../utils';
 import SuggestionBox from './components/SuggestionBox';
-import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
+import MobileComponent from '../MobileComponent';
+import DesktopComponent from '../DesktopComponent';
 
 class SearchBar extends React.Component {
   blurDelay = 150;

@@ -9,7 +9,6 @@ import { getLocaleString } from '../../redux/selectors/locale';
 import { getAddressNavigatorParamsConnector } from '../../utils/address';
 
 // Listen to redux state
-// const unitList = getUnitList(state);
 const mapStateToProps = (state) => {
   const map = state.mapRef.leafletElement;
   const {

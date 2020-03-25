@@ -7,7 +7,6 @@ import ExpandedSuggestions from './ExpandedSuggestions';
 
 
 // Listen to redux state
-// const unitList = getUnitList(state);
 const mapStateToProps = (state) => {
   const {
     navigator, user,

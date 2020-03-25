@@ -1,5 +1,5 @@
-import berryIcon from '../../../assets/images/berryIcon.svg';
-import berryIconContrast from '../../../assets/images/berryIconContrast.svg';
+import berryIcon from '../../../assets/icons/berryIcon.svg';
+import berryIconContrast from '../../../assets/icons/berryIconContrast.svg';
 
 // TODO: If berries are not used anymore, clean unused functionalities here
 
@@ -82,39 +82,6 @@ const drawStem = (
   ctx.closePath();
 };
 
-/*
-const drawNumber = (ctx, number) => {
-  ctx.font = '30px Arial';
-  ctx.fillText(number, canvasSize.width - 30, canvasSize.height - 5);
-};
-
-export const drawIcon = (unit, mapLayer, withoutCurve = false) => {
-  const canvas = document.createElement('canvas');
-  const ctx = canvas.getContext('2d');
-  canvas.height = canvasSize.height;
-  canvas.width = canvasSize.width;
-
-  // Berry calculation
-  let berryCenterPoint;
-  if (withoutCurve) {
-    berryCenterPoint = berryCenter(90); // Creates straight line
-  } else {
-    berryCenterPoint = berryCenter(70 + (unit.id % 40));
-  }
-  const berryColor = getAccesibilityColor(unit);
-
-  if (Array.isArray(unit)) {
-    drawStem(ctx, berryCenterPoint);
-    drawBerry(ctx, berryCenterPoint, berryColor);
-    drawNumber(ctx, unit.length);
-  }
-  drawStem(ctx, berryCenterPoint);
-  drawBerry(ctx, berryCenterPoint, berryColor);
-
-  return canvas.toDataURL();
-};
-*/
-
 const adjustCurve = (curve) => {
   if (curve) {
     if (curve > 110) {
@@ -141,31 +108,6 @@ export const drawUnitIcon = (berryColor, curve) => {
   const stemRadius = ratio * stemDefaults.width;
   drawStem(ctx, berryCenterPoint, stemRadius + 6, '#fff');
   drawStem(ctx, berryCenterPoint, stemRadius);
-  drawBerry(ctx, berryCenterPoint, berryColor);
-
-  return canvas.toDataURL();
-};
-
-// Temporary solution
-export const drawServiceIcon = () => {
-  const canvas = document.createElement('canvas');
-  const ctx = canvas.getContext('2d');
-  canvas.height = canvasSize.height;
-  canvas.width = canvasSize.width;
-  const berryColor = 'gray';
-
-  // Berry calculation
-  let berryCenterPoint;
-  berryCenterPoint = berryCenter(90); // Creates straight line
-  drawStem(ctx, berryCenterPoint);
-  drawBerry(ctx, berryCenterPoint, berryColor);
-
-  berryCenterPoint = berryCenter(90 + 40);
-  drawStem(ctx, berryCenterPoint);
-  drawBerry(ctx, berryCenterPoint, berryColor);
-
-  berryCenterPoint = berryCenter(90 - 40);
-  drawStem(ctx, berryCenterPoint);
   drawBerry(ctx, berryCenterPoint, berryColor);
 
   return canvas.toDataURL();
