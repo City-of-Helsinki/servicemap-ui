@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { renderToStaticMarkup } from 'react-dom/server';
-import TransitStopInfo from './TransitStopInfo/TransitStopInfo';
+import TransitStopInfo from './TransitStopInfo';
 import { fetchStops } from '../../utils/transitFetch';
 import { transitIconSize } from '../../config/mapConfig';
 
