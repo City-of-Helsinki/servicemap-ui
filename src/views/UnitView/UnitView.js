@@ -49,6 +49,9 @@ const UnitView = (props) => {
     location,
   } = props;
 
+  // Display feedback button only for units with these contract types
+  const allowFeedbackIDs = ['municipal_service', 'purchased_service'];
+
   const checkCorrectUnit = unit => unit && unit.id === parseInt(match.params.unit, 10);
 
   const [unit, setUnit] = useState(checkCorrectUnit(stateUnit) ? stateUnit : null);
@@ -97,6 +100,19 @@ const UnitView = (props) => {
     } else {
       navigator.openFeedback();
     }
+  };
+
+  const feedbackButton = () => {
+    if (allowFeedbackIDs.includes(unit.contract_type.id)) {
+      return (
+        <SMButton
+          messageID="home.send.feedback"
+          icon={<Mail />}
+          onClick={() => handleFeedbackClick()}
+          margin
+        />
+      );
+    } return null;
   };
 
   useEffect(() => { // On mount
@@ -148,12 +164,7 @@ const UnitView = (props) => {
         <UnitLinks unit={unit} />
         <ElectronicServices unit={unit} />
         <DesktopComponent>
-          <SMButton
-            messageID="home.send.feedback"
-            icon={<Mail />}
-            onClick={() => handleFeedbackClick()}
-            margin
-          />
+          {feedbackButton()}
         </DesktopComponent>
       </div>
     );
@@ -207,12 +218,7 @@ const UnitView = (props) => {
           }}
           margin
         />
-        <SMButton
-          messageID="home.send.feedback"
-          icon={<Mail />}
-          onClick={() => handleFeedbackClick()}
-          margin
-        />
+        {feedbackButton()}
       </div>
     </MobileComponent>
   );

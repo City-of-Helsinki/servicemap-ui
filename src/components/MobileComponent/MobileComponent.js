@@ -21,7 +21,11 @@ const MobileComponent = ({ children }) => {
 };
 
 MobileComponent.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
+};
+
+MobileComponent.defaultProps = {
+  children: null,
 };
 
 export default MobileComponent;
