@@ -10,6 +10,7 @@ import TopBar from '../components/TopBar';
 import Settings from '../components/Settings';
 import ViewRouter from './components/ViewRouter';
 import DesktopComponent from '../components/DesktopComponent';
+import AlertBox from '../components/AlertBox';
 
 const mobileBreakpoint = config.mobileUiBreakpoint;
 const { smallScreenBreakpoint } = config;
@@ -126,6 +127,7 @@ const DefaultLayout = (props) => {
             />
           )}
           <div style={styles.sidebarContent} aria-hidden={!!settingsToggled}>
+            <AlertBox />
             <ViewRouter />
           </div>
         </main>
