@@ -21,7 +21,11 @@ const DesktopComponent = ({ children }) => {
 };
 
 DesktopComponent.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
+};
+
+DesktopComponent.defaultProps = {
+  children: null,
 };
 
 export default DesktopComponent;
