@@ -2,9 +2,9 @@ import localeFi from 'react-intl/locale-data/fi';
 import localeEn from 'react-intl/locale-data/en';
 import localeSv from 'react-intl/locale-data/sv';
 import { addLocaleData } from 'react-intl';
-import messagesFi from './translations/fi';
-import messagesEn from './translations/en';
-import messagesSv from './translations/sv';
+import messagesFi from './fi';
+import messagesEn from './en';
+import messagesSv from './sv';
 
 // Translation messages for React Intl
 export const messages = {

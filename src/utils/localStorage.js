@@ -4,11 +4,21 @@ const APP_KEY = 'SM';
 
 
 class LocalStorageUtility {
-  storage;
+  storage = null;
 
   static setStorage() {
-    if (isClient() && !this.storage) {
-      this.storage = window.localStorage;
+    if (!isClient()) {
+      return;
+    }
+
+    try {
+      if (!this.storage) {
+        this.storage = window.localStorage;
+      }
+    } catch (e) {
+      // Error while setting storage
+      // Can be caused by blocked cookies
+      this.storage = null;
     }
   }
 

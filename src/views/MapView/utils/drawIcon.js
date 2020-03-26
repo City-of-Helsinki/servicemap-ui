@@ -1,5 +1,5 @@
-import berryIcon from '../../../assets/images/berryIcon.svg';
-import berryIconContrast from '../../../assets/images/berryIconContrast.svg';
+import berryIcon from '../../../assets/icons/berryIcon.svg';
+import berryIconContrast from '../../../assets/icons/berryIconContrast.svg';
 
 // TODO: If berries are not used anymore, clean unused functionalities here
 

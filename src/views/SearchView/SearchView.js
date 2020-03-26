@@ -16,19 +16,16 @@ import TabLists from '../../components/TabLists';
 import SMButton from '../../components/ServiceMapButton';
 import Container from '../../components/Container';
 import { generatePath } from '../../utils/path';
-import { DesktopComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import ExpandedSuggestions from '../../components/ExpandedSuggestions';
 import SettingsInfo from '../../components/SettingsInfo';
+import DesktopComponent from '../../components/DesktopComponent';
 
 class SearchView extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      serviceRedirect: {
-        service: null,
-        wasHandled: false,
-      },
+      serviceRedirect: null,
       expandVisible: null,
     };
   }
@@ -53,8 +50,13 @@ class SearchView extends React.Component {
 
   shouldComponentUpdate(nextProps) {
     const {
-      fetchUnits, isRedirectFetching, units, map,
+      fetchUnits, units, map,
     } = this.props;
+    const {
+      isRedirectFetching,
+    } = nextProps;
+
+    // Check if redirect fetch has stopped
     if (isRedirectFetching) {
       return false;
     }
@@ -85,13 +87,10 @@ class SearchView extends React.Component {
       return true;
     }
     const options = this.searchParamData(null, true);
-    if (options.service && serviceRedirect.service !== options.service) {
-      // Set new state object for serviceRedirect
-      const obj = {
-        service: null,
-        wasHandled: false,
-      };
-      this.setState({ serviceRedirect: obj });
+    if (options.service && serviceRedirect !== options.service) {
+      // Reset serviceRedirect
+      this.setState({ serviceRedirect: null });
+      
       // Fetch service_node for given old service data
       fetchRedirectService({ service: options.service }, (data) => {
         // Success
@@ -101,9 +100,9 @@ class SearchView extends React.Component {
           delete options.service;
           options.service_node = `${(options.service_node ? `${options.service_node},` : '')}${data.service_node}`;
 
-          // Set serviceRedirect to wasHandled
+          // Set serviceRedirect and fetch units
           fetchUnits(options);
-          this.setState({ serviceRedirect: { service: options.service_node, wasHandled: true } });
+          this.setState({ serviceRedirect: options.service_node });
         }
       });
       return true;
@@ -125,7 +124,7 @@ class SearchView extends React.Component {
       location,
     } = props || this.props;
     const { serviceRedirect } = this.state;
-    const redirectNode = serviceRedirect.service;
+    const redirectNode = serviceRedirect;
     const searchParams = parseSearchParams(location.search);
 
     const {

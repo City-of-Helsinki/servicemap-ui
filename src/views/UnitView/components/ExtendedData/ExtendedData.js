@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage, intlShape } from 'react-intl';
 import { useParams } from 'react-router-dom';
 import EventItem from '../../../../components/ListItems/EventItem';
 import PaginatedList from '../../../../components/Lists/PaginatedList';
@@ -9,7 +9,15 @@ import Loading from '../../../../components/Loading/Loading';
 import ReservationItem from '../../../../components/ListItems/ReservationItem';
 
 const ExtendedData = ({
-  currentUnit, events, fetchSelectedUnit, fetchReservations, fetchUnitEvents, getLocaleText, reservations, intl, type,
+  currentUnit,
+  events,
+  fetchSelectedUnit,
+  fetchReservations,
+  fetchUnitEvents,
+  getLocaleText,
+  reservations,
+  intl,
+  type,
 }) => {
   const { unit } = useParams();
   const title = currentUnit && currentUnit.name ? getLocaleText(currentUnit.name) : '';
@@ -136,4 +144,4 @@ ExtendedData.propTypes = {
   intl: intlShape,
 };
 
-export default injectIntl(ExtendedData);
+export default ExtendedData;

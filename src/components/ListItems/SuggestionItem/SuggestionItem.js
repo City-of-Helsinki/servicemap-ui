@@ -10,7 +10,7 @@ import { ArrowUpward } from '@material-ui/icons';
 import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
 import { intlShape } from 'react-intl';
 import config from '../../../../config';
-import BoldedText from '../../../utils/BoldedText';
+import BoldedText from '../../BoldedText';
 import { keyboardHandler } from '../../../utils';
 
 const SuggestionItem = (props) => {

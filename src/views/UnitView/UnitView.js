@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { Typography } from '@material-ui/core';
 import { FormattedMessage, intlShape } from 'react-intl';
 import { Map, Mail } from '@material-ui/icons';
-import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import SearchBar from '../../components/SearchBar';
 import { focusToPosition, focusDistrict } from '../MapView/utils/mapActions';
 import TitleBar from '../../components/TitleBar';
@@ -25,6 +24,8 @@ import { AddressIcon } from '../../components/SMIcon';
 import FeedbackView from '../FeedbackView';
 import SocialMediaLinks from './components/SocialMediaLinks';
 import UnitLinks from './components/UnitLinks';
+import DesktopComponent from '../../components/DesktopComponent';
+import MobileComponent from '../../components/MobileComponent';
 
 const UnitView = (props) => {
   const {
@@ -47,6 +48,9 @@ const UnitView = (props) => {
     userLocation,
     location,
   } = props;
+
+  // Display feedback button only for units with these contract types
+  const allowFeedbackIDs = ['municipal_service', 'purchased_service'];
 
   const checkCorrectUnit = unit => unit && unit.id === parseInt(match.params.unit, 10);
 
@@ -98,6 +102,19 @@ const UnitView = (props) => {
     }
   };
 
+  const feedbackButton = () => {
+    if (allowFeedbackIDs.includes(unit.contract_type.id)) {
+      return (
+        <SMButton
+          messageID="home.send.feedback"
+          icon={<Mail />}
+          onClick={() => handleFeedbackClick()}
+          margin
+        />
+      );
+    } return null;
+  };
+
   useEffect(() => { // On mount
     intializeUnitData();
   }, []);
@@ -147,12 +164,7 @@ const UnitView = (props) => {
         <UnitLinks unit={unit} />
         <ElectronicServices unit={unit} />
         <DesktopComponent>
-          <SMButton
-            messageID="home.send.feedback"
-            icon={<Mail />}
-            onClick={() => handleFeedbackClick()}
-            margin
-          />
+          {feedbackButton()}
         </DesktopComponent>
       </div>
     );
@@ -206,12 +218,7 @@ const UnitView = (props) => {
           }}
           margin
         />
-        <SMButton
-          messageID="home.send.feedback"
-          icon={<Mail />}
-          onClick={() => handleFeedbackClick()}
-          margin
-        />
+        {feedbackButton()}
       </div>
     </MobileComponent>
   );

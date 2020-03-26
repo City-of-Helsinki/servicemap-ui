@@ -117,7 +117,7 @@ const clientConfig = {
   mode: isEnvProduction ? 'production' : 'development',
   target: 'web',
   entry: {
-    'index.js': path.resolve(__dirname, 'src/client.js'),
+    'index.js': path.resolve(__dirname, 'client/client.js'),
   },
   node: {
     // Needed to enable importing dotenv in the browser.  Although
