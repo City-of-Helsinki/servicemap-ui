@@ -42,6 +42,10 @@ const paths = {
   feedback: {
     generate: () => '/feedback',
     regex: /\/[a-zA-Z]{2}\/feedback/
+  },
+  area: {
+    generate: () => '/area',
+    regex: /\/[a-zA-Z]{2}\/area/
   }
 }
 

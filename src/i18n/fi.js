@@ -26,7 +26,7 @@ export default {
   'address.list.rescue_area': 'Suojelupiiri',
   'address.list.rescue_district': 'Suojelulohko',
   'address.list.rescue_sub_district': 'Suojelualalohko',
-  'address.list.health_station_district': 'Terveysasema-alue',
+  'address.list.health_station_district': 'Terveyskeskusalue',
   'address.list.maternity_clinic_district': 'Neuvola-alue',
   'address.list.lower_comprehensive_school_district_fi': 'Suomenkielinen ala-astealue',
   'address.list.lower_comprehensive_school_district_sv': 'Ruotsinkielinen ala-astealue',
@@ -38,6 +38,13 @@ export default {
   'address.nearby': 'Lähellä',
   'address.districts': 'Alueet',
   'address.plural': 'Osoitteet',
+
+  // Area
+  'area.searchbar.infoText.address': 'Kirjoita kotiosoitteesi',
+  'area.tab.selection': 'Alueen valinta',
+  'area.tab.services': 'Valitun alueen palvelut',
+  'area.services.local': 'Oman alueesi palvelut',
+  'area.services.nearby': 'Lähialueiden palvelut',
 
   // Event
   'event.description': 'Kuvaus',

@@ -39,6 +39,13 @@ export default {
   'address.districts': 'Areas',
   'address.plural': 'Addresses',
 
+  // Area
+  'area.searchbar.infoText.address': 'Kirjoita kotiosoitteesi', // TODO: translate
+  'area.tab.selection': 'Choice of area',
+  'area.tab.services': 'Services in the chosen area',
+  'area.services.local': 'Services in your own area',
+  'area.services.nearby': 'Services in the neighbouring areas',
+
   // Event
   'event.description': 'Description',
   'event.time': 'Date and time',

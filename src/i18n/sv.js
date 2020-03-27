@@ -39,6 +39,13 @@ export default {
   'address.districts': 'Områden',
   'address.plural': 'Adresser',
 
+  // Area
+  'area.searchbar.infoText.address': 'Kirjoita kotiosoitteesi', // TODO: translate
+  'area.tab.selection': 'Val av område',
+  'area.tab.services': 'Tjänster i det valda området',
+  'area.services.local': 'Tjänster i ditt eget område',
+  'area.services.nearby': 'Tjänster i närområdena',
+
   // Event
   'event.description': 'Beskrivning',
   'event.time': 'Tidpunkt',
