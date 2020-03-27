@@ -103,7 +103,10 @@ const UnitView = (props) => {
   };
 
   const feedbackButton = () => {
-    if (allowFeedbackIDs.includes(unit.contract_type.id)) {
+    if (unit.contract_type
+        && unit.contract_type.id
+        && allowFeedbackIDs.includes(unit.contract_type.id)
+    ) {
       return (
         <SMButton
           messageID="home.send.feedback"
