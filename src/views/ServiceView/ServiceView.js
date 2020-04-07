@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { injectIntl, FormattedMessage } from 'react-intl';
 import { Paper, Typography } from '@material-ui/core';
 import SearchBar from '../../components/SearchBar';
 import TitleBar from '../../components/TitleBar';
@@ -213,7 +213,7 @@ ServiceView.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   getLocaleText: PropTypes.func.isRequired,
   fetchService: PropTypes.func.isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   map: PropTypes.objectOf(PropTypes.any),
 };

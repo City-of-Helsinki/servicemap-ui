@@ -8,7 +8,6 @@ import {
 } from '@material-ui/core';
 import { ArrowUpward } from '@material-ui/icons';
 import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
-import { intlShape } from 'react-intl';
 import config from '../../../../config';
 import BoldedText from '../../BoldedText';
 import { keyboardHandler } from '../../../utils';
@@ -147,7 +146,7 @@ SuggestionItem.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   text: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
   srText: PropTypes.string,
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   link: PropTypes.bool,
   icon: PropTypes.objectOf(PropTypes.any),
   handleArrowClick: PropTypes.func,

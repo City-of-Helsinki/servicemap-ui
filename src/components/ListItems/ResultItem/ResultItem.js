@@ -1,7 +1,6 @@
 /* eslint-disable camelcase */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { intlShape } from 'react-intl';
 import {
   ListItem, ListItemIcon, Typography, Divider,
 } from '@material-ui/core';
@@ -183,7 +182,7 @@ ResultItem.propTypes = {
   srLabel: PropTypes.string,
   selected: PropTypes.bool,
   padded: PropTypes.bool,
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 ResultItem.defaultProps = {

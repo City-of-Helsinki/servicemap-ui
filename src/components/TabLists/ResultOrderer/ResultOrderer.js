@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import {
   FormControl, Select, Typography,
 } from '@material-ui/core';
@@ -108,7 +108,7 @@ ResultOrderer.propTypes = {
   initialOrder: PropTypes.oneOf(allowedInitialValues),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   direction: PropTypes.oneOf(allowedDirections).isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   order: PropTypes.oneOf(allowedOrders).isRequired,
   setDirection: PropTypes.func.isRequired,
   setOrder: PropTypes.func.isRequired,

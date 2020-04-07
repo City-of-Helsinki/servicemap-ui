@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Typography, IconButton, Link } from '@material-ui/core';
 import { Cancel, ErrorOutline } from '@material-ui/icons';
-import { FormattedMessage, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 // This component uses default message inserted to code for now until proper implementation
 
@@ -97,7 +97,7 @@ AlertBox.propTypes = {
   title: PropTypes.string,
   text: PropTypes.string,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 AlertBox.defaultProps = {

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { intlShape, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { IconButton, Typography, Button } from '@material-ui/core';
 import { ArrowBack } from '@material-ui/icons';
 import { getPathName } from '../../utils/path';
@@ -118,7 +118,7 @@ BackButton.propTypes = {
   breadcrumb: PropTypes.arrayOf(PropTypes.any).isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   className: PropTypes.string,
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   style: PropTypes.objectOf(PropTypes.any),
   onClick: PropTypes.func,

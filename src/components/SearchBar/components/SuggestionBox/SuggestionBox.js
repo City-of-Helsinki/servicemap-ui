@@ -5,7 +5,7 @@ import {
   Paper, List, Typography,
 } from '@material-ui/core';
 import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
-import { FormattedMessage, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { getPreviousSearches } from '../../previousSearchData';
 import PreviousSearches from '../../PreviousSearches';
 import createSuggestions from '../../createSuggestions';
@@ -288,7 +288,7 @@ SuggestionBox.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   focusedSuggestion: PropTypes.number,
   setSearch: PropTypes.func,
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   locale: PropTypes.oneOf(config.supportedLanguages).isRequired,
 };
 

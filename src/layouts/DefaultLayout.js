@@ -1,7 +1,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
 import MapView from '../views/MapView';
 import I18n from '../i18n';
@@ -158,7 +158,7 @@ const DefaultLayout = (props) => {
 DefaultLayout.propTypes = {
   currentPage: PropTypes.string,
   i18n: PropTypes.instanceOf(I18n),
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   settingsToggled: PropTypes.string,
   toggleSettings: PropTypes.func.isRequired,

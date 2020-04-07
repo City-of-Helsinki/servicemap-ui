@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { useParams } from 'react-router-dom';
 import EventItem from '../../../../components/ListItems/EventItem';
 import PaginatedList from '../../../../components/Lists/PaginatedList';
@@ -141,7 +141,7 @@ ExtendedData.propTypes = {
   fetchReservations: PropTypes.func.isRequired,
   fetchUnitEvents: PropTypes.func.isRequired,
   reservations: PropTypes.objectOf(PropTypes.any).isRequired,
-  intl: intlShape,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default ExtendedData;

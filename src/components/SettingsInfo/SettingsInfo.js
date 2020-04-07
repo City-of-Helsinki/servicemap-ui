@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {
   Typography, Divider, ButtonBase,
 } from '@material-ui/core';
-import { intlShape, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import Container from '../Container';
 import {
   ColorblindIcon,
@@ -128,7 +128,7 @@ const SettingsInfo = ({
 
 SettingsInfo.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
   toggleSettings: PropTypes.func.isRequired,
 };

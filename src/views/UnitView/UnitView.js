@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Typography } from '@material-ui/core';
-import { FormattedMessage, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { Map, Mail } from '@material-ui/icons';
 import SearchBar from '../../components/SearchBar';
 import { focusToPosition, focusDistrict } from '../MapView/utils/mapActions';
@@ -364,7 +364,7 @@ UnitView.propTypes = {
   match: PropTypes.objectOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   getLocaleText: PropTypes.func.isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   reservations: PropTypes.arrayOf(PropTypes.any),
   userLocation: PropTypes.objectOf(PropTypes.any),

@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import {
   Typography, Tabs, Tab,
 } from '@material-ui/core';
-import { intlShape } from 'react-intl';
 import isClient, { parseSearchParams, stringifySearchParams, AddEventListener } from '../../utils';
 import ResultList from '../Lists/ResultList';
 import PaginationComponent from '../PaginationComponent';
@@ -468,7 +467,7 @@ TabLists.propTypes = {
     itemsPerPage: PropTypes.number,
   })).isRequired,
   headerComponents: PropTypes.objectOf(PropTypes.any),
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
 };

@@ -7,7 +7,7 @@ import {
 import {
   Search, Cancel,
 } from '@material-ui/icons';
-import { intlShape, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import BackButton from '../BackButton';
 import { keyboardHandler } from '../../utils';
 import SuggestionBox from './components/SuggestionBox';
@@ -393,7 +393,7 @@ SearchBar.propTypes = {
   hideBackButton: PropTypes.bool,
   navigator: PropTypes.objectOf(PropTypes.any),
   initialValue: PropTypes.string,
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   isSticky: PropTypes.number,
   isFetching: PropTypes.bool.isRequired,
   previousSearch: PropTypes.oneOfType([PropTypes.string, PropTypes.objectOf(PropTypes.any)]),

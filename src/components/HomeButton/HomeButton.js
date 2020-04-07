@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { IconButton } from '@material-ui/core';
 import { Close } from '@material-ui/icons';
-import { intlShape } from 'react-intl';
 
 const HomeButton = (props) => {
   const {
@@ -30,7 +29,7 @@ const HomeButton = (props) => {
 HomeButton.propTypes = {
   className: PropTypes.string,
   navigator: PropTypes.objectOf(PropTypes.any),
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 HomeButton.defaultProps = {

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ButtonBase, Typography } from '@material-ui/core';
-import { FormattedMessage, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 // ServiceMapButton
 const SMButton = ({
@@ -80,7 +80,7 @@ SMButton.propTypes = {
   children: PropTypes.node,
   role: PropTypes.string,
   disabled: PropTypes.bool,
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 SMButton.defaultProps = {

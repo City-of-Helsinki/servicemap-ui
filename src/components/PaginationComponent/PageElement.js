@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { intlShape } from 'react-intl';
 import { Typography, withStyles, ButtonBase } from '@material-ui/core';
 import styles from './styles';
 
@@ -42,7 +41,7 @@ const PageElement = ({
 PageElement.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   className: PropTypes.string,
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   isActive: PropTypes.bool.isRequired,
   number: PropTypes.number.isRequired,
   onClick: PropTypes.func.isRequired,

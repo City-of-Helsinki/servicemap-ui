@@ -5,7 +5,7 @@ import {
   Paper, List, Typography,
 } from '@material-ui/core';
 import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
-import { FormattedMessage, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import createSuggestions from '../SearchBar/createSuggestions';
 import config from '../../../config';
 import SMButton from '../ServiceMapButton';
@@ -261,7 +261,7 @@ const ExpandedSuggestions = (props) => {
 ExpandedSuggestions.propTypes = {
   button: PropTypes.bool,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   isVisible: PropTypes.bool,
   navigator: PropTypes.objectOf(PropTypes.any),
   onClick: PropTypes.func.isRequired,

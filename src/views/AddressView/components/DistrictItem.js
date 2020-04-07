@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import ResultItem from '../../../components/ListItems/ResultItem';
 import { AreaIcon } from '../../../components/SMIcon';
 import MobileComponent from '../../../components/MobileComponent';
@@ -40,7 +40,7 @@ DistrictItem.propTypes = {
   title: PropTypes.string.isRequired,
   period: PropTypes.string,
   showDistrictOnMap: PropTypes.func.isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 DistrictItem.defaultProps = {

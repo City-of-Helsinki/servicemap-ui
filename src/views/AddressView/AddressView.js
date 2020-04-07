@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Typography } from '@material-ui/core';
-import { intlShape, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { Map } from '@material-ui/icons';
 import SearchBar from '../../components/SearchBar';
 import { focusDistrict, focusToPosition } from '../MapView/utils/mapActions';
@@ -290,7 +290,7 @@ AddressView.propTypes = {
   match: PropTypes.objectOf(PropTypes.any),
   setHighlightedDistrict: PropTypes.func.isRequired,
   map: PropTypes.objectOf(PropTypes.any),
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   getAddressNavigatorParams: PropTypes.func.isRequired,
   getLocaleText: PropTypes.func.isRequired,

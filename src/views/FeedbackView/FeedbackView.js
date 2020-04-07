@@ -4,7 +4,7 @@ import { Warning } from '@material-ui/icons';
 import {
   Typography, InputBase, Checkbox, FormControl, Dialog, ButtonBase,
 } from '@material-ui/core';
-import { intlShape, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { Prompt } from 'react-router-dom';
 import TitleBar from '../../components/TitleBar';
 import SMButton from '../../components/ServiceMapButton';
@@ -220,7 +220,7 @@ const FeedbackView = ({
 FeedbackView.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   selectedUnit: PropTypes.objectOf(PropTypes.any),
   getLocaleText: PropTypes.func.isRequired,
