@@ -256,3 +256,24 @@ test('Search suggestion arrow navigation does loop correctly', async(t) => {
     // After pressing key down on last item expect focused suggestion to loop to first item
     .expect(searchbar.getReact(({props, state}) => state.focusedSuggestion)).eql(0, 'Focused suggestion index should loop to first item');
 });
+
+
+test('Search suggestion click works correctly', async(t) => {
+  // Get SearchBar input
+  const input = ReactSelector('InputBase');
+
+  // Make new search
+  await t
+    .expect(getLocation()).contains(`http://${server.address}:${server.port}/fi/search`)
+    .click(input)
+    .pressKey('ctrl+a delete')
+    .typeText(input, 'kirjastoa');
+
+  const items = ReactSelector('SuggestionItem');
+  const clickedItem = await items.nth(0);
+  const text = await clickedItem.getReact(({props}) => props.text);
+  await t
+    .click(clickedItem)
+    .expect(getLocation()).contains(`http://${server.address}:${server.port}/fi/search?q=${text}`)
+    
+});
