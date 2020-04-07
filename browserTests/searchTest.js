@@ -233,3 +233,26 @@ test('SuggestionButton accessibility attributes are OK', async(t) => {
       // We expect ExpandedSearchButton to have role link since it takes to another view 
       .expect(esbRole).eql('link', 'ExpandedSearchButton should be considered a link');
 });
+
+test('Search suggestion arrow navigation does loop correctly', async(t) => {
+  // Get SearchBar focused suggestion value
+  const searchbar = ReactSelector('SearchBar');
+  // Get SearchBar input
+  const input = ReactSelector('InputBase');
+  await t
+    .click(input)
+    .pressKey('down');
+
+  const items = ReactSelector('SuggestionItem');
+  let maxItemIndex = await items.count - 1;
+
+  await t
+    // After first key down we expect focused suggestion to be at first item
+    .expect(searchbar.getReact(({props, state}) => state.focusedSuggestion)).eql(0, 'Focused suggestion index should be set to first item')
+    .pressKey('up')
+    // After pressing key up on first item expect focused suggestion to loop to last item
+    .expect(searchbar.getReact(({props, state}) => state.focusedSuggestion)).eql(maxItemIndex, 'Focused suggestion index should loop to last item')
+    .pressKey('down')
+    // After pressing key down on last item expect focused suggestion to loop to first item
+    .expect(searchbar.getReact(({props, state}) => state.focusedSuggestion)).eql(0, 'Focused suggestion index should loop to first item');
+});
