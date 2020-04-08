@@ -18,7 +18,9 @@ const formatEventDate = (event, intl) => {
   }
   let dateString = `${startWeekDay} ${startDate} ${startTime}`;
   // Check how many days to start of event. Returns number of days or "today"/"tomorrow"
-  const daysTo = intl.formatRelativeTime(start, 'day');
+  const oneDay = 86400000; // day in milliseconds
+  const dayDifference = Math.round(Math.abs((new Date() - start) / oneDay));
+  const daysTo = intl.formatRelativeTime(dayDifference, 'day', { numeric: 'auto' });
   // Check if string has numbers. If false, means that value is either "today" or "tomorrow"
   if (!/\d/.test(daysTo)) {
     // Instead of date, display "today" or "tomorrow"
