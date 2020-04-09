@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { intlShape } from 'react-intl';
+import Helmet from 'react-helmet';
 import { uppercaseFirst } from '../../../utils';
-import HeadModifier from '../../../components/HeadModifier';
 
 class PageHandler extends React.Component {
   componentDidMount() {
@@ -37,9 +37,9 @@ class PageHandler extends React.Component {
     const title = `${uppercaseFirst(pageMessage)} ${message}${appTitle}`;
 
     return (
-      <HeadModifier>
+      <Helmet>
         <title>{title}</title>
-      </HeadModifier>
+      </Helmet>
     );
   }
 }
