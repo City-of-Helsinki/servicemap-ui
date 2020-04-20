@@ -1,12 +1,12 @@
 /* eslint-disable global-require */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Typography } from '@material-ui/core';
+import { Typography, Divider } from '@material-ui/core';
 import { intlShape, FormattedMessage } from 'react-intl';
 import { Map } from '@material-ui/icons';
 import SearchBar from '../../components/SearchBar';
 import { focusDistrict, focusToPosition } from '../MapView/utils/mapActions';
-import fetchDistricts from './utils/fetchDistricts';
+import fetchDistricts, { fetchAdministrativeDistricts } from './utils/fetchDistricts';
 import TitleBar from '../../components/TitleBar';
 import TitledList from '../../components/Lists/TitledList';
 import { AddressIcon } from '../../components/SMIcon';
@@ -20,10 +20,37 @@ import TabLists from '../../components/TabLists';
 import { getAddressText, addressMatchParamsToFetchOptions } from '../../utils/address';
 import DesktopComponent from '../../components/DesktopComponent';
 import MobileComponent from '../../components/MobileComponent';
+import DivisionItem from '../../components/ListItems/DivisionItem';
 
+
+const hiddenDivisions = {
+  emergency_care_district: true,
+};
+
+const getEmergencyCareUnit = (division) => {
+  if (division && division.type === 'emergency_care_district') {
+    switch (division.ocd_id) {
+      case 'ocd-division/country:fi/kunta:helsinki/päivystysalue:haartmanin_päivystysalue': {
+        return 11828; // Haartman
+      }
+      case 'ocd-division/country:fi/kunta:helsinki/päivystysalue:marian_päivystysalue': {
+        return 4060; // Malmi
+      }
+      // The next ID anticipates a probable change in the division name
+      case 'ocd-division/country:fi/kunta:helsinki/päivystysalue:malmin_päivystysalue': {
+        return 4060; // Malmi
+      }
+      default: {
+        return null;
+      }
+    }
+  }
+  return null;
+};
 
 const AddressView = (props) => {
   const [districts, setDistricts] = useState(null);
+  const [administrativeDistricts, setAdministrativeDistricts] = useState([]);
   const [units, setUnits] = useState(null);
   const [error, setError] = useState(null);
 
@@ -35,6 +62,7 @@ const AddressView = (props) => {
     intl,
     match,
     getAddressNavigatorParams,
+    getDistance,
     getLocaleText,
     map,
     setAddressData,
@@ -52,6 +80,8 @@ const AddressView = (props) => {
     setDistricts(null);
     fetchDistricts(lnglat)
       .then(response => setDistricts(response));
+    fetchAdministrativeDistricts(lnglat)
+      .then(response => setAdministrativeDistricts(response));
   };
 
   const fetchUnits = (lnglat) => {
@@ -195,6 +225,52 @@ const AddressView = (props) => {
     } return <Typography><FormattedMessage id="general.loading" /></Typography>;
   };
 
+  const renderClosebyServices = () => {
+    if (!administrativeDistricts) {
+      return null;
+    }
+
+    // Get divisions with units
+    const divisionsWithUnits = administrativeDistricts
+      .filter(d => d.unit)
+      .filter(d => !hiddenDivisions[d.type]);
+    // Get emergency division
+    const emergencyDiv = administrativeDistricts.find(x => x.type === 'emergency_care_district');
+
+    const units = divisionsWithUnits.map((x) => {
+      const { unit } = x;
+      const unitData = unit;
+      unitData.area = x;
+      if (x.type === 'health_station_district') {
+        unitData.emergencyUnitId = getEmergencyCareUnit(emergencyDiv);
+      }
+      return unitData;
+    });
+
+    return (
+      <>
+        <div className={classes.servicesTitle}>
+          <Typography align="left" variant="body2"><FormattedMessage id="address.services.info" /></Typography>
+        </div>
+        <Divider aria-hidden />
+        {
+          units.map((data) => {
+            const key = `${data.area.id}`;
+            const distance = getDistance(data);
+            return (
+              <DivisionItem
+                data={data}
+                distance={distance}
+                divider
+                key={key}
+              />
+            );
+          })
+        }
+      </>
+    );
+  }
+
   // Clean up when component unmounts
   useEffect(() => () => unmountCleanup(), [map]);
 
@@ -216,6 +292,13 @@ const AddressView = (props) => {
   // Render component
   const title = getAddressText(addressData, getLocaleText);
   const tabs = [
+    {
+      ariaLabel: intl.formatMessage({ id: 'service.nearby' }),
+      component: renderClosebyServices(),
+      data: null,
+      itemsPerPage: null,
+      title: intl.formatMessage({ id: 'service.nearby' }),
+    },
     {
       ariaLabel: intl.formatMessage({ id: 'address.districts' }),
       component: renderDistrictsList(),
@@ -293,6 +376,7 @@ AddressView.propTypes = {
   intl: intlShape.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   getAddressNavigatorParams: PropTypes.func.isRequired,
+  getDistance: PropTypes.func.isRequired,
   getLocaleText: PropTypes.func.isRequired,
   setAddressData: PropTypes.func.isRequired,
   setAddressLocation: PropTypes.func.isRequired,

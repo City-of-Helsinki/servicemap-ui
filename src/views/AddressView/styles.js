@@ -29,4 +29,8 @@ export default theme => ({
     paddingLeft: theme.spacing.unitDouble,
     paddingRight: theme.spacing.unitDouble,
   },
+  servicesTitle: {
+    padding: theme.spacing.unit,
+    margin: `${theme.spacing.unit}px ${theme.spacing.unitDouble}px`,
+  },
 });
