@@ -31,14 +31,14 @@ const getEmergencyCareUnit = (division) => {
   if (division && division.type === 'emergency_care_district') {
     switch (division.ocd_id) {
       case 'ocd-division/country:fi/kunta:helsinki/päivystysalue:haartmanin_päivystysalue': {
-        return 11828; // Haartman
+        return 26104; // Haartman
       }
       case 'ocd-division/country:fi/kunta:helsinki/päivystysalue:marian_päivystysalue': {
-        return 4060; // Malmi
+        return 26107; // Malmi
       }
       // The next ID anticipates a probable change in the division name
       case 'ocd-division/country:fi/kunta:helsinki/päivystysalue:malmin_päivystysalue': {
-        return 4060; // Malmi
+        return 26107; // Malmi
       }
       default: {
         return null;
