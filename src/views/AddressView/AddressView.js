@@ -7,11 +7,10 @@ import { Map } from '@material-ui/icons';
 import SearchBar from '../../components/SearchBar';
 import { focusDistrict, focusToPosition } from '../MapView/utils/mapActions';
 import fetchDistricts from './utils/fetchDistricts';
-import { MobileComponent, DesktopComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import TitleBar from '../../components/TitleBar';
 import TitledList from '../../components/Lists/TitledList';
 import { AddressIcon } from '../../components/SMIcon';
-import HeadModifier from '../../utils/headModifier';
+import HeadModifier from '../../components/HeadModifier';
 
 import fetchAddressUnits from './utils/fetchAddressUnits';
 import fetchAddressData from './utils/fetchAddressData';
@@ -19,6 +18,8 @@ import SMButton from '../../components/ServiceMapButton';
 import DistritctItem from './components/DistrictItem';
 import TabLists from '../../components/TabLists';
 import { getAddressText, addressMatchParamsToFetchOptions } from '../../utils/address';
+import DesktopComponent from '../../components/DesktopComponent';
+import MobileComponent from '../../components/MobileComponent';
 
 
 const AddressView = (props) => {

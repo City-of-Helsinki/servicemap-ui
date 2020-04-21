@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { drawServiceIcon } from '../../../views/MapView/utils/drawIcon';
+import { getIcon } from '../../SMIcon';
 import { uppercaseFirst } from '../../../utils';
 import SimpleListItem from '../SimpleListItem';
 
@@ -11,7 +11,7 @@ class ServiceItem extends React.Component {
 
   componentDidMount() {
     const { classes } = this.props;
-    this.setState({ icon: <img alt="" src={drawServiceIcon()} className={classes.icon} aria-hidden="true" /> });
+    this.setState({ icon: getIcon('serviceDark', { className: classes.icon }) });
   }
 
   render() {

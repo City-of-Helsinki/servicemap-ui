@@ -148,7 +148,6 @@ const ExpandedSuggestions = (props) => {
                     button
                     key={item.suggestion + item.count}
                     icon={<Search />}
-                    role="link"
                     text={item.suggestion}
                     handleItemClick={() => {
                       suggestionClick(item.suggestion);

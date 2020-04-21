@@ -11,7 +11,8 @@ import { intlShape, FormattedMessage } from 'react-intl';
 import BackButton from '../BackButton';
 import { keyboardHandler } from '../../utils';
 import SuggestionBox from './components/SuggestionBox';
-import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
+import MobileComponent from '../MobileComponent';
+import DesktopComponent from '../DesktopComponent';
 
 class SearchBar extends React.Component {
   blurDelay = 150;
@@ -186,7 +187,7 @@ class SearchBar extends React.Component {
     const containerStyles = `${isActive ? classes.containerSticky : classes.containerInactive} ${classes.container}`;
 
     return (
-      <form action="" onSubmit={this.onSubmit} className={containerStyles} autoComplete="off">
+      <form id="SearchBar" action="" onSubmit={this.onSubmit} className={containerStyles} autoComplete="off">
         {
           (!hideBackButton || (isActive && isMobile))
           && (

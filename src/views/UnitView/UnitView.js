@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { Typography } from '@material-ui/core';
 import { FormattedMessage, intlShape } from 'react-intl';
 import { Map, Mail, Hearing } from '@material-ui/icons';
-import { DesktopComponent, MobileComponent } from '../../layouts/WrapperComponents/WrapperComponents';
 import SearchBar from '../../components/SearchBar';
 import { focusToPosition, focusDistrict } from '../MapView/utils/mapActions';
 import TitleBar from '../../components/TitleBar';
@@ -21,16 +20,18 @@ import Services from './components/Services';
 import Events from './components/Events';
 import SMButton from '../../components/ServiceMapButton';
 import TabLists from '../../components/TabLists';
-import calculateDistance from '../../utils/calculateDistance';
 import { AddressIcon } from '../../components/SMIcon';
 import FeedbackView from '../FeedbackView';
 import SocialMediaLinks from './components/SocialMediaLinks';
 import UnitLinks from './components/UnitLinks';
 import SimpleListItem from '../../components/ListItems/SimpleListItem';
 import TitledList from '../../components/Lists/TitledList';
+import DesktopComponent from '../../components/DesktopComponent';
+import MobileComponent from '../../components/MobileComponent';
 
 const UnitView = (props) => {
   const {
+    distance,
     stateUnit,
     map,
     intl,
@@ -52,6 +53,9 @@ const UnitView = (props) => {
     location,
   } = props;
 
+  // Display feedback button only for units with these contract types
+  const allowFeedbackIDs = ['municipal_service', 'purchased_service'];
+
   const checkCorrectUnit = unit => unit && unit.id === parseInt(match.params.unit, 10);
 
   const [unit, setUnit] = useState(checkCorrectUnit(stateUnit) ? stateUnit : null);
@@ -65,19 +69,6 @@ const UnitView = (props) => {
         focusToPosition(map, location.coordinates);
       }
     }
-  };
-
-  const formatDistanceString = (meters) => {
-    let distance = meters;
-    if (distance) {
-      if (distance >= 1000) {
-        distance /= 1000; // Convert from m to km
-        distance = distance.toFixed(1); // Show only one decimal
-        distance = intl.formatNumber(distance); // Format distance according to locale
-        return `${distance} km`;
-      }
-      return `${distance} m`;
-    } return null;
   };
 
   const intializeUnitData = () => {
@@ -114,6 +105,22 @@ const UnitView = (props) => {
     } else {
       navigator.openFeedback();
     }
+  };
+
+  const feedbackButton = () => {
+    if (unit.contract_type
+        && unit.contract_type.id
+        && allowFeedbackIDs.includes(unit.contract_type.id)
+    ) {
+      return (
+        <SMButton
+          messageID="home.send.feedback"
+          icon={<Mail />}
+          onClick={() => handleFeedbackClick()}
+          margin
+        />
+      );
+    } return null;
   };
 
   useEffect(() => { // On mount
@@ -165,12 +172,7 @@ const UnitView = (props) => {
         <UnitLinks unit={unit} />
         <ElectronicServices unit={unit} />
         <DesktopComponent>
-          <SMButton
-            messageID="home.send.feedback"
-            icon={<Mail />}
-            onClick={() => handleFeedbackClick()}
-            margin
-          />
+          {feedbackButton()}
         </DesktopComponent>
       </div>
     );
@@ -239,19 +241,13 @@ const UnitView = (props) => {
           }}
           margin
         />
-        <SMButton
-          messageID="home.send.feedback"
-          icon={<Mail />}
-          onClick={() => handleFeedbackClick()}
-          margin
-        />
+        {feedbackButton()}
       </div>
     </MobileComponent>
   );
 
   const render = () => {
     const title = unit && unit.name ? getLocaleText(unit.name) : '';
-    const distance = formatDistanceString(calculateDistance(unit, userLocation.coordinates));
 
     const TopArea = (
       <div className={`${classes.topArea}`}>
@@ -260,14 +256,14 @@ const UnitView = (props) => {
           <TitleBar
             icon={<AddressIcon className={classes.icon} />}
             title={title}
-            distance={distance}
+            distance={distance && distance.text}
           />
         </DesktopComponent>
         <MobileComponent>
           <TitleBar
             title={title}
             backButton
-            distance={distance}
+            distance={distance && distance.text}
           />
         </MobileComponent>
       </div>
@@ -371,6 +367,11 @@ export default UnitView;
 // Typechecking
 UnitView.propTypes = {
   accessibilitySentences: PropTypes.objectOf(PropTypes.any),
+  distance: PropTypes.shape({
+    distance: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    type: PropTypes.oneOf(['m', 'km']),
+    text: PropTypes.string,
+  }),
   unit: PropTypes.objectOf(PropTypes.any),
   embed: PropTypes.bool,
   eventsData: PropTypes.objectOf(PropTypes.any),
@@ -392,6 +393,7 @@ UnitView.propTypes = {
 
 UnitView.defaultProps = {
   accessibilitySentences: null,
+  distance: null,
   embed: false,
   eventsData: { events: null, unit: null },
   unit: null,

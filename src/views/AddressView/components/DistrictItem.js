@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
 import ResultItem from '../../../components/ListItems/ResultItem';
-import { MobileComponent, DesktopComponent } from '../../../layouts/WrapperComponents/WrapperComponents';
 import { AreaIcon } from '../../../components/SMIcon';
+import MobileComponent from '../../../components/MobileComponent';
+import DesktopComponent from '../../../components/DesktopComponent';
 
 const DistrictItem = ({
   district, title, period, showDistrictOnMap, intl,

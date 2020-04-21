@@ -167,7 +167,7 @@ const SuggestionBox = (props) => {
     if (suggestionList) {
       return (
         <>
-          <List className="suggestionList" ref={listRef}>
+          <List id="SuggestionList" className="suggestionList" ref={listRef}>
             {suggestionList.map((item, i) => {
               if (item.object_type === 'suggestion') {
                 return (
@@ -176,7 +176,6 @@ const SuggestionBox = (props) => {
                     button
                     key={`suggestion-${item.suggestion + item.count}`}
                     icon={<Search />}
-                    role="link"
                     text={item.suggestion}
                     handleArrowClick={handleArrowClick}
                     handleItemClick={() => handleSubmit(item.suggestion)}
