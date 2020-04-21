@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 import { Typography } from '@material-ui/core';
 import { intlShape, FormattedMessage } from 'react-intl';
 import { Map } from '@material-ui/icons';
+import Helmet from 'react-helmet';
 import SearchBar from '../../components/SearchBar';
 import { focusDistrict, focusToPosition } from '../MapView/utils/mapActions';
 import fetchDistricts from './utils/fetchDistricts';
 import TitleBar from '../../components/TitleBar';
 import TitledList from '../../components/Lists/TitledList';
 import { AddressIcon } from '../../components/SMIcon';
-import HeadModifier from '../../components/HeadModifier';
 
 import fetchAddressUnits from './utils/fetchAddressUnits';
 import fetchAddressData from './utils/fetchAddressData';
@@ -132,11 +132,11 @@ const AddressView = (props) => {
   const renderHead = (title) => {
     if (addressData) {
       return (
-        <HeadModifier>
+        <Helmet>
           <title>
             {`${title} | ${intl.formatMessage({ id: 'app.title' })}`}
           </title>
-        </HeadModifier>
+        </Helmet>
       );
     } return null;
   };
