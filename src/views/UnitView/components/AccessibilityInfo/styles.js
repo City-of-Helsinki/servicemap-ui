@@ -2,15 +2,13 @@ export default theme => ({
   adjustLeft: {
     marginLeft: -theme.spacing.unitTriple,
   },
-  colorLight: {
-    color: theme.custom.body2light.color,
-  },
   divider: {
     marginLeft: -theme.spacing.unitTriple,
     marginRight: -theme.spacing.unitTriple,
   },
   list: {
     paddingLeft: theme.spacing.unit * 3,
+    listStyleType: 'disc',
   },
   listIcon: {
     alignSelf: 'flex-start',
@@ -20,6 +18,9 @@ export default theme => ({
   },
   listItem: {
     paddingLeft: theme.spacing.unit,
+  },
+  descriptionItem: {
+    marginLeft: theme.spacing.unitDouble,
   },
   listTitle: {
     fontWeight: 'bold',
