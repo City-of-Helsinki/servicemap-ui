@@ -45,7 +45,6 @@ class TabLists extends React.Component {
       scrollDistance: 0,
       styles: {},
       tabIndex: newCurrentTab,
-      tabStyles: {},
     };
   }
 
@@ -220,7 +219,6 @@ class TabLists extends React.Component {
     // Change sidebar scroll to match TabList header's sticky elements' combined height
     const tabsElem = this.tabsRef.tabsRef.parentNode.parentNode;
     const tabsHeight = tabsElem.clientHeight;
-    const containerHeight = tabsElem.parentNode.clientHeight;
     const tabsDistanceFromTop = tabsElem.offsetTop;
     let sibling = tabsElem;
     let stickyElementPadding = 0;
@@ -229,27 +227,25 @@ class TabLists extends React.Component {
       sibling = sibling.previousSibling;
       const classes = sibling.className;
       if (classes.indexOf('sticky') > -1 && typeof sibling.clientHeight === 'number') {
+        // Calculate top padding by checking previous sticky siblings top value and height
+        stickyElementPadding += parseInt(getComputedStyle(sibling).top, 10);
         stickyElementPadding += sibling.clientHeight;
       }
+    }
+
+    if (mobile && stickyElementPadding === 0) {
+      stickyElementPadding = appBarHeight;
     }
 
     if (
       typeof stickyElementPadding === 'number'
       && typeof tabsDistanceFromTop === 'number'
-      && typeof containerHeight === 'number'
       && typeof tabsHeight === 'number'
     ) {
-      // Adjust tabs min height to work with shorter contents
-      // const customTabHeight = containerHeight - tabsHeight;
       // Set new styles and scrollDistance value to state
       this.setState({
         styles: {
-          // TODO figure better way to calculate top
-          top: mobile ? Math.max(appBarHeight, stickyElementPadding) : stickyElementPadding,
-        },
-        tabStyles: {
-          // TODO: disabeld temporarily for causing problems that break the layout
-          // minHeight: customTabHeight,
+          top: stickyElementPadding,
         },
         scrollDistance: (tabsDistanceFromTop - stickyElementPadding),
       });
@@ -360,7 +356,7 @@ class TabLists extends React.Component {
       classes, intl,
     } = this.props;
     const {
-      currentPage, tabIndex, tabStyles,
+      currentPage, tabIndex,
     } = this.state;
 
     const filteredData = this.filteredData();
@@ -394,7 +390,6 @@ class TabLists extends React.Component {
                   id={`tab-content-${index}`}
                   role="tabpanel"
                   key={item.title}
-                  style={activeTab ? tabStyles : null}
                 >
                   {
                     item.component
