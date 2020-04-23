@@ -230,10 +230,11 @@ const UnitView = (props) => {
     const title = unit && unit.name ? getLocaleText(unit.name) : '';
 
     const TopArea = (
-      <div className={`${classes.topArea}`}>
+      <>
         <DesktopComponent>
           <SearchBar margin />
           <TitleBar
+            sticky
             icon={<AddressIcon className={classes.icon} />}
             title={title}
             distance={distance && distance.text}
@@ -241,12 +242,13 @@ const UnitView = (props) => {
         </DesktopComponent>
         <MobileComponent>
           <TitleBar
+            sticky
             title={title}
             backButton
             distance={distance && distance.text}
           />
         </MobileComponent>
-      </div>
+      </>
     );
 
     if (unitFetching) {
