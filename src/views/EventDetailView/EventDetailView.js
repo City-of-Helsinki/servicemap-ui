@@ -123,7 +123,7 @@ class EventDetailView extends React.Component {
       const phoneText = unit && unit.phone ? `${unit.phone} ${intl.formatMessage({ id: 'unit.call.number' })}` : null;
       const time = this.formatDate(event);
       return (
-        <>
+        <div>
           <DesktopComponent>
             <SearchBar margin />
             <TitleBar sticky title={getLocaleText(event.name)} icon={<Event />} />
@@ -187,7 +187,7 @@ class EventDetailView extends React.Component {
               html
             />
           </div>
-        </>
+        </div>
       );
     }
     return (null);
