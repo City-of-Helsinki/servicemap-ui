@@ -1,3 +1,7 @@
+import config from '../../../config';
+
+const { topBarHeightMobile } = config;
+
 export default theme => ({
   container: {
     display: 'flex',
@@ -44,5 +48,15 @@ export default theme => ({
     paddingTop: 4,
     marginRight: theme.spacing.unit,
     minWidth: 50,
+  },
+  sticky: {
+    position: 'sticky',
+    top: 0,
+    zIndex: theme.zIndex.sticky,
+  },
+  mobileSticky: {
+    position: 'sticky',
+    top: topBarHeightMobile,
+    zIndex: theme.zIndex.sticky,
   },
 });
