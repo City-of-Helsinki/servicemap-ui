@@ -7,11 +7,10 @@ import {
   Typography, Divider, Button,
 } from '@material-ui/core';
 import { ArrowUpward } from '@material-ui/icons';
-import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
 import { intlShape } from 'react-intl';
-import config from '../../../../config';
 import BoldedText from '../../BoldedText';
 import { keyboardHandler } from '../../../utils';
+import useMobileStatus from '../../../utils/isMobile';
 
 const SuggestionItem = (props) => {
   const {
@@ -31,7 +30,7 @@ const SuggestionItem = (props) => {
   } = props;
 
   const [mouseDown, setMouseDown] = useState(false);
-  const isMobile = useMediaQuery(`(max-width:${config.mobileUiBreakpoint}px)`);
+  const isMobile = useMobileStatus();
   const onClick = (button || link) && handleItemClick
     ? (e) => {
       e.preventDefault();

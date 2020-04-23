@@ -4,7 +4,6 @@ import { Search } from '@material-ui/icons';
 import {
   Paper, List, Typography,
 } from '@material-ui/core';
-import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
 import { FormattedMessage, intlShape } from 'react-intl';
 import { getPreviousSearches } from '../../previousSearchData';
 import PreviousSearches from '../../PreviousSearches';
@@ -13,6 +12,7 @@ import config from '../../../../../config';
 import SuggestionItem from '../../../ListItems/SuggestionItem';
 import AddressItem from '../../../ListItems/AddressItem';
 import { uppercaseFirst } from '../../../../utils';
+import useMobileStatus from '../../../../utils/isMobile';
 
 
 const SuggestionBox = (props) => {
@@ -35,7 +35,7 @@ const SuggestionBox = (props) => {
   const [history] = useState(getPreviousSearches());
   // Query word on which suggestion list is based
   const [suggestionQuery, setSuggestionQuery] = useState(null);
-  const isMobile = useMediaQuery(`(max-width:${config.mobileUiBreakpoint}px)`);
+  const isMobile = useMobileStatus();
 
   const listRef = useRef(null);
   const fetchController = useRef(null);
