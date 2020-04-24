@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
+import { Typography, Link } from '@material-ui/core';
 import MapView from '../views/MapView';
 import I18n from '../i18n';
 import config from '../../config';
@@ -49,6 +50,10 @@ const createContentStyles = (
     },
     mapWrapper: {
       width: '100%',
+    },
+    messageText: {
+      lineHeight: 'normal',
+      whiteSpace: 'pre-wrap',
     },
     sidebar: {
       height: '100%',
@@ -98,6 +103,54 @@ const DefaultLayout = (props) => {
     }
   };
 
+  const alertText = (
+    <Typography style={styles.messageText} color="inherit">
+      <FormattedMessage id="alert.text" />
+      <Link
+        href={intl.formatMessage({ id: 'alert.link.helsinki' })}
+        target="_blank"
+        rel="noopener"
+        underline="always"
+        color="inherit"
+      >
+        <FormattedMessage id="settings.city.helsinki" />
+      </Link>
+      {', '}
+
+      <Link
+        href={intl.formatMessage({ id: 'alert.link.espoo' })}
+        target="_blank"
+        rel="noopener"
+        underline="always"
+        color="inherit"
+      >
+        <FormattedMessage id="settings.city.espoo" />
+      </Link>
+      {', '}
+
+      <Link
+        href={intl.formatMessage({ id: 'alert.link.vantaa' })}
+        target="_blank"
+        rel="noopener"
+        underline="always"
+        color="inherit"
+      >
+        <FormattedMessage id="settings.city.vantaa" />
+      </Link>
+      {', '}
+
+      <Link
+        href={intl.formatMessage({ id: 'alert.link.kauniainen' })}
+        target="_blank"
+        rel="noopener"
+        underline="always"
+        color="inherit"
+      >
+        <FormattedMessage id="settings.city.kauniainen" />
+      </Link>
+    </Typography>
+  );
+
   return (
     <>
       <div id="topArea" aria-hidden={!!settingsToggled}>
@@ -127,7 +180,10 @@ const DefaultLayout = (props) => {
             />
           )}
           <div style={styles.sidebarContent} aria-hidden={!!settingsToggled}>
-            <AlertBox />
+            <AlertBox
+              title={<FormattedMessage id="alert.title" />}
+              text={alertText}
+            />
             <ViewRouter />
           </div>
         </main>
