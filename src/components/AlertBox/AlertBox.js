@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Typography, IconButton, Link } from '@material-ui/core';
+import { Typography, IconButton } from '@material-ui/core';
 import { Cancel, ErrorOutline } from '@material-ui/icons';
-import { FormattedMessage, intlShape } from 'react-intl';
-
-// This component uses default message inserted to code for now until proper implementation
+import { intlShape } from 'react-intl';
 
 const AlertBox = ({
   title, text, classes, intl,
@@ -14,6 +12,8 @@ const AlertBox = ({
   if (!visible) {
     return null;
   }
+
+  const textIsString = typeof text === 'string';
 
   return (
     <div className={classes.container}>
@@ -25,58 +25,16 @@ const AlertBox = ({
           variant="h6"
           color="inherit"
         >
-          {title || <FormattedMessage id="alert.title" />}
+          {title}
         </Typography>
 
-        {text ? (
-          <Typography className={classes.messageText} color="inherit">{text}</Typography>
-        ) : (
-          <Typography className={classes.messageText} color="inherit">
-            <FormattedMessage id="alert.text" />
-            <Link
-              href={intl.formatMessage({ id: 'alert.link.helsinki' })}
-              target="_blank"
-              rel="noopener"
-              underline="always"
-              color="inherit"
-            >
-              <FormattedMessage id="settings.city.helsinki" />
-            </Link>
-            {', '}
-
-            <Link
-              href={intl.formatMessage({ id: 'alert.link.espoo' })}
-              target="_blank"
-              rel="noopener"
-              underline="always"
-              color="inherit"
-            >
-              <FormattedMessage id="settings.city.espoo" />
-            </Link>
-            {', '}
-
-            <Link
-              href={intl.formatMessage({ id: 'alert.link.vantaa' })}
-              target="_blank"
-              rel="noopener"
-              underline="always"
-              color="inherit"
-            >
-              <FormattedMessage id="settings.city.vantaa" />
-            </Link>
-            {', '}
-
-            <Link
-              href={intl.formatMessage({ id: 'alert.link.kauniainen' })}
-              target="_blank"
-              rel="noopener"
-              underline="always"
-              color="inherit"
-            >
-              <FormattedMessage id="settings.city.kauniainen" />
-            </Link>
-          </Typography>
-        )}
+        {
+          textIsString
+            ? (
+              <Typography className={classes.messageText} color="inherit">{text}</Typography>
+            )
+            : text
+        }
       </div>
       <IconButton
         aria-label={intl.formatMessage({ id: 'alert.close' })}
@@ -94,15 +52,10 @@ const AlertBox = ({
 (not by inseting to code) these props should be changed to isRequired */
 
 AlertBox.propTypes = {
-  title: PropTypes.string,
-  text: PropTypes.string,
+  title: PropTypes.node.isRequired,
+  text: PropTypes.node.isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   intl: intlShape.isRequired,
-};
-
-AlertBox.defaultProps = {
-  title: null,
-  text: null,
 };
 
 export default AlertBox;
