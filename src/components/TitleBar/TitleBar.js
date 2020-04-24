@@ -24,7 +24,7 @@ const TitleBar = ({
         && (
           <BackButton
             onClick={backButtonOnClick}
-            srText={backButtonSrText}
+            ariaLabel={backButtonSrText}
             className={classes.iconButton}
             variant="icon"
             focusVisibleClassName={classes.buttonFocus}
