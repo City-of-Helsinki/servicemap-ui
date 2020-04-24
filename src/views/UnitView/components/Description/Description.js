@@ -19,6 +19,7 @@ const Description = ({ unit, getLocaleText, classes }) => {
           <DescriptionText
             description={getLocaleText(unit.description)}
             title={<FormattedMessage id="unit.description" />}
+            titleComponent="h4"
           />
         )}
         {/* Other info texts + links */}
