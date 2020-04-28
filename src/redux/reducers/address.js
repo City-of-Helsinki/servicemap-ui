@@ -1,7 +1,9 @@
 const initialState = {
-  addressUnits: [],
+  units: [],
   addressCoordinates: null,
   addressData: null,
+  adminDistricts: null,
+  toRender: 'adminDistricts',
 };
 
 export default (state = initialState, action) => {
@@ -19,7 +21,17 @@ export default (state = initialState, action) => {
     case 'SET_ADDRESS_UNITS':
       return {
         ...state,
-        addressUnits: action.units,
+        units: action.units,
+      };
+    case 'SET_ADMINISTRATIVE_DISTRICTS':
+      return {
+        ...state,
+        adminDistricts: action.data,
+      };
+    case 'SET_TO_RENDER':
+      return {
+        ...state,
+        toRender: action.data,
       };
     default:
       return state;

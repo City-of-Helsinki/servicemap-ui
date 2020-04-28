@@ -15,7 +15,7 @@ import HeadModifier from '../../components/HeadModifier';
 import fetchAddressUnits from './utils/fetchAddressUnits';
 import fetchAddressData from './utils/fetchAddressData';
 import SMButton from '../../components/ServiceMapButton';
-import DistritctItem from './components/DistrictItem';
+import DistrictItem from './components/DistrictItem';
 import TabLists from '../../components/TabLists';
 import { getAddressText, addressMatchParamsToFetchOptions } from '../../utils/address';
 import DesktopComponent from '../../components/DesktopComponent';
@@ -50,12 +50,11 @@ const getEmergencyCareUnit = (division) => {
 
 const AddressView = (props) => {
   const [districts, setDistricts] = useState(null);
-  const [administrativeDistricts, setAdministrativeDistricts] = useState([]);
-  const [units, setUnits] = useState(null);
   const [error, setError] = useState(null);
 
   const {
     addressData,
+    adminDistricts,
     classes,
     embed,
     highlightedDistrict,
@@ -69,7 +68,10 @@ const AddressView = (props) => {
     setAddressLocation,
     setHighlightedDistrict,
     setAddressUnits,
+    setAdminDistricts,
+    setToRender,
     navigator,
+    units,
   } = props;
 
   const unmountCleanup = () => {
@@ -78,10 +80,13 @@ const AddressView = (props) => {
 
   const fetchAddressDistricts = (lnglat) => {
     setDistricts(null);
+    setAdminDistricts(null);
+    // Fetch district data
     fetchDistricts(lnglat)
       .then(response => setDistricts(response));
+    // Fetch administrative districts data
     fetchAdministrativeDistricts(lnglat)
-      .then(response => setAdministrativeDistricts(response));
+      .then(response => setAdminDistricts(response));
   };
 
   const fetchUnits = (lnglat) => {
@@ -95,7 +100,6 @@ const AddressView = (props) => {
           // eslint-disable-next-line no-param-reassign
           unit.object_type = 'unit';
         });
-        setUnits(units);
         setAddressUnits(data.results);
       });
   };
@@ -104,7 +108,7 @@ const AddressView = (props) => {
     if (districts || units) {
       // Remove old data before fetching new
       setDistricts(null);
-      setUnits(null);
+      setAddressUnits([]);
     }
 
     const options = match ? addressMatchParamsToFetchOptions(match) : {};
@@ -202,13 +206,14 @@ const AddressView = (props) => {
               <div key={districtList[0]} className={classes.districtListcontainer}>
                 <TitledList title={intl.formatMessage({ id: `address.list.${districtList[0]}` })} titleComponent="h4">
                   {districtList[1].map((district) => {
+                    const unitName = district.unit ? getLocaleText(district.unit.name) : '?';
                     const title = district.name
-                      ? getLocaleText(district.name) : (district.unit ? getLocaleText(district.unit.name) : '?');
+                      ? getLocaleText(district.name) : unitName;
                     const period = district.start && district.end
                       ? `${district.start.substring(0, 4)}-${district.end.substring(0, 4)}` : null;
 
                     return (
-                      <DistritctItem
+                      <DistrictItem
                         key={district.id}
                         district={district}
                         title={title}
@@ -226,16 +231,15 @@ const AddressView = (props) => {
   };
 
   const renderClosebyServices = () => {
-    if (!administrativeDistricts) {
-      return null;
+    if (!adminDistricts) {
+      return <Typography><FormattedMessage id="general.loading" /></Typography>;
     }
-
     // Get divisions with units
-    const divisionsWithUnits = administrativeDistricts
+    const divisionsWithUnits = adminDistricts
       .filter(d => d.unit)
       .filter(d => !hiddenDivisions[d.type]);
     // Get emergency division
-    const emergencyDiv = administrativeDistricts.find(x => x.type === 'emergency_care_district');
+    const emergencyDiv = adminDistricts.find(x => x.type === 'emergency_care_district');
 
     const units = divisionsWithUnits.map((x) => {
       const { unit } = x;
@@ -298,6 +302,9 @@ const AddressView = (props) => {
       data: null,
       itemsPerPage: null,
       title: intl.formatMessage({ id: 'service.nearby' }),
+      onClick: () => {
+        setToRender('adminDistricts');
+      },
     },
     {
       ariaLabel: intl.formatMessage({ id: 'address.districts' }),
@@ -305,6 +312,9 @@ const AddressView = (props) => {
       data: null,
       itemsPerPage: null,
       title: intl.formatMessage({ id: 'address.districts' }),
+      onClick: () => {
+        setToRender('district');
+      },
     },
     {
       ariaLabel: intl.formatMessage({ id: 'address.nearby' }),
@@ -317,6 +327,7 @@ const AddressView = (props) => {
         if (highlightedDistrict) {
           setHighlightedDistrict(null);
         }
+        setToRender('units');
       },
     },
   ];
@@ -370,6 +381,9 @@ export default AddressView;
 
 AddressView.propTypes = {
   addressData: PropTypes.objectOf(PropTypes.any),
+  adminDistricts: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+  })),
   match: PropTypes.objectOf(PropTypes.any),
   setHighlightedDistrict: PropTypes.func.isRequired,
   map: PropTypes.objectOf(PropTypes.any),
@@ -381,16 +395,23 @@ AddressView.propTypes = {
   setAddressData: PropTypes.func.isRequired,
   setAddressLocation: PropTypes.func.isRequired,
   setAddressUnits: PropTypes.func.isRequired,
+  setAdminDistricts: PropTypes.func.isRequired,
+  setToRender: PropTypes.func.isRequired,
   highlightedDistrict: PropTypes.objectOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   embed: PropTypes.bool,
+  units: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+  })),
 };
 
 AddressView.defaultProps = {
   addressData: null,
+  adminDistricts: null,
   match: {},
   map: null,
   navigator: null,
   highlightedDistrict: null,
   embed: false,
+  units: [],
 };

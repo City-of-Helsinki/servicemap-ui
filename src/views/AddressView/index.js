@@ -3,7 +3,13 @@ import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core';
 import { injectIntl } from 'react-intl';
 import setHighlightedDistrict from '../../redux/actions/district';
-import { setAddressData, setAddressUnits, setAddressLocation } from '../../redux/actions/address';
+import {
+  setAddressData,
+  setAddressUnits,
+  setAddressLocation,
+  setAdminDistricts,
+  setToRender,
+} from '../../redux/actions/address';
 import { getLocaleString } from '../../redux/selectors/locale';
 import styles from './styles';
 import AddressView from './AddressView';
@@ -21,14 +27,17 @@ const mapStateToProps = (state, props) => {
   const { address, user, navigator } = state;
   const getAddressNavigatorParams = getAddressNavigatorParamsConnector(getLocaleText, user.locale);
   const getDistance = unit => formatDistanceObject(intl, calculateDistance(state)(unit));
+  const { units, adminDistricts } = address;
   return {
     addressData: address.addressData,
+    adminDistricts,
     map,
     getAddressNavigatorParams,
     getDistance,
     getLocaleText,
     highlightedDistrict,
     navigator,
+    units,
   };
 };
 
@@ -36,6 +45,11 @@ const mapStateToProps = (state, props) => {
 export default withRouter(withStyles(styles)(injectIntl(connect(
   mapStateToProps,
   {
-    setHighlightedDistrict, setAddressData, setAddressUnits, setAddressLocation,
+    setHighlightedDistrict,
+    setAddressData,
+    setAddressUnits,
+    setAddressLocation,
+    setAdminDistricts,
+    setToRender,
   },
 )(AddressView))));
