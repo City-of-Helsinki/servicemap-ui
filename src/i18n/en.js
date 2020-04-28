@@ -38,7 +38,7 @@ export default {
   'address.nearby': 'Nearby',
   'address.districts': 'Areas',
   'address.plural': 'Addresses',
-  'address.services.header': 'Palvelut täällä asuville', // TODO: Translate
+  'address.services.header': 'Services for people who live here',
   'address.services.info': 'Services for people who live here',
   'address.emergency_care.common': 'When your health station is closed and in the night between 22-8, emergency care for children and young people under age 16 is provided at <a class="blue-link" href="/unit/7299">Children\'s Hospital</a> [<a class="external-link" href="http://www.hus.fi/en/medical-care/hospitals/childrens-hospital/Pages/default.aspx">homepage</a>], and for adults at',
   'address.emergency_care.unit.26107': 'Malmi hospital',
