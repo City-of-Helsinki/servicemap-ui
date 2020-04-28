@@ -23,7 +23,7 @@ Link.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
   classes: PropTypes.shape({
-    link: PropTypes.object,
+    link: PropTypes.string,
   }).isRequired,
   onClick: PropTypes.func.isRequired,
   text: PropTypes.bool,
