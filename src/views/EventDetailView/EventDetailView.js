@@ -177,8 +177,9 @@ class EventDetailView extends React.Component {
 
             <DescriptionText
               description={getLocaleText(description)}
-              title={intl.formatMessage({ id: 'event.description' })}
               html
+              title={intl.formatMessage({ id: 'event.description' })}
+              titleComponent="h4"
             />
           </div>
         </>

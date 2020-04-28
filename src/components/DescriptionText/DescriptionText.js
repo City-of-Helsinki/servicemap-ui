@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { Typography, Divider } from '@material-ui/core';
 import isClient from '../../utils';
 
-const DesciptionText = ({
-  description, title, html, classes,
+const DescriptionText = ({
+  description, html, classes, title, titleComponent,
 }) => {
   // Rendering only in client since dangerouslySetInnerHTML causes mismatch errors
   // between server and client HTML and not rendering anything on client side
@@ -14,7 +14,7 @@ const DesciptionText = ({
       <div className={classes.left}>
         <Typography
           className={classes.subtitle}
-          component="h4"
+          component={titleComponent}
           variant="subtitle1"
         >
           {title}
@@ -32,18 +32,17 @@ const DesciptionText = ({
   } return null;
 };
 
-DesciptionText.propTypes = {
-  description: PropTypes.string,
-  title: PropTypes.oneOfType([PropTypes.objectOf(PropTypes.any), PropTypes.string]),
+DescriptionText.propTypes = {
+  description: PropTypes.string.isRequired,
+  title: PropTypes.node.isRequired,
   html: PropTypes.bool,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
+  titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']).isRequired,
 };
 
-DesciptionText.defaultProps = {
-  description: null,
-  title: null,
+DescriptionText.defaultProps = {
   html: false,
 };
 
 
-export default DesciptionText;
+export default DescriptionText;
