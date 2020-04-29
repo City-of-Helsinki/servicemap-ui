@@ -186,7 +186,7 @@ const UnitView = (props) => {
     return (
       <div className={classes.content}>
         {hearingMaps && (
-          <TitledList title="Kuulokartat">
+          <TitledList title={intl.formatMessage({ id: 'unit.accessibility.hearingMaps' })}>
             {hearingMaps.map(item => (
               <SimpleListItem
                 role="link"
@@ -194,7 +194,7 @@ const UnitView = (props) => {
                 divider
                 icon={<Hearing />}
                 key={item.name}
-                text={item.name}
+                text={`${item.name} ${intl.formatMessage({ id: 'unit.opens.new.tab' })}`}
                 handleItemClick={() => window.open(item.url)}
               />
             ))}
