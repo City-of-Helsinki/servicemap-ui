@@ -1,7 +1,7 @@
 /* eslint-disable global-require */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Typography, Divider } from '@material-ui/core';
+import { Typography, Divider, List } from '@material-ui/core';
 import { intlShape, FormattedMessage } from 'react-intl';
 import { Map } from '@material-ui/icons';
 import SearchBar from '../../components/SearchBar';
@@ -257,20 +257,22 @@ const AddressView = (props) => {
           <Typography align="left" variant="body2"><FormattedMessage id="address.services.info" /></Typography>
         </div>
         <Divider aria-hidden />
-        {
-          units.map((data) => {
-            const key = `${data.area.id}`;
-            const distance = getDistance(data);
-            return (
-              <DivisionItem
-                data={data}
-                distance={distance}
-                divider
-                key={key}
-              />
-            );
-          })
-        }
+        <List>
+          {
+            units.map((data) => {
+              const key = `${data.area.id}`;
+              const distance = getDistance(data);
+              return (
+                <DivisionItem
+                  data={data}
+                  distance={distance}
+                  divider
+                  key={key}
+                />
+              );
+            })
+          }
+        </List>
       </>
     );
   }
