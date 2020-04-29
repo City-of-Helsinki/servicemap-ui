@@ -186,7 +186,7 @@ const UnitView = (props) => {
     return (
       <div className={classes.content}>
         {hearingMaps && (
-          <TitledList title={intl.formatMessage({ id: 'unit.accessibility.hearingMaps' })}>
+          <TitledList titleComponent="h4" title={intl.formatMessage({ id: 'unit.accessibility.hearingMaps' })}>
             {hearingMaps.map(item => (
               <SimpleListItem
                 role="link"
