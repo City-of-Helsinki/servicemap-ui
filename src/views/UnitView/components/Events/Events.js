@@ -31,11 +31,10 @@ const Events = ({
           title={<FormattedMessage id="unit.events" />}
           subtitle={<FormattedMessage id="unit.events.count" values={{ count: max }} />}
           titleComponent="h4"
-          shortened={max > listLength}
           buttonMessageID="unit.events.more"
           loading={isFetching}
           buttonID="UnitEventsButton"
-          showMoreOnClick={listLength
+          onButtonClick={listLength
             ? () => {
               if (navigator) {
                 navigator.replace({

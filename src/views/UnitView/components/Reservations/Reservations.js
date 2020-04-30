@@ -31,11 +31,10 @@ const Reservations = ({
           title={<FormattedMessage id="unit.reservations" />}
           subtitle={<FormattedMessage id="unit.reservations.count" values={{ count: max || 0 }} />}
           titleComponent="h4"
-          shortened={max > listLength}
           loading={isFetching}
           buttonID="UnitReservationButton"
           buttonMessageID="unit.reservations.more"
-          showMoreOnClick={listLength
+          onButtonClick={listLength
             ? () => {
               if (navigator) {
                 navigator.replace({

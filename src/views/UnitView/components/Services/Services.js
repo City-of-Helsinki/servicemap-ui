@@ -104,7 +104,7 @@ class Services extends React.Component {
           titleComponent="h4"
           listLength={serviceShownCount}
           buttonMessageID="unit.services.more"
-          showMoreOnClick={showMoreOnClick}
+          onButtonClick={showMoreOnClick}
         >
           {serviceList.map(service => (
             <ServiceItem
@@ -145,7 +145,7 @@ class Services extends React.Component {
             titleComponent="h3"
             listLength={periodShownCount}
             buttonMessageID="unit.services.more"
-            showMoreOnClick={showMoreOnClick}
+            onButtonClick={showMoreOnClick}
           >
             {subjectList.filter(subject => subject.period && `${subject.period[0]}–${subject.period[1]}` === period)
               .map(service => (
