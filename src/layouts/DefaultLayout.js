@@ -1,7 +1,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage, intlShape } from 'react-intl';
 import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
 import { Typography, Link } from '@material-ui/core';
 import MapView from '../views/MapView';
@@ -50,10 +50,6 @@ const createContentStyles = (
     mapWrapper: {
       width: '100%',
     },
-    messageText: {
-      lineHeight: 'normal',
-      whiteSpace: 'pre-wrap',
-    },
     sidebar: {
       height: '100%',
       position: 'relative',
@@ -81,7 +77,7 @@ const createContentStyles = (
 
 const DefaultLayout = (props) => {
   const {
-    currentPage, i18n, intl, location, settingsToggled, toggleSettings,
+    classes, currentPage, i18n, intl, location, settingsToggled, toggleSettings,
   } = props;
   const isMobile = useMobileStatus();
   const isSmallScreen = useMediaQuery(`(max-width:${smallScreenBreakpoint}px)`);
@@ -103,7 +99,7 @@ const DefaultLayout = (props) => {
   };
 
   const alertText = (
-    <Typography style={styles.messageText} color="inherit">
+    <Typography className={classes.messageText} color="inherit">
       <FormattedMessage id="alert.text" />
       <Link
         href={intl.formatMessage({ id: 'alert.link.helsinki' })}
@@ -211,6 +207,9 @@ const DefaultLayout = (props) => {
 
 // Typechecking
 DefaultLayout.propTypes = {
+  classes: PropTypes.shape({
+    messageText: PropTypes.string,
+  }).isRequired,
   currentPage: PropTypes.string,
   i18n: PropTypes.instanceOf(I18n),
   intl: intlShape.isRequired,
@@ -225,4 +224,4 @@ DefaultLayout.defaultProps = {
   settingsToggled: null,
 };
 
-export default injectIntl(DefaultLayout);
+export default DefaultLayout;
