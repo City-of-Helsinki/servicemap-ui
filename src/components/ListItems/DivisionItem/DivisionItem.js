@@ -78,13 +78,26 @@ const DivisionItem = ({
                 {
                   name
                   && (
-                    <Typography align="left" aria-hidden variant="body1" component="p">{name}</Typography>
+                    <Typography
+                      align="left"
+                      aria-hidden
+                      variant="body2"
+                      className={classes.weightBold}
+                      component="p"
+                    >
+                      {name}
+                    </Typography>
                   )
                 }
                 {
                   distance
                   && (
-                    <Typography align="left" aria-hidden variant="body2">
+                    <Typography
+                      align="left"
+                      aria-hidden
+                      className={classes.divisionDistance}
+                      variant="caption"
+                    >
                       {distance.distance}
                       {distance.type}
                     </Typography>
@@ -94,7 +107,14 @@ const DivisionItem = ({
               {
                 address
                 && (
-                  <Typography align="left" aria-hidden variant="body2">{address}</Typography>
+                  <Typography
+                    align="left"
+                    aria-hidden
+                    className={classes.divisionAddress}
+                    variant="caption"
+                  >
+                    {address}
+                  </Typography>
                 )
               }
             </div>
@@ -104,7 +124,11 @@ const DivisionItem = ({
           emergencyUnitId
           && (
             <div className={classes.emergencyContent}>
-              <Typography align="left">
+              <Typography
+                align="left"
+                className={classes.emergencyTypography}
+                variant="caption"
+              >
                 <FormattedHTMLMessage id="address.emergency_care.common" values={{ locale }} />
                 {' '}
                 {
