@@ -177,6 +177,7 @@ export default {
 
   // Units
   'unit': 'Toimipiste',
+  'unit.accessibility.hearingMaps': 'Kuuluvuuskartat',
   'unit.accessibility.noInfo': 'Ei esteettömyystietoja',
   'unit.accessibility.noShortcomings': 'Ei tiedossa olevia puutteita',
   'unit.accessibility.ok': 'Esteetön',

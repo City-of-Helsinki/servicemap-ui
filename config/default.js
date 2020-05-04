@@ -55,6 +55,9 @@ export default {
   "feedbackURL": {
     "root": settings.FEEDBACK_URL,
   },
+  "hearingMapAPI": {
+    "root": settings.HEARING_MAP_API,
+  },
   // constants
   "accessibilityColors":  {
     "default": "#2242C7",

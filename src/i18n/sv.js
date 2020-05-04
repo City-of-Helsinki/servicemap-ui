@@ -177,6 +177,7 @@ export default {
 
   // Units
   'unit': 'Verksamhetsställe',
+  'unit.accessibility.hearingMaps': 'Täckningskartor',
   'unit.accessibility.noInfo': 'Inga tillgänglighetsuppgifter',
   'unit.accessibility.noShortcomings': 'Inga igenkända brister',
   'unit.accessibility.ok': 'Tillänglig',
