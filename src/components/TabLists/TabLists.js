@@ -36,6 +36,13 @@ class TabLists extends React.Component {
 
     const newCurrentPage = typeof parsedCurrentPage === 'number' ? parsedCurrentPage : 1;
     const newCurrentTab = typeof parsedCurrentTab === 'number' ? parsedCurrentTab : 0;
+    
+    // Run click event for current tab if required
+    const filteredData = this.filteredData();
+    const item = filteredData ? filteredData[newCurrentTab] : null;
+    if (item && item.onClick) {
+      item.onClick(newCurrentTab);
+    }
 
     this.tabsRef = React.createRef();
 
@@ -327,7 +334,7 @@ class TabLists extends React.Component {
                       }}
                       className={classes.tab}
                       label={label}
-                      onClick={item.onClick || null}
+                      onClick={item.onClick ? () => item.onClick(index) : null}
                       focusVisibleClassName={classes.tabFocus}
                     />
                   );
@@ -343,7 +350,7 @@ class TabLists extends React.Component {
                       selected: classes.selected,
                     }}
                     label={`${item.title}`}
-                    onClick={item.onClick || null}
+                    onClick={item.onClick ? () => item.onClick(index) : null}
                     focusVisibleClassName={classes.tabFocus}
                   />
                 );

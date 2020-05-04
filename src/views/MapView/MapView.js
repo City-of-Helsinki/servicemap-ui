@@ -24,6 +24,9 @@ import HomeLogo from '../../components/Logos/HomeLogo';
 
 const MapView = (props) => {
   const {
+    addressShowing,
+    addressUnits,
+    adminDistricts,
     classes,
     createMarkerClusterLayer,
     currentPage,
@@ -33,7 +36,6 @@ const MapView = (props) => {
     intl,
     location,
     settings,
-    addressUnits,
     setAddressLocation,
     unitList,
     unitsLoading,
@@ -72,7 +74,19 @@ const MapView = (props) => {
     if (currentPage === 'home' || currentPage === 'search' || currentPage === 'division') {
       mapUnits = unitList;
     } else if (currentPage === 'address') {
-      mapUnits = addressUnits;
+      switch (addressShowing) {
+        case 'adminDistricts':
+          mapUnits = adminDistricts ? adminDistricts
+            .filter(d => d.unit)
+            .map(d => d.unit)
+            : [];
+          break;
+        case 'units':
+          mapUnits = addressUnits;
+          break;
+        default:
+          mapUnits = [];
+      }
     } else if (currentPage === 'service' && serviceUnits && !unitsLoading) {
       mapUnits = serviceUnits;
     } else if ((currentPage === 'unit' || currentPage === 'fullList' || currentPage === 'event') && highlightedUnit) {
