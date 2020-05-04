@@ -6,10 +6,9 @@ const Link = ({
   className,
   classes,
   onClick,
-  text,
 }) => (
   <span
-    className={`${classes.link} ${className || ''} ${text ? classes.blue : classes.default}`}
+    className={`${classes.link} ${className || ''} link`}
     role="link"
     tabIndex="0"
     onClick={onClick}
@@ -26,12 +25,10 @@ Link.propTypes = {
     link: PropTypes.string,
   }).isRequired,
   onClick: PropTypes.func.isRequired,
-  text: PropTypes.bool,
 };
 
 Link.defaultProps = {
   className: null,
-  text: false,
 };
 
 export default Link;

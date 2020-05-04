@@ -40,7 +40,7 @@ export default {
   'address.plural': 'Adresser',
   'address.services.header': 'Service för dem som bor här',
   'address.services.info': 'Kommunala tjänster vars verksamhetsområde omfattar positionen',
-  'address.emergency_care.common': 'När den egna hälsostationen är stängd och på natten kl. 22-8 är jour för barn och unga under 16 år på <a class="blue-link" href="/unit/7299">Barnkliniken</a> [<a class="external-link" href="http://www.hus.fi/sv/sjukvard/sjukhus/barnkliniken/Sidor/default.aspx">hemsidor</a>], och jour för vuxna på',
+  'address.emergency_care.common': 'När den egna hälsostationen är stängd och på natten kl. 22-8 är jour för barn och unga under 16 år på <a class="link" href="/unit/7299">Barnkliniken</a> [<a class="external-link" href="http://www.hus.fi/sv/sjukvard/sjukhus/barnkliniken/Sidor/default.aspx">hemsidor</a>], och jour för vuxna på',
   'address.emergency_care.unit.26107': 'Malms sjukhuset',
   'address.emergency_care.unit.26104': 'Haartmanska sjukhuset',
   'address.emergency_care.link': '[<a href="http://www.hel.fi/www/Helsinki/fi/sosiaali-ja-terveyspalvelut/terveyspalvelut/paivystys/" class="external-link">joursidor</a>]',

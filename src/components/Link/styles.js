@@ -1,15 +1,9 @@
-export default theme => ({
-  blue: {
-    color: theme.palette.primary.main,
-  },
-  default: {
-    color: 'inherit',
-  },
+export default () => ({
   link: {
     cursor: 'pointer',
+    textDecoration: 'underline',
     '&:hover': {
       cursor: 'pointer',
-      textDecoration: 'underline',
     },
   },
 });

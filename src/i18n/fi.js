@@ -40,7 +40,7 @@ export default {
   'address.plural': 'Osoitteet',
   'address.services.header': 'Palvelut täällä asuville',
   'address.services.info': 'Kunnalliset palvelut, joiden piiriin sijainti kuuluu',
-  'address.emergency_care.common': 'Terveysaseman ollessa kiinni sekä öisin klo 22- 8 alle 16-vuotiaiden päivystys on <a class="blue-link" href="/{locale}/unit/7299">Lastenklinikalla</a> [<a class="external-link" href="http://www.hus.fi/sairaanhoito/sairaalat/lastenklinikka/Sivut/default.aspx">kotisivut</a>] ja aikuisten päivystys',
+  'address.emergency_care.common': 'Terveysaseman ollessa kiinni sekä öisin klo 22- 8 alle 16-vuotiaiden päivystys on <a class="link" href="/{locale}/unit/7299">Lastenklinikalla</a> [<a class="external-link" href="http://www.hus.fi/sairaanhoito/sairaalat/lastenklinikka/Sivut/default.aspx">kotisivut</a>] ja aikuisten päivystys',
   'address.emergency_care.unit.26107': 'Malmin sairaalassa',
   'address.emergency_care.unit.26104': 'Haartmanin sairaalassa',
   'address.emergency_care.link': '[<a href="http://www.hel.fi/www/Helsinki/fi/sosiaali-ja-terveyspalvelut/terveyspalvelut/paivystys/" class="external-link">päivystyssivut</a>]',

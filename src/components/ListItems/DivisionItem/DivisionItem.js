@@ -134,7 +134,7 @@ const DivisionItem = ({
                 {
                   emergencyCareText
                   && (
-                    <SMLink onClick={emergencyOnClick} text>
+                    <SMLink onClick={emergencyOnClick}>
                       {emergencyCareText}
                     </SMLink>
                   )
