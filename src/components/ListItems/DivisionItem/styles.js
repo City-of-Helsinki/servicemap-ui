@@ -35,4 +35,11 @@ export default theme => ({
   li: {
     listStyleType: 'none',
   },
+  linkButton: {
+    flexDirection: 'column',
+    alignItems: 'initial',
+    '&:hover': {
+      textDecoration: 'underline',
+    },
+  },
 });

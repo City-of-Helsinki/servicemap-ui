@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Typography, ListItem, Divider,
+  Typography, ListItem, Divider, ButtonBase,
 } from '@material-ui/core';
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
 import UnitIcon from '../../SMIcon/UnitIcon';
@@ -50,7 +50,8 @@ const DivisionItem = ({
         component="li"
         className={classes.listItem}
       >
-        <SMLink
+        <ButtonBase
+          className={classes.linkButton}
           onClick={unitOnClick}
         >
           {
@@ -98,7 +99,7 @@ const DivisionItem = ({
               }
             </div>
           </div>
-        </SMLink>
+        </ButtonBase>
         {
           emergencyUnitId
           && (
