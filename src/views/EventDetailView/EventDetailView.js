@@ -123,13 +123,19 @@ class EventDetailView extends React.Component {
       const phoneText = unit && unit.phone ? `${unit.phone} ${intl.formatMessage({ id: 'unit.call.number' })}` : null;
       const time = this.formatDate(event);
       return (
-        <>
+        <div>
           <DesktopComponent>
             <SearchBar margin />
-            <TitleBar title={getLocaleText(event.name)} icon={<Event />} />
+            <TitleBar sticky title={getLocaleText(event.name)} icon={<Event />} />
           </DesktopComponent>
           <MobileComponent>
-            <TitleBar title={getLocaleText(event.name)} icon={<Event />} primary backButton />
+            <TitleBar
+              sticky
+              title={getLocaleText(event.name)}
+              icon={<Event />}
+              primary
+              backButton
+            />
           </MobileComponent>
 
           {event.images && event.images.length && (
@@ -182,7 +188,7 @@ class EventDetailView extends React.Component {
               titleComponent="h4"
             />
           </div>
-        </>
+        </div>
       );
     }
     return (null);

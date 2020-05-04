@@ -105,10 +105,6 @@ export default theme => ({
     height: '100%',
     overflow: 'auto',
   },
-  topArea: {
-    backgroundColor: '#fff',
-    zIndex: theme.zIndex.infront,
-  },
   mobileButtonArea: {
     display: 'flex',
     justifyContent: 'space-evenly',

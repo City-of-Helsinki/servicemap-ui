@@ -4,10 +4,7 @@ export default theme => ({
   },
   topArea: {
     backgroundColor: '#fff',
-    position: 'sticky',
     textAlign: 'left',
-    top: 0,
-    zIndex: theme.zIndex.infront,
   },
   mapButton: {
     marginTop: theme.spacing.unitTriple,

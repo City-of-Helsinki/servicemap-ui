@@ -176,15 +176,20 @@ const AddressView = (props) => {
   };
 
   const renderTopBar = title => (
-    <div>
+    <>
       <DesktopComponent>
         <SearchBar margin />
-        <TitleBar icon={<AddressIcon className={classes.titleIcon} />} title={error || title} primary />
+        <TitleBar
+          sticky
+          icon={<AddressIcon className={classes.titleIcon} />}
+          title={error || title}
+          primary
+        />
       </DesktopComponent>
       <MobileComponent>
-        <TitleBar icon={<AddressIcon />} title={title} primary backButton />
+        <TitleBar sticky icon={<AddressIcon />} title={title} primary backButton />
       </MobileComponent>
-    </div>
+    </>
   );
 
   const renderNearbyList = () => {
@@ -336,44 +341,44 @@ const AddressView = (props) => {
   return (
     <div>
       {renderHead(title)}
+      {renderTopBar(title)}
       <TabLists
         data={tabs}
         headerComponents={(
-          <div className={`${classes.topArea} sticky`}>
-            {renderTopBar(title)}
+          <div className={classes.topArea}>
             {addressData && units && districts && (
-            <MobileComponent>
-              <SMButton
-                margin
-                messageID="general.showOnMap"
-                icon={<Map />}
-                className={classes.mapButton}
-                onClick={() => {
-                  if (navigator) {
-                    focusToPosition(map, addressData.location.coordinates);
-                    navigator.openMap();
-                  }
-                }}
-              />
-            </MobileComponent>
+              <MobileComponent>
+                <SMButton
+                  margin
+                  messageID="general.showOnMap"
+                  icon={<Map />}
+                  className={classes.mapButton}
+                  onClick={() => {
+                    if (navigator) {
+                      focusToPosition(map, addressData.location.coordinates);
+                      navigator.openMap();
+                    }
+                  }}
+                />
+              </MobileComponent>
             )}
           </div>
         )}
       />
       {addressData && units && districts && (
-      <MobileComponent>
-        <SMButton
-          messageID="general.showOnMap"
-          icon={<Map />}
-          className={classes.mapButton}
-          onClick={() => {
-            if (navigator) {
-              focusToPosition(map, addressData.location.coordinates);
-              navigator.openMap();
-            }
-          }}
-        />
-      </MobileComponent>
+        <MobileComponent>
+          <SMButton
+            messageID="general.showOnMap"
+            icon={<Map />}
+            className={classes.mapButton}
+            onClick={() => {
+              if (navigator) {
+                focusToPosition(map, addressData.location.coordinates);
+                navigator.openMap();
+              }
+            }}
+          />
+        </MobileComponent>
       )}
     </div>
   );

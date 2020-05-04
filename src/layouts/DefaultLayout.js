@@ -12,8 +12,8 @@ import Settings from '../components/Settings';
 import ViewRouter from './components/ViewRouter';
 import DesktopComponent from '../components/DesktopComponent';
 import AlertBox from '../components/AlertBox';
+import useMobileStatus from '../utils/isMobile';
 
-const mobileBreakpoint = config.mobileUiBreakpoint;
 const { smallScreenBreakpoint } = config;
 
 const createContentStyles = (
@@ -29,7 +29,6 @@ const createContentStyles = (
 
   const styles = {
     activeRoot: {
-      flexDirection: mobileMapOnly || isMobile ? 'column' : 'row',
       margin: 0,
       width: '100%',
       display: 'flex',
@@ -64,7 +63,7 @@ const createContentStyles = (
       margin: 0,
       // eslint-disable-next-line no-nested-ternary
       overflow: settingsOpen ? 'hidden'
-        : isMobile ? '' : 'auto',
+        : isMobile ? 'visible' : 'auto',
       visibility: mobileMapOnly && !settingsOpen ? 'hidden' : null,
       flex: '0 1 auto',
     },
@@ -84,7 +83,7 @@ const DefaultLayout = (props) => {
   const {
     currentPage, i18n, intl, location, settingsToggled, toggleSettings,
   } = props;
-  const isMobile = useMediaQuery(`(max-width:${mobileBreakpoint}px)`);
+  const isMobile = useMobileStatus();
   const isSmallScreen = useMediaQuery(`(max-width:${smallScreenBreakpoint}px)`);
   const fullMobileMap = new URLSearchParams(location.search).get('map'); // If mobile map without bottom navigation & searchbar
   const mobileMapOnly = isMobile && (location.pathname.indexOf('/map') > -1 || fullMobileMap); // If mobile map view
