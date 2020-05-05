@@ -152,6 +152,7 @@ class Services extends React.Component {
                 <ServiceItem
                   key={`${service.id}-${service.clarification ? service.clarification.fi : ''}`}
                   service={service}
+                  link={false}
                 />
               ))}
           </TitledList>
