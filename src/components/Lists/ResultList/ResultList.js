@@ -62,7 +62,7 @@ class ResultList extends React.Component {
               let itemComponent = null;
               switch (object_type) {
                 case 'unit':
-                  itemComponent = <UnitItem key={`unit-${id}`} unit={item} listId={listId} single />;
+                  itemComponent = <UnitItem key={`unit-${id}`} unit={item} />;
                   break;
                 case 'service':
                   itemComponent = <ServiceItem key={`service-${id}`} service={item} />;
