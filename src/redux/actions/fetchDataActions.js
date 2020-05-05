@@ -63,4 +63,5 @@ export const reservations = dataSet('SELECTED_UNIT_RESERVATIONS');
 // Data fetch single
 export const selectedUnit = dataSingle('SELECTED_UNIT');
 export const accessibilitySentences = dataSingle('SELECTED_UNIT_ACCESSIBILITY_SENTENCES');
+export const hearingMaps = dataSingle('SELECTED_UNIT_HEARING_MAPS');
 export const redirectService = dataSingle('REDIRECT_SERVICE');

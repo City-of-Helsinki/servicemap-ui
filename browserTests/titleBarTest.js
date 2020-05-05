@@ -43,16 +43,4 @@ test('TitleBar back button works correctly', async (t) => {
     .expect(getLocation()).contains(`http://${server.address}:${server.port}/fi/search`);
 
 });
-
-test('TitleBar home button works correctly', async (t) => {
-  const titleBar = ReactSelector('TitleBar');
-  const button = await titleBar.findReact('HomeButton');
-
-  // Check that home button takes us to home page /fi/
-  await t
-    .expect(getLocation()).contains(`http://${server.address}:${server.port}/fi/unit/${unitID}`)
-    .click(button)
-    .expect(getLocation()).contains(`http://${server.address}:${server.port}/fi/`);
-
-});
 */

@@ -29,3 +29,4 @@ export const districtFetch = wrapperClosure('district');
 export const eventFetch = wrapperClosure('event');
 export const reservationsFetch = wrapperClosure('reservations', APIHandlers.reservations.options);
 export const serviceRedirectFetch = wrapperClosure('serviceRedirect');
+export const hearingMapsFetch = wrapperClosure('hearingMaps');

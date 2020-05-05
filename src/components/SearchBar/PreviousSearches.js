@@ -23,7 +23,6 @@ const PreviousSearches = ({
               button
               key={item}
               icon={<Search />}
-              role="link"
               text={item}
               handleArrowClick={handleArrowClick}
               handleItemClick={() => onClick(item)}

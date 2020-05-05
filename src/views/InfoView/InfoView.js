@@ -17,6 +17,7 @@ const InfoView = ({
 
   const renderTitlebar = () => (
     <TitleBar
+      sticky
       ariaHidden
       backButton
       title={<FormattedMessage id="info.title" />}
@@ -893,31 +894,31 @@ const InfoView = ({
   const versionText = `Version: ${version} ${(config.version && config.commit) ? '-' : ''} ${commit}`;
 
   return (
-    <div className={classes.pageContainer}>
-      {
-        renderTitlebar()
-      }
-      {locale === 'fi' && (
-        content === 'generalInfo'
-          ? renderFinnishInfo()
-          : renderFinnishA11y()
-      )}
-      {locale === 'en' && (
-        content === 'generalInfo'
-          ? renderEnglishInfo()
-          : renderEnglishA11y()
-      )}
-      {locale === 'sv' && (
-        content === 'generalInfo'
-          ? renderSwedishInfo()
-          : renderSwedishA11y()
-      )}
-      {
+    <div>
+      <div className={classes.pageContainer}>
+        {renderTitlebar()}
+        {locale === 'fi' && (
+          content === 'generalInfo'
+            ? renderFinnishInfo()
+            : renderFinnishA11y()
+        )}
+        {locale === 'en' && (
+          content === 'generalInfo'
+            ? renderEnglishInfo()
+            : renderEnglishA11y()
+        )}
+        {locale === 'sv' && (
+          content === 'generalInfo'
+            ? renderSwedishInfo()
+            : renderSwedishA11y()
+        )}
+        {
         config.version || config.commit
           ? (
             <Typography align="left" aria-hidden="true" className={classes.text}>{versionText}</Typography>
           ) : null
       }
+      </div>
     </div>
   );
 };

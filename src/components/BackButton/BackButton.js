@@ -16,7 +16,7 @@ const BackButton = (props) => {
     variant,
     navigator,
     srHidden,
-    srText,
+    ariaLabel,
     focusVisibleClassName,
   } = props;
 
@@ -42,7 +42,7 @@ const BackButton = (props) => {
   // Attempt to generate custom text
   const textId = `general.back.${idSuffix}`;
   const defaultMessage = intl.formatMessage({ id: 'general.back' });
-  const buttonText = srText || intl.formatMessage({ id: textId, defaultMessage });
+  const buttonText = intl.formatMessage({ id: textId, defaultMessage });
 
 
   if (variant === 'icon') {
@@ -52,7 +52,7 @@ const BackButton = (props) => {
         className={className}
         style={style}
         aria-hidden={srHidden}
-        aria-label={buttonText}
+        aria-label={ariaLabel || buttonText}
         focusVisibleClassName={focusVisibleClassName}
         onClick={(e) => {
           e.preventDefault();
@@ -76,7 +76,7 @@ const BackButton = (props) => {
           className={`${classes.containerButton} ${className}`}
           style={style}
           aria-hidden={srHidden}
-          aria-label={buttonText}
+          aria-label={ariaLabel || buttonText}
           onClick={(e) => {
             e.preventDefault();
             if (onClick) {
@@ -95,6 +95,8 @@ const BackButton = (props) => {
 
   return (
     <Button
+      aria-hidden={srHidden}
+      aria-label={ariaLabel || buttonText}
       role="link"
       variant="contained"
       color="primary"
@@ -124,7 +126,7 @@ BackButton.propTypes = {
   onClick: PropTypes.func,
   variant: PropTypes.oneOf(['container', 'icon', null]),
   srHidden: PropTypes.bool,
-  srText: PropTypes.string,
+  ariaLabel: PropTypes.string,
   focusVisibleClassName: PropTypes.string,
 };
 
@@ -135,7 +137,7 @@ BackButton.defaultProps = {
   onClick: null,
   variant: null,
   srHidden: false,
-  srText: null,
+  ariaLabel: null,
   focusVisibleClassName: null,
 };
 

@@ -34,13 +34,16 @@ const mapStateToProps = (state, props) => {
     customPosition, locale, page, position, theme,
   } = user;
   const getLocaleText = textObject => getLocaleString(state, textObject);
-  const { addressUnits } = address;
+  const { adminDistricts, units, showing } = address;
   const getAddressNavigatorParams = getAddressNavigatorParamsConnector(getLocaleText, locale);
   const getPath = (id, data) => generatePath(id, locale, data);
   const distanceCoordinates = getCurrentlyUsedPosition(state);
   const userLocation = customPosition.coordinates || position.coordinates;
   const getDistance = unit => formatDistanceObject(intl, calculateDistance(state)(unit));
   return {
+    addressUnits: units,
+    addressShowing: showing,
+    adminDistricts,
     createMarkerClusterLayer: markerClusterConnector(
       navigator,
       settings,
@@ -67,7 +70,6 @@ const mapStateToProps = (state, props) => {
     hideUserMarker: customPosition.hideMarker,
     settings,
     navigator,
-    addressUnits,
     locale,
   };
 };

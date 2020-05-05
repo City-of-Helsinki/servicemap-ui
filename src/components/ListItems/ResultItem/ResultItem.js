@@ -68,7 +68,7 @@ const ResultItem = ({
               // SROnly element with full readable text
             }
             <Typography
-              className={`${classes.title || ''}`}
+              className={`${classes.title || ''} ResultItem-srOnly`}
               component="p"
               variant="srOnly"
             >
@@ -79,7 +79,7 @@ const ResultItem = ({
               // Title
             }
             <Typography
-              className={`${classes.title || ''}  ${typographyClasses.title || ''}`}
+              className={`${classes.title || ''}  ${typographyClasses.title || ''} ResultItem-title`}
               component="p"
               role="textbox"
               variant="body2"
@@ -95,7 +95,7 @@ const ResultItem = ({
                 <div className={`${classes.rightColumn || ''}`}>
                   <Typography
                     variant="caption"
-                    className={`${classes.caption || ''} ${classes.text} ${classes.marginLeft || ''} ${typographyClasses.topRight || ''}`}
+                    className={`${classes.caption || ''} ${classes.text} ${classes.marginLeft || ''} ${typographyClasses.topRight || ''} ResultItem-distance`}
                     component="p"
                     aria-hidden="true"
                   >
@@ -115,7 +115,7 @@ const ResultItem = ({
                 <div>
                   <Typography
                     variant="caption"
-                    className={`${classes.noMargin || ''} ${classes.text} ${typographyClasses.subtitle || ''}`}
+                    className={`${classes.noMargin || ''} ${classes.text} ${typographyClasses.subtitle || ''} ResultItem-subtitle`}
                     component="p"
                     aria-hidden="true"
                   >
@@ -127,7 +127,7 @@ const ResultItem = ({
                   && (
                   <div className={`${classes.bottomContainer} ${bottomHighlight ? classes.bottomHighlight : ''}`}>
                     <Typography
-                      className={`${classes.smallFont || ''} ${typographyClasses.bottom || ''}`}
+                      className={`${classes.smallFont || ''} ${typographyClasses.bottom || ''} ResultItem-bottom`}
                       color="inherit"
                       component="p"
                       variant="caption"
