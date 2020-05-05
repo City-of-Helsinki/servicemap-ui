@@ -4,6 +4,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import BackButton from '../BackButton';
+import useMobileStatus from '../../utils/isMobile';
 
 const TitleBar = ({
   backButton,
@@ -16,22 +17,32 @@ const TitleBar = ({
   distance,
   className,
   ariaHidden,
-}) => (
-  <>
-    <div className={`${className || ''} ${classes.container} ${!backButton && !icon ? classes.textBar : ''}`}>
-      {
+  sticky,
+}) => {
+  let componentClasses = `${className || ''} ${classes.container} ${!backButton && !icon ? classes.textBar : ''}`;
+
+  if (sticky) {
+    const isMobile = useMobileStatus();
+    componentClasses += `sticky ${isMobile ? classes.mobileSticky : classes.sticky}`;
+  }
+
+
+  return (
+    <>
+      <div className={componentClasses}>
+        {
         backButton
         && (
           <BackButton
             onClick={backButtonOnClick}
-            srText={backButtonSrText}
+            ariaLabel={backButtonSrText}
             className={classes.iconButton}
             variant="icon"
             focusVisibleClassName={classes.buttonFocus}
           />
         )
       }
-      {
+        {
         !backButton
         && icon
         && (
@@ -40,23 +51,24 @@ const TitleBar = ({
           </div>
         )
       }
-      <Typography
-        aria-hidden={ariaHidden}
-        className={classes.title}
-        component={titleComponent}
-        tabIndex="-1"
-      >
-        {title}
-      </Typography>
+        <Typography
+          aria-hidden={ariaHidden}
+          className={classes.title}
+          component={titleComponent}
+          tabIndex="-1"
+        >
+          {title}
+        </Typography>
 
-      {distance && (
+        {distance && (
         <Typography className={classes.distance}>
           {distance}
         </Typography>
-      )}
-    </div>
-  </>
-);
+        )}
+      </div>
+    </>
+  );
+};
 
 TitleBar.propTypes = {
   backButton: PropTypes.bool,
@@ -69,6 +81,7 @@ TitleBar.propTypes = {
   className: PropTypes.string,
   distance: PropTypes.string,
   ariaHidden: PropTypes.bool,
+  sticky: PropTypes.bool,
 };
 
 TitleBar.defaultProps = {
@@ -80,6 +93,7 @@ TitleBar.defaultProps = {
   className: null,
   distance: null,
   ariaHidden: false,
+  sticky: false,
 };
 
 export default TitleBar;

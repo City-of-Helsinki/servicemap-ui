@@ -1,7 +1,6 @@
 /* eslint-disable quote-props */
 export default {
   'app.title': 'Palvelukartta',
-  'address': 'Osoite',
 
   // Accessibility
   'accessibility': 'Esteettömyys',
@@ -16,6 +15,7 @@ export default {
                               }`,
 
   // Address
+  'address': 'Osoite',
   'address.show.area': 'Näytä alue kartalla',
   'address.list.geographical': 'Maantieteellinen',
   'address.list.protection': 'Väestönsuojelu',
@@ -38,6 +38,12 @@ export default {
   'address.nearby': 'Lähellä',
   'address.districts': 'Alueet',
   'address.plural': 'Osoitteet',
+  'address.services.header': 'Palvelut täällä asuville',
+  'address.services.info': 'Kunnalliset palvelut, joiden piiriin sijainti kuuluu',
+  'address.emergency_care.common': 'Terveysaseman ollessa kiinni sekä öisin klo 22- 8 alle 16-vuotiaiden päivystys on <a class="link" href="/{locale}/unit/7299">Lastenklinikalla</a> [<a class="external-link" href="http://www.hus.fi/sairaanhoito/sairaalat/lastenklinikka/Sivut/default.aspx">kotisivut</a>] ja aikuisten päivystys',
+  'address.emergency_care.unit.26107': 'Malmin sairaalassa',
+  'address.emergency_care.unit.26104': 'Haartmanin sairaalassa',
+  'address.emergency_care.link': '[<a href="http://www.hel.fi/www/Helsinki/fi/sosiaali-ja-terveyspalvelut/terveyspalvelut/paivystys/" class="external-link">päivystyssivut</a>]',
 
   // Event
   'event.description': 'Kuvaus',
@@ -171,6 +177,7 @@ export default {
 
   // Units
   'unit': 'Toimipiste',
+  'unit.accessibility.hearingMaps': 'Kuuluvuuskartat',
   'unit.accessibility.noInfo': 'Ei esteettömyystietoja',
   'unit.accessibility.noShortcomings': 'Ei tiedossa olevia puutteita',
   'unit.accessibility.ok': 'Esteetön',
@@ -299,7 +306,7 @@ export default {
   // Service
   'service': 'Palvelu',
   'service.plural': 'Palvelut',
-  'service.nearby': 'Lähellä olevat palvelut',
+  'service.nearby': 'Palvelut täällä asuville',
   'service.units.empty': 'Palvelulla ei ole toimipisteitä',
   'service.tab': 'Palvelut ja tapahtumat',
 

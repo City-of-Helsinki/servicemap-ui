@@ -48,6 +48,7 @@ const ExtendedData = ({
 
   const renderTitleBar = messageID => (
     <TitleBar
+      sticky
       title={(
         <>
           {`${title} - `}
@@ -73,7 +74,7 @@ const ExtendedData = ({
       return null;
     };
     return (
-      <>
+      <div>
         {
           renderTitleBar('unit.events')
         }
@@ -89,7 +90,7 @@ const ExtendedData = ({
           isFetching
           && renderLoader()
         }
-      </>
+      </div>
     );
   };
 
@@ -107,7 +108,7 @@ const ExtendedData = ({
       return null;
     };
     return (
-      <>
+      <div>
         {
           renderTitleBar('unit.reservations')
         }
@@ -123,7 +124,7 @@ const ExtendedData = ({
           isFetching
           && renderLoader()
         }
-      </>
+      </div>
     );
   };
   switch (type) {

@@ -10,6 +10,7 @@ createTestCafe('localhost')
 
     return runner
       .src([
+        'browserTests/addressTest.js',
         'browserTests/accessibilityTest.js',
         'browserTests/browserTest.js',
         'browserTests/divisionTest.js',

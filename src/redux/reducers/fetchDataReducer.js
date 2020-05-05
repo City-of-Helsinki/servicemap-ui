@@ -77,6 +77,7 @@ const dataSingle = (state, action, prefix) => {
         ...state,
         isFetching: true,
         errorMessage: null,
+        data: null,
       };
     case `${prefix}_FETCH_HAS_ERRORED`:
       return {
@@ -122,4 +123,5 @@ export const reservations = (state = dataSingleInitialState, action) => dataSetR
 // Fetch data single reducers
 export const selectedUnit = (state = dataSingleInitialState, action) => dataSingle(state, action, 'SELECTED_UNIT');
 export const accessibilitySentences = (state = dataSingleInitialState, action) => dataSingle(state, action, 'SELECTED_UNIT_ACCESSIBILITY_SENTENCES');
+export const hearingMaps = (state = dataSingleInitialState, action) => dataSingle(state, action, 'SELECTED_UNIT_HEARING_MAPS');
 export const redirectService = (state = dataSetInitialState, action) => dataSingle(state, action, 'REDIRECT_SERVICE');
