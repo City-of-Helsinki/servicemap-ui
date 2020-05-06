@@ -24,6 +24,17 @@ const Reservations = ({
   const endIndex = listLength > data.length ? data.length : listLength;
   const shownData = data.slice(0, endIndex);
 
+  const onButtonClick = max > listLength
+    ? () => {
+      if (navigator) {
+        navigator.replace({
+          ...location,
+          hash: 'UnitReservationButton',
+        });
+        navigator.push('unit', { id: unit.id, type: 'reservations' });
+      }
+    } : null;
+
   if (shownData && shownData.length) {
     return (
       <div>
@@ -34,16 +45,7 @@ const Reservations = ({
           loading={isFetching}
           buttonID="UnitReservationButton"
           buttonMessageID="unit.reservations.more"
-          onButtonClick={listLength
-            ? () => {
-              if (navigator) {
-                navigator.replace({
-                  ...location,
-                  hash: 'UnitReservationButton',
-                });
-                navigator.push('unit', { id: unit.id, type: 'reservations' });
-              }
-            } : null}
+          onButtonClick={onButtonClick}
         >
           {shownData.map(item => (
             <ReservationItem key={item.id} reservation={item} />

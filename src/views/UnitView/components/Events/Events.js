@@ -24,6 +24,16 @@ const Events = ({
   const endIndex = listLength > data.length ? data.length : listLength;
   const shownData = data && data.length ? data.slice(0, endIndex) : null;
 
+  const onButtonClick = max > listLength ? () => {
+    if (navigator) {
+      navigator.replace({
+        ...location,
+        hash: 'UnitEventsButton',
+      });
+      navigator.push('unit', { id: unit.id, type: 'events' });
+    }
+  } : null;
+
   if (unit && shownData && shownData.length) {
     return (
       <div>
@@ -34,16 +44,7 @@ const Events = ({
           buttonMessageID="unit.events.more"
           loading={isFetching}
           buttonID="UnitEventsButton"
-          onButtonClick={listLength
-            ? () => {
-              if (navigator) {
-                navigator.replace({
-                  ...location,
-                  hash: 'UnitEventsButton',
-                });
-                navigator.push('unit', { id: unit.id, type: 'events' });
-              }
-            } : null}
+          onButtonClick={onButtonClick}
         >
           {shownData.map(event => (
             <EventItem key={event.id} event={event} />
