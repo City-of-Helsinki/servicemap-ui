@@ -17,29 +17,13 @@ export default {
   // Address
   'address': 'Address',
   'address.show.area': 'Show area on map',
-  'address.list.geographical': 'Geographical',
-  'address.list.protection': 'Civil defence',
-  'address.list.health': 'Health',
-  'address.list.education': 'Education',
-  'address.list.neighborhood': 'Neighborhood',
-  'address.list.postcode_area': 'Postcode area',
-  'address.list.rescue_area': 'Civil defence district',
-  'address.list.rescue_district': 'Civil defence section',
-  'address.list.rescue_sub_district': 'Civil defence subsection',
-  'address.list.health_station_district': 'Health station area',
-  'address.list.maternity_clinic_district': 'Maternity clinic area',
-  'address.list.lower_comprehensive_school_district_fi': 'Finnish primary school area',
-  'address.list.lower_comprehensive_school_district_sv': 'Swedish primary school area',
-  'address.list.upper_comprehensive_school_district_fi': 'Finnish secondary school area',
-  'address.list.upper_comprehensive_school_district_sv': 'Swedish secondary school area',
-  'address.list.preschool_education_fi': 'Finnish preschool education area',
-  'address.list.preschool_education_sv': 'Swedish preschool education area',
   'address.error': 'No address found',
   'address.nearby': 'Nearby',
   'address.districts': 'Areas',
   'address.plural': 'Addresses',
   'address.services.header': 'Services for people who live here',
   'address.services.info': 'Services for people who live here',
+  'address.area.link': 'Tutustu alueisiin kartalla.', // TODO: translate,
   'address.emergency_care.common': 'When your health station is closed and in the night between 22-8, emergency care for children and young people under age 16 is provided at <a class="link" href="/unit/7299">Children\'s Hospital</a> [<a class="external-link" href="http://www.hus.fi/en/medical-care/hospitals/childrens-hospital/Pages/default.aspx">homepage</a>], and for adults at',
   'address.emergency_care.unit.26107': 'Malmi hospital',
   'address.emergency_care.unit.26104': 'Haartman hospital',
@@ -47,10 +31,35 @@ export default {
 
   // Area
   'area.searchbar.infoText.address': 'Kirjoita kotiosoitteesi', // TODO: translate
+  'area.searchbar.infoText.optional': '(optional)',
   'area.tab.selection': 'Choice of area',
   'area.tab.services': 'Services in the chosen area',
   'area.services.local': 'Services in your own area',
   'area.services.nearby': 'Services in the neighbouring areas',
+  'area.open.category': 'Open category',
+  'area.info': 'Valitse alue, jonka palveluista haluat tietoa. Kirjoittamalla alla olevaan hakukenttään kotiosoitteesi saat näkyville karttaan ja Valitun alueen palvelut -välilehdelle alueet ja piirit, joihin kuulut',
+  'area.choose.district': 'Valitse alue', // TODO: translate
+  'area.noSelection': 'Valitse alue Alueen Valinta -välilehdeltä', // TODO: translate
+  'area.list.geographical': 'Geographical',
+  'area.list.protection': 'Civil defence',
+  'area.list.health': 'Health',
+  'area.list.education': 'Education',
+  'area.list.education.finnish': 'Suomenkieliset koulualueet', // TODO: translate
+  'area.list.education.swedish': 'Ruotsinkieliset koulualueet', // TODO: translate
+  'area.list.preschool': 'Esiopetus', // TODO: translate
+  'area.list.neighborhood': 'Neighborhood',
+  'area.list.postcode_area': 'Postcode area',
+  'area.list.rescue_area': 'Civil defence district',
+  'area.list.rescue_district': 'Civil defence section',
+  'area.list.rescue_sub_district': 'Civil defence subsection',
+  'area.list.health_station_district': 'Health station area',
+  'area.list.maternity_clinic_district': 'Maternity clinic area',
+  'area.list.lower_comprehensive_school_district_fi': 'Finnish primary school area',
+  'area.list.lower_comprehensive_school_district_sv': 'Swedish primary school area',
+  'area.list.upper_comprehensive_school_district_fi': 'Finnish secondary school area',
+  'area.list.upper_comprehensive_school_district_sv': 'Swedish secondary school area',
+  'area.list.preschool_education_fi': 'Finnish preschool education area',
+  'area.list.preschool_education_sv': 'Swedish preschool education area',
 
   // Event
   'event.description': 'Description',
@@ -97,6 +106,7 @@ export default {
   'general.menu.open': 'Open menu',
   'general.menu.close': 'Close menu',
   'general.back': 'Back',
+  'general.back.area': 'Back to area view',
   'general.back.address': 'Back to address view',
   'general.back.home': 'Back to home view',
   'general.back.goToHome': 'Go to home view',
@@ -133,6 +143,7 @@ export default {
   'general.pageTitles.list.reservations': 'Reservation list ',
   'general.pageTitles.info': 'Info view',
   'general.pageTitles.feedback': 'Feedback view',
+  'general.pageTitles.area': 'Area view.',
 
   // General - Pagination
   'general.pagination.previous': 'Previous page',
@@ -159,6 +170,7 @@ export default {
   'home.buttons.services': 'Get to know the services using the Services list',
   'home.buttons.closeByServices': 'Show nearby services',
   'home.buttons.instructions': 'Tips for using the service map',
+  'home.buttons.area': 'Katso alueet, kaupunginosat ja väestönsuojelupiirit', // TODO: translate
   'home.example.search': 'Search for',
   'home.message': 'Message from the developers',
   'home.send.feedback': 'Give feedback',

@@ -1,6 +1,6 @@
 import { withStyles } from '@material-ui/core';
 import { injectIntl } from 'react-intl';
-import UnitTab from './UnitTab';
+import AreaTab from './AreaTab';
 import styles from '../../styles';
 
-export default injectIntl(withStyles(styles)(UnitTab));
+export default injectIntl(withStyles(styles)(AreaTab));

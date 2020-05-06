@@ -358,7 +358,6 @@ const MapView = (props) => {
             Popup={Popup}
             Tooltip={Tooltip}
             mapOptions={mapOptions}
-            mobile={isMobile}
             map={mapRef.current}
           />
 

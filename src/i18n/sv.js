@@ -17,29 +17,13 @@ export default {
   // Address
   'address': 'Adress',
   'address.show.area': 'Visa området på kartan',
-  'address.list.geographical': 'Geografisk',
-  'address.list.protection': 'Befolkningsskydd',
-  'address.list.health': 'Hälsa',
-  'address.list.education': 'Utbildning',
-  'address.list.neighborhood': 'Stadsdel',
-  'address.list.postcode_area': 'Postnummerområde',
-  'address.list.rescue_area': 'Skyddsdistrikt',
-  'address.list.rescue_district': 'Skyddsavsnitt',
-  'address.list.rescue_sub_district': 'Skyddsunderavsnitt',
-  'address.list.health_station_district': 'Hälsostationsområde',
-  'address.list.maternity_clinic_district': 'Rådgivningsområde',
-  'address.list.lower_comprehensive_school_district_fi': 'Finskt grundskoleområde, lågklasserna',
-  'address.list.lower_comprehensive_school_district_sv': 'Svenskt grundskoleområde, lågklasserna',
-  'address.list.upper_comprehensive_school_district_fi': 'Finskt grundskoleområde, högklasserna',
-  'address.list.upper_comprehensive_school_district_sv': 'Svenskt grundskoleområde, högklasserna',
-  'address.list.preschool_education_fi': 'Finskt småbarnspedagogikområde',
-  'address.list.preschool_education_sv': 'Svenskt småbarnspedagogikområde',
   'address.error': 'Addressen kunde inte hittas',
   'address.nearby': 'Nära',
   'address.districts': 'Områden',
   'address.plural': 'Adresser',
   'address.services.header': 'Service för dem som bor här',
   'address.services.info': 'Kommunala tjänster vars verksamhetsområde omfattar positionen',
+  'address.area.link': 'Tutustu alueisiin kartalla.', // TODO: translate
   'address.emergency_care.common': 'När den egna hälsostationen är stängd och på natten kl. 22-8 är jour för barn och unga under 16 år på <a class="link" href="/unit/7299">Barnkliniken</a> [<a class="external-link" href="http://www.hus.fi/sv/sjukvard/sjukhus/barnkliniken/Sidor/default.aspx">hemsidor</a>], och jour för vuxna på',
   'address.emergency_care.unit.26107': 'Malms sjukhuset',
   'address.emergency_care.unit.26104': 'Haartmanska sjukhuset',
@@ -47,10 +31,35 @@ export default {
 
   // Area
   'area.searchbar.infoText.address': 'Kirjoita kotiosoitteesi', // TODO: translate
+  'area.searchbar.infoText.optional': '(valinnainen)', // TODO: translate
   'area.tab.selection': 'Val av område',
   'area.tab.services': 'Tjänster i det valda området',
   'area.services.local': 'Tjänster i ditt eget område',
   'area.services.nearby': 'Tjänster i närområdena',
+  'area.open.category': 'Öppna kategori',
+  'area.info': 'Valitse alue, jonka palveluista haluat tietoa. Kirjoittamalla alla olevaan hakukenttään kotiosoitteesi saat näkyville karttaan ja Valitun alueen palvelut -välilehdelle alueet ja piirit, joihin kuulut', // TODO: translate
+  'area.choose.district': 'Valitse alue', // TODO: translate
+  'area.noSelection': 'Valitse alue Alueen Valinta -välilehdeltä', // TODO: translate
+  'area.list.geographical': 'Geografisk',
+  'area.list.protection': 'Befolkningsskydd',
+  'area.list.health': 'Hälsa',
+  'area.list.education': 'Utbildning',
+  'area.list.education.finnish': 'Suomenkieliset koulualueet', // TODO: translate
+  'area.list.education.swedish': 'Ruotsinkieliset koulualueet', // TODO: translate
+  'area.list.preschool': 'Esiopetus', // TODO: translate
+  'area.list.neighborhood': 'Stadsdel',
+  'area.list.postcode_area': 'Postnummerområde',
+  'area.list.rescue_area': 'Skyddsdistrikt',
+  'area.list.rescue_district': 'Skyddsavsnitt',
+  'area.list.rescue_sub_district': 'Skyddsunderavsnitt',
+  'area.list.health_station_district': 'Hälsostationsområde',
+  'area.list.maternity_clinic_district': 'Rådgivningsområde',
+  'area.list.lower_comprehensive_school_district_fi': 'Finskt grundskoleområde, lågklasserna',
+  'area.list.lower_comprehensive_school_district_sv': 'Svenskt grundskoleområde, lågklasserna',
+  'area.list.upper_comprehensive_school_district_fi': 'Finskt grundskoleområde, högklasserna',
+  'area.list.upper_comprehensive_school_district_sv': 'Svenskt grundskoleområde, högklasserna',
+  'area.list.preschool_education_fi': 'Finskt småbarnspedagogikområde',
+  'area.list.preschool_education_sv': 'Svenskt småbarnspedagogikområde',
 
   // Event
   'event.description': 'Beskrivning',
@@ -98,6 +107,7 @@ export default {
   'general.menu.close': 'Stäng menyn',
   'general.back': 'Tillbaka',
   'general.back.address': 'Gå tillbaka till adressvyn',
+  'general.back.area': 'Palaa aluenäkymään', // TODO: translate
   'general.back.home': 'Gå tillbaka till startvyn',
   'general.back.goToHome': 'Gå till startvyn',
   'general.back.search': 'Gå tillbaka till sökvyn',
@@ -133,6 +143,7 @@ export default {
   'general.pageTitles.list.reservations': 'Förteckning över reserveringar ',
   'general.pageTitles.info': 'Infovy',
   'general.pageTitles.feedback': 'Responsvy',
+  'general.pageTitles.area': 'Aluenäkymä.', // TODO: translate,
 
   // General - Pagination
   'general.pagination.previous': 'Föregående sida',
@@ -159,6 +170,7 @@ export default {
   'home.buttons.services': 'Läs mer om tjänsterna i servicekatalogen',
   'home.buttons.closeByServices': 'Visa närtjänster',
   'home.buttons.instructions': 'Tips för användning av servicekartan',
+  'home.buttons.area': 'Katso alueet, kaupunginosat ja väestönsuojelupiirit', // TODO: translate
   'home.example.search': 'Sök med sökord',
   'home.message': 'Hälsningar av servicekartans utvecklare',
   'home.send.feedback': 'Skicka respons',

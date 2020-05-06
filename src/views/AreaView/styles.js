@@ -10,11 +10,19 @@ const styles = theme => ({
   infoTitle: {
     padding: theme.spacing.unit,
     paddingLeft: theme.spacing.unitTriple,
+    paddingRight: theme.spacing.unitTriple,
     paddingTop: 0,
     textAlign: 'start',
+    display: 'flex',
+  },
+  deleteLink: {
+    fontSize: 14,
+    color: '#3344dd',
+    textDecoration: 'underline',
+    marginLeft: theme.spacing.unit,
   },
   list: {
-    marginRight: -16,
+    marginRight: -theme.spacing.unitDouble,
   },
   districtItem: {
     padding: 0,
@@ -42,7 +50,7 @@ const styles = theme => ({
     width: '100%',
   },
   categoryItemContent: {
-    paddingLeft: 50,
+    paddingLeft: 32,
     marginRight: -32,
     width: '100%',
     boxSizing: 'border-box',
@@ -60,21 +68,24 @@ const styles = theme => ({
     paddingRight: theme.spacing.unit,
   },
   addressArea: {
-    margin: 32,
+    padding: theme.spacing.unitTriple,
+    paddingTop: theme.spacing.unit,
     textAlign: 'start',
-    height: 270,
-    paddingBottom: theme.spacing.unitDouble,
   },
   addressTitle: {
     marginBottom: theme.spacing.unitDouble,
   },
   searchBar: {
-    paddingLeft: 8,
+    paddingLeft: theme.spacing.unit,
     border: '1px solid #ACACAC',
     borderRadius: 4,
     width: '100%',
     height: 54,
     boxSizing: 'border-box',
+  },
+  fieldFocus: {
+    outline: '2px solid transparent',
+    boxShadow: `0 0 0 4px ${theme.palette.focusBorder}`,
   },
   cancelButton: {
     fontSize: 16,
@@ -82,13 +93,19 @@ const styles = theme => ({
   addressItem: {
     fontSize: 24,
   },
-  containerPadding: {
+  divisionItem: {
     padding: theme.spacing.unitDouble,
-    paddingTop: 0,
   },
-  divider: {
-    marginLeft: -theme.spacing.unitDouble,
-    marginRight: -theme.spacing.unitDouble,
+  areaTitle: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: 0,
+    paddingTop: theme.spacing.unitDouble,
+    height: 30,
+  },
+  sidePadding: {
+    paddingLeft: theme.spacing.unitDouble,
+    paddingRight: theme.spacing.unitDouble,
   },
   addressIcon: {
     fontSize: 24,

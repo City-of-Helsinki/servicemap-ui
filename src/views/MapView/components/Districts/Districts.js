@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { intlShape } from 'react-intl';
 import { Typography } from '@material-ui/core';
 import { drawMarkerIcon } from '../../utils/drawIcon';
 import swapCoordinates from '../../utils/swapCoordinates';
-import { focusDistrict } from '../../utils/mapActions';
 import AddressMarker from '../AddressMarker';
+import useMobileStatus from '../../../../utils/isMobile';
 
 const Districts = ({
   Polygon,
   Marker,
-  Popup,
   Tooltip,
   highlightedDistrict,
   districtData,
@@ -17,15 +17,14 @@ const Districts = ({
   getLocaleText,
   theme,
   mapOptions,
-  mobile,
   currentPage,
   selectedAddress,
-  map,
   classes,
   navigator,
   intl,
 }) => {
   const useContrast = theme === 'dark';
+  const isMobile = useMobileStatus();
 
   const renderDistrictMarkers = district => (
     <React.Fragment key={district.id}>
@@ -40,7 +39,7 @@ const Districts = ({
             keyboard={false}
             onClick={() => {
               if (navigator) {
-                if (mobile) {
+                if (isMobile) {
                   navigator.replace('unit', { id: district.unit.id });
                 } else {
                   navigator.push('unit', { id: district.unit.id });
@@ -49,11 +48,8 @@ const Districts = ({
             }}
           >
             <Tooltip
-            // className="popup"
               direction="top"
               offset={[1.5, -25]}
-              // closeButton={false}
-              // autoPan={false}
               position={[
                 district.unit.location.coordinates[1],
                 district.unit.location.coordinates[0],
@@ -101,7 +97,6 @@ const Districts = ({
     return districtData.map((district) => {
       const dimmed = addressDistrict && district.id !== addressDistrict;
 
-
       const area = district.boundary.coordinates.map(
         coords => swapCoordinates(coords),
       );
@@ -109,20 +104,10 @@ const Districts = ({
       return (
         <Polygon
           key={district.id}
-          positions={[
-            [area],
-          ]}
+          positions={[[area]]}
           color="#ff8400"
           fillOpacity={dimmed ? '0.3' : '0'}
           fillColor={dimmed ? '#000' : '#ff8400'}
-
-          onClick={(e) => {
-            e.originalEvent.view.L.DomEvent.stopPropagation(e);
-            e.originalEvent.view.L.DomEvent.preventDefault(e);
-            if (district.unit && !(district.overlaping && district.overlaping.some(obj => obj.unit))) {
-              navigator.push('unit', { id: district.unit.id });
-            }
-          }}
 
           onMouseOver={(e) => {
             e.target.openTooltip();
@@ -141,7 +126,7 @@ const Districts = ({
               direction="top"
               autoPan={false}
             >
-              {`${district.name.fi} - ${intl.formatMessage({ id: `address.list.${district.type}` })}`}
+              {`${district.name.fi} - ${intl.formatMessage({ id: `area.list.${district.type}` })}`}
             </Tooltip>
           ) : null}
           {renderDistrictMarkers(district)}
@@ -190,19 +175,25 @@ const Districts = ({
 Districts.propTypes = {
   Polygon: PropTypes.objectOf(PropTypes.any).isRequired,
   Marker: PropTypes.objectOf(PropTypes.any).isRequired,
-  Popup: PropTypes.objectOf(PropTypes.any).isRequired,
+  Tooltip: PropTypes.objectOf(PropTypes.any).isRequired,
   highlightedDistrict: PropTypes.objectOf(PropTypes.any),
   getLocaleText: PropTypes.func.isRequired,
   mapOptions: PropTypes.objectOf(PropTypes.any).isRequired,
+  currentPage: PropTypes.string.isRequired,
+  selectedAddress: PropTypes.objectOf(PropTypes.any),
+  districtData: PropTypes.arrayOf(PropTypes.object),
+  addressDistrict: PropTypes.number,
   navigator: PropTypes.objectOf(PropTypes.any).isRequired,
-  mobile: PropTypes.bool,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
+  intl: intlShape.isRequired,
   theme: PropTypes.oneOf(['default', 'dark']).isRequired,
 };
 
 Districts.defaultProps = {
   highlightedDistrict: null,
-  mobile: false,
+  selectedAddress: null,
+  districtData: null,
+  addressDistrict: null,
 };
 
 export default Districts;
