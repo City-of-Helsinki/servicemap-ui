@@ -10,7 +10,6 @@ import ResultList from '../Lists/ResultList';
 import PaginationComponent from '../PaginationComponent';
 import ResultOrderer from './ResultOrderer';
 import config from '../../../config';
-import { isEmbed } from '../../utils/path';
 
 class TabLists extends React.Component {
   // Options
@@ -59,9 +58,6 @@ class TabLists extends React.Component {
   componentDidMount() {
     if (window.innerWidth <= config.mobileUiBreakpoint) {
       this.setState({ mobile: true });
-    }
-    if (isEmbed) {
-      return;
     }
     this.addListeners();
     // Using setTimeout to avoid first calculations on mobile being done

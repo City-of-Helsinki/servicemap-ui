@@ -36,6 +36,7 @@ const UnitView = (props) => {
     map,
     intl,
     classes,
+    embed,
     getLocaleText,
     navigator,
     match,
@@ -136,6 +137,10 @@ const UnitView = (props) => {
   useEffect(() => {
     centerMap();
   }, [unit, map]);
+
+  if (embed) {
+    return null;
+  }
 
   const renderDetailTab = () => {
     if (!unit || !unit.complete) {
