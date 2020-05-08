@@ -77,7 +77,7 @@ const createContentStyles = (
 
 const DefaultLayout = (props) => {
   const {
-    classes, currentPage, i18n, intl, location, settingsToggled, toggleSettings,
+    classes, currentPage, i18n, intl, location, settingsToggled,
   } = props;
   const isMobile = useMobileStatus();
   const isSmallScreen = useMediaQuery(`(max-width:${smallScreenBreakpoint}px)`);
@@ -89,14 +89,6 @@ const DefaultLayout = (props) => {
   const styles = createContentStyles(
     isMobile, isSmallScreen, landscape, mobileMapOnly, fullMobileMap, settingsToggled, currentPage,
   );
-
-  const setSettingsPage = (type) => {
-    if (!type || type === settingsToggled) {
-      toggleSettings(null);
-    } else {
-      toggleSettings(type);
-    }
-  };
 
   const alertText = (
     <Typography className={classes.messageText} color="inherit">
@@ -159,7 +151,6 @@ const DefaultLayout = (props) => {
         </a>
         <TopBar
           settingsOpen={settingsToggled}
-          toggleSettings={type => setSettingsPage(type)}
           smallScreen={isSmallScreen}
           i18n={i18n}
         />
@@ -170,7 +161,6 @@ const DefaultLayout = (props) => {
           {settingsToggled && (
             <Settings
               key={settingsToggled}
-              toggleSettings={() => setSettingsPage()}
               isMobile={!!isMobile}
             />
           )}
@@ -215,7 +205,6 @@ DefaultLayout.propTypes = {
   intl: intlShape.isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   settingsToggled: PropTypes.string,
-  toggleSettings: PropTypes.func.isRequired,
 };
 
 DefaultLayout.defaultProps = {

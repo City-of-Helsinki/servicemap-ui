@@ -11,6 +11,7 @@ import {
   toggleEspoo,
   toggleVantaa,
   toggleKauniainen,
+  toggleSettings,
 } from '../../redux/actions/settings';
 import Settings from './Settings';
 import styles from './styles';
@@ -35,6 +36,7 @@ export default withStyles(styles)(connect(
     toggleEspoo,
     toggleVantaa,
     toggleKauniainen,
+    toggleSettings,
     changeTheme,
   },
 )(injectIntl(Settings)));
