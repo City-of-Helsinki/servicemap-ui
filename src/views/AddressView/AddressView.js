@@ -310,6 +310,9 @@ const AddressView = (props) => {
       itemsPerPage: null,
       title: intl.formatMessage({ id: 'service.nearby' }),
       onClick: () => {
+        if (highlightedDistrict) {
+          setHighlightedDistrict(null);
+        }
         setToRender('adminDistricts');
       },
     },
