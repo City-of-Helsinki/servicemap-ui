@@ -33,7 +33,7 @@ const createMarkerClusterLayer = (
   const createClusterCustomIcon = function (cluster) {
     const icon = divIcon({
       html: `<span aria-hidden="true" tabindex="-1">${cluster.getChildCount()}</span>`,
-      className: classes.unitClusterMarker,
+      className: `unitClusterMarker ${classes.unitClusterMarker}`,
       iconSize: point(30, 30, true),
     });
     return icon;
