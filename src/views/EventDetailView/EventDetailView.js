@@ -126,12 +126,18 @@ class EventDetailView extends React.Component {
         <div>
           <DesktopComponent>
             <SearchBar margin />
-            <TitleBar sticky title={getLocaleText(event.name)} icon={<Event />} />
+            <TitleBar
+              sticky
+              title={getLocaleText(event.name)}
+              titleComponent="h3"
+              icon={<Event />}
+            />
           </DesktopComponent>
           <MobileComponent>
             <TitleBar
               sticky
               title={getLocaleText(event.name)}
+              titleComponent="h3"
               icon={<Event />}
               primary
               backButton

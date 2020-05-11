@@ -183,11 +183,19 @@ const AddressView = (props) => {
           sticky
           icon={<AddressIcon className={classes.titleIcon} />}
           title={error || title}
+          titleComponent="h3"
           primary
         />
       </DesktopComponent>
       <MobileComponent>
-        <TitleBar sticky icon={<AddressIcon />} title={title} primary backButton />
+        <TitleBar
+          sticky
+          icon={<AddressIcon />}
+          title={title}
+          titleComponent="h3"
+          primary
+          backButton
+        />
       </MobileComponent>
     </>
   );
