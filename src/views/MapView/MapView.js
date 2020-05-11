@@ -24,7 +24,7 @@ import HomeLogo from '../../components/Logos/HomeLogo';
 
 const MapView = (props) => {
   const {
-    addressShowing,
+    addressToRender,
     addressUnits,
     adminDistricts,
     classes,
@@ -74,7 +74,7 @@ const MapView = (props) => {
     if (currentPage === 'home' || currentPage === 'search' || currentPage === 'division') {
       mapUnits = unitList;
     } else if (currentPage === 'address') {
-      switch (addressShowing) {
+      switch (addressToRender) {
         case 'adminDistricts':
           mapUnits = adminDistricts ? adminDistricts
             .filter(d => d.unit)
@@ -437,7 +437,12 @@ export default withRouter(withStyles(styles)(MapView));
 
 // Typechecking
 MapView.propTypes = {
+  addressToRender: PropTypes.string,
   addressUnits: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
+  adminDistricts: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    ocd_id: PropTypes.string,
+  })),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   createMarkerClusterLayer: PropTypes.func.isRequired,
   currentPage: PropTypes.string.isRequired,
@@ -468,7 +473,9 @@ MapView.propTypes = {
 };
 
 MapView.defaultProps = {
+  addressToRender: null,
   addressUnits: null,
+  adminDistricts: null,
   distanceCoordinates: null,
   hideUserMarker: false,
   highlightedDistrict: null,
