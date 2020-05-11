@@ -24,6 +24,17 @@ const Reservations = ({
   const endIndex = listLength > data.length ? data.length : listLength;
   const shownData = data.slice(0, endIndex);
 
+  const onButtonClick = max > listLength
+    ? () => {
+      if (navigator) {
+        navigator.replace({
+          ...location,
+          hash: 'UnitReservationButton',
+        });
+        navigator.push('unit', { id: unit.id, type: 'reservations' });
+      }
+    } : null;
+
   if (shownData && shownData.length) {
     return (
       <div>
@@ -31,20 +42,10 @@ const Reservations = ({
           title={<FormattedMessage id="unit.reservations" />}
           subtitle={<FormattedMessage id="unit.reservations.count" values={{ count: max || 0 }} />}
           titleComponent="h4"
-          shortened={max > listLength}
           loading={isFetching}
           buttonID="UnitReservationButton"
           buttonMessageID="unit.reservations.more"
-          showMoreOnClick={listLength
-            ? () => {
-              if (navigator) {
-                navigator.replace({
-                  ...location,
-                  hash: 'UnitReservationButton',
-                });
-                navigator.push('unit', { id: unit.id, type: 'reservations' });
-              }
-            } : null}
+          onButtonClick={onButtonClick}
         >
           {shownData.map(item => (
             <ReservationItem key={item.id} reservation={item} />

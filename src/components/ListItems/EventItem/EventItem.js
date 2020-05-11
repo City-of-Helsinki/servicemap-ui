@@ -50,6 +50,7 @@ const EventItem = ({
           navigator.push('event', event.id);
         }
       }}
+      role="link"
     />
   );
 };

@@ -10,11 +10,11 @@ const PaginatedList = ({
   customComponent,
   data,
   id,
+  itemsPerPage,
   navigator,
   title,
   titleComponent,
 }) => {
-  const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
   const location = useLocation();
 
@@ -91,6 +91,7 @@ PaginatedList.propTypes = {
   customComponent: PropTypes.func,
   data: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)).isRequired,
   id: PropTypes.string.isRequired,
+  itemsPerPage: PropTypes.number,
   navigator: PropTypes.objectOf(PropTypes.any),
   title: PropTypes.string,
   titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']).isRequired,
@@ -98,6 +99,7 @@ PaginatedList.propTypes = {
 
 PaginatedList.defaultProps = {
   customComponent: null,
+  itemsPerPage: 10,
   navigator: null,
   title: null,
 };

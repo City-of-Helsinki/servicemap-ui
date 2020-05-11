@@ -14,7 +14,6 @@ import useMobileStatus from '../../../utils/isMobile';
 
 const SuggestionItem = (props) => {
   const {
-    button,
     classes,
     divider,
     text,
@@ -22,16 +21,14 @@ const SuggestionItem = (props) => {
     handleArrowClick,
     icon,
     intl,
-    link,
     selected,
-    srText,
     subtitle,
     query,
   } = props;
 
   const [mouseDown, setMouseDown] = useState(false);
   const isMobile = useMobileStatus();
-  const onClick = (button || link) && handleItemClick
+  const onClick = handleItemClick
     ? (e) => {
       e.preventDefault();
       if (!mouseDown) {
@@ -43,7 +40,7 @@ const SuggestionItem = (props) => {
   return (
     <React.Fragment>
       <ListItem
-        button={!!link || button}
+        button
         component="li"
         classes={{
           root: classes.listItem,
@@ -66,7 +63,7 @@ const SuggestionItem = (props) => {
           role="link"
           tabIndex="-1"
         >
-          <ListItemIcon aria-hidden className={`${classes.listIcon} ${link ? classes.link : null}`}>
+          <ListItemIcon aria-hidden className={`${classes.listIcon}`}>
             {icon}
           </ListItemIcon>
 
@@ -75,13 +72,12 @@ const SuggestionItem = (props) => {
             classes={{ root: classes.textContainer }}
           >
             <Typography variant="srOnly">
-              {`${srText || ''} ${text} ${subtitle || ''}`}
+              {`${text} ${subtitle || ''}`}
             </Typography>
 
             <Typography
               aria-hidden
               variant="body2"
-              classes={{ root: link ? classes.link : null }}
             >
               {
                 query
@@ -114,7 +110,7 @@ const SuggestionItem = (props) => {
           && (
             <Button
               aria-label={intl.formatMessage({ id: 'search.arrowLabel' })}
-              className={`${classes.suggestIcon} ${link ? classes.link : null}`}
+              className={`${classes.suggestIcon}`}
               classes={{
                 label: classes.suggestIconLabel,
               }}
@@ -143,12 +139,9 @@ const SuggestionItem = (props) => {
 export default SuggestionItem;
 
 SuggestionItem.propTypes = {
-  button: PropTypes.bool,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   text: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
-  srText: PropTypes.string,
   intl: intlShape.isRequired,
-  link: PropTypes.bool,
   icon: PropTypes.objectOf(PropTypes.any),
   handleArrowClick: PropTypes.func,
   handleItemClick: PropTypes.func,
@@ -159,14 +152,10 @@ SuggestionItem.propTypes = {
 };
 
 SuggestionItem.defaultProps = {
-  button: false,
-  srText: null,
-  link: false,
   icon: null,
   handleArrowClick: null,
   handleItemClick: null,
   divider: false,
-  role: 'button',
   selected: false,
   subtitle: null,
   query: null,

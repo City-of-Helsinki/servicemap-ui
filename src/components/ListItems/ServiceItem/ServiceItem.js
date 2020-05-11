@@ -35,10 +35,12 @@ class ServiceItem extends React.Component {
         navigator.push('service', service.id);
       }
     } : null;
+    const role = link ? 'link' : null;
 
     return (
       <SimpleListItem
         button={link}
+        role={role}
         text={uppercaseFirst(text)}
         icon={icon}
         divider

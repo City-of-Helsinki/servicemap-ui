@@ -173,7 +173,6 @@ const SuggestionBox = (props) => {
                 return (
                   <SuggestionItem
                     selected={i === focusedSuggestion}
-                    button
                     key={`suggestion-${item.suggestion + item.count}`}
                     icon={<Search />}
                     text={item.suggestion}
