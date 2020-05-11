@@ -36,7 +36,7 @@ class TabLists extends React.Component {
 
     const newCurrentPage = typeof parsedCurrentPage === 'number' ? parsedCurrentPage : 1;
     const newCurrentTab = typeof parsedCurrentTab === 'number' ? parsedCurrentTab : 0;
-    
+
     // Run click event for current tab if required
     const filteredData = this.filteredData();
     const item = filteredData ? filteredData[newCurrentTab] : null;
