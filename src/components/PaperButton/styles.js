@@ -51,8 +51,6 @@ export default theme => ({
   },
   icon: {
     color: theme.palette.primary.highContrast,
-    height: 16,
-    width: 16,
     '& g': {
       fill: theme.palette.primary.highContrast,
     },
