@@ -234,6 +234,34 @@ test('SuggestionButton accessibility attributes are OK', async(t) => {
       .expect(esbRole).eql('link', 'ExpandedSearchButton should be considered a link');
 });
 
+test('Tabs accessibility attributes are OK', async(t) => {
+  await searchUnits(t, 'kirjasto');
+  const tabs = ReactSelector('Tab');
+  const tab1 = await tabs.nth(0);
+  const tab2 = await tabs.nth(1);
+
+  await t
+    .expect(tab1.getAttribute('aria-label')).ok('Aria label should exists for tab element')
+    .expect(tab2.getAttribute('aria-label')).ok('Aria label should exists for tab element')
+  ;
+});
+
+test('Search has aria-live element', async(t) => {
+  await searchUnits(t, 'kirjasto');
+  const view = ReactSelector('SearchView');
+  const unitCount = await view.getReact(({props}) => props.units ? props.units.length : 0);
+  const searchInfo = Selector('.SearchInfo').child(0);
+  const siText = await searchInfo.innerText;
+  const siAriaLive = await searchInfo.getAttribute('aria-live');
+
+  await t
+    // Expect info text to contain unit count
+    .expect(siText).contains(unitCount)
+    // Expect aria live to be set as polite
+    .expect(siAriaLive).eql('polite')
+  ;
+});
+
 test('Search suggestion arrow navigation does loop correctly', async(t) => {
   // Get SearchBar focused suggestion value
   const searchbar = ReactSelector('SearchBar');
@@ -255,6 +283,34 @@ test('Search suggestion arrow navigation does loop correctly', async(t) => {
     .pressKey('down')
     // After pressing key down on last item expect focused suggestion to loop to first item
     .expect(searchbar.getReact(({props, state}) => state.focusedSuggestion)).eql(0, 'Focused suggestion index should loop to first item');
+});
+
+test('SettingsInfo works correctly', async(t) => {
+  // Click settings in link in settings info
+  const settingsInfoButton = await ReactSelector('SettingsInfo ButtonBase');
+  const siText = await settingsInfoButton.innerText;
+  await t
+    .expect(siText).contains('Muuta haku- tai esteettömyysasetuksia')
+    .click(settingsInfoButton)
+    .wait(500)
+  ;
+
+  // Expect title to be focused in settings view
+  const title = Selector('.SettingsTitle').child(0);
+  const backButton = ReactSelector('SMButton ButtonBase').nth(1);
+  await t
+    .expect(title.focused).ok('Expected title to be focused on entering settings view')
+    .expect(title.innerText).eql('Asetukset')
+    .click(backButton)
+    .wait(500)
+  ;
+
+  // Expect focus to be back at SettingsInfo button when returning to search view
+  const settingsButton = ReactSelector('SettingsInfo ButtonBase');
+  await t
+    .expect(settingsButton.innerText).contains('Muuta haku- tai esteettömyysasetuksia')
+    .expect(settingsButton.focused).ok()
+  ;
 });
 
 
