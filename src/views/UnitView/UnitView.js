@@ -262,6 +262,7 @@ const UnitView = (props) => {
             sticky
             icon={<AddressIcon className={classes.icon} />}
             title={title}
+            titleComponent="h3"
             distance={distance && distance.text}
           />
         </DesktopComponent>
@@ -269,6 +270,7 @@ const UnitView = (props) => {
           <TitleBar
             sticky
             title={title}
+            titleComponent="h3"
             backButton
             distance={distance && distance.text}
           />

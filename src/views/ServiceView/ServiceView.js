@@ -140,6 +140,7 @@ class ServiceView extends React.Component {
                 className={classes.titlebar}
                 icon={icon}
                 title={getLocaleText(current.name)}
+                titleComponent="h3"
               />
             )
           }
@@ -152,6 +153,7 @@ class ServiceView extends React.Component {
                 className={classes.titlebar}
                 icon={icon}
                 title={getLocaleText(current.name)}
+                titleComponent="h3"
                 primary
                 backButton
               />
