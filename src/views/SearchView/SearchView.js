@@ -330,11 +330,12 @@ class SearchView extends React.Component {
   renderSearchInfo = () => {
     const { units, classes, isFetching } = this.props;
     const unitCount = units && units.length;
+    const className = `SearchInfo ${classes.searchInfo}`;
 
     return (
       <NoSsr>
         {!isFetching && (
-          <div align="left" className={classes.searchInfo}>
+          <div align="left" className={className}>
             <div aria-live="polite" className={classes.infoContainer}>
               <Typography className={`${classes.infoText} ${classes.bold}`}>
                 <FormattedMessage id="search.infoText" values={{ count: unitCount }} />
