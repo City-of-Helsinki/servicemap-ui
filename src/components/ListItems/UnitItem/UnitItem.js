@@ -58,6 +58,12 @@ const UnitItem = ({
 
   // Contract type text
   const contractType = contract_type && contract_type.description ? uppercaseFirst(getLocaleText(contract_type.description)) : '';
+  const distanceText = distance ? {
+    text: `${distance.distance} ${distance.type}`,
+    srText: `${distance.distance} ${distance.type === 'm'
+      ? intl.formatMessage({ id: 'general.distance.meters' })
+      : intl.formatMessage({ id: 'general.distance.kilometers' })}`,
+  } : {};
 
   return (
     <ResultItem
@@ -70,7 +76,7 @@ const UnitItem = ({
           title: classes.title,
         },
       }}
-      distance={distance}
+      distance={distanceText}
       icon={icon}
       onClick={(e) => {
         e.preventDefault();

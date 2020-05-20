@@ -21,6 +21,7 @@ const InfoView = ({
       ariaHidden
       backButton
       title={<FormattedMessage id="info.title" />}
+      titleComponent="h3"
     />
   );
   const renderFinnishInfo = () => (

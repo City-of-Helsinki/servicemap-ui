@@ -1,4 +1,5 @@
 /* eslint-disable */
+import { Selector } from 'testcafe';
 import { waitForReact, ReactSelector } from 'testcafe-react-selectors';
 
 import config from './config';
@@ -33,4 +34,52 @@ test('AddressView does render correct view', async (t) => {
   await t
     .expect(units).gt(1, 'Closeby units tab should show unit items')
   ;
-})
+});
+
+test('AddressView map renders correctly', async (t) => {
+  const zoomOut = await Selector('.leaflet-control-zoom-out');
+  await t
+    .click(zoomOut)
+    .click(zoomOut)
+    .wait(500)
+  ;
+
+  // By default administrative district tab should be open with unit markers
+  let markers = await Selector('.unitMarker, .unitClusterMarker').count;
+  await t
+    .expect(markers).gt(1)
+  ;
+
+  // Change to division tab and expect markers to disappear and area to appear on selection
+  const divisionTab = await ReactSelector('TabLists Tab').nth(1);
+  const divisonElem = await ReactSelector('ResultItem').nth(0);
+  await t
+    .click(divisionTab)
+    .wait(500)
+  ;
+  markers = await Selector('.unitMarker').count;
+  await t
+    // Expect markers not to exist
+    .expect(markers).eql(0)
+    .click(divisonElem)
+    .wait(500)
+  ;
+  let areaPolygon = await Selector('.leaflet-pane.leaflet-overlay-pane > svg > g').childNodeCount;
+  await t
+    .expect(areaPolygon).gte(1, 'Expected area polygon to be drawn on map')
+  ;
+
+  // Change to nearby tab and expect markers to appear
+  const closebyTab = await ReactSelector('TabLists Tab').nth(2);
+  await t
+    .click(closebyTab)
+    .wait(500)
+  ;
+  areaPolygon = await Selector('.leaflet-pane.leaflet-overlay-pane > svg > g').childNodeCount;
+  markers = await Selector('.unitMarker, .unitClusterMarker').count;
+  await t
+    .expect(areaPolygon).eql(0, 'Expected area polygon to disappear when closeby tab is selected')
+    // Expect markers to appear
+    .expect(markers).gt(1)
+  ;
+});

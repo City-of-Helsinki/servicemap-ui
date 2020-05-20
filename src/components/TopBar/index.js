@@ -5,7 +5,7 @@ import { injectIntl } from 'react-intl';
 import { getLocaleString } from '../../redux/selectors/locale';
 import styles from './styles';
 import TopBar from './TopBar';
-import { setMapType } from '../../redux/actions/settings';
+import { setMapType, toggleSettings } from '../../redux/actions/settings';
 import { changeTheme } from '../../redux/actions/user';
 import { getAddressNavigatorParamsConnector } from '../../utils/address';
 
@@ -29,5 +29,5 @@ const mapStateToProps = (state) => {
 
 export default injectIntl(withRouter(withStyles(styles)(connect(
   mapStateToProps,
-  { changeTheme, setMapType },
+  { changeTheme, setMapType, toggleSettings },
 )(TopBar))));
