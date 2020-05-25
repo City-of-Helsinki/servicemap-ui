@@ -36,6 +36,7 @@ const UnitView = (props) => {
     map,
     intl,
     classes,
+    embed,
     getLocaleText,
     navigator,
     match,
@@ -136,6 +137,10 @@ const UnitView = (props) => {
   useEffect(() => {
     centerMap();
   }, [unit, map]);
+
+  if (embed) {
+    return null;
+  }
 
   const renderDetailTab = () => {
     if (!unit || !unit.complete) {
@@ -257,6 +262,7 @@ const UnitView = (props) => {
             sticky
             icon={<AddressIcon className={classes.icon} />}
             title={title}
+            titleComponent="h3"
             distance={distance && distance.text}
           />
         </DesktopComponent>
@@ -264,6 +270,7 @@ const UnitView = (props) => {
           <TitleBar
             sticky
             title={title}
+            titleComponent="h3"
             backButton
             distance={distance && distance.text}
           />

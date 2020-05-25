@@ -55,6 +55,7 @@ const ExtendedData = ({
           <FormattedMessage id={messageID} />
         </>
       )}
+      titleComponent="h3"
       backButton
       className="ExtendedData-title"
     />

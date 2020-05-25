@@ -145,7 +145,6 @@ const ExpandedSuggestions = (props) => {
               if (item.object_type === 'suggestion') {
                 return (
                   <SuggestionItem
-                    button
                     key={item.suggestion + item.count}
                     icon={<Search />}
                     text={item.suggestion}

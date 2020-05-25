@@ -287,7 +287,6 @@ class SearchBar extends React.Component {
       className,
       isSticky,
       header,
-      srHideInput,
     } = this.props;
     const { isActive } = this.state;
 
@@ -307,7 +306,7 @@ class SearchBar extends React.Component {
 
     return (
       <>
-        <div aria-hidden={srHideInput} className={rootClasses} style={stickyStyles}>
+        <div className={rootClasses} style={stickyStyles}>
           {
             this.renderHeaderText(true)
           }
@@ -336,7 +335,6 @@ class SearchBar extends React.Component {
       className,
       isSticky,
       header,
-      srHideInput,
       margin,
     } = this.props;
 
@@ -362,7 +360,7 @@ class SearchBar extends React.Component {
           {this.renderMobile()}
         </MobileComponent>
         <DesktopComponent>
-          <div aria-hidden={srHideInput} className={rootClasses} style={stickyStyles}>
+          <div className={rootClasses} style={stickyStyles}>
             {
               this.renderHeaderText()
             }
@@ -397,7 +395,6 @@ SearchBar.propTypes = {
   isSticky: PropTypes.number,
   isFetching: PropTypes.bool.isRequired,
   previousSearch: PropTypes.oneOfType([PropTypes.string, PropTypes.objectOf(PropTypes.any)]),
-  srHideInput: PropTypes.bool,
   margin: PropTypes.bool,
 };
 
@@ -410,7 +407,6 @@ SearchBar.defaultProps = {
   initialValue: null,
   isSticky: null,
   navigator: null,
-  srHideInput: false,
   margin: false,
 };
 

@@ -66,6 +66,12 @@ export const toggleVantaa = () => setCitySelection('VANTAA', 'vantaa');
 
 export const toggleKauniainen = () => setCitySelection('KAUNIAINEN', 'kauniainen');
 
-export const toggleSettings = value => simpleAction('SETTINGS_TOGGLE', value);
+export const toggleSettings = value => async (dispatch, getState) => {
+  const { settings } = getState();
+  const { toggled } = settings;
+  const newValue = (!value || value === toggled) ? null : value;
+
+  dispatch(simpleAction('SETTINGS_TOGGLE', newValue));
+};
 
 export const setMapType = value => setMapTypeSetting(value);

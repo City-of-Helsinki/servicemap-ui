@@ -11,7 +11,7 @@ import { fitUnitsToMap, focusToPosition } from '../MapView/utils/mapActions';
 import Loading from '../../components/Loading/Loading';
 import Container from '../../components/Container';
 import PaginatedList from '../../components/Lists/PaginatedList';
-import ResultOrderer from '../../components/TabLists/ResultOrderer';
+import ResultOrderer from '../../components/ResultOrderer';
 import CustomLocation from '../../utils/customLocation';
 import { getIcon } from '../../components/SMIcon';
 import DesktopComponent from '../../components/DesktopComponent';
@@ -140,6 +140,7 @@ class ServiceView extends React.Component {
                 className={classes.titlebar}
                 icon={icon}
                 title={getLocaleText(current.name)}
+                titleComponent="h3"
               />
             )
           }
@@ -152,6 +153,7 @@ class ServiceView extends React.Component {
                 className={classes.titlebar}
                 icon={icon}
                 title={getLocaleText(current.name)}
+                titleComponent="h3"
                 primary
                 backButton
               />

@@ -14,8 +14,7 @@ const TitledList = ({
   title,
   titleComponent,
   divider,
-  showMoreOnClick,
-  shortened,
+  onButtonClick,
   loading,
   subtitle,
 }) => {
@@ -51,14 +50,14 @@ const TitledList = ({
       <List disablePadding>
         {list}
       </List>
-      {shortened && showMoreOnClick && !loading && (
+      {buttonMessageID && onButtonClick && !loading && (
         <SMButton
           id={buttonID}
           role="link"
           messageID={buttonMessageID}
           onClick={(e) => {
             e.preventDefault();
-            showMoreOnClick();
+            onButtonClick();
           }}
           margin
         />
@@ -74,27 +73,25 @@ const TitledList = ({
 
 TitledList.propTypes = {
   buttonID: PropTypes.string,
+  buttonMessageID: PropTypes.string,
   children: PropTypes.node.isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  subtitle: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
+  subtitle: PropTypes.node,
+  title: PropTypes.node.isRequired,
   divider: PropTypes.bool,
+  onButtonClick: PropTypes.func,
   titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']),
-  showMoreOnClick: PropTypes.func,
-  buttonMessageID: PropTypes.string,
   loading: PropTypes.bool,
-  shortened: PropTypes.bool,
 };
 
 TitledList.defaultProps = {
   buttonID: null,
   titleComponent: 'h3',
   divider: true,
-  showMoreOnClick: null,
+  onButtonClick: null,
   subtitle: null,
   buttonMessageID: null,
   loading: false,
-  shortened: false,
 };
 
 export default TitledList;

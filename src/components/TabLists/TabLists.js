@@ -8,7 +8,7 @@ import { intlShape } from 'react-intl';
 import isClient, { parseSearchParams, stringifySearchParams, AddEventListener } from '../../utils';
 import ResultList from '../Lists/ResultList';
 import PaginationComponent from '../PaginationComponent';
-import ResultOrderer from './ResultOrderer';
+import ResultOrderer from '../ResultOrderer';
 import config from '../../../config';
 
 class TabLists extends React.Component {
@@ -36,7 +36,7 @@ class TabLists extends React.Component {
 
     const newCurrentPage = typeof parsedCurrentPage === 'number' ? parsedCurrentPage : 1;
     const newCurrentTab = typeof parsedCurrentTab === 'number' ? parsedCurrentTab : 0;
-    
+
     // Run click event for current tab if required
     const filteredData = this.filteredData();
     const item = filteredData ? filteredData[newCurrentTab] : null;
