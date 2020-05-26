@@ -22,7 +22,7 @@ import { fetchEventData, fetchSelectedUnitData } from './dataFetcher';
 import IntlPolyfill from 'intl';
 import paths from '../config/paths';
 import legacyRedirector from './legacyRedirector';
-import matomoTrackingCode from './analytics';
+import { matomoTrackingCode, appDynamicsTrackingCode } from './analytics';
 import { getLastCommit, getVersion } from './version';
 
 // Get sentry dsn from environtment variables
@@ -158,6 +158,7 @@ const htmlTemplate = (reactDom, preloadedState, css, jss, locale, helmet) => `
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#141823" />
+    ${appDynamicsTrackingCode(process.env.APP_DYNAMICS_APP_KEY)}
   </head>
 
   <body>
