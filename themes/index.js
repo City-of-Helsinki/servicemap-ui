@@ -2,7 +2,7 @@ import { createMuiTheme } from '@material-ui/core';
 
 const focusIndicator = {
   outline: '2px solid transparent',
-  boxShadow: '0 0 0 4px rgba(25, 100, 230, 0.8)',
+  boxShadow: '0 0 0 4px #1964E6',
 };
 
 const focusIndicatorDark = {
@@ -160,7 +160,7 @@ const paletteDefault = {
     main: '#efefef',
     strong: '#898989',
   },
-  focusBorder: 'rgba(25, 100, 230, 0.8)',
+  focusBorder: '#1964E6',
   warning: '#AF0021',
 };
 
