@@ -52,7 +52,7 @@ export default {
   'area.list.rescue_area': 'Suojelupiiri',
   'area.list.rescue_district': 'Suojelulohko',
   'area.list.rescue_sub_district': 'Suojelualalohko',
-  'area.list.health_station_district': 'Terveyskeskusalue',
+  'area.list.health_station_district': 'Terveysasema-alue',
   'area.list.maternity_clinic_district': 'Neuvola-alue',
   'area.list.lower_comprehensive_school_district_fi': 'Suomenkielinen ala-astealue',
   'area.list.lower_comprehensive_school_district_sv': 'Ruotsinkielinen ala-astealue',
