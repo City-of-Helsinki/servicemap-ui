@@ -16,6 +16,7 @@ createTestCafe('localhost')
         'browserTests/divisionTest.js',
         'browserTests/searchTest.js',
         'browserTests/servicePageTest.js',
+        'browserTests/settingsTest.js',
         // 'browserTests/titleBarTest.js',
         'browserTests/unitPageTest.js',
         // 'browserTests/unitListPageTest.js',
