@@ -706,7 +706,7 @@ class Settings extends React.Component {
     }
 
     return (
-      <div id="SettingsContainer" className={`${classes.container}`} ref={this.dialogRef}>
+      <div id="SettingsContainer" className={`${classes.container}`} ref={this.dialogRef} role="dialog">
         {/* Empty element that makes keyboard focus loop in dialog */}
         <Typography variant="srOnly" aria-hidden tabIndex="0" onFocus={() => this.focusToLastElement()} />
 

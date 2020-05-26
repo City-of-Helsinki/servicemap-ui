@@ -157,7 +157,7 @@ const DefaultLayout = (props) => {
       </div>
 
       <div id="activeRoot" style={styles.activeRoot}>
-        <main role={settingsToggled && 'dialog'} className="SidebarWrapper" style={styles.sidebar}>
+        <main className="SidebarWrapper" style={styles.sidebar}>
           {settingsToggled && (
             <Settings
               key={settingsToggled}
