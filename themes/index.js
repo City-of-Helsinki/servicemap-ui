@@ -157,7 +157,7 @@ export const paletteDefault = {
     alpha: 'rgba(25,100,230,0.5)',
   },
   disabled: {
-    main: '#efefef',
+    main: 'rgb(239, 239, 239)',
     strong: '#898989',
   },
   focusBorder: 'rgba(25, 100, 230, 0.8)',
@@ -190,7 +190,7 @@ export const paletteDark = {
     alpha: 'rgba(88,91,99,0.5)',
   },
   disabled: {
-    main: '#efefef',
+    main: 'rgb(239, 239, 239)',
     strong: '#898989',
   },
   warning: '#AF0021',
