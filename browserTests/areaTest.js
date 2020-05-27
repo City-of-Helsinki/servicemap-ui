@@ -32,21 +32,21 @@ test('District selection is updated' , async (t) => {
     .pressKey('tab')
     .pressKey('space')
 
-  let districtDataType = ReactSelector('Districts').getReact(({props}) => props.districtData[0].type);
-  let selectionText = ReactSelector('Collapse ListItem');
+  const districtData = ReactSelector('Districts').getReact(({props}) => props.districtData);
+  let selectedItem = ReactSelector('Collapse ListItem').nth(0);
 
   await t
-    .expect(selectionText.classNames).contains(await districtDataType)
+    .expect(await districtData).ok('Data not set correctly to Districts component')
     // Select another radio button to see if data changes
     .pressKey('tab')
     .pressKey('space')
     .pressKey('enter')
 
-  districtDataType = ReactSelector('Districts').getReact(({props}) => props.districtData[0].type);
-  selectionText = ReactSelector('Collapse ListItem').nth(1);
+  const districtDataType = ReactSelector('Districts').getReact(({props}) => props.districtData[0].type);
+  selectedItem = ReactSelector('Collapse ListItem').nth(1);
 
   await t
-    .expect(selectionText.classNames).contains(await districtDataType)
+    .expect(selectedItem.classNames).contains(await districtDataType, 'Data not updated correctly to Districts component')
 })
 
 test('Unit list functions correctly' , async (t) => {
