@@ -19,6 +19,7 @@ createTestCafe('localhost')
         // 'browserTests/titleBarTest.js',
         'browserTests/unitPageTest.js',
         // 'browserTests/unitListPageTest.js',
+        'browserTests/areaTest.js',
       ])
       .browsers(['chrome:headless'])
       // .reporter('list')
