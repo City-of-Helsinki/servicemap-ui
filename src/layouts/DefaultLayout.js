@@ -3,7 +3,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, intlShape } from 'react-intl';
 import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
-import { Typography, Link } from '@material-ui/core';
 import MapView from '../views/MapView';
 import I18n from '../i18n';
 import config from '../../config';
@@ -11,7 +10,6 @@ import TopBar from '../components/TopBar';
 import Settings from '../components/Settings';
 import ViewRouter from './components/ViewRouter';
 import DesktopComponent from '../components/DesktopComponent';
-import AlertBox from '../components/AlertBox';
 import useMobileStatus from '../utils/isMobile';
 
 const { smallScreenBreakpoint } = config;
@@ -77,7 +75,7 @@ const createContentStyles = (
 
 const DefaultLayout = (props) => {
   const {
-    classes, currentPage, i18n, intl, location, settingsToggled,
+    currentPage, i18n, intl, location, settingsToggled,
   } = props;
   const isMobile = useMobileStatus();
   const isSmallScreen = useMediaQuery(`(max-width:${smallScreenBreakpoint}px)`);
@@ -89,55 +87,6 @@ const DefaultLayout = (props) => {
   const styles = createContentStyles(
     isMobile, isSmallScreen, landscape, mobileMapOnly, fullMobileMap, settingsToggled, currentPage,
   );
-
-  const alertText = (
-    <Typography className={classes.messageText} color="inherit">
-      <FormattedMessage id="alert.text" />
-      <Link
-        href={intl.formatMessage({ id: 'alert.link.helsinki' })}
-        target="_blank"
-        rel="noopener"
-        underline="always"
-        color="inherit"
-      >
-        <FormattedMessage id="settings.city.helsinki" />
-      </Link>
-      {', '}
-
-      <Link
-        href={intl.formatMessage({ id: 'alert.link.espoo' })}
-        target="_blank"
-        rel="noopener"
-        underline="always"
-        color="inherit"
-      >
-        <FormattedMessage id="settings.city.espoo" />
-      </Link>
-      {', '}
-
-      <Link
-        href={intl.formatMessage({ id: 'alert.link.vantaa' })}
-        target="_blank"
-        rel="noopener"
-        underline="always"
-        color="inherit"
-      >
-        <FormattedMessage id="settings.city.vantaa" />
-      </Link>
-      {', '}
-
-      <Link
-        href={intl.formatMessage({ id: 'alert.link.kauniainen' })}
-        target="_blank"
-        rel="noopener"
-        underline="always"
-        color="inherit"
-      >
-        <FormattedMessage id="settings.city.kauniainen" />
-      </Link>
-    </Typography>
-  );
-
   return (
     <>
       <div id="topArea" aria-hidden={!!settingsToggled}>
@@ -165,10 +114,6 @@ const DefaultLayout = (props) => {
             />
           )}
           <div style={styles.sidebarContent} aria-hidden={!!settingsToggled}>
-            <AlertBox
-              title={<FormattedMessage id="alert.title" />}
-              text={alertText}
-            />
             <ViewRouter />
           </div>
         </main>
