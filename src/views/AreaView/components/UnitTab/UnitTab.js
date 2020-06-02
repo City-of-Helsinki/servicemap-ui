@@ -100,7 +100,7 @@ const UnitTab = ({
               {formAddressString(selectedAddress)}
             </Typography>
           </div>
-          <Divider />
+          <Divider aria-hidden />
 
           {localUnitDistricts.length ? (
             <>

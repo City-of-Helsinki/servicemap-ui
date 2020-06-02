@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {
   List, ListItem, FormControlLabel, Radio, Typography, ButtonBase, Collapse,
 } from '@material-ui/core';
-import { FormattedMessage, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { ArrowDropUp, ArrowDropDown, Map } from '@material-ui/icons';
 import { AreaIcon } from '../../../../components/SMIcon';
 import AddressSearchBar from '../AddressSearchBar';
@@ -22,7 +22,6 @@ const AreaTab = ({
   setSelectedAddress,
   address,
   classes,
-  intl,
   navigator,
 }) => {
   const renderDistrictList = districList => (
@@ -34,7 +33,13 @@ const AreaTab = ({
           className={`${classes.districtItem} ${district.id}`}
         >
           <FormControlLabel
-            control={<Radio onChange={() => setRadioValue(district.id)} aria-labelledby={`${`${district.id}Name`} ${`${district.id}Period`}`} />}
+            control={(
+              <Radio
+                inputProps={{ 'aria-setsize': districtData.length.toString() }}
+                onChange={() => setRadioValue(district.id)}
+                aria-labelledby={`${`${district.id}Name`} ${`${district.id}Period`}`}
+              />
+            )}
             checked={radioValue ? radioValue === district.id : false}
             label={(
               <>
@@ -45,7 +50,7 @@ const AreaTab = ({
                   {`${district.date ? `${district.date.slice(0, 4)}-${district.date.slice(11, 15)}` : ''}`}
                 </Typography>
               </>
-                )}
+            )}
           />
         </ListItem>
       ))}
@@ -90,7 +95,7 @@ const AreaTab = ({
           <AreaIcon className={classes.rightPadding} />
           <ButtonBase
             aria-expanded={isOpen}
-            aria-label={`${intl.formatMessage({ id: 'area.open.category' })} ${item.title}`}
+            aria-label={item.title}
             className={classes.itemClickArea}
             onClick={() => handleOpen(item)}
           >
@@ -171,7 +176,6 @@ const AreaTab = ({
 
 AreaTab.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  intl: intlShape.isRequired,
   radioValue: PropTypes.string,
   fetching: PropTypes.arrayOf(PropTypes.any).isRequired,
   districtData: PropTypes.arrayOf(PropTypes.object),
