@@ -56,7 +56,7 @@ const AreaTab = ({
   const renderCollapseContent = (item) => {
     if (fetching.includes(item.title)) {
       return (
-        <Typography aria-live="polite">
+        <Typography aria-hidden>
           <FormattedMessage id="general.loading" />
         </Typography>
       );
@@ -158,6 +158,13 @@ const AreaTab = ({
           onClick={() => navigator.openMap()}
         />
       </MobileComponent>
+      {(fetching.length || districtData.length) ? (
+        <Typography variant="srOnly" role="alert">
+          {fetching.length
+            ? <FormattedMessage id="general.loading" />
+            : <FormattedMessage id="general.loading.done" />}
+        </Typography>
+      ) : null}
     </div>
   );
 };

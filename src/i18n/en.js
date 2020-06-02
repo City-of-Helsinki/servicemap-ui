@@ -36,7 +36,6 @@ export default {
   'area.tab.services': 'Services in the chosen area',
   'area.services.local': 'Services in your own area',
   'area.services.nearby': 'Services in the neighbouring areas',
-  'area.open.category': 'Open category',
   'area.info': 'Valitse alue, jonka palveluista haluat tietoa. Kirjoittamalla alla olevaan hakukenttään kotiosoitteesi saat näkyville karttaan ja Valitun alueen palvelut -välilehdelle alueet ja piirit, joihin kuulut',
   'area.choose.district': 'Valitse alue', // TODO: translate
   'area.noSelection': 'Valitse alue Alueen Valinta -välilehdeltä', // TODO: translate
@@ -129,6 +128,7 @@ export default {
   'general.home': 'Home',
   'general.noData': 'No data available',
   'general.loading': 'Loading',
+  'general.loading.done': 'Lataus valmis', // TODO: translate,
   'general.showOnMap': 'Show on map',
   'general.pageTitles.home': 'Home view',
   'general.pageTitles.search': 'Search results view',

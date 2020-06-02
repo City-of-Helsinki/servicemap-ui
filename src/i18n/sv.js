@@ -36,7 +36,6 @@ export default {
   'area.tab.services': 'Tjänster i det valda området',
   'area.services.local': 'Tjänster i ditt eget område',
   'area.services.nearby': 'Tjänster i närområdena',
-  'area.open.category': 'Öppna kategori',
   'area.info': 'Valitse alue, jonka palveluista haluat tietoa. Kirjoittamalla alla olevaan hakukenttään kotiosoitteesi saat näkyville karttaan ja Valitun alueen palvelut -välilehdelle alueet ja piirit, joihin kuulut', // TODO: translate
   'area.choose.district': 'Valitse alue', // TODO: translate
   'area.noSelection': 'Valitse alue Alueen Valinta -välilehdeltä', // TODO: translate
@@ -129,6 +128,7 @@ export default {
   'general.home': 'Hem',
   'general.noData': 'Data finns inte',
   'general.loading': 'Laddar',
+  'general.loading.done': 'Lataus valmis', // TODO: translate,
   'general.showOnMap': 'Visa på kartan',
   'general.pageTitles.home': 'Hemvy',
   'general.pageTitles.search': 'Sökresultatsvy',
