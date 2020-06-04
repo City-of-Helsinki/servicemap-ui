@@ -1,6 +1,7 @@
 /* eslint-disable */
 import axeCheck from 'axe-testcafe';
 import config from './config';
+import focusIndicatorTest from './focusIndicatorTest';
 
 const { server } = config;
 
@@ -17,12 +18,18 @@ test('Automated accessibility testing', async (t) => {
   await axeCheckHandler(t);
 });
 
+focusIndicatorTest()
+
+
 fixture`TestCafe Axe test: search page`
   .page`http://${server.address}:${server.port}/fi/search?q=kirjasto`;
 
 test('Automated accessibility testing', async (t) => {
   await axeCheckHandler(t);
 });
+
+focusIndicatorTest()
+
 
 fixture`TestCafe Axe test: unit page`
   .page`http://${server.address}:${server.port}/fi/unit/8215`;
@@ -31,12 +38,18 @@ test('Automated accessibility testing', async (t) => {
   await axeCheckHandler(t);
 });
 
+focusIndicatorTest()
+
+
 fixture`TestCafe Axe test: service page`
   .page`http://${server.address}:${server.port}/fi/service/813`;
 
 test('Automated accessibility testing', async (t) => {
   await axeCheckHandler(t);
 });
+
+focusIndicatorTest()
+
 
 fixture`TestCafe Axe test: address page`
   .page`http://${server.address}:${config.server.port}/fi/address/helsinki/Fleminginkatu/1`;
@@ -45,12 +58,19 @@ test('Automated accessibility testing', async (t) => {
   await axeCheckHandler(t);
 });
 
+focusIndicatorTest()
+
+
 fixture`TestCafe Axe test: area page`
   .page`http://${server.address}:${config.server.port}/fi/area`;
 
 test('Automated accessibility testing', async (t) => {
   await axeCheckHandler(t);
 });
+
+focusIndicatorTest()
+
+
 
 // This page expires when the event is done
 fixture`TestCafe Axe test: event page`
@@ -59,3 +79,5 @@ fixture`TestCafe Axe test: event page`
 test('Automated accessibility testing', async (t) => {
   await axeCheckHandler(t);
 });
+
+focusIndicatorTest()
