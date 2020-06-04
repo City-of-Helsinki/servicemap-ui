@@ -58,8 +58,4 @@ export default theme => ({
     margin: theme.spacing.unit,
     fontSize: 14,
   },
-  primaryFocus: {
-    outline: '2px solid transparent',
-    boxShadow: `0 0 0 3px ${theme.palette.primary.highContrast}, 0 0 0 6px ${theme.palette.focusBorder}`,
-  },
 });

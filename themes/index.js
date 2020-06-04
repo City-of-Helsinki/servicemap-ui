@@ -2,12 +2,12 @@ import { createMuiTheme } from '@material-ui/core';
 
 const focusIndicator = {
   outline: '2px solid transparent',
-  boxShadow: '0 0 0 4px rgba(25, 100, 230, 0.8)',
+  boxShadow: '0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(71, 131, 235), 0 0 0 8px rgb(255, 255, 255)',
 };
 
 const focusIndicatorDark = {
   outline: '2px solid transparent',
-  boxShadow: '0 0 0 4px #000',
+  boxShadow: '0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(0, 0, 0), 0 0 0 8px rgb(255, 255, 255)',
 };
 
 const props = {
@@ -160,7 +160,7 @@ const paletteDefault = {
     main: '#efefef',
     strong: '#898989',
   },
-  focusBorder: 'rgba(25, 100, 230, 0.8)',
+  focusBorder: 'rgb(71, 131, 235)',
   warning: '#AF0021',
 };
 

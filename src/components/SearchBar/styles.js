@@ -95,7 +95,7 @@ export default theme => ({
     },
   },
   searchButtonFocus: {
-    boxShadow: '0 0 0 3px #fff !important',
+    boxShadow: '0 0 0 4px #fff !important',
   },
   iconButtonSearchLabel: {
     flexDirection: 'column',
