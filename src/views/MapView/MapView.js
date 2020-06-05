@@ -140,7 +140,11 @@ const MapView = (props) => {
       setPrevMap(map);
     }
     // Search param map value
-    const spMap = parseSearchParams(location.search).map || false;
+    let spMap = parseSearchParams(location.search).map || false;
+
+    if (spMap === 'true') {
+      spMap = false;
+    }
 
     const newMap = CreateMap(spMap || settings.mapType, locale);
     setMapObject(newMap);
