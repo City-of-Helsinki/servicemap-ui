@@ -1,12 +1,16 @@
 language: node_js
 node_js: "stable"
     
-dist: trusty
+dist: bionic
 sudo: required
 
 addons:
   firefox: latest
   chrome: stable
+
+services:
+  - xvfb
+
 branches:
   only:
    - develop
@@ -21,10 +25,8 @@ before_install:
 install:
  - npm install
 before_script:
- - "export DISPLAY=:99.0"
- - "sh -e /etc/init.d/xvfb start"
- - sleep 3
  - fluxbox >/dev/null 2>&1 &
+ - sleep 3
  - npm run testBuild
 script:
  - npm test
