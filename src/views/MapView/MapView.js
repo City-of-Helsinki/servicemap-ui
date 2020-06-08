@@ -205,7 +205,7 @@ const MapView = (props) => {
         mapRef.current.leafletElement,
         [userLocation.longitude, userLocation.latitude],
       );
-    } else {
+    } else if (!embeded) {
       findUserLocation();
     }
   };
@@ -221,7 +221,9 @@ const MapView = (props) => {
   useEffect(() => { // On map mount
     initializeLeaflet();
     initializeMap();
-    findUserLocation();
+    if (!embeded) {
+      findUserLocation();
+    }
   }, []);
 
   useEffect(() => { // Set map ref to redux once map is rendered
