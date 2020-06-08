@@ -49,7 +49,7 @@ test('AddressView map renders correctly', async (t) => {
   ;
 
   // Change to nearby tab and expect markers to appear
-  const closebyTab = await ReactSelector('TabLists Tab').nth(2);
+  const closebyTab = await ReactSelector('TabLists Tab').nth(1);
   await t
     .click(closebyTab)
     .wait(500)
