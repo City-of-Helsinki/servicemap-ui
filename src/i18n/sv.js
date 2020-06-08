@@ -23,29 +23,29 @@ export default {
   'address.plural': 'Adresser',
   'address.services.header': 'Service för dem som bor här',
   'address.services.info': 'Kommunala tjänster vars verksamhetsområde omfattar positionen',
-  'address.area.link': 'Tutustu alueisiin kartalla.', // TODO: translate
+  'address.area.link': 'Bekanta dig med områdena på kartan.',
   'address.emergency_care.common': 'När den egna hälsostationen är stängd och på natten kl. 22-8 är jour för barn och unga under 16 år på <a class="link" href="/unit/7299">Barnkliniken</a> [<a class="external-link" href="http://www.hus.fi/sv/sjukvard/sjukhus/barnkliniken/Sidor/default.aspx">hemsidor</a>], och jour för vuxna på',
   'address.emergency_care.unit.26107': 'Malms sjukhuset',
   'address.emergency_care.unit.26104': 'Haartmanska sjukhuset',
   'address.emergency_care.link': '[<a href="http://www.hel.fi/www/Helsinki/fi/sosiaali-ja-terveyspalvelut/terveyspalvelut/paivystys/" class="external-link">joursidor</a>]',
 
   // Area
-  'area.searchbar.infoText.address': 'Kirjoita kotiosoitteesi', // TODO: translate
-  'area.searchbar.infoText.optional': '(valinnainen)', // TODO: translate
+  'area.searchbar.infoText.address': 'Skriv din hemadress',
+  'area.searchbar.infoText.optional': '(valfri)',
   'area.tab.selection': 'Val av område',
   'area.tab.services': 'Tjänster i det valda området',
   'area.services.local': 'Tjänster i ditt eget område',
   'area.services.nearby': 'Tjänster i närområdena',
   'area.info': 'Valitse alue, jonka palveluista haluat tietoa. Kirjoittamalla alla olevaan hakukenttään kotiosoitteesi saat näkyville karttaan ja Valitun alueen palvelut -välilehdelle alueet ja piirit, joihin kuulut', // TODO: translate
-  'area.choose.district': 'Valitse alue', // TODO: translate
-  'area.noSelection': 'Valitse alue Alueen Valinta -välilehdeltä', // TODO: translate
+  'area.choose.district': 'Väl område',
+  'area.noSelection': 'Väl område under fliken Val av område',
   'area.list.geographical': 'Geografisk',
   'area.list.protection': 'Befolkningsskydd',
   'area.list.health': 'Hälsa',
   'area.list.education': 'Utbildning',
-  'area.list.education.finnish': 'Suomenkieliset koulualueet', // TODO: translate
-  'area.list.education.swedish': 'Ruotsinkieliset koulualueet', // TODO: translate
-  'area.list.preschool': 'Esiopetus', // TODO: translate
+  'area.list.education.finnish': 'Finska skolområden',
+  'area.list.education.swedish': 'Svenska skolområden',
+  'area.list.preschool': 'Förskoleundervisning',
   'area.list.neighborhood': 'Stadsdel',
   'area.list.postcode_area': 'Postnummerområde',
   'area.list.rescue_area': 'Skyddsdistrikt',
@@ -106,7 +106,7 @@ export default {
   'general.menu.close': 'Stäng menyn',
   'general.back': 'Tillbaka',
   'general.back.address': 'Gå tillbaka till adressvyn',
-  'general.back.area': 'Palaa aluenäkymään', // TODO: translate
+  'general.back.area': 'Gå tillbaka till områdesvyn',
   'general.back.home': 'Gå tillbaka till startvyn',
   'general.back.goToHome': 'Gå till startvyn',
   'general.back.search': 'Gå tillbaka till sökvyn',
@@ -128,7 +128,7 @@ export default {
   'general.home': 'Hem',
   'general.noData': 'Data finns inte',
   'general.loading': 'Laddar',
-  'general.loading.done': 'Lataus valmis', // TODO: translate,
+  'general.loading.done': 'Laddning färdig',
   'general.showOnMap': 'Visa på kartan',
   'general.pageTitles.home': 'Hemvy',
   'general.pageTitles.search': 'Sökresultatsvy',
@@ -143,7 +143,7 @@ export default {
   'general.pageTitles.list.reservations': 'Förteckning över reserveringar ',
   'general.pageTitles.info': 'Infovy',
   'general.pageTitles.feedback': 'Responsvy',
-  'general.pageTitles.area': 'Aluenäkymä.', // TODO: translate,
+  'general.pageTitles.area': 'Områdesvy.',
 
   // General - Pagination
   'general.pagination.previous': 'Föregående sida',
@@ -170,7 +170,7 @@ export default {
   'home.buttons.services': 'Läs mer om tjänsterna i servicekatalogen',
   'home.buttons.closeByServices': 'Visa närtjänster',
   'home.buttons.instructions': 'Tips för användning av servicekartan',
-  'home.buttons.area': 'Katso alueet, kaupunginosat ja väestönsuojelupiirit', // TODO: translate
+  'home.buttons.area': 'Se områden, stadsdelar och befolkningsskyddsdistrikt',
   'home.example.search': 'Sök med sökord',
   'home.message': 'Hälsningar av servicekartans utvecklare',
   'home.send.feedback': 'Skicka respons',
@@ -396,7 +396,7 @@ export default {
   'info.title': 'Om tjänsten',
   'info.statement': 'Tillgänglighetsredogörelsen',
 
-  'alert.close': 'Stäng', // TODO: translate to "Sulje ilmoitus"
+  'alert.close': 'Stäng meddelande',
 
   // TODO: remove these once this corona alert is no longer used
   'alert.title': 'De flesta offentliga tjänster är stängda på grund av coronaviruset',
