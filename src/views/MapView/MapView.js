@@ -358,11 +358,9 @@ const MapView = (props) => {
             Polygon={Polygon}
             Marker={Marker}
             Popup={Popup}
-            highlightedDistrict={highlightedDistrict}
-            getLocaleText={getLocaleText}
+            Tooltip={Tooltip}
             mapOptions={mapOptions}
-            mobile={isMobile}
-            navigator={navigator}
+            map={mapRef.current}
           />
 
           {!embeded

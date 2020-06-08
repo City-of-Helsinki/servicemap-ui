@@ -12,6 +12,7 @@ const DivisionItem = ({
   data,
   distance,
   divider,
+  className,
   getLocaleText,
   intl,
   navigator,
@@ -28,7 +29,7 @@ const DivisionItem = ({
   const emergencyCareText = data.emergencyUnitId ? <FormattedMessage id={`address.emergency_care.unit.${data.emergencyUnitId}`} /> : null;
   const emergencyOnClick = () => navigator.push('unit', { id: emergencyUnitId });
 
-  let title = intl.formatMessage({ id: `address.list.${area.type}` });
+  let title = intl.formatMessage({ id: `area.list.${area.type}` });
   title = `${title}${aStart && aEnd ? ` ${aStart.getFullYear()}-${aEnd.getFullYear()}` : ''}`;
 
   // Screen reader text
@@ -48,7 +49,7 @@ const DivisionItem = ({
     <>
       <ListItem
         component="li"
-        className={classes.listItem}
+        className={`${classes.listItem} ${className || ''}`}
       >
         <ButtonBase
           className={classes.linkButton}
@@ -157,6 +158,7 @@ const DivisionItem = ({
 
 DivisionItem.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
+  className: PropTypes.string,
   data: PropTypes.objectOf(PropTypes.any).isRequired,
   distance: PropTypes.shape({
     distance: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
@@ -174,6 +176,7 @@ DivisionItem.propTypes = {
 
 DivisionItem.defaultProps = {
   distance: null,
+  className: null,
 };
 
 export default DivisionItem;

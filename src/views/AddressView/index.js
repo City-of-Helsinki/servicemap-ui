@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core';
 import { injectIntl } from 'react-intl';
-import setHighlightedDistrict from '../../redux/actions/district';
+import { setDistrictAddressData } from '../../redux/actions/district';
 import {
   setAddressData,
   setAddressUnits,
@@ -23,7 +23,6 @@ const mapStateToProps = (state, props) => {
   } = props;
   const map = state.mapRef.leafletElement;
   const getLocaleText = textObject => getLocaleString(state, textObject);
-  const highlightedDistrict = state.districts.highlitedDistrict;
   const { address, user, navigator } = state;
   const getAddressNavigatorParams = getAddressNavigatorParamsConnector(getLocaleText, user.locale);
   const getDistance = unit => formatDistanceObject(intl, calculateDistance(state)(unit));
@@ -35,7 +34,6 @@ const mapStateToProps = (state, props) => {
     getAddressNavigatorParams,
     getDistance,
     getLocaleText,
-    highlightedDistrict,
     navigator,
     units,
   };
@@ -45,11 +43,11 @@ const mapStateToProps = (state, props) => {
 export default withRouter(withStyles(styles)(injectIntl(connect(
   mapStateToProps,
   {
-    setHighlightedDistrict,
     setAddressData,
     setAddressUnits,
     setAddressLocation,
     setAdminDistricts,
     setToRender,
+    setDistrictAddressData,
   },
 )(AddressView))));

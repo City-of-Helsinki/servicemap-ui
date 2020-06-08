@@ -29,5 +29,14 @@ export default theme => ({
   servicesTitle: {
     padding: theme.spacing.unit,
     margin: `${theme.spacing.unit}px ${theme.spacing.unitDouble}px`,
+    textAlign: 'left',
+  },
+  areaLink: {
+    textDecoration: 'underline',
+    marginBottom: theme.spacing.unit,
+    marginTop: theme.spacing.unit,
+    '&:hover': {
+      opacity: '0.7',
+    },
   },
 });
