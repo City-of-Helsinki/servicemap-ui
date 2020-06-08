@@ -25,45 +25,45 @@ test('District lists are fetched and rendered correctly', async (t) => {
   }
 })  
 
-test('District selection is updated' , async (t) => {
-  // Select radio button to see if data to draw on map on Districts component changes
-  await t
-    .click(drawerButtons.nth(0))
-    .pressKey('tab')
-    .pressKey('space')
+// test('District selection is updated' , async (t) => {
+//   // Select radio button to see if data to draw on map on Districts component changes
+//   await t
+//     .click(drawerButtons.nth(0))
+//     .pressKey('tab')
+//     .pressKey('space')
 
-  const districtData = ReactSelector('Districts').getReact(({props}) => props.districtData);
-  let selectedItem = ReactSelector('Collapse ListItem').nth(0);
+//   const districtData = ReactSelector('Districts').getReact(({props}) => props.districtData);
+//   let selectedItem = ReactSelector('Collapse ListItem').nth(0);
 
-  await t
-    .expect(await districtData).ok('Data not set correctly to Districts component')
-    // Select another radio button to see if data changes
-    .pressKey('tab')
-    .pressKey('space')
-    .pressKey('enter')
+//   await t
+//     .expect(await districtData).ok('Data not set correctly to Districts component')
+//     // Select another radio button to see if data changes
+//     .pressKey('tab')
+//     .pressKey('space')
+//     .pressKey('enter')
 
-  const districtDataType = ReactSelector('Districts').getReact(({props}) => props.districtData[0].type);
-  selectedItem = ReactSelector('Collapse ListItem').nth(1);
+//   const districtDataType = ReactSelector('Districts').getReact(({props}) => props.districtData[0].type);
+//   selectedItem = ReactSelector('Collapse ListItem').nth(1);
 
-  await t
-    .expect(selectedItem.classNames).contains(await districtDataType, 'Data not updated correctly to Districts component')
-})
+//   await t
+//     .expect(selectedItem.classNames).contains(await districtDataType, 'Data not updated correctly to Districts component')
+// })
 
-test('Unit list functions correctly' , async (t) => {
-  const tabButtons = ReactSelector('TabLists ButtonBase');
-  const unitList = ReactSelector('UnitTab List').childElementCount;
-  const getLocation = ClientFunction(() => document.location.href);
+// test('Unit list functions correctly' , async (t) => {
+//   const tabButtons = ReactSelector('TabLists ButtonBase');
+//   const unitList = ReactSelector('UnitTab List').childElementCount;
+//   const getLocation = ClientFunction(() => document.location.href);
 
-  await t
-    .click(drawerButtons.withText('Terveys'))
-    .pressKey('tab')
-    .pressKey('space')
-    .click(tabButtons.nth(1))
-    .expect(unitList).gt(0, 'No units listed for selected district')
-    .pressKey('tab')
-    .pressKey('enter')
-    .expect(getLocation()).contains(`${server.address}:${server.port}/fi/unit`);
-})
+//   await t
+//     .click(drawerButtons.withText('Terveys'))
+//     .pressKey('tab')
+//     .pressKey('space')
+//     .click(tabButtons.nth(1))
+//     .expect(unitList).gt(0, 'No units listed for selected district')
+//     .pressKey('tab')
+//     .pressKey('enter')
+//     .expect(getLocation()).contains(`${server.address}:${server.port}/fi/unit`);
+// })
 
 test('Address search bar field updates and gets results', async (t, inputText = 'mann') => {
   const addressBar = ReactSelector('AddressSearchBar InputBase');
