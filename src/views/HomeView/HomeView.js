@@ -23,6 +23,12 @@ class HomeView extends React.Component {
       <div className={classes.background}>
         <div className={classes.buttonContainer}>
           <PaperButton
+            messageID="home.buttons.area"
+            icon={<Map />}
+            link
+            onClick={() => navigator.push('area')}
+          />
+          <PaperButton
             messageID="home.buttons.closeByServices"
             icon={getIcon('location')}
             link

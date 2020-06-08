@@ -3,6 +3,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { getAddressText } from '../../../../utils/address';
+import { AddressIcon } from '../../../../components/SMIcon';
 
 const AddressMarker = ({
   Marker,
@@ -10,16 +11,18 @@ const AddressMarker = ({
   address,
   classes,
   embeded,
+  position,
   getLocaleText,
 }) => {
-  if (!address || !address.addressCoordinates) {
+  if (!position && (!address || !address.addressCoordinates)) {
     return null;
   }
+
   // eslint-disable-next-line global-require
   const { divIcon } = require('leaflet');
   const addressIcon = divIcon({
     html: renderToStaticMarkup(
-      <span style={{ fontSize: 36 }} className="icon-icon-address" />,
+      <AddressIcon style={{ fontSize: 36 }} />,
     ),
     iconSize: [45, 45],
     iconAnchor: [22, 42],
@@ -31,7 +34,7 @@ const AddressMarker = ({
   return (
     <Marker
       className="addressMarker"
-      position={[addressCoordinates[1], addressCoordinates[0]]}
+      position={position || [addressCoordinates[1], addressCoordinates[0]]}
       icon={addressIcon}
       keyboard={false}
     >
@@ -59,12 +62,14 @@ AddressMarker.propTypes = {
   Tooltip: PropTypes.objectOf(PropTypes.any).isRequired,
   address: PropTypes.objectOf(PropTypes.any).isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
+  position: PropTypes.arrayOf(PropTypes.number),
   embeded: PropTypes.bool,
   getLocaleText: PropTypes.func.isRequired,
 };
 
 AddressMarker.defaultProps = {
   embeded: false,
+  position: null,
 };
 
 export default AddressMarker;

@@ -58,7 +58,7 @@ export const APIHandlers = {
     options: {
       page: 1,
       page_size: 200,
-      only: 'location,name,municipality,accessibility_shortcoming_count,service_nodes',
+      only: 'location,name,municipality,accessibility_shortcoming_count,service_nodes,contract_type',
       geometry: true,
       include: 'service_nodes,services,accessibility_properties',
     },

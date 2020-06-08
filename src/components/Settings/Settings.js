@@ -731,11 +731,11 @@ class Settings extends React.Component {
               color="primary"
             />
             <SMButton
+              aria-label={intl.formatMessage({ id: 'general.closeSettings' })}
               small
               role="button"
               onClick={() => this.toggleSettingsContainer()}
               messageID="general.close"
-              srText={intl.formatMessage({ id: 'general.closeSettings' })}
             />
           </Container>
 

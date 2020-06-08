@@ -11,8 +11,8 @@ import createSuggestions from '../../createSuggestions';
 import config from '../../../../../config';
 import SuggestionItem from '../../../ListItems/SuggestionItem';
 import AddressItem from '../../../ListItems/AddressItem';
-import { uppercaseFirst } from '../../../../utils';
 import useMobileStatus from '../../../../utils/isMobile';
+import { getAddressText } from '../../../../utils/address';
 
 
 const SuggestionBox = (props) => {
@@ -107,12 +107,6 @@ const SuggestionBox = (props) => {
     }
   };
 
-  const getAddressText = (item) => {
-    const number = `${item.number ? item.number : ''}${item.letter ? item.letter : ''}`;
-    const text = `${getLocaleText(item.street.name)} ${number}, ${uppercaseFirst(item.street.municipality)}`;
-    return text;
-  };
-
   const setSearchBarText = () => {
     if (listRef && listRef.current) {
       if (listRef.current.props.children.length && focusedSuggestion !== null) {
@@ -123,7 +117,7 @@ const SuggestionBox = (props) => {
             return;
           }
           if (focused.object_type === 'address') {
-            setSearch(getAddressText(focused));
+            setSearch(getAddressText(focused, getLocaleText));
           }
         } else if (history) {
           setSearch(history[focusedSuggestion]);
