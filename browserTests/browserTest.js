@@ -3,12 +3,15 @@ import { Selector, ClientFunction } from 'testcafe';
 
 import { waitForReact, ReactSelector } from 'testcafe-react-selectors';
 
+import { paletteDefault, paletteDark } from '../themes'
 import config from './config';
 const { server } = config;
 
+const siteRoot = `http://${server.address}:${server.port}`;
+
 // TODO: move these to the related view folders
-fixture`Frontpage tests`
-  .page`http://${server.address}:${server.port}/fi`
+fixture`General tests`
+  .page`${siteRoot}/fi`
   .beforeEach(async () => {
     await waitForReact();
   });
@@ -16,34 +19,42 @@ fixture`Frontpage tests`
 const getLocation = ClientFunction(() => document.location.href);
 
 
-const testFinnish = async (t) => {
-  const languageButtons = ReactSelector('Button');
-  const title = Selector('.app-title').textContent;
-  const text = await languageButtons.nth(1).innerText.then(s => s.toLocaleLowerCase());
-
-  await t
-    .expect(getLocation()).contains(`http://${server.address}:${server.port}/en`)
-    .expect(title).eql('Service map')
-    .expect(text).contains('suomi')
-    
-    
-    .click(languageButtons.nth(1))
-    .navigateTo(`http://${server.address}:${server.port}/fi`);
-};
-
 test('Language does change', async (t) => {
   const languageButtons = ReactSelector('ButtonBase');
-  const title = Selector('.app-title').textContent;
-  const text = await languageButtons.nth(2).innerText.then(s => s.toLocaleLowerCase());
+  const title = Selector('.app-title');
 
   await t
-    .expect(getLocation()).contains(`http://${server.address}:${server.port}/fi`)
-    .expect(title).eql('Palvelukartta')
-    .expect(text).contains('in english')    
-    .click(languageButtons.nth(2))
-    .navigateTo(`http://${server.address}:${server.port}/en`);
+    .expect(getLocation()).contains(`${siteRoot}/fi`)
+    .expect(title.textContent).eql('Palvelukartta')
+    .expect(await languageButtons.nth(2).innerText.then(s => s.toLocaleLowerCase())).contains('in english')
+    // This event doesn't work for test cafe. Using custom navigation
+    // WIP: figure out how to make language click event work with testcafe
+    // .click(languageButtons.nth(2))
+    .navigateTo(`${siteRoot}/en`)
+    .expect(getLocation()).contains(`${siteRoot}/en`)
+    .expect(title.textContent).eql('Service map')
+  ;
 
-  testFinnish(t);
+  await t
+    .expect(await languageButtons.nth(3).innerText.then(s => s.toLocaleLowerCase())).contains('på svenska')
+    // This event doesn't work for test cafe. Using custom navigation
+    // WIP: figure out how to make language click event work with testcafe
+    //.click(languageButtons.nth(3))
+    .navigateTo(`${siteRoot}/sv`)
+    .expect(getLocation()).contains(`${siteRoot}/sv`)
+    .expect(title.textContent).eql('Servicekarta')
+  ;
+});
+
+test('Contrast does change', async (t) => {
+  const contrastButton = ReactSelector('ButtonBase').nth(4);
+  const searchbarContainer = Selector('main').find('.SearchBar');
+
+  await t
+    .expect(searchbarContainer.getStyleProperty('background-image')).contains(paletteDefault.background.front)
+    .click(contrastButton)
+    .expect(searchbarContainer.getStyleProperty('background-image')).contains(paletteDark.background.front)
+  ;
 });
 
 fixture`Map tests`

@@ -397,12 +397,4 @@ export default {
   'info.statement': 'Saavutettavuusseloste',
 
   'alert.close': 'Sulje ilmoitus',
-
-  // TODO: remove these once this corona alert is no longer used
-  'alert.title': 'Koronaviruksen takia suurin osa julkisista palvelupisteistä on kiinni',
-  'alert.text': 'Lue lisää: ',
-  'alert.link.helsinki': 'https://www.hel.fi/helsinki/fi/kaupunki-ja-hallinto/tietoa-helsingista/yleistietoa-helsingista/koronavirus/',
-  'alert.link.espoo': 'https://www.espoo.fi/fi-FI',
-  'alert.link.vantaa': 'https://www.vantaa.fi/',
-  'alert.link.kauniainen': 'https://www.kauniainen.fi/',
 };

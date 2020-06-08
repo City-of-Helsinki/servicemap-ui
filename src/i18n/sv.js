@@ -397,12 +397,4 @@ export default {
   'info.statement': 'Tillgänglighetsredogörelsen',
 
   'alert.close': 'Stäng meddelande',
-
-  // TODO: remove these once this corona alert is no longer used
-  'alert.title': 'De flesta offentliga tjänster är stängda på grund av coronaviruset',
-  'alert.text': 'Läs mera: ',
-  'alert.link.helsinki': 'https://www.hel.fi/helsinki/sv/stad-och-forvaltning/information/allman/aktuellt/coronaviruset',
-  'alert.link.espoo': 'https://www.esbo.fi/sv-FI',
-  'alert.link.vantaa': 'https://www.vanda.fi/framsida',
-  'alert.link.kauniainen': 'https://www.kauniainen.fi/sv',
 };

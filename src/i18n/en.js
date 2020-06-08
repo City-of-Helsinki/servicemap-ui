@@ -397,12 +397,4 @@ export default {
   'info.statement': 'Accessibility statement',
 
   'alert.close': 'Close the notification',
-
-  // TODO: remove these once this corona alert is no longer used
-  'alert.title': 'Due to the Coronavirus epidemic most of the public services are closed',
-  'alert.text': 'Read more: ',
-  'alert.link.helsinki': 'https://www.hel.fi/helsinki/en/administration/information/general/information/coronavirus',
-  'alert.link.espoo': 'https://www.espoo.fi/en-US',
-  'alert.link.vantaa': 'https://www.vantaa.fi/front_page#',
-  'alert.link.kauniainen': 'https://www.kauniainen.fi/en',
 };
