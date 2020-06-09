@@ -14,10 +14,6 @@ import AreaTab from './components/AreaTab';
 import { districtFetch } from '../../utils/fetch';
 
 
-const formAddressString = address => (address
-  ? `${address.street.name.fi} ${address.number}${address.number_end ? address.number_end : ''}${address.letter ? address.letter : ''}, ${uppercaseFirst(address.street.municipality)}`
-  : '');
-
 const fetchReducer = (state, action) => {
   switch (action.type) {
     case 'add':
@@ -39,6 +35,7 @@ const AreaView = ({
   selectedDistrictData,
   addressDistrict,
   map,
+  getLocaleText,
   navigator,
   classes,
   intl,
@@ -106,6 +103,9 @@ const AreaView = ({
   const [openItems, setOpenItems] = useState([]); // List items that are expanded
   const [fetching, dispatchFetching] = useReducer(fetchReducer, []); // Fetch state
 
+  const formAddressString = address => (address
+    ? `${getLocaleText(address.street.name)} ${address.number}${address.number_end ? address.number_end : ''}${address.letter ? address.letter : ''}, ${uppercaseFirst(address.street.municipality)}`
+    : '');
 
   const focusLocalDistrict = () => {
     if (selectedAddress && addressDistrict) {

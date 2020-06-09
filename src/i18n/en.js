@@ -23,30 +23,29 @@ export default {
   'address.plural': 'Addresses',
   'address.services.header': 'Services for people who live here',
   'address.services.info': 'Services for people who live here',
-  'address.area.link': 'Tutustu alueisiin kartalla.', // TODO: translate,
+  'address.area.link': 'Get to know the areas on the map.',
   'address.emergency_care.common': 'When your health station is closed and in the night between 22-8, emergency care for children and young people under age 16 is provided at <a class="link" href="/unit/7299">Children\'s Hospital</a> [<a class="external-link" href="http://www.hus.fi/en/medical-care/hospitals/childrens-hospital/Pages/default.aspx">homepage</a>], and for adults at',
   'address.emergency_care.unit.26107': 'Malmi hospital',
   'address.emergency_care.unit.26104': 'Haartman hospital',
   'address.emergency_care.link': '[<a href="http://www.hel.fi/www/Helsinki/fi/sosiaali-ja-terveyspalvelut/terveyspalvelut/paivystys/" class="external-link">emergency webpages</a>]',
 
   // Area
-  'area.searchbar.infoText.address': 'Kirjoita kotiosoitteesi', // TODO: translate
+  'area.searchbar.infoText.address': 'Write your home address',
   'area.searchbar.infoText.optional': '(optional)',
   'area.tab.selection': 'Choice of area',
   'area.tab.services': 'Services in the chosen area',
   'area.services.local': 'Services in your own area',
   'area.services.nearby': 'Services in the neighbouring areas',
-  'area.open.category': 'Open category',
   'area.info': 'Valitse alue, jonka palveluista haluat tietoa. Kirjoittamalla alla olevaan hakukenttään kotiosoitteesi saat näkyville karttaan ja Valitun alueen palvelut -välilehdelle alueet ja piirit, joihin kuulut',
-  'area.choose.district': 'Valitse alue', // TODO: translate
-  'area.noSelection': 'Valitse alue Alueen Valinta -välilehdeltä', // TODO: translate
+  'area.choose.district': 'Choose area',
+  'area.noSelection': 'Choose area from the Choice of Area tab',
   'area.list.geographical': 'Geographical',
   'area.list.protection': 'Civil defence',
   'area.list.health': 'Health',
   'area.list.education': 'Education',
-  'area.list.education.finnish': 'Suomenkieliset koulualueet', // TODO: translate
-  'area.list.education.swedish': 'Ruotsinkieliset koulualueet', // TODO: translate
-  'area.list.preschool': 'Esiopetus', // TODO: translate
+  'area.list.education.finnish': 'Finnish school areas',
+  'area.list.education.swedish': 'Swedish school areas',
+  'area.list.preschool': 'Pre-school education',
   'area.list.neighborhood': 'Neighborhood',
   'area.list.postcode_area': 'Postcode area',
   'area.list.rescue_area': 'Civil defence district',
@@ -129,6 +128,7 @@ export default {
   'general.home': 'Home',
   'general.noData': 'No data available',
   'general.loading': 'Loading',
+  'general.loading.done': 'Loading completed',
   'general.showOnMap': 'Show on map',
   'general.pageTitles.home': 'Home view',
   'general.pageTitles.search': 'Search results view',
@@ -170,7 +170,7 @@ export default {
   'home.buttons.services': 'Get to know the services using the Services list',
   'home.buttons.closeByServices': 'Show nearby services',
   'home.buttons.instructions': 'Tips for using the service map',
-  'home.buttons.area': 'Katso alueet, kaupunginosat ja väestönsuojelupiirit', // TODO: translate
+  'home.buttons.area': 'Check the areas, neighbourhoods and civil defence districts',
   'home.example.search': 'Search for',
   'home.message': 'Message from the developers',
   'home.send.feedback': 'Give feedback',
@@ -396,13 +396,5 @@ export default {
   'info.title': 'About the service',
   'info.statement': 'Accessibility statement',
 
-  'alert.close': 'Close notification', // TODO: verify
-
-  // TODO: remove these once this corona alert is no longer used
-  'alert.title': 'Due to the Coronavirus epidemic most of the public services are closed',
-  'alert.text': 'Read more: ',
-  'alert.link.helsinki': 'https://www.hel.fi/helsinki/en/administration/information/general/information/coronavirus',
-  'alert.link.espoo': 'https://www.espoo.fi/en-US',
-  'alert.link.vantaa': 'https://www.vantaa.fi/front_page#',
-  'alert.link.kauniainen': 'https://www.kauniainen.fi/en',
+  'alert.close': 'Close the notification',
 };

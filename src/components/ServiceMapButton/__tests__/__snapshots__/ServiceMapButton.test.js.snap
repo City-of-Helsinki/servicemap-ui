@@ -1,0 +1,162 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ServiceMapButton /> should work 1`] = `
+<InjectIntl(WithStyles(SMButton))
+  onClick={[Function]}
+  role="button"
+>
+  <WithStyles(SMButton)
+    intl={
+      Object {
+        "defaultFormats": Object {},
+        "defaultLocale": "en",
+        "formatDate": [Function],
+        "formatHTMLMessage": [Function],
+        "formatMessage": [Function],
+        "formatNumber": [Function],
+        "formatPlural": [Function],
+        "formatRelative": [Function],
+        "formatTime": [Function],
+        "formats": Object {},
+        "formatters": Object {
+          "getDateTimeFormat": [Function],
+          "getMessageFormat": [Function],
+          "getNumberFormat": [Function],
+          "getPluralFormat": [Function],
+          "getRelativeFormat": [Function],
+        },
+        "locale": "fi",
+        "messages": Object {
+          "button.text": "Button text",
+        },
+        "now": [Function],
+        "onError": [Function],
+        "textComponent": "span",
+        "timeZone": null,
+      }
+    }
+    onClick={[Function]}
+    role="button"
+  >
+    <SMButton
+      aria-label={null}
+      className=""
+      classes={
+        Object {
+          "button": "SMButton-button-1",
+          "default": "SMButton-default-7",
+          "margin": "SMButton-margin-3",
+          "marginRight": "SMButton-marginRight-4",
+          "primary": "SMButton-primary-5",
+          "primaryFocus": "SMButton-primaryFocus-9",
+          "secondary": "SMButton-secondary-6",
+          "smallButton": "SMButton-smallButton-2",
+          "typography": "SMButton-typography-8",
+        }
+      }
+      color="default"
+      disabled={false}
+      icon={null}
+      intl={
+        Object {
+          "defaultFormats": Object {},
+          "defaultLocale": "en",
+          "formatDate": [Function],
+          "formatHTMLMessage": [Function],
+          "formatMessage": [Function],
+          "formatNumber": [Function],
+          "formatPlural": [Function],
+          "formatRelative": [Function],
+          "formatTime": [Function],
+          "formats": Object {},
+          "formatters": Object {
+            "getDateTimeFormat": [Function],
+            "getMessageFormat": [Function],
+            "getNumberFormat": [Function],
+            "getPluralFormat": [Function],
+            "getRelativeFormat": [Function],
+          },
+          "locale": "fi",
+          "messages": Object {
+            "button.text": "Button text",
+          },
+          "now": [Function],
+          "onError": [Function],
+          "textComponent": "span",
+          "timeZone": null,
+        }
+      }
+      margin={false}
+      messageID={null}
+      onClick={[Function]}
+      role="button"
+      small={false}
+      style={null}
+    >
+      <WithStyles(ButtonBase)
+        aria-label={null}
+        className="SMButton-button-1  SMButton-marginRight-4  SMButton-default-7"
+        disabled={false}
+        focusVisibleClassName={null}
+        icon={null}
+        onClick={[Function]}
+        role="button"
+        style={Object {}}
+        variant="contained"
+      >
+        <ButtonBase
+          aria-label={null}
+          centerRipple={false}
+          className="SMButton-button-1  SMButton-marginRight-4  SMButton-default-7"
+          classes={
+            Object {
+              "disabled": "MuiButtonBase-disabled-11",
+              "focusVisible": "MuiButtonBase-focusVisible-12",
+              "root": "MuiButtonBase-root-10",
+            }
+          }
+          component="button"
+          disableRipple={true}
+          disableTouchRipple={false}
+          disabled={false}
+          focusRipple={false}
+          focusVisibleClassName={null}
+          icon={null}
+          onClick={[Function]}
+          role="button"
+          style={Object {}}
+          tabIndex="0"
+          type="button"
+          variant="contained"
+        >
+          <button
+            aria-label={null}
+            className="MuiButtonBase-root-10 SMButton-button-1  SMButton-marginRight-4  SMButton-default-7"
+            disabled={false}
+            icon={null}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onContextMenu={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+            onMouseDown={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            onTouchEnd={[Function]}
+            onTouchMove={[Function]}
+            onTouchStart={[Function]}
+            role="button"
+            style={Object {}}
+            tabIndex="0"
+            type="button"
+            variant="contained"
+          >
+            Test
+          </button>
+        </ButtonBase>
+      </WithStyles(ButtonBase)>
+    </SMButton>
+  </WithStyles(SMButton)>
+</InjectIntl(WithStyles(SMButton))>
+`;

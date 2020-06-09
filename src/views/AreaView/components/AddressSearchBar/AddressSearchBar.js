@@ -8,7 +8,7 @@ import { Cancel } from '@material-ui/icons';
 import config from '../../../../../config';
 
 const AddressSearchBar = ({
-  defaultValue, setSelectedAddress, formAddressString, classes, intl,
+  defaultValue, setSelectedAddress, formAddressString, locale, classes, intl,
 }) => {
   const [addressResults, setAddressResults] = useState([]);
   const [resultIndex, setResultIndex] = useState(0);
@@ -46,7 +46,7 @@ const AddressSearchBar = ({
     setSearchBarValue(text);
     // Fetch address suggestions
     if (text.length && text.length > 1) {
-      fetch(`${config.serviceMapAPI.root}/search/?input=${text}&page=1&page_size=${suggestionCount}&type=address`)
+      fetch(`${config.serviceMapAPI.root}/search/?input=${text}&language=${locale}&page=1&page_size=${suggestionCount}&type=address`)
         .then(res => res.json())
         .then(data => setAddressResults(data.results))
         .catch((res) => {
@@ -111,6 +111,7 @@ AddressSearchBar.propTypes = {
   defaultValue: PropTypes.string.isRequired,
   setSelectedAddress: PropTypes.func.isRequired,
   formAddressString: PropTypes.func.isRequired,
+  locale: PropTypes.string.isRequired,
 };
 
 AddressSearchBar.defaultProps = {

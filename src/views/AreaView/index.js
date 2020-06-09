@@ -10,6 +10,7 @@ import {
   setDistrictAddressData,
 } from '../../redux/actions/district';
 import { getDistrictsByType, getAddressDistrict } from '../../redux/selectors/district';
+import { getLocaleString } from '../../redux/selectors/locale';
 
 const mapStateToProps = (state) => {
   const { districtData, selectedDistrict, districtAddressData } = state.districts;
@@ -17,12 +18,14 @@ const mapStateToProps = (state) => {
   const map = state.mapRef;
   const selectedDistrictData = getDistrictsByType(state);
   const addressDistrict = getAddressDistrict(state);
+  const getLocaleText = textObject => getLocaleString(state, textObject);
   return {
     districtData,
     selectedDistrictData,
     selectedDistrict,
     districtAddressData,
     addressDistrict,
+    getLocaleText,
     navigator,
     map,
   };

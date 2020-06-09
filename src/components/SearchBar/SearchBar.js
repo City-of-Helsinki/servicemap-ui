@@ -19,6 +19,8 @@ class SearchBar extends React.Component {
 
   blurTimeout = null;
 
+  rootClass = 'SearchBar';
+
   searchRef = null;
 
   constructor(props) {
@@ -291,6 +293,8 @@ class SearchBar extends React.Component {
     const { isActive } = this.state;
 
     const rootClasses = `${
+      this.rootClass
+    } ${
       isActive ? classes.mobileActiveRoot : classes.root
     } ${
       !isActive && typeof isSticky === 'number' ? classes.sticky : ''
@@ -339,6 +343,8 @@ class SearchBar extends React.Component {
     } = this.props;
 
     const rootClasses = `${
+      this.rootClass
+    } ${
       classes.root
     } ${
       typeof isSticky === 'number' ? classes.sticky : ''

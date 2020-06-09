@@ -2,6 +2,18 @@
 import { uppercaseFirst } from '.';
 import config from '../../config';
 
+// Gets translated municipality from configuration
+const getTranslatedMunicipality = (address, getLocaleText) => {
+  if (!address || !getLocaleText) {
+    return null;
+  }
+  let municipality = getLocaleText(config.municipality)[address.street.municipality];
+  if (municipality && typeof municipality === 'string') {
+    municipality = municipality.toLowerCase(); // Transform to lowercase
+  }
+  return municipality;
+};
+
 export const addressMatchParamsToFetchOptions = (match) => {
   if (!match) {
     return null;
@@ -75,5 +87,6 @@ export const getAddressText = (address, getLocaleText) => {
   const nEnd = address.number_end ? `-${address.number_end}` : '';
   const letter = address.letter ? address.letter : '';
   const fullNumber = `${nStart}${nEnd}${letter}`;
-  return `${getLocaleText(address.street.name)} ${fullNumber}, ${uppercaseFirst(address.street.municipality)}`;
+  const municipality = getTranslatedMunicipality(address, getLocaleText);
+  return `${getLocaleText(address.street.name)} ${fullNumber}, ${uppercaseFirst(municipality)}`;
 };
