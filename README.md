@@ -24,9 +24,6 @@ Builds the app for production to the `dist` folder.<br>
 
 Builds the app in development mode to the `dist` folder. Used mainly by Travis to run testcafe tests.<br>
 
-    "browserTest": "node browserTests/browserTestRunner.js",
-    "browserTestCLI": "testcafe chrome:headless browserTests/*Test.js --app \"node dist\"",
-    "production": "NODE_ENV=production BABEL_ENV=production webpack --progress --mode production && node dist"
 ### `npm start`
 
 Runs the app by starting node server using build files.
