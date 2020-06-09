@@ -13,7 +13,7 @@ console.error = message => {
   originalConsoleError(message);
 };
 
-// Mock matchMedia to help with component icon props
+// Mock matchMedia to prevent crash when using mediaQuery hooks
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
   value: jest.fn().mockImplementation(query => ({
