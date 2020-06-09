@@ -141,7 +141,7 @@ class Navigator extends React.Component {
     const { history } = this.props;
     const url = new URL(window.location);
 
-    url.searchParams.set('map', 'true');
+    url.searchParams.set('showMap', 'true');
     // TODO: better way to normalize spaces in url
     const searchString = url.search.replace('+', ' ');
     history.push(url.pathname + searchString);
@@ -152,7 +152,7 @@ class Navigator extends React.Component {
     const { history } = this.props;
     const url = new URL(window.location);
 
-    url.searchParams.delete('map');
+    url.searchParams.delete('showMap');
     if (replace) {
       history.goBack();
     } else {
