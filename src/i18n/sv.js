@@ -256,7 +256,7 @@ export default {
     other {# tjänster}
   }`,
   'unit.route': 'Se vägen till det här stället',
-  'unit.route.extra': '(Ny flik. Reseplaneraren är inte en tillgänglig tjänst)',
+  'unit.route.extra': '(Ny flik. HSL-reseplaneraren är inte en tillgänglig tjänst)',
   'unit.socialMedia.title': 'Verksamhetsstället på sociala medier',
 
   // Search
