@@ -14,6 +14,7 @@ import FeedbackView from '../../../views/FeedbackView';
 import DivisionView from '../../../views/DivisionView';
 import InfoView from '../../../views/InfoView';
 import ExtendedData from '../../../views/UnitView/components/ExtendedData';
+import AreaView from '../../../views/AreaView';
 
 const TitleWrapper = ({ children, messageId }) => (
   <>
@@ -135,6 +136,14 @@ const Feedback = () => (
   </TitleWrapper>
 );
 
+const Area = () => (
+  <TitleWrapper messageId="general.pageTitles.area">
+    <PageWrapper headMsgId="" page="area">
+      <AreaView />
+    </PageWrapper>
+  </TitleWrapper>
+);
+
 class ViewRouter extends React.Component {
   constructor(props) {
     super(props);
@@ -154,6 +163,7 @@ class ViewRouter extends React.Component {
         <Route path="/:lng/event/:event" component={Event} />
         <Route path="/:lng/address/:municipality/:street/:number" component={Address} />
         <Route exact path="/:lng/feedback/" component={Feedback} />
+        <Route exact path="/:lng/area/" component={Area} />
         <Route
           path="/:lng/division/:city?/:area?"
           render={() => (

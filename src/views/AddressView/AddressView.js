@@ -1,21 +1,21 @@
 /* eslint-disable global-require */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Typography, Divider, List } from '@material-ui/core';
+import {
+  Typography, Divider, List, ButtonBase,
+} from '@material-ui/core';
 import { intlShape, FormattedMessage } from 'react-intl';
 import { Map } from '@material-ui/icons';
 import Helmet from 'react-helmet';
 import SearchBar from '../../components/SearchBar';
-import { focusDistrict, focusToPosition } from '../MapView/utils/mapActions';
-import fetchDistricts, { fetchAdministrativeDistricts } from './utils/fetchDistricts';
+import { focusToPosition } from '../MapView/utils/mapActions';
+import fetchAdministrativeDistricts from './utils/fetchAdministrativeDistricts';
 import TitleBar from '../../components/TitleBar';
-import TitledList from '../../components/Lists/TitledList';
 import { AddressIcon } from '../../components/SMIcon';
 
 import fetchAddressUnits from './utils/fetchAddressUnits';
 import fetchAddressData from './utils/fetchAddressData';
 import SMButton from '../../components/ServiceMapButton';
-import DistrictItem from './components/DistrictItem';
 import TabLists from '../../components/TabLists';
 import { getAddressText, addressMatchParamsToFetchOptions } from '../../utils/address';
 import DesktopComponent from '../../components/DesktopComponent';
@@ -50,7 +50,6 @@ const getEmergencyCareUnit = (division) => {
 };
 
 const AddressView = (props) => {
-  const [districts, setDistricts] = useState(null);
   const [error, setError] = useState(null);
 
   const {
@@ -58,7 +57,6 @@ const AddressView = (props) => {
     adminDistricts,
     classes,
     embed,
-    highlightedDistrict,
     intl,
     match,
     getAddressNavigatorParams,
@@ -67,8 +65,8 @@ const AddressView = (props) => {
     map,
     setAddressData,
     setAddressLocation,
-    setHighlightedDistrict,
     setAddressUnits,
+    setDistrictAddressData,
     setAdminDistricts,
     setToRender,
     navigator,
@@ -76,16 +74,8 @@ const AddressView = (props) => {
     units,
   } = props;
 
-  const unmountCleanup = () => {
-    setHighlightedDistrict(null);
-  };
-
   const fetchAddressDistricts = (lnglat) => {
-    setDistricts(null);
     setAdminDistricts(null);
-    // Fetch district data
-    fetchDistricts(lnglat)
-      .then(response => setDistricts(response));
     // Fetch administrative districts data
     fetchAdministrativeDistricts(lnglat)
       .then(response => setAdminDistricts(response));
@@ -107,9 +97,8 @@ const AddressView = (props) => {
   };
 
   const fetchData = () => {
-    if (districts || units) {
+    if (units) {
       // Remove old data before fetching new
-      setDistricts(null);
       setAddressUnits([]);
     }
 
@@ -143,26 +132,6 @@ const AddressView = (props) => {
           setError(intl.formatMessage({ id: 'address.error' }));
         }
       });
-  };
-
-  const showDistrictOnMap = (district, mobile) => {
-    // On desktop mode if clicked on an already highlihted district, we want to toggle it off.
-    if (!mobile && highlightedDistrict && highlightedDistrict.id === district.id) {
-      setHighlightedDistrict(null);
-    } else {
-      setHighlightedDistrict(district);
-    }
-
-    const { coordinates } = district.boundary;
-    focusDistrict(map, coordinates);
-    // On mobile, show map when a district is clicked on the list
-    if (mobile && navigator) {
-      // Use this code if we want to show district title on mobile map
-      // const districtName = district.name || district.unit.name;
-      // const title = `${getLocaleText(districtName)} ${intl.formatMessage({ id: `address.list.${district.type}` })}`;
-      // mobileShowOnMap(title);
-      navigator.openMap();
-    }
   };
 
   const renderHead = (title) => {
@@ -212,39 +181,6 @@ const AddressView = (props) => {
   };
 
 
-  const renderDistrictsList = () => {
-    if (districts) {
-      if (Object.entries(districts).length !== 0) {
-        return (
-          Object.entries(districts).map(districtList => (
-            districtList[1].length > 0 && (
-              <div key={districtList[0]} className={classes.districtListcontainer}>
-                <TitledList title={intl.formatMessage({ id: `address.list.${districtList[0]}` })} titleComponent="h4">
-                  {districtList[1].map((district) => {
-                    const unitName = district.unit ? getLocaleText(district.unit.name) : '?';
-                    const title = district.name
-                      ? getLocaleText(district.name) : unitName;
-                    const period = district.start && district.end
-                      ? `${district.start.substring(0, 4)}-${district.end.substring(0, 4)}` : null;
-
-                    return (
-                      <DistrictItem
-                        key={district.id}
-                        district={district}
-                        title={title}
-                        period={period}
-                        showDistrictOnMap={showDistrictOnMap}
-                      />
-                    );
-                  })}
-                </TitledList>
-              </div>
-            )
-          )));
-      } return <Typography><FormattedMessage id="general.noData" /></Typography>;
-    } return <Typography><FormattedMessage id="general.loading" /></Typography>;
-  };
-
   const renderClosebyServices = () => {
     if (!adminDistricts) {
       return <Typography><FormattedMessage id="general.loading" /></Typography>;
@@ -270,6 +206,18 @@ const AddressView = (props) => {
       <>
         <div className={classes.servicesTitle}>
           <Typography align="left" variant="body2"><FormattedMessage id="address.services.info" /></Typography>
+          <ButtonBase
+            role="link"
+            className={classes.areaLink}
+            onClick={() => {
+              setDistrictAddressData({ address: addressData });
+              navigator.push('area');
+            }}
+          >
+            <Typography align="left" variant="body2">
+              <FormattedMessage id="address.area.link" />
+            </Typography>
+          </ButtonBase>
         </div>
         <Divider aria-hidden />
         <List>
@@ -292,17 +240,10 @@ const AddressView = (props) => {
     );
   };
 
-  // Clean up when component unmounts
-  useEffect(() => () => unmountCleanup(), [map]);
-
   // Update view data when match props (url) change
   useEffect(() => {
     if (map) {
       fetchData();
-      if (highlightedDistrict) {
-        // Clear any drawn districts from map
-        setHighlightedDistrict(null);
-      }
     }
   }, [match.url, map]);
 
@@ -320,20 +261,7 @@ const AddressView = (props) => {
       itemsPerPage: null,
       title: intl.formatMessage({ id: 'service.nearby' }),
       onClick: () => {
-        if (highlightedDistrict) {
-          setHighlightedDistrict(null);
-        }
         setToRender('adminDistricts');
-      },
-    },
-    {
-      ariaLabel: intl.formatMessage({ id: 'address.districts' }),
-      component: renderDistrictsList(),
-      data: null,
-      itemsPerPage: null,
-      title: intl.formatMessage({ id: 'address.districts' }),
-      onClick: () => {
-        setToRender('district');
       },
     },
     {
@@ -344,9 +272,6 @@ const AddressView = (props) => {
       title: intl.formatMessage({ id: 'address.nearby' }),
       noOrderer: true, // Remove this when we want result orderer for address unit list
       onClick: () => {
-        if (highlightedDistrict) {
-          setHighlightedDistrict(null);
-        }
         setToRender('units');
       },
     },
@@ -368,7 +293,7 @@ const AddressView = (props) => {
         data={tabs}
         headerComponents={(
           <div className={classes.topArea}>
-            {addressData && units && districts && (
+            {addressData && units && (
               <MobileComponent>
                 <SMButton
                   margin
@@ -387,7 +312,7 @@ const AddressView = (props) => {
           </div>
         )}
       />
-      {addressData && units && districts && (
+      {addressData && units && (
         <MobileComponent>
           <SMButton
             messageID="general.showOnMap"
@@ -414,7 +339,6 @@ AddressView.propTypes = {
     id: PropTypes.number,
   })),
   match: PropTypes.objectOf(PropTypes.any),
-  setHighlightedDistrict: PropTypes.func.isRequired,
   map: PropTypes.objectOf(PropTypes.any),
   intl: intlShape.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
@@ -425,8 +349,8 @@ AddressView.propTypes = {
   setAddressLocation: PropTypes.func.isRequired,
   setAddressUnits: PropTypes.func.isRequired,
   setAdminDistricts: PropTypes.func.isRequired,
+  setDistrictAddressData: PropTypes.func.isRequired,
   setToRender: PropTypes.func.isRequired,
-  highlightedDistrict: PropTypes.objectOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   embed: PropTypes.bool,
@@ -441,7 +365,6 @@ AddressView.defaultProps = {
   match: {},
   map: null,
   navigator: null,
-  highlightedDistrict: null,
   embed: false,
   units: [],
 };
