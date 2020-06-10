@@ -35,7 +35,6 @@ class PaginationComponent extends React.Component {
         <PageElement
           key={i}
           number={i}
-          intl={intl}
           isActive={current === i}
           onClick={() => { handlePageChange(i, pageCount); }}
         />,
