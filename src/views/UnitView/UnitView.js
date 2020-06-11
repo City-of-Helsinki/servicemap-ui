@@ -119,6 +119,7 @@ const UnitView = (props) => {
           icon={<Mail />}
           onClick={() => handleFeedbackClick()}
           margin
+          role="link"
         />
       );
     } return null;
@@ -245,6 +246,7 @@ const UnitView = (props) => {
             }
           }}
           margin
+          role="link"
         />
         {feedbackButton()}
       </div>
