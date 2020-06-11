@@ -121,14 +121,12 @@ class AccessibilityInfo extends React.Component {
   }
 
   renderAccessibilityDescriptions(heading) {
-    const { data } = this.props;
-
+    // Figure out heading levels
+    const { accessibilitySentences, classes, getLocaleText } = this.props;
+    const { data } = accessibilitySentences;
     if (!data) {
       return null;
     }
-
-    // Figure out heading levels
-    const { classes, getLocaleText } = this.props;
     const { groups, sentences } = data;
 
     const groupArray = Object.keys(groups);
@@ -279,10 +277,13 @@ class AccessibilityInfo extends React.Component {
 
 AccessibilityInfo.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  data: PropTypes.objectOf(PropTypes.shape({
-    sentences: PropTypes.any,
-    groups: PropTypes.any,
-  })).isRequired,
+  accessibilitySentences: PropTypes.shape({
+    isFetching: PropTypes.bool,
+    data: PropTypes.objectOf(PropTypes.shape({
+      sentences: PropTypes.any,
+      groups: PropTypes.any,
+    })),
+  }).isRequired,
   headingLevel: PropTypes.oneOf([2, 3, 4, 5]).isRequired,
   getLocaleText: PropTypes.func.isRequired,
   settings: PropTypes.objectOf(PropTypes.any).isRequired,

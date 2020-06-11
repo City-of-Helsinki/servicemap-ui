@@ -206,7 +206,7 @@ const UnitView = (props) => {
             ))}
           </TitledList>
         )}
-        <AccessibilityInfo titleAlways data={accessibilitySentences} headingLevel={4} />
+        <AccessibilityInfo titleAlways headingLevel={4} />
       </div>
     );
   };

@@ -8,7 +8,9 @@ const mapStateToProps = (state) => {
   const { selectedUnit, settings } = state;
   const { data } = selectedUnit.unit;
   const getLocaleText = textObject => getLocaleString(state, textObject);
+  const { accessibilitySentences } = selectedUnit;
   return {
+    accessibilitySentences,
     getLocaleText,
     unit: data,
     settings,
