@@ -285,6 +285,7 @@ const AddressView = (props) => {
             {addressData && units && (
               <MobileComponent>
                 <SMButton
+                  role="link"
                   margin
                   messageID="general.showOnMap"
                   icon={<Map />}
@@ -304,6 +305,7 @@ const AddressView = (props) => {
       {addressData && units && (
         <MobileComponent>
           <SMButton
+            role="link"
             messageID="general.showOnMap"
             icon={<Map />}
             className={classes.mapButton}

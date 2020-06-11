@@ -401,6 +401,7 @@ const ServiceTreeView = (props) => {
           setTreeState({ services, selected, opened });
           navigator.push('search', { service_node: ids });
         }}
+        role="link"
       />
     );
   };
