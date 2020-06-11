@@ -7,6 +7,7 @@ import { Warning, VerifiedUser } from '@material-ui/icons';
 import { FormattedMessage } from 'react-intl';
 import Container from '../../../../components/Container';
 import SettingsUtility from '../../../../utils/settings';
+import Loading from '../../../../components/Loading';
 
 class AccessibilityInfo extends React.Component {
   /**
@@ -121,14 +122,14 @@ class AccessibilityInfo extends React.Component {
   }
 
   renderAccessibilityDescriptions(heading) {
-    // Figure out heading levels
     const { accessibilitySentences, classes, getLocaleText } = this.props;
     const { data } = accessibilitySentences;
     if (!data) {
       return null;
     }
-    const { groups, sentences } = data;
 
+    // Figure out heading levels
+    const { groups, sentences } = data;
     const groupArray = Object.keys(groups);
     const sentenceArray = Object.keys(sentences);
 
@@ -217,7 +218,9 @@ class AccessibilityInfo extends React.Component {
   }
 
   render() {
-    const { classes, titleAlways, headingLevel } = this.props;
+    const {
+      accessibilitySentences, classes, titleAlways, headingLevel,
+    } = this.props;
 
     if (headingLevel < 1 || headingLevel > 5) {
       throw Error('Heading level is invalid');
@@ -267,9 +270,9 @@ class AccessibilityInfo extends React.Component {
             </>
           )
         }
-        {
-          aDescriptions
-        }
+        <Loading reducer={accessibilitySentences}>
+          { aDescriptions }
+        </Loading>
       </Container>
     );
   }
