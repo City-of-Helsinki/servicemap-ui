@@ -4,11 +4,12 @@ import PropTypes from 'prop-types';
 import {
   Typography, Tabs, Tab,
 } from '@material-ui/core';
-import { intlShape } from 'react-intl';
-import { parseSearchParams, stringifySearchParams } from '../../utils';
+import { intlShape, FormattedMessage } from 'react-intl';
+import isClient, { parseSearchParams, stringifySearchParams, AddEventListener } from '../../utils';
 import ResultList from '../Lists/ResultList';
 import PaginationComponent from '../PaginationComponent';
 import ResultOrderer from '../ResultOrderer';
+import AddressSearchBar from '../../views/AreaView/components/AddressSearchBar';
 import config from '../../../config';
 import useMobileStatus from '../../utils/isMobile';
 
@@ -54,7 +55,53 @@ const TabLists = ({
         });
       }
     }
-  };
+  }
+
+  // Handle tab change
+  handleTabChange = (e, value) => {
+    // Prevent tab handling for current tab click
+    const { tabIndex } = this.state;
+    if (tabIndex === value) {
+      return;
+    }
+    const { location, navigator } = this.props;
+    // Update p(page) param to current history
+    // Change page parameter in searchParams
+    const searchParams = parseSearchParams(location.search);
+    searchParams.p = 1;
+    searchParams.t = value;
+
+    // Get new search search params string
+    const searchString = stringifySearchParams(searchParams);
+
+    this.setState({
+      currentPage: 1,
+      tabIndex: value,
+    });
+
+    // Update p(page) param to current history
+    if (navigator) {
+      navigator.replace({
+        ...location,
+        search: `?${searchString || ''}`,
+      });
+    }
+    this.adjustScrollDistance();
+  }
+
+  handleAddressChange = (address) => {
+    const { changeCustomUserLocation } = this.props;
+    if (address) {
+      changeCustomUserLocation(
+        [address.location.coordinates[1], address.location.coordinates[0]],
+      );
+    } else {
+      changeCustomUserLocation(null);
+    }
+  }
+
+  adjustScrollDistance(scroll = null) {
+    const { scrollDistance } = this.state;
 
   const adjustScrollDistance = (scroll = null) => {
     let scrollDistanceFromTop = scrollDistance;
@@ -158,7 +205,20 @@ const TabLists = ({
       return newPageCount;
     }
     return null;
-  };
+  }
+
+  filteredData() {
+    const { data } = this.props;
+    return data.filter(item => item.component || (item.data && item.data.length > 0));
+  }
+
+  renderHeader() {
+    const {
+      classes, data, headerComponents, userAddress,
+    } = this.props;
+    const {
+      tabIndex, styles,
+    } = this.state;
 
   const renderHeader = () => {
     let fullData = [];
@@ -180,7 +240,16 @@ const TabLists = ({
         }
         {
           fullData.length > 0 && (
-            <ResultOrderer disabled={filteredData[tabIndex].noOrderer} />
+            <>
+              <ResultOrderer disabled={filteredData[tabIndex].noOrderer} />
+              <AddressSearchBar
+                defaultAddress={userAddress}
+                containerClassName={classes.addressBar}
+                inputClassName={classes.addressBarInput}
+                title={<FormattedMessage id="area.searchbar.infoText.address" />}
+                handleAddressChange={address => this.handleAddressChange(address)}
+              />
+            </>
           )
         }
         <Tabs
@@ -359,6 +428,8 @@ TabLists.propTypes = {
     data: PropTypes.array,
     itemsPerPage: PropTypes.number,
   })).isRequired,
+  changeCustomUserLocation: PropTypes.func.isRequired,
+  userAddress: PropTypes.objectOf(PropTypes.any),
   headerComponents: PropTypes.objectOf(PropTypes.any),
   intl: intlShape.isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -368,6 +439,7 @@ TabLists.propTypes = {
 TabLists.defaultProps = {
   headerComponents: null,
   navigator: null,
+  userAddress: null,
 };
 
 export default TabLists;
