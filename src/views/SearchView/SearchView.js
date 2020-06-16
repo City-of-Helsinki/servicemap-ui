@@ -90,7 +90,7 @@ class SearchView extends React.Component {
     if (options.service && serviceRedirect !== options.service) {
       // Reset serviceRedirect
       this.setState({ serviceRedirect: null });
-      
+
       // Fetch service_node for given old service data
       fetchRedirectService({ service: options.service }, (data) => {
         // Success
@@ -435,7 +435,6 @@ class SearchView extends React.Component {
         data: groupedData.addresses,
         itemsPerPage: 10,
         title: intl.formatMessage({ id: 'address.plural' }),
-        noOrderer: true,
       },
     ];
 
