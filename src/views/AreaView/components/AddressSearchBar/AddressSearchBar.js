@@ -1,25 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { intlShape, FormattedMessage } from 'react-intl';
 import {
   InputBase, IconButton, Paper, List, ListItem, Typography,
 } from '@material-ui/core';
-import { Cancel } from '@material-ui/icons';
+import { Clear } from '@material-ui/icons';
 import config from '../../../../../config';
+import { uppercaseFirst } from '../../../../utils';
 
 const AddressSearchBar = ({
-  defaultValue, setSelectedAddress, formAddressString, locale, classes, intl,
+  defaultAddress,
+  handleAddressChange,
+  title,
+  locale,
+  containerClassName,
+  inputClassName,
+  getLocaleText,
+  classes,
+  intl,
 }) => {
+  const formAddressString = address => (address
+    ? `${getLocaleText(address.street.name)} ${address.number}${address.number_end ? address.number_end : ''}${address.letter ? address.letter : ''}, ${uppercaseFirst(address.street.municipality)}`
+    : '');
+
   const [addressResults, setAddressResults] = useState([]);
   const [resultIndex, setResultIndex] = useState(0);
-  const [searchBarValue, setSearchBarValue] = useState(defaultValue);
+  const [searchBarValue, setSearchBarValue] = useState(formAddressString(defaultAddress));
 
   const suggestionCount = 5;
 
   const handleAddressSelect = (address) => {
     setSearchBarValue(formAddressString(address));
     setAddressResults([]);
-    setSelectedAddress(address);
+    handleAddressChange(address);
   };
 
   const handleSearchBarKeyPress = (e) => {
@@ -55,9 +68,14 @@ const AddressSearchBar = ({
     }
   };
 
+  useEffect(() => {
+    setSearchBarValue(formAddressString(defaultAddress));
+  }, [defaultAddress]);
+
   const showSuggestions = searchBarValue.length > 1 && addressResults && addressResults.length;
   return (
-    <>
+    <div className={containerClassName}>
+      <Typography color="inherit">{title}</Typography>
       <InputBase
         inputProps={{
           role: 'combobox',
@@ -65,23 +83,20 @@ const AddressSearchBar = ({
           'aria-label': intl.formatMessage({ id: 'search.searchField' }),
         }}
         type="search"
-        className={classes.searchBar}
+        className={`${classes.searchBar} ${inputClassName}`}
         value={searchBarValue}
-        classes={{ focused: classes.fieldFocus }}
         onChange={e => handleInputChange(e.target.value)}
         onKeyDown={e => showSuggestions && handleSearchBarKeyPress(e)}
         endAdornment={(
-          searchBarValue.length ? (
-            <IconButton
-              aria-label={intl.formatMessage({ id: 'search.cancelText' })}
-              onClick={() => {
-                setSelectedAddress(null);
-                setSearchBarValue('');
-              }}
-            >
-              <Cancel className={classes.cancelButton} />
-            </IconButton>
-          ) : null
+          <IconButton
+            aria-label={intl.formatMessage({ id: 'search.cancelText' })}
+            onClick={() => {
+              handleAddressChange(null);
+              setSearchBarValue('');
+            }}
+          >
+            <Clear className={classes.clearButton} />
+          </IconButton>
         )}
       />
       {showSuggestions ? (
@@ -95,26 +110,35 @@ const AddressSearchBar = ({
                 button
                 onClick={() => handleAddressSelect(address)}
               >
-                {formAddressString(address)}
+                <Typography>
+                  {formAddressString(address)}
+                </Typography>
               </ListItem>
             ))}
           </List>
         </Paper>
       ) : null}
-    </>
+    </div>
   );
 };
 
 AddressSearchBar.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   intl: intlShape.isRequired,
-  defaultValue: PropTypes.string.isRequired,
-  setSelectedAddress: PropTypes.func.isRequired,
-  formAddressString: PropTypes.func.isRequired,
+  defaultAddress: PropTypes.objectOf(PropTypes.any),
+  handleAddressChange: PropTypes.func.isRequired,
+  title: PropTypes.objectOf(PropTypes.any),
   locale: PropTypes.string.isRequired,
+  containerClassName: PropTypes.string,
+  inputClassName: PropTypes.string,
+  getLocaleText: PropTypes.func.isRequired,
 };
 
 AddressSearchBar.defaultProps = {
+  containerClassName: '',
+  inputClassName: '',
+  defaultAddress: null,
+  title: null,
 };
 
 export default AddressSearchBar;

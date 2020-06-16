@@ -76,19 +76,21 @@ const styles = theme => ({
     marginBottom: theme.spacing.unitDouble,
   },
   searchBar: {
-    paddingLeft: theme.spacing.unit,
+    paddingLeft: theme.spacing.unitDouble,
+    marginTop: theme.spacing.unit,
     border: '1px solid #ACACAC',
     borderRadius: 4,
     width: '100%',
-    height: 54,
+    height: '80%',
     boxSizing: 'border-box',
+    backgroundColor: '#fff',
   },
   fieldFocus: {
     outline: '2px solid transparent',
     boxShadow: `0 0 0 4px ${theme.palette.focusBorder}`,
   },
-  cancelButton: {
-    fontSize: 16,
+  clearButton: {
+    fontSize: 22,
   },
   addressItem: {
     fontSize: 24,

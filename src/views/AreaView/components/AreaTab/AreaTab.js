@@ -17,7 +17,6 @@ const AreaTab = ({
   districtData,
   openItems,
   handleOpen,
-  formAddressString,
   dataStructure,
   setSelectedAddress,
   address,
@@ -127,15 +126,16 @@ const AreaTab = ({
         <FormattedMessage id="area.info" />
       </Typography>
       <div className={classes.addressArea}>
-        <Typography className={classes.addressTitle}>
-          <FormattedMessage id="area.searchbar.infoText.address" />
-          {' '}
-          <FormattedMessage id="area.searchbar.infoText.optional" />
-        </Typography>
         <AddressSearchBar
-          defaultValue={formAddressString(address)}
-          setSelectedAddress={setSelectedAddress}
-          formAddressString={formAddressString}
+          defaultAddress={address}
+          handleAddressChange={setSelectedAddress}
+          title={(
+            <>
+              <FormattedMessage id="area.searchbar.infoText.address" />
+              {' '}
+              <FormattedMessage id="area.searchbar.infoText.optional" />
+            </>
+          )}
         />
       </div>
       <div className={classes.infoTitle}>
@@ -186,7 +186,6 @@ AreaTab.propTypes = {
   setSelectedAddress: PropTypes.func.isRequired,
   handleOpen: PropTypes.func.isRequired,
   setRadioValue: PropTypes.func.isRequired,
-  formAddressString: PropTypes.func.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
 };
 
