@@ -5,8 +5,8 @@ import {
   InputBase, IconButton, Paper, List, ListItem, Typography,
 } from '@material-ui/core';
 import { Clear } from '@material-ui/icons';
-import config from '../../../../../config';
-import { uppercaseFirst } from '../../../../utils';
+import config from '../../../config';
+import { uppercaseFirst } from '../../utils';
 
 const AddressSearchBar = ({
   defaultAddress,

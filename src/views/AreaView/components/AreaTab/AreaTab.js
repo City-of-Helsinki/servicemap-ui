@@ -6,7 +6,7 @@ import {
 import { FormattedMessage } from 'react-intl';
 import { ArrowDropUp, ArrowDropDown, Map } from '@material-ui/icons';
 import { AreaIcon } from '../../../../components/SMIcon';
-import AddressSearchBar from '../AddressSearchBar';
+import AddressSearchBar from '../../../../components/AddressSearchBar';
 import MobileComponent from '../../../../components/MobileComponent';
 import SMButton from '../../../../components/ServiceMapButton';
 

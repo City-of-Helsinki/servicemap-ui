@@ -9,7 +9,7 @@ import isClient, { parseSearchParams, stringifySearchParams, AddEventListener } 
 import ResultList from '../Lists/ResultList';
 import PaginationComponent from '../PaginationComponent';
 import ResultOrderer from '../ResultOrderer';
-import AddressSearchBar from '../../views/AreaView/components/AddressSearchBar';
+import AddressSearchBar from '../AddressSearchBar';
 import config from '../../../config';
 import useMobileStatus from '../../utils/isMobile';
 
