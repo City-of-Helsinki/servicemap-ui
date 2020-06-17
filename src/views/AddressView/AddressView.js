@@ -21,6 +21,7 @@ import { getAddressText, addressMatchParamsToFetchOptions } from '../../utils/ad
 import DesktopComponent from '../../components/DesktopComponent';
 import MobileComponent from '../../components/MobileComponent';
 import DivisionItem from '../../components/ListItems/DivisionItem';
+import { parseSearchParams } from '../../utils';
 
 
 const hiddenDivisions = {
@@ -69,6 +70,7 @@ const AddressView = (props) => {
     setAdminDistricts,
     setToRender,
     navigator,
+    location,
     units,
   } = props;
 
@@ -274,6 +276,15 @@ const AddressView = (props) => {
       },
     },
   ];
+
+  useEffect(() => {
+    const searchParams = parseSearchParams(location.search);
+    const selectedTab = parseInt(searchParams.t, 10) || 0;
+    if (tabs[selectedTab].onClick) {
+      tabs[selectedTab].onClick();
+    }
+  }, []);
+
   return (
     <div>
       {renderHead(title)}
@@ -343,6 +354,7 @@ AddressView.propTypes = {
   setDistrictAddressData: PropTypes.func.isRequired,
   setToRender: PropTypes.func.isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
+  location: PropTypes.objectOf(PropTypes.any).isRequired,
   embed: PropTypes.bool,
   units: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number,
