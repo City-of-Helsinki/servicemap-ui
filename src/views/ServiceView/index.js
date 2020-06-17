@@ -11,10 +11,6 @@ import styles from './styles';
 
 const mapStateToProps = (state) => {
   const { service, user } = state;
-  const {
-    count, current, errorMessage, isFetching, max,
-  } = service;
-
   const { customPosition } = user;
 
   const getLocaleText = textObject => getLocaleString(state, textObject);
@@ -22,15 +18,11 @@ const mapStateToProps = (state) => {
   const units = getServiceUnits(state);
 
   return {
-    count,
-    current,
     customPosition: customPosition.coordinates,
-    error: errorMessage,
     getLocaleText,
-    isLoading: isFetching,
     map,
-    max,
     unitData: units,
+    serviceReducer: service,
   };
 };
 
