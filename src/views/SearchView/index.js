@@ -30,6 +30,7 @@ const mapStateToProps = (state) => {
   return {
     unit: state.unit,
     units: unitData,
+    unitsReducer: units,
     isFetching,
     isRedirectFetching,
     count,

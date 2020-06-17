@@ -184,32 +184,26 @@ const UnitView = (props) => {
     );
   };
 
-  const renderAccessibilityTab = () => {
-    if (!unit || !unit.complete || !accessibilitySentences) {
-      return <></>;
-    }
-
-    return (
-      <div className={classes.content}>
-        {hearingMaps && (
-          <TitledList titleComponent="h4" title={intl.formatMessage({ id: 'unit.accessibility.hearingMaps' })}>
-            {hearingMaps.map(item => (
-              <SimpleListItem
-                role="link"
-                link
-                divider
-                icon={<Hearing />}
-                key={item.name}
-                text={`${item.name} ${intl.formatMessage({ id: 'unit.opens.new.tab' })}`}
-                handleItemClick={() => window.open(item.url)}
-              />
-            ))}
-          </TitledList>
-        )}
-        <AccessibilityInfo titleAlways data={accessibilitySentences} headingLevel={4} />
-      </div>
-    );
-  };
+  const renderAccessibilityTab = () => (
+    <div className={classes.content}>
+      {hearingMaps && (
+        <TitledList titleComponent="h4" title={intl.formatMessage({ id: 'unit.accessibility.hearingMaps' })}>
+          {hearingMaps.map(item => (
+            <SimpleListItem
+              role="link"
+              link
+              divider
+              icon={<Hearing />}
+              key={item.name}
+              text={`${item.name} ${intl.formatMessage({ id: 'unit.opens.new.tab' })}`}
+              handleItemClick={() => window.open(item.url)}
+            />
+          ))}
+        </TitledList>
+      )}
+      <AccessibilityInfo titleAlways headingLevel={4} />
+    </div>
+  );
 
   const renderServiceTab = () => {
     if (!unit || !unit.complete) {
