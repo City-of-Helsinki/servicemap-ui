@@ -1,18 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Typography, LinearProgress, withStyles } from '@material-ui/core';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, intlShape } from 'react-intl';
 import styles from './styles';
 
 const Loading = (props) => {
   const {
-    children, classes, text, progress, reducer,
+    children, classes, text, intl, progress, reducer,
   } = props;
 
   if (reducer) {
-    const { data, isFetching } = reducer;
+    const {
+      count, data, isFetching, max,
+    } = reducer;
     // Render loding text if currently loading information
     if (isFetching) {
+      if (max) {
+        const progress = (isFetching && count) ? Math.floor((count / max * 100)) : 0;
+        const text = intl && intl.formatMessage({ id: 'search.loading.units' }, { count, max });
+        return (
+          <div className={classes.root}>
+            <Typography variant="body2" aria-hidden="true">{text || <FormattedMessage id="general.fetching" />}</Typography>
+            <LinearProgress variant="determinate" value={Math.min(progress, 100)} />
+          </div>
+        );
+      }
       return <Typography className={classes.root}><FormattedMessage id="general.loading" /></Typography>;
     }
     // Check if data exists or if data is an array that it has results
@@ -45,6 +57,7 @@ Loading.propTypes = {
       PropTypes.array,
     ]),
   }),
+  intl: intlShape.isRequired,
 };
 
 Loading.defaultProps = {
