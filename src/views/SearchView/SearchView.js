@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import styles from './styles';
-import Loading from '../../components/Loading/Loading';
+import Loading from '../../components/Loading';
 import SearchBar from '../../components/SearchBar';
 import { fitUnitsToMap } from '../MapView/utils/mapActions';
 import { parseSearchParams, getSearchParam } from '../../utils';
@@ -90,7 +90,7 @@ class SearchView extends React.Component {
     if (options.service && serviceRedirect !== options.service) {
       // Reset serviceRedirect
       this.setState({ serviceRedirect: null });
-      
+
       // Fetch service_node for given old service data
       fetchRedirectService({ service: options.service }, (data) => {
         // Success
@@ -476,10 +476,9 @@ class SearchView extends React.Component {
 
   render() {
     const {
-      classes, isFetching, intl, count, max, embed,
+      classes, isFetching, embed, unitsReducer,
     } = this.props;
     const { expandVisible } = this.state;
-    const progress = (isFetching && count) ? Math.floor((count / max * 100)) : 0;
 
     const redirect = this.handleSingleResultRedirect();
 
@@ -510,13 +509,11 @@ class SearchView extends React.Component {
             this.renderScreenReaderInfo()
           }
         </Paper>
-        {
-          this.renderResults()
-        }
-        {
-          isFetching
-          && <Loading text={intl && intl.formatMessage({ id: 'search.loading.units' }, { count, max })} progress={progress} />
-        }
+        <Loading reducer={unitsReducer}>
+          {
+            this.renderResults()
+          }
+        </Loading>
         {
           <SettingsInfo />
         }
@@ -543,7 +540,6 @@ export default withRouter(injectIntl(withStyles(styles)(SearchView)));
 // Typechecking
 SearchView.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  count: PropTypes.number,
   embed: PropTypes.bool,
   fetchUnits: PropTypes.func,
   fetchRedirectService: PropTypes.func,
@@ -556,13 +552,13 @@ SearchView.propTypes = {
   max: PropTypes.number,
   previousSearch: PropTypes.oneOfType([PropTypes.string, PropTypes.objectOf(PropTypes.any)]),
   units: PropTypes.arrayOf(PropTypes.any),
+  unitsReducer: PropTypes.objectOf(PropTypes.any),
   map: PropTypes.objectOf(PropTypes.any),
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   query: PropTypes.string,
 };
 
 SearchView.defaultProps = {
-  count: 0,
   embed: false,
   fetchUnits: () => {},
   fetchRedirectService: () => {},
@@ -571,6 +567,7 @@ SearchView.defaultProps = {
   max: 0,
   previousSearch: null,
   units: [],
+  unitsReducer: null,
   map: null,
   query: null,
 };
