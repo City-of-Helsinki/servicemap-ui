@@ -10,15 +10,15 @@ createTestCafe('localhost')
 
     return runner
       .src([
-        'browserTests/accessibilityTest.js',
-        'browserTests/addressTest.js',
-        'browserTests/browserTest.js',
-        'browserTests/divisionTest.js',
-        'browserTests/searchTest.js',
-        'browserTests/serviceTest.js',
-        'browserTests/settingsTest.js',
-        // 'browserTests/titleBarTest.js',
-        'browserTests/unitPageTest.js',
+        // 'browserTests/accessibilityTest.js',
+        // 'browserTests/addressTest.js',
+        // 'browserTests/browserTest.js',
+        // 'browserTests/divisionTest.js',
+        // 'browserTests/searchTest.js',
+        // 'browserTests/serviceTest.js',
+        // 'browserTests/settingsTest.js',
+        // // 'browserTests/titleBarTest.js',
+        // 'browserTests/unitPageTest.js',
         // 'browserTests/unitListPageTest.js',
         'browserTests/areaTest.js',
       ])
