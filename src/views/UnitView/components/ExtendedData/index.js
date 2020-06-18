@@ -18,8 +18,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default injectIntl(connect(mapStateToProps, {
+export default connect(mapStateToProps, {
   fetchSelectedUnit,
   fetchUnitEvents,
   fetchReservations,
-})(ExtendedData));
+})(ExtendedData);
