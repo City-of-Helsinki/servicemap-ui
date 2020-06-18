@@ -156,6 +156,7 @@ const AreaTab = ({
 
       <MobileComponent>
         <SMButton
+          role="link"
           margin
           messageID="general.showOnMap"
           icon={<Map />}

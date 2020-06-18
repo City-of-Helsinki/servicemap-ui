@@ -256,7 +256,7 @@ export default {
     other {# palvelua}
   }`,
   'unit.route': 'Katso reitti tänne',
-  'unit.route.extra': '(Uusi välilehti. Reittiopas ei ole saavutettava palvelu)',
+  'unit.route.extra': '(Uusi välilehti. HSL-reittiopas ei ole saavutettava palvelu)',
   'unit.socialMedia.title': 'Toimipiste sosiaalisessa mediassa',
 
   // Search

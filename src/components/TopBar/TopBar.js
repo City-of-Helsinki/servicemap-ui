@@ -81,7 +81,7 @@ class TopBar extends React.Component {
     const {
       classes, navigator, location, settingsOpen, toggleSettings, breadcrumb,
     } = this.props;
-    const mapPage = location.search.indexOf('map=true') > -1;
+    const mapPage = location.search.indexOf('showMap=true') > -1;
     return (
       <Button
         aria-hidden
@@ -193,7 +193,7 @@ class TopBar extends React.Component {
 
     // Hide settings and map if open
     toggleSettings();
-    if (location.search.indexOf('map=true') > -1) {
+    if (location.search.indexOf('showMap=true') > -1) {
       navigator.closeMap();
     }
 

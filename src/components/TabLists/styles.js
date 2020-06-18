@@ -38,6 +38,9 @@ export default theme => ({
     paddingRight: 0,
     marginTop: theme.spacing.unitDouble,
     marginBottom: theme.spacing.unitDouble,
-    fontSize: 14,
+    fontSize: 'clamp(13px, 1.8vw, 14px)',
+  },
+  mobileTabFont: {
+    fontSize: 11.5,
   },
 });

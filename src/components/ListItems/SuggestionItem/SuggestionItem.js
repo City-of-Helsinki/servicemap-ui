@@ -51,11 +51,10 @@ const SuggestionItem = (props) => {
         onClick={onClick}
         onMouseDown={onClick}
         onMouseUp={() => setMouseDown(false)}
-        onKeyDown={() => {
-          keyboardHandler(onClick, ['space', 'enter']);
-        }}
+        onKeyDown={keyboardHandler(onClick, ['space', 'enter'])}
         onKeyUp={() => setMouseDown(false)}
         role="link"
+        tabIndex="0"
       >
         <span
           className={classes.container}
@@ -128,7 +127,7 @@ const SuggestionItem = (props) => {
         }
       </ListItem>
       {divider ? (
-        <li>
+        <li aria-hidden>
           <Divider aria-hidden className={classes.divider} />
         </li>
       ) : null}

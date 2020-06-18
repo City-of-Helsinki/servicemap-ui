@@ -256,7 +256,7 @@ export default {
     other {# services}
   }`,
   'unit.route': 'Look at the route to this place',
-  'unit.route.extra': '(New tab. The Journey Planner is not an accessible service)',
+  'unit.route.extra': '(New tab. The HSL Journey Planner is not an accessible service)',
   'unit.socialMedia.title': 'The service unit on social media',
 
   // Search
