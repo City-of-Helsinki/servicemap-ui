@@ -39,7 +39,8 @@ const SimpleListItem = (props) => {
         <ListItemText
           classes={{ root: classes.textContainer }}
         >
-          <Typography variant="srOnly">
+          {/* Class rs_skip allows readspeaker to avoid srOnly texts from being read */}
+          <Typography variant="srOnly" className="rs_skip">
             {`${srText || ''} ${text}`}
           </Typography>
 

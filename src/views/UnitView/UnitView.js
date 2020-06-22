@@ -28,6 +28,7 @@ import SimpleListItem from '../../components/ListItems/SimpleListItem';
 import TitledList from '../../components/Lists/TitledList';
 import DesktopComponent from '../../components/DesktopComponent';
 import MobileComponent from '../../components/MobileComponent';
+import ReadSpeakerButton from '../../components/ReadSpeakerButton';
 
 const UnitView = (props) => {
   const {
@@ -150,58 +151,68 @@ const UnitView = (props) => {
 
     return (
       <div className={classes.content}>
-        {/* Contract type */}
-        <Container margin text>
-          <Typography variant="body2">
-            {
-              unit.contract_type
-              && unit.contract_type.description
-              && `${uppercaseFirst(getLocaleText(unit.contract_type.description))}. `
-            }
-            {
-              unit.data_source
-              && <FormattedMessage id="unit.data_source" defaultMessage={'Source: {data_source}'} values={{ data_source: unit.data_source }} />
-            }
-          </Typography>
-        </Container>
+        <ReadSpeakerButton className={classes.rsButton} readID="rscontent-unitdetail" />
+        <div id="rscontent-unitdetail">
+          {/* Contract type */}
+          <Container margin text>
+            <Typography variant="body2">
+              {
+                unit.contract_type
+                && unit.contract_type.description
+                && `${uppercaseFirst(getLocaleText(unit.contract_type.description))}. `
+              }
+              {
+                unit.data_source
+                && <FormattedMessage id="unit.data_source" defaultMessage={'Source: {data_source}'} values={{ data_source: unit.data_source }} />
+              }
+            </Typography>
+          </Container>
 
-        {/* View Components */}
-        <ContactInfo
-          unit={unit}
-          userLocation={userLocation}
-          getLocaleText={getLocaleText}
-          intl={intl}
-        />
-        <SocialMediaLinks unit={unit} getLocaleText={getLocaleText} />
-        <Highlights unit={unit} getLocaleText={getLocaleText} />
-        <Description unit={unit} getLocaleText={getLocaleText} />
-        <UnitLinks unit={unit} />
-        <ElectronicServices unit={unit} />
-        <DesktopComponent>
-          {feedbackButton()}
-        </DesktopComponent>
+          {/* View Components */}
+          <ContactInfo
+            unit={unit}
+            userLocation={userLocation}
+            getLocaleText={getLocaleText}
+            intl={intl}
+          />
+          <SocialMediaLinks unit={unit} getLocaleText={getLocaleText} />
+          <Highlights unit={unit} getLocaleText={getLocaleText} />
+          <Description unit={unit} getLocaleText={getLocaleText} />
+          <UnitLinks unit={unit} />
+          <ElectronicServices unit={unit} />
+          <DesktopComponent>
+            {feedbackButton()}
+          </DesktopComponent>
+        </div>
       </div>
     );
   };
 
   const renderAccessibilityTab = () => (
     <div className={classes.content}>
-      {hearingMaps && (
-        <TitledList titleComponent="h4" title={intl.formatMessage({ id: 'unit.accessibility.hearingMaps' })}>
-          {hearingMaps.map(item => (
-            <SimpleListItem
-              role="link"
-              link
-              divider
-              icon={<Hearing />}
-              key={item.name}
-              text={`${item.name} ${intl.formatMessage({ id: 'unit.opens.new.tab' })}`}
-              handleItemClick={() => window.open(item.url)}
-            />
-          ))}
-        </TitledList>
-      )}
-      <AccessibilityInfo titleAlways headingLevel={4} />
+      <ReadSpeakerButton
+        className={classes.rsButton}
+        readID="rscontent"
+        encodedURL={encodeURI(`palvelukartta.test.hel.ninja${location.pathname}${location.search}`)}
+      />
+      <div id="rscontent" className={classes.aTabAdjuster}>
+        {hearingMaps && (
+          <TitledList titleComponent="h4" title={intl.formatMessage({ id: 'unit.accessibility.hearingMaps' })}>
+            {hearingMaps.map(item => (
+              <SimpleListItem
+                role="link"
+                link
+                divider
+                icon={<Hearing />}
+                key={item.name}
+                text={`${item.name} ${intl.formatMessage({ id: 'unit.opens.new.tab' })}`}
+                handleItemClick={() => window.open(item.url)}
+              />
+            ))}
+          </TitledList>
+        )}
+        <AccessibilityInfo titleAlways headingLevel={4} />
+      </div>
     </div>
   );
 
