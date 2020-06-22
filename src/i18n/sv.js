@@ -164,6 +164,9 @@ export default {
   'general.search': 'Sök',
   'general.distance.meters': 'Meters avstånd',
   'general.distance.kilometers': 'Kilometers avstånd',
+  // Readspeaker
+  'general.readspeaker.buttonText': 'Lyssna', // TODO: verify
+  'general.readspeaker.title': 'Lyssna med ReadSpeaker webReader', // TODO: verify
 
   // Home
   'home.buttons.settings': 'Spara dina egna stads- och tillgänglighetsinställningar',

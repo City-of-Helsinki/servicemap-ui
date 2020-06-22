@@ -144,6 +144,9 @@ export default {
   'general.pageTitles.info': 'Info view',
   'general.pageTitles.feedback': 'Feedback view',
   'general.pageTitles.area': 'Area view.',
+  // Readspeaker
+  'general.readspeaker.buttonText': 'Listen',
+  'general.readspeaker.title': 'Listen with ReadSpeaker webReader',
 
   // General - Pagination
   'general.pagination.previous': 'Previous page',
