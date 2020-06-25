@@ -14,6 +14,7 @@ const SimpleListItem = (props) => {
   return (
     <React.Fragment>
       <ListItem
+        aria-label={`${srText || ''} ${text}`}
         className={className}
         button={!!link || button}
         role={link ? 'link' : role}
@@ -39,9 +40,9 @@ const SimpleListItem = (props) => {
         <ListItemText
           classes={{ root: classes.textContainer }}
         >
-          {/* Class rs_skip allows readspeaker to avoid srOnly texts from being read */}
-          <Typography variant="srOnly" className="rs_skip">
-            {`${srText || ''} ${text}`}
+          {/* ReadSpeaker text - hidden form view and screen readers */}
+          <Typography aria-hidden variant="srOnly">
+            {`${srText || ''}`}
           </Typography>
 
           <Typography
