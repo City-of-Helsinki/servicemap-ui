@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/no-access-key */
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { intlShape, FormattedMessage } from 'react-intl';
 import config from '../../../config';
@@ -10,6 +10,25 @@ const ReadSpeakerButton = ({
   intl,
   readID,
 }) => {
+  useEffect(() => {
+    const rs = window.ReadSpeaker;
+    if (rs) {
+      // eslint-disable-next-line no-undef
+      rs.q(() => { rspkr.ui.addClickEvents(); });
+    }
+    return () => {
+      if (rs) {
+        rs.q(() => {
+          // eslint-disable-next-line no-undef
+          if (rspkr.ui.getActivePlayer()) {
+            // eslint-disable-next-line no-undef
+            rspkr.ui.getActivePlayer().close();
+          }
+        });
+      }
+    };
+  }, []);
+
   const locale = intl && intl.locale ? config.readspeakerLocales[intl.locale] : null;
   if (!locale || !readID) {
     return null;
