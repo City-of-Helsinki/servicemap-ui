@@ -11,6 +11,11 @@ const ReadSpeakerButton = ({
   readID,
 }) => {
   useEffect(() => {
+    /**
+     * ReadSpeaker fixes to fix click events and stop active player from
+     * when changing view.
+     * Important rspkr is not defined anywhere and works with internal query
+     */
     const rs = window.ReadSpeaker;
     if (rs) {
       // eslint-disable-next-line no-undef
