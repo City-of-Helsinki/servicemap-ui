@@ -144,6 +144,14 @@ const UnitView = (props) => {
     return null;
   }
 
+  // Renders hidden title text for readpseaker
+  const renderTitleForRS = () => {
+    const title = unit && unit.name ? getLocaleText(unit.name) : '';
+    return (
+      <Typography variant="srOnly" aria-hidden>{title}</Typography>
+    );
+  }
+
   const renderDetailTab = () => {
     if (!unit || !unit.complete) {
       return <></>;
@@ -153,6 +161,9 @@ const UnitView = (props) => {
       <div className={classes.content}>
         <ReadSpeakerButton className={classes.rsButton} readID="rscontent-unitdetail" />
         <div id="rscontent-unitdetail">
+          {
+            renderTitleForRS()
+          }
           {/* Contract type */}
           <Container margin text>
             <Typography variant="body2">
@@ -196,6 +207,9 @@ const UnitView = (props) => {
         encodedURL={encodeURI(`palvelukartta.test.hel.ninja${location.pathname}${location.search}`)}
       />
       <div id="rscontent" className={classes.aTabAdjuster}>
+        {
+          renderTitleForRS()
+        }
         {hearingMaps && (
           <TitledList titleComponent="h4" title={intl.formatMessage({ id: 'unit.accessibility.hearingMaps' })}>
             {hearingMaps.map(item => (
