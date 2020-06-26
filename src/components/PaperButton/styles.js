@@ -2,8 +2,7 @@ export default theme => ({
   container: {
     flex: '0 0 auto',
     padding: 0,
-    width: '88%',
-    maxWidth: 356,
+    width: '100%',
     border: `${theme.palette.detail.alpha} solid 0.5px`,
     '&:hover': {
       backgroundColor: theme.palette.primary.main,
