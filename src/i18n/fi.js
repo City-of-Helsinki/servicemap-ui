@@ -197,6 +197,7 @@ export default {
   // Units
   'unit': 'Toimipiste',
   'unit.accessibility.hearingMaps': 'Kuuluvuuskartat',
+  'unit.accessibility.hearingMaps.extra': '(Uusi välilehti. Palvelu ei ole saavutettava)',
   'unit.accessibility.noInfo': 'Ei esteettömyystietoja',
   'unit.accessibility.noShortcomings': 'Ei tiedossa olevia puutteita',
   'unit.accessibility.ok': 'Esteetön',
