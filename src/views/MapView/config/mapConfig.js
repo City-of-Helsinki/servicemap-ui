@@ -4,8 +4,8 @@ import { isRetina } from '../../../utils';
 
 // The default maximum bounds of the map
 const defaultMapBounds = {
-  maxLat: 61.5,
-  maxLng: 27.611126145397492,
+  maxLat: 61.755,
+  maxLng: 29.755,
   minLat: 59.1,
   minLng: 21.5,
 };
