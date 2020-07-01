@@ -20,13 +20,25 @@ const styles = theme => ({
   logo: {
     height: 29,
   },
+  mobileFont: {
+    ...theme.typography.caption,
+    lineHeight: '13px',
+    fontWeight: 'normal',
+    letterSpacing: 'normal',
+    color: 'inherit',
+  },
   toolbarBlack: {
     minHeight: 30,
     height: 30,
     backgroundColor: '#141823',
     padding: 0,
-    paddingLeft: 6,
-    paddingRight: 6,
+    paddingLeft: 18,
+    paddingRight: 18,
+  },
+  toolbarBlackMobile: {
+    paddingLeft: 14,
+    paddingRight: 14,
+
   },
   toolbarBlackContainer: {
     justifyContent: 'space-around',
