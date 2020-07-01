@@ -7,7 +7,7 @@ export default theme => ({
     display: 'flex',
     flexDirection: 'column',
     padding: theme.spacing.unitTriple,
-    paddingTop: 0,
+    paddingTop: theme.spacing.unitHalf,
     boxShadow: '0 2px 2px 0 rgba(0,0,0,0.5)',
     flex: '0 0 auto',
   },
