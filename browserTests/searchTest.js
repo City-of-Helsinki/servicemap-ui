@@ -34,7 +34,7 @@ const searchUnits = async (t, search = 'uimastadion') => {
 test('Navigate search view ', async (t) => {
   // Test result orderer navigation
   const unitCount = await searchUnits(t);
-  const input = ReactSelector('InputBase');
+  const input = ReactSelector('InputBase').nth(0);
   let select =  ReactSelector('ResultOrderer Select');
 
   await t
@@ -57,6 +57,8 @@ test('Navigate search view ', async (t) => {
     .pressKey('tab') // Tabs to search icon button
     .pressKey('tab') // Result orderer
     .pressKey('tab') // First tab
+    .pressKey('tab') // Address search
+    .pressKey('tab') // Address search clear
     .pressKey('tab') // Tabs to first item in list
     .expect(firstSearchItems.focused).ok('Tab did move focus to first list item')
     .pressKey('tab')
@@ -95,11 +97,30 @@ test('Navigate search view ', async (t) => {
   await t // Check that units exist
     .expect(units.count).gt(1)
 });
+
 test('Search does list results', async (t) => {
   // const unitCount = await searchUnits(t);
   const searchView = ReactSelector('SearchView')
   await t
     .expect(searchView.getReact(({props}) => props.units.length)).gt(5, `Search didn't get results`);
+});
+
+// Check that address search works and draws marker on map
+test('Address search does work', async (t) => {
+  await searchUnits(t, 'kirjasto');
+  const addressInput = ReactSelector('InputBase').nth(2);
+  const suggestions = ReactSelector('AddressSearchBar ListItem');
+  const marker = Selector('div[class*="userMarker"]');
+  const distanceText = Selector('div[class*="ResultItem-rightColumn"]');
+
+  await t
+    .typeText(addressInput, 'mannerheimintie')
+    .expect(suggestions.count).gt(0) // Expect address suggestions to render
+    .pressKey('enter')
+    .expect(marker.count).eql(1) // Expect usermarker to exist
+    .expect(distanceText.count).gt(0) // Expect distance text elements to render
+    .expect(distanceText.nth(0).innerText).ok() //Expect distance element innerText to exist
+  ;
 });
 
 test('UnitItem click event takes to unit page', async(t) => {
