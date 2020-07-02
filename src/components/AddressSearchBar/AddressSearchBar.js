@@ -72,6 +72,14 @@ const AddressSearchBar = ({
     setSearchBarValue(formAddressString(defaultAddress));
   }, [defaultAddress]);
 
+  // change searchbar value if resultIndex changes to
+  useEffect(() => {
+    const address = addressResults && addressResults[resultIndex];
+    if (address) {
+      setSearchBarValue(formAddressString(address));
+    }
+  }, [resultIndex]);
+
   const showSuggestions = searchBarValue.length > 1 && addressResults && addressResults.length;
   return (
     <div className={containerClassName}>
@@ -80,7 +88,7 @@ const AddressSearchBar = ({
         inputProps={{
           role: 'combobox',
           'aria-haspopup': !!showSuggestions,
-          'aria-label': intl.formatMessage({ id: 'search.searchField' }),
+          'aria-label': `${intl.formatMessage({ id: 'search.searchField' })} ${intl.formatMessage({ id: 'address.search' })}`,
         }}
         type="search"
         className={`${classes.searchBar} ${inputClassName}`}
@@ -104,9 +112,9 @@ const AddressSearchBar = ({
           </>
         )}
       />
+      <Typography aria-live="polite" id="resultLength" variant="srOnly"><FormattedMessage id="search.suggestions.suggestions" values={{ count: addressResults.length }} /></Typography>
       {showSuggestions ? (
         <Paper>
-          <Typography aria-live="polite" id="resultLength" variant="srOnly"><FormattedMessage id="search.infoText" values={{ count: addressResults.length }} /></Typography>
           <List>
             {addressResults.map((address, i) => (
               <ListItem

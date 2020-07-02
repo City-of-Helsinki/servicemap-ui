@@ -16,6 +16,7 @@ export default {
 
   // Address
   'address': 'Adress',
+  'address.search': 'Adress sök', // TODO: Verify
   'address.show.area': 'Visa området på kartan',
   'address.error': 'Addressen kunde inte hittas',
   'address.nearby': 'Nära',

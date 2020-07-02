@@ -16,6 +16,7 @@ export default {
 
   // Address
   'address': 'Osoite',
+  'address.search': 'Osoitehaku',
   'address.show.area': 'Näytä alue kartalla',
   'address.error': 'Osoitetta ei löytynyt',
   'address.nearby': 'Lähellä',
