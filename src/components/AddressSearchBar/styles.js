@@ -12,6 +12,20 @@ const styles = theme => ({
   clearButton: {
     fontSize: 22,
   },
+  divider: {
+    width: 1,
+    height: 24,
+    margin: 4,
+  },
+  IconButton: {
+    margiRight: theme.spacing.unitHalf,
+    padding: theme.spacing.unit,
+  },
+  searchIcon: {
+    color: 'rgba(0, 0, 0, 0.54)',
+    fontSize: 22,
+    padding: theme.spacing.unit,
+  },
 });
 
 export default styles;

@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { intlShape, FormattedMessage } from 'react-intl';
 import {
-  InputBase, IconButton, Paper, List, ListItem, Typography,
+  InputBase, IconButton, Paper, List, ListItem, Typography, Divider,
 } from '@material-ui/core';
-import { Clear } from '@material-ui/icons';
+import { Clear, Search } from '@material-ui/icons';
 import config from '../../../config';
 import { uppercaseFirst } from '../../utils';
 
@@ -88,15 +88,20 @@ const AddressSearchBar = ({
         onChange={e => handleInputChange(e.target.value)}
         onKeyDown={e => showSuggestions && handleSearchBarKeyPress(e)}
         endAdornment={(
-          <IconButton
-            aria-label={intl.formatMessage({ id: 'search.cancelText' })}
-            onClick={() => {
-              handleAddressChange(null);
-              setSearchBarValue('');
-            }}
-          >
-            <Clear className={classes.clearButton} />
-          </IconButton>
+          <>
+            <Search aria-hidden className={classes.searchIcon} />
+            <Divider aria-hidden className={classes.divider} />
+            <IconButton
+              aria-label={intl.formatMessage({ id: 'search.cancelText' })}
+              onClick={() => {
+                handleAddressChange(null);
+                setSearchBarValue('');
+              }}
+              className={classes.IconButton}
+            >
+              <Clear className={classes.clearButton} />
+            </IconButton>
+          </>
         )}
       />
       {showSuggestions ? (
