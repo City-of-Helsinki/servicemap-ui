@@ -17,6 +17,7 @@ export default {
   // Address
   'address': 'Address',
   'address.search': 'Address search',
+  'address.search.location': 'Chosen location is {location}',
   'address.show.area': 'Show area on map',
   'address.error': 'No address found',
   'address.nearby': 'Nearby',

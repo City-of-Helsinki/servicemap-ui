@@ -26,12 +26,14 @@ const AddressSearchBar = ({
   const [addressResults, setAddressResults] = useState([]);
   const [resultIndex, setResultIndex] = useState(0);
   const [searchBarValue, setSearchBarValue] = useState(formAddressString(defaultAddress));
+  const [currentLocation, setCurrentLocation] = useState(null);
 
   const suggestionCount = 5;
 
   const handleAddressSelect = (address) => {
     setSearchBarValue(formAddressString(address));
     setAddressResults([]);
+    setCurrentLocation(formAddressString(address));
     handleAddressChange(address);
   };
 
@@ -59,6 +61,9 @@ const AddressSearchBar = ({
     setSearchBarValue(text);
     // Fetch address suggestions
     if (text.length && text.length > 1) {
+      if (currentLocation) {
+        setCurrentLocation(null);
+      }
       fetch(`${config.serviceMapAPI.root}/search/?input=${text}&language=${locale}&page=1&page_size=${suggestionCount}&type=address`)
         .then(res => res.json())
         .then(data => setAddressResults(data.results))
@@ -81,6 +86,10 @@ const AddressSearchBar = ({
   }, [resultIndex]);
 
   const showSuggestions = searchBarValue.length > 1 && addressResults && addressResults.length;
+  // Add info text for location selection
+  const locationInfoText = currentLocation ? intl.formatMessage({ id: 'address.search.location' }, { location: currentLocation }) : '';
+  // Figure out which info text to use
+  const infoText = showSuggestions ? <FormattedMessage id="search.suggestions.suggestions" values={{ count: addressResults.length }} /> : locationInfoText;
   return (
     <div className={containerClassName}>
       <Typography color="inherit">{title}</Typography>
@@ -112,7 +121,7 @@ const AddressSearchBar = ({
           </>
         )}
       />
-      <Typography aria-live="polite" id="resultLength" variant="srOnly"><FormattedMessage id="search.suggestions.suggestions" values={{ count: addressResults.length }} /></Typography>
+      <Typography aria-live="polite" id="resultLength" variant="srOnly">{infoText}</Typography>
       {showSuggestions ? (
         <Paper>
           <List>
