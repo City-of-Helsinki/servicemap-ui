@@ -33,7 +33,7 @@ export default {
   'area.searchbar.infoText.address': 'Kirjoita kotiosoitteesi',
   'area.searchbar.infoText.optional': '(valinnainen)',
   'area.tab.selection': 'Alueen valinta',
-  'area.tab.services': 'Valitun alueen palvelut',
+  'area.tab.services': 'Alueen palvelut',
   'area.services.local': 'Oman alueesi palvelut',
   'area.services.nearby': 'Lähialueiden palvelut',
   'area.info': 'Valitse alue, jonka palveluista haluat tietoa. Kirjoittamalla alla olevaan hakukenttään kotiosoitteesi saat näkyville karttaan ja Valitun alueen palvelut -välilehdelle alueet ja piirit, joihin kuulut',
