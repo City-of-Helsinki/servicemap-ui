@@ -33,7 +33,7 @@ export default {
   'area.searchbar.infoText.address': 'Skriv din hemadress',
   'area.searchbar.infoText.optional': '(valfri)',
   'area.tab.selection': 'Val av område',
-  'area.tab.services': 'Tjänster i det valda området',
+  'area.tab.services': 'Tjänster i området',
   'area.services.local': 'Tjänster i ditt eget område',
   'area.services.nearby': 'Tjänster i närområdena',
   'area.info': 'Valitse alue, jonka palveluista haluat tietoa. Kirjoittamalla alla olevaan hakukenttään kotiosoitteesi saat näkyville karttaan ja Valitun alueen palvelut -välilehdelle alueet ja piirit, joihin kuulut', // TODO: translate
