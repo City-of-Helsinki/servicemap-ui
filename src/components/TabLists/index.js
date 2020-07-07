@@ -9,10 +9,10 @@ import { changeCustomUserLocation } from '../../redux/actions/user';
 // Listen to redux state
 const mapStateToProps = (state) => {
   const { navigator } = state;
-  const { position } = state.user;
+  const { customPosition, position } = state.user;
   return {
     navigator,
-    userAddress: position.addressData,
+    userAddress: position.addressData || customPosition.addressData,
   };
 };
 

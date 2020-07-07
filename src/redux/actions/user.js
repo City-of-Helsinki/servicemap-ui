@@ -79,10 +79,12 @@ export const findUserLocation = () => async (dispatch) => {
 
 export const changeCustomUserLocation = (
   customPosition,
+  addressData,
   hideMarker = false,
 ) => async (dispatch) => {
   if (customPosition && customPosition[0] && customPosition[1]) {
     dispatch(setCustomPosition({
+      addressData,
       coordinates: {
         latitude: customPosition[0],
         longitude: customPosition[1],
@@ -94,6 +96,7 @@ export const changeCustomUserLocation = (
   dispatch(setCustomPosition({
     coordinates: null,
     hideMarker: false,
+    addressData: null,
   }));
 };
 

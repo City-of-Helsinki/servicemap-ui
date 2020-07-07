@@ -62,6 +62,7 @@ const TabLists = ({
     if (address) {
       changeCustomUserLocation(
         [address.location.coordinates[1], address.location.coordinates[0]],
+        address,
       );
     } else {
       changeCustomUserLocation(null);
