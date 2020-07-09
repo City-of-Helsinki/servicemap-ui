@@ -36,7 +36,7 @@ export default {
   'area.tab.services': 'Services in the chosen area',
   'area.services.local': 'Services in your own area',
   'area.services.nearby': 'Services in the neighbouring areas',
-  'area.info': 'Valitse alue, jonka palveluista haluat tietoa. Kirjoittamalla alla olevaan hakukenttään kotiosoitteesi saat näkyville karttaan ja Valitun alueen palvelut -välilehdelle alueet ja piirit, joihin kuulut',
+  'area.info': 'Choose an area, whose services you want information about. Writing your home address in the search field opens a map, and the areas and districts that you belong to are shown under the Services in the area tab.',
   'area.choose.district': 'Choose area',
   'area.noSelection': 'Choose area from the Choice of Area tab',
   'area.list.geographical': 'Geographical',
