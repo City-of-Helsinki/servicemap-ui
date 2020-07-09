@@ -12,6 +12,7 @@ export default theme => ({
   },
   searchbarPlain: {
     background: theme.palette.background.plain,
+    paddingBottom: theme.spacing.unit,
   },
   label: {
     paddingTop: theme.spacing.unitDouble,
@@ -40,7 +41,9 @@ export default theme => ({
   searchInfo: {
     color: '#fff',
     background: theme.palette.background.plain,
-    padding: `${theme.spacing.unit}px ${theme.spacing.unitTriple}px`,
+    padding: theme.spacing.unitTriple,
+    paddingTop: theme.spacing.unitHalf,
+    paddingBottom: theme.spacing.unit,
   },
   infoText: {
     color: 'inherit',

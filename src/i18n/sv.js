@@ -16,6 +16,8 @@ export default {
 
   // Address
   'address': 'Adress',
+  'address.search': 'Adresssök',
+  'address.search.location': 'Den valda positionen är {location}',
   'address.show.area': 'Visa området på kartan',
   'address.error': 'Addressen kunde inte hittas',
   'address.nearby': 'Nära',

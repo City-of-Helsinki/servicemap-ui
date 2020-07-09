@@ -4,16 +4,17 @@ import PropTypes from 'prop-types';
 import {
   Typography, Tabs, Tab,
 } from '@material-ui/core';
-import { intlShape } from 'react-intl';
+import { intlShape, FormattedMessage } from 'react-intl';
 import { parseSearchParams, stringifySearchParams } from '../../utils';
 import ResultList from '../Lists/ResultList';
 import PaginationComponent from '../PaginationComponent';
 import ResultOrderer from '../ResultOrderer';
 import config from '../../../config';
 import useMobileStatus from '../../utils/isMobile';
+import AddressSearchBar from '../AddressSearchBar';
 
 const TabLists = ({
-  location, data, headerComponents, navigator, classes, intl,
+  changeCustomUserLocation, location, data, headerComponents, navigator, classes, intl, userAddress,
 }) => {
   // Option to change number of items shown per page
   const itemsPerPage = 10;
@@ -56,6 +57,17 @@ const TabLists = ({
     }
   };
 
+
+  const handleAddressChange = (address) => {
+    if (address) {
+      changeCustomUserLocation(
+        [address.location.coordinates[1], address.location.coordinates[0]],
+        address,
+      );
+    } else {
+      changeCustomUserLocation(null);
+    }
+  };
   const adjustScrollDistance = (scroll = null) => {
     let scrollDistanceFromTop = scrollDistance;
     const elem = document.getElementsByClassName(sidebarClass)[0];
@@ -180,7 +192,16 @@ const TabLists = ({
         }
         {
           fullData.length > 0 && (
-            <ResultOrderer disabled={filteredData[tabIndex].noOrderer} />
+            <>
+              <ResultOrderer disabled={filteredData[tabIndex].noOrderer} />
+              <AddressSearchBar
+                defaultAddress={userAddress}
+                containerClassName={classes.addressBar}
+                inputClassName={classes.addressBarInput}
+                title={<FormattedMessage id="area.searchbar.infoText.address" />}
+                handleAddressChange={address => handleAddressChange(address)}
+              />
+            </>
           )
         }
         <Tabs
@@ -359,6 +380,8 @@ TabLists.propTypes = {
     data: PropTypes.array,
     itemsPerPage: PropTypes.number,
   })).isRequired,
+  changeCustomUserLocation: PropTypes.func.isRequired,
+  userAddress: PropTypes.objectOf(PropTypes.any),
   headerComponents: PropTypes.objectOf(PropTypes.any),
   intl: intlShape.isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -368,6 +391,7 @@ TabLists.propTypes = {
 TabLists.defaultProps = {
   headerComponents: null,
   navigator: null,
+  userAddress: null,
 };
 
 export default TabLists;

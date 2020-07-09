@@ -45,7 +45,7 @@ class ServiceView extends React.Component {
 
     const customLocation = new CustomLocation(location);
     if (customLocation.coords) {
-      changeCustomUserLocation(customLocation.coords, customLocation.hideMarker);
+      changeCustomUserLocation(customLocation.coords, null, customLocation.hideMarker);
       return;
     }
     changeCustomUserLocation(null);

@@ -23,8 +23,12 @@ const props = {
 
 const overrides = theme => ({
   MuiButtonBase: {
-    // Default keyboard focus indicator
+    // Default keyboard focus indicator for buttons
     focusVisible: theme === 'dark' ? focusIndicatorDark : focusIndicator,
+  },
+  MuiInputBase: {
+    // Default keyboard focus indicator for input fields
+    root: { "&$focused": theme === 'dark' ? focusIndicatorDark : focusIndicator },
   },
 });
 
