@@ -38,7 +38,7 @@ export default {
   'area.tab.services': 'Tjänster i området',
   'area.services.local': 'Tjänster i ditt eget område',
   'area.services.nearby': 'Tjänster i närområdena',
-  'area.info': 'Valitse alue, jonka palveluista haluat tietoa. Kirjoittamalla alla olevaan hakukenttään kotiosoitteesi saat näkyville karttaan ja Valitun alueen palvelut -välilehdelle alueet ja piirit, joihin kuulut', // TODO: translate
+  'area.info': 'Välj ett område, vars tjänster du vill ha information om. Genom att skriva din hemadress i sökfältet öppnas en karta och under fliken Tjänster i området visas de områden och distrikt som du hör till',
   'area.choose.district': 'Väl område',
   'area.noSelection': 'Väl område under fliken Val av område',
   'area.list.geographical': 'Geografisk',
