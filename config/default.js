@@ -97,4 +97,9 @@ export default {
   "supportedLanguages": [
     "fi", "sv", "en"
   ],
+  "SUBDOMAINS": {
+    fi: 'palvelukartta',
+    sv: 'servicekarta',
+    en: 'servicemap',
+  },
 }

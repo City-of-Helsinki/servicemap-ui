@@ -74,6 +74,30 @@ export default {
   // Embed
   'embed.click_prompt_move': 'Klikkaa siirtyäksesi Palvelukartalle',
 
+  //Embedder
+  'embedder.city.title': 'Kaupunki',
+  'embedder.close': 'Sulje upotustyökalu',
+  'embedder.code.title': 'Kopioi HTML-koodi',
+  'embedder.height.title': 'Upotuksen korkeus',
+  'embedder.height.ratio.label': 'Suhteellinen korkeus. Upotuksen korkeuden suhde leveyteen on määritelty',
+  'embedder.height.fixed.label': 'Absoluuttinen korkeus. Upotuksen korkeus on määritelty pikseleissä',
+  'embedder.language.title': 'Upotuksen kieli',
+  'embedder.language.description.fi': 'Toimipisteiden tiedot näytetään suomen kielellä. Taustakartta on suomenkielinen.',
+  'embedder.language.description.sv': 'Toimipisteiden tiedot näytetään ruotsin kielellä. Taustakartta on ruotsinkielinen.',
+  'embedder.language.description.en': 'Toimipisteiden tiedot näytetään englannin kielellä. Taustakartta on suomenkielinen.',
+  'embedder.map.title': 'Taustakartta',
+  'embedder.preview.title': 'Kartan esikatselu',
+  'embedder.service.title': 'Palvelut',
+  'embedder.service.none': 'Kartta näytetään ilman toimipisteitä',
+  'embedder.service.common': 'Kartalla näytetään yleisimmät kaupunkilaisen arkeen liittyvät toimipisteet: koulut, päiväkodit ja terveyskeskukset.',
+  'embedder.service.all': 'Kartalla näytetään kaikki toimipisteet. Jos aluerajaus on liian laaja, upotuksen näyttäminen hidastuu ja sen havainnollisuus vähenee.',
+  'embedder.title': 'Upotustyökalu',
+  'embedder.title.info': 'Mikäli haluat tehdä upotuksen hakutuloksen mukaan tee haku ensin.',
+  'embedder.url.title': 'Kopioi osoite',
+  'embedder.width.title': 'Upotuksen leveys',
+  'embedder.width.auto.label': 'Automaattinen leveys. Upotus täyttää leveyssuunnassa elementin, johon se on sijoitettu. Tässä esikatselussa upotus on sijoitettu katkoviivalla merkittyyn vakiolevyiseen elementtiin.',
+  'embedder.width.custom.label': 'Valittu leveys. Upotuksen leveys on määritelty pikseleissä.',
+
   // Feedback
   'feedback.back': 'Palaa takaisin',
   'feedback.title': 'Anna palautetta tästä verkkopalvelusta',
@@ -135,6 +159,7 @@ export default {
   'general.loading': 'Ladataan',
   'general.loading.done': 'Lataus valmis',
   'general.showOnMap': 'Näytä kartalla',
+  'general.page.close': 'Sulje sivu',
   'general.pageTitles.home': 'Aloitusnäkymä',
   'general.pageTitles.search': 'Hakutulosnäkymä',
   'general.pageTitles.unit': 'Toimipistenäkymä',
