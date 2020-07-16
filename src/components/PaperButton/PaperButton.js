@@ -5,12 +5,13 @@ import { Button, Typography } from '@material-ui/core';
 import Container from '../Container';
 
 const PaperButton = ({
-  classes, intl, disabled, messageID, onClick, icon, link, subtitleID,
+  classes, intl, disabled, messageID, onClick, icon, link, subtitleID, noBorder,
 }) => {
   const clonedIcon = icon ? React.cloneElement(icon, { className: classes.icon }) : null;
   const role = link ? 'link' : 'button';
+  const containerClass = `${classes.container} ${disabled ? classes.buttonDisabled : ''} ${noBorder ? classes.noBorder : ''}`;
   return (
-    <Container paper className={`${classes.container} ${disabled ? classes.buttonDisabled : ''}`}>
+    <Container paper className={containerClass}>
       <Button
         classes={{
           label: classes.iconButtonLabel,
@@ -47,6 +48,7 @@ PaperButton.propTypes = {
   disabled: PropTypes.bool,
   icon: PropTypes.node,
   link: PropTypes.bool,
+  noBorder: PropTypes.bool,
   onClick: PropTypes.func,
   messageID: PropTypes.string.isRequired,
   subtitleID: PropTypes.string,
@@ -57,6 +59,7 @@ PaperButton.defaultProps = {
   disabled: false,
   icon: null,
   link: false,
+  noBorder: false,
   onClick: null,
   subtitleID: null,
 };
