@@ -25,7 +25,10 @@ const paths = {
     regex: /\/[a-zA-Z]{2}\/services/
   },
   embed: {
-    regex: /\/[a-zA-Z]{2}\/embed\/*/,
+    regex: /\/[a-zA-Z]{2}\/embed\//,
+  },
+  embedder: {
+    regex: /\/[a-zA-Z]{2}\/embedder\//,
   },
   event: {
     generate: id => `/event/${id || ''}`,
