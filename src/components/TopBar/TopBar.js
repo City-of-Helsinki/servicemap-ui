@@ -11,6 +11,7 @@ import { getIcon } from '../SMIcon';
 import DrawerMenu from '../DrawerMenu';
 import DesktopComponent from '../DesktopComponent';
 import MobileComponent from '../MobileComponent';
+import ToolMenu from '../ToolMenu';
 
 class TopBar extends React.Component {
   state={ drawerOpen: false }
@@ -298,6 +299,13 @@ class TopBar extends React.Component {
                   {this.renderDrawerMenu(pageType)}
                 </>
               )}
+              {
+                !smallScreen && (
+                  <div>
+                    <ToolMenu />
+                  </div>
+                )
+              }
             </DesktopComponent>
           </Toolbar>
         </AppBar>

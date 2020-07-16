@@ -74,7 +74,7 @@ export default {
   // Embed
   'embed.click_prompt_move': 'Klikkaa siirtyäksesi Palvelukartalle',
 
-  //Embedder
+  // Embedder
   'embedder.city.title': 'Kaupunki',
   'embedder.close': 'Sulje upotustyökalu',
   'embedder.code.title': 'Kopioi HTML-koodi',
@@ -150,6 +150,8 @@ export default {
   'general.back.serviceTree': 'Palaa palvelulistausnäkymään',
   'general.cancel': 'Peruuta',
   'general.close': 'Sulje',
+  'general.distance.meters': 'Metrin päässä',
+  'general.distance.kilometers': 'Kilometrin päässä',
   'general.yes': 'Kyllä',
   'general.no': 'Ei',
   'general.closeSettings': 'Sulje asetukset',
@@ -159,6 +161,7 @@ export default {
   'general.loading': 'Ladataan',
   'general.loading.done': 'Lataus valmis',
   'general.showOnMap': 'Näytä kartalla',
+  'general.open': 'Avaa',
   'general.page.close': 'Sulje sivu',
   'general.pageTitles.home': 'Aloitusnäkymä',
   'general.pageTitles.search': 'Hakutulosnäkymä',
@@ -192,8 +195,7 @@ export default {
   'general.save.changes.done': 'Muutokset tallennettu!',
   'general.save.confirmation': 'Haluatko tallentaa muutokset?',
   'general.search': 'Hae',
-  'general.distance.meters': 'Metrin päässä',
-  'general.distance.kilometers': 'Kilometrin päässä',
+  'general.tools': 'Työkalut',
 
   // Home
   'home.buttons.settings': 'Tallenna omat kaupunki- ja esteettömyysasetuksesi',
