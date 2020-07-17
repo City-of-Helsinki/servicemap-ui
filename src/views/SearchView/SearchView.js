@@ -140,10 +140,6 @@ class SearchView extends React.Component {
     if (q) {
       options.q = q;
     } else {
-      // Parse municipality
-      if (municipality || city) {
-        options.municipality = municipality || city;
-      }
       // Parse service
       if (includeService && service) {
         options.service = service;
@@ -184,6 +180,11 @@ class SearchView extends React.Component {
           options.service_node = serviceNodes.join(',');
         }
       }
+    }
+
+    // Parse municipality
+    if (municipality || city) {
+      options.municipality = municipality || city;
     }
 
 
