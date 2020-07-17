@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 import { filterEmptyServices, filterCities } from '../../utils/filters';
 import getOrderedData from './ordering';
+import { isEmbed } from '../../utils/path';
 
 const isFetching = state => state.units.isFetching;
 const units = state => state.units.data;
@@ -19,12 +20,18 @@ const cities = state => [
 const getFilteredData = (data, options = {}) => createSelector(
   [cities],
   (cities) => {
+    let embed = false;
+    if (global.window) {
+      embed = isEmbed({ url: window.location });
+    }
     let filteredData = data
       .filter(filterEmptyServices(cities));
-    if (options.municipality) {
-      filteredData = filteredData.filter(filterCities(options.municipality.split(',')));
-    } else {
-      filteredData = filteredData.filter(filterCities(cities));
+    if (!embed) {
+      if (options.municipality) {
+        filteredData = filteredData.filter(filterCities(options.municipality.split(',')));
+      } else {
+        filteredData = filteredData.filter(filterCities(cities));
+      }
     }
     return filteredData;
   },
