@@ -1,34 +1,7 @@
 /* eslint-disable no-param-reassign */
-import config from '../../../config';
+import { embedderConfig } from './EmbedderView';
 
 const URI = require('URIjs');
-
-const { SUBDOMAINS } = config;
-
-const data = {
-  DOMAIN: null,
-  SUBDOMAINS,
-  LANGUAGE: {
-    palvelukartta: 'fi',
-    servicekarta: 'sv',
-    servicemap: 'en',
-  },
-  LANGUAGES: {
-    en: 'english',
-    sv: 'svenska',
-    fi: 'suomi',
-  },
-  BACKGROUND_MAPS: ['servicemap', 'ortographic', 'accessible_map'],
-  DEFAULT_IFRAME_PROPERTIES: {
-    style: {
-      width: '100%',
-      height: '100%',
-    },
-    frameBorder: 0,
-  },
-  DEFAULT_CUSTOM_WIDTH: '400',
-  BASE_URL: '/embedder',
-};
 
 const joinQueries = (query) => {
   const data = query;
@@ -49,7 +22,7 @@ export const explode = (url) => {
   }
   let resource = path[0];
   let id = path.slice(1);
-  let language = data.LANGUAGE[uri.subdomain().split('.')[0]];
+  let language = embedderConfig.LANGUAGE[uri.subdomain().split('.')[0]];
   const query = uri.search(true);
   if (!(language && language.length > 0)) {
     if (uri.hostname() === 'localhost') {
@@ -78,10 +51,10 @@ export const transform = (url, {
 }) => {
   const uri = URI(url);
   if (lang != null) {
-    if (data.SUBDOMAINS_REST !== null) {
-      uri.subdomain(`${data.SUBDOMAINS[lang]}.${data.SUBDOMAINS_REST}`);
+    if (embedderConfig.SUBDOMAINS_REST !== null) {
+      uri.subdomain(`${embedderConfig.SUBDOMAINS[lang]}.${embedderConfig.SUBDOMAINS_REST}`);
     } else {
-      uri.subdomain(data.SUBDOMAINS[lang]);
+      uri.subdomain(embedderConfig.SUBDOMAINS[lang]);
     }
   }
   if (query != null) {
@@ -135,7 +108,7 @@ export const verify = (url) => {
   delete query.ratio;
   // Replace /embedder/ from url to have actual target url
   let directory = uri.directory();
-  directory = directory.replace(data.BASE_URL, '/embed');
+  directory = directory.replace(embedderConfig.BASE_URL, '/embed');
   uri.directory(directory);
   uri.search(query);
 
@@ -150,11 +123,11 @@ export const verify = (url) => {
 
   // Verify that subdomain is one of allowed
   let result = false;
-  Object.keys(data.SUBDOMAINS).forEach((key) => {
-    if (!Object.prototype.hasOwnProperty.call(data.SUBDOMAINS, key)) {
+  Object.keys(embedderConfig.SUBDOMAINS).forEach((key) => {
+    if (!Object.prototype.hasOwnProperty.call(embedderConfig.SUBDOMAINS, key)) {
       return;
     }
-    const subdomain = data.SUBDOMAINS[key];
+    const subdomain = embedderConfig.SUBDOMAINS[key];
     if (host === `${subdomain}.${domain}`) {
       result = uri.toString();
     }

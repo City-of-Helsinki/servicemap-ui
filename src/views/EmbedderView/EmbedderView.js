@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, intlShape } from 'react-intl';
 import {
-  Typography, AppBar, Paper, TextField,
+  Typography, Paper, TextField,
 } from '@material-ui/core';
 import URI from 'URIjs';
 import * as smurl from './url';
@@ -13,9 +13,13 @@ import EmbedController from './EmbedController';
 import IFramePreview from './IFramePreview';
 import CloseButton from '../../components/CloseButton';
 import SMButton from '../../components/ServiceMapButton';
+import config from '../../../config';
 
-export const config = {
+const { SUBDOMAINS } = config;
+
+export const embedderConfig = {
   DOMAIN: null,
+  SUBDOMAINS,
   LANGUAGE: {
     palvelukartta: 'fi',
     servicekarta: 'sv',
@@ -39,28 +43,10 @@ export const config = {
   BASE_URL: '/embedder',
 };
 
-const languageControls = generateLabel => Object.keys(config.LANGUAGES).map(lang => ({
-  value: lang,
-  label: `${uppercaseFirst(config.LANGUAGES[lang])}. ${generateLabel(lang)}`,
-}));
 
-const mapControls = generateLabel => config.BACKGROUND_MAPS.map(map => ({
-  value: map,
-  label: `${generateLabel(map)}`,
-}));
-
-const cityControls = config.CITIES.map(city => ({
-  value: city || 'all',
-  label: city ? uppercaseFirst(city) : 'Kaikki',
-}));
-
-const serviceControls = generateLabel => ['none', 'common', 'all'].map(service => ({
-  value: service,
-  label: generateLabel(service),
-}));
 
 const EmbedderView = ({
-  classes, intl, location, navigator,
+  classes, intl, navigator,
 }) => {
   if (!isClient()) {
     return null;
@@ -80,11 +66,11 @@ const EmbedderView = ({
 
   // Defaults
   const initialRatio = ratio || 52;
-  const defaultMap = search.map || config.BACKGROUND_MAPS[0];
+  const defaultMap = search.map || embedderConfig.BACKGROUND_MAPS[0];
   const defaultLanguage = getLanguage(url);
   const defaultCity = search.city || 'all';
-  const defaultFixedHeight = config.DEFAULT_CUSTOM_WIDTH;
-  const iframeConfig = config.DEFAULT_IFRAME_PROPERTIES || {};
+  const defaultFixedHeight = embedderConfig.DEFAULT_CUSTOM_WIDTH;
+  const iframeConfig = embedderConfig.DEFAULT_IFRAME_PROPERTIES || {};
   const defaultService = 'none';
 
   // States
@@ -92,7 +78,7 @@ const EmbedderView = ({
   const [map, setMap] = useState(defaultMap);
   const [city, setCity] = useState(defaultCity);
   const [service, setService] = useState(defaultService);
-  const [customWidth, setCustomWidth] = useState(config.DEFAULT_CUSTOM_WIDTH || 100);
+  const [customWidth, setCustomWidth] = useState(embedderConfig.DEFAULT_CUSTOM_WIDTH || 100);
   const [widthMode, setWidthMode] = useState('auto');
   const [fixedHeight, setFixedHeight] = useState(defaultFixedHeight);
   const [ratioHeight, setRatioHeight] = useState(initialRatio);
@@ -104,10 +90,7 @@ const EmbedderView = ({
   // Close embed view
   const closeView = () => {
     if (navigator) {
-      navigator.replace({
-        ...location,
-        pathname: location.pathname.replace('/embedder', ''),
-      });
+      navigator.goBack();
     }
   };
 
@@ -188,6 +171,10 @@ const EmbedderView = ({
    */
   const renderLanguageControl = () => {
     const description = locale => intl.formatMessage({ id: `embedder.language.description.${locale}` });
+    const languageControls = generateLabel => Object.keys(embedderConfig.LANGUAGES).map(lang => ({
+      value: lang,
+      label: `${uppercaseFirst(embedderConfig.LANGUAGES[lang])}. ${generateLabel(lang)}`,
+    }));
 
     return (
       <EmbedController
@@ -205,6 +192,10 @@ const EmbedderView = ({
    */
   const renderMapTypeControl = () => {
     const getLabel = map => intl.formatMessage({ id: `settings.map.${map}` });
+    const mapControls = generateLabel => embedderConfig.BACKGROUND_MAPS.map(map => ({
+      value: map,
+      label: `${generateLabel(map)}`,
+    }));
     return (
       <EmbedController
         titleID="embedder.map.title"
@@ -219,21 +210,32 @@ const EmbedderView = ({
   /**
    * Render city controls
    */
-  const renderCityControl = () => (
-    <EmbedController
-      titleID="embedder.city.title"
-      radioName="city"
-      radioValue={city}
-      radioControls={cityControls}
-      radioOnChange={(e, v) => setCity(v)}
-    />
-  );
+  const renderCityControl = () => {
+    const cityControls = embedderConfig.CITIES.map(city => ({
+      value: city || 'all',
+      label: city ? uppercaseFirst(city) : 'Kaikki',
+    }));
+
+    return (
+      <EmbedController
+        titleID="embedder.city.title"
+        radioName="city"
+        radioValue={city}
+        radioControls={cityControls}
+        radioOnChange={(e, v) => setCity(v)}
+      />
+    );
+  };
 
   /**
    * Render service control
    */
   const renderServiceControl = () => {
     const getLabel = service => intl.formatMessage({ id: `embedder.service.${service}` });
+    const serviceControls = generateLabel => ['none', 'common', 'all'].map(service => ({
+      value: service,
+      label: generateLabel(service),
+    }));
 
     return (
       <EmbedController

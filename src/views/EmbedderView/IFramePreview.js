@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Typography, Paper } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
-import { config } from './EmbedderView';
+import { embedderConfig } from './EmbedderView';
 
 const IFramePreview = ({
   classes,
@@ -21,7 +21,7 @@ const IFramePreview = ({
     width: '100%',
     paddingBottom: `${ratioHeight}%`,
   });
-  const iframeConfig = config.DEFAULT_IFRAME_PROPERTIES || {};
+  const iframeConfig = embedderConfig.DEFAULT_IFRAME_PROPERTIES || {};
   const hasContainer = heightMode === 'ratio' && widthMode === 'auto';
 
   let height = '100%';
