@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Typography, ButtonBase, Drawer,
+  Drawer,
 } from '@material-ui/core';
 import { Map } from '@material-ui/icons';
 import { getIcon } from '../SMIcon';
+import DrawerButton from './DrawerButton';
 
 const DrawerMenu = (props) => {
   const {
@@ -14,7 +15,7 @@ const DrawerMenu = (props) => {
     findUserLocation,
     intl,
     // currentPage,
-    settingsOpen,
+    // settingsOpen,
     pageType,
     isOpen,
     toggleDrawerMenu,
@@ -96,25 +97,16 @@ const DrawerMenu = (props) => {
       classes={{ paper: pageType === 'mobile' ? classes.drawerContainerMobile : classes.drawerContainer }}
     >
       {menuContent.map(item => (
-        <ButtonBase
+        <DrawerButton
+          active={item.active}
+          disabled={item.disabled}
           disableRipple
-          key={item.name}
-          tabIndex={isOpen ? 0 : -1}
-          role="link"
-          aria-hidden={!isOpen}
-          aria-label={`${item.name} ${item.disabled ? item.subText : ''}`}
+          icon={item.icon}
+          isOpen={isOpen}
+          text={item.name}
           onClick={item.clickEvent}
-          className={`${classes.drawerButton} ${item.active ? classes.drawerButtonActive : ''}`}
-          focusVisibleClassName={classes.itemFocus}
-        >
-          <div className={`${classes.drawerIcon} ${item.active ? classes.drawerIconActive : ''} ${item.disabled ? classes.disabled : ''}`}>
-            {item.icon}
-          </div>
-          <span aria-hidden className={classes.buttonLabel}>
-            <Typography className={`${classes.drawerButtonText} ${item.disabled ? classes.disabled : ''}`} variant="body1">{item.name}</Typography>
-            {item.disabled && <Typography className={classes.drawerButtonText} variant="caption">{item.subText}</Typography>}
-          </span>
-        </ButtonBase>
+          subText={item.subText}
+        />
       ))}
     </Drawer>
   // </ClickAwayListener>
@@ -128,7 +120,7 @@ DrawerMenu.propTypes = {
   userLocation: PropTypes.objectOf(PropTypes.any).isRequired,
   findUserLocation: PropTypes.func.isRequired,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
-  settingsOpen: PropTypes.string,
+  // settingsOpen: PropTypes.string,
   pageType: PropTypes.string.isRequired,
   isOpen: PropTypes.bool.isRequired,
   toggleDrawerMenu: PropTypes.func.isRequired,
@@ -137,7 +129,7 @@ DrawerMenu.propTypes = {
 };
 
 DrawerMenu.defaultProps = {
-  settingsOpen: null,
+  // settingsOpen: null,
 };
 
 export default DrawerMenu;
