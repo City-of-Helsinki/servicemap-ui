@@ -53,6 +53,7 @@ const IFramePreview = ({
   const element = hasContainer ? (
     <div style={wrapperStyleObject()}>
       <iframe
+        key={new Date().getTime()}
         title={title}
         style={styles}
         src={embedUrl}
@@ -60,6 +61,7 @@ const IFramePreview = ({
     </div>
   ) : (
     <iframe
+      key={new Date().getTime()}
       title={title}
       style={styles}
       src={embedUrl}
