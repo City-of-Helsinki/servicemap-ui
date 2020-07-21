@@ -11,6 +11,7 @@ const IFramePreview = ({
   fixedHeight,
   heightMode,
   ratioHeight,
+  title,
   widthMode,
 }) => {
   if (!embedUrl) {
@@ -52,14 +53,14 @@ const IFramePreview = ({
   const element = hasContainer ? (
     <div style={wrapperStyleObject()}>
       <iframe
-        title="Upotus"
+        title={title}
         style={styles}
         src={embedUrl}
       />
     </div>
   ) : (
     <iframe
-      title="Upotus"
+      title={title}
       style={styles}
       src={embedUrl}
     />
@@ -96,6 +97,7 @@ IFramePreview.propTypes = {
   embedUrl: PropTypes.string.isRequired,
   fixedHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   heightMode: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
   ratioHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   widthMode: PropTypes.string.isRequired,
 };

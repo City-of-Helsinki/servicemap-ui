@@ -95,6 +95,7 @@ const EmbedderView = ({
 
   const renderWrapperStyle = () => `position: relative; width:100%; padding-bottom:${ratioHeight}%;`;
   const embedUrl = getEmbedURL(url, { language, map, city, service });
+  const iframeTitle = intl.formatMessage({ id: 'embedder.iframe.title' });
 
   // Close embed view
   const closeView = () => {
@@ -114,7 +115,7 @@ const EmbedderView = ({
     if (heightMode === 'ratio') {
       if (widthMode === 'auto') {
         html = `<div style="${renderWrapperStyle()}">
-          <iframe style="position: absolute; top: 0; left: 0; border: none; width: 100%; height: 100%;"
+          <iframe title="${iframeTitle}" style="position: absolute; top: 0; left: 0; border: none; width: 100%; height: 100%;"
           src="${embedUrl}"></iframe></div>`;
       } else {
         height = parseInt(parseInt(customWidth, 10) * (parseInt(ratioHeight, 10) / 100.0), 10);
@@ -126,7 +127,7 @@ const EmbedderView = ({
         iframeConfig.style && iframeConfig.style.width && iframeConfig.style.width
       ) : customWidth;
       const widthUnit = width !== '100%' ? 'px' : '';
-      html = `<iframe style="border: none; width: ${width}${widthUnit}; height: ${height}px;"
+      html = `<iframe title="${iframeTitle}" style="border: none; width: ${width}${widthUnit}; height: ${height}px;"
                   src="${embedUrl}"></iframe>`;
     }
     return html;
@@ -407,6 +408,7 @@ const EmbedderView = ({
               fixedHeight={fixedHeight}
               heightMode={heightMode}
               ratioHeight={ratioHeight}
+              title={iframeTitle}
               widthMode={widthMode}
             />
           </form>

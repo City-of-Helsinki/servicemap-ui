@@ -81,6 +81,7 @@ export default {
   'embedder.height.title': 'Upotuksen korkeus',
   'embedder.height.ratio.label': 'Suhteellinen korkeus. Upotuksen korkeuden suhde leveyteen on määritelty',
   'embedder.height.fixed.label': 'Absoluuttinen korkeus. Upotuksen korkeus on määritelty pikseleissä',
+  'embedder.iframe.title': 'Palvelukartan upotusikkuna',
   'embedder.language.title': 'Upotuksen kieli',
   'embedder.language.description.fi': 'Toimipisteiden tiedot näytetään suomen kielellä. Taustakartta on suomenkielinen.',
   'embedder.language.description.sv': 'Toimipisteiden tiedot näytetään ruotsin kielellä. Taustakartta on ruotsinkielinen.',
