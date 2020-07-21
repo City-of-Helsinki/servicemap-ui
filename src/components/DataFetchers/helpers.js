@@ -74,13 +74,12 @@ export const searchParamFetchOptions = (location, redirectNode, includeService =
     // Handle bbox and level
     if (bbox) {
       const nLevel = level || 'customer_service'; // Taken from old servicemap
-      if (nLevel === 'none') {
-        return null;
+      if (nLevel !== 'none') {
+        options.level = nLevel;
+        // Swapping latLngs
+        options.bbox = reverseBBoxCoordinates(bbox).join(',');
+        options.bbox_srid = 4326;
       }
-      options.level = nLevel;
-      // Swapping latLngs
-      options.bbox = reverseBBoxCoordinates(bbox).join(',');
-      options.bbox_srid = 4326;
     }
   }
 
