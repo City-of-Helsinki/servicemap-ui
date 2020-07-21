@@ -98,6 +98,7 @@ const DrawerMenu = (props) => {
     >
       {menuContent.map(item => (
         <DrawerButton
+          key={item.name}
           active={item.active}
           disabled={item.disabled}
           disableRipple
