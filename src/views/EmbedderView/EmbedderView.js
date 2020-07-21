@@ -14,6 +14,7 @@ import IFramePreview from './IFramePreview';
 import CloseButton from '../../components/CloseButton';
 import SMButton from '../../components/ServiceMapButton';
 import config from '../../../config';
+import paths from '../../../config/paths';
 
 const { SUBDOMAINS } = config;
 
@@ -43,7 +44,15 @@ export const embedderConfig = {
   BASE_URL: '/embedder',
 };
 
+const hideCitiesIn = [
+  paths.unit.regex,
+  paths.address.regex,
+];
 
+const hideServicesIn = [
+  /\/[a-zA-Z]{2}\/search.*\?.*[q=|service=|service_node=|category=]/,
+  paths.unit.regex,
+];
 
 const EmbedderView = ({
   classes, intl, navigator,
@@ -85,7 +94,7 @@ const EmbedderView = ({
   const [heightMode, setHeightMode] = useState('ratio');
 
   const renderWrapperStyle = () => `position: relative; width:100%; padding-bottom:${ratioHeight}%;`;
-  const embedUrl = getEmbedURL(url, { language, map, city });
+  const embedUrl = getEmbedURL(url, { language, map, city, service });
 
   // Close embed view
   const closeView = () => {
@@ -121,6 +130,28 @@ const EmbedderView = ({
                   src="${embedUrl}"></iframe>`;
     }
     return html;
+  };
+
+  const showCities = (embedUrl) => {
+    const originalUrl = embedUrl.replace('/embed', '');
+    let show = true;
+    hideCitiesIn.forEach((r) => {
+      if (show) {
+        show = !r.test(originalUrl);
+      }
+    });
+    return show;
+  };
+
+  const showServices = (embedUrl) => {
+    const originalUrl = embedUrl.replace('/embed', '');
+    let show = true;
+    hideServicesIn.forEach((r) => {
+      if (show) {
+        show = !r.test(originalUrl);
+      }
+    });
+    return show;
   };
 
   /**
@@ -211,6 +242,9 @@ const EmbedderView = ({
    * Render city controls
    */
   const renderCityControl = () => {
+    if (!showCities(embedUrl)) {
+      return null;
+    }
     const cityControls = embedderConfig.CITIES.map(city => ({
       value: city || 'all',
       label: city ? uppercaseFirst(city) : 'Kaikki',
@@ -231,6 +265,9 @@ const EmbedderView = ({
    * Render service control
    */
   const renderServiceControl = () => {
+    if (!showServices(embedUrl)) {
+      return null;
+    }
     const getLabel = service => intl.formatMessage({ id: `embedder.service.${service}` });
     const serviceControls = generateLabel => ['none', 'common', 'all'].map(service => ({
       value: service,
