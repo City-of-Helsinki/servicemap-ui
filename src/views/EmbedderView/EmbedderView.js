@@ -211,6 +211,7 @@ const EmbedderView = ({
     return (
       <EmbedController
         titleID="embedder.language.title"
+        radioAriaLabel={intl.formatMessage({ id: 'embedder.language.aria.label' })}
         radioName="language"
         radioValue={language}
         radioControls={languageControls(description)}
@@ -231,6 +232,7 @@ const EmbedderView = ({
     return (
       <EmbedController
         titleID="embedder.map.title"
+        radioAriaLabel={intl.formatMessage({ id: 'embedder.map.aria.label' })}
         radioName="map"
         radioValue={map}
         radioControls={mapControls(getLabel)}
@@ -254,6 +256,7 @@ const EmbedderView = ({
     return (
       <EmbedController
         titleID="embedder.city.title"
+        radioAriaLabel={intl.formatMessage({ id: 'embedder.city.aria.label' })}
         radioName="city"
         radioValue={city}
         radioControls={cityControls}
@@ -278,6 +281,7 @@ const EmbedderView = ({
     return (
       <EmbedController
         titleID="embedder.service.title"
+        radioAriaLabel={intl.formatMessage({ id: 'embedder.service.aria.label' })}
         radioName="service"
         radioValue={service}
         radioControls={serviceControls(getLabel)}
@@ -307,6 +311,7 @@ const EmbedderView = ({
     return (
       <EmbedController
         titleID="embedder.width.title"
+        radioAriaLabel={intl.formatMessage({ id: 'embedder.width.aria.label' })}
         radioName="width"
         radioValue={widthMode}
         radioControls={controls}
@@ -339,6 +344,7 @@ const EmbedderView = ({
     return (
       <EmbedController
         titleID="embedder.height.title"
+        radioAriaLabel={intl.formatMessage({ id: 'embedder.height.aria.label' })}
         radioName="height"
         radioValue={heightMode}
         radioControls={controls}

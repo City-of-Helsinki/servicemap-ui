@@ -46,6 +46,7 @@ const SMRadio = ({
 };
 
 SMRadio.propTypes = {
+  'aria-label': PropTypes.string.isRequired,
   controls: PropTypes.arrayOf(PropTypes.shape({
     disabled: PropTypes.bool,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,

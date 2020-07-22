@@ -95,6 +95,7 @@ const EmbedController = ({
   inputOnChange,
   inputPreText,
   inputValue,
+  radioAriaLabel,
   radioControls,
   radioName,
   radioOnChange,
@@ -104,6 +105,7 @@ const EmbedController = ({
     if (radioControls && radioOnChange) {
       return (
         <SMRadio
+          aria-label={radioAriaLabel}
           name={radioName}
           initialValue={radioValue}
           controls={radioControls}
@@ -174,6 +176,7 @@ EmbedController.propTypes = {
   inputOnChange: PropTypes.func,
   inputPreText: PropTypes.string,
   inputValue: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  radioAriaLabel: PropTypes.string.isRequired,
   radioControls: PropTypes.arrayOf(PropTypes.shape({
     label: PropTypes.string,
     value: PropTypes.string,
