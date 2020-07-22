@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<DrawerButton /> should work 1`] = `
+<WithStyles(ButtonBase)
+  aria-hidden={true}
+  aria-label="Drawer button text"
+  className="DrawerButton-drawerButton-3 "
+  disableRipple={true}
+  focusVisibleClassName="DrawerButton-itemFocus-9"
+  key="Drawer button text"
+  onClick={[Function]}
+  role="link"
+  tabIndex={-1}
+>
+  <div
+    className="DrawerButton-drawerIcon-6  "
+  >
+    <pure(SearchIcon) />
+  </div>
+  <span
+    aria-hidden={true}
+  >
+    <WithStyles(Typography)
+      className="DrawerButton-drawerButtonText-5 "
+      variant="body1"
+    >
+      Drawer button text
+    </WithStyles(Typography)>
+  </span>
+</WithStyles(ButtonBase)>
+`;
