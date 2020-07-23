@@ -1,5 +1,6 @@
 import { serviceFetch, unitsFetch } from '../../utils/fetch';
 import { service } from './fetchDataActions';
+import { addSearchParametersToObject } from '../../utils';
 
 // Actions
 const {
@@ -23,11 +24,14 @@ export const fetchServiceUnits = serviceId => async (dispatch) => {
     dispatch(fetchProgressUpdate(resultTotal.length, response.count));
   };
 
-  const options = {
+  let options = {
     service: serviceId,
     page_size: 50,
     only: 'name,accessibility_shortcoming_count,location,municipality,contract_type',
   };
+
+  // Add search parameters to options
+  options = addSearchParametersToObject(options, ['city']);
 
   // Fetch data
   unitsFetch(options, onStart, onSuccess, onError, onNext);

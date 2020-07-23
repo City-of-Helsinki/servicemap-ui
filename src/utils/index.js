@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 import { unstable_useMediaQuery } from '@material-ui/core/useMediaQuery';
+import URI from 'URIjs';
 import config from '../../config';
 
 const isClient = () => typeof window !== 'undefined';
@@ -163,7 +164,7 @@ export const getSearchParam = (location, key) => {
 
 /**
  * Transform distance number to distance object
- * @param {*} intl - Intl object to format number text 
+ * @param {*} intl - Intl object to format number text
  * @param {number,string} distance - Calculated distance
  */
 export const formatDistanceObject = (intl, distance) => {
@@ -180,7 +181,28 @@ export const formatDistanceObject = (intl, distance) => {
     return adjustedDistance;
   }
   return null;
-}
+};
+
+/**
+ * Adds search parameters to given object avoids overriding
+ * @param {object} obj - object which is used as base for insertion
+ * @param {array} params - array of key values for which the search parameters are checked against
+ */
+export const addSearchParametersToObject = (obj, params) => {
+  if (!window || !window.location || !params || !params.length) {
+    return obj;
+  }
+
+  const uri = URI(window.location);
+  const search = uri.search(true);
+  const newObject = { ...obj };
+  params.forEach((v) => {
+    if (search[v] && !newObject[v]) {
+      newObject[v] = search[v];
+    }
+  });
+  return newObject;
+};
 
 
 export default isClient;
