@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Build, Code } from '@material-ui/icons';
 import { useLocation } from 'react-router-dom';
+import URI from 'URIjs';
 import { intlShape } from 'react-intl';
 import PaperButton from '../PaperButton';
 import SimpleListItem from '../ListItems/SimpleListItem';
@@ -21,20 +22,17 @@ const ToolMenu = ({
     const pathname = location.pathname.split('/');
     pathname.splice(2, 0, 'embedder');
 
-    let newSearch;
-    const bboxString = `bbox=${mapUtility.getBbox()}`;
-    if (location.search === '') {
-      newSearch = bboxString;
-    } else if (location.search.indexOf('bbox=') === -1) {
-      const search = location.search.split('&');
-      search.push(bboxString);
-      newSearch = search.join('&');
+    const uri = URI(window.location);
+    const search = uri.search(true);
+    if (!search.bbox) {
+      search.bbox = mapUtility.getBbox();
     }
+    uri.search(search);
 
     const newLocation = {
       ...location,
       pathname: pathname.join('/'),
-      search: newSearch,
+      search: uri.search(),
     };
 
     navigator.push(newLocation);
@@ -61,7 +59,7 @@ const ToolMenu = ({
       return null;
     }
 
-    const listClass = `${drawer ? classes.menuContainerDrawer : classes.menuContainer} ${drawer ? classes.fullWidth : ''}`
+    const listClass = `${drawer ? classes.menuContainerDrawer : classes.menuContainer} ${drawer ? classes.fullWidth : ''}`;
 
     return (
       <div>
