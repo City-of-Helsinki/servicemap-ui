@@ -22,7 +22,9 @@ const hideCitiesIn = [
 ];
 
 const hideServicesIn = [
+  paths.search.regex,
   paths.unit.regex,
+  paths.service.regex,
 ];
 
 const EmbedderView = ({
@@ -35,8 +37,9 @@ const EmbedderView = ({
   const data = isClient() ? smurl.verify(window.location.href) : {};
   let { url } = data;
   const { ratio } = data;
+  const parameters = smurl.explode(url);
   if (url) {
-    url = smurl.strip(url, {});
+    url = smurl.strip(url, parameters);
   }
   let search = {};
   if (url) {

@@ -17,20 +17,15 @@ const joinQueries = (query) => {
 export const explode = (url) => {
   const uri = URI(url);
   const path = uri.segment();
+  const language = path[0];
+  path.shift();
   if (path[0] === 'embed' || path[0] === 'embedder') {
     path.shift();
   }
   let resource = path[0];
   let id = path.slice(1);
-  let language = embedderConfig.LANGUAGE[uri.subdomain().split('.')[0]];
   const query = uri.search(true);
-  if (!(language && language.length > 0)) {
-    if (uri.hostname() === 'localhost') {
-      language = 'fi';
-    } else {
-      throw new ReferenceError(`Unknown subdomain in ${uri.host()}`);
-    }
-  }
+
   if (resource === '') {
     resource = null;
   }
