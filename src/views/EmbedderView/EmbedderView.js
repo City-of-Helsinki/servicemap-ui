@@ -432,12 +432,13 @@ EmbedderView.propTypes = {
     search: PropTypes.string,
   }).isRequired,
   intl: intlShape.isRequired,
-  mapType: PropTypes.oneOf(SettingsUtility.mapSettings).isRequired,
+  mapType: PropTypes.oneOf(SettingsUtility.mapSettings),
   navigator: PropTypes.objectOf(PropTypes.any),
 };
 
 EmbedderView.defaultProps = {
   navigator: null,
+  mapType: null,
 };
 
 

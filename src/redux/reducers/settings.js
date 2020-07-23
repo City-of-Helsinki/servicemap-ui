@@ -1,4 +1,4 @@
-const initialState = false;
+const initialState = null;
 
 const basicSelection = (state = initialState, action, prefix) => {
   switch (action.type) {
