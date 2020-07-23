@@ -7,9 +7,11 @@ import styles from './styles';
 
 
 const mapStateToProps = (state) => {
-  const { navigator } = state;
+  const { navigator, settings } = state;
+  const { mapType } = settings;
 
   return {
+    mapType,
     navigator,
   };
 };

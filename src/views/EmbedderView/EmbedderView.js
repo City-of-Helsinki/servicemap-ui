@@ -14,6 +14,7 @@ import CloseButton from '../../components/CloseButton';
 import SMButton from '../../components/ServiceMapButton';
 import paths from '../../../config/paths';
 import embedderConfig from './embedderConfig';
+import SettingsUtility from '../../utils/settings';
 
 
 const hideCitiesIn = [
@@ -28,7 +29,7 @@ const hideServicesIn = [
 ];
 
 const EmbedderView = ({
-  classes, intl, navigator,
+  classes, intl, mapType, navigator,
 }) => {
   if (!isClient()) {
     return null;
@@ -49,7 +50,7 @@ const EmbedderView = ({
 
   // Defaults
   const initialRatio = ratio || 52;
-  const defaultMap = search.map || embedderConfig.BACKGROUND_MAPS[0];
+  const defaultMap = search.map || mapType || embedderConfig.BACKGROUND_MAPS[0];
   const defaultLanguage = getLanguage(url);
   const defaultCity = search.city || 'all';
   const defaultFixedHeight = embedderConfig.DEFAULT_CUSTOM_WIDTH;
@@ -431,6 +432,7 @@ EmbedderView.propTypes = {
     search: PropTypes.string,
   }).isRequired,
   intl: intlShape.isRequired,
+  mapType: PropTypes.oneOf(SettingsUtility.mapSettings).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
 };
 
