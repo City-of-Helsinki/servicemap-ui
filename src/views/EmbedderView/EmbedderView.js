@@ -5,44 +5,16 @@ import {
   Typography, Paper, TextField,
 } from '@material-ui/core';
 import URI from 'URIjs';
-import * as smurl from './url';
+import * as smurl from './utils/url';
 import isClient, { uppercaseFirst } from '../../utils';
-import SettingsUtility from '../../utils/settings';
-import { getEmbedURL, getLanguage } from './utils';
-import EmbedController from './EmbedController';
-import IFramePreview from './IFramePreview';
+import { getEmbedURL, getLanguage } from './utils/utils';
+import EmbedController from './components/EmbedController';
+import IFramePreview from './components/IFramePreview';
 import CloseButton from '../../components/CloseButton';
 import SMButton from '../../components/ServiceMapButton';
-import config from '../../../config';
 import paths from '../../../config/paths';
+import embedderConfig from './embedderConfig';
 
-const { SUBDOMAINS } = config;
-
-export const embedderConfig = {
-  DOMAIN: null,
-  SUBDOMAINS,
-  LANGUAGE: {
-    palvelukartta: 'fi',
-    servicekarta: 'sv',
-    servicemap: 'en',
-  },
-  LANGUAGES: {
-    en: 'english',
-    sv: 'svenska',
-    fi: 'suomi',
-  },
-  BACKGROUND_MAPS: SettingsUtility.mapSettings,
-  CITIES: SettingsUtility.citySettings,
-  DEFAULT_IFRAME_PROPERTIES: {
-    style: {
-      width: '100%',
-      height: '100%',
-    },
-    frameBorder: 0,
-  },
-  DEFAULT_CUSTOM_WIDTH: '400',
-  BASE_URL: '/embedder',
-};
 
 const hideCitiesIn = [
   paths.unit.regex,
@@ -50,7 +22,6 @@ const hideCitiesIn = [
 ];
 
 const hideServicesIn = [
-  /\/[a-zA-Z]{2}\/search.*\?.*[q=|service=|service_node=|category=]/,
   paths.unit.regex,
 ];
 

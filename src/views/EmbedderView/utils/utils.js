@@ -15,7 +15,7 @@ export const getEmbedURL = (url, params = {}) => {
   if (params.city && params.city !== 'all') {
     data.city = params.city;
   }
-  if (params.service) {
+  if (params.service && params.service !== 'none') {
     data.level = params.service;
   }
   uri.search(data);

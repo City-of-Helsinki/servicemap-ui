@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { embedderConfig } from './EmbedderView';
+import embedderConfig from '../embedderConfig';
 
 const URI = require('URIjs');
 

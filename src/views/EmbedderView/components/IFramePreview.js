@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Typography, Paper } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
-import { embedderConfig } from './EmbedderView';
+import embedderConfig from '../embedderConfig';
 
 const IFramePreview = ({
   classes,
