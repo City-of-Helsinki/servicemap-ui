@@ -96,6 +96,7 @@ const ToolMenu = ({
           />
         ) : (
           <PaperButton
+            className={classes.menuButton}
             messageID="general.tools"
             icon={<Build />}
             noBorder

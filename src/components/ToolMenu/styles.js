@@ -18,4 +18,8 @@ export default ({
   fullWidth: {
     width: '100%',
   },
+  menuButton: {
+    marginLeft: 'auto',
+    justifySelf: 'flex-end',
+  },
 });

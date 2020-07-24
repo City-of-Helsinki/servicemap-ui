@@ -79,6 +79,9 @@ const styles = theme => ({
     lineHeight: 1,
   },
   toolbarWhite: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
     paddingLeft: 28,
     height: 70,
     backgroundColor: '#fff',
