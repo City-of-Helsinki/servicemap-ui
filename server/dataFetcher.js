@@ -1,10 +1,10 @@
 import AbortController from 'abort-controller';
 import paths from '../config/paths';
-import { eventFetch, selectedUnitFetch, unitEventsFetch, accessibilitySentencesFetch, reservationsFetch } from '../src/utils/fetch';
+import { eventFetch, selectedUnitFetch, unitEventsFetch, accessibilitySentencesFetch, reservationsFetch, hearingMapsFetch } from '../src/utils/fetch';
 import { changeSelectedEvent } from '../src/redux/actions/event';
 import { changeSelectedUnit } from '../src/redux/actions/selectedUnit';
 import { changeAccessibilitySentences } from '../src/redux/actions/selectedUnitAccessibility';
-import { events, reservations } from '../src/redux/actions/fetchDataActions';
+import { events, reservations, hearingMaps } from '../src/redux/actions/fetchDataActions';
 
 const timeoutTimer = process.env.SSR_FETCH_TIMEOUT;
 
@@ -168,6 +168,21 @@ export const fetchSelectedUnitData = (req, res, next) => {
       response();
     }
     reservationsFetch({ unit: `tprek:${id}` }, null, reservationFetchEnd, fetchOnError, null, null, controller)
+
+    // Fetch hearing maps for unit
+    const hearingMapsFetchEnd = (data) => {
+      if (!store || !store.dispatch || !data) {
+        response();
+        return;
+      }
+      const {
+        fetchSuccess,
+      } = hearingMaps;
+      store.dispatch(fetchSuccess(data));
+      response();
+    }
+    hearingMapsFetch(null, null, hearingMapsFetchEnd, fetchOnError, null, id, controller);
+    
 
   } catch(e) {
     console.log('Error in fetchSelectedUnitData', e.message);

@@ -23,6 +23,9 @@ import HomeLogo from '../../components/Logos/HomeLogo';
 
 const MapView = (props) => {
   const {
+    addressToRender,
+    addressUnits,
+    adminDistricts,
     classes,
     createMarkerClusterLayer,
     currentPage,
@@ -32,7 +35,6 @@ const MapView = (props) => {
     intl,
     location,
     settings,
-    addressUnits,
     setAddressLocation,
     unitList,
     unitsLoading,
@@ -71,7 +73,19 @@ const MapView = (props) => {
     if (currentPage === 'home' || currentPage === 'search' || currentPage === 'division') {
       mapUnits = unitList;
     } else if (currentPage === 'address') {
-      mapUnits = addressUnits;
+      switch (addressToRender) {
+        case 'adminDistricts':
+          mapUnits = adminDistricts ? adminDistricts
+            .filter(d => d.unit)
+            .map(d => d.unit)
+            : [];
+          break;
+        case 'units':
+          mapUnits = addressUnits;
+          break;
+        default:
+          mapUnits = [];
+      }
     } else if (currentPage === 'service' && serviceUnits && !unitsLoading) {
       mapUnits = serviceUnits;
     } else if ((currentPage === 'unit' || currentPage === 'fullList' || currentPage === 'event') && highlightedUnit) {
@@ -190,7 +204,7 @@ const MapView = (props) => {
         mapRef.current.leafletElement,
         [userLocation.longitude, userLocation.latitude],
       );
-    } else {
+    } else if (!embeded) {
       findUserLocation();
     }
   };
@@ -206,7 +220,9 @@ const MapView = (props) => {
   useEffect(() => { // On map mount
     initializeLeaflet();
     initializeMap();
-    findUserLocation();
+    if (!embeded) {
+      findUserLocation();
+    }
   }, []);
 
   useEffect(() => { // Set map ref to redux once map is rendered
@@ -341,11 +357,9 @@ const MapView = (props) => {
             Polygon={Polygon}
             Marker={Marker}
             Popup={Popup}
-            highlightedDistrict={highlightedDistrict}
-            getLocaleText={getLocaleText}
+            Tooltip={Tooltip}
             mapOptions={mapOptions}
-            mobile={isMobile}
-            navigator={navigator}
+            map={mapRef.current}
           />
 
           {!embeded
@@ -422,7 +436,12 @@ export default withRouter(withStyles(styles)(MapView));
 
 // Typechecking
 MapView.propTypes = {
+  addressToRender: PropTypes.string,
   addressUnits: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
+  adminDistricts: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    ocd_id: PropTypes.string,
+  })),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   createMarkerClusterLayer: PropTypes.func.isRequired,
   currentPage: PropTypes.string.isRequired,
@@ -453,7 +472,9 @@ MapView.propTypes = {
 };
 
 MapView.defaultProps = {
+  addressToRender: null,
   addressUnits: null,
+  adminDistricts: null,
   distanceCoordinates: null,
   hideUserMarker: false,
   highlightedDistrict: null,

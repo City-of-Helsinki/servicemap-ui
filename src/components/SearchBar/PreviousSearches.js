@@ -20,10 +20,8 @@ const PreviousSearches = ({
           history.map((item, i) => (
             <SuggestionItem
               selected={i === focusIndex}
-              button
               key={item}
               icon={<Search />}
-              role="link"
               text={item}
               handleArrowClick={handleArrowClick}
               handleItemClick={() => onClick(item)}

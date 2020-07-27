@@ -1,7 +1,6 @@
 /* eslint-disable quote-props */
 export default {
   'app.title': 'Service map',
-  'address': 'Address',
 
   // Accessibility
   'accessibility': 'Accessibility',
@@ -16,28 +15,52 @@ export default {
                               }`,
 
   // Address
+  'address': 'Address',
+  'address.search': 'Address search',
+  'address.search.location': 'Chosen location is {location}',
   'address.show.area': 'Show area on map',
-  'address.list.geographical': 'Geographical',
-  'address.list.protection': 'Civil defence',
-  'address.list.health': 'Health',
-  'address.list.education': 'Education',
-  'address.list.neighborhood': 'Neighborhood',
-  'address.list.postcode_area': 'Postcode area',
-  'address.list.rescue_area': 'Civil defence district',
-  'address.list.rescue_district': 'Civil defence section',
-  'address.list.rescue_sub_district': 'Civil defence subsection',
-  'address.list.health_station_district': 'Health station area',
-  'address.list.maternity_clinic_district': 'Maternity clinic area',
-  'address.list.lower_comprehensive_school_district_fi': 'Finnish primary school area',
-  'address.list.lower_comprehensive_school_district_sv': 'Swedish primary school area',
-  'address.list.upper_comprehensive_school_district_fi': 'Finnish secondary school area',
-  'address.list.upper_comprehensive_school_district_sv': 'Swedish secondary school area',
-  'address.list.preschool_education_fi': 'Finnish preschool education area',
-  'address.list.preschool_education_sv': 'Swedish preschool education area',
   'address.error': 'No address found',
   'address.nearby': 'Nearby',
   'address.districts': 'Areas',
   'address.plural': 'Addresses',
+  'address.services.header': 'Services for people who live here',
+  'address.services.info': 'Services for people who live here',
+  'address.area.link': 'Get to know the areas on the map.',
+  'address.emergency_care.common': 'When your health station is closed and in the night between 22-8, emergency care for children and young people under age 16 is provided at <a class="link" href="/unit/7299">Children\'s Hospital</a> [<a class="external-link" href="http://www.hus.fi/en/medical-care/hospitals/childrens-hospital/Pages/default.aspx">homepage</a>], and for adults at',
+  'address.emergency_care.unit.26107': 'Malmi hospital',
+  'address.emergency_care.unit.26104': 'Haartman hospital',
+  'address.emergency_care.link': '[<a href="http://www.hel.fi/www/Helsinki/fi/sosiaali-ja-terveyspalvelut/terveyspalvelut/paivystys/" class="external-link">emergency webpages</a>]',
+
+  // Area
+  'area.searchbar.infoText.address': 'Write your home address',
+  'area.searchbar.infoText.optional': '(optional)',
+  'area.tab.selection': 'Choice of area',
+  'area.tab.services': 'Services in the area',
+  'area.services.local': 'Services in your own area',
+  'area.services.nearby': 'Services in the neighbouring areas',
+  'area.info': 'Choose an area, whose services you want information about. Writing your home address in the search field opens a map, and the areas and districts that you belong to are shown under the Services in the area tab.',
+  'area.choose.district': 'Choose area',
+  'area.noSelection': 'Choose area from the Choice of Area tab',
+  'area.list.geographical': 'Geographical',
+  'area.list.protection': 'Civil defence',
+  'area.list.health': 'Health',
+  'area.list.education': 'Education',
+  'area.list.education.finnish': 'Finnish school areas',
+  'area.list.education.swedish': 'Swedish school areas',
+  'area.list.preschool': 'Pre-school education',
+  'area.list.neighborhood': 'Neighborhood',
+  'area.list.postcode_area': 'Postcode area',
+  'area.list.rescue_area': 'Civil defence district',
+  'area.list.rescue_district': 'Civil defence section',
+  'area.list.rescue_sub_district': 'Civil defence subsection',
+  'area.list.health_station_district': 'Health station area',
+  'area.list.maternity_clinic_district': 'Maternity clinic area',
+  'area.list.lower_comprehensive_school_district_fi': 'Finnish primary school area',
+  'area.list.lower_comprehensive_school_district_sv': 'Swedish primary school area',
+  'area.list.upper_comprehensive_school_district_fi': 'Finnish secondary school area',
+  'area.list.upper_comprehensive_school_district_sv': 'Swedish secondary school area',
+  'area.list.preschool_education_fi': 'Finnish preschool education area',
+  'area.list.preschool_education_sv': 'Swedish preschool education area',
 
   // Event
   'event.description': 'Description',
@@ -84,6 +107,7 @@ export default {
   'general.menu.open': 'Open menu',
   'general.menu.close': 'Close menu',
   'general.back': 'Back',
+  'general.back.area': 'Back to area view',
   'general.back.address': 'Back to address view',
   'general.back.home': 'Back to home view',
   'general.back.goToHome': 'Go to home view',
@@ -106,6 +130,7 @@ export default {
   'general.home': 'Home',
   'general.noData': 'No data available',
   'general.loading': 'Loading',
+  'general.loading.done': 'Loading completed',
   'general.showOnMap': 'Show on map',
   'general.pageTitles.home': 'Home view',
   'general.pageTitles.search': 'Search results view',
@@ -120,6 +145,7 @@ export default {
   'general.pageTitles.list.reservations': 'Reservation list ',
   'general.pageTitles.info': 'Info view',
   'general.pageTitles.feedback': 'Feedback view',
+  'general.pageTitles.area': 'Area view.',
 
   // General - Pagination
   'general.pagination.previous': 'Previous page',
@@ -146,6 +172,7 @@ export default {
   'home.buttons.services': 'Get to know the services using the Services list',
   'home.buttons.closeByServices': 'Show nearby services',
   'home.buttons.instructions': 'Tips for using the service map',
+  'home.buttons.area': 'Check the areas, neighbourhoods and civil defence districts',
   'home.example.search': 'Search for',
   'home.message': 'Message from the developers',
   'home.send.feedback': 'Give feedback',
@@ -171,6 +198,8 @@ export default {
 
   // Units
   'unit': 'Unit',
+  'unit.accessibility.hearingMaps': 'Coverage maps',
+  'unit.accessibility.hearingMaps.extra': '(New tab. The service is not accessible)',
   'unit.accessibility.noInfo': 'No accessibility information',
   'unit.accessibility.noShortcomings': 'No known shortcomings',
   'unit.accessibility.ok': 'Accessible',
@@ -230,7 +259,7 @@ export default {
     other {# services}
   }`,
   'unit.route': 'Look at the route to this place',
-  'unit.route.extra': '(New tab. The Journey Planner is not an accessible service)',
+  'unit.route.extra': '(New tab. The HSL Journey Planner is not an accessible service)',
   'unit.socialMedia.title': 'The service unit on social media',
 
   // Search
@@ -370,13 +399,5 @@ export default {
   'info.title': 'About the service',
   'info.statement': 'Accessibility statement',
 
-  'alert.close': 'Close notification', // TODO: verify
-
-  // TODO: remove these once this corona alert is no longer used
-  'alert.title': 'Due to the Coronavirus epidemic most of the public services are closed',
-  'alert.text': 'Read more: ',
-  'alert.link.helsinki': 'https://www.hel.fi/helsinki/en/administration/information/general/information/coronavirus',
-  'alert.link.espoo': 'https://www.espoo.fi/en-US',
-  'alert.link.vantaa': 'https://www.vantaa.fi/front_page#',
-  'alert.link.kauniainen': 'https://www.kauniainen.fi/en',
+  'alert.close': 'Close the notification',
 };

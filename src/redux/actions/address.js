@@ -13,8 +13,20 @@ const setAddressUnits = units => ({
   units,
 });
 
+const setAdminDistricts = data => ({
+  type: 'SET_ADMINISTRATIVE_DISTRICTS',
+  data,
+});
+
+const setToRender = data => ({
+  type: 'SET_TO_RENDER',
+  data,
+});
+
 export {
   setAddressData,
   setAddressLocation,
   setAddressUnits,
+  setAdminDistricts,
+  setToRender,
 };

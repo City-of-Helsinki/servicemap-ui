@@ -4,10 +4,10 @@ import { isRetina } from '../../../utils';
 
 // The default maximum bounds of the map
 const defaultMapBounds = {
-  maxLat: 60.68260671624568,
-  maxLng: 26.05329875808676,
-  minLat: 59.695219623662894,
-  minLng: 23.39691082417145,
+  maxLat: 61.755,
+  maxLng: 29.755,
+  minLat: 59.1,
+  minLng: 21.5,
 };
 
 const mapOptions = {
@@ -55,7 +55,7 @@ const mapTypes = {
   // These define the map tiles and options of individual map types
   servicemap: {
     name: 'servicemap',
-    url: 'https://tiles.hel.ninja/styles/hel-osm-bright/{z}/{x}/{y}.png',
+    generateUrl: (suffix = '') => `https://tiles.hel.ninja/styles/hel-osm-bright/{z}/{x}/{y}${suffix}.png`,
     minZoom: 9,
     maxZoom: 18,
     zoom: 13,
@@ -66,7 +66,7 @@ const mapTypes = {
   },
   accessible_map: {
     name: 'accessible_map',
-    url: 'https://tiles.hel.ninja/styles/turku-osm-high-contrast-pattern/{z}/{x}/{y}.png',
+    generateUrl: (suffix = '') => `https://tiles.hel.ninja/styles/turku-osm-high-contrast-pattern/{z}/{x}/{y}${suffix}.png`,
     minZoom: 9,
     maxZoom: 18,
     zoom: 13,
@@ -79,7 +79,7 @@ const mapTypes = {
     name: 'ortographic',
     layer: tileLayers.orthoImageLayer,
     // TODO: maybe have map names and formats as variables from the URL, like in the old version
-    url: 'https://kartta.hsy.fi/geoserver/gwc/service/wmts?layer=taustakartat_ja_aluejaot:Ortoilmakuva_2017&tilematrixset=ETRS-GK25&Service=WMTS&Request=GetTile&Version=1.0.0&TileMatrix=ETRS-GK25:{z}&TileCol={x}&TileRow={y}&Format=image/jpeg',
+    generateUrl: () => 'https://kartta.hsy.fi/geoserver/gwc/service/wmts?layer=taustakartat_ja_aluejaot:Ortoilmakuva_2017&tilematrixset=ETRS-GK25&Service=WMTS&Request=GetTile&Version=1.0.0&TileMatrix=ETRS-GK25:{z}&TileCol={x}&TileRow={y}&Format=image/jpeg',
     minZoom: 3,
     maxZoom: 10,
     zoom: 5,
@@ -98,7 +98,7 @@ const mapTypes = {
     name: 'guideMap',
     layer: tileLayers.guideMapLayer,
     // TODO: maybe have map names and formats as variables from the URL, like in the old version
-    url: 'https://kartta.hel.fi/ws/geoserver/avoindata/gwc/service/wmts?layer=avoindata:Karttasarja_PKS&tilematrixset=ETRS-GK25&Service=WMTS&Request=GetTile&Version=1.0.0&TileMatrix=ETRS-GK25:{z}&TileCol={x}&TileRow={y}&Format=image%2Fpng',
+    generateUrl: () => 'https://kartta.hel.fi/ws/geoserver/avoindata/gwc/service/wmts?layer=avoindata:Karttasarja_PKS&tilematrixset=ETRS-GK25&Service=WMTS&Request=GetTile&Version=1.0.0&TileMatrix=ETRS-GK25:{z}&TileCol={x}&TileRow={y}&Format=image%2Fpng',
     minZoom: 8,
     maxZoom: 15,
     zoom: 10,
@@ -118,18 +118,29 @@ const mapTypes = {
 
 const getMapOptions = (type, locale) => {
   const mapOptions = mapTypes[type] || mapTypes.servicemap;
-  // For servicemap, use retina and/or swedish url if needed
-  if (type === 'servicemap') {
-    let suffix = '';
-    if (isRetina) {
-      suffix += '@2x';
+
+  let suffix = '';
+  switch (type) {
+    // For servicemap, use retina and/or swedish url if needed
+    case 'servicemap': {
+      if (isRetina) {
+        suffix += '@2x';
+      }
+      if (locale === 'sv') {
+        suffix += '@sv';
+      }
+      break;
     }
-    if (locale === 'sv') {
-      suffix += '@sv';
+    case 'accessible_map': {
+      if (locale === 'sv') {
+        suffix += '@sv';
+      }
+      break;
     }
-    // Set new url for servicemap
-    mapOptions.url = `https://tiles.hel.ninja/styles/hel-osm-bright/{z}/{x}/{y}${suffix}.png`;
+    default:
   }
+  // Generate url based on options
+  mapOptions.url = mapOptions.generateUrl(suffix);
 
   return mapOptions;
 };

@@ -128,7 +128,11 @@ const FeedbackView = ({
       </Dialog>
 
       <form className={classes.container}>
-        <TitleBar backButton title={feedbackTitle} />
+        <TitleBar
+          backButton
+          title={feedbackTitle}
+          titleComponent="h3"
+        />
         <div className={classes.contentArea}>
           {/* Email field */}
           <FormControl>

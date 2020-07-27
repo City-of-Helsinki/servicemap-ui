@@ -4,7 +4,6 @@ import { Search } from '@material-ui/icons';
 import {
   Paper, List, Typography,
 } from '@material-ui/core';
-import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
 import { FormattedMessage } from 'react-intl';
 import { getPreviousSearches } from '../../previousSearchData';
 import PreviousSearches from '../../PreviousSearches';
@@ -12,7 +11,8 @@ import createSuggestions from '../../createSuggestions';
 import config from '../../../../../config';
 import SuggestionItem from '../../../ListItems/SuggestionItem';
 import AddressItem from '../../../ListItems/AddressItem';
-import { uppercaseFirst } from '../../../../utils';
+import useMobileStatus from '../../../../utils/isMobile';
+import { getAddressText } from '../../../../utils/address';
 
 
 const SuggestionBox = (props) => {
@@ -35,7 +35,7 @@ const SuggestionBox = (props) => {
   const [history] = useState(getPreviousSearches());
   // Query word on which suggestion list is based
   const [suggestionQuery, setSuggestionQuery] = useState(null);
-  const isMobile = useMediaQuery(`(max-width:${config.mobileUiBreakpoint}px)`);
+  const isMobile = useMobileStatus();
 
   const listRef = useRef(null);
   const fetchController = useRef(null);
@@ -107,12 +107,6 @@ const SuggestionBox = (props) => {
     }
   };
 
-  const getAddressText = (item) => {
-    const number = `${item.number ? item.number : ''}${item.letter ? item.letter : ''}`;
-    const text = `${getLocaleText(item.street.name)} ${number}, ${uppercaseFirst(item.street.municipality)}`;
-    return text;
-  };
-
   const setSearchBarText = () => {
     if (listRef && listRef.current) {
       if (listRef.current.props.children.length && focusedSuggestion !== null) {
@@ -123,7 +117,7 @@ const SuggestionBox = (props) => {
             return;
           }
           if (focused.object_type === 'address') {
-            setSearch(getAddressText(focused));
+            setSearch(getAddressText(focused, getLocaleText));
           }
         } else if (history) {
           setSearch(history[focusedSuggestion]);
@@ -167,16 +161,14 @@ const SuggestionBox = (props) => {
     if (suggestionList) {
       return (
         <>
-          <List className="suggestionList" ref={listRef}>
+          <List id="SuggestionList" className="suggestionList" ref={listRef}>
             {suggestionList.map((item, i) => {
               if (item.object_type === 'suggestion') {
                 return (
                   <SuggestionItem
                     selected={i === focusedSuggestion}
-                    button
                     key={`suggestion-${item.suggestion + item.count}`}
                     icon={<Search />}
-                    role="link"
                     text={item.suggestion}
                     handleArrowClick={handleArrowClick}
                     handleItemClick={() => handleSubmit(item.suggestion)}

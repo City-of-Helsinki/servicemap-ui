@@ -1,8 +1,9 @@
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 import { withRouter } from 'react-router-dom';
+import { withStyles } from '@material-ui/core';
 import DefaultLayout from './DefaultLayout';
-import { toggleSettings } from '../redux/actions/settings';
+import styles from './styles';
 
 // Listen to redux state
 const mapStateToProps = (state) => {
@@ -17,5 +18,4 @@ const mapStateToProps = (state) => {
 
 export default injectIntl(withRouter(connect(
   mapStateToProps,
-  { toggleSettings },
-)(DefaultLayout)));
+)(withStyles(styles)(DefaultLayout))));

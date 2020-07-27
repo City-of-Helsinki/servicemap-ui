@@ -1,75 +1,74 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { intlShape } from 'react-intl';
 import { Typography } from '@material-ui/core';
 import { drawMarkerIcon } from '../../utils/drawIcon';
 import swapCoordinates from '../../utils/swapCoordinates';
+import AddressMarker from '../AddressMarker';
+import useMobileStatus from '../../../../utils/isMobile';
 
 const Districts = ({
   Polygon,
   Marker,
-  Popup,
+  Tooltip,
   highlightedDistrict,
+  districtData,
+  addressDistrict,
   getLocaleText,
   theme,
   mapOptions,
-  mobile,
+  currentPage,
+  selectedAddress,
   classes,
   navigator,
+  intl,
 }) => {
   const useContrast = theme === 'dark';
+  const isMobile = useMobileStatus();
 
-  const renderDistrictMarkers = () => {
-    if (highlightedDistrict) {
-      return (
-        <React.Fragment key={highlightedDistrict.id}>
-          {highlightedDistrict && highlightedDistrict.unit && highlightedDistrict.unit.location ? (
-            <>
-              <Marker
-                position={[
-                  highlightedDistrict.unit.location.coordinates[1],
-                  highlightedDistrict.unit.location.coordinates[0],
-                ]}
-                icon={drawMarkerIcon(useContrast)}
-                keyboard={false}
-                onClick={() => {
-                  if (navigator) {
-                    if (mobile) {
-                      navigator.replace('unit', { id: highlightedDistrict.unit.id });
-                    } else {
-                      navigator.push('unit', { id: highlightedDistrict.unit.id });
-                    }
-                  }
-                }}
-              />
-              {/* Popup for the district unit name */}
-              <Popup
-                className="popup"
-                offset={[-0.5, -20]}
-                closeButton={false}
-                autoPan={false}
-                position={[
-                  highlightedDistrict.unit.location.coordinates[1],
-                  highlightedDistrict.unit.location.coordinates[0],
-                ]}
+  const renderDistrictMarkers = district => (
+    <React.Fragment key={district.id}>
+      {district.unit && district.unit.location ? (
+        <>
+          <Marker
+            position={[
+              district.unit.location.coordinates[1],
+              district.unit.location.coordinates[0],
+            ]}
+            icon={drawMarkerIcon(useContrast)}
+            keyboard={false}
+            onClick={() => {
+              if (navigator) {
+                if (isMobile) {
+                  navigator.replace('unit', { id: district.unit.id });
+                } else {
+                  navigator.push('unit', { id: district.unit.id });
+                }
+              }
+            }}
+          >
+            <Tooltip
+              direction="top"
+              offset={[1.5, -25]}
+              position={[
+                district.unit.location.coordinates[1],
+                district.unit.location.coordinates[0],
+              ]}
+            >
+              <Typography
+                noWrap
+                className={classes.popup}
               >
-                <Typography
-                  noWrap
-                  className={classes.popup}
-                >
-                  {getLocaleText(highlightedDistrict.unit.name)}
-                </Typography>
-              </Popup>
-            </>
-          )
-            : null
-          }
-        </React.Fragment>
-      );
-    }
-    return null;
-  };
+                {getLocaleText(district.unit.name)}
+              </Typography>
+            </Tooltip>
+          </Marker>
+        </>
+      ) : null}
+    </React.Fragment>
+  );
 
-  const renderDistricts = () => {
+  const renderSingleDistrict = () => {
     if (!highlightedDistrict) {
       return null;
     }
@@ -90,35 +89,111 @@ const Districts = ({
     );
   };
 
-  return (
-    <>
-      {
-        renderDistricts()
-      }
-      {
-        renderDistrictMarkers()
-      }
+  const renderMultipleDistricts = () => {
+    if (!districtData) {
+      return null;
+    }
 
-    </>
-  );
+    return districtData.map((district) => {
+      const dimmed = addressDistrict && district.id !== addressDistrict;
+
+      const area = district.boundary.coordinates.map(
+        coords => swapCoordinates(coords),
+      );
+
+      return (
+        <Polygon
+          key={district.id}
+          positions={[[area]]}
+          color="#ff8400"
+          fillOpacity={dimmed ? '0.3' : '0'}
+          fillColor={dimmed ? '#000' : '#ff8400'}
+
+          onMouseOver={(e) => {
+            e.target.openTooltip();
+            e.target.setStyle({ fillOpacity: '0.2' });
+          }}
+          onMouseOut={(e) => {
+            e.target.setStyle({ fillOpacity: dimmed ? '0.3' : '0' });
+          }}
+
+          onFocus={() => {}}
+          onBlur={() => {}}
+        >
+          {district.name && !(district.overlaping && district.overlaping.some(obj => obj.unit)) ? (
+            <Tooltip
+              sticky
+              direction="top"
+              autoPan={false}
+            >
+              {`${district.name.fi} - ${intl.formatMessage({ id: `area.list.${district.type}` })}`}
+            </Tooltip>
+          ) : null}
+          {renderDistrictMarkers(district)}
+          {district.overlaping && district.overlaping.map(obj => (
+            renderDistrictMarkers(obj)
+          ))}
+        </Polygon>
+      );
+    });
+  };
+
+
+  if (highlightedDistrict) {
+    return (
+      <>
+        {
+          renderSingleDistrict()
+        }
+        {
+          renderDistrictMarkers(highlightedDistrict)
+        }
+
+      </>
+    );
+  } if (currentPage === 'area') {
+    return (
+      <>
+        {selectedAddress ? (
+          <AddressMarker
+            Marker={Marker}
+            Tooltip={Tooltip}
+            getLocaleText={getLocaleText}
+            position={[
+              selectedAddress.location.coordinates[1], selectedAddress.location.coordinates[0],
+            ]}
+          />
+        ) : null}
+        {districtData ? (
+          renderMultipleDistricts()
+        ) : null}
+      </>
+    );
+  } return null;
 };
 
 Districts.propTypes = {
   Polygon: PropTypes.objectOf(PropTypes.any).isRequired,
   Marker: PropTypes.objectOf(PropTypes.any).isRequired,
-  Popup: PropTypes.objectOf(PropTypes.any).isRequired,
+  Tooltip: PropTypes.objectOf(PropTypes.any).isRequired,
   highlightedDistrict: PropTypes.objectOf(PropTypes.any),
   getLocaleText: PropTypes.func.isRequired,
   mapOptions: PropTypes.objectOf(PropTypes.any).isRequired,
+  currentPage: PropTypes.string.isRequired,
+  selectedAddress: PropTypes.objectOf(PropTypes.any),
+  districtData: PropTypes.arrayOf(PropTypes.object),
+  addressDistrict: PropTypes.number,
   navigator: PropTypes.objectOf(PropTypes.any).isRequired,
-  mobile: PropTypes.bool,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
+  intl: intlShape.isRequired,
   theme: PropTypes.oneOf(['default', 'dark']).isRequired,
 };
 
 Districts.defaultProps = {
   highlightedDistrict: null,
-  mobile: false,
+  selectedAddress: null,
+  districtData: null,
+  addressDistrict: null,
 };
 
 export default Districts;

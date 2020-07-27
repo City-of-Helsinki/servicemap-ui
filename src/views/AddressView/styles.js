@@ -4,10 +4,7 @@ export default theme => ({
   },
   topArea: {
     backgroundColor: '#fff',
-    position: 'sticky',
     textAlign: 'left',
-    top: 0,
-    zIndex: theme.zIndex.infront,
   },
   mapButton: {
     marginTop: theme.spacing.unitTriple,
@@ -28,5 +25,18 @@ export default theme => ({
   districtListcontainer: {
     paddingLeft: theme.spacing.unitDouble,
     paddingRight: theme.spacing.unitDouble,
+  },
+  servicesTitle: {
+    padding: theme.spacing.unit,
+    margin: `${theme.spacing.unit}px ${theme.spacing.unitDouble}px`,
+    textAlign: 'left',
+  },
+  areaLink: {
+    textDecoration: 'underline',
+    marginBottom: theme.spacing.unit,
+    marginTop: theme.spacing.unit,
+    '&:hover': {
+      opacity: '0.7',
+    },
   },
 });

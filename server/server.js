@@ -22,7 +22,7 @@ import { fetchEventData, fetchSelectedUnitData } from './dataFetcher';
 import IntlPolyfill from 'intl';
 import paths from '../config/paths';
 import legacyRedirector from './legacyRedirector';
-import matomoTrackingCode from './analytics';
+import { matomoTrackingCode, appDynamicsTrackingCode } from './analytics';
 import { getLastCommit, getVersion } from './version';
 
 // Get sentry dsn from environtment variables
@@ -75,6 +75,15 @@ app.use(`/rdr`, legacyRedirector);
 app.use('/', languageSubdomainRedirect);
 app.use(`/`, makeLanguageHandler);
 app.use('/', unitRedirect);
+// Handle treenode redirect
+app.use('/', (req, res, next) => {
+  if (req.query.treenode != null) {
+    const fullUrl = req.originalUrl.replace(/treenode/g, 'service_node');
+    res.redirect(301, fullUrl);
+    return;
+  }
+  next();
+});
 app.use(paths.event.regex, fetchEventData);
 app.use(paths.unit.regex, fetchSelectedUnitData);
 
@@ -158,6 +167,7 @@ const htmlTemplate = (reactDom, preloadedState, css, jss, locale, helmet) => `
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#141823" />
+    ${appDynamicsTrackingCode(process.env.APP_DYNAMICS_APP_KEY)}
   </head>
 
   <body>
@@ -172,6 +182,7 @@ const htmlTemplate = (reactDom, preloadedState, css, jss, locale, helmet) => `
         window.nodeEnvSettings.PRODUCTION_PREFIX = "${process.env.PRODUCTION_PREFIX}";
         window.nodeEnvSettings.DIGITRANSIT_API = "${process.env.DIGITRANSIT_API}";
         window.nodeEnvSettings.FEEDBACK_URL = "${process.env.FEEDBACK_URL}";
+        window.nodeEnvSettings.HEARING_MAP_API = "${process.env.HEARING_MAP_API}";
         window.nodeEnvSettings.MODE = "${process.env.MODE}";
         
         window.appVersion = {};

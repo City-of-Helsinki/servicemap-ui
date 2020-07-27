@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { injectIntl } from 'react-intl';
 import { Typography, withStyles, ButtonBase } from '@material-ui/core';
 import styles from './styles';
+import { keyboardHandler } from '../../utils';
 
 // Page number element
 const PageElement = ({
@@ -14,7 +16,8 @@ const PageElement = ({
         role="link"
         disabled={isActive}
         onClick={onClick}
-        tabIndex={isActive ? null : '0'}
+        onKeyDown={keyboardHandler(onClick, ['space', 'enter'])}
+        tabIndex={isActive ? '-1' : '0'}
       >
         <Typography
           variant="subtitle1"
@@ -51,4 +54,4 @@ PageElement.defaultProps = {
   className: '',
 };
 
-export default withStyles(styles)(PageElement);
+export default injectIntl(withStyles(styles)(PageElement));

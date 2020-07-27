@@ -4,14 +4,13 @@ import PropTypes from 'prop-types';
 import {
   ListItem, ListItemIcon, Typography, Divider,
 } from '@material-ui/core';
+import { keyboardHandler } from '../../../utils';
 
-// TODO: Complete distance calculations and related accessibility texts
 const ResultItem = ({
   bottomHighlight,
   bottomText,
   classes,
   onClick,
-  onKeyDown,
   icon,
   subtitle,
   title,
@@ -19,7 +18,6 @@ const ResultItem = ({
   divider,
   role,
   srLabel,
-  intl,
   selected,
   padded,
   extendedClasses,
@@ -29,9 +27,7 @@ const ResultItem = ({
     ${title || ''} 
     ${subtitle || ''} 
     ${distance
-    ? `${distance.distance} ${distance.type === 'm'
-      ? intl.formatMessage({ id: 'general.distance.meters' })
-      : intl.formatMessage({ id: 'general.distance.kilometers' })}`
+    ? distance.srText
     : ''} 
     ${bottomText || ''} 
     ${srLabel || ''}
@@ -46,11 +42,11 @@ const ResultItem = ({
       <ListItem
         selected={selected}
         button
-        role={role || 'link'}
+        role={role}
         component="li"
         tabIndex={0}
         onClick={onClick}
-        onKeyDown={onKeyDown}
+        onKeyDown={keyboardHandler(onClick, ['enter', 'space'])}
         className={listItemClasses}
       >
         {
@@ -67,7 +63,7 @@ const ResultItem = ({
               // SROnly element with full readable text
             }
             <Typography
-              className={`${classes.title || ''}`}
+              className={`${classes.title || ''} ResultItem-srOnly`}
               component="p"
               variant="srOnly"
             >
@@ -78,7 +74,7 @@ const ResultItem = ({
               // Title
             }
             <Typography
-              className={`${classes.title || ''}  ${typographyClasses.title || ''}`}
+              className={`${classes.title || ''}  ${typographyClasses.title || ''} ResultItem-title`}
               component="p"
               role="textbox"
               variant="body2"
@@ -89,17 +85,16 @@ const ResultItem = ({
 
             {
               // Distance text
-              distance
+              distance && distance.text
               && (
                 <div className={`${classes.rightColumn || ''}`}>
                   <Typography
                     variant="caption"
-                    className={`${classes.caption || ''} ${classes.text} ${classes.marginLeft || ''} ${typographyClasses.topRight || ''}`}
+                    className={`${classes.caption || ''} ${classes.text} ${classes.marginLeft || ''} ${typographyClasses.topRight || ''} ResultItem-distance`}
                     component="p"
                     aria-hidden="true"
                   >
-                    {distance.distance}
-                    {distance.type}
+                    {distance.text}
                   </Typography>
                 </div>
               )
@@ -114,7 +109,7 @@ const ResultItem = ({
                 <div>
                   <Typography
                     variant="caption"
-                    className={`${classes.noMargin || ''} ${classes.text} ${typographyClasses.subtitle || ''}`}
+                    className={`${classes.noMargin || ''} ${classes.text} ${typographyClasses.subtitle || ''} ResultItem-subtitle`}
                     component="p"
                     aria-hidden="true"
                   >
@@ -126,7 +121,7 @@ const ResultItem = ({
                   && (
                   <div className={`${classes.bottomContainer} ${bottomHighlight ? classes.bottomHighlight : ''}`}>
                     <Typography
-                      className={`${classes.smallFont || ''} ${typographyClasses.bottom || ''}`}
+                      className={`${classes.smallFont || ''} ${typographyClasses.bottom || ''} ResultItem-bottom`}
                       color="inherit"
                       component="p"
                       variant="caption"
@@ -169,12 +164,10 @@ ResultItem.propTypes = {
   })),
   icon: PropTypes.node,
   onClick: PropTypes.func,
-  onKeyDown: PropTypes.func,
   subtitle: PropTypes.string,
   title: PropTypes.string.isRequired,
   distance: PropTypes.shape({
-    distance: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    type: PropTypes.oneOf(['m', 'km']),
+    srText: PropTypes.string,
     text: PropTypes.string,
   }),
   divider: PropTypes.bool,
@@ -182,7 +175,6 @@ ResultItem.propTypes = {
   srLabel: PropTypes.string,
   selected: PropTypes.bool,
   padded: PropTypes.bool,
-  intl: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 ResultItem.defaultProps = {
@@ -192,11 +184,10 @@ ResultItem.defaultProps = {
   extendedClasses: null,
   icon: null,
   onClick: () => {},
-  onKeyDown: null,
   subtitle: null,
   distance: null,
   divider: true,
-  role: null,
+  role: 'link',
   srLabel: null,
   selected: false,
   padded: false,

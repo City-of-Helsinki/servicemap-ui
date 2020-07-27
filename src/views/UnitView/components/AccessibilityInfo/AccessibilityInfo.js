@@ -7,6 +7,7 @@ import { Warning, VerifiedUser } from '@material-ui/icons';
 import { FormattedMessage } from 'react-intl';
 import Container from '../../../../components/Container';
 import SettingsUtility from '../../../../utils/settings';
+import Loading from '../../../../components/Loading';
 
 class AccessibilityInfo extends React.Component {
   /**
@@ -103,7 +104,7 @@ class AccessibilityInfo extends React.Component {
                       {
                         shortcomings.map(shortcoming => (
                           <li key={shortcoming} className={classes.listItem}>
-                            <Typography className={classes.colorLight} component="p" variant="body2">
+                            <Typography component="p" variant="body2">
                               {shortcoming}
                             </Typography>
                           </li>
@@ -121,16 +122,14 @@ class AccessibilityInfo extends React.Component {
   }
 
   renderAccessibilityDescriptions(heading) {
-    const { data } = this.props;
-
+    const { accessibilitySentences, classes, getLocaleText } = this.props;
+    const { data } = accessibilitySentences;
     if (!data) {
       return null;
     }
 
     // Figure out heading levels
-    const { classes, getLocaleText } = this.props;
     const { groups, sentences } = data;
-
     const groupArray = Object.keys(groups);
     const sentenceArray = Object.keys(sentences);
 
@@ -154,7 +153,7 @@ class AccessibilityInfo extends React.Component {
 
                 if (groupSentences && groupSentences.length > 0) {
                   return (
-                    <ListItem key={title}>
+                    <ListItem className={classes.descriptionItem} key={title}>
                       <ListItemText>
                         <Typography className={classes.listTitle} component={heading} variant="body2" align="left">
                           {title}
@@ -165,7 +164,7 @@ class AccessibilityInfo extends React.Component {
                               const text = getLocaleText(sentence);
                               return (
                                 <li key={text} className={classes.listItem}>
-                                  <Typography className={classes.colorLight} component="p" variant="body2" align="left">
+                                  <Typography component="p" variant="body2" align="left">
                                     {text}
                                   </Typography>
                                 </li>
@@ -219,7 +218,9 @@ class AccessibilityInfo extends React.Component {
   }
 
   render() {
-    const { classes, titleAlways, headingLevel } = this.props;
+    const {
+      accessibilitySentences, classes, titleAlways, headingLevel,
+    } = this.props;
 
     if (headingLevel < 1 || headingLevel > 5) {
       throw Error('Heading level is invalid');
@@ -269,9 +270,9 @@ class AccessibilityInfo extends React.Component {
             </>
           )
         }
-        {
-          aDescriptions
-        }
+        <Loading reducer={accessibilitySentences}>
+          { aDescriptions }
+        </Loading>
       </Container>
     );
   }
@@ -279,10 +280,13 @@ class AccessibilityInfo extends React.Component {
 
 AccessibilityInfo.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  data: PropTypes.objectOf(PropTypes.shape({
-    sentences: PropTypes.any,
-    groups: PropTypes.any,
-  })).isRequired,
+  accessibilitySentences: PropTypes.shape({
+    isFetching: PropTypes.bool,
+    data: PropTypes.objectOf(PropTypes.shape({
+      sentences: PropTypes.any,
+      groups: PropTypes.any,
+    })),
+  }).isRequired,
   headingLevel: PropTypes.oneOf([2, 3, 4, 5]).isRequired,
   getLocaleText: PropTypes.func.isRequired,
   settings: PropTypes.objectOf(PropTypes.any).isRequired,

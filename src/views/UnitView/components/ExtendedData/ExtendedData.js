@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import EventItem from '../../../../components/ListItems/EventItem';
 import PaginatedList from '../../../../components/Lists/PaginatedList';
 import TitleBar from '../../../../components/TitleBar';
-import Loading from '../../../../components/Loading/Loading';
+import Loading from '../../../../components/Loading';
 import ReservationItem from '../../../../components/ListItems/ReservationItem';
 
 const ExtendedData = ({
@@ -16,7 +16,6 @@ const ExtendedData = ({
   fetchUnitEvents,
   getLocaleText,
   reservations,
-  intl,
   type,
 }) => {
   const { unit } = useParams();
@@ -48,82 +47,60 @@ const ExtendedData = ({
 
   const renderTitleBar = messageID => (
     <TitleBar
+      sticky
       title={(
         <>
           {`${title} - `}
           <FormattedMessage id={messageID} />
         </>
       )}
+      titleComponent="h3"
       backButton
       className="ExtendedData-title"
     />
   );
 
   const renderEvents = () => {
-    const {
-      count, data, isFetching, max,
-    } = events;
+    const { data } = events;
 
-    const renderLoader = () => {
-      if (isFetching) {
-        const progress = count ? Math.floor((count / max * 100)) : 0;
-        const loadingText = intl && max ? intl.formatMessage({ id: 'loading.events' }, { count, max }) : null;
-        return <Loading text={loadingText} progress={progress} />;
-      }
-      return null;
-    };
     return (
-      <>
+      <div>
         {
           renderTitleBar('unit.events')
         }
-        <PaginatedList
-          id="events"
-          data={data || []}
-          customComponent={event => (
-            <EventItem key={event.id} event={event} />
-          )}
-          titleComponent="h3"
-        />
-        {
-          isFetching
-          && renderLoader()
-        }
-      </>
+        <Loading reducer={events}>
+          <PaginatedList
+            id="events"
+            data={data || []}
+            customComponent={event => (
+              <EventItem key={event.id} event={event} />
+            )}
+            titleComponent="h3"
+          />
+        </Loading>
+      </div>
     );
   };
 
   const renderReservations = () => {
-    const {
-      count, data, isFetching, max,
-    } = reservations;
+    const { data } = reservations;
 
-    const renderLoader = () => {
-      if (isFetching) {
-        const progress = count ? Math.floor((count / max * 100)) : 0;
-        const loadingText = intl && max ? intl.formatMessage({ id: 'loading.events' }, { count, max }) : null;
-        return <Loading text={loadingText} progress={progress} />;
-      }
-      return null;
-    };
     return (
-      <>
+      <div>
         {
           renderTitleBar('unit.reservations')
         }
-        <PaginatedList
-          id="reservations"
-          data={data || []}
-          customComponent={item => (
-            <ReservationItem key={item.id} reservation={item} />
-          )}
-          titleComponent="h3"
-        />
-        {
-          isFetching
-          && renderLoader()
-        }
-      </>
+        <Loading reducer={reservations}>
+          <PaginatedList
+            id="reservations"
+            data={data || []}
+            customComponent={item => (
+              <ReservationItem key={item.id} reservation={item} />
+            )}
+            titleComponent="h3"
+          />
+        </Loading>
+      </div>
     );
   };
   switch (type) {
@@ -141,7 +118,6 @@ ExtendedData.propTypes = {
   fetchReservations: PropTypes.func.isRequired,
   fetchUnitEvents: PropTypes.func.isRequired,
   reservations: PropTypes.objectOf(PropTypes.any).isRequired,
-  intl: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default ExtendedData;

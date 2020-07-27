@@ -4,22 +4,23 @@ import { ButtonBase, Typography } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
 
 // ServiceMapButton
-const SMButton = ({
-  children,
-  classes,
-  intl,
-  className,
-  small,
-  color,
-  icon,
-  messageID,
-  onClick,
-  margin,
-  srText,
-  style,
-  role,
-  ...rest
-}) => {
+const SMButton = (props) => {
+  const {
+    'aria-label': ariaLabel,
+    children,
+    classes,
+    intl,
+    className,
+    small,
+    color,
+    icon,
+    messageID,
+    onClick,
+    margin,
+    style,
+    role,
+    ...rest
+  } = props;
   const colorStyle = classes[color] || '';
   const buttonIcon = icon ? React.cloneElement(icon, { className: classes.buttonIcon }) : null;
   const buttonClasses = `${classes.button} ${small ? classes.smallButton : ''} ${margin ? classes.margin : classes.marginRight} ${className} ${colorStyle}`;
@@ -27,24 +28,22 @@ const SMButton = ({
 
   let buttonTitle = null;
 
-  if (srText) {
-    buttonTitle = srText;
-  } else if (messageID) {
+  if (messageID) {
     buttonTitle = intl.formatMessage({ id: messageID });
   }
 
   return (
     <ButtonBase
-      aria-label={buttonTitle}
+      {...rest}
+      aria-label={ariaLabel || buttonTitle}
       className={buttonClasses}
       icon={buttonIcon}
       onClick={onClick}
-      role={role || 'link'}
+      role={role || 'button'}
       style={{
         ...style,
       }}
       variant="contained"
-      {...rest}
       focusVisibleClassName={color === 'primary' ? classes.primaryFocus : null}
     >
       {
@@ -67,6 +66,7 @@ const SMButton = ({
 };
 
 SMButton.propTypes = {
+  'aria-label': PropTypes.string,
   icon: PropTypes.objectOf(PropTypes.any),
   className: PropTypes.string,
   color: PropTypes.oneOf(['primary', 'secondary', 'default']),
@@ -74,16 +74,16 @@ SMButton.propTypes = {
   small: PropTypes.bool,
   messageID: PropTypes.string,
   onClick: PropTypes.func.isRequired,
-  srText: PropTypes.string,
   style: PropTypes.objectOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   children: PropTypes.node,
-  role: PropTypes.string,
+  role: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 SMButton.defaultProps = {
+  'aria-label': null,
   children: null,
   className: '',
   small: false,
@@ -91,9 +91,7 @@ SMButton.defaultProps = {
   icon: null,
   margin: false,
   messageID: null,
-  srText: null,
   style: null,
-  role: null,
   disabled: false,
 };
 

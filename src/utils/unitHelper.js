@@ -89,6 +89,9 @@ class UnitHelper {
   )
 
   static getDefaultIcon = () => {
+    if (!this.markerIcons) {
+      return null;
+    }
     const iconIndex = 2;
 
     const icon = this.markerIcons.default[iconIndex];
@@ -97,8 +100,12 @@ class UnitHelper {
   }
 
   static getIcon = (unit, settings, isStraight = false) => {
-    if (!isClient()) {
+    if (!this.markerIcons) {
       return null;
+    }
+    if (!unit || !settings) {
+      const icon = this.markerIcons.default[2];
+      return icon;
     }
     const shortcomingCount = this.getShortcomingCount(unit, settings);
     const markerType = this.getMarkerType(shortcomingCount);

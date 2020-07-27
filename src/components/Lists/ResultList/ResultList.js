@@ -62,7 +62,7 @@ class ResultList extends React.Component {
               let itemComponent = null;
               switch (object_type) {
                 case 'unit':
-                  itemComponent = <UnitItem key={`unit-${id}`} unit={item} listId={listId} single />;
+                  itemComponent = <UnitItem key={`unit-${id}`} unit={item} />;
                   break;
                 case 'service':
                   itemComponent = <ServiceItem key={`service-${id}`} service={item} />;
@@ -100,7 +100,7 @@ ResultList.propTypes = {
   listId: PropTypes.string.isRequired,
   resultCount: PropTypes.number,
   title: PropTypes.string,
-  titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']),
+  titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']).isRequired,
 };
 
 ResultList.defaultProps = {
@@ -108,5 +108,4 @@ ResultList.defaultProps = {
   customComponent: null,
   resultCount: null,
   title: null,
-  titleComponent: 'h3',
 };

@@ -1,7 +1,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
 import MapView from '../views/MapView';
 import I18n from '../i18n';
@@ -10,13 +10,12 @@ import TopBar from '../components/TopBar';
 import Settings from '../components/Settings';
 import ViewRouter from './components/ViewRouter';
 import DesktopComponent from '../components/DesktopComponent';
-import AlertBox from '../components/AlertBox';
+import useMobileStatus from '../utils/isMobile';
 
-const mobileBreakpoint = config.mobileUiBreakpoint;
 const { smallScreenBreakpoint } = config;
 
 const createContentStyles = (
-  isMobile, isSmallScreen, landscape, mobileMapOnly, fullMobileMap, settingsOpen, currentPage,
+  isMobile, isSmallScreen, landscape, fullMobileMap, settingsOpen, currentPage,
 ) => {
   let width = 450;
   if (isMobile) {
@@ -28,7 +27,6 @@ const createContentStyles = (
 
   const styles = {
     activeRoot: {
-      flexDirection: mobileMapOnly || isMobile ? 'column' : 'row',
       margin: 0,
       width: '100%',
       display: 'flex',
@@ -40,9 +38,9 @@ const createContentStyles = (
       position: isMobile ? 'fixed' : null,
       bottom: 0,
       margin: 0,
-      flex: !isMobile || mobileMapOnly ? 1 : 0,
+      flex: !isMobile || fullMobileMap ? 1 : 0,
       display: 'flex',
-      visibility: isMobile && (!mobileMapOnly || settingsOpen) ? 'hidden' : '',
+      visibility: isMobile && (!fullMobileMap || settingsOpen) ? 'hidden' : '',
       height: isMobile ? `calc(100% - ${topBarHeight})` : '100%',
       width: '100%',
       zIndex: 900,
@@ -59,8 +57,8 @@ const createContentStyles = (
       margin: 0,
       // eslint-disable-next-line no-nested-ternary
       overflow: settingsOpen ? 'hidden'
-        : isMobile ? '' : 'auto',
-      visibility: mobileMapOnly && !settingsOpen ? 'hidden' : null,
+        : isMobile ? 'visible' : 'auto',
+      visibility: fullMobileMap && !settingsOpen ? 'hidden' : null,
       flex: '0 1 auto',
     },
     sidebarContent: {
@@ -77,27 +75,17 @@ const createContentStyles = (
 
 const DefaultLayout = (props) => {
   const {
-    currentPage, i18n, intl, location, settingsToggled, toggleSettings,
+    currentPage, i18n, intl, location, settingsToggled,
   } = props;
-  const isMobile = useMediaQuery(`(max-width:${mobileBreakpoint}px)`);
+  const isMobile = useMobileStatus();
   const isSmallScreen = useMediaQuery(`(max-width:${smallScreenBreakpoint}px)`);
-  const fullMobileMap = new URLSearchParams(location.search).get('map'); // If mobile map without bottom navigation & searchbar
-  const mobileMapOnly = isMobile && (location.pathname.indexOf('/map') > -1 || fullMobileMap); // If mobile map view
+  const fullMobileMap = new URLSearchParams(location.search).get('showMap'); // If mobile map view
   const landscape = useMediaQuery('(min-device-aspect-ratio: 1/1)');
   const portrait = useMediaQuery('(max-device-aspect-ratio: 1/1)');
 
   const styles = createContentStyles(
-    isMobile, isSmallScreen, landscape, mobileMapOnly, fullMobileMap, settingsToggled, currentPage,
+    isMobile, isSmallScreen, landscape, fullMobileMap, settingsToggled, currentPage,
   );
-
-  const setSettingsPage = (type) => {
-    if (!type || type === settingsToggled) {
-      toggleSettings(null);
-    } else {
-      toggleSettings(type);
-    }
-  };
-
   return (
     <>
       <div id="topArea" aria-hidden={!!settingsToggled}>
@@ -111,23 +99,20 @@ const DefaultLayout = (props) => {
         </a>
         <TopBar
           settingsOpen={settingsToggled}
-          toggleSettings={type => setSettingsPage(type)}
           smallScreen={isSmallScreen}
           i18n={i18n}
         />
       </div>
 
       <div id="activeRoot" style={styles.activeRoot}>
-        <main role={settingsToggled && 'dialog'} className="SidebarWrapper" style={styles.sidebar}>
+        <main className="SidebarWrapper" style={styles.sidebar}>
           {settingsToggled && (
             <Settings
               key={settingsToggled}
-              toggleSettings={() => setSettingsPage()}
               isMobile={!!isMobile}
             />
           )}
           <div style={styles.sidebarContent} aria-hidden={!!settingsToggled}>
-            <AlertBox />
             <ViewRouter />
           </div>
         </main>
@@ -156,12 +141,14 @@ const DefaultLayout = (props) => {
 
 // Typechecking
 DefaultLayout.propTypes = {
+  classes: PropTypes.shape({
+    messageText: PropTypes.string,
+  }).isRequired,
   currentPage: PropTypes.string,
   i18n: PropTypes.instanceOf(I18n),
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   settingsToggled: PropTypes.string,
-  toggleSettings: PropTypes.func.isRequired,
 };
 
 DefaultLayout.defaultProps = {
@@ -170,4 +157,4 @@ DefaultLayout.defaultProps = {
   settingsToggled: null,
 };
 
-export default injectIntl(DefaultLayout);
+export default DefaultLayout;

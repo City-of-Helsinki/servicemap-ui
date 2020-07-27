@@ -33,7 +33,6 @@ const ResultOrderer = ({
   intl,
   order,
   disabled,
-  handleChange,
   setDirection,
   setOrder,
   userLocation,
@@ -77,7 +76,7 @@ const ResultOrderer = ({
           className={classes.select}
           native
           value={`${order}-${direction}`}
-          onChange={handleChange || defaultHandleChange}
+          onChange={defaultHandleChange}
           classes={{ select: classes.elementFocus }}
           inputProps={{
             name: 'result-sorter',
@@ -113,14 +112,12 @@ ResultOrderer.propTypes = {
   setDirection: PropTypes.func.isRequired,
   setOrder: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
-  handleChange: PropTypes.func,
   userLocation: PropTypes.objectOf(PropTypes.any),
 };
 
 ResultOrderer.defaultProps = {
   initialOrder: null,
   disabled: false,
-  handleChange: null,
   userLocation: null,
 };
 

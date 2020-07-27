@@ -1,7 +1,6 @@
 /* eslint-disable quote-props */
 export default {
   'app.title': 'Palvelukartta',
-  'address': 'Osoite',
 
   // Accessibility
   'accessibility': 'Esteettömyys',
@@ -16,28 +15,52 @@ export default {
                               }`,
 
   // Address
+  'address': 'Osoite',
+  'address.search': 'Osoitehaku',
+  'address.search.location': 'Valittu sijainti on {location}',
   'address.show.area': 'Näytä alue kartalla',
-  'address.list.geographical': 'Maantieteellinen',
-  'address.list.protection': 'Väestönsuojelu',
-  'address.list.health': 'Terveys',
-  'address.list.education': 'Koulutus',
-  'address.list.neighborhood': 'Kaupunginosa',
-  'address.list.postcode_area': 'Postinumeroalue',
-  'address.list.rescue_area': 'Suojelupiiri',
-  'address.list.rescue_district': 'Suojelulohko',
-  'address.list.rescue_sub_district': 'Suojelualalohko',
-  'address.list.health_station_district': 'Terveysasema-alue',
-  'address.list.maternity_clinic_district': 'Neuvola-alue',
-  'address.list.lower_comprehensive_school_district_fi': 'Suomenkielinen ala-astealue',
-  'address.list.lower_comprehensive_school_district_sv': 'Ruotsinkielinen ala-astealue',
-  'address.list.upper_comprehensive_school_district_fi': 'Suomenkielinen ylä-astealue',
-  'address.list.upper_comprehensive_school_district_sv': 'Ruotsinkielinen ylä-astealue',
-  'address.list.preschool_education_fi': 'Suomenkielinen varhaiskasvatusalue',
-  'address.list.preschool_education_sv': 'Ruotsinkielinen varhaiskasvatusalue',
   'address.error': 'Osoitetta ei löytynyt',
   'address.nearby': 'Lähellä',
   'address.districts': 'Alueet',
   'address.plural': 'Osoitteet',
+  'address.services.header': 'Palvelut täällä asuville',
+  'address.services.info': 'Kunnalliset palvelut, joiden piiriin sijainti kuuluu',
+  'address.area.link': 'Tutustu alueisiin kartalla.',
+  'address.emergency_care.common': 'Terveysaseman ollessa kiinni sekä öisin klo 22- 8 alle 16-vuotiaiden päivystys on <a class="link" href="/{locale}/unit/7299">Lastenklinikalla</a> [<a class="external-link" href="http://www.hus.fi/sairaanhoito/sairaalat/lastenklinikka/Sivut/default.aspx">kotisivut</a>] ja aikuisten päivystys',
+  'address.emergency_care.unit.26107': 'Malmin sairaalassa',
+  'address.emergency_care.unit.26104': 'Haartmanin sairaalassa',
+  'address.emergency_care.link': '[<a href="http://www.hel.fi/www/Helsinki/fi/sosiaali-ja-terveyspalvelut/terveyspalvelut/paivystys/" class="external-link">päivystyssivut</a>]',
+
+  // Area
+  'area.searchbar.infoText.address': 'Kirjoita kotiosoitteesi',
+  'area.searchbar.infoText.optional': '(valinnainen)',
+  'area.tab.selection': 'Alueen valinta',
+  'area.tab.services': 'Alueen palvelut',
+  'area.services.local': 'Oman alueesi palvelut',
+  'area.services.nearby': 'Lähialueiden palvelut',
+  'area.info': 'Valitse alue, jonka palveluista haluat tietoa. Kirjoittamalla alla olevaan hakukenttään kotiosoitteesi saat näkyville karttaan ja Alueen palvelut -välilehdelle alueet ja piirit, joihin kuulut',
+  'area.choose.district': 'Valitse alue',
+  'area.noSelection': 'Valitse alue Alueen Valinta -välilehdeltä',
+  'area.list.geographical': 'Maantieteellinen',
+  'area.list.protection': 'Väestönsuojelu',
+  'area.list.health': 'Terveys',
+  'area.list.education': 'Koulutus',
+  'area.list.education.finnish': 'Suomenkieliset koulualueet',
+  'area.list.education.swedish': 'Ruotsinkieliset koulualueet',
+  'area.list.preschool': 'Esiopetus',
+  'area.list.neighborhood': 'Kaupunginosa',
+  'area.list.postcode_area': 'Postinumeroalue',
+  'area.list.rescue_area': 'Suojelupiiri',
+  'area.list.rescue_district': 'Suojelulohko',
+  'area.list.rescue_sub_district': 'Suojelualalohko',
+  'area.list.health_station_district': 'Terveysasema-alue',
+  'area.list.maternity_clinic_district': 'Neuvola-alue',
+  'area.list.lower_comprehensive_school_district_fi': 'Suomenkielinen ala-astealue',
+  'area.list.lower_comprehensive_school_district_sv': 'Ruotsinkielinen ala-astealue',
+  'area.list.upper_comprehensive_school_district_fi': 'Suomenkielinen ylä-astealue',
+  'area.list.upper_comprehensive_school_district_sv': 'Ruotsinkielinen ylä-astealue',
+  'area.list.preschool_education_fi': 'Suomenkielinen esiopetusalue',
+  'area.list.preschool_education_sv': 'Ruotsinkielinen esiopetusalue',
 
   // Event
   'event.description': 'Kuvaus',
@@ -56,7 +79,7 @@ export default {
   'feedback.email.info': 'Jos haluat, että vastaamme antamaasi palautteeseen, anna sähköpostiosoitteesi.',
   'feedback.feedback': 'Palautteesi (pakollinen)',
   'feedback.feedback.info': 'Kerro mahdollisimman yksityiskohtaisesti mitä palautetta haluat antaa.',
-  'feedback.permission': 'Palautteeni saa jukaista (tarkastuksen jälkeen). Sähköpostiosoitetta ei julkaista.',
+  'feedback.permission': 'Palautteeni saa julkaista (tarkastuksen jälkeen). Sähköpostiosoitetta ei julkaista.',
   'feedback.additionalInfo': 'Antamasi palaute ohjautuu Helsingin kaupungin palautejärjestelmään.',
   'feedback.additionalInfo.link': 'Tietoja ja ohjeita palautteen antamisesta (linkki avautuu uuteen välilehteen).',
   'feedback.send': 'Lähetä palaute',
@@ -85,6 +108,7 @@ export default {
   'general.menu.close': 'Sulje valikko',
   'general.back': 'Palaa',
   'general.back.address': 'Palaa osoitenäkymään',
+  'general.back.area': 'Palaa aluenäkymään',
   'general.back.home': 'Palaa aloitusnäkymään',
   'general.back.goToHome': 'Siirry aloitusnäkymään',
   'general.back.search': 'Palaa hakunäkymään',
@@ -106,6 +130,7 @@ export default {
   'general.home': 'Koti',
   'general.noData': 'Tietoa ei saatavilla',
   'general.loading': 'Ladataan',
+  'general.loading.done': 'Lataus valmis',
   'general.showOnMap': 'Näytä kartalla',
   'general.pageTitles.home': 'Aloitusnäkymä',
   'general.pageTitles.search': 'Hakutulosnäkymä',
@@ -120,6 +145,7 @@ export default {
   'general.pageTitles.list.reservations': 'Varauslista',
   'general.pageTitles.info': 'Tietoa palvelusta',
   'general.pageTitles.feedback': 'Palautenäkymä',
+  'general.pageTitles.area': 'Aluenäkymä.',
 
   // General - Pagination
   'general.pagination.previous': 'Aiempi sivu',
@@ -146,6 +172,7 @@ export default {
   'home.buttons.services': 'Tutustu palveluihin palveluluettelon avulla',
   'home.buttons.closeByServices': 'Näytä lähellä olevat palvelut',
   'home.buttons.instructions': 'Vinkkejä Palvelukartan käyttöön',
+  'home.buttons.area': 'Katso alueet, kaupunginosat ja väestönsuojelupiirit',
   'home.example.search': 'Hae hakusanalla',
   'home.message': 'Terveisiä palvelukartan kehittäjiltä',
   'home.send.feedback': 'Anna palautetta',
@@ -171,6 +198,8 @@ export default {
 
   // Units
   'unit': 'Toimipiste',
+  'unit.accessibility.hearingMaps': 'Kuuluvuuskartat',
+  'unit.accessibility.hearingMaps.extra': '(Uusi välilehti. Palvelu ei ole saavutettava)',
   'unit.accessibility.noInfo': 'Ei esteettömyystietoja',
   'unit.accessibility.noShortcomings': 'Ei tiedossa olevia puutteita',
   'unit.accessibility.ok': 'Esteetön',
@@ -230,7 +259,7 @@ export default {
     other {# palvelua}
   }`,
   'unit.route': 'Katso reitti tänne',
-  'unit.route.extra': '(Uusi välilehti. Reittiopas ei ole saavutettava palvelu)',
+  'unit.route.extra': '(Uusi välilehti. HSL-reittiopas ei ole saavutettava palvelu)',
   'unit.socialMedia.title': 'Toimipiste sosiaalisessa mediassa',
 
   // Search
@@ -299,7 +328,7 @@ export default {
   // Service
   'service': 'Palvelu',
   'service.plural': 'Palvelut',
-  'service.nearby': 'Lähellä olevat palvelut',
+  'service.nearby': 'Palvelut täällä asuville',
   'service.units.empty': 'Palvelulla ei ole toimipisteitä',
   'service.tab': 'Palvelut ja tapahtumat',
 
@@ -371,12 +400,4 @@ export default {
   'info.statement': 'Saavutettavuusseloste',
 
   'alert.close': 'Sulje ilmoitus',
-
-  // TODO: remove these once this corona alert is no longer used
-  'alert.title': 'Koronaviruksen takia suurin osa julkisista palvelupisteistä on kiinni',
-  'alert.text': 'Lue lisää: ',
-  'alert.link.helsinki': 'https://www.hel.fi/helsinki/fi/kaupunki-ja-hallinto/tietoa-helsingista/yleistietoa-helsingista/koronavirus/',
-  'alert.link.espoo': 'https://www.espoo.fi/fi-FI',
-  'alert.link.vantaa': 'https://www.vantaa.fi/',
-  'alert.link.kauniainen': 'https://www.kauniainen.fi/',
 };

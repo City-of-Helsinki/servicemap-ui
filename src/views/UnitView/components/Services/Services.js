@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, intlShape } from 'react-intl';
 import TitledList from '../../../../components/Lists/TitledList';
 import ServiceItem from '../../../../components/ListItems/ServiceItem';
 
@@ -14,56 +14,40 @@ class Services extends React.Component {
 
   constructor(props) {
     super(props);
-    const { unit, listLength } = props;
-    const { services } = unit;
-    this.state = {
-      serviceList: services || [],
-      subjectList: [],
-      periodList: [],
-      serviceShownCount: listLength,
-      periodShownCount: listLength,
-    };
-  }
+    const { unit } = props;
 
-  componentDidMount() {
-    const { unit } = this.props;
-    if (unit.root_service_nodes.includes(educationNode)) {
-      // If unit has service node Education, form list of periods
-      this.formPeriodList();
-    } else {
-      // Else display services normally
-      this.sortName(unit.services);
-      this.setState({ serviceList: unit.services });
-    }
-  }
-
-  formPeriodList = () => {
-    const { unit } = this.props;
     const periodData = new Set();
-    // List of services that have period infomration
+    // If unit has service node Education, form list of periods
     const subjectList = [];
     // List of normal services without period infomration
-    const serviceList = [];
+    let serviceList = [];
 
-    unit.services.forEach((service) => {
-      if (service.period && service.period.length > 1) {
-        const yearString = `${service.period[0]}–${service.period[1]}`;
-        periodData.add(yearString);
-        subjectList.push(service);
-      } else {
-        serviceList.push(service);
-      }
-    });
+    if (unit.root_service_nodes.includes(educationNode)) {
+      unit.services.forEach((service) => {
+        if (service.period && service.period.length > 1) {
+          const yearString = `${service.period[0]}–${service.period[1]}`;
+          periodData.add(yearString);
+          subjectList.push(service);
+        } else {
+          serviceList.push(service);
+        }
+      });
 
-    this.sortName(serviceList);
-    this.sortName(subjectList);
+      this.sortName(serviceList);
+      this.sortName(subjectList);
+    } else {
+      // Else display services normally
+      serviceList = unit.services;
+      this.sortName(serviceList);
+      // this.setState({ serviceList: unit.services });
+    }
 
-    this.setState({
-      periodList: [...periodData],
-      serviceList,
+    this.state = {
+      serviceList, // services || [],
       subjectList,
-    });
-  };
+      periodList: [...periodData],
+    };
+  }
 
   sortName = (list) => {
     const { getLocaleText } = this.props;
@@ -81,18 +65,8 @@ class Services extends React.Component {
 
   renderServices() {
     const {
-      showMoreCount,
-    } = this.props;
-    const {
-      serviceList, serviceShownCount,
+      serviceList,
     } = this.state;
-
-    const showMoreOnClick = serviceShownCount
-      ? () => {
-        const lastListItem = this.serviceRef.querySelector('li:last-of-type');
-        lastListItem.focus();
-        this.setState({ serviceShownCount: serviceShownCount + showMoreCount });
-      } : null;
 
     return (
       <div ref={(ref) => { this.serviceRef = ref; }}>
@@ -102,17 +76,19 @@ class Services extends React.Component {
           title={<FormattedMessage id="unit.services" />}
           subtitle={<FormattedMessage id="unit.services.count" values={{ count: serviceList.length }} />}
           titleComponent="h4"
-          listLength={serviceShownCount}
-          buttonMessageID="unit.services.more"
-          showMoreOnClick={showMoreOnClick}
         >
-          {serviceList.map(service => (
-            <ServiceItem
-              key={`${service.id}-${service.clarification ? service.clarification.fi : ''}`}
-              service={service}
-              link={false}
-            />
-          ))}
+          {
+            serviceList.map((service, i) => {
+              const key = `service-${i}-${service.id}-${service.clarification ? service.clarification.fi : ''}`;
+              return (
+                <ServiceItem
+                  key={key}
+                  service={service}
+                  link={false}
+                />
+              );
+            })
+          }
         </TitledList>
         )}
       </div>
@@ -121,41 +97,41 @@ class Services extends React.Component {
 
   renderPeriods() {
     const {
-      intl, showMoreCount,
+      intl,
     } = this.props;
     const {
-      periodList, subjectList, periodShownCount,
+      periodList, subjectList,
     } = this.state;
-
-    const showMoreOnClick = periodShownCount
-      ? () => {
-        const lastListItem = this.periodRef.querySelector('li:last-of-type');
-        lastListItem.focus();
-        this.setState({ periodShownCount: periodShownCount + showMoreCount });
-      } : null;
 
     return (
       <div ref={(ref) => { this.periodRef = ref; }}>
         {/* Education periods */}
-        {periodList.map(period => (
-          <TitledList
-            key={period[0]}
-            title={`${intl.formatMessage({ id: 'unit.school.year' })} ${period}`}
-            subtitle={<FormattedMessage id="unit.services.count" values={{ count: subjectList.length }} />}
-            titleComponent="h3"
-            listLength={periodShownCount}
-            buttonMessageID="unit.services.more"
-            showMoreOnClick={showMoreOnClick}
-          >
-            {subjectList.filter(subject => subject.period && `${subject.period[0]}–${subject.period[1]}` === period)
-              .map(service => (
-                <ServiceItem
-                  key={`${service.id}-${service.clarification ? service.clarification.fi : ''}`}
-                  service={service}
-                />
-              ))}
-          </TitledList>
-        ))}
+        {
+          periodList.map((period) => {
+            const filteredSubjects = subjectList.filter(subject => subject.period && `${subject.period[0]}–${subject.period[1]}` === period);
+            return (
+              <TitledList
+                key={`period-${period}`}
+                title={`${intl.formatMessage({ id: 'unit.school.year' })} ${period}`}
+                subtitle={<FormattedMessage id="unit.services.count" values={{ count: filteredSubjects.length }} />}
+                titleComponent="h3"
+              >
+                {
+                  filteredSubjects.map((service, i) => {
+                    const key = `period-${i}-${service.id}-${service.clarification ? service.clarification.fi : ''}`;
+                    return (
+                      <ServiceItem
+                        key={key}
+                        service={service}
+                        link={false}
+                      />
+                    );
+                  })
+                }
+              </TitledList>
+            );
+          })
+        }
       </div>
     );
   }
@@ -177,15 +153,8 @@ class Services extends React.Component {
 
 Services.propTypes = {
   unit: PropTypes.objectOf(PropTypes.any).isRequired,
-  intl: PropTypes.objectOf(PropTypes.any).isRequired,
-  listLength: PropTypes.number,
+  intl: intlShape.isRequired,
   getLocaleText: PropTypes.func.isRequired,
-  showMoreCount: PropTypes.number,
-};
-
-Services.defaultProps = {
-  listLength: null,
-  showMoreCount: 10,
 };
 
 export default Services;

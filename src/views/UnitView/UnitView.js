@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Typography } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
-import { Map, Mail } from '@material-ui/icons';
+import { Map, Mail, Hearing } from '@material-ui/icons';
 import SearchBar from '../../components/SearchBar';
 import { focusToPosition, focusDistrict } from '../MapView/utils/mapActions';
 import TitleBar from '../../components/TitleBar';
@@ -24,6 +24,8 @@ import { AddressIcon } from '../../components/SMIcon';
 import FeedbackView from '../FeedbackView';
 import SocialMediaLinks from './components/SocialMediaLinks';
 import UnitLinks from './components/UnitLinks';
+import SimpleListItem from '../../components/ListItems/SimpleListItem';
+import TitledList from '../../components/Lists/TitledList';
 import DesktopComponent from '../../components/DesktopComponent';
 import MobileComponent from '../../components/MobileComponent';
 
@@ -34,6 +36,7 @@ const UnitView = (props) => {
     map,
     intl,
     classes,
+    embed,
     getLocaleText,
     navigator,
     match,
@@ -41,9 +44,11 @@ const UnitView = (props) => {
     fetchUnitEvents,
     fetchReservations,
     fetchAccessibilitySentences,
+    fetchHearingMaps,
     accessibilitySentences,
     eventsData,
     reservationsData,
+    hearingMaps,
     unitFetching,
     userLocation,
     location,
@@ -74,6 +79,7 @@ const UnitView = (props) => {
     if (!stateUnit || !checkCorrectUnit(stateUnit) || !stateUnit.complete) {
       fetchSelectedUnit(unitId, unit => setUnit(unit));
       fetchAccessibilitySentences(unitId);
+      fetchHearingMaps(unitId);
       fetchReservations(unitId);
       fetchUnitEvents(unitId);
     } else {
@@ -113,6 +119,7 @@ const UnitView = (props) => {
           icon={<Mail />}
           onClick={() => handleFeedbackClick()}
           margin
+          role="link"
         />
       );
     } return null;
@@ -131,6 +138,10 @@ const UnitView = (props) => {
   useEffect(() => {
     centerMap();
   }, [unit, map]);
+
+  if (embed) {
+    return null;
+  }
 
   const renderDetailTab = () => {
     if (!unit || !unit.complete) {
@@ -173,17 +184,26 @@ const UnitView = (props) => {
     );
   };
 
-  const renderAccessibilityTab = () => {
-    if (!unit || !unit.complete || !accessibilitySentences) {
-      return <></>;
-    }
-
-    return (
-      <div className={classes.content}>
-        <AccessibilityInfo titleAlways data={accessibilitySentences} headingLevel={4} />
-      </div>
-    );
-  };
+  const renderAccessibilityTab = () => (
+    <div className={classes.content}>
+      {hearingMaps && (
+        <TitledList titleComponent="h4" title={intl.formatMessage({ id: 'unit.accessibility.hearingMaps' })}>
+          {hearingMaps.map(item => (
+            <SimpleListItem
+              role="link"
+              link
+              divider
+              icon={<Hearing />}
+              key={item.name}
+              text={`${item.name} ${intl.formatMessage({ id: 'unit.accessibility.hearingMaps.extra' })}`}
+              handleItemClick={() => window.open(item.url)}
+            />
+          ))}
+        </TitledList>
+      )}
+      <AccessibilityInfo titleAlways headingLevel={4} />
+    </div>
+  );
 
   const renderServiceTab = () => {
     if (!unit || !unit.complete) {
@@ -220,6 +240,7 @@ const UnitView = (props) => {
             }
           }}
           margin
+          role="link"
         />
         {feedbackButton()}
       </div>
@@ -230,23 +251,27 @@ const UnitView = (props) => {
     const title = unit && unit.name ? getLocaleText(unit.name) : '';
 
     const TopArea = (
-      <div className={`${classes.topArea}`}>
+      <>
         <DesktopComponent>
           <SearchBar margin />
           <TitleBar
+            sticky
             icon={<AddressIcon className={classes.icon} />}
             title={title}
+            titleComponent="h3"
             distance={distance && distance.text}
           />
         </DesktopComponent>
         <MobileComponent>
           <TitleBar
+            sticky
             title={title}
+            titleComponent="h3"
             backButton
             distance={distance && distance.text}
           />
         </MobileComponent>
-      </div>
+      </>
     );
 
     if (unitFetching) {

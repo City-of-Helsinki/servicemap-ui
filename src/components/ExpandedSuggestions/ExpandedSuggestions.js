@@ -4,7 +4,6 @@ import { Search } from '@material-ui/icons';
 import {
   Paper, List, Typography,
 } from '@material-ui/core';
-import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
 import { FormattedMessage } from 'react-intl';
 import createSuggestions from '../SearchBar/createSuggestions';
 import config from '../../../config';
@@ -12,6 +11,7 @@ import SMButton from '../ServiceMapButton';
 import SuggestionItem from '../ListItems/SuggestionItem';
 import TitleBar from '../TitleBar';
 import AddressItem from '../ListItems/AddressItem';
+import useMobileStatus from '../../utils/isMobile';
 
 
 const ExpandedSuggestions = (props) => {
@@ -31,7 +31,7 @@ const ExpandedSuggestions = (props) => {
   const [suggestionError, setSuggestionError] = useState(false);
   // Query word on which suggestion list is based
   const [suggestionQuery, setSuggestionQuery] = useState(null);
-  const isMobile = useMediaQuery(`(max-width:${config.mobileUiBreakpoint}px)`);
+  const isMobile = useMobileStatus();
 
   const listRef = useRef(null);
   const fetchController = useRef(null);
@@ -145,10 +145,8 @@ const ExpandedSuggestions = (props) => {
               if (item.object_type === 'suggestion') {
                 return (
                   <SuggestionItem
-                    button
                     key={item.suggestion + item.count}
                     icon={<Search />}
-                    role="link"
                     text={item.suggestion}
                     handleItemClick={() => {
                       suggestionClick(item.suggestion);

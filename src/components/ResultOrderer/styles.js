@@ -1,5 +1,3 @@
-
-
 export default theme => ({
   black: {
     color: '#000',

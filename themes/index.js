@@ -23,8 +23,12 @@ const props = {
 
 const overrides = theme => ({
   MuiButtonBase: {
-    // Default keyboard focus indicator
+    // Default keyboard focus indicator for buttons
     focusVisible: theme === 'dark' ? focusIndicatorDark : focusIndicator,
+  },
+  MuiInputBase: {
+    // Default keyboard focus indicator for input fields
+    root: { "&$focused": theme === 'dark' ? focusIndicatorDark : focusIndicator },
   },
 });
 
@@ -132,9 +136,9 @@ const typography = {
 };
 
 // Color palette for normal theme
-const paletteDefault = {
+export const paletteDefault = {
   primary: {
-    main: '#1964E6',
+    main: 'rgb(25, 100, 230)',
     highContrast: '#fff',
   },
   secondary: {
@@ -142,9 +146,9 @@ const paletteDefault = {
     hover: '#1d39ad',
   },
   background: {
-    main: 'linear-gradient(340.58deg, #0B7BED 0%, #146CE8 67.04%, #1964E6 100%)',
-    plain: '#146CE8',
-    front: 'linear-gradient(340.58deg, #0B7BED 0%, #146CE8 67.04%, #1964E6 100%)',
+    main: 'linear-gradient(340.58deg, rgb(11, 123, 237) 0%, rgb(20, 108, 232) 67.04%, rgb(25, 100, 230) 100%)',
+    plain: 'rgb(20, 108, 232)',
+    front: 'linear-gradient(340.58deg, rgb(11, 123, 237) 0%, rgb(20, 108, 232) 67.04%, rgb(25, 100, 230) 100%)',
   },
   white: {
     light: '#f2f2f2',
@@ -153,11 +157,11 @@ const paletteDefault = {
     contrastText: '#000',
   },
   detail: {
-    main: '#1964E6',
+    main: 'rgb(25, 100, 230)',
     alpha: 'rgba(25,100,230,0.5)',
   },
   disabled: {
-    main: '#efefef',
+    main: 'rgb(239, 239, 239)',
     strong: '#898989',
   },
   focusBorder: 'rgba(25, 100, 230, 0.8)',
@@ -165,7 +169,7 @@ const paletteDefault = {
 };
 
 // Color palette for dark theme
-const paletteDark = {
+export const paletteDark = {
   primary: {
     main: '#353638',
     highContrast: '#fff',
@@ -190,7 +194,7 @@ const paletteDark = {
     alpha: 'rgba(88,91,99,0.5)',
   },
   disabled: {
-    main: '#efefef',
+    main: 'rgb(239, 239, 239)',
     strong: '#898989',
   },
   warning: '#AF0021',
