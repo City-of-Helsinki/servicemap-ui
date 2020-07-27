@@ -138,7 +138,7 @@ export const paletteDefault = {
     highContrast: '#fff',
   },
   secondary: {
-    main: 'rgba(20,24,35,0.9)',
+    main: 'rgb(43, 47, 57)',
     hover: '#1d39ad',
   },
   background: {
@@ -171,7 +171,7 @@ export const paletteDark = {
     highContrast: '#fff',
   },
   secondary: {
-    main: 'rgba(20,24,35,0.9)',
+    main: 'rgb(43, 47, 57)',
     hover: '#5b5d61',
   },
   background: {
