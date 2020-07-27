@@ -1,5 +1,5 @@
 import { Selector, ClientFunction } from 'testcafe';
-import { getContrast, getParentElementBG } from '../src/utils/componentContrast';
+import { getContrast, getElementBG, getParentElementBG } from '../src/utils/componentContrast';
 
 export default () => {
   test('Input fields have correct focus indicators', async (t) => {
@@ -37,7 +37,7 @@ export default () => {
         const parentBackground = await getParentElementBG(await focusedElement, await focusedElement.parent());
         const contrastWithBackground = getContrast(parentBackground, await focusedElement.getStyleProperty('box-shadow'));
         const contrastWithElement = getContrast(await focusedElement.getStyleProperty('background-color'), await focusedElement.getStyleProperty('box-shadow'));
-        
+      
       
         await t
           .expect(contrastWithBackground).gte(3, `Input contrast ratio between focus border and parent background is not enough`)
@@ -75,12 +75,22 @@ export default () => {
           .expect(focusBorder !== 'none').ok('Input field does not have correct box-shadow focus indicator')
 
         const parentBackground = await getParentElementBG(await button, await button.parent())
-        const contrastWithBackground = getContrast(parentBackground, await button.getStyleProperty('box-shadow'));
-        const contrastWithElement = getContrast(await button.getStyleProperty('background-color'), await button.getStyleProperty('box-shadow'));
+        if (parentBackground) {
+          const contrastWithBackground = getContrast(parentBackground, await button.getStyleProperty('box-shadow'));
+          await t
+            .expect(contrastWithBackground).gte(3, `Button "${await button.innerText}" contrast ratio between focus border and parent background is not enough`)
+        } else {
+          console.warn('Parent element background is image or gradient color, check contrast manually.');
+        }
 
-        await t
-          .expect(contrastWithBackground).gte(3, `Button "${await button.innerText}" contrast ratio between focus border and parent background is not enough`)
-          .expect(contrastWithElement).gte(3, `Button "${await button.innerText}" contrast ratio between focus border and element is not enough`)
+        const elementBackground = await getElementBG(await button)
+        if (elementBackground) {
+          const contrastWithElement = getContrast(elementBackground, await button.getStyleProperty('box-shadow'));
+          await t
+            .expect(contrastWithElement).gte(3, `Button "${await button.innerText}" contrast ratio between focus border and element is not enough`)
+        } else {
+          console.warn('Element background is image or gradient color, check contrast manually')
+        }
       }
     }
   })

@@ -1,4 +1,12 @@
 /* eslint-disable no-param-reassign */
+const getElementBG = async (element) => {
+  const elementBG = await element.getStyleProperty('background-color');
+  const elementBGImg = await element.getStyleProperty('background-image');
+  if (elementBGImg.includes('url(') || elementBGImg.includes('gradient')) {
+    return null;
+  }
+  return elementBG;
+};
 
 const getParentElementBG = async (current, parent) => {
   // Find the parent element that is the element's background and return its background color
@@ -6,12 +14,12 @@ const getParentElementBG = async (current, parent) => {
   const parentSize = await parent.boundingClientRect;
   // If no parent element with background found, use white color as default
   if (!parentSize) {
-    return 'rgb(0, 0, 0)';
+    return 'rgb(255, 255, 255)';
   }
   /* Parent element is defined here as first ancestor
    element that is significally larger than the focused element */
   if (parentSize.width - currentSize.width > 8 && parentSize.height - currentSize.height > 8) {
-    const parentBG = await parent.getStyleProperty('background-color');
+    const parentBG = await getElementBG(parent);
     // If parent has no background color (is transparent), check the next parent
     if (parentBG === 'rgba(0, 0, 0, 0)') {
       return getParentElementBG(current, parent.parent());
@@ -64,5 +72,6 @@ const getContrast = (background, element) => {
 
 export {
   getContrast,
+  getElementBG,
   getParentElementBG,
 };
