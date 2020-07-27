@@ -26,10 +26,13 @@ export default {
   'address.services.header': 'Palvelut täällä asuville',
   'address.services.info': 'Kunnalliset palvelut, joiden piiriin sijainti kuuluu',
   'address.area.link': 'Tutustu alueisiin kartalla.',
-  'address.emergency_care.common': 'Terveysaseman ollessa kiinni sekä öisin klo 22- 8 alle 16-vuotiaiden päivystys on <a class="link" href="/{locale}/unit/7299">Lastenklinikalla</a> [<a class="external-link" href="http://www.hus.fi/sairaanhoito/sairaalat/lastenklinikka/Sivut/default.aspx">kotisivut</a>] ja aikuisten päivystys',
+  'address.emergency_care.common': 'Terveysaseman ollessa kiinni sekä öisin klo 22- 8 alle 16-vuotiaiden päivystys on <a>Lastenklinikalla</a> [<a1>kotisivut</a1>] ja aikuisten päivystys',
+  'address.emergency_care.children_hospital.link': '/{locale}/unit/7299',
+  'address.emergency_care.common.link': 'http://www.hus.fi/sairaanhoito/sairaalat/lastenklinikka/Sivut/default.aspx',
   'address.emergency_care.unit.26107': 'Malmin sairaalassa',
   'address.emergency_care.unit.26104': 'Haartmanin sairaalassa',
-  'address.emergency_care.link': '[<a href="http://www.hel.fi/www/Helsinki/fi/sosiaali-ja-terveyspalvelut/terveyspalvelut/paivystys/" class="external-link">päivystyssivut</a>]',
+  'address.emergency_care.link': 'http://www.hel.fi/www/Helsinki/fi/sosiaali-ja-terveyspalvelut/terveyspalvelut/paivystys/',
+  'address.emergency_care.link.text': '[<a>päivystyssivut</a>]',
 
   // Area
   'area.searchbar.infoText.address': 'Kirjoita kotiosoitteesi',

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {
   Typography, ListItem, Divider, ButtonBase,
 } from '@material-ui/core';
-import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import UnitIcon from '../../SMIcon/UnitIcon';
 import SMLink from '../../Link';
 
@@ -44,6 +44,24 @@ const DivisionItem = ({
       : intl.formatMessage({ id: 'general.distance.kilometers' })}`
     : ''} 
   `;
+
+  const emergencyCareLink = txt => (
+    <a
+      href={intl.formatMessage({ id: 'address.emergency_care.link' })}
+      className="external-link"
+    >
+      {txt}
+    </a>
+  );
+
+  const emergencyCareCommonLink = txt => (
+    <a
+      className="external-link"
+      href={intl.formatMessage({ id: 'address.emergency_care.common.link' })}
+    >
+      {txt}
+    </a>
+  );
 
   return (
     <>
@@ -130,7 +148,25 @@ const DivisionItem = ({
                 className={classes.emergencyTypography}
                 variant="caption"
               >
-                <FormattedHTMLMessage id="address.emergency_care.common" values={{ locale }} />
+                <FormattedMessage
+                  id="address.emergency_care.common"
+                  values={{
+                    a: txt => (
+                      <a
+                        className="link"
+                        href={
+                          intl.formatMessage({
+                            id: 'address.emergency_care.children_hospital.link',
+                          },
+                          { locale })
+                        }
+                      >
+                        {txt}
+                      </a>
+                    ),
+                    a1: emergencyCareCommonLink,
+                  }}
+                />
                 {' '}
                 {
                   emergencyCareText
@@ -141,7 +177,10 @@ const DivisionItem = ({
                   )
                 }
                 {' '}
-                <FormattedHTMLMessage id="address.emergency_care.link" />
+                <FormattedMessage
+                  id="address.emergency_care.link.text"
+                  values={{ a: emergencyCareLink }}
+                />
               </Typography>
             </div>
           )
