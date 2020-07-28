@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Build, Code } from '@material-ui/icons';
 import { useLocation } from 'react-router-dom';
 import URI from 'URIjs';
-import { intlShape } from 'react-intl';
 import PaperButton from '../PaperButton';
 import SimpleListItem from '../ListItems/SimpleListItem';
 import DrawerButton from '../DrawerMenu/DrawerButton';
@@ -116,7 +115,7 @@ ToolMenu.propTypes = {
     menuContainer: PropTypes.string,
   }).isRequired,
   drawer: PropTypes.bool,
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   mapUtility: PropTypes.shape({
     getBbox: PropTypes.func,
   }),

@@ -29,7 +29,7 @@ const CloseButton = ({
 CloseButton.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   className: PropTypes.string,
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   onClick: PropTypes.func.isRequired,
 };
 
