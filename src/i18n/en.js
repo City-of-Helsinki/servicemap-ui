@@ -28,7 +28,7 @@ export default {
   'address.area.link': 'Get to know the areas on the map.',
   'address.emergency_care.common': 'When your health station is closed and in the night between 22-8, emergency care for children and young people under age 16 is provided at <a>Children\'s Hospital</a> [<a1>homepage</a1>], and for adults at',
   'address.emergency_care.children_hospital.link': '/{locale}/unit/7299',
-  'address.emergency_care.common.link': 'http://www.hus.fi/en/medical-care/hospitals/childrens-hospital/Pages/default.aspx',
+  'address.emergency_care.common.link': 'https://www.hus.fi/en/medical-care/hospitals/newchildrenshospital/Pages/default.aspx',
   'address.emergency_care.unit.26107': 'Malmi hospital',
   'address.emergency_care.unit.26104': 'Haartman hospital',
   'address.emergency_care.link': 'http://www.hel.fi/www/Helsinki/fi/sosiaali-ja-terveyspalvelut/terveyspalvelut/paivystys/',
