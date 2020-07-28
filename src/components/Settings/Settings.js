@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import {
   Typography,
   Divider,
@@ -757,7 +757,7 @@ class Settings extends React.Component {
 
 Settings.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   toggleColorblind: PropTypes.func.isRequired,
   toggleHearingAid: PropTypes.func.isRequired,
   toggleVisuallyImpaired: PropTypes.func.isRequired,

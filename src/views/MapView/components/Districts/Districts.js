@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { intlShape } from 'react-intl';
 import { Typography } from '@material-ui/core';
 import { drawMarkerIcon } from '../../utils/drawIcon';
 import swapCoordinates from '../../utils/swapCoordinates';
@@ -185,7 +184,7 @@ Districts.propTypes = {
   addressDistrict: PropTypes.number,
   navigator: PropTypes.objectOf(PropTypes.any).isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   theme: PropTypes.oneOf(['default', 'dark']).isRequired,
 };
 

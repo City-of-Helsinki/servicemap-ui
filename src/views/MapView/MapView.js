@@ -3,7 +3,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { withStyles, Tooltip as MUITooltip, ButtonBase } from '@material-ui/core';
-import { intlShape } from 'react-intl';
 import { MyLocation, LocationDisabled } from '@material-ui/icons';
 import { mapOptions } from './config/mapConfig';
 import CreateMap from './utils/createMap';
@@ -455,7 +454,7 @@ MapView.propTypes = {
   hideUserMarker: PropTypes.bool,
   highlightedDistrict: PropTypes.objectOf(PropTypes.any),
   highlightedUnit: PropTypes.objectOf(PropTypes.any),
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   isMobile: PropTypes.bool,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   match: PropTypes.objectOf(PropTypes.any).isRequired,

@@ -1,9 +1,10 @@
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   Switch, Route,
 } from 'react-router-dom';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import MapView from '../views/MapView';
 import PageHandler from './components/PageHandler';
 import AddressView from '../views/AddressView';
@@ -125,7 +126,7 @@ const EmbedLayout = ({ intl }) => {
 };
 
 EmbedLayout.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default injectIntl(EmbedLayout);

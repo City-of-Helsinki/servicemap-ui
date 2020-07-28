@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Typography, LinearProgress, withStyles } from '@material-ui/core';
-import { FormattedMessage, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import styles from './styles';
 
 const Loading = (props) => {
@@ -57,7 +57,7 @@ Loading.propTypes = {
       PropTypes.array,
     ]),
   }),
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 Loading.defaultProps = {

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import {
   Typography,
   Button,
@@ -38,7 +38,7 @@ SettingsTitle.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   close: PropTypes.func,
   id: PropTypes.string,
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   titleID: PropTypes.string.isRequired,
   typography: PropTypes.objectOf(PropTypes.any),
 };

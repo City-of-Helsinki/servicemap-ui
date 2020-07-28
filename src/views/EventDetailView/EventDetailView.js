@@ -3,7 +3,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // TODO Remove this when redux selected event is used
-import { intlShape } from 'react-intl';
 import { AccessTime, Phone, Event } from '@material-ui/icons';
 import DescriptionText from '../../components/DescriptionText';
 import SearchBar from '../../components/SearchBar';
@@ -209,7 +208,7 @@ EventDetailView.propTypes = {
   fetchSelectedUnit: PropTypes.func.isRequired,
   map: PropTypes.objectOf(PropTypes.any),
   match: PropTypes.objectOf(PropTypes.any).isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   getLocaleText: PropTypes.func.isRequired,
   selectedUnit: PropTypes.objectOf(PropTypes.any),
 };

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { intlShape, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import {
   InputBase, IconButton, Paper, List, ListItem, Typography, Divider,
 } from '@material-ui/core';
@@ -146,7 +146,7 @@ const AddressSearchBar = ({
 
 AddressSearchBar.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   defaultAddress: PropTypes.objectOf(PropTypes.any),
   handleAddressChange: PropTypes.func.isRequired,
   title: PropTypes.objectOf(PropTypes.any),

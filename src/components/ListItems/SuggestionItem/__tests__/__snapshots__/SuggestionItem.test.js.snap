@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<SuggestionItem /> should work 1`] = `
-<InjectIntl(WithStyles(SuggestionItem))
+<injectIntl(WithStyles(SuggestionItem))
   icon={<pure(SearchIcon) />}
   subtitle="Subtitle text"
   text="Title text"
@@ -13,28 +13,33 @@ exports[`<SuggestionItem /> should work 1`] = `
         "defaultFormats": Object {},
         "defaultLocale": "en",
         "formatDate": [Function],
-        "formatHTMLMessage": [Function],
+        "formatDateToParts": [Function],
+        "formatDisplayName": [Function],
+        "formatList": [Function],
         "formatMessage": [Function],
         "formatNumber": [Function],
+        "formatNumberToParts": [Function],
         "formatPlural": [Function],
-        "formatRelative": [Function],
+        "formatRelativeTime": [Function],
         "formatTime": [Function],
+        "formatTimeToParts": [Function],
         "formats": Object {},
         "formatters": Object {
           "getDateTimeFormat": [Function],
+          "getDisplayNames": [Function],
+          "getListFormat": [Function],
           "getMessageFormat": [Function],
           "getNumberFormat": [Function],
-          "getPluralFormat": [Function],
-          "getRelativeFormat": [Function],
+          "getPluralRules": [Function],
+          "getRelativeTimeFormat": [Function],
         },
         "locale": "fi",
         "messages": Object {
           "search.arrowLabel": "Arrow button label",
         },
-        "now": [Function],
         "onError": [Function],
-        "textComponent": "span",
-        "timeZone": null,
+        "textComponent": Symbol(react.fragment),
+        "timeZone": undefined,
       }
     }
     subtitle="Subtitle text"
@@ -64,28 +69,33 @@ exports[`<SuggestionItem /> should work 1`] = `
           "defaultFormats": Object {},
           "defaultLocale": "en",
           "formatDate": [Function],
-          "formatHTMLMessage": [Function],
+          "formatDateToParts": [Function],
+          "formatDisplayName": [Function],
+          "formatList": [Function],
           "formatMessage": [Function],
           "formatNumber": [Function],
+          "formatNumberToParts": [Function],
           "formatPlural": [Function],
-          "formatRelative": [Function],
+          "formatRelativeTime": [Function],
           "formatTime": [Function],
+          "formatTimeToParts": [Function],
           "formats": Object {},
           "formatters": Object {
             "getDateTimeFormat": [Function],
+            "getDisplayNames": [Function],
+            "getListFormat": [Function],
             "getMessageFormat": [Function],
             "getNumberFormat": [Function],
-            "getPluralFormat": [Function],
-            "getRelativeFormat": [Function],
+            "getPluralRules": [Function],
+            "getRelativeTimeFormat": [Function],
           },
           "locale": "fi",
           "messages": Object {
             "search.arrowLabel": "Arrow button label",
           },
-          "now": [Function],
           "onError": [Function],
-          "textComponent": "span",
-          "timeZone": null,
+          "textComponent": Symbol(react.fragment),
+          "timeZone": undefined,
         }
       }
       query={null}
@@ -2733,5 +2743,5 @@ exports[`<SuggestionItem /> should work 1`] = `
       </WithStyles(ListItem)>
     </SuggestionItem>
   </WithStyles(SuggestionItem)>
-</InjectIntl(WithStyles(SuggestionItem))>
+</injectIntl(WithStyles(SuggestionItem))>
 `;

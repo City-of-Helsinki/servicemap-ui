@@ -1,25 +1,25 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<PaginationComponent /> should work 1`] = `
-<WithStyles(InjectIntl(PaginationComponent))
+<WithStyles(injectIntl(PaginationComponent))
   current={2}
   handlePageChange={[MockFunction]}
   maxShownPages={5}
   pageCount={8}
 >
-  <InjectIntl(PaginationComponent)
+  <injectIntl(PaginationComponent)
     classes={
       Object {
-        "arrowFlip": "InjectIntl-PaginationComponent--arrowFlip-2",
-        "arrowIcon": "InjectIntl-PaginationComponent--arrowIcon-1",
-        "borderBlack": "InjectIntl-PaginationComponent--borderBlack-3",
-        "button": "InjectIntl-PaginationComponent--button-4",
-        "buttonContainer": "InjectIntl-PaginationComponent--buttonContainer-5",
-        "list": "InjectIntl-PaginationComponent--list-6",
-        "listContainer": "InjectIntl-PaginationComponent--listContainer-7",
-        "pageElement": "InjectIntl-PaginationComponent--pageElement-8",
-        "pageElementActive": "InjectIntl-PaginationComponent--pageElementActive-9",
-        "pageItem": "InjectIntl-PaginationComponent--pageItem-10",
+        "arrowFlip": "injectIntl-PaginationComponent--arrowFlip-2",
+        "arrowIcon": "injectIntl-PaginationComponent--arrowIcon-1",
+        "borderBlack": "injectIntl-PaginationComponent--borderBlack-3",
+        "button": "injectIntl-PaginationComponent--button-4",
+        "buttonContainer": "injectIntl-PaginationComponent--buttonContainer-5",
+        "list": "injectIntl-PaginationComponent--list-6",
+        "listContainer": "injectIntl-PaginationComponent--listContainer-7",
+        "pageElement": "injectIntl-PaginationComponent--pageElement-8",
+        "pageElementActive": "injectIntl-PaginationComponent--pageElementActive-9",
+        "pageItem": "injectIntl-PaginationComponent--pageItem-10",
       }
     }
     current={2}
@@ -30,16 +30,16 @@ exports[`<PaginationComponent /> should work 1`] = `
     <PaginationComponent
       classes={
         Object {
-          "arrowFlip": "InjectIntl-PaginationComponent--arrowFlip-2",
-          "arrowIcon": "InjectIntl-PaginationComponent--arrowIcon-1",
-          "borderBlack": "InjectIntl-PaginationComponent--borderBlack-3",
-          "button": "InjectIntl-PaginationComponent--button-4",
-          "buttonContainer": "InjectIntl-PaginationComponent--buttonContainer-5",
-          "list": "InjectIntl-PaginationComponent--list-6",
-          "listContainer": "InjectIntl-PaginationComponent--listContainer-7",
-          "pageElement": "InjectIntl-PaginationComponent--pageElement-8",
-          "pageElementActive": "InjectIntl-PaginationComponent--pageElementActive-9",
-          "pageItem": "InjectIntl-PaginationComponent--pageItem-10",
+          "arrowFlip": "injectIntl-PaginationComponent--arrowFlip-2",
+          "arrowIcon": "injectIntl-PaginationComponent--arrowIcon-1",
+          "borderBlack": "injectIntl-PaginationComponent--borderBlack-3",
+          "button": "injectIntl-PaginationComponent--button-4",
+          "buttonContainer": "injectIntl-PaginationComponent--buttonContainer-5",
+          "list": "injectIntl-PaginationComponent--list-6",
+          "listContainer": "injectIntl-PaginationComponent--listContainer-7",
+          "pageElement": "injectIntl-PaginationComponent--pageElement-8",
+          "pageElementActive": "injectIntl-PaginationComponent--pageElementActive-9",
+          "pageItem": "injectIntl-PaginationComponent--pageItem-10",
         }
       }
       current={2}
@@ -49,19 +49,25 @@ exports[`<PaginationComponent /> should work 1`] = `
           "defaultFormats": Object {},
           "defaultLocale": "en",
           "formatDate": [Function],
-          "formatHTMLMessage": [Function],
+          "formatDateToParts": [Function],
+          "formatDisplayName": [Function],
+          "formatList": [Function],
           "formatMessage": [Function],
           "formatNumber": [Function],
+          "formatNumberToParts": [Function],
           "formatPlural": [Function],
-          "formatRelative": [Function],
+          "formatRelativeTime": [Function],
           "formatTime": [Function],
+          "formatTimeToParts": [Function],
           "formats": Object {},
           "formatters": Object {
             "getDateTimeFormat": [Function],
+            "getDisplayNames": [Function],
+            "getListFormat": [Function],
             "getMessageFormat": [Function],
             "getNumberFormat": [Function],
-            "getPluralFormat": [Function],
-            "getRelativeFormat": [Function],
+            "getPluralRules": [Function],
+            "getRelativeTimeFormat": [Function],
           },
           "locale": "fi",
           "messages": Object {
@@ -70,20 +76,19 @@ exports[`<PaginationComponent /> should work 1`] = `
             "general.pagination.openPage": "Avaa sivu {count}",
             "general.pagination.previous": "Aiempi sivu",
           },
-          "now": [Function],
           "onError": [Function],
-          "textComponent": "span",
-          "timeZone": null,
+          "textComponent": Symbol(react.fragment),
+          "timeZone": undefined,
         }
       }
       maxShownPages={5}
       pageCount={8}
     >
       <WithStyles(Container)
-        className="InjectIntl-PaginationComponent--buttonContainer-5"
+        className="injectIntl-PaginationComponent--buttonContainer-5"
       >
         <Container
-          className="InjectIntl-PaginationComponent--buttonContainer-5"
+          className="injectIntl-PaginationComponent--buttonContainer-5"
           classes={
             Object {
               "margin": "Container-margin-13",
@@ -101,14 +106,14 @@ exports[`<PaginationComponent /> should work 1`] = `
           titleComponent="h3"
         >
           <DivWrapper
-            className="Container-root-11    InjectIntl-PaginationComponent--buttonContainer-5"
+            className="Container-root-11    injectIntl-PaginationComponent--buttonContainer-5"
           >
             <div
-              className="Container-root-11    InjectIntl-PaginationComponent--buttonContainer-5"
+              className="Container-root-11    injectIntl-PaginationComponent--buttonContainer-5"
             >
-              <InjectIntl(WithStyles(SMButton))
+              <injectIntl(WithStyles(SMButton))
                 aria-label="Aiempi sivu"
-                className="InjectIntl-PaginationComponent--button-4 InjectIntl-PaginationComponent--arrowFlip-2 InjectIntl-PaginationComponent--borderBlack-3"
+                className="injectIntl-PaginationComponent--button-4 injectIntl-PaginationComponent--arrowFlip-2 injectIntl-PaginationComponent--borderBlack-3"
                 color="primary"
                 disabled={false}
                 onClick={[Function]}
@@ -117,7 +122,7 @@ exports[`<PaginationComponent /> should work 1`] = `
               >
                 <WithStyles(SMButton)
                   aria-label="Aiempi sivu"
-                  className="InjectIntl-PaginationComponent--button-4 InjectIntl-PaginationComponent--arrowFlip-2 InjectIntl-PaginationComponent--borderBlack-3"
+                  className="injectIntl-PaginationComponent--button-4 injectIntl-PaginationComponent--arrowFlip-2 injectIntl-PaginationComponent--borderBlack-3"
                   color="primary"
                   disabled={false}
                   intl={
@@ -125,19 +130,25 @@ exports[`<PaginationComponent /> should work 1`] = `
                       "defaultFormats": Object {},
                       "defaultLocale": "en",
                       "formatDate": [Function],
-                      "formatHTMLMessage": [Function],
+                      "formatDateToParts": [Function],
+                      "formatDisplayName": [Function],
+                      "formatList": [Function],
                       "formatMessage": [Function],
                       "formatNumber": [Function],
+                      "formatNumberToParts": [Function],
                       "formatPlural": [Function],
-                      "formatRelative": [Function],
+                      "formatRelativeTime": [Function],
                       "formatTime": [Function],
+                      "formatTimeToParts": [Function],
                       "formats": Object {},
                       "formatters": Object {
                         "getDateTimeFormat": [Function],
+                        "getDisplayNames": [Function],
+                        "getListFormat": [Function],
                         "getMessageFormat": [Function],
                         "getNumberFormat": [Function],
-                        "getPluralFormat": [Function],
-                        "getRelativeFormat": [Function],
+                        "getPluralRules": [Function],
+                        "getRelativeTimeFormat": [Function],
                       },
                       "locale": "fi",
                       "messages": Object {
@@ -146,10 +157,9 @@ exports[`<PaginationComponent /> should work 1`] = `
                         "general.pagination.openPage": "Avaa sivu {count}",
                         "general.pagination.previous": "Aiempi sivu",
                       },
-                      "now": [Function],
                       "onError": [Function],
-                      "textComponent": "span",
-                      "timeZone": null,
+                      "textComponent": Symbol(react.fragment),
+                      "timeZone": undefined,
                     }
                   }
                   onClick={[Function]}
@@ -158,7 +168,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                 >
                   <SMButton
                     aria-label="Aiempi sivu"
-                    className="InjectIntl-PaginationComponent--button-4 InjectIntl-PaginationComponent--arrowFlip-2 InjectIntl-PaginationComponent--borderBlack-3"
+                    className="injectIntl-PaginationComponent--button-4 injectIntl-PaginationComponent--arrowFlip-2 injectIntl-PaginationComponent--borderBlack-3"
                     classes={
                       Object {
                         "button": "SMButton-button-16",
@@ -180,19 +190,25 @@ exports[`<PaginationComponent /> should work 1`] = `
                         "defaultFormats": Object {},
                         "defaultLocale": "en",
                         "formatDate": [Function],
-                        "formatHTMLMessage": [Function],
+                        "formatDateToParts": [Function],
+                        "formatDisplayName": [Function],
+                        "formatList": [Function],
                         "formatMessage": [Function],
                         "formatNumber": [Function],
+                        "formatNumberToParts": [Function],
                         "formatPlural": [Function],
-                        "formatRelative": [Function],
+                        "formatRelativeTime": [Function],
                         "formatTime": [Function],
+                        "formatTimeToParts": [Function],
                         "formats": Object {},
                         "formatters": Object {
                           "getDateTimeFormat": [Function],
+                          "getDisplayNames": [Function],
+                          "getListFormat": [Function],
                           "getMessageFormat": [Function],
                           "getNumberFormat": [Function],
-                          "getPluralFormat": [Function],
-                          "getRelativeFormat": [Function],
+                          "getPluralRules": [Function],
+                          "getRelativeTimeFormat": [Function],
                         },
                         "locale": "fi",
                         "messages": Object {
@@ -201,10 +217,9 @@ exports[`<PaginationComponent /> should work 1`] = `
                           "general.pagination.openPage": "Avaa sivu {count}",
                           "general.pagination.previous": "Aiempi sivu",
                         },
-                        "now": [Function],
                         "onError": [Function],
-                        "textComponent": "span",
-                        "timeZone": null,
+                        "textComponent": Symbol(react.fragment),
+                        "timeZone": undefined,
                       }
                     }
                     margin={false}
@@ -217,7 +232,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                   >
                     <WithStyles(ButtonBase)
                       aria-label="Aiempi sivu"
-                      className="SMButton-button-16  SMButton-marginRight-19 InjectIntl-PaginationComponent--button-4 InjectIntl-PaginationComponent--arrowFlip-2 InjectIntl-PaginationComponent--borderBlack-3 SMButton-primary-20"
+                      className="SMButton-button-16  SMButton-marginRight-19 injectIntl-PaginationComponent--button-4 injectIntl-PaginationComponent--arrowFlip-2 injectIntl-PaginationComponent--borderBlack-3 SMButton-primary-20"
                       disabled={false}
                       focusVisibleClassName="SMButton-primaryFocus-24"
                       icon={null}
@@ -229,7 +244,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                       <ButtonBase
                         aria-label="Aiempi sivu"
                         centerRipple={false}
-                        className="SMButton-button-16  SMButton-marginRight-19 InjectIntl-PaginationComponent--button-4 InjectIntl-PaginationComponent--arrowFlip-2 InjectIntl-PaginationComponent--borderBlack-3 SMButton-primary-20"
+                        className="SMButton-button-16  SMButton-marginRight-19 injectIntl-PaginationComponent--button-4 injectIntl-PaginationComponent--arrowFlip-2 injectIntl-PaginationComponent--borderBlack-3 SMButton-primary-20"
                         classes={
                           Object {
                             "disabled": "MuiButtonBase-disabled-26",
@@ -253,7 +268,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                       >
                         <button
                           aria-label="Aiempi sivu"
-                          className="MuiButtonBase-root-25 SMButton-button-16  SMButton-marginRight-19 InjectIntl-PaginationComponent--button-4 InjectIntl-PaginationComponent--arrowFlip-2 InjectIntl-PaginationComponent--borderBlack-3 SMButton-primary-20"
+                          className="MuiButtonBase-root-25 SMButton-button-16  SMButton-marginRight-19 injectIntl-PaginationComponent--button-4 injectIntl-PaginationComponent--arrowFlip-2 injectIntl-PaginationComponent--borderBlack-3 SMButton-primary-20"
                           disabled={false}
                           icon={null}
                           onBlur={[Function]}
@@ -275,16 +290,16 @@ exports[`<PaginationComponent /> should work 1`] = `
                           variant="contained"
                         >
                           <pure(ArrowForwardIosIcon)
-                            className="InjectIntl-PaginationComponent--arrowIcon-1"
+                            className="injectIntl-PaginationComponent--arrowIcon-1"
                           >
                             <ArrowForwardIosIcon
-                              className="InjectIntl-PaginationComponent--arrowIcon-1"
+                              className="injectIntl-PaginationComponent--arrowIcon-1"
                             >
                               <WithStyles(SvgIcon)
-                                className="InjectIntl-PaginationComponent--arrowIcon-1"
+                                className="injectIntl-PaginationComponent--arrowIcon-1"
                               >
                                 <SvgIcon
-                                  className="InjectIntl-PaginationComponent--arrowIcon-1"
+                                  className="injectIntl-PaginationComponent--arrowIcon-1"
                                   classes={
                                     Object {
                                       "colorAction": "MuiSvgIcon-colorAction-31",
@@ -305,7 +320,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                 >
                                   <svg
                                     aria-hidden="true"
-                                    className="MuiSvgIcon-root-28 InjectIntl-PaginationComponent--arrowIcon-1"
+                                    className="MuiSvgIcon-root-28 injectIntl-PaginationComponent--arrowIcon-1"
                                     focusable="false"
                                     role="presentation"
                                     viewBox="0 0 24 24"
@@ -327,10 +342,10 @@ exports[`<PaginationComponent /> should work 1`] = `
                     </WithStyles(ButtonBase)>
                   </SMButton>
                 </WithStyles(SMButton)>
-              </InjectIntl(WithStyles(SMButton))>
-              <InjectIntl(WithStyles(SMButton))
+              </injectIntl(WithStyles(SMButton))>
+              <injectIntl(WithStyles(SMButton))
                 aria-label="Seuraava sivu"
-                className="InjectIntl-PaginationComponent--button-4 InjectIntl-PaginationComponent--borderBlack-3"
+                className="injectIntl-PaginationComponent--button-4 injectIntl-PaginationComponent--borderBlack-3"
                 color="primary"
                 disabled={false}
                 onClick={[Function]}
@@ -339,7 +354,7 @@ exports[`<PaginationComponent /> should work 1`] = `
               >
                 <WithStyles(SMButton)
                   aria-label="Seuraava sivu"
-                  className="InjectIntl-PaginationComponent--button-4 InjectIntl-PaginationComponent--borderBlack-3"
+                  className="injectIntl-PaginationComponent--button-4 injectIntl-PaginationComponent--borderBlack-3"
                   color="primary"
                   disabled={false}
                   intl={
@@ -347,19 +362,25 @@ exports[`<PaginationComponent /> should work 1`] = `
                       "defaultFormats": Object {},
                       "defaultLocale": "en",
                       "formatDate": [Function],
-                      "formatHTMLMessage": [Function],
+                      "formatDateToParts": [Function],
+                      "formatDisplayName": [Function],
+                      "formatList": [Function],
                       "formatMessage": [Function],
                       "formatNumber": [Function],
+                      "formatNumberToParts": [Function],
                       "formatPlural": [Function],
-                      "formatRelative": [Function],
+                      "formatRelativeTime": [Function],
                       "formatTime": [Function],
+                      "formatTimeToParts": [Function],
                       "formats": Object {},
                       "formatters": Object {
                         "getDateTimeFormat": [Function],
+                        "getDisplayNames": [Function],
+                        "getListFormat": [Function],
                         "getMessageFormat": [Function],
                         "getNumberFormat": [Function],
-                        "getPluralFormat": [Function],
-                        "getRelativeFormat": [Function],
+                        "getPluralRules": [Function],
+                        "getRelativeTimeFormat": [Function],
                       },
                       "locale": "fi",
                       "messages": Object {
@@ -368,10 +389,9 @@ exports[`<PaginationComponent /> should work 1`] = `
                         "general.pagination.openPage": "Avaa sivu {count}",
                         "general.pagination.previous": "Aiempi sivu",
                       },
-                      "now": [Function],
                       "onError": [Function],
-                      "textComponent": "span",
-                      "timeZone": null,
+                      "textComponent": Symbol(react.fragment),
+                      "timeZone": undefined,
                     }
                   }
                   onClick={[Function]}
@@ -380,7 +400,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                 >
                   <SMButton
                     aria-label="Seuraava sivu"
-                    className="InjectIntl-PaginationComponent--button-4 InjectIntl-PaginationComponent--borderBlack-3"
+                    className="injectIntl-PaginationComponent--button-4 injectIntl-PaginationComponent--borderBlack-3"
                     classes={
                       Object {
                         "button": "SMButton-button-16",
@@ -402,19 +422,25 @@ exports[`<PaginationComponent /> should work 1`] = `
                         "defaultFormats": Object {},
                         "defaultLocale": "en",
                         "formatDate": [Function],
-                        "formatHTMLMessage": [Function],
+                        "formatDateToParts": [Function],
+                        "formatDisplayName": [Function],
+                        "formatList": [Function],
                         "formatMessage": [Function],
                         "formatNumber": [Function],
+                        "formatNumberToParts": [Function],
                         "formatPlural": [Function],
-                        "formatRelative": [Function],
+                        "formatRelativeTime": [Function],
                         "formatTime": [Function],
+                        "formatTimeToParts": [Function],
                         "formats": Object {},
                         "formatters": Object {
                           "getDateTimeFormat": [Function],
+                          "getDisplayNames": [Function],
+                          "getListFormat": [Function],
                           "getMessageFormat": [Function],
                           "getNumberFormat": [Function],
-                          "getPluralFormat": [Function],
-                          "getRelativeFormat": [Function],
+                          "getPluralRules": [Function],
+                          "getRelativeTimeFormat": [Function],
                         },
                         "locale": "fi",
                         "messages": Object {
@@ -423,10 +449,9 @@ exports[`<PaginationComponent /> should work 1`] = `
                           "general.pagination.openPage": "Avaa sivu {count}",
                           "general.pagination.previous": "Aiempi sivu",
                         },
-                        "now": [Function],
                         "onError": [Function],
-                        "textComponent": "span",
-                        "timeZone": null,
+                        "textComponent": Symbol(react.fragment),
+                        "timeZone": undefined,
                       }
                     }
                     margin={false}
@@ -439,7 +464,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                   >
                     <WithStyles(ButtonBase)
                       aria-label="Seuraava sivu"
-                      className="SMButton-button-16  SMButton-marginRight-19 InjectIntl-PaginationComponent--button-4 InjectIntl-PaginationComponent--borderBlack-3 SMButton-primary-20"
+                      className="SMButton-button-16  SMButton-marginRight-19 injectIntl-PaginationComponent--button-4 injectIntl-PaginationComponent--borderBlack-3 SMButton-primary-20"
                       disabled={false}
                       focusVisibleClassName="SMButton-primaryFocus-24"
                       icon={null}
@@ -451,7 +476,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                       <ButtonBase
                         aria-label="Seuraava sivu"
                         centerRipple={false}
-                        className="SMButton-button-16  SMButton-marginRight-19 InjectIntl-PaginationComponent--button-4 InjectIntl-PaginationComponent--borderBlack-3 SMButton-primary-20"
+                        className="SMButton-button-16  SMButton-marginRight-19 injectIntl-PaginationComponent--button-4 injectIntl-PaginationComponent--borderBlack-3 SMButton-primary-20"
                         classes={
                           Object {
                             "disabled": "MuiButtonBase-disabled-26",
@@ -475,7 +500,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                       >
                         <button
                           aria-label="Seuraava sivu"
-                          className="MuiButtonBase-root-25 SMButton-button-16  SMButton-marginRight-19 InjectIntl-PaginationComponent--button-4 InjectIntl-PaginationComponent--borderBlack-3 SMButton-primary-20"
+                          className="MuiButtonBase-root-25 SMButton-button-16  SMButton-marginRight-19 injectIntl-PaginationComponent--button-4 injectIntl-PaginationComponent--borderBlack-3 SMButton-primary-20"
                           disabled={false}
                           icon={null}
                           onBlur={[Function]}
@@ -497,16 +522,16 @@ exports[`<PaginationComponent /> should work 1`] = `
                           variant="contained"
                         >
                           <pure(ArrowForwardIosIcon)
-                            className="InjectIntl-PaginationComponent--arrowIcon-1"
+                            className="injectIntl-PaginationComponent--arrowIcon-1"
                           >
                             <ArrowForwardIosIcon
-                              className="InjectIntl-PaginationComponent--arrowIcon-1"
+                              className="injectIntl-PaginationComponent--arrowIcon-1"
                             >
                               <WithStyles(SvgIcon)
-                                className="InjectIntl-PaginationComponent--arrowIcon-1"
+                                className="injectIntl-PaginationComponent--arrowIcon-1"
                               >
                                 <SvgIcon
-                                  className="InjectIntl-PaginationComponent--arrowIcon-1"
+                                  className="injectIntl-PaginationComponent--arrowIcon-1"
                                   classes={
                                     Object {
                                       "colorAction": "MuiSvgIcon-colorAction-31",
@@ -527,7 +552,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                 >
                                   <svg
                                     aria-hidden="true"
-                                    className="MuiSvgIcon-root-28 InjectIntl-PaginationComponent--arrowIcon-1"
+                                    className="MuiSvgIcon-root-28 injectIntl-PaginationComponent--arrowIcon-1"
                                     focusable="false"
                                     role="presentation"
                                     viewBox="0 0 24 24"
@@ -549,12 +574,12 @@ exports[`<PaginationComponent /> should work 1`] = `
                     </WithStyles(ButtonBase)>
                   </SMButton>
                 </WithStyles(SMButton)>
-              </InjectIntl(WithStyles(SMButton))>
+              </injectIntl(WithStyles(SMButton))>
               <WithStyles(Container)
-                className="InjectIntl-PaginationComponent--listContainer-7"
+                className="injectIntl-PaginationComponent--listContainer-7"
               >
                 <Container
-                  className="InjectIntl-PaginationComponent--listContainer-7"
+                  className="injectIntl-PaginationComponent--listContainer-7"
                   classes={
                     Object {
                       "margin": "Container-margin-13",
@@ -572,15 +597,15 @@ exports[`<PaginationComponent /> should work 1`] = `
                   titleComponent="h3"
                 >
                   <DivWrapper
-                    className="Container-root-11    InjectIntl-PaginationComponent--listContainer-7"
+                    className="Container-root-11    injectIntl-PaginationComponent--listContainer-7"
                   >
                     <div
-                      className="Container-root-11    InjectIntl-PaginationComponent--listContainer-7"
+                      className="Container-root-11    injectIntl-PaginationComponent--listContainer-7"
                     >
                       <ul
-                        className="InjectIntl-PaginationComponent--list-6"
+                        className="injectIntl-PaginationComponent--list-6"
                       >
-                        <InjectIntl(WithStyles(PageElement))
+                        <injectIntl(WithStyles(PageElement))
                           isActive={false}
                           key="1"
                           number={1}
@@ -592,19 +617,25 @@ exports[`<PaginationComponent /> should work 1`] = `
                                 "defaultFormats": Object {},
                                 "defaultLocale": "en",
                                 "formatDate": [Function],
-                                "formatHTMLMessage": [Function],
+                                "formatDateToParts": [Function],
+                                "formatDisplayName": [Function],
+                                "formatList": [Function],
                                 "formatMessage": [Function],
                                 "formatNumber": [Function],
+                                "formatNumberToParts": [Function],
                                 "formatPlural": [Function],
-                                "formatRelative": [Function],
+                                "formatRelativeTime": [Function],
                                 "formatTime": [Function],
+                                "formatTimeToParts": [Function],
                                 "formats": Object {},
                                 "formatters": Object {
                                   "getDateTimeFormat": [Function],
+                                  "getDisplayNames": [Function],
+                                  "getListFormat": [Function],
                                   "getMessageFormat": [Function],
                                   "getNumberFormat": [Function],
-                                  "getPluralFormat": [Function],
-                                  "getRelativeFormat": [Function],
+                                  "getPluralRules": [Function],
+                                  "getRelativeTimeFormat": [Function],
                                 },
                                 "locale": "fi",
                                 "messages": Object {
@@ -613,10 +644,9 @@ exports[`<PaginationComponent /> should work 1`] = `
                                   "general.pagination.openPage": "Avaa sivu {count}",
                                   "general.pagination.previous": "Aiempi sivu",
                                 },
-                                "now": [Function],
                                 "onError": [Function],
-                                "textComponent": "span",
-                                "timeZone": null,
+                                "textComponent": Symbol(react.fragment),
+                                "timeZone": undefined,
                               }
                             }
                             isActive={false}
@@ -644,19 +674,25 @@ exports[`<PaginationComponent /> should work 1`] = `
                                   "defaultFormats": Object {},
                                   "defaultLocale": "en",
                                   "formatDate": [Function],
-                                  "formatHTMLMessage": [Function],
+                                  "formatDateToParts": [Function],
+                                  "formatDisplayName": [Function],
+                                  "formatList": [Function],
                                   "formatMessage": [Function],
                                   "formatNumber": [Function],
+                                  "formatNumberToParts": [Function],
                                   "formatPlural": [Function],
-                                  "formatRelative": [Function],
+                                  "formatRelativeTime": [Function],
                                   "formatTime": [Function],
+                                  "formatTimeToParts": [Function],
                                   "formats": Object {},
                                   "formatters": Object {
                                     "getDateTimeFormat": [Function],
+                                    "getDisplayNames": [Function],
+                                    "getListFormat": [Function],
                                     "getMessageFormat": [Function],
                                     "getNumberFormat": [Function],
-                                    "getPluralFormat": [Function],
-                                    "getRelativeFormat": [Function],
+                                    "getPluralRules": [Function],
+                                    "getRelativeTimeFormat": [Function],
                                   },
                                   "locale": "fi",
                                   "messages": Object {
@@ -665,10 +701,9 @@ exports[`<PaginationComponent /> should work 1`] = `
                                     "general.pagination.openPage": "Avaa sivu {count}",
                                     "general.pagination.previous": "Aiempi sivu",
                                   },
-                                  "now": [Function],
                                   "onError": [Function],
-                                  "textComponent": "span",
-                                  "timeZone": null,
+                                  "textComponent": Symbol(react.fragment),
+                                  "timeZone": undefined,
                                 }
                               }
                               isActive={false}
@@ -1732,8 +1767,8 @@ exports[`<PaginationComponent /> should work 1`] = `
                               </li>
                             </PageElement>
                           </WithStyles(PageElement)>
-                        </InjectIntl(WithStyles(PageElement))>
-                        <InjectIntl(WithStyles(PageElement))
+                        </injectIntl(WithStyles(PageElement))>
+                        <injectIntl(WithStyles(PageElement))
                           isActive={true}
                           key="2"
                           number={2}
@@ -1745,19 +1780,25 @@ exports[`<PaginationComponent /> should work 1`] = `
                                 "defaultFormats": Object {},
                                 "defaultLocale": "en",
                                 "formatDate": [Function],
-                                "formatHTMLMessage": [Function],
+                                "formatDateToParts": [Function],
+                                "formatDisplayName": [Function],
+                                "formatList": [Function],
                                 "formatMessage": [Function],
                                 "formatNumber": [Function],
+                                "formatNumberToParts": [Function],
                                 "formatPlural": [Function],
-                                "formatRelative": [Function],
+                                "formatRelativeTime": [Function],
                                 "formatTime": [Function],
+                                "formatTimeToParts": [Function],
                                 "formats": Object {},
                                 "formatters": Object {
                                   "getDateTimeFormat": [Function],
+                                  "getDisplayNames": [Function],
+                                  "getListFormat": [Function],
                                   "getMessageFormat": [Function],
                                   "getNumberFormat": [Function],
-                                  "getPluralFormat": [Function],
-                                  "getRelativeFormat": [Function],
+                                  "getPluralRules": [Function],
+                                  "getRelativeTimeFormat": [Function],
                                 },
                                 "locale": "fi",
                                 "messages": Object {
@@ -1766,10 +1807,9 @@ exports[`<PaginationComponent /> should work 1`] = `
                                   "general.pagination.openPage": "Avaa sivu {count}",
                                   "general.pagination.previous": "Aiempi sivu",
                                 },
-                                "now": [Function],
                                 "onError": [Function],
-                                "textComponent": "span",
-                                "timeZone": null,
+                                "textComponent": Symbol(react.fragment),
+                                "timeZone": undefined,
                               }
                             }
                             isActive={true}
@@ -1797,19 +1837,25 @@ exports[`<PaginationComponent /> should work 1`] = `
                                   "defaultFormats": Object {},
                                   "defaultLocale": "en",
                                   "formatDate": [Function],
-                                  "formatHTMLMessage": [Function],
+                                  "formatDateToParts": [Function],
+                                  "formatDisplayName": [Function],
+                                  "formatList": [Function],
                                   "formatMessage": [Function],
                                   "formatNumber": [Function],
+                                  "formatNumberToParts": [Function],
                                   "formatPlural": [Function],
-                                  "formatRelative": [Function],
+                                  "formatRelativeTime": [Function],
                                   "formatTime": [Function],
+                                  "formatTimeToParts": [Function],
                                   "formats": Object {},
                                   "formatters": Object {
                                     "getDateTimeFormat": [Function],
+                                    "getDisplayNames": [Function],
+                                    "getListFormat": [Function],
                                     "getMessageFormat": [Function],
                                     "getNumberFormat": [Function],
-                                    "getPluralFormat": [Function],
-                                    "getRelativeFormat": [Function],
+                                    "getPluralRules": [Function],
+                                    "getRelativeTimeFormat": [Function],
                                   },
                                   "locale": "fi",
                                   "messages": Object {
@@ -1818,10 +1864,9 @@ exports[`<PaginationComponent /> should work 1`] = `
                                     "general.pagination.openPage": "Avaa sivu {count}",
                                     "general.pagination.previous": "Aiempi sivu",
                                   },
-                                  "now": [Function],
                                   "onError": [Function],
-                                  "textComponent": "span",
-                                  "timeZone": null,
+                                  "textComponent": Symbol(react.fragment),
+                                  "timeZone": undefined,
                                 }
                               }
                               isActive={true}
@@ -2885,8 +2930,8 @@ exports[`<PaginationComponent /> should work 1`] = `
                               </li>
                             </PageElement>
                           </WithStyles(PageElement)>
-                        </InjectIntl(WithStyles(PageElement))>
-                        <InjectIntl(WithStyles(PageElement))
+                        </injectIntl(WithStyles(PageElement))>
+                        <injectIntl(WithStyles(PageElement))
                           isActive={false}
                           key="3"
                           number={3}
@@ -2898,19 +2943,25 @@ exports[`<PaginationComponent /> should work 1`] = `
                                 "defaultFormats": Object {},
                                 "defaultLocale": "en",
                                 "formatDate": [Function],
-                                "formatHTMLMessage": [Function],
+                                "formatDateToParts": [Function],
+                                "formatDisplayName": [Function],
+                                "formatList": [Function],
                                 "formatMessage": [Function],
                                 "formatNumber": [Function],
+                                "formatNumberToParts": [Function],
                                 "formatPlural": [Function],
-                                "formatRelative": [Function],
+                                "formatRelativeTime": [Function],
                                 "formatTime": [Function],
+                                "formatTimeToParts": [Function],
                                 "formats": Object {},
                                 "formatters": Object {
                                   "getDateTimeFormat": [Function],
+                                  "getDisplayNames": [Function],
+                                  "getListFormat": [Function],
                                   "getMessageFormat": [Function],
                                   "getNumberFormat": [Function],
-                                  "getPluralFormat": [Function],
-                                  "getRelativeFormat": [Function],
+                                  "getPluralRules": [Function],
+                                  "getRelativeTimeFormat": [Function],
                                 },
                                 "locale": "fi",
                                 "messages": Object {
@@ -2919,10 +2970,9 @@ exports[`<PaginationComponent /> should work 1`] = `
                                   "general.pagination.openPage": "Avaa sivu {count}",
                                   "general.pagination.previous": "Aiempi sivu",
                                 },
-                                "now": [Function],
                                 "onError": [Function],
-                                "textComponent": "span",
-                                "timeZone": null,
+                                "textComponent": Symbol(react.fragment),
+                                "timeZone": undefined,
                               }
                             }
                             isActive={false}
@@ -2950,19 +3000,25 @@ exports[`<PaginationComponent /> should work 1`] = `
                                   "defaultFormats": Object {},
                                   "defaultLocale": "en",
                                   "formatDate": [Function],
-                                  "formatHTMLMessage": [Function],
+                                  "formatDateToParts": [Function],
+                                  "formatDisplayName": [Function],
+                                  "formatList": [Function],
                                   "formatMessage": [Function],
                                   "formatNumber": [Function],
+                                  "formatNumberToParts": [Function],
                                   "formatPlural": [Function],
-                                  "formatRelative": [Function],
+                                  "formatRelativeTime": [Function],
                                   "formatTime": [Function],
+                                  "formatTimeToParts": [Function],
                                   "formats": Object {},
                                   "formatters": Object {
                                     "getDateTimeFormat": [Function],
+                                    "getDisplayNames": [Function],
+                                    "getListFormat": [Function],
                                     "getMessageFormat": [Function],
                                     "getNumberFormat": [Function],
-                                    "getPluralFormat": [Function],
-                                    "getRelativeFormat": [Function],
+                                    "getPluralRules": [Function],
+                                    "getRelativeTimeFormat": [Function],
                                   },
                                   "locale": "fi",
                                   "messages": Object {
@@ -2971,10 +3027,9 @@ exports[`<PaginationComponent /> should work 1`] = `
                                     "general.pagination.openPage": "Avaa sivu {count}",
                                     "general.pagination.previous": "Aiempi sivu",
                                   },
-                                  "now": [Function],
                                   "onError": [Function],
-                                  "textComponent": "span",
-                                  "timeZone": null,
+                                  "textComponent": Symbol(react.fragment),
+                                  "timeZone": undefined,
                                 }
                               }
                               isActive={false}
@@ -4038,8 +4093,8 @@ exports[`<PaginationComponent /> should work 1`] = `
                               </li>
                             </PageElement>
                           </WithStyles(PageElement)>
-                        </InjectIntl(WithStyles(PageElement))>
-                        <InjectIntl(WithStyles(PageElement))
+                        </injectIntl(WithStyles(PageElement))>
+                        <injectIntl(WithStyles(PageElement))
                           isActive={false}
                           key="4"
                           number={4}
@@ -4051,19 +4106,25 @@ exports[`<PaginationComponent /> should work 1`] = `
                                 "defaultFormats": Object {},
                                 "defaultLocale": "en",
                                 "formatDate": [Function],
-                                "formatHTMLMessage": [Function],
+                                "formatDateToParts": [Function],
+                                "formatDisplayName": [Function],
+                                "formatList": [Function],
                                 "formatMessage": [Function],
                                 "formatNumber": [Function],
+                                "formatNumberToParts": [Function],
                                 "formatPlural": [Function],
-                                "formatRelative": [Function],
+                                "formatRelativeTime": [Function],
                                 "formatTime": [Function],
+                                "formatTimeToParts": [Function],
                                 "formats": Object {},
                                 "formatters": Object {
                                   "getDateTimeFormat": [Function],
+                                  "getDisplayNames": [Function],
+                                  "getListFormat": [Function],
                                   "getMessageFormat": [Function],
                                   "getNumberFormat": [Function],
-                                  "getPluralFormat": [Function],
-                                  "getRelativeFormat": [Function],
+                                  "getPluralRules": [Function],
+                                  "getRelativeTimeFormat": [Function],
                                 },
                                 "locale": "fi",
                                 "messages": Object {
@@ -4072,10 +4133,9 @@ exports[`<PaginationComponent /> should work 1`] = `
                                   "general.pagination.openPage": "Avaa sivu {count}",
                                   "general.pagination.previous": "Aiempi sivu",
                                 },
-                                "now": [Function],
                                 "onError": [Function],
-                                "textComponent": "span",
-                                "timeZone": null,
+                                "textComponent": Symbol(react.fragment),
+                                "timeZone": undefined,
                               }
                             }
                             isActive={false}
@@ -4103,19 +4163,25 @@ exports[`<PaginationComponent /> should work 1`] = `
                                   "defaultFormats": Object {},
                                   "defaultLocale": "en",
                                   "formatDate": [Function],
-                                  "formatHTMLMessage": [Function],
+                                  "formatDateToParts": [Function],
+                                  "formatDisplayName": [Function],
+                                  "formatList": [Function],
                                   "formatMessage": [Function],
                                   "formatNumber": [Function],
+                                  "formatNumberToParts": [Function],
                                   "formatPlural": [Function],
-                                  "formatRelative": [Function],
+                                  "formatRelativeTime": [Function],
                                   "formatTime": [Function],
+                                  "formatTimeToParts": [Function],
                                   "formats": Object {},
                                   "formatters": Object {
                                     "getDateTimeFormat": [Function],
+                                    "getDisplayNames": [Function],
+                                    "getListFormat": [Function],
                                     "getMessageFormat": [Function],
                                     "getNumberFormat": [Function],
-                                    "getPluralFormat": [Function],
-                                    "getRelativeFormat": [Function],
+                                    "getPluralRules": [Function],
+                                    "getRelativeTimeFormat": [Function],
                                   },
                                   "locale": "fi",
                                   "messages": Object {
@@ -4124,10 +4190,9 @@ exports[`<PaginationComponent /> should work 1`] = `
                                     "general.pagination.openPage": "Avaa sivu {count}",
                                     "general.pagination.previous": "Aiempi sivu",
                                   },
-                                  "now": [Function],
                                   "onError": [Function],
-                                  "textComponent": "span",
-                                  "timeZone": null,
+                                  "textComponent": Symbol(react.fragment),
+                                  "timeZone": undefined,
                                 }
                               }
                               isActive={false}
@@ -5191,8 +5256,8 @@ exports[`<PaginationComponent /> should work 1`] = `
                               </li>
                             </PageElement>
                           </WithStyles(PageElement)>
-                        </InjectIntl(WithStyles(PageElement))>
-                        <InjectIntl(WithStyles(PageElement))
+                        </injectIntl(WithStyles(PageElement))>
+                        <injectIntl(WithStyles(PageElement))
                           isActive={false}
                           key="5"
                           number={5}
@@ -5204,19 +5269,25 @@ exports[`<PaginationComponent /> should work 1`] = `
                                 "defaultFormats": Object {},
                                 "defaultLocale": "en",
                                 "formatDate": [Function],
-                                "formatHTMLMessage": [Function],
+                                "formatDateToParts": [Function],
+                                "formatDisplayName": [Function],
+                                "formatList": [Function],
                                 "formatMessage": [Function],
                                 "formatNumber": [Function],
+                                "formatNumberToParts": [Function],
                                 "formatPlural": [Function],
-                                "formatRelative": [Function],
+                                "formatRelativeTime": [Function],
                                 "formatTime": [Function],
+                                "formatTimeToParts": [Function],
                                 "formats": Object {},
                                 "formatters": Object {
                                   "getDateTimeFormat": [Function],
+                                  "getDisplayNames": [Function],
+                                  "getListFormat": [Function],
                                   "getMessageFormat": [Function],
                                   "getNumberFormat": [Function],
-                                  "getPluralFormat": [Function],
-                                  "getRelativeFormat": [Function],
+                                  "getPluralRules": [Function],
+                                  "getRelativeTimeFormat": [Function],
                                 },
                                 "locale": "fi",
                                 "messages": Object {
@@ -5225,10 +5296,9 @@ exports[`<PaginationComponent /> should work 1`] = `
                                   "general.pagination.openPage": "Avaa sivu {count}",
                                   "general.pagination.previous": "Aiempi sivu",
                                 },
-                                "now": [Function],
                                 "onError": [Function],
-                                "textComponent": "span",
-                                "timeZone": null,
+                                "textComponent": Symbol(react.fragment),
+                                "timeZone": undefined,
                               }
                             }
                             isActive={false}
@@ -5256,19 +5326,25 @@ exports[`<PaginationComponent /> should work 1`] = `
                                   "defaultFormats": Object {},
                                   "defaultLocale": "en",
                                   "formatDate": [Function],
-                                  "formatHTMLMessage": [Function],
+                                  "formatDateToParts": [Function],
+                                  "formatDisplayName": [Function],
+                                  "formatList": [Function],
                                   "formatMessage": [Function],
                                   "formatNumber": [Function],
+                                  "formatNumberToParts": [Function],
                                   "formatPlural": [Function],
-                                  "formatRelative": [Function],
+                                  "formatRelativeTime": [Function],
                                   "formatTime": [Function],
+                                  "formatTimeToParts": [Function],
                                   "formats": Object {},
                                   "formatters": Object {
                                     "getDateTimeFormat": [Function],
+                                    "getDisplayNames": [Function],
+                                    "getListFormat": [Function],
                                     "getMessageFormat": [Function],
                                     "getNumberFormat": [Function],
-                                    "getPluralFormat": [Function],
-                                    "getRelativeFormat": [Function],
+                                    "getPluralRules": [Function],
+                                    "getRelativeTimeFormat": [Function],
                                   },
                                   "locale": "fi",
                                   "messages": Object {
@@ -5277,10 +5353,9 @@ exports[`<PaginationComponent /> should work 1`] = `
                                     "general.pagination.openPage": "Avaa sivu {count}",
                                     "general.pagination.previous": "Aiempi sivu",
                                   },
-                                  "now": [Function],
                                   "onError": [Function],
-                                  "textComponent": "span",
-                                  "timeZone": null,
+                                  "textComponent": Symbol(react.fragment),
+                                  "timeZone": undefined,
                                 }
                               }
                               isActive={false}
@@ -6344,7 +6419,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                               </li>
                             </PageElement>
                           </WithStyles(PageElement)>
-                        </InjectIntl(WithStyles(PageElement))>
+                        </injectIntl(WithStyles(PageElement))>
                       </ul>
                     </div>
                   </DivWrapper>
@@ -6355,6 +6430,6 @@ exports[`<PaginationComponent /> should work 1`] = `
         </Container>
       </WithStyles(Container)>
     </PaginationComponent>
-  </InjectIntl(PaginationComponent)>
-</WithStyles(InjectIntl(PaginationComponent))>
+  </injectIntl(PaginationComponent)>
+</WithStyles(injectIntl(PaginationComponent))>
 `;

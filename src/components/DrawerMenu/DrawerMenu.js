@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { intlShape } from 'react-intl';
 import {
   Typography, ButtonBase, Drawer,
 } from '@material-ui/core';
@@ -128,7 +127,7 @@ DrawerMenu.propTypes = {
   // currentPage: PropTypes.string.isRequired,
   userLocation: PropTypes.objectOf(PropTypes.any).isRequired,
   findUserLocation: PropTypes.func.isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   settingsOpen: PropTypes.string,
   pageType: PropTypes.string.isRequired,
   isOpen: PropTypes.bool.isRequired,
