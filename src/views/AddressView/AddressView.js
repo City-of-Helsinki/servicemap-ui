@@ -89,7 +89,6 @@ const AddressView = (props) => {
       .then((data) => {
         const units = data.results;
         units.forEach((unit) => {
-          // eslint-disable-next-line no-param-reassign
           unit.object_type = 'unit';
         });
         setAddressUnits(data.results);

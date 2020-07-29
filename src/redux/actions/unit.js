@@ -35,7 +35,6 @@ export const fetchUnits = (
       saveSearchToHistory(searchQuery, results);
     } else {
       results.forEach((unit) => {
-        // eslint-disable-next-line no-param-reassign
         unit.object_type = 'unit';
       });
     }

@@ -41,7 +41,6 @@ const createSuggestions = async (query, signal, locale) => {
   if (data[0] !== 'error' && data[0].suggestions && data[0].suggestions.length) {
     data[0].suggestions.forEach((element) => {
       if (!element.object_type) {
-        // eslint-disable-next-line no-param-reassign
         element.object_type = 'suggestion';
       }
     });

@@ -22,7 +22,6 @@ const getOrderedData = data => createSelector(
     // Accessibility
       case 'accessibility': {
         results.forEach((element) => {
-        // eslint-disable-next-line no-param-reassign
           element.shorcomingCount = UnitHelper.getShortcomingCount(element, settings);
         });
         results.sort((a, b) => {
@@ -63,7 +62,6 @@ const getOrderedData = data => createSelector(
       }
       case 'distance': {
         results.forEach((element) => {
-        // eslint-disable-next-line no-param-reassign
           element.distanceFromUser = calculateDistanceFunc(element);
         });
         results.sort((a, b) => {
