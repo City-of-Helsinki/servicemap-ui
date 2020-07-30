@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Build, Code } from '@material-ui/icons';
 import { useLocation } from 'react-router-dom';
-import URI from 'URIjs';
+import URI from 'urijs';
 import PaperButton from '../PaperButton';
 import SimpleListItem from '../ListItems/SimpleListItem';
 import DrawerButton from '../DrawerMenu/DrawerButton';
@@ -73,6 +73,7 @@ const ToolMenu = ({
                 handleItemClick={v.onClick}
                 srText={v.srText}
                 text={v.text}
+                role="link"
               />
             ))
           }
@@ -95,11 +96,13 @@ const ToolMenu = ({
           />
         ) : (
           <PaperButton
+            aria-label={intl.formatMessage({ id: 'general.tools' })}
             className={classes.menuButton}
             messageID="general.tools"
             icon={<Build />}
             noBorder
             onClick={openToolMenu}
+            aria-pressed={open}
           />
         )
       }

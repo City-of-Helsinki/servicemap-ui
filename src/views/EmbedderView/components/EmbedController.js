@@ -87,6 +87,7 @@ const CustomInput = withStyles(customStyles)(({
  */
 const EmbedController = ({
   classes,
+  titleComponent,
   titleID,
   description,
   inputButtonOnClick,
@@ -141,7 +142,7 @@ const EmbedController = ({
       {
         titleID
         && (
-          <Typography align="left" variant="h5"><FormattedMessage id={titleID} /></Typography>
+          <Typography align="left" variant="h5" component={titleComponent}><FormattedMessage id={titleID} /></Typography>
         )
       }
       {
@@ -168,6 +169,7 @@ EmbedController.propTypes = {
     input: PropTypes.string,
     iconButton: PropTypes.string,
   }).isRequired,
+  titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']).isRequired,
   titleID: PropTypes.string.isRequired,
   description: PropTypes.node,
   inputButtonOnClick: PropTypes.func,

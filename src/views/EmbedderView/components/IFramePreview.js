@@ -12,6 +12,7 @@ const IFramePreview = ({
   heightMode,
   ratioHeight,
   title,
+  titleComponent,
   widthMode,
 }) => {
   if (!embedUrl) {
@@ -74,6 +75,7 @@ const IFramePreview = ({
         align="left"
         className={classes.marginBottom}
         variant="h5"
+        component={titleComponent}
       >
         <FormattedMessage id="embedder.preview.title" />
       </Typography>
@@ -100,6 +102,7 @@ IFramePreview.propTypes = {
   fixedHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   heightMode: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
+  titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']).isRequired,
   ratioHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   widthMode: PropTypes.string.isRequired,
 };

@@ -5,10 +5,10 @@ import { Button, Typography } from '@material-ui/core';
 import Container from '../Container';
 
 const PaperButton = ({
-  classes, className, intl, disabled, messageID, onClick, icon, link, subtitleID, noBorder,
+  classes, className, intl, disabled, messageID, onClick, icon, link, subtitleID, noBorder, role, ...rest,
 }) => {
   const clonedIcon = icon ? React.cloneElement(icon, { className: classes.icon }) : null;
-  const role = link ? 'link' : 'button';
+  const bRole = role || link ? 'link' : 'button';
   const containerClass = `${classes.container} ${disabled ? classes.buttonDisabled : ''} ${noBorder ? classes.noBorder : ''}${` ${className || ''}`}`;
   return (
     <Container paper className={containerClass}>
@@ -18,9 +18,10 @@ const PaperButton = ({
         }}
         className={classes.iconButton}
         onClick={onClick}
-        role={role}
+        role={bRole}
         disabled={disabled}
         aria-label={`${intl.formatMessage({ id: messageID })} ${subtitleID ? intl.formatMessage({ id: subtitleID }) : ''}`}
+        {...rest}
       >
         <div className={`${classes.iconContainer} ${disabled ? classes.iconDisabled : ''}`}>
           {clonedIcon}
@@ -52,6 +53,7 @@ PaperButton.propTypes = {
   noBorder: PropTypes.bool,
   onClick: PropTypes.func,
   messageID: PropTypes.string.isRequired,
+  role: PropTypes.string,
   subtitleID: PropTypes.string,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
 };
@@ -63,6 +65,7 @@ PaperButton.defaultProps = {
   link: false,
   noBorder: false,
   onClick: null,
+  role: null,
   subtitleID: null,
 };
 

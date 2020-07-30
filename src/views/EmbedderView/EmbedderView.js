@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import {
   Typography, Paper, TextField,
 } from '@material-ui/core';
-import URI from 'URIjs';
+import URI from 'urijs';
 import * as smurl from './utils/url';
 import isClient, { uppercaseFirst } from '../../utils';
 import { getEmbedURL, getLanguage } from './utils/utils';
@@ -38,8 +38,8 @@ const EmbedderView = ({
   const data = isClient() ? smurl.verify(window.location.href) : {};
   let { url } = data;
   const { ratio } = data;
-  const parameters = smurl.explode(url);
   if (url) {
+    const parameters = smurl.explode(url);
     url = smurl.strip(url, parameters);
   }
   let search = {};
@@ -68,9 +68,22 @@ const EmbedderView = ({
   const [ratioHeight, setRatioHeight] = useState(initialRatio);
   const [heightMode, setHeightMode] = useState('ratio');
 
+  const dialogRef = useRef();
+
   const renderWrapperStyle = () => `position: relative; width:100%; padding-bottom:${ratioHeight}%;`;
   const embedUrl = getEmbedURL(url, { language, map, city, service });
   const iframeTitle = intl.formatMessage({ id: 'embedder.iframe.title' });
+
+
+  const focusToFirstElement = () => {
+    const dialog = dialogRef.current;
+    const buttons = dialog.querySelectorAll('button');
+    buttons[0].focus();
+  };
+
+  useEffect(() => {
+    focusToFirstElement();
+  }, []);
 
   // Close embed view
   const closeView = () => {
@@ -146,6 +159,7 @@ const EmbedderView = ({
           align="left"
           className={classes.marginBottom}
           variant="h5"
+          component="h2"
         >
           <FormattedMessage id="embedder.url.title" />
         </Typography>
@@ -163,6 +177,7 @@ const EmbedderView = ({
           align="left"
           className={classes.marginBottom}
           variant="h5"
+          component="h2"
         >
           <FormattedMessage id="embedder.code.title" />
         </Typography>
@@ -186,6 +201,7 @@ const EmbedderView = ({
     return (
       <EmbedController
         titleID="embedder.language.title"
+        titleComponent="h2"
         radioAriaLabel={intl.formatMessage({ id: 'embedder.language.aria.label' })}
         radioName="language"
         radioValue={language}
@@ -207,6 +223,7 @@ const EmbedderView = ({
     return (
       <EmbedController
         titleID="embedder.map.title"
+        titleComponent="h2"
         radioAriaLabel={intl.formatMessage({ id: 'embedder.map.aria.label' })}
         radioName="map"
         radioValue={map}
@@ -231,6 +248,7 @@ const EmbedderView = ({
     return (
       <EmbedController
         titleID="embedder.city.title"
+        titleComponent="h2"
         radioAriaLabel={intl.formatMessage({ id: 'embedder.city.aria.label' })}
         radioName="city"
         radioValue={city}
@@ -256,6 +274,7 @@ const EmbedderView = ({
     return (
       <EmbedController
         titleID="embedder.service.title"
+        titleComponent="h2"
         radioAriaLabel={intl.formatMessage({ id: 'embedder.service.aria.label' })}
         radioName="service"
         radioValue={service}
@@ -286,6 +305,7 @@ const EmbedderView = ({
     return (
       <EmbedController
         titleID="embedder.width.title"
+        titleComponent="h2"
         radioAriaLabel={intl.formatMessage({ id: 'embedder.width.aria.label' })}
         radioName="width"
         radioValue={widthMode}
@@ -319,6 +339,7 @@ const EmbedderView = ({
     return (
       <EmbedController
         titleID="embedder.height.title"
+        titleComponent="h2"
         radioAriaLabel={intl.formatMessage({ id: 'embedder.height.aria.label' })}
         radioName="height"
         radioValue={heightMode}
@@ -338,7 +359,7 @@ const EmbedderView = ({
   };
 
   return (
-    <div>
+    <div ref={dialogRef}>
       <div className={classes.appBar} />
       <div className={classes.container}>
         <div style={{
@@ -351,9 +372,10 @@ const EmbedderView = ({
             aria-label={intl.formatMessage({ id: 'embedder.close' })}
             className={classes.closeButton}
             onClick={closeView}
+            role="link"
           />
           <div className={classes.titleContainer}>
-            <Typography align="left" className={classes.title} variant="h2">
+            <Typography align="left" className={classes.title} variant="h1">
               <FormattedMessage id="embedder.title" />
             </Typography>
             <Typography align="left" variant="body2">
@@ -390,6 +412,7 @@ const EmbedderView = ({
               heightMode={heightMode}
               ratioHeight={ratioHeight}
               title={iframeTitle}
+              titleComponent="h2"
               widthMode={widthMode}
             />
           </form>
