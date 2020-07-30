@@ -11,9 +11,8 @@ import styles from '../styles';
 const customStyles = () => ({
   root: {
     padding: '2px 4px',
-    display: 'flex',
+    display: 'inline-flex',
     alignItems: 'center',
-    width: '100%',
   },
   input: {
     marginLeft: 8,
