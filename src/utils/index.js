@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import { unstable_useMediaQuery } from '@material-ui/core/useMediaQuery';
-import URI from 'URIjs';
+import URI from 'urijs';
 import config from '../../config';
 
 const isClient = () => typeof window !== 'undefined';

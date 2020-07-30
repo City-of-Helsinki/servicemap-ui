@@ -15,7 +15,6 @@
     "@turf/boolean-within": "^6.0.1",
     "@turf/distance": "^6.0.1",
     "@turf/point-on-feature": "^5.1.5",
-    "URIjs": "^1.16.1",
     "abort-controller": "^3.0.0",
     "abortcontroller-polyfill": "^1.4.0",
     "axe-testcafe": "^1.1.0",
@@ -46,6 +45,7 @@
     "reselect": "^4.0.0",
     "testcafe": "^1.1.0",
     "testcafe-react-selectors": "^3.1.0",
+    "urijs": "^1.19.2",
     "webpack": "^4.29.5",
     "webpack-cli": "^3.2.3",
     "whatwg-fetch": "^3.0.0"

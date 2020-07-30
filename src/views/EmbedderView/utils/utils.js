@@ -1,4 +1,4 @@
-const URI = require('URIjs');
+const URI = require('urijs');
 
 export const getEmbedURL = (url, params = {}) => {
   if (!url) {
