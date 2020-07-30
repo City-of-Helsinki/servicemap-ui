@@ -73,6 +73,37 @@ export default {
 
   // Embed
   'embed.click_prompt_move': 'Click to open the Service Map',
+  
+  // Embedder - TODO: translate whole section
+  'embedder.city.title': 'Kaupunki',
+  'embedder.city.aria.label': 'Valitse upotukselle kaupunkirajaus',
+  'embedder.close': 'Sulje upotustyökalu',
+  'embedder.code.title': 'Kopioi HTML-koodi',
+  'embedder.height.title': 'Upotuksen korkeus',
+  'embedder.height.aria.label': 'Valitse upotuksen korkeus',
+  'embedder.height.ratio.label': 'Suhteellinen korkeus. Upotuksen korkeuden suhde leveyteen on määritelty',
+  'embedder.height.fixed.label': 'Absoluuttinen korkeus. Upotuksen korkeus on määritelty pikseleissä',
+  'embedder.iframe.title': 'Palvelukartan upotusikkuna',
+  'embedder.language.title': 'Upotuksen kieli',
+  'embedder.language.aria.label': 'Valitse upotuksen kieli',
+  'embedder.language.description.fi': 'Toimipisteiden tiedot näytetään suomen kielellä. Taustakartta on suomenkielinen.',
+  'embedder.language.description.sv': 'Toimipisteiden tiedot näytetään ruotsin kielellä. Taustakartta on ruotsinkielinen.',
+  'embedder.language.description.en': 'Toimipisteiden tiedot näytetään englannin kielellä. Taustakartta on suomenkielinen.',
+  'embedder.map.title': 'Taustakartta',
+  'embedder.map.aria.label': 'Valitse taustakartta',
+  'embedder.preview.title': 'Kartan esikatselu',
+  'embedder.service.title': 'Palvelut',
+  'embedder.service.aria.label': 'Valitse näytettävät palvelut',
+  'embedder.service.none': 'Kartta näytetään ilman toimipisteitä',
+  'embedder.service.common': 'Kartalla näytetään yleisimmät kaupunkilaisen arkeen liittyvät toimipisteet: koulut, päiväkodit ja terveyskeskukset.',
+  'embedder.service.all': 'Kartalla näytetään kaikki toimipisteet. Jos aluerajaus on liian laaja, upotuksen näyttäminen hidastuu ja sen havainnollisuus vähenee.',
+  'embedder.title': 'Upotustyökalu',
+  'embedder.title.info': 'Mikäli haluat tehdä upotuksen hakutuloksen mukaan tee haku ensin.',
+  'embedder.url.title': 'Kopioi osoite',
+  'embedder.width.title': 'Upotuksen leveys',
+  'embedder.width.aria.label': 'Valitse upotuksen leveys',
+  'embedder.width.auto.label': 'Automaattinen leveys. Upotus täyttää leveyssuunnassa elementin, johon se on sijoitettu. Tässä esikatselussa upotus on sijoitettu katkoviivalla merkittyyn vakiolevyiseen elementtiin.',
+  'embedder.width.custom.label': 'Valittu leveys. Upotuksen leveys on määritelty pikseleissä.',
 
   // Feedback
   'feedback.back': 'Go back',
@@ -135,6 +166,8 @@ export default {
   'general.loading': 'Loading',
   'general.loading.done': 'Loading completed',
   'general.showOnMap': 'Show on map',
+  'general.open': 'Open', // TODO: Verify
+  'general.page.close': 'Close page', // TODO: Verify
   'general.pageTitles.home': 'Home view',
   'general.pageTitles.search': 'Search results view',
   'general.pageTitles.unit': 'Unit view',
@@ -149,6 +182,7 @@ export default {
   'general.pageTitles.info': 'Info view',
   'general.pageTitles.feedback': 'Feedback view',
   'general.pageTitles.area': 'Area view.',
+  'general.tools': 'Työkalut', // TODO: Translate
 
   // General - Pagination
   'general.pagination.previous': 'Previous page',
