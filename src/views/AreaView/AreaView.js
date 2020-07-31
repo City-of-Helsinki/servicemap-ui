@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import booleanEqual from '@turf/boolean-equal';
@@ -11,7 +9,7 @@ import TabLists from '../../components/TabLists';
 import UnitTab from './components/UnitTab';
 import { uppercaseFirst } from '../../utils';
 import AreaTab from './components/AreaTab';
-import { districtFetch } from '../../utils/fetch';
+import { districtFetch, unitsFetch } from '../../utils/fetch';
 
 
 const fetchReducer = (state, action) => {
@@ -26,14 +24,19 @@ const fetchReducer = (state, action) => {
 };
 
 const AreaView = ({
-  setSelectedDistrict,
+  setSelectedDistrictType,
+  setSelectedSubdistrict,
   setDistrictData,
   setDistrictAddressData,
+  setSubdistrictUnits,
   districtData,
   districtAddressData,
-  selectedDistrict,
+  selectedDistrictType,
   selectedDistrictData,
   addressDistrict,
+  subdistrictUnits,
+  filteredSubdistrictUnits,
+  selectedSubdistrict,
   map,
   getLocaleText,
   navigator,
@@ -98,7 +101,8 @@ const AreaView = ({
   ];
 
   // State
-  const [radioValue, setRadioValue] = useState(null);
+  const [districtRadioValue, setDistrictRadioValue] = useState(null);
+  const [subdistrictRadioValue, setSubdistrictRadioValue] = useState(null);
   const [selectedAddress, setSelectedAddress] = useState(districtAddressData.address);
   const [openItems, setOpenItems] = useState([]); // List items that are expanded
   const [fetching, dispatchFetching] = useReducer(fetchReducer, []); // Fetch state
@@ -106,13 +110,6 @@ const AreaView = ({
   const formAddressString = address => (address
     ? `${getLocaleText(address.street.name)} ${address.number}${address.number_end ? address.number_end : ''}${address.letter ? address.letter : ''}, ${uppercaseFirst(address.street.municipality)}`
     : '');
-
-  const focusLocalDistrict = () => {
-    if (selectedAddress && addressDistrict) {
-      const district = selectedDistrictData.find(obj => obj.id === addressDistrict);
-      focusDistrict(map.leafletElement, district.boundary.coordinates);
-    }
-  };
 
   const changeDistrictData = (data, type) => {
     // Collect different periods from district data
@@ -226,6 +223,24 @@ const AreaView = ({
       });
   };
 
+  const fetchDistrictUnitList = async (divisionID) => {
+    if (subdistrictUnits.some(unit => unit.division_id === divisionID)) return;
+    const options = {
+      page: 1,
+      page_size: 500,
+      division: divisionID,
+    };
+    await unitsFetch(options)
+      .then((data) => {
+        const units = data.results;
+        units.forEach((unit) => {
+          unit.object_type = 'unit';
+          unit.division_id = divisionID;
+        });
+        setSubdistrictUnits(data.results);
+      });
+  };
+
   const handleOpen = async (item) => {
     if (openItems.includes(item.title)) {
       const items = openItems.filter(i => i !== item.title);
@@ -245,11 +260,25 @@ const AreaView = ({
   };
 
   useEffect(() => {
-    setSelectedDistrict(radioValue);
-  }, [radioValue]);
+    setSelectedDistrictType(districtRadioValue);
+  }, [districtRadioValue]);
 
   useEffect(() => {
-    focusLocalDistrict();
+    if (subdistrictRadioValue) {
+      fetchDistrictUnitList(subdistrictRadioValue);
+      // Focus map to subdistrict
+      const district = selectedDistrictData.find(obj => obj.ocd_id === subdistrictRadioValue);
+      focusDistrict(map.leafletElement, district.boundary.coordinates);
+    }
+    setSelectedSubdistrict(subdistrictRadioValue);
+  }, [subdistrictRadioValue]);
+
+  useEffect(() => {
+    // Focus map to local district
+    if (selectedAddress && addressDistrict) {
+      const district = selectedDistrictData.find(obj => obj.id === addressDistrict);
+      focusDistrict(map.leafletElement, district.boundary.coordinates);
+    }
   }, [addressDistrict]);
 
   useEffect(() => {
@@ -260,29 +289,37 @@ const AreaView = ({
     }
   }, [selectedAddress]);
 
-  useEffect(() => { // Open previous selections when returning to page
-    if (selectedDistrict) {
+  useEffect(() => {
+    // Open and set previous selections when returning to page
+    if (selectedDistrictType) {
       const category = dataStructure.find(
-        obj => obj.districts.some(district => selectedDistrict.includes(district)),
+        obj => obj.districts.some(district => selectedDistrictType.includes(district)),
       );
       handleOpen(category);
-      setRadioValue(selectedDistrict);
+      setSelectedDistrictType(selectedDistrictType);
+      setSelectedSubdistrict(selectedSubdistrict);
+      setDistrictRadioValue(selectedDistrictType);
+      setSubdistrictRadioValue(selectedSubdistrict);
     }
   }, []);
 
 
   const renderAreaTab = () => (
     <AreaTab
-      radioValue={radioValue}
-      setRadioValue={setRadioValue}
+      districtRadioValue={districtRadioValue}
+      subdistrictRadioValue={subdistrictRadioValue}
+      setDistrictRadioValue={setDistrictRadioValue}
+      setSubdistrictRadioValue={setSubdistrictRadioValue}
       fetching={fetching}
       districtData={districtData}
-      dataStructure={dataStructure}
+      selectedDistrictData={selectedDistrictData}
       openItems={openItems}
       handleOpen={handleOpen}
+      dataStructure={dataStructure}
       setSelectedAddress={setSelectedAddress}
       address={districtAddressData.address}
       navigator={navigator}
+      getLocaleText={getLocaleText}
     />
   );
 
@@ -290,9 +327,11 @@ const AreaView = ({
     <UnitTab
       selectedDistrictData={selectedDistrictData}
       selectedAddress={selectedAddress}
+      selectedSubdistrict={selectedSubdistrict}
+      filteredSubdistrictUnits={filteredSubdistrictUnits}
       addressDistrict={addressDistrict}
       formAddressString={formAddressString}
-      dataStructure={dataStructure}
+      getLocaleText={getLocaleText}
     />
   );
 
@@ -322,7 +361,7 @@ const AreaView = ({
 };
 
 AreaView.propTypes = {
-  setSelectedDistrict: PropTypes.func.isRequired,
+  setSelectedDistrictType: PropTypes.func.isRequired,
 };
 
 export default AreaView;

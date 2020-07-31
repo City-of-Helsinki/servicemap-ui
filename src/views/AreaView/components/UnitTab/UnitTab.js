@@ -1,15 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { List, Typography, Divider } from '@material-ui/core';
+import {
+  List, Typography, Divider, ExpansionPanel, ExpansionPanelSummary,
+} from '@material-ui/core';
 import distance from '@turf/distance';
 import { FormattedMessage } from 'react-intl';
+import { ArrowDropDown } from '@material-ui/icons';
 import { AreaIcon, AddressIcon } from '../../../../components/SMIcon';
-import { formatDistanceObject } from '../../../../utils';
+import { formatDistanceObject, uppercaseFirst } from '../../../../utils';
 import DivisionItem from '../../../../components/ListItems/DivisionItem';
+import UnitItem from '../../../../components/ListItems/UnitItem';
 
 
 const UnitTab = ({
-  selectedDistrictData, selectedAddress, addressDistrict, formAddressString, classes, intl,
+  selectedDistrictData,
+  selectedAddress,
+  selectedSubdistrict,
+  filteredSubdistrictUnits,
+  addressDistrict,
+  formAddressString,
+  getLocaleText,
+  classes,
+  intl,
 }) => {
   const sortDistricts = (districts) => {
     districts.sort((a, b) => a.unit.distance - b.unit.distance);
@@ -36,14 +48,68 @@ const UnitTab = ({
     />
   );
 
+  const renderUnitList = () => {
+    // Render list of units for neighborhood and postcode-area subdistricts
+    const servicesArray = [];
+    filteredSubdistrictUnits.map((unit) => {
+      const categories = unit.services;
+      categories.forEach((category) => {
+        const serviceCategory = servicesArray.find(service => service.id === category.id);
+        if (!serviceCategory) {
+          servicesArray.push({ id: category.id, units: [unit], name: category.name });
+        } else {
+          serviceCategory.units.push(unit);
+        }
+      });
+      return null;
+    });
+    return (
+      servicesArray.map(category => (
+        <ExpansionPanel key={category.id} classes={{ expanded: classes.expandedUnitCategory }}>
+          <ExpansionPanelSummary classes={{ content: classes.centerItems }}>
+            <Typography className={classes.unitCategoryText}>{`${uppercaseFirst(getLocaleText(category.name))} (${category.units.length})`}</Typography>
+            <ArrowDropDown className={classes.right} />
+          </ExpansionPanelSummary>
+          <List>
+            {category.units.map((unit, i) => (
+              <UnitItem
+                key={unit.id}
+                unit={unit}
+                divider={i !== category.units.length - 1}
+              />
+            ))}
+          </List>
+        </ExpansionPanel>
+      ))
+    );
+  };
+
 
   const render = () => {
-    if (!selectedDistrictData) {
+    if (!selectedDistrictData.length) {
       return (
         <div>
           <Typography className={classes.infoText}>
             <FormattedMessage id="area.noSelection" />
           </Typography>
+        </div>
+      );
+    }
+
+    if (selectedSubdistrict) {
+      // If geographical subdistrict is selected, lsit units within the district
+      return (
+        <div>
+          <List>
+            {selectedDistrictData.filter(obj => obj.unit).map(district => (
+              renderDistrictUnitItem(district)
+            ))}
+            {selectedSubdistrict ? (
+              <List>
+                {renderUnitList()}
+              </List>
+            ) : null}
+          </List>
         </div>
       );
     }

@@ -102,6 +102,17 @@ const styles = theme => ({
   selectedAddress: {
     fontSize: 18,
   },
+  unitCategoryText: {
+    textAlign: 'left',
+    padding: theme.spacing.unit,
+    paddingLeft: 0,
+  },
+  expandedUnitCategory: {
+    margin: 0,
+  },
+  centerItems: {
+    alignItems: 'center',
+  },
 });
 
 export default styles;
