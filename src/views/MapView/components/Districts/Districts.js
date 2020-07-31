@@ -18,6 +18,7 @@ const Districts = ({
   mapOptions,
   currentPage,
   selectedAddress,
+  selectedSubdistrict,
   classes,
   navigator,
   intl,
@@ -94,7 +95,13 @@ const Districts = ({
     }
 
     return districtData.map((district) => {
-      const dimmed = addressDistrict && district.id !== addressDistrict;
+      let dimmed;
+      if (selectedSubdistrict) {
+        dimmed = district.ocd_id !== selectedSubdistrict;
+      } else {
+        dimmed = addressDistrict && district.id !== addressDistrict;
+      }
+
 
       const area = district.boundary.coordinates.map(
         coords => swapCoordinates(coords),
@@ -182,6 +189,7 @@ Districts.propTypes = {
   selectedAddress: PropTypes.objectOf(PropTypes.any),
   districtData: PropTypes.arrayOf(PropTypes.object),
   addressDistrict: PropTypes.number,
+  selectedSubdistrict: PropTypes.string,
   navigator: PropTypes.objectOf(PropTypes.any).isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -193,6 +201,7 @@ Districts.defaultProps = {
   selectedAddress: null,
   districtData: null,
   addressDistrict: null,
+  selectedSubdistrict: null,
 };
 
 export default Districts;

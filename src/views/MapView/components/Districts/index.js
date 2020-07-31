@@ -9,7 +9,7 @@ import { getLocaleString } from '../../../../redux/selectors/locale';
 const mapStateToProps = (state) => {
   const { navigator } = state;
   const { theme, page } = state.user;
-  const { districtAddressData } = state.districts;
+  const { districtAddressData, selectedSubdistrict } = state.districts;
   const districtData = getDistrictsByType(state);
   const addressDistrict = getAddressDistrict(state);
   const highlightedDistrict = getHighlightedDistrict(state);
@@ -22,6 +22,7 @@ const mapStateToProps = (state) => {
     highlightedDistrict,
     addressDistrict,
     selectedAddress: districtAddressData.address,
+    selectedSubdistrict,
     getLocaleText,
   };
 };

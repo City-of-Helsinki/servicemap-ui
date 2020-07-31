@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 import { withRouter } from 'react-router-dom';
-import { getHighlightedDistrict } from '../../redux/selectors/district';
+import { getHighlightedDistrict, getSubdistrictServices } from '../../redux/selectors/district';
 import { getSelectedUnit } from '../../redux/selectors/selectedUnit';
 import { getLocaleString } from '../../redux/selectors/locale';
 import setMapRef from '../../redux/actions/map';
@@ -35,7 +35,8 @@ const mapStateToProps = (state, props) => {
   } = user;
   const getLocaleText = textObject => getLocaleString(state, textObject);
   const { adminDistricts, units, toRender } = address;
-  const getAddressNavigatorParams = getAddressNavigatorParamsConnector(getLocaleText, locale);
+  const districtUnits = getSubdistrictServices(state);
+  const getAddressNavigatorParams = () => getAddressNavigatorParamsConnector(getLocaleText, locale);
   const getPath = (id, data) => generatePath(id, locale, data);
   const distanceCoordinates = getCurrentlyUsedPosition(state);
   const userLocation = customPosition.coordinates || position.coordinates;
@@ -64,6 +65,7 @@ const mapStateToProps = (state, props) => {
     getLocaleText,
     unitList,
     serviceUnits,
+    districtUnits,
     unitsLoading,
     currentPage: page,
     userLocation,
