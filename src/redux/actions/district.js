@@ -3,8 +3,8 @@ export const setHighlightedDistrict = district => ({
   district,
 });
 
-export const setSelectedDistrict = district => ({
-  type: 'SET_SELECTED_DISTRICT',
+export const setSelectedDistrictType = district => ({
+  type: 'SET_SELECTED_DISTRICT_TYPE',
   district,
 });
 
@@ -16,4 +16,14 @@ export const setDistrictData = data => ({
 export const setDistrictAddressData = data => ({
   type: 'SET_DISTRICT_ADDRESS_DATA',
   data,
+});
+
+export const setSubdistrictUnits = units => ({
+  type: 'SET_SUBDISTRICT_UNITS',
+  units,
+});
+
+export const setSelectedSubdistrict = district => ({
+  type: 'SET_SELECTED_SUBDISTRICT',
+  district,
 });
