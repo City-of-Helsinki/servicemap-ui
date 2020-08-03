@@ -27,6 +27,10 @@ const UnitTab = ({
     districts.sort((a, b) => a.unit.distance - b.unit.distance);
   };
 
+  const sortUnitCategories = (categories) => {
+    categories.sort((a, b) => getLocaleText(a.name).localeCompare(getLocaleText(b.name)));
+  };
+
   const distanceToAddress = coord => (
     Math.round(distance(coord, selectedAddress.location.coordinates) * 1000)
   );
@@ -51,20 +55,32 @@ const UnitTab = ({
   const renderUnitList = () => {
     // Render list of units for neighborhood and postcode-area subdistricts
     const servicesArray = [];
+    const educationServicesArray = [];
     filteredSubdistrictUnits.map((unit) => {
       const categories = unit.services;
       categories.forEach((category) => {
-        const serviceCategory = servicesArray.find(service => service.id === category.id);
-        if (!serviceCategory) {
-          servicesArray.push({ id: category.id, units: [unit], name: category.name });
+        let serviceList;
+        if (category.period) { // Add educational services to own list.
+          serviceList = educationServicesArray;
         } else {
+          serviceList = servicesArray;
+        }
+        const serviceCategory = serviceList.find(service => service.id === category.id);
+        if (!serviceCategory) {
+          serviceList.push({ id: category.id, units: [unit], name: category.name });
+        } else if (!serviceCategory.units.some(listUnit => listUnit.id === unit.id)) {
           serviceCategory.units.push(unit);
         }
       });
       return null;
     });
+
+    sortUnitCategories(servicesArray);
+    sortUnitCategories(educationServicesArray);
+    const serviceList = [...servicesArray, ...educationServicesArray];
+
     return (
-      servicesArray.map(category => (
+      serviceList.map(category => (
         <ExpansionPanel key={category.id} classes={{ expanded: classes.expandedUnitCategory }}>
           <ExpansionPanelSummary classes={{ content: classes.centerItems }}>
             <Typography className={classes.unitCategoryText}>{`${uppercaseFirst(getLocaleText(category.name))} (${category.units.length})`}</Typography>

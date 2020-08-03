@@ -41,12 +41,18 @@ const AreaTab = ({
     setSubdistrictRadioValue(null);
   };
 
+  const sortSubdistricts = (districts) => {
+    districts.sort((a, b) => getLocaleText(a.name).localeCompare(getLocaleText(b.name)));
+  };
+
   const showSubdistricts = (district) => {
     if (selectedDistrictData.length) {
       if (district.id === 'neighborhood' && selectedDistrictData[0].type === 'neighborhood') {
+        sortSubdistricts(selectedDistrictData);
         return true;
       }
       if (district.id === 'postcode_area' && selectedDistrictData[0].type === 'postcode_area') {
+        sortSubdistricts(selectedDistrictData);
         return true;
       }
     }
