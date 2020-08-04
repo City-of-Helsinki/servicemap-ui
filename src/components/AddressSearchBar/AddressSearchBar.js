@@ -15,6 +15,8 @@ const AddressSearchBar = ({
   locale,
   containerClassName,
   inputClassName,
+  setOrder,
+  setDirection,
   getLocaleText,
   classes,
   intl,
@@ -34,6 +36,8 @@ const AddressSearchBar = ({
     setSearchBarValue(formAddressString(address));
     setAddressResults([]);
     setCurrentLocation(formAddressString(address));
+    setDirection('asc');
+    setOrder('distance');
     handleAddressChange(address);
   };
 
@@ -149,6 +153,8 @@ AddressSearchBar.propTypes = {
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   defaultAddress: PropTypes.objectOf(PropTypes.any),
   handleAddressChange: PropTypes.func.isRequired,
+  setOrder: PropTypes.func.isRequired,
+  setDirection: PropTypes.func.isRequired,
   title: PropTypes.objectOf(PropTypes.any),
   locale: PropTypes.string.isRequired,
   containerClassName: PropTypes.string,
