@@ -11,13 +11,14 @@ const cities = state => [
   ...state.settings.kauniainen ? ['kauniainen'] : [],
 ];
 
-export const getProcessedData = (state, options = {}) => createSelector(
-  [units, isFetching, cities],
-  (data, isFetching, cities) => {
-    // Prevent processing data if fetch is in process
-    if (isFetching) {
-      return [];
-    }
+/**
+ * Returns given data after filtering it
+ * @param {*} data - search data to be filtered
+ * @param {*} options - options for filtering - municipality: to override city setting filtering
+ */
+const getFilteredData = (data, options = {}) => createSelector(
+  [cities],
+  (cities) => {
     let filteredData = data
       .filter(filterEmptyServices(cities));
     if (options.municipality) {
@@ -25,10 +26,45 @@ export const getProcessedData = (state, options = {}) => createSelector(
     } else {
       filteredData = filteredData.filter(filterCities(cities));
     }
+    return filteredData;
+  },
+);
 
+/**
+ * Gets processed data for rendering search results
+ * @param {*} state - redux state object
+ * @param {*} options - options for filtering
+ */
+export const getProcessedData = (state, options = {}) => createSelector(
+  [units, isFetching],
+  (data, isFetching) => {
+    // Prevent processing data if fetch is in process
+    if (isFetching) {
+      return [];
+    }
+
+    const filteredData = getFilteredData(data, options)(state);
     const orderedData = getOrderedData(filteredData)(state);
+
     return orderedData;
   },
 )(state);
 
-export default getProcessedData;
+/**
+ * Get processed data for map rendering
+ * @param {*} state - redux state object
+ * @param {*} options - options for filtering
+ */
+export const getProcessedMapData = (state, options = {}) => createSelector(
+  [units, isFetching],
+  (data, isFetching) => {
+    // Prevent processing data if fetch is in process
+    if (isFetching) {
+      return [];
+    }
+
+    const filteredData = getFilteredData(data, options)(state);
+
+    return filteredData;
+  },
+)(state);

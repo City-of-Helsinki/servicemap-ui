@@ -7,7 +7,6 @@ import {
   Typography, Divider, Button,
 } from '@material-ui/core';
 import { ArrowUpward } from '@material-ui/icons';
-import { intlShape } from 'react-intl';
 import BoldedText from '../../BoldedText';
 import { keyboardHandler } from '../../../utils';
 import useMobileStatus from '../../../utils/isMobile';
@@ -140,7 +139,7 @@ export default SuggestionItem;
 SuggestionItem.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   text: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   icon: PropTypes.objectOf(PropTypes.any),
   handleArrowClick: PropTypes.func,
   handleItemClick: PropTypes.func,

@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Typography, IconButton } from '@material-ui/core';
 import { Cancel, ErrorOutline } from '@material-ui/icons';
-import { intlShape } from 'react-intl';
+
+// This component uses default message inserted to code for now until proper implementation
 
 const AlertBox = ({
   title, text, classes, intl,
@@ -55,7 +56,7 @@ AlertBox.propTypes = {
   title: PropTypes.node.isRequired,
   text: PropTypes.node.isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default AlertBox;

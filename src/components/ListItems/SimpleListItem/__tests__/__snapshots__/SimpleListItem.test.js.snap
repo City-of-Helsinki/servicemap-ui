@@ -155,6 +155,14 @@ exports[`<SimpleListItem /> should work 1`] = `
                           "outline": "2px solid transparent",
                         },
                       },
+                      "MuiInputBase": Object {
+                        "root": Object {
+                          "&$focused": Object {
+                            "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                            "outline": "2px solid transparent",
+                          },
+                        },
+                      },
                     },
                     "palette": Object {
                       "action": Object {
@@ -644,6 +652,14 @@ exports[`<SimpleListItem /> should work 1`] = `
                                 "outline": "2px solid transparent",
                               },
                             },
+                            "MuiInputBase": Object {
+                              "root": Object {
+                                "&$focused": Object {
+                                  "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                                  "outline": "2px solid transparent",
+                                },
+                              },
+                            },
                           },
                           "palette": Object {
                             "action": Object {
@@ -1128,6 +1144,14 @@ exports[`<SimpleListItem /> should work 1`] = `
                                     "focusVisible": Object {
                                       "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
                                       "outline": "2px solid transparent",
+                                    },
+                                  },
+                                  "MuiInputBase": Object {
+                                    "root": Object {
+                                      "&$focused": Object {
+                                        "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                                        "outline": "2px solid transparent",
+                                      },
                                     },
                                   },
                                 },
@@ -1625,6 +1649,14 @@ exports[`<SimpleListItem /> should work 1`] = `
                                     "focusVisible": Object {
                                       "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
                                       "outline": "2px solid transparent",
+                                    },
+                                  },
+                                  "MuiInputBase": Object {
+                                    "root": Object {
+                                      "&$focused": Object {
+                                        "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                                        "outline": "2px solid transparent",
+                                      },
                                     },
                                   },
                                 },

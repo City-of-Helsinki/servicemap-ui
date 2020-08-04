@@ -75,20 +75,9 @@ const styles = theme => ({
   addressTitle: {
     marginBottom: theme.spacing.unitDouble,
   },
-  searchBar: {
-    paddingLeft: theme.spacing.unit,
-    border: '1px solid #ACACAC',
-    borderRadius: 4,
-    width: '100%',
-    height: 54,
-    boxSizing: 'border-box',
-  },
   fieldFocus: {
     outline: '2px solid transparent',
     boxShadow: `0 0 0 4px ${theme.palette.focusBorder}`,
-  },
-  cancelButton: {
-    fontSize: 16,
   },
   addressItem: {
     fontSize: 24,

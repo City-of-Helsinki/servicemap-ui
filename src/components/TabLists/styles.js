@@ -43,4 +43,14 @@ export default theme => ({
   mobileTabFont: {
     fontSize: 11.5,
   },
+  addressBar: {
+    padding: theme.spacing.unitTriple,
+    paddingTop: 0,
+    backgroundColor: theme.palette.background.plain,
+    color: '#fff',
+    textAlign: 'left',
+  },
+  addressBarInput: {
+    height: 47,
+  },
 });
