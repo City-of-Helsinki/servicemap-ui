@@ -60,8 +60,8 @@ export default {
   'area.list.maternity_clinic_district': 'Neuvola-alue',
   'area.list.lower_comprehensive_school_district_fi': 'Suomenkielinen ala-astealue',
   'area.list.lower_comprehensive_school_district_sv': 'Ruotsinkielinen ala-astealue',
-  'area.list.upper_comprehensive_school_district_fi': 'Suomenkielinen ylä-astealue',
-  'area.list.upper_comprehensive_school_district_sv': 'Ruotsinkielinen ylä-astealue',
+  'area.list.upper_comprehensive_school_district_fi': 'Suomenkielinen yläastealue',
+  'area.list.upper_comprehensive_school_district_sv': 'Ruotsinkielinen yläastealue',
   'area.list.preschool_education_fi': 'Suomenkielinen esiopetusalue',
   'area.list.preschool_education_sv': 'Ruotsinkielinen esiopetusalue',
 
