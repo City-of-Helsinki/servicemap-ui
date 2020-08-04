@@ -44,6 +44,8 @@ export default {
   'area.info': 'Choose an area, whose services you want information about. Writing your home address in the search field opens a map, and the areas and districts that you belong to are shown under the Services in the area tab.',
   'area.choose.district': 'Choose area',
   'area.noSelection': 'Choose area from the Choice of Area tab',
+  'area.subdistrict.neighborhood': 'Valitse kaupunginosa', // TODO: translate
+  'area.subdistrict.postcode_area': 'Valitse postinumeroalue', // TODO: translate
   'area.list.geographical': 'Geographical',
   'area.list.protection': 'Civil defence',
   'area.list.health': 'Health',

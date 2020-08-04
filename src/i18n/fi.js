@@ -44,6 +44,8 @@ export default {
   'area.info': 'Valitse alue, jonka palveluista haluat tietoa. Kirjoittamalla alla olevaan hakukenttään kotiosoitteesi saat näkyville karttaan ja Alueen palvelut -välilehdelle alueet ja piirit, joihin kuulut',
   'area.choose.district': 'Valitse alue',
   'area.noSelection': 'Valitse alue Alueen Valinta -välilehdeltä',
+  'area.subdistrict.neighborhood': 'Valitse kaupunginosa',
+  'area.subdistrict.postcode_area': 'Valitse postinumeroalue',
   'area.list.geographical': 'Maantieteellinen',
   'area.list.protection': 'Väestönsuojelu',
   'area.list.health': 'Terveys',

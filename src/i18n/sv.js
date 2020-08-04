@@ -44,6 +44,8 @@ export default {
   'area.info': 'Välj ett område, vars tjänster du vill ha information om. Genom att skriva din hemadress i sökfältet öppnas en karta och under fliken Tjänster i området visas de områden och distrikt som du hör till',
   'area.choose.district': 'Väl område',
   'area.noSelection': 'Väl område under fliken Val av område',
+  'area.subdistrict.neighborhood': 'Valitse kaupunginosa', // TODO: translate
+  'area.subdistrict.postcode_area': 'Valitse postinumeroalue', // TODO: translate
   'area.list.geographical': 'Geografisk',
   'area.list.protection': 'Befolkningsskydd',
   'area.list.health': 'Hälsa',
