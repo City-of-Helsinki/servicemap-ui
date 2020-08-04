@@ -4,6 +4,7 @@ import { injectIntl } from 'react-intl';
 import AddressSearchBar from './AddressSearchBar';
 import styles from './styles';
 import { getLocaleString } from '../../redux/selectors/locale';
+import { setOrder, setDirection } from '../../redux/actions/sort';
 
 const mapStateToProps = (state) => {
   const { locale } = state.user;
@@ -16,4 +17,5 @@ const mapStateToProps = (state) => {
 
 export default injectIntl(withStyles(styles)(connect(
   mapStateToProps,
+  { setOrder, setDirection },
 )(AddressSearchBar)));
