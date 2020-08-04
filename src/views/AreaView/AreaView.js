@@ -45,6 +45,7 @@ const AreaView = ({
 }) => {
   const dataStructure = [ // Categorized district data structure
     {
+      id: 'health',
       title: intl.formatMessage({ id: 'area.list.health' }),
       districts: [
         'health_station_district',
@@ -52,6 +53,7 @@ const AreaView = ({
       ],
     },
     {
+      id: 'education',
       title: intl.formatMessage({ id: 'area.list.education' }),
       districts: [
         'lower_comprehensive_school_district_fi',
@@ -77,6 +79,7 @@ const AreaView = ({
       ],
     },
     {
+      id: 'preschool',
       title: intl.formatMessage({ id: 'area.list.preschool' }),
       districts: [
         'preschool_education_fi',
@@ -84,6 +87,7 @@ const AreaView = ({
       ],
     },
     {
+      id: 'geographical',
       title: intl.formatMessage({ id: 'area.list.geographical' }),
       districts: [
         'neighborhood',
@@ -91,6 +95,7 @@ const AreaView = ({
       ],
     },
     {
+      id: 'protection',
       title: intl.formatMessage({ id: 'area.list.protection' }),
       districts: [
         'rescue_area',
@@ -111,7 +116,7 @@ const AreaView = ({
     ? `${getLocaleText(address.street.name)} ${address.number}${address.number_end ? address.number_end : ''}${address.letter ? address.letter : ''}, ${uppercaseFirst(address.street.municipality)}`
     : '');
 
-  const changeDistrictData = (data, type) => {
+  const changeDistrictData = (data, type, category) => {
     // Collect different periods from district data
     const dateArray = [];
     data.forEach((item) => {
@@ -127,11 +132,13 @@ const AreaView = ({
       const dataItems = dateArray.map(period => data.filter(district => `${district.start}-${district.end}` === period));
       dataItems.forEach((data, i) => {
         setDistrictData({
-          id: `${type}${dateArray[i]}`, data, date: dateArray[i], name: type,
+          id: `${type}${dateArray[i]}`, data, date: dateArray[i], name: type, category,
         });
       });
     } else {
-      setDistrictData({ id: type, data, name: type });
+      setDistrictData({
+        id: type, data, name: type, category,
+      });
     }
   };
 
@@ -161,7 +168,7 @@ const AreaView = ({
     });
   };
 
-  const filterFetchData = (data, type) => {
+  const filterFetchData = (data, type, category) => {
     let filteredData = [];
     data.results.forEach((district) => {
       // Skip if district is already marked as overlaping with another district
@@ -170,6 +177,7 @@ const AreaView = ({
         return;
       }
       const returnItem = district;
+      returnItem.category = category;
 
       // Combine other districts that are duplicates or within this district
       const overlapingDistricts = data.results.filter(obj => compareBoundaries(district, obj));
@@ -184,7 +192,7 @@ const AreaView = ({
       filteredData.push(returnItem);
     });
 
-    changeDistrictData(filteredData, type);
+    changeDistrictData(filteredData, type, category);
   };
 
   const fetchAddressDistricts = async () => {
@@ -206,7 +214,7 @@ const AreaView = ({
       });
   };
 
-  const fetchDistrictsByType = async (type) => {
+  const fetchDistrictsByType = async (type, category) => {
     const options = {
       page: 1,
       page_size: 200,
@@ -216,7 +224,7 @@ const AreaView = ({
     };
     await districtFetch(options)
       .then((data) => {
-        filterFetchData(data, type);
+        filterFetchData(data, type, category);
       })
       .catch(() => {
         dispatchFetching({ type: 'remove', value: type });
@@ -227,7 +235,7 @@ const AreaView = ({
     if (subdistrictUnits.some(unit => unit.division_id === divisionID)) return;
     const options = {
       page: 1,
-      page_size: 500,
+      page_size: 1000,
       division: divisionID,
     };
     await unitsFetch(options)
@@ -242,11 +250,11 @@ const AreaView = ({
   };
 
   const handleOpen = async (item) => {
-    if (openItems.includes(item.title)) {
-      const items = openItems.filter(i => i !== item.title);
+    if (openItems.includes(item.id)) {
+      const items = openItems.filter(i => i !== item.id);
       setOpenItems(items);
     } else {
-      setOpenItems([...openItems, item.title]);
+      setOpenItems([...openItems, item.id]);
     }
 
     // If no fetched data found, fetch all distirct types within opened category
@@ -254,7 +262,7 @@ const AreaView = ({
       && !fetching.includes(item.title)
     ) {
       dispatchFetching({ type: 'add', value: item.title });
-      Promise.all(item.districts.map(i => fetchDistrictsByType(i)))
+      Promise.all(item.districts.map(i => fetchDistrictsByType(i, item.id)))
         .then(() => dispatchFetching({ type: 'remove', value: item.title }));
     }
   };
@@ -290,6 +298,14 @@ const AreaView = ({
   }, [selectedAddress]);
 
   useEffect(() => {
+    setSubdistrictRadioValue(selectedSubdistrict);
+  }, [selectedSubdistrict]);
+
+  useEffect(() => {
+    setDistrictRadioValue(selectedDistrictType);
+  }, [selectedDistrictType]);
+
+  useEffect(() => {
     // Open and set previous selections when returning to page
     if (selectedDistrictType) {
       const category = dataStructure.find(
@@ -298,8 +314,6 @@ const AreaView = ({
       handleOpen(category);
       setSelectedDistrictType(selectedDistrictType);
       setSelectedSubdistrict(selectedSubdistrict);
-      setDistrictRadioValue(selectedDistrictType);
-      setSubdistrictRadioValue(selectedSubdistrict);
     }
   }, []);
 

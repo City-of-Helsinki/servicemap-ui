@@ -102,6 +102,9 @@ const styles = theme => ({
   selectedAddress: {
     fontSize: 18,
   },
+  subdistrictList: {
+    paddingLeft: 32,
+  },
   unitCategoryText: {
     textAlign: 'left',
     padding: theme.spacing.unit,

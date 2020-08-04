@@ -24,6 +24,7 @@ const AreaTab = ({
   setSelectedAddress,
   address,
   classes,
+  intl,
   navigator,
   getLocaleText,
 }) => {
@@ -47,11 +48,7 @@ const AreaTab = ({
 
   const showSubdistricts = (district) => {
     if (selectedDistrictData.length) {
-      if (district.id === 'neighborhood' && selectedDistrictData[0].type === 'neighborhood') {
-        sortSubdistricts(selectedDistrictData);
-        return true;
-      }
-      if (district.id === 'postcode_area' && selectedDistrictData[0].type === 'postcode_area') {
+      if (district.category === 'geographical' && selectedDistrictData[0].type === district.id) {
         sortSubdistricts(selectedDistrictData);
         return true;
       }
@@ -90,13 +87,17 @@ const AreaTab = ({
             />
           </ListItem>
           {showSubdistricts(district) ? (
-            <List disablePadding style={{ paddingLeft: 32 }}>
-              <RadioGroup aria-label="valitse kaupunginosa" value={subdistrictRadioValue} onChange={handleSubdistrictChange}>
+            <List disablePadding className={classes.subdistrictList}>
+              <RadioGroup
+                aria-label={intl.formatMessage({ id: `area.subdistrict.${district.id}` })}
+                value={subdistrictRadioValue}
+                onChange={handleSubdistrictChange}
+              >
                 {selectedDistrictData.map(districtItem => (
                   <FormControlLabel
                     key={districtItem.id}
                     value={districtItem.ocd_id}
-                    control={<Radio />}
+                    control={<Radio checked={subdistrictRadioValue === districtItem.ocd_id} />}
                     label={<Typography>{getLocaleText(districtItem.name)}</Typography>}
                   />
                 ))}
@@ -135,7 +136,7 @@ const AreaTab = ({
 
 
   const renderCategoryItem = (item) => {
-    const isOpen = openItems.includes(item.title);
+    const isOpen = openItems.includes(item.id);
     return (
       <ListItem
         key={item.title}
@@ -243,6 +244,7 @@ AreaTab.propTypes = {
   setSubdistrictRadioValue: PropTypes.func.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   getLocaleText: PropTypes.func.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 AreaTab.defaultProps = {
