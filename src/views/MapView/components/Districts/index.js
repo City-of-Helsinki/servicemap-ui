@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core';
 import Districts from './Districts';
 import styles from '../../styles';
 import { getDistrictsByType, getAddressDistrict, getHighlightedDistrict } from '../../../../redux/selectors/district';
+import { setSelectedSubdistrict } from '../../../../redux/actions/district';
 import { getLocaleString } from '../../../../redux/selectors/locale';
 
 const mapStateToProps = (state) => {
@@ -27,4 +28,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default injectIntl(withStyles(styles)(connect(mapStateToProps)(Districts)));
+export default injectIntl(withStyles(styles)(connect(
+  mapStateToProps,
+  { setSelectedSubdistrict },
+)(Districts)));

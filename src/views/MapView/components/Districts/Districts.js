@@ -19,12 +19,21 @@ const Districts = ({
   currentPage,
   selectedAddress,
   selectedSubdistrict,
+  setSelectedSubdistrict,
   classes,
   navigator,
   intl,
 }) => {
   const useContrast = theme === 'dark';
   const isMobile = useMobileStatus();
+
+  const districtOnClick = (e, district) => {
+    if (district.category === 'geographical') {
+      // Disable normal map click event
+      e.originalEvent.view.L.DomEvent.stopPropagation(e);
+      setSelectedSubdistrict(district.ocd_id);
+    }
+  };
 
   const renderDistrictMarkers = district => (
     <React.Fragment key={district.id}>
@@ -110,6 +119,7 @@ const Districts = ({
       return (
         <Polygon
           key={district.id}
+          onClick={e => districtOnClick(e, district)}
           positions={[[area]]}
           color="#ff8400"
           fillOpacity={dimmed ? '0.3' : '0'}
@@ -190,6 +200,7 @@ Districts.propTypes = {
   districtData: PropTypes.arrayOf(PropTypes.object),
   addressDistrict: PropTypes.number,
   selectedSubdistrict: PropTypes.string,
+  setSelectedSubdistrict: PropTypes.func.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any).isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
