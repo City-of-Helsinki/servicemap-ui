@@ -166,6 +166,14 @@ const styles = theme => ({
   bold: {
     fontWeight: 'bold',
   },
+  distanceIcon: {
+    fontSize: 50,
+    color: '#1964e6',
+    outline: 'none',
+  },
+  distancePopup: {
+    padding: 8,
+  },
 
   // Transit stops
   transitBackground: {
