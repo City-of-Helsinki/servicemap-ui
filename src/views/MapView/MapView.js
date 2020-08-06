@@ -2,7 +2,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { withStyles, Tooltip as MUITooltip, ButtonBase } from '@material-ui/core';
+import {
+  withStyles, Tooltip as MUITooltip, ButtonBase, Typography,
+} from '@material-ui/core';
 import { MyLocation, LocationDisabled } from '@material-ui/icons';
 import { mapOptions } from './config/mapConfig';
 import CreateMap from './utils/createMap';
@@ -19,7 +21,13 @@ import AddressMarker from './components/AddressMarker';
 import isClient, { parseSearchParams } from '../../utils';
 import swapCoordinates from './utils/swapCoordinates';
 import HomeLogo from '../../components/Logos/HomeLogo';
+import DistanceMeasure from './components/DistanceMeasure';
 
+if (global.window) {
+  require('leaflet');
+  require('leaflet.markercluster');
+  global.rL = require('react-leaflet');
+}
 
 const MapView = (props) => {
   const {
@@ -58,7 +66,6 @@ const MapView = (props) => {
   // State
   const [mapObject, setMapObject] = useState(null);
   const [mapClickPoint, setMapClickPoint] = useState(null);
-  const [leaflet, setLeaflet] = useState(null);
   const [refSaved, setRefSaved] = useState(false);
   const [prevMap, setPrevMap] = useState(null);
   const [markerCluster, setMarkerCluster] = useState(null);
@@ -66,6 +73,7 @@ const MapView = (props) => {
   const [measuring, setMeasuring] = useState(false);
 
   const embeded = isEmbed(match);
+
 
   const getMapUnits = () => {
     let mapUnits = [];
@@ -107,18 +115,6 @@ const MapView = (props) => {
     return data;
   };
 
-  const renderTopBar = () => {
-    if (isMobile) {
-      return (
-        // TODO: search bar disabled from map until it is fixed
-        // <div className={classes.topArea}>
-        //   <SearchBar background="none" />
-        // </div>
-        null
-      );
-    } return null;
-  };
-
   const setClickCoordinates = (ev) => {
     setMapClickPoint(null);
     if (document.getElementsByClassName('popup').length > 0) {
@@ -146,48 +142,16 @@ const MapView = (props) => {
     setMapObject(newMap);
   };
 
-  const initializeLeaflet = () => {
-    // The leaflet map works only client-side so it needs to be imported here
-    const {
-      Map, TileLayer, ZoomControl, Marker, Popup, Polygon, Polyline, Tooltip,
-    } = require('react-leaflet');
-
-    const Control = require('react-leaflet-control');
-
-    const L = require('leaflet');
-    require('leaflet.markercluster');
-
-    const {
-      divIcon, point, marker, markerClusterGroup,
-    } = L;
-
-    setLeaflet({
-      divIcon,
-      point,
-      Map,
-      marker,
-      markerClusterGroup,
-      TileLayer,
-      ZoomControl,
-      Marker,
-      Popup,
-      Polygon,
-      Polyline,
-      Tooltip,
-      Control: Control.default,
-    });
-  };
-
   // Markercluster initializer
   const initializeMarkerClusterLayer = () => {
     const map = mapRef && mapRef.current ? mapRef.current : null;
 
-    if (map && leaflet && createMarkerClusterLayer && isClient()) {
+    if (map && global.L && createMarkerClusterLayer && isClient()) {
       const popupTexts = {
         title: intl.formatMessage({ id: 'unit.plural' }),
         info: count => intl.formatMessage({ id: 'map.unit.cluster.popup.info' }, { count }),
       };
-      const cluster = createMarkerClusterLayer(leaflet, map, classes, popupTexts, embeded);
+      const cluster = createMarkerClusterLayer(global.L, map, classes, popupTexts, embeded);
       if (cluster) {
         // Remove old layer
         if (markerCluster) {
@@ -228,7 +192,6 @@ const MapView = (props) => {
 
 
   useEffect(() => { // On map mount
-    initializeLeaflet();
     initializeMap();
     if (!embeded) {
       findUserLocation();
@@ -273,14 +236,13 @@ const MapView = (props) => {
   // Create new markercluster layer when map is loaded or when distancePosition changes
   useEffect(() => {
     initializeMarkerClusterLayer();
-  }, [mapObject, leaflet, distancePosition]);
+  }, [mapObject, distancePosition]);
 
   // Attempt to render unit markers on page change or unitList change
   useEffect(() => {
     if (!markerCluster) {
       return;
     }
-
     const data = getMapUnits();
     const map = mapRef && mapRef.current ? mapRef.current.leafletElement : null;
     // Clear layers if no units currently set for data
@@ -290,11 +252,23 @@ const MapView = (props) => {
       return;
     }
     if (map) {
-      renderUnitMarkers(leaflet, map, data, classes, markerCluster, embeded);
+      renderUnitMarkers(global.L, map, data, classes, markerCluster, embeded);
     }
   }, [unitList, highlightedUnit, markerCluster, addressUnits, serviceUnits, highlightedDistrict]);
 
   // Render
+
+  const renderTopBar = () => {
+    if (isMobile) {
+      return (
+        // TODO: search bar disabled from map until it is fixed
+        // <div className={classes.topArea}>
+        //   <SearchBar background="none" />
+        // </div>
+        null
+      );
+    } return null;
+  };
 
   const renderEmbedOverlay = () => {
     if (!embeded) {
@@ -314,11 +288,9 @@ const MapView = (props) => {
   };
 
 
-  const {
-    Map, TileLayer, ZoomControl, Marker, Popup, Polygon, Polyline, Tooltip, Control,
-  } = leaflet || {};
-
-  if (Map && mapObject) {
+  if (global.rL && mapObject) {
+    const { Map, TileLayer, ZoomControl } = global.rL || {};
+    const Control = require('react-leaflet-control').default;
     let center = mapOptions.initialPosition;
     let zoom = isMobile ? mapObject.options.mobileZoom : mapObject.options.zoom;
     if (prevMap) { // If changing map type, use viewport values of previuous map
@@ -354,39 +326,23 @@ const MapView = (props) => {
             url={mapObject.options.url}
             attribution='&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors'
           />
-          {
-            !highlightedDistrict
-            && (
-              <UnitMarkers
-                data={getMapUnits()}
-                Polyline={Polyline}
-              />
-            )
-          }
-          <Districts
-            Polygon={Polygon}
-            Marker={Marker}
-            Popup={Popup}
-            Tooltip={Tooltip}
-            mapOptions={mapOptions}
-            map={mapRef.current}
-          />
+          {!highlightedDistrict && (
+            <UnitMarkers data={getMapUnits()} />
+          )}
 
-          {!embeded
-            && (
-              <TransitStops
-                getLocaleText={getLocaleText}
-                Marker={Marker}
-                Popup={Popup}
-                map={mapRef.current}
-                mapObject={mapObject}
-                isMobile={isMobile}
-              />
+          <Districts mapOptions={mapOptions} map={mapRef.current} />
+
+          {!embeded && (
+            <TransitStops
+              getLocaleText={getLocaleText}
+              map={mapRef.current}
+              mapObject={mapObject}
+              isMobile={isMobile}
+            />
           )}
 
           {!embeded && !measuring && mapClickPoint && ( // Draw address popoup on mapclick to map
             <AddressPopup
-              Popup={Popup}
               mapClickPoint={mapClickPoint}
               getAddressNavigatorParams={getAddressNavigatorParams}
               getLocaleText={getLocaleText}
@@ -397,15 +353,10 @@ const MapView = (props) => {
           )}
 
           {currentPage === 'address' && (
-            <AddressMarker
-              Marker={Marker}
-              Tooltip={Tooltip}
-              getLocaleText={getLocaleText}
-              embeded={embeded}
-            />
+            <AddressMarker embeded={embeded} />
           )}
 
-          { !hideUserMarker && userLocation && (
+          {!hideUserMarker && userLocation && (
             <UserMarker
               position={[userLocation.latitude, userLocation.longitude]}
               classes={classes}
@@ -425,19 +376,19 @@ const MapView = (props) => {
             && (
               <>
                 {/* Custom user location map button */}
-              <Control position="bottomright">
-                <ButtonBase
-                  disabled={!userLocation}
-                  className={`${classes.showLocationButton} ${!userLocation ? classes.locationDisabled : ''}`}
-                  onClick={() => focusOnUser()}
-                  focusVisibleClassName={classes.locationButtonFocus}
-                >
-                  {userLocation
-                    ? <MyLocation className={classes.showLocationIcon} />
-                    : <LocationDisabled className={classes.showLocationIcon} />
-                }
-                </ButtonBase>
-              </Control>
+                <Control position="bottomright">
+                  <ButtonBase
+                    disabled={!userLocation}
+                    className={`${classes.showLocationButton} ${!userLocation ? classes.locationDisabled : ''}`}
+                    onClick={() => focusOnUser()}
+                    focusVisibleClassName={classes.locationButtonFocus}
+                  >
+                    {userLocation
+                      ? <MyLocation className={classes.showLocationIcon} />
+                      : <LocationDisabled className={classes.showLocationIcon} />
+                    }
+                  </ButtonBase>
+                </Control>
                 {/* Measure button placeholder TODO: add button to tool menu */}
                 <Control position="bottomright">
                   <ButtonBase
