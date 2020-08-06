@@ -63,6 +63,7 @@ const MapView = (props) => {
   const [prevMap, setPrevMap] = useState(null);
   const [markerCluster, setMarkerCluster] = useState(null);
   const [distancePosition, setDistancePosition] = useState(null);
+  const [measuring, setMeasuring] = useState(false);
 
   const embeded = isEmbed(match);
 
@@ -214,6 +215,15 @@ const MapView = (props) => {
       .then((data) => {
         navigator.push('address', getAddressNavigatorParams(data));
       });
+  };
+
+  const toggleMeasureTool = () => {
+    setMapClickPoint(null);
+    if (mapRef.current && !measuring) {
+      setMeasuring(true);
+    } else if (measuring) {
+      setMeasuring(false);
+    }
   };
 
 
@@ -372,9 +382,9 @@ const MapView = (props) => {
                 mapObject={mapObject}
                 isMobile={isMobile}
               />
-            )
-          }
-          {!embeded && mapClickPoint && ( // Draw address popoup on mapclick to map
+          )}
+
+          {!embeded && !measuring && mapClickPoint && ( // Draw address popoup on mapclick to map
             <AddressPopup
               Popup={Popup}
               mapClickPoint={mapClickPoint}
@@ -405,11 +415,16 @@ const MapView = (props) => {
             />
           )}
 
+          {measuring && (
+            <DistanceMeasure mapClickPoint={mapClickPoint} />
+          )}
+
           <ZoomControl position="bottomright" aria-hidden="true" />
           {
             !embeded
             && (
-              /* Custom user location map button */
+              <>
+                {/* Custom user location map button */}
               <Control position="bottomright">
                 <ButtonBase
                   disabled={!userLocation}
@@ -423,6 +438,18 @@ const MapView = (props) => {
                 }
                 </ButtonBase>
               </Control>
+                {/* Measure button placeholder TODO: add button to tool menu */}
+                <Control position="bottomright">
+                  <ButtonBase
+                    onClick={() => toggleMeasureTool()}
+                    focusVisibleClassName={classes.locationButtonFocus}
+                  >
+                    <Typography>
+                      {!measuring ? 'Aloita mittaus' : 'Lopeta mittaus'}
+                    </Typography>
+                  </ButtonBase>
+                </Control>
+              </>
             )
           }
         </Map>
