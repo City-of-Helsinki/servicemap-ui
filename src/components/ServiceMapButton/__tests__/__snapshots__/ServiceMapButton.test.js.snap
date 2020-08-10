@@ -31,7 +31,7 @@ exports[`<ServiceMapButton /> should work 1`] = `
           "getPluralRules": [Function],
           "getRelativeTimeFormat": [Function],
         },
-        "locale": "fi",
+        "locale": "en",
         "messages": Object {
           "button.text": "Button text",
         },
@@ -87,7 +87,7 @@ exports[`<ServiceMapButton /> should work 1`] = `
             "getPluralRules": [Function],
             "getRelativeTimeFormat": [Function],
           },
-          "locale": "fi",
+          "locale": "en",
           "messages": Object {
             "button.text": "Button text",
           },

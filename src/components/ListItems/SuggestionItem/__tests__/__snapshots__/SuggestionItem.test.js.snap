@@ -33,7 +33,7 @@ exports[`<SuggestionItem /> should work 1`] = `
           "getPluralRules": [Function],
           "getRelativeTimeFormat": [Function],
         },
-        "locale": "fi",
+        "locale": "en",
         "messages": Object {
           "search.arrowLabel": "Arrow button label",
         },
@@ -89,7 +89,7 @@ exports[`<SuggestionItem /> should work 1`] = `
             "getPluralRules": [Function],
             "getRelativeTimeFormat": [Function],
           },
-          "locale": "fi",
+          "locale": "en",
           "messages": Object {
             "search.arrowLabel": "Arrow button label",
           },
