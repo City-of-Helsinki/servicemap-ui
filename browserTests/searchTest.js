@@ -270,7 +270,8 @@ test('Tabs accessibility attributes are OK', async(t) => {
 test('Search has aria-live element', async(t) => {
   await searchUnits(t, 'kirjasto');
   const view = ReactSelector('SearchView');
-  const unitCount = await view.getReact(({props}) => props.units ? props.units.length : 0);
+  const units = await view.getReact(({props}) => props.units ? props.units : []);
+  const unitCount = await units.filter(unit => unit.object_type === 'unit').length
   const searchInfo = Selector('.SearchInfo').child(0);
   const siText = await searchInfo.innerText;
   const siAriaLive = await searchInfo.getAttribute('aria-live');
