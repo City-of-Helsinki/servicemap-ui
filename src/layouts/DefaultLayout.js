@@ -1,7 +1,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
 import MapView from '../views/MapView';
 import I18n from '../i18n';
@@ -15,7 +15,7 @@ import useMobileStatus from '../utils/isMobile';
 const { smallScreenBreakpoint } = config;
 
 const createContentStyles = (
-  isMobile, isSmallScreen, landscape, mobileMapOnly, fullMobileMap, settingsOpen, currentPage,
+  isMobile, isSmallScreen, landscape, fullMobileMap, settingsOpen, currentPage,
 ) => {
   let width = 450;
   if (isMobile) {
@@ -38,9 +38,9 @@ const createContentStyles = (
       position: isMobile ? 'fixed' : null,
       bottom: 0,
       margin: 0,
-      flex: !isMobile || mobileMapOnly ? 1 : 0,
+      flex: !isMobile || fullMobileMap ? 1 : 0,
       display: 'flex',
-      visibility: isMobile && (!mobileMapOnly || settingsOpen) ? 'hidden' : '',
+      visibility: isMobile && (!fullMobileMap || settingsOpen) ? 'hidden' : '',
       height: isMobile ? `calc(100% - ${topBarHeight})` : '100%',
       width: '100%',
       zIndex: 900,
@@ -58,7 +58,7 @@ const createContentStyles = (
       // eslint-disable-next-line no-nested-ternary
       overflow: settingsOpen ? 'hidden'
         : isMobile ? 'visible' : 'auto',
-      visibility: mobileMapOnly && !settingsOpen ? 'hidden' : null,
+      visibility: fullMobileMap && !settingsOpen ? 'hidden' : null,
       flex: '0 1 auto',
     },
     sidebarContent: {
@@ -79,13 +79,12 @@ const DefaultLayout = (props) => {
   } = props;
   const isMobile = useMobileStatus();
   const isSmallScreen = useMediaQuery(`(max-width:${smallScreenBreakpoint}px)`);
-  const fullMobileMap = new URLSearchParams(location.search).get('map'); // If mobile map without bottom navigation & searchbar
-  const mobileMapOnly = isMobile && (location.pathname.indexOf('/map') > -1 || fullMobileMap); // If mobile map view
+  const fullMobileMap = new URLSearchParams(location.search).get('showMap'); // If mobile map view
   const landscape = useMediaQuery('(min-device-aspect-ratio: 1/1)');
   const portrait = useMediaQuery('(max-device-aspect-ratio: 1/1)');
 
   const styles = createContentStyles(
-    isMobile, isSmallScreen, landscape, mobileMapOnly, fullMobileMap, settingsToggled, currentPage,
+    isMobile, isSmallScreen, landscape, fullMobileMap, settingsToggled, currentPage,
   );
   return (
     <>
@@ -147,7 +146,7 @@ DefaultLayout.propTypes = {
   }).isRequired,
   currentPage: PropTypes.string,
   i18n: PropTypes.instanceOf(I18n),
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   settingsToggled: PropTypes.string,
 };

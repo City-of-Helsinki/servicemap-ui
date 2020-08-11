@@ -1,0 +1,2046 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SimpleListItem /> should work 1`] = `
+<WithStyles(SimpleListItem)
+  text="Title text"
+>
+  <SimpleListItem
+    button={false}
+    className={null}
+    classes={
+      Object {
+        "divider": "SimpleListItem-divider-5",
+        "itemFocus": "SimpleListItem-itemFocus-6",
+        "link": "SimpleListItem-link-3",
+        "listIcon": "SimpleListItem-listIcon-4",
+        "listItem": "SimpleListItem-listItem-1",
+        "textContainer": "SimpleListItem-textContainer-2",
+      }
+    }
+    divider={false}
+    handleItemClick={null}
+    icon={null}
+    link={false}
+    role={null}
+    selected={false}
+    srText={null}
+    text="Title text"
+  >
+    <WithStyles(ListItem)
+      button={false}
+      className={null}
+      classes={
+        Object {
+          "root": "SimpleListItem-listItem-1",
+          "selected": "SimpleListItem-itemFocus-6",
+        }
+      }
+      component="li"
+      onClick={null}
+      onKeyDown={null}
+      role={null}
+      selected={false}
+      tabIndex={-1}
+    >
+      <ListItem
+        ContainerComponent="li"
+        alignItems="center"
+        button={false}
+        className={null}
+        classes={
+          Object {
+            "alignItemsFlexStart": "MuiListItem-alignItemsFlexStart-12",
+            "button": "MuiListItem-button-16",
+            "container": "MuiListItem-container-8",
+            "default": "MuiListItem-default-10",
+            "dense": "MuiListItem-dense-11",
+            "disabled": "MuiListItem-disabled-13",
+            "divider": "MuiListItem-divider-14",
+            "focusVisible": "MuiListItem-focusVisible-9",
+            "gutters": "MuiListItem-gutters-15",
+            "root": "MuiListItem-root-7 SimpleListItem-listItem-1",
+            "secondaryAction": "MuiListItem-secondaryAction-17",
+            "selected": "MuiListItem-selected-18 SimpleListItem-itemFocus-6",
+          }
+        }
+        component="li"
+        dense={false}
+        disableGutters={false}
+        disabled={false}
+        divider={false}
+        onClick={null}
+        onKeyDown={null}
+        role={null}
+        selected={false}
+        tabIndex={-1}
+      >
+        <MergeListContext
+          alignItems="center"
+          dense={false}
+        >
+          <li
+            className="MuiListItem-root-7 SimpleListItem-listItem-1 MuiListItem-default-10 MuiListItem-gutters-15"
+            disabled={false}
+            onClick={null}
+            onKeyDown={null}
+            role={null}
+            tabIndex={-1}
+          >
+            <WithStyles(ListItemText)
+              classes={
+                Object {
+                  "root": "SimpleListItem-textContainer-2",
+                }
+              }
+              key=".1"
+            >
+              <ListItemText
+                classes={
+                  Object {
+                    "dense": "MuiListItemText-dense-21",
+                    "inset": "MuiListItemText-inset-20",
+                    "primary": "MuiListItemText-primary-22",
+                    "root": "MuiListItemText-root-19 SimpleListItem-textContainer-2",
+                    "secondary": "MuiListItemText-secondary-23",
+                    "textDense": "MuiListItemText-textDense-24",
+                  }
+                }
+                disableTypography={false}
+                inset={false}
+                theme={
+                  Object {
+                    "breakpoints": Object {
+                      "between": [Function],
+                      "down": [Function],
+                      "keys": Array [
+                        "xs",
+                        "sm",
+                        "md",
+                        "lg",
+                        "xl",
+                      ],
+                      "only": [Function],
+                      "up": [Function],
+                      "values": Object {
+                        "lg": 1280,
+                        "md": 900,
+                        "sm": 700,
+                        "xl": 1920,
+                        "xs": 0,
+                      },
+                      "width": [Function],
+                    },
+                    "custom": Object {
+                      "body2light": Object {
+                        "color": "rgba(0,0,0,0.7)",
+                      },
+                    },
+                    "direction": "ltr",
+                    "mixins": Object {
+                      "gutters": [Function],
+                      "toolbar": Object {
+                        "@media (min-width:0px) and (orientation: landscape)": Object {
+                          "minHeight": 48,
+                        },
+                        "@media (min-width:700px)": Object {
+                          "minHeight": 64,
+                        },
+                        "minHeight": 56,
+                      },
+                    },
+                    "overrides": Object {
+                      "MuiButtonBase": Object {
+                        "focusVisible": Object {
+                          "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                          "outline": "2px solid transparent",
+                        },
+                      },
+                      "MuiInputBase": Object {
+                        "root": Object {
+                          "&$focused": Object {
+                            "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                            "outline": "2px solid transparent",
+                          },
+                        },
+                      },
+                    },
+                    "palette": Object {
+                      "action": Object {
+                        "active": "rgba(0, 0, 0, 0.54)",
+                        "disabled": "rgba(0, 0, 0, 0.26)",
+                        "disabledBackground": "rgba(0, 0, 0, 0.12)",
+                        "hover": "rgba(0, 0, 0, 0.08)",
+                        "hoverOpacity": 0.08,
+                        "selected": "rgba(0, 0, 0, 0.14)",
+                      },
+                      "augmentColor": [Function],
+                      "background": Object {
+                        "default": "#fafafa",
+                        "front": "linear-gradient(340.58deg, rgb(11, 123, 237) 0%, rgb(20, 108, 232) 67.04%, rgb(25, 100, 230) 100%)",
+                        "main": "linear-gradient(340.58deg, rgb(11, 123, 237) 0%, rgb(20, 108, 232) 67.04%, rgb(25, 100, 230) 100%)",
+                        "paper": "#fff",
+                        "plain": "rgb(20, 108, 232)",
+                      },
+                      "common": Object {
+                        "black": "#000",
+                        "white": "#fff",
+                      },
+                      "contrastThreshold": 3,
+                      "detail": Object {
+                        "alpha": "rgba(25,100,230,0.5)",
+                        "main": "rgb(25, 100, 230)",
+                      },
+                      "disabled": Object {
+                        "main": "rgb(239, 239, 239)",
+                        "strong": "#898989",
+                      },
+                      "divider": "rgba(0, 0, 0, 0.12)",
+                      "error": Object {
+                        "contrastText": "#fff",
+                        "dark": "#d32f2f",
+                        "light": "#e57373",
+                        "main": "#f44336",
+                      },
+                      "focusBorder": "rgba(25, 100, 230, 0.8)",
+                      "getContrastText": [Function],
+                      "grey": Object {
+                        "100": "#f5f5f5",
+                        "200": "#eeeeee",
+                        "300": "#e0e0e0",
+                        "400": "#bdbdbd",
+                        "50": "#fafafa",
+                        "500": "#9e9e9e",
+                        "600": "#757575",
+                        "700": "#616161",
+                        "800": "#424242",
+                        "900": "#212121",
+                        "A100": "#d5d5d5",
+                        "A200": "#aaaaaa",
+                        "A400": "#303030",
+                        "A700": "#616161",
+                      },
+                      "primary": Object {
+                        "contrastText": "#fff",
+                        "dark": "rgb(17, 70, 161)",
+                        "highContrast": "#fff",
+                        "light": "rgb(71, 131, 235)",
+                        "main": "rgb(25, 100, 230)",
+                      },
+                      "secondary": Object {
+                        "contrastText": "#fff",
+                        "dark": "rgba(14, 16, 24, 0.9)",
+                        "hover": "#1d39ad",
+                        "light": "rgba(67, 70, 79, 0.9)",
+                        "main": "rgba(20,24,35,0.9)",
+                      },
+                      "text": Object {
+                        "disabled": "rgba(0, 0, 0, 0.38)",
+                        "hint": "rgba(0, 0, 0, 0.38)",
+                        "primary": "rgba(0, 0, 0, 0.87)",
+                        "secondary": "rgba(0, 0, 0, 0.54)",
+                      },
+                      "tonalOffset": 0.2,
+                      "type": "light",
+                      "warning": "#AF0021",
+                      "white": Object {
+                        "contrastText": "#000",
+                        "dark": "#979797",
+                        "light": "#f2f2f2",
+                        "main": "#FFFFFF",
+                      },
+                    },
+                    "props": Object {
+                      "MuiButton": Object {
+                        "disableFocusRipple": true,
+                        "disableRipple": true,
+                      },
+                      "MuiButtonBase": Object {
+                        "disableRipple": true,
+                      },
+                    },
+                    "shadows": Array [
+                      "none",
+                      "0px 1px 3px 0px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 2px 1px -1px rgba(0,0,0,0.12)",
+                      "0px 1px 5px 0px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 3px 1px -2px rgba(0,0,0,0.12)",
+                      "0px 1px 8px 0px rgba(0,0,0,0.2),0px 3px 4px 0px rgba(0,0,0,0.14),0px 3px 3px -2px rgba(0,0,0,0.12)",
+                      "0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12)",
+                      "0px 3px 5px -1px rgba(0,0,0,0.2),0px 5px 8px 0px rgba(0,0,0,0.14),0px 1px 14px 0px rgba(0,0,0,0.12)",
+                      "0px 3px 5px -1px rgba(0,0,0,0.2),0px 6px 10px 0px rgba(0,0,0,0.14),0px 1px 18px 0px rgba(0,0,0,0.12)",
+                      "0px 4px 5px -2px rgba(0,0,0,0.2),0px 7px 10px 1px rgba(0,0,0,0.14),0px 2px 16px 1px rgba(0,0,0,0.12)",
+                      "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)",
+                      "0px 5px 6px -3px rgba(0,0,0,0.2),0px 9px 12px 1px rgba(0,0,0,0.14),0px 3px 16px 2px rgba(0,0,0,0.12)",
+                      "0px 6px 6px -3px rgba(0,0,0,0.2),0px 10px 14px 1px rgba(0,0,0,0.14),0px 4px 18px 3px rgba(0,0,0,0.12)",
+                      "0px 6px 7px -4px rgba(0,0,0,0.2),0px 11px 15px 1px rgba(0,0,0,0.14),0px 4px 20px 3px rgba(0,0,0,0.12)",
+                      "0px 7px 8px -4px rgba(0,0,0,0.2),0px 12px 17px 2px rgba(0,0,0,0.14),0px 5px 22px 4px rgba(0,0,0,0.12)",
+                      "0px 7px 8px -4px rgba(0,0,0,0.2),0px 13px 19px 2px rgba(0,0,0,0.14),0px 5px 24px 4px rgba(0,0,0,0.12)",
+                      "0px 7px 9px -4px rgba(0,0,0,0.2),0px 14px 21px 2px rgba(0,0,0,0.14),0px 5px 26px 4px rgba(0,0,0,0.12)",
+                      "0px 8px 9px -5px rgba(0,0,0,0.2),0px 15px 22px 2px rgba(0,0,0,0.14),0px 6px 28px 5px rgba(0,0,0,0.12)",
+                      "0px 8px 10px -5px rgba(0,0,0,0.2),0px 16px 24px 2px rgba(0,0,0,0.14),0px 6px 30px 5px rgba(0,0,0,0.12)",
+                      "0px 8px 11px -5px rgba(0,0,0,0.2),0px 17px 26px 2px rgba(0,0,0,0.14),0px 6px 32px 5px rgba(0,0,0,0.12)",
+                      "0px 9px 11px -5px rgba(0,0,0,0.2),0px 18px 28px 2px rgba(0,0,0,0.14),0px 7px 34px 6px rgba(0,0,0,0.12)",
+                      "0px 9px 12px -6px rgba(0,0,0,0.2),0px 19px 29px 2px rgba(0,0,0,0.14),0px 7px 36px 6px rgba(0,0,0,0.12)",
+                      "0px 10px 13px -6px rgba(0,0,0,0.2),0px 20px 31px 3px rgba(0,0,0,0.14),0px 8px 38px 7px rgba(0,0,0,0.12)",
+                      "0px 10px 13px -6px rgba(0,0,0,0.2),0px 21px 33px 3px rgba(0,0,0,0.14),0px 8px 40px 7px rgba(0,0,0,0.12)",
+                      "0px 10px 14px -6px rgba(0,0,0,0.2),0px 22px 35px 3px rgba(0,0,0,0.14),0px 8px 42px 7px rgba(0,0,0,0.12)",
+                      "0px 11px 14px -7px rgba(0,0,0,0.2),0px 23px 36px 3px rgba(0,0,0,0.14),0px 9px 44px 8px rgba(0,0,0,0.12)",
+                      "0px 11px 15px -7px rgba(0,0,0,0.2),0px 24px 38px 3px rgba(0,0,0,0.14),0px 9px 46px 8px rgba(0,0,0,0.12)",
+                    ],
+                    "shape": Object {
+                      "borderRadius": 4,
+                    },
+                    "spacing": Object {
+                      "unit": 8,
+                      "unitDouble": 16,
+                      "unitHalf": 4,
+                      "unitTriple": 24,
+                    },
+                    "transitions": Object {
+                      "create": [Function],
+                      "duration": Object {
+                        "complex": 375,
+                        "enteringScreen": 225,
+                        "leavingScreen": 195,
+                        "short": 250,
+                        "shorter": 200,
+                        "shortest": 150,
+                        "standard": 300,
+                      },
+                      "easing": Object {
+                        "easeIn": "cubic-bezier(0.4, 0, 1, 1)",
+                        "easeInOut": "cubic-bezier(0.4, 0, 0.2, 1)",
+                        "easeOut": "cubic-bezier(0.0, 0, 0.2, 1)",
+                        "sharp": "cubic-bezier(0.4, 0, 0.6, 1)",
+                      },
+                      "getAutoHeightDuration": [Function],
+                    },
+                    "typography": Object {
+                      "body1": Object {
+                        "color": "rgba(0, 0, 0, 0.87)",
+                        "fontFamily": "Lato",
+                        "fontSize": "1.043rem",
+                        "fontWeight": 400,
+                        "letterSpacing": "0.03125rem",
+                        "lineHeight": "1.75rem",
+                      },
+                      "body1Next": Object {
+                        "color": "rgba(0, 0, 0, 0.87)",
+                        "fontFamily": "Lato",
+                        "fontSize": "1.1428571428571428rem",
+                        "fontWeight": 400,
+                        "lineHeight": 1.5,
+                      },
+                      "body2": Object {
+                        "color": "rgba(0, 0, 0, 0.87)",
+                        "fontFamily": "Lato",
+                        "fontSize": "0.913rem",
+                        "fontWeight": 400,
+                        "letterSpacing": "0.015625rem",
+                        "lineHeight": "1.25rem",
+                      },
+                      "body2Next": Object {
+                        "color": "rgba(0, 0, 0, 0.87)",
+                        "fontFamily": "Lato",
+                        "fontSize": "1rem",
+                        "fontWeight": 400,
+                        "lineHeight": 1.5,
+                      },
+                      "button": Object {
+                        "color": "#ffffff",
+                        "fontFamily": "Lato",
+                        "fontSize": "0.90125rem",
+                        "fontWeight": "bold",
+                        "letterSpacing": "0.078125rem",
+                        "lineHeight": "1rem",
+                        "textTransform": "uppercase",
+                      },
+                      "buttonNext": Object {
+                        "color": "rgba(0, 0, 0, 0.87)",
+                        "fontFamily": "Lato",
+                        "fontSize": "1rem",
+                        "fontWeight": 500,
+                        "lineHeight": 1.75,
+                        "textTransform": "uppercase",
+                      },
+                      "caption": Object {
+                        "color": "rgba(0,0,0,0.6)",
+                        "fontFamily": "Lato",
+                        "fontSize": "0.7725rem",
+                        "fontWeight": "bold",
+                        "letterSpacing": "0.025rem",
+                        "lineHeight": "1rem",
+                      },
+                      "captionNext": Object {
+                        "color": "rgba(0, 0, 0, 0.87)",
+                        "fontFamily": "Lato",
+                        "fontSize": "0.8571428571428571rem",
+                        "fontWeight": 400,
+                        "lineHeight": 1.66,
+                      },
+                      "display1": Object {
+                        "color": "rgba(0, 0, 0, 0.54)",
+                        "fontFamily": "Lato",
+                        "fontSize": "2.4285714285714284rem",
+                        "fontWeight": 400,
+                        "lineHeight": "1.20588em",
+                      },
+                      "display2": Object {
+                        "color": "rgba(0, 0, 0, 0.54)",
+                        "fontFamily": "Lato",
+                        "fontSize": "3.214285714285714rem",
+                        "fontWeight": 400,
+                        "lineHeight": "1.13333em",
+                        "marginLeft": "-.02em",
+                      },
+                      "display3": Object {
+                        "color": "rgba(0, 0, 0, 0.54)",
+                        "fontFamily": "Lato",
+                        "fontSize": "4rem",
+                        "fontWeight": 400,
+                        "letterSpacing": "-.02em",
+                        "lineHeight": "1.30357em",
+                        "marginLeft": "-.02em",
+                      },
+                      "display4": Object {
+                        "color": "rgba(0, 0, 0, 0.54)",
+                        "fontFamily": "Lato",
+                        "fontSize": "8rem",
+                        "fontWeight": 300,
+                        "letterSpacing": "-.04em",
+                        "lineHeight": "1.14286em",
+                        "marginLeft": "-.04em",
+                      },
+                      "fontFamily": "Lato",
+                      "fontSize": 16,
+                      "fontWeightLight": 300,
+                      "fontWeightMedium": 500,
+                      "fontWeightRegular": 400,
+                      "h1": Object {
+                        "color": "rgba(0, 0, 0, 0.87)",
+                        "fontFamily": "Lato",
+                        "fontSize": "6.259rem",
+                        "fontWeight": 300,
+                        "letterSpacing": "-0.09375em",
+                        "lineHeight": 1,
+                      },
+                      "h2": Object {
+                        "color": "rgba(0, 0, 0, 0.87)",
+                        "fontFamily": "Lato",
+                        "fontSize": "3.862rem",
+                        "fontWeight": "bold",
+                        "letterSpacing": "-0.03125rem",
+                        "lineHeight": 1,
+                      },
+                      "h3": Object {
+                        "color": "rgba(0, 0, 0, 0.87)",
+                        "fontFamily": "Lato",
+                        "fontSize": "3.089rem",
+                        "fontWeight": "bold",
+                        "letterSpacing": 0,
+                        "lineHeight": 1.04,
+                      },
+                      "h4": Object {
+                        "color": "rgba(0, 0, 0, 0.87)",
+                        "fontFamily": "Lato",
+                        "fontSize": "2.214rem",
+                        "fontWeight": 400,
+                        "letterSpacing": "0.015625rem",
+                        "lineHeight": 1.17,
+                      },
+                      "h5": Object {
+                        "color": "rgba(0, 0, 0, 0.87)",
+                        "fontFamily": "Lato",
+                        "fontSize": "1.564rem",
+                        "fontWeight": 400,
+                        "letterSpacing": 0,
+                        "lineHeight": 1.33,
+                      },
+                      "h6": Object {
+                        "color": "rgba(0, 0, 0, 0.87)",
+                        "fontFamily": "Lato",
+                        "fontSize": "1.288rem",
+                        "fontWeight": "bold",
+                        "letterSpacing": "0.015625rem",
+                        "lineHeight": "1.5rem",
+                      },
+                      "headline": Object {
+                        "color": "rgba(0, 0, 0, 0.87)",
+                        "fontFamily": "Lato",
+                        "fontSize": "1.7142857142857142rem",
+                        "fontWeight": 400,
+                        "lineHeight": "1.35417em",
+                      },
+                      "overline": Object {
+                        "color": "rgba(0, 0, 0, 0.87)",
+                        "fontFamily": "Lato",
+                        "fontSize": "0.7725rem",
+                        "fontWeight": "bold",
+                        "letterSpacing": "0.125rem",
+                        "lineHeight": "1rem",
+                        "textTransform": "uppercase",
+                      },
+                      "pxToRem": [Function],
+                      "round": [Function],
+                      "subheading": Object {
+                        "color": "rgba(0, 0, 0, 0.87)",
+                        "fontFamily": "Lato",
+                        "fontSize": "1.1428571428571428rem",
+                        "fontWeight": 400,
+                        "lineHeight": "1.5em",
+                      },
+                      "subtitle1": Object {
+                        "color": "rgba(0, 0, 0, 0.87)",
+                        "fontFamily": "Lato",
+                        "fontSize": "1.03rem",
+                        "fontWeight": "bold",
+                        "letterSpacing": "0.00937rem",
+                        "lineHeight": "1.5rem",
+                      },
+                      "subtitle2": Object {
+                        "color": "rgba(0, 0, 0, 0.87)",
+                        "fontFamily": "Lato",
+                        "fontSize": "1rem",
+                        "fontWeight": 500,
+                        "lineHeight": 1.57,
+                      },
+                      "title": Object {
+                        "color": "rgba(0, 0, 0, 0.87)",
+                        "fontFamily": "Lato",
+                        "fontSize": "1.5rem",
+                        "fontWeight": 500,
+                        "lineHeight": "1.16667em",
+                      },
+                      "useNextVariants": true,
+                    },
+                    "zIndex": Object {
+                      "appBar": 1100,
+                      "behind": -1,
+                      "drawer": 1200,
+                      "forward": 50,
+                      "infront": 900,
+                      "mobileStepper": 1000,
+                      "modal": 1300,
+                      "snackbar": 1400,
+                      "sticky": 51,
+                      "tooltip": 1500,
+                    },
+                  }
+                }
+              >
+                <div
+                  className="MuiListItemText-root-19 SimpleListItem-textContainer-2"
+                >
+                  <WithStyles(Typography)
+                    className="MuiListItemText-primary-22"
+                    component="span"
+                    variant="body1"
+                  >
+                    <Typography
+                      align="inherit"
+                      className="MuiListItemText-primary-22"
+                      classes={
+                        Object {
+                          "alignCenter": "MuiTypography-alignCenter-48",
+                          "alignJustify": "MuiTypography-alignJustify-50",
+                          "alignLeft": "MuiTypography-alignLeft-47",
+                          "alignRight": "MuiTypography-alignRight-49",
+                          "body1": "MuiTypography-body1-34",
+                          "body2": "MuiTypography-body2-33",
+                          "button": "MuiTypography-button-36",
+                          "caption": "MuiTypography-caption-35",
+                          "colorError": "MuiTypography-colorError-59",
+                          "colorInherit": "MuiTypography-colorInherit-54",
+                          "colorPrimary": "MuiTypography-colorPrimary-55",
+                          "colorSecondary": "MuiTypography-colorSecondary-56",
+                          "colorTextPrimary": "MuiTypography-colorTextPrimary-57",
+                          "colorTextSecondary": "MuiTypography-colorTextSecondary-58",
+                          "display1": "MuiTypography-display1-29",
+                          "display2": "MuiTypography-display2-28",
+                          "display3": "MuiTypography-display3-27",
+                          "display4": "MuiTypography-display4-26",
+                          "gutterBottom": "MuiTypography-gutterBottom-52",
+                          "h1": "MuiTypography-h1-37",
+                          "h2": "MuiTypography-h2-38",
+                          "h3": "MuiTypography-h3-39",
+                          "h4": "MuiTypography-h4-40",
+                          "h5": "MuiTypography-h5-41",
+                          "h6": "MuiTypography-h6-42",
+                          "headline": "MuiTypography-headline-30",
+                          "inline": "MuiTypography-inline-60",
+                          "noWrap": "MuiTypography-noWrap-51",
+                          "overline": "MuiTypography-overline-45",
+                          "paragraph": "MuiTypography-paragraph-53",
+                          "root": "MuiTypography-root-25",
+                          "srOnly": "MuiTypography-srOnly-46",
+                          "subheading": "MuiTypography-subheading-32",
+                          "subtitle1": "MuiTypography-subtitle1-43",
+                          "subtitle2": "MuiTypography-subtitle2-44",
+                          "title": "MuiTypography-title-31",
+                        }
+                      }
+                      color="default"
+                      component="span"
+                      gutterBottom={false}
+                      headlineMapping={
+                        Object {
+                          "body1": "p",
+                          "body2": "p",
+                          "display1": "h1",
+                          "display2": "h1",
+                          "display3": "h1",
+                          "display4": "h1",
+                          "h1": "h1",
+                          "h2": "h2",
+                          "h3": "h3",
+                          "h4": "h4",
+                          "h5": "h5",
+                          "h6": "h6",
+                          "headline": "h1",
+                          "subheading": "h3",
+                          "subtitle1": "h6",
+                          "subtitle2": "h6",
+                          "title": "h2",
+                        }
+                      }
+                      inline={false}
+                      noWrap={false}
+                      paragraph={false}
+                      theme={
+                        Object {
+                          "breakpoints": Object {
+                            "between": [Function],
+                            "down": [Function],
+                            "keys": Array [
+                              "xs",
+                              "sm",
+                              "md",
+                              "lg",
+                              "xl",
+                            ],
+                            "only": [Function],
+                            "up": [Function],
+                            "values": Object {
+                              "lg": 1280,
+                              "md": 900,
+                              "sm": 700,
+                              "xl": 1920,
+                              "xs": 0,
+                            },
+                            "width": [Function],
+                          },
+                          "custom": Object {
+                            "body2light": Object {
+                              "color": "rgba(0,0,0,0.7)",
+                            },
+                          },
+                          "direction": "ltr",
+                          "mixins": Object {
+                            "gutters": [Function],
+                            "toolbar": Object {
+                              "@media (min-width:0px) and (orientation: landscape)": Object {
+                                "minHeight": 48,
+                              },
+                              "@media (min-width:700px)": Object {
+                                "minHeight": 64,
+                              },
+                              "minHeight": 56,
+                            },
+                          },
+                          "overrides": Object {
+                            "MuiButtonBase": Object {
+                              "focusVisible": Object {
+                                "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                                "outline": "2px solid transparent",
+                              },
+                            },
+                            "MuiInputBase": Object {
+                              "root": Object {
+                                "&$focused": Object {
+                                  "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                                  "outline": "2px solid transparent",
+                                },
+                              },
+                            },
+                          },
+                          "palette": Object {
+                            "action": Object {
+                              "active": "rgba(0, 0, 0, 0.54)",
+                              "disabled": "rgba(0, 0, 0, 0.26)",
+                              "disabledBackground": "rgba(0, 0, 0, 0.12)",
+                              "hover": "rgba(0, 0, 0, 0.08)",
+                              "hoverOpacity": 0.08,
+                              "selected": "rgba(0, 0, 0, 0.14)",
+                            },
+                            "augmentColor": [Function],
+                            "background": Object {
+                              "default": "#fafafa",
+                              "front": "linear-gradient(340.58deg, rgb(11, 123, 237) 0%, rgb(20, 108, 232) 67.04%, rgb(25, 100, 230) 100%)",
+                              "main": "linear-gradient(340.58deg, rgb(11, 123, 237) 0%, rgb(20, 108, 232) 67.04%, rgb(25, 100, 230) 100%)",
+                              "paper": "#fff",
+                              "plain": "rgb(20, 108, 232)",
+                            },
+                            "common": Object {
+                              "black": "#000",
+                              "white": "#fff",
+                            },
+                            "contrastThreshold": 3,
+                            "detail": Object {
+                              "alpha": "rgba(25,100,230,0.5)",
+                              "main": "rgb(25, 100, 230)",
+                            },
+                            "disabled": Object {
+                              "main": "rgb(239, 239, 239)",
+                              "strong": "#898989",
+                            },
+                            "divider": "rgba(0, 0, 0, 0.12)",
+                            "error": Object {
+                              "contrastText": "#fff",
+                              "dark": "#d32f2f",
+                              "light": "#e57373",
+                              "main": "#f44336",
+                            },
+                            "focusBorder": "rgba(25, 100, 230, 0.8)",
+                            "getContrastText": [Function],
+                            "grey": Object {
+                              "100": "#f5f5f5",
+                              "200": "#eeeeee",
+                              "300": "#e0e0e0",
+                              "400": "#bdbdbd",
+                              "50": "#fafafa",
+                              "500": "#9e9e9e",
+                              "600": "#757575",
+                              "700": "#616161",
+                              "800": "#424242",
+                              "900": "#212121",
+                              "A100": "#d5d5d5",
+                              "A200": "#aaaaaa",
+                              "A400": "#303030",
+                              "A700": "#616161",
+                            },
+                            "primary": Object {
+                              "contrastText": "#fff",
+                              "dark": "rgb(17, 70, 161)",
+                              "highContrast": "#fff",
+                              "light": "rgb(71, 131, 235)",
+                              "main": "rgb(25, 100, 230)",
+                            },
+                            "secondary": Object {
+                              "contrastText": "#fff",
+                              "dark": "rgba(14, 16, 24, 0.9)",
+                              "hover": "#1d39ad",
+                              "light": "rgba(67, 70, 79, 0.9)",
+                              "main": "rgba(20,24,35,0.9)",
+                            },
+                            "text": Object {
+                              "disabled": "rgba(0, 0, 0, 0.38)",
+                              "hint": "rgba(0, 0, 0, 0.38)",
+                              "primary": "rgba(0, 0, 0, 0.87)",
+                              "secondary": "rgba(0, 0, 0, 0.54)",
+                            },
+                            "tonalOffset": 0.2,
+                            "type": "light",
+                            "warning": "#AF0021",
+                            "white": Object {
+                              "contrastText": "#000",
+                              "dark": "#979797",
+                              "light": "#f2f2f2",
+                              "main": "#FFFFFF",
+                            },
+                          },
+                          "props": Object {
+                            "MuiButton": Object {
+                              "disableFocusRipple": true,
+                              "disableRipple": true,
+                            },
+                            "MuiButtonBase": Object {
+                              "disableRipple": true,
+                            },
+                          },
+                          "shadows": Array [
+                            "none",
+                            "0px 1px 3px 0px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 2px 1px -1px rgba(0,0,0,0.12)",
+                            "0px 1px 5px 0px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 3px 1px -2px rgba(0,0,0,0.12)",
+                            "0px 1px 8px 0px rgba(0,0,0,0.2),0px 3px 4px 0px rgba(0,0,0,0.14),0px 3px 3px -2px rgba(0,0,0,0.12)",
+                            "0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12)",
+                            "0px 3px 5px -1px rgba(0,0,0,0.2),0px 5px 8px 0px rgba(0,0,0,0.14),0px 1px 14px 0px rgba(0,0,0,0.12)",
+                            "0px 3px 5px -1px rgba(0,0,0,0.2),0px 6px 10px 0px rgba(0,0,0,0.14),0px 1px 18px 0px rgba(0,0,0,0.12)",
+                            "0px 4px 5px -2px rgba(0,0,0,0.2),0px 7px 10px 1px rgba(0,0,0,0.14),0px 2px 16px 1px rgba(0,0,0,0.12)",
+                            "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)",
+                            "0px 5px 6px -3px rgba(0,0,0,0.2),0px 9px 12px 1px rgba(0,0,0,0.14),0px 3px 16px 2px rgba(0,0,0,0.12)",
+                            "0px 6px 6px -3px rgba(0,0,0,0.2),0px 10px 14px 1px rgba(0,0,0,0.14),0px 4px 18px 3px rgba(0,0,0,0.12)",
+                            "0px 6px 7px -4px rgba(0,0,0,0.2),0px 11px 15px 1px rgba(0,0,0,0.14),0px 4px 20px 3px rgba(0,0,0,0.12)",
+                            "0px 7px 8px -4px rgba(0,0,0,0.2),0px 12px 17px 2px rgba(0,0,0,0.14),0px 5px 22px 4px rgba(0,0,0,0.12)",
+                            "0px 7px 8px -4px rgba(0,0,0,0.2),0px 13px 19px 2px rgba(0,0,0,0.14),0px 5px 24px 4px rgba(0,0,0,0.12)",
+                            "0px 7px 9px -4px rgba(0,0,0,0.2),0px 14px 21px 2px rgba(0,0,0,0.14),0px 5px 26px 4px rgba(0,0,0,0.12)",
+                            "0px 8px 9px -5px rgba(0,0,0,0.2),0px 15px 22px 2px rgba(0,0,0,0.14),0px 6px 28px 5px rgba(0,0,0,0.12)",
+                            "0px 8px 10px -5px rgba(0,0,0,0.2),0px 16px 24px 2px rgba(0,0,0,0.14),0px 6px 30px 5px rgba(0,0,0,0.12)",
+                            "0px 8px 11px -5px rgba(0,0,0,0.2),0px 17px 26px 2px rgba(0,0,0,0.14),0px 6px 32px 5px rgba(0,0,0,0.12)",
+                            "0px 9px 11px -5px rgba(0,0,0,0.2),0px 18px 28px 2px rgba(0,0,0,0.14),0px 7px 34px 6px rgba(0,0,0,0.12)",
+                            "0px 9px 12px -6px rgba(0,0,0,0.2),0px 19px 29px 2px rgba(0,0,0,0.14),0px 7px 36px 6px rgba(0,0,0,0.12)",
+                            "0px 10px 13px -6px rgba(0,0,0,0.2),0px 20px 31px 3px rgba(0,0,0,0.14),0px 8px 38px 7px rgba(0,0,0,0.12)",
+                            "0px 10px 13px -6px rgba(0,0,0,0.2),0px 21px 33px 3px rgba(0,0,0,0.14),0px 8px 40px 7px rgba(0,0,0,0.12)",
+                            "0px 10px 14px -6px rgba(0,0,0,0.2),0px 22px 35px 3px rgba(0,0,0,0.14),0px 8px 42px 7px rgba(0,0,0,0.12)",
+                            "0px 11px 14px -7px rgba(0,0,0,0.2),0px 23px 36px 3px rgba(0,0,0,0.14),0px 9px 44px 8px rgba(0,0,0,0.12)",
+                            "0px 11px 15px -7px rgba(0,0,0,0.2),0px 24px 38px 3px rgba(0,0,0,0.14),0px 9px 46px 8px rgba(0,0,0,0.12)",
+                          ],
+                          "shape": Object {
+                            "borderRadius": 4,
+                          },
+                          "spacing": Object {
+                            "unit": 8,
+                            "unitDouble": 16,
+                            "unitHalf": 4,
+                            "unitTriple": 24,
+                          },
+                          "transitions": Object {
+                            "create": [Function],
+                            "duration": Object {
+                              "complex": 375,
+                              "enteringScreen": 225,
+                              "leavingScreen": 195,
+                              "short": 250,
+                              "shorter": 200,
+                              "shortest": 150,
+                              "standard": 300,
+                            },
+                            "easing": Object {
+                              "easeIn": "cubic-bezier(0.4, 0, 1, 1)",
+                              "easeInOut": "cubic-bezier(0.4, 0, 0.2, 1)",
+                              "easeOut": "cubic-bezier(0.0, 0, 0.2, 1)",
+                              "sharp": "cubic-bezier(0.4, 0, 0.6, 1)",
+                            },
+                            "getAutoHeightDuration": [Function],
+                          },
+                          "typography": Object {
+                            "body1": Object {
+                              "color": "rgba(0, 0, 0, 0.87)",
+                              "fontFamily": "Lato",
+                              "fontSize": "1.043rem",
+                              "fontWeight": 400,
+                              "letterSpacing": "0.03125rem",
+                              "lineHeight": "1.75rem",
+                            },
+                            "body1Next": Object {
+                              "color": "rgba(0, 0, 0, 0.87)",
+                              "fontFamily": "Lato",
+                              "fontSize": "1.1428571428571428rem",
+                              "fontWeight": 400,
+                              "lineHeight": 1.5,
+                            },
+                            "body2": Object {
+                              "color": "rgba(0, 0, 0, 0.87)",
+                              "fontFamily": "Lato",
+                              "fontSize": "0.913rem",
+                              "fontWeight": 400,
+                              "letterSpacing": "0.015625rem",
+                              "lineHeight": "1.25rem",
+                            },
+                            "body2Next": Object {
+                              "color": "rgba(0, 0, 0, 0.87)",
+                              "fontFamily": "Lato",
+                              "fontSize": "1rem",
+                              "fontWeight": 400,
+                              "lineHeight": 1.5,
+                            },
+                            "button": Object {
+                              "color": "#ffffff",
+                              "fontFamily": "Lato",
+                              "fontSize": "0.90125rem",
+                              "fontWeight": "bold",
+                              "letterSpacing": "0.078125rem",
+                              "lineHeight": "1rem",
+                              "textTransform": "uppercase",
+                            },
+                            "buttonNext": Object {
+                              "color": "rgba(0, 0, 0, 0.87)",
+                              "fontFamily": "Lato",
+                              "fontSize": "1rem",
+                              "fontWeight": 500,
+                              "lineHeight": 1.75,
+                              "textTransform": "uppercase",
+                            },
+                            "caption": Object {
+                              "color": "rgba(0,0,0,0.6)",
+                              "fontFamily": "Lato",
+                              "fontSize": "0.7725rem",
+                              "fontWeight": "bold",
+                              "letterSpacing": "0.025rem",
+                              "lineHeight": "1rem",
+                            },
+                            "captionNext": Object {
+                              "color": "rgba(0, 0, 0, 0.87)",
+                              "fontFamily": "Lato",
+                              "fontSize": "0.8571428571428571rem",
+                              "fontWeight": 400,
+                              "lineHeight": 1.66,
+                            },
+                            "display1": Object {
+                              "color": "rgba(0, 0, 0, 0.54)",
+                              "fontFamily": "Lato",
+                              "fontSize": "2.4285714285714284rem",
+                              "fontWeight": 400,
+                              "lineHeight": "1.20588em",
+                            },
+                            "display2": Object {
+                              "color": "rgba(0, 0, 0, 0.54)",
+                              "fontFamily": "Lato",
+                              "fontSize": "3.214285714285714rem",
+                              "fontWeight": 400,
+                              "lineHeight": "1.13333em",
+                              "marginLeft": "-.02em",
+                            },
+                            "display3": Object {
+                              "color": "rgba(0, 0, 0, 0.54)",
+                              "fontFamily": "Lato",
+                              "fontSize": "4rem",
+                              "fontWeight": 400,
+                              "letterSpacing": "-.02em",
+                              "lineHeight": "1.30357em",
+                              "marginLeft": "-.02em",
+                            },
+                            "display4": Object {
+                              "color": "rgba(0, 0, 0, 0.54)",
+                              "fontFamily": "Lato",
+                              "fontSize": "8rem",
+                              "fontWeight": 300,
+                              "letterSpacing": "-.04em",
+                              "lineHeight": "1.14286em",
+                              "marginLeft": "-.04em",
+                            },
+                            "fontFamily": "Lato",
+                            "fontSize": 16,
+                            "fontWeightLight": 300,
+                            "fontWeightMedium": 500,
+                            "fontWeightRegular": 400,
+                            "h1": Object {
+                              "color": "rgba(0, 0, 0, 0.87)",
+                              "fontFamily": "Lato",
+                              "fontSize": "6.259rem",
+                              "fontWeight": 300,
+                              "letterSpacing": "-0.09375em",
+                              "lineHeight": 1,
+                            },
+                            "h2": Object {
+                              "color": "rgba(0, 0, 0, 0.87)",
+                              "fontFamily": "Lato",
+                              "fontSize": "3.862rem",
+                              "fontWeight": "bold",
+                              "letterSpacing": "-0.03125rem",
+                              "lineHeight": 1,
+                            },
+                            "h3": Object {
+                              "color": "rgba(0, 0, 0, 0.87)",
+                              "fontFamily": "Lato",
+                              "fontSize": "3.089rem",
+                              "fontWeight": "bold",
+                              "letterSpacing": 0,
+                              "lineHeight": 1.04,
+                            },
+                            "h4": Object {
+                              "color": "rgba(0, 0, 0, 0.87)",
+                              "fontFamily": "Lato",
+                              "fontSize": "2.214rem",
+                              "fontWeight": 400,
+                              "letterSpacing": "0.015625rem",
+                              "lineHeight": 1.17,
+                            },
+                            "h5": Object {
+                              "color": "rgba(0, 0, 0, 0.87)",
+                              "fontFamily": "Lato",
+                              "fontSize": "1.564rem",
+                              "fontWeight": 400,
+                              "letterSpacing": 0,
+                              "lineHeight": 1.33,
+                            },
+                            "h6": Object {
+                              "color": "rgba(0, 0, 0, 0.87)",
+                              "fontFamily": "Lato",
+                              "fontSize": "1.288rem",
+                              "fontWeight": "bold",
+                              "letterSpacing": "0.015625rem",
+                              "lineHeight": "1.5rem",
+                            },
+                            "headline": Object {
+                              "color": "rgba(0, 0, 0, 0.87)",
+                              "fontFamily": "Lato",
+                              "fontSize": "1.7142857142857142rem",
+                              "fontWeight": 400,
+                              "lineHeight": "1.35417em",
+                            },
+                            "overline": Object {
+                              "color": "rgba(0, 0, 0, 0.87)",
+                              "fontFamily": "Lato",
+                              "fontSize": "0.7725rem",
+                              "fontWeight": "bold",
+                              "letterSpacing": "0.125rem",
+                              "lineHeight": "1rem",
+                              "textTransform": "uppercase",
+                            },
+                            "pxToRem": [Function],
+                            "round": [Function],
+                            "subheading": Object {
+                              "color": "rgba(0, 0, 0, 0.87)",
+                              "fontFamily": "Lato",
+                              "fontSize": "1.1428571428571428rem",
+                              "fontWeight": 400,
+                              "lineHeight": "1.5em",
+                            },
+                            "subtitle1": Object {
+                              "color": "rgba(0, 0, 0, 0.87)",
+                              "fontFamily": "Lato",
+                              "fontSize": "1.03rem",
+                              "fontWeight": "bold",
+                              "letterSpacing": "0.00937rem",
+                              "lineHeight": "1.5rem",
+                            },
+                            "subtitle2": Object {
+                              "color": "rgba(0, 0, 0, 0.87)",
+                              "fontFamily": "Lato",
+                              "fontSize": "1rem",
+                              "fontWeight": 500,
+                              "lineHeight": 1.57,
+                            },
+                            "title": Object {
+                              "color": "rgba(0, 0, 0, 0.87)",
+                              "fontFamily": "Lato",
+                              "fontSize": "1.5rem",
+                              "fontWeight": 500,
+                              "lineHeight": "1.16667em",
+                            },
+                            "useNextVariants": true,
+                          },
+                          "zIndex": Object {
+                            "appBar": 1100,
+                            "behind": -1,
+                            "drawer": 1200,
+                            "forward": 50,
+                            "infront": 900,
+                            "mobileStepper": 1000,
+                            "modal": 1300,
+                            "snackbar": 1400,
+                            "sticky": 51,
+                            "tooltip": 1500,
+                          },
+                        }
+                      }
+                      variant="body1"
+                    >
+                      <span
+                        className="MuiTypography-root-25 MuiTypography-body1-34 MuiListItemText-primary-22"
+                      >
+                        <WithStyles(Typography)
+                          variant="srOnly"
+                        >
+                          <Typography
+                            align="inherit"
+                            classes={
+                              Object {
+                                "alignCenter": "MuiTypography-alignCenter-48",
+                                "alignJustify": "MuiTypography-alignJustify-50",
+                                "alignLeft": "MuiTypography-alignLeft-47",
+                                "alignRight": "MuiTypography-alignRight-49",
+                                "body1": "MuiTypography-body1-34",
+                                "body2": "MuiTypography-body2-33",
+                                "button": "MuiTypography-button-36",
+                                "caption": "MuiTypography-caption-35",
+                                "colorError": "MuiTypography-colorError-59",
+                                "colorInherit": "MuiTypography-colorInherit-54",
+                                "colorPrimary": "MuiTypography-colorPrimary-55",
+                                "colorSecondary": "MuiTypography-colorSecondary-56",
+                                "colorTextPrimary": "MuiTypography-colorTextPrimary-57",
+                                "colorTextSecondary": "MuiTypography-colorTextSecondary-58",
+                                "display1": "MuiTypography-display1-29",
+                                "display2": "MuiTypography-display2-28",
+                                "display3": "MuiTypography-display3-27",
+                                "display4": "MuiTypography-display4-26",
+                                "gutterBottom": "MuiTypography-gutterBottom-52",
+                                "h1": "MuiTypography-h1-37",
+                                "h2": "MuiTypography-h2-38",
+                                "h3": "MuiTypography-h3-39",
+                                "h4": "MuiTypography-h4-40",
+                                "h5": "MuiTypography-h5-41",
+                                "h6": "MuiTypography-h6-42",
+                                "headline": "MuiTypography-headline-30",
+                                "inline": "MuiTypography-inline-60",
+                                "noWrap": "MuiTypography-noWrap-51",
+                                "overline": "MuiTypography-overline-45",
+                                "paragraph": "MuiTypography-paragraph-53",
+                                "root": "MuiTypography-root-25",
+                                "srOnly": "MuiTypography-srOnly-46",
+                                "subheading": "MuiTypography-subheading-32",
+                                "subtitle1": "MuiTypography-subtitle1-43",
+                                "subtitle2": "MuiTypography-subtitle2-44",
+                                "title": "MuiTypography-title-31",
+                              }
+                            }
+                            color="default"
+                            gutterBottom={false}
+                            headlineMapping={
+                              Object {
+                                "body1": "p",
+                                "body2": "p",
+                                "display1": "h1",
+                                "display2": "h1",
+                                "display3": "h1",
+                                "display4": "h1",
+                                "h1": "h1",
+                                "h2": "h2",
+                                "h3": "h3",
+                                "h4": "h4",
+                                "h5": "h5",
+                                "h6": "h6",
+                                "headline": "h1",
+                                "subheading": "h3",
+                                "subtitle1": "h6",
+                                "subtitle2": "h6",
+                                "title": "h2",
+                              }
+                            }
+                            inline={false}
+                            noWrap={false}
+                            paragraph={false}
+                            theme={
+                              Object {
+                                "breakpoints": Object {
+                                  "between": [Function],
+                                  "down": [Function],
+                                  "keys": Array [
+                                    "xs",
+                                    "sm",
+                                    "md",
+                                    "lg",
+                                    "xl",
+                                  ],
+                                  "only": [Function],
+                                  "up": [Function],
+                                  "values": Object {
+                                    "lg": 1280,
+                                    "md": 900,
+                                    "sm": 700,
+                                    "xl": 1920,
+                                    "xs": 0,
+                                  },
+                                  "width": [Function],
+                                },
+                                "custom": Object {
+                                  "body2light": Object {
+                                    "color": "rgba(0,0,0,0.7)",
+                                  },
+                                },
+                                "direction": "ltr",
+                                "mixins": Object {
+                                  "gutters": [Function],
+                                  "toolbar": Object {
+                                    "@media (min-width:0px) and (orientation: landscape)": Object {
+                                      "minHeight": 48,
+                                    },
+                                    "@media (min-width:700px)": Object {
+                                      "minHeight": 64,
+                                    },
+                                    "minHeight": 56,
+                                  },
+                                },
+                                "overrides": Object {
+                                  "MuiButtonBase": Object {
+                                    "focusVisible": Object {
+                                      "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                                      "outline": "2px solid transparent",
+                                    },
+                                  },
+                                  "MuiInputBase": Object {
+                                    "root": Object {
+                                      "&$focused": Object {
+                                        "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                                        "outline": "2px solid transparent",
+                                      },
+                                    },
+                                  },
+                                },
+                                "palette": Object {
+                                  "action": Object {
+                                    "active": "rgba(0, 0, 0, 0.54)",
+                                    "disabled": "rgba(0, 0, 0, 0.26)",
+                                    "disabledBackground": "rgba(0, 0, 0, 0.12)",
+                                    "hover": "rgba(0, 0, 0, 0.08)",
+                                    "hoverOpacity": 0.08,
+                                    "selected": "rgba(0, 0, 0, 0.14)",
+                                  },
+                                  "augmentColor": [Function],
+                                  "background": Object {
+                                    "default": "#fafafa",
+                                    "front": "linear-gradient(340.58deg, rgb(11, 123, 237) 0%, rgb(20, 108, 232) 67.04%, rgb(25, 100, 230) 100%)",
+                                    "main": "linear-gradient(340.58deg, rgb(11, 123, 237) 0%, rgb(20, 108, 232) 67.04%, rgb(25, 100, 230) 100%)",
+                                    "paper": "#fff",
+                                    "plain": "rgb(20, 108, 232)",
+                                  },
+                                  "common": Object {
+                                    "black": "#000",
+                                    "white": "#fff",
+                                  },
+                                  "contrastThreshold": 3,
+                                  "detail": Object {
+                                    "alpha": "rgba(25,100,230,0.5)",
+                                    "main": "rgb(25, 100, 230)",
+                                  },
+                                  "disabled": Object {
+                                    "main": "rgb(239, 239, 239)",
+                                    "strong": "#898989",
+                                  },
+                                  "divider": "rgba(0, 0, 0, 0.12)",
+                                  "error": Object {
+                                    "contrastText": "#fff",
+                                    "dark": "#d32f2f",
+                                    "light": "#e57373",
+                                    "main": "#f44336",
+                                  },
+                                  "focusBorder": "rgba(25, 100, 230, 0.8)",
+                                  "getContrastText": [Function],
+                                  "grey": Object {
+                                    "100": "#f5f5f5",
+                                    "200": "#eeeeee",
+                                    "300": "#e0e0e0",
+                                    "400": "#bdbdbd",
+                                    "50": "#fafafa",
+                                    "500": "#9e9e9e",
+                                    "600": "#757575",
+                                    "700": "#616161",
+                                    "800": "#424242",
+                                    "900": "#212121",
+                                    "A100": "#d5d5d5",
+                                    "A200": "#aaaaaa",
+                                    "A400": "#303030",
+                                    "A700": "#616161",
+                                  },
+                                  "primary": Object {
+                                    "contrastText": "#fff",
+                                    "dark": "rgb(17, 70, 161)",
+                                    "highContrast": "#fff",
+                                    "light": "rgb(71, 131, 235)",
+                                    "main": "rgb(25, 100, 230)",
+                                  },
+                                  "secondary": Object {
+                                    "contrastText": "#fff",
+                                    "dark": "rgba(14, 16, 24, 0.9)",
+                                    "hover": "#1d39ad",
+                                    "light": "rgba(67, 70, 79, 0.9)",
+                                    "main": "rgba(20,24,35,0.9)",
+                                  },
+                                  "text": Object {
+                                    "disabled": "rgba(0, 0, 0, 0.38)",
+                                    "hint": "rgba(0, 0, 0, 0.38)",
+                                    "primary": "rgba(0, 0, 0, 0.87)",
+                                    "secondary": "rgba(0, 0, 0, 0.54)",
+                                  },
+                                  "tonalOffset": 0.2,
+                                  "type": "light",
+                                  "warning": "#AF0021",
+                                  "white": Object {
+                                    "contrastText": "#000",
+                                    "dark": "#979797",
+                                    "light": "#f2f2f2",
+                                    "main": "#FFFFFF",
+                                  },
+                                },
+                                "props": Object {
+                                  "MuiButton": Object {
+                                    "disableFocusRipple": true,
+                                    "disableRipple": true,
+                                  },
+                                  "MuiButtonBase": Object {
+                                    "disableRipple": true,
+                                  },
+                                },
+                                "shadows": Array [
+                                  "none",
+                                  "0px 1px 3px 0px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 2px 1px -1px rgba(0,0,0,0.12)",
+                                  "0px 1px 5px 0px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 3px 1px -2px rgba(0,0,0,0.12)",
+                                  "0px 1px 8px 0px rgba(0,0,0,0.2),0px 3px 4px 0px rgba(0,0,0,0.14),0px 3px 3px -2px rgba(0,0,0,0.12)",
+                                  "0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12)",
+                                  "0px 3px 5px -1px rgba(0,0,0,0.2),0px 5px 8px 0px rgba(0,0,0,0.14),0px 1px 14px 0px rgba(0,0,0,0.12)",
+                                  "0px 3px 5px -1px rgba(0,0,0,0.2),0px 6px 10px 0px rgba(0,0,0,0.14),0px 1px 18px 0px rgba(0,0,0,0.12)",
+                                  "0px 4px 5px -2px rgba(0,0,0,0.2),0px 7px 10px 1px rgba(0,0,0,0.14),0px 2px 16px 1px rgba(0,0,0,0.12)",
+                                  "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)",
+                                  "0px 5px 6px -3px rgba(0,0,0,0.2),0px 9px 12px 1px rgba(0,0,0,0.14),0px 3px 16px 2px rgba(0,0,0,0.12)",
+                                  "0px 6px 6px -3px rgba(0,0,0,0.2),0px 10px 14px 1px rgba(0,0,0,0.14),0px 4px 18px 3px rgba(0,0,0,0.12)",
+                                  "0px 6px 7px -4px rgba(0,0,0,0.2),0px 11px 15px 1px rgba(0,0,0,0.14),0px 4px 20px 3px rgba(0,0,0,0.12)",
+                                  "0px 7px 8px -4px rgba(0,0,0,0.2),0px 12px 17px 2px rgba(0,0,0,0.14),0px 5px 22px 4px rgba(0,0,0,0.12)",
+                                  "0px 7px 8px -4px rgba(0,0,0,0.2),0px 13px 19px 2px rgba(0,0,0,0.14),0px 5px 24px 4px rgba(0,0,0,0.12)",
+                                  "0px 7px 9px -4px rgba(0,0,0,0.2),0px 14px 21px 2px rgba(0,0,0,0.14),0px 5px 26px 4px rgba(0,0,0,0.12)",
+                                  "0px 8px 9px -5px rgba(0,0,0,0.2),0px 15px 22px 2px rgba(0,0,0,0.14),0px 6px 28px 5px rgba(0,0,0,0.12)",
+                                  "0px 8px 10px -5px rgba(0,0,0,0.2),0px 16px 24px 2px rgba(0,0,0,0.14),0px 6px 30px 5px rgba(0,0,0,0.12)",
+                                  "0px 8px 11px -5px rgba(0,0,0,0.2),0px 17px 26px 2px rgba(0,0,0,0.14),0px 6px 32px 5px rgba(0,0,0,0.12)",
+                                  "0px 9px 11px -5px rgba(0,0,0,0.2),0px 18px 28px 2px rgba(0,0,0,0.14),0px 7px 34px 6px rgba(0,0,0,0.12)",
+                                  "0px 9px 12px -6px rgba(0,0,0,0.2),0px 19px 29px 2px rgba(0,0,0,0.14),0px 7px 36px 6px rgba(0,0,0,0.12)",
+                                  "0px 10px 13px -6px rgba(0,0,0,0.2),0px 20px 31px 3px rgba(0,0,0,0.14),0px 8px 38px 7px rgba(0,0,0,0.12)",
+                                  "0px 10px 13px -6px rgba(0,0,0,0.2),0px 21px 33px 3px rgba(0,0,0,0.14),0px 8px 40px 7px rgba(0,0,0,0.12)",
+                                  "0px 10px 14px -6px rgba(0,0,0,0.2),0px 22px 35px 3px rgba(0,0,0,0.14),0px 8px 42px 7px rgba(0,0,0,0.12)",
+                                  "0px 11px 14px -7px rgba(0,0,0,0.2),0px 23px 36px 3px rgba(0,0,0,0.14),0px 9px 44px 8px rgba(0,0,0,0.12)",
+                                  "0px 11px 15px -7px rgba(0,0,0,0.2),0px 24px 38px 3px rgba(0,0,0,0.14),0px 9px 46px 8px rgba(0,0,0,0.12)",
+                                ],
+                                "shape": Object {
+                                  "borderRadius": 4,
+                                },
+                                "spacing": Object {
+                                  "unit": 8,
+                                  "unitDouble": 16,
+                                  "unitHalf": 4,
+                                  "unitTriple": 24,
+                                },
+                                "transitions": Object {
+                                  "create": [Function],
+                                  "duration": Object {
+                                    "complex": 375,
+                                    "enteringScreen": 225,
+                                    "leavingScreen": 195,
+                                    "short": 250,
+                                    "shorter": 200,
+                                    "shortest": 150,
+                                    "standard": 300,
+                                  },
+                                  "easing": Object {
+                                    "easeIn": "cubic-bezier(0.4, 0, 1, 1)",
+                                    "easeInOut": "cubic-bezier(0.4, 0, 0.2, 1)",
+                                    "easeOut": "cubic-bezier(0.0, 0, 0.2, 1)",
+                                    "sharp": "cubic-bezier(0.4, 0, 0.6, 1)",
+                                  },
+                                  "getAutoHeightDuration": [Function],
+                                },
+                                "typography": Object {
+                                  "body1": Object {
+                                    "color": "rgba(0, 0, 0, 0.87)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "1.043rem",
+                                    "fontWeight": 400,
+                                    "letterSpacing": "0.03125rem",
+                                    "lineHeight": "1.75rem",
+                                  },
+                                  "body1Next": Object {
+                                    "color": "rgba(0, 0, 0, 0.87)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "1.1428571428571428rem",
+                                    "fontWeight": 400,
+                                    "lineHeight": 1.5,
+                                  },
+                                  "body2": Object {
+                                    "color": "rgba(0, 0, 0, 0.87)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "0.913rem",
+                                    "fontWeight": 400,
+                                    "letterSpacing": "0.015625rem",
+                                    "lineHeight": "1.25rem",
+                                  },
+                                  "body2Next": Object {
+                                    "color": "rgba(0, 0, 0, 0.87)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "1rem",
+                                    "fontWeight": 400,
+                                    "lineHeight": 1.5,
+                                  },
+                                  "button": Object {
+                                    "color": "#ffffff",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "0.90125rem",
+                                    "fontWeight": "bold",
+                                    "letterSpacing": "0.078125rem",
+                                    "lineHeight": "1rem",
+                                    "textTransform": "uppercase",
+                                  },
+                                  "buttonNext": Object {
+                                    "color": "rgba(0, 0, 0, 0.87)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "1rem",
+                                    "fontWeight": 500,
+                                    "lineHeight": 1.75,
+                                    "textTransform": "uppercase",
+                                  },
+                                  "caption": Object {
+                                    "color": "rgba(0,0,0,0.6)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "0.7725rem",
+                                    "fontWeight": "bold",
+                                    "letterSpacing": "0.025rem",
+                                    "lineHeight": "1rem",
+                                  },
+                                  "captionNext": Object {
+                                    "color": "rgba(0, 0, 0, 0.87)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "0.8571428571428571rem",
+                                    "fontWeight": 400,
+                                    "lineHeight": 1.66,
+                                  },
+                                  "display1": Object {
+                                    "color": "rgba(0, 0, 0, 0.54)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "2.4285714285714284rem",
+                                    "fontWeight": 400,
+                                    "lineHeight": "1.20588em",
+                                  },
+                                  "display2": Object {
+                                    "color": "rgba(0, 0, 0, 0.54)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "3.214285714285714rem",
+                                    "fontWeight": 400,
+                                    "lineHeight": "1.13333em",
+                                    "marginLeft": "-.02em",
+                                  },
+                                  "display3": Object {
+                                    "color": "rgba(0, 0, 0, 0.54)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "4rem",
+                                    "fontWeight": 400,
+                                    "letterSpacing": "-.02em",
+                                    "lineHeight": "1.30357em",
+                                    "marginLeft": "-.02em",
+                                  },
+                                  "display4": Object {
+                                    "color": "rgba(0, 0, 0, 0.54)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "8rem",
+                                    "fontWeight": 300,
+                                    "letterSpacing": "-.04em",
+                                    "lineHeight": "1.14286em",
+                                    "marginLeft": "-.04em",
+                                  },
+                                  "fontFamily": "Lato",
+                                  "fontSize": 16,
+                                  "fontWeightLight": 300,
+                                  "fontWeightMedium": 500,
+                                  "fontWeightRegular": 400,
+                                  "h1": Object {
+                                    "color": "rgba(0, 0, 0, 0.87)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "6.259rem",
+                                    "fontWeight": 300,
+                                    "letterSpacing": "-0.09375em",
+                                    "lineHeight": 1,
+                                  },
+                                  "h2": Object {
+                                    "color": "rgba(0, 0, 0, 0.87)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "3.862rem",
+                                    "fontWeight": "bold",
+                                    "letterSpacing": "-0.03125rem",
+                                    "lineHeight": 1,
+                                  },
+                                  "h3": Object {
+                                    "color": "rgba(0, 0, 0, 0.87)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "3.089rem",
+                                    "fontWeight": "bold",
+                                    "letterSpacing": 0,
+                                    "lineHeight": 1.04,
+                                  },
+                                  "h4": Object {
+                                    "color": "rgba(0, 0, 0, 0.87)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "2.214rem",
+                                    "fontWeight": 400,
+                                    "letterSpacing": "0.015625rem",
+                                    "lineHeight": 1.17,
+                                  },
+                                  "h5": Object {
+                                    "color": "rgba(0, 0, 0, 0.87)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "1.564rem",
+                                    "fontWeight": 400,
+                                    "letterSpacing": 0,
+                                    "lineHeight": 1.33,
+                                  },
+                                  "h6": Object {
+                                    "color": "rgba(0, 0, 0, 0.87)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "1.288rem",
+                                    "fontWeight": "bold",
+                                    "letterSpacing": "0.015625rem",
+                                    "lineHeight": "1.5rem",
+                                  },
+                                  "headline": Object {
+                                    "color": "rgba(0, 0, 0, 0.87)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "1.7142857142857142rem",
+                                    "fontWeight": 400,
+                                    "lineHeight": "1.35417em",
+                                  },
+                                  "overline": Object {
+                                    "color": "rgba(0, 0, 0, 0.87)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "0.7725rem",
+                                    "fontWeight": "bold",
+                                    "letterSpacing": "0.125rem",
+                                    "lineHeight": "1rem",
+                                    "textTransform": "uppercase",
+                                  },
+                                  "pxToRem": [Function],
+                                  "round": [Function],
+                                  "subheading": Object {
+                                    "color": "rgba(0, 0, 0, 0.87)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "1.1428571428571428rem",
+                                    "fontWeight": 400,
+                                    "lineHeight": "1.5em",
+                                  },
+                                  "subtitle1": Object {
+                                    "color": "rgba(0, 0, 0, 0.87)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "1.03rem",
+                                    "fontWeight": "bold",
+                                    "letterSpacing": "0.00937rem",
+                                    "lineHeight": "1.5rem",
+                                  },
+                                  "subtitle2": Object {
+                                    "color": "rgba(0, 0, 0, 0.87)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "1rem",
+                                    "fontWeight": 500,
+                                    "lineHeight": 1.57,
+                                  },
+                                  "title": Object {
+                                    "color": "rgba(0, 0, 0, 0.87)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "1.5rem",
+                                    "fontWeight": 500,
+                                    "lineHeight": "1.16667em",
+                                  },
+                                  "useNextVariants": true,
+                                },
+                                "zIndex": Object {
+                                  "appBar": 1100,
+                                  "behind": -1,
+                                  "drawer": 1200,
+                                  "forward": 50,
+                                  "infront": 900,
+                                  "mobileStepper": 1000,
+                                  "modal": 1300,
+                                  "snackbar": 1400,
+                                  "sticky": 51,
+                                  "tooltip": 1500,
+                                },
+                              }
+                            }
+                            variant="srOnly"
+                          >
+                            <span
+                              className="MuiTypography-root-25 MuiTypography-srOnly-46"
+                            >
+                               Title text
+                            </span>
+                          </Typography>
+                        </WithStyles(Typography)>
+                        <WithStyles(Typography)
+                          aria-hidden={true}
+                          classes={
+                            Object {
+                              "root": null,
+                            }
+                          }
+                          variant="body2"
+                        >
+                          <Typography
+                            align="inherit"
+                            aria-hidden={true}
+                            classes={
+                              Object {
+                                "alignCenter": "MuiTypography-alignCenter-48",
+                                "alignJustify": "MuiTypography-alignJustify-50",
+                                "alignLeft": "MuiTypography-alignLeft-47",
+                                "alignRight": "MuiTypography-alignRight-49",
+                                "body1": "MuiTypography-body1-34",
+                                "body2": "MuiTypography-body2-33",
+                                "button": "MuiTypography-button-36",
+                                "caption": "MuiTypography-caption-35",
+                                "colorError": "MuiTypography-colorError-59",
+                                "colorInherit": "MuiTypography-colorInherit-54",
+                                "colorPrimary": "MuiTypography-colorPrimary-55",
+                                "colorSecondary": "MuiTypography-colorSecondary-56",
+                                "colorTextPrimary": "MuiTypography-colorTextPrimary-57",
+                                "colorTextSecondary": "MuiTypography-colorTextSecondary-58",
+                                "display1": "MuiTypography-display1-29",
+                                "display2": "MuiTypography-display2-28",
+                                "display3": "MuiTypography-display3-27",
+                                "display4": "MuiTypography-display4-26",
+                                "gutterBottom": "MuiTypography-gutterBottom-52",
+                                "h1": "MuiTypography-h1-37",
+                                "h2": "MuiTypography-h2-38",
+                                "h3": "MuiTypography-h3-39",
+                                "h4": "MuiTypography-h4-40",
+                                "h5": "MuiTypography-h5-41",
+                                "h6": "MuiTypography-h6-42",
+                                "headline": "MuiTypography-headline-30",
+                                "inline": "MuiTypography-inline-60",
+                                "noWrap": "MuiTypography-noWrap-51",
+                                "overline": "MuiTypography-overline-45",
+                                "paragraph": "MuiTypography-paragraph-53",
+                                "root": "MuiTypography-root-25",
+                                "srOnly": "MuiTypography-srOnly-46",
+                                "subheading": "MuiTypography-subheading-32",
+                                "subtitle1": "MuiTypography-subtitle1-43",
+                                "subtitle2": "MuiTypography-subtitle2-44",
+                                "title": "MuiTypography-title-31",
+                              }
+                            }
+                            color="default"
+                            gutterBottom={false}
+                            headlineMapping={
+                              Object {
+                                "body1": "p",
+                                "body2": "p",
+                                "display1": "h1",
+                                "display2": "h1",
+                                "display3": "h1",
+                                "display4": "h1",
+                                "h1": "h1",
+                                "h2": "h2",
+                                "h3": "h3",
+                                "h4": "h4",
+                                "h5": "h5",
+                                "h6": "h6",
+                                "headline": "h1",
+                                "subheading": "h3",
+                                "subtitle1": "h6",
+                                "subtitle2": "h6",
+                                "title": "h2",
+                              }
+                            }
+                            inline={false}
+                            noWrap={false}
+                            paragraph={false}
+                            theme={
+                              Object {
+                                "breakpoints": Object {
+                                  "between": [Function],
+                                  "down": [Function],
+                                  "keys": Array [
+                                    "xs",
+                                    "sm",
+                                    "md",
+                                    "lg",
+                                    "xl",
+                                  ],
+                                  "only": [Function],
+                                  "up": [Function],
+                                  "values": Object {
+                                    "lg": 1280,
+                                    "md": 900,
+                                    "sm": 700,
+                                    "xl": 1920,
+                                    "xs": 0,
+                                  },
+                                  "width": [Function],
+                                },
+                                "custom": Object {
+                                  "body2light": Object {
+                                    "color": "rgba(0,0,0,0.7)",
+                                  },
+                                },
+                                "direction": "ltr",
+                                "mixins": Object {
+                                  "gutters": [Function],
+                                  "toolbar": Object {
+                                    "@media (min-width:0px) and (orientation: landscape)": Object {
+                                      "minHeight": 48,
+                                    },
+                                    "@media (min-width:700px)": Object {
+                                      "minHeight": 64,
+                                    },
+                                    "minHeight": 56,
+                                  },
+                                },
+                                "overrides": Object {
+                                  "MuiButtonBase": Object {
+                                    "focusVisible": Object {
+                                      "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                                      "outline": "2px solid transparent",
+                                    },
+                                  },
+                                  "MuiInputBase": Object {
+                                    "root": Object {
+                                      "&$focused": Object {
+                                        "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                                        "outline": "2px solid transparent",
+                                      },
+                                    },
+                                  },
+                                },
+                                "palette": Object {
+                                  "action": Object {
+                                    "active": "rgba(0, 0, 0, 0.54)",
+                                    "disabled": "rgba(0, 0, 0, 0.26)",
+                                    "disabledBackground": "rgba(0, 0, 0, 0.12)",
+                                    "hover": "rgba(0, 0, 0, 0.08)",
+                                    "hoverOpacity": 0.08,
+                                    "selected": "rgba(0, 0, 0, 0.14)",
+                                  },
+                                  "augmentColor": [Function],
+                                  "background": Object {
+                                    "default": "#fafafa",
+                                    "front": "linear-gradient(340.58deg, rgb(11, 123, 237) 0%, rgb(20, 108, 232) 67.04%, rgb(25, 100, 230) 100%)",
+                                    "main": "linear-gradient(340.58deg, rgb(11, 123, 237) 0%, rgb(20, 108, 232) 67.04%, rgb(25, 100, 230) 100%)",
+                                    "paper": "#fff",
+                                    "plain": "rgb(20, 108, 232)",
+                                  },
+                                  "common": Object {
+                                    "black": "#000",
+                                    "white": "#fff",
+                                  },
+                                  "contrastThreshold": 3,
+                                  "detail": Object {
+                                    "alpha": "rgba(25,100,230,0.5)",
+                                    "main": "rgb(25, 100, 230)",
+                                  },
+                                  "disabled": Object {
+                                    "main": "rgb(239, 239, 239)",
+                                    "strong": "#898989",
+                                  },
+                                  "divider": "rgba(0, 0, 0, 0.12)",
+                                  "error": Object {
+                                    "contrastText": "#fff",
+                                    "dark": "#d32f2f",
+                                    "light": "#e57373",
+                                    "main": "#f44336",
+                                  },
+                                  "focusBorder": "rgba(25, 100, 230, 0.8)",
+                                  "getContrastText": [Function],
+                                  "grey": Object {
+                                    "100": "#f5f5f5",
+                                    "200": "#eeeeee",
+                                    "300": "#e0e0e0",
+                                    "400": "#bdbdbd",
+                                    "50": "#fafafa",
+                                    "500": "#9e9e9e",
+                                    "600": "#757575",
+                                    "700": "#616161",
+                                    "800": "#424242",
+                                    "900": "#212121",
+                                    "A100": "#d5d5d5",
+                                    "A200": "#aaaaaa",
+                                    "A400": "#303030",
+                                    "A700": "#616161",
+                                  },
+                                  "primary": Object {
+                                    "contrastText": "#fff",
+                                    "dark": "rgb(17, 70, 161)",
+                                    "highContrast": "#fff",
+                                    "light": "rgb(71, 131, 235)",
+                                    "main": "rgb(25, 100, 230)",
+                                  },
+                                  "secondary": Object {
+                                    "contrastText": "#fff",
+                                    "dark": "rgba(14, 16, 24, 0.9)",
+                                    "hover": "#1d39ad",
+                                    "light": "rgba(67, 70, 79, 0.9)",
+                                    "main": "rgba(20,24,35,0.9)",
+                                  },
+                                  "text": Object {
+                                    "disabled": "rgba(0, 0, 0, 0.38)",
+                                    "hint": "rgba(0, 0, 0, 0.38)",
+                                    "primary": "rgba(0, 0, 0, 0.87)",
+                                    "secondary": "rgba(0, 0, 0, 0.54)",
+                                  },
+                                  "tonalOffset": 0.2,
+                                  "type": "light",
+                                  "warning": "#AF0021",
+                                  "white": Object {
+                                    "contrastText": "#000",
+                                    "dark": "#979797",
+                                    "light": "#f2f2f2",
+                                    "main": "#FFFFFF",
+                                  },
+                                },
+                                "props": Object {
+                                  "MuiButton": Object {
+                                    "disableFocusRipple": true,
+                                    "disableRipple": true,
+                                  },
+                                  "MuiButtonBase": Object {
+                                    "disableRipple": true,
+                                  },
+                                },
+                                "shadows": Array [
+                                  "none",
+                                  "0px 1px 3px 0px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 2px 1px -1px rgba(0,0,0,0.12)",
+                                  "0px 1px 5px 0px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 3px 1px -2px rgba(0,0,0,0.12)",
+                                  "0px 1px 8px 0px rgba(0,0,0,0.2),0px 3px 4px 0px rgba(0,0,0,0.14),0px 3px 3px -2px rgba(0,0,0,0.12)",
+                                  "0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12)",
+                                  "0px 3px 5px -1px rgba(0,0,0,0.2),0px 5px 8px 0px rgba(0,0,0,0.14),0px 1px 14px 0px rgba(0,0,0,0.12)",
+                                  "0px 3px 5px -1px rgba(0,0,0,0.2),0px 6px 10px 0px rgba(0,0,0,0.14),0px 1px 18px 0px rgba(0,0,0,0.12)",
+                                  "0px 4px 5px -2px rgba(0,0,0,0.2),0px 7px 10px 1px rgba(0,0,0,0.14),0px 2px 16px 1px rgba(0,0,0,0.12)",
+                                  "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)",
+                                  "0px 5px 6px -3px rgba(0,0,0,0.2),0px 9px 12px 1px rgba(0,0,0,0.14),0px 3px 16px 2px rgba(0,0,0,0.12)",
+                                  "0px 6px 6px -3px rgba(0,0,0,0.2),0px 10px 14px 1px rgba(0,0,0,0.14),0px 4px 18px 3px rgba(0,0,0,0.12)",
+                                  "0px 6px 7px -4px rgba(0,0,0,0.2),0px 11px 15px 1px rgba(0,0,0,0.14),0px 4px 20px 3px rgba(0,0,0,0.12)",
+                                  "0px 7px 8px -4px rgba(0,0,0,0.2),0px 12px 17px 2px rgba(0,0,0,0.14),0px 5px 22px 4px rgba(0,0,0,0.12)",
+                                  "0px 7px 8px -4px rgba(0,0,0,0.2),0px 13px 19px 2px rgba(0,0,0,0.14),0px 5px 24px 4px rgba(0,0,0,0.12)",
+                                  "0px 7px 9px -4px rgba(0,0,0,0.2),0px 14px 21px 2px rgba(0,0,0,0.14),0px 5px 26px 4px rgba(0,0,0,0.12)",
+                                  "0px 8px 9px -5px rgba(0,0,0,0.2),0px 15px 22px 2px rgba(0,0,0,0.14),0px 6px 28px 5px rgba(0,0,0,0.12)",
+                                  "0px 8px 10px -5px rgba(0,0,0,0.2),0px 16px 24px 2px rgba(0,0,0,0.14),0px 6px 30px 5px rgba(0,0,0,0.12)",
+                                  "0px 8px 11px -5px rgba(0,0,0,0.2),0px 17px 26px 2px rgba(0,0,0,0.14),0px 6px 32px 5px rgba(0,0,0,0.12)",
+                                  "0px 9px 11px -5px rgba(0,0,0,0.2),0px 18px 28px 2px rgba(0,0,0,0.14),0px 7px 34px 6px rgba(0,0,0,0.12)",
+                                  "0px 9px 12px -6px rgba(0,0,0,0.2),0px 19px 29px 2px rgba(0,0,0,0.14),0px 7px 36px 6px rgba(0,0,0,0.12)",
+                                  "0px 10px 13px -6px rgba(0,0,0,0.2),0px 20px 31px 3px rgba(0,0,0,0.14),0px 8px 38px 7px rgba(0,0,0,0.12)",
+                                  "0px 10px 13px -6px rgba(0,0,0,0.2),0px 21px 33px 3px rgba(0,0,0,0.14),0px 8px 40px 7px rgba(0,0,0,0.12)",
+                                  "0px 10px 14px -6px rgba(0,0,0,0.2),0px 22px 35px 3px rgba(0,0,0,0.14),0px 8px 42px 7px rgba(0,0,0,0.12)",
+                                  "0px 11px 14px -7px rgba(0,0,0,0.2),0px 23px 36px 3px rgba(0,0,0,0.14),0px 9px 44px 8px rgba(0,0,0,0.12)",
+                                  "0px 11px 15px -7px rgba(0,0,0,0.2),0px 24px 38px 3px rgba(0,0,0,0.14),0px 9px 46px 8px rgba(0,0,0,0.12)",
+                                ],
+                                "shape": Object {
+                                  "borderRadius": 4,
+                                },
+                                "spacing": Object {
+                                  "unit": 8,
+                                  "unitDouble": 16,
+                                  "unitHalf": 4,
+                                  "unitTriple": 24,
+                                },
+                                "transitions": Object {
+                                  "create": [Function],
+                                  "duration": Object {
+                                    "complex": 375,
+                                    "enteringScreen": 225,
+                                    "leavingScreen": 195,
+                                    "short": 250,
+                                    "shorter": 200,
+                                    "shortest": 150,
+                                    "standard": 300,
+                                  },
+                                  "easing": Object {
+                                    "easeIn": "cubic-bezier(0.4, 0, 1, 1)",
+                                    "easeInOut": "cubic-bezier(0.4, 0, 0.2, 1)",
+                                    "easeOut": "cubic-bezier(0.0, 0, 0.2, 1)",
+                                    "sharp": "cubic-bezier(0.4, 0, 0.6, 1)",
+                                  },
+                                  "getAutoHeightDuration": [Function],
+                                },
+                                "typography": Object {
+                                  "body1": Object {
+                                    "color": "rgba(0, 0, 0, 0.87)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "1.043rem",
+                                    "fontWeight": 400,
+                                    "letterSpacing": "0.03125rem",
+                                    "lineHeight": "1.75rem",
+                                  },
+                                  "body1Next": Object {
+                                    "color": "rgba(0, 0, 0, 0.87)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "1.1428571428571428rem",
+                                    "fontWeight": 400,
+                                    "lineHeight": 1.5,
+                                  },
+                                  "body2": Object {
+                                    "color": "rgba(0, 0, 0, 0.87)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "0.913rem",
+                                    "fontWeight": 400,
+                                    "letterSpacing": "0.015625rem",
+                                    "lineHeight": "1.25rem",
+                                  },
+                                  "body2Next": Object {
+                                    "color": "rgba(0, 0, 0, 0.87)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "1rem",
+                                    "fontWeight": 400,
+                                    "lineHeight": 1.5,
+                                  },
+                                  "button": Object {
+                                    "color": "#ffffff",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "0.90125rem",
+                                    "fontWeight": "bold",
+                                    "letterSpacing": "0.078125rem",
+                                    "lineHeight": "1rem",
+                                    "textTransform": "uppercase",
+                                  },
+                                  "buttonNext": Object {
+                                    "color": "rgba(0, 0, 0, 0.87)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "1rem",
+                                    "fontWeight": 500,
+                                    "lineHeight": 1.75,
+                                    "textTransform": "uppercase",
+                                  },
+                                  "caption": Object {
+                                    "color": "rgba(0,0,0,0.6)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "0.7725rem",
+                                    "fontWeight": "bold",
+                                    "letterSpacing": "0.025rem",
+                                    "lineHeight": "1rem",
+                                  },
+                                  "captionNext": Object {
+                                    "color": "rgba(0, 0, 0, 0.87)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "0.8571428571428571rem",
+                                    "fontWeight": 400,
+                                    "lineHeight": 1.66,
+                                  },
+                                  "display1": Object {
+                                    "color": "rgba(0, 0, 0, 0.54)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "2.4285714285714284rem",
+                                    "fontWeight": 400,
+                                    "lineHeight": "1.20588em",
+                                  },
+                                  "display2": Object {
+                                    "color": "rgba(0, 0, 0, 0.54)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "3.214285714285714rem",
+                                    "fontWeight": 400,
+                                    "lineHeight": "1.13333em",
+                                    "marginLeft": "-.02em",
+                                  },
+                                  "display3": Object {
+                                    "color": "rgba(0, 0, 0, 0.54)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "4rem",
+                                    "fontWeight": 400,
+                                    "letterSpacing": "-.02em",
+                                    "lineHeight": "1.30357em",
+                                    "marginLeft": "-.02em",
+                                  },
+                                  "display4": Object {
+                                    "color": "rgba(0, 0, 0, 0.54)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "8rem",
+                                    "fontWeight": 300,
+                                    "letterSpacing": "-.04em",
+                                    "lineHeight": "1.14286em",
+                                    "marginLeft": "-.04em",
+                                  },
+                                  "fontFamily": "Lato",
+                                  "fontSize": 16,
+                                  "fontWeightLight": 300,
+                                  "fontWeightMedium": 500,
+                                  "fontWeightRegular": 400,
+                                  "h1": Object {
+                                    "color": "rgba(0, 0, 0, 0.87)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "6.259rem",
+                                    "fontWeight": 300,
+                                    "letterSpacing": "-0.09375em",
+                                    "lineHeight": 1,
+                                  },
+                                  "h2": Object {
+                                    "color": "rgba(0, 0, 0, 0.87)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "3.862rem",
+                                    "fontWeight": "bold",
+                                    "letterSpacing": "-0.03125rem",
+                                    "lineHeight": 1,
+                                  },
+                                  "h3": Object {
+                                    "color": "rgba(0, 0, 0, 0.87)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "3.089rem",
+                                    "fontWeight": "bold",
+                                    "letterSpacing": 0,
+                                    "lineHeight": 1.04,
+                                  },
+                                  "h4": Object {
+                                    "color": "rgba(0, 0, 0, 0.87)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "2.214rem",
+                                    "fontWeight": 400,
+                                    "letterSpacing": "0.015625rem",
+                                    "lineHeight": 1.17,
+                                  },
+                                  "h5": Object {
+                                    "color": "rgba(0, 0, 0, 0.87)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "1.564rem",
+                                    "fontWeight": 400,
+                                    "letterSpacing": 0,
+                                    "lineHeight": 1.33,
+                                  },
+                                  "h6": Object {
+                                    "color": "rgba(0, 0, 0, 0.87)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "1.288rem",
+                                    "fontWeight": "bold",
+                                    "letterSpacing": "0.015625rem",
+                                    "lineHeight": "1.5rem",
+                                  },
+                                  "headline": Object {
+                                    "color": "rgba(0, 0, 0, 0.87)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "1.7142857142857142rem",
+                                    "fontWeight": 400,
+                                    "lineHeight": "1.35417em",
+                                  },
+                                  "overline": Object {
+                                    "color": "rgba(0, 0, 0, 0.87)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "0.7725rem",
+                                    "fontWeight": "bold",
+                                    "letterSpacing": "0.125rem",
+                                    "lineHeight": "1rem",
+                                    "textTransform": "uppercase",
+                                  },
+                                  "pxToRem": [Function],
+                                  "round": [Function],
+                                  "subheading": Object {
+                                    "color": "rgba(0, 0, 0, 0.87)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "1.1428571428571428rem",
+                                    "fontWeight": 400,
+                                    "lineHeight": "1.5em",
+                                  },
+                                  "subtitle1": Object {
+                                    "color": "rgba(0, 0, 0, 0.87)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "1.03rem",
+                                    "fontWeight": "bold",
+                                    "letterSpacing": "0.00937rem",
+                                    "lineHeight": "1.5rem",
+                                  },
+                                  "subtitle2": Object {
+                                    "color": "rgba(0, 0, 0, 0.87)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "1rem",
+                                    "fontWeight": 500,
+                                    "lineHeight": 1.57,
+                                  },
+                                  "title": Object {
+                                    "color": "rgba(0, 0, 0, 0.87)",
+                                    "fontFamily": "Lato",
+                                    "fontSize": "1.5rem",
+                                    "fontWeight": 500,
+                                    "lineHeight": "1.16667em",
+                                  },
+                                  "useNextVariants": true,
+                                },
+                                "zIndex": Object {
+                                  "appBar": 1100,
+                                  "behind": -1,
+                                  "drawer": 1200,
+                                  "forward": 50,
+                                  "infront": 900,
+                                  "mobileStepper": 1000,
+                                  "modal": 1300,
+                                  "snackbar": 1400,
+                                  "sticky": 51,
+                                  "tooltip": 1500,
+                                },
+                              }
+                            }
+                            variant="body2"
+                          >
+                            <p
+                              aria-hidden={true}
+                              className="MuiTypography-root-25 MuiTypography-body2-33"
+                            >
+                              Title text
+                            </p>
+                          </Typography>
+                        </WithStyles(Typography)>
+                      </span>
+                    </Typography>
+                  </WithStyles(Typography)>
+                </div>
+              </ListItemText>
+            </WithStyles(ListItemText)>
+          </li>
+        </MergeListContext>
+      </ListItem>
+    </WithStyles(ListItem)>
+  </SimpleListItem>
+</WithStyles(SimpleListItem)>
+`;

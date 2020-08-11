@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {
   Typography, Divider, List, ButtonBase,
 } from '@material-ui/core';
-import { intlShape, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { Map } from '@material-ui/icons';
 import Helmet from 'react-helmet';
 import SearchBar from '../../components/SearchBar';
@@ -21,6 +21,7 @@ import { getAddressText, addressMatchParamsToFetchOptions } from '../../utils/ad
 import DesktopComponent from '../../components/DesktopComponent';
 import MobileComponent from '../../components/MobileComponent';
 import DivisionItem from '../../components/ListItems/DivisionItem';
+import { parseSearchParams } from '../../utils';
 
 
 const hiddenDivisions = {
@@ -69,6 +70,7 @@ const AddressView = (props) => {
     setAdminDistricts,
     setToRender,
     navigator,
+    location,
     units,
   } = props;
 
@@ -274,6 +276,15 @@ const AddressView = (props) => {
       },
     },
   ];
+
+  useEffect(() => {
+    const searchParams = parseSearchParams(location.search);
+    const selectedTab = parseInt(searchParams.t, 10) || 0;
+    if (tabs[selectedTab].onClick) {
+      tabs[selectedTab].onClick();
+    }
+  }, []);
+
   return (
     <div>
       {renderHead(title)}
@@ -285,6 +296,7 @@ const AddressView = (props) => {
             {addressData && units && (
               <MobileComponent>
                 <SMButton
+                  role="link"
                   margin
                   messageID="general.showOnMap"
                   icon={<Map />}
@@ -304,6 +316,7 @@ const AddressView = (props) => {
       {addressData && units && (
         <MobileComponent>
           <SMButton
+            role="link"
             messageID="general.showOnMap"
             icon={<Map />}
             className={classes.mapButton}
@@ -329,7 +342,7 @@ AddressView.propTypes = {
   })),
   match: PropTypes.objectOf(PropTypes.any),
   map: PropTypes.objectOf(PropTypes.any),
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   getAddressNavigatorParams: PropTypes.func.isRequired,
   getDistance: PropTypes.func.isRequired,
@@ -341,6 +354,7 @@ AddressView.propTypes = {
   setDistrictAddressData: PropTypes.func.isRequired,
   setToRender: PropTypes.func.isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
+  location: PropTypes.objectOf(PropTypes.any).isRequired,
   embed: PropTypes.bool,
   units: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number,

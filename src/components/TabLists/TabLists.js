@@ -1,106 +1,44 @@
 /* eslint-disable react/no-multi-comp */
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import {
   Typography, Tabs, Tab,
 } from '@material-ui/core';
-import { intlShape } from 'react-intl';
-import isClient, { parseSearchParams, stringifySearchParams, AddEventListener } from '../../utils';
+import { FormattedMessage } from 'react-intl';
+import { parseSearchParams, stringifySearchParams } from '../../utils';
 import ResultList from '../Lists/ResultList';
 import PaginationComponent from '../PaginationComponent';
 import ResultOrderer from '../ResultOrderer';
 import config from '../../../config';
+import useMobileStatus from '../../utils/isMobile';
+import AddressSearchBar from '../AddressSearchBar';
 
-class TabLists extends React.Component {
-  // Options
-  events = [];
-
+const TabLists = ({
+  changeCustomUserLocation, location, data, headerComponents, navigator, classes, intl, userAddress,
+}) => {
   // Option to change number of items shown per page
-  itemsPerPage = 10;
+  const itemsPerPage = 10;
 
-  tabTitleClass = 'TabResultTitle';
+  const isMobile = useMobileStatus();
 
-  sidebarClass = 'SidebarWrapper';
+  const searchParams = parseSearchParams(location.search);
+  const getPagefromUrl = () => parseInt(searchParams.p, 10) || 1;
+  const getTabfromUrl = () => parseInt(searchParams.t, 10) || 0;
 
-  tabsRef = null;
+  const tabTitleClass = 'TabResultTitle';
+  const sidebarClass = 'SidebarWrapper';
 
-  constructor(props) {
-    super(props);
-    const { location } = props;
-    const searchParams = parseSearchParams(location.search);
-    const pageParam = searchParams.p || null;
-    const tabParam = searchParams.t || null;
+  const [currentPage, setCurrentPage] = useState(getPagefromUrl());
+  const [scrollDistance, setScrollDistance] = useState(0);
+  const [tabIndex, setTabIndex] = useState(getTabfromUrl());
+  const [styles, setStyles] = useState({});
 
-    const parsedCurrentPage = typeof pageParam === 'string' ? parseInt(pageParam, 10) : pageParam;
-    const parsedCurrentTab = typeof tabParam === 'string' ? parseInt(tabParam, 10) : tabParam;
+  let tabsRef = useRef(null);
 
-    const newCurrentPage = typeof parsedCurrentPage === 'number' ? parsedCurrentPage : 1;
-    const newCurrentTab = typeof parsedCurrentTab === 'number' ? parsedCurrentTab : 0;
-
-    // Run click event for current tab if required
-    const filteredData = this.filteredData();
-    const item = filteredData ? filteredData[newCurrentTab] : null;
-    if (item && item.onClick) {
-      item.onClick(newCurrentTab);
-    }
-
-    this.tabsRef = React.createRef();
-
-    this.state = {
-      currentPage: newCurrentPage,
-      mobile: false,
-      scrollDistance: 0,
-      styles: {},
-      tabIndex: newCurrentTab,
-    };
-  }
-
-  componentDidMount() {
-    if (window.innerWidth <= config.mobileUiBreakpoint) {
-      this.setState({ mobile: true });
-    }
-    this.addListeners();
-    // Using setTimeout to avoid first calculations on mobile being done
-    // with desktop components. Problem seems to be caused by media query hook
-    // in Mobile- and DesktopComponent
-    setTimeout(() => {
-      this.calculateHeaderStylings();
-      this.adjustScrollDistance(0);
-    }, 500);
-  }
-
-  // Update only when data changes
-  shouldComponentUpdate(nextProps, nextState) {
-    const { data } = this.props;
-    const { currentPage, tabIndex, styles } = this.state;
-    return data !== nextProps.data
-      || currentPage !== nextState.currentPage
-      || tabIndex !== nextState.tabIndex
-      || styles !== nextState.styles;
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    const { currentPage } = this.state;
-    // If page changed focus to first list item
-    if (currentPage !== prevState.currentPage) {
-      const firstListResult = document.querySelectorAll(`.${this.tabTitleClass}`)[0];
-
-      try {
-        firstListResult.focus();
-      } catch (e) {
-        console.error('Unable to focus on list title');
-      }
-    }
-  }
-
-  componentWillUnmount() {
-    this.removeListeners();
-  }
+  const filteredData = data.filter(item => item.component || (item.data && item.data.length > 0));
 
   // Handle page number changes
-  handlePageChange = (pageNum, pageCount) => {
-    const { location, navigator } = this.props;
-
+  const handlePageChange = (pageNum, pageCount) => {
     if (pageNum >= 1 && pageNum <= pageCount) {
       // Change page parameter in searchParams
       const searchParams = parseSearchParams(location.search);
@@ -108,9 +46,7 @@ class TabLists extends React.Component {
 
       // Get new search search params string
       const searchString = stringifySearchParams(searchParams);
-      this.setState({
-        currentPage: pageNum,
-      });
+      setCurrentPage(pageNum);
       // Update p(page) param to current history
       if (navigator) {
         navigator.replace({
@@ -119,45 +55,22 @@ class TabLists extends React.Component {
         });
       }
     }
-  }
+  };
 
-  // Handle tab change
-  handleTabChange = (e, value) => {
-    // Prevent tab handling for current tab click
-    const { tabIndex } = this.state;
-    if (tabIndex === value) {
-      return;
+
+  const handleAddressChange = (address) => {
+    if (address) {
+      changeCustomUserLocation(
+        [address.location.coordinates[1], address.location.coordinates[0]],
+        address,
+      );
+    } else {
+      changeCustomUserLocation(null);
     }
-    const { location, navigator } = this.props;
-    // Update p(page) param to current history
-    // Change page parameter in searchParams
-    const searchParams = parseSearchParams(location.search);
-    searchParams.p = 1;
-    searchParams.t = value;
-
-    // Get new search search params string
-    const searchString = stringifySearchParams(searchParams);
-
-    this.setState({
-      currentPage: 1,
-      tabIndex: value,
-    });
-
-    // Update p(page) param to current history
-    if (navigator) {
-      navigator.replace({
-        ...location,
-        search: `?${searchString || ''}`,
-      });
-    }
-    this.adjustScrollDistance();
-  }
-
-  adjustScrollDistance(scroll = null) {
-    const { scrollDistance } = this.state;
-
+  };
+  const adjustScrollDistance = (scroll = null) => {
     let scrollDistanceFromTop = scrollDistance;
-    const elem = document.getElementsByClassName(this.sidebarClass)[0];
+    const elem = document.getElementsByClassName(sidebarClass)[0];
     const elemOverflow = window.getComputedStyle(elem, null).getPropertyValue('overflow');
 
     // Adjust scroll to given number
@@ -177,54 +90,49 @@ class TabLists extends React.Component {
     } else if (elem.scrollTop > scrollDistance) {
       elem.scrollTop = scrollDistanceFromTop;
     }
-  }
+  };
 
-  // Add event listeners
-  addListeners() {
-    if (!isClient()) {
+  // Handle tab change
+  const handleTabChange = (e, value) => {
+    // Prevent tab handling for current tab click
+    if (tabIndex === value) {
       return;
     }
+    // Update p(page) param to current history
+    // Change page parameter in searchParams
+    const searchParams = parseSearchParams(location.search);
+    searchParams.p = 1;
+    searchParams.t = value;
 
-    const shouldUpdate = mobile => (mobile && window.innerWidth > config.mobileUiBreakpoint)
-      || (!mobile && window.innerWidth <= config.mobileUiBreakpoint);
+    // Get new search search params string
+    const searchString = stringifySearchParams(searchParams);
+    setCurrentPage(1);
+    setTabIndex(value);
 
-    // Add resize event listener to update header tab styles
-    this.events.push(AddEventListener(window, 'resize', () => {
-      const { mobile } = this.state;
+    // Update p(page) param to current history
+    if (navigator) {
+      navigator.replace({
+        ...location,
+        search: `?${searchString || ''}`,
+      });
+    }
+    adjustScrollDistance();
+  };
 
-      // If should update set new state and attempt to run calculations if should still update
-      if (shouldUpdate(mobile)) {
-        this.setState({ mobile: !mobile }, () => {
-          this.calculateHeaderStylings();
-        });
-      }
-    }));
-  }
-
-  // Remove all event listeners
-  removeListeners() {
-    if (!this.events || !this.events.length) {
+  const calculateHeaderStylings = () => {
+    if (!tabsRef) {
       return;
     }
-
-    this.events.forEach(unlisten => unlisten());
-  }
-
-  calculateHeaderStylings() {
-    if (!this.tabsRef) {
-      return;
-    }
-    const { mobile } = this.state;
     // Sticky relation is different on mobile (root relation) and desktop (current content relation)
-    const appBarHeight = mobile ? config.topBarHeightMobile : config.topBarHeight;
+    const appBarHeight = isMobile ? config.topBarHeightMobile : config.topBarHeight;
 
     // Reset scroll to avoid scrolled sticky  elements having inconsistent offsetTop
-    const elem = document.getElementsByClassName(this.sidebarClass)[0];
+    const elem = document.getElementsByClassName(sidebarClass)[0];
     elem.scrollTop = 0;
 
     // Calculate height by looping through Tabs root element's previous siblings
     // Change sidebar scroll to match TabList header's sticky elements' combined height
-    const tabsElem = this.tabsRef.tabsRef.parentNode.parentNode;
+    const tabsElem = tabsRef.tabsRef.parentNode.parentNode;
     const tabsHeight = tabsElem.clientHeight;
     const tabsDistanceFromTop = tabsElem.offsetTop;
     let sibling = tabsElem;
@@ -240,7 +148,7 @@ class TabLists extends React.Component {
       }
     }
 
-    if (mobile && stickyElementPadding === 0) {
+    if (isMobile && stickyElementPadding === 0) {
       stickyElementPadding = appBarHeight;
     }
 
@@ -250,37 +158,21 @@ class TabLists extends React.Component {
       && typeof tabsHeight === 'number'
     ) {
       // Set new styles and scrollDistance value to state
-      this.setState({
-        styles: {
-          top: stickyElementPadding,
-        },
-        scrollDistance: (tabsDistanceFromTop - stickyElementPadding),
-      });
+      setStyles({ top: stickyElementPadding });
+      setScrollDistance(tabsDistanceFromTop - stickyElementPadding);
     }
-  }
+  };
 
   // Calculate pageCount
-  calculatePageCount(data) {
+  const calculatePageCount = (data) => {
     if (data && data.length) {
-      const newPageCount = Math.ceil(data.length / this.itemsPerPage);
+      const newPageCount = Math.ceil(data.length / itemsPerPage);
       return newPageCount;
     }
     return null;
-  }
+  };
 
-  filteredData() {
-    const { data } = this.props;
-    return data.filter(item => item.component || (item.data && item.data.length > 0));
-  }
-
-  renderHeader() {
-    const {
-      classes, data, headerComponents,
-    } = this.props;
-    const {
-      tabIndex, styles,
-    } = this.state;
-
+  const renderHeader = () => {
     let fullData = [];
 
     data.forEach((element) => {
@@ -288,7 +180,11 @@ class TabLists extends React.Component {
         fullData = [...fullData, ...element.data];
       }
     });
-    const filteredData = this.filteredData();
+
+    const tabLabelStyles = filteredData.length === 3 && isMobile
+      ? `${classes.tabLabelContainer} ${classes.mobileTabFont}`
+      : classes.tabLabelContainer;
+
     return (
       <>
         {
@@ -296,19 +192,28 @@ class TabLists extends React.Component {
         }
         {
           fullData.length > 0 && (
-            <ResultOrderer disabled={filteredData[tabIndex].noOrderer} />
+            <>
+              <ResultOrderer disabled={filteredData[tabIndex].noOrderer} />
+              <AddressSearchBar
+                defaultAddress={userAddress}
+                containerClassName={classes.addressBar}
+                inputClassName={classes.addressBarInput}
+                title={<FormattedMessage id="area.searchbar.infoText.address" />}
+                handleAddressChange={address => handleAddressChange(address)}
+              />
+            </>
           )
         }
         <Tabs
           // TODO: In materialUI 4.*
           // Change to use ref and update height calculations in componentDidMount
-          innerRef={(ref) => { this.tabsRef = ref; }}
+          innerRef={(ref) => { tabsRef = ref; }}
           className={`sticky ${classes.root}`}
           classes={{
             indicator: classes.indicator,
           }}
           value={tabIndex}
-          onChange={this.handleTabChange}
+          onChange={handleTabChange}
           variant="fullWidth"
           style={styles}
         >
@@ -325,7 +230,7 @@ class TabLists extends React.Component {
                       aria-label={item.ariaLabel ? item.ariaLabel : null}
                       classes={{
                         root: classes.tab,
-                        labelContainer: classes.tabLabelContainer,
+                        labelContainer: tabLabelStyles,
                         selected: classes.selected,
                       }}
                       className={classes.tab}
@@ -342,7 +247,7 @@ class TabLists extends React.Component {
                     aria-label={item.ariaLabel ? item.ariaLabel : null}
                     classes={{
                       root: classes.tab,
-                      labelContainer: classes.tabLabelContainer,
+                      labelContainer: tabLabelStyles,
                       selected: classes.selected,
                     }}
                     label={`${item.title}`}
@@ -355,26 +260,31 @@ class TabLists extends React.Component {
         </Tabs>
       </>
     );
-  }
+  };
+
+  useEffect(() => {
+    calculateHeaderStylings();
+  }, [isMobile]);
+
+  useEffect(() => {
+    const firstListResult = document.querySelectorAll(`.${tabTitleClass}`)[0];
+    if (firstListResult) {
+      try {
+        firstListResult.focus();
+      } catch (e) {
+        console.error('Unable to focus on list title');
+      }
+    }
+  }, [currentPage]);
 
 
-  render() {
-    const {
-      classes, intl,
-    } = this.props;
-    const {
-      currentPage, tabIndex,
-    } = this.state;
+  const render = () => (
+    <>
+      {
+        renderHeader()
+      }
 
-    const filteredData = this.filteredData();
-
-    return (
-      <>
-        {
-          this.renderHeader()
-        }
-
-        {
+      {
           // Create tab views from data
           filteredData.map((item, index) => {
             // If component given use it instead
@@ -406,15 +316,15 @@ class TabLists extends React.Component {
             }
 
             // Calculate pageCount and adjust currentPage
-            const pageCount = this.calculatePageCount(item.data);
+            const pageCount = calculatePageCount(item.data);
             const adjustedCurrentPage = currentPage > pageCount ? pageCount : currentPage;
 
             // Calculate shown data
-            const endIndex = item.data.length >= this.itemsPerPage
-              ? adjustedCurrentPage * this.itemsPerPage
+            const endIndex = item.data.length >= itemsPerPage
+              ? adjustedCurrentPage * itemsPerPage
               : item.data.length;
             const startIndex = adjustedCurrentPage > 1
-              ? (adjustedCurrentPage - 1) * this.itemsPerPage
+              ? (adjustedCurrentPage - 1) * itemsPerPage
               : 0;
             const shownData = item.data.slice(startIndex, endIndex);
 
@@ -430,7 +340,7 @@ class TabLists extends React.Component {
                   index === tabIndex
                   && (
                     <>
-                      <Typography className={this.tabTitleClass} variant="srOnly" component="p" tabIndex="-1">
+                      <Typography className={tabTitleClass} variant="srOnly" component="p" tabIndex="-1">
                         {`${item.title} ${additionalText}`}
                       </Typography>
                       <ResultList
@@ -445,7 +355,7 @@ class TabLists extends React.Component {
                       <PaginationComponent
                         current={adjustedCurrentPage}
                         pageCount={pageCount}
-                        handlePageChange={this.handlePageChange}
+                        handlePageChange={handlePageChange}
                       />
                     </>
                   )
@@ -454,10 +364,11 @@ class TabLists extends React.Component {
             );
           })
         }
-      </>
-    );
-  }
-}
+    </>
+  );
+
+  return render();
+};
 
 TabLists.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -469,8 +380,10 @@ TabLists.propTypes = {
     data: PropTypes.array,
     itemsPerPage: PropTypes.number,
   })).isRequired,
+  changeCustomUserLocation: PropTypes.func.isRequired,
+  userAddress: PropTypes.objectOf(PropTypes.any),
   headerComponents: PropTypes.objectOf(PropTypes.any),
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
 };
@@ -478,6 +391,7 @@ TabLists.propTypes = {
 TabLists.defaultProps = {
   headerComponents: null,
   navigator: null,
+  userAddress: null,
 };
 
 export default TabLists;

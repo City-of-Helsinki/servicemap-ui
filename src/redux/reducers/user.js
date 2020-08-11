@@ -11,6 +11,7 @@ const initialState = {
   },
   customPosition: {
     coordinates: null,
+    addressData: null,
   },
 };
 

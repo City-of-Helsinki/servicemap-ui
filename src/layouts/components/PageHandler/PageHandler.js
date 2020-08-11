@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { intlShape } from 'react-intl';
 import Helmet from 'react-helmet';
 import { uppercaseFirst } from '../../../utils';
 
@@ -45,7 +44,7 @@ class PageHandler extends React.Component {
 }
 
 PageHandler.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   messageId: PropTypes.string,
   page: PropTypes.string,
   unit: PropTypes.objectOf(PropTypes.any),

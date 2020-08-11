@@ -6,7 +6,7 @@ import {
 import { FormattedMessage } from 'react-intl';
 import { ArrowDropUp, ArrowDropDown, Map } from '@material-ui/icons';
 import { AreaIcon } from '../../../../components/SMIcon';
-import AddressSearchBar from '../AddressSearchBar';
+import AddressSearchBar from '../../../../components/AddressSearchBar';
 import MobileComponent from '../../../../components/MobileComponent';
 import SMButton from '../../../../components/ServiceMapButton';
 
@@ -17,7 +17,6 @@ const AreaTab = ({
   districtData,
   openItems,
   handleOpen,
-  formAddressString,
   dataStructure,
   setSelectedAddress,
   address,
@@ -127,15 +126,16 @@ const AreaTab = ({
         <FormattedMessage id="area.info" />
       </Typography>
       <div className={classes.addressArea}>
-        <Typography className={classes.addressTitle}>
-          <FormattedMessage id="area.searchbar.infoText.address" />
-          {' '}
-          <FormattedMessage id="area.searchbar.infoText.optional" />
-        </Typography>
         <AddressSearchBar
-          defaultValue={formAddressString(address)}
-          setSelectedAddress={setSelectedAddress}
-          formAddressString={formAddressString}
+          defaultAddress={address}
+          handleAddressChange={setSelectedAddress}
+          title={(
+            <>
+              <FormattedMessage id="area.searchbar.infoText.address" />
+              {' '}
+              <FormattedMessage id="area.searchbar.infoText.optional" />
+            </>
+          )}
         />
       </div>
       <div className={classes.infoTitle}>
@@ -156,6 +156,7 @@ const AreaTab = ({
 
       <MobileComponent>
         <SMButton
+          role="link"
           margin
           messageID="general.showOnMap"
           icon={<Map />}
@@ -185,7 +186,6 @@ AreaTab.propTypes = {
   setSelectedAddress: PropTypes.func.isRequired,
   handleOpen: PropTypes.func.isRequired,
   setRadioValue: PropTypes.func.isRequired,
-  formAddressString: PropTypes.func.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
 };
 

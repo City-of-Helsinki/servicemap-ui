@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Typography } from '@material-ui/core';
-import { FormattedMessage, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { Map, Mail, Hearing } from '@material-ui/icons';
 import SearchBar from '../../components/SearchBar';
 import { focusToPosition, focusDistrict } from '../MapView/utils/mapActions';
@@ -119,6 +119,7 @@ const UnitView = (props) => {
           icon={<Mail />}
           onClick={() => handleFeedbackClick()}
           margin
+          role="link"
         />
       );
     } return null;
@@ -183,32 +184,26 @@ const UnitView = (props) => {
     );
   };
 
-  const renderAccessibilityTab = () => {
-    if (!unit || !unit.complete || !accessibilitySentences) {
-      return <></>;
-    }
-
-    return (
-      <div className={classes.content}>
-        {hearingMaps && (
-          <TitledList titleComponent="h4" title={intl.formatMessage({ id: 'unit.accessibility.hearingMaps' })}>
-            {hearingMaps.map(item => (
-              <SimpleListItem
-                role="link"
-                link
-                divider
-                icon={<Hearing />}
-                key={item.name}
-                text={`${item.name} ${intl.formatMessage({ id: 'unit.opens.new.tab' })}`}
-                handleItemClick={() => window.open(item.url)}
-              />
-            ))}
-          </TitledList>
-        )}
-        <AccessibilityInfo titleAlways data={accessibilitySentences} headingLevel={4} />
-      </div>
-    );
-  };
+  const renderAccessibilityTab = () => (
+    <div className={classes.content}>
+      {hearingMaps && (
+        <TitledList titleComponent="h4" title={intl.formatMessage({ id: 'unit.accessibility.hearingMaps' })}>
+          {hearingMaps.map(item => (
+            <SimpleListItem
+              role="link"
+              link
+              divider
+              icon={<Hearing />}
+              key={item.name}
+              text={`${item.name} ${intl.formatMessage({ id: 'unit.accessibility.hearingMaps.extra' })}`}
+              handleItemClick={() => window.open(item.url)}
+            />
+          ))}
+        </TitledList>
+      )}
+      <AccessibilityInfo titleAlways headingLevel={4} />
+    </div>
+  );
 
   const renderServiceTab = () => {
     if (!unit || !unit.complete) {
@@ -245,6 +240,7 @@ const UnitView = (props) => {
             }
           }}
           margin
+          role="link"
         />
         {feedbackButton()}
       </div>
@@ -393,7 +389,7 @@ UnitView.propTypes = {
   match: PropTypes.objectOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   getLocaleText: PropTypes.func.isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   reservations: PropTypes.arrayOf(PropTypes.any),
   userLocation: PropTypes.objectOf(PropTypes.any),

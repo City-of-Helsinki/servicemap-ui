@@ -38,6 +38,19 @@ export default theme => ({
     paddingRight: 0,
     marginTop: theme.spacing.unitDouble,
     marginBottom: theme.spacing.unitDouble,
-    fontSize: 14,
+    fontSize: 'clamp(13px, 1.8vw, 14px)',
+  },
+  mobileTabFont: {
+    fontSize: 11.5,
+  },
+  addressBar: {
+    padding: theme.spacing.unitTriple,
+    paddingTop: 0,
+    backgroundColor: theme.palette.background.plain,
+    color: '#fff',
+    textAlign: 'left',
+  },
+  addressBarInput: {
+    height: 47,
   },
 });

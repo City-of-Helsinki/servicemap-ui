@@ -16,7 +16,7 @@ const getOrderedData = data => createSelector(
     if (!data) {
       throw new Error('Invalid data provided to getOrderedData selector');
     }
-    const results = Array.from(data);
+    let results = Array.from(data);
 
     switch (order) {
     // Accessibility
@@ -48,8 +48,8 @@ const getOrderedData = data => createSelector(
       // Alphabetical ordering
       case 'alphabetical': {
         results.sort((a, b) => {
-          const x = getLocaleString(locale, a.name).toLowerCase();
-          const y = getLocaleString(locale, b.name).toLowerCase();
+          const x = getLocaleString(locale, a.name || a.street.name).toLowerCase();
+          const y = getLocaleString(locale, b.name || b.street.name).toLowerCase();
           if (x > y) { return -1; }
           if (x < y) { return 1; }
           return 0;
@@ -62,11 +62,13 @@ const getOrderedData = data => createSelector(
         break;
       }
       case 'distance': {
-        results.forEach((element) => {
+        const unitsWithoutLocation = results.filter(unit => unit.location === null);
+        const filteredLsit = results.filter(unit => unit.location !== null);
+        filteredLsit.forEach((element) => {
         // eslint-disable-next-line no-param-reassign
           element.distanceFromUser = calculateDistanceFunc(element);
         });
-        results.sort((a, b) => {
+        filteredLsit.sort((a, b) => {
           const aDistance = a.distanceFromUser;
           const bDistance = b.distanceFromUser;
           if (aDistance < bDistance) return -1;
@@ -76,8 +78,10 @@ const getOrderedData = data => createSelector(
 
         // If reversed distance ordering
         if (direction === 'desc') {
-          results.reverse();
+          filteredLsit.reverse();
         }
+
+        results = [...filteredLsit, ...unitsWithoutLocation];
         break;
       }
       // Ordering based on match score

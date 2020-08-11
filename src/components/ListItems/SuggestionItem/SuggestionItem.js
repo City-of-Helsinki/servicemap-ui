@@ -7,7 +7,6 @@ import {
   Typography, Divider, Button,
 } from '@material-ui/core';
 import { ArrowUpward } from '@material-ui/icons';
-import { intlShape } from 'react-intl';
 import BoldedText from '../../BoldedText';
 import { keyboardHandler } from '../../../utils';
 import useMobileStatus from '../../../utils/isMobile';
@@ -51,11 +50,10 @@ const SuggestionItem = (props) => {
         onClick={onClick}
         onMouseDown={onClick}
         onMouseUp={() => setMouseDown(false)}
-        onKeyDown={() => {
-          keyboardHandler(onClick, ['space', 'enter']);
-        }}
+        onKeyDown={keyboardHandler(onClick, ['space', 'enter'])}
         onKeyUp={() => setMouseDown(false)}
         role="link"
+        tabIndex="0"
       >
         <span
           className={classes.container}
@@ -128,7 +126,7 @@ const SuggestionItem = (props) => {
         }
       </ListItem>
       {divider ? (
-        <li>
+        <li aria-hidden>
           <Divider aria-hidden className={classes.divider} />
         </li>
       ) : null}
@@ -141,7 +139,7 @@ export default SuggestionItem;
 SuggestionItem.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   text: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   icon: PropTypes.objectOf(PropTypes.any),
   handleArrowClick: PropTypes.func,
   handleItemClick: PropTypes.func,

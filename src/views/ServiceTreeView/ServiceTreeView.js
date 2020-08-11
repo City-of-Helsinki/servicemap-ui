@@ -6,7 +6,7 @@ import {
 import {
   ArrowDropUp, ArrowDropDown, Search, Cancel,
 } from '@material-ui/icons';
-import { FormattedMessage, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import config from '../../../config';
 import SMButton from '../../components/ServiceMapButton';
 
@@ -401,6 +401,7 @@ const ServiceTreeView = (props) => {
           setTreeState({ services, selected, opened });
           navigator.push('search', { service_node: ids });
         }}
+        role="link"
       />
     );
   };
@@ -432,7 +433,7 @@ const ServiceTreeView = (props) => {
 ServiceTreeView.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   setTreeState: PropTypes.func.isRequired,
   prevServices: PropTypes.arrayOf(PropTypes.any),
   prevSelected: PropTypes.arrayOf(PropTypes.any),

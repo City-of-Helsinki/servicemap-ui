@@ -4,7 +4,7 @@ import {
   Button, Typography, AppBar, Toolbar, ButtonBase, NoSsr,
 } from '@material-ui/core';
 import { Map, Menu, Close } from '@material-ui/icons';
-import { FormattedMessage, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import I18n from '../../i18n';
 import HomeLogo from '../Logos/HomeLogo';
 import { getIcon } from '../SMIcon';
@@ -80,7 +80,7 @@ class TopBar extends React.Component {
     const {
       classes, navigator, location, settingsOpen, toggleSettings, breadcrumb,
     } = this.props;
-    const mapPage = location.search.indexOf('map=true') > -1;
+    const mapPage = location.search.indexOf('showMap=true') > -1;
     return (
       <Button
         aria-hidden
@@ -137,8 +137,9 @@ class TopBar extends React.Component {
     );
   }
 
-  renderLanguages = () => {
+  renderLanguages = (pageType) => {
     const { classes, i18n, location } = this.props;
+    const typographyClass = className => `${pageType === 'mobile' ? classes.mobileFont : ''} ${className || ''}`;
     return (
       <>
         {i18n.availableLocales
@@ -155,7 +156,7 @@ class TopBar extends React.Component {
                 window.location = `${newLocation.pathname}${newLocation.search}`;
               }}
             >
-              <Typography className={locale === i18n.locale ? classes.bold : classes.greyText} color="inherit">
+              <Typography className={typographyClass(locale === i18n.locale ? classes.bold : classes.greyText)} color="inherit">
                 {i18n.localeText(locale)}
               </Typography>
             </ButtonBase>
@@ -192,7 +193,7 @@ class TopBar extends React.Component {
 
     // Hide settings and map if open
     toggleSettings();
-    if (location.search.indexOf('map=true') > -1) {
+    if (location.search.indexOf('showMap=true') > -1) {
       navigator.closeMap();
     }
 
@@ -240,22 +241,28 @@ class TopBar extends React.Component {
 
   renderTopBar = (pageType) => {
     const { classes, smallScreen, theme } = this.props;
+    const fontClass = pageType === 'mobile' ? classes.mobileFont : '';
+    const toolbarBlackClass = `${
+      classes.toolbarBlack
+    } ${
+      pageType === 'mobile' ? classes.toolbarBlackMobile : ''
+    }`;
     return (
       <>
         <AppBar className={classes.appBar}>
           {/* Toolbar black area */}
-          <Toolbar className={classes.toolbarBlack}>
+          <Toolbar className={toolbarBlackClass}>
             <div className={classes.toolbarBlackContainer}>
               <ButtonBase role="link" onClick={() => this.handleNavigation('home')} focusVisibleClassName={classes.topButtonFocused}>
-                <Typography color="inherit">
+                <Typography className={fontClass} color="inherit">
                   <FormattedMessage id="general.frontPage" />
                 </Typography>
               </ButtonBase>
               <Typography aria-hidden color="inherit">|</Typography>
-              {this.renderLanguages()}
+              {this.renderLanguages(pageType)}
               <Typography aria-hidden color="inherit">|</Typography>
               <ButtonBase role="link" onClick={() => this.handleContrastChange()} focusVisibleClassName={classes.topButtonFocused}>
-                <Typography color="inherit"><FormattedMessage id="general.contrast" /></Typography>
+                <Typography className={fontClass} color="inherit"><FormattedMessage id="general.contrast" /></Typography>
               </ButtonBase>
             </div>
           </Toolbar>
@@ -333,7 +340,7 @@ TopBar.propTypes = {
   changeTheme: PropTypes.func.isRequired,
   setMapType: PropTypes.func.isRequired,
   theme: PropTypes.string.isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 TopBar.defaultProps = {
