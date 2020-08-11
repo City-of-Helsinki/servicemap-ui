@@ -69,7 +69,7 @@ exports[`<PaginationComponent /> should work 1`] = `
             "getPluralRules": [Function],
             "getRelativeTimeFormat": [Function],
           },
-          "locale": "fi",
+          "locale": "en",
           "messages": Object {
             "general.pagination.currentlyOpenedPage": "Sivu {count}, avattu",
             "general.pagination.next": "Seuraava sivu",
@@ -150,7 +150,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                         "getPluralRules": [Function],
                         "getRelativeTimeFormat": [Function],
                       },
-                      "locale": "fi",
+                      "locale": "en",
                       "messages": Object {
                         "general.pagination.currentlyOpenedPage": "Sivu {count}, avattu",
                         "general.pagination.next": "Seuraava sivu",
@@ -210,7 +210,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                           "getPluralRules": [Function],
                           "getRelativeTimeFormat": [Function],
                         },
-                        "locale": "fi",
+                        "locale": "en",
                         "messages": Object {
                           "general.pagination.currentlyOpenedPage": "Sivu {count}, avattu",
                           "general.pagination.next": "Seuraava sivu",
@@ -382,7 +382,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                         "getPluralRules": [Function],
                         "getRelativeTimeFormat": [Function],
                       },
-                      "locale": "fi",
+                      "locale": "en",
                       "messages": Object {
                         "general.pagination.currentlyOpenedPage": "Sivu {count}, avattu",
                         "general.pagination.next": "Seuraava sivu",
@@ -442,7 +442,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                           "getPluralRules": [Function],
                           "getRelativeTimeFormat": [Function],
                         },
-                        "locale": "fi",
+                        "locale": "en",
                         "messages": Object {
                           "general.pagination.currentlyOpenedPage": "Sivu {count}, avattu",
                           "general.pagination.next": "Seuraava sivu",
@@ -637,7 +637,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                   "getPluralRules": [Function],
                                   "getRelativeTimeFormat": [Function],
                                 },
-                                "locale": "fi",
+                                "locale": "en",
                                 "messages": Object {
                                   "general.pagination.currentlyOpenedPage": "Sivu {count}, avattu",
                                   "general.pagination.next": "Seuraava sivu",
@@ -694,7 +694,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                     "getPluralRules": [Function],
                                     "getRelativeTimeFormat": [Function],
                                   },
-                                  "locale": "fi",
+                                  "locale": "en",
                                   "messages": Object {
                                     "general.pagination.currentlyOpenedPage": "Sivu {count}, avattu",
                                     "general.pagination.next": "Seuraava sivu",
@@ -1800,7 +1800,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                   "getPluralRules": [Function],
                                   "getRelativeTimeFormat": [Function],
                                 },
-                                "locale": "fi",
+                                "locale": "en",
                                 "messages": Object {
                                   "general.pagination.currentlyOpenedPage": "Sivu {count}, avattu",
                                   "general.pagination.next": "Seuraava sivu",
@@ -1857,7 +1857,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                     "getPluralRules": [Function],
                                     "getRelativeTimeFormat": [Function],
                                   },
-                                  "locale": "fi",
+                                  "locale": "en",
                                   "messages": Object {
                                     "general.pagination.currentlyOpenedPage": "Sivu {count}, avattu",
                                     "general.pagination.next": "Seuraava sivu",
@@ -2963,7 +2963,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                   "getPluralRules": [Function],
                                   "getRelativeTimeFormat": [Function],
                                 },
-                                "locale": "fi",
+                                "locale": "en",
                                 "messages": Object {
                                   "general.pagination.currentlyOpenedPage": "Sivu {count}, avattu",
                                   "general.pagination.next": "Seuraava sivu",
@@ -3020,7 +3020,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                     "getPluralRules": [Function],
                                     "getRelativeTimeFormat": [Function],
                                   },
-                                  "locale": "fi",
+                                  "locale": "en",
                                   "messages": Object {
                                     "general.pagination.currentlyOpenedPage": "Sivu {count}, avattu",
                                     "general.pagination.next": "Seuraava sivu",
@@ -4126,7 +4126,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                   "getPluralRules": [Function],
                                   "getRelativeTimeFormat": [Function],
                                 },
-                                "locale": "fi",
+                                "locale": "en",
                                 "messages": Object {
                                   "general.pagination.currentlyOpenedPage": "Sivu {count}, avattu",
                                   "general.pagination.next": "Seuraava sivu",
@@ -4183,7 +4183,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                     "getPluralRules": [Function],
                                     "getRelativeTimeFormat": [Function],
                                   },
-                                  "locale": "fi",
+                                  "locale": "en",
                                   "messages": Object {
                                     "general.pagination.currentlyOpenedPage": "Sivu {count}, avattu",
                                     "general.pagination.next": "Seuraava sivu",
@@ -5289,7 +5289,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                   "getPluralRules": [Function],
                                   "getRelativeTimeFormat": [Function],
                                 },
-                                "locale": "fi",
+                                "locale": "en",
                                 "messages": Object {
                                   "general.pagination.currentlyOpenedPage": "Sivu {count}, avattu",
                                   "general.pagination.next": "Seuraava sivu",
@@ -5346,7 +5346,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                     "getPluralRules": [Function],
                                     "getRelativeTimeFormat": [Function],
                                   },
-                                  "locale": "fi",
+                                  "locale": "en",
                                   "messages": Object {
                                     "general.pagination.currentlyOpenedPage": "Sivu {count}, avattu",
                                     "general.pagination.next": "Seuraava sivu",
