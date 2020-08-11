@@ -53,7 +53,6 @@ exports[`<ServiceMapButton /> should work 1`] = `
           "margin": "SMButton-margin-3",
           "marginRight": "SMButton-marginRight-4",
           "primary": "SMButton-primary-5",
-          "primaryFocus": "SMButton-primaryFocus-9",
           "secondary": "SMButton-secondary-6",
           "smallButton": "SMButton-smallButton-2",
           "typography": "SMButton-typography-8",
@@ -107,7 +106,6 @@ exports[`<ServiceMapButton /> should work 1`] = `
         aria-label={null}
         className="SMButton-button-1  SMButton-marginRight-4  SMButton-default-7"
         disabled={false}
-        focusVisibleClassName={null}
         icon={null}
         onClick={[Function]}
         role="button"
@@ -120,9 +118,9 @@ exports[`<ServiceMapButton /> should work 1`] = `
           className="SMButton-button-1  SMButton-marginRight-4  SMButton-default-7"
           classes={
             Object {
-              "disabled": "MuiButtonBase-disabled-11",
-              "focusVisible": "MuiButtonBase-focusVisible-12",
-              "root": "MuiButtonBase-root-10",
+              "disabled": "MuiButtonBase-disabled-10",
+              "focusVisible": "MuiButtonBase-focusVisible-11",
+              "root": "MuiButtonBase-root-9",
             }
           }
           component="button"
@@ -130,7 +128,6 @@ exports[`<ServiceMapButton /> should work 1`] = `
           disableTouchRipple={false}
           disabled={false}
           focusRipple={false}
-          focusVisibleClassName={null}
           icon={null}
           onClick={[Function]}
           role="button"
@@ -141,7 +138,7 @@ exports[`<ServiceMapButton /> should work 1`] = `
         >
           <button
             aria-label={null}
-            className="MuiButtonBase-root-10 SMButton-button-1  SMButton-marginRight-4  SMButton-default-7"
+            className="MuiButtonBase-root-9 SMButton-button-1  SMButton-marginRight-4  SMButton-default-7"
             disabled={false}
             icon={null}
             onBlur={[Function]}

@@ -151,14 +151,14 @@ exports[`<SimpleListItem /> should work 1`] = `
                     "overrides": Object {
                       "MuiButtonBase": Object {
                         "focusVisible": Object {
-                          "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                          "boxShadow": "0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(71, 131, 235), 0 0 0 8px rgb(255, 255, 255)",
                           "outline": "2px solid transparent",
                         },
                       },
                       "MuiInputBase": Object {
                         "root": Object {
                           "&$focused": Object {
-                            "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                            "boxShadow": "0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(71, 131, 235), 0 0 0 8px rgb(255, 255, 255)",
                             "outline": "2px solid transparent",
                           },
                         },
@@ -201,7 +201,7 @@ exports[`<SimpleListItem /> should work 1`] = `
                         "light": "#e57373",
                         "main": "#f44336",
                       },
-                      "focusBorder": "rgba(25, 100, 230, 0.8)",
+                      "focusBorder": "rgb(71, 131, 235)",
                       "getContrastText": [Function],
                       "grey": Object {
                         "100": "#f5f5f5",
@@ -228,10 +228,10 @@ exports[`<SimpleListItem /> should work 1`] = `
                       },
                       "secondary": Object {
                         "contrastText": "#fff",
-                        "dark": "rgba(14, 16, 24, 0.9)",
+                        "dark": "rgb(30, 32, 39)",
                         "hover": "#1d39ad",
-                        "light": "rgba(67, 70, 79, 0.9)",
-                        "main": "rgba(20,24,35,0.9)",
+                        "light": "rgb(85, 88, 96)",
+                        "main": "rgb(43, 47, 57)",
                       },
                       "text": Object {
                         "disabled": "rgba(0, 0, 0, 0.38)",
@@ -648,14 +648,14 @@ exports[`<SimpleListItem /> should work 1`] = `
                           "overrides": Object {
                             "MuiButtonBase": Object {
                               "focusVisible": Object {
-                                "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                                "boxShadow": "0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(71, 131, 235), 0 0 0 8px rgb(255, 255, 255)",
                                 "outline": "2px solid transparent",
                               },
                             },
                             "MuiInputBase": Object {
                               "root": Object {
                                 "&$focused": Object {
-                                  "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                                  "boxShadow": "0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(71, 131, 235), 0 0 0 8px rgb(255, 255, 255)",
                                   "outline": "2px solid transparent",
                                 },
                               },
@@ -698,7 +698,7 @@ exports[`<SimpleListItem /> should work 1`] = `
                               "light": "#e57373",
                               "main": "#f44336",
                             },
-                            "focusBorder": "rgba(25, 100, 230, 0.8)",
+                            "focusBorder": "rgb(71, 131, 235)",
                             "getContrastText": [Function],
                             "grey": Object {
                               "100": "#f5f5f5",
@@ -725,10 +725,10 @@ exports[`<SimpleListItem /> should work 1`] = `
                             },
                             "secondary": Object {
                               "contrastText": "#fff",
-                              "dark": "rgba(14, 16, 24, 0.9)",
+                              "dark": "rgb(30, 32, 39)",
                               "hover": "#1d39ad",
-                              "light": "rgba(67, 70, 79, 0.9)",
-                              "main": "rgba(20,24,35,0.9)",
+                              "light": "rgb(85, 88, 96)",
+                              "main": "rgb(43, 47, 57)",
                             },
                             "text": Object {
                               "disabled": "rgba(0, 0, 0, 0.38)",
@@ -1142,14 +1142,14 @@ exports[`<SimpleListItem /> should work 1`] = `
                                 "overrides": Object {
                                   "MuiButtonBase": Object {
                                     "focusVisible": Object {
-                                      "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                                      "boxShadow": "0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(71, 131, 235), 0 0 0 8px rgb(255, 255, 255)",
                                       "outline": "2px solid transparent",
                                     },
                                   },
                                   "MuiInputBase": Object {
                                     "root": Object {
                                       "&$focused": Object {
-                                        "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                                        "boxShadow": "0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(71, 131, 235), 0 0 0 8px rgb(255, 255, 255)",
                                         "outline": "2px solid transparent",
                                       },
                                     },
@@ -1192,7 +1192,7 @@ exports[`<SimpleListItem /> should work 1`] = `
                                     "light": "#e57373",
                                     "main": "#f44336",
                                   },
-                                  "focusBorder": "rgba(25, 100, 230, 0.8)",
+                                  "focusBorder": "rgb(71, 131, 235)",
                                   "getContrastText": [Function],
                                   "grey": Object {
                                     "100": "#f5f5f5",
@@ -1219,10 +1219,10 @@ exports[`<SimpleListItem /> should work 1`] = `
                                   },
                                   "secondary": Object {
                                     "contrastText": "#fff",
-                                    "dark": "rgba(14, 16, 24, 0.9)",
+                                    "dark": "rgb(30, 32, 39)",
                                     "hover": "#1d39ad",
-                                    "light": "rgba(67, 70, 79, 0.9)",
-                                    "main": "rgba(20,24,35,0.9)",
+                                    "light": "rgb(85, 88, 96)",
+                                    "main": "rgb(43, 47, 57)",
                                   },
                                   "text": Object {
                                     "disabled": "rgba(0, 0, 0, 0.38)",
@@ -1647,14 +1647,14 @@ exports[`<SimpleListItem /> should work 1`] = `
                                 "overrides": Object {
                                   "MuiButtonBase": Object {
                                     "focusVisible": Object {
-                                      "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                                      "boxShadow": "0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(71, 131, 235), 0 0 0 8px rgb(255, 255, 255)",
                                       "outline": "2px solid transparent",
                                     },
                                   },
                                   "MuiInputBase": Object {
                                     "root": Object {
                                       "&$focused": Object {
-                                        "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                                        "boxShadow": "0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(71, 131, 235), 0 0 0 8px rgb(255, 255, 255)",
                                         "outline": "2px solid transparent",
                                       },
                                     },
@@ -1697,7 +1697,7 @@ exports[`<SimpleListItem /> should work 1`] = `
                                     "light": "#e57373",
                                     "main": "#f44336",
                                   },
-                                  "focusBorder": "rgba(25, 100, 230, 0.8)",
+                                  "focusBorder": "rgb(71, 131, 235)",
                                   "getContrastText": [Function],
                                   "grey": Object {
                                     "100": "#f5f5f5",
@@ -1724,10 +1724,10 @@ exports[`<SimpleListItem /> should work 1`] = `
                                   },
                                   "secondary": Object {
                                     "contrastText": "#fff",
-                                    "dark": "rgba(14, 16, 24, 0.9)",
+                                    "dark": "rgb(30, 32, 39)",
                                     "hover": "#1d39ad",
-                                    "light": "rgba(67, 70, 79, 0.9)",
-                                    "main": "rgba(20,24,35,0.9)",
+                                    "light": "rgb(85, 88, 96)",
+                                    "main": "rgb(43, 47, 57)",
                                   },
                                   "text": Object {
                                     "disabled": "rgba(0, 0, 0, 0.38)",
