@@ -38,7 +38,6 @@ exports[`<ServiceMapButton /> should work 1`] = `
         "onError": [Function],
         "textComponent": Symbol(react.fragment),
         "timeZone": undefined,
-        "wrapRichTextChunksInFragment": undefined,
       }
     }
     onClick={[Function]}
@@ -95,7 +94,6 @@ exports[`<ServiceMapButton /> should work 1`] = `
           "onError": [Function],
           "textComponent": Symbol(react.fragment),
           "timeZone": undefined,
-          "wrapRichTextChunksInFragment": undefined,
         }
       }
       margin={false}

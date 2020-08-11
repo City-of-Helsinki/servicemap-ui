@@ -40,7 +40,6 @@ exports[`<PageElement /> should work 1`] = `
         "onError": [Function],
         "textComponent": Symbol(react.fragment),
         "timeZone": undefined,
-        "wrapRichTextChunksInFragment": undefined,
       }
     }
     isActive={false}
@@ -96,7 +95,6 @@ exports[`<PageElement /> should work 1`] = `
           "onError": [Function],
           "textComponent": Symbol(react.fragment),
           "timeZone": undefined,
-          "wrapRichTextChunksInFragment": undefined,
         }
       }
       isActive={false}
