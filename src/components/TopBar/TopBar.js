@@ -146,6 +146,7 @@ class TopBar extends React.Component {
             <ButtonBase
               role="link"
               key={locale}
+              focusVisibleClassName={classes.topButtonFocused}
               lang={locale}
               onClick={() => {
                 const newLocation = location;
@@ -245,7 +246,7 @@ class TopBar extends React.Component {
           {/* Toolbar black area */}
           <Toolbar className={classes.toolbarBlack}>
             <div className={classes.toolbarBlackContainer}>
-              <ButtonBase role="link" onClick={() => this.handleNavigation('home')}>
+              <ButtonBase role="link" onClick={() => this.handleNavigation('home')} focusVisibleClassName={classes.topButtonFocused}>
                 <Typography color="inherit">
                   <FormattedMessage id="general.frontPage" />
                 </Typography>
@@ -253,7 +254,7 @@ class TopBar extends React.Component {
               <Typography aria-hidden color="inherit">|</Typography>
               {this.renderLanguages()}
               <Typography aria-hidden color="inherit">|</Typography>
-              <ButtonBase role="link" onClick={() => this.handleContrastChange()}>
+              <ButtonBase role="link" onClick={() => this.handleContrastChange()} focusVisibleClassName={classes.topButtonFocused}>
                 <Typography color="inherit"><FormattedMessage id="general.contrast" /></Typography>
               </ButtonBase>
             </div>
