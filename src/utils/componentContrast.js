@@ -70,8 +70,19 @@ const getContrast = (background, element) => {
   return Math.max(...contrasts);
 };
 
+const getFocusedElement = async (element, parent) => {
+  const indicator = await element.getStyleProperty('box-shadow');
+  if (indicator !== 'none') {
+    return element;
+  } if (parent.parent()) {
+    return getFocusedElement(parent, parent.parent());
+  }
+  return null;
+};
+
 export {
   getContrast,
   getElementBG,
   getParentElementBG,
+  getFocusedElement,
 };

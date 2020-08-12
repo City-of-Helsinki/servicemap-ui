@@ -244,7 +244,7 @@ exports[`<SimpleListItem /> should work 1`] = `
                       "warning": "#AF0021",
                       "white": Object {
                         "contrastText": "#000",
-                        "dark": "#979797",
+                        "dark": "#949494",
                         "light": "#f2f2f2",
                         "main": "#FFFFFF",
                       },
@@ -741,7 +741,7 @@ exports[`<SimpleListItem /> should work 1`] = `
                             "warning": "#AF0021",
                             "white": Object {
                               "contrastText": "#000",
-                              "dark": "#979797",
+                              "dark": "#949494",
                               "light": "#f2f2f2",
                               "main": "#FFFFFF",
                             },
@@ -1235,7 +1235,7 @@ exports[`<SimpleListItem /> should work 1`] = `
                                   "warning": "#AF0021",
                                   "white": Object {
                                     "contrastText": "#000",
-                                    "dark": "#979797",
+                                    "dark": "#949494",
                                     "light": "#f2f2f2",
                                     "main": "#FFFFFF",
                                   },
@@ -1740,7 +1740,7 @@ exports[`<SimpleListItem /> should work 1`] = `
                                   "warning": "#AF0021",
                                   "white": Object {
                                     "contrastText": "#000",
-                                    "dark": "#979797",
+                                    "dark": "#949494",
                                     "light": "#f2f2f2",
                                     "main": "#FFFFFF",
                                   },

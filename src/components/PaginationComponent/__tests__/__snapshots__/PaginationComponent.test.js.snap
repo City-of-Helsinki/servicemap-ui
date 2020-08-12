@@ -79,6 +79,7 @@ exports[`<PaginationComponent /> should work 1`] = `
           "onError": [Function],
           "textComponent": Symbol(react.fragment),
           "timeZone": undefined,
+          "wrapRichTextChunksInFragment": undefined,
         }
       }
       maxShownPages={5}
@@ -160,6 +161,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                       "onError": [Function],
                       "textComponent": Symbol(react.fragment),
                       "timeZone": undefined,
+                      "wrapRichTextChunksInFragment": undefined,
                     }
                   }
                   onClick={[Function]}
@@ -219,6 +221,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                         "onError": [Function],
                         "textComponent": Symbol(react.fragment),
                         "timeZone": undefined,
+                        "wrapRichTextChunksInFragment": undefined,
                       }
                     }
                     margin={false}
@@ -389,6 +392,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                       "onError": [Function],
                       "textComponent": Symbol(react.fragment),
                       "timeZone": undefined,
+                      "wrapRichTextChunksInFragment": undefined,
                     }
                   }
                   onClick={[Function]}
@@ -448,6 +452,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                         "onError": [Function],
                         "textComponent": Symbol(react.fragment),
                         "timeZone": undefined,
+                        "wrapRichTextChunksInFragment": undefined,
                       }
                     }
                     margin={false}
@@ -641,6 +646,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                 "onError": [Function],
                                 "textComponent": Symbol(react.fragment),
                                 "timeZone": undefined,
+                                "wrapRichTextChunksInFragment": undefined,
                               }
                             }
                             isActive={false}
@@ -698,6 +704,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                   "onError": [Function],
                                   "textComponent": Symbol(react.fragment),
                                   "timeZone": undefined,
+                                  "wrapRichTextChunksInFragment": undefined,
                                 }
                               }
                               isActive={false}
@@ -963,7 +970,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                 "warning": "#AF0021",
                                                 "white": Object {
                                                   "contrastText": "#000",
-                                                  "dark": "#979797",
+                                                  "dark": "#949494",
                                                   "light": "#f2f2f2",
                                                   "main": "#FFFFFF",
                                                 },
@@ -1457,7 +1464,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                       "warning": "#AF0021",
                                                       "white": Object {
                                                         "contrastText": "#000",
-                                                        "dark": "#979797",
+                                                        "dark": "#949494",
                                                         "light": "#f2f2f2",
                                                         "main": "#FFFFFF",
                                                       },
@@ -1804,6 +1811,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                 "onError": [Function],
                                 "textComponent": Symbol(react.fragment),
                                 "timeZone": undefined,
+                                "wrapRichTextChunksInFragment": undefined,
                               }
                             }
                             isActive={true}
@@ -1861,6 +1869,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                   "onError": [Function],
                                   "textComponent": Symbol(react.fragment),
                                   "timeZone": undefined,
+                                  "wrapRichTextChunksInFragment": undefined,
                                 }
                               }
                               isActive={true}
@@ -2126,7 +2135,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                 "warning": "#AF0021",
                                                 "white": Object {
                                                   "contrastText": "#000",
-                                                  "dark": "#979797",
+                                                  "dark": "#949494",
                                                   "light": "#f2f2f2",
                                                   "main": "#FFFFFF",
                                                 },
@@ -2620,7 +2629,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                       "warning": "#AF0021",
                                                       "white": Object {
                                                         "contrastText": "#000",
-                                                        "dark": "#979797",
+                                                        "dark": "#949494",
                                                         "light": "#f2f2f2",
                                                         "main": "#FFFFFF",
                                                       },
@@ -2967,6 +2976,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                 "onError": [Function],
                                 "textComponent": Symbol(react.fragment),
                                 "timeZone": undefined,
+                                "wrapRichTextChunksInFragment": undefined,
                               }
                             }
                             isActive={false}
@@ -3024,6 +3034,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                   "onError": [Function],
                                   "textComponent": Symbol(react.fragment),
                                   "timeZone": undefined,
+                                  "wrapRichTextChunksInFragment": undefined,
                                 }
                               }
                               isActive={false}
@@ -3289,7 +3300,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                 "warning": "#AF0021",
                                                 "white": Object {
                                                   "contrastText": "#000",
-                                                  "dark": "#979797",
+                                                  "dark": "#949494",
                                                   "light": "#f2f2f2",
                                                   "main": "#FFFFFF",
                                                 },
@@ -3783,7 +3794,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                       "warning": "#AF0021",
                                                       "white": Object {
                                                         "contrastText": "#000",
-                                                        "dark": "#979797",
+                                                        "dark": "#949494",
                                                         "light": "#f2f2f2",
                                                         "main": "#FFFFFF",
                                                       },
@@ -4130,6 +4141,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                 "onError": [Function],
                                 "textComponent": Symbol(react.fragment),
                                 "timeZone": undefined,
+                                "wrapRichTextChunksInFragment": undefined,
                               }
                             }
                             isActive={false}
@@ -4187,6 +4199,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                   "onError": [Function],
                                   "textComponent": Symbol(react.fragment),
                                   "timeZone": undefined,
+                                  "wrapRichTextChunksInFragment": undefined,
                                 }
                               }
                               isActive={false}
@@ -4452,7 +4465,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                 "warning": "#AF0021",
                                                 "white": Object {
                                                   "contrastText": "#000",
-                                                  "dark": "#979797",
+                                                  "dark": "#949494",
                                                   "light": "#f2f2f2",
                                                   "main": "#FFFFFF",
                                                 },
@@ -4946,7 +4959,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                       "warning": "#AF0021",
                                                       "white": Object {
                                                         "contrastText": "#000",
-                                                        "dark": "#979797",
+                                                        "dark": "#949494",
                                                         "light": "#f2f2f2",
                                                         "main": "#FFFFFF",
                                                       },
@@ -5293,6 +5306,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                 "onError": [Function],
                                 "textComponent": Symbol(react.fragment),
                                 "timeZone": undefined,
+                                "wrapRichTextChunksInFragment": undefined,
                               }
                             }
                             isActive={false}
@@ -5350,6 +5364,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                   "onError": [Function],
                                   "textComponent": Symbol(react.fragment),
                                   "timeZone": undefined,
+                                  "wrapRichTextChunksInFragment": undefined,
                                 }
                               }
                               isActive={false}
@@ -5615,7 +5630,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                 "warning": "#AF0021",
                                                 "white": Object {
                                                   "contrastText": "#000",
-                                                  "dark": "#979797",
+                                                  "dark": "#949494",
                                                   "light": "#f2f2f2",
                                                   "main": "#FFFFFF",
                                                 },
@@ -6109,7 +6124,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                       "warning": "#AF0021",
                                                       "white": Object {
                                                         "contrastText": "#000",
-                                                        "dark": "#979797",
+                                                        "dark": "#949494",
                                                         "light": "#f2f2f2",
                                                         "main": "#FFFFFF",
                                                       },

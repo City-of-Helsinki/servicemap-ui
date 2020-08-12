@@ -1,5 +1,5 @@
 import { Selector, ClientFunction } from 'testcafe';
-import { getContrast, getElementBG, getParentElementBG } from '../src/utils/componentContrast';
+import { getContrast, getElementBG, getParentElementBG, getFocusedElement } from '../src/utils/componentContrast';
 
 export default () => {
   test('Input fields have correct focus indicators', async (t) => {
@@ -19,20 +19,18 @@ export default () => {
         });
         
         await focusElement()
-        
-        // Check if focus border is on the input element or its parent. (Mui InputBase puts focus on wrapper div insted of the input field itself)
-        const currentFocused = await field.getStyleProperty('box-shadow')
-        const parentFocused = await parent.getStyleProperty('box-shadow')
-        let focusedElement = null;
 
-        if (currentFocused !== 'none') {
-          focusedElement = field;
-        } else if (parentFocused !== 'none'){
-          focusedElement = parent;
-        }
+        // Focusing on Mui checkbox element does not display focus border. Element needs to be focused with tab as well.
+        await t
+          .pressKey('tab')
+          .pressKey('shift+tab')
+          .wait(20)
+        
+
+        const focusedElement = await getFocusedElement(field, parent);
 
         await t
-          .expect(focusedElement).ok('Input field does not have correct box-shadow focus indicator')
+          .expect(focusedElement.exists).ok('Input field does not have correct box-shadow focus indicator')
 
         const parentBackground = await getParentElementBG(await focusedElement, await focusedElement.parent());
         const contrastWithBackground = getContrast(parentBackground, await focusedElement.getStyleProperty('box-shadow'));
@@ -72,7 +70,7 @@ export default () => {
 
         const focusBorder = await button.getStyleProperty('box-shadow')
         await t
-          .expect(focusBorder !== 'none').ok('Input field does not have correct box-shadow focus indicator')
+          .expect(focusBorder !== 'none').ok('Button does not have correct box-shadow focus indicator')
 
         const parentBackground = await getParentElementBG(await button, await button.parent())
         if (parentBackground) {
