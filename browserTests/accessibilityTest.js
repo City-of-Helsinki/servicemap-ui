@@ -84,6 +84,18 @@ fixture`TestCafe Axe test: area page`
   componentContrastTest('BackButton');
 
 
+fixture`TestCafe Axe test: service tree page`
+  .page`http://${server.address}:${server.port}/fi/services`;
+
+  test('Automated accessibility testing', async (t) => {
+    await axeCheckHandler(t);
+  });
+
+  focusIndicatorTest()
+  componentContrastTest('SMButton');
+  componentContrastTest('BackButton');
+
+
 // This page expires when the event is done
 fixture`TestCafe Axe test: event page`
   .page`http://${server.address}:${server.port}/fi/event/helmet:190724`;
