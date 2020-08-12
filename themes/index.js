@@ -153,7 +153,7 @@ export const paletteDefault = {
   white: {
     light: '#f2f2f2',
     main: '#FFFFFF',
-    dark: '#979797',
+    dark: '#949494',
     contrastText: '#000',
   },
   detail: {
@@ -186,7 +186,7 @@ export const paletteDark = {
   white: {
     light: '#f2f2f2',
     main: '#FFFFFF',
-    dark: '#979797',
+    dark: '#949494',
     contrastText: '#000',
   },
   detail: {
