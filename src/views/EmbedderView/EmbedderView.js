@@ -71,7 +71,9 @@ const EmbedderView = ({
   const dialogRef = useRef();
 
   const renderWrapperStyle = () => `position: relative; width:100%; padding-bottom:${ratioHeight}%;`;
-  const embedUrl = getEmbedURL(url, { language, map, city, service });
+  const embedUrl = getEmbedURL(url, {
+    language, map, city, service, defaultLanguage,
+  });
   const iframeTitle = intl.formatMessage({ id: 'embedder.iframe.title' });
 
 

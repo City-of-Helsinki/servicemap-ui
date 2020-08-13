@@ -18,6 +18,10 @@ export const getEmbedURL = (url, params = {}) => {
   if (params.service && params.service !== 'none') {
     data.level = params.service;
   }
+  if (params.defaultLanguage) {
+    data.search_language = params.defaultLanguage;
+  }
+
   uri.search(data);
 
   if (params.language) {

@@ -120,9 +120,7 @@ class SearchView extends React.Component {
   }
 
   searchParamData = (props = null, includeService = false) => {
-    const {
-      location,
-    } = props || this.props;
+    const { location } = props || this.props;
     const { serviceRedirect } = this.state;
     const redirectNode = serviceRedirect;
     const searchParams = parseSearchParams(location.search);
@@ -134,6 +132,7 @@ class SearchView extends React.Component {
       municipality,
       service,
       service_node,
+      search_language,
     } = searchParams;
 
     const options = {};
@@ -187,6 +186,10 @@ class SearchView extends React.Component {
       options.municipality = municipality || city;
     }
 
+    // Parse search language
+    if (search_language) {
+      options.search_language = search_language;
+    }
 
     return options;
   }
