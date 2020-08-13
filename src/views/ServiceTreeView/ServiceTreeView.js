@@ -235,7 +235,7 @@ const ServiceTreeView = (props) => {
       .some(node => selected.some(item => item.id === node.id));
 
     return (
-      <div key={item.id}>
+      <React.Fragment key={item.id}>
         <ListItem
           disableGutters
           className={`${classes.listItem} ${classes[`level${level}`]}`}
@@ -282,7 +282,7 @@ const ServiceTreeView = (props) => {
             )
           ))}
         </Collapse>
-      </div>
+      </React.Fragment>
     );
   };
 
@@ -307,8 +307,7 @@ const ServiceTreeView = (props) => {
             <>
               <Typography className={`${classes.infoText} ${classes.bold}`}>
                 <FormattedMessage id="settings.city.info" values={{ count: citySettings.length }} />
-                {':'}
-                &nbsp;
+                : &nbsp;
               </Typography>
               <Typography className={classes.infoText}>
                 {cityString}
