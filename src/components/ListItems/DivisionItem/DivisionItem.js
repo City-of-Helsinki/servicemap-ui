@@ -19,8 +19,11 @@ const DivisionItem = ({
   locale,
 }) => {
   const { area } = data;
-  const aStart = area && area.start ? new Date(area.start) : null;
-  const aEnd = area && area.end ? new Date(area.end) : null;
+  const aStart = area && area.start ? new Date(area.start).getFullYear() : null;
+  const aEnd = area && area.end ? new Date(area.end).getFullYear() : null;
+
+  if (aStart === 2019 || aEnd === 2019) return null;
+
   const name = data.name ? getLocaleText(data.name) : null;
   const address = data.street_address ? getLocaleText(data.street_address) : null;
   const unitOnClick = () => navigator.push('unit', { id: data.id });
@@ -30,7 +33,7 @@ const DivisionItem = ({
   const emergencyOnClick = () => navigator.push('unit', { id: emergencyUnitId });
 
   let title = intl.formatMessage({ id: `area.list.${area.type}` });
-  title = `${title}${aStart && aEnd ? ` ${aStart.getFullYear()}-${aEnd.getFullYear()}` : ''}`;
+  title = `${title}${aStart && aEnd ? ` ${aStart}-${aEnd}` : ''}`;
 
   // Screen reader text
   const srText = `
