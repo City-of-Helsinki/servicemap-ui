@@ -1,16 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Build, Code } from '@material-ui/icons';
 import { useLocation } from 'react-router-dom';
 import URI from 'urijs';
-import PaperButton from '../PaperButton';
-import SimpleListItem from '../ListItems/SimpleListItem';
-import DrawerButton from '../DrawerMenu/DrawerButton';
+import DropDownMenuButton from '../DropDownMenuButton';
 
 const ToolMenu = ({
-  classes, drawer, intl, mapUtility, navigator,
+  intl, mapUtility, navigator,
 }) => {
-  const [open, setOpen] = useState(false);
   const location = useLocation();
 
   // Open embedderView
@@ -49,66 +46,13 @@ const ToolMenu = ({
     },
   ];
 
-  const openToolMenu = () => {
-    setOpen(!open);
-  };
-
-  const renderMenu = () => {
-    if (!open) {
-      return null;
-    }
-
-    const listClass = `${drawer ? classes.menuContainerDrawer : classes.menuContainer} ${drawer ? classes.fullWidth : ''}`;
-
-    return (
-      <div>
-        <ul className={listClass}>
-          {
-            menuItems.map(v => (
-              <SimpleListItem
-                key={v.key}
-                dark={drawer}
-                icon={v.icon}
-                button
-                handleItemClick={v.onClick}
-                srText={v.srText}
-                text={v.text}
-                role="link"
-              />
-            ))
-          }
-        </ul>
-      </div>
-    );
-  };
-
   return (
     <>
-      {
-        drawer ? (
-          <DrawerButton
-            active={open}
-            disableRipple
-            icon={<Build />}
-            isOpen
-            text={intl.formatMessage({ id: 'general.tools' })}
-            onClick={openToolMenu}
-          />
-        ) : (
-          <PaperButton
-            aria-label={intl.formatMessage({ id: 'general.tools' })}
-            className={classes.menuButton}
-            messageID="general.tools"
-            icon={<Build />}
-            noBorder
-            onClick={openToolMenu}
-            aria-pressed={open}
-          />
-        )
-      }
-      {
-        renderMenu()
-      }
+      <DropDownMenuButton
+        buttonIcon={<Build />}
+        buttonText={intl.formatMessage({ id: 'general.tools' })}
+        menuItems={menuItems}
+      />
     </>
   );
 };
@@ -117,7 +61,6 @@ ToolMenu.propTypes = {
   classes: PropTypes.shape({
     menuContainer: PropTypes.string,
   }).isRequired,
-  drawer: PropTypes.bool,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   mapUtility: PropTypes.shape({
     getBbox: PropTypes.func,
@@ -128,7 +71,6 @@ ToolMenu.propTypes = {
 };
 
 ToolMenu.defaultProps = {
-  drawer: false,
   mapUtility: null,
   navigator: null,
 };
