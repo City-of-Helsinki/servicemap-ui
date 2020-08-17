@@ -1,13 +1,16 @@
 import config from '../../../config';
 
+const menuContainerTop = config.topBarHeight + 1;
+
 export default ({
   menuContainer: {
     position: 'fixed',
     backgroundColor: '#fff',
-    right: 0,
+    right: 1,
     padding: 0,
     margin: 0,
-    top: config.topBarHeight,
+    top: menuContainerTop,
+    border: '1px solid blue',
   },
   menuContainerDrawer: {
     backgroundColor: 'inherit',
