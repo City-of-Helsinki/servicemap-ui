@@ -47,7 +47,7 @@ const IFramePreview = ({
     position: hasContainer ? 'absolute' : null,
     top: hasContainer ? 0 : null,
     left: hasContainer ? 0 : null,
-    border: 'none',
+    // border: 'none',
     width: hasContainer ? '100%' : `${width}${widthUnit}`,
     height: hasContainer ? '100%' : `${height}px`,
   };
@@ -55,6 +55,7 @@ const IFramePreview = ({
     <div style={wrapperStyleObject()}>
       <iframe
         key={new Date().getTime()}
+        className={classes.iframeWrapper}
         title={title}
         style={styles}
         src={embedUrl}
@@ -63,6 +64,7 @@ const IFramePreview = ({
   ) : (
     <iframe
       key={new Date().getTime()}
+      className={classes.iframeWrapper}
       title={title}
       style={styles}
       src={embedUrl}
@@ -80,11 +82,9 @@ const IFramePreview = ({
         <FormattedMessage id="embedder.preview.title" />
       </Typography>
       <div className={classes.iframeContainer} style={{ width: '100%' }}>
-        <div className={classes.iframeWrapper}>
-          {
-            element
-          }
-        </div>
+        {
+          element
+        }
       </div>
     </Paper>
   );
