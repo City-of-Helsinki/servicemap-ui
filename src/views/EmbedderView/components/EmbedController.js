@@ -32,7 +32,7 @@ const customStyles = () => ({
  * CustomInput component
  */
 const CustomInput = withStyles(customStyles)(({
-  buttonClick, buttonText, classes, disabled, initialValue, onChange, preText,
+  ariaLabel, buttonClick, buttonText, classes, disabled, initialValue, onChange, preText,
 }) => {
   const [value, setValue] = useState(initialValue);
   useEffect(() => {
@@ -51,12 +51,15 @@ const CustomInput = withStyles(customStyles)(({
       <InputBase
         className={classes.input}
         disabled={disabled}
-        value={value}
+        inputProps={{
+          'aria-label': ariaLabel,
+        }}
         onChange={inputOnChange}
+        value={value}
       />
       {
         preText && (
-          <pre className={classes.iconButton} aria-label="Search">
+          <pre className={classes.iconButton} aria-hidden>
             {preText}
           </pre>
         )
@@ -66,7 +69,7 @@ const CustomInput = withStyles(customStyles)(({
           <>
             <Divider className={classes.divider} />
             <Button
-              aria-label="Directions"
+              aria-label={buttonText}
               color="primary"
               className={classes.iconButton}
               onClick={(e) => { buttonClick(e, value); }}
@@ -89,6 +92,7 @@ const EmbedController = ({
   titleComponent,
   titleID,
   description,
+  inputAriaLabel,
   inputButtonOnClick,
   inputButtonText,
   inputDisabled,
@@ -124,6 +128,7 @@ const EmbedController = ({
     return (
       <div>
         <CustomInput
+          ariaLabel={inputAriaLabel}
           disabled={inputDisabled}
           initialValue={inputValue}
           buttonClick={inputButtonOnClick}
@@ -171,6 +176,7 @@ EmbedController.propTypes = {
   titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']).isRequired,
   titleID: PropTypes.string.isRequired,
   description: PropTypes.node,
+  inputAriaLabel: PropTypes.string,
   inputButtonOnClick: PropTypes.func,
   inputButtonText: PropTypes.node,
   inputDisabled: PropTypes.bool,
@@ -189,6 +195,7 @@ EmbedController.propTypes = {
 
 EmbedController.defaultProps = {
   description: null,
+  inputAriaLabel: null,
   inputButtonOnClick: null,
   inputButtonText: null,
   inputDisabled: null,

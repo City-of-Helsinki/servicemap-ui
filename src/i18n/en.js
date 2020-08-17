@@ -73,7 +73,7 @@ export default {
 
   // Embed
   'embed.click_prompt_move': 'Click to open the Service Map',
-  
+
   // Embedder - TODO: translate whole section
   'embedder.city.title': 'Kaupunki',
   'embedder.city.aria.label': 'Valitse upotukselle kaupunkirajaus',
@@ -83,6 +83,8 @@ export default {
   'embedder.height.aria.label': 'Valitse upotuksen korkeus',
   'embedder.height.ratio.label': 'Suhteellinen korkeus. Upotuksen korkeuden suhde leveyteen on määritelty',
   'embedder.height.fixed.label': 'Absoluuttinen korkeus. Upotuksen korkeus on määritelty pikseleissä',
+  'embedder.height.input.aria.fixed': 'Upotuksen korkeus pikseleissä',
+  'embedder.height.input.aria.ratio': 'Upotuksen korkeus prosentteina leveydestä',
   'embedder.iframe.title': 'Palvelukartan upotusikkuna',
   'embedder.language.title': 'Upotuksen kieli',
   'embedder.language.aria.label': 'Valitse upotuksen kieli',
@@ -103,7 +105,9 @@ export default {
   'embedder.width.title': 'Upotuksen leveys',
   'embedder.width.aria.label': 'Valitse upotuksen leveys',
   'embedder.width.auto.label': 'Automaattinen leveys. Upotus täyttää leveyssuunnassa elementin, johon se on sijoitettu. Tässä esikatselussa upotus on sijoitettu katkoviivalla merkittyyn vakiolevyiseen elementtiin.',
-  'embedder.width.custom.label': 'Valittu leveys. Upotuksen leveys on määritelty pikseleissä.',
+  'embedder.width.custom.label': 'Asetettu leveys. Upotuksen leveys on määritelty pikseleissä.',
+  'embedder.width.input.aria.auto': 'Upotuksen leveys prosentteina',
+  'embedder.width.input.aria.custom': 'Upotuksen leveys pikseleissä',
 
   // Feedback
   'feedback.back': 'Go back',

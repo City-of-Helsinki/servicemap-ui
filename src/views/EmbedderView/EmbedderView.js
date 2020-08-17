@@ -303,6 +303,9 @@ const EmbedderView = ({
     const inputValue = widthMode === 'custom' ? customWidth : 100;
     const inputOnChange = (e, v) => setCustomWidth(v);
     const pretext = widthMode === 'custom' ? 'px' : '%';
+    const ariaLabel = widthMode === 'custom'
+      ? intl.formatMessage({ id: 'embedder.width.input.aria.custom' })
+      : intl.formatMessage({ id: 'embedder.width.input.aria.auto' });
 
     return (
       <EmbedController
@@ -313,6 +316,7 @@ const EmbedderView = ({
         radioValue={widthMode}
         radioControls={controls}
         radioOnChange={(e, v) => setWidthMode(v)}
+        inputAriaLabel={ariaLabel}
         inputValue={inputValue}
         inputOnChange={inputOnChange}
         inputPreText={pretext}
@@ -337,6 +341,9 @@ const EmbedderView = ({
     ];
     const customHeight = heightMode === 'fixed' ? fixedHeight : ratioHeight;
     const pretext = heightMode === 'fixed' ? 'px' : '%';
+    const ariaLabel = heightMode === 'fixed'
+      ? intl.formatMessage({ id: 'embedder.height.input.aria.fixed' })
+      : intl.formatMessage({ id: 'embedder.height.input.aria.ratio' });
 
     return (
       <EmbedController
@@ -347,6 +354,7 @@ const EmbedderView = ({
         radioValue={heightMode}
         radioControls={controls}
         radioOnChange={(e, v) => setHeightMode(v)}
+        inputAriaLabel={ariaLabel}
         inputValue={customHeight}
         inputOnChange={(e, v) => {
           if (heightMode === 'fixed') {
