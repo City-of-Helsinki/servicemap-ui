@@ -28,6 +28,11 @@ const hideServicesIn = [
   paths.service.regex,
 ];
 
+// Timeout for handling width and height input changes
+// only once user stops typing
+let timeout;
+const timeoutDelay = 1000;
+
 const EmbedderView = ({
   classes, intl, mapType, navigator,
 }) => {
@@ -85,6 +90,13 @@ const EmbedderView = ({
 
   useEffect(() => {
     focusToFirstElement();
+
+    // Run component unmount cleanup
+    return () => {
+      if (timeout) {
+        clearTimeout(timeout);
+      }
+    };
   }, []);
 
   // Close embed view
@@ -92,6 +104,14 @@ const EmbedderView = ({
     if (navigator) {
       navigator.goBack();
     }
+  };
+
+  // Run timeout function and cancel previous if it exists
+  const runTimeoutFunction = (func) => {
+    if (timeout) {
+      clearTimeout(timeout);
+    }
+    timeout = setTimeout(func, timeoutDelay);
   };
 
   // Figure out embed html
@@ -301,7 +321,7 @@ const EmbedderView = ({
       },
     ];
     const inputValue = widthMode === 'custom' ? customWidth : 100;
-    const inputOnChange = (e, v) => setCustomWidth(v);
+    const inputOnChange = (e, v) => runTimeoutFunction(() => setCustomWidth(v));
     const pretext = widthMode === 'custom' ? 'px' : '%';
     const ariaLabel = widthMode === 'custom'
       ? intl.formatMessage({ id: 'embedder.width.input.aria.custom' })
@@ -357,11 +377,13 @@ const EmbedderView = ({
         inputAriaLabel={ariaLabel}
         inputValue={customHeight}
         inputOnChange={(e, v) => {
-          if (heightMode === 'fixed') {
-            setFixedHeight(v);
-          } else {
-            setRatioHeight(v);
-          }
+          runTimeoutFunction(() => {
+            if (heightMode === 'fixed') {
+              setFixedHeight(v);
+            } else {
+              setRatioHeight(v);
+            }
+          });
         }}
         inputPreText={pretext}
       />
