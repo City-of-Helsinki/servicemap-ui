@@ -55,7 +55,7 @@ const mapTypes = {
   // These define the map tiles and options of individual map types
   servicemap: {
     name: 'servicemap',
-    generateUrl: (suffix = '') => `https://tiles.hel.ninja/styles/hel-osm-bright/{z}/{x}/{y}${suffix}.png`,
+    generateUrl: (suffix = '') => `https://maptiles.turku.fi/styles/hel-osm-bright/{z}/{x}/{y}${suffix}.png`,
     minZoom: 9,
     maxZoom: 18,
     zoom: 13,
