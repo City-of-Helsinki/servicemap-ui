@@ -75,7 +75,7 @@ const createContentStyles = (
 
 const DefaultLayout = (props) => {
   const {
-    currentPage, i18n, intl, location, settingsToggled,
+    classes, currentPage, i18n, intl, location, settingsToggled,
   } = props;
   const isMobile = useMobileStatus();
   const isSmallScreen = useMediaQuery(`(max-width:${smallScreenBreakpoint}px)`);
@@ -94,9 +94,11 @@ const DefaultLayout = (props) => {
         </h1>
         {/* Jump link to main content for screenreaders
         Must be first interactable element on page */}
-        <a href="#view-title" className="sr-only">
-          <FormattedMessage id="general.skipToContent" />
-        </a>
+        <div className={classes.srFocusedContainer}>
+          <a href="#view-title" className={classes.srFocused}>
+            <FormattedMessage id="general.skipToContent" />
+          </a>
+        </div>
         <TopBar
           settingsOpen={settingsToggled}
           smallScreen={isSmallScreen}
