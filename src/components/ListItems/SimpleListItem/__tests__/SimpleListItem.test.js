@@ -95,9 +95,9 @@ describe('<SimpleListItem />', () => {
     const text = component.find('p').at(0);
 
     // Expect screen reader texts to render correctly
-    expect(srText.text().indexOf(mockProps.text) !== -1).toBeTruthy();
+    expect(component.find('ListItem').props()['aria-label'].indexOf(mockProps.text) !== -1).toBeTruthy();
     // Expect aria-hidden attributes to be placed correctly
-    expect(srText.props()['aria-hidden']).toBeFalsy();
+    expect(srText.props()['aria-hidden']).toBeTruthy();
     expect(text.props()['aria-hidden']).toBeTruthy();
     // Expect role to be set
     expect(component.find('ListItem').props().role).toEqual(null);
@@ -117,10 +117,14 @@ describe('<SimpleListItem />', () => {
     );
 
     const srText = component.find('span').at(1).text();
-    const containsText = srText.indexOf(mockProps.text) !== -1
-      && srText.indexOf('Screen reader text') !== -1;
+    const containsText = srText.indexOf('Screen reader text') !== -1;
+    const alText = component.find('ListItem').props()['aria-label'];
+    const alContainsText = alText.indexOf(mockProps.text) !== -1
+    && alText.indexOf('Screen reader text') !== -1
 
     // Expect screen reader text to contain both text and srText values
+    expect(alContainsText).toBeTruthy();
+    // Expect screen reader only text to exist in separate span element
     expect(containsText).toBeTruthy();
     // Expect role to be set
     expect(component.props().role).toEqual('button');
