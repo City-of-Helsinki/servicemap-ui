@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-access-key */
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { intlShape, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import config from '../../../config';
 
 const ReadSpeakerButton = ({
@@ -61,7 +61,7 @@ const ReadSpeakerButton = ({
 ReadSpeakerButton.propTypes = {
   className: PropTypes.string,
   encodedURL: PropTypes.string,
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   readID: PropTypes.string.isRequired,
 };
 
