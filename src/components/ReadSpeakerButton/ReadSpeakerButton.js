@@ -49,7 +49,9 @@ const ReadSpeakerButton = ({
       >
         <span className="rsbtn_left rsimg rspart">
           <span className="rsbtn_text">
-            <FormattedMessage id="general.readspeaker.buttonText" />
+            <span>
+              <FormattedMessage id="general.readspeaker.buttonText" />
+            </span>
           </span>
         </span>
         <span className="rsbtn_right rsimg rsplay rspart" />
