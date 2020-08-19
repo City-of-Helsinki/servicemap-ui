@@ -5,7 +5,7 @@ const FocusableSRLinks = ({ classes, items }) => (
   <div className={classes.srFocusedContainer}>
     {
       items.map(v => (
-        <a href={v.href} className={classes.srFocused}>
+        <a href={v.href} className={classes.srFocused} key={v.href}>
           {v.text}
         </a>
       ))
