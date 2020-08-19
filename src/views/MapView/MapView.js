@@ -19,6 +19,7 @@ import AddressMarker from './components/AddressMarker';
 import isClient, { parseSearchParams } from '../../utils';
 import swapCoordinates from './utils/swapCoordinates';
 import HomeLogo from '../../components/Logos/HomeLogo';
+import addUnitsToMap from '../../utils/addUnitsToMap';
 
 
 const MapView = (props) => {
@@ -280,7 +281,9 @@ const MapView = (props) => {
       return;
     }
     if (map) {
-      renderUnitMarkers(leaflet, map, data, classes, markerCluster, embeded);
+      console.log('asd');
+      // renderUnitMarkers(leaflet, map, data, classes, markerCluster, embeded);
+      addUnitsToMap(leaflet, map, data, classes, markerCluster, embeded);
     }
   }, [unitList, highlightedUnit, markerCluster, addressUnits, serviceUnits, highlightedDistrict]);
 
