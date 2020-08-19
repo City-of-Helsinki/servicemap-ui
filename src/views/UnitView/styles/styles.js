@@ -1,4 +1,7 @@
 export default theme => ({
+  aTabAdjuster: {
+    marginLeft: theme.spacing.unit,
+  },
   root: {
     height: '100%',
     display: 'flex',
@@ -109,6 +112,10 @@ export default theme => ({
     marginBottom: theme.spacing.unit,
   },
   feedbackButton: {
+    marginLeft: theme.spacing.unitDouble,
+  },
+  rsButton: {
+    marginTop: theme.spacing.unitDouble,
     marginLeft: theme.spacing.unitDouble,
   },
 });

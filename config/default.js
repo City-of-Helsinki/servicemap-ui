@@ -97,4 +97,9 @@ export default {
   "supportedLanguages": [
     "fi", "sv", "en"
   ],
+  "readspeakerLocales": {
+    "fi": 'fi_fi',
+    "en": 'en_uk',
+    "sv": 'sv_se',
+  }
 }

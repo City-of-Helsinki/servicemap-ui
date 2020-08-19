@@ -27,6 +27,7 @@ exports[`<SimpleListItem /> should work 1`] = `
     text="Title text"
   >
     <WithStyles(ListItem)
+      aria-label=" Title text"
       button={false}
       className={null}
       classes={
@@ -45,6 +46,7 @@ exports[`<SimpleListItem /> should work 1`] = `
       <ListItem
         ContainerComponent="li"
         alignItems="center"
+        aria-label=" Title text"
         button={false}
         className={null}
         classes={
@@ -79,6 +81,7 @@ exports[`<SimpleListItem /> should work 1`] = `
           dense={false}
         >
           <li
+            aria-label=" Title text"
             className="MuiListItem-root-7 SimpleListItem-listItem-1 MuiListItem-default-10 MuiListItem-gutters-15"
             disabled={false}
             onClick={null}
@@ -1028,10 +1031,12 @@ exports[`<SimpleListItem /> should work 1`] = `
                         className="MuiTypography-root-25 MuiTypography-body1-34 MuiListItemText-primary-22"
                       >
                         <WithStyles(Typography)
+                          aria-hidden={true}
                           variant="srOnly"
                         >
                           <Typography
                             align="inherit"
+                            aria-hidden={true}
                             classes={
                               Object {
                                 "alignCenter": "MuiTypography-alignCenter-48",
@@ -1519,10 +1524,9 @@ exports[`<SimpleListItem /> should work 1`] = `
                             variant="srOnly"
                           >
                             <span
+                              aria-hidden={true}
                               className="MuiTypography-root-25 MuiTypography-srOnly-46"
-                            >
-                               Title text
-                            </span>
+                            />
                           </Typography>
                         </WithStyles(Typography)>
                         <WithStyles(Typography)
