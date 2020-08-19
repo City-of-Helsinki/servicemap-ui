@@ -1,7 +1,8 @@
-import localeFi from 'react-intl/locale-data/fi';
-import localeEn from 'react-intl/locale-data/en';
-import localeSv from 'react-intl/locale-data/sv';
-import { addLocaleData } from 'react-intl';
+// import localeFi from 'react-intl/locale-data/fi';
+// import localeEn from 'react-intl/locale-data/en';
+// import localeSv from 'react-intl/locale-data/sv';
+
+// import { addLocaleData } from 'react-intl';
 import messagesFi from './fi';
 import messagesEn from './en';
 import messagesSv from './sv';
@@ -26,7 +27,7 @@ export const mutableKeys = [
  * */
 class i18n {
   constructor(props) {
-    addLocaleData([...localeFi, ...localeEn, ...localeSv]); // Add locale data to react-intl
+    // addLocaleData([...localeFi, ...localeEn, ...localeSv]); // Add locale data to react-intl
     const instance = this;
 
     // Set given options

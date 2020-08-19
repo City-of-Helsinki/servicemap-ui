@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { intlShape } from 'react-intl';
 import { EventAvailable } from '@material-ui/icons';
 import SimpleListItem from '../SimpleListItem';
 
@@ -19,7 +18,7 @@ const ReservationItem = ({ getLocaleText, reservation, intl }) => (
 
 ReservationItem.propTypes = {
   getLocaleText: PropTypes.func.isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   reservation: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.objectOf(PropTypes.any),

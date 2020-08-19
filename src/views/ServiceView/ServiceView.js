@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { injectIntl, FormattedMessage } from 'react-intl';
 import { Typography } from '@material-ui/core';
 import SearchBar from '../../components/SearchBar';
 import TitleBar from '../../components/TitleBar';
@@ -45,7 +45,7 @@ class ServiceView extends React.Component {
 
     const customLocation = new CustomLocation(location);
     if (customLocation.coords) {
-      changeCustomUserLocation(customLocation.coords, customLocation.hideMarker);
+      changeCustomUserLocation(customLocation.coords, null, customLocation.hideMarker);
       return;
     }
     changeCustomUserLocation(null);
@@ -204,7 +204,7 @@ ServiceView.propTypes = {
   ]),
   getLocaleText: PropTypes.func.isRequired,
   fetchService: PropTypes.func.isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   map: PropTypes.objectOf(PropTypes.any),
   serviceReducer: PropTypes.shape({

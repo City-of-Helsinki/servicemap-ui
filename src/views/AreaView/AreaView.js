@@ -280,7 +280,6 @@ const AreaView = ({
       dataStructure={dataStructure}
       openItems={openItems}
       handleOpen={handleOpen}
-      formAddressString={formAddressString}
       setSelectedAddress={setSelectedAddress}
       address={districtAddressData.address}
       navigator={navigator}

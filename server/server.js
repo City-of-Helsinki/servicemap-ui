@@ -75,6 +75,15 @@ app.use(`/rdr`, legacyRedirector);
 app.use('/', languageSubdomainRedirect);
 app.use(`/`, makeLanguageHandler);
 app.use('/', unitRedirect);
+// Handle treenode redirect
+app.use('/', (req, res, next) => {
+  if (req.query.treenode != null) {
+    const fullUrl = req.originalUrl.replace(/treenode/g, 'service_node');
+    res.redirect(301, fullUrl);
+    return;
+  }
+  next();
+});
 app.use(paths.event.regex, fetchEventData);
 app.use(paths.unit.regex, fetchSelectedUnitData);
 

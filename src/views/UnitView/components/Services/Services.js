@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import TitledList from '../../../../components/Lists/TitledList';
 import ServiceItem from '../../../../components/ListItems/ServiceItem';
 
@@ -153,7 +153,7 @@ class Services extends React.Component {
 
 Services.propTypes = {
   unit: PropTypes.objectOf(PropTypes.any).isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   getLocaleText: PropTypes.func.isRequired,
 };
 

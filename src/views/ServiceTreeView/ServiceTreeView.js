@@ -6,7 +6,7 @@ import {
 import {
   ArrowDropUp, ArrowDropDown, Search, Cancel,
 } from '@material-ui/icons';
-import { FormattedMessage, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import config from '../../../config';
 import SMButton from '../../components/ServiceMapButton';
 
@@ -235,7 +235,7 @@ const ServiceTreeView = (props) => {
       .some(node => selected.some(item => item.id === node.id));
 
     return (
-      <div key={item.id}>
+      <React.Fragment key={item.id}>
         <ListItem
           disableGutters
           className={`${classes.listItem} ${classes[`level${level}`]}`}
@@ -282,7 +282,7 @@ const ServiceTreeView = (props) => {
             )
           ))}
         </Collapse>
-      </div>
+      </React.Fragment>
     );
   };
 
@@ -307,8 +307,7 @@ const ServiceTreeView = (props) => {
             <>
               <Typography className={`${classes.infoText} ${classes.bold}`}>
                 <FormattedMessage id="settings.city.info" values={{ count: citySettings.length }} />
-                {':'}
-                &nbsp;
+                : &nbsp;
               </Typography>
               <Typography className={classes.infoText}>
                 {cityString}
@@ -433,7 +432,7 @@ const ServiceTreeView = (props) => {
 ServiceTreeView.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   setTreeState: PropTypes.func.isRequired,
   prevServices: PropTypes.arrayOf(PropTypes.any),
   prevSelected: PropTypes.arrayOf(PropTypes.any),
