@@ -32,7 +32,6 @@ class TopBar extends React.Component {
           id={`SettingsButton${category.type}`}
           key={`SettingsButton${category.type}`}
           aria-pressed={settingsOpen === category.type}
-          disableFocusRipple
           className={settingsOpen === category.type
             ? classes.settingsButtonPressed
             : classes.settingsButton

@@ -1,4 +1,7 @@
 export default theme => ({
+  aTabAdjuster: {
+    marginLeft: theme.spacing.unit,
+  },
   root: {
     height: '100%',
     display: 'flex',
@@ -19,11 +22,6 @@ export default theme => ({
   label: {
     paddingTop: theme.spacing.unit * 2,
     paddingBottom: theme.spacing.unit * 2,
-  },
-  cssFocused: {
-    outlineStyle: 'solid',
-    outlineColor: 'blue',
-    outlineWidth: 2,
   },
   input: {
     marginLeft: 8,
@@ -114,6 +112,10 @@ export default theme => ({
     marginBottom: theme.spacing.unit,
   },
   feedbackButton: {
+    marginLeft: theme.spacing.unitDouble,
+  },
+  rsButton: {
+    marginTop: theme.spacing.unitDouble,
     marginLeft: theme.spacing.unitDouble,
   },
 });

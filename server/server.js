@@ -168,6 +168,13 @@ const htmlTemplate = (reactDom, preloadedState, css, jss, locale, helmet) => `
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#141823" />
     ${appDynamicsTrackingCode(process.env.APP_DYNAMICS_APP_KEY)}
+    <script type="text/javascript">
+      window.rsConf = {
+        params: '//cdn1.readspeaker.com/script/11515/webReader/webReader.js?pids=wr', 
+        general: {usePost:true}
+      };
+    </script>
+    <script src="//cdn1.readspeaker.com/script/11515/webReader/webReader.js?pids=wr" type="text/javascript"></script>
   </head>
 
   <body>
