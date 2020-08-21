@@ -57,8 +57,8 @@ const styles = theme => ({
   },
   settingsButtonsContainer: {
     paddingLeft: 50,
-    width: '70%',
     display: 'flex',
+    flex: '1 0 auto',
   },
   settingsButton: {
     textTransform: 'none',
