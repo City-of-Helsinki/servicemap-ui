@@ -42,6 +42,15 @@ if (typeof settings.MAPS === 'undefined') {
     settings.MAPS = 'servicemap,ortographic,guideMap,accessible_map';
 }
 
+if (typeof settings.OLD_MAP_LINK_EN === 'undefined'
+    && typeof settings.OLD_MAP_LINK_FI === 'undefined'
+    && typeof settings.OLD_MAP_LINK_SV === 'undefined') {
+    // If not set default to Helsinki
+    settings.OLD_MAP_LINK_EN = 'https://palvelukartta-vanha.hel.fi/?lang=en';
+    settings.OLD_MAP_LINK_FI = 'https://palvelukartta-vanha.hel.fi/?lang=fi';
+    settings.OLD_MAP_LINK_SV = 'https://palvelukartta-vanha.hel.fi/?lang=sv';
+}
+
 export default {
   "version": version.tag,
   "commit": version.commit,
@@ -108,4 +117,7 @@ export default {
   "supportedLanguages": [
     "fi", "sv", "en"
   ],
+  "old_map_en": settings.OLD_MAP_LINK_EN,
+  "old_map_fi": settings.OLD_MAP_LINK_FI,
+  "old_map_sv": settings.OLD_MAP_LINK_SV,
 }
