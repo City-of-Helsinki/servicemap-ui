@@ -1,4 +1,4 @@
-export default () => ({
+export default ({
   messageText: {
     lineHeight: 'normal',
     whiteSpace: 'pre-wrap',

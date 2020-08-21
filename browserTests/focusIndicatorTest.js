@@ -10,8 +10,9 @@ export default () => {
       const field = inputFields.nth(i);
       const parent = field.parent();
       const disabled = await field.getAttribute('disabled');
+      const tabindex = await field.getAttribute('tabindex');
 
-      if (disabled === undefined || disabled === false) {
+      if ((disabled === undefined || disabled === false) && tabindex !== '-1' ) {
         const focusElement = ClientFunction(() => {
           field().focus();
         }, {
@@ -51,45 +52,48 @@ export default () => {
     for(let i = 0; i < buttonsCount; i++) {  
       const button = buttons.nth(i);
       const disabled = await button.getAttribute('disabled');
+      const tabindex = await button.getAttribute('tabindex');
 
-      if (disabled === undefined || disabled === false) {
-        const focusElement = ClientFunction(() => {
-          button().focus();
-        }, {
-        dependencies: { button }
-        });
-        
-        await focusElement()
-    
-        // Focusing on Mui button element does not display focus border. Element needs to be focused with tab as well.
-        await t
-          .pressKey('tab')
-          .pressKey('shift+tab')
-          .wait(20)
+      if (await button.getAttribute('data-rs-container') !== "readspeaker_button1") { // Ignore readspeaker button. TODO: better implementation  
+        if ((disabled === undefined || disabled === false) && tabindex !== '-1') {
+          const focusElement = ClientFunction(() => {
+            button().focus();
+          }, {
+          dependencies: { button }
+          });
 
-
-        const focusBorder = await button.getStyleProperty('box-shadow')
-        await t
-          .expect(focusBorder !== 'none').ok('Button does not have correct box-shadow focus indicator')
-
-        const parentBackground = await getParentElementBG(await button, await button.parent())
-        if (parentBackground) {
-          const contrastWithBackground = getContrast(parentBackground, await button.getStyleProperty('box-shadow'));
+          await focusElement()
+          
+          // Focusing on Mui button element does not display focus border. Element needs to be focused with tab as well.
           await t
-            .expect(contrastWithBackground).gte(3, `Button "${await button.innerText}" contrast ratio between focus border and parent background is not enough`)
-        } else {
-          console.warn('Parent element background is image or gradient color, check contrast manually.');
-        }
+            .pressKey('tab')
+            .pressKey('shift+tab')
+            .wait(20)
 
-        const elementBackground = await getElementBG(await button)
-        if (elementBackground) {
-          const contrastWithElement = getContrast(elementBackground, await button.getStyleProperty('box-shadow'));
+
+          const focusBorder = await button.getStyleProperty('box-shadow')
           await t
-            .expect(contrastWithElement).gte(3, `Button "${await button.innerText}" contrast ratio between focus border and element is not enough`)
-        } else {
-          console.warn('Element background is image or gradient color, check contrast manually')
+          .expect(focusBorder !== 'none').ok(`Button  "${await button.innerText}" does not have correct box-shadow focus indicator`);
+
+          const parentBackground = await getParentElementBG(await button, await button.parent())
+          if (parentBackground) {
+            const contrastWithBackground = getContrast(parentBackground, focusBorder);
+            await t
+              .expect(contrastWithBackground).gte(3, `Button "${await button.innerText}" contrast ratio between focus border and parent background is not enough`)
+          } else {
+            console.warn('Parent element background is image or gradient color, check contrast manually.');
+          }
+
+          const elementBackground = await getElementBG(await button)
+          if (elementBackground) {
+            const contrastWithElement = getContrast(elementBackground, await button.getStyleProperty('box-shadow'));
+            await t
+              .expect(contrastWithElement).gte(3, `Button "${await button.innerText}" contrast ratio between focus border and element is not enough`)
+          } else {
+            console.warn('Element background is image or gradient color, check contrast manually')
+          }
         }
-      }
+     } 
     }
   })
 }
