@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<FocusableSRLinks /> should work 1`] = `
+<div
+  className="FocusableSRLinks-srFocusedContainer-1"
+>
+  <a
+    className="FocusableSRLinks-srFocused-2"
+    href="#test-href"
+    key="#test-href"
+  >
+    Title text
+  </a>
+</div>
+`;
