@@ -37,6 +37,11 @@ if (typeof settings.INITIAL_MAP_POSITION === 'undefined') {
     settings.INITIAL_MAP_POSITION = '60.170377597530016,24.941309323934886';
 }
 
+if (typeof settings.MAPS === 'undefined') {
+    // If not set default to Helsinki
+    settings.MAPS = 'servicemap,ortographic,guideMap,accessible_map';
+}
+
 export default {
   "version": version.tag,
   "commit": version.commit,
@@ -71,6 +76,7 @@ export default {
   },
   "production": settings.MODE === 'production',
   "initialMapPosition": settings.INITIAL_MAP_POSITION.split(','),
+  "maps": settings.MAPS.split(','),
   "smallContentAreaBreakpoint": 449,
   "mobileUiBreakpoint": 699,
   "municipality": {
