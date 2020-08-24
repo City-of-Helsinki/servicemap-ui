@@ -7,7 +7,7 @@ import MapUtility from '../../utils/mapUtility';
 
 const mapStateToProps = (state) => {
   const { mapRef, navigator } = state;
-  const map = mapRef.leafletElement;
+  const map = mapRef && mapRef.leafletElement;
 
   return {
     mapUtility: map ? new MapUtility({ map }) : null,

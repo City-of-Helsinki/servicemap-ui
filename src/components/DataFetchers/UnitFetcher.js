@@ -49,7 +49,8 @@ class UnitFetcher extends React.Component {
 // Listen to redux state
 const mapStateToProps = (state) => {
   const unit = getSelectedUnit(state);
-  const map = state.mapRef.leafletElement;
+  const { mapRef } = state;
+  const map = mapRef && mapRef.leafletElement;
 
   return {
     unit,

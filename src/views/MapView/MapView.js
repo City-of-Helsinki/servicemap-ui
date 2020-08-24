@@ -130,6 +130,10 @@ const MapView = (props) => {
     setMapRef(mapRef.current);
   };
 
+  const clearMapReference = () => {
+    setMapRef(null);
+  };
+
   const initializeMap = () => {
     if (mapRef.current) {
       // If changing map type, save current map viewport values before changing map
@@ -223,6 +227,11 @@ const MapView = (props) => {
     if (!embeded) {
       findUserLocation();
     }
+
+    return () => {
+      // Clear map reference on unmount
+      clearMapReference();
+    };
   }, []);
 
   useEffect(() => { // Set map ref to redux once map is rendered
