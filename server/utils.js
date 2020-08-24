@@ -99,23 +99,27 @@ export const unitRedirect = (req, res, next) => {
 export const parseInitialMapPositionFromHostname = (req) => {
   // Expecting DOMAIN_MAP_POSITIONS to be a string shaped like
   // hostname1,lat1,lon1:hostname2,lat2,lon2
-  const envValue = process.env.DOMAIN_MAP_POSITIONS;
   let initialMapPosition = process.env.INITIAL_MAP_POSITION || '60.170377597530016,24.941309323934886';
-  if (envValue && req) {
-    const host = req.hostname;
-    const hostsArray = envValue.split(':');
-    if (host && hostsArray.length) {
-      hostsArray.forEach(h => {
-        const values = h.split(',');
-        if (
-          Array.isArray(values)
-          && values.length === 3
-          && host === values[0]
-        ) {
-          initialMapPosition = `${values[1]},${values[2]}`;
-        }
-      });
+  try {
+    const envValue = process.env.DOMAIN_MAP_POSITIONS;
+    if (envValue && req) {
+      const host = req.hostname;
+      const hostsArray = envValue.split(':');
+      if (host && hostsArray.length) {
+        hostsArray.forEach(h => {
+          const values = h.split(',');
+          if (
+            Array.isArray(values)
+            && values.length === 3
+            && host === values[0]
+          ) {
+            initialMapPosition = `${values[1]},${values[2]}`;
+          }
+        });
+      }
     }
+  } catch (e) {
+    console.log('Error while handling parseInitialMapPositionFromHostname. Returning default value:', initialMapPosition);
   }
   return initialMapPosition;
 }
