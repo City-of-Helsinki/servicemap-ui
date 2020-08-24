@@ -134,7 +134,7 @@ app.get('/*', (req, res, next) => {
   const preloadedState = store.getState();
   
   const customValues = {
-    initialMapPosition: parseInitialMapPositionFromHostname(req)
+    initialMapPosition: parseInitialMapPositionFromHostname(req, Sentry)
   };
 
   res.writeHead(200, { 'Content-Type': 'text/html' });
