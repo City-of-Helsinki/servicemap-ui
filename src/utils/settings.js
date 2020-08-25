@@ -23,6 +23,13 @@ class SettingsUtility {
     key => (key),
   );
 
+  // AccessibilityRelatedSettings
+  // Filter mobility and accessibility settings from null values
+  static accessibilityRelatedSettings = [
+    ...this.mobilitySettings.filter(v => v),
+    ...this.accessibilityImpairmentKeys.filter(v => v),
+  ];
+
   static isValidAccessibilitySenseImpairment(key) {
     if (this.accessibilityImpairmentKeys.indexOf(key) < 0) {
       throw new Error(`Invalid value for accessibility sense setting: ${key}`);
