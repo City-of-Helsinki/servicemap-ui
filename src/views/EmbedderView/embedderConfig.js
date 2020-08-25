@@ -12,9 +12,9 @@ const embedderConfig = {
     servicemap: 'en',
   },
   LANGUAGES: {
+    fi: 'suomi',
     en: 'english',
     sv: 'svenska',
-    fi: 'suomi',
   },
   BACKGROUND_MAPS: SettingsUtility.mapSettings,
   CITIES: SettingsUtility.citySettings,
