@@ -402,7 +402,7 @@ export default {
   'settings.aria.opened': 'Settings have been opened',
   'settings.aria.saved': 'Settings have been saved',
 
-  'info.title': 'About the service',
+  'info.title': 'About the service and accessibility statement',
   'info.statement': 'Accessibility statement',
 
   'alert.close': 'Close the notification',
