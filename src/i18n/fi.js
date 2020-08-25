@@ -402,7 +402,7 @@ export default {
   'settings.aria.opened': 'Asetukset avattu',
   'settings.aria.saved': 'Asetukset on tallennettu',
 
-  'info.title': 'Tietoa palvelusta',
+  'info.title': 'Tietoa palvelusta ja saavutettavuusseloste',
   'info.statement': 'Saavutettavuusseloste',
 
   'alert.close': 'Sulje ilmoitus',

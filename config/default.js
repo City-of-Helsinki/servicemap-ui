@@ -32,6 +32,10 @@ if (typeof settings.PRODUCTION_PREFIX === 'undefined') {
     settings.PRODUCTION_PREFIX = 'sm';
 }
 
+if (typeof settings.INITIAL_MAP_POSITION === 'undefined') {
+  settings.INITIAL_MAP_POSITION = '60.170377597530016,24.941309323934886';
+}
+
 export default {
   "version": version.tag,
   "commit": version.commit,
@@ -65,7 +69,7 @@ export default {
     "shortcomings": "#b00021",
   },
   "production": settings.MODE === 'production',
-  "initialMapPosition": [60.170377597530016, 24.941309323934886],
+  "initialMapPosition": settings.INITIAL_MAP_POSITION.split(','),
   "smallContentAreaBreakpoint": 449,
   "mobileUiBreakpoint": 699,
   "municipality": {

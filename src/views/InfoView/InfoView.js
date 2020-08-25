@@ -26,6 +26,10 @@ const InfoView = ({
   );
   const renderFinnishInfo = () => (
     <div className={classes.textContainer}>
+      <Typography component="h3" variant="body2">Palvelukartan saavutettavuus</Typography>
+      <ButtonBase className={classes.linkButton} role="link" onClick={() => handleClick()}>
+        <Typography color="inherit" variant="body2"><FormattedMessage id="info.statement" /></Typography>
+      </ButtonBase>
       <Typography component="h3" variant="body2"><FormattedMessage id="app.title" /></Typography>
       <Typography className={classes.text} variant="body2">
         Palvelukartalta löydät Espoon, Helsingin, Kauniaisten, Vantaan julkiset toimipisteet ja niiden palvelut.
@@ -163,10 +167,6 @@ const InfoView = ({
         then the background map will automatically change into a high-contrast background map. You can change
         the background map in the settings.
       </Typography> */}
-      <Typography component="h3" variant="body2">Palvelukartan saavutettavuus</Typography>
-      <ButtonBase className={classes.linkButton} role="link" onClick={() => handleClick()}>
-        <Typography color="inherit" variant="body2"><FormattedMessage id="info.statement" /></Typography>
-      </ButtonBase>
       <Typography component="h3" variant="body2">Palaute</Typography>
       <Typography className={classes.text} variant="body2">
         Kiitämme kaikesta palautteesta, jotta voimme kehittää Palvelukarttaa yhä paremmaksi.
@@ -315,6 +315,10 @@ const InfoView = ({
 
   const renderEnglishInfo = () => (
     <div className={classes.textContainer}>
+      <Typography component="h3" variant="body2">Accessibility of the Service Map</Typography>
+      <ButtonBase className={classes.linkButton} role="link" onClick={() => handleClick()}>
+        <Typography color="inherit" variant="body2"><FormattedMessage id="info.statement" /></Typography>
+      </ButtonBase>
       <Typography component="h3" variant="body2"><FormattedMessage id="app.title" /></Typography>
       <Typography className={classes.text} variant="body2">
         On the Service Map, you can find the public services units of the cities of Espoo, Helsinki, Kauniainen and
@@ -437,10 +441,6 @@ const InfoView = ({
         then the background map will automatically change into a high-contrast background map. You can change
         the background map in the settings.
       </Typography>
-      <Typography component="h3" variant="body2">Accessibility of the Service Map</Typography>
-      <ButtonBase className={classes.linkButton} role="link" onClick={() => handleClick()}>
-        <Typography color="inherit" variant="body2"><FormattedMessage id="info.statement" /></Typography>
-      </ButtonBase>
       <Typography component="h3" variant="body2">Feedback</Typography>
       <Typography className={classes.text} variant="body2">
         We thank you for all feedback, in order for us to be able to make the Service Map even better.
@@ -607,6 +607,10 @@ const InfoView = ({
 
   const renderSwedishInfo = () => (
     <div className={classes.textContainer}>
+      <Typography component="h3" variant="body2">Servicekartans tillgänglighet</Typography>
+      <ButtonBase className={classes.linkButton} role="link" onClick={() => handleClick()}>
+        <Typography color="inherit" variant="body2"><FormattedMessage id="info.statement" /></Typography>
+      </ButtonBase>
       <Typography component="h3" variant="body2"><FormattedMessage id="app.title" /></Typography>
       <Typography className={classes.text} variant="body2">
         På Servicekartan hittar du offentliga verksamhetsställen och service i Esbo, Grankulla, Helsingfors och
@@ -723,10 +727,6 @@ const InfoView = ({
         then the background map will automatically change into a high-contrast background map. You can change
         the background map in the settings.
       </Typography> */}
-      <Typography component="h3" variant="body2">Servicekartans tillgänglighet</Typography>
-      <ButtonBase className={classes.linkButton} role="link" onClick={() => handleClick()}>
-        <Typography color="inherit" variant="body2"><FormattedMessage id="info.statement" /></Typography>
-      </ButtonBase>
       <Typography component="h3" variant="body2">Respons</Typography>
       <Typography className={classes.text} variant="body2">
         Vi tackar för all respons som hjälper oss att göra Servicekartan ännu bättre.
