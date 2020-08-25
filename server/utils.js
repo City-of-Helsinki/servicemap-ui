@@ -98,17 +98,18 @@ export const unitRedirect = (req, res, next) => {
  * @param {*} Sentry - Sentry object for sending error logs to sentry
  */
 export const parseInitialMapPositionFromHostname = (req, Sentry) => {
-  // Expecting DOMAIN_MAP_POSITIONS to be a string shaped like
-  // hostname1,lat1,lon1:hostname2,lat2,lon2
   let initialMapPosition = process.env.INITIAL_MAP_POSITION || '60.170377597530016,24.941309323934886';
   try {
-    const envValue = process.env.DOMAIN_MAP_POSITIONS;
-    if (envValue && req) {
+    // Expecting DOMAIN_MAP_POSITIONS to be a string shaped like
+    // hostname1,lat1,lon1:hostname2,lat2,lon2
+    const domainMapPos = process.env.DOMAIN_MAP_POSITIONS;
+    if (domainMapPos && req) {
       const host = req.hostname;
-      const hostsArray = envValue.split(':');
-      if (host && hostsArray.length) {
-        hostsArray.forEach(h => {
+      const domainArray = domainMapPos.split(':');
+      if (host && domainArray.length) {
+        domainArray.forEach(h => {
           const values = h.split(',');
+          // Change initialMapPosition if request host is same as given host
           if (
             Array.isArray(values)
             && values.length === 3
