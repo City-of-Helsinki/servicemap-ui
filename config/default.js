@@ -36,6 +36,10 @@ if (typeof settings.INITIAL_MAP_POSITION === 'undefined') {
   settings.INITIAL_MAP_POSITION = '60.170377597530016,24.941309323934886';
 }
 
+if (typeof settings.CITIES === 'undefined') {
+  settings.CITIES = 'helsinki,espoo,vantaa,kauniainen';
+}
+
 export default {
   "version": version.tag,
   "commit": version.commit,
@@ -70,6 +74,7 @@ export default {
   },
   "production": settings.MODE === 'production',
   "initialMapPosition": settings.INITIAL_MAP_POSITION.split(','),
+  "cities": settings.CITIES.split(','),
   "smallContentAreaBreakpoint": 449,
   "mobileUiBreakpoint": 699,
   "municipality": {

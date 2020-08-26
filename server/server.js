@@ -196,7 +196,8 @@ const htmlTemplate = (reactDom, preloadedState, css, jss, locale, helmet, custom
         window.nodeEnvSettings.HEARING_MAP_API = "${process.env.HEARING_MAP_API}";
         window.nodeEnvSettings.MODE = "${process.env.MODE}";
         window.nodeEnvSettings.INITIAL_MAP_POSITION = "${customValues.initialMapPosition}";
-        
+        window.nodeEnvSettings.CITIES = "${process.env.CITIES}";
+
         window.appVersion = {};
         window.appVersion.tag = "${versionTag}";
         window.appVersion.commit = "${versionCommit}";

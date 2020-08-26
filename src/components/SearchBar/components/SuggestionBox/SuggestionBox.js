@@ -51,12 +51,10 @@ const SuggestionBox = (props) => {
     }), []);
 
   /* TODO: Utilize city information with search queries
-  const cities = [
-    ...settings.helsinki ? ['Helsinki'] : [],
-    ...settings.espoo ? ['Espoo'] : [],
-    ...settings.vantaa ? ['Vantaa'] : [],
-    ...settings.kauniainen ? ['Kauniainen'] : [],
-  ];
+  let cities = []
+  config.cities.forEach((city) => {
+    cities.push( ...settings[city] ? [city] : []);
+  });
   */
 
   const slicedSuggestions = () => {

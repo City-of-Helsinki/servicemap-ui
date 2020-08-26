@@ -20,15 +20,13 @@ import {
   ColorblindIcon,
   HearingIcon,
   VisualImpairmentIcon,
-  HelsinkiIcon,
-  EspooIcon,
-  VantaaIcon,
-  KauniainenIcon,
   getIcon,
 } from '../SMIcon';
+import SMIcon from '../SMIcon/SMIcon';
 import SettingsTitle from './SettingsTitle';
 import TitleBar from '../TitleBar';
 import SMButton from '../ServiceMapButton';
+import config from '../../../config';
 
 class Settings extends React.Component {
   buttonID = 'SettingsButton';
@@ -52,10 +50,6 @@ class Settings extends React.Component {
       hearingAid,
       mobility,
       visuallyImpaired,
-      helsinki,
-      espoo,
-      vantaa,
-      kauniainen,
       mapType,
     } = settings;
 
@@ -66,12 +60,11 @@ class Settings extends React.Component {
       hearingAid,
       mobility: mobility !== null ? mobility : 'none',
       visuallyImpaired,
-      helsinki,
-      espoo,
-      vantaa,
-      kauniainen,
       mapType: mapType !== false ? mapType : 'servicemap',
+      cities: {},
     };
+
+    config.cities.forEach((city) => { newCurrent.cities[city] = settings.cities[city]; });
 
     this.setState({
       currentSettings: newCurrent,
@@ -96,14 +89,10 @@ class Settings extends React.Component {
     let changed = false;
     let settingsByType = currentSettings;
 
-    if (settings.toggled === 'citySettings') {
-      settingsByType = {
-        helsinki: currentSettings.helsinki,
-        espoo: currentSettings.espoo,
-        vantaa: currentSettings.vantaa,
-        kauniainen: currentSettings.kauniainen,
-      };
-    } else if (settings.toggled === 'mapSettings') {
+    if (!('cities' in currentSettings)) {
+      currentSettings.cities = {};
+    }
+    if (settings.toggled === 'mapSettings') {
       settingsByType = {
         mapType: currentSettings.mapType,
       };
@@ -120,19 +109,26 @@ class Settings extends React.Component {
       if (changed) {
         return;
       }
+      if (key === 'cities') {
+        config.cities.forEach((city) => {
+          if (settings.cities[city] !== currentSettings.cities[city]) {
+            changed = true;
+          }
+        });
+      } else {
+        const settingsHasKey = Object.prototype.hasOwnProperty.call(settings, key);
+        const currentHasKey = Object.prototype.hasOwnProperty.call(settingsByType, key);
+        if (settingsHasKey && currentHasKey) {
+          const a = settings[key];
+          let b = settingsByType[key];
+          // Handle comparison with no mobility settings set
+          if (key === 'mobility' && b === 'none') {
+            b = null;
+          }
 
-      const settingsHasKey = Object.prototype.hasOwnProperty.call(settings, key);
-      const currentHasKey = Object.prototype.hasOwnProperty.call(settingsByType, key);
-      if (settingsHasKey && currentHasKey) {
-        const a = settings[key];
-        let b = settingsByType[key];
-        // Handle comparison with no mobility settings set
-        if (key === 'mobility' && b === 'none') {
-          b = null;
-        }
-
-        if (a !== b) {
-          changed = true;
+          if (a !== b) {
+            changed = true;
+          }
         }
       }
     });
@@ -207,7 +203,11 @@ class Settings extends React.Component {
     const newCurrent = {
       ...currentSettings,
     };
-    newCurrent[key] = value;
+    if (config.cities.includes(key)) {
+      newCurrent.cities[key] = value;
+    } else {
+      newCurrent[key] = value;
+    }
 
     this.setState({
       currentSettings: newCurrent,
@@ -236,10 +236,7 @@ class Settings extends React.Component {
       toggleVisuallyImpaired,
       setMobility,
       setMapType,
-      toggleHelsinki,
-      toggleEspoo,
-      toggleVantaa,
-      toggleKauniainen,
+      toggleCity,
       changeTheme,
       settings,
     } = this.props;
@@ -284,11 +281,8 @@ class Settings extends React.Component {
       hearingAid: toggleHearingAid,
       visuallyImpaired: toggleVisuallyImpaired,
       mobility: setMobility,
-      helsinki: toggleHelsinki,
-      espoo: toggleEspoo,
-      vantaa: toggleVantaa,
-      kauniainen: toggleKauniainen,
       mapType: setMapType,
+      cities: toggleCity,
     };
 
     try {
@@ -486,28 +480,7 @@ class Settings extends React.Component {
     const { currentSettings } = this.state;
     const { classes, intl } = this.props;
 
-    const citySettingsList = {
-      helsinki: {
-        labelId: 'settings.city.helsinki',
-        value: currentSettings.helsinki,
-        icon: <HelsinkiIcon className={classes.icon} />,
-      },
-      espoo: {
-        labelId: 'settings.city.espoo',
-        value: currentSettings.espoo,
-        icon: <EspooIcon className={classes.icon} />,
-      },
-      vantaa: {
-        labelId: 'settings.city.vantaa',
-        value: currentSettings.vantaa,
-        icon: <VantaaIcon className={classes.icon} />,
-      },
-      kauniainen: {
-        labelId: 'settings.city.kauniainen',
-        value: currentSettings.kauniainen,
-        icon: <KauniainenIcon className={classes.icon} />,
-      },
-    };
+    const citySettingsList = config.cities;
 
     return (
       <>
@@ -522,35 +495,29 @@ class Settings extends React.Component {
           <FormGroup row role="group" aria-labelledby="CitySettings">
             <List className={classes.list}>
               {
-              Object.keys(citySettingsList).map((key) => {
-                if (Object.prototype.hasOwnProperty.call(citySettingsList, key)) {
-                  const item = citySettingsList[key];
-                  return (
-                    <ListItem className={classes.checkbox} key={key}>
-                      <FormControlLabel
-                        control={(
-                          <Checkbox
-                            color="primary"
-                            checked={!!item.value}
-                            value={key}
-                            onChange={() => {
-                              this.setAlert(false);
-                              this.handleChange(key, !item.value);
-                            }}
-                          />
+                citySettingsList.map(key => (
+                  <ListItem className={classes.checkbox} key={key}>
+                    <FormControlLabel
+                      control={(
+                        <Checkbox
+                          color="primary"
+                          checked={!!currentSettings.cities[key]}
+                          value={key}
+                          onChange={() => {
+                            this.setAlert(false);
+                            this.handleChange(key, !currentSettings.cities[key]);
+                          }}
+                        />
                         )}
-                        label={(
-                          <>
-                            {item.icon}
-                            <FormattedMessage id={item.labelId} />
-                          </>
+                      label={(
+                        <>
+                          <SMIcon icon={`icon-icon-coat-of-arms-${key}`} />
+                          <FormattedMessage id={`settings.city.${key}`} />
+                        </>
                         )}
-                      />
-                    </ListItem>
-                  );
-                }
-                return null;
-              })
+                    />
+                  </ListItem>
+                ))
             }
             </List>
           </FormGroup>
@@ -761,10 +728,7 @@ Settings.propTypes = {
   toggleColorblind: PropTypes.func.isRequired,
   toggleHearingAid: PropTypes.func.isRequired,
   toggleVisuallyImpaired: PropTypes.func.isRequired,
-  toggleHelsinki: PropTypes.func.isRequired,
-  toggleEspoo: PropTypes.func.isRequired,
-  toggleVantaa: PropTypes.func.isRequired,
-  toggleKauniainen: PropTypes.func.isRequired,
+  toggleCity: PropTypes.func.isRequired,
   setMobility: PropTypes.func.isRequired,
   setMapType: PropTypes.func.isRequired,
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
