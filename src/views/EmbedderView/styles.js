@@ -14,6 +14,10 @@ export default (theme) => {
       margin: 0,
       marginBottom: theme.spacing.unitDouble,
     },
+    checkbox: {
+      paddingLeft: 0,
+      paddingRight: 0,
+    },
     closeButton: {
       position: 'absolute',
       top: 0,

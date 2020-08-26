@@ -21,6 +21,9 @@ export const getEmbedURL = (url, params = {}) => {
   if (data.q && params.defaultLanguage) {
     data.search_language = params.defaultLanguage;
   }
+  if (params.transit) {
+    data.transit = params.transit ? 1 : 0;
+  }
 
   uri.search(data);
 

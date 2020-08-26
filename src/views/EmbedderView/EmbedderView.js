@@ -72,12 +72,13 @@ const EmbedderView = ({
   const [fixedHeight, setFixedHeight] = useState(defaultFixedHeight);
   const [ratioHeight, setRatioHeight] = useState(initialRatio);
   const [heightMode, setHeightMode] = useState('ratio');
+  const [transit, setTransit] = useState(false);
 
   const dialogRef = useRef();
 
   const renderWrapperStyle = () => `position: relative; width:100%; padding-bottom:${ratioHeight}%;`;
   const embedUrl = getEmbedURL(url, {
-    language, map, city, service, defaultLanguage,
+    language, map, city, service, defaultLanguage, transit,
   });
   const iframeTitle = intl.formatMessage({ id: 'embedder.iframe.title' });
 
@@ -390,6 +391,27 @@ const EmbedderView = ({
     );
   };
 
+  const renderTransitControl = () => {
+    const controls = [
+      {
+        key: 'transit',
+        value: transit,
+        onChange: v => setTransit(v),
+        icon: null,
+        labelId: 'embedder.transit.label',
+      },
+    ];
+
+    return (
+      <EmbedController
+        titleID="embedder.transit.title"
+        titleComponent="h2"
+        checkboxControls={controls}
+        checkboxLabelledBy="embedder.transit.title"
+      />
+    );
+  }
+
   return (
     <div ref={dialogRef}>
       <div className={classes.appBar} />
@@ -447,6 +469,10 @@ const EmbedderView = ({
               titleComponent="h2"
               widthMode={widthMode}
             />
+
+            {
+              renderTransitControl()
+            }
           </form>
           {
             renderEmbedHTML()

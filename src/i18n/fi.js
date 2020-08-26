@@ -101,6 +101,8 @@ export default {
   'embedder.service.all': 'Kartalla näytetään kaikki toimipisteet. Jos aluerajaus on liian laaja, upotuksen näyttäminen hidastuu ja sen havainnollisuus vähenee.',
   'embedder.title': 'Upotustyökalu',
   'embedder.title.info': 'Mikäli haluat tehdä upotuksen hakutuloksen mukaan tee haku ensin.',
+  'embedder.transit.title': 'Pysäkkien näkyvyys kartan lähietäisyydellä',
+  'embedder.transit.label': 'Näytä joukkoliikenteen pysäkit',
   'embedder.url.title': 'Kopioi osoite',
   'embedder.width.title': 'Upotuksen leveys',
   'embedder.width.aria.label': 'Valitse upotuksen leveys',

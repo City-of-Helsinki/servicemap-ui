@@ -370,19 +370,14 @@ const MapView = (props) => {
             mapOptions={mapOptions}
             map={mapRef.current}
           />
-
-          {!embeded
-            && (
-              <TransitStops
-                getLocaleText={getLocaleText}
-                Marker={Marker}
-                Popup={Popup}
-                map={mapRef.current}
-                mapObject={mapObject}
-                isMobile={isMobile}
-              />
-            )
-          }
+          <TransitStops
+            getLocaleText={getLocaleText}
+            Marker={Marker}
+            Popup={Popup}
+            map={mapRef.current}
+            mapObject={mapObject}
+            isMobile={isMobile}
+          />
           {!embeded && mapClickPoint && ( // Draw address popoup on mapclick to map
             <AddressPopup
               Popup={Popup}

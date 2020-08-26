@@ -5,6 +5,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import TransitStopInfo from './TransitStopInfo';
 import { fetchStops } from '../../utils/transitFetch';
 import { transitIconSize } from '../../config/mapConfig';
+import { isEmbed } from '../../../../utils/path';
 
 class TransitStops extends React.Component {
   constructor(props) {
@@ -50,7 +51,12 @@ class TransitStops extends React.Component {
     const transitZoom = isMobile
       ? mapObject.options.mobileTransitZoom : mapObject.options.transitZoom;
     const currentZoom = map.leafletElement.getZoom();
-    return currentZoom >= transitZoom;
+
+    const url = new URL(window.location);
+    const embeded = isEmbed({ url: url.toString() });
+    const showTransit = !embeded || url.searchParams.get('transit') === '1';
+
+    return (currentZoom >= transitZoom) && showTransit;
   }
 
   getTransitIcon = (type) => {
