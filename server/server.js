@@ -185,6 +185,10 @@ const htmlTemplate = (reactDom, preloadedState, css, jss, locale, helmet) => `
         window.nodeEnvSettings.HEARING_MAP_API = "${process.env.HEARING_MAP_API}";
         window.nodeEnvSettings.MODE = "${process.env.MODE}";
         window.nodeEnvSettings.INITIAL_MAP_POSITION = "${process.env.INITIAL_MAP_POSITION}";
+        window.nodeEnvSettings.MAPS = "${process.env.MAPS}";
+        window.nodeEnvSettings.OLD_MAP_LINK_EN = "${process.env.OLD_MAP_LINK_EN}";
+        window.nodeEnvSettings.OLD_MAP_LINK_FI = "${process.env.OLD_MAP_LINK_FI}";
+        window.nodeEnvSettings.OLD_MAP_LINK_SV = "${process.env.OLD_MAP_LINK_SV}";
         
         window.appVersion = {};
         window.appVersion.tag = "${versionTag}";
