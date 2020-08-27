@@ -26,6 +26,7 @@ const hideServicesIn = [
   paths.search.regex,
   paths.unit.regex,
   paths.service.regex,
+  paths.address.regex,
 ];
 
 // Timeout for handling width and height input changes
