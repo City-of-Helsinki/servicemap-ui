@@ -73,22 +73,20 @@ export const transform = (url, {
 };
 
 export const strip = (url, parameters) => {
-  if (parameters.resource == null) {
-    return url;
-  }
-  if (parameters.query.bbox != null) {
-    delete parameters.query.bbox;
-  }
   const uri = URI(url);
   const query = uri.search(true);
-  if (query.bbox != null) {
-    delete query.bbox;
+  if (query.p != null) {
+    delete query.p;
   }
+  if (parameters.resource != null) {
+    if (query.bbox != null) {
+      delete query.bbox;
+    }
+  }
+
   uri.search(query);
   return uri.toString();
 };
-
-// const IE_FAULTY_URL = /#(.*[\/\?].*)+$/;
 
 /**
  * Verify url and return correct url or false if invalid
