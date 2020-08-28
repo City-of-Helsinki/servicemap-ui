@@ -73,7 +73,7 @@ export const searchParamFetchOptions = (location, redirectNode, includeService =
 
     // Handle bbox and level
     if (bbox) {
-      const nLevel = level || 'customer_service'; // Taken from old servicemap
+      const nLevel = level || 'none';
       if (nLevel !== 'none') {
         options.level = nLevel;
         // Swapping latLngs
