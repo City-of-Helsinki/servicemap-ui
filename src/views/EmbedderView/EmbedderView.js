@@ -74,12 +74,13 @@ const EmbedderView = ({
   const [ratioHeight, setRatioHeight] = useState(initialRatio);
   const [heightMode, setHeightMode] = useState('ratio');
   const [transit, setTransit] = useState(false);
+  const [showUnits, setShowUnits] = useState(true);
 
   const dialogRef = useRef();
 
   const renderWrapperStyle = () => `position: relative; width:100%; padding-bottom:${ratioHeight}%;`;
   const embedUrl = getEmbedURL(url, {
-    language, map, city, service, defaultLanguage, transit,
+    language, map, city, service, defaultLanguage, transit, showUnits,
   });
   const iframeTitle = intl.formatMessage({ id: 'embedder.iframe.title' });
 
@@ -392,23 +393,30 @@ const EmbedderView = ({
     );
   };
 
-  const renderTransitControl = () => {
+  const renderMapOptionsControl = () => {
     const controls = [
       {
         key: 'transit',
         value: transit,
         onChange: v => setTransit(v),
         icon: null,
-        labelId: 'embedder.transit.label',
+        labelId: 'embedder.options.label.transit',
       },
+      {
+        key: 'units',
+        value: showUnits,
+        onChange: v => setShowUnits(v),
+        icon: null,
+        labelId: 'embedder.options.label.units',
+      }
     ];
 
     return (
       <EmbedController
-        titleID="embedder.transit.title"
+        titleID="embedder.options.title"
         titleComponent="h2"
         checkboxControls={controls}
-        checkboxLabelledBy="embedder.transit.title"
+        checkboxLabelledBy="embedder.options.title"
       />
     );
   }
@@ -472,7 +480,7 @@ const EmbedderView = ({
             />
 
             {
-              renderTransitControl()
+              renderMapOptionsControl()
             }
           </form>
           {

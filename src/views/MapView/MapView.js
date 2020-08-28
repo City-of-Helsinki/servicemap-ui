@@ -282,13 +282,14 @@ const MapView = (props) => {
 
     const data = getMapUnits();
     const map = mapRef && mapRef.current ? mapRef.current.leafletElement : null;
+    const showUnits = new URLSearchParams(location.search).get('units') !== 'none';
     // Clear layers if no units currently set for data
     // caused by while fetching
     if (!data.units.length || (currentPage === 'address' && highlightedDistrict)) {
       markerCluster.clearLayers();
       return;
     }
-    if (map) {
+    if (map && showUnits) {
       renderUnitMarkers(leaflet, map, data, classes, markerCluster, embeded);
     }
   }, [unitList, highlightedUnit, markerCluster, addressUnits, serviceUnits, highlightedDistrict]);

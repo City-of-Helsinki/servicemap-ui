@@ -24,6 +24,9 @@ export const getEmbedURL = (url, params = {}) => {
   if (params.transit) {
     data.transit = params.transit ? 1 : 0;
   }
+  if (params.showUnits === false) {
+    data.units = 'none';
+  }
 
   uri.search(data);
 
