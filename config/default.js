@@ -120,4 +120,9 @@ export default {
   "old_map_en": settings.OLD_MAP_LINK_EN,
   "old_map_fi": settings.OLD_MAP_LINK_FI,
   "old_map_sv": settings.OLD_MAP_LINK_SV,
+  "readspeakerLocales": {
+    "fi": 'fi_fi',
+    "en": 'en_uk',
+    "sv": 'sv_se',
+  }
 }

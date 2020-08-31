@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Typography } from '@material-ui/core';
-import { FormattedMessage, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { Map, Mail, Hearing } from '@material-ui/icons';
 import SearchBar from '../../components/SearchBar';
 import { focusToPosition, focusDistrict } from '../MapView/utils/mapActions';
@@ -28,6 +28,7 @@ import SimpleListItem from '../../components/ListItems/SimpleListItem';
 import TitledList from '../../components/Lists/TitledList';
 import DesktopComponent from '../../components/DesktopComponent';
 import MobileComponent from '../../components/MobileComponent';
+import ReadSpeakerButton from '../../components/ReadSpeakerButton';
 
 const UnitView = (props) => {
   const {
@@ -143,6 +144,14 @@ const UnitView = (props) => {
     return null;
   }
 
+  // Renders hidden title text for readpseaker
+  const renderTitleForRS = () => {
+    const title = unit && unit.name ? getLocaleText(unit.name) : '';
+    return (
+      <Typography variant="srOnly" aria-hidden>{title}</Typography>
+    );
+  }
+
   const renderDetailTab = () => {
     if (!unit || !unit.complete) {
       return <></>;
@@ -150,58 +159,74 @@ const UnitView = (props) => {
 
     return (
       <div className={classes.content}>
-        {/* Contract type */}
-        <Container margin text>
-          <Typography variant="body2">
-            {
-              unit.contract_type
-              && unit.contract_type.description
-              && `${uppercaseFirst(getLocaleText(unit.contract_type.description))}. `
-            }
-            {
-              unit.data_source
-              && <FormattedMessage id="unit.data_source" defaultMessage={'Source: {data_source}'} values={{ data_source: unit.data_source }} />
-            }
-          </Typography>
-        </Container>
+        <ReadSpeakerButton className={classes.rsButton} readID="rscontent-unitdetail" />
+        <div id="rscontent-unitdetail">
+          {
+            renderTitleForRS()
+          }
+          {/* Contract type */}
+          <Container margin text>
+            <Typography variant="body2">
+              {
+                unit.contract_type
+                && unit.contract_type.description
+                && `${uppercaseFirst(getLocaleText(unit.contract_type.description))}. `
+              }
+              {
+                unit.data_source
+                && <FormattedMessage id="unit.data_source" defaultMessage={'Source: {data_source}'} values={{ data_source: unit.data_source }} />
+              }
+            </Typography>
+          </Container>
 
-        {/* View Components */}
-        <ContactInfo
-          unit={unit}
-          userLocation={userLocation}
-          getLocaleText={getLocaleText}
-          intl={intl}
-        />
-        <SocialMediaLinks unit={unit} getLocaleText={getLocaleText} />
-        <Highlights unit={unit} getLocaleText={getLocaleText} />
-        <Description unit={unit} getLocaleText={getLocaleText} />
-        <UnitLinks unit={unit} />
-        <ElectronicServices unit={unit} />
-        <DesktopComponent>
-          {feedbackButton()}
-        </DesktopComponent>
+          {/* View Components */}
+          <ContactInfo
+            unit={unit}
+            userLocation={userLocation}
+            getLocaleText={getLocaleText}
+            intl={intl}
+          />
+          <SocialMediaLinks unit={unit} getLocaleText={getLocaleText} />
+          <Highlights unit={unit} getLocaleText={getLocaleText} />
+          <Description unit={unit} getLocaleText={getLocaleText} />
+          <UnitLinks unit={unit} />
+          <ElectronicServices unit={unit} />
+          <DesktopComponent>
+            {feedbackButton()}
+          </DesktopComponent>
+        </div>
       </div>
     );
   };
 
   const renderAccessibilityTab = () => (
     <div className={classes.content}>
-      {hearingMaps && (
-        <TitledList titleComponent="h4" title={intl.formatMessage({ id: 'unit.accessibility.hearingMaps' })}>
-          {hearingMaps.map(item => (
-            <SimpleListItem
-              role="link"
-              link
-              divider
-              icon={<Hearing />}
-              key={item.name}
-              text={`${item.name} ${intl.formatMessage({ id: 'unit.accessibility.hearingMaps.extra' })}`}
-              handleItemClick={() => window.open(item.url)}
-            />
-          ))}
-        </TitledList>
-      )}
-      <AccessibilityInfo titleAlways headingLevel={4} />
+      <ReadSpeakerButton
+        className={classes.rsButton}
+        readID="rscontent"
+        encodedURL={encodeURI(`palvelukartta.test.hel.ninja${location.pathname}${location.search}`)}
+      />
+      <div id="rscontent" className={classes.aTabAdjuster}>
+        {
+          renderTitleForRS()
+        }
+        {hearingMaps && (
+          <TitledList titleComponent="h4" title={intl.formatMessage({ id: 'unit.accessibility.hearingMaps' })}>
+            {hearingMaps.map(item => (
+              <SimpleListItem
+                role="link"
+                link
+                divider
+                icon={<Hearing />}
+                key={item.name}
+                text={`${item.name} ${intl.formatMessage({ id: 'unit.accessibility.hearingMaps.extra' })}`}
+                handleItemClick={() => window.open(item.url)}
+              />
+            ))}
+          </TitledList>
+        )}
+        <AccessibilityInfo titleAlways headingLevel={4} />
+      </div>
     </div>
   );
 
@@ -389,7 +414,7 @@ UnitView.propTypes = {
   match: PropTypes.objectOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   getLocaleText: PropTypes.func.isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   reservations: PropTypes.arrayOf(PropTypes.any),
   userLocation: PropTypes.objectOf(PropTypes.any),

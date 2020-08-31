@@ -26,10 +26,13 @@ export default {
   'address.services.header': 'Service för dem som bor här',
   'address.services.info': 'Kommunala tjänster vars verksamhetsområde omfattar positionen',
   'address.area.link': 'Bekanta dig med områdena på kartan.',
-  'address.emergency_care.common': 'När den egna hälsostationen är stängd och på natten kl. 22-8 är jour för barn och unga under 16 år på <a class="link" href="/unit/7299">Barnkliniken</a> [<a class="external-link" href="http://www.hus.fi/sv/sjukvard/sjukhus/barnkliniken/Sidor/default.aspx">hemsidor</a>], och jour för vuxna på',
+  'address.emergency_care.common': 'När den egna hälsostationen är stängd och på natten kl. 22-8 är jour för barn och unga under 16 år på <a>Barnkliniken</a> [<a1>hemsidor</a1>], och jour för vuxna på',
+  'address.emergency_care.children_hospital.link': '/{locale}/unit/7299',
+  'address.emergency_care.common.link': 'https://www.hus.fi/sv/sjukvard/sjukhus/nyabarnsjukhuset/Sidor/default.aspx',
   'address.emergency_care.unit.26107': 'Malms sjukhuset',
   'address.emergency_care.unit.26104': 'Haartmanska sjukhuset',
-  'address.emergency_care.link': '[<a href="http://www.hel.fi/www/Helsinki/fi/sosiaali-ja-terveyspalvelut/terveyspalvelut/paivystys/" class="external-link">joursidor</a>]',
+  'address.emergency_care.link': 'http://www.hel.fi/www/Helsinki/fi/sosiaali-ja-terveyspalvelut/terveyspalvelut/paivystys/',
+  'address.emergency_care.link.text': '[<a>joursidor</a>]',
 
   // Area
   'area.searchbar.infoText.address': 'Skriv din hemadress',
@@ -38,7 +41,7 @@ export default {
   'area.tab.services': 'Tjänster i området',
   'area.services.local': 'Tjänster i ditt eget område',
   'area.services.nearby': 'Tjänster i närområdena',
-  'area.info': 'Valitse alue, jonka palveluista haluat tietoa. Kirjoittamalla alla olevaan hakukenttään kotiosoitteesi saat näkyville karttaan ja Valitun alueen palvelut -välilehdelle alueet ja piirit, joihin kuulut', // TODO: translate
+  'area.info': 'Välj ett område, vars tjänster du vill ha information om. Genom att skriva din hemadress i sökfältet öppnas en karta och under fliken Tjänster i området visas de områden och distrikt som du hör till',
   'area.choose.district': 'Väl område',
   'area.noSelection': 'Väl område under fliken Val av område',
   'area.list.geographical': 'Geografisk',
@@ -166,6 +169,9 @@ export default {
   'general.search': 'Sök',
   'general.distance.meters': 'Meters avstånd',
   'general.distance.kilometers': 'Kilometers avstånd',
+  // Readspeaker
+  'general.readspeaker.buttonText': 'Lyssna', // TODO: verify
+  'general.readspeaker.title': 'Lyssna med ReadSpeaker webReader', // TODO: verify
 
   // Home
   'home.buttons.settings': 'Spara dina egna stads- och tillgänglighetsinställningar',
@@ -396,7 +402,7 @@ export default {
   'settings.aria.opened': 'Inställningarna har öppnats',
   'settings.aria.saved': 'Inställningarna har sparats',
 
-  'info.title': 'Om tjänsten',
+  'info.title': 'Om tjänsten och tillgänglighetsredogörelsen',
   'info.statement': 'Tillgänglighetsredogörelsen',
 
   'alert.close': 'Stäng meddelande',

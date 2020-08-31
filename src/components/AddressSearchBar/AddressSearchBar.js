@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { intlShape, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import {
   InputBase, IconButton, Paper, List, ListItem, Typography, Divider,
 } from '@material-ui/core';
@@ -15,6 +15,8 @@ const AddressSearchBar = ({
   locale,
   containerClassName,
   inputClassName,
+  setOrder,
+  setDirection,
   getLocaleText,
   classes,
   intl,
@@ -34,6 +36,8 @@ const AddressSearchBar = ({
     setSearchBarValue(formAddressString(address));
     setAddressResults([]);
     setCurrentLocation(formAddressString(address));
+    setDirection('asc');
+    setOrder('distance');
     handleAddressChange(address);
   };
 
@@ -146,9 +150,11 @@ const AddressSearchBar = ({
 
 AddressSearchBar.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   defaultAddress: PropTypes.objectOf(PropTypes.any),
   handleAddressChange: PropTypes.func.isRequired,
+  setOrder: PropTypes.func.isRequired,
+  setDirection: PropTypes.func.isRequired,
   title: PropTypes.objectOf(PropTypes.any),
   locale: PropTypes.string.isRequired,
   containerClassName: PropTypes.string,

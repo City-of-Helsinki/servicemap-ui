@@ -10,7 +10,7 @@ import thunk from 'redux-thunk';
 import config from '../config';
 import rootReducer from '../src/redux/rootReducer';
 import App from '../src/App';
-import { makeLanguageHandler, languageSubdomainRedirect, unitRedirect } from './utils';
+import { makeLanguageHandler, languageSubdomainRedirect, unitRedirect, parseInitialMapPositionFromHostname } from './utils';
 import { setLocale } from '../src/redux/actions/user';
 import { SheetsRegistry } from 'jss';
 import { Helmet } from 'react-helmet';
@@ -89,7 +89,7 @@ app.use(paths.unit.regex, fetchSelectedUnitData);
 
 app.get('/*', (req, res, next) => {
   // CSS for all rendered React components
-  const css = new Set(); 
+  const css = new Set();
   const insertCss = (...styles) => styles.forEach(style => css.add(style._getCss()));
 
 
@@ -133,8 +133,12 @@ app.get('/*', (req, res, next) => {
 
   const preloadedState = store.getState();
 
+  const customValues = {
+    initialMapPosition: parseInitialMapPositionFromHostname(req, Sentry)
+  };
+
   res.writeHead(200, { 'Content-Type': 'text/html' });
-  res.end(htmlTemplate(reactDom, preloadedState, css, jss, locale, helmet));
+  res.end(htmlTemplate(reactDom, preloadedState, css, jss, locale, helmet, customValues));
 });
 
 // The error handler must be before any other error middleware
@@ -145,7 +149,7 @@ if (Sentry) {
 console.log(`Starting server on port ${process.env.PORT || 2048}`);
 app.listen(process.env.PORT || 2048);
 
-const htmlTemplate = (reactDom, preloadedState, css, jss, locale, helmet) => `
+const htmlTemplate = (reactDom, preloadedState, css, jss, locale, helmet, customValues) => `
 <!DOCTYPE html>
 <html lang="${locale || 'fi'}">
   <head>
@@ -168,6 +172,13 @@ const htmlTemplate = (reactDom, preloadedState, css, jss, locale, helmet) => `
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#141823" />
     ${appDynamicsTrackingCode(process.env.APP_DYNAMICS_APP_KEY)}
+    <script type="text/javascript">
+      window.rsConf = {
+        params: '//cdn1.readspeaker.com/script/11515/webReader/webReader.js?pids=wr',
+        general: {usePost:true}
+      };
+    </script>
+    <script src="//cdn1.readspeaker.com/script/11515/webReader/webReader.js?pids=wr" type="text/javascript"></script>
   </head>
 
   <body>
@@ -184,12 +195,12 @@ const htmlTemplate = (reactDom, preloadedState, css, jss, locale, helmet) => `
         window.nodeEnvSettings.FEEDBACK_URL = "${process.env.FEEDBACK_URL}";
         window.nodeEnvSettings.HEARING_MAP_API = "${process.env.HEARING_MAP_API}";
         window.nodeEnvSettings.MODE = "${process.env.MODE}";
-        window.nodeEnvSettings.INITIAL_MAP_POSITION = "${process.env.INITIAL_MAP_POSITION}";
+        window.nodeEnvSettings.INITIAL_MAP_POSITION = "${customValues.initialMapPosition}";
         window.nodeEnvSettings.MAPS = "${process.env.MAPS}";
         window.nodeEnvSettings.OLD_MAP_LINK_EN = "${process.env.OLD_MAP_LINK_EN}";
         window.nodeEnvSettings.OLD_MAP_LINK_FI = "${process.env.OLD_MAP_LINK_FI}";
         window.nodeEnvSettings.OLD_MAP_LINK_SV = "${process.env.OLD_MAP_LINK_SV}";
-        
+
         window.appVersion = {};
         window.appVersion.tag = "${versionTag}";
         window.appVersion.commit = "${versionCommit}";

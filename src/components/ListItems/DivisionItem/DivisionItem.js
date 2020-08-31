@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {
   Typography, ListItem, Divider, ButtonBase,
 } from '@material-ui/core';
-import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import UnitIcon from '../../SMIcon/UnitIcon';
 import SMLink from '../../Link';
 
@@ -19,8 +19,11 @@ const DivisionItem = ({
   locale,
 }) => {
   const { area } = data;
-  const aStart = area && area.start ? new Date(area.start) : null;
-  const aEnd = area && area.end ? new Date(area.end) : null;
+  const aStart = area && area.start ? new Date(area.start).getFullYear() : null;
+  const aEnd = area && area.end ? new Date(area.end).getFullYear() : null;
+
+  if (aStart === 2019 || aEnd === 2019) return null;
+
   const name = data.name ? getLocaleText(data.name) : null;
   const address = data.street_address ? getLocaleText(data.street_address) : null;
   const unitOnClick = () => navigator.push('unit', { id: data.id });
@@ -30,7 +33,7 @@ const DivisionItem = ({
   const emergencyOnClick = () => navigator.push('unit', { id: emergencyUnitId });
 
   let title = intl.formatMessage({ id: `area.list.${area.type}` });
-  title = `${title}${aStart && aEnd ? ` ${aStart.getFullYear()}-${aEnd.getFullYear()}` : ''}`;
+  title = `${title}${aStart && aEnd ? ` ${aStart}-${aEnd}` : ''}`;
 
   // Screen reader text
   const srText = `
@@ -44,6 +47,24 @@ const DivisionItem = ({
       : intl.formatMessage({ id: 'general.distance.kilometers' })}`
     : ''} 
   `;
+
+  const emergencyCareLink = txt => (
+    <a
+      href={intl.formatMessage({ id: 'address.emergency_care.link' })}
+      className="external-link"
+    >
+      {txt}
+    </a>
+  );
+
+  const emergencyCareCommonLink = txt => (
+    <a
+      className="external-link"
+      href={intl.formatMessage({ id: 'address.emergency_care.common.link' })}
+    >
+      {txt}
+    </a>
+  );
 
   return (
     <>
@@ -130,7 +151,25 @@ const DivisionItem = ({
                 className={classes.emergencyTypography}
                 variant="caption"
               >
-                <FormattedHTMLMessage id="address.emergency_care.common" values={{ locale }} />
+                <FormattedMessage
+                  id="address.emergency_care.common"
+                  values={{
+                    a: txt => (
+                      <a
+                        className="link"
+                        href={
+                          intl.formatMessage({
+                            id: 'address.emergency_care.children_hospital.link',
+                          },
+                          { locale })
+                        }
+                      >
+                        {txt}
+                      </a>
+                    ),
+                    a1: emergencyCareCommonLink,
+                  }}
+                />
                 {' '}
                 {
                   emergencyCareText
@@ -141,7 +180,10 @@ const DivisionItem = ({
                   )
                 }
                 {' '}
-                <FormattedHTMLMessage id="address.emergency_care.link" />
+                <FormattedMessage
+                  id="address.emergency_care.link.text"
+                  values={{ a: emergencyCareLink }}
+                />
               </Typography>
             </div>
           )

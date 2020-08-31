@@ -26,10 +26,13 @@ export default {
   'address.services.header': 'Palvelut täällä asuville',
   'address.services.info': 'Kunnalliset palvelut, joiden piiriin sijainti kuuluu',
   'address.area.link': 'Tutustu alueisiin kartalla.',
-  'address.emergency_care.common': 'Terveysaseman ollessa kiinni sekä öisin klo 22- 8 alle 16-vuotiaiden päivystys on <a class="link" href="/{locale}/unit/7299">Lastenklinikalla</a> [<a class="external-link" href="http://www.hus.fi/sairaanhoito/sairaalat/lastenklinikka/Sivut/default.aspx">kotisivut</a>] ja aikuisten päivystys',
+  'address.emergency_care.common': 'Terveysaseman ollessa kiinni sekä öisin klo 22- 8 alle 16-vuotiaiden päivystys on <a>Lastenklinikalla</a> [<a1>kotisivut</a1>] ja aikuisten päivystys',
+  'address.emergency_care.children_hospital.link': '/{locale}/unit/7299',
+  'address.emergency_care.common.link': 'http://www.hus.fi/sairaanhoito/sairaalat/lastenklinikka/Sivut/default.aspx',
   'address.emergency_care.unit.26107': 'Malmin sairaalassa',
   'address.emergency_care.unit.26104': 'Haartmanin sairaalassa',
-  'address.emergency_care.link': '[<a href="http://www.hel.fi/www/Helsinki/fi/sosiaali-ja-terveyspalvelut/terveyspalvelut/paivystys/" class="external-link">päivystyssivut</a>]',
+  'address.emergency_care.link': 'http://www.hel.fi/www/Helsinki/fi/sosiaali-ja-terveyspalvelut/terveyspalvelut/paivystys/',
+  'address.emergency_care.link.text': '[<a>päivystyssivut</a>]',
 
   // Area
   'area.searchbar.infoText.address': 'Kirjoita kotiosoitteesi',
@@ -38,7 +41,7 @@ export default {
   'area.tab.services': 'Alueen palvelut',
   'area.services.local': 'Oman alueesi palvelut',
   'area.services.nearby': 'Lähialueiden palvelut',
-  'area.info': 'Valitse alue, jonka palveluista haluat tietoa. Kirjoittamalla alla olevaan hakukenttään kotiosoitteesi saat näkyville karttaan ja Valitun alueen palvelut -välilehdelle alueet ja piirit, joihin kuulut',
+  'area.info': 'Valitse alue, jonka palveluista haluat tietoa. Kirjoittamalla alla olevaan hakukenttään kotiosoitteesi saat näkyville karttaan ja Alueen palvelut -välilehdelle alueet ja piirit, joihin kuulut',
   'area.choose.district': 'Valitse alue',
   'area.noSelection': 'Valitse alue Alueen Valinta -välilehdeltä',
   'area.list.geographical': 'Maantieteellinen',
@@ -57,8 +60,8 @@ export default {
   'area.list.maternity_clinic_district': 'Neuvola-alue',
   'area.list.lower_comprehensive_school_district_fi': 'Suomenkielinen ala-astealue',
   'area.list.lower_comprehensive_school_district_sv': 'Ruotsinkielinen ala-astealue',
-  'area.list.upper_comprehensive_school_district_fi': 'Suomenkielinen ylä-astealue',
-  'area.list.upper_comprehensive_school_district_sv': 'Ruotsinkielinen ylä-astealue',
+  'area.list.upper_comprehensive_school_district_fi': 'Suomenkielinen yläastealue',
+  'area.list.upper_comprehensive_school_district_sv': 'Ruotsinkielinen yläastealue',
   'area.list.preschool_education_fi': 'Suomenkielinen esiopetusalue',
   'area.list.preschool_education_sv': 'Ruotsinkielinen esiopetusalue',
 
@@ -146,6 +149,9 @@ export default {
   'general.pageTitles.info': 'Tietoa palvelusta',
   'general.pageTitles.feedback': 'Palautenäkymä',
   'general.pageTitles.area': 'Aluenäkymä.',
+  // Readspeaker
+  'general.readspeaker.buttonText': 'Kuuntele',
+  'general.readspeaker.title': 'Kuuntele ReadSpeaker webReaderilla',
 
   // General - Pagination
   'general.pagination.previous': 'Aiempi sivu',
@@ -396,7 +402,7 @@ export default {
   'settings.aria.opened': 'Asetukset avattu',
   'settings.aria.saved': 'Asetukset on tallennettu',
 
-  'info.title': 'Tietoa palvelusta',
+  'info.title': 'Tietoa palvelusta ja saavutettavuusseloste',
   'info.statement': 'Saavutettavuusseloste',
 
   'alert.close': 'Sulje ilmoitus',

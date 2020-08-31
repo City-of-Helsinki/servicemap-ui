@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {
   Typography, Divider, List, ButtonBase,
 } from '@material-ui/core';
-import { intlShape, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { Map } from '@material-ui/icons';
 import Helmet from 'react-helmet';
 import SearchBar from '../../components/SearchBar';
@@ -342,7 +342,7 @@ AddressView.propTypes = {
   })),
   match: PropTypes.objectOf(PropTypes.any),
   map: PropTypes.objectOf(PropTypes.any),
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   getAddressNavigatorParams: PropTypes.func.isRequired,
   getDistance: PropTypes.func.isRequired,

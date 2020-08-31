@@ -13,7 +13,7 @@ fixture`Area view test`
 
 const drawerButtons = ReactSelector('AreaTab List ButtonBase');
 
-test.only('District lists are fetched and rendered correctly', async (t) => {
+test('District lists are fetched and rendered correctly', async (t) => {
   const listLength = await drawerButtons.count;
 
   for(let i = 0; i < listLength; i++) {  

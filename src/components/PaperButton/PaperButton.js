@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { Button, Typography } from '@material-ui/core';
 import Container from '../Container';
 
@@ -50,7 +50,7 @@ PaperButton.propTypes = {
   onClick: PropTypes.func,
   messageID: PropTypes.string.isRequired,
   subtitleID: PropTypes.string,
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 PaperButton.defaultProps = {

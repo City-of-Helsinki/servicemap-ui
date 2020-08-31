@@ -4,7 +4,7 @@ import {
   Button, Typography, AppBar, Toolbar, ButtonBase, NoSsr,
 } from '@material-ui/core';
 import { Map, Menu, Close } from '@material-ui/icons';
-import { FormattedMessage, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import I18n from '../../i18n';
 import HomeLogo from '../Logos/HomeLogo';
 import { getIcon } from '../SMIcon';
@@ -32,7 +32,6 @@ class TopBar extends React.Component {
           id={`SettingsButton${category.type}`}
           key={`SettingsButton${category.type}`}
           aria-pressed={settingsOpen === category.type}
-          disableFocusRipple
           className={settingsOpen === category.type
             ? classes.settingsButtonPressed
             : classes.settingsButton
@@ -341,7 +340,7 @@ TopBar.propTypes = {
   changeTheme: PropTypes.func.isRequired,
   setMapType: PropTypes.func.isRequired,
   theme: PropTypes.string.isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 TopBar.defaultProps = {

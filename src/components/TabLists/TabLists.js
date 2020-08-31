@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {
   Typography, Tabs, Tab,
 } from '@material-ui/core';
-import { intlShape, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { parseSearchParams, stringifySearchParams } from '../../utils';
 import ResultList from '../Lists/ResultList';
 import PaginationComponent from '../PaginationComponent';
@@ -383,7 +383,7 @@ TabLists.propTypes = {
   changeCustomUserLocation: PropTypes.func.isRequired,
   userAddress: PropTypes.objectOf(PropTypes.any),
   headerComponents: PropTypes.objectOf(PropTypes.any),
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
 };

@@ -26,4 +26,4 @@ export const filterEmptyServices = cities => (obj) => {
   return hasUnits;
 };
 
-export const filterCities = (cities, onlyUnits = false) => unit => cities.length === 0 || (!onlyUnits && unit.object_type !== 'unit') || cities.includes(unit.municipality);
+export const filterCities = (cities, onlyUnits = false) => unit => cities.length === 0 || !unit.municipality || (!onlyUnits && unit.object_type !== 'unit') || cities.includes(unit.municipality);

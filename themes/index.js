@@ -2,12 +2,12 @@ import { createMuiTheme } from '@material-ui/core';
 
 const focusIndicator = {
   outline: '2px solid transparent',
-  boxShadow: '0 0 0 4px rgba(25, 100, 230, 0.8)',
+  boxShadow: '0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(71, 131, 235), 0 0 0 8px rgb(255, 255, 255)',
 };
 
 const focusIndicatorDark = {
   outline: '2px solid transparent',
-  boxShadow: '0 0 0 4px #000',
+  boxShadow: '0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(0, 0, 0), 0 0 0 8px rgb(255, 255, 255)',
 };
 
 const props = {
@@ -142,7 +142,7 @@ export const paletteDefault = {
     highContrast: '#fff',
   },
   secondary: {
-    main: 'rgba(20,24,35,0.9)',
+    main: 'rgb(43, 47, 57)',
     hover: '#1d39ad',
   },
   background: {
@@ -153,7 +153,7 @@ export const paletteDefault = {
   white: {
     light: '#f2f2f2',
     main: '#FFFFFF',
-    dark: '#979797',
+    dark: '#949494',
     contrastText: '#000',
   },
   detail: {
@@ -164,7 +164,7 @@ export const paletteDefault = {
     main: 'rgb(239, 239, 239)',
     strong: '#898989',
   },
-  focusBorder: 'rgba(25, 100, 230, 0.8)',
+  focusBorder: 'rgb(71, 131, 235)',
   warning: '#AF0021',
 };
 
@@ -175,7 +175,7 @@ export const paletteDark = {
     highContrast: '#fff',
   },
   secondary: {
-    main: 'rgba(20,24,35,0.9)',
+    main: 'rgb(43, 47, 57)',
     hover: '#5b5d61',
   },
   background: {
@@ -186,7 +186,7 @@ export const paletteDark = {
   white: {
     light: '#f2f2f2',
     main: '#FFFFFF',
-    dark: '#979797',
+    dark: '#949494',
     contrastText: '#000',
   },
   detail: {

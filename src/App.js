@@ -21,6 +21,16 @@ import EmbedLayout from './layouts/EmbedLayout';
 import Navigator from './components/Navigator';
 import DataFetcher from './components/DataFetchers/DataFetcher';
 
+import '@formatjs/intl-pluralrules/polyfill';
+import '@formatjs/intl-pluralrules/dist/locale-data/en';
+import '@formatjs/intl-pluralrules/dist/locale-data/fi';
+import '@formatjs/intl-pluralrules/dist/locale-data/sv';
+
+import '@formatjs/intl-relativetimeformat/polyfill';
+import '@formatjs/intl-relativetimeformat/dist/locale-data/en';
+import '@formatjs/intl-relativetimeformat/dist/locale-data/fi';
+import '@formatjs/intl-relativetimeformat/dist/locale-data/sv';
+
 class App extends React.Component {
   constructor(props) {
     super(props);

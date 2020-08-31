@@ -18,11 +18,6 @@ export default theme => ({
     paddingTop: theme.spacing.unitDouble,
     paddingBottom: theme.spacing.unitDouble,
   },
-  cssFocused: {
-    outlineStyle: 'solid',
-    outlineColor: 'blue',
-    outlineWidth: 2,
-  },
   input: {
     marginLeft: 8,
     flex: 1,

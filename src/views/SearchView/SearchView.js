@@ -6,7 +6,7 @@ import { withRouter, Redirect } from 'react-router-dom';
 import {
   Paper, withStyles, Typography, Link, NoSsr, Divider,
 } from '@material-ui/core';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { injectIntl, FormattedMessage } from 'react-intl';
 import styles from './styles';
 import Loading from '../../components/Loading';
 import SearchBar from '../../components/SearchBar';
@@ -329,7 +329,8 @@ class SearchView extends React.Component {
 
   renderSearchInfo = () => {
     const { units, classes, isFetching } = this.props;
-    const unitCount = units && units.length;
+    const unitList = units && units.filter(i => i.object_type === 'unit');
+    const unitCount = unitList && unitList.length;
     const className = `SearchInfo ${classes.searchInfo}`;
 
     return (
@@ -543,7 +544,7 @@ SearchView.propTypes = {
   fetchUnits: PropTypes.func,
   fetchRedirectService: PropTypes.func,
   getAddressNavigatorParams: PropTypes.func.isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   isFetching: PropTypes.bool,
   isRedirectFetching: PropTypes.bool,
   // eslint-disable-next-line react/no-unused-prop-types

@@ -14,6 +14,7 @@ const SimpleListItem = (props) => {
   return (
     <React.Fragment>
       <ListItem
+        aria-label={`${srText || ''} ${text}`}
         className={className}
         button={!!link || button}
         role={link ? 'link' : role}
@@ -39,8 +40,9 @@ const SimpleListItem = (props) => {
         <ListItemText
           classes={{ root: classes.textContainer }}
         >
-          <Typography variant="srOnly">
-            {`${srText || ''} ${text}`}
+          {/* ReadSpeaker text - hidden form view and screen readers */}
+          <Typography aria-hidden variant="srOnly">
+            {`${srText || ''}`}
           </Typography>
 
           <Typography

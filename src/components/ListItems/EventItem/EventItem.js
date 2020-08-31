@@ -1,7 +1,6 @@
 /* eslint-disable camelcase */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { intlShape } from 'react-intl';
 import { Event } from '@material-ui/icons';
 import ResultItem from '../ResultItem';
 
@@ -19,7 +18,9 @@ const formatEventDate = (event, intl) => {
   }
   let dateString = `${startWeekDay} ${startDate} ${startTime}`;
   // Check how many days to start of event. Returns number of days or "today"/"tomorrow"
-  const daysTo = intl.formatRelative(start, { units: 'day' });
+  const oneDay = 86400000; // day in milliseconds
+  const dayDifference = Math.round(Math.abs((new Date() - start) / oneDay));
+  const daysTo = intl.formatRelativeTime(dayDifference, 'day', { numeric: 'auto' });
   // Check if string has numbers. If false, means that value is either "today" or "tomorrow"
   if (!/\d/.test(daysTo)) {
     // Instead of date, display "today" or "tomorrow"
@@ -62,7 +63,7 @@ EventItem.propTypes = {
   changeSelectedEvent: PropTypes.func.isRequired,
   event: PropTypes.objectOf(PropTypes.any).isRequired,
   getLocaleText: PropTypes.func.isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
 };
 
