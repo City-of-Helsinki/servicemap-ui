@@ -70,6 +70,24 @@ class SettingsUtility {
   }
 
   /**
+   * Return active city settings from redux state
+   * @param {*} state 
+   * @returns {array} - Array of city settings which are active
+   */
+  static getActiveCitySettings(state) {
+    const result = [];
+    SettingsUtility.citySettings.forEach((city) => {
+      if (
+        Object.prototype.hasOwnProperty.call(state.settings, (city))
+        && state.settings[city]
+      ) {
+        result.push(city);
+      }
+    });
+    return result;
+  }
+
+  /**
    * Get redux compatible settings object from localStorage
    */
   static getSettingsFromLocalStorage() {
