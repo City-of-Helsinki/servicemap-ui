@@ -199,6 +199,7 @@ export default {
   'map.ariaLabel': 'Karttanäkymä. Kartan tietoja voi tarkastella tällä hetkellä vain näönvaraisesti.',
   'map.transit.endStation': 'Päätepysäkki',
   'map.address.searching': 'Haetaan osoitetta...',
+  'map.address.notFound': 'Tuntematon osoite',
   'map.address.info': 'Osoitteen tiedot',
   'map.unit.cluster.popup.info': '{count} toimipistettä',
 
