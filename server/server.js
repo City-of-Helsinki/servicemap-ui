@@ -1,7 +1,7 @@
 import express from 'express';
 import path from 'path';
 import React from 'react';
-import { renderToString } from 'react-dom/server';
+import ReactDOMServer from 'react-dom/server';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router-dom';
@@ -12,9 +12,9 @@ import rootReducer from '../src/redux/rootReducer';
 import App from '../src/App';
 import { makeLanguageHandler, languageSubdomainRedirect, unitRedirect } from './utils';
 import { setLocale } from '../src/redux/actions/user';
-import { SheetsRegistry } from 'jss';
 import { Helmet } from 'react-helmet';
 import { createGenerateClassName, MuiThemeProvider } from '@material-ui/core';
+import { ServerStyleSheets } from '@material-ui/core/styles';
 import JssProvider from 'react-jss/lib/JssProvider';
 import themes from '../themes';
 import fetch from 'node-fetch';
@@ -92,13 +92,6 @@ app.get('/*', (req, res, next) => {
   const css = new Set(); 
   const insertCss = (...styles) => styles.forEach(style => css.add(style._getCss()));
 
-
-  // Create a sheetsRegistry instance.
-  const sheetsRegistry = new SheetsRegistry();
-
-  // Create a sheetsManager instance.
-  const sheetsManager = new Map();
-
   // Create a new class name generator.
   const generateClassName = createGenerateClassName({
     productionPrefix: config.productionPrefix,
@@ -112,10 +105,13 @@ app.get('/*', (req, res, next) => {
   if (store && store.dispatch) {
     store.dispatch(setLocale(locale))
   }
-  
-  const jsx = (
-    <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>
-      <MuiThemeProvider theme={themes.SMTheme} sheetsManager={sheetsManager}>
+
+  // Create server style sheets
+  const sheets = new ServerStyleSheets();
+
+  const jsx = sheets.collect(
+    <JssProvider generateClassName={generateClassName}>
+      <MuiThemeProvider theme={themes.SMTheme}>
         <Provider store={store}>
           <StaticRouter location={req.url} context={{}}>
             <StyleContext.Provider value={{ insertCss }}>
@@ -126,15 +122,14 @@ app.get('/*', (req, res, next) => {
       </MuiThemeProvider>
     </JssProvider>
   );
-  const reactDom = renderToString(jsx);
+  const reactDom = ReactDOMServer.renderToString(jsx);
+  const cssString = sheets.toString();
   const helmet = Helmet.renderStatic();
-
-  const jss = sheetsRegistry.toString();
 
   const preloadedState = store.getState();
 
   res.writeHead(200, { 'Content-Type': 'text/html' });
-  res.end(htmlTemplate(reactDom, preloadedState, css, jss, locale, helmet));
+  res.end(htmlTemplate(reactDom, preloadedState, css, cssString, locale, helmet));
 });
 
 // The error handler must be before any other error middleware
@@ -145,14 +140,14 @@ if (Sentry) {
 console.log(`Starting server on port ${process.env.PORT || 2048}`);
 app.listen(process.env.PORT || 2048);
 
-const htmlTemplate = (reactDom, preloadedState, css, jss, locale, helmet) => `
+const htmlTemplate = (reactDom, preloadedState, css, cssString, locale, helmet) => `
 <!DOCTYPE html>
 <html lang="${locale || 'fi'}">
   <head>
     <meta charset="utf-8">
     ${helmet.title.toString()}
     <!-- jss-insertion-point -->
-    <style id="jss-server-side">${jss}</style>
+    <style id="jss-server-side">${cssString}</style>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
     integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
     crossorigin=""
