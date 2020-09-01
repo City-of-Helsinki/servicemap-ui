@@ -2,7 +2,7 @@ export default theme => ({
   containerInner: {
     display: 'flex',
     flexDirection: 'row',
-    padding: `0 ${theme.spacing.unit}px`,
+    padding: theme.spacing(0, 1),
   },
   content: {
     alignSelf: 'center',
@@ -18,14 +18,14 @@ export default theme => ({
   },
   divisionTitle: {
     fontWeight: 'bold',
-    paddingLeft: theme.spacing.unitDouble,
-    marginBottom: theme.spacing.unit,
+    paddingLeft: theme.spacing(2),
+    marginBottom: theme.spacing(1),
   },
   emergencyContent: {
     display: 'flex',
     flexDirection: 'row',
-    padding: `0 ${theme.spacing.unit}px`,
-    marginLeft: theme.spacing.unit * 5,
+    padding: theme.spacing(0, 1),
+    marginLeft: theme.spacing(5),
     marginRight: 60,
   },
   emergencyTypography: {
@@ -38,13 +38,13 @@ export default theme => ({
     justifyContent: 'space-between',
   },
   icon: {
-    marginRight: theme.spacing.unitDouble,
+    marginRight: theme.spacing(2),
   },
   listItem: {
     alignItems: 'stretch',
     display: 'flex',
     flexDirection: 'column',
-    padding: theme.spacing.unit,
+    padding: theme.spacing(1),
   },
   li: {
     listStyleType: 'none',

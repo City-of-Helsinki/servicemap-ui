@@ -23,8 +23,10 @@ const props = {
 
 const overrides = theme => ({
   MuiButtonBase: {
-    // Default keyboard focus indicator for buttons
-    focusVisible: theme === 'dark' ? focusIndicatorDark : focusIndicator,
+    root: {
+      // Default keyboard focus indicator for buttons
+      '&$focusVisible': theme === 'dark' ? focusIndicatorDark : focusIndicator, 
+    },
   },
   MuiInputBase: {
     // Default keyboard focus indicator for input fields
@@ -42,12 +44,7 @@ const breakpoints = {
   },
 };
 
-const spacing = {
-  unit: 8,
-  unitHalf: 4,
-  unitDouble: 16,
-  unitTriple: 24,
-};
+const spacing = 8;
 
 const custom = {
   body2light: {
@@ -164,8 +161,12 @@ export const paletteDefault = {
     main: 'rgb(239, 239, 239)',
     strong: '#898989',
   },
-  focusBorder: 'rgb(71, 131, 235)',
-  warning: '#AF0021',
+  focusBorder: {
+    main: 'rgb(71, 131, 235)'
+  },
+  warning: {
+    main: '#AF0021',
+  },
 };
 
 // Color palette for dark theme
@@ -197,8 +198,12 @@ export const paletteDark = {
     main: 'rgb(239, 239, 239)',
     strong: '#898989',
   },
-  warning: '#AF0021',
-  focusBorder: '#000',
+  warning: {
+    main: '#AF0021',
+  },
+  focusBorder: {
+    main: '#000',
+  },
 };
 
 // Themes

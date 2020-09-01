@@ -7,9 +7,9 @@ export default theme => ({
     textAlign: 'left',
   },
   mapButton: {
-    marginTop: theme.spacing.unitTriple,
-    marginLeft: theme.spacing.unitTriple,
-    marginBottom: theme.spacing.unit,
+    marginTop: theme.spacing(3),
+    marginLeft: theme.spacing(3),
+    marginBottom: theme.spacing(1),
   },
   mapIcon: {
     marginLeft: 0,
@@ -23,18 +23,18 @@ export default theme => ({
     marginRight: 0,
   },
   districtListcontainer: {
-    paddingLeft: theme.spacing.unitDouble,
-    paddingRight: theme.spacing.unitDouble,
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
   },
   servicesTitle: {
-    padding: theme.spacing.unit,
-    margin: `${theme.spacing.unit}px ${theme.spacing.unitDouble}px`,
+    padding: theme.spacing(1),
+    margin: theme.spacing(1, 2),
     textAlign: 'left',
   },
   areaLink: {
     textDecoration: 'underline',
-    marginBottom: theme.spacing.unit,
-    marginTop: theme.spacing.unit,
+    marginBottom: theme.spacing(1),
+    marginTop: theme.spacing(1),
     '&:hover': {
       opacity: '0.7',
     },

@@ -4,13 +4,13 @@ const styles = theme => ({
     backgroundColor: theme.palette.primary.main,
   },
   infoText: {
-    padding: theme.spacing.unitTriple,
+    padding: theme.spacing(3),
     textAlign: 'start',
   },
   infoTitle: {
-    padding: theme.spacing.unit,
-    paddingLeft: theme.spacing.unitTriple,
-    paddingRight: theme.spacing.unitTriple,
+    padding: theme.spacing(1),
+    paddingLeft: theme.spacing(3),
+    paddingRight: theme.spacing(3),
     paddingTop: 0,
     textAlign: 'start',
     display: 'flex',
@@ -19,10 +19,10 @@ const styles = theme => ({
     fontSize: 14,
     color: '#3344dd',
     textDecoration: 'underline',
-    marginLeft: theme.spacing.unit,
+    marginLeft: theme.spacing(1),
   },
   list: {
-    marginRight: -theme.spacing.unitDouble,
+    marginRight: theme.spacing(-2),
   },
   districtItem: {
     padding: 0,
@@ -37,8 +37,8 @@ const styles = theme => ({
     height: 49,
     display: 'flex',
     alignItems: 'center',
-    paddingTop: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit,
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
   },
   categoryItem: {
     paddingRight: 32,
@@ -65,36 +65,36 @@ const styles = theme => ({
     marginLeft: 'auto',
   },
   rightPadding: {
-    paddingRight: theme.spacing.unit,
+    paddingRight: theme.spacing(1),
   },
   addressArea: {
-    padding: theme.spacing.unitTriple,
-    paddingTop: theme.spacing.unit,
+    padding: theme.spacing(3),
+    paddingTop: theme.spacing(1),
     textAlign: 'start',
   },
   addressTitle: {
-    marginBottom: theme.spacing.unitDouble,
+    marginBottom: theme.spacing(2),
   },
   fieldFocus: {
     outline: '2px solid transparent',
-    boxShadow: `0 0 0 4px ${theme.palette.focusBorder}`,
+    boxShadow: `0 0 0 4px ${theme.palette.focusBorder.main}`,
   },
   addressItem: {
     fontSize: 24,
   },
   divisionItem: {
-    padding: theme.spacing.unitDouble,
+    padding: theme.spacing(2),
   },
   areaTitle: {
     display: 'flex',
     alignItems: 'center',
     padding: 0,
-    paddingTop: theme.spacing.unitDouble,
+    paddingTop: theme.spacing(2),
     height: 30,
   },
   sidePadding: {
-    paddingLeft: theme.spacing.unitDouble,
-    paddingRight: theme.spacing.unitDouble,
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
   },
   addressIcon: {
     fontSize: 24,

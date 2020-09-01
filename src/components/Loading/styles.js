@@ -1,7 +1,7 @@
 
 const styles = theme => ({
   root: {
-    padding: theme.spacing.unitDouble,
+    padding: theme.spacing(2),
   },
 });
 

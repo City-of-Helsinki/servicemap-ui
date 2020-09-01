@@ -30,21 +30,21 @@ export default theme => ({
   tabFocus: {
     outline: `4px solid ${theme.palette.primary.highContrast}`,
     outlineOffset: -1,
-    boxShadow: `inset 0 0 0 4px ${theme.palette.focusBorder}`,
+    boxShadow: `inset 0 0 0 4px ${theme.palette.focusBorder.main}`,
     backgroundColor: 'rgba(0, 0, 0, 0.08)',
   },
   tabLabelContainer: {
     paddingLeft: 0,
     paddingRight: 0,
-    marginTop: theme.spacing.unitDouble,
-    marginBottom: theme.spacing.unitDouble,
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
     fontSize: 'clamp(13px, 1.8vw, 14px)',
   },
   mobileTabFont: {
     fontSize: 11.5,
   },
   addressBar: {
-    padding: theme.spacing.unitTriple,
+    padding: theme.spacing(3),
     paddingTop: 0,
     backgroundColor: theme.palette.background.plain,
     color: '#fff',

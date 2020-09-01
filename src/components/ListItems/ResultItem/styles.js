@@ -1,17 +1,17 @@
 
 export default theme => ({
   listItemPadded: {
-    padding: theme.spacing.unitDouble,
+    padding: theme.spacing(2),
   },
   listItem: {
-    padding: theme.spacing.unit,
+    padding: theme.spacing(1),
   },
   listItemIcon: {
-    margin: theme.spacing.unit,
-    marginRight: theme.spacing.unitDouble,
+    margin: theme.spacing(1),
+    marginRight: theme.spacing(2),
   },
   listItemIconPadded: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
   },
   bottomContainer: {
     display: 'inline-block',
@@ -37,7 +37,7 @@ export default theme => ({
   itemTextContainer: {
     flex: '1 1 auto',
     margin: 0,
-    marginLeft: theme.spacing.unitDouble,
+    marginLeft: theme.spacing(2),
   },
   topRow: {
     display: 'flex',
@@ -50,7 +50,7 @@ export default theme => ({
     justifyContent: 'space-between',
   },
   marginLeft: {
-    marginLeft: theme.spacing.unit,
+    marginLeft: theme.spacing(1),
   },
   rightColumn: {
     textAlign: 'right',
@@ -63,6 +63,6 @@ export default theme => ({
     fontWeight: 'normal',
   },
   divider: {
-    marginRight: -theme.spacing.unitDouble,
+    marginRight: theme.spacing(-2),
   },
 });

@@ -3,14 +3,14 @@ import config from '../../../../../config';
 export default theme => ({
   suggestionArea: {
     position: 'absolute',
-    right: theme.spacing.unitTriple,
-    left: theme.spacing.unitTriple,
+    right: theme.spacing(3),
+    left: theme.spacing(3),
     zIndex: theme.zIndex.infront,
     backgroundColor: '#fff',
     overflow: 'auto',
     borderRadius: 0,
-    borderBottomLeftRadius: theme.spacing.unitHalf,
-    borderBottomRightRadius: theme.spacing.unitHalf,
+    borderBottomLeftRadius: theme.spacing(0.5),
+    borderBottomRightRadius: theme.spacing(0.5),
     maxHeight: `calc(80vh - ${config.topBarHeight}px)`,
   },
   suggestionAreaMobile: {
@@ -22,14 +22,14 @@ export default theme => ({
     backgroundColor: '#fff',
     overflow: 'auto',
     borderRadius: 0,
-    borderBottomLeftRadius: theme.spacing.unitHalf,
-    borderBottomRightRadius: theme.spacing.unitHalf,
+    borderBottomLeftRadius: theme.spacing(0.5),
+    borderBottomRightRadius: theme.spacing(0.5),
     display: 'flex',
     flexDirection: 'column',
     boxShadow: 'none',
   },
   infoText: {
-    padding: theme.spacing.unit,
-    marginLeft: theme.spacing.unitTriple * 2,
+    padding: theme.spacing(1),
+    marginLeft: theme.spacing(6),
   },
 });

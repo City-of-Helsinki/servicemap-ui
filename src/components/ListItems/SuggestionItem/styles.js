@@ -2,16 +2,16 @@ export default theme => ({
   container: {
     display: 'flex',
     flex: '1 1 auto',
-    padding: `${theme.spacing.unitHalf}px 0`,
+    padding: theme.spacing(0.5, 0),
   },
   listItem: {
-    padding: `0 ${theme.spacing.unit}px`,
+    padding: theme.spacing(0, 1),
   },
   textContainer: {
     display: 'flex',
-    padding: `${theme.spacing.unit}px 0`,
-    marginLeft: theme.spacing.unitDouble,
-    marginRight: theme.spacing.unitDouble,
+    padding: theme.spacing(1, 0),
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(2),
     whiteSpace: 'pre-line',
     '& p': {
       lineHeight: '18px',
@@ -20,10 +20,10 @@ export default theme => ({
   listIcon: {
     width: '1.5rem',
     height: '1.5rem',
-    margin: `${theme.spacing.unitHalf}px ${theme.spacing.unit}px`,
+    margin: theme.spacing(0.5, 1),
     marginRight: 0,
     alignSelf: 'center',
-    padding: theme.spacing.unitHalf,
+    padding: theme.spacing(0.5),
   },
   suggestIcon: {
     color: '#757575',
@@ -32,7 +32,7 @@ export default theme => ({
     padding: 0,
   },
   suggestIconLabel: {
-    padding: theme.spacing.unit,
+    padding: theme.spacing(1),
   },
   subtitle: {
     fontSize: '10px',
@@ -40,14 +40,14 @@ export default theme => ({
     lineHeight: '18px',
   },
   divider: {
-    marginLeft: theme.spacing.unit * 8,
-    marginRight: -theme.spacing.unitDouble,
+    marginLeft: theme.spacing(8),
+    marginRight: theme.spacing(-2),
   },
   text: {
     alignSelf: 'center',
   },
   itemFocus: {
     outline: '2px solid transparent',
-    boxShadow: `0 0 0 4px ${theme.palette.focusBorder}`,
+    boxShadow: `0 0 0 4px ${theme.palette.focusBorder.main}`,
   },
 });

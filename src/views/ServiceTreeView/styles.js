@@ -12,7 +12,7 @@ export default theme => ({
     paddingTop: 23,
     paddingLeft: 21,
     paddingRight: 21,
-    paddingBottom: theme.spacing.unitDouble,
+    paddingBottom: theme.spacing(2),
   },
   mainContent: {
     textAlign: 'left',
@@ -49,7 +49,7 @@ export default theme => ({
   },
   iconRight: {
     marginLeft: 'auto',
-    marginRight: theme.spacing.unitDouble,
+    marginRight: theme.spacing(2),
     fontSize: 30,
   },
   checkBox: {
@@ -75,7 +75,7 @@ export default theme => ({
     position: 'absolute',
   },
   checkboxPadding: {
-    padding: theme.spacing.unitHalf,
+    padding: theme.spacing(0.5),
   },
   outerLines: {
     height: '100%',
@@ -84,27 +84,27 @@ export default theme => ({
   },
   listClickArea: {
     width: '100%',
-    paddingTop: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit,
-    marginRight: theme.spacing.unitHalf,
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
+    marginRight: theme.spacing(0.5),
   },
   searchButton: {
-    marginTop: theme.spacing.unitDouble,
+    marginTop: theme.spacing(2),
     marginBottom: 10,
     marginLeft: 21,
   },
   seleectionList: {
-    marginTop: theme.spacing.unit,
-    marginBottom: theme.spacing.unit,
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
   },
   selectionText: {
     fontSize: 12,
-    paddingRight: theme.spacing.unitDouble,
+    paddingRight: theme.spacing(2),
     color: '#fff',
   },
   deleteText: {
     fontSize: 12,
-    paddingRight: theme.spacing.unit,
+    paddingRight: theme.spacing(1),
     color: '#fff',
   },
   deleteIcon: {
