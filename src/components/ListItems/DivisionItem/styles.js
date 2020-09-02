@@ -10,6 +10,7 @@ export default theme => ({
   },
   divisionAddress: {
     color: 'black',
+    display: 'block',
     fontWeight: 'normal',
   },
   divisionDistance: {

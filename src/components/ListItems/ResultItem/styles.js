@@ -9,9 +9,11 @@ export default theme => ({
   listItemIcon: {
     margin: theme.spacing(1),
     marginRight: theme.spacing(2),
+    minWidth: 0,
   },
   listItemIconPadded: {
     margin: theme.spacing(1),
+    minWidth: 0,
   },
   bottomContainer: {
     display: 'inline-block',

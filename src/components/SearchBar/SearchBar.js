@@ -208,7 +208,7 @@ class SearchBar extends React.Component {
             'aria-label': intl.formatMessage({ id: 'search.searchField' }),
           }}
           type="search"
-          inputRef={(ref) => { this.searchRef = ref; }}
+          inputRef={this.searchRef}
           className={classes.input}
           value={inputValue || ''}
           classes={{ focused: classes.fieldFocus }}

@@ -15,6 +15,8 @@ export default theme => ({
     margin: 0,
     color: theme.palette.primary.main,
     marginTop: '-3px',
+    marginRight: theme.spacing(2),
+    minWidth: 0,
   },
   listItem: {
     paddingLeft: theme.spacing(1),

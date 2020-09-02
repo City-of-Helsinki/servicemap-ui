@@ -19,6 +19,9 @@ const props = {
     disableRipple: true,
     disableFocusRipple: true,
   },
+  MuiTypography: {
+    variant: 'body2',
+  },
 };
 
 const overrides = theme => ({
@@ -32,6 +35,12 @@ const overrides = theme => ({
     // Default keyboard focus indicator for input fields
     root: { "&$focused": theme === 'dark' ? focusIndicatorDark : focusIndicator },
   },
+  MuiListItemText: {
+    root: {
+      marginTop: 0,
+      marginBottom: 0,
+    }
+  }
 });
 
 const breakpoints = {

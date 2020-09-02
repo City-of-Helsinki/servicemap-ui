@@ -36,8 +36,8 @@ export default theme => ({
   tabLabelContainer: {
     paddingLeft: 0,
     paddingRight: 0,
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2),
+    paddingTop: theme.spacing(3),
+    paddingBottom: theme.spacing(3),
     fontSize: 'clamp(13px, 1.8vw, 14px)',
   },
   mobileTabFont: {

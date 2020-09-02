@@ -17,6 +17,7 @@ export default theme => ({
     height: '1.5rem',
     margin: theme.spacing(1),
     marginRight: theme.spacing(2),
+    minWidth: 0,
   },
   divider: {
     marginLeft: theme.spacing(9),

@@ -59,7 +59,7 @@ class TopBar extends React.Component {
               <NoSsr>
                 <span className={classes.iconTextContainer}>
                   {getIcon(category.settings, { className: classes.smallIcon })}
-                  <Typography>
+                  <Typography variant="body2">
                     <FormattedMessage id={`settings.map.${category.settings}`} />
                   </Typography>
                 </span>
@@ -67,7 +67,7 @@ class TopBar extends React.Component {
             )
             : (
               <NoSsr>
-                <Typography>
+                <Typography variant="body2">
                   <FormattedMessage id="settings.amount" values={{ count: category.settings.filter(i => (i !== false && i !== null)).length }} />
                 </Typography>
               </NoSsr>
@@ -156,7 +156,11 @@ class TopBar extends React.Component {
                 window.location = `${newLocation.pathname}${newLocation.search}`;
               }}
             >
-              <Typography className={typographyClass(locale === i18n.locale ? classes.bold : classes.greyText)} color="inherit">
+              <Typography
+                className={typographyClass(locale === i18n.locale ? classes.bold : classes.greyText)}
+                color="inherit"
+                variant="body2"
+              >
                 {i18n.localeText(locale)}
               </Typography>
             </ButtonBase>
@@ -254,7 +258,7 @@ class TopBar extends React.Component {
           <Toolbar className={toolbarBlackClass}>
             <div className={classes.toolbarBlackContainer}>
               <ButtonBase role="link" onClick={() => this.handleNavigation('home')} focusVisibleClassName={classes.topButtonFocused}>
-                <Typography className={fontClass} color="inherit">
+                <Typography className={fontClass} color="inherit" variant="body2">
                   <FormattedMessage id="general.frontPage" />
                 </Typography>
               </ButtonBase>
@@ -262,7 +266,7 @@ class TopBar extends React.Component {
               {this.renderLanguages(pageType)}
               <Typography aria-hidden color="inherit">|</Typography>
               <ButtonBase role="link" onClick={() => this.handleContrastChange()} focusVisibleClassName={classes.topButtonFocused}>
-                <Typography className={fontClass} color="inherit"><FormattedMessage id="general.contrast" /></Typography>
+                <Typography className={fontClass} color="inherit" variant="body2"><FormattedMessage id="general.contrast" /></Typography>
               </ButtonBase>
             </div>
           </Toolbar>
