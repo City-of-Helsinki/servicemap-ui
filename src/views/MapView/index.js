@@ -9,7 +9,7 @@ import { setAddressLocation } from '../../redux/actions/address';
 import { findUserLocation } from '../../redux/actions/user';
 import MapView from './MapView';
 import { getServiceUnits } from '../../redux/selectors/service';
-import { getProcessedMapData } from '../../redux/selectors/results';
+import { getProcessedData } from '../../redux/selectors/results';
 import { markerClusterConnector, renderMarkerConnector } from './utils/unitMarkers';
 import { getAddressNavigatorParamsConnector } from '../../utils/address';
 import { generatePath } from '../../utils/path';
@@ -24,7 +24,7 @@ const mapStateToProps = (state, props) => {
   const {
     address, navigator, settings, user,
   } = state;
-  const unitList = getProcessedMapData(state);
+  const unitList = getProcessedData(state);
   const unitsLoading = state.service.isFetching;
   const serviceUnits = getServiceUnits(state);
   // const serviceUnits = state.service.data;
