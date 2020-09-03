@@ -1,31 +1,30 @@
+import { createSelector } from 'reselect';
+
 const getCustomPosition = state => state.user.customPosition.coordinates;
 const getUserPosition = state => state.user.position.coordinates;
 const getAddress = state => state.address;
 const getCurrentPage = state => state.user.page;
 
-export const getCurrentlyUsedPosition = (state) => {
-  const customPosition = getCustomPosition(state);
-  const userPosition = getUserPosition(state);
-  const address = getAddress(state);
-  const currentPage = getCurrentPage(state);
+export const getCurrentlyUsedPosition = createSelector(
+  [getCustomPosition, getUserPosition, getAddress, getCurrentPage],
+  (customPosition, userPosition, address, currentPage) => {
+    const addressPosition = currentPage === 'address' && address && address.addressCoordinates ? {
+      latitude: address.addressCoordinates[1],
+      longitude: address.addressCoordinates[0],
+    } : null;
 
-  const addressPosition = currentPage === 'address' && address && address.addressCoordinates ? {
-    latitude: address.addressCoordinates[1],
-    longitude: address.addressCoordinates[0],
-  } : null;
+    const usedPosition = customPosition || addressPosition || userPosition;
+    if (usedPosition && usedPosition.latitude && usedPosition.longitude) {
+      return usedPosition;
+    }
+    return null;
+  },
+);
 
-  const usedPosition = customPosition || addressPosition || userPosition;
-  if (usedPosition && usedPosition.latitude && usedPosition.longitude) {
-    return usedPosition;
-  }
-  return null;
-};
-
-export const calculateDistance = state => (unit) => {
+export const calculateDistance = (unit, usedPosition) => {
   if (!unit || !unit.location) {
     return null;
   }
-  const usedPosition = getCurrentlyUsedPosition(state);
 
   if (!usedPosition) {
     return null;
