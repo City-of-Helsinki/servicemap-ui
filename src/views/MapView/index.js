@@ -39,7 +39,9 @@ const mapStateToProps = (state, props) => {
   const getPath = (id, data) => generatePath(id, locale, data);
   const distanceCoordinates = getCurrentlyUsedPosition(state);
   const userLocation = customPosition.coordinates || position.coordinates;
-  const getDistance = unit => formatDistanceObject(intl, calculateDistance(state)(unit));
+  const getDistance = unit => (
+    formatDistanceObject(intl, calculateDistance(unit, distanceCoordinates))
+  );
   return {
     addressUnits: units,
     addressToRender: toRender,
