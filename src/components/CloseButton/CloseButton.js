@@ -10,6 +10,7 @@ const CloseButton = ({
   className,
   intl,
   onClick,
+  textID,
   ...rest
 }) => (
   <Button
@@ -22,7 +23,11 @@ const CloseButton = ({
     {...rest}
   >
     <Close />
-    <FormattedMessage id="general.close" />
+    {
+      textID
+        ? <FormattedMessage id={textID} />
+        : <FormattedMessage id="general.close" />
+    }
   </Button>
 );
 
@@ -31,10 +36,12 @@ CloseButton.propTypes = {
   className: PropTypes.string,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   onClick: PropTypes.func.isRequired,
+  textID: PropTypes.string,
 };
 
 CloseButton.defaultProps = {
   className: null,
+  textID: null,
 };
 
 export default CloseButton;

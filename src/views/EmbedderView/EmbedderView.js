@@ -15,6 +15,7 @@ import SMButton from '../../components/ServiceMapButton';
 import paths from '../../../config/paths';
 import embedderConfig from './embedderConfig';
 import SettingsUtility from '../../utils/settings';
+import { Helmet } from 'react-helmet';
 
 
 const hideCitiesIn = [
@@ -408,7 +409,7 @@ const EmbedderView = ({
         onChange: v => setShowUnits(v),
         icon: null,
         labelId: 'embedder.options.label.units',
-      }
+      },
     ];
 
     return (
@@ -419,10 +420,21 @@ const EmbedderView = ({
         checkboxLabelledBy="embedder.options.title"
       />
     );
-  }
+  };
+
+  const renderHeadInfo = () => (
+    <Helmet>
+      <title>
+        {`${intl.formatMessage({ id: 'embedder.title' })} | ${intl.formatMessage({ id: 'app.title' })}`}
+      </title>
+    </Helmet>
+  );
 
   return (
     <div ref={dialogRef}>
+      {
+        renderHeadInfo()
+      }
       <div className={classes.appBar} />
       <div className={classes.container}>
         <div style={{
@@ -436,6 +448,7 @@ const EmbedderView = ({
             className={classes.closeButton}
             onClick={closeView}
             role="link"
+            textID="embedder.close"
           />
           <div className={classes.titleContainer}>
             <Typography align="left" className={classes.title} variant="h1">
@@ -490,9 +503,9 @@ const EmbedderView = ({
             aria-label={intl.formatMessage({ id: 'embedder.close' })}
             className={classes.button}
             small
-            role="button"
+            role="link"
             onClick={closeView}
-            messageID="general.page.close"
+            messageID="embedder.close"
           />
         </div>
 
