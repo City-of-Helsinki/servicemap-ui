@@ -45,12 +45,15 @@ const ToolMenu = ({
       srText: intl.formatMessage({ id: 'general.open' }),
     },
   ];
+  const toolMenuText = intl.formatMessage({ id: 'general.tools' });
 
   return (
     <>
       <DropDownMenuButton
+        panelID="ToolMenuPanel"
         buttonIcon={<Build />}
-        buttonText={intl.formatMessage({ id: 'general.tools' })}
+        buttonText={toolMenuText}
+        menuAriaLabel={toolMenuText}
         menuItems={menuItems}
       />
     </>

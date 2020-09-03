@@ -2,15 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Button,
-  Popper,
-  Paper,
   ClickAwayListener,
-  MenuList,
-  MenuItem,
-  Grow,
   Typography,
+  ButtonBase,
 } from '@material-ui/core';
 import { ArrowDropUp, ArrowDropDown } from '@material-ui/icons';
+import { keyboardHandler } from '../../utils';
 
 class DropDownMenuButton extends React.Component {
   state = {
@@ -30,24 +27,40 @@ class DropDownMenuButton extends React.Component {
   };
 
   renderMenu = () => {
-    const { classes, menuItems } = this.props;
-
+    const {
+      classes, menuItems, menuAriaLabel, panelID,
+    } = this.props;
     return (
-      <MenuList>
-        {
-          menuItems.map(v => (
-            <MenuItem key={v.key} onClick={v.onClick} className={classes.menuItem}>
-              <span>{v.icon}</span>
-              <Typography component="p" variant="body2">{v.text}</Typography>
-            </MenuItem>
-          ))
-        }
-      </MenuList>
+      <ClickAwayListener onClickAway={this.handleClose}>
+        <div
+          id={panelID}
+          aria-label={menuAriaLabel}
+          className={classes.menuPanel}
+          role="region"
+        >
+          {
+            menuItems.map(v => (
+              <ButtonBase
+                key={v.key}
+                className={classes.menuItem}
+                role="link"
+                onClick={v.onClick}
+                onKeyPress={keyboardHandler(v.onClick, ['space', 'enter'])}
+                component="span"
+                tabIndex="0"
+              >
+                <span>{v.icon}</span>
+                <Typography component="p" variant="body2">{v.text}</Typography>
+              </ButtonBase>
+            ))
+          }
+        </div>
+      </ClickAwayListener>
     );
   }
 
   render() {
-    const { buttonIcon, buttonText, classes } = this.props;
+    const { buttonIcon, buttonText, classes, panelID } = this.props;
     const { open } = this.state;
     const arrowIcon = open
       ? <ArrowDropUp className={classes.iconRight} />
@@ -59,9 +72,9 @@ class DropDownMenuButton extends React.Component {
           buttonRef={(node) => {
             this.anchorEl = node;
           }}
-          aria-owns={open ? 'menu-list-grow' : undefined}
+          aria-controls={panelID}
           aria-haspopup="true"
-          aria-pressed={open}
+          aria-expanded={open}
           onClick={this.handleToggle}
           className={classes.button}
         >
@@ -73,23 +86,9 @@ class DropDownMenuButton extends React.Component {
           <Typography component="p" variant="subtitle1">{buttonText}</Typography>
           {arrowIcon}
         </Button>
-        <Popper open={open} anchorEl={this.anchorEl} transition disablePortal>
-          {({ TransitionProps, placement }) => (
-            <Grow
-              {...TransitionProps}
-              id="menu-list-grow"
-              style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
-            >
-              <Paper>
-                <ClickAwayListener onClickAway={this.handleClose}>
-                  {
-                    this.renderMenu()
-                  }
-                </ClickAwayListener>
-              </Paper>
-            </Grow>
-          )}
-        </Popper>
+        {
+          open && this.renderMenu()
+        }
       </div>
     );
   }
@@ -107,6 +106,8 @@ DropDownMenuButton.propTypes = {
     text: PropTypes.string.isRequired,
     onClick: PropTypes.func.isRequired,
   })).isRequired,
+  menuAriaLabel: PropTypes.string.isRequired,
+  panelID: PropTypes.string.isRequired,
 };
 
 DropDownMenuButton.defaultProps = {
