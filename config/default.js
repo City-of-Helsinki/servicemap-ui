@@ -33,7 +33,22 @@ if (typeof settings.PRODUCTION_PREFIX === 'undefined') {
 }
 
 if (typeof settings.INITIAL_MAP_POSITION === 'undefined') {
-  settings.INITIAL_MAP_POSITION = '60.170377597530016,24.941309323934886';
+    // If not set default to Helsinki
+    settings.INITIAL_MAP_POSITION = '60.170377597530016,24.941309323934886';
+}
+
+if (typeof settings.MAPS === 'undefined') {
+    // If not set default to Helsinki
+    settings.MAPS = 'servicemap,ortographic,guideMap,accessible_map';
+}
+
+if (typeof settings.OLD_MAP_LINK_EN === 'undefined'
+    && typeof settings.OLD_MAP_LINK_FI === 'undefined'
+    && typeof settings.OLD_MAP_LINK_SV === 'undefined') {
+    // If not set default to Helsinki
+    settings.OLD_MAP_LINK_EN = 'https://palvelukartta-vanha.hel.fi/?lang=en';
+    settings.OLD_MAP_LINK_FI = 'https://palvelukartta-vanha.hel.fi/?lang=fi';
+    settings.OLD_MAP_LINK_SV = 'https://palvelukartta-vanha.hel.fi/?lang=sv';
 }
 
 export default {
@@ -70,6 +85,7 @@ export default {
   },
   "production": settings.MODE === 'production',
   "initialMapPosition": settings.INITIAL_MAP_POSITION.split(','),
+  "maps": settings.MAPS.split(','),
   "smallContentAreaBreakpoint": 449,
   "mobileUiBreakpoint": 699,
   "municipality": {
@@ -101,6 +117,9 @@ export default {
   "supportedLanguages": [
     "fi", "sv", "en"
   ],
+  "old_map_en": settings.OLD_MAP_LINK_EN,
+  "old_map_fi": settings.OLD_MAP_LINK_FI,
+  "old_map_sv": settings.OLD_MAP_LINK_SV,
   "readspeakerLocales": {
     "fi": 'fi_fi',
     "en": 'en_uk',
