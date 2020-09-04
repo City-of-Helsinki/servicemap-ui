@@ -1,15 +1,15 @@
 import { createSelector } from 'reselect';
 import { filterCities } from '../../utils/filters';
 import getOrderedData from './ordering';
+import config from '../../../config';
 
 
 const units = state => state.service.data;
-const cities = state => [
-  ...state.settings.helsinki ? ['helsinki'] : [],
-  ...state.settings.vantaa ? ['vantaa'] : [],
-  ...state.settings.espoo ? ['espoo'] : [],
-  ...state.settings.kauniainen ? ['kauniainen'] : [],
-];
+const cities = (state) => {
+  const cities = [];
+  config.cities.forEach(city => cities.push(...state.settings.cities[city] ? [city] : []));
+  return cities;
+};
 
 export const getServiceUnits = state => createSelector(
   [units, cities],
