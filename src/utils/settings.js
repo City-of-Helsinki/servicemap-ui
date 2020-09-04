@@ -1,9 +1,10 @@
 import LocalStorageUtility from './localStorage';
+import config from '../../config'
 
 const ALLOWED = {
   mobility: [null, 'wheelchair', 'reduced_mobility', 'rollator', 'stroller'],
   city: [null, 'helsinki', 'espoo', 'vantaa', 'kauniainen'],
-  map: ['servicemap', 'ortographic', 'guideMap', 'accessible_map'],
+  map: config.maps,
 };
 
 const ACCESSIBILITY_MAPPING = {
@@ -22,6 +23,13 @@ class SettingsUtility {
   static accessibilityImpairmentKeys = Object.keys(ACCESSIBILITY_MAPPING).map(
     key => (key),
   );
+
+  // AccessibilityRelatedSettings
+  // Filter mobility and accessibility settings from null values
+  static accessibilityRelatedSettings = [
+    ...this.mobilitySettings.filter(v => v),
+    ...this.accessibilityImpairmentKeys.filter(v => v),
+  ];
 
   static isValidAccessibilitySenseImpairment(key) {
     if (this.accessibilityImpairmentKeys.indexOf(key) < 0) {
