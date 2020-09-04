@@ -27,33 +27,33 @@ class SettingsUtility {
   // AccessibilityRelatedSettings
   // Filter mobility and accessibility settings from null values
   static accessibilityRelatedSettings = [
-    ...this.mobilitySettings.filter(v => v),
-    ...this.accessibilityImpairmentKeys.filter(v => v),
+    ...SettingsUtility.mobilitySettings.filter(v => v),
+    ...SettingsUtility.accessibilityImpairmentKeys.filter(v => v),
   ];
 
   static isValidAccessibilitySenseImpairment(key) {
-    if (this.accessibilityImpairmentKeys.indexOf(key) < 0) {
+    if (SettingsUtility.accessibilityImpairmentKeys.indexOf(key) < 0) {
       throw new Error(`Invalid value for accessibility sense setting: ${key}`);
     }
     return true;
   }
 
   static isValidMobilitySetting(value) {
-    if (this.mobilitySettings.indexOf(value) < 0) {
+    if (SettingsUtility.mobilitySettings.indexOf(value) < 0) {
       throw new Error(`Invalid value for mobility setting: ${value}`);
     }
     return true;
   }
 
   static isValidCitySetting(value) {
-    if (this.citySettings.indexOf(value) < 0) {
+    if (SettingsUtility.citySettings.indexOf(value) < 0) {
       throw new Error(`Invalid value for city setting: ${value}`);
     }
     return true;
   }
 
   static isValidMapSetting(value) {
-    if (this.mapSettings.indexOf(value) < 0) {
+    if (SettingsUtility.mapSettings.indexOf(value) < 0) {
       throw new Error(`Invalid value for map setting: ${value}`);
     }
     return true;
@@ -109,7 +109,7 @@ class SettingsUtility {
       data.push(mobility);
     }
 
-    this.accessibilityImpairmentKeys.forEach((key) => {
+    SettingsUtility.accessibilityImpairmentKeys.forEach((key) => {
       if (Object.prototype.hasOwnProperty.call(settings, key) && settings[key]) {
         data.push(ACCESSIBILITY_MAPPING[key]);
       }
@@ -120,7 +120,7 @@ class SettingsUtility {
 
   // Check accessibility settings have been activated
   static hasActiveAccessibilitySettings(settings) {
-    const activeSettings = this.parseShortcomingSettings(settings);
+    const activeSettings = SettingsUtility.parseShortcomingSettings(settings);
     return activeSettings && activeSettings.length;
   }
 }
