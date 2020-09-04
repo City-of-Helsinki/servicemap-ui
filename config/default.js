@@ -51,6 +51,10 @@ if (typeof settings.OLD_MAP_LINK_EN === 'undefined'
     settings.OLD_MAP_LINK_SV = 'https://palvelukartta-vanha.hel.fi/?lang=sv';
 }
 
+if (typeof settings.CITIES === 'undefined') {
+  settings.CITIES = 'helsinki,espoo,vantaa,kauniainen';
+}
+
 export default {
   "version": version.tag,
   "commit": version.commit,
@@ -85,6 +89,7 @@ export default {
   },
   "production": settings.MODE === 'production',
   "initialMapPosition": settings.INITIAL_MAP_POSITION.split(','),
+  "cities": settings.CITIES.split(','),
   "maps": settings.MAPS.split(','),
   "smallContentAreaBreakpoint": 449,
   "mobileUiBreakpoint": 699,
