@@ -199,6 +199,7 @@ export default {
   'map.ariaLabel': 'Kartvy. Kartans uppgifter kan i nuläget granskas endast visuellt.',
   'map.transit.endStation': 'Ändhållplats',
   'map.address.searching': 'Söker adress...',
+  'map.address.notFound': 'Okänd adress',
   'map.address.info': 'Adressens uppgifter',
   'map.unit.cluster.popup.info': '{count} verksamhetsställen', // TODO: Verify
 

@@ -5,6 +5,7 @@ import SearchBar from '../../components/SearchBar';
 import PaperButton from '../../components/PaperButton';
 import { getIcon } from '../../components/SMIcon';
 import MobileComponent from '../../components/MobileComponent';
+import config from '../../../config';
 
 class HomeView extends React.Component {
   renderNavigationOptions = () => {
@@ -70,9 +71,9 @@ class HomeView extends React.Component {
             link
             onClick={() => {
               window.open(getLocaleText({
-                fi: 'https://palvelukartta-vanha.hel.fi/?lang=fi',
-                sv: 'https://palvelukartta-vanha.hel.fi/?lang=sv',
-                en: 'https://palvelukartta-vanha.hel.fi/?lang=en',
+                fi: config.old_map_fi,
+                sv: config.old_map_sv,
+                en: config.old_map_en,
               }));
             }}
           />
