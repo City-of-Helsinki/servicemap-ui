@@ -28,19 +28,19 @@ const overrides = theme => ({
   MuiButtonBase: {
     root: {
       // Default keyboard focus indicator for buttons
-      '&$focusVisible': theme === 'dark' ? focusIndicatorDark : focusIndicator, 
+      '&$focusVisible': theme === 'dark' ? focusIndicatorDark : focusIndicator,
     },
   },
   MuiInputBase: {
     // Default keyboard focus indicator for input fields
-    root: { "&$focused": theme === 'dark' ? focusIndicatorDark : focusIndicator },
+    root: { '&$focused': theme === 'dark' ? focusIndicatorDark : focusIndicator },
   },
   MuiListItemText: {
     root: {
       marginTop: 0,
       marginBottom: 0,
-    }
-  }
+    },
+  },
 });
 
 const breakpoints = {
@@ -171,7 +171,7 @@ export const paletteDefault = {
     strong: '#898989',
   },
   focusBorder: {
-    main: 'rgb(71, 131, 235)'
+    main: 'rgb(71, 131, 235)',
   },
   warning: {
     main: '#AF0021',

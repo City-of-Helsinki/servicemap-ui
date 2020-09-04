@@ -2,7 +2,7 @@
 import React from 'react';
 import { createMount } from '@material-ui/core/test-utils';
 import { MuiThemeProvider } from '@material-ui/core';
-import themes from '../../../../../themes';
+import themes from '../../../../themes';
 import ResultItem from '../index';
 
 // Generic required props for ResultItem

@@ -30,6 +30,7 @@ import '@formatjs/intl-relativetimeformat/polyfill';
 import '@formatjs/intl-relativetimeformat/dist/locale-data/en';
 import '@formatjs/intl-relativetimeformat/dist/locale-data/fi';
 import '@formatjs/intl-relativetimeformat/dist/locale-data/sv';
+import ThemeWrapper from './themes/ThemeWrapper';
 
 class App extends React.Component {
   constructor(props) {
@@ -61,16 +62,20 @@ class App extends React.Component {
     const { i18n } = this.state;
     const i18nData = i18n.data();
     return (
-      <IntlProvider {...i18nData}>
-        <div className="App">
-          <Switch>
-            <Route path="*/embed" component={EmbedLayout} />
-            <Route render={() => <DefaultLayout i18n={i18n} />} />
-          </Switch>
-          <Navigator />
-          <DataFetcher />
-        </div>
-      </IntlProvider>
+      <ThemeWrapper>
+        <IntlProvider {...i18nData}>
+          {/* <StylesProvider generateClassName={generateClassName}> */}
+          <div className="App">
+            <Switch>
+              <Route path="*/embed" component={EmbedLayout} />
+              <Route render={() => <DefaultLayout i18n={i18n} />} />
+            </Switch>
+            <Navigator />
+            <DataFetcher />
+          </div>
+          {/* </StylesProvider> */}
+        </IntlProvider>
+      </ThemeWrapper>
     );
   }
 }

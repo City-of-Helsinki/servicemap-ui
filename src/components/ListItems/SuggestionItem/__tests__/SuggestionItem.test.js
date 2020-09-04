@@ -4,7 +4,7 @@ import { createMount } from '@material-ui/core/test-utils';
 import { MuiThemeProvider } from '@material-ui/core';
 import { IntlProvider } from 'react-intl';
 import { Search } from '@material-ui/icons';
-import themes from '../../../../../themes';
+import themes from '../../../../themes';
 import SuggestionItem from '../index';
 
 // Mock props for intl provider

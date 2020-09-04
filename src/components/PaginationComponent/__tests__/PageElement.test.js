@@ -3,7 +3,7 @@ import React from 'react';
 import { createMount } from '@material-ui/core/test-utils';
 import { MuiThemeProvider } from '@material-ui/core';
 import { IntlProvider } from 'react-intl';
-import themes from '../../../../themes';
+import themes from '../../../themes';
 import PageElement from '../PageElement';
 
 // Mock props for intl provider

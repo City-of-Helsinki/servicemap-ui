@@ -15,7 +15,6 @@ import App from '../src/App';
 import SettingsUtility from '../src/utils/settings';
 import LocalStorageUtility from '../src/utils/localStorage';
 import favicon from '../src/assets/icons/favicon.ico';
-import ThemeWrapper from './ThemeWrapper';
 
 if (!global.AbortController) {
   global.AbortController = ac.AbortController;
@@ -66,15 +65,13 @@ function Main() {
 
       {/* Provider to help with isomorphic style loader */}
       <StyleContext.Provider value={{ insertCss }}>
-        <ThemeWrapper>
-          {
-            // HTML head tags
-          }
-          <Helmet>
-            <link rel="shortcut icon" href={favicon} />
-          </Helmet>
-          <App />
-        </ThemeWrapper>
+        {
+          // HTML head tags
+        }
+        <Helmet>
+          <link rel="shortcut icon" href={favicon} />
+        </Helmet>
+        <App />
       </StyleContext.Provider>
     </Provider>
   );

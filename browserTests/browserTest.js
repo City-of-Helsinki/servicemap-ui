@@ -3,7 +3,7 @@ import { Selector, ClientFunction } from 'testcafe';
 
 import { waitForReact, ReactSelector } from 'testcafe-react-selectors';
 
-import { paletteDefault, paletteDark } from '../themes'
+import { paletteDefault, paletteDark } from '../src/themes'
 import config from './config';
 const { server } = config;
 

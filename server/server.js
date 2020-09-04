@@ -13,9 +13,7 @@ import App from '../src/App';
 import { makeLanguageHandler, languageSubdomainRedirect, unitRedirect } from './utils';
 import { setLocale } from '../src/redux/actions/user';
 import { Helmet } from 'react-helmet';
-import { MuiThemeProvider } from '@material-ui/core';
 import { ServerStyleSheets } from '@material-ui/core/styles';
-import themes from '../themes';
 import fetch from 'node-fetch';
 import { fetchEventData, fetchSelectedUnitData } from './dataFetcher';
 import IntlPolyfill from 'intl';
@@ -104,16 +102,14 @@ app.get('/*', (req, res, next) => {
   const sheets = new ServerStyleSheets();
 
   const jsx = sheets.collect(
-    <MuiThemeProvider theme={themes.SMTheme}>
-      <Provider store={store}>
-        <StaticRouter location={req.url} context={{}}>
-          {/* Provider to help with isomorphic style loader */}
-          <StyleContext.Provider value={{ insertCss }}>
-            <App />
-          </StyleContext.Provider>
-        </StaticRouter>
-      </Provider>
-    </MuiThemeProvider>
+    <Provider store={store}>
+      <StaticRouter location={req.url} context={{}}>
+        {/* Provider to help with isomorphic style loader */}
+        <StyleContext.Provider value={{ insertCss }}>
+          <App />
+        </StyleContext.Provider>
+      </StaticRouter>
+    </Provider>
   );
   const reactDom = ReactDOMServer.renderToString(jsx);
   const cssString = sheets.toString();
