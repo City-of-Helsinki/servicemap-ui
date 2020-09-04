@@ -1,6 +1,5 @@
 const webpack = require('webpack'); //to access built-in plugins
 const path = require('path');
-const nodeExternals = require('webpack-node-externals');
 const dotenv = require('dotenv');
 dotenv.config();
 
