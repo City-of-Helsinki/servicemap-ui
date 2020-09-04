@@ -91,7 +91,6 @@ const serverConfig = {
   entry: {
     'index.js': path.resolve(__dirname, 'server/server.js'),
   },
-  externals: [nodeExternals({})],
   module: {
     rules: [
       {

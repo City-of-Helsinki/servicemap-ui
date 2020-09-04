@@ -13,9 +13,8 @@ import App from '../src/App';
 import { makeLanguageHandler, languageSubdomainRedirect, unitRedirect } from './utils';
 import { setLocale } from '../src/redux/actions/user';
 import { Helmet } from 'react-helmet';
-import { createGenerateClassName, MuiThemeProvider } from '@material-ui/core';
+import { MuiThemeProvider } from '@material-ui/core';
 import { ServerStyleSheets } from '@material-ui/core/styles';
-import JssProvider from 'react-jss/lib/JssProvider';
 import themes from '../themes';
 import fetch from 'node-fetch';
 import { fetchEventData, fetchSelectedUnitData } from './dataFetcher';
@@ -92,11 +91,6 @@ app.get('/*', (req, res, next) => {
   const css = new Set(); 
   const insertCss = (...styles) => styles.forEach(style => css.add(style._getCss()));
 
-  // Create a new class name generator.
-  const generateClassName = createGenerateClassName({
-    productionPrefix: config.productionPrefix,
-  });
-
   // Locale for page
   const localeParam = req.params[0].slice(0, 2)
   const locale = supportedLanguages.indexOf(localeParam > -1) ? localeParam : 'fi';
@@ -110,17 +104,16 @@ app.get('/*', (req, res, next) => {
   const sheets = new ServerStyleSheets();
 
   const jsx = sheets.collect(
-    <JssProvider generateClassName={generateClassName}>
-      <MuiThemeProvider theme={themes.SMTheme}>
-        <Provider store={store}>
-          <StaticRouter location={req.url} context={{}}>
-            <StyleContext.Provider value={{ insertCss }}>
-              <App />
-            </StyleContext.Provider>
-          </StaticRouter>
-        </Provider>
-      </MuiThemeProvider>
-    </JssProvider>
+    <MuiThemeProvider theme={themes.SMTheme}>
+      <Provider store={store}>
+        <StaticRouter location={req.url} context={{}}>
+          {/* Provider to help with isomorphic style loader */}
+          <StyleContext.Provider value={{ insertCss }}>
+            <App />
+          </StyleContext.Provider>
+        </StaticRouter>
+      </Provider>
+    </MuiThemeProvider>
   );
   const reactDom = ReactDOMServer.renderToString(jsx);
   const cssString = sheets.toString();

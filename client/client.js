@@ -9,16 +9,11 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import StyleContext from 'isomorphic-style-loader/StyleContext';
-import JssProvider from 'react-jss/lib/JssProvider';
-import {
-  createGenerateClassName,
-} from '@material-ui/core/styles';
 import ac from 'abortcontroller-polyfill';
 import rootReducer from '../src/redux/rootReducer';
 import App from '../src/App';
 import SettingsUtility from '../src/utils/settings';
 import LocalStorageUtility from '../src/utils/localStorage';
-import config from '../config';
 import favicon from '../src/assets/icons/favicon.ico';
 import ThemeWrapper from './ThemeWrapper';
 
@@ -51,21 +46,26 @@ const store = createStore(rootReducer, preloadedState, applyMiddleware(thunk));
 
 const app = document.getElementById('app');
 
-// Create a new class name generator.
-const generateClassName = createGenerateClassName({
-  productionPrefix: config.productionPrefix,
-});
-
 const insertCss = (...styles) => {
   const removeCss = styles.map(style => style._insertCss());
   return () => removeCss.forEach(dispose => dispose());
 };
 
+function Main() {
+  // Remove server side styles
+  React.useEffect(() => {
+    const jssStyles = document.querySelector('#jss-server-side');
+    console.log(jssStyles);
+    if (jssStyles) {
+      jssStyles.parentElement.removeChild(jssStyles);
+    }
+  }, []);
 
-ReactDOM.hydrate(
-  <Provider store={store}>
-    <StyleContext.Provider value={{ insertCss }}>
-      <JssProvider generateClassName={generateClassName}>
+  return (
+    <Provider store={store}>
+
+      {/* Provider to help with isomorphic style loader */}
+      <StyleContext.Provider value={{ insertCss }}>
         <ThemeWrapper>
           {
             // HTML head tags
@@ -75,7 +75,12 @@ ReactDOM.hydrate(
           </Helmet>
           <App />
         </ThemeWrapper>
-      </JssProvider>
-    </StyleContext.Provider>
-  </Provider>, app,
+      </StyleContext.Provider>
+    </Provider>
+  );
+}
+
+
+ReactDOM.hydrate(
+  <Main />, app,
 );
