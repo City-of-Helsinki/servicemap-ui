@@ -55,6 +55,23 @@ if (typeof settings.CITIES === 'undefined') {
   settings.CITIES = 'helsinki,espoo,vantaa,kauniainen';
 }
 
+if (typeof settings.SERVICE_MAP_URL === 'undefined') {
+  // If not set default to Helsinki
+  settings.SERVICE_MAP_URL = 'https://tiles.hel.ninja/styles/hel-osm-bright/{z}/{x}/{y}';
+}
+if (typeof settings.ACCESSIBLE_MAP_URL === 'undefined') {
+  // If not set default to Helsinki
+  settings.ACCESSIBLE_MAP_URL = 'https://tiles.hel.ninja/styles/turku-osm-high-contrast-pattern/{z}/{x}/{y}';
+}
+if (typeof settings.ORTOGRAPHIC_MAP_URL === 'undefined') {
+  // If not set default to Helsinki
+  settings.ORTOGRAPHIC_MAP_URL = 'https://kartta.hsy.fi/geoserver/gwc/service/wmts?layer=taustakartat_ja_aluejaot:Ortoilmakuva_2017&tilematrixset=ETRS-GK25&Service=WMTS&Request=GetTile&Version=1.0.0&TileMatrix=ETRS-GK25:{z}&TileCol={x}&TileRow={y}&Format=image/jpeg';
+}
+if (typeof settings.GUIDE_MAP_URL === 'undefined') {
+  // If not set default to Helsinki
+  settings.GUIDE_MAP_URL = 'https://kartta.hel.fi/ws/geoserver/avoindata/gwc/service/wmts?layer=avoindata:Karttasarja_PKS&tilematrixset=ETRS-GK25&Service=WMTS&Request=GetTile&Version=1.0.0&TileMatrix=ETRS-GK25:{z}&TileCol={x}&TileRow={y}&Format=image%2Fpng';
+}
+
 export default {
   "version": version.tag,
   "commit": version.commit,
@@ -89,6 +106,10 @@ export default {
   },
   "production": settings.MODE === 'production',
   "initialMapPosition": settings.INITIAL_MAP_POSITION.split(','),
+  "servicemap_url": settings.SERVICE_MAP_URL,
+  "accessible_map_url": settings.ACCESSIBLE_MAP_URL,
+  "ortographic_map_url": settings.ORTOGRAPHIC_MAP_URL,
+  "guide_map_url": settings.GUIDE_MAP_URL,
   "cities": settings.CITIES.split(','),
   "maps": settings.MAPS.split(','),
   "smallContentAreaBreakpoint": 449,

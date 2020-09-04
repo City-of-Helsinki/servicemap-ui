@@ -55,7 +55,7 @@ const mapTypes = {
   // These define the map tiles and options of individual map types
   servicemap: {
     name: 'servicemap',
-    generateUrl: (suffix = '') => `https://tiles.hel.ninja/styles/hel-osm-bright/{z}/{x}/{y}${suffix}.png`,
+    generateUrl: (suffix = '') => `${config.servicemap_url}${suffix}.png`,
     minZoom: 9,
     maxZoom: 18,
     zoom: 13,
@@ -66,7 +66,7 @@ const mapTypes = {
   },
   accessible_map: {
     name: 'accessible_map',
-    generateUrl: (suffix = '') => `https://tiles.hel.ninja/styles/turku-osm-high-contrast-pattern/{z}/{x}/{y}${suffix}.png`,
+    generateUrl: (suffix = '') => `${config.accessible_map_url}${suffix}.png`,
     minZoom: 9,
     maxZoom: 18,
     zoom: 13,
@@ -79,7 +79,7 @@ const mapTypes = {
     name: 'ortographic',
     layer: tileLayers.orthoImageLayer,
     // TODO: maybe have map names and formats as variables from the URL, like in the old version
-    generateUrl: () => 'https://kartta.hsy.fi/geoserver/gwc/service/wmts?layer=taustakartat_ja_aluejaot:Ortoilmakuva_2017&tilematrixset=ETRS-GK25&Service=WMTS&Request=GetTile&Version=1.0.0&TileMatrix=ETRS-GK25:{z}&TileCol={x}&TileRow={y}&Format=image/jpeg',
+    generateUrl: () => config.ortographic_map_url,
     minZoom: 3,
     maxZoom: 10,
     zoom: 5,
@@ -98,7 +98,7 @@ const mapTypes = {
     name: 'guideMap',
     layer: tileLayers.guideMapLayer,
     // TODO: maybe have map names and formats as variables from the URL, like in the old version
-    generateUrl: () => 'https://kartta.hel.fi/ws/geoserver/avoindata/gwc/service/wmts?layer=avoindata:Karttasarja_PKS&tilematrixset=ETRS-GK25&Service=WMTS&Request=GetTile&Version=1.0.0&TileMatrix=ETRS-GK25:{z}&TileCol={x}&TileRow={y}&Format=image%2Fpng',
+    generateUrl: () => config.guide_map_url,
     minZoom: 8,
     maxZoom: 15,
     zoom: 10,
