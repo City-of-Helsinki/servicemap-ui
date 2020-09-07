@@ -12,6 +12,7 @@ import DrawerMenu from '../DrawerMenu';
 import DesktopComponent from '../DesktopComponent';
 import MobileComponent from '../MobileComponent';
 import config from '../../../config';
+import ToolMenu from '../ToolMenu';
 
 class TopBar extends React.Component {
   state={ drawerOpen: false }
@@ -300,6 +301,11 @@ class TopBar extends React.Component {
                   {this.renderDrawerMenu(pageType)}
                 </>
               )}
+              {
+                !smallScreen && (
+                  <ToolMenu />
+                )
+              }
             </DesktopComponent>
           </Toolbar>
         </AppBar>
