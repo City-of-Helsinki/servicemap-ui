@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import config from '../../../config';
 import { filterEmptyServices, filterCities } from '../../utils/filters';
 import isClient from '../../utils';
 import orderUnits from '../../utils/orderUnits';
@@ -15,12 +16,11 @@ const settings = state => state.settings;
  * @param {*} settings - user settings, used in filtering
  */
 const getFilteredData = (data, options, settings) => {
-  const cities = [
-    ...settings.helsinki ? ['helsinki'] : [],
-    ...settings.vantaa ? ['vantaa'] : [],
-    ...settings.espoo ? ['espoo'] : [],
-    ...settings.kauniainen ? ['kauniainen'] : [],
-  ];
+  const cities = [];
+  config.cities.forEach((city) => {
+    cities.push(...settings.cities[city] ? [city] : []);
+  });
+
   let filteredData = data
     .filter(filterEmptyServices(cities));
   if (options && options.municipality) {

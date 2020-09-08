@@ -164,12 +164,13 @@ export default {
   'general.return.viewTitle': 'Siirry pääsisällön alkuun',
   'general.skipToContent': 'Siirry pääsisältöön',
   'general.new.tab': 'Aukeaa uuteen välilehteen',
-  'general.time.short': 'klo',
   'general.save': 'Tallenna',
   'general.save.changes': 'Tallenna asetukset',
   'general.save.changes.done': 'Muutokset tallennettu!',
   'general.save.confirmation': 'Haluatko tallentaa muutokset?',
   'general.search': 'Hae',
+  'general.time.short': 'klo',
+  'general.tools': 'Työkalut',
   'general.distance.meters': 'Metrin päässä',
   'general.distance.kilometers': 'Kilometrin päässä',
 
@@ -199,6 +200,7 @@ export default {
   'map.ariaLabel': 'Karttanäkymä. Kartan tietoja voi tarkastella tällä hetkellä vain näönvaraisesti.',
   'map.transit.endStation': 'Päätepysäkki',
   'map.address.searching': 'Haetaan osoitetta...',
+  'map.address.notFound': 'Tuntematon osoite',
   'map.address.info': 'Osoitteen tiedot',
   'map.unit.cluster.popup.info': '{count} toimipistettä',
 

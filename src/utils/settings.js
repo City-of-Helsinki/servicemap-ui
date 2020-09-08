@@ -1,9 +1,10 @@
 import LocalStorageUtility from './localStorage';
+import config from '../../config';
 
 const ALLOWED = {
   mobility: [null, 'wheelchair', 'reduced_mobility', 'rollator', 'stroller'],
-  city: [null, 'helsinki', 'espoo', 'vantaa', 'kauniainen'],
-  map: ['servicemap', 'ortographic', 'guideMap', 'accessible_map'],
+  city: [null, ...config.cities],
+  map: config.maps,
 };
 
 const ACCESSIBILITY_MAPPING = {
@@ -23,6 +24,13 @@ class SettingsUtility {
     key => (key),
   );
 
+  // AccessibilityRelatedSettings
+  // Filter mobility and accessibility settings from null values
+  static accessibilityRelatedSettings = [
+    ...this.mobilitySettings.filter(v => v),
+    ...this.accessibilityImpairmentKeys.filter(v => v),
+  ];
+
   static isValidAccessibilitySenseImpairment(key) {
     if (this.accessibilityImpairmentKeys.indexOf(key) < 0) {
       throw new Error(`Invalid value for accessibility sense setting: ${key}`);
@@ -37,10 +45,12 @@ class SettingsUtility {
     return true;
   }
 
-  static isValidCitySetting(value) {
-    if (this.citySettings.indexOf(value) < 0) {
-      throw new Error(`Invalid value for city setting: ${value}`);
-    }
+  static isValidCitySetting(values) {
+    Object.keys(values).forEach((key) => {
+      if (!config.cities.includes(key)) {
+        throw new Error(`Invalid value for city setting: ${key}`);
+      }
+    });
     return true;
   }
 
@@ -81,11 +91,12 @@ class SettingsUtility {
       colorblind: LocalStorageUtility.getItem('colorblind') === 'true',
       visuallyImpaired: LocalStorageUtility.getItem('visuallyImpaired') === 'true',
       hearingAid: LocalStorageUtility.getItem('hearingAid') === 'true',
-      helsinki: LocalStorageUtility.getItem('helsinki') === 'true',
-      espoo: LocalStorageUtility.getItem('espoo') === 'true',
-      vantaa: LocalStorageUtility.getItem('vantaa') === 'true',
-      kauniainen: LocalStorageUtility.getItem('kauniainen') === 'true',
+      cities: {},
     };
+
+    config.cities.forEach((city) => {
+      settings.cities[city] = LocalStorageUtility.getItem(city) === 'true';
+    });
 
     return settings;
   }

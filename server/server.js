@@ -89,7 +89,7 @@ app.use(paths.unit.regex, fetchSelectedUnitData);
 
 app.get('/*', (req, res, next) => {
   // CSS for all rendered React components
-  const css = new Set(); 
+  const css = new Set();
   const insertCss = (...styles) => styles.forEach(style => css.add(style._getCss()));
 
 
@@ -132,7 +132,7 @@ app.get('/*', (req, res, next) => {
   const jss = sheetsRegistry.toString();
 
   const preloadedState = store.getState();
-  
+
   const customValues = {
     initialMapPosition: parseInitialMapPositionFromHostname(req, Sentry)
   };
@@ -174,7 +174,7 @@ const htmlTemplate = (reactDom, preloadedState, css, jss, locale, helmet, custom
     ${appDynamicsTrackingCode(process.env.APP_DYNAMICS_APP_KEY)}
     <script type="text/javascript">
       window.rsConf = {
-        params: '//cdn1.readspeaker.com/script/11515/webReader/webReader.js?pids=wr', 
+        params: '//cdn1.readspeaker.com/script/11515/webReader/webReader.js?pids=wr',
         general: {usePost:true}
       };
     </script>
@@ -196,7 +196,16 @@ const htmlTemplate = (reactDom, preloadedState, css, jss, locale, helmet, custom
         window.nodeEnvSettings.HEARING_MAP_API = "${process.env.HEARING_MAP_API}";
         window.nodeEnvSettings.MODE = "${process.env.MODE}";
         window.nodeEnvSettings.INITIAL_MAP_POSITION = "${customValues.initialMapPosition}";
-        
+        window.nodeEnvSettings.SERVICE_MAP_URL = "${process.env.SERVICE_MAP_URL}";
+        window.nodeEnvSettings.ACCESSIBLE_MAP_URL = "${process.env.ACCESSIBLE_MAP_URL}";
+        window.nodeEnvSettings.ORTOGRAPHIC_MAP_URL = "${process.env.ORTOGRAPHIC_MAP_URL}";
+        window.nodeEnvSettings.GUIDE_MAP_URL = "${process.env.GUIDE_MAP_URL}";
+        window.nodeEnvSettings.CITIES = "${process.env.CITIES}";
+        window.nodeEnvSettings.MAPS = "${process.env.MAPS}";
+        window.nodeEnvSettings.OLD_MAP_LINK_EN = "${process.env.OLD_MAP_LINK_EN}";
+        window.nodeEnvSettings.OLD_MAP_LINK_FI = "${process.env.OLD_MAP_LINK_FI}";
+        window.nodeEnvSettings.OLD_MAP_LINK_SV = "${process.env.OLD_MAP_LINK_SV}";
+
         window.appVersion = {};
         window.appVersion.tag = "${versionTag}";
         window.appVersion.commit = "${versionCommit}";
