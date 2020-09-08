@@ -28,7 +28,7 @@ export default {
   'address.area.link': 'Bekanta dig med områdena på kartan.',
   'address.emergency_care.common': 'När den egna hälsostationen är stängd och på natten kl. 22-8 är jour för barn och unga under 16 år på <a>Barnkliniken</a> [<a1>hemsidor</a1>], och jour för vuxna på',
   'address.emergency_care.children_hospital.link': '/{locale}/unit/7299',
-  'address.emergency_care.common.link': 'http://www.hus.fi/sv/sjukvard/sjukhus/barnkliniken/Sidor/default.aspx',
+  'address.emergency_care.common.link': 'https://www.hus.fi/sv/sjukvard/sjukhus/nyabarnsjukhuset/Sidor/default.aspx',
   'address.emergency_care.unit.26107': 'Malms sjukhuset',
   'address.emergency_care.unit.26104': 'Haartmanska sjukhuset',
   'address.emergency_care.link': 'http://www.hel.fi/www/Helsinki/fi/sosiaali-ja-terveyspalvelut/terveyspalvelut/paivystys/',
@@ -201,15 +201,19 @@ export default {
   'general.return.viewTitle': 'Gå till början av huvudinnehållet',
   'general.skipToContent': 'Gå till huvudinnehållet',
   'general.new.tab': 'Öppnas i en ny flik',
-  'general.time.short': 'kl.',
   'general.save': 'Spara',
   'general.save.changes': 'Spara inställningar',
   'general.save.changes.done': 'Ändringarna har sparats!',
   'general.save.confirmation': 'Vill du spara ändringarna?',
   'general.search': 'Sök',
+  'general.time.short': 'kl.',
+  'general.tools': 'Verktyg',
   'general.distance.meters': 'Meters avstånd',
   'general.distance.kilometers': 'Kilometers avstånd',
   'general.tools': 'Verktyg',
+  // Readspeaker
+  'general.readspeaker.buttonText': 'Lyssna', // TODO: verify
+  'general.readspeaker.title': 'Lyssna med ReadSpeaker webReader', // TODO: verify
 
   // Home
   'home.buttons.settings': 'Spara dina egna stads- och tillgänglighetsinställningar',
@@ -237,6 +241,7 @@ export default {
   'map.ariaLabel': 'Kartvy. Kartans uppgifter kan i nuläget granskas endast visuellt.',
   'map.transit.endStation': 'Ändhållplats',
   'map.address.searching': 'Söker adress...',
+  'map.address.notFound': 'Okänd adress',
   'map.address.info': 'Adressens uppgifter',
   'map.unit.cluster.popup.info': '{count} verksamhetsställen', // TODO: Verify
 
@@ -440,7 +445,7 @@ export default {
   'settings.aria.opened': 'Inställningarna har öppnats',
   'settings.aria.saved': 'Inställningarna har sparats',
 
-  'info.title': 'Om tjänsten',
+  'info.title': 'Om tjänsten och tillgänglighetsredogörelsen',
   'info.statement': 'Tillgänglighetsredogörelsen',
 
   'alert.close': 'Stäng meddelande',

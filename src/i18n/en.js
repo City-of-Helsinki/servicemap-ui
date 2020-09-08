@@ -28,7 +28,7 @@ export default {
   'address.area.link': 'Get to know the areas on the map.',
   'address.emergency_care.common': 'When your health station is closed and in the night between 22-8, emergency care for children and young people under age 16 is provided at <a>Children\'s Hospital</a> [<a1>homepage</a1>], and for adults at',
   'address.emergency_care.children_hospital.link': '/{locale}/unit/7299',
-  'address.emergency_care.common.link': 'http://www.hus.fi/en/medical-care/hospitals/childrens-hospital/Pages/default.aspx',
+  'address.emergency_care.common.link': 'https://www.hus.fi/en/medical-care/hospitals/newchildrenshospital/Pages/default.aspx',
   'address.emergency_care.unit.26107': 'Malmi hospital',
   'address.emergency_care.unit.26104': 'Haartman hospital',
   'address.emergency_care.link': 'http://www.hel.fi/www/Helsinki/fi/sosiaali-ja-terveyspalvelut/terveyspalvelut/paivystys/',
@@ -115,7 +115,7 @@ export default {
   // Feedback
   'feedback.back': 'Go back',
   'feedback.title': 'Give feedback on this web service',
-  'feedback.title.unit': 'Give feedback on the service unit {unit}',
+  'feedback.title.unit': 'Give feedback on the service location {unit}',
   'feedback.email': 'Email',
   'feedback.email.info': 'If you want us to answer the feedback, please provide your e-mail address.',
   'feedback.feedback': 'Your feedback (required)',
@@ -154,7 +154,7 @@ export default {
   'general.back.goToHome': 'Go to home view',
   'general.back.search': 'Back to search view',
   'general.back.service': 'Back to service view',
-  'general.back.unit': 'Back to unit view',
+  'general.back.unit': 'Back to location view',
   'general.back.event': 'Back to event view',
   'general.back.info': 'Return back',
   'general.back.feedback': 'Return back',
@@ -177,9 +177,9 @@ export default {
   'general.page.close': 'Close page', // TODO: Verify
   'general.pageTitles.home': 'Home view',
   'general.pageTitles.search': 'Search results view',
-  'general.pageTitles.unit': 'Unit view',
-  'general.pageTitles.unit.events': 'Units\' events',
-  'general.pageTitles.unit.reservations': 'Units\' reservable objects',
+  'general.pageTitles.unit': 'Location view',
+  'general.pageTitles.unit.events': 'Locations\' events',
+  'general.pageTitles.unit.reservations': 'Locations\' reservable objects',
   'general.pageTitles.service': 'Service view',
   'general.pageTitles.serviceTree': 'Services list',
   'general.pageTitles.event': 'Event view',
@@ -190,6 +190,9 @@ export default {
   'general.pageTitles.feedback': 'Feedback view',
   'general.pageTitles.area': 'Area view.',
   'general.tools': 'Tools',
+  // Readspeaker
+  'general.readspeaker.buttonText': 'Listen',
+  'general.readspeaker.title': 'Listen with ReadSpeaker webReader',
 
   // General - Pagination
   'general.pagination.previous': 'Previous page',
@@ -202,12 +205,13 @@ export default {
   'general.return.viewTitle': 'Return to beginning of main content',
   'general.skipToContent': 'Skip to content',
   'general.new.tab': 'Opens in new tab',
-  'general.time.short': 'at',
   'general.save': 'Save',
   'general.save.changes': 'Save settings',
   'general.save.changes.done': 'Changes have been saved!',
   'general.save.confirmation': 'Would you like to save changes?',
   'general.search': 'Search',
+  'general.time.short': 'at',
+  'general.tools': 'Tools',
   'general.distance.meters': 'Meters away',
   'general.distance.kilometers': 'Kilometers away',
 
@@ -229,19 +233,20 @@ export default {
   // Loading texts
   'loading.events': 'Loading events {count} / {max}',
   'loading.events.srInfo': 'Loading {count} event(s)',
-  'search.loading.units': 'Searching units {count} / {max}',
-  'search.loading.units.srInfo': 'Searching {count} unit(s)',
+  'search.loading.units': 'Searching locations {count} / {max}',
+  'search.loading.units.srInfo': 'Searching {count} location(s)',
 
   // Map
   'map': 'Map',
   'map.ariaLabel': 'Map. Currently map information is only accessible visually.',
   'map.transit.endStation': 'Terminus',
   'map.address.searching': 'Retreiving address...',
+  'map.address.notFound': 'Unknown address',
   'map.address.info': 'Address information',
-  'map.unit.cluster.popup.info': '{count} units',
+  'map.unit.cluster.popup.info': '{count} locations',
 
   // Units
-  'unit': 'Unit',
+  'unit': 'Location',
   'unit.accessibility.hearingMaps': 'Coverage maps',
   'unit.accessibility.hearingMaps.extra': '(New tab. The service is not accessible)',
   'unit.accessibility.noInfo': 'No accessibility information',
@@ -252,11 +257,11 @@ export default {
                                     one {# accessibility shortcoming}
                                     other {# accessibility shortcomings}
                                   }`,
-  'unit.accessibility.unitNoInfo': 'Unit has not delivered any accessibility information.', // TODO: verify
+  'unit.accessibility.unitNoInfo': 'Location has not delivered any accessibility information.', // TODO: verify
   'unit.basicInfo': 'Information',
   'unit.data_source': 'Source: {data_source}',
-  'unit.details.notFound': 'Unit info not available.',
-  'unit.plural': 'Units',
+  'unit.details.notFound': 'Location info not available.',
+  'unit.plural': 'Locations',
 
   'unit.contact.info': 'Contact information',
   'unit.links': 'Web sites',
@@ -271,8 +276,8 @@ export default {
   'unit.events.more': 'Show more events',
   'unit.homepage': 'Home page',
   'unit.homepage.missing': 'No home page provided',
-  'unit.picture': 'Picture of unit: ',
-  'unit.description': 'Unit description',
+  'unit.picture': 'Picture of location: ',
+  'unit.description': 'Location description',
   'unit.address': 'Address',
   'unit.address.missing': 'No address provided',
   'unit.phone': 'Phone number',
@@ -304,18 +309,18 @@ export default {
   }`,
   'unit.route': 'Look at the route to this place',
   'unit.route.extra': '(New tab. The HSL Journey Planner is not an accessible service)',
-  'unit.socialMedia.title': 'The service unit on social media',
+  'unit.socialMedia.title': 'The service location on social media',
 
   // Search
   'search': 'Search',
   'search.arrowLabel': 'Refine',
   'search.cancelText': 'Clear search text',
   'search.notFoundWith': 'No results for search "{query}".',
-  'search.placeholder': 'Search for services or units',
+  'search.placeholder': 'Search for services or locations',
   'search.info': `{count, plural,
-                  =0 {No units were found}
-                  one {# unit found}
-                  other {# units found}
+                  =0 {No locations were found}
+                  one {# location found}
+                  other {# locations found}
                 }`,
   'search.resultList': `{count, plural,
                   =0 {no matches}
@@ -333,9 +338,9 @@ export default {
                   other {# matches}
                 }`,
   'search.results.units': `{count, plural,
-                  =0 {no units found}
-                  one {# unit found}
-                  other {# units found}
+                  =0 {no locations found}
+                  one {# location found}
+                  other {# locations found}
                 }`,
   'search.results.services': `{count, plural,
                   =0 {no services found}
@@ -345,12 +350,12 @@ export default {
   'search.resultInfo': 'Search information',
   'search.searchField': 'Search field',
   'search.results.title': 'Search results',
-  'search.input.placeholder': 'Search units',
+  'search.input.placeholder': 'Search locations',
   'search.notFound': 'No results found with given search',
   'search.started': 'Search started',
   'search.infoText': '{count} Search results',
-  'search.searchbar.headerText': 'All the services in the metropolitan area within your reach.',
-  'search.searchbar.infoText': 'Search for services units or addresses',
+  'search.searchbar.headerText': 'Find services near your home',
+  'search.searchbar.infoText': 'Search for services, locations or addresses',
   'search.suggestions.suggest': 'Did you mean..?',
   'search.suggestions.expand': 'Search suggestions',
   'search.suggestions.loading': 'Loading suggestions',
@@ -373,7 +378,7 @@ export default {
   'service': 'Service',
   'service.plural': 'Services',
   'service.nearby': 'Nearby services',
-  'service.units.empty': 'Service does not have units',
+  'service.units.empty': 'Service does not have locations',
   'service.tab': 'Services and events',
 
   // Service tree
@@ -440,7 +445,7 @@ export default {
   'settings.aria.opened': 'Settings have been opened',
   'settings.aria.saved': 'Settings have been saved',
 
-  'info.title': 'About the service',
+  'info.title': 'About the service and accessibility statement',
   'info.statement': 'Accessibility statement',
 
   'alert.close': 'Close the notification',

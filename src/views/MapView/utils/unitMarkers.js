@@ -2,6 +2,13 @@ import isClient from '../../../utils';
 import { mapTypes } from '../config/mapConfig';
 import { drawMarkerIcon } from './drawIcon';
 
+const getClusterIconSize = (count) => {
+  let iconSize;
+  if (count >= 1000) iconSize = 45;
+  else if (count >= 100) iconSize = 35;
+  else iconSize = 30;
+  return iconSize;
+};
 
 const createMarkerClusterLayer = (
   leaflet,
@@ -31,10 +38,12 @@ const createMarkerClusterLayer = (
   // NOTE: iconCreateFunction is running by leaflet, which is not support ES6 arrow func syntax
   // eslint-disable-next-line
   const createClusterCustomIcon = function (cluster) {
+    const cCount = cluster.getChildCount();
+    const iconSize = getClusterIconSize(cCount);
     const icon = divIcon({
-      html: `<span aria-hidden="true" tabindex="-1">${cluster.getChildCount()}</span>`,
+      html: `<span aria-hidden="true" tabindex="-1">${cCount}</span>`,
       className: `unitClusterMarker ${classes.unitClusterMarker}`,
-      iconSize: point(30, 30, true),
+      iconSize: point(iconSize, iconSize, true),
     });
     return icon;
   };

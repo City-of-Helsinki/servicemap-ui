@@ -47,6 +47,10 @@ const ToolMenu = ({
   ];
   const toolMenuText = intl.formatMessage({ id: 'general.tools' });
 
+  if (menuItems.length === 0) {
+    return null;
+  }
+
   return (
     <>
       <DropDownMenuButton

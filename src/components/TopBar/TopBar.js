@@ -11,6 +11,7 @@ import { getIcon } from '../SMIcon';
 import DrawerMenu from '../DrawerMenu';
 import DesktopComponent from '../DesktopComponent';
 import MobileComponent from '../MobileComponent';
+import config from '../../../config';
 import ToolMenu from '../ToolMenu';
 
 class TopBar extends React.Component {
@@ -21,8 +22,10 @@ class TopBar extends React.Component {
       settingsOpen, classes, toggleSettings, settings,
     } = this.props;
 
+    const citySettings = [];
+    config.cities.forEach(city => citySettings.push(settings.cities[city]));
     const settingsCategories = [
-      { type: 'citySettings', settings: [settings.helsinki, settings.espoo, settings.vantaa, settings.kauniainen] },
+      { type: 'citySettings', settings: citySettings },
       { type: 'mapSettings', settings: settings.mapType },
       { type: 'accessibilitySettings', settings: [settings.mobility, settings.colorblind, settings.hearingAid, settings.visuallyImpaired] },
     ];
@@ -33,7 +36,6 @@ class TopBar extends React.Component {
           id={`SettingsButton${category.type}`}
           key={`SettingsButton${category.type}`}
           aria-pressed={settingsOpen === category.type}
-          disableFocusRipple
           className={settingsOpen === category.type
             ? classes.settingsButtonPressed
             : classes.settingsButton

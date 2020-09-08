@@ -2,15 +2,17 @@ import { createSelector } from 'reselect';
 import { filterEmptyServices, filterCities } from '../../utils/filters';
 import getOrderedData from './ordering';
 import { isEmbed } from '../../utils/path';
+import config from '../../../config';
 
 const isFetching = state => state.units.isFetching;
 const units = state => state.units.data;
-const cities = state => [
-  ...state.settings.helsinki ? ['helsinki'] : [],
-  ...state.settings.vantaa ? ['vantaa'] : [],
-  ...state.settings.espoo ? ['espoo'] : [],
-  ...state.settings.kauniainen ? ['kauniainen'] : [],
-];
+const cities = (state) => {
+  const cities = [];
+  config.cities.forEach((city) => {
+    cities.push(...state.settings.cities[city] ? [city] : []);
+  });
+  return cities;
+};
 
 /**
  * Returns given data after filtering it

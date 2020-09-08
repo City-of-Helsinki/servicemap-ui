@@ -69,7 +69,7 @@ exports[`<PaginationComponent /> should work 1`] = `
             "getPluralRules": [Function],
             "getRelativeTimeFormat": [Function],
           },
-          "locale": "fi",
+          "locale": "en",
           "messages": Object {
             "general.pagination.currentlyOpenedPage": "Sivu {count}, avattu",
             "general.pagination.next": "Seuraava sivu",
@@ -150,7 +150,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                         "getPluralRules": [Function],
                         "getRelativeTimeFormat": [Function],
                       },
-                      "locale": "fi",
+                      "locale": "en",
                       "messages": Object {
                         "general.pagination.currentlyOpenedPage": "Sivu {count}, avattu",
                         "general.pagination.next": "Seuraava sivu",
@@ -176,7 +176,6 @@ exports[`<PaginationComponent /> should work 1`] = `
                         "margin": "SMButton-margin-18",
                         "marginRight": "SMButton-marginRight-19",
                         "primary": "SMButton-primary-20",
-                        "primaryFocus": "SMButton-primaryFocus-24",
                         "secondary": "SMButton-secondary-21",
                         "smallButton": "SMButton-smallButton-17",
                         "typography": "SMButton-typography-23",
@@ -210,7 +209,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                           "getPluralRules": [Function],
                           "getRelativeTimeFormat": [Function],
                         },
-                        "locale": "fi",
+                        "locale": "en",
                         "messages": Object {
                           "general.pagination.currentlyOpenedPage": "Sivu {count}, avattu",
                           "general.pagination.next": "Seuraava sivu",
@@ -234,7 +233,6 @@ exports[`<PaginationComponent /> should work 1`] = `
                       aria-label="Aiempi sivu"
                       className="SMButton-button-16  SMButton-marginRight-19 injectIntl-PaginationComponent--button-4 injectIntl-PaginationComponent--arrowFlip-2 injectIntl-PaginationComponent--borderBlack-3 SMButton-primary-20"
                       disabled={false}
-                      focusVisibleClassName="SMButton-primaryFocus-24"
                       icon={null}
                       onClick={[Function]}
                       role="link"
@@ -247,9 +245,9 @@ exports[`<PaginationComponent /> should work 1`] = `
                         className="SMButton-button-16  SMButton-marginRight-19 injectIntl-PaginationComponent--button-4 injectIntl-PaginationComponent--arrowFlip-2 injectIntl-PaginationComponent--borderBlack-3 SMButton-primary-20"
                         classes={
                           Object {
-                            "disabled": "MuiButtonBase-disabled-26",
-                            "focusVisible": "MuiButtonBase-focusVisible-27",
-                            "root": "MuiButtonBase-root-25",
+                            "disabled": "MuiButtonBase-disabled-25",
+                            "focusVisible": "MuiButtonBase-focusVisible-26",
+                            "root": "MuiButtonBase-root-24",
                           }
                         }
                         component="button"
@@ -257,7 +255,6 @@ exports[`<PaginationComponent /> should work 1`] = `
                         disableTouchRipple={false}
                         disabled={false}
                         focusRipple={false}
-                        focusVisibleClassName="SMButton-primaryFocus-24"
                         icon={null}
                         onClick={[Function]}
                         role="link"
@@ -268,7 +265,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                       >
                         <button
                           aria-label="Aiempi sivu"
-                          className="MuiButtonBase-root-25 SMButton-button-16  SMButton-marginRight-19 injectIntl-PaginationComponent--button-4 injectIntl-PaginationComponent--arrowFlip-2 injectIntl-PaginationComponent--borderBlack-3 SMButton-primary-20"
+                          className="MuiButtonBase-root-24 SMButton-button-16  SMButton-marginRight-19 injectIntl-PaginationComponent--button-4 injectIntl-PaginationComponent--arrowFlip-2 injectIntl-PaginationComponent--borderBlack-3 SMButton-primary-20"
                           disabled={false}
                           icon={null}
                           onBlur={[Function]}
@@ -302,15 +299,15 @@ exports[`<PaginationComponent /> should work 1`] = `
                                   className="injectIntl-PaginationComponent--arrowIcon-1"
                                   classes={
                                     Object {
-                                      "colorAction": "MuiSvgIcon-colorAction-31",
-                                      "colorDisabled": "MuiSvgIcon-colorDisabled-33",
-                                      "colorError": "MuiSvgIcon-colorError-32",
-                                      "colorPrimary": "MuiSvgIcon-colorPrimary-29",
-                                      "colorSecondary": "MuiSvgIcon-colorSecondary-30",
-                                      "fontSizeInherit": "MuiSvgIcon-fontSizeInherit-34",
-                                      "fontSizeLarge": "MuiSvgIcon-fontSizeLarge-36",
-                                      "fontSizeSmall": "MuiSvgIcon-fontSizeSmall-35",
-                                      "root": "MuiSvgIcon-root-28",
+                                      "colorAction": "MuiSvgIcon-colorAction-30",
+                                      "colorDisabled": "MuiSvgIcon-colorDisabled-32",
+                                      "colorError": "MuiSvgIcon-colorError-31",
+                                      "colorPrimary": "MuiSvgIcon-colorPrimary-28",
+                                      "colorSecondary": "MuiSvgIcon-colorSecondary-29",
+                                      "fontSizeInherit": "MuiSvgIcon-fontSizeInherit-33",
+                                      "fontSizeLarge": "MuiSvgIcon-fontSizeLarge-35",
+                                      "fontSizeSmall": "MuiSvgIcon-fontSizeSmall-34",
+                                      "root": "MuiSvgIcon-root-27",
                                     }
                                   }
                                   color="inherit"
@@ -320,7 +317,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                 >
                                   <svg
                                     aria-hidden="true"
-                                    className="MuiSvgIcon-root-28 injectIntl-PaginationComponent--arrowIcon-1"
+                                    className="MuiSvgIcon-root-27 injectIntl-PaginationComponent--arrowIcon-1"
                                     focusable="false"
                                     role="presentation"
                                     viewBox="0 0 24 24"
@@ -382,7 +379,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                         "getPluralRules": [Function],
                         "getRelativeTimeFormat": [Function],
                       },
-                      "locale": "fi",
+                      "locale": "en",
                       "messages": Object {
                         "general.pagination.currentlyOpenedPage": "Sivu {count}, avattu",
                         "general.pagination.next": "Seuraava sivu",
@@ -408,7 +405,6 @@ exports[`<PaginationComponent /> should work 1`] = `
                         "margin": "SMButton-margin-18",
                         "marginRight": "SMButton-marginRight-19",
                         "primary": "SMButton-primary-20",
-                        "primaryFocus": "SMButton-primaryFocus-24",
                         "secondary": "SMButton-secondary-21",
                         "smallButton": "SMButton-smallButton-17",
                         "typography": "SMButton-typography-23",
@@ -442,7 +438,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                           "getPluralRules": [Function],
                           "getRelativeTimeFormat": [Function],
                         },
-                        "locale": "fi",
+                        "locale": "en",
                         "messages": Object {
                           "general.pagination.currentlyOpenedPage": "Sivu {count}, avattu",
                           "general.pagination.next": "Seuraava sivu",
@@ -466,7 +462,6 @@ exports[`<PaginationComponent /> should work 1`] = `
                       aria-label="Seuraava sivu"
                       className="SMButton-button-16  SMButton-marginRight-19 injectIntl-PaginationComponent--button-4 injectIntl-PaginationComponent--borderBlack-3 SMButton-primary-20"
                       disabled={false}
-                      focusVisibleClassName="SMButton-primaryFocus-24"
                       icon={null}
                       onClick={[Function]}
                       role="link"
@@ -479,9 +474,9 @@ exports[`<PaginationComponent /> should work 1`] = `
                         className="SMButton-button-16  SMButton-marginRight-19 injectIntl-PaginationComponent--button-4 injectIntl-PaginationComponent--borderBlack-3 SMButton-primary-20"
                         classes={
                           Object {
-                            "disabled": "MuiButtonBase-disabled-26",
-                            "focusVisible": "MuiButtonBase-focusVisible-27",
-                            "root": "MuiButtonBase-root-25",
+                            "disabled": "MuiButtonBase-disabled-25",
+                            "focusVisible": "MuiButtonBase-focusVisible-26",
+                            "root": "MuiButtonBase-root-24",
                           }
                         }
                         component="button"
@@ -489,7 +484,6 @@ exports[`<PaginationComponent /> should work 1`] = `
                         disableTouchRipple={false}
                         disabled={false}
                         focusRipple={false}
-                        focusVisibleClassName="SMButton-primaryFocus-24"
                         icon={null}
                         onClick={[Function]}
                         role="link"
@@ -500,7 +494,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                       >
                         <button
                           aria-label="Seuraava sivu"
-                          className="MuiButtonBase-root-25 SMButton-button-16  SMButton-marginRight-19 injectIntl-PaginationComponent--button-4 injectIntl-PaginationComponent--borderBlack-3 SMButton-primary-20"
+                          className="MuiButtonBase-root-24 SMButton-button-16  SMButton-marginRight-19 injectIntl-PaginationComponent--button-4 injectIntl-PaginationComponent--borderBlack-3 SMButton-primary-20"
                           disabled={false}
                           icon={null}
                           onBlur={[Function]}
@@ -534,15 +528,15 @@ exports[`<PaginationComponent /> should work 1`] = `
                                   className="injectIntl-PaginationComponent--arrowIcon-1"
                                   classes={
                                     Object {
-                                      "colorAction": "MuiSvgIcon-colorAction-31",
-                                      "colorDisabled": "MuiSvgIcon-colorDisabled-33",
-                                      "colorError": "MuiSvgIcon-colorError-32",
-                                      "colorPrimary": "MuiSvgIcon-colorPrimary-29",
-                                      "colorSecondary": "MuiSvgIcon-colorSecondary-30",
-                                      "fontSizeInherit": "MuiSvgIcon-fontSizeInherit-34",
-                                      "fontSizeLarge": "MuiSvgIcon-fontSizeLarge-36",
-                                      "fontSizeSmall": "MuiSvgIcon-fontSizeSmall-35",
-                                      "root": "MuiSvgIcon-root-28",
+                                      "colorAction": "MuiSvgIcon-colorAction-30",
+                                      "colorDisabled": "MuiSvgIcon-colorDisabled-32",
+                                      "colorError": "MuiSvgIcon-colorError-31",
+                                      "colorPrimary": "MuiSvgIcon-colorPrimary-28",
+                                      "colorSecondary": "MuiSvgIcon-colorSecondary-29",
+                                      "fontSizeInherit": "MuiSvgIcon-fontSizeInherit-33",
+                                      "fontSizeLarge": "MuiSvgIcon-fontSizeLarge-35",
+                                      "fontSizeSmall": "MuiSvgIcon-fontSizeSmall-34",
+                                      "root": "MuiSvgIcon-root-27",
                                     }
                                   }
                                   color="inherit"
@@ -552,7 +546,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                 >
                                   <svg
                                     aria-hidden="true"
-                                    className="MuiSvgIcon-root-28 injectIntl-PaginationComponent--arrowIcon-1"
+                                    className="MuiSvgIcon-root-27 injectIntl-PaginationComponent--arrowIcon-1"
                                     focusable="false"
                                     role="presentation"
                                     viewBox="0 0 24 24"
@@ -637,7 +631,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                   "getPluralRules": [Function],
                                   "getRelativeTimeFormat": [Function],
                                 },
-                                "locale": "fi",
+                                "locale": "en",
                                 "messages": Object {
                                   "general.pagination.currentlyOpenedPage": "Sivu {count}, avattu",
                                   "general.pagination.next": "Seuraava sivu",
@@ -657,16 +651,16 @@ exports[`<PaginationComponent /> should work 1`] = `
                               className=""
                               classes={
                                 Object {
-                                  "arrowFlip": "PageElement-arrowFlip-38",
-                                  "arrowIcon": "PageElement-arrowIcon-37",
-                                  "borderBlack": "PageElement-borderBlack-39",
-                                  "button": "PageElement-button-40",
-                                  "buttonContainer": "PageElement-buttonContainer-41",
-                                  "list": "PageElement-list-42",
-                                  "listContainer": "PageElement-listContainer-43",
-                                  "pageElement": "PageElement-pageElement-44",
-                                  "pageElementActive": "PageElement-pageElementActive-45",
-                                  "pageItem": "PageElement-pageItem-46",
+                                  "arrowFlip": "PageElement-arrowFlip-37",
+                                  "arrowIcon": "PageElement-arrowIcon-36",
+                                  "borderBlack": "PageElement-borderBlack-38",
+                                  "button": "PageElement-button-39",
+                                  "buttonContainer": "PageElement-buttonContainer-40",
+                                  "list": "PageElement-list-41",
+                                  "listContainer": "PageElement-listContainer-42",
+                                  "pageElement": "PageElement-pageElement-43",
+                                  "pageElementActive": "PageElement-pageElementActive-44",
+                                  "pageItem": "PageElement-pageItem-45",
                                 }
                               }
                               intl={
@@ -694,7 +688,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                     "getPluralRules": [Function],
                                     "getRelativeTimeFormat": [Function],
                                   },
-                                  "locale": "fi",
+                                  "locale": "en",
                                   "messages": Object {
                                     "general.pagination.currentlyOpenedPage": "Sivu {count}, avattu",
                                     "general.pagination.next": "Seuraava sivu",
@@ -722,9 +716,9 @@ exports[`<PaginationComponent /> should work 1`] = `
                                     centerRipple={false}
                                     classes={
                                       Object {
-                                        "disabled": "MuiButtonBase-disabled-26",
-                                        "focusVisible": "MuiButtonBase-focusVisible-27",
-                                        "root": "MuiButtonBase-root-25",
+                                        "disabled": "MuiButtonBase-disabled-25",
+                                        "focusVisible": "MuiButtonBase-focusVisible-26",
+                                        "root": "MuiButtonBase-root-24",
                                       }
                                     }
                                     component="button"
@@ -739,7 +733,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                     type="button"
                                   >
                                     <button
-                                      className="MuiButtonBase-root-25"
+                                      className="MuiButtonBase-root-24"
                                       disabled={false}
                                       onBlur={[Function]}
                                       onClick={[Function]}
@@ -758,51 +752,51 @@ exports[`<PaginationComponent /> should work 1`] = `
                                       type="button"
                                     >
                                       <WithStyles(Typography)
-                                        className=" PageElement-pageItem-46 PageElement-pageElement-44"
+                                        className=" PageElement-pageItem-45 PageElement-pageElement-43"
                                         component="p"
                                         variant="subtitle1"
                                       >
                                         <Typography
                                           align="inherit"
-                                          className=" PageElement-pageItem-46 PageElement-pageElement-44"
+                                          className=" PageElement-pageItem-45 PageElement-pageElement-43"
                                           classes={
                                             Object {
-                                              "alignCenter": "MuiTypography-alignCenter-70",
-                                              "alignJustify": "MuiTypography-alignJustify-72",
-                                              "alignLeft": "MuiTypography-alignLeft-69",
-                                              "alignRight": "MuiTypography-alignRight-71",
-                                              "body1": "MuiTypography-body1-56",
-                                              "body2": "MuiTypography-body2-55",
-                                              "button": "MuiTypography-button-58",
-                                              "caption": "MuiTypography-caption-57",
-                                              "colorError": "MuiTypography-colorError-81",
-                                              "colorInherit": "MuiTypography-colorInherit-76",
-                                              "colorPrimary": "MuiTypography-colorPrimary-77",
-                                              "colorSecondary": "MuiTypography-colorSecondary-78",
-                                              "colorTextPrimary": "MuiTypography-colorTextPrimary-79",
-                                              "colorTextSecondary": "MuiTypography-colorTextSecondary-80",
-                                              "display1": "MuiTypography-display1-51",
-                                              "display2": "MuiTypography-display2-50",
-                                              "display3": "MuiTypography-display3-49",
-                                              "display4": "MuiTypography-display4-48",
-                                              "gutterBottom": "MuiTypography-gutterBottom-74",
-                                              "h1": "MuiTypography-h1-59",
-                                              "h2": "MuiTypography-h2-60",
-                                              "h3": "MuiTypography-h3-61",
-                                              "h4": "MuiTypography-h4-62",
-                                              "h5": "MuiTypography-h5-63",
-                                              "h6": "MuiTypography-h6-64",
-                                              "headline": "MuiTypography-headline-52",
-                                              "inline": "MuiTypography-inline-82",
-                                              "noWrap": "MuiTypography-noWrap-73",
-                                              "overline": "MuiTypography-overline-67",
-                                              "paragraph": "MuiTypography-paragraph-75",
-                                              "root": "MuiTypography-root-47",
-                                              "srOnly": "MuiTypography-srOnly-68",
-                                              "subheading": "MuiTypography-subheading-54",
-                                              "subtitle1": "MuiTypography-subtitle1-65",
-                                              "subtitle2": "MuiTypography-subtitle2-66",
-                                              "title": "MuiTypography-title-53",
+                                              "alignCenter": "MuiTypography-alignCenter-69",
+                                              "alignJustify": "MuiTypography-alignJustify-71",
+                                              "alignLeft": "MuiTypography-alignLeft-68",
+                                              "alignRight": "MuiTypography-alignRight-70",
+                                              "body1": "MuiTypography-body1-55",
+                                              "body2": "MuiTypography-body2-54",
+                                              "button": "MuiTypography-button-57",
+                                              "caption": "MuiTypography-caption-56",
+                                              "colorError": "MuiTypography-colorError-80",
+                                              "colorInherit": "MuiTypography-colorInherit-75",
+                                              "colorPrimary": "MuiTypography-colorPrimary-76",
+                                              "colorSecondary": "MuiTypography-colorSecondary-77",
+                                              "colorTextPrimary": "MuiTypography-colorTextPrimary-78",
+                                              "colorTextSecondary": "MuiTypography-colorTextSecondary-79",
+                                              "display1": "MuiTypography-display1-50",
+                                              "display2": "MuiTypography-display2-49",
+                                              "display3": "MuiTypography-display3-48",
+                                              "display4": "MuiTypography-display4-47",
+                                              "gutterBottom": "MuiTypography-gutterBottom-73",
+                                              "h1": "MuiTypography-h1-58",
+                                              "h2": "MuiTypography-h2-59",
+                                              "h3": "MuiTypography-h3-60",
+                                              "h4": "MuiTypography-h4-61",
+                                              "h5": "MuiTypography-h5-62",
+                                              "h6": "MuiTypography-h6-63",
+                                              "headline": "MuiTypography-headline-51",
+                                              "inline": "MuiTypography-inline-81",
+                                              "noWrap": "MuiTypography-noWrap-72",
+                                              "overline": "MuiTypography-overline-66",
+                                              "paragraph": "MuiTypography-paragraph-74",
+                                              "root": "MuiTypography-root-46",
+                                              "srOnly": "MuiTypography-srOnly-67",
+                                              "subheading": "MuiTypography-subheading-53",
+                                              "subtitle1": "MuiTypography-subtitle1-64",
+                                              "subtitle2": "MuiTypography-subtitle2-65",
+                                              "title": "MuiTypography-title-52",
                                             }
                                           }
                                           color="default"
@@ -876,14 +870,14 @@ exports[`<PaginationComponent /> should work 1`] = `
                                               "overrides": Object {
                                                 "MuiButtonBase": Object {
                                                   "focusVisible": Object {
-                                                    "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                                                    "boxShadow": "0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(71, 131, 235), 0 0 0 8px rgb(255, 255, 255)",
                                                     "outline": "2px solid transparent",
                                                   },
                                                 },
                                                 "MuiInputBase": Object {
                                                   "root": Object {
                                                     "&$focused": Object {
-                                                      "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                                                      "boxShadow": "0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(71, 131, 235), 0 0 0 8px rgb(255, 255, 255)",
                                                       "outline": "2px solid transparent",
                                                     },
                                                   },
@@ -926,7 +920,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                   "light": "#e57373",
                                                   "main": "#f44336",
                                                 },
-                                                "focusBorder": "rgba(25, 100, 230, 0.8)",
+                                                "focusBorder": "rgb(71, 131, 235)",
                                                 "getContrastText": [Function],
                                                 "grey": Object {
                                                   "100": "#f5f5f5",
@@ -953,10 +947,10 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                 },
                                                 "secondary": Object {
                                                   "contrastText": "#fff",
-                                                  "dark": "rgba(14, 16, 24, 0.9)",
+                                                  "dark": "rgb(30, 32, 39)",
                                                   "hover": "#1d39ad",
-                                                  "light": "rgba(67, 70, 79, 0.9)",
-                                                  "main": "rgba(20,24,35,0.9)",
+                                                  "light": "rgb(85, 88, 96)",
+                                                  "main": "rgb(43, 47, 57)",
                                                 },
                                                 "text": Object {
                                                   "disabled": "rgba(0, 0, 0, 0.38)",
@@ -969,7 +963,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                 "warning": "#AF0021",
                                                 "white": Object {
                                                   "contrastText": "#000",
-                                                  "dark": "#979797",
+                                                  "dark": "#949494",
                                                   "light": "#f2f2f2",
                                                   "main": "#FFFFFF",
                                                 },
@@ -1253,7 +1247,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                           variant="subtitle1"
                                         >
                                           <p
-                                            className="MuiTypography-root-47 MuiTypography-subtitle1-65  PageElement-pageItem-46 PageElement-pageElement-44"
+                                            className="MuiTypography-root-46 MuiTypography-subtitle1-64  PageElement-pageItem-45 PageElement-pageElement-43"
                                           >
                                             <WithStyles(Typography)
                                               variant="srOnly"
@@ -1262,42 +1256,42 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                 align="inherit"
                                                 classes={
                                                   Object {
-                                                    "alignCenter": "MuiTypography-alignCenter-70",
-                                                    "alignJustify": "MuiTypography-alignJustify-72",
-                                                    "alignLeft": "MuiTypography-alignLeft-69",
-                                                    "alignRight": "MuiTypography-alignRight-71",
-                                                    "body1": "MuiTypography-body1-56",
-                                                    "body2": "MuiTypography-body2-55",
-                                                    "button": "MuiTypography-button-58",
-                                                    "caption": "MuiTypography-caption-57",
-                                                    "colorError": "MuiTypography-colorError-81",
-                                                    "colorInherit": "MuiTypography-colorInherit-76",
-                                                    "colorPrimary": "MuiTypography-colorPrimary-77",
-                                                    "colorSecondary": "MuiTypography-colorSecondary-78",
-                                                    "colorTextPrimary": "MuiTypography-colorTextPrimary-79",
-                                                    "colorTextSecondary": "MuiTypography-colorTextSecondary-80",
-                                                    "display1": "MuiTypography-display1-51",
-                                                    "display2": "MuiTypography-display2-50",
-                                                    "display3": "MuiTypography-display3-49",
-                                                    "display4": "MuiTypography-display4-48",
-                                                    "gutterBottom": "MuiTypography-gutterBottom-74",
-                                                    "h1": "MuiTypography-h1-59",
-                                                    "h2": "MuiTypography-h2-60",
-                                                    "h3": "MuiTypography-h3-61",
-                                                    "h4": "MuiTypography-h4-62",
-                                                    "h5": "MuiTypography-h5-63",
-                                                    "h6": "MuiTypography-h6-64",
-                                                    "headline": "MuiTypography-headline-52",
-                                                    "inline": "MuiTypography-inline-82",
-                                                    "noWrap": "MuiTypography-noWrap-73",
-                                                    "overline": "MuiTypography-overline-67",
-                                                    "paragraph": "MuiTypography-paragraph-75",
-                                                    "root": "MuiTypography-root-47",
-                                                    "srOnly": "MuiTypography-srOnly-68",
-                                                    "subheading": "MuiTypography-subheading-54",
-                                                    "subtitle1": "MuiTypography-subtitle1-65",
-                                                    "subtitle2": "MuiTypography-subtitle2-66",
-                                                    "title": "MuiTypography-title-53",
+                                                    "alignCenter": "MuiTypography-alignCenter-69",
+                                                    "alignJustify": "MuiTypography-alignJustify-71",
+                                                    "alignLeft": "MuiTypography-alignLeft-68",
+                                                    "alignRight": "MuiTypography-alignRight-70",
+                                                    "body1": "MuiTypography-body1-55",
+                                                    "body2": "MuiTypography-body2-54",
+                                                    "button": "MuiTypography-button-57",
+                                                    "caption": "MuiTypography-caption-56",
+                                                    "colorError": "MuiTypography-colorError-80",
+                                                    "colorInherit": "MuiTypography-colorInherit-75",
+                                                    "colorPrimary": "MuiTypography-colorPrimary-76",
+                                                    "colorSecondary": "MuiTypography-colorSecondary-77",
+                                                    "colorTextPrimary": "MuiTypography-colorTextPrimary-78",
+                                                    "colorTextSecondary": "MuiTypography-colorTextSecondary-79",
+                                                    "display1": "MuiTypography-display1-50",
+                                                    "display2": "MuiTypography-display2-49",
+                                                    "display3": "MuiTypography-display3-48",
+                                                    "display4": "MuiTypography-display4-47",
+                                                    "gutterBottom": "MuiTypography-gutterBottom-73",
+                                                    "h1": "MuiTypography-h1-58",
+                                                    "h2": "MuiTypography-h2-59",
+                                                    "h3": "MuiTypography-h3-60",
+                                                    "h4": "MuiTypography-h4-61",
+                                                    "h5": "MuiTypography-h5-62",
+                                                    "h6": "MuiTypography-h6-63",
+                                                    "headline": "MuiTypography-headline-51",
+                                                    "inline": "MuiTypography-inline-81",
+                                                    "noWrap": "MuiTypography-noWrap-72",
+                                                    "overline": "MuiTypography-overline-66",
+                                                    "paragraph": "MuiTypography-paragraph-74",
+                                                    "root": "MuiTypography-root-46",
+                                                    "srOnly": "MuiTypography-srOnly-67",
+                                                    "subheading": "MuiTypography-subheading-53",
+                                                    "subtitle1": "MuiTypography-subtitle1-64",
+                                                    "subtitle2": "MuiTypography-subtitle2-65",
+                                                    "title": "MuiTypography-title-52",
                                                   }
                                                 }
                                                 color="default"
@@ -1370,14 +1364,14 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                     "overrides": Object {
                                                       "MuiButtonBase": Object {
                                                         "focusVisible": Object {
-                                                          "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                                                          "boxShadow": "0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(71, 131, 235), 0 0 0 8px rgb(255, 255, 255)",
                                                           "outline": "2px solid transparent",
                                                         },
                                                       },
                                                       "MuiInputBase": Object {
                                                         "root": Object {
                                                           "&$focused": Object {
-                                                            "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                                                            "boxShadow": "0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(71, 131, 235), 0 0 0 8px rgb(255, 255, 255)",
                                                             "outline": "2px solid transparent",
                                                           },
                                                         },
@@ -1420,7 +1414,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                         "light": "#e57373",
                                                         "main": "#f44336",
                                                       },
-                                                      "focusBorder": "rgba(25, 100, 230, 0.8)",
+                                                      "focusBorder": "rgb(71, 131, 235)",
                                                       "getContrastText": [Function],
                                                       "grey": Object {
                                                         "100": "#f5f5f5",
@@ -1447,10 +1441,10 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                       },
                                                       "secondary": Object {
                                                         "contrastText": "#fff",
-                                                        "dark": "rgba(14, 16, 24, 0.9)",
+                                                        "dark": "rgb(30, 32, 39)",
                                                         "hover": "#1d39ad",
-                                                        "light": "rgba(67, 70, 79, 0.9)",
-                                                        "main": "rgba(20,24,35,0.9)",
+                                                        "light": "rgb(85, 88, 96)",
+                                                        "main": "rgb(43, 47, 57)",
                                                       },
                                                       "text": Object {
                                                         "disabled": "rgba(0, 0, 0, 0.38)",
@@ -1463,7 +1457,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                       "warning": "#AF0021",
                                                       "white": Object {
                                                         "contrastText": "#000",
-                                                        "dark": "#979797",
+                                                        "dark": "#949494",
                                                         "light": "#f2f2f2",
                                                         "main": "#FFFFFF",
                                                       },
@@ -1747,7 +1741,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                 variant="srOnly"
                                               >
                                                 <span
-                                                  className="MuiTypography-root-47 MuiTypography-srOnly-68"
+                                                  className="MuiTypography-root-46 MuiTypography-srOnly-67"
                                                 >
                                                   Avaa sivu 1
                                                 </span>
@@ -1800,7 +1794,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                   "getPluralRules": [Function],
                                   "getRelativeTimeFormat": [Function],
                                 },
-                                "locale": "fi",
+                                "locale": "en",
                                 "messages": Object {
                                   "general.pagination.currentlyOpenedPage": "Sivu {count}, avattu",
                                   "general.pagination.next": "Seuraava sivu",
@@ -1820,16 +1814,16 @@ exports[`<PaginationComponent /> should work 1`] = `
                               className=""
                               classes={
                                 Object {
-                                  "arrowFlip": "PageElement-arrowFlip-38",
-                                  "arrowIcon": "PageElement-arrowIcon-37",
-                                  "borderBlack": "PageElement-borderBlack-39",
-                                  "button": "PageElement-button-40",
-                                  "buttonContainer": "PageElement-buttonContainer-41",
-                                  "list": "PageElement-list-42",
-                                  "listContainer": "PageElement-listContainer-43",
-                                  "pageElement": "PageElement-pageElement-44",
-                                  "pageElementActive": "PageElement-pageElementActive-45",
-                                  "pageItem": "PageElement-pageItem-46",
+                                  "arrowFlip": "PageElement-arrowFlip-37",
+                                  "arrowIcon": "PageElement-arrowIcon-36",
+                                  "borderBlack": "PageElement-borderBlack-38",
+                                  "button": "PageElement-button-39",
+                                  "buttonContainer": "PageElement-buttonContainer-40",
+                                  "list": "PageElement-list-41",
+                                  "listContainer": "PageElement-listContainer-42",
+                                  "pageElement": "PageElement-pageElement-43",
+                                  "pageElementActive": "PageElement-pageElementActive-44",
+                                  "pageItem": "PageElement-pageItem-45",
                                 }
                               }
                               intl={
@@ -1857,7 +1851,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                     "getPluralRules": [Function],
                                     "getRelativeTimeFormat": [Function],
                                   },
-                                  "locale": "fi",
+                                  "locale": "en",
                                   "messages": Object {
                                     "general.pagination.currentlyOpenedPage": "Sivu {count}, avattu",
                                     "general.pagination.next": "Seuraava sivu",
@@ -1885,9 +1879,9 @@ exports[`<PaginationComponent /> should work 1`] = `
                                     centerRipple={false}
                                     classes={
                                       Object {
-                                        "disabled": "MuiButtonBase-disabled-26",
-                                        "focusVisible": "MuiButtonBase-focusVisible-27",
-                                        "root": "MuiButtonBase-root-25",
+                                        "disabled": "MuiButtonBase-disabled-25",
+                                        "focusVisible": "MuiButtonBase-focusVisible-26",
+                                        "root": "MuiButtonBase-root-24",
                                       }
                                     }
                                     component="button"
@@ -1902,7 +1896,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                     type="button"
                                   >
                                     <button
-                                      className="MuiButtonBase-root-25 MuiButtonBase-disabled-26"
+                                      className="MuiButtonBase-root-24 MuiButtonBase-disabled-25"
                                       disabled={true}
                                       onBlur={[Function]}
                                       onClick={[Function]}
@@ -1921,51 +1915,51 @@ exports[`<PaginationComponent /> should work 1`] = `
                                       type="button"
                                     >
                                       <WithStyles(Typography)
-                                        className=" PageElement-pageItem-46 PageElement-pageElementActive-45"
+                                        className=" PageElement-pageItem-45 PageElement-pageElementActive-44"
                                         component="p"
                                         variant="subtitle1"
                                       >
                                         <Typography
                                           align="inherit"
-                                          className=" PageElement-pageItem-46 PageElement-pageElementActive-45"
+                                          className=" PageElement-pageItem-45 PageElement-pageElementActive-44"
                                           classes={
                                             Object {
-                                              "alignCenter": "MuiTypography-alignCenter-70",
-                                              "alignJustify": "MuiTypography-alignJustify-72",
-                                              "alignLeft": "MuiTypography-alignLeft-69",
-                                              "alignRight": "MuiTypography-alignRight-71",
-                                              "body1": "MuiTypography-body1-56",
-                                              "body2": "MuiTypography-body2-55",
-                                              "button": "MuiTypography-button-58",
-                                              "caption": "MuiTypography-caption-57",
-                                              "colorError": "MuiTypography-colorError-81",
-                                              "colorInherit": "MuiTypography-colorInherit-76",
-                                              "colorPrimary": "MuiTypography-colorPrimary-77",
-                                              "colorSecondary": "MuiTypography-colorSecondary-78",
-                                              "colorTextPrimary": "MuiTypography-colorTextPrimary-79",
-                                              "colorTextSecondary": "MuiTypography-colorTextSecondary-80",
-                                              "display1": "MuiTypography-display1-51",
-                                              "display2": "MuiTypography-display2-50",
-                                              "display3": "MuiTypography-display3-49",
-                                              "display4": "MuiTypography-display4-48",
-                                              "gutterBottom": "MuiTypography-gutterBottom-74",
-                                              "h1": "MuiTypography-h1-59",
-                                              "h2": "MuiTypography-h2-60",
-                                              "h3": "MuiTypography-h3-61",
-                                              "h4": "MuiTypography-h4-62",
-                                              "h5": "MuiTypography-h5-63",
-                                              "h6": "MuiTypography-h6-64",
-                                              "headline": "MuiTypography-headline-52",
-                                              "inline": "MuiTypography-inline-82",
-                                              "noWrap": "MuiTypography-noWrap-73",
-                                              "overline": "MuiTypography-overline-67",
-                                              "paragraph": "MuiTypography-paragraph-75",
-                                              "root": "MuiTypography-root-47",
-                                              "srOnly": "MuiTypography-srOnly-68",
-                                              "subheading": "MuiTypography-subheading-54",
-                                              "subtitle1": "MuiTypography-subtitle1-65",
-                                              "subtitle2": "MuiTypography-subtitle2-66",
-                                              "title": "MuiTypography-title-53",
+                                              "alignCenter": "MuiTypography-alignCenter-69",
+                                              "alignJustify": "MuiTypography-alignJustify-71",
+                                              "alignLeft": "MuiTypography-alignLeft-68",
+                                              "alignRight": "MuiTypography-alignRight-70",
+                                              "body1": "MuiTypography-body1-55",
+                                              "body2": "MuiTypography-body2-54",
+                                              "button": "MuiTypography-button-57",
+                                              "caption": "MuiTypography-caption-56",
+                                              "colorError": "MuiTypography-colorError-80",
+                                              "colorInherit": "MuiTypography-colorInherit-75",
+                                              "colorPrimary": "MuiTypography-colorPrimary-76",
+                                              "colorSecondary": "MuiTypography-colorSecondary-77",
+                                              "colorTextPrimary": "MuiTypography-colorTextPrimary-78",
+                                              "colorTextSecondary": "MuiTypography-colorTextSecondary-79",
+                                              "display1": "MuiTypography-display1-50",
+                                              "display2": "MuiTypography-display2-49",
+                                              "display3": "MuiTypography-display3-48",
+                                              "display4": "MuiTypography-display4-47",
+                                              "gutterBottom": "MuiTypography-gutterBottom-73",
+                                              "h1": "MuiTypography-h1-58",
+                                              "h2": "MuiTypography-h2-59",
+                                              "h3": "MuiTypography-h3-60",
+                                              "h4": "MuiTypography-h4-61",
+                                              "h5": "MuiTypography-h5-62",
+                                              "h6": "MuiTypography-h6-63",
+                                              "headline": "MuiTypography-headline-51",
+                                              "inline": "MuiTypography-inline-81",
+                                              "noWrap": "MuiTypography-noWrap-72",
+                                              "overline": "MuiTypography-overline-66",
+                                              "paragraph": "MuiTypography-paragraph-74",
+                                              "root": "MuiTypography-root-46",
+                                              "srOnly": "MuiTypography-srOnly-67",
+                                              "subheading": "MuiTypography-subheading-53",
+                                              "subtitle1": "MuiTypography-subtitle1-64",
+                                              "subtitle2": "MuiTypography-subtitle2-65",
+                                              "title": "MuiTypography-title-52",
                                             }
                                           }
                                           color="default"
@@ -2039,14 +2033,14 @@ exports[`<PaginationComponent /> should work 1`] = `
                                               "overrides": Object {
                                                 "MuiButtonBase": Object {
                                                   "focusVisible": Object {
-                                                    "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                                                    "boxShadow": "0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(71, 131, 235), 0 0 0 8px rgb(255, 255, 255)",
                                                     "outline": "2px solid transparent",
                                                   },
                                                 },
                                                 "MuiInputBase": Object {
                                                   "root": Object {
                                                     "&$focused": Object {
-                                                      "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                                                      "boxShadow": "0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(71, 131, 235), 0 0 0 8px rgb(255, 255, 255)",
                                                       "outline": "2px solid transparent",
                                                     },
                                                   },
@@ -2089,7 +2083,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                   "light": "#e57373",
                                                   "main": "#f44336",
                                                 },
-                                                "focusBorder": "rgba(25, 100, 230, 0.8)",
+                                                "focusBorder": "rgb(71, 131, 235)",
                                                 "getContrastText": [Function],
                                                 "grey": Object {
                                                   "100": "#f5f5f5",
@@ -2116,10 +2110,10 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                 },
                                                 "secondary": Object {
                                                   "contrastText": "#fff",
-                                                  "dark": "rgba(14, 16, 24, 0.9)",
+                                                  "dark": "rgb(30, 32, 39)",
                                                   "hover": "#1d39ad",
-                                                  "light": "rgba(67, 70, 79, 0.9)",
-                                                  "main": "rgba(20,24,35,0.9)",
+                                                  "light": "rgb(85, 88, 96)",
+                                                  "main": "rgb(43, 47, 57)",
                                                 },
                                                 "text": Object {
                                                   "disabled": "rgba(0, 0, 0, 0.38)",
@@ -2132,7 +2126,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                 "warning": "#AF0021",
                                                 "white": Object {
                                                   "contrastText": "#000",
-                                                  "dark": "#979797",
+                                                  "dark": "#949494",
                                                   "light": "#f2f2f2",
                                                   "main": "#FFFFFF",
                                                 },
@@ -2416,7 +2410,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                           variant="subtitle1"
                                         >
                                           <p
-                                            className="MuiTypography-root-47 MuiTypography-subtitle1-65  PageElement-pageItem-46 PageElement-pageElementActive-45"
+                                            className="MuiTypography-root-46 MuiTypography-subtitle1-64  PageElement-pageItem-45 PageElement-pageElementActive-44"
                                           >
                                             <WithStyles(Typography)
                                               variant="srOnly"
@@ -2425,42 +2419,42 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                 align="inherit"
                                                 classes={
                                                   Object {
-                                                    "alignCenter": "MuiTypography-alignCenter-70",
-                                                    "alignJustify": "MuiTypography-alignJustify-72",
-                                                    "alignLeft": "MuiTypography-alignLeft-69",
-                                                    "alignRight": "MuiTypography-alignRight-71",
-                                                    "body1": "MuiTypography-body1-56",
-                                                    "body2": "MuiTypography-body2-55",
-                                                    "button": "MuiTypography-button-58",
-                                                    "caption": "MuiTypography-caption-57",
-                                                    "colorError": "MuiTypography-colorError-81",
-                                                    "colorInherit": "MuiTypography-colorInherit-76",
-                                                    "colorPrimary": "MuiTypography-colorPrimary-77",
-                                                    "colorSecondary": "MuiTypography-colorSecondary-78",
-                                                    "colorTextPrimary": "MuiTypography-colorTextPrimary-79",
-                                                    "colorTextSecondary": "MuiTypography-colorTextSecondary-80",
-                                                    "display1": "MuiTypography-display1-51",
-                                                    "display2": "MuiTypography-display2-50",
-                                                    "display3": "MuiTypography-display3-49",
-                                                    "display4": "MuiTypography-display4-48",
-                                                    "gutterBottom": "MuiTypography-gutterBottom-74",
-                                                    "h1": "MuiTypography-h1-59",
-                                                    "h2": "MuiTypography-h2-60",
-                                                    "h3": "MuiTypography-h3-61",
-                                                    "h4": "MuiTypography-h4-62",
-                                                    "h5": "MuiTypography-h5-63",
-                                                    "h6": "MuiTypography-h6-64",
-                                                    "headline": "MuiTypography-headline-52",
-                                                    "inline": "MuiTypography-inline-82",
-                                                    "noWrap": "MuiTypography-noWrap-73",
-                                                    "overline": "MuiTypography-overline-67",
-                                                    "paragraph": "MuiTypography-paragraph-75",
-                                                    "root": "MuiTypography-root-47",
-                                                    "srOnly": "MuiTypography-srOnly-68",
-                                                    "subheading": "MuiTypography-subheading-54",
-                                                    "subtitle1": "MuiTypography-subtitle1-65",
-                                                    "subtitle2": "MuiTypography-subtitle2-66",
-                                                    "title": "MuiTypography-title-53",
+                                                    "alignCenter": "MuiTypography-alignCenter-69",
+                                                    "alignJustify": "MuiTypography-alignJustify-71",
+                                                    "alignLeft": "MuiTypography-alignLeft-68",
+                                                    "alignRight": "MuiTypography-alignRight-70",
+                                                    "body1": "MuiTypography-body1-55",
+                                                    "body2": "MuiTypography-body2-54",
+                                                    "button": "MuiTypography-button-57",
+                                                    "caption": "MuiTypography-caption-56",
+                                                    "colorError": "MuiTypography-colorError-80",
+                                                    "colorInherit": "MuiTypography-colorInherit-75",
+                                                    "colorPrimary": "MuiTypography-colorPrimary-76",
+                                                    "colorSecondary": "MuiTypography-colorSecondary-77",
+                                                    "colorTextPrimary": "MuiTypography-colorTextPrimary-78",
+                                                    "colorTextSecondary": "MuiTypography-colorTextSecondary-79",
+                                                    "display1": "MuiTypography-display1-50",
+                                                    "display2": "MuiTypography-display2-49",
+                                                    "display3": "MuiTypography-display3-48",
+                                                    "display4": "MuiTypography-display4-47",
+                                                    "gutterBottom": "MuiTypography-gutterBottom-73",
+                                                    "h1": "MuiTypography-h1-58",
+                                                    "h2": "MuiTypography-h2-59",
+                                                    "h3": "MuiTypography-h3-60",
+                                                    "h4": "MuiTypography-h4-61",
+                                                    "h5": "MuiTypography-h5-62",
+                                                    "h6": "MuiTypography-h6-63",
+                                                    "headline": "MuiTypography-headline-51",
+                                                    "inline": "MuiTypography-inline-81",
+                                                    "noWrap": "MuiTypography-noWrap-72",
+                                                    "overline": "MuiTypography-overline-66",
+                                                    "paragraph": "MuiTypography-paragraph-74",
+                                                    "root": "MuiTypography-root-46",
+                                                    "srOnly": "MuiTypography-srOnly-67",
+                                                    "subheading": "MuiTypography-subheading-53",
+                                                    "subtitle1": "MuiTypography-subtitle1-64",
+                                                    "subtitle2": "MuiTypography-subtitle2-65",
+                                                    "title": "MuiTypography-title-52",
                                                   }
                                                 }
                                                 color="default"
@@ -2533,14 +2527,14 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                     "overrides": Object {
                                                       "MuiButtonBase": Object {
                                                         "focusVisible": Object {
-                                                          "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                                                          "boxShadow": "0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(71, 131, 235), 0 0 0 8px rgb(255, 255, 255)",
                                                           "outline": "2px solid transparent",
                                                         },
                                                       },
                                                       "MuiInputBase": Object {
                                                         "root": Object {
                                                           "&$focused": Object {
-                                                            "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                                                            "boxShadow": "0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(71, 131, 235), 0 0 0 8px rgb(255, 255, 255)",
                                                             "outline": "2px solid transparent",
                                                           },
                                                         },
@@ -2583,7 +2577,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                         "light": "#e57373",
                                                         "main": "#f44336",
                                                       },
-                                                      "focusBorder": "rgba(25, 100, 230, 0.8)",
+                                                      "focusBorder": "rgb(71, 131, 235)",
                                                       "getContrastText": [Function],
                                                       "grey": Object {
                                                         "100": "#f5f5f5",
@@ -2610,10 +2604,10 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                       },
                                                       "secondary": Object {
                                                         "contrastText": "#fff",
-                                                        "dark": "rgba(14, 16, 24, 0.9)",
+                                                        "dark": "rgb(30, 32, 39)",
                                                         "hover": "#1d39ad",
-                                                        "light": "rgba(67, 70, 79, 0.9)",
-                                                        "main": "rgba(20,24,35,0.9)",
+                                                        "light": "rgb(85, 88, 96)",
+                                                        "main": "rgb(43, 47, 57)",
                                                       },
                                                       "text": Object {
                                                         "disabled": "rgba(0, 0, 0, 0.38)",
@@ -2626,7 +2620,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                       "warning": "#AF0021",
                                                       "white": Object {
                                                         "contrastText": "#000",
-                                                        "dark": "#979797",
+                                                        "dark": "#949494",
                                                         "light": "#f2f2f2",
                                                         "main": "#FFFFFF",
                                                       },
@@ -2910,7 +2904,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                 variant="srOnly"
                                               >
                                                 <span
-                                                  className="MuiTypography-root-47 MuiTypography-srOnly-68"
+                                                  className="MuiTypography-root-46 MuiTypography-srOnly-67"
                                                 >
                                                   Sivu 2, avattu
                                                 </span>
@@ -2963,7 +2957,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                   "getPluralRules": [Function],
                                   "getRelativeTimeFormat": [Function],
                                 },
-                                "locale": "fi",
+                                "locale": "en",
                                 "messages": Object {
                                   "general.pagination.currentlyOpenedPage": "Sivu {count}, avattu",
                                   "general.pagination.next": "Seuraava sivu",
@@ -2983,16 +2977,16 @@ exports[`<PaginationComponent /> should work 1`] = `
                               className=""
                               classes={
                                 Object {
-                                  "arrowFlip": "PageElement-arrowFlip-38",
-                                  "arrowIcon": "PageElement-arrowIcon-37",
-                                  "borderBlack": "PageElement-borderBlack-39",
-                                  "button": "PageElement-button-40",
-                                  "buttonContainer": "PageElement-buttonContainer-41",
-                                  "list": "PageElement-list-42",
-                                  "listContainer": "PageElement-listContainer-43",
-                                  "pageElement": "PageElement-pageElement-44",
-                                  "pageElementActive": "PageElement-pageElementActive-45",
-                                  "pageItem": "PageElement-pageItem-46",
+                                  "arrowFlip": "PageElement-arrowFlip-37",
+                                  "arrowIcon": "PageElement-arrowIcon-36",
+                                  "borderBlack": "PageElement-borderBlack-38",
+                                  "button": "PageElement-button-39",
+                                  "buttonContainer": "PageElement-buttonContainer-40",
+                                  "list": "PageElement-list-41",
+                                  "listContainer": "PageElement-listContainer-42",
+                                  "pageElement": "PageElement-pageElement-43",
+                                  "pageElementActive": "PageElement-pageElementActive-44",
+                                  "pageItem": "PageElement-pageItem-45",
                                 }
                               }
                               intl={
@@ -3020,7 +3014,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                     "getPluralRules": [Function],
                                     "getRelativeTimeFormat": [Function],
                                   },
-                                  "locale": "fi",
+                                  "locale": "en",
                                   "messages": Object {
                                     "general.pagination.currentlyOpenedPage": "Sivu {count}, avattu",
                                     "general.pagination.next": "Seuraava sivu",
@@ -3048,9 +3042,9 @@ exports[`<PaginationComponent /> should work 1`] = `
                                     centerRipple={false}
                                     classes={
                                       Object {
-                                        "disabled": "MuiButtonBase-disabled-26",
-                                        "focusVisible": "MuiButtonBase-focusVisible-27",
-                                        "root": "MuiButtonBase-root-25",
+                                        "disabled": "MuiButtonBase-disabled-25",
+                                        "focusVisible": "MuiButtonBase-focusVisible-26",
+                                        "root": "MuiButtonBase-root-24",
                                       }
                                     }
                                     component="button"
@@ -3065,7 +3059,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                     type="button"
                                   >
                                     <button
-                                      className="MuiButtonBase-root-25"
+                                      className="MuiButtonBase-root-24"
                                       disabled={false}
                                       onBlur={[Function]}
                                       onClick={[Function]}
@@ -3084,51 +3078,51 @@ exports[`<PaginationComponent /> should work 1`] = `
                                       type="button"
                                     >
                                       <WithStyles(Typography)
-                                        className=" PageElement-pageItem-46 PageElement-pageElement-44"
+                                        className=" PageElement-pageItem-45 PageElement-pageElement-43"
                                         component="p"
                                         variant="subtitle1"
                                       >
                                         <Typography
                                           align="inherit"
-                                          className=" PageElement-pageItem-46 PageElement-pageElement-44"
+                                          className=" PageElement-pageItem-45 PageElement-pageElement-43"
                                           classes={
                                             Object {
-                                              "alignCenter": "MuiTypography-alignCenter-70",
-                                              "alignJustify": "MuiTypography-alignJustify-72",
-                                              "alignLeft": "MuiTypography-alignLeft-69",
-                                              "alignRight": "MuiTypography-alignRight-71",
-                                              "body1": "MuiTypography-body1-56",
-                                              "body2": "MuiTypography-body2-55",
-                                              "button": "MuiTypography-button-58",
-                                              "caption": "MuiTypography-caption-57",
-                                              "colorError": "MuiTypography-colorError-81",
-                                              "colorInherit": "MuiTypography-colorInherit-76",
-                                              "colorPrimary": "MuiTypography-colorPrimary-77",
-                                              "colorSecondary": "MuiTypography-colorSecondary-78",
-                                              "colorTextPrimary": "MuiTypography-colorTextPrimary-79",
-                                              "colorTextSecondary": "MuiTypography-colorTextSecondary-80",
-                                              "display1": "MuiTypography-display1-51",
-                                              "display2": "MuiTypography-display2-50",
-                                              "display3": "MuiTypography-display3-49",
-                                              "display4": "MuiTypography-display4-48",
-                                              "gutterBottom": "MuiTypography-gutterBottom-74",
-                                              "h1": "MuiTypography-h1-59",
-                                              "h2": "MuiTypography-h2-60",
-                                              "h3": "MuiTypography-h3-61",
-                                              "h4": "MuiTypography-h4-62",
-                                              "h5": "MuiTypography-h5-63",
-                                              "h6": "MuiTypography-h6-64",
-                                              "headline": "MuiTypography-headline-52",
-                                              "inline": "MuiTypography-inline-82",
-                                              "noWrap": "MuiTypography-noWrap-73",
-                                              "overline": "MuiTypography-overline-67",
-                                              "paragraph": "MuiTypography-paragraph-75",
-                                              "root": "MuiTypography-root-47",
-                                              "srOnly": "MuiTypography-srOnly-68",
-                                              "subheading": "MuiTypography-subheading-54",
-                                              "subtitle1": "MuiTypography-subtitle1-65",
-                                              "subtitle2": "MuiTypography-subtitle2-66",
-                                              "title": "MuiTypography-title-53",
+                                              "alignCenter": "MuiTypography-alignCenter-69",
+                                              "alignJustify": "MuiTypography-alignJustify-71",
+                                              "alignLeft": "MuiTypography-alignLeft-68",
+                                              "alignRight": "MuiTypography-alignRight-70",
+                                              "body1": "MuiTypography-body1-55",
+                                              "body2": "MuiTypography-body2-54",
+                                              "button": "MuiTypography-button-57",
+                                              "caption": "MuiTypography-caption-56",
+                                              "colorError": "MuiTypography-colorError-80",
+                                              "colorInherit": "MuiTypography-colorInherit-75",
+                                              "colorPrimary": "MuiTypography-colorPrimary-76",
+                                              "colorSecondary": "MuiTypography-colorSecondary-77",
+                                              "colorTextPrimary": "MuiTypography-colorTextPrimary-78",
+                                              "colorTextSecondary": "MuiTypography-colorTextSecondary-79",
+                                              "display1": "MuiTypography-display1-50",
+                                              "display2": "MuiTypography-display2-49",
+                                              "display3": "MuiTypography-display3-48",
+                                              "display4": "MuiTypography-display4-47",
+                                              "gutterBottom": "MuiTypography-gutterBottom-73",
+                                              "h1": "MuiTypography-h1-58",
+                                              "h2": "MuiTypography-h2-59",
+                                              "h3": "MuiTypography-h3-60",
+                                              "h4": "MuiTypography-h4-61",
+                                              "h5": "MuiTypography-h5-62",
+                                              "h6": "MuiTypography-h6-63",
+                                              "headline": "MuiTypography-headline-51",
+                                              "inline": "MuiTypography-inline-81",
+                                              "noWrap": "MuiTypography-noWrap-72",
+                                              "overline": "MuiTypography-overline-66",
+                                              "paragraph": "MuiTypography-paragraph-74",
+                                              "root": "MuiTypography-root-46",
+                                              "srOnly": "MuiTypography-srOnly-67",
+                                              "subheading": "MuiTypography-subheading-53",
+                                              "subtitle1": "MuiTypography-subtitle1-64",
+                                              "subtitle2": "MuiTypography-subtitle2-65",
+                                              "title": "MuiTypography-title-52",
                                             }
                                           }
                                           color="default"
@@ -3202,14 +3196,14 @@ exports[`<PaginationComponent /> should work 1`] = `
                                               "overrides": Object {
                                                 "MuiButtonBase": Object {
                                                   "focusVisible": Object {
-                                                    "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                                                    "boxShadow": "0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(71, 131, 235), 0 0 0 8px rgb(255, 255, 255)",
                                                     "outline": "2px solid transparent",
                                                   },
                                                 },
                                                 "MuiInputBase": Object {
                                                   "root": Object {
                                                     "&$focused": Object {
-                                                      "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                                                      "boxShadow": "0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(71, 131, 235), 0 0 0 8px rgb(255, 255, 255)",
                                                       "outline": "2px solid transparent",
                                                     },
                                                   },
@@ -3252,7 +3246,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                   "light": "#e57373",
                                                   "main": "#f44336",
                                                 },
-                                                "focusBorder": "rgba(25, 100, 230, 0.8)",
+                                                "focusBorder": "rgb(71, 131, 235)",
                                                 "getContrastText": [Function],
                                                 "grey": Object {
                                                   "100": "#f5f5f5",
@@ -3279,10 +3273,10 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                 },
                                                 "secondary": Object {
                                                   "contrastText": "#fff",
-                                                  "dark": "rgba(14, 16, 24, 0.9)",
+                                                  "dark": "rgb(30, 32, 39)",
                                                   "hover": "#1d39ad",
-                                                  "light": "rgba(67, 70, 79, 0.9)",
-                                                  "main": "rgba(20,24,35,0.9)",
+                                                  "light": "rgb(85, 88, 96)",
+                                                  "main": "rgb(43, 47, 57)",
                                                 },
                                                 "text": Object {
                                                   "disabled": "rgba(0, 0, 0, 0.38)",
@@ -3295,7 +3289,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                 "warning": "#AF0021",
                                                 "white": Object {
                                                   "contrastText": "#000",
-                                                  "dark": "#979797",
+                                                  "dark": "#949494",
                                                   "light": "#f2f2f2",
                                                   "main": "#FFFFFF",
                                                 },
@@ -3579,7 +3573,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                           variant="subtitle1"
                                         >
                                           <p
-                                            className="MuiTypography-root-47 MuiTypography-subtitle1-65  PageElement-pageItem-46 PageElement-pageElement-44"
+                                            className="MuiTypography-root-46 MuiTypography-subtitle1-64  PageElement-pageItem-45 PageElement-pageElement-43"
                                           >
                                             <WithStyles(Typography)
                                               variant="srOnly"
@@ -3588,42 +3582,42 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                 align="inherit"
                                                 classes={
                                                   Object {
-                                                    "alignCenter": "MuiTypography-alignCenter-70",
-                                                    "alignJustify": "MuiTypography-alignJustify-72",
-                                                    "alignLeft": "MuiTypography-alignLeft-69",
-                                                    "alignRight": "MuiTypography-alignRight-71",
-                                                    "body1": "MuiTypography-body1-56",
-                                                    "body2": "MuiTypography-body2-55",
-                                                    "button": "MuiTypography-button-58",
-                                                    "caption": "MuiTypography-caption-57",
-                                                    "colorError": "MuiTypography-colorError-81",
-                                                    "colorInherit": "MuiTypography-colorInherit-76",
-                                                    "colorPrimary": "MuiTypography-colorPrimary-77",
-                                                    "colorSecondary": "MuiTypography-colorSecondary-78",
-                                                    "colorTextPrimary": "MuiTypography-colorTextPrimary-79",
-                                                    "colorTextSecondary": "MuiTypography-colorTextSecondary-80",
-                                                    "display1": "MuiTypography-display1-51",
-                                                    "display2": "MuiTypography-display2-50",
-                                                    "display3": "MuiTypography-display3-49",
-                                                    "display4": "MuiTypography-display4-48",
-                                                    "gutterBottom": "MuiTypography-gutterBottom-74",
-                                                    "h1": "MuiTypography-h1-59",
-                                                    "h2": "MuiTypography-h2-60",
-                                                    "h3": "MuiTypography-h3-61",
-                                                    "h4": "MuiTypography-h4-62",
-                                                    "h5": "MuiTypography-h5-63",
-                                                    "h6": "MuiTypography-h6-64",
-                                                    "headline": "MuiTypography-headline-52",
-                                                    "inline": "MuiTypography-inline-82",
-                                                    "noWrap": "MuiTypography-noWrap-73",
-                                                    "overline": "MuiTypography-overline-67",
-                                                    "paragraph": "MuiTypography-paragraph-75",
-                                                    "root": "MuiTypography-root-47",
-                                                    "srOnly": "MuiTypography-srOnly-68",
-                                                    "subheading": "MuiTypography-subheading-54",
-                                                    "subtitle1": "MuiTypography-subtitle1-65",
-                                                    "subtitle2": "MuiTypography-subtitle2-66",
-                                                    "title": "MuiTypography-title-53",
+                                                    "alignCenter": "MuiTypography-alignCenter-69",
+                                                    "alignJustify": "MuiTypography-alignJustify-71",
+                                                    "alignLeft": "MuiTypography-alignLeft-68",
+                                                    "alignRight": "MuiTypography-alignRight-70",
+                                                    "body1": "MuiTypography-body1-55",
+                                                    "body2": "MuiTypography-body2-54",
+                                                    "button": "MuiTypography-button-57",
+                                                    "caption": "MuiTypography-caption-56",
+                                                    "colorError": "MuiTypography-colorError-80",
+                                                    "colorInherit": "MuiTypography-colorInherit-75",
+                                                    "colorPrimary": "MuiTypography-colorPrimary-76",
+                                                    "colorSecondary": "MuiTypography-colorSecondary-77",
+                                                    "colorTextPrimary": "MuiTypography-colorTextPrimary-78",
+                                                    "colorTextSecondary": "MuiTypography-colorTextSecondary-79",
+                                                    "display1": "MuiTypography-display1-50",
+                                                    "display2": "MuiTypography-display2-49",
+                                                    "display3": "MuiTypography-display3-48",
+                                                    "display4": "MuiTypography-display4-47",
+                                                    "gutterBottom": "MuiTypography-gutterBottom-73",
+                                                    "h1": "MuiTypography-h1-58",
+                                                    "h2": "MuiTypography-h2-59",
+                                                    "h3": "MuiTypography-h3-60",
+                                                    "h4": "MuiTypography-h4-61",
+                                                    "h5": "MuiTypography-h5-62",
+                                                    "h6": "MuiTypography-h6-63",
+                                                    "headline": "MuiTypography-headline-51",
+                                                    "inline": "MuiTypography-inline-81",
+                                                    "noWrap": "MuiTypography-noWrap-72",
+                                                    "overline": "MuiTypography-overline-66",
+                                                    "paragraph": "MuiTypography-paragraph-74",
+                                                    "root": "MuiTypography-root-46",
+                                                    "srOnly": "MuiTypography-srOnly-67",
+                                                    "subheading": "MuiTypography-subheading-53",
+                                                    "subtitle1": "MuiTypography-subtitle1-64",
+                                                    "subtitle2": "MuiTypography-subtitle2-65",
+                                                    "title": "MuiTypography-title-52",
                                                   }
                                                 }
                                                 color="default"
@@ -3696,14 +3690,14 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                     "overrides": Object {
                                                       "MuiButtonBase": Object {
                                                         "focusVisible": Object {
-                                                          "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                                                          "boxShadow": "0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(71, 131, 235), 0 0 0 8px rgb(255, 255, 255)",
                                                           "outline": "2px solid transparent",
                                                         },
                                                       },
                                                       "MuiInputBase": Object {
                                                         "root": Object {
                                                           "&$focused": Object {
-                                                            "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                                                            "boxShadow": "0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(71, 131, 235), 0 0 0 8px rgb(255, 255, 255)",
                                                             "outline": "2px solid transparent",
                                                           },
                                                         },
@@ -3746,7 +3740,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                         "light": "#e57373",
                                                         "main": "#f44336",
                                                       },
-                                                      "focusBorder": "rgba(25, 100, 230, 0.8)",
+                                                      "focusBorder": "rgb(71, 131, 235)",
                                                       "getContrastText": [Function],
                                                       "grey": Object {
                                                         "100": "#f5f5f5",
@@ -3773,10 +3767,10 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                       },
                                                       "secondary": Object {
                                                         "contrastText": "#fff",
-                                                        "dark": "rgba(14, 16, 24, 0.9)",
+                                                        "dark": "rgb(30, 32, 39)",
                                                         "hover": "#1d39ad",
-                                                        "light": "rgba(67, 70, 79, 0.9)",
-                                                        "main": "rgba(20,24,35,0.9)",
+                                                        "light": "rgb(85, 88, 96)",
+                                                        "main": "rgb(43, 47, 57)",
                                                       },
                                                       "text": Object {
                                                         "disabled": "rgba(0, 0, 0, 0.38)",
@@ -3789,7 +3783,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                       "warning": "#AF0021",
                                                       "white": Object {
                                                         "contrastText": "#000",
-                                                        "dark": "#979797",
+                                                        "dark": "#949494",
                                                         "light": "#f2f2f2",
                                                         "main": "#FFFFFF",
                                                       },
@@ -4073,7 +4067,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                 variant="srOnly"
                                               >
                                                 <span
-                                                  className="MuiTypography-root-47 MuiTypography-srOnly-68"
+                                                  className="MuiTypography-root-46 MuiTypography-srOnly-67"
                                                 >
                                                   Avaa sivu 3
                                                 </span>
@@ -4126,7 +4120,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                   "getPluralRules": [Function],
                                   "getRelativeTimeFormat": [Function],
                                 },
-                                "locale": "fi",
+                                "locale": "en",
                                 "messages": Object {
                                   "general.pagination.currentlyOpenedPage": "Sivu {count}, avattu",
                                   "general.pagination.next": "Seuraava sivu",
@@ -4146,16 +4140,16 @@ exports[`<PaginationComponent /> should work 1`] = `
                               className=""
                               classes={
                                 Object {
-                                  "arrowFlip": "PageElement-arrowFlip-38",
-                                  "arrowIcon": "PageElement-arrowIcon-37",
-                                  "borderBlack": "PageElement-borderBlack-39",
-                                  "button": "PageElement-button-40",
-                                  "buttonContainer": "PageElement-buttonContainer-41",
-                                  "list": "PageElement-list-42",
-                                  "listContainer": "PageElement-listContainer-43",
-                                  "pageElement": "PageElement-pageElement-44",
-                                  "pageElementActive": "PageElement-pageElementActive-45",
-                                  "pageItem": "PageElement-pageItem-46",
+                                  "arrowFlip": "PageElement-arrowFlip-37",
+                                  "arrowIcon": "PageElement-arrowIcon-36",
+                                  "borderBlack": "PageElement-borderBlack-38",
+                                  "button": "PageElement-button-39",
+                                  "buttonContainer": "PageElement-buttonContainer-40",
+                                  "list": "PageElement-list-41",
+                                  "listContainer": "PageElement-listContainer-42",
+                                  "pageElement": "PageElement-pageElement-43",
+                                  "pageElementActive": "PageElement-pageElementActive-44",
+                                  "pageItem": "PageElement-pageItem-45",
                                 }
                               }
                               intl={
@@ -4183,7 +4177,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                     "getPluralRules": [Function],
                                     "getRelativeTimeFormat": [Function],
                                   },
-                                  "locale": "fi",
+                                  "locale": "en",
                                   "messages": Object {
                                     "general.pagination.currentlyOpenedPage": "Sivu {count}, avattu",
                                     "general.pagination.next": "Seuraava sivu",
@@ -4211,9 +4205,9 @@ exports[`<PaginationComponent /> should work 1`] = `
                                     centerRipple={false}
                                     classes={
                                       Object {
-                                        "disabled": "MuiButtonBase-disabled-26",
-                                        "focusVisible": "MuiButtonBase-focusVisible-27",
-                                        "root": "MuiButtonBase-root-25",
+                                        "disabled": "MuiButtonBase-disabled-25",
+                                        "focusVisible": "MuiButtonBase-focusVisible-26",
+                                        "root": "MuiButtonBase-root-24",
                                       }
                                     }
                                     component="button"
@@ -4228,7 +4222,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                     type="button"
                                   >
                                     <button
-                                      className="MuiButtonBase-root-25"
+                                      className="MuiButtonBase-root-24"
                                       disabled={false}
                                       onBlur={[Function]}
                                       onClick={[Function]}
@@ -4247,51 +4241,51 @@ exports[`<PaginationComponent /> should work 1`] = `
                                       type="button"
                                     >
                                       <WithStyles(Typography)
-                                        className=" PageElement-pageItem-46 PageElement-pageElement-44"
+                                        className=" PageElement-pageItem-45 PageElement-pageElement-43"
                                         component="p"
                                         variant="subtitle1"
                                       >
                                         <Typography
                                           align="inherit"
-                                          className=" PageElement-pageItem-46 PageElement-pageElement-44"
+                                          className=" PageElement-pageItem-45 PageElement-pageElement-43"
                                           classes={
                                             Object {
-                                              "alignCenter": "MuiTypography-alignCenter-70",
-                                              "alignJustify": "MuiTypography-alignJustify-72",
-                                              "alignLeft": "MuiTypography-alignLeft-69",
-                                              "alignRight": "MuiTypography-alignRight-71",
-                                              "body1": "MuiTypography-body1-56",
-                                              "body2": "MuiTypography-body2-55",
-                                              "button": "MuiTypography-button-58",
-                                              "caption": "MuiTypography-caption-57",
-                                              "colorError": "MuiTypography-colorError-81",
-                                              "colorInherit": "MuiTypography-colorInherit-76",
-                                              "colorPrimary": "MuiTypography-colorPrimary-77",
-                                              "colorSecondary": "MuiTypography-colorSecondary-78",
-                                              "colorTextPrimary": "MuiTypography-colorTextPrimary-79",
-                                              "colorTextSecondary": "MuiTypography-colorTextSecondary-80",
-                                              "display1": "MuiTypography-display1-51",
-                                              "display2": "MuiTypography-display2-50",
-                                              "display3": "MuiTypography-display3-49",
-                                              "display4": "MuiTypography-display4-48",
-                                              "gutterBottom": "MuiTypography-gutterBottom-74",
-                                              "h1": "MuiTypography-h1-59",
-                                              "h2": "MuiTypography-h2-60",
-                                              "h3": "MuiTypography-h3-61",
-                                              "h4": "MuiTypography-h4-62",
-                                              "h5": "MuiTypography-h5-63",
-                                              "h6": "MuiTypography-h6-64",
-                                              "headline": "MuiTypography-headline-52",
-                                              "inline": "MuiTypography-inline-82",
-                                              "noWrap": "MuiTypography-noWrap-73",
-                                              "overline": "MuiTypography-overline-67",
-                                              "paragraph": "MuiTypography-paragraph-75",
-                                              "root": "MuiTypography-root-47",
-                                              "srOnly": "MuiTypography-srOnly-68",
-                                              "subheading": "MuiTypography-subheading-54",
-                                              "subtitle1": "MuiTypography-subtitle1-65",
-                                              "subtitle2": "MuiTypography-subtitle2-66",
-                                              "title": "MuiTypography-title-53",
+                                              "alignCenter": "MuiTypography-alignCenter-69",
+                                              "alignJustify": "MuiTypography-alignJustify-71",
+                                              "alignLeft": "MuiTypography-alignLeft-68",
+                                              "alignRight": "MuiTypography-alignRight-70",
+                                              "body1": "MuiTypography-body1-55",
+                                              "body2": "MuiTypography-body2-54",
+                                              "button": "MuiTypography-button-57",
+                                              "caption": "MuiTypography-caption-56",
+                                              "colorError": "MuiTypography-colorError-80",
+                                              "colorInherit": "MuiTypography-colorInherit-75",
+                                              "colorPrimary": "MuiTypography-colorPrimary-76",
+                                              "colorSecondary": "MuiTypography-colorSecondary-77",
+                                              "colorTextPrimary": "MuiTypography-colorTextPrimary-78",
+                                              "colorTextSecondary": "MuiTypography-colorTextSecondary-79",
+                                              "display1": "MuiTypography-display1-50",
+                                              "display2": "MuiTypography-display2-49",
+                                              "display3": "MuiTypography-display3-48",
+                                              "display4": "MuiTypography-display4-47",
+                                              "gutterBottom": "MuiTypography-gutterBottom-73",
+                                              "h1": "MuiTypography-h1-58",
+                                              "h2": "MuiTypography-h2-59",
+                                              "h3": "MuiTypography-h3-60",
+                                              "h4": "MuiTypography-h4-61",
+                                              "h5": "MuiTypography-h5-62",
+                                              "h6": "MuiTypography-h6-63",
+                                              "headline": "MuiTypography-headline-51",
+                                              "inline": "MuiTypography-inline-81",
+                                              "noWrap": "MuiTypography-noWrap-72",
+                                              "overline": "MuiTypography-overline-66",
+                                              "paragraph": "MuiTypography-paragraph-74",
+                                              "root": "MuiTypography-root-46",
+                                              "srOnly": "MuiTypography-srOnly-67",
+                                              "subheading": "MuiTypography-subheading-53",
+                                              "subtitle1": "MuiTypography-subtitle1-64",
+                                              "subtitle2": "MuiTypography-subtitle2-65",
+                                              "title": "MuiTypography-title-52",
                                             }
                                           }
                                           color="default"
@@ -4365,14 +4359,14 @@ exports[`<PaginationComponent /> should work 1`] = `
                                               "overrides": Object {
                                                 "MuiButtonBase": Object {
                                                   "focusVisible": Object {
-                                                    "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                                                    "boxShadow": "0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(71, 131, 235), 0 0 0 8px rgb(255, 255, 255)",
                                                     "outline": "2px solid transparent",
                                                   },
                                                 },
                                                 "MuiInputBase": Object {
                                                   "root": Object {
                                                     "&$focused": Object {
-                                                      "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                                                      "boxShadow": "0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(71, 131, 235), 0 0 0 8px rgb(255, 255, 255)",
                                                       "outline": "2px solid transparent",
                                                     },
                                                   },
@@ -4415,7 +4409,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                   "light": "#e57373",
                                                   "main": "#f44336",
                                                 },
-                                                "focusBorder": "rgba(25, 100, 230, 0.8)",
+                                                "focusBorder": "rgb(71, 131, 235)",
                                                 "getContrastText": [Function],
                                                 "grey": Object {
                                                   "100": "#f5f5f5",
@@ -4442,10 +4436,10 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                 },
                                                 "secondary": Object {
                                                   "contrastText": "#fff",
-                                                  "dark": "rgba(14, 16, 24, 0.9)",
+                                                  "dark": "rgb(30, 32, 39)",
                                                   "hover": "#1d39ad",
-                                                  "light": "rgba(67, 70, 79, 0.9)",
-                                                  "main": "rgba(20,24,35,0.9)",
+                                                  "light": "rgb(85, 88, 96)",
+                                                  "main": "rgb(43, 47, 57)",
                                                 },
                                                 "text": Object {
                                                   "disabled": "rgba(0, 0, 0, 0.38)",
@@ -4458,7 +4452,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                 "warning": "#AF0021",
                                                 "white": Object {
                                                   "contrastText": "#000",
-                                                  "dark": "#979797",
+                                                  "dark": "#949494",
                                                   "light": "#f2f2f2",
                                                   "main": "#FFFFFF",
                                                 },
@@ -4742,7 +4736,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                           variant="subtitle1"
                                         >
                                           <p
-                                            className="MuiTypography-root-47 MuiTypography-subtitle1-65  PageElement-pageItem-46 PageElement-pageElement-44"
+                                            className="MuiTypography-root-46 MuiTypography-subtitle1-64  PageElement-pageItem-45 PageElement-pageElement-43"
                                           >
                                             <WithStyles(Typography)
                                               variant="srOnly"
@@ -4751,42 +4745,42 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                 align="inherit"
                                                 classes={
                                                   Object {
-                                                    "alignCenter": "MuiTypography-alignCenter-70",
-                                                    "alignJustify": "MuiTypography-alignJustify-72",
-                                                    "alignLeft": "MuiTypography-alignLeft-69",
-                                                    "alignRight": "MuiTypography-alignRight-71",
-                                                    "body1": "MuiTypography-body1-56",
-                                                    "body2": "MuiTypography-body2-55",
-                                                    "button": "MuiTypography-button-58",
-                                                    "caption": "MuiTypography-caption-57",
-                                                    "colorError": "MuiTypography-colorError-81",
-                                                    "colorInherit": "MuiTypography-colorInherit-76",
-                                                    "colorPrimary": "MuiTypography-colorPrimary-77",
-                                                    "colorSecondary": "MuiTypography-colorSecondary-78",
-                                                    "colorTextPrimary": "MuiTypography-colorTextPrimary-79",
-                                                    "colorTextSecondary": "MuiTypography-colorTextSecondary-80",
-                                                    "display1": "MuiTypography-display1-51",
-                                                    "display2": "MuiTypography-display2-50",
-                                                    "display3": "MuiTypography-display3-49",
-                                                    "display4": "MuiTypography-display4-48",
-                                                    "gutterBottom": "MuiTypography-gutterBottom-74",
-                                                    "h1": "MuiTypography-h1-59",
-                                                    "h2": "MuiTypography-h2-60",
-                                                    "h3": "MuiTypography-h3-61",
-                                                    "h4": "MuiTypography-h4-62",
-                                                    "h5": "MuiTypography-h5-63",
-                                                    "h6": "MuiTypography-h6-64",
-                                                    "headline": "MuiTypography-headline-52",
-                                                    "inline": "MuiTypography-inline-82",
-                                                    "noWrap": "MuiTypography-noWrap-73",
-                                                    "overline": "MuiTypography-overline-67",
-                                                    "paragraph": "MuiTypography-paragraph-75",
-                                                    "root": "MuiTypography-root-47",
-                                                    "srOnly": "MuiTypography-srOnly-68",
-                                                    "subheading": "MuiTypography-subheading-54",
-                                                    "subtitle1": "MuiTypography-subtitle1-65",
-                                                    "subtitle2": "MuiTypography-subtitle2-66",
-                                                    "title": "MuiTypography-title-53",
+                                                    "alignCenter": "MuiTypography-alignCenter-69",
+                                                    "alignJustify": "MuiTypography-alignJustify-71",
+                                                    "alignLeft": "MuiTypography-alignLeft-68",
+                                                    "alignRight": "MuiTypography-alignRight-70",
+                                                    "body1": "MuiTypography-body1-55",
+                                                    "body2": "MuiTypography-body2-54",
+                                                    "button": "MuiTypography-button-57",
+                                                    "caption": "MuiTypography-caption-56",
+                                                    "colorError": "MuiTypography-colorError-80",
+                                                    "colorInherit": "MuiTypography-colorInherit-75",
+                                                    "colorPrimary": "MuiTypography-colorPrimary-76",
+                                                    "colorSecondary": "MuiTypography-colorSecondary-77",
+                                                    "colorTextPrimary": "MuiTypography-colorTextPrimary-78",
+                                                    "colorTextSecondary": "MuiTypography-colorTextSecondary-79",
+                                                    "display1": "MuiTypography-display1-50",
+                                                    "display2": "MuiTypography-display2-49",
+                                                    "display3": "MuiTypography-display3-48",
+                                                    "display4": "MuiTypography-display4-47",
+                                                    "gutterBottom": "MuiTypography-gutterBottom-73",
+                                                    "h1": "MuiTypography-h1-58",
+                                                    "h2": "MuiTypography-h2-59",
+                                                    "h3": "MuiTypography-h3-60",
+                                                    "h4": "MuiTypography-h4-61",
+                                                    "h5": "MuiTypography-h5-62",
+                                                    "h6": "MuiTypography-h6-63",
+                                                    "headline": "MuiTypography-headline-51",
+                                                    "inline": "MuiTypography-inline-81",
+                                                    "noWrap": "MuiTypography-noWrap-72",
+                                                    "overline": "MuiTypography-overline-66",
+                                                    "paragraph": "MuiTypography-paragraph-74",
+                                                    "root": "MuiTypography-root-46",
+                                                    "srOnly": "MuiTypography-srOnly-67",
+                                                    "subheading": "MuiTypography-subheading-53",
+                                                    "subtitle1": "MuiTypography-subtitle1-64",
+                                                    "subtitle2": "MuiTypography-subtitle2-65",
+                                                    "title": "MuiTypography-title-52",
                                                   }
                                                 }
                                                 color="default"
@@ -4859,14 +4853,14 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                     "overrides": Object {
                                                       "MuiButtonBase": Object {
                                                         "focusVisible": Object {
-                                                          "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                                                          "boxShadow": "0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(71, 131, 235), 0 0 0 8px rgb(255, 255, 255)",
                                                           "outline": "2px solid transparent",
                                                         },
                                                       },
                                                       "MuiInputBase": Object {
                                                         "root": Object {
                                                           "&$focused": Object {
-                                                            "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                                                            "boxShadow": "0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(71, 131, 235), 0 0 0 8px rgb(255, 255, 255)",
                                                             "outline": "2px solid transparent",
                                                           },
                                                         },
@@ -4909,7 +4903,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                         "light": "#e57373",
                                                         "main": "#f44336",
                                                       },
-                                                      "focusBorder": "rgba(25, 100, 230, 0.8)",
+                                                      "focusBorder": "rgb(71, 131, 235)",
                                                       "getContrastText": [Function],
                                                       "grey": Object {
                                                         "100": "#f5f5f5",
@@ -4936,10 +4930,10 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                       },
                                                       "secondary": Object {
                                                         "contrastText": "#fff",
-                                                        "dark": "rgba(14, 16, 24, 0.9)",
+                                                        "dark": "rgb(30, 32, 39)",
                                                         "hover": "#1d39ad",
-                                                        "light": "rgba(67, 70, 79, 0.9)",
-                                                        "main": "rgba(20,24,35,0.9)",
+                                                        "light": "rgb(85, 88, 96)",
+                                                        "main": "rgb(43, 47, 57)",
                                                       },
                                                       "text": Object {
                                                         "disabled": "rgba(0, 0, 0, 0.38)",
@@ -4952,7 +4946,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                       "warning": "#AF0021",
                                                       "white": Object {
                                                         "contrastText": "#000",
-                                                        "dark": "#979797",
+                                                        "dark": "#949494",
                                                         "light": "#f2f2f2",
                                                         "main": "#FFFFFF",
                                                       },
@@ -5236,7 +5230,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                 variant="srOnly"
                                               >
                                                 <span
-                                                  className="MuiTypography-root-47 MuiTypography-srOnly-68"
+                                                  className="MuiTypography-root-46 MuiTypography-srOnly-67"
                                                 >
                                                   Avaa sivu 4
                                                 </span>
@@ -5289,7 +5283,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                   "getPluralRules": [Function],
                                   "getRelativeTimeFormat": [Function],
                                 },
-                                "locale": "fi",
+                                "locale": "en",
                                 "messages": Object {
                                   "general.pagination.currentlyOpenedPage": "Sivu {count}, avattu",
                                   "general.pagination.next": "Seuraava sivu",
@@ -5309,16 +5303,16 @@ exports[`<PaginationComponent /> should work 1`] = `
                               className=""
                               classes={
                                 Object {
-                                  "arrowFlip": "PageElement-arrowFlip-38",
-                                  "arrowIcon": "PageElement-arrowIcon-37",
-                                  "borderBlack": "PageElement-borderBlack-39",
-                                  "button": "PageElement-button-40",
-                                  "buttonContainer": "PageElement-buttonContainer-41",
-                                  "list": "PageElement-list-42",
-                                  "listContainer": "PageElement-listContainer-43",
-                                  "pageElement": "PageElement-pageElement-44",
-                                  "pageElementActive": "PageElement-pageElementActive-45",
-                                  "pageItem": "PageElement-pageItem-46",
+                                  "arrowFlip": "PageElement-arrowFlip-37",
+                                  "arrowIcon": "PageElement-arrowIcon-36",
+                                  "borderBlack": "PageElement-borderBlack-38",
+                                  "button": "PageElement-button-39",
+                                  "buttonContainer": "PageElement-buttonContainer-40",
+                                  "list": "PageElement-list-41",
+                                  "listContainer": "PageElement-listContainer-42",
+                                  "pageElement": "PageElement-pageElement-43",
+                                  "pageElementActive": "PageElement-pageElementActive-44",
+                                  "pageItem": "PageElement-pageItem-45",
                                 }
                               }
                               intl={
@@ -5346,7 +5340,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                     "getPluralRules": [Function],
                                     "getRelativeTimeFormat": [Function],
                                   },
-                                  "locale": "fi",
+                                  "locale": "en",
                                   "messages": Object {
                                     "general.pagination.currentlyOpenedPage": "Sivu {count}, avattu",
                                     "general.pagination.next": "Seuraava sivu",
@@ -5374,9 +5368,9 @@ exports[`<PaginationComponent /> should work 1`] = `
                                     centerRipple={false}
                                     classes={
                                       Object {
-                                        "disabled": "MuiButtonBase-disabled-26",
-                                        "focusVisible": "MuiButtonBase-focusVisible-27",
-                                        "root": "MuiButtonBase-root-25",
+                                        "disabled": "MuiButtonBase-disabled-25",
+                                        "focusVisible": "MuiButtonBase-focusVisible-26",
+                                        "root": "MuiButtonBase-root-24",
                                       }
                                     }
                                     component="button"
@@ -5391,7 +5385,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                     type="button"
                                   >
                                     <button
-                                      className="MuiButtonBase-root-25"
+                                      className="MuiButtonBase-root-24"
                                       disabled={false}
                                       onBlur={[Function]}
                                       onClick={[Function]}
@@ -5410,51 +5404,51 @@ exports[`<PaginationComponent /> should work 1`] = `
                                       type="button"
                                     >
                                       <WithStyles(Typography)
-                                        className=" PageElement-pageItem-46 PageElement-pageElement-44"
+                                        className=" PageElement-pageItem-45 PageElement-pageElement-43"
                                         component="p"
                                         variant="subtitle1"
                                       >
                                         <Typography
                                           align="inherit"
-                                          className=" PageElement-pageItem-46 PageElement-pageElement-44"
+                                          className=" PageElement-pageItem-45 PageElement-pageElement-43"
                                           classes={
                                             Object {
-                                              "alignCenter": "MuiTypography-alignCenter-70",
-                                              "alignJustify": "MuiTypography-alignJustify-72",
-                                              "alignLeft": "MuiTypography-alignLeft-69",
-                                              "alignRight": "MuiTypography-alignRight-71",
-                                              "body1": "MuiTypography-body1-56",
-                                              "body2": "MuiTypography-body2-55",
-                                              "button": "MuiTypography-button-58",
-                                              "caption": "MuiTypography-caption-57",
-                                              "colorError": "MuiTypography-colorError-81",
-                                              "colorInherit": "MuiTypography-colorInherit-76",
-                                              "colorPrimary": "MuiTypography-colorPrimary-77",
-                                              "colorSecondary": "MuiTypography-colorSecondary-78",
-                                              "colorTextPrimary": "MuiTypography-colorTextPrimary-79",
-                                              "colorTextSecondary": "MuiTypography-colorTextSecondary-80",
-                                              "display1": "MuiTypography-display1-51",
-                                              "display2": "MuiTypography-display2-50",
-                                              "display3": "MuiTypography-display3-49",
-                                              "display4": "MuiTypography-display4-48",
-                                              "gutterBottom": "MuiTypography-gutterBottom-74",
-                                              "h1": "MuiTypography-h1-59",
-                                              "h2": "MuiTypography-h2-60",
-                                              "h3": "MuiTypography-h3-61",
-                                              "h4": "MuiTypography-h4-62",
-                                              "h5": "MuiTypography-h5-63",
-                                              "h6": "MuiTypography-h6-64",
-                                              "headline": "MuiTypography-headline-52",
-                                              "inline": "MuiTypography-inline-82",
-                                              "noWrap": "MuiTypography-noWrap-73",
-                                              "overline": "MuiTypography-overline-67",
-                                              "paragraph": "MuiTypography-paragraph-75",
-                                              "root": "MuiTypography-root-47",
-                                              "srOnly": "MuiTypography-srOnly-68",
-                                              "subheading": "MuiTypography-subheading-54",
-                                              "subtitle1": "MuiTypography-subtitle1-65",
-                                              "subtitle2": "MuiTypography-subtitle2-66",
-                                              "title": "MuiTypography-title-53",
+                                              "alignCenter": "MuiTypography-alignCenter-69",
+                                              "alignJustify": "MuiTypography-alignJustify-71",
+                                              "alignLeft": "MuiTypography-alignLeft-68",
+                                              "alignRight": "MuiTypography-alignRight-70",
+                                              "body1": "MuiTypography-body1-55",
+                                              "body2": "MuiTypography-body2-54",
+                                              "button": "MuiTypography-button-57",
+                                              "caption": "MuiTypography-caption-56",
+                                              "colorError": "MuiTypography-colorError-80",
+                                              "colorInherit": "MuiTypography-colorInherit-75",
+                                              "colorPrimary": "MuiTypography-colorPrimary-76",
+                                              "colorSecondary": "MuiTypography-colorSecondary-77",
+                                              "colorTextPrimary": "MuiTypography-colorTextPrimary-78",
+                                              "colorTextSecondary": "MuiTypography-colorTextSecondary-79",
+                                              "display1": "MuiTypography-display1-50",
+                                              "display2": "MuiTypography-display2-49",
+                                              "display3": "MuiTypography-display3-48",
+                                              "display4": "MuiTypography-display4-47",
+                                              "gutterBottom": "MuiTypography-gutterBottom-73",
+                                              "h1": "MuiTypography-h1-58",
+                                              "h2": "MuiTypography-h2-59",
+                                              "h3": "MuiTypography-h3-60",
+                                              "h4": "MuiTypography-h4-61",
+                                              "h5": "MuiTypography-h5-62",
+                                              "h6": "MuiTypography-h6-63",
+                                              "headline": "MuiTypography-headline-51",
+                                              "inline": "MuiTypography-inline-81",
+                                              "noWrap": "MuiTypography-noWrap-72",
+                                              "overline": "MuiTypography-overline-66",
+                                              "paragraph": "MuiTypography-paragraph-74",
+                                              "root": "MuiTypography-root-46",
+                                              "srOnly": "MuiTypography-srOnly-67",
+                                              "subheading": "MuiTypography-subheading-53",
+                                              "subtitle1": "MuiTypography-subtitle1-64",
+                                              "subtitle2": "MuiTypography-subtitle2-65",
+                                              "title": "MuiTypography-title-52",
                                             }
                                           }
                                           color="default"
@@ -5528,14 +5522,14 @@ exports[`<PaginationComponent /> should work 1`] = `
                                               "overrides": Object {
                                                 "MuiButtonBase": Object {
                                                   "focusVisible": Object {
-                                                    "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                                                    "boxShadow": "0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(71, 131, 235), 0 0 0 8px rgb(255, 255, 255)",
                                                     "outline": "2px solid transparent",
                                                   },
                                                 },
                                                 "MuiInputBase": Object {
                                                   "root": Object {
                                                     "&$focused": Object {
-                                                      "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                                                      "boxShadow": "0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(71, 131, 235), 0 0 0 8px rgb(255, 255, 255)",
                                                       "outline": "2px solid transparent",
                                                     },
                                                   },
@@ -5578,7 +5572,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                   "light": "#e57373",
                                                   "main": "#f44336",
                                                 },
-                                                "focusBorder": "rgba(25, 100, 230, 0.8)",
+                                                "focusBorder": "rgb(71, 131, 235)",
                                                 "getContrastText": [Function],
                                                 "grey": Object {
                                                   "100": "#f5f5f5",
@@ -5605,10 +5599,10 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                 },
                                                 "secondary": Object {
                                                   "contrastText": "#fff",
-                                                  "dark": "rgba(14, 16, 24, 0.9)",
+                                                  "dark": "rgb(30, 32, 39)",
                                                   "hover": "#1d39ad",
-                                                  "light": "rgba(67, 70, 79, 0.9)",
-                                                  "main": "rgba(20,24,35,0.9)",
+                                                  "light": "rgb(85, 88, 96)",
+                                                  "main": "rgb(43, 47, 57)",
                                                 },
                                                 "text": Object {
                                                   "disabled": "rgba(0, 0, 0, 0.38)",
@@ -5621,7 +5615,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                 "warning": "#AF0021",
                                                 "white": Object {
                                                   "contrastText": "#000",
-                                                  "dark": "#979797",
+                                                  "dark": "#949494",
                                                   "light": "#f2f2f2",
                                                   "main": "#FFFFFF",
                                                 },
@@ -5905,7 +5899,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                           variant="subtitle1"
                                         >
                                           <p
-                                            className="MuiTypography-root-47 MuiTypography-subtitle1-65  PageElement-pageItem-46 PageElement-pageElement-44"
+                                            className="MuiTypography-root-46 MuiTypography-subtitle1-64  PageElement-pageItem-45 PageElement-pageElement-43"
                                           >
                                             <WithStyles(Typography)
                                               variant="srOnly"
@@ -5914,42 +5908,42 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                 align="inherit"
                                                 classes={
                                                   Object {
-                                                    "alignCenter": "MuiTypography-alignCenter-70",
-                                                    "alignJustify": "MuiTypography-alignJustify-72",
-                                                    "alignLeft": "MuiTypography-alignLeft-69",
-                                                    "alignRight": "MuiTypography-alignRight-71",
-                                                    "body1": "MuiTypography-body1-56",
-                                                    "body2": "MuiTypography-body2-55",
-                                                    "button": "MuiTypography-button-58",
-                                                    "caption": "MuiTypography-caption-57",
-                                                    "colorError": "MuiTypography-colorError-81",
-                                                    "colorInherit": "MuiTypography-colorInherit-76",
-                                                    "colorPrimary": "MuiTypography-colorPrimary-77",
-                                                    "colorSecondary": "MuiTypography-colorSecondary-78",
-                                                    "colorTextPrimary": "MuiTypography-colorTextPrimary-79",
-                                                    "colorTextSecondary": "MuiTypography-colorTextSecondary-80",
-                                                    "display1": "MuiTypography-display1-51",
-                                                    "display2": "MuiTypography-display2-50",
-                                                    "display3": "MuiTypography-display3-49",
-                                                    "display4": "MuiTypography-display4-48",
-                                                    "gutterBottom": "MuiTypography-gutterBottom-74",
-                                                    "h1": "MuiTypography-h1-59",
-                                                    "h2": "MuiTypography-h2-60",
-                                                    "h3": "MuiTypography-h3-61",
-                                                    "h4": "MuiTypography-h4-62",
-                                                    "h5": "MuiTypography-h5-63",
-                                                    "h6": "MuiTypography-h6-64",
-                                                    "headline": "MuiTypography-headline-52",
-                                                    "inline": "MuiTypography-inline-82",
-                                                    "noWrap": "MuiTypography-noWrap-73",
-                                                    "overline": "MuiTypography-overline-67",
-                                                    "paragraph": "MuiTypography-paragraph-75",
-                                                    "root": "MuiTypography-root-47",
-                                                    "srOnly": "MuiTypography-srOnly-68",
-                                                    "subheading": "MuiTypography-subheading-54",
-                                                    "subtitle1": "MuiTypography-subtitle1-65",
-                                                    "subtitle2": "MuiTypography-subtitle2-66",
-                                                    "title": "MuiTypography-title-53",
+                                                    "alignCenter": "MuiTypography-alignCenter-69",
+                                                    "alignJustify": "MuiTypography-alignJustify-71",
+                                                    "alignLeft": "MuiTypography-alignLeft-68",
+                                                    "alignRight": "MuiTypography-alignRight-70",
+                                                    "body1": "MuiTypography-body1-55",
+                                                    "body2": "MuiTypography-body2-54",
+                                                    "button": "MuiTypography-button-57",
+                                                    "caption": "MuiTypography-caption-56",
+                                                    "colorError": "MuiTypography-colorError-80",
+                                                    "colorInherit": "MuiTypography-colorInherit-75",
+                                                    "colorPrimary": "MuiTypography-colorPrimary-76",
+                                                    "colorSecondary": "MuiTypography-colorSecondary-77",
+                                                    "colorTextPrimary": "MuiTypography-colorTextPrimary-78",
+                                                    "colorTextSecondary": "MuiTypography-colorTextSecondary-79",
+                                                    "display1": "MuiTypography-display1-50",
+                                                    "display2": "MuiTypography-display2-49",
+                                                    "display3": "MuiTypography-display3-48",
+                                                    "display4": "MuiTypography-display4-47",
+                                                    "gutterBottom": "MuiTypography-gutterBottom-73",
+                                                    "h1": "MuiTypography-h1-58",
+                                                    "h2": "MuiTypography-h2-59",
+                                                    "h3": "MuiTypography-h3-60",
+                                                    "h4": "MuiTypography-h4-61",
+                                                    "h5": "MuiTypography-h5-62",
+                                                    "h6": "MuiTypography-h6-63",
+                                                    "headline": "MuiTypography-headline-51",
+                                                    "inline": "MuiTypography-inline-81",
+                                                    "noWrap": "MuiTypography-noWrap-72",
+                                                    "overline": "MuiTypography-overline-66",
+                                                    "paragraph": "MuiTypography-paragraph-74",
+                                                    "root": "MuiTypography-root-46",
+                                                    "srOnly": "MuiTypography-srOnly-67",
+                                                    "subheading": "MuiTypography-subheading-53",
+                                                    "subtitle1": "MuiTypography-subtitle1-64",
+                                                    "subtitle2": "MuiTypography-subtitle2-65",
+                                                    "title": "MuiTypography-title-52",
                                                   }
                                                 }
                                                 color="default"
@@ -6022,14 +6016,14 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                     "overrides": Object {
                                                       "MuiButtonBase": Object {
                                                         "focusVisible": Object {
-                                                          "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                                                          "boxShadow": "0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(71, 131, 235), 0 0 0 8px rgb(255, 255, 255)",
                                                           "outline": "2px solid transparent",
                                                         },
                                                       },
                                                       "MuiInputBase": Object {
                                                         "root": Object {
                                                           "&$focused": Object {
-                                                            "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                                                            "boxShadow": "0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(71, 131, 235), 0 0 0 8px rgb(255, 255, 255)",
                                                             "outline": "2px solid transparent",
                                                           },
                                                         },
@@ -6072,7 +6066,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                         "light": "#e57373",
                                                         "main": "#f44336",
                                                       },
-                                                      "focusBorder": "rgba(25, 100, 230, 0.8)",
+                                                      "focusBorder": "rgb(71, 131, 235)",
                                                       "getContrastText": [Function],
                                                       "grey": Object {
                                                         "100": "#f5f5f5",
@@ -6099,10 +6093,10 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                       },
                                                       "secondary": Object {
                                                         "contrastText": "#fff",
-                                                        "dark": "rgba(14, 16, 24, 0.9)",
+                                                        "dark": "rgb(30, 32, 39)",
                                                         "hover": "#1d39ad",
-                                                        "light": "rgba(67, 70, 79, 0.9)",
-                                                        "main": "rgba(20,24,35,0.9)",
+                                                        "light": "rgb(85, 88, 96)",
+                                                        "main": "rgb(43, 47, 57)",
                                                       },
                                                       "text": Object {
                                                         "disabled": "rgba(0, 0, 0, 0.38)",
@@ -6115,7 +6109,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                       "warning": "#AF0021",
                                                       "white": Object {
                                                         "contrastText": "#000",
-                                                        "dark": "#979797",
+                                                        "dark": "#949494",
                                                         "light": "#f2f2f2",
                                                         "main": "#FFFFFF",
                                                       },
@@ -6399,7 +6393,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                                 variant="srOnly"
                                               >
                                                 <span
-                                                  className="MuiTypography-root-47 MuiTypography-srOnly-68"
+                                                  className="MuiTypography-root-46 MuiTypography-srOnly-67"
                                                 >
                                                   Avaa sivu 5
                                                 </span>

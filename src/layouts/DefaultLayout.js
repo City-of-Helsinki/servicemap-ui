@@ -11,6 +11,7 @@ import Settings from '../components/Settings';
 import ViewRouter from './components/ViewRouter';
 import DesktopComponent from '../components/DesktopComponent';
 import useMobileStatus from '../utils/isMobile';
+import FocusableSRLinks from '../components/FocusableSRLinks';
 
 const { smallScreenBreakpoint } = config;
 
@@ -75,7 +76,7 @@ const createContentStyles = (
 
 const DefaultLayout = (props) => {
   const {
-    currentPage, i18n, intl, location, settingsToggled,
+    classes, currentPage, i18n, intl, location, settingsToggled,
   } = props;
   const isMobile = useMobileStatus();
   const isSmallScreen = useMediaQuery(`(max-width:${smallScreenBreakpoint}px)`);
@@ -86,6 +87,13 @@ const DefaultLayout = (props) => {
   const styles = createContentStyles(
     isMobile, isSmallScreen, landscape, fullMobileMap, settingsToggled, currentPage,
   );
+  const srLinks = [
+    {
+      href: '#view-title',
+      text: <FormattedMessage id="general.skipToContent" />,
+    },
+  ];
+
   return (
     <>
       <div id="topArea" aria-hidden={!!settingsToggled}>
@@ -94,9 +102,7 @@ const DefaultLayout = (props) => {
         </h1>
         {/* Jump link to main content for screenreaders
         Must be first interactable element on page */}
-        <a href="#view-title" className="sr-only">
-          <FormattedMessage id="general.skipToContent" />
-        </a>
+        <FocusableSRLinks items={srLinks} />
         <TopBar
           settingsOpen={settingsToggled}
           smallScreen={isSmallScreen}
