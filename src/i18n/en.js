@@ -200,7 +200,7 @@ export default {
   'map.ariaLabel': 'Map. Currently map information is only accessible visually.',
   'map.transit.endStation': 'Terminus',
   'map.address.searching': 'Retreiving address...',
-  'map.address.notFound': 'Unknown address',
+  'map.address.notFound': 'The address could not be found',
   'map.address.info': 'Address information',
   'map.unit.cluster.popup.info': '{count} locations',
 
