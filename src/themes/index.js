@@ -41,6 +41,16 @@ const overrides = theme => ({
       marginBottom: 0,
     },
   },
+  MuiSvgIcon: {
+    root: {
+      fontSize: 24,
+    },
+  },
+  PrivateSwitchBase: {
+    root: {
+      padding: 12,
+    },
+  },
 });
 
 const breakpoints = {

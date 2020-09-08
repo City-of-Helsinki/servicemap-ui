@@ -24,6 +24,7 @@ export default theme => ({
     marginRight: 0,
     alignSelf: 'center',
     padding: theme.spacing(0.5),
+    minWidth: 0,
   },
   suggestIcon: {
     color: '#757575',
