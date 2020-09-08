@@ -4,10 +4,14 @@ export default theme => ({
     alignItems: 'center',
     display: 'block',
     height: '100%',
+    width: 230,
+    marginRight: theme.spacing.unitDouble,
   },
   button: {
     height: '100%',
-    marginRight: theme.spacing.unit,
+    width: '100%',
+    paddingLeft: theme.spacing.unit,
+    paddingRight: theme.spacing.unitDouble,
     '& p': {
       marginRight: theme.spacing.unitDouble,
       textTransform: 'none',
@@ -31,24 +35,26 @@ export default theme => ({
     },
   },
   iconRight: {
-    marginLeft: theme.spacing.unitDouble,
+    marginLeft: 'auto',
     fontSize: 24,
   },
   menuItem: {
-    // display: 'flex',
+    justifyContent: 'start',
     flex: '1 0 auto',
     alignItems: 'center',
     cursor: 'pointer',
     ...theme.typography.body2,
     // Icon element
     '& span': {
+      display: 'flex',
+      justifyContent: 'center',
       width: 32,
       margin: theme.spacing.unit,
       marginRight: theme.spacing.unitDouble,
     },
     // Text element
     '& p': {
-      marginRight: theme.spacing.unitDouble,
+      textAlign: 'left',
       textTransform: 'none',
       fontWeight: 'normal',
     },
@@ -58,14 +64,15 @@ export default theme => ({
   },
   menuPanel: {
     display: 'flex',
+    flexDirection: 'column',
     position: 'absolute',
-    width: '185px',
-    marginLeft: '5px',
-    borderWidth: 'thin',
-    borderColor: 'black',
-    borderStyle: 'none',
+    width: 'inherit',
+    padding: theme.spacing.unit,
+    boxSizing: 'border-box',
     backgroundColor: 'white',
     color: 'black',
     zIndex: 2,
+    border: `${theme.palette.detail.alpha} solid 0.5px`,
+    borderRadius: 4,
   },
 });
