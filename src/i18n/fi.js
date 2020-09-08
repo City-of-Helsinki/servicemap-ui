@@ -404,6 +404,9 @@ export default {
   'settings.aria.opened': 'Asetukset avattu',
   'settings.aria.saved': 'Asetukset on tallennettu',
 
+  // Tools
+  'tool.download': 'Lataa tiedot (uusi välilehti)',
+
   'info.title': 'Tietoa palvelusta ja saavutettavuusseloste',
   'info.statement': 'Saavutettavuusseloste',
 

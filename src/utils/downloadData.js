@@ -2,9 +2,10 @@ import { useSelector } from 'react-redux';
 import { getOrderedData } from '../redux/selectors/results';
 import { getServiceUnits } from '../redux/selectors/service';
 
-// Returns correct set of data for download data tool
-const useDownloadData = (page) => {
+// Cutom hook that returns correct set of data for download data tool
+const useDownloadData = () => {
   let selector;
+  const page = useSelector(state => state.user.page);
   switch (page) {
     case 'search':
       selector = getOrderedData;
