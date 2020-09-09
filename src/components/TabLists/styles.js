@@ -28,9 +28,9 @@ export default theme => ({
     },
   },
   tabFocus: {
-    outline: `4px solid ${theme.palette.primary.highContrast}`,
+    outline: `4px solid ${theme.palette.primary.highContrast} !important`,
     outlineOffset: -1,
-    boxShadow: `inset 0 0 0 4px ${theme.palette.focusBorder.main}`,
+    boxShadow: `inset 0 0 0 4px ${theme.palette.focusBorder.main} !important`,
     backgroundColor: 'rgba(0, 0, 0, 0.08)',
   },
   tabLabelContainer: {

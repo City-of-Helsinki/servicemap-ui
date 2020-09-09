@@ -47,7 +47,7 @@ const styles = theme => ({
     color: '#fff',
   },
   topButtonFocused: {
-    boxShadow: '0 0 0 2px #fff',
+    boxShadow: '0 0 0 2px #fff !important',
   },
   bold: {
     fontWeight: 'bold',
