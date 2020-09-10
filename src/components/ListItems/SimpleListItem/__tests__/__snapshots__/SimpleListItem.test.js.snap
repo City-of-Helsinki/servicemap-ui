@@ -31,7 +31,7 @@ exports[`<SimpleListItem /> should work 1`] = `
     <WithStyles(ListItem)
       aria-label=" Title text"
       button={false}
-      className="null "
+      className={null}
       classes={
         Object {
           "root": "SimpleListItem-listItem-1",
@@ -50,7 +50,7 @@ exports[`<SimpleListItem /> should work 1`] = `
         alignItems="center"
         aria-label=" Title text"
         button={false}
-        className="null "
+        className={null}
         classes={
           Object {
             "alignItemsFlexStart": "MuiListItem-alignItemsFlexStart-13",
@@ -83,7 +83,8 @@ exports[`<SimpleListItem /> should work 1`] = `
           dense={false}
         >
           <li
-            className="MuiListItem-root-8 SimpleListItem-listItem-1 MuiListItem-default-11 MuiListItem-gutters-16 null "
+            aria-label=" Title text"
+            className="MuiListItem-root-8 SimpleListItem-listItem-1 MuiListItem-default-11 MuiListItem-gutters-16"
             disabled={false}
             onClick={null}
             onKeyDown={null}
@@ -1525,10 +1526,8 @@ exports[`<SimpleListItem /> should work 1`] = `
                             variant="srOnly"
                           >
                             <span
+                              aria-hidden={true}
                               className="MuiTypography-root-26 MuiTypography-srOnly-47"
-                            >
-                               Title text
-                            </span>
                             />
                           </Typography>
                         </WithStyles(Typography)>
