@@ -89,9 +89,6 @@ class Settings extends React.Component {
     let changed = false;
     let settingsByType = currentSettings;
 
-    if (!('cities' in currentSettings)) {
-      currentSettings.cities = {};
-    }
     if (settings.toggled === 'mapSettings') {
       settingsByType = {
         mapType: currentSettings.mapType,
@@ -479,6 +476,8 @@ class Settings extends React.Component {
   renderCitySettings = (close) => {
     const { currentSettings } = this.state;
     const { classes, intl } = this.props;
+
+    if (!currentSettings.cities) return null;
 
     const citySettingsList = config.cities;
 

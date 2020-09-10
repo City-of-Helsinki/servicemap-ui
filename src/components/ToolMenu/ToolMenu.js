@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Build, Code } from '@material-ui/icons';
 import { useLocation } from 'react-router-dom';
 import URI from 'urijs';
+import {
+  Build, Code, GetApp,
+} from '@material-ui/icons';
 import DropDownMenuButton from '../DropDownMenuButton';
+import useDownloadData from '../../utils/downloadData';
 
 const ToolMenu = ({
   intl, mapUtility, navigator,
@@ -33,8 +36,10 @@ const ToolMenu = ({
 
     navigator.push(newLocation);
   };
+  const downloadToolData = useDownloadData();
 
   const menuItems = [
+    // Example shape
     {
       key: 'embedder.title',
       text: intl.formatMessage({ id: 'embedder.title' }),
@@ -43,6 +48,18 @@ const ToolMenu = ({
         openEmbedder();
       },
       srText: intl.formatMessage({ id: 'general.open' }),
+    },
+    {
+      key: 'downloadTool',
+      text: intl.formatMessage({ id: 'tool.download' }),
+      icon: <GetApp />,
+      onClick: () => {
+        const content = JSON.stringify(downloadToolData, null, 2);
+        const tab = window.open();
+        tab.document.open();
+        tab.document.write(`<html><body><pre style="white-space: pre;">${content}</pre></body></html>`);
+        tab.document.close();
+      },
     },
   ];
   const toolMenuText = intl.formatMessage({ id: 'general.tools' });

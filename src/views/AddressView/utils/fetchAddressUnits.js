@@ -6,6 +6,7 @@ const fetchAddressUnits = async (lnglat) => {
     lon: `${lnglat[0]}`,
     distance: 500,
     only: 'name,location,accessibility_shortcoming_count,',
+    geometry: false,
     page: 1,
     page_size: 500,
   };

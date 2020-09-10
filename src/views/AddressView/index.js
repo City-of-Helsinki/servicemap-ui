@@ -15,7 +15,7 @@ import styles from './styles';
 import AddressView from './AddressView';
 import { getAddressNavigatorParamsConnector } from '../../utils/address';
 import { formatDistanceObject } from '../../utils';
-import { calculateDistance } from '../../redux/selectors/unit';
+import { calculateDistance, getCurrentlyUsedPosition } from '../../redux/selectors/unit';
 
 const mapStateToProps = (state, props) => {
   const {
@@ -27,7 +27,8 @@ const mapStateToProps = (state, props) => {
   const map = mapRef && mapRef.leafletElement;
   const getLocaleText = textObject => getLocaleString(state, textObject);
   const getAddressNavigatorParams = getAddressNavigatorParamsConnector(getLocaleText, user.locale);
-  const getDistance = unit => formatDistanceObject(intl, calculateDistance(state)(unit));
+  const currentPosition = getCurrentlyUsedPosition(state);
+  const getDistance = unit => formatDistanceObject(intl, calculateDistance(unit, currentPosition));
   const { units, adminDistricts } = address;
   return {
     addressData: address.addressData,

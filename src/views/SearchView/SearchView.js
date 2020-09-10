@@ -219,7 +219,7 @@ class SearchView extends React.Component {
     if (getSearchParam(location, 'bbox')) {
       return;
     }
-    if (map && map._layersMaxZoom) {
+    if (map && map.options.maxZoom) {
       fitUnitsToMap(units, map);
     }
   }
