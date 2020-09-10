@@ -9,10 +9,10 @@ import { getAddressNavigatorParamsConnector } from '../../utils/address';
 
 // Listen to redux state
 const mapStateToProps = (state) => {
-  const map = state.mapRef.leafletElement;
   const {
-    units, user, settings, serviceTree, redirectService,
+    mapRef, units, user, settings, serviceTree, redirectService,
   } = state;
+  const map = mapRef && mapRef.leafletElement;
   const {
     isFetching, count, max, previousSearch,
   } = units;

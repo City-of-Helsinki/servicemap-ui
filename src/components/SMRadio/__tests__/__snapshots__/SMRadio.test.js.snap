@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SMRadio /> should work 1`] = `
+<WithStyles(FormControl)
+  component="fieldset"
+>
+  <RadioGroup
+    aria-label="Aria label text"
+    name="service"
+    onChange={[Function]}
+    value="none"
+  >
+    <WithStyles(WithFormControlContext(FormControlLabel))
+      control={<WithStyles(Radio) />}
+      disabled={false}
+      key="none"
+      label="label none"
+      value="none"
+    />
+    <WithStyles(WithFormControlContext(FormControlLabel))
+      control={<WithStyles(Radio) />}
+      disabled={false}
+      key="common"
+      label="label common"
+      value="common"
+    />
+    <WithStyles(WithFormControlContext(FormControlLabel))
+      control={<WithStyles(Radio) />}
+      disabled={false}
+      key="all"
+      label="label all"
+      value="all"
+    />
+  </RadioGroup>
+</WithStyles(FormControl)>
+`;

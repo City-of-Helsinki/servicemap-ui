@@ -20,6 +20,7 @@ import DefaultLayout from './layouts';
 import EmbedLayout from './layouts/EmbedLayout';
 import Navigator from './components/Navigator';
 import DataFetcher from './components/DataFetchers/DataFetcher';
+import EmbedderView from './views/EmbedderView';
 
 import '@formatjs/intl-pluralrules/polyfill';
 import '@formatjs/intl-pluralrules/dist/locale-data/en';
@@ -60,10 +61,12 @@ class App extends React.Component {
   render() {
     const { i18n } = this.state;
     const i18nData = i18n.data();
+
     return (
       <IntlProvider {...i18nData}>
         <div className="App">
           <Switch>
+            <Route path="*/embedder" component={EmbedderView} />
             <Route path="*/embed" component={EmbedLayout} />
             <Route render={() => <DefaultLayout i18n={i18n} />} />
           </Switch>

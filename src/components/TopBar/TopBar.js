@@ -171,14 +171,13 @@ class TopBar extends React.Component {
 
   renderDrawerMenu = (pageType) => {
     const { drawerOpen } = this.state;
-    const { toggleSettings, settingsOpen } = this.props;
+    const { toggleSettings } = this.props;
     return (
       <DrawerMenu
         isOpen={drawerOpen}
         pageType={pageType}
         toggleDrawerMenu={() => this.toggleDrawerMenu()}
         toggleSettings={toggleSettings}
-        settingsOpen={settingsOpen}
         handleNavigation={this.handleNavigation}
       />
     );

@@ -6,7 +6,8 @@ import { setHighlightedDistrict } from '../../redux/actions/district';
 import { getHighlightedDistrict } from '../../redux/selectors/district';
 
 const mapStateToProps = (state) => {
-  const map = state.mapRef.leafletElement;
+  const { mapRef } = state;
+  const map = mapRef && mapRef.leafletElement;
   const highlightedDistrict = getHighlightedDistrict(state);
   return {
     highlightedDistrict,

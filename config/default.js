@@ -143,6 +143,11 @@ export default {
   "supportedLanguages": [
     "fi", "sv", "en"
   ],
+  "SUBDOMAINS": {
+    fi: 'palvelukartta',
+    sv: 'servicekarta',
+    en: 'servicemap',
+  },
   "old_map_en": settings.OLD_MAP_LINK_EN,
   "old_map_fi": settings.OLD_MAP_LINK_FI,
   "old_map_sv": settings.OLD_MAP_LINK_SV,

@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 import config from '../../../config';
+import { isEmbed } from '../../utils/path';
 import { filterEmptyServices, filterCities } from '../../utils/filters';
 import isClient from '../../utils';
 import orderUnits from '../../utils/orderUnits';
@@ -21,12 +22,20 @@ const getFilteredData = (data, options, settings) => {
     cities.push(...settings.cities[city] ? [city] : []);
   });
 
+  let embed = false;
+  if (global.window) {
+    embed = isEmbed({ url: window.location });
+  }
+
   let filteredData = data
     .filter(filterEmptyServices(cities));
-  if (options && options.municipality) {
-    filteredData = filteredData.filter(filterCities(options.municipality.split(',')));
-  } else {
-    filteredData = filteredData.filter(filterCities(cities));
+
+  if (!embed) {
+    if (options && options.municipality) {
+      filteredData = filteredData.filter(filterCities(options.municipality.split(',')));
+    } else {
+      filteredData = filteredData.filter(filterCities(cities));
+    }
   }
   return filteredData;
 };
