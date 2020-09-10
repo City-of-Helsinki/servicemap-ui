@@ -43,11 +43,11 @@ class DropDownMenuButton extends React.Component {
               <ButtonBase
                 key={v.key}
                 className={classes.menuItem}
-                role="link"
                 onClick={v.onClick}
                 onKeyPress={keyboardHandler(v.onClick, ['space', 'enter'])}
                 component="span"
                 tabIndex="0"
+                aria-hidden={v.ariaHidden}
               >
                 <span>{v.icon}</span>
                 <Typography component="p" variant="body2">{v.text}</Typography>
