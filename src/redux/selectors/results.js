@@ -1,70 +1,66 @@
 import { createSelector } from 'reselect';
+import config from '../../../config';
 import { filterEmptyServices, filterCities } from '../../utils/filters';
-import getOrderedData from './ordering';
+import isClient from '../../utils';
+import orderUnits from '../../utils/orderUnits';
+import getSortingParameters from './ordering';
 
 const isFetching = state => state.units.isFetching;
 const units = state => state.units.data;
-const cities = state => [
-  ...state.settings.helsinki ? ['helsinki'] : [],
-  ...state.settings.vantaa ? ['vantaa'] : [],
-  ...state.settings.espoo ? ['espoo'] : [],
-  ...state.settings.kauniainen ? ['kauniainen'] : [],
-];
+const settings = state => state.settings;
 
 /**
  * Returns given data after filtering it
  * @param {*} data - search data to be filtered
  * @param {*} options - options for filtering - municipality: to override city setting filtering
+ * @param {*} settings - user settings, used in filtering
  */
-const getFilteredData = (data, options = {}) => createSelector(
-  [cities],
-  (cities) => {
-    let filteredData = data
-      .filter(filterEmptyServices(cities));
-    if (options.municipality) {
-      filteredData = filteredData.filter(filterCities(options.municipality.split(',')));
-    } else {
-      filteredData = filteredData.filter(filterCities(cities));
+const getFilteredData = (data, options, settings) => {
+  const cities = [];
+  config.cities.forEach((city) => {
+    cities.push(...settings.cities[city] ? [city] : []);
+  });
+
+  let filteredData = data
+    .filter(filterEmptyServices(cities));
+  if (options && options.municipality) {
+    filteredData = filteredData.filter(filterCities(options.municipality.split(',')));
+  } else {
+    filteredData = filteredData.filter(filterCities(cities));
+  }
+  return filteredData;
+};
+
+/**
+ * Gets unordered processed result data for rendering search results
+ */
+export const getProcessedData = createSelector(
+  [units, isFetching, settings],
+  (data, isFetching, settings) => {
+    // Prevent processing data if fetch is in process
+    if (isFetching) return [];
+
+    const options = {};
+    const overrideMunicipality = isClient() && new URLSearchParams().get('municipality');
+    if (overrideMunicipality) {
+      options.municipality = overrideMunicipality;
     }
+
+    const filteredData = getFilteredData(data, options, settings);
     return filteredData;
   },
 );
 
 /**
- * Gets processed data for rendering search results
- * @param {*} state - redux state object
- * @param {*} options - options for filtering
+ * Gets ordered processed result data for rendering search results
  */
-export const getProcessedData = (state, options = {}) => createSelector(
-  [units, isFetching],
-  (data, isFetching) => {
-    // Prevent processing data if fetch is in process
-    if (isFetching) {
-      return [];
+export const getOrderedData = createSelector(
+  [getProcessedData, getSortingParameters],
+  (unitData, sortingParameters) => {
+    if (!unitData) {
+      throw new Error('Invalid data provided to getOrderedData selector');
     }
-
-    const filteredData = getFilteredData(data, options)(state);
-    const orderedData = getOrderedData(filteredData)(state);
-
-    return orderedData;
+    const orderedUnits = orderUnits(unitData, sortingParameters);
+    return orderedUnits;
   },
-)(state);
-
-/**
- * Get processed data for map rendering
- * @param {*} state - redux state object
- * @param {*} options - options for filtering
- */
-export const getProcessedMapData = (state, options = {}) => createSelector(
-  [units, isFetching],
-  (data, isFetching) => {
-    // Prevent processing data if fetch is in process
-    if (isFetching) {
-      return [];
-    }
-
-    const filteredData = getFilteredData(data, options)(state);
-
-    return filteredData;
-  },
-)(state);
+);

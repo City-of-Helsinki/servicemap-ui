@@ -90,3 +90,41 @@ export const unitRedirect = (req, res, next) => {
   next();
   return;
 }
+
+/**
+ * Parse initial map position from environment variable
+ * or use default position (Helsinki)
+ * @param {*} req - express request
+ * @param {*} Sentry - Sentry object for sending error logs to sentry
+ */
+export const parseInitialMapPositionFromHostname = (req, Sentry) => {
+  let initialMapPosition = process.env.INITIAL_MAP_POSITION || '60.170377597530016,24.941309323934886';
+  try {
+    // Expecting DOMAIN_MAP_POSITIONS to be a string shaped like
+    // hostname1,lat1,lon1:hostname2,lat2,lon2
+    const domainMapPos = process.env.DOMAIN_MAP_POSITIONS;
+    if (domainMapPos && req) {
+      const host = req.hostname;
+      const domainArray = domainMapPos.split(':');
+      if (host && domainArray.length) {
+        domainArray.forEach(h => {
+          const values = h.split(',');
+          // Change initialMapPosition if request host is same as given host
+          if (
+            Array.isArray(values)
+            && values.length === 3
+            && host === values[0]
+          ) {
+            initialMapPosition = `${values[1]},${values[2]}`;
+          }
+        });
+      }
+    }
+  } catch (e) {
+    if (Sentry && Sentry.captureException) {
+      Sentry.captureException(e);
+    }
+    console.log('Error while handling parseInitialMapPositionFromHostname. Returning default value:', initialMapPosition);
+  }
+  return initialMapPosition;
+}

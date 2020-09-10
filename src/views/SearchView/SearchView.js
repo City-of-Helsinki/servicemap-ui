@@ -215,7 +215,7 @@ class SearchView extends React.Component {
     if (getSearchParam(location, 'bbox')) {
       return;
     }
-    if (map && map._layersMaxZoom) {
+    if (map && map.options.maxZoom) {
       fitUnitsToMap(units, map);
     }
   }
@@ -329,7 +329,8 @@ class SearchView extends React.Component {
 
   renderSearchInfo = () => {
     const { units, classes, isFetching } = this.props;
-    const unitCount = units && units.length;
+    const unitList = units && units.filter(i => i.object_type === 'unit');
+    const unitCount = unitList && unitList.length;
     const className = `SearchInfo ${classes.searchInfo}`;
 
     return (
@@ -395,6 +396,7 @@ class SearchView extends React.Component {
     } = this.props;
 
     const showResults = !isFetching && units && units.length > 0;
+    const showExpandedSearch = this.isInputSearch();
 
     if (!showResults) {
       return null;
@@ -410,7 +412,7 @@ class SearchView extends React.Component {
           count: groupedData
             .units.length,
         })}`,
-        beforePagination: this.renderExpandedSearchButton(),
+        beforePagination: showExpandedSearch ? this.renderExpandedSearchButton() : null,
         component: null,
         data: groupedData.units,
         itemsPerPage: 10,

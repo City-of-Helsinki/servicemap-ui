@@ -60,8 +60,8 @@ export default {
   'area.list.maternity_clinic_district': 'Neuvola-alue',
   'area.list.lower_comprehensive_school_district_fi': 'Suomenkielinen ala-astealue',
   'area.list.lower_comprehensive_school_district_sv': 'Ruotsinkielinen ala-astealue',
-  'area.list.upper_comprehensive_school_district_fi': 'Suomenkielinen ylä-astealue',
-  'area.list.upper_comprehensive_school_district_sv': 'Ruotsinkielinen ylä-astealue',
+  'area.list.upper_comprehensive_school_district_fi': 'Suomenkielinen yläastealue',
+  'area.list.upper_comprehensive_school_district_sv': 'Ruotsinkielinen yläastealue',
   'area.list.preschool_education_fi': 'Suomenkielinen esiopetusalue',
   'area.list.preschool_education_sv': 'Ruotsinkielinen esiopetusalue',
 
@@ -149,6 +149,9 @@ export default {
   'general.pageTitles.info': 'Tietoa palvelusta',
   'general.pageTitles.feedback': 'Palautenäkymä',
   'general.pageTitles.area': 'Aluenäkymä.',
+  // Readspeaker
+  'general.readspeaker.buttonText': 'Kuuntele',
+  'general.readspeaker.title': 'Kuuntele ReadSpeaker webReaderilla',
 
   // General - Pagination
   'general.pagination.previous': 'Aiempi sivu',
@@ -161,12 +164,13 @@ export default {
   'general.return.viewTitle': 'Siirry pääsisällön alkuun',
   'general.skipToContent': 'Siirry pääsisältöön',
   'general.new.tab': 'Aukeaa uuteen välilehteen',
-  'general.time.short': 'klo',
   'general.save': 'Tallenna',
   'general.save.changes': 'Tallenna asetukset',
   'general.save.changes.done': 'Muutokset tallennettu!',
   'general.save.confirmation': 'Haluatko tallentaa muutokset?',
   'general.search': 'Hae',
+  'general.time.short': 'klo',
+  'general.tools': 'Työkalut',
   'general.distance.meters': 'Metrin päässä',
   'general.distance.kilometers': 'Kilometrin päässä',
 
@@ -196,6 +200,7 @@ export default {
   'map.ariaLabel': 'Karttanäkymä. Kartan tietoja voi tarkastella tällä hetkellä vain näönvaraisesti.',
   'map.transit.endStation': 'Päätepysäkki',
   'map.address.searching': 'Haetaan osoitetta...',
+  'map.address.notFound': 'Osoitetta ei löytynyt',
   'map.address.info': 'Osoitteen tiedot',
   'map.unit.cluster.popup.info': '{count} toimipistettä',
 
@@ -399,7 +404,10 @@ export default {
   'settings.aria.opened': 'Asetukset avattu',
   'settings.aria.saved': 'Asetukset on tallennettu',
 
-  'info.title': 'Tietoa palvelusta',
+  // Tools
+  'tool.download': 'Lataa tiedot (uusi välilehti)',
+
+  'info.title': 'Tietoa palvelusta ja saavutettavuusseloste',
   'info.statement': 'Saavutettavuusseloste',
 
   'alert.close': 'Sulje ilmoitus',

@@ -8,7 +8,7 @@ import PaginationComponent from '../index';
 
 // Mock props for intl provider
 const intlMock = {
-  locale: 'fi',
+  locale: 'en',
   messages: {
     'general.pagination.previous': 'Aiempi sivu',
     'general.pagination.next': 'Seuraava sivu',
