@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import {
-  withStyles, Tooltip as MUITooltip, ButtonBase, Typography,
+  withStyles, Tooltip as MUITooltip, ButtonBase,
 } from '@material-ui/core';
 import { MyLocation, LocationDisabled } from '@material-ui/icons';
 import { mapOptions } from './config/mapConfig';
@@ -58,6 +58,7 @@ const MapView = (props) => {
     findUserLocation,
     userLocation,
     locale,
+    measuringMode,
   } = props;
 
 
@@ -70,7 +71,6 @@ const MapView = (props) => {
   const [prevMap, setPrevMap] = useState(null);
   const [markerCluster, setMarkerCluster] = useState(null);
   const [distancePosition, setDistancePosition] = useState(null);
-  const [measuring, setMeasuring] = useState(false);
 
   const embeded = isEmbed(match);
 
@@ -186,16 +186,6 @@ const MapView = (props) => {
       });
   };
 
-  const toggleMeasureTool = () => {
-    setMapClickPoint(null);
-    if (mapRef.current && !measuring) {
-      setMeasuring(true);
-    } else if (measuring) {
-      setMeasuring(false);
-    }
-  };
-
-
   useEffect(() => { // On map mount
     initializeMap();
     if (!embeded) {
@@ -267,6 +257,11 @@ const MapView = (props) => {
     highlightedDistrict,
     currentPage]);
 
+
+  useEffect(() => {
+    setMapClickPoint(null);
+  }, [measuringMode]);
+
   // Render
 
   const renderTopBar = () => {
@@ -319,7 +314,7 @@ const MapView = (props) => {
         {renderTopBar()}
         {renderEmbedOverlay()}
         <Map
-          className={classes.map}
+          className={`${classes.map} ${measuringMode ? classes.measuringCursor : ''}`}
           key={mapObject.options.name}
           ref={mapRef}
           zoomControl={false}
@@ -352,7 +347,8 @@ const MapView = (props) => {
             />
           )}
 
-          {!embeded && !measuring && mapClickPoint && ( // Draw address popoup on mapclick to map
+          {!embeded && !measuringMode && mapClickPoint && (
+            // Draw address popoup on mapclick to map
             <AddressPopup
               mapClickPoint={mapClickPoint}
               getAddressNavigatorParams={getAddressNavigatorParams}
@@ -377,7 +373,7 @@ const MapView = (props) => {
             />
           )}
 
-          {measuring && (
+          {measuringMode && (
             <DistanceMeasure mapClickPoint={mapClickPoint} />
           )}
 
@@ -398,17 +394,6 @@ const MapView = (props) => {
                       ? <MyLocation className={classes.showLocationIcon} />
                       : <LocationDisabled className={classes.showLocationIcon} />
                     }
-                  </ButtonBase>
-                </Control>
-                {/* Measure button placeholder TODO: add button to tool menu */}
-                <Control position="bottomright">
-                  <ButtonBase
-                    onClick={() => toggleMeasureTool()}
-                    focusVisibleClassName={classes.locationButtonFocus}
-                  >
-                    <Typography>
-                      {!measuring ? 'Aloita mittaus' : 'Lopeta mittaus'}
-                    </Typography>
                   </ButtonBase>
                 </Control>
               </>
@@ -458,6 +443,7 @@ MapView.propTypes = {
   unitsLoading: PropTypes.bool,
   userLocation: PropTypes.objectOf(PropTypes.any),
   locale: PropTypes.string.isRequired,
+  measuringMode: PropTypes.bool.isRequired,
 };
 
 MapView.defaultProps = {
