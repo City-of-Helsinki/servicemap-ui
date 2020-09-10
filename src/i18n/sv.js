@@ -404,6 +404,9 @@ export default {
   'settings.aria.opened': 'Inställningarna har öppnats',
   'settings.aria.saved': 'Inställningarna har sparats',
 
+  // Tools
+  'tool.download': 'Exportera (ny flik)',
+
   'info.title': 'Om tjänsten och tillgänglighetsredogörelsen',
   'info.statement': 'Tillgänglighetsredogörelsen',
 

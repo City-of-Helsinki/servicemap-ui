@@ -7,7 +7,7 @@ import { MyLocation, LocationDisabled } from '@material-ui/icons';
 import { mapOptions } from './config/mapConfig';
 import CreateMap from './utils/createMap';
 import UnitMarkers from './components/UnitMarkers';
-import { focusToPosition } from './utils/mapActions';
+import { focusToPosition, fitUnitsToMap } from './utils/mapActions';
 import styles from './styles';
 import Districts from './components/Districts';
 import TransitStops from './components/TransitStops';
@@ -70,7 +70,10 @@ const MapView = (props) => {
     let mapUnits = [];
     let unitGeometry = null;
 
-    if (currentPage === 'home' || currentPage === 'search' || currentPage === 'division') {
+    if (currentPage === 'home' && embeded) {
+      mapUnits = unitList;
+    }
+    if (currentPage === 'search' || currentPage === 'division') {
       mapUnits = unitList;
     } else if (currentPage === 'address') {
       switch (addressToRender) {
@@ -96,6 +99,8 @@ const MapView = (props) => {
         unitGeometry = coordinates;
       }
     }
+
+    if (mapRef.current) fitUnitsToMap(mapUnits, mapRef.current.leafletElement);
 
     const data = { units: mapUnits, unitGeometry };
 
@@ -282,7 +287,13 @@ const MapView = (props) => {
     if (map) {
       renderUnitMarkers(leaflet, map, data, classes, markerCluster, embeded);
     }
-  }, [unitList, highlightedUnit, markerCluster, addressUnits, serviceUnits, highlightedDistrict]);
+  }, [unitList,
+    highlightedUnit,
+    markerCluster,
+    addressUnits,
+    serviceUnits,
+    highlightedDistrict,
+    currentPage]);
 
   // Render
 

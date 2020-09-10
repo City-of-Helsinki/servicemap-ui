@@ -60,7 +60,9 @@ class DropDownMenuButton extends React.Component {
   }
 
   render() {
-    const { buttonIcon, buttonText, classes, panelID } = this.props;
+    const {
+      buttonIcon, buttonText, classes, panelID,
+    } = this.props;
     const { open } = this.state;
     const arrowIcon = open
       ? <ArrowDropUp className={classes.iconRight} />
@@ -72,7 +74,7 @@ class DropDownMenuButton extends React.Component {
           buttonRef={(node) => {
             this.anchorEl = node;
           }}
-          aria-controls={panelID}
+          aria-controls={open ? panelID : undefined}
           aria-haspopup="true"
           aria-expanded={open}
           onClick={this.handleToggle}
