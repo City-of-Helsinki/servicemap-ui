@@ -54,7 +54,6 @@ const MapView = (props) => {
     renderUnitMarkers,
     setMapRef,
     navigator,
-    match,
     findUserLocation,
     userLocation,
     locale,
@@ -72,7 +71,7 @@ const MapView = (props) => {
   const [markerCluster, setMarkerCluster] = useState(null);
   const [distancePosition, setDistancePosition] = useState(null);
 
-  const embeded = isEmbed(match);
+  const embeded = isEmbed({ url: location.pathname });
 
 
   const getMapUnits = () => {
@@ -133,6 +132,10 @@ const MapView = (props) => {
     setMapRef(mapRef.current);
   };
 
+  const clearMapReference = () => {
+    setMapRef(null);
+  };
+
   const initializeMap = () => {
     if (mapRef.current) {
       // If changing map type, save current map viewport values before changing map
@@ -142,8 +145,9 @@ const MapView = (props) => {
     }
     // Search param map value
     const spMap = parseSearchParams(location.search).map || false;
+    const mapType = spMap || (embeded ? 'servicemap' : settings.mapType);
 
-    const newMap = CreateMap(spMap || settings.mapType, locale);
+    const newMap = CreateMap(mapType, locale);
     setMapObject(newMap);
   };
 
@@ -191,6 +195,11 @@ const MapView = (props) => {
     if (!embeded) {
       findUserLocation();
     }
+
+    return () => {
+      // Clear map reference on unmount
+      clearMapReference();
+    };
   }, []);
 
   useEffect(() => { // Set map ref to redux once map is rendered
@@ -240,13 +249,14 @@ const MapView = (props) => {
     }
     const data = getMapUnits();
     const map = mapRef && mapRef.current ? mapRef.current.leafletElement : null;
+    const showUnits = new URLSearchParams(location.search).get('units') !== 'none';
     // Clear layers if no units currently set for data
     // caused by while fetching
     if (!data.units.length || (currentPage === 'address' && highlightedDistrict)) {
       markerCluster.clearLayers();
       return;
     }
-    if (map) {
+    if (map && showUnits) {
       renderUnitMarkers(global.L, map, data, classes, markerCluster, embeded);
     }
   }, [unitList,
@@ -338,15 +348,12 @@ const MapView = (props) => {
 
           <Districts mapOptions={mapOptions} map={mapRef.current} />
 
-          {!embeded && (
-            <TransitStops
-              getLocaleText={getLocaleText}
-              map={mapRef.current}
-              mapObject={mapObject}
-              isMobile={isMobile}
-            />
-          )}
-
+          <TransitStops
+            getLocaleText={getLocaleText}
+            map={mapRef.current}
+            mapObject={mapObject}
+            isMobile={isMobile}
+          />
           {!embeded && !measuringMode && mapClickPoint && (
             // Draw address popoup on mapclick to map
             <AddressPopup
@@ -431,7 +438,6 @@ MapView.propTypes = {
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   isMobile: PropTypes.bool,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
-  match: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   serviceUnits: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
   setAddressLocation: PropTypes.func.isRequired,

@@ -21,9 +21,11 @@ const mapStateToProps = (state, props) => {
   const {
     intl,
   } = props;
-  const map = state.mapRef.leafletElement;
+  const {
+    address, mapRef, user, navigator,
+  } = state;
+  const map = mapRef && mapRef.leafletElement;
   const getLocaleText = textObject => getLocaleString(state, textObject);
-  const { address, user, navigator } = state;
   const getAddressNavigatorParams = getAddressNavigatorParamsConnector(getLocaleText, user.locale);
   const currentPosition = getCurrentlyUsedPosition(state);
   const getDistance = unit => formatDistanceObject(intl, calculateDistance(unit, currentPosition));
