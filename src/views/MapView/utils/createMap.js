@@ -1,5 +1,6 @@
 /* eslint-disable global-require */
 import { getMapOptions } from '../config/mapConfig';
+import config from '../../../../config';
 
 let L;
 // Check if we are on client side because leafelt map works only on client side
@@ -9,8 +10,12 @@ if (typeof window !== 'undefined') {
 }
 
 const CreateMap = (mapType, locale) => {
+  let type = mapType;
+  if (!config.maps.includes(type)) {
+    type = 'servicemap';
+  }
   // const options = mapTypes[mapType];
-  const options = getMapOptions(mapType, locale);
+  const options = getMapOptions(type, locale);
   const { layer } = options;
 
   if (!layer) {

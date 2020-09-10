@@ -161,12 +161,13 @@ export default {
   'general.return.viewTitle': 'Gå till början av huvudinnehållet',
   'general.skipToContent': 'Gå till huvudinnehållet',
   'general.new.tab': 'Öppnas i en ny flik',
-  'general.time.short': 'kl.',
   'general.save': 'Spara',
   'general.save.changes': 'Spara inställningar',
   'general.save.changes.done': 'Ändringarna har sparats!',
   'general.save.confirmation': 'Vill du spara ändringarna?',
   'general.search': 'Sök',
+  'general.time.short': 'kl.',
+  'general.tools': 'Verktyg',
   'general.distance.meters': 'Meters avstånd',
   'general.distance.kilometers': 'Kilometers avstånd',
   // Readspeaker
@@ -199,7 +200,7 @@ export default {
   'map.ariaLabel': 'Kartvy. Kartans uppgifter kan i nuläget granskas endast visuellt.',
   'map.transit.endStation': 'Ändhållplats',
   'map.address.searching': 'Söker adress...',
-  'map.address.notFound': 'Okänd adress',
+  'map.address.notFound': 'Adressen hittades ej',
   'map.address.info': 'Adressens uppgifter',
   'map.unit.cluster.popup.info': '{count} verksamhetsställen', // TODO: Verify
 

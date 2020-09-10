@@ -7,10 +7,7 @@ import {
   setMapType,
   toggleColorblind,
   toggleVisuallyImpaired,
-  toggleHelsinki,
-  toggleEspoo,
-  toggleVantaa,
-  toggleKauniainen,
+  toggleCity,
   toggleSettings,
 } from '../../redux/actions/settings';
 import Settings from './Settings';
@@ -32,10 +29,7 @@ export default withStyles(styles)(connect(
     setMapType,
     toggleColorblind,
     toggleVisuallyImpaired,
-    toggleHelsinki,
-    toggleEspoo,
-    toggleVantaa,
-    toggleKauniainen,
+    toggleCity,
     toggleSettings,
     changeTheme,
   },

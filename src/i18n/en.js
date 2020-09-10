@@ -164,12 +164,13 @@ export default {
   'general.return.viewTitle': 'Return to beginning of main content',
   'general.skipToContent': 'Skip to content',
   'general.new.tab': 'Opens in new tab',
-  'general.time.short': 'at',
   'general.save': 'Save',
   'general.save.changes': 'Save settings',
   'general.save.changes.done': 'Changes have been saved!',
   'general.save.confirmation': 'Would you like to save changes?',
   'general.search': 'Search',
+  'general.time.short': 'at',
+  'general.tools': 'Tools',
   'general.distance.meters': 'Meters away',
   'general.distance.kilometers': 'Kilometers away',
 
@@ -199,7 +200,7 @@ export default {
   'map.ariaLabel': 'Map. Currently map information is only accessible visually.',
   'map.transit.endStation': 'Terminus',
   'map.address.searching': 'Retreiving address...',
-  'map.address.notFound': 'Unknown address',
+  'map.address.notFound': 'The address could not be found',
   'map.address.info': 'Address information',
   'map.unit.cluster.popup.info': '{count} locations',
 

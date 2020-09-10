@@ -125,7 +125,7 @@ const Districts = ({
               direction="top"
               autoPan={false}
             >
-              {`${district.name.fi} - ${intl.formatMessage({ id: `area.list.${district.type}` })}`}
+              {`${getLocaleText(district.name)} - ${intl.formatMessage({ id: `area.list.${district.type}` })}`}
             </Tooltip>
           ) : null}
           {renderDistrictMarkers(district)}
