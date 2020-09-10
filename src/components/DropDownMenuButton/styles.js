@@ -48,6 +48,7 @@ export default theme => ({
     '& span': {
       display: 'flex',
       justifyContent: 'center',
+      flexShrink: 0,
       width: 32,
       margin: theme.spacing.unit,
       marginRight: theme.spacing.unitDouble,
