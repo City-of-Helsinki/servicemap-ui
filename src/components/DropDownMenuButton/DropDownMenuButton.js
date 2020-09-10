@@ -43,6 +43,7 @@ class DropDownMenuButton extends React.Component {
               <ButtonBase
                 key={v.key}
                 className={classes.menuItem}
+                role="link"
                 onClick={v.onClick}
                 onKeyPress={keyboardHandler(v.onClick, ['space', 'enter'])}
                 component="span"
