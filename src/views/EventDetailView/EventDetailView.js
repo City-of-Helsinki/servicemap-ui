@@ -74,7 +74,7 @@ class EventDetailView extends React.Component {
       map,
     } = this.props;
     const { centered } = this.state;
-    if (unit && unit.location && map && map._layersMaxZoom && !centered) {
+    if (unit && unit.location && map && map.options.maxZoom && !centered) {
       const { location } = unit;
       this.setState({ centered: true });
       focusToPosition(map, location.coordinates);
