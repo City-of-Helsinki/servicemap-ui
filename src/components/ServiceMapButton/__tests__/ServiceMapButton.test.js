@@ -12,6 +12,7 @@ const intlMock = {
   messages: {
     'button.text': 'Button text',
   },
+  wrapRichTextChunksInFragment: false,
 };
 
 // Generic required props for ServiceMapButton

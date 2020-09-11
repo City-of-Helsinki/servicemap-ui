@@ -40,6 +40,7 @@ exports[`<SuggestionItem /> should work 1`] = `
         "onError": [Function],
         "textComponent": Symbol(react.fragment),
         "timeZone": undefined,
+        "wrapRichTextChunksInFragment": false,
       }
     }
     subtitle="Subtitle text"
@@ -96,6 +97,7 @@ exports[`<SuggestionItem /> should work 1`] = `
           "onError": [Function],
           "textComponent": Symbol(react.fragment),
           "timeZone": undefined,
+          "wrapRichTextChunksInFragment": false,
         }
       }
       query={null}

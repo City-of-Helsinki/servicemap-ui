@@ -13,6 +13,7 @@ const intlMock = {
     'general.pagination.openPage': 'Open page {count}',
     'general.pagination.currentlyOpenedPage': 'Sivu {count}, avattu',
   },
+  wrapRichTextChunksInFragment: false,
 };
 
 // Generic required props for ResultItem

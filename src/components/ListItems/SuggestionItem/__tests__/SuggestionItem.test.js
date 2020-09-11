@@ -13,6 +13,7 @@ const intlMock = {
   messages: {
     'search.arrowLabel': 'Arrow button label',
   },
+  wrapRichTextChunksInFragment: false,
 };
 
 // Generic required props for SimpleListItem
