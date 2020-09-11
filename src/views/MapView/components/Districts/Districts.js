@@ -18,8 +18,9 @@ const Districts = ({
   mapOptions,
   currentPage,
   selectedAddress,
-  selectedSubdistrict,
-  setSelectedSubdistrict,
+  selectedSubdistricts,
+  setSelectedSubdistricts,
+  setSelectedDistrictServices,
   classes,
   navigator,
   intl,
@@ -31,7 +32,17 @@ const Districts = ({
     if (district.category === 'geographical') {
       // Disable normal map click event
       e.originalEvent.view.L.DomEvent.stopPropagation(e);
-      setSelectedSubdistrict(district.ocd_id);
+      // Add/remove district from selected geographical districts
+      let newArray;
+      if (selectedSubdistricts.includes(district.ocd_id)) {
+        newArray = selectedSubdistricts.filter(i => i !== district.ocd_id);
+      } else {
+        newArray = [...selectedSubdistricts, district.ocd_id];
+      }
+      if (newArray === []) {
+        setSelectedDistrictServices([]);
+      }
+      setSelectedSubdistricts(newArray);
     }
   };
 
@@ -105,8 +116,8 @@ const Districts = ({
 
     return districtData.map((district) => {
       let dimmed;
-      if (selectedSubdistrict) {
-        dimmed = district.ocd_id !== selectedSubdistrict;
+      if (selectedSubdistricts.length) {
+        dimmed = !selectedSubdistricts.includes(district.ocd_id);
       } else {
         dimmed = addressDistrict && district.id !== addressDistrict;
       }
@@ -199,8 +210,9 @@ Districts.propTypes = {
   selectedAddress: PropTypes.objectOf(PropTypes.any),
   districtData: PropTypes.arrayOf(PropTypes.object),
   addressDistrict: PropTypes.number,
-  selectedSubdistrict: PropTypes.string,
-  setSelectedSubdistrict: PropTypes.func.isRequired,
+  selectedSubdistricts: PropTypes.arrayOf(PropTypes.string),
+  setSelectedSubdistricts: PropTypes.func.isRequired,
+  setSelectedDistrictServices: PropTypes.func.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any).isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -212,7 +224,7 @@ Districts.defaultProps = {
   selectedAddress: null,
   districtData: null,
   addressDistrict: null,
-  selectedSubdistrict: null,
+  selectedSubdistricts: [],
 };
 
 export default Districts;
