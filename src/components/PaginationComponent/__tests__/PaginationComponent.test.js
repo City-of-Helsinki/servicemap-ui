@@ -57,7 +57,7 @@ describe('<PaginationComponent />', () => {
     const mockCallBack = jest.fn((newCurrent, totalCount) => ({ newCurrent, totalCount }));
     const component = mount(<PaginationComponent {...mockProps} handlePageChange={mockCallBack} />);
 
-    component.find('PageElement ButtonBase').at(2).simulate('click');
+    component.find('PageElement ForwardRef(ButtonBase)').at(2).simulate('click');
     expect(mockCallBack.mock.calls.length).toEqual(1);
 
     // Expect handlePageChange to get first argument (newCurrent) correctly
@@ -68,13 +68,13 @@ describe('<PaginationComponent />', () => {
 
   it('does set active correctly', () => {
     const component = mount(<PaginationComponent {...mockProps} />);
-    expect(component.find('PageElement ButtonBase').at(mockProps.current - 1).props().disabled).toBeTruthy();
+    expect(component.find('PageElement ForwardRef(ButtonBase)').at(mockProps.current - 1).props().disabled).toBeTruthy();
   });
 
   it('does use default accessibility attributes correctly', () => {
     const component = mount(<PaginationComponent {...mockProps} current={1} />);
 
-    const buttons = component.find('ButtonBase');
+    const buttons = component.find('ForwardRef(ButtonBase)');
 
     // Test previous page button accessibility
     expect(buttons.at(0).props()['aria-label']).toEqual(intlMock.messages['general.pagination.previous']);

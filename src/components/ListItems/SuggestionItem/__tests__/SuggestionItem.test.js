@@ -59,7 +59,7 @@ describe('<SuggestionItem />', () => {
     const mockCallBack = jest.fn();
     const component = mount(<SuggestionItem {...mockProps} handleItemClick={mockCallBack} />);
 
-    component.find('ListItem').simulate('click');
+    component.find('ForwardRef(ListItem)').simulate('click');
     expect(mockCallBack.mock.calls.length).toEqual(1);
   });
 
@@ -67,10 +67,10 @@ describe('<SuggestionItem />', () => {
     const mockCallBack = jest.fn();
     const component = mount(<SuggestionItem {...mockProps} handleItemClick={mockCallBack} />);
 
-    component.find('ListItem').simulate('keyDown', { key: 'enter', keyCode: 13, which: 13 });
+    component.find('ForwardRef(ListItem)').simulate('keyDown', { key: 'enter', keyCode: 13, which: 13 });
     // Simulate keyUp to release SuggestionItem mouseDown state
-    component.find('ListItem').simulate('keyUp', { key: 'enter', keyCode: 13, which: 13 });
-    component.find('ListItem').simulate('keyDown', { key: 'space', keyCode: 32, which: 32 });
+    component.find('ForwardRef(ListItem)').simulate('keyUp', { key: 'enter', keyCode: 13, which: 13 });
+    component.find('ForwardRef(ListItem)').simulate('keyDown', { key: 'space', keyCode: 32, which: 32 });
     expect(mockCallBack.mock.calls.length).toEqual(2);
   });
 
@@ -84,22 +84,22 @@ describe('<SuggestionItem />', () => {
 
   it('does set select correctly', () => {
     let component = mount(<SuggestionItem {...mockProps} />);
-    expect(component.find('ListItem').props().selected).toBeFalsy();
+    expect(component.find('ForwardRef(ListItem)').props().selected).toBeFalsy();
 
     resetMount();
 
     component = mount(<SuggestionItem {...mockProps} selected />);
-    expect(component.find('ListItem').props().selected).toBeTruthy();
+    expect(component.find('ForwardRef(ListItem)').props().selected).toBeTruthy();
   });
 
   it('does set divider correctly', () => {
     let component = mount(<SuggestionItem {...mockProps} />);
-    expect(component.find('Divider').exists()).toBeFalsy();
+    expect(component.find('ForwardRef(Divider)').exists()).toBeFalsy();
 
     resetMount();
 
     component = mount(<SuggestionItem {...mockProps} divider />);
-    expect(component.find('Divider').exists()).toBeTruthy();
+    expect(component.find('ForwardRef(Divider)').exists()).toBeTruthy();
   });
 
   it('does bold query correctly', () => {
@@ -122,11 +122,11 @@ describe('<SuggestionItem />', () => {
     expect(srText.props()['aria-hidden']).toBeFalsy();
     expect(text.props()['aria-hidden']).toBeTruthy();
     // Expect role to be set
-    expect(component.find('ListItem').props().role).toEqual('link');
+    expect(component.find('ForwardRef(ListItem)').props().role).toEqual('link');
     // Expect element to have tabIndex 0
-    expect(component.find('ListItem').props().tabIndex).toEqual('0');
+    expect(component.find('ForwardRef(ListItem)').props().tabIndex).toEqual('0');
     // Expect span element to have tabIndex -1
-    expect(component.find('ListItem').find('span').at(0).props().tabIndex).toEqual('-1');
+    expect(component.find('ForwardRef(ListItem)').find('span').at(0).props().tabIndex).toEqual('-1');
   });
 
   it('does use given accessibility attributes correctly', () => {
@@ -143,6 +143,6 @@ describe('<SuggestionItem />', () => {
     // Expect divider element to be hidden from screen readers
     expect(component.find('li').at(1).props()['aria-hidden']).toBeTruthy();
     // Expect element to have tabIndex 0
-    expect(component.find('ListItem').props().tabIndex).toEqual('0');
+    expect(component.find('ForwardRef(ListItem)').props().tabIndex).toEqual('0');
   });
 });

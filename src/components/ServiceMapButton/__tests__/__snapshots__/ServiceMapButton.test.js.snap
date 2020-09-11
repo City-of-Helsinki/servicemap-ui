@@ -104,7 +104,7 @@ exports[`<ServiceMapButton /> should work 1`] = `
       small={false}
       style={null}
     >
-      <WithStyles(ButtonBase)
+      <WithStyles(ForwardRef(ButtonBase))
         aria-label={null}
         className="SMButton-button-1  SMButton-marginRight-4  SMButton-default-7"
         disabled={false}
@@ -114,38 +114,32 @@ exports[`<ServiceMapButton /> should work 1`] = `
         style={Object {}}
         variant="contained"
       >
-        <ButtonBase
+        <ForwardRef(ButtonBase)
           aria-label={null}
-          centerRipple={false}
           className="SMButton-button-1  SMButton-marginRight-4  SMButton-default-7"
           classes={
             Object {
-              "disabled": "MuiButtonBase-disabled-10",
-              "focusVisible": "MuiButtonBase-focusVisible-11",
-              "root": "MuiButtonBase-root-9",
+              "disabled": "Mui-disabled",
+              "focusVisible": "Mui-focusVisible",
+              "root": "MuiButtonBase-root",
             }
           }
-          component="button"
           disableRipple={true}
-          disableTouchRipple={false}
           disabled={false}
-          focusRipple={false}
           icon={null}
           onClick={[Function]}
           role="button"
           style={Object {}}
-          tabIndex="0"
-          type="button"
           variant="contained"
         >
           <button
             aria-label={null}
-            className="MuiButtonBase-root-9 SMButton-button-1  SMButton-marginRight-4  SMButton-default-7"
+            className="MuiButtonBase-root SMButton-button-1  SMButton-marginRight-4  SMButton-default-7"
             disabled={false}
             icon={null}
             onBlur={[Function]}
             onClick={[Function]}
-            onContextMenu={[Function]}
+            onDragLeave={[Function]}
             onFocus={[Function]}
             onKeyDown={[Function]}
             onKeyUp={[Function]}
@@ -157,14 +151,14 @@ exports[`<ServiceMapButton /> should work 1`] = `
             onTouchStart={[Function]}
             role="button"
             style={Object {}}
-            tabIndex="0"
+            tabIndex={0}
             type="button"
             variant="contained"
           >
             Test
           </button>
-        </ButtonBase>
-      </WithStyles(ButtonBase)>
+        </ForwardRef(ButtonBase)>
+      </WithStyles(ForwardRef(ButtonBase))>
     </SMButton>
   </WithStyles(SMButton)>
 </injectIntl(WithStyles(SMButton))>

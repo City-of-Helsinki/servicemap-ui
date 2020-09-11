@@ -54,7 +54,7 @@ describe('<PageElement />', () => {
     const mockCallBack = jest.fn();
     const component = mount(<PageElement {...mockProps} onClick={mockCallBack} />);
 
-    component.find('ButtonBase').simulate('click');
+    component.find('ForwardRef(ButtonBase)').simulate('click');
     expect(mockCallBack.mock.calls.length).toEqual(1);
   });
 
@@ -62,8 +62,8 @@ describe('<PageElement />', () => {
     const mockCallBack = jest.fn();
     const component = mount(<PageElement {...mockProps} onClick={mockCallBack} />);
 
-    component.find('ButtonBase').simulate('keyDown', { which: 13 });
-    component.find('ButtonBase').simulate('keyDown', { which: 32 });
+    component.find('ForwardRef(ButtonBase)').simulate('keyDown', { which: 13 });
+    component.find('ForwardRef(ButtonBase)').simulate('keyDown', { which: 32 });
     expect(mockCallBack.mock.calls.length).toEqual(2);
   });
 
@@ -76,7 +76,7 @@ describe('<PageElement />', () => {
 
   it('does set active correctly', () => {
     const component = mount(<PageElement {...mockProps} isActive />);
-    expect(component.find('ButtonBase').props().disabled).toBeTruthy();
+    expect(component.find('ForwardRef(ButtonBase)').props().disabled).toBeTruthy();
   });
 
   it('does use default accessibility attributes correctly', () => {
@@ -92,10 +92,10 @@ describe('<PageElement />', () => {
     expect(spans.at(1).props()['aria-hidden']).toBeTruthy();
 
     // // Expect role to be set to link
-    expect(component.find('ButtonBase').props().role).toEqual('link');
+    expect(component.find('ForwardRef(ButtonBase)').props().role).toEqual('link');
 
     // // Expect element to have tabIndex 0
-    expect(component.find('ButtonBase').props().tabIndex).toEqual('0');
+    expect(component.find('ForwardRef(ButtonBase)').props().tabIndex).toEqual('0');
   });
 
   it('does use given accessibility attributes correctly', () => {
@@ -110,6 +110,6 @@ describe('<PageElement />', () => {
     expect(srText).toEqual(`Sivu ${mockProps.number}, avattu`);
 
     // // Expect element to have tabIndex -1
-    expect(component.find('ButtonBase').props().tabIndex).toEqual('-1');
+    expect(component.find('ForwardRef(ButtonBase)').props().tabIndex).toEqual('-1');
   });
 });

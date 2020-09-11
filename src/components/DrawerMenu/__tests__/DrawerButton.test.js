@@ -1,10 +1,10 @@
 // Link.react.test.js
 import React from 'react';
-import { createMount, createShallow } from '@material-ui/core/test-utils';
+import { createMount } from '@material-ui/core/test-utils';
 import { MuiThemeProvider, Typography } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
 import DawerButton from '../DrawerButton';
-import themes from '../../../../themes';
+import themes from '../../../themes';
 
 // Generic required props for ServiceMapButton
 const buttonMockProps = {
@@ -28,12 +28,10 @@ const Providers = ({ children }) => (
 describe('<DrawerButton />', () => {
   // let render;
   let mount;
-  let shallow;
 
   beforeEach(() => {
     // render = createRender({ wrappingComponent: Providers });
     mount = createMount({ wrappingComponent: Providers });
-    shallow = createShallow({ wrappingComponent: Providers });
   });
 
   afterEach(() => {
@@ -41,7 +39,7 @@ describe('<DrawerButton />', () => {
   });
 
   it('should work', () => {
-    const component = shallow(<DawerButton {...buttonMockProps} />).dive();
+    const component = mount(<DawerButton {...buttonMockProps} />);
     expect(component).toMatchSnapshot();
   });
 
@@ -52,7 +50,7 @@ describe('<DrawerButton />', () => {
 
   it('simulates click event', () => {
     const mockCallBack = jest.fn();
-    const component = shallow(
+    const component = mount(
       <DawerButton
         {...buttonMockProps}
         onClick={mockCallBack}
@@ -68,7 +66,7 @@ describe('<DrawerButton />', () => {
         {...buttonMockProps}
       />,
     );
-    const buttonBase = component.find('ButtonBase');
+    const buttonBase = component.find('ForwardRef(ButtonBase)');
     // Expect role to be link
     expect(buttonBase.props().role).toEqual('link');
     // Expect aria-label to be same as given text
@@ -85,7 +83,7 @@ describe('<DrawerButton />', () => {
       />,
     );
 
-    const buttonBase = component.find('ButtonBase');
+    const buttonBase = component.find('ForwardRef(ButtonBase)');
     // Expect element to be aria-hidden when menu not opened
     expect(buttonBase.props()['aria-hidden']).toEqual(true);
     // Expect tabIndex to be -1 when menu not opened
@@ -100,7 +98,7 @@ describe('<DrawerButton />', () => {
       />,
     );
 
-    const buttonBase = component.find('ButtonBase');
+    const buttonBase = component.find('ForwardRef(ButtonBase)');
     // Expect element to not be hidden when menu open
     expect(buttonBase.props()['aria-hidden']).toEqual(false);
     // Expect element to be in tab order when menu is open
@@ -114,7 +112,7 @@ describe('<DrawerButton />', () => {
         disabled
       />,
     );
-    const buttonBase = component.find('ButtonBase');
+    const buttonBase = component.find('ForwardRef(ButtonBase)');
     // Expect aria-label to be same as given text
     expect(buttonBase.props()['aria-label']).toEqual(`${buttonMockProps.text} ${buttonMockProps.subText}`);
   });
