@@ -34,6 +34,7 @@ const AreaView = ({
   selectedDistrictType,
   selectedDistrictData,
   addressDistrict,
+  renderUnitMarkers,
   subdistrictUnits,
   filteredSubdistrictUnits,
   selectedSubdistrict,
@@ -115,6 +116,17 @@ const AreaView = ({
   const formAddressString = address => (address
     ? `${getLocaleText(address.street.name)} ${address.number}${address.number_end ? address.number_end : ''}${address.letter ? address.letter : ''}, ${uppercaseFirst(address.street.municipality)}`
     : '');
+
+
+  const renderUnits = (data) => {
+    const L = require('leaflet'); // TODO: use global leaflet once available
+    let markerCluster;
+    map.leafletElement.eachLayer((layer) => {
+      if (layer.id === 'markerCluster') markerCluster = layer;
+    });
+
+    renderUnitMarkers(L, map, data, classes, markerCluster, false);
+  };
 
   const changeDistrictData = (data, type, category) => {
     // Collect different periods from district data
