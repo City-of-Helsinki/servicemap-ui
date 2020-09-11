@@ -102,7 +102,8 @@ class TransitStops extends React.Component {
   }
 
   render() {
-    const { Marker, Popup, getLocaleText } = this.props;
+    const { getLocaleText } = this.props;
+    const { Marker, Popup } = global.rL;
     const { transitStops } = this.state;
 
     return (
@@ -130,8 +131,6 @@ class TransitStops extends React.Component {
 }
 
 TransitStops.propTypes = {
-  Marker: PropTypes.objectOf(PropTypes.any).isRequired,
-  Popup: PropTypes.objectOf(PropTypes.any).isRequired,
   getLocaleText: PropTypes.func.isRequired,
   map: PropTypes.objectOf(PropTypes.any).isRequired,
   mapObject: PropTypes.objectOf(PropTypes.any).isRequired,

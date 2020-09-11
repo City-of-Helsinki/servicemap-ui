@@ -20,13 +20,14 @@ import {
   colorblind, hearingAid, mobility, mapType, visuallyImpaired, cities,
 } from './reducers/settings';
 import {
-  direction, order, mapRef, settingsToggled,
+  direction, order, mapRef, settingsToggled, measuringMode,
 } from './reducers/simpleReducers';
 
 // Export all redux reducers here
 export default combineReducers({
   breadcrumb,
   mapRef,
+  measuringMode,
   navigator,
   units,
   user,

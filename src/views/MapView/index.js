@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { getHighlightedDistrict } from '../../redux/selectors/district';
 import { getSelectedUnit } from '../../redux/selectors/selectedUnit';
 import { getLocaleString } from '../../redux/selectors/locale';
-import setMapRef from '../../redux/actions/map';
+import { setMapRef } from '../../redux/actions/map';
 import { setAddressLocation } from '../../redux/actions/address';
 import { findUserLocation } from '../../redux/actions/user';
 import MapView from './MapView';
@@ -22,7 +22,7 @@ const mapStateToProps = (state, props) => {
     intl,
   } = props;
   const {
-    address, navigator, settings, user,
+    address, navigator, settings, user, measuringMode,
   } = state;
   const unitList = getProcessedData(state);
   const unitsLoading = state.service.isFetching;
@@ -73,6 +73,7 @@ const mapStateToProps = (state, props) => {
     settings,
     navigator,
     locale,
+    measuringMode,
   };
 };
 

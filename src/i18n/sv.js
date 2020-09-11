@@ -447,6 +447,8 @@ export default {
 
   // Tools
   'tool.download': 'Exportera (ny flik)',
+  'tool.measuring': 'Mät avstånd',
+  'tool.measuring.stop': 'Sluta mäta',
 
   'info.title': 'Om tjänsten och tillgänglighetsredogörelsen',
   'info.statement': 'Tillgänglighetsredogörelsen',

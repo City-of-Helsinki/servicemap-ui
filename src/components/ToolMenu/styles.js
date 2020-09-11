@@ -25,4 +25,9 @@ export default ({
     marginLeft: 'auto',
     justifySelf: 'flex-end',
   },
+  smIcon: {
+    margin: '0px !important',
+    width: '24px !important',
+    height: '24px !important',
+  },
 });

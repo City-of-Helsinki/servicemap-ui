@@ -7,9 +7,10 @@ import {
 } from '@material-ui/icons';
 import DropDownMenuButton from '../DropDownMenuButton';
 import useDownloadData from '../../utils/downloadData';
+import SMIcon from '../SMIcon/SMIcon';
 
 const ToolMenu = ({
-  intl, mapUtility, navigator,
+  intl, classes, mapUtility, navigator, setMeasuringMode, measuringMode,
 }) => {
   const location = useLocation();
 
@@ -61,6 +62,15 @@ const ToolMenu = ({
         tab.document.close();
       },
     },
+    {
+      key: 'measuringTool',
+      text: measuringMode ? intl.formatMessage({ id: 'tool.measuring.stop' }) : intl.formatMessage({ id: 'tool.measuring' }),
+      icon: <SMIcon className={classes.smIcon} icon="icon-icon-measuring-tool" />,
+      ariaHidden: true,
+      onClick: () => {
+        setMeasuringMode(!measuringMode);
+      },
+    },
   ];
   const toolMenuText = intl.formatMessage({ id: 'general.tools' });
 
@@ -82,6 +92,8 @@ const ToolMenu = ({
 };
 
 ToolMenu.propTypes = {
+  setMeasuringMode: PropTypes.func.isRequired,
+  measuringMode: PropTypes.bool.isRequired,
   classes: PropTypes.shape({
     menuContainer: PropTypes.string,
   }).isRequired,

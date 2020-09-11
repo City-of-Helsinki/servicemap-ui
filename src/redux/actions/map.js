@@ -1,6 +1,5 @@
 import simpleAction from './simpleActions';
 
 // Map
-const setMapRef = value => simpleAction('MAPREF', value);
-
-export default setMapRef;
+export const setMapRef = value => simpleAction('MAPREF', value);
+export const setMeasuringMode = value => simpleAction('MEASURING_MODE', value);
