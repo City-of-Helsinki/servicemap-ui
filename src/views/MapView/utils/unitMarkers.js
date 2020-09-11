@@ -268,6 +268,8 @@ const renderUnitMarkers = (
       item.setAttribute('tabindex', '-1');
       item.setAttribute('aria-hidden', 'true');
     });
+  } else {
+    clusterLayer.clearLayers();
   }
 };
 
