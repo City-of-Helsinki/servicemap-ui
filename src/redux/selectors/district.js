@@ -6,7 +6,8 @@ const getSelectedDistrict = state => state.districts.selectedDistrictType;
 const getDistrictData = state => state.districts.districtData;
 const getAddressDistrictData = state => state.districts.districtAddressData.districts;
 const getSubdistrictUnits = state => state.districts.subdistrictUnits;
-const getSubdistricSelection = state => state.districts.selectedSubdistrict;
+const getSubdistrictSelection = state => state.districts.selectedSubdistricts;
+const getSelectedDistrictServices = state => state.districts.selectedDistrictServices;
 
 export const getDistrictsByType = createSelector(
   [getSelectedDistrict, getDistrictData],
@@ -30,11 +31,22 @@ export const getAddressDistrict = createSelector(
 );
 
 export const getSubdistrictServices = createSelector(
-  [getSubdistricSelection, getSubdistrictUnits],
-  (selectedSubdistrict, unitData) => {
-    if (selectedSubdistrict && unitData) {
-      return unitData.filter(obj => obj.division_id === selectedSubdistrict);
+  [getSubdistrictSelection, getSubdistrictUnits],
+  (selectedSubdistricts, unitData) => {
+    if (selectedSubdistricts && unitData) {
+      return unitData.filter(unit => selectedSubdistricts.includes(unit.division_id));
     }
     return [];
+  },
+);
+
+export const getFilteredSubdistrictUnits = createSelector(
+  [getSubdistrictServices, getSelectedDistrictServices],
+  (districtUnits, serviceFilters) => {
+    if (serviceFilters.length) {
+      return districtUnits.filter(unit => (
+        unit.services.some(service => serviceFilters.includes(service.id))));
+    }
+    return districtUnits;
   },
 );

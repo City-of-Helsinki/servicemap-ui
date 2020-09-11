@@ -18,12 +18,17 @@ export const setDistrictAddressData = data => ({
   data,
 });
 
-export const setSubdistrictUnits = units => ({
-  type: 'SET_SUBDISTRICT_UNITS',
+export const addSubdistrictUnits = units => ({
+  type: 'ADD_SUBDISTRICT_UNITS',
   units,
 });
 
-export const setSelectedSubdistrict = district => ({
-  type: 'SET_SELECTED_SUBDISTRICT',
-  district,
+export const setSelectedSubdistricts = districts => ({
+  type: 'SET_SELECTED_SUBDISTRICTS',
+  districts,
+});
+
+export const setSelectedDistrictServices = services => ({
+  type: 'SET_SELECTED_DISTRICT_SERVICES',
+  services,
 });

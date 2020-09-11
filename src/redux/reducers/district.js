@@ -3,7 +3,8 @@ const initialState = {
   selectedDistrictType: null,
   districtData: [],
   subdistrictUnits: [],
-  selectedSubdistrict: null,
+  selectedSubdistricts: [],
+  selectedDistrictServices: [],
   districtAddressData: {
     address: null,
     districts: [],
@@ -53,16 +54,22 @@ export default (state = initialState, action) => {
         districtAddressData: action.data,
       };
 
-    case 'SET_SUBDISTRICT_UNITS':
+    case 'ADD_SUBDISTRICT_UNITS':
       return {
         ...state,
         subdistrictUnits: [...state.subdistrictUnits, ...action.units],
       };
 
-    case 'SET_SELECTED_SUBDISTRICT':
+    case 'SET_SELECTED_SUBDISTRICTS':
       return {
         ...state,
-        selectedSubdistrict: action.district,
+        selectedSubdistricts: action.districts,
+      };
+
+    case 'SET_SELECTED_DISTRICT_SERVICES':
+      return {
+        ...state,
+        selectedDistrictServices: action.services,
       };
 
     default:
