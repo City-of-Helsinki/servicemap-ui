@@ -52,6 +52,7 @@ if (typeof settings.OLD_MAP_LINK_EN === 'undefined'
 }
 
 if (typeof settings.CITIES === 'undefined') {
+  // If not set default to Helsinki
   settings.CITIES = 'helsinki,espoo,vantaa,kauniainen';
 }
 

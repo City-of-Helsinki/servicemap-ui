@@ -1,5 +1,5 @@
 /* eslint-disable quote-props */
-export default {
+const translations = {
   'app.title': 'Servicekarta',
 
   // Accessibility
@@ -455,3 +455,16 @@ export default {
 
   'alert.close': 'Stäng meddelande',
 };
+
+let overridingExternalTranslations;
+
+// Read and merge external translations with current translations
+try {
+  // eslint-disable-next-line global-require,import/no-unresolved
+  overridingExternalTranslations = require('./externalTranslations/sv.json');
+} catch (e) {
+  overridingExternalTranslations = {};
+}
+
+const swedishTranslations = { ...translations, ...overridingExternalTranslations };
+export default swedishTranslations;
