@@ -195,6 +195,7 @@ const MapView = (props) => {
         if (markerCluster) {
           map.leafletElement.removeLayer(markerCluster);
         }
+        cluster.id = 'markerCluster';
         map.leafletElement.addLayer(cluster);
         setMarkerCluster(cluster);
       }

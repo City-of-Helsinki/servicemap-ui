@@ -25,10 +25,11 @@ const fetchReducer = (state, action) => {
 
 const AreaView = ({
   setSelectedDistrictType,
-  setSelectedSubdistrict,
+  setSelectedSubdistricts,
+  setSelectedDistrictServices,
   setDistrictData,
   setDistrictAddressData,
-  setSubdistrictUnits,
+  addSubdistrictUnits,
   districtData,
   districtAddressData,
   selectedDistrictType,
@@ -37,7 +38,7 @@ const AreaView = ({
   renderUnitMarkers,
   subdistrictUnits,
   filteredSubdistrictUnits,
-  selectedSubdistrict,
+  selectedSubdistricts,
   map,
   getLocaleText,
   navigator,
@@ -108,7 +109,6 @@ const AreaView = ({
 
   // State
   const [districtRadioValue, setDistrictRadioValue] = useState(null);
-  const [subdistrictRadioValue, setSubdistrictRadioValue] = useState(null);
   const [selectedAddress, setSelectedAddress] = useState(districtAddressData.address);
   const [openItems, setOpenItems] = useState([]); // List items that are expanded
   const [fetching, dispatchFetching] = useReducer(fetchReducer, []); // Fetch state
@@ -117,6 +117,9 @@ const AreaView = ({
     ? `${getLocaleText(address.street.name)} ${address.number}${address.number_end ? address.number_end : ''}${address.letter ? address.letter : ''}, ${uppercaseFirst(address.street.municipality)}`
     : '');
 
+  const focusMapToDistrict = (district) => {
+    focusDistrict(map.leafletElement, district.boundary.coordinates);
+  };
 
   const renderUnits = (data) => {
     const L = require('leaflet'); // TODO: use global leaflet once available
@@ -244,7 +247,6 @@ const AreaView = ({
   };
 
   const fetchDistrictUnitList = async (divisionID) => {
-    if (subdistrictUnits.some(unit => unit.division_id === divisionID)) return;
     const options = {
       page: 1,
       page_size: 1000,
@@ -257,7 +259,7 @@ const AreaView = ({
           unit.object_type = 'unit';
           unit.division_id = divisionID;
         });
-        setSubdistrictUnits(data.results);
+        addSubdistrictUnits(data.results);
       });
   };
 
@@ -283,21 +285,12 @@ const AreaView = ({
     setSelectedDistrictType(districtRadioValue);
   }, [districtRadioValue]);
 
-  useEffect(() => {
-    if (subdistrictRadioValue) {
-      fetchDistrictUnitList(subdistrictRadioValue);
-      // Focus map to subdistrict
-      const district = selectedDistrictData.find(obj => obj.ocd_id === subdistrictRadioValue);
-      focusDistrict(map.leafletElement, district.boundary.coordinates);
-    }
-    setSelectedSubdistrict(subdistrictRadioValue);
-  }, [subdistrictRadioValue]);
 
   useEffect(() => {
     // Focus map to local district
     if (selectedAddress && addressDistrict) {
       const district = selectedDistrictData.find(obj => obj.id === addressDistrict);
-      focusDistrict(map.leafletElement, district.boundary.coordinates);
+      focusMapToDistrict(district);
     }
   }, [addressDistrict]);
 
@@ -310,8 +303,12 @@ const AreaView = ({
   }, [selectedAddress]);
 
   useEffect(() => {
-    setSubdistrictRadioValue(selectedSubdistrict);
-  }, [selectedSubdistrict]);
+    selectedSubdistricts.forEach((district) => {
+      if (!subdistrictUnits.some(unit => unit.division_id === district)) {
+        fetchDistrictUnitList(district);
+      }
+    });
+  }, [selectedSubdistricts]);
 
   useEffect(() => {
     setDistrictRadioValue(selectedDistrictType);
@@ -325,7 +322,7 @@ const AreaView = ({
       );
       handleOpen(category);
       setSelectedDistrictType(selectedDistrictType);
-      setSelectedSubdistrict(selectedSubdistrict);
+      // setSelectedSubdistrict(selectedSubdistrict); // FIX THIS
     }
   }, []);
 
@@ -333,9 +330,10 @@ const AreaView = ({
   const renderAreaTab = () => (
     <AreaTab
       districtRadioValue={districtRadioValue}
-      subdistrictRadioValue={subdistrictRadioValue}
+      selectedSubdistricts={selectedSubdistricts}
       setDistrictRadioValue={setDistrictRadioValue}
-      setSubdistrictRadioValue={setSubdistrictRadioValue}
+      setSelectedSubdistricts={setSelectedSubdistricts}
+      setSelectedDistrictServices={setSelectedDistrictServices}
       fetching={fetching}
       districtData={districtData}
       selectedDistrictData={selectedDistrictData}
@@ -353,11 +351,13 @@ const AreaView = ({
     <UnitTab
       selectedDistrictData={selectedDistrictData}
       selectedAddress={selectedAddress}
-      selectedSubdistrict={selectedSubdistrict}
+      selectedSubdistricts={selectedSubdistricts}
+      setSelectedDistrictServices={setSelectedDistrictServices}
       filteredSubdistrictUnits={filteredSubdistrictUnits}
       addressDistrict={addressDistrict}
       formAddressString={formAddressString}
       getLocaleText={getLocaleText}
+      renderUnits={data => renderUnits(data)}
     />
   );
 
