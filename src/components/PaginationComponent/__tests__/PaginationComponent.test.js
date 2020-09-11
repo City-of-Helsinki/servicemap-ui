@@ -15,6 +15,7 @@ const intlMock = {
     'general.pagination.openPage': 'Avaa sivu {count}',
     'general.pagination.currentlyOpenedPage': 'Sivu {count}, avattu',
   },
+  wrapRichTextChunksInFragment: false,
 };
 
 // Generic required props for ResultItem

@@ -57,8 +57,8 @@ const styles = theme => ({
   },
   settingsButtonsContainer: {
     paddingLeft: 50,
-    width: '70%',
     display: 'flex',
+    flex: '1 0 auto',
   },
   settingsButton: {
     textTransform: 'none',
@@ -79,6 +79,9 @@ const styles = theme => ({
     lineHeight: 1,
   },
   toolbarWhite: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
     paddingLeft: 28,
     height: 70,
     backgroundColor: '#fff',

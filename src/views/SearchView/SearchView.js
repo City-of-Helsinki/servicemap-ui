@@ -120,9 +120,7 @@ class SearchView extends React.Component {
   }
 
   searchParamData = (props = null, includeService = false) => {
-    const {
-      location,
-    } = props || this.props;
+    const { location } = props || this.props;
     const { serviceRedirect } = this.state;
     const redirectNode = serviceRedirect;
     const searchParams = parseSearchParams(location.search);
@@ -134,16 +132,13 @@ class SearchView extends React.Component {
       municipality,
       service,
       service_node,
+      search_language,
     } = searchParams;
 
     const options = {};
     if (q) {
       options.q = q;
     } else {
-      // Parse municipality
-      if (municipality || city) {
-        options.municipality = municipality || city;
-      }
       // Parse service
       if (includeService && service) {
         options.service = service;
@@ -186,6 +181,15 @@ class SearchView extends React.Component {
       }
     }
 
+    // Parse municipality
+    if (municipality || city) {
+      options.municipality = municipality || city;
+    }
+
+    // Parse search language
+    if (search_language) {
+      options.search_language = search_language;
+    }
 
     return options;
   }
@@ -215,7 +219,7 @@ class SearchView extends React.Component {
     if (getSearchParam(location, 'bbox')) {
       return;
     }
-    if (map && map._layersMaxZoom) {
+    if (map && map.options.maxZoom) {
       fitUnitsToMap(units, map);
     }
   }
@@ -399,6 +403,7 @@ class SearchView extends React.Component {
     } = this.props;
 
     const showResults = !isFetching && units && units.length > 0;
+    const showExpandedSearch = this.isInputSearch();
 
     if (!showResults) {
       return null;
@@ -414,7 +419,7 @@ class SearchView extends React.Component {
           count: groupedData
             .units.length,
         })}`,
-        beforePagination: this.renderExpandedSearchButton(),
+        beforePagination: showExpandedSearch ? this.renderExpandedSearchButton() : null,
         component: null,
         data: groupedData.units,
         itemsPerPage: 10,

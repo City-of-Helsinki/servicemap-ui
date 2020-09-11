@@ -25,15 +25,18 @@ const paths = {
     regex: /\/[a-zA-Z]{2}\/services/
   },
   embed: {
-    regex: /\/[a-zA-Z]{2}\/embed\/*/,
+    regex: /\/[a-zA-Z]{2}\/embed\//,
+  },
+  embedder: {
+    regex: /\/[a-zA-Z]{2}\/embedder\//,
   },
   event: {
     generate: id => `/event/${id || ''}`,
-    regex: /\/[a-zA-Z]{2}\/event\/([a-z:0-9]+)/
+    regex: /\/[a-zA-Z]{2}\/event\/([a-zäö:0-9]+)/
   },
   address: {
     generate: data => `${data.embed ? '/embed/address/' : '/address/'}${data.municipality}/${data.street}/${data.number}`,
-    regex: /\/[a-zA-Z]{2}\/address\/([a-zA-Z]+)\/([a-zA-Z])+\/([a-z:0-9]+)/
+    regex: /\/[a-zA-Z]{2}\/address\/([a-zA-ZäöÄÖ]+)\/([a-zA-ZäöÄÖ])+\/([a-z:0-9]+)/
   },
   info: {
     generate: () => `/info`,

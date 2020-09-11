@@ -1,9 +1,9 @@
 import LocalStorageUtility from './localStorage';
-import config from '../../config'
+import config from '../../config';
 
 const ALLOWED = {
   mobility: [null, 'wheelchair', 'reduced_mobility', 'rollator', 'stroller'],
-  city: [null, 'helsinki', 'espoo', 'vantaa', 'kauniainen'],
+  city: [null, ...config.cities],
   map: config.maps,
 };
 
@@ -45,10 +45,12 @@ class SettingsUtility {
     return true;
   }
 
-  static isValidCitySetting(value) {
-    if (SettingsUtility.citySettings.indexOf(value) < 0) {
-      throw new Error(`Invalid value for city setting: ${value}`);
-    }
+  static isValidCitySetting(values) {
+    Object.keys(values).forEach((key) => {
+      if (!config.cities.includes(key)) {
+        throw new Error(`Invalid value for city setting: ${key}`);
+      }
+    });
     return true;
   }
 
@@ -78,6 +80,24 @@ class SettingsUtility {
   }
 
   /**
+   * Return active city settings from redux state
+   * @param {*} state
+   * @returns {array} - Array of city settings which are active
+   */
+  static getActiveCitySettings(state) {
+    const result = [];
+    SettingsUtility.citySettings.forEach((city) => {
+      if (
+        Object.prototype.hasOwnProperty.call(state.settings, (city))
+        && state.settings[city]
+      ) {
+        result.push(city);
+      }
+    });
+    return result;
+  }
+
+  /**
    * Get redux compatible settings object from localStorage
    */
   static getSettingsFromLocalStorage() {
@@ -89,11 +109,12 @@ class SettingsUtility {
       colorblind: LocalStorageUtility.getItem('colorblind') === 'true',
       visuallyImpaired: LocalStorageUtility.getItem('visuallyImpaired') === 'true',
       hearingAid: LocalStorageUtility.getItem('hearingAid') === 'true',
-      helsinki: LocalStorageUtility.getItem('helsinki') === 'true',
-      espoo: LocalStorageUtility.getItem('espoo') === 'true',
-      vantaa: LocalStorageUtility.getItem('vantaa') === 'true',
-      kauniainen: LocalStorageUtility.getItem('kauniainen') === 'true',
+      cities: {},
     };
+
+    config.cities.forEach((city) => {
+      settings.cities[city] = LocalStorageUtility.getItem(city) === 'true';
+    });
 
     return settings;
   }

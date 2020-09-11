@@ -82,9 +82,6 @@ const AddressView = (props) => {
   };
 
   const fetchUnits = (lnglat) => {
-    if (embed) {
-      return;
-    }
     fetchAddressUnits(lnglat)
       .then((data) => {
         const units = data.results;
@@ -123,9 +120,6 @@ const AddressView = (props) => {
           const { coordinates } = address.location;
 
           focusToPosition(map, [coordinates[0], coordinates[1]]);
-          if (embed) {
-            return;
-          }
           fetchAddressDistricts(coordinates);
           fetchUnits(coordinates);
         } else {
@@ -247,10 +241,6 @@ const AddressView = (props) => {
     }
   }, [match.url, map]);
 
-  if (embed) {
-    return null;
-  }
-
   // Render component
   const title = getAddressText(addressData, getLocaleText);
   const tabs = [
@@ -284,6 +274,10 @@ const AddressView = (props) => {
       tabs[selectedTab].onClick();
     }
   }, []);
+
+  if (embed) {
+    return null;
+  }
 
   return (
     <div>

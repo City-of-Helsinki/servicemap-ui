@@ -11,25 +11,25 @@ import { getLocaleString } from '../../redux/selectors/locale';
 
 import UnitView from './UnitView';
 import styles from './styles/styles';
-import { calculateDistance } from '../../redux/selectors/unit';
+import { calculateDistance, getCurrentlyUsedPosition } from '../../redux/selectors/unit';
 import { formatDistanceObject } from '../../utils';
 
 // Listen to redux state
 const mapStateToProps = (state, props) => {
   const { intl } = props;
   const stateUnit = state.selectedUnit.unit.data;
+  const currentPosition = getCurrentlyUsedPosition(state);
   const unitFetching = state.selectedUnit.unit.isFetching;
   const {
     accessibilitySentences, events, reservations, hearingMaps,
   } = state.selectedUnit;
   const getLocaleText = textObject => getLocaleString(state, textObject);
-  const map = state.mapRef.leafletElement;
-  const { navigator } = state;
-  const { user } = state;
+  const { mapRef, navigator, user } = state;
+  const map = mapRef && mapRef.leafletElement;
 
   return {
     accessibilitySentences: accessibilitySentences.data,
-    distance: formatDistanceObject(intl, calculateDistance(state)(stateUnit)),
+    distance: formatDistanceObject(intl, calculateDistance(stateUnit, currentPosition)),
     stateUnit,
     unitFetching,
     eventsData: events,

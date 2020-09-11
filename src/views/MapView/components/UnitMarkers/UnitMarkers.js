@@ -11,9 +11,8 @@ class UnitMarkers extends React.Component {
   }
 
   render() {
-    const {
-      data, Polyline,
-    } = this.props;
+    const { data } = this.props;
+    const { Polyline } = global.rL;
 
     const unitListFiltered = data.units.filter(unit => unit.object_type === 'unit');
     // Show markers with location
@@ -34,7 +33,6 @@ class UnitMarkers extends React.Component {
 
 UnitMarkers.propTypes = {
   data: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.any)).isRequired,
-  Polyline: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 UnitMarkers.defaultProps = {

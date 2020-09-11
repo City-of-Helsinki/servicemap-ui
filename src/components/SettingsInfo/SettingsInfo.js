@@ -10,14 +10,12 @@ import {
   HearingIcon,
   VisualImpairmentIcon,
   getIcon,
-  HelsinkiIcon,
-  VantaaIcon,
-  EspooIcon,
-  KauniainenIcon,
 } from '../SMIcon';
+import SMIcon from '../SMIcon/SMIcon';
 import constants from './constants';
 import SettingsInfoItem from './SettingsInfoItem';
 import isClient from '../../utils';
+import config from '../../../config';
 
 const SettingsInfo = ({
   classes,
@@ -31,7 +29,7 @@ const SettingsInfo = ({
   }
 
   const {
-    colorblind, hearingAid, mobility, visuallyImpaired, helsinki, espoo, vantaa, kauniainen,
+    colorblind, hearingAid, mobility, visuallyImpaired,
   } = settings;
 
   const accessibilitySettings = [
@@ -41,12 +39,10 @@ const SettingsInfo = ({
     ...mobility ? [{ text: intl.formatMessage({ id: `settings.mobility.${mobility}` }), icon: getIcon(mobility) }] : [],
   ];
 
-  let citySettings = [
-    ...helsinki ? [{ text: `${intl.formatMessage({ id: 'settings.city.helsinki' })}`, icon: <HelsinkiIcon /> }] : [],
-    ...espoo ? [{ text: `${intl.formatMessage({ id: 'settings.city.espoo' })}`, icon: <EspooIcon /> }] : [],
-    ...vantaa ? [{ text: `${intl.formatMessage({ id: 'settings.city.vantaa' })}`, icon: <VantaaIcon /> }] : [],
-    ...kauniainen ? [{ text: `${intl.formatMessage({ id: 'settings.city.kauniainen' })}`, icon: <KauniainenIcon /> }] : [],
-  ];
+  let citySettings = [];
+  config.cities.forEach((city) => {
+    citySettings.push(...settings.cities[city] ? [{ text: `${intl.formatMessage({ id: `settings.city.${city}` })}`, icon: <SMIcon icon={`icon-icon-coat-of-arms-${city}`} /> }] : []);
+  });
 
   if (citySettings.length === 4) {
     citySettings = [];

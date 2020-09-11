@@ -2,6 +2,11 @@ export default theme => ({
   listItem: {
     minHeight: '3.5rem',
     padding: theme.spacing(1),
+    color: '#000',
+    '&.dark': {
+      paddingLeft: 26,
+      color: '#fff',
+    },
   },
   textContainer: {
     padding: theme.spacing(1, 0),
@@ -12,12 +17,16 @@ export default theme => ({
   link: {
     color: '#0000EE',
   },
+  whiteText: {
+    color: '#fff',
+  },
   listIcon: {
     width: '1.5rem',
     height: '1.5rem',
     margin: theme.spacing(1),
     marginRight: theme.spacing(2),
     minWidth: 0,
+    color: 'inherit',
   },
   divider: {
     marginLeft: theme.spacing(9),

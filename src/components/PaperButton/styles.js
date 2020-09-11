@@ -63,4 +63,11 @@ export default theme => ({
     lineHeight: '18px',
     color: 'rgba(0, 0, 0, 0.87)',
   },
+  noBorder: {
+    margin: 0,
+    padding: 0,
+    border: 0,
+    boxShadow: 'none',
+    width: 'auto',
+  },
 });
