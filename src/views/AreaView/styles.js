@@ -110,11 +110,26 @@ const styles = theme => ({
     padding: theme.spacing.unit,
     paddingLeft: 0,
   },
+  expandingElement: {
+    boxShadow: 'none',
+    width: '100%',
+  },
   expandedUnitCategory: {
     margin: 0,
   },
+  deleteButton: {
+    marginLeft: theme.spacing.unitTriple,
+  },
+  unitListArea: {
+    textAlign: 'left',
+  },
   centerItems: {
     alignItems: 'center',
+    padding: 0,
+  },
+  testPadding: {
+    paddingLeft: 0,
+    paddingRight: 32,
   },
 });
 

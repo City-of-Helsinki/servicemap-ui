@@ -1,21 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
-  List, Typography, Divider, ExpansionPanel, ExpansionPanelSummary,
+  List, Typography, Divider, ExpansionPanel, ExpansionPanelSummary, Checkbox, FormControlLabel,
 } from '@material-ui/core';
 import distance from '@turf/distance';
 import { FormattedMessage } from 'react-intl';
-import { ArrowDropDown } from '@material-ui/icons';
+import { ArrowDropDown, Cancel } from '@material-ui/icons';
 import { AreaIcon, AddressIcon } from '../../../../components/SMIcon';
 import { formatDistanceObject, uppercaseFirst } from '../../../../utils';
 import DivisionItem from '../../../../components/ListItems/DivisionItem';
 import UnitItem from '../../../../components/ListItems/UnitItem';
+import SMButton from '../../../../components/ServiceMapButton';
 
 
 const UnitTab = ({
   selectedDistrictData,
   selectedAddress,
-  selectedSubdistrict,
+  selectedSubdistricts,
+  setSelectedDistrictServices,
   filteredSubdistrictUnits,
   addressDistrict,
   formAddressString,
@@ -23,6 +25,8 @@ const UnitTab = ({
   classes,
   intl,
 }) => {
+  const [checkedServices, setCheckedServices] = useState([]);
+
   const sortDistricts = (districts) => {
     districts.sort((a, b) => a.unit.distance - b.unit.distance);
   };
@@ -34,6 +38,17 @@ const UnitTab = ({
   const distanceToAddress = coord => (
     Math.round(distance(coord, selectedAddress.location.coordinates) * 1000)
   );
+
+  const handleCheckboxChange = (event, category) => {
+    let newArray;
+    if (event.target.checked) {
+      newArray = [...checkedServices, category.id];
+    } else {
+      newArray = checkedServices.filter(service => service !== category.id);
+    }
+    setCheckedServices(newArray);
+    setSelectedDistrictServices(newArray);
+  };
 
   const renderDistrictUnitItem = district => (
     <DivisionItem
@@ -81,10 +96,26 @@ const UnitTab = ({
 
     return (
       serviceList.map(category => (
-        <ExpansionPanel key={category.id} classes={{ expanded: classes.expandedUnitCategory }}>
-          <ExpansionPanelSummary classes={{ content: classes.centerItems }}>
-            <Typography className={classes.unitCategoryText}>{`${uppercaseFirst(getLocaleText(category.name))} (${category.units.length})`}</Typography>
-            <ArrowDropDown className={classes.right} />
+        <ExpansionPanel
+          CollapseProps={{ unmountOnExit: true }}
+          key={category.id}
+          classes={{ expanded: classes.expandedUnitCategory }}
+        >
+          <ExpansionPanelSummary
+            classes={{ content: classes.centerItems }}
+            expandIcon={<ArrowDropDown />}
+          >
+            <FormControlLabel
+              onClick={event => event.stopPropagation()}
+              onFocus={event => event.stopPropagation()}
+              control={(
+                <Checkbox
+                  checked={checkedServices.some(service => service === category.id)}
+                  onChange={e => handleCheckboxChange(e, category)}
+                />
+              )}
+              label={<Typography className={classes.unitCategoryText}>{`${uppercaseFirst(getLocaleText(category.name))} (${category.units.length})`}</Typography>}
+            />
           </ExpansionPanelSummary>
           <List>
             {category.units.map((unit, i) => (
@@ -112,19 +143,30 @@ const UnitTab = ({
       );
     }
 
-    if (selectedSubdistrict) {
-      // If geographical subdistrict is selected, lsit units within the district
+    if (selectedSubdistricts.length) {
+      // If geographical subdistrict is selected, list units within the district
       return (
-        <div>
-          <List>
+        <div className={classes.unitListArea}>
+          <SMButton
+            className={classes.deleteButton}
+            disabled={!checkedServices.length}
+            messageID="services.selections.delete.all"
+            icon={<Cancel className={classes.deleteIcon} />}
+            role="button"
+            margin
+            color="primary"
+            onClick={() => {
+              setCheckedServices([]);
+              setSelectedDistrictServices([]);
+            }}
+          />
+          <List disablePadding>
             {selectedDistrictData.filter(obj => obj.unit).map(district => (
               renderDistrictUnitItem(district)
             ))}
-            {selectedSubdistrict ? (
-              <List>
-                {renderUnitList()}
-              </List>
-            ) : null}
+            <List disablePadding>
+              {renderUnitList()}
+            </List>
           </List>
         </div>
       );
