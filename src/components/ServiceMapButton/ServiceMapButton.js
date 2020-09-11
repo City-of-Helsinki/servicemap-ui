@@ -19,6 +19,7 @@ const SMButton = (props) => {
     margin,
     style,
     role,
+    disabled,
     ...rest
   } = props;
   const colorStyle = classes[color] || '';
@@ -36,6 +37,7 @@ const SMButton = (props) => {
     <ButtonBase
       {...rest}
       aria-label={ariaLabel || buttonTitle}
+      disabled={disabled}
       className={buttonClasses}
       icon={buttonIcon}
       onClick={onClick}
