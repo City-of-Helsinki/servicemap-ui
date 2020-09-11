@@ -73,6 +73,11 @@ if (typeof settings.GUIDE_MAP_URL === 'undefined') {
   settings.GUIDE_MAP_URL = 'https://kartta.hel.fi/ws/geoserver/avoindata/gwc/service/wmts?layer=avoindata:Karttasarja_PKS&tilematrixset=ETRS-GK25&Service=WMTS&Request=GetTile&Version=1.0.0&TileMatrix=ETRS-GK25:{z}&TileCol={x}&TileRow={y}&Format=image%2Fpng';
 }
 
+if (typeof settings.SHOW_AREA_SELECTION === 'undefined') {
+  // If not set default to Helsinki
+  settings.SHOW_AREA_SELECTION = true;
+}
+
 export default {
   "version": version.tag,
   "commit": version.commit,
@@ -156,5 +161,6 @@ export default {
     "fi": 'fi_fi',
     "en": 'en_uk',
     "sv": 'sv_se',
-  }
+  },
+  "show_area_selection": (settings.SHOW_AREA_SELECTION === 'true'),
 }
