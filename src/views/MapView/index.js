@@ -36,7 +36,7 @@ const mapStateToProps = (state, props) => {
   const getLocaleText = textObject => getLocaleString(state, textObject);
   const { adminDistricts, units, toRender } = address;
   const districtUnits = getFilteredSubdistrictUnits(state);
-  const getAddressNavigatorParams = () => getAddressNavigatorParamsConnector(getLocaleText, locale);
+  const getAddressNavigatorParams = getAddressNavigatorParamsConnector(getLocaleText, locale);
   const getPath = (id, data) => generatePath(id, locale, data);
   const distanceCoordinates = getCurrentlyUsedPosition(state);
   const userLocation = customPosition.coordinates || position.coordinates;
