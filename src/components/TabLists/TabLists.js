@@ -33,7 +33,7 @@ const TabLists = ({
   const [tabIndex, setTabIndex] = useState(getTabfromUrl());
   const [styles, setStyles] = useState({});
 
-  let tabsRef = useRef(null);
+  const tabsRef = useRef(null);
 
   const filteredData = data.filter(item => item.component || (item.data && item.data.length > 0));
 
@@ -120,7 +120,7 @@ const TabLists = ({
   };
 
   const calculateHeaderStylings = () => {
-    if (!tabsRef) {
+    if (!tabsRef || !tabsRef.current) {
       return;
     }
     // Sticky relation is different on mobile (root relation) and desktop (current content relation)
@@ -132,7 +132,7 @@ const TabLists = ({
 
     // Calculate height by looping through Tabs root element's previous siblings
     // Change sidebar scroll to match TabList header's sticky elements' combined height
-    const tabsElem = tabsRef.tabsRef.parentNode.parentNode;
+    const tabsElem = tabsRef.current;
     const tabsHeight = tabsElem.clientHeight;
     const tabsDistanceFromTop = tabsElem.offsetTop;
     let sibling = tabsElem;
@@ -207,7 +207,7 @@ const TabLists = ({
         <Tabs
           // TODO: In materialUI 4.*
           // Change to use ref and update height calculations in componentDidMount
-          innerRef={(ref) => { tabsRef = ref; }}
+          ref={tabsRef}
           className={`sticky ${classes.root}`}
           classes={{
             indicator: classes.indicator,
@@ -229,8 +229,7 @@ const TabLists = ({
                       aria-controls={`tab-content-${index}`}
                       aria-label={item.ariaLabel ? item.ariaLabel : null}
                       classes={{
-                        root: classes.tab,
-                        labelContainer: tabLabelStyles,
+                        root: `${classes.tab} ${tabLabelStyles}`,
                         selected: classes.selected,
                       }}
                       className={classes.tab}
@@ -246,8 +245,7 @@ const TabLists = ({
                     aria-controls={`tab-content-${index}`}
                     aria-label={item.ariaLabel ? item.ariaLabel : null}
                     classes={{
-                      root: classes.tab,
-                      labelContainer: tabLabelStyles,
+                      root: `${classes.tab} ${tabLabelStyles}`,
                       selected: classes.selected,
                     }}
                     label={`${item.title}`}

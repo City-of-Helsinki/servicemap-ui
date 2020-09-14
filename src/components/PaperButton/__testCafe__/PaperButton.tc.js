@@ -1,6 +1,6 @@
 /* eslint-disable no-await-in-loop */
 import { ReactSelector } from 'testcafe-react-selectors';
-import { paletteDefault } from '../../../../themes';
+import { paletteDefault } from '../../../themes';
 
 const PaperButtonTest = async (t) => {
   const paperButtons = ReactSelector('PaperButton');

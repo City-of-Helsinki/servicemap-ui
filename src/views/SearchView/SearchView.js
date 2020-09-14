@@ -383,7 +383,10 @@ class SearchView extends React.Component {
         onClick={() => {
           this.setState({ expandVisible: false });
           setTimeout(() => {
-            document.getElementById('ExpandSuggestions').focus();
+            const elem = document.getElementById('ExpandSuggestions');
+            if (elem) {
+              elem.focus();
+            }
           }, 1);
         }}
         isVisible

@@ -1,7 +1,7 @@
 export default theme => ({
   listItem: {
     minHeight: '3.5rem',
-    padding: theme.spacing.unit,
+    padding: theme.spacing(1),
     color: '#000',
     '&.dark': {
       paddingLeft: 26,
@@ -9,9 +9,9 @@ export default theme => ({
     },
   },
   textContainer: {
-    padding: `${theme.spacing.unit}px 0`,
-    marginLeft: theme.spacing.unitDouble,
-    marginRight: theme.spacing.unitDouble,
+    padding: theme.spacing(1, 0),
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(2),
     whiteSpace: 'pre-line',
   },
   link: {
@@ -23,16 +23,17 @@ export default theme => ({
   listIcon: {
     width: '1.5rem',
     height: '1.5rem',
-    margin: theme.spacing.unit,
-    marginRight: theme.spacing.unitDouble,
+    margin: theme.spacing(1),
+    marginRight: theme.spacing(2),
+    minWidth: 0,
     color: 'inherit',
   },
   divider: {
-    marginLeft: theme.spacing.unit * 9,
-    marginRight: -theme.spacing.unitDouble,
+    marginLeft: theme.spacing(9),
+    marginRight: theme.spacing(-2),
   },
   itemFocus: {
     outline: '2px solid transparent',
-    boxShadow: `0 0 0 4px ${theme.palette.focusBorder}`,
+    boxShadow: `0 0 0 4px ${theme.palette.focusBorder.main}`,
   },
 });

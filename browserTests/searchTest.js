@@ -14,7 +14,7 @@ fixture`Search view test`
 const getLocation = ClientFunction(() => document.location.href);
 
 const searchUnits = async (t, search = 'uimastadion') => {
-  const input = ReactSelector('InputBase');
+  const input = ReactSelector('WithStyles(ForwardRef(InputBase))');
 
   // Make new search
   await t
@@ -31,14 +31,16 @@ const searchUnits = async (t, search = 'uimastadion') => {
   return unitCount;
 }
 
-test('Navigate search view ', async (t) => {
+test('Navigate search view', async (t) => {
   // Test result orderer navigation
-  const unitCount = await searchUnits(t);
-  const input = ReactSelector('InputBase').nth(0);
-  let select =  ReactSelector('ResultOrderer Select');
+  const unitCount = await searchUnits(t, 'kirjasto');
+  const input = ReactSelector('WithStyles(ForwardRef(InputBase))').nth(0);
+  let select =  ReactSelector('ResultOrderer WithStyles(ForwardRef(Select))');
 
   await t
-    .typeText(input, 'kirjasto')
+    // .click(input)
+    // .pressKey('ctrl+a delete')
+    .typeText(input, 't')
     .pressKey('tab') // Tabs to cancel button
     .pressKey('tab') // Tabs to search icon button
     .pressKey('tab') // Result orderer
@@ -48,11 +50,11 @@ test('Navigate search view ', async (t) => {
     .pressKey('up')
     .expect(select.getReact(({props}) => props.value)).eql('match-desc');
   // Test result list navigation
-  const firstSearchItems =  ReactSelector('TabLists ResultItem');
-  const secondSearchItems = firstSearchItems.nth(1);
+  const items =  ReactSelector('TabLists ResultItem');
+  // const secondSearchItems = firstSearchItems.nth(1);
 
   await t
-    .typeText(input, 'kirjasto')
+    .typeText(input, 't')
     .pressKey('tab') // Tabs to cancel button
     .pressKey('tab') // Tabs to search icon button
     .pressKey('tab') // Result orderer
@@ -60,43 +62,51 @@ test('Navigate search view ', async (t) => {
     .pressKey('tab') // Address search
     .pressKey('tab') // Address search clear
     .pressKey('tab') // Tabs to first item in list
-    .expect(firstSearchItems.focused).ok('Tab did move focus to first list item')
+    .expect(items.nth(0).focused).ok('Tab did move focus to first list item')
     .pressKey('tab')
-    .expect(secondSearchItems.focused).ok('Tab did move focus to second list item')
+    .expect(items.nth(1).focused).ok('Tab did move focus to second list item')
     .pressKey('shift+tab')
-    .expect(firstSearchItems.focused).ok('Tab did move focus back to first list item');
+    .expect(items.nth(0).focused).ok('Tab did move focus back to first list item');
 
+});
+
+test('Tab navigation works correctly', async (t) => {
   // Test tabs navigation
   await searchUnits(t, 'kirjasto');
-  const tabs =  ReactSelector('TabLists Tab');
+  const tabs =  ReactSelector('TabLists WithStyles(ForwardRef(Tab))');
+  const services =  ReactSelector('TabLists ServiceItem');
+  const units =  ReactSelector('TabLists UnitItem');
 
   await t
-    .click(tabs.nth(1));
-
-  let services =  ReactSelector('TabLists ServiceItem');
-  await t // Check that services exist
+    // Check that clicks work correctly
+    .click(tabs.nth(1))
+    // Check that services exist
     .expect(services.count).gt(1)
-    .click(tabs.nth(0));
-
-  let units =  ReactSelector('TabLists UnitItem');
-  await t // Check that units exist
-    .expect(units.count).gt(1);
-
-  await t
-    .pressKey('tab')
-    .expect(tabs.nth(1).focused).ok('Tab did move focus back to second tab item')
-    .pressKey('enter');
-
-  services =  ReactSelector('TabLists ServiceItem');
-  await t // Check that units exist
-    .expect(services.count).gt(1)
-    .pressKey('shift+tab enter')
-    .expect(tabs.nth(0).focused).ok('Tab did move focus back to first tab item');
-
-  units =  ReactSelector('TabLists UnitItem');
-  await t // Check that units exist
+    .click(tabs.nth(0))
+    // Check that units exist
     .expect(units.count).gt(1)
-});
+
+    // Check that keyboard navigation works correctly
+    // Check that right tab (services tab) works correctly
+    .pressKey('right')
+    .expect(tabs.nth(1).focused).ok('Right arrow did move focus to second tab item')
+    .pressKey('enter')
+    .pressKey('tab')
+    .expect(services.count).gt(1)
+    .expect(services.nth(0).focused).ok('Tab should move focus to first list item')
+    .pressKey('shift+tab')
+    .expect(tabs.nth(1).focused).ok('Shift+tab should move focus back to second tab')
+
+    // Check that first tab (units tab) works correctly
+    .pressKey('left')
+    .expect(tabs.nth(0).focused).ok('Left arrow should move focus back to first tab')
+    .pressKey('enter')
+    .pressKey('tab')
+    .expect(units.count).gt(1)
+    .expect(units.nth(0).focused).ok('Tab should move focus to first list item')
+    .pressKey('shift+tab')
+    .expect(tabs.nth(0).focused).ok('Shift+tab should move focus back to second tab'); // Check that units exist
+})
 
 test('Search does list results', async (t) => {
   // const unitCount = await searchUnits(t);
@@ -108,8 +118,8 @@ test('Search does list results', async (t) => {
 // Check that address search works and draws marker on map
 test('Address search does work', async (t) => {
   await searchUnits(t, 'kirjasto');
-  const addressInput = ReactSelector('InputBase').nth(2);
-  const suggestions = ReactSelector('AddressSearchBar ListItem');
+  const addressInput = ReactSelector('WithStyles(ForwardRef(InputBase))').nth(2);
+  const suggestions = ReactSelector('AddressSearchBar WithStyles(ForwardRef(ListItem))');
   const marker = Selector('div[class*="userMarker"]');
   const distanceText = Selector('div[class*="ResultItem-rightColumn"]');
 
@@ -124,7 +134,7 @@ test('Address search does work', async (t) => {
 });
 
 test('UnitItem click event takes to unit page', async(t) => {
-  const tabs =  ReactSelector('TabLists Tab');
+  const tabs =  ReactSelector('TabLists WithStyles(ForwardRef(Tab))');
   const units =  ReactSelector('TabLists UnitItem');
   const id = await units.nth(0).getReact(({props}) => props.unit.id);
   const target = `http://${server.address}:${server.port}/fi/unit/${id}`;
@@ -136,7 +146,7 @@ test('UnitItem click event takes to unit page', async(t) => {
 
 test('ServiceItem click event takes to service page', async(t) => {
   await searchUnits(t, 'kirjasto');
-  const tabs =  ReactSelector('TabLists Tab');
+  const tabs =  ReactSelector('TabLists WithStyles(ForwardRef(Tab))');
 
   await t
     .click(tabs.nth(1));
@@ -257,7 +267,7 @@ test('SuggestionButton accessibility attributes are OK', async(t) => {
 
 test('Tabs accessibility attributes are OK', async(t) => {
   await searchUnits(t, 'kirjasto');
-  const tabs = ReactSelector('Tab');
+  const tabs = ReactSelector('WithStyles(ForwardRef(Tab))');
   const tab1 = await tabs.nth(0);
   const tab2 = await tabs.nth(1);
 
@@ -288,7 +298,7 @@ test('Search suggestion arrow navigation does loop correctly', async(t) => {
   // Get SearchBar focused suggestion value
   const searchbar = ReactSelector('SearchBar');
   // Get SearchBar input
-  const input = ReactSelector('InputBase');
+  const input = ReactSelector('WithStyles(ForwardRef(InputBase))');
   await t
     .click(input)
     .pressKey('down');
@@ -309,7 +319,7 @@ test('Search suggestion arrow navigation does loop correctly', async(t) => {
 
 test('SettingsInfo works correctly', async(t) => {
   // Click settings in link in settings info
-  const settingsInfoButton = await ReactSelector('SettingsInfo ButtonBase');
+  const settingsInfoButton = await ReactSelector('SettingsInfo WithStyles(ForwardRef(ButtonBase))');
   const siText = await settingsInfoButton.innerText;
   await t
     .expect(siText).contains('Muuta haku- tai esteettömyysasetuksia')
@@ -319,7 +329,7 @@ test('SettingsInfo works correctly', async(t) => {
 
   // Expect title to be focused in settings view
   const title = Selector('.SettingsTitle').child(0);
-  const backButton = ReactSelector('SMButton ButtonBase').nth(1);
+  const backButton = ReactSelector('SMButton WithStyles(ForwardRef(ButtonBase))').nth(1);
   await t
     .expect(title.focused).ok('Expected title to be focused on entering settings view')
     .expect(title.innerText).eql('Asetukset')
@@ -328,7 +338,7 @@ test('SettingsInfo works correctly', async(t) => {
   ;
 
   // Expect focus to be back at SettingsInfo button when returning to search view
-  const settingsButton = ReactSelector('SettingsInfo ButtonBase');
+  const settingsButton = ReactSelector('SettingsInfo WithStyles(ForwardRef(ButtonBase))');
   await t
     .expect(settingsButton.innerText).contains('Muuta haku- tai esteettömyysasetuksia')
     .expect(settingsButton.focused).ok()
@@ -338,7 +348,7 @@ test('SettingsInfo works correctly', async(t) => {
 
 test('Search suggestion click works correctly', async(t) => {
   // Get SearchBar input
-  const input = ReactSelector('InputBase');
+  const input = ReactSelector('WithStyles(ForwardRef(InputBase))');
 
   // Make new search
   await t

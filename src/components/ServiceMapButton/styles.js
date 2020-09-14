@@ -10,13 +10,13 @@ export default theme => ({
     padding: '0 4px',
   },
   margin: {
-    marginTop: theme.spacing.unitDouble,
-    marginBottom: theme.spacing.unitDouble,
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
   },
   marginRight: {
-    marginRight: theme.spacing.unitDouble,
+    marginRight: theme.spacing(2),
   },
   primary: {
     color: theme.palette.primary.highContrast,
@@ -55,7 +55,7 @@ export default theme => ({
   },
   typography: {
     textTransform: 'none',
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
     fontSize: 14,
   },
 });

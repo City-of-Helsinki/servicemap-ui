@@ -3,7 +3,7 @@ import { Selector, ClientFunction } from 'testcafe';
 
 import { waitForReact, ReactSelector } from 'testcafe-react-selectors';
 
-import { paletteDefault, paletteDark } from '../themes'
+import { paletteDefault, paletteDark } from '../src/themes'
 import config from './config';
 const { server } = config;
 
@@ -20,7 +20,7 @@ const getLocation = ClientFunction(() => document.location.href);
 
 
 test('Language does change', async (t) => {
-  const languageButtons = ReactSelector('ButtonBase');
+  const languageButtons = ReactSelector('WithStyles(ForwardRef(ButtonBase))');
   const title = Selector('.app-title');
 
   await t
@@ -47,7 +47,7 @@ test('Language does change', async (t) => {
 });
 
 test('Contrast does change', async (t) => {
-  const contrastButton = ReactSelector('ButtonBase').nth(4);
+  const contrastButton = ReactSelector('WithStyles(ForwardRef(ButtonBase))').nth(4);
   const searchbarContainer = Selector('main').find('.SearchBar');
 
   await t

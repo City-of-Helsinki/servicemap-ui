@@ -85,30 +85,30 @@ class UnitHelper {
   */
 
   static getIconColor = count => (
-    this.accessibilityColors[this.getMarkerType(count)]
+    UnitHelper.accessibilityColors[UnitHelper.getMarkerType(count)]
   )
 
   static getDefaultIcon = () => {
-    if (!this.markerIcons) {
+    if (!UnitHelper.markerIcons) {
       return null;
     }
     const iconIndex = 2;
 
-    const icon = this.markerIcons.default[iconIndex];
+    const icon = UnitHelper.markerIcons.default[iconIndex];
 
     return icon;
   }
 
   static getIcon = (unit, settings, isStraight = false) => {
-    if (!this.markerIcons) {
+    if (!UnitHelper.markerIcons) {
       return null;
     }
     if (!unit || !settings) {
-      const icon = this.markerIcons.default[2];
+      const icon = UnitHelper.markerIcons.default[2];
       return icon;
     }
-    const shortcomingCount = this.getShortcomingCount(unit, settings);
-    const markerType = this.getMarkerType(shortcomingCount);
+    const shortcomingCount = UnitHelper.getShortcomingCount(unit, settings);
+    const markerType = UnitHelper.getMarkerType(shortcomingCount);
 
     let iconIndex = 2;
     if (!isStraight && unit.id) {
@@ -116,7 +116,7 @@ class UnitHelper {
       iconIndex = index;
     }
 
-    const icon = this.markerIcons[markerType][iconIndex];
+    const icon = UnitHelper.markerIcons[markerType][iconIndex];
 
     return icon;
   }

@@ -2,7 +2,7 @@
 import React from 'react';
 import { createShallow } from '@material-ui/core/test-utils';
 import { MuiThemeProvider, RadioGroup, FormControlLabel } from '@material-ui/core';
-import themes from '../../../../themes';
+import themes from '../../../themes';
 import SMRadio from '../index';
 
 // Generic required props for SimpleListItem

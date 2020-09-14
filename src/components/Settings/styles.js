@@ -16,7 +16,7 @@ export default theme => ({
     borderRadius: 0,
     padding: 0,
     paddingLeft: 46,
-    paddingRight: theme.spacing.unitDouble,
+    paddingRight: theme.spacing(2),
     margin: 0,
   },
   alertText: {
@@ -31,11 +31,11 @@ export default theme => ({
     flexDirection: 'column',
   },
   checkbox: {
-    padding: theme.spacing.unit,
+    padding: theme.spacing(1),
   },
   boxFocus: {
     boxShadow: 'none',
-    outline: `4px solid ${theme.palette.focusBorder}`,
+    outline: `4px solid ${theme.palette.focusBorder.main}`,
   },
   confirmationButtonContainer: {
     display: 'flex',
@@ -57,8 +57,8 @@ export default theme => ({
     border: '1px solid',
   },
   contentButton: {
-    marginBottom: theme.spacing.unitDouble,
-    marginTop: theme.spacing.unitDouble,
+    marginBottom: theme.spacing(2),
+    marginTop: theme.spacing(2),
   },
   flexBase: {
     flex: '0 0 auto',
@@ -73,17 +73,17 @@ export default theme => ({
     justifyContent: 'space-between',
     flexDirection: 'row',
     padding: 0,
-    margin: `0 ${theme.spacing.unit}px`,
+    margin: theme.spacing(0, 1),
   },
   titleText: {
-    margin: `${theme.spacing.unit}px 0`,
+    margin: theme.spacing(1, 0),
   },
   flexReverse: {
     flexDirection: 'row-reverse',
   },
   closeButton: {
-    margin: `0 ${theme.spacing.unit}px`,
-    padding: theme.spacing.unitHalf,
+    margin: theme.spacing(0, 1),
+    padding: theme.spacing(0.5),
   },
   container: {
     backgroundColor: '#fff',
@@ -128,8 +128,8 @@ export default theme => ({
   },
   radioLabel: {
     margin: 0,
-    marginLeft: `-${theme.spacing.unitHalf}px`,
-    padding: `${theme.spacing.unit}px 0`,
+    marginLeft: theme.spacing(-0.5),
+    padding: theme.spacing(1, 0),
   },
   stickyContainer: {
     backgroundColor: '#fff',

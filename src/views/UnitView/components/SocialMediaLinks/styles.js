@@ -3,8 +3,8 @@ export default theme => ({
     textAlign: 'start',
   },
   someListContainer: {
-    padding: theme.spacing.unit,
-    paddingTop: theme.spacing.unitDouble,
+    padding: theme.spacing(1),
+    paddingTop: theme.spacing(2),
     paddingLeft: 72,
   },
   someList: {
@@ -17,7 +17,7 @@ export default theme => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    marginBottom: theme.spacing.unitHalf,
+    marginBottom: theme.spacing(0.5),
     justifyContent: 'center',
     backgroundColor: '#fff',
     '&:hover': {

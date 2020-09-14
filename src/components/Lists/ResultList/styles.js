@@ -16,7 +16,7 @@ export default theme => ({
     justifyContent: 'space-between',
     width: '100%',
     overflow: 'hidden',
-    padding: `${theme.spacing.unit}px ${theme.spacing.unitDouble}px`,
+    padding: theme.spacing(1, 2),
   },
   titleText: {
     ...theme.typography.body2,
@@ -25,11 +25,11 @@ export default theme => ({
   },
   left: {
     float: 'left',
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
   },
   right: {
     float: 'right',
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
   },
   list: {
     maxHeight: '100%',

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Typography, Divider, ButtonBase,
+  Typography, Divider, ButtonBase, NoSsr,
 } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
 import Container from '../Container';
@@ -55,7 +55,7 @@ const SettingsInfo = ({
     ? 'settings.info.title.noSettings' : 'settings.info.title';
 
   return (
-    <>
+    <NoSsr>
       <Typography component="h3" variant="srOnly">
         <FormattedMessage id="settings.info.heading" />
       </Typography>
@@ -118,7 +118,7 @@ const SettingsInfo = ({
           }) : null}
         </div>
       </Container>
-    </>
+    </NoSsr>
   );
 };
 

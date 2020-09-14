@@ -11,7 +11,7 @@ export default theme => ({
     border: '1px solid #000000',
   },
   button: {
-    margin: theme.spacing.unitHalf,
+    margin: theme.spacing(0.5),
     height: 32,
     width: 32,
     minHeight: 32,
@@ -19,8 +19,8 @@ export default theme => ({
   },
   buttonContainer: {
     flexDirection: 'row',
-    margin: `${theme.spacing.unit}px ${theme.spacing.unitDouble}px`,
-    padding: theme.spacing.unitHalf,
+    margin: theme.spacing(1, 2),
+    padding: theme.spacing(0.5),
   },
   list: {
     display: 'inherit',
@@ -46,7 +46,7 @@ export default theme => ({
   },
   pageItem: {
     margin: 0,
-    marginLeft: theme.spacing.unitHalf,
-    marginRight: theme.spacing.unitHalf,
+    marginLeft: theme.spacing(0.5),
+    marginRight: theme.spacing(0.5),
   },
 });

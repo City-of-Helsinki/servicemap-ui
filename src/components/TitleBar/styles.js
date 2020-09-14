@@ -10,7 +10,7 @@ export default theme => ({
     background: theme.palette.background.main,
     boxShadow: '0 2px 4px 0 rgba(0,0,0,0.5)',
     color: '#fff',
-    padding: theme.spacing.unit,
+    padding: theme.spacing(1),
   },
   textBar: {
     paddingLeft: 36,
@@ -30,8 +30,8 @@ export default theme => ({
     display: 'flex',
     color: 'inherit',
     flex: '0 1 auto',
-    padding: theme.spacing.unit,
-    marginLeft: theme.spacing.unitHalf,
+    padding: theme.spacing(1),
+    marginLeft: theme.spacing(0.5),
   },
   buttonFocus: {
     outline: '2px solid transparent',
@@ -44,9 +44,9 @@ export default theme => ({
     fontSize: 16,
     color: 'inherit',
     marginLeft: 'auto',
-    paddingLeft: theme.spacing.unit,
+    paddingLeft: theme.spacing(1),
     paddingTop: 4,
-    marginRight: theme.spacing.unit,
+    marginRight: theme.spacing(1),
     minWidth: 50,
   },
   sticky: {
