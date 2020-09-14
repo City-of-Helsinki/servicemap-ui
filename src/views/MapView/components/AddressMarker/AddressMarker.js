@@ -6,8 +6,6 @@ import { getAddressText } from '../../../../utils/address';
 import { AddressIcon } from '../../../../components/SMIcon';
 
 const AddressMarker = ({
-  Marker,
-  Tooltip,
   address,
   classes,
   embeded,
@@ -17,6 +15,8 @@ const AddressMarker = ({
   if (!position && (!address || !address.addressCoordinates)) {
     return null;
   }
+
+  const { Marker, Tooltip } = global.rL;
 
   // eslint-disable-next-line global-require
   const { divIcon } = require('leaflet');
@@ -58,8 +58,6 @@ const AddressMarker = ({
 };
 
 AddressMarker.propTypes = {
-  Marker: PropTypes.objectOf(PropTypes.any).isRequired,
-  Tooltip: PropTypes.objectOf(PropTypes.any).isRequired,
   address: PropTypes.objectOf(PropTypes.any).isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   position: PropTypes.arrayOf(PropTypes.number),

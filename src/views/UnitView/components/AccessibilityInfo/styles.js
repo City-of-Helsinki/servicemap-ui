@@ -3,8 +3,8 @@ export default theme => ({
     marginLeft: -theme.spacing.unitTriple,
   },
   divider: {
-    marginLeft: -theme.spacing.unitTriple,
-    marginRight: -theme.spacing.unitTriple,
+    marginLeft: -32,
+    marginRight: -32,
   },
   list: {
     paddingLeft: theme.spacing.unit * 3,

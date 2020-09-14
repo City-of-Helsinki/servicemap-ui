@@ -127,6 +127,10 @@ const AreaView = ({
     data.forEach((item) => {
       if (item.start && item.end) {
         const period = `${item.start}-${item.end}`;
+        if (period.includes('2019')) {
+          // FIXME: remove temporary solution to hide older school years once period data is updated
+          return;
+        }
         if (!dateArray.includes(period)) {
           dateArray.push(period);
         }

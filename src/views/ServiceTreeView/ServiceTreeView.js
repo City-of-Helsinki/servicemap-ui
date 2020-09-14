@@ -29,14 +29,12 @@ const ServiceTreeView = (props) => {
   const [selected, setSelected] = useState(prevSelected);
   const [selectedOpen, setSelectedOpen] = useState(false);
 
-  let citySettings = [
-    ...settings.helsinki ? ['Helsinki'] : [],
-    ...settings.espoo ? ['Espoo'] : [],
-    ...settings.vantaa ? ['Vantaa'] : [],
-    ...settings.kauniainen ? ['Kauniainen'] : [],
-  ];
+  let citySettings = [];
+  config.cities.forEach((city) => {
+    citySettings.push(...settings.cities[city] ? [city] : []);
+  });
 
-  if (citySettings.length === 4) {
+  if (citySettings.length === config.cities.length) {
     citySettings = [];
   }
 
@@ -214,15 +212,14 @@ const ServiceTreeView = (props) => {
       ? <ArrowDropUp className={classes.iconRight} />
       : <ArrowDropDown className={classes.iconRight} />;
 
-    let resultCount;
+    let resultCount = 0;
 
-    if (!citySettings.length || citySettings.length === 4) {
+    if (!citySettings.length || citySettings.length === config.cities.length) {
       resultCount = item.unit_count.total;
     } else {
-      resultCount = (settings.helsinki ? item.unit_count.municipality.helsinki || 0 : 0)
-      + (settings.espoo ? item.unit_count.municipality.espoo || 0 : 0)
-      + (settings.vantaa ? item.unit_count.municipality.vantaa || 0 : 0)
-      + (settings.kauniainen ? item.unit_count.municipality.kauniainen || 0 : 0);
+      config.cities.forEach((city) => {
+        resultCount += (settings.cities[city] ? item.unit_count.municipality[city] || 0 : 0);
+      });
     }
 
     const checkboxSrTitle = `${intl.formatMessage({ id: 'services.tree.level' })} ${level + 1} ${getLocaleText(item.name)} ${intl.formatMessage({ id: 'services.category.select' })}`;
@@ -235,7 +232,7 @@ const ServiceTreeView = (props) => {
       .some(node => selected.some(item => item.id === node.id));
 
     return (
-      <div key={item.id}>
+      <React.Fragment key={item.id}>
         <ListItem
           disableGutters
           className={`${classes.listItem} ${classes[`level${level}`]}`}
@@ -282,7 +279,7 @@ const ServiceTreeView = (props) => {
             )
           ))}
         </Collapse>
-      </div>
+      </React.Fragment>
     );
   };
 
@@ -307,8 +304,7 @@ const ServiceTreeView = (props) => {
             <>
               <Typography className={`${classes.infoText} ${classes.bold}`}>
                 <FormattedMessage id="settings.city.info" values={{ count: citySettings.length }} />
-                {':'}
-                &nbsp;
+                : &nbsp;
               </Typography>
               <Typography className={classes.infoText}>
                 {cityString}

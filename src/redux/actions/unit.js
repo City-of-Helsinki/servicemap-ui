@@ -48,7 +48,7 @@ export const fetchUnits = (
   // Fetch data
   const data = options;
   if (data.q) {
-    data.language = locale || 'fi';
+    data.language = options.search_language || locale || 'fi';
     searchFetch(
       data,
       onStart,

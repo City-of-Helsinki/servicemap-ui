@@ -1,25 +1,12 @@
 import SettingsUtility from '../../utils/settings';
 import LocalStorageUtility from '../../utils/localStorage';
 import simpleAction from './simpleActions';
+import config from '../../../config';
 
 const setAccessibilitySelection = (prefix, key) => async (dispatch, getState) => {
   const { settings } = getState();
   const settingsHasKey = Object.prototype.hasOwnProperty.call(settings, key);
   const keyIsValid = SettingsUtility.isValidAccessibilitySenseImpairment(key);
-  if (settingsHasKey && keyIsValid) {
-    const value = settings[key];
-    dispatch({
-      type: `${prefix}_SET_SELECTION`,
-      selection: !value,
-    });
-    LocalStorageUtility.saveItem(key, !value); // Save value to localStorage
-  }
-};
-
-const setCitySelection = (prefix, key) => async (dispatch, getState) => {
-  const { settings } = getState();
-  const settingsHasKey = Object.prototype.hasOwnProperty.call(settings, key);
-  const keyIsValid = SettingsUtility.isValidCitySetting(key);
   if (settingsHasKey && keyIsValid) {
     const value = settings[key];
     dispatch({
@@ -49,6 +36,21 @@ const setMapTypeSetting = setting => async (dispatch) => {
   }
 };
 
+export const toggleCity = values => async (dispatch) => {
+  const keyIsValid = SettingsUtility.isValidCitySetting(values);
+  const citySettings = {};
+  config.cities.forEach((city) => { citySettings[city] = values[city]; });
+
+  if (keyIsValid) {
+    dispatch({
+      type: 'CITY_SET_SELECTION',
+      selection: citySettings,
+    });
+    config.cities.forEach((city) => {
+      LocalStorageUtility.saveItem(city, values[city]); // Save values to localStorage
+    });
+  }
+};
 
 export const toggleHearingAid = () => setAccessibilitySelection('HEARING', 'hearingAid');
 
@@ -57,14 +59,6 @@ export const toggleVisuallyImpaired = () => setAccessibilitySelection('SIGHT', '
 export const toggleColorblind = () => setAccessibilitySelection('COLORBLIND', 'colorblind');
 
 export const setMobility = value => setMobilitySetting(value);
-
-export const toggleHelsinki = () => setCitySelection('HELSINKI', 'helsinki');
-
-export const toggleEspoo = () => setCitySelection('ESPOO', 'espoo');
-
-export const toggleVantaa = () => setCitySelection('VANTAA', 'vantaa');
-
-export const toggleKauniainen = () => setCitySelection('KAUNIAINEN', 'kauniainen');
 
 export const toggleSettings = value => async (dispatch, getState) => {
   const { settings } = getState();

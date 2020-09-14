@@ -8,13 +8,14 @@ import PaginationComponent from '../index';
 
 // Mock props for intl provider
 const intlMock = {
-  locale: 'fi',
+  locale: 'en',
   messages: {
     'general.pagination.previous': 'Aiempi sivu',
     'general.pagination.next': 'Seuraava sivu',
     'general.pagination.openPage': 'Avaa sivu {count}',
     'general.pagination.currentlyOpenedPage': 'Sivu {count}, avattu',
   },
+  wrapRichTextChunksInFragment: false,
 };
 
 // Generic required props for ResultItem

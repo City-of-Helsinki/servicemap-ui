@@ -4,12 +4,12 @@ import { withRouter } from 'react-router-dom';
 import { getHighlightedDistrict, getFilteredSubdistrictUnits } from '../../redux/selectors/district';
 import { getSelectedUnit } from '../../redux/selectors/selectedUnit';
 import { getLocaleString } from '../../redux/selectors/locale';
-import setMapRef from '../../redux/actions/map';
+import { setMapRef } from '../../redux/actions/map';
 import { setAddressLocation } from '../../redux/actions/address';
 import { findUserLocation } from '../../redux/actions/user';
 import MapView from './MapView';
 import { getServiceUnits } from '../../redux/selectors/service';
-import { getProcessedMapData } from '../../redux/selectors/results';
+import { getProcessedData } from '../../redux/selectors/results';
 import { markerClusterConnector, renderMarkerConnector } from './utils/unitMarkers';
 import { getAddressNavigatorParamsConnector } from '../../utils/address';
 import { generatePath } from '../../utils/path';
@@ -22,9 +22,9 @@ const mapStateToProps = (state, props) => {
     intl,
   } = props;
   const {
-    address, navigator, settings, user,
+    address, navigator, settings, user, measuringMode,
   } = state;
-  const unitList = getProcessedMapData(state);
+  const unitList = getProcessedData(state);
   const unitsLoading = state.service.isFetching;
   const serviceUnits = getServiceUnits(state);
   // const serviceUnits = state.service.data;
@@ -40,7 +40,9 @@ const mapStateToProps = (state, props) => {
   const getPath = (id, data) => generatePath(id, locale, data);
   const distanceCoordinates = getCurrentlyUsedPosition(state);
   const userLocation = customPosition.coordinates || position.coordinates;
-  const getDistance = unit => formatDistanceObject(intl, calculateDistance(state)(unit));
+  const getDistance = unit => (
+    formatDistanceObject(intl, calculateDistance(unit, distanceCoordinates))
+  );
   return {
     addressUnits: units,
     addressToRender: toRender,
@@ -73,6 +75,7 @@ const mapStateToProps = (state, props) => {
     settings,
     navigator,
     locale,
+    measuringMode,
   };
 };
 

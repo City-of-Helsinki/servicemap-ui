@@ -21,14 +21,16 @@ class AccessibilityInfo extends React.Component {
       return null;
     }
 
-    const cities = ['helsinki', 'espoo', 'vantaa', 'kauniainen'];
+    const accessibilitySettings = SettingsUtility.accessibilityRelatedSettings;
 
     // Create shortcoming array from current settings
     const shortcomingSettings = [];
     Object.keys(settings).forEach((key) => {
-      if (!cities.includes(key)) {
-        if (Object.prototype.hasOwnProperty.call(settings, key)) {
-          const item = settings[key];
+      if (Object.prototype.hasOwnProperty.call(settings, key)) {
+        const item = settings[key];
+        // Confirm accessibility values
+        // both radio values using item and checkbox values using key
+        if (accessibilitySettings.includes(key) || accessibilitySettings.includes(item)) {
           if (typeof item === 'string') {
             shortcomingSettings.push(item);
           } if (typeof item === 'boolean' && item === true) {
@@ -37,6 +39,10 @@ class AccessibilityInfo extends React.Component {
         }
       }
     });
+
+    if (!shortcomingSettings.length) {
+      return 'noSettings';
+    }
 
     // Create shortcoming data
     const renderedShortcomings = [];
@@ -69,7 +75,7 @@ class AccessibilityInfo extends React.Component {
     const { classes, getLocaleText } = this.props;
     const data = shortcomings;
 
-    if (!data || data.length === 0) {
+    if (!data || data === 'noSettings' || data.length === 0) {
       return null;
     }
 
@@ -227,18 +233,18 @@ class AccessibilityInfo extends React.Component {
     }
     const shortcomings = this.parseAccessibilityShortcomings();
 
-    const shouldRenderTitle = !!(shortcomings && shortcomings.length);
+    const shouldRenderExtraTitle = !!(Array.isArray(shortcomings) && shortcomings.length);
 
 
     const heading = `h${headingLevel}`;
-    const listHeading = (titleAlways || shouldRenderTitle) ? `h${headingLevel + 1}` : heading;
+    const listHeading = (titleAlways || shouldRenderExtraTitle) ? `h${headingLevel + 1}` : heading;
     const aShortcomings = this.renderAccessibilityShortcomings(listHeading, shortcomings);
     const aDescriptions = this.renderAccessibilityDescriptions(listHeading);
 
     const noInfo = !aDescriptions && !aShortcomings;
     const noShortcomings = aDescriptions && !aShortcomings;
 
-    const infoText = this.renderInfoText(noInfo, noShortcomings);
+    const infoText = aShortcomings && this.renderInfoText(noInfo, noShortcomings);
 
     return (
       <Container>
@@ -260,7 +266,7 @@ class AccessibilityInfo extends React.Component {
           }
         </NoSsr>
         {
-          shouldRenderTitle
+          shouldRenderExtraTitle
           && (
             <>
               <Typography className={classes.title} component={heading} variant="subtitle1" align="left">

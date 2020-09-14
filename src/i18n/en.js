@@ -28,7 +28,7 @@ export default {
   'address.area.link': 'Get to know the areas on the map.',
   'address.emergency_care.common': 'When your health station is closed and in the night between 22-8, emergency care for children and young people under age 16 is provided at <a>Children\'s Hospital</a> [<a1>homepage</a1>], and for adults at',
   'address.emergency_care.children_hospital.link': '/{locale}/unit/7299',
-  'address.emergency_care.common.link': 'http://www.hus.fi/en/medical-care/hospitals/childrens-hospital/Pages/default.aspx',
+  'address.emergency_care.common.link': 'https://www.hus.fi/en/medical-care/hospitals/newchildrenshospital/Pages/default.aspx',
   'address.emergency_care.unit.26107': 'Malmi hospital',
   'address.emergency_care.unit.26104': 'Haartman hospital',
   'address.emergency_care.link': 'http://www.hel.fi/www/Helsinki/fi/sosiaali-ja-terveyspalvelut/terveyspalvelut/paivystys/',
@@ -76,10 +76,48 @@ export default {
   // Embed
   'embed.click_prompt_move': 'Click to open the Service Map',
 
+  // Embedder
+  'embedder.city.title': 'City',
+  'embedder.city.aria.label': 'Choose city limits for the embedding',
+  'embedder.close': 'Close embedding tool',
+  'embedder.code.title': 'Copy the HTML code',
+  'embedder.height.title': 'Height of the embedding',
+  'embedder.height.aria.label': 'Choose height of the embedding',
+  'embedder.height.ratio.label': 'Relative height. The height of the embedding in relation to the width has been defined',
+  'embedder.height.fixed.label': 'Absolute height. The height of the embedding has been defined in pixels',
+  'embedder.height.input.aria.fixed': 'Height of the embedding in pixels',
+  'embedder.height.input.aria.ratio': 'Height of the embedding as per cent of the width',
+  'embedder.iframe.title': 'Service map embedding window',
+  'embedder.language.title': 'Language of the embedding',
+  'embedder.language.aria.label': 'Choose the language of the embedding',
+  'embedder.language.description.fi': 'Service unit information is shown in Finnish. Background map is in Finnish.',
+  'embedder.language.description.sv': 'Service unit information is shown in Swedish. Background map is in Swedish.',
+  'embedder.language.description.en': 'Service unit information is shown in English. Background map is in Finnish.',
+  'embedder.map.title': 'Background map',
+  'embedder.map.aria.label': 'Choose backgroud map',
+  'embedder.preview.title': 'Map preview',
+  'embedder.options.title': 'Show on the map',
+  'embedder.options.label.units': 'Show locations',
+  'embedder.options.label.transit': 'Show public transport stops (Zoom in the map to see the stops)',
+  'embedder.service.title': 'Services',
+  'embedder.service.aria.label': 'Choose services to be shown',
+  'embedder.service.none': 'Map is shown without service units',
+  'embedder.service.common': 'The city resident\'s most common everyday service units are shown on the map: schools, daycares and health stations.',
+  'embedder.service.all': 'All service units are shown on the map. Too extensive area borders slow down the embedding and decreases its clarity.',
+  'embedder.title': 'Embedding tool',
+  'embedder.title.info': 'If you want to make an embedding from a search result, start by making the search.',
+  'embedder.url.title': 'Copy the address',
+  'embedder.width.title': 'Width of the embedding',
+  'embedder.width.aria.label': 'Choose width of the embedding',
+  'embedder.width.auto.label': 'Automatic width. The embedding fills the width of the element in which it has been placed. In this preview, the embedding has been placed in a standard-width element, which has been outlined with a broken line. ',
+  'embedder.width.custom.label': 'Width has been set. The width of the embedding has been set in pixels.',
+  'embedder.width.input.aria.auto': 'Width of the embedding, per cent',
+  'embedder.width.input.aria.custom': 'Width of the embedding, pixels',
+
   // Feedback
   'feedback.back': 'Go back',
   'feedback.title': 'Give feedback on this web service',
-  'feedback.title.unit': 'Give feedback on the service unit {unit}',
+  'feedback.title.unit': 'Give feedback on the service location {unit}',
   'feedback.email': 'Email',
   'feedback.email.info': 'If you want us to answer the feedback, please provide your e-mail address.',
   'feedback.feedback': 'Your feedback (required)',
@@ -118,7 +156,7 @@ export default {
   'general.back.goToHome': 'Go to home view',
   'general.back.search': 'Back to search view',
   'general.back.service': 'Back to service view',
-  'general.back.unit': 'Back to unit view',
+  'general.back.unit': 'Back to location view',
   'general.back.event': 'Back to event view',
   'general.back.info': 'Return back',
   'general.back.feedback': 'Return back',
@@ -137,11 +175,13 @@ export default {
   'general.loading': 'Loading',
   'general.loading.done': 'Loading completed',
   'general.showOnMap': 'Show on map',
+  'general.open': 'Open', // TODO: Verify
+  'general.page.close': 'Close page', // TODO: Verify
   'general.pageTitles.home': 'Home view',
   'general.pageTitles.search': 'Search results view',
-  'general.pageTitles.unit': 'Unit view',
-  'general.pageTitles.unit.events': 'Units\' events',
-  'general.pageTitles.unit.reservations': 'Units\' reservable objects',
+  'general.pageTitles.unit': 'Location view',
+  'general.pageTitles.unit.events': 'Locations\' events',
+  'general.pageTitles.unit.reservations': 'Locations\' reservable objects',
   'general.pageTitles.service': 'Service view',
   'general.pageTitles.serviceTree': 'Services list',
   'general.pageTitles.event': 'Event view',
@@ -151,6 +191,10 @@ export default {
   'general.pageTitles.info': 'Info view',
   'general.pageTitles.feedback': 'Feedback view',
   'general.pageTitles.area': 'Area view.',
+  'general.tools': 'Tools',
+  // Readspeaker
+  'general.readspeaker.buttonText': 'Listen',
+  'general.readspeaker.title': 'Listen with ReadSpeaker webReader',
 
   // General - Pagination
   'general.pagination.previous': 'Previous page',
@@ -163,12 +207,13 @@ export default {
   'general.return.viewTitle': 'Return to beginning of main content',
   'general.skipToContent': 'Skip to content',
   'general.new.tab': 'Opens in new tab',
-  'general.time.short': 'at',
   'general.save': 'Save',
   'general.save.changes': 'Save settings',
   'general.save.changes.done': 'Changes have been saved!',
   'general.save.confirmation': 'Would you like to save changes?',
   'general.search': 'Search',
+  'general.time.short': 'at',
+  'general.tools': 'Tools',
   'general.distance.meters': 'Meters away',
   'general.distance.kilometers': 'Kilometers away',
 
@@ -190,19 +235,20 @@ export default {
   // Loading texts
   'loading.events': 'Loading events {count} / {max}',
   'loading.events.srInfo': 'Loading {count} event(s)',
-  'search.loading.units': 'Searching units {count} / {max}',
-  'search.loading.units.srInfo': 'Searching {count} unit(s)',
+  'search.loading.units': 'Searching locations {count} / {max}',
+  'search.loading.units.srInfo': 'Searching {count} location(s)',
 
   // Map
   'map': 'Map',
   'map.ariaLabel': 'Map. Currently map information is only accessible visually.',
   'map.transit.endStation': 'Terminus',
   'map.address.searching': 'Retreiving address...',
+  'map.address.notFound': 'The address could not be found',
   'map.address.info': 'Address information',
-  'map.unit.cluster.popup.info': '{count} units',
+  'map.unit.cluster.popup.info': '{count} locations',
 
   // Units
-  'unit': 'Unit',
+  'unit': 'Location',
   'unit.accessibility.hearingMaps': 'Coverage maps',
   'unit.accessibility.hearingMaps.extra': '(New tab. The service is not accessible)',
   'unit.accessibility.noInfo': 'No accessibility information',
@@ -213,11 +259,11 @@ export default {
                                     one {# accessibility shortcoming}
                                     other {# accessibility shortcomings}
                                   }`,
-  'unit.accessibility.unitNoInfo': 'Unit has not delivered any accessibility information.', // TODO: verify
+  'unit.accessibility.unitNoInfo': 'Location has not delivered any accessibility information.', // TODO: verify
   'unit.basicInfo': 'Information',
   'unit.data_source': 'Source: {data_source}',
-  'unit.details.notFound': 'Unit info not available.',
-  'unit.plural': 'Units',
+  'unit.details.notFound': 'Location info not available.',
+  'unit.plural': 'Locations',
 
   'unit.contact.info': 'Contact information',
   'unit.links': 'Web sites',
@@ -232,8 +278,8 @@ export default {
   'unit.events.more': 'Show more events',
   'unit.homepage': 'Home page',
   'unit.homepage.missing': 'No home page provided',
-  'unit.picture': 'Picture of unit: ',
-  'unit.description': 'Unit description',
+  'unit.picture': 'Picture of location: ',
+  'unit.description': 'Location description',
   'unit.address': 'Address',
   'unit.address.missing': 'No address provided',
   'unit.phone': 'Phone number',
@@ -265,18 +311,18 @@ export default {
   }`,
   'unit.route': 'Look at the route to this place',
   'unit.route.extra': '(New tab. The HSL Journey Planner is not an accessible service)',
-  'unit.socialMedia.title': 'The service unit on social media',
+  'unit.socialMedia.title': 'The service location on social media',
 
   // Search
   'search': 'Search',
   'search.arrowLabel': 'Refine',
   'search.cancelText': 'Clear search text',
   'search.notFoundWith': 'No results for search "{query}".',
-  'search.placeholder': 'Search for services or units',
+  'search.placeholder': 'Search for services or locations',
   'search.info': `{count, plural,
-                  =0 {No units were found}
-                  one {# unit found}
-                  other {# units found}
+                  =0 {No locations were found}
+                  one {# location found}
+                  other {# locations found}
                 }`,
   'search.resultList': `{count, plural,
                   =0 {no matches}
@@ -294,9 +340,9 @@ export default {
                   other {# matches}
                 }`,
   'search.results.units': `{count, plural,
-                  =0 {no units found}
-                  one {# unit found}
-                  other {# units found}
+                  =0 {no locations found}
+                  one {# location found}
+                  other {# locations found}
                 }`,
   'search.results.services': `{count, plural,
                   =0 {no services found}
@@ -306,12 +352,12 @@ export default {
   'search.resultInfo': 'Search information',
   'search.searchField': 'Search field',
   'search.results.title': 'Search results',
-  'search.input.placeholder': 'Search units',
+  'search.input.placeholder': 'Search locations',
   'search.notFound': 'No results found with given search',
   'search.started': 'Search started',
   'search.infoText': '{count} Search results',
-  'search.searchbar.headerText': 'All the services in the metropolitan area within your reach.',
-  'search.searchbar.infoText': 'Search for services units or addresses',
+  'search.searchbar.headerText': 'Find services near your home',
+  'search.searchbar.infoText': 'Search for services, locations or addresses',
   'search.suggestions.suggest': 'Did you mean..?',
   'search.suggestions.expand': 'Search suggestions',
   'search.suggestions.loading': 'Loading suggestions',
@@ -334,7 +380,7 @@ export default {
   'service': 'Service',
   'service.plural': 'Services',
   'service.nearby': 'Nearby services',
-  'service.units.empty': 'Service does not have units',
+  'service.units.empty': 'Service does not have locations',
   'service.tab': 'Services and events',
 
   // Service tree
@@ -401,7 +447,12 @@ export default {
   'settings.aria.opened': 'Settings have been opened',
   'settings.aria.saved': 'Settings have been saved',
 
-  'info.title': 'About the service',
+  // Tools
+  'tool.download': 'Download data (new tab)',
+  'tool.measuring': 'Measure distance',
+  'tool.measuring.stop': 'Stop measuring',
+
+  'info.title': 'About the service and accessibility statement',
   'info.statement': 'Accessibility statement',
 
   'alert.close': 'Close the notification',

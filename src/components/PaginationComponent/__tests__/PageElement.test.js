@@ -8,11 +8,12 @@ import PageElement from '../PageElement';
 
 // Mock props for intl provider
 const intlMock = {
-  locale: 'fi',
+  locale: 'en',
   messages: {
     'general.pagination.openPage': 'Open page {count}',
     'general.pagination.currentlyOpenedPage': 'Sivu {count}, avattu',
   },
+  wrapRichTextChunksInFragment: false,
 };
 
 // Generic required props for ResultItem

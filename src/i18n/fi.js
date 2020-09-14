@@ -62,8 +62,8 @@ export default {
   'area.list.maternity_clinic_district': 'Neuvola-alue',
   'area.list.lower_comprehensive_school_district_fi': 'Suomenkielinen ala-astealue',
   'area.list.lower_comprehensive_school_district_sv': 'Ruotsinkielinen ala-astealue',
-  'area.list.upper_comprehensive_school_district_fi': 'Suomenkielinen ylä-astealue',
-  'area.list.upper_comprehensive_school_district_sv': 'Ruotsinkielinen ylä-astealue',
+  'area.list.upper_comprehensive_school_district_fi': 'Suomenkielinen yläastealue',
+  'area.list.upper_comprehensive_school_district_sv': 'Ruotsinkielinen yläastealue',
   'area.list.preschool_education_fi': 'Suomenkielinen esiopetusalue',
   'area.list.preschool_education_sv': 'Ruotsinkielinen esiopetusalue',
 
@@ -75,6 +75,44 @@ export default {
 
   // Embed
   'embed.click_prompt_move': 'Klikkaa siirtyäksesi Palvelukartalle',
+
+  // Embedder
+  'embedder.city.title': 'Kaupunki',
+  'embedder.city.aria.label': 'Valitse upotukselle kaupunkirajaus',
+  'embedder.close': 'Sulje upotustyökalu',
+  'embedder.code.title': 'Kopioi HTML-koodi',
+  'embedder.height.title': 'Upotuksen korkeus',
+  'embedder.height.aria.label': 'Valitse upotuksen korkeus',
+  'embedder.height.ratio.label': 'Suhteellinen korkeus. Upotuksen korkeuden suhde leveyteen on määritelty',
+  'embedder.height.fixed.label': 'Absoluuttinen korkeus. Upotuksen korkeus on määritelty pikseleissä',
+  'embedder.height.input.aria.fixed': 'Upotuksen korkeus pikseleissä',
+  'embedder.height.input.aria.ratio': 'Upotuksen korkeus prosentteina leveydestä',
+  'embedder.iframe.title': 'Palvelukartan upotusikkuna',
+  'embedder.language.title': 'Upotuksen kieli',
+  'embedder.language.aria.label': 'Valitse upotuksen kieli',
+  'embedder.language.description.fi': 'Toimipisteiden tiedot näytetään suomen kielellä. Taustakartta on suomenkielinen.',
+  'embedder.language.description.sv': 'Toimipisteiden tiedot näytetään ruotsin kielellä. Taustakartta on ruotsinkielinen.',
+  'embedder.language.description.en': 'Toimipisteiden tiedot näytetään englannin kielellä. Taustakartta on suomenkielinen.',
+  'embedder.map.title': 'Taustakartta',
+  'embedder.map.aria.label': 'Valitse taustakartta',
+  'embedder.options.title': 'Näytä kartalla',
+  'embedder.options.label.units': 'Näytä toimipisteet',
+  'embedder.options.label.transit': 'Näytä joukkoliikenteen pysäkit (Tarkenna karttaa lähietäisyydelle, jotta joukkoliikennepysäkit näkyvät)',
+  'embedder.preview.title': 'Kartan esikatselu',
+  'embedder.service.title': 'Palvelut',
+  'embedder.service.aria.label': 'Valitse näytettävät palvelut',
+  'embedder.service.none': 'Kartta näytetään ilman toimipisteitä',
+  'embedder.service.common': 'Kartalla näytetään yleisimmät kaupunkilaisen arkeen liittyvät toimipisteet: koulut, päiväkodit ja terveyskeskukset.',
+  'embedder.service.all': 'Kartalla näytetään kaikki toimipisteet. Jos aluerajaus on liian laaja, upotuksen näyttäminen hidastuu ja sen havainnollisuus vähenee.',
+  'embedder.title': 'Upotustyökalu',
+  'embedder.title.info': 'Mikäli haluat tehdä upotuksen hakutuloksen mukaan tee haku ensin.',
+  'embedder.url.title': 'Kopioi osoite',
+  'embedder.width.title': 'Upotuksen leveys',
+  'embedder.width.aria.label': 'Valitse upotuksen leveys',
+  'embedder.width.auto.label': 'Automaattinen leveys. Upotus täyttää leveyssuunnassa elementin, johon se on sijoitettu. Tässä esikatselussa upotus on sijoitettu katkoviivalla merkittyyn vakiolevyiseen elementtiin.',
+  'embedder.width.custom.label': 'Asetettu leveys. Upotuksen leveys on määritelty pikseleissä.',
+  'embedder.width.input.aria.auto': 'Upotuksen leveys prosentteina',
+  'embedder.width.input.aria.custom': 'Upotuksen leveys pikseleissä',
 
   // Feedback
   'feedback.back': 'Palaa takaisin',
@@ -128,6 +166,8 @@ export default {
   'general.back.serviceTree': 'Palaa palvelulistausnäkymään',
   'general.cancel': 'Peruuta',
   'general.close': 'Sulje',
+  'general.distance.meters': 'Metrin päässä',
+  'general.distance.kilometers': 'Kilometrin päässä',
   'general.yes': 'Kyllä',
   'general.no': 'Ei',
   'general.closeSettings': 'Sulje asetukset',
@@ -137,6 +177,8 @@ export default {
   'general.loading': 'Ladataan',
   'general.loading.done': 'Lataus valmis',
   'general.showOnMap': 'Näytä kartalla',
+  'general.open': 'Avaa',
+  'general.page.close': 'Sulje sivu',
   'general.pageTitles.home': 'Aloitusnäkymä',
   'general.pageTitles.search': 'Hakutulosnäkymä',
   'general.pageTitles.unit': 'Toimipistenäkymä',
@@ -151,6 +193,9 @@ export default {
   'general.pageTitles.info': 'Tietoa palvelusta',
   'general.pageTitles.feedback': 'Palautenäkymä',
   'general.pageTitles.area': 'Aluenäkymä.',
+  // Readspeaker
+  'general.readspeaker.buttonText': 'Kuuntele',
+  'general.readspeaker.title': 'Kuuntele ReadSpeaker webReaderilla',
 
   // General - Pagination
   'general.pagination.previous': 'Aiempi sivu',
@@ -163,12 +208,14 @@ export default {
   'general.return.viewTitle': 'Siirry pääsisällön alkuun',
   'general.skipToContent': 'Siirry pääsisältöön',
   'general.new.tab': 'Aukeaa uuteen välilehteen',
-  'general.time.short': 'klo',
   'general.save': 'Tallenna',
   'general.save.changes': 'Tallenna asetukset',
   'general.save.changes.done': 'Muutokset tallennettu!',
   'general.save.confirmation': 'Haluatko tallentaa muutokset?',
   'general.search': 'Hae',
+  'general.tools': 'Työkalut',
+  'general.time.short': 'klo',
+  'general.tools': 'Työkalut',
   'general.distance.meters': 'Metrin päässä',
   'general.distance.kilometers': 'Kilometrin päässä',
 
@@ -198,6 +245,7 @@ export default {
   'map.ariaLabel': 'Karttanäkymä. Kartan tietoja voi tarkastella tällä hetkellä vain näönvaraisesti.',
   'map.transit.endStation': 'Päätepysäkki',
   'map.address.searching': 'Haetaan osoitetta...',
+  'map.address.notFound': 'Osoitetta ei löytynyt',
   'map.address.info': 'Osoitteen tiedot',
   'map.unit.cluster.popup.info': '{count} toimipistettä',
 
@@ -401,7 +449,12 @@ export default {
   'settings.aria.opened': 'Asetukset avattu',
   'settings.aria.saved': 'Asetukset on tallennettu',
 
-  'info.title': 'Tietoa palvelusta',
+  // Tools
+  'tool.download': 'Lataa tiedot (uusi välilehti)',
+  'tool.measuring': 'Mittaa etäisyys',
+  'tool.measuring.stop': 'Lopeta mittaus',
+
+  'info.title': 'Tietoa palvelusta ja saavutettavuusseloste',
   'info.statement': 'Saavutettavuusseloste',
 
   'alert.close': 'Sulje ilmoitus',

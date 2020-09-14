@@ -78,7 +78,7 @@ class ServiceView extends React.Component {
   focusMap = (unit) => {
     const { customPosition, map } = this.props;
     const { mapMoved } = this.state;
-    if (!map || !map._layersMaxZoom || mapMoved) {
+    if (!map || !map.options.maxZoom || mapMoved) {
       return;
     }
 

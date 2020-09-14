@@ -1,23 +1,22 @@
 import { createSelector } from 'reselect';
+import config from '../../../config';
 import { filterCities } from '../../utils/filters';
-import getOrderedData from './ordering';
+import getSortingParameters from './ordering';
+import orderUnits from '../../utils/orderUnits';
 
 
-const units = state => state.service.data;
-const cities = state => [
-  ...state.settings.helsinki ? ['helsinki'] : [],
-  ...state.settings.vantaa ? ['vantaa'] : [],
-  ...state.settings.espoo ? ['espoo'] : [],
-  ...state.settings.kauniainen ? ['kauniainen'] : [],
-];
+const getUnits = state => state.service.data;
+const getSettings = state => state.settings;
 
-export const getServiceUnits = state => createSelector(
-  [units, cities],
-  (units, cities) => {
+export const getServiceUnits = createSelector(
+  [getUnits, getSettings, getSortingParameters],
+  (units, settings, sortingParameters) => {
+    const cities = [];
+    config.cities.forEach(city => cities.push(...settings.cities[city] ? [city] : []));
     const filteredUnits = units.filter(filterCities(cities, true));
-    const orderedUnits = getOrderedData(filteredUnits)(state);
+    const orderedUnits = orderUnits(filteredUnits, sortingParameters);
     return orderedUnits;
   },
-)(state);
+);
 
 export default { getServiceUnits };

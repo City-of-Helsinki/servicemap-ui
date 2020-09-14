@@ -7,6 +7,7 @@ const fitUnitsToMap = (units, map) => {
 
   const corner1 = map.options.maxBounds.getNorthWest();
   const corner2 = map.options.maxBounds.getSouthEast();
+  const { maxZoom } = map.options;
 
   const mapBounds = new L.LatLngBounds([
     [corner1.lat, corner1.lng],
@@ -24,13 +25,13 @@ const fitUnitsToMap = (units, map) => {
     }
   });
   if (bounds.length > 0) {
-    map.fitBounds(bounds, { padding: [15, 15], maxZoom: map._layersMaxZoom - 1 });
+    map.fitBounds(bounds, { padding: [15, 15], maxZoom: maxZoom - 1 });
   }
 };
 
 
 const focusToPosition = (map, coordinates, zoomOption) => {
-  const zoom = typeof zoomOption === 'number' ? zoomOption : map._layersMaxZoom - 1;
+  const zoom = typeof zoomOption === 'number' ? zoomOption : map.options.maxZoom - 1;
   map.setView(
     [coordinates[1], coordinates[0]],
     zoom,

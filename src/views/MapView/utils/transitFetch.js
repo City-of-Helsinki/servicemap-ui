@@ -1,5 +1,6 @@
 import { unitsFetch } from '../../../utils/fetch';
 import config from '../../../../config';
+import MapUtility from '../../../utils/mapUtility';
 
 /* eslint-disable global-require */
 // Fetch list of stops
@@ -24,7 +25,7 @@ const fetchStops = async (map) => {
   const wideBounds = L.latLngBounds(cornerTop, cornerBottom);
 
   // Bounds used in subway entrance fetch
-  const fetchBox = `${wideBounds.getWest()},${wideBounds.getSouth()},${wideBounds.getEast()},${wideBounds.getNorth()}`;
+  const fetchBox = MapUtility.getBboxFromBounds(wideBounds, true);
 
   let stopData = null;
 

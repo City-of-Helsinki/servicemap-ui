@@ -8,10 +8,11 @@ import themes from '../../../../themes';
 
 // Mock props for intl provider
 const intlMock = {
-  locale: 'fi',
+  locale: 'en',
   messages: {
     'button.text': 'Button text',
   },
+  wrapRichTextChunksInFragment: false,
 };
 
 // Generic required props for ServiceMapButton
@@ -44,21 +45,21 @@ describe('<ServiceMapButton />', () => {
 
   it('should work', () => {
     const component = mount(
-      <ServiceMapButton {...buttonMockProps}>Test</ServiceMapButton>
+      <ServiceMapButton {...buttonMockProps}>Test</ServiceMapButton>,
     );
     expect(component).toMatchSnapshot();
   });
 
   it('does show text using children', () => {
     const component = mount(
-      <ServiceMapButton {...buttonMockProps}>Test</ServiceMapButton>
+      <ServiceMapButton {...buttonMockProps}>Test</ServiceMapButton>,
     );
     expect(component.text()).toEqual('Test');
   });
 
   it('does show text using intl message id', () => {
     const component = mount(
-      <ServiceMapButton {...buttonMockProps} messageID="button.text" />
+      <ServiceMapButton {...buttonMockProps} messageID="button.text" />,
     );
     expect(component.text()).toEqual(intlMock.messages['button.text']);
   });

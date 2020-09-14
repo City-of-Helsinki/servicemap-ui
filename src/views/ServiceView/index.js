@@ -10,11 +10,11 @@ import { changeCustomUserLocation } from '../../redux/actions/user';
 import styles from './styles';
 
 const mapStateToProps = (state) => {
-  const { service, user } = state;
+  const { mapRef, service, user } = state;
   const { customPosition } = user;
 
   const getLocaleText = textObject => getLocaleString(state, textObject);
-  const map = state.mapRef.leafletElement;
+  const map = mapRef && mapRef.leafletElement;
   const units = getServiceUnits(state);
 
   return {

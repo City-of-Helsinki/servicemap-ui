@@ -17,16 +17,17 @@ import event from './reducers/event';
 import address from './reducers/address';
 import serviceTree from './reducers/serviceTree';
 import {
-  colorblind, hearingAid, mobility, mapType, visuallyImpaired, helsinki, espoo, vantaa, kauniainen,
+  colorblind, hearingAid, mobility, mapType, visuallyImpaired, cities,
 } from './reducers/settings';
 import {
-  direction, order, mapRef, settingsToggled,
+  direction, order, mapRef, settingsToggled, measuringMode,
 } from './reducers/simpleReducers';
 
 // Export all redux reducers here
 export default combineReducers({
   breadcrumb,
   mapRef,
+  measuringMode,
   navigator,
   units,
   user,
@@ -48,10 +49,7 @@ export default combineReducers({
     hearingAid,
     mobility,
     visuallyImpaired,
-    helsinki,
-    espoo,
-    vantaa,
-    kauniainen,
+    cities,
     mapType,
   }),
   sort: combineReducers({

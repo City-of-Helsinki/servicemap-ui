@@ -8,12 +8,14 @@ import { keyboardHandler } from '../../../utils';
 
 const SimpleListItem = (props) => {
   const {
-    button, text, classes, link, icon, handleItemClick, role, divider, selected, srText, className,
+    button, dark, text, classes, link, icon, handleItemClick, role, divider, selected, srText, className,
   } = props;
   const isLinkOrButton = button || link;
   return (
     <React.Fragment>
       <ListItem
+        className={`${className} ${dark ? 'dark' : ''}`}
+        aria-label={`${srText || ''} ${text}`}
         className={className}
         button={!!link || button}
         role={link ? 'link' : role}
@@ -39,14 +41,16 @@ const SimpleListItem = (props) => {
         <ListItemText
           classes={{ root: classes.textContainer }}
         >
-          <Typography variant="srOnly">
-            {`${srText || ''} ${text}`}
+          {/* ReadSpeaker text - hidden form view and screen readers */}
+          <Typography aria-hidden variant="srOnly">
+            {`${srText || ''}`}
           </Typography>
 
           <Typography
             aria-hidden
+            color="inherit"
             variant="body2"
-            classes={{ root: link ? classes.link : null }}
+            classes={{ root: `${link ? classes.link : null} ${dark ? classes.whiteText : ''}` }}
           >
             {text}
           </Typography>
@@ -66,6 +70,7 @@ export default SimpleListItem;
 SimpleListItem.propTypes = {
   button: PropTypes.bool,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
+  dark: PropTypes.bool,
   text: PropTypes.string.isRequired,
   srText: PropTypes.string,
   link: PropTypes.bool,
@@ -79,6 +84,7 @@ SimpleListItem.propTypes = {
 
 SimpleListItem.defaultProps = {
   button: false,
+  dark: false,
   srText: null,
   link: false,
   icon: null,

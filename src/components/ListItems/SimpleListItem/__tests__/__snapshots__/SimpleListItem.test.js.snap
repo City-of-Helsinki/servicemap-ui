@@ -9,14 +9,16 @@ exports[`<SimpleListItem /> should work 1`] = `
     className={null}
     classes={
       Object {
-        "divider": "SimpleListItem-divider-5",
-        "itemFocus": "SimpleListItem-itemFocus-6",
+        "divider": "SimpleListItem-divider-6",
+        "itemFocus": "SimpleListItem-itemFocus-7",
         "link": "SimpleListItem-link-3",
-        "listIcon": "SimpleListItem-listIcon-4",
+        "listIcon": "SimpleListItem-listIcon-5",
         "listItem": "SimpleListItem-listItem-1",
         "textContainer": "SimpleListItem-textContainer-2",
+        "whiteText": "SimpleListItem-whiteText-4",
       }
     }
+    dark={false}
     divider={false}
     handleItemClick={null}
     icon={null}
@@ -27,12 +29,13 @@ exports[`<SimpleListItem /> should work 1`] = `
     text="Title text"
   >
     <WithStyles(ListItem)
+      aria-label=" Title text"
       button={false}
       className={null}
       classes={
         Object {
           "root": "SimpleListItem-listItem-1",
-          "selected": "SimpleListItem-itemFocus-6",
+          "selected": "SimpleListItem-itemFocus-7",
         }
       }
       component="li"
@@ -45,22 +48,23 @@ exports[`<SimpleListItem /> should work 1`] = `
       <ListItem
         ContainerComponent="li"
         alignItems="center"
+        aria-label=" Title text"
         button={false}
         className={null}
         classes={
           Object {
-            "alignItemsFlexStart": "MuiListItem-alignItemsFlexStart-12",
-            "button": "MuiListItem-button-16",
-            "container": "MuiListItem-container-8",
-            "default": "MuiListItem-default-10",
-            "dense": "MuiListItem-dense-11",
-            "disabled": "MuiListItem-disabled-13",
-            "divider": "MuiListItem-divider-14",
-            "focusVisible": "MuiListItem-focusVisible-9",
-            "gutters": "MuiListItem-gutters-15",
-            "root": "MuiListItem-root-7 SimpleListItem-listItem-1",
-            "secondaryAction": "MuiListItem-secondaryAction-17",
-            "selected": "MuiListItem-selected-18 SimpleListItem-itemFocus-6",
+            "alignItemsFlexStart": "MuiListItem-alignItemsFlexStart-13",
+            "button": "MuiListItem-button-17",
+            "container": "MuiListItem-container-9",
+            "default": "MuiListItem-default-11",
+            "dense": "MuiListItem-dense-12",
+            "disabled": "MuiListItem-disabled-14",
+            "divider": "MuiListItem-divider-15",
+            "focusVisible": "MuiListItem-focusVisible-10",
+            "gutters": "MuiListItem-gutters-16",
+            "root": "MuiListItem-root-8 SimpleListItem-listItem-1",
+            "secondaryAction": "MuiListItem-secondaryAction-18",
+            "selected": "MuiListItem-selected-19 SimpleListItem-itemFocus-7",
           }
         }
         component="li"
@@ -79,7 +83,8 @@ exports[`<SimpleListItem /> should work 1`] = `
           dense={false}
         >
           <li
-            className="MuiListItem-root-7 SimpleListItem-listItem-1 MuiListItem-default-10 MuiListItem-gutters-15"
+            aria-label=" Title text"
+            className="MuiListItem-root-8 SimpleListItem-listItem-1 MuiListItem-default-11 MuiListItem-gutters-16"
             disabled={false}
             onClick={null}
             onKeyDown={null}
@@ -97,12 +102,12 @@ exports[`<SimpleListItem /> should work 1`] = `
               <ListItemText
                 classes={
                   Object {
-                    "dense": "MuiListItemText-dense-21",
-                    "inset": "MuiListItemText-inset-20",
-                    "primary": "MuiListItemText-primary-22",
-                    "root": "MuiListItemText-root-19 SimpleListItem-textContainer-2",
-                    "secondary": "MuiListItemText-secondary-23",
-                    "textDense": "MuiListItemText-textDense-24",
+                    "dense": "MuiListItemText-dense-22",
+                    "inset": "MuiListItemText-inset-21",
+                    "primary": "MuiListItemText-primary-23",
+                    "root": "MuiListItemText-root-20 SimpleListItem-textContainer-2",
+                    "secondary": "MuiListItemText-secondary-24",
+                    "textDense": "MuiListItemText-textDense-25",
                   }
                 }
                 disableTypography={false}
@@ -151,14 +156,14 @@ exports[`<SimpleListItem /> should work 1`] = `
                     "overrides": Object {
                       "MuiButtonBase": Object {
                         "focusVisible": Object {
-                          "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                          "boxShadow": "0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(71, 131, 235), 0 0 0 8px rgb(255, 255, 255)",
                           "outline": "2px solid transparent",
                         },
                       },
                       "MuiInputBase": Object {
                         "root": Object {
                           "&$focused": Object {
-                            "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                            "boxShadow": "0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(71, 131, 235), 0 0 0 8px rgb(255, 255, 255)",
                             "outline": "2px solid transparent",
                           },
                         },
@@ -201,7 +206,7 @@ exports[`<SimpleListItem /> should work 1`] = `
                         "light": "#e57373",
                         "main": "#f44336",
                       },
-                      "focusBorder": "rgba(25, 100, 230, 0.8)",
+                      "focusBorder": "rgb(71, 131, 235)",
                       "getContrastText": [Function],
                       "grey": Object {
                         "100": "#f5f5f5",
@@ -228,10 +233,10 @@ exports[`<SimpleListItem /> should work 1`] = `
                       },
                       "secondary": Object {
                         "contrastText": "#fff",
-                        "dark": "rgba(14, 16, 24, 0.9)",
+                        "dark": "rgb(30, 32, 39)",
                         "hover": "#1d39ad",
-                        "light": "rgba(67, 70, 79, 0.9)",
-                        "main": "rgba(20,24,35,0.9)",
+                        "light": "rgb(85, 88, 96)",
+                        "main": "rgb(43, 47, 57)",
                       },
                       "text": Object {
                         "disabled": "rgba(0, 0, 0, 0.38)",
@@ -244,7 +249,7 @@ exports[`<SimpleListItem /> should work 1`] = `
                       "warning": "#AF0021",
                       "white": Object {
                         "contrastText": "#000",
-                        "dark": "#979797",
+                        "dark": "#949494",
                         "light": "#f2f2f2",
                         "main": "#FFFFFF",
                       },
@@ -527,54 +532,54 @@ exports[`<SimpleListItem /> should work 1`] = `
                 }
               >
                 <div
-                  className="MuiListItemText-root-19 SimpleListItem-textContainer-2"
+                  className="MuiListItemText-root-20 SimpleListItem-textContainer-2"
                 >
                   <WithStyles(Typography)
-                    className="MuiListItemText-primary-22"
+                    className="MuiListItemText-primary-23"
                     component="span"
                     variant="body1"
                   >
                     <Typography
                       align="inherit"
-                      className="MuiListItemText-primary-22"
+                      className="MuiListItemText-primary-23"
                       classes={
                         Object {
-                          "alignCenter": "MuiTypography-alignCenter-48",
-                          "alignJustify": "MuiTypography-alignJustify-50",
-                          "alignLeft": "MuiTypography-alignLeft-47",
-                          "alignRight": "MuiTypography-alignRight-49",
-                          "body1": "MuiTypography-body1-34",
-                          "body2": "MuiTypography-body2-33",
-                          "button": "MuiTypography-button-36",
-                          "caption": "MuiTypography-caption-35",
-                          "colorError": "MuiTypography-colorError-59",
-                          "colorInherit": "MuiTypography-colorInherit-54",
-                          "colorPrimary": "MuiTypography-colorPrimary-55",
-                          "colorSecondary": "MuiTypography-colorSecondary-56",
-                          "colorTextPrimary": "MuiTypography-colorTextPrimary-57",
-                          "colorTextSecondary": "MuiTypography-colorTextSecondary-58",
-                          "display1": "MuiTypography-display1-29",
-                          "display2": "MuiTypography-display2-28",
-                          "display3": "MuiTypography-display3-27",
-                          "display4": "MuiTypography-display4-26",
-                          "gutterBottom": "MuiTypography-gutterBottom-52",
-                          "h1": "MuiTypography-h1-37",
-                          "h2": "MuiTypography-h2-38",
-                          "h3": "MuiTypography-h3-39",
-                          "h4": "MuiTypography-h4-40",
-                          "h5": "MuiTypography-h5-41",
-                          "h6": "MuiTypography-h6-42",
-                          "headline": "MuiTypography-headline-30",
-                          "inline": "MuiTypography-inline-60",
-                          "noWrap": "MuiTypography-noWrap-51",
-                          "overline": "MuiTypography-overline-45",
-                          "paragraph": "MuiTypography-paragraph-53",
-                          "root": "MuiTypography-root-25",
-                          "srOnly": "MuiTypography-srOnly-46",
-                          "subheading": "MuiTypography-subheading-32",
-                          "subtitle1": "MuiTypography-subtitle1-43",
-                          "subtitle2": "MuiTypography-subtitle2-44",
-                          "title": "MuiTypography-title-31",
+                          "alignCenter": "MuiTypography-alignCenter-49",
+                          "alignJustify": "MuiTypography-alignJustify-51",
+                          "alignLeft": "MuiTypography-alignLeft-48",
+                          "alignRight": "MuiTypography-alignRight-50",
+                          "body1": "MuiTypography-body1-35",
+                          "body2": "MuiTypography-body2-34",
+                          "button": "MuiTypography-button-37",
+                          "caption": "MuiTypography-caption-36",
+                          "colorError": "MuiTypography-colorError-60",
+                          "colorInherit": "MuiTypography-colorInherit-55",
+                          "colorPrimary": "MuiTypography-colorPrimary-56",
+                          "colorSecondary": "MuiTypography-colorSecondary-57",
+                          "colorTextPrimary": "MuiTypography-colorTextPrimary-58",
+                          "colorTextSecondary": "MuiTypography-colorTextSecondary-59",
+                          "display1": "MuiTypography-display1-30",
+                          "display2": "MuiTypography-display2-29",
+                          "display3": "MuiTypography-display3-28",
+                          "display4": "MuiTypography-display4-27",
+                          "gutterBottom": "MuiTypography-gutterBottom-53",
+                          "h1": "MuiTypography-h1-38",
+                          "h2": "MuiTypography-h2-39",
+                          "h3": "MuiTypography-h3-40",
+                          "h4": "MuiTypography-h4-41",
+                          "h5": "MuiTypography-h5-42",
+                          "h6": "MuiTypography-h6-43",
+                          "headline": "MuiTypography-headline-31",
+                          "inline": "MuiTypography-inline-61",
+                          "noWrap": "MuiTypography-noWrap-52",
+                          "overline": "MuiTypography-overline-46",
+                          "paragraph": "MuiTypography-paragraph-54",
+                          "root": "MuiTypography-root-26",
+                          "srOnly": "MuiTypography-srOnly-47",
+                          "subheading": "MuiTypography-subheading-33",
+                          "subtitle1": "MuiTypography-subtitle1-44",
+                          "subtitle2": "MuiTypography-subtitle2-45",
+                          "title": "MuiTypography-title-32",
                         }
                       }
                       color="default"
@@ -648,14 +653,14 @@ exports[`<SimpleListItem /> should work 1`] = `
                           "overrides": Object {
                             "MuiButtonBase": Object {
                               "focusVisible": Object {
-                                "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                                "boxShadow": "0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(71, 131, 235), 0 0 0 8px rgb(255, 255, 255)",
                                 "outline": "2px solid transparent",
                               },
                             },
                             "MuiInputBase": Object {
                               "root": Object {
                                 "&$focused": Object {
-                                  "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                                  "boxShadow": "0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(71, 131, 235), 0 0 0 8px rgb(255, 255, 255)",
                                   "outline": "2px solid transparent",
                                 },
                               },
@@ -698,7 +703,7 @@ exports[`<SimpleListItem /> should work 1`] = `
                               "light": "#e57373",
                               "main": "#f44336",
                             },
-                            "focusBorder": "rgba(25, 100, 230, 0.8)",
+                            "focusBorder": "rgb(71, 131, 235)",
                             "getContrastText": [Function],
                             "grey": Object {
                               "100": "#f5f5f5",
@@ -725,10 +730,10 @@ exports[`<SimpleListItem /> should work 1`] = `
                             },
                             "secondary": Object {
                               "contrastText": "#fff",
-                              "dark": "rgba(14, 16, 24, 0.9)",
+                              "dark": "rgb(30, 32, 39)",
                               "hover": "#1d39ad",
-                              "light": "rgba(67, 70, 79, 0.9)",
-                              "main": "rgba(20,24,35,0.9)",
+                              "light": "rgb(85, 88, 96)",
+                              "main": "rgb(43, 47, 57)",
                             },
                             "text": Object {
                               "disabled": "rgba(0, 0, 0, 0.38)",
@@ -741,7 +746,7 @@ exports[`<SimpleListItem /> should work 1`] = `
                             "warning": "#AF0021",
                             "white": Object {
                               "contrastText": "#000",
-                              "dark": "#979797",
+                              "dark": "#949494",
                               "light": "#f2f2f2",
                               "main": "#FFFFFF",
                             },
@@ -1025,51 +1030,53 @@ exports[`<SimpleListItem /> should work 1`] = `
                       variant="body1"
                     >
                       <span
-                        className="MuiTypography-root-25 MuiTypography-body1-34 MuiListItemText-primary-22"
+                        className="MuiTypography-root-26 MuiTypography-body1-35 MuiListItemText-primary-23"
                       >
                         <WithStyles(Typography)
+                          aria-hidden={true}
                           variant="srOnly"
                         >
                           <Typography
                             align="inherit"
+                            aria-hidden={true}
                             classes={
                               Object {
-                                "alignCenter": "MuiTypography-alignCenter-48",
-                                "alignJustify": "MuiTypography-alignJustify-50",
-                                "alignLeft": "MuiTypography-alignLeft-47",
-                                "alignRight": "MuiTypography-alignRight-49",
-                                "body1": "MuiTypography-body1-34",
-                                "body2": "MuiTypography-body2-33",
-                                "button": "MuiTypography-button-36",
-                                "caption": "MuiTypography-caption-35",
-                                "colorError": "MuiTypography-colorError-59",
-                                "colorInherit": "MuiTypography-colorInherit-54",
-                                "colorPrimary": "MuiTypography-colorPrimary-55",
-                                "colorSecondary": "MuiTypography-colorSecondary-56",
-                                "colorTextPrimary": "MuiTypography-colorTextPrimary-57",
-                                "colorTextSecondary": "MuiTypography-colorTextSecondary-58",
-                                "display1": "MuiTypography-display1-29",
-                                "display2": "MuiTypography-display2-28",
-                                "display3": "MuiTypography-display3-27",
-                                "display4": "MuiTypography-display4-26",
-                                "gutterBottom": "MuiTypography-gutterBottom-52",
-                                "h1": "MuiTypography-h1-37",
-                                "h2": "MuiTypography-h2-38",
-                                "h3": "MuiTypography-h3-39",
-                                "h4": "MuiTypography-h4-40",
-                                "h5": "MuiTypography-h5-41",
-                                "h6": "MuiTypography-h6-42",
-                                "headline": "MuiTypography-headline-30",
-                                "inline": "MuiTypography-inline-60",
-                                "noWrap": "MuiTypography-noWrap-51",
-                                "overline": "MuiTypography-overline-45",
-                                "paragraph": "MuiTypography-paragraph-53",
-                                "root": "MuiTypography-root-25",
-                                "srOnly": "MuiTypography-srOnly-46",
-                                "subheading": "MuiTypography-subheading-32",
-                                "subtitle1": "MuiTypography-subtitle1-43",
-                                "subtitle2": "MuiTypography-subtitle2-44",
-                                "title": "MuiTypography-title-31",
+                                "alignCenter": "MuiTypography-alignCenter-49",
+                                "alignJustify": "MuiTypography-alignJustify-51",
+                                "alignLeft": "MuiTypography-alignLeft-48",
+                                "alignRight": "MuiTypography-alignRight-50",
+                                "body1": "MuiTypography-body1-35",
+                                "body2": "MuiTypography-body2-34",
+                                "button": "MuiTypography-button-37",
+                                "caption": "MuiTypography-caption-36",
+                                "colorError": "MuiTypography-colorError-60",
+                                "colorInherit": "MuiTypography-colorInherit-55",
+                                "colorPrimary": "MuiTypography-colorPrimary-56",
+                                "colorSecondary": "MuiTypography-colorSecondary-57",
+                                "colorTextPrimary": "MuiTypography-colorTextPrimary-58",
+                                "colorTextSecondary": "MuiTypography-colorTextSecondary-59",
+                                "display1": "MuiTypography-display1-30",
+                                "display2": "MuiTypography-display2-29",
+                                "display3": "MuiTypography-display3-28",
+                                "display4": "MuiTypography-display4-27",
+                                "gutterBottom": "MuiTypography-gutterBottom-53",
+                                "h1": "MuiTypography-h1-38",
+                                "h2": "MuiTypography-h2-39",
+                                "h3": "MuiTypography-h3-40",
+                                "h4": "MuiTypography-h4-41",
+                                "h5": "MuiTypography-h5-42",
+                                "h6": "MuiTypography-h6-43",
+                                "headline": "MuiTypography-headline-31",
+                                "inline": "MuiTypography-inline-61",
+                                "noWrap": "MuiTypography-noWrap-52",
+                                "overline": "MuiTypography-overline-46",
+                                "paragraph": "MuiTypography-paragraph-54",
+                                "root": "MuiTypography-root-26",
+                                "srOnly": "MuiTypography-srOnly-47",
+                                "subheading": "MuiTypography-subheading-33",
+                                "subtitle1": "MuiTypography-subtitle1-44",
+                                "subtitle2": "MuiTypography-subtitle2-45",
+                                "title": "MuiTypography-title-32",
                               }
                             }
                             color="default"
@@ -1142,14 +1149,14 @@ exports[`<SimpleListItem /> should work 1`] = `
                                 "overrides": Object {
                                   "MuiButtonBase": Object {
                                     "focusVisible": Object {
-                                      "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                                      "boxShadow": "0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(71, 131, 235), 0 0 0 8px rgb(255, 255, 255)",
                                       "outline": "2px solid transparent",
                                     },
                                   },
                                   "MuiInputBase": Object {
                                     "root": Object {
                                       "&$focused": Object {
-                                        "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                                        "boxShadow": "0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(71, 131, 235), 0 0 0 8px rgb(255, 255, 255)",
                                         "outline": "2px solid transparent",
                                       },
                                     },
@@ -1192,7 +1199,7 @@ exports[`<SimpleListItem /> should work 1`] = `
                                     "light": "#e57373",
                                     "main": "#f44336",
                                   },
-                                  "focusBorder": "rgba(25, 100, 230, 0.8)",
+                                  "focusBorder": "rgb(71, 131, 235)",
                                   "getContrastText": [Function],
                                   "grey": Object {
                                     "100": "#f5f5f5",
@@ -1219,10 +1226,10 @@ exports[`<SimpleListItem /> should work 1`] = `
                                   },
                                   "secondary": Object {
                                     "contrastText": "#fff",
-                                    "dark": "rgba(14, 16, 24, 0.9)",
+                                    "dark": "rgb(30, 32, 39)",
                                     "hover": "#1d39ad",
-                                    "light": "rgba(67, 70, 79, 0.9)",
-                                    "main": "rgba(20,24,35,0.9)",
+                                    "light": "rgb(85, 88, 96)",
+                                    "main": "rgb(43, 47, 57)",
                                   },
                                   "text": Object {
                                     "disabled": "rgba(0, 0, 0, 0.38)",
@@ -1235,7 +1242,7 @@ exports[`<SimpleListItem /> should work 1`] = `
                                   "warning": "#AF0021",
                                   "white": Object {
                                     "contrastText": "#000",
-                                    "dark": "#979797",
+                                    "dark": "#949494",
                                     "light": "#f2f2f2",
                                     "main": "#FFFFFF",
                                   },
@@ -1519,19 +1526,19 @@ exports[`<SimpleListItem /> should work 1`] = `
                             variant="srOnly"
                           >
                             <span
-                              className="MuiTypography-root-25 MuiTypography-srOnly-46"
-                            >
-                               Title text
-                            </span>
+                              aria-hidden={true}
+                              className="MuiTypography-root-26 MuiTypography-srOnly-47"
+                            />
                           </Typography>
                         </WithStyles(Typography)>
                         <WithStyles(Typography)
                           aria-hidden={true}
                           classes={
                             Object {
-                              "root": null,
+                              "root": "null ",
                             }
                           }
+                          color="inherit"
                           variant="body2"
                         >
                           <Typography
@@ -1539,45 +1546,45 @@ exports[`<SimpleListItem /> should work 1`] = `
                             aria-hidden={true}
                             classes={
                               Object {
-                                "alignCenter": "MuiTypography-alignCenter-48",
-                                "alignJustify": "MuiTypography-alignJustify-50",
-                                "alignLeft": "MuiTypography-alignLeft-47",
-                                "alignRight": "MuiTypography-alignRight-49",
-                                "body1": "MuiTypography-body1-34",
-                                "body2": "MuiTypography-body2-33",
-                                "button": "MuiTypography-button-36",
-                                "caption": "MuiTypography-caption-35",
-                                "colorError": "MuiTypography-colorError-59",
-                                "colorInherit": "MuiTypography-colorInherit-54",
-                                "colorPrimary": "MuiTypography-colorPrimary-55",
-                                "colorSecondary": "MuiTypography-colorSecondary-56",
-                                "colorTextPrimary": "MuiTypography-colorTextPrimary-57",
-                                "colorTextSecondary": "MuiTypography-colorTextSecondary-58",
-                                "display1": "MuiTypography-display1-29",
-                                "display2": "MuiTypography-display2-28",
-                                "display3": "MuiTypography-display3-27",
-                                "display4": "MuiTypography-display4-26",
-                                "gutterBottom": "MuiTypography-gutterBottom-52",
-                                "h1": "MuiTypography-h1-37",
-                                "h2": "MuiTypography-h2-38",
-                                "h3": "MuiTypography-h3-39",
-                                "h4": "MuiTypography-h4-40",
-                                "h5": "MuiTypography-h5-41",
-                                "h6": "MuiTypography-h6-42",
-                                "headline": "MuiTypography-headline-30",
-                                "inline": "MuiTypography-inline-60",
-                                "noWrap": "MuiTypography-noWrap-51",
-                                "overline": "MuiTypography-overline-45",
-                                "paragraph": "MuiTypography-paragraph-53",
-                                "root": "MuiTypography-root-25",
-                                "srOnly": "MuiTypography-srOnly-46",
-                                "subheading": "MuiTypography-subheading-32",
-                                "subtitle1": "MuiTypography-subtitle1-43",
-                                "subtitle2": "MuiTypography-subtitle2-44",
-                                "title": "MuiTypography-title-31",
+                                "alignCenter": "MuiTypography-alignCenter-49",
+                                "alignJustify": "MuiTypography-alignJustify-51",
+                                "alignLeft": "MuiTypography-alignLeft-48",
+                                "alignRight": "MuiTypography-alignRight-50",
+                                "body1": "MuiTypography-body1-35",
+                                "body2": "MuiTypography-body2-34",
+                                "button": "MuiTypography-button-37",
+                                "caption": "MuiTypography-caption-36",
+                                "colorError": "MuiTypography-colorError-60",
+                                "colorInherit": "MuiTypography-colorInherit-55",
+                                "colorPrimary": "MuiTypography-colorPrimary-56",
+                                "colorSecondary": "MuiTypography-colorSecondary-57",
+                                "colorTextPrimary": "MuiTypography-colorTextPrimary-58",
+                                "colorTextSecondary": "MuiTypography-colorTextSecondary-59",
+                                "display1": "MuiTypography-display1-30",
+                                "display2": "MuiTypography-display2-29",
+                                "display3": "MuiTypography-display3-28",
+                                "display4": "MuiTypography-display4-27",
+                                "gutterBottom": "MuiTypography-gutterBottom-53",
+                                "h1": "MuiTypography-h1-38",
+                                "h2": "MuiTypography-h2-39",
+                                "h3": "MuiTypography-h3-40",
+                                "h4": "MuiTypography-h4-41",
+                                "h5": "MuiTypography-h5-42",
+                                "h6": "MuiTypography-h6-43",
+                                "headline": "MuiTypography-headline-31",
+                                "inline": "MuiTypography-inline-61",
+                                "noWrap": "MuiTypography-noWrap-52",
+                                "overline": "MuiTypography-overline-46",
+                                "paragraph": "MuiTypography-paragraph-54",
+                                "root": "MuiTypography-root-26 null ",
+                                "srOnly": "MuiTypography-srOnly-47",
+                                "subheading": "MuiTypography-subheading-33",
+                                "subtitle1": "MuiTypography-subtitle1-44",
+                                "subtitle2": "MuiTypography-subtitle2-45",
+                                "title": "MuiTypography-title-32",
                               }
                             }
-                            color="default"
+                            color="inherit"
                             gutterBottom={false}
                             headlineMapping={
                               Object {
@@ -1647,14 +1654,14 @@ exports[`<SimpleListItem /> should work 1`] = `
                                 "overrides": Object {
                                   "MuiButtonBase": Object {
                                     "focusVisible": Object {
-                                      "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                                      "boxShadow": "0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(71, 131, 235), 0 0 0 8px rgb(255, 255, 255)",
                                       "outline": "2px solid transparent",
                                     },
                                   },
                                   "MuiInputBase": Object {
                                     "root": Object {
                                       "&$focused": Object {
-                                        "boxShadow": "0 0 0 4px rgba(25, 100, 230, 0.8)",
+                                        "boxShadow": "0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(71, 131, 235), 0 0 0 8px rgb(255, 255, 255)",
                                         "outline": "2px solid transparent",
                                       },
                                     },
@@ -1697,7 +1704,7 @@ exports[`<SimpleListItem /> should work 1`] = `
                                     "light": "#e57373",
                                     "main": "#f44336",
                                   },
-                                  "focusBorder": "rgba(25, 100, 230, 0.8)",
+                                  "focusBorder": "rgb(71, 131, 235)",
                                   "getContrastText": [Function],
                                   "grey": Object {
                                     "100": "#f5f5f5",
@@ -1724,10 +1731,10 @@ exports[`<SimpleListItem /> should work 1`] = `
                                   },
                                   "secondary": Object {
                                     "contrastText": "#fff",
-                                    "dark": "rgba(14, 16, 24, 0.9)",
+                                    "dark": "rgb(30, 32, 39)",
                                     "hover": "#1d39ad",
-                                    "light": "rgba(67, 70, 79, 0.9)",
-                                    "main": "rgba(20,24,35,0.9)",
+                                    "light": "rgb(85, 88, 96)",
+                                    "main": "rgb(43, 47, 57)",
                                   },
                                   "text": Object {
                                     "disabled": "rgba(0, 0, 0, 0.38)",
@@ -1740,7 +1747,7 @@ exports[`<SimpleListItem /> should work 1`] = `
                                   "warning": "#AF0021",
                                   "white": Object {
                                     "contrastText": "#000",
-                                    "dark": "#979797",
+                                    "dark": "#949494",
                                     "light": "#f2f2f2",
                                     "main": "#FFFFFF",
                                   },
@@ -2025,7 +2032,7 @@ exports[`<SimpleListItem /> should work 1`] = `
                           >
                             <p
                               aria-hidden={true}
-                              className="MuiTypography-root-25 MuiTypography-body2-33"
+                              className="MuiTypography-root-26 null  MuiTypography-body2-34 MuiTypography-colorInherit-55"
                             >
                               Title text
                             </p>

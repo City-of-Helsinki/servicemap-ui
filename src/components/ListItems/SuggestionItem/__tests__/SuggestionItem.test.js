@@ -9,10 +9,11 @@ import SuggestionItem from '../index';
 
 // Mock props for intl provider
 const intlMock = {
-  locale: 'fi',
+  locale: 'en',
   messages: {
     'search.arrowLabel': 'Arrow button label',
   },
+  wrapRichTextChunksInFragment: false,
 };
 
 // Generic required props for SimpleListItem

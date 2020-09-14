@@ -7,9 +7,6 @@ import AddressMarker from '../AddressMarker';
 import useMobileStatus from '../../../../utils/isMobile';
 
 const Districts = ({
-  Polygon,
-  Marker,
-  Tooltip,
   highlightedDistrict,
   districtData,
   addressDistrict,
@@ -25,6 +22,7 @@ const Districts = ({
   navigator,
   intl,
 }) => {
+  const { Polygon, Marker, Tooltip } = global.rL;
   const useContrast = theme === 'dark';
   const isMobile = useMobileStatus();
 
@@ -153,7 +151,7 @@ const Districts = ({
               direction="top"
               autoPan={false}
             >
-              {`${district.name.fi} - ${intl.formatMessage({ id: `area.list.${district.type}` })}`}
+              {`${getLocaleText(district.name)} - ${intl.formatMessage({ id: `area.list.${district.type}` })}`}
             </Tooltip>
           ) : null}
           {renderDistrictMarkers(district)}
@@ -200,9 +198,6 @@ const Districts = ({
 };
 
 Districts.propTypes = {
-  Polygon: PropTypes.objectOf(PropTypes.any).isRequired,
-  Marker: PropTypes.objectOf(PropTypes.any).isRequired,
-  Tooltip: PropTypes.objectOf(PropTypes.any).isRequired,
   highlightedDistrict: PropTypes.objectOf(PropTypes.any),
   getLocaleText: PropTypes.func.isRequired,
   mapOptions: PropTypes.objectOf(PropTypes.any).isRequired,
