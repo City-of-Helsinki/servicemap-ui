@@ -31,14 +31,16 @@ const searchUnits = async (t, search = 'uimastadion') => {
   return unitCount;
 }
 
-test('Navigate search view ', async (t) => {
+test('Navigate search view', async (t) => {
   // Test result orderer navigation
-  const unitCount = await searchUnits(t);
+  const unitCount = await searchUnits(t, 'kirjasto');
   const input = ReactSelector('WithStyles(ForwardRef(InputBase))').nth(0);
   let select =  ReactSelector('ResultOrderer WithStyles(ForwardRef(Select))');
 
   await t
-    .typeText(input, 'kirjasto')
+    // .click(input)
+    // .pressKey('ctrl+a delete')
+    .typeText(input, 't')
     .pressKey('tab') // Tabs to cancel button
     .pressKey('tab') // Tabs to search icon button
     .pressKey('tab') // Result orderer
@@ -52,7 +54,7 @@ test('Navigate search view ', async (t) => {
   // const secondSearchItems = firstSearchItems.nth(1);
 
   await t
-    .typeText(input, 'kirjasto')
+    .typeText(input, 't')
     .pressKey('tab') // Tabs to cancel button
     .pressKey('tab') // Tabs to search icon button
     .pressKey('tab') // Result orderer
@@ -66,37 +68,45 @@ test('Navigate search view ', async (t) => {
     .pressKey('shift+tab')
     .expect(items.nth(0).focused).ok('Tab did move focus back to first list item');
 
+});
+
+test('Tab navigation works correctly', async (t) => {
   // Test tabs navigation
   await searchUnits(t, 'kirjasto');
   const tabs =  ReactSelector('TabLists WithStyles(ForwardRef(Tab))');
+  const services =  ReactSelector('TabLists ServiceItem');
+  const units =  ReactSelector('TabLists UnitItem');
 
   await t
-    .click(tabs.nth(1));
-
-  let services =  ReactSelector('TabLists ServiceItem');
-  await t // Check that services exist
+    // Check that clicks work correctly
+    .click(tabs.nth(1))
+    // Check that services exist
     .expect(services.count).gt(1)
-    .click(tabs.nth(0));
-
-  let units =  ReactSelector('TabLists UnitItem');
-  await t // Check that units exist
-    .expect(units.count).gt(1);
-
-  await t
-    .pressKey('tab')
-    .expect(tabs.nth(1).focused).ok('Tab did move focus back to second tab item')
-    .pressKey('enter');
-
-  services =  ReactSelector('TabLists ServiceItem');
-  await t // Check that units exist
-    .expect(services.count).gt(1)
-    .pressKey('shift+tab enter')
-    .expect(tabs.nth(0).focused).ok('Tab did move focus back to first tab item');
-
-  units =  ReactSelector('TabLists UnitItem');
-  await t // Check that units exist
+    .click(tabs.nth(0))
+    // Check that units exist
     .expect(units.count).gt(1)
-});
+
+    // Check that keyboard navigation works correctly
+    // Check that right tab (services tab) works correctly
+    .pressKey('right')
+    .expect(tabs.nth(1).focused).ok('Right arrow did move focus to second tab item')
+    .pressKey('enter')
+    .pressKey('tab')
+    .expect(services.count).gt(1)
+    .expect(services.nth(0).focused).ok('Tab should move focus to first list item')
+    .pressKey('shift+tab')
+    .expect(tabs.nth(1).focused).ok('Shift+tab should move focus back to second tab')
+
+    // Check that first tab (units tab) works correctly
+    .pressKey('left')
+    .expect(tabs.nth(0).focused).ok('Left arrow should move focus back to first tab')
+    .pressKey('enter')
+    .pressKey('tab')
+    .expect(units.count).gt(1)
+    .expect(units.nth(0).focused).ok('Tab should move focus to first list item')
+    .pressKey('shift+tab')
+    .expect(tabs.nth(0).focused).ok('Shift+tab should move focus back to second tab'); // Check that units exist
+})
 
 test('Search does list results', async (t) => {
   // const unitCount = await searchUnits(t);
