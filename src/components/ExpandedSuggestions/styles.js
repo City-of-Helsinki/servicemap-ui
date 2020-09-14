@@ -3,7 +3,7 @@ import config from '../../../config';
 export default theme => ({
   bottomContent: {
     display: 'flex',
-    padding: `${theme.spacing.unit}px ${theme.spacing.unitTriple}px`,
+    padding: theme.spacing(1, 3),
   },
   container: {
     overflow: 'auto',
@@ -25,26 +25,26 @@ export default theme => ({
     zIndex: theme.zIndex.infront,
   },
   infoText: {
-    paddingBottom: theme.spacing.unitHalf,
+    paddingBottom: theme.spacing(0.5),
   },
   input: {
     flex: '1 1 auto',
-    paddingLeft: theme.spacing.unit,
-    paddingRight: theme.spacing.unit,
+    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(1),
   },
   inputFocused: {
     paddingLeft: 0,
-    paddingRight: theme.spacing.unit,
+    paddingRight: theme.spacing(1),
   },
   iconButton: {
     flex: '0 1 auto',
-    padding: theme.spacing.unit,
-    margin: theme.spacing.unit,
+    padding: theme.spacing(1),
+    margin: theme.spacing(1),
   },
   iconButtonSearch: {
     flex: '0 0 auto',
     borderRadius: 0,
-    padding: theme.spacing.unitHalf,
+    padding: theme.spacing(0.5),
     textTransform: 'none',
     '& svg': {
       fontSize: 28,
@@ -55,7 +55,7 @@ export default theme => ({
   },
   icon: {
     flex: '0 1 auto',
-    padding: theme.spacing.unit,
+    padding: theme.spacing(1),
   },
   sticky: {
     position: 'sticky',
@@ -63,10 +63,10 @@ export default theme => ({
   },
   headerText: {
     fontWeight: 'bold',
-    marginBottom: theme.spacing.unitDouble,
+    marginBottom: theme.spacing(2),
   },
   padding: {
-    padding: theme.spacing.unitDouble,
+    padding: theme.spacing(2),
   },
   primary: {
     backgroundColor: theme.palette.primary.main,
@@ -79,13 +79,13 @@ export default theme => ({
     width: 'fit-content',
     height: 42,
     marginTop: 12,
-    marginBottom: theme.spacing.unitDouble,
+    marginBottom: theme.spacing(2),
   },
   expandSearchTop: {
     display: 'flex',
     flexDirection: 'row-reverse',
-    paddingTop: theme.spacing.unit,
-    paddingLeft: theme.spacing.unitDouble,
-    paddingRight: theme.spacing.unitDouble,
+    paddingTop: theme.spacing(1),
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
   },
 });

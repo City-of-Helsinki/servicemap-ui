@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { unstable_useMediaQuery } from '@material-ui/core/useMediaQuery';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import URI from 'urijs';
 import config from '../../config';
 
@@ -147,9 +147,9 @@ export const arraysEqual = (a, b) => {
  */
 export const isSmallContentArea = () => {
   const { smallContentAreaBreakpoint, mobileUiBreakpoint, smallScreenBreakpoint } = config;
-  const smallContent = unstable_useMediaQuery(`(max-width:${smallContentAreaBreakpoint}px)`);
-  const smallScreen = unstable_useMediaQuery(`(max-width:${smallScreenBreakpoint}px)`);
-  const notMobile = unstable_useMediaQuery(`(min-width:${mobileUiBreakpoint}px)`);
+  const smallContent = useMediaQuery(`(max-width:${smallContentAreaBreakpoint}px)`);
+  const smallScreen = useMediaQuery(`(max-width:${smallScreenBreakpoint}px)`);
+  const notMobile = useMediaQuery(`(min-width:${mobileUiBreakpoint}px)`);
   return (
     smallContent
     || (smallScreen && notMobile)

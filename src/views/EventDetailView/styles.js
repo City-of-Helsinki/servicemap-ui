@@ -6,7 +6,7 @@ export default theme => ({
     backgroundColor: 'rgba(0,0,0,0.15)',
   },
   content: {
-    padding: theme.spacing.unitDouble,
+    padding: theme.spacing(2),
     paddingTop: 0,
   },
 });

@@ -2,7 +2,7 @@
 import React from 'react';
 import { createMount } from '@material-ui/core/test-utils';
 import { MuiThemeProvider } from '@material-ui/core';
-import themes from '../../../../../themes';
+import themes from '../../../../themes';
 import SimpleListItem from '../index';
 
 // Generic required props for SimpleListItem
@@ -46,7 +46,7 @@ describe('<SimpleListItem />', () => {
       <SimpleListItem {...mockProps} handleItemClick={mockCallBack} button />
     );
 
-    component.find('ListItem').simulate('click');
+    component.find('ForwardRef(ListItem)').simulate('click');
     expect(mockCallBack.mock.calls.length).toEqual(1);
   });
 
@@ -56,8 +56,8 @@ describe('<SimpleListItem />', () => {
       <SimpleListItem {...mockProps} handleItemClick={mockCallBack} button />
     );
 
-    component.find('ListItem').simulate('keyDown', { which: 13 });
-    component.find('ListItem').simulate('keyDown', { which: 32 });
+    component.find('ForwardRef(ListItem)').simulate('keyDown', { which: 13 });
+    component.find('ForwardRef(ListItem)').simulate('keyDown', { which: 32 });
     expect(mockCallBack.mock.calls.length).toEqual(2);
   });
 
@@ -70,22 +70,22 @@ describe('<SimpleListItem />', () => {
 
   it('does set select correctly', () => {
     let component = mount(<SimpleListItem {...mockProps} />);
-    expect(component.find('ListItem').props().selected).toBeFalsy();
+    expect(component.find('ForwardRef(ListItem)').props().selected).toBeFalsy();
 
     resetMount();
 
     component = mount(<SimpleListItem {...mockProps} selected />);
-    expect(component.find('ListItem').props().selected).toBeTruthy();
+    expect(component.find('ForwardRef(ListItem)').props().selected).toBeTruthy();
   });
 
   it('does set divider correctly', () => {
     let component = mount(<SimpleListItem {...mockProps} />);
-    expect(component.find('Divider').exists()).toBeFalsy();
+    expect(component.find('ForwardRef(Divider)').exists()).toBeFalsy();
 
     resetMount();
 
     component = mount(<SimpleListItem {...mockProps} divider />);
-    expect(component.find('Divider').exists()).toBeTruthy();
+    expect(component.find('ForwardRef(Divider)').exists()).toBeTruthy();
   });
 
   it('does use default accessibility attributes correctly', () => {
@@ -95,14 +95,14 @@ describe('<SimpleListItem />', () => {
     const text = component.find('p').at(0);
 
     // Expect screen reader texts to render correctly
-    expect(component.find('ListItem').props()['aria-label'].indexOf(mockProps.text) !== -1).toBeTruthy();
+    expect(component.find('ForwardRef(ListItem)').props()['aria-label'].indexOf(mockProps.text) !== -1).toBeTruthy();
     // Expect aria-hidden attributes to be placed correctly
     expect(srText.props()['aria-hidden']).toBeTruthy();
     expect(text.props()['aria-hidden']).toBeTruthy();
     // Expect role to be set
-    expect(component.find('ListItem').props().role).toEqual(null);
+    expect(component.find('ForwardRef(ListItem)').props().role).toEqual(null);
     // Expect element to have tabIndex -1
-    expect(component.find('ListItem').props().tabIndex).toEqual(-1);
+    expect(component.find('ForwardRef(ListItem)').props().tabIndex).toEqual(-1);
   });
 
   it('does use given accessibility attributes correctly', () => {
@@ -118,9 +118,9 @@ describe('<SimpleListItem />', () => {
 
     const srText = component.find('span').at(1).text();
     const containsText = srText.indexOf('Screen reader text') !== -1;
-    const alText = component.find('ListItem').props()['aria-label'];
+    const alText = component.find('ForwardRef(ListItem)').props()['aria-label'];
     const alContainsText = alText.indexOf(mockProps.text) !== -1
-    && alText.indexOf('Screen reader text') !== -1
+    && alText.indexOf('Screen reader text') !== -1;
 
     // Expect screen reader text to contain both text and srText values
     expect(alContainsText).toBeTruthy();
@@ -131,6 +131,6 @@ describe('<SimpleListItem />', () => {
     // Expect divider element to be hidden from screen readers
     expect(component.find('li').at(1).props()['aria-hidden']).toBeTruthy();
     // Expect element to have tabIndex 0
-    expect(component.find('ListItem').props().tabIndex).toEqual(0);
+    expect(component.find('ForwardRef(ListItem)').props().tabIndex).toEqual(0);
   });
 });

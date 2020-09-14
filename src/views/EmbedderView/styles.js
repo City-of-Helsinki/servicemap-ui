@@ -1,9 +1,9 @@
 export default (theme) => {
-  const formPaperHorizontalPadding = theme.spacing.unitTriple;
+  const formPaperHorizontalPadding = theme.spacing(3);
   return {
     appBar: {
       position: 'relative',
-      padding: theme.spacing.unitDouble,
+      padding: theme.spacing(2),
       backgroundColor: theme.palette.primary.main,
       top: 0,
       left: 'auto',
@@ -12,7 +12,7 @@ export default (theme) => {
     button: {
       float: 'right',
       margin: 0,
-      marginBottom: theme.spacing.unitDouble,
+      marginBottom: theme.spacing(2),
     },
     checkbox: {
       paddingLeft: 0,
@@ -24,7 +24,7 @@ export default (theme) => {
       right: 0,
     },
     container: {
-      margin: `0 10% ${theme.spacing.unitTriple}px 10%`,
+      margin: `0 10% ${theme.spacing(3)}px 10%`,
     },
     iframeContainer: {
       width: '100%',
@@ -33,19 +33,19 @@ export default (theme) => {
       border: '3px dashed #666',
     },
     formContainer: {
-      margin: `${theme.spacing.unitDouble}px 0`,
+      margin: `${theme.spacing(2)}px 0`,
     },
     marginBottom: {
-      marginBottom: theme.spacing.unitDouble,
+      marginBottom: theme.spacing(2),
     },
     formContainerPaper: {
       minWidth: `calc(100% - ${formPaperHorizontalPadding * 2}px)`,
       display: 'inline-block',
-      margin: `${theme.spacing.unitTriple}px 0`,
-      padding: `${theme.spacing.unitDouble}px ${formPaperHorizontalPadding}px`,
+      margin: `${theme.spacing(3)}px 0`,
+      padding: `${theme.spacing(2)}px ${formPaperHorizontalPadding}px`,
       textAlign: 'left',
       '& label': {
-        margin: `${theme.spacing.unit}px 0`,
+        margin: `${theme.spacing(1)}px 0`,
       },
       '& fieldset': {
         margin: '0 -12px',
@@ -75,11 +75,11 @@ export default (theme) => {
     },
     title: {
       ...theme.typography.h4,
-      marginBottom: theme.spacing.unitTriple,
+      marginBottom: theme.spacing(3),
     },
     titleContainer: {
-      margin: `${theme.spacing.unitDouble}px 0`,
-      padding: theme.spacing.unitTriple,
+      margin: `${theme.spacing(2)}px 0`,
+      padding: theme.spacing(3),
       position: 'relative',
     },
   };

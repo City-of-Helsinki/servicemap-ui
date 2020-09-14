@@ -136,7 +136,7 @@ const UnitTab = ({
     if (!selectedDistrictData.length) {
       return (
         <div>
-          <Typography className={classes.infoText}>
+          <Typography className={classes.infoText} variant="body2">
             <FormattedMessage id="area.noSelection" />
           </Typography>
         </div>

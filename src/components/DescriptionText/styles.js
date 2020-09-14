@@ -1,17 +1,17 @@
 
 export default theme => ({
   divider: {
-    marginLeft: -theme.spacing.unitDouble,
-    marginRight: -theme.spacing.unitDouble,
+    marginLeft: theme.spacing(-2),
+    marginRight: theme.spacing(-2),
   },
   left: {
     textAlign: 'left',
   },
   paragraph: {
-    margin: theme.spacing.unitDouble,
+    margin: theme.spacing(2),
     whiteSpace: 'pre-line',
   },
   subtitle: {
-    margin: theme.spacing.unitDouble,
+    margin: theme.spacing(2),
   },
 });

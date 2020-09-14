@@ -52,7 +52,7 @@ const styles = theme => ({
   },
   locationButtonFocus: {
     outline: '2px solid transparent',
-    boxShadow: `0 0 0 3px ${theme.palette.primary.highContrast}, 0 0 0 4px ${theme.palette.focusBorder}`,
+    boxShadow: `0 0 0 3px ${theme.palette.primary.highContrast}, 0 0 0 4px ${theme.palette.focusBorder.main}`,
   },
   locationDisabled: {
     backgroundColor: theme.palette.disabled.strong,
@@ -75,7 +75,7 @@ const styles = theme => ({
     zIndex: theme.zIndex.infront,
   },
   unitTooltip: {
-    padding: theme.spacing.unitDouble,
+    padding: theme.spacing(2),
     textAlign: 'left',
   },
   unitClusterMarker: {
@@ -98,12 +98,12 @@ const styles = theme => ({
     display: 'flex',
   },
   unitTooltipContainer: {
-    padding: theme.spacing.unitDouble,
+    padding: theme.spacing(2),
     textAlign: 'left',
   },
   unitTooltipTitle: {
     ...theme.typography.subtitle1,
-    margin: `${theme.spacing.unitHalf}px ${theme.spacing.unit}px`,
+    margin: theme.spacing(0.5, 1),
     fontWeight: 'bold',
   },
   unitTooltipSubContainer: {
@@ -112,7 +112,7 @@ const styles = theme => ({
   },
   unitTooltipSubtitle: {
     ...theme.typography.body2,
-    margin: `0 ${theme.spacing.unit}px`,
+    margin: theme.spacing(0, 1),
   },
   unitPopupList: {
     listStyleType: 'none',
@@ -126,9 +126,9 @@ const styles = theme => ({
     '& li': {
       display: 'flex',
       justifyContent: 'space-between',
-      padding: `${theme.spacing.unit}px ${theme.spacing.unit}px`,
+      padding: theme.spacing(1),
       '& p': {
-        margin: `0 ${theme.spacing.unit}px`,
+        margin: theme.spacing(0, 1),
       },
       '& hr': {
         height: 1,
@@ -146,24 +146,24 @@ const styles = theme => ({
     },
     '& .popup-divider': {
       cursor: 'unset',
-      padding: `0 ${theme.spacing.unitDouble}px`,
+      padding: theme.spacing(0, 2),
     },
   },
   unitPopupTitle: {
     ...theme.typography.subtitle1,
-    margin: `${theme.spacing.unit}px ${theme.spacing.unitDouble}px !important`,
+    margin: `${theme.spacing(1, 2)} !important`,
     fontWeight: 'bold',
     textAlign: 'center',
   },
   unitPopupItem: {
     ...theme.typography.body2,
-    margin: `${theme.spacing.unitHalf}px ${theme.spacing.unit}px`,
+    margin: theme.spacing(0.5, 1),
     fontWeight: 'bold',
     wordBreak: 'break-word',
   },
   unitPopupDistance: {
     ...theme.typography.body2,
-    margin: `${theme.spacing.unitHalf}px ${theme.spacing.unit}px`,
+    margin: theme.spacing(0.5, 1),
     fontWeight: 'bold',
   },
   bold: {
@@ -203,7 +203,7 @@ const styles = theme => ({
   },
   tranistInfoContainer: {
     width: 230,
-    padding: theme.spacing.unitDouble,
+    padding: theme.spacing(2),
     display: 'flex',
     flexDirection: 'column',
   },

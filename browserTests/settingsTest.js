@@ -23,7 +23,7 @@ test('Settings does opens and closes correctly', async (t) => {
   await openSettings(t);
 
   const title = ReactSelector('TitleBar').child(0);
-  const closeButton = ReactSelector('Settings').findReact('ButtonBase');
+  const closeButton = ReactSelector('Settings').findReact('WithStyles(ForwardRef(ButtonBase))');
   await t
     .expect(title.focused).ok()
     .expect(title.innerText).eql('Esteettömyysasetukset')
@@ -36,7 +36,7 @@ test('Settings does work like dialog', async (t) => {
   openSettings(t);
 
   const settingsContainer = Selector('#SettingsContainer');
-  const buttons = ReactSelector('Settings').findReact('ButtonBase');
+  const buttons = ReactSelector('Settings').findReact('WithStyles(ForwardRef(ButtonBase))');
   const buttonCount = await buttons.count;
   const closeButton = buttons.nth(0);
 

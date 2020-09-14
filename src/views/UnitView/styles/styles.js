@@ -1,6 +1,6 @@
 export default theme => ({
   aTabAdjuster: {
-    marginLeft: theme.spacing.unit,
+    marginLeft: theme.spacing(1),
   },
   root: {
     height: '100%',
@@ -9,19 +9,19 @@ export default theme => ({
     overflowY: 'auto',
   },
   content: {
-    paddingLeft: theme.spacing.unitDouble,
-    paddingRight: theme.spacing.unitDouble,
-    paddingBottom: theme.spacing.unitDouble,
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
   },
   bold: {
     fontWeight: 'bold',
   },
   margin: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
   },
   label: {
-    paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2,
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
   },
   input: {
     marginLeft: 8,
@@ -36,7 +36,7 @@ export default theme => ({
     margin: 0,
   },
   eventIcon: {
-    marginRight: theme.spacing.unitDouble,
+    marginRight: theme.spacing(2),
   },
   borderBottom: {
     borderBottom: '1px solid rgba(0,0,0,0.2)',
@@ -47,25 +47,25 @@ export default theme => ({
   },
   left: {
     textAlign: 'left',
-    marginLeft: theme.spacing.unitDouble,
-    marginRight: theme.spacing.unitDouble,
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(2),
   },
   marginVertical: {
-    marginTop: theme.spacing.unitDouble,
-    marginBottom: theme.spacing.unitDouble,
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
   },
   title: {
     display: 'flex',
-    marginTop: theme.spacing.unitDouble,
-    marginBottom: theme.spacing.unitDouble,
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
   },
   subtitle: {
-    marginTop: theme.spacing.unitDouble,
-    marginBottom: theme.spacing.unitDouble,
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
   },
   paragraph: {
-    marginTop: theme.spacing.unitDouble,
-    marginBottom: theme.spacing.unitDouble,
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
     whiteSpace: 'pre-line',
   },
   divider: {
@@ -89,9 +89,9 @@ export default theme => ({
     position: 'absolute',
     display: 'flex',
     alignItems: 'center',
-    padding: theme.spacing.unit,
-    paddingLeft: theme.spacing.unitDouble,
-    paddingRight: theme.spacing.unitDouble,
+    padding: theme.spacing(1),
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
     bottom: 0,
     left: 0,
     color: '#000',
@@ -107,15 +107,15 @@ export default theme => ({
     display: 'flex',
     justifyContent: 'space-evenly',
     alignItems: 'end',
-    paddingLeft: theme.spacing.unitDouble,
-    paddingRight: theme.spacing.unitDouble,
-    marginBottom: theme.spacing.unit,
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
+    marginBottom: theme.spacing(1),
   },
   feedbackButton: {
-    marginLeft: theme.spacing.unitDouble,
+    marginLeft: theme.spacing(2),
   },
   rsButton: {
-    marginTop: theme.spacing.unitDouble,
-    marginLeft: theme.spacing.unitDouble,
+    marginTop: theme.spacing(2),
+    marginLeft: theme.spacing(2),
   },
 });

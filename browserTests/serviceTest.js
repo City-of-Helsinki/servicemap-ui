@@ -24,8 +24,8 @@ test('User marker is drawn on map based on coordinates', async (t) => {
 });
 
 test('Result orderer has distance option as default with user marker coordinates', async (t) => {
-  const input = ReactSelector('InputBase');
-  let select =  ReactSelector('ResultOrderer Select');
+  const input = ReactSelector('WithStyles(ForwardRef(InputBase))');
+  let select =  ReactSelector('ResultOrderer WithStyles(ForwardRef(Select))');
 
   await t
     .expect(select.getReact(({props}) => props.value)).eql('distance-asc')
@@ -41,8 +41,8 @@ fixture `Service page tests`
   });
 
 test('Keyboard navigation is OK', async (t) => {
-  const input = ReactSelector('InputBase');
-  const select =  ReactSelector('ResultOrderer Select');
+  const input = ReactSelector('WithStyles(ForwardRef(InputBase))');
+  const select =  ReactSelector('ResultOrderer WithStyles(ForwardRef(Select))');
 
   // Use keyboard to change result ordering
   await t
