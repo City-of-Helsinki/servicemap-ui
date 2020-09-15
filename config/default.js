@@ -78,6 +78,11 @@ if (typeof settings.SHOW_AREA_SELECTION === 'undefined') {
   settings.SHOW_AREA_SELECTION = true;
 }
 
+if (typeof settings.FEEDBACK_ADDITIONAL_INFO_LINK === 'undefined') {
+  // If not set default to Helsinki
+  settings.FEEDBACK_ADDITIONAL_INFO_LINK = "https://www.hel.fi/helsinki/fi/kaupunki-ja-hallinto/osallistu-ja-vaikuta/palaute/ohjeita-palautteesta";
+}
+
 export default {
   "version": version.tag,
   "commit": version.commit,
@@ -163,4 +168,5 @@ export default {
     "sv": 'sv_se',
   },
   "show_area_selection": (settings.SHOW_AREA_SELECTION === 'true'),
+  "feedback_additional_info_link": settings.FEEDBACK_ADDITIONAL_INFO_LINK,
 }
