@@ -171,11 +171,19 @@ const styles = theme => ({
   },
   distanceIcon: {
     fontSize: 50,
-    color: '#1964e6',
+    color: theme.palette.primary.main,
+    textShadow: '-1px 0 #fff, 0 1px #fff, 1px 0 #fff, 0 -1px #fff',
     outline: 'none',
   },
   distancePopup: {
     padding: 8,
+  },
+  distanceLine: {
+    stroke: theme.palette.primary.main,
+  },
+  distanceLineBorder: {
+    stroke: '#fff',
+    strokeWidth: 6,
   },
 
   // Transit stops

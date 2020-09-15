@@ -90,7 +90,8 @@ const DistanceMeasure = (props) => {
           )}
         </Marker>
       ))}
-      <Polyline positions={lineArray} />
+      <Polyline className={classes.distanceLineBorder} positions={lineArray} />
+      <Polyline className={classes.distanceLine} positions={lineArray} />
     </>
   );
 };
