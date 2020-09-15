@@ -30,6 +30,9 @@ const js = {
       ],
       [
         require.resolve('babel-plugin-transform-class-properties')
+      ],
+      [
+        require.resolve('@babel/plugin-proposal-optional-chaining')
       ]
     ],
     // This is a feature of `babel-loader` for webpack (not Babel itself).
