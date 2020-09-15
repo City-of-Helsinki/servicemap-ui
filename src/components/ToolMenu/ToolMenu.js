@@ -8,6 +8,7 @@ import {
 import DropDownMenuButton from '../DropDownMenuButton';
 import useDownloadData from '../../utils/downloadData';
 import SMIcon from '../SMIcon/SMIcon';
+import SMButton from '../ServiceMapButton';
 
 const ToolMenu = ({
   intl, classes, mapUtility, navigator, setMeasuringMode, measuringMode,
@@ -87,6 +88,16 @@ const ToolMenu = ({
         menuAriaLabel={toolMenuText}
         menuItems={menuItems}
       />
+      {measuringMode && (
+        <SMButton
+          aria-hidden="true"
+          className={classes.measuringButton}
+          color="primary"
+          role="button"
+          messageID="tool.measuring.stop"
+          onClick={() => setMeasuringMode(false)}
+        />
+      )}
     </>
   );
 };
