@@ -449,7 +449,7 @@ export default {
 
   // Tools
   'tool.download': 'Lataa tiedot (uusi välilehti)',
-  'tool.measuring': 'Mittaa etäisyys',
+  'tool.measuring': 'Mittaa etäisyys (käytettävissä vain hiirellä)',
   'tool.measuring.stop': 'Lopeta mittaus',
 
   'info.title': 'Tietoa palvelusta ja saavutettavuusseloste',

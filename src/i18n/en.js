@@ -447,7 +447,7 @@ export default {
 
   // Tools
   'tool.download': 'Download data (new tab)',
-  'tool.measuring': 'Measure distance',
+  'tool.measuring': 'Measure distance (mouse only)',
   'tool.measuring.stop': 'Stop measuring',
 
   'info.title': 'About the service and accessibility statement',
