@@ -115,31 +115,41 @@ const AreaView = ({
   };
 
   const changeDistrictData = (data, type) => {
-    // Collect different periods from district data
-    const dateArray = [];
-    data.forEach((item) => {
-      if (item.start && item.end) {
-        const period = `${item.start}-${item.end}`;
-        if (period.includes('2019')) {
-          // FIXME: remove temporary solution to hide older school years once period data is updated
-          return;
-        }
-        if (!dateArray.includes(period)) {
-          dateArray.push(period);
-        }
+    // Group data by periods (used in school districts)
+    const groupedData = data.reduce((acc, cur) => {
+      if (cur.start && cur.start.includes(2019)) {
+        // FIXME: remove temporary solution to hide older school years once period data is updated
+        return acc;
+      }
+      const district = cur;
+      // Remove days and months from district start and end values
+      if (district.start && district.end) {
+        district.start = new Date(district.start).getFullYear();
+        district.end = new Date(district.end).getFullYear();
+      }
+      const duplicate = acc.find(
+        list => list[0].start === district.start && list[0].end === district.end,
+      );
+      if (duplicate) {
+        duplicate.push(district);
+      } else {
+        acc.push([district]);
+      }
+      return acc;
+    }, []);
+
+    groupedData.sort((a, b) => a[0].start - b[0].start);
+
+    groupedData.forEach((periodData) => {
+      const { start, end } = periodData[0];
+      if (start && end) {
+        setDistrictData({
+          id: `${type}${start}-${end}`, data: periodData, date: [start, end], name: type,
+        });
+      } else {
+        setDistrictData({ id: type, data: periodData, name: type });
       }
     });
-    // If different periods were found, seperate them into idividual objects
-    if (dateArray.length) {
-      const dataItems = dateArray.map(period => data.filter(district => `${district.start}-${district.end}` === period));
-      dataItems.forEach((data, i) => {
-        setDistrictData({
-          id: `${type}${dateArray[i]}`, data, date: dateArray[i], name: type,
-        });
-      });
-    } else {
-      setDistrictData({ id: type, data, name: type });
-    }
   };
 
   const compareBoundaries = (a, b) => {
@@ -216,15 +226,13 @@ const AreaView = ({
   const fetchDistrictsByType = async (type) => {
     const options = {
       page: 1,
-      page_size: 200,
+      page_size: 300,
       type,
       geometry: true,
       unit_include: 'name,location,street_address',
     };
-    await districtFetch(options)
-      .then((data) => {
-        filterFetchData(data, type);
-      })
+    return districtFetch(options)
+      .then(data => ({ data, type }))
       .catch(() => {
         dispatchFetching({ type: 'remove', value: type });
       });
@@ -244,7 +252,10 @@ const AreaView = ({
     ) {
       dispatchFetching({ type: 'add', value: item.title });
       Promise.all(item.districts.map(i => fetchDistrictsByType(i)))
-        .then(() => dispatchFetching({ type: 'remove', value: item.title }));
+        .then((results) => {
+          results.forEach(result => filterFetchData(result.data, result.type));
+          dispatchFetching({ type: 'remove', value: item.title });
+        });
     }
   };
 
