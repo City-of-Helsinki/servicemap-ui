@@ -180,7 +180,7 @@ const AreaView = ({
 
   const filterFetchData = (data, type) => {
     let filteredData = [];
-    data.results.forEach((district) => {
+    data.forEach((district) => {
       // Skip if district is already marked as overlaping with another district
       if (filteredData.some(obj => obj.overlaping
         && obj.overlaping.some(item => item.id === district.id))) {
@@ -189,7 +189,7 @@ const AreaView = ({
       const returnItem = district;
 
       // Combine other districts that are duplicates or within this district
-      const overlapingDistricts = data.results.filter(obj => compareBoundaries(district, obj));
+      const overlapingDistricts = data.filter(obj => compareBoundaries(district, obj));
 
       if (overlapingDistricts.length) {
         returnItem.overlaping = overlapingDistricts;
@@ -232,7 +232,10 @@ const AreaView = ({
       unit_include: 'name,location,street_address',
     };
     return districtFetch(options)
-      .then(data => ({ data, type }))
+      .then((data) => {
+        const filteredData = data.results.filter(i => i.boundary && i.boundary.coordinates);
+        return { data: filteredData, type };
+      })
       .catch(() => {
         dispatchFetching({ type: 'remove', value: id });
       });
