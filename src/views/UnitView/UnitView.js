@@ -29,6 +29,7 @@ import TitledList from '../../components/Lists/TitledList';
 import DesktopComponent from '../../components/DesktopComponent';
 import MobileComponent from '../../components/MobileComponent';
 import ReadSpeakerButton from '../../components/ReadSpeakerButton';
+import config from "../../../config";
 
 const UnitView = (props) => {
   const {
@@ -157,9 +158,20 @@ const UnitView = (props) => {
       return <></>;
     }
 
+    let readSpeakerButton = null;
+
+    if (config.show_read_speaker_button) {
+      readSpeakerButton = (
+        <ReadSpeakerButton
+          className={classes.rsButton}
+          readID="rscontent-unitdetail"
+        />
+      );
+    }
+
     return (
       <div className={classes.content}>
-        <ReadSpeakerButton className={classes.rsButton} readID="rscontent-unitdetail" />
+        {readSpeakerButton}
         <div id="rscontent-unitdetail">
           {
             renderTitleForRS()

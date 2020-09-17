@@ -52,6 +52,7 @@ if (typeof settings.OLD_MAP_LINK_EN === 'undefined'
 }
 
 if (typeof settings.CITIES === 'undefined') {
+  // If not set default to Helsinki
   settings.CITIES = 'helsinki,espoo,vantaa,kauniainen';
 }
 
@@ -70,6 +71,21 @@ if (typeof settings.ORTOGRAPHIC_MAP_URL === 'undefined') {
 if (typeof settings.GUIDE_MAP_URL === 'undefined') {
   // If not set default to Helsinki
   settings.GUIDE_MAP_URL = 'https://kartta.hel.fi/ws/geoserver/avoindata/gwc/service/wmts?layer=avoindata:Karttasarja_PKS&tilematrixset=ETRS-GK25&Service=WMTS&Request=GetTile&Version=1.0.0&TileMatrix=ETRS-GK25:{z}&TileCol={x}&TileRow={y}&Format=image%2Fpng';
+}
+
+if (typeof settings.SHOW_AREA_SELECTION === 'undefined') {
+  // If not set default to Helsinki
+  settings.SHOW_AREA_SELECTION = true;
+}
+
+if (typeof settings.SHOW_READ_SPEAKER_BUTTON === 'undefined') {
+  // If not set default to Helsinki
+  settings.SHOW_READ_SPEAKER_BUTTON = true;
+}
+
+if (typeof settings.FEEDBACK_ADDITIONAL_INFO_LINK === 'undefined') {
+  // If not set default to Helsinki
+  settings.FEEDBACK_ADDITIONAL_INFO_LINK = "https://www.hel.fi/helsinki/fi/kaupunki-ja-hallinto/osallistu-ja-vaikuta/palaute/ohjeita-palautteesta";
 }
 
 export default {
@@ -155,5 +171,8 @@ export default {
     "fi": 'fi_fi',
     "en": 'en_uk',
     "sv": 'sv_se',
-  }
+  },
+  "show_area_selection": (settings.SHOW_AREA_SELECTION === 'true'),
+  "show_read_speaker_button": (settings.SHOW_READ_SPEAKER_BUTTON === 'true'),
+  "feedback_additional_info_link": settings.FEEDBACK_ADDITIONAL_INFO_LINK,
 }
