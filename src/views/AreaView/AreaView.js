@@ -223,7 +223,7 @@ const AreaView = ({
       });
   };
 
-  const fetchDistrictsByType = async (type) => {
+  const fetchDistrictsByType = async (type, id) => {
     const options = {
       page: 1,
       page_size: 300,
@@ -234,7 +234,7 @@ const AreaView = ({
     return districtFetch(options)
       .then(data => ({ data, type }))
       .catch(() => {
-        dispatchFetching({ type: 'remove', value: type });
+        dispatchFetching({ type: 'remove', value: id });
       });
   };
 
@@ -251,10 +251,10 @@ const AreaView = ({
       && !fetching.includes(item.title)
     ) {
       dispatchFetching({ type: 'add', value: item.title });
-      Promise.all(item.districts.map(i => fetchDistrictsByType(i)))
+      Promise.all(item.districts.map(i => fetchDistrictsByType(i, item.title)))
         .then((results) => {
-          results.forEach(result => filterFetchData(result.data, result.type));
           dispatchFetching({ type: 'remove', value: item.title });
+          results.forEach(result => filterFetchData(result.data, result.type));
         });
     }
   };
