@@ -108,7 +108,12 @@ const MapView = (props) => {
       }
     }
 
-    if (mapRef.current) fitUnitsToMap(mapUnits, mapRef.current.leafletElement);
+    if (mapRef.current && !(currentPage === 'address' || currentPage === 'area')) {
+      // TODO: this should be revisited once new map focusing is implemented
+      /* Zoom out map to fit all unit markers when unit data changes.
+      Do not do this on area view and address view */
+      fitUnitsToMap(mapUnits, mapRef.current.leafletElement);
+    }
 
     const data = { units: mapUnits, unitGeometry };
 
