@@ -344,6 +344,7 @@ const UnitView = (props) => {
     if (unit && unit.complete) {
       const tabs = [
         {
+          id: 'basicInfo',
           ariaLabel: intl.formatMessage({ id: 'unit.basicInfo' }),
           component: renderDetailTab(),
           data: null,
@@ -351,6 +352,7 @@ const UnitView = (props) => {
           title: intl.formatMessage({ id: 'unit.basicInfo' }),
         },
         {
+          id: 'accessibilityDetails',
           ariaLabel: intl.formatMessage({ id: 'accessibility' }),
           component: renderAccessibilityTab(),
           data: null,
@@ -358,6 +360,7 @@ const UnitView = (props) => {
           title: intl.formatMessage({ id: 'accessibility' }),
         },
         {
+          id: 'services',
           ariaLabel: intl.formatMessage({ id: 'service.tab' }),
           component: renderServiceTab(),
           data: null,
