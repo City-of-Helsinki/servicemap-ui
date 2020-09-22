@@ -447,7 +447,7 @@ const translations = {
 
   // Tools
   'tool.download': 'Exportera (ny flik)',
-  'tool.measuring': 'Mät avstånd',
+  'tool.measuring': 'Mät avstånd (endast med mus)',
   'tool.measuring.stop': 'Sluta mäta',
 
   'info.title': 'Om tjänsten och tillgänglighetsredogörelsen',

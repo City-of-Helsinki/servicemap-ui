@@ -39,6 +39,8 @@ export default theme => ({
     fontSize: 24,
   },
   menuItem: {
+    padding: theme.spacing(1),
+    paddingRight: theme.spacing(2),
     justifyContent: 'start',
     flex: '1 0 auto',
     alignItems: 'center',
@@ -50,7 +52,6 @@ export default theme => ({
       justifyContent: 'center',
       flexShrink: 0,
       width: 32,
-      margin: theme.spacing(1),
       marginRight: theme.spacing(2),
     },
     // Text element
