@@ -27,7 +27,7 @@ const DivisionView = ({
       };
     } else if (area && city) {
       options = {
-        division: `${city}/${area}`,
+        division: `ocd-division/country:fi/${area}`,
         level: 'all',
         only: 'root_service_nodes,services,location,name,street_address,contract_type,municipality',
         page: 1,
