@@ -224,10 +224,10 @@ class SearchBar extends React.Component {
                 aria-label={intl.formatMessage({ id: 'search.cancelText' })}
                 className={classes.cancelButton}
                 onClick={() => {
-                  if (this.searchRef) {
+                  if (this.searchRef?.current) {
                     // Clear blur timeout to keep suggestion box active
                     clearTimeout(this.blurTimeout);
-                    this.searchRef.focus();
+                    this.searchRef.current.focus();
                   }
                   this.setState({ search: '', searchQuery: '' });
                 }}
