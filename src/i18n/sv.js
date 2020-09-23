@@ -1,5 +1,5 @@
 /* eslint-disable quote-props */
-export default {
+const translations = {
   'app.title': 'Servicekarta',
 
   // Accessibility
@@ -27,7 +27,7 @@ export default {
   'address.services.info': 'Kommunala tjänster vars verksamhetsområde omfattar positionen',
   'address.area.link': 'Bekanta dig med områdena på kartan.',
   'address.emergency_care.common': 'När den egna hälsostationen är stängd och på natten kl. 22-8 är jour för barn och unga under 16 år på <a>Barnkliniken</a> [<a1>hemsidor</a1>], och jour för vuxna på',
-  'address.emergency_care.children_hospital.link': '/{locale}/unit/7299',
+  'address.emergency_care.children_hospital.link': '/sv/unit/62976',
   'address.emergency_care.common.link': 'https://www.hus.fi/sv/sjukvard/sjukhus/nyabarnsjukhuset/Sidor/default.aspx',
   'address.emergency_care.unit.26107': 'Malms sjukhuset',
   'address.emergency_care.unit.26104': 'Haartmanska sjukhuset',
@@ -73,6 +73,44 @@ export default {
 
   // Embed
   'embed.click_prompt_move': 'Klicka för att öppna Servicekartan',
+
+  // Embedder
+  'embedder.city.title': 'Staden',
+  'embedder.city.aria.label': 'Välj stadsgränser för inbäddningen',
+  'embedder.close': 'Stäng inbäddningsverktyget',
+  'embedder.code.title': 'Kopiera HTML-koden',
+  'embedder.height.title': 'Inbäddningens höjd',
+  'embedder.height.aria.label': 'Välj inbäddningens höjd',
+  'embedder.height.ratio.label': 'Relativ höjd. Inbäddningens höjd i förhållande till dess bredd har fastställts',
+  'embedder.height.fixed.label': 'Abslout höjd. Inbäddningens höjd har fastställts i pixlar',
+  'embedder.height.input.aria.fixed': 'Inbäddningens höjd i pixlar',
+  'embedder.height.input.aria.ratio': 'Inbäddningens höjd som procent av bredden',
+  'embedder.iframe.title': 'Servicekartans inbäddningsfönster',
+  'embedder.language.title': 'Inbäddningens språk',
+  'embedder.language.aria.label': 'Välj inbäddningens språk',
+  'embedder.language.description.fi': 'Verksamhetsställenas information visas på finska. Bakgrundskartan är på finska.',
+  'embedder.language.description.sv': 'Verksamhetsställenas information visas på svenska. Bakgrundskartan är på svenska.',
+  'embedder.language.description.en': 'Verksamhetsställenas information visas på engelska. Bakgrundskartan är på finska.',
+  'embedder.map.title': 'Bakgrundskarta',
+  'embedder.map.aria.label': 'Välj bakgrundskarta',
+  'embedder.options.title': 'Visa på kartan',
+  'embedder.options.label.units': 'Visa verksamhetsställen',
+  'embedder.options.label.transit': 'Visa kollektivtrafikens hållplatser (Zooma in kartan för att se hållplatserna)',
+  'embedder.preview.title': 'Map preview',
+  'embedder.service.title': 'Tjänster',
+  'embedder.service.aria.label': 'Välj tjänsterna som visas',
+  'embedder.service.none': 'Kartan visas utan verksamhetsställen',
+  'embedder.service.common': 'På kartan visas de vanligaste verksamhetsställena i stadsbons vardag: skolor, daghem och hälsostationer.',
+  'embedder.service.all': 'Alla verksamhetsställen visas på kartan. För omfattande områdesgränser gör inbäddningen långsammare och otydligare.',
+  'embedder.title': 'Inbäddningsverktyg',
+  'embedder.title.info': 'Om du vill göra en inbäddning enligt sökresultat, börja med att göra sökningen.',
+  'embedder.url.title': 'Kopiera adressen',
+  'embedder.width.title': 'Inbäddningens bredd',
+  'embedder.width.aria.label': 'Välj inbäddningens bredd',
+  'embedder.width.auto.label': 'Automatisk bredd. Inbäddningen fyller bredden av elementet som den har placerats i. I den här förhandsgranskningen har inbäddningen placeats i ett element med standardbredd markerat med en streckad linje.',
+  'embedder.width.custom.label': 'Bredden har fastställts. Inbäddningens bredd har fastställs i pixlar.',
+  'embedder.width.input.aria.auto': 'Inbäddningens bredd, procent',
+  'embedder.width.input.aria.custom': 'Inbäddningens bredd, pixlar',
 
   // Feedback
   'feedback.back': 'Gå tillbaka',
@@ -135,6 +173,8 @@ export default {
   'general.loading': 'Laddar',
   'general.loading.done': 'Laddning färdig',
   'general.showOnMap': 'Visa på kartan',
+  'general.open': 'Open', // TODO: Translate
+  'general.page.close': 'Close page', // TODO: Translate
   'general.pageTitles.home': 'Hemvy',
   'general.pageTitles.search': 'Sökresultatsvy',
   'general.pageTitles.unit': 'Vy med verksamhetsställen',
@@ -170,6 +210,7 @@ export default {
   'general.tools': 'Verktyg',
   'general.distance.meters': 'Meters avstånd',
   'general.distance.kilometers': 'Kilometers avstånd',
+  'general.tools': 'Verktyg',
   // Readspeaker
   'general.readspeaker.buttonText': 'Lyssna', // TODO: verify
   'general.readspeaker.title': 'Lyssna med ReadSpeaker webReader', // TODO: verify
@@ -404,8 +445,26 @@ export default {
   'settings.aria.opened': 'Inställningarna har öppnats',
   'settings.aria.saved': 'Inställningarna har sparats',
 
+  // Tools
+  'tool.download': 'Exportera (ny flik)',
+  'tool.measuring': 'Mät avstånd (endast med mus)',
+  'tool.measuring.stop': 'Sluta mäta',
+
   'info.title': 'Om tjänsten och tillgänglighetsredogörelsen',
   'info.statement': 'Tillgänglighetsredogörelsen',
 
   'alert.close': 'Stäng meddelande',
 };
+
+let overridingExternalTranslations;
+
+// Read and merge external translations with current translations
+try {
+  // eslint-disable-next-line global-require,import/no-unresolved
+  overridingExternalTranslations = require('./externalTranslations/sv.json');
+} catch (e) {
+  overridingExternalTranslations = {};
+}
+
+const swedishTranslations = { ...translations, ...overridingExternalTranslations };
+export default swedishTranslations;

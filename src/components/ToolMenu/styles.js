@@ -25,4 +25,16 @@ export default ({
     marginLeft: 'auto',
     justifySelf: 'flex-end',
   },
+  smIcon: {
+    margin: '0px !important',
+    width: '24px !important',
+    height: '24px !important',
+  },
+  measuringButton: {
+    position: 'absolute',
+    right: 0,
+    top: 86,
+    borderRadius: 4,
+    border: '2px solid #fff',
+  },
 });

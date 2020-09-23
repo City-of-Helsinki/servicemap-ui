@@ -1,7 +1,7 @@
 const styles = theme => ({
   searchBar: {
-    paddingLeft: theme.spacing.unitDouble,
-    marginTop: theme.spacing.unit,
+    paddingLeft: theme.spacing(2),
+    marginTop: theme.spacing(1),
     border: '1px solid #ACACAC',
     borderRadius: 4,
     width: '100%',
@@ -18,13 +18,13 @@ const styles = theme => ({
     margin: 4,
   },
   IconButton: {
-    margiRight: theme.spacing.unitHalf,
-    padding: theme.spacing.unit,
+    margiRight: theme.spacing(0.5),
+    padding: theme.spacing(1),
   },
   searchIcon: {
     color: 'rgba(0, 0, 0, 0.54)',
     fontSize: 22,
-    padding: theme.spacing.unit,
+    padding: theme.spacing(1),
   },
 });
 

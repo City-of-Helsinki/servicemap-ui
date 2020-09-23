@@ -1,8 +1,8 @@
 
 export default theme => ({
   container: {
-    marginTop: theme.spacing.unit,
-    padding: `0 ${theme.spacing.unitTriple}px`,
+    marginTop: theme.spacing(1),
+    padding: theme.spacing(0, 3),
     zIndex: 0,
   },
   flexRow: {
@@ -12,8 +12,8 @@ export default theme => ({
   },
   containerButton: {
     color: 'inherit',
-    marginLeft: -theme.spacing.unit,
-    padding: theme.spacing.unit,
+    marginLeft: theme.spacing(-1),
+    padding: theme.spacing(1),
   },
   containerText: {
     color: 'inherit',

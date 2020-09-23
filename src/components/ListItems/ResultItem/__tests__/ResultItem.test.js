@@ -2,7 +2,7 @@
 import React from 'react';
 import { createMount } from '@material-ui/core/test-utils';
 import { MuiThemeProvider } from '@material-ui/core';
-import themes from '../../../../../themes';
+import themes from '../../../../themes';
 import ResultItem from '../index';
 
 // Generic required props for ResultItem
@@ -45,7 +45,7 @@ describe('<ResultItem />', () => {
     const mockCallBack = jest.fn();
     const component = mount(<ResultItem {...mockProps} onClick={mockCallBack} />);
 
-    component.find('ListItem').simulate('click');
+    component.find('ForwardRef(ListItem)').simulate('click');
     expect(mockCallBack.mock.calls.length).toEqual(1);
   });
 
@@ -53,8 +53,8 @@ describe('<ResultItem />', () => {
     const mockCallBack = jest.fn();
     const component = mount(<ResultItem {...mockProps} onClick={mockCallBack} />);
 
-    component.find('ListItem').simulate('keyDown', { which: 13 });
-    component.find('ListItem').simulate('keyDown', { which: 32 });
+    component.find('ForwardRef(ListItem)').simulate('keyDown', { which: 13 });
+    component.find('ForwardRef(ListItem)').simulate('keyDown', { which: 32 });
     expect(mockCallBack.mock.calls.length).toEqual(2);
   });
 
@@ -70,12 +70,12 @@ describe('<ResultItem />', () => {
 
   it('does set select correctly', () => {
     const component = mount(<ResultItem {...mockProps} selected />);
-    expect(component.find('ListItem').props().selected).toBeTruthy();
+    expect(component.find('ForwardRef(ListItem)').props().selected).toBeTruthy();
   });
 
   it('does set divider correctly', () => {
     const component = mount(<ResultItem {...mockProps} />);
-    expect(component.find('Divider').exists()).toBeTruthy();
+    expect(component.find('ForwardRef(Divider)').exists()).toBeTruthy();
   });
 
   it('does use default accessibility attributes correctly', () => {
@@ -98,10 +98,10 @@ describe('<ResultItem />', () => {
     expect(paragraphs.at(4).props()['aria-hidden']).toEqual('true');
 
     // Expect role to be set
-    expect(component.find('ListItem').props().role).toEqual('link');
+    expect(component.find('ForwardRef(ListItem)').props().role).toEqual('link');
     
     // Expect element to have tabIndex 0
-    expect(component.find('ListItem').props().tabIndex).toEqual(0);
+    expect(component.find('ForwardRef(ListItem)').props().tabIndex).toEqual(0);
   });
 
   it('does use given accessibility attributes correctly', () => {

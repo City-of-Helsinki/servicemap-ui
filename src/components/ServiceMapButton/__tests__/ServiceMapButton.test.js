@@ -4,7 +4,7 @@ import { IntlProvider } from 'react-intl';
 import { createMount } from '@material-ui/core/test-utils';
 import { MuiThemeProvider } from '@material-ui/core';
 import ServiceMapButton from '../index';
-import themes from '../../../../themes';
+import themes from '../../../themes';
 
 // Mock props for intl provider
 const intlMock = {
@@ -12,6 +12,7 @@ const intlMock = {
   messages: {
     'button.text': 'Button text',
   },
+  wrapRichTextChunksInFragment: false,
 };
 
 // Generic required props for ServiceMapButton
@@ -82,7 +83,7 @@ describe('<ServiceMapButton />', () => {
         messageID="button.text"
       />,
     );
-    const buttonBase = component.find('ButtonBase');
+    const buttonBase = component.find('ForwardRef(ButtonBase)');
     const p = component.find('p');
     // Expect aria-label to be same as given text
     expect(buttonBase.props()['aria-label']).toEqual(intlMock.messages['button.text']);
@@ -100,7 +101,7 @@ describe('<ServiceMapButton />', () => {
         role="link"
       />,
     );
-    const buttonBase = component.find('ButtonBase');
+    const buttonBase = component.find('ForwardRef(ButtonBase)');
     expect(buttonBase.props().role).toEqual('link');
     expect(buttonBase.props()['aria-label']).toEqual('Testing label');
   });

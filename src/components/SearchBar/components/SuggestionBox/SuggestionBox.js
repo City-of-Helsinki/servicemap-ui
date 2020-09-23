@@ -107,7 +107,7 @@ const SuggestionBox = (props) => {
 
   const setSearchBarText = () => {
     if (listRef && listRef.current) {
-      if (listRef.current.props.children.length && focusedSuggestion !== null) {
+      if (listRef.current.children.length && focusedSuggestion !== null) {
         if (searchQueries) {
           const focused = searchQueries[focusedSuggestion];
           if (focused.object_type === 'suggestion') {

@@ -1,0 +1,184 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<DrawerButton /> should work 1`] = `
+<WithStyles(DrawerButton)
+  active={false}
+  disableRipple={true}
+  disabled={false}
+  icon={<pure(SearchIcon) />}
+  isOpen={false}
+  onClick={[Function]}
+  subText="Drawer button subtext"
+  text="Drawer button text"
+>
+  <DrawerButton
+    active={false}
+    classes={
+      Object {
+        "disabled": "DrawerButton-disabled-8",
+        "drawerButton": "DrawerButton-drawerButton-3",
+        "drawerButtonActive": "DrawerButton-drawerButtonActive-4",
+        "drawerButtonText": "DrawerButton-drawerButtonText-5",
+        "drawerContainer": "DrawerButton-drawerContainer-1",
+        "drawerContainerMobile": "DrawerButton-drawerContainerMobile-2",
+        "drawerIcon": "DrawerButton-drawerIcon-6",
+        "drawerIconActive": "DrawerButton-drawerIconActive-7",
+        "itemFocus": "DrawerButton-itemFocus-9",
+      }
+    }
+    disableRipple={true}
+    disabled={false}
+    icon={<pure(SearchIcon) />}
+    isOpen={false}
+    onClick={[Function]}
+    subText="Drawer button subtext"
+    text="Drawer button text"
+  >
+    <WithStyles(ForwardRef(ButtonBase))
+      aria-hidden={true}
+      aria-label="Drawer button text"
+      className="DrawerButton-drawerButton-3 "
+      disableRipple={true}
+      focusVisibleClassName="DrawerButton-itemFocus-9"
+      key="Drawer button text"
+      onClick={[Function]}
+      role="link"
+      tabIndex={-1}
+    >
+      <ForwardRef(ButtonBase)
+        aria-hidden={true}
+        aria-label="Drawer button text"
+        className="DrawerButton-drawerButton-3 "
+        classes={
+          Object {
+            "disabled": "Mui-disabled",
+            "focusVisible": "Mui-focusVisible",
+            "root": "MuiButtonBase-root",
+          }
+        }
+        disableRipple={true}
+        focusVisibleClassName="DrawerButton-itemFocus-9"
+        onClick={[Function]}
+        role="link"
+        tabIndex={-1}
+      >
+        <button
+          aria-hidden={true}
+          aria-label="Drawer button text"
+          className="MuiButtonBase-root DrawerButton-drawerButton-3 "
+          disabled={false}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          role="link"
+          tabIndex={-1}
+          type="button"
+        >
+          <div
+            className="DrawerButton-drawerIcon-6  "
+          >
+            <pure(SearchIcon)>
+              <SearchIcon>
+                <WithStyles(ForwardRef(SvgIcon))>
+                  <ForwardRef(SvgIcon)
+                    classes={
+                      Object {
+                        "colorAction": "MuiSvgIcon-colorAction",
+                        "colorDisabled": "MuiSvgIcon-colorDisabled",
+                        "colorError": "MuiSvgIcon-colorError",
+                        "colorPrimary": "MuiSvgIcon-colorPrimary",
+                        "colorSecondary": "MuiSvgIcon-colorSecondary",
+                        "fontSizeInherit": "MuiSvgIcon-fontSizeInherit",
+                        "fontSizeLarge": "MuiSvgIcon-fontSizeLarge",
+                        "fontSizeSmall": "MuiSvgIcon-fontSizeSmall",
+                        "root": "MuiSvgIcon-root",
+                      }
+                    }
+                  >
+                    <svg
+                      aria-hidden={true}
+                      className="MuiSvgIcon-root"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+                      />
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                    </svg>
+                  </ForwardRef(SvgIcon)>
+                </WithStyles(ForwardRef(SvgIcon))>
+              </SearchIcon>
+            </pure(SearchIcon)>
+          </div>
+          <span
+            aria-hidden={true}
+          >
+            <WithStyles(ForwardRef(Typography))
+              className="DrawerButton-drawerButtonText-5 "
+              variant="body1"
+            >
+              <ForwardRef(Typography)
+                className="DrawerButton-drawerButtonText-5 "
+                classes={
+                  Object {
+                    "alignCenter": "MuiTypography-alignCenter",
+                    "alignJustify": "MuiTypography-alignJustify",
+                    "alignLeft": "MuiTypography-alignLeft",
+                    "alignRight": "MuiTypography-alignRight",
+                    "body1": "MuiTypography-body1",
+                    "body2": "MuiTypography-body2",
+                    "button": "MuiTypography-button",
+                    "caption": "MuiTypography-caption",
+                    "colorError": "MuiTypography-colorError",
+                    "colorInherit": "MuiTypography-colorInherit",
+                    "colorPrimary": "MuiTypography-colorPrimary",
+                    "colorSecondary": "MuiTypography-colorSecondary",
+                    "colorTextPrimary": "MuiTypography-colorTextPrimary",
+                    "colorTextSecondary": "MuiTypography-colorTextSecondary",
+                    "displayBlock": "MuiTypography-displayBlock",
+                    "displayInline": "MuiTypography-displayInline",
+                    "gutterBottom": "MuiTypography-gutterBottom",
+                    "h1": "MuiTypography-h1",
+                    "h2": "MuiTypography-h2",
+                    "h3": "MuiTypography-h3",
+                    "h4": "MuiTypography-h4",
+                    "h5": "MuiTypography-h5",
+                    "h6": "MuiTypography-h6",
+                    "noWrap": "MuiTypography-noWrap",
+                    "overline": "MuiTypography-overline",
+                    "paragraph": "MuiTypography-paragraph",
+                    "root": "MuiTypography-root",
+                    "srOnly": "MuiTypography-srOnly",
+                    "subtitle1": "MuiTypography-subtitle1",
+                    "subtitle2": "MuiTypography-subtitle2",
+                  }
+                }
+                variant="body1"
+              >
+                <p
+                  className="MuiTypography-root DrawerButton-drawerButtonText-5  MuiTypography-body1"
+                >
+                  Drawer button text
+                </p>
+              </ForwardRef(Typography)>
+            </WithStyles(ForwardRef(Typography))>
+          </span>
+        </button>
+      </ForwardRef(ButtonBase)>
+    </WithStyles(ForwardRef(ButtonBase))>
+  </DrawerButton>
+</WithStyles(DrawerButton)>
+`;

@@ -6,7 +6,7 @@ import UnitItem from './UnitItem';
 import { getLocaleString } from '../../../redux/selectors/locale';
 import { changeSelectedUnit } from '../../../redux/actions/selectedUnit';
 import styles from './styles';
-import { calculateDistance } from '../../../redux/selectors/unit';
+import { calculateDistance, getCurrentlyUsedPosition } from '../../../redux/selectors/unit';
 import { formatDistanceObject } from '../../../utils';
 
 // Listen to redux state
@@ -19,7 +19,7 @@ const mapStateToProps = (state, props) => {
     navigator, settings,
   } = state;
   return {
-    distance: formatDistanceObject(intl, calculateDistance(state)(unit)),
+    distance: formatDistanceObject(intl, calculateDistance(unit, getCurrentlyUsedPosition(state))),
     getLocaleText,
     navigator,
     settings,

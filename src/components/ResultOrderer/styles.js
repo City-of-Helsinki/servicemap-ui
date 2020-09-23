@@ -8,7 +8,7 @@ export default theme => ({
     flex: '0 0 auto',
     background: theme.palette.background.plain,
     color: theme.palette.primary.highContrast,
-    padding: `0 ${theme.spacing.unitTriple}px ${theme.spacing.unitTriple}px ${theme.spacing.unitTriple}px`,
+    padding: theme.spacing(0, 3, 3, 3),
   },
   formControl: {
     display: 'flex',
@@ -39,7 +39,7 @@ export default theme => ({
     color: 'inherit !important',
     flex: '0 1 auto',
     position: 'inherit',
-    marginRight: theme.spacing.unitDouble,
+    marginRight: theme.spacing(2),
   },
   icon: {
     color: 'inherit',

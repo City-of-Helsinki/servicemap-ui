@@ -66,8 +66,8 @@ test('District lists are fetched and rendered correctly', async (t) => {
 // })
 
 test('Address search bar field updates and gets results', async (t, inputText = 'mann') => {
-  const addressBar = ReactSelector('AddressSearchBar InputBase');
-  const suggestions = ReactSelector('AddressSearchBar ListItem');
+  const addressBar = ReactSelector('AddressSearchBar WithStyles(ForwardRef(InputBase))');
+  const suggestions = ReactSelector('AddressSearchBar WithStyles(ForwardRef(ListItem))');
 
   await t
     .typeText(addressBar, inputText)

@@ -203,7 +203,7 @@ const FeedbackView = ({
           <ButtonBase
             className={classes.link}
             role="link"
-            onClick={() => window.open('https://www.hel.fi/helsinki/fi/kaupunki-ja-hallinto/osallistu-ja-vaikuta/palaute/ohjeita-palautteesta')}
+            onClick={() => window.open(config.feedback_additional_info_link)}
           >
             <Typography><FormattedMessage id="feedback.additionalInfo.link" /></Typography>
           </ButtonBase>

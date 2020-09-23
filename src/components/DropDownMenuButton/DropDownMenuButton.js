@@ -26,6 +26,11 @@ class DropDownMenuButton extends React.Component {
     this.setState({ open: false });
   };
 
+  handleItemClick = (event, item) => {
+    this.handleClose(event);
+    item.onClick();
+  }
+
   renderMenu = () => {
     const {
       classes, menuItems, menuAriaLabel, panelID,
@@ -44,10 +49,11 @@ class DropDownMenuButton extends React.Component {
                 key={v.key}
                 className={classes.menuItem}
                 role="link"
-                onClick={v.onClick}
-                onKeyPress={keyboardHandler(v.onClick, ['space', 'enter'])}
+                onClick={e => this.handleItemClick(e, v)}
+                onKeyPress={e => keyboardHandler(this.handleItemClick(e, v), ['space', 'enter'])}
                 component="span"
                 tabIndex="0"
+                aria-hidden={v.ariaHidden}
               >
                 <span>{v.icon}</span>
                 <Typography component="p" variant="body2">{v.text}</Typography>
@@ -60,7 +66,9 @@ class DropDownMenuButton extends React.Component {
   }
 
   render() {
-    const { buttonIcon, buttonText, classes, panelID } = this.props;
+    const {
+      buttonIcon, buttonText, classes, panelID,
+    } = this.props;
     const { open } = this.state;
     const arrowIcon = open
       ? <ArrowDropUp className={classes.iconRight} />
@@ -72,7 +80,7 @@ class DropDownMenuButton extends React.Component {
           buttonRef={(node) => {
             this.anchorEl = node;
           }}
-          aria-controls={panelID}
+          aria-controls={open ? panelID : undefined}
           aria-haspopup="true"
           aria-expanded={open}
           onClick={this.handleToggle}

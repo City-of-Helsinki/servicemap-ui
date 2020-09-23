@@ -6,8 +6,10 @@ import fetchAddress from '../../utils/fetchAddress';
 import { getAddressText } from '../../../../utils/address';
 
 const AddressPopup = ({
-  Popup, classes, mapClickPoint, getAddressNavigatorParams, getLocaleText, map, navigator,
+  classes, mapClickPoint, getAddressNavigatorParams, getLocaleText, map, navigator,
 }) => {
+  const { Popup } = global.rL;
+
   const [address, setAddress] = useState(null);
   const [fetching, setFetching] = useState(null);
 
@@ -72,7 +74,6 @@ const AddressPopup = ({
 };
 
 AddressPopup.propTypes = {
-  Popup: PropTypes.objectOf(PropTypes.any).isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   mapClickPoint: PropTypes.objectOf(PropTypes.any).isRequired,
   getAddressNavigatorParams: PropTypes.func.isRequired,

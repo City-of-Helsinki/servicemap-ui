@@ -22,7 +22,7 @@ class Services extends React.Component {
     // List of normal services without period infomration
     let serviceList = [];
 
-    if (unit.root_service_nodes.includes(educationNode)) {
+    if (unit.root_service_nodes && unit.root_service_nodes.includes(educationNode)) {
       unit.services.forEach((service) => {
         if (service.period && service.period.length > 1) {
           const yearString = `${service.period[0]}–${service.period[1]}`;

@@ -22,6 +22,7 @@ import DesktopComponent from '../../components/DesktopComponent';
 import MobileComponent from '../../components/MobileComponent';
 import DivisionItem from '../../components/ListItems/DivisionItem';
 import { parseSearchParams } from '../../utils';
+import config from '../../../config';
 
 
 const hiddenDivisions = {
@@ -82,9 +83,6 @@ const AddressView = (props) => {
   };
 
   const fetchUnits = (lnglat) => {
-    if (embed) {
-      return;
-    }
     fetchAddressUnits(lnglat)
       .then((data) => {
         const units = data.results;
@@ -123,9 +121,6 @@ const AddressView = (props) => {
           const { coordinates } = address.location;
 
           focusToPosition(map, [coordinates[0], coordinates[1]]);
-          if (embed) {
-            return;
-          }
           fetchAddressDistricts(coordinates);
           fetchUnits(coordinates);
         } else {
@@ -247,23 +242,9 @@ const AddressView = (props) => {
     }
   }, [match.url, map]);
 
-  if (embed) {
-    return null;
-  }
-
   // Render component
   const title = getAddressText(addressData, getLocaleText);
   const tabs = [
-    {
-      ariaLabel: intl.formatMessage({ id: 'service.nearby' }),
-      component: renderClosebyServices(),
-      data: null,
-      itemsPerPage: null,
-      title: intl.formatMessage({ id: 'service.nearby' }),
-      onClick: () => {
-        setToRender('adminDistricts');
-      },
-    },
     {
       ariaLabel: intl.formatMessage({ id: 'address.nearby' }),
       component: renderNearbyList(),
@@ -277,6 +258,21 @@ const AddressView = (props) => {
     },
   ];
 
+  // Show/Hide nearby service tab dynamically, show only if area selection is shown
+  if (config.show_area_selection) {
+    const nearbyServicesTab = {
+      ariaLabel: intl.formatMessage({id: 'service.nearby'}),
+      component: renderClosebyServices(),
+      data: null,
+      itemsPerPage: null,
+      title: intl.formatMessage({id: 'service.nearby'}),
+      onClick: () => {
+        setToRender('adminDistricts');
+      },
+    };
+    tabs.unshift(nearbyServicesTab);
+  }
+
   useEffect(() => {
     const searchParams = parseSearchParams(location.search);
     const selectedTab = parseInt(searchParams.t, 10) || 0;
@@ -284,6 +280,10 @@ const AddressView = (props) => {
       tabs[selectedTab].onClick();
     }
   }, []);
+
+  if (embed) {
+    return null;
+  }
 
   return (
     <div>

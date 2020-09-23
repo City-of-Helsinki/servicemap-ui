@@ -29,6 +29,7 @@ import TitledList from '../../components/Lists/TitledList';
 import DesktopComponent from '../../components/DesktopComponent';
 import MobileComponent from '../../components/MobileComponent';
 import ReadSpeakerButton from '../../components/ReadSpeakerButton';
+import config from "../../../config";
 
 const UnitView = (props) => {
   const {
@@ -157,9 +158,20 @@ const UnitView = (props) => {
       return <></>;
     }
 
+    let detailReadSpeakerButton = null;
+
+    if (config.show_read_speaker_button) {
+      detailReadSpeakerButton = (
+        <ReadSpeakerButton
+          className={classes.rsButton}
+          readID="rscontent-unitdetail"
+        />
+      );
+    }
+
     return (
       <div className={classes.content}>
-        <ReadSpeakerButton className={classes.rsButton} readID="rscontent-unitdetail" />
+        {detailReadSpeakerButton}
         <div id="rscontent-unitdetail">
           {
             renderTitleForRS()
@@ -199,36 +211,47 @@ const UnitView = (props) => {
     );
   };
 
-  const renderAccessibilityTab = () => (
-    <div className={classes.content}>
-      <ReadSpeakerButton
-        className={classes.rsButton}
-        readID="rscontent"
-        encodedURL={encodeURI(`palvelukartta.test.hel.ninja${location.pathname}${location.search}`)}
-      />
-      <div id="rscontent" className={classes.aTabAdjuster}>
-        {
-          renderTitleForRS()
-        }
-        {hearingMaps && (
-          <TitledList titleComponent="h4" title={intl.formatMessage({ id: 'unit.accessibility.hearingMaps' })}>
-            {hearingMaps.map(item => (
-              <SimpleListItem
-                role="link"
-                link
-                divider
-                icon={<Hearing />}
-                key={item.name}
-                text={`${item.name} ${intl.formatMessage({ id: 'unit.accessibility.hearingMaps.extra' })}`}
-                handleItemClick={() => window.open(item.url)}
-              />
-            ))}
-          </TitledList>
-        )}
-        <AccessibilityInfo titleAlways headingLevel={4} />
+  const renderAccessibilityTab = () => {
+
+    let accessibilityReadSpeakerButton = null;
+
+    if (config.show_read_speaker_button) {
+      accessibilityReadSpeakerButton = (
+        <ReadSpeakerButton
+          className={classes.rsButton}
+          readID="rscontent"
+          encodedURL={encodeURI(`palvelukartta.test.hel.ninja${location.pathname}${location.search}`)}
+        />
+      );
+    }
+
+    return (
+      <div className={classes.content}>
+        {accessibilityReadSpeakerButton}
+        <div id="rscontent" className={classes.aTabAdjuster}>
+          {
+            renderTitleForRS()
+          }
+          {hearingMaps && (
+            <TitledList titleComponent="h4" title={intl.formatMessage({id: 'unit.accessibility.hearingMaps'})}>
+              {hearingMaps.map(item => (
+                <SimpleListItem
+                  role="link"
+                  link
+                  divider
+                  icon={<Hearing/>}
+                  key={item.name}
+                  text={`${item.name} ${intl.formatMessage({id: 'unit.accessibility.hearingMaps.extra'})}`}
+                  handleItemClick={() => window.open(item.url)}
+                />
+              ))}
+            </TitledList>
+          )}
+          <AccessibilityInfo titleAlways headingLevel={4}/>
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   const renderServiceTab = () => {
     if (!unit || !unit.complete) {

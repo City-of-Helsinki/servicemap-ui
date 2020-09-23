@@ -13,7 +13,7 @@ export default theme => ({
   iconButton: {
     flex: '1 0 auto',
     color: theme.palette.primary.main,
-    padding: theme.spacing.unit,
+    padding: theme.spacing(1),
   },
   iconButtonLabel: {
     display: 'flex',
@@ -29,8 +29,8 @@ export default theme => ({
   },
   left: {
     textAlign: 'left',
-    marginLeft: theme.spacing.unitDouble,
-    marginRight: theme.spacing.unitDouble,
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(2),
     marginTop: 24,
   },
 });

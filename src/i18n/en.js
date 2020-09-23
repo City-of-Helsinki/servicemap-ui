@@ -1,5 +1,5 @@
 /* eslint-disable quote-props */
-export default {
+const translations = {
   'app.title': 'Service map',
 
   // Accessibility
@@ -27,7 +27,7 @@ export default {
   'address.services.info': 'Services for people who live here',
   'address.area.link': 'Get to know the areas on the map.',
   'address.emergency_care.common': 'When your health station is closed and in the night between 22-8, emergency care for children and young people under age 16 is provided at <a>Children\'s Hospital</a> [<a1>homepage</a1>], and for adults at',
-  'address.emergency_care.children_hospital.link': '/{locale}/unit/7299',
+  'address.emergency_care.children_hospital.link': '/en/unit/62976',
   'address.emergency_care.common.link': 'https://www.hus.fi/en/medical-care/hospitals/newchildrenshospital/Pages/default.aspx',
   'address.emergency_care.unit.26107': 'Malmi hospital',
   'address.emergency_care.unit.26104': 'Haartman hospital',
@@ -73,6 +73,44 @@ export default {
 
   // Embed
   'embed.click_prompt_move': 'Click to open the Service Map',
+
+  // Embedder
+  'embedder.city.title': 'City',
+  'embedder.city.aria.label': 'Choose city limits for the embedding',
+  'embedder.close': 'Close embedding tool',
+  'embedder.code.title': 'Copy the HTML code',
+  'embedder.height.title': 'Height of the embedding',
+  'embedder.height.aria.label': 'Choose height of the embedding',
+  'embedder.height.ratio.label': 'Relative height. The height of the embedding in relation to the width has been defined',
+  'embedder.height.fixed.label': 'Absolute height. The height of the embedding has been defined in pixels',
+  'embedder.height.input.aria.fixed': 'Height of the embedding in pixels',
+  'embedder.height.input.aria.ratio': 'Height of the embedding as per cent of the width',
+  'embedder.iframe.title': 'Service map embedding window',
+  'embedder.language.title': 'Language of the embedding',
+  'embedder.language.aria.label': 'Choose the language of the embedding',
+  'embedder.language.description.fi': 'Service unit information is shown in Finnish. Background map is in Finnish.',
+  'embedder.language.description.sv': 'Service unit information is shown in Swedish. Background map is in Swedish.',
+  'embedder.language.description.en': 'Service unit information is shown in English. Background map is in Finnish.',
+  'embedder.map.title': 'Background map',
+  'embedder.map.aria.label': 'Choose backgroud map',
+  'embedder.preview.title': 'Map preview',
+  'embedder.options.title': 'Show on the map',
+  'embedder.options.label.units': 'Show locations',
+  'embedder.options.label.transit': 'Show public transport stops (Zoom in the map to see the stops)',
+  'embedder.service.title': 'Services',
+  'embedder.service.aria.label': 'Choose services to be shown',
+  'embedder.service.none': 'Map is shown without service units',
+  'embedder.service.common': 'The city resident\'s most common everyday service units are shown on the map: schools, daycares and health stations.',
+  'embedder.service.all': 'All service units are shown on the map. Too extensive area borders slow down the embedding and decreases its clarity.',
+  'embedder.title': 'Embedding tool',
+  'embedder.title.info': 'If you want to make an embedding from a search result, start by making the search.',
+  'embedder.url.title': 'Copy the address',
+  'embedder.width.title': 'Width of the embedding',
+  'embedder.width.aria.label': 'Choose width of the embedding',
+  'embedder.width.auto.label': 'Automatic width. The embedding fills the width of the element in which it has been placed. In this preview, the embedding has been placed in a standard-width element, which has been outlined with a broken line. ',
+  'embedder.width.custom.label': 'Width has been set. The width of the embedding has been set in pixels.',
+  'embedder.width.input.aria.auto': 'Width of the embedding, per cent',
+  'embedder.width.input.aria.custom': 'Width of the embedding, pixels',
 
   // Feedback
   'feedback.back': 'Go back',
@@ -135,6 +173,8 @@ export default {
   'general.loading': 'Loading',
   'general.loading.done': 'Loading completed',
   'general.showOnMap': 'Show on map',
+  'general.open': 'Open', // TODO: Verify
+  'general.page.close': 'Close page', // TODO: Verify
   'general.pageTitles.home': 'Home view',
   'general.pageTitles.search': 'Search results view',
   'general.pageTitles.unit': 'Location view',
@@ -149,6 +189,7 @@ export default {
   'general.pageTitles.info': 'Info view',
   'general.pageTitles.feedback': 'Feedback view',
   'general.pageTitles.area': 'Area view.',
+  'general.tools': 'Tools',
   // Readspeaker
   'general.readspeaker.buttonText': 'Listen',
   'general.readspeaker.title': 'Listen with ReadSpeaker webReader',
@@ -404,8 +445,26 @@ export default {
   'settings.aria.opened': 'Settings have been opened',
   'settings.aria.saved': 'Settings have been saved',
 
+  // Tools
+  'tool.download': 'Download data (new tab)',
+  'tool.measuring': 'Measure distance (mouse only)',
+  'tool.measuring.stop': 'Stop measuring',
+
   'info.title': 'About the service and accessibility statement',
   'info.statement': 'Accessibility statement',
 
   'alert.close': 'Close the notification',
 };
+
+let overridingExternalTranslations;
+
+// Read and merge external translations with current translations
+try {
+  // eslint-disable-next-line global-require,import/no-unresolved
+  overridingExternalTranslations = require('./externalTranslations/en.json');
+} catch (e) {
+  overridingExternalTranslations = {};
+}
+
+const englishTranslations = { ...translations, ...overridingExternalTranslations };
+export default englishTranslations;

@@ -14,6 +14,7 @@ class Navigator extends React.Component {
     super(props);
 
     const {
+      breadcrumb,
       history,
     } = props;
 
@@ -43,7 +44,9 @@ class Navigator extends React.Component {
           breadcrumbPop();
           break;
         case 'REPLACE':
-          breadcrumbReplace(location);
+          if (breadcrumb.length) {
+            breadcrumbReplace(location);
+          }
           break;
         default:
       }

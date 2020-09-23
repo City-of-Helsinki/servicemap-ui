@@ -28,7 +28,7 @@ export default theme => ({
     border: '1px solid #000',
     '&:focus': {
       outline: '2px solid transparent',
-      boxShadow: `0 0 0 4px ${theme.palette.focusBorder}`,
+      boxShadow: `0 0 0 4px ${theme.palette.focusBorder.main}`,
     },
   },
   inputInfo: {
@@ -37,7 +37,7 @@ export default theme => ({
   errorContainer: {
     display: 'flex',
     alignItems: 'center',
-    color: `${theme.palette.warning}`,
+    color: `${theme.palette.warning.main}`,
   },
   errorIcon: {
     fontSize: 16,
@@ -47,8 +47,8 @@ export default theme => ({
     margin: 0,
   },
   errorField: {
-    border: `1px solid ${theme.palette.warning}`,
-    boxShadow: `0 0 0 1px ${theme.palette.warning}`,
+    border: `1px solid ${theme.palette.warning.main}`,
+    boxShadow: `0 0 0 1px ${theme.palette.warning.main}`,
   },
   characterInfo: {
     color: '#000',
@@ -56,7 +56,7 @@ export default theme => ({
     marginLeft: 'auto',
   },
   characterInfoError: {
-    color: `${theme.palette.warning}`,
+    color: `${theme.palette.warning.main}`,
   },
   title: {
     paddingTop: 16,

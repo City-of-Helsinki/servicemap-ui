@@ -8,15 +8,15 @@ export default theme => ({
     padding: 0,
   },
   margin: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
   },
   searchbarPlain: {
     background: theme.palette.background.plain,
-    paddingBottom: theme.spacing.unit,
+    paddingBottom: theme.spacing(1),
   },
   label: {
-    paddingTop: theme.spacing.unitDouble,
-    paddingBottom: theme.spacing.unitDouble,
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
   },
   input: {
     marginLeft: 8,
@@ -36,9 +36,9 @@ export default theme => ({
   searchInfo: {
     color: '#fff',
     background: theme.palette.background.plain,
-    padding: theme.spacing.unitTriple,
-    paddingTop: theme.spacing.unitHalf,
-    paddingBottom: theme.spacing.unit,
+    padding: theme.spacing(3),
+    paddingTop: theme.spacing(0.5),
+    paddingBottom: theme.spacing(1),
   },
   infoText: {
     color: 'inherit',
@@ -53,13 +53,13 @@ export default theme => ({
     flexWrap: 'wrap',
   },
   list: {
-    margin: `${theme.spacing.unit}px 0`,
-    padding: `0 0 0 ${theme.spacing.unitDouble}px`,
+    margin: theme.spacing(1, 0),
+    padding: theme.spacing(0, 0, 0, 2),
   },
   settingItem: {
     display: 'flex',
     width: '50%',
-    marginBottom: theme.spacing.unit,
+    marginBottom: theme.spacing(1),
   },
   settingItemText: {
     color: 'inherit',
@@ -67,7 +67,7 @@ export default theme => ({
   },
   suggestionButtonContainer: {
     display: 'flex',
-    margin: `${theme.spacing.unitDouble}px ${theme.spacing.unitTriple}px`,
+    margin: theme.spacing(2, 3),
   },
   bold: {
     fontWeight: 'bold',

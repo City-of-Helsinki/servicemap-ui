@@ -1,5 +1,5 @@
 /* eslint-disable quote-props */
-export default {
+const translations = {
   'app.title': 'Palvelukartta',
 
   // Accessibility
@@ -26,9 +26,9 @@ export default {
   'address.services.header': 'Palvelut täällä asuville',
   'address.services.info': 'Kunnalliset palvelut, joiden piiriin sijainti kuuluu',
   'address.area.link': 'Tutustu alueisiin kartalla.',
-  'address.emergency_care.common': 'Terveysaseman ollessa kiinni sekä öisin klo 22- 8 alle 16-vuotiaiden päivystys on <a>Lastenklinikalla</a> [<a1>kotisivut</a1>] ja aikuisten päivystys',
-  'address.emergency_care.children_hospital.link': '/{locale}/unit/7299',
-  'address.emergency_care.common.link': 'http://www.hus.fi/sairaanhoito/sairaalat/lastenklinikka/Sivut/default.aspx',
+  'address.emergency_care.common': 'Terveysaseman ollessa kiinni sekä öisin klo 22- 8 alle 16-vuotiaiden päivystys on <a>Lastensairaalassa</a> [<a1>kotisivut</a1>] ja aikuisten päivystys',
+  'address.emergency_care.children_hospital.link': '/fi/unit/62976',
+  'address.emergency_care.common.link': 'https://www.hus.fi/sairaanhoito/sairaalat/Uusi-lastensairaala/Sivut/default.aspx',
   'address.emergency_care.unit.26107': 'Malmin sairaalassa',
   'address.emergency_care.unit.26104': 'Haartmanin sairaalassa',
   'address.emergency_care.link': 'http://www.hel.fi/www/Helsinki/fi/sosiaali-ja-terveyspalvelut/terveyspalvelut/paivystys/',
@@ -73,6 +73,44 @@ export default {
 
   // Embed
   'embed.click_prompt_move': 'Klikkaa siirtyäksesi Palvelukartalle',
+
+  // Embedder
+  'embedder.city.title': 'Kaupunki',
+  'embedder.city.aria.label': 'Valitse upotukselle kaupunkirajaus',
+  'embedder.close': 'Sulje upotustyökalu',
+  'embedder.code.title': 'Kopioi HTML-koodi',
+  'embedder.height.title': 'Upotuksen korkeus',
+  'embedder.height.aria.label': 'Valitse upotuksen korkeus',
+  'embedder.height.ratio.label': 'Suhteellinen korkeus. Upotuksen korkeuden suhde leveyteen on määritelty',
+  'embedder.height.fixed.label': 'Absoluuttinen korkeus. Upotuksen korkeus on määritelty pikseleissä',
+  'embedder.height.input.aria.fixed': 'Upotuksen korkeus pikseleissä',
+  'embedder.height.input.aria.ratio': 'Upotuksen korkeus prosentteina leveydestä',
+  'embedder.iframe.title': 'Palvelukartan upotusikkuna',
+  'embedder.language.title': 'Upotuksen kieli',
+  'embedder.language.aria.label': 'Valitse upotuksen kieli',
+  'embedder.language.description.fi': 'Toimipisteiden tiedot näytetään suomen kielellä. Taustakartta on suomenkielinen.',
+  'embedder.language.description.sv': 'Toimipisteiden tiedot näytetään ruotsin kielellä. Taustakartta on ruotsinkielinen.',
+  'embedder.language.description.en': 'Toimipisteiden tiedot näytetään englannin kielellä. Taustakartta on suomenkielinen.',
+  'embedder.map.title': 'Taustakartta',
+  'embedder.map.aria.label': 'Valitse taustakartta',
+  'embedder.options.title': 'Näytä kartalla',
+  'embedder.options.label.units': 'Näytä toimipisteet',
+  'embedder.options.label.transit': 'Näytä joukkoliikenteen pysäkit (Tarkenna karttaa lähietäisyydelle, jotta joukkoliikennepysäkit näkyvät)',
+  'embedder.preview.title': 'Kartan esikatselu',
+  'embedder.service.title': 'Palvelut',
+  'embedder.service.aria.label': 'Valitse näytettävät palvelut',
+  'embedder.service.none': 'Kartta näytetään ilman toimipisteitä',
+  'embedder.service.common': 'Kartalla näytetään yleisimmät kaupunkilaisen arkeen liittyvät toimipisteet: koulut, päiväkodit ja terveyskeskukset.',
+  'embedder.service.all': 'Kartalla näytetään kaikki toimipisteet. Jos aluerajaus on liian laaja, upotuksen näyttäminen hidastuu ja sen havainnollisuus vähenee.',
+  'embedder.title': 'Upotustyökalu',
+  'embedder.title.info': 'Mikäli haluat tehdä upotuksen hakutuloksen mukaan tee haku ensin.',
+  'embedder.url.title': 'Kopioi osoite',
+  'embedder.width.title': 'Upotuksen leveys',
+  'embedder.width.aria.label': 'Valitse upotuksen leveys',
+  'embedder.width.auto.label': 'Automaattinen leveys. Upotus täyttää leveyssuunnassa elementin, johon se on sijoitettu. Tässä esikatselussa upotus on sijoitettu katkoviivalla merkittyyn vakiolevyiseen elementtiin.',
+  'embedder.width.custom.label': 'Asetettu leveys. Upotuksen leveys on määritelty pikseleissä.',
+  'embedder.width.input.aria.auto': 'Upotuksen leveys prosentteina',
+  'embedder.width.input.aria.custom': 'Upotuksen leveys pikseleissä',
 
   // Feedback
   'feedback.back': 'Palaa takaisin',
@@ -126,6 +164,8 @@ export default {
   'general.back.serviceTree': 'Palaa palvelulistausnäkymään',
   'general.cancel': 'Peruuta',
   'general.close': 'Sulje',
+  'general.distance.meters': 'Metrin päässä',
+  'general.distance.kilometers': 'Kilometrin päässä',
   'general.yes': 'Kyllä',
   'general.no': 'Ei',
   'general.closeSettings': 'Sulje asetukset',
@@ -135,6 +175,8 @@ export default {
   'general.loading': 'Ladataan',
   'general.loading.done': 'Lataus valmis',
   'general.showOnMap': 'Näytä kartalla',
+  'general.open': 'Avaa',
+  'general.page.close': 'Sulje sivu',
   'general.pageTitles.home': 'Aloitusnäkymä',
   'general.pageTitles.search': 'Hakutulosnäkymä',
   'general.pageTitles.unit': 'Toimipistenäkymä',
@@ -169,6 +211,7 @@ export default {
   'general.save.changes.done': 'Muutokset tallennettu!',
   'general.save.confirmation': 'Haluatko tallentaa muutokset?',
   'general.search': 'Hae',
+  'general.tools': 'Työkalut',
   'general.time.short': 'klo',
   'general.tools': 'Työkalut',
   'general.distance.meters': 'Metrin päässä',
@@ -404,8 +447,26 @@ export default {
   'settings.aria.opened': 'Asetukset avattu',
   'settings.aria.saved': 'Asetukset on tallennettu',
 
+  // Tools
+  'tool.download': 'Lataa tiedot (uusi välilehti)',
+  'tool.measuring': 'Mittaa etäisyys (käytettävissä vain hiirellä)',
+  'tool.measuring.stop': 'Lopeta mittaus',
+
   'info.title': 'Tietoa palvelusta ja saavutettavuusseloste',
   'info.statement': 'Saavutettavuusseloste',
 
   'alert.close': 'Sulje ilmoitus',
 };
+
+let overridingExternalTranslations;
+
+// Read and merge external translations with current translations
+try {
+  // eslint-disable-next-line global-require,import/no-unresolved
+  overridingExternalTranslations = require('./externalTranslations/fi.json');
+} catch (e) {
+  overridingExternalTranslations = {};
+}
+
+const finnishTranslations = { ...translations, ...overridingExternalTranslations };
+export default finnishTranslations;
