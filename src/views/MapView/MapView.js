@@ -108,13 +108,6 @@ const MapView = (props) => {
       }
     }
 
-    if (mapRef.current && !(currentPage === 'address' || currentPage === 'area')) {
-      // TODO: this should be revisited once new map focusing is implemented
-      /* Zoom out map to fit all unit markers when unit data changes.
-      Do not do this on area view and address view */
-      fitUnitsToMap(mapUnits, mapRef.current.leafletElement);
-    }
-
     const data = { units: mapUnits, unitGeometry };
 
     if (data.unitGeometry) {
@@ -254,6 +247,14 @@ const MapView = (props) => {
     }
     const data = getMapUnits();
     const map = mapRef && mapRef.current ? mapRef.current.leafletElement : null;
+
+    if (map && data.units.length && !(currentPage === 'address' || currentPage === 'area')) {
+      // TODO: this should be revisited once new map focusing is implemented
+      /* Zoom out map to fit all unit markers when unit data changes.
+      Do not do this on area view and address view */
+      fitUnitsToMap(data.units, map);
+    }
+
     const showUnits = new URLSearchParams(location.search).get('units') !== 'none';
     // Clear layers if no units currently set for data
     // caused by while fetching
