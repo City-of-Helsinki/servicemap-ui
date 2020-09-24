@@ -121,34 +121,33 @@ const AreaView = ({
         // FIXME: remove temporary solution to hide older school years once period data is updated
         return acc;
       }
-      const district = cur;
-      // Remove days and months from district start and end values
-      if (district.start && district.end) {
-        district.start = new Date(district.start).getFullYear();
-        district.end = new Date(district.end).getFullYear();
-      }
       const duplicate = acc.find(
-        list => list[0].start === district.start && list[0].end === district.end,
+        list => list[0].start === cur.start && list[0].end === cur.end,
       );
       if (duplicate) {
-        duplicate.push(district);
+        duplicate.push(cur);
       } else {
-        acc.push([district]);
+        acc.push([cur]);
       }
       return acc;
     }, []);
 
-    groupedData.sort((a, b) => a[0].start - b[0].start);
+    groupedData.sort(
+      (a, b) => new Date(a[0].start).getFullYear() - new Date(b[0].start).getFullYear(),
+    );
 
-    groupedData.forEach((periodData) => {
-      const { start, end } = periodData[0];
-      if (start && end) {
-        setDistrictData({
-          id: `${type}${start}-${end}`, data: periodData, date: [start, end], name: type,
-        });
-      } else {
-        setDistrictData({ id: type, data: periodData, name: type });
-      }
+    groupedData.forEach((data) => {
+      const { start, end } = data[0];
+      const period = start && end
+        ? `${new Date(start).getFullYear()}-${new Date(end).getFullYear()}`
+        : null;
+
+      setDistrictData({
+        id: `${type}${period || ''}`,
+        data,
+        name: type,
+        period,
+      });
     });
   };
 
@@ -226,7 +225,7 @@ const AreaView = ({
   const fetchDistrictsByType = async (type, id) => {
     const options = {
       page: 1,
-      page_size: 300,
+      page_size: 500,
       type,
       geometry: true,
       unit_include: 'name,location,street_address',
