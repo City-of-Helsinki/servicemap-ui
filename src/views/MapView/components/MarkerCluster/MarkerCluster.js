@@ -8,13 +8,12 @@ import { generatePath, isEmbed } from '../../../../utils/path';
 import { createMarkerClusterLayer, createMarkerContent } from './clusterUtils';
 import { mapTypes } from '../../config/mapConfig';
 import { keyboardHandler } from '../../../../utils';
-import { fitUnitsToMap } from '../../utils/mapActions';
 
 // Handle unit markers
-const tooltipOptions = (markerCount, classes) => ({
+const tooltipOptions = (permanent, classes) => ({
   className: classes.unitTooltipContainer,
   direction: 'top',
-  permanent: markerCount === 1,
+  permanent,
   opacity: 1,
   offset: [0, -25],
 });
@@ -32,7 +31,7 @@ const clusterData = {};
 
 const MarkerCluster = ({
   classes,
-  currentPage,
+  // currentPage,
   data,
   getDistance,
   getLocaleText,
@@ -75,7 +74,7 @@ const MarkerCluster = ({
         const tooltipContent = createMarkerContent(
           clusterData.highlightedUnit, classes, getLocaleText, distance,
         );
-        cluster.bindTooltip(tooltipContent, tooltipOptions(1, classes));
+        cluster.bindTooltip(tooltipContent, tooltipOptions(true, classes));
       }
     }
     return icon;
@@ -245,6 +244,7 @@ const MarkerCluster = ({
         // Distance
         const distance = getDistance(unit, intl);
         const tooltipContent = createMarkerContent(unit, classes, getLocaleText, distance);
+        const tooltipPermanent = highlightedUnit && highlightedUnit.id === unit.id;
 
         const markerElem = global.L.marker(
           [unit.location.coordinates[1], unit.location.coordinates[0]],
@@ -255,7 +255,7 @@ const MarkerCluster = ({
           },
         ).bindTooltip(
           tooltipContent,
-          tooltipOptions(unitListFiltered.length, classes),
+          tooltipOptions(tooltipPermanent, classes),
         );
 
         if (unitListFiltered.length > 1 || embeded) {
@@ -288,16 +288,12 @@ const MarkerCluster = ({
       item.setAttribute('aria-hidden', 'true');
     });
 
-    if (map && data.units.length && !(currentPage === 'address' || currentPage === 'area')) {
-      // TODO: this should be revisited once new map focusing is implemented
-      /* Zoom out map to fit all unit markers when unit data changes.
-      Do not do this on area view and address view */
-      fitUnitsToMap(data.units, map);
-    }
-
-    // optionally center the map around the markers
-    // map.fitBounds(mcg.getBounds());
-    // // add the marker cluster group to the map
+    // if (map && data.units.length && !(currentPage === 'address' || currentPage === 'area')) {
+    //   // TODO: this should be revisited once new map focusing is implemented
+    //   /* Zoom out map to fit all unit markers when unit data changes.
+    //   Do not do this on area view and address view */
+    //   // fitUnitsToMap(data.units, map);
+    // }
   }, [cluster, data]);
 
   return null;
@@ -305,7 +301,7 @@ const MarkerCluster = ({
 
 MarkerCluster.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  currentPage: PropTypes.string.isRequired,
+  // currentPage: PropTypes.string.isRequired,
   data: PropTypes.shape({
     units: PropTypes.arrayOf(
       PropTypes.shape({
