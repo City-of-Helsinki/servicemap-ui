@@ -63,16 +63,6 @@ const UnitView = (props) => {
 
   const [unit, setUnit] = useState(checkCorrectUnit(stateUnit) ? stateUnit : null);
 
-  const centerMap = () => {
-    if (unit && map) {
-      const { geometry, location } = unit;
-      if (geometry && geometry.type === 'MultiLineString') {
-        focusDistrict(map, [geometry.coordinates]);
-      } else if (location) {
-        focusToPosition(map, location.coordinates);
-      }
-    }
-  };
 
   const intializeUnitData = () => {
     const { params } = match;
@@ -136,10 +126,6 @@ const UnitView = (props) => {
       intializeUnitData();
     }
   }, [match.params.unit]);
-
-  useEffect(() => {
-    centerMap();
-  }, [unit, map]);
 
   if (embed) {
     return null;
