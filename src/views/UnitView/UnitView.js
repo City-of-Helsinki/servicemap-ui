@@ -29,7 +29,7 @@ import TitledList from '../../components/Lists/TitledList';
 import DesktopComponent from '../../components/DesktopComponent';
 import MobileComponent from '../../components/MobileComponent';
 import ReadSpeakerButton from '../../components/ReadSpeakerButton';
-import config from "../../../config";
+import config from '../../../config';
 
 const UnitView = (props) => {
   const {
@@ -151,7 +151,7 @@ const UnitView = (props) => {
     return (
       <Typography variant="srOnly" aria-hidden>{title}</Typography>
     );
-  }
+  };
 
   const renderDetailTab = () => {
     if (!unit || !unit.complete) {
@@ -212,7 +212,6 @@ const UnitView = (props) => {
   };
 
   const renderAccessibilityTab = () => {
-
     let accessibilityReadSpeakerButton = null;
 
     if (config.show_read_speaker_button) {
@@ -233,21 +232,21 @@ const UnitView = (props) => {
             renderTitleForRS()
           }
           {hearingMaps && (
-            <TitledList titleComponent="h4" title={intl.formatMessage({id: 'unit.accessibility.hearingMaps'})}>
+            <TitledList titleComponent="h4" title={intl.formatMessage({ id: 'unit.accessibility.hearingMaps' })}>
               {hearingMaps.map(item => (
                 <SimpleListItem
                   role="link"
                   link
                   divider
-                  icon={<Hearing/>}
+                  icon={<Hearing />}
                   key={item.name}
-                  text={`${item.name} ${intl.formatMessage({id: 'unit.accessibility.hearingMaps.extra'})}`}
+                  text={`${item.name} ${intl.formatMessage({ id: 'unit.accessibility.hearingMaps.extra' })}`}
                   handleItemClick={() => window.open(item.url)}
                 />
               ))}
             </TitledList>
           )}
-          <AccessibilityInfo titleAlways headingLevel={4}/>
+          <AccessibilityInfo titleAlways headingLevel={4} />
         </div>
       </div>
     );
@@ -344,6 +343,7 @@ const UnitView = (props) => {
     if (unit && unit.complete) {
       const tabs = [
         {
+          id: 'basicInfo',
           ariaLabel: intl.formatMessage({ id: 'unit.basicInfo' }),
           component: renderDetailTab(),
           data: null,
@@ -351,6 +351,7 @@ const UnitView = (props) => {
           title: intl.formatMessage({ id: 'unit.basicInfo' }),
         },
         {
+          id: 'accessibilityDetails',
           ariaLabel: intl.formatMessage({ id: 'accessibility' }),
           component: renderAccessibilityTab(),
           data: null,
@@ -358,6 +359,7 @@ const UnitView = (props) => {
           title: intl.formatMessage({ id: 'accessibility' }),
         },
         {
+          id: 'services',
           ariaLabel: intl.formatMessage({ id: 'service.tab' }),
           component: renderServiceTab(),
           data: null,
