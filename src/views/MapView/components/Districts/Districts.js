@@ -32,10 +32,10 @@ const Districts = ({
       e.originalEvent.view.L.DomEvent.stopPropagation(e);
       // Add/remove district from selected geographical districts
       let newArray;
-      if (selectedSubdistricts.includes(district.ocd_id)) {
-        newArray = selectedSubdistricts.filter(i => i !== district.ocd_id);
+      if (selectedSubdistricts.some(item => item.ocd_id === district.ocd_id)) {
+        newArray = selectedSubdistricts.filter(i => i.ocd_id !== district.ocd_id);
       } else {
-        newArray = [...selectedSubdistricts, district.ocd_id];
+        newArray = [...selectedSubdistricts, district];
       }
       if (newArray === []) {
         setSelectedDistrictServices([]);
@@ -115,7 +115,7 @@ const Districts = ({
     return districtData.map((district) => {
       let dimmed;
       if (selectedSubdistricts.length) {
-        dimmed = !selectedSubdistricts.includes(district.ocd_id);
+        dimmed = !selectedSubdistricts.some(item => item.ocd_id === district.ocd_id);
       } else {
         dimmed = addressDistrict && district.id !== addressDistrict;
       }
@@ -205,7 +205,7 @@ Districts.propTypes = {
   selectedAddress: PropTypes.objectOf(PropTypes.any),
   districtData: PropTypes.arrayOf(PropTypes.object),
   addressDistrict: PropTypes.number,
-  selectedSubdistricts: PropTypes.arrayOf(PropTypes.string),
+  selectedSubdistricts: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
   setSelectedSubdistricts: PropTypes.func.isRequired,
   setSelectedDistrictServices: PropTypes.func.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any).isRequired,

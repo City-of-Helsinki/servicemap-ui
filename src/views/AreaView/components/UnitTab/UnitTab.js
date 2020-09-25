@@ -1,7 +1,15 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
-  List, Typography, Divider, ExpansionPanel, ExpansionPanelSummary, Checkbox, FormControlLabel,
+  List,
+  Typography,
+  Divider,
+  Checkbox,
+  FormControlLabel,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  ListItem,
 } from '@material-ui/core';
 import distance from '@turf/distance';
 import { FormattedMessage } from 'react-intl';
@@ -17,6 +25,7 @@ const UnitTab = ({
   selectedDistrictData,
   selectedAddress,
   selectedSubdistricts,
+  selectedDistrictServices,
   setSelectedDistrictServices,
   filteredSubdistrictUnits,
   addressDistrict,
@@ -25,7 +34,7 @@ const UnitTab = ({
   classes,
   intl,
 }) => {
-  const [checkedServices, setCheckedServices] = useState([]);
+  const [checkedServices, setCheckedServices] = useState(selectedDistrictServices);
 
   const sortDistricts = (districts) => {
     districts.sort((a, b) => a.unit.distance - b.unit.distance);
@@ -82,7 +91,12 @@ const UnitTab = ({
         }
         const serviceCategory = serviceList.find(service => service.id === category.id);
         if (!serviceCategory) {
-          serviceList.push({ id: category.id, units: [unit], name: category.name });
+          serviceList.push({
+            id: category.id,
+            units: [unit],
+            name: category.name,
+            period: category.period,
+          });
         } else if (!serviceCategory.units.some(listUnit => listUnit.id === unit.id)) {
           serviceCategory.units.push(unit);
         }
@@ -96,37 +110,54 @@ const UnitTab = ({
 
     return (
       serviceList.map(category => (
-        <ExpansionPanel
-          CollapseProps={{ unmountOnExit: true }}
-          key={category.id}
-          classes={{ expanded: classes.expandedUnitCategory }}
+        <ListItem
+          className={classes.categoryItem}
+          key={`${category.id}${category.period ? category.period[0] : ''}`}
         >
-          <ExpansionPanelSummary
-            classes={{ content: classes.centerItems }}
-            expandIcon={<ArrowDropDown />}
+          <Accordion
+            TransitionProps={{ unmountOnExit: true, mountOnEnter: true }}
+            classes={{ root: classes.expandingElement }}
           >
-            <FormControlLabel
-              onClick={event => event.stopPropagation()}
-              onFocus={event => event.stopPropagation()}
-              control={(
-                <Checkbox
-                  checked={checkedServices.some(service => service === category.id)}
-                  onChange={e => handleCheckboxChange(e, category)}
-                />
+            <AccordionSummary
+              classes={{ root: classes.accordionSummary }}
+              expandIcon={<ArrowDropDown />}
+              id={`${category.id}-header`}
+              aria-controls={`${category.id}-content`}
+            >
+              <FormControlLabel
+                onClick={event => event.stopPropagation()}
+                onFocus={event => event.stopPropagation()}
+                control={(
+                  <Checkbox
+                    checked={checkedServices.some(service => service === category.id)}
+                    onChange={e => handleCheckboxChange(e, category)}
+                  />
               )}
-              label={<Typography className={classes.unitCategoryText}>{`${uppercaseFirst(getLocaleText(category.name))} (${category.units.length})`}</Typography>}
-            />
-          </ExpansionPanelSummary>
-          <List>
-            {category.units.map((unit, i) => (
-              <UnitItem
-                key={unit.id}
-                unit={unit}
-                divider={i !== category.units.length - 1}
+                label={(
+                  <>
+                    <Typography>
+                      {`${uppercaseFirst(getLocaleText(category.name))} (${category.units.length})`}
+                    </Typography>
+                    <Typography aria-hidden className={classes.captionText} variant="caption">
+                      {`${category.period ? `${category.period[0]}-${category.period[1]}` : ''}`}
+                    </Typography>
+                  </>
+                )}
               />
-            ))}
-          </List>
-        </ExpansionPanel>
+            </AccordionSummary>
+            <AccordionDetails classes={{ root: classes.accoridonContent }} id={`${category.id}-content`}>
+              <List classes={{ root: classes.fullWidth }} disablePadding>
+                {category.units.map((unit, i) => (
+                  <UnitItem
+                    key={`${unit.id}-${category.id}`}
+                    unit={unit}
+                    divider={i !== category.units.length - 1}
+                  />
+                ))}
+              </List>
+            </AccordionDetails>
+          </Accordion>
+        </ListItem>
       ))
     );
   };
@@ -161,12 +192,7 @@ const UnitTab = ({
             }}
           />
           <List disablePadding>
-            {selectedDistrictData.filter(obj => obj.unit).map(district => (
-              renderDistrictUnitItem(district)
-            ))}
-            <List disablePadding>
-              {renderUnitList()}
-            </List>
+            {renderUnitList()}
           </List>
         </div>
       );

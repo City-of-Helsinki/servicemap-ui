@@ -33,8 +33,10 @@ export const getAddressDistrict = createSelector(
 export const getSubdistrictServices = createSelector(
   [getSubdistrictSelection, getSubdistrictUnits],
   (selectedSubdistricts, unitData) => {
-    if (selectedSubdistricts && unitData) {
-      return unitData.filter(unit => selectedSubdistricts.includes(unit.division_id));
+    if (selectedSubdistricts.length && unitData) {
+      return unitData.filter(
+        unit => selectedSubdistricts.some(district => district.ocd_id === unit.division_id),
+      );
     }
     return [];
   },

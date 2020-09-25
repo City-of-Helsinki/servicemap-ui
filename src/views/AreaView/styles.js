@@ -22,23 +22,28 @@ const styles = theme => ({
     marginLeft: theme.spacing(1),
   },
   list: {
-    marginRight: theme.spacing(-2),
+    paddingLeft: theme.spacing(5),
   },
   districtItem: {
-    padding: 0,
-    paddingTop: 4,
-    paddingBottom: 4,
+    paddingLeft: 0,
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
   },
   captionText: {
     color: '#000',
     fontWeight: 'normal',
   },
+  loadingText: {
+    paddingLeft: theme.spacing(6),
+    paddingBottom: theme.spacing(1),
+  },
   subtitle: {
-    height: 49,
+    height: 48,
     display: 'flex',
     alignItems: 'center',
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(1),
+    paddingLeft: theme.spacing(6),
   },
   categoryItem: {
     paddingRight: 32,
@@ -48,6 +53,7 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'row',
     width: '100%',
+    alignItems: 'center',
   },
   categoryItemContent: {
     paddingLeft: 32,
@@ -105,20 +111,30 @@ const styles = theme => ({
   subdistrictList: {
     paddingLeft: 32,
   },
-  unitCategoryText: {
-    textAlign: 'left',
-    padding: theme.spacing.unit,
-    paddingLeft: 0,
-  },
   expandingElement: {
     boxShadow: 'none',
     width: '100%',
   },
-  expandedUnitCategory: {
+  expandingElementContent: {
+    marginBottom: -1,
+  },
+  testPadding: {
+    paddingLeft: 0,
+    paddingRight: theme.spacing(4),
+  },
+  accordionSummary: {
+    minHeight: '48px !important',
+    height: 48,
+    padding: 0,
+  },
+  accordionSummaryContent: {
+    margin: 0,
+  },
+  textExpanded: {
     margin: 0,
   },
   deleteButton: {
-    marginLeft: theme.spacing.unitTriple,
+    marginLeft: theme.spacing(2),
   },
   unitListArea: {
     textAlign: 'left',
@@ -127,9 +143,15 @@ const styles = theme => ({
     alignItems: 'center',
     padding: 0,
   },
-  testPadding: {
+  test: {
+    backgroundColor: 'yellow',
+  },
+  accoridonContent: {
     paddingLeft: 0,
-    paddingRight: 32,
+    paddingRight: 0,
+  },
+  fullWidth: {
+    width: '100%',
   },
 });
 

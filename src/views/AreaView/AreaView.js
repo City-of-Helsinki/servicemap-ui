@@ -19,7 +19,7 @@ const fetchReducer = (state, action) => {
     case 'remove':
       return state.filter(item => item !== action.value);
     default:
-      throw new Error();
+      throw new Error('District fetch failed');
   }
 };
 
@@ -38,6 +38,7 @@ const AreaView = ({
   subdistrictUnits,
   filteredSubdistrictUnits,
   selectedSubdistricts,
+  selectedDistrictServices,
   map,
   getLocaleText,
   navigator,
@@ -266,7 +267,7 @@ const AreaView = ({
     }
 
     // If no fetched data found, fetch all distirct types within opened category
-    if (!districtData.some(district => district.name === item.districts[0])
+    if (!districtData.some(district => item.districts.includes(district.name))
       && !fetching.includes(item.title)
     ) {
       dispatchFetching({ type: 'add', value: item.title });
@@ -298,8 +299,8 @@ const AreaView = ({
 
   useEffect(() => {
     selectedSubdistricts.forEach((district) => {
-      if (!subdistrictUnits.some(unit => unit.division_id === district)) {
-        fetchDistrictUnitList(district);
+      if (!subdistrictUnits.some(unit => unit.division_id === district.ocd_id)) {
+        fetchDistrictUnitList(district.ocd_id);
       }
     });
   }, [selectedSubdistricts]);
@@ -316,7 +317,6 @@ const AreaView = ({
       );
       handleOpen(category);
       setSelectedDistrictType(selectedDistrictType);
-      // setSelectedSubdistrict(selectedSubdistrict); // FIX THIS
     }
   }, []);
 
@@ -348,6 +348,7 @@ const AreaView = ({
       selectedSubdistricts={selectedSubdistricts}
       setSelectedDistrictServices={setSelectedDistrictServices}
       filteredSubdistrictUnits={filteredSubdistrictUnits}
+      selectedDistrictServices={selectedDistrictServices}
       addressDistrict={addressDistrict}
       formAddressString={formAddressString}
       getLocaleText={getLocaleText}

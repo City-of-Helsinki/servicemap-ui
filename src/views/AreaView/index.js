@@ -18,7 +18,12 @@ import { getLocaleString } from '../../redux/selectors/locale';
 const mapStateToProps = (state) => {
   const { navigator } = state;
   const {
-    districtData, selectedDistrictType, districtAddressData, subdistrictUnits, selectedSubdistricts,
+    districtData,
+    selectedDistrictType,
+    districtAddressData,
+    subdistrictUnits,
+    selectedSubdistricts,
+    selectedDistrictServices,
   } = state.districts;
   const map = state.mapRef;
   const filteredSubdistrictUnits = getSubdistrictServices(state);
@@ -34,6 +39,7 @@ const mapStateToProps = (state) => {
     subdistrictUnits,
     filteredSubdistrictUnits,
     selectedSubdistricts,
+    selectedDistrictServices,
     getLocaleText,
     navigator,
     map,
