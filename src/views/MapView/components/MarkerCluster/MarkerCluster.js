@@ -28,12 +28,15 @@ const getClusterIconSize = (count) => {
   return iconSize;
 };
 
+const clusterData = {};
+
 const MarkerCluster = ({
   classes,
   currentPage,
   data,
   getDistance,
   getLocaleText,
+  highlightedUnit,
   map,
   navigator,
   settings,
@@ -42,6 +45,11 @@ const MarkerCluster = ({
   const embeded = isEmbed();
   const intl = useIntl();
   const [cluster, setCluster] = useState(null);
+
+  // Update highlightedUnit to clusterData object for reference
+  useEffect(() => {
+    clusterData.highlightedUnit = highlightedUnit;
+  }, [highlightedUnit]);
 
   // Function for creating custom icon for cluster group
   // https://github.com/Leaflet/Leaflet.markercluster#customising-the-clustered-markers
@@ -55,6 +63,21 @@ const MarkerCluster = ({
       className: `unitClusterMarker ${classes.unitClusterMarker}`,
       iconSize: global.L.point(iconSize, iconSize, true),
     });
+
+    // Add cluster tooltip for highlightedUnit
+    if (clusterData.highlightedUnit) {
+      const markers = cluster.getAllChildMarkers();
+      const marker = markers.find(
+        obj => obj.options.customUnitData.id === clusterData.highlightedUnit.id,
+      );
+      if (marker) {
+        const distance = getDistance(clusterData.highlightedUnit, intl);
+        const tooltipContent = createMarkerContent(
+          clusterData.highlightedUnit, classes, getLocaleText, distance,
+        );
+        cluster.bindTooltip(tooltipContent, tooltipOptions(1, classes));
+      }
+    }
     return icon;
   };
 
@@ -156,12 +179,33 @@ const MarkerCluster = ({
     }
   };
 
+  const clusterMouseover = (a) => {
+    if (clusterData.highlightedUnit) {
+      return;
+    }
+    const clusterMarkers = a.layer.getAllChildMarkers();
+    const units = clusterMarkers.map((marker) => {
+      if (marker && marker.options && marker.options.customUnitData) {
+        const data = marker.options.customUnitData;
+        return data;
+      }
+      return null;
+    });
+
+    // Create popuelement and add events
+    const elem = clusterPopupContent()(units);
+    // Bind and open popup with content to cluster
+    a.layer.bindPopup(elem, {
+      closeButton: true,
+      offset: [4, -14],
+    }).openPopup();
+  };
+
   // Create and initialize marker cluster layer on mount
   useEffect(() => {
     const mcg = createMarkerClusterLayer(
       createClusterCustomIcon,
-      clusterPopupContent(),
-      null,
+      clusterMouseover,
       clusterMouseout,
       null,
       maxClusterRadius,
@@ -192,6 +236,7 @@ const MarkerCluster = ({
     }
 
     const useContrast = theme === 'dark';
+    const markers = [];
 
     // Add unit markers to clusterlayer
     unitListFiltered.forEach((unit) => {
@@ -230,9 +275,12 @@ const MarkerCluster = ({
             });
         }
 
-        cluster.addLayer(markerElem);
+        markers.push(markerElem);
       }
     });
+
+    // Add markers in bulk
+    cluster.addLayers(markers);
 
     // Hide all markers from screen readers
     document.querySelectorAll('.leaflet-marker-icon').forEach((item) => {
