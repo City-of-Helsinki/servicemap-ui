@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
@@ -11,7 +11,6 @@ import { mapTypes } from '../../config/mapConfig';
 import { keyboardHandler } from '../../../../utils';
 import { fitUnitsToMap } from '../../utils/mapActions';
 
-let mcg = null;
 // Handle unit markers
 const tooltipOptions = (markerCount, classes) => ({
   className: classes.unitTooltipContainer,
@@ -41,11 +40,9 @@ const MarkerCluster = ({
   settings,
   theme,
 }) => {
-  if (!data.units.length) {
-    return null;
-  }
   const embeded = isEmbed();
   const intl = useIntl();
+  const [cluster, setCluster] = useState(null);
 
   // Function for creating custom icon for cluster group
   // https://github.com/Leaflet/Leaflet.markercluster#customising-the-clustered-markers
@@ -148,7 +145,7 @@ const MarkerCluster = ({
 
   // Create marker cluster layer on mount
   useEffect(() => {
-    mcg = createMarkerClusterLayer(
+    const mcg = createMarkerClusterLayer(
       createClusterCustomIcon,
       clusterPopupContent(),
       null,
@@ -157,13 +154,18 @@ const MarkerCluster = ({
       maxClusterRadius,
     );
     map.addLayer(mcg);
+    setCluster(mcg);
   }, []);
 
   useEffect(() => {
     // Clear cluster
-    mcg.clearLayers();
-    console.log(data);
-    console.log('Rendering MarkerCluster markers');
+    if (!cluster) {
+      return;
+    }
+    cluster.clearLayers();
+    if (!data.units.length) {
+      return;
+    }
     // Filter units of object_type unit
     const unitListFiltered = data.units.filter(unit => unit.object_type === 'unit');
     if (!unitListFiltered.length) {
@@ -209,7 +211,7 @@ const MarkerCluster = ({
             });
         }
 
-        mcg.addLayer(markerElem);
+        cluster.addLayer(markerElem);
       }
     });
 
@@ -228,7 +230,7 @@ const MarkerCluster = ({
     // optionally center the map around the markers
     // map.fitBounds(mcg.getBounds());
     // // add the marker cluster group to the map
-  }, [data]);
+  }, [cluster, data]);
 
   return null;
 };

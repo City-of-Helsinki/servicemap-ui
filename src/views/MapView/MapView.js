@@ -274,7 +274,6 @@ const MapView = (props) => {
 
           <MarkerCluster
             map={mapRef?.current?.leafletElement}
-            currentPage={currentPage}
             data={unitData}
           />
           {
