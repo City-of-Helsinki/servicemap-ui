@@ -81,14 +81,10 @@ const MarkerCluster = ({
   };
 
 
-  const { clusterPopupVisibility, maxZoom, minZoom } = mapTypes[settings.mapType || 'servicemap'];
+  const { clusterPopupVisibility } = mapTypes[settings.mapType || 'servicemap'];
   const popupTexts = {
     title: intl.formatMessage({ id: 'unit.plural' }),
     info: count => intl.formatMessage({ id: 'map.unit.cluster.popup.info' }, { count }),
-  };
-  const maxClusterRadius = (zoom) => {
-    const normalizedZoom = (zoom - minZoom) / (maxZoom - minZoom);
-    return Math.round(100 * (1 - normalizedZoom));
   };
   const onClusterItemClick = (unit) => {
     UnitHelper.unitElementClick(navigator, unit);
@@ -205,7 +201,6 @@ const MarkerCluster = ({
       clusterMouseover,
       clusterMouseout,
       null,
-      maxClusterRadius,
     );
     // Add cluster to map
     map.addLayer(mcg);

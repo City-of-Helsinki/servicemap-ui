@@ -8,7 +8,6 @@ export const createMarkerClusterLayer = (
   clusterMouseover,
   clusterMouseout,
   clusterAnimationend,
-  maxClusterRadius,
 ) => {
   if (!isClient()) {
     return null;
@@ -23,7 +22,7 @@ export const createMarkerClusterLayer = (
     spiderfyOnMaxZoom: false,
     showCoverageOnHover: false,
     iconCreateFunction: createClusterCustomIcon,
-    maxClusterRadius,
+    maxClusterRadius: 40,
     removeOutsideVisibleBounds: true,
     zoomToBoundsOnClick: !embeded,
   });
