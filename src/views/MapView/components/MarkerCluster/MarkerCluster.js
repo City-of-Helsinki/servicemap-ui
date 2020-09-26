@@ -4,10 +4,11 @@ import { useIntl } from 'react-intl';
 import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 import { drawMarkerIcon } from '../../utils/drawIcon';
-import { generatePath, isEmbed } from '../../../../utils/path';
+import { isEmbed } from '../../../../utils/path';
 import { createMarkerClusterLayer, createMarkerContent } from './clusterUtils';
 import { mapTypes } from '../../config/mapConfig';
 import { keyboardHandler } from '../../../../utils';
+import UnitHelper from '../../../../utils/unitHelper';
 
 // Handle unit markers
 const tooltipOptions = (permanent, classes) => ({
@@ -31,7 +32,6 @@ const clusterData = {};
 
 const MarkerCluster = ({
   classes,
-  // currentPage,
   data,
   getDistance,
   getLocaleText,
@@ -91,9 +91,7 @@ const MarkerCluster = ({
     return Math.round(100 * (1 - normalizedZoom));
   };
   const onClusterItemClick = (unit) => {
-    if (navigator && unit) {
-      navigator.push('unit', { id: unit.id });
-    }
+    UnitHelper.unitElementClick(navigator, unit);
   };
   // eslint-disable-next-line no-underscore-dangle
   const showListOfUnits = () => (map._zoom > clusterPopupVisibility);
@@ -260,15 +258,7 @@ const MarkerCluster = ({
 
         if (unitListFiltered.length > 1 || embeded) {
           markerElem.on('click', () => {
-            if (embeded) {
-              const { origin } = window.location;
-              const path = generatePath('unit', { id: unit.id });
-              window.open(`${origin}${path}`);
-              return;
-            }
-            if (navigator) {
-              navigator.push('unit', { id: unit.id });
-            }
+            UnitHelper.unitElementClick(navigator, unit);
           })
             .on('mouseover', () => {
               map.closePopup();
@@ -301,7 +291,6 @@ const MarkerCluster = ({
 
 MarkerCluster.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  // currentPage: PropTypes.string.isRequired,
   data: PropTypes.shape({
     units: PropTypes.arrayOf(
       PropTypes.shape({

@@ -2,6 +2,8 @@ import { drawUnitIcon } from '../views/MapView/utils/drawIcon';
 import isClient from '.';
 import SettingsUtility from './settings';
 import config from '../../config';
+import { isEmbed } from './path';
+import paths from '../../config/paths';
 
 // TODO: If berries are not used anymore, clean this class
 
@@ -119,6 +121,29 @@ class UnitHelper {
     const icon = UnitHelper.markerIcons[markerType][iconIndex];
 
     return icon;
+  }
+
+  static unitElementClick = (navigator, unit) => {
+    if (!global.window) {
+      throw Error('Can\'t run unitElementClick without window');
+    }
+    if (!navigator || !navigator.push || !navigator.replace) {
+      throw Error('Invalid navigator argument given.');
+    }
+    if (!unit || (typeof unit !== 'number' && !unit.id)) {
+      throw Error('Invalid unit argument given.');
+    }
+    const id = typeof unit === 'number' ? unit : unit.id;
+    const embeded = isEmbed();
+    if (embeded) {
+      const { origin } = window.location;
+      const path = navigator.generatePath('unit', { id });
+      window.open(`${origin}${path}`);
+      return;
+    }
+    const action = paths.unit.regex.test(window.location.href)
+      ? 'replace' : 'push';
+    navigator[action]('unit', { id });
   }
 }
 
