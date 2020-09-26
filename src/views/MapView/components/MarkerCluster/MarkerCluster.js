@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import ReactDOMServer from 'react-dom/server';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 import 'leaflet.markercluster/dist/MarkerCluster.css';
@@ -79,61 +78,75 @@ const MarkerCluster = ({
 
   // Cluster popup content
   const clusterPopupContent = () => (units) => {
-    const listContent = (
-      <>
-        <p className={classes.unitPopupTitle}>{popupTexts.title}</p>
-        <ul className={classes.unitPopupList}>
-          {
-            units.map((unit) => {
-              const distance = getDistance(unit, intl);
-              return (
-                <React.Fragment key={unit.id}>
-                  <li>
-                    <span
-                      role="link"
-                      tabIndex="0"
-                      onClick={() => onClusterItemClick(unit)}
-                      onKeyDown={keyboardHandler(() => onClusterItemClick(unit), ['enter', 'space'])}
-                    >
-                      <p className={classes.unitPopupItem}>{getLocaleText(unit.name)}</p>
-                      {
-                        distance
-                        && (
-                          <p className={`${classes.unitPopupDistance} popup-distance`}>
-                            {distance.distance}
-                            {distance.type}
-                          </p>
-                        )
-                      }
-                    </span>
-                  </li>
-                  <li aria-hidden className="popup-divider"><hr /></li>
-                </React.Fragment>
-              );
-            })
-          }
-        </ul>
-      </>
-    );
+    // Create container and title
+    const container = document.createElement('div');
+    container.className = classes.unitTooltipContainer;
+    container.setAttribute('aria-hidden', 'true');
 
-    // Content when not showing list of units
-    const simpleContent = (
-      <p className={classes.unitTooltipTitle}>{popupTexts.info(units.length)}</p>
-    );
+    // Render simple info popup
+    if (!showListOfUnits()) {
+      const title = document.createElement('p');
+      title.innerText = popupTexts.info(units.length);
+      title.className = classes.unitTooltipTitle;
+      container.appendChild(title);
 
-    return (
-      ReactDOMServer.renderToStaticMarkup(
-        <div className={classes.unitTooltipContainer} aria-hidden>
-          {
-            showListOfUnits()
-              ? listContent
-              : simpleContent
+      return container;
+    }
+
+    /**
+     * Render element with list of units in cluster
+     * */
+    const title = document.createElement('p');
+    title.innerText = popupTexts.title;
+    title.className = classes.unitPopupTitle;
+    container.appendChild(title);
+
+    // Add list element
+    const list = document.createElement('ul');
+    list.className = classes.unitPopupList;
+
+    // Add units to list
+    units.forEach((unit) => {
+      if (unit?.name) {
+        const listItem = document.createElement('li');
+        // Create span for interactive list item content
+        const span = document.createElement('span');
+        span.setAttribute('tabindex', '0');
+        span.setAttribute('role', 'link');
+        span.onkeydown = keyboardHandler(() => onClusterItemClick(unit), ['enter', 'space']);
+        span.onclick = () => {
+          if (onClusterItemClick) {
+            onClusterItemClick(unit);
           }
-        </div>,
-      )
-    );
+        };
+
+        // Create span content
+        let content = `<p class="${classes.unitPopupItem}">${getLocaleText(unit.name)}</p>`;
+        // Distance
+        const distance = getDistance(unit, intl);
+        if (distance) {
+          content += `<p class="${classes.unitPopupDistance} popup-distance">${distance.distance}${distance.type}</p>`;
+        }
+        span.innerHTML = content;
+        // Append span to listItem
+        listItem.append(span);
+        // Append listItem to list
+        list.appendChild(listItem);
+
+        // Divider element
+        const divider = document.createElement('li');
+        divider.setAttribute('aria-hidden', 'true');
+        divider.className = 'popup-divider';
+        divider.innerHTML = '<hr />';
+        list.appendChild(divider);
+      }
+    });
+    container.appendChild(list);
+
+    return container;
   };
 
+  // Function for cluster mouseout event
   const clusterMouseout = () => {
     if (embeded) {
       return;
@@ -143,7 +156,7 @@ const MarkerCluster = ({
     }
   };
 
-  // Create marker cluster layer on mount
+  // Create and initialize marker cluster layer on mount
   useEffect(() => {
     const mcg = createMarkerClusterLayer(
       createClusterCustomIcon,
@@ -153,10 +166,16 @@ const MarkerCluster = ({
       null,
       maxClusterRadius,
     );
+    // Add cluster to map
     map.addLayer(mcg);
+    // Set cluster to state
     setCluster(mcg);
   }, []);
 
+  /**
+   * This effect handles marker rendering using clusterlayer
+   * Triggered by changes in data prop and cluster initialization
+   */
   useEffect(() => {
     // Clear cluster
     if (!cluster) {
@@ -215,6 +234,7 @@ const MarkerCluster = ({
       }
     });
 
+    // Hide all markers from screen readers
     document.querySelectorAll('.leaflet-marker-icon').forEach((item) => {
       item.setAttribute('tabindex', '-1');
       item.setAttribute('aria-hidden', 'true');
