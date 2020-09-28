@@ -88,6 +88,11 @@ if (typeof settings.FEEDBACK_ADDITIONAL_INFO_LINK === 'undefined') {
   settings.FEEDBACK_ADDITIONAL_INFO_LINK = "https://www.hel.fi/helsinki/fi/kaupunki-ja-hallinto/osallistu-ja-vaikuta/palaute/ohjeita-palautteesta";
 }
 
+if (typeof settings.FEEDBACK_IS_PUBLISHED === 'undefined') {
+  // If not set default to Helsinki
+  settings.FEEDBACK_ADDITIONAL_INFO_LINK = true;
+}
+
 export default {
   "version": version.tag,
   "commit": version.commit,
@@ -175,4 +180,5 @@ export default {
   "show_area_selection": (settings.SHOW_AREA_SELECTION === 'true'),
   "show_read_speaker_button": (settings.SHOW_READ_SPEAKER_BUTTON === 'true'),
   "feedback_additional_info_link": settings.FEEDBACK_ADDITIONAL_INFO_LINK,
+  "feedback_is_published": (settings.FEEDBACK_IS_PUBLISHED === 'true'),
 }
