@@ -173,9 +173,6 @@ const MarkerCluster = ({
   };
 
   const clusterMouseover = (a) => {
-    if (clusterData.highlightedUnit) {
-      return;
-    }
     const clusterMarkers = a.layer.getAllChildMarkers();
     const units = clusterMarkers.map((marker) => {
       if (marker && marker.options && marker.options.customUnitData) {
