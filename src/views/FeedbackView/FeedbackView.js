@@ -98,6 +98,29 @@ const FeedbackView = ({
     });
   };
 
+  let feedbackPermission = null;
+
+  // Show/Hide feedback permission checkbox dynamically
+  if (config.feedback_is_published) {
+    feedbackPermission = (
+      /* Permission checkbox */
+      <FormControl>
+        <div className={classes.checkbox}>
+          <Checkbox
+            icon={<span className={classes.checkBoxIcon} />}
+            size="small"
+            color="primary"
+            onChange={() => setPermission(!permission)}
+            inputProps={{ title: intl.formatMessage({ id: 'feedback.permission' }) }}
+            aria-describedby="checkboxTitle"
+            classes={{ root: classes.box }}
+          />
+          <Typography aria-hidden><FormattedMessage id="feedback.permission" /></Typography>
+        </div>
+      </FormControl>
+    );
+  }
+
   return (
     <>
       {/* Exit dialog */}
@@ -180,22 +203,7 @@ const FeedbackView = ({
               </Typography>
             </div>
           </FormControl>
-
-          {/* Permission checkbox */}
-          <FormControl>
-            <div className={classes.checkbox}>
-              <Checkbox
-                icon={<span className={classes.checkBoxIcon} />}
-                size="small"
-                color="primary"
-                onChange={() => setPermission(!permission)}
-                inputProps={{ title: intl.formatMessage({ id: 'feedback.permission' }) }}
-                aria-describedby="checkboxTitle"
-                classes={{ root: classes.box }}
-              />
-              <Typography aria-hidden><FormattedMessage id="feedback.permission" /></Typography>
-            </div>
-          </FormControl>
+          {feedbackPermission}
         </div>
 
         <div className={classes.bottomArea}>

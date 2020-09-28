@@ -192,6 +192,7 @@ const htmlTemplate = (reactDom, preloadedState, css, cssString, locale, helmet, 
         window.nodeEnvSettings.SHOW_AREA_SELECTION = "${process.env.SHOW_AREA_SELECTION}";
         window.nodeEnvSettings.SHOW_READ_SPEAKER_BUTTON = "${process.env.SHOW_READ_SPEAKER_BUTTON}";
         window.nodeEnvSettings.FEEDBACK_ADDITIONAL_INFO_LINK = "${process.env.FEEDBACK_ADDITIONAL_INFO_LINK}";
+        window.nodeEnvSettings.FEEDBACK_IS_PUBLISHED = "${process.env.FEEDBACK_IS_PUBLISHED}";
         window.nodeEnvSettings.USE_PTV_ACCESSIBILITY_API = "${process.env.USE_PTV_ACCESSIBILITY_API}";
 
         window.appVersion = {};
