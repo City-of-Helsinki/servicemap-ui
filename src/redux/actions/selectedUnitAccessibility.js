@@ -30,17 +30,57 @@ const generateId = (content) => {
  */
 const buildTranslatedObject = (data, base) => {
   const obj = {};
-  config.supportedLanguages.forEach((lang) => {
-    obj[lang] = data[`${base}_${lang}`];
-  });
+  if (base) {
+    config.supportedLanguages.forEach((lang) => {
+      obj[lang] = data[`${base}_${lang}`];
+    });
+  } else {
+    data.forEach((element) => {
+      obj[element.language] = element.value;
+    });
+  }
   return obj;
 };
 
-/**
- * Parse accessibility sentences to more usable form
- * @param {*} data - fetched data from server
- */
-export const parseAccessibilitySentences = (data) => {
+const parsePTVAccessibilitySentences = (data) => {
+  const sentences = {};
+  const groups = {};
+  let i = 0;
+  data.forEach((element) => {
+    if (element.sentenceGroups) {
+      const group = buildTranslatedObject(element.sentenceGroups);
+      
+      // Check if group already exists in groups
+      let groupKey;
+      Object.keys(groups).forEach((key) => {
+        if (groups[key].fi == group.fi) {
+          groupKey = key;
+        }
+      });
+      if (!groupKey) {
+        groups[i] = group;
+      } else {
+        i = groupKey;
+      }
+    }
+    if (element.sentences) {
+      const sentence = buildTranslatedObject(element.sentences);
+      if (!(i in sentences)) {
+        sentences[i] = [];
+      }
+      sentences[i].push(sentence);
+    }
+    i++;
+  });
+
+  if (Object.keys(sentences).length === 0 || Object.keys(groups).length === 0) {
+    return null;
+  } else {
+    return { sentences, groups };
+  }
+};
+
+const parseHelsinkiAccessibilitySentences = (data) => {
   if (data && data.accessibility_sentences) {
     const sentences = {};
     const groups = {};
@@ -62,6 +102,18 @@ export const parseAccessibilitySentences = (data) => {
   }
 
   return null;
+};
+
+/**
+ * Parse accessibility sentences to more usable form
+ * @param {*} data - fetched data from server
+ */
+export const parseAccessibilitySentences = (data) => {
+  if (config.usePtvAccessibilityApi) {
+    return parsePTVAccessibilitySentences(data);
+  } else {
+    return parseHelsinkiAccessibilitySentences(data);
+  }
 };
 
 // Change selected unit to given unit

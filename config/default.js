@@ -93,6 +93,10 @@ if (typeof settings.FEEDBACK_IS_PUBLISHED === 'undefined') {
   settings.FEEDBACK_ADDITIONAL_INFO_LINK = true;
 }
 
+if (typeof settings.USE_PTV_ACCESSIBILITY_API === 'undefined') {
+  settings.USE_PTV_ACCESSIBILITY_API = false;
+}
+
 export default {
   "version": version.tag,
   "commit": version.commit,
@@ -181,4 +185,5 @@ export default {
   "show_read_speaker_button": (settings.SHOW_READ_SPEAKER_BUTTON === 'true'),
   "feedback_additional_info_link": settings.FEEDBACK_ADDITIONAL_INFO_LINK,
   "feedback_is_published": (settings.FEEDBACK_IS_PUBLISHED === 'true'),
+  "usePtvAccessibilityApi": (settings.USE_PTV_ACCESSIBILITY_API) === 'true',
 }
