@@ -190,9 +190,14 @@ const MapView = (props) => {
   });
 
   useEffect(() => {
-    if (highlightedUnit && !unitList.length && mapUtility) {
-      mapUtility.centerMapToUnit(highlightedUnit);
+    if (!highlightedUnit || !mapUtility) {
+      return;
     }
+    if (!unitList.length) {
+      mapUtility.centerMapToUnit(highlightedUnit);
+      return;
+    }
+    mapUtility.panInside(highlightedUnit);
   }, [highlightedUnit, mapUtility]);
 
   useEffect(() => { // On map type change
