@@ -36,6 +36,8 @@ class UnitHelper {
 
   static isValidUnit = unit => unit && unit.object_type === 'unit';
 
+  static isUnitPage = () => paths.unit.regex.test(window.location.href);
+
   static getShortcomingCount(unit, settings) {
     if (unit && settings) {
       // Check if user has settings

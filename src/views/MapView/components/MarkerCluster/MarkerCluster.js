@@ -64,7 +64,7 @@ const MarkerCluster = ({
     });
 
     // Add cluster tooltip for highlightedUnit
-    if (clusterData.highlightedUnit) {
+    if (clusterData.highlightedUnit && UnitHelper.isUnitPage()) {
       const markers = cluster.getAllChildMarkers();
       const marker = markers.find(
         obj => obj.options.customUnitData.id === clusterData.highlightedUnit.id,
@@ -234,7 +234,8 @@ const MarkerCluster = ({
         // Distance
         const distance = getDistance(unit, intl);
         const tooltipContent = createMarkerContent(unit, classes, getLocaleText, distance);
-        const tooltipPermanent = highlightedUnit && highlightedUnit.id === unit.id;
+        const tooltipPermanent = highlightedUnit
+          && (highlightedUnit.id === unit.id && UnitHelper.isUnitPage());
 
         const markerElem = global.L.marker(
           [unit.location.coordinates[1], unit.location.coordinates[0]],
