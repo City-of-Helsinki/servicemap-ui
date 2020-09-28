@@ -1,7 +1,13 @@
 import paths from '../../config/paths';
 import config from '../../config';
+import isClient from '.';
 
-export const isEmbed = match => match && match.url && !!paths.embed.regex.exec(match.url);
+export const isEmbed = (match) => {
+  if (!match) {
+    return isClient() && !!paths.embed.regex.exec(window.location);
+  }
+  return match.url && !!paths.embed.regex.exec(match.url);
+};
 
 export const comparePath = (path, location) => {
   if (Object.prototype.hasOwnProperty.call(paths, path)) {
