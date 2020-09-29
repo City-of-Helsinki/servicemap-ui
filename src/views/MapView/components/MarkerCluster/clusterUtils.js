@@ -49,17 +49,45 @@ export const createMarkerClusterLayer = (
   });
 
   // Run clustermouseout function
-  clusterLayer.on('clustermouseout', () => {
-    if (clusterMouseout) clusterMouseout();
+  clusterLayer.on('clustermouseout', (a) => {
+    if (clusterMouseout) clusterMouseout(a);
   });
 
 
   return clusterLayer;
 };
 
-export const createMarkerContent = (unit, classes, getLocaleText, distance) => (
+export const createTooltipContent = (unit, classes, getLocaleText, distance) => (
   ReactDOMServer.renderToStaticMarkup(
     <div>
+      <p className={classes.unitTooltipTitle}>{unit.name && getLocaleText(unit.name)}</p>
+      <div className={classes.unitTooltipSubContainer}>
+        {
+          unit.street_address
+          && (
+            <p className={classes.unitTooltipSubtitle}>
+              {getLocaleText(unit.street_address)}
+            </p>
+          )
+        }
+        {
+          distance
+          && (
+            <p className={classes.unitTooltipSubtitle}>
+              {distance.distance}
+              {distance.type}
+            </p>
+          )
+        }
+      </div>
+    </div>,
+  )
+);
+
+
+export const createPopupContent = (unit, classes, getLocaleText, distance) => (
+  ReactDOMServer.renderToStaticMarkup(
+    <div className={classes.unitTooltipWrapper}>
       <p className={classes.unitTooltipTitle}>{unit.name && getLocaleText(unit.name)}</p>
       <div className={classes.unitTooltipSubContainer}>
         {
