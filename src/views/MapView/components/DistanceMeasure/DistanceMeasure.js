@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Typography } from '@material-ui/core';
+import { renderToStaticMarkup } from 'react-dom/server';
 
 
 const DistanceMeasure = (props) => {
@@ -50,7 +51,12 @@ const DistanceMeasure = (props) => {
       iconAnchor: global.L.point([25, 56]),
       popupAnchor: global.L.point([0, -40]),
       className: classes.distanceIcon,
-      html: '<span class=icon-icon-address></span>',
+      html: renderToStaticMarkup(
+        <>
+          <span className={`${classes.distanceMarkerBackground} icon-icon-hsl-background`} />
+          <span className="icon-icon-address" />
+        </>,
+      ),
     });
     setIcon(icon);
   }, []);
@@ -91,6 +97,7 @@ const DistanceMeasure = (props) => {
         </Marker>
       ))}
       <Polyline className={classes.distanceLineBorder} positions={lineArray} />
+      <Polyline className={classes.distanceLineBackground} positions={lineArray} />
       <Polyline className={classes.distanceLine} positions={lineArray} />
     </>
   );

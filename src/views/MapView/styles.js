@@ -179,11 +179,25 @@ const styles = theme => ({
     padding: 8,
   },
   distanceLine: {
-    stroke: theme.palette.primary.main,
+    stroke: theme.palette.measuringStroke.main,
+    strokeDasharray: 12,
+  },
+  distanceLineBackground: {
+    stroke: theme.palette.measuringStroke.background,
+    strokeWidth: 10,
   },
   distanceLineBorder: {
     stroke: '#fff',
-    strokeWidth: 6,
+    strokeWidth: 14,
+  },
+  distanceMarkerBackground: {
+    fontFamily: 'hsl-piktoframe',
+    color: '#fff',
+    position: 'absolute',
+    zIndex: theme.zIndex.behind,
+    fontSize: 16,
+    top: 16,
+    left: 16,
   },
 
   // Transit stops
