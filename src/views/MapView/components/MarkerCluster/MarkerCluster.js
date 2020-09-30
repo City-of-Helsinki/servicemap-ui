@@ -20,7 +20,7 @@ const tooltipOptions = (permanent, classes) => ({
 
 const popupOptions = () => ({
   autoClose: false,
-  autoPan: true,
+  autoPan: false,
   closeButton: true,
   closeOnClick: false,
   direction: 'top',
