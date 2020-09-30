@@ -73,6 +73,10 @@ const DistanceMeasure = (props) => {
           draggable
           key={point.lat}
           position={point}
+          onMouseOver={(e) => { e.target.openPopup(); }}
+          onMouseOut={(e) => { e.target.closePopup(); }}
+          onFocus={() => {}}
+          onBlur={() => {}}
         >
           {/* Show distance tooltip on last marker */}
           {markerArray.length > 1 && i === markerArray.length - 1 && (
