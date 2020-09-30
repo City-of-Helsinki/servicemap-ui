@@ -5,14 +5,16 @@ import { renderToStaticMarkup } from 'react-dom/server';
 
 
 const DistanceMeasure = (props) => {
-  const { mapClickPoint, classes } = props;
+  const { classes, setMarkerArray, markerArray } = props;
 
   const {
-    Marker, Polyline, Tooltip, Popup,
+    Marker, Polyline, Tooltip, Popup, useLeaflet,
   } = global.rL;
 
-  const [markerArray, setMarkerArray] = useState([]);
-  const [lineArray, setLineArray] = useState([]);
+  const { map } = useLeaflet();
+
+  const [clickedPoint, setClickedPoint] = useState(null);
+  const [lineArray, setLineArray] = useState(markerArray);
   const [icon, setIcon] = useState(null);
 
   const getDistance = (interval) => {
@@ -37,11 +39,15 @@ const DistanceMeasure = (props) => {
 
   useEffect(() => {
     // When the map is clicked, add new marker and update line between markers
-    if (mapClickPoint) {
-      setMarkerArray([...markerArray, mapClickPoint]);
-      setLineArray([...lineArray, mapClickPoint]);
+    if (clickedPoint) {
+      setMarkerArray([...markerArray, clickedPoint]);
+      setLineArray([...lineArray, clickedPoint]);
     }
-  }, [mapClickPoint]);
+  }, [clickedPoint]);
+
+  useEffect(() => {
+    map.on('click', e => setClickedPoint(e.latlng));
+  }, []);
 
 
   useEffect(() => {
@@ -61,25 +67,25 @@ const DistanceMeasure = (props) => {
     setIcon(icon);
   }, []);
 
-
-  return (
-    <>
-      {markerArray.map((point, i) => (
-        <Marker
-          keyboard={false}
-          icon={icon}
-          onDrag={ev => updateLine(ev, i)}
-          onClick={() => {}}
-          draggable
-          key={point.lat}
-          position={point}
-          onMouseOver={(e) => { e.target.openPopup(); }}
-          onMouseOut={(e) => { e.target.closePopup(); }}
-          onFocus={() => {}}
-          onBlur={() => {}}
-        >
-          {/* Show distance tooltip on last marker */}
-          {markerArray.length > 1 && i === markerArray.length - 1 && (
+  if (icon && markerArray.length) {
+    return (
+      <>
+        {markerArray.map((point, i) => (
+          <Marker
+            keyboard={false}
+            icon={icon}
+            onDrag={ev => updateLine(ev, i)}
+            onClick={() => {}}
+            draggable
+            key={point.lat}
+            position={point}
+            onMouseOver={(e) => { e.target.openPopup(); }}
+            onMouseOut={(e) => { e.target.closePopup(); }}
+            onFocus={() => {}}
+            onBlur={() => {}}
+          >
+            {/* Show distance tooltip on last marker */}
+            {markerArray.length > 1 && i === markerArray.length - 1 && (
             <Tooltip
               direction="top"
               offset={[0, -40]}
@@ -87,9 +93,9 @@ const DistanceMeasure = (props) => {
             >
               <Typography>{`${getDistance()}m`}</Typography>
             </Tooltip>
-          )}
-          {/* Show distance popup on markers when clicked */}
-          {i !== 0 && i !== markerArray.length - 1 && (
+            )}
+            {/* Show distance popup on markers when clicked */}
+            {i !== 0 && i !== markerArray.length - 1 && (
             <Popup closeButton={false} autoPan={false}>
               <div className={classes.distancePopup}>
                 <Typography>
@@ -97,23 +103,22 @@ const DistanceMeasure = (props) => {
                 </Typography>
               </div>
             </Popup>
-          )}
-        </Marker>
-      ))}
-      <Polyline className={classes.distanceLineBorder} positions={lineArray} />
-      <Polyline className={classes.distanceLineBackground} positions={lineArray} />
-      <Polyline className={classes.distanceLine} positions={lineArray} />
-    </>
-  );
+            )}
+          </Marker>
+        ))}
+        <Polyline className={classes.distanceLineBorder} positions={lineArray} />
+        <Polyline className={classes.distanceLineBackground} positions={lineArray} />
+        <Polyline className={classes.distanceLine} positions={lineArray} />
+      </>
+    );
+  }
+  return null;
 };
 
 DistanceMeasure.propTypes = {
-  mapClickPoint: PropTypes.objectOf(PropTypes.any),
+  markerArray: PropTypes.arrayOf(PropTypes.any).isRequired,
+  setMarkerArray: PropTypes.func.isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-};
-
-DistanceMeasure.defaultProps = {
-  mapClickPoint: null,
 };
 
 export default DistanceMeasure;
