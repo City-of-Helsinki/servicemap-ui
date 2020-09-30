@@ -4,19 +4,28 @@ import { useIntl } from 'react-intl';
 import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 import { drawMarkerIcon } from '../../utils/drawIcon';
-import { generatePath, isEmbed } from '../../../../utils/path';
-import { createMarkerClusterLayer, createMarkerContent } from './clusterUtils';
+import { isEmbed } from '../../../../utils/path';
+import { createMarkerClusterLayer, createTooltipContent, createPopupContent } from './clusterUtils';
 import { mapTypes } from '../../config/mapConfig';
 import { keyboardHandler } from '../../../../utils';
-import { fitUnitsToMap } from '../../utils/mapActions';
+import UnitHelper from '../../../../utils/unitHelper';
 
-// Handle unit markers
-const tooltipOptions = (markerCount, classes) => ({
+const tooltipOptions = (permanent, classes) => ({
   className: classes.unitTooltipContainer,
   direction: 'top',
-  permanent: markerCount === 1,
+  permanent,
   opacity: 1,
   offset: [0, -25],
+});
+
+const popupOptions = () => ({
+  autoClose: false,
+  autoPan: false,
+  closeButton: true,
+  closeOnClick: false,
+  direction: 'top',
+  opacity: 1,
+  offset: [0, -20],
 });
 
 // Cluster icon size handler
@@ -28,12 +37,14 @@ const getClusterIconSize = (count) => {
   return iconSize;
 };
 
+const clusterData = {};
+
 const MarkerCluster = ({
   classes,
-  currentPage,
   data,
   getDistance,
   getLocaleText,
+  highlightedUnit,
   map,
   navigator,
   settings,
@@ -42,6 +53,11 @@ const MarkerCluster = ({
   const embeded = isEmbed();
   const intl = useIntl();
   const [cluster, setCluster] = useState(null);
+
+  // Update highlightedUnit to clusterData object for reference
+  useEffect(() => {
+    clusterData.highlightedUnit = highlightedUnit;
+  }, [highlightedUnit]);
 
   // Function for creating custom icon for cluster group
   // https://github.com/Leaflet/Leaflet.markercluster#customising-the-clustered-markers
@@ -55,23 +71,35 @@ const MarkerCluster = ({
       className: `unitClusterMarker ${classes.unitClusterMarker}`,
       iconSize: global.L.point(iconSize, iconSize, true),
     });
+
+    // Add cluster tooltip for highlightedUnit
+    if (clusterData.highlightedUnit && UnitHelper.isUnitPage()) {
+      const markers = cluster.getAllChildMarkers();
+      const marker = markers.find(
+        obj => obj.options.customUnitData.id === clusterData.highlightedUnit.id,
+      );
+      if (marker) {
+        const distance = getDistance(clusterData.highlightedUnit, intl);
+        const tooltipContent = createPopupContent(
+          clusterData.highlightedUnit, classes, getLocaleText, distance,
+        );
+        // Bind popup
+        cluster.bindPopup(tooltipContent, popupOptions());
+        // Store reference of highlighted cluster
+        clusterData.highlightedCluster = cluster;
+      }
+    }
     return icon;
   };
 
 
-  const { clusterPopupVisibility, maxZoom, minZoom } = mapTypes[settings.mapType || 'servicemap'];
+  const { clusterPopupVisibility } = mapTypes[settings.mapType || 'servicemap'];
   const popupTexts = {
     title: intl.formatMessage({ id: 'unit.plural' }),
     info: count => intl.formatMessage({ id: 'map.unit.cluster.popup.info' }, { count }),
   };
-  const maxClusterRadius = (zoom) => {
-    const normalizedZoom = (zoom - minZoom) / (maxZoom - minZoom);
-    return Math.round(100 * (1 - normalizedZoom));
-  };
   const onClusterItemClick = (unit) => {
-    if (navigator && unit) {
-      navigator.push('unit', { id: unit.id });
-    }
+    UnitHelper.unitElementClick(navigator, unit);
   };
   // eslint-disable-next-line no-underscore-dangle
   const showListOfUnits = () => (map._zoom > clusterPopupVisibility);
@@ -147,12 +175,51 @@ const MarkerCluster = ({
   };
 
   // Function for cluster mouseout event
-  const clusterMouseout = () => {
+  const clusterMouseout = (a) => {
     if (embeded) {
       return;
     }
-    if (!showListOfUnits()) {
-      map.closePopup();
+    const cluster = a?.layer;
+    // Close popup on mouseout if cluster is not highlighted cluster
+    // or cluster doesn't show list of units
+    if (!showListOfUnits() && cluster !== clusterData.highlightedCluster
+    ) {
+      cluster.closePopup();
+    }
+  };
+
+  const clusterMouseover = (a) => {
+    const cluster = a?.layer;
+    // Don't open new cluster if cluster already has popup that is open
+    if (cluster.isPopupOpen()) {
+      return;
+    }
+    const clusterMarkers = a.layer.getAllChildMarkers();
+    const units = clusterMarkers.map((marker) => {
+      if (marker && marker.options && marker.options.customUnitData) {
+        const data = marker.options.customUnitData;
+        return data;
+      }
+      return null;
+    });
+
+    // Create popuelement and add events
+    const elem = clusterPopupContent()(units);
+    // Bind and open popup with content to cluster
+    a.layer.bindPopup(elem, {
+      closeButton: true,
+      offset: [4, -14],
+    }).openPopup();
+  };
+
+  const clusterAnimationEnd = () => {
+    // Open highlighted cluster popup
+    if (clusterData.highlightedCluster) {
+      clusterData.highlightedCluster.openPopup();
+    }
+    // Open highlighted marker popup
+    if (clusterData.highlightedMarker) {
+      clusterData.highlightedMarker.openPopup();
     }
   };
 
@@ -160,11 +227,9 @@ const MarkerCluster = ({
   useEffect(() => {
     const mcg = createMarkerClusterLayer(
       createClusterCustomIcon,
-      clusterPopupContent(),
-      null,
+      clusterMouseover,
       clusterMouseout,
-      null,
-      maxClusterRadius,
+      clusterAnimationEnd,
     );
     // Add cluster to map
     map.addLayer(mcg);
@@ -181,7 +246,10 @@ const MarkerCluster = ({
     if (!cluster) {
       return;
     }
+    // Clear old layers and clusterData
     cluster.clearLayers();
+    clusterData.highlightedMarker = null;
+    clusterData.highlightedCluster = null;
     if (!data.units.length) {
       return;
     }
@@ -192,6 +260,7 @@ const MarkerCluster = ({
     }
 
     const useContrast = theme === 'dark';
+    const markers = [];
 
     // Add unit markers to clusterlayer
     unitListFiltered.forEach((unit) => {
@@ -199,7 +268,20 @@ const MarkerCluster = ({
       if (unit && unit.location) {
         // Distance
         const distance = getDistance(unit, intl);
-        const tooltipContent = createMarkerContent(unit, classes, getLocaleText, distance);
+        const tooltipContent = createTooltipContent(
+          unit,
+          classes,
+          getLocaleText,
+          distance,
+        );
+        const popupContent = createPopupContent(
+          unit,
+          classes,
+          getLocaleText,
+          distance,
+        );
+        const tooltipPermanent = highlightedUnit
+          && (highlightedUnit.id === unit.id && UnitHelper.isUnitPage());
 
         const markerElem = global.L.marker(
           [unit.location.coordinates[1], unit.location.coordinates[0]],
@@ -208,31 +290,43 @@ const MarkerCluster = ({
             customUnitData: unit,
             keyboard: false,
           },
-        ).bindTooltip(
-          tooltipContent,
-          tooltipOptions(unitListFiltered.length, classes),
+        ).bindPopup(
+          popupContent,
+          popupOptions(),
         );
+
+        // If not highlighted marker add tooltip
+        if (!tooltipPermanent) {
+          markerElem.bindTooltip(
+            tooltipContent,
+            tooltipOptions(false, classes),
+          );
+        } else {
+          // If marker is highlighted save reference
+          clusterData.highlightedMarker = markerElem;
+        }
 
         if (unitListFiltered.length > 1 || embeded) {
           markerElem.on('click', () => {
-            if (embeded) {
-              const { origin } = window.location;
-              const path = generatePath('unit', { id: unit.id });
-              window.open(`${origin}${path}`);
-              return;
-            }
-            if (navigator) {
-              navigator.push('unit', { id: unit.id });
-            }
-          })
-            .on('mouseover', () => {
-              map.closePopup();
-            });
+            UnitHelper.unitElementClick(navigator, unit);
+          });
         }
 
-        cluster.addLayer(markerElem);
+        markers.push(markerElem);
       }
     });
+
+    // Add markers in bulk
+    cluster.addLayers(markers);
+
+    // Open highlighted marker popup
+    if (clusterData.highlightedMarker && !clusterData.highlightedMarker.isPopupOpen()) {
+      clusterData.highlightedMarker.openPopup();
+    }
+    // Open highlighted cluster popup
+    if (clusterData.highlightedCluster && !clusterData.highlightedCluster.isPopupOpen()) {
+      clusterData.highlightedCluster.openPopup();
+    }
 
     // Hide all markers from screen readers
     document.querySelectorAll('.leaflet-marker-icon').forEach((item) => {
@@ -240,16 +334,12 @@ const MarkerCluster = ({
       item.setAttribute('aria-hidden', 'true');
     });
 
-    if (map && data.units.length && !(currentPage === 'address' || currentPage === 'area')) {
-      // TODO: this should be revisited once new map focusing is implemented
-      /* Zoom out map to fit all unit markers when unit data changes.
-      Do not do this on area view and address view */
-      fitUnitsToMap(data.units, map);
-    }
-
-    // optionally center the map around the markers
-    // map.fitBounds(mcg.getBounds());
-    // // add the marker cluster group to the map
+    // if (map && data.units.length && !(currentPage === 'address' || currentPage === 'area')) {
+    //   // TODO: this should be revisited once new map focusing is implemented
+    //   /* Zoom out map to fit all unit markers when unit data changes.
+    //   Do not do this on area view and address view */
+    //   // fitUnitsToMap(data.units, map);
+    // }
   }, [cluster, data]);
 
   return null;
@@ -257,7 +347,6 @@ const MarkerCluster = ({
 
 MarkerCluster.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  currentPage: PropTypes.string.isRequired,
   data: PropTypes.shape({
     units: PropTypes.arrayOf(
       PropTypes.shape({

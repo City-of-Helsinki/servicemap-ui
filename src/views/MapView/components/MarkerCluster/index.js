@@ -6,6 +6,7 @@ import { generatePath } from '../../../../utils/path';
 import { formatDistanceObject } from '../../../../utils';
 import { calculateDistance, getCurrentlyUsedPosition } from '../../../../redux/selectors/unit';
 import styles from '../../styles';
+import { getSelectedUnit } from '../../../../redux/selectors/selectedUnit';
 
 
 const mapStateToProps = (state) => {
@@ -17,12 +18,14 @@ const mapStateToProps = (state) => {
   const getDistance = (unit, intl) => (
     formatDistanceObject(intl, calculateDistance(unit, distanceCoordinates))
   );
+  const highlightedUnit = getSelectedUnit(state);
 
   return {
     currentPage: page,
     getDistance,
     getLocaleText,
     getPath,
+    highlightedUnit,
     navigator,
     settings,
     theme,

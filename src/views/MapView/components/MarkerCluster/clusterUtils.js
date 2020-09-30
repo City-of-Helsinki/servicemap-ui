@@ -5,11 +5,9 @@ import { isEmbed } from '../../../../utils/path';
 
 export const createMarkerClusterLayer = (
   createClusterCustomIcon,
-  createPopupContent,
   clusterMouseover,
   clusterMouseout,
   clusterAnimationend,
-  maxClusterRadius,
 ) => {
   if (!isClient()) {
     return null;
@@ -24,7 +22,7 @@ export const createMarkerClusterLayer = (
     spiderfyOnMaxZoom: false,
     showCoverageOnHover: false,
     iconCreateFunction: createClusterCustomIcon,
-    maxClusterRadius,
+    maxClusterRadius: 40,
     removeOutsideVisibleBounds: true,
     zoomToBoundsOnClick: !embeded,
   });
@@ -32,23 +30,6 @@ export const createMarkerClusterLayer = (
   if (!embeded) {
     clusterLayer.on('clustermouseover', (a) => {
       if (clusterMouseover) clusterMouseover(a);
-
-      const clusterMarkers = a.layer.getAllChildMarkers();
-      const units = clusterMarkers.map((marker) => {
-        if (marker && marker.options && marker.options.customUnitData) {
-          const data = marker.options.customUnitData;
-          return data;
-        }
-        return null;
-      });
-
-      // Create popuelement and add events
-      const elem = createPopupContent(units);
-      // Bind and open popup with content to cluster
-      a.layer.bindPopup(elem, {
-        closeButton: true,
-        offset: [4, -14],
-      }).openPopup();
     });
   } else {
     // Add cluster click only when embeded
@@ -68,17 +49,45 @@ export const createMarkerClusterLayer = (
   });
 
   // Run clustermouseout function
-  clusterLayer.on('clustermouseout', () => {
-    if (clusterMouseout) clusterMouseout();
+  clusterLayer.on('clustermouseout', (a) => {
+    if (clusterMouseout) clusterMouseout(a);
   });
 
 
   return clusterLayer;
 };
 
-export const createMarkerContent = (unit, classes, getLocaleText, distance) => (
+export const createTooltipContent = (unit, classes, getLocaleText, distance) => (
   ReactDOMServer.renderToStaticMarkup(
     <div>
+      <p className={classes.unitTooltipTitle}>{unit.name && getLocaleText(unit.name)}</p>
+      <div className={classes.unitTooltipSubContainer}>
+        {
+          unit.street_address
+          && (
+            <p className={classes.unitTooltipSubtitle}>
+              {getLocaleText(unit.street_address)}
+            </p>
+          )
+        }
+        {
+          distance
+          && (
+            <p className={classes.unitTooltipSubtitle}>
+              {distance.distance}
+              {distance.type}
+            </p>
+          )
+        }
+      </div>
+    </div>,
+  )
+);
+
+
+export const createPopupContent = (unit, classes, getLocaleText, distance) => (
+  ReactDOMServer.renderToStaticMarkup(
+    <div className={classes.unitTooltipWrapper}>
       <p className={classes.unitTooltipTitle}>{unit.name && getLocaleText(unit.name)}</p>
       <div className={classes.unitTooltipSubContainer}>
         {

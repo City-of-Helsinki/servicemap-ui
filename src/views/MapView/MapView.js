@@ -23,6 +23,7 @@ import DistanceMeasure from './components/DistanceMeasure';
 import MarkerCluster from './components/MarkerCluster';
 import swapCoordinates from './utils/swapCoordinates';
 import UnitGeometry from './components/UnitGeometry';
+import MapUtility from './utils/mapUtility';
 
 if (global.window) {
   require('leaflet');
@@ -67,6 +68,7 @@ const MapView = (props) => {
   const [refSaved, setRefSaved] = useState(false);
   const [prevMap, setPrevMap] = useState(null);
   const [unitData, setUnitData] = useState(null);
+  const [mapUtility, setMapUtility] = useState(null);
 
   const embeded = isEmbed({ url: location.pathname });
 
@@ -78,7 +80,11 @@ const MapView = (props) => {
     if (currentPage === 'home' && embeded) {
       mapUnits = unitList;
     }
-    if (currentPage === 'search' || currentPage === 'division') {
+    if (
+      currentPage === 'search'
+      || currentPage === 'division'
+      || (currentPage === 'unit' && unitList.length)
+    ) {
       mapUnits = unitList;
     } else if (currentPage === 'address') {
       switch (addressToRender) {
@@ -183,12 +189,30 @@ const MapView = (props) => {
     }
   });
 
+  useEffect(() => {
+    if (!highlightedUnit || !mapUtility) {
+      return;
+    }
+    if (!unitList.length) {
+      mapUtility.centerMapToUnit(highlightedUnit);
+      return;
+    }
+    mapUtility.panInside(highlightedUnit);
+  }, [highlightedUnit, mapUtility]);
+
   useEffect(() => { // On map type change
     // Init new map and set new ref to redux
     initializeMap();
     setRefSaved(false);
   }, [settings.mapType]);
 
+  useEffect(() => {
+    if (!mapUtility && mapRef.current) {
+      setMapUtility(new MapUtility({ leaflet: mapRef.current.leafletElement }));
+    }
+  }, [mapRef.current]);
+
+  // Attempt to render unit markers on page change or unitList change
   useEffect(() => {
     setUnitData(getMapUnits());
   }, [
