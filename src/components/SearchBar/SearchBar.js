@@ -102,7 +102,7 @@ class SearchBar extends React.Component {
   }
 
   handleSubmit = (search) => {
-    const { isFetching } = this.props;
+    const { changeSelectedUnit, isFetching } = this.props;
     if (!isFetching && search && search !== '') {
       const {
         fetchUnits, navigator, previousSearch,
@@ -112,6 +112,7 @@ class SearchBar extends React.Component {
       if (search !== previousSearch) {
         this.setState({ search }); // Change current search text to new one
         fetchUnits({ q: search });
+        changeSelectedUnit(null);
       }
 
       if (navigator) {
@@ -390,6 +391,7 @@ class SearchBar extends React.Component {
 
 SearchBar.propTypes = {
   background: PropTypes.oneOf(['default', 'none']),
+  changeSelectedUnit: PropTypes.func.isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   className: PropTypes.string,
   fetchUnits: PropTypes.func.isRequired,
