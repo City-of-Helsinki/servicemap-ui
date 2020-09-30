@@ -97,6 +97,32 @@ if (typeof settings.USE_PTV_ACCESSIBILITY_API === 'undefined') {
   settings.USE_PTV_ACCESSIBILITY_API = false;
 }
 
+let municipalities;
+try {
+  municipalities = require('./municipalities.json');
+} catch(e) {
+  municipalities = {
+    fi: {
+      espoo: 'Espoo',
+      helsinki: 'Helsinki',
+      kauniainen: 'Kauniainen',
+      vantaa: 'Vantaa'
+    },
+    en: {
+      espoo: 'Espoo',
+      helsinki: 'Helsinki',
+      kauniainen: 'Kauniainen',
+      vantaa: 'Vantaa'
+    },
+    sv: {
+      espoo: 'Esbo',
+      helsinki: 'Helsingfors',
+      kauniainen: 'Grankulla',
+      vantaa: 'Vanda'
+    }
+  }
+}
+
 export default {
   "version": version.tag,
   "commit": version.commit,
@@ -139,26 +165,7 @@ export default {
   "maps": settings.MAPS.split(','),
   "smallContentAreaBreakpoint": 449,
   "mobileUiBreakpoint": 699,
-  "municipality": {
-    fi: {
-      espoo: 'Espoo',
-      helsinki: 'Helsinki',
-      kauniainen: 'Kauniainen',
-      vantaa: 'Vantaa'
-    },
-    en: {
-      espoo: 'Espoo',
-      helsinki: 'Helsinki',
-      kauniainen: 'Kauniainen',
-      vantaa: 'Vantaa'
-    },
-    sv: {
-      espoo: 'Esbo',
-      helsinki: 'Helsingfors',
-      kauniainen: 'Grankulla',
-      vantaa: 'Vanda'
-    }
-  },
+  "municipality": municipalities,
   "smallScreenBreakpoint": 899,
   "topBarHeight": 100,
   "topBarHeightMobile": 90,
