@@ -5,7 +5,9 @@ import { renderToStaticMarkup } from 'react-dom/server';
 
 
 const DistanceMeasure = (props) => {
-  const { classes, setMarkerArray, markerArray } = props;
+  const {
+    classes, markerArray, setMarkerArray, lineArray, setLineArray,
+  } = props;
 
   const {
     Marker, Polyline, Tooltip, Popup, useLeaflet,
@@ -14,7 +16,6 @@ const DistanceMeasure = (props) => {
   const { map } = useLeaflet();
 
   const [clickedPoint, setClickedPoint] = useState(null);
-  const [lineArray, setLineArray] = useState(markerArray);
   const [icon, setIcon] = useState(null);
 
   const getDistance = (interval) => {
@@ -47,6 +48,7 @@ const DistanceMeasure = (props) => {
 
   useEffect(() => {
     map.on('click', e => setClickedPoint(e.latlng));
+    setMarkerArray(lineArray);
   }, []);
 
 
@@ -117,7 +119,9 @@ const DistanceMeasure = (props) => {
 
 DistanceMeasure.propTypes = {
   markerArray: PropTypes.arrayOf(PropTypes.any).isRequired,
+  lineArray: PropTypes.arrayOf(PropTypes.any).isRequired,
   setMarkerArray: PropTypes.func.isRequired,
+  setLineArray: PropTypes.func.isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 

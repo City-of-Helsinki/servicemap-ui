@@ -71,6 +71,7 @@ const MapView = (props) => {
   const [markerCluster, setMarkerCluster] = useState(null);
   const [distancePosition, setDistancePosition] = useState(null);
   const [measuringMarkers, setMeasuringMarkers] = useState([]);
+  const [measuringLine, setMeasuringLine] = useState([]);
 
   const embeded = isEmbed({ url: location.pathname });
 
@@ -279,6 +280,7 @@ const MapView = (props) => {
     setMapClickPoint(null);
     if (!measuringMode) {
       setMeasuringMarkers([]);
+      setMeasuringLine([]);
     }
   }, [measuringMode]);
 
@@ -391,7 +393,12 @@ const MapView = (props) => {
           )}
 
           {measuringMode && (
-            <DistanceMeasure markerArray={measuringMarkers} setMarkerArray={setMeasuringMarkers} />
+            <DistanceMeasure
+              markerArray={measuringMarkers}
+              setMarkerArray={setMeasuringMarkers}
+              lineArray={measuringLine}
+              setLineArray={setMeasuringLine}
+            />
           )}
 
           <ZoomControl position="bottomright" aria-hidden="true" />
