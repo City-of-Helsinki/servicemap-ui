@@ -114,6 +114,9 @@ const styles = theme => ({
     ...theme.typography.body2,
     margin: theme.spacing(0, 1),
   },
+  unitTooltipWrapper: {
+    padding: theme.spacing(2),
+  },
   unitPopupList: {
     listStyleType: 'none',
     padding: 0,

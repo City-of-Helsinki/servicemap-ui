@@ -54,7 +54,6 @@ function Main() {
   // Remove server side styles
   React.useEffect(() => {
     const jssStyles = document.querySelector('#jss-server-side');
-    console.log(jssStyles);
     if (jssStyles) {
       jssStyles.parentElement.removeChild(jssStyles);
     }

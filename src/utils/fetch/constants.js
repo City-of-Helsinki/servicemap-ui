@@ -7,7 +7,7 @@ import config from '../../../config';
 // API handlers
 export const APIHandlers = {
   accessibilitySentences: {
-    url: id => `${config.accessibilitySentenceAPI.root}/unit/${id}`,
+    url: id => `${config.accessibilitySentenceAPI.root}/` + (config.usePtvAccessibilityApi ? `${id}/sentences/` : `unit/${id}`),
     options: {},
   },
   address: {

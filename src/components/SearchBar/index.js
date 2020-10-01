@@ -4,6 +4,7 @@ import { injectIntl } from 'react-intl';
 import SearchBar from './SearchBar';
 import styles from './styles';
 import { fetchUnits } from '../../redux/actions/unit';
+import { changeSelectedUnit } from '../../redux/actions/selectedUnit';
 
 // Listen to redux state
 const mapStateToProps = (state) => {
@@ -20,5 +21,5 @@ const mapStateToProps = (state) => {
 
 export default withStyles(styles)(injectIntl(connect(
   mapStateToProps,
-  { fetchUnits },
+  { changeSelectedUnit, fetchUnits },
 )(SearchBar)));

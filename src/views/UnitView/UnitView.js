@@ -63,16 +63,17 @@ const UnitView = (props) => {
 
   const [unit, setUnit] = useState(checkCorrectUnit(stateUnit) ? stateUnit : null);
 
-  const centerMap = () => {
-    if (unit && map) {
-      const { geometry, location } = unit;
-      if (geometry && geometry.type === 'MultiLineString') {
-        focusDistrict(map, [geometry.coordinates]);
-      } else if (location) {
-        focusToPosition(map, location.coordinates);
-      }
+
+  const initializePTVAccessibilitySentences = () => {
+    if (unit) {
+      unit.identifiers.forEach((element) => {
+        if (element.namespace === 'ptv' ) {
+          const ptvId = element.value;
+          fetchAccessibilitySentences(ptvId);
+        }
+      });
     }
-  };
+  }
 
   const intializeUnitData = () => {
     const { params } = match;
@@ -137,9 +138,11 @@ const UnitView = (props) => {
     }
   }, [match.params.unit]);
 
-  useEffect(() => {
-    centerMap();
-  }, [unit, map]);
+  if (config.usePtvAccessibilityApi) {
+    useEffect(() => {
+      initializePTVAccessibilitySentences();
+    }, [unit]);
+  }
 
   if (embed) {
     return null;
