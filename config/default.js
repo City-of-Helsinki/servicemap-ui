@@ -94,7 +94,7 @@ if (typeof settings.FEEDBACK_ADDITIONAL_INFO_LINK === 'undefined') {
 
 if (typeof settings.FEEDBACK_IS_PUBLISHED === 'undefined') {
   // If not set default to Helsinki
-  settings.FEEDBACK_ADDITIONAL_INFO_LINK = true;
+  settings.FEEDBACK_IS_PUBLISHED = true;
 }
 
 if (typeof settings.USE_PTV_ACCESSIBILITY_API === 'undefined') {
