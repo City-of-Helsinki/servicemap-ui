@@ -163,7 +163,7 @@ const UnitView = (props) => {
 
     let detailReadSpeakerButton = null;
 
-    if (config.show_read_speaker_button) {
+    if (config.showReadSpeakerButton) {
       detailReadSpeakerButton = (
         <ReadSpeakerButton
           className={classes.rsButton}
@@ -217,7 +217,7 @@ const UnitView = (props) => {
   const renderAccessibilityTab = () => {
     let accessibilityReadSpeakerButton = null;
 
-    if (config.show_read_speaker_button) {
+    if (config.showReadSpeakerButton) {
       accessibilityReadSpeakerButton = (
         <ReadSpeakerButton
           className={classes.rsButton}
