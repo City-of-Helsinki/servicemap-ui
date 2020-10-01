@@ -77,7 +77,7 @@ const DistanceMeasure = (props) => {
             onDrag={ev => updateLine(ev, i)}
             onClick={() => {}}
             draggable
-            key={point.lat}
+            key={`${point.lat}-${point.lng}`}
             position={point}
             onMouseOver={(e) => { e.target.openPopup(); }}
             onMouseOut={(e) => { e.target.closePopup(); }}
