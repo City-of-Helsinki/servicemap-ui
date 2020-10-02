@@ -250,11 +250,11 @@ const MarkerCluster = ({
     cluster.clearLayers();
     clusterData.highlightedMarker = null;
     clusterData.highlightedCluster = null;
-    if (!data.units.length) {
+    if (!data.length) {
       return;
     }
     // Filter units of object_type unit
-    const unitListFiltered = data.units.filter(unit => unit.object_type === 'unit');
+    const unitListFiltered = data.filter(unit => unit.object_type === 'unit');
     if (!unitListFiltered.length) {
       return;
     }
@@ -333,13 +333,6 @@ const MarkerCluster = ({
       item.setAttribute('tabindex', '-1');
       item.setAttribute('aria-hidden', 'true');
     });
-
-    // if (map && data.units.length && !(currentPage === 'address' || currentPage === 'area')) {
-    //   // TODO: this should be revisited once new map focusing is implemented
-    //   /* Zoom out map to fit all unit markers when unit data changes.
-    //   Do not do this on area view and address view */
-    //   // fitUnitsToMap(data.units, map);
-    // }
   }, [cluster, data]);
 
   return null;
@@ -347,14 +340,11 @@ const MarkerCluster = ({
 
 MarkerCluster.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  data: PropTypes.shape({
-    units: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number,
-      }),
-    ),
-    unitGeometry: PropTypes.array,
-  }).isRequired,
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+    }),
+  ).isRequired,
   getDistance: PropTypes.func.isRequired,
   getLocaleText: PropTypes.func.isRequired,
   map: PropTypes.objectOf(PropTypes.any).isRequired,
