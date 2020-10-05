@@ -202,6 +202,20 @@ const AreaView = ({
       filteredData.push(returnItem);
     });
 
+    // console.log(filteredData);
+
+    // const groupedData = filteredData.reduce((acc, cur) => {
+    //   const duplicate = acc.find(list => list[0].municipality === cur.municipality);
+    //   if (duplicate) {
+    //     duplicate.push(cur);
+    //   } else {
+    //     acc.push([cur]);
+    //   }
+    //   return acc;
+    // }, []);
+
+    // console.log(groupedData);
+
     changeDistrictData(filteredData, type, category);
   };
 

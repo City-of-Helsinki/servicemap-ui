@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useReducer, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   List,
@@ -15,10 +15,12 @@ import {
 } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
 import { ArrowDropDown, Map } from '@material-ui/icons';
+import { useSelector } from 'react-redux';
 import { AreaIcon } from '../../../../components/SMIcon';
 import AddressSearchBar from '../../../../components/AddressSearchBar';
 import MobileComponent from '../../../../components/MobileComponent';
 import SMButton from '../../../../components/ServiceMapButton';
+import { uppercaseFirst } from '../../../../utils';
 
 const AreaTab = (props) => {
   const {
@@ -40,6 +42,11 @@ const AreaTab = (props) => {
     navigator,
     getLocaleText,
   } = props;
+  const citySettings = useSelector(state => state.settings.cities);
+  // const cities = [];
+  // citySettings.forEach((city) => {
+  //   cities.push(...citySettings[city] ? [city] : []);
+  // });
   const defaultExpanded = selectedSubdistricts.length && selectedSubdistricts[0].type;
   const [expandedSubcategory, setExpandedSubcategory] = useState(defaultExpanded);
 
@@ -112,6 +119,31 @@ const AreaTab = (props) => {
 
   const renderExpandingDistrictItem = (district) => {
     sortSubdistricts(selectedDistrictData);
+    // Divide data into individual arrays based on municipality
+    const groupedData = selectedDistrictData.reduce((acc, cur) => {
+      const duplicate = acc.find(list => list[0].municipality === cur.municipality);
+      if (duplicate) {
+        duplicate.push(cur);
+      } else {
+        acc.push([cur]);
+      }
+      return acc;
+    }, []);
+
+    const cityFilteredData = groupedData;
+    // const selectedCities = Object.values(citySettings).filter(city => city);
+    // console.log(selectedCities);
+    // let cityFilteredData = [];
+    // if (!selectedCities.length) {
+    //   cityFilteredData = groupedData;
+    // } else {
+    //   // cityFilteredData = groupedData.filter(data => citySettings[data[0].municipality]);
+    //   cityFilteredData = groupedData.filter(data => selectedCities.includes(data[0].municipality));
+    // }
+    // // if (!cities.length) {
+    // //   cityFilteredData = groupedData;
+    // // }
+
     return (
       <Accordion
         square
@@ -131,26 +163,36 @@ const AreaTab = (props) => {
         >
           {renderDistrictItem(district)}
         </AccordionSummary>
-        <AccordionDetails id={`${district.id}-content`}>
-          <List disablePadding className={classes.subdistrictList}>
-            <FormGroup aria-label={intl.formatMessage({ id: `area.subdistrict.${district.id}` })}>
-              {selectedDistrictData.map(districtItem => (
-                <FormControlLabel
-                  key={districtItem.id}
-                  value={districtItem.ocd_id}
-                  control={(
-                    <Checkbox
-                      onChange={e => handleCheckboxChange(e, districtItem)}
-                      checked={selectedSubdistricts.some(
-                        district => district.ocd_id === districtItem.ocd_id,
-                      )}
-                    />
-                  )}
-                  label={<Typography>{getLocaleText(districtItem.name)}</Typography>}
-                />
-              ))}
-            </FormGroup>
-          </List>
+        <AccordionDetails style={{ flexDirection: 'column' }} id={`${district.id}-content`}>
+          {cityFilteredData.map((data) => {
+            const { municipality } = data[0];
+            return (
+              <React.Fragment key={municipality}>
+                <div className={classes.subtitle}>
+                  <Typography>{uppercaseFirst(municipality)}</Typography>
+                </div>
+                <List disablePadding className={classes.subdistrictList}>
+                  <FormGroup aria-label={intl.formatMessage({ id: `area.subdistrict.${district.id}` })}>
+                    {data.map(districtItem => (
+                      <FormControlLabel
+                        key={districtItem.id}
+                        value={districtItem.ocd_id}
+                        label={<Typography>{getLocaleText(districtItem.name)}</Typography>}
+                        control={(
+                          <Checkbox
+                            onChange={e => handleCheckboxChange(e, districtItem)}
+                            checked={selectedSubdistricts.some(
+                              district => district.ocd_id === districtItem.ocd_id,
+                            )}
+                          />
+                        )}
+                      />
+                    ))}
+                  </FormGroup>
+                </List>
+              </React.Fragment>
+            );
+          })}
         </AccordionDetails>
       </Accordion>
     );
