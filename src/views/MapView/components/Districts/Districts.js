@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Typography } from '@material-ui/core';
+import { useSelector } from 'react-redux';
 import { drawMarkerIcon } from '../../utils/drawIcon';
 import swapCoordinates from '../../utils/swapCoordinates';
 import AddressMarker from '../AddressMarker';
@@ -25,6 +26,7 @@ const Districts = ({
   const { Polygon, Marker, Tooltip } = global.rL;
   const useContrast = theme === 'dark';
   const isMobile = useMobileStatus();
+  const citySettings = useSelector(state => state.settings.cities);
 
   const districtOnClick = (e, district) => {
     if (district.category === 'geographical') {
@@ -112,14 +114,21 @@ const Districts = ({
       return null;
     }
 
-    return districtData.map((district) => {
+    const selectedCities = Object.values(citySettings).filter(city => city);
+    let filteredData = [];
+    if (selectedCities.length) {
+      filteredData = districtData.filter(district => citySettings[district.municipality]);
+    } else {
+      filteredData = districtData;
+    }
+
+    return filteredData.map((district) => {
       let dimmed;
       if (selectedSubdistricts.length) {
         dimmed = !selectedSubdistricts.some(item => item.ocd_id === district.ocd_id);
       } else {
         dimmed = addressDistrict && district.id !== addressDistrict;
       }
-
 
       const area = district.boundary.coordinates.map(
         coords => swapCoordinates(coords),
@@ -133,7 +142,6 @@ const Districts = ({
           color="#ff8400"
           fillOpacity={dimmed ? '0.3' : '0'}
           fillColor={dimmed ? '#000' : '#ff8400'}
-
           onMouseOver={(e) => {
             e.target.openTooltip();
             e.target.setStyle({ fillOpacity: '0.2' });
@@ -141,7 +149,6 @@ const Districts = ({
           onMouseOut={(e) => {
             e.target.setStyle({ fillOpacity: dimmed ? '0.3' : '0' });
           }}
-
           onFocus={() => {}}
           onBlur={() => {}}
         >

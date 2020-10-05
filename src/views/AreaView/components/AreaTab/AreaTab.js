@@ -1,4 +1,4 @@
-import React, { Fragment, useReducer, useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   List,
@@ -43,10 +43,6 @@ const AreaTab = (props) => {
     getLocaleText,
   } = props;
   const citySettings = useSelector(state => state.settings.cities);
-  // const cities = [];
-  // citySettings.forEach((city) => {
-  //   cities.push(...citySettings[city] ? [city] : []);
-  // });
   const defaultExpanded = selectedSubdistricts.length && selectedSubdistricts[0].type;
   const [expandedSubcategory, setExpandedSubcategory] = useState(defaultExpanded);
 
@@ -129,20 +125,14 @@ const AreaTab = (props) => {
       }
       return acc;
     }, []);
-
-    const cityFilteredData = groupedData;
-    // const selectedCities = Object.values(citySettings).filter(city => city);
-    // console.log(selectedCities);
-    // let cityFilteredData = [];
-    // if (!selectedCities.length) {
-    //   cityFilteredData = groupedData;
-    // } else {
-    //   // cityFilteredData = groupedData.filter(data => citySettings[data[0].municipality]);
-    //   cityFilteredData = groupedData.filter(data => selectedCities.includes(data[0].municipality));
-    // }
-    // // if (!cities.length) {
-    // //   cityFilteredData = groupedData;
-    // // }
+    // Filter data with city settings
+    const selectedCities = Object.values(citySettings).filter(city => city);
+    let cityFilteredData = [];
+    if (!selectedCities.length) {
+      cityFilteredData = groupedData;
+    } else {
+      cityFilteredData = groupedData.filter(data => citySettings[data[0].municipality]);
+    }
 
     return (
       <Accordion
@@ -345,7 +335,7 @@ AreaTab.propTypes = {
   dataStructure: PropTypes.arrayOf(PropTypes.object).isRequired,
   setSelectedAddress: PropTypes.func.isRequired,
   handleOpen: PropTypes.func.isRequired,
-  setDistrictRadioValue: PropTypes.func.isRequired,
+  changeSelectedDistrictType: PropTypes.func.isRequired,
   setSelectedDistrictServices: PropTypes.func.isRequired,
   setSelectedSubdistricts: PropTypes.func.isRequired,
   selectedSubdistricts: PropTypes.arrayOf(PropTypes.object).isRequired,
