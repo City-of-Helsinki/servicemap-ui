@@ -101,11 +101,11 @@ export const parseInitialMapPositionFromHostname = (req, Sentry) => {
   let initialMapPosition = process.env.INITIAL_MAP_POSITION || '60.170377597530016,24.941309323934886';
   try {
     // Expecting DOMAIN_MAP_POSITIONS to be a string shaped like
-    // hostname1,lat1,lon1:hostname2,lat2,lon2
+    // hostname1,lat1,lon1;hostname2,lat2,lon2
     const domainMapPos = process.env.DOMAIN_MAP_POSITIONS;
     if (domainMapPos && req) {
       const host = req.hostname;
-      const domainArray = domainMapPos.split(':');
+      const domainArray = domainMapPos.split(';');
       if (host && domainArray.length) {
         domainArray.forEach(h => {
           const values = h.split(',');
