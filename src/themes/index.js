@@ -186,6 +186,10 @@ export const paletteDefault = {
   warning: {
     main: '#AF0021',
   },
+  measuringStroke: {
+    main: '#fff',
+    background: 'rgb(25, 100, 230)',
+  },
 };
 
 // Color palette for dark theme
@@ -222,6 +226,10 @@ export const paletteDark = {
   },
   focusBorder: {
     main: '#000',
+  },
+  measuringStroke: {
+    main: '#313131',
+    background: '#A6A6A6',
   },
 };
 

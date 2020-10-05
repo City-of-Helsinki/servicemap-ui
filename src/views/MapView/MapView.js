@@ -69,6 +69,8 @@ const MapView = (props) => {
   const [prevMap, setPrevMap] = useState(null);
   const [unitData, setUnitData] = useState(null);
   const [mapUtility, setMapUtility] = useState(null);
+  const [measuringMarkers, setMeasuringMarkers] = useState([]);
+  const [measuringLine, setMeasuringLine] = useState([]);
 
   const embeded = isEmbed({ url: location.pathname });
 
@@ -227,6 +229,10 @@ const MapView = (props) => {
 
   useEffect(() => {
     setMapClickPoint(null);
+    if (!measuringMode) {
+      setMeasuringMarkers([]);
+      setMeasuringLine([]);
+    }
   }, [measuringMode]);
 
   // Render
@@ -347,7 +353,12 @@ const MapView = (props) => {
           )}
 
           {measuringMode && (
-            <DistanceMeasure mapClickPoint={mapClickPoint} />
+            <DistanceMeasure
+              markerArray={measuringMarkers}
+              setMarkerArray={setMeasuringMarkers}
+              lineArray={measuringLine}
+              setLineArray={setMeasuringLine}
+            />
           )}
 
           <ZoomControl position="bottomright" aria-hidden="true" />
