@@ -4,7 +4,7 @@ import booleanEqual from '@turf/boolean-equal';
 import booleanWithin from '@turf/boolean-within';
 import pointOnFeature from '@turf/point-on-feature';
 import area from '@turf/area';
-import { focusDistrict } from '../MapView/utils/mapActions';
+import { focusDistrict, focusDistricts } from '../MapView/utils/mapActions';
 import TabLists from '../../components/TabLists';
 import UnitTab from './components/UnitTab';
 import { uppercaseFirst } from '../../utils';
@@ -121,6 +121,16 @@ const AreaView = ({
     focusDistrict(map.leafletElement, district.boundary.coordinates);
   };
 
+  const changeSelectedDistrictType = (value) => {
+    // Fit all districts to map, if first time selecting district
+    if (map && !districtRadioValue) {
+      const districts = districtData.find(data => data.id === value);
+      if (districts) {
+        focusDistricts(map.leafletElement, districts.data);
+      }
+    }
+    setDistrictRadioValue(value);
+  };
 
   const changeDistrictData = (data, type, category) => {
     // Collect different periods from district data
@@ -201,20 +211,6 @@ const AreaView = ({
       }
       filteredData.push(returnItem);
     });
-
-    // console.log(filteredData);
-
-    // const groupedData = filteredData.reduce((acc, cur) => {
-    //   const duplicate = acc.find(list => list[0].municipality === cur.municipality);
-    //   if (duplicate) {
-    //     duplicate.push(cur);
-    //   } else {
-    //     acc.push([cur]);
-    //   }
-    //   return acc;
-    // }, []);
-
-    // console.log(groupedData);
 
     changeDistrictData(filteredData, type, category);
   };
@@ -320,7 +316,7 @@ const AreaView = ({
   }, [selectedSubdistricts]);
 
   useEffect(() => {
-    setDistrictRadioValue(selectedDistrictType);
+    changeSelectedDistrictType(selectedDistrictType);
   }, [selectedDistrictType]);
 
   useEffect(() => {
@@ -339,7 +335,7 @@ const AreaView = ({
     <AreaTab
       districtRadioValue={districtRadioValue}
       selectedSubdistricts={selectedSubdistricts}
-      setDistrictRadioValue={setDistrictRadioValue}
+      changeSelectedDistrictType={changeSelectedDistrictType}
       setSelectedSubdistricts={setSelectedSubdistricts}
       setSelectedDistrictServices={setSelectedDistrictServices}
       fetching={fetching}

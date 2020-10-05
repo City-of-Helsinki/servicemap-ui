@@ -43,6 +43,13 @@ const focusDistrict = (map, coordinates) => {
   map.fitBounds(bounds);
 };
 
+const focusDistricts = (map, districts) => {
+  const bounds = districts.map(
+    district => district.boundary.coordinates.map(area => swapCoordinates(area)),
+  );
+  map.fitBounds(bounds);
+};
+
 const fitBbox = (map, bbox) => {
   if (!map || !bbox || bbox.length !== 4) {
     return;
@@ -59,4 +66,5 @@ export {
   fitUnitsToMap,
   focusToPosition,
   focusDistrict,
+  focusDistricts,
 };

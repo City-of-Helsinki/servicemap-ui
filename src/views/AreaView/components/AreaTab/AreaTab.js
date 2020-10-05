@@ -26,7 +26,7 @@ const AreaTab = (props) => {
   const {
     districtRadioValue,
     selectedSubdistricts,
-    setDistrictRadioValue,
+    changeSelectedDistrictType,
     setSelectedSubdistricts,
     setSelectedDistrictServices,
     fetching,
@@ -52,7 +52,7 @@ const AreaTab = (props) => {
 
   const handleRadioChange = (district) => {
     setSelectedSubdistricts([]);
-    setDistrictRadioValue(district.id);
+    changeSelectedDistrictType(district.id);
     setExpandedSubcategory(null);
   };
 
@@ -74,7 +74,7 @@ const AreaTab = (props) => {
       if (districtRadioValue !== district.id) {
         setSelectedSubdistricts([]);
       }
-      setDistrictRadioValue(district.id);
+      changeSelectedDistrictType(district.id);
       setExpandedSubcategory(district.id);
     } else {
       setExpandedSubcategory(null);
@@ -83,7 +83,7 @@ const AreaTab = (props) => {
 
   const clearRadioValues = () => {
     setSelectedSubdistricts([]);
-    setDistrictRadioValue(null);
+    changeSelectedDistrictType(null);
     setExpandedSubcategory(null);
   };
 
