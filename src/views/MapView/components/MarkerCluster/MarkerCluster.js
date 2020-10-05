@@ -92,6 +92,16 @@ const MarkerCluster = ({
     return icon;
   };
 
+  // Remove popup from old marker and set new highligted marker
+  const setNewHighlightedMarker = (marker) => {
+    // Close popup for highlighterMarker if it exists
+    if (clusterData.highlightedMarker) {
+      clusterData.highlightedMarker.closePopup();
+    }
+    // Set this marker as highligtedMarker
+    clusterData.highlightedMarker = marker;
+  };
+
 
   const { clusterPopupVisibility } = mapTypes[settings.mapType || 'servicemap'];
   const popupTexts = {
@@ -248,7 +258,8 @@ const MarkerCluster = ({
     }
     // Clear old layers and clusterData
     cluster.clearLayers();
-    clusterData.highlightedMarker = null;
+
+    setNewHighlightedMarker(null);
     clusterData.highlightedCluster = null;
     if (!data.length) {
       return;
@@ -303,11 +314,12 @@ const MarkerCluster = ({
           );
         } else {
           // If marker is highlighted save reference
-          clusterData.highlightedMarker = markerElem;
+          setNewHighlightedMarker(markerElem);
         }
 
         if (unitListFiltered.length > 1 || embeded) {
           markerElem.on('click', () => {
+            setNewHighlightedMarker(markerElem);
             UnitHelper.unitElementClick(navigator, unit);
           });
         }
