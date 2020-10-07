@@ -125,6 +125,7 @@ const AreaTab = (props) => {
       }
       return acc;
     }, []);
+
     // Filter data with city settings
     const selectedCities = Object.values(citySettings).filter(city => city);
     let cityFilteredData = [];
@@ -133,6 +134,12 @@ const AreaTab = (props) => {
     } else {
       cityFilteredData = groupedData.filter(data => citySettings[data[0].municipality]);
     }
+
+    // Reorder data order by municipality
+    const citiesInOrder = Object.keys(citySettings);
+    cityFilteredData.sort(
+      (a, b) => citiesInOrder.indexOf(a[0].municipality) - citiesInOrder.indexOf(b[0].municipality),
+    );
 
     return (
       <Accordion
@@ -158,8 +165,8 @@ const AreaTab = (props) => {
             const { municipality } = data[0];
             return (
               <React.Fragment key={municipality}>
-                <div className={classes.subtitle}>
-                  <Typography>{uppercaseFirst(municipality)}</Typography>
+                <div className={classes.municipalitySubtitle}>
+                  <Typography className={classes.bold}>{uppercaseFirst(municipality)}</Typography>
                 </div>
                 <List disablePadding className={classes.subdistrictList}>
                   <FormGroup aria-label={intl.formatMessage({ id: `area.subdistrict.${district.id}` })}>
