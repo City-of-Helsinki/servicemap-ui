@@ -63,6 +63,8 @@ const UnitView = (props) => {
 
   const [unit, setUnit] = useState(checkCorrectUnit(stateUnit) ? stateUnit : null);
 
+  const isMobile = useMobileStatus();
+
 
   const initializePTVAccessibilitySentences = () => {
     if (unit) {
@@ -302,25 +304,17 @@ const UnitView = (props) => {
 
     const TopArea = (
       <>
-        <DesktopComponent>
+        {!isMobile && (
           <SearchBar margin />
+        )}
           <TitleBar
             sticky
-            icon={<AddressIcon className={classes.icon} />}
+          icon={!isMobile ? <AddressIcon className={classes.icon} /> : null}
             title={title}
+          backButton={!!isMobile}
             titleComponent="h3"
             distance={distance && distance.text}
           />
-        </DesktopComponent>
-        <MobileComponent>
-          <TitleBar
-            sticky
-            title={title}
-            titleComponent="h3"
-            backButton
-            distance={distance && distance.text}
-          />
-        </MobileComponent>
       </>
     );
 
