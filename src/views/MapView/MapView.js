@@ -68,6 +68,7 @@ const MapView = (props) => {
   const [refSaved, setRefSaved] = useState(false);
   const [prevMap, setPrevMap] = useState(null);
   const [unitData, setUnitData] = useState(null);
+  const [unitGeometry, setUnitGeometry] = useState(null);
   const [mapUtility, setMapUtility] = useState(null);
   const [measuringMarkers, setMeasuringMarkers] = useState([]);
   const [measuringLine, setMeasuringLine] = useState([]);
@@ -77,7 +78,6 @@ const MapView = (props) => {
 
   const getMapUnits = () => {
     let mapUnits = [];
-    let unitGeometry = null;
 
     if (currentPage === 'home' && embeded) {
       mapUnits = unitList;
@@ -104,23 +104,27 @@ const MapView = (props) => {
       }
     } else if (currentPage === 'service' && serviceUnits && !unitsLoading) {
       mapUnits = serviceUnits;
-    } else if ((currentPage === 'unit' || currentPage === 'fullList' || currentPage === 'event') && highlightedUnit) {
+    } else if (
+      (currentPage === 'unit' || currentPage === 'fullList' || currentPage === 'event')
+      && highlightedUnit
+    ) {
       mapUnits = [highlightedUnit];
+    }
+
+    return mapUnits;
+  };
+
+  const getUnitGeometry = () => {
+    if ((currentPage === 'unit' || currentPage === 'fullList' || currentPage === 'event') && highlightedUnit) {
       const { geometry } = highlightedUnit;
       if (geometry && geometry.type === 'MultiLineString') {
         const { coordinates } = geometry;
-        unitGeometry = coordinates;
+        const unitGeometry = swapCoordinates(coordinates);
+        return unitGeometry;
       }
     }
-
-    const data = { units: mapUnits, unitGeometry };
-
-    if (data.unitGeometry) {
-      data.unitGeometry = swapCoordinates(data.unitGeometry);
-    }
-
-    return data;
-  };
+    return null;
+  }
 
   const setClickCoordinates = (ev) => {
     setMapClickPoint(null);
@@ -201,6 +205,10 @@ const MapView = (props) => {
     }
     mapUtility.panInside(highlightedUnit);
   }, [highlightedUnit, mapUtility]);
+
+  useEffect(() => {
+    setUnitGeometry(getUnitGeometry());
+  }, [highlightedUnit, currentPage]);
 
   useEffect(() => { // On map type change
     // Init new map and set new ref to redux
@@ -308,10 +316,9 @@ const MapView = (props) => {
           />
           {
             !highlightedDistrict
-            && unitData?.units?.length === 1
-            && unitData.unitGeometry
+            && unitGeometry
             && (
-              <UnitGeometry geometryData={unitData.unitGeometry} />
+              <UnitGeometry geometryData={unitGeometry} />
             )
           }
           <TileLayer
