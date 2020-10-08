@@ -46,6 +46,6 @@ export default theme => ({
     height: 25,
   },
   someDivider: {
-    marginRight: -32,
+    marginRight: -theme.spacing(3),
   },
 });

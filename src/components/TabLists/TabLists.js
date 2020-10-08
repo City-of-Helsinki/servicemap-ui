@@ -159,15 +159,13 @@ const TabLists = ({
       const classes = sibling.className;
       if (classes.indexOf('sticky') > -1 && typeof sibling.clientHeight === 'number') {
         // Calculate top padding by checking previous sticky siblings top value and height
-        stickyElementPadding += parseInt(getComputedStyle(sibling).top, 10);
         stickyElementPadding += sibling.clientHeight;
       }
     }
 
-    if (isMobile && stickyElementPadding === 0) {
-      stickyElementPadding = appBarHeight;
+    if (isMobile) {
+      stickyElementPadding += appBarHeight;
     }
-
     if (
       typeof stickyElementPadding === 'number'
       && typeof tabsDistanceFromTop === 'number'
@@ -175,7 +173,7 @@ const TabLists = ({
     ) {
       // Set new styles and scrollDistance value to state
       setStyles({ top: stickyElementPadding });
-      setScrollDistance(tabsDistanceFromTop - stickyElementPadding);
+      setScrollDistance(tabsDistanceFromTop);
     }
   };
 
@@ -221,8 +219,6 @@ const TabLists = ({
           )
         }
         <Tabs
-          // TODO: In materialUI 4.*
-          // Change to use ref and update height calculations in componentDidMount
           ref={tabsRef}
           className={`sticky ${classes.root}`}
           classes={{

@@ -22,7 +22,7 @@ class HomeView extends React.Component {
 
     let areaSelection = null;
 
-    if (config.show_area_selection) {
+    if (config.showAreaSelection) {
       areaSelection = (
         <PaperButton
           messageID="home.buttons.area"
@@ -79,9 +79,9 @@ class HomeView extends React.Component {
             link
             onClick={() => {
               window.open(getLocaleText({
-                fi: config.old_map_fi,
-                sv: config.old_map_sv,
-                en: config.old_map_en,
+                fi: config.oldMapFi,
+                sv: config.oldMapSv,
+                en: config.oldMapEn,
               }));
             }}
           />

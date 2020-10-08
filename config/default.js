@@ -73,6 +73,10 @@ if (typeof settings.GUIDE_MAP_URL === 'undefined') {
   settings.GUIDE_MAP_URL = 'https://kartta.hel.fi/ws/geoserver/avoindata/gwc/service/wmts?layer=avoindata:Karttasarja_PKS&tilematrixset=ETRS-GK25&Service=WMTS&Request=GetTile&Version=1.0.0&TileMatrix=ETRS-GK25:{z}&TileCol={x}&TileRow={y}&Format=image%2Fpng';
 }
 
+if (typeof settings.REITTIOPAS_URL === 'undefined') {
+  settings.REITTIOPAS_URL = 'https://reittiopas.hsl.fi/reitti/';
+}
+
 if (typeof settings.SHOW_AREA_SELECTION === 'undefined') {
   // If not set default to Helsinki
   settings.SHOW_AREA_SELECTION = true;
@@ -90,11 +94,37 @@ if (typeof settings.FEEDBACK_ADDITIONAL_INFO_LINK === 'undefined') {
 
 if (typeof settings.FEEDBACK_IS_PUBLISHED === 'undefined') {
   // If not set default to Helsinki
-  settings.FEEDBACK_ADDITIONAL_INFO_LINK = true;
+  settings.FEEDBACK_IS_PUBLISHED = true;
 }
 
 if (typeof settings.USE_PTV_ACCESSIBILITY_API === 'undefined') {
   settings.USE_PTV_ACCESSIBILITY_API = false;
+}
+
+let municipalities;
+try {
+  municipalities = require('./municipalities.json');
+} catch(e) {
+  municipalities = {
+    fi: {
+      espoo: 'Espoo',
+      helsinki: 'Helsinki',
+      kauniainen: 'Kauniainen',
+      vantaa: 'Vantaa'
+    },
+    en: {
+      espoo: 'Espoo',
+      helsinki: 'Helsinki',
+      kauniainen: 'Kauniainen',
+      vantaa: 'Vantaa'
+    },
+    sv: {
+      espoo: 'Esbo',
+      helsinki: 'Helsingfors',
+      kauniainen: 'Grankulla',
+      vantaa: 'Vanda'
+    }
+  }
 }
 
 export default {
@@ -131,34 +161,16 @@ export default {
   },
   "production": settings.MODE === 'production',
   "initialMapPosition": settings.INITIAL_MAP_POSITION.split(','),
-  "servicemap_url": settings.SERVICE_MAP_URL,
-  "accessible_map_url": settings.ACCESSIBLE_MAP_URL,
-  "ortographic_map_url": settings.ORTOGRAPHIC_MAP_URL,
-  "guide_map_url": settings.GUIDE_MAP_URL,
+  "servicemapURL": settings.SERVICE_MAP_URL,
+  "accessibleMapURL": settings.ACCESSIBLE_MAP_URL,
+  "ortographicMapURL": settings.ORTOGRAPHIC_MAP_URL,
+  "guideMapURL": settings.GUIDE_MAP_URL,
+  "reittiopasURL": settings.REITTIOPAS_URL,
   "cities": settings.CITIES.split(','),
   "maps": settings.MAPS.split(','),
   "smallContentAreaBreakpoint": 449,
   "mobileUiBreakpoint": 699,
-  "municipality": {
-    fi: {
-      espoo: 'Espoo',
-      helsinki: 'Helsinki',
-      kauniainen: 'Kauniainen',
-      vantaa: 'Vantaa'
-    },
-    en: {
-      espoo: 'Espoo',
-      helsinki: 'Helsinki',
-      kauniainen: 'Kauniainen',
-      vantaa: 'Vantaa'
-    },
-    sv: {
-      espoo: 'Esbo',
-      helsinki: 'Helsingfors',
-      kauniainen: 'Grankulla',
-      vantaa: 'Vanda'
-    }
-  },
+  "municipality": municipalities,
   "smallScreenBreakpoint": 899,
   "topBarHeight": 100,
   "topBarHeightMobile": 90,
@@ -173,17 +185,17 @@ export default {
     sv: 'servicekarta',
     en: 'servicemap',
   },
-  "old_map_en": settings.OLD_MAP_LINK_EN,
-  "old_map_fi": settings.OLD_MAP_LINK_FI,
-  "old_map_sv": settings.OLD_MAP_LINK_SV,
+  "oldMapEn": settings.OLD_MAP_LINK_EN,
+  "oldMapFi": settings.OLD_MAP_LINK_FI,
+  "oldMapSv": settings.OLD_MAP_LINK_SV,
   "readspeakerLocales": {
     "fi": 'fi_fi',
     "en": 'en_uk',
     "sv": 'sv_se',
   },
-  "show_area_selection": (settings.SHOW_AREA_SELECTION === 'true'),
-  "show_read_speaker_button": (settings.SHOW_READ_SPEAKER_BUTTON === 'true'),
-  "feedback_additional_info_link": settings.FEEDBACK_ADDITIONAL_INFO_LINK,
-  "feedback_is_published": (settings.FEEDBACK_IS_PUBLISHED === 'true'),
+  "showAreaSelection": (settings.SHOW_AREA_SELECTION === 'true'),
+  "showReadSpeakerButton": (settings.SHOW_READ_SPEAKER_BUTTON === 'true'),
+  "feedbackAdditionalInfoLink": settings.FEEDBACK_ADDITIONAL_INFO_LINK,
+  "feedbackIsPublished": (settings.FEEDBACK_IS_PUBLISHED === 'true'),
   "usePtvAccessibilityApi": (settings.USE_PTV_ACCESSIBILITY_API) === 'true',
 }

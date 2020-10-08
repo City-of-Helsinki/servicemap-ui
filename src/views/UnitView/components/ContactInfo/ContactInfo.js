@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import config from '../../../../../config';
 import InfoList from '../InfoList';
 import unitSectionFilter from '../../utils/unitSectionFilter';
 
@@ -32,7 +33,7 @@ const ContactInfo = ({
   const contact = unitSectionFilter(unit.connections, 'PHONE_OR_EMAIL');
 
   // Temporary link implementation for route info
-  const url = 'https://reittiopas.hsl.fi/reitti/';
+  const url = config.reittiopasURL;
   let currentLocationString = ' ';
 
   if (userLocation && userLocation.addressData) {

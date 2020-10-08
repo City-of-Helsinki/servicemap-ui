@@ -101,7 +101,7 @@ const FeedbackView = ({
   let feedbackPermission = null;
 
   // Show/Hide feedback permission checkbox dynamically
-  if (config.feedback_is_published) {
+  if (config.feedbackIsPublished) {
     feedbackPermission = (
       /* Permission checkbox */
       <FormControl>
@@ -211,7 +211,7 @@ const FeedbackView = ({
           <ButtonBase
             className={classes.link}
             role="link"
-            onClick={() => window.open(config.feedback_additional_info_link)}
+            onClick={() => window.open(config.feedbackAdditionalInfoLink)}
           >
             <Typography><FormattedMessage id="feedback.additionalInfo.link" /></Typography>
           </ButtonBase>

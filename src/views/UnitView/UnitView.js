@@ -5,12 +5,10 @@ import { Typography } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
 import { Map, Mail, Hearing } from '@material-ui/icons';
 import SearchBar from '../../components/SearchBar';
-import { focusToPosition, focusDistrict } from '../MapView/utils/mapActions';
 import TitleBar from '../../components/TitleBar';
 import Container from '../../components/Container';
 import { uppercaseFirst } from '../../utils';
 import AccessibilityInfo from './components/AccessibilityInfo';
-
 import ContactInfo from './components/ContactInfo';
 import Highlights from './components/Highlights';
 import ElectronicServices from './components/ElectronicServices';
@@ -26,16 +24,14 @@ import SocialMediaLinks from './components/SocialMediaLinks';
 import UnitLinks from './components/UnitLinks';
 import SimpleListItem from '../../components/ListItems/SimpleListItem';
 import TitledList from '../../components/Lists/TitledList';
-import DesktopComponent from '../../components/DesktopComponent';
-import MobileComponent from '../../components/MobileComponent';
 import ReadSpeakerButton from '../../components/ReadSpeakerButton';
 import config from '../../../config';
+import useMobileStatus from '../../utils/isMobile';
 
 const UnitView = (props) => {
   const {
     distance,
     stateUnit,
-    map,
     intl,
     classes,
     embed,
@@ -63,17 +59,19 @@ const UnitView = (props) => {
 
   const [unit, setUnit] = useState(checkCorrectUnit(stateUnit) ? stateUnit : null);
 
+  const isMobile = useMobileStatus();
+
 
   const initializePTVAccessibilitySentences = () => {
     if (unit) {
       unit.identifiers.forEach((element) => {
-        if (element.namespace === 'ptv' ) {
+        if (element.namespace === 'ptv') {
           const ptvId = element.value;
           fetchAccessibilitySentences(ptvId);
         }
       });
     }
-  }
+  };
 
   const intializeUnitData = () => {
     const { params } = match;
@@ -163,7 +161,7 @@ const UnitView = (props) => {
 
     let detailReadSpeakerButton = null;
 
-    if (config.show_read_speaker_button) {
+    if (config.showReadSpeakerButton) {
       detailReadSpeakerButton = (
         <ReadSpeakerButton
           className={classes.rsButton}
@@ -206,9 +204,7 @@ const UnitView = (props) => {
           <Description unit={unit} getLocaleText={getLocaleText} />
           <UnitLinks unit={unit} />
           <ElectronicServices unit={unit} />
-          <DesktopComponent>
-            {feedbackButton()}
-          </DesktopComponent>
+          {!isMobile && feedbackButton()}
         </div>
       </div>
     );
@@ -217,7 +213,7 @@ const UnitView = (props) => {
   const renderAccessibilityTab = () => {
     let accessibilityReadSpeakerButton = null;
 
-    if (config.show_read_speaker_button) {
+    if (config.showReadSpeakerButton) {
       accessibilityReadSpeakerButton = (
         <ReadSpeakerButton
           className={classes.rsButton}
@@ -277,24 +273,22 @@ const UnitView = (props) => {
   };
 
   const renderMobileButtons = () => (
-    <MobileComponent>
-      <div className={classes.mobileButtonArea}>
-        <SMButton
-          aria-hidden
-          messageID="general.showOnMap"
-          icon={<Map />}
-          onClick={(e) => {
-            e.preventDefault();
-            if (navigator) {
-              navigator.openMap();
-            }
-          }}
-          margin
-          role="link"
-        />
-        {feedbackButton()}
-      </div>
-    </MobileComponent>
+    <div className={classes.mobileButtonArea}>
+      <SMButton
+        aria-hidden
+        messageID="general.showOnMap"
+        icon={<Map />}
+        onClick={(e) => {
+          e.preventDefault();
+          if (navigator) {
+            navigator.openMap();
+          }
+        }}
+        margin
+        role="link"
+      />
+      {feedbackButton()}
+    </div>
   );
 
   const render = () => {
@@ -302,25 +296,17 @@ const UnitView = (props) => {
 
     const TopArea = (
       <>
-        <DesktopComponent>
+        {!isMobile && (
           <SearchBar margin />
-          <TitleBar
-            sticky
-            icon={<AddressIcon className={classes.icon} />}
-            title={title}
-            titleComponent="h3"
-            distance={distance && distance.text}
-          />
-        </DesktopComponent>
-        <MobileComponent>
-          <TitleBar
-            sticky
-            title={title}
-            titleComponent="h3"
-            backButton
-            distance={distance && distance.text}
-          />
-        </MobileComponent>
+        )}
+        <TitleBar
+          sticky
+          icon={!isMobile ? <AddressIcon className={classes.icon} /> : null}
+          title={title}
+          backButton={!!isMobile}
+          titleComponent="h3"
+          distance={distance && distance.text}
+        />
       </>
     );
 
@@ -397,7 +383,7 @@ const UnitView = (props) => {
                   </div>
                 )
               }
-                {renderMobileButtons()}
+                {isMobile && renderMobileButtons()}
               </>
           )}
           />

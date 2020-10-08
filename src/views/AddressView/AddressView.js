@@ -259,7 +259,7 @@ const AddressView = (props) => {
   ];
 
   // Show/Hide nearby service tab dynamically, show only if area selection is shown
-  if (config.show_area_selection) {
+  if (config.showAreaSelection) {
     const nearbyServicesTab = {
       ariaLabel: intl.formatMessage({id: 'service.nearby'}),
       component: renderClosebyServices(),

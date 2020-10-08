@@ -92,6 +92,16 @@ const MarkerCluster = ({
     return icon;
   };
 
+  // Remove popup from old marker and set new highligted marker
+  const setNewHighlightedMarker = (marker) => {
+    // Close popup for highlighterMarker if it exists
+    if (clusterData.highlightedMarker) {
+      clusterData.highlightedMarker.closePopup();
+    }
+    // Set this marker as highligtedMarker
+    clusterData.highlightedMarker = marker;
+  };
+
 
   const { clusterPopupVisibility } = mapTypes[settings.mapType || 'servicemap'];
   const popupTexts = {
@@ -248,13 +258,14 @@ const MarkerCluster = ({
     }
     // Clear old layers and clusterData
     cluster.clearLayers();
-    clusterData.highlightedMarker = null;
+
+    setNewHighlightedMarker(null);
     clusterData.highlightedCluster = null;
-    if (!data.units.length) {
+    if (!data.length) {
       return;
     }
     // Filter units of object_type unit
-    const unitListFiltered = data.units.filter(unit => unit.object_type === 'unit');
+    const unitListFiltered = data.filter(unit => unit.object_type === 'unit');
     if (!unitListFiltered.length) {
       return;
     }
@@ -303,11 +314,12 @@ const MarkerCluster = ({
           );
         } else {
           // If marker is highlighted save reference
-          clusterData.highlightedMarker = markerElem;
+          setNewHighlightedMarker(markerElem);
         }
 
         if (unitListFiltered.length > 1 || embeded) {
           markerElem.on('click', () => {
+            setNewHighlightedMarker(markerElem);
             UnitHelper.unitElementClick(navigator, unit);
           });
         }
@@ -333,13 +345,6 @@ const MarkerCluster = ({
       item.setAttribute('tabindex', '-1');
       item.setAttribute('aria-hidden', 'true');
     });
-
-    // if (map && data.units.length && !(currentPage === 'address' || currentPage === 'area')) {
-    //   // TODO: this should be revisited once new map focusing is implemented
-    //   /* Zoom out map to fit all unit markers when unit data changes.
-    //   Do not do this on area view and address view */
-    //   // fitUnitsToMap(data.units, map);
-    // }
   }, [cluster, data]);
 
   return null;
@@ -347,14 +352,11 @@ const MarkerCluster = ({
 
 MarkerCluster.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  data: PropTypes.shape({
-    units: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number,
-      }),
-    ),
-    unitGeometry: PropTypes.array,
-  }).isRequired,
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+    }),
+  ).isRequired,
   getDistance: PropTypes.func.isRequired,
   getLocaleText: PropTypes.func.isRequired,
   map: PropTypes.objectOf(PropTypes.any).isRequired,
