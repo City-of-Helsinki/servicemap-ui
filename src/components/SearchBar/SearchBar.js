@@ -151,15 +151,29 @@ class SearchBar extends React.Component {
     return (
       <>
         <Divider aria-hidden />
-        <SuggestionBox
-          visible={showSuggestions}
-          focusedSuggestion={focusedSuggestion}
-          searchQuery={searchQuery}
-          handleArrowClick={value => this.onInputChange(value)}
-          handleSubmit={this.handleSubmit}
-          setSearch={value => this.setState({ search: value })}
-          isMobile
-        />
+        {/* TODO: Modify this class to functional component, to use useMobile hook
+        instead of individual mobile/desktop components. */}
+        <MobileComponent>
+          <SuggestionBox
+            visible={showSuggestions}
+            focusedSuggestion={focusedSuggestion}
+            searchQuery={searchQuery}
+            handleArrowClick={value => this.onInputChange(value)}
+            handleSubmit={this.handleSubmit}
+            setSearch={value => this.setState({ search: value })}
+            isMobile
+          />
+        </MobileComponent>
+        <DesktopComponent>
+          <SuggestionBox
+            visible={showSuggestions}
+            focusedSuggestion={focusedSuggestion}
+            searchQuery={searchQuery}
+            handleArrowClick={value => this.onInputChange(value)}
+            handleSubmit={this.handleSubmit}
+            setSearch={value => this.setState({ search: value })}
+          />
+        </DesktopComponent>
       </>
     );
   }
@@ -379,7 +393,7 @@ class SearchBar extends React.Component {
                 this.renderInput()
               }
               {
-                this.renderSuggestionBox()
+                this.renderSuggestionBox(true)
               }
             </Paper>
           </div>

@@ -24,8 +24,7 @@ const mapStateToProps = (state, props) => {
     accessibilitySentences, events, reservations, hearingMaps,
   } = state.selectedUnit;
   const getLocaleText = textObject => getLocaleString(state, textObject);
-  const { mapRef, navigator, user } = state;
-  const map = mapRef && mapRef.leafletElement;
+  const { navigator, user } = state;
 
   return {
     accessibilitySentences: accessibilitySentences.data,
@@ -34,7 +33,6 @@ const mapStateToProps = (state, props) => {
     unitFetching,
     eventsData: events,
     getLocaleText,
-    map,
     navigator,
     reservationsData: reservations,
     userLocation: user.position,
