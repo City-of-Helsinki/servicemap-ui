@@ -197,7 +197,7 @@ export default {
     "en": 'en_uk',
     "sv": 'sv_se',
   },
-  "sentryDSN": settings.SENTRY_DSN_CLIENT,
+  "sentryDSN": (settings.SENTRY_DSN_CLIENT !== 'false') ? settings.SENTRY_DSN_CLIENT : false,
   "showAreaSelection": (settings.SHOW_AREA_SELECTION === 'true'),
   "showReadSpeakerButton": (settings.SHOW_READ_SPEAKER_BUTTON === 'true'),
   "feedbackAdditionalInfoLink": settings.FEEDBACK_ADDITIONAL_INFO_LINK,
