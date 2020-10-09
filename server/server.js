@@ -195,6 +195,7 @@ const htmlTemplate = (reactDom, preloadedState, css, cssString, locale, helmet, 
         window.nodeEnvSettings.FEEDBACK_ADDITIONAL_INFO_LINK = "${process.env.FEEDBACK_ADDITIONAL_INFO_LINK}";
         window.nodeEnvSettings.FEEDBACK_IS_PUBLISHED = "${process.env.FEEDBACK_IS_PUBLISHED}";
         window.nodeEnvSettings.USE_PTV_ACCESSIBILITY_API = "${process.env.USE_PTV_ACCESSIBILITY_API}";
+        window.nodeEnvSettings.SENTRY_DSN_CLIENT = "${process.env.SENTRY_DSN_CLIENT}";
 
         window.appVersion = {};
         window.appVersion.tag = "${versionTag}";
