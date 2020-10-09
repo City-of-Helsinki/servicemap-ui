@@ -129,26 +129,31 @@ const FeedbackView = ({
         message={intl.formatMessage({ id: 'feedback.modal.leave' })}
       />
       {/* Confirm dialog */}
-      <Dialog open={!!modalOpen}>
-        <div className={classes.modalContainer}>
-          <Typography className={classes.modalTitle}>
-            <FormattedMessage id={modalOpen === 'send' ? 'feedback.modal.success' : 'feedback.modal.error'} />
-          </Typography>
-          <SMButton
-            margin
-            role="button"
-            className={classes.modalButton}
-            messageID="feedback.modal.confirm"
-            color="primary"
-            onClick={() => {
-              setModalOpen(false);
-              if (modalOpen === 'send') {
-                navigator.goBack();
-              }
-            }}
-          />
-        </div>
-      </Dialog>
+      {
+        modalOpen
+        && (
+          <Dialog open={!!modalOpen}>
+            <div className={classes.modalContainer}>
+              <Typography className={classes.modalTitle}>
+                <FormattedMessage id={modalOpen === 'send' ? 'feedback.modal.success' : 'feedback.modal.error'} />
+              </Typography>
+              <SMButton
+                margin
+                role="button"
+                className={classes.modalButton}
+                messageID="feedback.modal.confirm"
+                color="primary"
+                onClick={() => {
+                  setModalOpen(false);
+                  if (modalOpen === 'send') {
+                    navigator.goBack();
+                  }
+                }}
+              />
+            </div>
+          </Dialog>
+        )
+      }
 
       <form className={classes.container}>
         <TitleBar
