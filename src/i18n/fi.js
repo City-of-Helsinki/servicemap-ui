@@ -247,6 +247,13 @@ const translations = {
   'map.address.info': 'Osoitteen tiedot',
   'map.unit.cluster.popup.info': '{count} toimipistettä',
 
+  // Print
+  'print.alert': 'Työkaluvalikon tulostus printtaa kunnollisen näkymän',
+  'print.button.close': 'Sulje näkymä',
+  'print.button.print': 'Tulosta näkymä',
+  'print.table.header.number': 'Numero kartalla',
+  'print.table.header.location': 'Toimipisteet',
+
   // Units
   'unit': 'Toimipiste',
   'unit.accessibility.hearingMaps': 'Kuuluvuuskartat',

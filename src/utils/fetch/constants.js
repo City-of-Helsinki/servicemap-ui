@@ -33,7 +33,7 @@ export const APIHandlers = {
     options: {
       page: 1,
       page_size: 200,
-      only: 'unit.location,unit.name,unit.municipality,unit.accessibility_shortcoming_count,unit.contract_type',
+      only: 'unit.street_address,unit.location,unit.name,unit.municipality,unit.accessibility_shortcoming_count,unit.contract_type',
       geometry: true,
     },
   },

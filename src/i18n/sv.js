@@ -245,6 +245,13 @@ const translations = {
   'map.address.info': 'Adressens uppgifter',
   'map.unit.cluster.popup.info': '{count} verksamhetsställen', // TODO: Verify
 
+  // Print
+  'print.alert': 'Työkaluvalikon tulostus printtaa kunnollisen näkymän',
+  'print.button.close': 'Sulje näkymä', // TODO: Translate
+  'print.button.print': 'Tulosta näkymä', // TODO: Translate
+  'print.table.header.number': 'Numero kartalla', // TODO: Translate
+  'print.table.header.location': 'Toimipisteet', // TODO: Translate
+
   // Units
   'unit': 'Verksamhetsställe',
   'unit.accessibility.hearingMaps': 'Täckningskartor',

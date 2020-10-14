@@ -1,18 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
 import URI from 'urijs';
 import {
-  Build, Code, GetApp,
+  Build, Code, GetApp, Print,
 } from '@material-ui/icons';
 import DropDownMenuButton from '../DropDownMenuButton';
 import useDownloadData from '../../utils/downloadData';
 import SMIcon from '../SMIcon/SMIcon';
 import SMButton from '../ServiceMapButton';
+import PrintContext from '../../context/PrintContext';
 
 const ToolMenu = ({
   intl, classes, mapUtility, navigator, setMeasuringMode, measuringMode,
 }) => {
+  const togglePrintView = useContext(PrintContext);
   const location = useLocation();
 
   // Open embedderView
@@ -70,6 +72,17 @@ const ToolMenu = ({
       ariaHidden: true,
       onClick: () => {
         setMeasuringMode(!measuringMode);
+      },
+    },
+    {
+      key: 'printTool',
+      text: 'Tulosta',
+      icon: <Print className={classes.smIcon} />,
+      ariaHidden: true,
+      onClick: () => {
+        if (typeof togglePrintView === 'function') {
+          togglePrintView();
+        }
       },
     },
   ];
