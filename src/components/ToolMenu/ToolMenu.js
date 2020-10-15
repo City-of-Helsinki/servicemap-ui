@@ -5,14 +5,42 @@ import URI from 'urijs';
 import {
   Build, Code, GetApp,
 } from '@material-ui/icons';
+import { useSelector } from 'react-redux';
 import DropDownMenuButton from '../DropDownMenuButton';
 import useDownloadData from '../../utils/downloadData';
 import SMIcon from '../SMIcon/SMIcon';
 
 const ToolMenu = ({
-  intl, classes, mapUtility, navigator, setMeasuringMode, measuringMode,
+  intl, classes, mapUtility, navigator, setMeasuringMode, measuringMode, currentPage,
 }) => {
   const location = useLocation();
+  const districtState = useSelector(state => state.districts);
+
+
+  const getAreaViewParams = () => {
+    const {
+      districtAddressData, selectedDistrictType, selectedSubdistricts, selectedDistrictServices,
+    } = districtState;
+    const selected = selectedDistrictType
+      ? `selected=${selectedDistrictType}` : null;
+    const districts = selectedSubdistricts.length
+      ? `districts=${selectedSubdistricts.map(i => i).toString()}` : null;
+    const services = selectedDistrictServices.length
+      ? `services=${selectedDistrictServices}` : null;
+    const addressCoordinates = districtAddressData.address
+      ? `lat=${districtAddressData.address.location.coordinates[1]}&lng=${districtAddressData.address.location.coordinates[0]}` : null;
+
+    const params = [
+      ...(selected ? [selected] : []),
+      ...(districts ? [districts] : []),
+      ...(services ? [services] : []),
+      ...(addressCoordinates ? [addressCoordinates] : []),
+    ];
+    if (params.length) {
+      return `?${params.join('&')}`;
+    }
+    return '';
+  };
 
   // Open embedderView
   const openEmbedder = () => {
@@ -28,11 +56,16 @@ const ToolMenu = ({
       search.bbox = mapUtility.getBbox();
     }
     uri.search(search);
+    let searchParams = uri.search();
+
+    if (currentPage === 'area') {
+      searchParams = getAreaViewParams();
+    }
 
     const newLocation = {
       ...location,
       pathname: pathname.join('/'),
-      search: uri.search(),
+      search: searchParams,
     };
 
     navigator.push(newLocation);
@@ -94,6 +127,7 @@ const ToolMenu = ({
 ToolMenu.propTypes = {
   setMeasuringMode: PropTypes.func.isRequired,
   measuringMode: PropTypes.bool.isRequired,
+  currentPage: PropTypes.string.isRequired,
   classes: PropTypes.shape({
     menuContainer: PropTypes.string,
   }).isRequired,

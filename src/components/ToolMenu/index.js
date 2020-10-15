@@ -7,13 +7,16 @@ import MapUtility from '../../utils/mapUtility';
 import { setMeasuringMode } from '../../redux/actions/map';
 
 const mapStateToProps = (state) => {
-  const { mapRef, navigator, measuringMode } = state;
+  const {
+    mapRef, navigator, measuringMode, user,
+  } = state;
   const map = mapRef && mapRef.leafletElement;
 
   return {
     mapUtility: map ? new MapUtility({ map }) : null,
     navigator,
     measuringMode,
+    currentPage: user.page,
   };
 };
 
