@@ -54,10 +54,35 @@ const MarkerCluster = ({
   const intl = useIntl();
   const [cluster, setCluster] = useState(null);
 
-  // Update highlightedUnit to clusterData object for reference
-  useEffect(() => {
-    clusterData.highlightedUnit = highlightedUnit;
-  }, [highlightedUnit]);
+  // Get highlighted unit's marker or cluster marker
+  const getHighlightedMarker = () => {
+    const layers = cluster?._featureGroup?._layers;
+    if (layers && highlightedUnit?.id) {
+      const mIndex = Object.keys(layers).find((m) => {
+        const current = layers[m];
+        if (current instanceof global.L.MarkerCluster) {
+          const clusterMarkers = current.getAllChildMarkers();
+          const marker = clusterMarkers.some(marker => marker?.options?.customUnitData?.id === highlightedUnit.id);
+          return marker;
+        }
+        return current?.options?.customUnitData?.id === highlightedUnit.id;
+      });
+      return layers[mIndex];
+    }
+
+    return null;
+  };
+
+  // Closure function for handling unit based popup content
+  const getUnitPopupContent = (unit) => {
+    const distance = getDistance(unit, intl);
+    return createPopupContent(
+      unit,
+      classes,
+      getLocaleText,
+      distance,
+    );
+  };
 
   // Function for creating custom icon for cluster group
   // https://github.com/Leaflet/Leaflet.markercluster#customising-the-clustered-markers
@@ -79,10 +104,7 @@ const MarkerCluster = ({
         obj => obj.options.customUnitData.id === clusterData.highlightedUnit.id,
       );
       if (marker) {
-        const distance = getDistance(clusterData.highlightedUnit, intl);
-        const tooltipContent = createPopupContent(
-          clusterData.highlightedUnit, classes, getLocaleText, distance,
-        );
+        const tooltipContent = getUnitPopupContent(clusterData.highlightedUnit);
         // Bind popup
         cluster.bindPopup(tooltipContent, popupOptions());
         // Store reference of highlighted cluster
@@ -115,7 +137,7 @@ const MarkerCluster = ({
   const showListOfUnits = () => (map._zoom > clusterPopupVisibility);
 
   // Cluster popup content
-  const clusterPopupContent = () => (units) => {
+  const clusterPopupContent = (units) => {
     // Create container and title
     const container = document.createElement('div');
     container.className = classes.unitTooltipContainer;
@@ -214,7 +236,7 @@ const MarkerCluster = ({
     });
 
     // Create popuelement and add events
-    const elem = clusterPopupContent()(units);
+    const elem = clusterPopupContent(units);
     // Bind and open popup with content to cluster
     a.layer.bindPopup(elem, {
       closeButton: true,
@@ -232,6 +254,30 @@ const MarkerCluster = ({
       clusterData.highlightedMarker.openPopup();
     }
   };
+
+  // Update highlightedUnit to clusterData object for reference
+  useEffect(() => {
+    map.closePopup();
+    if (
+      highlightedUnit
+      && highlightedUnit?.id !== clusterData?.highlightedUnit?.id
+    ) {
+      const marker = getHighlightedMarker();
+      if (marker) {
+        // map.closePopup();
+        if (marker instanceof global.L.MarkerCluster) {
+          const elem = getUnitPopupContent(highlightedUnit);
+          marker.bindPopup(elem, {
+            closeButton: true,
+            offset: [4, -14],
+          }).openPopup();
+        } else {
+          marker.openPopup();
+        }
+      }
+    }
+    clusterData.highlightedUnit = highlightedUnit;
+  }, [highlightedUnit]);
 
   // Create and initialize marker cluster layer on mount
   useEffect(() => {
