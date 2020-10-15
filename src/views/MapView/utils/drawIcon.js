@@ -29,7 +29,7 @@ const stemDefaults = {
 };
 
 // NumberCircleMaker configurations
-const CIRCLE_MARKER_FONT_SIZE = 48;
+const CIRCLE_MARKER_FONT_SIZE = 32;
 const CIRCLE_MARKER_PADDING = 15;
 
 const berryCenter = (value) => {
@@ -148,12 +148,10 @@ export class NumberCircleMaker {
     return ctx.fillText(num, position, position);
   }
 
-  drawCircle = (ctx, diameter) => {
-    return this.stroke(ctx, (ctx) => {
-      const radius = diameter / 2 + CIRCLE_MARKER_PADDING;
-      return ctx.arc(radius, radius, radius, 0, 2 * Math.PI);
-    });
-  }
+  drawCircle = (ctx, diameter) => this.stroke(ctx, (ctx) => {
+    const radius = diameter / 2 + CIRCLE_MARKER_PADDING;
+    return ctx.arc(radius, radius, radius, 0, 2 * Math.PI);
+  });
 
   initContext = (ctx) => {
     ctx.font = `bold ${CIRCLE_MARKER_FONT_SIZE}px sans-serif`;

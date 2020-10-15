@@ -12,10 +12,12 @@ import {
   TableBody,
   Typography,
 } from '@material-ui/core';
+import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { NumberCircleMaker } from '../MapView/utils/drawIcon';
 import CreateMap from '../MapView/utils/createMap';
 import SMButton from '../../components/ServiceMapButton';
+import paths from '../../../config/paths';
 
 const StyledTableRow = withStyles(theme => ({
   root: {
@@ -33,6 +35,7 @@ const PrintView = ({
 }) => {
   const intl = useIntl();
   const [descriptions, setDescriptions] = useState([]);
+  const location = useLocation();
 
   const disableMap = (map) => {
     if (!map) {
@@ -65,17 +68,44 @@ const PrintView = ({
     return markers;
   };
 
+
+  const getClusteredUnits = markerCluster => (
+    markerCluster.getAllChildMarkers().map(mm => mm.options.customUnitData)
+  );
+
+  const isUnitPage = () => paths.unit.regex.test(location.pathname);
+
+  const getID = () => {
+    const parts = location.pathname.split('/');
+    const index = parts.indexOf('unit');
+    const id = parseInt(parts[index + 1], 10);
+    return id;
+  };
+  const unitID = getID();
+
+  const isInvalidUnitPageMarker = (marker) => {
+    let isInvalid = false;
+    if (marker instanceof global.L.MarkerCluster) {
+      const units = getClusteredUnits(marker);
+      isInvalid = !units.find(v => v.id === unitID);
+    } else if (marker.options.customUnitData.id !== unitID) {
+      isInvalid = true;
+    }
+
+    return isInvalid;
+  };
+
   const createMap = () => {
     const mapOptions = CreateMap('servicemap', 'fi');
-    const { options } = mapOptions;
+    const { crs, options } = mapOptions;
     const mapCenter = map.getCenter();
     const mapZoom = map.getZoom();
     const mymap = global.L.map('print-map')
       .setView(mapCenter, mapZoom);
 
     global.L.tileLayer(options.url, {
-      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
       maxZoom: options.maxZoom,
+      crs,
     }).addTo(mymap);
 
     // Layer for markers
@@ -83,9 +113,6 @@ const PrintView = ({
 
     // Add markers
     const markers = getMarkers();
-    const getClusteredUnits = markerCluster => (
-      markerCluster.getAllChildMarkers().map(mm => mm.options.customUnitData)
-    );
     const mapBounds = map.getBounds();
     mymap.fitBounds(mapBounds);
 
@@ -98,25 +125,43 @@ const PrintView = ({
         if (!mapBounds.contains(marker.getLatLng())) {
           return;
         }
-        // Icon size smaller than 70 causes clusters to misbehave when zooming in after printing
-        const iconSize = 60;
+        if (isUnitPage() && isInvalidUnitPageMarker(marker)) {
+          return;
+        }
+        let unitPageUnit;
+
+        const description = {};
+        if (marker instanceof global.L.MarkerCluster) {
+          const units = getClusteredUnits(marker);
+          if (isUnitPage()) {
+            unitPageUnit = units.find(v => v.id === unitID);
+            description.units = [unitPageUnit];
+          } else {
+            description.units = units;
+          }
+        } else {
+          unitPageUnit = marker.options.customUnitData;
+          description.units = [unitPageUnit];
+        }
+        const iconSize = 40;
 
         const canvasIcon = document.createElement('canvas');
         canvasIcon.height = iconSize;
         canvasIcon.width = iconSize;
         const ctx = canvasIcon.getContext('2d');
-        const drawer = new NumberCircleMaker(iconSize / 2);
+        const drawer = new NumberCircleMaker(iconSize);
         // eslint-disable-next-line no-plusplus
         drawer.drawNumberedCircle(ctx, ++vid);
 
         const customIcon = new global.L.Icon({
           iconUrl: canvasIcon.toDataURL(),
           iconSize: [iconSize, iconSize],
-          iconAnchor: [3 * iconSize / 4, iconSize / 4],
         });
 
+        const { coordinates } = unitPageUnit.location;
+
         const customMarker = global.L.marker(
-          marker.getLatLng(),
+          isUnitPage() ? [coordinates[1], coordinates[0]] : marker.getLatLng(),
           {
             icon: customIcon,
           },
@@ -124,15 +169,7 @@ const PrintView = ({
         layer.addLayer(customMarker);
 
 
-        const description = {};
         description.number = vid;
-
-        if (marker instanceof global.L.MarkerCluster) {
-          const units = getClusteredUnits(marker);
-          description.units = units;
-        } else {
-          description.units = [marker.options.customUnitData];
-        }
 
         descriptions.push(description);
       }
@@ -141,7 +178,6 @@ const PrintView = ({
     layer.addTo(mymap);
 
     disableMap(mymap);
-    console.log(descriptions);
 
     setDescriptions(descriptions);
   };
