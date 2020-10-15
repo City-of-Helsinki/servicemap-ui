@@ -95,6 +95,37 @@ const PrintView = ({
     return isInvalid;
   };
 
+  const getUnitPageUnit = (marker) => {
+    if (isUnitPage() && !isInvalidUnitPageMarker(marker)) {
+      let unit;
+
+      if (marker instanceof global.L.MarkerCluster) {
+        const units = getClusteredUnits(marker);
+        unit = units.find(v => v.id === unitID);
+      } else {
+        unit = marker.options.customUnitData;
+      }
+      return unit;
+    }
+    return null;
+  };
+
+  const createCustomIcon = (number) => {
+    const iconSize = 30;
+
+    const canvasIcon = document.createElement('canvas');
+    canvasIcon.height = iconSize;
+    canvasIcon.width = iconSize;
+    const ctx = canvasIcon.getContext('2d');
+    const drawer = new NumberCircleMaker(iconSize);
+    drawer.drawNumberedCircle(ctx, number);
+
+    return new global.L.Icon({
+      iconUrl: canvasIcon.toDataURL(),
+      iconSize: [iconSize, iconSize],
+    });
+  };
+
   const createMap = () => {
     const mapOptions = CreateMap('servicemap', 'fi');
     const { crs, options } = mapOptions;
@@ -128,42 +159,28 @@ const PrintView = ({
         if (isUnitPage() && isInvalidUnitPageMarker(marker)) {
           return;
         }
-        let unitPageUnit;
+        const unitPageUnit = getUnitPageUnit(marker);
 
         const description = {};
-        if (marker instanceof global.L.MarkerCluster) {
-          const units = getClusteredUnits(marker);
-          if (isUnitPage()) {
-            unitPageUnit = units.find(v => v.id === unitID);
-            description.units = [unitPageUnit];
-          } else {
-            description.units = units;
-          }
-        } else {
-          unitPageUnit = marker.options.customUnitData;
+        if (unitPageUnit) {
           description.units = [unitPageUnit];
+        } else if (marker instanceof global.L.MarkerCluster) {
+          const units = getClusteredUnits(marker);
+          description.units = units;
+        } else {
+          description.units = [marker.options.customUnitData];
         }
-        const iconSize = 40;
 
-        const canvasIcon = document.createElement('canvas');
-        canvasIcon.height = iconSize;
-        canvasIcon.width = iconSize;
-        const ctx = canvasIcon.getContext('2d');
-        const drawer = new NumberCircleMaker(iconSize);
-        // eslint-disable-next-line no-plusplus
-        drawer.drawNumberedCircle(ctx, ++vid);
-
-        const customIcon = new global.L.Icon({
-          iconUrl: canvasIcon.toDataURL(),
-          iconSize: [iconSize, iconSize],
-        });
-
-        const { coordinates } = unitPageUnit.location;
+        let coordinates;
+        if (unitPageUnit) {
+          // eslint-disable-next-line prefer-destructuring
+          coordinates = unitPageUnit.location.coordinates;
+        }
 
         const customMarker = global.L.marker(
-          isUnitPage() ? [coordinates[1], coordinates[0]] : marker.getLatLng(),
+          coordinates ? [coordinates[1], coordinates[0]] : marker.getLatLng(),
           {
-            icon: customIcon,
+            icon: createCustomIcon(++vid),
           },
         );
         layer.addLayer(customMarker);
@@ -223,37 +240,52 @@ const PrintView = ({
               </TableHead>
               <TableBody>
                 {
-                  descriptions.map(description => (
-                    <React.Fragment key={description.number}>
-                      <StyledTableRow key={description.number}>
-                        <TableCell>{description.number}</TableCell>
-                        <TableCell>
-                          <Typography variant="subtitle1">
-                            {getLocaleText(description.units[0].name)}
-                          </Typography>
-                          <Typography variant="body2">
-                            {getLocaleText(description.units[0].street_address)}
-                          </Typography>
-                        </TableCell>
-                      </StyledTableRow>
-                      {
-                        description.units.slice(1).map((unit) => {
-                          const name = getLocaleText(unit.name);
-                          const address = getLocaleText(unit.street_address);
-                          const key = `${description.number}-${unit.id}`;
-                          return (
-                            <StyledTableRow key={key}>
-                              <TableCell />
-                              <TableCell>
-                                <Typography variant="subtitle1">{name}</Typography>
-                                <Typography variant="body2">{address}</Typography>
-                              </TableCell>
-                            </StyledTableRow>
-                          );
-                        })
-                      }
-                    </React.Fragment>
-                  ))
+                  descriptions.map((description) => {
+                    if (!description?.units) {
+                      return null;
+                    }
+                    const { name, street_address: address } = description.units[0];
+                    return (
+                      <React.Fragment key={description.number}>
+                        <StyledTableRow key={description.number}>
+                          <TableCell>{description.number}</TableCell>
+                          <TableCell>
+                            <Typography variant="subtitle1">
+                              {getLocaleText(name)}
+                            </Typography>
+                            {
+                              address
+                              && (
+                                <Typography variant="body2">
+                                  {getLocaleText(address)}
+                                </Typography>
+                              )
+                            }
+                          </TableCell>
+                        </StyledTableRow>
+                        {
+                          description.units.slice(1).map((unit) => {
+                            const { name, street_address: address } = unit;
+                            const key = `${description.number}-${unit.id}`;
+                            return (
+                              <StyledTableRow key={key}>
+                                <TableCell />
+                                <TableCell>
+                                  <Typography variant="subtitle1">{getLocaleText(name)}</Typography>
+                                  {
+                                    address
+                                    && (
+                                      <Typography variant="body2">{getLocaleText(address)}</Typography>
+                                    )
+                                  }
+                                </TableCell>
+                              </StyledTableRow>
+                            );
+                          })
+                        }
+                      </React.Fragment>
+                    );
+                  })
                 }
               </TableBody>
             </Table>
