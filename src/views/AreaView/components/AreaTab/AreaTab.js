@@ -26,7 +26,7 @@ const AreaTab = (props) => {
   const {
     districtRadioValue,
     selectedSubdistricts,
-    changeSelectedDistrictType,
+    setDistrictRadioValue,
     setSelectedSubdistricts,
     setSelectedDistrictServices,
     fetching,
@@ -43,21 +43,21 @@ const AreaTab = (props) => {
     getLocaleText,
   } = props;
   const citySettings = useSelector(state => state.settings.cities);
-  const defaultExpanded = selectedSubdistricts.length && selectedSubdistricts[0].type;
+  const defaultExpanded = selectedSubdistricts.length;
   const [expandedSubcategory, setExpandedSubcategory] = useState(defaultExpanded);
 
   const handleRadioChange = (district) => {
     setSelectedSubdistricts([]);
-    changeSelectedDistrictType(district.id);
+    setDistrictRadioValue(district.id);
     setExpandedSubcategory(null);
   };
 
   const handleCheckboxChange = (event, district) => {
     let newArray;
     if (event.target.checked) {
-      newArray = [...selectedSubdistricts, district];
+      newArray = [...selectedSubdistricts, district.ocd_id];
     } else {
-      newArray = selectedSubdistricts.filter(service => service.ocd_id !== district.ocd_id);
+      newArray = selectedSubdistricts.filter(i => i !== district.ocd_id);
     }
     if (newArray === []) {
       setSelectedDistrictServices([]);
@@ -70,7 +70,7 @@ const AreaTab = (props) => {
       if (districtRadioValue !== district.id) {
         setSelectedSubdistricts([]);
       }
-      changeSelectedDistrictType(district.id);
+      setDistrictRadioValue(district.id);
       setExpandedSubcategory(district.id);
     } else {
       setExpandedSubcategory(null);
@@ -79,7 +79,7 @@ const AreaTab = (props) => {
 
   const clearRadioValues = () => {
     setSelectedSubdistricts([]);
-    changeSelectedDistrictType(null);
+    setDistrictRadioValue(null);
     setExpandedSubcategory(null);
   };
 
@@ -179,7 +179,7 @@ const AreaTab = (props) => {
                           <Checkbox
                             onChange={e => handleCheckboxChange(e, districtItem)}
                             checked={selectedSubdistricts.some(
-                              district => district.ocd_id === districtItem.ocd_id,
+                              district => district === districtItem.ocd_id,
                             )}
                           />
                         )}
@@ -342,10 +342,10 @@ AreaTab.propTypes = {
   dataStructure: PropTypes.arrayOf(PropTypes.object).isRequired,
   setSelectedAddress: PropTypes.func.isRequired,
   handleOpen: PropTypes.func.isRequired,
-  changeSelectedDistrictType: PropTypes.func.isRequired,
+  setDistrictRadioValue: PropTypes.func.isRequired,
   setSelectedDistrictServices: PropTypes.func.isRequired,
   setSelectedSubdistricts: PropTypes.func.isRequired,
-  selectedSubdistricts: PropTypes.arrayOf(PropTypes.object).isRequired,
+  selectedSubdistricts: PropTypes.arrayOf(PropTypes.string).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   getLocaleText: PropTypes.func.isRequired,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,

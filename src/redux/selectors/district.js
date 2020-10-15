@@ -12,8 +12,9 @@ const getSelectedDistrictServices = state => state.districts.selectedDistrictSer
 export const getDistrictsByType = createSelector(
   [getSelectedDistrict, getDistrictData],
   (selectedDistrictType, districtData) => {
-    if (selectedDistrictType && districtData) {
-      return districtData.find(obj => obj.id === selectedDistrictType).data;
+    if (selectedDistrictType && districtData.length) {
+      const districtType = districtData.find(obj => obj.id === selectedDistrictType);
+      return districtType ? districtType.data : [];
     }
     return [];
   },
@@ -35,7 +36,7 @@ export const getSubdistrictServices = createSelector(
   (selectedSubdistricts, unitData) => {
     if (selectedSubdistricts.length && unitData) {
       return unitData.filter(
-        unit => selectedSubdistricts.some(district => district.ocd_id === unit.division_id),
+        unit => selectedSubdistricts.some(district => district === unit.division_id),
       );
     }
     return [];
