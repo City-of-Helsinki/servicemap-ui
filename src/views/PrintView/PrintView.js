@@ -55,16 +55,22 @@ const PrintView = ({
 
   const getMarkers = () => {
     const layers = map._layers;
-    const featureGroupID = Object.keys(layers).find((key) => {
+    const markers = [];
+
+    Object.keys(layers).forEach((key) => {
       if (!Object.prototype.hasOwnProperty.call(layers, key)) {
-        return false;
+        return;
       }
       const current = layers[key];
-      return !!current._featureGroup;
+
+      if (
+        current instanceof global.L.MarkerCluster
+        || current instanceof global.L.Marker
+      ) {
+        markers.push(current);
+      }
     });
 
-    const featureGroup = layers[featureGroupID]?._featureGroup;
-    const markers = featureGroup?._layers;
     return markers;
   };
 
@@ -234,7 +240,7 @@ const PrintView = ({
                     {intl.formatMessage({ id: 'print.table.header.number' })}
                   </TableCell>
                   <TableCell>
-                    {intl.formatMessage({ id: 'print.table.header.location' })}
+                    {intl.formatMessage({ id: 'unit' })}
                   </TableCell>
                 </TableRow>
               </TableHead>
@@ -250,9 +256,14 @@ const PrintView = ({
                         <StyledTableRow key={description.number}>
                           <TableCell>{description.number}</TableCell>
                           <TableCell>
-                            <Typography variant="subtitle1">
-                              {getLocaleText(name)}
-                            </Typography>
+                            {
+                              name
+                              && (
+                                <Typography variant="subtitle1">
+                                  {getLocaleText(name)}
+                                </Typography>
+                              )
+                            }
                             {
                               address
                               && (
@@ -271,7 +282,12 @@ const PrintView = ({
                               <StyledTableRow key={key}>
                                 <TableCell />
                                 <TableCell>
-                                  <Typography variant="subtitle1">{getLocaleText(name)}</Typography>
+                                  {
+                                    name
+                                    && (
+                                      <Typography variant="subtitle1">{getLocaleText(name)}</Typography>
+                                    )
+                                  }
                                   {
                                     address
                                     && (
