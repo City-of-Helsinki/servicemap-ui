@@ -12,6 +12,7 @@
     "@material-ui/icons": "^3.0.2",
     "@material-ui/styles": "^4.0.0",
     "@sentry/node": "^5.12.3",
+    "@sentry/react": "^5.25.0",
     "@turf/area": "^6.0.1",
     "@turf/boolean-equal": "^6.0.1",
     "@turf/boolean-within": "^6.0.1",
