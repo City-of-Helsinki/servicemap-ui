@@ -66,23 +66,22 @@ const ToolMenu = ({
       },
     },
     {
+      key: 'printTool',
+      text: 'Tulosta',
+      icon: <Print className={classes.smIcon} />,
+      onClick: () => {
+        if (typeof togglePrintView === 'function') {
+          togglePrintView();
+        }
+      },
+    },
+    {
       key: 'measuringTool',
       text: measuringMode ? intl.formatMessage({ id: 'tool.measuring.stop' }) : intl.formatMessage({ id: 'tool.measuring' }),
       icon: <SMIcon className={classes.smIcon} icon="icon-icon-measuring-tool" />,
       ariaHidden: true,
       onClick: () => {
         setMeasuringMode(!measuringMode);
-      },
-    },
-    {
-      key: 'printTool',
-      text: 'Tulosta',
-      icon: <Print className={classes.smIcon} />,
-      ariaHidden: true,
-      onClick: () => {
-        if (typeof togglePrintView === 'function') {
-          togglePrintView();
-        }
       },
     },
   ];

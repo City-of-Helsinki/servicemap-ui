@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { useIntl } from 'react-intl';
 import {
@@ -27,6 +27,12 @@ const StyledTableRow = withStyles(theme => ({
   },
 }))(TableRow);
 
+const StyledTableCell = withStyles(theme => ({
+  root: {
+    padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
+  },
+}))(TableCell);
+
 const PrintView = ({
   classes,
   getLocaleText,
@@ -36,6 +42,19 @@ const PrintView = ({
   const intl = useIntl();
   const [descriptions, setDescriptions] = useState([]);
   const location = useLocation();
+  const dialogRef = useRef();
+
+  const focusToFirstElement = () => {
+    const dialog = dialogRef.current;
+    const buttons = dialog.querySelectorAll('button');
+    buttons[0].focus();
+  };
+
+  const focusToLastElement = () => {
+    const dialog = dialogRef.current;
+    const buttons = dialog.querySelectorAll('button');
+    buttons[buttons.length - 1].focus();
+  };
 
   const disableMap = (map) => {
     if (!map) {
@@ -147,6 +166,13 @@ const PrintView = ({
 
     // Layer for markers
     const layer = global.L.featureGroup();
+    layer.on('add', () => {
+      // Hide all markers from screen readers
+      document.querySelectorAll('.leaflet-marker-icon').forEach((item) => {
+        item.setAttribute('tabindex', '-1');
+        item.setAttribute('aria-hidden', 'true');
+      });
+    });
 
     // Add markers
     const markers = getMarkers();
@@ -207,10 +233,13 @@ const PrintView = ({
 
   useEffect(() => {
     createMap();
+    focusToFirstElement();
   }, []);
 
   return (
-    <div className={classes.wrapper}>
+    <div ref={dialogRef} role="dialog" className={classes.wrapper}>
+      {/* Empty element that makes keyboard focus loop in dialog */}
+      <Typography variant="srOnly" aria-hidden tabIndex="0" onFocus={focusToLastElement} />
       <div className={classes.container}>
         <div className={classes.buttonContainer}>
           <SMButton
@@ -227,21 +256,25 @@ const PrintView = ({
             onClick={() => {
               window.print();
             }}
-            role="link"
           />
         </div>
-        <div id="print-map" className={classes.map} />
+        <div
+          aria-label={intl.formatMessage({ id: 'map.ariaLabel' })}
+          id="print-map"
+          className={classes.map}
+          tabIndex="-1"
+        />
         <div>
           <TableContainer component={Paper} className={classes.table}>
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>
+                  <StyledTableCell>
                     {intl.formatMessage({ id: 'print.table.header.number' })}
-                  </TableCell>
-                  <TableCell>
+                  </StyledTableCell>
+                  <StyledTableCell>
                     {intl.formatMessage({ id: 'unit' })}
-                  </TableCell>
+                  </StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -254,8 +287,8 @@ const PrintView = ({
                     return (
                       <React.Fragment key={description.number}>
                         <StyledTableRow key={description.number}>
-                          <TableCell>{description.number}</TableCell>
-                          <TableCell>
+                          <StyledTableCell>{description.number}</StyledTableCell>
+                          <StyledTableCell>
                             {
                               name
                               && (
@@ -272,7 +305,7 @@ const PrintView = ({
                                 </Typography>
                               )
                             }
-                          </TableCell>
+                          </StyledTableCell>
                         </StyledTableRow>
                         {
                           description.units.slice(1).map((unit) => {
@@ -280,8 +313,8 @@ const PrintView = ({
                             const key = `${description.number}-${unit.id}`;
                             return (
                               <StyledTableRow key={key}>
-                                <TableCell />
-                                <TableCell>
+                                <StyledTableCell />
+                                <StyledTableCell>
                                   {
                                     name
                                     && (
@@ -294,7 +327,7 @@ const PrintView = ({
                                       <Typography variant="body2">{getLocaleText(address)}</Typography>
                                     )
                                   }
-                                </TableCell>
+                                </StyledTableCell>
                               </StyledTableRow>
                             );
                           })
@@ -309,6 +342,8 @@ const PrintView = ({
           </TableContainer>
         </div>
       </div>
+      {/* Empty element that makes keyboard focus loop in dialog */}
+      <Typography variant="srOnly" aria-hidden tabIndex="0" onFocus={focusToFirstElement} />
     </div>
   );
 };
