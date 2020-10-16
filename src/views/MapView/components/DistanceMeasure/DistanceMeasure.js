@@ -58,7 +58,7 @@ const DistanceMeasure = (props) => {
       iconSize: global.L.point([50, 50]),
       iconAnchor: global.L.point([25, 56]),
       popupAnchor: global.L.point([0, -40]),
-      className: classes.distanceIcon,
+      className: classes.addressIcon,
       html: renderToStaticMarkup(
         <>
           <span className={`${classes.distanceMarkerBackground} icon-icon-hsl-background`} />

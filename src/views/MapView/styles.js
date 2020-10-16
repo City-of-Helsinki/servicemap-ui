@@ -172,7 +172,7 @@ const styles = theme => ({
   bold: {
     fontWeight: 'bold',
   },
-  distanceIcon: {
+  addressIcon: {
     fontSize: 50,
     color: theme.palette.primary.main,
     textShadow: '-1px 0 #fff, 0 1px #fff, 1px 0 #fff, 0 -1px #fff',
@@ -217,6 +217,7 @@ const styles = theme => ({
     height: transitIconSize,
     margin: 0,
     lineHeight: 1,
+    textShadow: '-1px 0 #fff, 0 1px #fff, 1px 0 #fff, 0 -1px #fff',
   },
   transitIconInfo: {
     fontSize: 18,
