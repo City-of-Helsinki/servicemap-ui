@@ -21,6 +21,7 @@ const Districts = ({
   selectedSubdistricts,
   setSelectedSubdistricts,
   setSelectedDistrictServices,
+  embed,
   classes,
   navigator,
   intl,
@@ -122,7 +123,7 @@ const Districts = ({
     if (selectedCities.length) {
       const searchParams = parseSearchParams(location.search);
       filteredData = districtData.filter(district => (searchParams.city
-        ? district.municipality === searchParams.city
+        ? embed && district.municipality === searchParams.city
         : citySettings[district.municipality]));
     } else {
       filteredData = districtData;
@@ -184,7 +185,9 @@ const Districts = ({
           renderSingleDistrict()
         }
         {
-          renderDistrictMarkers(highlightedDistrict)
+          embed && parseSearchParams(location.search).units !== 'none' && (
+            renderDistrictMarkers(highlightedDistrict)
+          )
         }
 
       </>
@@ -221,6 +224,7 @@ Districts.propTypes = {
   selectedSubdistricts: PropTypes.arrayOf(PropTypes.string),
   setSelectedSubdistricts: PropTypes.func.isRequired,
   setSelectedDistrictServices: PropTypes.func.isRequired,
+  embed: PropTypes.bool.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any).isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,

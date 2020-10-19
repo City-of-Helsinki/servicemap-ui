@@ -354,7 +354,7 @@ const MapView = (props) => {
             <UnitMarkers data={getMapUnits()} />
           )}
 
-          <Districts mapOptions={mapOptions} map={mapRef.current} />
+          <Districts mapOptions={mapOptions} map={mapRef.current} embed={embeded} />
 
           <TransitStops
             getLocaleText={getLocaleText}
