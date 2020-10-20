@@ -33,7 +33,7 @@ class SearchView extends React.Component {
 
   componentDidMount() {
     const {
-      fetchUnits, units, map,
+      fetchUnits, units,
     } = this.props;
     const options = this.searchParamData();
 
@@ -45,13 +45,13 @@ class SearchView extends React.Component {
 
     if (this.shouldFetch() && Object.keys(options).length) {
       fetchUnits(options);
-      this.focusMap(units, map);
+      this.focusMap(units);
     }
   }
 
   shouldComponentUpdate(nextProps) {
     const {
-      fetchUnits, units, map,
+      fetchUnits, units,
     } = this.props;
     const {
       isRedirectFetching,
@@ -65,12 +65,12 @@ class SearchView extends React.Component {
     if (this.shouldFetch(nextProps)) {
       const searchData = this.searchParamData(nextProps);
       fetchUnits(searchData);
-      this.focusMap(units, map);
+      this.focusMap(units);
       return false;
     }
-    // If new search results, call map focus functio
-    if (nextProps.units.length > 0 && units !== nextProps.units) {
-      this.focusMap(nextProps.units, map);
+    // If new search results, call map focus function
+    if (nextProps.units.length > 0 && JSON.stringify(units) !== JSON.stringify(nextProps.units)) {
+      this.focusMap(nextProps.units);
     }
     return true;
   }
@@ -217,8 +217,8 @@ class SearchView extends React.Component {
     return false;
   }
 
-  focusMap = (units, map) => {
-    const { location } = this.props;
+  focusMap = (units) => {
+    const { location, map } = this.props;
     if (getSearchParam(location, 'bbox')) {
       return;
     }
