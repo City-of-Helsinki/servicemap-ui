@@ -113,7 +113,7 @@ const PrintView = ({
     if (marker instanceof global.L.MarkerCluster) {
       const units = getClusteredUnits(marker);
       isInvalid = !units.find(v => v.id === unitID);
-    } else if (marker.options.customUnitData.id !== unitID) {
+    } else if (marker?.options?.customUnitData?.id !== unitID) {
       isInvalid = true;
     }
 
