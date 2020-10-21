@@ -246,11 +246,10 @@ const translations = {
   'map.unit.cluster.popup.info': '{count} locations',
 
   // Print
-  'print.alert': 'Työkaluvalikon tulostus printtaa kunnollisen näkymän',
-  'print.button.close': 'Sulje näkymä', // TODO: Translate
-  'print.button.print': 'Tulosta näkymä', // TODO: Translate
-  'print.table.header.number': 'Numero kartalla', // TODO: Translate
-  'print.table.header.location': 'Toimipisteet', // TODO: Translate
+  'print.alert': 'Use the toolbox printing option',
+  'print.button.close': 'Close the view',
+  'print.button.print': 'Print the view',
+  'print.table.header.number': 'Number on the map',
 
   // Units
   'unit': 'Location',
