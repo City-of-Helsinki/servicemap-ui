@@ -102,7 +102,7 @@ class SearchBar extends React.Component {
   }
 
   handleSubmit = (search) => {
-    const { isFetching } = this.props;
+    const { changeSelectedUnit, isFetching } = this.props;
     if (!isFetching && search && search !== '') {
       const {
         fetchUnits, navigator, previousSearch,
@@ -112,6 +112,7 @@ class SearchBar extends React.Component {
       if (search !== previousSearch) {
         this.setState({ search }); // Change current search text to new one
         fetchUnits({ q: search });
+        changeSelectedUnit(null);
       }
 
       if (navigator) {
@@ -150,15 +151,29 @@ class SearchBar extends React.Component {
     return (
       <>
         <Divider aria-hidden />
-        <SuggestionBox
-          visible={showSuggestions}
-          focusedSuggestion={focusedSuggestion}
-          searchQuery={searchQuery}
-          handleArrowClick={value => this.onInputChange(value)}
-          handleSubmit={this.handleSubmit}
-          setSearch={value => this.setState({ search: value })}
-          isMobile
-        />
+        {/* TODO: Modify this class to functional component, to use useMobile hook
+        instead of individual mobile/desktop components. */}
+        <MobileComponent>
+          <SuggestionBox
+            visible={showSuggestions}
+            focusedSuggestion={focusedSuggestion}
+            searchQuery={searchQuery}
+            handleArrowClick={value => this.onInputChange(value)}
+            handleSubmit={this.handleSubmit}
+            setSearch={value => this.setState({ search: value })}
+            isMobile
+          />
+        </MobileComponent>
+        <DesktopComponent>
+          <SuggestionBox
+            visible={showSuggestions}
+            focusedSuggestion={focusedSuggestion}
+            searchQuery={searchQuery}
+            handleArrowClick={value => this.onInputChange(value)}
+            handleSubmit={this.handleSubmit}
+            setSearch={value => this.setState({ search: value })}
+          />
+        </DesktopComponent>
       </>
     );
   }
@@ -224,10 +239,10 @@ class SearchBar extends React.Component {
                 aria-label={intl.formatMessage({ id: 'search.cancelText' })}
                 className={classes.cancelButton}
                 onClick={() => {
-                  if (this.searchRef) {
+                  if (this.searchRef?.current) {
                     // Clear blur timeout to keep suggestion box active
                     clearTimeout(this.blurTimeout);
-                    this.searchRef.focus();
+                    this.searchRef.current.focus();
                   }
                   this.setState({ search: '', searchQuery: '' });
                 }}
@@ -378,7 +393,7 @@ class SearchBar extends React.Component {
                 this.renderInput()
               }
               {
-                this.renderSuggestionBox()
+                this.renderSuggestionBox(true)
               }
             </Paper>
           </div>
@@ -390,6 +405,7 @@ class SearchBar extends React.Component {
 
 SearchBar.propTypes = {
   background: PropTypes.oneOf(['default', 'none']),
+  changeSelectedUnit: PropTypes.func.isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   className: PropTypes.string,
   fetchUnits: PropTypes.func.isRequired,

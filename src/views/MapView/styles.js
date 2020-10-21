@@ -114,6 +114,9 @@ const styles = theme => ({
     ...theme.typography.body2,
     margin: theme.spacing(0, 1),
   },
+  unitTooltipWrapper: {
+    padding: theme.spacing(2),
+  },
   unitPopupList: {
     listStyleType: 'none',
     padding: 0,
@@ -169,13 +172,35 @@ const styles = theme => ({
   bold: {
     fontWeight: 'bold',
   },
-  distanceIcon: {
+  addressIcon: {
     fontSize: 50,
-    color: '#1964e6',
+    color: theme.palette.primary.main,
+    textShadow: '-1px 0 #fff, 0 1px #fff, 1px 0 #fff, 0 -1px #fff',
     outline: 'none',
   },
   distancePopup: {
     padding: 8,
+  },
+  distanceLine: {
+    stroke: theme.palette.measuringStroke.main,
+    strokeDasharray: 12,
+  },
+  distanceLineBackground: {
+    stroke: theme.palette.measuringStroke.background,
+    strokeWidth: 10,
+  },
+  distanceLineBorder: {
+    stroke: '#fff',
+    strokeWidth: 14,
+  },
+  distanceMarkerBackground: {
+    fontFamily: 'hsl-piktoframe',
+    color: '#fff',
+    position: 'absolute',
+    zIndex: theme.zIndex.behind,
+    fontSize: 16,
+    top: 16,
+    left: 16,
   },
 
   // Transit stops
@@ -192,6 +217,7 @@ const styles = theme => ({
     height: transitIconSize,
     margin: 0,
     lineHeight: 1,
+    textShadow: '-1px 0 #fff, 0 1px #fff, 1px 0 #fff, 0 -1px #fff',
   },
   transitIconInfo: {
     fontSize: 18,

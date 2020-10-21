@@ -1,5 +1,5 @@
 /* eslint-disable quote-props */
-export default {
+const translations = {
   'app.title': 'Servicekarta',
 
   // Accessibility
@@ -27,7 +27,7 @@ export default {
   'address.services.info': 'Kommunala tjänster vars verksamhetsområde omfattar positionen',
   'address.area.link': 'Bekanta dig med områdena på kartan.',
   'address.emergency_care.common': 'När den egna hälsostationen är stängd och på natten kl. 22-8 är jour för barn och unga under 16 år på <a>Barnkliniken</a> [<a1>hemsidor</a1>], och jour för vuxna på',
-  'address.emergency_care.children_hospital.link': '/{locale}/unit/7299',
+  'address.emergency_care.children_hospital.link': '/sv/unit/62976',
   'address.emergency_care.common.link': 'https://www.hus.fi/sv/sjukvard/sjukhus/nyabarnsjukhuset/Sidor/default.aspx',
   'address.emergency_care.unit.26107': 'Malms sjukhuset',
   'address.emergency_care.unit.26104': 'Haartmanska sjukhuset',
@@ -451,7 +451,7 @@ export default {
 
   // Tools
   'tool.download': 'Exportera (ny flik)',
-  'tool.measuring': 'Mät avstånd',
+  'tool.measuring': 'Mät avstånd (endast med mus)',
   'tool.measuring.stop': 'Sluta mäta',
 
   'info.title': 'Om tjänsten och tillgänglighetsredogörelsen',
@@ -459,3 +459,16 @@ export default {
 
   'alert.close': 'Stäng meddelande',
 };
+
+let overridingExternalTranslations;
+
+// Read and merge external translations with current translations
+try {
+  // eslint-disable-next-line global-require,import/no-unresolved
+  overridingExternalTranslations = require('./externalTranslations/sv.json');
+} catch (e) {
+  overridingExternalTranslations = {};
+}
+
+const swedishTranslations = { ...translations, ...overridingExternalTranslations };
+export default swedishTranslations;

@@ -19,6 +19,7 @@ import { generatePath } from '../../utils/path';
 import ExpandedSuggestions from '../../components/ExpandedSuggestions';
 import SettingsInfo from '../../components/SettingsInfo';
 import DesktopComponent from '../../components/DesktopComponent';
+import MobileComponent from '../../components/MobileComponent';
 
 class SearchView extends React.Component {
   constructor(props) {
@@ -120,7 +121,7 @@ class SearchView extends React.Component {
   }
 
   searchParamData = (props = null, includeService = false) => {
-    const { location } = props || this.props;
+    const { location, citySettings } = props || this.props;
     const { serviceRedirect } = this.state;
     const redirectNode = serviceRedirect;
     const searchParams = parseSearchParams(location.search);
@@ -181,9 +182,11 @@ class SearchView extends React.Component {
       }
     }
 
+    const settingMunicipality = citySettings && citySettings.join(',');
+
     // Parse municipality
-    if (municipality || city) {
-      options.municipality = municipality || city;
+    if (municipality || city || settingMunicipality) {
+      options.municipality = municipality || city || settingMunicipality;
     }
 
     // Parse search language
@@ -378,19 +381,41 @@ class SearchView extends React.Component {
     }
 
     return (
-      <ExpandedSuggestions
-        searchQuery={query}
-        onClick={() => {
-          this.setState({ expandVisible: false });
-          setTimeout(() => {
-            const elem = document.getElementById('ExpandSuggestions');
-            if (elem) {
-              elem.focus();
-            }
-          }, 1);
-        }}
-        isVisible
-      />
+      <>
+        <DesktopComponent>
+          {/* TODO: Modify this class to functional component, to use useMobile hook
+        instead of individual mobile/desktop components. */}
+          <ExpandedSuggestions
+            searchQuery={query}
+            onClick={() => {
+              this.setState({ expandVisible: false });
+              setTimeout(() => {
+                const elem = document.getElementById('ExpandSuggestions');
+                if (elem) {
+                  elem.focus();
+                }
+              }, 1);
+            }}
+            isVisible
+          />
+        </DesktopComponent>
+        <MobileComponent>
+          <ExpandedSuggestions
+            searchQuery={query}
+            onClick={() => {
+              this.setState({ expandVisible: false });
+              setTimeout(() => {
+                const elem = document.getElementById('ExpandSuggestions');
+                if (elem) {
+                  elem.focus();
+                }
+              }, 1);
+            }}
+            isVisible
+            isMobile
+          />
+        </MobileComponent>
+      </>
     );
   }
 

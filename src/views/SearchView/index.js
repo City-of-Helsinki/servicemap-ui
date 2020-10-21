@@ -6,6 +6,7 @@ import { changeSelectedUnit } from '../../redux/actions/selectedUnit';
 import { getOrderedData } from '../../redux/selectors/results';
 import { getLocaleString } from '../../redux/selectors/locale';
 import { getAddressNavigatorParamsConnector } from '../../utils/address';
+import SettingsUtility from '../../utils/settings';
 
 // Listen to redux state
 const mapStateToProps = (state) => {
@@ -28,6 +29,7 @@ const mapStateToProps = (state) => {
     isFetching,
     isRedirectFetching,
     count,
+    citySettings: SettingsUtility.getActiveCitySettings(state),
     getAddressNavigatorParams,
     max,
     map,

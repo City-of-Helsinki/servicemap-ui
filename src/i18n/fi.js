@@ -1,5 +1,5 @@
 /* eslint-disable quote-props */
-export default {
+const translations = {
   'app.title': 'Palvelukartta',
 
   // Accessibility
@@ -26,9 +26,9 @@ export default {
   'address.services.header': 'Palvelut täällä asuville',
   'address.services.info': 'Kunnalliset palvelut, joiden piiriin sijainti kuuluu',
   'address.area.link': 'Tutustu alueisiin kartalla.',
-  'address.emergency_care.common': 'Terveysaseman ollessa kiinni sekä öisin klo 22- 8 alle 16-vuotiaiden päivystys on <a>Lastenklinikalla</a> [<a1>kotisivut</a1>] ja aikuisten päivystys',
-  'address.emergency_care.children_hospital.link': '/{locale}/unit/7299',
-  'address.emergency_care.common.link': 'http://www.hus.fi/sairaanhoito/sairaalat/lastenklinikka/Sivut/default.aspx',
+  'address.emergency_care.common': 'Terveysaseman ollessa kiinni sekä öisin klo 22- 8 alle 16-vuotiaiden päivystys on <a>Lastensairaalassa</a> [<a1>kotisivut</a1>] ja aikuisten päivystys',
+  'address.emergency_care.children_hospital.link': '/fi/unit/62976',
+  'address.emergency_care.common.link': 'https://www.hus.fi/sairaanhoito/sairaalat/Uusi-lastensairaala/Sivut/default.aspx',
   'address.emergency_care.unit.26107': 'Malmin sairaalassa',
   'address.emergency_care.unit.26104': 'Haartmanin sairaalassa',
   'address.emergency_care.link': 'http://www.hel.fi/www/Helsinki/fi/sosiaali-ja-terveyspalvelut/terveyspalvelut/paivystys/',
@@ -453,7 +453,7 @@ export default {
 
   // Tools
   'tool.download': 'Lataa tiedot (uusi välilehti)',
-  'tool.measuring': 'Mittaa etäisyys',
+  'tool.measuring': 'Mittaa etäisyys (käytettävissä vain hiirellä)',
   'tool.measuring.stop': 'Lopeta mittaus',
 
   'info.title': 'Tietoa palvelusta ja saavutettavuusseloste',
@@ -461,3 +461,16 @@ export default {
 
   'alert.close': 'Sulje ilmoitus',
 };
+
+let overridingExternalTranslations;
+
+// Read and merge external translations with current translations
+try {
+  // eslint-disable-next-line global-require,import/no-unresolved
+  overridingExternalTranslations = require('./externalTranslations/fi.json');
+} catch (e) {
+  overridingExternalTranslations = {};
+}
+
+const finnishTranslations = { ...translations, ...overridingExternalTranslations };
+export default finnishTranslations;

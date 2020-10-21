@@ -158,10 +158,7 @@ const DivisionItem = ({
                       <a
                         className="link"
                         href={
-                          intl.formatMessage({
-                            id: 'address.emergency_care.children_hospital.link',
-                          },
-                          { locale })
+                          intl.formatMessage({ id: 'address.emergency_care.children_hospital.link' })
                         }
                       >
                         {txt}

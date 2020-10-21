@@ -30,6 +30,9 @@ const js = {
       ],
       [
         require.resolve('babel-plugin-transform-class-properties')
+      ],
+      [
+        require.resolve('@babel/plugin-proposal-optional-chaining')
       ]
     ],
     // This is a feature of `babel-loader` for webpack (not Babel itself).
@@ -69,7 +72,10 @@ const icons = (isClient = true) => ({
 
 const css = {
   test: /\.css$/,
-  exclude: /node_modules/,
+  include: [
+    path.resolve(__dirname, "src"),
+    /node_modules\/leaflet.markercluster/
+  ],
   use: [
     'isomorphic-style-loader',
     {

@@ -98,6 +98,29 @@ const FeedbackView = ({
     });
   };
 
+  let feedbackPermission = null;
+
+  // Show/Hide feedback permission checkbox dynamically
+  if (config.feedbackIsPublished) {
+    feedbackPermission = (
+      /* Permission checkbox */
+      <FormControl>
+        <div className={classes.checkbox}>
+          <Checkbox
+            icon={<span className={classes.checkBoxIcon} />}
+            size="small"
+            color="primary"
+            onChange={() => setPermission(!permission)}
+            inputProps={{ title: intl.formatMessage({ id: 'feedback.permission' }) }}
+            aria-describedby="checkboxTitle"
+            classes={{ root: classes.box }}
+          />
+          <Typography aria-hidden><FormattedMessage id="feedback.permission" /></Typography>
+        </div>
+      </FormControl>
+    );
+  }
+
   return (
     <>
       {/* Exit dialog */}
@@ -106,26 +129,31 @@ const FeedbackView = ({
         message={intl.formatMessage({ id: 'feedback.modal.leave' })}
       />
       {/* Confirm dialog */}
-      <Dialog open={!!modalOpen}>
-        <div className={classes.modalContainer}>
-          <Typography className={classes.modalTitle}>
-            <FormattedMessage id={modalOpen === 'send' ? 'feedback.modal.success' : 'feedback.modal.error'} />
-          </Typography>
-          <SMButton
-            margin
-            role="button"
-            className={classes.modalButton}
-            messageID="feedback.modal.confirm"
-            color="primary"
-            onClick={() => {
-              setModalOpen(false);
-              if (modalOpen === 'send') {
-                navigator.goBack();
-              }
-            }}
-          />
-        </div>
-      </Dialog>
+      {
+        modalOpen
+        && (
+          <Dialog open={!!modalOpen}>
+            <div className={classes.modalContainer}>
+              <Typography className={classes.modalTitle}>
+                <FormattedMessage id={modalOpen === 'send' ? 'feedback.modal.success' : 'feedback.modal.error'} />
+              </Typography>
+              <SMButton
+                margin
+                role="button"
+                className={classes.modalButton}
+                messageID="feedback.modal.confirm"
+                color="primary"
+                onClick={() => {
+                  setModalOpen(false);
+                  if (modalOpen === 'send') {
+                    navigator.goBack();
+                  }
+                }}
+              />
+            </div>
+          </Dialog>
+        )
+      }
 
       <form className={classes.container}>
         <TitleBar
@@ -180,22 +208,7 @@ const FeedbackView = ({
               </Typography>
             </div>
           </FormControl>
-
-          {/* Permission checkbox */}
-          <FormControl>
-            <div className={classes.checkbox}>
-              <Checkbox
-                icon={<span className={classes.checkBoxIcon} />}
-                size="small"
-                color="primary"
-                onChange={() => setPermission(!permission)}
-                inputProps={{ title: intl.formatMessage({ id: 'feedback.permission' }) }}
-                aria-describedby="checkboxTitle"
-                classes={{ root: classes.box }}
-              />
-              <Typography aria-hidden><FormattedMessage id="feedback.permission" /></Typography>
-            </div>
-          </FormControl>
+          {feedbackPermission}
         </div>
 
         <div className={classes.bottomArea}>
@@ -203,7 +216,7 @@ const FeedbackView = ({
           <ButtonBase
             className={classes.link}
             role="link"
-            onClick={() => window.open('https://www.hel.fi/helsinki/fi/kaupunki-ja-hallinto/osallistu-ja-vaikuta/palaute/ohjeita-palautteesta')}
+            onClick={() => window.open(config.feedbackAdditionalInfoLink)}
           >
             <Typography><FormattedMessage id="feedback.additionalInfo.link" /></Typography>
           </ButtonBase>

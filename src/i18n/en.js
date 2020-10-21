@@ -1,5 +1,5 @@
 /* eslint-disable quote-props */
-export default {
+const translations = {
   'app.title': 'Service map',
 
   // Accessibility
@@ -27,7 +27,7 @@ export default {
   'address.services.info': 'Services for people who live here',
   'address.area.link': 'Get to know the areas on the map.',
   'address.emergency_care.common': 'When your health station is closed and in the night between 22-8, emergency care for children and young people under age 16 is provided at <a>Children\'s Hospital</a> [<a1>homepage</a1>], and for adults at',
-  'address.emergency_care.children_hospital.link': '/{locale}/unit/7299',
+  'address.emergency_care.children_hospital.link': '/en/unit/62976',
   'address.emergency_care.common.link': 'https://www.hus.fi/en/medical-care/hospitals/newchildrenshospital/Pages/default.aspx',
   'address.emergency_care.unit.26107': 'Malmi hospital',
   'address.emergency_care.unit.26104': 'Haartman hospital',
@@ -451,7 +451,7 @@ export default {
 
   // Tools
   'tool.download': 'Download data (new tab)',
-  'tool.measuring': 'Measure distance',
+  'tool.measuring': 'Measure distance (mouse only)',
   'tool.measuring.stop': 'Stop measuring',
 
   'info.title': 'About the service and accessibility statement',
@@ -459,3 +459,16 @@ export default {
 
   'alert.close': 'Close the notification',
 };
+
+let overridingExternalTranslations;
+
+// Read and merge external translations with current translations
+try {
+  // eslint-disable-next-line global-require,import/no-unresolved
+  overridingExternalTranslations = require('./externalTranslations/en.json');
+} catch (e) {
+  overridingExternalTranslations = {};
+}
+
+const englishTranslations = { ...translations, ...overridingExternalTranslations };
+export default englishTranslations;

@@ -22,6 +22,7 @@ import DesktopComponent from '../../components/DesktopComponent';
 import MobileComponent from '../../components/MobileComponent';
 import DivisionItem from '../../components/ListItems/DivisionItem';
 import { parseSearchParams } from '../../utils';
+import config from '../../../config';
 
 
 const hiddenDivisions = {
@@ -244,16 +245,6 @@ const AddressView = (props) => {
   const title = getAddressText(addressData, getLocaleText);
   const tabs = [
     {
-      ariaLabel: intl.formatMessage({ id: 'service.nearby' }),
-      component: renderClosebyServices(),
-      data: null,
-      itemsPerPage: null,
-      title: intl.formatMessage({ id: 'service.nearby' }),
-      onClick: () => {
-        setToRender('adminDistricts');
-      },
-    },
-    {
       ariaLabel: intl.formatMessage({ id: 'address.nearby' }),
       component: renderNearbyList(),
       data: units,
@@ -265,6 +256,21 @@ const AddressView = (props) => {
       },
     },
   ];
+
+  // Show/Hide nearby service tab dynamically, show only if area selection is shown
+  if (config.showAreaSelection) {
+    const nearbyServicesTab = {
+      ariaLabel: intl.formatMessage({id: 'service.nearby'}),
+      component: renderClosebyServices(),
+      data: null,
+      itemsPerPage: null,
+      title: intl.formatMessage({id: 'service.nearby'}),
+      onClick: () => {
+        setToRender('adminDistricts');
+      },
+    };
+    tabs.unshift(nearbyServicesTab);
+  }
 
   useEffect(() => {
     const searchParams = parseSearchParams(location.search);

@@ -14,7 +14,14 @@ import useMobileStatus from '../../utils/isMobile';
 import AddressSearchBar from '../AddressSearchBar';
 
 const TabLists = ({
-  changeCustomUserLocation, location, data, headerComponents, navigator, classes, intl, userAddress,
+  changeCustomUserLocation,
+  location,
+  data,
+  headerComponents,
+  navigator,
+  classes,
+  intl,
+  userAddress,
 }) => {
   // Option to change number of items shown per page
   const itemsPerPage = 10;
@@ -23,7 +30,11 @@ const TabLists = ({
 
   const searchParams = parseSearchParams(location.search);
   const getPagefromUrl = () => parseInt(searchParams.p, 10) || 1;
-  const getTabfromUrl = () => parseInt(searchParams.t, 10) || 0;
+  const getTabfromUrl = () => {
+    let index = data.findIndex(tab => tab.id === searchParams.t);
+    if (index === -1) index = parseInt(searchParams.t, 10) || 0;
+    return index;
+  };
 
   const tabTitleClass = 'TabResultTitle';
   const sidebarClass = 'SidebarWrapper';
@@ -102,7 +113,12 @@ const TabLists = ({
     // Change page parameter in searchParams
     const searchParams = parseSearchParams(location.search);
     searchParams.p = 1;
-    searchParams.t = value;
+
+    if (data[value].id) {
+      searchParams.t = data[value].id;
+    } else {
+      searchParams.t = value;
+    }
 
     // Get new search search params string
     const searchString = stringifySearchParams(searchParams);
@@ -143,15 +159,13 @@ const TabLists = ({
       const classes = sibling.className;
       if (classes.indexOf('sticky') > -1 && typeof sibling.clientHeight === 'number') {
         // Calculate top padding by checking previous sticky siblings top value and height
-        stickyElementPadding += parseInt(getComputedStyle(sibling).top, 10);
         stickyElementPadding += sibling.clientHeight;
       }
     }
 
-    if (isMobile && stickyElementPadding === 0) {
-      stickyElementPadding = appBarHeight;
+    if (isMobile) {
+      stickyElementPadding += appBarHeight;
     }
-
     if (
       typeof stickyElementPadding === 'number'
       && typeof tabsDistanceFromTop === 'number'
@@ -159,7 +173,7 @@ const TabLists = ({
     ) {
       // Set new styles and scrollDistance value to state
       setStyles({ top: stickyElementPadding });
-      setScrollDistance(tabsDistanceFromTop - stickyElementPadding);
+      setScrollDistance(tabsDistanceFromTop);
     }
   };
 
@@ -205,8 +219,6 @@ const TabLists = ({
           )
         }
         <Tabs
-          // TODO: In materialUI 4.*
-          // Change to use ref and update height calculations in componentDidMount
           ref={tabsRef}
           className={`sticky ${classes.root}`}
           classes={{

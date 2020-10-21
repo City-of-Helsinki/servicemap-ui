@@ -190,7 +190,7 @@ const AreaView = ({
 
   const filterFetchData = (data, type, category) => {
     let filteredData = [];
-    data.results.forEach((district) => {
+    data.forEach((district) => {
       // Skip if district is already marked as overlaping with another district
       if (filteredData.some(obj => obj.overlaping
         && obj.overlaping.some(item => item.id === district.id))) {
@@ -200,7 +200,7 @@ const AreaView = ({
       returnItem.category = category;
 
       // Combine other districts that are duplicates or within this district
-      const overlapingDistricts = data.results.filter(obj => compareBoundaries(district, obj));
+      const overlapingDistricts = data.filter(obj => compareBoundaries(district, obj));
 
       if (overlapingDistricts.length) {
         returnItem.overlaping = overlapingDistricts;
@@ -234,20 +234,21 @@ const AreaView = ({
       });
   };
 
-  const fetchDistrictsByType = async (type, category) => {
+  const fetchDistrictsByType = async (type, id) => {
     const options = {
       page: 1,
-      page_size: 200,
+      page_size: 500,
       type,
       geometry: true,
       unit_include: 'name,location,street_address',
     };
-    await districtFetch(options)
+    return districtFetch(options)
       .then((data) => {
-        filterFetchData(data, type, category);
+        const filteredData = data.results.filter(i => i.boundary && i.boundary.coordinates);
+        return { data: filteredData, type };
       })
       .catch(() => {
-        dispatchFetching({ type: 'remove', value: type });
+        dispatchFetching({ type: 'remove', value: id });
       });
   };
 
@@ -281,8 +282,11 @@ const AreaView = ({
       && !fetching.includes(item.title)
     ) {
       dispatchFetching({ type: 'add', value: item.title });
-      Promise.all(item.districts.map(i => fetchDistrictsByType(i, item.id)))
-        .then(() => dispatchFetching({ type: 'remove', value: item.title }));
+      Promise.all(item.districts.map(i => fetchDistrictsByType(i, item.title)))
+        .then((results) => {
+          dispatchFetching({ type: 'remove', value: item.title });
+          results.forEach(result => filterFetchData(result.data, result.type));
+        });
     }
   };
 
