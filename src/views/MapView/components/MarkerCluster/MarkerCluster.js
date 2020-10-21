@@ -41,6 +41,7 @@ const clusterData = {};
 
 const MarkerCluster = ({
   classes,
+  currentPage,
   data,
   getDistance,
   getLocaleText,
@@ -55,8 +56,9 @@ const MarkerCluster = ({
   const [cluster, setCluster] = useState(null);
 
   // Get highlighted unit's marker or cluster marker
-  const getHighlightedMarker = () => {
-    const layers = cluster?._featureGroup?._layers;
+  const getHighlightedMarker = (layerSet) => {
+    const layers = layerSet || cluster?._featureGroup?._layers;
+    const { highlightedUnit } = clusterData;
     if (layers && highlightedUnit?.id) {
       const mIndex = Object.keys(layers).find((m) => {
         const current = layers[m];
@@ -84,6 +86,36 @@ const MarkerCluster = ({
     );
   };
 
+  // Open highlighted units' popup
+  const openHighlightUnitPopup = (mapLayers) => {
+    const highlightedMarker = getHighlightedMarker(mapLayers);
+    if (highlightedMarker && UnitHelper.isUnitPage()) {
+      const tooltipContent = getUnitPopupContent(clusterData.highlightedUnit);
+      if (highlightedMarker instanceof global.L.MarkerCluster) {
+        highlightedMarker.bindPopup(tooltipContent, popupOptions()).openPopup();
+      } else {
+        highlightedMarker.openPopup();
+      }
+    }
+  };
+
+  // Parse unitData from clusterMarker
+  const parseUnitData = (marker) => {
+    if (marker instanceof global.L.MarkerCluster) {
+      const clusterMarkers = marker.getAllChildMarkers();
+      const units = clusterMarkers.map((marker) => {
+        if (marker && marker.options && marker.options.customUnitData) {
+          const data = marker.options.customUnitData;
+          return data;
+        }
+        return null;
+      });
+
+      return units;
+    }
+    return null;
+  };
+
   // Function for creating custom icon for cluster group
   // https://github.com/Leaflet/Leaflet.markercluster#customising-the-clustered-markers
   // NOTE: iconCreateFunction is running by leaflet, which is not support ES6 arrow func syntax
@@ -96,21 +128,6 @@ const MarkerCluster = ({
       className: `unitClusterMarker ${classes.unitClusterMarker}`,
       iconSize: global.L.point(iconSize, iconSize, true),
     });
-
-    // Add cluster tooltip for highlightedUnit
-    if (clusterData.highlightedUnit && UnitHelper.isUnitPage()) {
-      const markers = cluster.getAllChildMarkers();
-      const marker = markers.find(
-        obj => obj.options.customUnitData.id === clusterData.highlightedUnit.id,
-      );
-      if (marker) {
-        const tooltipContent = getUnitPopupContent(clusterData.highlightedUnit);
-        // Bind popup
-        cluster.bindPopup(tooltipContent, popupOptions());
-        // Store reference of highlighted cluster
-        clusterData.highlightedCluster = cluster;
-      }
-    }
     return icon;
   };
 
@@ -226,14 +243,7 @@ const MarkerCluster = ({
     if (cluster.isPopupOpen()) {
       return;
     }
-    const clusterMarkers = a.layer.getAllChildMarkers();
-    const units = clusterMarkers.map((marker) => {
-      if (marker && marker.options && marker.options.customUnitData) {
-        const data = marker.options.customUnitData;
-        return data;
-      }
-      return null;
-    });
+    const units = parseUnitData(cluster);
 
     // Create popuelement and add events
     const elem = clusterPopupContent(units);
@@ -244,40 +254,24 @@ const MarkerCluster = ({
     }).openPopup();
   };
 
-  const clusterAnimationEnd = () => {
-    // Open highlighted cluster popup
-    if (clusterData.highlightedCluster) {
-      clusterData.highlightedCluster.openPopup();
-    }
-    // Open highlighted marker popup
-    if (clusterData.highlightedMarker) {
-      clusterData.highlightedMarker.openPopup();
-    }
+  const clusterAnimationEnd = (a) => {
+    // Handle highlighted marker's popup opening when clusters change
+    const mapLayers = a?.target?._map?._layers;
+    openHighlightUnitPopup(mapLayers);
   };
 
   // Update highlightedUnit to clusterData object for reference
   useEffect(() => {
-    map.closePopup();
-    if (
-      highlightedUnit
-      && highlightedUnit?.id !== clusterData?.highlightedUnit?.id
-    ) {
-      const marker = getHighlightedMarker();
-      if (marker) {
-        // map.closePopup();
-        if (marker instanceof global.L.MarkerCluster) {
-          const elem = getUnitPopupContent(highlightedUnit);
-          marker.bindPopup(elem, {
-            closeButton: true,
-            offset: [4, -14],
-          }).openPopup();
-        } else {
-          marker.openPopup();
-        }
-      }
-    }
     clusterData.highlightedUnit = highlightedUnit;
-  }, [highlightedUnit]);
+    if (!highlightedUnit) {
+      return;
+    }
+    if (highlightedUnit && currentPage === 'search') {
+      map.closePopup();
+      return;
+    }
+    openHighlightUnitPopup();
+  }, [highlightedUnit, currentPage]);
 
   // Create and initialize marker cluster layer on mount
   useEffect(() => {
@@ -377,14 +371,6 @@ const MarkerCluster = ({
     // Add markers in bulk
     cluster.addLayers(markers);
 
-    // Open highlighted marker popup
-    if (clusterData.highlightedMarker && !clusterData.highlightedMarker.isPopupOpen()) {
-      clusterData.highlightedMarker.openPopup();
-    }
-    // Open highlighted cluster popup
-    if (clusterData.highlightedCluster && !clusterData.highlightedCluster.isPopupOpen()) {
-      clusterData.highlightedCluster.openPopup();
-    }
 
     // Hide all markers from screen readers
     document.querySelectorAll('.leaflet-marker-icon').forEach((item) => {
