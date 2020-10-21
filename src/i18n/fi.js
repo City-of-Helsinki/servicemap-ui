@@ -422,7 +422,9 @@ export default {
   'settings.sense.colorblind': 'Minun on vaikea erottaa värejä',
   'settings.info.heading': 'Asetustiedot', // TODO: verify
   'settings.info.title': 'Valitsemasi asetukset vaikuttavat hakutulokseen',
+  'settings.info.title.city': 'Kaupunkiasetukset vaikuttavat aluetietoihin',
   'settings.info.title.noSettings': 'Muuta haku- tai esteettömyysasetuksia',
+  'settings.info.title.noSettings.city': 'Muuta kaupunkiasetuksia rajataksesi alueita',
   'settings.mobility.title': 'Liikkumisrajoitteet',
   'settings.mobility.none': 'Ei liikkumisrajoitteita',
   'settings.mobility.wheelchair': 'Käytän pyörätuolia',
