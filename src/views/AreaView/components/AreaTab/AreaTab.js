@@ -315,7 +315,7 @@ const AreaTab = (props) => {
         onlyCities
         title="settings.info.title.city"
         altTitle="settings.info.title.noSettings.city"
-        settingsPage="citySettings"
+        settingsPage="area"
         noDivider
       />
 

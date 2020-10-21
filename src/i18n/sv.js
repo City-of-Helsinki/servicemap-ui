@@ -409,6 +409,7 @@ const translations = {
   'settings.accessibilitySettings.long': 'Tillgänglighetsinställningar',
   'settings.mobile.long': 'Inställningar',
   'settings.search.long': 'Inställningar',
+  'settings.area.long': 'Stadsinställningar',
   'settings.amount': `{count, plural,
     one {# val} 
     other {# val}

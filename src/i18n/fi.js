@@ -411,6 +411,7 @@ const translations = {
   'settings.accessibilitySettings.long': 'Esteettömyysasetukset',
   'settings.mobile.long': 'Asetukset',
   'settings.search.long': 'Asetukset',
+  'settings.area.long': 'Kaupunkiasetukset',
   'settings.amount': `{count, plural,
     one {# valinta}
     other {# valintaa}
