@@ -19,8 +19,8 @@ import { useSelector } from 'react-redux';
 import { AreaIcon } from '../../../../components/SMIcon';
 import AddressSearchBar from '../../../../components/AddressSearchBar';
 import MobileComponent from '../../../../components/MobileComponent';
+import SettingsInfo from '../../../../components/SettingsInfo';
 import SMButton from '../../../../components/ServiceMapButton';
-import { uppercaseFirst } from '../../../../utils';
 
 const AreaTab = (props) => {
   const {
@@ -166,7 +166,9 @@ const AreaTab = (props) => {
             return (
               <React.Fragment key={municipality}>
                 <div className={classes.municipalitySubtitle}>
-                  <Typography className={classes.bold}>{uppercaseFirst(municipality)}</Typography>
+                  <Typography className={classes.bold}>
+                    <FormattedMessage id={`settings.city.${municipality}`} />
+                  </Typography>
                 </div>
                 <List disablePadding className={classes.subdistrictList}>
                   <FormGroup aria-label={intl.formatMessage({ id: `area.subdistrict.${district.id}` })}>
@@ -309,6 +311,13 @@ const AreaTab = (props) => {
       <List>
         {dataStructure.map(item => renderCategoryItem(item))}
       </List>
+      <SettingsInfo
+        onlyCities
+        title="settings.info.title.city"
+        altTitle="settings.info.title.noSettings.city"
+        settingsPage="citySettings"
+        noDivider
+      />
 
       <MobileComponent>
         <SMButton

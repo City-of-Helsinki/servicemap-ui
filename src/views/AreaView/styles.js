@@ -45,6 +45,14 @@ const styles = theme => ({
     paddingBottom: theme.spacing(1),
     paddingLeft: theme.spacing(6),
   },
+  municipalitySubtitle: {
+    height: 48,
+    display: 'flex',
+    alignItems: 'center',
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
+    paddingLeft: theme.spacing(4),
+  },
   categoryItem: {
     paddingRight: 32,
     flexDirection: 'column',
