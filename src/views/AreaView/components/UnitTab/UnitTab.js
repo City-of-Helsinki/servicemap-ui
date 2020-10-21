@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   List,
@@ -58,6 +58,10 @@ const UnitTab = ({
     setCheckedServices(newArray);
     setSelectedDistrictServices(newArray);
   };
+
+  useEffect(() => {
+    setCheckedServices(selectedDistrictServices);
+  }, [selectedDistrictServices]);
 
   const renderDistrictUnitItem = district => (
     <DivisionItem
@@ -129,7 +133,7 @@ const UnitTab = ({
                 onFocus={event => event.stopPropagation()}
                 control={(
                   <Checkbox
-                    checked={checkedServices.some(service => service === category.id)}
+                    checked={checkedServices.includes(category.id)}
                     onChange={e => handleCheckboxChange(e, category)}
                   />
               )}

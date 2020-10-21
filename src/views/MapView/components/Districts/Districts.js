@@ -2,10 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Typography } from '@material-ui/core';
 import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import { drawMarkerIcon } from '../../utils/drawIcon';
 import swapCoordinates from '../../utils/swapCoordinates';
 import AddressMarker from '../AddressMarker';
 import useMobileStatus from '../../../../utils/isMobile';
+import { parseSearchParams } from '../../../../utils';
 
 const Districts = ({
   highlightedDistrict,
@@ -19,6 +21,7 @@ const Districts = ({
   selectedSubdistricts,
   setSelectedSubdistricts,
   setSelectedDistrictServices,
+  embed,
   classes,
   navigator,
   intl,
@@ -26,6 +29,7 @@ const Districts = ({
   const { Polygon, Marker, Tooltip } = global.rL;
   const useContrast = theme === 'dark';
   const isMobile = useMobileStatus();
+  const location = useLocation();
   const citySettings = useSelector(state => state.settings.cities);
 
   const districtOnClick = (e, district) => {
@@ -34,10 +38,10 @@ const Districts = ({
       e.originalEvent.view.L.DomEvent.stopPropagation(e);
       // Add/remove district from selected geographical districts
       let newArray;
-      if (selectedSubdistricts.some(item => item.ocd_id === district.ocd_id)) {
-        newArray = selectedSubdistricts.filter(i => i.ocd_id !== district.ocd_id);
+      if (selectedSubdistricts.some(item => item === district.ocd_id)) {
+        newArray = selectedSubdistricts.filter(i => i !== district.ocd_id);
       } else {
-        newArray = [...selectedSubdistricts, district];
+        newArray = [...selectedSubdistricts, district.ocd_id];
       }
       if (newArray === []) {
         setSelectedDistrictServices([]);
@@ -117,7 +121,10 @@ const Districts = ({
     const selectedCities = Object.values(citySettings).filter(city => city);
     let filteredData = [];
     if (selectedCities.length) {
-      filteredData = districtData.filter(district => citySettings[district.municipality]);
+      const searchParams = parseSearchParams(location.search);
+      filteredData = districtData.filter(district => (searchParams.city
+        ? embed && district.municipality === searchParams.city
+        : citySettings[district.municipality]));
     } else {
       filteredData = districtData;
     }
@@ -125,7 +132,7 @@ const Districts = ({
     return filteredData.map((district) => {
       let dimmed;
       if (selectedSubdistricts.length) {
-        dimmed = !selectedSubdistricts.some(item => item.ocd_id === district.ocd_id);
+        dimmed = !selectedSubdistricts.some(item => item === district.ocd_id);
       } else {
         dimmed = addressDistrict && district.id !== addressDistrict;
       }
@@ -178,7 +185,9 @@ const Districts = ({
           renderSingleDistrict()
         }
         {
-          renderDistrictMarkers(highlightedDistrict)
+          embed && parseSearchParams(location.search).units !== 'none' && (
+            renderDistrictMarkers(highlightedDistrict)
+          )
         }
 
       </>
@@ -212,9 +221,10 @@ Districts.propTypes = {
   selectedAddress: PropTypes.objectOf(PropTypes.any),
   districtData: PropTypes.arrayOf(PropTypes.object),
   addressDistrict: PropTypes.number,
-  selectedSubdistricts: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
+  selectedSubdistricts: PropTypes.arrayOf(PropTypes.string),
   setSelectedSubdistricts: PropTypes.func.isRequired,
   setSelectedDistrictServices: PropTypes.func.isRequired,
+  embed: PropTypes.bool.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any).isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,

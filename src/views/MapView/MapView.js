@@ -329,7 +329,7 @@ const MapView = (props) => {
             url={mapObject.options.url}
             attribution='&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors'
           />
-          <Districts mapOptions={mapOptions} map={mapRef.current} />
+          <Districts mapOptions={mapOptions} map={mapRef.current} embed={embeded} />
 
           <TransitStops
             getLocaleText={getLocaleText}
