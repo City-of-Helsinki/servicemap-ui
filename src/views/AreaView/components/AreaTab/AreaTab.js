@@ -141,6 +141,8 @@ const AreaTab = (props) => {
       (a, b) => citiesInOrder.indexOf(a[0].municipality) - citiesInOrder.indexOf(b[0].municipality),
     );
 
+    const expandedState = expandedSubcategory === district.id;
+
     return (
       <Accordion
         square
@@ -148,47 +150,48 @@ const AreaTab = (props) => {
         classes={{ root: classes.expandingElement }}
         TransitionProps={{ timeout: 250, unmountOnExit: true }}
         defaultExpanded={defaultExpanded === district.id}
-        expanded={expandedSubcategory === district.id}
+        expanded={expandedState}
       >
         <AccordionSummary
-          id={`${district.id}-header`}
-          aria-controls={`${district.id}-content`}
+          aria-label={!expandedState
+            ? intl.formatMessage({ id: 'area.choose.subdistrict' }, { category: intl.formatMessage({ id: `area.list.${district.name}` }) })
+            : intl.formatMessage({ id: 'area.close.subdistrict' }, { category: intl.formatMessage({ id: `area.list.${district.name}` }) })
+          }
           expandIcon={<ArrowDropDown />}
           classes={{ root: classes.accordionSummary }}
-          onClick={event => event.stopPropagation()}
-          onFocus={event => event.stopPropagation()}
         >
           {renderDistrictItem(district)}
         </AccordionSummary>
-        <AccordionDetails style={{ flexDirection: 'column' }} id={`${district.id}-content`}>
+        <AccordionDetails className={classes.subdistrictContainer}>
           {cityFilteredData.map((data) => {
             const { municipality } = data[0];
             return (
               <React.Fragment key={municipality}>
                 <div className={classes.municipalitySubtitle}>
-                  <Typography className={classes.bold}>
+                  <Typography component="h4" className={classes.bold}>
                     <FormattedMessage id={`settings.city.${municipality}`} />
                   </Typography>
                 </div>
-                <List disablePadding className={classes.subdistrictList}>
-                  <FormGroup aria-label={intl.formatMessage({ id: `area.subdistrict.${district.id}` })}>
+                <FormGroup>
+                  <List disablePadding className={classes.subdistrictList}>
                     {data.map(districtItem => (
-                      <FormControlLabel
-                        key={districtItem.id}
-                        value={districtItem.ocd_id}
-                        label={<Typography>{getLocaleText(districtItem.name)}</Typography>}
-                        control={(
-                          <Checkbox
-                            onChange={e => handleCheckboxChange(e, districtItem)}
-                            checked={selectedSubdistricts.some(
-                              district => district === districtItem.ocd_id,
-                            )}
-                          />
-                        )}
-                      />
+                      <ListItem key={districtItem.id}>
+                        <FormControlLabel
+                          value={districtItem.ocd_id}
+                          control={(
+                            <Checkbox
+                              onChange={e => handleCheckboxChange(e, districtItem)}
+                              checked={selectedSubdistricts.some(
+                                district => district === districtItem.ocd_id,
+                              )}
+                            />
+                          )}
+                          label={<Typography>{getLocaleText(districtItem.name)}</Typography>}
+                        />
+                      </ListItem>
                     ))}
-                  </FormGroup>
-                </List>
+                  </List>
+                </FormGroup>
               </React.Fragment>
             );
           })}
@@ -262,10 +265,12 @@ const AreaTab = (props) => {
           }}
         >
           <AccordionSummary
+            id={`${item.id}-header`}
+            aria-controls={`${item.id}-content`}
             expandIcon={<ArrowDropDown />}
             classes={{ root: classes.accordionSummary }}
           >
-            <div className={classes.categoryItemTitle}>
+            <div id={`${item.id}-content`} className={classes.categoryItemTitle}>
               <AreaIcon className={classes.rightPadding} />
               <Typography className={classes.bold}>{item.title}</Typography>
             </div>

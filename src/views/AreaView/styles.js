@@ -116,8 +116,11 @@ const styles = theme => ({
   selectedAddress: {
     fontSize: 18,
   },
+  subdistrictContainer: {
+    flexDirection: 'column',
+  },
   subdistrictList: {
-    paddingLeft: 32,
+    paddingLeft: theme.spacing(3),
   },
   expandingElement: {
     boxShadow: 'none',
