@@ -293,7 +293,7 @@ const PrintView = ({
                             {
                               name
                               && (
-                                <Typography variant="subtitle1">
+                                <Typography variant="subtitle1" component="p">
                                   {getLocaleText(name)}
                                 </Typography>
                               )
@@ -319,7 +319,7 @@ const PrintView = ({
                                   {
                                     name
                                     && (
-                                      <Typography variant="subtitle1">{getLocaleText(name)}</Typography>
+                                      <Typography variant="subtitle1" component="p">{getLocaleText(name)}</Typography>
                                     )
                                   }
                                   {
