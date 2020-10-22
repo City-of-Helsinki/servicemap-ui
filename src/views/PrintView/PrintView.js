@@ -256,6 +256,7 @@ const PrintView = ({
             onClick={() => {
               window.print();
             }}
+            role="button"
           />
         </div>
         <div
