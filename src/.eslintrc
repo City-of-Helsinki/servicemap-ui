@@ -3,6 +3,7 @@
     "rules": {
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
         "no-shadow": 0,
+        "no-console": ["error", { "allow": ["warn"] }],
         "no-param-reassign": ["error", { "props": false }]
     },
     "env": {
