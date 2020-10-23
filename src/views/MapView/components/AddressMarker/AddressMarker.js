@@ -3,7 +3,6 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { getAddressText } from '../../../../utils/address';
-import { AddressIcon } from '../../../../components/SMIcon';
 
 const AddressMarker = ({
   address,
@@ -21,8 +20,12 @@ const AddressMarker = ({
   // eslint-disable-next-line global-require
   const { divIcon } = require('leaflet');
   const addressIcon = divIcon({
+    className: classes.addressIcon,
     html: renderToStaticMarkup(
-      <AddressIcon style={{ fontSize: 36 }} />,
+      <>
+        <span className={`${classes.distanceMarkerBackground} icon-icon-hsl-background`} />
+        <span className="icon-icon-address" />
+      </>,
     ),
     iconSize: [45, 45],
     iconAnchor: [22, 42],

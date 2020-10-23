@@ -124,7 +124,7 @@ const MapView = (props) => {
       }
     }
     return null;
-  }
+  };
 
   const setClickCoordinates = (ev) => {
     setMapClickPoint(null);
@@ -217,7 +217,7 @@ const MapView = (props) => {
   }, [settings.mapType]);
 
   useEffect(() => {
-    if (!mapUtility && mapRef.current) {
+    if (mapRef.current) {
       setMapUtility(new MapUtility({ leaflet: mapRef.current.leafletElement }));
     }
   }, [mapRef.current]);

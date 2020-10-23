@@ -3,15 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@babel/plugin-proposal-class-properties": "^7.3.4",
-    "@babel/plugin-proposal-optional-chaining": "^7.11.0",
-    "@babel/runtime": "^7.4.2",
     "@formatjs/intl-pluralrules": "^1.5.4",
     "@formatjs/intl-relativetimeformat": "^4.5.11",
     "@material-ui/core": "^4.0.0",
     "@material-ui/icons": "^4.0.0",
     "@material-ui/styles": "^4.0.0",
     "@sentry/node": "^5.12.3",
+    "@sentry/react": "^5.25.0",
     "@turf/area": "^6.0.1",
     "@turf/boolean-equal": "^6.0.1",
     "@turf/boolean-within": "^6.0.1",
@@ -19,7 +17,6 @@
     "@turf/point-on-feature": "^5.1.5",
     "abort-controller": "^3.0.0",
     "abortcontroller-polyfill": "^1.4.0",
-    "axe-testcafe": "^1.1.0",
     "core-js": "^3.1.4",
     "dotenv": "^8.1.0",
     "express": "^4.16.4",
@@ -45,11 +42,7 @@
     "redux-thunk": "^2.3.0",
     "regenerator-runtime": "^0.13.3",
     "reselect": "^4.0.0",
-    "testcafe": "^1.1.0",
-    "testcafe-react-selectors": "^4.0.0",
     "urijs": "^1.19.2",
-    "webpack": "^4.29.5",
-    "webpack-cli": "^3.2.3",
     "whatwg-fetch": "^3.0.0"
   },
   "scripts": {
@@ -73,6 +66,10 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.3.4",
+    "@babel/plugin-proposal-optional-chaining": "^7.11.0",
+    "@babel/runtime": "^7.4.2",
+    "axe-testcafe": "^1.1.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "eslint": "^5.16.0",
@@ -83,7 +80,11 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.5.0",
     "jest-canvas-mock": "^2.1.2",
-    "jest-enzyme": "^7.1.2"
+    "jest-enzyme": "^7.1.2",
+    "testcafe": "^1.9.4",
+    "testcafe-react-selectors": "^4.0.0",
+    "webpack": "^4.29.5",
+    "webpack-cli": "^3.2.3"
   },
   "jest": {
     "moduleNameMapper": {

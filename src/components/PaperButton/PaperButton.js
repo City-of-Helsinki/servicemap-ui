@@ -5,7 +5,7 @@ import { Button, Typography } from '@material-ui/core';
 import Container from '../Container';
 
 const PaperButton = ({
-  classes, className, intl, disabled, messageID, onClick, icon, link, subtitleID, noBorder, role, ...rest,
+  classes, className, intl, disabled, messageID, onClick, icon, link, subtitleID, noBorder, role, ...rest
 }) => {
   const clonedIcon = icon ? React.cloneElement(icon, { className: classes.icon }) : null;
   const bRole = role || link ? 'link' : 'button';

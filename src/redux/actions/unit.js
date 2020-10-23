@@ -12,8 +12,7 @@ export const fetchUnits = (
   // searchQuery = null,
   options = null,
   abortController = null,
-) => async (dispatch, getState)
-=> {
+) => async (dispatch, getState) => {
   const { units, user } = getState();
   const { locale } = user;
   if (units.isFetching) {

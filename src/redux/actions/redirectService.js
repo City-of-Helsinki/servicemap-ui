@@ -10,8 +10,7 @@ const {
 const fetchRedirectService = (
   options = null,
   onSuccessFunc,
-) => async (dispatch)
-=> {
+) => async (dispatch) => {
   const onStart = () => dispatch(isFetching());
 
   const onSuccess = (results) => {
