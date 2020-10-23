@@ -30,7 +30,6 @@ const fitUnitsToMap = (units, map) => {
     } catch (err) {
       console.warn('Fit units to map failed', err);
     }
-    map.fitBounds(bounds, { padding: [15, 15], maxZoom: maxZoom - 1 });
   }
 };
 
