@@ -105,9 +105,11 @@ const AreaTab = (props) => {
           <Typography id={`${district.id}Name`} aria-hidden>
             <FormattedMessage id={`area.list.${district.name}`} />
           </Typography>
-          <Typography id={`${district.id}Period`} aria-hidden className={classes.captionText} variant="caption">
-            {`${district.date ? `${district.date.slice(0, 4)}-${district.date.slice(11, 15)}` : ''}`}
-          </Typography>
+          {district.period && (
+            <Typography id={`${district.id}Period`} aria-hidden className={classes.captionText} variant="caption">
+              {district.period}
+            </Typography>
+          )}
         </>
       )}
     />
