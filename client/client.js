@@ -21,6 +21,7 @@ import config from '../config';
 if (config.sentryDSN) {
   Sentry.init({
     dsn: config.sentryDSN,
+    ignoreErrors: ['AbortError'],
   });
 }
 
