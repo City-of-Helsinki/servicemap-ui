@@ -282,6 +282,7 @@ const translations = {
   'unit.address.missing': 'Ingen adress har meddelats',
   'unit.phone': 'Telefonnummer',
   'unit.phone.missing': 'Telefonnummer har inte meddelats',
+  'unit.phone.charge': 'Samtalspriser',
   'unit.email': 'E-postadress',
   'unit.email.missing': 'E-postadress har inte meddelats',
   'unit.opening.hours': 'Öppettider',

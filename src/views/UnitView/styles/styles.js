@@ -118,4 +118,22 @@ export default theme => ({
     marginTop: theme.spacing(2),
     marginLeft: theme.spacing(2),
   },
+  accordionItem: {
+    paddingLeft: theme.spacing(7),
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(3),
+  },
+  accordionRoot: {
+    minHeight: 32,
+  },
+  accordionSummaryRoot: {
+    height: 32,
+    minHeight: 32,
+  },
+  accordionDetailsRoot: {
+    paddingBottom: 0,
+  },
+  callInfoText: {
+    whiteSpace: 'pre-line',
+  },
 });

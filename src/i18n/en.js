@@ -282,6 +282,7 @@ const translations = {
   'unit.address.missing': 'No address provided',
   'unit.phone': 'Phone number',
   'unit.phone.missing': 'No phone number provided',
+  'unit.phone.charge': 'Call charges',
   'unit.email': 'Email',
   'unit.email.missing': 'No email provided',
   'unit.opening.hours': 'Opening hours',

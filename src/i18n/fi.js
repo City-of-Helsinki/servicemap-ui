@@ -284,6 +284,7 @@ const translations = {
   'unit.address.missing': 'Osoitetta ei ilmoitettu',
   'unit.phone': 'Puhelinnumero',
   'unit.phone.missing': 'Puhelinnumeroa ei ilmoitettu',
+  'unit.phone.charge': 'Puhelujen hinnat',
   'unit.email': 'Sähköpostiosoite',
   'unit.email.missing': 'Sähköpostiosoitetta ei ilmoitettu',
   'unit.opening.hours': 'Aukioloajat',

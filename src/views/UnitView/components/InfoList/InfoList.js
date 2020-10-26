@@ -96,6 +96,10 @@ class InfoList extends React.Component {
         return (
           <TitledList title={title} titleComponent={titleComponent}>
             {data.map((item) => {
+              if (item.component) {
+                // Component to override default listitem type
+                return item.component;
+              }
               if (item.value && item.type) {
                 const text = this.formString(item.value, intl);
                 const srText = this.formSrString(item, intl);
@@ -109,7 +113,7 @@ class InfoList extends React.Component {
                       text={text}
                       srText={srText}
                       handleItemClick={() => this.handleItemClick(item.value)}
-                      divider
+                      divider={!item.noDivider}
                     />
                   );
                 }
