@@ -101,6 +101,10 @@ if (typeof settings.USE_PTV_ACCESSIBILITY_API === 'undefined') {
   settings.USE_PTV_ACCESSIBILITY_API = false;
 }
 
+if (typeof settings.SENTRY_DSN_CLIENT === 'undefined') {
+  settings.SENTRY_DSN_CLIENT = false;
+}
+
 let municipalities;
 try {
   municipalities = require('./municipalities.json');
@@ -193,6 +197,7 @@ export default {
     "en": 'en_uk',
     "sv": 'sv_se',
   },
+  "sentryDSN": (settings.SENTRY_DSN_CLIENT !== 'false') ? settings.SENTRY_DSN_CLIENT : false,
   "showAreaSelection": (settings.SHOW_AREA_SELECTION === 'true'),
   "showReadSpeakerButton": (settings.SHOW_READ_SPEAKER_BUTTON === 'true'),
   "feedbackAdditionalInfoLink": settings.FEEDBACK_ADDITIONAL_INFO_LINK,

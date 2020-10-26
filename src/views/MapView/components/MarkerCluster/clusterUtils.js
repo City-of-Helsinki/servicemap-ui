@@ -39,8 +39,8 @@ export const createMarkerClusterLayer = (
   }
 
   // Hide clusters and markers from keyboard after clustering animations are done
-  clusterLayer.on('animationend', () => {
-    if (clusterAnimationend) clusterAnimationend();
+  clusterLayer.on('animationend', (a) => {
+    if (clusterAnimationend) clusterAnimationend(a);
 
     document.querySelectorAll('.leaflet-marker-icon').forEach((item) => {
       item.setAttribute('tabindex', '-1');

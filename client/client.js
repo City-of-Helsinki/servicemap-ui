@@ -4,6 +4,7 @@ import 'regenerator-runtime/runtime';
 import 'whatwg-fetch';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import * as Sentry from "@sentry/react";
 import { Helmet } from 'react-helmet';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
@@ -15,6 +16,13 @@ import App from '../src/App';
 import SettingsUtility from '../src/utils/settings';
 import LocalStorageUtility from '../src/utils/localStorage';
 import favicon from '../src/assets/icons/favicon.ico';
+import config from '../config';
+
+if (config.sentryDSN) {
+  Sentry.init({
+    dsn: config.sentryDSN,
+  });
+}
 
 if (!global.AbortController) {
   global.AbortController = ac.AbortController;

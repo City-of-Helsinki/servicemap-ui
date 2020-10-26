@@ -22,7 +22,7 @@ env:
 
 before_install:
  - stty cols 80
- - npm update
+ - npm update --legacy-peer-deps
 install:
  - npm install
 before_script:
