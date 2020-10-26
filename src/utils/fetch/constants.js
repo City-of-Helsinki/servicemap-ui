@@ -49,7 +49,7 @@ export const APIHandlers = {
     url: id => `${config.serviceMapAPI.root}/unit/${id}/`,
     options: {
       accessibility_description: true,
-      include: 'service_nodes,services',
+      include: 'service_nodes,services,keywords',
       geometry: true,
     },
   },
