@@ -51,6 +51,13 @@ const overrides = theme => ({
       padding: 12,
     },
   },
+  MuiAccordionSummary: {
+    root: {
+      '&$expanded': {
+        minHeight: 0,
+      },
+    },
+  },
 });
 
 const breakpoints = {
