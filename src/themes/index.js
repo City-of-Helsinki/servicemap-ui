@@ -49,6 +49,7 @@ const overrides = theme => ({
   PrivateSwitchBase: {
     root: {
       padding: 12,
+      marginRight: 8,
     },
   },
 });
