@@ -35,6 +35,7 @@ const styles = theme => ({
   },
   loadingText: {
     paddingLeft: theme.spacing(6),
+    paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(1),
   },
   subtitle: {
@@ -123,6 +124,7 @@ const styles = theme => ({
     paddingLeft: theme.spacing(3),
   },
   expandingElement: {
+    minHeight: '32px !important',
     boxShadow: 'none',
     width: '100%',
   },
