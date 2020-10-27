@@ -229,6 +229,7 @@ const translations = {
   // Location
   'location.notFound': 'Positionen hittades inte',
   'location.notAllowed': 'Positionen tilläts inte',
+  'location.center': 'Centrera på användarens position',
 
   // Loading
   'loading.events': 'Söker evenemang {count} / {max}',

@@ -290,6 +290,8 @@ const MapView = (props) => {
         : prevMap.props.zoom + zoomDifference;
     }
 
+    const userLocationAriaLabel = intl.formatMessage({ id: !userLocation ? 'location.notAllowed' : 'location.center' });
+
     return (
       <>
         {renderTopBar()}
@@ -376,6 +378,7 @@ const MapView = (props) => {
                 {/* Custom user location map button */}
                 <Control position="bottomright">
                   <ButtonBase
+                    aria-label={userLocationAriaLabel}
                     disabled={!userLocation}
                     className={`${classes.showLocationButton} ${!userLocation ? classes.locationDisabled : ''}`}
                     onClick={() => focusOnUser()}

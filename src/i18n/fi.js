@@ -231,6 +231,7 @@ const translations = {
   // Location
   'location.notFound': 'Sijaintia ei löytynyt',
   'location.notAllowed': 'Sijaintia ei sallittu',
+  'location.center': 'Keskitä käyttäjän sijaintiin',
 
   // Loading
   'loading.events': 'Haetaan tapahtumia {count} / {max}',

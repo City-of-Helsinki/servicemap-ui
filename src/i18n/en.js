@@ -229,6 +229,7 @@ const translations = {
   // Location
   'location.notFound': 'Location not found',
   'location.notAllowed': 'Location not allowed',
+  'location.center': 'Center on user\'s location',
 
   // Loading texts
   'loading.events': 'Loading events {count} / {max}',
