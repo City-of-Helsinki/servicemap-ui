@@ -36,7 +36,8 @@ export const getAddressDistrict = createSelector(
 export const getSubdistrictServices = createSelector(
   [getSubdistrictSelection, getSubdistrictUnits, settings],
   (selectedSubdistricts, unitData, settings) => {
-    const cityFilteredUnits = Object.keys(settings.cities).length
+    const selectedCities = Object.values(settings.cities).filter(city => city);
+    const cityFilteredUnits = selectedCities.length
       ? unitData.filter(unit => settings.cities[unit.municipality])
       : unitData;
     if (selectedSubdistricts.length && unitData) {
