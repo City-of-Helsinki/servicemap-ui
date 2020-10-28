@@ -229,6 +229,7 @@ const translations = {
   // Location
   'location.notFound': 'Positionen hittades inte',
   'location.notAllowed': 'Positionen tilläts inte',
+  'location.center': 'Centrera på användarens position',
 
   // Loading
   'loading.events': 'Söker evenemang {count} / {max}',
@@ -244,6 +245,12 @@ const translations = {
   'map.address.notFound': 'Adressen hittades ej',
   'map.address.info': 'Adressens uppgifter',
   'map.unit.cluster.popup.info': '{count} verksamhetsställen', // TODO: Verify
+
+  // Print
+  'print.alert': 'Använd utskriftsalternativet i verktygsmenyn',
+  'print.button.close': 'Stäng vyn',
+  'print.button.print': 'Skriv ut vyn',
+  'print.table.header.number': 'Nummer på kartan',
 
   // Units
   'unit': 'Verksamhetsställe',

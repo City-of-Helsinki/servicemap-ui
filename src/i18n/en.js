@@ -229,6 +229,7 @@ const translations = {
   // Location
   'location.notFound': 'Location not found',
   'location.notAllowed': 'Location not allowed',
+  'location.center': 'Center on user\'s location',
 
   // Loading texts
   'loading.events': 'Loading events {count} / {max}',
@@ -244,6 +245,12 @@ const translations = {
   'map.address.notFound': 'The address could not be found',
   'map.address.info': 'Address information',
   'map.unit.cluster.popup.info': '{count} locations',
+
+  // Print
+  'print.alert': 'Use the toolbox printing option',
+  'print.button.close': 'Close the view',
+  'print.button.print': 'Print the view',
+  'print.table.header.number': 'Number on the map',
 
   // Units
   'unit': 'Location',

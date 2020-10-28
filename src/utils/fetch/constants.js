@@ -33,7 +33,7 @@ export const APIHandlers = {
     options: {
       page: 1,
       page_size: 200,
-      only: 'unit.location,unit.name,unit.municipality,unit.accessibility_shortcoming_count,unit.contract_type',
+      only: 'unit.street_address,unit.location,unit.name,unit.municipality,unit.accessibility_shortcoming_count,unit.contract_type',
       geometry: true,
     },
   },
@@ -58,7 +58,7 @@ export const APIHandlers = {
     options: {
       page: 1,
       page_size: 200,
-      only: 'location,name,municipality,accessibility_shortcoming_count,service_nodes,contract_type',
+      only: 'street_address,location,name,municipality,accessibility_shortcoming_count,service_nodes,contract_type',
       geometry: true,
       include: 'service_nodes,services,accessibility_properties',
     },

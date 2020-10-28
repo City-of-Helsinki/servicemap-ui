@@ -13,6 +13,7 @@ import styles from './index.css';
 import SMFonts from './service-map-icons.css';
 import HSLFonts from './hsl-icons.css';
 import appStyles from './App.css';
+import printCSS from './print.css';
 import isClient from './utils';
 import { getLocale } from './redux/selectors/locale';
 import { changeLocaleAction } from './redux/actions/user';
@@ -115,7 +116,7 @@ const LanguageWrapper = () => {
   );
 };
 
-export default withStyles(styles, appStyles, SMFonts, HSLFonts)(LanguageWrapper);
+export default withStyles(styles, appStyles, SMFonts, HSLFonts, printCSS)(LanguageWrapper);
 
 // Typechecking
 App.propTypes = {

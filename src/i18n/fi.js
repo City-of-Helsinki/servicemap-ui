@@ -231,6 +231,7 @@ const translations = {
   // Location
   'location.notFound': 'Sijaintia ei löytynyt',
   'location.notAllowed': 'Sijaintia ei sallittu',
+  'location.center': 'Keskitä käyttäjän sijaintiin',
 
   // Loading
   'loading.events': 'Haetaan tapahtumia {count} / {max}',
@@ -246,6 +247,12 @@ const translations = {
   'map.address.notFound': 'Osoitetta ei löytynyt',
   'map.address.info': 'Osoitteen tiedot',
   'map.unit.cluster.popup.info': '{count} toimipistettä',
+
+  // Print
+  'print.alert': 'Käytä tulostamiseen työkaluvalikon tulostusta',
+  'print.button.close': 'Sulje näkymä',
+  'print.button.print': 'Tulosta näkymä',
+  'print.table.header.number': 'Numero kartalla',
 
   // Units
   'unit': 'Toimipiste',

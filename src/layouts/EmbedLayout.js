@@ -116,9 +116,7 @@ const EmbedLayout = ({ intl }) => {
           </Switch>
         </div>
         <div aria-label={intl.formatMessage({ id: 'map.ariaLabel' })} tabIndex="-1" style={styles.map}>
-          <div aria-hidden="true" style={styles.map}>
-            <MapView />
-          </div>
+          <MapView />
         </div>
       </div>
     </>

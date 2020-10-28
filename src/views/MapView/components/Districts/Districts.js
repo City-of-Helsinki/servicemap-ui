@@ -28,6 +28,7 @@ const Districts = ({
       {district.unit && district.unit.location ? (
         <>
           <Marker
+            customUnitData={district.unit}
             position={[
               district.unit.location.coordinates[1],
               district.unit.location.coordinates[0],

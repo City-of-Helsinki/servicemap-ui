@@ -38,7 +38,7 @@ export const fetchServiceUnits = serviceId => async (dispatch, getState) => {
   let options = {
     service: serviceId,
     page_size: 50,
-    only: 'name,accessibility_shortcoming_count,location,municipality,contract_type',
+    only: 'street_address,name,accessibility_shortcoming_count,location,municipality,contract_type',
   };
 
   if (municipality) {
