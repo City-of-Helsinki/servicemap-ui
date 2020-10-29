@@ -19,6 +19,8 @@ import userLocationIcon from '../../assets/icons/userLocation.svg';
 import noWheelchairIcon from '../../assets/icons/wheelchair.svg';
 import serviceIcon from '../../assets/icons/serviceIcon.svg';
 import serviceIconDark from '../../assets/icons/serviceIconDark.svg';
+import servicemapLogoIcon from '../../assets/icons/servicemapLogoIcon.svg';
+import closeIcon from '../../assets/icons/closeIcon.svg';
 
 /**
  * Senses
@@ -144,6 +146,11 @@ export const getIcon = (key, props) => {
 
     case 'noWheelchair':
       return <img aria-hidden alt="" src={noWheelchairIcon} {...props} />;
+
+    case 'servicemapLogoIcon':
+      return <img aria-hidden alt="" src={servicemapLogoIcon} {...props} />;
+    case 'closeIcon':
+      return <img aria-hidden alt="" src={closeIcon} {...props} />
 
     default:
       return null;

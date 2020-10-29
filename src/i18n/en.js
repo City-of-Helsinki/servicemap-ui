@@ -245,6 +245,9 @@ const translations = {
   'map.address.info': 'Address information',
   'map.unit.cluster.popup.info': '{count} locations',
 
+  // News info
+  'newsInfo.subtitle': 'Uusi toiminnallisuus', // TODO: Translate
+
   // Units
   'unit': 'Location',
   'unit.accessibility.hearingMaps': 'Coverage maps',

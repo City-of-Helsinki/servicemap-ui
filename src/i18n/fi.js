@@ -247,6 +247,9 @@ const translations = {
   'map.address.info': 'Osoitteen tiedot',
   'map.unit.cluster.popup.info': '{count} toimipistettä',
 
+  // News info
+  'newsInfo.subtitle': 'Uusi toiminnallisuus',
+
   // Units
   'unit': 'Toimipiste',
   'unit.accessibility.hearingMaps': 'Kuuluvuuskartat',
