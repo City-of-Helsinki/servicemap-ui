@@ -1,13 +1,13 @@
-export default () => ({
+export default theme => ({
   container: {
-    padding: 8,
-    paddingBottom: 12,
+    padding: 12,
     color: '#fff',
     display: 'flex',
-    backgroundColor: '#141823',
+    backgroundColor: theme.palette.primary.main,
   },
-  infoIcon: {
-    paddingTop: 8,
+  icon: {
+    width: 32,
+    height: 32,
   },
   cancelIcon: {
     fontSize: 16,
@@ -25,8 +25,17 @@ export default () => ({
     whiteSpace: 'pre-wrap',
   },
   closeButton: {
-    alignSelf: 'start',
-    padding: 8,
-    paddingTop: 12,
+    textTransform: 'initial',
+    fontSize: 12,
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    margin: 8,
+  },
+  endIcon: {
+    marginLeft: 4,
+  },
+  padder: {
+    width: 100,
   },
 });

@@ -124,6 +124,7 @@ const DefaultLayout = (props) => {
 
       <div id="activeRoot" style={styles.activeRoot}>
         <main className="SidebarWrapper" style={styles.sidebar}>
+          <AlertBox />
           {settingsToggled && (
             <Settings
               key={settingsToggled}
