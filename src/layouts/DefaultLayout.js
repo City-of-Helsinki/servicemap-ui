@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -12,6 +12,7 @@ import ViewRouter from './components/ViewRouter';
 import DesktopComponent from '../components/DesktopComponent';
 import useMobileStatus from '../utils/isMobile';
 import FocusableSRLinks from '../components/FocusableSRLinks';
+import AlertBox from '../components/AlertBox';
 
 const { smallScreenBreakpoint } = config;
 
@@ -76,13 +77,24 @@ const createContentStyles = (
 
 const DefaultLayout = (props) => {
   const {
-    classes, currentPage, i18n, intl, location, settingsToggled,
+    currentPage,
+    fetchErrors,
+    fetchNews,
+    i18n,
+    intl,
+    location,
+    settingsToggled,
   } = props;
   const isMobile = useMobileStatus();
   const isSmallScreen = useMediaQuery(`(max-width:${smallScreenBreakpoint}px)`);
   const fullMobileMap = new URLSearchParams(location.search).get('showMap'); // If mobile map view
   const landscape = useMediaQuery('(min-device-aspect-ratio: 1/1)');
   const portrait = useMediaQuery('(max-device-aspect-ratio: 1/1)');
+
+  useEffect(() => {
+    fetchErrors();
+    fetchNews();
+  }, []);
 
   const styles = createContentStyles(
     isMobile, isSmallScreen, landscape, fullMobileMap, settingsToggled, currentPage,
@@ -147,10 +159,9 @@ const DefaultLayout = (props) => {
 
 // Typechecking
 DefaultLayout.propTypes = {
-  classes: PropTypes.shape({
-    messageText: PropTypes.string,
-  }).isRequired,
   currentPage: PropTypes.string,
+  fetchErrors: PropTypes.func.isRequired,
+  fetchNews: PropTypes.func.isRequired,
   i18n: PropTypes.instanceOf(I18n),
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
