@@ -98,7 +98,7 @@ export default theme => ({
     display: 'none',
   },
   icon: {
-    marginLeft: 20,
+    marginLeft: 12,
     marginRight: 32,
     display: 'inline-block',
     verticalAlign: 'middle',

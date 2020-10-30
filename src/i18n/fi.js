@@ -43,6 +43,8 @@ const translations = {
   'area.services.nearby': 'Lähialueiden palvelut',
   'area.info': 'Valitse alue, jonka palveluista haluat tietoa. Kirjoittamalla alla olevaan hakukenttään kotiosoitteesi saat näkyville karttaan ja Alueen palvelut -välilehdelle alueet ja piirit, joihin kuulut',
   'area.choose.district': 'Valitse alue',
+  'area.choose.subdistrict': 'Valitse ja avaa {category}',
+  'area.close.subdistrict': 'Sulje {category}',
   'area.noSelection': 'Valitse alue Alueen Valinta -välilehdeltä',
   'area.list.geographical': 'Maantieteellinen',
   'area.list.protection': 'Väestönsuojelu',
@@ -417,6 +419,7 @@ const translations = {
   'settings.accessibilitySettings.long': 'Esteettömyysasetukset',
   'settings.mobile.long': 'Asetukset',
   'settings.search.long': 'Asetukset',
+  'settings.area.long': 'Kaupunkiasetukset',
   'settings.amount': `{count, plural,
     one {# valinta}
     other {# valintaa}
@@ -428,7 +431,9 @@ const translations = {
   'settings.sense.colorblind': 'Minun on vaikea erottaa värejä',
   'settings.info.heading': 'Asetustiedot', // TODO: verify
   'settings.info.title': 'Valitsemasi asetukset vaikuttavat hakutulokseen',
+  'settings.info.title.city': 'Kaupunkiasetukset vaikuttavat aluetietoihin',
   'settings.info.title.noSettings': 'Muuta haku- tai esteettömyysasetuksia',
+  'settings.info.title.noSettings.city': 'Muuta kaupunkiasetuksia rajataksesi alueita',
   'settings.mobility.title': 'Liikkumisrajoitteet',
   'settings.mobility.none': 'Ei liikkumisrajoitteita',
   'settings.mobility.wheelchair': 'Käytän pyörätuolia',

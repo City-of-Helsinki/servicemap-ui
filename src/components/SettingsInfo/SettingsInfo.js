@@ -22,6 +22,11 @@ const SettingsInfo = ({
   intl,
   settings,
   toggleSettings,
+  onlyCities,
+  title,
+  altTitle,
+  settingsPage,
+  noDivider,
 }) => {
   // Don't render on server since settings can't be utilized server side
   if (!isClient()) {
@@ -32,7 +37,7 @@ const SettingsInfo = ({
     colorblind, hearingAid, mobility, visuallyImpaired,
   } = settings;
 
-  const accessibilitySettings = [
+  const accessibilitySettings = onlyCities ? [] : [
     ...colorblind ? [{ text: intl.formatMessage({ id: 'settings.sense.colorblind' }), icon: <ColorblindIcon /> }] : [],
     ...hearingAid ? [{ text: intl.formatMessage({ id: 'settings.sense.hearing' }), icon: <HearingIcon /> }] : [],
     ...visuallyImpaired ? [{ text: intl.formatMessage({ id: 'settings.sense.visual' }), icon: <VisualImpairmentIcon /> }] : [],
@@ -44,7 +49,7 @@ const SettingsInfo = ({
     citySettings.push(...settings.cities[city] ? [{ text: `${intl.formatMessage({ id: `settings.city.${city}` })}`, icon: <SMIcon icon={`icon-icon-coat-of-arms-${city}`} /> }] : []);
   });
 
-  if (citySettings.length === 4) {
+  if (!onlyCities && citySettings.length === config.cities.length) {
     citySettings = [];
   }
 
@@ -52,21 +57,23 @@ const SettingsInfo = ({
 
   const titleText = accessibilitySettings.length === 0
     && citySettings.length === 0
-    ? 'settings.info.title.noSettings' : 'settings.info.title';
+    ? altTitle || 'settings.info.title.noSettings' : title || 'settings.info.title';
 
   return (
     <NoSsr>
       <Typography component="h3" variant="srOnly">
         <FormattedMessage id="settings.info.heading" />
       </Typography>
-      <Divider aria-hidden="true" />
+      {!noDivider && (
+        <Divider aria-hidden="true" />
+      )}
       <Container className={classes.container}>
         <ButtonBase
           id="SettingsLink"
           aria-labelledby="SettingsInfo-srTitle"
           role="link"
           onClick={() => {
-            toggleSettings('search');
+            toggleSettings(settingsPage || 'search');
             setTimeout(() => {
               const settings = document.getElementsByClassName('SettingsTitle')[0];
               if (settings) {
@@ -104,7 +111,7 @@ const SettingsInfo = ({
             );
           }) : null}
 
-          {accessibilitySettings.length ? accessibilitySettings.map((access) => {
+          {!onlyCities && accessibilitySettings.length ? accessibilitySettings.map((access) => {
             totalItems += 1;
             return (
               <SettingsInfoItem
@@ -127,9 +134,19 @@ SettingsInfo.propTypes = {
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
   toggleSettings: PropTypes.func.isRequired,
+  onlyCities: PropTypes.bool,
+  title: PropTypes.string,
+  altTitle: PropTypes.string,
+  settingsPage: PropTypes.string,
+  noDivider: PropTypes.bool,
 };
 
 SettingsInfo.defaultProps = {
+  onlyCities: false,
+  title: null,
+  altTitle: null,
+  settingsPage: null,
+  noDivider: false,
 };
 
 
