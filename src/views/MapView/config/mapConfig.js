@@ -55,6 +55,7 @@ const mapTypes = {
   // These define the map tiles and options of individual map types
   servicemap: {
     name: 'servicemap',
+    attribution: 'map.attribution.osm',
     generateUrl: (suffix = '') => `${config.servicemapURL}${suffix}.png`,
     minZoom: 9,
     maxZoom: 18,
@@ -66,6 +67,7 @@ const mapTypes = {
   },
   accessible_map: {
     name: 'accessible_map',
+    attribution: 'map.attribution.helsinki',
     generateUrl: (suffix = '') => `${config.accessibleMapURL}${suffix}.png`,
     minZoom: 9,
     maxZoom: 18,
@@ -77,6 +79,7 @@ const mapTypes = {
   },
   ortographic: {
     name: 'ortographic',
+    attribution: 'map.attribution.helsinki',
     layer: tileLayers.orthoImageLayer,
     // TODO: maybe have map names and formats as variables from the URL, like in the old version
     generateUrl: () => config.ortographicMapURL,
@@ -96,6 +99,7 @@ const mapTypes = {
   },
   guideMap: {
     name: 'guideMap',
+    attribution: 'map.attribution.osm',
     layer: tileLayers.guideMapLayer,
     // TODO: maybe have map names and formats as variables from the URL, like in the old version
     generateUrl: () => config.guideMapURL,
