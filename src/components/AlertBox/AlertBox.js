@@ -2,18 +2,30 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Typography } from '@material-ui/core';
 import { getIcon } from '../SMIcon';
+import LocalStorageUtility from '../../utils/localStorage';
 
-// This component uses default message inserted to code for now until proper implementation
+// LocalStorage key for alert message
+const lsKey = 'alertMessage';
 
 const AlertBox = ({
   classes, getLocaleText, intl, errors, news,
 }) => {
   const [visible, setVisible] = useState(true);
-  const abData = errors.length ? errors : news;
+  const isErrorMessage = !!errors.length;
+  const abData = isErrorMessage ? errors : news;
+  const savedMessage = LocalStorageUtility.getItem(lsKey);
 
-  if (!visible || !abData.length) {
+  if (
+    !visible
+    || !abData.length
+    || JSON.stringify(abData[0].title) === savedMessage
+  ) {
     return null;
   }
+
+  const setMessageAsWatched = () => {
+    LocalStorageUtility.saveItem(lsKey, JSON.stringify(abData[0].title));
+  };
 
   const { title, lead_paragraph: leadParagraph } = abData[0];
   const tTitle = getLocaleText(title);
@@ -21,8 +33,12 @@ const AlertBox = ({
   const icon = getIcon('servicemapLogoIcon', {
     className: classes.icon,
   });
-  const closeIcon = getIcon('closeIcon');
-  const closeText = intl.formatMessage({ id: 'general.close' });
+  const closeButtonIcon = getIcon('closeIcon');
+  const closeButtonText = intl.formatMessage({ id: 'general.close' });
+  const closeButtonClick = () => {
+    setVisible(false);
+    setMessageAsWatched();
+  };
 
   return (
     <div className={classes.container}>
@@ -45,10 +61,10 @@ const AlertBox = ({
           endIcon: classes.endIcon,
         }}
         className={classes.closeButton}
-        endIcon={closeIcon}
-        onClick={() => setVisible(false)}
+        endIcon={closeButtonIcon}
+        onClick={closeButtonClick}
       >
-        {closeText}
+        {closeButtonText}
       </Button>
     </div>
   );
