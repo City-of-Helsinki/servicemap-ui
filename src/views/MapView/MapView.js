@@ -329,7 +329,7 @@ const MapView = (props) => {
           }
           <TileLayer
             url={mapObject.options.url}
-            attribution='&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors'
+            attribution={intl.formatMessage({ id: mapObject.options.attribution })}
           />
           <Districts mapOptions={mapOptions} map={mapRef.current} embed={embeded} />
 
