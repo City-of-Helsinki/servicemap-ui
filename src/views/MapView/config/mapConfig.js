@@ -67,7 +67,7 @@ const mapTypes = {
   },
   accessible_map: {
     name: 'accessible_map',
-    attribution: 'map.attribution.helsinki',
+    attribution: 'map.attribution.osm',
     generateUrl: (suffix = '') => `${config.accessibleMapURL}${suffix}.png`,
     minZoom: 9,
     maxZoom: 18,
@@ -99,7 +99,7 @@ const mapTypes = {
   },
   guideMap: {
     name: 'guideMap',
-    attribution: 'map.attribution.osm',
+    attribution: 'map.attribution.helsinki',
     layer: tileLayers.guideMapLayer,
     // TODO: maybe have map names and formats as variables from the URL, like in the old version
     generateUrl: () => config.guideMapURL,
