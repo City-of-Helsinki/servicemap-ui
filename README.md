@@ -40,4 +40,13 @@ Launches TestCafe test runner and performs browser tests on headless chrome.<br>
 Launches the application using `node dist` command and then launches TestCafe test runner in headless mode. Mainly used by Travis CI.
 
 ## How to use
-For development first install packages using `npm install` in project root. Then you need to add environment variables. `.env.example` should have all required values so you can copy it to `.env`. Then you can start development server using `npm run dev`
+For development: 
+- Make sure npm packages are installed by running `npm install`in project root.
+- Make sure you have environment variables set. `.env.example` should have all required values so you can copy it to `.env`.
+- Then you can start development server using `npm run dev`. Which watches files and updates on code changes.
+
+To run in production mode:
+- Make sure npm packages are installed by running `npm install`in project root.
+- Make sure you have environment variables set. `.env.example` should have all required values so you can copy it to `.env`.
+- Build files by running `npm run build`
+- Then you can just run the app with `npm start`
