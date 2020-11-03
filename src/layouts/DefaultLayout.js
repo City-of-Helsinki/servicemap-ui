@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -13,6 +13,8 @@ import DesktopComponent from '../components/DesktopComponent';
 import useMobileStatus from '../utils/isMobile';
 import FocusableSRLinks from '../components/FocusableSRLinks';
 import AlertBox from '../components/AlertBox';
+import PrintView from '../views/PrintView';
+import { PrintProvider } from '../context/PrintContext';
 
 const { smallScreenBreakpoint } = config;
 
@@ -47,9 +49,6 @@ const createContentStyles = (
       width: '100%',
       zIndex: 900,
     },
-    mapWrapper: {
-      width: '100%',
-    },
     sidebar: {
       height: '100%',
       position: 'relative',
@@ -74,6 +73,10 @@ const createContentStyles = (
 
   return styles;
 };
+
+// Shitty hack to get alert showing when not using print view
+// (showAlert did not use updated showPrintView value)
+const valueStore = {};
 
 const DefaultLayout = (props) => {
   const {
@@ -105,24 +108,50 @@ const DefaultLayout = (props) => {
       text: <FormattedMessage id="general.skipToContent" />,
     },
   ];
+  const [showPrintView, togglePrintView] = useState(false);
+
+  const togglePrint = () => {
+    valueStore.showPrintView = !showPrintView;
+    togglePrintView(!showPrintView);
+  };
+  const showAlert = () => {
+    if (valueStore.showPrintView) {
+      return;
+    }
+    alert(intl.formatMessage({ id: 'print.alert' }));
+  };
+
+  useEffect(() => {
+    window.onbeforeprint = showAlert;
+  }, []);
+
+
+  const printClass = `ǹo-print${showPrintView ? ' sr-only' : ''}`;
 
   return (
     <>
-      <div id="topArea" aria-hidden={!!settingsToggled}>
+      <div id="topArea" aria-hidden={!!settingsToggled} className={printClass}>
         <h1 id="app-title" tabIndex="-1" className="sr-only app-title" component="h1">
           <FormattedMessage id="app.title" />
         </h1>
         {/* Jump link to main content for screenreaders
         Must be first interactable element on page */}
         <FocusableSRLinks items={srLinks} />
-        <TopBar
-          settingsOpen={settingsToggled}
-          smallScreen={isSmallScreen}
-          i18n={i18n}
-        />
+        <PrintProvider value={togglePrint}>
+          <TopBar
+            settingsOpen={settingsToggled}
+            smallScreen={isSmallScreen}
+            i18n={i18n}
+          />
+        </PrintProvider>
       </div>
-
-      <div id="activeRoot" style={styles.activeRoot}>
+      {
+        showPrintView
+        && (
+          <PrintView togglePrintView={togglePrint} />
+        )
+      }
+      <div id="activeRoot" style={styles.activeRoot} className={printClass}>
         <main className="SidebarWrapper" style={styles.sidebar}>
           <AlertBox />
           {settingsToggled && (
@@ -141,9 +170,7 @@ const DefaultLayout = (props) => {
           tabIndex="-1"
           style={styles.map}
         >
-          <div aria-hidden="true" style={styles.mapWrapper}>
-            <MapView isMobile={!!isMobile} />
-          </div>
+          <MapView isMobile={!!isMobile} />
         </div>
       </div>
 

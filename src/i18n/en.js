@@ -43,6 +43,8 @@ const translations = {
   'area.services.nearby': 'Services in the neighbouring areas',
   'area.info': 'Choose an area, whose services you want information about. Writing your home address in the search field opens a map, and the areas and districts that you belong to are shown under the Services in the area tab.',
   'area.choose.district': 'Choose area',
+  'area.choose.subdistrict': 'Choose and open {category}',
+  'area.close.subdistrict': 'Close {category}',
   'area.noSelection': 'Choose area from the Choice of Area tab',
   'area.list.geographical': 'Geographical',
   'area.list.protection': 'Civil defence',
@@ -229,6 +231,7 @@ const translations = {
   // Location
   'location.notFound': 'Location not found',
   'location.notAllowed': 'Location not allowed',
+  'location.center': 'Center on user\'s location',
 
   // Loading texts
   'loading.events': 'Loading events {count} / {max}',
@@ -239,11 +242,19 @@ const translations = {
   // Map
   'map': 'Map',
   'map.ariaLabel': 'Map. Currently map information is only accessible visually.',
+  'map.attribution.osm': '&copy; <a href="http://osm.org/copyright">OpenStreetMap contributors</a>',
+  'map.attribution.helsinki': '&copy; Cities of Helsinki, Espoo, Vantaa ja Kauniainen',
   'map.transit.endStation': 'Terminus',
   'map.address.searching': 'Retreiving address...',
   'map.address.notFound': 'The address could not be found',
   'map.address.info': 'Address information',
   'map.unit.cluster.popup.info': '{count} locations',
+
+  // Print
+  'print.alert': 'Use the toolbox printing option',
+  'print.button.close': 'Close the view',
+  'print.button.print': 'Print the view',
+  'print.table.header.number': 'Number on the map',
 
   // Units
   'unit': 'Location',
@@ -282,6 +293,7 @@ const translations = {
   'unit.address.missing': 'No address provided',
   'unit.phone': 'Phone number',
   'unit.phone.missing': 'No phone number provided',
+  'unit.phone.charge': 'Call charges',
   'unit.email': 'Email',
   'unit.email.missing': 'No email provided',
   'unit.opening.hours': 'Opening hours',
@@ -407,6 +419,7 @@ const translations = {
   'settings.accessibilitySettings.long': 'Accessibility settings',
   'settings.mobile.long': 'Settings',
   'settings.search.long': 'Settings',
+  'settings.area.long': 'City settings',
   'settings.amount': `{count, plural,
     one {# selection}
     other {# selections}
@@ -418,7 +431,9 @@ const translations = {
   'settings.sense.colorblind': 'I have color vision deficiency',
   'settings.info.heading': 'Settings info',
   'settings.info.title': 'Your selected settings will effect search results',
+  'settings.info.title.city': 'The city settings affect the area information',
   'settings.info.title.noSettings': 'Change search or accessibility settings',
+  'settings.info.title.noSettings.city': 'Change the city settings to narrow down the number of areas',
   'settings.mobility.title': 'Mobility impairments',
   'settings.mobility.none': 'No mobility impairments',
   'settings.mobility.wheelchair': 'I use a wheelchair',

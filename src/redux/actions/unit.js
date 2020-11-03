@@ -12,8 +12,7 @@ export const fetchUnits = (
   // searchQuery = null,
   options = null,
   abortController = null,
-) => async (dispatch, getState)
-=> {
+) => async (dispatch, getState) => {
   const { units, user } = getState();
   const { locale } = user;
   if (units.isFetching) {
@@ -35,7 +34,6 @@ export const fetchUnits = (
       saveSearchToHistory(searchQuery, results);
     } else {
       results.forEach((unit) => {
-        // eslint-disable-next-line no-param-reassign
         unit.object_type = 'unit';
       });
     }

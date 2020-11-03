@@ -1,17 +1,17 @@
-
-
 import React, { useState, useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import booleanEqual from '@turf/boolean-equal';
 import booleanWithin from '@turf/boolean-within';
 import pointOnFeature from '@turf/point-on-feature';
 import area from '@turf/area';
-import { focusDistrict } from '../MapView/utils/mapActions';
+import { useLocation } from 'react-router-dom';
+import { focusDistrict, focusDistricts } from '../MapView/utils/mapActions';
 import TabLists from '../../components/TabLists';
 import UnitTab from './components/UnitTab';
-import { uppercaseFirst } from '../../utils';
+import { parseSearchParams, uppercaseFirst } from '../../utils';
 import AreaTab from './components/AreaTab';
-import { districtFetch } from '../../utils/fetch';
+import { districtFetch, unitsFetch } from '../../utils/fetch';
+import fetchAddress from '../MapView/utils/fetchAddress';
 
 
 const fetchReducer = (state, action) => {
@@ -21,27 +21,40 @@ const fetchReducer = (state, action) => {
     case 'remove':
       return state.filter(item => item !== action.value);
     default:
-      throw new Error();
+      throw new Error('District fetch failed');
   }
 };
 
 const AreaView = ({
-  setSelectedDistrict,
+  setSelectedDistrictType,
+  setSelectedSubdistricts,
+  setSelectedDistrictServices,
   setDistrictData,
   setDistrictAddressData,
+  addSubdistrictUnits,
   districtData,
   districtAddressData,
-  selectedDistrict,
+  selectedDistrictType,
   selectedDistrictData,
   addressDistrict,
+  subdistrictUnits,
+  filteredSubdistrictUnits,
+  selectedSubdistricts,
+  selectedDistrictServices,
   map,
   getLocaleText,
   navigator,
+  embed,
   classes,
   intl,
 }) => {
+  if (!map || !map.leafletElement) {
+    return null;
+  }
+
   const dataStructure = [ // Categorized district data structure
     {
+      id: 'health',
       title: intl.formatMessage({ id: 'area.list.health' }),
       districts: [
         'health_station_district',
@@ -49,6 +62,7 @@ const AreaView = ({
       ],
     },
     {
+      id: 'education',
       title: intl.formatMessage({ id: 'area.list.education' }),
       districts: [
         'lower_comprehensive_school_district_fi',
@@ -74,6 +88,7 @@ const AreaView = ({
       ],
     },
     {
+      id: 'preschool',
       title: intl.formatMessage({ id: 'area.list.preschool' }),
       districts: [
         'preschool_education_fi',
@@ -81,6 +96,7 @@ const AreaView = ({
       ],
     },
     {
+      id: 'geographical',
       title: intl.formatMessage({ id: 'area.list.geographical' }),
       districts: [
         'neighborhood',
@@ -88,6 +104,7 @@ const AreaView = ({
       ],
     },
     {
+      id: 'protection',
       title: intl.formatMessage({ id: 'area.list.protection' }),
       districts: [
         'rescue_area',
@@ -97,24 +114,28 @@ const AreaView = ({
     },
   ];
 
+  const location = useLocation();
+
   // State
-  const [radioValue, setRadioValue] = useState(null);
+  const [districtRadioValue, setDistrictRadioValue] = useState(null);
   const [selectedAddress, setSelectedAddress] = useState(districtAddressData.address);
-  const [openItems, setOpenItems] = useState([]); // List items that are expanded
-  const [fetching, dispatchFetching] = useReducer(fetchReducer, []); // Fetch state
+  const [openItems, setOpenItems] = useState([]);
+  // Pending request to focus map to districts. Executed once district data is loaded
+  const [focusTo, setFocusTo] = useState(null);
+  // Fetch state
+  const [fetching, dispatchFetching] = useReducer(fetchReducer, []);
+
 
   const formAddressString = address => (address
     ? `${getLocaleText(address.street.name)} ${address.number}${address.number_end ? address.number_end : ''}${address.letter ? address.letter : ''}, ${uppercaseFirst(address.street.municipality)}`
     : '');
 
-  const focusLocalDistrict = () => {
-    if (selectedAddress && addressDistrict) {
-      const district = selectedDistrictData.find(obj => obj.id === addressDistrict);
-      focusDistrict(map.leafletElement, district.boundary.coordinates);
-    }
+  const focusMapToDistrict = (district) => {
+    focusDistrict(map.leafletElement, district.boundary.coordinates);
   };
 
-  const changeDistrictData = (data, type) => {
+
+  const changeDistrictData = (data, type, category) => {
     // Group data by periods (used in school districts)
     const groupedData = data.reduce((acc, cur) => {
       if (cur.start && cur.start.includes(2019)) {
@@ -147,6 +168,7 @@ const AreaView = ({
         data,
         name: type,
         period,
+        category,
       });
     });
   };
@@ -177,7 +199,7 @@ const AreaView = ({
     });
   };
 
-  const filterFetchData = (data, type) => {
+  const filterFetchData = (data, type, category) => {
     let filteredData = [];
     data.forEach((district) => {
       // Skip if district is already marked as overlaping with another district
@@ -186,6 +208,7 @@ const AreaView = ({
         return;
       }
       const returnItem = district;
+      returnItem.category = category;
 
       // Combine other districts that are duplicates or within this district
       const overlapingDistricts = data.filter(obj => compareBoundaries(district, obj));
@@ -200,7 +223,7 @@ const AreaView = ({
       filteredData.push(returnItem);
     });
 
-    changeDistrictData(filteredData, type);
+    changeDistrictData(filteredData, type, category);
   };
 
   const fetchAddressDistricts = async () => {
@@ -222,7 +245,7 @@ const AreaView = ({
       });
   };
 
-  const fetchDistrictsByType = async (type, id) => {
+  const fetchDistrictsByType = async (type, id, category) => {
     const options = {
       page: 1,
       page_size: 500,
@@ -233,41 +256,67 @@ const AreaView = ({
     return districtFetch(options)
       .then((data) => {
         const filteredData = data.results.filter(i => i.boundary && i.boundary.coordinates);
-        return { data: filteredData, type };
+        return { data: filteredData, type, category };
       })
       .catch(() => {
         dispatchFetching({ type: 'remove', value: id });
       });
   };
 
+  const fetchDistrictUnitList = async (divisionID) => {
+    const options = {
+      page: 1,
+      page_size: 1000,
+      division: divisionID,
+    };
+    await unitsFetch(options)
+      .then((data) => {
+        const units = data.results;
+        units.forEach((unit) => {
+          unit.object_type = 'unit';
+          unit.division_id = divisionID;
+        });
+        addSubdistrictUnits(data.results);
+      });
+  };
+
   const handleOpen = async (item) => {
-    if (openItems.includes(item.title)) {
-      const items = openItems.filter(i => i !== item.title);
+    if (openItems.includes(item.id)) {
+      const items = openItems.filter(i => i !== item.id);
       setOpenItems(items);
     } else {
-      setOpenItems([...openItems, item.title]);
+      setOpenItems([...openItems, item.id]);
     }
 
     // If no fetched data found, fetch all distirct types within opened category
-    if (!districtData.some(district => district.name === item.districts[0])
+    if (!districtData.some(district => item.districts.includes(district.name))
       && !fetching.includes(item.title)
     ) {
       dispatchFetching({ type: 'add', value: item.title });
-      Promise.all(item.districts.map(i => fetchDistrictsByType(i, item.title)))
+      await Promise.all(item.districts.map(i => fetchDistrictsByType(i, item.title, item.id)))
         .then((results) => {
           dispatchFetching({ type: 'remove', value: item.title });
-          results.forEach(result => filterFetchData(result.data, result.type));
+          results.forEach(result => filterFetchData(result.data, result.type, result.category));
         });
     }
   };
 
-  useEffect(() => {
-    setSelectedDistrict(radioValue);
-  }, [radioValue]);
 
   useEffect(() => {
-    focusLocalDistrict();
-  }, [addressDistrict]);
+    if (selectedDistrictType !== districtRadioValue) {
+      setSelectedDistrictType(districtRadioValue);
+    }
+  }, [districtRadioValue]);
+
+
+  useEffect(() => {
+    // Focus map to local district
+    if (selectedAddress && addressDistrict) {
+      const district = selectedDistrictData.find(obj => obj.id === addressDistrict);
+      focusMapToDistrict(district);
+    }
+  }, [addressDistrict, map]);
+
 
   useEffect(() => {
     if (selectedAddress) {
@@ -277,29 +326,113 @@ const AreaView = ({
     }
   }, [selectedAddress]);
 
-  useEffect(() => { // Open previous selections when returning to page
-    if (selectedDistrict) {
+
+  useEffect(() => {
+    selectedSubdistricts.forEach((district) => {
+      if (!subdistrictUnits.some(unit => unit.division_id === district)) {
+        fetchDistrictUnitList(district);
+      }
+    });
+  }, [selectedSubdistricts]);
+
+
+  useEffect(() => {
+    setDistrictRadioValue(selectedDistrictType);
+  }, [selectedDistrictType]);
+
+
+  useEffect(() => {
+    // If pending district focus, focus to districts when distitct data is loaded
+    if (districtData.length && focusTo) {
+      if (focusTo === 'districts') {
+        const districts = districtData.find(data => data.id === selectedDistrictType);
+        if (districts) {
+          setFocusTo(null);
+          focusDistricts(map.leafletElement, districts.data);
+        }
+      } else if (focusTo === 'subdistricts') {
+        const districts = districtData.find(data => data.id === selectedDistrictType);
+        if (districts) {
+          const filtetedDistricts = districts.data.filter(
+            i => selectedSubdistricts.includes(i.ocd_id),
+          );
+          setFocusTo(null);
+          focusDistricts(map.leafletElement, filtetedDistricts);
+        }
+      }
+    }
+  }, [districtData, focusTo]);
+
+
+  useEffect(() => {
+    // Apply url parameters if first render
+    const searchParams = parseSearchParams(location.search);
+    if (Object.keys(searchParams).length) {
+      if (searchParams.selected) {
+        if (!districtData.length) {
+          // Open correct category and fetch data based on url parameters
+          const category = dataStructure.find(
+            data => data.districts.includes(searchParams.selected),
+          );
+          if (embed) {
+            fetchDistrictsByType(searchParams.selected, null, category)
+              .then(result => filterFetchData(result.data, result.type, result.category));
+          } else {
+            handleOpen(category);
+          }
+          // Set selected district type from url paramters
+          setSelectedDistrictType(searchParams.selected);
+          if (searchParams.districts) {
+            // Set selected geographical districts from url parameters
+            setSelectedSubdistricts(searchParams.districts.split(','));
+            setFocusTo('subdistricts');
+          } else {
+            setFocusTo('districts');
+          }
+        } else {
+          setSelectedDistrictType(searchParams.selected);
+        }
+      }
+      if (searchParams.services) {
+        const services = searchParams.services.split(',');
+        const convertedServices = services.map(service => parseInt(service, 10));
+        setSelectedDistrictServices(convertedServices);
+      }
+      if (searchParams.lat && searchParams.lng) {
+        // Set address from url paramters
+        fetchAddress({ lat: searchParams.lat, lng: searchParams.lng })
+          .then(data => setSelectedAddress(data));
+      }
+    }
+
+    // Open and set previous selections when returning to page
+    if (selectedDistrictType) {
       const category = dataStructure.find(
-        obj => obj.districts.some(district => selectedDistrict.includes(district)),
+        obj => obj.districts.some(district => selectedDistrictType.includes(district)),
       );
       handleOpen(category);
-      setRadioValue(selectedDistrict);
+      setSelectedDistrictType(selectedDistrictType);
     }
   }, []);
 
 
   const renderAreaTab = () => (
     <AreaTab
-      radioValue={radioValue}
-      setRadioValue={setRadioValue}
+      districtRadioValue={districtRadioValue}
+      selectedSubdistricts={selectedSubdistricts}
+      setDistrictRadioValue={setDistrictRadioValue}
+      setSelectedSubdistricts={setSelectedSubdistricts}
+      setSelectedDistrictServices={setSelectedDistrictServices}
       fetching={fetching}
       districtData={districtData}
-      dataStructure={dataStructure}
+      selectedDistrictData={selectedDistrictData}
       openItems={openItems}
       handleOpen={handleOpen}
+      dataStructure={dataStructure}
       setSelectedAddress={setSelectedAddress}
       address={districtAddressData.address}
       navigator={navigator}
+      getLocaleText={getLocaleText}
     />
   );
 
@@ -307,9 +440,13 @@ const AreaView = ({
     <UnitTab
       selectedDistrictData={selectedDistrictData}
       selectedAddress={selectedAddress}
+      selectedSubdistricts={selectedSubdistricts}
+      setSelectedDistrictServices={setSelectedDistrictServices}
+      filteredSubdistrictUnits={filteredSubdistrictUnits}
+      selectedDistrictServices={selectedDistrictServices}
       addressDistrict={addressDistrict}
       formAddressString={formAddressString}
-      dataStructure={dataStructure}
+      getLocaleText={getLocaleText}
     />
   );
 
@@ -325,21 +462,24 @@ const AreaView = ({
         title: intl.formatMessage({ id: 'area.tab.services' }),
       },
     ];
-    return (
-      <div>
-        <div className={classes.topBar} />
-        <TabLists
-          data={tabs}
-        />
-      </div>
-    );
+    if (!embed) {
+      return (
+        <div>
+          <div className={classes.topBar} />
+          <TabLists
+            data={tabs}
+          />
+        </div>
+      );
+    }
+    return null;
   };
 
   return render();
 };
 
 AreaView.propTypes = {
-  setSelectedDistrict: PropTypes.func.isRequired,
+  setSelectedDistrictType: PropTypes.func.isRequired,
 };
 
 export default AreaView;

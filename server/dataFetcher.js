@@ -124,6 +124,9 @@ export const fetchSelectedUnitData = (req, res, next) => {
       }
       data.complete = true;
       store.dispatch(changeSelectedUnit(data));
+      if (data.keywords.fi.includes('kuuluvuuskartta')) {
+        hearingMapsFetch(null, null, hearingMapsFetchEnd, fetchOnError, null, id, controller);
+      }
       response();
     }
     selectedUnitFetch(null, null, selectedUnitFetchEnd, fetchOnError, null, id, controller);
@@ -169,7 +172,7 @@ export const fetchSelectedUnitData = (req, res, next) => {
     }
     reservationsFetch({ unit: `tprek:${id}` }, null, reservationFetchEnd, fetchOnError, null, null, controller)
 
-    // Fetch hearing maps for unit
+    // Fetch hearing maps for unit if unit has keyword "kuuluvuuskartta"
     const hearingMapsFetchEnd = (data) => {
       if (!store || !store.dispatch || !data) {
         response();
@@ -178,11 +181,10 @@ export const fetchSelectedUnitData = (req, res, next) => {
       const {
         fetchSuccess,
       } = hearingMaps;
-      store.dispatch(fetchSuccess(data));
+      store.dispatch(fetchSuccess({id, data}));
       response();
     }
-    hearingMapsFetch(null, null, hearingMapsFetchEnd, fetchOnError, null, id, controller);
-    
+
 
   } catch(e) {
     console.log('Error in fetchSelectedUnitData', e.message);

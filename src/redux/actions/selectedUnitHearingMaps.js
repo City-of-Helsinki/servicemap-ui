@@ -7,7 +7,7 @@ const {
 
 export const fetchHearingMaps = id => async (dispatch) => {
   const onStart = () => dispatch(isFetching());
-  const onSuccess = data => dispatch(fetchSuccess(data));
+  const onSuccess = data => dispatch(fetchSuccess({ id, data }));
   const onError = e => dispatch(fetchError(e.message));
 
   hearingMapsFetch({}, onStart, onSuccess, onError, null, id);

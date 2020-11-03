@@ -28,6 +28,10 @@ const stemDefaults = {
   color: '#333',
 };
 
+// NumberCircleMaker configurations
+const CIRCLE_MARKER_FONT_SIZE = 32;
+const CIRCLE_MARKER_PADDING = 15;
+
 const berryCenter = (value) => {
   let rotation = value;
   rotation = Math.PI * rotation / 180;
@@ -126,5 +130,52 @@ export const drawMarkerIcon = (contrast = false) => {
 
   return markerIcon;
 };
+
+export class NumberCircleMaker {
+  constructor(diameter1) {
+    this.diameter = diameter1;
+  }
+
+  stroke = (c, callback) => {
+    c.beginPath();
+    callback(c);
+    c.fill();
+    return c.closePath();
+  }
+
+  drawNumber = (ctx, num, width) => {
+    const position = width / 2 + CIRCLE_MARKER_PADDING;
+    return ctx.fillText(num, position, position);
+  }
+
+  drawCircle = (ctx, diameter) => this.stroke(ctx, (ctx) => {
+    const radius = diameter / 2 + CIRCLE_MARKER_PADDING;
+    return ctx.arc(radius, radius, radius, 0, 2 * Math.PI);
+  });
+
+  initContext = (ctx) => {
+    ctx.font = `bold ${CIRCLE_MARKER_FONT_SIZE}px sans-serif`;
+    ctx.textBaseline = 'middle';
+    ctx.textAlign = 'center';
+    return ctx;
+  }
+
+  drawNumberedCircle = (ctx, num) => {
+    let number = num;
+    this.initContext(ctx);
+    number = num.toString();
+    ctx.fillStyle = '#ffffff';
+    const numberDimensions = ctx.measureText(num);
+    const { width } = numberDimensions;
+    const scalingFactor = this.diameter / (width + 2 * CIRCLE_MARKER_PADDING);
+    ctx.save();
+    ctx.scale(scalingFactor, scalingFactor);
+    this.drawNumber(ctx, number, numberDimensions.width);
+    ctx.globalCompositeOperation = 'destination-over';
+    ctx.fillStyle = '#000000';
+    this.drawCircle(ctx, numberDimensions.width);
+    return ctx.restore();
+  }
+}
 
 export default drawMarkerIcon;

@@ -78,9 +78,13 @@ const UnitView = (props) => {
     const unitId = params.unit;
     // If no selected unit data, or selected unit data is old, fetch new data
     if (!stateUnit || !checkCorrectUnit(stateUnit) || !stateUnit.complete) {
-      fetchSelectedUnit(unitId, unit => setUnit(unit));
+      fetchSelectedUnit(unitId, (unit) => {
+        setUnit(unit);
+        if (unit?.keywords?.fi?.includes('kuuluvuuskartta')) {
+          fetchHearingMaps(unitId);
+        }
+      });
       fetchAccessibilitySentences(unitId);
-      fetchHearingMaps(unitId);
       fetchReservations(unitId);
       fetchUnitEvents(unitId);
     } else {
@@ -193,12 +197,7 @@ const UnitView = (props) => {
           </Container>
 
           {/* View Components */}
-          <ContactInfo
-            unit={unit}
-            userLocation={userLocation}
-            getLocaleText={getLocaleText}
-            intl={intl}
-          />
+          <ContactInfo unit={unit} userLocation={userLocation} getLocaleText={getLocaleText} />
           <SocialMediaLinks unit={unit} getLocaleText={getLocaleText} />
           <Highlights unit={unit} getLocaleText={getLocaleText} />
           <Description unit={unit} getLocaleText={getLocaleText} />
@@ -230,9 +229,9 @@ const UnitView = (props) => {
           {
             renderTitleForRS()
           }
-          {hearingMaps && (
+          {hearingMaps?.id === unit.id.toString(10) && (
             <TitledList titleComponent="h4" title={intl.formatMessage({ id: 'unit.accessibility.hearingMaps' })}>
-              {hearingMaps.map(item => (
+              {hearingMaps.data.map(item => (
                 <SimpleListItem
                   role="link"
                   link

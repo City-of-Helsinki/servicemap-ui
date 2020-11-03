@@ -43,6 +43,8 @@ const translations = {
   'area.services.nearby': 'Lähialueiden palvelut',
   'area.info': 'Valitse alue, jonka palveluista haluat tietoa. Kirjoittamalla alla olevaan hakukenttään kotiosoitteesi saat näkyville karttaan ja Alueen palvelut -välilehdelle alueet ja piirit, joihin kuulut',
   'area.choose.district': 'Valitse alue',
+  'area.choose.subdistrict': 'Valitse ja avaa {category}',
+  'area.close.subdistrict': 'Sulje {category}',
   'area.noSelection': 'Valitse alue Alueen Valinta -välilehdeltä',
   'area.list.geographical': 'Maantieteellinen',
   'area.list.protection': 'Väestönsuojelu',
@@ -231,6 +233,7 @@ const translations = {
   // Location
   'location.notFound': 'Sijaintia ei löytynyt',
   'location.notAllowed': 'Sijaintia ei sallittu',
+  'location.center': 'Keskitä käyttäjän sijaintiin',
 
   // Loading
   'loading.events': 'Haetaan tapahtumia {count} / {max}',
@@ -241,11 +244,19 @@ const translations = {
   // Map
   'map': 'Kartta',
   'map.ariaLabel': 'Karttanäkymä. Kartan tietoja voi tarkastella tällä hetkellä vain näönvaraisesti.',
+  'map.attribution.osm': '&copy; <a href="http://osm.org/copyright">OpenStreetMapin tekijät</a>',
+  'map.attribution.helsinki': '&copy; Helsingin, Espoon, Vantaan ja Kauniaisen kaupungit',
   'map.transit.endStation': 'Päätepysäkki',
   'map.address.searching': 'Haetaan osoitetta...',
   'map.address.notFound': 'Osoitetta ei löytynyt',
   'map.address.info': 'Osoitteen tiedot',
   'map.unit.cluster.popup.info': '{count} toimipistettä',
+
+  // Print
+  'print.alert': 'Käytä tulostamiseen työkaluvalikon tulostusta',
+  'print.button.close': 'Sulje näkymä',
+  'print.button.print': 'Tulosta näkymä',
+  'print.table.header.number': 'Numero kartalla',
 
   // Units
   'unit': 'Toimipiste',
@@ -284,6 +295,7 @@ const translations = {
   'unit.address.missing': 'Osoitetta ei ilmoitettu',
   'unit.phone': 'Puhelinnumero',
   'unit.phone.missing': 'Puhelinnumeroa ei ilmoitettu',
+  'unit.phone.charge': 'Puhelujen hinnat',
   'unit.email': 'Sähköpostiosoite',
   'unit.email.missing': 'Sähköpostiosoitetta ei ilmoitettu',
   'unit.opening.hours': 'Aukioloajat',
@@ -409,6 +421,7 @@ const translations = {
   'settings.accessibilitySettings.long': 'Esteettömyysasetukset',
   'settings.mobile.long': 'Asetukset',
   'settings.search.long': 'Asetukset',
+  'settings.area.long': 'Kaupunkiasetukset',
   'settings.amount': `{count, plural,
     one {# valinta}
     other {# valintaa}
@@ -420,7 +433,9 @@ const translations = {
   'settings.sense.colorblind': 'Minun on vaikea erottaa värejä',
   'settings.info.heading': 'Asetustiedot', // TODO: verify
   'settings.info.title': 'Valitsemasi asetukset vaikuttavat hakutulokseen',
+  'settings.info.title.city': 'Kaupunkiasetukset vaikuttavat aluetietoihin',
   'settings.info.title.noSettings': 'Muuta haku- tai esteettömyysasetuksia',
+  'settings.info.title.noSettings.city': 'Muuta kaupunkiasetuksia rajataksesi alueita',
   'settings.mobility.title': 'Liikkumisrajoitteet',
   'settings.mobility.none': 'Ei liikkumisrajoitteita',
   'settings.mobility.wheelchair': 'Käytän pyörätuolia',

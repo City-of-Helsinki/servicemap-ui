@@ -15,6 +15,7 @@ const UnitItem = ({
   getLocaleText,
   intl,
   padded,
+  divider,
   navigator,
   settings,
 }) => {
@@ -86,6 +87,7 @@ const UnitItem = ({
         }
       }}
       padded={padded}
+      divider={divider}
     />
   );
 };
@@ -107,6 +109,7 @@ UnitItem.propTypes = {
   navigator: PropTypes.objectOf(PropTypes.any),
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
   padded: PropTypes.bool,
+  divider: PropTypes.bool,
 };
 
 UnitItem.defaultProps = {
@@ -115,4 +118,5 @@ UnitItem.defaultProps = {
   onClick: null,
   navigator: null,
   padded: false,
+  divider: false,
 };
