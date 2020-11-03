@@ -54,7 +54,7 @@ const ContactInfo = ({
             </Accordion>
           </ListItem>
           <li aria-hidden>
-            <Divider />
+            <Divider className={classes.dividerShort} />
           </li>
         </React.Fragment>
       ),
