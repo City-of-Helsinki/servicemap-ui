@@ -1,9 +1,8 @@
 import config from '../../../config';
-import { alertErrors, alertNews } from '../actions/fetchDataActions';
+import { alertErrors, alertNews } from './fetchDataActions';
 
 // Thunk fetch
-export const fetchNews = () => async (dispatch)
-=> {
+export const fetchNews = () => async (dispatch) => {
   // Actions
   const {
     isFetching, fetchSuccess, fetchError,
@@ -21,9 +20,7 @@ export const fetchNews = () => async (dispatch)
 
 
 // Thunk fetch
-export const fetchErrors = (
-) => async (dispatch)
-=> {
+export const fetchErrors = () => async (dispatch) => {
   // Actions
   const {
     isFetching, fetchSuccess, fetchError,
