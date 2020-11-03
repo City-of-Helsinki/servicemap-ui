@@ -1,9 +1,11 @@
 export default theme => ({
   container: {
-    padding: 12,
+    padding: theme.spacing(3),
     color: '#fff',
     display: 'flex',
     backgroundColor: theme.palette.primary.main,
+    borderBottom: '1px solid',
+    borderColor: theme.palette.primary.contrastColor,
   },
   icon: {
     width: 32,
@@ -31,6 +33,9 @@ export default theme => ({
     top: 0,
     right: 0,
     margin: 8,
+    '&:hover': {
+      backgroundColor: theme.palette.primary.dark,
+    },
   },
   endIcon: {
     marginLeft: 4,
