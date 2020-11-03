@@ -245,9 +245,6 @@ const translations = {
   'map.address.info': 'Adressens uppgifter',
   'map.unit.cluster.popup.info': '{count} verksamhetsställen', // TODO: Verify
 
-  // News info
-  'newsInfo.subtitle': 'Uusi toiminnallisuus', // TODO: Translate
-
   // Units
   'unit': 'Verksamhetsställe',
   'unit.accessibility.hearingMaps': 'Täckningskartor',

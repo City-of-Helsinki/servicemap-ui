@@ -19,7 +19,7 @@ import userLocationIcon from '../../assets/icons/userLocation.svg';
 import noWheelchairIcon from '../../assets/icons/wheelchair.svg';
 import serviceIcon from '../../assets/icons/serviceIcon.svg';
 import serviceIconDark from '../../assets/icons/serviceIconDark.svg';
-import servicemapLogoIcon from '../../assets/icons/servicemapLogoIcon.svg';
+import servicemapLogoIcon from '../../assets/icons/IconPalvelukarttaPrimary.svg';
 import closeIcon from '../../assets/icons/closeIcon.svg';
 
 /**
