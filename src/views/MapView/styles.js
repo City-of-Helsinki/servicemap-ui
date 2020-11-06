@@ -96,6 +96,24 @@ const styles = theme => ({
     justifyContent: 'center',
     alignItems: 'center',
     display: 'flex',
+    '&.markerHighlighted': {
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.primary.highContrast,
+      borderColor: theme.palette.primary.highContrast,
+      boxShadow: '0px 4px 4px 0px rgba(0,0,0,0.25)',
+      '&.dark': {
+        boxShadow: '0px 4px 4px 0px rgba(255,255,255,0.45)',
+      },
+    },
+  },
+  unitMarker: {
+    borderRadius: '50%',
+    '&.markerHighlighted': {
+      boxShadow: '0px 4px 4px 0px rgba(0,0,0,0.25)',
+      '&.dark': {
+        boxShadow: '0px 4px 4px 0px rgba(255,255,255,0.45)',
+      },
+    },
   },
   unitTooltipContainer: {
     padding: theme.spacing(2),

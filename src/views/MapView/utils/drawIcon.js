@@ -1,5 +1,5 @@
-import berryIcon from '../../../assets/icons/berryIcon.svg';
-import berryIconContrast from '../../../assets/icons/berryIconContrast.svg';
+import berryIcon from '../../../assets/icons/LocationDefault.svg';
+import berryIconContrast from '../../../assets/icons/LocationDefaultContrast.svg';
 
 // TODO: If berries are not used anymore, clean unused functionalities here
 
@@ -117,7 +117,7 @@ export const drawUnitIcon = (berryColor, curve) => {
   return canvas.toDataURL();
 };
 
-export const drawMarkerIcon = (contrast = false) => {
+export const drawMarkerIcon = (contrast = false, className = '') => {
   const L = require('leaflet'); // eslint-disable-line global-require
 
   // Generate marker icon
@@ -125,7 +125,7 @@ export const drawMarkerIcon = (contrast = false) => {
     iconUrl: contrast ? berryIconContrast : berryIcon,
     iconSize: [30, 30],
     iconAnchor: [13, 25],
-    className: 'unitMarker',
+    className: `unitMarker ${className}`,
   });
 
   return markerIcon;
