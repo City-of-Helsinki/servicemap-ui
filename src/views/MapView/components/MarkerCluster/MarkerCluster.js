@@ -51,6 +51,7 @@ const MarkerCluster = ({
   settings,
   theme,
 }) => {
+  const useContrast = theme === 'dark';
   const embeded = isEmbed();
   const intl = useIntl();
   const [cluster, setCluster] = useState(null);
@@ -123,9 +124,14 @@ const MarkerCluster = ({
   const createClusterCustomIcon = function (cluster) {
     const cCount = cluster.getChildCount();
     const iconSize = getClusterIconSize(cCount);
+    const children = cluster.getAllChildMarkers();
+    const unitClasses = children
+      .map(marker => marker?.options?.customUnitData?.id && `unit-marker-${marker.options.customUnitData.id}`)
+      .filter(v => !!v);
+    const iconClasses = `unitClusterMarker ${classes.unitClusterMarker} ${unitClasses.join(' ')} ${useContrast ? 'dark' : ''}`;
     const icon = global.L.divIcon({
       html: `<span aria-hidden="true" tabindex="-1">${cCount}</span>`,
-      className: `unitClusterMarker ${classes.unitClusterMarker}`,
+      className: iconClasses,
       iconSize: global.L.point(iconSize, iconSize, true),
     });
     return icon;
@@ -310,7 +316,6 @@ const MarkerCluster = ({
       return;
     }
 
-    const useContrast = theme === 'dark';
     const markers = [];
 
     // Add unit markers to clusterlayer
@@ -334,10 +339,11 @@ const MarkerCluster = ({
         const tooltipPermanent = highlightedUnit
           && (highlightedUnit.id === unit.id && UnitHelper.isUnitPage());
 
+        const markerClasses = `unit-marker-${unit.id} ${classes.unitMarker}${useContrast ? ' dark' : ''}`;
         const markerElem = global.L.marker(
           [unit.location.coordinates[1], unit.location.coordinates[0]],
           {
-            icon: drawMarkerIcon(useContrast),
+            icon: drawMarkerIcon(useContrast, markerClasses),
             customUnitData: unit,
             keyboard: false,
           },

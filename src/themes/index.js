@@ -25,6 +25,13 @@ const props = {
 };
 
 const overrides = theme => ({
+  MuiListItem: {
+    button: {
+      '&:hover': {
+        backgroundColor: '#DEDEDE',
+      },
+    },
+  },
   MuiButtonBase: {
     root: {
       // Default keyboard focus indicator for buttons
