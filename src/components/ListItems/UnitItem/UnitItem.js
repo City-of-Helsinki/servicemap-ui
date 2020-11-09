@@ -162,5 +162,5 @@ UnitItem.defaultProps = {
   onClick: null,
   navigator: null,
   padded: false,
-  divider: false,
+  divider: true,
 };
