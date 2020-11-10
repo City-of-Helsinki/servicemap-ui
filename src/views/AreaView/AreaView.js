@@ -123,7 +123,8 @@ const AreaView = ({
   // Pending request to focus map to districts. Executed once district data is loaded
   const [focusTo, setFocusTo] = useState(null);
   // Fetch state
-  const [fetching, dispatchFetching] = useReducer(fetchReducer, []);
+  const [ditsrictsFetching, dispatchDistrictsFetching] = useReducer(fetchReducer, []);
+  const [unitsFetching, dispatchUnitsFetching] = useReducer(fetchReducer, []);
 
 
   const formAddressString = address => (address
@@ -259,11 +260,12 @@ const AreaView = ({
         return { data: filteredData, type, category };
       })
       .catch(() => {
-        dispatchFetching({ type: 'remove', value: id });
+        dispatchDistrictsFetching({ type: 'remove', value: id });
       });
   };
 
   const fetchDistrictUnitList = async (divisionID) => {
+    dispatchUnitsFetching({ type: 'add', value: divisionID });
     const options = {
       page: 1,
       page_size: 1000,
@@ -276,6 +278,7 @@ const AreaView = ({
           unit.object_type = 'unit';
           unit.division_id = divisionID;
         });
+        dispatchUnitsFetching({ type: 'remove', value: divisionID });
         addSubdistrictUnits(data.results);
       });
   };
@@ -290,12 +293,12 @@ const AreaView = ({
 
     // If no fetched data found, fetch all distirct types within opened category
     if (!districtData.some(district => item.districts.includes(district.name))
-      && !fetching.includes(item.title)
+      && !ditsrictsFetching.includes(item.title)
     ) {
-      dispatchFetching({ type: 'add', value: item.title });
+      dispatchDistrictsFetching({ type: 'add', value: item.title });
       await Promise.all(item.districts.map(i => fetchDistrictsByType(i, item.title, item.id)))
         .then((results) => {
-          dispatchFetching({ type: 'remove', value: item.title });
+          dispatchDistrictsFetching({ type: 'remove', value: item.title });
           results.forEach(result => filterFetchData(result.data, result.type, result.category));
         });
     }
@@ -329,7 +332,9 @@ const AreaView = ({
 
   useEffect(() => {
     selectedSubdistricts.forEach((district) => {
-      if (!subdistrictUnits.some(unit => unit.division_id === district)) {
+      // Fetch geographical districts unless currently fetching or already fetched
+      if (!unitsFetching.includes(district)
+        && !subdistrictUnits.some(unit => unit.division_id === district)) {
         fetchDistrictUnitList(district);
       }
     });
@@ -423,7 +428,7 @@ const AreaView = ({
       setDistrictRadioValue={setDistrictRadioValue}
       setSelectedSubdistricts={setSelectedSubdistricts}
       setSelectedDistrictServices={setSelectedDistrictServices}
-      fetching={fetching}
+      fetching={ditsrictsFetching}
       districtData={districtData}
       selectedDistrictData={selectedDistrictData}
       openItems={openItems}
