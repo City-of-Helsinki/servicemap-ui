@@ -67,6 +67,17 @@ const translations = {
   'area.list.preschool_education_fi': 'Finskt småbarnspedagogikområde',
   'area.list.preschool_education_sv': 'Svenskt småbarnspedagogikområde',
 
+  // Download dialog
+  'download.cropping.title': 'NYKYINEN RAJAUS', // TODO: Translate
+  'download.cropText.unit': 'Yksittäinen toimipiste:', // TODO: Translate
+  'download.cropText.service': 'Toimipisteet valituilla palveluilla:', // TODO: Translate
+  'download.cropText.search': 'Toimipisteet tekstihaun perusteella:', // TODO: Translate
+  'download.cropText.none': 'Ei valittua rajausta', // TODO: Translate
+  'download.data.none': 'Valitse ensin palvelukartalle näkyviin toimipisteitä selaus- tai hakutoiminnoilla ja palaa tähän näkymään tallentaaksesi valittujen toimipisteiden tiedot.', // TODO: Translate
+  'download.format': 'Tiedostomuoto:', // TODO: Translate
+  'download.info': 'Tallenna rajaamiesi toimipisteiden tiedot tiedostoon, jonka voi ladata esimerkiksi Google Maps -sovellukseen tai jatkokäsitellä.', // TODO: Translate
+  'download.title': 'Lataa toimipisteen tiedot', // TODO: Translate
+
   // Event
   'event.description': 'Beskrivning',
   'event.time': 'Tidpunkt',

@@ -6,16 +6,17 @@ import {
   Build, Code, GetApp, Print,
 } from '@material-ui/icons';
 import DropDownMenuButton from '../DropDownMenuButton';
-import useDownloadData from '../../utils/downloadData';
 import SMIcon from '../SMIcon/SMIcon';
 import SMButton from '../ServiceMapButton';
 import PrintContext from '../../context/PrintContext';
+import DownloadDialog from '../Dialog/DownloadDialog';
 
 const ToolMenu = ({
   intl, classes, mapUtility, navigator, setMeasuringMode, measuringMode,
 }) => {
   const togglePrintView = useContext(PrintContext);
   const location = useLocation();
+  const [openDownload, setOpenDownload] = React.useState(false);
 
   // Open embedderView
   const openEmbedder = () => {
@@ -40,7 +41,6 @@ const ToolMenu = ({
 
     navigator.push(newLocation);
   };
-  const downloadToolData = useDownloadData();
 
   const menuItems = [
     // Example shape
@@ -58,11 +58,7 @@ const ToolMenu = ({
       text: intl.formatMessage({ id: 'tool.download' }),
       icon: <GetApp />,
       onClick: () => {
-        const content = JSON.stringify(downloadToolData, null, 2);
-        const tab = window.open();
-        tab.document.open();
-        tab.document.write(`<html><body><pre style="white-space: pre;">${content}</pre></body></html>`);
-        tab.document.close();
+        setOpenDownload(true);
       },
     },
     {
@@ -110,6 +106,7 @@ const ToolMenu = ({
           onClick={() => setMeasuringMode(false)}
         />
       )}
+      <DownloadDialog open={openDownload} setOpen={setOpenDownload} />
     </>
   );
 };

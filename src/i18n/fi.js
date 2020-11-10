@@ -67,6 +67,17 @@ const translations = {
   'area.list.preschool_education_fi': 'Suomenkielinen esiopetusalue',
   'area.list.preschool_education_sv': 'Ruotsinkielinen esiopetusalue',
 
+  // Download dialog
+  'download.cropping.title': 'NYKYINEN RAJAUS',
+  'download.cropText.unit': 'Yksittäinen toimipiste:',
+  'download.cropText.service': 'Toimipisteet valituilla palveluilla:',
+  'download.cropText.search': 'Toimipisteet tekstihaun perusteella:',
+  'download.cropText.none': 'Ei valittua rajausta',
+  'download.data.none': 'Valitse ensin palvelukartalle näkyviin toimipisteitä selaus- tai hakutoiminnoilla ja palaa tähän näkymään tallentaaksesi valittujen toimipisteiden tiedot.',
+  'download.format': 'Tiedostomuoto:',
+  'download.info': 'Tallenna rajaamiesi toimipisteiden tiedot tiedostoon, jonka voi ladata esimerkiksi Google Maps -sovellukseen tai jatkokäsitellä.',
+  'download.title': 'Lataa toimipisteen tiedot',
+
   // Event
   'event.description': 'Kuvaus',
   'event.time': 'Ajankohta',
