@@ -176,6 +176,7 @@ const translations = {
   'general.noData': 'Tietoa ei saatavilla',
   'general.news.alert.title': 'Ilmoitusikkuna',
   'general.news.alert.close.aria': 'Sulje ilmoitusikkuna',
+  'general.news.info.title': 'Palvelukartan uutiset',
   'general.loading': 'Ladataan',
   'general.loading.done': 'Lataus valmis',
   'general.showOnMap': 'Näytä kartalla',
