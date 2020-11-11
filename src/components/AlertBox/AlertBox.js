@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Typography } from '@material-ui/core';
+import { FormattedMessage } from 'react-intl';
 import { getIcon } from '../SMIcon';
 import LocalStorageUtility from '../../utils/localStorage';
 
@@ -35,18 +36,22 @@ const AlertBox = ({
   });
   const closeButtonIcon = getIcon('closeIcon');
   const closeButtonText = intl.formatMessage({ id: 'general.close' });
+  const closeButtonTextAria = intl.formatMessage({ id: 'general.news.alert.close.aria' });
   const closeButtonClick = () => {
     setVisible(false);
     setMessageAsWatched();
   };
 
   return (
-    <div className={classes.container}>
+    <section className={classes.container}>
+      <Typography variant="srOnly" component="h2">
+        <FormattedMessage id="general.news.alert.title" />
+      </Typography>
       {icon}
       <div className={classes.textContent}>
         <Typography
           className={classes.title}
-          component="h2"
+          component="h3"
           variant="subtitle1"
           color="inherit"
         >
@@ -56,6 +61,7 @@ const AlertBox = ({
       </div>
       <div className={classes.padder} />
       <Button
+        aria-label={closeButtonTextAria}
         color="inherit"
         classes={{
           endIcon: classes.endIcon,
@@ -66,7 +72,7 @@ const AlertBox = ({
       >
         {closeButtonText}
       </Button>
-    </div>
+    </section>
   );
 };
 

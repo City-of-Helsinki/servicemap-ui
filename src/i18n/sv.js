@@ -172,6 +172,8 @@ const translations = {
   'general.fetching': 'Laddar data...',
   'general.home': 'Hem',
   'general.noData': 'Data finns inte',
+  'general.news.alert.title': 'Ilmoitusikkuna', // TODO: Translate
+  'general.news.alert.close.aria': 'Sulje ilmoitusikkuna', // TODO: Translate
   'general.loading': 'Laddar',
   'general.loading.done': 'Laddning färdig',
   'general.showOnMap': 'Visa på kartan',

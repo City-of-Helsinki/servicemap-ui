@@ -174,6 +174,8 @@ const translations = {
   'general.fetching': 'Ladataan tietoja...',
   'general.home': 'Koti',
   'general.noData': 'Tietoa ei saatavilla',
+  'general.news.alert.title': 'Ilmoitusikkuna',
+  'general.news.alert.close.aria': 'Sulje ilmoitusikkuna',
   'general.loading': 'Ladataan',
   'general.loading.done': 'Lataus valmis',
   'general.showOnMap': 'Näytä kartalla',
