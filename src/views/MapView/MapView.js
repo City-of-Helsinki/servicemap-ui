@@ -47,6 +47,7 @@ const MapView = (props) => {
     unitList,
     unitsLoading,
     serviceUnits,
+    districtUnits,
     hideUserMarker,
     highlightedUnit,
     highlightedDistrict,
@@ -104,6 +105,8 @@ const MapView = (props) => {
       }
     } else if (currentPage === 'service' && serviceUnits && !unitsLoading) {
       mapUnits = serviceUnits;
+    } else if (currentPage === 'area' && districtUnits) {
+      mapUnits = districtUnits;
     } else if (
       (currentPage === 'unit' || currentPage === 'fullList' || currentPage === 'event')
       && highlightedUnit
@@ -230,6 +233,7 @@ const MapView = (props) => {
     highlightedUnit,
     addressUnits,
     serviceUnits,
+    districtUnits,
     highlightedDistrict,
     currentPage,
   ]);
@@ -290,6 +294,8 @@ const MapView = (props) => {
         : prevMap.props.zoom + zoomDifference;
     }
 
+    const userLocationAriaLabel = intl.formatMessage({ id: !userLocation ? 'location.notAllowed' : 'location.center' });
+
     return (
       <>
         {renderTopBar()}
@@ -323,9 +329,9 @@ const MapView = (props) => {
           }
           <TileLayer
             url={mapObject.options.url}
-            attribution='&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors'
+            attribution={intl.formatMessage({ id: mapObject.options.attribution })}
           />
-          <Districts mapOptions={mapOptions} map={mapRef.current} />
+          <Districts mapOptions={mapOptions} map={mapRef.current} embed={embeded} />
 
           <TransitStops
             getLocaleText={getLocaleText}
@@ -376,6 +382,7 @@ const MapView = (props) => {
                 {/* Custom user location map button */}
                 <Control position="bottomright">
                   <ButtonBase
+                    aria-label={userLocationAriaLabel}
                     disabled={!userLocation}
                     className={`${classes.showLocationButton} ${!userLocation ? classes.locationDisabled : ''}`}
                     onClick={() => focusOnUser()}
@@ -419,6 +426,7 @@ MapView.propTypes = {
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   serviceUnits: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
+  districtUnits: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
   setAddressLocation: PropTypes.func.isRequired,
   findUserLocation: PropTypes.func.isRequired,
   setMapRef: PropTypes.func.isRequired,
@@ -440,6 +448,7 @@ MapView.defaultProps = {
   isMobile: false,
   navigator: null,
   serviceUnits: null,
+  districtUnits: null,
   unitList: null,
   unitsLoading: false,
   userLocation: null,

@@ -177,7 +177,7 @@ class Settings extends React.Component {
     const { settings } = this.props;
     setTimeout(() => {
       let elem;
-      if (settings.toggled === 'search') {
+      if (settings.toggled === 'search' || settings.toggled === 'area') {
         elem = document.getElementById('SettingsLink');
       } else if (settings.toggled === 'mobile') {
         elem = document.getElementById('MenuButton');
@@ -658,7 +658,7 @@ class Settings extends React.Component {
       </>
     );
 
-    if (settingsPage === 'citySettings') {
+    if (settingsPage === 'citySettings' || settingsPage === 'area') {
       pageContent = this.renderCitySettings('close');
     } else if (settingsPage === 'mapSettings') {
       pageContent = this.renderMapSettings('close');

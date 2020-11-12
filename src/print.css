@@ -1,0 +1,10 @@
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  body, html, #wrapper {
+    height: 100%;
+  }
+}

@@ -25,6 +25,13 @@ const props = {
 };
 
 const overrides = theme => ({
+  MuiListItem: {
+    button: {
+      '&:hover': {
+        backgroundColor: '#DEDEDE',
+      },
+    },
+  },
   MuiButtonBase: {
     root: {
       // Default keyboard focus indicator for buttons
@@ -49,6 +56,14 @@ const overrides = theme => ({
   PrivateSwitchBase: {
     root: {
       padding: 12,
+      marginRight: 8,
+    },
+  },
+  MuiAccordionSummary: {
+    root: {
+      '&$expanded': {
+        minHeight: 0,
+      },
     },
   },
 });

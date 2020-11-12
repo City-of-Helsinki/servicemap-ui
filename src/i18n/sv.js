@@ -43,6 +43,8 @@ const translations = {
   'area.services.nearby': 'Tjänster i närområdena',
   'area.info': 'Välj ett område, vars tjänster du vill ha information om. Genom att skriva din hemadress i sökfältet öppnas en karta och under fliken Tjänster i området visas de områden och distrikt som du hör till',
   'area.choose.district': 'Väl område',
+  'area.choose.subdistrict': 'Väl och öppna {category}',
+  'area.close.subdistrict': 'Stäng {category}',
   'area.noSelection': 'Väl område under fliken Val av område',
   'area.list.geographical': 'Geografisk',
   'area.list.protection': 'Befolkningsskydd',
@@ -229,6 +231,7 @@ const translations = {
   // Location
   'location.notFound': 'Positionen hittades inte',
   'location.notAllowed': 'Positionen tilläts inte',
+  'location.center': 'Centrera på användarens position',
 
   // Loading
   'loading.events': 'Söker evenemang {count} / {max}',
@@ -239,11 +242,19 @@ const translations = {
   // Map
   'map': 'Karta',
   'map.ariaLabel': 'Kartvy. Kartans uppgifter kan i nuläget granskas endast visuellt.',
+  'map.attribution.osm': '&copy; <a href="http://osm.org/copyright">Upphovsmännen bakom OpenStreetMaps</a>',
+  'map.attribution.helsinki': '&copy; Helsingfors, Esbo, Vanda och Grankulla städer',
   'map.transit.endStation': 'Ändhållplats',
   'map.address.searching': 'Söker adress...',
   'map.address.notFound': 'Adressen hittades ej',
   'map.address.info': 'Adressens uppgifter',
   'map.unit.cluster.popup.info': '{count} verksamhetsställen', // TODO: Verify
+
+  // Print
+  'print.alert': 'Använd utskriftsalternativet i verktygsmenyn',
+  'print.button.close': 'Stäng vyn',
+  'print.button.print': 'Skriv ut vyn',
+  'print.table.header.number': 'Nummer på kartan',
 
   // Units
   'unit': 'Verksamhetsställe',
@@ -282,6 +293,7 @@ const translations = {
   'unit.address.missing': 'Ingen adress har meddelats',
   'unit.phone': 'Telefonnummer',
   'unit.phone.missing': 'Telefonnummer har inte meddelats',
+  'unit.phone.charge': 'Samtalspriser',
   'unit.email': 'E-postadress',
   'unit.email.missing': 'E-postadress har inte meddelats',
   'unit.opening.hours': 'Öppettider',
@@ -407,6 +419,7 @@ const translations = {
   'settings.accessibilitySettings.long': 'Tillgänglighetsinställningar',
   'settings.mobile.long': 'Inställningar',
   'settings.search.long': 'Inställningar',
+  'settings.area.long': 'Stadsinställningar',
   'settings.amount': `{count, plural,
     one {# val} 
     other {# val}
@@ -418,7 +431,9 @@ const translations = {
   'settings.sense.colorblind': 'Jag har svårt att urskilja förger',
   'settings.info.heading': 'Inställningsuppgifter',
   'settings.info.title': 'Dina valda inställningar påverkar sökresultatet',
+  'settings.info.title.city': 'Stadsinställningarna påverkar områdesinformationen',
   'settings.info.title.noSettings': 'Ändra sök- eller tillgänglighetsinställningar',
+  'settings.info.title.noSettings.city': 'Ändra stadsinställningarna för att begränsa antalet områden',
   'settings.mobility.title': 'Rörelsehinder',
   'settings.mobility.none': 'Inga rörelsehinder',
   'settings.mobility.wheelchair': 'Jag använder rullstol',

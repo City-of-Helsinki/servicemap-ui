@@ -22,23 +22,37 @@ const styles = theme => ({
     marginLeft: theme.spacing(1),
   },
   list: {
-    marginRight: theme.spacing(-2),
+    paddingLeft: theme.spacing(5),
   },
   districtItem: {
-    padding: 0,
-    paddingTop: 4,
-    paddingBottom: 4,
+    paddingLeft: 0,
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
   },
   captionText: {
     color: '#000',
     fontWeight: 'normal',
   },
+  loadingText: {
+    paddingLeft: theme.spacing(6),
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
+  },
   subtitle: {
-    height: 49,
+    height: 48,
     display: 'flex',
     alignItems: 'center',
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(1),
+    paddingLeft: theme.spacing(6),
+  },
+  municipalitySubtitle: {
+    height: 48,
+    display: 'flex',
+    alignItems: 'center',
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
+    paddingLeft: theme.spacing(4),
   },
   categoryItem: {
     paddingRight: 32,
@@ -48,6 +62,7 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'row',
     width: '100%',
+    alignItems: 'center',
   },
   categoryItemContent: {
     paddingLeft: 32,
@@ -101,6 +116,55 @@ const styles = theme => ({
   },
   selectedAddress: {
     fontSize: 18,
+  },
+  subdistrictContainer: {
+    flexDirection: 'column',
+  },
+  subdistrictList: {
+    paddingLeft: theme.spacing(3),
+  },
+  expandingElement: {
+    minHeight: '32px !important',
+    boxShadow: 'none',
+    width: '100%',
+  },
+  expandingElementContent: {
+    marginBottom: -1,
+  },
+  testPadding: {
+    paddingLeft: 0,
+    paddingRight: theme.spacing(4),
+  },
+  accordionSummary: {
+    minHeight: '48px !important',
+    height: 48,
+    padding: 0,
+  },
+  accordionSummaryContent: {
+    margin: 0,
+  },
+  textExpanded: {
+    margin: 0,
+  },
+  deleteButton: {
+    marginLeft: theme.spacing(2),
+  },
+  unitListArea: {
+    textAlign: 'left',
+  },
+  centerItems: {
+    alignItems: 'center',
+    padding: 0,
+  },
+  test: {
+    backgroundColor: 'yellow',
+  },
+  accoridonContent: {
+    paddingLeft: 0,
+    paddingRight: 0,
+  },
+  fullWidth: {
+    width: '100%',
   },
 });
 

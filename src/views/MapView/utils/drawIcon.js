@@ -1,5 +1,5 @@
-import berryIcon from '../../../assets/icons/berryIcon.svg';
-import berryIconContrast from '../../../assets/icons/berryIconContrast.svg';
+import berryIcon from '../../../assets/icons/LocationDefault.svg';
+import berryIconContrast from '../../../assets/icons/LocationDefaultContrast.svg';
 
 // TODO: If berries are not used anymore, clean unused functionalities here
 
@@ -27,6 +27,10 @@ const stemDefaults = {
   control: 1030,
   color: '#333',
 };
+
+// NumberCircleMaker configurations
+const CIRCLE_MARKER_FONT_SIZE = 32;
+const CIRCLE_MARKER_PADDING = 15;
 
 const berryCenter = (value) => {
   let rotation = value;
@@ -113,7 +117,7 @@ export const drawUnitIcon = (berryColor, curve) => {
   return canvas.toDataURL();
 };
 
-export const drawMarkerIcon = (contrast = false) => {
+export const drawMarkerIcon = (contrast = false, className = '') => {
   const L = require('leaflet'); // eslint-disable-line global-require
 
   // Generate marker icon
@@ -121,10 +125,57 @@ export const drawMarkerIcon = (contrast = false) => {
     iconUrl: contrast ? berryIconContrast : berryIcon,
     iconSize: [30, 30],
     iconAnchor: [13, 25],
-    className: 'unitMarker',
+    className: `unitMarker ${className}`,
   });
 
   return markerIcon;
 };
+
+export class NumberCircleMaker {
+  constructor(diameter1) {
+    this.diameter = diameter1;
+  }
+
+  stroke = (c, callback) => {
+    c.beginPath();
+    callback(c);
+    c.fill();
+    return c.closePath();
+  }
+
+  drawNumber = (ctx, num, width) => {
+    const position = width / 2 + CIRCLE_MARKER_PADDING;
+    return ctx.fillText(num, position, position);
+  }
+
+  drawCircle = (ctx, diameter) => this.stroke(ctx, (ctx) => {
+    const radius = diameter / 2 + CIRCLE_MARKER_PADDING;
+    return ctx.arc(radius, radius, radius, 0, 2 * Math.PI);
+  });
+
+  initContext = (ctx) => {
+    ctx.font = `bold ${CIRCLE_MARKER_FONT_SIZE}px sans-serif`;
+    ctx.textBaseline = 'middle';
+    ctx.textAlign = 'center';
+    return ctx;
+  }
+
+  drawNumberedCircle = (ctx, num) => {
+    let number = num;
+    this.initContext(ctx);
+    number = num.toString();
+    ctx.fillStyle = '#ffffff';
+    const numberDimensions = ctx.measureText(num);
+    const { width } = numberDimensions;
+    const scalingFactor = this.diameter / (width + 2 * CIRCLE_MARKER_PADDING);
+    ctx.save();
+    ctx.scale(scalingFactor, scalingFactor);
+    this.drawNumber(ctx, number, numberDimensions.width);
+    ctx.globalCompositeOperation = 'destination-over';
+    ctx.fillStyle = '#000000';
+    this.drawCircle(ctx, numberDimensions.width);
+    return ctx.restore();
+  }
+}
 
 export default drawMarkerIcon;

@@ -21,6 +21,7 @@ const ResultItem = ({
   selected,
   padded,
   extendedClasses,
+  ...rest
 }) => {
   // Screen reader text
   const srText = `
@@ -48,6 +49,7 @@ const ResultItem = ({
         onClick={onClick}
         onKeyDown={keyboardHandler(onClick, ['enter', 'space'])}
         className={listItemClasses}
+        {...rest}
       >
         {
           icon
