@@ -3,6 +3,7 @@ import breadcrumb from './reducers/breadcrumb';
 import navigator from './reducers/navigator';
 import {
   units,
+  serviceTreeUnits,
   service,
   selectedUnit,
   accessibilitySentences,
@@ -42,7 +43,10 @@ export default combineReducers({
   }),
   event,
   address,
-  serviceTree,
+  serviceTree: combineReducers({
+    serviceTree,
+    serviceTreeUnits,
+  }),
   settings: combineReducers({
     toggled: settingsToggled,
     colorblind,

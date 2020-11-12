@@ -15,18 +15,22 @@ const ServiceTreeView = (props) => {
     classes,
     navigator,
     intl,
-    setTreeState,
-    prevServices,
-    prevSelected,
-    prevOpened,
+    serviceTree,
     settings,
     getLocaleText,
+    fetchServiceTreeUnits,
+    setTreeSerivces,
+    setTreeSelected,
+    setTreeOpened,
+    setFetchedNode,
   } = props;
 
+  const { // Service tree state from redux
+    services, selected, opened, fetched,
+  } = serviceTree.serviceTree;
+
+  const { isFetching } = serviceTree.serviceTreeUnits;
   // State
-  const [services, setServices] = useState(prevServices);
-  const [opened, setOpened] = useState(prevOpened);
-  const [selected, setSelected] = useState(prevSelected);
   const [selectedOpen, setSelectedOpen] = useState(false);
 
   let citySettings = [];
@@ -62,9 +66,9 @@ const ServiceTreeView = (props) => {
   );
 
   const setInitialServices = () => {
-    // Fetch initially shown service nodes when first entering the pag
+    // Fetch initially shown service nodes when first entering the page
     fetchRootNodes()
-      .then(data => setServices(data));
+      .then(data => setTreeSerivces(data));
   };
 
   const fetchChildServices = async (service) => {
@@ -114,7 +118,7 @@ const ServiceTreeView = (props) => {
 
   const handleExpand = (service, isOpen) => {
     if (isOpen) { // Close expanded item
-      setOpened(opened.filter(e => e !== service.id));
+      setTreeOpened(opened.filter(e => e !== service.id));
     } else if (services.some(e => e.parent === service.id)) { // Expand item without fetching
       setOpened([...opened, service.id]);
     } else { // Fetch child nodes then expand
@@ -130,11 +134,11 @@ const ServiceTreeView = (props) => {
       const nodesToRemove = [...parentsToRemove, ...childrenToRemove];
       // Remove nodes from selected state
       if (nodesToRemove.length) {
-        setSelected(
-          selected.filter(element => element.id !== item.id && !nodesToRemove.includes(element.id)),
+        setTreeSelected(
+          selected.filter(element => element !== item.id && !nodesToRemove.includes(element)),
         );
       } else {
-        setSelected(selected.filter(element => element.id !== item.id));
+        setTreeSelected(selected.filter(element => element !== item.id));
       }
 
     // If checbox is not checked, add checkbox selections

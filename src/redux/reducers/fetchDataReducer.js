@@ -38,6 +38,14 @@ const dataSetReducer = (state, action, prefix) => {
         data: action.data,
         count: action.data ? action.data.length : 0,
       };
+    case `${prefix}_FETCH_MORE_DATA_SUCCESS`:
+      return {
+        ...state,
+        isFetching: false,
+        errorMessage: null,
+        data: [...state.data, ...action.data],
+        count: action.data ? action.data.length : 0,
+      };
     case `${prefix}_FETCH_PROGRESS_UPDATE`:
       return {
         ...state,
@@ -116,6 +124,7 @@ const dataSingle = (state, action, prefix) => {
 
 // Fetch data set reducers
 export const units = (state = dataSetInitialState, action) => dataSetReducer(state, action, 'UNITS');
+export const serviceTreeUnits = (state = dataSetInitialState, action) => dataSetReducer(state, action, 'SERVICE_TREE_UNITS');
 export const service = (state = dataSetInitialState, action) => dataSetReducer(state, action, 'SERVICE');
 export const unitEvents = (state = dataSingleInitialState, action) => dataSetReducer(state, action, 'SELECTED_UNIT_EVENTS');
 export const reservations = (state = dataSingleInitialState, action) => dataSetReducer(state, action, 'SELECTED_UNIT_RESERVATIONS');
