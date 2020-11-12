@@ -1,3 +1,4 @@
+import pointOnFeature from '@turf/point-on-feature';
 import swapCoordinates from './swapCoordinates';
 
 /* eslint-disable global-require, no-underscore-dangle */
@@ -65,10 +66,30 @@ const fitBbox = (map, bbox) => {
   map.fitBounds(bounds);
 };
 
+const panViewToBounds = (map, selectedGeometry, geometryGroup) => {
+  const mapBounds = map.leafletElement.getBounds();
+  // Get point inside geometry
+  const geometryPoint = pointOnFeature(selectedGeometry).geometry.coordinates;
+  const pointLatLng = global.L.latLng(geometryPoint);
+  // If point is outside of map bounds, move map to area
+  if (!mapBounds.contains(pointLatLng)) {
+    try {
+      if (geometryGroup?.length) { // If a group of geomteries is given, fit them all to map
+        map.leafletElement.fitBounds(geometryGroup);
+      } else {
+        map.leafletElement.fitBounds(selectedGeometry.coordinates);
+      }
+    } catch (err) {
+      console.warn('Fit districts to map failed', err);
+    }
+  }
+};
+
 export {
   fitBbox,
   fitUnitsToMap,
   focusToPosition,
   focusDistrict,
   focusDistricts,
+  panViewToBounds,
 };

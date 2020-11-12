@@ -21,6 +21,7 @@ import AddressSearchBar from '../../../../components/AddressSearchBar';
 import MobileComponent from '../../../../components/MobileComponent';
 import SettingsInfo from '../../../../components/SettingsInfo';
 import SMButton from '../../../../components/ServiceMapButton';
+import { panViewToBounds } from '../../../MapView/utils/mapActions';
 
 const AreaTab = (props) => {
   const {
@@ -41,6 +42,7 @@ const AreaTab = (props) => {
     intl,
     navigator,
     getLocaleText,
+    map,
   } = props;
   const citySettings = useSelector(state => state.settings.cities);
   const defaultExpanded = selectedSubdistricts.length;
@@ -56,6 +58,12 @@ const AreaTab = (props) => {
     let newArray;
     if (event.target.checked) {
       newArray = [...selectedSubdistricts, district.ocd_id];
+      // Focus to selected districts
+      const districtsToFocus = selectedDistrictData.filter(
+        district => newArray.includes(district.ocd_id),
+      );
+      const coordinateArray = districtsToFocus.map(district => district.boundary.coordinates);
+      panViewToBounds(map, district.boundary, coordinateArray);
     } else {
       newArray = selectedSubdistricts.filter(i => i !== district.ocd_id);
     }
@@ -364,6 +372,7 @@ AreaTab.propTypes = {
   selectedSubdistricts: PropTypes.arrayOf(PropTypes.string).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   getLocaleText: PropTypes.func.isRequired,
+  map: PropTypes.objectOf(PropTypes.any).isRequired,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 

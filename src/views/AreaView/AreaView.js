@@ -438,6 +438,7 @@ const AreaView = ({
       address={districtAddressData.address}
       navigator={navigator}
       getLocaleText={getLocaleText}
+      map={map}
     />
   );
 
