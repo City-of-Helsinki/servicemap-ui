@@ -17,6 +17,7 @@ const ToolMenu = ({
   const togglePrintView = useContext(PrintContext);
   const location = useLocation();
   const [openDownload, setOpenDownload] = React.useState(false);
+  const toolMenuButton = React.useRef();
 
   // Open embedderView
   const openEmbedder = () => {
@@ -81,15 +82,17 @@ const ToolMenu = ({
       },
     },
   ];
-  const toolMenuText = intl.formatMessage({ id: 'general.tools' });
 
   if (menuItems.length === 0) {
     return null;
   }
 
+  const toolMenuText = intl.formatMessage({ id: 'general.tools' });
+
   return (
     <>
       <DropDownMenuButton
+        ref={toolMenuButton}
         panelID="ToolMenuPanel"
         buttonIcon={<Build />}
         buttonText={toolMenuText}
@@ -106,7 +109,7 @@ const ToolMenu = ({
           onClick={() => setMeasuringMode(false)}
         />
       )}
-      <DownloadDialog open={openDownload} setOpen={setOpenDownload} />
+      <DownloadDialog open={openDownload} setOpen={setOpenDownload} referer={toolMenuButton} />
     </>
   );
 };
@@ -116,6 +119,8 @@ ToolMenu.propTypes = {
   measuringMode: PropTypes.bool.isRequired,
   classes: PropTypes.shape({
     menuContainer: PropTypes.string,
+    smIcon: PropTypes.string,
+    measuringButton: PropTypes.string,
   }).isRequired,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   mapUtility: PropTypes.shape({

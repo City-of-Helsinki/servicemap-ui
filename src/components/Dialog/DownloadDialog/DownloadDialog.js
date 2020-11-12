@@ -10,7 +10,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import { useSelector } from 'react-redux';
-import Dialog from '../Dialog';
+import Dialog from '../index';
 import SMButton from '../../ServiceMapButton';
 import useDownloadData from '../../../utils/downloadData';
 
@@ -120,7 +120,13 @@ const DownloadDialog = ({
 
     return (
       <div className={classes.croppingContainer}>
-        <Typography variant="subtitle1" component="h3">{croppingTitle}</Typography>
+        <Typography
+          className={classes.croppingTitle}
+          variant="subtitle1"
+          component="h3"
+        >
+          {croppingTitle}
+        </Typography>
         <Typography variant="body2">{text}</Typography>
         <Typography variant="body2" className={classes.croppingText}>
           {selectionText}
@@ -138,7 +144,7 @@ const DownloadDialog = ({
   const dialogText = intl.formatMessage({ id: 'download.info' });
   // const formatText = intl.formatMessage({ id: 'download.format' });
   const downloadTitle = intl.formatMessage({ id: 'download.title' });
-  const downloadText = intl.formatMessage({ id: 'tool.download' });
+  const downloadText = intl.formatMessage({ id: 'download.download' });
 
   return (
     <Dialog
@@ -164,6 +170,7 @@ DownloadDialog.propTypes = {
   classes: PropTypes.shape({
     croppingContainer: PropTypes.string,
     croppingText: PropTypes.string,
+    croppingTitle: PropTypes.string,
     formControlGroup: PropTypes.string,
     formControlLabel: PropTypes.string,
   }).isRequired,

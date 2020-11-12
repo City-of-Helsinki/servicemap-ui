@@ -8,6 +8,9 @@ export default theme => ({
   croppingText: {
     marginLeft: theme.spacing(2),
   },
+  croppingTitle: {
+    textTransform: 'uppercase',
+  },
   formControlGroup: {
     flexDirection: 'row',
   },

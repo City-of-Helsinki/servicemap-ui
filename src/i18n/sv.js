@@ -74,6 +74,7 @@ const translations = {
   'download.cropText.search': 'Toimipisteet tekstihaun perusteella:', // TODO: Translate
   'download.cropText.none': 'Ei valittua rajausta', // TODO: Translate
   'download.data.none': 'Valitse ensin palvelukartalle näkyviin toimipisteitä selaus- tai hakutoiminnoilla ja palaa tähän näkymään tallentaaksesi valittujen toimipisteiden tiedot.', // TODO: Translate
+  'download.download': 'Exportera (ny flik)',
   'download.format': 'Tiedostomuoto:', // TODO: Translate
   'download.info': 'Tallenna rajaamiesi toimipisteiden tiedot tiedostoon, jonka voi ladata esimerkiksi Google Maps -sovellukseen tai jatkokäsitellä.', // TODO: Translate
   'download.title': 'Lataa toimipisteen tiedot', // TODO: Translate
@@ -472,7 +473,7 @@ const translations = {
   'settings.aria.saved': 'Inställningarna har sparats',
 
   // Tools
-  'tool.download': 'Exportera (ny flik)',
+  'tool.download': 'Exportera',
   'tool.measuring': 'Mät avstånd (endast med mus)',
   'tool.measuring.stop': 'Sluta mäta',
 

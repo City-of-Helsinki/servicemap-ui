@@ -68,15 +68,16 @@ const translations = {
   'area.list.preschool_education_sv': 'Swedish preschool education area',
 
   // Download dialog
-  'download.cropping.title': 'NYKYINEN RAJAUS', // TODO: Translate
-  'download.cropText.unit': 'Yksittäinen toimipiste:', // TODO: Translate
-  'download.cropText.service': 'Toimipisteet valituilla palveluilla:', // TODO: Translate
-  'download.cropText.search': 'Toimipisteet tekstihaun perusteella:', // TODO: Translate
-  'download.cropText.none': 'Ei valittua rajausta', // TODO: Translate
-  'download.data.none': 'Valitse ensin palvelukartalle näkyviin toimipisteitä selaus- tai hakutoiminnoilla ja palaa tähän näkymään tallentaaksesi valittujen toimipisteiden tiedot.', // TODO: Translate
-  'download.format': 'Tiedostomuoto:', // TODO: Translate
-  'download.info': 'Tallenna rajaamiesi toimipisteiden tiedot tiedostoon, jonka voi ladata esimerkiksi Google Maps -sovellukseen tai jatkokäsitellä.', // TODO: Translate
-  'download.title': 'Lataa toimipisteen tiedot', // TODO: Translate
+  'download.cropping.title': 'Current selection',
+  'download.cropText.unit': 'A single service point:', // TODO: verify
+  'download.cropText.service': 'Service points with chosen services:', // TODO: verify
+  'download.cropText.search': 'Service points matching a text search:', // TODO: verify
+  'download.cropText.none': 'No service points chosen', // TODO: verify
+  'download.data.none': 'First make some service points visible on the service map by searching or browsing and then return here to save the service point data.', // TODO: Verify
+  'download.download': 'Download data (new tab)',
+  'download.format': 'File format:', // TODO: verify
+  'download.info': 'You can download the data for the set of service points you have chosen. The downloaded file can be loaded into Google Maps, loaded into another program, or otherwise processed.', // TODO: verify
+  'download.title': 'Download service point data', // TODO: verify
 
   // Event
   'event.description': 'Description',
@@ -472,7 +473,7 @@ const translations = {
   'settings.aria.saved': 'Settings have been saved',
 
   // Tools
-  'tool.download': 'Download data (new tab)',
+  'tool.download': 'Download data',
   'tool.measuring': 'Measure distance (mouse only)',
   'tool.measuring.stop': 'Stop measuring',
 
