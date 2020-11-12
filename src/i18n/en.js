@@ -172,9 +172,9 @@ const translations = {
   'general.fetching': 'Loading data...',
   'general.home': 'Home',
   'general.noData': 'No data available',
-  'general.news.alert.title': 'Ilmoitusikkuna', // TODO: Translate
-  'general.news.alert.close.aria': 'Sulje ilmoitusikkuna', // TODO: Translate
-  'general.news.info.title': 'Palvelukartan uutiset', // TODO: Translate
+  'general.news.alert.title': 'Notification window',
+  'general.news.alert.close.aria': 'Close notification window',
+  'general.news.info.title': 'Service map news',
   'general.loading': 'Loading',
   'general.loading.done': 'Loading completed',
   'general.showOnMap': 'Show on map',

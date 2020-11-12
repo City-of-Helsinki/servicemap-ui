@@ -172,9 +172,9 @@ const translations = {
   'general.fetching': 'Laddar data...',
   'general.home': 'Hem',
   'general.noData': 'Data finns inte',
-  'general.news.alert.title': 'Ilmoitusikkuna', // TODO: Translate
-  'general.news.alert.close.aria': 'Sulje ilmoitusikkuna', // TODO: Translate
-  'general.news.info.title': 'Palvelukartan uutiset', // TODO: Translate
+  'general.news.alert.title': 'Meddelandefönster',
+  'general.news.alert.close.aria': 'Stäng meddelandefönstret',
+  'general.news.info.title': 'Servicekartans nyheter',
   'general.loading': 'Laddar',
   'general.loading.done': 'Laddning färdig',
   'general.showOnMap': 'Visa på kartan',
