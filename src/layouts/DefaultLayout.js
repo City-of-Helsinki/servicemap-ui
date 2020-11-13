@@ -18,7 +18,7 @@ import { PrintProvider } from '../context/PrintContext';
 const { smallScreenBreakpoint } = config;
 
 const createContentStyles = (
-  isMobile, isSmallScreen, landscape, fullMobileMap, settingsOpen, currentPage,
+  isMobile, isSmallScreen, landscape, fullMobileMap, settingsOpen, currentPage, sidebarHidden,
 ) => {
   let width = 450;
   if (isMobile) {
@@ -53,7 +53,7 @@ const createContentStyles = (
       position: 'relative',
       top: 0,
       bottom: 0,
-      width,
+      width: sidebarHidden ? 0 : width,
       margin: 0,
       // eslint-disable-next-line no-nested-ternary
       overflow: settingsOpen ? 'hidden'
@@ -78,6 +78,9 @@ const createContentStyles = (
 const valueStore = {};
 
 const DefaultLayout = (props) => {
+  const [showPrintView, togglePrintView] = useState(false);
+  const [sidebarHidden, toggleSidebarHidden] = useState(false);
+
   const {
     currentPage, i18n, intl, location, settingsToggled,
   } = props;
@@ -88,7 +91,7 @@ const DefaultLayout = (props) => {
   const portrait = useMediaQuery('(max-device-aspect-ratio: 1/1)');
 
   const styles = createContentStyles(
-    isMobile, isSmallScreen, landscape, fullMobileMap, settingsToggled, currentPage,
+    isMobile, isSmallScreen, landscape, fullMobileMap, settingsToggled, currentPage, sidebarHidden,
   );
   const srLinks = [
     {
@@ -96,8 +99,10 @@ const DefaultLayout = (props) => {
       text: <FormattedMessage id="general.skipToContent" />,
     },
   ];
-  const [showPrintView, togglePrintView] = useState(false);
 
+  const toggleSidebar = () => {
+    toggleSidebarHidden(!sidebarHidden);
+  };
   const togglePrint = () => {
     valueStore.showPrintView = !showPrintView;
     togglePrintView(!showPrintView);
@@ -157,7 +162,11 @@ const DefaultLayout = (props) => {
           tabIndex="-1"
           style={styles.map}
         >
-          <MapView isMobile={!!isMobile} />
+          <MapView
+            sidebarHidden={sidebarHidden}
+            toggleSidebar={toggleSidebar}
+            isMobile={!!isMobile}
+          />
         </div>
       </div>
 

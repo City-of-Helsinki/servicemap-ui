@@ -3,9 +3,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import {
-  withStyles, Tooltip as MUITooltip, ButtonBase,
+  withStyles, Tooltip as MUITooltip, ButtonBase, Typography,
 } from '@material-ui/core';
-import { MyLocation, LocationDisabled } from '@material-ui/icons';
+import {
+  MyLocation, LocationDisabled, ArrowLeft, ArrowRight,
+} from '@material-ui/icons';
 import { mapOptions } from './config/mapConfig';
 import CreateMap from './utils/createMap';
 import { focusToPosition } from './utils/mapActions';
@@ -58,6 +60,8 @@ const MapView = (props) => {
     userLocation,
     locale,
     measuringMode,
+    toggleSidebar,
+    sidebarHidden,
   } = props;
 
 
@@ -375,6 +379,31 @@ const MapView = (props) => {
           )}
 
           <ZoomControl position="bottomright" aria-hidden="true" />
+          <Control position="topleft">
+            <ButtonBase
+              style={{
+                marginLeft: -10, marginTop: -14, backgroundColor: 'rgb(25, 100, 230)', border: '2px solid #fff',
+              }}
+              onClick={() => {
+                toggleSidebar();
+                // Update lealfet map size after sidebar has been hidden
+                setTimeout(() => (
+                  mapRef?.current?.leafletElement.invalidateSize()
+                ), 1);
+              }}
+            >
+              {sidebarHidden
+                ? <ArrowRight style={{ color: '#fff' }} />
+                : <ArrowLeft style={{ color: '#fff' }} />
+              }
+              <Typography style={{ color: '#fff', paddingRight: 8 }}>
+                {sidebarHidden
+                  ? 'Avaa sivupalkki'
+                  : 'Sulje sivupalkki'
+                }
+              </Typography>
+            </ButtonBase>
+          </Control>
           {
             !embeded
             && (
