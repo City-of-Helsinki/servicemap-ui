@@ -12,6 +12,7 @@ import ViewRouter from './components/ViewRouter';
 import DesktopComponent from '../components/DesktopComponent';
 import useMobileStatus from '../utils/isMobile';
 import FocusableSRLinks from '../components/FocusableSRLinks';
+import AlertBox from '../components/AlertBox';
 import PrintView from '../views/PrintView';
 import { PrintProvider } from '../context/PrintContext';
 
@@ -79,13 +80,24 @@ const valueStore = {};
 
 const DefaultLayout = (props) => {
   const {
-    currentPage, i18n, intl, location, settingsToggled,
+    currentPage,
+    fetchErrors,
+    fetchNews,
+    i18n,
+    intl,
+    location,
+    settingsToggled,
   } = props;
   const isMobile = useMobileStatus();
   const isSmallScreen = useMediaQuery(`(max-width:${smallScreenBreakpoint}px)`);
   const fullMobileMap = new URLSearchParams(location.search).get('showMap'); // If mobile map view
   const landscape = useMediaQuery('(min-device-aspect-ratio: 1/1)');
   const portrait = useMediaQuery('(max-device-aspect-ratio: 1/1)');
+
+  useEffect(() => {
+    fetchErrors();
+    fetchNews();
+  }, []);
 
   const styles = createContentStyles(
     isMobile, isSmallScreen, landscape, fullMobileMap, settingsToggled, currentPage,
@@ -141,6 +153,7 @@ const DefaultLayout = (props) => {
       }
       <div id="activeRoot" style={styles.activeRoot} className={printClass}>
         <main className="SidebarWrapper" style={styles.sidebar}>
+          <AlertBox />
           {settingsToggled && (
             <Settings
               key={settingsToggled}
@@ -174,10 +187,9 @@ const DefaultLayout = (props) => {
 
 // Typechecking
 DefaultLayout.propTypes = {
-  classes: PropTypes.shape({
-    messageText: PropTypes.string,
-  }).isRequired,
   currentPage: PropTypes.string,
+  fetchErrors: PropTypes.func.isRequired,
+  fetchNews: PropTypes.func.isRequired,
   i18n: PropTypes.instanceOf(I18n),
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,

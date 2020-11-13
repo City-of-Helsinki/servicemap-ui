@@ -1,51 +1,78 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Typography, IconButton } from '@material-ui/core';
-import { Cancel, ErrorOutline } from '@material-ui/icons';
+import { Button, Typography } from '@material-ui/core';
+import { FormattedMessage } from 'react-intl';
+import { getIcon } from '../SMIcon';
+import LocalStorageUtility from '../../utils/localStorage';
 
-// This component uses default message inserted to code for now until proper implementation
+// LocalStorage key for alert message
+const lsKey = 'alertMessage';
 
 const AlertBox = ({
-  title, text, classes, intl,
+  classes, getLocaleText, intl, errors, news,
 }) => {
   const [visible, setVisible] = useState(true);
+  const isErrorMessage = !!errors.length;
+  const abData = isErrorMessage ? errors : news;
+  const savedMessage = LocalStorageUtility.getItem(lsKey);
 
-  if (!visible) {
+  if (
+    !visible
+    || !abData.length
+    || JSON.stringify(abData[0].title) === savedMessage
+  ) {
     return null;
   }
 
-  const textIsString = typeof text === 'string';
+  const setMessageAsWatched = () => {
+    LocalStorageUtility.saveItem(lsKey, JSON.stringify(abData[0].title));
+  };
+
+  const { title, lead_paragraph: leadParagraph } = abData[0];
+  const tTitle = getLocaleText(title);
+  const tLeadParagraph = getLocaleText(leadParagraph);
+  const icon = getIcon('servicemapLogoIcon', {
+    className: classes.icon,
+  });
+  const closeButtonIcon = getIcon('closeIcon');
+  const closeButtonText = intl.formatMessage({ id: 'general.close' });
+  const closeButtonTextAria = intl.formatMessage({ id: 'general.news.alert.close.aria' });
+  const closeButtonClick = () => {
+    setVisible(false);
+    setMessageAsWatched();
+  };
 
   return (
-    <div className={classes.container}>
-      <ErrorOutline className={classes.infoIcon} />
+    <section className={classes.container}>
+      <Typography variant="srOnly" component="h2">
+        <FormattedMessage id="general.news.alert.title" />
+      </Typography>
+      {icon}
       <div className={classes.textContent}>
         <Typography
           className={classes.title}
-          component="h2"
-          variant="h6"
+          component="h3"
+          variant="subtitle1"
           color="inherit"
         >
-          {title}
+          {tTitle}
         </Typography>
-
-        {
-          textIsString
-            ? (
-              <Typography className={classes.messageText} color="inherit">{text}</Typography>
-            )
-            : text
-        }
+        <Typography className={classes.messageText} color="inherit">{tLeadParagraph}</Typography>
       </div>
-      <IconButton
-        aria-label={intl.formatMessage({ id: 'alert.close' })}
-        onClick={() => setVisible(false)}
-        className={classes.closeButton}
+      <div className={classes.padder} />
+      <Button
+        aria-label={closeButtonTextAria}
         color="inherit"
+        classes={{
+          endIcon: classes.endIcon,
+        }}
+        className={classes.closeButton}
+        endIcon={closeButtonIcon}
+        onClick={closeButtonClick}
       >
-        <Cancel className={classes.cancelIcon} />
-      </IconButton>
-    </div>
+        {closeButtonText}
+      </Button>
+    </section>
   );
 };
 
@@ -53,8 +80,23 @@ const AlertBox = ({
 (not by inseting to code) these props should be changed to isRequired */
 
 AlertBox.propTypes = {
-  title: PropTypes.node.isRequired,
-  text: PropTypes.node.isRequired,
+  errors: PropTypes.arrayOf(PropTypes.shape({
+    lead_paragraph: PropTypes.shape({
+      fi: PropTypes.string,
+    }),
+    title: PropTypes.shape({
+      fi: PropTypes.string,
+    }),
+  })).isRequired,
+  getLocaleText: PropTypes.func.isRequired,
+  news: PropTypes.arrayOf(PropTypes.shape({
+    lead_paragraph: PropTypes.shape({
+      fi: PropTypes.string,
+    }),
+    title: PropTypes.shape({
+      fi: PropTypes.string,
+    }),
+  })).isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
 };
