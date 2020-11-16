@@ -128,7 +128,7 @@ const ServiceTreeView = (props) => {
 
   const handleCheckboxClick = (e, item) => {
     // If checbox is already checked, remove checkbox selections
-    if (selected.some(element => element.id === item.id)) {
+    if (selected.includes(item.id)) {
       const parentsToRemove = getSelectedParentNodes(item);
       const childrenToRemove = getSelectedChildNodes(item);
       const nodesToRemove = [...parentsToRemove, ...childrenToRemove];
@@ -144,17 +144,16 @@ const ServiceTreeView = (props) => {
     // If checbox is not checked, add checkbox selections
     } else {
       // Select all visible child nodes as well
-      let newState = [item, ...checkChildNodes(item)];
+      let newState = [item.id, ...checkChildNodes(item)];
 
       // If all other sibling nodes are selected too, select parent node as well
       const parent = services.find(service => service.id === item.parent);
-      if (parent && parent.children.every(child => [...selected, item].some(i => i.id === child))) {
-        newState = [...newState, parent];
+      if (parent && parent.children.every(child => [...selected, item.id].includes(child))) {
+        newState = [...newState, parent.id];
       }
 
       // Filter duplicates
-      newState = newState.filter(e => !selected.some(i => i.id === e.id));
-      setSelected([...selected, ...newState]);
+      newState = newState.filter(e => !selected.includes(e));
       e.stopPropagation();
     }
   };
@@ -229,11 +228,11 @@ const ServiceTreeView = (props) => {
     const checkboxSrTitle = `${intl.formatMessage({ id: 'services.tree.level' })} ${level + 1} ${getLocaleText(item.name)} ${intl.formatMessage({ id: 'services.category.select' })}`;
     const itemSrTitle = `${getLocaleText(item.name)} (${resultCount}) ${intl.formatMessage({ id: 'services.category.open' })}`;
 
-    const isSelected = selected.some(e => e.id === item.id);
+    const isSelected = selected.includes(item.id);
 
-    // Check if any child grandchild node is checked, so we can display indeterminate mark.
+    // Check if any child or grandchild node is checked, so we can display indeterminate mark.
     const childIsSelected = checkChildNodes(item)
-      .some(node => selected.some(item => item.id === node.id));
+      .some(node => selected.includes(node));
 
     return (
       <React.Fragment key={item.id}>
@@ -410,7 +409,8 @@ const ServiceTreeView = (props) => {
   // If node's parent is also checked, add only parent to list of selected nodes for search
   const selectedList = [];
   selected.forEach((e) => {
-    if (!selected.some(i => i.id === e.parent)) {
+    const node = services.find(item => item.id === e);
+    if (!selected.includes(node.parent)) {
       selectedList.push(e);
     }
   });
