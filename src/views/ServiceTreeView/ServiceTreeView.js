@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import {
   List, ListItem, Collapse, Checkbox, Typography, ButtonBase, NoSsr, Divider,
@@ -9,6 +9,31 @@ import {
 import { FormattedMessage } from 'react-intl';
 import config from '../../../config';
 import SMButton from '../../components/ServiceMapButton';
+
+
+const nodeFetchReducer = (state, action) => {
+  // Handle local fetch state
+  switch (action.type) {
+    case 'start':
+      return {
+        ...state,
+        fetching: [...state.fetching, action.fetching],
+      };
+    case 'end':
+      return {
+        ...state,
+        fetching: state.fetching.filter(item => item !== action.fetching),
+      };
+    case 'complete':
+      return {
+        ...state,
+        data: [...state.data, ...action.data],
+        fetching: state.fetching.filter(item => item !== action.fetching),
+      };
+    default:
+      throw new Error('Child node fetch failed');
+  }
+};
 
 const ServiceTreeView = (props) => {
   const {
@@ -30,8 +55,11 @@ const ServiceTreeView = (props) => {
   } = serviceTree.serviceTree;
 
   const { isFetching } = serviceTree.serviceTreeUnits;
+
   // State
   const [selectedOpen, setSelectedOpen] = useState(false);
+  const [nodeData, dispatchNodeFetch] = useReducer(nodeFetchReducer, { data: [], fetching: [] });
+
 
   let citySettings = [];
   config.cities.forEach((city) => {
@@ -71,19 +99,11 @@ const ServiceTreeView = (props) => {
       .then(data => setTreeSerivces(data));
   };
 
-  const fetchChildServices = async (service) => {
-    // Fetch and set to state the child nodes of the opened node
+  const fetchChildNodes = async service => (
     fetch(`${config.serviceMapAPI.root}/service_node/?parent=${service}&page=1&page_size=1000`)
       .then(response => response.json())
-      .then((data) => {
-        setServices([...services, ...data.results]);
-        // Expand the opened parent node once the child nodes have been fetched
-        setOpened([...opened, service]);
-        if (selected.find(e => e.id === service)) {
-          setSelected([...selected, ...data.results]);
-        }
-      });
-  };
+      .then(data => data.results));
+
 
   const getSelectedParentNodes = (item, data = []) => {
     if (item.parent) {
@@ -116,13 +136,41 @@ const ServiceTreeView = (props) => {
   };
 
 
+  const getRecursiveChildNodes = async (node) => {
+    // Repeat this function recursively on child nodes
+    if (!node.children.length) return [];
+    return fetchChildNodes(node.id)
+      .then(children => Promise.all(children.map(node => getRecursiveChildNodes(node)))
+        .then((results) => {
+          const combindedResults = [].concat(...results);
+          return [...children, ...combindedResults];
+        }));
+  };
+
+  const handleChildNodeFetch = (node) => {
+    // Fetch all child nodes recursively until all levels are fetched
+    dispatchNodeFetch({ type: 'start', fetching: node.id });
+    getRecursiveChildNodes(node)
+      .then((data) => {
+        dispatchNodeFetch({ type: 'complete', data, fetching: node.id });
+        setTreeOpened([...opened, node.id]);
+        if (selected.includes(node.id) || checkParents(selected, node.id)) {
+          setTreeSelected([...selected, ...data.map(item => item.id)]);
+        }
+      })
+      .catch((e) => {
+        console.warn(e);
+        dispatchNodeFetch({ type: 'end', fetching: node.id });
+      });
+  };
+
   const handleExpand = (service, isOpen) => {
     if (isOpen) { // Close expanded item
       setTreeOpened(opened.filter(e => e !== service.id));
     } else if (services.some(e => e.parent === service.id)) { // Expand item without fetching
-      setOpened([...opened, service.id]);
-    } else { // Fetch child nodes then expand
-      fetchChildServices(service.id);
+      setTreeOpened([...opened, service.id]);
+    } else { // Fetch all child nodes then expand
+      handleChildNodeFetch(service);
     }
   };
 
@@ -207,6 +255,18 @@ const ServiceTreeView = (props) => {
     }
   }, []);
 
+  useEffect(() => {
+    // Resolve child service node fetch, once all fetches are complete
+    if (!nodeData.fetching.length && nodeData.data.length) {
+      const newArray = nodeData.data.filter(
+        result => !services.some(service => service.id === result.id),
+      );
+      if (newArray.length) {
+        setTreeSerivces([...services, ...newArray]);
+      }
+    }
+  }, [nodeData]);
+
   const expandingComponent = (item, level, last = []) => {
     const hasChildren = item.children.length;
     const isOpen = opened.includes(item.id);
@@ -265,7 +325,10 @@ const ServiceTreeView = (props) => {
             aria-label={itemSrTitle}
           >
             <Typography align="left" className={classes.text}>
-              {`${getLocaleText(item.name)} (${resultCount})`}
+              {nodeData.fetching.includes(item.id)
+                ? <FormattedMessage id="general.loading" />
+                : `${getLocaleText(item.name)} (${resultCount})`
+              }
             </Typography>
             {hasChildren ? icon : <span className={classes.iconRight} />}
           </ButtonBase>
@@ -273,14 +336,14 @@ const ServiceTreeView = (props) => {
         </ListItem>
 
         <Collapse aria-hidden={!isOpen} in={isOpen}>
-          {isOpen && children && children.length && children.map((child, i) => (
+          {isOpen && children && children.length ? children.map((child, i) => (
             expandingComponent(
               child, // child service node
               level + 1, // child node level
               // If this node is last of its level, add to list (this helps the drawing of lines)
               i + 1 === children.length ? [...last, level] : last,
             )
-          ))}
+          )) : null}
         </Collapse>
       </React.Fragment>
     );
