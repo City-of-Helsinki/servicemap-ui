@@ -22,6 +22,7 @@ import isClient, { parseSearchParams } from '../../utils';
 import swapCoordinates from './utils/swapCoordinates';
 import HomeLogo from '../../components/Logos/HomeLogo';
 import DistanceMeasure from './components/DistanceMeasure';
+import Loading from '../../components/Loading';
 
 if (global.window) {
   require('leaflet');
@@ -201,6 +202,8 @@ const MapView = (props) => {
       });
   };
 
+  const showLoadingScreen = () => serviceTreeUnitsReducer.isFetching;
+
   useEffect(() => { // On map mount
     initializeMap();
     if (!embeded) {
@@ -355,6 +358,11 @@ const MapView = (props) => {
             url={mapObject.options.url}
             attribution='&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors'
           />
+          {showLoadingScreen() && (
+            <div className={classes.loadingScreen}>
+              <Loading reducer={serviceTreeUnitsReducer} />
+            </div>
+          )}
           {!highlightedDistrict && (
             <UnitMarkers data={getMapUnits()} />
           )}

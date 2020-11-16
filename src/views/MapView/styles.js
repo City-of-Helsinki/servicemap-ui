@@ -9,6 +9,16 @@ const styles = theme => ({
   addressLink: {
     color: theme.palette.primary.main,
   },
+  loadingScreen: {
+    height: '100%',
+    width: '100%',
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    position: 'absolute',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: theme.zIndex.infront,
+  },
   popup: {
     padding: 12,
   },
