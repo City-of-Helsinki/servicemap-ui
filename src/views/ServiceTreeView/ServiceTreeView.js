@@ -71,15 +71,13 @@ const ServiceTreeView = (props) => {
   }
 
   const checkChildNodes = (node, nodes = []) => {
-    // Find all visible child nodes, so they can be selected when the parent checkbox is selected
-    if (services.find(e => e.id === node.children[0])) {
+    // Find all known child nodes, so they can be selected when the parent checkbox is selected
+    if (services.find(service => node.children.includes(service.id))) {
       const nodeObjects = node.children.map(child => services.find(e => e.id === child));
-      nodes.push(...nodeObjects);
-      // Check if any child nodes are opened to repeat this function on them
+      nodes.push(...node.children);
+      // Repeat this on child node childs
       nodeObjects.forEach((i) => {
-        if (opened.some(e => e === i.id)) {
           nodes.push(...checkChildNodes(i));
-        }
       });
       return nodes;
     }
@@ -107,11 +105,11 @@ const ServiceTreeView = (props) => {
 
   const getSelectedParentNodes = (item, data = []) => {
     if (item.parent) {
-      const checkdedParent = selected.find(e => e.id === item.parent && e.name);
-      if (checkdedParent) {
-        data.push(checkdedParent.id);
-        if (checkdedParent.parent) {
-          getSelectedParentNodes(checkdedParent, data);
+      const parentNode = services.find(node => node.id === item.parent);
+      if (selected.includes(item.parent) && parentNode.name) {
+        data.push(item.parent);
+        if (parentNode.parent) {
+          getSelectedParentNodes(parentNode, data);
         } else {
           return data;
         }
@@ -125,7 +123,7 @@ const ServiceTreeView = (props) => {
     // Loop through each checked child node and their checked childs
     let child = item;
     if (typeof item === 'number') {
-      child = selected.find(e => e.id === item);
+      child = services.find(e => e.id === item);
     }
     if (child && child.children) {
       data.push(...child.children);
@@ -135,6 +133,21 @@ const ServiceTreeView = (props) => {
     } return data;
   };
 
+  const checkParents = (list, nodeID) => {
+    // This checks recursively if some parent node is included in given list
+    const serviceNode = services.find(service => service.id === nodeID);
+    if (!serviceNode || !serviceNode.parent) return false;
+    if (list.includes(serviceNode.parent)) {
+      return true;
+    }
+    return checkParents(list, serviceNode.parent);
+  };
+
+  const handleUnitFetch = (item) => {
+    if (fetched.includes(item.id) || checkParents(fetched, item.id)) return;
+    fetchServiceTreeUnits({ service_node: item.id });
+    setFetchedNode(item.id);
+  };
 
   const getRecursiveChildNodes = async (node) => {
     // Repeat this function recursively on child nodes
@@ -202,7 +215,10 @@ const ServiceTreeView = (props) => {
 
       // Filter duplicates
       newState = newState.filter(e => !selected.includes(e));
+      setTreeSelected([...selected, ...newState]);
       e.stopPropagation();
+      // Fetch node units to display on map
+      handleUnitFetch(item);
     }
   };
 
@@ -305,10 +321,11 @@ const ServiceTreeView = (props) => {
           <div className={classes.checkBox}>
             {drawCheckboxLines(isOpen, level, item.id)}
             <Checkbox
+              disabled={isFetching}
               className={classes.checkboxPadding}
               inputProps={{ title: checkboxSrTitle }}
-              onClick={e => handleCheckboxClick(e, item)}
-              icon={<span className={classes.checkBoxIcon} />}
+              onClick={e => (!isFetching ? handleCheckboxClick(e, item) : null)}
+              icon={<span className={`${classes.checkBoxIcon} ${isFetching ? classes.checkBoxDisabled : ''}`} />}
               color="primary"
               checked={isSelected}
               indeterminate={childIsSelected && !isSelected}
