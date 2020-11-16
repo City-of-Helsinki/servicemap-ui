@@ -77,7 +77,7 @@ const ServiceTreeView = (props) => {
       nodes.push(...node.children);
       // Repeat this on child node childs
       nodeObjects.forEach((i) => {
-          nodes.push(...checkChildNodes(i));
+        nodes.push(...checkChildNodes(i));
       });
       return nodes;
     }
@@ -249,10 +249,10 @@ const ServiceTreeView = (props) => {
       return null;
     }
     if (bottom && currentLast) {
-      return <path key={`outerPath${id}`} d="M 20 0 V 30 H 26" stroke="black" fill="transparent" />;
+      return <path key={`outerPath${id}`} d="M 20 0 V 31 H 26" stroke="black" fill="transparent" />;
     }
     if (bottom && !currentLast) {
-      return <path key={`outerPath${id}`} d="M 20 0 V 60 M 20 30 H 26" stroke="black" fill="transparent" />;
+      return <path key={`outerPath${id}`} d="M 20 0 V 60 M 20 31 H 26" stroke="black" fill="transparent" />;
     }
     return <path key={`outerPath${id}`} d="M 20 0 V 60" stroke="black" fill="transparent" />;
   };
@@ -421,7 +421,7 @@ const ServiceTreeView = (props) => {
           <ButtonBase
             className={classes.right}
             disabled={!selectedList.length}
-            onClick={() => setSelected([])}
+            onClick={() => setTreeSelected([])}
             focusVisibleClassName={classes.selectionFocus}
           >
             <Typography className={classes.deleteText}>
@@ -464,8 +464,11 @@ const ServiceTreeView = (props) => {
   );
 
   const renderSearchButton = (selectedList) => {
-    const ids = selectedList.map(i => i.id);
-    const selectedString = selectedList.map(i => getLocaleText(i.name)).join(', ');
+    const selectedString = selectedList.map((i) => {
+      const node = services.find(node => node.id === i);
+      return getLocaleText(node.name);
+    }).join(', ');
+
     return (
       <SMButton
         aria-label={selectedList.length
@@ -477,8 +480,7 @@ const ServiceTreeView = (props) => {
         icon={<Search />}
         messageID="services.search"
         onClick={() => {
-          setTreeState({ services, selected, opened });
-          navigator.push('search', { service_node: ids });
+          navigator.push('search', { service_node: selectedList });
         }}
         role="link"
       />
@@ -514,19 +516,18 @@ ServiceTreeView.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
-  setTreeState: PropTypes.func.isRequired,
-  prevServices: PropTypes.arrayOf(PropTypes.any),
-  prevSelected: PropTypes.arrayOf(PropTypes.any),
-  prevOpened: PropTypes.arrayOf(PropTypes.any),
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
+  serviceTree: PropTypes.objectOf(PropTypes.any).isRequired,
   getLocaleText: PropTypes.func.isRequired,
+  fetchServiceTreeUnits: PropTypes.func.isRequired,
+  setTreeSerivces: PropTypes.func.isRequired,
+  setTreeSelected: PropTypes.func.isRequired,
+  setTreeOpened: PropTypes.func.isRequired,
+  setFetchedNode: PropTypes.func.isRequired,
 };
 
 ServiceTreeView.defaultProps = {
   navigator: null,
-  prevServices: [],
-  prevSelected: [],
-  prevOpened: [],
 };
 
 export default ServiceTreeView;
