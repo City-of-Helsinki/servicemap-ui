@@ -49,6 +49,7 @@ exports[`<PaginationComponent /> should work 1`] = `
           "defaultFormats": Object {},
           "defaultLocale": "en",
           "formatDate": [Function],
+          "formatDateTimeRange": [Function],
           "formatDateToParts": [Function],
           "formatDisplayName": [Function],
           "formatList": [Function],
@@ -131,6 +132,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                       "defaultFormats": Object {},
                       "defaultLocale": "en",
                       "formatDate": [Function],
+                      "formatDateTimeRange": [Function],
                       "formatDateToParts": [Function],
                       "formatDisplayName": [Function],
                       "formatList": [Function],
@@ -191,6 +193,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                         "defaultFormats": Object {},
                         "defaultLocale": "en",
                         "formatDate": [Function],
+                        "formatDateTimeRange": [Function],
                         "formatDateToParts": [Function],
                         "formatDisplayName": [Function],
                         "formatList": [Function],
@@ -283,49 +286,41 @@ exports[`<PaginationComponent /> should work 1`] = `
                           type="button"
                           variant="contained"
                         >
-                          <pure(ArrowForwardIosIcon)
+                          <ForwardRef
                             className="injectIntl(PaginationComponent)-arrowIcon-1"
                           >
-                            <ArrowForwardIosIcon
+                            <WithStyles(ForwardRef(SvgIcon))
                               className="injectIntl(PaginationComponent)-arrowIcon-1"
                             >
-                              <WithStyles(ForwardRef(SvgIcon))
+                              <ForwardRef(SvgIcon)
                                 className="injectIntl(PaginationComponent)-arrowIcon-1"
-                              >
-                                <ForwardRef(SvgIcon)
-                                  className="injectIntl(PaginationComponent)-arrowIcon-1"
-                                  classes={
-                                    Object {
-                                      "colorAction": "MuiSvgIcon-colorAction",
-                                      "colorDisabled": "MuiSvgIcon-colorDisabled",
-                                      "colorError": "MuiSvgIcon-colorError",
-                                      "colorPrimary": "MuiSvgIcon-colorPrimary",
-                                      "colorSecondary": "MuiSvgIcon-colorSecondary",
-                                      "fontSizeInherit": "MuiSvgIcon-fontSizeInherit",
-                                      "fontSizeLarge": "MuiSvgIcon-fontSizeLarge",
-                                      "fontSizeSmall": "MuiSvgIcon-fontSizeSmall",
-                                      "root": "MuiSvgIcon-root",
-                                    }
+                                classes={
+                                  Object {
+                                    "colorAction": "MuiSvgIcon-colorAction",
+                                    "colorDisabled": "MuiSvgIcon-colorDisabled",
+                                    "colorError": "MuiSvgIcon-colorError",
+                                    "colorPrimary": "MuiSvgIcon-colorPrimary",
+                                    "colorSecondary": "MuiSvgIcon-colorSecondary",
+                                    "fontSizeInherit": "MuiSvgIcon-fontSizeInherit",
+                                    "fontSizeLarge": "MuiSvgIcon-fontSizeLarge",
+                                    "fontSizeSmall": "MuiSvgIcon-fontSizeSmall",
+                                    "root": "MuiSvgIcon-root",
                                   }
+                                }
+                              >
+                                <svg
+                                  aria-hidden={true}
+                                  className="MuiSvgIcon-root injectIntl(PaginationComponent)-arrowIcon-1"
+                                  focusable="false"
+                                  viewBox="0 0 24 24"
                                 >
-                                  <svg
-                                    aria-hidden={true}
-                                    className="MuiSvgIcon-root injectIntl(PaginationComponent)-arrowIcon-1"
-                                    focusable="false"
-                                    viewBox="0 0 24 24"
-                                  >
-                                    <path
-                                      d="M5.88 4.12L13.76 12l-7.88 7.88L8 22l10-10L8 2z"
-                                    />
-                                    <path
-                                      d="M0 0h24v24H0z"
-                                      fill="none"
-                                    />
-                                  </svg>
-                                </ForwardRef(SvgIcon)>
-                              </WithStyles(ForwardRef(SvgIcon))>
-                            </ArrowForwardIosIcon>
-                          </pure(ArrowForwardIosIcon)>
+                                  <path
+                                    d="M5.88 4.12L13.76 12l-7.88 7.88L8 22l10-10L8 2z"
+                                  />
+                                </svg>
+                              </ForwardRef(SvgIcon)>
+                            </WithStyles(ForwardRef(SvgIcon))>
+                          </ForwardRef>
                         </button>
                       </ForwardRef(ButtonBase)>
                     </WithStyles(ForwardRef(ButtonBase))>
@@ -351,6 +346,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                       "defaultFormats": Object {},
                       "defaultLocale": "en",
                       "formatDate": [Function],
+                      "formatDateTimeRange": [Function],
                       "formatDateToParts": [Function],
                       "formatDisplayName": [Function],
                       "formatList": [Function],
@@ -411,6 +407,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                         "defaultFormats": Object {},
                         "defaultLocale": "en",
                         "formatDate": [Function],
+                        "formatDateTimeRange": [Function],
                         "formatDateToParts": [Function],
                         "formatDisplayName": [Function],
                         "formatList": [Function],
@@ -503,49 +500,41 @@ exports[`<PaginationComponent /> should work 1`] = `
                           type="button"
                           variant="contained"
                         >
-                          <pure(ArrowForwardIosIcon)
+                          <ForwardRef
                             className="injectIntl(PaginationComponent)-arrowIcon-1"
                           >
-                            <ArrowForwardIosIcon
+                            <WithStyles(ForwardRef(SvgIcon))
                               className="injectIntl(PaginationComponent)-arrowIcon-1"
                             >
-                              <WithStyles(ForwardRef(SvgIcon))
+                              <ForwardRef(SvgIcon)
                                 className="injectIntl(PaginationComponent)-arrowIcon-1"
-                              >
-                                <ForwardRef(SvgIcon)
-                                  className="injectIntl(PaginationComponent)-arrowIcon-1"
-                                  classes={
-                                    Object {
-                                      "colorAction": "MuiSvgIcon-colorAction",
-                                      "colorDisabled": "MuiSvgIcon-colorDisabled",
-                                      "colorError": "MuiSvgIcon-colorError",
-                                      "colorPrimary": "MuiSvgIcon-colorPrimary",
-                                      "colorSecondary": "MuiSvgIcon-colorSecondary",
-                                      "fontSizeInherit": "MuiSvgIcon-fontSizeInherit",
-                                      "fontSizeLarge": "MuiSvgIcon-fontSizeLarge",
-                                      "fontSizeSmall": "MuiSvgIcon-fontSizeSmall",
-                                      "root": "MuiSvgIcon-root",
-                                    }
+                                classes={
+                                  Object {
+                                    "colorAction": "MuiSvgIcon-colorAction",
+                                    "colorDisabled": "MuiSvgIcon-colorDisabled",
+                                    "colorError": "MuiSvgIcon-colorError",
+                                    "colorPrimary": "MuiSvgIcon-colorPrimary",
+                                    "colorSecondary": "MuiSvgIcon-colorSecondary",
+                                    "fontSizeInherit": "MuiSvgIcon-fontSizeInherit",
+                                    "fontSizeLarge": "MuiSvgIcon-fontSizeLarge",
+                                    "fontSizeSmall": "MuiSvgIcon-fontSizeSmall",
+                                    "root": "MuiSvgIcon-root",
                                   }
+                                }
+                              >
+                                <svg
+                                  aria-hidden={true}
+                                  className="MuiSvgIcon-root injectIntl(PaginationComponent)-arrowIcon-1"
+                                  focusable="false"
+                                  viewBox="0 0 24 24"
                                 >
-                                  <svg
-                                    aria-hidden={true}
-                                    className="MuiSvgIcon-root injectIntl(PaginationComponent)-arrowIcon-1"
-                                    focusable="false"
-                                    viewBox="0 0 24 24"
-                                  >
-                                    <path
-                                      d="M5.88 4.12L13.76 12l-7.88 7.88L8 22l10-10L8 2z"
-                                    />
-                                    <path
-                                      d="M0 0h24v24H0z"
-                                      fill="none"
-                                    />
-                                  </svg>
-                                </ForwardRef(SvgIcon)>
-                              </WithStyles(ForwardRef(SvgIcon))>
-                            </ArrowForwardIosIcon>
-                          </pure(ArrowForwardIosIcon)>
+                                  <path
+                                    d="M5.88 4.12L13.76 12l-7.88 7.88L8 22l10-10L8 2z"
+                                  />
+                                </svg>
+                              </ForwardRef(SvgIcon)>
+                            </WithStyles(ForwardRef(SvgIcon))>
+                          </ForwardRef>
                         </button>
                       </ForwardRef(ButtonBase)>
                     </WithStyles(ForwardRef(ButtonBase))>
@@ -594,6 +583,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                 "defaultFormats": Object {},
                                 "defaultLocale": "en",
                                 "formatDate": [Function],
+                                "formatDateTimeRange": [Function],
                                 "formatDateToParts": [Function],
                                 "formatDisplayName": [Function],
                                 "formatList": [Function],
@@ -652,6 +642,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                   "defaultFormats": Object {},
                                   "defaultLocale": "en",
                                   "formatDate": [Function],
+                                  "formatDateTimeRange": [Function],
                                   "formatDateToParts": [Function],
                                   "formatDisplayName": [Function],
                                   "formatList": [Function],
@@ -852,6 +843,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                 "defaultFormats": Object {},
                                 "defaultLocale": "en",
                                 "formatDate": [Function],
+                                "formatDateTimeRange": [Function],
                                 "formatDateToParts": [Function],
                                 "formatDisplayName": [Function],
                                 "formatList": [Function],
@@ -910,6 +902,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                   "defaultFormats": Object {},
                                   "defaultLocale": "en",
                                   "formatDate": [Function],
+                                  "formatDateTimeRange": [Function],
                                   "formatDateToParts": [Function],
                                   "formatDisplayName": [Function],
                                   "formatList": [Function],
@@ -1110,6 +1103,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                 "defaultFormats": Object {},
                                 "defaultLocale": "en",
                                 "formatDate": [Function],
+                                "formatDateTimeRange": [Function],
                                 "formatDateToParts": [Function],
                                 "formatDisplayName": [Function],
                                 "formatList": [Function],
@@ -1168,6 +1162,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                   "defaultFormats": Object {},
                                   "defaultLocale": "en",
                                   "formatDate": [Function],
+                                  "formatDateTimeRange": [Function],
                                   "formatDateToParts": [Function],
                                   "formatDisplayName": [Function],
                                   "formatList": [Function],
@@ -1368,6 +1363,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                 "defaultFormats": Object {},
                                 "defaultLocale": "en",
                                 "formatDate": [Function],
+                                "formatDateTimeRange": [Function],
                                 "formatDateToParts": [Function],
                                 "formatDisplayName": [Function],
                                 "formatList": [Function],
@@ -1426,6 +1422,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                   "defaultFormats": Object {},
                                   "defaultLocale": "en",
                                   "formatDate": [Function],
+                                  "formatDateTimeRange": [Function],
                                   "formatDateToParts": [Function],
                                   "formatDisplayName": [Function],
                                   "formatList": [Function],
@@ -1626,6 +1623,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                 "defaultFormats": Object {},
                                 "defaultLocale": "en",
                                 "formatDate": [Function],
+                                "formatDateTimeRange": [Function],
                                 "formatDateToParts": [Function],
                                 "formatDisplayName": [Function],
                                 "formatList": [Function],
@@ -1684,6 +1682,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                                   "defaultFormats": Object {},
                                   "defaultLocale": "en",
                                   "formatDate": [Function],
+                                  "formatDateTimeRange": [Function],
                                   "formatDateToParts": [Function],
                                   "formatDisplayName": [Function],
                                   "formatList": [Function],

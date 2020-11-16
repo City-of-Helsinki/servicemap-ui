@@ -20,15 +20,23 @@ class HomeView extends React.Component {
     const subtitleID = userLocation && userLocation.allowed ? notFoundText
       : 'location.notAllowed';
 
+    let areaSelection = null;
+
+    if (config.showAreaSelection) {
+      areaSelection = (
+        <PaperButton
+          messageID="home.buttons.area"
+          icon={<Map />}
+          link
+          onClick={() => navigator.push('area')}
+        />
+      );
+    }
+
     return (
       <div className={classes.background}>
         <div className={classes.buttonContainer}>
-          <PaperButton
-            messageID="home.buttons.area"
-            icon={<Map />}
-            link
-            onClick={() => navigator.push('area')}
-          />
+          {areaSelection}
           <PaperButton
             messageID="home.buttons.closeByServices"
             icon={getIcon('location')}
@@ -71,9 +79,9 @@ class HomeView extends React.Component {
             link
             onClick={() => {
               window.open(getLocaleText({
-                fi: config.old_map_fi,
-                sv: config.old_map_sv,
-                en: config.old_map_en,
+                fi: config.oldMapFi,
+                sv: config.oldMapSv,
+                en: config.oldMapEn,
               }));
             }}
           />

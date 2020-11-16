@@ -19,6 +19,7 @@ import { generatePath } from '../../utils/path';
 import ExpandedSuggestions from '../../components/ExpandedSuggestions';
 import SettingsInfo from '../../components/SettingsInfo';
 import DesktopComponent from '../../components/DesktopComponent';
+import MobileComponent from '../../components/MobileComponent';
 
 class SearchView extends React.Component {
   constructor(props) {
@@ -32,7 +33,7 @@ class SearchView extends React.Component {
 
   componentDidMount() {
     const {
-      fetchUnits, units, map,
+      fetchUnits, units,
     } = this.props;
     const options = this.searchParamData();
 
@@ -44,13 +45,13 @@ class SearchView extends React.Component {
 
     if (this.shouldFetch() && Object.keys(options).length) {
       fetchUnits(options);
-      this.focusMap(units, map);
+      this.focusMap(units);
     }
   }
 
   shouldComponentUpdate(nextProps) {
     const {
-      fetchUnits, units, map,
+      fetchUnits, units,
     } = this.props;
     const {
       isRedirectFetching,
@@ -64,12 +65,12 @@ class SearchView extends React.Component {
     if (this.shouldFetch(nextProps)) {
       const searchData = this.searchParamData(nextProps);
       fetchUnits(searchData);
-      this.focusMap(units, map);
+      this.focusMap(units);
       return false;
     }
-    // If new search results, call map focus functio
-    if (nextProps.units.length > 0 && units !== nextProps.units) {
-      this.focusMap(nextProps.units, map);
+    // If new search results, call map focus function
+    if (nextProps.units.length > 0 && JSON.stringify(units) !== JSON.stringify(nextProps.units)) {
+      this.focusMap(nextProps.units);
     }
     return true;
   }
@@ -120,7 +121,7 @@ class SearchView extends React.Component {
   }
 
   searchParamData = (props = null, includeService = false) => {
-    const { location } = props || this.props;
+    const { location, citySettings } = props || this.props;
     const { serviceRedirect } = this.state;
     const redirectNode = serviceRedirect;
     const searchParams = parseSearchParams(location.search);
@@ -181,9 +182,11 @@ class SearchView extends React.Component {
       }
     }
 
+    const settingMunicipality = citySettings && citySettings.join(',');
+
     // Parse municipality
-    if (municipality || city) {
-      options.municipality = municipality || city;
+    if (municipality || city || settingMunicipality) {
+      options.municipality = municipality || city || settingMunicipality;
     }
 
     // Parse search language
@@ -214,8 +217,8 @@ class SearchView extends React.Component {
     return false;
   }
 
-  focusMap = (units, map) => {
-    const { location } = this.props;
+  focusMap = (units) => {
+    const { location, map } = this.props;
     if (getSearchParam(location, 'bbox')) {
       return;
     }
@@ -378,19 +381,41 @@ class SearchView extends React.Component {
     }
 
     return (
-      <ExpandedSuggestions
-        searchQuery={query}
-        onClick={() => {
-          this.setState({ expandVisible: false });
-          setTimeout(() => {
-            const elem = document.getElementById('ExpandSuggestions');
-            if (elem) {
-              elem.focus();
-            }
-          }, 1);
-        }}
-        isVisible
-      />
+      <>
+        <DesktopComponent>
+          {/* TODO: Modify this class to functional component, to use useMobile hook
+        instead of individual mobile/desktop components. */}
+          <ExpandedSuggestions
+            searchQuery={query}
+            onClick={() => {
+              this.setState({ expandVisible: false });
+              setTimeout(() => {
+                const elem = document.getElementById('ExpandSuggestions');
+                if (elem) {
+                  elem.focus();
+                }
+              }, 1);
+            }}
+            isVisible
+          />
+        </DesktopComponent>
+        <MobileComponent>
+          <ExpandedSuggestions
+            searchQuery={query}
+            onClick={() => {
+              this.setState({ expandVisible: false });
+              setTimeout(() => {
+                const elem = document.getElementById('ExpandSuggestions');
+                if (elem) {
+                  elem.focus();
+                }
+              }, 1);
+            }}
+            isVisible
+            isMobile
+          />
+        </MobileComponent>
+      </>
     );
   }
 

@@ -1,5 +1,5 @@
 /* eslint-disable quote-props */
-export default {
+const translations = {
   'app.title': 'Servicekarta',
 
   // Accessibility
@@ -27,7 +27,7 @@ export default {
   'address.services.info': 'Kommunala tjänster vars verksamhetsområde omfattar positionen',
   'address.area.link': 'Bekanta dig med områdena på kartan.',
   'address.emergency_care.common': 'När den egna hälsostationen är stängd och på natten kl. 22-8 är jour för barn och unga under 16 år på <a>Barnkliniken</a> [<a1>hemsidor</a1>], och jour för vuxna på',
-  'address.emergency_care.children_hospital.link': '/{locale}/unit/7299',
+  'address.emergency_care.children_hospital.link': '/sv/unit/62976',
   'address.emergency_care.common.link': 'https://www.hus.fi/sv/sjukvard/sjukhus/nyabarnsjukhuset/Sidor/default.aspx',
   'address.emergency_care.unit.26107': 'Malms sjukhuset',
   'address.emergency_care.unit.26104': 'Haartmanska sjukhuset',
@@ -43,9 +43,9 @@ export default {
   'area.services.nearby': 'Tjänster i närområdena',
   'area.info': 'Välj ett område, vars tjänster du vill ha information om. Genom att skriva din hemadress i sökfältet öppnas en karta och under fliken Tjänster i området visas de områden och distrikt som du hör till',
   'area.choose.district': 'Väl område',
+  'area.choose.subdistrict': 'Väl och öppna {category}',
+  'area.close.subdistrict': 'Stäng {category}',
   'area.noSelection': 'Väl område under fliken Val av område',
-  'area.subdistrict.neighborhood': 'Valitse kaupunginosa', // TODO: translate
-  'area.subdistrict.postcode_area': 'Valitse postinumeroalue', // TODO: translate
   'area.list.geographical': 'Geografisk',
   'area.list.protection': 'Befolkningsskydd',
   'area.list.health': 'Hälsa',
@@ -231,6 +231,7 @@ export default {
   // Location
   'location.notFound': 'Positionen hittades inte',
   'location.notAllowed': 'Positionen tilläts inte',
+  'location.center': 'Centrera på användarens position',
 
   // Loading
   'loading.events': 'Söker evenemang {count} / {max}',
@@ -241,11 +242,19 @@ export default {
   // Map
   'map': 'Karta',
   'map.ariaLabel': 'Kartvy. Kartans uppgifter kan i nuläget granskas endast visuellt.',
+  'map.attribution.osm': '&copy; <a href="http://osm.org/copyright">Upphovsmännen bakom OpenStreetMaps</a>',
+  'map.attribution.helsinki': '&copy; Helsingfors, Esbo, Vanda och Grankulla städer',
   'map.transit.endStation': 'Ändhållplats',
   'map.address.searching': 'Söker adress...',
   'map.address.notFound': 'Adressen hittades ej',
   'map.address.info': 'Adressens uppgifter',
   'map.unit.cluster.popup.info': '{count} verksamhetsställen', // TODO: Verify
+
+  // Print
+  'print.alert': 'Använd utskriftsalternativet i verktygsmenyn',
+  'print.button.close': 'Stäng vyn',
+  'print.button.print': 'Skriv ut vyn',
+  'print.table.header.number': 'Nummer på kartan',
 
   // Units
   'unit': 'Verksamhetsställe',
@@ -284,6 +293,7 @@ export default {
   'unit.address.missing': 'Ingen adress har meddelats',
   'unit.phone': 'Telefonnummer',
   'unit.phone.missing': 'Telefonnummer har inte meddelats',
+  'unit.phone.charge': 'Samtalspriser',
   'unit.email': 'E-postadress',
   'unit.email.missing': 'E-postadress har inte meddelats',
   'unit.opening.hours': 'Öppettider',
@@ -409,6 +419,7 @@ export default {
   'settings.accessibilitySettings.long': 'Tillgänglighetsinställningar',
   'settings.mobile.long': 'Inställningar',
   'settings.search.long': 'Inställningar',
+  'settings.area.long': 'Stadsinställningar',
   'settings.amount': `{count, plural,
     one {# val} 
     other {# val}
@@ -420,7 +431,9 @@ export default {
   'settings.sense.colorblind': 'Jag har svårt att urskilja förger',
   'settings.info.heading': 'Inställningsuppgifter',
   'settings.info.title': 'Dina valda inställningar påverkar sökresultatet',
+  'settings.info.title.city': 'Stadsinställningarna påverkar områdesinformationen',
   'settings.info.title.noSettings': 'Ändra sök- eller tillgänglighetsinställningar',
+  'settings.info.title.noSettings.city': 'Ändra stadsinställningarna för att begränsa antalet områden',
   'settings.mobility.title': 'Rörelsehinder',
   'settings.mobility.none': 'Inga rörelsehinder',
   'settings.mobility.wheelchair': 'Jag använder rullstol',
@@ -449,7 +462,7 @@ export default {
 
   // Tools
   'tool.download': 'Exportera (ny flik)',
-  'tool.measuring': 'Mät avstånd',
+  'tool.measuring': 'Mät avstånd (endast med mus)',
   'tool.measuring.stop': 'Sluta mäta',
 
   'info.title': 'Om tjänsten och tillgänglighetsredogörelsen',
@@ -457,3 +470,16 @@ export default {
 
   'alert.close': 'Stäng meddelande',
 };
+
+let overridingExternalTranslations;
+
+// Read and merge external translations with current translations
+try {
+  // eslint-disable-next-line global-require,import/no-unresolved
+  overridingExternalTranslations = require('./externalTranslations/sv.json');
+} catch (e) {
+  overridingExternalTranslations = {};
+}
+
+const swedishTranslations = { ...translations, ...overridingExternalTranslations };
+export default swedishTranslations;

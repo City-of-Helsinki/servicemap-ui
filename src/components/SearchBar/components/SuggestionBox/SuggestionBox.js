@@ -11,7 +11,6 @@ import createSuggestions from '../../createSuggestions';
 import config from '../../../../../config';
 import SuggestionItem from '../../../ListItems/SuggestionItem';
 import AddressItem from '../../../ListItems/AddressItem';
-import useMobileStatus from '../../../../utils/isMobile';
 import { getAddressText } from '../../../../utils/address';
 
 
@@ -25,6 +24,7 @@ const SuggestionBox = (props) => {
     focusedSuggestion,
     getLocaleText,
     setSearch,
+    isMobile,
     intl,
     locale,
   } = props;
@@ -35,7 +35,6 @@ const SuggestionBox = (props) => {
   const [history] = useState(getPreviousSearches());
   // Query word on which suggestion list is based
   const [suggestionQuery, setSuggestionQuery] = useState(null);
-  const isMobile = useMobileStatus();
 
   const listRef = useRef(null);
   const fetchController = useRef(null);
@@ -219,14 +218,14 @@ const SuggestionBox = (props) => {
     const sidebar = document.getElementsByClassName('SidebarWrapper')[0];
     const app = document.getElementsByClassName('App')[0];
     if (visible) {
-      sidebar.style.overflow = isMobile ? 'hidden' : 'hidden';
+      sidebar.style.overflow = 'hidden';
       if (app) {
         app.style.height = '100%';
       }
     }
 
     return () => {
-      sidebar.style.overflow = isMobile ? '' : 'auto';
+      sidebar.style.overflow = isMobile ? 'visible' : 'auto';
       if (app) {
         app.style.height = null;
       }
@@ -278,6 +277,7 @@ SuggestionBox.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   focusedSuggestion: PropTypes.number,
   setSearch: PropTypes.func,
+  isMobile: PropTypes.bool,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   locale: PropTypes.oneOf(config.supportedLanguages).isRequired,
 };
@@ -287,6 +287,7 @@ SuggestionBox.defaultProps = {
   searchQuery: null,
   focusedSuggestion: null,
   setSearch: null,
+  isMobile: false,
 };
 
 export default SuggestionBox;

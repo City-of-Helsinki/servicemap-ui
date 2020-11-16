@@ -8,8 +8,7 @@ import {
 import { MyLocation, LocationDisabled } from '@material-ui/icons';
 import { mapOptions } from './config/mapConfig';
 import CreateMap from './utils/createMap';
-import UnitMarkers from './components/UnitMarkers';
-import { focusToPosition, fitUnitsToMap } from './utils/mapActions';
+import { focusToPosition } from './utils/mapActions';
 import styles from './styles';
 import Districts from './components/Districts';
 import TransitStops from './components/TransitStops';
@@ -18,11 +17,14 @@ import UserMarker from './components/UserMarker';
 import fetchAddress from './utils/fetchAddress';
 import { isEmbed } from '../../utils/path';
 import AddressMarker from './components/AddressMarker';
-import isClient, { parseSearchParams } from '../../utils';
-import swapCoordinates from './utils/swapCoordinates';
+import { parseSearchParams } from '../../utils';
 import HomeLogo from '../../components/Logos/HomeLogo';
 import DistanceMeasure from './components/DistanceMeasure';
 import Loading from '../../components/Loading';
+import MarkerCluster from './components/MarkerCluster';
+import swapCoordinates from './utils/swapCoordinates';
+import UnitGeometry from './components/UnitGeometry';
+import MapUtility from './utils/mapUtility';
 
 if (global.window) {
   require('leaflet');
@@ -36,9 +38,7 @@ const MapView = (props) => {
     addressUnits,
     adminDistricts,
     classes,
-    createMarkerClusterLayer,
     currentPage,
-    distanceCoordinates,
     getAddressNavigatorParams,
     getLocaleText,
     intl,
@@ -55,7 +55,6 @@ const MapView = (props) => {
     highlightedUnit,
     highlightedDistrict,
     isMobile,
-    renderUnitMarkers,
     setMapRef,
     navigator,
     findUserLocation,
@@ -72,20 +71,26 @@ const MapView = (props) => {
   const [mapClickPoint, setMapClickPoint] = useState(null);
   const [refSaved, setRefSaved] = useState(false);
   const [prevMap, setPrevMap] = useState(null);
-  const [markerCluster, setMarkerCluster] = useState(null);
-  const [distancePosition, setDistancePosition] = useState(null);
+  const [unitData, setUnitData] = useState(null);
+  const [unitGeometry, setUnitGeometry] = useState(null);
+  const [mapUtility, setMapUtility] = useState(null);
+  const [measuringMarkers, setMeasuringMarkers] = useState([]);
+  const [measuringLine, setMeasuringLine] = useState([]);
 
   const embeded = isEmbed({ url: location.pathname });
 
 
   const getMapUnits = () => {
     let mapUnits = [];
-    let unitGeometry = null;
 
     if (currentPage === 'home' && embeded) {
       mapUnits = unitList;
     }
-    if (currentPage === 'search' || currentPage === 'division') {
+    if (
+      currentPage === 'search'
+      || currentPage === 'division'
+      || (currentPage === 'unit' && unitList.length)
+    ) {
       mapUnits = unitList;
     } else if (currentPage === 'address') {
       switch (addressToRender) {
@@ -107,27 +112,26 @@ const MapView = (props) => {
       mapUnits = serviceTreeUnitData;
     } else if (currentPage === 'area' && districtUnits) {
       mapUnits = districtUnits;
-    } else if ((currentPage === 'unit' || currentPage === 'fullList' || currentPage === 'event') && highlightedUnit) {
+    } else if (
+      (currentPage === 'unit' || currentPage === 'fullList' || currentPage === 'event')
+      && highlightedUnit
+    ) {
       mapUnits = [highlightedUnit];
+    }
+
+    return mapUnits;
+  };
+
+  const getUnitGeometry = () => {
+    if ((currentPage === 'unit' || currentPage === 'fullList' || currentPage === 'event') && highlightedUnit) {
       const { geometry } = highlightedUnit;
       if (geometry && geometry.type === 'MultiLineString') {
         const { coordinates } = geometry;
-        unitGeometry = coordinates;
+        const unitGeometry = swapCoordinates(coordinates);
+        return unitGeometry;
       }
     }
-
-    if (mapRef.current && !(currentPage === 'address' || currentPage === 'area')) {
-      // TODO: this should be rivisited once new map focusing is implemented (very soon)
-      fitUnitsToMap(mapUnits, mapRef.current.leafletElement);
-    }
-
-    const data = { units: mapUnits, unitGeometry };
-
-    if (data.unitGeometry) {
-      data.unitGeometry = swapCoordinates(data.unitGeometry);
-    }
-
-    return data;
+    return null;
   };
 
   const setClickCoordinates = (ev) => {
@@ -160,28 +164,6 @@ const MapView = (props) => {
 
     const newMap = CreateMap(mapType, locale);
     setMapObject(newMap);
-  };
-
-  // Markercluster initializer
-  const initializeMarkerClusterLayer = () => {
-    const map = mapRef && mapRef.current ? mapRef.current : null;
-
-    if (map && global.L && createMarkerClusterLayer && isClient()) {
-      const popupTexts = {
-        title: intl.formatMessage({ id: 'unit.plural' }),
-        info: count => intl.formatMessage({ id: 'map.unit.cluster.popup.info' }, { count }),
-      };
-      const cluster = createMarkerClusterLayer(global.L, map, classes, popupTexts, embeded);
-      if (cluster) {
-        // Remove old layer
-        if (markerCluster) {
-          map.leafletElement.removeLayer(markerCluster);
-        }
-        cluster.id = 'markerCluster';
-        map.leafletElement.addLayer(cluster);
-        setMarkerCluster(cluster);
-      }
-    }
   };
 
   const focusOnUser = () => {
@@ -223,69 +205,54 @@ const MapView = (props) => {
     }
   });
 
+  useEffect(() => {
+    if (!highlightedUnit || !mapUtility) {
+      return;
+    }
+    if (!unitList.length) {
+      mapUtility.centerMapToUnit(highlightedUnit);
+      return;
+    }
+    mapUtility.panInside(highlightedUnit);
+  }, [highlightedUnit, mapUtility]);
+
+  useEffect(() => {
+    setUnitGeometry(getUnitGeometry());
+  }, [highlightedUnit, currentPage]);
+
   useEffect(() => { // On map type change
     // Init new map and set new ref to redux
     initializeMap();
     setRefSaved(false);
   }, [settings.mapType]);
 
-  // Set distance position used for redrawing markecluster layer
   useEffect(() => {
-    if (!distanceCoordinates && distancePosition) {
-      setDistancePosition(null);
-      return;
+    if (mapRef.current) {
+      setMapUtility(new MapUtility({ leaflet: mapRef.current.leafletElement }));
     }
-    if (!distancePosition && distanceCoordinates) {
-      setDistancePosition(distanceCoordinates);
-      return;
-    }
-    if (
-      distanceCoordinates
-      && distancePosition
-      && (
-        distanceCoordinates.latitude !== distancePosition.latitude
-        || distanceCoordinates.longitude !== distancePosition.longitude
-      )
-    ) {
-      setDistancePosition(distanceCoordinates);
-    }
-  }, [distanceCoordinates]);
-
-  // Create new markercluster layer when map is loaded or when distancePosition changes
-  useEffect(() => {
-    initializeMarkerClusterLayer();
-  }, [mapObject, distancePosition]);
+  }, [mapRef.current]);
 
   // Attempt to render unit markers on page change or unitList change
   useEffect(() => {
-    if (!markerCluster) {
-      return;
-    }
-    const data = getMapUnits();
-    const map = mapRef && mapRef.current ? mapRef.current.leafletElement : null;
-    const showUnits = new URLSearchParams(location.search).get('units') !== 'none';
-    // Clear layers if no units currently set for data
-    // caused by while fetching
-    if (!data.units.length || (currentPage === 'address' && highlightedDistrict)) {
-      markerCluster.clearLayers();
-      return;
-    }
-    if (map && showUnits) {
-      renderUnitMarkers(global.L, map, data, classes, markerCluster, embeded);
-    }
-  }, [unitList,
+    setUnitData(getMapUnits());
+  }, [
+    unitList,
     highlightedUnit,
-    markerCluster,
     addressUnits,
     serviceUnits,
     serviceTreeUnitData,
     districtUnits,
     highlightedDistrict,
-    currentPage]);
+    currentPage,
+  ]);
 
 
   useEffect(() => {
     setMapClickPoint(null);
+    if (!measuringMode) {
+      setMeasuringMarkers([]);
+      setMeasuringLine([]);
+    }
   }, [measuringMode]);
 
   // Render
@@ -335,6 +302,8 @@ const MapView = (props) => {
         : prevMap.props.zoom + zoomDifference;
     }
 
+    const userLocationAriaLabel = intl.formatMessage({ id: !userLocation ? 'location.notAllowed' : 'location.center' });
+
     return (
       <>
         {renderTopBar()}
@@ -354,19 +323,26 @@ const MapView = (props) => {
           maxBoundsViscosity={1.0}
           onClick={(ev) => { setClickCoordinates(ev); }}
         >
-          <TileLayer
-            url={mapObject.options.url}
-            attribution='&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors'
-          />
           {showLoadingScreen() && (
             <div className={classes.loadingScreen}>
               <Loading reducer={serviceTreeUnitsReducer} />
             </div>
           )}
-          {!highlightedDistrict && (
-            <UnitMarkers data={getMapUnits()} />
-          )}
-
+          <MarkerCluster
+            map={mapRef?.current?.leafletElement}
+            data={unitData}
+          />
+          {
+            !highlightedDistrict
+            && unitGeometry
+            && (
+              <UnitGeometry geometryData={unitGeometry} />
+            )
+          }
+          <TileLayer
+            url={mapObject.options.url}
+            attribution={intl.formatMessage({ id: mapObject.options.attribution })}
+          />
           <Districts mapOptions={mapOptions} map={mapRef.current} embed={embeded} />
 
           <TransitStops
@@ -402,7 +378,12 @@ const MapView = (props) => {
           )}
 
           {measuringMode && (
-            <DistanceMeasure mapClickPoint={mapClickPoint} />
+            <DistanceMeasure
+              markerArray={measuringMarkers}
+              setMarkerArray={setMeasuringMarkers}
+              lineArray={measuringLine}
+              setLineArray={setMeasuringLine}
+            />
           )}
 
           <ZoomControl position="bottomright" aria-hidden="true" />
@@ -413,6 +394,7 @@ const MapView = (props) => {
                 {/* Custom user location map button */}
                 <Control position="bottomright">
                   <ButtonBase
+                    aria-label={userLocationAriaLabel}
                     disabled={!userLocation}
                     className={`${classes.showLocationButton} ${!userLocation ? classes.locationDisabled : ''}`}
                     onClick={() => focusOnUser()}
@@ -445,12 +427,7 @@ MapView.propTypes = {
     ocd_id: PropTypes.string,
   })),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  createMarkerClusterLayer: PropTypes.func.isRequired,
   currentPage: PropTypes.string.isRequired,
-  distanceCoordinates: PropTypes.shape({
-    latitude: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    longitude: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  }),
   getAddressNavigatorParams: PropTypes.func.isRequired,
   getLocaleText: PropTypes.func.isRequired,
   hideUserMarker: PropTypes.bool,
@@ -464,7 +441,6 @@ MapView.propTypes = {
   districtUnits: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
   setAddressLocation: PropTypes.func.isRequired,
   findUserLocation: PropTypes.func.isRequired,
-  renderUnitMarkers: PropTypes.func.isRequired,
   setMapRef: PropTypes.func.isRequired,
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
   unitList: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
@@ -480,7 +456,6 @@ MapView.defaultProps = {
   addressToRender: null,
   addressUnits: null,
   adminDistricts: null,
-  distanceCoordinates: null,
   hideUserMarker: false,
   highlightedDistrict: null,
   highlightedUnit: null,

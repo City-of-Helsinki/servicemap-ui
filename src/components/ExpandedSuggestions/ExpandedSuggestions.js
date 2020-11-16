@@ -11,7 +11,6 @@ import SMButton from '../ServiceMapButton';
 import SuggestionItem from '../ListItems/SuggestionItem';
 import TitleBar from '../TitleBar';
 import AddressItem from '../ListItems/AddressItem';
-import useMobileStatus from '../../utils/isMobile';
 
 
 const ExpandedSuggestions = (props) => {
@@ -23,6 +22,7 @@ const ExpandedSuggestions = (props) => {
     navigator,
     onClick,
     isVisible,
+    isMobile,
     locale,
   } = props;
 
@@ -31,7 +31,6 @@ const ExpandedSuggestions = (props) => {
   const [suggestionError, setSuggestionError] = useState(false);
   // Query word on which suggestion list is based
   const [suggestionQuery, setSuggestionQuery] = useState(null);
-  const isMobile = useMobileStatus();
 
   const listRef = useRef(null);
   const fetchController = useRef(null);
@@ -204,14 +203,14 @@ const ExpandedSuggestions = (props) => {
     const sidebar = document.getElementsByClassName('SidebarWrapper')[0];
     const app = document.getElementsByClassName('App')[0];
     if (isVisible) {
-      sidebar.style.overflow = isMobile ? 'hidden' : 'hidden';
+      sidebar.style.overflow = 'hidden';
       if (app) {
         app.style.height = '100%';
       }
     }
 
     return () => {
-      sidebar.style.overflow = isMobile ? '' : 'auto';
+      sidebar.style.overflow = isMobile ? 'visible' : 'auto';
       if (app) {
         app.style.height = null;
       }
@@ -261,6 +260,7 @@ ExpandedSuggestions.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   isVisible: PropTypes.bool,
+  isMobile: PropTypes.bool,
   navigator: PropTypes.objectOf(PropTypes.any),
   onClick: PropTypes.func.isRequired,
   searchQuery: PropTypes.string,
@@ -272,6 +272,7 @@ ExpandedSuggestions.defaultProps = {
   searchQuery: null,
   navigator: null,
   isVisible: false,
+  isMobile: false,
 };
 
 export default ExpandedSuggestions;

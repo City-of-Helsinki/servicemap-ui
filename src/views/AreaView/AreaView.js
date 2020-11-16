@@ -123,7 +123,8 @@ const AreaView = ({
   // Pending request to focus map to districts. Executed once district data is loaded
   const [focusTo, setFocusTo] = useState(null);
   // Fetch state
-  const [fetching, dispatchFetching] = useReducer(fetchReducer, []);
+  const [ditsrictsFetching, dispatchDistrictsFetching] = useReducer(fetchReducer, []);
+  const [unitsFetching, dispatchUnitsFetching] = useReducer(fetchReducer, []);
 
 
   const formAddressString = address => (address
@@ -136,33 +137,41 @@ const AreaView = ({
 
 
   const changeDistrictData = (data, type, category) => {
-    // Collect different periods from district data
-    const dateArray = [];
-    data.forEach((item) => {
-      if (item.start && item.end) {
-        const period = `${item.start}-${item.end}`;
-        if (period.includes('2019')) {
-          // FIXME: remove temporary solution to hide older school years once period data is updated
-          return;
-        }
-        if (!dateArray.includes(period)) {
-          dateArray.push(period);
-        }
+    // Group data by periods (used in school districts)
+    const groupedData = data.reduce((acc, cur) => {
+      if (cur.start && cur.start.includes(2019)) {
+        // FIXME: remove temporary solution to hide older school years once period data is updated
+        return acc;
       }
-    });
-    // If different periods were found, seperate them into idividual objects
-    if (dateArray.length) {
-      const dataItems = dateArray.map(period => data.filter(district => `${district.start}-${district.end}` === period));
-      dataItems.forEach((data, i) => {
-        setDistrictData({
-          id: `${type}${dateArray[i]}`, data, date: dateArray[i], name: type, category,
-        });
-      });
-    } else {
+      const duplicate = acc.find(
+        list => list[0].start === cur.start && list[0].end === cur.end,
+      );
+      if (duplicate) {
+        duplicate.push(cur);
+      } else {
+        acc.push([cur]);
+      }
+      return acc;
+    }, []);
+
+    groupedData.sort(
+      (a, b) => new Date(a[0].start).getFullYear() - new Date(b[0].start).getFullYear(),
+    );
+
+    groupedData.forEach((data) => {
+      const { start, end } = data[0];
+      const period = start && end
+        ? `${new Date(start).getFullYear()}-${new Date(end).getFullYear()}`
+        : null;
+
       setDistrictData({
-        id: type, data, name: type, category,
+        id: `${type}${period || ''}`,
+        data,
+        name: type,
+        period,
+        category,
       });
-    }
+    });
   };
 
   const compareBoundaries = (a, b) => {
@@ -251,11 +260,12 @@ const AreaView = ({
         return { data: filteredData, type, category };
       })
       .catch(() => {
-        dispatchFetching({ type: 'remove', value: id });
+        dispatchDistrictsFetching({ type: 'remove', value: id });
       });
   };
 
   const fetchDistrictUnitList = async (divisionID) => {
+    dispatchUnitsFetching({ type: 'add', value: divisionID });
     const options = {
       page: 1,
       page_size: 1000,
@@ -268,6 +278,7 @@ const AreaView = ({
           unit.object_type = 'unit';
           unit.division_id = divisionID;
         });
+        dispatchUnitsFetching({ type: 'remove', value: divisionID });
         addSubdistrictUnits(data.results);
       });
   };
@@ -282,12 +293,12 @@ const AreaView = ({
 
     // If no fetched data found, fetch all distirct types within opened category
     if (!districtData.some(district => item.districts.includes(district.name))
-      && !fetching.includes(item.title)
+      && !ditsrictsFetching.includes(item.title)
     ) {
-      dispatchFetching({ type: 'add', value: item.title });
+      dispatchDistrictsFetching({ type: 'add', value: item.title });
       await Promise.all(item.districts.map(i => fetchDistrictsByType(i, item.title, item.id)))
         .then((results) => {
-          dispatchFetching({ type: 'remove', value: item.title });
+          dispatchDistrictsFetching({ type: 'remove', value: item.title });
           results.forEach(result => filterFetchData(result.data, result.type, result.category));
         });
     }
@@ -321,7 +332,9 @@ const AreaView = ({
 
   useEffect(() => {
     selectedSubdistricts.forEach((district) => {
-      if (!subdistrictUnits.some(unit => unit.division_id === district)) {
+      // Fetch geographical districts unless currently fetching or already fetched
+      if (!unitsFetching.includes(district)
+        && !subdistrictUnits.some(unit => unit.division_id === district)) {
         fetchDistrictUnitList(district);
       }
     });
@@ -415,7 +428,7 @@ const AreaView = ({
       setDistrictRadioValue={setDistrictRadioValue}
       setSelectedSubdistricts={setSelectedSubdistricts}
       setSelectedDistrictServices={setSelectedDistrictServices}
-      fetching={fetching}
+      fetching={ditsrictsFetching}
       districtData={districtData}
       selectedDistrictData={selectedDistrictData}
       openItems={openItems}

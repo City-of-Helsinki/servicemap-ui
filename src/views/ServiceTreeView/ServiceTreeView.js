@@ -227,7 +227,7 @@ const ServiceTreeView = (props) => {
     let strokeColor = '#000';
 
     if (isOpen) {
-      paths.push('M 20 38 V 60');
+      paths.push('M 17 38 V 60');
     }
     if (level > 0) {
       strokeColor = '#323232';
@@ -249,12 +249,12 @@ const ServiceTreeView = (props) => {
       return null;
     }
     if (bottom && currentLast) {
-      return <path key={`outerPath${id}`} d="M 20 0 V 31 H 26" stroke="black" fill="transparent" />;
+      return <path key={`outerPath${id}`} d="M 17 0 V 31 H 26" stroke="black" fill="transparent" />;
     }
     if (bottom && !currentLast) {
-      return <path key={`outerPath${id}`} d="M 20 0 V 60 M 20 31 H 26" stroke="black" fill="transparent" />;
+      return <path key={`outerPath${id}`} d="M 17 0 V 60 M 17 31 H 26" stroke="black" fill="transparent" />;
     }
-    return <path key={`outerPath${id}`} d="M 20 0 V 60" stroke="black" fill="transparent" />;
+    return <path key={`outerPath${id}`} d="M 17 0 V 60" stroke="black" fill="transparent" />;
   };
 
   const drawOuterLines = (level, last, id) => (

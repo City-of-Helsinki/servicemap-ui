@@ -106,6 +106,24 @@ const styles = theme => ({
     justifyContent: 'center',
     alignItems: 'center',
     display: 'flex',
+    '&.markerHighlighted': {
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.primary.highContrast,
+      borderColor: theme.palette.primary.highContrast,
+      boxShadow: '0px 4px 4px 0px rgba(0,0,0,0.6)',
+      '&.dark': {
+        boxShadow: '0px 4px 4px 0px rgba(255,255,255,0.8)',
+      },
+    },
+  },
+  unitMarker: {
+    borderRadius: '50%',
+    '&.markerHighlighted': {
+      boxShadow: '0px 4px 4px 0px rgba(0,0,0,0.6)',
+      '&.dark': {
+        boxShadow: '0px 4px 4px 0px rgba(255,255,255,0.8)',
+      },
+    },
   },
   unitTooltipContainer: {
     padding: theme.spacing(2),
@@ -123,6 +141,9 @@ const styles = theme => ({
   unitTooltipSubtitle: {
     ...theme.typography.body2,
     margin: theme.spacing(0, 1),
+  },
+  unitTooltipWrapper: {
+    padding: theme.spacing(2),
   },
   unitPopupList: {
     listStyleType: 'none',
@@ -179,13 +200,35 @@ const styles = theme => ({
   bold: {
     fontWeight: 'bold',
   },
-  distanceIcon: {
+  addressIcon: {
     fontSize: 50,
-    color: '#1964e6',
+    color: theme.palette.primary.main,
+    textShadow: '-1px 0 #fff, 0 1px #fff, 1px 0 #fff, 0 -1px #fff',
     outline: 'none',
   },
   distancePopup: {
     padding: 8,
+  },
+  distanceLine: {
+    stroke: theme.palette.measuringStroke.main,
+    strokeDasharray: 12,
+  },
+  distanceLineBackground: {
+    stroke: theme.palette.measuringStroke.background,
+    strokeWidth: 10,
+  },
+  distanceLineBorder: {
+    stroke: '#fff',
+    strokeWidth: 14,
+  },
+  distanceMarkerBackground: {
+    fontFamily: 'hsl-piktoframe',
+    color: '#fff',
+    position: 'absolute',
+    zIndex: theme.zIndex.behind,
+    fontSize: 16,
+    top: 16,
+    left: 16,
   },
 
   // Transit stops
@@ -202,6 +245,7 @@ const styles = theme => ({
     height: transitIconSize,
     margin: 0,
     lineHeight: 1,
+    textShadow: '-1px 0 #fff, 0 1px #fff, 1px 0 #fff, 0 -1px #fff',
   },
   transitIconInfo: {
     fontSize: 18,

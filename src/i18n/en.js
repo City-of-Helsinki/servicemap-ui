@@ -1,5 +1,5 @@
 /* eslint-disable quote-props */
-export default {
+const translations = {
   'app.title': 'Service map',
 
   // Accessibility
@@ -27,7 +27,7 @@ export default {
   'address.services.info': 'Services for people who live here',
   'address.area.link': 'Get to know the areas on the map.',
   'address.emergency_care.common': 'When your health station is closed and in the night between 22-8, emergency care for children and young people under age 16 is provided at <a>Children\'s Hospital</a> [<a1>homepage</a1>], and for adults at',
-  'address.emergency_care.children_hospital.link': '/{locale}/unit/7299',
+  'address.emergency_care.children_hospital.link': '/en/unit/62976',
   'address.emergency_care.common.link': 'https://www.hus.fi/en/medical-care/hospitals/newchildrenshospital/Pages/default.aspx',
   'address.emergency_care.unit.26107': 'Malmi hospital',
   'address.emergency_care.unit.26104': 'Haartman hospital',
@@ -43,9 +43,9 @@ export default {
   'area.services.nearby': 'Services in the neighbouring areas',
   'area.info': 'Choose an area, whose services you want information about. Writing your home address in the search field opens a map, and the areas and districts that you belong to are shown under the Services in the area tab.',
   'area.choose.district': 'Choose area',
+  'area.choose.subdistrict': 'Choose and open {category}',
+  'area.close.subdistrict': 'Close {category}',
   'area.noSelection': 'Choose area from the Choice of Area tab',
-  'area.subdistrict.neighborhood': 'Valitse kaupunginosa', // TODO: translate
-  'area.subdistrict.postcode_area': 'Valitse postinumeroalue', // TODO: translate
   'area.list.geographical': 'Geographical',
   'area.list.protection': 'Civil defence',
   'area.list.health': 'Health',
@@ -231,6 +231,7 @@ export default {
   // Location
   'location.notFound': 'Location not found',
   'location.notAllowed': 'Location not allowed',
+  'location.center': 'Center on user\'s location',
 
   // Loading texts
   'loading.events': 'Loading events {count} / {max}',
@@ -241,11 +242,19 @@ export default {
   // Map
   'map': 'Map',
   'map.ariaLabel': 'Map. Currently map information is only accessible visually.',
+  'map.attribution.osm': '&copy; <a href="http://osm.org/copyright">OpenStreetMap contributors</a>',
+  'map.attribution.helsinki': '&copy; Cities of Helsinki, Espoo, Vantaa ja Kauniainen',
   'map.transit.endStation': 'Terminus',
   'map.address.searching': 'Retreiving address...',
   'map.address.notFound': 'The address could not be found',
   'map.address.info': 'Address information',
   'map.unit.cluster.popup.info': '{count} locations',
+
+  // Print
+  'print.alert': 'Use the toolbox printing option',
+  'print.button.close': 'Close the view',
+  'print.button.print': 'Print the view',
+  'print.table.header.number': 'Number on the map',
 
   // Units
   'unit': 'Location',
@@ -284,6 +293,7 @@ export default {
   'unit.address.missing': 'No address provided',
   'unit.phone': 'Phone number',
   'unit.phone.missing': 'No phone number provided',
+  'unit.phone.charge': 'Call charges',
   'unit.email': 'Email',
   'unit.email.missing': 'No email provided',
   'unit.opening.hours': 'Opening hours',
@@ -409,6 +419,7 @@ export default {
   'settings.accessibilitySettings.long': 'Accessibility settings',
   'settings.mobile.long': 'Settings',
   'settings.search.long': 'Settings',
+  'settings.area.long': 'City settings',
   'settings.amount': `{count, plural,
     one {# selection}
     other {# selections}
@@ -420,7 +431,9 @@ export default {
   'settings.sense.colorblind': 'I have color vision deficiency',
   'settings.info.heading': 'Settings info',
   'settings.info.title': 'Your selected settings will effect search results',
+  'settings.info.title.city': 'The city settings affect the area information',
   'settings.info.title.noSettings': 'Change search or accessibility settings',
+  'settings.info.title.noSettings.city': 'Change the city settings to narrow down the number of areas',
   'settings.mobility.title': 'Mobility impairments',
   'settings.mobility.none': 'No mobility impairments',
   'settings.mobility.wheelchair': 'I use a wheelchair',
@@ -449,7 +462,7 @@ export default {
 
   // Tools
   'tool.download': 'Download data (new tab)',
-  'tool.measuring': 'Measure distance',
+  'tool.measuring': 'Measure distance (mouse only)',
   'tool.measuring.stop': 'Stop measuring',
 
   'info.title': 'About the service and accessibility statement',
@@ -457,3 +470,16 @@ export default {
 
   'alert.close': 'Close the notification',
 };
+
+let overridingExternalTranslations;
+
+// Read and merge external translations with current translations
+try {
+  // eslint-disable-next-line global-require,import/no-unresolved
+  overridingExternalTranslations = require('./externalTranslations/en.json');
+} catch (e) {
+  overridingExternalTranslations = {};
+}
+
+const englishTranslations = { ...translations, ...overridingExternalTranslations };
+export default englishTranslations;

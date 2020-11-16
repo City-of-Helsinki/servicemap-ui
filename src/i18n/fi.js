@@ -1,5 +1,5 @@
 /* eslint-disable quote-props */
-export default {
+const translations = {
   'app.title': 'Palvelukartta',
 
   // Accessibility
@@ -26,9 +26,9 @@ export default {
   'address.services.header': 'Palvelut täällä asuville',
   'address.services.info': 'Kunnalliset palvelut, joiden piiriin sijainti kuuluu',
   'address.area.link': 'Tutustu alueisiin kartalla.',
-  'address.emergency_care.common': 'Terveysaseman ollessa kiinni sekä öisin klo 22- 8 alle 16-vuotiaiden päivystys on <a>Lastenklinikalla</a> [<a1>kotisivut</a1>] ja aikuisten päivystys',
-  'address.emergency_care.children_hospital.link': '/{locale}/unit/7299',
-  'address.emergency_care.common.link': 'http://www.hus.fi/sairaanhoito/sairaalat/lastenklinikka/Sivut/default.aspx',
+  'address.emergency_care.common': 'Terveysaseman ollessa kiinni sekä öisin klo 22- 8 alle 16-vuotiaiden päivystys on <a>Lastensairaalassa</a> [<a1>kotisivut</a1>] ja aikuisten päivystys',
+  'address.emergency_care.children_hospital.link': '/fi/unit/62976',
+  'address.emergency_care.common.link': 'https://www.hus.fi/sairaanhoito/sairaalat/Uusi-lastensairaala/Sivut/default.aspx',
   'address.emergency_care.unit.26107': 'Malmin sairaalassa',
   'address.emergency_care.unit.26104': 'Haartmanin sairaalassa',
   'address.emergency_care.link': 'http://www.hel.fi/www/Helsinki/fi/sosiaali-ja-terveyspalvelut/terveyspalvelut/paivystys/',
@@ -43,9 +43,9 @@ export default {
   'area.services.nearby': 'Lähialueiden palvelut',
   'area.info': 'Valitse alue, jonka palveluista haluat tietoa. Kirjoittamalla alla olevaan hakukenttään kotiosoitteesi saat näkyville karttaan ja Alueen palvelut -välilehdelle alueet ja piirit, joihin kuulut',
   'area.choose.district': 'Valitse alue',
+  'area.choose.subdistrict': 'Valitse ja avaa {category}',
+  'area.close.subdistrict': 'Sulje {category}',
   'area.noSelection': 'Valitse alue Alueen Valinta -välilehdeltä',
-  'area.subdistrict.neighborhood': 'Valitse kaupunginosa',
-  'area.subdistrict.postcode_area': 'Valitse postinumeroalue',
   'area.list.geographical': 'Maantieteellinen',
   'area.list.protection': 'Väestönsuojelu',
   'area.list.health': 'Terveys',
@@ -233,6 +233,7 @@ export default {
   // Location
   'location.notFound': 'Sijaintia ei löytynyt',
   'location.notAllowed': 'Sijaintia ei sallittu',
+  'location.center': 'Keskitä käyttäjän sijaintiin',
 
   // Loading
   'loading.events': 'Haetaan tapahtumia {count} / {max}',
@@ -243,11 +244,19 @@ export default {
   // Map
   'map': 'Kartta',
   'map.ariaLabel': 'Karttanäkymä. Kartan tietoja voi tarkastella tällä hetkellä vain näönvaraisesti.',
+  'map.attribution.osm': '&copy; <a href="http://osm.org/copyright">OpenStreetMapin tekijät</a>',
+  'map.attribution.helsinki': '&copy; Helsingin, Espoon, Vantaan ja Kauniaisen kaupungit',
   'map.transit.endStation': 'Päätepysäkki',
   'map.address.searching': 'Haetaan osoitetta...',
   'map.address.notFound': 'Osoitetta ei löytynyt',
   'map.address.info': 'Osoitteen tiedot',
   'map.unit.cluster.popup.info': '{count} toimipistettä',
+
+  // Print
+  'print.alert': 'Käytä tulostamiseen työkaluvalikon tulostusta',
+  'print.button.close': 'Sulje näkymä',
+  'print.button.print': 'Tulosta näkymä',
+  'print.table.header.number': 'Numero kartalla',
 
   // Units
   'unit': 'Toimipiste',
@@ -286,6 +295,7 @@ export default {
   'unit.address.missing': 'Osoitetta ei ilmoitettu',
   'unit.phone': 'Puhelinnumero',
   'unit.phone.missing': 'Puhelinnumeroa ei ilmoitettu',
+  'unit.phone.charge': 'Puhelujen hinnat',
   'unit.email': 'Sähköpostiosoite',
   'unit.email.missing': 'Sähköpostiosoitetta ei ilmoitettu',
   'unit.opening.hours': 'Aukioloajat',
@@ -411,6 +421,7 @@ export default {
   'settings.accessibilitySettings.long': 'Esteettömyysasetukset',
   'settings.mobile.long': 'Asetukset',
   'settings.search.long': 'Asetukset',
+  'settings.area.long': 'Kaupunkiasetukset',
   'settings.amount': `{count, plural,
     one {# valinta}
     other {# valintaa}
@@ -422,7 +433,9 @@ export default {
   'settings.sense.colorblind': 'Minun on vaikea erottaa värejä',
   'settings.info.heading': 'Asetustiedot', // TODO: verify
   'settings.info.title': 'Valitsemasi asetukset vaikuttavat hakutulokseen',
+  'settings.info.title.city': 'Kaupunkiasetukset vaikuttavat aluetietoihin',
   'settings.info.title.noSettings': 'Muuta haku- tai esteettömyysasetuksia',
+  'settings.info.title.noSettings.city': 'Muuta kaupunkiasetuksia rajataksesi alueita',
   'settings.mobility.title': 'Liikkumisrajoitteet',
   'settings.mobility.none': 'Ei liikkumisrajoitteita',
   'settings.mobility.wheelchair': 'Käytän pyörätuolia',
@@ -451,7 +464,7 @@ export default {
 
   // Tools
   'tool.download': 'Lataa tiedot (uusi välilehti)',
-  'tool.measuring': 'Mittaa etäisyys',
+  'tool.measuring': 'Mittaa etäisyys (käytettävissä vain hiirellä)',
   'tool.measuring.stop': 'Lopeta mittaus',
 
   'info.title': 'Tietoa palvelusta ja saavutettavuusseloste',
@@ -459,3 +472,16 @@ export default {
 
   'alert.close': 'Sulje ilmoitus',
 };
+
+let overridingExternalTranslations;
+
+// Read and merge external translations with current translations
+try {
+  // eslint-disable-next-line global-require,import/no-unresolved
+  overridingExternalTranslations = require('./externalTranslations/fi.json');
+} catch (e) {
+  overridingExternalTranslations = {};
+}
+
+const finnishTranslations = { ...translations, ...overridingExternalTranslations };
+export default finnishTranslations;

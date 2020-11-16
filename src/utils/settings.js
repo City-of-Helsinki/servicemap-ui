@@ -86,10 +86,11 @@ class SettingsUtility {
    */
   static getActiveCitySettings(state) {
     const result = [];
+    const citySettings = state?.settings?.cities;
     SettingsUtility.citySettings.forEach((city) => {
       if (
-        Object.prototype.hasOwnProperty.call(state.settings, (city))
-        && state.settings[city]
+        Object.prototype.hasOwnProperty.call(citySettings, (city))
+        && citySettings[city]
       ) {
         result.push(city);
       }

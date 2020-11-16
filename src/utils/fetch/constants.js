@@ -7,7 +7,7 @@ import config from '../../../config';
 // API handlers
 export const APIHandlers = {
   accessibilitySentences: {
-    url: id => `${config.accessibilitySentenceAPI.root}/unit/${id}`,
+    url: id => `${config.accessibilitySentenceAPI.root}/` + (config.usePtvAccessibilityApi ? `${id}/sentences/` : `unit/${id}`),
     options: {},
   },
   address: {
@@ -33,7 +33,7 @@ export const APIHandlers = {
     options: {
       page: 1,
       page_size: 200,
-      only: 'unit.location,unit.name,unit.municipality,unit.accessibility_shortcoming_count,unit.contract_type',
+      only: 'unit.street_address,unit.location,unit.name,unit.municipality,unit.accessibility_shortcoming_count,unit.contract_type',
       geometry: true,
     },
   },
@@ -49,7 +49,7 @@ export const APIHandlers = {
     url: id => `${config.serviceMapAPI.root}/unit/${id}/`,
     options: {
       accessibility_description: true,
-      include: 'service_nodes,services',
+      include: 'service_nodes,services,keywords',
       geometry: true,
     },
   },
@@ -58,7 +58,7 @@ export const APIHandlers = {
     options: {
       page: 1,
       page_size: 200,
-      only: 'location,name,municipality,accessibility_shortcoming_count,service_nodes,contract_type',
+      only: 'street_address,location,name,municipality,accessibility_shortcoming_count,service_nodes,contract_type',
       geometry: true,
       include: 'service_nodes,services,accessibility_properties',
     },

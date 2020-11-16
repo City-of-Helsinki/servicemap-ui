@@ -35,6 +35,7 @@ const styles = theme => ({
   },
   loadingText: {
     paddingLeft: theme.spacing(6),
+    paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(1),
   },
   subtitle: {
@@ -44,6 +45,14 @@ const styles = theme => ({
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(1),
     paddingLeft: theme.spacing(6),
+  },
+  municipalitySubtitle: {
+    height: 48,
+    display: 'flex',
+    alignItems: 'center',
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
+    paddingLeft: theme.spacing(4),
   },
   categoryItem: {
     paddingRight: 32,
@@ -108,10 +117,14 @@ const styles = theme => ({
   selectedAddress: {
     fontSize: 18,
   },
+  subdistrictContainer: {
+    flexDirection: 'column',
+  },
   subdistrictList: {
-    paddingLeft: 32,
+    paddingLeft: theme.spacing(3),
   },
   expandingElement: {
+    minHeight: '32px !important',
     boxShadow: 'none',
     width: '100%',
   },

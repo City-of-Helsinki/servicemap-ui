@@ -16,13 +16,14 @@ const mapStateToProps = (state, props) => {
   } = props;
   const getLocaleText = textObject => getLocaleString(state, textObject);
   const {
-    navigator, settings,
+    navigator, settings, user,
   } = state;
   return {
     distance: formatDistanceObject(intl, calculateDistance(unit, getCurrentlyUsedPosition(state))),
     getLocaleText,
     navigator,
     settings,
+    theme: user.theme,
   };
 };
 

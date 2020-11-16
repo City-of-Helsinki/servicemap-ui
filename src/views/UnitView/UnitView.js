@@ -5,12 +5,10 @@ import { Typography } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
 import { Map, Mail, Hearing } from '@material-ui/icons';
 import SearchBar from '../../components/SearchBar';
-import { focusToPosition, focusDistrict } from '../MapView/utils/mapActions';
 import TitleBar from '../../components/TitleBar';
 import Container from '../../components/Container';
 import { uppercaseFirst } from '../../utils';
 import AccessibilityInfo from './components/AccessibilityInfo';
-
 import ContactInfo from './components/ContactInfo';
 import Highlights from './components/Highlights';
 import ElectronicServices from './components/ElectronicServices';
@@ -26,15 +24,14 @@ import SocialMediaLinks from './components/SocialMediaLinks';
 import UnitLinks from './components/UnitLinks';
 import SimpleListItem from '../../components/ListItems/SimpleListItem';
 import TitledList from '../../components/Lists/TitledList';
-import DesktopComponent from '../../components/DesktopComponent';
-import MobileComponent from '../../components/MobileComponent';
 import ReadSpeakerButton from '../../components/ReadSpeakerButton';
+import config from '../../../config';
+import useMobileStatus from '../../utils/isMobile';
 
 const UnitView = (props) => {
   const {
     distance,
     stateUnit,
-    map,
     intl,
     classes,
     embed,
@@ -62,14 +59,17 @@ const UnitView = (props) => {
 
   const [unit, setUnit] = useState(checkCorrectUnit(stateUnit) ? stateUnit : null);
 
-  const centerMap = () => {
-    if (unit && map) {
-      const { geometry, location } = unit;
-      if (geometry && geometry.type === 'MultiLineString') {
-        focusDistrict(map, [geometry.coordinates]);
-      } else if (location) {
-        focusToPosition(map, location.coordinates);
-      }
+  const isMobile = useMobileStatus();
+
+
+  const initializePTVAccessibilitySentences = () => {
+    if (unit) {
+      unit.identifiers.forEach((element) => {
+        if (element.namespace === 'ptv') {
+          const ptvId = element.value;
+          fetchAccessibilitySentences(ptvId);
+        }
+      });
     }
   };
 
@@ -78,9 +78,13 @@ const UnitView = (props) => {
     const unitId = params.unit;
     // If no selected unit data, or selected unit data is old, fetch new data
     if (!stateUnit || !checkCorrectUnit(stateUnit) || !stateUnit.complete) {
-      fetchSelectedUnit(unitId, unit => setUnit(unit));
+      fetchSelectedUnit(unitId, (unit) => {
+        setUnit(unit);
+        if (unit?.keywords?.fi?.includes('kuuluvuuskartta')) {
+          fetchHearingMaps(unitId);
+        }
+      });
       fetchAccessibilitySentences(unitId);
-      fetchHearingMaps(unitId);
       fetchReservations(unitId);
       fetchUnitEvents(unitId);
     } else {
@@ -136,9 +140,11 @@ const UnitView = (props) => {
     }
   }, [match.params.unit]);
 
-  useEffect(() => {
-    centerMap();
-  }, [unit, map]);
+  if (config.usePtvAccessibilityApi) {
+    useEffect(() => {
+      initializePTVAccessibilitySentences();
+    }, [unit]);
+  }
 
   if (embed) {
     return null;
@@ -150,16 +156,27 @@ const UnitView = (props) => {
     return (
       <Typography variant="srOnly" aria-hidden>{title}</Typography>
     );
-  }
+  };
 
   const renderDetailTab = () => {
     if (!unit || !unit.complete) {
       return <></>;
     }
 
+    let detailReadSpeakerButton = null;
+
+    if (config.showReadSpeakerButton) {
+      detailReadSpeakerButton = (
+        <ReadSpeakerButton
+          className={classes.rsButton}
+          readID="rscontent-unitdetail"
+        />
+      );
+    }
+
     return (
       <div className={classes.content}>
-        <ReadSpeakerButton className={classes.rsButton} readID="rscontent-unitdetail" />
+        {detailReadSpeakerButton}
         <div id="rscontent-unitdetail">
           {
             renderTitleForRS()
@@ -180,55 +197,58 @@ const UnitView = (props) => {
           </Container>
 
           {/* View Components */}
-          <ContactInfo
-            unit={unit}
-            userLocation={userLocation}
-            getLocaleText={getLocaleText}
-            intl={intl}
-          />
+          <ContactInfo unit={unit} userLocation={userLocation} getLocaleText={getLocaleText} />
           <SocialMediaLinks unit={unit} getLocaleText={getLocaleText} />
           <Highlights unit={unit} getLocaleText={getLocaleText} />
           <Description unit={unit} getLocaleText={getLocaleText} />
           <UnitLinks unit={unit} />
           <ElectronicServices unit={unit} />
-          <DesktopComponent>
-            {feedbackButton()}
-          </DesktopComponent>
+          {!isMobile && feedbackButton()}
         </div>
       </div>
     );
   };
 
-  const renderAccessibilityTab = () => (
-    <div className={classes.content}>
-      <ReadSpeakerButton
-        className={classes.rsButton}
-        readID="rscontent"
-        encodedURL={encodeURI(`palvelukartta.test.hel.ninja${location.pathname}${location.search}`)}
-      />
-      <div id="rscontent" className={classes.aTabAdjuster}>
-        {
-          renderTitleForRS()
-        }
-        {hearingMaps && (
-          <TitledList titleComponent="h4" title={intl.formatMessage({ id: 'unit.accessibility.hearingMaps' })}>
-            {hearingMaps.map(item => (
-              <SimpleListItem
-                role="link"
-                link
-                divider
-                icon={<Hearing />}
-                key={item.name}
-                text={`${item.name} ${intl.formatMessage({ id: 'unit.accessibility.hearingMaps.extra' })}`}
-                handleItemClick={() => window.open(item.url)}
-              />
-            ))}
-          </TitledList>
-        )}
-        <AccessibilityInfo titleAlways headingLevel={4} />
+  const renderAccessibilityTab = () => {
+    let accessibilityReadSpeakerButton = null;
+
+    if (config.showReadSpeakerButton) {
+      accessibilityReadSpeakerButton = (
+        <ReadSpeakerButton
+          className={classes.rsButton}
+          readID="rscontent"
+          encodedURL={encodeURI(`palvelukartta.test.hel.ninja${location.pathname}${location.search}`)}
+        />
+      );
+    }
+
+    return (
+      <div className={classes.content}>
+        {accessibilityReadSpeakerButton}
+        <div id="rscontent" className={classes.aTabAdjuster}>
+          {
+            renderTitleForRS()
+          }
+          {hearingMaps?.id === unit.id.toString(10) && (
+            <TitledList titleComponent="h4" title={intl.formatMessage({ id: 'unit.accessibility.hearingMaps' })}>
+              {hearingMaps.data.map(item => (
+                <SimpleListItem
+                  role="link"
+                  link
+                  divider
+                  icon={<Hearing />}
+                  key={item.name}
+                  text={`${item.name} ${intl.formatMessage({ id: 'unit.accessibility.hearingMaps.extra' })}`}
+                  handleItemClick={() => window.open(item.url)}
+                />
+              ))}
+            </TitledList>
+          )}
+          <AccessibilityInfo titleAlways headingLevel={4} />
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   const renderServiceTab = () => {
     if (!unit || !unit.complete) {
@@ -252,24 +272,22 @@ const UnitView = (props) => {
   };
 
   const renderMobileButtons = () => (
-    <MobileComponent>
-      <div className={classes.mobileButtonArea}>
-        <SMButton
-          aria-hidden
-          messageID="general.showOnMap"
-          icon={<Map />}
-          onClick={(e) => {
-            e.preventDefault();
-            if (navigator) {
-              navigator.openMap();
-            }
-          }}
-          margin
-          role="link"
-        />
-        {feedbackButton()}
-      </div>
-    </MobileComponent>
+    <div className={classes.mobileButtonArea}>
+      <SMButton
+        aria-hidden
+        messageID="general.showOnMap"
+        icon={<Map />}
+        onClick={(e) => {
+          e.preventDefault();
+          if (navigator) {
+            navigator.openMap();
+          }
+        }}
+        margin
+        role="link"
+      />
+      {feedbackButton()}
+    </div>
   );
 
   const render = () => {
@@ -277,25 +295,17 @@ const UnitView = (props) => {
 
     const TopArea = (
       <>
-        <DesktopComponent>
+        {!isMobile && (
           <SearchBar margin />
-          <TitleBar
-            sticky
-            icon={<AddressIcon className={classes.icon} />}
-            title={title}
-            titleComponent="h3"
-            distance={distance && distance.text}
-          />
-        </DesktopComponent>
-        <MobileComponent>
-          <TitleBar
-            sticky
-            title={title}
-            titleComponent="h3"
-            backButton
-            distance={distance && distance.text}
-          />
-        </MobileComponent>
+        )}
+        <TitleBar
+          sticky
+          icon={!isMobile ? <AddressIcon className={classes.icon} /> : null}
+          title={title}
+          backButton={!!isMobile}
+          titleComponent="h3"
+          distance={distance && distance.text}
+        />
       </>
     );
 
@@ -321,6 +331,7 @@ const UnitView = (props) => {
     if (unit && unit.complete) {
       const tabs = [
         {
+          id: 'basicInfo',
           ariaLabel: intl.formatMessage({ id: 'unit.basicInfo' }),
           component: renderDetailTab(),
           data: null,
@@ -328,6 +339,7 @@ const UnitView = (props) => {
           title: intl.formatMessage({ id: 'unit.basicInfo' }),
         },
         {
+          id: 'accessibilityDetails',
           ariaLabel: intl.formatMessage({ id: 'accessibility' }),
           component: renderAccessibilityTab(),
           data: null,
@@ -335,6 +347,7 @@ const UnitView = (props) => {
           title: intl.formatMessage({ id: 'accessibility' }),
         },
         {
+          id: 'services',
           ariaLabel: intl.formatMessage({ id: 'service.tab' }),
           component: renderServiceTab(),
           data: null,
@@ -369,7 +382,7 @@ const UnitView = (props) => {
                   </div>
                 )
               }
-                {renderMobileButtons()}
+                {isMobile && renderMobileButtons()}
               </>
           )}
           />

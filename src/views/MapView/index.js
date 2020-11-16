@@ -10,18 +10,11 @@ import { findUserLocation } from '../../redux/actions/user';
 import MapView from './MapView';
 import { getServiceUnits } from '../../redux/selectors/service';
 import { getProcessedData } from '../../redux/selectors/results';
-import { markerClusterConnector, renderMarkerConnector } from './utils/unitMarkers';
 import { getAddressNavigatorParamsConnector } from '../../utils/address';
-import { generatePath } from '../../utils/path';
-import { calculateDistance, getCurrentlyUsedPosition } from '../../redux/selectors/unit';
-import { formatDistanceObject } from '../../utils';
 import { getServiceTreeUnits } from '../../redux/selectors/serviceTree';
 
 // Get redux states as props to component
-const mapStateToProps = (state, props) => {
-  const {
-    intl,
-  } = props;
+const mapStateToProps = (state) => {
   const {
     address, navigator, settings, user, measuringMode, serviceTree,
   } = state;
@@ -30,40 +23,20 @@ const mapStateToProps = (state, props) => {
   const serviceUnits = getServiceUnits(state);
   const serviceTreeUnitsReducer = serviceTree.serviceTreeUnits;
   const serviceTreeUnitData = getServiceTreeUnits(state);
-  // const serviceUnits = state.service.data;
   const highlightedDistrict = getHighlightedDistrict(state);
   const highlightedUnit = getSelectedUnit(state);
   const {
-    customPosition, locale, page, position, theme,
+    customPosition, locale, page, position,
   } = user;
   const getLocaleText = textObject => getLocaleString(state, textObject);
   const { adminDistricts, units, toRender } = address;
   const districtUnits = getFilteredSubdistrictUnits(state);
   const getAddressNavigatorParams = getAddressNavigatorParamsConnector(getLocaleText, locale);
-  const getPath = (id, data) => generatePath(id, locale, data);
-  const distanceCoordinates = getCurrentlyUsedPosition(state);
   const userLocation = customPosition.coordinates || position.coordinates;
-  const getDistance = unit => (
-    formatDistanceObject(intl, calculateDistance(unit, distanceCoordinates))
-  );
   return {
     addressUnits: units,
     addressToRender: toRender,
     adminDistricts,
-    createMarkerClusterLayer: markerClusterConnector(
-      navigator,
-      settings,
-      getLocaleText,
-      getDistance,
-    ),
-    distanceCoordinates,
-    renderUnitMarkers: renderMarkerConnector(
-      getLocaleText,
-      navigator,
-      theme,
-      getPath,
-      getDistance,
-    ),
     highlightedDistrict,
     highlightedUnit,
     getAddressNavigatorParams,
