@@ -15,6 +15,7 @@ import { getAddressNavigatorParamsConnector } from '../../utils/address';
 import { generatePath } from '../../utils/path';
 import { calculateDistance, getCurrentlyUsedPosition } from '../../redux/selectors/unit';
 import { formatDistanceObject } from '../../utils';
+import { getServiceTreeUnits } from '../../redux/selectors/serviceTree';
 
 // Get redux states as props to component
 const mapStateToProps = (state, props) => {
@@ -22,11 +23,13 @@ const mapStateToProps = (state, props) => {
     intl,
   } = props;
   const {
-    address, navigator, settings, user, measuringMode,
+    address, navigator, settings, user, measuringMode, serviceTree,
   } = state;
   const unitList = getProcessedData(state);
-  const unitsLoading = state.service.isFetching;
+  const unitsLoading = state.service.isFetching || state.units.isFetching;
   const serviceUnits = getServiceUnits(state);
+  const serviceTreeUnitsReducer = serviceTree.serviceTreeUnits;
+  const serviceTreeUnitData = getServiceTreeUnits(state);
   // const serviceUnits = state.service.data;
   const highlightedDistrict = getHighlightedDistrict(state);
   const highlightedUnit = getSelectedUnit(state);
@@ -68,6 +71,8 @@ const mapStateToProps = (state, props) => {
     unitList,
     serviceUnits,
     districtUnits,
+    serviceTreeUnitData,
+    serviceTreeUnitsReducer,
     unitsLoading,
     currentPage: page,
     userLocation,

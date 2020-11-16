@@ -20,9 +20,9 @@ export const setTreeOpened = opened => ({
   opened,
 });
 
-export const setFetchedNode = data => ({
+export const setFetchedNode = node => ({
   type: 'SET_TREE_FETCHED',
-  data,
+  node,
 });
 
 

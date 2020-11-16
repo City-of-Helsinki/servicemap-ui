@@ -47,6 +47,8 @@ const MapView = (props) => {
     unitList,
     unitsLoading,
     serviceUnits,
+    serviceTreeUnitData,
+    serviceTreeUnitsReducer,
     districtUnits,
     hideUserMarker,
     highlightedUnit,
@@ -100,6 +102,8 @@ const MapView = (props) => {
       }
     } else if (currentPage === 'service' && serviceUnits && !unitsLoading) {
       mapUnits = serviceUnits;
+    } else if (currentPage === 'serviceTree') {
+      mapUnits = serviceTreeUnitData;
     } else if (currentPage === 'area' && districtUnits) {
       mapUnits = districtUnits;
     } else if ((currentPage === 'unit' || currentPage === 'fullList' || currentPage === 'event') && highlightedUnit) {
@@ -271,6 +275,7 @@ const MapView = (props) => {
     markerCluster,
     addressUnits,
     serviceUnits,
+    serviceTreeUnitData,
     districtUnits,
     highlightedDistrict,
     currentPage]);
@@ -455,6 +460,8 @@ MapView.propTypes = {
   setMapRef: PropTypes.func.isRequired,
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
   unitList: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
+  serviceTreeUnitData: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)).isRequired,
+  serviceTreeUnitsReducer: PropTypes.objectOf(PropTypes.any).isRequired,
   unitsLoading: PropTypes.bool,
   userLocation: PropTypes.objectOf(PropTypes.any),
   locale: PropTypes.string.isRequired,
