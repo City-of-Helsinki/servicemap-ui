@@ -29,10 +29,14 @@ const TabLists = ({
   const isMobile = useMobileStatus();
 
   const searchParams = parseSearchParams(location.search);
+  const filteredData = data.filter(item => item.component || (item.data && item.data.length > 0));
   const getPagefromUrl = () => parseInt(searchParams.p, 10) || 1;
   const getTabfromUrl = () => {
     let index = data.findIndex(tab => tab.id === searchParams.t);
     if (index === -1) index = parseInt(searchParams.t, 10) || 0;
+    if (filteredData.length <= index) {
+      return 0;
+    }
     return index;
   };
 
@@ -45,8 +49,6 @@ const TabLists = ({
   const [styles, setStyles] = useState({});
 
   const tabsRef = useRef(null);
-
-  const filteredData = data.filter(item => item.component || (item.data && item.data.length > 0));
 
   // Handle page number changes
   const handlePageChange = (pageNum, pageCount) => {
