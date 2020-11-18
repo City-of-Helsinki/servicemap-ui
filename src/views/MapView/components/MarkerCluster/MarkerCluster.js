@@ -50,6 +50,7 @@ const MarkerCluster = ({
   navigator,
   settings,
   theme,
+  measuringMode,
 }) => {
   const useContrast = theme === 'dark';
   const embeded = isEmbed();
@@ -382,8 +383,10 @@ const MarkerCluster = ({
     document.querySelectorAll('.leaflet-marker-icon').forEach((item) => {
       item.setAttribute('tabindex', '-1');
       item.setAttribute('aria-hidden', 'true');
+      // Remove marker interaction when using measuring tool
+      if (measuringMode) item.classList.remove('leaflet-interactive');
     });
-  }, [cluster, data]);
+  }, [cluster, data, measuringMode]);
 
   return null;
 };

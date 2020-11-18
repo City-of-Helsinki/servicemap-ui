@@ -319,6 +319,7 @@ const MapView = (props) => {
           <MarkerCluster
             map={mapRef?.current?.leafletElement}
             data={unitData}
+            measuringMode={measuringMode}
           />
           {
             !highlightedDistrict
