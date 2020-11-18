@@ -7,14 +7,14 @@ const getSelectedServices = state => state.serviceTree.serviceTree.selected;
 const getFetchedServices = state => state.serviceTree.serviceTree.services;
 
 
-const checkParents = (services, selectedServices, node) => {
-  // This recursive function checks if any parent or grandparent node is selected
-  const serviceNode = services.find(service => service.id === node);
+export const checkParents = (services, list, nodeID) => {
+  // This checks recursively if some parent node is included in given list
+  const serviceNode = services.find(service => service.id === nodeID);
   if (!serviceNode || !serviceNode.parent) return false;
-  if (selectedServices.some(service => service === serviceNode.parent)) {
+  if (list.includes(serviceNode.parent)) {
     return true;
   }
-  return checkParents(services, selectedServices, node.parent);
+  return checkParents(services, list, serviceNode.parent);
 };
 
 const getSelectedServiceTreeUnits = createSelector(

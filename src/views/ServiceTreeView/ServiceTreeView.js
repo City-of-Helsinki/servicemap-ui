@@ -9,6 +9,7 @@ import {
 import { FormattedMessage } from 'react-intl';
 import config from '../../../config';
 import SMButton from '../../components/ServiceMapButton';
+import { checkParents } from '../../redux/selectors/serviceTree';
 
 
 const nodeFetchReducer = (state, action) => {
@@ -133,18 +134,8 @@ const ServiceTreeView = (props) => {
     } return data;
   };
 
-  const checkParents = (list, nodeID) => {
-    // This checks recursively if some parent node is included in given list
-    const serviceNode = services.find(service => service.id === nodeID);
-    if (!serviceNode || !serviceNode.parent) return false;
-    if (list.includes(serviceNode.parent)) {
-      return true;
-    }
-    return checkParents(list, serviceNode.parent);
-  };
-
   const handleUnitFetch = (item) => {
-    if (fetched.includes(item.id) || checkParents(fetched, item.id)) return;
+    if (fetched.includes(item.id) || checkParents(services, fetched, item.id)) return;
     fetchServiceTreeUnits({ service_node: item.id });
     setFetchedNode(item.id);
   };
@@ -167,7 +158,7 @@ const ServiceTreeView = (props) => {
       .then((data) => {
         dispatchNodeFetch({ type: 'complete', data, fetching: node.id });
         setTreeOpened([...opened, node.id]);
-        if (selected.includes(node.id) || checkParents(selected, node.id)) {
+        if (selected.includes(node.id) || checkParents(services, selected, node.id)) {
           setTreeSelected([...selected, ...data.map(item => item.id)]);
         }
       })
