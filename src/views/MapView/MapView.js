@@ -120,10 +120,25 @@ const MapView = (props) => {
   const getUnitGeometry = () => {
     if ((currentPage === 'unit' || currentPage === 'fullList' || currentPage === 'event') && highlightedUnit) {
       const { geometry } = highlightedUnit;
-      if (geometry && geometry.type === 'MultiLineString') {
+      if (geometry) {
         const { coordinates } = geometry;
-        const unitGeometry = swapCoordinates(coordinates);
-        return unitGeometry;
+        let unitGeometry;
+        switch (geometry.type) {
+          case 'MultiLineString': {
+            unitGeometry = swapCoordinates(coordinates);
+            break;
+          }
+          case 'MultiPolygon': {
+            unitGeometry = swapCoordinates(coordinates[0]);
+            break;
+          }
+          default:
+            return null;
+        }
+        return {
+          ...geometry,
+          coordinates: unitGeometry,
+        };
       }
     }
     return null;

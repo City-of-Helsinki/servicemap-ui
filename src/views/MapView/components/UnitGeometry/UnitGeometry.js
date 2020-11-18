@@ -5,26 +5,53 @@ import PropTypes from 'prop-types';
 const UnitGeometry = ({
   geometryData,
 }) => {
-  const { Polyline } = global.rL;
+  const { Polyline, Polygon } = global.rL;
+  const renderPolyline = () => {
+    if (geometryData?.type !== 'MultiLineString' || !geometryData?.coordinates) {
+      return null;
+    }
+
+    return (
+      <Polyline
+        positions={[
+          geometryData.coordinates,
+        ]}
+        color="#ff8400"
+      />
+    );
+  };
+
+  const renderPolygon = () => {
+    if (geometryData?.type !== 'MultiPolygon' || !geometryData?.coordinates) {
+      return null;
+    }
+
+    return (
+      <Polygon
+        positions={geometryData.coordinates}
+        color="#ff8400"
+        fillColor="#000"
+      />
+    );
+  };
+
   return (
     <>
       {
-        geometryData
-        && (
-          <Polyline
-            positions={[
-              geometryData,
-            ]}
-            color="#ff8400"
-          />
-        )
+        renderPolyline()
+      }
+      {
+        renderPolygon()
       }
     </>
   );
 };
 
 UnitGeometry.propTypes = {
-  geometryData: PropTypes.arrayOf(PropTypes.array).isRequired,
+  geometryData: PropTypes.shape({
+    coordinates: PropTypes.arrayOf(PropTypes.array).isRequired,
+    type: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 
