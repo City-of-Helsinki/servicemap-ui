@@ -34,7 +34,7 @@ const ServiceTreeView = (props) => {
   const { isFetching } = serviceTree.serviceTreeUnits;
 
   const [selectedOpen, setSelectedOpen] = useState(false);
-  const prevOpenedNodesRef = useRef();
+  const prevOpenedNodesRef = useRef([]);
 
   let citySettings = [];
   config.cities.forEach((city) => {
@@ -384,10 +384,8 @@ const ServiceTreeView = (props) => {
   );
 
   const renderSearchButton = (selectedList) => {
-    const selectedString = selectedList.map((i) => {
-      const node = services.find(node => node.id === i);
-      return getLocaleText(node.name);
-    }).join(', ');
+    const ids = selectedList.map(i => i.id);
+    const selectedString = selectedList.map(i => getLocaleText(i.name)).join(', ');
 
     return (
       <SMButton
@@ -400,7 +398,7 @@ const ServiceTreeView = (props) => {
         icon={<Search />}
         messageID="services.search"
         onClick={() => {
-          navigator.push('search', { service_node: selectedList });
+          navigator.push('search', { service_node: ids });
         }}
         role="link"
       />
@@ -413,7 +411,7 @@ const ServiceTreeView = (props) => {
   selected.forEach((e) => {
     const node = services.find(item => item.id === e);
     if (!selected.includes(node.parent)) {
-      selectedList.push(e);
+      selectedList.push(node);
     }
   });
 
