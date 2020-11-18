@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import {
   List, ListItem, Collapse, Checkbox, Typography, ButtonBase, NoSsr, Divider,
@@ -11,31 +11,6 @@ import config from '../../../config';
 import SMButton from '../../components/ServiceMapButton';
 import { checkParents } from '../../redux/selectors/serviceTree';
 
-
-const nodeFetchReducer = (state, action) => {
-  // Handle local fetch state
-  switch (action.type) {
-    case 'start':
-      return {
-        ...state,
-        fetching: [...state.fetching, action.fetching],
-      };
-    case 'end':
-      return {
-        ...state,
-        fetching: state.fetching.filter(item => item !== action.fetching),
-      };
-    case 'complete':
-      return {
-        ...state,
-        data: [...state.data, ...action.data],
-        fetching: state.fetching.filter(item => item !== action.fetching),
-      };
-    default:
-      throw new Error('Child node fetch failed');
-  }
-};
-
 const ServiceTreeView = (props) => {
   const {
     classes,
@@ -45,22 +20,21 @@ const ServiceTreeView = (props) => {
     settings,
     getLocaleText,
     fetchServiceTreeUnits,
-    setTreeSerivces,
+    fetchRootNodes,
+    fetchBranchNodes,
     setTreeSelected,
-    setTreeOpened,
-    setFetchedNode,
+    addOpenedNode,
+    removeOpenedNode,
   } = props;
 
   const { // Service tree state from redux
-    services, selected, opened, fetched,
+    services, selected, opened, fetching, fetched,
   } = serviceTree.serviceTree;
 
   const { isFetching } = serviceTree.serviceTreeUnits;
 
-  // State
   const [selectedOpen, setSelectedOpen] = useState(false);
-  const [nodeData, dispatchNodeFetch] = useReducer(nodeFetchReducer, { data: [], fetching: [] });
-
+  const prevOpenedNodesRef = useRef();
 
   let citySettings = [];
   config.cities.forEach((city) => {
@@ -84,24 +58,6 @@ const ServiceTreeView = (props) => {
     }
     return [];
   };
-
-  const fetchRootNodes = () => (
-    // Fetch all top level 0 nodes (root nodes)
-    fetch(`${config.serviceMapAPI.root}/service_node/?level=0&page=1&page_size=100`)
-      .then(response => response.json())
-      .then(data => data.results)
-  );
-
-  const setInitialServices = () => {
-    // Fetch initially shown service nodes when first entering the page
-    fetchRootNodes()
-      .then(data => setTreeSerivces(data));
-  };
-
-  const fetchChildNodes = async service => (
-    fetch(`${config.serviceMapAPI.root}/service_node/?parent=${service}&page=1&page_size=1000`)
-      .then(response => response.json())
-      .then(data => data.results));
 
 
   const getSelectedParentNodes = (item, data = []) => {
@@ -137,44 +93,16 @@ const ServiceTreeView = (props) => {
   const handleUnitFetch = (item) => {
     if (fetched.includes(item.id) || checkParents(services, fetched, item.id)) return;
     fetchServiceTreeUnits({ service_node: item.id });
-    setFetchedNode(item.id);
   };
 
-  const getRecursiveChildNodes = async (node) => {
-    // Repeat this function recursively on child nodes
-    if (!node.children.length) return [];
-    return fetchChildNodes(node.id)
-      .then(children => Promise.all(children.map(node => getRecursiveChildNodes(node)))
-        .then((results) => {
-          const combindedResults = [].concat(...results);
-          return [...children, ...combindedResults];
-        }));
-  };
-
-  const handleChildNodeFetch = (node) => {
-    // Fetch all child nodes recursively until all levels are fetched
-    dispatchNodeFetch({ type: 'start', fetching: node.id });
-    getRecursiveChildNodes(node)
-      .then((data) => {
-        dispatchNodeFetch({ type: 'complete', data, fetching: node.id });
-        setTreeOpened([...opened, node.id]);
-        if (selected.includes(node.id) || checkParents(services, selected, node.id)) {
-          setTreeSelected([...selected, ...data.map(item => item.id)]);
-        }
-      })
-      .catch((e) => {
-        console.warn(e);
-        dispatchNodeFetch({ type: 'end', fetching: node.id });
-      });
-  };
 
   const handleExpand = (service, isOpen) => {
     if (isOpen) { // Close expanded item
-      setTreeOpened(opened.filter(e => e !== service.id));
+      removeOpenedNode(service.id);
     } else if (services.some(e => e.parent === service.id)) { // Expand item without fetching
-      setTreeOpened([...opened, service.id]);
+      addOpenedNode(service.id);
     } else { // Fetch all child nodes then expand
-      handleChildNodeFetch(service);
+      fetchBranchNodes(service);
     }
   };
 
@@ -258,21 +186,22 @@ const ServiceTreeView = (props) => {
 
   useEffect(() => {
     if (!services.length) {
-      setInitialServices();
+      fetchRootNodes();
     }
   }, []);
 
   useEffect(() => {
-    // Resolve child service node fetch, once all fetches are complete
-    if (!nodeData.fetching.length && nodeData.data.length) {
-      const newArray = nodeData.data.filter(
-        result => !services.some(service => service.id === result.id),
-      );
-      if (newArray.length) {
-        setTreeSerivces([...services, ...newArray]);
-      }
+    /* When node is opened, select child node checkboxes if the parent node checkbox is selected */
+    // Find opened node by comparing previous opened list to new one from redux
+    const openedNodeID = opened.find(node => !prevOpenedNodesRef.current.includes(node));
+    if (selected.includes(openedNodeID) || checkParents(services, selected, openedNodeID)) {
+      const openedNode = services.find(node => node.id === openedNodeID);
+      setTreeSelected([...selected, ...openedNode.children]);
     }
-  }, [nodeData]);
+    // Update previous opened list
+    prevOpenedNodesRef.current = opened;
+  }, [opened]);
+
 
   const expandingComponent = (item, level, last = []) => {
     const hasChildren = item.children.length;
@@ -333,7 +262,7 @@ const ServiceTreeView = (props) => {
             aria-label={itemSrTitle}
           >
             <Typography align="left" className={classes.text}>
-              {nodeData.fetching.includes(item.id)
+              {fetching.includes(item.id)
                 ? <FormattedMessage id="general.loading" />
                 : `${getLocaleText(item.name)} (${resultCount})`
               }
@@ -511,10 +440,11 @@ ServiceTreeView.propTypes = {
   serviceTree: PropTypes.objectOf(PropTypes.any).isRequired,
   getLocaleText: PropTypes.func.isRequired,
   fetchServiceTreeUnits: PropTypes.func.isRequired,
-  setTreeSerivces: PropTypes.func.isRequired,
   setTreeSelected: PropTypes.func.isRequired,
-  setTreeOpened: PropTypes.func.isRequired,
-  setFetchedNode: PropTypes.func.isRequired,
+  fetchRootNodes: PropTypes.func.isRequired,
+  fetchBranchNodes: PropTypes.func.isRequired,
+  addOpenedNode: PropTypes.func.isRequired,
+  removeOpenedNode: PropTypes.func.isRequired,
 };
 
 ServiceTreeView.defaultProps = {

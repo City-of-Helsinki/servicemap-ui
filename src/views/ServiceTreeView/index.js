@@ -3,7 +3,12 @@ import { withStyles } from '@material-ui/core';
 import { injectIntl } from 'react-intl';
 import { getLocaleString } from '../../redux/selectors/locale';
 import {
-  setTreeSerivces, setTreeSelected, setTreeOpened, setFetchedNode, fetchServiceTreeUnits,
+  fetchRootNodes,
+  fetchBranchNodes,
+  fetchServiceTreeUnits,
+  setTreeSelected,
+  addOpenedNode,
+  removeOpenedNode,
 } from '../../redux/actions/serviceTree';
 import ServiceTreeView from './ServiceTreeView';
 import styles from './styles';
@@ -22,6 +27,11 @@ const mapStateToProps = (state) => {
 export default withStyles(styles)(injectIntl(connect(
   mapStateToProps,
   {
-    fetchServiceTreeUnits, setTreeSerivces, setTreeSelected, setTreeOpened, setFetchedNode,
+    fetchRootNodes,
+    fetchBranchNodes,
+    fetchServiceTreeUnits,
+    setTreeSelected,
+    addOpenedNode,
+    removeOpenedNode,
   },
 )(ServiceTreeView)));

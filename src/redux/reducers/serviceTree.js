@@ -2,6 +2,7 @@ const initialState = {
   services: [],
   selected: [],
   opened: [],
+  fetching: [],
   fetched: [],
 };
 
@@ -17,10 +18,26 @@ export default (state = initialState, action) => {
         ...state,
         selected: action.selected,
       };
-    case 'SET_TREE_OPENED':
+    case 'ADD_OPENED_NODE':
       return {
         ...state,
-        opened: action.opened,
+        opened: [...state.opened, action.node],
+      };
+    case 'REMOVE_OPENED_NODE':
+      return {
+        ...state,
+        opened: [...state.opened.filter(item => item !== action.node)],
+      };
+    case 'START_NODE_FETCH':
+      return {
+        ...state,
+        fetching: [...state.fetching, action.nodeID],
+      };
+    case 'END_NODE_FETCH':
+      return {
+        ...state,
+        services: [...state.services, ...action.data.nodes],
+        fetching: [...state.fetching.filter(item => item !== action.data.nodeID)],
       };
     case 'SET_TREE_FETCHED':
       return {
