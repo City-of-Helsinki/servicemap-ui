@@ -343,17 +343,15 @@ const AreaView = ({
 
   useEffect(() => {
     // If pending district focus, focus to districts when distitct data is loaded
-    if (districtData.length && focusTo) {
+    if (focusTo && selectedDistrictData.length) {
       if (focusTo === 'districts') {
-        const districts = districtData.find(data => data.id === selectedDistrictType);
-        if (districts) {
+        if (selectedDistrictData) {
           setFocusTo(null);
-          focusDistricts(map.leafletElement, districts.data);
+          focusDistricts(map.leafletElement, selectedDistrictData);
         }
       } else if (focusTo === 'subdistricts') {
-        const districts = districtData.find(data => data.id === selectedDistrictType);
-        if (districts) {
-          const filtetedDistricts = districts.data.filter(
+        if (selectedDistrictData) {
+          const filtetedDistricts = selectedDistrictData.filter(
             i => selectedSubdistricts.includes(i.ocd_id),
           );
           setFocusTo(null);
@@ -361,7 +359,7 @@ const AreaView = ({
         }
       }
     }
-  }, [districtData, focusTo]);
+  }, [selectedDistrictData, focusTo]);
 
 
   useEffect(() => {
