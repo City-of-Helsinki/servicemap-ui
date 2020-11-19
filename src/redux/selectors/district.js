@@ -8,13 +8,21 @@ const getAddressDistrictData = state => state.districts.districtAddressData.dist
 const getSubdistrictUnits = state => state.districts.subdistrictUnits;
 const getSubdistrictSelection = state => state.districts.selectedSubdistricts;
 const getSelectedDistrictServices = state => state.districts.selectedDistrictServices;
-const settings = state => state.settings;
+const getSettings = state => state.settings;
 
 export const getDistrictsByType = createSelector(
-  [getSelectedDistrict, getDistrictData],
-  (selectedDistrictType, districtData) => {
+  [getSelectedDistrict, getDistrictData, getSettings],
+  (selectedDistrictType, districtData, settings) => {
     if (selectedDistrictType && districtData.length) {
       const districtType = districtData.find(obj => obj.id === selectedDistrictType);
+      const selectedCities = Object.values(settings.cities).filter(city => city);
+      // Filter distircts by user city settings
+      if (districtType && selectedCities.length) {
+        const cityFilteredDistricts = districtType.data.filter(
+          district => settings.cities[district.municipality],
+        );
+        return cityFilteredDistricts;
+      }
       return districtType ? districtType.data : [];
     }
     return [];
@@ -34,7 +42,7 @@ export const getAddressDistrict = createSelector(
 
 // Get selected geographical district units
 export const getSubdistrictServices = createSelector(
-  [getSubdistrictSelection, getSubdistrictUnits, settings],
+  [getSubdistrictSelection, getSubdistrictUnits, getSettings],
   (selectedSubdistricts, unitData, settings) => {
     const selectedCities = Object.values(settings.cities).filter(city => city);
     const cityFilteredUnits = selectedCities.length
