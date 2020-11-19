@@ -37,10 +37,10 @@ export const getSubdistrictServices = createSelector(
   [getSubdistrictSelection, getSubdistrictUnits, settings],
   (selectedSubdistricts, unitData, settings) => {
     const selectedCities = Object.values(settings.cities).filter(city => city);
-    const cityFilteredUnits = selectedCities.length
+    const cityFilteredUnits = selectedCities?.length
       ? unitData.filter(unit => settings.cities[unit.municipality])
       : unitData;
-    if (selectedSubdistricts.length && unitData) {
+    if (selectedSubdistricts?.length && unitData) {
       return cityFilteredUnits.filter(
         unit => selectedSubdistricts.some(district => district === unit.division_id),
       );
