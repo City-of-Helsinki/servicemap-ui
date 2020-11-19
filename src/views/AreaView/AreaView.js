@@ -369,11 +369,12 @@ const AreaView = ({
       if (searchParams.selected) {
         if (!districtData.length) {
           // Open correct category and fetch data based on url parameters
+          const paramValue = searchParams.selected.split(/([0-9]+)/)[0];
           const category = dataStructure.find(
-            data => data.districts.includes(searchParams.selected),
+            data => data.districts.includes(paramValue),
           );
           if (embed) {
-            fetchDistrictsByType(searchParams.selected, null, category)
+            fetchDistrictsByType(paramValue, null, category.id)
               .then(result => filterFetchData(result.data, result.type, result.category));
           } else {
             handleOpen(category);
