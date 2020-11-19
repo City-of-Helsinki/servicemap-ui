@@ -19,6 +19,7 @@ const Districts = ({
   theme,
   mapOptions,
   currentPage,
+  measuringMode,
   selectedAddress,
   selectedSubdistricts,
   setSelectedSubdistricts,
@@ -43,6 +44,7 @@ const Districts = ({
   }, [selectedSubdistricts]);
 
   const districtOnClick = (e, district) => {
+    if (measuringMode) return;
     if (district.category === 'geographical') {
       // Disable normal map click event
       e.originalEvent.view.L.DomEvent.stopPropagation(e);
@@ -75,6 +77,7 @@ const Districts = ({
             icon={drawMarkerIcon(useContrast)}
             keyboard={false}
             onClick={() => {
+              if (measuringMode) return;
               if (navigator) {
                 if (isMobile) {
                   navigator.replace('unit', { id: district.unit.id });
@@ -231,6 +234,7 @@ Districts.propTypes = {
   getLocaleText: PropTypes.func.isRequired,
   mapOptions: PropTypes.objectOf(PropTypes.any).isRequired,
   currentPage: PropTypes.string.isRequired,
+  measuringMode: PropTypes.bool.isRequired,
   selectedAddress: PropTypes.objectOf(PropTypes.any),
   districtData: PropTypes.arrayOf(PropTypes.object),
   addressDistrict: PropTypes.number,
