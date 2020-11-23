@@ -348,17 +348,15 @@ const AreaView = ({
 
   useEffect(() => {
     // If pending district focus, focus to districts when distitct data is loaded
-    if (districtData.length && focusTo) {
+    if (focusTo && selectedDistrictData.length) {
       if (focusTo === 'districts') {
-        const districts = districtData.find(data => data.id === selectedDistrictType);
-        if (districts) {
+        if (selectedDistrictData) {
           setFocusTo(null);
-          focusDistricts(map.leafletElement, districts.data);
+          focusDistricts(map.leafletElement, selectedDistrictData);
         }
       } else if (focusTo === 'subdistricts') {
-        const districts = districtData.find(data => data.id === selectedDistrictType);
-        if (districts) {
-          const filtetedDistricts = districts.data.filter(
+        if (selectedDistrictData) {
+          const filtetedDistricts = selectedDistrictData.filter(
             i => selectedSubdistricts.includes(i.ocd_id),
           );
           setFocusTo(null);
@@ -366,7 +364,7 @@ const AreaView = ({
         }
       }
     }
-  }, [districtData, focusTo]);
+  }, [selectedDistrictData, focusTo]);
 
 
   useEffect(() => {
@@ -376,11 +374,12 @@ const AreaView = ({
       if (searchParams.selected) {
         if (!districtData.length) {
           // Open correct category and fetch data based on url parameters
+          const paramValue = searchParams.selected.split(/([0-9]+)/)[0];
           const category = dataStructure.find(
-            data => data.districts.includes(searchParams.selected),
+            data => data.districts.includes(paramValue),
           );
           if (embed) {
-            fetchDistrictsByType(searchParams.selected, null, category)
+            fetchDistrictsByType(paramValue, null, category.id)
               .then(result => filterFetchData(result.data, result.type, result.category));
           } else {
             handleOpen(category);
