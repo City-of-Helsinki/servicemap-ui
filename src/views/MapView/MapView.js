@@ -79,6 +79,9 @@ const MapView = (props) => {
   const getMapUnits = () => {
     let mapUnits = [];
 
+    if (embeded && parseSearchParams(location.search).units === 'none') {
+      return [];
+    }
     if (currentPage === 'home' && embeded) {
       mapUnits = unitList;
     }

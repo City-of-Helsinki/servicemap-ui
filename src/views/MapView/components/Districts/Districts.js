@@ -64,49 +64,53 @@ const Districts = ({
     }
   };
 
-  const renderDistrictMarkers = district => (
-    <React.Fragment key={district.id}>
-      {district.unit && district.unit.location ? (
-        <>
-          <Marker
-            customUnitData={district.unit}
-            position={[
-              district.unit.location.coordinates[1],
-              district.unit.location.coordinates[0],
-            ]}
-            icon={drawMarkerIcon(useContrast)}
-            keyboard={false}
-            onClick={() => {
-              if (measuringMode) return;
-              if (navigator) {
-                if (isMobile) {
-                  navigator.replace('unit', { id: district.unit.id });
-                } else {
-                  navigator.push('unit', { id: district.unit.id });
-                }
-              }
-            }}
-          >
-            <Tooltip
-              direction="top"
-              offset={[1.5, -25]}
+  const renderDistrictMarkers = (district) => {
+    if (embed && parseSearchParams(location.search).units === 'none') {
+      return null;
+    }
+    return (
+      <React.Fragment key={district.id}>
+        {district.unit && district.unit.location ? (
+          <>
+            <Marker
+              customUnitData={district.unit}
               position={[
                 district.unit.location.coordinates[1],
                 district.unit.location.coordinates[0],
               ]}
+              icon={drawMarkerIcon(useContrast)}
+              keyboard={false}
+              onClick={() => {
+                if (navigator) {
+                  if (isMobile) {
+                    navigator.replace('unit', { id: district.unit.id });
+                  } else {
+                    navigator.push('unit', { id: district.unit.id });
+                  }
+                }
+              }}
             >
-              <Typography
-                noWrap
-                className={classes.popup}
+              <Tooltip
+                direction="top"
+                offset={[1.5, -25]}
+                position={[
+                  district.unit.location.coordinates[1],
+                  district.unit.location.coordinates[0],
+                ]}
               >
-                {getLocaleText(district.unit.name)}
-              </Typography>
-            </Tooltip>
-          </Marker>
-        </>
-      ) : null}
-    </React.Fragment>
-  );
+                <Typography
+                  noWrap
+                  className={classes.popup}
+                >
+                  {getLocaleText(district.unit.name)}
+                </Typography>
+              </Tooltip>
+            </Marker>
+          </>
+        ) : null}
+      </React.Fragment>
+    );
+  };
 
   const renderSingleDistrict = () => {
     if (!highlightedDistrict) {
