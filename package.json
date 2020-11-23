@@ -31,7 +31,7 @@
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
     "react-helmet": "^5.2.1",
-    "react-intl": "^5.9.4",
+    "react-intl": "^5.10.4",
     "react-jss": "^8.6.1",
     "react-leaflet": "^2.4.0",
     "react-leaflet-control": "^2.1.2",

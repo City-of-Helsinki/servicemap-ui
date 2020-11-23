@@ -2,16 +2,17 @@
 
 exports[`<SuggestionItem /> should work 1`] = `
 <injectIntl(WithStyles(SuggestionItem))
-  icon={<UNDEFINED />}
+  icon={<Memo />}
   subtitle="Subtitle text"
   text="Title text"
 >
   <WithStyles(SuggestionItem)
-    icon={<UNDEFINED />}
+    icon={<Memo />}
     intl={
       Object {
         "defaultFormats": Object {},
         "defaultLocale": "en",
+        "defaultRichTextElements": undefined,
         "formatDate": [Function],
         "formatDateTimeRange": [Function],
         "formatDateToParts": [Function],
@@ -65,11 +66,12 @@ exports[`<SuggestionItem /> should work 1`] = `
       divider={false}
       handleArrowClick={null}
       handleItemClick={null}
-      icon={<UNDEFINED />}
+      icon={<Memo />}
       intl={
         Object {
           "defaultFormats": Object {},
           "defaultLocale": "en",
+          "defaultRichTextElements": undefined,
           "formatDate": [Function],
           "formatDateTimeRange": [Function],
           "formatDateToParts": [Function],
