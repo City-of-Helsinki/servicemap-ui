@@ -135,7 +135,11 @@ const handleFetch = async (
       return res;
     })
     .catch((err) => {
-      console.error(`Error while fetching data: ${err.message}`);
+      if (err instanceof TypeError) {
+        console.warn(`TypeError while fetching data: ${err.message}`);
+      } else {
+        console.error(`Error while fetching data: ${err.message}`);
+      }
       // eslint-disable-next-line no-param-reassign
       abortController = null;
       if (onError) {
