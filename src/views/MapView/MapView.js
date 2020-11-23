@@ -69,7 +69,6 @@ const MapView = (props) => {
   const [refSaved, setRefSaved] = useState(false);
   const [prevMap, setPrevMap] = useState(null);
   const [unitData, setUnitData] = useState(null);
-  const [unitGeometry, setUnitGeometry] = useState(null);
   const [mapUtility, setMapUtility] = useState(null);
   const [measuringMarkers, setMeasuringMarkers] = useState([]);
   const [measuringLine, setMeasuringLine] = useState([]);
@@ -117,9 +116,9 @@ const MapView = (props) => {
     return mapUnits;
   };
 
-  const getUnitGeometry = () => {
-    if ((currentPage === 'unit' || currentPage === 'fullList' || currentPage === 'event') && highlightedUnit) {
-      const { geometry } = highlightedUnit;
+  const getUnitGeometry = (unit) => {
+    if ((currentPage === 'unit' || currentPage === 'search' || currentPage === 'fullList' || currentPage === 'event')) {
+      const { geometry } = unit;
       if (geometry) {
         const { coordinates } = geometry;
         let unitGeometry;
@@ -224,9 +223,6 @@ const MapView = (props) => {
     mapUtility.panInside(highlightedUnit);
   }, [highlightedUnit, mapUtility]);
 
-  useEffect(() => {
-    setUnitGeometry(getUnitGeometry());
-  }, [highlightedUnit, currentPage]);
 
   useEffect(() => { // On map type change
     // Init new map and set new ref to redux
@@ -293,6 +289,20 @@ const MapView = (props) => {
     );
   };
 
+  const renderUnitGeometry = () => {
+    if (highlightedDistrict) return null;
+    if (currentPage !== 'unit') {
+      return unitData.map(unit => (
+        unit.geometry
+          ? <UnitGeometry key={unit.id} geometryData={getUnitGeometry(unit)} />
+          : null
+      ));
+    } if (highlightedUnit) {
+      return <UnitGeometry geometryData={getUnitGeometry(highlightedUnit)} />;
+    }
+    return null;
+  };
+
 
   if (global.rL && mapObject) {
     const { Map, TileLayer, ZoomControl } = global.rL || {};
@@ -337,11 +347,7 @@ const MapView = (props) => {
             measuringMode={measuringMode}
           />
           {
-            !highlightedDistrict
-            && unitGeometry
-            && (
-              <UnitGeometry geometryData={unitGeometry} />
-            )
+            renderUnitGeometry()
           }
           <TileLayer
             url={mapObject.options.url}
