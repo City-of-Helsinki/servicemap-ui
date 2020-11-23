@@ -50,6 +50,7 @@ const AreaTab = (props) => {
     setSelectedSubdistricts([]);
     setDistrictRadioValue(district.id);
     setExpandedSubcategory(null);
+    setSelectedDistrictServices([]);
   };
 
   const handleCheckboxChange = (event, district) => {

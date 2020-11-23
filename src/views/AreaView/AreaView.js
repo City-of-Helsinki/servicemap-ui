@@ -317,6 +317,11 @@ const AreaView = ({
     if (selectedAddress && addressDistrict) {
       const district = selectedDistrictData.find(obj => obj.id === addressDistrict);
       focusMapToDistrict(district);
+      // Add local geographical district
+      const selectedCategory = dataStructure.find(i => i.districts.includes(selectedDistrictType));
+      if (selectedCategory?.id === 'geographical') {
+        setSelectedSubdistricts([...selectedSubdistricts, district.ocd_id]);
+      }
     }
   }, [addressDistrict, map]);
 
