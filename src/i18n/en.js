@@ -172,6 +172,9 @@ const translations = {
   'general.fetching': 'Loading data...',
   'general.home': 'Home',
   'general.noData': 'No data available',
+  'general.news.alert.title': 'Notification window',
+  'general.news.alert.close.aria': 'Close notification window',
+  'general.news.info.title': 'Service map news',
   'general.loading': 'Loading',
   'general.loading.done': 'Loading completed',
   'general.showOnMap': 'Show on map',
@@ -242,6 +245,8 @@ const translations = {
   // Map
   'map': 'Map',
   'map.ariaLabel': 'Map. Currently map information is only accessible visually.',
+  'map.attribution.osm': '&copy; <a href="http://osm.org/copyright">OpenStreetMap contributors</a>',
+  'map.attribution.helsinki': '&copy; Cities of Helsinki, Espoo, Vantaa ja Kauniainen',
   'map.transit.endStation': 'Terminus',
   'map.address.searching': 'Retreiving address...',
   'map.address.notFound': 'The address could not be found',

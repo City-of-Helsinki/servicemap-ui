@@ -119,6 +119,8 @@ export const units = (state = dataSetInitialState, action) => dataSetReducer(sta
 export const service = (state = dataSetInitialState, action) => dataSetReducer(state, action, 'SERVICE');
 export const unitEvents = (state = dataSingleInitialState, action) => dataSetReducer(state, action, 'SELECTED_UNIT_EVENTS');
 export const reservations = (state = dataSingleInitialState, action) => dataSetReducer(state, action, 'SELECTED_UNIT_RESERVATIONS');
+export const alertNews = (state = dataSingleInitialState, action) => dataSetReducer(state, action, 'ALERT_NEWS');
+export const alertErrors = (state = dataSingleInitialState, action) => dataSetReducer(state, action, 'ALERT_ERRORS');
 
 // Fetch data single reducers
 export const selectedUnit = (state = dataSingleInitialState, action) => dataSingle(state, action, 'SELECTED_UNIT');

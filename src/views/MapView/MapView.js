@@ -123,10 +123,25 @@ const MapView = (props) => {
   const getUnitGeometry = () => {
     if ((currentPage === 'unit' || currentPage === 'fullList' || currentPage === 'event') && highlightedUnit) {
       const { geometry } = highlightedUnit;
-      if (geometry && geometry.type === 'MultiLineString') {
+      if (geometry) {
         const { coordinates } = geometry;
-        const unitGeometry = swapCoordinates(coordinates);
-        return unitGeometry;
+        let unitGeometry;
+        switch (geometry.type) {
+          case 'MultiLineString': {
+            unitGeometry = swapCoordinates(coordinates);
+            break;
+          }
+          case 'MultiPolygon': {
+            unitGeometry = swapCoordinates(coordinates[0]);
+            break;
+          }
+          default:
+            return null;
+        }
+        return {
+          ...geometry,
+          coordinates: unitGeometry,
+        };
       }
     }
     return null;
@@ -322,6 +337,7 @@ const MapView = (props) => {
           <MarkerCluster
             map={mapRef?.current?.leafletElement}
             data={unitData}
+            measuringMode={measuringMode}
           />
           {
             !highlightedDistrict
@@ -332,7 +348,7 @@ const MapView = (props) => {
           }
           <TileLayer
             url={mapObject.options.url}
-            attribution='&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors'
+            attribution={intl.formatMessage({ id: mapObject.options.attribution })}
           />
           <Districts mapOptions={mapOptions} map={mapRef.current} embed={embeded} />
 

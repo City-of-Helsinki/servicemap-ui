@@ -172,6 +172,9 @@ const translations = {
   'general.fetching': 'Laddar data...',
   'general.home': 'Hem',
   'general.noData': 'Data finns inte',
+  'general.news.alert.title': 'Meddelandefönster',
+  'general.news.alert.close.aria': 'Stäng meddelandefönstret',
+  'general.news.info.title': 'Servicekartans nyheter',
   'general.loading': 'Laddar',
   'general.loading.done': 'Laddning färdig',
   'general.showOnMap': 'Visa på kartan',
@@ -242,6 +245,8 @@ const translations = {
   // Map
   'map': 'Karta',
   'map.ariaLabel': 'Kartvy. Kartans uppgifter kan i nuläget granskas endast visuellt.',
+  'map.attribution.osm': '&copy; <a href="http://osm.org/copyright">Upphovsmännen bakom OpenStreetMaps</a>',
+  'map.attribution.helsinki': '&copy; Helsingfors, Esbo, Vanda och Grankulla städer',
   'map.transit.endStation': 'Ändhållplats',
   'map.address.searching': 'Söker adress...',
   'map.address.notFound': 'Adressen hittades ej',

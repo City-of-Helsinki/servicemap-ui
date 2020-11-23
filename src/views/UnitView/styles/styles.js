@@ -71,6 +71,10 @@ export default theme => ({
   divider: {
     marginRight: 0,
   },
+  dividerShort: {
+    marginLeft: theme.spacing(9),
+    marginRight: theme.spacing(-2),
+  },
   image: {
     objectFit: 'cover',
     height: '100%',

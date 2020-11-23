@@ -174,6 +174,9 @@ const translations = {
   'general.fetching': 'Ladataan tietoja...',
   'general.home': 'Koti',
   'general.noData': 'Tietoa ei saatavilla',
+  'general.news.alert.title': 'Ilmoitusikkuna',
+  'general.news.alert.close.aria': 'Sulje ilmoitusikkuna',
+  'general.news.info.title': 'Palvelukartan uutiset',
   'general.loading': 'Ladataan',
   'general.loading.done': 'Lataus valmis',
   'general.showOnMap': 'Näytä kartalla',
@@ -244,6 +247,8 @@ const translations = {
   // Map
   'map': 'Kartta',
   'map.ariaLabel': 'Karttanäkymä. Kartan tietoja voi tarkastella tällä hetkellä vain näönvaraisesti.',
+  'map.attribution.osm': '&copy; <a href="http://osm.org/copyright">OpenStreetMapin tekijät</a>',
+  'map.attribution.helsinki': '&copy; Helsingin, Espoon, Vantaan ja Kauniaisen kaupungit',
   'map.transit.endStation': 'Päätepysäkki',
   'map.address.searching': 'Haetaan osoitetta...',
   'map.address.notFound': 'Osoitetta ei löytynyt',

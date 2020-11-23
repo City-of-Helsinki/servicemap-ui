@@ -6,6 +6,7 @@ import PaperButton from '../../components/PaperButton';
 import { getIcon } from '../../components/SMIcon';
 import MobileComponent from '../../components/MobileComponent';
 import config from '../../../config';
+import NewsInfo from '../../components/NewsInfo';
 
 class HomeView extends React.Component {
   renderNavigationOptions = () => {
@@ -85,6 +86,7 @@ class HomeView extends React.Component {
               }));
             }}
           />
+          <NewsInfo />
         </div>
       </div>
     );
