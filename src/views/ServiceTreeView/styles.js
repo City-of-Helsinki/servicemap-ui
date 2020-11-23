@@ -69,6 +69,9 @@ export default theme => ({
     border: '1px solid #323232;',
     borderRadius: 1,
   },
+  checkBoxDisabled: {
+    border: '1px solid rgba(0, 0, 0, 0.26)',
+  },
   checkBoxLines: {
     height: 'inherit',
     width: 'inherit',
@@ -78,7 +81,7 @@ export default theme => ({
     padding: theme.spacing(0.5),
   },
   outerLines: {
-    height: '100%',
+    height: '103%',
     width: 26,
     flexShrink: 0,
   },

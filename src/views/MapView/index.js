@@ -11,15 +11,18 @@ import MapView from './MapView';
 import { getServiceUnits } from '../../redux/selectors/service';
 import { getProcessedData } from '../../redux/selectors/results';
 import { getAddressNavigatorParamsConnector } from '../../utils/address';
+import { getServiceTreeUnits } from '../../redux/selectors/serviceTree';
 
 // Get redux states as props to component
 const mapStateToProps = (state) => {
   const {
-    address, navigator, settings, user, measuringMode,
+    address, navigator, settings, user, measuringMode, serviceTree,
   } = state;
   const unitList = getProcessedData(state);
-  const unitsLoading = state.service.isFetching;
+  const unitsLoading = state.service.isFetching || state.units.isFetching;
   const serviceUnits = getServiceUnits(state);
+  const serviceTreeUnitsReducer = serviceTree.serviceTreeUnits;
+  const serviceTreeUnitData = getServiceTreeUnits(state);
   const highlightedDistrict = getHighlightedDistrict(state);
   const highlightedUnit = getSelectedUnit(state);
   const {
@@ -41,6 +44,8 @@ const mapStateToProps = (state) => {
     unitList,
     serviceUnits,
     districtUnits,
+    serviceTreeUnitData,
+    serviceTreeUnitsReducer,
     unitsLoading,
     currentPage: page,
     userLocation,

@@ -20,6 +20,7 @@ import AddressMarker from './components/AddressMarker';
 import { parseSearchParams } from '../../utils';
 import HomeLogo from '../../components/Logos/HomeLogo';
 import DistanceMeasure from './components/DistanceMeasure';
+import Loading from '../../components/Loading';
 import MarkerCluster from './components/MarkerCluster';
 import swapCoordinates from './utils/swapCoordinates';
 import UnitGeometry from './components/UnitGeometry';
@@ -47,6 +48,8 @@ const MapView = (props) => {
     unitList,
     unitsLoading,
     serviceUnits,
+    serviceTreeUnitData,
+    serviceTreeUnitsReducer,
     districtUnits,
     hideUserMarker,
     highlightedUnit,
@@ -107,6 +110,8 @@ const MapView = (props) => {
       }
     } else if (currentPage === 'service' && serviceUnits && !unitsLoading) {
       mapUnits = serviceUnits;
+    } else if (currentPage === 'serviceTree') {
+      mapUnits = serviceTreeUnitData;
     } else if (currentPage === 'area' && districtUnits) {
       mapUnits = districtUnits;
     } else if (
@@ -196,6 +201,8 @@ const MapView = (props) => {
       });
   };
 
+  const showLoadingScreen = () => serviceTreeUnitsReducer.isFetching;
+
   useEffect(() => { // On map mount
     initializeMap();
     if (!embeded) {
@@ -247,6 +254,7 @@ const MapView = (props) => {
     highlightedUnit,
     addressUnits,
     serviceUnits,
+    serviceTreeUnitData,
     districtUnits,
     highlightedDistrict,
     currentPage,
@@ -343,7 +351,11 @@ const MapView = (props) => {
           maxBoundsViscosity={1.0}
           onClick={(ev) => { setClickCoordinates(ev); }}
         >
-
+          {showLoadingScreen() && (
+            <div className={classes.loadingScreen}>
+              <Loading reducer={serviceTreeUnitsReducer} />
+            </div>
+          )}
           <MarkerCluster
             map={mapRef?.current?.leafletElement}
             data={unitData}
@@ -457,6 +469,8 @@ MapView.propTypes = {
   setMapRef: PropTypes.func.isRequired,
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
   unitList: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
+  serviceTreeUnitData: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)).isRequired,
+  serviceTreeUnitsReducer: PropTypes.objectOf(PropTypes.any).isRequired,
   unitsLoading: PropTypes.bool,
   userLocation: PropTypes.objectOf(PropTypes.any),
   locale: PropTypes.string.isRequired,

@@ -5,6 +5,7 @@ import {
   alertErrors,
   alertNews,
   units,
+  serviceTreeUnits,
   service,
   selectedUnit,
   accessibilitySentences,
@@ -48,7 +49,10 @@ export default combineReducers({
   }),
   event,
   address,
-  serviceTree,
+  serviceTree: combineReducers({
+    serviceTree,
+    serviceTreeUnits,
+  }),
   settings: combineReducers({
     toggled: settingsToggled,
     colorblind,

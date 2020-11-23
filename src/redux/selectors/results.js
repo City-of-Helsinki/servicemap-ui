@@ -16,7 +16,7 @@ const settings = state => state.settings;
  * @param {*} options - options for filtering - municipality: to override city setting filtering
  * @param {*} settings - user settings, used in filtering
  */
-const getFilteredData = (data, options, settings) => {
+export const getFilteredData = (data, options, settings) => {
   const cities = [];
   config.cities.forEach((city) => {
     cities.push(...settings.cities[city] ? [city] : []);
