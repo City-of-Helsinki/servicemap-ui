@@ -44,6 +44,16 @@ const UnitGeometry = ({
     setGeometryData(getUnitGeometry(data));
   }, [data]);
 
+  const geometryOnClick = (e) => {
+    try {
+      e.originalEvent.preventDefault();
+      e.originalEvent.stopPropagation();
+      UnitHelper.unitElementClick(navigator, data);
+    } catch (e) {
+      console.warn('Unable to process UnitGeometry Polygon click event');
+    }
+  }
+
   const renderPolyline = () => {
     if (geometryData?.type !== 'MultiLineString' || !geometryData?.coordinates) {
       return null;
@@ -55,6 +65,7 @@ const UnitGeometry = ({
           geometryData.coordinates,
         ]}
         color="#ff8400"
+        onClick={geometryOnClick}
       />
     );
   };
@@ -69,15 +80,7 @@ const UnitGeometry = ({
         positions={geometryData.coordinates}
         color="#ff8400"
         fillColor="#000"
-        onClick={(e) => {
-          try {
-            e.originalEvent.preventDefault();
-            e.originalEvent.stopPropagation();
-            UnitHelper.unitElementClick(navigator, data);
-          } catch (e) {
-            console.warn('Unable to process UnitGeometry Polygon click event');
-          }
-        }}
+        onClick={geometryOnClick}
       />
     );
   };
