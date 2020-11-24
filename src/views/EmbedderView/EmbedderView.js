@@ -5,6 +5,7 @@ import {
   Typography, Paper, TextField,
 } from '@material-ui/core';
 import URI from 'urijs';
+import { Helmet } from 'react-helmet';
 import * as smurl from './utils/url';
 import isClient, { uppercaseFirst } from '../../utils';
 import { getEmbedURL, getLanguage } from './utils/utils';
@@ -15,7 +16,6 @@ import SMButton from '../../components/ServiceMapButton';
 import paths from '../../../config/paths';
 import embedderConfig from './embedderConfig';
 import SettingsUtility from '../../utils/settings';
-import { Helmet } from 'react-helmet';
 
 
 const hideCitiesIn = [
@@ -28,6 +28,7 @@ const hideServicesIn = [
   paths.unit.regex,
   paths.service.regex,
   paths.address.regex,
+  paths.area.regex,
 ];
 
 // Timeout for handling width and height input changes

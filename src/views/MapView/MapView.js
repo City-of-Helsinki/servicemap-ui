@@ -21,7 +21,6 @@ import { parseSearchParams } from '../../utils';
 import HomeLogo from '../../components/Logos/HomeLogo';
 import DistanceMeasure from './components/DistanceMeasure';
 import MarkerCluster from './components/MarkerCluster';
-import swapCoordinates from './utils/swapCoordinates';
 import UnitGeometry from './components/UnitGeometry';
 import MapUtility from './utils/mapUtility';
 
@@ -69,7 +68,6 @@ const MapView = (props) => {
   const [refSaved, setRefSaved] = useState(false);
   const [prevMap, setPrevMap] = useState(null);
   const [unitData, setUnitData] = useState(null);
-  const [unitGeometry, setUnitGeometry] = useState(null);
   const [mapUtility, setMapUtility] = useState(null);
   const [measuringMarkers, setMeasuringMarkers] = useState([]);
   const [measuringLine, setMeasuringLine] = useState([]);
@@ -80,6 +78,9 @@ const MapView = (props) => {
   const getMapUnits = () => {
     let mapUnits = [];
 
+    if (embeded && parseSearchParams(location.search).units === 'none') {
+      return [];
+    }
     if (currentPage === 'home' && embeded) {
       mapUnits = unitList;
     }
@@ -115,18 +116,6 @@ const MapView = (props) => {
     }
 
     return mapUnits;
-  };
-
-  const getUnitGeometry = () => {
-    if ((currentPage === 'unit' || currentPage === 'fullList' || currentPage === 'event') && highlightedUnit) {
-      const { geometry } = highlightedUnit;
-      if (geometry && geometry.type === 'MultiLineString') {
-        const { coordinates } = geometry;
-        const unitGeometry = swapCoordinates(coordinates);
-        return unitGeometry;
-      }
-    }
-    return null;
   };
 
   const setClickCoordinates = (ev) => {
@@ -209,9 +198,6 @@ const MapView = (props) => {
     mapUtility.panInside(highlightedUnit);
   }, [highlightedUnit, mapUtility]);
 
-  useEffect(() => {
-    setUnitGeometry(getUnitGeometry());
-  }, [highlightedUnit, currentPage]);
 
   useEffect(() => { // On map type change
     // Init new map and set new ref to redux
@@ -278,6 +264,20 @@ const MapView = (props) => {
     );
   };
 
+  const renderUnitGeometry = () => {
+    if (highlightedDistrict) return null;
+    if (currentPage !== 'unit') {
+      return unitData.map(unit => (
+        unit.geometry
+          ? <UnitGeometry key={unit.id} data={unit} />
+          : null
+      ));
+    } if (highlightedUnit) {
+      return <UnitGeometry data={highlightedUnit} />;
+    }
+    return null;
+  };
+
 
   if (global.rL && mapObject) {
     const { Map, TileLayer, ZoomControl } = global.rL || {};
@@ -319,13 +319,10 @@ const MapView = (props) => {
           <MarkerCluster
             map={mapRef?.current?.leafletElement}
             data={unitData}
+            measuringMode={measuringMode}
           />
           {
-            !highlightedDistrict
-            && unitGeometry
-            && (
-              <UnitGeometry geometryData={unitGeometry} />
-            )
+            renderUnitGeometry()
           }
           <TileLayer
             url={mapObject.options.url}
