@@ -21,7 +21,6 @@ import { parseSearchParams } from '../../utils';
 import HomeLogo from '../../components/Logos/HomeLogo';
 import DistanceMeasure from './components/DistanceMeasure';
 import MarkerCluster from './components/MarkerCluster';
-import swapCoordinates from './utils/swapCoordinates';
 import UnitGeometry from './components/UnitGeometry';
 import MapUtility from './utils/mapUtility';
 
@@ -117,33 +116,6 @@ const MapView = (props) => {
     }
 
     return mapUnits;
-  };
-
-  const getUnitGeometry = (unit) => {
-    if ((currentPage === 'unit' || currentPage === 'search' || currentPage === 'fullList' || currentPage === 'event')) {
-      const { geometry } = unit;
-      if (geometry) {
-        const { coordinates } = geometry;
-        let unitGeometry;
-        switch (geometry.type) {
-          case 'MultiLineString': {
-            unitGeometry = swapCoordinates(coordinates);
-            break;
-          }
-          case 'MultiPolygon': {
-            unitGeometry = swapCoordinates(coordinates[0]);
-            break;
-          }
-          default:
-            return null;
-        }
-        return {
-          ...geometry,
-          coordinates: unitGeometry,
-        };
-      }
-    }
-    return null;
   };
 
   const setClickCoordinates = (ev) => {
@@ -297,11 +269,11 @@ const MapView = (props) => {
     if (currentPage !== 'unit') {
       return unitData.map(unit => (
         unit.geometry
-          ? <UnitGeometry key={unit.id} geometryData={getUnitGeometry(unit)} />
+          ? <UnitGeometry key={unit.id} data={unit} />
           : null
       ));
     } if (highlightedUnit) {
-      return <UnitGeometry geometryData={getUnitGeometry(highlightedUnit)} />;
+      return <UnitGeometry data={highlightedUnit} />;
     }
     return null;
   };
