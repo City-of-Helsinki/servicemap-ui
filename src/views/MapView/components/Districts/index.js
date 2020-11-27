@@ -20,7 +20,7 @@ const mapStateToProps = (state) => {
     navigator,
     currentPage: page,
     districtData,
-    unitsFetching: unitsFetching.length,
+    unitsFetching: !!unitsFetching.length,
     highlightedDistrict,
     addressDistrict,
     selectedAddress: districtAddressData.address,
