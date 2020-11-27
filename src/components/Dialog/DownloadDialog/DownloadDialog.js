@@ -9,10 +9,12 @@ import {
   RadioGroup,
   Typography,
 } from '@material-ui/core';
+import { OpenInNew } from '@material-ui/icons';
 import { useSelector } from 'react-redux';
 import Dialog from '../index';
 import SMButton from '../../ServiceMapButton';
 import useDownloadData from '../../../utils/downloadData';
+import { getIcon } from '../../SMIcon';
 
 const DownloadDialog = ({
   classes,
@@ -25,6 +27,7 @@ const DownloadDialog = ({
   const service = useSelector(state => state.service.current);
   const searchQuery = useSelector(state => state.units.previousSearch);
   const intl = useIntl();
+  const icon = getIcon('serviceDark', { className: classes.icon });
 
   const formats = [
     {
@@ -128,13 +131,23 @@ const DownloadDialog = ({
           {croppingTitle}
         </Typography>
         <Typography variant="body2">{text}</Typography>
-        <Typography variant="body2" className={classes.croppingText}>
-          {selectionText}
-        </Typography>
+        {
+          selectionText
+          && (
+            <Typography variant="body2" className={classes.croppingText}>
+              {selectionText}
+            </Typography>
+          )
+        }
         {
           dataText
           && (
-            <Typography variant="body2">{dataText}</Typography>
+            <div
+              className={classes.unitCount}
+            >
+              {icon}
+              <Typography component="p" variant="body2">{dataText}</Typography>
+            </div>
           )
         }
       </div>
@@ -142,6 +155,7 @@ const DownloadDialog = ({
   };
 
   const dialogText = intl.formatMessage({ id: 'download.info' });
+  const dialogCoordinateText = intl.formatMessage({ id: 'download.coordinate' });
   // const formatText = intl.formatMessage({ id: 'download.format' });
   const downloadTitle = intl.formatMessage({ id: 'download.title' });
   const downloadText = intl.formatMessage({ id: 'download.download' });
@@ -151,15 +165,17 @@ const DownloadDialog = ({
       {...rest}
       title={downloadTitle}
       content={(
-        <>
+        <div className={classes.container}>
           <Typography variant="body2">{dialogText}</Typography>
+          <Typography variant="body2" className={classes.topMargin}>{dialogCoordinateText}</Typography>
           {croppingText()}
           {btnGroup}
-        </>
+        </div>
       )}
       actions={downloadOnClick ? (
         <SMButton color="primary" role="button" onClick={downloadOnClick}>
           {downloadText}
+          <OpenInNew className={classes.downloadIcon} />
         </SMButton>
       ) : null}
     />
@@ -168,11 +184,15 @@ const DownloadDialog = ({
 
 DownloadDialog.propTypes = {
   classes: PropTypes.shape({
+    container: PropTypes.string,
     croppingContainer: PropTypes.string,
     croppingText: PropTypes.string,
     croppingTitle: PropTypes.string,
+    downloadIcon: PropTypes.string,
     formControlGroup: PropTypes.string,
     formControlLabel: PropTypes.string,
+    topMargin: PropTypes.string,
+    unitCount: PropTypes.string,
   }).isRequired,
   getLocaleText: PropTypes.func.isRequired,
 };

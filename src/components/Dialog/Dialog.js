@@ -49,26 +49,28 @@ const Dialog = ({
   return (
     <div>
       <MUIDialog ref={dialogRef} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-        {/* Empty element that makes keyboard focus loop in dialog */}
-        <Typography variant="srOnly" aria-hidden tabIndex="0" onFocus={focusToLastElement} />
-        <CloseButton
-          autoFocus
-          className={classes.closeButton}
-          onClick={handleClose}
-          role="link"
-        />
-        <DialogTitle id="form-dialog-title" autoFocus>{title}</DialogTitle>
-        <DialogContent>
-          {content}
-        </DialogContent>
-        <DialogActions>
-          {actions}
-          <SMButton onClick={handleClose} role="link">
-            {cancelText}
-          </SMButton>
-        </DialogActions>
-        {/* Empty element that makes keyboard focus loop in dialog */}
-        <Typography variant="srOnly" aria-hidden tabIndex="0" onFocus={focusToFirstElement} />
+        <div className={classes.root}>
+          {/* Empty element that makes keyboard focus loop in dialog */}
+          <Typography variant="srOnly" aria-hidden tabIndex="0" onFocus={focusToLastElement} />
+          <CloseButton
+            autoFocus
+            className={classes.topCloseButton}
+            onClick={handleClose}
+            role="link"
+          />
+          <DialogTitle id="form-dialog-title" autoFocus>{title}</DialogTitle>
+          <DialogContent>
+            {content}
+          </DialogContent>
+          <DialogActions>
+            {actions}
+            <SMButton className={classes.closeButton} onClick={handleClose} role="link">
+              {cancelText}
+            </SMButton>
+          </DialogActions>
+          {/* Empty element that makes keyboard focus loop in dialog */}
+          <Typography variant="srOnly" aria-hidden tabIndex="0" onFocus={focusToFirstElement} />
+        </div>
       </MUIDialog>
     </div>
   );
@@ -77,6 +79,8 @@ const Dialog = ({
 Dialog.propTypes = {
   classes: PropTypes.shape({
     closeButton: PropTypes.string,
+    root: PropTypes.string,
+    topCloseButton: PropTypes.string,
   }).isRequired,
   title: PropTypes.node.isRequired,
   content: PropTypes.node.isRequired,
