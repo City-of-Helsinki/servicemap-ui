@@ -10,7 +10,7 @@ import TabLists from '../../components/TabLists';
 import UnitTab from './components/UnitTab';
 import { parseSearchParams, uppercaseFirst } from '../../utils';
 import AreaTab from './components/AreaTab';
-import { districtFetch, unitsFetch } from '../../utils/fetch';
+import { districtFetch } from '../../utils/fetch';
 import fetchAddress from '../MapView/utils/fetchAddress';
 
 
@@ -31,7 +31,8 @@ const AreaView = ({
   setSelectedDistrictServices,
   setDistrictData,
   setDistrictAddressData,
-  addSubdistrictUnits,
+  fetchDistrictUnitList,
+  unitsFetching,
   districtData,
   districtAddressData,
   selectedDistrictType,
@@ -124,7 +125,6 @@ const AreaView = ({
   const [focusTo, setFocusTo] = useState(null);
   // Fetch state
   const [ditsrictsFetching, dispatchDistrictsFetching] = useReducer(fetchReducer, []);
-  const [unitsFetching, dispatchUnitsFetching] = useReducer(fetchReducer, []);
 
 
   const formAddressString = address => (address
@@ -264,24 +264,6 @@ const AreaView = ({
       });
   };
 
-  const fetchDistrictUnitList = async (divisionID) => {
-    dispatchUnitsFetching({ type: 'add', value: divisionID });
-    const options = {
-      page: 1,
-      page_size: 1000,
-      division: divisionID,
-    };
-    await unitsFetch(options)
-      .then((data) => {
-        const units = data.results;
-        units.forEach((unit) => {
-          unit.object_type = 'unit';
-          unit.division_id = divisionID;
-        });
-        dispatchUnitsFetching({ type: 'remove', value: divisionID });
-        addSubdistrictUnits(data.results);
-      });
-  };
 
   const handleOpen = async (item) => {
     if (openItems.includes(item.id)) {
