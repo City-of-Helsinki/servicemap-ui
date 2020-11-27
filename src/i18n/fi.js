@@ -240,6 +240,7 @@ const translations = {
   'loading.events.srInfo': 'Haetaan {count} tapahtumaa',
   'search.loading.units': 'Haetaan toimipisteitä {count} / {max}',
   'search.loading.units.srInfo': 'Haetaan {count} toimipistettä',
+  'search.loading.units.simple': 'Haetaan toimipisteitä',
 
   // Map
   'map': 'Kartta',

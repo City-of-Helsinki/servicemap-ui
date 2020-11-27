@@ -12,6 +12,7 @@ import { parseSearchParams } from '../../../../utils';
 const Districts = ({
   highlightedDistrict,
   districtData,
+  unitsFetching,
   addressDistrict,
   getLocaleText,
   theme,
@@ -144,6 +145,7 @@ const Districts = ({
 
       return (
         <Polygon
+          interactive={!unitsFetching}
           key={district.id}
           onClick={e => districtOnClick(e, district)}
           positions={[[area]]}
@@ -221,6 +223,7 @@ Districts.propTypes = {
   currentPage: PropTypes.string.isRequired,
   selectedAddress: PropTypes.objectOf(PropTypes.any),
   districtData: PropTypes.arrayOf(PropTypes.object),
+  unitsFetching: PropTypes.bool.isRequired,
   addressDistrict: PropTypes.number,
   selectedSubdistricts: PropTypes.arrayOf(PropTypes.string),
   setSelectedSubdistricts: PropTypes.func.isRequired,

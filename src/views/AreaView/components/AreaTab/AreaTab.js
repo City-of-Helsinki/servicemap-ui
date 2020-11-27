@@ -30,7 +30,8 @@ const AreaTab = (props) => {
     setDistrictRadioValue,
     setSelectedSubdistricts,
     setSelectedDistrictServices,
-    fetching,
+    ditsrictsFetching,
+    unitsFetching,
     districtData,
     selectedDistrictData,
     openItems,
@@ -190,6 +191,7 @@ const AreaTab = (props) => {
                           value={districtItem.ocd_id}
                           control={(
                             <Checkbox
+                              disabled={unitsFetching}
                               onChange={e => handleCheckboxChange(e, districtItem)}
                               checked={selectedSubdistricts.some(
                                 district => district === districtItem.ocd_id,
@@ -197,6 +199,7 @@ const AreaTab = (props) => {
                             />
                           )}
                           label={<Typography>{getLocaleText(districtItem.name)}</Typography>}
+                          aria-label={`${getLocaleText(districtItem.name)} ${unitsFetching ? intl.formatMessage({ id: 'search.loading.units.simple' }) : ''}`}
                         />
                       </ListItem>
                     ))}
@@ -232,7 +235,7 @@ const AreaTab = (props) => {
 
 
   const renderCollapseContent = (item) => {
-    if (fetching.includes(item.title)) {
+    if (ditsrictsFetching.includes(item.title)) {
       return (
         <div className={classes.loadingText}>
           <Typography aria-hidden>
@@ -344,9 +347,9 @@ const AreaTab = (props) => {
           onClick={() => navigator.openMap()}
         />
       </MobileComponent>
-      {(fetching.length || districtData.length) ? (
+      {(ditsrictsFetching.length || districtData.length) ? (
         <Typography variant="srOnly" role="alert">
-          {fetching.length
+          {ditsrictsFetching.length
             ? <FormattedMessage id="general.loading" />
             : <FormattedMessage id="general.loading.done" />}
         </Typography>
@@ -358,7 +361,8 @@ const AreaTab = (props) => {
 AreaTab.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   districtRadioValue: PropTypes.string,
-  fetching: PropTypes.arrayOf(PropTypes.any).isRequired,
+  ditsrictsFetching: PropTypes.arrayOf(PropTypes.any).isRequired,
+  unitsFetching: PropTypes.bool.isRequired,
   districtData: PropTypes.arrayOf(PropTypes.object),
   selectedDistrictData: PropTypes.arrayOf(PropTypes.object),
   openItems: PropTypes.arrayOf(PropTypes.string).isRequired,

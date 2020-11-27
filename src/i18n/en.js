@@ -238,6 +238,7 @@ const translations = {
   'loading.events.srInfo': 'Loading {count} event(s)',
   'search.loading.units': 'Searching locations {count} / {max}',
   'search.loading.units.srInfo': 'Searching {count} location(s)',
+  'search.loading.units.simple': 'Searching locations',
 
   // Map
   'map': 'Map',
