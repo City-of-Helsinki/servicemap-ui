@@ -15,8 +15,6 @@ const SimpleListItem = (props) => {
     <React.Fragment>
       <ListItem
         className={`${className} ${dark ? 'dark' : ''}`}
-        aria-label={`${srText || ''} ${text}`}
-        className={className}
         button={!!link || button}
         role={link ? 'link' : role}
         tabIndex={isLinkOrButton ? 0 : -1}
@@ -47,11 +45,11 @@ const SimpleListItem = (props) => {
           </Typography>
 
           <Typography
-            aria-hidden
             color="inherit"
             variant="body2"
             classes={{ root: `${link ? classes.link : null} ${dark ? classes.whiteText : ''}` }}
           >
+            <Typography variant="srOnly">{srText}</Typography>
             {text}
           </Typography>
         </ListItemText>
