@@ -8,7 +8,18 @@ import { keyboardHandler } from '../../../utils';
 
 const SimpleListItem = (props) => {
   const {
-    button, dark, text, classes, link, icon, handleItemClick, role, divider, selected, srText, className,
+    button,
+    dark,
+    text,
+    classes,
+    link,
+    icon,
+    handleItemClick,
+    role,
+    divider,
+    selected,
+    srText,
+    className,
   } = props;
   const isLinkOrButton = button || link;
   return (
@@ -30,7 +41,7 @@ const SimpleListItem = (props) => {
         {
           icon
           && (
-            <ListItemIcon aria-hidden className={`${classes.listIcon} ${link ? classes.link : null}`}>
+            <ListItemIcon aria-hidden className={`${classes.listIcon} ${link ? classes.link : ''}`}>
               {icon}
             </ListItemIcon>
           )
