@@ -23,7 +23,7 @@ const translations = {
   'address.nearby': 'Nearby',
   'address.districts': 'Areas',
   'address.plural': 'Addresses',
-  'address.services.header': 'Services for people who live here',
+  'address.services.header': 'Service areas',
   'address.services.info': 'Services for people who live here',
   'address.area.link': 'Get to know the areas on the map.',
   'address.emergency_care.common': 'When your health station is closed and in the night between 22-8, emergency care for children and young people under age 16 is provided at <a>Children\'s Hospital</a> [<a1>homepage</a1>], and for adults at',

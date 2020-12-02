@@ -23,7 +23,7 @@ const translations = {
   'address.nearby': 'Lähellä',
   'address.districts': 'Alueet',
   'address.plural': 'Osoitteet',
-  'address.services.header': 'Palvelut täällä asuville',
+  'address.services.header': 'Palvelualueet',
   'address.services.info': 'Kunnalliset palvelut, joiden piiriin sijainti kuuluu',
   'address.area.link': 'Tutustu alueisiin kartalla.',
   'address.emergency_care.common': 'Terveysaseman ollessa kiinni sekä öisin klo 22- 8 alle 16-vuotiaiden päivystys on <a>Lastensairaalassa</a> [<a1>kotisivut</a1>] ja aikuisten päivystys',
