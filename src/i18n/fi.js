@@ -78,6 +78,7 @@ const translations = {
   'download.format': 'Tiedostomuoto:',
   'download.info': 'Tallenna rajaamiesi toimipisteiden tiedot tiedostoon, jonka voi ladata esimerkiksi Google Maps -sovellukseen tai jatkokäsitellä.',
   'download.title': 'Lataa toimipisteen tiedot',
+  'download.coordinate': 'Palvelukartan koordinaattijärjestelmä on: ETRS89 / GK25FIN (EPSG:3879)',
 
   // Event
   'event.description': 'Kuvaus',

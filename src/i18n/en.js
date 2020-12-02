@@ -68,16 +68,17 @@ const translations = {
   'area.list.preschool_education_sv': 'Swedish preschool education area',
 
   // Download dialog
-  'download.cropping.title': 'Current selection',
-  'download.cropText.unit': 'A single service point:', // TODO: verify
-  'download.cropText.service': 'Service points with chosen services:', // TODO: verify
-  'download.cropText.search': 'Service points matching a text search:', // TODO: verify
-  'download.cropText.none': 'No service points chosen', // TODO: verify
-  'download.data.none': 'First make some service points visible on the service map by searching or browsing and then return here to save the service point data.', // TODO: Verify
-  'download.download': 'Download data (new tab)',
-  'download.format': 'File format:', // TODO: verify
-  'download.info': 'You can download the data for the set of service points you have chosen. The downloaded file can be loaded into Google Maps, loaded into another program, or otherwise processed.', // TODO: verify
-  'download.title': 'Download service point data', // TODO: verify
+  'download.cropping.title': 'Current filter values',
+  'download.cropText.unit': 'Single service unit:',
+  'download.cropText.service': 'Service units with selected services:',
+  'download.cropText.search': 'Service units based on text search:',
+  'download.cropText.none': 'No filter values have been selected',
+  'download.data.none': 'First select service units to be shown on the Service Map using the browse or search functions and then return to this view to save the information of the selected service units.',
+  'download.download': 'Download the information (new tab)',
+  'download.format': 'File format:',
+  'download.info': 'Save the information of the service units that you have filtered into a file, which you can import, for example, to the Google Maps application or continue working with.',
+  'download.title': 'Download the service location information',
+  'download.coordinate': 'The coordinate system of the Service Map is: ETRS89 / GK25FIN (EPSG:3879)',
 
   // Event
   'event.description': 'Description',

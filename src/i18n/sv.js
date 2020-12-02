@@ -68,16 +68,17 @@ const translations = {
   'area.list.preschool_education_sv': 'Svenskt småbarnspedagogikområde',
 
   // Download dialog
-  'download.cropping.title': 'NYKYINEN RAJAUS', // TODO: Translate
-  'download.cropText.unit': 'Yksittäinen toimipiste:', // TODO: Translate
-  'download.cropText.service': 'Toimipisteet valituilla palveluilla:', // TODO: Translate
-  'download.cropText.search': 'Toimipisteet tekstihaun perusteella:', // TODO: Translate
-  'download.cropText.none': 'Ei valittua rajausta', // TODO: Translate
-  'download.data.none': 'Valitse ensin palvelukartalle näkyviin toimipisteitä selaus- tai hakutoiminnoilla ja palaa tähän näkymään tallentaaksesi valittujen toimipisteiden tiedot.', // TODO: Translate
-  'download.download': 'Exportera (ny flik)',
-  'download.format': 'Tiedostomuoto:', // TODO: Translate
-  'download.info': 'Tallenna rajaamiesi toimipisteiden tiedot tiedostoon, jonka voi ladata esimerkiksi Google Maps -sovellukseen tai jatkokäsitellä.', // TODO: Translate
-  'download.title': 'Lataa toimipisteen tiedot', // TODO: Translate
+  'download.cropping.title': 'Nuvarande filterinställningar',
+  'download.cropText.unit': 'Enskilt verksamhetsställe:',
+  'download.cropText.service': 'Verksamhetsställena med valda tjänster:',
+  'download.cropText.search': 'Verksamhetsställena utifrån textsökning:',
+  'download.cropText.none': 'Inga filtervärden har valts',
+  'download.data.none': 'Plocka först fram verksamhetsställen på servicekartan med hjälp av bläddrings- eller sökfunktionen och kom sedan tillbaka till den här vyn för att spara verksamhetsställenas uppgifter.',
+  'download.download': 'Ladda ner uppgifter (ny flik)',
+  'download.format': 'Filformat:',
+  'download.info': 'Spara uppgifterna om de verksamhetsställen som du har filtrerat i en fil som du kan ladda till exempel i applikationen Google Maps eller annars öppna för fortsatt behandling.',
+  'download.title': 'Ladda ner verksamhetsställets uppgifter',
+  'download.coordinate': 'Servicekartans koordinatsystem är: ETRS89 / GK25FIN (EPSG:3879)',
 
   // Event
   'event.description': 'Beskrivning',
