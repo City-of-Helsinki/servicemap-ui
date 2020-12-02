@@ -5,6 +5,7 @@ import URI from 'urijs';
 import {
   Build, Code, GetApp, Print,
 } from '@material-ui/icons';
+import { useSelector } from 'react-redux';
 import DropDownMenuButton from '../DropDownMenuButton';
 import SMIcon from '../SMIcon/SMIcon';
 import SMButton from '../ServiceMapButton';
@@ -12,12 +13,39 @@ import PrintContext from '../../context/PrintContext';
 import DownloadDialog from '../Dialog/DownloadDialog';
 
 const ToolMenu = ({
-  intl, classes, mapUtility, navigator, setMeasuringMode, measuringMode,
+  intl, classes, mapUtility, navigator, setMeasuringMode, measuringMode, currentPage,
 }) => {
   const togglePrintView = useContext(PrintContext);
   const location = useLocation();
   const [openDownload, setOpenDownload] = React.useState(false);
   const toolMenuButton = React.useRef();
+  const districtState = useSelector(state => state.districts);
+
+  const getAreaViewParams = () => {
+    // Form url with parameters when user clicks embedder from tool menu
+    const {
+      districtAddressData, selectedDistrictType, selectedSubdistricts, selectedDistrictServices,
+    } = districtState;
+    const selected = selectedDistrictType
+      ? `selected=${selectedDistrictType}` : null;
+    const districts = selectedSubdistricts.length
+      ? `districts=${selectedSubdistricts.map(i => i).toString()}` : null;
+    const services = selectedDistrictServices.length
+      ? `services=${selectedDistrictServices}` : null;
+    const addressCoordinates = districtAddressData.address
+      ? `lat=${districtAddressData.address.location.coordinates[1]}&lng=${districtAddressData.address.location.coordinates[0]}` : null;
+
+    const params = [
+      ...(selected ? [selected] : []),
+      ...(districts ? [districts] : []),
+      ...(services ? [services] : []),
+      ...(addressCoordinates ? [addressCoordinates] : []),
+    ];
+    if (params.length) {
+      return `?${params.join('&')}`;
+    }
+    return '';
+  };
 
   // Open embedderView
   const openEmbedder = () => {
@@ -33,11 +61,16 @@ const ToolMenu = ({
       search.bbox = mapUtility.getBbox();
     }
     uri.search(search);
+    let searchParams = uri.search();
+
+    if (currentPage === 'area') {
+      searchParams = getAreaViewParams();
+    }
 
     const newLocation = {
       ...location,
       pathname: pathname.join('/'),
-      search: uri.search(),
+      search: searchParams,
     };
 
     navigator.push(newLocation);
@@ -117,6 +150,7 @@ const ToolMenu = ({
 ToolMenu.propTypes = {
   setMeasuringMode: PropTypes.func.isRequired,
   measuringMode: PropTypes.bool.isRequired,
+  currentPage: PropTypes.string.isRequired,
   classes: PropTypes.shape({
     menuContainer: PropTypes.string,
     smIcon: PropTypes.string,

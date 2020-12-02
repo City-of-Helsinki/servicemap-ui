@@ -2,6 +2,8 @@ import { combineReducers } from 'redux';
 import breadcrumb from './reducers/breadcrumb';
 import navigator from './reducers/navigator';
 import {
+  alertErrors,
+  alertNews,
   units,
   service,
   selectedUnit,
@@ -25,6 +27,10 @@ import {
 
 // Export all redux reducers here
 export default combineReducers({
+  alerts: combineReducers({
+    errors: alertErrors,
+    news: alertNews,
+  }),
   breadcrumb,
   mapRef,
   measuringMode,

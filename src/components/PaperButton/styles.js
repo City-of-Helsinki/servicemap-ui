@@ -43,9 +43,7 @@ export default theme => ({
     width: 40,
     height: 40,
     borderRadius: '50%',
-    margin: theme.spacing(1),
-    marginRight: 11,
-    marginLeft: 12,
+    margin: theme.spacing(1, 1.5),
     boxShadow: `0 4px 8px 0 ${theme.palette.detail.alpha}`,
   },
   icon: {

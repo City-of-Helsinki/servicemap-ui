@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core';
 import DefaultLayout from './DefaultLayout';
 import styles from './styles';
+import { fetchErrors, fetchNews } from '../redux/actions/alerts';
 
 // Listen to redux state
 const mapStateToProps = (state) => {
@@ -18,4 +19,5 @@ const mapStateToProps = (state) => {
 
 export default injectIntl(withRouter(connect(
   mapStateToProps,
+  { fetchErrors, fetchNews },
 )(withStyles(styles)(DefaultLayout))));

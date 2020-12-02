@@ -59,6 +59,8 @@ export const units = dataSet('UNITS');
 export const service = dataSet('SERVICE');
 export const events = dataSet('SELECTED_UNIT_EVENTS');
 export const reservations = dataSet('SELECTED_UNIT_RESERVATIONS');
+export const alertNews = dataSet('ALERT_NEWS');
+export const alertErrors = dataSet('ALERT_ERRORS');
 
 // Data fetch single
 export const selectedUnit = dataSingle('SELECTED_UNIT');

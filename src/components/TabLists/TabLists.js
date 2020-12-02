@@ -29,10 +29,14 @@ const TabLists = ({
   const isMobile = useMobileStatus();
 
   const searchParams = parseSearchParams(location.search);
+  const filteredData = data.filter(item => item.component || (item.data && item.data.length > 0));
   const getPagefromUrl = () => parseInt(searchParams.p, 10) || 1;
   const getTabfromUrl = () => {
     let index = data.findIndex(tab => tab.id === searchParams.t);
     if (index === -1) index = parseInt(searchParams.t, 10) || 0;
+    if (filteredData.length <= index) {
+      return 0;
+    }
     return index;
   };
 
@@ -46,7 +50,10 @@ const TabLists = ({
 
   const tabsRef = useRef(null);
 
-  const filteredData = data.filter(item => item.component || (item.data && item.data.length > 0));
+  // Default tabindex if it's out of bound
+  if (filteredData.length <= tabIndex) {
+    setTabIndex(0);
+  }
 
   // Handle page number changes
   const handlePageChange = (pageNum, pageCount) => {
@@ -199,6 +206,13 @@ const TabLists = ({
       ? `${classes.tabLabelContainer} ${classes.mobileTabFont}`
       : classes.tabLabelContainer;
 
+    let disabled;
+    try {
+      disabled = filteredData[tabIndex].noOrderer;
+    } catch (e) {
+      disabled = true;
+    }
+
     return (
       <>
         {
@@ -207,7 +221,7 @@ const TabLists = ({
         {
           fullData.length > 0 && (
             <>
-              <ResultOrderer disabled={filteredData[tabIndex].noOrderer} />
+              <ResultOrderer disabled={disabled} />
               <AddressSearchBar
                 defaultAddress={userAddress}
                 containerClassName={classes.addressBar}
@@ -295,85 +309,85 @@ const TabLists = ({
       }
 
       {
-          // Create tab views from data
-          filteredData.map((item, index) => {
-            // If component given use it instead
-            if (item.component) {
-              const activeTab = index === tabIndex;
-              if (!activeTab) {
-                return (
-                  <div
-                    id={`tab-content-${index}`}
-                    role="tabpanel"
-                    key={item.title}
-                    style={{ display: 'none' }}
-                  />
-                );
-              }
-
+        // Create tab views from data
+        filteredData.map((item, index) => {
+          // If component given use it instead
+          if (item.component) {
+            const activeTab = index === tabIndex;
+            if (!activeTab) {
               return (
                 <div
-                  className="active"
                   id={`tab-content-${index}`}
                   role="tabpanel"
                   key={item.title}
-                >
-                  {
-                    item.component
-                  }
-                </div>
+                  style={{ display: 'none' }}
+                />
               );
             }
 
-            // Calculate pageCount and adjust currentPage
-            const pageCount = calculatePageCount(item.data);
-            const adjustedCurrentPage = currentPage > pageCount ? pageCount : currentPage;
-
-            // Calculate shown data
-            const endIndex = item.data.length >= itemsPerPage
-              ? adjustedCurrentPage * itemsPerPage
-              : item.data.length;
-            const startIndex = adjustedCurrentPage > 1
-              ? (adjustedCurrentPage - 1) * itemsPerPage
-              : 0;
-            const shownData = item.data.slice(startIndex, endIndex);
-
-            const additionalText = `${intl.formatMessage({ id: 'general.pagination.pageCount' }, { current: adjustedCurrentPage, max: pageCount })}`;
-
             return (
               <div
+                className="active"
                 id={`tab-content-${index}`}
-                className={classes.resultList}
+                role="tabpanel"
                 key={item.title}
               >
                 {
-                  index === tabIndex
-                  && (
-                    <>
-                      <Typography className={tabTitleClass} variant="srOnly" component="p" tabIndex="-1">
-                        {`${item.title} ${additionalText}`}
-                      </Typography>
-                      <ResultList
-                        data={shownData}
-                        listId={`${item.title}-results`}
-                        resultCount={item.data.length}
-                        titleComponent="h3"
-                      />
-                      {
-                        item.beforePagination || null
-                      }
-                      <PaginationComponent
-                        current={adjustedCurrentPage}
-                        pageCount={pageCount}
-                        handlePageChange={handlePageChange}
-                      />
-                    </>
-                  )
+                  item.component
                 }
               </div>
             );
-          })
-        }
+          }
+
+          // Calculate pageCount and adjust currentPage
+          const pageCount = calculatePageCount(item.data);
+          const adjustedCurrentPage = currentPage > pageCount ? pageCount : currentPage;
+
+          // Calculate shown data
+          const endIndex = item.data.length >= itemsPerPage
+            ? adjustedCurrentPage * itemsPerPage
+            : item.data.length;
+          const startIndex = adjustedCurrentPage > 1
+            ? (adjustedCurrentPage - 1) * itemsPerPage
+            : 0;
+          const shownData = item.data.slice(startIndex, endIndex);
+
+          const additionalText = `${intl.formatMessage({ id: 'general.pagination.pageCount' }, { current: adjustedCurrentPage, max: pageCount })}`;
+
+          return (
+            <div
+              id={`tab-content-${index}`}
+              className={classes.resultList}
+              key={item.title}
+            >
+              {
+                index === tabIndex
+                && (
+                  <>
+                    <Typography className={tabTitleClass} variant="srOnly" component="p" tabIndex="-1">
+                      {`${item.title} ${additionalText}`}
+                    </Typography>
+                    <ResultList
+                      data={shownData}
+                      listId={`${item.title}-results`}
+                      resultCount={item.data.length}
+                      titleComponent="h3"
+                    />
+                    {
+                      item.beforePagination || null
+                    }
+                    <PaginationComponent
+                      current={adjustedCurrentPage}
+                      pageCount={pageCount}
+                      handlePageChange={handlePageChange}
+                    />
+                  </>
+                )
+              }
+            </div>
+          );
+        })
+      }
     </>
   );
 

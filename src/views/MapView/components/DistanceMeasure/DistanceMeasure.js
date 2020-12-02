@@ -74,6 +74,7 @@ const DistanceMeasure = (props) => {
       <>
         {markerArray.map((point, i) => (
           <Marker
+            zIndexOffset={500}
             keyboard={false}
             icon={icon}
             onDrag={ev => updateLine(ev, i)}
