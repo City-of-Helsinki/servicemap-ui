@@ -23,7 +23,7 @@ const translations = {
   'address.nearby': 'Nära',
   'address.districts': 'Områden',
   'address.plural': 'Adresser',
-  'address.services.header': 'Service för dem som bor här',
+  'address.services.header': 'Tjänstområde',
   'address.services.info': 'Kommunala tjänster vars verksamhetsområde omfattar positionen',
   'address.area.link': 'Bekanta dig med områdena på kartan.',
   'address.emergency_care.common': 'När den egna hälsostationen är stängd och på natten kl. 22-8 är jour för barn och unga under 16 år på <a>Barnkliniken</a> [<a1>hemsidor</a1>], och jour för vuxna på',
