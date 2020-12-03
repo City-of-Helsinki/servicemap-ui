@@ -67,6 +67,19 @@ const translations = {
   'area.list.preschool_education_fi': 'Finskt småbarnspedagogikområde',
   'area.list.preschool_education_sv': 'Svenskt småbarnspedagogikområde',
 
+  // Download dialog
+  'download.cropping.title': 'Nuvarande filterinställningar',
+  'download.cropText.unit': 'Enskilt verksamhetsställe:',
+  'download.cropText.service': 'Verksamhetsställena med valda tjänster:',
+  'download.cropText.search': 'Verksamhetsställena utifrån textsökning:',
+  'download.cropText.none': 'Inga filtervärden har valts',
+  'download.data.none': 'Plocka först fram verksamhetsställen på servicekartan med hjälp av bläddrings- eller sökfunktionen och kom sedan tillbaka till den här vyn för att spara verksamhetsställenas uppgifter.',
+  'download.download': 'Ladda ner uppgifter (ny flik)',
+  'download.format': 'Filformat:',
+  'download.info': 'Spara uppgifterna om de verksamhetsställen som du har filtrerat i en fil som du kan ladda till exempel i applikationen Google Maps eller annars öppna för fortsatt behandling.',
+  'download.title': 'Ladda ner verksamhetsställets uppgifter',
+  'download.coordinate': 'Servicekartans koordinatsystem är: ETRS89 / GK25FIN (EPSG:3879)',
+
   // Event
   'event.description': 'Beskrivning',
   'event.time': 'Tidpunkt',
@@ -465,7 +478,7 @@ const translations = {
   'settings.aria.saved': 'Inställningarna har sparats',
 
   // Tools
-  'tool.download': 'Exportera (ny flik)',
+  'tool.download': 'Exportera',
   'tool.measuring': 'Mät avstånd (endast med mus)',
   'tool.measuring.stop': 'Sluta mäta',
 

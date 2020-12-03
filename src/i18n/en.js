@@ -67,6 +67,19 @@ const translations = {
   'area.list.preschool_education_fi': 'Finnish preschool education area',
   'area.list.preschool_education_sv': 'Swedish preschool education area',
 
+  // Download dialog
+  'download.cropping.title': 'Current filter values',
+  'download.cropText.unit': 'Single service unit:',
+  'download.cropText.service': 'Service units with selected services:',
+  'download.cropText.search': 'Service units based on text search:',
+  'download.cropText.none': 'No filter values have been selected',
+  'download.data.none': 'First select service units to be shown on the Service Map using the browse or search functions and then return to this view to save the information of the selected service units.',
+  'download.download': 'Download the information (new tab)',
+  'download.format': 'File format:',
+  'download.info': 'Save the information of the service units that you have filtered into a file, which you can import, for example, to the Google Maps application or continue working with.',
+  'download.title': 'Download the service location information',
+  'download.coordinate': 'The coordinate system of the Service Map is: ETRS89 / GK25FIN (EPSG:3879)',
+
   // Event
   'event.description': 'Description',
   'event.time': 'Date and time',
@@ -465,7 +478,7 @@ const translations = {
   'settings.aria.saved': 'Settings have been saved',
 
   // Tools
-  'tool.download': 'Download data (new tab)',
+  'tool.download': 'Download data',
   'tool.measuring': 'Measure distance (mouse only)',
   'tool.measuring.stop': 'Stop measuring',
 
