@@ -23,7 +23,7 @@ const translations = {
   'address.nearby': 'Nära',
   'address.districts': 'Områden',
   'address.plural': 'Adresser',
-  'address.services.header': 'Service för dem som bor här',
+  'address.services.header': 'Tjänstområde',
   'address.services.info': 'Kommunala tjänster vars verksamhetsområde omfattar positionen',
   'address.area.link': 'Bekanta dig med områdena på kartan.',
   'address.emergency_care.common': 'När den egna hälsostationen är stängd och på natten kl. 22-8 är jour för barn och unga under 16 år på <a>Barnkliniken</a> [<a1>hemsidor</a1>], och jour för vuxna på',
@@ -66,6 +66,19 @@ const translations = {
   'area.list.upper_comprehensive_school_district_sv': 'Svenskt grundskoleområde, högklasserna',
   'area.list.preschool_education_fi': 'Finskt småbarnspedagogikområde',
   'area.list.preschool_education_sv': 'Svenskt småbarnspedagogikområde',
+
+  // Download dialog
+  'download.cropping.title': 'Nuvarande filterinställningar',
+  'download.cropText.unit': 'Enskilt verksamhetsställe:',
+  'download.cropText.service': 'Verksamhetsställena med valda tjänster:',
+  'download.cropText.search': 'Verksamhetsställena utifrån textsökning:',
+  'download.cropText.none': 'Inga filtervärden har valts',
+  'download.data.none': 'Plocka först fram verksamhetsställen på servicekartan med hjälp av bläddrings- eller sökfunktionen och kom sedan tillbaka till den här vyn för att spara verksamhetsställenas uppgifter.',
+  'download.download': 'Ladda ner uppgifter (ny flik)',
+  'download.format': 'Filformat:',
+  'download.info': 'Spara uppgifterna om de verksamhetsställen som du har filtrerat i en fil som du kan ladda till exempel i applikationen Google Maps eller annars öppna för fortsatt behandling.',
+  'download.title': 'Ladda ner verksamhetsställets uppgifter',
+  'download.coordinate': 'Servicekartans koordinatsystem är: ETRS89 / GK25FIN (EPSG:3879)',
 
   // Event
   'event.description': 'Beskrivning',
@@ -241,6 +254,7 @@ const translations = {
   'loading.events.srInfo': 'Söker {count} evenemange(n)',
   'search.loading.units': 'Söker verksamhetsställen {count} / {max}',
   'search.loading.units.srInfo': 'Söker {count} verksamhetsställe(n)',
+  'search.loading.units.simple': 'Söker verksamhetsställen',
 
   // Map
   'map': 'Karta',
@@ -464,7 +478,7 @@ const translations = {
   'settings.aria.saved': 'Inställningarna har sparats',
 
   // Tools
-  'tool.download': 'Exportera (ny flik)',
+  'tool.download': 'Exportera',
   'tool.measuring': 'Mät avstånd (endast med mus)',
   'tool.measuring.stop': 'Sluta mäta',
 

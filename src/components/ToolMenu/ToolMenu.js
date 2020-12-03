@@ -7,18 +7,19 @@ import {
 } from '@material-ui/icons';
 import { useSelector } from 'react-redux';
 import DropDownMenuButton from '../DropDownMenuButton';
-import useDownloadData from '../../utils/downloadData';
 import SMIcon from '../SMIcon/SMIcon';
 import SMButton from '../ServiceMapButton';
 import PrintContext from '../../context/PrintContext';
+import DownloadDialog from '../Dialog/DownloadDialog';
 
 const ToolMenu = ({
   intl, classes, mapUtility, navigator, setMeasuringMode, measuringMode, currentPage,
 }) => {
   const togglePrintView = useContext(PrintContext);
   const location = useLocation();
+  const [openDownload, setOpenDownload] = React.useState(false);
+  const toolMenuButton = React.useRef();
   const districtState = useSelector(state => state.districts);
-
 
   const getAreaViewParams = () => {
     // Form url with parameters when user clicks embedder from tool menu
@@ -74,7 +75,6 @@ const ToolMenu = ({
 
     navigator.push(newLocation);
   };
-  const downloadToolData = useDownloadData();
 
   const menuItems = [
     // Example shape
@@ -92,11 +92,7 @@ const ToolMenu = ({
       text: intl.formatMessage({ id: 'tool.download' }),
       icon: <GetApp />,
       onClick: () => {
-        const content = JSON.stringify(downloadToolData, null, 2);
-        const tab = window.open();
-        tab.document.open();
-        tab.document.write(`<html><body><pre style="white-space: pre;">${content}</pre></body></html>`);
-        tab.document.close();
+        setOpenDownload(true);
       },
     },
     {
@@ -119,15 +115,17 @@ const ToolMenu = ({
       },
     },
   ];
-  const toolMenuText = intl.formatMessage({ id: 'general.tools' });
 
   if (menuItems.length === 0) {
     return null;
   }
 
+  const toolMenuText = intl.formatMessage({ id: 'general.tools' });
+
   return (
     <>
       <DropDownMenuButton
+        ref={toolMenuButton}
         panelID="ToolMenuPanel"
         buttonIcon={<Build />}
         buttonText={toolMenuText}
@@ -144,6 +142,7 @@ const ToolMenu = ({
           onClick={() => setMeasuringMode(false)}
         />
       )}
+      <DownloadDialog open={openDownload} setOpen={setOpenDownload} referer={toolMenuButton} />
     </>
   );
 };
@@ -154,6 +153,8 @@ ToolMenu.propTypes = {
   currentPage: PropTypes.string.isRequired,
   classes: PropTypes.shape({
     menuContainer: PropTypes.string,
+    smIcon: PropTypes.string,
+    measuringButton: PropTypes.string,
   }).isRequired,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   mapUtility: PropTypes.shape({

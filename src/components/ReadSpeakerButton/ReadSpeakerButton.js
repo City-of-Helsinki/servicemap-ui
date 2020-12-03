@@ -39,7 +39,7 @@ const ReadSpeakerButton = ({
     return null;
   }
   return (
-    <div id="readspeaker_button1" className={`rs_skip rsbtn rs_preserve ${className || ''}`}>
+    <div aria-hidden="true" id="readspeaker_button1" className={`rs_skip rsbtn rs_preserve ${className || ''}`}>
       <a
         rel="nofollow"
         className="rsbtn_play"

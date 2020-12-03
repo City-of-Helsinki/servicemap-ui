@@ -23,7 +23,7 @@ const translations = {
   'address.nearby': 'Lähellä',
   'address.districts': 'Alueet',
   'address.plural': 'Osoitteet',
-  'address.services.header': 'Palvelut täällä asuville',
+  'address.services.header': 'Palvelualueet',
   'address.services.info': 'Kunnalliset palvelut, joiden piiriin sijainti kuuluu',
   'address.area.link': 'Tutustu alueisiin kartalla.',
   'address.emergency_care.common': 'Terveysaseman ollessa kiinni sekä öisin klo 22- 8 alle 16-vuotiaiden päivystys on <a>Lastensairaalassa</a> [<a1>kotisivut</a1>] ja aikuisten päivystys',
@@ -66,6 +66,19 @@ const translations = {
   'area.list.upper_comprehensive_school_district_sv': 'Ruotsinkielinen yläastealue',
   'area.list.preschool_education_fi': 'Suomenkielinen esiopetusalue',
   'area.list.preschool_education_sv': 'Ruotsinkielinen esiopetusalue',
+
+  // Download dialog
+  'download.cropping.title': 'Nykyinen rajaus',
+  'download.cropText.unit': 'Yksittäinen toimipiste:',
+  'download.cropText.service': 'Toimipisteet valituilla palveluilla:',
+  'download.cropText.search': 'Toimipisteet tekstihaun perusteella:',
+  'download.cropText.none': 'Ei valittua rajausta',
+  'download.data.none': 'Valitse ensin palvelukartalle näkyviin toimipisteitä selaus- tai hakutoiminnoilla ja palaa tähän näkymään tallentaaksesi valittujen toimipisteiden tiedot.',
+  'download.download': 'Lataa tiedot (uusi välilehti)',
+  'download.format': 'Tiedostomuoto:',
+  'download.info': 'Tallenna rajaamiesi toimipisteiden tiedot tiedostoon, jonka voi ladata esimerkiksi Google Maps -sovellukseen tai jatkokäsitellä.',
+  'download.title': 'Lataa toimipisteen tiedot',
+  'download.coordinate': 'Palvelukartan koordinaattijärjestelmä on: ETRS89 / GK25FIN (EPSG:3879)',
 
   // Event
   'event.description': 'Kuvaus',
@@ -243,6 +256,7 @@ const translations = {
   'loading.events.srInfo': 'Haetaan {count} tapahtumaa',
   'search.loading.units': 'Haetaan toimipisteitä {count} / {max}',
   'search.loading.units.srInfo': 'Haetaan {count} toimipistettä',
+  'search.loading.units.simple': 'Haetaan toimipisteitä',
 
   // Map
   'map': 'Kartta',
@@ -466,7 +480,7 @@ const translations = {
   'settings.aria.saved': 'Asetukset on tallennettu',
 
   // Tools
-  'tool.download': 'Lataa tiedot (uusi välilehti)',
+  'tool.download': 'Lataa tiedot',
   'tool.measuring': 'Mittaa etäisyys (käytettävissä vain hiirellä)',
   'tool.measuring.stop': 'Lopeta mittaus',
 
