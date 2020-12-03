@@ -88,5 +88,6 @@ export const getAddressText = (address, getLocaleText) => {
   const letter = address.letter ? address.letter : '';
   const fullNumber = `${nStart}${nEnd}${letter}`;
   const municipality = getTranslatedMunicipality(address, getLocaleText);
-  return `${getLocaleText(address.street.name)} ${fullNumber}, ${uppercaseFirst(municipality)}`;
+  const postalCode = address.postal_code ? ` ${address.postal_code},` : '';
+  return `${getLocaleText(address.street.name)} ${fullNumber},${postalCode} ${uppercaseFirst(municipality)}`;
 };

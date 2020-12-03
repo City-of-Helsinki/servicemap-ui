@@ -12,9 +12,11 @@ import unitSectionFilter from '../../utils/unitSectionFilter';
 const ContactInfo = ({
   unit, userLocation, getLocaleText, intl, classes,
 }) => {
+  const { address_zip: addressZip } = unit;
+  const postalCode = addressZip ? `, ${addressZip}` : '';
   const address = {
     type: 'ADDRESS',
-    value: unit.street_address ? unit.street_address : intl.formatMessage({ id: 'unit.address.missing' }),
+    value: unit.street_address ? `${getLocaleText(unit.street_address)}${postalCode}, ${intl.formatMessage({ id: `settings.city.${unit.municipality}` })}` : intl.formatMessage({ id: 'unit.address.missing' }),
   };
   const phone = {
     type: 'PHONE',
