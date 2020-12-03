@@ -97,7 +97,17 @@ const MapView = (props) => {
         case 'adminDistricts':
           mapUnits = adminDistricts ? adminDistricts
             .filter(d => d.unit)
-            .map(d => d.unit)
+            .reduce((unique, o) => {
+              // Ignore districts without unit
+              if (!o.unit) {
+                return unique;
+              }
+              // Add only unique units
+              if (!unique.some(obj => obj.id === o.unit.id)) {
+                unique.push(o.unit);
+              }
+              return unique;
+            }, [])
             : [];
           break;
         case 'units':
