@@ -14,6 +14,7 @@ let districtClicked = null;
 const Districts = ({
   highlightedDistrict,
   districtData,
+  unitsFetching,
   addressDistrict,
   getLocaleText,
   theme,
@@ -163,6 +164,7 @@ const Districts = ({
 
       return (
         <Polygon
+          interactive={!unitsFetching}
           key={district.id}
           onClick={e => districtOnClick(e, district)}
           positions={[[area]]}
@@ -241,6 +243,7 @@ Districts.propTypes = {
   measuringMode: PropTypes.bool.isRequired,
   selectedAddress: PropTypes.objectOf(PropTypes.any),
   districtData: PropTypes.arrayOf(PropTypes.object),
+  unitsFetching: PropTypes.bool.isRequired,
   addressDistrict: PropTypes.number,
   selectedSubdistricts: PropTypes.arrayOf(PropTypes.string),
   setSelectedSubdistricts: PropTypes.func.isRequired,

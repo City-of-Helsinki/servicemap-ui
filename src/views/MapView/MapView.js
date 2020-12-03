@@ -20,6 +20,7 @@ import AddressMarker from './components/AddressMarker';
 import { parseSearchParams } from '../../utils';
 import HomeLogo from '../../components/Logos/HomeLogo';
 import DistanceMeasure from './components/DistanceMeasure';
+import Loading from '../../components/Loading';
 import MarkerCluster from './components/MarkerCluster';
 import UnitGeometry from './components/UnitGeometry';
 import MapUtility from './utils/mapUtility';
@@ -47,6 +48,7 @@ const MapView = (props) => {
     unitsLoading,
     serviceUnits,
     districtUnits,
+    districtUnitsFetching,
     hideUserMarker,
     highlightedUnit,
     highlightedDistrict,
@@ -294,6 +296,7 @@ const MapView = (props) => {
         : prevMap.props.zoom + zoomDifference;
     }
 
+    const showLoadingScreen = () => districtUnitsFetching.length;
     const userLocationAriaLabel = intl.formatMessage({ id: !userLocation ? 'location.notAllowed' : 'location.center' });
 
     return (
@@ -301,6 +304,7 @@ const MapView = (props) => {
         {renderTopBar()}
         {renderEmbedOverlay()}
         <Map
+          preferCanvas
           className={`${classes.map} ${measuringMode ? classes.measuringCursor : ''}`}
           key={mapObject.options.name}
           ref={mapRef}
@@ -328,6 +332,11 @@ const MapView = (props) => {
             url={mapObject.options.url}
             attribution={intl.formatMessage({ id: mapObject.options.attribution })}
           />
+          {showLoadingScreen() ? (
+            <div className={classes.loadingScreen}>
+              <Loading />
+            </div>
+          ) : null}
           <Districts mapOptions={mapOptions} map={mapRef.current} embed={embeded} />
 
           <TransitStops
@@ -424,6 +433,7 @@ MapView.propTypes = {
   navigator: PropTypes.objectOf(PropTypes.any),
   serviceUnits: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
   districtUnits: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
+  districtUnitsFetching: PropTypes.arrayOf(PropTypes.any).isRequired,
   setAddressLocation: PropTypes.func.isRequired,
   findUserLocation: PropTypes.func.isRequired,
   setMapRef: PropTypes.func.isRequired,

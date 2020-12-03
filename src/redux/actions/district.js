@@ -1,3 +1,5 @@
+import { unitsFetch } from '../../utils/fetch';
+
 export const setHighlightedDistrict = district => ({
   type: 'SET_DISTRICT_HIGHLIGHT',
   district,
@@ -18,11 +20,6 @@ export const setDistrictAddressData = data => ({
   data,
 });
 
-export const addSubdistrictUnits = units => ({
-  type: 'ADD_SUBDISTRICT_UNITS',
-  units,
-});
-
 export const setSelectedSubdistricts = districts => ({
   type: 'SET_SELECTED_SUBDISTRICTS',
   districts,
@@ -32,3 +29,37 @@ export const setSelectedDistrictServices = services => ({
   type: 'SET_SELECTED_DISTRICT_SERVICES',
   services,
 });
+
+const startUnitFetch = node => ({
+  type: 'START_UNIT_FETCH',
+  node,
+});
+
+const endUnitFetch = data => ({
+  type: 'END_UNIT_FETCH',
+  node: data.nodeID,
+  units: data.units,
+});
+
+export const fetchDistrictUnitList = nodeID => (
+  async (dispatch) => {
+    dispatch(startUnitFetch(nodeID));
+    const options = {
+      page: 1,
+      page_size: 1000,
+      division: nodeID,
+    };
+    try {
+      const data = await unitsFetch(options);
+      const units = data.results;
+      units.forEach((unit) => {
+        unit.object_type = 'unit';
+        unit.division_id = nodeID;
+      });
+      dispatch(endUnitFetch({ nodeID, units }));
+    } catch (e) {
+      console.warn(e);
+      dispatch(endUnitFetch({ nodeID, units: [] }));
+    }
+  }
+);

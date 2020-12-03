@@ -241,6 +241,7 @@ const translations = {
   'loading.events.srInfo': 'Söker {count} evenemange(n)',
   'search.loading.units': 'Söker verksamhetsställen {count} / {max}',
   'search.loading.units.srInfo': 'Söker {count} verksamhetsställe(n)',
+  'search.loading.units.simple': 'Söker verksamhetsställen',
 
   // Map
   'map': 'Karta',
