@@ -3,11 +3,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import {
-  withStyles, Tooltip as MUITooltip, ButtonBase, Typography,
+  withStyles, Tooltip as MUITooltip, ButtonBase,
 } from '@material-ui/core';
-import {
-  MyLocation, LocationDisabled, ArrowLeft, ArrowRight,
-} from '@material-ui/icons';
+import { MyLocation, LocationDisabled } from '@material-ui/icons';
 import { mapOptions } from './config/mapConfig';
 import CreateMap from './utils/createMap';
 import { focusToPosition } from './utils/mapActions';
@@ -26,6 +24,7 @@ import MarkerCluster from './components/MarkerCluster';
 import swapCoordinates from './utils/swapCoordinates';
 import UnitGeometry from './components/UnitGeometry';
 import MapUtility from './utils/mapUtility';
+import HideSidebarButton from './components/HideSidebarButton';
 
 if (global.window) {
   require('leaflet');
@@ -380,29 +379,11 @@ const MapView = (props) => {
 
           <ZoomControl position="bottomright" aria-hidden="true" />
           <Control position="topleft">
-            <ButtonBase
-              style={{
-                marginLeft: -10, marginTop: -14, backgroundColor: 'rgb(25, 100, 230)', border: '2px solid #fff',
-              }}
-              onClick={() => {
-                toggleSidebar();
-                // Update lealfet map size after sidebar has been hidden
-                setTimeout(() => (
-                  mapRef?.current?.leafletElement.invalidateSize()
-                ), 1);
-              }}
-            >
-              {sidebarHidden
-                ? <ArrowRight style={{ color: '#fff' }} />
-                : <ArrowLeft style={{ color: '#fff' }} />
-              }
-              <Typography style={{ color: '#fff', paddingRight: 8 }}>
-                {sidebarHidden
-                  ? 'Avaa sivupalkki'
-                  : 'Sulje sivupalkki'
-                }
-              </Typography>
-            </ButtonBase>
+            <HideSidebarButton
+              sidebarHidden={sidebarHidden}
+              mapRef={mapRef}
+              toggleSidebar={toggleSidebar}
+            />
           </Control>
           {
             !embeded
@@ -465,6 +446,8 @@ MapView.propTypes = {
   userLocation: PropTypes.objectOf(PropTypes.any),
   locale: PropTypes.string.isRequired,
   measuringMode: PropTypes.bool.isRequired,
+  toggleSidebar: PropTypes.func.isRequired,
+  sidebarHidden: PropTypes.bool.isRequired,
 };
 
 MapView.defaultProps = {
