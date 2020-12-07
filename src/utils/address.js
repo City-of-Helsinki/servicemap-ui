@@ -88,6 +88,19 @@ export const getAddressText = (address, getLocaleText, showPostalCode = true) =>
   const letter = address.letter ? address.letter : '';
   const fullNumber = `${nStart}${nEnd}${letter}`;
   const municipality = getTranslatedMunicipality(address, getLocaleText);
-  const postalCode = showPostalCode && address.postal_code ? ` ${address.postal_code},` : '';
+  const postalCode = showPostalCode && address.postal_code ? ` ${address.postal_code}` : '';
   return `${getLocaleText(address.street.name)} ${fullNumber},${postalCode} ${uppercaseFirst(municipality)}`;
+};
+
+export const getAddressFromUnit = (unit, getLocaleText, intl) => {
+  if (!unit || !unit.street_address) {
+    return '';
+  }
+  if (!unit.address_zip || !unit.municipality) {
+    return `${getLocaleText(unit.street_address)}`;
+  }
+  const { address_zip: addressZip } = unit;
+  const postalCode = addressZip ? `, ${addressZip}` : '';
+
+  return `${getLocaleText(unit.street_address)}${postalCode} ${intl.formatMessage({ id: `settings.city.${unit.municipality}` })}`;
 };

@@ -19,6 +19,7 @@ import { formatDistanceObject, uppercaseFirst } from '../../../../utils';
 import DivisionItem from '../../../../components/ListItems/DivisionItem';
 import UnitItem from '../../../../components/ListItems/UnitItem';
 import SMButton from '../../../../components/ServiceMapButton';
+import { getAddressFromUnit } from '../../../../utils/address';
 
 
 const UnitTab = ({
@@ -64,9 +65,8 @@ const UnitTab = ({
   }, [selectedDistrictServices]);
 
   const renderDistrictUnitItem = (district) => {
-    const { unit, municipality } = district;
-    const { street_address: sa, address_zip: az } = unit;
-    const streetAddress = `${getLocaleText(sa)}, ${az} ${uppercaseFirst(municipality)}`;
+    const { unit } = district;
+    const streetAddress = getAddressFromUnit(unit, getLocaleText, intl);
     return (
       <DivisionItem
         key={district.id}

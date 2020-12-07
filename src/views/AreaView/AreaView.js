@@ -252,7 +252,7 @@ const AreaView = ({
       page_size: 500,
       type,
       geometry: true,
-      unit_include: 'name,location,street_address,address_zip',
+      unit_include: 'name,location,street_address,address_zip,municipality',
     };
     return districtFetch(options)
       .then((data) => {
