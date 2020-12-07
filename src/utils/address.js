@@ -76,7 +76,7 @@ export const getAddressNavigatorParamsConnector = (getLocaleText, locale) => (ad
   return data;
 };
 
-export const getAddressText = (address, getLocaleText) => {
+export const getAddressText = (address, getLocaleText, showPostalCode = true) => {
   if (!address || !address.number || !address.street.name || !address.street.municipality) {
     return '';
   }
@@ -88,6 +88,6 @@ export const getAddressText = (address, getLocaleText) => {
   const letter = address.letter ? address.letter : '';
   const fullNumber = `${nStart}${nEnd}${letter}`;
   const municipality = getTranslatedMunicipality(address, getLocaleText);
-  const postalCode = address.postal_code ? ` ${address.postal_code},` : '';
+  const postalCode = showPostalCode && address.postal_code ? ` ${address.postal_code},` : '';
   return `${getLocaleText(address.street.name)} ${fullNumber},${postalCode} ${uppercaseFirst(municipality)}`;
 };
