@@ -63,22 +63,27 @@ const UnitTab = ({
     setCheckedServices(selectedDistrictServices);
   }, [selectedDistrictServices]);
 
-  const renderDistrictUnitItem = district => (
-    <DivisionItem
-      key={district.id}
-      className={classes.divisionItem}
-      divider
-      data={{
-        area: district,
-        name: district.unit.name || null,
-        id: district.unit.id,
-        street_address: district.unit.street_address,
-      }}
-      distance={district.unit.distance
-        ? formatDistanceObject(intl, district.unit.distance)
-        : null}
-    />
-  );
+  const renderDistrictUnitItem = (district) => {
+    const { unit, municipality } = district;
+    const { street_address: sa, address_zip: az } = unit;
+    const streetAddress = `${getLocaleText(sa)}, ${az} ${uppercaseFirst(municipality)}`;
+    return (
+      <DivisionItem
+        key={district.id}
+        className={classes.divisionItem}
+        divider
+        data={{
+          area: district,
+          name: district.unit.name || null,
+          id: district.unit.id,
+          street_address: streetAddress,
+        }}
+        distance={district.unit.distance
+          ? formatDistanceObject(intl, district.unit.distance)
+          : null}
+      />
+    );
+  };
 
   const renderUnitList = () => {
     // Render list of units for neighborhood and postcode-area subdistricts

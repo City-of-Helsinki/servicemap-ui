@@ -25,7 +25,7 @@ const DivisionItem = ({
   if (aStart === 2019 || aEnd === 2019) return null;
 
   const name = data.name ? getLocaleText(data.name) : null;
-  const address = data.street_address ? getLocaleText(data.street_address) : null;
+  const address = typeof data.street_address === 'object' ? getLocaleText(data.street_address) : (data.street_address || null);
   const unitOnClick = () => navigator.push('unit', { id: data.id });
 
   const emergencyUnitId = data.emergencyUnitId || null;
