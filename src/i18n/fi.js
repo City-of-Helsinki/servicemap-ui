@@ -233,9 +233,6 @@ const translations = {
   'general.search': 'Hae',
   'general.tools': 'Työkalut',
   'general.time.short': 'klo',
-  'general.tools': 'Työkalut',
-  'general.distance.meters': 'Metrin päässä',
-  'general.distance.kilometers': 'Kilometrin päässä',
 
   // Home
   'home.buttons.settings': 'Tallenna omat kaupunki- ja esteettömyysasetuksesi',

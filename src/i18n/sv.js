@@ -181,6 +181,8 @@ const translations = {
   'general.back.serviceTree': 'Gå tillbaka till servicekatalogen',
   'general.cancel': 'Ångra',
   'general.close': 'Stäng',
+  'general.distance.meters': 'Meters avstånd',
+  'general.distance.kilometers': 'Kilometers avstånd',
   'general.yes': 'Ja',
   'general.no': 'Nej',
   'general.closeSettings': 'Stäng inställningarna',
@@ -227,9 +229,6 @@ const translations = {
   'general.save.confirmation': 'Vill du spara ändringarna?',
   'general.search': 'Sök',
   'general.time.short': 'kl.',
-  'general.tools': 'Verktyg',
-  'general.distance.meters': 'Meters avstånd',
-  'general.distance.kilometers': 'Kilometers avstånd',
   'general.tools': 'Verktyg',
   // Readspeaker
   'general.readspeaker.buttonText': 'Lyssna', // TODO: verify

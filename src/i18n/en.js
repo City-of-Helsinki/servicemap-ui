@@ -181,6 +181,8 @@ const translations = {
   'general.back.serviceTree': 'Back to service list page',
   'general.cancel': 'Cancel',
   'general.close': 'Close',
+  'general.distance.meters': 'Meters away',
+  'general.distance.kilometers': 'Kilometers away',
   'general.yes': 'Yes',
   'general.no': 'No',
   'general.closeSettings': 'Close settings',
@@ -231,9 +233,6 @@ const translations = {
   'general.save.confirmation': 'Would you like to save changes?',
   'general.search': 'Search',
   'general.time.short': 'at',
-  'general.tools': 'Tools',
-  'general.distance.meters': 'Meters away',
-  'general.distance.kilometers': 'Kilometers away',
 
   // Home
   'home.buttons.settings': 'Save your own city and accessibility options',
