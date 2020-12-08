@@ -50,11 +50,6 @@ const SimpleListItem = (props) => {
         <ListItemText
           classes={{ root: classes.textContainer }}
         >
-          {/* ReadSpeaker text - hidden form view and screen readers */}
-          <Typography aria-hidden variant="srOnly">
-            {`${srText || ''}`}
-          </Typography>
-
           <Typography
             color="inherit"
             variant="body2"
