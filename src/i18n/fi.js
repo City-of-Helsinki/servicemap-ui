@@ -50,6 +50,7 @@ const translations = {
   'area.list.protection': 'Väestönsuojelu',
   'area.list.health': 'Terveys',
   'area.list.education': 'Koulutus',
+  'area.list.natureConservation': 'Luonnonsuojelu',
   'area.list.education.finnish': 'Suomenkieliset koulualueet',
   'area.list.education.swedish': 'Ruotsinkieliset koulualueet',
   'area.list.preschool': 'Esiopetus',
@@ -66,6 +67,7 @@ const translations = {
   'area.list.upper_comprehensive_school_district_sv': 'Ruotsinkielinen yläastealue',
   'area.list.preschool_education_fi': 'Suomenkielinen esiopetusalue',
   'area.list.preschool_education_sv': 'Ruotsinkielinen esiopetusalue',
+  'area.list.nature_reserve': 'Luonnonsuojelualueet',
 
   // Download dialog
   'download.cropping.title': 'Nykyinen rajaus',
