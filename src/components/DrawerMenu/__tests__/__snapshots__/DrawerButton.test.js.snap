@@ -5,7 +5,7 @@ exports[`<DrawerButton /> should work 1`] = `
   active={false}
   disableRipple={true}
   disabled={false}
-  icon={<UNDEFINED />}
+  icon={<Memo />}
   isOpen={false}
   onClick={[Function]}
   subText="Drawer button subtext"
@@ -28,7 +28,7 @@ exports[`<DrawerButton /> should work 1`] = `
     }
     disableRipple={true}
     disabled={false}
-    icon={<UNDEFINED />}
+    icon={<Memo />}
     isOpen={false}
     onClick={[Function]}
     subText="Drawer button subtext"
