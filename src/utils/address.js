@@ -76,7 +76,7 @@ export const getAddressNavigatorParamsConnector = (getLocaleText, locale) => (ad
   return data;
 };
 
-export const getAddressText = (address, getLocaleText) => {
+export const getAddressText = (address, getLocaleText, showPostalCode = true) => {
   if (!address || !address.number || !address.street.name || !address.street.municipality) {
     return '';
   }
@@ -88,5 +88,19 @@ export const getAddressText = (address, getLocaleText) => {
   const letter = address.letter ? address.letter : '';
   const fullNumber = `${nStart}${nEnd}${letter}`;
   const municipality = getTranslatedMunicipality(address, getLocaleText);
-  return `${getLocaleText(address.street.name)} ${fullNumber}, ${uppercaseFirst(municipality)}`;
+  const postalCode = showPostalCode && address.postal_code ? ` ${address.postal_code}` : '';
+  return `${getLocaleText(address.street.name)} ${fullNumber},${postalCode} ${uppercaseFirst(municipality)}`;
+};
+
+export const getAddressFromUnit = (unit, getLocaleText, intl) => {
+  if (!unit || !unit.street_address) {
+    return '';
+  }
+  if (!unit.address_zip || !unit.municipality) {
+    return `${getLocaleText(unit.street_address)}`;
+  }
+  const { address_zip: addressZip } = unit;
+  const postalCode = addressZip ? `, ${addressZip}` : '';
+
+  return `${getLocaleText(unit.street_address)}${postalCode} ${intl.formatMessage({ id: `settings.city.${unit.municipality}` })}`;
 };

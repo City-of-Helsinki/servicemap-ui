@@ -19,6 +19,7 @@ import { formatDistanceObject, uppercaseFirst } from '../../../../utils';
 import DivisionItem from '../../../../components/ListItems/DivisionItem';
 import UnitItem from '../../../../components/ListItems/UnitItem';
 import SMButton from '../../../../components/ServiceMapButton';
+import { getAddressFromUnit } from '../../../../utils/address';
 
 
 const UnitTab = ({
@@ -63,22 +64,26 @@ const UnitTab = ({
     setCheckedServices(selectedDistrictServices);
   }, [selectedDistrictServices]);
 
-  const renderDistrictUnitItem = district => (
-    <DivisionItem
-      key={district.id}
-      className={classes.divisionItem}
-      divider
-      data={{
-        area: district,
-        name: district.unit.name || null,
-        id: district.unit.id,
-        street_address: district.unit.street_address,
-      }}
-      distance={district.unit.distance
-        ? formatDistanceObject(intl, district.unit.distance)
-        : null}
-    />
-  );
+  const renderDistrictUnitItem = (district) => {
+    const { unit } = district;
+    const streetAddress = getAddressFromUnit(unit, getLocaleText, intl);
+    return (
+      <DivisionItem
+        key={district.id}
+        className={classes.divisionItem}
+        divider
+        data={{
+          area: district,
+          name: district.unit.name || null,
+          id: district.unit.id,
+          street_address: streetAddress,
+        }}
+        distance={district.unit.distance
+          ? formatDistanceObject(intl, district.unit.distance)
+          : null}
+      />
+    );
+  };
 
   const renderUnitList = () => {
     // Render list of units for neighborhood and postcode-area subdistricts
