@@ -224,7 +224,7 @@ const MapView = (props) => {
 
       const usp = new URLSearchParams(location.search);
       const lat = usp.get('lat');
-      const lng = usp.get('lng');
+      const lng = usp.get('lon');
       try {
         if (lat && lng) {
           const position = [usp.get('lon'), usp.get('lat')];
