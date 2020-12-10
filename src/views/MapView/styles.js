@@ -33,8 +33,8 @@ const styles = theme => ({
     wordBreak: 'break-all',
   },
   addressPopupButton: {
-    paddingTop: '9px',
-    paddingBottom: 12,
+    paddingTop: theme.spacing(0.5),
+    paddingBottom: theme.spacing(2),
   },
   coordinateLink: {
     color: theme.palette.primary.main,
