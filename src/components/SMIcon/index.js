@@ -21,6 +21,8 @@ import serviceIcon from '../../assets/icons/serviceIcon.svg';
 import serviceIconDark from '../../assets/icons/serviceIconDark.svg';
 import servicemapLogoIcon from '../../assets/icons/IconPalvelukarttaPrimary.svg';
 import closeIcon from '../../assets/icons/closeIcon.svg';
+import coordinateMarker from '../../assets/icons/CoordinateMarker.svg';
+import coordinateMarkerContrast from '../../assets/icons/CoordinateMarkerContrast.svg';
 
 /**
  * Senses
@@ -150,7 +152,11 @@ export const getIcon = (key, props) => {
     case 'servicemapLogoIcon':
       return <img aria-hidden alt="" src={servicemapLogoIcon} {...props} />;
     case 'closeIcon':
-      return <img aria-hidden alt="" src={closeIcon} {...props} />
+      return <img aria-hidden alt="" src={closeIcon} {...props} />;
+    case 'coordinateMarker':
+      return <img aria-hidden alt="" src={coordinateMarker} {...props} />;
+    case 'coordinateMarkerContrast':
+      return <img aria-hidden alt="" src={coordinateMarkerContrast} {...props} />;
 
     default:
       return null;
