@@ -27,9 +27,7 @@ const ResultItem = ({
   const srText = `
     ${title || ''} 
     ${subtitle || ''} 
-    ${distance
-    ? distance.srText
-    : ''} 
+    ${distance?.srText || ''} 
     ${bottomText || ''} 
     ${srLabel || ''}
   `;
