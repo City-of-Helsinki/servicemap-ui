@@ -1,43 +1,45 @@
 const styles = theme => ({
   hideSidebarButton: {
-    width: 50,
+    maxWidth: 50,
+    minWidth: 50,
     height: 40,
     marginLeft: -10,
     marginTop: -10,
+    padding: 10,
     backgroundColor: '#fff',
     transition: '0.2s',
-    whiteSpace: 'nowrap',
     '& p': {
       display: 'none',
-      width: 0,
-      transition: 'width 0.2s',
+      maxWidth: 0,
       paddingLeft: theme.spacing(1),
       paddingRight: theme.spacing(1),
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
     },
-    '&:hover:focus': {
+    '&:hover': {
       backgroundColor: theme.palette.primary.main,
       color: '#fff',
-      width: 200,
+      maxWidth: 200,
       '& p': {
         display: 'block',
-        width: '100%',
+        maxWidth: 200,
       },
     },
   },
   fullLength: {
-    width: 200,
+    minWidth: 200,
+    maxWidth: 200,
     color: '#000',
     '& p': {
       display: 'block',
-      width: '100%',
+      maxWidth: 200,
     },
   },
   reversed: {
     flexDirection: 'row-reverse',
   },
   buttonContent: {
-    position: 'absolute',
-    left: 12,
+    width: '100%',
     display: 'flex',
     alignItems: 'center',
   },
@@ -45,10 +47,10 @@ const styles = theme => ({
     boxShadow: 'none !important',
     backgroundColor: theme.palette.primary.main,
     color: '#fff',
-    width: 200,
+    maxWidth: 200,
     '& p': {
       display: 'block',
-      width: '100%',
+      maxWidth: 200,
     },
   },
 });
