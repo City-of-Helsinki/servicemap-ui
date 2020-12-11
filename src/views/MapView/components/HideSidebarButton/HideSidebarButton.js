@@ -7,7 +7,7 @@ const HideSidebarButton = ({
   classes, sidebarHidden, mapRef, toggleSidebar,
 }) => (
   <ButtonBase
-    aaria-hidden
+    aria-hidden
     className={`${classes.hideSidebarButton} ${sidebarHidden ? classes.fullLength : ''}`}
     classes={{ focusVisible: classes.keyboardFocus }}
     onClick={() => {

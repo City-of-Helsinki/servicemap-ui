@@ -53,6 +53,7 @@ const createContentStyles = (
       position: 'relative',
       top: 0,
       bottom: 0,
+      width,
       margin: 0,
       // eslint-disable-next-line no-nested-ternary
       overflow: settingsOpen ? 'hidden'
