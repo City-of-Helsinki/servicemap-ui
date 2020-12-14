@@ -114,7 +114,7 @@ const SuggestionBox = (props) => {
             return;
           }
           if (focused.object_type === 'address') {
-            setSearch(getAddressText(focused, getLocaleText));
+            setSearch(getAddressText(focused, getLocaleText, false));
           }
         } else if (history) {
           setSearch(history[focusedSuggestion]);
@@ -184,6 +184,7 @@ const SuggestionBox = (props) => {
                     key={`address-${sortIndex}`}
                     address={item}
                     className="suggestion"
+                    showPostalCode={false}
                   />
                 );
               }

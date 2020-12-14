@@ -85,6 +85,7 @@ const MarkerCluster = ({
       classes,
       getLocaleText,
       distance,
+      intl,
     );
   };
 
@@ -336,6 +337,7 @@ const MarkerCluster = ({
           classes,
           getLocaleText,
           distance,
+          intl,
         );
         const tooltipPermanent = highlightedUnit
           && (highlightedUnit.id === unit.id && UnitHelper.isUnitPage());

@@ -2,6 +2,7 @@ import ReactDOMServer from 'react-dom/server';
 import React from 'react';
 import isClient from '../../../../utils';
 import { isEmbed } from '../../../../utils/path';
+import { getAddressFromUnit } from '../../../../utils/address';
 
 export const createMarkerClusterLayer = (
   createClusterCustomIcon,
@@ -85,7 +86,7 @@ export const createTooltipContent = (unit, classes, getLocaleText, distance) => 
 );
 
 
-export const createPopupContent = (unit, classes, getLocaleText, distance) => (
+export const createPopupContent = (unit, classes, getLocaleText, distance, intl) => (
   ReactDOMServer.renderToStaticMarkup(
     <div className={classes.unitTooltipWrapper}>
       <p className={classes.unitTooltipTitle}>{unit.name && getLocaleText(unit.name)}</p>
@@ -94,7 +95,7 @@ export const createPopupContent = (unit, classes, getLocaleText, distance) => (
           unit.street_address
           && (
             <p className={classes.unitTooltipSubtitle}>
-              {getLocaleText(unit.street_address)}
+              {getAddressFromUnit(unit, getLocaleText, intl)}
             </p>
           )
         }

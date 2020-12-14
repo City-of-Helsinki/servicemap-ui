@@ -113,6 +113,13 @@ const AreaView = ({
         'rescue_sub_district',
       ],
     },
+    {
+      id: 'nature',
+      title: intl.formatMessage({ id: 'area.list.natureConservation' }),
+      districts: [
+        'nature_reserve',
+      ],
+    },
   ];
 
   const location = useLocation();
@@ -252,7 +259,7 @@ const AreaView = ({
       page_size: 500,
       type,
       geometry: true,
-      unit_include: 'name,location,street_address',
+      unit_include: 'name,location,street_address,address_zip,municipality',
     };
     return districtFetch(options)
       .then((data) => {
