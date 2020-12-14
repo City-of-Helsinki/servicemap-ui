@@ -46,6 +46,13 @@ const AddressPopup = ({
         search: usp.toString(),
       };
       navigator.replace(newLocation);
+      try {
+        if (map?.leafletElement) {
+          map.leafletElement.closePopup();
+        }
+      } catch (e) {
+        console.warn('Unable to close AddressPopup on coordinate selection');
+      }
     }
   };
 
