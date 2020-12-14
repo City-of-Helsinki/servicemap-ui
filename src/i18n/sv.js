@@ -50,6 +50,7 @@ const translations = {
   'area.list.protection': 'Befolkningsskydd',
   'area.list.health': 'Hälsa',
   'area.list.education': 'Utbildning',
+  'area.list.natureConservation': 'Naturskydd',
   'area.list.education.finnish': 'Finska skolområden',
   'area.list.education.swedish': 'Svenska skolområden',
   'area.list.preschool': 'Förskoleundervisning',
@@ -66,6 +67,7 @@ const translations = {
   'area.list.upper_comprehensive_school_district_sv': 'Svenskt grundskoleområde, högklasserna',
   'area.list.preschool_education_fi': 'Finskt småbarnspedagogikområde',
   'area.list.preschool_education_sv': 'Svenskt småbarnspedagogikområde',
+  'area.list.nature_reserve': 'Naturskyddsområden',
 
   // Download dialog
   'download.cropping.title': 'Nuvarande filterinställningar',
@@ -179,6 +181,8 @@ const translations = {
   'general.back.serviceTree': 'Gå tillbaka till servicekatalogen',
   'general.cancel': 'Ångra',
   'general.close': 'Stäng',
+  'general.distance.meters': 'Meters avstånd',
+  'general.distance.kilometers': 'Kilometers avstånd',
   'general.yes': 'Ja',
   'general.no': 'Nej',
   'general.closeSettings': 'Stäng inställningarna',
@@ -225,9 +229,6 @@ const translations = {
   'general.save.confirmation': 'Vill du spara ändringarna?',
   'general.search': 'Sök',
   'general.time.short': 'kl.',
-  'general.tools': 'Verktyg',
-  'general.distance.meters': 'Meters avstånd',
-  'general.distance.kilometers': 'Kilometers avstånd',
   'general.tools': 'Verktyg',
   // Readspeaker
   'general.readspeaker.buttonText': 'Lyssna', // TODO: verify

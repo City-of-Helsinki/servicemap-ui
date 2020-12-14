@@ -113,6 +113,13 @@ const AreaView = ({
         'rescue_sub_district',
       ],
     },
+    {
+      id: 'nature',
+      title: intl.formatMessage({ id: 'area.list.natureConservation' }),
+      districts: [
+        'nature_reserve',
+      ],
+    },
   ];
 
   const location = useLocation();
