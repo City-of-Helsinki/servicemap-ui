@@ -125,4 +125,29 @@ describe('<ResultItem />', () => {
     // Expect role to be set
     expect(component.props().role).toEqual('button');
   });
+
+  // Expect element to not put strings like "undefined" or "null" into element if values are missing
+  it('doesn\'t show invalid texts if values missing', () => {
+    const component = mount(
+      <ResultItem
+        {...mockProps}
+        bottomText={null}
+        distance={{}}
+        subtitle={null}
+        role="button"
+      />,
+    );
+
+    const text = component.text();
+    const textContainsInvalidText = text.indexOf('undefined') !== -1
+      || text.indexOf('null') !== -1;
+    const srText = component.find('p.ResultItem-srOnly').text();
+    const srTextContainsInvalidText = srText.indexOf('undefined') !== -1
+      || srText.indexOf('null') !== -1;
+
+    // Expect element texts to render correctly
+    expect(textContainsInvalidText).toBeFalsy();
+    // Expect screen reader texts to render correctly
+    expect(srTextContainsInvalidText).toBeFalsy();
+  });
 });
