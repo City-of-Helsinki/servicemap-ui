@@ -221,7 +221,7 @@ const translations = {
   'general.pagination.next': 'Next page',
   'general.pagination.openPage': 'Open page {count}',
   'general.pagination.currentlyOpenedPage': 'Page {count} currently opened',
-  'general.pagination.pageCount': 'page {current} / {max}',
+  'general.pagination.pageCount': 'page {current} of {max}',
 
   'general.previousSearch': 'Previous searches',
   'general.return.viewTitle': 'Return to beginning of main content',
