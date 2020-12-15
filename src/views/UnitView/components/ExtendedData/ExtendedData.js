@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { useParams } from 'react-router-dom';
 import EventItem from '../../../../components/ListItems/EventItem';
 import PaginatedList from '../../../../components/Lists/PaginatedList';
@@ -18,6 +18,7 @@ const ExtendedData = ({
   reservations,
   type,
 }) => {
+  const intl = useIntl();
   const { unit } = useParams();
   const title = currentUnit && currentUnit.name ? getLocaleText(currentUnit.name) : '';
 
@@ -45,13 +46,14 @@ const ExtendedData = ({
     }
   }, []);
 
+  const getTitleText = messageID => `${title} - ${intl.formatMessage({ id: messageID })}`;
+
   const renderTitleBar = messageID => (
     <TitleBar
       sticky
       title={(
         <>
-          {`${title} - `}
-          <FormattedMessage id={messageID} />
+          {getTitleText(messageID)}
         </>
       )}
       titleComponent="h3"
@@ -62,6 +64,8 @@ const ExtendedData = ({
 
   const renderEvents = () => {
     const { data } = events;
+    const titleText = intl.formatMessage({ id: 'unit.events' });
+    const srTitle = `${title} ${titleText}`;
 
     return (
       <div>
@@ -75,6 +79,8 @@ const ExtendedData = ({
             customComponent={event => (
               <EventItem key={event.id} event={event} />
             )}
+            srTitle={srTitle}
+            title={titleText}
             titleComponent="h3"
           />
         </Loading>
@@ -84,6 +90,8 @@ const ExtendedData = ({
 
   const renderReservations = () => {
     const { data } = reservations;
+    const titleText = intl.formatMessage({ id: 'unit.reservations' });
+    const srTitle = `${title} ${titleText}`;
 
     return (
       <div>
@@ -97,6 +105,8 @@ const ExtendedData = ({
             customComponent={item => (
               <ReservationItem key={item.id} reservation={item} />
             )}
+            srTitle={srTitle}
+            title={titleText}
             titleComponent="h3"
           />
         </Loading>
