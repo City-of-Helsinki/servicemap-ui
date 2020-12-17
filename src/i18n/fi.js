@@ -17,7 +17,9 @@ const translations = {
   // Address
   'address': 'Osoite',
   'address.search': 'Osoitehaku',
+  'address.search.cleared': 'Hakukenttä tyhjennetty',
   'address.search.location': 'Valittu sijainti on {location}',
+  'address.search.suggestion': 'Valitse osoite hakuehdotuksista',
   'address.show.area': 'Näytä alue kartalla',
   'address.error': 'Osoitetta ei löytynyt',
   'address.nearby': 'Lähellä',
