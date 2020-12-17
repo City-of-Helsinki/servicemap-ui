@@ -29,6 +29,7 @@ const AddressSearchBar = ({
   const [resultIndex, setResultIndex] = useState(0);
   const [searchBarValue, setSearchBarValue] = useState(formAddressString(defaultAddress));
   const [currentLocation, setCurrentLocation] = useState(null);
+  const [cleared, setCleared] = useState(false);
 
   const suggestionCount = 5;
 
@@ -62,6 +63,10 @@ const AddressSearchBar = ({
   };
 
   const handleInputChange = (text) => {
+    // Reset cleared text
+    if (cleared) {
+      setCleared(false);
+    }
     setSearchBarValue(text);
     // Fetch address suggestions
     if (text.length && text.length > 1) {
@@ -93,7 +98,23 @@ const AddressSearchBar = ({
   // Add info text for location selection
   const locationInfoText = currentLocation ? intl.formatMessage({ id: 'address.search.location' }, { location: currentLocation }) : '';
   // Figure out which info text to use
-  const infoText = showSuggestions ? <FormattedMessage id="search.suggestions.suggestions" values={{ count: addressResults.length }} /> : locationInfoText;
+  let infoText = showSuggestions && addressResults.length ? <FormattedMessage id="search.suggestions.suggestions" values={{ count: addressResults.length }} /> : locationInfoText;
+  if (cleared) {
+    infoText = <FormattedMessage id="address.search.cleared" />;
+  } else {
+    infoText = (
+      <>
+        {infoText}
+        {
+          addressResults.length
+          && (
+            <FormattedMessage id="address.search.suggestion" />
+          )
+        }
+      </>
+    );
+  }
+
   return (
     <div className={containerClassName}>
       <Typography color="inherit">{title}</Typography>
@@ -115,6 +136,7 @@ const AddressSearchBar = ({
             <IconButton
               aria-label={intl.formatMessage({ id: 'search.cancelText' })}
               onClick={() => {
+                setCleared(true);
                 handleAddressChange(null);
                 setSearchBarValue('');
               }}
