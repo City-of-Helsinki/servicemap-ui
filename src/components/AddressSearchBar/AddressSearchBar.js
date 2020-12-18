@@ -66,6 +66,11 @@ const AddressSearchBar = ({
     }
   };
 
+  const blurSearchfield = (e) => {
+    e.preventDefault();
+    document.activeElement.blur();
+  };
+
   const handleInputChange = (text) => {
     // Reset cleared text
     if (cleared) {
@@ -119,55 +124,57 @@ const AddressSearchBar = ({
   return (
     <div className={containerClassName}>
       <Typography color="inherit">{title}</Typography>
-      <InputBase
-        inputRef={inputRef}
-        inputProps={{
-          role: 'combobox',
-          'aria-haspopup': !!showSuggestions,
-          'aria-label': `${intl.formatMessage({ id: 'search.searchField' })} ${intl.formatMessage({ id: 'address.search' })}`,
-        }}
-        type="search"
-        className={`${classes.searchBar} ${inputClassName}`}
-        value={searchBarValue}
-        onChange={e => handleInputChange(e.target.value)}
-        onKeyDown={e => showSuggestions && handleSearchBarKeyPress(e)}
-        endAdornment={(
-          <>
-            <Search aria-hidden className={classes.searchIcon} />
-            <Divider aria-hidden className={classes.divider} />
-            <IconButton
-              aria-label={intl.formatMessage({ id: 'search.cancelText' })}
-              onClick={() => {
-                setCleared(true);
-                handleAddressChange(null);
-                setSearchBarValue('');
-              }}
-              className={classes.IconButton}
-            >
-              <Clear className={classes.clearButton} />
-            </IconButton>
-          </>
-        )}
-      />
-      <Typography aria-live="polite" id="resultLength" variant="srOnly">{infoText}</Typography>
-      {showSuggestions ? (
-        <Paper>
-          <List>
-            {addressResults.map((address, i) => (
-              <ListItem
-                selected={i === resultIndex}
-                key={formAddressString(address)}
-                button
-                onClick={() => handleAddressSelect(address)}
+      <form action="" onSubmit={e => blurSearchfield(e)}>
+        <InputBase
+          inputRef={inputRef}
+          inputProps={{
+            role: 'combobox',
+            'aria-haspopup': !!showSuggestions,
+            'aria-label': `${intl.formatMessage({ id: 'search.searchField' })} ${intl.formatMessage({ id: 'address.search' })}`,
+          }}
+          type="search"
+          className={`${classes.searchBar} ${inputClassName}`}
+          value={searchBarValue}
+          onChange={e => handleInputChange(e.target.value)}
+          onKeyDown={e => showSuggestions && handleSearchBarKeyPress(e)}
+          endAdornment={(
+            <>
+              <Search aria-hidden className={classes.searchIcon} />
+              <Divider aria-hidden className={classes.divider} />
+              <IconButton
+                aria-label={intl.formatMessage({ id: 'search.cancelText' })}
+                onClick={() => {
+                  setCleared(true);
+                  handleAddressChange(null);
+                  setSearchBarValue('');
+                }}
+                className={classes.IconButton}
               >
-                <Typography>
-                  {formAddressString(address)}
-                </Typography>
-              </ListItem>
-            ))}
-          </List>
-        </Paper>
-      ) : null}
+                <Clear className={classes.clearButton} />
+              </IconButton>
+            </>
+          )}
+        />
+        <Typography aria-live="polite" id="resultLength" variant="srOnly">{infoText}</Typography>
+        {showSuggestions ? (
+          <Paper>
+            <List>
+              {addressResults.map((address, i) => (
+                <ListItem
+                  selected={i === resultIndex}
+                  key={formAddressString(address)}
+                  button
+                  onClick={() => handleAddressSelect(address)}
+                >
+                  <Typography>
+                    {formAddressString(address)}
+                  </Typography>
+                </ListItem>
+              ))}
+            </List>
+          </Paper>
+        ) : null}
+      </form>
     </div>
   );
 };
