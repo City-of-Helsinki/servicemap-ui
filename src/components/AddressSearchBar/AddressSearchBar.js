@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
@@ -32,8 +32,12 @@ const AddressSearchBar = ({
   const [cleared, setCleared] = useState(false);
 
   const suggestionCount = 5;
+  const inputRef = useRef();
 
   const handleAddressSelect = (address) => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
     setSearchBarValue(formAddressString(address));
     setAddressResults([]);
     setCurrentLocation(formAddressString(address));
@@ -119,6 +123,7 @@ const AddressSearchBar = ({
     <div className={containerClassName}>
       <Typography color="inherit">{title}</Typography>
       <InputBase
+        inputRef={inputRef}
         inputProps={{
           role: 'combobox',
           'aria-haspopup': !!showSuggestions,
