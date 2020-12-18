@@ -110,10 +110,7 @@ const AddressSearchBar = ({
       <>
         {infoText}
         {
-          addressResults.length
-          && (
-            <FormattedMessage id="address.search.suggestion" />
-          )
+          addressResults.length ? (<FormattedMessage id="address.search.suggestion" />) : null
         }
       </>
     );
