@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Tabs, Tab,
+  Tabs, Tab, Typography,
 } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
 import { parseSearchParams, stringifySearchParams } from '../../utils';
@@ -16,6 +16,8 @@ const TabLists = ({
   changeCustomUserLocation,
   location,
   data,
+  focusClass,
+  focusText,
   headerComponents,
   navigator,
   classes,
@@ -193,6 +195,13 @@ const TabLists = ({
             </>
           )
         }
+        {
+          focusClass
+          && focusText
+          && (
+            <Typography variant="srOnly" className={focusClass} tabIndex="-1">{focusText}</Typography>
+          )
+        }
         <Tabs
           ref={tabsRef}
           className={`sticky ${classes.root}`}
@@ -335,12 +344,16 @@ TabLists.propTypes = {
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
+  focusClass: PropTypes.string,
+  focusText: PropTypes.string,
 };
 
 TabLists.defaultProps = {
   headerComponents: null,
   navigator: null,
   userAddress: null,
+  focusClass: null,
+  focusText: null,
 };
 
 export default TabLists;
