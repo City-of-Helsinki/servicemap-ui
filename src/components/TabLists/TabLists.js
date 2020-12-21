@@ -2,16 +2,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Typography, Tabs, Tab,
+  Tabs, Tab,
 } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
 import { parseSearchParams, stringifySearchParams } from '../../utils';
-import ResultList from '../Lists/ResultList';
-import PaginationComponent from '../PaginationComponent';
 import ResultOrderer from '../ResultOrderer';
 import config from '../../../config';
 import useMobileStatus from '../../utils/isMobile';
 import AddressSearchBar from '../AddressSearchBar';
+import PaginatedList from '../Lists/PaginatedList';
 
 const TabLists = ({
   changeCustomUserLocation,
@@ -20,17 +19,12 @@ const TabLists = ({
   headerComponents,
   navigator,
   classes,
-  intl,
   userAddress,
 }) => {
-  // Option to change number of items shown per page
-  const itemsPerPage = 10;
-
   const isMobile = useMobileStatus();
 
   const searchParams = parseSearchParams(location.search);
   const filteredData = data.filter(item => item.component || (item.data && item.data.length > 0));
-  const getPagefromUrl = () => parseInt(searchParams.p, 10) || 1;
   const getTabfromUrl = () => {
     let index = data.findIndex(tab => tab.id === searchParams.t);
     if (index === -1) index = parseInt(searchParams.t, 10) || 0;
@@ -40,10 +34,8 @@ const TabLists = ({
     return index;
   };
 
-  const tabTitleClass = 'TabResultTitle';
   const sidebarClass = 'SidebarWrapper';
 
-  const [currentPage, setCurrentPage] = useState(getPagefromUrl());
   const [scrollDistance, setScrollDistance] = useState(0);
   const [tabIndex, setTabIndex] = useState(getTabfromUrl());
   const [styles, setStyles] = useState({});
@@ -54,27 +46,6 @@ const TabLists = ({
   if (filteredData.length <= tabIndex) {
     setTabIndex(0);
   }
-
-  // Handle page number changes
-  const handlePageChange = (pageNum, pageCount) => {
-    if (pageNum >= 1 && pageNum <= pageCount) {
-      // Change page parameter in searchParams
-      const searchParams = parseSearchParams(location.search);
-      searchParams.p = pageNum;
-
-      // Get new search search params string
-      const searchString = stringifySearchParams(searchParams);
-      setCurrentPage(pageNum);
-      // Update p(page) param to current history
-      if (navigator) {
-        navigator.replace({
-          ...location,
-          search: `?${searchString || ''}`,
-        });
-      }
-    }
-  };
-
 
   const handleAddressChange = (address) => {
     if (address) {
@@ -129,7 +100,6 @@ const TabLists = ({
 
     // Get new search search params string
     const searchString = stringifySearchParams(searchParams);
-    setCurrentPage(1);
     setTabIndex(value);
 
     // Update p(page) param to current history
@@ -182,15 +152,6 @@ const TabLists = ({
       setStyles({ top: stickyElementPadding });
       setScrollDistance(tabsDistanceFromTop);
     }
-  };
-
-  // Calculate pageCount
-  const calculatePageCount = (data) => {
-    if (data && data.length) {
-      const newPageCount = Math.ceil(data.length / itemsPerPage);
-      return newPageCount;
-    }
-    return null;
   };
 
   const renderHeader = () => {
@@ -290,18 +251,6 @@ const TabLists = ({
     calculateHeaderStylings();
   }, [isMobile]);
 
-  useEffect(() => {
-    const firstListResult = document.querySelectorAll(`.${tabTitleClass}`)[0];
-    if (firstListResult) {
-      try {
-        firstListResult.focus();
-      } catch (e) {
-        console.error('Unable to focus on list title');
-      }
-    }
-  }, [currentPage]);
-
-
   const render = () => (
     <>
       {
@@ -339,20 +288,6 @@ const TabLists = ({
             );
           }
 
-          // Calculate pageCount and adjust currentPage
-          const pageCount = calculatePageCount(item.data);
-          const adjustedCurrentPage = currentPage > pageCount ? pageCount : currentPage;
-
-          // Calculate shown data
-          const endIndex = item.data.length >= itemsPerPage
-            ? adjustedCurrentPage * itemsPerPage
-            : item.data.length;
-          const startIndex = adjustedCurrentPage > 1
-            ? (adjustedCurrentPage - 1) * itemsPerPage
-            : 0;
-          const shownData = item.data.slice(startIndex, endIndex);
-
-          const additionalText = `${intl.formatMessage({ id: 'general.pagination.pageCount' }, { current: adjustedCurrentPage, max: pageCount })}`;
 
           return (
             <div
@@ -364,22 +299,12 @@ const TabLists = ({
                 index === tabIndex
                 && (
                   <>
-                    <Typography className={tabTitleClass} variant="srOnly" component="p" tabIndex="-1">
-                      {`${item.title} ${additionalText}`}
-                    </Typography>
-                    <ResultList
-                      data={shownData}
-                      listId={`${item.title}-results`}
-                      resultCount={item.data.length}
+                    <PaginatedList
+                      id={`${item.title}-results`}
+                      data={item.data}
                       titleComponent="h3"
-                    />
-                    {
-                      item.beforePagination || null
-                    }
-                    <PaginationComponent
-                      current={adjustedCurrentPage}
-                      pageCount={pageCount}
-                      handlePageChange={handlePageChange}
+                      beforePagination={item.beforePagination || null}
+                      srTitle={item.title}
                     />
                   </>
                 )
