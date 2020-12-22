@@ -1,0 +1,107 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ResultList /> should work 1`] = `
+<div>
+  <div>
+    <div>
+      <WithStyles(ForwardRef(Typography))
+        aria-labelledby="testID-result-title testID-result-title-info"
+        className="undefined undefined SearchResultTitle"
+        component="h3"
+        id="testID-result-title"
+        tabIndex="-1"
+        variant="subtitle1"
+      >
+        Title text
+      </WithStyles(ForwardRef(Typography))>
+      <WithStyles(ForwardRef(Typography))
+        aria-hidden="true"
+        component="p"
+        id="testID-result-title-info"
+        variant="caption"
+      >
+        <FormattedMessage
+          id="search.resultList"
+          values={
+            Object {
+              "count": 5,
+            }
+          }
+        />
+      </WithStyles(ForwardRef(Typography))>
+    </div>
+  </div>
+  <WithStyles(ForwardRef(Divider))
+    aria-hidden="true"
+  />
+  <p>
+    Test before list
+  </p>
+  <WithStyles(ForwardRef(List))
+    id="testID"
+  >
+    <injectIntl(WithStyles(Connect(UnitItem)))
+      className="unit-63115"
+      key="unit-63115"
+      unit={
+        Object {
+          "accessibility_properties": Array [],
+          "accessibility_shortcoming_count": Object {},
+          "contract_type": Object {
+            "description": Object {
+              "en": "municipal service",
+              "fi": "kunnallinen palvelu",
+              "sv": "kommunal tjänst",
+            },
+            "id": "municipal_service",
+          },
+          "id": 63115,
+          "municipality": "espoo",
+          "name": Object {
+            "en": "Lippulaiva library",
+            "fi": "Lippulaivan kirjasto",
+            "sv": "Lippulaivabiblioteket",
+          },
+          "object_type": "unit",
+          "street_address": Object {
+            "en": "Merikarhunkuja 11",
+            "fi": "Merikarhunkuja 11",
+            "sv": "Sjöbjörnsgränden 11",
+          },
+        }
+      }
+    />
+    <injectIntl(WithStyles(Connect(UnitItem)))
+      className="unit-62032"
+      key="unit-62032"
+      unit={
+        Object {
+          "accessibility_properties": Array [],
+          "accessibility_shortcoming_count": Object {},
+          "contract_type": Object {
+            "description": Object {
+              "en": "municipal service",
+              "fi": "kunnallinen palvelu",
+              "sv": "kommunal tjänst",
+            },
+            "id": "municipal_service",
+          },
+          "id": 62032,
+          "municipality": "vantaa",
+          "name": Object {
+            "en": "Kivistö Library",
+            "fi": "Kivistön kirjasto",
+            "sv": "Kivistö bibliotek",
+          },
+          "object_type": "unit",
+          "street_address": Object {
+            "en": "Topaasikuja 11",
+            "fi": "Topaasikuja 11",
+            "sv": "Topasgränden 11",
+          },
+        }
+      }
+    />
+  </WithStyles(ForwardRef(List))>
+</div>
+`;

@@ -220,7 +220,7 @@ const translations = {
   'general.pagination.next': 'Seuraava sivu',
   'general.pagination.openPage': 'Avaa sivu {count}',
   'general.pagination.currentlyOpenedPage': 'Sivu {count}, avattu',
-  'general.pagination.pageCount': 'sivu {current} / {max}',
+  'general.pagination.pageCount': 'sivu {current} kautta {max}',
 
   'general.previousSearch': 'Aikaisemmat haut',
   'general.return.viewTitle': 'Siirry pääsisällön alkuun',

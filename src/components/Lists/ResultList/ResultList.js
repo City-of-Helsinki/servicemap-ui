@@ -18,7 +18,7 @@ class ResultList extends React.Component {
 
   render() {
     const {
-      classes, data, customComponent, listId, resultCount, title, titleComponent,
+      beforeList, classes, data, customComponent, listId, resultCount, title, titleComponent,
     } = this.props;
 
     return (
@@ -53,6 +53,7 @@ class ResultList extends React.Component {
           )
         }
         <Divider aria-hidden="true" />
+        {beforeList}
         <List className={classes.list} id={listId}>
           {
             data && data.length
@@ -94,6 +95,7 @@ export default ResultList;
 
 // Typechecking
 ResultList.propTypes = {
+  beforeList: PropTypes.node,
   classes: PropTypes.objectOf(PropTypes.any),
   customComponent: PropTypes.func,
   data: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)).isRequired,
@@ -104,6 +106,7 @@ ResultList.propTypes = {
 };
 
 ResultList.defaultProps = {
+  beforeList: null,
   classes: {},
   customComponent: null,
   resultCount: null,

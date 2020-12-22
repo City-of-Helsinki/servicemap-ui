@@ -127,3 +127,18 @@ test('Pagination attributes change correctly', async (t) => {
     .expect(buttons.nth(4).getAttribute('tabindex')).eql('-1')
   ;
 });
+
+test('Pagination\'s page change focuses correctly', async(t) => {
+  const resultList = ReactSelector('ResultList');
+  const focusTarget = resultList.find('p').nth(1);
+  const pagination = ReactSelector('PaginationComponent');
+  const buttons = pagination.find('button');
+
+  await t
+    .click(buttons.nth(3))
+    // Focus target should be focused
+    .expect(focusTarget.focused).ok()
+    // Focus target should be screen reader text with pagination information
+    .expect(focusTarget.innerText).contains('sivu 2 kautta')
+  ;
+});

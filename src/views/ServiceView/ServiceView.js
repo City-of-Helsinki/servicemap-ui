@@ -127,6 +127,7 @@ class ServiceView extends React.Component {
     const showServiceWithoutUnits = current && !isFetching && !serviceUnits;
 
     const initialOrder = customPosition ? 'distance-asc' : null;
+    const paginatedListTitle = intl.formatMessage({ id: 'unit.plural' });
 
     return (
       <div>
@@ -164,7 +165,8 @@ class ServiceView extends React.Component {
           <PaginatedList
             id="events"
             data={serviceUnits || []}
-            title={intl.formatMessage({ id: 'unit.plural' })}
+            srTitle={paginatedListTitle}
+            title={paginatedListTitle}
             titleComponent="h4"
           />
         </Loading>
