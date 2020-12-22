@@ -125,6 +125,7 @@ const ToolMenu = ({
   return (
     <>
       <DropDownMenuButton
+        id="ToolMenuButton"
         ref={toolMenuButton}
         panelID="ToolMenuPanel"
         buttonIcon={<Build />}

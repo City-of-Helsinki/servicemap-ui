@@ -67,7 +67,7 @@ class DropDownMenuButton extends React.Component {
 
   render() {
     const {
-      buttonIcon, buttonText, classes, panelID,
+      buttonIcon, buttonText, classes, id, panelID,
     } = this.props;
     const { open } = this.state;
     const arrowIcon = open
@@ -77,6 +77,7 @@ class DropDownMenuButton extends React.Component {
     return (
       <div className={classes.root}>
         <Button
+          id={id}
           buttonRef={(node) => {
             this.anchorEl = node;
           }}
@@ -108,7 +109,12 @@ DropDownMenuButton.propTypes = {
   classes: PropTypes.shape({
     root: PropTypes.string,
     button: PropTypes.string,
+    menuItem: PropTypes.string,
+    menuPanel: PropTypes.string,
+    icon: PropTypes.string,
+    iconRight: PropTypes.string,
   }).isRequired,
+  id: PropTypes.string,
   menuItems: PropTypes.arrayOf(PropTypes.shape({
     key: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired,
@@ -120,6 +126,7 @@ DropDownMenuButton.propTypes = {
 
 DropDownMenuButton.defaultProps = {
   buttonIcon: null,
+  id: null,
 };
 
 export default DropDownMenuButton;
