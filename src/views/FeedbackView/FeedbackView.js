@@ -9,6 +9,7 @@ import { Prompt } from 'react-router-dom';
 import TitleBar from '../../components/TitleBar';
 import SMButton from '../../components/ServiceMapButton';
 import config from '../../../config';
+import DesktopComponent from '../../components/DesktopComponent';
 
 const FeedbackView = ({
   classes, navigator, intl, location, selectedUnit, getLocaleText,
@@ -124,10 +125,12 @@ const FeedbackView = ({
   return (
     <>
       {/* Exit dialog */}
-      <Prompt
-        when={!!(!modalOpen && (email || feedback || permission))}
-        message={intl.formatMessage({ id: 'feedback.modal.leave' })}
-      />
+      <DesktopComponent>
+        <Prompt
+          when={!!(!modalOpen && (email || feedback || permission))}
+          message={intl.formatMessage({ id: 'feedback.modal.leave' })}
+        />
+      </DesktopComponent>
       {/* Confirm dialog */}
       {
         modalOpen
