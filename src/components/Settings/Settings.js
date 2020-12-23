@@ -66,9 +66,13 @@ class Settings extends React.Component {
     };
 
     config.cities.forEach((city) => { newCurrent.cities[city] = settings.cities[city]; });
+    const initialPreviousSearch = {
+      ...newCurrent,
+      cities: { ...newCurrent.cities },
+    };
     this.setState({
       currentSettings: newCurrent,
-      previousSettings: newCurrent,
+      previousSettings: initialPreviousSearch,
     });
 
     setTimeout(() => {
@@ -135,7 +139,12 @@ class Settings extends React.Component {
 
   setNewPreviousSettings(previousSettings) {
     this.setState({
-      previousSettings,
+      previousSettings: {
+        ...previousSettings,
+        cities: {
+          ...previousSettings.cities,
+        },
+      },
       saved: true,
     });
   }
@@ -217,7 +226,12 @@ class Settings extends React.Component {
   resetCurrentSelections() {
     const { previousSettings } = this.state;
     this.setState({
-      currentSettings: previousSettings,
+      currentSettings: {
+        ...previousSettings,
+        cities: {
+          ...previousSettings.cities,
+        },
+      },
       saved: false,
     });
   }
