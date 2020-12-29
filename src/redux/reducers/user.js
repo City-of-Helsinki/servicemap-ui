@@ -1,5 +1,5 @@
 
-const initialState = {
+export const initialState = {
   initialLoad: false,
   locale: 'fi',
   page: 'home',

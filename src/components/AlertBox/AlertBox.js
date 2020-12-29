@@ -47,6 +47,18 @@ const AlertBox = ({
       <Typography variant="srOnly" component="h2">
         <FormattedMessage id="general.news.alert.title" />
       </Typography>
+      <Button
+        aria-label={closeButtonTextAria}
+        color="inherit"
+        classes={{
+          endIcon: classes.endIcon,
+        }}
+        className={classes.closeButton}
+        endIcon={closeButtonIcon}
+        onClick={closeButtonClick}
+      >
+        {closeButtonText}
+      </Button>
       {icon}
       <div className={classes.textContent}>
         <Typography
@@ -60,18 +72,6 @@ const AlertBox = ({
         <Typography className={classes.messageText} color="inherit">{tLeadParagraph}</Typography>
       </div>
       <div className={classes.padder} />
-      <Button
-        aria-label={closeButtonTextAria}
-        color="inherit"
-        classes={{
-          endIcon: classes.endIcon,
-        }}
-        className={classes.closeButton}
-        endIcon={closeButtonIcon}
-        onClick={closeButtonClick}
-      >
-        {closeButtonText}
-      </Button>
     </section>
   );
 };

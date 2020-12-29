@@ -12,10 +12,10 @@ import Loading from '../../components/Loading';
 import Container from '../../components/Container';
 import PaginatedList from '../../components/Lists/PaginatedList';
 import ResultOrderer from '../../components/ResultOrderer';
-import CustomLocation from '../../utils/customLocation';
 import { getIcon } from '../../components/SMIcon';
 import DesktopComponent from '../../components/DesktopComponent';
 import MobileComponent from '../../components/MobileComponent';
+import coordinateIsActive from '../../utils/coordinate';
 
 class ServiceView extends React.Component {
   constructor(props) {
@@ -41,30 +41,23 @@ class ServiceView extends React.Component {
     if (this.shouldFetch()) {
       fetchService(params.service);
     }
-    const { changeCustomUserLocation, location } = this.props;
-
-    const customLocation = new CustomLocation(location);
-    if (customLocation.coords) {
-      changeCustomUserLocation(customLocation.coords, null, customLocation.hideMarker);
-      return;
-    }
-    changeCustomUserLocation(null);
   }
 
   componentDidUpdate(nextProps) {
     const {
+      location,
       unitData,
     } = this.props;
+
+    if (coordinateIsActive(location)) {
+      return;
+    }
+
     // Focus map if service is set and units exist
     if (unitData.length > 0 && unitData !== nextProps.unitData) {
       // Focus map on unit
       this.focusMap(unitData);
     }
-  }
-
-  componentWillUnmount() {
-    const { changeCustomUserLocation } = this.props;
-    changeCustomUserLocation(null);
   }
 
   // Check if view will fetch data because search params has changed
@@ -134,6 +127,7 @@ class ServiceView extends React.Component {
     const showServiceWithoutUnits = current && !isFetching && !serviceUnits;
 
     const initialOrder = customPosition ? 'distance-asc' : null;
+    const paginatedListTitle = intl.formatMessage({ id: 'unit.plural' });
 
     return (
       <div>
@@ -171,7 +165,8 @@ class ServiceView extends React.Component {
           <PaginatedList
             id="events"
             data={serviceUnits || []}
-            title={intl.formatMessage({ id: 'unit.plural' })}
+            srTitle={paginatedListTitle}
+            title={paginatedListTitle}
             titleComponent="h4"
           />
         </Loading>
@@ -189,7 +184,6 @@ class ServiceView extends React.Component {
 }
 
 ServiceView.propTypes = {
-  changeCustomUserLocation: PropTypes.func.isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   customPosition: PropTypes.shape({
     latitude: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),

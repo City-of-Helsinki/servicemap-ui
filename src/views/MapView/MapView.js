@@ -24,6 +24,7 @@ import Loading from '../../components/Loading';
 import MarkerCluster from './components/MarkerCluster';
 import UnitGeometry from './components/UnitGeometry';
 import MapUtility from './utils/mapUtility';
+import CoordinateMarker from './components/CoordinateMarker';
 
 if (global.window) {
   require('leaflet');
@@ -220,6 +221,18 @@ const MapView = (props) => {
   useEffect(() => {
     if (mapRef.current) {
       setMapUtility(new MapUtility({ leaflet: mapRef.current.leafletElement }));
+
+      const usp = new URLSearchParams(location.search);
+      const lat = usp.get('lat');
+      const lng = usp.get('lon');
+      try {
+        if (lat && lng) {
+          const position = [usp.get('lon'), usp.get('lat')];
+          focusToPosition(mapRef.current.leafletElement, position); 
+        }
+      } catch (e) {
+        console.error('Error while attemptin to focus on coordinate:', e)
+      }
     }
   }, [mapRef.current]);
 
@@ -413,6 +426,7 @@ const MapView = (props) => {
               </>
             )
           }
+          <CoordinateMarker />
         </Map>
       </>
     );
