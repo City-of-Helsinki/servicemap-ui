@@ -195,26 +195,26 @@ const FeedbackView = ({
               onBlur={!fbFieldVisited ? () => setFbFieldVisited(true) : null}
               inputProps={{ maxLength: feedbackMaxLength, 'aria-invalid': !!errorMessage }}
             />
-            <div className={classes.inputInfo}>
-              {errorMessage && (
-                <div className={classes.errorContainer}>
-                  <Warning className={classes.errorIcon} />
-                  &nbsp;
-                  <Typography color="inherit" aria-hidden className={classes.errorText}>
-                    {errorMessage}
-                  </Typography>
-                </div>
-              )}
-              {!feedbackLength && (
-                <Typography id="srError" role="alert" variant="srOnly">
-                  <FormattedMessage id="feedback.srError.required" />
-                </Typography>
-              )}
-              <Typography aria-hidden className={`${classes.characterInfo} ${feedbackFull ? classes.characterInfoError : ''}`}>
-                {`${feedbackLength}/${feedbackMaxLength}`}
-              </Typography>
-            </div>
           </FormControl>
+          <div className={classes.inputInfo}>
+            {errorMessage && (
+              <div aria-hidden className={classes.errorContainer}>
+                <Warning className={classes.errorIcon} />
+                &nbsp;
+                <Typography color="inherit" aria-hidden className={classes.errorText}>
+                  {errorMessage}
+                </Typography>
+              </div>
+            )}
+            {!feedbackLength && (
+              <Typography id="srError" role="alert" variant="srOnly">
+                <FormattedMessage id="feedback.srError.required" />
+              </Typography>
+            )}
+            <Typography aria-hidden className={`${classes.characterInfo} ${feedbackFull ? classes.characterInfoError : ''}`}>
+              {`${feedbackLength}/${feedbackMaxLength}`}
+            </Typography>
+          </div>
           {feedbackPermission}
         </div>
 
