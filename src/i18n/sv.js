@@ -468,6 +468,7 @@ const translations = {
   'settings.city.espoo': 'Esbo',
   'settings.city.vantaa': 'Vanda',
   'settings.city.kauniainen': 'Grankulla',
+  'settings.city.kirkkonummi': 'Kyrkslätt',
   'settings.map.title': 'Kartunderlag',
   'settings.map.servicemap': 'Servicekarta',
   'settings.map.ortographic': 'Flygbild',

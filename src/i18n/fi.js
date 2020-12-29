@@ -468,6 +468,7 @@ const translations = {
   'settings.city.espoo': 'Espoo',
   'settings.city.vantaa': 'Vantaa',
   'settings.city.kauniainen': 'Kauniainen',
+  'settings.city.kirkkonummi': 'Kirkkonummi',
   'settings.map.title': 'Karttapohja',
   'settings.map.servicemap': 'Palvelukartta',
   'settings.map.ortographic': 'Ilmakuva',
