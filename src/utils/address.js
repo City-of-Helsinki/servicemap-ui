@@ -101,6 +101,10 @@ export const getAddressFromUnit = (unit, getLocaleText, intl) => {
   }
   const { address_zip: addressZip } = unit;
   const postalCode = addressZip ? `, ${addressZip}` : '';
+  const city = intl.formatMessage({
+    id: `settings.city.${unit.municipality}`,
+    defaultMessage: ' ',
+  });
 
-  return `${getLocaleText(unit.street_address)}${postalCode} ${intl.formatMessage({ id: `settings.city.${unit.municipality}` })}`;
+  return `${getLocaleText(unit.street_address)}${postalCode} ${city}`;
 };
