@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Warning } from '@material-ui/icons';
 import {
-  Typography, InputBase, Checkbox, FormControl, Dialog, ButtonBase,
+  Typography, InputBase, Checkbox, FormControl, Dialog, ButtonBase, DialogTitle, DialogContent,
 } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
 import { Prompt } from 'react-router-dom';
@@ -135,24 +135,28 @@ const FeedbackView = ({
       {
         modalOpen
         && (
-          <Dialog open={!!modalOpen}>
+          <Dialog open={!!modalOpen} onEntered={() => document.getElementById('dialog-title').focus()}>
             <div className={classes.modalContainer}>
-              <Typography className={classes.modalTitle}>
-                <FormattedMessage id={modalOpen === 'send' ? 'feedback.modal.success' : 'feedback.modal.error'} />
-              </Typography>
-              <SMButton
-                margin
-                role="button"
-                className={classes.modalButton}
-                messageID="feedback.modal.confirm"
-                color="primary"
-                onClick={() => {
-                  setModalOpen(false);
-                  if (modalOpen === 'send') {
-                    navigator.goBack();
-                  }
-                }}
-              />
+              <DialogTitle tabIndex="-1" id="dialog-title">
+                <Typography aria-live="polite" className={classes.modalTitle}>
+                  <FormattedMessage id={modalOpen === 'send' ? 'feedback.modal.success' : 'feedback.modal.error'} />
+                </Typography>
+              </DialogTitle>
+              <DialogContent>
+                <SMButton
+                  margin
+                  role="button"
+                  className={classes.modalButton}
+                  messageID="feedback.modal.confirm"
+                  color="primary"
+                  onClick={() => {
+                    setModalOpen(false);
+                    if (modalOpen === 'send') {
+                      navigator.goBack();
+                    }
+                  }}
+                />
+              </DialogContent>
             </div>
           </Dialog>
         )
