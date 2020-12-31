@@ -12,6 +12,7 @@ import { parseSearchParams, uppercaseFirst } from '../../utils';
 import AreaTab from './components/AreaTab';
 import { districtFetch } from '../../utils/fetch';
 import fetchAddress from '../MapView/utils/fetchAddress';
+import TitleBar from '../../components/TitleBar';
 
 
 const fetchReducer = (state, action) => {
@@ -465,7 +466,11 @@ const AreaView = ({
     if (!embed) {
       return (
         <div>
-          <div className={classes.topBar} />
+          <TitleBar
+            title={intl.formatMessage({ id: 'general.pageTitles.area' })}
+            titleComponent="p"
+            backButton
+          />
           <TabLists
             data={tabs}
           />

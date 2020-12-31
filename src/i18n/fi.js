@@ -210,7 +210,7 @@ const translations = {
   'general.pageTitles.list.reservations': 'Varauslista',
   'general.pageTitles.info': 'Tietoa palvelusta',
   'general.pageTitles.feedback': 'Palautenäkymä',
-  'general.pageTitles.area': 'Aluenäkymä.',
+  'general.pageTitles.area': 'Aluenäkymä',
   // Readspeaker
   'general.readspeaker.buttonText': 'Kuuntele',
   'general.readspeaker.title': 'Kuuntele ReadSpeaker webReaderilla',
