@@ -19,7 +19,6 @@ const SuggestionItem = (props) => {
     handleItemClick,
     handleArrowClick,
     icon,
-    intl,
     selected,
     subtitle,
     query,
@@ -53,13 +52,10 @@ const SuggestionItem = (props) => {
         onKeyDown={keyboardHandler(onClick, ['space', 'enter'])}
         onKeyUp={() => setMouseDown(false)}
         role="link"
-        tabIndex="0"
+        aria-label={`${text} ${subtitle || ''}`}
       >
         <span
           className={classes.container}
-          type="submit"
-          role="link"
-          tabIndex="-1"
         >
           <ListItemIcon aria-hidden className={`${classes.listIcon}`}>
             {icon}
@@ -69,9 +65,6 @@ const SuggestionItem = (props) => {
             className={classes.text}
             classes={{ root: classes.textContainer }}
           >
-            <Typography variant="srOnly">
-              {`${text} ${subtitle || ''}`}
-            </Typography>
 
             <Typography
               aria-hidden
@@ -108,7 +101,6 @@ const SuggestionItem = (props) => {
           && (
             <Button
               aria-hidden
-              aria-label={intl.formatMessage({ id: 'search.arrowLabel' })}
               className={`${classes.suggestIcon}`}
               classes={{
                 label: classes.suggestIconLabel,
@@ -140,7 +132,6 @@ export default SuggestionItem;
 SuggestionItem.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   text: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
-  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   icon: PropTypes.objectOf(PropTypes.any),
   handleArrowClick: PropTypes.func,
   handleItemClick: PropTypes.func,
