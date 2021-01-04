@@ -168,7 +168,6 @@ const ServiceTreeView = (props) => {
       if (sibling) {
         sibling.focus();
       } else if (titleRef.current) {
-        console.log('titleRef', titleRef);
         titleRef.current.focus();
       }
     }
