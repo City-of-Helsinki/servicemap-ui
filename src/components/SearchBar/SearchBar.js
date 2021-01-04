@@ -230,7 +230,7 @@ class SearchBar extends React.Component {
           onChange={this.onInputChange}
           onFocus={this.activateSearch}
           onKeyDown={e => keyboardHandler(this.keyHandler(e), ['up, down'])}
-          onBlur={this.handleBlur}
+          onBlur={isMobile ? () => {} : this.handleBlur}
           endAdornment={
             inputValue
             && inputValue !== ''
