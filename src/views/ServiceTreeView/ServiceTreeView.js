@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import {
   List, ListItem, Collapse, Checkbox, Typography, ButtonBase, NoSsr, Divider,
@@ -28,6 +28,8 @@ const ServiceTreeView = (props) => {
   const [opened, setOpened] = useState(prevOpened);
   const [selected, setSelected] = useState(prevSelected);
   const [selectedOpen, setSelectedOpen] = useState(false);
+
+  const titleRef = useRef();
 
   let citySettings = [];
   config.cities.forEach((city) => {
@@ -152,6 +154,30 @@ const ServiceTreeView = (props) => {
       newState = newState.filter(e => !selected.some(i => i.id === e.id));
       setSelected([...selected, ...newState]);
       e.stopPropagation();
+    }
+  };
+
+  // Remove selection and refocus
+  const handleRemoveSelection = (e, item, focus = false) => {
+    handleCheckboxClick(e, item);
+    // If focus set to true
+    // Attempt to focus to either previous or next sibling in list
+    if (focus) {
+      const sibling = e.currentTarget.parentNode?.previousSibling?.childNodes[1]
+        || e.currentTarget.parentNode?.nextSibling?.childNodes[1];
+      if (sibling) {
+        sibling.focus();
+      } else if (titleRef.current) {
+        titleRef.current.focus();
+      }
+    }
+  };
+
+  // Clear selections and focus to title
+  const handleRemoveAllSelections = () => {
+    setSelected([]);
+    if (titleRef.current) {
+      titleRef.current.focus();
     }
   };
 
@@ -338,7 +364,7 @@ const ServiceTreeView = (props) => {
           <ButtonBase
             className={classes.right}
             disabled={!selectedList.length}
-            onClick={() => setSelected([])}
+            onClick={() => handleRemoveAllSelections()}
             focusVisibleClassName={classes.selectionFocus}
           >
             <Typography className={classes.deleteText}>
@@ -362,7 +388,7 @@ const ServiceTreeView = (props) => {
                 <ButtonBase
                   className={classes.right}
                   aria-label={intl.formatMessage({ id: 'services.selections.delete.sr' }, { service: getLocaleText(item.name) })}
-                  onClick={() => handleCheckboxClick(null, item)}
+                  onClick={e => handleRemoveSelection(e, item, true)}
                   focusVisibleClassName={classes.selectionFocus}
                 >
                   <Typography className={classes.deleteText} variant="body2">
@@ -414,7 +440,12 @@ const ServiceTreeView = (props) => {
   return (
     <>
       <div className={classes.topArea}>
-        <Typography aria-hidden className={classes.title}><FormattedMessage id="services" /></Typography>
+        <Typography
+          ref={titleRef}
+          aria-hidden
+          className={classes.title}
+          tabIndex="-1"
+        ><FormattedMessage id="services" /></Typography>
         {renderSelectedCities()}
         {renderSelectionList(selectedList)}
       </div>
