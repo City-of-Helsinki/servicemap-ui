@@ -107,6 +107,7 @@ const SuggestionItem = (props) => {
           && handleArrowClick
           && (
             <Button
+              aria-hidden
               aria-label={intl.formatMessage({ id: 'search.arrowLabel' })}
               className={`${classes.suggestIcon}`}
               classes={{
