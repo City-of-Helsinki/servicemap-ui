@@ -158,11 +158,13 @@ const SuggestionBox = (props) => {
     if (suggestionList) {
       return (
         <>
-          <List id="SuggestionList" className="suggestionList" ref={listRef}>
+          <List role="listbox" id="SuggestionList" className="suggestionList" ref={listRef}>
             {suggestionList.map((item, i) => {
               if (item.object_type === 'suggestion') {
                 return (
                   <SuggestionItem
+                    id={`suggestion${i}`}
+                    role="option"
                     selected={i === focusedSuggestion}
                     key={`suggestion-${item.suggestion + item.count}`}
                     icon={<Search />}
@@ -180,6 +182,8 @@ const SuggestionBox = (props) => {
                 const sortIndex = item.sort_index;
                 return (
                   <AddressItem
+                    id={`suggestion${i}`}
+                    role="option"
                     selected={i === focusedSuggestion}
                     key={`address-${sortIndex}`}
                     address={item}

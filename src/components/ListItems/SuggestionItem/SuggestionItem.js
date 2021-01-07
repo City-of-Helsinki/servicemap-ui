@@ -23,6 +23,8 @@ const SuggestionItem = (props) => {
     selected,
     subtitle,
     query,
+    role,
+    id,
   } = props;
 
   const [mouseDown, setMouseDown] = useState(false);
@@ -52,8 +54,9 @@ const SuggestionItem = (props) => {
         onMouseUp={() => setMouseDown(false)}
         onKeyDown={keyboardHandler(onClick, ['space', 'enter'])}
         onKeyUp={() => setMouseDown(false)}
-        role="link"
+        role={role || 'link'}
         tabIndex="0"
+        id={id}
       >
         <span
           className={classes.container}
@@ -147,6 +150,8 @@ SuggestionItem.propTypes = {
   selected: PropTypes.bool,
   subtitle: PropTypes.string,
   query: PropTypes.string,
+  role: PropTypes.string,
+  id: PropTypes.string,
 };
 
 SuggestionItem.defaultProps = {
@@ -157,4 +162,6 @@ SuggestionItem.defaultProps = {
   selected: false,
   subtitle: null,
   query: null,
+  role: null,
+  id: null,
 };

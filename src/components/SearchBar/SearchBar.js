@@ -202,7 +202,7 @@ class SearchBar extends React.Component {
       inputValue = null;
     }
     const containerStyles = `${isActive ? classes.containerSticky : classes.containerInactive} ${classes.container}`;
-
+    const inputString = this.searchRef.current?.value;
     return (
       <form id="SearchBar" action="" onSubmit={this.onSubmit} className={containerStyles} autoComplete="off">
         {
@@ -221,8 +221,10 @@ class SearchBar extends React.Component {
             role: 'combobox',
             'aria-haspopup': !!showSuggestions,
             'aria-label': intl.formatMessage({ id: 'search.searchField' }),
+            'aria-owns': inputString?.length ? 'SuggestionList' : 'PreviousList',
+            'aria-activedescendant': `suggestion${focusedSuggestion}`,
           }}
-          type="search"
+          type="text"
           inputRef={this.searchRef}
           className={classes.input}
           value={inputValue || ''}

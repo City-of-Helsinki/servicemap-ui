@@ -15,6 +15,8 @@ const AddressItem = (props) => {
     selected,
     className,
     showPostalCode,
+    role,
+    id,
   } = props;
 
   const text = getAddressText(address, getLocaleText, showPostalCode);
@@ -32,8 +34,9 @@ const AddressItem = (props) => {
           navigator.push('address', getAddressNavigatorParams(address));
         }
       }}
-      role="link"
+      role={role || 'link'}
       selected={selected}
+      id={id}
     />
   );
 };
@@ -50,6 +53,8 @@ AddressItem.propTypes = {
   selected: PropTypes.bool,
   className: PropTypes.string,
   showPostalCode: PropTypes.bool,
+  role: PropTypes.string,
+  id: PropTypes.string,
 };
 
 AddressItem.defaultProps = {
@@ -57,4 +62,6 @@ AddressItem.defaultProps = {
   selected: false,
   className: null,
   showPostalCode: true,
+  role: null,
+  id: null,
 };
