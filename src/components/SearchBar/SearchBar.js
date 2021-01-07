@@ -30,8 +30,7 @@ class SearchBar extends React.Component {
     this.searchRef = React.createRef();
 
     this.state = {
-      search: previousSearch || initialValue || '',
-      searchQuery: '',
+      initialSearchValue: previousSearch || initialValue || '',
       isActive: false,
       focusedSuggestion: null,
     };
@@ -43,7 +42,7 @@ class SearchBar extends React.Component {
     const oldInitialValue = this.props.initialValue;
 
     if (oldInitialValue !== initialValue) {
-      this.setState({ search: initialValue });
+      this.setState({ initialSearchValue: initialValue });
     }
     return true;
   }
@@ -56,10 +55,8 @@ class SearchBar extends React.Component {
     this.setState({ isActive: false, focusedSuggestion: null });
   }
 
-  onInputChange = (e) => {
-    const query = typeof e === 'string' ? e : e.currentTarget.value;
-    const searchQuery = query[query.length - 1] === ' ' ? query.slice(0, -1) : query;
-    this.setState({ search: query, focusedSuggestion: null, searchQuery });
+  setSearchbarValue = (value) => {
+    this.searchRef.current.value = value;
   }
 
   keyHandler = (e) => {
@@ -97,7 +94,7 @@ class SearchBar extends React.Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-    const { search } = this.state;
+    const search = this.searchRef.current?.value;
     this.handleSubmit(search);
   }
 
@@ -121,8 +118,7 @@ class SearchBar extends React.Component {
       this.setInactive();
 
       if (searchQuery !== previousSearch) {
-        this.setState({ search: searchQuery }); // Change current search text to new one
-        this.searchRef.current.value = searchQuery;
+        this.searchRef.current.value = searchQuery; // Change current search text to new one
         fetchUnits({ q: searchQuery });
         changeSelectedUnit(null);
       }
@@ -145,15 +141,14 @@ class SearchBar extends React.Component {
   };
 
   activateSearch = () => {
-    const { search } = this.state;
-    if (search) {
-      this.onInputChange(search);
-    }
+    this.setState({ focusedSuggestion: null });
     this.setState({ isActive: true });
   }
 
   renderSuggestionBox = () => {
-    const { searchQuery, isActive, focusedSuggestion } = this.state;
+    const { isActive, focusedSuggestion } = this.state;
+    const query = this.searchRef.current?.value || '';
+    const searchQuery = query[query.length - 1] === ' ' ? query.slice(0, -1) : query;
 
     const showSuggestions = isActive;
     if (!showSuggestions) {
@@ -170,7 +165,7 @@ class SearchBar extends React.Component {
             visible={showSuggestions}
             focusedSuggestion={focusedSuggestion}
             searchQuery={searchQuery}
-            handleArrowClick={value => this.onInputChange(value)}
+            handleArrowClick={value => this.setSearchbarValue(value)}
             handleSubmit={this.handleSubmit}
             isMobile
           />
@@ -180,7 +175,7 @@ class SearchBar extends React.Component {
             visible={showSuggestions}
             focusedSuggestion={focusedSuggestion}
             searchQuery={searchQuery}
-            handleArrowClick={value => this.onInputChange(value)}
+            handleArrowClick={value => this.setSearchbarValue(value)}
             handleSubmit={this.handleSubmit}
           />
         </DesktopComponent>
@@ -189,15 +184,8 @@ class SearchBar extends React.Component {
   }
 
   renderInput = (isMobile = false) => {
-    const {
-      classes,
-      hideBackButton,
-      intl,
-      previousSearch,
-    } = this.props;
-    const { search, isActive } = this.state;
-
-    const previousSearchText = typeof previousSearch === 'string' ? previousSearch : null;
+    const { classes, hideBackButton, intl } = this.props;
+    const { isActive, focusedSuggestion, initialSearchValue } = this.state;
     const backButtonEvent = isActive && isMobile
       ? () => {
         this.setInactive();
@@ -207,12 +195,8 @@ class SearchBar extends React.Component {
     // Style classes
     const backButtonStyles = `${classes.iconButton}`;
     const showSuggestions = isActive;
-    let inputValue = typeof search === 'string' ? search : previousSearchText;
-    if (inputValue.includes('service_node')) {
-      inputValue = null;
-    }
+    const inputHasValue = this.searchRef.current?.value?.length;
     const containerStyles = `${isActive ? classes.containerSticky : classes.containerInactive} ${classes.container}`;
-    const inputString = this.searchRef.current?.value;
     return (
       <form id="SearchBar" action="" onSubmit={this.onSubmit} className={containerStyles} autoComplete="off">
         {
@@ -231,37 +215,37 @@ class SearchBar extends React.Component {
             role: 'combobox',
             'aria-haspopup': !!showSuggestions,
             'aria-label': intl.formatMessage({ id: 'search.searchField' }),
-            'aria-owns': inputString?.length ? 'SuggestionList' : 'PreviousList',
+            'aria-owns': inputHasValue ? 'SuggestionList' : 'PreviousList',
             'aria-activedescendant': `suggestion${focusedSuggestion}`,
           }}
           type="text"
           inputRef={this.searchRef}
           className={classes.input}
-          value={inputValue || ''}
+          defaultValue={initialSearchValue || ''}
           classes={{ focused: classes.fieldFocus }}
-          onChange={this.onInputChange}
+          onChange={() => this.setState({ focusedSuggestion: null })}
           onFocus={this.activateSearch}
           onKeyDown={e => keyboardHandler(this.keyHandler(e), ['up, down'])}
           onBlur={this.handleBlur}
           endAdornment={
-            inputValue
-            && inputValue !== ''
-            && (
-              <IconButton
-                aria-label={intl.formatMessage({ id: 'search.cancelText' })}
-                className={classes.cancelButton}
-                onClick={() => {
-                  if (this.searchRef?.current) {
-                    // Clear blur timeout to keep suggestion box active
-                    clearTimeout(this.blurTimeout);
-                    this.searchRef.current.focus();
-                  }
-                  this.setState({ search: '', searchQuery: '' });
-                }}
-              >
-                <Cancel />
-              </IconButton>
-            )
+            inputHasValue
+              ? (
+                <IconButton
+                  aria-label={intl.formatMessage({ id: 'search.cancelText' })}
+                  className={classes.cancelButton}
+                  onClick={() => {
+                    if (this.searchRef?.current) {
+                      // Clear blur timeout to keep suggestion box active
+                      clearTimeout(this.blurTimeout);
+                      this.searchRef.current.focus();
+                    }
+                    this.searchRef.current.value = '';
+                  }}
+                >
+                  <Cancel />
+                </IconButton>
+              )
+              : null
           }
         />
 
