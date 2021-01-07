@@ -389,6 +389,7 @@ const translations = {
   'search.infoText': '{count} Hakutulosta',
   'search.searchbar.headerText': 'Pääkaupunkiseudun kaikki julkiset palvelut ulottuvillasi.',
   'search.searchbar.infoText': 'Hae palveluita, toimipisteitä tai osoitteita',
+  'search.skipLink': 'Hyppylinkki hakutuloksiin',
   'search.suggestions.suggest': 'Tarkoititko..?',
   'search.suggestions.expand': 'Hakuehdotukset',
   'search.suggestions.loading': 'Ladataan ehdotuksia',

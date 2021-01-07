@@ -11,7 +11,7 @@ import styles from './styles';
 import Loading from '../../components/Loading';
 import SearchBar from '../../components/SearchBar';
 import { fitUnitsToMap } from '../MapView/utils/mapActions';
-import { parseSearchParams, getSearchParam } from '../../utils';
+import { parseSearchParams, getSearchParam, keyboardHandler } from '../../utils';
 import TabLists from '../../components/TabLists';
 import SMButton from '../../components/ServiceMapButton';
 import Container from '../../components/Container';
@@ -22,6 +22,8 @@ import DesktopComponent from '../../components/DesktopComponent';
 import MobileComponent from '../../components/MobileComponent';
 
 class SearchView extends React.Component {
+  focusClass = 'TabListFocusTarget';
+
   constructor(props) {
     super(props);
 
@@ -246,6 +248,13 @@ class SearchView extends React.Component {
     };
   }
 
+  skipToContent = () => {
+    const elem = document.getElementsByClassName(this.focusClass)[0];
+    if (elem) {
+      elem.focus();
+    }
+  }
+
   // Handles redirect if only single result is found
   handleSingleResultRedirect() {
     const {
@@ -342,6 +351,15 @@ class SearchView extends React.Component {
 
     return (
       <NoSsr>
+        <Typography
+          role="link"
+          tabIndex="-1"
+          onClick={this.skipToContent}
+          onKeyPress={() => { keyboardHandler(this.skipToContent(), ['space', 'enter']); }}
+          variant="srOnly"
+        >
+          <FormattedMessage id="search.skipLink" />
+        </Typography>
         {!isFetching && (
           <div align="left" className={className}>
             <div aria-live="polite" className={classes.infoContainer}>
@@ -475,6 +493,8 @@ class SearchView extends React.Component {
     return (
       <TabLists
         data={searchResults}
+        focusClass={this.focusClass}
+        focusText={intl.formatMessage({ id: 'search.results.title' })}
       />
     );
   }

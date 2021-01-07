@@ -9,6 +9,7 @@ import PaginationComponent from '../../PaginationComponent';
 import { parseSearchParams, stringifySearchParams } from '../../../utils';
 
 const PaginatedList = ({
+  beforePagination,
   customComponent,
   data,
   id,
@@ -102,6 +103,9 @@ const PaginatedList = ({
         customComponent={customComponent}
       />
       {
+        beforePagination || null
+      }
+      {
         data.length > 0
         && (
           <PaginationComponent
@@ -116,6 +120,7 @@ const PaginatedList = ({
 };
 
 PaginatedList.propTypes = {
+  beforePagination: PropTypes.node,
   customComponent: PropTypes.func,
   data: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)).isRequired,
   id: PropTypes.string.isRequired,
@@ -127,6 +132,7 @@ PaginatedList.propTypes = {
 };
 
 PaginatedList.defaultProps = {
+  beforePagination: null,
   customComponent: null,
   itemsPerPage: 10,
   navigator: null,
