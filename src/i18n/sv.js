@@ -387,6 +387,7 @@ const translations = {
   'search.infoText': '{count} sökresultat',
   'search.searchbar.headerText': 'Alla tjänster i huvudstadsregionen inom räckhåll.',
   'search.searchbar.infoText': 'Sök tjänster, verksamhetsställen eller adresser',
+  'search.skipLink': 'Hoppa till sökresultaten',
   'search.suggestions.suggest': 'Menade du..?',
   'search.suggestions.expand': 'Sökförslag',
   'search.suggestions.loading': 'Laddar förslag',
