@@ -103,20 +103,32 @@ class SearchBar extends React.Component {
 
   handleSubmit = (search) => {
     const { changeSelectedUnit, isFetching } = this.props;
-    if (!isFetching && search && search !== '') {
+    const { focusedSuggestion } = this.state;
+    if (isFetching) return;
+    let searchQuery;
+    if (focusedSuggestion !== null) {
+      // Get focused suggestion search string
+      const suggestion = document.getElementById(`suggestion${focusedSuggestion}`);
+      // Omit search restult count from suggestion string
+      searchQuery = suggestion?.getElementsByTagName('p')[0].textContent;
+    } else if (search && search !== '') {
+      searchQuery = search;
+    }
+    if (searchQuery) {
       const {
         fetchUnits, navigator, previousSearch,
       } = this.props;
       this.setInactive();
 
-      if (search !== previousSearch) {
-        this.setState({ search }); // Change current search text to new one
-        fetchUnits({ q: search });
+      if (searchQuery !== previousSearch) {
+        this.setState({ search: searchQuery }); // Change current search text to new one
+        this.searchRef.current.value = searchQuery;
+        fetchUnits({ q: searchQuery });
         changeSelectedUnit(null);
       }
 
       if (navigator) {
-        navigator.push('search', { q: search });
+        navigator.push('search', { q: searchQuery });
       }
     }
   }
@@ -160,7 +172,6 @@ class SearchBar extends React.Component {
             searchQuery={searchQuery}
             handleArrowClick={value => this.onInputChange(value)}
             handleSubmit={this.handleSubmit}
-            setSearch={value => this.setState({ search: value })}
             isMobile
           />
         </MobileComponent>
@@ -171,7 +182,6 @@ class SearchBar extends React.Component {
             searchQuery={searchQuery}
             handleArrowClick={value => this.onInputChange(value)}
             handleSubmit={this.handleSubmit}
-            setSearch={value => this.setState({ search: value })}
           />
         </DesktopComponent>
       </>

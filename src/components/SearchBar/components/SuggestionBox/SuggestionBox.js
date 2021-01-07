@@ -11,7 +11,6 @@ import createSuggestions from '../../createSuggestions';
 import config from '../../../../../config';
 import SuggestionItem from '../../../ListItems/SuggestionItem';
 import AddressItem from '../../../ListItems/AddressItem';
-import { getAddressText } from '../../../../utils/address';
 
 
 const SuggestionBox = (props) => {
@@ -22,8 +21,6 @@ const SuggestionBox = (props) => {
     handleSubmit,
     classes,
     focusedSuggestion,
-    getLocaleText,
-    setSearch,
     isMobile,
     intl,
     locale,
@@ -100,25 +97,6 @@ const SuggestionBox = (props) => {
       setSearchQueries(null);
       if (fetchController.current) {
         fetchController.current.abort();
-      }
-    }
-  };
-
-  const setSearchBarText = () => {
-    if (listRef && listRef.current) {
-      if (listRef.current.children.length && focusedSuggestion !== null) {
-        if (searchQueries) {
-          const focused = searchQueries[focusedSuggestion];
-          if (focused.object_type === 'suggestion') {
-            setSearch(focused.suggestion);
-            return;
-          }
-          if (focused.object_type === 'address') {
-            setSearch(getAddressText(focused, getLocaleText, false));
-          }
-        } else if (history) {
-          setSearch(history[focusedSuggestion]);
-        }
       }
     }
   };
@@ -214,10 +192,6 @@ const SuggestionBox = (props) => {
     }
   }, [searchQuery]);
 
-  useEffect(() => { // Change text of the searchbar when suggestion with keyboard focus changes
-    setSearchBarText();
-  }, [focusedSuggestion]);
-
   useEffect(() => {
     // Disable page scroll when suggestion box is open
     const sidebar = document.getElementsByClassName('SidebarWrapper')[0];
@@ -274,14 +248,12 @@ const SuggestionBox = (props) => {
 };
 
 SuggestionBox.propTypes = {
-  getLocaleText: PropTypes.func.isRequired,
   visible: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   searchQuery: PropTypes.string,
   handleArrowClick: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   focusedSuggestion: PropTypes.number,
-  setSearch: PropTypes.func,
   isMobile: PropTypes.bool,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   locale: PropTypes.oneOf(config.supportedLanguages).isRequired,
@@ -291,7 +263,6 @@ SuggestionBox.defaultProps = {
   visible: false,
   searchQuery: null,
   focusedSuggestion: null,
-  setSearch: null,
   isMobile: false,
 };
 
