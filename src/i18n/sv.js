@@ -17,7 +17,9 @@ const translations = {
   // Address
   'address': 'Adress',
   'address.search': 'Adresssök',
+  'address.search.cleared': 'Sökfältet har tömts',
   'address.search.location': 'Den valda positionen är {location}',
+  'address.search.suggestion': 'Välj adress från sökresultaten',
   'address.show.area': 'Visa området på kartan',
   'address.error': 'Addressen kunde inte hittas',
   'address.nearby': 'Nära',
