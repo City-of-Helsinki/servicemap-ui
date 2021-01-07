@@ -17,7 +17,9 @@ const translations = {
   // Address
   'address': 'Address',
   'address.search': 'Address search',
+  'address.search.cleared': 'Search box cleared',
   'address.search.location': 'Chosen location is {location}',
+  'address.search.suggestion': 'Choose an address from the search suggestions',
   'address.show.area': 'Show area on map',
   'address.error': 'No address found',
   'address.nearby': 'Nearby',
