@@ -295,7 +295,7 @@ const AddressView = (props) => {
             {addressData && units && (
               <MobileComponent>
                 <SMButton
-                  role="link"
+                  aria-hidden
                   margin
                   messageID="general.showOnMap"
                   icon={<Map />}
