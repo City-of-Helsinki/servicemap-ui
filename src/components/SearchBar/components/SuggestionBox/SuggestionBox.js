@@ -236,12 +236,12 @@ const SuggestionBox = (props) => {
       : `${classes.suggestionArea}`;
 
     return (
-      <>
+      <section aria-label={intl.formatMessage({ id: 'search.suggestions.expand' })}>
         <Paper elevation={20} className={containerStyles}>
           <p className="sr-only" aria-live="polite">{srText}</p>
           {component}
         </Paper>
-      </>
+      </section>
     );
   }
   return <></>;
