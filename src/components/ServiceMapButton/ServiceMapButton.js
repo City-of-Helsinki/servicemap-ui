@@ -4,7 +4,7 @@ import { ButtonBase, Typography } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
 
 // ServiceMapButton
-const SMButton = (props, ref) => {
+const SMButton = React.forwardRef((props, ref) => {
   const {
     'aria-label': ariaLabel,
     children,
@@ -65,7 +65,7 @@ const SMButton = (props, ref) => {
       }
     </ButtonBase>
   );
-};
+});
 
 SMButton.propTypes = {
   'aria-label': PropTypes.string,
