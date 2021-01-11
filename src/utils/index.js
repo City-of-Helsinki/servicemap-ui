@@ -12,14 +12,6 @@ export const isRetina = () => {
   return false;
 };
 
-// Focus user to view title's link element
-export const focusToViewTitle = () => {
-  const elem = document.getElementById('view-title');
-  if (elem) {
-    elem.focus();
-  }
-};
-
 export const uppercaseFirst = val => val.charAt(0).toUpperCase() + val.slice(1);
 
 // Function for parsing react router search params
