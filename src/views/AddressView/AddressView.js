@@ -295,7 +295,7 @@ const AddressView = (props) => {
             {addressData && units && (
               <MobileComponent>
                 <SMButton
-                  role="link"
+                  aria-hidden
                   margin
                   messageID="general.showOnMap"
                   icon={<Map />}
@@ -312,22 +312,6 @@ const AddressView = (props) => {
           </div>
         )}
       />
-      {addressData && units && (
-        <MobileComponent>
-          <SMButton
-            role="link"
-            messageID="general.showOnMap"
-            icon={<Map />}
-            className={classes.mapButton}
-            onClick={() => {
-              if (navigator) {
-                focusToPosition(map, addressData.location.coordinates);
-                navigator.openMap();
-              }
-            }}
-          />
-        </MobileComponent>
-      )}
     </div>
   );
 };
