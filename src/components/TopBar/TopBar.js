@@ -268,7 +268,7 @@ class TopBar extends React.Component {
               <Typography aria-hidden color="inherit">|</Typography>
               {this.renderLanguages(pageType)}
               <Typography aria-hidden color="inherit">|</Typography>
-              <ButtonBase role="link" onClick={() => this.handleContrastChange()} focusVisibleClassName={classes.topButtonFocused}>
+              <ButtonBase role="button" onClick={() => this.handleContrastChange()} focusVisibleClassName={classes.topButtonFocused}>
                 <Typography className={fontClass} color="inherit" variant="body2"><FormattedMessage id="general.contrast" /></Typography>
               </ButtonBase>
             </div>

@@ -70,6 +70,7 @@ const DivisionItem = ({
     <>
       <ListItem
         component="li"
+        role="link"
         className={`${classes.listItem} ${className || ''}`}
       >
         <ButtonBase
