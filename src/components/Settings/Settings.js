@@ -34,6 +34,7 @@ class Settings extends React.Component {
   constructor(props) {
     super(props);
     this.dialogRef = React.createRef();
+    this.closeButtonRef = React.createRef();
     this.state = {
       alert: false,
       currentSettings: {},
@@ -65,10 +66,13 @@ class Settings extends React.Component {
     };
 
     config.cities.forEach((city) => { newCurrent.cities[city] = settings.cities[city]; });
-
+    const initialPreviousSearch = {
+      ...newCurrent,
+      cities: { ...newCurrent.cities },
+    };
     this.setState({
       currentSettings: newCurrent,
-      previousSettings: newCurrent,
+      previousSettings: initialPreviousSearch,
     });
 
     setTimeout(() => {
@@ -135,7 +139,12 @@ class Settings extends React.Component {
 
   setNewPreviousSettings(previousSettings) {
     this.setState({
-      previousSettings,
+      previousSettings: {
+        ...previousSettings,
+        cities: {
+          ...previousSettings.cities,
+        },
+      },
       saved: true,
     });
   }
@@ -217,7 +226,12 @@ class Settings extends React.Component {
   resetCurrentSelections() {
     const { previousSettings } = this.state;
     this.setState({
-      currentSettings: previousSettings,
+      currentSettings: {
+        ...previousSettings,
+        cities: {
+          ...previousSettings.cities,
+        },
+      },
       saved: false,
     });
   }
@@ -225,7 +239,7 @@ class Settings extends React.Component {
   /**
    * Save new settings to redux
    */
-  saveSettings() {
+  saveSettings(focusTarget) {
     const { currentSettings } = this.state;
     const {
       toggleHearingAid,
@@ -307,6 +321,10 @@ class Settings extends React.Component {
     // Set new settings as previous
     this.setNewPreviousSettings(currentSettings);
     this.setAlert(true);
+
+    if (focusTarget) {
+      focusTarget.focus();
+    }
   }
 
   renderSenseSettings(close) {
@@ -610,8 +628,8 @@ class Settings extends React.Component {
             role="button"
             messageID="general.save"
             onClick={() => {
-              this.saveSettings();
-              this.dialogRef.current.querySelector('h2').focus();
+              const focusTarget = this.dialogRef.current.querySelector('h2');
+              this.saveSettings(focusTarget);
             }}
             color="primary"
           />
@@ -692,11 +710,12 @@ class Settings extends React.Component {
               small
               role="button"
               disabled={!settingsHaveChanged}
-              onClick={() => this.saveSettings()}
+              onClick={() => this.saveSettings(this.closeButtonRef.current)}
               messageID="general.save.changes"
               color="primary"
             />
             <SMButton
+              innerRef={this.closeButtonRef}
               aria-label={intl.formatMessage({ id: 'general.closeSettings' })}
               small
               role="button"
