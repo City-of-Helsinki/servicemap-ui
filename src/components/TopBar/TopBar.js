@@ -13,6 +13,7 @@ import DesktopComponent from '../DesktopComponent';
 import MobileComponent from '../MobileComponent';
 import config from '../../../config';
 import ToolMenu from '../ToolMenu';
+import { focusToViewTitle } from '../../utils/accessibility';
 
 class TopBar extends React.Component {
   state={ drawerOpen: false }
@@ -210,7 +211,7 @@ class TopBar extends React.Component {
           navigator.push('home');
         } else {
           setTimeout(() => {
-            document.getElementById('view-title').focus();
+            focusToViewTitle();
           }, 1);
         }
         break;

@@ -20,6 +20,7 @@ import ExpandedSuggestions from '../../components/ExpandedSuggestions';
 import SettingsInfo from '../../components/SettingsInfo';
 import DesktopComponent from '../../components/DesktopComponent';
 import MobileComponent from '../../components/MobileComponent';
+import { viewTitleID } from '../../utils/accessibility';
 
 class SearchView extends React.Component {
   focusClass = 'TabListFocusTarget';
@@ -579,7 +580,7 @@ class SearchView extends React.Component {
         }
         <DesktopComponent>
           <Typography variant="srOnly" component="h3">
-            <Link href="#view-title" tabIndex="-1">
+            <Link href={`#${viewTitleID}`} tabIndex="-1">
               <FormattedMessage id="general.return.viewTitle" />
             </Link>
           </Typography>
