@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Warning } from '@material-ui/icons';
 import {
@@ -10,6 +10,7 @@ import TitleBar from '../../components/TitleBar';
 import SMButton from '../../components/ServiceMapButton';
 import config from '../../../config';
 import DesktopComponent from '../../components/DesktopComponent';
+import { focusToViewTitle } from '../../utils/accessibility';
 
 const FeedbackView = ({
   classes, navigator, intl, location, selectedUnit, getLocaleText,
@@ -31,6 +32,10 @@ const FeedbackView = ({
   const feedbackTitle = feedbackType === 'unit' && selectedUnit
     ? intl.formatMessage({ id: 'feedback.title.unit' }, { unit: getLocaleText(selectedUnit.name) })
     : intl.formatMessage({ id: 'feedback.title' });
+
+  useEffect(() => {
+    focusToViewTitle();
+  }, []);
 
   const resetForm = () => {
     setEmail(null);
