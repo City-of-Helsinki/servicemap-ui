@@ -1,14 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Typography, ButtonBase, Link } from '@material-ui/core';
 import TitleBar from '../../components/TitleBar';
 import config from '../../../config';
+import { focusToViewTitle } from '../../utils/accessibility';
 
 const InfoView = ({
   classes, history, location, locale,
 }) => {
   const content = location.pathname.includes('accessibility') ? 'accessibilityInfo' : 'generalInfo';
+
+  useEffect(() => {
+    setTimeout(() => {
+      focusToViewTitle();
+    }, 1);
+  }, [content]);
 
   const handleClick = () => {
     document.getElementsByClassName('SidebarWrapper')[0].scrollTo(0, 0);
