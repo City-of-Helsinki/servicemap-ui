@@ -206,7 +206,7 @@ const FeedbackView = ({
                 </Typography>
               </div>
             )}
-            {!feedbackLength && (
+            {fbFieldVisited && !feedbackLength && (
               <Typography id="srError" role="alert" variant="srOnly">
                 <FormattedMessage id="feedback.srError.required" />
               </Typography>
