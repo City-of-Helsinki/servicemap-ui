@@ -12,6 +12,8 @@ import SMButton from '../ServiceMapButton';
 import PrintContext from '../../context/PrintContext';
 import DownloadDialog from '../Dialog/DownloadDialog';
 
+const ToolMenuButtonID = 'ToolMenuButton';
+
 const ToolMenu = ({
   intl, classes, mapUtility, navigator, setMeasuringMode, measuringMode, currentPage,
 }) => {
@@ -73,7 +75,7 @@ const ToolMenu = ({
       search: searchParams,
     };
 
-    navigator.push(newLocation);
+    navigator.push(newLocation, null, ToolMenuButtonID);
   };
 
   const menuItems = [
@@ -125,7 +127,7 @@ const ToolMenu = ({
   return (
     <>
       <DropDownMenuButton
-        id="ToolMenuButton"
+        id={ToolMenuButtonID}
         ref={toolMenuButton}
         panelID="ToolMenuPanel"
         buttonIcon={<Build />}
