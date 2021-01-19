@@ -234,9 +234,6 @@ const ServiceTreeView = (props) => {
     const hasChildren = item.children.length;
     const isOpen = opened.includes(item.id);
     const children = hasChildren ? services.filter(e => e.parent === item.id) : null;
-    const icon = isOpen
-      ? <ArrowDropUp className={classes.iconRight} />
-      : <ArrowDropDown className={classes.iconRight} />;
 
     let resultCount = 0;
 
@@ -259,52 +256,45 @@ const ServiceTreeView = (props) => {
 
     return (
       <React.Fragment key={item.id}>
-        <ListItem
-          disableGutters
+        <SMAccordion
           className={`${classes.listItem} ${classes[`level${level}`]}`}
-        >
-          {level > 0 && (drawOuterLines(level, last, item.id))}
-
-          <div className={classes.checkBox}>
-            {drawCheckboxLines(isOpen, level, item.id)}
-            <Checkbox
-              className={classes.checkboxPadding}
-              inputProps={{ title: checkboxSrTitle }}
-              onClick={e => handleCheckboxClick(e, item)}
-              icon={<span className={classes.checkBoxIcon} />}
-              color="primary"
-              checked={isSelected}
-              indeterminate={childIsSelected && !isSelected}
-            />
-          </div>
-
-          <ButtonBase
-            aria-expanded={!hasChildren ? null : isOpen}
-            className={classes.listClickArea}
-            disabled={!hasChildren}
-            disableRipple
-            disableTouchRipple
-            onClick={hasChildren ? () => handleExpand(item, isOpen) : null}
-            aria-label={itemSrTitle}
-          >
-            <Typography align="left" className={classes.text}>
+          onOpen={hasChildren ? () => handleExpand(item, isOpen) : () => null}
+          disabled={!hasChildren}
+          defaultOpen={isOpen}
+          openButtonSrText={itemSrTitle}
+          adornment={(
+            <>
+              {level > 0 && (drawOuterLines(level, last, item.id))}
+              <div className={classes.checkBox}>
+                {drawCheckboxLines(isOpen, level, item.id)}
+                <Checkbox
+                  focusVisibleClassName={classes.checkboxFocus}
+                  inputProps={{ title: checkboxSrTitle }}
+                  onClick={e => handleCheckboxClick(e, item)}
+                  icon={<span className={classes.checkBoxIcon} />}
+                  color="primary"
+                  checked={isSelected}
+                  indeterminate={childIsSelected && !isSelected}
+                />
+              </div>
+            </>
+          )}
+          titleContent={(
+            <Typography aria-hidden className={classes.text}>
               {`${getLocaleText(item.name)} (${resultCount})`}
             </Typography>
-            {hasChildren ? icon : <span className={classes.iconRight} />}
-          </ButtonBase>
-
-        </ListItem>
-
-        <Collapse aria-hidden={!isOpen} in={isOpen}>
-          {isOpen && children && children.length && children.map((child, i) => (
-            expandingComponent(
-              child, // child service node
-              level + 1, // child node level
-              // If this node is last of its level, add to list (this helps the drawing of lines)
-              i + 1 === children.length ? [...last, level] : last,
-            )
-          ))}
-        </Collapse>
+          )}
+          collapseContent={
+            children && children.length ? children.map((child, i) => (
+              expandingComponent(
+                child, // child service node
+                level + 1, // child node level
+                // If this node is last of its level, add to list (this helps the drawing of lines)
+                i + 1 === children.length ? [...last, level] : last,
+              )
+            )) : null
+          }
+        />
       </React.Fragment>
     );
   };
