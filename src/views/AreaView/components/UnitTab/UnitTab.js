@@ -45,9 +45,12 @@ const UnitTab = ({
     categories.sort((a, b) => getLocaleText(a.name).localeCompare(getLocaleText(b.name)));
   };
 
-  const distanceToAddress = coord => (
-    Math.round(distance(coord, selectedAddress.location.coordinates) * 1000)
-  );
+  const distanceToAddress = (coord) => {
+    if (coord) {
+      return Math.round(distance(coord, selectedAddress.location.coordinates) * 1000);
+    }
+    return null;
+  };
 
   const handleCheckboxChange = (event, category) => {
     let newArray;
@@ -215,14 +218,14 @@ const UnitTab = ({
       localDistrict.forEach((district) => {
         if (district.unit) {
           const newValue = district;
-          newValue.unit.distance = distanceToAddress(district.unit.location.coordinates);
+          newValue.unit.distance = distanceToAddress(district.unit.location?.coordinates);
           localUnitDistricts.push(newValue);
         }
         if (district.overlaping) {
           district.overlaping.forEach((obj) => {
             if (obj.unit) {
               const newValue = obj;
-              newValue.unit.distance = distanceToAddress(obj.unit.location.coordinates);
+              newValue.unit.distance = distanceToAddress(obj.unit.location?.coordinates);
               localUnitDistricts.push(newValue);
             }
           });
@@ -233,14 +236,14 @@ const UnitTab = ({
         if (district.municipality === selectedAddress.street.municipality) {
           if (district.unit) {
             const newValue = district;
-            newValue.unit.distance = distanceToAddress(district.unit.location.coordinates);
+            newValue.unit.distance = distanceToAddress(district.unit.location?.coordinates);
             otherUnitDistricts.push(newValue);
           }
           if (district.overlaping) {
             district.overlaping.forEach((obj) => {
               if (obj.unit) {
                 const newValue = obj;
-                newValue.unit.distance = distanceToAddress(obj.unit.location.coordinates);
+                newValue.unit.distance = distanceToAddress(obj.unit.location?.coordinates);
                 otherUnitDistricts.push(newValue);
               }
             });

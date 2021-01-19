@@ -76,7 +76,7 @@ TitleBar.propTypes = {
   backButtonSrText: PropTypes.string,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   title: PropTypes.node.isRequired,
-  titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']).isRequired,
+  titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p']).isRequired,
   icon: PropTypes.objectOf(PropTypes.any),
   className: PropTypes.string,
   distance: PropTypes.string,
