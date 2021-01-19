@@ -9,6 +9,7 @@ import {
 import { FormattedMessage } from 'react-intl';
 import config from '../../../config';
 import SMButton from '../../components/ServiceMapButton';
+import SMAccordion from '../../components/SMAccordion';
 
 const ServiceTreeView = (props) => {
   const {
@@ -190,7 +191,7 @@ const ServiceTreeView = (props) => {
     }
     if (level > 0) {
       strokeColor = '#323232';
-      paths.push('M 0 30 H 12');
+      paths.push('M 0 30 H 7');
     }
 
     const line = paths.join(' ');
@@ -211,7 +212,7 @@ const ServiceTreeView = (props) => {
       return <path key={`outerPath${id}`} d="M 17 0 V 30 H 26" stroke="black" fill="transparent" />;
     }
     if (bottom && !currentLast) {
-      return <path key={`outerPath${id}`} d="M 17 0 V 60 M 20 30 H 26" stroke="black" fill="transparent" />;
+      return <path key={`outerPath${id}`} d="M 17 0 V 60 M 17 30 H 26" stroke="black" fill="transparent" />;
     }
     return <path key={`outerPath${id}`} d="M 17 0 V 60" stroke="black" fill="transparent" />;
   };
@@ -246,7 +247,7 @@ const ServiceTreeView = (props) => {
     }
 
     const checkboxSrTitle = `${intl.formatMessage({ id: 'services.tree.level' })} ${level + 1} ${getLocaleText(item.name)} ${intl.formatMessage({ id: 'services.category.select' })}`;
-    const itemSrTitle = `${getLocaleText(item.name)} (${resultCount}) ${intl.formatMessage({ id: 'services.category.open' })}`;
+    const itemSrTitle = `${getLocaleText(item.name)} ${intl.formatMessage({ id: 'services.category.open' })}`;
 
     const isSelected = selected.some(e => e.id === item.id);
 
@@ -435,7 +436,9 @@ const ServiceTreeView = (props) => {
           aria-hidden
           className={classes.title}
           tabIndex="-1"
-        ><FormattedMessage id="services" /></Typography>
+        >
+          <FormattedMessage id="services" />
+        </Typography>
         {renderSelectedCities()}
         {renderSelectionList(selectedList)}
       </div>
