@@ -156,13 +156,17 @@ const htmlTemplate = (reactDom, preloadedState, css, cssString, locale, helmet, 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#141823" />
     ${appDynamicsTrackingCode(process.env.APP_DYNAMICS_APP_KEY)}
-    <script type="text/javascript">
-      window.rsConf = {
-        params: '//cdn1.readspeaker.com/script/11515/webReader/webReader.js?pids=wr',
-        general: {usePost:true}
-      };
-    </script>
-    <script src="//cdn1.readspeaker.com/script/11515/webReader/webReader.js?pids=wr" type="text/javascript"></script>
+    ${
+      process.env.READ_SPEAKER_URL
+      && process.env.READ_SPEAKER_URL !== 'false' ? `
+        <script type="text/javascript">
+          window.rsConf = {
+            params: '${process.env.READ_SPEAKER_URL}',
+            general: {usePost:true}
+          };
+        </script>
+        <script src="${process.env.READ_SPEAKER_URL}" type="text/javascript"></script>
+      ` : ''}
   </head>
 
   <body>
@@ -191,7 +195,7 @@ const htmlTemplate = (reactDom, preloadedState, css, cssString, locale, helmet, 
         window.nodeEnvSettings.OLD_MAP_LINK_FI = "${process.env.OLD_MAP_LINK_FI}";
         window.nodeEnvSettings.OLD_MAP_LINK_SV = "${process.env.OLD_MAP_LINK_SV}";
         window.nodeEnvSettings.SHOW_AREA_SELECTION = "${process.env.SHOW_AREA_SELECTION}";
-        window.nodeEnvSettings.SHOW_READ_SPEAKER_BUTTON = "${process.env.SHOW_READ_SPEAKER_BUTTON}";
+        window.nodeEnvSettings.READ_SPEAKER_URL = "${process.env.READ_SPEAKER_URL}";
         window.nodeEnvSettings.FEEDBACK_ADDITIONAL_INFO_LINK = "${process.env.FEEDBACK_ADDITIONAL_INFO_LINK}";
         window.nodeEnvSettings.FEEDBACK_IS_PUBLISHED = "${process.env.FEEDBACK_IS_PUBLISHED}";
         window.nodeEnvSettings.USE_PTV_ACCESSIBILITY_API = "${process.env.USE_PTV_ACCESSIBILITY_API}";
