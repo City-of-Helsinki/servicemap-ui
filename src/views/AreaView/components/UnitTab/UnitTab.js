@@ -35,6 +35,7 @@ const UnitTab = ({
   classes,
   intl,
 }) => {
+  const districtsWithUnits = selectedDistrictData.filter(obj => obj.unit);
   const [checkedServices, setCheckedServices] = useState(selectedDistrictServices);
 
   const sortDistricts = (districts) => {
@@ -183,6 +184,16 @@ const UnitTab = ({
       );
     }
 
+    if (!districtsWithUnits.length) {
+      return (
+        <div>
+          <Typography className={classes.infoText} variant="body2">
+            <FormattedMessage id="area.noUnits" />
+          </Typography>
+        </div>
+      );
+    }
+
     if (selectedSubdistricts.length) {
       // If geographical subdistrict is selected, list units within the district
       return (
@@ -299,7 +310,7 @@ const UnitTab = ({
     return (
       <div>
         <List>
-          {selectedDistrictData.filter(obj => obj.unit).map(district => (
+          {districtsWithUnits.map(district => (
             renderDistrictUnitItem(district)
           ))}
         </List>

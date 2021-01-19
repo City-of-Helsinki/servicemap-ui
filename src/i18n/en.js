@@ -48,6 +48,7 @@ const translations = {
   'area.choose.subdistrict': 'Choose and open {category}',
   'area.close.subdistrict': 'Close {category}',
   'area.noSelection': 'Choose area from the Choice of Area tab',
+  'area.noUnits': 'Chosen area doesn\'t have units',
   'area.list.geographical': 'Geographical',
   'area.list.protection': 'Civil defence',
   'area.list.health': 'Health',
