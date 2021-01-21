@@ -28,8 +28,8 @@ const Highlights = ({ unit, classes, getLocaleText }) => {
         },
         name: {
           fi: 'Katso liikuntapaikan kunto ulkoliikunta.fi palvelusta',
-          en: 'Katso liikuntapaikan kunto ulkoliikunta.fi palvelusta', // TODO: add translations
-          sv: 'Katso liikuntapaikan kunto ulkoliikunta.fi palvelusta', // TODO: add translations
+          en: 'Check the condition of an exercise location in the ulkoliikunta.fi service',
+          sv: 'Kolla skicket på en motionsplats i tjänsten ulkoliikunta.fi',
         },
       },
     };
