@@ -2,13 +2,38 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Typography, Link } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
+import config from '../../../../../config';
 import unitSectionFilter from '../../utils/unitSectionFilter';
 
 const Highlights = ({ unit, classes, getLocaleText }) => {
   const connections = unitSectionFilter(unit.connections, 'HIGHLIGHT');
 
-  if (!connections || !connections.length) {
+  // Add link to ulkoliikunta.fi as custom highligh to certain services
+  const outdoorSportIDs = [695, 406, 426, 731, 730, 191];
+  const showOutdoorsLink = config.outdoorExerciseURL
+    && unit.services.some(service => outdoorSportIDs.includes(service.id));
+
+  if (!connections?.length && !showOutdoorsLink) {
     return null;
+  }
+
+  if (showOutdoorsLink) {
+    const outdoorsObject = {
+      id: 'outdoorSports',
+      value: {
+        www: {
+          fi: `${config.outdoorExerciseURL}/unit/${unit.id}`,
+          en: `${config.outdoorExerciseURL}/unit/${unit.id}`,
+          sv: `${config.outdoorExerciseURL}/unit/${unit.id}`,
+        },
+        name: {
+          fi: 'Katso liikuntapaikan kunto ulkoliikunta.fi palvelusta',
+          en: 'Katso liikuntapaikan kunto ulkoliikunta.fi palvelusta', // TODO: add translations
+          sv: 'Katso liikuntapaikan kunto ulkoliikunta.fi palvelusta', // TODO: add translations
+        },
+      },
+    };
+    connections.push(outdoorsObject);
   }
 
   return (
