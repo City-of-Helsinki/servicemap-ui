@@ -170,6 +170,7 @@ export default {
   "ortographicMapURL": settings.ORTOGRAPHIC_MAP_URL,
   "guideMapURL": settings.GUIDE_MAP_URL,
   "reittiopasURL": settings.REITTIOPAS_URL,
+  "ulkoliikuntaURL": settings.ULKOLIIKUNTA_URL,
   "cities": settings.CITIES.split(','),
   "maps": settings.MAPS.split(','),
   "smallContentAreaBreakpoint": 449,
