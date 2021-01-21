@@ -140,6 +140,16 @@ class SearchBar extends React.Component {
     this.setState({ isActive: true });
   }
 
+  closeMobileSuggestions = () => {
+    this.setInactive();
+    setTimeout(() => {
+      const elem = document.getElementById('SearchButton');
+      if (elem) {
+        elem.focus();
+      }
+    }, 10);
+  };
+
   renderSuggestionBox = () => {
     const { searchQuery, isActive, focusedSuggestion } = this.state;
 
@@ -148,12 +158,26 @@ class SearchBar extends React.Component {
       return null;
     }
 
+    // Screen reader only element for closing suggestions
+    const closeSuggestionElem = (
+      <Typography
+        role="link"
+        tabIndex="-1"
+        onClick={this.closeMobileSuggestions}
+        onKeyPress={() => { keyboardHandler(this.closeMobileSuggestions, ['space', 'enter']); }}
+        variant="srOnly"
+      >
+        <FormattedMessage id="search.skipSuggestions" />
+      </Typography>
+    );
+
     return (
       <>
         <Divider aria-hidden />
         {/* TODO: Modify this class to functional component, to use useMobile hook
         instead of individual mobile/desktop components. */}
         <MobileComponent>
+          {closeSuggestionElem}
           <SuggestionBox
             visible={showSuggestions}
             focusedSuggestion={focusedSuggestion}
@@ -163,6 +187,7 @@ class SearchBar extends React.Component {
             setSearch={value => this.setState({ search: value })}
             isMobile
           />
+          {closeSuggestionElem}
         </MobileComponent>
         <DesktopComponent>
           <SuggestionBox
@@ -254,6 +279,7 @@ class SearchBar extends React.Component {
         />
 
         <Button
+          id="SearchButton"
           aria-label={intl.formatMessage({ id: 'search' })}
           type="submit"
           className={classes.iconButtonSearch}
