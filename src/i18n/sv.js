@@ -48,6 +48,7 @@ const translations = {
   'area.choose.subdistrict': 'Väl och öppna {category}',
   'area.close.subdistrict': 'Stäng {category}',
   'area.noSelection': 'Väl område under fliken Val av område',
+  'area.noUnits': 'Det finns inga verksamhetsställen i ditt valda område',
   'area.list.geographical': 'Geografisk',
   'area.list.protection': 'Befolkningsskydd',
   'area.list.health': 'Hälsa',

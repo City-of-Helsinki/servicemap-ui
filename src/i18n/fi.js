@@ -48,6 +48,7 @@ const translations = {
   'area.choose.subdistrict': 'Valitse ja avaa {category}',
   'area.close.subdistrict': 'Sulje {category}',
   'area.noSelection': 'Valitse alue Alueen Valinta -välilehdeltä',
+  'area.noUnits': 'Valitsemallasi alueella ei ole toimipisteitä',
   'area.list.geographical': 'Maantieteellinen',
   'area.list.protection': 'Väestönsuojelu',
   'area.list.health': 'Terveys',

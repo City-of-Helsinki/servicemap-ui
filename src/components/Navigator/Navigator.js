@@ -4,55 +4,9 @@ import { connect } from 'react-redux';
 import { fetchUnits } from '../../redux/actions/unit';
 import { breadcrumbPush, breadcrumbPop, breadcrumbReplace } from '../../redux/actions/breadcrumb';
 import { generatePath } from '../../utils/path';
-import { parseSearchParams } from '../../utils';
-import paths from '../../../config/paths';
 
 class Navigator extends React.Component {
   unlisten = null;
-
-  constructor(props) {
-    super(props);
-
-    const {
-      breadcrumb,
-      history,
-    } = props;
-
-    // Listen history and handle changes
-    this.unlisten = history.listen((newLocation, action) => {
-      const {
-        breadcrumbPush, breadcrumbPop, breadcrumbReplace, fetchUnits, location, previousSearch,
-      } = this.props;
-
-      // Get search params
-      const searchParams = parseSearchParams(newLocation.search);
-      const searchParam = searchParams.q || null;
-
-      // If page is search
-      // and previousSearch is not current new location's params
-      // then fetch units with new location's search params
-      if (paths.search.regex.exec(newLocation.pathname) && previousSearch !== searchParam) {
-        // fetchUnits([], null, searchParam);
-      }
-
-      // Update breadcrumbs
-      switch (action) {
-        case 'PUSH':
-          breadcrumbPush(location);
-          break;
-        case 'POP':
-          breadcrumbPop();
-          break;
-        case 'REPLACE':
-          if (breadcrumb.length) {
-            breadcrumbReplace(location);
-          }
-          break;
-        default:
-      }
-      // this.unlisten();
-    });
-  }
 
   componentWillUnmount() {
     // Remove history listener
@@ -81,14 +35,18 @@ class Navigator extends React.Component {
   goBack = () => {
     const {
       breadcrumb,
+      breadcrumbPop,
       history,
+      location,
     } = this.props;
 
     // If breadcrumb has values go back else take user to home
     if (breadcrumb && breadcrumb.length > 0) {
       history.goBack();
+      breadcrumbPop();
     } else {
       history.push(this.generatePath('home'));
+      breadcrumbPush({ location });
     }
   }
 
@@ -98,16 +56,21 @@ class Navigator extends React.Component {
    * @param target - String key for path config or object for history location
    * @param data - Data for path used if target is path key
    */
-  push = (target, data) => {
+  push = (target, data, focusTarget) => {
     const {
+      breadcrumbPush,
       history,
+      location,
     } = this.props;
 
     try {
       if (typeof target === 'string') {
-        history.push(this.generatePath(target, data));
+        const path = this.generatePath(target, data);
+        history.push(path);
+        breadcrumbPush({ location, focusTarget });
       } else if (typeof target === 'object') {
         history.push(target);
+        breadcrumbPush({ location, focusTarget });
       } else {
         throw Error(`Invalid target given to navigator push: ${target}`);
       }
@@ -178,17 +141,12 @@ Navigator.propTypes = {
   breadcrumb: PropTypes.arrayOf(PropTypes.any).isRequired,
   breadcrumbPush: PropTypes.func.isRequired,
   breadcrumbPop: PropTypes.func.isRequired,
-  breadcrumbReplace: PropTypes.func.isRequired,
-  fetchUnits: PropTypes.func.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   match: PropTypes.objectOf(PropTypes.any).isRequired,
-  previousSearch: PropTypes.oneOfType([PropTypes.string, PropTypes.objectOf(PropTypes.any)]),
 };
 
-Navigator.defaultProps = {
-  previousSearch: null,
-};
+Navigator.defaultProps = {};
 
 // Listen to redux state
 const mapStateToProps = (state) => {
