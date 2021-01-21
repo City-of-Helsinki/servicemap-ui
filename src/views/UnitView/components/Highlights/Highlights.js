@@ -10,7 +10,7 @@ const Highlights = ({ unit, classes, getLocaleText }) => {
 
   // Add link to ulkoliikunta.fi as custom highligh to certain services
   const outdoorSportIDs = [695, 406, 426, 731, 730, 191];
-  const showOutdoorsLink = config.ulkoliikuntaURL
+  const showOutdoorsLink = config.outdoorExerciseURL
     && unit.services.some(service => outdoorSportIDs.includes(service.id));
 
   if (!connections?.length && !showOutdoorsLink) {
@@ -22,9 +22,9 @@ const Highlights = ({ unit, classes, getLocaleText }) => {
       id: 'outdoorSports',
       value: {
         www: {
-          fi: `${config.ulkoliikuntaURL}/unit/${unit.id}`,
-          en: `${config.ulkoliikuntaURL}/unit/${unit.id}`,
-          sv: `${config.ulkoliikuntaURL}/unit/${unit.id}`,
+          fi: `${config.outdoorExerciseURL}/unit/${unit.id}`,
+          en: `${config.outdoorExerciseURL}/unit/${unit.id}`,
+          sv: `${config.outdoorExerciseURL}/unit/${unit.id}`,
         },
         name: {
           fi: 'Katso liikuntapaikan kunto ulkoliikunta.fi palvelusta',
