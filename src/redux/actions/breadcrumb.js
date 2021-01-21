@@ -19,7 +19,7 @@ export const breadcrumbPop = () => async (dispatch, getState) => {
         }
       }, 1);
     } catch (e) {
-      console.warn('Unable to focus to focusTarget in breadcrumb')
+      console.warn('Unable to focus to focusTarget in breadcrumb');
     }
   }
 
