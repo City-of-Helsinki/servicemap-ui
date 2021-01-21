@@ -5,7 +5,9 @@ import { FormattedMessage } from 'react-intl';
 import config from '../../../../../config';
 import unitSectionFilter from '../../utils/unitSectionFilter';
 
-const Highlights = ({ unit, classes, getLocaleText }) => {
+const Highlights = ({
+  unit, classes, getLocaleText, intl,
+}) => {
   const connections = unitSectionFilter(unit.connections, 'HIGHLIGHT');
 
   // Add link to ulkoliikunta.fi as custom highligh to certain services
@@ -19,7 +21,7 @@ const Highlights = ({ unit, classes, getLocaleText }) => {
 
   if (showOutdoorsLink) {
     const outdoorsObject = {
-      id: 'outdoorSports',
+      id: 'outdoorExercise',
       value: {
         www: {
           fi: `${config.outdoorExerciseURL}/unit/${unit.id}`,
@@ -27,9 +29,9 @@ const Highlights = ({ unit, classes, getLocaleText }) => {
           sv: `${config.outdoorExerciseURL}/unit/${unit.id}`,
         },
         name: {
-          fi: 'Katso liikuntapaikan kunto ulkoliikunta.fi palvelusta',
-          en: 'Check the condition of an exercise location in the ulkoliikunta.fi service',
-          sv: 'Kolla skicket på en motionsplats i tjänsten ulkoliikunta.fi',
+          fi: intl.formatMessage({ id: 'unit.outdoorLink' }),
+          en: intl.formatMessage({ id: 'unit.outdoorLink' }),
+          sv: intl.formatMessage({ id: 'unit.outdoorLink' }),
         },
       },
     };
@@ -65,6 +67,7 @@ Highlights.propTypes = {
   unit: PropTypes.objectOf(PropTypes.any).isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   getLocaleText: PropTypes.func.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default Highlights;

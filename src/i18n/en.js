@@ -344,6 +344,7 @@ const translations = {
   'unit.route': 'Look at the route to this place',
   'unit.route.extra': '(New tab. The HSL Journey Planner is not an accessible service)',
   'unit.socialMedia.title': 'The service location on social media',
+  'unit.outdoorLink': 'Check the condition of an exercise location in the ulkoliikunta.fi service',
 
   // Search
   'search': 'Search',
