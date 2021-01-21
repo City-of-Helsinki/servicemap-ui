@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<ServiceMapButton /> should work 1`] = `
-<injectIntl(WithStyles(SMButton))
+<injectIntl(WithStyles(ForwardRef))
   onClick={[Function]}
   role="button"
 >
-  <WithStyles(SMButton)
+  <WithStyles(ForwardRef)
     intl={
       Object {
         "defaultFormats": Object {},
@@ -46,19 +46,19 @@ exports[`<ServiceMapButton /> should work 1`] = `
     onClick={[Function]}
     role="button"
   >
-    <SMButton
+    <ForwardRef
       aria-label={null}
       className=""
       classes={
         Object {
-          "button": "SMButton-button-1",
-          "default": "SMButton-default-7",
-          "margin": "SMButton-margin-3",
-          "marginRight": "SMButton-marginRight-4",
-          "primary": "SMButton-primary-5",
-          "secondary": "SMButton-secondary-6",
-          "smallButton": "SMButton-smallButton-2",
-          "typography": "SMButton-typography-8",
+          "button": "ForwardRef-button-1",
+          "default": "ForwardRef-default-7",
+          "margin": "ForwardRef-margin-3",
+          "marginRight": "ForwardRef-marginRight-4",
+          "primary": "ForwardRef-primary-5",
+          "secondary": "ForwardRef-secondary-6",
+          "smallButton": "ForwardRef-smallButton-2",
+          "typography": "ForwardRef-typography-8",
         }
       }
       color="default"
@@ -110,7 +110,7 @@ exports[`<ServiceMapButton /> should work 1`] = `
     >
       <WithStyles(ForwardRef(ButtonBase))
         aria-label={null}
-        className="SMButton-button-1  SMButton-marginRight-4  SMButton-default-7"
+        className="ForwardRef-button-1  ForwardRef-marginRight-4  ForwardRef-default-7"
         disabled={false}
         icon={null}
         onClick={[Function]}
@@ -120,7 +120,7 @@ exports[`<ServiceMapButton /> should work 1`] = `
       >
         <ForwardRef(ButtonBase)
           aria-label={null}
-          className="SMButton-button-1  SMButton-marginRight-4  SMButton-default-7"
+          className="ForwardRef-button-1  ForwardRef-marginRight-4  ForwardRef-default-7"
           classes={
             Object {
               "disabled": "Mui-disabled",
@@ -138,7 +138,7 @@ exports[`<ServiceMapButton /> should work 1`] = `
         >
           <button
             aria-label={null}
-            className="MuiButtonBase-root SMButton-button-1  SMButton-marginRight-4  SMButton-default-7"
+            className="MuiButtonBase-root ForwardRef-button-1  ForwardRef-marginRight-4  ForwardRef-default-7"
             disabled={false}
             icon={null}
             onBlur={[Function]}
@@ -163,7 +163,7 @@ exports[`<ServiceMapButton /> should work 1`] = `
           </button>
         </ForwardRef(ButtonBase)>
       </WithStyles(ForwardRef(ButtonBase))>
-    </SMButton>
-  </WithStyles(SMButton)>
-</injectIntl(WithStyles(SMButton))>
+    </ForwardRef>
+  </WithStyles(ForwardRef)>
+</injectIntl(WithStyles(ForwardRef))>
 `;

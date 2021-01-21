@@ -42,6 +42,10 @@ const paths = {
     generate: () => `/info`,
     regex: /\/[a-zA-Z]{2}\/info/
   },
+  infoAccessibility: {
+    generate: () => '/info/accessibility',
+    regex: /\/[a-zA-Z]{2}\/info\/accessibility/
+  },
   feedback: {
     generate: () => '/feedback',
     regex: /\/[a-zA-Z]{2}\/feedback/
