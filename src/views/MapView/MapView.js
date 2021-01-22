@@ -379,11 +379,13 @@ const MapView = (props) => {
 
           <ZoomControl position="bottomright" aria-hidden="true" />
           <Control position="topleft">
-            <HideSidebarButton
-              sidebarHidden={sidebarHidden}
-              mapRef={mapRef}
-              toggleSidebar={toggleSidebar}
-            />
+            {!isMobile ? (
+              <HideSidebarButton
+                sidebarHidden={sidebarHidden}
+                mapRef={mapRef}
+                toggleSidebar={toggleSidebar}
+              />
+            ) : null}
           </Control>
           {
             !embeded

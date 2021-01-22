@@ -70,7 +70,7 @@ const createContentStyles = (
     styles.sidebar.borderRight = '8px solid transparent';
   }
 
-  if (sidebarHidden) {
+  if (sidebarHidden && !isMobile) {
     styles.sidebar.display = 'none';
   }
 
