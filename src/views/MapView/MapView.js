@@ -379,7 +379,7 @@ const MapView = (props) => {
 
           <ZoomControl position="bottomright" aria-hidden="true" />
           <Control position="topleft">
-            {!isMobile ? (
+            {!isMobile && !embeded && toggleSidebar ? (
               <HideSidebarButton
                 sidebarHidden={sidebarHidden}
                 mapRef={mapRef}
@@ -448,8 +448,8 @@ MapView.propTypes = {
   userLocation: PropTypes.objectOf(PropTypes.any),
   locale: PropTypes.string.isRequired,
   measuringMode: PropTypes.bool.isRequired,
-  toggleSidebar: PropTypes.func.isRequired,
-  sidebarHidden: PropTypes.bool.isRequired,
+  toggleSidebar: PropTypes.func,
+  sidebarHidden: PropTypes.bool,
 };
 
 MapView.defaultProps = {
@@ -465,5 +465,7 @@ MapView.defaultProps = {
   districtUnits: null,
   unitList: null,
   unitsLoading: false,
+  toggleSidebar: null,
+  sidebarHidden: false,
   userLocation: null,
 };
