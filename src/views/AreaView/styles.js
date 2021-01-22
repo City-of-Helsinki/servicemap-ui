@@ -55,14 +55,13 @@ const styles = theme => ({
     paddingLeft: theme.spacing(4),
   },
   categoryItem: {
+    paddingTop: 0,
+    paddingBottom: 0,
     paddingRight: 32,
     flexDirection: 'column',
   },
-  categoryItemTitle: {
-    display: 'flex',
-    flexDirection: 'row',
-    width: '100%',
-    alignItems: 'center',
+  serviceTitle: {
+    paddingRight: 32,
   },
   categoryItemContent: {
     paddingLeft: 32,
@@ -163,8 +162,12 @@ const styles = theme => ({
     paddingLeft: 0,
     paddingRight: 0,
   },
-  fullWidth: {
-    width: '100%',
+  unitList: {
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(4),
+  },
+  collpasePadding: {
+    paddingBottom: theme.spacing(2),
   },
 });
 

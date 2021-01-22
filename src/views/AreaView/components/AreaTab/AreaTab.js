@@ -74,7 +74,7 @@ const AreaTab = (props) => {
   };
 
   const handleSubcategoryExpand = (expanded, district) => {
-    if (expanded) {
+    if (!expanded) {
       if (districtRadioValue !== district.id) {
         setSelectedSubdistricts([]);
       }
