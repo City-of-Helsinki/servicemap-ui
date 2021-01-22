@@ -4,6 +4,7 @@ import { Button, Typography } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
 import { getIcon } from '../SMIcon';
 import LocalStorageUtility from '../../utils/localStorage';
+import { focusToViewTitle } from '../../utils/accessibility';
 
 // LocalStorage key for alert message
 const lsKey = 'alertMessage';
@@ -40,6 +41,7 @@ const AlertBox = ({
   const closeButtonClick = () => {
     setVisible(false);
     setMessageAsWatched();
+    focusToViewTitle();
   };
 
   return (

@@ -17,7 +17,9 @@ const translations = {
   // Address
   'address': 'Osoite',
   'address.search': 'Osoitehaku',
+  'address.search.cleared': 'Hakukenttä tyhjennetty',
   'address.search.location': 'Valittu sijainti on {location}',
+  'address.search.suggestion': 'Valitse osoite hakuehdotuksista',
   'address.show.area': 'Näytä alue kartalla',
   'address.error': 'Osoitetta ei löytynyt',
   'address.nearby': 'Lähellä',
@@ -46,6 +48,7 @@ const translations = {
   'area.choose.subdistrict': 'Valitse ja avaa {category}',
   'area.close.subdistrict': 'Sulje {category}',
   'area.noSelection': 'Valitse alue Alueen Valinta -välilehdeltä',
+  'area.noUnits': 'Valitsemallasi alueella ei ole toimipisteitä',
   'area.list.geographical': 'Maantieteellinen',
   'area.list.protection': 'Väestönsuojelu',
   'area.list.health': 'Terveys',
@@ -210,7 +213,7 @@ const translations = {
   'general.pageTitles.list.reservations': 'Varauslista',
   'general.pageTitles.info': 'Tietoa palvelusta',
   'general.pageTitles.feedback': 'Palautenäkymä',
-  'general.pageTitles.area': 'Aluenäkymä.',
+  'general.pageTitles.area': 'Aluenäkymä',
   // Readspeaker
   'general.readspeaker.buttonText': 'Kuuntele',
   'general.readspeaker.title': 'Kuuntele ReadSpeaker webReaderilla',
@@ -341,6 +344,7 @@ const translations = {
   'unit.route': 'Katso reitti tänne',
   'unit.route.extra': '(Uusi välilehti. HSL-reittiopas ei ole saavutettava palvelu)',
   'unit.socialMedia.title': 'Toimipiste sosiaalisessa mediassa',
+  'unit.outdoorLink': 'Katso liikuntapaikan kunto ulkoliikunta.fi palvelusta',
 
   // Search
   'search': 'Hae',
@@ -387,6 +391,7 @@ const translations = {
   'search.infoText': '{count} Hakutulosta',
   'search.searchbar.headerText': 'Pääkaupunkiseudun kaikki julkiset palvelut ulottuvillasi.',
   'search.searchbar.infoText': 'Hae palveluita, toimipisteitä tai osoitteita',
+  'search.skipLink': 'Hyppylinkki hakutuloksiin',
   'search.suggestions.suggest': 'Tarkoititko..?',
   'search.suggestions.expand': 'Hakuehdotukset',
   'search.suggestions.loading': 'Ladataan ehdotuksia',

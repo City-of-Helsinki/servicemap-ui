@@ -17,7 +17,9 @@ const translations = {
   // Address
   'address': 'Address',
   'address.search': 'Address search',
+  'address.search.cleared': 'Search box cleared',
   'address.search.location': 'Chosen location is {location}',
+  'address.search.suggestion': 'Choose an address from the search suggestions',
   'address.show.area': 'Show area on map',
   'address.error': 'No address found',
   'address.nearby': 'Nearby',
@@ -46,6 +48,7 @@ const translations = {
   'area.choose.subdistrict': 'Choose and open {category}',
   'area.close.subdistrict': 'Close {category}',
   'area.noSelection': 'Choose area from the Choice of Area tab',
+  'area.noUnits': 'There are no service locations in your chosen area',
   'area.list.geographical': 'Geographical',
   'area.list.protection': 'Civil defence',
   'area.list.health': 'Health',
@@ -341,6 +344,7 @@ const translations = {
   'unit.route': 'Look at the route to this place',
   'unit.route.extra': '(New tab. The HSL Journey Planner is not an accessible service)',
   'unit.socialMedia.title': 'The service location on social media',
+  'unit.outdoorLink': 'Check the condition of an exercise location in the ulkoliikunta.fi service',
 
   // Search
   'search': 'Search',
@@ -387,6 +391,7 @@ const translations = {
   'search.infoText': '{count} Search results',
   'search.searchbar.headerText': 'Find services near your home',
   'search.searchbar.infoText': 'Search for services, locations or addresses',
+  'search.skipLink': 'Jump link to the search results',
   'search.suggestions.suggest': 'Did you mean..?',
   'search.suggestions.expand': 'Search suggestions',
   'search.suggestions.loading': 'Loading suggestions',

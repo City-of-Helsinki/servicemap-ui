@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
@@ -29,10 +29,15 @@ const AddressSearchBar = ({
   const [resultIndex, setResultIndex] = useState(0);
   const [searchBarValue, setSearchBarValue] = useState(formAddressString(defaultAddress));
   const [currentLocation, setCurrentLocation] = useState(null);
+  const [cleared, setCleared] = useState(false);
 
   const suggestionCount = 5;
+  const inputRef = useRef();
 
   const handleAddressSelect = (address) => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
     setSearchBarValue(formAddressString(address));
     setAddressResults([]);
     setCurrentLocation(formAddressString(address));
@@ -61,7 +66,16 @@ const AddressSearchBar = ({
     }
   };
 
+  const blurSearchfield = (e) => {
+    e.preventDefault();
+    document.activeElement.blur();
+  };
+
   const handleInputChange = (text) => {
+    // Reset cleared text
+    if (cleared) {
+      setCleared(false);
+    }
     setSearchBarValue(text);
     // Fetch address suggestions
     if (text.length && text.length > 1) {
@@ -93,57 +107,74 @@ const AddressSearchBar = ({
   // Add info text for location selection
   const locationInfoText = currentLocation ? intl.formatMessage({ id: 'address.search.location' }, { location: currentLocation }) : '';
   // Figure out which info text to use
-  const infoText = showSuggestions ? <FormattedMessage id="search.suggestions.suggestions" values={{ count: addressResults.length }} /> : locationInfoText;
+  let infoText = showSuggestions && addressResults.length ? <FormattedMessage id="search.suggestions.suggestions" values={{ count: addressResults.length }} /> : locationInfoText;
+  if (cleared) {
+    infoText = <FormattedMessage id="address.search.cleared" />;
+  } else {
+    infoText = (
+      <>
+        {infoText}
+        {
+          addressResults.length ? (<FormattedMessage id="address.search.suggestion" />) : null
+        }
+      </>
+    );
+  }
+
   return (
     <div className={containerClassName}>
       <Typography color="inherit">{title}</Typography>
-      <InputBase
-        inputProps={{
-          role: 'combobox',
-          'aria-haspopup': !!showSuggestions,
-          'aria-label': `${intl.formatMessage({ id: 'search.searchField' })} ${intl.formatMessage({ id: 'address.search' })}`,
-        }}
-        type="search"
-        className={`${classes.searchBar} ${inputClassName}`}
-        value={searchBarValue}
-        onChange={e => handleInputChange(e.target.value)}
-        onKeyDown={e => showSuggestions && handleSearchBarKeyPress(e)}
-        endAdornment={(
-          <>
-            <Search aria-hidden className={classes.searchIcon} />
-            <Divider aria-hidden className={classes.divider} />
-            <IconButton
-              aria-label={intl.formatMessage({ id: 'search.cancelText' })}
-              onClick={() => {
-                handleAddressChange(null);
-                setSearchBarValue('');
-              }}
-              className={classes.IconButton}
-            >
-              <Clear className={classes.clearButton} />
-            </IconButton>
-          </>
-        )}
-      />
-      <Typography aria-live="polite" id="resultLength" variant="srOnly">{infoText}</Typography>
-      {showSuggestions ? (
-        <Paper>
-          <List>
-            {addressResults.map((address, i) => (
-              <ListItem
-                selected={i === resultIndex}
-                key={formAddressString(address)}
-                button
-                onClick={() => handleAddressSelect(address)}
+      <form action="" onSubmit={e => blurSearchfield(e)}>
+        <InputBase
+          inputRef={inputRef}
+          inputProps={{
+            role: 'combobox',
+            'aria-haspopup': !!showSuggestions,
+            'aria-label': `${intl.formatMessage({ id: 'search.searchField' })} ${intl.formatMessage({ id: 'address.search' })}`,
+          }}
+          type="search"
+          className={`${classes.searchBar} ${inputClassName}`}
+          value={searchBarValue}
+          onChange={e => handleInputChange(e.target.value)}
+          onKeyDown={e => showSuggestions && handleSearchBarKeyPress(e)}
+          endAdornment={(
+            <>
+              <Search aria-hidden className={classes.searchIcon} />
+              <Divider aria-hidden className={classes.divider} />
+              <IconButton
+                aria-label={intl.formatMessage({ id: 'search.cancelText' })}
+                onClick={() => {
+                  setCleared(true);
+                  handleAddressChange(null);
+                  setSearchBarValue('');
+                }}
+                className={classes.IconButton}
               >
-                <Typography>
-                  {formAddressString(address)}
-                </Typography>
-              </ListItem>
-            ))}
-          </List>
-        </Paper>
-      ) : null}
+                <Clear className={classes.clearButton} />
+              </IconButton>
+            </>
+          )}
+        />
+        <Typography aria-live="polite" id="resultLength" variant="srOnly">{infoText}</Typography>
+        {showSuggestions ? (
+          <Paper>
+            <List>
+              {addressResults.map((address, i) => (
+                <ListItem
+                  selected={i === resultIndex}
+                  key={formAddressString(address)}
+                  button
+                  onClick={() => handleAddressSelect(address)}
+                >
+                  <Typography>
+                    {formAddressString(address)}
+                  </Typography>
+                </ListItem>
+              ))}
+            </List>
+          </Paper>
+        ) : null}
+      </form>
     </div>
   );
 };

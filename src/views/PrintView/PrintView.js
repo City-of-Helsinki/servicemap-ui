@@ -234,6 +234,17 @@ const PrintView = ({
   useEffect(() => {
     createMap();
     focusToFirstElement();
+    // Focus back to ToolMenu button on closing PrintView
+    return () => {
+      try {
+        const e = document.getElementById('ToolMenuButton');
+        if (e) {
+          e.focus();
+        }
+      } catch (e) {
+        console.warn(`Unable to focus to ToolMenuPanel ${e.message}`);
+      }
+    };
   }, []);
 
   return (

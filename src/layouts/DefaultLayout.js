@@ -15,6 +15,7 @@ import FocusableSRLinks from '../components/FocusableSRLinks';
 import AlertBox from '../components/AlertBox';
 import PrintView from '../views/PrintView';
 import { PrintProvider } from '../context/PrintContext';
+import { viewTitleID } from '../utils/accessibility';
 
 const { smallScreenBreakpoint } = config;
 
@@ -104,7 +105,7 @@ const DefaultLayout = (props) => {
   );
   const srLinks = [
     {
-      href: '#view-title',
+      href: `#${viewTitleID}`,
       text: <FormattedMessage id="general.skipToContent" />,
     },
   ];

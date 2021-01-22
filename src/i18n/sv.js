@@ -17,7 +17,9 @@ const translations = {
   // Address
   'address': 'Adress',
   'address.search': 'Adresssök',
+  'address.search.cleared': 'Sökfältet har tömts',
   'address.search.location': 'Den valda positionen är {location}',
+  'address.search.suggestion': 'Välj adress från sökresultaten',
   'address.show.area': 'Visa området på kartan',
   'address.error': 'Addressen kunde inte hittas',
   'address.nearby': 'Nära',
@@ -46,6 +48,7 @@ const translations = {
   'area.choose.subdistrict': 'Väl och öppna {category}',
   'area.close.subdistrict': 'Stäng {category}',
   'area.noSelection': 'Väl område under fliken Val av område',
+  'area.noUnits': 'Det finns inga verksamhetsställen i ditt valda område',
   'area.list.geographical': 'Geografisk',
   'area.list.protection': 'Befolkningsskydd',
   'area.list.health': 'Hälsa',
@@ -341,6 +344,7 @@ const translations = {
   'unit.route': 'Se vägen till det här stället',
   'unit.route.extra': '(Ny flik. HRT-reseplaneraren är inte en tillgänglig tjänst)',
   'unit.socialMedia.title': 'Verksamhetsstället på sociala medier',
+  'unit.outdoorLink': 'Kolla skicket på en motionsplats i tjänsten ulkoliikunta.fi',
 
   // Search
   'search': 'Sök',
@@ -387,6 +391,7 @@ const translations = {
   'search.infoText': '{count} sökresultat',
   'search.searchbar.headerText': 'Alla tjänster i huvudstadsregionen inom räckhåll.',
   'search.searchbar.infoText': 'Sök tjänster, verksamhetsställen eller adresser',
+  'search.skipLink': 'Hoppa till sökresultaten',
   'search.suggestions.suggest': 'Menade du..?',
   'search.suggestions.expand': 'Sökförslag',
   'search.suggestions.loading': 'Laddar förslag',
