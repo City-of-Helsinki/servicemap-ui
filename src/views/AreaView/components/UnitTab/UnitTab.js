@@ -5,21 +5,18 @@ import {
   Typography,
   Divider,
   Checkbox,
-  FormControlLabel,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
   ListItem,
 } from '@material-ui/core';
 import distance from '@turf/distance';
 import { FormattedMessage } from 'react-intl';
-import { ArrowDropDown, Cancel } from '@material-ui/icons';
+import { Cancel } from '@material-ui/icons';
 import { AreaIcon, AddressIcon } from '../../../../components/SMIcon';
 import { formatDistanceObject, uppercaseFirst } from '../../../../utils';
 import DivisionItem from '../../../../components/ListItems/DivisionItem';
 import UnitItem from '../../../../components/ListItems/UnitItem';
 import SMButton from '../../../../components/ServiceMapButton';
 import { getAddressFromUnit } from '../../../../utils/address';
+import SMAccordion from '../../../../components/SMAccordion';
 
 
 const UnitTab = ({
@@ -120,10 +117,40 @@ const UnitTab = ({
     return (
       serviceList.map(category => (
         <ListItem
-          className={classes.categoryItem}
           key={`${category.id}${category.period ? category.period[0] : ''}`}
+          disableGutters
         >
-          <Accordion
+          <SMAccordion
+            className={classes.serviceTitle}
+            titleContent={(
+              <div>
+                <Typography>
+                  {`${uppercaseFirst(getLocaleText(category.name))} (${category.units.length})`}
+                </Typography>
+                <Typography aria-hidden className={classes.captionText} variant="caption">
+                  {`${category.period ? `${category.period[0]}-${category.period[1]}` : ''}`}
+                </Typography>
+              </div>
+            )}
+            adornment={(
+              <Checkbox
+                checked={checkedServices.includes(category.id)}
+                onChange={e => handleCheckboxChange(e, category)}
+              />
+            )}
+            collapseContent={(
+              <List className={classes.unitList} disablePadding>
+                {category.units.map((unit, i) => (
+                  <UnitItem
+                    key={`${unit.id}-${category.id}`}
+                    unit={unit}
+                    divider={i !== category.units.length - 1}
+                  />
+                ))}
+              </List>
+            )}
+          />
+          {/* <Accordion
             TransitionProps={{ unmountOnExit: true, mountOnEnter: true }}
             classes={{ root: classes.expandingElement }}
           >
@@ -165,7 +192,7 @@ const UnitTab = ({
                 ))}
               </List>
             </AccordionDetails>
-          </Accordion>
+          </Accordion> */}
         </ListItem>
       ))
     );

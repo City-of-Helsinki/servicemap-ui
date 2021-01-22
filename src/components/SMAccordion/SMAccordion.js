@@ -55,8 +55,7 @@ const SMAccordion = ({
         ) : titleContent}
       </div>
       <Collapse className={classes.collapseContainer} aria-hidden={!open} in={open}>
-        {open && collapseContent}
-        {/* {collapseContent} */}
+        {collapseContent}
       </Collapse>
     </div>
   );
