@@ -91,14 +91,14 @@ describe('<SimpleListItem />', () => {
   it('does use default accessibility attributes correctly', () => {
     const component = mount(<SimpleListItem {...mockProps} />);
 
-    const srText = component.find('span').at(1);
+    const srText = component.find('span').at(0);
     const text = component.find('p').at(0);
 
     // Expect screen reader texts to render correctly
-    expect(component.find('ForwardRef(ListItem)').props()['aria-label'].indexOf(mockProps.text) !== -1).toBeTruthy();
+    expect(component.find('ForwardRef(ListItem)').text().indexOf(mockProps.text) !== -1).toBeTruthy();
     // Expect aria-hidden attributes to be placed correctly
-    expect(srText.props()['aria-hidden']).toBeTruthy();
-    expect(text.props()['aria-hidden']).toBeTruthy();
+    expect(srText.props()['aria-hidden']).toBeFalsy();
+    expect(text.props()['aria-hidden']).toBeFalsy();
     // Expect role to be set
     expect(component.find('ForwardRef(ListItem)').props().role).toEqual(null);
     // Expect element to have tabIndex -1
@@ -116,16 +116,18 @@ describe('<SimpleListItem />', () => {
       />,
     );
 
-    const srText = component.find('span').at(1).text();
-    const containsText = srText.indexOf('Screen reader text') !== -1;
-    const alText = component.find('ForwardRef(ListItem)').props()['aria-label'];
-    const alContainsText = alText.indexOf(mockProps.text) !== -1
-    && alText.indexOf('Screen reader text') !== -1;
+    const srText = component.find('span').at(0);
+    const visibleText = component.find('p').at(0);
+    const srTextContains = srText.text().indexOf('Screen reader text') !== -1;
+    const visibleTextContains = visibleText.text().indexOf(mockProps.text) !== -1;
 
-    // Expect screen reader text to contain both text and srText values
-    expect(alContainsText).toBeTruthy();
+    // Expect aria-hidden attributes to be placed correctly
+    expect(srText.props()['aria-hidden']).toBeFalsy();
+    expect(visibleText.props()['aria-hidden']).toBeFalsy();
+    // Expect visible text to contain given attribute
+    expect(visibleTextContains).toBeTruthy();
     // Expect screen reader only text to exist in separate span element
-    expect(containsText).toBeTruthy();
+    expect(srTextContains).toBeTruthy();
     // Expect role to be set
     expect(component.props().role).toEqual('button');
     // Expect divider element to be hidden from screen readers

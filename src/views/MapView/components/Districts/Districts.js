@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Typography } from '@material-ui/core';
 import { useSelector } from 'react-redux';
@@ -9,14 +9,18 @@ import AddressMarker from '../AddressMarker';
 import useMobileStatus from '../../../../utils/isMobile';
 import { parseSearchParams } from '../../../../utils';
 
+let districtClicked = null;
+
 const Districts = ({
   highlightedDistrict,
   districtData,
+  unitsFetching,
   addressDistrict,
   getLocaleText,
   theme,
   mapOptions,
   currentPage,
+  measuringMode,
   selectedAddress,
   selectedSubdistricts,
   setSelectedSubdistricts,
@@ -32,10 +36,21 @@ const Districts = ({
   const location = useLocation();
   const citySettings = useSelector(state => state.settings.cities);
 
+  /* TODO: The following useEffect is used to prevent double click bug with
+  lealfet + safari. Should be removed when the bug is fixed by lealfet */
+  useEffect(() => {
+    setTimeout(() => {
+      districtClicked = null;
+    }, 1000);
+  }, [selectedSubdistricts]);
+
   const districtOnClick = (e, district) => {
+    if (measuringMode) return;
     if (district.category === 'geographical') {
       // Disable normal map click event
       e.originalEvent.view.L.DomEvent.stopPropagation(e);
+      if (districtClicked === district.ocd_id) return; // Prevent safari double click
+      districtClicked = district.ocd_id;
       // Add/remove district from selected geographical districts
       let newArray;
       if (selectedSubdistricts.some(item => item === district.ocd_id)) {
@@ -50,48 +65,53 @@ const Districts = ({
     }
   };
 
-  const renderDistrictMarkers = district => (
-    <React.Fragment key={district.id}>
-      {district.unit && district.unit.location ? (
-        <>
-          <Marker
-            customUnitData={district.unit}
-            position={[
-              district.unit.location.coordinates[1],
-              district.unit.location.coordinates[0],
-            ]}
-            icon={drawMarkerIcon(useContrast)}
-            keyboard={false}
-            onClick={() => {
-              if (navigator) {
-                if (isMobile) {
-                  navigator.replace('unit', { id: district.unit.id });
-                } else {
-                  navigator.push('unit', { id: district.unit.id });
-                }
-              }
-            }}
-          >
-            <Tooltip
-              direction="top"
-              offset={[1.5, -25]}
+  const renderDistrictMarkers = (district) => {
+    if (embed && parseSearchParams(location.search).units === 'none') {
+      return null;
+    }
+    return (
+      <React.Fragment key={district.id}>
+        {district.unit && district.unit.location ? (
+          <>
+            <Marker
+              customUnitData={district.unit}
               position={[
                 district.unit.location.coordinates[1],
                 district.unit.location.coordinates[0],
               ]}
+              icon={drawMarkerIcon(useContrast)}
+              keyboard={false}
+              onClick={() => {
+                if (navigator) {
+                  if (isMobile) {
+                    navigator.replace('unit', { id: district.unit.id });
+                  } else {
+                    navigator.push('unit', { id: district.unit.id });
+                  }
+                }
+              }}
             >
-              <Typography
-                noWrap
-                className={classes.popup}
+              <Tooltip
+                direction="top"
+                offset={[1.5, -25]}
+                position={[
+                  district.unit.location.coordinates[1],
+                  district.unit.location.coordinates[0],
+                ]}
               >
-                {getLocaleText(district.unit.name)}
-              </Typography>
-            </Tooltip>
-          </Marker>
-        </>
-      ) : null}
-    </React.Fragment>
-  );
+                <Typography
+                  noWrap
+                  className={classes.popup}
+                >
+                  {getLocaleText(district.unit.name)}
+                </Typography>
+              </Tooltip>
+            </Marker>
+          </>
+        ) : null}
+      </React.Fragment>
+    );
+  };
 
   const renderSingleDistrict = () => {
     if (!highlightedDistrict) {
@@ -144,6 +164,7 @@ const Districts = ({
 
       return (
         <Polygon
+          interactive={!unitsFetching}
           key={district.id}
           onClick={e => districtOnClick(e, district)}
           positions={[[area]]}
@@ -219,8 +240,10 @@ Districts.propTypes = {
   getLocaleText: PropTypes.func.isRequired,
   mapOptions: PropTypes.objectOf(PropTypes.any).isRequired,
   currentPage: PropTypes.string.isRequired,
+  measuringMode: PropTypes.bool.isRequired,
   selectedAddress: PropTypes.objectOf(PropTypes.any),
   districtData: PropTypes.arrayOf(PropTypes.object),
+  unitsFetching: PropTypes.bool.isRequired,
   addressDistrict: PropTypes.number,
   selectedSubdistricts: PropTypes.arrayOf(PropTypes.string),
   setSelectedSubdistricts: PropTypes.func.isRequired,

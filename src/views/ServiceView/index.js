@@ -6,7 +6,6 @@ import { getLocaleString } from '../../redux/selectors/locale';
 import { fetchService } from '../../redux/actions/services';
 import ServiceView from './ServiceView';
 import { getServiceUnits } from '../../redux/selectors/service';
-import { changeCustomUserLocation } from '../../redux/actions/user';
 import styles from './styles';
 
 const mapStateToProps = (state) => {
@@ -28,5 +27,5 @@ const mapStateToProps = (state) => {
 
 export default withRouter(withStyles(styles)(connect(
   mapStateToProps,
-  { changeCustomUserLocation, fetchService },
+  { fetchService },
 )(ServiceView)));

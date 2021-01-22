@@ -260,11 +260,11 @@ const AddressView = (props) => {
   // Show/Hide nearby service tab dynamically, show only if area selection is shown
   if (config.showAreaSelection) {
     const nearbyServicesTab = {
-      ariaLabel: intl.formatMessage({id: 'service.nearby'}),
+      ariaLabel: intl.formatMessage({ id: 'address.services.header' }),
       component: renderClosebyServices(),
       data: null,
       itemsPerPage: null,
-      title: intl.formatMessage({id: 'service.nearby'}),
+      title: intl.formatMessage({ id: 'address.services.header' }),
       onClick: () => {
         setToRender('adminDistricts');
       },
@@ -295,7 +295,7 @@ const AddressView = (props) => {
             {addressData && units && (
               <MobileComponent>
                 <SMButton
-                  role="link"
+                  aria-hidden
                   margin
                   messageID="general.showOnMap"
                   icon={<Map />}
@@ -312,22 +312,6 @@ const AddressView = (props) => {
           </div>
         )}
       />
-      {addressData && units && (
-        <MobileComponent>
-          <SMButton
-            role="link"
-            messageID="general.showOnMap"
-            icon={<Map />}
-            className={classes.mapButton}
-            onClick={() => {
-              if (navigator) {
-                focusToPosition(map, addressData.location.coordinates);
-                navigator.openMap();
-              }
-            }}
-          />
-        </MobileComponent>
-      )}
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 import 'leaflet.markercluster/dist/MarkerCluster.css';
@@ -50,6 +50,7 @@ const MarkerCluster = ({
   navigator,
   settings,
   theme,
+  measuringMode,
 }) => {
   const useContrast = theme === 'dark';
   const embeded = isEmbed();
@@ -84,6 +85,7 @@ const MarkerCluster = ({
       classes,
       getLocaleText,
       distance,
+      intl,
     );
   };
 
@@ -335,6 +337,7 @@ const MarkerCluster = ({
           classes,
           getLocaleText,
           distance,
+          intl,
         );
         const tooltipPermanent = highlightedUnit
           && (highlightedUnit.id === unit.id && UnitHelper.isUnitPage());
@@ -382,8 +385,29 @@ const MarkerCluster = ({
     document.querySelectorAll('.leaflet-marker-icon').forEach((item) => {
       item.setAttribute('tabindex', '-1');
       item.setAttribute('aria-hidden', 'true');
+      // Remove marker interaction when using measuring tool
+      if (measuringMode) item.classList.remove('leaflet-interactive');
     });
-  }, [cluster, data]);
+  }, [cluster, data, measuringMode]);
+
+  const removeMarkerInteraction = useCallback(() => {
+    /* Remove interactions from markers during measuring mode.
+     Use callback is used so that cluster.off() works correctly */
+    document.querySelectorAll('.leaflet-marker-icon').forEach((item) => {
+      item.classList.remove('leaflet-interactive');
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!cluster) return;
+    if (measuringMode) {
+      // Add event listener to remove marker interactions when new clusters are generated
+      cluster.on('animationend', removeMarkerInteraction);
+    } else {
+      // Remove event listener when measuring mode is closed
+      cluster.off('animationend', removeMarkerInteraction);
+    }
+  }, [measuringMode]);
 
   return null;
 };

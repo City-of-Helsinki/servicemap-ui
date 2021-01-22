@@ -13,6 +13,7 @@ import DesktopComponent from '../DesktopComponent';
 import MobileComponent from '../MobileComponent';
 import config from '../../../config';
 import ToolMenu from '../ToolMenu';
+import { focusToViewTitle } from '../../utils/accessibility';
 
 class TopBar extends React.Component {
   state={ drawerOpen: false }
@@ -210,7 +211,7 @@ class TopBar extends React.Component {
           navigator.push('home');
         } else {
           setTimeout(() => {
-            document.getElementById('view-title').focus();
+            focusToViewTitle();
           }, 1);
         }
         break;
@@ -268,7 +269,7 @@ class TopBar extends React.Component {
               <Typography aria-hidden color="inherit">|</Typography>
               {this.renderLanguages(pageType)}
               <Typography aria-hidden color="inherit">|</Typography>
-              <ButtonBase role="link" onClick={() => this.handleContrastChange()} focusVisibleClassName={classes.topButtonFocused}>
+              <ButtonBase role="button" onClick={() => this.handleContrastChange()} focusVisibleClassName={classes.topButtonFocused}>
                 <Typography className={fontClass} color="inherit" variant="body2"><FormattedMessage id="general.contrast" /></Typography>
               </ButtonBase>
             </div>

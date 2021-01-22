@@ -9,21 +9,41 @@ const styles = theme => ({
   addressLink: {
     color: theme.palette.primary.main,
   },
+  loadingScreen: {
+    height: '100%',
+    width: '100%',
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    position: 'absolute',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: theme.zIndex.infront,
+  },
   popup: {
     padding: 12,
   },
   addressPopup: {
     lineHeight: '6px',
-    padding: 12,
-    paddingBottom: 0,
     width: 'auto',
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
+    alignItems: 'start',
+    padding: theme.spacing(2),
+    position: 'inherit',
+    wordBreak: 'break-all',
   },
   addressPopupButton: {
-    paddingTop: '9px',
-    paddingBottom: 12,
+    paddingTop: theme.spacing(0.5),
+    paddingBottom: theme.spacing(2),
+  },
+  coordinateLink: {
+    color: theme.palette.primary.main,
+    wordBreak: 'break-word',
+    textAlign: 'left',
+    maxWidth: 240,
+  },
+  marginBottom: {
+    marginBottom: `${theme.spacing(2)}px !important`,
   },
   embedLogo: {
     bottom: 0,

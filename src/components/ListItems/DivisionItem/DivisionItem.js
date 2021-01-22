@@ -6,6 +6,7 @@ import {
 import { FormattedMessage } from 'react-intl';
 import UnitIcon from '../../SMIcon/UnitIcon';
 import SMLink from '../../Link';
+import { getAddressFromUnit } from '../../../utils/address';
 
 const DivisionItem = ({
   classes,
@@ -16,7 +17,6 @@ const DivisionItem = ({
   getLocaleText,
   intl,
   navigator,
-  locale,
 }) => {
   const { area } = data;
   const aStart = area && area.start ? new Date(area.start).getFullYear() : null;
@@ -25,7 +25,7 @@ const DivisionItem = ({
   if (aStart === 2019 || aEnd === 2019) return null;
 
   const name = data.name ? getLocaleText(data.name) : null;
-  const address = data.street_address ? getLocaleText(data.street_address) : null;
+  const address = typeof data.street_address === 'object' ? getAddressFromUnit(data, getLocaleText, intl) : (data.street_address || null);
   const unitOnClick = () => navigator.push('unit', { id: data.id });
 
   const emergencyUnitId = data.emergencyUnitId || null;
@@ -70,6 +70,7 @@ const DivisionItem = ({
     <>
       <ListItem
         component="li"
+        role="link"
         className={`${classes.listItem} ${className || ''}`}
       >
         <ButtonBase
@@ -207,7 +208,6 @@ DivisionItem.propTypes = {
   divider: PropTypes.bool.isRequired,
   getLocaleText: PropTypes.func.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any).isRequired,
-  locale: PropTypes.string.isRequired,
   intl: PropTypes.shape({
     formatMessage: PropTypes.func,
   }).isRequired,

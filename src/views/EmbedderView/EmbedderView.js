@@ -5,6 +5,8 @@ import {
   Typography, Paper, TextField,
 } from '@material-ui/core';
 import URI from 'urijs';
+import { Helmet } from 'react-helmet';
+import { useSelector } from 'react-redux';
 import * as smurl from './utils/url';
 import isClient, { uppercaseFirst } from '../../utils';
 import { getEmbedURL, getLanguage } from './utils/utils';
@@ -15,7 +17,6 @@ import SMButton from '../../components/ServiceMapButton';
 import paths from '../../../config/paths';
 import embedderConfig from './embedderConfig';
 import SettingsUtility from '../../utils/settings';
-import { Helmet } from 'react-helmet';
 
 
 const hideCitiesIn = [
@@ -28,6 +29,7 @@ const hideServicesIn = [
   paths.unit.regex,
   paths.service.regex,
   paths.address.regex,
+  paths.area.regex,
 ];
 
 // Timeout for handling width and height input changes
@@ -36,7 +38,11 @@ let timeout;
 const timeoutDelay = 1000;
 
 const EmbedderView = ({
-  classes, intl, mapType, navigator,
+  classes,
+  getLocaleText,
+  intl,
+  mapType,
+  navigator,
 }) => {
   if (!isClient()) {
     return null;
@@ -63,6 +69,9 @@ const EmbedderView = ({
   const defaultFixedHeight = embedderConfig.DEFAULT_CUSTOM_WIDTH;
   const iframeConfig = embedderConfig.DEFAULT_IFRAME_PROPERTIES || {};
   const defaultService = 'none';
+  const page = useSelector(state => state.user.page);
+  const selectedUnit = useSelector(state => state.selectedUnit.unit.data);
+  const currentService = useSelector(state => state.service.current);
 
   // States
   const [language, setLanguage] = useState(defaultLanguage);
@@ -83,8 +92,32 @@ const EmbedderView = ({
   const embedUrl = getEmbedURL(url, {
     language, map, city, service, defaultLanguage, transit, showUnits,
   });
-  const iframeTitle = intl.formatMessage({ id: 'embedder.iframe.title' });
 
+  const getTitleText = () => {
+    let text;
+    const appTitle = intl.formatMessage({ id: 'app.title' });
+    try {
+      switch (page) {
+        case 'unit':
+          text = selectedUnit?.name && getLocaleText(selectedUnit.name);
+          break;
+        case 'service':
+          text = currentService?.name && getLocaleText(currentService.name);
+          break;
+        default:
+          text = intl.formatMessage({ id: `general.pageTitles.ts${page}` });
+      }
+      if (text.indexOf('general.pageTitles') !== -1) {
+        text = null;
+      }
+    } catch (e) {
+      console.warn('Error while trying to get title text', e.message);
+    }
+
+    return `${appTitle}${text ? ` - ${text}` : ''}`;
+  };
+
+  const iframeTitle = getTitleText();
 
   const focusToFirstElement = () => {
     const dialog = dialogRef.current;
@@ -529,6 +562,7 @@ EmbedderView.propTypes = {
     title: PropTypes.string,
     titleContainer: PropTypes.string,
   }).isRequired,
+  getLocaleText: PropTypes.func.isRequired,
   location: PropTypes.shape({
     hash: PropTypes.string,
     pathname: PropTypes.string,

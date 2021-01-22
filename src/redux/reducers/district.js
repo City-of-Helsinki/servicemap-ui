@@ -2,6 +2,7 @@ const initialState = {
   highlitedDistrict: null,
   selectedDistrictType: null,
   districtData: [],
+  unitsFetching: [],
   subdistrictUnits: [],
   selectedSubdistricts: [],
   selectedDistrictServices: [],
@@ -54,11 +55,6 @@ export default (state = initialState, action) => {
         districtAddressData: action.data,
       };
 
-    case 'ADD_SUBDISTRICT_UNITS':
-      return {
-        ...state,
-        subdistrictUnits: [...state.subdistrictUnits, ...action.units],
-      };
 
     case 'SET_SELECTED_SUBDISTRICTS':
       return {
@@ -70,6 +66,19 @@ export default (state = initialState, action) => {
       return {
         ...state,
         selectedDistrictServices: action.services,
+      };
+
+    case 'START_UNIT_FETCH':
+      return {
+        ...state,
+        unitsFetching: [...state.unitsFetching, action.node],
+      };
+
+    case 'END_UNIT_FETCH':
+      return {
+        ...state,
+        unitsFetching: [...state.unitsFetching.filter(item => item !== action.node)],
+        subdistrictUnits: [...state.subdistrictUnits, ...action.units],
       };
 
     default:

@@ -8,15 +8,24 @@ import { keyboardHandler } from '../../../utils';
 
 const SimpleListItem = (props) => {
   const {
-    button, dark, text, classes, link, icon, handleItemClick, role, divider, selected, srText, className,
+    button,
+    dark,
+    text,
+    classes,
+    link,
+    icon,
+    handleItemClick,
+    role,
+    divider,
+    selected,
+    srText,
+    className,
   } = props;
   const isLinkOrButton = button || link;
   return (
     <React.Fragment>
       <ListItem
         className={`${className} ${dark ? 'dark' : ''}`}
-        aria-label={`${srText || ''} ${text}`}
-        className={className}
         button={!!link || button}
         role={link ? 'link' : role}
         tabIndex={isLinkOrButton ? 0 : -1}
@@ -32,7 +41,7 @@ const SimpleListItem = (props) => {
         {
           icon
           && (
-            <ListItemIcon aria-hidden className={`${classes.listIcon} ${link ? classes.link : null}`}>
+            <ListItemIcon aria-hidden className={`${classes.listIcon} ${link ? classes.link : ''}`}>
               {icon}
             </ListItemIcon>
           )
@@ -41,17 +50,12 @@ const SimpleListItem = (props) => {
         <ListItemText
           classes={{ root: classes.textContainer }}
         >
-          {/* ReadSpeaker text - hidden form view and screen readers */}
-          <Typography aria-hidden variant="srOnly">
-            {`${srText || ''}`}
-          </Typography>
-
           <Typography
-            aria-hidden
             color="inherit"
             variant="body2"
             classes={{ root: `${link ? classes.link : null} ${dark ? classes.whiteText : ''}` }}
           >
+            <Typography variant="srOnly">{srText}</Typography>
             {text}
           </Typography>
         </ListItemText>

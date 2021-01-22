@@ -19,6 +19,7 @@ import { formatDistanceObject, uppercaseFirst } from '../../../../utils';
 import DivisionItem from '../../../../components/ListItems/DivisionItem';
 import UnitItem from '../../../../components/ListItems/UnitItem';
 import SMButton from '../../../../components/ServiceMapButton';
+import { getAddressFromUnit } from '../../../../utils/address';
 
 
 const UnitTab = ({
@@ -34,6 +35,7 @@ const UnitTab = ({
   classes,
   intl,
 }) => {
+  const districtsWithUnits = selectedDistrictData.filter(obj => obj.unit);
   const [checkedServices, setCheckedServices] = useState(selectedDistrictServices);
 
   const sortDistricts = (districts) => {
@@ -44,9 +46,12 @@ const UnitTab = ({
     categories.sort((a, b) => getLocaleText(a.name).localeCompare(getLocaleText(b.name)));
   };
 
-  const distanceToAddress = coord => (
-    Math.round(distance(coord, selectedAddress.location.coordinates) * 1000)
-  );
+  const distanceToAddress = (coord) => {
+    if (coord) {
+      return Math.round(distance(coord, selectedAddress.location.coordinates) * 1000);
+    }
+    return null;
+  };
 
   const handleCheckboxChange = (event, category) => {
     let newArray;
@@ -63,22 +68,26 @@ const UnitTab = ({
     setCheckedServices(selectedDistrictServices);
   }, [selectedDistrictServices]);
 
-  const renderDistrictUnitItem = district => (
-    <DivisionItem
-      key={district.id}
-      className={classes.divisionItem}
-      divider
-      data={{
-        area: district,
-        name: district.unit.name || null,
-        id: district.unit.id,
-        street_address: district.unit.street_address,
-      }}
-      distance={district.unit.distance
-        ? formatDistanceObject(intl, district.unit.distance)
-        : null}
-    />
-  );
+  const renderDistrictUnitItem = (district) => {
+    const { unit } = district;
+    const streetAddress = getAddressFromUnit(unit, getLocaleText, intl);
+    return (
+      <DivisionItem
+        key={district.id}
+        className={classes.divisionItem}
+        divider
+        data={{
+          area: district,
+          name: district.unit.name || null,
+          id: district.unit.id,
+          street_address: streetAddress,
+        }}
+        distance={district.unit.distance
+          ? formatDistanceObject(intl, district.unit.distance)
+          : null}
+      />
+    );
+  };
 
   const renderUnitList = () => {
     // Render list of units for neighborhood and postcode-area subdistricts
@@ -178,6 +187,16 @@ const UnitTab = ({
       );
     }
 
+    if (!districtsWithUnits.length) {
+      return (
+        <div>
+          <Typography className={classes.infoText} variant="body2">
+            <FormattedMessage id="area.noUnits" />
+          </Typography>
+        </div>
+      );
+    }
+
     if (selectedSubdistricts.length) {
       // If geographical subdistrict is selected, list units within the district
       return (
@@ -210,14 +229,14 @@ const UnitTab = ({
       localDistrict.forEach((district) => {
         if (district.unit) {
           const newValue = district;
-          newValue.unit.distance = distanceToAddress(district.unit.location.coordinates);
+          newValue.unit.distance = distanceToAddress(district.unit.location?.coordinates);
           localUnitDistricts.push(newValue);
         }
         if (district.overlaping) {
           district.overlaping.forEach((obj) => {
             if (obj.unit) {
               const newValue = obj;
-              newValue.unit.distance = distanceToAddress(obj.unit.location.coordinates);
+              newValue.unit.distance = distanceToAddress(obj.unit.location?.coordinates);
               localUnitDistricts.push(newValue);
             }
           });
@@ -228,14 +247,14 @@ const UnitTab = ({
         if (district.municipality === selectedAddress.street.municipality) {
           if (district.unit) {
             const newValue = district;
-            newValue.unit.distance = distanceToAddress(district.unit.location.coordinates);
+            newValue.unit.distance = distanceToAddress(district.unit.location?.coordinates);
             otherUnitDistricts.push(newValue);
           }
           if (district.overlaping) {
             district.overlaping.forEach((obj) => {
               if (obj.unit) {
                 const newValue = obj;
-                newValue.unit.distance = distanceToAddress(obj.unit.location.coordinates);
+                newValue.unit.distance = distanceToAddress(obj.unit.location?.coordinates);
                 otherUnitDistricts.push(newValue);
               }
             });
@@ -294,7 +313,7 @@ const UnitTab = ({
     return (
       <div>
         <List>
-          {selectedDistrictData.filter(obj => obj.unit).map(district => (
+          {districtsWithUnits.map(district => (
             renderDistrictUnitItem(district)
           ))}
         </List>

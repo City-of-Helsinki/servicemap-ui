@@ -7,10 +7,17 @@ import { getAddressText } from '../../../utils/address';
 
 const AddressItem = (props) => {
   const {
-    getAddressNavigatorParams, getLocaleText, navigator, address, classes, selected, className,
+    getAddressNavigatorParams,
+    getLocaleText,
+    navigator,
+    address,
+    classes,
+    selected,
+    className,
+    showPostalCode,
   } = props;
 
-  const text = getAddressText(address, getLocaleText);
+  const text = getAddressText(address, getLocaleText, showPostalCode);
 
   return (
     <SimpleListItem
@@ -42,10 +49,12 @@ AddressItem.propTypes = {
   address: PropTypes.objectOf(PropTypes.any).isRequired,
   selected: PropTypes.bool,
   className: PropTypes.string,
+  showPostalCode: PropTypes.bool,
 };
 
 AddressItem.defaultProps = {
   navigator: null,
   selected: false,
   className: null,
+  showPostalCode: true,
 };

@@ -8,13 +8,14 @@ import { ExpandMore } from '@material-ui/icons';
 import config from '../../../../../config';
 import InfoList from '../InfoList';
 import unitSectionFilter from '../../utils/unitSectionFilter';
+import { getAddressFromUnit } from '../../../../utils/address';
 
 const ContactInfo = ({
   unit, userLocation, getLocaleText, intl, classes,
 }) => {
   const address = {
     type: 'ADDRESS',
-    value: unit.street_address ? unit.street_address : intl.formatMessage({ id: 'unit.address.missing' }),
+    value: unit.street_address ? getAddressFromUnit(unit, getLocaleText, intl) : intl.formatMessage({ id: 'unit.address.missing' }),
   };
   const phone = {
     type: 'PHONE',

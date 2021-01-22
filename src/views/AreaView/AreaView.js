@@ -10,8 +10,9 @@ import TabLists from '../../components/TabLists';
 import UnitTab from './components/UnitTab';
 import { parseSearchParams, uppercaseFirst } from '../../utils';
 import AreaTab from './components/AreaTab';
-import { districtFetch, unitsFetch } from '../../utils/fetch';
+import { districtFetch } from '../../utils/fetch';
 import fetchAddress from '../MapView/utils/fetchAddress';
+import TitleBar from '../../components/TitleBar';
 
 
 const fetchReducer = (state, action) => {
@@ -31,7 +32,8 @@ const AreaView = ({
   setSelectedDistrictServices,
   setDistrictData,
   setDistrictAddressData,
-  addSubdistrictUnits,
+  fetchDistrictUnitList,
+  unitsFetching,
   districtData,
   districtAddressData,
   selectedDistrictType,
@@ -112,6 +114,13 @@ const AreaView = ({
         'rescue_sub_district',
       ],
     },
+    {
+      id: 'nature',
+      title: intl.formatMessage({ id: 'area.list.natureConservation' }),
+      districts: [
+        'nature_reserve',
+      ],
+    },
   ];
 
   const location = useLocation();
@@ -124,7 +133,6 @@ const AreaView = ({
   const [focusTo, setFocusTo] = useState(null);
   // Fetch state
   const [ditsrictsFetching, dispatchDistrictsFetching] = useReducer(fetchReducer, []);
-  const [unitsFetching, dispatchUnitsFetching] = useReducer(fetchReducer, []);
 
 
   const formAddressString = address => (address
@@ -252,7 +260,7 @@ const AreaView = ({
       page_size: 500,
       type,
       geometry: true,
-      unit_include: 'name,location,street_address',
+      unit_include: 'name,location,street_address,address_zip,municipality',
     };
     return districtFetch(options)
       .then((data) => {
@@ -264,24 +272,6 @@ const AreaView = ({
       });
   };
 
-  const fetchDistrictUnitList = async (divisionID) => {
-    dispatchUnitsFetching({ type: 'add', value: divisionID });
-    const options = {
-      page: 1,
-      page_size: 1000,
-      division: divisionID,
-    };
-    await unitsFetch(options)
-      .then((data) => {
-        const units = data.results;
-        units.forEach((unit) => {
-          unit.object_type = 'unit';
-          unit.division_id = divisionID;
-        });
-        dispatchUnitsFetching({ type: 'remove', value: divisionID });
-        addSubdistrictUnits(data.results);
-      });
-  };
 
   const handleOpen = async (item) => {
     if (openItems.includes(item.id)) {
@@ -317,6 +307,11 @@ const AreaView = ({
     if (selectedAddress && addressDistrict) {
       const district = selectedDistrictData.find(obj => obj.id === addressDistrict);
       focusMapToDistrict(district);
+      // Add local geographical district
+      const selectedCategory = dataStructure.find(i => i.districts.includes(selectedDistrictType));
+      if (selectedCategory?.id === 'geographical') {
+        setSelectedSubdistricts([...selectedSubdistricts, district.ocd_id]);
+      }
     }
   }, [addressDistrict, map]);
 
@@ -348,17 +343,15 @@ const AreaView = ({
 
   useEffect(() => {
     // If pending district focus, focus to districts when distitct data is loaded
-    if (districtData.length && focusTo) {
+    if (focusTo && selectedDistrictData.length) {
       if (focusTo === 'districts') {
-        const districts = districtData.find(data => data.id === selectedDistrictType);
-        if (districts) {
+        if (selectedDistrictData) {
           setFocusTo(null);
-          focusDistricts(map.leafletElement, districts.data);
+          focusDistricts(map.leafletElement, selectedDistrictData);
         }
       } else if (focusTo === 'subdistricts') {
-        const districts = districtData.find(data => data.id === selectedDistrictType);
-        if (districts) {
-          const filtetedDistricts = districts.data.filter(
+        if (selectedDistrictData) {
+          const filtetedDistricts = selectedDistrictData.filter(
             i => selectedSubdistricts.includes(i.ocd_id),
           );
           setFocusTo(null);
@@ -366,7 +359,7 @@ const AreaView = ({
         }
       }
     }
-  }, [districtData, focusTo]);
+  }, [selectedDistrictData, focusTo]);
 
 
   useEffect(() => {
@@ -376,11 +369,12 @@ const AreaView = ({
       if (searchParams.selected) {
         if (!districtData.length) {
           // Open correct category and fetch data based on url parameters
+          const paramValue = searchParams.selected.split(/([0-9]+)/)[0];
           const category = dataStructure.find(
-            data => data.districts.includes(searchParams.selected),
+            data => data.districts.includes(paramValue),
           );
           if (embed) {
-            fetchDistrictsByType(searchParams.selected, null, category)
+            fetchDistrictsByType(paramValue, null, category.id)
               .then(result => filterFetchData(result.data, result.type, result.category));
           } else {
             handleOpen(category);
@@ -428,7 +422,8 @@ const AreaView = ({
       setDistrictRadioValue={setDistrictRadioValue}
       setSelectedSubdistricts={setSelectedSubdistricts}
       setSelectedDistrictServices={setSelectedDistrictServices}
-      fetching={ditsrictsFetching}
+      ditsrictsFetching={ditsrictsFetching}
+      unitsFetching={!!unitsFetching.length}
       districtData={districtData}
       selectedDistrictData={selectedDistrictData}
       openItems={openItems}
@@ -438,6 +433,7 @@ const AreaView = ({
       address={districtAddressData.address}
       navigator={navigator}
       getLocaleText={getLocaleText}
+      map={map}
     />
   );
 
@@ -470,7 +466,11 @@ const AreaView = ({
     if (!embed) {
       return (
         <div>
-          <div className={classes.topBar} />
+          <TitleBar
+            title={intl.formatMessage({ id: 'general.pageTitles.area' })}
+            titleComponent="p"
+            backButton
+          />
           <TabLists
             data={tabs}
           />

@@ -15,7 +15,7 @@ import { getAddressNavigatorParamsConnector } from '../../utils/address';
 // Get redux states as props to component
 const mapStateToProps = (state) => {
   const {
-    address, navigator, settings, user, measuringMode,
+    address, navigator, settings, user, measuringMode, districts,
   } = state;
   const unitList = getProcessedData(state);
   const unitsLoading = state.service.isFetching;
@@ -28,6 +28,7 @@ const mapStateToProps = (state) => {
   const getLocaleText = textObject => getLocaleString(state, textObject);
   const { adminDistricts, units, toRender } = address;
   const districtUnits = getFilteredSubdistrictUnits(state);
+  const districtUnitsFetching = districts.unitsFetching;
   const getAddressNavigatorParams = getAddressNavigatorParamsConnector(getLocaleText, locale);
   const userLocation = customPosition.coordinates || position.coordinates;
   return {
@@ -41,6 +42,7 @@ const mapStateToProps = (state) => {
     unitList,
     serviceUnits,
     districtUnits,
+    districtUnitsFetching,
     unitsLoading,
     currentPage: page,
     userLocation,

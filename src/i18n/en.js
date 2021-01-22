@@ -17,13 +17,15 @@ const translations = {
   // Address
   'address': 'Address',
   'address.search': 'Address search',
+  'address.search.cleared': 'Search box cleared',
   'address.search.location': 'Chosen location is {location}',
+  'address.search.suggestion': 'Choose an address from the search suggestions',
   'address.show.area': 'Show area on map',
   'address.error': 'No address found',
   'address.nearby': 'Nearby',
   'address.districts': 'Areas',
   'address.plural': 'Addresses',
-  'address.services.header': 'Services for people who live here',
+  'address.services.header': 'Service areas',
   'address.services.info': 'Services for people who live here',
   'address.area.link': 'Get to know the areas on the map.',
   'address.emergency_care.common': 'When your health station is closed and in the night between 22-8, emergency care for children and young people under age 16 is provided at <a>Children\'s Hospital</a> [<a1>homepage</a1>], and for adults at',
@@ -46,10 +48,12 @@ const translations = {
   'area.choose.subdistrict': 'Choose and open {category}',
   'area.close.subdistrict': 'Close {category}',
   'area.noSelection': 'Choose area from the Choice of Area tab',
+  'area.noUnits': 'There are no service locations in your chosen area',
   'area.list.geographical': 'Geographical',
   'area.list.protection': 'Civil defence',
   'area.list.health': 'Health',
   'area.list.education': 'Education',
+  'area.list.natureConservation': 'Nature conservation',
   'area.list.education.finnish': 'Finnish school areas',
   'area.list.education.swedish': 'Swedish school areas',
   'area.list.preschool': 'Pre-school education',
@@ -66,6 +70,20 @@ const translations = {
   'area.list.upper_comprehensive_school_district_sv': 'Swedish secondary school area',
   'area.list.preschool_education_fi': 'Finnish preschool education area',
   'area.list.preschool_education_sv': 'Swedish preschool education area',
+  'area.list.nature_reserve': 'Nature conservation areas',
+
+  // Download dialog
+  'download.cropping.title': 'Current filter values',
+  'download.cropText.unit': 'Single service unit:',
+  'download.cropText.service': 'Service units with selected services:',
+  'download.cropText.search': 'Service units based on text search:',
+  'download.cropText.none': 'No filter values have been selected',
+  'download.data.none': 'First select service units to be shown on the Service Map using the browse or search functions and then return to this view to save the information of the selected service units.',
+  'download.download': 'Download the information (new tab)',
+  'download.format': 'File format:',
+  'download.info': 'Save the information of the service units that you have filtered into a file, which you can import, for example, to the Google Maps application or continue working with.',
+  'download.title': 'Download the service location information',
+  'download.coordinate': 'The coordinate system of the Service Map is: ETRS89 / GK25FIN (EPSG:3879)',
 
   // Event
   'event.description': 'Description',
@@ -166,12 +184,17 @@ const translations = {
   'general.back.serviceTree': 'Back to service list page',
   'general.cancel': 'Cancel',
   'general.close': 'Close',
+  'general.distance.meters': 'Meters away',
+  'general.distance.kilometers': 'Kilometers away',
   'general.yes': 'Yes',
   'general.no': 'No',
   'general.closeSettings': 'Close settings',
   'general.fetching': 'Loading data...',
   'general.home': 'Home',
   'general.noData': 'No data available',
+  'general.news.alert.title': 'Notification window',
+  'general.news.alert.close.aria': 'Close notification window',
+  'general.news.info.title': 'Service map news',
   'general.loading': 'Loading',
   'general.loading.done': 'Loading completed',
   'general.showOnMap': 'Show on map',
@@ -201,7 +224,7 @@ const translations = {
   'general.pagination.next': 'Next page',
   'general.pagination.openPage': 'Open page {count}',
   'general.pagination.currentlyOpenedPage': 'Page {count} currently opened',
-  'general.pagination.pageCount': 'page {current} / {max}',
+  'general.pagination.pageCount': 'page {current} of {max}',
 
   'general.previousSearch': 'Previous searches',
   'general.return.viewTitle': 'Return to beginning of main content',
@@ -213,9 +236,6 @@ const translations = {
   'general.save.confirmation': 'Would you like to save changes?',
   'general.search': 'Search',
   'general.time.short': 'at',
-  'general.tools': 'Tools',
-  'general.distance.meters': 'Meters away',
-  'general.distance.kilometers': 'Kilometers away',
 
   // Home
   'home.buttons.settings': 'Save your own city and accessibility options',
@@ -238,6 +258,7 @@ const translations = {
   'loading.events.srInfo': 'Loading {count} event(s)',
   'search.loading.units': 'Searching locations {count} / {max}',
   'search.loading.units.srInfo': 'Searching {count} location(s)',
+  'search.loading.units.simple': 'Searching locations',
 
   // Map
   'map': 'Map',
@@ -245,6 +266,7 @@ const translations = {
   'map.attribution.osm': '&copy; <a href="http://osm.org/copyright">OpenStreetMap contributors</a>',
   'map.attribution.helsinki': '&copy; Cities of Helsinki, Espoo, Vantaa ja Kauniainen',
   'map.transit.endStation': 'Terminus',
+  'map.address.coordinate': 'Share location coordinate',
   'map.address.searching': 'Retreiving address...',
   'map.address.notFound': 'The address could not be found',
   'map.address.info': 'Address information',
@@ -322,6 +344,7 @@ const translations = {
   'unit.route': 'Look at the route to this place',
   'unit.route.extra': '(New tab. The HSL Journey Planner is not an accessible service)',
   'unit.socialMedia.title': 'The service location on social media',
+  'unit.outdoorLink': 'Check the condition of an exercise location in the ulkoliikunta.fi service',
 
   // Search
   'search': 'Search',
@@ -368,6 +391,7 @@ const translations = {
   'search.infoText': '{count} Search results',
   'search.searchbar.headerText': 'Find services near your home',
   'search.searchbar.infoText': 'Search for services, locations or addresses',
+  'search.skipLink': 'Jump link to the search results',
   'search.suggestions.suggest': 'Did you mean..?',
   'search.suggestions.expand': 'Search suggestions',
   'search.suggestions.loading': 'Loading suggestions',
@@ -449,6 +473,7 @@ const translations = {
   'settings.city.espoo': 'Espoo',
   'settings.city.vantaa': 'Vantaa',
   'settings.city.kauniainen': 'Kauniainen',
+  'settings.city.kirkkonummi': 'Kirkkonummi',
   'settings.map.title': 'Background map',
   'settings.map.servicemap': 'Service map',
   'settings.map.ortographic': 'Aerial view',
@@ -461,7 +486,7 @@ const translations = {
   'settings.aria.saved': 'Settings have been saved',
 
   // Tools
-  'tool.download': 'Download data (new tab)',
+  'tool.download': 'Download data',
   'tool.measuring': 'Measure distance (mouse only)',
   'tool.measuring.stop': 'Stop measuring',
 

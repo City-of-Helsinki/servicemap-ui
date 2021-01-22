@@ -17,13 +17,15 @@ const translations = {
   // Address
   'address': 'Adress',
   'address.search': 'Adresssök',
+  'address.search.cleared': 'Sökfältet har tömts',
   'address.search.location': 'Den valda positionen är {location}',
+  'address.search.suggestion': 'Välj adress från sökresultaten',
   'address.show.area': 'Visa området på kartan',
   'address.error': 'Addressen kunde inte hittas',
   'address.nearby': 'Nära',
   'address.districts': 'Områden',
   'address.plural': 'Adresser',
-  'address.services.header': 'Service för dem som bor här',
+  'address.services.header': 'Tjänstområde',
   'address.services.info': 'Kommunala tjänster vars verksamhetsområde omfattar positionen',
   'address.area.link': 'Bekanta dig med områdena på kartan.',
   'address.emergency_care.common': 'När den egna hälsostationen är stängd och på natten kl. 22-8 är jour för barn och unga under 16 år på <a>Barnkliniken</a> [<a1>hemsidor</a1>], och jour för vuxna på',
@@ -46,10 +48,12 @@ const translations = {
   'area.choose.subdistrict': 'Väl och öppna {category}',
   'area.close.subdistrict': 'Stäng {category}',
   'area.noSelection': 'Väl område under fliken Val av område',
+  'area.noUnits': 'Det finns inga verksamhetsställen i ditt valda område',
   'area.list.geographical': 'Geografisk',
   'area.list.protection': 'Befolkningsskydd',
   'area.list.health': 'Hälsa',
   'area.list.education': 'Utbildning',
+  'area.list.natureConservation': 'Naturskydd',
   'area.list.education.finnish': 'Finska skolområden',
   'area.list.education.swedish': 'Svenska skolområden',
   'area.list.preschool': 'Förskoleundervisning',
@@ -66,6 +70,20 @@ const translations = {
   'area.list.upper_comprehensive_school_district_sv': 'Svenskt grundskoleområde, högklasserna',
   'area.list.preschool_education_fi': 'Finskt småbarnspedagogikområde',
   'area.list.preschool_education_sv': 'Svenskt småbarnspedagogikområde',
+  'area.list.nature_reserve': 'Naturskyddsområden',
+
+  // Download dialog
+  'download.cropping.title': 'Nuvarande filterinställningar',
+  'download.cropText.unit': 'Enskilt verksamhetsställe:',
+  'download.cropText.service': 'Verksamhetsställena med valda tjänster:',
+  'download.cropText.search': 'Verksamhetsställena utifrån textsökning:',
+  'download.cropText.none': 'Inga filtervärden har valts',
+  'download.data.none': 'Plocka först fram verksamhetsställen på servicekartan med hjälp av bläddrings- eller sökfunktionen och kom sedan tillbaka till den här vyn för att spara verksamhetsställenas uppgifter.',
+  'download.download': 'Ladda ner uppgifter (ny flik)',
+  'download.format': 'Filformat:',
+  'download.info': 'Spara uppgifterna om de verksamhetsställen som du har filtrerat i en fil som du kan ladda till exempel i applikationen Google Maps eller annars öppna för fortsatt behandling.',
+  'download.title': 'Ladda ner verksamhetsställets uppgifter',
+  'download.coordinate': 'Servicekartans koordinatsystem är: ETRS89 / GK25FIN (EPSG:3879)',
 
   // Event
   'event.description': 'Beskrivning',
@@ -166,12 +184,17 @@ const translations = {
   'general.back.serviceTree': 'Gå tillbaka till servicekatalogen',
   'general.cancel': 'Ångra',
   'general.close': 'Stäng',
+  'general.distance.meters': 'Meters avstånd',
+  'general.distance.kilometers': 'Kilometers avstånd',
   'general.yes': 'Ja',
   'general.no': 'Nej',
   'general.closeSettings': 'Stäng inställningarna',
   'general.fetching': 'Laddar data...',
   'general.home': 'Hem',
   'general.noData': 'Data finns inte',
+  'general.news.alert.title': 'Meddelandefönster',
+  'general.news.alert.close.aria': 'Stäng meddelandefönstret',
+  'general.news.info.title': 'Servicekartans nyheter',
   'general.loading': 'Laddar',
   'general.loading.done': 'Laddning färdig',
   'general.showOnMap': 'Visa på kartan',
@@ -197,7 +220,7 @@ const translations = {
   'general.pagination.next': 'Följande sida',
   'general.pagination.openPage': 'Öppna sida {count}',
   'general.pagination.currentlyOpenedPage': 'Sida {count} öppnad',
-  'general.pagination.pageCount': 'sida {current} / {max}',
+  'general.pagination.pageCount': 'sida {current} av {max}',
 
   'general.previousSearch': 'Föregående sökningar',
   'general.return.viewTitle': 'Gå till början av huvudinnehållet',
@@ -209,9 +232,6 @@ const translations = {
   'general.save.confirmation': 'Vill du spara ändringarna?',
   'general.search': 'Sök',
   'general.time.short': 'kl.',
-  'general.tools': 'Verktyg',
-  'general.distance.meters': 'Meters avstånd',
-  'general.distance.kilometers': 'Kilometers avstånd',
   'general.tools': 'Verktyg',
   // Readspeaker
   'general.readspeaker.buttonText': 'Lyssna', // TODO: verify
@@ -238,6 +258,7 @@ const translations = {
   'loading.events.srInfo': 'Söker {count} evenemange(n)',
   'search.loading.units': 'Söker verksamhetsställen {count} / {max}',
   'search.loading.units.srInfo': 'Söker {count} verksamhetsställe(n)',
+  'search.loading.units.simple': 'Söker verksamhetsställen',
 
   // Map
   'map': 'Karta',
@@ -245,6 +266,7 @@ const translations = {
   'map.attribution.osm': '&copy; <a href="http://osm.org/copyright">Upphovsmännen bakom OpenStreetMaps</a>',
   'map.attribution.helsinki': '&copy; Helsingfors, Esbo, Vanda och Grankulla städer',
   'map.transit.endStation': 'Ändhållplats',
+  'map.address.coordinate': 'Dela platskoordinat',
   'map.address.searching': 'Söker adress...',
   'map.address.notFound': 'Adressen hittades ej',
   'map.address.info': 'Adressens uppgifter',
@@ -322,6 +344,7 @@ const translations = {
   'unit.route': 'Se vägen till det här stället',
   'unit.route.extra': '(Ny flik. HRT-reseplaneraren är inte en tillgänglig tjänst)',
   'unit.socialMedia.title': 'Verksamhetsstället på sociala medier',
+  'unit.outdoorLink': 'Kolla skicket på en motionsplats i tjänsten ulkoliikunta.fi',
 
   // Search
   'search': 'Sök',
@@ -368,6 +391,7 @@ const translations = {
   'search.infoText': '{count} sökresultat',
   'search.searchbar.headerText': 'Alla tjänster i huvudstadsregionen inom räckhåll.',
   'search.searchbar.infoText': 'Sök tjänster, verksamhetsställen eller adresser',
+  'search.skipLink': 'Hoppa till sökresultaten',
   'search.suggestions.suggest': 'Menade du..?',
   'search.suggestions.expand': 'Sökförslag',
   'search.suggestions.loading': 'Laddar förslag',
@@ -449,6 +473,7 @@ const translations = {
   'settings.city.espoo': 'Esbo',
   'settings.city.vantaa': 'Vanda',
   'settings.city.kauniainen': 'Grankulla',
+  'settings.city.kirkkonummi': 'Kyrkslätt',
   'settings.map.title': 'Kartunderlag',
   'settings.map.servicemap': 'Servicekarta',
   'settings.map.ortographic': 'Flygbild',
@@ -461,7 +486,7 @@ const translations = {
   'settings.aria.saved': 'Inställningarna har sparats',
 
   // Tools
-  'tool.download': 'Exportera (ny flik)',
+  'tool.download': 'Exportera',
   'tool.measuring': 'Mät avstånd (endast med mus)',
   'tool.measuring.stop': 'Sluta mäta',
 

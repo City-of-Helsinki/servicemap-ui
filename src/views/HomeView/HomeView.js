@@ -6,6 +6,7 @@ import PaperButton from '../../components/PaperButton';
 import { getIcon } from '../../components/SMIcon';
 import MobileComponent from '../../components/MobileComponent';
 import config from '../../../config';
+import NewsInfo from '../../components/NewsInfo';
 
 class HomeView extends React.Component {
   renderNavigationOptions = () => {
@@ -68,10 +69,13 @@ class HomeView extends React.Component {
             onClick={() => navigator.push('feedback')}
           />
           <PaperButton
+            id="home-paper-info-button"
             messageID="info.title"
             icon={getIcon('help')}
             link
-            onClick={() => navigator.push('info')}
+            onClick={() => {
+              navigator.push('info', null, 'home-paper-info-button');
+            }}
           />
           <PaperButton
             messageID="home.old.link"
@@ -85,6 +89,7 @@ class HomeView extends React.Component {
               }));
             }}
           />
+          <NewsInfo />
         </div>
       </div>
     );

@@ -20,11 +20,12 @@ import AddressMarker from './components/AddressMarker';
 import { parseSearchParams } from '../../utils';
 import HomeLogo from '../../components/Logos/HomeLogo';
 import DistanceMeasure from './components/DistanceMeasure';
+import Loading from '../../components/Loading';
 import MarkerCluster from './components/MarkerCluster';
-import swapCoordinates from './utils/swapCoordinates';
 import UnitGeometry from './components/UnitGeometry';
 import MapUtility from './utils/mapUtility';
 import HideSidebarButton from './components/HideSidebarButton';
+import CoordinateMarker from './components/CoordinateMarker';
 
 if (global.window) {
   require('leaflet');
@@ -49,6 +50,7 @@ const MapView = (props) => {
     unitsLoading,
     serviceUnits,
     districtUnits,
+    districtUnitsFetching,
     hideUserMarker,
     highlightedUnit,
     highlightedDistrict,
@@ -72,7 +74,6 @@ const MapView = (props) => {
   const [refSaved, setRefSaved] = useState(false);
   const [prevMap, setPrevMap] = useState(null);
   const [unitData, setUnitData] = useState(null);
-  const [unitGeometry, setUnitGeometry] = useState(null);
   const [mapUtility, setMapUtility] = useState(null);
   const [measuringMarkers, setMeasuringMarkers] = useState([]);
   const [measuringLine, setMeasuringLine] = useState([]);
@@ -83,6 +84,9 @@ const MapView = (props) => {
   const getMapUnits = () => {
     let mapUnits = [];
 
+    if (embeded && parseSearchParams(location.search).units === 'none') {
+      return [];
+    }
     if (currentPage === 'home' && embeded) {
       mapUnits = unitList;
     }
@@ -97,7 +101,17 @@ const MapView = (props) => {
         case 'adminDistricts':
           mapUnits = adminDistricts ? adminDistricts
             .filter(d => d.unit)
-            .map(d => d.unit)
+            .reduce((unique, o) => {
+              // Ignore districts without unit
+              if (!o.unit) {
+                return unique;
+              }
+              // Add only unique units
+              if (!unique.some(obj => obj.id === o.unit.id)) {
+                unique.push(o.unit);
+              }
+              return unique;
+            }, [])
             : [];
           break;
         case 'units':
@@ -118,18 +132,6 @@ const MapView = (props) => {
     }
 
     return mapUnits;
-  };
-
-  const getUnitGeometry = () => {
-    if ((currentPage === 'unit' || currentPage === 'fullList' || currentPage === 'event') && highlightedUnit) {
-      const { geometry } = highlightedUnit;
-      if (geometry && geometry.type === 'MultiLineString') {
-        const { coordinates } = geometry;
-        const unitGeometry = swapCoordinates(coordinates);
-        return unitGeometry;
-      }
-    }
-    return null;
   };
 
   const setClickCoordinates = (ev) => {
@@ -187,6 +189,17 @@ const MapView = (props) => {
     if (!embeded) {
       findUserLocation();
     }
+    // Hide zoom control amd attribution from screen readers
+    setTimeout(() => {
+      const e = document.querySelector('.leaflet-control-zoom');
+      const e2 = document.querySelector('.leaflet-control-attribution');
+      if (e) {
+        e.setAttribute('aria-hidden', 'true');
+      }
+      if (e2) {
+        e2.setAttribute('aria-hidden', 'true');
+      }
+    }, 1);
 
     return () => {
       // Clear map reference on unmount
@@ -212,9 +225,6 @@ const MapView = (props) => {
     mapUtility.panInside(highlightedUnit);
   }, [highlightedUnit, mapUtility]);
 
-  useEffect(() => {
-    setUnitGeometry(getUnitGeometry());
-  }, [highlightedUnit, currentPage]);
 
   useEffect(() => { // On map type change
     // Init new map and set new ref to redux
@@ -225,6 +235,18 @@ const MapView = (props) => {
   useEffect(() => {
     if (mapRef.current) {
       setMapUtility(new MapUtility({ leaflet: mapRef.current.leafletElement }));
+
+      const usp = new URLSearchParams(location.search);
+      const lat = usp.get('lat');
+      const lng = usp.get('lon');
+      try {
+        if (lat && lng) {
+          const position = [usp.get('lon'), usp.get('lat')];
+          focusToPosition(mapRef.current.leafletElement, position); 
+        }
+      } catch (e) {
+        console.error('Error while attemptin to focus on coordinate:', e)
+      }
     }
   }, [mapRef.current]);
 
@@ -281,6 +303,20 @@ const MapView = (props) => {
     );
   };
 
+  const renderUnitGeometry = () => {
+    if (highlightedDistrict) return null;
+    if (currentPage !== 'unit') {
+      return unitData.map(unit => (
+        unit.geometry
+          ? <UnitGeometry key={unit.id} data={unit} />
+          : null
+      ));
+    } if (highlightedUnit) {
+      return <UnitGeometry data={highlightedUnit} />;
+    }
+    return null;
+  };
+
 
   if (global.rL && mapObject) {
     const { Map, TileLayer, ZoomControl } = global.rL || {};
@@ -297,6 +333,7 @@ const MapView = (props) => {
         : prevMap.props.zoom + zoomDifference;
     }
 
+    const showLoadingScreen = () => districtUnitsFetching.length;
     const userLocationAriaLabel = intl.formatMessage({ id: !userLocation ? 'location.notAllowed' : 'location.center' });
 
     return (
@@ -304,6 +341,7 @@ const MapView = (props) => {
         {renderTopBar()}
         {renderEmbedOverlay()}
         <Map
+          preferCanvas
           className={`${classes.map} ${measuringMode ? classes.measuringCursor : ''}`}
           key={mapObject.options.name}
           ref={mapRef}
@@ -322,18 +360,20 @@ const MapView = (props) => {
           <MarkerCluster
             map={mapRef?.current?.leafletElement}
             data={unitData}
+            measuringMode={measuringMode}
           />
           {
-            !highlightedDistrict
-            && unitGeometry
-            && (
-              <UnitGeometry geometryData={unitGeometry} />
-            )
+            renderUnitGeometry()
           }
           <TileLayer
             url={mapObject.options.url}
             attribution={intl.formatMessage({ id: mapObject.options.attribution })}
           />
+          {showLoadingScreen() ? (
+            <div className={classes.loadingScreen}>
+              <Loading />
+            </div>
+          ) : null}
           <Districts mapOptions={mapOptions} map={mapRef.current} embed={embeded} />
 
           <TransitStops
@@ -409,6 +449,7 @@ const MapView = (props) => {
               </>
             )
           }
+          <CoordinateMarker />
         </Map>
       </>
     );
@@ -439,6 +480,7 @@ MapView.propTypes = {
   navigator: PropTypes.objectOf(PropTypes.any),
   serviceUnits: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
   districtUnits: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
+  districtUnitsFetching: PropTypes.arrayOf(PropTypes.any).isRequired,
   setAddressLocation: PropTypes.func.isRequired,
   findUserLocation: PropTypes.func.isRequired,
   setMapRef: PropTypes.func.isRequired,

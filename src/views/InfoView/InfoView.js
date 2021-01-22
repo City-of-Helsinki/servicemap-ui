@@ -1,18 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Typography, ButtonBase, Link } from '@material-ui/core';
 import TitleBar from '../../components/TitleBar';
 import config from '../../../config';
+import { focusToViewTitle } from '../../utils/accessibility';
 
 const InfoView = ({
-  classes, history, location, locale,
+  classes, location, locale, navigator,
 }) => {
   const content = location.pathname.includes('accessibility') ? 'accessibilityInfo' : 'generalInfo';
 
+  useEffect(() => {
+    setTimeout(() => {
+      focusToViewTitle();
+    }, 1);
+  }, [content]);
+
   const handleClick = () => {
     document.getElementsByClassName('SidebarWrapper')[0].scrollTo(0, 0);
-    history.push('info/accessibility');
+    navigator.push('infoAccessibility');
   };
 
   const renderTitlebar = () => (
@@ -231,9 +238,38 @@ const InfoView = ({
       </Typography>
       <Typography component="h3" variant="body2">Havaitut puutteet</Typography>
       <Typography className={classes.text} variant="body2">
-        Palvelukartta.hel.fi sivusto on saavutettava siltä osin, kuin saavutettavuuslaki sitä edellyttää.
-        Saavutettavuuslain ulkopuolella ovat kartat, joten tässä palvelussa oleva kartta ei ole saavutettava
+        Palvelukartta.hel.fi sivusto on saavutettava siltä osin, kuin saavutettavuuslaki sitä edellyttää. 
+        Palvelukartta noudattaa laissa asetettua pykälää:
       </Typography>
+      <Typography className={classes.text} variant="body2">
+        3 § Lain soveltamisala 5) verkkokarttoihin ja karttapalveluihin; jos kuitenkin palveluntarjoajan digitaalisessa
+        palvelussa oleva kartta on tarkoitettu navigointikäyttöön, sen olennainen käyttäjää opastava tietosisältö on
+        kuitenkin tarjottava vaihtoehtoisella tavalla saavutettavuusvaatimukset täyttävässä digitaalisessa muodossa;
+      </Typography>
+      <Typography className={classes.text} variant="body2">
+        Perustelu: Palvelukartan käyttöliittymä tarjoaa kaiken kartassa esitettävän, palvelun käytön kannalta keskeisen
+        tiedon vaihtoehtoisessa, saavutettavassa muodossa. Tiedot esitetään käyttöliittymän osassa, jossa palvelun
+        hakukenttä sijaitsee. Selausjärjestyksessä tiedot ovat hakukentän jälkeen ja edelleen mm. toimipistenäkymän
+        välilehdissä sekä pelkän osoitteen (esim. kadun nimi) perusteella tehdyn haun tuloksissa. Käyttäjä voi mm. tutkia,
+        mitä palveluun tallennettuja toimipisteitä kyseiseltä kadulta löytyy, mikäli toimipistettä ei halua etsiä suoralla
+        osoitteella tai toimipisteen nimellä. Kartan visuaalinen tarkastelu tai sen kohteiden klikkaaminen ei siten ole
+        ainoa keino, jolla käyttäjä voi osoite- tai toimipistetietoja selvittää, tai toimipisteitä etsiä. Kartta auttaa
+        niitä käyttäjiä, jotka sitä kykenevät hyödyntämään, mutta kartta ei ole ainoa keino palvelun käyttämiseen.
+      </Typography>
+      <Typography className={classes.text} variant="body2">
+        Kartta on palvelussa tietoisesti piilotettu avustavalta tekniikalta. Syynä on, että karttapohja sisältää lukuisia
+        tietoja, jotka ovat oltava teknisesti osa sivun sisältöä, jotta kartta voidaan piirtää oikein ja jotta käyttäjä voi
+        näitä kohteita klikata (tällaisia tietoja ovat mm. kadunnimet ja kadulla sijaitsevat toimipisteet).
+      </Typography>
+      <Typography className={classes.text} variant="body2">
+        Jos kartta asetetaan sivulle täysin "paljaana" eikä sitä piiloteta ruudunlukuohjelmalta, muuttuu palvelun käyttö
+        kohtuuttoman vaikeaksi henkilöille, jotka eivät palvelua voi näönvaraisesti tarkastella. Syynä on, että ruudunlukija
+        esittää silloin käyttäjälle kaiken edellä kuvatun, karttapohjaan liittyvän ns. metatiedon, kuten klikattavat
+        toimipisteet ja kadunnimet. Käyttäjä hyvin nopeasti hukkuisi tällaisen tietotulvan sekaan, ja palvelun käytöstä
+        tulisi kohtuuttoman raskasta. Siksi karttaa ei tällä hetkellä paljasteta avustavalle teknologialle, vaan vastaava
+        tieto tarjotaan palvelun hakukentän kautta. 
+      </Typography>
+
       <Typography component="h4" variant="body2">Puutteiden korjaus</Typography>
       <Typography className={classes.text} variant="body2">
         Karttanäkymää ei tehdä saavutettavaksi. Ruudunlukijalta kartta on piilotettu.
@@ -309,6 +345,35 @@ const InfoView = ({
         saavutettavuus@avi.fi
         Puhelinvaihde: 0295 016 000
         Avoinna: ma-pe klo 8.00 – 16.15`}
+      </Typography>
+      <Typography component="h3" variant="body2">Helsingin kaupunki ja saavutettavuus</Typography>
+      <Typography className={classes.text} variant="body2">
+        Helsingin kaupungin tavoitteena on olla kaikille esteetön ja saavutettava
+        kaupunki. Kaupungin tavoitteena on, että Helsingissä on kaikkien
+        kaupunkilaisten mahdollisimman helppo liikkua ja toimia ja että kaikki
+        sisältö ja palvelut olisivat kaikkien saavutettavissa.
+      </Typography>
+      <Typography className={classes.text} variant="body2">
+        Kaupunki edistää digitaalisten palveluiden saavutettavuutta yhdenmukaistamalla julkaisutyötä
+        ja järjestämällä saavutettavuuteen keskittyvää koulutusta henkilökunnalleen.
+      </Typography>
+      <Typography className={classes.text} variant="body2">
+        Sivustojen saavutettavuuden tasoa seurataan jatkuvasti sivustoja ylläpidettäessä.
+        Havaittuihin puutteisiin reagoidaan välittömästi. Tarvittavat muutokset pyritään
+        suorittamaan mahdollisimman nopeasti.
+      </Typography>
+      <Typography component="h4" variant="body2">Vammaiset ja avustavien teknologioiden käyttäjät</Typography>
+      <Typography className={classes.text} variant="body2">
+        Kaupunki tarjoaa neuvontaa ja tukea vammaisille ja avustavien teknologioiden käyttäjille.
+        Tukea on saatavilla kaupungin sivuilla ilmoitetuista neuvontasivuilta sekä
+        puhelinneuvonnasta.
+      </Typography>
+
+      <Typography component="h3" variant="body2">Saavutettavuusselosteen hyväksyntä</Typography>
+      <Typography className={classes.text} variant="body2">
+        Tämän selosteen on hyväksynyt 27.2.2020
+        Kaupunginkanslia/ strategiaosasto/ tietohallinto
+        Helsingin kaupunki
       </Typography>
     </div>
   );
@@ -928,8 +993,8 @@ const InfoView = ({
 InfoView.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
   locale: PropTypes.string.isRequired,
+  navigator: PropTypes.objectOf(PropTypes.any),
 };
 
 export default InfoView;

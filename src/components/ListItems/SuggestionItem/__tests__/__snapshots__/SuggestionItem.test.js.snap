@@ -12,6 +12,7 @@ exports[`<SuggestionItem /> should work 1`] = `
       Object {
         "defaultFormats": Object {},
         "defaultLocale": "en",
+        "defaultRichTextElements": undefined,
         "formatDate": [Function],
         "formatDateTimeRange": [Function],
         "formatDateToParts": [Function],
@@ -70,6 +71,7 @@ exports[`<SuggestionItem /> should work 1`] = `
         Object {
           "defaultFormats": Object {},
           "defaultLocale": "en",
+          "defaultRichTextElements": undefined,
           "formatDate": [Function],
           "formatDateTimeRange": [Function],
           "formatDateToParts": [Function],
