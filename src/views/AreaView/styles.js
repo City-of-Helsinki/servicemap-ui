@@ -22,7 +22,11 @@ const styles = theme => ({
     marginLeft: theme.spacing(1),
   },
   list: {
-    paddingLeft: theme.spacing(5),
+    paddingLeft: 60,
+  },
+  subsistrictAccordion: {
+    padding: 0,
+    marginLeft: -11,
   },
   districtItem: {
     paddingLeft: 0,
@@ -34,7 +38,7 @@ const styles = theme => ({
     fontWeight: 'normal',
   },
   loadingText: {
-    paddingLeft: theme.spacing(6),
+    paddingLeft: theme.spacing(8),
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(1),
   },

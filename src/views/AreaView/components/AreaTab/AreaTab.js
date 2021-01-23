@@ -204,12 +204,13 @@ const AreaTab = (props) => {
     return (
       <SMAccordion
         onOpen={(e, expanded) => handleSubcategoryExpand(expanded, district)}
+        className={classes.subsistrictAccordion}
         defaultOpen={expandedState}
         openButtonSrText={
         !expandedState
           ? intl.formatMessage({ id: 'area.choose.subdistrict' }, { category: intl.formatMessage({ id: `area.list.${district.name}` }) })
           : intl.formatMessage({ id: 'area.close.subdistrict' }, { category: intl.formatMessage({ id: `area.list.${district.name}` }) })
-      }
+        }
         adornment={districtRadioButton(district)}
         titleContent={(
           <>
