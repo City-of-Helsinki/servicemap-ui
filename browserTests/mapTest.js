@@ -12,11 +12,11 @@ fixture`Search unit geometry test`
   });
 
 test('Unit geometry is drawn on map', async (t) => {
-  const polygon = Selector('.leaflet-overlay-pane g');
+  const polygon = Selector('.leaflet-pane .leaflet-overlay-pane').find('canvas');
   const listItem = ReactSelector('UnitItem').nth(0);
   await t
     .click(listItem)
-    .expect(polygon.hasChildNodes).ok('Unit geometry not drawn on map');
+    .expect(polygon.exists).ok('Unit geometry not drawn on map');
 });
 
 fixture`Unit page geometry test`
@@ -26,7 +26,7 @@ fixture`Unit page geometry test`
   });
 
 test('Unit geometry is drawn on map', async (t) => {
-  const polygon = Selector('.leaflet-overlay-pane g');
+  const polygon = Selector('.leaflet-pane .leaflet-overlay-pane').find('canvas');
   await t
-    .expect(polygon.hasChildNodes).ok();
+    .expect(polygon.exists).ok();
 });
