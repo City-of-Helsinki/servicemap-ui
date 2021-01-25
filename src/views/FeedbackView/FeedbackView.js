@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Warning } from '@material-ui/icons';
 import {
-  Typography, InputBase, Checkbox, FormControl, Dialog, ButtonBase,
+  Typography, InputBase, Checkbox, FormControl, Dialog, ButtonBase, DialogTitle, DialogContent,
 } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
 import { Prompt } from 'react-router-dom';
 import TitleBar from '../../components/TitleBar';
 import SMButton from '../../components/ServiceMapButton';
 import config from '../../../config';
+import DesktopComponent from '../../components/DesktopComponent';
 
 const FeedbackView = ({
   classes, navigator, intl, location, selectedUnit, getLocaleText,
@@ -124,32 +125,38 @@ const FeedbackView = ({
   return (
     <>
       {/* Exit dialog */}
-      <Prompt
-        when={!!(!modalOpen && (email || feedback || permission))}
-        message={intl.formatMessage({ id: 'feedback.modal.leave' })}
-      />
+      <DesktopComponent>
+        <Prompt
+          when={!!(!modalOpen && (email || feedback || permission))}
+          message={intl.formatMessage({ id: 'feedback.modal.leave' })}
+        />
+      </DesktopComponent>
       {/* Confirm dialog */}
       {
         modalOpen
         && (
-          <Dialog open={!!modalOpen}>
+          <Dialog open={!!modalOpen} onEntered={() => document.getElementById('dialog-title').focus()}>
             <div className={classes.modalContainer}>
-              <Typography className={classes.modalTitle}>
-                <FormattedMessage id={modalOpen === 'send' ? 'feedback.modal.success' : 'feedback.modal.error'} />
-              </Typography>
-              <SMButton
-                margin
-                role="button"
-                className={classes.modalButton}
-                messageID="feedback.modal.confirm"
-                color="primary"
-                onClick={() => {
-                  setModalOpen(false);
-                  if (modalOpen === 'send') {
-                    navigator.goBack();
-                  }
-                }}
-              />
+              <DialogTitle tabIndex="-1" id="dialog-title">
+                <Typography aria-live="polite" className={classes.modalTitle}>
+                  <FormattedMessage id={modalOpen === 'send' ? 'feedback.modal.success' : 'feedback.modal.error'} />
+                </Typography>
+              </DialogTitle>
+              <DialogContent>
+                <SMButton
+                  margin
+                  role="button"
+                  className={classes.modalButton}
+                  messageID="feedback.modal.confirm"
+                  color="primary"
+                  onClick={() => {
+                    setModalOpen(false);
+                    if (modalOpen === 'send') {
+                      navigator.goBack();
+                    }
+                  }}
+                />
+              </DialogContent>
             </div>
           </Dialog>
         )
@@ -188,26 +195,26 @@ const FeedbackView = ({
               onBlur={!fbFieldVisited ? () => setFbFieldVisited(true) : null}
               inputProps={{ maxLength: feedbackMaxLength, 'aria-invalid': !!errorMessage }}
             />
-            <div className={classes.inputInfo}>
-              {errorMessage && (
-                <div className={classes.errorContainer}>
-                  <Warning className={classes.errorIcon} />
-                  &nbsp;
-                  <Typography color="inherit" aria-hidden className={classes.errorText}>
-                    {errorMessage}
-                  </Typography>
-                </div>
-              )}
-              {!feedbackLength && (
-                <Typography id="srError" role="alert" variant="srOnly">
-                  <FormattedMessage id="feedback.srError.required" />
-                </Typography>
-              )}
-              <Typography aria-hidden className={`${classes.characterInfo} ${feedbackFull ? classes.characterInfoError : ''}`}>
-                {`${feedbackLength}/${feedbackMaxLength}`}
-              </Typography>
-            </div>
           </FormControl>
+          <div className={classes.inputInfo}>
+            {errorMessage && (
+              <div aria-hidden className={classes.errorContainer}>
+                <Warning className={classes.errorIcon} />
+                &nbsp;
+                <Typography color="inherit" aria-hidden className={classes.errorText}>
+                  {errorMessage}
+                </Typography>
+              </div>
+            )}
+            {!feedbackLength && (
+              <Typography id="srError" role="alert" variant="srOnly">
+                <FormattedMessage id="feedback.srError.required" />
+              </Typography>
+            )}
+            <Typography aria-hidden className={`${classes.characterInfo} ${feedbackFull ? classes.characterInfoError : ''}`}>
+              {`${feedbackLength}/${feedbackMaxLength}`}
+            </Typography>
+          </div>
           {feedbackPermission}
         </div>
 

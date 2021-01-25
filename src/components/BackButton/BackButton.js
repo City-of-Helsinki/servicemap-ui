@@ -24,7 +24,7 @@ const BackButton = (props) => {
   // Figure out correct translation id suffix
   let idSuffix = 'goToHome';
   if (breadcrumb.length) {
-    const previousEntry = breadcrumb[breadcrumb.length - 1];
+    const previousEntry = breadcrumb[breadcrumb.length - 1]?.location;
     if (typeof previousEntry === 'string') {
       const suffix = getPathName(previousEntry);
       if (suffix) {

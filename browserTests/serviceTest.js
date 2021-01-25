@@ -1,5 +1,5 @@
 import { waitForReact, ReactSelector } from 'testcafe-react-selectors';
-import { ClientFunction } from 'testcafe';
+import { ClientFunction, Selector } from 'testcafe';
 import config from './config';
 
 const { server } = config;
@@ -15,21 +15,12 @@ fixture`Service page coordinate tests`
   });
 
 test('User marker is drawn on map based on coordinates', async (t) => {
-  const marker = ReactSelector('UserMarker');
+  const marker = ReactSelector('CoordinateMarker Marker');
   const coords = await marker.getReact(({props}) => props.position);
 
   await t
     .expect(marker).ok('no marker found')
     .expect(coords).eql(coordinates, 'user marker coordinates do not match parameter coordinates');
-});
-
-test('Result orderer has distance option as default with user marker coordinates', async (t) => {
-  const input = ReactSelector('WithStyles(ForwardRef(InputBase))');
-  let select =  ReactSelector('ResultOrderer WithStyles(ForwardRef(Select))');
-
-  await t
-    .expect(select.getReact(({props}) => props.value)).eql('distance-asc')
-  ;
 });
 
 const servicePage = `http://${server.address}:${server.port}/fi/service/813`;
@@ -77,9 +68,21 @@ test('Keyboard navigation is OK', async (t) => {
   await t
     // Click next page button
     .click(buttons.nth(1))
+    // Focus is lost to start of the page after button click
+    // Pagination moves focus to p element with tabindex -1 which doesn't seem to work
+    // with testCafe tests but works on live version
     .expect(location).contains(servicePage)
     .expect(location).contains('p=2')
+    .click(select) // Click select to move focus back to view
+  ;
+  
+  // After clicking to change page focus is moved to start of the list
+  // We need to move back to page navigation
+  for (let i = 0; i < 12; i++) {
+    await t.pressKey('tab');
+  }
 
+  // Check keyboard navigation
   await t
     .pressKey('shift+tab') // Move back to previous page button
     .expect(buttons.nth(0).focused).ok()

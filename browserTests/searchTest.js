@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { Selector, ClientFunction } from 'testcafe';
 import { waitForReact, ReactSelector } from 'testcafe-react-selectors';
+import { viewTitleID } from '../src/utils/accessibility';
 
 import config from './config';
 const { server } = config;
@@ -171,7 +172,7 @@ test('Expanded suggestions does open and close correctly', async(t) => {
     // Go back to search view
     .click(backButton);
 
-  const viewText = await Selector('#view-title').innerText;
+  const viewText = await Selector(`#${viewTitleID}`).innerText;
   const button2 = await Selector('#ExpandSuggestions');
   await t
     // Check that back button takes back to correct view
@@ -329,7 +330,7 @@ test('SettingsInfo works correctly', async(t) => {
 
   // Expect title to be focused in settings view
   const title = Selector('.SettingsTitle').child(0);
-  const backButton = ReactSelector('SMButton WithStyles(ForwardRef(ButtonBase))').nth(1);
+  const backButton = Selector('button[aria-label="Sulje asetukset"]').nth(0);
   await t
     .expect(title.focused).ok('Expected title to be focused on entering settings view')
     .expect(title.innerText).eql('Asetukset')

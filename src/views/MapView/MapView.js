@@ -186,6 +186,17 @@ const MapView = (props) => {
     if (!embeded) {
       findUserLocation();
     }
+    // Hide zoom control amd attribution from screen readers
+    setTimeout(() => {
+      const e = document.querySelector('.leaflet-control-zoom');
+      const e2 = document.querySelector('.leaflet-control-attribution');
+      if (e) {
+        e.setAttribute('aria-hidden', 'true');
+      }
+      if (e2) {
+        e2.setAttribute('aria-hidden', 'true');
+      }
+    }, 1);
 
     return () => {
       // Clear map reference on unmount

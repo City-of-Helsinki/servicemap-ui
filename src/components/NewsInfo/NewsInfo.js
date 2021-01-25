@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, Paper, Typography } from '@material-ui/core';
-import { getIcon } from '../SMIcon';
 import { FormattedMessage } from 'react-intl';
+import { getIcon } from '../SMIcon';
 
 const NewsInfo = ({
   classes, getLocaleText, news,
@@ -22,7 +22,7 @@ const NewsInfo = ({
   const tTitle = title && getLocaleText(title);
   const tLeadParagraph = leadParagraph && getLocaleText(leadParagraph);
   const teUrlTitle = eUrlTitle && getLocaleText(eUrlTitle);
-  const urlHref = eUrl && eUrl !== '' ? eUrl : false;
+  const urlHref = eUrl && eUrl !== '' ? getLocaleText(eUrl) : false;
   const icon = getIcon('servicemapLogoIcon', {
     className: classes.icon,
   });
@@ -70,10 +70,13 @@ const NewsInfo = ({
 
 NewsInfo.propTypes = {
   classes: PropTypes.shape({
+    bottomContent: PropTypes.string,
     container: PropTypes.string,
+    hidePaddingTop: PropTypes.string,
     icon: PropTypes.string,
     image: PropTypes.string,
     title: PropTypes.string,
+    titleContainer: PropTypes.string,
     subtitle: PropTypes.string,
   }).isRequired,
   getLocaleText: PropTypes.func.isRequired,
@@ -82,6 +85,13 @@ NewsInfo.propTypes = {
       fi: PropTypes.string,
     }),
     title: PropTypes.shape({
+      fi: PropTypes.string,
+    }),
+    picture_url: PropTypes.string,
+    external_url_title: PropTypes.shape({
+      fi: PropTypes.string,
+    }),
+    external_url: PropTypes.shape({
       fi: PropTypes.string,
     }),
   })).isRequired,

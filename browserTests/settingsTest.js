@@ -80,8 +80,11 @@ test('Settings saves correctly', async (t) => {
   const settings = ReactSelector('Settings');
   const checkboxGroup = settings.find('[aria-labelledby=SenseSettings]');
   const checkboxes = checkboxGroup.find('input[type=checkbox]');
-  const saveButton = settings.find('button[aria-label="Tallenna asetukset"]').nth(0);
+  const topSaveButton = settings.find('button[aria-label="Tallenna"]').nth(0);
+  const bottomSaveButton = settings.find('button[aria-label="Tallenna asetukset"]').nth(0);
   const ariaLiveElement = settings.find('span[aria-live=polite]').nth(0);
+  const closeButton = settings.find('button[aria-label="Sulje asetukset"]').nth(1);
+
   await t
     .click(checkboxes.nth(1))
     .expect(checkboxes.nth(1).checked).ok('Expected second checkbox to be checked')
@@ -89,10 +92,28 @@ test('Settings saves correctly', async (t) => {
       'Asetukset muutettu. Muista tallentaa',
       'Expect aria live element to have state information about settings change'
     )
-    .click(saveButton)
+    .click(bottomSaveButton)
     .expect(ariaLiveElement.innerText).contains(
       'Asetukset on tallennettu',
       'Expected aria live element to have state information about saved settings'
     )
+    // Focus should be moved after save in order to avoid loss of focus on mobile
+    .expect(closeButton.focused).ok('Expect focus to move to close button on save')
+  ;
+
+  const title = Selector('.SettingsTitle').find('h2');
+  await t
+    .click(checkboxes.nth(1))
+    .expect(checkboxes.nth(1).checked).notOk('Expected second checkbox to be unchecked')
+    .expect(ariaLiveElement.innerText).contains(
+      'Asetukset muutettu. Muista tallentaa',
+      'Expect aria live element to have state information about settings change'
+    )
+    .click(topSaveButton)
+    .expect(ariaLiveElement.innerText).contains(
+      'Asetukset on tallennettu',
+      'Expected aria live element to have state information about saved settings'
+    )
+    .expect(title.focused).ok('Expect focus to move to title on confirmation box save')
   ;
 })
