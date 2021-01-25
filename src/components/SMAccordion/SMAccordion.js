@@ -4,6 +4,7 @@ import { ButtonBase, Collapse } from '@material-ui/core';
 import { ArrowDropDown } from '@material-ui/icons';
 
 const SMAccordion = ({
+  isOpen,
   defaultOpen,
   adornment,
   titleContent,
@@ -17,16 +18,18 @@ const SMAccordion = ({
   const [open, setOpen] = useState(defaultOpen);
   const [pendingOpen, setPendingOpen] = useState(false);
 
-  const icon = <ArrowDropDown className={`${classes.icon} ${open ? classes.iconOpen : ''}`} />;
+  const openState = isOpen !== null ? isOpen : open;
+
+  const icon = <ArrowDropDown className={`${classes.icon} ${openState ? classes.iconOpen : ''}`} />;
 
   const handleOpen = (e) => {
-    onOpen(e, open);
+    onOpen(e, openState);
     /* If no content is provided (usually because content is loading), set open event as pending.
       This makes accordion opening smoother once content is loaded */
-    if (!open && !collapseContent) {
+    if (!openState && !collapseContent) {
       setPendingOpen(true);
     } else {
-      setOpen(!open);
+      setOpen(!openState);
     }
   };
 
@@ -46,7 +49,7 @@ const SMAccordion = ({
           <ButtonBase
             className={classes.clickArea}
             aria-label={openButtonSrText}
-            aria-expanded={open}
+            aria-expanded={openState}
             onClick={e => handleOpen(e)}
           >
             {titleContent}
@@ -54,8 +57,8 @@ const SMAccordion = ({
           </ButtonBase>
         ) : titleContent}
       </div>
-      <Collapse className={classes.collapseContainer} aria-hidden={!open} in={open}>
-        {collapseContent}
+      <Collapse className={classes.collapseContainer} in={openState}>
+        {openState && collapseContent}
       </Collapse>
     </div>
   );
@@ -63,6 +66,7 @@ const SMAccordion = ({
 
 
 SMAccordion.propTypes = {
+  isOpen: PropTypes.bool,
   defaultOpen: PropTypes.bool,
   titleContent: PropTypes.objectOf(PropTypes.any).isRequired,
   collapseContent: PropTypes.arrayOf(PropTypes.any),
@@ -75,6 +79,7 @@ SMAccordion.propTypes = {
 };
 
 SMAccordion.defaultProps = {
+  isOpen: null,
   defaultOpen: false,
   collapseContent: null,
   adornment: null,
