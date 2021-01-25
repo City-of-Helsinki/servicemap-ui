@@ -48,6 +48,7 @@ const translations = {
   'area.choose.subdistrict': 'Väl och öppna {category}',
   'area.close.subdistrict': 'Stäng {category}',
   'area.noSelection': 'Väl område under fliken Val av område',
+  'area.noUnits': 'Det finns inga verksamhetsställen i ditt valda område',
   'area.list.geographical': 'Geografisk',
   'area.list.protection': 'Befolkningsskydd',
   'area.list.health': 'Hälsa',
@@ -343,6 +344,7 @@ const translations = {
   'unit.route': 'Se vägen till det här stället',
   'unit.route.extra': '(Ny flik. HRT-reseplaneraren är inte en tillgänglig tjänst)',
   'unit.socialMedia.title': 'Verksamhetsstället på sociala medier',
+  'unit.outdoorLink': 'Kolla skicket på en motionsplats i tjänsten ulkoliikunta.fi',
 
   // Search
   'search': 'Sök',

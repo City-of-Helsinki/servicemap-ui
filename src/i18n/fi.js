@@ -48,6 +48,7 @@ const translations = {
   'area.choose.subdistrict': 'Valitse ja avaa {category}',
   'area.close.subdistrict': 'Sulje {category}',
   'area.noSelection': 'Valitse alue Alueen Valinta -välilehdeltä',
+  'area.noUnits': 'Valitsemallasi alueella ei ole toimipisteitä',
   'area.list.geographical': 'Maantieteellinen',
   'area.list.protection': 'Väestönsuojelu',
   'area.list.health': 'Terveys',
@@ -343,6 +344,7 @@ const translations = {
   'unit.route': 'Katso reitti tänne',
   'unit.route.extra': '(Uusi välilehti. HSL-reittiopas ei ole saavutettava palvelu)',
   'unit.socialMedia.title': 'Toimipiste sosiaalisessa mediassa',
+  'unit.outdoorLink': 'Katso liikuntapaikan kunto ulkoliikunta.fi palvelusta',
 
   // Search
   'search': 'Hae',
@@ -390,6 +392,7 @@ const translations = {
   'search.searchbar.headerText': 'Pääkaupunkiseudun kaikki julkiset palvelut ulottuvillasi.',
   'search.searchbar.infoText': 'Hae palveluita, toimipisteitä tai osoitteita',
   'search.skipLink': 'Hyppylinkki hakutuloksiin',
+  'search.skipSuggestions': 'Sulje hakuehdotukset',
   'search.suggestions.suggest': 'Tarkoititko..?',
   'search.suggestions.expand': 'Hakuehdotukset',
   'search.suggestions.loading': 'Ladataan ehdotuksia',

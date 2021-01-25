@@ -69,10 +69,13 @@ class HomeView extends React.Component {
             onClick={() => navigator.push('feedback')}
           />
           <PaperButton
+            id="home-paper-info-button"
             messageID="info.title"
             icon={getIcon('help')}
             link
-            onClick={() => navigator.push('info')}
+            onClick={() => {
+              navigator.push('info', null, 'home-paper-info-button');
+            }}
           />
           <PaperButton
             messageID="home.old.link"

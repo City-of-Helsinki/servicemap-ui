@@ -1,18 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Typography, ButtonBase, Link } from '@material-ui/core';
 import TitleBar from '../../components/TitleBar';
 import config from '../../../config';
+import { focusToViewTitle } from '../../utils/accessibility';
 
 const InfoView = ({
-  classes, history, location, locale,
+  classes, location, locale, navigator,
 }) => {
   const content = location.pathname.includes('accessibility') ? 'accessibilityInfo' : 'generalInfo';
 
+  useEffect(() => {
+    setTimeout(() => {
+      focusToViewTitle();
+    }, 1);
+  }, [content]);
+
   const handleClick = () => {
     document.getElementsByClassName('SidebarWrapper')[0].scrollTo(0, 0);
-    history.push('info/accessibility');
+    navigator.push('infoAccessibility');
   };
 
   const renderTitlebar = () => (
@@ -986,8 +993,8 @@ const InfoView = ({
 InfoView.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
   locale: PropTypes.string.isRequired,
+  navigator: PropTypes.objectOf(PropTypes.any),
 };
 
 export default InfoView;

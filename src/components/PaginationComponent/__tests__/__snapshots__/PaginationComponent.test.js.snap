@@ -114,7 +114,7 @@ exports[`<PaginationComponent /> should work 1`] = `
             <div
               className="Container-root-11    injectIntl(PaginationComponent)-buttonContainer-5"
             >
-              <injectIntl(WithStyles(SMButton))
+              <injectIntl(WithStyles(ForwardRef))
                 aria-label="Aiempi sivu"
                 className="injectIntl(PaginationComponent)-button-4 injectIntl(PaginationComponent)-arrowFlip-2 injectIntl(PaginationComponent)-borderBlack-3"
                 color="primary"
@@ -123,7 +123,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                 role="link"
                 variant="contained"
               >
-                <WithStyles(SMButton)
+                <WithStyles(ForwardRef)
                   aria-label="Aiempi sivu"
                   className="injectIntl(PaginationComponent)-button-4 injectIntl(PaginationComponent)-arrowFlip-2 injectIntl(PaginationComponent)-borderBlack-3"
                   color="primary"
@@ -172,19 +172,19 @@ exports[`<PaginationComponent /> should work 1`] = `
                   role="link"
                   variant="contained"
                 >
-                  <SMButton
+                  <ForwardRef
                     aria-label="Aiempi sivu"
                     className="injectIntl(PaginationComponent)-button-4 injectIntl(PaginationComponent)-arrowFlip-2 injectIntl(PaginationComponent)-borderBlack-3"
                     classes={
                       Object {
-                        "button": "SMButton-button-16",
-                        "default": "SMButton-default-22",
-                        "margin": "SMButton-margin-18",
-                        "marginRight": "SMButton-marginRight-19",
-                        "primary": "SMButton-primary-20",
-                        "secondary": "SMButton-secondary-21",
-                        "smallButton": "SMButton-smallButton-17",
-                        "typography": "SMButton-typography-23",
+                        "button": "ForwardRef-button-16",
+                        "default": "ForwardRef-default-22",
+                        "margin": "ForwardRef-margin-18",
+                        "marginRight": "ForwardRef-marginRight-19",
+                        "primary": "ForwardRef-primary-20",
+                        "secondary": "ForwardRef-secondary-21",
+                        "smallButton": "ForwardRef-smallButton-17",
+                        "typography": "ForwardRef-typography-23",
                       }
                     }
                     color="primary"
@@ -240,7 +240,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                   >
                     <WithStyles(ForwardRef(ButtonBase))
                       aria-label="Aiempi sivu"
-                      className="SMButton-button-16  SMButton-marginRight-19 injectIntl(PaginationComponent)-button-4 injectIntl(PaginationComponent)-arrowFlip-2 injectIntl(PaginationComponent)-borderBlack-3 SMButton-primary-20"
+                      className="ForwardRef-button-16  ForwardRef-marginRight-19 injectIntl(PaginationComponent)-button-4 injectIntl(PaginationComponent)-arrowFlip-2 injectIntl(PaginationComponent)-borderBlack-3 ForwardRef-primary-20"
                       disabled={false}
                       icon={null}
                       onClick={[Function]}
@@ -250,7 +250,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                     >
                       <ForwardRef(ButtonBase)
                         aria-label="Aiempi sivu"
-                        className="SMButton-button-16  SMButton-marginRight-19 injectIntl(PaginationComponent)-button-4 injectIntl(PaginationComponent)-arrowFlip-2 injectIntl(PaginationComponent)-borderBlack-3 SMButton-primary-20"
+                        className="ForwardRef-button-16  ForwardRef-marginRight-19 injectIntl(PaginationComponent)-button-4 injectIntl(PaginationComponent)-arrowFlip-2 injectIntl(PaginationComponent)-borderBlack-3 ForwardRef-primary-20"
                         classes={
                           Object {
                             "disabled": "Mui-disabled",
@@ -268,7 +268,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                       >
                         <button
                           aria-label="Aiempi sivu"
-                          className="MuiButtonBase-root SMButton-button-16  SMButton-marginRight-19 injectIntl(PaginationComponent)-button-4 injectIntl(PaginationComponent)-arrowFlip-2 injectIntl(PaginationComponent)-borderBlack-3 SMButton-primary-20"
+                          className="MuiButtonBase-root ForwardRef-button-16  ForwardRef-marginRight-19 injectIntl(PaginationComponent)-button-4 injectIntl(PaginationComponent)-arrowFlip-2 injectIntl(PaginationComponent)-borderBlack-3 ForwardRef-primary-20"
                           disabled={false}
                           icon={null}
                           onBlur={[Function]}
@@ -327,10 +327,10 @@ exports[`<PaginationComponent /> should work 1`] = `
                         </button>
                       </ForwardRef(ButtonBase)>
                     </WithStyles(ForwardRef(ButtonBase))>
-                  </SMButton>
-                </WithStyles(SMButton)>
-              </injectIntl(WithStyles(SMButton))>
-              <injectIntl(WithStyles(SMButton))
+                  </ForwardRef>
+                </WithStyles(ForwardRef)>
+              </injectIntl(WithStyles(ForwardRef))>
+              <injectIntl(WithStyles(ForwardRef))
                 aria-label="Seuraava sivu"
                 className="injectIntl(PaginationComponent)-button-4 injectIntl(PaginationComponent)-borderBlack-3"
                 color="primary"
@@ -339,7 +339,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                 role="link"
                 variant="contained"
               >
-                <WithStyles(SMButton)
+                <WithStyles(ForwardRef)
                   aria-label="Seuraava sivu"
                   className="injectIntl(PaginationComponent)-button-4 injectIntl(PaginationComponent)-borderBlack-3"
                   color="primary"
@@ -388,19 +388,19 @@ exports[`<PaginationComponent /> should work 1`] = `
                   role="link"
                   variant="contained"
                 >
-                  <SMButton
+                  <ForwardRef
                     aria-label="Seuraava sivu"
                     className="injectIntl(PaginationComponent)-button-4 injectIntl(PaginationComponent)-borderBlack-3"
                     classes={
                       Object {
-                        "button": "SMButton-button-16",
-                        "default": "SMButton-default-22",
-                        "margin": "SMButton-margin-18",
-                        "marginRight": "SMButton-marginRight-19",
-                        "primary": "SMButton-primary-20",
-                        "secondary": "SMButton-secondary-21",
-                        "smallButton": "SMButton-smallButton-17",
-                        "typography": "SMButton-typography-23",
+                        "button": "ForwardRef-button-16",
+                        "default": "ForwardRef-default-22",
+                        "margin": "ForwardRef-margin-18",
+                        "marginRight": "ForwardRef-marginRight-19",
+                        "primary": "ForwardRef-primary-20",
+                        "secondary": "ForwardRef-secondary-21",
+                        "smallButton": "ForwardRef-smallButton-17",
+                        "typography": "ForwardRef-typography-23",
                       }
                     }
                     color="primary"
@@ -456,7 +456,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                   >
                     <WithStyles(ForwardRef(ButtonBase))
                       aria-label="Seuraava sivu"
-                      className="SMButton-button-16  SMButton-marginRight-19 injectIntl(PaginationComponent)-button-4 injectIntl(PaginationComponent)-borderBlack-3 SMButton-primary-20"
+                      className="ForwardRef-button-16  ForwardRef-marginRight-19 injectIntl(PaginationComponent)-button-4 injectIntl(PaginationComponent)-borderBlack-3 ForwardRef-primary-20"
                       disabled={false}
                       icon={null}
                       onClick={[Function]}
@@ -466,7 +466,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                     >
                       <ForwardRef(ButtonBase)
                         aria-label="Seuraava sivu"
-                        className="SMButton-button-16  SMButton-marginRight-19 injectIntl(PaginationComponent)-button-4 injectIntl(PaginationComponent)-borderBlack-3 SMButton-primary-20"
+                        className="ForwardRef-button-16  ForwardRef-marginRight-19 injectIntl(PaginationComponent)-button-4 injectIntl(PaginationComponent)-borderBlack-3 ForwardRef-primary-20"
                         classes={
                           Object {
                             "disabled": "Mui-disabled",
@@ -484,7 +484,7 @@ exports[`<PaginationComponent /> should work 1`] = `
                       >
                         <button
                           aria-label="Seuraava sivu"
-                          className="MuiButtonBase-root SMButton-button-16  SMButton-marginRight-19 injectIntl(PaginationComponent)-button-4 injectIntl(PaginationComponent)-borderBlack-3 SMButton-primary-20"
+                          className="MuiButtonBase-root ForwardRef-button-16  ForwardRef-marginRight-19 injectIntl(PaginationComponent)-button-4 injectIntl(PaginationComponent)-borderBlack-3 ForwardRef-primary-20"
                           disabled={false}
                           icon={null}
                           onBlur={[Function]}
@@ -543,9 +543,9 @@ exports[`<PaginationComponent /> should work 1`] = `
                         </button>
                       </ForwardRef(ButtonBase)>
                     </WithStyles(ForwardRef(ButtonBase))>
-                  </SMButton>
-                </WithStyles(SMButton)>
-              </injectIntl(WithStyles(SMButton))>
+                  </ForwardRef>
+                </WithStyles(ForwardRef)>
+              </injectIntl(WithStyles(ForwardRef))>
               <WithStyles(Container)
                 className="injectIntl(PaginationComponent)-listContainer-7"
               >
