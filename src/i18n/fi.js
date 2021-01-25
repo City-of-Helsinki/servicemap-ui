@@ -344,6 +344,7 @@ const translations = {
   'unit.route': 'Katso reitti tänne',
   'unit.route.extra': '(Uusi välilehti. HSL-reittiopas ei ole saavutettava palvelu)',
   'unit.socialMedia.title': 'Toimipiste sosiaalisessa mediassa',
+  'unit.outdoorLink': 'Katso liikuntapaikan kunto ulkoliikunta.fi palvelusta',
 
   // Search
   'search': 'Hae',
