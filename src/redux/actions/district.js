@@ -30,6 +30,11 @@ export const setSelectedDistrictServices = services => ({
   services,
 });
 
+export const setAreaViewState = object => ({
+  type: 'SET_AREA_VIEW_STATE',
+  object,
+});
+
 const startUnitFetch = node => ({
   type: 'START_UNIT_FETCH',
   node,

@@ -27,6 +27,9 @@ const UnitTab = ({
   setSelectedDistrictServices,
   filteredSubdistrictUnits,
   addressDistrict,
+  openServices,
+  setOpenServices,
+  setCheckedServices,
   formAddressString,
   getLocaleText,
   classes,
@@ -57,9 +60,14 @@ const UnitTab = ({
     setSelectedDistrictServices(newArray);
   };
 
-  useEffect(() => {
-    setCheckedServices(selectedDistrictServices);
-  }, [selectedDistrictServices]);
+  const saveOpenState = (category, expanded) => {
+    if (!expanded) {
+      setOpenServices([...openServices, category.id]);
+    } else {
+      const items = openServices.filter(i => i !== category.id);
+      setOpenServices(items);
+    }
+  };
 
   const renderDistrictUnitItem = (district) => {
     const { unit } = district;
@@ -122,6 +130,8 @@ const UnitTab = ({
         >
           <SMAccordion
             className={classes.serviceTitle}
+            onOpen={(e, expanded) => saveOpenState(category, expanded)}
+            defaultOpen={openServices.includes(category.id)}
             titleContent={(
               <div>
                 <Typography>
