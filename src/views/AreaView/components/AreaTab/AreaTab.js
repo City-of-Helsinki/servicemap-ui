@@ -28,6 +28,7 @@ const AreaTab = (props) => {
     setDistrictRadioValue,
     setSelectedSubdistricts,
     setSelectedDistrictServices,
+    setOpenServices,
     ditsrictsFetching,
     unitsFetching,
     districtData,
@@ -44,13 +45,20 @@ const AreaTab = (props) => {
     map,
   } = props;
   const citySettings = useSelector(state => state.settings.cities);
-  const defaultExpanded = selectedSubdistricts.length;
+  const selectedDistrictType = useSelector(state => state.districts.selectedDistrictType);
+  const selectedCategory = dataStructure.find(
+    data => data.districts.includes(selectedDistrictType),
+  )?.id;
+
+
+  const defaultExpanded = selectedSubdistricts.length && selectedDistrictType; // Mikä tämä on???
   const [expandedSubcategory, setExpandedSubcategory] = useState(defaultExpanded);
 
   const handleRadioChange = (district) => {
     setSelectedSubdistricts([]);
     setDistrictRadioValue(district.id);
     setExpandedSubcategory(null);
+    setOpenServices([]);
     setSelectedDistrictServices([]);
   };
 
@@ -78,6 +86,8 @@ const AreaTab = (props) => {
       if (districtRadioValue !== district.id) {
         setSelectedSubdistricts([]);
       }
+      setOpenServices([]);
+      setSelectedDistrictServices([]);
       setDistrictRadioValue(district.id);
       setExpandedSubcategory(district.id);
     } else {
@@ -146,24 +156,28 @@ const AreaTab = (props) => {
           </div>
           <FormGroup>
             <List disablePadding className={classes.subdistrictList}>
-              {data.map(districtItem => (
-                <ListItem key={districtItem.id}>
-                  <FormControlLabel
-                    value={districtItem.ocd_id}
-                    control={(
-                      <Checkbox
-                        disabled={unitsFetching}
-                        onChange={e => handleCheckboxChange(e, districtItem)}
-                        checked={selectedSubdistricts.some(
-                          district => district === districtItem.ocd_id,
-                        )}
-                      />
+              {data.map((districtItem) => {
+                const disabled = !!(unitsFetching.length
+                  && !unitsFetching.includes(districtItem.ocd_id));
+                return (
+                  <ListItem key={districtItem.id}>
+                    <FormControlLabel
+                      value={districtItem.ocd_id}
+                      control={(
+                        <Checkbox
+                          disabled={disabled}
+                          onChange={e => handleCheckboxChange(e, districtItem)}
+                          checked={selectedSubdistricts.some(
+                            district => district === districtItem.ocd_id,
+                          )}
+                        />
                     )}
-                    label={<Typography>{getLocaleText(districtItem.name)}</Typography>}
-                    aria-label={`${getLocaleText(districtItem.name)} ${unitsFetching ? intl.formatMessage({ id: 'search.loading.units.simple' }) : ''}`}
-                  />
-                </ListItem>
-              ))}
+                      label={<Typography>{getLocaleText(districtItem.name)}</Typography>}
+                      aria-label={`${getLocaleText(districtItem.name)} ${disabled ? intl.formatMessage({ id: 'search.loading.units.simple' }) : ''}`}
+                    />
+                  </ListItem>
+                );
+              })}
             </List>
           </FormGroup>
         </React.Fragment>
@@ -205,7 +219,7 @@ const AreaTab = (props) => {
       <SMAccordion
         onOpen={(e, expanded) => handleSubcategoryExpand(expanded, district)}
         className={classes.subsistrictAccordion}
-        defaultOpen={expandedState}
+        isOpen={expandedState}
         openButtonSrText={
         !expandedState
           ? intl.formatMessage({ id: 'area.choose.subdistrict' }, { category: intl.formatMessage({ id: `area.list.${district.name}` }) })
@@ -278,13 +292,13 @@ const AreaTab = (props) => {
 
 
   const renderCategoryItem = (item) => {
-    const expanded = openItems.includes(item.id);
+    const expanded = openItems.includes(item.id) || selectedCategory === item.id;
     return (
       <ListItem key={item.title} className={classes.categoryItem} disableGutters divider>
         <SMAccordion
           className={classes.expandingElement}
           onOpen={() => handleOpen(item)}
-          defaultExpanded={expanded}
+          defaultOpen={expanded}
           adornment={<AreaIcon className={classes.rightPadding} />}
           titleContent={(<Typography id={`${item.id}-content`} className={classes.bold}>{item.title}</Typography>)}
           collapseContent={(
@@ -364,7 +378,7 @@ AreaTab.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   districtRadioValue: PropTypes.string,
   ditsrictsFetching: PropTypes.arrayOf(PropTypes.any).isRequired,
-  unitsFetching: PropTypes.bool.isRequired,
+  unitsFetching: PropTypes.arrayOf(PropTypes.any).isRequired,
   districtData: PropTypes.arrayOf(PropTypes.object),
   selectedDistrictData: PropTypes.arrayOf(PropTypes.object),
   openItems: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -375,6 +389,7 @@ AreaTab.propTypes = {
   setDistrictRadioValue: PropTypes.func.isRequired,
   setSelectedDistrictServices: PropTypes.func.isRequired,
   setSelectedSubdistricts: PropTypes.func.isRequired,
+  setOpenServices: PropTypes.func.isRequired,
   selectedSubdistricts: PropTypes.arrayOf(PropTypes.string).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   getLocaleText: PropTypes.func.isRequired,

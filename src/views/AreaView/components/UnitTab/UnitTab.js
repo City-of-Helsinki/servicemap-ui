@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {
   List,
@@ -35,8 +35,6 @@ const UnitTab = ({
   classes,
   intl,
 }) => {
-  const [checkedServices, setCheckedServices] = useState(selectedDistrictServices);
-
   const sortDistricts = (districts) => {
     districts.sort((a, b) => a.unit.distance - b.unit.distance);
   };
@@ -52,11 +50,10 @@ const UnitTab = ({
   const handleCheckboxChange = (event, category) => {
     let newArray;
     if (event.target.checked) {
-      newArray = [...checkedServices, category.id];
+      newArray = [...selectedDistrictServices, category.id];
     } else {
-      newArray = checkedServices.filter(service => service !== category.id);
+      newArray = selectedDistrictServices.filter(service => service !== category.id);
     }
-    setCheckedServices(newArray);
     setSelectedDistrictServices(newArray);
   };
 
@@ -144,7 +141,8 @@ const UnitTab = ({
             )}
             adornment={(
               <Checkbox
-                checked={checkedServices.includes(category.id)}
+                aria-hidden
+                checked={selectedDistrictServices.includes(category.id)}
                 onChange={e => handleCheckboxChange(e, category)}
               />
             )}
@@ -160,49 +158,6 @@ const UnitTab = ({
               </List>
             )}
           />
-          {/* <Accordion
-            TransitionProps={{ unmountOnExit: true, mountOnEnter: true }}
-            classes={{ root: classes.expandingElement }}
-          >
-            <AccordionSummary
-              classes={{ root: classes.accordionSummary }}
-              expandIcon={<ArrowDropDown />}
-              id={`${category.id}-header`}
-              aria-controls={`${category.id}-content`}
-            >
-              <FormControlLabel
-                onClick={event => event.stopPropagation()}
-                onFocus={event => event.stopPropagation()}
-                control={(
-                  <Checkbox
-                    checked={checkedServices.includes(category.id)}
-                    onChange={e => handleCheckboxChange(e, category)}
-                  />
-              )}
-                label={(
-                  <>
-                    <Typography>
-                      {`${uppercaseFirst(getLocaleText(category.name))} (${category.units.length})`}
-                    </Typography>
-                    <Typography aria-hidden className={classes.captionText} variant="caption">
-                      {`${category.period ? `${category.period[0]}-${category.period[1]}` : ''}`}
-                    </Typography>
-                  </>
-                )}
-              />
-            </AccordionSummary>
-            <AccordionDetails classes={{ root: classes.accoridonContent }} id={`${category.id}-content`}>
-              <List classes={{ root: classes.fullWidth }} disablePadding>
-                {category.units.map((unit, i) => (
-                  <UnitItem
-                    key={`${unit.id}-${category.id}`}
-                    unit={unit}
-                    divider={i !== category.units.length - 1}
-                  />
-                ))}
-              </List>
-            </AccordionDetails>
-          </Accordion> */}
         </ListItem>
       ))
     );
@@ -225,8 +180,9 @@ const UnitTab = ({
       return (
         <div className={classes.unitListArea}>
           <SMButton
+            aria-hidden
             className={classes.deleteButton}
-            disabled={!checkedServices.length}
+            disabled={!selectedDistrictServices.length}
             messageID="services.selections.delete.all"
             icon={<Cancel className={classes.deleteIcon} />}
             role="button"
