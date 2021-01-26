@@ -22,11 +22,12 @@ const getLocation = ClientFunction(() => document.location.href);
 test('Language does change', async (t) => {
   const languageButtons = ReactSelector('WithStyles(ForwardRef(ButtonBase))');
   const title = Selector('.app-title');
+  let text = await languageButtons.nth(2).innerText;
 
   await t
     .expect(getLocation()).contains(`${siteRoot}/fi`)
     .expect(title.textContent).eql('Palvelukartta')
-    .expect(await languageButtons.nth(2).innerText.then(s => s.toLocaleLowerCase())).contains('in english')
+    .expect(text.toLowerCase()).contains('in english')
     // This event doesn't work for test cafe. Using custom navigation
     // WIP: figure out how to make language click event work with testcafe
     // .click(languageButtons.nth(2))
@@ -35,8 +36,11 @@ test('Language does change', async (t) => {
     .expect(title.textContent).eql('Service map')
   ;
 
+
+  text = await languageButtons.nth(3).innerText;
+
   await t
-    .expect(await languageButtons.nth(3).innerText.then(s => s.toLocaleLowerCase())).contains('på svenska')
+    .expect(text.toLowerCase()).contains('på svenska')
     // This event doesn't work for test cafe. Using custom navigation
     // WIP: figure out how to make language click event work with testcafe
     //.click(languageButtons.nth(3))

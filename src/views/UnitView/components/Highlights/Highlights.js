@@ -2,13 +2,40 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Typography, Link } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
+import config from '../../../../../config';
 import unitSectionFilter from '../../utils/unitSectionFilter';
 
-const Highlights = ({ unit, classes, getLocaleText }) => {
+const Highlights = ({
+  unit, classes, getLocaleText, intl,
+}) => {
   const connections = unitSectionFilter(unit.connections, 'HIGHLIGHT');
 
-  if (!connections || !connections.length) {
+  // Add link to ulkoliikunta.fi as custom highligh to certain services
+  const outdoorSportIDs = [695, 406, 426, 731, 730, 191];
+  const showOutdoorsLink = config.outdoorExerciseURL
+    && unit.services.some(service => outdoorSportIDs.includes(service.id));
+
+  if (!connections?.length && !showOutdoorsLink) {
     return null;
+  }
+
+  if (showOutdoorsLink) {
+    const outdoorsObject = {
+      id: 'outdoorExercise',
+      value: {
+        www: {
+          fi: `${config.outdoorExerciseURL}/unit/${unit.id}`,
+          en: `${config.outdoorExerciseURL}/unit/${unit.id}`,
+          sv: `${config.outdoorExerciseURL}/unit/${unit.id}`,
+        },
+        name: {
+          fi: intl.formatMessage({ id: 'unit.outdoorLink' }),
+          en: intl.formatMessage({ id: 'unit.outdoorLink' }),
+          sv: intl.formatMessage({ id: 'unit.outdoorLink' }),
+        },
+      },
+    };
+    connections.push(outdoorsObject);
   }
 
   return (
@@ -40,6 +67,7 @@ Highlights.propTypes = {
   unit: PropTypes.objectOf(PropTypes.any).isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   getLocaleText: PropTypes.func.isRequired,
+  intl: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default Highlights;
