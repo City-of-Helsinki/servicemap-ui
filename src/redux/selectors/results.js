@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 import config from '../../../config';
 import { isEmbed } from '../../utils/path';
-import { filterEmptyServices, filterCities } from '../../utils/filters';
+import { filterEmptyServices, filterCities, filterResultTypes } from '../../utils/filters';
 import isClient from '../../utils';
 import orderUnits from '../../utils/orderUnits';
 import getSortingParameters from './ordering';
@@ -28,7 +28,8 @@ const getFilteredData = (data, options, settings) => {
   }
 
   let filteredData = data
-    .filter(filterEmptyServices(cities));
+    .filter(filterEmptyServices(cities))
+    .filter(filterResultTypes());
 
   if (!embed) {
     if (options && options.municipality) {

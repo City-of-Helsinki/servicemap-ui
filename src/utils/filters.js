@@ -27,3 +27,11 @@ export const filterEmptyServices = cities => (obj) => {
 };
 
 export const filterCities = (cities, onlyUnits = false) => unit => cities.length === 0 || !unit.municipality || (!onlyUnits && unit.object_type !== 'unit') || cities.includes(unit.municipality);
+
+export const filterResultTypes = () => (obj) => {
+  const allowedTypes = ['unit', 'service', 'address'];
+  if (allowedTypes.includes(obj.object_type)) {
+    return true;
+  }
+  return false;
+};
