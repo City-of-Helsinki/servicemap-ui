@@ -69,11 +69,13 @@ SMAccordion.propTypes = {
   isOpen: PropTypes.bool,
   defaultOpen: PropTypes.bool,
   titleContent: PropTypes.objectOf(PropTypes.any).isRequired,
-  collapseContent: PropTypes.arrayOf(PropTypes.any),
+  collapseContent: PropTypes.oneOfType(
+    [PropTypes.arrayOf(PropTypes.any), PropTypes.objectOf(PropTypes.any)],
+  ),
   adornment: PropTypes.objectOf(PropTypes.any),
   onOpen: PropTypes.func,
   disabled: PropTypes.bool,
-  openButtonSrText: PropTypes.string.isRequired,
+  openButtonSrText: PropTypes.string,
   className: PropTypes.string,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
 };
@@ -85,6 +87,7 @@ SMAccordion.defaultProps = {
   adornment: null,
   onOpen: () => {},
   disabled: false,
+  openButtonSrText: null,
   className: '',
 };
 
