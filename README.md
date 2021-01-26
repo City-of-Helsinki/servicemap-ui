@@ -2,7 +2,7 @@
 
 ## Requirements 
 Using following:
-* Node LTS (v10.15.3)
+* Node LTS (v14)
 * npm (v6.4.1)
 
 For development:
