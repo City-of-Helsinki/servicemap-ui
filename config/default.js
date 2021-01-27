@@ -82,9 +82,9 @@ if (typeof settings.SHOW_AREA_SELECTION === 'undefined') {
   settings.SHOW_AREA_SELECTION = true;
 }
 
-if (typeof settings.SHOW_READ_SPEAKER_BUTTON === 'undefined') {
-  // If not set default to Helsinki
-  settings.SHOW_READ_SPEAKER_BUTTON = true;
+if (typeof settings.READ_SPEAKER_URL === 'undefined') {
+  // If not set default to false
+  settings.READ_SPEAKER_URL = false;
 }
 
 if (typeof settings.FEEDBACK_ADDITIONAL_INFO_LINK === 'undefined') {
@@ -200,7 +200,7 @@ export default {
   },
   "sentryDSN": (settings.SENTRY_DSN_CLIENT !== 'false') ? settings.SENTRY_DSN_CLIENT : false,
   "showAreaSelection": (settings.SHOW_AREA_SELECTION === 'true'),
-  "showReadSpeakerButton": (settings.SHOW_READ_SPEAKER_BUTTON === 'true'),
+  "showReadSpeakerButton": (settings.READ_SPEAKER_URL !== 'false' && settings.READ_SPEAKER_URL !== false),
   "feedbackAdditionalInfoLink": settings.FEEDBACK_ADDITIONAL_INFO_LINK,
   "feedbackIsPublished": (settings.FEEDBACK_IS_PUBLISHED === 'true'),
   "usePtvAccessibilityApi": (settings.USE_PTV_ACCESSIBILITY_API) === 'true',
