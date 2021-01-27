@@ -15,10 +15,12 @@ const PreviousSearches = ({
     if (history) {
       return (
         <>
-          <List className="suggestionList" ref={listRef}>
+          <List role="listbox" id="PreviousList" className="suggestionList" ref={listRef}>
             {
           history.map((item, i) => (
             <SuggestionItem
+              id={`suggestion${i}`}
+              role="option"
               selected={i === focusIndex}
               key={item}
               icon={<Search />}

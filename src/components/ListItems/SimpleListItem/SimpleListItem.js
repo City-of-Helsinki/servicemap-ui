@@ -20,6 +20,7 @@ const SimpleListItem = (props) => {
     selected,
     srText,
     className,
+    id,
   } = props;
   const isLinkOrButton = button || link;
   return (
@@ -37,6 +38,7 @@ const SimpleListItem = (props) => {
           selected: classes.itemFocus,
         }}
         selected={selected}
+        id={id}
       >
         {
           icon
@@ -84,6 +86,7 @@ SimpleListItem.propTypes = {
   divider: PropTypes.bool,
   selected: PropTypes.bool,
   className: PropTypes.string,
+  id: PropTypes.string,
 };
 
 SimpleListItem.defaultProps = {
@@ -97,4 +100,5 @@ SimpleListItem.defaultProps = {
   divider: false,
   selected: false,
   className: null,
+  id: null,
 };

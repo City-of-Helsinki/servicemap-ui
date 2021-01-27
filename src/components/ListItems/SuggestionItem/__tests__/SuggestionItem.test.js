@@ -123,10 +123,6 @@ describe('<SuggestionItem />', () => {
     expect(text.props()['aria-hidden']).toBeTruthy();
     // Expect role to be set
     expect(component.find('ForwardRef(ListItem)').props().role).toEqual('link');
-    // Expect element to have tabIndex 0
-    expect(component.find('ForwardRef(ListItem)').props().tabIndex).toEqual('0');
-    // Expect span element to have tabIndex -1
-    expect(component.find('ForwardRef(ListItem)').find('span').at(0).props().tabIndex).toEqual('-1');
   });
 
   it('does use given accessibility attributes correctly', () => {
@@ -142,7 +138,5 @@ describe('<SuggestionItem />', () => {
     expect(component.props().role).toEqual('button');
     // Expect divider element to be hidden from screen readers
     expect(component.find('li').at(1).props()['aria-hidden']).toBeTruthy();
-    // Expect element to have tabIndex 0
-    expect(component.find('ForwardRef(ListItem)').props().tabIndex).toEqual('0');
   });
 });

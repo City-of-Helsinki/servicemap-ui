@@ -22,6 +22,7 @@ exports[`<SimpleListItem /> should work 1`] = `
     divider={false}
     handleItemClick={null}
     icon={null}
+    id={null}
     link={false}
     role={null}
     selected={false}
@@ -38,6 +39,7 @@ exports[`<SimpleListItem /> should work 1`] = `
         }
       }
       component="li"
+      id={null}
       onClick={null}
       onKeyDown={null}
       role={null}
@@ -63,6 +65,7 @@ exports[`<SimpleListItem /> should work 1`] = `
           }
         }
         component="li"
+        id={null}
         onClick={null}
         onKeyDown={null}
         role={null}
@@ -72,6 +75,7 @@ exports[`<SimpleListItem /> should work 1`] = `
         <li
           className="MuiListItem-root SimpleListItem-listItem-1 null  MuiListItem-gutters"
           disabled={false}
+          id={null}
           onClick={null}
           onKeyDown={null}
           role={null}

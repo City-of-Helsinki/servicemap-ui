@@ -33,7 +33,7 @@ test('Unit markers are drawn on map', async (t) => {
 */
 
 test('District is drawn on map', async (t) => {
-  const district = await Selector('.leaflet-zoom-animated g').hasChildNodes;
+  const district = await Selector('.leaflet-pane .leaflet-overlay-pane').find('canvas').exists;
 
   await t
     .expect(district).ok('district not drawn on map');

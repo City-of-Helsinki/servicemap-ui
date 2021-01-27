@@ -6,6 +6,7 @@ const initialState = {
   subdistrictUnits: [],
   selectedSubdistricts: [],
   selectedDistrictServices: [],
+  areaViewState: null,
   districtAddressData: {
     address: null,
     districts: [],
@@ -66,6 +67,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         selectedDistrictServices: action.services,
+      };
+
+    case 'SET_AREA_VIEW_STATE':
+      return {
+        ...state,
+        areaViewState: action.object,
       };
 
     case 'START_UNIT_FETCH':

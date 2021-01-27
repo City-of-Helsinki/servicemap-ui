@@ -24,6 +24,7 @@ import Loading from '../../components/Loading';
 import MarkerCluster from './components/MarkerCluster';
 import UnitGeometry from './components/UnitGeometry';
 import MapUtility from './utils/mapUtility';
+import HideSidebarButton from './components/HideSidebarButton';
 import CoordinateMarker from './components/CoordinateMarker';
 
 if (global.window) {
@@ -60,6 +61,8 @@ const MapView = (props) => {
     userLocation,
     locale,
     measuringMode,
+    toggleSidebar,
+    sidebarHidden,
   } = props;
 
 
@@ -415,6 +418,15 @@ const MapView = (props) => {
           )}
 
           <ZoomControl position="bottomright" aria-hidden="true" />
+          <Control position="topleft">
+            {!isMobile && !embeded && toggleSidebar ? (
+              <HideSidebarButton
+                sidebarHidden={sidebarHidden}
+                mapRef={mapRef}
+                toggleSidebar={toggleSidebar}
+              />
+            ) : null}
+          </Control>
           {
             !embeded
             && (
@@ -478,6 +490,8 @@ MapView.propTypes = {
   userLocation: PropTypes.objectOf(PropTypes.any),
   locale: PropTypes.string.isRequired,
   measuringMode: PropTypes.bool.isRequired,
+  toggleSidebar: PropTypes.func,
+  sidebarHidden: PropTypes.bool,
 };
 
 MapView.defaultProps = {
@@ -493,5 +507,7 @@ MapView.defaultProps = {
   districtUnits: null,
   unitList: null,
   unitsLoading: false,
+  toggleSidebar: null,
+  sidebarHidden: false,
   userLocation: null,
 };

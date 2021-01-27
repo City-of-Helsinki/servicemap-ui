@@ -21,6 +21,7 @@ import paths from '../config/paths';
 import legacyRedirector from './legacyRedirector';
 import { matomoTrackingCode, appDynamicsTrackingCode } from './analytics';
 import { getLastCommit, getVersion } from './version';
+import ieHandler from './ieMiddleware';
 
 // Get sentry dsn from environtment variables
 const sentryDSN = process.env.SENTRY_DSN_SERVER;
@@ -68,6 +69,7 @@ app.use(`/*`, (req, res, next) => {
   req._context = store;
   next();
 });
+app.use('/*', ieHandler)
 app.use(`/rdr`, legacyRedirector);
 app.use('/', languageSubdomainRedirect);
 app.use(`/`, makeLanguageHandler);

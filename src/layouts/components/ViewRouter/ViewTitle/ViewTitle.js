@@ -34,13 +34,19 @@ class ViewTitle extends React.Component {
   }
 
   render() {
-    const { messageId, match } = this.props;
+    const { messageId, match, location } = this.props;
     const type = match.params.type || '';
+
+    let message = messageId;
+
+    if (location.search.includes('feedback=true')) {
+      message = 'general.pageTitles.feedback';
+    }
 
     return (
       <RootRef rootRef={this.titleRef}>
         <Typography id={viewTitleID} variant="srOnly" component="h2" tabIndex="-1">
-          <FormattedMessage id={messageId + type} />
+          <FormattedMessage id={message + type} />
         </Typography>
       </RootRef>
     );

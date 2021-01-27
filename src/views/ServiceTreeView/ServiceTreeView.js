@@ -9,6 +9,7 @@ import {
 import { FormattedMessage } from 'react-intl';
 import config from '../../../config';
 import SMButton from '../../components/ServiceMapButton';
+import SMAccordion from '../../components/SMAccordion';
 
 const ServiceTreeView = (props) => {
   const {
@@ -190,7 +191,7 @@ const ServiceTreeView = (props) => {
     }
     if (level > 0) {
       strokeColor = '#323232';
-      paths.push('M 0 30 H 12');
+      paths.push('M 0 30 H 7');
     }
 
     const line = paths.join(' ');
@@ -211,7 +212,7 @@ const ServiceTreeView = (props) => {
       return <path key={`outerPath${id}`} d="M 17 0 V 30 H 26" stroke="black" fill="transparent" />;
     }
     if (bottom && !currentLast) {
-      return <path key={`outerPath${id}`} d="M 17 0 V 60 M 20 30 H 26" stroke="black" fill="transparent" />;
+      return <path key={`outerPath${id}`} d="M 17 0 V 60 M 17 30 H 26" stroke="black" fill="transparent" />;
     }
     return <path key={`outerPath${id}`} d="M 17 0 V 60" stroke="black" fill="transparent" />;
   };
@@ -234,9 +235,6 @@ const ServiceTreeView = (props) => {
     const hasChildren = item.children.length;
     const isOpen = opened.includes(item.id);
     const children = hasChildren ? services.filter(e => e.parent === item.id) : null;
-    const icon = isOpen
-      ? <ArrowDropUp className={classes.iconRight} />
-      : <ArrowDropDown className={classes.iconRight} />;
 
     let resultCount = 0;
 
@@ -249,7 +247,7 @@ const ServiceTreeView = (props) => {
     }
 
     const checkboxSrTitle = `${intl.formatMessage({ id: 'services.tree.level' })} ${level + 1} ${getLocaleText(item.name)} ${intl.formatMessage({ id: 'services.category.select' })}`;
-    const itemSrTitle = `${getLocaleText(item.name)} (${resultCount}) ${intl.formatMessage({ id: 'services.category.open' })}`;
+    const itemSrTitle = `${getLocaleText(item.name)} ${intl.formatMessage({ id: 'services.category.open' })}`;
 
     const isSelected = selected.some(e => e.id === item.id);
 
@@ -258,54 +256,51 @@ const ServiceTreeView = (props) => {
       .some(node => selected.some(item => item.id === node.id));
 
     return (
-      <React.Fragment key={item.id}>
-        <ListItem
-          disableGutters
+      <li key={item.id}>
+        <SMAccordion
           className={`${classes.listItem} ${classes[`level${level}`]}`}
-        >
-          {level > 0 && (drawOuterLines(level, last, item.id))}
-
-          <div className={classes.checkBox}>
-            {drawCheckboxLines(isOpen, level, item.id)}
-            <Checkbox
-              className={classes.checkboxPadding}
-              inputProps={{ title: checkboxSrTitle }}
-              onClick={e => handleCheckboxClick(e, item)}
-              icon={<span className={classes.checkBoxIcon} />}
-              color="primary"
-              checked={isSelected}
-              indeterminate={childIsSelected && !isSelected}
-            />
-          </div>
-
-          <ButtonBase
-            aria-expanded={!hasChildren ? null : isOpen}
-            className={classes.listClickArea}
-            disabled={!hasChildren}
-            disableRipple
-            disableTouchRipple
-            onClick={hasChildren ? () => handleExpand(item, isOpen) : null}
-            aria-label={itemSrTitle}
-          >
-            <Typography align="left" className={classes.text}>
+          onOpen={hasChildren ? () => handleExpand(item, isOpen) : () => null}
+          disabled={!hasChildren}
+          defaultOpen={isOpen}
+          openButtonSrText={itemSrTitle}
+          adornment={(
+            <>
+              {level > 0 && (drawOuterLines(level, last, item.id))}
+              <div className={classes.checkBox}>
+                {drawCheckboxLines(isOpen, level, item.id)}
+                <Checkbox
+                  focusVisibleClassName={classes.checkboxFocus}
+                  inputProps={{ title: checkboxSrTitle }}
+                  onClick={e => handleCheckboxClick(e, item)}
+                  icon={<span className={classes.checkBoxIcon} />}
+                  color="primary"
+                  checked={isSelected}
+                  indeterminate={childIsSelected && !isSelected}
+                />
+              </div>
+            </>
+          )}
+          titleContent={(
+            <Typography aria-hidden className={classes.text}>
               {`${getLocaleText(item.name)} (${resultCount})`}
             </Typography>
-            {hasChildren ? icon : <span className={classes.iconRight} />}
-          </ButtonBase>
-
-        </ListItem>
-
-        <Collapse aria-hidden={!isOpen} in={isOpen}>
-          {isOpen && children && children.length && children.map((child, i) => (
-            expandingComponent(
-              child, // child service node
-              level + 1, // child node level
-              // If this node is last of its level, add to list (this helps the drawing of lines)
-              i + 1 === children.length ? [...last, level] : last,
-            )
-          ))}
-        </Collapse>
-      </React.Fragment>
+          )}
+          collapseContent={
+            children && children.length ? (
+              <List disablePadding>
+                {children.map((child, i) => (
+                  expandingComponent(
+                    child, // child service node
+                    level + 1, // child node level
+                    // If this node is last of its level, add to list
+                    i + 1 === children.length ? [...last, level] : last,
+                  )
+                ))}
+              </List>
+            ) : null
+          }
+        />
+      </li>
     );
   };
 
@@ -445,7 +440,9 @@ const ServiceTreeView = (props) => {
           aria-hidden
           className={classes.title}
           tabIndex="-1"
-        ><FormattedMessage id="services" /></Typography>
+        >
+          <FormattedMessage id="services" />
+        </Typography>
         {renderSelectedCities()}
         {renderSelectionList(selectedList)}
       </div>

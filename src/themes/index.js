@@ -3,11 +3,13 @@ import { createMuiTheme } from '@material-ui/core';
 const focusIndicator = {
   outline: '2px solid transparent',
   boxShadow: '0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(71, 131, 235), 0 0 0 8px rgb(255, 255, 255)',
+  zIndex: '1',
 };
 
 const focusIndicatorDark = {
   outline: '2px solid transparent',
   boxShadow: '0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(0, 0, 0), 0 0 0 8px rgb(255, 255, 255)',
+  zIndex: '1',
 };
 
 const props = {
@@ -57,13 +59,6 @@ const overrides = theme => ({
     root: {
       padding: 12,
       marginRight: 8,
-    },
-  },
-  MuiAccordionSummary: {
-    root: {
-      '&$expanded': {
-        minHeight: 0,
-      },
     },
   },
 });
