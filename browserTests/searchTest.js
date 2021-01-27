@@ -206,7 +206,7 @@ test('SearchBar accessibility is OK', async(t) => {
     // We expect suggestions to open on searchbar click
     .expect(suggestion).ok('Suggestions should appear on search input activation')
     // We expect suggestion list items to have link role
-    .expect(suggestionRole).eql('link', 'Suggestion should be considered link');
+    .expect(suggestionRole).eql('option', 'Suggestion should be considered option');
 });
 
 test('ResultList accessibility attributes are OK', async(t) => {
