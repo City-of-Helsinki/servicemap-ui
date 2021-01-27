@@ -1,3 +1,4 @@
+import { Warning } from '@material-ui/icons';
 import { ServerStyleSheets, withStyles } from '@material-ui/styles';
 import StyleContext from 'isomorphic-style-loader/StyleContext';
 import React from 'react';
@@ -48,16 +49,23 @@ const styles = () => ({
   container: {
     margin: '5%',
     fontFamily: 'Lato',
-    fontSize: 14,
+    fontSize: 18,
     lineHeight: '18px',
   },
   row: {
-    backgroundColor: '#ffc233',
-    padding: `8px 16px`,
-    margin: `24px 0`,
+    display: 'flex',
+    flexDirection: 'row',
     '& a': {
       display: 'inline-block',
-    }
+    },
+    padding: `8px 16px`,
+    margin: `24px 0`,
+  },
+  errorIcon: {
+    alignSelf: 'center',
+    color: 'rgb(25, 100, 230)',
+    fontSize: 32,
+    marginRight: 24,
   }
 })
 
@@ -68,35 +76,44 @@ const IETemplate = withStyles(styles)(({
   return (
       <div className={classes.container}>
         <div className={classes.row}>
-          <p>Palvelukartta-palvelu ei toimi Internet Explorer-selaimella</p>
-          <p>Käytä toista selainta, kuten&nbsp;
-            <a href="https://www.google.com/intl/fi_fi/chrome/" target="_blank" rel="noopener noreferer">Chrome</a>
-            ,&nbsp;
-            <a href="https://www.mozilla.org/fi/firefox/new/" target="_blank" rel="noopener noreferer">Firefox</a>
-            &nbsp;tai&nbsp;
-            <a href="https://www.microsoft/fi-fi/edge/" target="_blank" rel="noopener noreferer">Edge</a>
-            &nbsp;ole hyvä
-          </p>
+          <Warning className={classes.errorIcon} />
+          <div>
+            <p>Palvelukartta-palvelu ei toimi Internet Explorer-selaimella</p>
+            <p>Käytä toista selainta, kuten&nbsp;
+              <a href="https://www.google.com/intl/fi_fi/chrome/" target="_blank" rel="noopener noreferer">Chrome</a>
+              ,&nbsp;
+              <a href="https://www.mozilla.org/fi/firefox/new/" target="_blank" rel="noopener noreferer">Firefox</a>
+              &nbsp;tai&nbsp;
+              <a href="https://www.microsoft/fi-fi/edge/" target="_blank" rel="noopener noreferer">Edge</a>
+              &nbsp;ole hyvä
+            </p>
+          </div>
         </div>
         <div className={classes.row}>
-          <p>Servicekarta tjänsten fungerar inte med Internet Explorer</p>
-          <p>Vänligen använd någon annan webbläsare t.ex.&nbsp;
-            <a href="https://www.google.com/intl/sv/chrome/" target="_blank" rel="noopener noreferer">Chrome</a>
-            ,&nbsp;
-            <a href="https://www.mozilla.org/sv-SE/firefox/new/" target="_blank" rel="noopener noreferer">Firefox</a>
-            &nbsp;eller&nbsp;
-            <a href="https://www.microsoft/sv-se/edge/" target="_blank" rel="noopener noreferer">Edge</a>
-          </p>
+          <Warning className={classes.errorIcon} />
+          <div>
+            <p>Servicekarta tjänsten fungerar inte med Internet Explorer</p>
+            <p>Vänligen använd någon annan webbläsare t.ex.&nbsp;
+              <a href="https://www.google.com/intl/sv/chrome/" target="_blank" rel="noopener noreferer">Chrome</a>
+              ,&nbsp;
+              <a href="https://www.mozilla.org/sv-SE/firefox/new/" target="_blank" rel="noopener noreferer">Firefox</a>
+              &nbsp;eller&nbsp;
+              <a href="https://www.microsoft/sv-se/edge/" target="_blank" rel="noopener noreferer">Edge</a>
+            </p>
+          </div>
         </div>
         <div className={classes.row}>
-          <p>Servicemap service does not work with Internet Explorer.</p>
-          <p>Please use another browser such as&nbsp;
-            <a href="https://www.google.com/intl/en_us/chrome/" target="_blank" rel="noopener noreferer">Chrome</a>
-            ,&nbsp;
-            <a href="https://www.mozilla.org/en-US/firefox/new/" target="_blank" rel="noopener noreferer">Firefox</a>
-            &nbsp;or&nbsp;
-            <a href="https://www.microsoft/en-us/edge/" target="_blank" rel="noopener noreferer">Edge</a>
-          </p>
+          <Warning className={classes.errorIcon} />
+          <div>
+            <p>Servicemap service does not work with Internet Explorer.</p>
+            <p>Please use another browser such as&nbsp;
+              <a href="https://www.google.com/intl/en_us/chrome/" target="_blank" rel="noopener noreferer">Chrome</a>
+              ,&nbsp;
+              <a href="https://www.mozilla.org/en-US/firefox/new/" target="_blank" rel="noopener noreferer">Firefox</a>
+              &nbsp;or&nbsp;
+              <a href="https://www.microsoft/en-us/edge/" target="_blank" rel="noopener noreferer">Edge</a>
+            </p>
+          </div>
         </div>
       </div>
   )
