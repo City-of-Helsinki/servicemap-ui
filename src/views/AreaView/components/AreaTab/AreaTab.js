@@ -7,14 +7,11 @@ import {
   Radio,
   Typography,
   ButtonBase,
-  Accordion,
-  AccordionSummary,
   FormGroup,
   Checkbox,
-  AccordionDetails,
 } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
-import { ArrowDropDown, Map } from '@material-ui/icons';
+import { Map } from '@material-ui/icons';
 import { useSelector } from 'react-redux';
 import { AreaIcon } from '../../../../components/SMIcon';
 import AddressSearchBar from '../../../../components/AddressSearchBar';
@@ -22,6 +19,7 @@ import MobileComponent from '../../../../components/MobileComponent';
 import SettingsInfo from '../../../../components/SettingsInfo';
 import SMButton from '../../../../components/ServiceMapButton';
 import { panViewToBounds } from '../../../MapView/utils/mapActions';
+import SMAccordion from '../../../../components/SMAccordion';
 
 const AreaTab = (props) => {
   const {
@@ -30,6 +28,7 @@ const AreaTab = (props) => {
     setDistrictRadioValue,
     setSelectedSubdistricts,
     setSelectedDistrictServices,
+    setOpenServices,
     ditsrictsFetching,
     unitsFetching,
     districtData,
@@ -46,13 +45,20 @@ const AreaTab = (props) => {
     map,
   } = props;
   const citySettings = useSelector(state => state.settings.cities);
-  const defaultExpanded = selectedSubdistricts.length;
+  const selectedDistrictType = useSelector(state => state.districts.selectedDistrictType);
+  const selectedCategory = dataStructure.find(
+    data => data.districts.includes(selectedDistrictType),
+  )?.id;
+
+
+  const defaultExpanded = selectedSubdistricts.length && selectedDistrictType; // Mikä tämä on???
   const [expandedSubcategory, setExpandedSubcategory] = useState(defaultExpanded);
 
   const handleRadioChange = (district) => {
     setSelectedSubdistricts([]);
     setDistrictRadioValue(district.id);
     setExpandedSubcategory(null);
+    setOpenServices([]);
     setSelectedDistrictServices([]);
   };
 
@@ -76,10 +82,12 @@ const AreaTab = (props) => {
   };
 
   const handleSubcategoryExpand = (expanded, district) => {
-    if (expanded) {
+    if (!expanded) {
       if (districtRadioValue !== district.id) {
         setSelectedSubdistricts([]);
       }
+      setOpenServices([]);
+      setSelectedDistrictServices([]);
       setDistrictRadioValue(district.id);
       setExpandedSubcategory(district.id);
     } else {
@@ -97,6 +105,17 @@ const AreaTab = (props) => {
     districts.sort((a, b) => getLocaleText(a.name).localeCompare(getLocaleText(b.name)));
   };
 
+
+  const districtRadioButton = district => (
+    <Radio
+      inputProps={{
+        'aria-setsize': districtData.length.toString(),
+        'aria-label': intl.formatMessage({ id: `area.list.${district.name}` }),
+      }}
+      onChange={() => handleRadioChange(district)}
+      checked={districtRadioValue ? districtRadioValue === district.id : false}
+    />
+  );
 
   const renderDistrictItem = district => (
     <FormControlLabel
@@ -123,6 +142,47 @@ const AreaTab = (props) => {
         </>
       )}
     />
+  );
+
+  const geographicalDistrictList = data => (
+    data.map((data) => {
+      const { municipality } = data[0];
+      return (
+        <React.Fragment key={municipality}>
+          <div className={classes.municipalitySubtitle}>
+            <Typography component="h4" className={classes.bold}>
+              <FormattedMessage id={`settings.city.${municipality}`} />
+            </Typography>
+          </div>
+          <FormGroup>
+            <List disablePadding className={classes.subdistrictList}>
+              {data.map((districtItem) => {
+                const disabled = !!(unitsFetching.length
+                  && !unitsFetching.includes(districtItem.ocd_id));
+                return (
+                  <ListItem key={districtItem.id}>
+                    <FormControlLabel
+                      value={districtItem.ocd_id}
+                      control={(
+                        <Checkbox
+                          disabled={disabled}
+                          onChange={e => handleCheckboxChange(e, districtItem)}
+                          checked={selectedSubdistricts.some(
+                            district => district === districtItem.ocd_id,
+                          )}
+                        />
+                    )}
+                      label={<Typography>{getLocaleText(districtItem.name)}</Typography>}
+                      aria-label={`${getLocaleText(districtItem.name)} ${disabled ? intl.formatMessage({ id: 'search.loading.units.simple' }) : ''}`}
+                    />
+                  </ListItem>
+                );
+              })}
+            </List>
+          </FormGroup>
+        </React.Fragment>
+      );
+    })
   );
 
   const renderExpandingDistrictItem = (district) => {
@@ -156,61 +216,30 @@ const AreaTab = (props) => {
     const expandedState = expandedSubcategory === district.id;
 
     return (
-      <Accordion
-        square
-        onChange={(e, expanded) => handleSubcategoryExpand(expanded, district)}
-        classes={{ root: classes.expandingElement }}
-        TransitionProps={{ timeout: 250, unmountOnExit: true }}
-        defaultExpanded={defaultExpanded === district.id}
-        expanded={expandedState}
-      >
-        <AccordionSummary
-          aria-label={!expandedState
-            ? intl.formatMessage({ id: 'area.choose.subdistrict' }, { category: intl.formatMessage({ id: `area.list.${district.name}` }) })
-            : intl.formatMessage({ id: 'area.close.subdistrict' }, { category: intl.formatMessage({ id: `area.list.${district.name}` }) })
-          }
-          expandIcon={<ArrowDropDown />}
-          classes={{ root: classes.accordionSummary }}
-        >
-          {renderDistrictItem(district)}
-        </AccordionSummary>
-        <AccordionDetails className={classes.subdistrictContainer}>
-          {cityFilteredData.map((data) => {
-            const { municipality } = data[0];
-            return (
-              <React.Fragment key={municipality}>
-                <div className={classes.municipalitySubtitle}>
-                  <Typography component="h4" className={classes.bold}>
-                    <FormattedMessage id={`settings.city.${municipality}`} />
-                  </Typography>
-                </div>
-                <FormGroup>
-                  <List disablePadding className={classes.subdistrictList}>
-                    {data.map(districtItem => (
-                      <ListItem key={districtItem.id}>
-                        <FormControlLabel
-                          value={districtItem.ocd_id}
-                          control={(
-                            <Checkbox
-                              disabled={unitsFetching}
-                              onChange={e => handleCheckboxChange(e, districtItem)}
-                              checked={selectedSubdistricts.some(
-                                district => district === districtItem.ocd_id,
-                              )}
-                            />
-                          )}
-                          label={<Typography>{getLocaleText(districtItem.name)}</Typography>}
-                          aria-label={`${getLocaleText(districtItem.name)} ${unitsFetching ? intl.formatMessage({ id: 'search.loading.units.simple' }) : ''}`}
-                        />
-                      </ListItem>
-                    ))}
-                  </List>
-                </FormGroup>
-              </React.Fragment>
-            );
-          })}
-        </AccordionDetails>
-      </Accordion>
+      <SMAccordion
+        onOpen={(e, expanded) => handleSubcategoryExpand(expanded, district)}
+        className={classes.subsistrictAccordion}
+        isOpen={expandedState}
+        openButtonSrText={
+        !expandedState
+          ? intl.formatMessage({ id: 'area.choose.subdistrict' }, { category: intl.formatMessage({ id: `area.list.${district.name}` }) })
+          : intl.formatMessage({ id: 'area.close.subdistrict' }, { category: intl.formatMessage({ id: `area.list.${district.name}` }) })
+        }
+        adornment={districtRadioButton(district)}
+        titleContent={(
+          <>
+            <Typography id={`${district.id}Name`} aria-hidden>
+              <FormattedMessage id={`area.list.${district.name}`} />
+            </Typography>
+            {district.period && (
+            <Typography id={`${district.id}Period`} aria-hidden className={classes.captionText} variant="caption">
+              {district.period}
+            </Typography>
+            )}
+          </>
+      )}
+        collapseContent={geographicalDistrictList(cityFilteredData)}
+      />
     );
   };
 
@@ -263,35 +292,21 @@ const AreaTab = (props) => {
 
 
   const renderCategoryItem = (item) => {
-    const expanded = openItems.includes(item.id);
+    const expanded = openItems.includes(item.id) || selectedCategory === item.id;
     return (
-      <ListItem
-        key={item.title}
-        className={classes.categoryItem}
-        divider
-      >
-        <Accordion
-          classes={{ root: classes.expandingElement }}
-          onChange={() => handleOpen(item)}
-          expanded={expanded}
-          TransitionProps={{
-            unmountOnExit: true,
-          }}
-        >
-          <AccordionSummary
-            id={`${item.id}-header`}
-            aria-controls={`${item.id}-content`}
-            expandIcon={<ArrowDropDown />}
-            classes={{ root: classes.accordionSummary }}
-          >
-            <div id={`${item.id}-content`} className={classes.categoryItemTitle}>
-              <AreaIcon className={classes.rightPadding} />
-              <Typography className={classes.bold}>{item.title}</Typography>
+      <ListItem key={item.title} className={classes.categoryItem} disableGutters divider>
+        <SMAccordion
+          className={classes.expandingElement}
+          onOpen={() => handleOpen(item)}
+          defaultOpen={expanded}
+          adornment={<AreaIcon className={classes.rightPadding} />}
+          titleContent={(<Typography id={`${item.id}-content`} className={classes.bold}>{item.title}</Typography>)}
+          collapseContent={(
+            <div className={classes.collpasePadding}>
+              {renderCollapseContent(item)}
             </div>
-
-          </AccordionSummary>
-          {renderCollapseContent(item)}
-        </Accordion>
+          )}
+        />
       </ListItem>
     );
   };
@@ -363,7 +378,7 @@ AreaTab.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   districtRadioValue: PropTypes.string,
   ditsrictsFetching: PropTypes.arrayOf(PropTypes.any).isRequired,
-  unitsFetching: PropTypes.bool.isRequired,
+  unitsFetching: PropTypes.arrayOf(PropTypes.any).isRequired,
   districtData: PropTypes.arrayOf(PropTypes.object),
   selectedDistrictData: PropTypes.arrayOf(PropTypes.object),
   openItems: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -374,6 +389,7 @@ AreaTab.propTypes = {
   setDistrictRadioValue: PropTypes.func.isRequired,
   setSelectedDistrictServices: PropTypes.func.isRequired,
   setSelectedSubdistricts: PropTypes.func.isRequired,
+  setOpenServices: PropTypes.func.isRequired,
   selectedSubdistricts: PropTypes.arrayOf(PropTypes.string).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   getLocaleText: PropTypes.func.isRequired,

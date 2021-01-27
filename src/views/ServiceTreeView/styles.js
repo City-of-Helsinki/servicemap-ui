@@ -17,14 +17,6 @@ export default theme => ({
   mainContent: {
     textAlign: 'left',
   },
-  listItem: {
-    alignSelf: 'center',
-    height: 60,
-    display: 'flex',
-    flexDirection: 'row',
-    padding: 0,
-    paddingLeft: 12,
-  },
   level0: {
     borderBottom: '0.5px solid rgba(151, 151, 151, 0.5)',
     backgroundColor: '#fff',
@@ -74,19 +66,13 @@ export default theme => ({
     width: 'inherit',
     position: 'absolute',
   },
-  checkboxPadding: {
-    padding: theme.spacing(0.5),
+  checkboxFocus: {
+    boxShadow: `inset 0 0 0 4px ${theme.palette.primary.main} !important`,
   },
   outerLines: {
     height: '100%',
     width: 26,
     flexShrink: 0,
-  },
-  listClickArea: {
-    width: '100%',
-    paddingTop: theme.spacing(1),
-    paddingBottom: theme.spacing(1),
-    marginRight: theme.spacing(0.5),
   },
   searchButton: {
     marginTop: theme.spacing(2),

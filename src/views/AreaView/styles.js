@@ -22,7 +22,11 @@ const styles = theme => ({
     marginLeft: theme.spacing(1),
   },
   list: {
-    paddingLeft: theme.spacing(5),
+    paddingLeft: 60,
+  },
+  subsistrictAccordion: {
+    padding: 0,
+    marginLeft: -11,
   },
   districtItem: {
     paddingLeft: 0,
@@ -34,7 +38,7 @@ const styles = theme => ({
     fontWeight: 'normal',
   },
   loadingText: {
-    paddingLeft: theme.spacing(6),
+    paddingLeft: theme.spacing(8),
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(1),
   },
@@ -55,14 +59,13 @@ const styles = theme => ({
     paddingLeft: theme.spacing(4),
   },
   categoryItem: {
+    paddingTop: 0,
+    paddingBottom: 0,
     paddingRight: 32,
     flexDirection: 'column',
   },
-  categoryItemTitle: {
-    display: 'flex',
-    flexDirection: 'row',
-    width: '100%',
-    alignItems: 'center',
+  serviceTitle: {
+    paddingRight: 32,
   },
   categoryItemContent: {
     paddingLeft: 32,
@@ -163,8 +166,12 @@ const styles = theme => ({
     paddingLeft: 0,
     paddingRight: 0,
   },
-  fullWidth: {
-    width: '100%',
+  unitList: {
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(4),
+  },
+  collpasePadding: {
+    paddingBottom: theme.spacing(2),
   },
 });
 

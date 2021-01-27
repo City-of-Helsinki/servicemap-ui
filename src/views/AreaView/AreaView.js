@@ -1,4 +1,6 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, {
+  useState, useEffect, useReducer, useRef,
+} from 'react';
 import PropTypes from 'prop-types';
 import booleanEqual from '@turf/boolean-equal';
 import booleanWithin from '@turf/boolean-within';
@@ -32,6 +34,7 @@ const AreaView = ({
   setSelectedDistrictServices,
   setDistrictData,
   setDistrictAddressData,
+  setAreaViewState,
   fetchDistrictUnitList,
   unitsFetching,
   districtData,
@@ -43,11 +46,11 @@ const AreaView = ({
   filteredSubdistrictUnits,
   selectedSubdistricts,
   selectedDistrictServices,
+  areaViewState,
   map,
   getLocaleText,
   navigator,
   embed,
-  classes,
   intl,
 }) => {
   if (!map || !map.leafletElement) {
@@ -124,15 +127,23 @@ const AreaView = ({
   ];
 
   const location = useLocation();
+  const accordionStates = useRef(null);
 
   // State
   const [districtRadioValue, setDistrictRadioValue] = useState(null);
   const [selectedAddress, setSelectedAddress] = useState(districtAddressData.address);
-  const [openItems, setOpenItems] = useState([]);
+  const [openItems, setOpenItems] = useState(areaViewState ? areaViewState.openItems : []);
+  const [openServices, setOpenServices] = useState(areaViewState ? areaViewState.openServices : []);
   // Pending request to focus map to districts. Executed once district data is loaded
   const [focusTo, setFocusTo] = useState(null);
   // Fetch state
   const [ditsrictsFetching, dispatchDistrictsFetching] = useReducer(fetchReducer, []);
+
+  // State that will be saved to redux on unmount
+  accordionStates.current = {
+    openItems,
+    openServices,
+  };
 
 
   const formAddressString = address => (address
@@ -294,6 +305,10 @@ const AreaView = ({
     }
   };
 
+  useEffect(() => () => {
+    // Save accordion state on unmount
+    setAreaViewState(accordionStates.current);
+  }, []);
 
   useEffect(() => {
     if (selectedDistrictType !== districtRadioValue) {
@@ -422,8 +437,9 @@ const AreaView = ({
       setDistrictRadioValue={setDistrictRadioValue}
       setSelectedSubdistricts={setSelectedSubdistricts}
       setSelectedDistrictServices={setSelectedDistrictServices}
+      setOpenServices={setOpenServices}
       ditsrictsFetching={ditsrictsFetching}
-      unitsFetching={!!unitsFetching.length}
+      unitsFetching={unitsFetching}
       districtData={districtData}
       selectedDistrictData={selectedDistrictData}
       openItems={openItems}
@@ -446,6 +462,8 @@ const AreaView = ({
       filteredSubdistrictUnits={filteredSubdistrictUnits}
       selectedDistrictServices={selectedDistrictServices}
       addressDistrict={addressDistrict}
+      openServices={openServices}
+      setOpenServices={setOpenServices}
       formAddressString={formAddressString}
       getLocaleText={getLocaleText}
     />
