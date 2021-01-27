@@ -5,7 +5,8 @@ import ReactDOMServer from 'react-dom/server';
 import { Provider } from 'react-redux';
 import ThemeWrapper from '../src/themes/ThemeWrapper';
 
-function msieversion(userAgent) {
+// Check if user agent is Internet Explorer
+function isIE(userAgent) {
   var ua = userAgent;
   var msie = ua.indexOf("MSIE ");
 
@@ -124,7 +125,7 @@ const ieHandler = (req, res, next) => {
   try {
     // Check if user-agent is IE
     const ua = req.headers['user-agent'];
-    const ie = msieversion(ua);
+    const ie = isIE(ua);
     if (ie) {
       let store = req._context;
       const css = new Set();
