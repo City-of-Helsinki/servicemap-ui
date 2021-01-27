@@ -146,7 +146,7 @@ const ieHandler = (req, res, next) => {
       return;
     }
   } catch (e) {
-    console.log(e);
+    console.error(`Error while handling IE middleware: ${e.message}`);
   }
   
   next();
