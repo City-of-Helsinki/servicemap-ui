@@ -4,6 +4,7 @@ import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { Provider } from 'react-redux';
 import ThemeWrapper from '../src/themes/ThemeWrapper';
+import { appDynamicsTrackingCode, matomoTrackingCode } from './analytics';
 
 // Check if user agent is Internet Explorer
 function isIE(userAgent) {
@@ -31,11 +32,13 @@ const IEHTML = (reactDom, css, cssString) => `
   </style>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#141823" />
+  ${appDynamicsTrackingCode(process.env.APP_DYNAMICS_APP_KEY)}
 </head>
 
 <body>
   <style>${[...css].join('')}</style>
   <div id="app">${reactDom}</div>
+  ${matomoTrackingCode(process.env.MATOMO_URL, process.env.MATOMO_SITE_ID)}
 </body>
 </html>
 `;
