@@ -221,6 +221,7 @@ class SearchBar extends React.Component {
     const backButtonStyles = `${classes.iconButton}`;
     const showSuggestions = isActive;
     const inputHasValue = this.searchRef.current?.value?.length;
+    const listID = inputHasValue ? 'SuggestionList' : 'PreviousList';
     const containerStyles = `${isActive ? classes.containerSticky : classes.containerInactive} ${classes.container}`;
     return (
       <form id="SearchBar" action="" onSubmit={this.onSubmit} className={containerStyles} autoComplete="off">
@@ -240,8 +241,8 @@ class SearchBar extends React.Component {
             role: 'combobox',
             'aria-haspopup': !!showSuggestions,
             'aria-label': intl.formatMessage({ id: 'search.searchField' }),
-            'aria-owns': inputHasValue ? 'SuggestionList' : 'PreviousList',
-            'aria-activedescendant': `suggestion${focusedSuggestion}`,
+            'aria-owns': showSuggestions ? listID : null,
+            'aria-activedescendant': showSuggestions ? `suggestion${focusedSuggestion}` : null,
           }}
           type="text"
           inputRef={this.searchRef}
