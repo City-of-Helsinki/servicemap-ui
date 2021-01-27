@@ -256,7 +256,7 @@ const ServiceTreeView = (props) => {
       .some(node => selected.some(item => item.id === node.id));
 
     return (
-      <React.Fragment key={item.id}>
+      <li key={item.id}>
         <SMAccordion
           className={`${classes.listItem} ${classes[`level${level}`]}`}
           onOpen={hasChildren ? () => handleExpand(item, isOpen) : () => null}
@@ -286,17 +286,21 @@ const ServiceTreeView = (props) => {
             </Typography>
           )}
           collapseContent={
-            children && children.length ? children.map((child, i) => (
-              expandingComponent(
-                child, // child service node
-                level + 1, // child node level
-                // If this node is last of its level, add to list (this helps the drawing of lines)
-                i + 1 === children.length ? [...last, level] : last,
-              )
-            )) : null
+            children && children.length ? (
+              <List disablePadding>
+                {children.map((child, i) => (
+                  expandingComponent(
+                    child, // child service node
+                    level + 1, // child node level
+                    // If this node is last of its level, add to list
+                    i + 1 === children.length ? [...last, level] : last,
+                  )
+                ))}
+              </List>
+            ) : null
           }
         />
-      </React.Fragment>
+      </li>
     );
   };
 
