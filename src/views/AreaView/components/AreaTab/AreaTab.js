@@ -291,7 +291,7 @@ const AreaTab = (props) => {
   };
 
 
-  const renderCategoryItem = (item) => {
+  const categoryItem = (item) => {
     const expanded = openItems.includes(item.id) || selectedCategory === item.id;
     return (
       <ListItem key={item.title} className={classes.categoryItem} disableGutters divider>
@@ -300,7 +300,7 @@ const AreaTab = (props) => {
           onOpen={() => handleOpen(item)}
           defaultOpen={expanded}
           adornment={<AreaIcon className={classes.rightPadding} />}
-          titleContent={(<Typography id={`${item.id}-content`} className={classes.bold}>{item.title}</Typography>)}
+          titleContent={<Typography id={`${item.id}-content`} className={classes.bold}>{item.title}</Typography>}
           collapseContent={(
             <div className={classes.collpasePadding}>
               {renderCollapseContent(item)}
@@ -310,6 +310,22 @@ const AreaTab = (props) => {
       </ListItem>
     );
   };
+
+
+  const subcategoryDependencies = (item) => {
+    if (item.id === 'geographical') {
+      return [selectedSubdistricts, expandedSubcategory];
+    }
+    return [false];
+  };
+
+  const renderCategoryItem = item => useMemo(() => categoryItem(item),
+    [
+      openItems.includes(item.id) || selectedCategory === item.id,
+      districtData.filter(i => item.districts.includes(i.name)).length,
+      districtRadioValue,
+      ...subcategoryDependencies(item),
+    ]);
 
 
   return (
