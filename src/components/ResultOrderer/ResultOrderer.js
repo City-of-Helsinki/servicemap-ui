@@ -5,6 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import {
   FormControl, Select, Typography,
 } from '@material-ui/core';
+import { useSelector } from 'react-redux';
 
 const allowedDirections = [
   'asc',
@@ -37,6 +38,14 @@ const ResultOrderer = ({
   setOrder,
   userLocation,
 }) => {
+  const userSettings = useSelector(state => state.settings);
+  const accessibiliySettingsLength = [
+    userSettings.mobility,
+    userSettings.colorblind,
+    userSettings.hearingAid,
+    userSettings.visuallyImpaired,
+  ].filter(i => (i !== false && i !== null)).length;
+
   const isValidDirection = direction => direction && allowedDirections.indexOf(direction) > -1;
 
   const isValidOrder = order => order && allowedOrders.indexOf(order) > -1;
@@ -64,6 +73,12 @@ const ResultOrderer = ({
       }
     }
   }, []);
+
+  useEffect(() => {
+    if (accessibiliySettingsLength) {
+      setOrder('accessibility');
+    }
+  }, [accessibiliySettingsLength]);
 
   return (
     <form className={classes.root} autoComplete="off">
