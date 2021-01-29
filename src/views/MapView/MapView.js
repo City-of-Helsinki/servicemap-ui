@@ -341,6 +341,7 @@ const MapView = (props) => {
         {renderTopBar()}
         {renderEmbedOverlay()}
         <Map
+          preferCanvas
           className={`${classes.map} ${measuringMode ? classes.measuringCursor : ''}`}
           key={mapObject.options.name}
           ref={mapRef}

@@ -219,18 +219,6 @@ const styles = theme => ({
   distancePopup: {
     padding: 8,
   },
-  distanceLine: {
-    stroke: theme.palette.measuringStroke.main,
-    strokeDasharray: 12,
-  },
-  distanceLineBackground: {
-    stroke: theme.palette.measuringStroke.background,
-    strokeWidth: 10,
-  },
-  distanceLineBorder: {
-    stroke: '#fff',
-    strokeWidth: 14,
-  },
   distanceMarkerBackground: {
     fontFamily: 'hsl-piktoframe',
     color: '#fff',

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Typography } from '@material-ui/core';
+import { Typography, useTheme } from '@material-ui/core';
 import { renderToStaticMarkup } from 'react-dom/server';
 
 
@@ -13,6 +13,7 @@ const DistanceMeasure = (props) => {
     Marker, Polyline, Tooltip, Popup, useLeaflet,
   } = global.rL;
 
+  const theme = useTheme();
   const { map } = useLeaflet();
 
   const [clickedPoint, setClickedPoint] = useState(null);
@@ -109,9 +110,9 @@ const DistanceMeasure = (props) => {
             )}
           </Marker>
         ))}
-        <Polyline className={classes.distanceLineBorder} positions={lineArray} />
-        <Polyline className={classes.distanceLineBackground} positions={lineArray} />
-        <Polyline className={classes.distanceLine} positions={lineArray} />
+        <Polyline color={theme.palette.measuringStroke.border} weight="14" positions={lineArray} />
+        <Polyline color={theme.palette.measuringStroke.background} weight="10" positions={lineArray} />
+        <Polyline color={theme.palette.measuringStroke.main} dashArray="12" positions={lineArray} />
       </>
     );
   }
