@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   List,
@@ -185,10 +185,11 @@ const AreaTab = (props) => {
     })
   );
 
-  const renderExpandingDistrictItem = (district) => {
-    sortSubdistricts(selectedDistrictData);
+  const renderGeographicalDistrictItem = (district) => {
+    const districList = districtData.find(obj => obj.id === district.id).data;
+    sortSubdistricts(districList);
     // Divide data into individual arrays based on municipality
-    const groupedData = selectedDistrictData.reduce((acc, cur) => {
+    const groupedData = districList.reduce((acc, cur) => {
       const duplicate = acc.find(list => list[0].municipality === cur.municipality);
       if (duplicate) {
         duplicate.push(cur);
@@ -254,7 +255,7 @@ const AreaTab = (props) => {
             focusVisibleClassName={classes.test}
           >
             {district.id === 'neighborhood' || district.id === 'postcode_area'
-              ? renderExpandingDistrictItem(district)
+              ? renderGeographicalDistrictItem(district)
               : renderDistrictItem(district)
             }
           </ListItem>
