@@ -491,7 +491,7 @@ const translations = {
   'tool.measuring.stop': 'Stop measuring',
 
   'info.title': 'About the service and accessibility statement',
-  'info.statement': 'Accessibility statement',
+  'info.statement': 'Accessibility statement, will be updated in march 2021',
 
   'alert.close': 'Close the notification',
 };

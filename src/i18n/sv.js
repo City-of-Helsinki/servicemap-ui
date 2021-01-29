@@ -491,7 +491,7 @@ const translations = {
   'tool.measuring.stop': 'Sluta mäta',
 
   'info.title': 'Om tjänsten och tillgänglighetsredogörelsen',
-  'info.statement': 'Tillgänglighetsredogörelsen',
+  'info.statement': 'Tillgänglighetsredogörelsen, uppdateras kommer i mars 2021',
 
   'alert.close': 'Stäng meddelande',
 };

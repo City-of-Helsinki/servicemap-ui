@@ -492,7 +492,7 @@ const translations = {
   'tool.measuring.stop': 'Lopeta mittaus',
 
   'info.title': 'Tietoa palvelusta ja saavutettavuusseloste',
-  'info.statement': 'Saavutettavuusseloste',
+  'info.statement': 'Saavutettavuusseloste, päivitetään seuraavaksi maaliskuussa 2021',
 
   'alert.close': 'Sulje ilmoitus',
 };
