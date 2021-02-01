@@ -7,6 +7,7 @@ import {
 import { Clear, Search } from '@material-ui/icons';
 import config from '../../../config';
 import { keyboardHandler, uppercaseFirst } from '../../utils';
+import useMobileStatus from '../../utils/isMobile';
 
 const AddressSearchBar = ({
   defaultAddress,
@@ -24,6 +25,8 @@ const AddressSearchBar = ({
   const formAddressString = address => (address
     ? `${getLocaleText(address.street.name)} ${address.number}${address.number_end ? address.number_end : ''}${address.letter ? address.letter : ''}, ${uppercaseFirst(address.street.municipality)}`
     : '');
+
+  const isMobile = useMobileStatus();
 
   const [addressResults, setAddressResults] = useState([]);
   const [resultIndex, setResultIndex] = useState(null);
@@ -46,11 +49,9 @@ const AddressSearchBar = ({
   };
 
   const handleSearchBarKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      handleAddressSelect(addressResults[resultIndex]);
-    } else if (e.key === 'ArrowDown') {
+    if (e.key === 'ArrowDown') {
       e.preventDefault();
-      if (resultIndex === addressResults.length - 1) {
+      if (resultIndex === null || resultIndex === addressResults.length - 1) {
         setResultIndex(0);
       } else {
         setResultIndex(resultIndex + 1);
@@ -65,9 +66,18 @@ const AddressSearchBar = ({
     }
   };
 
-  const blurSearchfield = (e) => {
+  const clearSuggestions = (e) => {
     e.preventDefault();
-    document.activeElement.blur();
+    setAddressResults([]);
+  };
+
+  const handleSubmit = (e) => {
+    if (resultIndex !== null) {
+      handleAddressSelect(addressResults[resultIndex]);
+    } else {
+      handleAddressSelect(addressResults[0]);
+    }
+    clearSuggestions(e);
   };
 
   const handleInputChange = (text) => {
@@ -114,7 +124,7 @@ const AddressSearchBar = ({
   return (
     <div className={containerClassName}>
       <Typography color="inherit">{title}</Typography>
-      <form action="" onSubmit={e => blurSearchfield(e)}>
+      <form action="" onSubmit={e => handleSubmit(e)}>
         <InputBase
           inputRef={inputRef}
           inputProps={{
@@ -125,7 +135,8 @@ const AddressSearchBar = ({
             'aria-activedescendant': showSuggestions ? `address-suggestion${resultIndex}` : null,
           }}
           type="text"
-          type="search"
+          onBlur={isMobile ? () => {} : e => clearSuggestions(e)}
+          onFocus={() => setResultIndex(null)}
           className={`${classes.searchBar} ${inputClassName}`}
           defaultValue={formAddressString(defaultAddress)}
           onChange={e => handleInputChange(e.target.value)}
