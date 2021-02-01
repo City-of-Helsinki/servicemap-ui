@@ -6,7 +6,7 @@ import {
 } from '@material-ui/core';
 import { Clear, Search } from '@material-ui/icons';
 import config from '../../../config';
-import { uppercaseFirst } from '../../utils';
+import { keyboardHandler, uppercaseFirst } from '../../utils';
 
 const AddressSearchBar = ({
   defaultAddress,
@@ -131,7 +131,10 @@ const AddressSearchBar = ({
             role: 'combobox',
             'aria-haspopup': !!showSuggestions,
             'aria-label': `${intl.formatMessage({ id: 'search.searchField' })} ${intl.formatMessage({ id: 'address.search' })}`,
+            'aria-owns': showSuggestions ? 'address-results' : null,
+            'aria-activedescendant': showSuggestions ? `address-suggestion${resultIndex}` : null,
           }}
+          type="text"
           type="search"
           className={`${classes.searchBar} ${inputClassName}`}
           value={searchBarValue}
@@ -158,13 +161,16 @@ const AddressSearchBar = ({
         <Typography aria-live="polite" id="resultLength" variant="srOnly">{infoText}</Typography>
         {showSuggestions ? (
           <Paper>
-            <List>
+            <List role="listbox" id="address-results">
               {addressResults.map((address, i) => (
                 <ListItem
+                  id={`address-suggestion${i}`}
+                  role="option"
                   selected={i === resultIndex}
                   key={formAddressString(address)}
                   button
                   onClick={() => handleAddressSelect(address)}
+                  onKeyDown={keyboardHandler(() => handleAddressSelect(address), ['space', 'enter'])}
                 >
                   <Typography>
                     {formAddressString(address)}
