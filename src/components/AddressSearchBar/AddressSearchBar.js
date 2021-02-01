@@ -26,8 +26,7 @@ const AddressSearchBar = ({
     : '');
 
   const [addressResults, setAddressResults] = useState([]);
-  const [resultIndex, setResultIndex] = useState(0);
-  const [searchBarValue, setSearchBarValue] = useState(formAddressString(defaultAddress));
+  const [resultIndex, setResultIndex] = useState(null);
   const [currentLocation, setCurrentLocation] = useState(null);
   const [cleared, setCleared] = useState(false);
 
@@ -38,7 +37,7 @@ const AddressSearchBar = ({
     if (inputRef.current) {
       inputRef.current.focus();
     }
-    setSearchBarValue(formAddressString(address));
+    inputRef.current.value = formAddressString(address);
     setAddressResults([]);
     setCurrentLocation(formAddressString(address));
     setDirection('asc');
@@ -76,7 +75,6 @@ const AddressSearchBar = ({
     if (cleared) {
       setCleared(false);
     }
-    setSearchBarValue(text);
     // Fetch address suggestions
     if (text.length && text.length > 1) {
       if (currentLocation) {
@@ -92,18 +90,10 @@ const AddressSearchBar = ({
   };
 
   useEffect(() => {
-    setSearchBarValue(formAddressString(defaultAddress));
+    inputRef.current.value = formAddressString(defaultAddress);
   }, [defaultAddress]);
 
-  // change searchbar value if resultIndex changes to
-  useEffect(() => {
-    const address = addressResults && addressResults[resultIndex];
-    if (address) {
-      setSearchBarValue(formAddressString(address));
-    }
-  }, [resultIndex]);
-
-  const showSuggestions = searchBarValue.length > 1 && addressResults && addressResults.length;
+  const showSuggestions = inputRef.current?.value.length > 1 && addressResults?.length;
   // Add info text for location selection
   const locationInfoText = currentLocation ? intl.formatMessage({ id: 'address.search.location' }, { location: currentLocation }) : '';
   // Figure out which info text to use
@@ -137,7 +127,7 @@ const AddressSearchBar = ({
           type="text"
           type="search"
           className={`${classes.searchBar} ${inputClassName}`}
-          value={searchBarValue}
+          defaultValue={formAddressString(defaultAddress)}
           onChange={e => handleInputChange(e.target.value)}
           onKeyDown={e => showSuggestions && handleSearchBarKeyPress(e)}
           endAdornment={(
@@ -149,7 +139,7 @@ const AddressSearchBar = ({
                 onClick={() => {
                   setCleared(true);
                   handleAddressChange(null);
-                  setSearchBarValue('');
+                  inputRef.current.value = '';
                 }}
                 className={classes.IconButton}
               >
