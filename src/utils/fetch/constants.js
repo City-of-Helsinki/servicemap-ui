@@ -33,8 +33,9 @@ export const APIHandlers = {
     options: {
       page: 1,
       page_size: 200,
-      only: 'unit.street_address,unit.location,unit.name,unit.municipality,unit.accessibility_shortcoming_count,unit.contract_type,unit.extensions',
+      only: 'unit.street_address,unit.location,unit.name,unit.municipality,unit.accessibility_shortcoming_count,unit.contract_type',
       geometry: true,
+      include: 'unit.department',
     },
   },
   service: {
@@ -49,7 +50,7 @@ export const APIHandlers = {
     url: id => `${config.serviceMapAPI.root}/unit/${id}/`,
     options: {
       accessibility_description: true,
-      include: 'service_nodes,services,keywords',
+      include: 'service_nodes,services,keywords,department',
       geometry: true,
     },
   },
@@ -58,9 +59,9 @@ export const APIHandlers = {
     options: {
       page: 1,
       page_size: 200,
-      only: 'street_address,location,name,municipality,accessibility_shortcoming_count,service_nodes,contract_type,extensions',
+      only: 'street_address,location,name,municipality,accessibility_shortcoming_count,service_nodes,contract_type',
       geometry: true,
-      include: 'service_nodes,services,accessibility_properties',
+      include: 'service_nodes,services,accessibility_properties,department',
     },
   },
   unitEvents: {

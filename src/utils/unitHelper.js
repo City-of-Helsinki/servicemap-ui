@@ -150,12 +150,12 @@ class UnitHelper {
   }
 
   static getContractText = (unit, intl, getLocaleText) => {
-    const { contract_type, extensions } = unit;
+    const { contract_type, department } = unit;
     if (!contract_type?.description) return null;
 
     const municipalIDs = ['municipal_service', 'purchased_service'];
     const contractText = uppercaseFirst(getLocaleText(contract_type.description));
-    const contractMunicipality = extensions.maintenance_organization;
+    const contractMunicipality = department?.municipality;
 
     if (contractMunicipality && municipalIDs.includes(contract_type.id)) {
       const cityString = intl.formatMessage({ id: `settings.city.${extensions.maintenance_organization}` });
