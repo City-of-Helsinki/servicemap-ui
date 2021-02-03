@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import {
   FormControl, Select, Typography,
 } from '@material-ui/core';
-import useAcccessibilitySettings from '../../utils/accessibilitySettingsActive';
+import { useAcccessibilitySettings } from '../../utils/settings';
 
 const allowedDirections = [
   'asc',

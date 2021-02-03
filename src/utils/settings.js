@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import LocalStorageUtility from './localStorage';
 import config from '../../config';
 
@@ -11,6 +12,19 @@ const ACCESSIBILITY_MAPPING = {
   colorblind: 'colour_blind',
   hearingAid: 'hearing_aid',
   visuallyImpaired: 'visual_impairment',
+};
+
+// Return active accessibility settings
+export const useAcccessibilitySettings = () => {
+  const userSettings = useSelector(state => state.settings);
+  const accessibiliySettingsValues = [
+    userSettings.mobility,
+    userSettings.colorblind,
+    userSettings.hearingAid,
+    userSettings.visuallyImpaired,
+  ].filter(i => (i !== false && i !== null));
+
+  return accessibiliySettingsValues;
 };
 
 class SettingsUtility {
