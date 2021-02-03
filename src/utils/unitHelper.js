@@ -158,8 +158,11 @@ class UnitHelper {
     const contractMunicipality = department?.municipality;
 
     if (contractMunicipality && municipalIDs.includes(contract_type.id)) {
-      const cityString = intl.formatMessage({ id: `settings.city.${extensions.maintenance_organization}` });
-      if (cityString) {
+      const cityString = intl.formatMessage({
+        id: `settings.city.${contractMunicipality}`,
+        defaultMessage: ' ',
+      });
+      if (cityString.length > 1) {
         return `${contractText}, ${cityString}`;
       }
       return contractText;
