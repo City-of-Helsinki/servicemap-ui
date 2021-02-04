@@ -26,7 +26,7 @@ const popupOptions = () => ({
   closeOnClick: false,
   direction: 'top',
   opacity: 1,
-  offset: [0, -20],
+  offset: [2, -20],
 });
 
 // Cluster icon size handler
@@ -143,12 +143,21 @@ const MarkerCluster = ({
 
   // Remove popup from old marker and set new highligted marker
   const setNewHighlightedMarker = (marker) => {
-    // Close popup for highlighterMarker if it exists
-    if (clusterData.highlightedMarker) {
-      clusterData.highlightedMarker.closePopup();
+    if (!marker) return;
+    const { highlightedMarker } = clusterData;
+    // Open popoup on marker click even if it is already highlighted unit.
+    if (marker.options.customUnitData.id === highlightedMarker?.options.customUnitData.id) {
+      if (marker.isPopupOpen()) {
+        marker.openPopup();
+      }
+    } else {
+      // Close popup for highlighterMarker if it exists
+      if (highlightedMarker) {
+        highlightedMarker.closePopup();
+      }
+      // Set this marker as highligtedMarker
+      clusterData.highlightedMarker = marker;
     }
-    // Set this marker as highligtedMarker
-    clusterData.highlightedMarker = marker;
   };
 
 
@@ -276,7 +285,7 @@ const MarkerCluster = ({
     if (!highlightedUnit) {
       return;
     }
-    if (highlightedUnit && currentPage === 'search') {
+    if (highlightedUnit && currentPage === 'search' && !isMobile) {
       map.closePopup();
       return;
     }
