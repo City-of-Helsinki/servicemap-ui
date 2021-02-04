@@ -9,6 +9,7 @@ import { createMarkerClusterLayer, createTooltipContent, createPopupContent } fr
 import { mapTypes } from '../../config/mapConfig';
 import { keyboardHandler } from '../../../../utils';
 import UnitHelper from '../../../../utils/unitHelper';
+import useMobileStatus from '../../../../utils/isMobile';
 
 const tooltipOptions = (permanent, classes) => ({
   className: classes.unitTooltipContainer,
@@ -54,6 +55,7 @@ const MarkerCluster = ({
 }) => {
   const useContrast = theme === 'dark';
   const embeded = isEmbed();
+  const isMobile = useMobileStatus();
   const intl = useIntl();
   const [cluster, setCluster] = useState(null);
 
@@ -369,7 +371,9 @@ const MarkerCluster = ({
         if (unitListFiltered.length > 1 || embeded) {
           markerElem.on('click', () => {
             setNewHighlightedMarker(markerElem);
-            UnitHelper.unitElementClick(navigator, unit);
+            if (!isMobile) {
+              UnitHelper.unitElementClick(navigator, unit);
+            }
           });
         }
 
