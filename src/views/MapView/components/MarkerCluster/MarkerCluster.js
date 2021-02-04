@@ -88,6 +88,7 @@ const MarkerCluster = ({
       getLocaleText,
       distance,
       intl,
+      isMobile,
     );
   };
 
@@ -349,6 +350,7 @@ const MarkerCluster = ({
           getLocaleText,
           distance,
           intl,
+          isMobile,
         );
         const tooltipPermanent = highlightedUnit
           && (highlightedUnit.id === unit.id && UnitHelper.isUnitPage());
@@ -366,8 +368,16 @@ const MarkerCluster = ({
           popupOptions(),
         );
 
+        if (isMobile) {
+          markerElem.on('popupopen', (e) => {
+            // Bind click event to popup when popup is opened
+            e.popup.getElement().addEventListener('click',
+              () => UnitHelper.unitElementClick(navigator, unit));
+          });
+        }
+
         // If not highlighted marker add tooltip
-        if (!tooltipPermanent) {
+        if (!tooltipPermanent && !isMobile) {
           markerElem.bindTooltip(
             tooltipContent,
             tooltipOptions(false, classes),
@@ -401,7 +411,7 @@ const MarkerCluster = ({
       // Remove marker interaction when using measuring tool
       if (measuringMode) item.classList.remove('leaflet-interactive');
     });
-  }, [cluster, data, measuringMode]);
+  }, [cluster, data, isMobile, measuringMode]);
 
   const removeMarkerInteraction = useCallback(() => {
     /* Remove interactions from markers during measuring mode.

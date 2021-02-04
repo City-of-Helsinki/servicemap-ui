@@ -280,6 +280,7 @@ const translations = {
 
   // Units
   'unit': 'Location',
+  'unit.showInformation': 'Näytä toimipisteen tiedot', // TODO: Translate
   'unit.accessibility.hearingMaps': 'Coverage maps',
   'unit.accessibility.hearingMaps.extra': '(New tab. The service is not accessible)',
   'unit.accessibility.noInfo': 'No accessibility information',
