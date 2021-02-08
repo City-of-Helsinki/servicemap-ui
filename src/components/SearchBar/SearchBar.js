@@ -53,6 +53,11 @@ class SearchBar extends React.Component {
     clearTimeout(this.blurTimeout);
   }
 
+  handleArrowClick = (value) => {
+    this.setSearchbarValue(value);
+    this.setState({ focusedSuggestion: null });
+  }
+
   setInactive = () => {
     this.setState({ isActive: false, focusedSuggestion: null });
   }
@@ -191,7 +196,7 @@ class SearchBar extends React.Component {
             visible={showSuggestions}
             focusedSuggestion={focusedSuggestion}
             searchQuery={searchQuery}
-            handleArrowClick={value => this.setSearchbarValue(value)}
+            handleArrowClick={this.handleArrowClick}
             handleSubmit={this.handleSubmit}
             isMobile
           />
@@ -202,7 +207,7 @@ class SearchBar extends React.Component {
             visible={showSuggestions}
             focusedSuggestion={focusedSuggestion}
             searchQuery={searchQuery}
-            handleArrowClick={value => this.setSearchbarValue(value)}
+            handleArrowClick={this.handleArrowClick}
             handleSubmit={this.handleSubmit}
           />
         </DesktopComponent>

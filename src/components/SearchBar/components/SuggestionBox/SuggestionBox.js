@@ -186,7 +186,7 @@ const SuggestionBox = (props) => {
       setSuggestionQuery(null);
       resetSuggestions();
     }
-    if (searchQuery && focusedSuggestion === null) {
+    if (searchQuery) {
       setSuggestionQuery(searchQuery);
       generateSuggestions(searchQuery);
     }
