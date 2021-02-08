@@ -126,13 +126,14 @@ const AddressSearchBar = ({
       <Typography color="inherit">{title}</Typography>
       <form action="" onSubmit={e => handleSubmit(e)}>
         <InputBase
+          id="addressSearchbar"
           inputRef={inputRef}
           inputProps={{
             role: 'combobox',
             'aria-haspopup': !!showSuggestions,
             'aria-label': `${intl.formatMessage({ id: 'search.searchField' })} ${intl.formatMessage({ id: 'address.search' })}`,
             'aria-owns': showSuggestions ? 'address-results' : null,
-            'aria-activedescendant': showSuggestions ? `address-suggestion${resultIndex}` : null,
+            'aria-activedescendant': showSuggestions && resultIndex !== null ? `address-suggestion${resultIndex}` : null,
           }}
           type="text"
           onBlur={isMobile ? () => {} : e => clearSuggestions(e)}
