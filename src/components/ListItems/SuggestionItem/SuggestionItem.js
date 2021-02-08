@@ -48,7 +48,6 @@ const SuggestionItem = (props) => {
         }}
         selected={selected}
         className="suggestion"
-        onClick={onClick}
         onMouseDown={onClick}
         onMouseUp={() => setMouseDown(false)}
         onKeyDown={keyboardHandler(onClick, ['space', 'enter'])}
