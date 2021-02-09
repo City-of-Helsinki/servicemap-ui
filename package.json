@@ -53,7 +53,7 @@
     "eject": "react-scripts eject",
     "dev": "NODE_ENV=development BABEL_ENV=development webpack --watch --progress & nodemon dist",
     "browserTest": "node browserTests/browserTestRunner.js",
-    "browserTestCLI": "testcafe chrome:headless browserTests/*Test.js --app \"node dist\"",
+    "browserTestCLI": "testcafe chrome:headless browserTests/*Test.js --app \"node dist\" && testcafe \"chrome:emulation:width=300;height=500;mobile=true;orientation=vertical:touch=true\" browserTests/mobile/*Test.js --app \"node dist\"",
     "production": "NODE_ENV=production BABEL_ENV=production webpack --progress --mode production && node dist"
   },
   "eslintConfig": {
