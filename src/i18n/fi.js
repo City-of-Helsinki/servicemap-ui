@@ -400,6 +400,7 @@ const translations = {
   'search.suggestions.suggestions': '{count} hakuehdotusta',
   // 'search.suggestions.expandSuggestions': '{count} tarkennusehdotusta',
   'search.suggestions.results': '{count} tulosta',
+  'search.suggestions.hideButton': 'Pienennä ehdotuslista',
   'search.suggestions.history': '{count} kohdetta hakuhistoriassa',
   'search.suggestions.noHistory': 'Ei aikaisempia hakuja',
   'search.tryAgain': 'Yritä hakea uudelleen',

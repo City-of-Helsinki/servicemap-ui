@@ -181,7 +181,7 @@ class SearchBar extends React.Component {
         onKeyPress={() => { keyboardHandler(this.closeMobileSuggestions, ['space', 'enter']); }}
         variant="srOnly"
       >
-        <FormattedMessage id="search.skipSuggestions" />
+        <FormattedMessage id="search.suggestions.hideButton" />
       </Typography>
     );
 
@@ -191,8 +191,8 @@ class SearchBar extends React.Component {
         {/* TODO: Modify this class to functional component, to use useMobile hook
         instead of individual mobile/desktop components. */}
         <MobileComponent>
-          {closeSuggestionElem}
           <SuggestionBox
+            closeMobileSuggestions={this.closeMobileSuggestions}
             visible={showSuggestions}
             focusedSuggestion={focusedSuggestion}
             searchQuery={searchQuery}

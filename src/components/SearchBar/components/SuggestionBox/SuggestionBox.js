@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Search } from '@material-ui/icons';
+import { ArrowDropUp, Search } from '@material-ui/icons';
 import {
   Paper, List, Typography,
 } from '@material-ui/core';
@@ -11,10 +11,12 @@ import createSuggestions from '../../createSuggestions';
 import config from '../../../../../config';
 import SuggestionItem from '../../../ListItems/SuggestionItem';
 import AddressItem from '../../../ListItems/AddressItem';
+import { keyboardHandler } from '../../../../utils';
 
 
 const SuggestionBox = (props) => {
   const {
+    closeMobileSuggestions,
     visible,
     searchQuery,
     handleArrowClick,
@@ -178,6 +180,31 @@ const SuggestionBox = (props) => {
     } return null;
   };
 
+  const renderHideSuggestions = () => {
+    if (!closeMobileSuggestions) {
+      return null;
+    }
+
+    return (
+      <div
+        className={classes.minimizeLink}
+        role="link"
+        onClick={(e) => {
+          e.preventDefault();
+          closeMobileSuggestions();
+        }}
+        onKeyDown={(e) => {
+          e.preventDefault();
+          keyboardHandler(closeMobileSuggestions, ['space', 'enter'])(e);
+        }}
+        tabIndex="0"
+      >
+        <Typography variant="body2"><FormattedMessage id="search.suggestions.hideButton" /></Typography>
+        <ArrowDropUp />
+      </div>
+    );
+  };
+
   /**
   * Component updaters
   */
@@ -239,6 +266,9 @@ const SuggestionBox = (props) => {
       <>
         <Paper elevation={20} className={containerStyles}>
           <p className="sr-only" aria-live="polite">{srText}</p>
+          {
+            renderHideSuggestions()
+          }
           {component}
         </Paper>
       </>
@@ -248,6 +278,7 @@ const SuggestionBox = (props) => {
 };
 
 SuggestionBox.propTypes = {
+  closeMobileSuggestions: PropTypes.func,
   visible: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   searchQuery: PropTypes.string,
   handleArrowClick: PropTypes.func.isRequired,
@@ -260,6 +291,7 @@ SuggestionBox.propTypes = {
 };
 
 SuggestionBox.defaultProps = {
+  closeMobileSuggestions: null,
   visible: false,
   searchQuery: null,
   focusedSuggestion: null,
