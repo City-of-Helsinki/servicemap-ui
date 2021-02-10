@@ -55,11 +55,11 @@ describe('<SuggestionItem />', () => {
     expect(component).toMatchSnapshot();
   });
 
-  it('simulates click event', () => {
+  it('simulates mousedown event', () => {
     const mockCallBack = jest.fn();
     const component = mount(<SuggestionItem {...mockProps} handleItemClick={mockCallBack} />);
 
-    component.find('ForwardRef(ListItem)').simulate('click');
+    component.find('ForwardRef(ListItem)').simulate('mousedown');
     expect(mockCallBack.mock.calls.length).toEqual(1);
   });
 
