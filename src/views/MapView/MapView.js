@@ -136,7 +136,7 @@ const MapView = (props) => {
 
   const setClickCoordinates = (ev) => {
     setMapClickPoint(null);
-    if (document.getElementsByClassName('popup').length > 0) {
+    if (document.getElementsByClassName('leaflet-popup').length > 0) {
       mapRef.current.leafletElement.closePopup();
     } else {
       setMapClickPoint(ev.latlng);
