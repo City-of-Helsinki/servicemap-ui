@@ -5,7 +5,7 @@ import UnitHelper from '../../../utils/unitHelper';
 import ResultItem from '../ResultItem';
 import SettingsUtility from '../../../utils/settings';
 import UnitIcon from '../../SMIcon/UnitIcon';
-import isClient, { uppercaseFirst } from '../../../utils';
+import isClient from '../../../utils';
 import locationIcon from '../../../assets/icons/LocationDefault.svg';
 import locationIconHover from '../../../assets/icons/LocationHover.svg';
 import locationIconContrast from '../../../assets/icons/LocationDefaultContrast.svg';
@@ -51,9 +51,7 @@ const UnitItem = ({
 
   const icon = isClient() ? <UnitIcon unit={unit} /> : null;
   // Parse unit data
-  const {
-    contract_type, id, name,
-  } = unit;
+  const { id, name } = unit;
 
   const resetMarkerHighlight = () => {
     // Handle marker highlight removal
@@ -96,7 +94,8 @@ const UnitItem = ({
   const { problemCount } = accessData;
 
   // Contract type text
-  const contractType = contract_type && contract_type.description ? uppercaseFirst(getLocaleText(contract_type.description)) : '';
+  const contractText = UnitHelper.getContractText(unit, intl, getLocaleText) || '';
+
   const distanceText = distance ? {
     text: `${distance.distance} ${distance.type}`,
     srText: `${distance.distance} ${distance.type === 'm'
@@ -107,7 +106,7 @@ const UnitItem = ({
   return (
     <ResultItem
       title={getLocaleText(name)}
-      subtitle={contractType}
+      subtitle={contractText}
       bottomText={accessText}
       bottomHighlight={problemCount !== null && typeof problemCount !== 'undefined'}
       extendedClasses={{
