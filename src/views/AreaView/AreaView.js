@@ -17,17 +17,6 @@ import fetchAddress from '../MapView/utils/fetchAddress';
 import TitleBar from '../../components/TitleBar';
 
 
-const fetchReducer = (state, action) => {
-  switch (action.type) {
-    case 'add':
-      return [...state, action.value];
-    case 'remove':
-      return state.filter(item => item !== action.value);
-    default:
-      throw new Error('District fetch failed');
-  }
-};
-
 const AreaView = ({
   setSelectedDistrictType,
   setSelectedSubdistricts,
@@ -154,98 +143,6 @@ const AreaView = ({
     focusDistrict(map.leafletElement, district.boundary.coordinates);
   };
 
-
-  const changeDistrictData = (data, type, category) => {
-    // Group data by periods (used in school districts)
-    const groupedData = data.reduce((acc, cur) => {
-      if (cur.start && cur.start.includes(2019)) {
-        // FIXME: remove temporary solution to hide older school years once period data is updated
-        return acc;
-      }
-      const duplicate = acc.find(
-        list => list[0].start === cur.start && list[0].end === cur.end,
-      );
-      if (duplicate) {
-        duplicate.push(cur);
-      } else {
-        acc.push([cur]);
-      }
-      return acc;
-    }, []);
-
-    groupedData.sort(
-      (a, b) => new Date(a[0].start).getFullYear() - new Date(b[0].start).getFullYear(),
-    );
-
-    groupedData.forEach((data) => {
-      const { start, end } = data[0];
-      const period = start && end
-        ? `${new Date(start).getFullYear()}-${new Date(end).getFullYear()}`
-        : null;
-
-      setDistrictData({
-        id: `${type}${period || ''}`,
-        data,
-        name: type,
-        period,
-        category,
-      });
-    });
-  };
-
-  const compareBoundaries = (a, b) => {
-    // This function checks if district b is within district a or districts are identical
-    if (a.id === b.id || a.start !== b.start || a.end !== b.end) {
-      return false;
-    }
-    if (booleanEqual(a.boundary, b.boundary)) {
-      return true;
-    }
-    // Calculate which area is larger
-    const areaA = a.boundary.coordinates.reduce((c, d) => c + area({ type: 'Polygon', coordinates: d }), 0);
-    const areaB = b.boundary.coordinates.reduce((c, d) => c + area({ type: 'Polygon', coordinates: d }), 0);
-    if (areaA < areaB) {
-      return false;
-    }
-
-    /* Check if a point on the smaller polygon is found within the larger polygon.
-    Array.every and Array.some are used because multipolygons can contain several polygons */
-    return b.boundary.coordinates.every((polygon) => {
-      const polygonBPoint = pointOnFeature({ type: 'Polygon', coordinates: polygon });
-      return a.boundary.coordinates.some((polygon) => {
-        const polygonA = { type: 'Polygon', coordinates: polygon };
-        return booleanWithin(polygonBPoint, polygonA);
-      });
-    });
-  };
-
-  const filterFetchData = (data, type, category) => {
-    let filteredData = [];
-    data.forEach((district) => {
-      // Skip if district is already marked as overlaping with another district
-      if (filteredData.some(obj => obj.overlaping
-        && obj.overlaping.some(item => item.id === district.id))) {
-        return;
-      }
-      const returnItem = district;
-      returnItem.category = category;
-
-      // Combine other districts that are duplicates or within this district
-      const overlapingDistricts = data.filter(obj => compareBoundaries(district, obj));
-
-      if (overlapingDistricts.length) {
-        returnItem.overlaping = overlapingDistricts;
-        // Remove overlaping districts from filtered data if already added
-        overlapingDistricts.forEach((obj) => {
-          filteredData = filteredData.filter(item => item.id !== obj.id);
-        });
-      }
-      filteredData.push(returnItem);
-    });
-
-    changeDistrictData(filteredData, type, category);
-  };
-
   const fetchAddressDistricts = async () => {
     const options = {
       lat: `${selectedAddress.location.coordinates[1]}`,
@@ -265,23 +162,6 @@ const AreaView = ({
       });
   };
 
-  const fetchDistrictsByType = async (type, id, category) => {
-    const options = {
-      page: 1,
-      page_size: 500,
-      type,
-      geometry: true,
-      unit_include: 'name,location,street_address,address_zip,municipality',
-    };
-    return districtFetch(options)
-      .then((data) => {
-        const filteredData = data.results.filter(i => i.boundary && i.boundary.coordinates);
-        return { data: filteredData, type, category };
-      })
-      .catch(() => {
-        dispatchDistrictsFetching({ type: 'remove', value: id });
-      });
-  };
 
 
   const handleOpen = async (item) => {

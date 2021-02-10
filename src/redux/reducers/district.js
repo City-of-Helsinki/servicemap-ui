@@ -3,6 +3,7 @@ const initialState = {
   selectedDistrictType: null,
   districtData: [],
   unitsFetching: [],
+  districtsFetching: [],
   subdistrictUnits: [],
   selectedSubdistricts: [],
   selectedDistrictServices: [],
@@ -41,7 +42,15 @@ export default (state = initialState, action) => {
     case 'SET_DISTRICT_DATA':
       return {
         ...state,
-        districtData: [...state.districtData, action.data],
+        districtData: action.data,
+      };
+
+    case 'UPDATE_DISTRICT_DATA':
+      return {
+        ...state,
+        districtData: state.districtData.map(obj => (obj.name === action.districtType
+          ? { ...obj, data: action.data }
+          : obj)),
       };
 
     case 'SET_DISTRICT_ADDRESS_DATA':
@@ -86,6 +95,20 @@ export default (state = initialState, action) => {
         ...state,
         unitsFetching: [...state.unitsFetching.filter(item => item !== action.node)],
         subdistrictUnits: [...state.subdistrictUnits, ...action.units],
+      };
+
+    case 'START_DISTRICT_FETCH':
+      return {
+        ...state,
+        districtsFetching: [...state.districtsFetching, action.districtType],
+      };
+
+    case 'END_DISTRICT_FETCH':
+      return {
+        ...state,
+        districtsFetching: [
+          ...state.districtsFetching.filter(item => item !== action.districtType),
+        ],
       };
 
     default:
