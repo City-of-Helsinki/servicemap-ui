@@ -489,6 +489,7 @@ const translations = {
   'tool.download': 'Download data',
   'tool.measuring': 'Measure distance (mouse only)',
   'tool.measuring.stop': 'Stop measuring',
+  'tool.print': 'Print',
 
   'info.title': 'About the service and accessibility statement',
   'info.statement': 'Accessibility statement, will be updated in march 2021',

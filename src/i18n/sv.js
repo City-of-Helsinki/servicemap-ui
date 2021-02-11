@@ -489,6 +489,7 @@ const translations = {
   'tool.download': 'Exportera',
   'tool.measuring': 'Mät avstånd (endast med mus)',
   'tool.measuring.stop': 'Sluta mäta',
+  'tool.print': 'Skriv ut',
 
   'info.title': 'Om tjänsten och tillgänglighetsredogörelsen',
   'info.statement': 'Tillgänglighetsredogörelsen, uppdateras kommer i mars 2021',
