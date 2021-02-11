@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Typography } from '@material-ui/core';
+import { FormattedMessage } from 'react-intl';
 import NewsItem from './components/NewsItem/NewsItem';
 
 const NewsInfo = ({
@@ -9,11 +11,18 @@ const NewsInfo = ({
     return null;
   }
 
-  const dataToRender = news.slice(0, showCount);
-
-  return dataToRender.map(item => (
-    <NewsItem item={item} />
+  const newsItems = news.slice(0, showCount).map(item => (
+    <NewsItem key={`news-item-${item?.title?.fi}`} item={item} />
   ));
+
+  return (
+    <>
+      <Typography variant="srOnly" component="h3">
+        <FormattedMessage id="general.news.info.title" />
+      </Typography>
+      { newsItems }
+    </>
+  );
 };
 
 NewsInfo.propTypes = {

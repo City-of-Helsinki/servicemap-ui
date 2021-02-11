@@ -32,9 +32,6 @@ const NewsItem = ({ classes, item, getLocaleText }) => {
   return (
     <Paper className={classes.container}>
       <div className="row padding">
-        <Typography variant="srOnly" component="h3">
-          <FormattedMessage id="general.news.info.title" />
-        </Typography>
         {icon}
         <div className={`column ${classes.titleContainer}`}>
           <Typography variant="subtitle1" component="h4">{tTitle}</Typography>
