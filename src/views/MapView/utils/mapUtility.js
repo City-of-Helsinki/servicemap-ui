@@ -20,13 +20,21 @@ class MapUtility {
       throw Error('centerMapToUnit requires valid unit to center');
     }
 
-    if (unit && this.leaflet) {
-      const { geometry, location } = unit;
-      if (geometry && geometry.type === 'MultiLineString') {
-        focusDistrict(this.leaflet, [geometry.coordinates]);
-      } else if (location) {
-        focusToPosition(this.leaflet, location.coordinates);
+    const { geometry, location } = unit;
+    const allowedGeometries = ['MultiLineString', 'MultiPolygon'];
+  
+    if (geometry && allowedGeometries.includes(geometry.type)) {
+      switch (geometry.type) {
+        case 'MultiLineString':
+          focusDistrict(this.leaflet, [geometry.coordinates]);
+          break;
+        case 'MultiPolygon':
+          focusDistrict(this.leaflet, geometry.coordinates);
+          break;
+        default:
       }
+    } else if (location) {
+      focusToPosition(this.leaflet, location.coordinates);
     }
   }
 
