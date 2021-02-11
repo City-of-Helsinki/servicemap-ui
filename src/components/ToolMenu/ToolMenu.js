@@ -99,7 +99,7 @@ const ToolMenu = ({
     },
     {
       key: 'printTool',
-      text: 'Tulosta',
+      text: intl.formatMessage({ id: 'tool.print'}),
       icon: <Print className={classes.smIcon} />,
       onClick: () => {
         if (typeof togglePrintView === 'function') {

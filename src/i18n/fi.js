@@ -490,6 +490,7 @@ const translations = {
   'tool.download': 'Lataa tiedot',
   'tool.measuring': 'Mittaa etäisyys (käytettävissä vain hiirellä)',
   'tool.measuring.stop': 'Lopeta mittaus',
+  'tool.print': 'Tulosta',
 
   'info.title': 'Tietoa palvelusta ja saavutettavuusseloste',
   'info.statement': 'Saavutettavuusseloste, päivitetään seuraavaksi maaliskuussa 2021',
