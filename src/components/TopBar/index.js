@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core';
 import { injectIntl } from 'react-intl';
-import { getLocaleString } from '../../redux/selectors/locale';
+import { getLocale, getLocaleString } from '../../redux/selectors/locale';
 import styles from './styles';
 import TopBar from './TopBar';
 import { setMapType, toggleSettings } from '../../redux/actions/settings';
@@ -24,6 +24,7 @@ const mapStateToProps = (state) => {
     breadcrumb,
     settings,
     theme: user.theme,
+    locale: getLocale(state),
   };
 };
 

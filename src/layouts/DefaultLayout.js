@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import MapView from '../views/MapView';
-import I18n from '../i18n';
 import config from '../../config';
 import TopBar from '../components/TopBar';
 import Settings from '../components/Settings';
@@ -91,7 +90,6 @@ const DefaultLayout = (props) => {
     currentPage,
     fetchErrors,
     fetchNews,
-    i18n,
     intl,
     location,
     settingsToggled,
@@ -151,7 +149,6 @@ const DefaultLayout = (props) => {
           <TopBar
             settingsOpen={settingsToggled}
             smallScreen={isSmallScreen}
-            i18n={i18n}
           />
         </PrintProvider>
       </div>
@@ -204,7 +201,6 @@ DefaultLayout.propTypes = {
   currentPage: PropTypes.string,
   fetchErrors: PropTypes.func.isRequired,
   fetchNews: PropTypes.func.isRequired,
-  i18n: PropTypes.instanceOf(I18n),
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   settingsToggled: PropTypes.string,
@@ -212,7 +208,6 @@ DefaultLayout.propTypes = {
 
 DefaultLayout.defaultProps = {
   currentPage: null,
-  i18n: null,
   settingsToggled: null,
 };
 

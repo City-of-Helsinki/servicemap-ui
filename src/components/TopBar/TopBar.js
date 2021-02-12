@@ -5,7 +5,6 @@ import {
 } from '@material-ui/core';
 import { Map, Menu, Close } from '@material-ui/icons';
 import { FormattedMessage } from 'react-intl';
-import I18n from '../../i18n';
 import HomeLogo from '../Logos/HomeLogo';
 import { getIcon } from '../SMIcon';
 import DrawerMenu from '../DrawerMenu';
@@ -14,6 +13,7 @@ import MobileComponent from '../MobileComponent';
 import config from '../../../config';
 import ToolMenu from '../ToolMenu';
 import { focusToViewTitle } from '../../utils/accessibility';
+import LocaleUtility from '../../utils/locale';
 
 class TopBar extends React.Component {
   state={ drawerOpen: false }
@@ -143,30 +143,34 @@ class TopBar extends React.Component {
   }
 
   renderLanguages = (pageType) => {
-    const { classes, i18n, location } = this.props;
+    const { classes, locale, location } = this.props;
     const typographyClass = className => `${pageType === 'mobile' ? classes.mobileFont : ''} ${className || ''}`;
     return (
       <>
-        {i18n.availableLocales
-          .map(locale => (
+        {LocaleUtility.availableLocales
+          .map(currentLocale => (
             <ButtonBase
               role="link"
-              key={locale}
+              key={currentLocale}
               focusVisibleClassName={classes.topButtonFocused}
-              lang={locale}
+              lang={currentLocale}
               onClick={() => {
                 const newLocation = location;
-                const newPath = location.pathname.replace(/^\/[a-zA-Z]{2}\//, `/${locale}/`);
+                const newPath = location.pathname.replace(/^\/[a-zA-Z]{2}\//, `/${currentLocale}/`);
                 newLocation.pathname = newPath;
                 window.location = `${newLocation.pathname}${newLocation.search}`;
               }}
             >
               <Typography
-                className={typographyClass(locale === i18n.locale ? classes.bold : classes.greyText)}
+                className={typographyClass(
+                  currentLocale === locale
+                    ? classes.bold
+                    : classes.greyText,
+                )}
                 color="inherit"
                 variant="body2"
               >
-                {i18n.localeText(locale)}
+                <FormattedMessage id={`general.language.${currentLocale}`} />
               </Typography>
             </ButtonBase>
           ))}
@@ -339,25 +343,24 @@ class TopBar extends React.Component {
 }
 
 TopBar.propTypes = {
-  i18n: PropTypes.instanceOf(I18n),
+  breadcrumb: PropTypes.arrayOf(PropTypes.any).isRequired,
+  changeTheme: PropTypes.func.isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  location: PropTypes.objectOf(PropTypes.any).isRequired,
-  navigator: PropTypes.objectOf(PropTypes.any),
-  settingsOpen: PropTypes.string,
-  settings: PropTypes.objectOf(PropTypes.any).isRequired,
-  toggleSettings: PropTypes.func.isRequired,
   currentPage: PropTypes.string.isRequired,
   getAddressNavigatorParams: PropTypes.func.isRequired,
-  breadcrumb: PropTypes.arrayOf(PropTypes.any).isRequired,
-  smallScreen: PropTypes.bool.isRequired,
-  changeTheme: PropTypes.func.isRequired,
-  setMapType: PropTypes.func.isRequired,
-  theme: PropTypes.string.isRequired,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
+  locale: PropTypes.oneOf(config.supportedLanguages).isRequired,
+  location: PropTypes.objectOf(PropTypes.any).isRequired,
+  navigator: PropTypes.objectOf(PropTypes.any),
+  setMapType: PropTypes.func.isRequired,
+  settingsOpen: PropTypes.string,
+  settings: PropTypes.objectOf(PropTypes.any).isRequired,
+  smallScreen: PropTypes.bool.isRequired,
+  theme: PropTypes.string.isRequired,
+  toggleSettings: PropTypes.func.isRequired,
 };
 
 TopBar.defaultProps = {
-  i18n: null,
   navigator: null,
   settingsOpen: null,
 };
