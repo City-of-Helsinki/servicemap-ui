@@ -59,6 +59,7 @@ const Districts = ({
       }
       setSelectedSubdistricts(newArray);
     } else if (district.category === 'nature') {
+      if (config.natureAreaURL === 'undefined') return;
       setAreaPopup({
         district,
         link: `${config.natureAreaURL}${district.origin_id}`,
