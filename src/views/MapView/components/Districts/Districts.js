@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Typography } from '@material-ui/core';
+import { Typography, Link } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 import { drawMarkerIcon } from '../../utils/drawIcon';
 import swapCoordinates from '../../utils/swapCoordinates';
 import AddressMarker from '../AddressMarker';
 import useMobileStatus from '../../../../utils/isMobile';
 import { parseSearchParams } from '../../../../utils';
+import config from '../../../../../config';
 
 
 const Districts = ({
@@ -29,17 +31,22 @@ const Districts = ({
   navigator,
   intl,
 }) => {
-  const { Polygon, Marker, Tooltip } = global.rL;
+  const {
+    Polygon, Marker, Tooltip, Popup,
+  } = global.rL;
   const useContrast = theme === 'dark';
   const isMobile = useMobileStatus();
   const location = useLocation();
   const citySettings = useSelector(state => state.settings.cities);
+  const selectedDistrictType = useSelector(state => state.districts.selectedDistrictType);
+  const [areaPopup, setAreaPopup] = useState(null);
 
   const districtOnClick = (e, district) => {
     if (measuringMode) return;
+    // Disable normal map click event
+    e.originalEvent.view.L.DomEvent.stopPropagation(e);
+
     if (district.category === 'geographical') {
-      // Disable normal map click event
-      e.originalEvent.view.L.DomEvent.stopPropagation(e);
       // Add/remove district from selected geographical districts
       let newArray;
       if (selectedSubdistricts.some(item => item === district.ocd_id)) {
@@ -51,6 +58,13 @@ const Districts = ({
         setSelectedDistrictServices([]);
       }
       setSelectedSubdistricts(newArray);
+    } else if (district.category === 'nature') {
+      setAreaPopup({
+        district,
+        link: `${config.natureAreaURL}${district.origin_id}`,
+        name: district.name,
+        position: e.latlng,
+      });
     }
   };
 
@@ -188,6 +202,24 @@ const Districts = ({
     });
   };
 
+  const renderAreaPopup = () => (
+    <Popup onClose={() => setAreaPopup(null)} position={areaPopup.position}>
+      <div className={classes.areaPopup}>
+        <Typography>{getLocaleText(areaPopup.name)}</Typography>
+        {areaPopup.link && (
+          <Link className={classes.areaLink} href={areaPopup.link} target="_blank">
+            <Typography><FormattedMessage id="area.popupLink" /></Typography>
+          </Link>
+        )}
+      </div>
+    </Popup>
+  );
+
+
+  useEffect(() => {
+    setAreaPopup(null);
+  }, [selectedDistrictType]);
+
 
   if (highlightedDistrict) {
     return (
@@ -217,7 +249,10 @@ const Districts = ({
           />
         ) : null}
         {districtData ? (
-          renderMultipleDistricts()
+          <>
+            {renderMultipleDistricts()}
+            {areaPopup && renderAreaPopup()}
+          </>
         ) : null}
       </>
     );
