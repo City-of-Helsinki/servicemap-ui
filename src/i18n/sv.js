@@ -280,7 +280,7 @@ const translations = {
 
   // Units
   'unit': 'Verksamhetsställe',
-  'unit.showInformation': 'Näytä toimipisteen tiedot', // TODO: Translate
+  'unit.showInformation': 'Visa uppgifterna för verksamhetsstället',
   'unit.accessibility.hearingMaps': 'Täckningskartor',
   'unit.accessibility.hearingMaps.extra': '(Ny flik. Tjänsten är inte tillgänglig)',
   'unit.accessibility.noInfo': 'Inga tillgänglighetsuppgifter',
