@@ -498,7 +498,7 @@ const translations = {
   'tool.print': 'Tulosta',
 
   'info.title': 'Tietoa palvelusta ja saavutettavuusseloste',
-  'info.statement': 'Saavutettavuusseloste, päivitetään seuraavaksi maaliskuussa 2021',
+  'info.statement': 'Saavutettavuusseloste',
 
   'alert.close': 'Sulje ilmoitus',
 };

@@ -497,7 +497,7 @@ const translations = {
   'tool.print': 'Print',
 
   'info.title': 'About the service and accessibility statement',
-  'info.statement': 'Accessibility statement, will be updated in march 2021',
+  'info.statement': 'Accessibility statement',
 
   'alert.close': 'Close the notification',
 };
