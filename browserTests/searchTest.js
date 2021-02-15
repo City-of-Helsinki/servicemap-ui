@@ -366,3 +366,22 @@ test('Search suggestion click works correctly', async(t) => {
     .expect(getLocation()).contains(`http://${server.address}:${server.port}/fi/search?q=${text}`)
     
 });
+
+fixture`Pagination tests`
+  .page`http://${server.address}:${server.port}/fi/search?q=kirjasto&p=2`
+  .beforeEach(async () => {
+    await waitForReact();
+  });
+
+test('Pagination\'s page defaults correctly', async(t) => {
+  const pagination = ReactSelector('PaginationComponent');
+  // 4th button is second page element
+  const secondPageElement = pagination.find('button').nth(3);
+
+  await t
+    // Expect second page to be out of tabindex because it's active
+    .expect(secondPageElement.getAttribute('tabindex')).eql('-1')
+    // Expect second page to be disabled because it's active
+    .expect(secondPageElement.getAttribute('disabled')).eql('')
+  ;
+});
