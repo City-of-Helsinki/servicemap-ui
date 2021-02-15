@@ -8,7 +8,6 @@ import {
   Switch, Route, BrowserRouter,
 } from 'react-router-dom';
 
-import I18n from './i18n';
 import styles from './index.css';
 import SMFonts from './service-map-icons.css';
 import HSLFonts from './hsl-icons.css';
@@ -33,24 +32,10 @@ import '@formatjs/intl-relativetimeformat/dist/locale-data/en';
 import '@formatjs/intl-relativetimeformat/dist/locale-data/fi';
 import '@formatjs/intl-relativetimeformat/dist/locale-data/sv';
 import ThemeWrapper from './themes/ThemeWrapper';
+import LocaleUtility from './utils/locale';
+import config from '../config';
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    // Default state
-    const { changeLocaleAction, match } = this.props;
-    const newLocale = match.params.lng;
-    const i18n = new I18n();
-
-    if (i18n.isValidLocale(newLocale)) {
-      i18n.changeLocale(newLocale);
-      changeLocaleAction(newLocale);
-    }
-
-    this.state = {
-      i18n,
-    };
-  }
 
   // Remove the server-side injected CSS.
   componentDidMount() {
@@ -61,18 +46,18 @@ class App extends React.Component {
   }
 
   render() {
-    const { i18n } = this.state;
-    const i18nData = i18n.data();
+    const { locale } = this.props;
+    const intlData = LocaleUtility.intlData(locale);
 
     return (
       <ThemeWrapper>
-        <IntlProvider {...i18nData}>
+        <IntlProvider {...intlData}>
           {/* <StylesProvider generateClassName={generateClassName}> */}
           <div className="App">
             <Switch>
               <Route path="*/embedder" component={EmbedderView} />
               <Route path="*/embed" component={EmbedLayout} />
-              <Route render={() => <DefaultLayout i18n={i18n} />} />
+              <Route render={() => <DefaultLayout />} />
             </Switch>
             <Navigator />
             <DataFetcher />
@@ -121,6 +106,7 @@ export default withStyles(styles, appStyles, SMFonts, HSLFonts, printCSS)(Langua
 // Typechecking
 App.propTypes = {
   match: PropTypes.object.isRequired,
+  locale: PropTypes.oneOf(config.supportedLanguages).isRequired,
   location: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   changeLocaleAction: PropTypes.func.isRequired,
