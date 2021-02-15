@@ -170,8 +170,7 @@ const MarkerCluster = ({
   const onClusterItemClick = (unit) => {
     UnitHelper.unitElementClick(navigator, unit);
   };
-  // eslint-disable-next-line no-underscore-dangle
-  const showListOfUnits = () => (map._zoom > clusterPopupVisibility);
+  const showListOfUnits = () => (map.getZoom() > clusterPopupVisibility);
 
   // Cluster popup content
   const clusterPopupContent = (units) => {
@@ -300,6 +299,7 @@ const MarkerCluster = ({
       clusterMouseover,
       clusterMouseout,
       clusterAnimationEnd,
+      showListOfUnits,
     );
     // Add cluster to map
     map.addLayer(mcg);

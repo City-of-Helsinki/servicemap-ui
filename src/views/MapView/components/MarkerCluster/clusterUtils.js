@@ -9,6 +9,7 @@ export const createMarkerClusterLayer = (
   clusterMouseover,
   clusterMouseout,
   clusterAnimationend,
+  showListOfUnits,
 ) => {
   if (!isClient()) {
     return null;
@@ -32,8 +33,14 @@ export const createMarkerClusterLayer = (
     clusterLayer.on('clustermouseover', (a) => {
       if (clusterMouseover) clusterMouseover(a);
     });
+    // Add click events as alternative way to trigger hover events on mobile
+    clusterLayer.on('clusterclick', (a) => {
+      if (clusterMouseover && showListOfUnits()) {
+        clusterMouseover(a);
+      }
+    });
   } else {
-    // Add cluster click only when embeded
+    // Add cluster click when embeded
     clusterLayer.on('clusterclick', () => {
       window.open(window.location.href.replace('/embed', ''));
     });
