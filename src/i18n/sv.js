@@ -196,6 +196,9 @@ const translations = {
   'general.news.alert.title': 'Meddelandefönster',
   'general.news.alert.close.aria': 'Stäng meddelandefönstret',
   'general.news.info.title': 'Servicekartans nyheter',
+  'general.language.fi': 'Suomeksi',
+  'general.language.sv': 'På svenska',
+  'general.language.en': 'In English',
   'general.loading': 'Laddar',
   'general.loading.done': 'Laddning färdig',
   'general.showOnMap': 'Visa på kartan',
@@ -281,6 +284,7 @@ const translations = {
 
   // Units
   'unit': 'Verksamhetsställe',
+  'unit.showInformation': 'Visa uppgifterna för verksamhetsstället',
   'unit.accessibility.hearingMaps': 'Täckningskartor',
   'unit.accessibility.hearingMaps.extra': '(Ny flik. Tjänsten är inte tillgänglig)',
   'unit.accessibility.noInfo': 'Inga tillgänglighetsuppgifter',
@@ -490,6 +494,7 @@ const translations = {
   'tool.download': 'Exportera',
   'tool.measuring': 'Mät avstånd (endast med mus)',
   'tool.measuring.stop': 'Sluta mäta',
+  'tool.print': 'Skriv ut',
 
   'info.title': 'Om tjänsten och tillgänglighetsredogörelsen',
   'info.statement': 'Tillgänglighetsredogörelsen, uppdateras kommer i mars 2021',

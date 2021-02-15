@@ -41,7 +41,6 @@ const Districts = ({
   const selectedDistrictType = useSelector(state => state.districts.selectedDistrictType);
   const [areaPopup, setAreaPopup] = useState(null);
 
-
   const districtOnClick = (e, district) => {
     if (measuringMode) return;
     // Disable normal map click event

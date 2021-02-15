@@ -196,6 +196,9 @@ const translations = {
   'general.news.alert.title': 'Notification window',
   'general.news.alert.close.aria': 'Close notification window',
   'general.news.info.title': 'Service map news',
+  'general.language.fi': 'Suomeksi',
+  'general.language.sv': 'På svenska',
+  'general.language.en': 'In English',
   'general.loading': 'Loading',
   'general.loading.done': 'Loading completed',
   'general.showOnMap': 'Show on map',
@@ -281,6 +284,7 @@ const translations = {
 
   // Units
   'unit': 'Location',
+  'unit.showInformation': 'Show the details for the location',
   'unit.accessibility.hearingMaps': 'Coverage maps',
   'unit.accessibility.hearingMaps.extra': '(New tab. The service is not accessible)',
   'unit.accessibility.noInfo': 'No accessibility information',
@@ -490,6 +494,7 @@ const translations = {
   'tool.download': 'Download data',
   'tool.measuring': 'Measure distance (mouse only)',
   'tool.measuring.stop': 'Stop measuring',
+  'tool.print': 'Print',
 
   'info.title': 'About the service and accessibility statement',
   'info.statement': 'Accessibility statement, will be updated in march 2021',

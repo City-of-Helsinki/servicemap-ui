@@ -196,6 +196,9 @@ const translations = {
   'general.news.alert.title': 'Ilmoitusikkuna',
   'general.news.alert.close.aria': 'Sulje ilmoitusikkuna',
   'general.news.info.title': 'Palvelukartan uutiset',
+  'general.language.fi': 'Suomeksi',
+  'general.language.sv': 'På svenska',
+  'general.language.en': 'In English',
   'general.loading': 'Ladataan',
   'general.loading.done': 'Lataus valmis',
   'general.showOnMap': 'Näytä kartalla',
@@ -281,6 +284,7 @@ const translations = {
 
   // Units
   'unit': 'Toimipiste',
+  'unit.showInformation': 'Näytä toimipisteen tiedot',
   'unit.accessibility.hearingMaps': 'Kuuluvuuskartat',
   'unit.accessibility.hearingMaps.extra': '(Uusi välilehti. Palvelu ei ole saavutettava)',
   'unit.accessibility.noInfo': 'Ei esteettömyystietoja',
@@ -491,6 +495,7 @@ const translations = {
   'tool.download': 'Lataa tiedot',
   'tool.measuring': 'Mittaa etäisyys (käytettävissä vain hiirellä)',
   'tool.measuring.stop': 'Lopeta mittaus',
+  'tool.print': 'Tulosta',
 
   'info.title': 'Tietoa palvelusta ja saavutettavuusseloste',
   'info.statement': 'Saavutettavuusseloste, päivitetään seuraavaksi maaliskuussa 2021',

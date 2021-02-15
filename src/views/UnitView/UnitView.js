@@ -7,7 +7,6 @@ import { Map, Mail, Hearing } from '@material-ui/icons';
 import SearchBar from '../../components/SearchBar';
 import TitleBar from '../../components/TitleBar';
 import Container from '../../components/Container';
-import { uppercaseFirst } from '../../utils';
 import AccessibilityInfo from './components/AccessibilityInfo';
 import ContactInfo from './components/ContactInfo';
 import Highlights from './components/Highlights';
@@ -27,6 +26,7 @@ import TitledList from '../../components/Lists/TitledList';
 import ReadSpeakerButton from '../../components/ReadSpeakerButton';
 import config from '../../../config';
 import useMobileStatus from '../../utils/isMobile';
+import UnitHelper from '../../utils/unitHelper';
 
 const UnitView = (props) => {
   const {
@@ -162,6 +162,7 @@ const UnitView = (props) => {
     if (!unit || !unit.complete) {
       return <></>;
     }
+    const contractText = UnitHelper.getContractText(unit, intl, getLocaleText);
 
     let detailReadSpeakerButton = null;
 
@@ -185,13 +186,12 @@ const UnitView = (props) => {
           <Container margin text>
             <Typography variant="body2">
               {
-                unit.contract_type
-                && unit.contract_type.description
-                && `${uppercaseFirst(getLocaleText(unit.contract_type.description))}. `
+                contractText
+                && `${contractText}. `
               }
               {
                 unit.data_source
-                && <FormattedMessage id="unit.data_source" defaultMessage={'Source: {data_source}'} values={{ data_source: unit.data_source }} />
+                && <FormattedMessage id="unit.data_source" defaultMessage="Source: {data_source}" values={{ data_source: unit.data_source }} />
               }
             </Typography>
           </Container>

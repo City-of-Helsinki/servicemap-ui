@@ -8,12 +8,21 @@ export const getEmbedURL = (url, params = {}) => {
 
   const segment = uri.segment();
   const data = uri.search(true); // Get data object of search parameters
+  const cityObj = params.city;
+  const cities = Object.keys(cityObj).reduce((acc, current) => {
+    if (Object.prototype.hasOwnProperty.call(cityObj, current)) {
+      if (cityObj[current]) {
+        acc.push(current);
+      }
+    }
+    return acc;
+  }, []);
 
   if (params.map && params.map !== 'servicemap') {
     data.map = params.map;
   }
-  if (params.city && params.city !== 'all') {
-    data.city = params.city;
+  if (cities.length > 0) {
+    data.city = cities.join(',');
   }
   if (params.service && params.service !== 'none') {
     data.level = params.service;

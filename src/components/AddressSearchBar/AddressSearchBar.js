@@ -6,7 +6,8 @@ import {
 } from '@material-ui/core';
 import { Clear, Search } from '@material-ui/icons';
 import config from '../../../config';
-import { uppercaseFirst } from '../../utils';
+import { keyboardHandler, uppercaseFirst } from '../../utils';
+import useMobileStatus from '../../utils/isMobile';
 
 const AddressSearchBar = ({
   defaultAddress,
@@ -25,9 +26,10 @@ const AddressSearchBar = ({
     ? `${getLocaleText(address.street.name)} ${address.number}${address.number_end ? address.number_end : ''}${address.letter ? address.letter : ''}, ${uppercaseFirst(address.street.municipality)}`
     : '');
 
+  const isMobile = useMobileStatus();
+
   const [addressResults, setAddressResults] = useState([]);
-  const [resultIndex, setResultIndex] = useState(0);
-  const [searchBarValue, setSearchBarValue] = useState(formAddressString(defaultAddress));
+  const [resultIndex, setResultIndex] = useState(null);
   const [currentLocation, setCurrentLocation] = useState(null);
   const [cleared, setCleared] = useState(false);
 
@@ -38,7 +40,7 @@ const AddressSearchBar = ({
     if (inputRef.current) {
       inputRef.current.focus();
     }
-    setSearchBarValue(formAddressString(address));
+    inputRef.current.value = formAddressString(address);
     setAddressResults([]);
     setCurrentLocation(formAddressString(address));
     setDirection('asc');
@@ -47,11 +49,9 @@ const AddressSearchBar = ({
   };
 
   const handleSearchBarKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      handleAddressSelect(addressResults[resultIndex]);
-    } else if (e.key === 'ArrowDown') {
+    if (e.key === 'ArrowDown') {
       e.preventDefault();
-      if (resultIndex === addressResults.length - 1) {
+      if (resultIndex === null || resultIndex === addressResults.length - 1) {
         setResultIndex(0);
       } else {
         setResultIndex(resultIndex + 1);
@@ -66,9 +66,18 @@ const AddressSearchBar = ({
     }
   };
 
-  const blurSearchfield = (e) => {
+  const clearSuggestions = (e) => {
     e.preventDefault();
-    document.activeElement.blur();
+    setAddressResults([]);
+  };
+
+  const handleSubmit = (e) => {
+    if (resultIndex !== null) {
+      handleAddressSelect(addressResults[resultIndex]);
+    } else {
+      handleAddressSelect(addressResults[0]);
+    }
+    clearSuggestions(e);
   };
 
   const handleInputChange = (text) => {
@@ -76,7 +85,6 @@ const AddressSearchBar = ({
     if (cleared) {
       setCleared(false);
     }
-    setSearchBarValue(text);
     // Fetch address suggestions
     if (text.length && text.length > 1) {
       if (currentLocation) {
@@ -92,18 +100,10 @@ const AddressSearchBar = ({
   };
 
   useEffect(() => {
-    setSearchBarValue(formAddressString(defaultAddress));
+    inputRef.current.value = formAddressString(defaultAddress);
   }, [defaultAddress]);
 
-  // change searchbar value if resultIndex changes to
-  useEffect(() => {
-    const address = addressResults && addressResults[resultIndex];
-    if (address) {
-      setSearchBarValue(formAddressString(address));
-    }
-  }, [resultIndex]);
-
-  const showSuggestions = searchBarValue.length > 1 && addressResults && addressResults.length;
+  const showSuggestions = inputRef.current?.value.length > 1 && addressResults?.length;
   // Add info text for location selection
   const locationInfoText = currentLocation ? intl.formatMessage({ id: 'address.search.location' }, { location: currentLocation }) : '';
   // Figure out which info text to use
@@ -124,17 +124,22 @@ const AddressSearchBar = ({
   return (
     <div className={containerClassName}>
       <Typography color="inherit">{title}</Typography>
-      <form action="" onSubmit={e => blurSearchfield(e)}>
+      <form action="" onSubmit={e => handleSubmit(e)}>
         <InputBase
+          id="addressSearchbar"
           inputRef={inputRef}
           inputProps={{
             role: 'combobox',
             'aria-haspopup': !!showSuggestions,
             'aria-label': `${intl.formatMessage({ id: 'search.searchField' })} ${intl.formatMessage({ id: 'address.search' })}`,
+            'aria-owns': showSuggestions ? 'address-results' : null,
+            'aria-activedescendant': showSuggestions && resultIndex !== null ? `address-suggestion${resultIndex}` : null,
           }}
-          type="search"
+          type="text"
+          onBlur={isMobile ? () => {} : e => clearSuggestions(e)}
+          onFocus={() => setResultIndex(null)}
           className={`${classes.searchBar} ${inputClassName}`}
-          value={searchBarValue}
+          defaultValue={formAddressString(defaultAddress)}
           onChange={e => handleInputChange(e.target.value)}
           onKeyDown={e => showSuggestions && handleSearchBarKeyPress(e)}
           endAdornment={(
@@ -146,7 +151,7 @@ const AddressSearchBar = ({
                 onClick={() => {
                   setCleared(true);
                   handleAddressChange(null);
-                  setSearchBarValue('');
+                  inputRef.current.value = '';
                 }}
                 className={classes.IconButton}
               >
@@ -158,13 +163,16 @@ const AddressSearchBar = ({
         <Typography aria-live="polite" id="resultLength" variant="srOnly">{infoText}</Typography>
         {showSuggestions ? (
           <Paper>
-            <List>
+            <List role="listbox" id="address-results">
               {addressResults.map((address, i) => (
                 <ListItem
+                  id={`address-suggestion${i}`}
+                  role="option"
                   selected={i === resultIndex}
                   key={formAddressString(address)}
                   button
                   onClick={() => handleAddressSelect(address)}
+                  onKeyDown={keyboardHandler(() => handleAddressSelect(address), ['space', 'enter'])}
                 >
                   <Typography>
                     {formAddressString(address)}
