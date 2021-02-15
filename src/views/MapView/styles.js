@@ -42,6 +42,17 @@ const styles = theme => ({
     textAlign: 'left',
     maxWidth: 240,
   },
+  areaPopup: {
+    padding: theme.spacing(1.5),
+    paddingTop: 22,
+    paddingBottom: 14,
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  areaLink: {
+    textAlign: 'center',
+    paddingTop: theme.spacing(0.5),
+  },
   marginBottom: {
     marginBottom: `${theme.spacing(2)}px !important`,
   },
