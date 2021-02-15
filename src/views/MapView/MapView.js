@@ -136,7 +136,7 @@ const MapView = (props) => {
 
   const setClickCoordinates = (ev) => {
     setMapClickPoint(null);
-    if (document.getElementsByClassName('popup').length > 0) {
+    if (document.getElementsByClassName('leaflet-popup').length > 0) {
       mapRef.current.leafletElement.closePopup();
     } else {
       setMapClickPoint(ev.latlng);
@@ -341,6 +341,7 @@ const MapView = (props) => {
         {renderTopBar()}
         {renderEmbedOverlay()}
         <Map
+          tap={false} // This should fix leaflet safari double click bug
           preferCanvas
           className={`${classes.map} ${measuringMode ? classes.measuringCursor : ''}`}
           key={mapObject.options.name}

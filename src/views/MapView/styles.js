@@ -152,6 +152,12 @@ const styles = theme => ({
     ...theme.typography.body2,
     margin: theme.spacing(0, 1),
   },
+  unitTooltipLink: {
+    ...theme.typography.body2,
+    paddingTop: theme.spacing(1),
+    textAlign: 'center',
+    color: theme.palette.primary.main,
+  },
   unitTooltipWrapper: {
     padding: theme.spacing(2),
   },

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Typography } from '@material-ui/core';
 import { useSelector } from 'react-redux';
@@ -9,7 +9,6 @@ import AddressMarker from '../AddressMarker';
 import useMobileStatus from '../../../../utils/isMobile';
 import { parseSearchParams } from '../../../../utils';
 
-let districtClicked = null;
 
 const Districts = ({
   highlightedDistrict,
@@ -36,21 +35,11 @@ const Districts = ({
   const location = useLocation();
   const citySettings = useSelector(state => state.settings.cities);
 
-  /* TODO: The following useEffect is used to prevent double click bug with
-  lealfet + safari. Should be removed when the bug is fixed by lealfet */
-  useEffect(() => {
-    setTimeout(() => {
-      districtClicked = null;
-    }, 1000);
-  }, [selectedSubdistricts]);
-
   const districtOnClick = (e, district) => {
     if (measuringMode) return;
     if (district.category === 'geographical') {
       // Disable normal map click event
       e.originalEvent.view.L.DomEvent.stopPropagation(e);
-      if (districtClicked === district.ocd_id) return; // Prevent safari double click
-      districtClicked = district.ocd_id;
       // Add/remove district from selected geographical districts
       let newArray;
       if (selectedSubdistricts.some(item => item === district.ocd_id)) {
