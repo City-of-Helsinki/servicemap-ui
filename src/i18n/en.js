@@ -246,7 +246,7 @@ const translations = {
   'home.buttons.services': 'Get to know the services using the Services list',
   'home.buttons.closeByServices': 'Show nearby services',
   'home.buttons.instructions': 'Tips for using the service map',
-  'home.buttons.area': 'Check the areas, neighbourhoods and civil defence districts',
+  'home.buttons.area': 'View the areas for healthcare, education, pre-primary education, civil defence, nature and neighborhoods.',
   'home.example.search': 'Search for',
   'home.message': 'Message from the developers',
   'home.send.feedback': 'Give feedback',
