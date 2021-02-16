@@ -399,6 +399,7 @@ const translations = {
   'search.suggestions.suggestions': '{count} search suggestions',
   // 'search.suggestions.expandSuggestions': '{count} refinement suggestions',
   'search.suggestions.results': '{count} results',
+  'search.suggestions.hideButton': 'Hide the list of suggestions',
   'search.suggestions.history': '{count} items in search history',
   'search.suggestions.noHistory': 'No previous searches',
   'search.tryAgain': 'Try searching again',
