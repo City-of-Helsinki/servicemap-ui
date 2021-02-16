@@ -18,31 +18,38 @@ const sortHistory = sortedObject => (a, b) => {
   return 0;
 };
 
-// Format old data stucture to new one
-const formatOldData = (jsonData) => {
-  try {
-    const keys = Object.keys(jsonData);
-    if (
-      keys.length
-      && Object.prototype.hasOwnProperty.call(jsonData, keys[0])
-      && typeof jsonData[keys[0]] === 'number'
-    ) {
-      const data = {};
-      keys.forEach((key) => {
-        if (Object.prototype.hasOwnProperty.call(jsonData, key)) {
-          data[key] = {
-            weight: 1,
-            weightedLastSearch: new Date().getTime(),
-          };
-        }
-      });
-      return data;
-    }
-  } catch (e) {
-    console.warn(`Unable to format old history data: ${e.message}`);
+// Format single history object to correct format and return new data object
+const formatSingleHistoryObject = (current) => {
+  const today = new Date();
+  if (!current) {
+    return {
+      weight: 1,
+      weightedLastSearch: today.getTime(),
+    };
   }
 
-  return jsonData;
+  let data = {};
+  // Create new correctly formatted data object if current is old data
+  if (typeof current === 'number') {
+    data = {
+      weight: current,
+      weightedLastSearch: today.getTime() + current * halfDay,
+    };
+    return data;
+  }
+
+  // Update current data object weights and weightedLastSearch
+  const searchWeight = (
+    current
+    && current?.weight > 0
+      ? today.getTime() + current.weight * halfDay
+      : today.getTime()
+  );
+  data = {
+    weight: current && typeof current?.weight === 'number' ? current.weight + 1 : 1,
+    weightedLastSearch: searchWeight,
+  };
+  return data;
 };
 
 // Update weights every 5 days
@@ -61,15 +68,27 @@ const updateWeights = (jsonData) => {
   const keys = Object.keys(jsonData);
 
   if (shouldUpdate) {
-    keys.forEach((key) => {
-      if (Object.prototype.hasOwnProperty.call(jsonData, key)) {
-        const current = jsonData[key];
-        current.weight -= 1;
-        if (current.weight < 0) {
-          current.weight = 0;
+    try {
+      keys.forEach((key) => {
+        if (Object.prototype.hasOwnProperty.call(jsonData, key)) {
+          const current = jsonData[key];
+          // If old data still exists change to new format
+          if (typeof current === 'number') {
+            jsonData[key] = {
+              weight: current,
+              weightedLastSearch: new Date().getTime(),
+            };
+            return;
+          }
+          current.weight -= 1;
+          if (current.weight < 0) {
+            current.weight = 0;
+          }
         }
-      }
-    });
+      });
+    } catch (e) {
+      console.warn(`Error while updating previous search weights: ${e.message}`);
+    }
 
     LocalStorageUtility.saveItem(nextUpdateKey, today.getTime() + halfDay * 10);
   }
@@ -101,20 +120,8 @@ export const saveSearchToHistory = (searchWord, results) => {
     jsonData = toJson(data);
   }
 
-  jsonData = formatOldData(jsonData);
-
   const current = jsonData[historyKey];
-  const today = new Date();
-  const searchWeight = (
-    current
-    && current.weight > 0
-      ? today.getTime() + current.weight * halfDay
-      : today.getTime()
-  );
-  jsonData[historyKey] = {
-    weight: current && typeof current.weight === 'number' ? current.weight + 1 : 1,
-    weightedLastSearch: searchWeight,
-  };
+  jsonData[historyKey] = formatSingleHistoryObject(current);
 
   updateWeights(jsonData);
 
