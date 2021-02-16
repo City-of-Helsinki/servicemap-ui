@@ -404,6 +404,7 @@ const translations = {
   'search.suggestions.suggestions': '{count} sökförslag',
   // 'search.suggestions.expandSuggestions': '{count} preciseringsförslag',
   'search.suggestions.results': '{count} resultat',
+  'search.suggestions.hideButton': 'Göm listan med förslag',
   'search.suggestions.history': '{count} objekt i sökhistorien',
   'search.suggestions.noHistory': 'Inga tidigare sökningar',
   'search.tryAgain': 'Försök att söka på nytt',
