@@ -1,6 +1,19 @@
 import config from '../../../../../config';
 
 export default theme => ({
+  minimizeLink: {
+    backgroundColor: theme.palette.disabled.main,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: theme.spacing(2),
+    '& p': {
+      marginLeft: theme.spacing(6),
+    },
+    '& svg': {
+      marginRight: theme.spacing(1.5),
+    },
+  },
   suggestionArea: {
     position: 'absolute',
     right: theme.spacing(3),

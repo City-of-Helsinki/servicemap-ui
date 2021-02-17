@@ -38,6 +38,7 @@ let timeout;
 const timeoutDelay = 1000;
 
 const EmbedderView = ({
+  citySettings,
   classes,
   getLocaleText,
   intl,
@@ -61,11 +62,19 @@ const EmbedderView = ({
     search = uri.search(true);
   }
 
+  const cityOption = (search?.city !== '' && search?.city?.split(',')) || citySettings;
+  const citiesToReduce = cityOption.length > 0
+    ? cityOption
+    : embedderConfig.CITIES.filter(v => v);
+
   // Defaults
   const initialRatio = ratio || 52;
   const defaultMap = search.map || mapType || embedderConfig.BACKGROUND_MAPS[0];
   const defaultLanguage = getLanguage(url);
-  const defaultCity = search.city || 'all';
+  const defaultCities = citiesToReduce.reduce((acc, current) => {
+    acc[current] = true;
+    return acc;
+  }, {});
   const defaultFixedHeight = embedderConfig.DEFAULT_CUSTOM_WIDTH;
   const iframeConfig = embedderConfig.DEFAULT_IFRAME_PROPERTIES || {};
   const defaultService = 'none';
@@ -76,7 +85,7 @@ const EmbedderView = ({
   // States
   const [language, setLanguage] = useState(defaultLanguage);
   const [map, setMap] = useState(defaultMap);
-  const [city, setCity] = useState(defaultCity);
+  const [city, setCity] = useState(defaultCities);
   const [service, setService] = useState(defaultService);
   const [customWidth, setCustomWidth] = useState(embedderConfig.DEFAULT_CUSTOM_WIDTH || 100);
   const [widthMode, setWidthMode] = useState('auto');
@@ -105,7 +114,7 @@ const EmbedderView = ({
           text = currentService?.name && getLocaleText(currentService.name);
           break;
         default:
-          text = intl.formatMessage({ id: `general.pageTitles.ts${page}` });
+          text = intl.formatMessage({ id: `general.pageTitles.${page}` });
       }
       if (text.indexOf('general.pageTitles') !== -1) {
         text = null;
@@ -299,20 +308,26 @@ const EmbedderView = ({
     if (!showCities(embedUrl)) {
       return null;
     }
-    const cityControls = embedderConfig.CITIES.map(city => ({
-      value: city || 'all',
-      label: city ? uppercaseFirst(city) : 'Kaikki',
+    const cities = city;
+    const cityControls = embedderConfig.CITIES.filter(v => v).map(city => ({
+      key: city,
+      value: !!cities[city],
+      label: uppercaseFirst(city),
+      icon: null,
+      onChange: (v) => {
+        const newCities = {};
+        Object.assign(newCities, cities);
+        newCities[city] = v;
+        setCity(newCities);
+      },
     }));
 
     return (
       <EmbedController
         titleID="embedder.city.title"
         titleComponent="h2"
-        radioAriaLabel={intl.formatMessage({ id: 'embedder.city.aria.label' })}
-        radioName="city"
-        radioValue={city}
-        radioControls={cityControls}
-        radioOnChange={(e, v) => setCity(v)}
+        checkboxControls={cityControls}
+        checkboxLabelledBy="embedder.city.title"
       />
     );
   };
@@ -548,6 +563,7 @@ const EmbedderView = ({
 };
 
 EmbedderView.propTypes = {
+  citySettings: PropTypes.arrayOf(PropTypes.string).isRequired,
   classes: PropTypes.shape({
     appBar: PropTypes.string,
     button: PropTypes.string,

@@ -1,7 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Typography, Paper, withStyles, InputBase, Divider, Button, List, FormGroup, FormControlLabel, ListItem, Checkbox,
+  Typography,
+  Paper,
+  withStyles,
+  InputBase,
+  Divider,
+  Button,
+  List,
+  FormGroup,
+  FormControlLabel,
+  ListItem,
+  Checkbox,
 } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
 import SMRadio from '../../../components/SMRadio';
@@ -130,7 +140,13 @@ const EmbedController = ({
                     label={(
                       <>
                         {item.icon}
-                        <FormattedMessage id={item.labelId} />
+                        {
+                          item.labelId
+                            ? (
+                              <FormattedMessage id={item.labelId} />
+                            )
+                            : item.label
+                        }
                       </>
                     )}
                   />
@@ -215,11 +231,13 @@ const EmbedController = ({
 
 EmbedController.propTypes = {
   classes: PropTypes.shape({
+    checkbox: PropTypes.string,
     divider: PropTypes.string,
     root: PropTypes.string,
     formContainerPaper: PropTypes.string,
     input: PropTypes.string,
     iconButton: PropTypes.string,
+    list: PropTypes.string,
   }).isRequired,
   titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']).isRequired,
   titleID: PropTypes.string.isRequired,
@@ -229,7 +247,8 @@ EmbedController.propTypes = {
     value: PropTypes.bool.isRequired,
     onChange: PropTypes.func.isRequired,
     icon: PropTypes.node,
-    labelId: PropTypes.string.isRequired,
+    labelId: PropTypes.string,
+    label: PropTypes.string,
   })),
   checkboxLabelledBy: PropTypes.string,
   inputAriaLabel: PropTypes.string,

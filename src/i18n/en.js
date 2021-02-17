@@ -49,6 +49,7 @@ const translations = {
   'area.close.subdistrict': 'Close {category}',
   'area.noSelection': 'Choose area from the Choice of Area tab',
   'area.noUnits': 'There are no service locations in your chosen area',
+  'area.popupLink': 'Show the details for the area (new tab)',
   'area.list.geographical': 'Geographical',
   'area.list.protection': 'Civil defence',
   'area.list.health': 'Health',
@@ -195,6 +196,9 @@ const translations = {
   'general.news.alert.title': 'Notification window',
   'general.news.alert.close.aria': 'Close notification window',
   'general.news.info.title': 'Service map news',
+  'general.language.fi': 'Suomeksi',
+  'general.language.sv': 'På svenska',
+  'general.language.en': 'In English',
   'general.loading': 'Loading',
   'general.loading.done': 'Loading completed',
   'general.showOnMap': 'Show on map',
@@ -280,6 +284,7 @@ const translations = {
 
   // Units
   'unit': 'Location',
+  'unit.showInformation': 'Show the details for the location',
   'unit.accessibility.hearingMaps': 'Coverage maps',
   'unit.accessibility.hearingMaps.extra': '(New tab. The service is not accessible)',
   'unit.accessibility.noInfo': 'No accessibility information',
@@ -399,6 +404,7 @@ const translations = {
   'search.suggestions.suggestions': '{count} search suggestions',
   // 'search.suggestions.expandSuggestions': '{count} refinement suggestions',
   'search.suggestions.results': '{count} results',
+  'search.suggestions.hideButton': 'Hide the list of suggestions',
   'search.suggestions.history': '{count} items in search history',
   'search.suggestions.noHistory': 'No previous searches',
   'search.tryAgain': 'Try searching again',
@@ -489,6 +495,7 @@ const translations = {
   'tool.download': 'Download data',
   'tool.measuring': 'Measure distance (mouse only)',
   'tool.measuring.stop': 'Stop measuring',
+  'tool.print': 'Print',
 
   'info.title': 'About the service and accessibility statement',
   'info.statement': 'Accessibility statement',

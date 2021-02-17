@@ -19,8 +19,10 @@ const PaginatedList = ({
   title,
   titleComponent,
 }) => {
-  const [currentPage, setCurrentPage] = useState(1);
   const location = useLocation();
+  const searchPageNum = parseInt(new URLSearchParams(location.search).get('p'), 10); // Get query parameter
+  const defaultPageNum = !Number.isNaN(searchPageNum) ? searchPageNum : 1;
+  const [currentPage, setCurrentPage] = useState(defaultPageNum);
   const intl = useIntl();
   const focusTarget = useRef();
   const isFirstRun = useRef(true);

@@ -199,6 +199,7 @@ export const paletteDefault = {
   measuringStroke: {
     main: '#fff',
     background: 'rgb(25, 100, 230)',
+    border: '#fff',
   },
 };
 
@@ -240,6 +241,7 @@ export const paletteDark = {
   measuringStroke: {
     main: '#313131',
     background: '#A6A6A6',
+    border: '#fff',
   },
 };
 

@@ -3,6 +3,7 @@ import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { getLocaleString } from '../../redux/selectors/locale';
+import SettingsUtility from '../../utils/settings';
 import EmbedderView from './EmbedderView';
 import styles from './styles';
 
@@ -13,6 +14,7 @@ const mapStateToProps = (state) => {
   const getLocaleText = textObject => getLocaleString(state, textObject);
 
   return {
+    citySettings: SettingsUtility.getActiveCitySettings(state),
     getLocaleText,
     mapType,
     navigator,

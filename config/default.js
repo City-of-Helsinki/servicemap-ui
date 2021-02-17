@@ -171,6 +171,7 @@ export default {
   "guideMapURL": settings.GUIDE_MAP_URL,
   "reittiopasURL": settings.REITTIOPAS_URL,
   "outdoorExerciseURL": settings.OUTDOOR_EXERCISE_URL,
+  "natureAreaURL": settings.NATURE_AREA_URL,
   "cities": settings.CITIES.split(','),
   "maps": settings.MAPS.split(','),
   "smallContentAreaBreakpoint": 449,

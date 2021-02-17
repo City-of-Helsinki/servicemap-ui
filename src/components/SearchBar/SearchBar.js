@@ -28,9 +28,11 @@ class SearchBar extends React.Component {
     const { initialValue, previousSearch } = props;
 
     this.searchRef = React.createRef();
+    // Avoid service_nodes when setting initial search value
+    const ps = previousSearch && previousSearch.indexOf('service_node:') === -1 ? previousSearch : null;
 
     this.state = {
-      initialSearchValue: previousSearch || initialValue || '',
+      initialSearchValue: ps || initialValue || '',
       isActive: false,
       focusedSuggestion: null,
     };
@@ -49,6 +51,11 @@ class SearchBar extends React.Component {
 
   componentWillUnmount() {
     clearTimeout(this.blurTimeout);
+  }
+
+  handleArrowClick = (value) => {
+    this.setSearchbarValue(value);
+    this.setState({ focusedSuggestion: null });
   }
 
   setInactive = () => {
@@ -174,7 +181,7 @@ class SearchBar extends React.Component {
         onKeyPress={() => { keyboardHandler(this.closeMobileSuggestions, ['space', 'enter']); }}
         variant="srOnly"
       >
-        <FormattedMessage id="search.skipSuggestions" />
+        <FormattedMessage id="search.suggestions.hideButton" />
       </Typography>
     );
 
@@ -184,12 +191,12 @@ class SearchBar extends React.Component {
         {/* TODO: Modify this class to functional component, to use useMobile hook
         instead of individual mobile/desktop components. */}
         <MobileComponent>
-          {closeSuggestionElem}
           <SuggestionBox
+            closeMobileSuggestions={this.closeMobileSuggestions}
             visible={showSuggestions}
             focusedSuggestion={focusedSuggestion}
             searchQuery={searchQuery}
-            handleArrowClick={value => this.setSearchbarValue(value)}
+            handleArrowClick={this.handleArrowClick}
             handleSubmit={this.handleSubmit}
             isMobile
           />
@@ -200,7 +207,7 @@ class SearchBar extends React.Component {
             visible={showSuggestions}
             focusedSuggestion={focusedSuggestion}
             searchQuery={searchQuery}
-            handleArrowClick={value => this.setSearchbarValue(value)}
+            handleArrowClick={this.handleArrowClick}
             handleSubmit={this.handleSubmit}
           />
         </DesktopComponent>

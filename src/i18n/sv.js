@@ -49,6 +49,7 @@ const translations = {
   'area.close.subdistrict': 'Stäng {category}',
   'area.noSelection': 'Väl område under fliken Val av område',
   'area.noUnits': 'Det finns inga verksamhetsställen i ditt valda område',
+  'area.popupLink': 'Visa uppgifterna för området (ny flik)',
   'area.list.geographical': 'Geografisk',
   'area.list.protection': 'Befolkningsskydd',
   'area.list.health': 'Hälsa',
@@ -195,6 +196,9 @@ const translations = {
   'general.news.alert.title': 'Meddelandefönster',
   'general.news.alert.close.aria': 'Stäng meddelandefönstret',
   'general.news.info.title': 'Servicekartans nyheter',
+  'general.language.fi': 'Suomeksi',
+  'general.language.sv': 'På svenska',
+  'general.language.en': 'In English',
   'general.loading': 'Laddar',
   'general.loading.done': 'Laddning färdig',
   'general.showOnMap': 'Visa på kartan',
@@ -280,6 +284,7 @@ const translations = {
 
   // Units
   'unit': 'Verksamhetsställe',
+  'unit.showInformation': 'Visa uppgifterna för verksamhetsstället',
   'unit.accessibility.hearingMaps': 'Täckningskartor',
   'unit.accessibility.hearingMaps.extra': '(Ny flik. Tjänsten är inte tillgänglig)',
   'unit.accessibility.noInfo': 'Inga tillgänglighetsuppgifter',
@@ -399,6 +404,7 @@ const translations = {
   'search.suggestions.suggestions': '{count} sökförslag',
   // 'search.suggestions.expandSuggestions': '{count} preciseringsförslag',
   'search.suggestions.results': '{count} resultat',
+  'search.suggestions.hideButton': 'Göm listan med förslag',
   'search.suggestions.history': '{count} objekt i sökhistorien',
   'search.suggestions.noHistory': 'Inga tidigare sökningar',
   'search.tryAgain': 'Försök att söka på nytt',
@@ -489,6 +495,7 @@ const translations = {
   'tool.download': 'Exportera',
   'tool.measuring': 'Mät avstånd (endast med mus)',
   'tool.measuring.stop': 'Sluta mäta',
+  'tool.print': 'Skriv ut',
 
   'info.title': 'Om tjänsten och tillgänglighetsredogörelsen',
   'info.statement': 'Tillgänglighetsredogörelsen',

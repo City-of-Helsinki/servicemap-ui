@@ -279,7 +279,11 @@ const TabLists = ({
                   role="tabpanel"
                   key={item.title}
                   style={{ display: 'none' }}
-                />
+                >
+                  {
+                    item.component
+                  }
+                </div>
               );
             }
 
