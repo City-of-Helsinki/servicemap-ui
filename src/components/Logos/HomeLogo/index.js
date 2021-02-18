@@ -64,4 +64,4 @@ const mapStateToProps = state => ({
   locale: getLocale(state),
 });
 
-export default connect(mapStateToProps)(withStyles(styles)(HomeLogo));
+export default connect(mapStateToProps, {})(withStyles(styles)(HomeLogo));
