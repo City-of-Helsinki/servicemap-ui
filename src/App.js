@@ -1,8 +1,9 @@
 /* eslint-disable react/forbid-prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { IntlProvider } from 'react-intl';
+import { IntlProvider, useIntl } from 'react-intl';
 import { connect } from 'react-redux';
+import { Helmet } from 'react-helmet';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import {
   Switch, Route, BrowserRouter,
@@ -35,8 +36,20 @@ import ThemeWrapper from './themes/ThemeWrapper';
 import LocaleUtility from './utils/locale';
 import config from '../config';
 
-class App extends React.Component {
+// General meta tags for app
+const MetaTags = () => {
+  const intl = useIntl();
+  return (
+    <Helmet>
+      <meta property="og:site_name" content={intl.formatMessage({ id: 'app.title' })} />
+      {
+        isClient() && <meta property="og:url" content={window.location} />
+      }
+    </Helmet>
+  );
+};
 
+class App extends React.Component {
   // Remove the server-side injected CSS.
   componentDidMount() {
     const jssStyles = document.getElementById('jss-server-side');
@@ -52,6 +65,7 @@ class App extends React.Component {
     return (
       <ThemeWrapper>
         <IntlProvider {...intlData}>
+          <MetaTags />
           {/* <StylesProvider generateClassName={generateClassName}> */}
           <div className="App">
             <Switch>

@@ -10,7 +10,7 @@ import thunk from 'redux-thunk';
 import config from '../config';
 import rootReducer from '../src/redux/rootReducer';
 import App from '../src/App';
-import { makeLanguageHandler, languageSubdomainRedirect, unitRedirect, parseInitialMapPositionFromHostname } from './utils';
+import { makeLanguageHandler, languageSubdomainRedirect, unitRedirect, parseInitialMapPositionFromHostname, getRequestFullUrl } from './utils';
 import { setLocale } from '../src/redux/actions/user';
 import { Helmet } from 'react-helmet';
 import { ServerStyleSheets } from '@material-ui/core/styles';
@@ -141,6 +141,8 @@ const htmlTemplate = (req, reactDom, preloadedState, css, cssString, locale, hel
   <head>
     <meta charset="utf-8">
     ${helmet.title.toString()}
+    ${helmet.meta.toString()}
+    <meta property="og:url" data-react-helmet="true" content="${getRequestFullUrl(req)}" />
     <!-- jss-insertion-point -->
     <style id="jss-server-side">${cssString}</style>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
