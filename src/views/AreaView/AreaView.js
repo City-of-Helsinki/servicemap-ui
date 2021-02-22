@@ -198,22 +198,19 @@ const AreaView = ({
 
 
   useEffect(() => {
-    // Focus map to local district
+    // Focus map to local district when new address is selected
     if (selectedAddress && addressDistrict) {
-      const district = selectedDistrictData.find(obj => obj.id === addressDistrict);
+      const district = localAddressData.districts.find(obj => obj.id === addressDistrict.id);
       focusMapToDistrict(district);
-      // Add local geographical district
-      const selectedCategory = dataStructure.find(i => i.districts.includes(selectedDistrictType));
-      if (selectedCategory?.id === 'geographical') {
-        setSelectedSubdistricts([...selectedSubdistricts, district.ocd_id]);
-      }
     }
   }, [addressDistrict, map]);
 
 
   useEffect(() => {
     if (selectedAddress) {
-      fetchAddressDistricts();
+      if (formAddressString(districtAddressData.address) !== formAddressString(selectedAddress)) {
+        fetchAddressDistricts();
+      }
     } else {
       setDistrictAddressData(null);
     }
