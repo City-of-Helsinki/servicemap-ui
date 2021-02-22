@@ -331,22 +331,6 @@ const AreaTab = (props) => {
 
   return (
     <div>
-      <Typography className={classes.infoText}>
-        <FormattedMessage id="area.info" />
-      </Typography>
-      <div className={classes.addressArea}>
-        <AddressSearchBar
-          defaultAddress={address}
-          handleAddressChange={setSelectedAddress}
-          title={(
-            <>
-              <FormattedMessage id="area.searchbar.infoText.address" />
-              {' '}
-              <FormattedMessage id="area.searchbar.infoText.optional" />
-            </>
-          )}
-        />
-      </div>
       <div className={classes.infoTitle}>
         <Typography variant="subtitle1" component="h3">
           <FormattedMessage id="area.choose.district" />

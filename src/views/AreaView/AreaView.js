@@ -369,6 +369,19 @@ const AreaView = ({
             titleComponent="p"
             backButton
           />
+          <div className={classes.addressArea}>
+            <AddressSearchBar
+              defaultAddress={districtAddressData.address}
+              handleAddressChange={setSelectedAddress}
+              title={(
+                <>
+                  <FormattedMessage id="area.searchbar.infoText.address" />
+                  {' '}
+                  <FormattedMessage id="area.searchbar.infoText.optional" />
+                </>
+              )}
+            />
+          </div>
           <TabLists
             data={tabs}
           />
