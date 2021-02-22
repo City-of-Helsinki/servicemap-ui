@@ -163,27 +163,15 @@ const AreaView = ({
   };
 
 
-
-  const handleOpen = async (item) => {
+  const handleOpen = (item) => {
     if (openItems.includes(item.id)) {
       const items = openItems.filter(i => i !== item.id);
       setOpenItems(items);
     } else {
       setOpenItems([...openItems, item.id]);
     }
-
-    // If no fetched data found, fetch all distirct types within opened category
-    if (!districtData.some(district => item.districts.includes(district.name))
-      && !ditsrictsFetching.includes(item.title)
-    ) {
-      dispatchDistrictsFetching({ type: 'add', value: item.title });
-      await Promise.all(item.districts.map(i => fetchDistrictsByType(i, item.title, item.id)))
-        .then((results) => {
-          dispatchDistrictsFetching({ type: 'remove', value: item.title });
-          results.forEach(result => filterFetchData(result.data, result.type, result.category));
-        });
-    }
   };
+
 
   useEffect(() => () => {
     // Save accordion state on unmount
