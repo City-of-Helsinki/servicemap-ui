@@ -254,11 +254,10 @@ const AreaView = ({
           const category = dataStructure.find(
             data => data.districts.includes(paramValue),
           );
-          setRadioValue(paramValue);
           handleOpen(category);
         }
         // Set selected district type from url paramters
-        setSelectedDistrictType(searchParams.selected);
+        setSelectedDistrictType(paramValue);
         if (searchParams.districts) {
           // Set selected geographical districts from url parameters
           setSelectedSubdistricts(searchParams.districts.split(','));
@@ -280,15 +279,10 @@ const AreaView = ({
       } else {
         fetchAllDistricts();
       }
-    } else { // Returning to page
-      if (areaViewState) {
-        // Returns map to the previous spot
-        const { center, zoom } = areaViewState;
-        if (center && zoom) map.leafletElement.setView(center, zoom);
-      }
-      if (selectedDistrictType) {
-        setRadioValue(selectedDistrictType);
-      }
+    } else if (areaViewState) { // Returning to page
+      // Returns map to the previous spot
+      const { center, zoom } = areaViewState;
+      if (center && zoom) map.leafletElement.setView(center, zoom);
     }
   }, []);
 
