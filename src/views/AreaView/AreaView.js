@@ -240,12 +240,12 @@ const AreaView = ({
     // If pending district focus, focus to districts when distitct data is loaded
     if (focusTo && selectedDistrictData.length) {
       if (focusTo === 'districts') {
-        if (selectedDistrictData) {
+        if (selectedDistrictData[0]?.boundary) {
           setFocusTo(null);
           focusDistricts(map.leafletElement, selectedDistrictData);
         }
       } else if (focusTo === 'subdistricts') {
-        if (selectedDistrictData) {
+        if (selectedDistrictData[0]?.boundary) {
           const filtetedDistricts = selectedDistrictData.filter(
             i => selectedSubdistricts.includes(i.ocd_id),
           );
@@ -258,54 +258,52 @@ const AreaView = ({
 
 
   useEffect(() => {
-    // Apply url parameters if first render
-    const searchParams = parseSearchParams(location.search);
-    if (Object.keys(searchParams).length) {
-      if (searchParams.selected) {
-        if (!districtData.length) {
-          // Open correct category and fetch data based on url parameters
-          const paramValue = searchParams.selected.split(/([0-9]+)/)[0];
+    // Handle first mount of page
+    if (!districtData.length) { // First time arriving to page
+      // Apply url parameters if first render
+      const searchParams = parseSearchParams(location.search);
+      if (Object.keys(searchParams).length && searchParams.selected) {
+        const paramValue = searchParams.selected.split(/([0-9]+)/)[0];
+        fetchAllDistricts(paramValue);
+        if (!embed) {
           const category = dataStructure.find(
             data => data.districts.includes(paramValue),
           );
-          if (embed) {
-            fetchDistrictsByType(paramValue, null, category.id)
-              .then(result => filterFetchData(result.data, result.type, result.category));
-          } else {
-            handleOpen(category);
-          }
-          // Set selected district type from url paramters
-          setSelectedDistrictType(searchParams.selected);
-          if (searchParams.districts) {
-            // Set selected geographical districts from url parameters
-            setSelectedSubdistricts(searchParams.districts.split(','));
-            setFocusTo('subdistricts');
-          } else {
-            setFocusTo('districts');
-          }
-        } else {
-          setSelectedDistrictType(searchParams.selected);
+          setRadioValue(paramValue);
+          handleOpen(category);
         }
-      }
-      if (searchParams.services) {
-        const services = searchParams.services.split(',');
-        const convertedServices = services.map(service => parseInt(service, 10));
-        setSelectedDistrictServices(convertedServices);
-      }
-      if (searchParams.lat && searchParams.lng) {
-        // Set address from url paramters
-        fetchAddress({ lat: searchParams.lat, lng: searchParams.lng })
-          .then(data => setSelectedAddress(data));
-      }
-    }
+        // Set selected district type from url paramters
+        setSelectedDistrictType(searchParams.selected);
+        if (searchParams.districts) {
+          // Set selected geographical districts from url parameters
+          setSelectedSubdistricts(searchParams.districts.split(','));
+          setFocusTo('subdistricts');
+        } else {
+          setFocusTo('districts');
+        }
 
-    // Open and set previous selections when returning to page
-    if (selectedDistrictType) {
-      const category = dataStructure.find(
-        obj => obj.districts.some(district => selectedDistrictType.includes(district)),
-      );
-      handleOpen(category);
-      setSelectedDistrictType(selectedDistrictType);
+        if (searchParams.services) {
+          const services = searchParams.services.split(',');
+          const convertedServices = services.map(service => parseInt(service, 10));
+          setSelectedDistrictServices(convertedServices);
+        }
+        if (searchParams.lat && searchParams.lng) {
+          // Set address from url paramters
+          fetchAddress({ lat: searchParams.lat, lng: searchParams.lng })
+            .then(data => setSelectedAddress(data));
+        }
+      } else {
+        fetchAllDistricts();
+      }
+    } else { // Returning to page
+      if (areaViewState) {
+        // Returns map to the previous spot
+        const { center, zoom } = areaViewState;
+        if (center && zoom) map.leafletElement.setView(center, zoom);
+      }
+      if (selectedDistrictType) {
+        setRadioValue(selectedDistrictType);
+      }
     }
   }, []);
 
