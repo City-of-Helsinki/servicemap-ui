@@ -289,24 +289,13 @@ const AreaView = ({
 
   const renderAreaTab = () => (
     <AreaTab
-      districtRadioValue={districtRadioValue}
-      selectedSubdistricts={selectedSubdistricts}
-      setDistrictRadioValue={setDistrictRadioValue}
-      setSelectedSubdistricts={setSelectedSubdistricts}
-      setSelectedDistrictServices={setSelectedDistrictServices}
-      setOpenServices={setOpenServices}
-      ditsrictsFetching={ditsrictsFetching}
-      unitsFetching={unitsFetching}
+      selectedAddress={selectedAddress}
       districtData={districtData}
-      selectedDistrictData={selectedDistrictData}
-      openItems={openItems}
+      intitialOpenItems={accordionStates.current?.openItems}
       handleOpen={handleOpen}
       dataStructure={dataStructure}
-      setSelectedAddress={setSelectedAddress}
-      address={districtAddressData.address}
       navigator={navigator}
       getLocaleText={getLocaleText}
-      map={map}
     />
   );
 
