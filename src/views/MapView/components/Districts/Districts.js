@@ -155,7 +155,7 @@ const Districts = ({
       if (selectedSubdistricts.length) {
         dimmed = !selectedSubdistricts.some(item => item === district.ocd_id);
       } else {
-        dimmed = addressDistrict && district.id !== addressDistrict;
+        dimmed = addressDistrict && district.id !== addressDistrict.id;
       }
 
       const area = district.boundary.coordinates.map(
@@ -244,7 +244,7 @@ Districts.propTypes = {
   selectedAddress: PropTypes.objectOf(PropTypes.any),
   districtData: PropTypes.arrayOf(PropTypes.object),
   unitsFetching: PropTypes.bool.isRequired,
-  addressDistrict: PropTypes.number,
+  addressDistrict: PropTypes.objectOf(PropTypes.any),
   selectedSubdistricts: PropTypes.arrayOf(PropTypes.string),
   setSelectedSubdistricts: PropTypes.func.isRequired,
   setSelectedDistrictServices: PropTypes.func.isRequired,

@@ -64,23 +64,6 @@ const endDistrictFetch = districtType => ({
 });
 
 
-export const fetchAllDistricts = () => (
-  async (dispatch) => {
-    const options = {
-      page: 1,
-      page_size: 500,
-      type: 'health_station_district,maternity_clinic_district,lower_comprehensive_school_district_fi,lower_comprehensive_school_district_sv,upper_comprehensive_school_district_fi,upper_comprehensive_school_district_sv,preschool_education_fi,preschool_education_sv,rescue_area,rescue_district,rescue_sub_district,nature_reserve',
-      geometry: false,
-    };
-    const onNext = () => {};
-    const onSuccess = (result) => {
-      const groupedData = groupDistrictData(result);
-      dispatch(setDistrictData(groupedData));
-    };
-    districtFetch(options, null, onSuccess, null, onNext);
-  }
-);
-
 export const fetchDistrictGeometry = type => (
   async (dispatch) => {
     const options = {
@@ -95,9 +78,29 @@ export const fetchDistrictGeometry = type => (
     };
     const onNext = () => {};
     const onSuccess = (results) => {
-      dispatch(endDistrictFetch(type));
       const filteredData = parseDistrictGeometry(results);
       dispatch(updateDistrictData(type, filteredData));
+      dispatch(endDistrictFetch(type));
+    };
+    districtFetch(options, onStart, onSuccess, null, onNext);
+  }
+);
+
+export const fetchAllDistricts = selected => (
+  async (dispatch) => {
+    const options = {
+      page: 1,
+      page_size: 500,
+      type: 'health_station_district,maternity_clinic_district,lower_comprehensive_school_district_fi,lower_comprehensive_school_district_sv,upper_comprehensive_school_district_fi,upper_comprehensive_school_district_sv,preschool_education_fi,preschool_education_sv,rescue_area,rescue_district,rescue_sub_district,nature_reserve,neighborhood,postcode_area',
+      geometry: false,
+    };
+    const onStart = () => dispatch(startDistrictFetch('all'));
+    const onNext = () => {};
+    const onSuccess = (result) => {
+      const groupedData = groupDistrictData(result);
+      dispatch(setDistrictData(groupedData));
+      dispatch(endDistrictFetch('all'));
+      if (selected) dispatch(fetchDistrictGeometry(selected));
     };
     districtFetch(options, onStart, onSuccess, null, onNext);
   }

@@ -34,7 +34,7 @@ export const getAddressDistrict = createSelector(
   (districts, addressDistricts) => {
     if (districts && addressDistricts) {
       const district = districts.find(obj => addressDistricts.some(i => i.id === obj.id));
-      return district ? district.id : null;
+      return district;
     }
     return null;
   },
