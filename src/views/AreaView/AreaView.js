@@ -15,6 +15,7 @@ import AreaTab from './components/AreaTab';
 import { districtFetch } from '../../utils/fetch';
 import fetchAddress from '../MapView/utils/fetchAddress';
 import TitleBar from '../../components/TitleBar';
+import { dataStructure } from './utils/districtData';
 
 
 const AreaView = ({
@@ -45,75 +46,6 @@ const AreaView = ({
   if (!map || !map.leafletElement) {
     return null;
   }
-
-  const dataStructure = [ // Categorized district data structure
-    {
-      id: 'health',
-      title: intl.formatMessage({ id: 'area.list.health' }),
-      districts: [
-        'health_station_district',
-        'maternity_clinic_district',
-      ],
-    },
-    {
-      id: 'education',
-      title: intl.formatMessage({ id: 'area.list.education' }),
-      districts: [
-        'lower_comprehensive_school_district_fi',
-        'lower_comprehensive_school_district_sv',
-        'upper_comprehensive_school_district_fi',
-        'upper_comprehensive_school_district_sv',
-      ],
-      subCategories: [
-        {
-          subtitle: intl.formatMessage({ id: 'area.list.education.finnish' }),
-          districts: [
-            'lower_comprehensive_school_district_fi',
-            'upper_comprehensive_school_district_fi',
-          ],
-        },
-        {
-          subtitle: intl.formatMessage({ id: 'area.list.education.swedish' }),
-          districts: [
-            'lower_comprehensive_school_district_sv',
-            'upper_comprehensive_school_district_sv',
-          ],
-        },
-      ],
-    },
-    {
-      id: 'preschool',
-      title: intl.formatMessage({ id: 'area.list.preschool' }),
-      districts: [
-        'preschool_education_fi',
-        'preschool_education_sv',
-      ],
-    },
-    {
-      id: 'geographical',
-      title: intl.formatMessage({ id: 'area.list.geographical' }),
-      districts: [
-        'neighborhood',
-        'postcode_area',
-      ],
-    },
-    {
-      id: 'protection',
-      title: intl.formatMessage({ id: 'area.list.protection' }),
-      districts: [
-        'rescue_area',
-        'rescue_district',
-        'rescue_sub_district',
-      ],
-    },
-    {
-      id: 'nature',
-      title: intl.formatMessage({ id: 'area.list.natureConservation' }),
-      districts: [
-        'nature_reserve',
-      ],
-    },
-  ];
 
   const location = useLocation();
   const accordionStates = useRef(null);
@@ -293,7 +225,6 @@ const AreaView = ({
       districtData={districtData}
       intitialOpenItems={accordionStates.current?.openItems}
       handleOpen={handleOpen}
-      dataStructure={dataStructure}
       navigator={navigator}
       getLocaleText={getLocaleText}
     />

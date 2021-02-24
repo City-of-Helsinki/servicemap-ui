@@ -3,36 +3,114 @@ import booleanWithin from '@turf/boolean-within';
 import pointOnFeature from '@turf/point-on-feature';
 import area from '@turf/area';
 
-export const groupDistrictData = data => data.reduce((acc, cur) => {
-  // Group data by district type and period
-  const { start, end } = cur;
-  if (start?.includes(2019)) {
-    // FIXME: temporary solution to hide older school years
-    return acc;
-  }
-  const period = start && end
-    ? `${new Date(start).getFullYear()}-${new Date(end).getFullYear()}`
-    : null;
-  const currentType = period ? `${cur.type}${period}` : cur.type;
-  const duplicate = acc.find(obj => obj.id === currentType);
+export const dataStructure = [ // Categorized district data structure
+  {
+    id: 'health',
+    titleID: 'area.list.health',
+    districts: [
+      'health_station_district',
+      'maternity_clinic_district',
+    ],
+  },
+  {
+    id: 'education',
+    titleID: 'area.list.education',
+    districts: [
+      'lower_comprehensive_school_district_fi',
+      'lower_comprehensive_school_district_sv',
+      'upper_comprehensive_school_district_fi',
+      'upper_comprehensive_school_district_sv',
+    ],
+    subCategories: [
+      {
+        titleID: 'area.list.education.finnish',
+        districts: [
+          'lower_comprehensive_school_district_fi',
+          'upper_comprehensive_school_district_fi',
+        ],
+      },
+      {
+        titleID: 'area.list.education.swedish',
+        districts: [
+          'lower_comprehensive_school_district_sv',
+          'upper_comprehensive_school_district_sv',
+        ],
+      },
+    ],
+  },
+  {
+    id: 'preschool',
+    titleID: 'area.list.preschool',
+    districts: [
+      'preschool_education_fi',
+      'preschool_education_sv',
+    ],
+  },
+  {
+    id: 'geographical',
+    titleID: 'area.list.geographical',
+    districts: [
+      'neighborhood',
+      'postcode_area',
+    ],
+  },
+  {
+    id: 'protection',
+    titleID: 'area.list.protection',
+    districts: [
+      'rescue_area',
+      'rescue_district',
+      'rescue_sub_district',
+    ],
+  },
+  {
+    id: 'nature',
+    titleID: 'area.list.natureConservation',
+    districts: [
+      'nature_reserve',
+    ],
+  },
+];
 
-  if (duplicate) {
-    duplicate.data.push(cur);
-  } else {
-    acc.push({
-      id: currentType,
-      data: [cur],
-      name: cur.type,
-      period,
-      category: null,
-    });
-  }
-  return acc;
-  // TODO: sort by period!
-  //   groupedData.sort(
-  //     (a, b) => new Date(a[0].start).getFullYear() - new Date(b[0].start).getFullYear(),
-  //   );
-}, []);
+
+export const groupDistrictData = (data) => {
+  const groupedData = data.reduce((acc, cur) => {
+  // Group data by district type and period
+    const { start, end } = cur;
+    if (start?.includes(2019)) {
+    // FIXME: temporary solution to hide older school years
+      return acc;
+    }
+    const period = start && end
+      ? `${new Date(start).getFullYear()}-${new Date(end).getFullYear()}`
+      : null;
+    const currentType = period ? `${cur.type}${period}` : cur.type;
+    const duplicate = acc.find(obj => obj.id === currentType);
+
+    if (duplicate) {
+      duplicate.data.push(cur);
+    } else {
+      acc.push({
+        id: currentType,
+        data: [cur],
+        name: cur.type,
+        period,
+      });
+    }
+    return acc;
+  }, []);
+
+  // Sort by period
+  groupedData.sort(
+    (a, b) => new Date(a.data[0].start).getFullYear() - new Date(b.data[0].start).getFullYear(),
+  );
+
+  // Sort by data structure order
+  const categoryOrder = dataStructure.flatMap(obj => obj.districts);
+  groupedData.sort((a, b) => categoryOrder.indexOf(a.name) - categoryOrder.indexOf(b.name));
+
+  return groupedData;
+};
 
 const compareBoundaries = (a, b) => {
   // This function checks if district b is within district a or districts are identical
@@ -72,8 +150,6 @@ export const parseDistrictGeometry = (results) => {
       return;
     }
     const returnItem = district;
-    // TODO: check if category is still needed
-    // returnItem.category = category;
 
     // Combine other districts that are duplicates or within this district
     const overlapingDistricts = data.filter(obj => compareBoundaries(district, obj));

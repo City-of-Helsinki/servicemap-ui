@@ -16,7 +16,7 @@ import SMButton from '../../../../components/ServiceMapButton';
 import SMAccordion from '../../../../components/SMAccordion';
 import { fetchDistrictGeometry, setSelectedDistrictType } from '../../../../redux/actions/district';
 import DistrictUnitList from '../DistrictUnitList';
-import DistrictToggleItem from '../DistrictToggleItem';
+import { dataStructure } from '../../utils/districtData';
 
 const AreaTab = (props) => {
   const {
@@ -24,7 +24,6 @@ const AreaTab = (props) => {
     districtData,
     intitialOpenItems,
     handleOpen,
-    dataStructure,
     navigator,
     getLocaleText,
     classes,
@@ -101,8 +100,10 @@ const AreaTab = (props) => {
       return item.subCategories.map((obj) => {
         const districList = districtData.filter(i => obj.districts.includes(i.name));
         return (
-          <React.Fragment key={obj.subtitle}>
-            <div className={classes.subtitle}><Typography>{obj.subtitle}</Typography></div>
+          <React.Fragment key={obj.titleID}>
+            <div className={classes.subtitle}>
+              <Typography><FormattedMessage id={obj.titleID} /></Typography>
+            </div>
             {renderDistrictList(districList)}
           </React.Fragment>
         );
@@ -118,12 +119,12 @@ const AreaTab = (props) => {
     const defaultExpanded = intitialOpenItems.includes(item.id) || selectedCategory === item.id;
     // TODO: fix constant re-rendering on accoriodn open/close
     return (
-      <ListItem key={item.title} className={classes.listItem} divider>
+      <ListItem key={item.titleID} className={classes.listItem} divider>
         <SMAccordion
           className={classes.accodrion}
           onOpen={() => handleOpen(item)}
           defaultOpen={defaultExpanded}
-          titleContent={<Typography id={`${item.id}-content`} className={classes.bold}>{item.title}</Typography>}
+          titleContent={<Typography id={`${item.id}-content`} className={classes.bold}><FormattedMessage id={item.titleID} /></Typography>}
           collapseContent={(
             <>
               <Divider aria-hidden />
@@ -189,7 +190,6 @@ AreaTab.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   districtData: PropTypes.arrayOf(PropTypes.object),
   intitialOpenItems: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
-  dataStructure: PropTypes.arrayOf(PropTypes.object).isRequired,
   selectedAddress: PropTypes.objectOf(PropTypes.any),
   handleOpen: PropTypes.func.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
