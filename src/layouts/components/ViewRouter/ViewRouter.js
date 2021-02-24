@@ -87,6 +87,13 @@ const UnitReservations = () => (
     </PageWrapper>
   </TitleWrapper>
 );
+const UnitFeedback = () => (
+  <TitleWrapper messageId="general.pageTitles.feedback">
+    <PageWrapper headMsgId="" page="unit">
+      <FeedbackView />
+    </PageWrapper>
+  </TitleWrapper>
+);
 
 const Service = () => (
   <TitleWrapper messageId="general.pageTitles.service">
@@ -154,6 +161,7 @@ class ViewRouter extends React.Component {
   render() {
     return (
       <Switch>
+        <Route exact path="/:lng/unit/:unit/feedback" component={UnitFeedback} />
         <Route exact path="/:lng/unit/:unit/events" component={UnitEvents} />
         <Route exact path="/:lng/unit/:unit/reservations" component={UnitReservations} />
         <Route exact path="/:lng/unit/:unit" component={Unit} />
