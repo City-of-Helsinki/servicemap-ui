@@ -48,7 +48,7 @@ const AreaView = ({
   }
 
   const location = useLocation();
-  const accordionStates = useRef(null);
+  const accordionStates = useRef(areaViewState || {});
 
   // State
   const [districtRadioValue, setDistrictRadioValue] = useState(null);
@@ -60,12 +60,7 @@ const AreaView = ({
   // Fetch state
   const [ditsrictsFetching, dispatchDistrictsFetching] = useReducer(fetchReducer, []);
 
-  // State that will be saved to redux on unmount
-  accordionStates.current = {
-    openItems,
-    openServices,
-  };
-
+  
 
   const formAddressString = address => (address
     ? `${getLocaleText(address.street.name)} ${address.number}${address.number_end ? address.number_end : ''}${address.letter ? address.letter : ''}, ${uppercaseFirst(address.street.municipality)}`
@@ -104,17 +99,20 @@ const AreaView = ({
     }
   };
 
+  const getViewState = () => ({
+    openItems: accordionStates.current.openItems,
+    center: map.leafletElement.getCenter(),
+    zoom: map.leafletElement.getZoom(),
+  });
 
   useEffect(() => () => {
-    // Save accordion state on unmount
-    setAreaViewState(accordionStates.current);
+    // On unmount, save map position and opened accordions
+    setAreaViewState(getViewState());
   }, []);
 
   useEffect(() => {
-    if (selectedDistrictType !== districtRadioValue) {
-      setSelectedDistrictType(districtRadioValue);
-    }
-  }, [districtRadioValue]);
+    accordionStates.current.openItems = openItems;
+  }, [openItems]);
 
 
   useEffect(() => {
