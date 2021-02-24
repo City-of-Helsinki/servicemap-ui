@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback } from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import {
   List,
@@ -16,7 +16,8 @@ import SMButton from '../../../../components/ServiceMapButton';
 import SMAccordion from '../../../../components/SMAccordion';
 import { fetchDistrictGeometry, setSelectedDistrictType } from '../../../../redux/actions/district';
 import DistrictUnitList from '../DistrictUnitList';
-import { dataStructure } from '../../utils/districtData';
+import DistrictToggleButton from '../DistrictToggleButton';
+import { dataStructure } from '../../utils/districtDataHelper';
 
 const AreaTab = (props) => {
   const {
@@ -47,9 +48,10 @@ const AreaTab = (props) => {
   };
 
 
-  const renderDistrictItem = useCallback(district => (
-    <DistrictToggleItem
+  const renderDistrictItem = district => (
+    <DistrictToggleButton
       district={district}
+      selectionSize={districtData.length}
       onToggle={() => handleRadioChange(district)}
       selected={selectedDistrictType === district.id}
       label={(
@@ -65,7 +67,7 @@ const AreaTab = (props) => {
         </>
       )}
     />
-  ), [selectedDistrictType]);
+  );
 
 
   const renderDistrictList = districList => (
@@ -175,7 +177,9 @@ const AreaTab = (props) => {
           onClick={() => navigator.openMap()}
         />
       </MobileComponent>
-      {/* {(ditsrictsFetching.length || districtData.length) ? ( // TODO: sccreen reader info during first fetch
+      {/*
+      // TODO: sccreen reader info during first fetch
+      {(ditsrictsFetching.length || districtData.length) ? (
         <Typography variant="srOnly" role="alert">
           {ditsrictsFetching.length
             ? <FormattedMessage id="general.loading" />
