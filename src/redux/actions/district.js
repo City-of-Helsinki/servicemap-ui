@@ -1,5 +1,5 @@
 import { districtFetch, unitsFetch } from '../../utils/fetch';
-import { groupDistrictData, parseDistrictGeometry } from '../../views/AreaView/utils/districtData';
+import { groupDistrictData, parseDistrictGeometry } from '../../views/AreaView/utils/districtDataHelper';
 
 export const setHighlightedDistrict = district => ({
   type: 'SET_DISTRICT_HIGHLIGHT',

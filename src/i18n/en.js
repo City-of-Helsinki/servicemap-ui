@@ -39,8 +39,8 @@ const translations = {
   // Area
   'area.searchbar.infoText.address': 'Write your home address',
   'area.searchbar.infoText.optional': '(optional)',
-  'area.tab.selection': 'Choice of area',
-  'area.tab.services': 'Services in the area',
+  'area.tab.publicServices': 'Julkisten palveluiden alueet', // TODO: translate
+  'area.tab.geographical': 'Kaupunginosat ja postinumeroalueet', // TODO: translate
   'area.services.local': 'Services in your own area',
   'area.services.nearby': 'Services in the neighbouring areas',
   'area.info': 'Choose an area, whose services you want information about. Writing your home address in the search field opens a map, and the areas and districts that you belong to are shown under the Services in the area tab.',

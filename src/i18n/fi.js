@@ -39,8 +39,8 @@ const translations = {
   // Area
   'area.searchbar.infoText.address': 'Kirjoita kotiosoitteesi',
   'area.searchbar.infoText.optional': '(valinnainen)',
-  'area.tab.selection': 'Alueen valinta',
-  'area.tab.services': 'Alueen palvelut',
+  'area.tab.publicServices': 'Julkisten palveluiden alueet',
+  'area.tab.geographical': 'Kaupunginosat ja postinumeroalueet',
   'area.services.local': 'Oman alueesi palvelut',
   'area.services.nearby': 'Lähialueiden palvelut',
   'area.info': 'Valitse alue, jonka palveluista haluat tietoa. Kirjoittamalla alla olevaan hakukenttään kotiosoitteesi saat näkyville karttaan ja Alueen palvelut -välilehdelle alueet ja piirit, joihin kuulut',

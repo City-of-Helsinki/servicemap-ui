@@ -1,12 +1,8 @@
-import React, {
-  useState, useEffect, useReducer, useRef,
-} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import booleanEqual from '@turf/boolean-equal';
-import booleanWithin from '@turf/boolean-within';
-import pointOnFeature from '@turf/point-on-feature';
-import area from '@turf/area';
 import { useLocation } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
+import { useSelector } from 'react-redux';
 import { focusDistrict, focusDistricts } from '../MapView/utils/mapActions';
 import TabLists from '../../components/TabLists';
 import UnitTab from './components/UnitTab';
@@ -15,25 +11,24 @@ import AreaTab from './components/AreaTab';
 import { districtFetch } from '../../utils/fetch';
 import fetchAddress from '../MapView/utils/fetchAddress';
 import TitleBar from '../../components/TitleBar';
-import { dataStructure } from './utils/districtData';
+import AddressSearchBar from '../../components/AddressSearchBar';
+import { dataStructure } from './utils/districtDataHelper';
 
 
 const AreaView = ({
   setSelectedDistrictType,
   setSelectedSubdistricts,
   setSelectedDistrictServices,
-  setDistrictData,
   setDistrictAddressData,
   setAreaViewState,
   fetchDistrictUnitList,
+  fetchAllDistricts,
   unitsFetching,
   districtData,
   districtAddressData,
-  selectedDistrictType,
   selectedDistrictData,
   addressDistrict,
   subdistrictUnits,
-  filteredSubdistrictUnits,
   selectedSubdistricts,
   selectedDistrictServices,
   areaViewState,
@@ -42,6 +37,7 @@ const AreaView = ({
   navigator,
   embed,
   intl,
+  classes,
 }) => {
   if (!map || !map.leafletElement) {
     return null;
@@ -49,18 +45,13 @@ const AreaView = ({
 
   const location = useLocation();
   const accordionStates = useRef(areaViewState || {});
+  const localAddressData = useSelector(state => state.districts.districtAddressData);
 
   // State
-  const [districtRadioValue, setDistrictRadioValue] = useState(null);
   const [selectedAddress, setSelectedAddress] = useState(districtAddressData.address);
   const [openItems, setOpenItems] = useState(areaViewState ? areaViewState.openItems : []);
-  const [openServices, setOpenServices] = useState(areaViewState ? areaViewState.openServices : []);
   // Pending request to focus map to districts. Executed once district data is loaded
   const [focusTo, setFocusTo] = useState(null);
-  // Fetch state
-  const [ditsrictsFetching, dispatchDistrictsFetching] = useReducer(fetchReducer, []);
-
-  
 
   const formAddressString = address => (address
     ? `${getLocaleText(address.street.name)} ${address.number}${address.number_end ? address.number_end : ''}${address.letter ? address.letter : ''}, ${uppercaseFirst(address.street.municipality)}`
@@ -147,11 +138,6 @@ const AreaView = ({
 
 
   useEffect(() => {
-    setDistrictRadioValue(selectedDistrictType);
-  }, [selectedDistrictType]);
-
-
-  useEffect(() => {
     // If pending district focus, focus to districts when distitct data is loaded
     if (focusTo && selectedDistrictData.length) {
       if (focusTo === 'districts') {
@@ -231,16 +217,15 @@ const AreaView = ({
   const renderUnitTab = () => (
     <UnitTab
       selectedDistrictData={selectedDistrictData}
-      selectedAddress={selectedAddress}
       selectedSubdistricts={selectedSubdistricts}
       setSelectedDistrictServices={setSelectedDistrictServices}
-      filteredSubdistrictUnits={filteredSubdistrictUnits}
+      intitialOpenItems={accordionStates.current?.openItems}
+      handleOpen={handleOpen}
       selectedDistrictServices={selectedDistrictServices}
-      addressDistrict={addressDistrict}
-      openServices={openServices}
-      setOpenServices={setOpenServices}
       formAddressString={formAddressString}
       getLocaleText={getLocaleText}
+      districtData={districtData}
+      map={map}
     />
   );
 
@@ -249,11 +234,11 @@ const AreaView = ({
     const tabs = [
       {
         component: renderAreaTab(),
-        title: intl.formatMessage({ id: 'area.tab.selection' }),
+        title: intl.formatMessage({ id: 'area.tab.publicServices' }),
       },
       {
         component: renderUnitTab(),
-        title: intl.formatMessage({ id: 'area.tab.services' }),
+        title: intl.formatMessage({ id: 'area.tab.geographical' }),
       },
     ];
     if (!embed) {
