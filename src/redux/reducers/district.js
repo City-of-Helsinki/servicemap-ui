@@ -72,6 +72,20 @@ export default (state = initialState, action) => {
         selectedSubdistricts: action.districts,
       };
 
+    case 'ADD_SELECTED_DISTRICT_SERVICE':
+      return {
+        ...state,
+        selectedDistrictServices: [...state.selectedDistrictServices, action.district],
+      };
+
+    case 'REMOVE_SELECTED_DISTRICT_SERVICE':
+      return {
+        ...state,
+        selectedDistrictServices: [
+          ...state.selectedDistrictServices.filter(item => item !== action.district),
+        ],
+      };
+
     case 'SET_SELECTED_DISTRICT_SERVICES':
       return {
         ...state,

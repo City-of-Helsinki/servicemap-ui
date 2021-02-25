@@ -39,12 +39,17 @@ const translations = {
   // Area
   'area.searchbar.infoText.address': 'Skriv din hemadress',
   'area.searchbar.infoText.optional': '(valfri)',
-  'area.tab.selection': 'Val av område',
-  'area.tab.services': 'Tjänster i området',
+  'area.tab.publicServices': 'Julkisten palveluiden alueet', // TODO: translate
+  'area.tab.geographical': 'Kaupunginosat ja postinumeroalueet', // TODO: translate
   'area.services.local': 'Tjänster i ditt eget område',
   'area.services.nearby': 'Tjänster i närområdena',
   'area.info': 'Välj ett område, vars tjänster du vill ha information om. Genom att skriva din hemadress i sökfältet öppnas en karta och under fliken Tjänster i området visas de områden och distrikt som du hör till',
   'area.choose.district': 'Väl område',
+  'area.localAddress.title': 'Osoitteesi tiedot', // TODO: translate
+  'area.localAddress.neighborhood': 'Kaupunginosa: {area}', // TODO: translate
+  'area.localAddress.postCode': 'Postinumero: {area}', // TODO: translate
+  'area.geographicalServices.neighborhood': 'Kaupunginosan palvelut ({length})', // TODO: translate
+  'area.geographicalServices.postcode_area': 'Postinumeroalueen palvelut ({length})', // TODO: translate
   'area.choose.subdistrict': 'Väl och öppna {category}',
   'area.close.subdistrict': 'Stäng {category}',
   'area.noSelection': 'Väl område under fliken Val av område',

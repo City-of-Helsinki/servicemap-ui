@@ -1,317 +1,187 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import {
-  List,
-  Typography,
-  Divider,
-  Checkbox,
-  ListItem,
-} from '@material-ui/core';
-import distance from '@turf/distance';
+import { List, Typography, ListItem } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
-import { Cancel } from '@material-ui/icons';
-import { AreaIcon, AddressIcon } from '../../../../components/SMIcon';
-import { formatDistanceObject, uppercaseFirst } from '../../../../utils';
-import DivisionItem from '../../../../components/ListItems/DivisionItem';
-import UnitItem from '../../../../components/ListItems/UnitItem';
-import SMButton from '../../../../components/ServiceMapButton';
-import { getAddressFromUnit } from '../../../../utils/address';
+import { FormatListBulleted, LocationOn } from '@material-ui/icons';
+import { useDispatch, useSelector } from 'react-redux';
 import SMAccordion from '../../../../components/SMAccordion';
+import DistrictToggleButton from '../DistrictToggleButton';
+import {
+  fetchDistrictGeometry,
+  setSelectedDistrictServices,
+  setSelectedDistrictType,
+  setSelectedSubdistricts,
+} from '../../../../redux/actions/district';
+import { getSubdistrictServices } from '../../../../redux/selectors/district';
+import GeographicalDistrictList from '../GeographicalDistrictList';
+import GeographicalUnitList from '../GeographicalUnitList.js';
 
 
 const UnitTab = ({
-  selectedDistrictData,
-  selectedAddress,
-  selectedSubdistricts,
-  selectedDistrictServices,
-  setSelectedDistrictServices,
-  filteredSubdistrictUnits,
-  addressDistrict,
-  openServices,
-  setOpenServices,
-  setCheckedServices,
+  handleOpen,
   formAddressString,
   getLocaleText,
   classes,
-  intl,
 }) => {
-  const districtsWithUnits = selectedDistrictData.filter(obj => obj.unit);
+  const dispatch = useDispatch();
+  const areaViewState = useSelector(state => state.districts.areaViewState);
+  const filteredSubdistrictUnitsLength = useSelector(state => getSubdistrictServices(state).length);
+  const localAddressData = useSelector(state => state.districts.districtAddressData);
+  const selectedDistrictType = useSelector(state => state.districts.selectedDistrictType);
+  const districtData = useSelector(state => state.districts.districtData);
+  const map = useSelector(state => state.mapRef);
 
-  const sortDistricts = (districts) => {
-    districts.sort((a, b) => a.unit.distance - b.unit.distance);
-  };
+  const [initialOpenItems] = useState(areaViewState?.openItems || []);
+  const [openCategory, setOpenCategory] = useState(areaViewState?.openItems.find(item => item === 'neighborhood' || item === 'postcode_area') || []);
 
-  const sortUnitCategories = (categories) => {
-    categories.sort((a, b) => getLocaleText(a.name).localeCompare(getLocaleText(b.name)));
-  };
 
-  const distanceToAddress = (coord) => {
-    if (coord) {
-      return Math.round(distance(coord, selectedAddress.location.coordinates) * 1000);
+  const setRadioButtonValue = (district) => {
+    if (!district.data.some(obj => obj.boundary)) {
+      dispatch(fetchDistrictGeometry(district.name));
     }
-    return null;
-  };
-
-  const handleCheckboxChange = (event, category) => {
-    let newArray;
-    if (event.target.checked) {
-      newArray = [...selectedDistrictServices, category.id];
+    setOpenCategory(null);
+    dispatch(setSelectedDistrictType(district.id));
+    dispatch(setSelectedDistrictServices([]));
+    const localDistrict = localAddressData.districts.find(obj => obj.type === district.name);
+    if (localDistrict) {
+      dispatch(setSelectedSubdistricts([localDistrict.ocd_id]));
     } else {
-      newArray = selectedDistrictServices.filter(service => service !== category.id);
+      dispatch(setSelectedSubdistricts([]));
     }
-    setSelectedDistrictServices(newArray);
   };
 
-  const saveOpenState = (category, expanded) => {
-    if (!expanded) {
-      setOpenServices([...openServices, category.id]);
+  const clearRadioButtonValue = () => {
+    setOpenCategory(null);
+    dispatch(setSelectedDistrictType(null));
+    dispatch(setSelectedDistrictServices([]));
+    dispatch(setSelectedSubdistricts([]));
+  };
+
+  const handleRadioChange = (district, e) => {
+    e.stopPropagation();
+    if (selectedDistrictType === district.id) {
+      clearRadioButtonValue();
     } else {
-      const items = openServices.filter(i => i !== category.id);
-      setOpenServices(items);
+      setRadioButtonValue(district);
     }
   };
 
-  const renderDistrictUnitItem = (district) => {
-    const { unit } = district;
-    const streetAddress = getAddressFromUnit(unit, getLocaleText, intl);
-    return (
-      <DivisionItem
-        key={district.id}
-        className={classes.divisionItem}
-        divider
-        data={{
-          area: district,
-          name: district.unit.name || null,
-          id: district.unit.id,
-          street_address: streetAddress,
-        }}
-        distance={district.unit.distance
-          ? formatDistanceObject(intl, district.unit.distance)
-          : null}
-      />
-    );
+  const handleAccordionToggle = (district, opening) => {
+    handleOpen(district);
+    if (opening) {
+      if (selectedDistrictType !== district.id) {
+        setRadioButtonValue(district);
+      }
+      setOpenCategory(district.id);
+    } else {
+      setOpenCategory(null);
+    }
   };
 
-  const renderUnitList = () => {
-    // Render list of units for neighborhood and postcode-area subdistricts
-    const servicesArray = [];
-    const educationServicesArray = [];
-    filteredSubdistrictUnits.map((unit) => {
-      const categories = unit.services;
-      categories.forEach((category) => {
-        let serviceList;
-        if (category.period) { // Add educational services to own list.
-          serviceList = educationServicesArray;
-        } else {
-          serviceList = servicesArray;
-        }
-        const serviceCategory = serviceList.find(service => service.id === category.id);
-        if (!serviceCategory) {
-          serviceList.push({
-            id: category.id,
-            units: [unit],
-            name: category.name,
-            period: category.period,
-          });
-        } else if (!serviceCategory.units.some(listUnit => listUnit.id === unit.id)) {
-          serviceCategory.units.push(unit);
-        }
-      });
-      return null;
-    });
+  useEffect(() => {
+    if (selectedDistrictType && selectedDistrictType !== 'neighborhood' && selectedDistrictType !== 'postcode_area') {
+      dispatch(setSelectedSubdistricts([]));
+      dispatch(setSelectedDistrictServices([]));
+      setOpenCategory(null);
+    }
+  }, [selectedDistrictType]);
 
-    sortUnitCategories(servicesArray);
-    sortUnitCategories(educationServicesArray);
-    const serviceList = [...servicesArray, ...educationServicesArray];
 
+  const renderAddressInfo = useCallback(() => {
+    const localPostArea = localAddressData.districts.find(obj => obj.type === 'postcode_area');
+    const localNeighborhood = localAddressData.districts.find(obj => obj.type === 'neighborhood');
     return (
-      serviceList.map(category => (
-        <ListItem
-          key={`${category.id}${category.period ? category.period[0] : ''}`}
-          disableGutters
-        >
-          <SMAccordion
-            className={classes.serviceTitle}
-            onOpen={(e, expanded) => saveOpenState(category, expanded)}
-            defaultOpen={openServices.includes(category.id)}
-            titleContent={(
-              <div>
-                <Typography>
-                  {`${uppercaseFirst(getLocaleText(category.name))} (${category.units.length})`}
-                </Typography>
-                <Typography aria-hidden className={classes.captionText} variant="caption">
-                  {`${category.period ? `${category.period[0]}-${category.period[1]}` : ''}`}
-                </Typography>
-              </div>
-            )}
-            adornment={(
-              <Checkbox
-                aria-hidden
-                checked={selectedDistrictServices.includes(category.id)}
-                onChange={e => handleCheckboxChange(e, category)}
-              />
-            )}
-            collapseContent={(
-              <List className={classes.unitList} disablePadding>
-                {category.units.map((unit, i) => (
-                  <UnitItem
-                    key={`${unit.id}-${category.id}`}
-                    unit={unit}
-                    divider={i !== category.units.length - 1}
-                  />
-                ))}
-              </List>
-            )}
-          />
-        </ListItem>
-      ))
+      <div className={classes.addressInfoContainer}>
+        <Typography className={classes.addressInfoText}><FormattedMessage id="area.localAddress.title" /></Typography>
+        <div className={classes.addressInfoIconArea}>
+          <LocationOn color="primary" className={classes.addressInfoIcon} />
+          <Typography variant="subtitle1">{formAddressString(localAddressData.address)}</Typography>
+        </div>
+        {localPostArea ? (
+          <Typography className={classes.addressInfoText}>
+            <FormattedMessage id="area.localAddress.postCode" values={{ area: getLocaleText(localPostArea.name) }} />
+          </Typography>
+        ) : null}
+        {localNeighborhood ? (
+          <Typography className={classes.addressInfoText}>
+            <FormattedMessage id="area.localAddress.neighborhood" values={{ area: getLocaleText(localNeighborhood.name) }} />
+          </Typography>
+        ) : null}
+      </div>
     );
-  };
+  }, [localAddressData]);
 
 
   const render = () => {
-    if (!selectedDistrictData.length) {
-      return (
-        <div>
-          <Typography className={classes.infoText} variant="body2">
-            <FormattedMessage id="area.noSelection" />
-          </Typography>
-        </div>
-      );
-    }
-
-    if (!districtsWithUnits.length && !selectedSubdistricts.length) {
-      return (
-        <div>
-          <Typography className={classes.infoText} variant="body2">
-            <FormattedMessage id="area.noUnits" />
-          </Typography>
-        </div>
-      );
-    }
-
-    if (selectedSubdistricts.length) {
-      // If geographical subdistrict is selected, list units within the district
-      return (
-        <div className={classes.unitListArea}>
-          <SMButton
-            aria-hidden
-            className={classes.deleteButton}
-            disabled={!selectedDistrictServices.length}
-            messageID="services.selections.delete.all"
-            icon={<Cancel className={classes.deleteIcon} />}
-            role="button"
-            margin
-            color="primary"
-            onClick={() => {
-              setCheckedServices([]);
-              setSelectedDistrictServices([]);
-            }}
-          />
-          <List disablePadding>
-            {renderUnitList()}
-          </List>
-        </div>
-      );
-    }
-
-    if (selectedAddress) {
-      const localDistrict = selectedDistrictData.filter(obj => obj.id === addressDistrict);
-      const otherDistricts = selectedDistrictData.filter(obj => obj.id !== addressDistrict);
-
-      const localUnitDistricts = [];
-      localDistrict.forEach((district) => {
-        if (district.unit) {
-          const newValue = district;
-          newValue.unit.distance = distanceToAddress(district.unit.location?.coordinates);
-          localUnitDistricts.push(newValue);
-        }
-        if (district.overlaping) {
-          district.overlaping.forEach((obj) => {
-            if (obj.unit) {
-              const newValue = obj;
-              newValue.unit.distance = distanceToAddress(obj.unit.location?.coordinates);
-              localUnitDistricts.push(newValue);
-            }
-          });
-        }
-      });
-      const otherUnitDistricts = [];
-      otherDistricts.forEach((district) => {
-        if (district.municipality === selectedAddress.street.municipality) {
-          if (district.unit) {
-            const newValue = district;
-            newValue.unit.distance = distanceToAddress(district.unit.location?.coordinates);
-            otherUnitDistricts.push(newValue);
-          }
-          if (district.overlaping) {
-            district.overlaping.forEach((obj) => {
-              if (obj.unit) {
-                const newValue = obj;
-                newValue.unit.distance = distanceToAddress(obj.unit.location?.coordinates);
-                otherUnitDistricts.push(newValue);
-              }
-            });
-          }
-        }
-      });
-
-      sortDistricts(localUnitDistricts);
-      sortDistricts(otherUnitDistricts);
-
-      return (
-        <div>
-          <div className={`${classes.subtitle} ${classes.sidePadding}`}>
-            <AddressIcon className={`${classes.rightPadding} ${classes.addressIcon}`} />
-            <Typography className={classes.selectedAddress}>
-              {formAddressString(selectedAddress)}
-            </Typography>
-          </div>
-          <Divider aria-hidden />
-
-          {localUnitDistricts.length ? (
-            <>
-              <div className={`${classes.areaTitle} ${classes.sidePadding}`}>
-                <AreaIcon className={classes.rightPadding} />
-                <Typography component="h3" className={classes.bold}>
-                  <FormattedMessage id="area.services.local" />
-                </Typography>
-              </div>
-              <List>
-                {localUnitDistricts.map(district => (
-                  renderDistrictUnitItem(district)
-                ))}
-              </List>
-            </>
-          ) : null}
-
-          {otherUnitDistricts.length ? (
-            <>
-              <div className={`${classes.areaTitle} ${classes.sidePadding}`}>
-                <AreaIcon className={classes.rightPadding} />
-                <Typography component="h3" className={classes.bold}>
-                  <FormattedMessage id="area.services.nearby" />
-                </Typography>
-              </div>
-              <List>
-                {otherUnitDistricts.map(district => (
-                  renderDistrictUnitItem(district)
-                ))}
-              </List>
-            </>
-          ) : null}
-        </div>
-      );
-    }
-
+    const districtItems = districtData.filter(obj => obj.id === 'neighborhood' || obj.id === 'postcode_area');
     return (
-      <div>
+      <>
+        {localAddressData?.address && localAddressData.districts.length && (
+          renderAddressInfo()
+        )}
         <List>
-          {districtsWithUnits.map(district => (
-            renderDistrictUnitItem(district)
-          ))}
+          {districtItems.map((district) => {
+            const opened = openCategory === district.id;
+            const selected = selectedDistrictType === district.id;
+            return (
+              <ListItem
+                divider
+                disableGutters
+                key={district.id}
+                className={`${classes.listItem} ${district.id}`}
+              >
+                <SMAccordion // Top level categories (neighborhood and postcode area)
+                  defaultOpen={initialOpenItems.includes(district.id)}
+                  onOpen={(e, open) => handleAccordionToggle(district, !open)}
+                  isOpen={opened}
+                  elevated={opened}
+                  adornment={(
+                    <DistrictToggleButton
+                      selected={selected}
+                      district={district}
+                      onToggle={e => handleRadioChange(district, e)}
+                    />
+                  )}
+                  titleContent={(
+                    <Typography id={`${district.id}Name`} aria-hidden>
+                      <FormattedMessage id={`area.list.${district.name}`} />
+                    </Typography>
+                  )}
+                  collapseContent={(
+                    <div className={classes.districtServiceList}>
+                      <SMAccordion // Unit list accordion
+                        defaultOpen={initialOpenItems.some(item => typeof item === 'number')}
+                        disabled={!filteredSubdistrictUnitsLength}
+                        className={classes.unitsAccordion}
+                        adornment={<FormatListBulleted className={classes.iconPadding} />}
+                        titleContent={(
+                          <Typography variant="caption">
+                            <FormattedMessage
+                              id={`area.geographicalServices.${district.id}`}
+                              values={{ length: filteredSubdistrictUnitsLength }}
+                            />
+                          </Typography>
+                        )}
+                        collapseContent={(
+                          <GeographicalUnitList
+                            handleOpen={handleOpen}
+                            getLocaleText={getLocaleText}
+                          />
+                        )}
+                      />
+                      <GeographicalDistrictList // District selection list
+                        district={district}
+                        map={map}
+                        getLocaleText={getLocaleText}
+                      />
+                    </div>
+                  )}
+                />
+              </ListItem>
+            );
+          })}
         </List>
-      </div>
+      </>
     );
   };
 
@@ -320,9 +190,9 @@ const UnitTab = ({
 
 UnitTab.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
+  handleOpen: PropTypes.func.isRequired,
+  formAddressString: PropTypes.func.isRequired,
+  getLocaleText: PropTypes.func.isRequired,
 };
 
-UnitTab.defaultProps = {
-};
-
-export default UnitTab;
+export default React.memo(UnitTab);

@@ -32,6 +32,16 @@ export const setSelectedSubdistricts = districts => ({
   districts,
 });
 
+export const addSelectedDistrictService = district => ({
+  type: 'ADD_SELECTED_DISTRICT_SERVICE',
+  district,
+});
+
+export const removeSelectedDistrictService = district => ({
+  type: 'REMOVE_SELECTED_DISTRICT_SERVICE',
+  district,
+});
+
 export const setSelectedDistrictServices = services => ({
   type: 'SET_SELECTED_DISTRICT_SERVICES',
   services,

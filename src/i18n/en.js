@@ -45,6 +45,11 @@ const translations = {
   'area.services.nearby': 'Services in the neighbouring areas',
   'area.info': 'Choose an area, whose services you want information about. Writing your home address in the search field opens a map, and the areas and districts that you belong to are shown under the Services in the area tab.',
   'area.choose.district': 'Choose area',
+  'area.localAddress.title': 'Osoitteesi tiedot', // TODO: translate
+  'area.localAddress.neighborhood': 'Kaupunginosa: {area}', // TODO: translate
+  'area.localAddress.postCode': 'Postinumero: {area}', // TODO: translate
+  'area.geographicalServices.neighborhood': 'Kaupunginosan palvelut ({length})', // TODO: translate
+  'area.geographicalServices.postcode_area': 'Postinumeroalueen palvelut ({length})', // TODO: translate
   'area.choose.subdistrict': 'Choose and open {category}',
   'area.close.subdistrict': 'Close {category}',
   'area.noSelection': 'Choose area from the Choice of Area tab',

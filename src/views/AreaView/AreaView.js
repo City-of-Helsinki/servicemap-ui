@@ -216,16 +216,9 @@ const AreaView = ({
 
   const renderUnitTab = () => (
     <UnitTab
-      selectedDistrictData={selectedDistrictData}
-      selectedSubdistricts={selectedSubdistricts}
-      setSelectedDistrictServices={setSelectedDistrictServices}
-      intitialOpenItems={accordionStates.current?.openItems}
-      handleOpen={handleOpen}
-      selectedDistrictServices={selectedDistrictServices}
+      handleOpen={useCallback(item => handleOpen(item), [])}
       formAddressString={formAddressString}
-      getLocaleText={getLocaleText}
-      districtData={districtData}
-      map={map}
+      getLocaleText={useCallback(obj => getLocaleText(obj), [])}
     />
   );
 
