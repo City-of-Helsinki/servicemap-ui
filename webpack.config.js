@@ -144,7 +144,8 @@ const clientConfig = {
   output: {
     path: path.resolve(__dirname, 'dist/src'),
     filename: '[name]',
-  }
+  },
+  devtool: isEnvDevelopment ? 'source-map' : undefined,
 };
 
 module.exports = [serverConfig, clientConfig];
