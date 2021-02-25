@@ -87,7 +87,6 @@ const AreaTab = (props) => {
             <DistrictUnitList
               district={district}
               selectedAddress={selectedAddress}
-              // formAddressString={formAddressString}
               getLocaleText={getLocaleText}
             />
           )}
@@ -207,4 +206,4 @@ AreaTab.defaultProps = {
   selectedAddress: null,
 };
 
-export default AreaTab;
+export default React.memo(AreaTab);

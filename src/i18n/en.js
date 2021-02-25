@@ -42,7 +42,8 @@ const translations = {
   'area.tab.publicServices': 'Julkisten palveluiden alueet', // TODO: translate
   'area.tab.geographical': 'Kaupunginosat ja postinumeroalueet', // TODO: translate
   'area.services.local': 'Services in your own area',
-  'area.services.nearby': 'Services in the neighbouring areas',
+  'area.services.nearby': 'Lähialueiden palvelut listana', // TODO: translate
+  'area.services.all': 'Palvelut listana', // TODO: translate
   'area.info': 'Choose an area, whose services you want information about. Writing your home address in the search field opens a map, and the areas and districts that you belong to are shown under the Services in the area tab.',
   'area.choose.district': 'Choose area',
   'area.localAddress.title': 'Osoitteesi tiedot', // TODO: translate
