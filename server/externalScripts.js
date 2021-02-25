@@ -1,3 +1,50 @@
+export function cookieHubCode (req) {
+  if (!req) {
+    return '';
+  }
+
+  let cookiehubURL;
+  // Attempt to parse COOKIEHUB_DOMAINS object
+  try {
+    if (!process.env.COOKIEHUB_DOMAINS) {
+      return '';
+    }
+    const cookiehubDomainsObject = process.env.COOKIEHUB_DOMAINS.split(';');
+    const allowedDomains = cookiehubDomainsObject.map(o => {
+      const data = o.split(',');
+      return {
+        domain: data[0],
+        url: data[1],
+      }
+    });
+
+    const host = req.hostname;
+    const fData = allowedDomains.filter(o => host.indexOf(o.domain) > -1);
+    const show = !!fData.length;
+    if (!show) {
+      return '';
+    }
+    cookiehubURL = allowedDomains[0].url;
+  } catch (e) {
+    console.error(`Error while parsing COOKIEHUB_DOMAINS variable: ${e.message}`);
+    return '';
+  }
+  
+  return `
+    <script type="text/javascript">
+      var cpm = {
+        enabled: false  // while implementing cookiehub in disabled mode, use this line
+        // enabled: (location.href.indexOf('/embed/') > -1 ? false : true) // uncomment this line when in production
+      };
+      (function(h,u,b){
+      var d=h.getElementsByTagName("script")[0],e=h.createElement("script");
+      e.async=true;e.src='${cookiehubURL}';
+      e.onload=function(){u.cookiehub.load(b);}
+      d.parentNode.insertBefore(e,d);
+      })(document,window,cpm);
+    </script>
+  `;
+};
 
 export function matomoTrackingCode (analyticsUrl, siteId) {
   if (analyticsUrl === undefined || siteId === undefined) {
