@@ -246,7 +246,7 @@ const translations = {
   'home.buttons.services': 'Läs mer om tjänsterna i servicekatalogen',
   'home.buttons.closeByServices': 'Visa närtjänster',
   'home.buttons.instructions': 'Tips för användning av servicekartan',
-  'home.buttons.area': 'Se områden, stadsdelar och befolkningsskyddsdistrikt',
+  'home.buttons.area': 'Se hälsovårds-, rådgivnings-, elevupptagnings-, förskole-, befolkningsskydds- och naturskyddsområdena samt stadsdelarna',
   'home.example.search': 'Sök med sökord',
   'home.message': 'Hälsningar av servicekartans utvecklare',
   'home.send.feedback': 'Skicka respons',
