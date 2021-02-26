@@ -109,7 +109,7 @@ const UnitView = (props) => {
     } else if (unit.municipality === 'kauniainen') {
       window.open('https://www.kauniainen.fi/kaupunki_ja_paatoksenteko/osallistu_ja_vaikuta');
     } else {
-      navigator.openFeedback();
+      navigator.push('unit', { id: unit.id, type: 'feedback' });
     }
   };
 
@@ -319,12 +319,6 @@ const UnitView = (props) => {
             </p>
           </div>
         </div>
-      );
-    }
-
-    if (location.search.includes('feedback=true')) {
-      return (
-        <FeedbackView />
       );
     }
 
