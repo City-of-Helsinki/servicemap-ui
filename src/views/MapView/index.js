@@ -29,6 +29,7 @@ const mapStateToProps = (state) => {
   const { adminDistricts, units, toRender } = address;
   const districtUnits = getFilteredSubdistrictUnits(state);
   const districtUnitsFetching = districts.unitsFetching;
+  const { districtsFetching } = districts;
   const getAddressNavigatorParams = getAddressNavigatorParamsConnector(getLocaleText, locale);
   const userLocation = customPosition.coordinates || position.coordinates;
   return {
@@ -42,7 +43,7 @@ const mapStateToProps = (state) => {
     unitList,
     serviceUnits,
     districtUnits,
-    districtUnitsFetching,
+    districtViewFetching: !!(districtUnitsFetching.length || districtsFetching.length),
     unitsLoading,
     currentPage: page,
     userLocation,

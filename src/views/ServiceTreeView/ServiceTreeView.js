@@ -260,7 +260,7 @@ const ServiceTreeView = (props) => {
         <SMAccordion
           className={`${classes.listItem} ${classes[`level${level}`]}`}
           onOpen={hasChildren ? () => handleExpand(item, isOpen) : () => null}
-          disabled={!hasChildren}
+          simpleItem={!hasChildren}
           defaultOpen={isOpen}
           openButtonSrText={itemSrTitle}
           adornment={(

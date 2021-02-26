@@ -46,7 +46,7 @@ const Districts = ({
 
   const districtOnClick = (e, district) => {
     if (measuringMode) return;
-    if (district.category === 'geographical') {
+    if (district.type === 'neighborhood' || district.type === 'postcode_area') {
       // Disable normal map click event
       e.originalEvent.view.L.DomEvent.stopPropagation(e);
       if (districtClicked === district.ocd_id) return; // Prevent safari double click
@@ -135,7 +135,7 @@ const Districts = ({
   };
 
   const renderMultipleDistricts = () => {
-    if (!districtData) {
+    if (!districtData[0]?.boundary) {
       return null;
     }
 
