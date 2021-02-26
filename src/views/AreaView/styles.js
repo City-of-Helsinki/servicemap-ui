@@ -22,14 +22,14 @@ const styles = theme => ({
     marginLeft: theme.spacing(1),
   },
   list: {
-    paddingLeft: 60,
+    paddingLeft: 10,
   },
   subsistrictAccordion: {
     padding: 0,
     marginLeft: -11,
   },
   districtItem: {
-    paddingLeft: 0,
+    paddingLeft: theme.spacing(3),
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(1),
   },
@@ -38,9 +38,10 @@ const styles = theme => ({
     fontWeight: 'normal',
   },
   loadingText: {
-    paddingLeft: theme.spacing(8),
-    paddingTop: theme.spacing(1),
-    paddingBottom: theme.spacing(1),
+    height: 56,
+    display: 'flex',
+    alignItems: 'center',
+    paddingLeft: 77,
   },
   subtitle: {
     height: 48,
@@ -48,24 +49,30 @@ const styles = theme => ({
     alignItems: 'center',
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(1),
-    paddingLeft: theme.spacing(6),
+    paddingLeft: 26,
   },
   municipalitySubtitle: {
     height: 48,
     display: 'flex',
     alignItems: 'center',
-    paddingTop: theme.spacing(1),
+    paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(1),
     paddingLeft: theme.spacing(4),
+    boxSizing: 'border-box',
   },
-  categoryItem: {
-    paddingTop: 0,
-    paddingBottom: 0,
-    paddingRight: 32,
-    flexDirection: 'column',
+  listItem: {
+    padding: 0,
+    minHeight: theme.spacing(7),
+  },
+  areaItem: {
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
+  },
+  geoItem: {
+    paddingLeft: theme.spacing(2),
   },
   serviceTitle: {
-    paddingRight: 32,
+    paddingLeft: 63,
   },
   categoryItemContent: {
     paddingLeft: 32,
@@ -87,7 +94,6 @@ const styles = theme => ({
   },
   addressArea: {
     padding: theme.spacing(3),
-    paddingTop: theme.spacing(1),
     textAlign: 'start',
   },
   addressTitle: {
@@ -101,7 +107,8 @@ const styles = theme => ({
     fontSize: 24,
   },
   divisionItem: {
-    padding: theme.spacing(2),
+    paddingTop: 14,
+    paddingBottom: 14,
   },
   areaTitle: {
     display: 'flex',
@@ -126,17 +133,11 @@ const styles = theme => ({
   subdistrictList: {
     paddingLeft: theme.spacing(3),
   },
-  expandingElement: {
-    minHeight: '32px !important',
-    boxShadow: 'none',
-    width: '100%',
+  accodrion: {
+    paddingLeft: theme.spacing(3),
   },
   expandingElementContent: {
     marginBottom: -1,
-  },
-  testPadding: {
-    paddingLeft: 0,
-    paddingRight: theme.spacing(4),
   },
   accordionSummary: {
     minHeight: '48px !important',
@@ -154,24 +155,94 @@ const styles = theme => ({
   },
   unitListArea: {
     textAlign: 'left',
+    backgroundColor: 'rgba(222, 222, 222, 0.56)',
   },
   centerItems: {
     alignItems: 'center',
     padding: 0,
-  },
-  test: {
-    backgroundColor: 'yellow',
   },
   accoridonContent: {
     paddingLeft: 0,
     paddingRight: 0,
   },
   unitList: {
-    paddingLeft: theme.spacing(2),
+    paddingLeft: theme.spacing(8),
     paddingRight: theme.spacing(4),
+    paddingBottom: theme.spacing(1),
   },
-  collpasePadding: {
+  collapseArea: {
+    backgroundColor: 'rgba(222, 222, 222, 0.12)',
+  },
+  districtServiceList: {
+    backgroundColor: 'rgb(245,245,245)',
+    boxShadow: 'inset 0px 4px 4px rgba(0, 0, 0, 0.06)',
+  },
+  geogrpahicalDiststrictlist: {
+    backgroundColor: 'rgb(245,245,245)',
+    paddingLeft: 30,
+  },
+  serviceListAccordion: {
+    paddingLeft: 79,
+    height: 48,
+  },
+  iconPadding: {
+    padding: theme.spacing(2.5),
+    paddingLeft: 60,
+  },
+  areaSwitch: {
+    paddingLeft: theme.spacing(2),
+  },
+  labelContainer: {
+    marginLeft: theme.spacing(2),
+  },
+  unitsAccordion: {
+    height: 48,
+    backgroundColor: 'rgba(222, 222, 222, 0.56)',
+  },
+  checkBoxIcon: {
+    margin: 2,
+    width: 18,
+    height: 18,
+    backgroundColor: '#fff',
+    border: '0.5px solid #DEDEDE',
+    boxShadow: 'inset 1px 1px 2px rgba(0, 0, 0, 0.05)',
+    borderRadius: 1,
+  },
+  disablePadding: {
+    padding: 0,
+  },
+  customSwitch: {
+    overflow: 'visible',
+  },
+  servciceList: {
+    paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(2),
+    paddingLeft: 77,
+    backgroundColor: 'rgb(230,243,254)',
+  },
+  serviceListPadding: {
+    paddingLeft: 72,
+  },
+  serviceDivider: {
+    marginLeft: -72,
+  },
+  addressInfoContainer: {
+    backgroundColor: '#E3F3FF',
+    textAlign: 'left',
+    padding: theme.spacing(2),
+    paddingBottom: theme.spacing(4),
+  },
+  addressInfoText: {
+    paddingLeft: 62,
+  },
+  addressInfoIconArea: {
+    display: 'flex',
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(1),
+  },
+  addressInfoIcon: {
+    width: 50,
+    paddingRight: theme.spacing(1.5),
   },
 });
 

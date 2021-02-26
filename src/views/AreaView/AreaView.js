@@ -1,4 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, {
+  useState, useEffect, useRef, useCallback,
+} from 'react';
 import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
@@ -30,7 +32,6 @@ const AreaView = ({
   addressDistrict,
   subdistrictUnits,
   selectedSubdistricts,
-  selectedDistrictServices,
   areaViewState,
   map,
   getLocaleText,
@@ -53,9 +54,12 @@ const AreaView = ({
   // Pending request to focus map to districts. Executed once district data is loaded
   const [focusTo, setFocusTo] = useState(null);
 
-  const formAddressString = address => (address
-    ? `${getLocaleText(address.street.name)} ${address.number}${address.number_end ? address.number_end : ''}${address.letter ? address.letter : ''}, ${uppercaseFirst(address.street.municipality)}`
-    : '');
+  const formAddressString = useCallback(
+    address => (address
+      ? `${getLocaleText(address.street.name)} ${address.number}${address.number_end ? address.number_end : ''}${address.letter ? address.letter : ''}, ${uppercaseFirst(address.street.municipality)}`
+      : ''),
+    [],
+  );
 
   const focusMapToDistrict = (district) => {
     focusDistrict(map.leafletElement, district.boundary.coordinates);
@@ -208,7 +212,7 @@ const AreaView = ({
       selectedAddress={selectedAddress}
       districtData={districtData}
       intitialOpenItems={accordionStates.current?.openItems}
-      handleOpen={handleOpen}
+      handleOpen={useCallback(item => handleOpen(item), [])}
       navigator={navigator}
       getLocaleText={getLocaleText}
     />
