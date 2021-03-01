@@ -27,6 +27,7 @@ import ReadSpeakerButton from '../../components/ReadSpeakerButton';
 import config from '../../../config';
 import useMobileStatus from '../../utils/isMobile';
 import UnitHelper from '../../utils/unitHelper';
+import useLocaleText from '../../utils/useLocaleText';
 
 const UnitView = (props) => {
   const {
@@ -35,7 +36,6 @@ const UnitView = (props) => {
     intl,
     classes,
     embed,
-    getLocaleText,
     navigator,
     match,
     fetchSelectedUnit,
@@ -60,6 +60,8 @@ const UnitView = (props) => {
   const [unit, setUnit] = useState(checkCorrectUnit(stateUnit) ? stateUnit : null);
 
   const isMobile = useMobileStatus();
+
+  const getLocaleText = useLocaleText();
 
 
   const initializePTVAccessibilitySentences = () => {
@@ -140,11 +142,11 @@ const UnitView = (props) => {
     }
   }, [match.params.unit]);
 
-  if (config.usePtvAccessibilityApi) {
-    useEffect(() => {
+  useEffect(() => {
+    if (config.usePtvAccessibilityApi) {
       initializePTVAccessibilitySentences();
-    }, [unit]);
-  }
+    }
+  }, [unit]);
 
   if (embed) {
     return null;
@@ -426,7 +428,6 @@ UnitView.propTypes = {
   fetchUnitEvents: PropTypes.func.isRequired,
   match: PropTypes.objectOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  getLocaleText: PropTypes.func.isRequired,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   reservations: PropTypes.arrayOf(PropTypes.any),

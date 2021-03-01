@@ -7,7 +7,6 @@ import { fetchAccessibilitySentences } from '../../redux/actions/selectedUnitAcc
 import { fetchHearingMaps } from '../../redux/actions/selectedUnitHearingMaps';
 import { fetchUnitEvents } from '../../redux/actions/selectedUnitEvents';
 import { fetchReservations } from '../../redux/actions/selectedUnitReservations';
-import { getLocaleString } from '../../redux/selectors/locale';
 
 import UnitView from './UnitView';
 import styles from './styles/styles';
@@ -23,7 +22,6 @@ const mapStateToProps = (state, props) => {
   const {
     accessibilitySentences, events, reservations, hearingMaps,
   } = state.selectedUnit;
-  const getLocaleText = textObject => getLocaleString(state, textObject);
   const { navigator, user } = state;
 
   return {
@@ -32,7 +30,6 @@ const mapStateToProps = (state, props) => {
     stateUnit,
     unitFetching,
     eventsData: events,
-    getLocaleText,
     navigator,
     reservationsData: reservations,
     userLocation: user.position,

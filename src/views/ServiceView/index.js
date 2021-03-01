@@ -11,7 +11,7 @@ import styles from './styles';
 const mapStateToProps = (state) => {
   const { mapRef, service, user } = state;
   const { customPosition } = user;
-
+  // TODO: replace this with useLocaleText when the component is converted to function component
   const getLocaleText = textObject => getLocaleString(state, textObject);
   const map = mapRef && mapRef.leafletElement;
   const units = getServiceUnits(state);
