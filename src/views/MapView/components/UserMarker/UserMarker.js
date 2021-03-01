@@ -17,6 +17,7 @@ const UserMarker = ({ position, classes, onClick }) => {
 
   return (
     <Marker
+      id="userMarker"
       onClick={onClick}
       position={position}
       icon={icon}
