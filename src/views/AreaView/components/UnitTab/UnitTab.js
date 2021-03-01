@@ -116,7 +116,7 @@ const UnitTab = ({
     const districtItems = districtData.filter(obj => obj.id === 'neighborhood' || obj.id === 'postcode_area');
     return (
       <>
-        {localAddressData?.address && localAddressData.districts.length && (
+        {localAddressData?.address && localAddressData.districts?.length && (
           renderAddressInfo()
         )}
         <List>

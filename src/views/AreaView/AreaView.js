@@ -121,7 +121,9 @@ const AreaView = ({
 
   useEffect(() => {
     if (selectedAddress) {
-      if (formAddressString(districtAddressData.address) !== formAddressString(selectedAddress)) {
+      if (!selectedAddress.districts
+        || formAddressString(districtAddressData.address) !== formAddressString(selectedAddress)
+      ) {
         fetchAddressDistricts();
       }
     } else {
