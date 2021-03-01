@@ -10,6 +10,7 @@ import { mapTypes } from '../../config/mapConfig';
 import { keyboardHandler } from '../../../../utils';
 import UnitHelper from '../../../../utils/unitHelper';
 import useMobileStatus from '../../../../utils/isMobile';
+import useLocaleText from '../../../../utils/useLocaleText';
 
 const tooltipOptions = (permanent, classes) => ({
   className: classes.unitTooltipContainer,
@@ -45,7 +46,6 @@ const MarkerCluster = ({
   currentPage,
   data,
   getDistance,
-  getLocaleText,
   highlightedUnit,
   map,
   navigator,
@@ -53,6 +53,7 @@ const MarkerCluster = ({
   theme,
   measuringMode,
 }) => {
+  const getLocaleText = useLocaleText();
   const useContrast = theme === 'dark';
   const embeded = isEmbed();
   const isMobile = useMobileStatus();
