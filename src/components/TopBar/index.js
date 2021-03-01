@@ -14,7 +14,10 @@ const mapStateToProps = (state) => {
   const {
     navigator, user, breadcrumb, settings,
   } = state;
+  // TODO: replace this with useLocaleText when the component is converted to function component
   const getLocaleText = textObject => getLocaleString(state, textObject);
+  /* TODO: create custom hook for getAddressNavigatorParams to prevent
+  re-rendering on every state change */
   const getAddressNavigatorParams = getAddressNavigatorParamsConnector(getLocaleText, user.locale);
   return {
     getAddressNavigatorParams,
