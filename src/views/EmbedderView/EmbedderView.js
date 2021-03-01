@@ -17,6 +17,7 @@ import SMButton from '../../components/ServiceMapButton';
 import paths from '../../../config/paths';
 import embedderConfig from './embedderConfig';
 import SettingsUtility from '../../utils/settings';
+import useLocaleText from '../../utils/useLocaleText';
 
 
 const hideCitiesIn = [
@@ -40,14 +41,10 @@ const timeoutDelay = 1000;
 const EmbedderView = ({
   citySettings,
   classes,
-  getLocaleText,
   intl,
   mapType,
   navigator,
 }) => {
-  if (!isClient()) {
-    return null;
-  }
   // Verify url
   const data = isClient() ? smurl.verify(window.location.href) : {};
   let { url } = data;
@@ -81,6 +78,7 @@ const EmbedderView = ({
   const page = useSelector(state => state.user.page);
   const selectedUnit = useSelector(state => state.selectedUnit.unit.data);
   const currentService = useSelector(state => state.service.current);
+  const getLocaleText = useLocaleText();
 
   // States
   const [language, setLanguage] = useState(defaultLanguage);
@@ -478,6 +476,10 @@ const EmbedderView = ({
     </Helmet>
   );
 
+  if (!isClient()) {
+    return null;
+  }
+
   return (
     <div ref={dialogRef}>
       {
@@ -578,7 +580,6 @@ EmbedderView.propTypes = {
     title: PropTypes.string,
     titleContainer: PropTypes.string,
   }).isRequired,
-  getLocaleText: PropTypes.func.isRequired,
   location: PropTypes.shape({
     hash: PropTypes.string,
     pathname: PropTypes.string,
