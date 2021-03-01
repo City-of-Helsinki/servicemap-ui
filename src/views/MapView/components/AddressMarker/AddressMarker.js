@@ -3,14 +3,15 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { getAddressText } from '../../../../utils/address';
+import useLocaleText from '../../../../utils/useLocaleText';
 
 const AddressMarker = ({
   address,
   classes,
   embeded,
   position,
-  getLocaleText,
 }) => {
+  const getLocaleText = useLocaleText();
   if (!position && (!address || !address.addressCoordinates)) {
     return null;
   }
@@ -47,7 +48,7 @@ const AddressMarker = ({
           <Tooltip
             className={classes.unitTooltip}
             direction="top"
-            offset={[0, -36]}
+            offset={[0, -36]} // TODO: fix offset
             permanent
           >
             <Typography variant="body2">
@@ -65,7 +66,6 @@ AddressMarker.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   position: PropTypes.arrayOf(PropTypes.number),
   embeded: PropTypes.bool,
-  getLocaleText: PropTypes.func.isRequired,
 };
 
 AddressMarker.defaultProps = {
