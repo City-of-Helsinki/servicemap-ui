@@ -5,16 +5,17 @@ import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import fetchAddress from '../../utils/fetchAddress';
 import { getAddressText } from '../../../../utils/address';
+import useLocaleText from '../../../../utils/useLocaleText';
 
 const AddressPopup = ({
   classes,
   mapClickPoint,
   getAddressNavigatorParams,
-  getLocaleText,
   map,
   navigator,
 }) => {
   const { Popup } = global.rL;
+  const getLocaleText = useLocaleText();
 
   const [address, setAddress] = useState(null);
   const [fetching, setFetching] = useState(null);
@@ -122,7 +123,6 @@ AddressPopup.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   mapClickPoint: PropTypes.objectOf(PropTypes.any).isRequired,
   getAddressNavigatorParams: PropTypes.func.isRequired,
-  getLocaleText: PropTypes.func.isRequired,
   map: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any).isRequired,
 };

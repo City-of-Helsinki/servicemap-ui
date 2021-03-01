@@ -8,6 +8,7 @@ import { transitIconSize } from '../../config/mapConfig';
 import { isEmbed } from '../../../../utils/path';
 
 class TransitStops extends React.Component {
+  // TODO: convert this to function component and replace getLocaleText from parent component with useLocaText on this component
   constructor(props) {
     super(props);
     this.state = {
