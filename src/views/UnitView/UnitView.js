@@ -199,10 +199,10 @@ const UnitView = (props) => {
           </Container>
 
           {/* View Components */}
-          <ContactInfo unit={unit} userLocation={userLocation} getLocaleText={getLocaleText} />
-          <SocialMediaLinks unit={unit} getLocaleText={getLocaleText} />
-          <Highlights unit={unit} getLocaleText={getLocaleText} />
-          <Description unit={unit} getLocaleText={getLocaleText} />
+          <ContactInfo unit={unit} userLocation={userLocation} />
+          <SocialMediaLinks unit={unit} />
+          <Highlights unit={unit} />
+          <Description unit={unit} />
           <UnitLinks unit={unit} />
           <ElectronicServices unit={unit} />
           {!isMobile && feedbackButton()}

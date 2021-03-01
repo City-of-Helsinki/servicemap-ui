@@ -7,8 +7,10 @@ import DefaultIcon from '@material-ui/icons/Public';
 import { FormattedMessage } from 'react-intl';
 import unitSectionFilter from '../../utils/unitSectionFilter';
 import { getIcon } from '../../../../components/SMIcon';
+import useLocaleText from '../../../../utils/useLocaleText';
 
-const SocialMediaLinks = ({ unit, getLocaleText, classes }) => {
+const SocialMediaLinks = ({ unit, classes }) => {
+  const getLocaleText = useLocaleText();
   const links = unitSectionFilter(unit.connections, 'SOCIAL_MEDIA_LINK');
   const columns = 3;
 
@@ -52,7 +54,6 @@ const SocialMediaLinks = ({ unit, getLocaleText, classes }) => {
 
 SocialMediaLinks.propTypes = {
   unit: PropTypes.objectOf(PropTypes.any).isRequired,
-  getLocaleText: PropTypes.func.isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
