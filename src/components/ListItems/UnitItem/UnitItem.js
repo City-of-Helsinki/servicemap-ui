@@ -10,13 +10,13 @@ import locationIcon from '../../../assets/icons/LocationDefault.svg';
 import locationIconHover from '../../../assets/icons/LocationHover.svg';
 import locationIconContrast from '../../../assets/icons/LocationDefaultContrast.svg';
 import locationIconContrastHover from '../../../assets/icons/LocationHoverContrast.svg';
+import useLocaleText from '../../../utils/useLocaleText';
 
 const UnitItem = ({
   classes,
   distance,
   unit,
   onClick,
-  getLocaleText,
   intl,
   padded,
   divider,
@@ -24,10 +24,7 @@ const UnitItem = ({
   settings,
   theme,
 }) => {
-  // Don't render if not valid unit
-  if (!UnitHelper.isValidUnit(unit)) {
-    return null;
-  }
+  const getLocaleText = useLocaleText();
 
   const parseAccessibilityText = () => {
     const accessSettingsSet = SettingsUtility.hasActiveAccessibilitySettings(settings);
@@ -88,6 +85,12 @@ const UnitItem = ({
     resetMarkerHighlight();
   };
 
+
+  // Don't render if not valid unit
+  if (!UnitHelper.isValidUnit(unit)) {
+    return null;
+  }
+
   // Accessibility text and color
   const accessData = isClient() ? parseAccessibilityText() : 0;
   const accessText = accessData.text;
@@ -145,7 +148,6 @@ UnitItem.propTypes = {
     text: PropTypes.string,
   }),
   unit: PropTypes.objectOf(PropTypes.any),
-  getLocaleText: PropTypes.func.isRequired,
   onClick: PropTypes.func,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
