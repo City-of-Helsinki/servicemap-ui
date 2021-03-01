@@ -8,7 +8,6 @@ import { transitIconSize } from '../../config/mapConfig';
 import { isEmbed } from '../../../../utils/path';
 
 class TransitStops extends React.Component {
-  // TODO: convert this to function component and replace getLocaleText from parent component with useLocaText on this component
   constructor(props) {
     super(props);
     this.state = {
@@ -103,7 +102,6 @@ class TransitStops extends React.Component {
   }
 
   render() {
-    const { getLocaleText } = this.props;
     const { Marker, Popup } = global.rL;
     const { transitStops } = this.state;
 
@@ -121,7 +119,6 @@ class TransitStops extends React.Component {
               <TransitStopInfo
                 stop={stop}
                 onCloseClick={() => this.closePopup()}
-                getLocaleText={getLocaleText}
               />
             </Popup>
           </Marker>
@@ -132,7 +129,6 @@ class TransitStops extends React.Component {
 }
 
 TransitStops.propTypes = {
-  getLocaleText: PropTypes.func.isRequired,
   map: PropTypes.objectOf(PropTypes.any).isRequired,
   mapObject: PropTypes.objectOf(PropTypes.any).isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,

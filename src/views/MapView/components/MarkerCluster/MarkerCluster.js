@@ -444,7 +444,6 @@ MarkerCluster.propTypes = {
     }),
   ).isRequired,
   getDistance: PropTypes.func.isRequired,
-  getLocaleText: PropTypes.func.isRequired,
   map: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any).isRequired,
   settings: PropTypes.objectOf(PropTypes.any).isRequired,

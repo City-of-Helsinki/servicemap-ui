@@ -64,7 +64,6 @@ const MapView = (props) => {
     toggleSidebar,
     sidebarHidden,
   } = props;
-  const getLocaleText = useLocaleText();
   const mapRef = useRef(null);
 
   // State
@@ -377,7 +376,6 @@ const MapView = (props) => {
           <Districts mapOptions={mapOptions} map={mapRef.current} embed={embeded} />
 
           <TransitStops
-            getLocaleText={getLocaleText}
             map={mapRef.current}
             mapObject={mapObject}
             isMobile={isMobile}

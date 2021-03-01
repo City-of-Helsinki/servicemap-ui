@@ -7,10 +7,10 @@ import { Typography, ButtonBase } from '@material-ui/core';
 import { Close } from '@material-ui/icons';
 import { fetchStopData } from '../../../utils/transitFetch';
 import { getIcon } from '../../../../../components/SMIcon';
+import useLocaleText from '../../../../../utils/useLocaleText';
 
-const TransitStopInfo = ({
-  stop, onCloseClick, classes, getLocaleText,
-}) => {
+const TransitStopInfo = ({ stop, onCloseClick, classes }) => {
+  const getLocaleText = useLocaleText();
   const [stopData, setStopData] = useState({ departureTimes: null, wheelchair: null });
 
   const getAccessibilityIcon = (value) => {
@@ -113,7 +113,6 @@ TransitStopInfo.propTypes = {
   stop: PropTypes.objectOf(PropTypes.any),
   onCloseClick: PropTypes.func.isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  getLocaleText: PropTypes.func.isRequired,
 };
 
 TransitStopInfo.defaultProps = {
