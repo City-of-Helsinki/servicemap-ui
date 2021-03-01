@@ -10,6 +10,7 @@ import AddressMarker from '../AddressMarker';
 import useMobileStatus from '../../../../utils/isMobile';
 import { parseSearchParams } from '../../../../utils';
 import config from '../../../../../config';
+import useLocaleText from '../../../../utils/useLocaleText';
 
 
 const Districts = ({
@@ -17,7 +18,6 @@ const Districts = ({
   districtData,
   unitsFetching,
   addressDistrict,
-  getLocaleText,
   theme,
   mapOptions,
   currentPage,
@@ -37,6 +37,7 @@ const Districts = ({
   const useContrast = theme === 'dark';
   const isMobile = useMobileStatus();
   const location = useLocation();
+  const getLocaleText = useLocaleText();
   const citySettings = useSelector(state => state.settings.cities);
   const selectedDistrictType = useSelector(state => state.districts.selectedDistrictType);
   const [areaPopup, setAreaPopup] = useState(null);
@@ -262,7 +263,6 @@ const Districts = ({
 
 Districts.propTypes = {
   highlightedDistrict: PropTypes.objectOf(PropTypes.any),
-  getLocaleText: PropTypes.func.isRequired,
   mapOptions: PropTypes.objectOf(PropTypes.any).isRequired,
   currentPage: PropTypes.string.isRequired,
   measuringMode: PropTypes.bool.isRequired,
