@@ -185,7 +185,7 @@ const PrintView = ({
     Object.keys(markers).forEach((key) => {
       if (Object.prototype.hasOwnProperty.call(markers, key)) {
         const marker = markers[key];
-        if (!mapBounds.contains(marker.getLatLng())) {
+        if (marker.options.id === 'userMarker' || !mapBounds.contains(marker.getLatLng())) {
           return;
         }
         if (isUnitPage() && isInvalidUnitPageMarker(marker)) {
