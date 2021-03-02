@@ -7,6 +7,7 @@ import PaginatedList from '../../../../components/Lists/PaginatedList';
 import TitleBar from '../../../../components/TitleBar';
 import Loading from '../../../../components/Loading';
 import ReservationItem from '../../../../components/ListItems/ReservationItem';
+import useLocaleText from '../../../../utils/useLocaleText';
 
 const ExtendedData = ({
   currentUnit,
@@ -14,10 +15,10 @@ const ExtendedData = ({
   fetchSelectedUnit,
   fetchReservations,
   fetchUnitEvents,
-  getLocaleText,
   reservations,
   type,
 }) => {
+  const getLocaleText = useLocaleText();
   const intl = useIntl();
   const { unit } = useParams();
   const title = currentUnit && currentUnit.name ? getLocaleText(currentUnit.name) : '';
@@ -125,9 +126,16 @@ const ExtendedData = ({
 
 ExtendedData.propTypes = {
   events: PropTypes.objectOf(PropTypes.any).isRequired,
+  currentUnit: PropTypes.objectOf(PropTypes.any),
+  fetchSelectedUnit: PropTypes.func.isRequired,
+  type: PropTypes.string.isRequired,
   fetchReservations: PropTypes.func.isRequired,
   fetchUnitEvents: PropTypes.func.isRequired,
   reservations: PropTypes.objectOf(PropTypes.any).isRequired,
+};
+
+ExtendedData.defaultProps = {
+  currentUnit: null,
 };
 
 export default ExtendedData;

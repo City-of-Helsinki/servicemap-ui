@@ -6,6 +6,7 @@ import {
 import { Map } from '@material-ui/icons';
 import { getIcon } from '../SMIcon';
 import DrawerButton from './DrawerButton';
+import useLocaleText from '../../utils/useLocaleText';
 
 const DrawerMenu = (props) => {
   const {
@@ -20,8 +21,8 @@ const DrawerMenu = (props) => {
     isOpen,
     toggleDrawerMenu,
     handleNavigation,
-    getLocaleText,
   } = props;
+  const getLocaleText = useLocaleText();
 
   const menuContent = [
     { // Nearby services button
@@ -126,7 +127,6 @@ DrawerMenu.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   toggleDrawerMenu: PropTypes.func.isRequired,
   handleNavigation: PropTypes.func.isRequired,
-  getLocaleText: PropTypes.func.isRequired,
 };
 
 DrawerMenu.defaultProps = {

@@ -5,23 +5,26 @@ import {
   InputBase, IconButton, Paper, List, ListItem, Typography, Divider,
 } from '@material-ui/core';
 import { Clear, Search } from '@material-ui/icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { setOrder, setDirection } from '../../redux/actions/sort';
 import config from '../../../config';
 import { keyboardHandler, uppercaseFirst } from '../../utils';
 import useMobileStatus from '../../utils/isMobile';
+import useLocaleText from '../../utils/useLocaleText';
 
 const AddressSearchBar = ({
   defaultAddress,
   handleAddressChange,
   title,
-  locale,
   containerClassName,
   inputClassName,
-  setOrder,
-  setDirection,
-  getLocaleText,
   classes,
   intl,
 }) => {
+  const getLocaleText = useLocaleText();
+  const dispatch = useDispatch();
+  const locale = useSelector(state => state.user.locale);
+
   const formAddressString = address => (address
     ? `${getLocaleText(address.street.name)} ${address.number}${address.number_end ? address.number_end : ''}${address.letter ? address.letter : ''}, ${uppercaseFirst(address.street.municipality)}`
     : '');
@@ -43,8 +46,8 @@ const AddressSearchBar = ({
     inputRef.current.value = formAddressString(address);
     setAddressResults([]);
     setCurrentLocation(formAddressString(address));
-    setDirection('asc');
-    setOrder('distance');
+    dispatch(setDirection('asc'));
+    dispatch(setOrder('distance'));
     handleAddressChange(address);
   };
 
@@ -192,13 +195,9 @@ AddressSearchBar.propTypes = {
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   defaultAddress: PropTypes.objectOf(PropTypes.any),
   handleAddressChange: PropTypes.func.isRequired,
-  setOrder: PropTypes.func.isRequired,
-  setDirection: PropTypes.func.isRequired,
   title: PropTypes.objectOf(PropTypes.any),
-  locale: PropTypes.string.isRequired,
   containerClassName: PropTypes.string,
   inputClassName: PropTypes.string,
-  getLocaleText: PropTypes.func.isRequired,
 };
 
 AddressSearchBar.defaultProps = {

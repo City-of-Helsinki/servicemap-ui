@@ -27,6 +27,7 @@ import ReadSpeakerButton from '../../components/ReadSpeakerButton';
 import config from '../../../config';
 import useMobileStatus from '../../utils/isMobile';
 import UnitHelper from '../../utils/unitHelper';
+import useLocaleText from '../../utils/useLocaleText';
 
 const UnitView = (props) => {
   const {
@@ -35,7 +36,6 @@ const UnitView = (props) => {
     intl,
     classes,
     embed,
-    getLocaleText,
     navigator,
     match,
     fetchSelectedUnit,
@@ -60,6 +60,8 @@ const UnitView = (props) => {
   const [unit, setUnit] = useState(checkCorrectUnit(stateUnit) ? stateUnit : null);
 
   const isMobile = useMobileStatus();
+
+  const getLocaleText = useLocaleText();
 
 
   const initializePTVAccessibilitySentences = () => {
@@ -109,7 +111,7 @@ const UnitView = (props) => {
     } else if (unit.municipality === 'kauniainen') {
       window.open('https://www.kauniainen.fi/kaupunki_ja_paatoksenteko/osallistu_ja_vaikuta');
     } else {
-      navigator.openFeedback();
+      navigator.push('unit', { id: unit.id, type: 'feedback' });
     }
   };
 
@@ -140,11 +142,11 @@ const UnitView = (props) => {
     }
   }, [match.params.unit]);
 
-  if (config.usePtvAccessibilityApi) {
-    useEffect(() => {
+  useEffect(() => {
+    if (config.usePtvAccessibilityApi) {
       initializePTVAccessibilitySentences();
-    }, [unit]);
-  }
+    }
+  }, [unit]);
 
   if (embed) {
     return null;
@@ -197,10 +199,10 @@ const UnitView = (props) => {
           </Container>
 
           {/* View Components */}
-          <ContactInfo unit={unit} userLocation={userLocation} getLocaleText={getLocaleText} />
-          <SocialMediaLinks unit={unit} getLocaleText={getLocaleText} />
-          <Highlights unit={unit} getLocaleText={getLocaleText} />
-          <Description unit={unit} getLocaleText={getLocaleText} />
+          <ContactInfo unit={unit} userLocation={userLocation} />
+          <SocialMediaLinks unit={unit} />
+          <Highlights unit={unit} />
+          <Description unit={unit} />
           <UnitLinks unit={unit} />
           <ElectronicServices unit={unit} />
           {!isMobile && feedbackButton()}
@@ -322,12 +324,6 @@ const UnitView = (props) => {
       );
     }
 
-    if (location.search.includes('feedback=true')) {
-      return (
-        <FeedbackView />
-      );
-    }
-
     if (unit && unit.complete) {
       const tabs = [
         {
@@ -426,7 +422,6 @@ UnitView.propTypes = {
   fetchUnitEvents: PropTypes.func.isRequired,
   match: PropTypes.objectOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  getLocaleText: PropTypes.func.isRequired,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   reservations: PropTypes.arrayOf(PropTypes.any),

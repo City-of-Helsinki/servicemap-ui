@@ -17,13 +17,14 @@ import SMButton from '../../ServiceMapButton';
 import useDownloadData from '../../../utils/downloadData';
 import { getIcon } from '../../SMIcon';
 import { fetchServiceNames } from './utils';
+import useLocaleText from '../../../utils/useLocaleText';
 
 const DownloadDialog = ({
   classes,
-  getLocaleText,
   open,
   ...rest
 }) => {
+  const getLocaleText = useLocaleText();
   const downloadData = useDownloadData();
   const page = useSelector(state => state.user.page);
   const selectedUnit = useSelector(state => state.selectedUnit.unit.data);
@@ -234,10 +235,10 @@ DownloadDialog.propTypes = {
     downloadIcon: PropTypes.string,
     formControlGroup: PropTypes.string,
     formControlLabel: PropTypes.string,
+    icon: PropTypes.string,
     topMargin: PropTypes.string,
     unitCount: PropTypes.string,
   }).isRequired,
-  getLocaleText: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
 };
 

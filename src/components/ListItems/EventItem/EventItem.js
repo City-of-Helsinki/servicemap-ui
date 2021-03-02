@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Event } from '@material-ui/icons';
 import ResultItem from '../ResultItem';
+import useLocaleText from '../../../utils/useLocaleText';
 
 const formatEventDate = (event, intl) => {
   const timeString = intl.formatMessage({ id: 'general.time.short' });
@@ -32,10 +33,10 @@ const formatEventDate = (event, intl) => {
 const EventItem = ({
   changeSelectedEvent,
   event,
-  getLocaleText,
   intl,
   navigator,
 }) => {
+  const getLocaleText = useLocaleText();
   const dateString = formatEventDate(event, intl);
   return (
     <ResultItem
@@ -62,7 +63,6 @@ export default EventItem;
 EventItem.propTypes = {
   changeSelectedEvent: PropTypes.func.isRequired,
   event: PropTypes.objectOf(PropTypes.any).isRequired,
-  getLocaleText: PropTypes.func.isRequired,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
 };

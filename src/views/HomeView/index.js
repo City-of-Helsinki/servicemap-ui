@@ -12,7 +12,10 @@ const mapStateToProps = (state) => {
   const {
     data, isFetching, count, max,
   } = units;
+  // TODO: replace this with useLocaleText when the component is converted to function component
   const getLocaleText = textObject => getLocaleString(state, textObject);
+  /* TODO: create custom hook for getAddressNavigatorParams to prevent
+  re-rendering on every state change */
   const getAddressNavigatorParams = getAddressNavigatorParamsConnector(getLocaleText, user.locale);
   return {
     unit: state.unit,

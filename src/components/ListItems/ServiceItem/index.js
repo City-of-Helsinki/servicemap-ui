@@ -8,6 +8,7 @@ import styles from './styles';
 // Listen to redux state
 const mapStateToProps = (state) => {
   const { current } = state.service;
+  // TODO: replace this with useLocaleText when the component is converted to function component
   const getLocaleText = textObject => getLocaleString(state, textObject);
   const { navigator } = state;
   return {

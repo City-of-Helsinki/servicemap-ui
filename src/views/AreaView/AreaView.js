@@ -15,6 +15,7 @@ import AreaTab from './components/AreaTab';
 import { districtFetch } from '../../utils/fetch';
 import fetchAddress from '../MapView/utils/fetchAddress';
 import TitleBar from '../../components/TitleBar';
+import useLocaleText from '../../utils/useLocaleText';
 
 
 const fetchReducer = (state, action) => {
@@ -48,15 +49,10 @@ const AreaView = ({
   selectedDistrictServices,
   areaViewState,
   map,
-  getLocaleText,
   navigator,
   embed,
   intl,
 }) => {
-  if (!map || !map.leafletElement) {
-    return null;
-  }
-
   const dataStructure = [ // Categorized district data structure
     {
       id: 'health',
@@ -125,7 +121,7 @@ const AreaView = ({
       ],
     },
   ];
-
+  const getLocaleText = useLocaleText();
   const location = useLocation();
   const accordionStates = useRef(null);
 
@@ -429,6 +425,10 @@ const AreaView = ({
     }
   }, []);
 
+
+  if (!map || !map.leafletElement) {
+    return null;
+  }
 
   const renderAreaTab = () => (
     <AreaTab

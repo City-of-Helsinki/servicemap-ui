@@ -5,7 +5,7 @@ import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { Provider } from 'react-redux';
 import ThemeWrapper from '../src/themes/ThemeWrapper';
-import { appDynamicsTrackingCode, matomoTrackingCode } from './analytics';
+import { appDynamicsTrackingCode, cookieHubCode, matomoTrackingCode } from './externalScripts';
 
 // Check if user agent is Internet Explorer
 function isIE(userAgent) {
@@ -21,7 +21,7 @@ function isIE(userAgent) {
 }
 
 // IE HTML skeleton
-const IEHTML = (reactDom, css, cssString) => `
+const IEHTML = (req, reactDom, css, cssString) => `
 <!DOCTYPE html>
 <html lang="fi">
 <head>
@@ -34,6 +34,7 @@ const IEHTML = (reactDom, css, cssString) => `
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#141823" />
   ${appDynamicsTrackingCode(process.env.APP_DYNAMICS_APP_KEY)}
+  ${cookieHubCode(req)}
 </head>
 
 <body>
@@ -163,7 +164,7 @@ const ieHandler = (req, res, next) => {
       const cssString = sheets.toString();
 
       res.writeHead(200, { 'Content-Type': 'text/html' });
-      res.end(IEHTML(reactDom, css, cssString));
+      res.end(IEHTML(req, reactDom, css, cssString));
       return;
     }
   } catch (e) {

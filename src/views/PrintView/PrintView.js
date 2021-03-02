@@ -18,6 +18,7 @@ import { NumberCircleMaker } from '../MapView/utils/drawIcon';
 import CreateMap from '../MapView/utils/createMap';
 import SMButton from '../../components/ServiceMapButton';
 import paths from '../../../config/paths';
+import useLocaleText from '../../utils/useLocaleText';
 
 const StyledTableRow = withStyles(theme => ({
   root: {
@@ -35,11 +36,11 @@ const StyledTableCell = withStyles(theme => ({
 
 const PrintView = ({
   classes,
-  getLocaleText,
   map,
   togglePrintView,
 }) => {
   const intl = useIntl();
+  const getLocaleText = useLocaleText();
   const [descriptions, setDescriptions] = useState([]);
   const location = useLocation();
   const dialogRef = useRef();
@@ -68,8 +69,8 @@ const PrintView = ({
     map.keyboard.disable();
     if (map.tap) map.tap.disable();
     document.getElementById('print-map').style.cursor = 'default';
-    document.querySelector('.leaflet-control-zoom').style.display = 'none'
-    document.querySelector('.leaflet-control-attribution').style.display = 'none'
+    document.querySelector('.leaflet-control-zoom').style.display = 'none';
+    document.querySelector('.leaflet-control-attribution').style.display = 'none';
   };
 
   const getMarkers = () => {
@@ -185,7 +186,7 @@ const PrintView = ({
     Object.keys(markers).forEach((key) => {
       if (Object.prototype.hasOwnProperty.call(markers, key)) {
         const marker = markers[key];
-        if (!mapBounds.contains(marker.getLatLng())) {
+        if (marker.options.id === 'userMarker' || !mapBounds.contains(marker.getLatLng())) {
           return;
         }
         if (isUnitPage() && isInvalidUnitPageMarker(marker)) {
@@ -365,11 +366,13 @@ PrintView.propTypes = {
     buttonContainer: PropTypes.string,
     container: PropTypes.string,
     map: PropTypes.string,
+    table: PropTypes.string,
     wrapper: PropTypes.string,
   }).isRequired,
-  getLocaleText: PropTypes.func.isRequired,
   map: PropTypes.shape({
     getBounds: PropTypes.func,
+    getCenter: PropTypes.func,
+    getZoom: PropTypes.func,
   }).isRequired,
   togglePrintView: PropTypes.func.isRequired,
 };

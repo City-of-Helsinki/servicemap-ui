@@ -19,6 +19,7 @@
     "abortcontroller-polyfill": "^1.5.0",
     "core-js": "^3.7.0",
     "dotenv": "^8.2.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
     "express": "^4.17.1",
     "intl": "^1.2.5",
     "isomorphic-style-loader": "^5.1.0",

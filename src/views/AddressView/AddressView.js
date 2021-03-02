@@ -23,6 +23,7 @@ import MobileComponent from '../../components/MobileComponent';
 import DivisionItem from '../../components/ListItems/DivisionItem';
 import { parseSearchParams } from '../../utils';
 import config from '../../../config';
+import useLocaleText from '../../utils/useLocaleText';
 
 
 const hiddenDivisions = {
@@ -62,7 +63,6 @@ const AddressView = (props) => {
     match,
     getAddressNavigatorParams,
     getDistance,
-    getLocaleText,
     map,
     setAddressData,
     setAddressLocation,
@@ -74,6 +74,8 @@ const AddressView = (props) => {
     location,
     units,
   } = props;
+
+  const getLocaleText = useLocaleText();
 
   const fetchAddressDistricts = (lnglat) => {
     setAdminDistricts(null);
@@ -329,7 +331,6 @@ AddressView.propTypes = {
   navigator: PropTypes.objectOf(PropTypes.any),
   getAddressNavigatorParams: PropTypes.func.isRequired,
   getDistance: PropTypes.func.isRequired,
-  getLocaleText: PropTypes.func.isRequired,
   setAddressData: PropTypes.func.isRequired,
   setAddressLocation: PropTypes.func.isRequired,
   setAddressUnits: PropTypes.func.isRequired,

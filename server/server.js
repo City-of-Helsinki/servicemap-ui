@@ -19,7 +19,7 @@ import { fetchEventData, fetchSelectedUnitData } from './dataFetcher';
 import IntlPolyfill from 'intl';
 import paths from '../config/paths';
 import legacyRedirector from './legacyRedirector';
-import { matomoTrackingCode, appDynamicsTrackingCode } from './analytics';
+import { matomoTrackingCode, appDynamicsTrackingCode, cookieHubCode } from './externalScripts';
 import { getLastCommit, getVersion } from './version';
 import ieHandler from './ieMiddleware';
 
@@ -124,7 +124,7 @@ app.get('/*', (req, res, next) => {
   };
 
   res.writeHead(200, { 'Content-Type': 'text/html' });
-  res.end(htmlTemplate(reactDom, preloadedState, css, cssString, locale, helmet, customValues));
+  res.end(htmlTemplate(req, reactDom, preloadedState, css, cssString, locale, helmet, customValues));
 });
 
 // The error handler must be before any other error middleware
@@ -135,7 +135,7 @@ if (Sentry) {
 console.log(`Starting server on port ${process.env.PORT || 2048}`);
 app.listen(process.env.PORT || 2048);
 
-const htmlTemplate = (reactDom, preloadedState, css, cssString, locale, helmet, customValues) => `
+const htmlTemplate = (req, reactDom, preloadedState, css, cssString, locale, helmet, customValues) => `
 <!DOCTYPE html>
 <html lang="${locale || 'fi'}">
   <head>
@@ -158,6 +158,7 @@ const htmlTemplate = (reactDom, preloadedState, css, cssString, locale, helmet, 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#141823" />
     ${appDynamicsTrackingCode(process.env.APP_DYNAMICS_APP_KEY)}
+    ${cookieHubCode(req)}
     ${
       process.env.READ_SPEAKER_URL
       && process.env.READ_SPEAKER_URL !== 'false' ? `

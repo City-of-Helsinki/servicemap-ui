@@ -8,6 +8,7 @@ import ServiceItem from '../../../../components/ListItems/ServiceItem';
 const educationNode = 1087;
 
 class Services extends React.Component {
+  // TODO: replace getLocaleText with useLocaleText when the component is converted to function component
   serviceRef = null;
 
   periodRef = null;
