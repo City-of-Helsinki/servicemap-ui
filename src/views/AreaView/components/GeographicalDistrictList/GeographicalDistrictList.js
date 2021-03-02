@@ -1,5 +1,5 @@
 import {
-  Checkbox, List, ListItem, Typography,
+  Checkbox, FormControlLabel, List, ListItem, Typography,
 } from '@material-ui/core';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -80,13 +80,18 @@ const GeographicalDistrictList = ({
           <List disablePadding>
             {data.map(district => (
               <ListItem className={`${classes.listItem} ${classes.areaItem}`} key={district.id} divider>
-                <Checkbox
-                  color="primary"
-                  icon={<span className={classes.checkBoxIcon} />}
-                  onChange={e => handleCheckboxChange(e, district)}
-                  checked={selectedSubdistricts.includes(district.ocd_id)}
+                <FormControlLabel
+                  className={classes.checkboxPadding}
+                  control={(
+                    <Checkbox
+                      color="primary"
+                      icon={<span className={classes.checkBoxIcon} />}
+                      onChange={e => handleCheckboxChange(e, district)}
+                      checked={selectedSubdistricts.includes(district.ocd_id)}
+                    />
+                  )}
+                  label={<Typography>{getLocaleText(district.name)}</Typography>}
                 />
-                <Typography>{district.name.fi}</Typography>
               </ListItem>
             ))}
           </List>

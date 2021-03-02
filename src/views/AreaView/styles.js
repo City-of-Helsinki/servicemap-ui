@@ -199,6 +199,9 @@ const styles = theme => ({
     height: 48,
     backgroundColor: 'rgba(222, 222, 222, 0.56)',
   },
+  checkboxPadding: {
+    paddingLeft: theme.spacing(2),
+  },
   checkBoxIcon: {
     margin: 2,
     width: 18,
