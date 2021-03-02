@@ -35,6 +35,7 @@ const Districts = ({
   const isMobile = useMobileStatus();
   const location = useLocation();
   const citySettings = useSelector(state => state.settings.cities);
+  const geographicalDsitricts = ['neighborhood', 'postcode_area'];
 
   /* TODO: The following useEffect is used to prevent double click bug with
   lealfet + safari. Should be removed when the bug is fixed by lealfet */
@@ -46,7 +47,7 @@ const Districts = ({
 
   const districtOnClick = (e, district) => {
     if (measuringMode) return;
-    if (district.type === 'neighborhood' || district.type === 'postcode_area') {
+    if (geographicalDsitricts.includes(district.type)) {
       // Disable normal map click event
       e.originalEvent.view.L.DomEvent.stopPropagation(e);
       if (districtClicked === district.ocd_id) return; // Prevent safari double click
@@ -152,8 +153,10 @@ const Districts = ({
 
     return filteredData.map((district) => {
       let dimmed;
-      if (selectedSubdistricts.length) {
-        dimmed = !selectedSubdistricts.some(item => item === district.ocd_id);
+      if (geographicalDsitricts.includes(district.type)) {
+        if (selectedSubdistricts.length) {
+          dimmed = !selectedSubdistricts.some(item => item === district.ocd_id);
+        }
       } else {
         dimmed = addressDistrict && district.id !== addressDistrict.id;
       }
