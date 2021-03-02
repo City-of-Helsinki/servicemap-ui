@@ -1,6 +1,7 @@
 /* eslint-disable quote-props */
 const translations = {
   'app.title': 'Service map',
+  'app.description': 'Find services near your home',
 
   // Accessibility
   'accessibility': 'Accessibility',

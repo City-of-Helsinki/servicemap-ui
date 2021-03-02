@@ -1,6 +1,7 @@
 /* eslint-disable quote-props */
 const translations = {
   'app.title': 'Palvelukartta',
+  'app.description': 'Pääkaupunkiseudun kaikki julkiset palvelut ulottuvillasi.',
 
   // Accessibility
   'accessibility': 'Esteettömyys',

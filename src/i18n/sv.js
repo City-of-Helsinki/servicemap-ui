@@ -1,6 +1,7 @@
 /* eslint-disable quote-props */
 const translations = {
   'app.title': 'Servicekarta',
+  'app.description': 'Alla tjänster i huvudstadsregionen inom räckhåll.',
 
   // Accessibility
   'accessibility': 'Tillgänglighet',

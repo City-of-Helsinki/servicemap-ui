@@ -45,6 +45,7 @@ const MetaTags = () => {
       {
         isClient() && <meta property="og:url" content={window.location} />
       }
+      <meta property="og:description" content={intl.formatMessage({ id: 'app.description' })} />
     </Helmet>
   );
 };
