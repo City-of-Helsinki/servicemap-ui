@@ -47,6 +47,7 @@ const AreaView = ({
   const location = useLocation();
   const accordionStates = useRef(areaViewState || {});
   const localAddressData = useSelector(state => state.districts.districtAddressData);
+  const selectedDistrictType = useSelector(state => state.districts.selectedDistrictType);
 
   // State
   const [selectedAddress, setSelectedAddress] = useState(districtAddressData.address);
@@ -99,6 +100,12 @@ const AreaView = ({
     center: map.leafletElement.getCenter(),
     zoom: map.leafletElement.getZoom(),
   });
+
+  const clearRadioButtonValue = useCallback(() => {
+    setSelectedDistrictType(null);
+    setSelectedDistrictServices([]);
+    setSelectedSubdistricts([]);
+  }, []);
 
   useEffect(() => () => {
     // On unmount, save map position and opened accordions
@@ -225,6 +232,7 @@ const AreaView = ({
       handleOpen={useCallback(item => handleOpen(item), [])}
       formAddressString={formAddressString}
       getLocaleText={useCallback(obj => getLocaleText(obj), [])}
+      clearRadioButtonValue={clearRadioButtonValue}
     />
   );
 
@@ -262,6 +270,7 @@ const AreaView = ({
             />
           </div>
           <TabLists
+            onTabChange={() => (selectedDistrictType ? clearRadioButtonValue() : null)}
             data={tabs}
           />
         </div>

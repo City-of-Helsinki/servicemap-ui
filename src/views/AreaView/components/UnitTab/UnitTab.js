@@ -20,6 +20,7 @@ import GeographicalUnitList from '../GeographicalUnitList.js';
 const UnitTab = ({
   handleOpen,
   formAddressString,
+  clearRadioButtonValue,
   getLocaleText,
   classes,
 }) => {
@@ -39,7 +40,6 @@ const UnitTab = ({
     if (!district.data.some(obj => obj.boundary)) {
       dispatch(fetchDistrictGeometry(district.name));
     }
-    setOpenCategory(null);
     dispatch(setSelectedDistrictType(district.id));
     dispatch(setSelectedDistrictServices([]));
     const localDistrict = localAddressData.districts.find(obj => obj.type === district.name);
@@ -50,15 +50,10 @@ const UnitTab = ({
     }
   };
 
-  const clearRadioButtonValue = () => {
-    setOpenCategory(null);
-    dispatch(setSelectedDistrictType(null));
-    dispatch(setSelectedDistrictServices([]));
-    dispatch(setSelectedSubdistricts([]));
-  };
 
   const handleRadioChange = (district, e) => {
     e.stopPropagation();
+    setOpenCategory(null);
     if (selectedDistrictType === district.id) {
       clearRadioButtonValue();
     } else {
