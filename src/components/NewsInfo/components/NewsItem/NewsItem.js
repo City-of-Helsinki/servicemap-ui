@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/styles';
 import { Link, Paper, Typography } from '@material-ui/core';
-import { FormattedMessage } from 'react-intl';
 import { getIcon } from '../../../SMIcon';
 import styles from './styles';
-import { getLocaleString } from '../../../../redux/selectors/locale';
+import useLocaleText from '../../../../utils/useLocaleText';
 
-const NewsItem = ({ classes, item, getLocaleText }) => {
+const NewsItem = ({ classes, item }) => {
+  const getLocaleText = useLocaleText();
   if (!item || !item.title) {
     return null;
   }
@@ -77,7 +76,6 @@ NewsItem.propTypes = {
     titleContainer: PropTypes.string,
     subtitle: PropTypes.string,
   }).isRequired,
-  getLocaleText: PropTypes.func.isRequired,
   item: PropTypes.shape({
     lead_paragraph: PropTypes.shape({
       fi: PropTypes.string,
@@ -95,13 +93,5 @@ NewsItem.propTypes = {
   }).isRequired,
 };
 
-// Listen to redux state
-const mapStateToProps = (state) => {
-  const getLocaleText = textObject => getLocaleString(state, textObject);
 
-  return {
-    getLocaleText,
-  };
-};
-
-export default withStyles(styles)(connect(mapStateToProps)(NewsItem));
+export default withStyles(styles)(NewsItem);

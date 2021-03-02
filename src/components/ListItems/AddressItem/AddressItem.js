@@ -4,11 +4,11 @@ import { uppercaseFirst } from '../../../utils';
 import SimpleListItem from '../SimpleListItem';
 import { AddressIcon } from '../../SMIcon';
 import { getAddressText } from '../../../utils/address';
+import useLocaleText from '../../../utils/useLocaleText';
 
 const AddressItem = (props) => {
   const {
     getAddressNavigatorParams,
-    getLocaleText,
     navigator,
     address,
     classes,
@@ -18,6 +18,7 @@ const AddressItem = (props) => {
     role,
     id,
   } = props;
+  const getLocaleText = useLocaleText();
 
   const text = getAddressText(address, getLocaleText, showPostalCode);
 
@@ -47,7 +48,6 @@ export default AddressItem;
 AddressItem.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   getAddressNavigatorParams: PropTypes.func.isRequired,
-  getLocaleText: PropTypes.func.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   address: PropTypes.objectOf(PropTypes.any).isRequired,
   selected: PropTypes.bool,

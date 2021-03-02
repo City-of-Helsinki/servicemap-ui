@@ -10,11 +10,12 @@ const mapStateToProps = (state) => {
   const { current } = state.service;
   const getLocaleText = textObject => getLocaleString(state, textObject);
   const { navigator, user } = state;
+  /* TODO: create custom hook for getAddressNavigatorParams to prevent
+  re-rendering on every state change */
   const getAddressNavigatorParams = getAddressNavigatorParamsConnector(getLocaleText, user.locale);
   return {
     getAddressNavigatorParams,
     currentService: current,
-    getLocaleText,
     navigator,
   };
 };

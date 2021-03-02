@@ -1,7 +1,8 @@
 
 const getLocale = store => store.user.locale;
 
-// This returns correct string according to locale
+// NOTE: this is used only on old class components. useLocaleText should be used instead
+// TODO: remove this once class components are replaced with function components
 const getLocaleString = (state, obj) => {
   let locale;
   if (typeof state === 'string') {

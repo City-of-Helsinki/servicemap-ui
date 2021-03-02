@@ -5,13 +5,16 @@ import { FormattedMessage } from 'react-intl';
 import { getIcon } from '../SMIcon';
 import LocalStorageUtility from '../../utils/localStorage';
 import { focusToViewTitle } from '../../utils/accessibility';
+import useLocaleText from '../../utils/useLocaleText';
 
 // LocalStorage key for alert message
 const lsKey = 'alertMessage';
 
 const AlertBox = ({
-  classes, getLocaleText, intl, errors, news,
+  classes, intl, errors, news,
 }) => {
+  const getLocaleText = useLocaleText();
+
   const [visible, setVisible] = useState(true);
   const isErrorMessage = !!errors.length;
   const abData = isErrorMessage ? errors : news;
@@ -90,7 +93,6 @@ AlertBox.propTypes = {
       fi: PropTypes.string,
     }),
   })).isRequired,
-  getLocaleText: PropTypes.func.isRequired,
   news: PropTypes.arrayOf(PropTypes.shape({
     lead_paragraph: PropTypes.shape({
       fi: PropTypes.string,

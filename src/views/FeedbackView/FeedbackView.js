@@ -11,10 +11,12 @@ import SMButton from '../../components/ServiceMapButton';
 import config from '../../../config';
 import DesktopComponent from '../../components/DesktopComponent';
 import { focusToViewTitle } from '../../utils/accessibility';
+import useLocaleText from '../../utils/useLocaleText';
 
 const FeedbackView = ({
-  classes, navigator, intl, location, selectedUnit, getLocaleText,
+  classes, navigator, intl, location, selectedUnit,
 }) => {
+  const getLocaleText = useLocaleText();
   // State
   const [email, setEmail] = useState(null);
   const [feedback, setFeedback] = useState(null);
@@ -262,7 +264,6 @@ FeedbackView.propTypes = {
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   selectedUnit: PropTypes.objectOf(PropTypes.any),
-  getLocaleText: PropTypes.func.isRequired,
 };
 
 FeedbackView.defaultProps = {

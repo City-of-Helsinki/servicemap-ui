@@ -4,8 +4,11 @@ import { FormattedMessage } from 'react-intl';
 import { Typography, Link } from '@material-ui/core';
 import unitSectionFilter from '../../utils/unitSectionFilter';
 import DescriptionText from '../../../../components/DescriptionText';
+import useLocaleText from '../../../../utils/useLocaleText';
 
-const Description = ({ unit, getLocaleText, classes }) => {
+const Description = ({ unit, classes }) => {
+  const getLocaleText = useLocaleText();
+
   const additionalInfo = [
     ...unitSectionFilter(unit.connections, 'OTHER_INFO'),
     ...unitSectionFilter(unit.connections, 'TOPICAL'),
@@ -61,7 +64,6 @@ const Description = ({ unit, getLocaleText, classes }) => {
 Description.propTypes = {
   unit: PropTypes.objectOf(PropTypes.any).isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  getLocaleText: PropTypes.func.isRequired,
 };
 
 export default Description;

@@ -4,10 +4,10 @@ import { Typography, Link } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
 import config from '../../../../../config';
 import unitSectionFilter from '../../utils/unitSectionFilter';
+import useLocaleText from '../../../../utils/useLocaleText';
 
-const Highlights = ({
-  unit, classes, getLocaleText, intl,
-}) => {
+const Highlights = ({ unit, classes, intl }) => {
+  const getLocaleText = useLocaleText();
   const connections = unitSectionFilter(unit.connections, 'HIGHLIGHT');
 
   // Add link to ulkoliikunta.fi as custom highligh to certain services
@@ -66,7 +66,6 @@ const Highlights = ({
 Highlights.propTypes = {
   unit: PropTypes.objectOf(PropTypes.any).isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  getLocaleText: PropTypes.func.isRequired,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
