@@ -203,13 +203,13 @@ const styles = theme => ({
     paddingLeft: theme.spacing(2),
   },
   checkBoxIcon: {
-    margin: 3,
-    width: 16,
-    height: 16,
+    margin: 2,
+    width: 18,
+    height: 18,
     backgroundColor: '#fff',
-    border: `1px solid ${theme.palette.secondary.main}`,
+    border: '0.5px solid #949494',
     boxShadow: 'inset 1px 1px 2px rgba(0, 0, 0, 0.05)',
-    borderRadius: 1,
+    borderRadius: 2,
   },
   disablePadding: {
     padding: 0,
@@ -218,7 +218,7 @@ const styles = theme => ({
     overflow: 'visible',
   },
   switchBorder: {
-    border: `1px solid ${theme.palette.secondary.main}`,
+    border: '1px solid #949494',
   },
   servciceList: {
     paddingTop: theme.spacing(2),
