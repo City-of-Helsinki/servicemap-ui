@@ -156,7 +156,7 @@ const UnitTab = ({
                         className={classes.unitsAccordion}
                         adornment={<FormatListBulleted className={classes.iconPadding} />}
                         titleContent={(
-                          <Typography variant="caption">
+                          <Typography className={classes.captionText} variant="caption">
                             <FormattedMessage
                               id={`area.geographicalServices.${district.id}`}
                               values={{ length: filteredSubdistrictUnitsLength }}

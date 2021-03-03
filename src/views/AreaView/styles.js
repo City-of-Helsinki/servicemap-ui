@@ -203,11 +203,11 @@ const styles = theme => ({
     paddingLeft: theme.spacing(2),
   },
   checkBoxIcon: {
-    margin: 2,
-    width: 18,
-    height: 18,
+    margin: 3,
+    width: 16,
+    height: 16,
     backgroundColor: '#fff',
-    border: '0.5px solid #DEDEDE',
+    border: `1px solid ${theme.palette.secondary.main}`,
     boxShadow: 'inset 1px 1px 2px rgba(0, 0, 0, 0.05)',
     borderRadius: 1,
   },
@@ -216,6 +216,9 @@ const styles = theme => ({
   },
   customSwitch: {
     overflow: 'visible',
+  },
+  switchBorder: {
+    border: `1px solid ${theme.palette.secondary.main}`,
   },
   servciceList: {
     paddingTop: theme.spacing(2),

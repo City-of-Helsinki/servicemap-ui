@@ -16,6 +16,7 @@ const DistrictToggleButton = ({
     control={(
       <Switch
         color="primary"
+        classes={{ thumb: classes.switchBorder }}
         size="small"
         value={district.id}
         className={classes.customSwitch}
