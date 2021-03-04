@@ -33,12 +33,17 @@ const DistrictUnitList = (props) => {
 
   const renderDistrictUnitItem = (district) => {
     const { unit } = district;
+    let title;
+    if (district.type === 'rescue_area') {
+      title = `${district.origin_id}. ${intl.formatMessage({ id: `area.list.${district.type}` })}`;
+    }
     const streetAddress = getAddressFromUnit(unit, getLocaleText, intl);
     return (
       <DivisionItem
         key={district.id}
         divider={false}
-        disableTitle
+        disableTitle={!title}
+        customTitle={title}
         className={classes.divisionItem}
         data={{
           area: district,

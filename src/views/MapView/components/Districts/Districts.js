@@ -164,6 +164,9 @@ const Districts = ({
       const area = district.boundary.coordinates.map(
         coords => swapCoordinates(coords),
       );
+      const tooltipTitle = district.type === 'rescue_area'
+        ? `${district.origin_id}. ${intl.formatMessage({ id: `area.list.${district.type}` })} - ${getLocaleText(district.name)}`
+        : `${getLocaleText(district.name)} - ${intl.formatMessage({ id: `area.list.${district.type}` })}`;
 
       return (
         <Polygon
@@ -190,7 +193,7 @@ const Districts = ({
               direction="top"
               autoPan={false}
             >
-              {`${getLocaleText(district.name)} - ${intl.formatMessage({ id: `area.list.${district.type}` })}`}
+              {tooltipTitle}
             </Tooltip>
           ) : null}
           {renderDistrictMarkers(district)}
