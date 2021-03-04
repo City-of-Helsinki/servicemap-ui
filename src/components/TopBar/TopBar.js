@@ -7,7 +7,7 @@ import { Map, Menu, Close } from '@material-ui/icons';
 import { FormattedMessage } from 'react-intl';
 import HomeLogo from '../Logos/HomeLogo';
 import { getIcon } from '../SMIcon';
-import DrawerMenu from '../DrawerMenu';
+import DrawerMenu from './DrawerMenu';
 import DesktopComponent from '../DesktopComponent';
 import MobileComponent from '../MobileComponent';
 import config from '../../../config';

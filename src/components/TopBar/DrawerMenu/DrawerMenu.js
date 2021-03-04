@@ -4,9 +4,9 @@ import {
   Drawer,
 } from '@material-ui/core';
 import { Map } from '@material-ui/icons';
-import { getIcon } from '../SMIcon';
+import { getIcon } from '../../SMIcon';
 import DrawerButton from './DrawerButton';
-import useLocaleText from '../../utils/useLocaleText';
+import useLocaleText from '../../../utils/useLocaleText';
 
 const DrawerMenu = (props) => {
   const {
