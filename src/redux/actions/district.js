@@ -37,9 +37,9 @@ export const addSelectedDistrictService = district => ({
   district,
 });
 
-export const removeSelectedDistrictService = district => ({
+export const removeSelectedDistrictService = data => ({
   type: 'REMOVE_SELECTED_DISTRICT_SERVICE',
-  district,
+  data,
 });
 
 export const setSelectedDistrictServices = services => ({

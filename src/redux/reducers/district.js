@@ -82,7 +82,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         selectedDistrictServices: [
-          ...state.selectedDistrictServices.filter(item => item !== action.district),
+          ...state.selectedDistrictServices.filter((item) => {
+            if (Array.isArray(action.data)) {
+              return !action.data.includes(item);
+            }
+            return item !== action.data;
+          }),
         ],
       };
 

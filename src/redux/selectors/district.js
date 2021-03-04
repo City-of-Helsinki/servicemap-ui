@@ -5,7 +5,7 @@ export const getHighlightedDistrict = state => state.districts.highlitedDistrict
 const getSelectedDistrict = state => state.districts.selectedDistrictType;
 const getDistrictData = state => state.districts.districtData;
 const getAddressDistrictData = state => state.districts.districtAddressData.districts;
-const getSubdistrictUnits = state => state.districts.subdistrictUnits;
+export const getSubdistrictUnits = state => state.districts.subdistrictUnits;
 const getSubdistrictSelection = state => state.districts.selectedSubdistricts;
 const getSelectedDistrictServices = state => state.districts.selectedDistrictServices;
 const getCitySettings = state => state.settings.cities;
@@ -41,7 +41,7 @@ export const getAddressDistrict = createSelector(
 );
 
 // Get selected geographical district units
-export const getSubdistrictServices = createSelector(
+export const getFilteredSubdistrictServices = createSelector(
   [getSubdistrictSelection, getSubdistrictUnits, getCitySettings],
   (selectedSubdistricts, unitData, citySettings) => {
     const selectedCities = Object.values(citySettings).filter(city => city);
@@ -59,7 +59,7 @@ export const getSubdistrictServices = createSelector(
 
 // Get area view units filtered by area view unit tab checkbox selection
 export const getFilteredSubdistrictUnits = createSelector(
-  [getSubdistrictServices, getSelectedDistrictServices],
+  [getFilteredSubdistrictServices, getSelectedDistrictServices],
   (districtUnits, serviceFilters) => {
     if (serviceFilters.length) {
       return districtUnits.filter(unit => (
