@@ -60,6 +60,7 @@ const translations = {
   'area.list.health': 'Hälsa',
   'area.list.education': 'Utbildning',
   'area.list.natureConservation': 'Naturskydd',
+  'area.list.parking': 'Pysäköinti', // TODO: translate
   'area.list.education.finnish': 'Finska skolområden',
   'area.list.education.swedish': 'Svenska skolområden',
   'area.list.preschool': 'Förskoleundervisning',

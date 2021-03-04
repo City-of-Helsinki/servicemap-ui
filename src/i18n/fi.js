@@ -60,6 +60,7 @@ const translations = {
   'area.list.health': 'Terveys',
   'area.list.education': 'Oppilaaksiottoalueet',
   'area.list.natureConservation': 'Luonnonsuojelu',
+  'area.list.parking': 'Pysäköinti',
   'area.list.education.finnish': 'Suomenkieliset koulualueet',
   'area.list.education.swedish': 'Ruotsinkieliset koulualueet',
   'area.list.preschool': 'Esiopetus',
