@@ -152,6 +152,9 @@ const AreaTab = (props) => {
 
   return (
     <div>
+      <Typography variant="srOnly" component="h3">
+        <FormattedMessage id="area.list" />
+      </Typography>
       <List>
         <RadioGroup value={selectedDistrictType}>
           {districtCategoryList.map(item => renderCategoryItem(item))}

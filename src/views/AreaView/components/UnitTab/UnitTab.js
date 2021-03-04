@@ -15,6 +15,7 @@ import {
 import { getSubdistrictServices } from '../../../../redux/selectors/district';
 import GeographicalDistrictList from '../GeographicalDistrictList';
 import GeographicalUnitList from '../GeographicalUnitList.js';
+import SettingsInfo from '../../../../components/SettingsInfo';
 
 
 const UnitTab = ({
@@ -88,10 +89,10 @@ const UnitTab = ({
     const localNeighborhood = localAddressData.districts.find(obj => obj.type === 'neighborhood');
     return (
       <div className={classes.addressInfoContainer}>
-        <Typography className={classes.addressInfoText}><FormattedMessage id="area.localAddress.title" /></Typography>
+        <Typography component="h3" className={classes.addressInfoText}><FormattedMessage id="area.localAddress.title" /></Typography>
         <div className={classes.addressInfoIconArea}>
           <LocationOn color="primary" className={classes.addressInfoIcon} />
-          <Typography variant="subtitle1">{formAddressString(localAddressData.address)}</Typography>
+          <Typography component="p" variant="subtitle1">{formAddressString(localAddressData.address)}</Typography>
         </div>
         {localPostArea ? (
           <Typography className={classes.addressInfoText}>
@@ -115,6 +116,9 @@ const UnitTab = ({
         {localAddressData?.address && localAddressData.districts?.length && (
           renderAddressInfo()
         )}
+        <Typography variant="srOnly" component="h3">
+          <FormattedMessage id="area.list" />
+        </Typography>
         <List>
           {districtItems.map((district) => {
             const opened = openCategory === district.id;
@@ -178,6 +182,13 @@ const UnitTab = ({
             );
           })}
         </List>
+        <SettingsInfo
+          onlyCities
+          title="settings.info.title.city"
+          altTitle="settings.info.title.noSettings.city"
+          settingsPage="area"
+          noDivider
+        />
       </>
     );
   };

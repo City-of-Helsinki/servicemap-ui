@@ -37,6 +37,7 @@ const translations = {
   'address.emergency_care.link.text': '[<a>emergency webpages</a>]',
 
   // Area
+  // TODO: clean unused translations
   'area.searchbar.infoText.address': 'Write your home address',
   'area.searchbar.infoText.optional': '(optional)',
   'area.tab.publicServices': 'Julkisten palveluiden alueet', // TODO: translate
@@ -46,6 +47,7 @@ const translations = {
   'area.services.all': 'Palvelut listana', // TODO: translate
   'area.info': 'Choose an area, whose services you want information about. Writing your home address in the search field opens a map, and the areas and districts that you belong to are shown under the Services in the area tab.',
   'area.choose.district': 'Choose area',
+  'area.list': 'Alueen valinta', // TODO: translate
   'area.localAddress.title': 'Osoitteesi tiedot', // TODO: translate
   'area.localAddress.neighborhood': 'Kaupunginosa: {area}', // TODO: translate
   'area.localAddress.postCode': 'Postinumero: {area}', // TODO: translate

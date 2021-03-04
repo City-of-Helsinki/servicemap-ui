@@ -37,6 +37,7 @@ const translations = {
   'address.emergency_care.link.text': '[<a>päivystyssivut</a>]',
 
   // Area
+  // TODO: clean unused translations
   'area.searchbar.infoText.address': 'Kirjoita kotiosoitteesi',
   'area.searchbar.infoText.optional': '(valinnainen)',
   'area.tab.publicServices': 'Julkisten palveluiden alueet',
@@ -46,6 +47,7 @@ const translations = {
   'area.services.all': 'Palvelut listana',
   'area.info': 'Valitse alue, jonka palveluista haluat tietoa. Kirjoittamalla alla olevaan hakukenttään kotiosoitteesi saat näkyville karttaan ja Alueen palvelut -välilehdelle alueet ja piirit, joihin kuulut',
   'area.choose.district': 'Valitse alue',
+  'area.list': 'Alueen valinta',
   'area.localAddress.title': 'Osoitteesi tiedot',
   'area.localAddress.neighborhood': 'Kaupunginosa: {area}',
   'area.localAddress.postCode': 'Postinumero: {area}',

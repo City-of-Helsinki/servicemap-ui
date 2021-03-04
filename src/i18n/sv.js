@@ -37,6 +37,7 @@ const translations = {
   'address.emergency_care.link.text': '[<a>joursidor</a>]',
 
   // Area
+  // TODO: clean unused translations
   'area.searchbar.infoText.address': 'Skriv din hemadress',
   'area.searchbar.infoText.optional': '(valfri)',
   'area.tab.publicServices': 'Julkisten palveluiden alueet', // TODO: translate
@@ -46,6 +47,7 @@ const translations = {
   'area.services.all': 'Palvelut listana', // TODO: translate
   'area.info': 'Välj ett område, vars tjänster du vill ha information om. Genom att skriva din hemadress i sökfältet öppnas en karta och under fliken Tjänster i området visas de områden och distrikt som du hör till',
   'area.choose.district': 'Väl område',
+  'area.list': 'Alueen valinta', // TODO: translate
   'area.localAddress.title': 'Osoitteesi tiedot', // TODO: translate
   'area.localAddress.neighborhood': 'Kaupunginosa: {area}', // TODO: translate
   'area.localAddress.postCode': 'Postinumero: {area}', // TODO: translate
