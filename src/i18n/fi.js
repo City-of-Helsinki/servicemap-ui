@@ -456,9 +456,10 @@ const translations = {
     other {# valintaa}
   }`,
   'settings.accessibility': 'Minua koskevat esteettömyystiedot',
+  'settings.accessibility.none': 'Ei rajauksia',
   'settings.sense.title': 'Aistirajoitteet',
-  'settings.sense.hearing': 'Käytän kuulolaitetta',
-  'settings.sense.visual': 'Olen näkövammainen',
+  'settings.sense.hearingAid': 'Käytän kuulolaitetta',
+  'settings.sense.visuallyImpaired': 'Olen näkövammainen',
   'settings.sense.colorblind': 'Minun on vaikea erottaa värejä',
   'settings.info.heading': 'Asetustiedot', // TODO: verify
   'settings.info.title': 'Valitsemasi asetukset vaikuttavat hakutulokseen',
@@ -475,6 +476,7 @@ const translations = {
     one {Valitsemani kaupunki}
     other {Valitsemani kaupungit}
   }`,
+  'settings.city.all': 'Näytä kaikki',
   'settings.city.title': 'Kaupunki',
   'settings.city.helsinki': 'Helsinki',
   'settings.city.espoo': 'Espoo',

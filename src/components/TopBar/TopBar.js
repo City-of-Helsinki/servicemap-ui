@@ -14,6 +14,7 @@ import config from '../../../config';
 import ToolMenu from '../ToolMenu';
 import { focusToViewTitle } from '../../utils/accessibility';
 import LocaleUtility from '../../utils/locale';
+import SettingsText from '../SettingsText';
 
 class TopBar extends React.Component {
   state={ drawerOpen: false }
@@ -22,13 +23,10 @@ class TopBar extends React.Component {
     const {
       settingsOpen, classes, toggleSettings, settings,
     } = this.props;
-
-    const citySettings = [];
-    config.cities.forEach(city => citySettings.push(settings.cities[city]));
     const settingsCategories = [
-      { type: 'citySettings', settings: citySettings },
-      { type: 'mapSettings', settings: settings.mapType },
-      { type: 'accessibilitySettings', settings: [settings.mobility, settings.colorblind, settings.hearingAid, settings.visuallyImpaired] },
+      { type: 'citySettings' },
+      { type: 'mapSettings'  },
+      { type: 'accessibilitySettings' },
     ];
 
     return (
@@ -56,27 +54,7 @@ class TopBar extends React.Component {
             }, 1);
           }}
         >
-          <Typography component="p" variant="subtitle1" className={classes.settingsButtonText}>
-            <FormattedMessage id={`settings.${category.type}`} />
-          </Typography>
-          {category.type === 'mapSettings'
-            ? (
-              <NoSsr>
-                <span className={classes.iconTextContainer}>
-                  {getIcon(category.settings, { className: classes.smallIcon })}
-                  <Typography variant="body2">
-                    <FormattedMessage id={`settings.map.${category.settings}`} />
-                  </Typography>
-                </span>
-              </NoSsr>
-            )
-            : (
-              <NoSsr>
-                <Typography variant="body2">
-                  <FormattedMessage id="settings.amount" values={{ count: category.settings.filter(i => (i !== false && i !== null)).length }} />
-                </Typography>
-              </NoSsr>
-            )}
+          <SettingsText type={category.type} />
         </Button>
       )));
   }

@@ -65,6 +65,9 @@ const styles = theme => ({
     alignItems: 'flex-start',
     marginRight: '4%',
     borderRadius: 0,
+    '& p': {
+      textAlign: 'left',
+    }
   },
   settingsButtonPressed: {
     textTransform: 'none',
