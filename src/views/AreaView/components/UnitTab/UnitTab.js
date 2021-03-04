@@ -27,6 +27,7 @@ const UnitTab = ({
   const dispatch = useDispatch();
   const areaViewState = useSelector(state => state.districts.areaViewState);
   const filteredSubdistrictUnitsLength = useSelector(state => getSubdistrictServices(state).length);
+  const districtsFetching = useSelector(state => state.districts.districtsFetching);
   const localAddressData = useSelector(state => state.districts.districtAddressData);
   const selectedDistrictType = useSelector(state => state.districts.selectedDistrictType);
   const districtData = useSelector(state => state.districts.districtData);
@@ -180,6 +181,16 @@ const UnitTab = ({
       </>
     );
   };
+
+  if (!districtData.length && districtsFetching) {
+    return (
+      <div className={classes.loadingText}>
+        <Typography aria-hidden>
+          <FormattedMessage id="general.loading" />
+        </Typography>
+      </div>
+    );
+  }
 
   return render();
 };

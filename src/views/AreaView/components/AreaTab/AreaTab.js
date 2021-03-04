@@ -118,7 +118,6 @@ const AreaTab = (props) => {
 
   const renderCategoryItem = (item) => {
     const defaultExpanded = intitialOpenItems.includes(item.id) || selectedCategory === item.id;
-    // TODO: fix constant re-rendering on accoriodn open/close
     return (
       <ListItem key={item.titleID} className={classes.listItem} divider>
         <SMAccordion
@@ -141,7 +140,7 @@ const AreaTab = (props) => {
 
   const districtCategoryList = dataStructure.filter(obj => obj.id !== 'geographical');
 
-  if (!districtData.length && districtsFetching) { // TODO: better loadaing screen
+  if (!districtData.length && districtsFetching) {
     return (
       <div className={classes.loadingText}>
         <Typography aria-hidden>
@@ -176,15 +175,6 @@ const AreaTab = (props) => {
           onClick={() => navigator.openMap()}
         />
       </MobileComponent>
-      {/*
-      // TODO: sccreen reader info during first fetch
-      {(ditsrictsFetching.length || districtData.length) ? (
-        <Typography variant="srOnly" role="alert">
-          {ditsrictsFetching.length
-            ? <FormattedMessage id="general.loading" />
-            : <FormattedMessage id="general.loading.done" />}
-        </Typography>
-      ) : null} */}
     </div>
   );
 };

@@ -38,10 +38,10 @@ const styles = theme => ({
     fontWeight: 'normal',
   },
   loadingText: {
-    height: 56,
     display: 'flex',
     alignItems: 'center',
-    paddingLeft: 77,
+    justifyContent: 'center',
+    padding: theme.spacing(4),
   },
   subtitle: {
     height: 48,
