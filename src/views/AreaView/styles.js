@@ -182,7 +182,7 @@ const styles = theme => ({
     paddingLeft: 30,
   },
   serviceListAccordion: {
-    paddingLeft: 79,
+    paddingLeft: 77,
     height: 48,
   },
   iconPadding: {

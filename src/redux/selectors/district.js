@@ -8,18 +8,18 @@ const getAddressDistrictData = state => state.districts.districtAddressData.dist
 const getSubdistrictUnits = state => state.districts.subdistrictUnits;
 const getSubdistrictSelection = state => state.districts.selectedSubdistricts;
 const getSelectedDistrictServices = state => state.districts.selectedDistrictServices;
-const getSettings = state => state.settings;
+const getCitySettings = state => state.settings.cities;
 
 export const getDistrictsByType = createSelector(
-  [getSelectedDistrict, getDistrictData, getSettings],
-  (selectedDistrictType, districtData, settings) => {
+  [getSelectedDistrict, getDistrictData, getCitySettings],
+  (selectedDistrictType, districtData, citySettings) => {
     if (selectedDistrictType && districtData.length) {
       const districtType = districtData.find(obj => obj.id === selectedDistrictType);
-      const selectedCities = Object.values(settings.cities).filter(city => city);
+      const selectedCities = Object.values(citySettings).filter(city => city);
       // Filter distircts by user city settings
       if (districtType && selectedCities.length) {
         const cityFilteredDistricts = districtType.data.filter(
-          district => settings.cities[district.municipality],
+          district => citySettings[district.municipality],
         );
         return cityFilteredDistricts;
       }
@@ -42,11 +42,11 @@ export const getAddressDistrict = createSelector(
 
 // Get selected geographical district units
 export const getSubdistrictServices = createSelector(
-  [getSubdistrictSelection, getSubdistrictUnits, getSettings],
-  (selectedSubdistricts, unitData, settings) => {
-    const selectedCities = Object.values(settings.cities).filter(city => city);
+  [getSubdistrictSelection, getSubdistrictUnits, getCitySettings],
+  (selectedSubdistricts, unitData, citySettings) => {
+    const selectedCities = Object.values(citySettings).filter(city => city);
     const cityFilteredUnits = selectedCities?.length
-      ? unitData.filter(unit => settings.cities[unit.municipality])
+      ? unitData.filter(unit => citySettings[unit.municipality])
       : unitData;
     if (selectedSubdistricts?.length && unitData) {
       return cityFilteredUnits.filter(

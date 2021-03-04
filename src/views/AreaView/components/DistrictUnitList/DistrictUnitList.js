@@ -57,7 +57,8 @@ const DistrictUnitList = (props) => {
     <SMAccordion
       className={classes.serviceListAccordion}
       defaultOpen
-      titleContent={<Typography>{title}</Typography>}
+      titleContent={<Typography>{`${title} (${districts.length})`}</Typography>}
+      disabled={!districts.length}
       collapseContent={(
         <List className={classes.serviceListPadding} disablePadding>
           {districts.map(district => (
