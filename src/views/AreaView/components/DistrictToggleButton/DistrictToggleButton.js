@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormControlLabel, Switch } from '@material-ui/core';
 
 const DistrictToggleButton = ({
-  district, onToggle, selected, selectionSize, label, classes,
+  district, onToggle, selected, selectionSize, label, classes, ...rest
 }) => (
   <FormControlLabel
     onFocus={event => event.stopPropagation()}
@@ -24,6 +24,7 @@ const DistrictToggleButton = ({
         onChange={e => onToggle(e)}
         aria-labelledby={`${`${district.id}Name`} ${`${district.id}Period`}`}
         checked={selected}
+        {...rest}
       />
     )}
   />

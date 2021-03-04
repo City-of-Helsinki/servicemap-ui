@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { List, Typography, ListItem } from '@material-ui/core';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { FormatListBulleted, LocationOn } from '@material-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import SMAccordion from '../../../../components/SMAccordion';
@@ -25,7 +25,6 @@ const UnitTab = ({
   classes,
 }) => {
   const dispatch = useDispatch();
-  const intl = useIntl();
   const areaViewState = useSelector(state => state.districts.areaViewState);
   const filteredSubdistrictUnitsLength = useSelector(state => getSubdistrictServices(state).length);
   const localAddressData = useSelector(state => state.districts.districtAddressData);
@@ -129,11 +128,6 @@ const UnitTab = ({
                 <SMAccordion // Top level categories (neighborhood and postcode area)
                   defaultOpen={initialOpenItems.includes(district.id)}
                   onOpen={(e, open) => handleAccordionToggle(district, !open)}
-                  openButtonSrText={
-                    !opened
-                      ? intl.formatMessage({ id: 'area.choose.subdistrict' }, { category: intl.formatMessage({ id: `area.list.${district.name}` }) })
-                      : intl.formatMessage({ id: 'area.close.subdistrict' }, { category: intl.formatMessage({ id: `area.list.${district.name}` }) })
-                  }
                   isOpen={opened}
                   elevated={opened}
                   adornment={(
@@ -141,10 +135,11 @@ const UnitTab = ({
                       selected={selected}
                       district={district}
                       onToggle={e => handleRadioChange(district, e)}
+                      aria-hidden
                     />
                   )}
                   titleContent={(
-                    <Typography id={`${district.id}Name`} aria-hidden>
+                    <Typography id={`${district.id}Name`}>
                       <FormattedMessage id={`area.list.${district.name}`} />
                     </Typography>
                   )}

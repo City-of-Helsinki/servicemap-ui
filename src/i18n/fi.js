@@ -51,8 +51,6 @@ const translations = {
   'area.localAddress.postCode': 'Postinumero: {area}',
   'area.geographicalServices.neighborhood': 'Kaupunginosan palvelut ({length})',
   'area.geographicalServices.postcode_area': 'Postinumeroalueen palvelut ({length})',
-  'area.choose.subdistrict': 'Valitse ja avaa {category}',
-  'area.close.subdistrict': 'Sulje {category}',
   'area.noSelection': 'Valitse alue Alueen Valinta -välilehdeltä',
   'area.noUnits': 'Valitsemallasi alueella ei ole toimipisteitä',
   'area.list.geographical': 'Maantieteellinen',
