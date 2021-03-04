@@ -41,7 +41,7 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: theme.spacing(4),
+    height: 56,
   },
   subtitle: {
     height: 48,
