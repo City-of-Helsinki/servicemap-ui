@@ -78,6 +78,7 @@ const translations = {
   'area.list.preschool_education_fi': 'Suomenkielinen esiopetusalue',
   'area.list.preschool_education_sv': 'Ruotsinkielinen esiopetusalue',
   'area.list.nature_reserve': 'Luonnonsuojelualueet',
+  'area.list.resident_parking_zone': 'Asukaspysäköintialueet', // TODO: translate
 
   // Download dialog
   'download.cropping.title': 'Nykyinen rajaus',

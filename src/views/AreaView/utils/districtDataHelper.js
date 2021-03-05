@@ -74,7 +74,7 @@ export const dataStructure = [ // Categorized district data structure
     id: 'parking',
     titleID: 'area.list.parking',
     districts: [
-      'resident_parking',
+      'resident_parking_zone',
     ],
   },
 ];

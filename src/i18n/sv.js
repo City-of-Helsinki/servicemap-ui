@@ -78,6 +78,7 @@ const translations = {
   'area.list.preschool_education_fi': 'Finskt småbarnspedagogikområde',
   'area.list.preschool_education_sv': 'Svenskt småbarnspedagogikområde',
   'area.list.nature_reserve': 'Naturskyddsområden',
+  'area.list.resident_parking_zone': 'Asukaspysäköintialueet', // TODO: translate
 
   // Download dialog
   'download.cropping.title': 'Nuvarande filterinställningar',
