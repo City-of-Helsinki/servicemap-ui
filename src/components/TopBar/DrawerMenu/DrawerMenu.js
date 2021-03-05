@@ -7,6 +7,7 @@ import { Map } from '@material-ui/icons';
 import { getIcon } from '../../SMIcon';
 import DrawerButton from './DrawerButton';
 import useLocaleText from '../../../utils/useLocaleText';
+import DrawerSettings from './DrawerSettings';
 
 const DrawerMenu = (props) => {
   const {
@@ -52,9 +53,7 @@ const DrawerMenu = (props) => {
       },
     },
     { // Settings button
-      name: intl.formatMessage({ id: 'home.buttons.settings' }),
-      // active: settingsOpen,
-      icon: getIcon('accessibility'),
+      type: 'settings',
       clickEvent: () => {
         toggleSettings('mobile');
         toggleDrawerMenu();
@@ -97,19 +96,30 @@ const DrawerMenu = (props) => {
       open={isOpen}
       classes={{ paper: pageType === 'mobile' ? classes.drawerContainerMobile : classes.drawerContainer }}
     >
-      {menuContent.map(item => (
-        <DrawerButton
-          key={item.name}
-          active={item.active}
-          disabled={item.disabled}
-          disableRipple
-          icon={item.icon}
-          isOpen={isOpen}
-          text={item.name}
-          onClick={item.clickEvent}
-          subText={item.subText}
-        />
-      ))}
+      {menuContent.map((item) => {
+        if (item.type === 'settings') {
+          return (
+            <DrawerSettings
+              key={item.type}
+              onClick={item.clickEvent}
+            />
+          );
+        }
+        
+        return (
+          <DrawerButton
+            key={item.name}
+            active={item.active}
+            disabled={item.disabled}
+            disableRipple
+            icon={item.icon}
+            isOpen={isOpen}
+            text={item.name}
+            onClick={item.clickEvent}
+            subText={item.subText}
+          />
+        );
+      })}
     </Drawer>
   // </ClickAwayListener>
   );

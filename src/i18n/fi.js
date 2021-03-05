@@ -442,6 +442,8 @@ const translations = {
 
   // Settings
   'settings': 'Asetukset',
+  'settings.change': 'Muokkaa asetuksiasi',
+  'settings.drawer.aria.title': 'Tämän hetkiset asetukset',
   'settings.citySettings': 'Kaupunki',
   'settings.citySettings.long': 'Kaupunkiasetukset',
   'settings.mapSettings': 'Karttapohja',
