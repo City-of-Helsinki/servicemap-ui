@@ -167,10 +167,15 @@ const fetchWrapper = async (
     throw new Error('Invalid key provided to fetchWrapper');
   }
 
-  const { url, options } = APIHandlers[key];
+  const { url, options, envName } = APIHandlers[key];
   const functionWithID = typeof url === 'function' && (typeof id === 'number' || typeof id === 'string');
+
   if (typeof url !== 'string' && !functionWithID) {
     throw new Error('Invalid data given to fetchWrapper');
+  }
+
+  if (typeof url === 'string' && url.indexOf('undefined') !== -1) {
+    throw new Error(`Invalid fetch URL: Missing ${envName} environment variable`);
   }
 
   const fetchURL = overrideUrl || (functionWithID ? url(id) : url);
