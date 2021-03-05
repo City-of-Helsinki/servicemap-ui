@@ -27,6 +27,7 @@ import MapUtility from './utils/mapUtility';
 import HideSidebarButton from './components/HideSidebarButton';
 import CoordinateMarker from './components/CoordinateMarker';
 import useLocaleText from '../../utils/useLocaleText';
+import PanControl from './components/PanControl';
 
 if (global.window) {
   require('leaflet');
@@ -424,6 +425,10 @@ const MapView = (props) => {
               />
             ) : null}
           </Control>
+          <PanControl
+            Control={Control}
+            map={mapRef?.current?.leafletElement}
+          />
           {
             !embeded
             && (
