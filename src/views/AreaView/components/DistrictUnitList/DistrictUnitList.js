@@ -35,7 +35,7 @@ const DistrictUnitList = (props) => {
     const { unit } = district;
     let title;
     if (district.type === 'rescue_area') {
-      title = `${district.origin_id}. ${intl.formatMessage({ id: `area.list.${district.type}` })}`;
+      title = `${intl.formatMessage({ id: `area.list.${district.type}` })} ${district.origin_id} ${getLocaleText(district.name)}`;
     }
     const streetAddress = getAddressFromUnit(unit, getLocaleText, intl);
     return (

@@ -165,7 +165,7 @@ const Districts = ({
         coords => swapCoordinates(coords),
       );
       const tooltipTitle = district.type === 'rescue_area'
-        ? `${district.origin_id}. ${intl.formatMessage({ id: `area.list.${district.type}` })} - ${getLocaleText(district.name)}`
+        ? `${intl.formatMessage({ id: `area.list.${district.type}` })} ${district.origin_id} - ${getLocaleText(district.name)}`
         : `${getLocaleText(district.name)} - ${intl.formatMessage({ id: `area.list.${district.type}` })}`;
 
       return (
