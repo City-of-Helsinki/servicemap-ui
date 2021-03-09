@@ -142,7 +142,7 @@ const DistrictUnitList = (props) => {
           {localUnitDistricts.length ? (
             <>
               <div className={classes.servciceList}>
-                <Typography component="h3">
+                <Typography>
                   <FormattedMessage id="area.services.local" />
                 </Typography>
                 <List disablePadding>

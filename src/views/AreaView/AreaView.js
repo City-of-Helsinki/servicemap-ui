@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
+import { Typography } from '@material-ui/core';
 import { focusDistrict, focusDistricts } from '../MapView/utils/mapActions';
 import TabLists from '../../components/TabLists';
 import UnitTab from './components/UnitTab';
@@ -48,6 +49,7 @@ const AreaView = ({
   const accordionStates = useRef(areaViewState || {});
   const localAddressData = useSelector(state => state.districts.districtAddressData);
   const selectedDistrictType = useSelector(state => state.districts.selectedDistrictType);
+  const districtsFetching = useSelector(state => state.districts.districtsFetching);
 
   // State
   const [selectedAddress, setSelectedAddress] = useState(districtAddressData.address);
@@ -273,6 +275,14 @@ const AreaView = ({
             onTabChange={() => (selectedDistrictType ? clearRadioButtonValue() : null)}
             data={tabs}
           />
+          <div className={classes.loadingText}>
+            <Typography variant="srOnly" aria-live="assertive">
+              {districtsFetching.length
+                ? <FormattedMessage id="general.loading" />
+                : <FormattedMessage id="general.loading.done" />
+               }
+            </Typography>
+          </div>
         </div>
       );
     }
