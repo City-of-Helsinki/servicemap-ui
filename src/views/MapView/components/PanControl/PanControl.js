@@ -42,6 +42,29 @@ const PanControl = ({ classes, Control, map }) => {
     map.panBy(point);
   }, []);
 
+  // Handle keyboard arrow functionality for leaflet map
+  const keyboardCallback = useCallback((e) => {
+    switch (e.key) {
+      case 'ArrowDown':
+        e.preventDefault();
+        callback('down');
+        break;
+      case 'ArrowUp':
+        e.preventDefault();
+        callback('up');
+        break;
+      case 'ArrowLeft':
+        e.preventDefault();
+        callback('left');
+        break;
+      case 'ArrowRight':
+        e.preventDefault();
+        callback('right');
+        break;
+      default:
+    }
+  }, []);
+
   return (
     <Control position="bottomright">
       <div className={classes.container}>
@@ -50,6 +73,7 @@ const PanControl = ({ classes, Control, map }) => {
           aria-hidden
           className={classes.top}
           onClick={() => callback('up')}
+          onKeyDown={keyboardCallback}
           tabIndex="0"
         >
           <ArrowDropUp />
@@ -59,6 +83,7 @@ const PanControl = ({ classes, Control, map }) => {
           aria-hidden
           className={classes.left}
           onClick={() => callback('left')}
+          onKeyDown={keyboardCallback}
           tabIndex="0"
         >
           <ArrowLeft />
@@ -68,6 +93,7 @@ const PanControl = ({ classes, Control, map }) => {
           aria-hidden
           className={classes.right}
           onClick={() => callback('right')}
+          onKeyDown={keyboardCallback}
           tabIndex="0"
         >
           <ArrowRight />
@@ -77,6 +103,7 @@ const PanControl = ({ classes, Control, map }) => {
           aria-hidden
           className={classes.bottom}
           onClick={() => callback('down')}
+          onKeyDown={keyboardCallback}
           tabIndex="0"
         >
           <ArrowDropDown />
