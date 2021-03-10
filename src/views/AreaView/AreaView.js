@@ -1,10 +1,8 @@
-import React, {
-  useState, useEffect, useRef, useCallback,
-} from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Typography } from '@material-ui/core';
 import { focusDistrict, focusDistricts } from '../MapView/utils/mapActions';
 import TabLists from '../../components/TabLists';
@@ -16,6 +14,7 @@ import fetchAddress from '../MapView/utils/fetchAddress';
 import TitleBar from '../../components/TitleBar';
 import AddressSearchBar from '../../components/AddressSearchBar';
 import { dataStructure } from './utils/districtDataHelper';
+import { handleItemOpen } from '../../redux/actions/district';
 
 
 const AreaView = ({
@@ -23,7 +22,7 @@ const AreaView = ({
   setSelectedSubdistricts,
   setSelectedDistrictServices,
   setDistrictAddressData,
-  setAreaViewState,
+  setMapState,
   fetchDistrictUnitList,
   fetchAllDistricts,
   unitsFetching,
@@ -33,7 +32,7 @@ const AreaView = ({
   addressDistrict,
   subdistrictUnits,
   selectedSubdistricts,
-  areaViewState,
+  mapState,
   map,
   getLocaleText,
   navigator,
@@ -44,16 +43,17 @@ const AreaView = ({
   if (!map || !map.leafletElement) {
     return null;
   }
-
+  const dispatch = useDispatch();
   const location = useLocation();
-  const accordionStates = useRef(areaViewState || {});
   const localAddressData = useSelector(state => state.districts.districtAddressData);
   const selectedDistrictType = useSelector(state => state.districts.selectedDistrictType);
   const districtsFetching = useSelector(state => state.districts.districtsFetching);
 
   // State
   const [selectedAddress, setSelectedAddress] = useState(districtAddressData.address);
-  const [openItems, setOpenItems] = useState(areaViewState ? areaViewState.openItems : []);
+  const [initialOpenItems] = useState(
+    useSelector(state => state.districts.openItems),
+  );
   // Pending request to focus map to districts. Executed once district data is loaded
   const [focusTo, setFocusTo] = useState(null);
 
@@ -88,17 +88,7 @@ const AreaView = ({
   };
 
 
-  const handleOpen = (item) => {
-    if (openItems.includes(item.id)) {
-      const items = openItems.filter(i => i !== item.id);
-      setOpenItems(items);
-    } else {
-      setOpenItems([...openItems, item.id]);
-    }
-  };
-
   const getViewState = () => ({
-    openItems: accordionStates.current.openItems,
     center: map.leafletElement.getCenter(),
     zoom: map.leafletElement.getZoom(),
   });
@@ -110,13 +100,9 @@ const AreaView = ({
   }, []);
 
   useEffect(() => () => {
-    // On unmount, save map position and opened accordions
-    setAreaViewState(getViewState());
+    // On unmount, save map position
+    setMapState(getViewState());
   }, []);
-
-  useEffect(() => {
-    accordionStates.current.openItems = openItems;
-  }, [openItems]);
 
 
   useEffect(() => {
@@ -185,7 +171,7 @@ const AreaView = ({
           const category = dataStructure.find(
             data => data.districts.includes(paramValue),
           );
-          handleOpen(category);
+          dispatch(handleItemOpen(category.id));
         }
         // Set selected district type from url paramters
         setSelectedDistrictType(paramValue);
@@ -210,9 +196,9 @@ const AreaView = ({
       } else {
         fetchAllDistricts();
       }
-    } else if (areaViewState) { // Returning to page
+    } else if (mapState) { // Returning to page
       // Returns map to the previous spot
-      const { center, zoom } = areaViewState;
+      const { center, zoom } = mapState;
       if (center && zoom) map.leafletElement.setView(center, zoom);
     }
   }, []);
@@ -222,8 +208,7 @@ const AreaView = ({
     <AreaTab
       selectedAddress={selectedAddress}
       districtData={districtData}
-      intitialOpenItems={accordionStates.current?.openItems}
-      handleOpen={useCallback(item => handleOpen(item), [])}
+      initialOpenItems={initialOpenItems}
       navigator={navigator}
       getLocaleText={getLocaleText}
     />
@@ -231,7 +216,7 @@ const AreaView = ({
 
   const renderUnitTab = () => (
     <UnitTab
-      handleOpen={useCallback(item => handleOpen(item), [])}
+      initialOpenItems={initialOpenItems}
       formAddressString={formAddressString}
       getLocaleText={useCallback(obj => getLocaleText(obj), [])}
       clearRadioButtonValue={clearRadioButtonValue}

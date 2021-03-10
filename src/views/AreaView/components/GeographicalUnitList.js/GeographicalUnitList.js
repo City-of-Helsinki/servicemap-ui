@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import UnitItem from '../../../../components/ListItems/UnitItem';
 import SMAccordion from '../../../../components/SMAccordion';
-import { addSelectedDistrictService, removeSelectedDistrictService } from '../../../../redux/actions/district';
+import { addSelectedDistrictService, handleItemOpen, removeSelectedDistrictService } from '../../../../redux/actions/district';
 import { getFilteredSubdistrictServices } from '../../../../redux/selectors/district';
 import { uppercaseFirst } from '../../../../utils';
 
@@ -36,11 +36,9 @@ const UnitCheckbox = ({
 };
 
 
-const GeographicalUnitList = ({ getLocaleText, handleOpen, classes }) => {
+const GeographicalUnitList = ({ getLocaleText, classes, initialOpenItems }) => {
   const dispatch = useDispatch();
-  const areaViewState = useSelector(state => state.districts.areaViewState);
   const filteredSubdistrictUnits = useSelector(state => getFilteredSubdistrictServices(state));
-  const [initialOpenItems] = useState(areaViewState?.openItems || []);
   const selectedServices = useSelector(state => state.districts.selectedDistrictServices);
   const [serviceList, setServiceList] = useState([]);
   const [initialCheckedItems] = useState(selectedServices);
@@ -118,7 +116,7 @@ const GeographicalUnitList = ({ getLocaleText, handleOpen, classes }) => {
           >
             <SMAccordion
               className={classes.serviceTitle}
-              onOpen={() => handleOpen(category)}
+              onOpen={() => dispatch(handleItemOpen(category.id))}
               defaultOpen={initialOpenItems.includes(category.id)}
               titleContent={(
                 <div>
@@ -161,7 +159,6 @@ const GeographicalUnitList = ({ getLocaleText, handleOpen, classes }) => {
 GeographicalUnitList.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   getLocaleText: PropTypes.func.isRequired,
-  handleOpen: PropTypes.func.isRequired,
 };
 
 UnitCheckbox.propTypes = {

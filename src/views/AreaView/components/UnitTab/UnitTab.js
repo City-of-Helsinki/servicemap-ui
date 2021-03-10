@@ -8,6 +8,7 @@ import SMAccordion from '../../../../components/SMAccordion';
 import DistrictToggleButton from '../DistrictToggleButton';
 import {
   fetchDistrictGeometry,
+  handleItemOpen,
   setSelectedDistrictServices,
   setSelectedDistrictType,
   setSelectedSubdistricts,
@@ -19,23 +20,25 @@ import SettingsInfo from '../../../../components/SettingsInfo';
 
 
 const UnitTab = ({
-  handleOpen,
+  initialOpenItems,
   formAddressString,
   clearRadioButtonValue,
   getLocaleText,
   classes,
 }) => {
   const dispatch = useDispatch();
-  const areaViewState = useSelector(state => state.districts.areaViewState);
-  const filteredSubdistrictUnitsLength = useSelector(state => getFilteredSubdistrictServices(state).length);
+  const filteredSubdistrictUnitsLength = useSelector(
+    state => getFilteredSubdistrictServices(state).length,
+  );
   const districtsFetching = useSelector(state => state.districts.districtsFetching);
   const localAddressData = useSelector(state => state.districts.districtAddressData);
   const selectedDistrictType = useSelector(state => state.districts.selectedDistrictType);
   const districtData = useSelector(state => state.districts.districtData);
   const map = useSelector(state => state.mapRef);
 
-  const [initialOpenItems] = useState(areaViewState?.openItems || []);
-  const [openCategory, setOpenCategory] = useState(areaViewState?.openItems.find(item => item === 'neighborhood' || item === 'postcode_area') || []);
+  const [openCategory, setOpenCategory] = useState(
+    useSelector(state => state.districts.openItems).find(item => item === 'neighborhood' || item === 'postcode_area') || [],
+  );
 
 
   const setRadioButtonValue = (district) => {
@@ -64,7 +67,7 @@ const UnitTab = ({
   };
 
   const handleAccordionToggle = (district, opening) => {
-    handleOpen(district);
+    dispatch(handleItemOpen(district.id));
     if (opening) {
       if (selectedDistrictType !== district.id) {
         setRadioButtonValue(district);
@@ -165,7 +168,7 @@ const UnitTab = ({
                         )}
                         collapseContent={(
                           <GeographicalUnitList
-                            handleOpen={handleOpen}
+                            initialOpenItems={initialOpenItems}
                             getLocaleText={getLocaleText}
                           />
                         )}
@@ -208,9 +211,13 @@ const UnitTab = ({
 
 UnitTab.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  handleOpen: PropTypes.func.isRequired,
+  initialOpenItems: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
   formAddressString: PropTypes.func.isRequired,
   getLocaleText: PropTypes.func.isRequired,
+};
+
+UnitTab.defaultProps = {
+  initialOpenItems: [],
 };
 
 export default React.memo(UnitTab);

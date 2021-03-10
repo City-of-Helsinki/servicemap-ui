@@ -14,7 +14,7 @@ import MobileComponent from '../../../../components/MobileComponent';
 import SettingsInfo from '../../../../components/SettingsInfo';
 import SMButton from '../../../../components/ServiceMapButton';
 import SMAccordion from '../../../../components/SMAccordion';
-import { fetchDistrictGeometry, setSelectedDistrictType } from '../../../../redux/actions/district';
+import { fetchDistrictGeometry, handleItemOpen, setSelectedDistrictType } from '../../../../redux/actions/district';
 import DistrictUnitList from '../DistrictUnitList';
 import DistrictToggleButton from '../DistrictToggleButton';
 import { dataStructure } from '../../utils/districtDataHelper';
@@ -23,8 +23,7 @@ const AreaTab = (props) => {
   const {
     selectedAddress,
     districtData,
-    intitialOpenItems,
-    handleOpen,
+    initialOpenItems,
     navigator,
     getLocaleText,
     classes,
@@ -117,12 +116,12 @@ const AreaTab = (props) => {
 
 
   const renderCategoryItem = (item) => {
-    const defaultExpanded = intitialOpenItems.includes(item.id) || selectedCategory === item.id;
+    const defaultExpanded = initialOpenItems.includes(item.id) || selectedCategory === item.id;
     return (
       <ListItem key={item.titleID} className={classes.listItem} divider>
         <SMAccordion
           className={classes.accodrion}
-          onOpen={() => handleOpen(item)}
+          onOpen={() => dispatch(handleItemOpen(item.id))}
           defaultOpen={defaultExpanded}
           titleContent={<Typography id={`${item.id}-content`} className={classes.bold}><FormattedMessage id={item.titleID} /></Typography>}
           collapseContent={(
@@ -185,15 +184,14 @@ const AreaTab = (props) => {
 AreaTab.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   districtData: PropTypes.arrayOf(PropTypes.object),
-  intitialOpenItems: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
+  initialOpenItems: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
   selectedAddress: PropTypes.objectOf(PropTypes.any),
-  handleOpen: PropTypes.func.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   getLocaleText: PropTypes.func.isRequired,
 };
 
 AreaTab.defaultProps = {
-  intitialOpenItems: [],
+  initialOpenItems: [],
   navigator: null,
   districtData: [],
   selectedAddress: null,

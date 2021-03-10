@@ -7,7 +7,8 @@ const initialState = {
   subdistrictUnits: [],
   selectedSubdistricts: [],
   selectedDistrictServices: [],
-  areaViewState: null,
+  openItems: [],
+  mapState: null,
   districtAddressData: {
     address: null,
     districts: [],
@@ -65,7 +66,6 @@ export default (state = initialState, action) => {
         districtAddressData: action.data,
       };
 
-
     case 'SET_SELECTED_SUBDISTRICTS':
       return {
         ...state,
@@ -97,10 +97,22 @@ export default (state = initialState, action) => {
         selectedDistrictServices: action.services,
       };
 
-    case 'SET_AREA_VIEW_STATE':
+    case 'ADD_OPEN_ITEM':
       return {
         ...state,
-        areaViewState: action.object,
+        openItems: [...state.openItems, action.item],
+      };
+
+    case 'REMOVE_OPEN_ITEM':
+      return {
+        ...state,
+        openItems: [...state.openItems.filter(id => id !== action.item)],
+      };
+
+    case 'SET_MAP_STATE':
+      return {
+        ...state,
+        mapState: action.object,
       };
 
     case 'START_UNIT_FETCH':

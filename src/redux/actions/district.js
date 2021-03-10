@@ -47,8 +47,18 @@ export const setSelectedDistrictServices = services => ({
   services,
 });
 
-export const setAreaViewState = object => ({
-  type: 'SET_AREA_VIEW_STATE',
+const addOpenItem = item => ({
+  type: 'ADD_OPEN_ITEM',
+  item,
+});
+
+const removeOpenItem = item => ({
+  type: 'REMOVE_OPEN_ITEM',
+  item,
+});
+
+export const setMapState = object => ({
+  type: 'SET_MAP_STATE',
   object,
 });
 
@@ -135,6 +145,17 @@ export const fetchDistrictUnitList = nodeID => (
     } catch (e) {
       console.warn(e);
       dispatch(endUnitFetch({ nodeID, units: [] }));
+    }
+  }
+);
+
+export const handleItemOpen = id => (
+  (dispatch, getState) => {
+    const { openItems } = getState().districts;
+    if (openItems.includes(id)) {
+      dispatch(removeOpenItem(id));
+    } else {
+      dispatch(addOpenItem(id));
     }
   }
 );

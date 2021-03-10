@@ -10,7 +10,7 @@ import {
   setDistrictAddressData,
   fetchDistrictUnitList,
   fetchAllDistricts,
-  setAreaViewState,
+  setMapState,
 } from '../../redux/actions/district';
 import { getDistrictsByType, getAddressDistrict } from '../../redux/selectors/district';
 import { getLocaleString } from '../../redux/selectors/locale';
@@ -24,7 +24,7 @@ const mapStateToProps = (state) => {
     selectedSubdistricts,
     selectedDistrictServices,
     unitsFetching,
-    areaViewState,
+    mapState,
   } = state.districts;
   const map = state.mapRef;
   const selectedDistrictData = getDistrictsByType(state);
@@ -39,7 +39,7 @@ const mapStateToProps = (state) => {
     selectedSubdistricts,
     selectedDistrictServices,
     unitsFetching,
-    areaViewState,
+    mapState,
     getLocaleText,
     navigator,
     map,
@@ -53,7 +53,7 @@ export default injectIntl(withStyles(styles)(connect(
     setSelectedSubdistricts,
     setSelectedDistrictServices,
     setDistrictAddressData,
-    setAreaViewState,
+    setMapState,
     fetchDistrictUnitList,
     fetchAllDistricts,
   },
