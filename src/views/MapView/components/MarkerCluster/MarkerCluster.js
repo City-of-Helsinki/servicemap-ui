@@ -98,6 +98,10 @@ const MarkerCluster = ({
     const highlightedMarker = getHighlightedMarker(mapLayers);
     if (highlightedMarker && UnitHelper.isUnitPage()) {
       const tooltipContent = getUnitPopupContent(clusterData.highlightedUnit);
+      // Close all open popups
+      map.eachLayer((layer) => {
+        layer.closePopup();
+      });
       if (highlightedMarker instanceof global.L.MarkerCluster) {
         highlightedMarker.bindPopup(tooltipContent, popupOptions()).openPopup();
       } else {
