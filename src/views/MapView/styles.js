@@ -201,6 +201,9 @@ const styles = theme => ({
         cursor: 'pointer',
         backgroundColor: theme.palette.white.light,
       },
+      '&:focus': {
+        backgroundColor: theme.palette.white.light,
+      },
     },
     '& .popup-divider': {
       cursor: 'unset',
