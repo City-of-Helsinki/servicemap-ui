@@ -6,9 +6,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Typography } from '@material-ui/core';
 import { focusDistrict, focusDistricts } from '../MapView/utils/mapActions';
 import TabLists from '../../components/TabLists';
-import UnitTab from './components/UnitTab';
+import GeographicalTab from './components/GeographicalTab';
 import { parseSearchParams, uppercaseFirst } from '../../utils';
-import AreaTab from './components/AreaTab';
+import ServiceTab from './components/ServiceTab';
 import { districtFetch } from '../../utils/fetch';
 import fetchAddress from '../MapView/utils/fetchAddress';
 import TitleBar from '../../components/TitleBar';
@@ -204,8 +204,8 @@ const AreaView = ({
   }, []);
 
 
-  const renderAreaTab = () => (
-    <AreaTab
+  const renderServiceTab = () => (
+    <ServiceTab
       selectedAddress={selectedAddress}
       districtData={districtData}
       initialOpenItems={initialOpenItems}
@@ -214,8 +214,8 @@ const AreaView = ({
     />
   );
 
-  const renderUnitTab = () => (
-    <UnitTab
+  const renderGeographicalTab = () => (
+    <GeographicalTab
       initialOpenItems={initialOpenItems}
       formAddressString={formAddressString}
       getLocaleText={useCallback(obj => getLocaleText(obj), [])}
@@ -227,11 +227,11 @@ const AreaView = ({
   const render = () => {
     const tabs = [
       {
-        component: renderAreaTab(),
+        component: renderServiceTab(),
         title: intl.formatMessage({ id: 'area.tab.publicServices' }),
       },
       {
-        component: renderUnitTab(),
+        component: renderGeographicalTab(),
         title: intl.formatMessage({ id: 'area.tab.geographical' }),
       },
     ];

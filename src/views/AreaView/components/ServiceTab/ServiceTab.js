@@ -19,7 +19,7 @@ import DistrictUnitList from '../DistrictUnitList';
 import DistrictToggleButton from '../DistrictToggleButton';
 import { dataStructure } from '../../utils/districtDataHelper';
 
-const AreaTab = (props) => {
+const ServiceTab = (props) => {
   const {
     selectedAddress,
     districtData,
@@ -181,7 +181,7 @@ const AreaTab = (props) => {
   );
 };
 
-AreaTab.propTypes = {
+ServiceTab.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   districtData: PropTypes.arrayOf(PropTypes.object),
   initialOpenItems: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
@@ -190,11 +190,11 @@ AreaTab.propTypes = {
   getLocaleText: PropTypes.func.isRequired,
 };
 
-AreaTab.defaultProps = {
+ServiceTab.defaultProps = {
   initialOpenItems: [],
   navigator: null,
   districtData: [],
   selectedAddress: null,
 };
 
-export default React.memo(AreaTab);
+export default React.memo(ServiceTab);

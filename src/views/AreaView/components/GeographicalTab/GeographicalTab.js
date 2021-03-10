@@ -15,11 +15,11 @@ import {
 } from '../../../../redux/actions/district';
 import { getFilteredSubdistrictServices } from '../../../../redux/selectors/district';
 import GeographicalDistrictList from '../GeographicalDistrictList';
-import GeographicalUnitList from '../GeographicalUnitList.js';
 import SettingsInfo from '../../../../components/SettingsInfo';
+import GeographicalUnitList from '../GeographicalUnitList/GeographicalUnitList';
 
 
-const UnitTab = ({
+const GeographicalTab = ({
   initialOpenItems,
   formAddressString,
   clearRadioButtonValue,
@@ -209,15 +209,15 @@ const UnitTab = ({
   return render();
 };
 
-UnitTab.propTypes = {
+GeographicalTab.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   initialOpenItems: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
   formAddressString: PropTypes.func.isRequired,
   getLocaleText: PropTypes.func.isRequired,
 };
 
-UnitTab.defaultProps = {
+GeographicalTab.defaultProps = {
   initialOpenItems: [],
 };
 
-export default React.memo(UnitTab);
+export default React.memo(GeographicalTab);
