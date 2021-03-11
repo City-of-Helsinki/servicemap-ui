@@ -16,7 +16,7 @@ import {
 import { getFilteredSubdistrictServices } from '../../../../redux/selectors/district';
 import GeographicalDistrictList from '../GeographicalDistrictList';
 import SettingsInfo from '../../../../components/SettingsInfo';
-import GeographicalUnitList from '../GeographicalUnitList/GeographicalUnitList';
+import GeographicalUnitList from '../GeographicalUnitList';
 
 
 const GeographicalTab = ({
