@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   Button, Typography, AppBar, Toolbar, ButtonBase, NoSsr,
@@ -15,14 +15,28 @@ import ToolMenu from '../ToolMenu';
 import { focusToViewTitle } from '../../utils/accessibility';
 import LocaleUtility from '../../utils/locale';
 
-class TopBar extends React.Component {
-  state={ drawerOpen: false }
+const TopBar = (props) => {
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
-  renderSettingsButtons = () => {
-    const {
-      settingsOpen, classes, toggleSettings, settings,
-    } = this.props;
+  const {
+    settingsOpen,
+    classes,
+    toggleSettings,
+    settings,
+    breadcrumb,
+    intl,
+    locale,
+    location,
+    changeTheme,
+    theme,
+    setMapType,
+    getAddressNavigatorParams,
+    navigator,
+    currentPage,
+    smallScreen,
+  } = props;
 
+  const renderSettingsButtons = () => {
     const citySettings = [];
     config.cities.forEach(city => citySettings.push(settings.cities[city]));
     const settingsCategories = [
@@ -79,12 +93,9 @@ class TopBar extends React.Component {
             )}
         </Button>
       )));
-  }
+  };
 
-  renderMapButton = () => {
-    const {
-      classes, navigator, location, settingsOpen, toggleSettings, breadcrumb,
-    } = this.props;
+  const renderMapButton = () => {
     const mapPage = location.search.indexOf('showMap=true') > -1;
     return (
       <Button
@@ -109,41 +120,42 @@ class TopBar extends React.Component {
         </Typography>
       </Button>
     );
-  }
+  };
 
-  renderMenuButton = () => {
-    const { classes, intl } = this.props;
-    const { drawerOpen } = this.state;
-    return (
-      <Button
-        id="MenuButton"
-        aria-label={intl.formatMessage({ id: drawerOpen ? 'general.menu.close' : 'general.menu.open' })}
-        aria-pressed={drawerOpen}
-        className={drawerOpen ? classes.toolbarButtonPressed : classes.toolbarButton}
-        classes={{ label: classes.buttonLabel }}
-        onClick={() => this.toggleDrawerMenu()}
-      >
-        {drawerOpen ? (
-          <>
-            <Close />
-            <Typography color="inherit" variant="body2">
-              <FormattedMessage id="general.close" />
-            </Typography>
-          </>
-        ) : (
-          <>
-            <Menu />
-            <Typography color="inherit" variant="body2">
-              <FormattedMessage id="general.menu" />
-            </Typography>
-          </>
-        )}
-      </Button>
-    );
-  }
+  const toggleDrawerMenu = () => {
+    setTimeout(() => {
+      setDrawerOpen(!drawerOpen);
+    }, 1);
+  };
 
-  renderLanguages = (pageType) => {
-    const { classes, locale, location } = this.props;
+  const renderMenuButton = () => (
+    <Button
+      id="MenuButton"
+      aria-label={intl.formatMessage({ id: drawerOpen ? 'general.menu.close' : 'general.menu.open' })}
+      aria-pressed={drawerOpen}
+      className={drawerOpen ? classes.toolbarButtonPressed : classes.toolbarButton}
+      classes={{ label: classes.buttonLabel }}
+      onClick={() => toggleDrawerMenu()}
+    >
+      {drawerOpen ? (
+        <>
+          <Close />
+          <Typography color="inherit" variant="body2">
+            <FormattedMessage id="general.close" />
+          </Typography>
+        </>
+      ) : (
+        <>
+          <Menu />
+          <Typography color="inherit" variant="body2">
+            <FormattedMessage id="general.menu" />
+          </Typography>
+        </>
+      )}
+    </Button>
+  );
+
+  const renderLanguages = (pageType) => {
     const typographyClass = className => `${pageType === 'mobile' ? classes.mobileFont : ''} ${className || ''}`;
     return (
       <>
@@ -176,33 +188,14 @@ class TopBar extends React.Component {
           ))}
       </>
     );
-  }
+  };
 
-  renderDrawerMenu = (pageType) => {
-    const { drawerOpen } = this.state;
-    const { toggleSettings } = this.props;
-    return (
-      <DrawerMenu
-        isOpen={drawerOpen}
-        pageType={pageType}
-        toggleDrawerMenu={() => this.toggleDrawerMenu()}
-        toggleSettings={toggleSettings}
-        handleNavigation={this.handleNavigation}
-      />
-    );
-  }
-
-  handleContrastChange = () => {
-    const { changeTheme, theme, setMapType } = this.props;
+  const handleContrastChange = () => {
     changeTheme(theme === 'default' ? 'dark' : 'default');
     setMapType(theme === 'default' ? 'accessible_map' : 'servicemap');
-  }
+  };
 
-  handleNavigation = (target, data) => {
-    const {
-      getAddressNavigatorParams, navigator, currentPage, toggleSettings, location,
-    } = this.props;
-
+  const handleNavigation = (target, data) => {
     // Hide settings and map if open
     toggleSettings();
     if (location.search.indexOf('showMap=true') > -1) {
@@ -241,18 +234,20 @@ class TopBar extends React.Component {
       default:
         break;
     }
-  }
+  };
+
+  const renderDrawerMenu = pageType => (
+    <DrawerMenu
+      isOpen={drawerOpen}
+      pageType={pageType}
+      toggleDrawerMenu={() => toggleDrawerMenu()}
+      toggleSettings={toggleSettings}
+      handleNavigation={handleNavigation}
+    />
+  );
 
 
-  toggleDrawerMenu = () => {
-    const { drawerOpen } = this.state;
-    setTimeout(() => {
-      this.setState({ drawerOpen: !drawerOpen });
-    }, 1);
-  }
-
-  renderTopBar = (pageType) => {
-    const { classes, smallScreen, theme } = this.props;
+  const renderTopBar = (pageType) => {
     const fontClass = pageType === 'mobile' ? classes.mobileFont : '';
     const toolbarBlackClass = `${
       classes.toolbarBlack
@@ -265,15 +260,15 @@ class TopBar extends React.Component {
           {/* Toolbar black area */}
           <Toolbar className={toolbarBlackClass}>
             <div className={classes.toolbarBlackContainer}>
-              <ButtonBase role="link" onClick={() => this.handleNavigation('home')} focusVisibleClassName={classes.topButtonFocused}>
+              <ButtonBase role="link" onClick={() => handleNavigation('home')} focusVisibleClassName={classes.topButtonFocused}>
                 <Typography className={fontClass} color="inherit" variant="body2">
                   <FormattedMessage id="general.frontPage" />
                 </Typography>
               </ButtonBase>
               <Typography aria-hidden color="inherit">|</Typography>
-              {this.renderLanguages(pageType)}
+              {renderLanguages(pageType)}
               <Typography aria-hidden color="inherit">|</Typography>
-              <ButtonBase role="button" onClick={() => this.handleContrastChange()} focusVisibleClassName={classes.topButtonFocused}>
+              <ButtonBase role="button" onClick={() => handleContrastChange()} focusVisibleClassName={classes.topButtonFocused}>
                 <Typography className={fontClass} color="inherit" variant="body2"><FormattedMessage id="general.contrast" /></Typography>
               </ButtonBase>
             </div>
@@ -281,17 +276,17 @@ class TopBar extends React.Component {
 
           {/* Toolbar white area */}
           <Toolbar disableGutters className={pageType === 'mobile' ? classes.toolbarWhiteMobile : classes.toolbarWhite}>
-            <ButtonBase aria-hidden onClick={() => this.handleNavigation('home')}>
+            <ButtonBase aria-hidden onClick={() => handleNavigation('home')}>
               <NoSsr>
                 <HomeLogo aria-hidden contrast={theme === 'dark'} className={classes.logo} />
               </NoSsr>
             </ButtonBase>
             <MobileComponent>
               <div className={classes.mobileButtonContainer}>
-                {this.renderMapButton()}
-                {this.renderMenuButton()}
+                {renderMapButton()}
+                {renderMenuButton()}
               </div>
-              {this.renderDrawerMenu(pageType)}
+              {renderDrawerMenu(pageType)}
             </MobileComponent>
             <DesktopComponent>
               {!smallScreen ? (
@@ -299,14 +294,14 @@ class TopBar extends React.Component {
                   <Typography component="h2" variant="srOnly">
                     <FormattedMessage id="settings" />
                   </Typography>
-                  {this.renderSettingsButtons()}
+                  {renderSettingsButtons()}
                 </div>
               ) : (
                 <>
                   <div className={classes.mobileButtonContainer}>
-                    {this.renderMenuButton()}
+                    {renderMenuButton()}
                   </div>
-                  {this.renderDrawerMenu(pageType)}
+                  {renderDrawerMenu(pageType)}
                 </>
               )}
               {
@@ -321,26 +316,23 @@ class TopBar extends React.Component {
         <Toolbar className={pageType === 'mobile' ? classes.alignerMobile : classes.aligner} />
       </>
     );
-  }
+  };
 
-
-  render() {
-    return (
-      <>
-        <MobileComponent>
-          <>
-            {this.renderTopBar('mobile')}
-          </>
-        </MobileComponent>
-        <DesktopComponent>
-          <>
-            {this.renderTopBar('desktop')}
-          </>
-        </DesktopComponent>
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <MobileComponent>
+        <>
+          {renderTopBar('mobile')}
+        </>
+      </MobileComponent>
+      <DesktopComponent>
+        <>
+          {renderTopBar('desktop')}
+        </>
+      </DesktopComponent>
+    </>
+  );
+};
 
 TopBar.propTypes = {
   breadcrumb: PropTypes.arrayOf(PropTypes.any).isRequired,
