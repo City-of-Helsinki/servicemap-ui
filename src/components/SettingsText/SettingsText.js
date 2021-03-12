@@ -29,24 +29,24 @@ const SettingsText = ({ classes, type, variant }) => {
     switch(type) {
       case 'citySettings':
         if (citySettings.length) {
-          settings = citySettings.map(c => `settings.city.${c}`);
+          settings = citySettings.map(c => ({ id: `settings.city.${c}` }));
           break;
         }
-        settings = ['settings.city.all'];
+        settings = [{ id: 'settings.city.all' }];
         break;
       case 'mapSettings':
         if (!map) break;
         icon = getIcon(map, { className: classes.smallIcon });
-        settings = [`settings.map.${map}`];
+        settings = [{ id: `settings.map.${map}`, icon }];
         break;
       case 'accessibilitySettings':
         if (!a11ySettings.length && !mobility) {
           settings = ['settings.accessibility.none'];
           break;
         }
-        settings = a11ySettings.map(a => `settings.sense.${a}`);
+        settings = a11ySettings.map(a => ({ id: `settings.sense.${a}` }));
         if (mobility) {
-          settings.push(`settings.mobility.${mobility}`);
+          settings.push({ id: `settings.mobility.${mobility}` });
         }
         break;
       default:
@@ -82,9 +82,10 @@ const SettingsText = ({ classes, type, variant }) => {
         <FormattedMessage id={`settings.${type}`} />
       </Typography>
       <Typography component="p" className={text}>
-        {settings.map((id, i) => (
-          <React.Fragment key={id}>
-            <FormattedMessage id={id} />
+        {settings.map((s, i) => (
+          <React.Fragment key={s.id}>
+            {s.icon}
+            <FormattedMessage id={s.id} />
             {i + 1 !== settings.length && ', '}
           </React.Fragment>
         ))}

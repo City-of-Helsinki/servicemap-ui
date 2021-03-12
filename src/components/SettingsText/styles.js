@@ -17,4 +17,8 @@ export default theme => ({
     lineHeight: '18px',
     color: 'inherit',
   },
+  smallIcon: {
+    height: 14,
+    marginRight: 4,
+  }
 });
