@@ -19,7 +19,10 @@ export const fetchUnits = (
 
   const timeout = searchTimeout;
   const abortController = new AbortController();
-  const fetchTimeout = setTimeout(() => abortController.abort(), timeout);
+  const fetchTimeout = setTimeout(() => {
+    console.warn('Search backend not responding');
+    abortController.abort();
+  }, timeout);
 
   if (units.isFetching) {
     throw Error('Unable to fetch units because previous fetch is still active');
