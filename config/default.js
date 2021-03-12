@@ -187,6 +187,7 @@ export default {
   "smallScreenBreakpoint": 899,
   "topBarHeight": 100,
   "topBarHeightMobile": 90,
+  "searchTimeout": 15000,
   // locales
   "defaultLocale": 'fi',
   "streetAddressLanguages": ["fi", "sv"],
