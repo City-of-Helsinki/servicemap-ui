@@ -295,7 +295,7 @@ const translations = {
                                     one {# esteettömyyspuute}
                                     other {# esteettömyyspuutetta}
                                   }`,
-  'unit.accessibility.unitNoInfo': 'Toimipiste ei ole toimittanut esteettömyystietoja.',
+  'unit.accessibility.unitNoInfo': 'Esteettömyystieto puuttuu.',
   'unit.basicInfo': 'Perustiedot',
   'unit.data_source': 'Lähde: {data_source}',
   'unit.details.notFound': 'Toimipisteen tietoja ei saatavilla.',

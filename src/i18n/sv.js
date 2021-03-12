@@ -295,7 +295,7 @@ const translations = {
                                     one {# tillgänglighetsbrist}
                                     other {# tillgänglighetsbrister}
                                   }`,
-  'unit.accessibility.unitNoInfo': 'Verksamhetsstället har inte meddelat tillgänglighetsuppgifter.',
+  'unit.accessibility.unitNoInfo': 'Tillgänglighetsuppgifter saknas.',
   'unit.basicInfo': 'Grunduppgifter',
   'unit.data_source': 'Källa: {data_source}',
   'unit.details.notFound': 'Verksamhetsställets uppgifter finns inte att tillgå.',
