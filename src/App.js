@@ -35,6 +35,7 @@ import '@formatjs/intl-relativetimeformat/dist/locale-data/sv';
 import ThemeWrapper from './themes/ThemeWrapper';
 import LocaleUtility from './utils/locale';
 import config from '../config';
+import ogImage from './assets/images/servicemap-meta-img.png';
 
 // General meta tags for app
 const MetaTags = () => {
@@ -46,6 +47,9 @@ const MetaTags = () => {
         isClient() && <meta property="og:url" content={window.location} />
       }
       <meta property="og:description" content={intl.formatMessage({ id: 'app.description' })} />
+      <meta property="og:image" data-react-helmet="true" content={ogImage} />
+      <meta name="twitter:card" data-react-helmet="true" content="summary" />
+      <meta name="twitter:image:alt" data-react-helmet="true" content={intl.formatMessage({ id: 'app.og.image.alt'})} />
     </Helmet>
   );
 };

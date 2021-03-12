@@ -2,6 +2,7 @@
 const translations = {
   'app.title': 'Service map',
   'app.description': 'Find services near your home',
+  'app.og.image.alt': 'Servicemap logo',
 
   // Accessibility
   'accessibility': 'Accessibility',
