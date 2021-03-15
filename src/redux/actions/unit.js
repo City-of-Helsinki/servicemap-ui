@@ -20,7 +20,7 @@ export const fetchUnits = (
   const timeout = searchTimeout;
   const abortController = new AbortController();
   const fetchTimeout = setTimeout(() => {
-    console.warn('Search backend not responding');
+    console.warn(`Search fetch aborted: Timeout after ${searchTimeout / 1000} seconds`);
     abortController.abort();
   }, timeout);
 
