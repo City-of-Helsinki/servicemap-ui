@@ -14,7 +14,7 @@ import config from '../../../config';
 import ToolMenu from '../ToolMenu';
 import { focusToViewTitle } from '../../utils/accessibility';
 import LocaleUtility from '../../utils/locale';
-import SettingsText from '../SettingsText';
+import SettingsButton from './SettingsButton';
 
 class TopBar extends React.Component {
   state={ drawerOpen: false }
@@ -31,15 +31,9 @@ class TopBar extends React.Component {
 
     return (
       settingsCategories.map(category => (
-        <Button
-          id={`SettingsButton${category.type}`}
-          key={`SettingsButton${category.type}`}
+        <SettingsButton
+          key={category.type}
           aria-pressed={settingsOpen === category.type}
-          className={settingsOpen === category.type
-            ? classes.settingsButtonPressed
-            : classes.settingsButton
-                      }
-          classes={{ label: classes.buttonLabel }}
           onClick={() => {
             toggleSettings(category.type);
             setTimeout(() => {
@@ -53,9 +47,9 @@ class TopBar extends React.Component {
               }
             }, 1);
           }}
-        >
-          <SettingsText type={category.type} />
-        </Button>
+          settingsOpen={settingsOpen}
+          type={category.type}
+        />
       )));
   }
 

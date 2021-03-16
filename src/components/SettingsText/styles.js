@@ -11,6 +11,10 @@ export default theme => ({
   text: {
     color: 'inherit',
     margin: 0,
+    textAlign: 'left',
+    overflow: 'hidden',
+    width: '100%',
+    textOverflow: 'ellipsis',
   },
   textSmall: {
     ...theme.typography.caption,

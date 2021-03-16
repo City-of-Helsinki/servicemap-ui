@@ -3,6 +3,9 @@ import config from '../../../config';
 const { topBarHeight, topBarHeightMobile } = config;
 
 const styles = theme => ({
+  smallScreen: {
+    maxWidth: '200px !important',
+  },
   aligner: {
     height: topBarHeight,
   },
@@ -58,24 +61,26 @@ const styles = theme => ({
   settingsButtonsContainer: {
     paddingLeft: 50,
     display: 'flex',
-    flex: '1 0 auto',
+    flex: '1 1 auto',
   },
   settingsButton: {
     textTransform: 'none',
     alignItems: 'flex-start',
-    marginRight: '4%',
+    marginRight: '1%',
     borderRadius: 0,
     '& p': {
       textAlign: 'left',
-    }
+    },
+    maxWidth: 350,
+    maxHeight: 58 ,
+    flex: '0 1 auto',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
   },
   settingsButtonPressed: {
-    textTransform: 'none',
-    alignItems: 'flex-start',
-    marginRight: '4%',
     marginBottom: -2,
     borderBottom: '2px solid',
-    borderRadius: 0,
   },
   settingsButtonText: {
     color: 'inherit',
