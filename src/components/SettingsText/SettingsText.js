@@ -28,7 +28,7 @@ const SettingsText = ({ classes, type, variant }) => {
   try {
     switch(type) {
       case 'citySettings':
-        if (citySettings.length) {
+        if (citySettings.length && citySettings.length !== config.cities.length) {
           settings = citySettings.map(c => ({ id: `settings.city.${c}` }));
           break;
         }
@@ -41,7 +41,7 @@ const SettingsText = ({ classes, type, variant }) => {
         break;
       case 'accessibilitySettings':
         if (!a11ySettings.length && !mobility) {
-          settings = ['settings.accessibility.none'];
+          settings = [{ id: 'settings.accessibility.none' }];
           break;
         }
         settings = a11ySettings.map(a => ({ id: `settings.sense.${a}` }));
