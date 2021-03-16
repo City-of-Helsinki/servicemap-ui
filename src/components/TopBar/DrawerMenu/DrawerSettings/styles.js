@@ -5,7 +5,7 @@ export default theme => ({
   container: {
     color: 'inherit',
     display: 'flex',
-    flex: '0 1   auto',
+    flex: '0 0   auto',
     minHeight: '80px',
     paddingTop: theme.spacing(3),
     paddingBottom: theme.spacing(3),
