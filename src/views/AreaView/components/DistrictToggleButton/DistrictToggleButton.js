@@ -20,7 +20,11 @@ const DistrictToggleButton = ({
         size="small"
         value={district.id}
         className={classes.customSwitch}
-        inputProps={{ 'aria-setsize': selectionSize ? selectionSize.toString() : null }}
+        inputProps={{
+          role: 'button',
+          'aria-setsize': selectionSize ? selectionSize.toString() : null,
+          'aria-pressed': selected,
+        }}
         onChange={e => onToggle(e)}
         aria-labelledby={`${`${district.id}Name`} ${`${district.id}Period`}`}
         checked={selected}
