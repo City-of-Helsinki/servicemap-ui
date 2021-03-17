@@ -1,6 +1,8 @@
 /* eslint-disable quote-props */
 const translations = {
   'app.title': 'Palvelukartta',
+  'app.description': 'Pääkaupunkiseudun kaikki julkiset palvelut ulottuvillasi.',
+  'app.og.image.alt': 'Palvelukartan logo',
 
   // Accessibility
   'accessibility': 'Esteettömyys',
