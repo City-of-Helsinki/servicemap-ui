@@ -58,11 +58,12 @@ const GeographicalTab = ({
 
   const handleRadioChange = (district, e) => {
     e.stopPropagation();
-    setOpenCategory(null);
     if (selectedDistrictType === district.id) {
       clearRadioButtonValue();
+      setOpenCategory(null);
     } else {
       setRadioButtonValue(district);
+      setOpenCategory(district.id);
     }
   };
 
@@ -79,7 +80,7 @@ const GeographicalTab = ({
   };
 
   useEffect(() => {
-    if (selectedDistrictType && selectedDistrictType !== 'neighborhood' && selectedDistrictType !== 'postcode_area') {
+    if (!selectedDistrictType || (selectedDistrictType !== 'neighborhood' && selectedDistrictType !== 'postcode_area')) {
       dispatch(setSelectedSubdistricts([]));
       dispatch(setSelectedDistrictServices([]));
       setOpenCategory(null);
