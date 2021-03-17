@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { Typography } from '@material-ui/core';
+import { Map } from '@material-ui/icons';
 import { focusDistrict, focusDistricts } from '../MapView/utils/mapActions';
 import TabLists from '../../components/TabLists';
 import GeographicalTab from './components/GeographicalTab';
@@ -15,6 +16,8 @@ import TitleBar from '../../components/TitleBar';
 import AddressSearchBar from '../../components/AddressSearchBar';
 import { dataStructure } from './utils/districtDataHelper';
 import { handleItemOpen } from '../../redux/actions/district';
+import SMButton from '../../components/ServiceMapButton';
+import MobileComponent from '../../components/MobileComponent';
 
 
 const AreaView = ({
@@ -209,7 +212,6 @@ const AreaView = ({
       selectedAddress={selectedAddress}
       districtData={districtData}
       initialOpenItems={initialOpenItems}
-      navigator={navigator}
       getLocaleText={getLocaleText}
     />
   );
@@ -260,6 +262,19 @@ const AreaView = ({
             onTabChange={() => (selectedDistrictType ? clearRadioButtonValue() : null)}
             data={tabs}
           />
+          <MobileComponent>
+            {!districtsFetching.length && (
+              <SMButton
+                aria-hidden
+                role="link"
+                margin
+                messageID="general.showOnMap"
+                icon={<Map />}
+                className={classes.mapButton}
+                onClick={() => navigator.openMap()}
+              />
+            )}
+          </MobileComponent>
           <div className={classes.loadingText}>
             <Typography variant="srOnly" aria-live="assertive">
               {districtsFetching.length

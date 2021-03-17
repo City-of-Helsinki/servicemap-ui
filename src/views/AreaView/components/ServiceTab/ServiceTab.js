@@ -8,11 +8,8 @@ import {
   Divider,
 } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
-import { Map } from '@material-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
-import MobileComponent from '../../../../components/MobileComponent';
 import SettingsInfo from '../../../../components/SettingsInfo';
-import SMButton from '../../../../components/ServiceMapButton';
 import SMAccordion from '../../../../components/SMAccordion';
 import { fetchDistrictGeometry, handleItemOpen, setSelectedDistrictType } from '../../../../redux/actions/district';
 import DistrictUnitList from '../DistrictUnitList';
@@ -24,7 +21,6 @@ const ServiceTab = (props) => {
     selectedAddress,
     districtData,
     initialOpenItems,
-    navigator,
     getLocaleText,
     classes,
   } = props;
@@ -166,17 +162,6 @@ const ServiceTab = (props) => {
         settingsPage="area"
         noDivider
       />
-
-      <MobileComponent>
-        <SMButton
-          role="link"
-          margin
-          messageID="general.showOnMap"
-          icon={<Map />}
-          className={classes.mapButton}
-          onClick={() => navigator.openMap()}
-        />
-      </MobileComponent>
     </div>
   );
 };
@@ -186,13 +171,11 @@ ServiceTab.propTypes = {
   districtData: PropTypes.arrayOf(PropTypes.object),
   initialOpenItems: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
   selectedAddress: PropTypes.objectOf(PropTypes.any),
-  navigator: PropTypes.objectOf(PropTypes.any),
   getLocaleText: PropTypes.func.isRequired,
 };
 
 ServiceTab.defaultProps = {
   initialOpenItems: [],
-  navigator: null,
   districtData: [],
   selectedAddress: null,
 };
