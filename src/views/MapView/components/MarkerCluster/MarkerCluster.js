@@ -98,6 +98,10 @@ const MarkerCluster = ({
     const highlightedMarker = getHighlightedMarker(mapLayers);
     if (highlightedMarker && UnitHelper.isUnitPage()) {
       const tooltipContent = getUnitPopupContent(clusterData.highlightedUnit);
+      // Close all open popups
+      map.eachLayer((layer) => {
+        layer.closePopup();
+      });
       if (highlightedMarker instanceof global.L.MarkerCluster) {
         highlightedMarker.bindPopup(tooltipContent, popupOptions()).openPopup();
       } else {
@@ -208,10 +212,10 @@ const MarkerCluster = ({
         const listItem = document.createElement('li');
         // Create span for interactive list item content
         const span = document.createElement('span');
-        span.setAttribute('tabindex', '0');
-        span.setAttribute('role', 'link');
-        span.onkeydown = keyboardHandler(() => onClusterItemClick(unit), ['enter', 'space']);
-        span.onclick = () => {
+        listItem.setAttribute('tabindex', '0');
+        listItem.setAttribute('role', 'link');
+        listItem.onkeydown = keyboardHandler(() => onClusterItemClick(unit), ['enter', 'space']);
+        listItem.onclick = () => {
           if (onClusterItemClick) {
             onClusterItemClick(unit);
           }
