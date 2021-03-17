@@ -53,6 +53,8 @@ const translations = {
   'area.localAddress.postCode': 'Postinumero: {area}', // TODO: translate
   'area.geographicalServices.neighborhood': 'Kaupunginosan palvelut ({length})', // TODO: translate
   'area.geographicalServices.postcode_area': 'Postinumeroalueen palvelut ({length})', // TODO: translate
+  'area.neighborhood.title': 'Valitse kaupunginosa', // TODO: translate
+  'area.postcode_area.title': 'Valitse postinumero', // TODO: translate
   'area.noSelection': 'Väl område under fliken Val av område',
   'area.noUnits': 'Det finns inga verksamhetsställen i ditt valda område',
   'area.list.geographical': 'Geografisk',

@@ -2,6 +2,7 @@ import {
   Checkbox, FormControlLabel, List, ListItem, Typography,
 } from '@material-ui/core';
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedDistrictServices, setSelectedSubdistricts } from '../../../../redux/actions/district';
@@ -68,36 +69,50 @@ const GeographicalDistrictList = ({
   );
 
   return (
-    cityFilteredData.map((data) => {
-      const { municipality } = data[0];
-      return (
-        <React.Fragment key={municipality}>
-          <div className={classes.municipalitySubtitle}>
-            <Typography component="h4" className={classes.bold}>
-              <FormattedMessage id={`settings.city.${municipality}`} />
-            </Typography>
-          </div>
-          <List disablePadding>
-            {data.map(district => (
-              <ListItem className={`${classes.listItem} ${classes.areaItem}`} key={district.id} divider>
-                <FormControlLabel
-                  className={classes.checkboxPadding}
-                  control={(
-                    <Checkbox
-                      color="primary"
-                      icon={<span className={classes.checkBoxIcon} />}
-                      onChange={e => handleCheckboxChange(e, district)}
-                      checked={selectedSubdistricts.includes(district.ocd_id)}
-                    />
+    <>
+      <div className={classes.municipalitySubtitle}>
+        <Typography component="h4" className={classes.bold}>
+          <FormattedMessage id={`area.${district.name}.title`} />
+        </Typography>
+      </div>
+      {cityFilteredData.map((data) => {
+        const { municipality } = data[0];
+        return (
+          <React.Fragment key={municipality}>
+            <div className={classes.municipalitySubtitle}>
+              <Typography component="h5" className={classes.bold}>
+                <FormattedMessage id={`settings.city.${municipality}`} />
+              </Typography>
+            </div>
+            <List disablePadding>
+              {data.map(district => (
+                <ListItem className={`${classes.listItem} ${classes.areaItem}`} key={district.id} divider>
+                  <FormControlLabel
+                    className={classes.checkboxPadding}
+                    control={(
+                      <Checkbox
+                        color="primary"
+                        icon={<span className={classes.checkBoxIcon} />}
+                        onChange={e => handleCheckboxChange(e, district)}
+                        checked={selectedSubdistricts.includes(district.ocd_id)}
+                      />
                   )}
-                  label={<Typography>{getLocaleText(district.name)}</Typography>}
-                />
-              </ListItem>
-            ))}
-          </List>
-        </React.Fragment>
-      );
-    }));
+                    label={<Typography>{getLocaleText(district.name)}</Typography>}
+                  />
+                </ListItem>
+              ))}
+            </List>
+          </React.Fragment>
+        );
+      })}
+    </>
+  );
+};
+
+GeographicalDistrictList.propTypes = {
+  classes: PropTypes.objectOf(PropTypes.any).isRequired,
+  getLocaleText: PropTypes.func.isRequired,
+  district: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default React.memo(GeographicalDistrictList);
