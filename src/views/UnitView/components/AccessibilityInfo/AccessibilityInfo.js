@@ -244,7 +244,7 @@ class AccessibilityInfo extends React.Component {
     const noInfo = !aDescriptions && !aShortcomings;
     const noShortcomings = aDescriptions && !aShortcomings;
 
-    const infoText = aShortcomings && this.renderInfoText(noInfo, noShortcomings);
+    const infoText = this.renderInfoText(noInfo, noShortcomings);
 
     return (
       <Container>
@@ -289,8 +289,8 @@ AccessibilityInfo.propTypes = {
   accessibilitySentences: PropTypes.shape({
     isFetching: PropTypes.bool,
     data: PropTypes.objectOf(PropTypes.shape({
-      sentences: PropTypes.any,
-      groups: PropTypes.any,
+      sentences: PropTypes.objectOf(PropTypes.any),
+      groups: PropTypes.objectOf(PropTypes.any),
     })),
   }).isRequired,
   headingLevel: PropTypes.oneOf([2, 3, 4, 5]).isRequired,

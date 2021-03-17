@@ -297,7 +297,7 @@ const translations = {
                                     one {# accessibility shortcoming}
                                     other {# accessibility shortcomings}
                                   }`,
-  'unit.accessibility.unitNoInfo': 'Location has not delivered any accessibility information.', // TODO: verify
+  'unit.accessibility.unitNoInfo': 'Accessibility information missing.',
   'unit.basicInfo': 'Information',
   'unit.data_source': 'Source: {data_source}',
   'unit.details.notFound': 'Location info not available.',
