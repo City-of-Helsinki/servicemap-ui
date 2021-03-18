@@ -8,12 +8,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedDistrictServices, setSelectedSubdistricts } from '../../../../redux/actions/district';
 import { getDistrictsByType } from '../../../../redux/selectors/district';
 import { panViewToBounds } from '../../../MapView/utils/mapActions';
+import useLocaleText from '../../../../utils/useLocaleText';
 
 
-const GeographicalDistrictList = ({
-  district, getLocaleText, classes,
-}) => {
+const GeographicalDistrictList = ({ district, classes }) => {
   const dispatch = useDispatch();
+  const getLocaleText = useLocaleText();
   const map = useSelector(state => state.mapRef);
   const citySettings = useSelector(state => state.settings.cities);
   const selectedSubdistricts = useSelector(state => state.districts.selectedSubdistricts);
@@ -111,7 +111,6 @@ const GeographicalDistrictList = ({
 
 GeographicalDistrictList.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  getLocaleText: PropTypes.func.isRequired,
   district: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 

@@ -17,13 +17,13 @@ import { getFilteredSubdistrictServices } from '../../../../redux/selectors/dist
 import GeographicalDistrictList from '../GeographicalDistrictList';
 import SettingsInfo from '../../../../components/SettingsInfo';
 import GeographicalUnitList from '../GeographicalUnitList';
+import useLocaleText from '../../../../utils/useLocaleText';
 
 
 const GeographicalTab = ({
   initialOpenItems,
   formAddressString,
   clearRadioButtonValue,
-  getLocaleText,
   classes,
 }) => {
   const dispatch = useDispatch();
@@ -35,6 +35,7 @@ const GeographicalTab = ({
   const selectedDistrictType = useSelector(state => state.districts.selectedDistrictType);
   const districtData = useSelector(state => state.districts.districtData);
   const map = useSelector(state => state.mapRef);
+  const getLocaleText = useLocaleText();
 
   const [openCategory, setOpenCategory] = useState(
     useSelector(state => state.districts.openItems).find(item => item === 'neighborhood' || item === 'postcode_area') || [],
@@ -170,14 +171,12 @@ const GeographicalTab = ({
                         collapseContent={(
                           <GeographicalUnitList
                             initialOpenItems={initialOpenItems}
-                            getLocaleText={getLocaleText}
                           />
                         )}
                       />
                       <GeographicalDistrictList // District selection list
                         district={district}
                         map={map}
-                        getLocaleText={getLocaleText}
                       />
                     </div>
                   )}
@@ -214,7 +213,6 @@ GeographicalTab.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   initialOpenItems: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
   formAddressString: PropTypes.func.isRequired,
-  getLocaleText: PropTypes.func.isRequired,
 };
 
 GeographicalTab.defaultProps = {

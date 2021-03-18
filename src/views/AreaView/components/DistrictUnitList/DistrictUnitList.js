@@ -9,15 +9,17 @@ import { getAddressDistrict } from '../../../../redux/selectors/district';
 import DivisionItem from '../../../../components/ListItems/DivisionItem';
 import { getAddressFromUnit } from '../../../../utils/address';
 import SMAccordion from '../../../../components/SMAccordion';
+import useLocaleText from '../../../../utils/useLocaleText';
 
 const DistrictUnitList = (props) => {
   const {
-    classes, intl, getLocaleText, selectedAddress, district,
+    classes, intl, selectedAddress, district,
   } = props;
 
   const citySettings = useSelector(state => state.settings.cities);
   const addressDistrict = useSelector(state => getAddressDistrict(state));
   const districtsFetching = useSelector(state => state.districts.districtsFetching);
+  const getLocaleText = useLocaleText();
 
   const sortDistricts = (districts) => {
     districts.sort((a, b) => a.unit.distance - b.unit.distance);
@@ -186,7 +188,6 @@ DistrictUnitList.propTypes = {
   district: PropTypes.objectOf(PropTypes.any).isRequired,
   selectedAddress: PropTypes.objectOf(PropTypes.any),
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
-  getLocaleText: PropTypes.func.isRequired,
 };
 
 DistrictUnitList.defaultProps = {

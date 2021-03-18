@@ -21,7 +21,6 @@ const ServiceTab = (props) => {
     selectedAddress,
     districtData,
     initialOpenItems,
-    getLocaleText,
     classes,
   } = props;
   const dispatch = useDispatch();
@@ -82,7 +81,6 @@ const ServiceTab = (props) => {
             <DistrictUnitList
               district={district}
               selectedAddress={selectedAddress}
-              getLocaleText={getLocaleText}
             />
           )}
         </Fragment>
@@ -171,7 +169,6 @@ ServiceTab.propTypes = {
   districtData: PropTypes.arrayOf(PropTypes.object),
   initialOpenItems: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
   selectedAddress: PropTypes.objectOf(PropTypes.any),
-  getLocaleText: PropTypes.func.isRequired,
 };
 
 ServiceTab.defaultProps = {

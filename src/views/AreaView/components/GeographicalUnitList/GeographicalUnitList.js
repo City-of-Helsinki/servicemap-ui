@@ -11,6 +11,7 @@ import SMAccordion from '../../../../components/SMAccordion';
 import { addSelectedDistrictService, handleItemOpen, removeSelectedDistrictService } from '../../../../redux/actions/district';
 import { getFilteredSubdistrictServices } from '../../../../redux/selectors/district';
 import { uppercaseFirst } from '../../../../utils';
+import useLocaleText from '../../../../utils/useLocaleText';
 
 
 // Custom uncontrolled checkbox that allows default value
@@ -36,8 +37,9 @@ const UnitCheckbox = ({
 };
 
 
-const GeographicalUnitList = ({ getLocaleText, classes, initialOpenItems }) => {
+const GeographicalUnitList = ({ classes, initialOpenItems }) => {
   const dispatch = useDispatch();
+  const getLocaleText = useLocaleText();
   const filteredSubdistrictUnits = useSelector(state => getFilteredSubdistrictServices(state));
   const selectedServices = useSelector(state => state.districts.selectedDistrictServices);
   const [serviceList, setServiceList] = useState([]);
@@ -158,7 +160,6 @@ const GeographicalUnitList = ({ getLocaleText, classes, initialOpenItems }) => {
 };
 GeographicalUnitList.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  getLocaleText: PropTypes.func.isRequired,
 };
 
 UnitCheckbox.propTypes = {
