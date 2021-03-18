@@ -15,7 +15,7 @@ import fetchAddress from '../MapView/utils/fetchAddress';
 import TitleBar from '../../components/TitleBar';
 import AddressSearchBar from '../../components/AddressSearchBar';
 import { dataStructure } from './utils/districtDataHelper';
-import { handleItemOpen } from '../../redux/actions/district';
+import { handleOpenItems } from '../../redux/actions/district';
 import SMButton from '../../components/ServiceMapButton';
 import MobileComponent from '../../components/MobileComponent';
 import useLocaleText from '../../utils/useLocaleText';
@@ -174,7 +174,7 @@ const AreaView = ({
           const category = dataStructure.find(
             data => data.districts.includes(paramValue),
           );
-          dispatch(handleItemOpen(category.id));
+          dispatch(handleOpenItems(category.id));
         }
         // Set selected district type from url paramters
         setSelectedDistrictType(paramValue);

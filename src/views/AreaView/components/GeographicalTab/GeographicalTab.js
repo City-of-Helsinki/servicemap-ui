@@ -8,7 +8,7 @@ import SMAccordion from '../../../../components/SMAccordion';
 import DistrictToggleButton from '../DistrictToggleButton';
 import {
   fetchDistrictGeometry,
-  handleItemOpen,
+  handleOpenGeographicalCategory,
   setSelectedDistrictServices,
   setSelectedDistrictType,
   setSelectedSubdistricts,
@@ -56,6 +56,10 @@ const GeographicalTab = ({
     }
   };
 
+  const handleCategoryOpen = (id) => {
+    setOpenCategory(id);
+    dispatch(handleOpenGeographicalCategory(id));
+  };
 
   const handleRadioChange = (district, e) => {
     e.stopPropagation();
@@ -64,17 +68,16 @@ const GeographicalTab = ({
       setOpenCategory(null);
     } else {
       setRadioButtonValue(district);
-      setOpenCategory(district.id);
+      handleCategoryOpen(district.id);
     }
   };
 
   const handleAccordionToggle = (district, opening) => {
-    dispatch(handleItemOpen(district.id));
     if (opening) {
       if (selectedDistrictType !== district.id) {
         setRadioButtonValue(district);
       }
-      setOpenCategory(district.id);
+      handleCategoryOpen(district.id);
     } else {
       setOpenCategory(null);
     }

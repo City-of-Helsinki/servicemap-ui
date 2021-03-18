@@ -1,5 +1,5 @@
 import { districtFetch, unitsFetch } from '../../utils/fetch';
-import { groupDistrictData, parseDistrictGeometry } from '../../views/AreaView/utils/districtDataHelper';
+import { geographicalDistricts, groupDistrictData, parseDistrictGeometry } from '../../views/AreaView/utils/districtDataHelper';
 
 export const setHighlightedDistrict = district => ({
   type: 'SET_DISTRICT_HIGHLIGHT',
@@ -149,12 +149,25 @@ export const fetchDistrictUnitList = nodeID => (
   }
 );
 
-export const handleItemOpen = id => (
+export const handleOpenItems = id => (
   (dispatch, getState) => {
     const { openItems } = getState().districts;
     if (openItems.includes(id)) {
       dispatch(removeOpenItem(id));
     } else {
+      dispatch(addOpenItem(id));
+    }
+  }
+);
+
+export const handleOpenGeographicalCategory = id => (
+  (dispatch, getState) => {
+    const { openItems } = getState().districts;
+    const stateCategory = openItems.find(item => geographicalDistricts.includes(item));
+    if (stateCategory) {
+      dispatch(removeOpenItem(stateCategory));
+    }
+    if (id) {
       dispatch(addOpenItem(id));
     }
   }

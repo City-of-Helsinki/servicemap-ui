@@ -11,7 +11,7 @@ import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import SettingsInfo from '../../../../components/SettingsInfo';
 import SMAccordion from '../../../../components/SMAccordion';
-import { fetchDistrictGeometry, handleItemOpen, setSelectedDistrictType } from '../../../../redux/actions/district';
+import { fetchDistrictGeometry, handleOpenItems, setSelectedDistrictType } from '../../../../redux/actions/district';
 import DistrictUnitList from '../DistrictUnitList';
 import DistrictToggleButton from '../DistrictToggleButton';
 import { dataStructure } from '../../utils/districtDataHelper';
@@ -115,7 +115,7 @@ const ServiceTab = (props) => {
       <ListItem key={item.titleID} className={classes.listItem} divider>
         <SMAccordion
           className={classes.accodrion}
-          onOpen={() => dispatch(handleItemOpen(item.id))}
+          onOpen={() => dispatch(handleOpenItems(item.id))}
           defaultOpen={defaultExpanded}
           titleContent={<Typography id={`${item.id}-content`} className={classes.bold}><FormattedMessage id={item.titleID} /></Typography>}
           collapseContent={(
