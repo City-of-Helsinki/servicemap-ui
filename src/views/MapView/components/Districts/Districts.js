@@ -11,6 +11,7 @@ import useMobileStatus from '../../../../utils/isMobile';
 import { parseSearchParams } from '../../../../utils';
 import config from '../../../../../config';
 import useLocaleText from '../../../../utils/useLocaleText';
+import { geographicalDistricts } from '../../../AreaView/utils/districtDataHelper';
 
 
 const Districts = ({
@@ -39,8 +40,6 @@ const Districts = ({
   const location = useLocation();
   const getLocaleText = useLocaleText();
   const citySettings = useSelector(state => state.settings.cities);
-
-  const geographicalDsitricts = ['neighborhood', 'postcode_area'];
   const selectedDistrictType = useSelector(state => state.districts.selectedDistrictType);
   const [areaPopup, setAreaPopup] = useState(null);
 
@@ -49,7 +48,7 @@ const Districts = ({
     // Disable normal map click event
     e.originalEvent.view.L.DomEvent.stopPropagation(e);
 
-    if (geographicalDsitricts.includes(district.type)) {
+    if (geographicalDistricts.includes(district.type)) {
       // Add/remove district from selected geographical districts
       let newArray;
       if (selectedSubdistricts.some(item => item === district.ocd_id)) {
@@ -159,7 +158,7 @@ const Districts = ({
 
     return filteredData.map((district) => {
       let dimmed;
-      if (geographicalDsitricts.includes(district.type)) {
+      if (geographicalDistricts.includes(district.type)) {
         if (selectedSubdistricts.length) {
           dimmed = !selectedSubdistricts.some(item => item === district.ocd_id);
         }

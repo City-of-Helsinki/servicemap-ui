@@ -72,6 +72,8 @@ export const dataStructure = [ // Categorized district data structure
   },
 ];
 
+export const geographicalDistricts = dataStructure.find(obj => obj.id === 'geographical').districts;
+
 
 export const groupDistrictData = (data) => {
   const groupedData = data.reduce((acc, cur) => {
