@@ -5,7 +5,6 @@ import Districts from './Districts';
 import styles from '../../styles';
 import { getDistrictsByType, getAddressDistrict, getHighlightedDistrict } from '../../../../redux/selectors/district';
 import { setSelectedSubdistricts, setSelectedDistrictServices } from '../../../../redux/actions/district';
-import { getLocaleString } from '../../../../redux/selectors/locale';
 
 const mapStateToProps = (state) => {
   const { navigator, measuringMode } = state;
@@ -14,7 +13,6 @@ const mapStateToProps = (state) => {
   const districtData = getDistrictsByType(state);
   const addressDistrict = getAddressDistrict(state);
   const highlightedDistrict = getHighlightedDistrict(state);
-  const getLocaleText = textObject => getLocaleString(state, textObject);
   return {
     theme,
     navigator,
@@ -26,7 +24,6 @@ const mapStateToProps = (state) => {
     selectedAddress: districtAddressData.address,
     selectedSubdistricts,
     measuringMode,
-    getLocaleText,
   };
 };
 

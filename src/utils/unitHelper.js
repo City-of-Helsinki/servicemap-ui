@@ -1,5 +1,6 @@
+/* eslint-disable camelcase */
 import { drawUnitIcon } from '../views/MapView/utils/drawIcon';
-import isClient from '.';
+import isClient, { uppercaseFirst } from '.';
 import SettingsUtility from './settings';
 import config from '../../config';
 import { isEmbed } from './path';
@@ -146,6 +147,26 @@ class UnitHelper {
     const action = paths.unit.regex.test(window.location.href)
       ? 'replace' : 'push';
     navigator[action]('unit', { id });
+  }
+
+  static getContractText = (unit, intl, getLocaleText) => {
+    const { contract_type, department } = unit;
+    if (!contract_type?.description) return null;
+
+    const contractText = uppercaseFirst(getLocaleText(contract_type.description));
+    const contractMunicipality = department?.municipality;
+
+    if (contractMunicipality) {
+      const cityString = intl.formatMessage({
+        id: `settings.city.${contractMunicipality}`,
+        defaultMessage: ' ',
+      });
+      if (cityString.length > 1) {
+        return `${contractText}, ${cityString}`;
+      }
+      return contractText;
+    }
+    return contractText;
   }
 }
 

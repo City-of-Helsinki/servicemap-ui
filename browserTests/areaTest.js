@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { waitForReact, ReactSelector } from 'testcafe-react-selectors';
-import { ClientFunction } from 'testcafe';
+import { ClientFunction, Selector } from 'testcafe';
 
 import config from './config';
 const { server } = config;
@@ -66,18 +66,17 @@ test('District lists are fetched and rendered correctly', async (t) => {
 // })
 
 test('Address search bar field updates and gets results', async (t, inputText = 'mann') => {
-  const addressBar = ReactSelector('AddressSearchBar WithStyles(ForwardRef(InputBase))');
+  const addressBar = Selector('#addressSearchbar')
   const suggestions = ReactSelector('AddressSearchBar WithStyles(ForwardRef(ListItem))');
 
   await t
     .typeText(addressBar, inputText)
-    .expect(addressBar.getReact(({props}) => props.value)).eql(inputText)
     .expect(suggestions.count).gt(0)
 
-  const suggestion = suggestions.nth(1);
+  const suggestion = suggestions.nth(0);
 
   await t
     .pressKey('down')
     .pressKey('enter')
-    .expect(addressBar.getReact(({props}) => props.value)).eql(await suggestion.textContent, 'Address search bar did not update text when suggesttion was selected')
+    .expect(addressBar.value).eql(await suggestion.textContent, 'Address search bar did not update text when suggesttion was selected');
 });

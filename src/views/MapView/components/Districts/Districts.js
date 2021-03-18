@@ -1,22 +1,23 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Typography } from '@material-ui/core';
+import { Typography, Link } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 import { drawMarkerIcon } from '../../utils/drawIcon';
 import swapCoordinates from '../../utils/swapCoordinates';
 import AddressMarker from '../AddressMarker';
 import useMobileStatus from '../../../../utils/isMobile';
 import { parseSearchParams } from '../../../../utils';
+import config from '../../../../../config';
+import useLocaleText from '../../../../utils/useLocaleText';
 
-let districtClicked = null;
 
 const Districts = ({
   highlightedDistrict,
   districtData,
   unitsFetching,
   addressDistrict,
-  getLocaleText,
   theme,
   mapOptions,
   currentPage,
@@ -30,28 +31,25 @@ const Districts = ({
   navigator,
   intl,
 }) => {
-  const { Polygon, Marker, Tooltip } = global.rL;
+  const {
+    Polygon, Marker, Tooltip, Popup,
+  } = global.rL;
   const useContrast = theme === 'dark';
   const isMobile = useMobileStatus();
   const location = useLocation();
+  const getLocaleText = useLocaleText();
   const citySettings = useSelector(state => state.settings.cities);
-  const geographicalDsitricts = ['neighborhood', 'postcode_area'];
 
-  /* TODO: The following useEffect is used to prevent double click bug with
-  lealfet + safari. Should be removed when the bug is fixed by lealfet */
-  useEffect(() => {
-    setTimeout(() => {
-      districtClicked = null;
-    }, 1000);
-  }, [selectedSubdistricts]);
+  const geographicalDsitricts = ['neighborhood', 'postcode_area'];
+  const selectedDistrictType = useSelector(state => state.districts.selectedDistrictType);
+  const [areaPopup, setAreaPopup] = useState(null);
 
   const districtOnClick = (e, district) => {
     if (measuringMode) return;
+    // Disable normal map click event
+    e.originalEvent.view.L.DomEvent.stopPropagation(e);
+
     if (geographicalDsitricts.includes(district.type)) {
-      // Disable normal map click event
-      e.originalEvent.view.L.DomEvent.stopPropagation(e);
-      if (districtClicked === district.ocd_id) return; // Prevent safari double click
-      districtClicked = district.ocd_id;
       // Add/remove district from selected geographical districts
       let newArray;
       if (selectedSubdistricts.some(item => item === district.ocd_id)) {
@@ -63,6 +61,14 @@ const Districts = ({
         setSelectedDistrictServices([]);
       }
       setSelectedSubdistricts(newArray);
+    } else if (district.category === 'nature') {
+      if (config.natureAreaURL === 'undefined') return;
+      setAreaPopup({
+        district,
+        link: `${config.natureAreaURL}${district.origin_id}`,
+        name: district.name,
+        position: e.latlng,
+      });
     }
   };
 
@@ -202,6 +208,24 @@ const Districts = ({
     });
   };
 
+  const renderAreaPopup = () => (
+    <Popup onClose={() => setAreaPopup(null)} position={areaPopup.position}>
+      <div className={classes.areaPopup}>
+        <Typography>{getLocaleText(areaPopup.name)}</Typography>
+        {areaPopup.link && (
+          <Link className={classes.areaLink} href={areaPopup.link} target="_blank">
+            <Typography><FormattedMessage id="area.popupLink" /></Typography>
+          </Link>
+        )}
+      </div>
+    </Popup>
+  );
+
+
+  useEffect(() => {
+    setAreaPopup(null);
+  }, [selectedDistrictType]);
+
 
   if (highlightedDistrict) {
     return (
@@ -231,7 +255,10 @@ const Districts = ({
           />
         ) : null}
         {districtData ? (
-          renderMultipleDistricts()
+          <>
+            {renderMultipleDistricts()}
+            {areaPopup && renderAreaPopup()}
+          </>
         ) : null}
       </>
     );
@@ -240,7 +267,6 @@ const Districts = ({
 
 Districts.propTypes = {
   highlightedDistrict: PropTypes.objectOf(PropTypes.any),
-  getLocaleText: PropTypes.func.isRequired,
   mapOptions: PropTypes.objectOf(PropTypes.any).isRequired,
   currentPage: PropTypes.string.isRequired,
   measuringMode: PropTypes.bool.isRequired,

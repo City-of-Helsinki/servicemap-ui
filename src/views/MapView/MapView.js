@@ -26,6 +26,7 @@ import UnitGeometry from './components/UnitGeometry';
 import MapUtility from './utils/mapUtility';
 import HideSidebarButton from './components/HideSidebarButton';
 import CoordinateMarker from './components/CoordinateMarker';
+import useLocaleText from '../../utils/useLocaleText';
 
 if (global.window) {
   require('leaflet');
@@ -41,7 +42,6 @@ const MapView = (props) => {
     classes,
     currentPage,
     getAddressNavigatorParams,
-    getLocaleText,
     intl,
     location,
     settings,
@@ -64,8 +64,6 @@ const MapView = (props) => {
     toggleSidebar,
     sidebarHidden,
   } = props;
-
-
   const mapRef = useRef(null);
 
   // State
@@ -136,7 +134,7 @@ const MapView = (props) => {
 
   const setClickCoordinates = (ev) => {
     setMapClickPoint(null);
-    if (document.getElementsByClassName('popup').length > 0) {
+    if (document.getElementsByClassName('leaflet-popup').length > 0) {
       mapRef.current.leafletElement.closePopup();
     } else {
       setMapClickPoint(ev.latlng);
@@ -242,10 +240,10 @@ const MapView = (props) => {
       try {
         if (lat && lng) {
           const position = [usp.get('lon'), usp.get('lat')];
-          focusToPosition(mapRef.current.leafletElement, position); 
+          focusToPosition(mapRef.current.leafletElement, position);
         }
       } catch (e) {
-        console.error('Error while attemptin to focus on coordinate:', e)
+        console.error('Error while attemptin to focus on coordinate:', e);
       }
     }
   }, [mapRef.current]);
@@ -341,6 +339,7 @@ const MapView = (props) => {
         {renderTopBar()}
         {renderEmbedOverlay()}
         <Map
+          tap={false} // This should fix leaflet safari double click bug
           preferCanvas
           className={`${classes.map} ${measuringMode ? classes.measuringCursor : ''}`}
           key={mapObject.options.name}
@@ -377,7 +376,6 @@ const MapView = (props) => {
           <Districts mapOptions={mapOptions} map={mapRef.current} embed={embeded} />
 
           <TransitStops
-            getLocaleText={getLocaleText}
             map={mapRef.current}
             mapObject={mapObject}
             isMobile={isMobile}
@@ -387,7 +385,6 @@ const MapView = (props) => {
             <AddressPopup
               mapClickPoint={mapClickPoint}
               getAddressNavigatorParams={getAddressNavigatorParams}
-              getLocaleText={getLocaleText}
               map={mapRef.current}
               setAddressLocation={setAddressLocation}
               navigator={navigator}
@@ -470,7 +467,6 @@ MapView.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   currentPage: PropTypes.string.isRequired,
   getAddressNavigatorParams: PropTypes.func.isRequired,
-  getLocaleText: PropTypes.func.isRequired,
   hideUserMarker: PropTypes.bool,
   highlightedDistrict: PropTypes.objectOf(PropTypes.any),
   highlightedUnit: PropTypes.objectOf(PropTypes.any),

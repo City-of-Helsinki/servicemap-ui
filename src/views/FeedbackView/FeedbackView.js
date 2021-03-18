@@ -11,10 +11,12 @@ import SMButton from '../../components/ServiceMapButton';
 import config from '../../../config';
 import DesktopComponent from '../../components/DesktopComponent';
 import { focusToViewTitle } from '../../utils/accessibility';
+import useLocaleText from '../../utils/useLocaleText';
 
 const FeedbackView = ({
-  classes, navigator, intl, location, selectedUnit, getLocaleText,
+  classes, navigator, intl, location, selectedUnit,
 }) => {
+  const getLocaleText = useLocaleText();
   // State
   const [email, setEmail] = useState(null);
   const [feedback, setFeedback] = useState(null);
@@ -29,7 +31,9 @@ const FeedbackView = ({
   const feedbackFull = feedbackLength >= feedbackMaxLength;
   const errorMessage = fbFieldVisited && feedbackLength === 0 ? intl.formatMessage({ id: 'feedback.error.required' }) : null;
 
-  const feedbackTitle = feedbackType === 'unit' && selectedUnit
+  const isUnitFeedback = feedbackType === 'unit';
+
+  const feedbackTitle = isUnitFeedback && selectedUnit
     ? intl.formatMessage({ id: 'feedback.title.unit' }, { unit: getLocaleText(selectedUnit.name) })
     : intl.formatMessage({ id: 'feedback.title' });
 
@@ -52,6 +56,12 @@ const FeedbackView = ({
     }
   };
 
+  const backButtonCallback = isUnitFeedback
+    ? React.useCallback(() => {
+      navigator.closeFeedback(selectedUnit.id);
+    }, [navigator, feedbackType])
+    : null;
+  const backButtonSrText = backButtonCallback ? intl.formatMessage({ id: 'general.back.unit' }) : null;
   const handleSend = () => {
     setSending(true);
 
@@ -170,6 +180,8 @@ const FeedbackView = ({
       <form className={classes.container}>
         <TitleBar
           backButton
+          backButtonOnClick={backButtonCallback}
+          backButtonSrText={backButtonSrText}
           title={feedbackTitle}
           titleComponent="h3"
         />
@@ -252,7 +264,6 @@ FeedbackView.propTypes = {
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   selectedUnit: PropTypes.objectOf(PropTypes.any),
-  getLocaleText: PropTypes.func.isRequired,
 };
 
 FeedbackView.defaultProps = {

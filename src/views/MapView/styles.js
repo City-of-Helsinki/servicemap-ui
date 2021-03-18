@@ -42,6 +42,17 @@ const styles = theme => ({
     textAlign: 'left',
     maxWidth: 240,
   },
+  areaPopup: {
+    padding: theme.spacing(1.5),
+    paddingTop: 22,
+    paddingBottom: 14,
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  areaLink: {
+    textAlign: 'center',
+    paddingTop: theme.spacing(0.5),
+  },
   marginBottom: {
     marginBottom: `${theme.spacing(2)}px !important`,
   },
@@ -152,6 +163,12 @@ const styles = theme => ({
     ...theme.typography.body2,
     margin: theme.spacing(0, 1),
   },
+  unitTooltipLink: {
+    ...theme.typography.body2,
+    paddingTop: theme.spacing(1),
+    textAlign: 'center',
+    color: theme.palette.primary.main,
+  },
   unitTooltipWrapper: {
     padding: theme.spacing(2),
   },
@@ -182,6 +199,9 @@ const styles = theme => ({
       },
       '&:hover': {
         cursor: 'pointer',
+        backgroundColor: theme.palette.white.light,
+      },
+      '&:focus': {
         backgroundColor: theme.palette.white.light,
       },
     },

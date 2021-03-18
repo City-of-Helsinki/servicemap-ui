@@ -1,6 +1,8 @@
 /* eslint-disable quote-props */
 const translations = {
   'app.title': 'Palvelukartta',
+  'app.description': 'Pääkaupunkiseudun kaikki julkiset palvelut ulottuvillasi.',
+  'app.og.image.alt': 'Palvelukartan logo',
 
   // Accessibility
   'accessibility': 'Esteettömyys',
@@ -28,9 +30,9 @@ const translations = {
   'address.services.header': 'Palvelualueet',
   'address.services.info': 'Kunnalliset palvelut, joiden piiriin sijainti kuuluu',
   'address.area.link': 'Tutustu alueisiin kartalla.',
-  'address.emergency_care.common': 'Terveysaseman ollessa kiinni sekä öisin klo 22- 8 alle 16-vuotiaiden päivystys on <a>Lastensairaalassa</a> [<a1>kotisivut</a1>] ja aikuisten päivystys',
+  'address.emergency_care.common': 'Terveysaseman ollessa kiinni sekä öisin klo 22- 8 alle 16-vuotiaiden päivystys on <a>Uudessa lastensairaalassa</a> [<a1>kotisivut</a1>] ja aikuisten päivystys',
   'address.emergency_care.children_hospital.link': '/fi/unit/62976',
-  'address.emergency_care.common.link': 'https://www.hus.fi/sairaanhoito/sairaalat/Uusi-lastensairaala/Sivut/default.aspx',
+  'address.emergency_care.common.link': 'https://www.hus.fi/potilaalle/sairaalat-ja-toimipisteet/uusi-lastensairaala',
   'address.emergency_care.unit.26107': 'Malmin sairaalassa',
   'address.emergency_care.unit.26104': 'Haartmanin sairaalassa',
   'address.emergency_care.link': 'http://www.hel.fi/www/Helsinki/fi/sosiaali-ja-terveyspalvelut/terveyspalvelut/paivystys/',
@@ -57,6 +59,7 @@ const translations = {
   'area.postcode_area.title': 'Valitse postinumero',
   'area.noSelection': 'Valitse alue Alueen Valinta -välilehdeltä',
   'area.noUnits': 'Valitsemallasi alueella ei ole toimipisteitä',
+  'area.popupLink': 'Näytä alueen tiedot (uusi välilehti)',
   'area.list.geographical': 'Maantieteellinen',
   'area.list.protection': 'Väestönsuojelu',
   'area.list.health': 'Terveys',
@@ -203,6 +206,9 @@ const translations = {
   'general.news.alert.title': 'Ilmoitusikkuna',
   'general.news.alert.close.aria': 'Sulje ilmoitusikkuna',
   'general.news.info.title': 'Palvelukartan uutiset',
+  'general.language.fi': 'Suomeksi',
+  'general.language.sv': 'På svenska',
+  'general.language.en': 'In English',
   'general.loading': 'Ladataan',
   'general.loading.done': 'Lataus valmis',
   'general.showOnMap': 'Näytä kartalla',
@@ -250,7 +256,7 @@ const translations = {
   'home.buttons.services': 'Tutustu palveluihin palveluluettelon avulla',
   'home.buttons.closeByServices': 'Näytä lähellä olevat palvelut',
   'home.buttons.instructions': 'Vinkkejä Palvelukartan käyttöön',
-  'home.buttons.area': 'Katso oppilaaksiottoalueet, alueet, kaupunginosat ja väestönsuojelupiirit',
+  'home.buttons.area': 'Katso terveys-, neuvola-, oppilaaksiotto-, esiopetus-, väestön- ja luonnonsuojelualueet sekä kaupunginosat',
   'home.example.search': 'Hae hakusanalla',
   'home.message': 'Terveisiä palvelukartan kehittäjiltä',
   'home.send.feedback': 'Anna palautetta',
@@ -288,6 +294,7 @@ const translations = {
 
   // Units
   'unit': 'Toimipiste',
+  'unit.showInformation': 'Näytä toimipisteen tiedot',
   'unit.accessibility.hearingMaps': 'Kuuluvuuskartat',
   'unit.accessibility.hearingMaps.extra': '(Uusi välilehti. Palvelu ei ole saavutettava)',
   'unit.accessibility.noInfo': 'Ei esteettömyystietoja',
@@ -298,7 +305,7 @@ const translations = {
                                     one {# esteettömyyspuute}
                                     other {# esteettömyyspuutetta}
                                   }`,
-  'unit.accessibility.unitNoInfo': 'Toimipiste ei ole toimittanut esteettömyystietoja.',
+  'unit.accessibility.unitNoInfo': 'Esteettömyystieto puuttuu.',
   'unit.basicInfo': 'Perustiedot',
   'unit.data_source': 'Lähde: {data_source}',
   'unit.details.notFound': 'Toimipisteen tietoja ei saatavilla.',
@@ -408,6 +415,7 @@ const translations = {
   'search.suggestions.suggestions': '{count} hakuehdotusta',
   // 'search.suggestions.expandSuggestions': '{count} tarkennusehdotusta',
   'search.suggestions.results': '{count} tulosta',
+  'search.suggestions.hideButton': 'Piilota ehdotuslista',
   'search.suggestions.history': '{count} kohdetta hakuhistoriassa',
   'search.suggestions.noHistory': 'Ei aikaisempia hakuja',
   'search.tryAgain': 'Yritä hakea uudelleen',
@@ -498,9 +506,10 @@ const translations = {
   'tool.download': 'Lataa tiedot',
   'tool.measuring': 'Mittaa etäisyys (käytettävissä vain hiirellä)',
   'tool.measuring.stop': 'Lopeta mittaus',
+  'tool.print': 'Tulosta',
 
   'info.title': 'Tietoa palvelusta ja saavutettavuusseloste',
-  'info.statement': 'Saavutettavuusseloste, päivitetään seuraavaksi maaliskuussa 2021',
+  'info.statement': 'Saavutettavuusseloste',
 
   'alert.close': 'Sulje ilmoitus',
 };

@@ -1,6 +1,8 @@
 /* eslint-disable quote-props */
 const translations = {
   'app.title': 'Servicekarta',
+  'app.description': 'Alla tjänster i huvudstadsregionen inom räckhåll.',
+  'app.og.image.alt': 'Servicekarta logo',
 
   // Accessibility
   'accessibility': 'Tillgänglighet',
@@ -28,9 +30,9 @@ const translations = {
   'address.services.header': 'Tjänstområde',
   'address.services.info': 'Kommunala tjänster vars verksamhetsområde omfattar positionen',
   'address.area.link': 'Bekanta dig med områdena på kartan.',
-  'address.emergency_care.common': 'När den egna hälsostationen är stängd och på natten kl. 22-8 är jour för barn och unga under 16 år på <a>Barnkliniken</a> [<a1>hemsidor</a1>], och jour för vuxna på',
+  'address.emergency_care.common': 'När den egna hälsostationen är stängd och på natten kl. 22-8 är jour för barn och unga under 16 år på <a>Nya barnsjukhuset</a> [<a1>hemsidor</a1>], och jour för vuxna på',
   'address.emergency_care.children_hospital.link': '/sv/unit/62976',
-  'address.emergency_care.common.link': 'https://www.hus.fi/sv/sjukvard/sjukhus/nyabarnsjukhuset/Sidor/default.aspx',
+  'address.emergency_care.common.link': 'https://www.hus.fi/sv/patienten/sjukhus/nya-barnsjukhuset',
   'address.emergency_care.unit.26107': 'Malms sjukhuset',
   'address.emergency_care.unit.26104': 'Haartmanska sjukhuset',
   'address.emergency_care.link': 'http://www.hel.fi/www/Helsinki/fi/sosiaali-ja-terveyspalvelut/terveyspalvelut/paivystys/',
@@ -57,6 +59,7 @@ const translations = {
   'area.postcode_area.title': 'Valitse postinumero', // TODO: translate
   'area.noSelection': 'Väl område under fliken Val av område',
   'area.noUnits': 'Det finns inga verksamhetsställen i ditt valda område',
+  'area.popupLink': 'Visa uppgifterna för området (ny flik)',
   'area.list.geographical': 'Geografisk',
   'area.list.protection': 'Befolkningsskydd',
   'area.list.health': 'Hälsa',
@@ -203,6 +206,9 @@ const translations = {
   'general.news.alert.title': 'Meddelandefönster',
   'general.news.alert.close.aria': 'Stäng meddelandefönstret',
   'general.news.info.title': 'Servicekartans nyheter',
+  'general.language.fi': 'Suomeksi',
+  'general.language.sv': 'På svenska',
+  'general.language.en': 'In English',
   'general.loading': 'Laddar',
   'general.loading.done': 'Laddning färdig',
   'general.showOnMap': 'Visa på kartan',
@@ -250,7 +256,7 @@ const translations = {
   'home.buttons.services': 'Läs mer om tjänsterna i servicekatalogen',
   'home.buttons.closeByServices': 'Visa närtjänster',
   'home.buttons.instructions': 'Tips för användning av servicekartan',
-  'home.buttons.area': 'Se områden, stadsdelar och befolkningsskyddsdistrikt',
+  'home.buttons.area': 'Se hälsovårds-, rådgivnings-, elevupptagnings-, förskole-, befolkningsskydds- och naturskyddsområdena samt stadsdelarna',
   'home.example.search': 'Sök med sökord',
   'home.message': 'Hälsningar av servicekartans utvecklare',
   'home.send.feedback': 'Skicka respons',
@@ -288,6 +294,7 @@ const translations = {
 
   // Units
   'unit': 'Verksamhetsställe',
+  'unit.showInformation': 'Visa uppgifterna för verksamhetsstället',
   'unit.accessibility.hearingMaps': 'Täckningskartor',
   'unit.accessibility.hearingMaps.extra': '(Ny flik. Tjänsten är inte tillgänglig)',
   'unit.accessibility.noInfo': 'Inga tillgänglighetsuppgifter',
@@ -298,7 +305,7 @@ const translations = {
                                     one {# tillgänglighetsbrist}
                                     other {# tillgänglighetsbrister}
                                   }`,
-  'unit.accessibility.unitNoInfo': 'Verksamhetsstället har inte meddelat tillgänglighetsuppgifter.',
+  'unit.accessibility.unitNoInfo': 'Tillgänglighetsuppgifter saknas.',
   'unit.basicInfo': 'Grunduppgifter',
   'unit.data_source': 'Källa: {data_source}',
   'unit.details.notFound': 'Verksamhetsställets uppgifter finns inte att tillgå.',
@@ -407,6 +414,7 @@ const translations = {
   'search.suggestions.suggestions': '{count} sökförslag',
   // 'search.suggestions.expandSuggestions': '{count} preciseringsförslag',
   'search.suggestions.results': '{count} resultat',
+  'search.suggestions.hideButton': 'Göm listan med förslag',
   'search.suggestions.history': '{count} objekt i sökhistorien',
   'search.suggestions.noHistory': 'Inga tidigare sökningar',
   'search.tryAgain': 'Försök att söka på nytt',
@@ -497,9 +505,10 @@ const translations = {
   'tool.download': 'Exportera',
   'tool.measuring': 'Mät avstånd (endast med mus)',
   'tool.measuring.stop': 'Sluta mäta',
+  'tool.print': 'Skriv ut',
 
   'info.title': 'Om tjänsten och tillgänglighetsredogörelsen',
-  'info.statement': 'Tillgänglighetsredogörelsen, uppdateras kommer i mars 2021',
+  'info.statement': 'Tillgänglighetsredogörelsen',
 
   'alert.close': 'Stäng meddelande',
 };

@@ -1,6 +1,8 @@
 /* eslint-disable quote-props */
 const translations = {
   'app.title': 'Service map',
+  'app.description': 'Find services near your home',
+  'app.og.image.alt': 'Servicemap logo',
 
   // Accessibility
   'accessibility': 'Accessibility',
@@ -28,9 +30,9 @@ const translations = {
   'address.services.header': 'Service areas',
   'address.services.info': 'Services for people who live here',
   'address.area.link': 'Get to know the areas on the map.',
-  'address.emergency_care.common': 'When your health station is closed and in the night between 22-8, emergency care for children and young people under age 16 is provided at <a>Children\'s Hospital</a> [<a1>homepage</a1>], and for adults at',
+  'address.emergency_care.common': 'When your health station is closed and in the night between 22-8, emergency care for children and young people under age 16 is provided at <a>New Children\'s Hospital</a> [<a1>homepage</a1>], and for adults at',
   'address.emergency_care.children_hospital.link': '/en/unit/62976',
-  'address.emergency_care.common.link': 'https://www.hus.fi/en/medical-care/hospitals/newchildrenshospital/Pages/default.aspx',
+  'address.emergency_care.common.link': 'https://www.hus.fi/en/patient/hospitals-and-other-units/new-childrens-hospital',
   'address.emergency_care.unit.26107': 'Malmi hospital',
   'address.emergency_care.unit.26104': 'Haartman hospital',
   'address.emergency_care.link': 'http://www.hel.fi/www/Helsinki/fi/sosiaali-ja-terveyspalvelut/terveyspalvelut/paivystys/',
@@ -57,6 +59,7 @@ const translations = {
   'area.postcode_area.title': 'Valitse postinumero', // TODO: translate
   'area.noSelection': 'Choose area from the Choice of Area tab',
   'area.noUnits': 'There are no service locations in your chosen area',
+  'area.popupLink': 'Show the details for the area (new tab)',
   'area.list.geographical': 'Geographical',
   'area.list.protection': 'Civil defence',
   'area.list.health': 'Health',
@@ -203,6 +206,9 @@ const translations = {
   'general.news.alert.title': 'Notification window',
   'general.news.alert.close.aria': 'Close notification window',
   'general.news.info.title': 'Service map news',
+  'general.language.fi': 'Suomeksi',
+  'general.language.sv': 'På svenska',
+  'general.language.en': 'In English',
   'general.loading': 'Loading',
   'general.loading.done': 'Loading completed',
   'general.showOnMap': 'Show on map',
@@ -250,7 +256,7 @@ const translations = {
   'home.buttons.services': 'Get to know the services using the Services list',
   'home.buttons.closeByServices': 'Show nearby services',
   'home.buttons.instructions': 'Tips for using the service map',
-  'home.buttons.area': 'Check the areas, neighbourhoods and civil defence districts',
+  'home.buttons.area': 'View the areas for healthcare, education, pre-primary education, civil defence, nature and neighborhoods.',
   'home.example.search': 'Search for',
   'home.message': 'Message from the developers',
   'home.send.feedback': 'Give feedback',
@@ -288,6 +294,7 @@ const translations = {
 
   // Units
   'unit': 'Location',
+  'unit.showInformation': 'Show the details for the location',
   'unit.accessibility.hearingMaps': 'Coverage maps',
   'unit.accessibility.hearingMaps.extra': '(New tab. The service is not accessible)',
   'unit.accessibility.noInfo': 'No accessibility information',
@@ -298,7 +305,7 @@ const translations = {
                                     one {# accessibility shortcoming}
                                     other {# accessibility shortcomings}
                                   }`,
-  'unit.accessibility.unitNoInfo': 'Location has not delivered any accessibility information.', // TODO: verify
+  'unit.accessibility.unitNoInfo': 'Accessibility information missing.',
   'unit.basicInfo': 'Information',
   'unit.data_source': 'Source: {data_source}',
   'unit.details.notFound': 'Location info not available.',
@@ -407,6 +414,7 @@ const translations = {
   'search.suggestions.suggestions': '{count} search suggestions',
   // 'search.suggestions.expandSuggestions': '{count} refinement suggestions',
   'search.suggestions.results': '{count} results',
+  'search.suggestions.hideButton': 'Hide the list of suggestions',
   'search.suggestions.history': '{count} items in search history',
   'search.suggestions.noHistory': 'No previous searches',
   'search.tryAgain': 'Try searching again',
@@ -497,9 +505,10 @@ const translations = {
   'tool.download': 'Download data',
   'tool.measuring': 'Measure distance (mouse only)',
   'tool.measuring.stop': 'Stop measuring',
+  'tool.print': 'Print',
 
   'info.title': 'About the service and accessibility statement',
-  'info.statement': 'Accessibility statement, will be updated in march 2021',
+  'info.statement': 'Accessibility statement',
 
   'alert.close': 'Close the notification',
 };

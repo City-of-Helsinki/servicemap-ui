@@ -23,6 +23,10 @@ if (config.sentryDSN) {
     dsn: config.sentryDSN,
     ignoreErrors: [
       'AbortError',
+      // Ignore fetch related common errors
+      /TypeError: (Kumottu|cancelled)/,
+      'TypeError: Failed to fetch',
+      'TypeError: NetworkError when attempting to fetch resource.',
       /adrum/,
     ],
   });

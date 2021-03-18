@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 import { Typography } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
 import { Map, Mail, Hearing } from '@material-ui/icons';
+import { Helmet } from 'react-helmet';
 import SearchBar from '../../components/SearchBar';
 import TitleBar from '../../components/TitleBar';
 import Container from '../../components/Container';
-import { uppercaseFirst } from '../../utils';
 import AccessibilityInfo from './components/AccessibilityInfo';
 import ContactInfo from './components/ContactInfo';
 import Highlights from './components/Highlights';
@@ -27,6 +27,9 @@ import TitledList from '../../components/Lists/TitledList';
 import ReadSpeakerButton from '../../components/ReadSpeakerButton';
 import config from '../../../config';
 import useMobileStatus from '../../utils/isMobile';
+import UnitHelper from '../../utils/unitHelper';
+import useLocaleText from '../../utils/useLocaleText';
+import isClient from '../../utils';
 
 const UnitView = (props) => {
   const {
@@ -35,7 +38,6 @@ const UnitView = (props) => {
     intl,
     classes,
     embed,
-    getLocaleText,
     navigator,
     match,
     fetchSelectedUnit,
@@ -60,6 +62,8 @@ const UnitView = (props) => {
   const [unit, setUnit] = useState(checkCorrectUnit(stateUnit) ? stateUnit : null);
 
   const isMobile = useMobileStatus();
+
+  const getLocaleText = useLocaleText();
 
 
   const initializePTVAccessibilitySentences = () => {
@@ -109,7 +113,7 @@ const UnitView = (props) => {
     } else if (unit.municipality === 'kauniainen') {
       window.open('https://www.kauniainen.fi/kaupunki_ja_paatoksenteko/osallistu_ja_vaikuta');
     } else {
-      navigator.openFeedback();
+      navigator.push('unit', { id: unit.id, type: 'feedback' });
     }
   };
 
@@ -140,11 +144,11 @@ const UnitView = (props) => {
     }
   }, [match.params.unit]);
 
-  if (config.usePtvAccessibilityApi) {
-    useEffect(() => {
+  useEffect(() => {
+    if (config.usePtvAccessibilityApi) {
       initializePTVAccessibilitySentences();
-    }, [unit]);
-  }
+    }
+  }, [unit]);
 
   if (embed) {
     return null;
@@ -162,6 +166,7 @@ const UnitView = (props) => {
     if (!unit || !unit.complete) {
       return <></>;
     }
+    const contractText = UnitHelper.getContractText(unit, intl, getLocaleText);
 
     let detailReadSpeakerButton = null;
 
@@ -185,22 +190,21 @@ const UnitView = (props) => {
           <Container margin text>
             <Typography variant="body2">
               {
-                unit.contract_type
-                && unit.contract_type.description
-                && `${uppercaseFirst(getLocaleText(unit.contract_type.description))}. `
+                contractText
+                && `${contractText}. `
               }
               {
                 unit.data_source
-                && <FormattedMessage id="unit.data_source" defaultMessage={'Source: {data_source}'} values={{ data_source: unit.data_source }} />
+                && <FormattedMessage id="unit.data_source" defaultMessage="Source: {data_source}" values={{ data_source: unit.data_source }} />
               }
             </Typography>
           </Container>
 
           {/* View Components */}
-          <ContactInfo unit={unit} userLocation={userLocation} getLocaleText={getLocaleText} />
-          <SocialMediaLinks unit={unit} getLocaleText={getLocaleText} />
-          <Highlights unit={unit} getLocaleText={getLocaleText} />
-          <Description unit={unit} getLocaleText={getLocaleText} />
+          <ContactInfo unit={unit} userLocation={userLocation} />
+          <SocialMediaLinks unit={unit} />
+          <Highlights unit={unit} />
+          <Description unit={unit} />
           <UnitLinks unit={unit} />
           <ElectronicServices unit={unit} />
           {!isMobile && feedbackButton()}
@@ -290,6 +294,36 @@ const UnitView = (props) => {
     </div>
   );
 
+
+  const renderHead = () => {
+    if (!unit || !unit.complete) {
+      return null;
+    }
+    const title = unit && unit.name ? getLocaleText(unit.name) : '';
+    const imageAlt = `${intl.formatMessage({ id: 'unit.picture' })}${getLocaleText(unit.name)}`;
+    const description = unit.description ? getLocaleText(unit.description) : null;
+
+    return (
+      <Helmet>
+        <meta property="og:title" content={title} />
+        {
+          description
+          && (
+            <meta property="og:description" content={description} />
+          )
+        }
+        {
+          unit.picture_url
+          && (
+            <meta property="og:image" content={unit.picture_url} />
+          )
+        }
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:image:alt" content={imageAlt} />
+      </Helmet>
+    );
+  };
+
   const render = () => {
     const title = unit && unit.name ? getLocaleText(unit.name) : '';
 
@@ -322,13 +356,8 @@ const UnitView = (props) => {
       );
     }
 
-    if (location.search.includes('feedback=true')) {
-      return (
-        <FeedbackView />
-      );
-    }
-
     if (unit && unit.complete) {
+      const imageAlt = `${intl.formatMessage({ id: 'unit.picture' })}${getLocaleText(unit.name)}`;
       const tabs = [
         {
           id: 'basicInfo',
@@ -357,6 +386,9 @@ const UnitView = (props) => {
       ];
       return (
         <div>
+          {
+            renderHead()
+          }
           <TabLists
             data={tabs}
             headerComponents={(
@@ -370,7 +402,7 @@ const UnitView = (props) => {
                   <div className={classes.imageContainer}>
                     <img
                       className={classes.image}
-                      alt={`${intl.formatMessage({ id: 'unit.picture' })}${getLocaleText(unit.name)}`}
+                      alt={imageAlt}
                       src={unit.picture_url}
                     />
                     {
@@ -426,7 +458,6 @@ UnitView.propTypes = {
   fetchUnitEvents: PropTypes.func.isRequired,
   match: PropTypes.objectOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  getLocaleText: PropTypes.func.isRequired,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   reservations: PropTypes.arrayOf(PropTypes.any),

@@ -5,18 +5,18 @@ import UnitHelper from '../../../utils/unitHelper';
 import ResultItem from '../ResultItem';
 import SettingsUtility from '../../../utils/settings';
 import UnitIcon from '../../SMIcon/UnitIcon';
-import isClient, { uppercaseFirst } from '../../../utils';
+import isClient from '../../../utils';
 import locationIcon from '../../../assets/icons/LocationDefault.svg';
 import locationIconHover from '../../../assets/icons/LocationHover.svg';
 import locationIconContrast from '../../../assets/icons/LocationDefaultContrast.svg';
 import locationIconContrastHover from '../../../assets/icons/LocationHoverContrast.svg';
+import useLocaleText from '../../../utils/useLocaleText';
 
 const UnitItem = ({
   classes,
   distance,
   unit,
   onClick,
-  getLocaleText,
   intl,
   padded,
   divider,
@@ -24,10 +24,7 @@ const UnitItem = ({
   settings,
   theme,
 }) => {
-  // Don't render if not valid unit
-  if (!UnitHelper.isValidUnit(unit)) {
-    return null;
-  }
+  const getLocaleText = useLocaleText();
 
   const parseAccessibilityText = () => {
     const accessSettingsSet = SettingsUtility.hasActiveAccessibilitySettings(settings);
@@ -51,9 +48,7 @@ const UnitItem = ({
 
   const icon = isClient() ? <UnitIcon unit={unit} /> : null;
   // Parse unit data
-  const {
-    contract_type, id, name,
-  } = unit;
+  const { id, name } = unit;
 
   const resetMarkerHighlight = () => {
     // Handle marker highlight removal
@@ -90,13 +85,20 @@ const UnitItem = ({
     resetMarkerHighlight();
   };
 
+
+  // Don't render if not valid unit
+  if (!UnitHelper.isValidUnit(unit)) {
+    return null;
+  }
+
   // Accessibility text and color
   const accessData = isClient() ? parseAccessibilityText() : 0;
   const accessText = accessData.text;
   const { problemCount } = accessData;
 
   // Contract type text
-  const contractType = contract_type && contract_type.description ? uppercaseFirst(getLocaleText(contract_type.description)) : '';
+  const contractText = UnitHelper.getContractText(unit, intl, getLocaleText) || '';
+
   const distanceText = distance ? {
     text: `${distance.distance} ${distance.type}`,
     srText: `${distance.distance} ${distance.type === 'm'
@@ -107,7 +109,7 @@ const UnitItem = ({
   return (
     <ResultItem
       title={getLocaleText(name)}
-      subtitle={contractType}
+      subtitle={contractText}
       bottomText={accessText}
       bottomHighlight={problemCount !== null && typeof problemCount !== 'undefined'}
       extendedClasses={{
@@ -146,7 +148,6 @@ UnitItem.propTypes = {
     text: PropTypes.string,
   }),
   unit: PropTypes.objectOf(PropTypes.any),
-  getLocaleText: PropTypes.func.isRequired,
   onClick: PropTypes.func,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),

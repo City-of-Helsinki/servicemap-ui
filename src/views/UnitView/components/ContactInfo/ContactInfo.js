@@ -9,10 +9,13 @@ import config from '../../../../../config';
 import InfoList from '../InfoList';
 import unitSectionFilter from '../../utils/unitSectionFilter';
 import { getAddressFromUnit } from '../../../../utils/address';
+import useLocaleText from '../../../../utils/useLocaleText';
 
 const ContactInfo = ({
-  unit, userLocation, getLocaleText, intl, classes,
+  unit, userLocation, intl, classes,
 }) => {
+  const getLocaleText = useLocaleText();
+
   const address = {
     type: 'ADDRESS',
     value: unit.street_address ? getAddressFromUnit(unit, getLocaleText, intl) : intl.formatMessage({ id: 'unit.address.missing' }),
@@ -119,7 +122,6 @@ ContactInfo.propTypes = {
   unit: PropTypes.objectOf(PropTypes.any).isRequired,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  getLocaleText: PropTypes.func.isRequired,
   userLocation: PropTypes.objectOf(PropTypes.any),
 };
 

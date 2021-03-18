@@ -18,6 +18,7 @@ import { dataStructure } from './utils/districtDataHelper';
 import { handleItemOpen } from '../../redux/actions/district';
 import SMButton from '../../components/ServiceMapButton';
 import MobileComponent from '../../components/MobileComponent';
+import useLocaleText from '../../utils/useLocaleText';
 
 
 const AreaView = ({
@@ -37,20 +38,17 @@ const AreaView = ({
   selectedSubdistricts,
   mapState,
   map,
-  getLocaleText,
   navigator,
   embed,
   intl,
   classes,
 }) => {
-  if (!map || !map.leafletElement) {
-    return null;
-  }
   const dispatch = useDispatch();
   const location = useLocation();
   const localAddressData = useSelector(state => state.districts.districtAddressData);
   const selectedDistrictType = useSelector(state => state.districts.selectedDistrictType);
   const districtsFetching = useSelector(state => state.districts.districtsFetching);
+  const getLocaleText = useLocaleText();
 
   // State
   const [selectedAddress, setSelectedAddress] = useState(districtAddressData.address);
@@ -103,9 +101,11 @@ const AreaView = ({
   }, []);
 
   useEffect(() => () => {
-    // On unmount, save map position
-    setMapState(getViewState());
-  }, []);
+    if (map) {
+      // On unmount, save map position
+      setMapState(getViewState());
+    }
+  }, [map]);
 
 
   useEffect(() => {
@@ -206,13 +206,15 @@ const AreaView = ({
     }
   }, []);
 
+  if (!map || !map.leafletElement) {
+    return null;
+  }
 
   const renderServiceTab = () => (
     <ServiceTab
       selectedAddress={selectedAddress}
       districtData={districtData}
       initialOpenItems={initialOpenItems}
-      getLocaleText={getLocaleText}
     />
   );
 
@@ -220,7 +222,6 @@ const AreaView = ({
     <GeographicalTab
       initialOpenItems={initialOpenItems}
       formAddressString={formAddressString}
-      getLocaleText={useCallback(obj => getLocaleText(obj), [])}
       clearRadioButtonValue={clearRadioButtonValue}
     />
   );

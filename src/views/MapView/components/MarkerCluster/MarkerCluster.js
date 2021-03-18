@@ -9,6 +9,8 @@ import { createMarkerClusterLayer, createTooltipContent, createPopupContent } fr
 import { mapTypes } from '../../config/mapConfig';
 import { keyboardHandler } from '../../../../utils';
 import UnitHelper from '../../../../utils/unitHelper';
+import useMobileStatus from '../../../../utils/isMobile';
+import useLocaleText from '../../../../utils/useLocaleText';
 
 const tooltipOptions = (permanent, classes) => ({
   className: classes.unitTooltipContainer,
@@ -25,7 +27,7 @@ const popupOptions = () => ({
   closeOnClick: false,
   direction: 'top',
   opacity: 1,
-  offset: [0, -20],
+  offset: [2, -20],
 });
 
 // Cluster icon size handler
@@ -44,7 +46,6 @@ const MarkerCluster = ({
   currentPage,
   data,
   getDistance,
-  getLocaleText,
   highlightedUnit,
   map,
   navigator,
@@ -52,8 +53,10 @@ const MarkerCluster = ({
   theme,
   measuringMode,
 }) => {
+  const getLocaleText = useLocaleText();
   const useContrast = theme === 'dark';
   const embeded = isEmbed();
+  const isMobile = useMobileStatus();
   const intl = useIntl();
   const [cluster, setCluster] = useState(null);
 
@@ -86,6 +89,7 @@ const MarkerCluster = ({
       getLocaleText,
       distance,
       intl,
+      isMobile,
     );
   };
 
@@ -94,6 +98,10 @@ const MarkerCluster = ({
     const highlightedMarker = getHighlightedMarker(mapLayers);
     if (highlightedMarker && UnitHelper.isUnitPage()) {
       const tooltipContent = getUnitPopupContent(clusterData.highlightedUnit);
+      // Close all open popups
+      map.eachLayer((layer) => {
+        layer.closePopup();
+      });
       if (highlightedMarker instanceof global.L.MarkerCluster) {
         highlightedMarker.bindPopup(tooltipContent, popupOptions()).openPopup();
       } else {
@@ -141,12 +149,21 @@ const MarkerCluster = ({
 
   // Remove popup from old marker and set new highligted marker
   const setNewHighlightedMarker = (marker) => {
-    // Close popup for highlighterMarker if it exists
-    if (clusterData.highlightedMarker) {
-      clusterData.highlightedMarker.closePopup();
+    if (!marker) return;
+    const { highlightedMarker } = clusterData;
+    // Open popoup on marker click even if it is already highlighted unit.
+    if (marker.options.customUnitData.id === highlightedMarker?.options.customUnitData.id) {
+      if (marker.isPopupOpen()) {
+        marker.openPopup();
+      }
+    } else {
+      // Close popup for highlighterMarker if it exists
+      if (highlightedMarker) {
+        highlightedMarker.closePopup();
+      }
+      // Set this marker as highligtedMarker
+      clusterData.highlightedMarker = marker;
     }
-    // Set this marker as highligtedMarker
-    clusterData.highlightedMarker = marker;
   };
 
 
@@ -158,8 +175,7 @@ const MarkerCluster = ({
   const onClusterItemClick = (unit) => {
     UnitHelper.unitElementClick(navigator, unit);
   };
-  // eslint-disable-next-line no-underscore-dangle
-  const showListOfUnits = () => (map._zoom > clusterPopupVisibility);
+  const showListOfUnits = () => (map.getZoom() > clusterPopupVisibility);
 
   // Cluster popup content
   const clusterPopupContent = (units) => {
@@ -196,10 +212,10 @@ const MarkerCluster = ({
         const listItem = document.createElement('li');
         // Create span for interactive list item content
         const span = document.createElement('span');
-        span.setAttribute('tabindex', '0');
-        span.setAttribute('role', 'link');
-        span.onkeydown = keyboardHandler(() => onClusterItemClick(unit), ['enter', 'space']);
-        span.onclick = () => {
+        listItem.setAttribute('tabindex', '0');
+        listItem.setAttribute('role', 'link');
+        listItem.onkeydown = keyboardHandler(() => onClusterItemClick(unit), ['enter', 'space']);
+        listItem.onclick = () => {
           if (onClusterItemClick) {
             onClusterItemClick(unit);
           }
@@ -274,7 +290,7 @@ const MarkerCluster = ({
     if (!highlightedUnit) {
       return;
     }
-    if (highlightedUnit && currentPage === 'search') {
+    if (highlightedUnit && currentPage === 'search' && !isMobile) {
       map.closePopup();
       return;
     }
@@ -288,6 +304,7 @@ const MarkerCluster = ({
       clusterMouseover,
       clusterMouseout,
       clusterAnimationEnd,
+      showListOfUnits,
     );
     // Add cluster to map
     map.addLayer(mcg);
@@ -338,6 +355,7 @@ const MarkerCluster = ({
           getLocaleText,
           distance,
           intl,
+          isMobile,
         );
         const tooltipPermanent = highlightedUnit
           && (highlightedUnit.id === unit.id && UnitHelper.isUnitPage());
@@ -355,8 +373,16 @@ const MarkerCluster = ({
           popupOptions(),
         );
 
+        if (isMobile) {
+          markerElem.on('popupopen', (e) => {
+            // Bind click event to popup when popup is opened
+            e.popup.getElement().addEventListener('click',
+              () => UnitHelper.unitElementClick(navigator, unit));
+          });
+        }
+
         // If not highlighted marker add tooltip
-        if (!tooltipPermanent) {
+        if (!tooltipPermanent && !isMobile) {
           markerElem.bindTooltip(
             tooltipContent,
             tooltipOptions(false, classes),
@@ -369,7 +395,9 @@ const MarkerCluster = ({
         if (unitListFiltered.length > 1 || embeded) {
           markerElem.on('click', () => {
             setNewHighlightedMarker(markerElem);
-            UnitHelper.unitElementClick(navigator, unit);
+            if (!isMobile) {
+              UnitHelper.unitElementClick(navigator, unit);
+            }
           });
         }
 
@@ -388,7 +416,7 @@ const MarkerCluster = ({
       // Remove marker interaction when using measuring tool
       if (measuringMode) item.classList.remove('leaflet-interactive');
     });
-  }, [cluster, data, measuringMode]);
+  }, [cluster, data, isMobile, measuringMode]);
 
   const removeMarkerInteraction = useCallback(() => {
     /* Remove interactions from markers during measuring mode.
@@ -420,7 +448,6 @@ MarkerCluster.propTypes = {
     }),
   ).isRequired,
   getDistance: PropTypes.func.isRequired,
-  getLocaleText: PropTypes.func.isRequired,
   map: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any).isRequired,
   settings: PropTypes.objectOf(PropTypes.any).isRequired,

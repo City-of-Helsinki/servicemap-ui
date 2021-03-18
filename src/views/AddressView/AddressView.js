@@ -1,4 +1,5 @@
 /* eslint-disable global-require */
+/* eslint-disable camelcase */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -23,6 +24,7 @@ import MobileComponent from '../../components/MobileComponent';
 import DivisionItem from '../../components/ListItems/DivisionItem';
 import { parseSearchParams } from '../../utils';
 import config from '../../../config';
+import useLocaleText from '../../utils/useLocaleText';
 
 
 const hiddenDivisions = {
@@ -62,7 +64,6 @@ const AddressView = (props) => {
     match,
     getAddressNavigatorParams,
     getDistance,
-    getLocaleText,
     map,
     setAddressData,
     setAddressLocation,
@@ -74,6 +75,8 @@ const AddressView = (props) => {
     location,
     units,
   } = props;
+
+  const getLocaleText = useLocaleText();
 
   const fetchAddressDistricts = (lnglat) => {
     setAdminDistricts(null);
@@ -93,13 +96,29 @@ const AddressView = (props) => {
       });
   };
 
-  const fetchData = () => {
-    if (units) {
-      // Remove old data before fetching new
-      setAddressUnits([]);
-    }
+  const compareAddress = (newAdddress) => {
+    if (!newAdddress) return false;
+    const compareValues = (a, b) => {
+      if ((!a && !b) || a === b) {
+        return true;
+      }
+      return false;
+    };
 
+    return addressData
+      && compareValues(newAdddress.street, getLocaleText(addressData.street.name))
+      && compareValues(newAdddress.number, addressData.number)
+      && compareValues(newAdddress.number_end, addressData.number_end)
+      && compareValues(newAdddress.letter, addressData.letter);
+  };
+
+  const fetchData = () => {
     const options = match ? addressMatchParamsToFetchOptions(match) : {};
+
+    const isSameAddress = compareAddress(options);
+    if (isSameAddress) return;
+
+    setAddressUnits([]);
 
     fetchAddressData(options)
       .then((data) => {
@@ -329,7 +348,6 @@ AddressView.propTypes = {
   navigator: PropTypes.objectOf(PropTypes.any),
   getAddressNavigatorParams: PropTypes.func.isRequired,
   getDistance: PropTypes.func.isRequired,
-  getLocaleText: PropTypes.func.isRequired,
   setAddressData: PropTypes.func.isRequired,
   setAddressLocation: PropTypes.func.isRequired,
   setAddressUnits: PropTypes.func.isRequired,

@@ -10,6 +10,7 @@ import { FormattedMessage } from 'react-intl';
 import config from '../../../config';
 import SMButton from '../../components/ServiceMapButton';
 import SMAccordion from '../../components/SMAccordion';
+import useLocaleText from '../../utils/useLocaleText';
 
 const ServiceTreeView = (props) => {
   const {
@@ -21,8 +22,8 @@ const ServiceTreeView = (props) => {
     prevSelected,
     prevOpened,
     settings,
-    getLocaleText,
   } = props;
+  const getLocaleText = useLocaleText();
 
   // State
   const [services, setServices] = useState(prevServices);
@@ -463,7 +464,6 @@ ServiceTreeView.propTypes = {
   prevSelected: PropTypes.arrayOf(PropTypes.any),
   prevOpened: PropTypes.arrayOf(PropTypes.any),
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
-  getLocaleText: PropTypes.func.isRequired,
 };
 
 ServiceTreeView.defaultProps = {

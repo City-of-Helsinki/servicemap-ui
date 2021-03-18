@@ -7,6 +7,7 @@ import { FormattedMessage } from 'react-intl';
 import UnitIcon from '../../SMIcon/UnitIcon';
 import SMLink from '../../Link';
 import { getAddressFromUnit } from '../../../utils/address';
+import useLocaleText from '../../../utils/useLocaleText';
 
 const DivisionItem = ({
   classes,
@@ -15,10 +16,10 @@ const DivisionItem = ({
   divider,
   disableTitle,
   className,
-  getLocaleText,
   intl,
   navigator,
 }) => {
+  const getLocaleText = useLocaleText();
   const { area } = data;
   const aStart = area && area.start ? new Date(area.start).getFullYear() : null;
   const aEnd = area && area.end ? new Date(area.end).getFullYear() : null;
@@ -209,7 +210,6 @@ DivisionItem.propTypes = {
   }),
   divider: PropTypes.bool.isRequired,
   disableTitle: PropTypes.bool,
-  getLocaleText: PropTypes.func.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any).isRequired,
   intl: PropTypes.shape({
     formatMessage: PropTypes.func,

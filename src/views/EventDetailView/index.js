@@ -9,6 +9,7 @@ import { getLocaleString } from '../../redux/selectors/locale';
 import styles from './styles';
 
 const mapStateToProps = (state) => {
+  // TODO: replace this with useLocaleText when the component is converted to function component
   const getLocaleText = textObject => getLocaleString(state, textObject);
   const { event, mapRef, navigator } = state;
   const selectedUnit = state.selectedUnit.unit.data;

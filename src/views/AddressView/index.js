@@ -26,6 +26,8 @@ const mapStateToProps = (state, props) => {
   } = state;
   const map = mapRef && mapRef.leafletElement;
   const getLocaleText = textObject => getLocaleString(state, textObject);
+  /* TODO: create custom hooks for getAddressNavigatorParams and getDistance
+  to prevent re-rendering on every state change */
   const getAddressNavigatorParams = getAddressNavigatorParamsConnector(getLocaleText, user.locale);
   const currentPosition = getCurrentlyUsedPosition(state);
   const getDistance = unit => formatDistanceObject(intl, calculateDistance(unit, currentPosition));
@@ -36,7 +38,6 @@ const mapStateToProps = (state, props) => {
     map,
     getAddressNavigatorParams,
     getDistance,
-    getLocaleText,
     navigator,
     units,
   };

@@ -30,6 +30,8 @@ const mapStateToProps = (state) => {
   const districtUnits = getFilteredSubdistrictUnits(state);
   const districtUnitsFetching = districts.unitsFetching;
   const { districtsFetching } = districts;
+  /* TODO: create custom hook for getAddressNavigatorParams to prevent
+  re-rendering on every state change */
   const getAddressNavigatorParams = getAddressNavigatorParamsConnector(getLocaleText, locale);
   const userLocation = customPosition.coordinates || position.coordinates;
   return {
@@ -39,7 +41,6 @@ const mapStateToProps = (state) => {
     highlightedDistrict,
     highlightedUnit,
     getAddressNavigatorParams,
-    getLocaleText,
     unitList,
     serviceUnits,
     districtUnits,

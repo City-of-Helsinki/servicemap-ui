@@ -17,6 +17,7 @@ import SMButton from '../../components/ServiceMapButton';
 import paths from '../../../config/paths';
 import embedderConfig from './embedderConfig';
 import SettingsUtility from '../../utils/settings';
+import useLocaleText from '../../utils/useLocaleText';
 
 
 const hideCitiesIn = [
@@ -38,15 +39,12 @@ let timeout;
 const timeoutDelay = 1000;
 
 const EmbedderView = ({
+  citySettings,
   classes,
-  getLocaleText,
   intl,
   mapType,
   navigator,
 }) => {
-  if (!isClient()) {
-    return null;
-  }
   // Verify url
   const data = isClient() ? smurl.verify(window.location.href) : {};
   let { url } = data;
@@ -61,22 +59,31 @@ const EmbedderView = ({
     search = uri.search(true);
   }
 
+  const cityOption = (search?.city !== '' && search?.city?.split(',')) || citySettings;
+  const citiesToReduce = cityOption.length > 0
+    ? cityOption
+    : embedderConfig.CITIES.filter(v => v);
+
   // Defaults
   const initialRatio = ratio || 52;
   const defaultMap = search.map || mapType || embedderConfig.BACKGROUND_MAPS[0];
   const defaultLanguage = getLanguage(url);
-  const defaultCity = search.city || 'all';
+  const defaultCities = citiesToReduce.reduce((acc, current) => {
+    acc[current] = true;
+    return acc;
+  }, {});
   const defaultFixedHeight = embedderConfig.DEFAULT_CUSTOM_WIDTH;
   const iframeConfig = embedderConfig.DEFAULT_IFRAME_PROPERTIES || {};
   const defaultService = 'none';
   const page = useSelector(state => state.user.page);
   const selectedUnit = useSelector(state => state.selectedUnit.unit.data);
   const currentService = useSelector(state => state.service.current);
+  const getLocaleText = useLocaleText();
 
   // States
   const [language, setLanguage] = useState(defaultLanguage);
   const [map, setMap] = useState(defaultMap);
-  const [city, setCity] = useState(defaultCity);
+  const [city, setCity] = useState(defaultCities);
   const [service, setService] = useState(defaultService);
   const [customWidth, setCustomWidth] = useState(embedderConfig.DEFAULT_CUSTOM_WIDTH || 100);
   const [widthMode, setWidthMode] = useState('auto');
@@ -105,7 +112,7 @@ const EmbedderView = ({
           text = currentService?.name && getLocaleText(currentService.name);
           break;
         default:
-          text = intl.formatMessage({ id: `general.pageTitles.ts${page}` });
+          text = intl.formatMessage({ id: `general.pageTitles.${page}` });
       }
       if (text.indexOf('general.pageTitles') !== -1) {
         text = null;
@@ -299,20 +306,26 @@ const EmbedderView = ({
     if (!showCities(embedUrl)) {
       return null;
     }
-    const cityControls = embedderConfig.CITIES.map(city => ({
-      value: city || 'all',
-      label: city ? uppercaseFirst(city) : 'Kaikki',
+    const cities = city;
+    const cityControls = embedderConfig.CITIES.filter(v => v).map(city => ({
+      key: city,
+      value: !!cities[city],
+      label: uppercaseFirst(city),
+      icon: null,
+      onChange: (v) => {
+        const newCities = {};
+        Object.assign(newCities, cities);
+        newCities[city] = v;
+        setCity(newCities);
+      },
     }));
 
     return (
       <EmbedController
         titleID="embedder.city.title"
         titleComponent="h2"
-        radioAriaLabel={intl.formatMessage({ id: 'embedder.city.aria.label' })}
-        radioName="city"
-        radioValue={city}
-        radioControls={cityControls}
-        radioOnChange={(e, v) => setCity(v)}
+        checkboxControls={cityControls}
+        checkboxLabelledBy="embedder.city.title"
       />
     );
   };
@@ -463,6 +476,10 @@ const EmbedderView = ({
     </Helmet>
   );
 
+  if (!isClient()) {
+    return null;
+  }
+
   return (
     <div ref={dialogRef}>
       {
@@ -548,6 +565,7 @@ const EmbedderView = ({
 };
 
 EmbedderView.propTypes = {
+  citySettings: PropTypes.arrayOf(PropTypes.string).isRequired,
   classes: PropTypes.shape({
     appBar: PropTypes.string,
     button: PropTypes.string,
@@ -562,7 +580,6 @@ EmbedderView.propTypes = {
     title: PropTypes.string,
     titleContainer: PropTypes.string,
   }).isRequired,
-  getLocaleText: PropTypes.func.isRequired,
   location: PropTypes.shape({
     hash: PropTypes.string,
     pathname: PropTypes.string,

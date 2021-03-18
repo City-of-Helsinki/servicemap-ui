@@ -6,6 +6,7 @@ import PageHandler from './PageHandler';
 
 const mapStateToProps = (state) => {
   const { selectedUnit, service, event } = state;
+  // TODO: replace this with useLocaleText when the component is converted to function component
   const getLocaleText = textObject => getLocaleString(state, textObject);
   return {
     unit: selectedUnit.unit.data,

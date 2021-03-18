@@ -137,25 +137,32 @@ export default {
   // API
   "accessibilitySentenceAPI": {
     "root": settings.ACCESSIBILITY_SENTENCE_API,
+    "id": 'ACCESSIBILITY_SENTENCE_API',
   },
   "serviceMapAPI": {
     "root": settings.SERVICEMAP_API,
+    "id": 'SERVICEMAP_API',
   },
   "eventsAPI": {
     "root": settings.EVENTS_API,
+    "id": 'EVENTS_API',
   },
   "reservationsAPI": {
     "root": settings.RESERVATIONS_API,
+    "id": 'RESERVATIONS_API',
   },
   "productionPrefix": settings.PRODUCTION_PREFIX,
   "digitransitAPI": {
     "root": settings.DIGITRANSIT_API,
+    "id": 'DIGITRANSIT_API',
   },
   "feedbackURL": {
     "root": settings.FEEDBACK_URL,
+    "id": 'FEEDBACK_URL',
   },
   "hearingMapAPI": {
     "root": settings.HEARING_MAP_API,
+    "id": 'HEARING_MAP_API',
   },
   // constants
   "accessibilityColors":  {
@@ -171,6 +178,7 @@ export default {
   "guideMapURL": settings.GUIDE_MAP_URL,
   "reittiopasURL": settings.REITTIOPAS_URL,
   "outdoorExerciseURL": settings.OUTDOOR_EXERCISE_URL,
+  "natureAreaURL": settings.NATURE_AREA_URL,
   "cities": settings.CITIES.split(','),
   "maps": settings.MAPS.split(','),
   "smallContentAreaBreakpoint": 449,
@@ -179,6 +187,7 @@ export default {
   "smallScreenBreakpoint": 899,
   "topBarHeight": 100,
   "topBarHeightMobile": 90,
+  "searchTimeout": 15000,
   // locales
   "defaultLocale": 'fi',
   "streetAddressLanguages": ["fi", "sv"],

@@ -1,8 +1,6 @@
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/styles';
 import MarkerCluster from './MarkerCluster';
-import { getLocaleString } from '../../../../redux/selectors/locale';
-import { generatePath } from '../../../../utils/path';
 import { formatDistanceObject } from '../../../../utils';
 import { calculateDistance, getCurrentlyUsedPosition } from '../../../../redux/selectors/unit';
 import styles from '../../styles';
@@ -11,10 +9,9 @@ import { getSelectedUnit } from '../../../../redux/selectors/selectedUnit';
 
 const mapStateToProps = (state) => {
   const { navigator, user, settings } = state;
-  const { locale, page, theme } = user;
-  const getLocaleText = textObject => getLocaleString(state, textObject);
-  const getPath = (id, data) => generatePath(id, locale, data);
+  const { page, theme } = user;
   const distanceCoordinates = getCurrentlyUsedPosition(state);
+  // TODO: optimization: memoize getDistance (move from mapStateToProps to custom hook)
   const getDistance = (unit, intl) => (
     formatDistanceObject(intl, calculateDistance(unit, distanceCoordinates))
   );
@@ -23,8 +20,6 @@ const mapStateToProps = (state) => {
   return {
     currentPage: page,
     getDistance,
-    getLocaleText,
-    getPath,
     highlightedUnit,
     navigator,
     settings,

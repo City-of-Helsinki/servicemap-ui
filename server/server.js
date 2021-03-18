@@ -10,7 +10,7 @@ import thunk from 'redux-thunk';
 import config from '../config';
 import rootReducer from '../src/redux/rootReducer';
 import App from '../src/App';
-import { makeLanguageHandler, languageSubdomainRedirect, unitRedirect, parseInitialMapPositionFromHostname } from './utils';
+import { makeLanguageHandler, languageSubdomainRedirect, unitRedirect, parseInitialMapPositionFromHostname, getRequestFullUrl } from './utils';
 import { setLocale } from '../src/redux/actions/user';
 import { Helmet } from 'react-helmet';
 import { ServerStyleSheets } from '@material-ui/core/styles';
@@ -19,9 +19,10 @@ import { fetchEventData, fetchSelectedUnitData } from './dataFetcher';
 import IntlPolyfill from 'intl';
 import paths from '../config/paths';
 import legacyRedirector from './legacyRedirector';
-import { matomoTrackingCode, appDynamicsTrackingCode } from './analytics';
+import { matomoTrackingCode, appDynamicsTrackingCode, cookieHubCode } from './externalScripts';
 import { getLastCommit, getVersion } from './version';
 import ieHandler from './ieMiddleware';
+import ogImage from '../src/assets/images/servicemap-meta-img.png';
 
 // Get sentry dsn from environtment variables
 const sentryDSN = process.env.SENTRY_DSN_SERVER;
@@ -124,7 +125,7 @@ app.get('/*', (req, res, next) => {
   };
 
   res.writeHead(200, { 'Content-Type': 'text/html' });
-  res.end(htmlTemplate(reactDom, preloadedState, css, cssString, locale, helmet, customValues));
+  res.end(htmlTemplate(req, reactDom, preloadedState, css, cssString, locale, helmet, customValues));
 });
 
 // The error handler must be before any other error middleware
@@ -135,12 +136,16 @@ if (Sentry) {
 console.log(`Starting server on port ${process.env.PORT || 2048}`);
 app.listen(process.env.PORT || 2048);
 
-const htmlTemplate = (reactDom, preloadedState, css, cssString, locale, helmet, customValues) => `
+const htmlTemplate = (req, reactDom, preloadedState, css, cssString, locale, helmet, customValues) => `
 <!DOCTYPE html>
 <html lang="${locale || 'fi'}">
   <head>
     <meta charset="utf-8">
     ${helmet.title.toString()}
+    ${helmet.meta.toString()}
+    <meta property="og:url" data-react-helmet="true" content="${getRequestFullUrl(req)}" />
+    <meta property="og:image" data-react-helmet="true" content="${ogImage}" />
+    <meta name="twitter:card" data-react-helmet="true" content="summary" />
     <!-- jss-insertion-point -->
     <style id="jss-server-side">${cssString}</style>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
@@ -158,6 +163,7 @@ const htmlTemplate = (reactDom, preloadedState, css, cssString, locale, helmet, 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#141823" />
     ${appDynamicsTrackingCode(process.env.APP_DYNAMICS_APP_KEY)}
+    ${cookieHubCode(req)}
     ${
       process.env.READ_SPEAKER_URL
       && process.env.READ_SPEAKER_URL !== 'false' ? `
@@ -192,6 +198,7 @@ const htmlTemplate = (reactDom, preloadedState, css, cssString, locale, helmet, 
         window.nodeEnvSettings.GUIDE_MAP_URL = "${process.env.GUIDE_MAP_URL}";
         window.nodeEnvSettings.REITTIOPAS_URL = "${process.env.REITTIOPAS_URL}";
         window.nodeEnvSettings.OUTDOOR_EXERCISE_URL = "${process.env.OUTDOOR_EXERCISE_URL}";
+        window.nodeEnvSettings.NATURE_AREA_URL = "${process.env.NATURE_AREA_URL}";
         window.nodeEnvSettings.CITIES = "${process.env.CITIES}";
         window.nodeEnvSettings.MAPS = "${process.env.MAPS}";
         window.nodeEnvSettings.OLD_MAP_LINK_EN = "${process.env.OLD_MAP_LINK_EN}";

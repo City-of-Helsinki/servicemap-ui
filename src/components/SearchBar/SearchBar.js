@@ -53,6 +53,11 @@ class SearchBar extends React.Component {
     clearTimeout(this.blurTimeout);
   }
 
+  handleArrowClick = (value) => {
+    this.setSearchbarValue(value);
+    this.setState({ focusedSuggestion: null });
+  }
+
   setInactive = () => {
     this.setState({ isActive: false, focusedSuggestion: null });
   }
@@ -176,7 +181,7 @@ class SearchBar extends React.Component {
         onKeyPress={() => { keyboardHandler(this.closeMobileSuggestions, ['space', 'enter']); }}
         variant="srOnly"
       >
-        <FormattedMessage id="search.skipSuggestions" />
+        <FormattedMessage id="search.suggestions.hideButton" />
       </Typography>
     );
 
@@ -186,12 +191,12 @@ class SearchBar extends React.Component {
         {/* TODO: Modify this class to functional component, to use useMobile hook
         instead of individual mobile/desktop components. */}
         <MobileComponent>
-          {closeSuggestionElem}
           <SuggestionBox
+            closeMobileSuggestions={this.closeMobileSuggestions}
             visible={showSuggestions}
             focusedSuggestion={focusedSuggestion}
             searchQuery={searchQuery}
-            handleArrowClick={value => this.setSearchbarValue(value)}
+            handleArrowClick={this.handleArrowClick}
             handleSubmit={this.handleSubmit}
             isMobile
           />
@@ -202,7 +207,7 @@ class SearchBar extends React.Component {
             visible={showSuggestions}
             focusedSuggestion={focusedSuggestion}
             searchQuery={searchQuery}
-            handleArrowClick={value => this.setSearchbarValue(value)}
+            handleArrowClick={this.handleArrowClick}
             handleSubmit={this.handleSubmit}
           />
         </DesktopComponent>

@@ -216,7 +216,7 @@ const InfoView = ({
 
   const renderFinnishA11y = () => (
     <div className={classes.textContainer}>
-      <Typography component="h3" variant="body2">Saavutettavuusseloste</Typography>
+      <Typography component="h3" variant="body2">Saavutettavuusseloste, päivitetään seuraavaksi maaliskuussa 2021</Typography>
       <Typography className={classes.text} variant="body2">
         Tämä saavutettavuusseloste koskee Helsingin kaupungin palvelukartta.hel.fi -verkkosivustoa. Sivuston osoite on https://palvelukartta.hel.fi/.
       </Typography>
@@ -555,7 +555,7 @@ const InfoView = ({
 
   const renderEnglishA11y = () => (
     <div className={classes.textContainer}>
-      <Typography component="h3" variant="body2">Accessibility statement</Typography>
+      <Typography component="h3" variant="body2">Accessibility statement, will be updated in march 2021</Typography>
       <Typography className={classes.text} variant="body2">
         This accessibility statement applies to the website Servicemap of the City of
         Helsinki. The site address is https://servicemap.hel.fi/.
@@ -842,7 +842,7 @@ const InfoView = ({
 
   const renderSwedishA11y = () => (
     <div className={classes.textContainer}>
-      <Typography component="h3" variant="body2">Tillgänglighetsutlåtande</Typography>
+      <Typography component="h3" variant="body2">Tillgänglighetsutlåtande, uppdateras kommer i mars 2021</Typography>
       <Typography className={classes.text} variant="body2">
         Detta tillgänglighetsutlåtande gäller Helsingfors stads webbplats Servicekarta.
         Webbplatsens adress är https://servicekarta.hel.fi.

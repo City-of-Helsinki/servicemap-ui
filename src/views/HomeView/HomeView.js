@@ -89,7 +89,7 @@ class HomeView extends React.Component {
               }));
             }}
           />
-          <NewsInfo />
+          <NewsInfo showCount={2} />
         </div>
       </div>
     );

@@ -27,8 +27,8 @@ export default theme => ({
   },
   iconButton: {
     flex: '1 0 auto',
-    height: 66,
-    padding: 0,
+    minHeight: 66,
+    padding: theme.spacing(1),
     paddingLeft: theme.spacing(1),
     paddingRight: theme.spacing(2),
     justifyContent: 'flex-start',
