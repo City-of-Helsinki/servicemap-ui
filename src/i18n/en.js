@@ -443,6 +443,8 @@ const translations = {
 
   // Settings
   'settings': 'Settings',
+  'settings.change': 'Edit your settings',
+  'settings.drawer.aria.title': 'Current settings',
   'settings.citySettings': 'City',
   'settings.citySettings.long': 'City settings',
   'settings.mapSettings': 'Background map',
@@ -457,9 +459,10 @@ const translations = {
     other {# selections}
   }`,
   'settings.accessibility': 'My accessibility settings',
+  'settings.accessibility.none': 'No filters',
   'settings.sense.title': 'Hearing and sight',
-  'settings.sense.hearing': 'I use a hearing aid',
-  'settings.sense.visual': 'I am visually impaired',
+  'settings.sense.hearingAid': 'I use a hearing aid',
+  'settings.sense.visuallyImpaired': 'I am visually impaired',
   'settings.sense.colorblind': 'I have color vision deficiency',
   'settings.info.heading': 'Settings info',
   'settings.info.title': 'Your selected settings will effect search results',
@@ -476,6 +479,7 @@ const translations = {
     one {Chosen city}
     other {Chosen cities}
   }`,
+  'settings.city.all': 'Show all',
   'settings.city.title': 'City',
   'settings.city.helsinki': 'Helsinki',
   'settings.city.espoo': 'Espoo',

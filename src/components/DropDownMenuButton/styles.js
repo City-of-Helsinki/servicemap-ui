@@ -6,6 +6,7 @@ export default theme => ({
     height: '100%',
     width: 230,
     marginRight: theme.spacing(2),
+    flex: '0 1 auto',
   },
   button: {
     height: '100%',

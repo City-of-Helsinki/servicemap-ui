@@ -3,8 +3,8 @@ import React from 'react';
 import { createMount } from '@material-ui/core/test-utils';
 import { MuiThemeProvider, Typography } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
-import DawerButton from '../DrawerButton';
-import themes from '../../../themes';
+import DrawerButton from '../DrawerButton';
+import themes from '../../../../themes';
 
 // Generic required props for ServiceMapButton
 const buttonMockProps = {
@@ -39,19 +39,19 @@ describe('<DrawerButton />', () => {
   });
 
   it('should work', () => {
-    const component = mount(<DawerButton {...buttonMockProps} />);
+    const component = mount(<DrawerButton {...buttonMockProps} />);
     expect(component).toMatchSnapshot();
   });
 
   it('does show text', () => {
-    const component = mount(<DawerButton {...buttonMockProps} />);
+    const component = mount(<DrawerButton {...buttonMockProps} />);
     expect(component.find(Typography).text()).toEqual(buttonMockProps.text);
   });
 
   it('simulates click event', () => {
     const mockCallBack = jest.fn();
     const component = mount(
-      <DawerButton
+      <DrawerButton
         {...buttonMockProps}
         onClick={mockCallBack}
       />,
@@ -62,7 +62,7 @@ describe('<DrawerButton />', () => {
 
   it('does render default accessibility attributes correctly', () => {
     const component = mount(
-      <DawerButton
+      <DrawerButton
         {...buttonMockProps}
       />,
     );
@@ -77,7 +77,7 @@ describe('<DrawerButton />', () => {
 
   it('does hide correctly when menu not open', () => {
     const component = mount(
-      <DawerButton
+      <DrawerButton
         {...buttonMockProps}
         isOpen={false}
       />,
@@ -92,7 +92,7 @@ describe('<DrawerButton />', () => {
 
   it('does show correctly when menu is opened', () => {
     const component = mount(
-      <DawerButton
+      <DrawerButton
         {...buttonMockProps}
         isOpen
       />,
@@ -107,7 +107,7 @@ describe('<DrawerButton />', () => {
 
   it('does render aria-label correctly when disabled', () => {
     const component = mount(
-      <DawerButton
+      <DrawerButton
         {...buttonMockProps}
         disabled
       />,
