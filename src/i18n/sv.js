@@ -441,6 +441,8 @@ const translations = {
 
   // Settings
   'settings': 'Inställningar',
+  'settings.change': 'Redigera dina inställningar',
+  'settings.drawer.aria.title': 'Nuvarande inställningar',
   'settings.citySettings': 'Stad',
   'settings.citySettings.long': 'Stadsinställningar',
   'settings.mapSettings': 'Kartunderlag',
@@ -455,9 +457,10 @@ const translations = {
     other {# val}
   }`,
   'settings.accessibility': 'Tillgänglighetsuppgifter som gäller mig',
+  'settings.accessibility.none': 'Inga filtreringar',
   'settings.sense.title': 'Hörsel och syn',
-  'settings.sense.hearing': 'Jag använder hörapparat',
-  'settings.sense.visual': 'Jag är synskadad',
+  'settings.sense.hearingAid': 'Jag använder hörapparat',
+  'settings.sense.visuallyImpaired': 'Jag är synskadad',
   'settings.sense.colorblind': 'Jag har svårt att urskilja förger',
   'settings.info.heading': 'Inställningsuppgifter',
   'settings.info.title': 'Dina valda inställningar påverkar sökresultatet',
@@ -474,6 +477,7 @@ const translations = {
     one {Vald stad} 
     other {Vald städer}
   }`,
+  'settings.city.all': 'Visa alla',
   'settings.city.title': 'Stad',
   'settings.city.helsinki': 'Helsingfors',
   'settings.city.espoo': 'Esbo',
