@@ -42,21 +42,21 @@ const translations = {
   // TODO: clean unused translations
   'area.searchbar.infoText.address': 'Write your home address',
   'area.searchbar.infoText.optional': '(optional)',
-  'area.tab.publicServices': 'Julkisten palveluiden alueet', // TODO: translate
-  'area.tab.geographical': 'Kaupunginosat ja postinumeroalueet', // TODO: translate
+  'area.tab.publicServices': 'Public service areas',
+  'area.tab.geographical': 'Neighbourhoods and postal code areas',
   'area.services.local': 'Services in your own area',
-  'area.services.nearby': 'Lähialueiden palvelut listana', // TODO: translate
-  'area.services.all': 'Palvelut listana', // TODO: translate
+  'area.services.nearby': 'Services in nearby areas as a list',
+  'area.services.all': 'Services as a list',
   'area.info': 'Choose an area, whose services you want information about. Writing your home address in the search field opens a map, and the areas and districts that you belong to are shown under the Services in the area tab.',
   'area.choose.district': 'Choose area',
-  'area.list': 'Alueen valinta', // TODO: translate
-  'area.localAddress.title': 'Osoitteesi tiedot', // TODO: translate
-  'area.localAddress.neighborhood': 'Kaupunginosa: {area}', // TODO: translate
-  'area.localAddress.postCode': 'Postinumero: {area}', // TODO: translate
-  'area.geographicalServices.neighborhood': 'Kaupunginosan palvelut ({length})', // TODO: translate
-  'area.geographicalServices.postcode_area': 'Postinumeroalueen palvelut ({length})', // TODO: translate
-  'area.neighborhood.title': 'Valitse kaupunginosa', // TODO: translate
-  'area.postcode_area.title': 'Valitse postinumero', // TODO: translate
+  'area.list': 'Area selection',
+  'area.localAddress.title': 'Information according to your address',
+  'area.localAddress.neighborhood': 'Neighbourhood: {area}',
+  'area.localAddress.postCode': 'Postal code area: {area}',
+  'area.geographicalServices.neighborhood': 'Services of the neighbourhood ({length})',
+  'area.geographicalServices.postcode_area': 'Services of the postal code area ({length})',
+  'area.neighborhood.title': 'Choose neighbourhood',
+  'area.postcode_area.title': 'Choose postal code',
   'area.noSelection': 'Choose area from the Choice of Area tab',
   'area.noUnits': 'There are no service locations in your chosen area',
   'area.popupLink': 'Show the details for the area (new tab)',

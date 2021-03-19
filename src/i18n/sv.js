@@ -42,21 +42,21 @@ const translations = {
   // TODO: clean unused translations
   'area.searchbar.infoText.address': 'Skriv din hemadress',
   'area.searchbar.infoText.optional': '(valfri)',
-  'area.tab.publicServices': 'Julkisten palveluiden alueet', // TODO: translate
-  'area.tab.geographical': 'Kaupunginosat ja postinumeroalueet', // TODO: translate
+  'area.tab.publicServices': 'Områden för offentliga tjänster',
+  'area.tab.geographical': 'Stadsdelar och postnummerområden',
   'area.services.local': 'Tjänster i ditt eget område',
-  'area.services.nearby': 'Lähialueiden palvelut listana', // TODO: translate
-  'area.services.all': 'Palvelut listana', // TODO: translate
+  'area.services.nearby': 'Lista över tjänsterna i närområden',
+  'area.services.all': 'Lista över tjänsterna',
   'area.info': 'Välj ett område, vars tjänster du vill ha information om. Genom att skriva din hemadress i sökfältet öppnas en karta och under fliken Tjänster i området visas de områden och distrikt som du hör till',
   'area.choose.district': 'Väl område',
-  'area.list': 'Alueen valinta', // TODO: translate
-  'area.localAddress.title': 'Osoitteesi tiedot', // TODO: translate
-  'area.localAddress.neighborhood': 'Kaupunginosa: {area}', // TODO: translate
-  'area.localAddress.postCode': 'Postinumero: {area}', // TODO: translate
-  'area.geographicalServices.neighborhood': 'Kaupunginosan palvelut ({length})', // TODO: translate
-  'area.geographicalServices.postcode_area': 'Postinumeroalueen palvelut ({length})', // TODO: translate
-  'area.neighborhood.title': 'Valitse kaupunginosa', // TODO: translate
-  'area.postcode_area.title': 'Valitse postinumero', // TODO: translate
+  'area.list': 'Val av område',
+  'area.localAddress.title': 'Uppgifter enligt din adress',
+  'area.localAddress.neighborhood': 'Stadsdel: {area}',
+  'area.localAddress.postCode': 'Postnummer: {area}',
+  'area.geographicalServices.neighborhood': 'Tjänster i stadsdelen ({length})',
+  'area.geographicalServices.postcode_area': 'Tjänster i postnummerområdet ({length})',
+  'area.neighborhood.title': 'Välj stadsdel',
+  'area.postcode_area.title': 'Välj postnummer',
   'area.noSelection': 'Väl område under fliken Val av område',
   'area.noUnits': 'Det finns inga verksamhetsställen i ditt valda område',
   'area.popupLink': 'Visa uppgifterna för området (ny flik)',
