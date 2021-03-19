@@ -15,7 +15,6 @@ import {
 } from '../../../../redux/actions/district';
 import { getFilteredSubdistrictServices } from '../../../../redux/selectors/district';
 import GeographicalDistrictList from '../GeographicalDistrictList';
-import SettingsInfo from '../../../../components/SettingsInfo';
 import GeographicalUnitList from '../GeographicalUnitList';
 import useLocaleText from '../../../../utils/useLocaleText';
 
@@ -188,13 +187,6 @@ const GeographicalTab = ({
             );
           })}
         </List>
-        <SettingsInfo
-          onlyCities
-          title="settings.info.title.city"
-          altTitle="settings.info.title.noSettings.city"
-          settingsPage="area"
-          noDivider
-        />
       </>
     );
   };

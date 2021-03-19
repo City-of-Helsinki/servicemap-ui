@@ -19,6 +19,7 @@ import { handleOpenItems } from '../../redux/actions/district';
 import SMButton from '../../components/ServiceMapButton';
 import MobileComponent from '../../components/MobileComponent';
 import useLocaleText from '../../utils/useLocaleText';
+import SettingsInfo from '../../components/SettingsInfo';
 
 
 const AreaView = ({
@@ -262,6 +263,13 @@ const AreaView = ({
           <TabLists
             onTabChange={() => (selectedDistrictType ? clearRadioButtonValue() : null)}
             data={tabs}
+          />
+          <SettingsInfo
+            onlyCities
+            title="settings.info.title.city"
+            altTitle="settings.info.title.noSettings.city"
+            settingsPage="area"
+            noDivider
           />
           <MobileComponent>
             {!districtsFetching.length && (

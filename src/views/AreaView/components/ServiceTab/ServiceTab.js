@@ -9,7 +9,6 @@ import {
 } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import SettingsInfo from '../../../../components/SettingsInfo';
 import SMAccordion from '../../../../components/SMAccordion';
 import { fetchDistrictGeometry, handleOpenItems, setSelectedDistrictType } from '../../../../redux/actions/district';
 import DistrictUnitList from '../DistrictUnitList';
@@ -78,10 +77,12 @@ const ServiceTab = (props) => {
 
           {/* Service list */}
           {selectedDistrictType === district.id && (
-            <DistrictUnitList
-              district={district}
-              selectedAddress={selectedAddress}
-            />
+            <li>
+              <DistrictUnitList
+                district={district}
+                selectedAddress={selectedAddress}
+              />
+            </li>
           )}
         </Fragment>
       ))}
@@ -153,13 +154,6 @@ const ServiceTab = (props) => {
           {districtCategoryList.map(item => renderCategoryItem(item))}
         </RadioGroup>
       </List>
-      <SettingsInfo
-        onlyCities
-        title="settings.info.title.city"
-        altTitle="settings.info.title.noSettings.city"
-        settingsPage="area"
-        noDivider
-      />
     </div>
   );
 };
