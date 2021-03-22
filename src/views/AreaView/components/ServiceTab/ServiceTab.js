@@ -149,11 +149,9 @@ const ServiceTab = (props) => {
       <Typography variant="srOnly" component="h3">
         <FormattedMessage id="area.list" />
       </Typography>
-      <RadioGroup value={selectedDistrictType}>
-        <List>
-          {districtCategoryList.map(item => renderCategoryItem(item))}
-        </List>
-      </RadioGroup>
+      <List>
+        {districtCategoryList.map(item => renderCategoryItem(item))}
+      </List>
     </div>
   );
 };
