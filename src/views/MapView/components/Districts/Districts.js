@@ -11,6 +11,7 @@ import useMobileStatus from '../../../../utils/isMobile';
 import { parseSearchParams } from '../../../../utils';
 import config from '../../../../../config';
 import useLocaleText from '../../../../utils/useLocaleText';
+import { geographicalDistricts } from '../../../AreaView/utils/districtDataHelper';
 
 
 const Districts = ({
@@ -47,7 +48,7 @@ const Districts = ({
     // Disable normal map click event
     e.originalEvent.view.L.DomEvent.stopPropagation(e);
 
-    if (district.category === 'geographical') {
+    if (geographicalDistricts.includes(district.type)) {
       // Add/remove district from selected geographical districts
       let newArray;
       if (selectedSubdistricts.some(item => item === district.ocd_id)) {
@@ -140,7 +141,7 @@ const Districts = ({
   };
 
   const renderMultipleDistricts = () => {
-    if (!districtData) {
+    if (!districtData[0]?.boundary) {
       return null;
     }
 
@@ -157,10 +158,12 @@ const Districts = ({
 
     return filteredData.map((district) => {
       let dimmed;
-      if (selectedSubdistricts.length) {
-        dimmed = !selectedSubdistricts.some(item => item === district.ocd_id);
+      if (geographicalDistricts.includes(district.type)) {
+        if (selectedSubdistricts.length) {
+          dimmed = !selectedSubdistricts.some(item => item === district.ocd_id);
+        }
       } else {
-        dimmed = addressDistrict && district.id !== addressDistrict;
+        dimmed = addressDistrict && district.id !== addressDistrict.id;
       }
 
       const area = district.boundary.coordinates.map(
@@ -269,7 +272,7 @@ Districts.propTypes = {
   selectedAddress: PropTypes.objectOf(PropTypes.any),
   districtData: PropTypes.arrayOf(PropTypes.object),
   unitsFetching: PropTypes.bool.isRequired,
-  addressDistrict: PropTypes.number,
+  addressDistrict: PropTypes.objectOf(PropTypes.any),
   selectedSubdistricts: PropTypes.arrayOf(PropTypes.string),
   setSelectedSubdistricts: PropTypes.func.isRequired,
   setSelectedDistrictServices: PropTypes.func.isRequired,

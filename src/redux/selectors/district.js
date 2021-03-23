@@ -5,21 +5,21 @@ export const getHighlightedDistrict = state => state.districts.highlitedDistrict
 const getSelectedDistrict = state => state.districts.selectedDistrictType;
 const getDistrictData = state => state.districts.districtData;
 const getAddressDistrictData = state => state.districts.districtAddressData.districts;
-const getSubdistrictUnits = state => state.districts.subdistrictUnits;
+export const getSubdistrictUnits = state => state.districts.subdistrictUnits;
 const getSubdistrictSelection = state => state.districts.selectedSubdistricts;
 const getSelectedDistrictServices = state => state.districts.selectedDistrictServices;
-const getSettings = state => state.settings;
+const getCitySettings = state => state.settings.cities;
 
 export const getDistrictsByType = createSelector(
-  [getSelectedDistrict, getDistrictData, getSettings],
-  (selectedDistrictType, districtData, settings) => {
+  [getSelectedDistrict, getDistrictData, getCitySettings],
+  (selectedDistrictType, districtData, citySettings) => {
     if (selectedDistrictType && districtData.length) {
       const districtType = districtData.find(obj => obj.id === selectedDistrictType);
-      const selectedCities = Object.values(settings.cities).filter(city => city);
+      const selectedCities = Object.values(citySettings).filter(city => city);
       // Filter distircts by user city settings
       if (districtType && selectedCities.length) {
         const cityFilteredDistricts = districtType.data.filter(
-          district => settings.cities[district.municipality],
+          district => citySettings[district.municipality],
         );
         return cityFilteredDistricts;
       }
@@ -34,19 +34,19 @@ export const getAddressDistrict = createSelector(
   (districts, addressDistricts) => {
     if (districts && addressDistricts) {
       const district = districts.find(obj => addressDistricts.some(i => i.id === obj.id));
-      return district ? district.id : null;
+      return district;
     }
     return null;
   },
 );
 
 // Get selected geographical district units
-export const getSubdistrictServices = createSelector(
-  [getSubdistrictSelection, getSubdistrictUnits, getSettings],
-  (selectedSubdistricts, unitData, settings) => {
-    const selectedCities = Object.values(settings.cities).filter(city => city);
+export const getFilteredSubdistrictServices = createSelector(
+  [getSubdistrictSelection, getSubdistrictUnits, getCitySettings],
+  (selectedSubdistricts, unitData, citySettings) => {
+    const selectedCities = Object.values(citySettings).filter(city => city);
     const cityFilteredUnits = selectedCities?.length
-      ? unitData.filter(unit => settings.cities[unit.municipality])
+      ? unitData.filter(unit => citySettings[unit.municipality])
       : unitData;
     if (selectedSubdistricts?.length && unitData) {
       return cityFilteredUnits.filter(
@@ -59,7 +59,7 @@ export const getSubdistrictServices = createSelector(
 
 // Get area view units filtered by area view unit tab checkbox selection
 export const getFilteredSubdistrictUnits = createSelector(
-  [getSubdistrictServices, getSelectedDistrictServices],
+  [getFilteredSubdistrictServices, getSelectedDistrictServices],
   (districtUnits, serviceFilters) => {
     if (serviceFilters.length) {
       return districtUnits.filter(unit => (

@@ -14,6 +14,7 @@ const DivisionItem = ({
   data,
   distance,
   divider,
+  disableTitle,
   className,
   intl,
   navigator,
@@ -89,6 +90,7 @@ const DivisionItem = ({
           </Typography>
           {
             area
+            && !disableTitle
             && (
               <Typography align="left" aria-hidden className={classes.divisionTitle} variant="subtitle1">
                 {title}
@@ -207,6 +209,7 @@ DivisionItem.propTypes = {
     text: PropTypes.string,
   }),
   divider: PropTypes.bool.isRequired,
+  disableTitle: PropTypes.bool,
   navigator: PropTypes.objectOf(PropTypes.any).isRequired,
   intl: PropTypes.shape({
     formatMessage: PropTypes.func,
@@ -216,6 +219,7 @@ DivisionItem.propTypes = {
 DivisionItem.defaultProps = {
   distance: null,
   className: null,
+  disableTitle: false,
 };
 
 export default DivisionItem;
