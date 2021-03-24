@@ -15,6 +15,7 @@ const DivisionItem = ({
   distance,
   divider,
   disableTitle,
+  customTitle,
   className,
   intl,
   navigator,
@@ -35,7 +36,11 @@ const DivisionItem = ({
   const emergencyOnClick = () => navigator.push('unit', { id: emergencyUnitId });
 
   let title = intl.formatMessage({ id: `area.list.${area.type}` });
-  title = `${title}${aStart && aEnd ? ` ${aStart}-${aEnd}` : ''}`;
+  if (customTitle) {
+    title = customTitle;
+  } else {
+    title = `${title}${aStart && aEnd ? ` ${aStart}-${aEnd}` : ''}`;
+  }
 
   // Screen reader text
   const srText = `
@@ -210,6 +215,7 @@ DivisionItem.propTypes = {
   }),
   divider: PropTypes.bool.isRequired,
   disableTitle: PropTypes.bool,
+  customTitle: PropTypes.string,
   navigator: PropTypes.objectOf(PropTypes.any).isRequired,
   intl: PropTypes.shape({
     formatMessage: PropTypes.func,
@@ -220,6 +226,7 @@ DivisionItem.defaultProps = {
   distance: null,
   className: null,
   disableTitle: false,
+  customTitle: null,
 };
 
 export default DivisionItem;
