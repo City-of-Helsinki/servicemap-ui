@@ -65,6 +65,7 @@ const translations = {
   'area.list.health': 'Hälsa',
   'area.list.education': 'Utbildning',
   'area.list.natureConservation': 'Naturskydd',
+  'area.list.parking': 'Parkering',
   'area.list.education.finnish': 'Finska skolområden',
   'area.list.education.swedish': 'Svenska skolområden',
   'area.list.preschool': 'Förskoleundervisning',
@@ -82,6 +83,7 @@ const translations = {
   'area.list.preschool_education_fi': 'Finskt småbarnspedagogikområde',
   'area.list.preschool_education_sv': 'Svenskt småbarnspedagogikområde',
   'area.list.nature_reserve': 'Naturskyddsområden',
+  'area.list.resident_parking_zone': 'Invånarparkeringsområden',
 
   // Download dialog
   'download.cropping.title': 'Nuvarande filterinställningar',
