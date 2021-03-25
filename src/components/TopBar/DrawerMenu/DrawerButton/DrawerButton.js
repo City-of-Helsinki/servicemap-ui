@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {
   Typography, ButtonBase, withStyles,
 } from '@material-ui/core';
-import styles from './styles';
+import styles from '../styles';
 
 
 const DrawerButton = ({

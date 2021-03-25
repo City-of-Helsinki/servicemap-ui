@@ -1,25 +1,29 @@
-export default () => ({
+export default theme => ({
   accordionContainer: {
     flexDirection: 'column',
     width: '100%',
   },
   accordion: {
     alignSelf: 'center',
-    height: 60,
+    height: theme.spacing(7),
     display: 'flex',
     flexDirection: 'row',
     padding: 0,
-    paddingLeft: 12,
-    paddingRight: 16,
+    paddingRight: theme.spacing(2),
+    paddingLeft: theme.spacing(2),
     alignItems: 'center',
   },
   icon: {
-    fontSize: 30,
+    fontSize: 24,
     transition: '0.3s',
     marginLeft: 'auto',
+    color: theme.palette.primary.main,
   },
   iconOpen: {
     transform: 'rotate(180deg)',
+  },
+  iconDisabled: {
+    color: theme.palette.disabled.strong,
   },
   clickArea: {
     width: '100%',
@@ -29,5 +33,9 @@ export default () => ({
   },
   collapseContainer: {
     width: '100%',
+  },
+  elevated: {
+    boxShadow: 'inset 0px 4px 4px rgba(0, 0, 0, 0.06)',
+    position: 'relative',
   },
 });

@@ -1,6 +1,8 @@
 /* eslint-disable quote-props */
 const translations = {
   'app.title': 'Service map',
+  'app.description': 'Find services near your home',
+  'app.og.image.alt': 'Servicemap logo',
 
   // Accessibility
   'accessibility': 'Accessibility',
@@ -37,16 +39,24 @@ const translations = {
   'address.emergency_care.link.text': '[<a>emergency webpages</a>]',
 
   // Area
+  // TODO: clean unused translations
   'area.searchbar.infoText.address': 'Write your home address',
   'area.searchbar.infoText.optional': '(optional)',
-  'area.tab.selection': 'Choice of area',
-  'area.tab.services': 'Services in the area',
+  'area.tab.publicServices': 'Public service areas',
+  'area.tab.geographical': 'Neighbourhoods and postal code areas',
   'area.services.local': 'Services in your own area',
-  'area.services.nearby': 'Services in the neighbouring areas',
+  'area.services.nearby': 'Services in nearby areas as a list',
+  'area.services.all': 'Services as a list',
   'area.info': 'Choose an area, whose services you want information about. Writing your home address in the search field opens a map, and the areas and districts that you belong to are shown under the Services in the area tab.',
   'area.choose.district': 'Choose area',
-  'area.choose.subdistrict': 'Choose and open {category}',
-  'area.close.subdistrict': 'Close {category}',
+  'area.list': 'Area selection',
+  'area.localAddress.title': 'Information according to your address',
+  'area.localAddress.neighborhood': 'Neighbourhood: {area}',
+  'area.localAddress.postCode': 'Postal code area: {area}',
+  'area.geographicalServices.neighborhood': 'Services of the neighbourhood ({length})',
+  'area.geographicalServices.postcode_area': 'Services of the postal code area ({length})',
+  'area.neighborhood.title': 'Choose neighbourhood',
+  'area.postcode_area.title': 'Choose postal code',
   'area.noSelection': 'Choose area from the Choice of Area tab',
   'area.noUnits': 'There are no service locations in your chosen area',
   'area.popupLink': 'Show the details for the area (new tab)',
@@ -55,6 +65,7 @@ const translations = {
   'area.list.health': 'Health',
   'area.list.education': 'Education',
   'area.list.natureConservation': 'Nature conservation',
+  'area.list.parking': 'Parking',
   'area.list.education.finnish': 'Finnish school areas',
   'area.list.education.swedish': 'Swedish school areas',
   'area.list.preschool': 'Pre-school education',
@@ -72,6 +83,7 @@ const translations = {
   'area.list.preschool_education_fi': 'Finnish preschool education area',
   'area.list.preschool_education_sv': 'Swedish preschool education area',
   'area.list.nature_reserve': 'Nature conservation areas',
+  'area.list.resident_parking_zone': 'Residential parking areas',
 
   // Download dialog
   'download.cropping.title': 'Current filter values',
@@ -295,7 +307,7 @@ const translations = {
                                     one {# accessibility shortcoming}
                                     other {# accessibility shortcomings}
                                   }`,
-  'unit.accessibility.unitNoInfo': 'Location has not delivered any accessibility information.', // TODO: verify
+  'unit.accessibility.unitNoInfo': 'Accessibility information missing.',
   'unit.basicInfo': 'Information',
   'unit.data_source': 'Source: {data_source}',
   'unit.details.notFound': 'Location info not available.',
@@ -441,6 +453,8 @@ const translations = {
 
   // Settings
   'settings': 'Settings',
+  'settings.change': 'Edit your settings',
+  'settings.drawer.aria.title': 'Current settings',
   'settings.citySettings': 'City',
   'settings.citySettings.long': 'City settings',
   'settings.mapSettings': 'Background map',
@@ -455,9 +469,10 @@ const translations = {
     other {# selections}
   }`,
   'settings.accessibility': 'My accessibility settings',
+  'settings.accessibility.none': 'No filters',
   'settings.sense.title': 'Hearing and sight',
-  'settings.sense.hearing': 'I use a hearing aid',
-  'settings.sense.visual': 'I am visually impaired',
+  'settings.sense.hearingAid': 'I use a hearing aid',
+  'settings.sense.visuallyImpaired': 'I am visually impaired',
   'settings.sense.colorblind': 'I have color vision deficiency',
   'settings.info.heading': 'Settings info',
   'settings.info.title': 'Your selected settings will effect search results',
@@ -474,6 +489,7 @@ const translations = {
     one {Chosen city}
     other {Chosen cities}
   }`,
+  'settings.city.all': 'Show all',
   'settings.city.title': 'City',
   'settings.city.helsinki': 'Helsinki',
   'settings.city.espoo': 'Espoo',

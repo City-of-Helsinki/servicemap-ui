@@ -39,8 +39,8 @@ const SettingsInfo = ({
 
   const accessibilitySettings = onlyCities ? [] : [
     ...colorblind ? [{ text: intl.formatMessage({ id: 'settings.sense.colorblind' }), icon: <ColorblindIcon /> }] : [],
-    ...hearingAid ? [{ text: intl.formatMessage({ id: 'settings.sense.hearing' }), icon: <HearingIcon /> }] : [],
-    ...visuallyImpaired ? [{ text: intl.formatMessage({ id: 'settings.sense.visual' }), icon: <VisualImpairmentIcon /> }] : [],
+    ...hearingAid ? [{ text: intl.formatMessage({ id: 'settings.sense.hearingAid' }), icon: <HearingIcon /> }] : [],
+    ...visuallyImpaired ? [{ text: intl.formatMessage({ id: 'settings.sense.visuallyImpaired' }), icon: <VisualImpairmentIcon /> }] : [],
     ...mobility ? [{ text: intl.formatMessage({ id: `settings.mobility.${mobility}` }), icon: getIcon(mobility) }] : [],
   ];
 

@@ -10,7 +10,7 @@ import thunk from 'redux-thunk';
 import config from '../config';
 import rootReducer from '../src/redux/rootReducer';
 import App from '../src/App';
-import { makeLanguageHandler, languageSubdomainRedirect, unitRedirect, parseInitialMapPositionFromHostname } from './utils';
+import { makeLanguageHandler, languageSubdomainRedirect, unitRedirect, parseInitialMapPositionFromHostname, getRequestFullUrl } from './utils';
 import { setLocale } from '../src/redux/actions/user';
 import { Helmet } from 'react-helmet';
 import { ServerStyleSheets } from '@material-ui/core/styles';
@@ -22,6 +22,7 @@ import legacyRedirector from './legacyRedirector';
 import { matomoTrackingCode, appDynamicsTrackingCode, cookieHubCode } from './externalScripts';
 import { getLastCommit, getVersion } from './version';
 import ieHandler from './ieMiddleware';
+import ogImage from '../src/assets/images/servicemap-meta-img.png';
 
 // Get sentry dsn from environtment variables
 const sentryDSN = process.env.SENTRY_DSN_SERVER;
@@ -141,6 +142,10 @@ const htmlTemplate = (req, reactDom, preloadedState, css, cssString, locale, hel
   <head>
     <meta charset="utf-8">
     ${helmet.title.toString()}
+    ${helmet.meta.toString()}
+    <meta property="og:url" data-react-helmet="true" content="${getRequestFullUrl(req)}" />
+    <meta property="og:image" data-react-helmet="true" content="${ogImage}" />
+    <meta name="twitter:card" data-react-helmet="true" content="summary" />
     <!-- jss-insertion-point -->
     <style id="jss-server-side">${cssString}</style>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"

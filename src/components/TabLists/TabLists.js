@@ -16,6 +16,7 @@ const TabLists = ({
   changeCustomUserLocation,
   location,
   data,
+  onTabChange,
   focusClass,
   focusText,
   headerComponents,
@@ -88,6 +89,9 @@ const TabLists = ({
     // Prevent tab handling for current tab click
     if (tabIndex === value) {
       return;
+    }
+    if (onTabChange) {
+      onTabChange();
     }
     // Update p(page) param to current history
     // Change page parameter in searchParams
@@ -345,6 +349,7 @@ TabLists.propTypes = {
   changeCustomUserLocation: PropTypes.func.isRequired,
   userAddress: PropTypes.objectOf(PropTypes.any),
   headerComponents: PropTypes.objectOf(PropTypes.any),
+  onTabChange: PropTypes.func,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
@@ -358,6 +363,7 @@ TabLists.defaultProps = {
   userAddress: null,
   focusClass: null,
   focusText: null,
+  onTabChange: null,
 };
 
 export default TabLists;
