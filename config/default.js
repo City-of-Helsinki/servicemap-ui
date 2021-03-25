@@ -171,6 +171,7 @@ export default {
     "shortcomings": "#b00021",
   },
   "production": settings.MODE === 'production',
+  "domain": settings.DOMAIN,
   "initialMapPosition": settings.INITIAL_MAP_POSITION.split(','),
   "servicemapURL": settings.SERVICE_MAP_URL,
   "accessibleMapURL": settings.ACCESSIBLE_MAP_URL,

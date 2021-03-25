@@ -23,6 +23,7 @@ import { matomoTrackingCode, appDynamicsTrackingCode, cookieHubCode } from './ex
 import { getLastCommit, getVersion } from './version';
 import ieHandler from './ieMiddleware';
 import ogImage from '../src/assets/images/servicemap-meta-img.png';
+import { initializeSitemaps, getSitemapIndex, getSitemap } from './sitemapMiddlewares';
 
 // Get sentry dsn from environtment variables
 const sentryDSN = process.env.SENTRY_DSN_SERVER;
@@ -47,6 +48,10 @@ const setupTests = () => {
   }
 };
 setupTests();
+if (config.domain) {
+  // Generate sitemaps
+  initializeSitemaps();
+}
 // Configure constants
 const app = express();
 const supportedLanguages = config.supportedLanguages;
@@ -72,6 +77,8 @@ app.use(`/*`, (req, res, next) => {
 });
 app.use('/*', ieHandler)
 app.use(`/rdr`, legacyRedirector);
+app.use('/sitemapIndex.xml', getSitemapIndex);
+app.use('/:lang/sitemap.xml', getSitemap);
 app.use('/', languageSubdomainRedirect);
 app.use(`/`, makeLanguageHandler);
 app.use('/', unitRedirect);
@@ -182,6 +189,7 @@ const htmlTemplate = (req, reactDom, preloadedState, css, cssString, locale, hel
     <style>${[...css].join('')}</style>
     <script>
         window.nodeEnvSettings = {};
+        window.nodeEnvSettings.DOMAIN = "${process.env.DOMAIN}";
         window.nodeEnvSettings.ACCESSIBILITY_SENTENCE_API = "${process.env.ACCESSIBILITY_SENTENCE_API}";
         window.nodeEnvSettings.SERVICEMAP_API = "${process.env.SERVICEMAP_API}";
         window.nodeEnvSettings.EVENTS_API = "${process.env.EVENTS_API}";
