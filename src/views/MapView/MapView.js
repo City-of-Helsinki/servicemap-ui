@@ -198,7 +198,7 @@ const MapView = (props) => {
       if (control1 && control2) {
         const controls = [control1, control2];
         controls.forEach(v => {
-          v.style['margin-right'] = '38px';
+          v.style['margin-right'] = '43px';
         });
       }
       if (e) {
