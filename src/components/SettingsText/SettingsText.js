@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
+  NoSsr,
   Typography,
 } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
@@ -73,7 +74,7 @@ const SettingsText = ({ classes, type, variant }) => {
   };
 
   return (
-    <>
+    <NoSsr>
       <Typography
         className={title}
         component="p"
@@ -90,7 +91,7 @@ const SettingsText = ({ classes, type, variant }) => {
           </React.Fragment>
         ))}
       </Typography>
-    </>
+    </NoSsr>
   );
 };
 
