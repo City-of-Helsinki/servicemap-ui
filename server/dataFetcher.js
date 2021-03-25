@@ -1,6 +1,6 @@
 import AbortController from 'abort-controller';
 import paths from '../config/paths';
-import { eventFetch, selectedUnitFetch, unitEventsFetch, accessibilitySentencesFetch, reservationsFetch, hearingMapsFetch } from '../src/utils/fetch';
+import { eventFetch, selectedUnitFetch, unitEventsFetch, accessibilitySentencesFetch, reservationsFetch, hearingMapsFetch, unitIDFetch } from '../src/utils/fetch';
 import { changeSelectedEvent } from '../src/redux/actions/event';
 import { changeSelectedUnit } from '../src/redux/actions/selectedUnit';
 import { changeAccessibilitySentences } from '../src/redux/actions/selectedUnitAccessibility';
@@ -189,5 +189,39 @@ export const fetchSelectedUnitData = (req, res, next) => {
   } catch(e) {
     console.log('Error in fetchSelectedUnitData', e.message);
     next();
+  }
+}
+
+// This fetches IDs of all servicemap units. Used when creating sitemaps
+export const fetchAllUnitIDs = async () => {
+  let returnData = null;
+  const ac = new AbortController();
+  const timeout = setTimeout(
+    () => {
+      ac.abort();
+    },
+    timeoutTimer,
+  );
+
+  const onSuccess = (data) => {
+    returnData = data;
+  } 
+  const onNext = () => {
+    clearTimeout(timeout);
+  }
+  const onError = (e) => {
+    console.log('error:',e)
+    return;
+  }
+  const options = {
+    only: 'id',
+    page_size: 1000,
+  }
+  try {
+    await unitIDFetch(options, null, onSuccess, onError, onNext, null, ac)
+    clearTimeout(timeout);
+    return returnData;
+  } catch(e) {
+    console.log('Error in sitemap id fetch', e.message);
   }
 }
