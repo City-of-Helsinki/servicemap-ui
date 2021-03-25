@@ -28,6 +28,7 @@ import HideSidebarButton from './components/HideSidebarButton';
 import CoordinateMarker from './components/CoordinateMarker';
 import useLocaleText from '../../utils/useLocaleText';
 import PanControl from './components/PanControl';
+import { adjustControlElements } from './utils';
 
 if (global.window) {
   require('leaflet');
@@ -190,23 +191,7 @@ const MapView = (props) => {
     }
     // Hide zoom control amd attribution from screen readers
     setTimeout(() => {
-      const e = document.querySelector('.leaflet-control-zoom');
-      const e2 = document.querySelector('.leaflet-control-attribution');
-      // Adjust bottom controls to align with pan controls
-      const control1 = document.querySelector('.leaflet-bottom.leaflet-right [class="leaflet-control"]');
-      const control2 = document.querySelector('.leaflet-bottom.leaflet-right .leaflet-control-zoom');
-      if (control1 && control2) {
-        const controls = [control1, control2];
-        controls.forEach(v => {
-          v.style['margin-right'] = '43px';
-        });
-      }
-      if (e) {
-        e.setAttribute('aria-hidden', 'true');
-      }
-      if (e2) {
-        e2.setAttribute('aria-hidden', 'true');
-      }
+      adjustControlElements();
     }, 1);
 
     return () => {
@@ -214,6 +199,12 @@ const MapView = (props) => {
       clearMapReference();
     };
   }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      adjustControlElements();
+    }, 1)
+  }, [mapObject]);
 
   useEffect(() => { // Set map ref to redux once map is rendered
     if (!refSaved && mapRef.current) {
