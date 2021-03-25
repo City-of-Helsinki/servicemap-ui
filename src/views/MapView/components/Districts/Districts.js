@@ -170,6 +170,10 @@ const Districts = ({
         coords => swapCoordinates(coords),
       );
 
+      const tooltipTitle = district.type === 'rescue_area'
+        ? `${intl.formatMessage({ id: `area.list.${district.type}` })} ${district.origin_id} - ${getLocaleText(district.name)}`
+        : `${getLocaleText(district.name)} - ${intl.formatMessage({ id: `area.list.${district.type}` })}`;
+
       return (
         <Polygon
           interactive={!unitsFetching}
@@ -195,7 +199,7 @@ const Districts = ({
               direction="top"
               autoPan={false}
             >
-              {`${getLocaleText(district.name)} - ${intl.formatMessage({ id: `area.list.${district.type}` })}`}
+              {tooltipTitle}
             </Tooltip>
           ) : null}
           {renderDistrictMarkers(district)}
