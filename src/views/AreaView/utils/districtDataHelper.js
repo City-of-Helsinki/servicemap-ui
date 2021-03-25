@@ -70,6 +70,13 @@ export const dataStructure = [ // Categorized district data structure
       'nature_reserve',
     ],
   },
+  {
+    id: 'parking',
+    titleID: 'area.list.parking',
+    districts: [
+      'resident_parking_zone',
+    ],
+  },
 ];
 
 export const geographicalDistricts = dataStructure.find(obj => obj.id === 'geographical').districts;

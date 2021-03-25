@@ -1,5 +1,10 @@
 import { districtFetch, unitsFetch } from '../../utils/fetch';
-import { geographicalDistricts, groupDistrictData, parseDistrictGeometry } from '../../views/AreaView/utils/districtDataHelper';
+import {
+  dataStructure,
+  geographicalDistricts,
+  groupDistrictData,
+  parseDistrictGeometry,
+} from '../../views/AreaView/utils/districtDataHelper';
 
 export const setHighlightedDistrict = district => ({
   type: 'SET_DISTRICT_HIGHLIGHT',
@@ -108,10 +113,11 @@ export const fetchDistrictGeometry = type => (
 
 export const fetchAllDistricts = selected => (
   async (dispatch) => {
+    const categories = dataStructure.map(obj => obj.districts).flat().join(',');
     const options = {
       page: 1,
       page_size: 500,
-      type: 'health_station_district,maternity_clinic_district,lower_comprehensive_school_district_fi,lower_comprehensive_school_district_sv,upper_comprehensive_school_district_fi,upper_comprehensive_school_district_sv,preschool_education_fi,preschool_education_sv,rescue_area,rescue_district,rescue_sub_district,nature_reserve,neighborhood,postcode_area',
+      type: categories,
       geometry: false,
     };
     const onStart = () => dispatch(startDistrictFetch('all'));
