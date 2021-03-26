@@ -73,7 +73,7 @@ const AddressSearchBar = ({
     e.preventDefault();
     setTimeout(() => {
       setAddressResults([]);
-    }, 100);
+    }, 200);
   };
 
   const handleSubmit = (e) => {
@@ -172,6 +172,7 @@ const AddressSearchBar = ({
             <List role="listbox" id="address-results">
               {addressResults.map((address, i) => (
                 <ListItem
+                  tabIndex="-1"
                   id={`address-suggestion${i}`}
                   role="option"
                   selected={i === resultIndex}
