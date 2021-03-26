@@ -73,7 +73,7 @@ const AddressSearchBar = ({
     e.preventDefault();
     setTimeout(() => {
       setAddressResults([]);
-    }, 100);
+    }, 500);
   };
 
   const handleSubmit = (e) => {
