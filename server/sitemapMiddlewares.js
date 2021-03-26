@@ -16,7 +16,7 @@ export const initializeSitemaps = () => {
 }
 
 // Return sitemap index
-export const getSitemapIndex = (res) => {
+export const getSitemapIndex = (req, res) => {
   res.header('Content-Type', 'application/xml');
   res.header('Content-Encoding', 'gzip');
  
