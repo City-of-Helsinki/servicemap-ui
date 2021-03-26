@@ -13,7 +13,7 @@ class PageHandler extends React.Component {
   // Modify html head
   render() {
     const {
-      intl, messageId, page, unit, service, event, getLocaleText,
+      intl, messageId, page, unit, service, event, embed, getLocaleText,
     } = this.props;
     const message = messageId ? intl.formatMessage({ id: messageId }) : '';
     let pageMessage = '';
@@ -37,6 +37,9 @@ class PageHandler extends React.Component {
 
     return (
       <Helmet>
+        {embed ? (
+          <meta name="robots" content="noindex"></meta>
+        ): null}
         <title>{title}</title>
       </Helmet>
     );
