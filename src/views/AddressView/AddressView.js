@@ -24,6 +24,7 @@ import MobileComponent from '../../components/MobileComponent';
 import DivisionItem from '../../components/ListItems/DivisionItem';
 import config from '../../../config';
 import useLocaleText from '../../utils/useLocaleText';
+import { parseSearchParams } from '../../utils';
 
 
 const hiddenDivisions = {
