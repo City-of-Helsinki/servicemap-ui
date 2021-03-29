@@ -5,6 +5,8 @@ import {
 } from '@material-ui/core';
 import { Map, Menu, Close } from '@material-ui/icons';
 import { FormattedMessage } from 'react-intl';
+import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import HomeLogo from '../Logos/HomeLogo';
 import { getIcon } from '../SMIcon';
 import DrawerMenu from '../DrawerMenu';
@@ -14,9 +16,13 @@ import config from '../../../config';
 import ToolMenu from '../ToolMenu';
 import { focusToViewTitle } from '../../utils/accessibility';
 import LocaleUtility from '../../utils/locale';
+import { useNavigationParams } from '../../utils/address';
 
 const TopBar = (props) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const locale = useSelector(state => state.user.locale);
+  const location = useLocation();
+  const getAddressNavigatorParams = useNavigationParams();
 
   const {
     settingsOpen,
@@ -25,12 +31,9 @@ const TopBar = (props) => {
     settings,
     breadcrumb,
     intl,
-    locale,
-    location,
     changeTheme,
     theme,
     setMapType,
-    getAddressNavigatorParams,
     navigator,
     currentPage,
     smallScreen,
@@ -339,10 +342,7 @@ TopBar.propTypes = {
   changeTheme: PropTypes.func.isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   currentPage: PropTypes.string.isRequired,
-  getAddressNavigatorParams: PropTypes.func.isRequired,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
-  locale: PropTypes.oneOf(config.supportedLanguages).isRequired,
-  location: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   setMapType: PropTypes.func.isRequired,
   settingsOpen: PropTypes.string,

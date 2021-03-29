@@ -1,6 +1,9 @@
 /* eslint-disable prefer-destructuring */
+import { useCallback } from 'react';
+import { useSelector } from 'react-redux';
 import { uppercaseFirst } from '.';
 import config from '../../config';
+import useLocaleText from './useLocaleText';
 
 // Gets translated municipality from configuration
 const getTranslatedMunicipality = (address, getLocaleText) => {
@@ -44,7 +47,7 @@ export const addressMatchParamsToFetchOptions = (match) => {
   return data;
 };
 
-export const getAddressNavigatorParamsConnector = (getLocaleText, locale) => (address) => {
+export const getAddressNavigatorParamsConnector = (getLocaleText, locale, address) => {
   if (!address || !address.number || !address.street.name || !address.street.municipality) {
     return null;
   }
@@ -107,4 +110,13 @@ export const getAddressFromUnit = (unit, getLocaleText, intl) => {
   });
 
   return `${getLocaleText(unit.street_address)}${postalCode} ${city}`;
+};
+
+export const useNavigationParams = () => {
+  const locale = useSelector(state => state.user.locale);
+  const getLocaleText = useLocaleText();
+  return useCallback(
+    address => getAddressNavigatorParamsConnector(getLocaleText, locale, address),
+    [locale],
+  );
 };

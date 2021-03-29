@@ -10,7 +10,6 @@ import { findUserLocation } from '../../redux/actions/user';
 import MapView from './MapView';
 import { getServiceUnits } from '../../redux/selectors/service';
 import { getProcessedData } from '../../redux/selectors/results';
-import { getAddressNavigatorParamsConnector } from '../../utils/address';
 
 // Get redux states as props to component
 const mapStateToProps = (state) => {
@@ -25,13 +24,9 @@ const mapStateToProps = (state) => {
   const {
     customPosition, locale, page, position,
   } = user;
-  const getLocaleText = textObject => getLocaleString(state, textObject);
   const { adminDistricts, units, toRender } = address;
   const districtUnits = getFilteredSubdistrictUnits(state);
   const districtUnitsFetching = districts.unitsFetching;
-  /* TODO: create custom hook for getAddressNavigatorParams to prevent
-  re-rendering on every state change */
-  const getAddressNavigatorParams = getAddressNavigatorParamsConnector(getLocaleText, locale);
   const userLocation = customPosition.coordinates || position.coordinates;
   return {
     addressUnits: units,
@@ -39,7 +34,6 @@ const mapStateToProps = (state) => {
     adminDistricts,
     highlightedDistrict,
     highlightedUnit,
-    getAddressNavigatorParams,
     unitList,
     serviceUnits,
     districtUnits,
