@@ -49,6 +49,10 @@ export const changeTheme = theme => async (dispatch) => {
 };
 
 export const findUserLocation = () => async (dispatch) => {
+  // Disable user location during browser tests.
+  if (window.navigator.webdriver) {
+    return;
+  }
   const success = (position) => {
     if (position.coords.accuracy < 1000) {
       fetchAddress({ lat: position.coords.latitude, lng: position.coords.longitude })

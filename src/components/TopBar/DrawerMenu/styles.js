@@ -1,22 +1,24 @@
-import config from '../../../config';
+import config from '../../../../config';
 
 const { topBarHeight, topBarHeightMobile } = config;
 
 const styles = () => ({
   drawerContainer: {
+    color: '#fff',
     top: topBarHeight,
     backgroundColor: '#353638',
     maxWidth: 350,
     padding: 2,
   },
   drawerContainerMobile: {
+    color: '#fff',
     top: topBarHeightMobile,
     backgroundColor: '#353638',
     maxWidth: 350,
     padding: 2,
   },
   drawerButton: {
-    color: '#fff',
+    color: 'inherit',
     height: 80,
     textTransform: 'none',
     justifyContent: 'left',

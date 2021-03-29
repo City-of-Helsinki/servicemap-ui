@@ -1,6 +1,8 @@
 /* eslint-disable quote-props */
 const translations = {
   'app.title': 'Servicekarta',
+  'app.description': 'Alla tjänster i huvudstadsregionen inom räckhåll.',
+  'app.og.image.alt': 'Servicekarta logo',
 
   // Accessibility
   'accessibility': 'Tillgänglighet',
@@ -37,16 +39,24 @@ const translations = {
   'address.emergency_care.link.text': '[<a>joursidor</a>]',
 
   // Area
+  // TODO: clean unused translations
   'area.searchbar.infoText.address': 'Skriv din hemadress',
   'area.searchbar.infoText.optional': '(valfri)',
-  'area.tab.selection': 'Val av område',
-  'area.tab.services': 'Tjänster i området',
+  'area.tab.publicServices': 'Områden för offentliga tjänster',
+  'area.tab.geographical': 'Stadsdelar och postnummerområden',
   'area.services.local': 'Tjänster i ditt eget område',
-  'area.services.nearby': 'Tjänster i närområdena',
+  'area.services.nearby': 'Lista över tjänsterna i närområden',
+  'area.services.all': 'Lista över tjänsterna',
   'area.info': 'Välj ett område, vars tjänster du vill ha information om. Genom att skriva din hemadress i sökfältet öppnas en karta och under fliken Tjänster i området visas de områden och distrikt som du hör till',
   'area.choose.district': 'Väl område',
-  'area.choose.subdistrict': 'Väl och öppna {category}',
-  'area.close.subdistrict': 'Stäng {category}',
+  'area.list': 'Val av område',
+  'area.localAddress.title': 'Uppgifter enligt din adress',
+  'area.localAddress.neighborhood': 'Stadsdel: {area}',
+  'area.localAddress.postCode': 'Postnummer: {area}',
+  'area.geographicalServices.neighborhood': 'Tjänster i stadsdelen ({length})',
+  'area.geographicalServices.postcode_area': 'Tjänster i postnummerområdet ({length})',
+  'area.neighborhood.title': 'Välj stadsdel',
+  'area.postcode_area.title': 'Välj postnummer',
   'area.noSelection': 'Väl område under fliken Val av område',
   'area.noUnits': 'Det finns inga verksamhetsställen i ditt valda område',
   'area.popupLink': 'Visa uppgifterna för området (ny flik)',
@@ -55,6 +65,7 @@ const translations = {
   'area.list.health': 'Hälsa',
   'area.list.education': 'Utbildning',
   'area.list.natureConservation': 'Naturskydd',
+  'area.list.parking': 'Parkering',
   'area.list.education.finnish': 'Finska skolområden',
   'area.list.education.swedish': 'Svenska skolområden',
   'area.list.preschool': 'Förskoleundervisning',
@@ -72,6 +83,7 @@ const translations = {
   'area.list.preschool_education_fi': 'Finskt småbarnspedagogikområde',
   'area.list.preschool_education_sv': 'Svenskt småbarnspedagogikområde',
   'area.list.nature_reserve': 'Naturskyddsområden',
+  'area.list.resident_parking_zone': 'Invånarparkeringsområden',
 
   // Download dialog
   'download.cropping.title': 'Nuvarande filterinställningar',
@@ -295,7 +307,7 @@ const translations = {
                                     one {# tillgänglighetsbrist}
                                     other {# tillgänglighetsbrister}
                                   }`,
-  'unit.accessibility.unitNoInfo': 'Verksamhetsstället har inte meddelat tillgänglighetsuppgifter.',
+  'unit.accessibility.unitNoInfo': 'Tillgänglighetsuppgifter saknas.',
   'unit.basicInfo': 'Grunduppgifter',
   'unit.data_source': 'Källa: {data_source}',
   'unit.details.notFound': 'Verksamhetsställets uppgifter finns inte att tillgå.',
@@ -441,6 +453,8 @@ const translations = {
 
   // Settings
   'settings': 'Inställningar',
+  'settings.change': 'Redigera dina inställningar',
+  'settings.drawer.aria.title': 'Nuvarande inställningar',
   'settings.citySettings': 'Stad',
   'settings.citySettings.long': 'Stadsinställningar',
   'settings.mapSettings': 'Kartunderlag',
@@ -455,9 +469,10 @@ const translations = {
     other {# val}
   }`,
   'settings.accessibility': 'Tillgänglighetsuppgifter som gäller mig',
+  'settings.accessibility.none': 'Inga filtreringar',
   'settings.sense.title': 'Hörsel och syn',
-  'settings.sense.hearing': 'Jag använder hörapparat',
-  'settings.sense.visual': 'Jag är synskadad',
+  'settings.sense.hearingAid': 'Jag använder hörapparat',
+  'settings.sense.visuallyImpaired': 'Jag är synskadad',
   'settings.sense.colorblind': 'Jag har svårt att urskilja förger',
   'settings.info.heading': 'Inställningsuppgifter',
   'settings.info.title': 'Dina valda inställningar påverkar sökresultatet',
@@ -474,6 +489,7 @@ const translations = {
     one {Vald stad} 
     other {Vald städer}
   }`,
+  'settings.city.all': 'Visa alla',
   'settings.city.title': 'Stad',
   'settings.city.helsinki': 'Helsingfors',
   'settings.city.espoo': 'Esbo',

@@ -71,7 +71,9 @@ const AddressSearchBar = ({
 
   const clearSuggestions = (e) => {
     e.preventDefault();
-    setAddressResults([]);
+    setTimeout(() => {
+      setAddressResults([]);
+    }, 200);
   };
 
   const handleSubmit = (e) => {
@@ -130,6 +132,7 @@ const AddressSearchBar = ({
       <form action="" onSubmit={e => handleSubmit(e)}>
         <InputBase
           id="addressSearchbar"
+          autoComplete="off"
           inputRef={inputRef}
           inputProps={{
             role: 'combobox',
@@ -169,6 +172,7 @@ const AddressSearchBar = ({
             <List role="listbox" id="address-results">
               {addressResults.map((address, i) => (
                 <ListItem
+                  tabIndex="-1"
                   id={`address-suggestion${i}`}
                   role="option"
                   selected={i === resultIndex}

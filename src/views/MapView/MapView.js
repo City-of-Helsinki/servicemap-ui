@@ -49,7 +49,7 @@ const MapView = (props) => {
     unitsLoading,
     serviceUnits,
     districtUnits,
-    districtUnitsFetching,
+    districtViewFetching,
     hideUserMarker,
     highlightedUnit,
     highlightedDistrict,
@@ -331,7 +331,7 @@ const MapView = (props) => {
         : prevMap.props.zoom + zoomDifference;
     }
 
-    const showLoadingScreen = () => districtUnitsFetching.length;
+    const showLoadingScreen = () => districtViewFetching;
     const userLocationAriaLabel = intl.formatMessage({ id: !userLocation ? 'location.notAllowed' : 'location.center' });
 
     return (
@@ -475,7 +475,7 @@ MapView.propTypes = {
   navigator: PropTypes.objectOf(PropTypes.any),
   serviceUnits: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
   districtUnits: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
-  districtUnitsFetching: PropTypes.arrayOf(PropTypes.any).isRequired,
+  districtViewFetching: PropTypes.bool.isRequired,
   setAddressLocation: PropTypes.func.isRequired,
   findUserLocation: PropTypes.func.isRequired,
   setMapRef: PropTypes.func.isRequired,

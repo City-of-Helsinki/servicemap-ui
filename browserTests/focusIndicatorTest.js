@@ -53,9 +53,10 @@ export default () => {
       const button = buttons.nth(i);
       const disabled = await button.getAttribute('disabled');
       const tabindex = await button.getAttribute('tabindex');
+      const size = await button.boundingClientRect;
 
       if (await button.getAttribute('data-rs-container') !== "readspeaker_button1") { // Ignore readspeaker button. TODO: better implementation  
-        if ((disabled === undefined || disabled === false) && tabindex !== '-1') {
+        if ((disabled === undefined || disabled === false) && tabindex !== '-1' && size.height !== 0) {
           const focusElement = ClientFunction(() => {
             button().focus();
           }, {

@@ -3,7 +3,6 @@ import { injectIntl } from 'react-intl';
 import { withRouter } from 'react-router-dom';
 import { getHighlightedDistrict, getFilteredSubdistrictUnits } from '../../redux/selectors/district';
 import { getSelectedUnit } from '../../redux/selectors/selectedUnit';
-import { getLocaleString } from '../../redux/selectors/locale';
 import { setMapRef } from '../../redux/actions/map';
 import { setAddressLocation } from '../../redux/actions/address';
 import { findUserLocation } from '../../redux/actions/user';
@@ -27,6 +26,8 @@ const mapStateToProps = (state) => {
   const { adminDistricts, units, toRender } = address;
   const districtUnits = getFilteredSubdistrictUnits(state);
   const districtUnitsFetching = districts.unitsFetching;
+  const { districtsFetching } = districts;
+
   const userLocation = customPosition.coordinates || position.coordinates;
   return {
     addressUnits: units,
@@ -37,7 +38,7 @@ const mapStateToProps = (state) => {
     unitList,
     serviceUnits,
     districtUnits,
-    districtUnitsFetching,
+    districtViewFetching: !!(districtUnitsFetching.length || districtsFetching.length),
     unitsLoading,
     currentPage: page,
     userLocation,

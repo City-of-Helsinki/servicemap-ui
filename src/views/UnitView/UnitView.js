@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Typography } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
 import { Map, Mail, Hearing } from '@material-ui/icons';
+import { Helmet } from 'react-helmet';
 import SearchBar from '../../components/SearchBar';
 import TitleBar from '../../components/TitleBar';
 import Container from '../../components/Container';
@@ -28,6 +29,7 @@ import config from '../../../config';
 import useMobileStatus from '../../utils/isMobile';
 import UnitHelper from '../../utils/unitHelper';
 import useLocaleText from '../../utils/useLocaleText';
+import isClient from '../../utils';
 
 const UnitView = (props) => {
   const {
@@ -292,6 +294,36 @@ const UnitView = (props) => {
     </div>
   );
 
+
+  const renderHead = () => {
+    if (!unit || !unit.complete) {
+      return null;
+    }
+    const title = unit && unit.name ? getLocaleText(unit.name) : '';
+    const imageAlt = `${intl.formatMessage({ id: 'unit.picture' })}${getLocaleText(unit.name)}`;
+    const description = unit.description ? getLocaleText(unit.description) : null;
+
+    return (
+      <Helmet>
+        <meta property="og:title" content={title} />
+        {
+          description
+          && (
+            <meta property="og:description" content={description} />
+          )
+        }
+        {
+          unit.picture_url
+          && (
+            <meta property="og:image" content={unit.picture_url} />
+          )
+        }
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:image:alt" content={imageAlt} />
+      </Helmet>
+    );
+  };
+
   const render = () => {
     const title = unit && unit.name ? getLocaleText(unit.name) : '';
 
@@ -325,6 +357,7 @@ const UnitView = (props) => {
     }
 
     if (unit && unit.complete) {
+      const imageAlt = `${intl.formatMessage({ id: 'unit.picture' })}${getLocaleText(unit.name)}`;
       const tabs = [
         {
           id: 'basicInfo',
@@ -353,6 +386,9 @@ const UnitView = (props) => {
       ];
       return (
         <div>
+          {
+            renderHead()
+          }
           <TabLists
             data={tabs}
             headerComponents={(
@@ -366,7 +402,7 @@ const UnitView = (props) => {
                   <div className={classes.imageContainer}>
                     <img
                       className={classes.image}
-                      alt={`${intl.formatMessage({ id: 'unit.picture' })}${getLocaleText(unit.name)}`}
+                      alt={imageAlt}
                       src={unit.picture_url}
                     />
                     {

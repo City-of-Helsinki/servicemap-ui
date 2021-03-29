@@ -128,3 +128,5 @@ export const parseInitialMapPositionFromHostname = (req, Sentry) => {
   }
   return initialMapPosition;
 }
+
+export const getRequestFullUrl = (req) => req.protocol + '://' + req.get('host') + req.originalUrl;

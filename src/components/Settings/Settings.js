@@ -338,12 +338,12 @@ class Settings extends React.Component {
         icon: <ColorblindIcon className={classes.icon} />,
       },
       hearingAid: {
-        labelId: 'settings.sense.hearing',
+        labelId: 'settings.sense.hearingAid',
         value: currentSettings.hearingAid,
         icon: <HearingIcon className={classes.icon} />,
       },
       visuallyImpaired: {
-        labelId: 'settings.sense.visual',
+        labelId: 'settings.sense.visuallyImpaired',
         value: currentSettings.visuallyImpaired,
         icon: <VisualImpairmentIcon className={classes.icon} />,
       },

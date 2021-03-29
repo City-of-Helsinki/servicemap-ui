@@ -11,16 +11,18 @@ const SMAccordion = ({
   collapseContent,
   onOpen,
   disabled,
+  simpleItem,
   openButtonSrText,
   className,
   classes,
+  elevated,
 }) => {
   const [open, setOpen] = useState(defaultOpen);
   const [pendingOpen, setPendingOpen] = useState(false);
 
   const openState = isOpen !== null ? isOpen : open;
 
-  const icon = <ArrowDropDown className={`${classes.icon} ${openState ? classes.iconOpen : ''}`} />;
+  const icon = <ArrowDropDown className={`${classes.icon} ${openState ? classes.iconOpen : ''}  ${disabled ? classes.iconDisabled : ''}`} />;
 
   const handleOpen = (e) => {
     onOpen(e, openState);
@@ -45,8 +47,9 @@ const SMAccordion = ({
     <div className={classes.accordionContainer}>
       <div className={`${classes.accordion} ${className}`}>
         {adornment}
-        {!disabled ? (
+        {!simpleItem ? (
           <ButtonBase
+            disabled={disabled}
             className={classes.clickArea}
             aria-label={openButtonSrText}
             aria-expanded={openState}
@@ -57,7 +60,7 @@ const SMAccordion = ({
           </ButtonBase>
         ) : titleContent}
       </div>
-      <Collapse className={classes.collapseContainer} in={openState}>
+      <Collapse className={`${classes.collapseContainer} ${elevated ? classes.elevated : ''}`} in={openState}>
         {openState && collapseContent}
       </Collapse>
     </div>
@@ -75,6 +78,8 @@ SMAccordion.propTypes = {
   adornment: PropTypes.objectOf(PropTypes.any),
   onOpen: PropTypes.func,
   disabled: PropTypes.bool,
+  simpleItem: PropTypes.bool,
+  elevated: PropTypes.bool,
   openButtonSrText: PropTypes.string,
   className: PropTypes.string,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -87,6 +92,8 @@ SMAccordion.defaultProps = {
   adornment: null,
   onOpen: () => {},
   disabled: false,
+  simpleItem: false,
+  elevated: false,
   openButtonSrText: null,
   className: '',
 };

@@ -1,6 +1,8 @@
 /* eslint-disable quote-props */
 const translations = {
   'app.title': 'Palvelukartta',
+  'app.description': 'Pääkaupunkiseudun kaikki julkiset palvelut ulottuvillasi.',
+  'app.og.image.alt': 'Palvelukartan logo',
 
   // Accessibility
   'accessibility': 'Esteettömyys',
@@ -37,16 +39,24 @@ const translations = {
   'address.emergency_care.link.text': '[<a>päivystyssivut</a>]',
 
   // Area
+  // TODO: clean unused translations
   'area.searchbar.infoText.address': 'Kirjoita kotiosoitteesi',
   'area.searchbar.infoText.optional': '(valinnainen)',
-  'area.tab.selection': 'Alueen valinta',
-  'area.tab.services': 'Alueen palvelut',
+  'area.tab.publicServices': 'Julkisten palveluiden alueet',
+  'area.tab.geographical': 'Kaupunginosat ja postinumeroalueet',
   'area.services.local': 'Oman alueesi palvelut',
-  'area.services.nearby': 'Lähialueiden palvelut',
+  'area.services.nearby': 'Lähialueiden palvelut listana',
+  'area.services.all': 'Palvelut listana',
   'area.info': 'Valitse alue, jonka palveluista haluat tietoa. Kirjoittamalla alla olevaan hakukenttään kotiosoitteesi saat näkyville karttaan ja Alueen palvelut -välilehdelle alueet ja piirit, joihin kuulut',
   'area.choose.district': 'Valitse alue',
-  'area.choose.subdistrict': 'Valitse ja avaa {category}',
-  'area.close.subdistrict': 'Sulje {category}',
+  'area.list': 'Alueen valinta',
+  'area.localAddress.title': 'Osoitteesi tiedot',
+  'area.localAddress.neighborhood': 'Kaupunginosa: {area}',
+  'area.localAddress.postCode': 'Postinumero: {area}',
+  'area.geographicalServices.neighborhood': 'Kaupunginosan palvelut ({length})',
+  'area.geographicalServices.postcode_area': 'Postinumeroalueen palvelut ({length})',
+  'area.neighborhood.title': 'Valitse kaupunginosa',
+  'area.postcode_area.title': 'Valitse postinumero',
   'area.noSelection': 'Valitse alue Alueen Valinta -välilehdeltä',
   'area.noUnits': 'Valitsemallasi alueella ei ole toimipisteitä',
   'area.popupLink': 'Näytä alueen tiedot (uusi välilehti)',
@@ -55,6 +65,7 @@ const translations = {
   'area.list.health': 'Terveys',
   'area.list.education': 'Oppilaaksiottoalueet',
   'area.list.natureConservation': 'Luonnonsuojelu',
+  'area.list.parking': 'Pysäköinti',
   'area.list.education.finnish': 'Suomenkieliset koulualueet',
   'area.list.education.swedish': 'Ruotsinkieliset koulualueet',
   'area.list.preschool': 'Esiopetus',
@@ -72,6 +83,7 @@ const translations = {
   'area.list.preschool_education_fi': 'Suomenkielinen esiopetusalue',
   'area.list.preschool_education_sv': 'Ruotsinkielinen esiopetusalue',
   'area.list.nature_reserve': 'Luonnonsuojelualueet',
+  'area.list.resident_parking_zone': 'Asukaspysäköintialueet',
 
   // Download dialog
   'download.cropping.title': 'Nykyinen rajaus',
@@ -295,7 +307,7 @@ const translations = {
                                     one {# esteettömyyspuute}
                                     other {# esteettömyyspuutetta}
                                   }`,
-  'unit.accessibility.unitNoInfo': 'Toimipiste ei ole toimittanut esteettömyystietoja.',
+  'unit.accessibility.unitNoInfo': 'Esteettömyystieto puuttuu.',
   'unit.basicInfo': 'Perustiedot',
   'unit.data_source': 'Lähde: {data_source}',
   'unit.details.notFound': 'Toimipisteen tietoja ei saatavilla.',
@@ -442,6 +454,8 @@ const translations = {
 
   // Settings
   'settings': 'Asetukset',
+  'settings.change': 'Muokkaa asetuksiasi',
+  'settings.drawer.aria.title': 'Tämän hetkiset asetukset',
   'settings.citySettings': 'Kaupunki',
   'settings.citySettings.long': 'Kaupunkiasetukset',
   'settings.mapSettings': 'Karttapohja',
@@ -456,9 +470,10 @@ const translations = {
     other {# valintaa}
   }`,
   'settings.accessibility': 'Minua koskevat esteettömyystiedot',
+  'settings.accessibility.none': 'Ei rajauksia',
   'settings.sense.title': 'Aistirajoitteet',
-  'settings.sense.hearing': 'Käytän kuulolaitetta',
-  'settings.sense.visual': 'Olen näkövammainen',
+  'settings.sense.hearingAid': 'Käytän kuulolaitetta',
+  'settings.sense.visuallyImpaired': 'Olen näkövammainen',
   'settings.sense.colorblind': 'Minun on vaikea erottaa värejä',
   'settings.info.heading': 'Asetustiedot', // TODO: verify
   'settings.info.title': 'Valitsemasi asetukset vaikuttavat hakutulokseen',
@@ -475,6 +490,7 @@ const translations = {
     one {Valitsemani kaupunki}
     other {Valitsemani kaupungit}
   }`,
+  'settings.city.all': 'Näytä kaikki',
   'settings.city.title': 'Kaupunki',
   'settings.city.helsinki': 'Helsinki',
   'settings.city.espoo': 'Espoo',

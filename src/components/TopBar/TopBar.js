@@ -8,15 +8,14 @@ import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import HomeLogo from '../Logos/HomeLogo';
-import { getIcon } from '../SMIcon';
-import DrawerMenu from '../DrawerMenu';
+import DrawerMenu from './DrawerMenu';
 import DesktopComponent from '../DesktopComponent';
 import MobileComponent from '../MobileComponent';
-import config from '../../../config';
 import ToolMenu from '../ToolMenu';
 import { focusToViewTitle } from '../../utils/accessibility';
 import LocaleUtility from '../../utils/locale';
 import { useNavigationParams } from '../../utils/address';
+import SettingsButton from './SettingsButton';
 
 const TopBar = (props) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -28,7 +27,6 @@ const TopBar = (props) => {
     settingsOpen,
     classes,
     toggleSettings,
-    settings,
     breadcrumb,
     intl,
     changeTheme,
@@ -40,25 +38,17 @@ const TopBar = (props) => {
   } = props;
 
   const renderSettingsButtons = () => {
-    const citySettings = [];
-    config.cities.forEach(city => citySettings.push(settings.cities[city]));
     const settingsCategories = [
-      { type: 'citySettings', settings: citySettings },
-      { type: 'mapSettings', settings: settings.mapType },
-      { type: 'accessibilitySettings', settings: [settings.mobility, settings.colorblind, settings.hearingAid, settings.visuallyImpaired] },
+      { type: 'citySettings' },
+      { type: 'mapSettings' },
+      { type: 'accessibilitySettings' },
     ];
 
     return (
       settingsCategories.map(category => (
-        <Button
-          id={`SettingsButton${category.type}`}
-          key={`SettingsButton${category.type}`}
+        <SettingsButton
+          key={category.type}
           aria-pressed={settingsOpen === category.type}
-          className={settingsOpen === category.type
-            ? classes.settingsButtonPressed
-            : classes.settingsButton
-                      }
-          classes={{ label: classes.buttonLabel }}
           onClick={() => {
             toggleSettings(category.type);
             setTimeout(() => {
@@ -72,29 +62,9 @@ const TopBar = (props) => {
               }
             }, 1);
           }}
-        >
-          <Typography component="p" variant="subtitle1" className={classes.settingsButtonText}>
-            <FormattedMessage id={`settings.${category.type}`} />
-          </Typography>
-          {category.type === 'mapSettings'
-            ? (
-              <NoSsr>
-                <span className={classes.iconTextContainer}>
-                  {getIcon(category.settings, { className: classes.smallIcon })}
-                  <Typography variant="body2">
-                    <FormattedMessage id={`settings.map.${category.settings}`} />
-                  </Typography>
-                </span>
-              </NoSsr>
-            )
-            : (
-              <NoSsr>
-                <Typography variant="body2">
-                  <FormattedMessage id="settings.amount" values={{ count: category.settings.filter(i => (i !== false && i !== null)).length }} />
-                </Typography>
-              </NoSsr>
-            )}
-        </Button>
+          settingsOpen={settingsOpen}
+          type={category.type}
+        />
       )));
   };
 

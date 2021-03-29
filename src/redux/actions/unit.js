@@ -1,6 +1,7 @@
 import { searchFetch, unitsFetch } from '../../utils/fetch';
 import { saveSearchToHistory } from '../../components/SearchBar/previousSearchData';
 import { units } from './fetchDataActions';
+import config from '../../../config';
 
 // Actions
 const {
@@ -11,10 +12,18 @@ const {
 export const fetchUnits = (
   // searchQuery = null,
   options = null,
-  abortController = null,
 ) => async (dispatch, getState) => {
   const { units, user } = getState();
   const { locale } = user;
+  const { searchTimeout } = config;
+
+  const timeout = searchTimeout;
+  const abortController = new AbortController();
+  const fetchTimeout = setTimeout(() => {
+    console.warn(`Search fetch aborted: Timeout after ${searchTimeout / 1000} seconds`);
+    abortController.abort();
+  }, timeout);
+
   if (units.isFetching) {
     throw Error('Unable to fetch units because previous fetch is still active');
   }
@@ -30,6 +39,7 @@ export const fetchUnits = (
   const onStart = () => dispatch(isFetching(searchQuery));
 
   const onSuccess = (results) => {
+    clearTimeout(fetchTimeout);
     if (options.q) {
       saveSearchToHistory(searchQuery, results);
     } else {
@@ -40,9 +50,10 @@ export const fetchUnits = (
     dispatch(fetchSuccess(results));
   };
   const onError = e => dispatch(fetchError(e.message));
-  const onNext = (resultTotal, response) => dispatch(
-    fetchProgressUpdate(resultTotal.length, response.count),
-  );
+  const onNext = (resultTotal, response) => {
+    clearTimeout(fetchTimeout);
+    dispatch(fetchProgressUpdate(resultTotal.length, response.count));
+  };
 
   // Fetch data
   const data = options;

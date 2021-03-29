@@ -1,4 +1,5 @@
 /* eslint-disable global-require */
+/* eslint-disable camelcase */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -95,13 +96,29 @@ const AddressView = (props) => {
       });
   };
 
-  const fetchData = () => {
-    if (units) {
-      // Remove old data before fetching new
-      setAddressUnits([]);
-    }
+  const compareAddress = (newAdddress) => {
+    if (!newAdddress) return false;
+    const compareValues = (a, b) => {
+      if ((!a && !b) || a === b) {
+        return true;
+      }
+      return false;
+    };
 
+    return addressData
+      && compareValues(newAdddress.street, getLocaleText(addressData.street.name))
+      && compareValues(newAdddress.number, addressData.number)
+      && compareValues(newAdddress.number_end, addressData.number_end)
+      && compareValues(newAdddress.letter, addressData.letter);
+  };
+
+  const fetchData = () => {
     const options = match ? addressMatchParamsToFetchOptions(match) : {};
+
+    const isSameAddress = compareAddress(options);
+    if (isSameAddress) return;
+
+    setAddressUnits([]);
 
     fetchAddressData(options)
       .then((data) => {

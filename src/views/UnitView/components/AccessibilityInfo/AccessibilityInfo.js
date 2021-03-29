@@ -241,7 +241,7 @@ const AccessibilityInfo = (props) => {
   const noInfo = !aDescriptions && !aShortcomings;
   const noShortcomings = aDescriptions && !aShortcomings;
 
-  const infoText = aShortcomings && renderInfoText(noInfo, noShortcomings);
+  const infoText = renderInfoText(noInfo, noShortcomings);
 
   return (
     <Container>
