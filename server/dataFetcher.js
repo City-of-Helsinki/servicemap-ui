@@ -192,34 +192,20 @@ export const fetchSelectedUnitData = (req, res, next) => {
   }
 }
 
-// This fetches IDs of all servicemap units. Used when creating sitemaps
-export const fetchAllUnitIDs = async () => {
+// This fetches all IDs. Used when creating sitemaps
+export const fetchIDs = async (type) => {
   let returnData = null;
-  const ac = new AbortController();
-  const timeout = setTimeout(
-    () => {
-      ac.abort();
-    },
-    timeoutTimer,
-  );
-
+  
   const onSuccess = (data) => {
     returnData = data;
   } 
-  const onNext = () => {
-    clearTimeout(timeout);
-  }
+  const onNext = () => {}
   const onError = (e) => {
     console.log('error:',e)
     return;
   }
-  const options = {
-    only: 'id',
-    page_size: 1000,
-  }
   try {
-    await unitIDFetch(options, null, onSuccess, onError, onNext, null, ac)
-    clearTimeout(timeout);
+    await unitIDFetch(null, null, onSuccess, onError, onNext, type, null)
     return returnData;
   } catch(e) {
     console.log('Error in sitemap id fetch', e.message);

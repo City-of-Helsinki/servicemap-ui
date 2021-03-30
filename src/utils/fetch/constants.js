@@ -74,10 +74,10 @@ export const APIHandlers = {
     envName: config.serviceMapAPI.id,
   },
   unitIDs: {
-    url: `${config.serviceMapAPI.root}/unit/`,
+    url: type => `${config.serviceMapAPI.root}/${type}/`,
     options: {
       page: 1,
-      page_size: 1000,
+      page_size: 500,
       only: 'id',
     },
     envName: config.serviceMapAPI.id,
