@@ -23,7 +23,7 @@ import { matomoTrackingCode, appDynamicsTrackingCode, cookieHubCode } from './ex
 import { getLastCommit, getVersion } from './version';
 import ieHandler from './ieMiddleware';
 import ogImage from '../src/assets/images/servicemap-meta-img.png';
-import { initializeSitemaps, getSitemapIndex, getSitemap } from './sitemapMiddlewares';
+import { initializeSitemap, getSitemap } from './sitemapMiddlewares';
 
 // Get sentry dsn from environtment variables
 const sentryDSN = process.env.SENTRY_DSN_SERVER;
@@ -50,7 +50,7 @@ const setupTests = () => {
 setupTests();
 if (config.domain) {
   // Generate sitemaps
-  initializeSitemaps();
+  initializeSitemap();
 }
 // Configure constants
 const app = express();
@@ -77,8 +77,7 @@ app.use(`/*`, (req, res, next) => {
 });
 app.use('/*', ieHandler)
 app.use(`/rdr`, legacyRedirector);
-app.use('/sitemapIndex.xml', getSitemapIndex);
-app.use('/:lang/sitemap.xml', getSitemap);
+app.use('/sitemap.xml', getSitemap);
 app.use('/', languageSubdomainRedirect);
 app.use(`/`, makeLanguageHandler);
 app.use('/', unitRedirect);

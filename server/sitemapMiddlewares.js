@@ -1,93 +1,82 @@
 import config from '../config';
-import { SitemapStream, SitemapIndexStream, streamToPromise } from 'sitemap'
+import { SitemapStream, streamToPromise } from 'sitemap'
 import { createGzip } from 'zlib'
-import { fetchAllUnitIDs } from './dataFetcher';
+import { fetchIDs } from './dataFetcher';
 
 const supportedLanguages = config.supportedLanguages;
-let sitemapIndex;
-const sitemaps = {}
+let sitemap;
 
-export const initializeSitemaps = () => {
-  // Create sitemap index and sitemaps for each language
-  generateSitemapIndex()
-  supportedLanguages.forEach(lang => {
-    generateSitemap(lang);
-  })
-}
-
-// Return sitemap index
-export const getSitemapIndex = (req, res) => {
-  res.header('Content-Type', 'application/xml');
-  res.header('Content-Encoding', 'gzip');
- 
-  if (sitemapIndex) {
-    res.send(sitemapIndex)
-    return
-  } else {
-    res.status(404).end();
-  }  
-}
+export const initializeSitemap = () => {
+  generateSitemap();
+};
 
 // This returns sitemaps for different languages
 export const getSitemap = (req, res) => {
   res.header('Content-Type', 'application/xml');
   res.header('Content-Encoding', 'gzip');
   
-  const locale = req.params.lang;
-
-  if (!supportedLanguages.includes(locale)) {
-    res.status(404).end();
-  }
   // Send the cached sitemap
-  if (sitemaps[locale]) {
-    res.send(sitemaps[locale])
+  if (sitemap) {
+    res.send(sitemap)
     return
   } else {
     res.status(404).end();
   }
 }
 
-const generateSitemapIndex = () => {
-  try {
-    const url = config.domain;
-    const smis = new SitemapIndexStream()
-    const pipeline = smis.pipe(createGzip())
-
-    // Create links to each language sitemap
-    supportedLanguages.forEach(lang => {
-      smis.write({ url: `${url}/${lang}/sitemap.xml` })
-    })
-
-    // Cache the response
-    streamToPromise(pipeline).then(smi => sitemapIndex = smi)
-    smis.end()
-
-  } catch (e) {
-    console.error(e)
-  }
-}
-
-const generateSitemap = async (locale) => {
+const generateSitemap = async () => {
   try {
     const url = config.domain;
     const smStream = new SitemapStream({ hostname: url })
     const pipeline = smStream.pipe(createGzip())
 
     // Write all page urls that we want to be found by search engines
-    smStream.write({ url: `/${locale}/home/` })
-    smStream.write({ url: `/${locale}/area/` })
-    // smStream.write({ url: `/${lang}/services/` })
+    const pages = ['home', 'area'];
 
-    // Generate URLs for all units
-    const unitIDs = await fetchAllUnitIDs()
+    pages.forEach(page => (
+      smStream.write({ 
+        url: `/fi/${page}/`, 
+        links: supportedLanguages.map(lang => ({
+          lang: lang,
+          url: `/${lang}/${page}/`, 
+        }))
+      })
+    ))
+
+
+    // Generate URLs for all units and servicces
+    const unitIDs = await fetchIDs('unit')
+    const serviceIDs = await fetchIDs('service')
+    
     if (unitIDs?.length) {
       unitIDs.forEach(item => {
-        smStream.write({ url: `/${locale}/unit/${item.id}` })
+        smStream.write({ 
+          url: `/fi/unit/${item.id}`, 
+          links: supportedLanguages.map(lang => ({
+            lang: lang,
+            url: `/${lang}/unit/${item.id}`, 
+          }))
+        })
       });
     }
-    
+
+    if (serviceIDs?.length) {
+      serviceIDs.forEach(item => {
+        // Do not add services with no units
+        if (item?.unit_count?.total !== 0) {
+          smStream.write({ 
+            url: `/fi/service/${item.id}`, 
+            links: supportedLanguages.map(lang => ({
+              lang: lang,
+              url: `/${lang}/service/${item.id}`, 
+            }))
+          })
+        }
+      });
+    }
+
     // Cache the response
-    streamToPromise(pipeline).then(sm => sitemaps[locale] = sm)
+    streamToPromise(pipeline).then(sm => sitemap = sm)
     smStream.end()
 
   } catch (e) {
