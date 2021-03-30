@@ -77,6 +77,7 @@ const generateSitemap = async () => {
 
     // Cache the response
     streamToPromise(pipeline).then(sm => sitemap = sm)
+    console.log('New sitemap created')
     smStream.end()
 
   } catch (e) {

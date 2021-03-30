@@ -22,6 +22,7 @@ import legacyRedirector from './legacyRedirector';
 import { matomoTrackingCode, appDynamicsTrackingCode, cookieHubCode } from './externalScripts';
 import { getLastCommit, getVersion } from './version';
 import ieHandler from './ieMiddleware';
+import schedule from 'node-schedule'
 import ogImage from '../src/assets/images/servicemap-meta-img.png';
 import { initializeSitemap, getSitemap } from './sitemapMiddlewares';
 
@@ -48,10 +49,18 @@ const setupTests = () => {
   }
 };
 setupTests();
+
+// Handle sitemap creation
 if (config.domain) {
-  // Generate sitemaps
+  // Generate sitemap on start
   initializeSitemap();
+  // Update sitemap every monday
+  schedule.scheduleJob({ hour: 8, minute: 0, dayOfWeek: 1 }, () => {
+    console.log('Updating sitemap...')
+    initializeSitemap();
+  });
 }
+
 // Configure constants
 const app = express();
 const supportedLanguages = config.supportedLanguages;
