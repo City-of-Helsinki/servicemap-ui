@@ -1,6 +1,6 @@
 import AbortController from 'abort-controller';
 import paths from '../config/paths';
-import { eventFetch, selectedUnitFetch, unitEventsFetch, accessibilitySentencesFetch, reservationsFetch, hearingMapsFetch, unitIDFetch } from '../src/utils/fetch';
+import { eventFetch, selectedUnitFetch, unitEventsFetch, accessibilitySentencesFetch, reservationsFetch, hearingMapsFetch, idFetch } from '../src/utils/fetch';
 import { changeSelectedEvent } from '../src/redux/actions/event';
 import { changeSelectedUnit } from '../src/redux/actions/selectedUnit';
 import { changeAccessibilitySentences } from '../src/redux/actions/selectedUnitAccessibility';
@@ -205,7 +205,7 @@ export const fetchIDs = async (type) => {
     return;
   }
   try {
-    await unitIDFetch(null, null, onSuccess, onError, onNext, type, null)
+    await idFetch(null, null, onSuccess, onError, onNext, type, null)
     return returnData;
   } catch(e) {
     console.log('Error in sitemap id fetch', e.message);

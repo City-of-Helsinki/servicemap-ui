@@ -30,4 +30,4 @@ export const eventFetch = wrapperClosure('event');
 export const reservationsFetch = wrapperClosure('reservations', APIHandlers.reservations.options);
 export const serviceRedirectFetch = wrapperClosure('serviceRedirect');
 export const hearingMapsFetch = wrapperClosure('hearingMaps');
-export const unitIDFetch = wrapperClosure('unitIDs', APIHandlers.unitIDs.options);
+export const idFetch = wrapperClosure('idFetch', APIHandlers.idFetch.options);
