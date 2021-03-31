@@ -34,12 +34,13 @@ class PageHandler extends React.Component {
     }
 
     const title = `${uppercaseFirst(pageMessage)} ${message}${appTitle}`;
+    const hideFromCrawlers = ['search', 'info', 'serviceTree', 'feedback'];
 
     return (
       <Helmet>
-        {embed ? (
-          <meta name="robots" content="noindex"></meta>
-        ): null}
+        {embed || hideFromCrawlers.includes(page) ? (
+          <meta name="robots" content="none" />
+        ) : null}
         <title>{title}</title>
       </Helmet>
     );
@@ -55,6 +56,7 @@ PageHandler.propTypes = {
   service: PropTypes.objectOf(PropTypes.any),
   getLocaleText: PropTypes.func.isRequired,
   setCurrentPage: PropTypes.func.isRequired,
+  embed: PropTypes.bool,
 };
 
 PageHandler.defaultProps = {
@@ -63,6 +65,7 @@ PageHandler.defaultProps = {
   unit: null,
   service: null,
   event: null,
+  embed: false,
 };
 
 export default PageHandler;
