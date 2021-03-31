@@ -87,6 +87,14 @@ app.use(`/*`, (req, res, next) => {
 app.use('/*', ieHandler)
 app.use(`/rdr`, legacyRedirector);
 app.use('/sitemap.xml', getSitemap);
+app.get('/robots.txt', (req, res, next) => {
+  if (config.domain) {
+    res.type('text/plain');
+    res.send(`User-agent: *\nAllow: /\n\nSitemap: ${config.domain}/sitemap.xml`);
+  } else {
+    next();
+  };
+});
 app.use('/', languageSubdomainRedirect);
 app.use(`/`, makeLanguageHandler);
 app.use('/', unitRedirect);
