@@ -18,6 +18,7 @@ const translations = {
 
   // Address
   'address': 'Adress',
+  'address.description': 'Katso osoitteen lähellä olevat palvelut', // TODO: translate
   'address.search': 'Adresssök',
   'address.search.cleared': 'Sökfältet har tömts',
   'address.search.location': 'Den valda positionen är {location}',
@@ -61,6 +62,7 @@ const translations = {
   'area.list.education.swedish': 'Svenska skolområden',
   'area.list.preschool': 'Förskoleundervisning',
   'area.list.neighborhood': 'Stadsdel',
+  'area.list.postcode': 'Postnummer',
   'area.list.postcode_area': 'Postnummerområde',
   'area.list.rescue_area': 'Skyddsdistrikt',
   'area.list.rescue_district': 'Skyddsavsnitt',
@@ -352,6 +354,8 @@ const translations = {
   'unit.route.extra': '(Ny flik. HRT-reseplaneraren är inte en tillgänglig tjänst)',
   'unit.socialMedia.title': 'Verksamhetsstället på sociala medier',
   'unit.outdoorLink': 'Kolla skicket på en motionsplats i tjänsten ulkoliikunta.fi',
+  'unit.seo.description': 'Katso sijainti kartalla', // TODO: translate
+  'unit.seo.description.accessibility': 'Katso esteettömyystiedot ja sijainti kartalla', // TODO: translate
 
   // Search
   'search': 'Sök',
@@ -424,6 +428,7 @@ const translations = {
   'service.nearby': 'Närtjänster',
   'service.units.empty': 'Tjänsten har inga verksamhetsställen',
   'service.tab': 'Tjänster och evenemang',
+  'service.description': 'Katso palveluiden sijainnit ja yhteystiedot', // TODO: translate
 
   // Service tree
   'services': 'Förteckning över tjänster',
