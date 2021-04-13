@@ -287,6 +287,9 @@ const translations = {
   'map.address.notFound': 'Osoitetta ei löytynyt',
   'map.address.info': 'Osoitteen tiedot',
   'map.unit.cluster.popup.info': '{count} toimipistettä',
+  'map.button.sidebar.hide': 'Pienennä sivupaneeli',
+  'map.button.sidebar.show': 'Laajenna sivupaneeli',
+
 
   // Print
   'print.alert': 'Käytä tulostamiseen työkaluvalikon tulostusta',

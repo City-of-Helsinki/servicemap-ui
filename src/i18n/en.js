@@ -287,6 +287,8 @@ const translations = {
   'map.address.notFound': 'The address could not be found',
   'map.address.info': 'Address information',
   'map.unit.cluster.popup.info': '{count} locations',
+  'map.button.sidebar.hide': 'Hide sidebar',
+  'map.button.sidebar.show': 'Show sidebar',
 
   // Print
   'print.alert': 'Use the toolbox printing option',
