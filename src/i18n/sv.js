@@ -287,6 +287,8 @@ const translations = {
   'map.address.notFound': 'Adressen hittades ej',
   'map.address.info': 'Adressens uppgifter',
   'map.unit.cluster.popup.info': '{count} verksamhetsställen', // TODO: Verify
+  'map.button.sidebar.hide': 'Pienennä sivupaneeli', // TODO: Translate
+  'map.button.sidebar.show': 'Laajenna sivupaneeli', // TODO: Translate
 
   // Print
   'print.alert': 'Använd utskriftsalternativet i verktygsmenyn',

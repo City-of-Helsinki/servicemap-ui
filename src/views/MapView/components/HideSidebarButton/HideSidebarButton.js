@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { ButtonBase, Typography } from '@material-ui/core';
 import { ChevronLeft, ChevronRight } from '@material-ui/icons';
+import { FormattedMessage } from 'react-intl';
 
 const HideSidebarButton = ({
   classes, sidebarHidden, mapRef, toggleSidebar,
@@ -24,7 +25,7 @@ const HideSidebarButton = ({
         : <ChevronLeft />
       }
       <Typography>
-        {sidebarHidden ? 'Laajenna sivupaneeli' : 'Pienennä sivupaneeli'}
+        <FormattedMessage id={sidebarHidden ? 'map.button.sidebar.show' : 'map.button.sidebar.hide'} />
       </Typography>
     </div>
   </ButtonBase>
