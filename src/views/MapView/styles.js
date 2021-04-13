@@ -5,13 +5,13 @@ const styles = theme => ({
   map: {
     height: '100%',
     flex: '1 0 auto',
-    '& .leaflet-control button,a': {
+    '& .leaflet-bottom.leaflet-right .leaflet-control button,a': {
       '&:hover': {
         color: '#347865 !important',
       },
       '&:focused': {
         color: '#347865 !important',
-      }
+      },
     },
   },
   addressLink: {
