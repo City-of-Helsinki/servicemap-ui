@@ -11,6 +11,7 @@ const SMAccordion = ({
   collapseContent,
   onOpen,
   disabled,
+  disableUnmount, // Disables accordion collapse content unmount on accordion close
   simpleItem,
   openButtonSrText,
   className,
@@ -61,7 +62,9 @@ const SMAccordion = ({
         ) : titleContent}
       </div>
       <Collapse className={`${classes.collapseContainer} ${elevated ? classes.elevated : ''}`} in={openState}>
-        {openState && collapseContent}
+        {disableUnmount ? (
+          collapseContent
+        ) : openState && collapseContent}
       </Collapse>
     </div>
   );
@@ -83,6 +86,7 @@ SMAccordion.propTypes = {
   openButtonSrText: PropTypes.string,
   className: PropTypes.string,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
+  disableUnmount: PropTypes.bool,
 };
 
 SMAccordion.defaultProps = {
@@ -96,6 +100,7 @@ SMAccordion.defaultProps = {
   elevated: false,
   openButtonSrText: null,
   className: '',
+  disableUnmount: false,
 };
 
 export default SMAccordion;
