@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
-  Accordion, AccordionDetails, AccordionSummary, Divider, ListItem, Typography,
+  ButtonBase, Divider, ListItem, Typography,
 } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
 import config from '../../../../../config';
@@ -10,6 +10,7 @@ import InfoList from '../InfoList';
 import unitSectionFilter from '../../utils/unitSectionFilter';
 import { getAddressFromUnit } from '../../../../utils/address';
 import useLocaleText from '../../../../utils/useLocaleText';
+import SMAccordion from '../../../../components/SMAccordion';
 
 const ContactInfo = ({
   unit, userLocation, intl, classes,
@@ -43,19 +44,18 @@ const ContactInfo = ({
       && (
         <React.Fragment key="callInformation">
           <ListItem className={classes.accordionItem}>
-            <Accordion classes={{ root: classes.accordionRoot }} elevation={0}>
-              <AccordionSummary
-                classes={{ root: classes.accordionSummaryRoot }}
-                expandIcon={<ExpandMore />}
-              >
-                <Typography><FormattedMessage id="unit.phone.charge" /></Typography>
-              </AccordionSummary>
-              <AccordionDetails classes={{ root: classes.accordionDetailsRoot }}>
-                <Typography className={classes.callInfoText}>
-                  {getLocaleText(unit.call_charge_info)}
-                </Typography>
-              </AccordionDetails>
-            </Accordion>
+            <SMAccordion
+              className={classes.accordionRoot}
+              disableUnmount
+              titleContent={<Typography><FormattedMessage id="unit.phone.charge" /></Typography>}
+              collapseContent={(
+                <div className={classes.accordionContaianer}>
+                  <Typography className={classes.callInfoText}>
+                    {getLocaleText(unit.call_charge_info)}
+                  </Typography>
+                </div>
+              )}
+            />
           </ListItem>
           <li aria-hidden>
             <Divider className={classes.dividerShort} />
