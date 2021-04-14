@@ -1,5 +1,7 @@
 import berryIcon from '../../../assets/icons/LocationDefault.svg';
 import berryIconContrast from '../../../assets/icons/LocationDefaultContrast.svg';
+import entranceIcon from '../../../assets/icons/doorIcon.svg';
+import entranceIconContrast from '../../../assets/icons/doorIconContrast.svg';
 
 // TODO: If berries are not used anymore, clean unused functionalities here
 
@@ -126,6 +128,21 @@ export const drawMarkerIcon = (contrast = false, className = '') => {
     iconSize: [30, 30],
     iconAnchor: [13, 25],
     className: `unitMarker ${className}`,
+  });
+
+  return markerIcon;
+};
+
+export const drawEntranceMarkreIcon = (contrast = false, className = '') => {
+  const L = require('leaflet'); // eslint-disable-line global-require
+
+  // Generate marker icon
+  const markerIcon = L.icon({
+    iconUrl: contrast ? entranceIconContrast : entranceIcon,
+    iconSize: [24, 24],
+    iconAnchor: [12, 12],
+    popupAnchor: [0, -12],
+    className: `entranceMarker ${className}`,
   });
 
   return markerIcon;
