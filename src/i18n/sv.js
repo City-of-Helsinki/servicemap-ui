@@ -330,6 +330,8 @@ const translations = {
   'unit.description': 'Information om verksamhetsstället',
   'unit.address': 'Adress',
   'unit.address.missing': 'Ingen adress har meddelats',
+  'unit.entrances.show': 'Katso lisäsisäänkäynnit', // TODO translate
+  'unit.entrances.accessibility': 'Katso esteettömyystiedot', // TODO translate
   'unit.phone': 'Telefonnummer',
   'unit.phone.missing': 'Telefonnummer har inte meddelats',
   'unit.phone.charge': 'Samtalspriser',

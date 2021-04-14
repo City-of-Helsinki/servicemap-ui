@@ -123,19 +123,25 @@ export default theme => ({
     marginLeft: theme.spacing(2),
   },
   accordionItem: {
+    padding: 0,
     paddingLeft: theme.spacing(7),
-    paddingTop: theme.spacing(1),
-    paddingBottom: theme.spacing(3),
   },
   accordionRoot: {
-    minHeight: 32,
+    height: 32,
+    marginBottom: theme.spacing(1),
   },
   accordionSummaryRoot: {
     height: 32,
     minHeight: 32,
   },
-  accordionDetailsRoot: {
-    paddingBottom: 0,
+  accordionContaianer: {
+    padding: theme.spacing(2),
+    paddingBottom: theme.spacing(1),
+    paddingTop: 0,
+  },
+  accessibilityLink: {
+    paddingTop: theme.spacing(1),
+    color: '#0000EE',
   },
   callInfoText: {
     whiteSpace: 'pre-line',

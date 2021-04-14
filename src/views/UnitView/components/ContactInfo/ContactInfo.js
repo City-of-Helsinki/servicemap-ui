@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import {
   ButtonBase, Divider, ListItem, Typography,
 } from '@material-ui/core';
-import { ExpandMore } from '@material-ui/icons';
+import { useHistory } from 'react-router-dom';
 import config from '../../../../../config';
 import InfoList from '../InfoList';
 import unitSectionFilter from '../../utils/unitSectionFilter';
@@ -15,11 +15,14 @@ import SMAccordion from '../../../../components/SMAccordion';
 const ContactInfo = ({
   unit, userLocation, intl, classes,
 }) => {
+  const history = useHistory();
   const getLocaleText = useLocaleText();
+  const additionalEntrances = unit?.entrances?.filter(entrance => !entrance.is_main_entrance);
 
   const address = {
     type: 'ADDRESS',
     value: unit.street_address ? getAddressFromUnit(unit, getLocaleText, intl) : intl.formatMessage({ id: 'unit.address.missing' }),
+    noDivider: additionalEntrances?.length,
   };
   const phone = {
     type: 'PHONE',
@@ -64,6 +67,50 @@ const ContactInfo = ({
       ),
   };
 
+  // Custom list item component for additional entrances
+  const entrances = {
+    component: additionalEntrances?.length
+    && (
+      <React.Fragment key="entrances">
+        <ListItem className={classes.accordionItem}>
+          <SMAccordion
+            className={classes.accordionRoot}
+            disableUnmount
+            titleContent={<Typography><FormattedMessage id="unit.entrances.show" /></Typography>}
+            collapseContent={(
+              <div className={classes.accordionContaianer}>
+                {additionalEntrances.map(entrance => (
+                  entrance.name ? (
+                    <Typography key={getLocaleText(entrance.name)}>
+                      {getLocaleText(entrance.name)}
+                    </Typography>
+                  ) : null
+                ))}
+                <ButtonBase
+                  role="link"
+                  className={classes.accessibilityLink}
+                  onClick={() => {
+                    const url = new URL(window.location);
+                    url.searchParams.set('p', '1');
+                    url.searchParams.set('t', 'accessibilityDetails');
+                    history.push(url.pathname + url.search);
+                  }}
+                >
+                  <Typography>
+                    <FormattedMessage id="unit.entrances.accessibility" />
+                  </Typography>
+                </ButtonBase>
+              </div>
+              )}
+          />
+        </ListItem>
+        <li aria-hidden>
+          <Divider className={classes.dividerShort} />
+        </li>
+      </React.Fragment>
+    ),
+  };
+
   // For infomration that is in data's connections array, use unitSectionFilter
   const hours = unitSectionFilter(unit.connections, 'OPENING_HOURS');
   const contact = unitSectionFilter(unit.connections, 'PHONE_OR_EMAIL');
@@ -83,6 +130,7 @@ const ContactInfo = ({
   // Form data array
   const data = [
     address,
+    entrances,
     phone,
     callInformation,
     email,

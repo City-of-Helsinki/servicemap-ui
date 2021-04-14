@@ -330,6 +330,8 @@ const translations = {
   'unit.description': 'Tietoa toimipisteestä',
   'unit.address': 'Osoite',
   'unit.address.missing': 'Osoitetta ei ilmoitettu',
+  'unit.entrances.show': 'Katso lisäsisäänkäynnit',
+  'unit.entrances.accessibility': 'Katso esteettömyystiedot',
   'unit.phone': 'Puhelinnumero',
   'unit.phone.missing': 'Puhelinnumeroa ei ilmoitettu',
   'unit.phone.charge': 'Puhelujen hinnat',

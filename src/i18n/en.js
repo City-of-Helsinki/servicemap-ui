@@ -330,6 +330,8 @@ const translations = {
   'unit.description': 'Location description',
   'unit.address': 'Address',
   'unit.address.missing': 'No address provided',
+  'unit.entrances.show': 'Katso lisäsisäänkäynnit', // TODO translate
+  'unit.entrances.accessibility': 'View accessibility details',
   'unit.phone': 'Phone number',
   'unit.phone.missing': 'No phone number provided',
   'unit.phone.charge': 'Call charges',
