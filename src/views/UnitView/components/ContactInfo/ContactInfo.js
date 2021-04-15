@@ -4,18 +4,20 @@ import { FormattedMessage } from 'react-intl';
 import {
   ButtonBase, Divider, ListItem, Typography,
 } from '@material-ui/core';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import config from '../../../../../config';
 import InfoList from '../InfoList';
 import unitSectionFilter from '../../utils/unitSectionFilter';
 import { getAddressFromUnit } from '../../../../utils/address';
 import useLocaleText from '../../../../utils/useLocaleText';
 import SMAccordion from '../../../../components/SMAccordion';
+import { parseSearchParams, stringifySearchParams } from '../../../../utils';
 
 const ContactInfo = ({
   unit, userLocation, intl, classes,
 }) => {
   const history = useHistory();
+  const location = useLocation();
   const getLocaleText = useLocaleText();
   const additionalEntrances = unit?.entrances?.filter(entrance => !entrance.is_main_entrance);
 
@@ -90,10 +92,11 @@ const ContactInfo = ({
                   role="link"
                   className={classes.accessibilityLink}
                   onClick={() => {
-                    const url = new URL(window.location);
-                    url.searchParams.set('p', '1');
-                    url.searchParams.set('t', 'accessibilityDetails');
-                    history.push(url.pathname + url.search);
+                    // Navigate to accessibility tab by changing url tab parameter
+                    const searchParams = parseSearchParams(location.search);
+                    searchParams.t = 'accessibilityDetails';
+                    const searchString = stringifySearchParams(searchParams);
+                    history.push(`${location.pathname}?${searchString}`);
                   }}
                 >
                   <Typography>
@@ -140,10 +143,10 @@ const ContactInfo = ({
   ];
 
   // Add route info to data in location exists
-  const { location } = unit;
+  const unitLocation = unit.location;
 
-  if (location && location.coordinates) {
-    const destinationString = `${getLocaleText(unit.name)}, ${unit.municipality}::${unit.location.coordinates[1]},${unit.location.coordinates[0]}`;
+  if (unitLocation && unitLocation.coordinates) {
+    const destinationString = `${getLocaleText(unit.name)}, ${unit.municipality}::${unitLocation.coordinates[1]},${unitLocation.coordinates[0]}`;
     const routeUrl = `${url}${currentLocationString}/${destinationString}?locale=${intl.locale}`;
 
     const route = {
