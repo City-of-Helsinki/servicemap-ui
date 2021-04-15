@@ -29,6 +29,7 @@ import CoordinateMarker from './components/CoordinateMarker';
 import useLocaleText from '../../utils/useLocaleText';
 import PanControl from './components/PanControl';
 import { adjustControlElements } from './utils';
+import EntranceMarker from './components/EntranceMarker';
 
 if (global.window) {
   require('leaflet');
@@ -200,10 +201,10 @@ const MapView = (props) => {
     };
   }, []);
 
-  useEffect(() => {
+  useEffect(() => {
     setTimeout(() => {
       adjustControlElements();
-    }, 1)
+    }, 1);
   }, [mapObject]);
 
   useEffect(() => { // Set map ref to redux once map is rendered
@@ -394,6 +395,10 @@ const MapView = (props) => {
 
           {currentPage === 'address' && (
             <AddressMarker embeded={embeded} />
+          )}
+
+          {currentPage === 'unit' && highlightedUnit?.entrances?.length && (
+            <EntranceMarker />
           )}
 
           {!hideUserMarker && userLocation && (
