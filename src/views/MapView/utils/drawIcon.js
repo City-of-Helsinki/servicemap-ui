@@ -126,7 +126,9 @@ export const drawMarkerIcon = (contrast = false, className = '') => {
   const markerIcon = L.icon({
     iconUrl: contrast ? berryIconContrast : berryIcon,
     iconSize: [30, 30],
-    iconAnchor: [13, 25],
+    iconAnchor: [15, 15],
+    popupAnchor: [-2, 11],
+    tooltipAnchor: [0, 11],
     className: `unitMarker ${className}`,
   });
 
