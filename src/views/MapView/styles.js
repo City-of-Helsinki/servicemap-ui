@@ -11,7 +11,7 @@ const styles = theme => ({
       },
       '&:focused': {
         color: '#347865 !important',
-      }
+      },
     },
   },
   addressLink: {
@@ -255,6 +255,9 @@ const styles = theme => ({
     fontSize: 16,
     top: 16,
     left: 16,
+  },
+  entranceType: {
+    paddingTop: theme.spacing(0.5),
   },
 
   // Transit stops

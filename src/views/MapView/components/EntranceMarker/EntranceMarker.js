@@ -44,7 +44,7 @@ const EntranceMarker = ({ classes }) => {
                     {getLocaleText(entrance.name)}
                   </Typography>
                 ) : null}
-                <Typography style={{ paddingTop: 4 }}>
+                <Typography className={classes.entranceType}>
                   {entrance.is_main_entrance ? (
                     <FormattedMessage id="unit.entrances.main" />
                   ) : <FormattedMessage id="unit.entrances.secondary" />}
