@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import distance from '@turf/distance';
 import flip from '@turf/flip';
+import { FormattedMessage } from 'react-intl';
 import { getSelectedUnit } from '../../../../redux/selectors/selectedUnit';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { drawEntranceMarkreIcon } from '../../utils/drawIcon';
@@ -45,8 +46,8 @@ const EntranceMarker = ({ classes }) => {
                 ) : null}
                 <Typography style={{ paddingTop: 4 }}>
                   {entrance.is_main_entrance ? (
-                    'Pääsisäänkäynti'
-                  ) : 'Lisäsisäänkäynti'}
+                    <FormattedMessage id="unit.entrances.main" />
+                  ) : <FormattedMessage id="unit.entrances.secondary" />}
                 </Typography>
               </div>
             </Popup>
