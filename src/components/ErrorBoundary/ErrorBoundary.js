@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ErrorComponent from './ErrorComponent';
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -12,25 +13,12 @@ class ErrorBoundary extends React.Component {
     return { hasError: true };
   }
 
-  componentDidCatch(error, errorInfo) {
-    // You can also log the error to an error reporting service
-    // logErrorToMyService(error, errorInfo);
-  }
-
   render() {
-    const { children, classes, errorComponent } = this.props;
+    const { children } = this.props;
     const { hasError } = this.state;
     if (hasError) {
-      const defaultComponent = (
-        <div className={classes.container}>
-          <h1 className={classes.text}>Something went wrong</h1>
-        </div>
-      );
-      const renderedContent = errorComponent || defaultComponent;
-      // You can render any custom fallback UI
-      return renderedContent;
+      return <ErrorComponent error="error" />;
     }
-
     return children;
   }
 }
