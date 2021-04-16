@@ -19,41 +19,41 @@ const TitleBar = ({
   ariaHidden,
   sticky,
 }) => {
-  let componentClasses = `${className || ''} ${classes.container} ${!backButton && !icon ? classes.textBar : ''}`;
+  const isMobile = useMobileStatus();
+  let componentClasses = `${className || ''} ${classes.container} ${!backButton && !icon ? classes.textBar : ''} ${backButton ? classes.multiLine : ''} `;
 
   if (sticky) {
-    const isMobile = useMobileStatus();
     componentClasses += `sticky ${isMobile ? classes.mobileSticky : classes.sticky}`;
   }
 
 
   return (
-    <>
-      <div className={componentClasses}>
-        {
+    <div className={componentClasses}>
+      {
         backButton
         && (
-          <BackButton
-            onClick={backButtonOnClick}
-            ariaLabel={backButtonSrText}
-            className={classes.iconButton}
-            variant="icon"
-            focusVisibleClassName={classes.buttonFocus}
-          />
+        <BackButton
+          onClick={backButtonOnClick}
+          ariaLabel={backButtonSrText}
+          className={classes.iconButton}
+          focusVisibleClassName={classes.buttonFocus}
+          variant="container"
+        />
         )
       }
-        {
+      {
         !backButton
         && icon
         && (
-          <div className={classes.iconButton} aria-hidden="true">
+          <div className={classes.icon} aria-hidden="true">
             {icon}
           </div>
         )
       }
+      <div className={classes.titleContainer}>
         <Typography
           aria-hidden={ariaHidden}
-          className={classes.title}
+          className={`${classes.title} ${backButton ? classes.titleLarge : ''}`}
           component={titleComponent}
           tabIndex="-1"
         >
@@ -61,12 +61,12 @@ const TitleBar = ({
         </Typography>
 
         {distance && (
-        <Typography className={classes.distance}>
-          {distance}
-        </Typography>
+          <Typography className={classes.distance}>
+            {distance}
+          </Typography>
         )}
       </div>
-    </>
+    </div>
   );
 };
 
