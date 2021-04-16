@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
-import { IconButton, Typography, Button } from '@material-ui/core';
+import {
+  IconButton, Typography, Button, ButtonBase,
+} from '@material-ui/core';
 import { ArrowBack } from '@material-ui/icons';
 import { getPathName } from '../../utils/path';
 
@@ -19,7 +20,6 @@ const BackButton = (props) => {
     ariaLabel,
     focusVisibleClassName,
   } = props;
-
   // Generate dynamic text
   // Figure out correct translation id suffix
   let idSuffix = 'goToHome';
@@ -43,6 +43,8 @@ const BackButton = (props) => {
   const textId = `general.back.${idSuffix}`;
   const defaultMessage = intl.formatMessage({ id: 'general.back' });
   const buttonText = intl.formatMessage({ id: textId, defaultMessage });
+  // Set button text as state, so that it does not change
+  const [buttonTitle] = useState(buttonText);
 
 
   if (variant === 'icon') {
@@ -63,7 +65,7 @@ const BackButton = (props) => {
           }
         }}
       >
-        <ArrowBack />
+        <ArrowBack fontSize="inherit" />
       </IconButton>
     );
   }
@@ -71,12 +73,12 @@ const BackButton = (props) => {
   if (variant === 'container') {
     return (
       <div className={`${classes.flexRow} ${classes.container}`}>
-        <IconButton
+        <ButtonBase
           role="link"
           className={`${classes.containerButton} ${className}`}
           style={style}
           aria-hidden={srHidden}
-          aria-label={ariaLabel || buttonText}
+          aria-label={ariaLabel || buttonTitle}
           onClick={(e) => {
             e.preventDefault();
             if (onClick) {
@@ -86,9 +88,11 @@ const BackButton = (props) => {
             }
           }}
         >
-          <ArrowBack />
-        </IconButton>
-        <Typography aria-hidden className={`${classes.containerText}`} color="inherit" variant="body2"><FormattedMessage id="general.backTo" /></Typography>
+          <ArrowBack fontSize="inherit" />
+          <Typography aria-hidden className={`${classes.containerText}`} fontSize="inherit" color="inherit" variant="body2">
+            {buttonTitle}
+          </Typography>
+        </ButtonBase>
       </div>
     );
   }
