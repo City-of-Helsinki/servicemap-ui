@@ -16,6 +16,8 @@ import PrintView from '../views/PrintView';
 import { PrintProvider } from '../context/PrintContext';
 import { viewTitleID } from '../utils/accessibility';
 import ErrorBoundary from '../components/ErrorBoundary';
+import { ErrorProvider } from '../context/ErrorContext';
+import { ErrorComponent } from '../components';
 
 const { smallScreenBreakpoint } = config;
 
@@ -86,6 +88,7 @@ const valueStore = {};
 const DefaultLayout = (props) => {
   const [showPrintView, togglePrintView] = useState(false);
   const [sidebarHidden, toggleSidebarHidden] = useState(false);
+  const [error, setError] = useState(false);
 
   const {
     currentPage,
@@ -139,62 +142,73 @@ const DefaultLayout = (props) => {
 
   return (
     <>
-      <div id="topArea" aria-hidden={!!settingsToggled} className={printClass}>
-        <h1 id="app-title" tabIndex="-1" className="sr-only app-title" component="h1">
-          <FormattedMessage id="app.title" />
-        </h1>
-        {/* Jump link to main content for screenreaders
-        Must be first interactable element on page */}
-        <FocusableSRLinks items={srLinks} />
-        <PrintProvider value={togglePrint}>
-          <TopBar
-            settingsOpen={settingsToggled}
-            smallScreen={isSmallScreen}
-          />
-        </PrintProvider>
-      </div>
+    <ErrorProvider value={{error, setError}}>
       {
-        showPrintView
-        && (
-          <PrintView togglePrintView={togglePrint} />
+        error && <ErrorComponent error={error} />
+      }
+      {
+        !error && 
+        (
+          <ErrorBoundary>
+            <div id="topArea" aria-hidden={!!settingsToggled} className={printClass}>
+              <h1 id="app-title" tabIndex="-1" className="sr-only app-title" component="h1">
+                <FormattedMessage id="app.title" />
+              </h1>
+              {/* Jump link to main content for screenreaders
+              Must be first interactable element on page */}
+              <FocusableSRLinks items={srLinks} />
+              <PrintProvider value={togglePrint}>
+                <TopBar
+                  settingsOpen={settingsToggled}
+                  smallScreen={isSmallScreen}
+                />
+              </PrintProvider>
+            </div>
+            {
+              showPrintView
+              && (
+                <PrintView togglePrintView={togglePrint} />
+              )
+            }
+            <div id="activeRoot" style={styles.activeRoot} className={printClass}>
+              <main className="SidebarWrapper" style={styles.sidebar}>
+                <AlertBox />
+                {settingsToggled && (
+                  <Settings
+                    key={settingsToggled}
+                    isMobile={!!isMobile}
+                  />
+                )}
+                <div style={styles.sidebarContent} aria-hidden={!!settingsToggled}>
+                  <ViewRouter />
+                </div>
+              </main>
+              <div
+                aria-label={intl.formatMessage({ id: 'map.ariaLabel' })}
+                aria-hidden={!!settingsToggled}
+                tabIndex="-1"
+                style={styles.map}
+              >
+                <MapView
+                  sidebarHidden={sidebarHidden}
+                  toggleSidebar={toggleSidebar}
+                  isMobile={!!isMobile}
+                />
+              </div>
+            </div>
+
+            <footer role="contentinfo" aria-hidden={!!settingsToggled} className="sr-only">
+              <DesktopComponent>
+                <a href="#app-title">
+                  <FormattedMessage id="general.backToStart" />
+                </a>
+              </DesktopComponent>
+            </footer>
+          </ErrorBoundary>
         )
       }
-      <div id="activeRoot" style={styles.activeRoot} className={printClass}>
-        <main className="SidebarWrapper" style={styles.sidebar}>
-          <AlertBox />
-          {settingsToggled && (
-            <Settings
-              key={settingsToggled}
-              isMobile={!!isMobile}
-            />
-          )}
-          <div style={styles.sidebarContent} aria-hidden={!!settingsToggled}>
-            <ViewRouter />
-          </div>
-        </main>
-        <div
-          aria-label={intl.formatMessage({ id: 'map.ariaLabel' })}
-          aria-hidden={!!settingsToggled}
-          tabIndex="-1"
-          style={styles.map}
-        >
-          <ErrorBoundary>
-            <MapView
-              sidebarHidden={sidebarHidden}
-              toggleSidebar={toggleSidebar}
-              isMobile={!!isMobile}
-            />
-          </ErrorBoundary>
-        </div>
-      </div>
-
-      <footer role="contentinfo" aria-hidden={!!settingsToggled} className="sr-only">
-        <DesktopComponent>
-          <a href="#app-title">
-            <FormattedMessage id="general.backToStart" />
-          </a>
-        </DesktopComponent>
-      </footer>
+      
+    </ErrorProvider>
     </>
   );
 };
