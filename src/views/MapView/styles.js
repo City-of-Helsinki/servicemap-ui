@@ -133,7 +133,7 @@ const styles = theme => ({
     borderRadius: '50%',
   },
   bgCircle: {
-    backgroundColor: theme.palette.primary.highContrast,
+    backgroundColor: theme.palette.white.main,
     width: 40,
     height: 40,
     '&.markerHighlighted': {
@@ -144,11 +144,17 @@ const styles = theme => ({
     background: 'rgba(0, 22, 183, 0.25)',
     width: 40,
     height: 40,
+    '&.dark': {
+      background: theme.palette.white.main,
+    },
   },
   midCircle: {
     background: 'rgba(0, 22, 183, 0.50)',
     width: 35,
     height: 35,
+    '&.dark': {
+      background: theme.palette.white.dark,
+    },
   },
   innerCircle: {
     fontFamily: 'Lato',

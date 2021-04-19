@@ -142,8 +142,8 @@ const MarkerCluster = ({
     const icon = global.L.divIcon({
       html: `
         <div class="${classes.bgCircle} ${classes.markerCircle} ${iconClasses}" aria-hidden="true" tabindex="-1">
-          <div class="${classes.outerCircle} ${classes.markerCircle}" aria-hidden="true" tabindex="-1">
-            <div class="${classes.midCircle} ${classes.markerCircle}" aria-hidden="true" tabindex="-1">
+          <div class="${classes.outerCircle} ${classes.markerCircle} ${useContrast ? 'dark' : ''}" aria-hidden="true" tabindex="-1">
+            <div class="${classes.midCircle} ${classes.markerCircle} ${useContrast ? 'dark' : ''}" aria-hidden="true" tabindex="-1">
               <div class="${classes.innerCircle} ${classes.markerCircle} ${useContrast ? 'dark' : ''}" aria-hidden="true" tabindex="-1">
                 ${cCount}
               </div>
