@@ -18,6 +18,7 @@ const translations = {
 
   // Address
   'address': 'Address',
+  'address.description': 'View services near the address',
   'address.search': 'Address search',
   'address.search.cleared': 'Search box cleared',
   'address.search.location': 'Chosen location is {location}',
@@ -70,6 +71,7 @@ const translations = {
   'area.list.education.swedish': 'Swedish school areas',
   'area.list.preschool': 'Pre-school education',
   'area.list.neighborhood': 'Neighborhood',
+  'area.list.postcode': 'Postcode',
   'area.list.postcode_area': 'Postcode area',
   'area.list.rescue_area': 'Civil defence district',
   'area.list.rescue_district': 'Civil defence section',
@@ -364,7 +366,8 @@ const translations = {
   'unit.route.extra': '(New tab. The HSL Journey Planner is not an accessible service)',
   'unit.socialMedia.title': 'The service location on social media',
   'unit.outdoorLink': 'Check the condition of an exercise location in the ulkoliikunta.fi service',
-
+  'unit.seo.description': 'View location on the map',
+  'unit.seo.description.accessibility': 'View accessibility info and location on the map',
   // Search
   'search': 'Search',
   'search.arrowLabel': 'Refine',
@@ -436,6 +439,7 @@ const translations = {
   'service.nearby': 'Nearby services',
   'service.units.empty': 'Service does not have locations',
   'service.tab': 'Services and events',
+  'service.description': 'View locations and contact information of services',
 
   // Service tree
   'services': 'Services list',
