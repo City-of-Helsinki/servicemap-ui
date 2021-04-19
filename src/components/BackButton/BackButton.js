@@ -18,6 +18,7 @@ const BackButton = (props) => {
     navigator,
     srHidden,
     ariaLabel,
+    text,
     focusVisibleClassName,
   } = props;
   // Generate dynamic text
@@ -72,28 +73,26 @@ const BackButton = (props) => {
 
   if (variant === 'container') {
     return (
-      <div className={`${classes.flexRow} ${classes.container}`}>
-        <ButtonBase
-          role="link"
-          className={`${classes.containerButton} ${className}`}
-          style={style}
-          aria-hidden={srHidden}
-          aria-label={ariaLabel || buttonTitle}
-          onClick={(e) => {
-            e.preventDefault();
-            if (onClick) {
-              onClick(e);
-            } else if (navigator) {
-              navigator.goBack();
-            }
-          }}
-        >
-          <ArrowBack fontSize="inherit" />
-          <Typography aria-hidden className={`${classes.containerText}`} fontSize="inherit" color="inherit" variant="body2">
-            {buttonTitle}
-          </Typography>
-        </ButtonBase>
-      </div>
+      <ButtonBase
+        role="link"
+        className={`${classes.containerButton} ${className}`}
+        style={style}
+        aria-hidden={srHidden}
+        aria-label={ariaLabel || buttonTitle}
+        onClick={(e) => {
+          e.preventDefault();
+          if (onClick) {
+            onClick(e);
+          } else if (navigator) {
+            navigator.goBack();
+          }
+        }}
+      >
+        <ArrowBack fontSize="inherit" />
+        <Typography aria-hidden className={`${classes.containerText}`} fontSize="inherit" color="inherit" variant="body2">
+          {text || buttonTitle}
+        </Typography>
+      </ButtonBase>
     );
   }
 
@@ -131,6 +130,7 @@ BackButton.propTypes = {
   variant: PropTypes.oneOf(['container', 'icon', null]),
   srHidden: PropTypes.bool,
   ariaLabel: PropTypes.string,
+  text: PropTypes.string,
   focusVisibleClassName: PropTypes.string,
 };
 
@@ -142,6 +142,7 @@ BackButton.defaultProps = {
   variant: null,
   srHidden: false,
   ariaLabel: null,
+  text: null,
   focusVisibleClassName: null,
 };
 

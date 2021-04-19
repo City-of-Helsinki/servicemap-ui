@@ -9,6 +9,7 @@ import useMobileStatus from '../../utils/isMobile';
 const TitleBar = ({
   backButton,
   backButtonOnClick,
+  backButtonText,
   backButtonSrText,
   classes,
   title,
@@ -34,6 +35,7 @@ const TitleBar = ({
         && (
         <BackButton
           onClick={backButtonOnClick}
+          text={backButtonText}
           ariaLabel={backButtonSrText}
           className={classes.iconButton}
           focusVisibleClassName={classes.buttonFocus}
@@ -73,6 +75,7 @@ const TitleBar = ({
 TitleBar.propTypes = {
   backButton: PropTypes.bool,
   backButtonOnClick: PropTypes.func,
+  backButtonText: PropTypes.string,
   backButtonSrText: PropTypes.string,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   title: PropTypes.node.isRequired,
@@ -87,6 +90,7 @@ TitleBar.propTypes = {
 TitleBar.defaultProps = {
   backButton: false,
   backButtonOnClick: null,
+  backButtonText: null,
   backButtonSrText: null,
   icon: null,
   className: null,

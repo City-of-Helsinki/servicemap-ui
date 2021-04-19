@@ -1,14 +1,7 @@
 
 export default theme => ({
-  container: {
-    zIndex: 0,
-  },
-  flexRow: {
-    alignItems: 'center',
-    display: 'flex',
-    flexDirection: 'row',
-  },
   containerButton: {
+    zIndex: 0,
     color: 'inherit',
     padding: theme.spacing(1),
   },
