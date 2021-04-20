@@ -255,6 +255,7 @@ const SMTheme = createMuiTheme({
   custom,
   palette: paletteDefault,
   zIndex,
+  focusIndicator,
 });
 
 const SMThemeDark = createMuiTheme({
@@ -266,6 +267,7 @@ const SMThemeDark = createMuiTheme({
   custom,
   palette: paletteDark,
   zIndex,
+  focusIndicator: focusIndicatorDark,
 });
 
 

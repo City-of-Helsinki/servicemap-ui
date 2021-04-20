@@ -138,10 +138,20 @@ const MarkerCluster = ({
     const unitClasses = children
       .map(marker => marker?.options?.customUnitData?.id && `unit-marker-${marker.options.customUnitData.id}`)
       .filter(v => !!v);
-    const iconClasses = `unitClusterMarker ${classes.unitClusterMarker} ${unitClasses.join(' ')} ${useContrast ? 'dark' : ''}`;
+    const iconClasses = unitClasses.join(' ');
     const icon = global.L.divIcon({
-      html: `<span aria-hidden="true" tabindex="-1">${cCount}</span>`,
-      className: iconClasses,
+      html: `
+        <div class="${classes.bgCircle} ${classes.markerCircle} ${iconClasses}" aria-hidden="true" tabindex="-1">
+          <div class="${classes.outerCircle} ${classes.markerCircle} ${useContrast ? 'dark' : ''}" aria-hidden="true" tabindex="-1">
+            <div class="${classes.midCircle} ${classes.markerCircle} ${useContrast ? 'dark' : ''}" aria-hidden="true" tabindex="-1">
+              <div class="${classes.innerCircle} ${classes.markerCircle} ${useContrast ? 'dark' : ''}" aria-hidden="true" tabindex="-1">
+                ${cCount}
+              </div>
+            </div>
+          </div>
+        </div>
+      `,
+      className: 'unitClusterMarker',
       iconSize: global.L.point(iconSize, iconSize, true),
     });
     return icon;

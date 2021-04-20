@@ -214,15 +214,11 @@ const MapView = (props) => {
   });
 
   useEffect(() => {
-    if (!highlightedUnit || !mapUtility) {
+    if (currentPage !== 'unit' || !highlightedUnit || !mapUtility) {
       return;
     }
-    if (!unitList.length) {
-      mapUtility.centerMapToUnit(highlightedUnit);
-      return;
-    }
-    mapUtility.panInside(highlightedUnit);
-  }, [highlightedUnit, mapUtility]);
+    mapUtility.centerMapToUnit(highlightedUnit);
+  }, [highlightedUnit, mapUtility, currentPage]);
 
 
   useEffect(() => { // On map type change
@@ -352,14 +348,14 @@ const MapView = (props) => {
           zoom={zoom}
           minZoom={mapObject.options.minZoom}
           maxZoom={mapObject.options.maxZoom}
+          unitZoom={mapObject.options.unitZoom}
           maxBounds={mapObject.options.mapBounds || mapOptions.defaultMaxBounds}
           maxBoundsViscosity={1.0}
           onClick={(ev) => { setClickCoordinates(ev); }}
         >
-
           <MarkerCluster
             map={mapRef?.current?.leafletElement}
-            data={unitData}
+            data={currentPage === 'unit' && highlightedUnit ? [highlightedUnit] : unitData}
             measuringMode={measuringMode}
           />
           {
