@@ -3,6 +3,7 @@ const translations = {
   'app.title': 'Palvelukartta',
   'app.description': 'Pääkaupunkiseudun kaikki julkiset palvelut ulottuvillasi.',
   'app.og.image.alt': 'Palvelukartan logo',
+  'app.errorpage.title': 'Virheviestisivu',
 
   // Accessibility
   'accessibility': 'Esteettömyys',

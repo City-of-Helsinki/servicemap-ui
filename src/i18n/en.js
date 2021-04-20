@@ -3,6 +3,7 @@ const translations = {
   'app.title': 'Service map',
   'app.description': 'Find services near your home',
   'app.og.image.alt': 'Servicemap logo',
+  'app.errorpage.title': 'Error message page',
 
   // Accessibility
   'accessibility': 'Accessibility',
