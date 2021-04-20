@@ -41,7 +41,7 @@ class TopBar extends React.Component {
               const settings = document.getElementsByClassName('TitleText')[0];
               if (settings) {
                 // Focus on settings title
-                settings.firstChild.focus();
+                settings.focus();
               } else {
                 button.focus();
               }

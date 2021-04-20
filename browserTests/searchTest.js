@@ -176,7 +176,7 @@ test('Expanded suggestions does open and close correctly', async(t) => {
   const button2 = await Selector('#ExpandSuggestions');
   await t
     // Check that back button takes back to correct view
-    .expect(viewText).eql('Hakutulosnäkymä', 'BackButton should take user back to search view')
+    .expect(viewText).eql('Hakutulossivu', 'BackButton should take user back to search view')
     // Check that focus is moved correctly when returning to search view
     .expect(button2.focused).ok('ExpandSuggestions button should have focus');
 
