@@ -1,5 +1,5 @@
 import { Typography } from '@material-ui/core';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import distance from '@turf/distance';
@@ -13,10 +13,32 @@ const EntranceMarker = ({ classes }) => {
   const getLocaleText = useLocaleText();
   const unit = useSelector(state => getSelectedUnit(state));
   const theme = useSelector(state => state.user.theme);
+  const map = useSelector(state => state.mapRef);
 
   const unitPoint = flip(unit.location);
+  const zoomLimit = map.leafletElement.options.unitZoom + 2;
 
-  if (unit?.entrances?.length) {
+  const shouldShowMarkers = () => map.leafletElement.getZoom() >= zoomLimit;
+  const [showMarkers, setShowMarkers] = useState(shouldShowMarkers());
+
+  const checkMarkerVisibility = () => {
+    if (shouldShowMarkers()) {
+      setShowMarkers(true);
+    } else {
+      setShowMarkers(false);
+    }
+  };
+
+  useEffect(() => {
+    // Add listener for zoom level to check if markers should be shown
+    map.leafletElement.on('zoomend', checkMarkerVisibility);
+    return () => {
+      map.leafletElement.off('zoomend', checkMarkerVisibility);
+    };
+  }, []);
+
+
+  if (unit?.entrances?.length && showMarkers) {
     const { Marker, Popup } = global.rL || {};
     return (
       unit.entrances.map((entrance) => {
