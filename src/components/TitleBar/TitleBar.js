@@ -55,7 +55,7 @@ const TitleBar = ({
       <div className={classes.titleContainer}>
         <Typography
           aria-hidden={ariaHidden}
-          className={`${classes.title} ${backButton ? classes.titleLarge : ''}`}
+          className={`TitleText ${classes.title} ${backButton ? classes.titleLarge : ''}`}
           component={titleComponent}
           tabIndex="-1"
         >

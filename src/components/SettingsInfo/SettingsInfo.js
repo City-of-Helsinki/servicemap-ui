@@ -75,7 +75,7 @@ const SettingsInfo = ({
           onClick={() => {
             toggleSettings(settingsPage || 'search');
             setTimeout(() => {
-              const settings = document.getElementsByClassName('SettingsTitle')[0];
+              const settings = document.getElementsByClassName('TitleText')[0];
               if (settings) {
                 // Focus on settings title
                 settings.firstChild.focus();

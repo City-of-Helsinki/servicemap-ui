@@ -101,7 +101,7 @@ test('Settings saves correctly', async (t) => {
     .expect(closeButton.focused).ok('Expect focus to move to close button on save')
   ;
 
-  const title = Selector('.SettingsTitle').find('h2');
+  const title = Selector('.TitleText');
   await t
     .click(checkboxes.nth(1))
     .expect(checkboxes.nth(1).checked).notOk('Expected second checkbox to be unchecked')

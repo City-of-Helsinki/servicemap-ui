@@ -329,7 +329,7 @@ test('SettingsInfo works correctly', async(t) => {
   ;
 
   // Expect title to be focused in settings view
-  const title = Selector('.SettingsTitle').child(0);
+  const title = Selector('.TitleText');
   const backButton = Selector('button[aria-label="Sulje asetukset"]').nth(0);
   await t
     .expect(title.focused).ok('Expected title to be focused on entering settings view')
