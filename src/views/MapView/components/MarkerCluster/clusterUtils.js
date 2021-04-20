@@ -97,25 +97,23 @@ export const createPopupContent = (unit, classes, getLocaleText, distance, intl,
   ReactDOMServer.renderToStaticMarkup(
     <div className={classes.unitTooltipWrapper}>
       <p className={classes.unitTooltipTitle}>{unit.name && getLocaleText(unit.name)}</p>
-      <div className={classes.unitTooltipSubContainer}>
-        {
-          unit.street_address
-          && (
-            <p className={classes.unitTooltipSubtitle}>
-              {getAddressFromUnit(unit, getLocaleText, intl)}
-            </p>
-          )
-        }
-        {
-          distance
-          && (
-            <p className={classes.unitTooltipSubtitle}>
-              {distance.distance}
-              {distance.type}
-            </p>
-          )
-        }
-      </div>
+      {
+        unit.street_address
+        && (
+          <p className={classes.unitTooltipSubtitle}>
+            {getAddressFromUnit(unit, getLocaleText, intl)}
+          </p>
+        )
+      }
+      {
+        distance
+        && (
+          <p className={classes.unitTooltipSubtitle}>
+            {distance.distance}
+            {distance.type}
+          </p>
+        )
+      }
       {isMobile && (
         <p className={classes.unitTooltipLink}>
           {intl.formatMessage({ id: 'unit.showInformation' })}

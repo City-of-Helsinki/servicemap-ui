@@ -145,7 +145,7 @@ const Feedback = () => (
 
 const Area = () => (
   <TitleWrapper messageId="general.pageTitles.area">
-    <PageWrapper headMsgId="" page="area">
+    <PageWrapper headMsgId="general.pageTitles.area" page="area">
       <AreaView />
     </PageWrapper>
   </TitleWrapper>

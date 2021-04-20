@@ -18,6 +18,7 @@ const translations = {
 
   // Address
   'address': 'Osoite',
+  'address.description': 'Katso osoitteen lähellä olevat palvelut', // TODO: translate
   'address.search': 'Osoitehaku',
   'address.search.cleared': 'Hakukenttä tyhjennetty',
   'address.search.location': 'Valittu sijainti on {location}',
@@ -70,6 +71,7 @@ const translations = {
   'area.list.education.swedish': 'Ruotsinkieliset koulualueet',
   'area.list.preschool': 'Esiopetus',
   'area.list.neighborhood': 'Kaupunginosa',
+  'area.list.postcode': 'Postinumero',
   'area.list.postcode_area': 'Postinumeroalue',
   'area.list.rescue_area': 'Suojelupiiri',
   'area.list.rescue_district': 'Suojelulohko',
@@ -287,6 +289,9 @@ const translations = {
   'map.address.notFound': 'Osoitetta ei löytynyt',
   'map.address.info': 'Osoitteen tiedot',
   'map.unit.cluster.popup.info': '{count} toimipistettä',
+  'map.button.sidebar.hide': 'Pienennä sivupaneeli',
+  'map.button.sidebar.show': 'Laajenna sivupaneeli',
+
 
   // Print
   'print.alert': 'Käytä tulostamiseen työkaluvalikon tulostusta',
@@ -366,6 +371,8 @@ const translations = {
   'unit.route.extra': '(Uusi välilehti. HSL-reittiopas ei ole saavutettava palvelu)',
   'unit.socialMedia.title': 'Toimipiste sosiaalisessa mediassa',
   'unit.outdoorLink': 'Katso liikuntapaikan kunto ulkoliikunta.fi palvelusta',
+  'unit.seo.description': 'Katso sijainti kartalla',
+  'unit.seo.description.accessibility': 'Katso esteettömyystiedot ja sijainti kartalla',
 
   // Search
   'search': 'Hae',
@@ -439,6 +446,7 @@ const translations = {
   'service.nearby': 'Palvelut täällä asuville',
   'service.units.empty': 'Palvelulla ei ole toimipisteitä',
   'service.tab': 'Palvelut ja tapahtumat',
+  'service.description': 'Katso palveluiden sijainnit ja yhteystiedot',
 
   // Service tree
   'services': 'Palveluluettelo',

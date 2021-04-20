@@ -1,22 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import TitledList from '../../../../components/Lists/TitledList';
 import ServiceItem from '../../../../components/ListItems/ServiceItem';
+import useLocaleText from '../../../../utils/useLocaleText';
 
 // Teaching and education service node. Could be changed to exclude daycare centers etc.
 const educationNode = 1087;
 
-class Services extends React.Component {
-  // TODO: replace getLocaleText with useLocaleText when the component is converted to function component
-  serviceRef = null;
+const Services = ({ intl, unit }) => {
+  const getLocaleText = useLocaleText();
 
-  periodRef = null;
+  const [serviceList, setServiceList] = useState([]);
+  const [periodList, setPeriodList] = useState([]);
+  const [subjectList, setSubjectList] = useState([]);
 
-  constructor(props) {
-    super(props);
-    const { unit } = props;
+  const sortName = (list) => {
+    const compare = (a, b) => {
+      if (getLocaleText(a.name) < getLocaleText(b.name)) {
+        return -1;
+      }
+      if (getLocaleText(a.name) > getLocaleText(b.name)) {
+        return 1;
+      }
+      return 0;
+    };
+    list.sort(compare);
+  };
 
+  useEffect(() => {
     const periodData = new Set();
     // If unit has service node Education, form list of periods
     const subjectList = [];
@@ -34,45 +46,24 @@ class Services extends React.Component {
         }
       });
 
-      this.sortName(serviceList);
-      this.sortName(subjectList);
+      sortName(serviceList);
+      sortName(subjectList);
     } else {
       // Else display services normally
       serviceList = unit.services;
-      this.sortName(serviceList);
+      sortName(serviceList);
       // this.setState({ serviceList: unit.services });
     }
 
-    this.state = {
-      serviceList, // services || [],
-      subjectList,
-      periodList: [...periodData],
-    };
-  }
+    setServiceList(serviceList);
+    setSubjectList(subjectList);
+    setPeriodList([...periodData]);
+  }, [unit.id]);
 
-  sortName = (list) => {
-    const { getLocaleText } = this.props;
-    const compare = (a, b) => {
-      if (getLocaleText(a.name) < getLocaleText(b.name)) {
-        return -1;
-      }
-      if (getLocaleText(a.name) > getLocaleText(b.name)) {
-        return 1;
-      }
-      return 0;
-    };
-    list.sort(compare);
-  };
-
-  renderServices() {
-    const {
-      serviceList,
-    } = this.state;
-
-    return (
-      <div ref={(ref) => { this.serviceRef = ref; }}>
-        {/* Services */}
-        {serviceList && serviceList.length > 0 && (
+  const renderServices = () => (
+    <div>
+      {/* Services */}
+      {serviceList && serviceList.length > 0 && (
         <TitledList
           title={<FormattedMessage id="unit.services" />}
           subtitle={<FormattedMessage id="unit.services.count" values={{ count: serviceList.length }} />}
@@ -91,23 +82,14 @@ class Services extends React.Component {
             })
           }
         </TitledList>
-        )}
-      </div>
-    );
-  }
+      )}
+    </div>
+  );
 
-  renderPeriods() {
-    const {
-      intl,
-    } = this.props;
-    const {
-      periodList, subjectList,
-    } = this.state;
-
-    return (
-      <div ref={(ref) => { this.periodRef = ref; }}>
-        {/* Education periods */}
-        {
+  const renderPeriods = () => (
+    <div>
+      {/* Education periods */}
+      {
           periodList.map((period) => {
             const filteredSubjects = subjectList.filter(subject => subject.period && `${subject.period[0]}–${subject.period[1]}` === period);
             return (
@@ -133,29 +115,25 @@ class Services extends React.Component {
             );
           })
         }
-      </div>
-    );
-  }
+    </div>
+  );
 
-  render() {
-    return (
-      <>
-        {
-          this.renderServices()
-        }
+  return (
+    <>
+      {
+        renderServices()
+      }
 
-        {
-          this.renderPeriods()
-        }
-      </>
-    );
-  }
-}
+      {
+        renderPeriods()
+      }
+    </>
+  );
+};
 
 Services.propTypes = {
   unit: PropTypes.objectOf(PropTypes.any).isRequired,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
-  getLocaleText: PropTypes.func.isRequired,
 };
 
 export default Services;
