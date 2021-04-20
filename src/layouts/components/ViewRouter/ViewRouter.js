@@ -15,7 +15,7 @@ import DivisionView from '../../../views/DivisionView';
 import InfoView from '../../../views/InfoView';
 import ExtendedData from '../../../views/UnitView/components/ExtendedData';
 import AreaView from '../../../views/AreaView';
-import { ErrorTrigger } from '../../../components/ErrorBoundary/ErrorTrigger';
+import { ErrorTrigger } from '../../../components';
 
 const TitleWrapper = ({ children, messageId }) => (
   <>

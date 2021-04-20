@@ -1,7 +1,6 @@
 import { Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/styles';
 import React from 'react';
-import useMobileStatus from '../../utils/isMobile';
 import UserHelper from '../../utils/user';
 import HomeLogo from '../Logos/HomeLogo';
 import styles from './styles';
@@ -12,8 +11,7 @@ export const ErrorComponent = withStyles(styles)(({
 }) => {
   let content = null;
   const theme = UserHelper.useTheme();
-  const isMobile = useMobileStatus();
-  const containerClasses = `${classes.viewContainer} ${isMobile && classes.viewMobileHeight}`;
+  const containerClasses = `${classes.viewContainer}`;
 
   switch(error) {
     case 'error': {
