@@ -63,8 +63,7 @@ const mapTypes = {
     clusterPopupVisibility: 13,
     unitZoom: 15,
     mobileZoom: 12,
-    transitZoom: 17,
-    mobileTransitZoom: 16,
+    detailZoom: 17,
   },
   accessible_map: {
     name: 'accessible_map',
@@ -76,8 +75,7 @@ const mapTypes = {
     clusterPopupVisibility: 13,
     unitZoom: 15,
     mobileZoom: 12,
-    transitZoom: 17,
-    mobileTransitZoom: 16,
+    detailZoom: 17,
   },
   ortographic: {
     name: 'ortographic',
@@ -91,8 +89,7 @@ const mapTypes = {
     clusterPopupVisibility: 6,
     unitZoom: 7,
     mobileZoom: 4,
-    transitZoom: 9,
-    mobileTransitZoom: 8,
+    detailZoom: 9,
     mapBounds: [
       [60.590720832407364, 25.390521218333532],
       [60.590720832407364, 24.276736721022225],
@@ -112,8 +109,7 @@ const mapTypes = {
     clusterPopupVisibility: 11,
     unitZoom: 12,
     mobileZoom: 9,
-    transitZoom: 14,
-    mobileTransitZoom: 13,
+    detailZoom: 14,
     mapBounds: [
       [60.402200415095926, 25.271114398151653],
       [60.402200415095926, 24.49246149510767],

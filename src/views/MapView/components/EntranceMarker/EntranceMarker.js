@@ -16,7 +16,7 @@ const EntranceMarker = ({ classes }) => {
   const map = useSelector(state => state.mapRef);
 
   const unitPoint = flip(unit.location);
-  const zoomLimit = map.leafletElement.options.unitZoom + 2;
+  const zoomLimit = map.leafletElement.options.detailZoom;
 
   const shouldShowMarkers = () => map.leafletElement.getZoom() >= zoomLimit;
   const [showMarkers, setShowMarkers] = useState(shouldShowMarkers());

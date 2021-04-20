@@ -350,6 +350,7 @@ const MapView = (props) => {
           minZoom={mapObject.options.minZoom}
           maxZoom={mapObject.options.maxZoom}
           unitZoom={mapObject.options.unitZoom}
+          detailZoom={mapObject.options.detailZoom}
           maxBounds={mapObject.options.mapBounds || mapOptions.defaultMaxBounds}
           maxBoundsViscosity={1.0}
           onClick={(ev) => { setClickCoordinates(ev); }}
