@@ -12,12 +12,13 @@ import logoSV from '../../../assets/images/Logo-SWE.svg';
 import logoSVContrast from '../../../assets/images/Logo-SWE-Contrast.svg';
 import styles from './styles';
 import config from '../../../../config';
-import { getLocale } from '../../../redux/selectors/locale';
+import UserHelper from '../../../utils/user';
 
 const HomeLogo = (props) => {
   const {
-    contrast, classes, locale, ...rest
+    contrast, classes, ...rest
   } = props;
+  const locale = UserHelper.useLocale();
 
   const getLogo = (production = false, contrast = false) => {
     if (production) {
@@ -43,9 +44,9 @@ const HomeLogo = (props) => {
   const logo = getLogo(config.production, contrast);
 
   return (
-    <div role="img" {...rest}>
+    <a {...rest} href={`/${locale}`}>
       <img src={logo} alt="" className={classes.icon} />
-    </div>
+    </a>
   );
 };
 
@@ -53,15 +54,10 @@ const HomeLogo = (props) => {
 HomeLogo.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   contrast: PropTypes.bool,
-  locale: PropTypes.oneOf(config.supportedLanguages).isRequired,
 };
 
 HomeLogo.defaultProps = {
   contrast: false,
 };
 
-const mapStateToProps = state => ({
-  locale: getLocale(state),
-});
-
-export default connect(mapStateToProps, {})(withStyles(styles)(HomeLogo));
+export default withStyles(styles)(HomeLogo);
