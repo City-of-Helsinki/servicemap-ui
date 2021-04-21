@@ -18,6 +18,7 @@ const translations = {
 
   // Address
   'address': 'Adress',
+  'address.description': 'Se tjänsterna i närheten av adressen',
   'address.search': 'Adresssök',
   'address.search.cleared': 'Sökfältet har tömts',
   'address.search.location': 'Den valda positionen är {location}',
@@ -39,16 +40,24 @@ const translations = {
   'address.emergency_care.link.text': '[<a>joursidor</a>]',
 
   // Area
+  // TODO: clean unused translations
   'area.searchbar.infoText.address': 'Skriv din hemadress',
   'area.searchbar.infoText.optional': '(valfri)',
-  'area.tab.selection': 'Val av område',
-  'area.tab.services': 'Tjänster i området',
+  'area.tab.publicServices': 'Områden för offentliga tjänster',
+  'area.tab.geographical': 'Stadsdelar och postnummerområden',
   'area.services.local': 'Tjänster i ditt eget område',
-  'area.services.nearby': 'Tjänster i närområdena',
+  'area.services.nearby': 'Lista över tjänsterna i närområden',
+  'area.services.all': 'Lista över tjänsterna',
   'area.info': 'Välj ett område, vars tjänster du vill ha information om. Genom att skriva din hemadress i sökfältet öppnas en karta och under fliken Tjänster i området visas de områden och distrikt som du hör till',
   'area.choose.district': 'Väl område',
-  'area.choose.subdistrict': 'Väl och öppna {category}',
-  'area.close.subdistrict': 'Stäng {category}',
+  'area.list': 'Val av område',
+  'area.localAddress.title': 'Uppgifter enligt din adress',
+  'area.localAddress.neighborhood': 'Stadsdel: {area}',
+  'area.localAddress.postCode': 'Postnummer: {area}',
+  'area.geographicalServices.neighborhood': 'Tjänster i stadsdelen ({length})',
+  'area.geographicalServices.postcode_area': 'Tjänster i postnummerområdet ({length})',
+  'area.neighborhood.title': 'Välj stadsdel',
+  'area.postcode_area.title': 'Välj postnummer',
   'area.noSelection': 'Väl område under fliken Val av område',
   'area.noUnits': 'Det finns inga verksamhetsställen i ditt valda område',
   'area.popupLink': 'Visa uppgifterna för området (ny flik)',
@@ -57,10 +66,12 @@ const translations = {
   'area.list.health': 'Hälsa',
   'area.list.education': 'Utbildning',
   'area.list.natureConservation': 'Naturskydd',
+  'area.list.parking': 'Parkering',
   'area.list.education.finnish': 'Finska skolområden',
   'area.list.education.swedish': 'Svenska skolområden',
   'area.list.preschool': 'Förskoleundervisning',
   'area.list.neighborhood': 'Stadsdel',
+  'area.list.postcode': 'Postnummer',
   'area.list.postcode_area': 'Postnummerområde',
   'area.list.rescue_area': 'Skyddsdistrikt',
   'area.list.rescue_district': 'Skyddsavsnitt',
@@ -74,6 +85,7 @@ const translations = {
   'area.list.preschool_education_fi': 'Finskt småbarnspedagogikområde',
   'area.list.preschool_education_sv': 'Svenskt småbarnspedagogikområde',
   'area.list.nature_reserve': 'Naturskyddsområden',
+  'area.list.resident_parking_zone': 'Invånarparkeringsområden',
 
   // Download dialog
   'download.cropping.title': 'Nuvarande filterinställningar',
@@ -277,6 +289,8 @@ const translations = {
   'map.address.notFound': 'Adressen hittades ej',
   'map.address.info': 'Adressens uppgifter',
   'map.unit.cluster.popup.info': '{count} verksamhetsställen', // TODO: Verify
+  'map.button.sidebar.hide': 'Pienennä sivupaneeli', // TODO: Translate
+  'map.button.sidebar.show': 'Laajenna sivupaneeli', // TODO: Translate
 
   // Print
   'print.alert': 'Använd utskriftsalternativet i verktygsmenyn',
@@ -352,6 +366,8 @@ const translations = {
   'unit.route.extra': '(Ny flik. HRT-reseplaneraren är inte en tillgänglig tjänst)',
   'unit.socialMedia.title': 'Verksamhetsstället på sociala medier',
   'unit.outdoorLink': 'Kolla skicket på en motionsplats i tjänsten ulkoliikunta.fi',
+  'unit.seo.description': 'Se läget på kartan',
+  'unit.seo.description.accessibility': 'Se tillgänglighetsuppgifterna och läget på kartan',
 
   // Search
   'search': 'Sök',
@@ -424,6 +440,7 @@ const translations = {
   'service.nearby': 'Närtjänster',
   'service.units.empty': 'Tjänsten har inga verksamhetsställen',
   'service.tab': 'Tjänster och evenemang',
+  'service.description': 'Se tjänsternas lägen och kontaktuppgifter',
 
   // Service tree
   'services': 'Förteckning över tjänster',
@@ -443,6 +460,8 @@ const translations = {
 
   // Settings
   'settings': 'Inställningar',
+  'settings.change': 'Redigera dina inställningar',
+  'settings.drawer.aria.title': 'Nuvarande inställningar',
   'settings.citySettings': 'Stad',
   'settings.citySettings.long': 'Stadsinställningar',
   'settings.mapSettings': 'Kartunderlag',
@@ -457,9 +476,10 @@ const translations = {
     other {# val}
   }`,
   'settings.accessibility': 'Tillgänglighetsuppgifter som gäller mig',
+  'settings.accessibility.none': 'Inga filtreringar',
   'settings.sense.title': 'Hörsel och syn',
-  'settings.sense.hearing': 'Jag använder hörapparat',
-  'settings.sense.visual': 'Jag är synskadad',
+  'settings.sense.hearingAid': 'Jag använder hörapparat',
+  'settings.sense.visuallyImpaired': 'Jag är synskadad',
   'settings.sense.colorblind': 'Jag har svårt att urskilja förger',
   'settings.info.heading': 'Inställningsuppgifter',
   'settings.info.title': 'Dina valda inställningar påverkar sökresultatet',
@@ -476,6 +496,7 @@ const translations = {
     one {Vald stad} 
     other {Vald städer}
   }`,
+  'settings.city.all': 'Visa alla',
   'settings.city.title': 'Stad',
   'settings.city.helsinki': 'Helsingfors',
   'settings.city.espoo': 'Esbo',

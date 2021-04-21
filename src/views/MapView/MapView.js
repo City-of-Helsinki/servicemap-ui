@@ -27,6 +27,8 @@ import MapUtility from './utils/mapUtility';
 import HideSidebarButton from './components/HideSidebarButton';
 import CoordinateMarker from './components/CoordinateMarker';
 import useLocaleText from '../../utils/useLocaleText';
+import PanControl from './components/PanControl';
+import { adjustControlElements } from './utils';
 
 if (global.window) {
   require('leaflet');
@@ -50,7 +52,7 @@ const MapView = (props) => {
     unitsLoading,
     serviceUnits,
     districtUnits,
-    districtUnitsFetching,
+    districtViewFetching,
     hideUserMarker,
     highlightedUnit,
     highlightedDistrict,
@@ -189,14 +191,7 @@ const MapView = (props) => {
     }
     // Hide zoom control amd attribution from screen readers
     setTimeout(() => {
-      const e = document.querySelector('.leaflet-control-zoom');
-      const e2 = document.querySelector('.leaflet-control-attribution');
-      if (e) {
-        e.setAttribute('aria-hidden', 'true');
-      }
-      if (e2) {
-        e2.setAttribute('aria-hidden', 'true');
-      }
+      adjustControlElements();
     }, 1);
 
     return () => {
@@ -204,6 +199,12 @@ const MapView = (props) => {
       clearMapReference();
     };
   }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      adjustControlElements();
+    }, 1)
+  }, [mapObject]);
 
   useEffect(() => { // Set map ref to redux once map is rendered
     if (!refSaved && mapRef.current) {
@@ -213,15 +214,11 @@ const MapView = (props) => {
   });
 
   useEffect(() => {
-    if (!highlightedUnit || !mapUtility) {
+    if (currentPage !== 'unit' || !highlightedUnit || !mapUtility) {
       return;
     }
-    if (!unitList.length) {
-      mapUtility.centerMapToUnit(highlightedUnit);
-      return;
-    }
-    mapUtility.panInside(highlightedUnit);
-  }, [highlightedUnit, mapUtility]);
+    mapUtility.centerMapToUnit(highlightedUnit);
+  }, [highlightedUnit, mapUtility, currentPage]);
 
 
   useEffect(() => { // On map type change
@@ -331,7 +328,7 @@ const MapView = (props) => {
         : prevMap.props.zoom + zoomDifference;
     }
 
-    const showLoadingScreen = () => districtUnitsFetching.length;
+    const showLoadingScreen = () => districtViewFetching;
     const userLocationAriaLabel = intl.formatMessage({ id: !userLocation ? 'location.notAllowed' : 'location.center' });
 
     return (
@@ -351,14 +348,14 @@ const MapView = (props) => {
           zoom={zoom}
           minZoom={mapObject.options.minZoom}
           maxZoom={mapObject.options.maxZoom}
+          unitZoom={mapObject.options.unitZoom}
           maxBounds={mapObject.options.mapBounds || mapOptions.defaultMaxBounds}
           maxBoundsViscosity={1.0}
           onClick={(ev) => { setClickCoordinates(ev); }}
         >
-
           <MarkerCluster
             map={mapRef?.current?.leafletElement}
-            data={unitData}
+            data={currentPage === 'unit' && highlightedUnit ? [highlightedUnit] : unitData}
             measuringMode={measuringMode}
           />
           {
@@ -424,6 +421,10 @@ const MapView = (props) => {
               />
             ) : null}
           </Control>
+          <PanControl
+            Control={Control}
+            map={mapRef?.current?.leafletElement}
+          />
           {
             !embeded
             && (
@@ -476,7 +477,7 @@ MapView.propTypes = {
   navigator: PropTypes.objectOf(PropTypes.any),
   serviceUnits: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
   districtUnits: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
-  districtUnitsFetching: PropTypes.arrayOf(PropTypes.any).isRequired,
+  districtViewFetching: PropTypes.bool.isRequired,
   setAddressLocation: PropTypes.func.isRequired,
   findUserLocation: PropTypes.func.isRequired,
   setMapRef: PropTypes.func.isRequired,

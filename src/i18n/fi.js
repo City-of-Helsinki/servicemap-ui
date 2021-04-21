@@ -18,6 +18,7 @@ const translations = {
 
   // Address
   'address': 'Osoite',
+  'address.description': 'Katso osoitteen lähellä olevat palvelut', // TODO: translate
   'address.search': 'Osoitehaku',
   'address.search.cleared': 'Hakukenttä tyhjennetty',
   'address.search.location': 'Valittu sijainti on {location}',
@@ -39,16 +40,24 @@ const translations = {
   'address.emergency_care.link.text': '[<a>päivystyssivut</a>]',
 
   // Area
+  // TODO: clean unused translations
   'area.searchbar.infoText.address': 'Kirjoita kotiosoitteesi',
   'area.searchbar.infoText.optional': '(valinnainen)',
-  'area.tab.selection': 'Alueen valinta',
-  'area.tab.services': 'Alueen palvelut',
+  'area.tab.publicServices': 'Julkisten palveluiden alueet',
+  'area.tab.geographical': 'Kaupunginosat ja postinumeroalueet',
   'area.services.local': 'Oman alueesi palvelut',
-  'area.services.nearby': 'Lähialueiden palvelut',
+  'area.services.nearby': 'Lähialueiden palvelut listana',
+  'area.services.all': 'Palvelut listana',
   'area.info': 'Valitse alue, jonka palveluista haluat tietoa. Kirjoittamalla alla olevaan hakukenttään kotiosoitteesi saat näkyville karttaan ja Alueen palvelut -välilehdelle alueet ja piirit, joihin kuulut',
   'area.choose.district': 'Valitse alue',
-  'area.choose.subdistrict': 'Valitse ja avaa {category}',
-  'area.close.subdistrict': 'Sulje {category}',
+  'area.list': 'Alueen valinta',
+  'area.localAddress.title': 'Osoitteesi tiedot',
+  'area.localAddress.neighborhood': 'Kaupunginosa: {area}',
+  'area.localAddress.postCode': 'Postinumero: {area}',
+  'area.geographicalServices.neighborhood': 'Kaupunginosan palvelut ({length})',
+  'area.geographicalServices.postcode_area': 'Postinumeroalueen palvelut ({length})',
+  'area.neighborhood.title': 'Valitse kaupunginosa',
+  'area.postcode_area.title': 'Valitse postinumero',
   'area.noSelection': 'Valitse alue Alueen Valinta -välilehdeltä',
   'area.noUnits': 'Valitsemallasi alueella ei ole toimipisteitä',
   'area.popupLink': 'Näytä alueen tiedot (uusi välilehti)',
@@ -57,10 +66,12 @@ const translations = {
   'area.list.health': 'Terveys',
   'area.list.education': 'Oppilaaksiottoalueet',
   'area.list.natureConservation': 'Luonnonsuojelu',
+  'area.list.parking': 'Pysäköinti',
   'area.list.education.finnish': 'Suomenkieliset koulualueet',
   'area.list.education.swedish': 'Ruotsinkieliset koulualueet',
   'area.list.preschool': 'Esiopetus',
   'area.list.neighborhood': 'Kaupunginosa',
+  'area.list.postcode': 'Postinumero',
   'area.list.postcode_area': 'Postinumeroalue',
   'area.list.rescue_area': 'Suojelupiiri',
   'area.list.rescue_district': 'Suojelulohko',
@@ -74,6 +85,7 @@ const translations = {
   'area.list.preschool_education_fi': 'Suomenkielinen esiopetusalue',
   'area.list.preschool_education_sv': 'Ruotsinkielinen esiopetusalue',
   'area.list.nature_reserve': 'Luonnonsuojelualueet',
+  'area.list.resident_parking_zone': 'Asukaspysäköintialueet',
 
   // Download dialog
   'download.cropping.title': 'Nykyinen rajaus',
@@ -277,6 +289,9 @@ const translations = {
   'map.address.notFound': 'Osoitetta ei löytynyt',
   'map.address.info': 'Osoitteen tiedot',
   'map.unit.cluster.popup.info': '{count} toimipistettä',
+  'map.button.sidebar.hide': 'Pienennä sivupaneeli',
+  'map.button.sidebar.show': 'Laajenna sivupaneeli',
+
 
   // Print
   'print.alert': 'Käytä tulostamiseen työkaluvalikon tulostusta',
@@ -352,6 +367,8 @@ const translations = {
   'unit.route.extra': '(Uusi välilehti. HSL-reittiopas ei ole saavutettava palvelu)',
   'unit.socialMedia.title': 'Toimipiste sosiaalisessa mediassa',
   'unit.outdoorLink': 'Katso liikuntapaikan kunto ulkoliikunta.fi palvelusta',
+  'unit.seo.description': 'Katso sijainti kartalla',
+  'unit.seo.description.accessibility': 'Katso esteettömyystiedot ja sijainti kartalla',
 
   // Search
   'search': 'Hae',
@@ -425,6 +442,7 @@ const translations = {
   'service.nearby': 'Palvelut täällä asuville',
   'service.units.empty': 'Palvelulla ei ole toimipisteitä',
   'service.tab': 'Palvelut ja tapahtumat',
+  'service.description': 'Katso palveluiden sijainnit ja yhteystiedot',
 
   // Service tree
   'services': 'Palveluluettelo',
@@ -444,6 +462,8 @@ const translations = {
 
   // Settings
   'settings': 'Asetukset',
+  'settings.change': 'Muokkaa asetuksiasi',
+  'settings.drawer.aria.title': 'Tämän hetkiset asetukset',
   'settings.citySettings': 'Kaupunki',
   'settings.citySettings.long': 'Kaupunkiasetukset',
   'settings.mapSettings': 'Karttapohja',
@@ -458,9 +478,10 @@ const translations = {
     other {# valintaa}
   }`,
   'settings.accessibility': 'Minua koskevat esteettömyystiedot',
+  'settings.accessibility.none': 'Ei rajauksia',
   'settings.sense.title': 'Aistirajoitteet',
-  'settings.sense.hearing': 'Käytän kuulolaitetta',
-  'settings.sense.visual': 'Olen näkövammainen',
+  'settings.sense.hearingAid': 'Käytän kuulolaitetta',
+  'settings.sense.visuallyImpaired': 'Olen näkövammainen',
   'settings.sense.colorblind': 'Minun on vaikea erottaa värejä',
   'settings.info.heading': 'Asetustiedot', // TODO: verify
   'settings.info.title': 'Valitsemasi asetukset vaikuttavat hakutulokseen',
@@ -477,6 +498,7 @@ const translations = {
     one {Valitsemani kaupunki}
     other {Valitsemani kaupungit}
   }`,
+  'settings.city.all': 'Näytä kaikki',
   'settings.city.title': 'Kaupunki',
   'settings.city.helsinki': 'Helsinki',
   'settings.city.espoo': 'Espoo',

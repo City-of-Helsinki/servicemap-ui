@@ -33,8 +33,7 @@ export function cookieHubCode (req) {
   return `
     <script type="text/javascript">
       var cpm = {
-        enabled: false  // while implementing cookiehub in disabled mode, use this line
-        // enabled: (location.href.indexOf('/embed/') > -1 ? false : true) // uncomment this line when in production
+        enabled: (location.href.indexOf('/embed/') > -1 ? false : true) // uncomment this line when in production
       };
       (function(h,u,b){
       var d=h.getElementsByTagName("script")[0],e=h.createElement("script");

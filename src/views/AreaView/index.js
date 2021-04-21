@@ -6,43 +6,38 @@ import styles from './styles';
 import {
   setSelectedDistrictType,
   setSelectedSubdistricts,
-  setHighlightedDistrict,
   setSelectedDistrictServices,
-  setDistrictData,
   setDistrictAddressData,
   fetchDistrictUnitList,
-  setAreaViewState,
+  fetchAllDistricts,
+  setMapState,
 } from '../../redux/actions/district';
-import { getDistrictsByType, getAddressDistrict, getSubdistrictServices } from '../../redux/selectors/district';
+import { getDistrictsByType, getAddressDistrict } from '../../redux/selectors/district';
 
 const mapStateToProps = (state) => {
   const { navigator } = state;
   const {
     districtData,
-    selectedDistrictType,
     districtAddressData,
     subdistrictUnits,
     selectedSubdistricts,
     selectedDistrictServices,
     unitsFetching,
-    areaViewState,
+    mapState,
   } = state.districts;
   const map = state.mapRef;
-  const filteredSubdistrictUnits = getSubdistrictServices(state);
   const selectedDistrictData = getDistrictsByType(state);
   const addressDistrict = getAddressDistrict(state);
   return {
     districtData,
     selectedDistrictData,
-    selectedDistrictType,
     districtAddressData,
     addressDistrict,
     subdistrictUnits,
-    filteredSubdistrictUnits,
     selectedSubdistricts,
     selectedDistrictServices,
     unitsFetching,
-    areaViewState,
+    mapState,
     navigator,
     map,
   };
@@ -54,10 +49,9 @@ export default injectIntl(withStyles(styles)(connect(
     setSelectedDistrictType,
     setSelectedSubdistricts,
     setSelectedDistrictServices,
-    setHighlightedDistrict,
-    setDistrictData,
-    setAreaViewState,
     setDistrictAddressData,
+    setMapState,
     fetchDistrictUnitList,
+    fetchAllDistricts,
   },
 )(AreaView)));

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { uppercaseFirst } from '../../../utils';
+import getPageDescriptions from './pageDescriptions';
 
 class PageHandler extends React.Component {
   componentDidMount() {
@@ -13,10 +14,11 @@ class PageHandler extends React.Component {
   // Modify html head
   render() {
     const {
-      intl, messageId, page, unit, service, event, embed, getLocaleText,
+      intl, messageId, page, unit, service, event, address, embed, getLocaleText,
     } = this.props;
     const message = messageId ? intl.formatMessage({ id: messageId }) : '';
     let pageMessage = '';
+    const pageDescription = getPageDescriptions(page, unit, address, getLocaleText, intl);
 
     // Add unit or service name to title if needed
     if ((page === 'unit' || page === 'eventList') && unit && unit.name) {
@@ -42,6 +44,7 @@ class PageHandler extends React.Component {
           <meta name="robots" content="none" />
         ) : null}
         <title>{title}</title>
+        <meta name="description" content={pageDescription} />
       </Helmet>
     );
   }
@@ -54,6 +57,7 @@ PageHandler.propTypes = {
   unit: PropTypes.objectOf(PropTypes.any),
   event: PropTypes.objectOf(PropTypes.any),
   service: PropTypes.objectOf(PropTypes.any),
+  address: PropTypes.objectOf(PropTypes.any),
   getLocaleText: PropTypes.func.isRequired,
   setCurrentPage: PropTypes.func.isRequired,
   embed: PropTypes.bool,
@@ -66,6 +70,7 @@ PageHandler.defaultProps = {
   service: null,
   event: null,
   embed: false,
+  address: null,
 };
 
 export default PageHandler;
