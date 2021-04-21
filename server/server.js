@@ -24,7 +24,7 @@ import { getLastCommit, getVersion } from './version';
 import ieHandler from './ieMiddleware';
 import schedule from 'node-schedule'
 import ogImage from '../src/assets/images/servicemap-meta-img.png';
-import { initializeSitemap, getSitemap } from './sitemapMiddlewares';
+import { generateSitemap, getSitemap } from './sitemapMiddlewares';
 
 // Get sentry dsn from environtment variables
 const sentryDSN = process.env.SENTRY_DSN_SERVER;
@@ -53,11 +53,11 @@ setupTests();
 // Handle sitemap creation
 if (config.production && config.domain) {
   // Generate sitemap on start
-  initializeSitemap();
+  generateSitemap();
   // Update sitemap every monday
   schedule.scheduleJob({ hour: 8, minute: 0, dayOfWeek: 1 }, () => {
     console.log('Updating sitemap...')
-    initializeSitemap();
+    generateSitemap();
   });
 }
 

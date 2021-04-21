@@ -3,28 +3,24 @@ import { SitemapStream, streamToPromise } from 'sitemap'
 import { createGzip } from 'zlib'
 import { fetchIDs } from './dataFetcher';
 
+const fs = require('fs');
 const supportedLanguages = config.supportedLanguages;
-let sitemap;
-
-export const initializeSitemap = () => {
-  generateSitemap();
-};
 
 // This returns sitemaps for different languages
 export const getSitemap = (req, res) => {
   res.header('Content-Type', 'application/xml');
   res.header('Content-Encoding', 'gzip');
-  
-  // Send the cached sitemap
-  if (sitemap) {
-    res.send(sitemap)
-    return
+
+  // Send sitemap file
+  if (fs.existsSync('dist/sitemap.xml')) {
+    res.sendFile(__dirname + '/sitemap.xml');
+    return;
   } else {
     res.status(404).end();
   }
 }
 
-const generateSitemap = async () => {
+export const generateSitemap = async () => {
   try {
     const url = config.domain;
     const smStream = new SitemapStream({ hostname: url })
@@ -75,8 +71,12 @@ const generateSitemap = async () => {
       });
     }
 
-    // Cache the response
-    streamToPromise(pipeline).then(sm => sitemap = sm)
+    // Save the sitemap as file
+    streamToPromise(pipeline).then(sm => {
+      fs.writeFile('dist/sitemap.xml', sm, (err) => {
+        if (err) return console.log(err);
+      })
+    });
     console.log('New sitemap created')
     smStream.end()
 
