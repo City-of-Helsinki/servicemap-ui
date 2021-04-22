@@ -166,14 +166,16 @@ const AreaView = ({
 
   useEffect(() => {
     const searchParams = parseSearchParams(location.search);
-    const selectedArea = searchParams.selected?.split(/([0-9]+)/)[0];
-    if (selectedArea) { // Arriving to page, with url parameters
+    const selectedArea = searchParams.selected;
+    // Get area parameter without year data
+    const selectedAreaType = selectedArea?.split(/([0-9]+)/)[0];
+    if (selectedAreaType) { // Arriving to page, with url parameters
       if (!embed) {
         /* Remove selected area parameter from url, otherwise it will override
         user area selection when returning to area view */
         history.replace();
         // Switch to geographical tab if geographical area
-        if (geographicalDistricts.includes(selectedArea)) {
+        if (geographicalDistricts.includes(selectedAreaType)) {
           const geoTab = document.getElementById('Tab1');
           if (geoTab) geoTab.click();
         }
@@ -181,10 +183,10 @@ const AreaView = ({
 
       // Fetch and select area from url parameters
       if (selectedArea !== selectedDistrictType) {
-        fetchAllDistricts(selectedArea);
+        fetchAllDistricts(selectedAreaType);
         if (!embed) {
           const category = dataStructure.find(
-            data => data.districts.includes(selectedArea),
+            data => data.districts.includes(selectedAreaType),
           );
           dispatch(handleOpenItems(category.id));
         }
