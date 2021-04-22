@@ -51,7 +51,7 @@ const paths = {
     regex: /\/[a-zA-Z]{2}\/feedback/
   },
   area: {
-    generate: () => '/area',
+    generate: selected => `/area${selected ? `?selected=${selected}` : ''}`,
     regex: /\/[a-zA-Z]{2}\/area/
   }
 }
