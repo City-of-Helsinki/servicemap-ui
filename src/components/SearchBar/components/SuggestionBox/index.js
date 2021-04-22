@@ -7,6 +7,7 @@ import SuggestionBox from './SuggestionBox';
 // Listen to redux state
 const mapStateToProps = state => ({
   locale: state.user.locale,
+  navigator: state.navigator,
 });
 
 export default withStyles(styles)(injectIntl(connect(mapStateToProps)(SuggestionBox)));
