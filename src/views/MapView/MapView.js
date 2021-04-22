@@ -28,7 +28,7 @@ import HideSidebarButton from './components/HideSidebarButton';
 import CoordinateMarker from './components/CoordinateMarker';
 import useLocaleText from '../../utils/useLocaleText';
 import PanControl from './components/PanControl';
-import { adjustControlElements } from './utils';
+import adjustControlElements from './utils';
 
 if (global.window) {
   require('leaflet');
@@ -191,7 +191,7 @@ const MapView = (props) => {
     }
     // Hide zoom control amd attribution from screen readers
     setTimeout(() => {
-      adjustControlElements();
+      adjustControlElements(embeded);
     }, 1);
 
     return () => {
@@ -200,10 +200,10 @@ const MapView = (props) => {
     };
   }, []);
 
-  useEffect(() => {
+  useEffect(() => {
     setTimeout(() => {
-      adjustControlElements();
-    }, 1)
+      adjustControlElements(embeded);
+    }, 1);
   }, [mapObject]);
 
   useEffect(() => { // Set map ref to redux once map is rendered
@@ -434,7 +434,7 @@ const MapView = (props) => {
             && (
               <>
                 {/* Custom user location map button */}
-                <Control position="bottomright">
+                <Control className="UserLocation" position="bottomright">
                   <ButtonBase
                     aria-label={userLocationAriaLabel}
                     disabled={!userLocation}
