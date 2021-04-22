@@ -168,15 +168,15 @@ const AreaView = ({
     const searchParams = parseSearchParams(location.search);
     const selectedArea = searchParams.selected?.split(/([0-9]+)/)[0];
     if (selectedArea) { // Arriving to page, with url parameters
-      /* Remove selected area parameter from url, otherwise it will override
-       user area selection when returning to area view */
       if (!embed) {
+        /* Remove selected area parameter from url, otherwise it will override
+        user area selection when returning to area view */
         history.replace();
-      }
-
-      // Switch to geographical tab if geographical area
-      if (geographicalDistricts.includes(selectedArea)) {
-        document.getElementById('Tab1').click();
+        // Switch to geographical tab if geographical area
+        if (geographicalDistricts.includes(selectedArea)) {
+          const geoTab = document.getElementById('Tab1');
+          if (geoTab) geoTab.click();
+        }
       }
 
       // Fetch and select area from url parameters

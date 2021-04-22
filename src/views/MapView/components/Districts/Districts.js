@@ -7,11 +7,11 @@ import { FormattedMessage } from 'react-intl';
 import { drawMarkerIcon } from '../../utils/drawIcon';
 import swapCoordinates from '../../utils/swapCoordinates';
 import AddressMarker from '../AddressMarker';
-import useMobileStatus from '../../../../utils/isMobile';
 import { parseSearchParams } from '../../../../utils';
 import config from '../../../../../config';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { geographicalDistricts } from '../../../AreaView/utils/districtDataHelper';
+import UnitHelper from '../../../../utils/unitHelper';
 
 
 const Districts = ({
@@ -36,7 +36,6 @@ const Districts = ({
     Polygon, Marker, Tooltip, Popup,
   } = global.rL;
   const useContrast = theme === 'dark';
-  const isMobile = useMobileStatus();
   const location = useLocation();
   const getLocaleText = useLocaleText();
   const citySettings = useSelector(state => state.settings.cities);
@@ -44,7 +43,7 @@ const Districts = ({
   const [areaPopup, setAreaPopup] = useState(null);
 
   const districtOnClick = (e, district) => {
-    if (measuringMode) return;
+    if (measuringMode || embed) return;
     // Disable normal map click event
     e.originalEvent.view.L.DomEvent.stopPropagation(e);
 
@@ -88,11 +87,7 @@ const Districts = ({
               keyboard={false}
               onClick={() => {
                 if (navigator) {
-                  if (isMobile) {
-                    navigator.replace('unit', { id: district.unit.id });
-                  } else {
-                    navigator.push('unit', { id: district.unit.id });
-                  }
+                  UnitHelper.unitElementClick(navigator, district.unit);
                 }
               }}
             >
