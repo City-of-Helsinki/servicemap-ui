@@ -26,8 +26,17 @@ export const generateSitemap = async () => {
     const smStream = new SitemapStream({ hostname: url })
     const pipeline = smStream.pipe(createGzip())
 
+    // Write front page to sitemap
+    smStream.write({ 
+      url: `/fi/`, 
+      links: supportedLanguages.map(lang => ({
+        lang: lang,
+        url: `/${lang}/`, 
+      }))
+    })
+
     // Write all page urls that we want to be found by search engines
-    const pages = ['home', 'area'];
+    const pages = ['area'];
 
     pages.forEach(page => (
       smStream.write({ 
@@ -38,7 +47,6 @@ export const generateSitemap = async () => {
         }))
       })
     ))
-
 
     // Generate URLs for all units and servicces
     const unitIDs = await fetchIDs('unit')
