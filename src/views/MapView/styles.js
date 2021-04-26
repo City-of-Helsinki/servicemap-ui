@@ -270,6 +270,9 @@ const styles = theme => ({
     top: 16,
     left: 16,
   },
+  entranceType: {
+    paddingTop: theme.spacing(0.5),
+  },
 
   // Transit stops
   transitBackground: {
