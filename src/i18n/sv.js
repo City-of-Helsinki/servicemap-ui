@@ -18,6 +18,7 @@ const translations = {
 
   // Address
   'address': 'Adress',
+  'address.description': 'Se tjänsterna i närheten av adressen',
   'address.search': 'Adresssök',
   'address.search.cleared': 'Sökfältet har tömts',
   'address.search.location': 'Den valda positionen är {location}',
@@ -70,6 +71,7 @@ const translations = {
   'area.list.education.swedish': 'Svenska skolområden',
   'area.list.preschool': 'Förskoleundervisning',
   'area.list.neighborhood': 'Stadsdel',
+  'area.list.postcode': 'Postnummer',
   'area.list.postcode_area': 'Postnummerområde',
   'area.list.rescue_area': 'Skyddsdistrikt',
   'area.list.rescue_district': 'Skyddsavsnitt',
@@ -181,14 +183,14 @@ const translations = {
   'general.menu.open': 'Öppna menyn',
   'general.menu.close': 'Stäng menyn',
   'general.back': 'Tillbaka',
-  'general.back.address': 'Gå tillbaka till adressvyn',
-  'general.back.area': 'Gå tillbaka till områdesvyn',
-  'general.back.home': 'Gå tillbaka till startvyn',
-  'general.back.goToHome': 'Gå till startvyn',
-  'general.back.search': 'Gå tillbaka till sökvyn',
-  'general.back.service': 'Gå tillbaka till tjänstevyn',
-  'general.back.unit': 'Gå tillbaka till vyn för verksamhetsställen',
-  'general.back.event': 'Gå tillbaka till evenemangsvyn',
+  'general.back.address': 'Gå tillbaka till adressidan',
+  'general.back.area': 'Gå tillbaka till områdessidan',
+  'general.back.home': 'Gå tillbaka till startsidan',
+  'general.back.goToHome': 'Gå till startsidan',
+  'general.back.search': 'Gå tillbaka till söksidan',
+  'general.back.service': 'Gå tillbaka till tjänstesidan',
+  'general.back.unit': 'Gå tillbaka till sida för verksamhetsställen',
+  'general.back.event': 'Gå tillbaka till evenemangsidan',
   'general.back.feedback': 'Gå tillbaka',
   'general.backTo': 'Gå tillbaka',
   'general.back.info': 'Gå tillbaka',
@@ -216,20 +218,20 @@ const translations = {
   'general.showOnMap': 'Visa på kartan',
   'general.open': 'Open', // TODO: Translate
   'general.page.close': 'Close page', // TODO: Translate
-  'general.pageTitles.home': 'Hemvy',
-  'general.pageTitles.search': 'Sökresultatsvy',
+  'general.pageTitles.home': 'Hemsida',
+  'general.pageTitles.search': 'Sökresultatsida',
   'general.pageTitles.unit': 'Vy med verksamhetsställen',
   'general.pageTitles.unit.events': 'Verksamhetsställets evenemang',
   'general.pageTitles.unit.reservations': 'Verksamhetsställets platser som kan reserveras',
-  'general.pageTitles.service': 'Tjänstevy',
+  'general.pageTitles.service': 'Tjänstesida',
   'general.pageTitles.serviceTree': 'Servicekatalog',
-  'general.pageTitles.event': 'Evenemangsvy',
-  'general.pageTitles.address': 'Adressvy',
+  'general.pageTitles.event': 'Evenemangssida',
+  'general.pageTitles.address': 'Adressida',
   'general.pageTitles.list.events': 'Förteckning över evenemang ',
   'general.pageTitles.list.reservations': 'Förteckning över reserveringar ',
-  'general.pageTitles.info': 'Infovy',
-  'general.pageTitles.feedback': 'Responsvy',
-  'general.pageTitles.area': 'Områdesvy.',
+  'general.pageTitles.info': 'Infosida',
+  'general.pageTitles.feedback': 'Responssida',
+  'general.pageTitles.area': 'Områdessida.',
 
   // General - Pagination
   'general.pagination.previous': 'Föregående sida',
@@ -287,6 +289,8 @@ const translations = {
   'map.address.notFound': 'Adressen hittades ej',
   'map.address.info': 'Adressens uppgifter',
   'map.unit.cluster.popup.info': '{count} verksamhetsställen', // TODO: Verify
+  'map.button.sidebar.hide': 'Minska sidopanelen',
+  'map.button.sidebar.show': 'Utvidga sidopanelen',
 
   // Print
   'print.alert': 'Använd utskriftsalternativet i verktygsmenyn',
@@ -330,6 +334,10 @@ const translations = {
   'unit.description': 'Information om verksamhetsstället',
   'unit.address': 'Adress',
   'unit.address.missing': 'Ingen adress har meddelats',
+  'unit.entrances.main': 'Huvudingång',
+  'unit.entrances.secondary': 'Tilläggsingång',
+  'unit.entrances.show': 'Se tilläggsingångar',
+  'unit.entrances.accessibility': 'Se tillgänglighetsuppgifter',
   'unit.phone': 'Telefonnummer',
   'unit.phone.missing': 'Telefonnummer har inte meddelats',
   'unit.phone.charge': 'Samtalspriser',
@@ -362,6 +370,8 @@ const translations = {
   'unit.route.extra': '(Ny flik. HRT-reseplaneraren är inte en tillgänglig tjänst)',
   'unit.socialMedia.title': 'Verksamhetsstället på sociala medier',
   'unit.outdoorLink': 'Kolla skicket på en motionsplats i tjänsten ulkoliikunta.fi',
+  'unit.seo.description': 'Se läget på kartan',
+  'unit.seo.description.accessibility': 'Se tillgänglighetsuppgifterna och läget på kartan',
 
   // Search
   'search': 'Sök',
@@ -434,6 +444,7 @@ const translations = {
   'service.nearby': 'Närtjänster',
   'service.units.empty': 'Tjänsten har inga verksamhetsställen',
   'service.tab': 'Tjänster och evenemang',
+  'service.description': 'Se tjänsternas lägen och kontaktuppgifter',
 
   // Service tree
   'services': 'Förteckning över tjänster',

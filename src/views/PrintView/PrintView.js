@@ -82,10 +82,19 @@ const PrintView = ({
         return;
       }
       const current = layers[key];
+      const cl = current?._icon?.classList; // Class list for icon
 
       if (
-        current instanceof global.L.MarkerCluster
-        || current instanceof global.L.Marker
+        ( 
+          current instanceof global.L.MarkerCluster
+          || current instanceof global.L.Marker
+        )
+        // Only unit markers and clusters
+        && cl
+        && (
+          cl.contains('unitMarker')
+          || cl.contains('unitClusterMarker')
+        )
       ) {
         markers.push(current);
       }
@@ -293,7 +302,7 @@ const PrintView = ({
               <TableBody>
                 {
                   descriptions.map((description) => {
-                    if (!description?.units) {
+                    if (!description?.units || !description.units[0]) {
                       return null;
                     }
                     const { name, street_address: address } = description.units[0];

@@ -76,8 +76,8 @@ class Settings extends React.Component {
     });
 
     setTimeout(() => {
-      const settings = document.getElementsByClassName('SettingsTitle')[0];
-      settings.firstChild.focus();
+      const settingsTitle = document.getElementsByClassName('TitleText')[0];
+      settingsTitle.focus();
     }, 1);
   }
 
@@ -694,7 +694,7 @@ class Settings extends React.Component {
         {/* Empty element that makes keyboard focus loop in dialog */}
         <Typography variant="srOnly" aria-hidden tabIndex="0" onFocus={() => this.focusToLastElement()} />
 
-        <TitleBar id="SettingsTitle" className="SettingsTitle" titleComponent="h2" title={<FormattedMessage id={`settings.${settingsPage}.long`} />} />
+        <TitleBar id="SettingsTitle" titleComponent="h2" title={<FormattedMessage id={`settings.${settingsPage}.long`} />} />
         <>
           {showAlert && (
             this.renderSaveAlert()

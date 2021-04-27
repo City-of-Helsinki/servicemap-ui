@@ -57,7 +57,7 @@ export const APIHandlers = {
     url: id => `${config.serviceMapAPI.root}/unit/${id}/`,
     options: {
       accessibility_description: true,
-      include: 'service_nodes,services,keywords,department',
+      include: 'service_nodes,services,keywords,department,entrances',
       geometry: true,
     },
     envName: config.serviceMapAPI.id,

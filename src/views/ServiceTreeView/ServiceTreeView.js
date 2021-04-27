@@ -48,9 +48,9 @@ const ServiceTreeView = (props) => {
       const nodeObjects = node.children.map(child => services.find(e => e.id === child));
       nodes.push(...nodeObjects);
       // Check if any child nodes are opened to repeat this function on them
-      nodeObjects.forEach((i) => {
-        if (opened.some(e => e === i.id)) {
-          nodes.push(...checkChildNodes(i));
+      nodeObjects.forEach((obj) => {
+        if (obj?.id && opened.some(item => item === obj.id)) {
+          nodes.push(...checkChildNodes(obj));
         }
       });
       return nodes;

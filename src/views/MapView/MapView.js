@@ -27,6 +27,9 @@ import MapUtility from './utils/mapUtility';
 import HideSidebarButton from './components/HideSidebarButton';
 import CoordinateMarker from './components/CoordinateMarker';
 import { useNavigationParams } from '../../utils/address';
+import PanControl from './components/PanControl';
+import { adjustControlElements } from './utils';
+import EntranceMarker from './components/EntranceMarker';
 
 if (global.window) {
   require('leaflet');
@@ -76,7 +79,7 @@ const MapView = (props) => {
   const [measuringLine, setMeasuringLine] = useState([]);
 
   const embeded = isEmbed({ url: location.pathname });
-  const getAddressNavigatorParams = useNavigationParams(); 
+  const getAddressNavigatorParams = useNavigationParams();
 
 
   const getMapUnits = () => {
@@ -189,14 +192,7 @@ const MapView = (props) => {
     }
     // Hide zoom control amd attribution from screen readers
     setTimeout(() => {
-      const e = document.querySelector('.leaflet-control-zoom');
-      const e2 = document.querySelector('.leaflet-control-attribution');
-      if (e) {
-        e.setAttribute('aria-hidden', 'true');
-      }
-      if (e2) {
-        e2.setAttribute('aria-hidden', 'true');
-      }
+      adjustControlElements();
     }, 1);
 
     return () => {
@@ -204,6 +200,12 @@ const MapView = (props) => {
       clearMapReference();
     };
   }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      adjustControlElements();
+    }, 1);
+  }, [mapObject]);
 
   useEffect(() => { // Set map ref to redux once map is rendered
     if (!refSaved && mapRef.current) {
@@ -213,15 +215,11 @@ const MapView = (props) => {
   });
 
   useEffect(() => {
-    if (!highlightedUnit || !mapUtility) {
+    if (currentPage !== 'unit' || !highlightedUnit || !mapUtility) {
       return;
     }
-    if (!unitList.length) {
-      mapUtility.centerMapToUnit(highlightedUnit);
-      return;
-    }
-    mapUtility.panInside(highlightedUnit);
-  }, [highlightedUnit, mapUtility]);
+    mapUtility.centerMapToUnit(highlightedUnit);
+  }, [highlightedUnit, mapUtility, currentPage]);
 
 
   useEffect(() => { // On map type change
@@ -351,14 +349,15 @@ const MapView = (props) => {
           zoom={zoom}
           minZoom={mapObject.options.minZoom}
           maxZoom={mapObject.options.maxZoom}
+          unitZoom={mapObject.options.unitZoom}
+          detailZoom={mapObject.options.detailZoom}
           maxBounds={mapObject.options.mapBounds || mapOptions.defaultMaxBounds}
           maxBoundsViscosity={1.0}
           onClick={(ev) => { setClickCoordinates(ev); }}
         >
-
           <MarkerCluster
             map={mapRef?.current?.leafletElement}
-            data={unitData}
+            data={currentPage === 'unit' && highlightedUnit ? [highlightedUnit] : unitData}
             measuringMode={measuringMode}
           />
           {
@@ -395,6 +394,10 @@ const MapView = (props) => {
             <AddressMarker embeded={embeded} />
           )}
 
+          {currentPage === 'unit' && highlightedUnit?.entrances?.length && (
+            <EntranceMarker />
+          )}
+
           {!hideUserMarker && userLocation && (
             <UserMarker
               position={[userLocation.latitude, userLocation.longitude]}
@@ -424,6 +427,10 @@ const MapView = (props) => {
               />
             ) : null}
           </Control>
+          <PanControl
+            Control={Control}
+            map={mapRef?.current?.leafletElement}
+          />
           {
             !embeded
             && (

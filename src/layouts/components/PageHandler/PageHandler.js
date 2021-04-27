@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { uppercaseFirst } from '../../../utils';
 import useLocaleText from '../../../utils/useLocaleText';
+import getPageDescriptions from './pageDescriptions';
 
 const PageHandler = (props) => {
   const {
-    page, setCurrentPage, intl, messageId, unit, service, event,
+    page, setCurrentPage, intl, messageId, unit, service, event, address,
   } = props;
 
   const getLocaleText = useLocaleText();
@@ -19,6 +20,7 @@ const PageHandler = (props) => {
   // Modify html head
   const message = messageId ? intl.formatMessage({ id: messageId }) : '';
   let pageMessage = '';
+  const pageDescription = getPageDescriptions(page, unit, address, getLocaleText, intl);
 
   // Add unit or service name to title if needed
   if ((page === 'unit' || page === 'eventList') && unit && unit.name) {
@@ -40,10 +42,10 @@ const PageHandler = (props) => {
   return (
     <Helmet>
       <title>{title}</title>
+      <meta name="description" content={pageDescription} />
     </Helmet>
   );
 };
-
 
 PageHandler.propTypes = {
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -52,6 +54,7 @@ PageHandler.propTypes = {
   unit: PropTypes.objectOf(PropTypes.any),
   event: PropTypes.objectOf(PropTypes.any),
   service: PropTypes.objectOf(PropTypes.any),
+  address: PropTypes.objectOf(PropTypes.any),
   setCurrentPage: PropTypes.func.isRequired,
 };
 
@@ -61,6 +64,7 @@ PageHandler.defaultProps = {
   unit: null,
   service: null,
   event: null,
+  address: null,
 };
 
 export default PageHandler;

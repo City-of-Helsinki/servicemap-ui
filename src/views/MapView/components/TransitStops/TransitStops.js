@@ -49,7 +49,7 @@ class TransitStops extends React.Component {
   showTransitStops = () => {
     const { isMobile, mapObject, map } = this.props;
     const transitZoom = isMobile
-      ? mapObject.options.mobileTransitZoom : mapObject.options.transitZoom;
+      ? mapObject.options.detailZoom - 1 : mapObject.options.detailZoom;
     const currentZoom = map.leafletElement.getZoom();
 
     const url = new URL(window.location);

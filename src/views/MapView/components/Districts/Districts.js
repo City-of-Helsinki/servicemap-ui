@@ -60,8 +60,7 @@ const Districts = ({
         setSelectedDistrictServices([]);
       }
       setSelectedSubdistricts(newArray);
-    } else if (district.category === 'nature') {
-      if (config.natureAreaURL === 'undefined') return;
+    } else if (district.type === 'nature_reserve' && config.natureAreaURL !== 'undefined') {
       setAreaPopup({
         district,
         link: `${config.natureAreaURL}${district.origin_id}`,

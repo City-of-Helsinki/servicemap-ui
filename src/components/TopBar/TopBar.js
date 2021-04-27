@@ -53,10 +53,10 @@ const TopBar = (props) => {
             toggleSettings(category.type);
             setTimeout(() => {
               const button = document.getElementById(`SettingsButton${category.type}`);
-              const settings = document.getElementsByClassName('SettingsTitle')[0];
+              const settings = document.getElementsByClassName('TitleText')[0];
               if (settings) {
                 // Focus on settings title
-                settings.firstChild.focus();
+                settings.focus();
               } else {
                 button.focus();
               }

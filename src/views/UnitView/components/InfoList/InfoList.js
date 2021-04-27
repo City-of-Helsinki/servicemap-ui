@@ -69,18 +69,18 @@ const InfoList = ({
   const formSrString = (data, intl) => {
     switch (data.type) {
       case 'ADDRESS':
-        return intl.formatMessage({ id: 'unit.address' });
+        return `${intl.formatMessage({ id: 'unit.address' })}: `;
       case 'PHONE':
-        return intl.formatMessage({ id: 'unit.phone' });
+        return `${intl.formatMessage({ id: 'unit.phone' })}: `;
       case 'EMAIL':
-        return intl.formatMessage({ id: 'unit.email' });
+        return `${intl.formatMessage({ id: 'unit.email' })}: `;
       case 'OPENING_HOURS':
         if (data.value.www) {
-          return intl.formatMessage({ id: 'unit.opening.hours.info' });
+          return `${intl.formatMessage({ id: 'unit.opening.hours.info' })}: `;
         }
-        return intl.formatMessage({ id: 'unit.opening.hours' });
+        return `${intl.formatMessage({ id: 'unit.opening.hours' })}: `;
       case 'PHONE_OR_EMAIL':
-        return intl.formatMessage({ id: 'unit.contact' });
+        return `${intl.formatMessage({ id: 'unit.contact' })}: `;
       default:
         return null;
     }
