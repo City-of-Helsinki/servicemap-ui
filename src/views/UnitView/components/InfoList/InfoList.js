@@ -3,10 +3,14 @@ import PropTypes from 'prop-types';
 import getItemIconData from '../../constants/itemIconData';
 import SimpleListItem from '../../../../components/ListItems/SimpleListItem';
 import TitledList from '../../../../components/Lists/TitledList';
+import useLocaleText from '../../../../utils/useLocaleText';
 
-class InfoList extends React.Component {
-  handleItemClick = (data) => {
-    const { getLocaleText } = this.props;
+const InfoList = ({
+  data, title, titleComponent, intl,
+}) => {
+  const getLocaleText = useLocaleText();
+
+  const handleItemClick = (data) => {
     if (data.www) {
       let url = data.www;
       if (typeof (url) === 'object') {
@@ -18,8 +22,7 @@ class InfoList extends React.Component {
     }
   };
 
-  formString = (data, intl) => {
-    const { getLocaleText } = this.props;
+  const formString = (data, intl) => {
     const first = Object.keys(data)[0];
     let fullText = '';
 
@@ -61,9 +64,9 @@ class InfoList extends React.Component {
     }
     fullText = fullText.charAt(0).toUpperCase() + fullText.slice(1);
     return fullText;
-  }
+  };
 
-  formSrString = (data, intl) => {
+  const formSrString = (data, intl) => {
     switch (data.type) {
       case 'ADDRESS':
         return `${intl.formatMessage({ id: 'unit.address' })}: `;
@@ -81,53 +84,48 @@ class InfoList extends React.Component {
       default:
         return null;
     }
-  }
+  };
 
-  render() {
-    const {
-      data, title, titleComponent, intl,
-    } = this.props;
-    if (data.length > 0) {
-      // Assign id for each item
-      for (let i = 0; i < data.length; i += 1) {
-        data[i].id = i;
-      }
-      if (data.length > 0) {
-        return (
-          <TitledList title={title} titleComponent={titleComponent}>
-            {data.map((item) => {
-              if (item.component) {
-                // Component to override default listitem type
-                return item.component;
-              }
-              if (item.value && item.type) {
-                const text = this.formString(item.value, intl);
-                const srText = this.formSrString(item, intl);
-
-                if (text !== '') {
-                  return (
-                    <SimpleListItem
-                      key={item.type + item.id}
-                      icon={getItemIconData(item.type, item.value)}
-                      link={!!item.value.www || !!item.value.phone}
-                      text={text}
-                      srText={srText}
-                      handleItemClick={() => this.handleItemClick(item.value)}
-                      divider={!item.noDivider}
-                    />
-                  );
-                }
-              } return null;
-            })}
-          </TitledList>
-        );
-      }
+  if (data.length > 0) {
+    // Assign id for each item
+    for (let i = 0; i < data.length; i += 1) {
+      data[i].id = i;
     }
-    return (
-      null
-    );
+    if (data.length > 0) {
+      return (
+        <TitledList title={title} titleComponent={titleComponent}>
+          {data.map((item) => {
+            if (item.component) {
+              // Component to override default listitem type
+              return item.component;
+            }
+            if (item.value && item.type) {
+              const text = formString(item.value, intl);
+              const srText = formSrString(item, intl);
+
+              if (text !== '') {
+                return (
+                  <SimpleListItem
+                    key={item.type + item.id}
+                    icon={getItemIconData(item.type, item.value)}
+                    link={!!item.value.www || !!item.value.phone}
+                    text={text}
+                    srText={srText}
+                    handleItemClick={() => handleItemClick(item.value)}
+                    divider={!item.noDivider}
+                  />
+                );
+              }
+            } return null;
+          })}
+        </TitledList>
+      );
+    }
   }
-}
+  return (
+    null
+  );
+};
 
 export default InfoList;
 
@@ -136,7 +134,6 @@ InfoList.propTypes = {
   title: PropTypes.objectOf(PropTypes.any).isRequired,
   titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']),
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
-  getLocaleText: PropTypes.func.isRequired,
 };
 
 InfoList.defaultProps = {

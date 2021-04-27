@@ -26,7 +26,7 @@ import UnitGeometry from './components/UnitGeometry';
 import MapUtility from './utils/mapUtility';
 import HideSidebarButton from './components/HideSidebarButton';
 import CoordinateMarker from './components/CoordinateMarker';
-import useLocaleText from '../../utils/useLocaleText';
+import { useNavigationParams } from '../../utils/address';
 import PanControl from './components/PanControl';
 import { adjustControlElements } from './utils';
 import EntranceMarker from './components/EntranceMarker';
@@ -44,7 +44,6 @@ const MapView = (props) => {
     adminDistricts,
     classes,
     currentPage,
-    getAddressNavigatorParams,
     intl,
     location,
     settings,
@@ -80,6 +79,7 @@ const MapView = (props) => {
   const [measuringLine, setMeasuringLine] = useState([]);
 
   const embeded = isEmbed({ url: location.pathname });
+  const getAddressNavigatorParams = useNavigationParams();
 
 
   const getMapUnits = () => {
@@ -473,7 +473,6 @@ MapView.propTypes = {
   })),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   currentPage: PropTypes.string.isRequired,
-  getAddressNavigatorParams: PropTypes.func.isRequired,
   hideUserMarker: PropTypes.bool,
   highlightedDistrict: PropTypes.objectOf(PropTypes.any),
   highlightedUnit: PropTypes.objectOf(PropTypes.any),
