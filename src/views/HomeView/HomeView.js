@@ -86,6 +86,7 @@ const HomeView = (props) => {
           />
           <PaperButton
             messageID="home.old.link"
+            newTab
             icon={<Map />}
             link
             onClick={() => {
