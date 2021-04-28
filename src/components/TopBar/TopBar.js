@@ -104,8 +104,9 @@ const TopBar = (props) => {
   const renderMenuButton = pageType => (
     <Button
       id="MenuButton"
-      aria-label={intl.formatMessage({ id: drawerOpen ? 'general.menu.close' : 'general.menu.open' })}
-      aria-pressed={drawerOpen}
+      aria-label={intl.formatMessage({ id: 'general.menu' })}
+      aria-expanded={drawerOpen}
+      aria-haspopup="true"
       className={`${drawerOpen ? classes.toolbarButtonPressed : classes.toolbarButton} ${pageType !== 'mobile' ? classes.largeButton : ''}`}
       classes={{ label: classes.buttonLabel }}
       onClick={() => toggleDrawerMenu()}
