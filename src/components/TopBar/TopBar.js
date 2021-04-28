@@ -249,7 +249,7 @@ const TopBar = (props) => {
 
           {/* Toolbar white area */}
           <Toolbar disableGutters className={pageType === 'mobile' ? classes.toolbarWhiteMobile : classes.toolbarWhite}>
-            <ButtonBase aria-hidden onClick={() => handleNavigation('home')}>
+            <ButtonBase aria-label={intl.formatMessage({ id: "general.back.goToHome" })} role="link" onClick={() => handleNavigation('home')}>
               <NoSsr>
                 <HomeLogo aria-hidden contrast={theme === 'dark'} className={classes.logo} />
               </NoSsr>
