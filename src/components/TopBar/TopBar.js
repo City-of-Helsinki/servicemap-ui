@@ -101,12 +101,12 @@ const TopBar = (props) => {
     }, 1);
   };
 
-  const renderMenuButton = () => (
+  const renderMenuButton = pageType => (
     <Button
       id="MenuButton"
       aria-label={intl.formatMessage({ id: drawerOpen ? 'general.menu.close' : 'general.menu.open' })}
       aria-pressed={drawerOpen}
-      className={drawerOpen ? classes.toolbarButtonPressed : classes.toolbarButton}
+      className={`${drawerOpen ? classes.toolbarButtonPressed : classes.toolbarButton} ${pageType !== 'mobile' ? classes.largeButton : ''}`}
       classes={{ label: classes.buttonLabel }}
       onClick={() => toggleDrawerMenu()}
     >
@@ -257,7 +257,7 @@ const TopBar = (props) => {
             <MobileComponent>
               <div className={classes.mobileButtonContainer}>
                 {renderMapButton()}
-                {renderMenuButton()}
+                {renderMenuButton(pageType)}
               </div>
               {renderDrawerMenu(pageType)}
             </MobileComponent>
@@ -316,7 +316,6 @@ TopBar.propTypes = {
   navigator: PropTypes.objectOf(PropTypes.any),
   setMapType: PropTypes.func.isRequired,
   settingsOpen: PropTypes.string,
-  settings: PropTypes.objectOf(PropTypes.any).isRequired,
   smallScreen: PropTypes.bool.isRequired,
   theme: PropTypes.string.isRequired,
   toggleSettings: PropTypes.func.isRequired,
