@@ -5,16 +5,18 @@ import {
 } from '@material-ui/core';
 import SettingsText from '../../SettingsText';
 
-const SettingsButton = ({ 'aria-pressed': ariaPressed, classes, settingsOpen, type, onClick }) => {
+const SettingsButton = ({
+  'aria-haspopup': ariaHaspopup, classes, settingsOpen, type, onClick,
+}) => {
   const minWidth = useMediaQuery('(min-width:900px)');
   const maxWidth = useMediaQuery('(max-width: 1100px)');
-  const buttonClass = (type) => `
+  const buttonClass = type => `
     ${classes.settingsButton} ${(settingsOpen === type && classes.settingsButtonPressed) || ''}
     ${(minWidth && maxWidth && classes.smallScreen) || ''}
   `;
   return (
     <Button
-      aria-pressed={ariaPressed}
+      aria-haspopup={ariaHaspopup}
       id={`SettingsButton${type}`}
       classes={{ label: classes.buttonLabel }}
       className={buttonClass(type)}
@@ -26,7 +28,7 @@ const SettingsButton = ({ 'aria-pressed': ariaPressed, classes, settingsOpen, ty
 };
 
 SettingsButton.propTypes = {
-  'aria-pressed': PropTypes.bool,
+  'aria-haspopup': PropTypes.string,
   classes: PropTypes.shape({
     buttonLabel: PropTypes.string,
     settingsButton: PropTypes.string,
@@ -35,12 +37,12 @@ SettingsButton.propTypes = {
   }).isRequired,
   settingsOpen: PropTypes.oneOf(['citySettings', 'mapSettings', 'accessibilitySettings']),
   type: PropTypes.oneOf(['citySettings', 'mapSettings', 'accessibilitySettings']).isRequired,
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired,
 };
 
 SettingsButton.defaultProps = {
   settingsOpen: null,
-  'aria-pressed': false,
+  'aria-haspopup': 'false',
 };
 
 export default SettingsButton;

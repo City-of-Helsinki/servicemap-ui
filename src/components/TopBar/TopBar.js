@@ -48,7 +48,7 @@ const TopBar = (props) => {
       settingsCategories.map(category => (
         <SettingsButton
           key={category.type}
-          aria-pressed={settingsOpen === category.type}
+          aria-haspopup="dialog"
           onClick={() => {
             toggleSettings(category.type);
             setTimeout(() => {
@@ -316,7 +316,6 @@ TopBar.propTypes = {
   navigator: PropTypes.objectOf(PropTypes.any),
   setMapType: PropTypes.func.isRequired,
   settingsOpen: PropTypes.string,
-  settings: PropTypes.objectOf(PropTypes.any).isRequired,
   smallScreen: PropTypes.bool.isRequired,
   theme: PropTypes.string.isRequired,
   toggleSettings: PropTypes.func.isRequired,
