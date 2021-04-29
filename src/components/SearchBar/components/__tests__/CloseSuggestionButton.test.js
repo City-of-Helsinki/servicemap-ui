@@ -96,10 +96,9 @@ describe('<CloseSuggestionButton />', () => {
 
     // SrOnly element
     const srComponent = shallow(<CloseSuggestionButton {...mockProps} srOnly />);
-    const span = srComponent;
 
-    expect(span.props()['role']).toEqual('button');
-    expect(span.props()['aria-hidden']).toBeFalsy();
-    expect(span.props().tabIndex).toEqual('-1');
+    expect(srComponent.props()['role']).toEqual('button');
+    expect(srComponent.props()['aria-hidden']).toBeFalsy();
+    expect(srComponent.props().tabIndex).toEqual('-1');
   });
 });
