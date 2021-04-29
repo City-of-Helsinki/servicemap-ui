@@ -14,32 +14,43 @@ export const CloseSuggestionButton = ({
 }) => {
   const tabIndex = srOnly ? '-1' : '0';
 
-  if (srOnly) {
+  try {
+    if (srOnly) {
+      if (!onKeyPress) {
+        throw Error('Missing onKeyPress prop for CloseSuggestionButton');
+      }
+      return (
+        <Typography
+          role="button"
+          tabIndex={tabIndex}
+          onClick={onClick}
+          onKeyPress={onKeyPress}
+          variant="srOnly"
+          {...rest}
+        >
+          <FormattedMessage id="search.suggestions.hideButton" />
+        </Typography>
+      );
+    }
+    if (!onKeyDown) {
+      throw Error('Missing onKeyDown prop for CloseSuggestionButton');
+    }
     return (
-      <Typography
+      <div
         role="button"
         tabIndex={tabIndex}
         onClick={onClick}
-        onKeyPress={onKeyPress}
-        variant="srOnly"
+        onKeyDown={onKeyDown}
         {...rest}
       >
-        <FormattedMessage id="search.suggestions.hideButton" />
-      </Typography>
+        <Typography variant="body2"><FormattedMessage id="search.suggestions.hideButton" /></Typography>
+        {!!icon ? icon: null}
+      </div>
     );
+  } catch (e) {
+    console.error(e);
   }
-  return (
-    <div
-      role="button"
-      tabIndex={tabIndex}
-      onClick={onClick}
-      onKeyDown={onKeyDown}
-      {...rest}
-    >
-      <Typography variant="body2"><FormattedMessage id="search.suggestions.hideButton" /></Typography>
-      {!!icon ? icon: null}
-    </div>
-  );
+  return null;
 }
 
 CloseSuggestionButton.propTypes = {
