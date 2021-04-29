@@ -21,6 +21,7 @@ const SettingsButton = ({
       classes={{ label: classes.buttonLabel }}
       className={buttonClass(type)}
       onClick={onClick}
+      role="button"
     >
       <SettingsText type={type} />
     </Button>
