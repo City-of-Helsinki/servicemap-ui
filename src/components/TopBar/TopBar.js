@@ -48,7 +48,6 @@ const TopBar = (props) => {
       settingsCategories.map(category => (
         <SettingsButton
           key={category.type}
-          aria-haspopup="dialog"
           onClick={() => {
             toggleSettings(category.type);
             setTimeout(() => {

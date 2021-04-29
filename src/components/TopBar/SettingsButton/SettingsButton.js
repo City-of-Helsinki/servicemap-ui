@@ -6,7 +6,7 @@ import {
 import SettingsText from '../../SettingsText';
 
 const SettingsButton = ({
-  'aria-haspopup': ariaHaspopup, classes, settingsOpen, type, onClick,
+  classes, settingsOpen, type, onClick,
 }) => {
   const minWidth = useMediaQuery('(min-width:900px)');
   const maxWidth = useMediaQuery('(max-width: 1100px)');
@@ -16,7 +16,7 @@ const SettingsButton = ({
   `;
   return (
     <Button
-      aria-haspopup={ariaHaspopup}
+      aria-haspopup="dialog"
       id={`SettingsButton${type}`}
       classes={{ label: classes.buttonLabel }}
       className={buttonClass(type)}
@@ -29,7 +29,6 @@ const SettingsButton = ({
 };
 
 SettingsButton.propTypes = {
-  'aria-haspopup': PropTypes.string,
   classes: PropTypes.shape({
     buttonLabel: PropTypes.string,
     settingsButton: PropTypes.string,
@@ -43,7 +42,6 @@ SettingsButton.propTypes = {
 
 SettingsButton.defaultProps = {
   settingsOpen: null,
-  'aria-haspopup': 'false',
 };
 
 export default SettingsButton;
