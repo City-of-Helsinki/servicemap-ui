@@ -9,7 +9,6 @@ export const CloseSuggestionButton = ({
   onKeyPress,
   onKeyDown,
   icon,
-  variant,
   srOnly,
   ...rest,
 }) => {
