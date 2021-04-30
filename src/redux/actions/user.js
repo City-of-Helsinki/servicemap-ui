@@ -50,7 +50,7 @@ export const changeTheme = theme => async (dispatch) => {
 
 export const findUserLocation = () => async (dispatch) => {
   // Disable user location during browser tests.
-  if (typeof window === 'undefined') {
+  if (window.navigator.webdriver) {
     return;
   }
   const success = (position) => {
@@ -77,6 +77,7 @@ export const findUserLocation = () => async (dispatch) => {
       dispatch(setUserPosition({ coordinates: null, allowed: true, addressData: null }));
     }
   };
+
   navigator.geolocation.getCurrentPosition(success, error, { enableHighAccuracy: true });
 };
 
