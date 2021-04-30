@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   List, ListItem, Collapse, Checkbox, Typography, ButtonBase, NoSsr, Divider,
@@ -11,6 +11,7 @@ import config from '../../../config';
 import SMButton from '../../components/ServiceMapButton';
 import SMAccordion from '../../components/SMAccordion';
 import useLocaleText from '../../utils/useLocaleText';
+import TitleBar from '../../components/TitleBar';
 
 const ServiceTreeView = (props) => {
   const {
@@ -31,7 +32,6 @@ const ServiceTreeView = (props) => {
   const [selected, setSelected] = useState(prevSelected);
   const [selectedOpen, setSelectedOpen] = useState(false);
 
-  const titleRef = useRef();
 
   let citySettings = [];
   config.cities.forEach((city) => {
@@ -159,6 +159,11 @@ const ServiceTreeView = (props) => {
     }
   };
 
+  const focusTitle = () => {
+    const title = document.getElementsByClassName('TitleText')[0];
+    title.focus();
+  };
+
   // Remove selection and refocus
   const handleRemoveSelection = (e, item, focus = false) => {
     handleCheckboxClick(e, item);
@@ -169,8 +174,8 @@ const ServiceTreeView = (props) => {
         || e.currentTarget.parentNode?.nextSibling?.childNodes[1];
       if (sibling) {
         sibling.focus();
-      } else if (titleRef.current) {
-        titleRef.current.focus();
+      } else {
+        focusTitle();
       }
     }
   };
@@ -178,9 +183,7 @@ const ServiceTreeView = (props) => {
   // Clear selections and focus to title
   const handleRemoveAllSelections = () => {
     setSelected([]);
-    if (titleRef.current) {
-      titleRef.current.focus();
-    }
+    focusTitle();
   };
 
   const drawCheckboxLines = (isOpen, level, id) => {
@@ -435,15 +438,13 @@ const ServiceTreeView = (props) => {
 
   return (
     <>
+      <TitleBar
+        title={intl.formatMessage({ id: 'general.pageTitles.serviceTree' })}
+        titleComponent="h3"
+        backButton
+        className={classes.topBarColor}
+      />
       <div className={classes.topArea}>
-        <Typography
-          ref={titleRef}
-          aria-hidden
-          className={classes.title}
-          tabIndex="-1"
-        >
-          <FormattedMessage id="services" />
-        </Typography>
         {renderSelectedCities()}
         {renderSelectionList(selectedList)}
       </div>
