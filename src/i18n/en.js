@@ -418,7 +418,7 @@ const translations = {
   'search.infoText': '{count} Search results',
   'search.searchbar.headerText': 'Find services near your home',
   'search.searchbar.infoText': 'Search for services, locations or addresses',
-  'search.skipLink': 'Jump link to the search results',
+  'search.skipLink': 'Move straight to the search results',
   'search.suggestions.suggest': 'Did you mean..?',
   'search.suggestions.expand': 'Search suggestions',
   'search.suggestions.loading': 'Loading suggestions',
