@@ -439,7 +439,7 @@ const ServiceTreeView = (props) => {
   return (
     <>
       <TitleBar
-        title={intl.formatMessage({ id: 'general.pageTitles.serviceTree' })}
+        title={intl.formatMessage({ id: 'general.pageTitles.serviceTree.title' })}
         titleComponent="h3"
         backButton
         className={classes.topBarColor}
