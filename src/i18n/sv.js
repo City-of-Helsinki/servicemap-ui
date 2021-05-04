@@ -180,8 +180,6 @@ const translations = {
   'general.frontPage': 'Framsidan',
   'general.contrast': 'Kontrast',
   'general.menu': 'Meny',
-  'general.menu.open': 'Öppna menyn',
-  'general.menu.close': 'Stäng menyn',
   'general.back': 'Tillbaka',
   'general.back.address': 'Gå tillbaka till adressidan',
   'general.back.area': 'Gå tillbaka till områdessidan',

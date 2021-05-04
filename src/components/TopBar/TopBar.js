@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {
   Button, Typography, AppBar, Toolbar, ButtonBase, NoSsr,
 } from '@material-ui/core';
-import { Map, Menu, Close } from '@material-ui/icons';
+import { Map } from '@material-ui/icons';
 import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
@@ -16,6 +16,7 @@ import { focusToViewTitle } from '../../utils/accessibility';
 import LocaleUtility from '../../utils/locale';
 import { useNavigationParams } from '../../utils/address';
 import SettingsButton from './SettingsButton';
+import MenuButton from './MenuButton';
 
 const TopBar = (props) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -28,7 +29,6 @@ const TopBar = (props) => {
     classes,
     toggleSettings,
     breadcrumb,
-    intl,
     changeTheme,
     theme,
     setMapType,
@@ -101,31 +101,12 @@ const TopBar = (props) => {
     }, 1);
   };
 
-  const renderMenuButton = () => (
-    <Button
-      id="MenuButton"
-      aria-label={intl.formatMessage({ id: drawerOpen ? 'general.menu.close' : 'general.menu.open' })}
-      aria-pressed={drawerOpen}
-      className={drawerOpen ? classes.toolbarButtonPressed : classes.toolbarButton}
-      classes={{ label: classes.buttonLabel }}
-      onClick={() => toggleDrawerMenu()}
-    >
-      {drawerOpen ? (
-        <>
-          <Close />
-          <Typography color="inherit" variant="body2">
-            <FormattedMessage id="general.close" />
-          </Typography>
-        </>
-      ) : (
-        <>
-          <Menu />
-          <Typography color="inherit" variant="body2">
-            <FormattedMessage id="general.menu" />
-          </Typography>
-        </>
-      )}
-    </Button>
+  const renderMenuButton = pageType => (
+    <MenuButton
+      pageType={pageType}
+      drawerOpen={drawerOpen}
+      toggleDrawerMenu={() => toggleDrawerMenu()}
+    />
   );
 
   const renderLanguages = (pageType) => {
@@ -257,7 +238,7 @@ const TopBar = (props) => {
             <MobileComponent>
               <div className={classes.mobileButtonContainer}>
                 {renderMapButton()}
-                {renderMenuButton()}
+                {renderMenuButton(pageType)}
               </div>
               {renderDrawerMenu(pageType)}
             </MobileComponent>
@@ -312,11 +293,9 @@ TopBar.propTypes = {
   changeTheme: PropTypes.func.isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   currentPage: PropTypes.string.isRequired,
-  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   setMapType: PropTypes.func.isRequired,
   settingsOpen: PropTypes.string,
-  settings: PropTypes.objectOf(PropTypes.any).isRequired,
   smallScreen: PropTypes.bool.isRequired,
   theme: PropTypes.string.isRequired,
   toggleSettings: PropTypes.func.isRequired,

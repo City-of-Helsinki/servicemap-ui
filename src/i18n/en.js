@@ -180,8 +180,6 @@ const translations = {
   'general.frontPage': 'Front page',
   'general.contrast': 'Contrast',
   'general.menu': 'Menu',
-  'general.menu.open': 'Open menu',
-  'general.menu.close': 'Close menu',
   'general.back': 'Back',
   'general.back.area': 'Back to area page',
   'general.back.address': 'Back to address page',
