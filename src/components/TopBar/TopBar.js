@@ -4,7 +4,7 @@ import {
   Button, Typography, AppBar, Toolbar, ButtonBase, NoSsr,
 } from '@material-ui/core';
 import { Map } from '@material-ui/icons';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import HomeLogo from '../Logos/HomeLogo';
@@ -22,6 +22,7 @@ const TopBar = (props) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const locale = useSelector(state => state.user.locale);
   const location = useLocation();
+  const intl = useIntl();
   const getAddressNavigatorParams = useNavigationParams();
 
   const {
@@ -230,7 +231,7 @@ const TopBar = (props) => {
 
           {/* Toolbar white area */}
           <Toolbar disableGutters className={pageType === 'mobile' ? classes.toolbarWhiteMobile : classes.toolbarWhite}>
-            <ButtonBase aria-label={intl.formatMessage({ id: "general.back.goToHome" })} role="link" onClick={() => handleNavigation('home')}>
+            <ButtonBase aria-label={intl.formatMessage({ id: 'general.back.goToHome' })} role="link" onClick={() => handleNavigation('home')}>
               <NoSsr>
                 <HomeLogo aria-hidden contrast={theme === 'dark'} className={classes.logo} />
               </NoSsr>
