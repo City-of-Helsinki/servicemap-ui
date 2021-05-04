@@ -1,9 +1,6 @@
 import React from 'react';
 import { createShallow } from '@material-ui/core/test-utils';
-import { MuiThemeProvider, ButtonBase } from '@material-ui/core';
-import configureStore from 'redux-mock-store';
-import { Provider } from 'react-redux';
-import { IntlProvider } from 'react-intl';
+import { MuiThemeProvider } from '@material-ui/core';
 import SettingsButton from '../SettingsButton';
 import themes from '../../../../themes';
 
@@ -16,37 +13,12 @@ const mockProps = {
   onClick: () => {},
 };
 
-// Mock props for intl provider
-const intlMock = {
-  locale: 'en',
-  messages: {
-    'settings.citySettings': 'City',
-    'settings.city.all': 'Show all',
-  },
-};
-
-const mockStore = configureStore([]);
-
 // eslint-disable-next-line react/prop-types
-const Providers = ({ children }) => {
-  const store = mockStore({
-    settings: {
-      cities: [],
-      colorblind: false,
-      hearingAid: false,
-      visuallyImpaired: false,
-    },
-  });
-  return (
-    <Provider store={store}>
-      <IntlProvider {...intlMock}>
-        <MuiThemeProvider theme={themes.SMTheme}>
-          {children}
-        </MuiThemeProvider>
-      </IntlProvider>
-    </Provider>
-  );
-};
+const Providers = ({ children }) => (
+  <MuiThemeProvider theme={themes.SMTheme}>
+    {children}
+  </MuiThemeProvider>
+);
 
 
 describe('<SettingsButton />', () => {
@@ -61,8 +33,11 @@ describe('<SettingsButton />', () => {
     expect(component).toMatchSnapshot();
   });
 
-  it('does use correct aria arrtibute', () => {
+  it('does use correct aria arrtibutes', () => {
     const component = shallow(<SettingsButton {...mockProps} />);
+    /*
+      The following aria-attributes are based on the accessibility testing report from 26.4.2021
+    */
     // Expect button role to be button
     expect(component.props().role).toEqual('button');
     // Expect button aria-haspopup value to be dialog
