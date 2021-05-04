@@ -1,6 +1,6 @@
 import React from 'react';
-import { createMount } from '@material-ui/core/test-utils';
-import { MuiThemeProvider } from '@material-ui/core';
+import { createShallow } from '@material-ui/core/test-utils';
+import { MuiThemeProvider, ButtonBase } from '@material-ui/core';
 import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 import { IntlProvider } from 'react-intl';
@@ -50,30 +50,22 @@ const Providers = ({ children }) => {
 
 
 describe('<SettingsButton />', () => {
-  // let render;
-  let mount;
+  let shallow;
 
   beforeEach(() => {
-    // render = createRender({ wrappingComponent: Providers });
-    mount = createMount({ wrappingComponent: Providers });
-  });
-
-  afterEach(() => {
-    mount.cleanUp();
+    shallow = createShallow({ wrappingComponent: Providers });
   });
 
   it('should work', () => {
-    const component = mount(<SettingsButton {...mockProps} />);
+    const component = shallow(<SettingsButton {...mockProps} />);
     expect(component).toMatchSnapshot();
   });
 
   it('does use correct aria arrtibute', () => {
-    const component = mount(<SettingsButton {...mockProps} />);
-
-    const buttonBase = component.find('ForwardRef(ButtonBase)');
+    const component = shallow(<SettingsButton {...mockProps} />);
     // Expect button role to be button
-    expect(buttonBase.props().role).toEqual('button');
+    expect(component.props().role).toEqual('button');
     // Expect button aria-haspopup value to be dialog
-    expect(buttonBase.props()['aria-haspopup']).toEqual('dialog');
+    expect(component.props()['aria-haspopup']).toEqual('dialog');
   });
 });
