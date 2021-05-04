@@ -74,7 +74,7 @@ export default () => {
 
           const focusBorder = await button.getStyleProperty('box-shadow')
           await t
-          .expect(focusBorder !== 'none').ok(`Button  "${await button.innerText}" does not have correct box-shadow focus indicator`);
+          .expect(focusBorder !== 'none').ok(`Button "${await button.innerText}" does not have correct box-shadow focus indicator`);
 
           const parentBackground = await getParentElementBG(await button, await button.parent())
           if (parentBackground) {
