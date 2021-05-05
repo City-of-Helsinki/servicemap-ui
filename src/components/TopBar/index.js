@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core';
-import { injectIntl } from 'react-intl';
 import styles from './styles';
 import TopBar from './TopBar';
 import { setMapType, toggleSettings } from '../../redux/actions/settings';
@@ -20,7 +19,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default injectIntl(withStyles(styles)(connect(
+export default withStyles(styles)(connect(
   mapStateToProps,
   { changeTheme, setMapType, toggleSettings },
-)(TopBar)));
+)(TopBar));

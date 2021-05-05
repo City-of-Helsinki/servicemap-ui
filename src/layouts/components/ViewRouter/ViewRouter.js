@@ -75,21 +75,21 @@ const Unit = () => (
 
 const UnitEvents = () => (
   <TitleWrapper messageId="general.pageTitles.unit.events">
-    <PageWrapper headMsgId="" page="unit">
+    <PageWrapper headMsgId="general.pageTitles.unit.events" page="unit">
       <ExtendedData type="events" />
     </PageWrapper>
   </TitleWrapper>
 );
 const UnitReservations = () => (
   <TitleWrapper messageId="general.pageTitles.unit.reservations">
-    <PageWrapper headMsgId="" page="unit">
+    <PageWrapper headMsgId="general.pageTitles.unit.reservations" page="unit">
       <ExtendedData type="reservations" />
     </PageWrapper>
   </TitleWrapper>
 );
 const UnitFeedback = () => (
   <TitleWrapper messageId="general.pageTitles.feedback">
-    <PageWrapper headMsgId="" page="unit">
+    <PageWrapper headMsgId="general.pageTitles.feedback" page="unit">
       <FeedbackView />
     </PageWrapper>
   </TitleWrapper>
@@ -121,7 +121,7 @@ const Address = () => (
 
 const ServiceTree = () => (
   <TitleWrapper messageId="general.pageTitles.serviceTree">
-    <PageWrapper headMsgId="general.pageTitles.serviceTree" page="serviceTree">
+    <PageWrapper headMsgId="general.pageTitles.serviceTree.title" page="serviceTree">
       <ServiceTreeView />
     </PageWrapper>
   </TitleWrapper>
@@ -129,7 +129,7 @@ const ServiceTree = () => (
 
 const Info = () => (
   <TitleWrapper messageId="general.pageTitles.info">
-    <PageWrapper headMsgId="" page="info">
+    <PageWrapper headMsgId="general.pageTitles.info" page="info">
       <InfoView />
     </PageWrapper>
   </TitleWrapper>
@@ -137,7 +137,7 @@ const Info = () => (
 
 const Feedback = () => (
   <TitleWrapper messageId="general.pageTitles.feedback">
-    <PageWrapper headMsgId="" page="feedback">
+    <PageWrapper headMsgId="general.pageTitles.feedback" page="feedback">
       <FeedbackView />
     </PageWrapper>
   </TitleWrapper>
