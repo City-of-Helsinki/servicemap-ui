@@ -18,13 +18,13 @@ import fetchAddressUnits from './utils/fetchAddressUnits';
 import fetchAddressData from './utils/fetchAddressData';
 import SMButton from '../../components/ServiceMapButton';
 import TabLists from '../../components/TabLists';
-import { getAddressText, addressMatchParamsToFetchOptions } from '../../utils/address';
+import { getAddressText, addressMatchParamsToFetchOptions, useNavigationParams } from '../../utils/address';
 import DesktopComponent from '../../components/DesktopComponent';
 import MobileComponent from '../../components/MobileComponent';
 import DivisionItem from '../../components/ListItems/DivisionItem';
-import { parseSearchParams } from '../../utils';
 import config from '../../../config';
 import useLocaleText from '../../utils/useLocaleText';
+import { parseSearchParams } from '../../utils';
 
 
 const hiddenDivisions = {
@@ -54,6 +54,8 @@ const getEmergencyCareUnit = (division) => {
 
 const AddressView = (props) => {
   const [error, setError] = useState(null);
+  const getAddressNavigatorParams = useNavigationParams();
+  const getLocaleText = useLocaleText();
 
   const {
     addressData,
@@ -62,7 +64,6 @@ const AddressView = (props) => {
     embed,
     intl,
     match,
-    getAddressNavigatorParams,
     getDistance,
     map,
     setAddressData,
@@ -76,7 +77,7 @@ const AddressView = (props) => {
     units,
   } = props;
 
-  const getLocaleText = useLocaleText();
+  const title = getAddressText(addressData, getLocaleText);
 
   const fetchAddressDistricts = (lnglat) => {
     setAdminDistricts(null);
@@ -261,7 +262,6 @@ const AddressView = (props) => {
   }, [match.url, map]);
 
   // Render component
-  const title = getAddressText(addressData, getLocaleText);
   const tabs = [
     {
       ariaLabel: intl.formatMessage({ id: 'address.nearby' }),
@@ -346,7 +346,6 @@ AddressView.propTypes = {
   map: PropTypes.objectOf(PropTypes.any),
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
-  getAddressNavigatorParams: PropTypes.func.isRequired,
   getDistance: PropTypes.func.isRequired,
   setAddressData: PropTypes.func.isRequired,
   setAddressLocation: PropTypes.func.isRequired,
