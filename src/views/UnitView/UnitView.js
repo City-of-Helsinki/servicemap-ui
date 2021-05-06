@@ -153,7 +153,7 @@ const UnitView = (props) => {
       // Return map to previous position if returning to search page or service page
       const isSearchPage = paths.search.regex.test(window.location.href);
       const isServicePage = paths.service.regex.test(window.location.href);
-      if (isSearchPage || isServicePage) {
+      if (map?.leafletElement && (isSearchPage || isServicePage)) {
         map.leafletElement.setView(viewPosition.current.center, viewPosition.current.zoom);
       }
     };
