@@ -1,37 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormControlLabel, Switch } from '@material-ui/core';
+import { Switch } from '@material-ui/core';
 
 const DistrictToggleButton = ({
   district, onToggle, selected, selectionSize, label, classes, ...rest
 }) => (
-  <FormControlLabel
-    onFocus={event => event.stopPropagation()}
-    className={classes.areaSwitch}
-    label={label && (
-      <div className={classes.labelContainer}>
-        {label}
-      </div>
-    )}
-    control={(
-      <Switch
-        color="primary"
-        classes={{ thumb: classes.switchBorder }}
-        size="small"
-        value={district.id}
-        className={classes.customSwitch}
-        inputProps={{
-          role: 'button',
-          'aria-setsize': selectionSize ? selectionSize.toString() : null,
-          'aria-pressed': selected,
-        }}
-        onChange={e => onToggle(e)}
-        aria-labelledby={`${`${district.id}Name`} ${`${district.id}Period`}`}
-        checked={selected}
-        {...rest}
-      />
-    )}
-  />
+  <div className={classes.areaSwitch}>
+    <Switch
+      color="primary"
+      classes={{ thumb: classes.switchBorder }}
+      size="small"
+      value={district.id}
+      className={classes.customSwitch}
+      inputProps={{
+        role: 'button',
+        'aria-setsize': selectionSize ? selectionSize.toString() : null,
+        'aria-pressed': selected,
+        'aria-labelledby': `${`${district.id}Name`} ${`${district.id}Period`}`,
+      }}
+      onChange={e => onToggle(e)}
+      checked={selected}
+      {...rest}
+    />
+    <div className={classes.labelContainer}>
+      {label}
+    </div>
+  </div>
 );
 
 DistrictToggleButton.propTypes = {

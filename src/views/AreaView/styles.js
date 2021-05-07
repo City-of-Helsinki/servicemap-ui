@@ -191,6 +191,11 @@ const styles = theme => ({
   },
   areaSwitch: {
     paddingLeft: theme.spacing(2),
+    display: 'inline-flex',
+    alignItems: 'center',
+    marginLeft: -11,
+    marginRight: 16,
+    verticalAlign: 'middle',
   },
   labelContainer: {
     marginLeft: theme.spacing(2),
