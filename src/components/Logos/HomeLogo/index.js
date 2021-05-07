@@ -12,13 +12,13 @@ import logoSV from '../../../assets/images/Logo-SWE.svg';
 import logoSVContrast from '../../../assets/images/Logo-SWE-Contrast.svg';
 import styles from './styles';
 import config from '../../../../config';
-import UserHelper from '../../../utils/user';
+import { useUserLocale } from '../../../utils/user';
 
 const HomeLogo = (props) => {
   const {
     contrast, classes, ...rest
   } = props;
-  const locale = UserHelper.useLocale();
+  const locale = useUserLocale();
 
   const getLogo = (production = false, contrast = false) => {
     if (production) {

@@ -2,7 +2,7 @@ import { Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/styles';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import UserHelper from '../../utils/user';
+import { useUserTheme } from '../../utils/user';
 import HomeLogo from '../Logos/HomeLogo';
 import styles from './styles';
 
@@ -11,7 +11,7 @@ export const ErrorComponent = withStyles(styles)(({
   error,
 }) => {
   let content = null;
-  const theme = UserHelper.useTheme();
+  const theme = useUserTheme();
   const containerClasses = `${classes.viewContainer}`;
 
   switch(error) {

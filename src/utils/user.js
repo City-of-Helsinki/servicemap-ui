@@ -1,12 +1,4 @@
 import { useSelector } from 'react-redux'
-
-class UserHelper {
-  static useTheme() {
-    return useSelector(state => state.user.theme);
-  }
-  static useLocale() {
-    return useSelector(state => state.user.locale);
-  }
-}
-
-export default UserHelper;
+ 
+export const useUserTheme = () => useSelector(state => state.user.theme);
+export const useUserLocale = () => useSelector(state => state.user.locale);
