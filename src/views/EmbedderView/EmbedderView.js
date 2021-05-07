@@ -235,6 +235,7 @@ const EmbedderView = ({
           value={embedUrl}
           margin="normal"
           variant="outlined"
+          inputProps={{ 'aria-label': intl.formatMessage({ id: 'embedder.url.title' }) }}
         />
         {
           /* Embed HTML code */
