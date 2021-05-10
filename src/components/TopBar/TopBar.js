@@ -49,7 +49,6 @@ const TopBar = (props) => {
       settingsCategories.map(category => (
         <SettingsButton
           key={category.type}
-          aria-pressed={settingsOpen === category.type}
           onClick={() => {
             toggleSettings(category.type);
             setTimeout(() => {
