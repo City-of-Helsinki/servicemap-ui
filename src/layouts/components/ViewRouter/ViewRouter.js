@@ -15,6 +15,7 @@ import DivisionView from '../../../views/DivisionView';
 import InfoView from '../../../views/InfoView';
 import ExtendedData from '../../../views/UnitView/components/ExtendedData';
 import AreaView from '../../../views/AreaView';
+import { ErrorTrigger } from '../../../components';
 
 const TitleWrapper = ({ children, messageId }) => (
   <>
@@ -183,7 +184,8 @@ class ViewRouter extends React.Component {
           )}
         />
         <Route path="/:lng/info/:page?" component={Info} />
-        <Route path="/:lng/" component={Home} />
+        <Route exact path="/:lng/" component={Home} />
+        <Route render={props => <ErrorTrigger error="badUrl" />} />
       </Switch>
     );
   }

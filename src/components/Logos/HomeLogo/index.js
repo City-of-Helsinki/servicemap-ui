@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core';
-import { connect } from 'react-redux';
 import logoNormal from '../../../assets/images/service-map-logo-fi.svg';
 import logoContrast from '../../../assets/images/service-map-logo-contrast.svg';
 import logoNormalDev from '../../../assets/images/service-map-logo-fi-dev.svg';
@@ -12,12 +11,13 @@ import logoSV from '../../../assets/images/Logo-SWE.svg';
 import logoSVContrast from '../../../assets/images/Logo-SWE-Contrast.svg';
 import styles from './styles';
 import config from '../../../../config';
-import { getLocale } from '../../../redux/selectors/locale';
+import { useUserLocale } from '../../../utils/user';
 
 const HomeLogo = (props) => {
   const {
-    contrast, classes, locale, ...rest
+    contrast, classes, ...rest
   } = props;
+  const locale = useUserLocale();
 
   const getLogo = (production = false, contrast = false) => {
     if (production) {
@@ -53,15 +53,10 @@ const HomeLogo = (props) => {
 HomeLogo.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   contrast: PropTypes.bool,
-  locale: PropTypes.oneOf(config.supportedLanguages).isRequired,
 };
 
 HomeLogo.defaultProps = {
   contrast: false,
 };
 
-const mapStateToProps = state => ({
-  locale: getLocale(state),
-});
-
-export default connect(mapStateToProps, {})(withStyles(styles)(HomeLogo));
+export default withStyles(styles)(HomeLogo);

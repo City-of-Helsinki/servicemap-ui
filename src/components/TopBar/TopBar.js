@@ -49,7 +49,6 @@ const TopBar = (props) => {
       settingsCategories.map(category => (
         <SettingsButton
           key={category.type}
-          aria-pressed={settingsOpen === category.type}
           onClick={() => {
             toggleSettings(category.type);
             setTimeout(() => {
@@ -123,7 +122,7 @@ const TopBar = (props) => {
               lang={currentLocale}
               onClick={() => {
                 const newLocation = location;
-                const newPath = location.pathname.replace(/^\/[a-zA-Z]{2}\//, `/${currentLocale}/`);
+                const newPath = location.pathname.replace(/^\/[a-zA-Z]{2}/, `/${currentLocale}`);
                 newLocation.pathname = newPath;
                 window.location = `${newLocation.pathname}${newLocation.search}`;
               }}
