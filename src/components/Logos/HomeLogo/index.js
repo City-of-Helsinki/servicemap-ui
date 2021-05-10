@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core';
-import { connect } from 'react-redux';
 import logoNormal from '../../../assets/images/service-map-logo-fi.svg';
 import logoContrast from '../../../assets/images/service-map-logo-contrast.svg';
 import logoNormalDev from '../../../assets/images/service-map-logo-fi-dev.svg';
@@ -44,9 +43,9 @@ const HomeLogo = (props) => {
   const logo = getLogo(config.production, contrast);
 
   return (
-    <a {...rest} href={`/${locale}`}>
+    <div role="img" {...rest}>
       <img src={logo} alt="" className={classes.icon} />
-    </a>
+    </div>
   );
 };
 
