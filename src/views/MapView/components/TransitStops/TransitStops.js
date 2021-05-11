@@ -93,6 +93,7 @@ class TransitStops extends React.Component {
         </>,
       ),
       iconSize: [transitIconSize, transitIconSize],
+      popupAnchor: [0, -13],
     });
   }
 
@@ -115,12 +116,14 @@ class TransitStops extends React.Component {
             position={[stop.lat, stop.lon]}
             keyboard={false}
           >
-            <Popup closeButton={false} className="popup" autoPan={false}>
-              <TransitStopInfo
-                stop={stop}
-                onCloseClick={() => this.closePopup()}
-              />
-            </Popup>
+            <div aria-hidden>
+              <Popup closeButton={false} className="popup" autoPan={false}>
+                <TransitStopInfo
+                  stop={stop}
+                  onCloseClick={() => this.closePopup()}
+                />
+              </Popup>
+            </div>
           </Marker>
         );
       })
