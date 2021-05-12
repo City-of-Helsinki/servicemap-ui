@@ -180,6 +180,8 @@ const translations = {
   // General
   'general.frontPage': 'Front page',
   'general.contrast': 'Contrast',
+  'general.contrast.ariaLabel.on': 'Turn on the high contrast mode',
+  'general.contrast.ariaLabel.off': 'Go back to the standard contrast mode',
   'general.menu': 'Menu',
   'general.back': 'Back',
   'general.back.area': 'Back to area page',

@@ -208,6 +208,7 @@ const TopBar = (props) => {
     } ${
       pageType === 'mobile' ? classes.toolbarBlackMobile : ''
     }`;
+    const contrastAriaLabel = intl.formatMessage({ id: `general.contrast.ariaLabel.${theme === 'dark' ? 'off' : 'on'}` })
     return (
       <>
         <AppBar className={classes.appBar}>
@@ -222,7 +223,7 @@ const TopBar = (props) => {
               <Typography aria-hidden color="inherit">|</Typography>
               {renderLanguages(pageType)}
               <Typography aria-hidden color="inherit">|</Typography>
-              <ButtonBase role="button" onClick={() => handleContrastChange()} focusVisibleClassName={classes.topButtonFocused}>
+              <ButtonBase role="button" onClick={() => handleContrastChange()} focusVisibleClassName={classes.topButtonFocused} aria-label={contrastAriaLabel}>
                 <Typography className={fontClass} color="inherit" variant="body2"><FormattedMessage id="general.contrast" /></Typography>
               </ButtonBase>
             </div>
