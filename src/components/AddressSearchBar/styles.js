@@ -5,7 +5,7 @@ const styles = theme => ({
     border: '1px solid #ACACAC',
     borderRadius: 4,
     width: '100%',
-    height: '80%',
+    height: 40,
     boxSizing: 'border-box',
     backgroundColor: '#fff',
   },
@@ -18,13 +18,11 @@ const styles = theme => ({
     margin: 4,
   },
   IconButton: {
-    margiRight: theme.spacing(0.5),
     padding: theme.spacing(1),
   },
   searchIcon: {
     color: 'rgba(0, 0, 0, 0.54)',
     fontSize: 22,
-    padding: theme.spacing(1),
   },
 });
 

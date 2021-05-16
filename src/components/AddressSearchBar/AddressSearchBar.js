@@ -150,8 +150,6 @@ const AddressSearchBar = ({
           onKeyDown={e => showSuggestions && handleSearchBarKeyPress(e)}
           endAdornment={(
             <>
-              <Search aria-hidden className={classes.searchIcon} />
-              <Divider aria-hidden className={classes.divider} />
               <IconButton
                 aria-label={intl.formatMessage({ id: 'search.cancelText' })}
                 onClick={() => {
@@ -162,6 +160,14 @@ const AddressSearchBar = ({
                 className={classes.IconButton}
               >
                 <Clear className={classes.clearButton} />
+              </IconButton>
+              <Divider aria-hidden className={classes.divider} />
+              <IconButton
+                aria-label={intl.formatMessage({ id: 'general.search' })}
+                onClick={e => handleSubmit(e)}
+                className={classes.IconButton}
+              >
+                <Search aria-hidden className={classes.searchIcon} />
               </IconButton>
             </>
           )}
