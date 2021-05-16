@@ -9,7 +9,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setOrder, setDirection } from '../../redux/actions/sort';
 import config from '../../../config';
 import { keyboardHandler, uppercaseFirst } from '../../utils';
-import useMobileStatus from '../../utils/isMobile';
 import useLocaleText from '../../utils/useLocaleText';
 
 const AddressSearchBar = ({
@@ -28,8 +27,6 @@ const AddressSearchBar = ({
   const formAddressString = address => (address
     ? `${getLocaleText(address.street.name)} ${address.number}${address.number_end ? address.number_end : ''}${address.letter ? address.letter : ''}, ${uppercaseFirst(address.street.municipality)}`
     : '');
-
-  const isMobile = useMobileStatus();
 
   const [addressResults, setAddressResults] = useState([]);
   const [resultIndex, setResultIndex] = useState(null);
@@ -76,7 +73,18 @@ const AddressSearchBar = ({
     }, 200);
   };
 
+  const handleBlur = () => {
+    setTimeout(() => {
+      const focused = document.activeElement.parentElement.parentElement;
+      if (focused.id !== 'addressSearchbarWrapper') {
+        setAddressResults([]);
+      }
+    }, 100);
+  };
+
   const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!addressResults.length) return;
     if (resultIndex !== null) {
       handleAddressSelect(addressResults[resultIndex]);
     } else {
@@ -127,9 +135,9 @@ const AddressSearchBar = ({
   }
 
   return (
-    <div className={containerClassName}>
+    <div onBlur={e => handleBlur(e)} className={containerClassName}>
       <Typography color="inherit">{title}</Typography>
-      <form action="" onSubmit={e => handleSubmit(e)}>
+      <form id="addressSearchbarWrapper" action="" onSubmit={e => handleSubmit(e)}>
         <InputBase
           id="addressSearchbar"
           autoComplete="off"
@@ -142,7 +150,6 @@ const AddressSearchBar = ({
             'aria-activedescendant': showSuggestions && resultIndex !== null ? `address-suggestion${resultIndex}` : null,
           }}
           type="text"
-          onBlur={isMobile ? () => {} : e => clearSuggestions(e)}
           onFocus={() => setResultIndex(null)}
           className={`${classes.searchBar} ${inputClassName}`}
           defaultValue={formAddressString(defaultAddress)}
