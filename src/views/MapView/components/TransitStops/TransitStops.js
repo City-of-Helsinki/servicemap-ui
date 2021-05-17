@@ -66,22 +66,22 @@ class TransitStops extends React.Component {
 
     switch (type) {
       case 3: // Bus stops
-        icon = <span className={`${classes.transitIconMap} ${classes.busIconColor} icon-icon-hsl-bus`} />;
+        icon = <span aria-hidden className={`${classes.transitIconMap} ${classes.busIconColor} icon-icon-hsl-bus`} />;
         break;
       case 0: // Tram stops
-        icon = <span className={`${classes.transitIconMap} ${classes.tramIconColor} icon-icon-hsl-tram`} />;
+        icon = <span aria-hidden className={`${classes.transitIconMap} ${classes.tramIconColor} icon-icon-hsl-tram`} />;
         break;
       case 109: // Train stops
-        icon = <span className={`${classes.transitIconMap} ${classes.trainIconColor} icon-icon-hsl-train`} />;
+        icon = <span aria-hidden className={`${classes.transitIconMap} ${classes.trainIconColor} icon-icon-hsl-train`} />;
         break;
       case 1: // Subway stops
-        icon = <span className={`${classes.transitIconMap} ${classes.metroIconColor} icon-icon-hsl-metro`} />;
+        icon = <span aria-hidden className={`${classes.transitIconMap} ${classes.metroIconColor} icon-icon-hsl-metro`} />;
         break;
       case -999: case 4: // Ferry stops
-        icon = <span className={`${classes.transitIconMap} ${classes.ferryIconColor} icon-icon-hsl-ferry`} />;
+        icon = <spanz aria-hidden className={`${classes.transitIconMap} ${classes.ferryIconColor} icon-icon-hsl-ferry`} />;
         break;
       default:
-        icon = <span className={`${classes.transitIconMap} ${classes.busIconColor} icon-icon-hsl-bus`} />;
+        icon = <span aria-hidden className={`${classes.transitIconMap} ${classes.busIconColor} icon-icon-hsl-bus`} />;
         break;
     }
 
