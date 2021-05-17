@@ -28,7 +28,7 @@ import HideSidebarButton from './components/HideSidebarButton';
 import CoordinateMarker from './components/CoordinateMarker';
 import { useNavigationParams } from '../../utils/address';
 import PanControl from './components/PanControl';
-import { adjustControlElements } from './utils';
+import adjustControlElements from './utils';
 import EntranceMarker from './components/EntranceMarker';
 
 if (global.window) {
@@ -435,8 +435,9 @@ const MapView = (props) => {
             && (
               <>
                 {/* Custom user location map button */}
-                <Control position="bottomright">
+                <Control className="UserLocation" position="bottomright">
                   <ButtonBase
+                    aria-hidden
                     aria-label={userLocationAriaLabel}
                     disabled={!userLocation}
                     className={`${classes.showLocationButton} ${!userLocation ? classes.locationDisabled : ''}`}
