@@ -34,8 +34,8 @@ test('AddressView does render correct view', async (t) => {
   ;
 });
 
-test('AddressView map renders correctly', async (t) => {
-  const zoomOut = await Selector('.leaflet-control-zoom-out');
+test.only('AddressView map renders correctly', async (t) => {
+  const zoomOut = await Selector('.zoomOut');
   await t
     .click(zoomOut)
     .click(zoomOut)

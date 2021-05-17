@@ -127,7 +127,7 @@ const PanControl = ({ classes, Control, map }) => {
         <ButtonBase
           type="button"
           aria-hidden
-          className={classes.zoomIn}
+          className={`${classes.zoomIn} zoomIn`}
           onClick={() => callback('in')}
           onKeyDown={keyboardCallback}
           tabIndex="0"
@@ -137,7 +137,7 @@ const PanControl = ({ classes, Control, map }) => {
         <ButtonBase
           type="button"
           aria-hidden
-          className={classes.zoomOut}
+          className={`${classes.zoomOut} zoomOut`}
           onClick={() => callback('out')}
           onKeyDown={keyboardCallback}
           tabIndex="0"
