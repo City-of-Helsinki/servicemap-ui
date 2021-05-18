@@ -180,6 +180,8 @@ const translations = {
   // General
   'general.frontPage': 'Framsidan',
   'general.contrast': 'Kontrast',
+  'general.contrast.ariaLabel.on': 'Aktivera högkontrastläge',
+  'general.contrast.ariaLabel.off': 'Gå tillbaka till standardkontrastläge',
   'general.menu': 'Meny',
   'general.back': 'Tillbaka',
   'general.back.address': 'Gå tillbaka till adressidan',
