@@ -262,7 +262,7 @@ const EmbedderView = ({
     const description = locale => intl.formatMessage({ id: `embedder.language.description.${locale}` });
     const languageControls = generateLabel => Object.keys(embedderConfig.LANGUAGES).map(lang => ({
       value: lang,
-      label: `${uppercaseFirst(embedderConfig.LANGUAGES[lang])}. ${generateLabel(lang)}`,
+      label: `${uppercaseFirst(embedderConfig.LANGUAGES[language][lang])}. ${generateLabel(lang)}`,
     }));
 
     return (
