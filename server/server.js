@@ -22,7 +22,9 @@ import legacyRedirector from './legacyRedirector';
 import { matomoTrackingCode, appDynamicsTrackingCode, cookieHubCode } from './externalScripts';
 import { getLastCommit, getVersion } from './version';
 import ieHandler from './ieMiddleware';
+import schedule from 'node-schedule'
 import ogImage from '../src/assets/images/servicemap-meta-img.png';
+import { generateSitemap, getSitemap } from './sitemapMiddlewares';
 
 // Get sentry dsn from environtment variables
 const sentryDSN = process.env.SENTRY_DSN_SERVER;
@@ -47,6 +49,18 @@ const setupTests = () => {
   }
 };
 setupTests();
+
+// Handle sitemap creation
+if (config.production && config.domain) {
+  // Generate sitemap on start
+  generateSitemap();
+  // Update sitemap every monday
+  schedule.scheduleJob({ hour: 8, minute: 0, dayOfWeek: 1 }, () => {
+    console.log('Updating sitemap...')
+    generateSitemap();
+  });
+}
+
 // Configure constants
 const app = express();
 const supportedLanguages = config.supportedLanguages;
@@ -72,6 +86,15 @@ app.use(`/*`, (req, res, next) => {
 });
 app.use('/*', ieHandler)
 app.use(`/rdr`, legacyRedirector);
+app.use('/sitemap.xml', getSitemap);
+app.get('/robots.txt', (req, res, next) => {
+  if (config.domain) {
+    res.type('text/plain');
+    res.send(`User-agent: *\nAllow: /\n\nSitemap: ${config.domain}/sitemap.xml`);
+  } else {
+    next();
+  };
+});
 app.use('/', languageSubdomainRedirect);
 app.use(`/`, makeLanguageHandler);
 app.use('/', unitRedirect);
@@ -182,6 +205,7 @@ const htmlTemplate = (req, reactDom, preloadedState, css, cssString, locale, hel
     <style>${[...css].join('')}</style>
     <script>
         window.nodeEnvSettings = {};
+        window.nodeEnvSettings.DOMAIN = "${process.env.DOMAIN}";
         window.nodeEnvSettings.ACCESSIBILITY_SENTENCE_API = "${process.env.ACCESSIBILITY_SENTENCE_API}";
         window.nodeEnvSettings.SERVICEMAP_API = "${process.env.SERVICEMAP_API}";
         window.nodeEnvSettings.EVENTS_API = "${process.env.EVENTS_API}";

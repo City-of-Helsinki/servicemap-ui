@@ -64,7 +64,7 @@ const EmbedLayout = ({ intl }) => {
               path="*/embed/unit/:unit"
               render={() => (
                 <>
-                  <PageHandler page="unit" />
+                  <PageHandler embed page="unit" />
                   <UnitView embed />
                 </>
               )}
@@ -73,7 +73,7 @@ const EmbedLayout = ({ intl }) => {
               path="*/embed/event/:event"
               render={() => (
                 <>
-                  <PageHandler page="event" />
+                  <PageHandler embed page="event" />
                   <EventDetailView embed />
                 </>
               )}
@@ -82,7 +82,7 @@ const EmbedLayout = ({ intl }) => {
               path="*/embed/search"
               render={() => (
                 <>
-                  <PageHandler page="search" />
+                  <PageHandler embed page="search" />
                   <SearchView embed />
                 </>
               )}
@@ -91,7 +91,7 @@ const EmbedLayout = ({ intl }) => {
               path="*/embed/service/:service"
               render={() => (
                 <>
-                  <PageHandler page="service" />
+                  <PageHandler embed page="service" />
                   <ServiceView embed />
                 </>
               )}
@@ -100,7 +100,7 @@ const EmbedLayout = ({ intl }) => {
               path="*/embed/address/:municipality/:street/:number/"
               render={() => (
                 <>
-                  <PageHandler page="address" />
+                  <PageHandler embed page="address" />
                   <AddressView embed />
                 </>
               )}
@@ -109,7 +109,7 @@ const EmbedLayout = ({ intl }) => {
               path="*/embed/division/:city?/:area?"
               render={() => (
                 <>
-                  <PageHandler page="division" />
+                  <PageHandler embed page="division" />
                   <DivisionView />
                 </>
               )}
@@ -118,7 +118,7 @@ const EmbedLayout = ({ intl }) => {
               path="*/embed/area/"
               render={() => (
                 <>
-                  <PageHandler page="area" />
+                  <PageHandler embed page="area" />
                   <AreaView embed />
                 </>
               )}
