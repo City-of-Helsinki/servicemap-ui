@@ -28,7 +28,7 @@ import HideSidebarButton from './components/HideSidebarButton';
 import CoordinateMarker from './components/CoordinateMarker';
 import { useNavigationParams } from '../../utils/address';
 import PanControl from './components/PanControl';
-import { adjustControlElements } from './utils';
+import adjustControlElements from './utils';
 import EntranceMarker from './components/EntranceMarker';
 
 if (global.window) {
@@ -315,7 +315,7 @@ const MapView = (props) => {
 
 
   if (global.rL && mapObject) {
-    const { Map, TileLayer, ZoomControl } = global.rL || {};
+    const { Map, TileLayer } = global.rL || {};
     const Control = require('react-leaflet-control').default;
     let center = mapOptions.initialPosition;
     let zoom = isMobile ? mapObject.options.mobileZoom : mapObject.options.zoom;
@@ -417,7 +417,6 @@ const MapView = (props) => {
             />
           )}
 
-          <ZoomControl position="bottomright" aria-hidden="true" />
           <Control position="topleft">
             {!isMobile && !embeded && toggleSidebar ? (
               <HideSidebarButton
@@ -436,8 +435,9 @@ const MapView = (props) => {
             && (
               <>
                 {/* Custom user location map button */}
-                <Control position="bottomright">
+                <Control className="UserLocation" position="bottomright">
                   <ButtonBase
+                    aria-hidden
                     aria-label={userLocationAriaLabel}
                     disabled={!userLocation}
                     className={`${classes.showLocationButton} ${!userLocation ? classes.locationDisabled : ''}`}

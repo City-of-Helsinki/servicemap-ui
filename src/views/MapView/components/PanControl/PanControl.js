@@ -1,24 +1,19 @@
 import {
+  Add,
   ArrowDropDown,
   ArrowDropUp,
   ArrowLeft,
   ArrowRight,
+  Remove,
 } from '@material-ui/icons';
 import { ButtonBase } from '@material-ui/core';
-import { withStyles } from '@material-ui/styles';
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import styles from './styles';
 import isClient from '../../../../utils';
 
 const panOffset = 100;
 
 const PanControl = ({ classes, Control, map }) => {
-  // Prevent rendering for server
-  if (!isClient()) {
-    return null;
-  }
-
   // Button callback function
   const callback = useCallback((direction) => {
     if (!map || !direction) return;
@@ -36,10 +31,18 @@ const PanControl = ({ classes, Control, map }) => {
       case 'right':
         point = new global.L.Point(panOffset, 0);
         break;
+      case 'in':
+        map.zoomIn(1);
+        break;
+      case 'out':
+        map.zoomOut(1);
+        break;
       default:
     }
 
-    map.panBy(point);
+    if (point) {
+      map.panBy(point);
+    }
   }, []);
 
   // Handle keyboard arrow functionality for leaflet map
@@ -61,9 +64,22 @@ const PanControl = ({ classes, Control, map }) => {
         e.preventDefault();
         callback('right');
         break;
+      case '+':
+        e.preventDefault();
+        callback('in');
+        break;
+      case '-':
+        e.preventDefault();
+        callback('out');
+        break;
       default:
     }
   }, []);
+
+  // Prevent rendering for server
+  if (!isClient()) {
+    return null;
+  }
 
   return (
     <Control position="bottomright">
@@ -108,6 +124,26 @@ const PanControl = ({ classes, Control, map }) => {
         >
           <ArrowDropDown />
         </ButtonBase>
+        <ButtonBase
+          type="button"
+          aria-hidden
+          className={`${classes.zoomIn} zoomIn`}
+          onClick={() => callback('in')}
+          onKeyDown={keyboardCallback}
+          tabIndex="0"
+        >
+          <Add />
+        </ButtonBase>
+        <ButtonBase
+          type="button"
+          aria-hidden
+          className={`${classes.zoomOut} zoomOut`}
+          onClick={() => callback('out')}
+          onKeyDown={keyboardCallback}
+          tabIndex="0"
+        >
+          <Remove />
+        </ButtonBase>
       </div>
     </Control>
   );
@@ -120,10 +156,14 @@ PanControl.propTypes = {
     bottom: PropTypes.string,
     left: PropTypes.string,
     right: PropTypes.string,
+    zoomIn: PropTypes.string,
+    zoomOut: PropTypes.string,
   }).isRequired,
   Control: PropTypes.objectOf(PropTypes.any).isRequired,
   map: PropTypes.shape({
     panBy: PropTypes.func,
+    zoomIn: PropTypes.func,
+    zoomOut: PropTypes.func,
   }).isRequired,
 };
 
