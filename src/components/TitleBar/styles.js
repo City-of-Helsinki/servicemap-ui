@@ -12,8 +12,20 @@ export default theme => ({
     color: '#fff',
     padding: theme.spacing(1),
   },
+  multiLine: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    paddingLeft: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
+  },
   textBar: {
     paddingLeft: 36,
+  },
+  titleContainer: {
+    flexDirection: 'row',
+    width: '100%',
+    display: 'flex',
   },
   title: {
     fontSize: 18,
@@ -26,12 +38,24 @@ export default theme => ({
       outlineStyle: 'none',
     },
   },
+  titleLarge: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
   iconButton: {
     display: 'flex',
     color: 'inherit',
     flex: '0 1 auto',
-    padding: theme.spacing(1),
-    marginLeft: theme.spacing(0.5),
+    padding: 0,
+    margin: theme.spacing(1),
+    marginTop: 0,
+    fontSize: 18,
+  },
+  icon: {
+    display: 'flex',
+    color: 'inherit',
+    margin: theme.spacing(1),
+    padding: 0,
   },
   buttonFocus: {
     outline: '2px solid transparent',
@@ -45,7 +69,6 @@ export default theme => ({
     color: 'inherit',
     marginLeft: 'auto',
     paddingLeft: theme.spacing(1),
-    paddingTop: 4,
     marginRight: theme.spacing(1),
     minWidth: 50,
   },

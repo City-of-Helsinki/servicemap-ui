@@ -66,3 +66,7 @@ input[type="search"]::-webkit-search-cancel-button{
   color: #4A4A4C !important;
 }
 
+.leaflet-control-attribution {
+  background: #fff !important;
+}
+

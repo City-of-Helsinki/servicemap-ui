@@ -8,13 +8,18 @@ import { FormattedMessage } from 'react-intl';
 import Container from '../../../../components/Container';
 import SettingsUtility from '../../../../utils/settings';
 import Loading from '../../../../components/Loading';
+import useLocaleText from '../../../../utils/useLocaleText';
 
-class AccessibilityInfo extends React.Component {
+const AccessibilityInfo = (props) => {
+  const {
+    settings, unit, accessibilitySentences, classes, titleAlways, headingLevel,
+  } = props;
+
+  const getLocaleText = useLocaleText();
   /**
    * Parse accessibility shortcomings to single array based on user's settings
    */
-  parseAccessibilityShortcomings() {
-    const { settings, unit } = this.props;
+  const parseAccessibilityShortcomings = () => {
     const accessibilityShortcomings = unit.accessibility_description;
 
     if (!accessibilityShortcomings) {
@@ -69,10 +74,9 @@ class AccessibilityInfo extends React.Component {
     });
 
     return renderedShortcomings;
-  }
+  };
 
-  renderAccessibilityShortcomings(heading, shortcomings) {
-    const { classes, getLocaleText } = this.props;
+  const renderAccessibilityShortcomings = (heading, shortcomings) => {
     const data = shortcomings;
 
     if (!data || data === 'noSettings' || data.length === 0) {
@@ -125,10 +129,9 @@ class AccessibilityInfo extends React.Component {
           </List>
         </>
       );
-  }
+  };
 
-  renderAccessibilityDescriptions(heading) {
-    const { accessibilitySentences, classes, getLocaleText } = this.props;
+  const renderAccessibilityDescriptions = (heading) => {
     const { data } = accessibilitySentences;
     if (!data) {
       return null;
@@ -189,11 +192,9 @@ class AccessibilityInfo extends React.Component {
         </List>
       </>
     );
-  }
+  };
 
-  renderInfoText(noInfo, noShortcomings) {
-    const { classes } = this.props;
-
+  const renderInfoText = (noInfo, noShortcomings) => {
     if (noInfo) {
       return (
         <ListItem component="div">
@@ -221,34 +222,30 @@ class AccessibilityInfo extends React.Component {
     }
 
     return null;
+  };
+
+
+  if (headingLevel < 1 || headingLevel > 5) {
+    throw Error('Heading level is invalid');
   }
+  const shortcomings = parseAccessibilityShortcomings();
 
-  render() {
-    const {
-      accessibilitySentences, classes, titleAlways, headingLevel,
-    } = this.props;
-
-    if (headingLevel < 1 || headingLevel > 5) {
-      throw Error('Heading level is invalid');
-    }
-    const shortcomings = this.parseAccessibilityShortcomings();
-
-    const shouldRenderExtraTitle = !!(Array.isArray(shortcomings) && shortcomings.length);
+  const shouldRenderExtraTitle = !!(Array.isArray(shortcomings) && shortcomings.length);
 
 
-    const heading = `h${headingLevel}`;
-    const listHeading = (titleAlways || shouldRenderExtraTitle) ? `h${headingLevel + 1}` : heading;
-    const aShortcomings = this.renderAccessibilityShortcomings(listHeading, shortcomings);
-    const aDescriptions = this.renderAccessibilityDescriptions(listHeading);
+  const heading = `h${headingLevel}`;
+  const listHeading = (titleAlways || shouldRenderExtraTitle) ? `h${headingLevel + 1}` : heading;
+  const aShortcomings = renderAccessibilityShortcomings(listHeading, shortcomings);
+  const aDescriptions = renderAccessibilityDescriptions(listHeading);
 
-    const noInfo = !aDescriptions && !aShortcomings;
-    const noShortcomings = aDescriptions && !aShortcomings;
+  const noInfo = !aDescriptions && !aShortcomings;
+  const noShortcomings = aDescriptions && !aShortcomings;
 
-    const infoText = this.renderInfoText(noInfo, noShortcomings);
+  const infoText = renderInfoText(noInfo, noShortcomings);
 
-    return (
-      <Container>
-        {
+  return (
+    <Container>
+      {
           (titleAlways)
           && (
             <Typography className={classes.title} variant="subtitle1" component={heading} align="left">
@@ -256,16 +253,16 @@ class AccessibilityInfo extends React.Component {
             </Typography>
           )
         }
-        <Divider className={classes.divider} aria-hidden="true" />
-        <NoSsr>
-          {
+      <Divider className={classes.divider} aria-hidden="true" />
+      <NoSsr>
+        {
             infoText
           }
-          {
+        {
             aShortcomings
           }
-        </NoSsr>
-        {
+      </NoSsr>
+      {
           shouldRenderExtraTitle
           && (
             <>
@@ -276,13 +273,12 @@ class AccessibilityInfo extends React.Component {
             </>
           )
         }
-        <Loading reducer={accessibilitySentences}>
-          { aDescriptions }
-        </Loading>
-      </Container>
-    );
-  }
-}
+      <Loading reducer={accessibilitySentences}>
+        { aDescriptions }
+      </Loading>
+    </Container>
+  );
+};
 
 AccessibilityInfo.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -294,7 +290,6 @@ AccessibilityInfo.propTypes = {
     })),
   }).isRequired,
   headingLevel: PropTypes.oneOf([2, 3, 4, 5]).isRequired,
-  getLocaleText: PropTypes.func.isRequired,
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
   titleAlways: PropTypes.bool,
   unit: PropTypes.objectOf(PropTypes.any).isRequired,

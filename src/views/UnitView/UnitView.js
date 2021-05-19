@@ -108,12 +108,13 @@ const UnitView = (props) => {
   };
 
   const handleFeedbackClick = () => {
+    const URLs = config.additionalFeedbackURLs;
     if (unit.municipality === 'espoo') {
-      window.open('https://easiointi.espoo.fi/efeedback/');
+      window.open(URLs.espoo);
     } else if (unit.municipality === 'vantaa') {
-      window.open('https://asiointi.vantaa.fi/anna-palautetta');
+      window.open(URLs.vantaa);
     } else if (unit.municipality === 'kauniainen') {
-      window.open('https://www.kauniainen.fi/kaupunki_ja_paatoksenteko/osallistu_ja_vaikuta');
+      window.open(URLs.kauniainen);
     } else {
       navigator.push('unit', { id: unit.id, type: 'feedback' });
     }
@@ -153,7 +154,7 @@ const UnitView = (props) => {
       // Return map to previous position if returning to search page or service page
       const isSearchPage = paths.search.regex.test(window.location.href);
       const isServicePage = paths.service.regex.test(window.location.href);
-      if (isSearchPage || isServicePage) {
+      if (map?.leafletElement && (isSearchPage || isServicePage)) {
         map.leafletElement.setView(viewPosition.current.center, viewPosition.current.zoom);
       }
     };

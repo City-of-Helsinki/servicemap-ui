@@ -9,6 +9,11 @@ const styles = () => ({
     backgroundColor: '#353638',
     maxWidth: 350,
     padding: 2,
+    overflow: 'visible',
+  },
+  scrollContainer: {
+    height: `calc(100vh - ${config.topBarHeight}px)`,
+    overflowY: 'auto',
   },
   drawerContainerMobile: {
     color: '#fff',
@@ -16,6 +21,7 @@ const styles = () => ({
     backgroundColor: '#353638',
     maxWidth: 350,
     padding: 2,
+    overflow: 'visible',
   },
   drawerButton: {
     color: 'inherit',
@@ -26,6 +32,7 @@ const styles = () => ({
     paddingLeft: 25,
     paddingRight: 25,
     borderBottom: '1px solid rgba(255, 255, 255, 0.24)',
+    width: '100%',
   },
   drawerButtonActive: {
     backgroundColor: '#141823',
