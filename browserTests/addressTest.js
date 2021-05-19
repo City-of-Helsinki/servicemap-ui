@@ -34,7 +34,7 @@ test('AddressView does render correct view', async (t) => {
   ;
 });
 
-test.only('AddressView map renders correctly', async (t) => {
+test('AddressView map renders correctly', async (t) => {
   const zoomOut = await Selector('.zoomOut');
   await t
     .click(zoomOut)

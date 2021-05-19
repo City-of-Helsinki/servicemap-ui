@@ -67,7 +67,7 @@ fixture`Map tests`
     await waitForReact();
   });
 
-test.only('Transit marker visible after zoom', async (t) => {
+test('Transit marker visible after zoom', async (t) => {
   const zoomIn  = Selector('.zoomIn');
   const markers = ReactSelector('Marker');
   
