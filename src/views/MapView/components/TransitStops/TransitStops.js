@@ -88,7 +88,7 @@ class TransitStops extends React.Component {
     return divIcon({
       html: renderToStaticMarkup(
         <>
-          <span className={`${classes.transitBackground} icon-icon-hsl-background`} />
+          <span aria-hidden className={`${classes.transitBackground} icon-icon-hsl-background`} />
           {icon}
         </>,
       ),
