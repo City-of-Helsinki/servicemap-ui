@@ -79,6 +79,7 @@ const EmbedderView = ({
   const selectedUnit = useSelector(state => state.selectedUnit.unit.data);
   const currentService = useSelector(state => state.service.current);
   const getLocaleText = useLocaleText();
+  const userLocale = useSelector(state => state.user.locale);
 
   // States
   const [language, setLanguage] = useState(defaultLanguage);
@@ -262,7 +263,7 @@ const EmbedderView = ({
     const description = locale => intl.formatMessage({ id: `embedder.language.description.${locale}` });
     const languageControls = generateLabel => Object.keys(embedderConfig.LANGUAGES).map(lang => ({
       value: lang,
-      label: `${uppercaseFirst(embedderConfig.LANGUAGES[language][lang])}. ${generateLabel(lang)}`,
+      label: `${uppercaseFirst(embedderConfig.LANGUAGES[userLocale][lang])}. ${generateLabel(lang)}`,
     }));
 
     return (
