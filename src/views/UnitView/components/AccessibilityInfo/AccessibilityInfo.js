@@ -15,6 +15,10 @@ const AccessibilityInfo = (props) => {
     settings, unit, accessibilitySentences, classes, titleAlways, headingLevel,
   } = props;
 
+  if (!unit) {
+    return null;
+  }
+
   const getLocaleText = useLocaleText();
   /**
    * Parse accessibility shortcomings to single array based on user's settings
