@@ -18,6 +18,7 @@ import paths from '../../../config/paths';
 import embedderConfig from './embedderConfig';
 import SettingsUtility from '../../utils/settings';
 import useLocaleText from '../../utils/useLocaleText';
+import { useUserLocale } from '../../utils/user';
 
 
 const hideCitiesIn = [
@@ -79,7 +80,7 @@ const EmbedderView = ({
   const selectedUnit = useSelector(state => state.selectedUnit.unit.data);
   const currentService = useSelector(state => state.service.current);
   const getLocaleText = useLocaleText();
-  const userLocale = useSelector(state => state.user.locale);
+  const userLocale = useUserLocale();
 
   // States
   const [language, setLanguage] = useState(defaultLanguage);
