@@ -5,6 +5,7 @@ import {
   Switch, Route,
 } from 'react-router-dom';
 import { injectIntl } from 'react-intl';
+import { Typography } from '@material-ui/core';
 import MapView from '../views/MapView';
 import PageHandler from './components/PageHandler';
 import AddressView from '../views/AddressView';
@@ -125,7 +126,8 @@ const EmbedLayout = ({ intl }) => {
             />
           </Switch>
         </div>
-        <div aria-label={intl.formatMessage({ id: 'map.ariaLabel' })} tabIndex="-1" style={styles.map}>
+        <Typography variant="srOnly">{intl.formatMessage({ id: 'map.ariaLabel' })}</Typography>
+        <div aria-hidden tabIndex="-1" style={styles.map}>
           <MapView />
         </div>
       </div>
