@@ -24,7 +24,7 @@ import { getLastCommit, getVersion } from './version';
 import ieHandler from './ieMiddleware';
 import schedule from 'node-schedule'
 import ogImage from '../src/assets/images/servicemap-meta-img.png';
-import { generateSitemap, getSitemap } from './sitemapMiddlewares';
+import { generateSitemap, getRobotsFile, getSitemap } from './sitemapMiddlewares';
 
 // Get sentry dsn from environtment variables
 const sentryDSN = process.env.SENTRY_DSN_SERVER;
@@ -87,14 +87,7 @@ app.use(`/*`, (req, res, next) => {
 app.use('/*', ieHandler)
 app.use(`/rdr`, legacyRedirector);
 app.use('/sitemap.xml', getSitemap);
-app.get('/robots.txt', (req, res, next) => {
-  if (config.domain) {
-    res.type('text/plain');
-    res.send(`User-agent: *\nAllow: /\n\nSitemap: ${config.domain}/sitemap.xml`);
-  } else {
-    next();
-  };
-});
+app.get('/robots.txt', getRobotsFile);
 app.use('/', languageSubdomainRedirect);
 app.use(`/`, makeLanguageHandler);
 app.use('/', unitRedirect);
@@ -206,6 +199,7 @@ const htmlTemplate = (req, reactDom, preloadedState, css, cssString, locale, hel
     <script>
         window.nodeEnvSettings = {};
         window.nodeEnvSettings.DOMAIN = "${process.env.DOMAIN}";
+        window.nodeEnvSettings.SERVER_TYPE = "${process.env.SERVER_TYPE}";
         window.nodeEnvSettings.ACCESSIBILITY_SENTENCE_API = "${process.env.ACCESSIBILITY_SENTENCE_API}";
         window.nodeEnvSettings.SERVICEMAP_API = "${process.env.SERVICEMAP_API}";
         window.nodeEnvSettings.EVENTS_API = "${process.env.EVENTS_API}";
