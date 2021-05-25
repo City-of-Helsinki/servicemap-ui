@@ -176,8 +176,6 @@ export default {
     kauniainen: 'https://www.kauniainen.fi/kaupunki_ja_paatoksenteko/osallistu_ja_vaikuta',
   },
   "production": settings.MODE === 'production',
-  "domain": settings.DOMAIN,
-  "serverType": settings.SERVER_TYPE,
   "initialMapPosition": settings.INITIAL_MAP_POSITION.split(','),
   "servicemapURL": settings.SERVICE_MAP_URL,
   "accessibleMapURL": settings.ACCESSIBLE_MAP_URL,

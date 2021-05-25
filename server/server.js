@@ -51,7 +51,7 @@ const setupTests = () => {
 setupTests();
 
 // Handle sitemap creation
-if (config.production && config.domain) {
+if (config.production && process.env.DOMAIN) {
   // Generate sitemap on start
   generateSitemap();
   // Update sitemap every monday
