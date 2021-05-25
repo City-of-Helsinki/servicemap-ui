@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { Typography } from '@material-ui/core';
 import MapView from '../views/MapView';
 import config from '../../config';
 import TopBar from '../components/TopBar';
@@ -183,9 +184,9 @@ const DefaultLayout = (props) => {
                   <ViewRouter />
                 </div>
               </main>
+              <Typography variant="srOnly">{intl.formatMessage({ id: 'map.ariaLabel' })}</Typography>
               <div
-                aria-label={intl.formatMessage({ id: 'map.ariaLabel' })}
-                aria-hidden={!!settingsToggled}
+                aria-hidden
                 tabIndex="-1"
                 style={styles.map}
               >
@@ -207,7 +208,6 @@ const DefaultLayout = (props) => {
           </ErrorBoundary>
         )
       }
-      
     </ErrorProvider>
     </>
   );
