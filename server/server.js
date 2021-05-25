@@ -198,8 +198,6 @@ const htmlTemplate = (req, reactDom, preloadedState, css, cssString, locale, hel
     <style>${[...css].join('')}</style>
     <script>
         window.nodeEnvSettings = {};
-        window.nodeEnvSettings.DOMAIN = "${process.env.DOMAIN}";
-        window.nodeEnvSettings.SERVER_TYPE = "${process.env.SERVER_TYPE}";
         window.nodeEnvSettings.ACCESSIBILITY_SENTENCE_API = "${process.env.ACCESSIBILITY_SENTENCE_API}";
         window.nodeEnvSettings.SERVICEMAP_API = "${process.env.SERVICEMAP_API}";
         window.nodeEnvSettings.EVENTS_API = "${process.env.EVENTS_API}";
