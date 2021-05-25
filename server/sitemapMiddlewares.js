@@ -20,9 +20,24 @@ export const getSitemap = (req, res) => {
   }
 }
 
+export const getRobotsFile = (req, res, next) => {
+  // Returns robots.txt file that points to sitemap location
+  if (process.env.DOMAIN) {
+    res.type('text/plain');
+    if (process.env.SERVER_TYPE === 'staging') {
+      // Disable crawling if on staging server
+      res.send(`User-agent: *\nDisallow: /`);
+    } else {
+      res.send(`User-agent: *\nAllow: /\n\nSitemap: ${process.env.DOMAIN}/sitemap.xml`);
+    }
+  } else {
+    next();
+  };
+}
+
 export const generateSitemap = async () => {
   try {
-    const url = config.domain;
+    const url = process.env.DOMAIN;
     const smStream = new SitemapStream({ hostname: url })
     const pipeline = smStream.pipe(createGzip())
 
