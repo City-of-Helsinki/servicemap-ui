@@ -22,7 +22,9 @@ import legacyRedirector from './legacyRedirector';
 import { matomoTrackingCode, appDynamicsTrackingCode, cookieHubCode } from './externalScripts';
 import { getLastCommit, getVersion } from './version';
 import ieHandler from './ieMiddleware';
+import schedule from 'node-schedule'
 import ogImage from '../src/assets/images/servicemap-meta-img.png';
+import { generateSitemap, getRobotsFile, getSitemap } from './sitemapMiddlewares';
 
 // Get sentry dsn from environtment variables
 const sentryDSN = process.env.SENTRY_DSN_SERVER;
@@ -47,6 +49,18 @@ const setupTests = () => {
   }
 };
 setupTests();
+
+// Handle sitemap creation
+if (config.production && process.env.DOMAIN) {
+  // Generate sitemap on start
+  generateSitemap();
+  // Update sitemap every monday
+  schedule.scheduleJob({ hour: 8, minute: 0, dayOfWeek: 1 }, () => {
+    console.log('Updating sitemap...')
+    generateSitemap();
+  });
+}
+
 // Configure constants
 const app = express();
 const supportedLanguages = config.supportedLanguages;
@@ -72,6 +86,8 @@ app.use(`/*`, (req, res, next) => {
 });
 app.use('/*', ieHandler)
 app.use(`/rdr`, legacyRedirector);
+app.use('/sitemap.xml', getSitemap);
+app.get('/robots.txt', getRobotsFile);
 app.use('/', languageSubdomainRedirect);
 app.use(`/`, makeLanguageHandler);
 app.use('/', unitRedirect);

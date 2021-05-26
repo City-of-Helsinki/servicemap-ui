@@ -20,6 +20,8 @@ a, .link {
 a:hover, a:focus, a:active,
 .link:hover, .link:focus, .link:active {
   color: #bb1122 !important;
+  outline: auto !important;
+  outline-color: rgb(71, 131, 235) !important;
 }
 
 a:visited, .link:visited {

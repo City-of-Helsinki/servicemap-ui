@@ -4,6 +4,7 @@ import Helmet from 'react-helmet';
 import { uppercaseFirst } from '../../../utils';
 import useLocaleText from '../../../utils/useLocaleText';
 import getPageDescriptions from './pageDescriptions';
+import { isEmbed } from '../../../utils/path';
 
 const PageHandler = (props) => {
   const {
@@ -11,6 +12,7 @@ const PageHandler = (props) => {
   } = props;
 
   const getLocaleText = useLocaleText();
+  const embed = isEmbed();
 
   useEffect(() => {
     // Save current page to redux
@@ -38,9 +40,13 @@ const PageHandler = (props) => {
   }
 
   const title = `${uppercaseFirst(pageMessage)} ${message}${appTitle}`;
+  const hideFromCrawlers = ['search', 'info', 'serviceTree', 'feedback'];
 
   return (
     <Helmet>
+      {embed || hideFromCrawlers.includes(page) ? (
+        <meta name="robots" content="none" />
+      ) : null}
       <title>{title}</title>
       <meta name="description" content={pageDescription} />
     </Helmet>

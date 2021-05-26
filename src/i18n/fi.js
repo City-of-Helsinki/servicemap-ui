@@ -180,6 +180,8 @@ const translations = {
   // General
   'general.frontPage': 'Etusivu',
   'general.contrast': 'Kontrasti',
+  'general.contrast.ariaLabel.on': 'Siirry suurikontrastiseen tilaan',
+  'general.contrast.ariaLabel.off': 'Palaa normaalikontrastiseen tilaan',
   'general.menu': 'Valikko',
   'general.back': 'Palaa',
   'general.back.address': 'Palaa osoitesivulle',

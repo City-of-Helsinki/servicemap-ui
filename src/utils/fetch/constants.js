@@ -73,6 +73,15 @@ export const APIHandlers = {
     },
     envName: config.serviceMapAPI.id,
   },
+  idFetch: {
+    url: type => `${config.serviceMapAPI.root}/${type}/`,
+    options: {
+      page: 1,
+      page_size: 500,
+      only: 'id',
+    },
+    envName: config.serviceMapAPI.id,
+  },
   unitEvents: {
     url: `${config.eventsAPI.root}/event/`,
     options: {
