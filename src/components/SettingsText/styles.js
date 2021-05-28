@@ -21,8 +21,17 @@ export default theme => ({
     lineHeight: '18px',
     color: 'inherit',
   },
+  titlePlain: {
+    fontWeight: 'bold',
+    lineHeight: '24px',
+    textAlign: 'left',
+    fontSize: 14,
+  },
+  textPlain: {
+    textAlign: 'left',
+  },
   smallIcon: {
     height: 14,
     marginRight: 4,
-  }
+  },
 });
