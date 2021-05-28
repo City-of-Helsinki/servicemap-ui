@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SettingsButton /> should work 1`] = `
+<WithStyles(ForwardRef(Button))
+  aria-haspopup="dialog"
+  className="
+    undefined 
+    
+  "
+  classes={
+    Object {
+      "label": undefined,
+    }
+  }
+  id="SettingsButtoncitySettings"
+  onClick={[Function]}
+  role="button"
+>
+  <WithStyles(SettingsText)
+    type="citySettings"
+  />
+</WithStyles(ForwardRef(Button))>
+`;

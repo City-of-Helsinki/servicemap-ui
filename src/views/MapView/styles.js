@@ -13,6 +13,12 @@ const styles = theme => ({
         color: '#347865 !important',
       },
     },
+    '&:focus': {
+      margin: '4px 4px 4px 0px',
+      height: 'calc(100% - 8px)',
+      outline: '2px solid transparent',
+      boxShadow: `0 0 0 4px ${theme.palette.focusBorder.main}`,
+    }
   },
   addressLink: {
     color: theme.palette.primary.main,
@@ -269,6 +275,9 @@ const styles = theme => ({
     fontSize: 16,
     top: 16,
     left: 16,
+  },
+  entranceType: {
+    paddingTop: theme.spacing(0.5),
   },
 
   // Transit stops

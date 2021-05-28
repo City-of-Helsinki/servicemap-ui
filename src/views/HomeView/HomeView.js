@@ -7,12 +7,19 @@ import { getIcon } from '../../components/SMIcon';
 import MobileComponent from '../../components/MobileComponent';
 import config from '../../../config';
 import NewsInfo from '../../components/NewsInfo';
+import { useNavigationParams } from '../../utils/address';
+import useLocaleText from '../../utils/useLocaleText';
 
-class HomeView extends React.Component {
-  renderNavigationOptions = () => {
-    const {
-      classes, getAddressNavigatorParams, getLocaleText, toggleSettings, navigator, userLocation,
-    } = this.props;
+const HomeView = (props) => {
+  const {
+    classes, toggleSettings, navigator, userLocation,
+  } = props;
+
+  const getLocaleText = useLocaleText();
+  const getAddressNavigatorParams = useNavigationParams();
+
+
+  const renderNavigationOptions = () => {
     const noUserLocation = !userLocation
       || !userLocation.coordinates
       || !userLocation.addressData;
@@ -79,6 +86,7 @@ class HomeView extends React.Component {
           />
           <PaperButton
             messageID="home.old.link"
+            newTab
             icon={<Map />}
             link
             onClick={() => {
@@ -93,20 +101,19 @@ class HomeView extends React.Component {
         </div>
       </div>
     );
-  }
+  };
 
-  render() {
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-        <SearchBar
-          hideBackButton
-          header
-        />
-        {
-          this.renderNavigationOptions()
-        }
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+      <SearchBar
+        hideBackButton
+        header
+      />
+      {
+        renderNavigationOptions()
+      }
 
-        {/* <Container paper>
+      {/* <Container paper>
           <Typography
             className={classes.left}
             variant="subtitle1"
@@ -177,18 +184,15 @@ kehitämme jatkuvasti saavutettavuutta ja käytettävyyttä.
             <br />
           </Typography>
         </Container> */}
-      </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 
 export default HomeView;
 
 // Typechecking
 HomeView.propTypes = {
-  getAddressNavigatorParams: PropTypes.func.isRequired,
-  getLocaleText: PropTypes.func.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   toggleSettings: PropTypes.func.isRequired,

@@ -13,6 +13,7 @@ import { keyboardHandler } from '../../utils';
 import SuggestionBox from './components/SuggestionBox';
 import MobileComponent from '../MobileComponent';
 import DesktopComponent from '../DesktopComponent';
+import { CloseSuggestionButton } from './components/CloseSuggestionButton';
 
 class SearchBar extends React.Component {
   blurDelay = 150;
@@ -172,19 +173,6 @@ class SearchBar extends React.Component {
       return null;
     }
 
-    // Screen reader only element for closing suggestions
-    const closeSuggestionElem = (
-      <Typography
-        role="link"
-        tabIndex="-1"
-        onClick={this.closeMobileSuggestions}
-        onKeyPress={() => { keyboardHandler(this.closeMobileSuggestions, ['space', 'enter']); }}
-        variant="srOnly"
-      >
-        <FormattedMessage id="search.suggestions.hideButton" />
-      </Typography>
-    );
-
     return (
       <>
         <Divider aria-hidden />
@@ -200,7 +188,11 @@ class SearchBar extends React.Component {
             handleSubmit={this.handleSubmit}
             isMobile
           />
-          {closeSuggestionElem}
+          <CloseSuggestionButton
+            onClick={this.closeMobileSuggestions}
+            onKeyPress={() => { keyboardHandler(this.closeMobileSuggestions, ['space', 'enter']); }}
+            srOnly
+          />
         </MobileComponent>
         <DesktopComponent>
           <SuggestionBox

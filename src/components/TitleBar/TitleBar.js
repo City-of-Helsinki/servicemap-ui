@@ -9,6 +9,7 @@ import useMobileStatus from '../../utils/isMobile';
 const TitleBar = ({
   backButton,
   backButtonOnClick,
+  backButtonText,
   backButtonSrText,
   classes,
   title,
@@ -19,41 +20,42 @@ const TitleBar = ({
   ariaHidden,
   sticky,
 }) => {
-  let componentClasses = `${className || ''} ${classes.container} ${!backButton && !icon ? classes.textBar : ''}`;
+  const isMobile = useMobileStatus();
+  let componentClasses = `${className || ''} ${classes.container} ${!backButton && !icon ? classes.textBar : ''} ${backButton ? classes.multiLine : ''} `;
 
   if (sticky) {
-    const isMobile = useMobileStatus();
     componentClasses += `sticky ${isMobile ? classes.mobileSticky : classes.sticky}`;
   }
 
 
   return (
-    <>
-      <div className={componentClasses}>
-        {
+    <div className={componentClasses}>
+      {
         backButton
         && (
-          <BackButton
-            onClick={backButtonOnClick}
-            ariaLabel={backButtonSrText}
-            className={classes.iconButton}
-            variant="icon"
-            focusVisibleClassName={classes.buttonFocus}
-          />
+        <BackButton
+          onClick={backButtonOnClick}
+          text={backButtonText}
+          ariaLabel={backButtonSrText}
+          className={classes.iconButton}
+          focusVisibleClassName={classes.buttonFocus}
+          variant="container"
+        />
         )
       }
-        {
+      {
         !backButton
         && icon
         && (
-          <div className={classes.iconButton} aria-hidden="true">
+          <div className={classes.icon} aria-hidden="true">
             {icon}
           </div>
         )
       }
+      <div className={classes.titleContainer}>
         <Typography
           aria-hidden={ariaHidden}
-          className={classes.title}
+          className={`TitleText ${classes.title} ${backButton ? classes.titleLarge : ''}`}
           component={titleComponent}
           tabIndex="-1"
         >
@@ -61,18 +63,19 @@ const TitleBar = ({
         </Typography>
 
         {distance && (
-        <Typography className={classes.distance}>
-          {distance}
-        </Typography>
+          <Typography className={classes.distance}>
+            {distance}
+          </Typography>
         )}
       </div>
-    </>
+    </div>
   );
 };
 
 TitleBar.propTypes = {
   backButton: PropTypes.bool,
   backButtonOnClick: PropTypes.func,
+  backButtonText: PropTypes.string,
   backButtonSrText: PropTypes.string,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   title: PropTypes.node.isRequired,
@@ -87,6 +90,7 @@ TitleBar.propTypes = {
 TitleBar.defaultProps = {
   backButton: false,
   backButtonOnClick: null,
+  backButtonText: null,
   backButtonSrText: null,
   icon: null,
   className: null,

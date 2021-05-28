@@ -1,12 +1,10 @@
 /* eslint-disable no-underscore-dangle */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
-import { injectIntl, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { Typography } from '@material-ui/core';
 import SearchBar from '../../components/SearchBar';
 import TitleBar from '../../components/TitleBar';
-import { generatePath } from '../../utils/path';
 import { fitUnitsToMap, focusToPosition } from '../MapView/utils/mapActions';
 import Loading from '../../components/Loading';
 import Container from '../../components/Container';
@@ -16,161 +14,127 @@ import { getIcon } from '../../components/SMIcon';
 import DesktopComponent from '../../components/DesktopComponent';
 import MobileComponent from '../../components/MobileComponent';
 import coordinateIsActive from '../../utils/coordinate';
+import useLocaleText from '../../utils/useLocaleText';
 
-class ServiceView extends React.Component {
-  constructor(props) {
-    super(props);
-    this.listTitle = React.createRef();
-    this.state = {
-      mapMoved: false,
-      icon: null,
-    };
-  }
-
-  componentDidMount() {
-    const {
-      classes, match, fetchService,
-    } = this.props;
-    const { params } = match;
-
-    this.setState({
-      icon: getIcon('service', { className: classes.icon }),
-    });
-
-    // Fetch service if current is not same as url param's
-    if (this.shouldFetch()) {
-      fetchService(params.service);
-    }
-  }
-
-  componentDidUpdate(nextProps) {
-    const {
-      location,
-      unitData,
-    } = this.props;
-
-    if (coordinateIsActive(location)) {
-      return;
-    }
-
-    // Focus map if service is set and units exist
-    if (unitData.length > 0 && unitData !== nextProps.unitData) {
-      // Focus map on unit
-      this.focusMap(unitData);
-    }
-  }
+const ServiceView = (props) => {
+  const {
+    classes,
+    match,
+    fetchService,
+    customPosition,
+    embed,
+    intl,
+    serviceReducer,
+    unitData,
+    map,
+    location,
+  } = props;
+  const getLocaleText = useLocaleText();
+  const [mapMoved, setMapMoved] = useState(false);
+  const [icon, setIcon] = useState(null);
 
   // Check if view will fetch data because search params has changed
-  shouldFetch = () => {
-    const { match, serviceReducer } = this.props;
-    const { params } = match;
+  const shouldFetch = () => {
     const { current, isFetching } = serviceReducer;
-    return !isFetching && (!current || `${current.id}` !== params.service);
-  }
+    return !isFetching && (!current || `${current.id}` !== match.params?.service);
+  };
 
-  focusMap = (unit) => {
-    const { customPosition, map } = this.props;
-    const { mapMoved } = this.state;
+  const focusMap = (unit) => {
     if (!map || !map.options.maxZoom || mapMoved) {
       return;
     }
 
     if (customPosition) {
-      this.setState({ mapMoved: true });
+      setMapMoved(true);
       focusToPosition(
         map,
         [customPosition.longitude, customPosition.latitude],
       );
       return;
     }
-    if (unit) {
-      this.setState({ mapMoved: true });
+    if (unit?.length) {
+      setMapMoved(true);
       fitUnitsToMap(unit, map);
     }
+  };
+
+
+  useEffect(() => {
+    setIcon(getIcon('service', { className: classes.icon }));
+    if (shouldFetch()) {
+      fetchService(match.params?.service);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (coordinateIsActive(location)) {
+      return;
+    }
+    if (unitData.length) {
+      focusMap(unitData);
+    }
+  }, [unitData]);
+
+
+  if (embed) {
+    return null;
+  }
+  const { current, isFetching } = serviceReducer;
+
+  let serviceUnits = null;
+  if (unitData && unitData.length > 0) {
+    serviceUnits = unitData;
   }
 
-  handleClick = (e, item) => {
-    const { history, match } = this.props;
-    const { params } = match;
-    const locale = params && params.lng;
-    e.preventDefault();
-    if (history && item) {
-      history.push(generatePath('unit', locale, item.id));
-    }
-  }
+  // Calculate visible components
+  const showTitle = current && current.name;
+  const showServiceWithoutUnits = current && !isFetching && !serviceUnits;
 
-  render() {
-    const {
-      classes,
-      customPosition,
-      embed,
-      getLocaleText,
-      intl,
-      serviceReducer,
-      unitData,
-    } = this.props;
-    const { icon } = this.state;
+  const initialOrder = customPosition ? 'distance-asc' : null;
+  const paginatedListTitle = intl.formatMessage({ id: 'unit.plural' });
 
-    if (embed) {
-      return null;
-    }
-
-    const { current, isFetching } = serviceReducer;
-
-    let serviceUnits = null;
-    if (unitData && unitData.length > 0) {
-      serviceUnits = unitData;
-    }
-
-    // Calculate visible components
-    const showTitle = current && current.name;
-    const showServiceWithoutUnits = current && !isFetching && !serviceUnits;
-
-    const initialOrder = customPosition ? 'distance-asc' : null;
-    const paginatedListTitle = intl.formatMessage({ id: 'unit.plural' });
-
-    return (
-      <div>
-        <DesktopComponent>
-          <SearchBar margin />
-          {
-            showTitle
-            && (
-              <TitleBar
-                className={classes.titlebar}
-                icon={icon}
-                title={getLocaleText(current.name)}
-                titleComponent="h3"
-              />
-            )
-          }
-        </DesktopComponent>
+  return (
+    <div>
+      <DesktopComponent>
+        <SearchBar margin />
         {
           showTitle
           && (
-            <MobileComponent>
-              <TitleBar
-                className={classes.titlebar}
-                icon={icon}
-                title={getLocaleText(current.name)}
-                titleComponent="h3"
-                primary
-                backButton
-              />
-            </MobileComponent>
+            <TitleBar
+              className={classes.titlebar}
+              icon={icon}
+              title={getLocaleText(current.name)}
+              titleComponent="h3"
+            />
           )
         }
-        <Loading reducer={serviceReducer}>
-          <ResultOrderer initialOrder={initialOrder} />
-          <PaginatedList
-            id="events"
-            data={serviceUnits || []}
-            srTitle={paginatedListTitle}
-            title={paginatedListTitle}
-            titleComponent="h4"
-          />
-        </Loading>
-        {
+      </DesktopComponent>
+      {
+        showTitle
+        && (
+          <MobileComponent>
+            <TitleBar
+              className={classes.titlebar}
+              icon={icon}
+              title={getLocaleText(current.name)}
+              titleComponent="h3"
+              primary
+              backButton
+            />
+          </MobileComponent>
+        )
+      }
+      <Loading reducer={serviceReducer}>
+        <ResultOrderer initialOrder={initialOrder} />
+        <PaginatedList
+          id="events"
+          data={serviceUnits || []}
+          srTitle={paginatedListTitle}
+          title={paginatedListTitle}
+          titleComponent="h4"
+        />
+      </Loading>
+      {
           showServiceWithoutUnits
           && (
             <Container margin>
@@ -178,10 +142,9 @@ class ServiceView extends React.Component {
             </Container>
           )
         }
-      </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 ServiceView.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -191,20 +154,19 @@ ServiceView.propTypes = {
   }),
   embed: PropTypes.bool,
   match: PropTypes.objectOf(PropTypes.any),
-  history: PropTypes.objectOf(PropTypes.any),
   unitData: PropTypes.oneOfType([
     PropTypes.objectOf(PropTypes.any),
     PropTypes.arrayOf(PropTypes.any),
   ]),
-  getLocaleText: PropTypes.func.isRequired,
   fetchService: PropTypes.func.isRequired,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   map: PropTypes.objectOf(PropTypes.any),
   serviceReducer: PropTypes.shape({
     count: PropTypes.number,
-    data: PropTypes.array,
+    data: PropTypes.arrayOf(PropTypes.any),
     isFetching: PropTypes.bool,
+    current: PropTypes.objectOf(PropTypes.any),
   }),
 };
 
@@ -212,10 +174,9 @@ ServiceView.defaultProps = {
   customPosition: null,
   embed: false,
   match: {},
-  history: {},
-  unitData: {},
+  unitData: [],
   map: null,
   serviceReducer: {},
 };
 
-export default withRouter(injectIntl(ServiceView));
+export default ServiceView;

@@ -18,6 +18,10 @@ const AccessibilityInfo = (props) => {
 
   const getLocaleText = useLocaleText();
 
+  if (!unit) {
+    return null;
+  }
+
   /**
    * Parse accessibility shortcomings to single array based on user's settings
    */
@@ -234,7 +238,6 @@ const AccessibilityInfo = (props) => {
     );
   };
 
-
   if (headingLevel < 1 || headingLevel > 5) {
     throw Error('Heading level is invalid');
   }
@@ -243,12 +246,10 @@ const AccessibilityInfo = (props) => {
   const shouldRenderExtraTitle = data && Object.keys(data.groups).length
   && Object.keys(data.sentences).length;
 
-
   const heading = `h${headingLevel}`;
   const listHeading = (titleAlways || shouldRenderExtraTitle) ? `h${headingLevel + 1}` : heading;
   const aShortcomings = renderAccessibilityShortcomings(listHeading, shortcomings);
   const aDescriptions = renderAccessibilityDescriptions(listHeading);
-
   const noInfo = !aDescriptions && !aShortcomings;
   const noShortcomings = aDescriptions && !aShortcomings;
 

@@ -26,9 +26,10 @@ import UnitGeometry from './components/UnitGeometry';
 import MapUtility from './utils/mapUtility';
 import HideSidebarButton from './components/HideSidebarButton';
 import CoordinateMarker from './components/CoordinateMarker';
-import useLocaleText from '../../utils/useLocaleText';
+import { useNavigationParams } from '../../utils/address';
 import PanControl from './components/PanControl';
-import { adjustControlElements } from './utils';
+import adjustControlElements from './utils';
+import EntranceMarker from './components/EntranceMarker';
 
 if (global.window) {
   require('leaflet');
@@ -43,7 +44,6 @@ const MapView = (props) => {
     adminDistricts,
     classes,
     currentPage,
-    getAddressNavigatorParams,
     intl,
     location,
     settings,
@@ -79,6 +79,7 @@ const MapView = (props) => {
   const [measuringLine, setMeasuringLine] = useState([]);
 
   const embeded = isEmbed({ url: location.pathname });
+  const getAddressNavigatorParams = useNavigationParams();
 
 
   const getMapUnits = () => {
@@ -200,10 +201,10 @@ const MapView = (props) => {
     };
   }, []);
 
-  useEffect(() => {
+  useEffect(() => {
     setTimeout(() => {
       adjustControlElements();
-    }, 1)
+    }, 1);
   }, [mapObject]);
 
   useEffect(() => { // Set map ref to redux once map is rendered
@@ -314,7 +315,7 @@ const MapView = (props) => {
 
 
   if (global.rL && mapObject) {
-    const { Map, TileLayer, ZoomControl } = global.rL || {};
+    const { Map, TileLayer } = global.rL || {};
     const Control = require('react-leaflet-control').default;
     let center = mapOptions.initialPosition;
     let zoom = isMobile ? mapObject.options.mobileZoom : mapObject.options.zoom;
@@ -349,6 +350,7 @@ const MapView = (props) => {
           minZoom={mapObject.options.minZoom}
           maxZoom={mapObject.options.maxZoom}
           unitZoom={mapObject.options.unitZoom}
+          detailZoom={mapObject.options.detailZoom}
           maxBounds={mapObject.options.mapBounds || mapOptions.defaultMaxBounds}
           maxBoundsViscosity={1.0}
           onClick={(ev) => { setClickCoordinates(ev); }}
@@ -392,6 +394,10 @@ const MapView = (props) => {
             <AddressMarker embeded={embeded} />
           )}
 
+          {currentPage === 'unit' && highlightedUnit?.entrances?.length && (
+            <EntranceMarker />
+          )}
+
           {!hideUserMarker && userLocation && (
             <UserMarker
               position={[userLocation.latitude, userLocation.longitude]}
@@ -411,7 +417,6 @@ const MapView = (props) => {
             />
           )}
 
-          <ZoomControl position="bottomright" aria-hidden="true" />
           <Control position="topleft">
             {!isMobile && !embeded && toggleSidebar ? (
               <HideSidebarButton
@@ -430,8 +435,9 @@ const MapView = (props) => {
             && (
               <>
                 {/* Custom user location map button */}
-                <Control position="bottomright">
+                <Control className="UserLocation" position="bottomright">
                   <ButtonBase
+                    aria-hidden
                     aria-label={userLocationAriaLabel}
                     disabled={!userLocation}
                     className={`${classes.showLocationButton} ${!userLocation ? classes.locationDisabled : ''}`}
@@ -467,7 +473,6 @@ MapView.propTypes = {
   })),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   currentPage: PropTypes.string.isRequired,
-  getAddressNavigatorParams: PropTypes.func.isRequired,
   hideUserMarker: PropTypes.bool,
   highlightedDistrict: PropTypes.objectOf(PropTypes.any),
   highlightedUnit: PropTypes.objectOf(PropTypes.any),
