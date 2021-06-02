@@ -51,7 +51,7 @@ export function matomoTrackingCode (analyticsUrl, siteId) {
   }
   return `
 <!-- Matomo -->
-<script type="text/javascript">
+<script type="text/plain" data-consent="analytics">
   var _paq = window._paq || [];
   _paq.push(['trackPageView']);
   _paq.push(['enableLinkTracking']);
