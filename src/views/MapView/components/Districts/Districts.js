@@ -169,7 +169,9 @@ const Districts = ({
         coords => swapCoordinates(coords),
       );
 
-      const tooltipTitle = district.type === 'rescue_area'
+      const showTooltip = !filteredData.some(obj => obj.overlaping);
+
+      const tooltipTitle = showTooltip && district.type === 'rescue_area'
         ? `${intl.formatMessage({ id: `area.list.${district.type}` })} ${district.origin_id} - ${getLocaleText(district.name)}`
         : `${getLocaleText(district.name)} - ${intl.formatMessage({ id: `area.list.${district.type}` })}`;
 
@@ -192,7 +194,7 @@ const Districts = ({
           onFocus={() => {}}
           onBlur={() => {}}
         >
-          {district.name && !(district.overlaping && district.overlaping.some(obj => obj.unit)) ? (
+          {showTooltip && district.name ? (
             <Tooltip
               sticky
               direction="top"
