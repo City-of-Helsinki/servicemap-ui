@@ -173,18 +173,22 @@ const Districts = ({
         ? `${intl.formatMessage({ id: `area.list.${district.type}` })} ${district.origin_id} - ${getLocaleText(district.name)}`
         : `${getLocaleText(district.name)} - ${intl.formatMessage({ id: `area.list.${district.type}` })}`;
 
+      const mainColor = useContrast ? '#fff' : '#ff8400';
+
       return (
         <Polygon
           interactive={!unitsFetching}
           key={district.id}
           onClick={e => districtOnClick(e, district)}
           positions={[[area]]}
-          color="#ff8400"
+          color={mainColor}
+          dashArray={useContrast ? '2, 10, 10, 10' : null}
+          dashOffset="20"
           fillOpacity={dimmed ? '0.3' : '0'}
-          fillColor={dimmed ? '#000' : '#ff8400'}
+          fillColor={dimmed ? '#000' : mainColor}
           onMouseOver={(e) => {
             e.target.openTooltip();
-            e.target.setStyle({ fillOpacity: '0.2' });
+            e.target.setStyle({ fillOpacity: useContrast ? '0.6' : '0.2' });
           }}
           onMouseOut={(e) => {
             e.target.setStyle({ fillOpacity: dimmed ? '0.3' : '0' });
