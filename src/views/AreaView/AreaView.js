@@ -51,12 +51,25 @@ const AreaView = ({
   const selectedDistrictType = useSelector(state => state.districts.selectedDistrictType);
   const districtsFetching = useSelector(state => state.districts.districtsFetching);
   const getLocaleText = useLocaleText();
+  const openItems = useSelector(state => state.districts.openItems);
+
+  const searchParams = parseSearchParams(location.search);
+  const selectedArea = searchParams.selected;
+  // Get area parameter without year data
+  const selectedAreaType = selectedArea?.split(/([0-9]+)/)[0];
+
+  const getInitialOpenItems = () => {
+    if (selectedAreaType) {
+      const category = dataStructure.find(
+        data => data.districts.includes(selectedAreaType),
+      );
+      return [category?.id];
+    } return openItems;
+  };
 
   // State
   const [selectedAddress, setSelectedAddress] = useState(districtAddressData.address);
-  const [initialOpenItems] = useState(
-    useSelector(state => state.districts.openItems),
-  );
+  const [initialOpenItems] = useState(getInitialOpenItems);
   // Pending request to focus map to districts. Executed once district data is loaded
   const [focusTo, setFocusTo] = useState(null);
 
@@ -165,10 +178,6 @@ const AreaView = ({
 
 
   useEffect(() => {
-    const searchParams = parseSearchParams(location.search);
-    const selectedArea = searchParams.selected;
-    // Get area parameter without year data
-    const selectedAreaType = selectedArea?.split(/([0-9]+)/)[0];
     if (selectedAreaType) { // Arriving to page, with url parameters
       if (!embed) {
         /* Remove selected area parameter from url, otherwise it will override
