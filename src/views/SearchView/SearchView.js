@@ -137,6 +137,7 @@ class SearchView extends React.Component {
       service,
       service_node,
       search_language,
+      events,
     } = searchParams;
 
     const options = {};
@@ -154,6 +155,10 @@ class SearchView extends React.Component {
       }
       if (!includeService && redirectNode) {
         options.service_node = redirectNode;
+      }
+
+      if (events) {
+        options.events = events;
       }
 
       if (category) {
@@ -211,11 +216,11 @@ class SearchView extends React.Component {
     // Should fetch if previousSearch has changed and data has required parameters
     if (previousSearch) {
       if (data.q !== previousSearch && this.stringifySearchQuery(data) !== previousSearch) {
-        return !!(data.q || data.service || data.service_node);
+        return !!(data.q || data.service || data.service_node || data.events);
       }
     } else {
       // Should fetch if no previous searches but search parameters exist
-      return !!(data.q || data.service || data.service_node);
+      return !!(data.q || data.service || data.service_node || data.events);
     }
     return false;
   }
@@ -241,11 +246,13 @@ class SearchView extends React.Component {
     const services = data.filter(obj => obj && obj.object_type === 'service');
     const units = data.filter(obj => obj && obj.object_type === 'unit');
     const addresses = data.filter(obj => obj && obj.object_type === 'address');
+    const events = data.filter(obj => obj && obj.object_type === 'event');
 
     return {
       services,
       units,
       addresses,
+      events,
     };
   }
 
@@ -488,6 +495,17 @@ class SearchView extends React.Component {
         data: groupedData.addresses,
         itemsPerPage: 10,
         title: intl.formatMessage({ id: 'address.plural' }),
+      },
+      {
+        id: 'events',
+        ariaLabel: `${intl.formatMessage({ id: 'event.title' })} ${intl.formatMessage({ id: 'search.results.short' }, {
+          count: groupedData
+            .events.length,
+        })}`,
+        component: null,
+        data: groupedData.events,
+        itemsPerPage: 10,
+        title: intl.formatMessage({ id: 'event.title' }),
       },
     ];
 
