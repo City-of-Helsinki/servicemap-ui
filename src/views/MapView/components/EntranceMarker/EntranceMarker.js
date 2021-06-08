@@ -42,10 +42,11 @@ const EntranceMarker = ({ classes }) => {
     const { Marker, Popup } = global.rL || {};
     return (
       unit.entrances.map((entrance) => {
+        if (!entrance.location) return null;
         const position = flip(entrance.location);
         const distanceBetween = distance(position, unitPoint) * 1000;
         // Don't show entrances that are too close to the unit marker
-        if (distanceBetween < 1) {
+        if (distanceBetween < 5) {
           return null;
         }
         const { coordinates } = position;
