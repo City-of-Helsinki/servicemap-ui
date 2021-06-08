@@ -15,9 +15,9 @@ const TransitStopInfo = ({ stop, onCloseClick, classes }) => {
 
   const getAccessibilityIcon = (value) => {
     if (value === 'POSSIBLE') {
-      return <Accessible className={classes.transitIconInfo} />;
+      return <Accessible className={classes.infoIcon} />;
     } if (value === 'NOT_POSSIBLE') {
-      return getIcon('noWheelchair', { className: classes.transitIconInfo });
+      return getIcon('noWheelchair', { className: classes.infoIcon });
     }
     return null;
   };
@@ -44,22 +44,22 @@ const TransitStopInfo = ({ stop, onCloseClick, classes }) => {
     let icon;
     switch (stop.vehicleType) {
       case 3: // Bus stops
-        icon = <span className={`${classes.transitIconInfo} ${classes.busIconColor} icon-icon-hsl-bus`} />;
+        icon = <span className={`${classes.infoIcon} ${classes.busIconColor} icon-icon-hsl-bus`} />;
         break;
       case 0: // Tram stops
-        icon = <span className={`${classes.transitIconInfo} ${classes.tramIconColor} icon-icon-hsl-tram`} />;
+        icon = <span className={`${classes.infoIcon} ${classes.tramIconColor} icon-icon-hsl-tram`} />;
         break;
       case 109: // Train stops
-        icon = <span className={`${classes.transitIconInfo} ${classes.trainIconColor} icon-icon-hsl-train`} />;
+        icon = <span className={`${classes.infoIcon} ${classes.trainIconColor} icon-icon-hsl-train`} />;
         break;
       case 1: // Subway stops
-        icon = <span className={`${classes.transitIconInfo} ${classes.metroIconColor} icon-icon-hsl-metro`} />;
+        icon = <span className={`${classes.infoIcon} ${classes.metroIconColor} icon-icon-hsl-metro`} />;
         break;
       case -999: case 4: // Ferry stops
-        icon = <span className={`${classes.transitIconInfo} ${classes.ferryIconColor} icon-icon-hsl-ferry`} />;
+        icon = <span className={`${classes.infoIcon} ${classes.ferryIconColor} icon-icon-hsl-ferry`} />;
         break;
       default:
-        icon = <span className={`${classes.transitIconInfo} ${classes.busIconColor} icon-icon-hsl-bus`} />;
+        icon = <span className={`${classes.infoIcon} ${classes.busIconColor} icon-icon-hsl-bus`} />;
         break;
     }
 
@@ -96,7 +96,7 @@ const TransitStopInfo = ({ stop, onCloseClick, classes }) => {
     <div className={classes.tranistInfoContainer}>
       <ButtonBase onClick={() => onCloseClick()} className={classes.closeButton}>
         <Typography className={classes.closeText}><FormattedMessage id="general.close" /></Typography>
-        <Close className={classes.transitIconInfo} />
+        <Close className={classes.infoIcon} />
       </ButtonBase>
       <div className={classes.transitInfoTitle}>
         <Typography className={classes.bold}>
