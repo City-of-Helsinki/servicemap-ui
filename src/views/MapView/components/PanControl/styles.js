@@ -38,4 +38,7 @@ export default {
     bottom: 0,
     right: 34,
   },
+  embedded: {
+    right: 2,
+  },
 };

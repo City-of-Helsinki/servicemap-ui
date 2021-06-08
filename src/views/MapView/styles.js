@@ -18,7 +18,7 @@ const styles = theme => ({
       height: 'calc(100% - 8px)',
       outline: '2px solid transparent',
       boxShadow: `0 0 0 4px ${theme.palette.focusBorder.main}`,
-    }
+    },
   },
   addressLink: {
     color: theme.palette.primary.main,
@@ -71,11 +71,12 @@ const styles = theme => ({
     marginBottom: `${theme.spacing(2)}px !important`,
   },
   embedLogo: {
-    bottom: 0,
+    top: 0,
     left: 0,
     height: 'auto',
     position: 'fixed',
     zIndex: 1000,
+    padding: theme.spacing(1.5),
   },
   userMarker: {
     display: 'flex',
