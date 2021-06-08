@@ -81,7 +81,7 @@ const EventDetailView = (props) => {
           // Attempt fetching selected unit if it doesn't exist or isn't correct one
           const unit = data.location;
           if (typeof unit === 'object' && unit.id) {
-            const unitId = unit.id.split(':').pop();
+            const unitId = typeof unit.id === 'string' ? unit.id.split(':').pop() : unit.id;
             if (
               !UnitHelper.isValidUnit(selectedUnit)
                   || parseInt(unitId, 10) !== selectedUnit.id
@@ -94,11 +94,11 @@ const EventDetailView = (props) => {
         };
         eventFetch(options, null, onSuccess, null, null, match.params.event);
       }
-    } else if (!selectedUnit) {
+    } else if (!selectedUnit || event.location.id !== selectedUnit.id) {
       // Attempt fetching selected unit if it doesn't exist or isn't correct one
       const unit = event.location;
       if (typeof unit === 'object' && unit.id) {
-        const unitId = unit.id.split(':').pop();
+        const unitId = typeof unit.id === 'string' ? unit.id.split(':').pop() : unit.id;
         if (
           !UnitHelper.isValidUnit(selectedUnit)
               || parseInt(unitId, 10) !== selectedUnit.id
@@ -140,13 +140,13 @@ const EventDetailView = (props) => {
           />
         </MobileComponent>
 
-        {event.images && event.images.length && (
+        {event.images && event.images.length ? (
           <img
             className={classes.eventImage}
             alt={intl.formatMessage({ id: 'event.picture' })}
             src={event.images[0].url}
           />
-        )}
+        ) : null}
         <div className={classes.content}>
           <TitledList titleComponent="h4" title={intl.formatMessage({ id: 'unit.contact.info' })}>
             <SimpleListItem
