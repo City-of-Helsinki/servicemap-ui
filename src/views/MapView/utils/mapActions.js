@@ -15,10 +15,16 @@ const fitUnitsToMap = (units, map) => {
     [corner2.lat, corner2.lng],
   ]);
 
+  let unitList = units;
+  unitList = units.map(obj => (obj.object_type === 'event' ? obj.location : obj));
+
   const bounds = [];
-  units.forEach((unit) => {
-    if (unit.object_type === 'unit' && unit.location && unit.location.coordinates) {
-      const unitCoordinates = [unit.location.coordinates[1], unit.location.coordinates[0]];
+
+  unitList.forEach((unit) => {
+    if (!unit) return;
+    const coordinates = unit.location?.coordinates || unit.position?.coordinates;
+    if (unit.object_type === 'unit' && coordinates) {
+      const unitCoordinates = [coordinates[1], coordinates[0]];
       // Check that unit is within map bounds
       if (mapBounds.contains(unitCoordinates)) {
         bounds.push(unitCoordinates);
