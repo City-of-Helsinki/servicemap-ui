@@ -16,7 +16,8 @@ const mapStateToProps = (state) => {
     address, navigator, settings, user, measuringMode, districts,
   } = state;
   const unitList = getProcessedData(state);
-  const unitsLoading = state.service.isFetching;
+  const serviceUnitsLoading = state.service.isFetching;
+  const searchUnitsLoading = state.units.isFetching;
   const serviceUnits = getServiceUnits(state);
   const highlightedDistrict = getHighlightedDistrict(state);
   const highlightedUnit = getSelectedUnit(state);
@@ -39,7 +40,7 @@ const mapStateToProps = (state) => {
     serviceUnits,
     districtUnits,
     districtViewFetching: !!(districtUnitsFetching.length || districtsFetching.length),
-    unitsLoading,
+    unitsLoading: serviceUnitsLoading || searchUnitsLoading,
     currentPage: page,
     userLocation,
     hideUserMarker: customPosition.hideMarker,

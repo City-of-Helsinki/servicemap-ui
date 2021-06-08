@@ -330,7 +330,7 @@ const MapView = (props) => {
         : prevMap.props.zoom + zoomDifference;
     }
 
-    const showLoadingScreen = () => districtViewFetching;
+    const showLoadingScreen = districtViewFetching || (embeded && unitsLoading);
     const userLocationAriaLabel = intl.formatMessage({ id: !userLocation ? 'location.notAllowed' : 'location.center' });
     const eventSearch = parseSearchParams(location.search).events;
 
@@ -374,7 +374,7 @@ const MapView = (props) => {
             url={mapObject.options.url}
             attribution={intl.formatMessage({ id: mapObject.options.attribution })}
           />
-          {showLoadingScreen() ? (
+          {showLoadingScreen ? (
             <div className={classes.loadingScreen}>
               <Loading />
             </div>
