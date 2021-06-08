@@ -169,11 +169,22 @@ const Districts = ({
         coords => swapCoordinates(coords),
       );
 
-      const showTooltip = !filteredData.some(obj => obj.overlaping);
+      // Count units in single area
+      let numberOfUnits = district.overlaping?.length
+        && district.overlaping.map(obj => obj.unit).filter(i => !!i).length;
+      if (district.unit) {
+        numberOfUnits += 1;
+      }
 
-      const tooltipTitle = showTooltip && district.type === 'rescue_area'
-        ? `${intl.formatMessage({ id: `area.list.${district.type}` })} ${district.origin_id} - ${getLocaleText(district.name)}`
-        : `${getLocaleText(district.name)} - ${intl.formatMessage({ id: `area.list.${district.type}` })}`;
+      let tooltipTitle;
+
+      if (numberOfUnits > 1) {
+        tooltipTitle = `${intl.formatMessage({ id: `area.list.${district.type}` })} - ${intl.formatMessage({ id: 'map.unit.cluster.popup.info' }, { count: numberOfUnits })}`;
+      } else if (district.type === 'rescue_area' && district.name) {
+        tooltipTitle = `${intl.formatMessage({ id: `area.list.${district.type}` })} ${district.origin_id} - ${getLocaleText(district.name)}`;
+      } else if (district.name) {
+        tooltipTitle = `${getLocaleText(district.name)} - ${intl.formatMessage({ id: `area.list.${district.type}` })}`;
+      }
 
       return (
         <Polygon
@@ -194,7 +205,7 @@ const Districts = ({
           onFocus={() => {}}
           onBlur={() => {}}
         >
-          {showTooltip && district.name ? (
+          {tooltipTitle ? (
             <Tooltip
               sticky
               direction="top"
