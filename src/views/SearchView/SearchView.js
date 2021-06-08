@@ -354,7 +354,7 @@ class SearchView extends React.Component {
   renderSearchInfo = () => {
     const { units, classes, isFetching } = this.props;
     const unitList = units && units.filter(i => i.object_type === 'unit');
-    const unitCount = unitList && unitList.length;
+    const unitCount = unitList?.length ? unitList.length : units.length;
     const className = `SearchInfo ${classes.searchInfo}`;
 
     return (
