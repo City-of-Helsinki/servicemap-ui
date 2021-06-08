@@ -170,6 +170,11 @@ export default {
     "missingInfo": "#4A4A4A",
     "shortcomings": "#b00021",
   },
+  "additionalFeedbackURLs" : {
+    espoo: 'https://easiointi.espoo.fi/efeedback/',
+    vantaa: 'https://asiointi.vantaa.fi/anna-palautetta',
+    kauniainen: 'https://www.kauniainen.fi/kaupunki_ja_paatoksenteko/osallistu_ja_vaikuta',
+  },
   "production": settings.MODE === 'production',
   "initialMapPosition": settings.INITIAL_MAP_POSITION.split(','),
   "servicemapURL": settings.SERVICE_MAP_URL,

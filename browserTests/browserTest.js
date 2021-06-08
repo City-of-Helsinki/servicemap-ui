@@ -68,7 +68,7 @@ fixture`Map tests`
   });
 
 test('Transit marker visible after zoom', async (t) => {
-  const zoomIn  = Selector('.leaflet-control-zoom-in');
+  const zoomIn  = Selector('.zoomIn');
   const markers = ReactSelector('Marker');
   
   // Zoom in to make transit markers visible

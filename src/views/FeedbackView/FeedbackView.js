@@ -127,8 +127,11 @@ const FeedbackView = ({
             size="small"
             color="primary"
             onChange={() => setPermission(!permission)}
-            inputProps={{ title: intl.formatMessage({ id: 'feedback.permission' }) }}
-            aria-describedby="checkboxTitle"
+            inputProps={{
+              title: intl.formatMessage({ id: 'feedback.permission' }),
+              'aria-labelledby': 'checkboxTitle',
+            }}
+            aria-labelledby="checkboxTitle"
             classes={{ root: classes.box }}
           />
           <Typography aria-hidden><FormattedMessage id="feedback.permission" /></Typography>
@@ -192,9 +195,9 @@ const FeedbackView = ({
             <Typography id="emailTitle" className={classes.subtitle}><FormattedMessage id="feedback.email" /></Typography>
             <InputBase
               className={classes.inputField}
-              aria-describedby="emailTitle"
               classes={{ input: classes.input }}
               onChange={e => handleChange('email', e)}
+              inputProps={{ 'aria-labelledby': 'emailTitle' }}
             />
           </FormControl>
 
@@ -204,13 +207,16 @@ const FeedbackView = ({
             <Typography id="feedbackTitle" className={classes.subtitle}><FormattedMessage id="feedback.feedback" /></Typography>
             <InputBase
               className={classes.inputField}
-              aria-describedby={!errorMessage ? 'feedbackTitle' : 'srError'}
               multiline
               rows="5"
               classes={{ input: `${classes.input} ${errorMessage ? classes.errorField : ''}` }}
               onChange={e => handleChange('feedback', e)}
               onBlur={!fbFieldVisited ? () => setFbFieldVisited(true) : null}
-              inputProps={{ maxLength: feedbackMaxLength, 'aria-invalid': !!errorMessage }}
+              inputProps={{
+                maxLength: feedbackMaxLength,
+                'aria-invalid': !!errorMessage,
+                'aria-labelledby': !errorMessage ? 'feedbackTitle' : 'srError',
+              }}
             />
           </FormControl>
           <div className={classes.inputInfo}>

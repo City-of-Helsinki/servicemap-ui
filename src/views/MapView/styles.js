@@ -5,13 +5,19 @@ const styles = theme => ({
   map: {
     height: '100%',
     flex: '1 0 auto',
-    '& .leaflet-control button,a': {
+    '& .leaflet-bottom.leaflet-right .leaflet-control button,a': {
       '&:hover': {
         color: '#347865 !important',
       },
       '&:focused': {
         color: '#347865 !important',
-      }
+      },
+    },
+    '&:focus': {
+      margin: '4px 4px 4px 0px',
+      height: 'calc(100% - 8px)',
+      outline: '2px solid transparent',
+      boxShadow: `0 0 0 4px ${theme.palette.focusBorder.main}`,
     },
   },
   addressLink: {
@@ -65,11 +71,12 @@ const styles = theme => ({
     marginBottom: `${theme.spacing(2)}px !important`,
   },
   embedLogo: {
-    bottom: 0,
+    top: 0,
     left: 0,
     height: 'auto',
     position: 'fixed',
     zIndex: 1000,
+    padding: theme.spacing(1.5),
   },
   userMarker: {
     display: 'flex',
@@ -117,34 +124,6 @@ const styles = theme => ({
     padding: theme.spacing(2),
     textAlign: 'left',
   },
-  unitClusterMarker: {
-    borderRadius: '50%',
-    backgroundColor: theme.palette.primary.highContrast,
-    color: theme.palette.primary.main,
-    fontWeight: 'bold',
-    fontSize: '18px',
-    marginLeft: -20,
-    marginTop: -20,
-    width: 30,
-    height: 30,
-    transform: 'translate3d(415px, 460px, 0px)',
-    zIndex: 460,
-    opacity: 1,
-    outline: 'none',
-    border: `solid ${theme.palette.primary.main}`,
-    justifyContent: 'center',
-    alignItems: 'center',
-    display: 'flex',
-    '&.markerHighlighted': {
-      backgroundColor: theme.palette.primary.main,
-      color: theme.palette.primary.highContrast,
-      borderColor: theme.palette.primary.highContrast,
-      boxShadow: '0px 4px 4px 0px rgba(0,0,0,0.6)',
-      '&.dark': {
-        boxShadow: '0px 4px 4px 0px rgba(255,255,255,0.8)',
-      },
-    },
-  },
   unitMarker: {
     borderRadius: '50%',
     '&.markerHighlighted': {
@@ -152,6 +131,48 @@ const styles = theme => ({
       '&.dark': {
         boxShadow: '0px 4px 4px 0px rgba(255,255,255,0.8)',
       },
+    },
+  },
+  markerCircle: {
+    alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'center',
+    borderRadius: '50%',
+  },
+  bgCircle: {
+    backgroundColor: theme.palette.white.main,
+    width: 40,
+    height: 40,
+    '&.markerHighlighted': {
+      ...theme.focusIndicator,
+    },
+  },
+  outerCircle: {
+    background: 'rgba(0, 22, 183, 0.25)',
+    width: 40,
+    height: 40,
+    '&.dark': {
+      background: theme.palette.white.main,
+    },
+  },
+  midCircle: {
+    background: 'rgba(0, 22, 183, 0.50)',
+    width: 35,
+    height: 35,
+    '&.dark': {
+      background: theme.palette.white.dark,
+    },
+  },
+  innerCircle: {
+    fontFamily: 'Lato',
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#fff',
+    background: 'rgba(0, 22, 183)',
+    width: 30,
+    height: 30,
+    '&.dark': {
+      background: theme.palette.primary.main,
     },
   },
   unitTooltipContainer: {
@@ -255,6 +276,9 @@ const styles = theme => ({
     fontSize: 16,
     top: 16,
     left: 16,
+  },
+  entranceType: {
+    paddingTop: theme.spacing(0.5),
   },
 
   // Transit stops

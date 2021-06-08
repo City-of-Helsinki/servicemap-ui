@@ -22,7 +22,7 @@ class MapUtility {
 
     const { geometry, location } = unit;
     const allowedGeometries = ['MultiLineString', 'MultiPolygon'];
-  
+
     if (geometry && allowedGeometries.includes(geometry.type)) {
       switch (geometry.type) {
         case 'MultiLineString':
@@ -34,7 +34,10 @@ class MapUtility {
         default:
       }
     } else if (location) {
-      focusToPosition(this.leaflet, location.coordinates);
+      const unitZoomLevel = this.leaflet.options.unitZoom;
+      const currentZoom = this.leaflet.getZoom();
+      const targetZoom = currentZoom < unitZoomLevel ? unitZoomLevel : currentZoom;
+      focusToPosition(this.leaflet, location.coordinates, targetZoom);
     }
   }
 

@@ -13,6 +13,7 @@ import SuggestionItem from '../../../ListItems/SuggestionItem';
 import AddressItem from '../../../ListItems/AddressItem';
 import { keyboardHandler } from '../../../../utils';
 import { AreaIcon } from '../../../SMIcon';
+import { CloseSuggestionButton } from '../CloseSuggestionButton';
 
 
 const SuggestionBox = (props) => {
@@ -211,9 +212,8 @@ const SuggestionBox = (props) => {
     }
 
     return (
-      <div
+      <CloseSuggestionButton
         className={classes.minimizeLink}
-        role="link"
         onClick={(e) => {
           e.preventDefault();
           closeMobileSuggestions();
@@ -222,11 +222,8 @@ const SuggestionBox = (props) => {
           e.preventDefault();
           keyboardHandler(closeMobileSuggestions, ['space', 'enter'])(e);
         }}
-        tabIndex="0"
-      >
-        <Typography variant="body2"><FormattedMessage id="search.suggestions.hideButton" /></Typography>
-        <ArrowDropUp />
-      </div>
+        icon={<ArrowDropUp />}
+      />
     );
   };
 

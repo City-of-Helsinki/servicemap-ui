@@ -227,9 +227,7 @@ const AreaView = ({
     } else if (mapState) { // Returning to page, without url parameters
       // Returns map to the previous spot
       const { center, zoom } = mapState;
-      if (center && zoom && map?.leafletElement) {
-        map.leafletElement.setView(center, zoom);
-      }
+      if (map?.leafletElement && center && zoom) map.leafletElement.setView(center, zoom);
     }
   }, []);
 

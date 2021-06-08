@@ -265,6 +265,16 @@ const TabLists = ({
     calculateHeaderStylings();
   }, [isMobile]);
 
+
+  useEffect(() => {
+    // Change tab if selected tab is changed on url
+    const tabFromUrl = getTabfromUrl();
+    if (tabFromUrl !== tabIndex) {
+      handleTabChange(null, tabFromUrl);
+    }
+  }, [location]);
+
+
   const render = () => (
     <>
       {
@@ -344,7 +354,7 @@ TabLists.propTypes = {
     beforePagination: PropTypes.node,
     component: PropTypes.node,
     title: PropTypes.string,
-    data: PropTypes.array,
+    data: PropTypes.arrayOf(PropTypes.any),
     itemsPerPage: PropTypes.number,
   })).isRequired,
   changeCustomUserLocation: PropTypes.func.isRequired,

@@ -11,6 +11,7 @@ const SMAccordion = ({
   collapseContent,
   onOpen,
   disabled,
+  disableUnmount, // Disables accordion collapse content unmount on accordion close
   simpleItem,
   openButtonSrText,
   className,
@@ -18,6 +19,8 @@ const SMAccordion = ({
   elevated,
 }) => {
   const [open, setOpen] = useState(defaultOpen);
+  // This state makes sure that the component does not initially render closed accordion contents
+  const [hasBeenOpened, setHasBeenOpened] = useState(defaultOpen);
   const [pendingOpen, setPendingOpen] = useState(false);
 
   const openState = isOpen !== null ? isOpen : open;
@@ -25,6 +28,7 @@ const SMAccordion = ({
   const icon = <ArrowDropDown className={`${classes.icon} ${openState ? classes.iconOpen : ''}  ${disabled ? classes.iconDisabled : ''}`} />;
 
   const handleOpen = (e) => {
+    if (!hasBeenOpened) setHasBeenOpened(true);
     onOpen(e, openState);
     /* If no content is provided (usually because content is loading), set open event as pending.
       This makes accordion opening smoother once content is loaded */
@@ -42,6 +46,8 @@ const SMAccordion = ({
       setPendingOpen(false);
     }
   }, [collapseContent, pendingOpen]);
+
+  const shouldRenderCollapse = disableUnmount ? hasBeenOpened : openState;
 
   return (
     <div className={classes.accordionContainer}>
@@ -61,7 +67,9 @@ const SMAccordion = ({
         ) : titleContent}
       </div>
       <Collapse className={`${classes.collapseContainer} ${elevated ? classes.elevated : ''}`} in={openState}>
-        {openState && collapseContent}
+        {shouldRenderCollapse ? (
+          collapseContent
+        ) : null}
       </Collapse>
     </div>
   );
@@ -83,6 +91,7 @@ SMAccordion.propTypes = {
   openButtonSrText: PropTypes.string,
   className: PropTypes.string,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
+  disableUnmount: PropTypes.bool,
 };
 
 SMAccordion.defaultProps = {
@@ -96,6 +105,7 @@ SMAccordion.defaultProps = {
   elevated: false,
   openButtonSrText: null,
   className: '',
+  disableUnmount: false,
 };
 
 export default SMAccordion;

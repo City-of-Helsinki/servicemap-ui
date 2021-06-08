@@ -114,6 +114,7 @@ const ExpandedSuggestions = (props) => {
     <TitleBar
       backButton
       backButtonOnClick={onClick}
+      backButtonText={intl.formatMessage({ id: 'search.closeExpand' })}
       backButtonSrText={intl.formatMessage({ id: 'search.closeExpand' })}
       className={`${classes.titleBar} ExpandedSuggestions-title`}
       titleComponent="h3"

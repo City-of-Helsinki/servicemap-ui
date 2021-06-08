@@ -40,6 +40,11 @@ const overrides = theme => ({
       '&$focusVisible': theme === 'dark' ? focusIndicatorDark : focusIndicator,
     },
   },
+  MuiButton: {
+    root: {
+      transition: 'none',
+    },
+  },
   MuiInputBase: {
     // Default keyboard focus indicator for input fields
     root: { '&$focused': theme === 'dark' ? focusIndicatorDark : focusIndicator },
@@ -255,6 +260,7 @@ const SMTheme = createMuiTheme({
   custom,
   palette: paletteDefault,
   zIndex,
+  focusIndicator,
 });
 
 const SMThemeDark = createMuiTheme({
@@ -266,6 +272,7 @@ const SMThemeDark = createMuiTheme({
   custom,
   palette: paletteDark,
   zIndex,
+  focusIndicator: focusIndicatorDark,
 });
 
 

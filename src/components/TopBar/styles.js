@@ -72,7 +72,7 @@ const styles = theme => ({
       textAlign: 'left',
     },
     maxWidth: 350,
-    maxHeight: 58 ,
+    maxHeight: 58,
     flex: '0 1 auto',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
@@ -120,6 +120,9 @@ const styles = theme => ({
     color: '#000',
     marginLeft: 4,
     borderRadius: 0,
+  },
+  largeButton: {
+    height: 66,
   },
   iconTextContainer: {
     display: 'flex',

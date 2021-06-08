@@ -2,23 +2,29 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
-  Accordion, AccordionDetails, AccordionSummary, Divider, ListItem, Typography,
+  ButtonBase, Divider, ListItem, Typography,
 } from '@material-ui/core';
-import { ExpandMore } from '@material-ui/icons';
+import { useHistory, useLocation } from 'react-router-dom';
 import config from '../../../../../config';
 import InfoList from '../InfoList';
 import unitSectionFilter from '../../utils/unitSectionFilter';
 import { getAddressFromUnit } from '../../../../utils/address';
 import useLocaleText from '../../../../utils/useLocaleText';
+import SMAccordion from '../../../../components/SMAccordion';
+import { parseSearchParams, stringifySearchParams } from '../../../../utils';
 
 const ContactInfo = ({
   unit, userLocation, intl, classes,
 }) => {
+  const history = useHistory();
+  const location = useLocation();
   const getLocaleText = useLocaleText();
+  const additionalEntrances = unit?.entrances?.filter(entrance => !entrance.is_main_entrance);
 
   const address = {
     type: 'ADDRESS',
     value: unit.street_address ? getAddressFromUnit(unit, getLocaleText, intl) : intl.formatMessage({ id: 'unit.address.missing' }),
+    noDivider: additionalEntrances?.length,
   };
   const phone = {
     type: 'PHONE',
@@ -43,25 +49,69 @@ const ContactInfo = ({
       && (
         <React.Fragment key="callInformation">
           <ListItem className={classes.accordionItem}>
-            <Accordion classes={{ root: classes.accordionRoot }} elevation={0}>
-              <AccordionSummary
-                classes={{ root: classes.accordionSummaryRoot }}
-                expandIcon={<ExpandMore />}
-              >
-                <Typography><FormattedMessage id="unit.phone.charge" /></Typography>
-              </AccordionSummary>
-              <AccordionDetails classes={{ root: classes.accordionDetailsRoot }}>
-                <Typography className={classes.callInfoText}>
-                  {getLocaleText(unit.call_charge_info)}
-                </Typography>
-              </AccordionDetails>
-            </Accordion>
+            <SMAccordion
+              className={classes.accordionRoot}
+              disableUnmount
+              titleContent={<Typography><FormattedMessage id="unit.phone.charge" /></Typography>}
+              collapseContent={(
+                <div className={classes.accordionContaianer}>
+                  <Typography className={classes.callInfoText}>
+                    {getLocaleText(unit.call_charge_info)}
+                  </Typography>
+                </div>
+              )}
+            />
           </ListItem>
           <li aria-hidden>
             <Divider className={classes.dividerShort} />
           </li>
         </React.Fragment>
       ),
+  };
+
+  // Custom list item component for additional entrances
+  const entrances = {
+    component: additionalEntrances?.length
+    && (
+      <React.Fragment key="entrances">
+        <ListItem className={classes.accordionItem}>
+          <SMAccordion
+            className={classes.accordionRoot}
+            disableUnmount
+            titleContent={<Typography><FormattedMessage id="unit.entrances.show" /></Typography>}
+            collapseContent={(
+              <div className={classes.accordionContaianer}>
+                {additionalEntrances.map(entrance => (
+                  entrance.name ? (
+                    <Typography key={getLocaleText(entrance.name)}>
+                      {getLocaleText(entrance.name)}
+                    </Typography>
+                  ) : null
+                ))}
+                <ButtonBase
+                  role="link"
+                  className={classes.accessibilityLink}
+                  onClick={() => {
+                    // Navigate to accessibility tab by changing url tab parameter
+                    const searchParams = parseSearchParams(location.search);
+                    searchParams.t = 'accessibilityDetails';
+                    const searchString = stringifySearchParams(searchParams);
+                    history.push(`${location.pathname}?${searchString}`);
+                  }}
+                >
+                  <Typography>
+                    <FormattedMessage id="unit.entrances.accessibility" />
+                  </Typography>
+                </ButtonBase>
+              </div>
+              )}
+          />
+        </ListItem>
+        <li aria-hidden>
+          <Divider className={classes.dividerShort} />
+        </li>
+      </React.Fragment>
+    ),
   };
 
   // For infomration that is in data's connections array, use unitSectionFilter
@@ -83,6 +133,7 @@ const ContactInfo = ({
   // Form data array
   const data = [
     address,
+    entrances,
     phone,
     callInformation,
     email,
@@ -92,10 +143,10 @@ const ContactInfo = ({
   ];
 
   // Add route info to data in location exists
-  const { location } = unit;
+  const unitLocation = unit.location;
 
-  if (location && location.coordinates) {
-    const destinationString = `${getLocaleText(unit.name)}, ${unit.municipality}::${unit.location.coordinates[1]},${unit.location.coordinates[0]}`;
+  if (unitLocation && unitLocation.coordinates) {
+    const destinationString = `${getLocaleText(unit.name)}, ${unit.municipality}::${unitLocation.coordinates[1]},${unitLocation.coordinates[0]}`;
     const routeUrl = `${url}${currentLocationString}/${destinationString}?locale=${intl.locale}`;
 
     const route = {
