@@ -1,10 +1,15 @@
 /* eslint-disable camelcase */
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   ListItem, ListItemIcon, Typography, Divider,
 } from '@material-ui/core';
+import { useTheme } from '@material-ui/styles';
 import { keyboardHandler } from '../../../utils';
+import locationIcon from '../../../assets/icons/LocationDefault.svg';
+import locationIconHover from '../../../assets/icons/LocationHover.svg';
+import locationIconContrast from '../../../assets/icons/LocationDefaultContrast.svg';
+import locationIconContrastHover from '../../../assets/icons/LocationHoverContrast.svg';
 
 const ResultItem = ({
   bottomHighlight,
@@ -21,8 +26,47 @@ const ResultItem = ({
   selected,
   padded,
   extendedClasses,
+  unitId,
   ...rest
 }) => {
+  const theme = useTheme();
+
+  const resetMarkerHighlight = () => {
+    // Handle marker highlight removal
+    const marker = document.querySelector(`.unit-marker-${unitId}`);
+    if (!marker) {
+      return;
+    }
+    marker.classList.remove('markerHighlighted');
+    if (marker.nodeName === 'IMG') {
+      const icon = theme === 'dark' ? locationIconContrast : locationIcon;
+      marker.setAttribute('src', icon);
+    }
+  };
+
+  useEffect(() => () => {
+    // Remove highlights on unmount
+    resetMarkerHighlight();
+  }, []);
+
+  const onMouseEnter = () => {
+    // Handle marker highlighting
+    const marker = document.querySelector(`.unit-marker-${unitId}`);
+    if (marker) {
+      marker.classList.add('markerHighlighted');
+      if (marker.nodeName === 'IMG') {
+        const icon = theme === 'dark' ? locationIconContrastHover : locationIconHover;
+        marker.setAttribute('src', icon);
+      }
+    }
+  };
+
+  const onMouseLeave = () => {
+    // Reset marker highlighting
+    resetMarkerHighlight();
+  };
+
+
   // Screen reader text
   const srText = `
     ${title || ''} 
@@ -46,6 +90,10 @@ const ResultItem = ({
         tabIndex={0}
         onClick={onClick}
         onKeyDown={keyboardHandler(onClick, ['enter', 'space'])}
+        onFocus={unitId ? onMouseEnter : null}
+        onBlur={unitId ? onMouseLeave : null}
+        onMouseEnter={unitId ? onMouseEnter : null}
+        onMouseLeave={unitId ? onMouseLeave : null}
         className={listItemClasses}
         {...rest}
       >
@@ -174,6 +222,7 @@ ResultItem.propTypes = {
   role: PropTypes.string,
   srLabel: PropTypes.string,
   selected: PropTypes.bool,
+  unitId: PropTypes.number,
   padded: PropTypes.bool,
 };
 
@@ -182,6 +231,7 @@ ResultItem.defaultProps = {
   bottomText: null,
   classes: {},
   extendedClasses: null,
+  unitId: null,
   icon: null,
   onClick: () => {},
   subtitle: null,

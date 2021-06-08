@@ -1,15 +1,11 @@
 /* eslint-disable camelcase */
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import UnitHelper from '../../../utils/unitHelper';
 import ResultItem from '../ResultItem';
 import SettingsUtility from '../../../utils/settings';
 import UnitIcon from '../../SMIcon/UnitIcon';
 import isClient from '../../../utils';
-import locationIcon from '../../../assets/icons/LocationDefault.svg';
-import locationIconHover from '../../../assets/icons/LocationHover.svg';
-import locationIconContrast from '../../../assets/icons/LocationDefaultContrast.svg';
-import locationIconContrastHover from '../../../assets/icons/LocationHoverContrast.svg';
 import useLocaleText from '../../../utils/useLocaleText';
 
 const UnitItem = ({
@@ -22,7 +18,6 @@ const UnitItem = ({
   divider,
   navigator,
   settings,
-  theme,
 }) => {
   const getLocaleText = useLocaleText();
 
@@ -49,42 +44,6 @@ const UnitItem = ({
   const icon = isClient() ? <UnitIcon unit={unit} /> : null;
   // Parse unit data
   const { id, name } = unit;
-
-  const resetMarkerHighlight = () => {
-    // Handle marker highlight removal
-    const marker = document.querySelector(`.unit-marker-${id}`);
-    if (!marker) {
-      return;
-    }
-    marker.classList.remove('markerHighlighted');
-    if (marker.nodeName === 'IMG') {
-      const icon = theme === 'dark' ? locationIconContrast : locationIcon;
-      marker.setAttribute('src', icon);
-    }
-  };
-
-  useEffect(() => () => {
-    // Remove highlights on unmount
-    resetMarkerHighlight();
-  }, []);
-
-  const onMouseEnter = () => {
-    // Handle marker highlighting
-    const marker = document.querySelector(`.unit-marker-${id}`);
-    if (marker) {
-      marker.classList.add('markerHighlighted');
-      if (marker.nodeName === 'IMG') {
-        const icon = theme === 'dark' ? locationIconContrastHover : locationIconHover;
-        marker.setAttribute('src', icon);
-      }
-    }
-  };
-
-  const onMouseLeave = () => {
-    // Reset marker highlighting
-    resetMarkerHighlight();
-  };
-
 
   // Don't render if not valid unit
   if (!UnitHelper.isValidUnit(unit)) {
@@ -127,10 +86,7 @@ const UnitItem = ({
           navigator.push('unit', { id });
         }
       }}
-      onFocus={onMouseEnter}
-      onBlur={onMouseLeave}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
+      unitId={id}
       padded={padded}
       divider={divider}
     />
@@ -154,7 +110,6 @@ UnitItem.propTypes = {
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
   padded: PropTypes.bool,
   divider: PropTypes.bool,
-  theme: PropTypes.oneOf(['dark', 'default']).isRequired,
 };
 
 UnitItem.defaultProps = {
