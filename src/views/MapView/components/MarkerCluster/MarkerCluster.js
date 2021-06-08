@@ -457,7 +457,7 @@ MarkerCluster.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   data: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number,
+      id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     }),
   ).isRequired,
   getDistance: PropTypes.func.isRequired,
