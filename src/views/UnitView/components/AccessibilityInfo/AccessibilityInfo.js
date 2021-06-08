@@ -5,11 +5,13 @@ import {
 } from '@material-ui/core';
 import { Warning, VerifiedUser, Accessibility } from '@material-ui/icons';
 import { FormattedMessage } from 'react-intl';
+import { useDispatch } from 'react-redux';
 import Container from '../../../../components/Container';
 import SettingsUtility from '../../../../utils/settings';
 import Loading from '../../../../components/Loading';
 import useLocaleText from '../../../../utils/useLocaleText';
 import SettingsText from '../../../../components/SettingsText';
+import { toggleSettings } from '../../../../redux/actions/settings';
 
 const AccessibilityInfo = (props) => {
   const {
@@ -17,6 +19,7 @@ const AccessibilityInfo = (props) => {
   } = props;
 
   const getLocaleText = useLocaleText();
+  const dispatch = useDispatch();
 
   if (!unit) {
     return null;
@@ -87,7 +90,10 @@ const AccessibilityInfo = (props) => {
       <Accessibility className={classes.infoIcon} />
       <div>
         <SettingsText variant="plain" type="accessibilitySettings" />
-        <ButtonBase>
+        <ButtonBase
+          id="SettingsLink"
+          onClick={() => dispatch(toggleSettings('search'))}
+        >
           <Typography className={classes.settingsLink}>
             <FormattedMessage id="settings.change" />
           </Typography>
