@@ -320,6 +320,9 @@ const MarkerCluster = ({
     map.addLayer(mcg);
     // Set cluster to state
     setCluster(mcg);
+    return () => {
+      mcg.clearLayers();
+    };
   }, []);
 
   /**
