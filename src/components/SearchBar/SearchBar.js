@@ -30,7 +30,8 @@ class SearchBar extends React.Component {
 
     this.searchRef = React.createRef();
     // Avoid service_nodes when setting initial search value
-    const ps = previousSearch && previousSearch.indexOf('service_node:') === -1 ? previousSearch : null;
+    const ps = previousSearch
+      && !(previousSearch.includes('service_node:') || previousSearch.includes('events:')) ? previousSearch : null;
 
     this.state = {
       initialSearchValue: ps || initialValue || '',
