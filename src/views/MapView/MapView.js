@@ -30,6 +30,7 @@ import { useNavigationParams } from '../../utils/address';
 import PanControl from './components/PanControl';
 import { adjustControlElements } from './utils';
 import EntranceMarker from './components/EntranceMarker';
+import EventMarkers from './components/EventMarkers';
 
 if (global.window) {
   require('leaflet');
@@ -331,6 +332,7 @@ const MapView = (props) => {
 
     const showLoadingScreen = () => districtViewFetching;
     const userLocationAriaLabel = intl.formatMessage({ id: !userLocation ? 'location.notAllowed' : 'location.center' });
+    const eventSearch = parseSearchParams(location.search).events;
 
     return (
       <>
@@ -355,11 +357,16 @@ const MapView = (props) => {
           maxBoundsViscosity={1.0}
           onClick={(ev) => { setClickCoordinates(ev); }}
         >
-          <MarkerCluster
-            map={mapRef?.current?.leafletElement}
-            data={currentPage === 'unit' && highlightedUnit ? [highlightedUnit] : unitData}
-            measuringMode={measuringMode}
-          />
+          {eventSearch
+            ? <EventMarkers searchData={unitData} />
+            : (
+              <MarkerCluster
+                map={mapRef?.current?.leafletElement}
+                data={currentPage === 'unit' && highlightedUnit ? [highlightedUnit] : unitData}
+                measuringMode={measuringMode}
+              />
+            )
+          }
           {
             renderUnitGeometry()
           }
