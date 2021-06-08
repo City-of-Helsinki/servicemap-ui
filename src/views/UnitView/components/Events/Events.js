@@ -15,12 +15,11 @@ const Events = ({
     data, isFetching, max,
   } = eventsData;
 
+  const location = useLocation();
+
   if (!data) {
     return null;
   }
-
-  const location = useLocation();
-
   const endIndex = listLength > data.length ? data.length : listLength;
   const shownData = data && data.length ? data.slice(0, endIndex) : null;
 
@@ -47,7 +46,7 @@ const Events = ({
           onButtonClick={onButtonClick}
         >
           {shownData.map(event => (
-            <EventItem key={event.id} event={event} />
+            <EventItem simpleItem key={event.id} event={event} />
           ))}
         </TitledList>
       </div>
