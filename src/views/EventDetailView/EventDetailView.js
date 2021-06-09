@@ -32,6 +32,7 @@ const EventDetailView = (props) => {
   const isMobile = useMobileStatus();
   const getLocaleText = useLocaleText();
   const [centered, setCentered] = useState(false);
+  const [fetchingEvent, setFetchingEvent] = useState(false);
 
 
   const centerMap = (unit) => {
@@ -75,7 +76,14 @@ const EventDetailView = (props) => {
         const options = {
           include: 'location,location.accessibility_shortcoming_count',
         };
+        const onStart = () => {
+          setFetchingEvent(true);
+        };
+        const onError = () => {
+          setFetchingEvent(false);
+        };
         const onSuccess = (data) => {
+          setFetchingEvent(false);
           changeSelectedEvent(data);
 
           // Attempt fetching selected unit if it doesn't exist or isn't correct one
@@ -92,7 +100,7 @@ const EventDetailView = (props) => {
             }
           }
         };
-        eventFetch(options, null, onSuccess, null, null, match.params.event);
+        eventFetch(options, onStart, onSuccess, onError, null, match.params.event);
       }
     } else if (!selectedUnit || event.location.id !== selectedUnit.id) {
       // Attempt fetching selected unit if it doesn't exist or isn't correct one
@@ -178,6 +186,16 @@ const EventDetailView = (props) => {
     return null;
   }
 
+  let title;
+
+  if (event) {
+    title = getLocaleText(event.name);
+  } else if (fetchingEvent) {
+    title = intl.formatMessage({ id: 'general.loading' });
+  } else {
+    title = intl.formatMessage({ id: 'general.noData' });
+  }
+
   return (
     <div>
       {!isMobile ? (
@@ -186,10 +204,7 @@ const EventDetailView = (props) => {
 
       <TitleBar
         sticky
-        title={event
-          ? getLocaleText(event.name)
-          : intl.formatMessage({ id: 'general.noData' })
-        }
+        title={title}
         titleComponent="h3"
         icon={event ? <Event /> : null}
         primary={isMobile}
