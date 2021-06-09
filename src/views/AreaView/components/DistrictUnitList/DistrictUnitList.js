@@ -87,7 +87,19 @@ const DistrictUnitList = (props) => {
         </div>
       );
     }
-    const districtsWithUnits = district.data.filter(obj => obj.unit);
+    const districtsWithUnits = [];
+    district.data.forEach((obj) => {
+      if (obj.unit) {
+        districtsWithUnits.push(obj);
+      }
+      if (obj.overlaping) {
+        obj.overlaping.forEach((i) => {
+          if (i.unit) {
+            districtsWithUnits.push(i);
+          }
+        });
+      }
+    });
 
     if (!districtsWithUnits.length) return null;
 
