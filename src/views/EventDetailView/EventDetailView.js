@@ -13,9 +13,8 @@ import TitledList from '../../components/Lists/TitledList';
 import UnitHelper from '../../utils/unitHelper';
 import { eventFetch } from '../../utils/fetch';
 import { focusToPosition } from '../MapView/utils/mapActions';
-import DesktopComponent from '../../components/DesktopComponent';
-import MobileComponent from '../../components/MobileComponent';
 import useLocaleText from '../../utils/useLocaleText';
+import useMobileStatus from '../../utils/isMobile';
 
 const EventDetailView = (props) => {
   const {
@@ -30,6 +29,7 @@ const EventDetailView = (props) => {
     embed,
   } = props;
 
+  const isMobile = useMobileStatus();
   const getLocaleText = useLocaleText();
   const [centered, setCentered] = useState(false);
 
@@ -110,36 +110,15 @@ const EventDetailView = (props) => {
   }, []);
 
 
-  if (embed) {
-    return null;
-  }
-  if (event) {
-    const description = event.description || event.short_description;
+  const renderEventDetails = () => {
+    if (!event) return null;
     const unit = selectedUnit;
+    const description = event.description || event.short_description;
     const phoneText = unit && unit.phone ? `${unit.phone} ${intl.formatMessage({ id: 'unit.call.number' })}` : null;
     const time = formatDate(event);
-    return (
-      <div>
-        <DesktopComponent>
-          <SearchBar margin />
-          <TitleBar
-            sticky
-            title={getLocaleText(event.name)}
-            titleComponent="h3"
-            icon={<Event />}
-          />
-        </DesktopComponent>
-        <MobileComponent>
-          <TitleBar
-            sticky
-            title={getLocaleText(event.name)}
-            titleComponent="h3"
-            icon={<Event />}
-            primary
-            backButton
-          />
-        </MobileComponent>
 
+    return (
+      <>
         {event.images && event.images.length ? (
           <img
             className={classes.eventImage}
@@ -157,30 +136,30 @@ const EventDetailView = (props) => {
               divider
             />
             {
-              unit
-              && (
-                <UnitItem
-                  key="unitInfo"
-                  unit={unit}
-                />
-              )
-            }
+            unit
+            && (
+              <UnitItem
+                key="unitInfo"
+                unit={unit}
+              />
+            )
+          }
             {
-               phoneText
-               && (
-               <SimpleListItem
-                 key="contactNumber"
-                 icon={<Phone />}
-                 text={phoneText}
-                 srText={intl.formatMessage({ id: 'unit.phone' })}
-                 link
-                 divider
-                 handleItemClick={() => {
-                   window.location.href = `tel:${unit.phone}`;
-                 }}
-               />
-               )
-             }
+             phoneText
+             && (
+             <SimpleListItem
+               key="contactNumber"
+               icon={<Phone />}
+               text={phoneText}
+               srText={intl.formatMessage({ id: 'unit.phone' })}
+               link
+               divider
+               handleItemClick={() => {
+                 window.location.href = `tel:${unit.phone}`;
+               }}
+             />
+             )
+           }
           </TitledList>
 
           <DescriptionText
@@ -190,10 +169,35 @@ const EventDetailView = (props) => {
             titleComponent="h4"
           />
         </div>
-      </div>
+      </>
     );
+  };
+
+
+  if (embed) {
+    return null;
   }
-  return (null);
+
+  return (
+    <div>
+      {!isMobile ? (
+        <SearchBar margin />
+      ) : null}
+
+      <TitleBar
+        sticky
+        title={event
+          ? getLocaleText(event.name)
+          : intl.formatMessage({ id: 'general.noData' })
+        }
+        titleComponent="h3"
+        icon={event ? <Event /> : null}
+        primary={isMobile}
+        backButton={isMobile}
+      />
+      {renderEventDetails()}
+    </div>
+  );
 };
 
 EventDetailView.propTypes = {
