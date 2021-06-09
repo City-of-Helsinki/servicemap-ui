@@ -51,13 +51,18 @@ exports[`<ResultItem /> should work 1`] = `
     srLabel={null}
     subtitle="Subtitle text"
     title="Title text"
+    unitId={null}
   >
     <WithStyles(ForwardRef(ListItem))
       button={true}
       className="ResultItem-listItem-2"
       component="li"
+      onBlur={null}
       onClick={[Function]}
+      onFocus={null}
       onKeyDown={[Function]}
+      onMouseEnter={null}
+      onMouseLeave={null}
       role="link"
       selected={false}
       tabIndex={0}
@@ -81,8 +86,12 @@ exports[`<ResultItem /> should work 1`] = `
           }
         }
         component="li"
+        onBlur={null}
         onClick={[Function]}
+        onFocus={null}
         onKeyDown={[Function]}
+        onMouseEnter={null}
+        onMouseLeave={null}
         role="link"
         selected={false}
         tabIndex={0}
@@ -92,8 +101,12 @@ exports[`<ResultItem /> should work 1`] = `
           component="li"
           disabled={false}
           focusVisibleClassName="Mui-focusVisible"
+          onBlur={null}
           onClick={[Function]}
+          onFocus={null}
           onKeyDown={[Function]}
+          onMouseEnter={null}
+          onMouseLeave={null}
           role="link"
           tabIndex={0}
         >
@@ -110,8 +123,12 @@ exports[`<ResultItem /> should work 1`] = `
             disableRipple={true}
             disabled={false}
             focusVisibleClassName="Mui-focusVisible"
+            onBlur={null}
             onClick={[Function]}
+            onFocus={null}
             onKeyDown={[Function]}
+            onMouseEnter={null}
+            onMouseLeave={null}
             role="link"
             tabIndex={0}
           >
@@ -125,6 +142,7 @@ exports[`<ResultItem /> should work 1`] = `
               onKeyDown={[Function]}
               onKeyUp={[Function]}
               onMouseDown={[Function]}
+              onMouseEnter={null}
               onMouseLeave={[Function]}
               onMouseUp={[Function]}
               onTouchEnd={[Function]}
