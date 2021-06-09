@@ -12,7 +12,7 @@ import PropTypes from 'prop-types';
 import isClient from '../../../../utils';
 import { isEmbed } from '../../../../utils/path';
 
-const embedded = isEmbed;
+const embedded = isEmbed();
 
 const panOffset = 100;
 
