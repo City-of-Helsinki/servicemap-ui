@@ -192,7 +192,7 @@ const MapView = (props) => {
     }
     // Hide zoom control amd attribution from screen readers
     setTimeout(() => {
-      adjustControlElements();
+      adjustControlElements(embeded);
     }, 1);
 
     return () => {

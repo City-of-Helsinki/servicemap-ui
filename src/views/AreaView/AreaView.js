@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { Typography } from '@material-ui/core';
@@ -14,7 +14,7 @@ import { districtFetch } from '../../utils/fetch';
 import fetchAddress from '../MapView/utils/fetchAddress';
 import TitleBar from '../../components/TitleBar';
 import AddressSearchBar from '../../components/AddressSearchBar';
-import { dataStructure } from './utils/districtDataHelper';
+import { dataStructure, geographicalDistricts } from './utils/districtDataHelper';
 import { handleOpenItems } from '../../redux/actions/district';
 import SMButton from '../../components/ServiceMapButton';
 import MobileComponent from '../../components/MobileComponent';
@@ -46,16 +46,30 @@ const AreaView = ({
 }) => {
   const dispatch = useDispatch();
   const location = useLocation();
+  const history = useHistory();
   const localAddressData = useSelector(state => state.districts.districtAddressData);
   const selectedDistrictType = useSelector(state => state.districts.selectedDistrictType);
   const districtsFetching = useSelector(state => state.districts.districtsFetching);
   const getLocaleText = useLocaleText();
+  const openItems = useSelector(state => state.districts.openItems);
+
+  const searchParams = parseSearchParams(location.search);
+  const selectedArea = searchParams.selected;
+  // Get area parameter without year data
+  const selectedAreaType = selectedArea?.split(/([0-9]+)/)[0];
+
+  const getInitialOpenItems = () => {
+    if (selectedAreaType) {
+      const category = dataStructure.find(
+        data => data.districts.includes(selectedAreaType),
+      );
+      return [category?.id];
+    } return openItems;
+  };
 
   // State
   const [selectedAddress, setSelectedAddress] = useState(districtAddressData.address);
-  const [initialOpenItems] = useState(
-    useSelector(state => state.districts.openItems),
-  );
+  const [initialOpenItems] = useState(getInitialOpenItems);
   // Pending request to focus map to districts. Executed once district data is loaded
   const [focusTo, setFocusTo] = useState(null);
 
@@ -164,43 +178,53 @@ const AreaView = ({
 
 
   useEffect(() => {
-    // Handle first mount of page
-    if (!districtData.length) { // First time arriving to page
-      // Apply url parameters if first render
-      const searchParams = parseSearchParams(location.search);
-      if (Object.keys(searchParams).length && searchParams.selected) {
-        const paramValue = searchParams.selected.split(/([0-9]+)/)[0];
-        fetchAllDistricts(paramValue);
+    if (selectedAreaType) { // Arriving to page, with url parameters
+      if (!embed) {
+        /* Remove selected area parameter from url, otherwise it will override
+        user area selection when returning to area view */
+        history.replace();
+        // Switch to geographical tab if geographical area
+        if (geographicalDistricts.includes(selectedAreaType)) {
+          const geoTab = document.getElementById('Tab1');
+          if (geoTab) geoTab.click();
+        }
+      }
+
+      // Fetch and select area from url parameters
+      if (selectedArea !== selectedDistrictType) {
+        fetchAllDistricts(selectedAreaType);
         if (!embed) {
           const category = dataStructure.find(
-            data => data.districts.includes(paramValue),
+            data => data.districts.includes(selectedAreaType),
           );
           dispatch(handleOpenItems(category.id));
         }
-        // Set selected district type from url paramters
-        setSelectedDistrictType(paramValue);
-        if (searchParams.districts) {
-          // Set selected geographical districts from url parameters
-          setSelectedSubdistricts(searchParams.districts.split(','));
-          setFocusTo('subdistricts');
-        } else {
-          setFocusTo('districts');
-        }
-
-        if (searchParams.services) {
-          const services = searchParams.services.split(',');
-          const convertedServices = services.map(service => parseInt(service, 10));
-          setSelectedDistrictServices(convertedServices);
-        }
-        if (searchParams.lat && searchParams.lng) {
-          // Set address from url paramters
-          fetchAddress({ lat: searchParams.lat, lng: searchParams.lng })
-            .then(data => setSelectedAddress(data));
-        }
-      } else {
-        fetchAllDistricts();
+        setSelectedDistrictType(selectedArea);
       }
-    } else if (mapState) { // Returning to page
+
+      // Set selected geographical districts from url parameters and handle map focus
+      if (searchParams.districts) {
+        setSelectedSubdistricts(searchParams.districts.split(','));
+        setFocusTo('subdistricts');
+      } else {
+        setFocusTo('districts');
+      }
+
+      // Set selected geographical services from url parameters
+      if (searchParams.services) {
+        const services = searchParams.services.split(',');
+        const convertedServices = services.map(service => parseInt(service, 10));
+        setSelectedDistrictServices(convertedServices);
+      }
+
+      // Set address from url paramters
+      if (searchParams.lat && searchParams.lng) {
+        fetchAddress({ lat: searchParams.lat, lng: searchParams.lng })
+          .then(data => setSelectedAddress(data));
+      }
+    } else if (!districtData.length) { // Arriving to page first time, without url parameters
+      fetchAllDistricts();
+    } else if (mapState) { // Returning to page, without url parameters
       // Returns map to the previous spot
       const { center, zoom } = mapState;
       if (map?.leafletElement && center && zoom) map.leafletElement.setView(center, zoom);

@@ -241,6 +241,7 @@ const TabLists = ({
                 }
                 return (
                   <Tab
+                    id={`Tab${index}`}
                     key={`${item.title}`}
                     aria-controls={`tab-content-${index}`}
                     aria-label={item.ariaLabel ? item.ariaLabel : null}

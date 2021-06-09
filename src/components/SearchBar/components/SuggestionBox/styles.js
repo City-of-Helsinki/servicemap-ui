@@ -45,4 +45,7 @@ export default theme => ({
     padding: theme.spacing(1),
     marginLeft: theme.spacing(6),
   },
+  areaIcon: {
+    margin: 0,
+  },
 });
