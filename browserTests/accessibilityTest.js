@@ -100,7 +100,7 @@ fixture`TestCafe Axe test: service tree page`
 fixture`TestCafe Axe test: event page`
   .page`http://${server.address}:${server.port}/fi/event/helmet:190724`;
 
-  test('Automated accessibility testing', async (t) => {
+  test.only('Automated accessibility testing', async (t) => {
     await axeCheckHandler(t);
   });
 
