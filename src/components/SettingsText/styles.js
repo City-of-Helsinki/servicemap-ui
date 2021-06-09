@@ -21,8 +21,22 @@ export default theme => ({
     lineHeight: '18px',
     color: 'inherit',
   },
+  titlePlain: {
+    fontWeight: 'bold',
+    lineHeight: '24px',
+    textAlign: 'left',
+    fontSize: 14,
+  },
+  textPlain: {
+    display: '-webkit-box',
+    '-webkit-box-orient': 'vertical',
+    textAlign: 'left',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    lineClamp: 2,
+  },
   smallIcon: {
     height: 14,
     marginRight: 4,
-  }
+  },
 });

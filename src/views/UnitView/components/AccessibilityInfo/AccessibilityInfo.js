@@ -1,25 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Typography, List, ListItem, ListItemIcon, ListItemText, Divider, NoSsr,
+  Typography, List, ListItem, ListItemIcon, ListItemText, Divider, NoSsr, ButtonBase,
 } from '@material-ui/core';
-import { Warning, VerifiedUser } from '@material-ui/icons';
+import { Warning, VerifiedUser, Accessibility } from '@material-ui/icons';
 import { FormattedMessage } from 'react-intl';
+import { useDispatch } from 'react-redux';
 import Container from '../../../../components/Container';
 import SettingsUtility from '../../../../utils/settings';
 import Loading from '../../../../components/Loading';
 import useLocaleText from '../../../../utils/useLocaleText';
+import SettingsText from '../../../../components/SettingsText';
+import { toggleSettings } from '../../../../redux/actions/settings';
 
 const AccessibilityInfo = (props) => {
   const {
     settings, unit, accessibilitySentences, classes, titleAlways, headingLevel,
   } = props;
 
+  const getLocaleText = useLocaleText();
+  const dispatch = useDispatch();
+
   if (!unit) {
     return null;
   }
 
-  const getLocaleText = useLocaleText();
   /**
    * Parse accessibility shortcomings to single array based on user's settings
    */
@@ -79,6 +84,23 @@ const AccessibilityInfo = (props) => {
 
     return renderedShortcomings;
   };
+
+  const renderAccessibilitySettings = () => (
+    <div className={classes.aSettingsContainer}>
+      <Accessibility className={classes.infoIcon} />
+      <div>
+        <SettingsText variant="plain" type="accessibilitySettings" />
+        <ButtonBase
+          id="SettingsLink"
+          onClick={() => dispatch(toggleSettings('search'))}
+        >
+          <Typography className={classes.settingsLink}>
+            <FormattedMessage id="settings.change" />
+          </Typography>
+        </ButtonBase>
+      </div>
+    </div>
+  );
 
   const renderAccessibilityShortcomings = (heading, shortcomings) => {
     const data = shortcomings;
@@ -199,52 +221,45 @@ const AccessibilityInfo = (props) => {
   };
 
   const renderInfoText = (noInfo, noShortcomings) => {
-    if (noInfo) {
-      return (
-        <ListItem component="div">
-          <ListItemIcon>
-            <Warning className={classes.noInfoColor} />
-          </ListItemIcon>
-          <Typography component="p" variant="body2" align="left">
-            <FormattedMessage id="unit.accessibility.unitNoInfo" />
-          </Typography>
-        </ListItem>
-      );
-    }
-
-    if (noShortcomings) {
-      return (
-        <ListItem component="div">
-          <ListItemIcon>
-            <VerifiedUser className={classes.noShortcomingsColor} />
-          </ListItemIcon>
-          <Typography component="p" variant="body2" align="left">
-            <FormattedMessage id="unit.accessibility.noShortcomings" />
-          </Typography>
-        </ListItem>
-      );
-    }
-
-    return null;
+    if (!noInfo && !noShortcomings) return null;
+    return (
+      <div className={classes.infoContainer}>
+        {noInfo && (
+          <>
+            <Warning className={classes.infoIcon} />
+            <Typography component="p" variant="body2" align="left">
+              <FormattedMessage id="unit.accessibility.unitNoInfo" />
+            </Typography>
+          </>
+        )}
+        {noShortcomings && (
+          <>
+            <VerifiedUser className={classes.infoIcon} />
+            <Typography component="p" variant="body2" align="left">
+              <FormattedMessage id="unit.accessibility.noShortcomings" />
+            </Typography>
+          </>
+        )}
+      </div>
+    );
   };
-
 
   if (headingLevel < 1 || headingLevel > 5) {
     throw Error('Heading level is invalid');
   }
   const shortcomings = parseAccessibilityShortcomings();
-
-  const shouldRenderExtraTitle = !!(Array.isArray(shortcomings) && shortcomings.length);
-
+  const { data } = accessibilitySentences;
+  const shouldRenderExtraTitle = data && Object.keys(data.groups).length
+  && Object.keys(data.sentences).length;
 
   const heading = `h${headingLevel}`;
   const listHeading = (titleAlways || shouldRenderExtraTitle) ? `h${headingLevel + 1}` : heading;
   const aShortcomings = renderAccessibilityShortcomings(listHeading, shortcomings);
   const aDescriptions = renderAccessibilityDescriptions(listHeading);
-
   const noInfo = !aDescriptions && !aShortcomings;
   const noShortcomings = aDescriptions && !aShortcomings;
 
+  const accessibilitySettings = renderAccessibilitySettings();
   const infoText = renderInfoText(noInfo, noShortcomings);
 
   return (
@@ -260,22 +275,25 @@ const AccessibilityInfo = (props) => {
       <Divider className={classes.divider} aria-hidden="true" />
       <NoSsr>
         {
+          accessibilitySettings
+        }
+        {
             infoText
-          }
+        }
         {
             aShortcomings
-          }
+        }
       </NoSsr>
       {
           shouldRenderExtraTitle
-          && (
-            <>
-              <Typography className={classes.title} component={heading} variant="subtitle1" align="left">
-                <FormattedMessage id="accessibility.details" />
-              </Typography>
-              <Divider className={classes.divider} aria-hidden="true" />
-            </>
-          )
+            ? (
+              <>
+                <Typography className={classes.descriptionsTitle} component={heading} variant="subtitle1" align="left">
+                  <FormattedMessage id="accessibility.details" />
+                </Typography>
+                <Divider className={classes.divider} aria-hidden="true" />
+              </>
+            ) : null
         }
       <Loading reducer={accessibilitySentences}>
         { aDescriptions }
