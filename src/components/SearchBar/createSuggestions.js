@@ -1,8 +1,9 @@
 import config from '../../../config';
+import { dataStructure } from '../../views/AreaView/utils/districtDataHelper';
 
 // TODO: need city (and locale?) parameters to new search fetch
 
-const createSuggestions = async (query, signal, locale) => {
+const createSuggestions = async (query, signal, locale, intl) => {
   const data = await Promise.all([
     fetch(`${config.serviceMapAPI.root}/suggestion/?q=${query}&language=${locale}`, { signal })
       .then((res) => {
@@ -12,7 +13,7 @@ const createSuggestions = async (query, signal, locale) => {
         return 'error';
       })
       .catch((res) => {
-        console.log('error:', res);
+        console.warn('error:', res);
         return 'error';
       }),
     fetch(`${config.serviceMapAPI.root}/search/?input=${query}&language=${locale}&page=1&page_size=3&type=address`, { signal })
@@ -23,7 +24,7 @@ const createSuggestions = async (query, signal, locale) => {
         return 'error';
       })
       .catch((res) => {
-        console.log('error:', res);
+        console.warn('error:', res);
         return 'error';
       }),
   ]);
@@ -37,6 +38,18 @@ const createSuggestions = async (query, signal, locale) => {
   if (data[1] !== 'error' && data[1].results && data[1].results.length) {
     suggestions = [...data[1].results];
   }
+
+  // Add area suggestions
+  const areas = dataStructure.flatMap(item => item.districts);
+  const matchingArea = areas.find(item => intl.formatMessage({ id: `area.list.${item}` }).toLowerCase().includes(query));
+  if (matchingArea) {
+    suggestions.push({
+      object_type: 'area',
+      id: matchingArea,
+      name: intl.formatMessage({ id: `area.list.${matchingArea}.plural` }),
+    });
+  }
+
   // Handle suggestion API results
   if (data[0] !== 'error' && data[0].suggestions && data[0].suggestions.length) {
     data[0].suggestions.forEach((element) => {

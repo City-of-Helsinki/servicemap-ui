@@ -7,7 +7,7 @@ import config from '../../../config';
 // API handlers
 export const APIHandlers = {
   accessibilitySentences: {
-    url: id => `${config.accessibilitySentenceAPI.root}/` + (config.usePtvAccessibilityApi ? `${id}/sentences/` : `unit/${id}`),
+    url: id => `${config.accessibilitySentenceAPI.root}/${config.usePtvAccessibilityApi ? `${id}/sentences/` : `unit/${id}`}`,
     options: {},
     envName: config.accessibilitySentenceAPI.id,
   },
@@ -96,6 +96,18 @@ export const APIHandlers = {
   event: {
     url: id => `${config.eventsAPI.root}/event/${id}/`,
     options: {},
+    envName: config.eventsAPI.id,
+  },
+  events: {
+    url: `${config.eventsAPI.root}/event/`,
+    options: {
+      type: 'event',
+      page: 1,
+      page_size: 100,
+      include: 'location,location.id',
+      start: 'today',
+      sort: 'end_time',
+    },
     envName: config.eventsAPI.id,
   },
   hearingMaps: {

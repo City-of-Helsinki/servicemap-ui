@@ -78,7 +78,7 @@ const ExtendedData = ({
             id="events"
             data={data || []}
             customComponent={event => (
-              <EventItem key={event.id} event={event} />
+              <EventItem simpleItem key={event.id} event={event} />
             )}
             srTitle={srTitle}
             title={titleText}

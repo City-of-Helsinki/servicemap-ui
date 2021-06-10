@@ -1,4 +1,4 @@
-import { searchFetch, unitsFetch } from '../../utils/fetch';
+import { eventsFetch, searchFetch, unitsFetch } from '../../utils/fetch';
 import { saveSearchToHistory } from '../../components/SearchBar/previousSearchData';
 import { units } from './fetchDataActions';
 import config from '../../../config';
@@ -49,10 +49,28 @@ export const fetchUnits = (
     }
     dispatch(fetchSuccess(results));
   };
+
+  const onSuccessEvents = (results) => {
+    clearTimeout(fetchTimeout);
+    results.forEach((event) => {
+      event.object_type = 'event';
+      const eventUnit = event.location;
+      if (eventUnit) {
+        eventUnit.object_type = 'unit';
+        if (typeof eventUnit.id === 'string') {
+          eventUnit.id = parseInt(eventUnit.id.match(/[0-9]+/g), 10);
+        }
+      }
+    });
+
+    dispatch(fetchSuccess(results));
+  };
+
   const onError = e => dispatch(fetchError(e.message));
   const onNext = (resultTotal, response) => {
     clearTimeout(fetchTimeout);
-    dispatch(fetchProgressUpdate(resultTotal.length, response.count));
+    const max = response.count || response.meta?.count;
+    dispatch(fetchProgressUpdate(resultTotal.length, max));
   };
 
   // Fetch data
@@ -63,6 +81,16 @@ export const fetchUnits = (
       data,
       onStart,
       onSuccess,
+      onError,
+      onNext,
+      null,
+      abortController,
+    );
+  } else if (data.events) {
+    eventsFetch(
+      { keyword: data.events },
+      onStart,
+      onSuccessEvents,
       onError,
       onNext,
       null,

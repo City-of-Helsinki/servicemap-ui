@@ -30,6 +30,7 @@ import { useNavigationParams } from '../../utils/address';
 import PanControl from './components/PanControl';
 import adjustControlElements from './utils';
 import EntranceMarker from './components/EntranceMarker';
+import EventMarkers from './components/EventMarkers';
 
 if (global.window) {
   require('leaflet');
@@ -192,7 +193,7 @@ const MapView = (props) => {
     }
     // Hide zoom control amd attribution from screen readers
     setTimeout(() => {
-      adjustControlElements();
+      adjustControlElements(embeded);
     }, 1);
 
     return () => {
@@ -329,8 +330,9 @@ const MapView = (props) => {
         : prevMap.props.zoom + zoomDifference;
     }
 
-    const showLoadingScreen = () => districtViewFetching;
+    const showLoadingScreen = districtViewFetching || (embeded && unitsLoading);
     const userLocationAriaLabel = intl.formatMessage({ id: !userLocation ? 'location.notAllowed' : 'location.center' });
+    const eventSearch = parseSearchParams(location.search).events;
 
     return (
       <>
@@ -355,11 +357,16 @@ const MapView = (props) => {
           maxBoundsViscosity={1.0}
           onClick={(ev) => { setClickCoordinates(ev); }}
         >
-          <MarkerCluster
-            map={mapRef?.current?.leafletElement}
-            data={currentPage === 'unit' && highlightedUnit ? [highlightedUnit] : unitData}
-            measuringMode={measuringMode}
-          />
+          {eventSearch
+            ? <EventMarkers searchData={unitData} />
+            : (
+              <MarkerCluster
+                map={mapRef?.current?.leafletElement}
+                data={currentPage === 'unit' && highlightedUnit ? [highlightedUnit] : unitData}
+                measuringMode={measuringMode}
+              />
+            )
+          }
           {
             renderUnitGeometry()
           }
@@ -367,7 +374,7 @@ const MapView = (props) => {
             url={mapObject.options.url}
             attribution={intl.formatMessage({ id: mapObject.options.attribution })}
           />
-          {showLoadingScreen() ? (
+          {showLoadingScreen ? (
             <div className={classes.loadingScreen}>
               <Loading />
             </div>

@@ -119,7 +119,7 @@ export const drawUnitIcon = (berryColor, curve) => {
   return canvas.toDataURL();
 };
 
-export const drawMarkerIcon = (contrast = false, className = '') => {
+export const drawMarkerIcon = (contrast = false, className = '', popupAnchor = [-3, 11]) => {
   const L = require('leaflet'); // eslint-disable-line global-require
 
   // Generate marker icon
@@ -127,7 +127,7 @@ export const drawMarkerIcon = (contrast = false, className = '') => {
     iconUrl: contrast ? berryIconContrast : berryIcon,
     iconSize: [30, 30],
     iconAnchor: [15, 15],
-    popupAnchor: [-2, 11],
+    popupAnchor,
     tooltipAnchor: [0, 11],
     className: `unitMarker ${className}`,
   });

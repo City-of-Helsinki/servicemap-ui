@@ -7,11 +7,11 @@ import { FormattedMessage } from 'react-intl';
 import { drawMarkerIcon } from '../../utils/drawIcon';
 import swapCoordinates from '../../utils/swapCoordinates';
 import AddressMarker from '../AddressMarker';
-import useMobileStatus from '../../../../utils/isMobile';
 import { parseSearchParams } from '../../../../utils';
 import config from '../../../../../config';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { geographicalDistricts } from '../../../AreaView/utils/districtDataHelper';
+import UnitHelper from '../../../../utils/unitHelper';
 
 
 const Districts = ({
@@ -36,7 +36,6 @@ const Districts = ({
     Polygon, Marker, Tooltip, Popup,
   } = global.rL;
   const useContrast = theme === 'dark';
-  const isMobile = useMobileStatus();
   const location = useLocation();
   const getLocaleText = useLocaleText();
   const citySettings = useSelector(state => state.settings.cities);
@@ -44,7 +43,7 @@ const Districts = ({
   const [areaPopup, setAreaPopup] = useState(null);
 
   const districtOnClick = (e, district) => {
-    if (measuringMode) return;
+    if (measuringMode || embed) return;
     // Disable normal map click event
     e.originalEvent.view.L.DomEvent.stopPropagation(e);
 
@@ -88,11 +87,7 @@ const Districts = ({
               keyboard={false}
               onClick={() => {
                 if (navigator) {
-                  if (isMobile) {
-                    navigator.replace('unit', { id: district.unit.id });
-                  } else {
-                    navigator.push('unit', { id: district.unit.id });
-                  }
+                  UnitHelper.unitElementClick(navigator, district.unit);
                 }
               }}
             >
@@ -169,9 +164,24 @@ const Districts = ({
         coords => swapCoordinates(coords),
       );
 
-      const tooltipTitle = district.type === 'rescue_area'
-        ? `${intl.formatMessage({ id: `area.list.${district.type}` })} ${district.origin_id} - ${getLocaleText(district.name)}`
-        : `${getLocaleText(district.name)} - ${intl.formatMessage({ id: `area.list.${district.type}` })}`;
+      // Count units in single area
+      let numberOfUnits = district.overlaping?.length
+        && district.overlaping.map(obj => obj.unit).filter(i => !!i).length;
+      if (district.unit) {
+        numberOfUnits += 1;
+      }
+
+      let tooltipTitle;
+
+      if (numberOfUnits > 1) {
+        tooltipTitle = `${intl.formatMessage({ id: `area.list.${district.type}` })} - ${intl.formatMessage({ id: 'map.unit.cluster.popup.info' }, { count: numberOfUnits })}`;
+      } else if (district.type === 'rescue_area' && district.name) {
+        tooltipTitle = `${intl.formatMessage({ id: `area.list.${district.type}` })} ${district.origin_id} - ${getLocaleText(district.name)}`;
+      } else if (district.name) {
+        tooltipTitle = `${getLocaleText(district.name)} - ${intl.formatMessage({ id: `area.list.${district.type}` })}`;
+      }
+
+      const mainColor = useContrast ? '#fff' : '#ff8400';
 
       return (
         <Polygon
@@ -179,12 +189,14 @@ const Districts = ({
           key={district.id}
           onClick={e => districtOnClick(e, district)}
           positions={[[area]]}
-          color="#ff8400"
+          color={mainColor}
+          dashArray={useContrast ? '2, 10, 10, 10' : null}
+          dashOffset="20"
           fillOpacity={dimmed ? '0.3' : '0'}
-          fillColor={dimmed ? '#000' : '#ff8400'}
+          fillColor={dimmed ? '#000' : mainColor}
           onMouseOver={(e) => {
             e.target.openTooltip();
-            e.target.setStyle({ fillOpacity: '0.2' });
+            e.target.setStyle({ fillOpacity: useContrast ? '0.6' : '0.2' });
           }}
           onMouseOut={(e) => {
             e.target.setStyle({ fillOpacity: dimmed ? '0.3' : '0' });
@@ -192,7 +204,7 @@ const Districts = ({
           onFocus={() => {}}
           onBlur={() => {}}
         >
-          {district.name && !(district.overlaping && district.overlaping.some(obj => obj.unit)) ? (
+          {tooltipTitle ? (
             <Tooltip
               sticky
               direction="top"

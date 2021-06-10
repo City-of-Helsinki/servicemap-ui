@@ -8,6 +8,7 @@ import { FormattedMessage } from 'react-intl';
 import UnitItem from '../../ListItems/UnitItem';
 import ServiceItem from '../../ListItems/ServiceItem';
 import AddressItem from '../../ListItems/AddressItem';
+import EventItem from '../../ListItems/EventItem';
 
 class ResultList extends React.Component {
   // Update only when data changes
@@ -70,6 +71,9 @@ class ResultList extends React.Component {
                   break;
                 case 'address':
                   itemComponent = <AddressItem key={`address-${sort_index}`} address={item} />;
+                  break;
+                case 'event':
+                  itemComponent = <EventItem key={`event-${item.id}`} event={item} />;
                   break;
                 default:
                   if (customComponent && item) {

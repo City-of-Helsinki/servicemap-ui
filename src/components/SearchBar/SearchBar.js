@@ -30,7 +30,8 @@ class SearchBar extends React.Component {
 
     this.searchRef = React.createRef();
     // Avoid service_nodes when setting initial search value
-    const ps = previousSearch && previousSearch.indexOf('service_node:') === -1 ? previousSearch : null;
+    const ps = previousSearch
+      && !(previousSearch.includes('service_node:') || previousSearch.includes('events:')) ? previousSearch : null;
 
     this.state = {
       initialSearchValue: ps || initialValue || '',
@@ -114,6 +115,10 @@ class SearchBar extends React.Component {
     if (focusedSuggestion !== null) {
       // Get focused suggestion search string
       const suggestion = document.getElementById(`suggestion${focusedSuggestion}`);
+      if (suggestion?.classList.contains('AreaSuggestion')) {
+        suggestion.click();
+        return;
+      }
       // Omit search restult count from suggestion string
       searchQuery = suggestion?.getElementsByTagName('p')[0].textContent;
     } else if (search && search !== '') {

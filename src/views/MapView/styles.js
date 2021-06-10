@@ -18,7 +18,7 @@ const styles = theme => ({
       height: 'calc(100% - 8px)',
       outline: '2px solid transparent',
       boxShadow: `0 0 0 4px ${theme.palette.focusBorder.main}`,
-    }
+    },
   },
   addressLink: {
     color: theme.palette.primary.main,
@@ -71,11 +71,12 @@ const styles = theme => ({
     marginBottom: `${theme.spacing(2)}px !important`,
   },
   embedLogo: {
-    bottom: 0,
+    top: 0,
     left: 0,
     height: 'auto',
     position: 'fixed',
     zIndex: 1000,
+    padding: theme.spacing(1.5),
   },
   userMarker: {
     display: 'flex',
@@ -280,6 +281,51 @@ const styles = theme => ({
     paddingTop: theme.spacing(0.5),
   },
 
+  // Event markers
+  popupContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    padding: theme.spacing(2),
+    paddingRight: 0,
+    paddingLeft: 0,
+  },
+  popupTopArea: {
+    paddingRight: theme.spacing(2),
+    paddingLeft: theme.spacing(2),
+  },
+  popoupTitleArea: {
+    display: 'flex',
+  },
+  popupCloseButton: {
+    marginLeft: 'auto',
+    marginBottom: 'auto',
+    marginRight: -theme.spacing(1),
+    marginTop: 3,
+    paddingLeft: theme.spacing(1),
+  },
+  addressContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    paddingBottom: theme.spacing(1),
+  },
+  popupList: {
+    backgroundColor: '#fafafa',
+    boxShadow: 'inset 0px 4px 4px rgba(0, 0, 0, 0.06)',
+    maxHeight: 175,
+    overflow: 'scroll',
+  },
+  popupListItem: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'start',
+    paddingBottom: 0,
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
+  },
+  eventDate: {
+    fontSize: 12,
+  },
+
   // Transit stops
   transitBackground: {
     fontFamily: 'hsl-piktoframe',
@@ -296,7 +342,7 @@ const styles = theme => ({
     lineHeight: 1,
     textShadow: '-1px 0 #fff, 0 1px #fff, 1px 0 #fff, 0 -1px #fff',
   },
-  transitIconInfo: {
+  infoIcon: {
     fontSize: 18,
     width: 18,
     height: 18,

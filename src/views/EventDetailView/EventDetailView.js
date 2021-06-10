@@ -13,9 +13,8 @@ import TitledList from '../../components/Lists/TitledList';
 import UnitHelper from '../../utils/unitHelper';
 import { eventFetch } from '../../utils/fetch';
 import { focusToPosition } from '../MapView/utils/mapActions';
-import DesktopComponent from '../../components/DesktopComponent';
-import MobileComponent from '../../components/MobileComponent';
 import useLocaleText from '../../utils/useLocaleText';
+import useMobileStatus from '../../utils/isMobile';
 
 const EventDetailView = (props) => {
   const {
@@ -30,8 +29,10 @@ const EventDetailView = (props) => {
     embed,
   } = props;
 
+  const isMobile = useMobileStatus();
   const getLocaleText = useLocaleText();
   const [centered, setCentered] = useState(false);
+  const [fetchingEvent, setFetchingEvent] = useState(false);
 
 
   const centerMap = (unit) => {
@@ -75,13 +76,20 @@ const EventDetailView = (props) => {
         const options = {
           include: 'location,location.accessibility_shortcoming_count',
         };
+        const onStart = () => {
+          setFetchingEvent(true);
+        };
+        const onError = () => {
+          setFetchingEvent(false);
+        };
         const onSuccess = (data) => {
+          setFetchingEvent(false);
           changeSelectedEvent(data);
 
           // Attempt fetching selected unit if it doesn't exist or isn't correct one
           const unit = data.location;
           if (typeof unit === 'object' && unit.id) {
-            const unitId = unit.id.split(':').pop();
+            const unitId = typeof unit.id === 'string' ? unit.id.split(':').pop() : unit.id;
             if (
               !UnitHelper.isValidUnit(selectedUnit)
                   || parseInt(unitId, 10) !== selectedUnit.id
@@ -92,13 +100,13 @@ const EventDetailView = (props) => {
             }
           }
         };
-        eventFetch(options, null, onSuccess, null, null, match.params.event);
+        eventFetch(options, onStart, onSuccess, onError, null, match.params.event);
       }
-    } else if (!selectedUnit) {
+    } else if (!selectedUnit || event.location.id !== selectedUnit.id) {
       // Attempt fetching selected unit if it doesn't exist or isn't correct one
       const unit = event.location;
       if (typeof unit === 'object' && unit.id) {
-        const unitId = unit.id.split(':').pop();
+        const unitId = typeof unit.id === 'string' ? unit.id.split(':').pop() : unit.id;
         if (
           !UnitHelper.isValidUnit(selectedUnit)
               || parseInt(unitId, 10) !== selectedUnit.id
@@ -110,43 +118,22 @@ const EventDetailView = (props) => {
   }, []);
 
 
-  if (embed) {
-    return null;
-  }
-  if (event) {
-    const description = event.description || event.short_description;
+  const renderEventDetails = () => {
+    if (!event) return null;
     const unit = selectedUnit;
+    const description = event.description || event.short_description;
     const phoneText = unit && unit.phone ? `${unit.phone} ${intl.formatMessage({ id: 'unit.call.number' })}` : null;
     const time = formatDate(event);
-    return (
-      <div>
-        <DesktopComponent>
-          <SearchBar margin />
-          <TitleBar
-            sticky
-            title={getLocaleText(event.name)}
-            titleComponent="h3"
-            icon={<Event />}
-          />
-        </DesktopComponent>
-        <MobileComponent>
-          <TitleBar
-            sticky
-            title={getLocaleText(event.name)}
-            titleComponent="h3"
-            icon={<Event />}
-            primary
-            backButton
-          />
-        </MobileComponent>
 
-        {event.images && event.images.length && (
+    return (
+      <>
+        {event.images && event.images.length ? (
           <img
             className={classes.eventImage}
             alt={intl.formatMessage({ id: 'event.picture' })}
             src={event.images[0].url}
           />
-        )}
+        ) : null}
         <div className={classes.content}>
           <TitledList titleComponent="h4" title={intl.formatMessage({ id: 'unit.contact.info' })}>
             <SimpleListItem
@@ -157,30 +144,30 @@ const EventDetailView = (props) => {
               divider
             />
             {
-              unit
-              && (
-                <UnitItem
-                  key="unitInfo"
-                  unit={unit}
-                />
-              )
-            }
+            unit
+            && (
+              <UnitItem
+                key="unitInfo"
+                unit={unit}
+              />
+            )
+          }
             {
-               phoneText
-               && (
-               <SimpleListItem
-                 key="contactNumber"
-                 icon={<Phone />}
-                 text={phoneText}
-                 srText={intl.formatMessage({ id: 'unit.phone' })}
-                 link
-                 divider
-                 handleItemClick={() => {
-                   window.location.href = `tel:${unit.phone}`;
-                 }}
-               />
-               )
-             }
+             phoneText
+             && (
+             <SimpleListItem
+               key="contactNumber"
+               icon={<Phone />}
+               text={phoneText}
+               srText={intl.formatMessage({ id: 'unit.phone' })}
+               link
+               divider
+               handleItemClick={() => {
+                 window.location.href = `tel:${unit.phone}`;
+               }}
+             />
+             )
+           }
           </TitledList>
 
           <DescriptionText
@@ -190,10 +177,42 @@ const EventDetailView = (props) => {
             titleComponent="h4"
           />
         </div>
-      </div>
+      </>
     );
+  };
+
+
+  if (embed) {
+    return null;
   }
-  return (null);
+
+  let title;
+
+  if (event) {
+    title = getLocaleText(event.name);
+  } else if (fetchingEvent) {
+    title = intl.formatMessage({ id: 'general.loading' });
+  } else {
+    title = intl.formatMessage({ id: 'general.noData' });
+  }
+
+  return (
+    <div>
+      {!isMobile ? (
+        <SearchBar margin />
+      ) : null}
+
+      <TitleBar
+        sticky
+        title={title}
+        titleComponent="h3"
+        icon={event ? <Event /> : null}
+        primary={isMobile}
+        backButton={isMobile}
+      />
+      {renderEventDetails()}
+    </div>
+  );
 };
 
 EventDetailView.propTypes = {

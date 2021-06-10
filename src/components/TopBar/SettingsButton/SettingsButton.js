@@ -35,7 +35,7 @@ SettingsButton.propTypes = {
     settingsButtonPressed: PropTypes.string,
     smallScreen: PropTypes.string,
   }).isRequired,
-  settingsOpen: PropTypes.oneOf(['citySettings', 'mapSettings', 'accessibilitySettings']),
+  settingsOpen: PropTypes.oneOf(['citySettings', 'mapSettings', 'accessibilitySettings, search']),
   type: PropTypes.oneOf(['citySettings', 'mapSettings', 'accessibilitySettings']).isRequired,
   onClick: PropTypes.func.isRequired,
 };

@@ -70,7 +70,7 @@ const ExpandedSuggestions = (props) => {
       fetchController.current = new AbortController();
       const { signal } = fetchController.current;
 
-      createSuggestions(query, signal, locale)
+      createSuggestions(query, signal, locale, intl)
         .then((suggestions) => {
           if (suggestions === 'error') {
             return;

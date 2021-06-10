@@ -14,13 +14,12 @@ const mapStateToProps = (state, props) => {
     intl, unit,
   } = props;
   const {
-    navigator, settings, user,
+    navigator, settings,
   } = state;
   return {
     distance: formatDistanceObject(intl, calculateDistance(unit, getCurrentlyUsedPosition(state))),
     navigator,
     settings,
-    theme: user.theme,
   };
 };
 
