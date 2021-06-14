@@ -194,7 +194,6 @@ const styles = theme => ({
     display: 'inline-flex',
     alignItems: 'center',
     marginLeft: -11,
-    marginRight: 16,
     verticalAlign: 'middle',
   },
   labelContainer: {
