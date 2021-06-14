@@ -10,6 +10,7 @@ import DivisionItem from '../../../../components/ListItems/DivisionItem';
 import { getAddressFromUnit } from '../../../../utils/address';
 import SMAccordion from '../../../../components/SMAccordion';
 import useLocaleText from '../../../../utils/useLocaleText';
+import { getCategoryDistricts } from '../../utils/districtDataHelper';
 
 const DistrictUnitList = (props) => {
   const {
@@ -36,7 +37,9 @@ const DistrictUnitList = (props) => {
   const renderDistrictUnitItem = (district) => {
     const { unit } = district;
     let title;
-    if (district.type === 'rescue_area') {
+    const rescueAreas = getCategoryDistricts('protection');
+
+    if (rescueAreas.includes(district.type)) {
       title = `${intl.formatMessage({ id: `area.list.${district.type}` })} ${district.origin_id} ${getLocaleText(district.name)}`;
     }
     const streetAddress = getAddressFromUnit(unit, getLocaleText, intl);

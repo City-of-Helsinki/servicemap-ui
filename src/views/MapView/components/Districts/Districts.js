@@ -10,7 +10,7 @@ import AddressMarker from '../AddressMarker';
 import { parseSearchParams } from '../../../../utils';
 import config from '../../../../../config';
 import useLocaleText from '../../../../utils/useLocaleText';
-import { geographicalDistricts } from '../../../AreaView/utils/districtDataHelper';
+import { geographicalDistricts, getCategoryDistricts } from '../../../AreaView/utils/districtDataHelper';
 import UnitHelper from '../../../../utils/unitHelper';
 
 
@@ -175,7 +175,7 @@ const Districts = ({
 
       if (numberOfUnits > 1) {
         tooltipTitle = `${intl.formatMessage({ id: `area.list.${district.type}` })} - ${intl.formatMessage({ id: 'map.unit.cluster.popup.info' }, { count: numberOfUnits })}`;
-      } else if (district.type === 'rescue_area' && district.name) {
+      } else if (getCategoryDistricts('protection').includes(district.type)) {
         tooltipTitle = `${intl.formatMessage({ id: `area.list.${district.type}` })} ${district.origin_id} - ${getLocaleText(district.name)}`;
       } else if (district.name) {
         tooltipTitle = `${getLocaleText(district.name)} - ${intl.formatMessage({ id: `area.list.${district.type}` })}`;
