@@ -27,7 +27,7 @@ const Districts = ({
   selectedSubdistricts,
   setSelectedSubdistricts,
   setSelectedDistrictServices,
-  embed,
+  embedded,
   classes,
   navigator,
   intl,
@@ -54,7 +54,7 @@ const Districts = ({
       });
     }
 
-    if (embed) return;
+    if (embedded) return;
     // Disable normal map click event
     e.originalEvent.view.L.DomEvent.stopPropagation(e);
 
@@ -74,7 +74,7 @@ const Districts = ({
   };
 
   const renderDistrictMarkers = (district) => {
-    if (embed && parseSearchParams(location.search).units === 'none') {
+    if (embedded && parseSearchParams(location.search).units === 'none') {
       return null;
     }
     return (
@@ -148,7 +148,7 @@ const Districts = ({
     if (selectedCities.length) {
       const searchParams = parseSearchParams(location.search);
       filteredData = districtData.filter(district => (searchParams.city
-        ? embed && district.municipality === searchParams.city
+        ? embedded && district.municipality === searchParams.city
         : citySettings[district.municipality]));
     } else {
       filteredData = districtData;
@@ -252,7 +252,7 @@ const Districts = ({
           renderSingleDistrict()
         }
         {
-          embed && parseSearchParams(location.search).units !== 'none' && (
+          embedded && parseSearchParams(location.search).units !== 'none' && (
             renderDistrictMarkers(highlightedDistrict)
           )
         }
@@ -295,7 +295,7 @@ Districts.propTypes = {
   selectedSubdistricts: PropTypes.arrayOf(PropTypes.string),
   setSelectedSubdistricts: PropTypes.func.isRequired,
   setSelectedDistrictServices: PropTypes.func.isRequired,
-  embed: PropTypes.bool.isRequired,
+  embedded: PropTypes.bool.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any).isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,

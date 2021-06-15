@@ -79,17 +79,17 @@ const MapView = (props) => {
   const [measuringMarkers, setMeasuringMarkers] = useState([]);
   const [measuringLine, setMeasuringLine] = useState([]);
 
-  const embeded = isEmbed({ url: location.pathname });
+  const embedded = isEmbed({ url: location.pathname });
   const getAddressNavigatorParams = useNavigationParams();
 
 
   const getMapUnits = () => {
     let mapUnits = [];
 
-    if (embeded && parseSearchParams(location.search).units === 'none') {
+    if (embedded && parseSearchParams(location.search).units === 'none') {
       return [];
     }
-    if (currentPage === 'home' && embeded) {
+    if (currentPage === 'home' && embedded) {
       mapUnits = unitList;
     }
     if (
@@ -137,7 +137,7 @@ const MapView = (props) => {
   };
 
   const setClickCoordinates = (ev) => {
-    if (embeded) return;
+    if (embedded) return;
     setMapClickPoint(null);
     if (document.getElementsByClassName('leaflet-popup').length > 0) {
       mapRef.current.leafletElement.closePopup();
@@ -163,7 +163,7 @@ const MapView = (props) => {
     }
     // Search param map value
     const spMap = parseSearchParams(location.search).map || false;
-    const mapType = spMap || (embeded ? 'servicemap' : settings.mapType);
+    const mapType = spMap || (embedded ? 'servicemap' : settings.mapType);
 
     const newMap = CreateMap(mapType, locale);
     setMapObject(newMap);
@@ -175,7 +175,7 @@ const MapView = (props) => {
         mapRef.current.leafletElement,
         [userLocation.longitude, userLocation.latitude],
       );
-    } else if (!embeded) {
+    } else if (!embedded) {
       findUserLocation();
     }
   };
@@ -189,12 +189,12 @@ const MapView = (props) => {
 
   useEffect(() => { // On map mount
     initializeMap();
-    if (!embeded) {
+    if (!embedded) {
       findUserLocation();
     }
     // Hide zoom control amd attribution from screen readers
     setTimeout(() => {
-      adjustControlElements(embeded);
+      adjustControlElements(embedded);
     }, 1);
 
     return () => {
@@ -285,7 +285,7 @@ const MapView = (props) => {
   };
 
   const renderEmbedOverlay = () => {
-    if (!embeded) {
+    if (!embedded) {
       return null;
     }
     const openApp = () => {
@@ -331,7 +331,7 @@ const MapView = (props) => {
         : prevMap.props.zoom + zoomDifference;
     }
 
-    const showLoadingScreen = districtViewFetching || (embeded && unitsLoading);
+    const showLoadingScreen = districtViewFetching || (embedded && unitsLoading);
     const userLocationAriaLabel = intl.formatMessage({ id: !userLocation ? 'location.notAllowed' : 'location.center' });
     const eventSearch = parseSearchParams(location.search).events;
 
@@ -342,7 +342,7 @@ const MapView = (props) => {
         <Map
           tap={false} // This should fix leaflet safari double click bug
           preferCanvas
-          className={`${classes.map} ${measuringMode ? classes.measuringCursor : ''} ${embeded || sidebarHidden ? classes.mapNoSidebar : ''} `}
+          className={`${classes.map} ${measuringMode ? classes.measuringCursor : ''} ${embedded || sidebarHidden ? classes.mapNoSidebar : ''} `}
           key={mapObject.options.name}
           ref={mapRef}
           zoomControl={false}
@@ -380,14 +380,14 @@ const MapView = (props) => {
               <Loading />
             </div>
           ) : null}
-          <Districts mapOptions={mapOptions} map={mapRef.current} embed={embeded} />
+          <Districts mapOptions={mapOptions} map={mapRef.current} embedded={embedded} />
 
           <TransitStops
             map={mapRef.current}
             mapObject={mapObject}
             isMobile={isMobile}
           />
-          {!embeded && !measuringMode && mapClickPoint && (
+          {!embedded && !measuringMode && mapClickPoint && (
             // Draw address popoup on mapclick to map
             <AddressPopup
               mapClickPoint={mapClickPoint}
@@ -399,7 +399,7 @@ const MapView = (props) => {
           )}
 
           {currentPage === 'address' && (
-            <AddressMarker embeded={embeded} />
+            <AddressMarker embedded={embedded} />
           )}
 
           {currentPage === 'unit' && highlightedUnit?.entrances?.length && (
@@ -426,7 +426,7 @@ const MapView = (props) => {
           )}
 
           <Control position="topleft">
-            {!isMobile && !embeded && toggleSidebar ? (
+            {!isMobile && !embedded && toggleSidebar ? (
               <HideSidebarButton
                 sidebarHidden={sidebarHidden}
                 mapRef={mapRef}
@@ -439,7 +439,7 @@ const MapView = (props) => {
             map={mapRef?.current?.leafletElement}
           />
           {
-            !embeded
+            !embedded
             && (
               <>
                 {/* Custom user location map button */}
