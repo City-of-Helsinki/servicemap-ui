@@ -44,6 +44,10 @@ export default class HttpClient {
   fetchNext = async (query, results) => {
     const signal = this.abortController?.signal || null;
     console.log('Fetching next:', query)
+    // Clear old timeout
+    this.clearTimeout();
+    // Create new timeout for next fetch
+    this.createTimeout();
     console.log('Current results ', results)
 
     return await fetch(query, { signal })
