@@ -4,7 +4,6 @@ import {
   List,
   ListItem,
   Typography,
-  RadioGroup,
   Divider,
 } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
@@ -34,7 +33,7 @@ const ServiceTab = (props) => {
       dispatch(setSelectedDistrictType(null));
     } else {
       if (!district.data.some(obj => obj.boundary)) {
-        dispatch(fetchDistrictGeometry(district.name));
+        dispatch(fetchDistrictGeometry(district.name, district.period));
       }
       dispatch(setSelectedDistrictType(district.id));
     }
