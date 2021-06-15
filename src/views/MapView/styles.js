@@ -20,6 +20,11 @@ const styles = theme => ({
       boxShadow: `0 0 0 4px ${theme.palette.focusBorder.main}`,
     },
   },
+  mapNoSidebar: {
+    '&:focus': {
+      margin: 4,
+    },
+  },
   addressLink: {
     color: theme.palette.primary.main,
   },
