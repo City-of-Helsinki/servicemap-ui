@@ -43,7 +43,18 @@ const Districts = ({
   const [areaPopup, setAreaPopup] = useState(null);
 
   const districtOnClick = (e, district) => {
-    if (measuringMode || embed) return;
+    if (measuringMode) return;
+
+    if (district.type === 'nature_reserve' && config.natureAreaURL !== 'undefined') {
+      setAreaPopup({
+        district,
+        link: `${config.natureAreaURL}${district.origin_id}`,
+        name: district.name,
+        position: e.latlng,
+      });
+    }
+
+    if (embed) return;
     // Disable normal map click event
     e.originalEvent.view.L.DomEvent.stopPropagation(e);
 
@@ -59,13 +70,6 @@ const Districts = ({
         setSelectedDistrictServices([]);
       }
       setSelectedSubdistricts(newArray);
-    } else if (district.type === 'nature_reserve' && config.natureAreaURL !== 'undefined') {
-      setAreaPopup({
-        district,
-        link: `${config.natureAreaURL}${district.origin_id}`,
-        name: district.name,
-        position: e.latlng,
-      });
     }
   };
 
