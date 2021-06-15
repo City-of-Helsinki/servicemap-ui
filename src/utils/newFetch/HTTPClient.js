@@ -44,22 +44,31 @@ export default class HttpClient {
   fetchNext = async (query, results) => {
     const signal = this.abortController?.signal || null;
     console.log('Fetching next:', query)
+    console.log('Current results ', results)
+
     return await fetch(query, { signal })
       .then(response => response.json())
-      .then(async data => {
-        if (data.next) {
-          return await this.fetchNext(data.next, [...results, data.results]);
+      .then(async response => {
+        const combinedResults = [...results, ...response.results];
+        if (this.onNext) {
+          this.onNext(combinedResults.length, response.count)
         }
-        return [...results, ...data.results];
+        if (response.next) {
+          return await this.fetchNext(response.next, combinedResults);
+        }
+        return combinedResults;
       });
   }
 
-  handleResults = async (data) => {
+  handleResults = async (response) => {
     console.log('Status in handleResults', this.status);
-    if (data.next) {
-      return await this.fetchNext(data.next, [...data.results]);
+    if (response.next) {
+      if (this.onNext) {
+        this.onNext(response.results.length, response.count)
+      }
+      return await this.fetchNext(response.next, response.results);
     }
-    return data.results;
+    return response.results;
   }
 
   fetch = async (endpoint, options) => {
@@ -107,6 +116,9 @@ export default class HttpClient {
   }
 
   throwAPIError = (msg, e) => {
+    if (this.onError) {
+      this.onError(e)
+    }
     this.status = 'error';
     this.clearTimeout();
     throw new APIFetchError(msg, e);
@@ -134,5 +146,20 @@ export default class HttpClient {
     if (this.timeout) {
       clearTimeout(this.timeout);
     }
+  }
+
+  setOnNext = (onNext) => {
+    if (typeof onNext !== 'function') {
+      throw new APIFetchError(`Invalid onNext provided for HTTPClient`);
+    }
+    this.onNext = onNext;
+  }
+
+  setOnError = (onError) => {
+    if (typeof onError !== 'function') {
+      throw new APIFetchError(`Invalid onError provided for HTTPClient`);
+    }
+    this.onError = onError;
+
   }
 }
