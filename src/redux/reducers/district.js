@@ -49,9 +49,10 @@ export default (state = initialState, action) => {
     case 'UPDATE_DISTRICT_DATA':
       return {
         ...state,
-        districtData: state.districtData.map(obj => (obj.name === action.districtType
-          ? { ...obj, data: action.data }
-          : obj)),
+        districtData: state.districtData.map(obj => (
+          obj.name === action.districtType && obj.period === action.period
+            ? { ...obj, data: action.data }
+            : obj)),
       };
 
     case 'SET_DISTRICT_ADDRESS_DATA':

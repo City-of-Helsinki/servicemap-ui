@@ -86,7 +86,7 @@ export const groupDistrictData = (data) => {
   const groupedData = data.reduce((acc, cur) => {
   // Group data by district type and period
     const { start, end } = cur;
-    if (start?.includes(2019)) {
+    if (start?.includes(2020)) {
     // FIXME: temporary solution to hide older school years
       return acc;
     }
