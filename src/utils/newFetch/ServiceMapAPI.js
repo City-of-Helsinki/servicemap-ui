@@ -3,7 +3,6 @@ import HttpClient, { APIFetchError } from './HTTPClient';
 
 export default class ServiceMapAPI extends HttpClient {
   constructor() {
-    console.log('ServiceMapAPI baseURL', config.serviceMapAPI.root)
     if (
       typeof config?.serviceMapAPI?.root === 'string'
       && config.serviceMapAPI.root.indexOf('undefined') !== -1
@@ -14,8 +13,9 @@ export default class ServiceMapAPI extends HttpClient {
   }
 
   search = async (query) => {
-    console.log('Search endpoint')
-
+    if (typeof query !== 'string') {
+      throw new APIFetchError('Invalid query string provided to ServiceMapAPI search method');
+    }
     const options = {
       page: 1,
       page_size: 200,
@@ -29,7 +29,6 @@ export default class ServiceMapAPI extends HttpClient {
   }
 
   serviceNames = async (idList) => {
-    console.log('Service node endpoint')
     if (typeof idList !== 'string') {
       throw new APIFetchError('Invalid idList string provided to ServiceMapAPI serviceNames method');
     }

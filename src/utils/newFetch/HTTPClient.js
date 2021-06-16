@@ -43,12 +43,10 @@ export default class HttpClient {
 
   fetchNext = async (query, results) => {
     const signal = this.abortController?.signal || null;
-    console.log('Fetching next:', query)
     // Clear old timeout
     this.clearTimeout();
     // Create new timeout for next fetch
     this.createTimeout();
-    console.log('Current results ', results)
 
     return await fetch(query, { signal })
       .then(response => response.json())
@@ -65,7 +63,6 @@ export default class HttpClient {
   }
 
   handleResults = async (response) => {
-    console.log('Status in handleResults', this.status);
     if (response.next) {
       if (this.onNext) {
         this.onNext(response.results.length, response.count)
@@ -82,12 +79,10 @@ export default class HttpClient {
     const signal = this.abortController?.signal || null;
     let promise;
 
-    console.log('Fetching...', `${this.baseURL}/${endpoint}`);
-
     // Since we do not send any POST data to server we expect all fetches to be GET
     // and utilize search parameters for sending required data
     if (typeof options !== 'string') {
-      this.throwAPIError(`Invalid options given to HTTPClient fetch method`);
+      this.throwAPIError(`Invalid options given to HTTPClient's fetch method`);
     }
     // Create fetch promise
     promise = fetch(`${this.baseURL}/${endpoint}?${options}`, { signal });
@@ -102,7 +97,6 @@ export default class HttpClient {
         const results = await this.handleResults(data)
         this.clearTimeout();
         this.status = 'done';
-        console.log('Status before returning results', this.status);
         return results;
       })
       .catch(e => {
@@ -115,16 +109,15 @@ export default class HttpClient {
   }
 
   get = async (endpoint, options) => {
-    console.log('Fetch is using GET');
     return await this.fetch(endpoint, this.optionsToSearchParams(options))
   }
 
   throwAPIError = (msg, e) => {
+    this.status = 'error';
+    this.clearTimeout();
     if (this.onError) {
       this.onError(e)
     }
-    this.status = 'error';
-    this.clearTimeout();
     throw new APIFetchError(msg, e);
   };
 
@@ -164,6 +157,9 @@ export default class HttpClient {
       throw new APIFetchError(`Invalid onError provided for HTTPClient`);
     }
     this.onError = onError;
+  }
 
+  isFetching = () => {
+    return this.status === 'fetching';
   }
 }
