@@ -248,7 +248,7 @@ const translations = {
   'general.pageTitles.list.reservations': 'Förteckning över reserveringar ',
   'general.pageTitles.info': 'Infosida',
   'general.pageTitles.feedback': 'Responssida',
-  'general.pageTitles.area': 'Områdessida.',
+  'general.pageTitles.area': 'Områdessida',
 
   // General - Pagination
   'general.pagination.previous': 'Föregående sida',

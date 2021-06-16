@@ -248,7 +248,7 @@ const translations = {
   'general.pageTitles.list.reservations': 'Reservation list ',
   'general.pageTitles.info': 'Info page',
   'general.pageTitles.feedback': 'Feedback page',
-  'general.pageTitles.area': 'Area page.',
+  'general.pageTitles.area': 'Area page',
   'general.tools': 'Tools',
   // Readspeaker
   'general.readspeaker.buttonText': 'Listen',
