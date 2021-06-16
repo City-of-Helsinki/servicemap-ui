@@ -36,8 +36,8 @@ const EventDetailView = (props) => {
 
 
   const centerMap = (unit) => {
-    if (unit && unit.location && map && map.options.maxZoom && !centered) {
-      const { location } = unit;
+    if (unit && (unit.location || unit.position) && map && map.options.maxZoom && !centered) {
+      const location = unit.location || unit.position;
       setCentered(true);
       focusToPosition(map, location.coordinates);
     }
@@ -105,6 +105,7 @@ const EventDetailView = (props) => {
     } else if (!selectedUnit || event.location.id !== selectedUnit.id) {
       // Attempt fetching selected unit if it doesn't exist or isn't correct one
       const unit = event.location;
+      centerMap(event.location);
       if (typeof unit === 'object' && unit.id) {
         const unitId = typeof unit.id === 'string' ? unit.id.split(':').pop() : unit.id;
         if (
@@ -116,6 +117,12 @@ const EventDetailView = (props) => {
       }
     }
   }, []);
+
+  useEffect(() => {
+    if (map && !centered) {
+      centerMap(event.location);
+    }
+  }, [map]);
 
 
   const renderEventDetails = () => {

@@ -21,9 +21,10 @@ const setDistrictData = data => ({
   data,
 });
 
-const updateDistrictData = (type, data) => ({
+const updateDistrictData = (type, data, period) => ({
   type: 'UPDATE_DISTRICT_DATA',
   districtType: type,
+  period,
   data,
 });
 
@@ -89,7 +90,7 @@ const endDistrictFetch = districtType => ({
 });
 
 
-export const fetchDistrictGeometry = type => (
+export const fetchDistrictGeometry = (type, period) => (
   async (dispatch) => {
     const options = {
       page: 1,
@@ -103,8 +104,17 @@ export const fetchDistrictGeometry = type => (
     };
     const onNext = () => {};
     const onSuccess = (results) => {
-      const filteredData = parseDistrictGeometry(results);
-      dispatch(updateDistrictData(type, filteredData));
+      let filteredData = parseDistrictGeometry(results);
+      if (period) {
+        // Filter with start and end year
+        const start = period.slice(0, 4);
+        const end = period.slice(-4);
+        const yearFilteredData = filteredData.filter(item => (
+          item.start.slice(0, 4) === start && item.end.slice(0, 4) === end
+        ));
+        filteredData = yearFilteredData;
+      }
+      dispatch(updateDistrictData(type, filteredData, period));
       dispatch(endDistrictFetch(type));
     };
     districtFetch(options, onStart, onSuccess, null, onNext);
