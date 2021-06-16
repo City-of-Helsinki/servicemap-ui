@@ -1,4 +1,3 @@
-import config from '../../../../config';
 import ServiceMapAPI from '../../../utils/newFetch/ServiceMapAPI';
 
 const smAPI = new ServiceMapAPI();
@@ -8,10 +7,8 @@ export const fetchServiceNames = async (ids) => {
     return null;
   }
 
-  return await smAPI.serviceNames(ids)
-    .then((data) => {
-      return data?.map(v => v.name);
-    })
-}
+  return smAPI.serviceNames(ids)
+    .then(data => data?.map(v => v.name));
+};
 
 export default fetchServiceNames;

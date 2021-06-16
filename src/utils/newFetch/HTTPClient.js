@@ -6,32 +6,39 @@ export class APIFetchError extends Error {
     super(props);
     // Maintains proper stack trace for where our error was thrown (only available on V8)
     if (Error.captureStackTrace) {
-      Error.captureStackTrace(this, APIFetchError)
+      Error.captureStackTrace(this, APIFetchError);
     }
 
-    this.name = 'APIFetchError'
+    this.name = 'APIFetchError';
     // Custom debugging information
-    this.date = new Date()
+    this.date = new Date();
   }
 }
 
 export default class HttpClient {
   timeoutTimer = config?.searchTimeout || 10000;
+
   status = '';
+
   abortController;
+
   timeout;
+
+  onError;
+
+  onNext;
 
   constructor(baseURL) {
     this.baseURL = baseURL;
   }
-  
+
   optionsToSearchParams = (options) => {
     if (typeof options !== 'object') {
       throw APIFetchError('Invalid options provided for HttpClient optionsToSearchParams method');
     }
 
     const params = new URLSearchParams();
-    Object.keys(options).forEach(key => {
+    Object.keys(options).forEach((key) => {
       if (Object.prototype.hasOwnProperty.call(options, key)) {
         const value = options[key];
         params.set(key, value);
@@ -48,15 +55,15 @@ export default class HttpClient {
     // Create new timeout for next fetch
     this.createTimeout();
 
-    return await fetch(query, { signal })
+    return fetch(query, { signal })
       .then(response => response.json())
-      .then(async response => {
+      .then(async (response) => {
         const combinedResults = [...results, ...response.results];
         if (this.onNext) {
-          this.onNext(combinedResults.length, response.count)
+          this.onNext(combinedResults.length, response.count);
         }
         if (response.next) {
-          return await this.fetchNext(response.next, combinedResults);
+          return this.fetchNext(response.next, combinedResults);
         }
         return combinedResults;
       });
@@ -65,9 +72,9 @@ export default class HttpClient {
   handleResults = async (response) => {
     if (response.next) {
       if (this.onNext) {
-        this.onNext(response.results.length, response.count)
+        this.onNext(response.results.length, response.count);
       }
-      return await this.fetchNext(response.next, response.results);
+      return this.fetchNext(response.next, response.results);
     }
     return response.results;
   }
@@ -77,57 +84,52 @@ export default class HttpClient {
     this.status = 'fetching';
 
     const signal = this.abortController?.signal || null;
-    let promise;
 
     // Since we do not send any POST data to server we expect all fetches to be GET
     // and utilize search parameters for sending required data
     if (typeof options !== 'string') {
-      this.throwAPIError(`Invalid options given to HTTPClient's fetch method`);
+      this.throwAPIError('Invalid options given to HTTPClient\'s fetch method');
     }
     // Create fetch promise
-    promise = fetch(`${this.baseURL}/${endpoint}?${options}`, { signal });
+    const promise = fetch(`${this.baseURL}/${endpoint}?${options}`, { signal });
 
     // Create timeout for aborting fetch
     this.createTimeout();
 
     // Preform fetch
-    return await promise
+    return promise
       .then(response => response.json())
       .then(async (data) => {
-        const results = await this.handleResults(data)
+        const results = await this.handleResults(data);
         this.clearTimeout();
         this.status = 'done';
         return results;
       })
-      .catch(e => {
+      .catch((e) => {
         if (e.name === 'AbortError') {
-          this.throwAPIError(`Error - ${endpoint} fetch aborted: Timeout after ${this.timeoutTimer / 1000} seconds`, e)
+          this.throwAPIError(`Error ${endpoint} fetch aborted`, e);
         } else {
-          this.throwAPIError(`Error while fetching ${endpoint}:`, e)
+          this.throwAPIError(`Error while fetching ${endpoint}:`, e);
         }
       });
   }
 
-  get = async (endpoint, options) => {
-    return await this.fetch(endpoint, this.optionsToSearchParams(options))
-  }
+  get = async (endpoint, options) => this.fetch(endpoint, this.optionsToSearchParams(options));
 
   throwAPIError = (msg, e) => {
     this.status = 'error';
     this.clearTimeout();
     if (this.onError) {
-      this.onError(e)
+      this.onError(e);
     }
     throw new APIFetchError(msg, e);
   };
 
-  getStatus = () => {
-    return this.status;
-  }
-  
+  getStatus = () => this.status;
+
   abort = () => {
     if (!this.abortController?.abort) {
-      throw new APIFetchError(`Invalid AbortController when attempting to abort fetch`);
+      throw new APIFetchError('Invalid AbortController when attempting to abort fetch');
     }
     this.clearTimeout();
     this.abortController.abort();
@@ -147,19 +149,17 @@ export default class HttpClient {
 
   setOnNext = (onNext) => {
     if (typeof onNext !== 'function') {
-      throw new APIFetchError(`Invalid onNext provided for HTTPClient`);
+      throw new APIFetchError('Invalid onNext provided for HTTPClient');
     }
     this.onNext = onNext;
   }
 
   setOnError = (onError) => {
     if (typeof onError !== 'function') {
-      throw new APIFetchError(`Invalid onError provided for HTTPClient`);
+      throw new APIFetchError('Invalid onError provided for HTTPClient');
     }
     this.onError = onError;
   }
 
-  isFetching = () => {
-    return this.status === 'fetching';
-  }
+  isFetching = () => this.status === 'fetching';
 }

@@ -22,10 +22,10 @@ export default class ServiceMapAPI extends HttpClient {
       only: 'unit.street_address,unit.location,unit.name,unit.municipality,unit.accessibility_shortcoming_count,unit.contract_type',
       geometry: true,
       include: 'unit.department',
-      q: query
+      q: query,
     };
 
-    return await this.get('search', options);
+    return this.get('search', options);
   }
 
   serviceNames = async (idList) => {
@@ -36,7 +36,7 @@ export default class ServiceMapAPI extends HttpClient {
       id: idList,
       page: '1',
       page_size: '1000',
-    }
+    };
     return this.get('service_node', options);
   }
 }
