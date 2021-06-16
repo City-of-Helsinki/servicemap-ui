@@ -92,8 +92,8 @@ const DistrictUnitList = (props) => {
       if (obj.unit) {
         districtsWithUnits.push(obj);
       }
-      if (obj.overlaping) {
-        obj.overlaping.forEach((i) => {
+      if (obj.overlapping) {
+        obj.overlapping.forEach((i) => {
           if (i.unit) {
             districtsWithUnits.push(i);
           }
@@ -121,8 +121,8 @@ const DistrictUnitList = (props) => {
         newValue.unit.distance = distanceToAddress(district.unit.location?.coordinates);
         localUnitDistricts.push(newValue);
 
-        if (district.overlaping) {
-          district.overlaping.forEach((obj) => {
+        if (district.overlapping) {
+          district.overlapping.forEach((obj) => {
             if (obj.unit) {
               const newValue = obj;
               newValue.unit.distance = distanceToAddress(obj.unit.location?.coordinates);
@@ -137,8 +137,8 @@ const DistrictUnitList = (props) => {
           const newValue = district;
           newValue.unit.distance = distanceToAddress(district.unit.location?.coordinates);
           otherUnitDistricts.push(newValue);
-          if (district.overlaping) {
-            district.overlaping.forEach((obj) => {
+          if (district.overlapping) {
+            district.overlapping.forEach((obj) => {
               if (obj.unit) {
                 const newValue = obj;
                 newValue.unit.distance = distanceToAddress(obj.unit.location?.coordinates);
