@@ -169,8 +169,8 @@ const Districts = ({
       );
 
       // Count units in single area
-      let numberOfUnits = district.overlaping?.length
-        && district.overlaping.map(obj => obj.unit).filter(i => !!i).length;
+      let numberOfUnits = district.overlapping?.length
+        && district.overlapping.map(obj => obj.unit).filter(i => !!i).length;
       if (district.unit) {
         numberOfUnits += 1;
       }
@@ -218,7 +218,7 @@ const Districts = ({
             </Tooltip>
           ) : null}
           {renderDistrictMarkers(district)}
-          {district.overlaping && district.overlaping.map(obj => (
+          {district.overlapping && district.overlapping.map(obj => (
             renderDistrictMarkers(obj)
           ))}
         </Polygon>

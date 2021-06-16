@@ -47,8 +47,8 @@ const translations = {
   'area.tab.publicServices': 'Områden för offentliga tjänster',
   'area.tab.geographical': 'Stadsdelar och postnummerområden',
   'area.services.local': 'Tjänster i ditt eget område',
-  'area.services.nearby': 'Lista över tjänsterna i närområden',
-  'area.services.all': 'Lista över tjänsterna',
+  'area.services.nearby': 'Lista över verksamhetsställen i närområden',
+  'area.services.all': 'Lista över verksamhetsställen',
   'area.info': 'Välj ett område, vars tjänster du vill ha information om. Genom att skriva din hemadress i sökfältet öppnas en karta och under fliken Tjänster i området visas de områden och distrikt som du hör till',
   'area.choose.district': 'Väl område',
   'area.list': 'Val av område',
@@ -248,7 +248,7 @@ const translations = {
   'general.pageTitles.list.reservations': 'Förteckning över reserveringar ',
   'general.pageTitles.info': 'Infosida',
   'general.pageTitles.feedback': 'Responssida',
-  'general.pageTitles.area': 'Områdessida.',
+  'general.pageTitles.area': 'Områdessida',
 
   // General - Pagination
   'general.pagination.previous': 'Föregående sida',
