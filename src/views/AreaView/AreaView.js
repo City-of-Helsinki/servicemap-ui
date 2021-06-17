@@ -81,7 +81,9 @@ const AreaView = ({
   );
 
   const focusMapToDistrict = (district) => {
-    focusDistrict(map.leafletElement, district.boundary.coordinates);
+    if (map?.leafletElement && district?.boundary) {
+      focusDistrict(map.leafletElement, district.boundary.coordinates);
+    }
   };
 
   const fetchAddressDistricts = async () => {
