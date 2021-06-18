@@ -106,10 +106,6 @@ const styles = theme => ({
   addressItem: {
     fontSize: 24,
   },
-  divisionItem: {
-    paddingTop: 14,
-    paddingBottom: 14,
-  },
   areaTitle: {
     display: 'flex',
     alignItems: 'center',

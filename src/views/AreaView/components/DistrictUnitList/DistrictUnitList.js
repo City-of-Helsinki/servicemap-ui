@@ -49,7 +49,6 @@ const DistrictUnitList = (props) => {
         divider={false}
         disableTitle={!title}
         customTitle={title}
-        className={classes.divisionItem}
         data={{
           area: district,
           name: district.unit.name || null,
