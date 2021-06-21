@@ -1,19 +1,14 @@
-import config from '../../../../config';
+import ServiceMapAPI from '../../../utils/newFetch/ServiceMapAPI';
 
-// Fetch service names using givcen service_node id's
-export const fetchServiceNames = (ids) => {
+const smAPI = new ServiceMapAPI();
+
+export const fetchServiceNames = async (ids) => {
   if (!ids) {
     return null;
   }
 
-  return fetch(`${config.serviceMapAPI.root}/service_node/?id=${ids}&page=1&page_size=1000`)
-    .then(response => response.json())
-    .then((data) => {
-      const nameArray = data?.results?.map(v => v.name);
-      return nameArray;
-    }).catch((e) => {
-      console.error('Error while fetching service names', e);
-    });
+  return smAPI.serviceNames(ids)
+    .then(data => data?.map(v => v.name));
 };
 
 export default fetchServiceNames;

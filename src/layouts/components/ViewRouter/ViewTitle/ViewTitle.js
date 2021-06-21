@@ -25,9 +25,20 @@ class ViewTitle extends React.Component {
       }
     } else {
       actionSetInitialLoad();
-      // Focus to site title on first load
+      // If cookiehub banner is visible prevent focusing
+      let shouldFocus = true;
+      try {
+        const chDialog = document.querySelectorAll('section.ch2 div[role="dialog"]');
+        if (chDialog?.length > 0) {
+          chDialog.forEach((v) => { shouldFocus = shouldFocus && v.style.display === 'none'; });
+        }
+      } catch (e) {
+        console.warn('Error while attempting to figure out if cookiehub banner exists');
+      }
+
+      // Focus to site title on first load if cookihub banner is hidden
       const appTitle = document.getElementById('app-title');
-      if (appTitle) {
+      if (appTitle && shouldFocus) {
         appTitle.focus();
       }
     }
