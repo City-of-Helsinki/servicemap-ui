@@ -60,7 +60,7 @@ const translations = {
   'area.neighborhood.title': 'Choose neighbourhood',
   'area.postcode_area.title': 'Choose postal code',
   'area.noSelection': 'Choose area from the Choice of Area tab',
-  'area.noUnits': 'There are no service locations in your chosen area',
+  'area.noUnits': 'There are no service points in your chosen area',
   'area.popupLink': 'Show the details for the area (new tab)',
   'area.list.geographical': 'Geographical',
   'area.list.protection': 'Civil defence',
@@ -105,14 +105,14 @@ const translations = {
 
   // Download dialog
   'download.cropping.title': 'Current filter values',
-  'download.cropText.unit': 'Single service unit:',
-  'download.cropText.service': 'Service units with selected services:',
-  'download.cropText.search': 'Service units based on text search:',
+  'download.cropText.unit': 'Single service point:',
+  'download.cropText.service': 'Service points with selected services:',
+  'download.cropText.search': 'Service points based on text search:',
   'download.cropText.none': 'No filter values have been selected',
-  'download.data.none': 'First select service units to be shown on the Service Map using the browse or search functions and then return to this view to save the information of the selected service units.',
+  'download.data.none': 'First select service points to be shown on the Service Map using the browse or search functions and then return to this view to save the information of the selected service points.',
   'download.download': 'Download the information (new tab)',
   'download.format': 'File format:',
-  'download.info': 'Save the information of the service units that you have filtered into a file, which you can import, for example, to the Google Maps application or continue working with.',
+  'download.info': 'Save the information of the service points that you have filtered into a file, which you can import, for example, to the Google Maps application or continue working with.',
   'download.title': 'Download the service location information',
   'download.coordinate': 'The coordinate system of the Service Map is: ETRS89 / GK25FIN (EPSG:3879)',
 
@@ -139,20 +139,20 @@ const translations = {
   'embedder.iframe.title': 'Service map embedding window',
   'embedder.language.title': 'Language of the embedding',
   'embedder.language.aria.label': 'Choose the language of the embedding',
-  'embedder.language.description.fi': 'Service unit information is shown in Finnish. Background map is in Finnish.',
-  'embedder.language.description.sv': 'Service unit information is shown in Swedish. Background map is in Swedish.',
-  'embedder.language.description.en': 'Service unit information is shown in English. Background map is in Finnish.',
+  'embedder.language.description.fi': 'Service point information is shown in Finnish. Background map is in Finnish.',
+  'embedder.language.description.sv': 'Service point information is shown in Swedish. Background map is in Swedish.',
+  'embedder.language.description.en': 'Service point information is shown in English. Background map is in Finnish.',
   'embedder.map.title': 'Background map',
   'embedder.map.aria.label': 'Choose backgroud map',
   'embedder.preview.title': 'Map preview',
   'embedder.options.title': 'Show on the map',
-  'embedder.options.label.units': 'Show locations',
+  'embedder.options.label.units': 'Show service points',
   'embedder.options.label.transit': 'Show public transport stops (Zoom in the map to see the stops)',
   'embedder.service.title': 'Services',
   'embedder.service.aria.label': 'Choose services to be shown',
-  'embedder.service.none': 'Map is shown without service units',
-  'embedder.service.common': 'The city resident\'s most common everyday service units are shown on the map: schools, daycares and health stations.',
-  'embedder.service.all': 'All service units are shown on the map. Too extensive area borders slow down the embedding and decreases its clarity.',
+  'embedder.service.none': 'Map is shown without service points',
+  'embedder.service.common': 'The city resident\'s most common everyday service points are shown on the map: schools, daycares and health stations.',
+  'embedder.service.all': 'All service points are shown on the map. Too extensive area borders slow down the embedding and decreases its clarity.',
   'embedder.title': 'Embedding tool',
   'embedder.title.info': 'If you want to make an embedding from a search result, start by making the search.',
   'embedder.url.title': 'Copy the address',
@@ -166,7 +166,7 @@ const translations = {
   // Feedback
   'feedback.back': 'Go back',
   'feedback.title': 'Give feedback on this web service',
-  'feedback.title.unit': 'Give feedback on the service location {unit}',
+  'feedback.title.unit': 'Give feedback on the service point {unit}',
   'feedback.email': 'Email',
   'feedback.email.info': 'If you want us to answer the feedback, please provide your e-mail address.',
   'feedback.feedback': 'Your feedback (required)',
@@ -205,7 +205,7 @@ const translations = {
   'general.back.goToHome': 'Go to home page',
   'general.back.search': 'Back to search page',
   'general.back.service': 'Back to service page',
-  'general.back.unit': 'Back to location page',
+  'general.back.unit': 'Back to service point page',
   'general.back.event': 'Back to event page',
   'general.back.info': 'Return back',
   'general.back.feedback': 'Return back',
@@ -236,9 +236,9 @@ const translations = {
   'general.page.close': 'Close page', // TODO: Verify
   'general.pageTitles.home': 'Home page',
   'general.pageTitles.search': 'Search results page',
-  'general.pageTitles.unit': 'Location page',
-  'general.pageTitles.unit.events': 'Locations\' events',
-  'general.pageTitles.unit.reservations': 'Locations\' reservable objects',
+  'general.pageTitles.unit': 'Service point page',
+  'general.pageTitles.unit.events': 'Service points\' events',
+  'general.pageTitles.unit.reservations': 'Service points\' reservable objects',
   'general.pageTitles.service': 'Service page',
   'general.pageTitles.serviceTree': 'Services list page',
   'general.pageTitles.serviceTree.title': 'Services list',
@@ -291,9 +291,9 @@ const translations = {
   // Loading texts
   'loading.events': 'Loading events {count} / {max}',
   'loading.events.srInfo': 'Loading {count} event(s)',
-  'search.loading.units': 'Searching locations {count} / {max}',
-  'search.loading.units.srInfo': 'Searching {count} location(s)',
-  'search.loading.units.simple': 'Searching locations',
+  'search.loading.units': 'Searching service points {count} / {max}',
+  'search.loading.units.srInfo': 'Searching {count} service point(s)',
+  'search.loading.units.simple': 'Searching service points',
 
   // Map
   'map': 'Map',
@@ -305,7 +305,7 @@ const translations = {
   'map.address.searching': 'Retreiving address...',
   'map.address.notFound': 'The address could not be found',
   'map.address.info': 'Address information',
-  'map.unit.cluster.popup.info': '{count} locations',
+  'map.unit.cluster.popup.info': '{count} service points',
   'map.button.sidebar.hide': 'Hide sidebar',
   'map.button.sidebar.show': 'Show sidebar',
 
@@ -316,8 +316,8 @@ const translations = {
   'print.table.header.number': 'Number on the map',
 
   // Units
-  'unit': 'Location',
-  'unit.showInformation': 'Show the details for the location',
+  'unit': 'Service point',
+  'unit.showInformation': 'Show the details for the service point',
   'unit.accessibility.hearingMaps': 'Coverage maps',
   'unit.accessibility.noInfo': 'No accessibility information',
   'unit.accessibility.noShortcomings': 'No known shortcomings',
@@ -330,8 +330,8 @@ const translations = {
   'unit.accessibility.unitNoInfo': 'Accessibility information missing.',
   'unit.basicInfo': 'Information',
   'unit.data_source': 'Source: {data_source}',
-  'unit.details.notFound': 'Location info not available.',
-  'unit.plural': 'Locations',
+  'unit.details.notFound': 'Service point info not available.',
+  'unit.plural': 'Service points',
 
   'unit.contact.info': 'Contact information',
   'unit.links': 'Web sites',
@@ -346,8 +346,8 @@ const translations = {
   'unit.events.more': 'Show more events',
   'unit.homepage': 'Home page',
   'unit.homepage.missing': 'No home page provided',
-  'unit.picture': 'Picture of location: ',
-  'unit.description': 'Location description',
+  'unit.picture': 'Picture of service point: ',
+  'unit.description': 'Service point description',
   'unit.address': 'Address',
   'unit.address.missing': 'No address provided',
   'unit.entrances.main': 'Main entrance',
@@ -384,10 +384,10 @@ const translations = {
   }`,
   'unit.route': 'Look at the route to this place',
   'unit.route.extra': '(New tab. The HSL Journey Planner is not an accessible service)',
-  'unit.socialMedia.title': 'The service location on social media',
+  'unit.socialMedia.title': 'The service point on social media',
   'unit.outdoorLink': 'Check the condition of an exercise location in the ulkoliikunta.fi service',
-  'unit.seo.description': 'View location on the map',
-  'unit.seo.description.accessibility': 'View accessibility info and location on the map',
+  'unit.seo.description': 'View service point on the map',
+  'unit.seo.description.accessibility': 'View accessibility info and service point on the map',
   // Search
   'search': 'Search',
   'search.arrowLabel': 'Refine',
@@ -415,9 +415,9 @@ const translations = {
                   other {# matches}
                 }`,
   'search.results.units': `{count, plural,
-                  =0 {no locations found}
-                  one {# location found}
-                  other {# locations found}
+                  =0 {no service points found}
+                  one {# service point found}
+                  other {# service points found}
                 }`,
   'search.results.services': `{count, plural,
                   =0 {no services found}
@@ -457,7 +457,7 @@ const translations = {
   'service': 'Service',
   'service.plural': 'Services',
   'service.nearby': 'Nearby services',
-  'service.units.empty': 'Service does not have locations',
+  'service.units.empty': 'Service does not have service points',
   'service.tab': 'Services and events',
   'service.description': 'View locations and contact information of services',
 
