@@ -2,7 +2,7 @@ export default theme => ({
   containerInner: {
     display: 'flex',
     flexDirection: 'row',
-    padding: theme.spacing(0, 1),
+    padding: theme.spacing(0, 1.5),
   },
   content: {
     alignSelf: 'center',
@@ -46,6 +46,8 @@ export default theme => ({
     display: 'flex',
     flexDirection: 'column',
     padding: theme.spacing(1),
+    paddingTop: theme.spacing(1.5),
+    paddingBottom: theme.spacing(1.5),
   },
   li: {
     listStyleType: 'none',

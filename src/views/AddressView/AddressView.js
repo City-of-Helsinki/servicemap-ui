@@ -1,9 +1,9 @@
 /* eslint-disable global-require */
 /* eslint-disable camelcase */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Typography, Divider, List, ButtonBase,
+  Typography, Divider, List, ButtonBase, ListItem,
 } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
 import { Map } from '@material-ui/icons';
@@ -12,7 +12,7 @@ import SearchBar from '../../components/SearchBar';
 import { focusToPosition } from '../MapView/utils/mapActions';
 import fetchAdministrativeDistricts from './utils/fetchAdministrativeDistricts';
 import TitleBar from '../../components/TitleBar';
-import { AddressIcon } from '../../components/SMIcon';
+import { AddressIcon, AreaIcon } from '../../components/SMIcon';
 
 import fetchAddressUnits from './utils/fetchAddressUnits';
 import fetchAddressData from './utils/fetchAddressData';
@@ -25,6 +25,7 @@ import DivisionItem from '../../components/ListItems/DivisionItem';
 import config from '../../../config';
 import useLocaleText from '../../utils/useLocaleText';
 import { parseSearchParams } from '../../utils';
+import { getCategoryDistricts } from '../AreaView/utils/districtDataHelper';
 
 
 const hiddenDivisions = {
@@ -206,6 +207,22 @@ const AddressView = (props) => {
     // Get emergency division
     const emergencyDiv = adminDistricts.find(x => x.type === 'emergency_care_district');
 
+    // Also add rescue areas that have no units
+    const rescueAreaIDs = getCategoryDistricts('protection');
+    const rescueAreas = adminDistricts.filter((obj, i) => {
+      if (rescueAreaIDs.includes(obj.type)) {
+        if (!obj.unit) {
+          return true;
+        }
+        // Move rescue areas to the end of unit list
+        adminDistricts.push(adminDistricts.splice(i, 1)[0]);
+        return false;
+      }
+      return false;
+    });
+
+    const getCustomRescueAreaTitle = area => `${area.origin_id} - ${getLocaleText(area.name)}`;
+
     const units = divisionsWithUnits.map((x) => {
       const { unit } = x;
       const unitData = unit;
@@ -239,16 +256,38 @@ const AddressView = (props) => {
             units.map((data) => {
               const key = `${data.area.id}`;
               const distance = getDistance(data);
+              const customTitle = rescueAreaIDs.includes(data.area.type)
+                ? `${intl.formatMessage({ id: `area.list.${data.area.type}` })} ${getCustomRescueAreaTitle(data.area)}`
+                : null;
               return (
                 <DivisionItem
                   data={data}
                   distance={distance}
                   divider
                   key={key}
+                  customTitle={customTitle}
                 />
               );
             })
           }
+          {rescueAreas.map(area => (
+            <Fragment key={area.id}>
+              <ListItem className={classes.simpleItem}>
+                <Typography className={classes.simpleTitle} variant="subtitle1">
+                  {intl.formatMessage({ id: `area.list.${area.type}` })}
+                </Typography>
+                <div className={classes.itemTextContainer}>
+                  <AreaIcon className={classes.areaIcon} />
+                  <Typography className={classes.boldText}>
+                    {getCustomRescueAreaTitle(area)}
+                  </Typography>
+                </div>
+              </ListItem>
+              <li aria-hidden className={classes.divider}>
+                <Divider aria-hidden />
+              </li>
+            </Fragment>
+          ))}
         </List>
       </>
     );
