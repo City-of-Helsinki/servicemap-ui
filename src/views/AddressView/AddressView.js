@@ -283,7 +283,9 @@ const AddressView = (props) => {
                   </Typography>
                 </div>
               </ListItem>
-              <Divider aria-hidden />
+              <li aria-hidden className={classes.divider}>
+                <Divider aria-hidden />
+              </li>
             </Fragment>
           ))}
         </List>

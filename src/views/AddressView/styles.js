@@ -62,4 +62,7 @@ export default theme => ({
     marginLeft: 0,
     marginRight: theme.spacing(2),
   },
+  divider: {
+    listStyleType: 'none',
+  },
 });
