@@ -1,9 +1,9 @@
 /* eslint-disable global-require */
 /* eslint-disable camelcase */
-import React, { useEffect, useState, Fragment } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Typography, Divider, List, ButtonBase, ListItem,
+  Typography, Divider, List, ButtonBase,
 } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
 import { Map } from '@material-ui/icons';
@@ -12,7 +12,7 @@ import SearchBar from '../../components/SearchBar';
 import { focusToPosition } from '../MapView/utils/mapActions';
 import fetchAdministrativeDistricts from './utils/fetchAdministrativeDistricts';
 import TitleBar from '../../components/TitleBar';
-import { AddressIcon, AreaIcon } from '../../components/SMIcon';
+import { AddressIcon } from '../../components/SMIcon';
 
 import fetchAddressUnits from './utils/fetchAddressUnits';
 import fetchAddressData from './utils/fetchAddressData';
@@ -26,6 +26,7 @@ import config from '../../../config';
 import useLocaleText from '../../utils/useLocaleText';
 import { parseSearchParams } from '../../utils';
 import { getCategoryDistricts } from '../AreaView/utils/districtDataHelper';
+import { DistrictItem } from '../../components';
 
 
 const hiddenDivisions = {
@@ -271,22 +272,7 @@ const AddressView = (props) => {
             })
           }
           {rescueAreas.map(area => (
-            <Fragment key={area.id}>
-              <ListItem className={classes.simpleItem}>
-                <Typography className={classes.simpleTitle} variant="subtitle1">
-                  {intl.formatMessage({ id: `area.list.${area.type}` })}
-                </Typography>
-                <div className={classes.itemTextContainer}>
-                  <AreaIcon className={classes.areaIcon} />
-                  <Typography className={classes.boldText}>
-                    {getCustomRescueAreaTitle(area)}
-                  </Typography>
-                </div>
-              </ListItem>
-              <li aria-hidden className={classes.divider}>
-                <Divider aria-hidden />
-              </li>
-            </Fragment>
+            <DistrictItem key={area.id} area={area} />
           ))}
         </List>
       </>
