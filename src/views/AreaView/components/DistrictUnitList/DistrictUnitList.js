@@ -11,6 +11,7 @@ import { getAddressFromUnit } from '../../../../utils/address';
 import SMAccordion from '../../../../components/SMAccordion';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { getCategoryDistricts } from '../../utils/districtDataHelper';
+import { sortByOriginID } from '../../utils';
 
 const DistrictUnitList = (props) => {
   const {
@@ -113,6 +114,10 @@ const DistrictUnitList = (props) => {
       cityFilteredUnits = districtsWithUnits.filter(unit => citySettings[unit.municipality]);
     }
 
+    if (district.id === 'rescue_area') {
+      sortByOriginID(cityFilteredUnits);
+    }
+
     if (selectedAddress && addressDistrict) {
       const localDistrict = cityFilteredUnits.filter(obj => obj.id === addressDistrict.id);
       const otherDistricts = cityFilteredUnits.filter(obj => obj.id !== addressDistrict.id);
@@ -155,8 +160,10 @@ const DistrictUnitList = (props) => {
         return null;
       }
 
-      sortDistricts(localUnitDistricts);
-      sortDistricts(otherUnitDistricts);
+      if (district.id !== 'rescue_area') {
+        sortDistricts(localUnitDistricts);
+        sortDistricts(otherUnitDistricts);
+      }
 
       return (
         <div>

@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import SMAccordion from '../../../../components/SMAccordion';
 import { getAddressDistrict } from '../../../../redux/selectors/district';
 import { DistrictItem } from '../../../../components';
+import { sortByOriginID } from '../../utils';
 
 export const DistrictAreaList = ({
   classes,
@@ -16,10 +17,6 @@ export const DistrictAreaList = ({
   const citySettings = useSelector(state => state.settings.cities);
   const addressDistrict = useSelector(state => getAddressDistrict(state));
   let sectionText = intl.formatMessage({ id: `area.services.all.${district.id}` });
-
-  const sortDistricts = (districts) => {
-    districts.sort((a, b) => parseInt(a.origin_id, 10) - parseInt(b.origin_id, 10));
-  };
 
   const districtsWithoutUnits = district.data.filter(d => (
     !d.unit
@@ -63,7 +60,7 @@ export const DistrictAreaList = ({
     />
   );
 
-  sortDistricts(filteredData);
+  sortByOriginID(filteredData);
 
   if (selectedAddress && addressDistrict) {
     sectionText = intl.formatMessage({ id: `area.services.nearby.${district.id}` });
