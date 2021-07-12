@@ -73,6 +73,23 @@ export const fetchUnits = (
     dispatch(fetchProgressUpdate(resultTotal.length, max));
   };
 
+  // Event fetch
+  const onEventStart = () => {
+    dispatch(isFetchingEvents(searchQuery));
+  };
+  const onEventSuccess = (results) => {
+    results.forEach((event) => {
+      event.object_type = 'event';
+    });
+    dispatch(fetchSuccessEvents(results));
+    dispatch(fetchMoreSuccess(results));
+  };
+  const onEventError = (e) => {
+    console.log('event fetch errored:', e);
+  };
+  const onEventNext = () => {};
+
+
   // Fetch data
   const data = options;
   if (data.q) {
@@ -83,6 +100,15 @@ export const fetchUnits = (
       onSuccess,
       onError,
       onNext,
+      null,
+      abortController,
+    );
+    eventsFetch(
+      { input: data.q },
+      onEventStart,
+      onEventSuccess,
+      onEventError,
+      onEventNext,
       null,
       abortController,
     );

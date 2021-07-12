@@ -12,6 +12,10 @@ const dataSet = prefix => ({
     type: `${prefix}_FETCH_DATA_SUCCESS`,
     data,
   }),
+  fetchMoreSuccess: data => ({
+    type: `${prefix}_FETCH_MORE_SUCCESS`,
+    data,
+  }),
   fetchProgressUpdate: (count, max, next) => ({
     type: `${prefix}_FETCH_PROGRESS_UPDATE`,
     count,

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { ArrowDropUp, Search } from '@material-ui/icons';
+import { ArrowDropUp, Event, Search } from '@material-ui/icons';
 import {
   Paper, List, Typography,
 } from '@material-ui/core';
@@ -14,6 +14,7 @@ import AddressItem from '../../../ListItems/AddressItem';
 import { keyboardHandler } from '../../../../utils';
 import { AreaIcon } from '../../../SMIcon';
 import { CloseSuggestionButton } from '../CloseSuggestionButton';
+import useLocaleText from '../../../../utils/useLocaleText';
 
 
 const SuggestionBox = (props) => {
@@ -30,6 +31,7 @@ const SuggestionBox = (props) => {
     locale,
     navigator,
   } = props;
+  const getLocaleText = useLocaleText();
 
   const [searchQueries, setSearchQueries] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -57,6 +59,12 @@ const SuggestionBox = (props) => {
     cities.push( ...settings[city] ? [city] : []);
   });
   */
+
+  const handleEventItemClick = (event) => {
+    if (navigator) {
+      navigator.push('event', event.id);
+    }
+  };
 
   const handleAreaItemClick = (area) => {
     if (navigator) {
@@ -178,6 +186,23 @@ const SuggestionBox = (props) => {
                     icon={<AreaIcon className={classes.areaIcon} />}
                     text={item.name}
                     handleItemClick={() => handleAreaItemClick(item)}
+                    divider
+                    isMobile
+                    query={suggestionQuery}
+                  />
+                );
+              }
+              if (item.resource_type === 'event') {
+                return (
+                  <SuggestionItem
+                    id={`suggestion${i}`}
+                    className="EventSuggestion"
+                    role="option"
+                    selected={i === focusedSuggestion}
+                    key={`suggestion-${item.id}`}
+                    icon={<Event />}
+                    text={getLocaleText(item.name)}
+                    handleItemClick={() => handleEventItemClick(item)}
                     divider
                     isMobile
                     query={suggestionQuery}

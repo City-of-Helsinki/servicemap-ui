@@ -265,6 +265,9 @@ const TabLists = ({
     calculateHeaderStylings();
   }, [isMobile]);
 
+  useEffect(() => {
+    setTabIndex(getTabfromUrl());
+  }, [data]);
 
   useEffect(() => {
     // Change tab if selected tab is changed on url

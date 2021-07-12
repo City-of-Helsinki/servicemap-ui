@@ -248,6 +248,8 @@ class SearchView extends React.Component {
     const addresses = data.filter(obj => obj && obj.object_type === 'address');
     const events = data.filter(obj => obj && obj.object_type === 'event');
 
+    console.log(data);
+
     return {
       services,
       units,
@@ -466,6 +468,7 @@ class SearchView extends React.Component {
     // Data for TabLists component
     const searchResults = [
       {
+        id: 'units',
         ariaLabel: `${intl.formatMessage({ id: 'unit.plural' })} ${intl.formatMessage({ id: 'search.results.short' }, {
           count: groupedData
             .units.length,
@@ -477,6 +480,7 @@ class SearchView extends React.Component {
         title: intl.formatMessage({ id: 'unit.plural' }),
       },
       {
+        id: 'services',
         ariaLabel: `${intl.formatMessage({ id: 'service.plural' })} ${intl.formatMessage({ id: 'search.results.short' }, {
           count: groupedData
             .services.length,
@@ -487,6 +491,7 @@ class SearchView extends React.Component {
         title: intl.formatMessage({ id: 'service.plural' }),
       },
       {
+        id: 'addresses',
         ariaLabel: `${intl.formatMessage({ id: 'address.plural' })} ${intl.formatMessage({ id: 'search.results.short' }, {
           count: groupedData
             .addresses.length,
