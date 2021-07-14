@@ -27,6 +27,17 @@ const createSuggestions = async (query, signal, locale, intl) => {
         console.warn('error:', res);
         return 'error';
       }),
+    fetch(`${config.eventsAPI.root}/search/?type=event&page_size=1&input=${query}`, { signal })
+      .then((res) => {
+        if (res.status === 200) {
+          return res.json();
+        }
+        return 'error';
+      })
+      .catch((res) => {
+        console.warn('error:', res);
+        return 'error';
+      }),
   ]);
 
   if (data[0] === 'error' && data[1] === 'error') {
@@ -37,6 +48,10 @@ const createSuggestions = async (query, signal, locale, intl) => {
   // Handle address fetch results
   if (data[1] !== 'error' && data[1].results && data[1].results.length) {
     suggestions = [...data[1].results];
+  }
+  // Handle event fetch results
+  if (data[2] !== 'error' && data[2]?.data.length) {
+    suggestions = [...data[2].data];
   }
 
   // Add area suggestions
