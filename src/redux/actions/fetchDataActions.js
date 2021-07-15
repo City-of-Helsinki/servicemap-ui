@@ -55,6 +55,7 @@ const dataSingle = prefix => ({
 });
 
 // Data fetch multiple
+export const searchResults = dataSet('SEARCH_RESULTS');
 export const units = dataSet('UNITS');
 export const service = dataSet('SERVICE');
 export const events = dataSet('SELECTED_UNIT_EVENTS');
