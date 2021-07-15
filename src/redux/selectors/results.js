@@ -7,7 +7,7 @@ import orderUnits from '../../utils/orderUnits';
 import getSortingParameters from './ordering';
 
 const isFetching = state => state.units.isFetching;
-const units = state => state.units.data;
+const units = state => state.searchResults.data;
 const settings = state => state.settings;
 
 /**

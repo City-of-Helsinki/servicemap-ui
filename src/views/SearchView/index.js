@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import SearchView from './SearchView';
 import { fetchUnits } from '../../redux/actions/unit';
+import fetchSearchResults from '../../redux/actions/search';
 import fetchRedirectService from '../../redux/actions/redirectService';
 import { changeSelectedUnit } from '../../redux/actions/selectedUnit';
 import { getOrderedData } from '../../redux/selectors/results';
@@ -11,14 +12,14 @@ import SettingsUtility from '../../utils/settings';
 // Listen to redux state
 const mapStateToProps = (state) => {
   const {
-    mapRef, units, user, settings, serviceTree, redirectService,
+    mapRef, searchResults, user, settings, serviceTree, redirectService,
   } = state;
   const map = mapRef && mapRef.leafletElement;
   const {
     isFetching, count, max, previousSearch,
-  } = units;
+  } = searchResults;
   const isRedirectFetching = redirectService.isFetching;
-  const unitData = getOrderedData(state);
+  const resultData = getOrderedData(state);
   /* TODO: use custom hook for getAddressNavigatorParams to prevent
   re-rendering on every state change */
   const getLocaleText = textObject => getLocaleString(state, textObject);
@@ -26,8 +27,8 @@ const mapStateToProps = (state) => {
 
   return {
     unit: state.unit,
-    units: unitData,
-    unitsReducer: units,
+    searchResults: resultData,
+    searchReducer: searchResults,
     isFetching,
     isRedirectFetching,
     count,
@@ -44,6 +45,6 @@ const mapStateToProps = (state) => {
 export default connect(
   mapStateToProps,
   {
-    fetchUnits, fetchRedirectService, changeSelectedUnit,
+    fetchSearchResults, fetchRedirectService, changeSelectedUnit,
   },
 )(SearchView);

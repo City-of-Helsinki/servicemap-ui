@@ -3,7 +3,7 @@ import { withStyles } from '@material-ui/core';
 import { injectIntl } from 'react-intl';
 import SearchBar from './SearchBar';
 import styles from './styles';
-import { fetchUnits } from '../../redux/actions/unit';
+import fetchSearchResults from '../../redux/actions/search';
 import { changeSelectedUnit } from '../../redux/actions/selectedUnit';
 
 // Listen to redux state
@@ -21,5 +21,5 @@ const mapStateToProps = (state) => {
 
 export default withStyles(styles)(injectIntl(connect(
   mapStateToProps,
-  { changeSelectedUnit, fetchUnits },
+  { changeSelectedUnit, fetchSearchResults },
 )(SearchBar)));

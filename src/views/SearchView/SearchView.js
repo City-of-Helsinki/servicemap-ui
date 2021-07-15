@@ -36,7 +36,7 @@ class SearchView extends React.Component {
 
   componentDidMount() {
     const {
-      fetchUnits, units,
+      fetchSearchResults, searchResults,
     } = this.props;
     const options = this.searchParamData();
 
@@ -47,14 +47,14 @@ class SearchView extends React.Component {
     }
 
     if (this.shouldFetch() && Object.keys(options).length) {
-      fetchUnits(options);
-      this.focusMap(units);
+      fetchSearchResults(options);
+      this.focusMap(searchResults);
     }
   }
 
   shouldComponentUpdate(nextProps) {
     const {
-      fetchUnits, units,
+      fetchSearchResults, searchResults,
     } = this.props;
     const {
       isRedirectFetching,
@@ -67,13 +67,14 @@ class SearchView extends React.Component {
 
     if (this.shouldFetch(nextProps)) {
       const searchData = this.searchParamData(nextProps);
-      fetchUnits(searchData);
-      this.focusMap(units);
+      fetchSearchResults(searchData);
+      this.focusMap(searchResults);
       return false;
     }
     // If new search results, call map focus function
-    if (nextProps.units.length > 0 && JSON.stringify(units) !== JSON.stringify(nextProps.units)) {
-      this.focusMap(nextProps.units);
+    if (nextProps.searchResults.length > 0
+      && JSON.stringify(searchResults) !== JSON.stringify(nextProps.searchResults)) {
+      this.focusMap(nextProps.searchResults);
     }
     return true;
   }
@@ -82,7 +83,7 @@ class SearchView extends React.Component {
   // Will fetch new service_node from redirect endpoint with service parameter
   handleServiceRedirect = () => {
     const {
-      fetchUnits, fetchRedirectService, isRedirectFetching,
+      fetchSearchResults, fetchRedirectService, isRedirectFetching,
     } = this.props;
     const {
       serviceRedirect,
@@ -105,7 +106,7 @@ class SearchView extends React.Component {
           options.service_node = `${(options.service_node ? `${options.service_node},` : '')}${data.service_node}`;
 
           // Set serviceRedirect and fetch units
-          fetchUnits(options);
+          fetchSearchResults(options);
           this.setState({ serviceRedirect: options.service_node });
         }
       });
@@ -266,22 +267,22 @@ class SearchView extends React.Component {
   // Handles redirect if only single result is found
   handleSingleResultRedirect() {
     const {
-      embed, units, getAddressNavigatorParams, isFetching, match,
+      embed, searchResults, getAddressNavigatorParams, isFetching, match,
     } = this.props;
 
     // If not currently searching and view should not fetch new search
     // and only 1 result found redirect directly to specific result page
-    if (!isFetching && !this.shouldFetch() && units && units.length === 1) {
+    if (!isFetching && !this.shouldFetch() && searchResults && searchResults.length === 1) {
       const {
         id, object_type,
-      } = units[0];
+      } = searchResults[0];
       let path = null;
       // Parse language params
       const { params } = match;
       const lng = params && params.lng;
       switch (object_type) {
         case 'address':
-          path = generatePath('address', lng, getAddressNavigatorParams(units[0]), embed);
+          path = generatePath('address', lng, getAddressNavigatorParams(searchResults[0]), embed);
           break;
         case 'unit':
           path = generatePath('unit', lng, { id }, embed);
@@ -304,11 +305,11 @@ class SearchView extends React.Component {
    */
   renderNotFound() {
     const {
-      classes, isFetching, previousSearch, units,
+      classes, isFetching, previousSearch, searchResults,
     } = this.props;
 
     // These variables should be passed to this function
-    const shouldRender = !isFetching && previousSearch && units && !units.length;
+    const shouldRender = !isFetching && previousSearch && searchResults && !searchResults.length;
     const messageIDs = ['spelling', 'city', 'service', 'address', 'keyword'];
 
     return shouldRender && (
@@ -352,9 +353,9 @@ class SearchView extends React.Component {
   }
 
   renderSearchInfo = () => {
-    const { units, classes, isFetching } = this.props;
-    const unitList = units && units.filter(i => i.object_type === 'unit');
-    const unitCount = unitList?.length ? unitList.length : units.length;
+    const { searchResults, classes, isFetching } = this.props;
+    const resultList = searchResults && searchResults.filter(i => i.object_type === 'unit');
+    const unitCount = resultList?.length ? resultList.length : searchResults.length;
     const className = `SearchInfo ${classes.searchInfo}`;
 
     return (
@@ -398,10 +399,10 @@ class SearchView extends React.Component {
 
   renderExpandedSearch = () => {
     const {
-      isFetching, units, query,
+      isFetching, searchResults, query,
     } = this.props;
 
-    const unitCount = units && units.length;
+    const unitCount = searchResults && searchResults.length;
     if (isFetching || !unitCount || !this.isInputSearch()) {
       return null;
     }
@@ -450,10 +451,10 @@ class SearchView extends React.Component {
    */
   renderResults() {
     const {
-      units, isFetching, intl,
+      searchResults, isFetching, intl,
     } = this.props;
 
-    const showResults = !isFetching && units && units.length > 0;
+    const showResults = !isFetching && searchResults && searchResults.length > 0;
     const showExpandedSearch = this.isInputSearch();
 
     if (!showResults) {
@@ -461,11 +462,12 @@ class SearchView extends React.Component {
     }
 
     // Group data
-    const groupedData = this.groupData(units);
+    const groupedData = this.groupData(searchResults);
 
     // Data for TabLists component
-    const searchResults = [
+    const searchResultData = [
       {
+        id: 'units',
         ariaLabel: `${intl.formatMessage({ id: 'unit.plural' })} ${intl.formatMessage({ id: 'search.results.short' }, {
           count: groupedData
             .units.length,
@@ -477,6 +479,7 @@ class SearchView extends React.Component {
         title: intl.formatMessage({ id: 'unit.plural' }),
       },
       {
+        id: 'services',
         ariaLabel: `${intl.formatMessage({ id: 'service.plural' })} ${intl.formatMessage({ id: 'search.results.short' }, {
           count: groupedData
             .services.length,
@@ -487,6 +490,7 @@ class SearchView extends React.Component {
         title: intl.formatMessage({ id: 'service.plural' }),
       },
       {
+        id: 'addresses',
         ariaLabel: `${intl.formatMessage({ id: 'address.plural' })} ${intl.formatMessage({ id: 'search.results.short' }, {
           count: groupedData
             .addresses.length,
@@ -511,7 +515,7 @@ class SearchView extends React.Component {
 
     return (
       <TabLists
-        data={searchResults}
+        data={searchResultData}
         focusClass={this.focusClass}
         focusText={intl.formatMessage({ id: 'search.results.title' })}
       />
@@ -548,7 +552,7 @@ class SearchView extends React.Component {
 
   render() {
     const {
-      classes, isFetching, embed, unitsReducer,
+      classes, isFetching, embed, searchReducer,
     } = this.props;
     const { expandVisible } = this.state;
 
@@ -581,7 +585,7 @@ class SearchView extends React.Component {
             this.renderScreenReaderInfo()
           }
         </Paper>
-        <Loading reducer={unitsReducer}>
+        <Loading reducer={searchReducer}>
           {
             this.renderResults()
           }
@@ -613,7 +617,7 @@ export default withRouter(injectIntl(withStyles(styles)(SearchView)));
 SearchView.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   embed: PropTypes.bool,
-  fetchUnits: PropTypes.func,
+  fetchSearchResults: PropTypes.func,
   fetchRedirectService: PropTypes.func,
   getAddressNavigatorParams: PropTypes.func.isRequired,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -623,8 +627,8 @@ SearchView.propTypes = {
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   max: PropTypes.number,
   previousSearch: PropTypes.oneOfType([PropTypes.string, PropTypes.objectOf(PropTypes.any)]),
-  units: PropTypes.arrayOf(PropTypes.any),
-  unitsReducer: PropTypes.objectOf(PropTypes.any),
+  searchResults: PropTypes.arrayOf(PropTypes.any),
+  searchReducer: PropTypes.objectOf(PropTypes.any),
   map: PropTypes.objectOf(PropTypes.any),
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   query: PropTypes.string,
@@ -632,14 +636,14 @@ SearchView.propTypes = {
 
 SearchView.defaultProps = {
   embed: false,
-  fetchUnits: () => {},
+  fetchSearchResults: () => {},
   fetchRedirectService: () => {},
   isFetching: false,
   isRedirectFetching: false,
   max: 0,
   previousSearch: null,
-  units: [],
-  unitsReducer: null,
+  searchResults: [],
+  searchReducer: null,
   map: null,
   query: null,
 };

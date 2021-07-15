@@ -126,13 +126,13 @@ class SearchBar extends React.Component {
     }
     if (searchQuery) {
       const {
-        fetchUnits, navigator, previousSearch,
+        navigator, previousSearch, fetchSearchResults,
       } = this.props;
       this.setInactive();
 
       if (searchQuery !== previousSearch) {
         this.searchRef.current.value = searchQuery; // Change current search text to new one
-        fetchUnits({ q: searchQuery });
+        fetchSearchResults({ q: searchQuery });
         changeSelectedUnit(null);
       }
 
@@ -435,7 +435,7 @@ SearchBar.propTypes = {
   changeSelectedUnit: PropTypes.func.isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   className: PropTypes.string,
-  fetchUnits: PropTypes.func.isRequired,
+  fetchSearchResults: PropTypes.func.isRequired,
   header: PropTypes.bool,
   hideBackButton: PropTypes.bool,
   navigator: PropTypes.objectOf(PropTypes.any),
