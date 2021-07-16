@@ -29,7 +29,7 @@ const TabLists = ({
   const searchParams = parseSearchParams(location.search);
   const filteredData = data.filter(item => item.component || (item.data && item.data.length > 0));
   const getTabfromUrl = () => {
-    let index = data.findIndex(tab => tab.id === searchParams.t);
+    let index = filteredData.findIndex(tab => tab.id === searchParams.t);
     if (index === -1) index = parseInt(searchParams.t, 10) || 0;
     if (filteredData.length <= index) {
       return 0;
@@ -98,8 +98,8 @@ const TabLists = ({
     const searchParams = parseSearchParams(location.search);
     searchParams.p = 1;
 
-    if (data[value].id) {
-      searchParams.t = data[value].id;
+    if (filteredData[value].id) {
+      searchParams.t = filteredData[value].id;
     } else {
       searchParams.t = value;
     }
@@ -163,7 +163,7 @@ const TabLists = ({
   const renderHeader = () => {
     let fullData = [];
 
-    data.forEach((element) => {
+    filteredData.forEach((element) => {
       if (element.data && !element.noOrderer) {
         fullData = [...fullData, ...element.data];
       }
@@ -265,6 +265,9 @@ const TabLists = ({
     calculateHeaderStylings();
   }, [isMobile]);
 
+  useEffect(() => {
+    setTabIndex(getTabfromUrl());
+  }, [data]);
 
   useEffect(() => {
     // Change tab if selected tab is changed on url

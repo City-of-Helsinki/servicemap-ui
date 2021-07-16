@@ -16,6 +16,10 @@ const EventItem = ({
 }) => {
   const getLocaleText = useLocaleText();
   const dateString = formatEventDate(event, intl);
+  let eventUnitId = event.location?.id;
+  if (eventUnitId) {
+    eventUnitId = parseInt(eventUnitId.match(/[0-9]+/g), 10);
+  }
 
   if (simpleItem) {
     return (
@@ -45,8 +49,7 @@ const EventItem = ({
       bottomText={dateString}
       subtitle={getLocaleText(event.location.name)}
       divider={divider}
-      divider
-      unitId={event.location?.id}
+      unitId={eventUnitId}
       onClick={(e) => {
         e.preventDefault();
         if (navigator) {

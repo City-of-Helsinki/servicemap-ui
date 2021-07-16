@@ -5,6 +5,7 @@ import {
   Paper, List, Typography,
 } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
+import { useDispatch } from 'react-redux';
 import { getPreviousSearches } from '../../previousSearchData';
 import PreviousSearches from '../../PreviousSearches';
 import createSuggestions from '../../createSuggestions';
@@ -16,6 +17,7 @@ import { AreaIcon } from '../../../SMIcon';
 import { CloseSuggestionButton } from '../CloseSuggestionButton';
 import useLocaleText from '../../../../utils/useLocaleText';
 import formatEventDate from '../../../../utils/events';
+import { changeSelectedEvent } from '../../../../redux/actions/event';
 
 
 const SuggestionBox = (props) => {
@@ -33,6 +35,7 @@ const SuggestionBox = (props) => {
     navigator,
   } = props;
   const getLocaleText = useLocaleText();
+  const dispatch = useDispatch();
 
   const [searchQueries, setSearchQueries] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -63,6 +66,7 @@ const SuggestionBox = (props) => {
 
   const handleEventItemClick = (event) => {
     if (navigator) {
+      dispatch(changeSelectedEvent(event));
       navigator.push('event', event.id);
     }
   };
