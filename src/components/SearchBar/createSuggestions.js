@@ -27,7 +27,7 @@ const createSuggestions = async (query, signal, locale, intl) => {
         console.warn('error:', res);
         return 'error';
       }),
-    fetch(`${config.eventsAPI.root}/search/?type=event&page_size=1&input=${query}`, { signal })
+    fetch(`${config.eventsAPI.root}/search/?type=event&page_size=1&include=location&input=${query}`, { signal })
       .then((res) => {
         if (res.status === 200) {
           return res.json();

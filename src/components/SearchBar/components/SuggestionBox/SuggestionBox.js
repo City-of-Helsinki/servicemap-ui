@@ -15,6 +15,7 @@ import { keyboardHandler } from '../../../../utils';
 import { AreaIcon } from '../../../SMIcon';
 import { CloseSuggestionButton } from '../CloseSuggestionButton';
 import useLocaleText from '../../../../utils/useLocaleText';
+import formatEventDate from '../../../../utils/events';
 
 
 const SuggestionBox = (props) => {
@@ -202,6 +203,7 @@ const SuggestionBox = (props) => {
                     key={`suggestion-${item.id}`}
                     icon={<Event />}
                     text={getLocaleText(item.name)}
+                    subtitle={`${formatEventDate(item, intl)} ${getLocaleText(item.location.name)}`}
                     handleItemClick={() => handleEventItemClick(item)}
                     divider
                     isMobile

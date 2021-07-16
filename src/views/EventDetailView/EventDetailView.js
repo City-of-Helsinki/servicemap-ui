@@ -119,7 +119,7 @@ const EventDetailView = (props) => {
   }, []);
 
   useEffect(() => {
-    if (map && !centered) {
+    if (map && event && !centered) {
       centerMap(event.location);
     }
   }, [map]);
