@@ -70,10 +70,11 @@ const EventMarkers = ({ searchData, classes, navigator }) => {
     events.forEach((event) => {
       const { location } = event;
       if (!location) return;
-      const duplicate = units.find(unit => unit.id === location.id);
+      const eventLocationId = parseInt(location.id.match(/[0-9]+/g), 10);
+      const duplicate = units.find(unit => unit.id === eventLocationId);
       if (!duplicate) {
         const newUnit = {
-          id: location.id,
+          id: eventLocationId,
           name: location.name,
           object_type: 'unit',
           location: location.position,

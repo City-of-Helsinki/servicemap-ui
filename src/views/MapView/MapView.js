@@ -333,7 +333,8 @@ const MapView = (props) => {
 
     const showLoadingScreen = districtViewFetching || (embedded && unitsLoading);
     const userLocationAriaLabel = intl.formatMessage({ id: !userLocation ? 'location.notAllowed' : 'location.center' });
-    const eventSearch = parseSearchParams(location.search).events;
+    const searchParams = parseSearchParams(location.search);
+    const eventSearch = searchParams.events || searchParams.t === 'events';
 
     return (
       <>
