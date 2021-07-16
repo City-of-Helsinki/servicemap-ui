@@ -118,6 +118,7 @@ class SearchBar extends React.Component {
 
       // Trigger click instead of searching with string on area sugestions and event suggestions
       if (suggestion?.classList.contains('AreaSuggestion') || suggestion?.classList.contains('EventSuggestion')) {
+        this.handleBlur();
         suggestion.click();
         return;
       }

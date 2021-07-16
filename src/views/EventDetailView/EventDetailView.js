@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 // TODO Remove this when redux selected event is used
 import { AccessTime, Phone, Event } from '@material-ui/icons';
+import { useLocation } from 'react-router-dom';
 import DescriptionText from '../../components/DescriptionText';
 import SearchBar from '../../components/SearchBar';
 import TitleBar from '../../components/TitleBar';
@@ -30,6 +31,7 @@ const EventDetailView = (props) => {
   } = props;
 
   const isMobile = useMobileStatus();
+  const location = useLocation();
   const getLocaleText = useLocaleText();
   const [centered, setCentered] = useState(false);
   const [fetchingEvent, setFetchingEvent] = useState(false);
@@ -41,6 +43,11 @@ const EventDetailView = (props) => {
       setCentered(true);
       focusToPosition(map, location.coordinates);
     }
+  };
+
+  const isCorrectEvent = (event) => {
+    if (!event || !location.pathname.includes(event.id)) return false;
+    return true;
   };
 
   // TODO: maybe combine this with the date fomratting used in events component
@@ -71,7 +78,7 @@ const EventDetailView = (props) => {
 
   useEffect(() => {
     // TODO: move this first fetch to server side
-    if (!event) {
+    if (!isCorrectEvent(event)) {
       if (match.params && match.params.event) {
         const options = {
           include: 'location,location.accessibility_shortcoming_count',
@@ -116,17 +123,17 @@ const EventDetailView = (props) => {
         }
       }
     }
-  }, []);
+  }, [location.pathname]);
 
   useEffect(() => {
-    if (map && event && !centered) {
+    if (map && isCorrectEvent(event) && !centered) {
       centerMap(event.location);
     }
   }, [map]);
 
 
   const renderEventDetails = () => {
-    if (!event) return null;
+    if (!isCorrectEvent(event)) return null;
     const unit = selectedUnit;
     const description = event.description || event.short_description;
     const phoneText = unit && unit.phone ? `${unit.phone} ${intl.formatMessage({ id: 'unit.call.number' })}` : null;
@@ -195,7 +202,7 @@ const EventDetailView = (props) => {
 
   let title;
 
-  if (event) {
+  if (isCorrectEvent(event)) {
     title = getLocaleText(event.name);
   } else if (fetchingEvent) {
     title = intl.formatMessage({ id: 'general.loading' });
