@@ -54,12 +54,12 @@ const orderUnits = (unitData, sortingParameters) => {
     }
     case 'distance': {
       const unitsWithoutLocation = results.filter(unit => unit.location === null);
-      const filteredLsit = results.filter(unit => unit.location !== null);
-      filteredLsit.forEach((element) => {
+      const filteredList = results.filter(unit => unit.location !== null);
+      filteredList.forEach((element) => {
         // eslint-disable-next-line no-param-reassign
         element.distanceFromUser = calculateDistance(element, usedPosition);
       });
-      filteredLsit.sort((a, b) => {
+      filteredList.sort((a, b) => {
         const aDistance = a.distanceFromUser;
         const bDistance = b.distanceFromUser;
         if (aDistance < bDistance) return -1;
@@ -69,10 +69,10 @@ const orderUnits = (unitData, sortingParameters) => {
 
       // If reversed distance ordering
       if (direction === 'desc') {
-        filteredLsit.reverse();
+        filteredList.reverse();
       }
 
-      results = [...filteredLsit, ...unitsWithoutLocation];
+      results = [...filteredList, ...unitsWithoutLocation];
       break;
     }
     // Ordering based on match score

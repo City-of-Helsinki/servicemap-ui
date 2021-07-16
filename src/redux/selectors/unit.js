@@ -35,11 +35,14 @@ export const calculateDistance = (unit, usedPosition) => {
     return degree * (pi / 180);
   };
 
+  const unitCoordinates = unit.location.coordinates || unit.location.position.coordinates;
+  if (!unitCoordinates) return null;
+
   // Calculate distance between two coordinates using the Haversine formula
   const r = 6371e3;
-  const lat1 = unit.location.coordinates[1];
+  const lat1 = unitCoordinates[1];
   const lat2 = usedPosition.latitude;
-  const lon1 = unit.location.coordinates[0];
+  const lon1 = unitCoordinates[0];
   const lon2 = usedPosition.longitude;
 
   const dLat = toRadians((lat2 - lat1));
