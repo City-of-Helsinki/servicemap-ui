@@ -115,10 +115,13 @@ class SearchBar extends React.Component {
     if (focusedSuggestion !== null) {
       // Get focused suggestion search string
       const suggestion = document.getElementById(`suggestion${focusedSuggestion}`);
-      if (suggestion?.classList.contains('AreaSuggestion')) {
+
+      // Trigger click instead of searching with string on area sugestions and event suggestions
+      if (suggestion?.classList.contains('AreaSuggestion') || suggestion?.classList.contains('EventSuggestion')) {
         suggestion.click();
         return;
       }
+
       // Omit search restult count from suggestion string
       searchQuery = suggestion?.getElementsByTagName('p')[0].textContent;
     } else if (search && search !== '') {
