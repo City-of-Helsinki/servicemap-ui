@@ -7,7 +7,7 @@ import useLocaleText from '../../../utils/useLocaleText';
 
 const ServiceItem = (props) => {
   const {
-    currentService, service, navigator, setNewCurrentService, link, classes,
+    currentService, service, navigator, setNewCurrentService, link, classes, divider,
   } = props;
   const [icon, setIcon] = useState(<img alt="" src={null} style={{ height: 24 }} aria-hidden="true" />);
   const getLocaleText = useLocaleText();
@@ -42,7 +42,7 @@ const ServiceItem = (props) => {
       role={role}
       text={uppercaseFirst(text)}
       icon={icon}
-      divider
+      divider={divider}
       handleItemClick={onClick}
     />
   );
@@ -57,10 +57,12 @@ ServiceItem.propTypes = {
   service: PropTypes.objectOf(PropTypes.any).isRequired,
   setNewCurrentService: PropTypes.func.isRequired,
   link: PropTypes.bool,
+  divider: PropTypes.bool,
 };
 
 ServiceItem.defaultProps = {
   currentService: null,
   navigator: null,
   link: true,
+  divider: true,
 };

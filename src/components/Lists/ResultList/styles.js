@@ -33,5 +33,6 @@ export default theme => ({
   },
   list: {
     maxHeight: '100%',
+    padding: theme.spacing(1),
   },
 });

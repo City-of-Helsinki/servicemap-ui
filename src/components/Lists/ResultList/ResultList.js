@@ -58,8 +58,9 @@ class ResultList extends React.Component {
         <List className={classes.list} id={listId}>
           {
             data && data.length
-            && data.map((item) => {
+            && data.map((item, i) => {
               const { id, object_type, sort_index } = item;
+              const lastItemOfList = i === data.length - 1;
               // Figure out correct icon for item
               let itemComponent = null;
               switch (object_type) {
@@ -67,13 +68,13 @@ class ResultList extends React.Component {
                   itemComponent = <UnitItem key={`unit-${id}`} className={`unit-${id}`} unit={item} />;
                   break;
                 case 'service':
-                  itemComponent = <ServiceItem key={`service-${id}`} service={item} />;
+                  itemComponent = <ServiceItem key={`service-${id}`} service={item} divider={!lastItemOfList} />;
                   break;
                 case 'address':
-                  itemComponent = <AddressItem key={`address-${sort_index}`} address={item} />;
+                  itemComponent = <AddressItem key={`address-${sort_index}`} address={item} divider={!lastItemOfList} />;
                   break;
                 case 'event':
-                  itemComponent = <EventItem key={`event-${item.id}`} event={item} />;
+                  itemComponent = <EventItem key={`event-${item.id}`} event={item} divider={!lastItemOfList} />;
                   break;
                 default:
                   if (customComponent && item) {

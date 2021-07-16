@@ -65,6 +65,6 @@ export default theme => ({
     fontWeight: 'normal',
   },
   divider: {
-    marginRight: theme.spacing(-2),
+    marginRight: theme.spacing(-1),
   },
 });

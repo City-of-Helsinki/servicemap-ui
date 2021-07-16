@@ -12,6 +12,7 @@ const EventItem = ({
   intl,
   navigator,
   simpleItem,
+  divider,
 }) => {
   const getLocaleText = useLocaleText();
   const dateString = formatEventDate(event, intl);
@@ -20,10 +21,10 @@ const EventItem = ({
     return (
       <ResultItem
         key={event.id}
-        icon={<Event />}
+        icon={<Event color="primary" />}
         title={getLocaleText(event.name)}
         subtitle={dateString}
-        divider
+        divider={divider}
         onClick={(e) => {
           e.preventDefault();
           if (navigator) {
@@ -39,10 +40,11 @@ const EventItem = ({
   return (
     <ResultItem
       key={event.id}
-      icon={<Event />}
+      icon={<Event color="primary" />}
       title={getLocaleText(event.name)}
       bottomText={dateString}
       subtitle={getLocaleText(event.location.name)}
+      divider={divider}
       divider
       unitId={event.location?.id}
       onClick={(e) => {
@@ -66,9 +68,11 @@ EventItem.propTypes = {
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   simpleItem: PropTypes.bool,
   navigator: PropTypes.objectOf(PropTypes.any),
+  divider: PropTypes.bool,
 };
 
 EventItem.defaultProps = {
   navigator: null,
   simpleItem: false,
+  divider: true,
 };

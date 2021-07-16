@@ -16,6 +16,7 @@ const AddressItem = (props) => {
     showPostalCode,
     role,
     id,
+    divider,
   } = props;
   const getLocaleText = useLocaleText();
   const getAddressNavigatorParams = useNavigationParams();
@@ -28,7 +29,7 @@ const AddressItem = (props) => {
       button
       text={uppercaseFirst(text)}
       icon={<AddressIcon className={classes.icon} />}
-      divider
+      divider={divider}
       handleItemClick={(e) => {
         e.preventDefault();
         if (navigator) {
@@ -54,6 +55,7 @@ AddressItem.propTypes = {
   showPostalCode: PropTypes.bool,
   role: PropTypes.string,
   id: PropTypes.string,
+  divider: PropTypes.bool,
 };
 
 AddressItem.defaultProps = {
@@ -63,4 +65,5 @@ AddressItem.defaultProps = {
   showPostalCode: true,
   role: null,
   id: null,
+  divider: true,
 };
