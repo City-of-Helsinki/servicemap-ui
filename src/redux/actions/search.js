@@ -42,7 +42,7 @@ const eventsFetch = async (dispatch, options) => {
 
 
 const fetchSearchResults = (options = null) => async (dispatch, getState) => {
-  const { stateSearchResults } = getState();
+  const stateSearchResults = getState().searchResults;
   if (stateSearchResults.isFetching) {
     throw Error('Unable to fetch search results because previous fetch is still active');
   }
