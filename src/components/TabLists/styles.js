@@ -6,10 +6,18 @@ export default theme => ({
     borderColor: theme.palette.white.contrastText,
     color: theme.palette.white.contrastText,
     boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+    [theme.breakpoints.only('xs')]: {
+      backgroundColor: '#2242C7',
+      color: theme.palette.primary.highContrast,
+    },
   },
   indicator: {
     backgroundColor: theme.palette.detail.main,
-    height: 6,
+    height: 12,
+    [theme.breakpoints.only('xs')]: {
+      height: 4,
+      backgroundColor: theme.palette.white.main,
+    },
   },
   resultList: {
     backgroundColor: 'white',
@@ -20,11 +28,13 @@ export default theme => ({
   tab: {
     minWidth: 0,
     fontWeight: 'normal',
-    flex: '1 1',
     opacity: 1,
-    borderBottom: '6px solid #DEDEDE',
     [theme.breakpoints.only('sm')]: {
       letterSpacing: 'normal',
+    },
+    [theme.breakpoints.up('sm')]: {
+      flex: '1 1',
+      borderBottom: '12px solid #DEDEDE',
     },
   },
   tabFocus: {
@@ -36,9 +46,13 @@ export default theme => ({
   tabLabelContainer: {
     paddingLeft: 0,
     paddingRight: 0,
-    paddingTop: theme.spacing(3),
-    paddingBottom: theme.spacing(3),
-    fontSize: 'clamp(13px, 1.8vw, 14px)',
+    paddingTop: 30,
+    paddingBottom: 5,
+    fontSize: 'clamp(13px, 1.8vw, 14.42px)',
+  },
+  tabSmallFont: {
+    fontSize: '12.36px',
+    textTransform: 'none',
   },
   mobileTabFont: {
     fontSize: 11.5,

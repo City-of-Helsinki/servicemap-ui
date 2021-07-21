@@ -169,9 +169,8 @@ const TabLists = ({
       }
     });
 
-    const tabLabelStyles = filteredData.length === 3 && isMobile
-      ? `${classes.tabLabelContainer} ${classes.mobileTabFont}`
-      : classes.tabLabelContainer;
+    const tabStyles = `${classes.tab} ${classes.tabLabelContainer} ${filteredData.length > 3 ? classes.tabSmallFont : ''}`;
+    const mobileTabStyles = `${classes.tab} ${classes.mobileTabFont}`;
 
     let disabled;
     try {
@@ -214,14 +213,15 @@ const TabLists = ({
           }}
           value={tabIndex}
           onChange={handleTabChange}
-          variant="fullWidth"
+          variant={isMobile && filteredData.length > 3 ? 'scrollable' : 'fullWidth'}
+          scrollButtons="on"
           style={styles}
         >
           {
               filteredData.map((item, index) => {
                 if (item.data && item.data.length > 0) {
-                  const label = `${item.title} ${item.component ? '' : `(${item.data.length})`}`;
-                  const tabId = `${item.title}-${item.data.length}`;
+                  const label = `${item.title}`;
+                  const tabId = `${item.title}`;
                   return (
                     <Tab
                       id={tabId}
@@ -229,10 +229,9 @@ const TabLists = ({
                       aria-controls={`tab-content-${index}`}
                       aria-label={item.ariaLabel ? item.ariaLabel : null}
                       classes={{
-                        root: `${classes.tab} ${tabLabelStyles}`,
+                        root: isMobile ? mobileTabStyles : tabStyles,
                         selected: classes.selected,
                       }}
-                      className={classes.tab}
                       label={label}
                       onClick={item.onClick ? () => item.onClick(index) : null}
                       focusVisibleClassName={classes.tabFocus}
@@ -246,7 +245,7 @@ const TabLists = ({
                     aria-controls={`tab-content-${index}`}
                     aria-label={item.ariaLabel ? item.ariaLabel : null}
                     classes={{
-                      root: `${classes.tab} ${tabLabelStyles}`,
+                      root: isMobile ? mobileTabStyles : tabStyles,
                       selected: classes.selected,
                     }}
                     label={`${item.title}`}
