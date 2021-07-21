@@ -24,10 +24,15 @@ export default theme => ({
     overflow: 'auto',
   },
   wrapper: {
+    position: 'relative',
     flex: '0 1 auto',
     borderRadius: 4,
   },
   mobileWrapper: {
+    flex: '0 1 auto',
+    borderRadius: 4,
+  },
+  mobileWrapperActive: {
     flex: '0 1 auto',
     display: 'flex',
     flexDirection: 'column',

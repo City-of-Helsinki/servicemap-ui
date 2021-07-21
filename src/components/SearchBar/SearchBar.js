@@ -347,7 +347,7 @@ class SearchBar extends React.Component {
     }  ${
       className
     }`;
-    const wrapperClasses = `${isActive ? classes.mobileWrapper : classes.wrapper}`;
+    const wrapperClasses = `${isActive ? classes.mobileWrapperActive : classes.mobileWrapper}`;
     const stickyStyles = typeof isSticky === 'number' ? { top: isSticky } : null;
 
     return (
