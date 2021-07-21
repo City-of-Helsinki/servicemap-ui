@@ -30,7 +30,7 @@ test('AddressView does render correct view', async (t) => {
 
   const units = await ReactSelector('UnitItem').count;
   await t
-    .expect(units).gt(1, 'Closeby units tab should show unit items')
+    .expect(units).gt(1, 'Closeby units tab should show unit items', { timeout: 4000 })
   ;
 });
 

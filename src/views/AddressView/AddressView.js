@@ -25,6 +25,8 @@ import DivisionItem from '../../components/ListItems/DivisionItem';
 import config from '../../../config';
 import useLocaleText from '../../utils/useLocaleText';
 import { parseSearchParams } from '../../utils';
+import { getCategoryDistricts } from '../AreaView/utils/districtDataHelper';
+import { DistrictItem } from '../../components';
 
 
 const hiddenDivisions = {
@@ -206,6 +208,22 @@ const AddressView = (props) => {
     // Get emergency division
     const emergencyDiv = adminDistricts.find(x => x.type === 'emergency_care_district');
 
+    // Also add rescue areas that have no units
+    const rescueAreaIDs = getCategoryDistricts('protection');
+    const rescueAreas = adminDistricts.filter((obj, i) => {
+      if (rescueAreaIDs.includes(obj.type)) {
+        if (!obj.unit) {
+          return true;
+        }
+        // Move rescue areas to the end of unit list
+        adminDistricts.push(adminDistricts.splice(i, 1)[0]);
+        return false;
+      }
+      return false;
+    });
+
+    const getCustomRescueAreaTitle = area => `${area.origin_id} - ${getLocaleText(area.name)}`;
+
     const units = divisionsWithUnits.map((x) => {
       const { unit } = x;
       const unitData = unit;
@@ -239,16 +257,23 @@ const AddressView = (props) => {
             units.map((data) => {
               const key = `${data.area.id}`;
               const distance = getDistance(data);
+              const customTitle = rescueAreaIDs.includes(data.area.type)
+                ? `${intl.formatMessage({ id: `area.list.${data.area.type}` })} ${getCustomRescueAreaTitle(data.area)}`
+                : null;
               return (
                 <DivisionItem
                   data={data}
                   distance={distance}
                   divider
                   key={key}
+                  customTitle={customTitle}
                 />
               );
             })
           }
+          {rescueAreas.map(area => (
+            <DistrictItem key={area.id} area={area} />
+          ))}
         </List>
       </>
     );
