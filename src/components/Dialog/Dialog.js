@@ -52,13 +52,14 @@ const Dialog = ({
         <div className={classes.root}>
           {/* Empty element that makes keyboard focus loop in dialog */}
           <Typography variant="srOnly" aria-hidden tabIndex="0" onFocus={focusToLastElement} />
-          <CloseButton
-            autoFocus
-            className={classes.topCloseButton}
-            onClick={handleClose}
-            role="link"
-          />
-          <DialogTitle id="form-dialog-title" autoFocus>{title}</DialogTitle>
+          <div className={classes.topArea}>
+            <CloseButton
+              autoFocus
+              onClick={handleClose}
+              role="link"
+            />
+            <DialogTitle id="form-dialog-title" autoFocus>{title}</DialogTitle>
+          </div>
           <DialogContent>
             {content}
           </DialogContent>
@@ -80,7 +81,7 @@ Dialog.propTypes = {
   classes: PropTypes.shape({
     closeButton: PropTypes.string,
     root: PropTypes.string,
-    topCloseButton: PropTypes.string,
+    topArea: PropTypes.string,
   }).isRequired,
   title: PropTypes.node.isRequired,
   content: PropTypes.node.isRequired,
@@ -91,12 +92,13 @@ Dialog.propTypes = {
     current: PropTypes.shape({
       anchorEl: PropTypes.objectOf(PropTypes.any),
     }),
-  }).isRequired,
+  }),
 };
 
 Dialog.defaultProps = {
   actions: null,
   open: false,
+  referer: null,
 };
 
 export default Dialog;
