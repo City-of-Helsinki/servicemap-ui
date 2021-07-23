@@ -10,7 +10,7 @@ import thunk from 'redux-thunk';
 import config from '../config';
 import rootReducer from '../src/redux/rootReducer';
 import App from '../src/App';
-import { makeLanguageHandler, languageSubdomainRedirect, unitRedirect, parseInitialMapPositionFromHostname, getRequestFullUrl } from './utils';
+import { makeLanguageHandler, languageSubdomainRedirect, unitRedirect, parseInitialMapPositionFromHostname, getRequestFullUrl, sitemapActive } from './utils';
 import { setLocale } from '../src/redux/actions/user';
 import { Helmet } from 'react-helmet';
 import { ServerStyleSheets } from '@material-ui/core/styles';
@@ -51,7 +51,7 @@ const setupTests = () => {
 setupTests();
 
 // Handle sitemap creation
-if (config.production && process.env.DOMAIN) {
+  if (sitemapActive()) {
   // Generate sitemap on start
   generateSitemap();
   // Update sitemap every monday
