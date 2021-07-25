@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 export const filterEmptyServices = cities => (obj) => {
   if (!obj || obj.object_type !== 'service' || !obj.unit_count) {
     return true;
@@ -26,7 +27,13 @@ export const filterEmptyServices = cities => (obj) => {
   return hasUnits;
 };
 
-export const filterCities = (cities, onlyUnits = false) => unit => cities.length === 0 || !unit.municipality || (!onlyUnits && unit.object_type !== 'unit') || cities.includes(unit.municipality);
+export const filterCities = (cities, onlyUnits = false) => (result) => {
+  const resultMunicipality = result.municipality || result.location?.address_locality?.fi;
+  return cities.length === 0
+    || !resultMunicipality
+    || (!onlyUnits && result.object_type !== 'unit' && result.object_type !== 'event')
+    || cities.includes(resultMunicipality.toLowerCase());
+};
 
 export const filterResultTypes = () => (obj) => {
   const allowedTypes = ['unit', 'service', 'address', 'event'];
