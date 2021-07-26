@@ -1,15 +1,15 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { fetchUnits } from '../../redux/actions/unit';
 import { fitBbox } from '../../views/MapView/utils/mapActions';
 import { searchParamFetchOptions } from './helpers';
 import { getSearchParam } from '../../utils';
+import fetchSearchResults from '../../redux/actions/search';
 
 const DataFetcher = ({
   currentPage,
-  fetchUnits,
+  fetchSearchResults,
   location,
   map,
 }) => {
@@ -27,6 +27,8 @@ const DataFetcher = ({
     }
 
     const options = searchParamFetchOptions(location, null, true);
+
+    // FIXME: bbox fetch not working when embedding with bbox url parameter. This returns false.
     if (
       !options.bbox || !options.bbox_srid || !options.level
       || options.q || options.service_node || options.service
@@ -34,7 +36,7 @@ const DataFetcher = ({
       return false;
     }
 
-    fetchUnits(options);
+    fetchSearchResults(options);
     return true;
   };
 
@@ -69,13 +71,13 @@ const mapStateToProps = (state) => {
 export default withRouter(connect(
   mapStateToProps,
   {
-    fetchUnits,
+    fetchSearchResults,
   },
 )(DataFetcher));
 
 // Typechecking
 DataFetcher.propTypes = {
-  fetchUnits: PropTypes.func.isRequired,
+  fetchSearchResults: PropTypes.func.isRequired,
   map: PropTypes.objectOf(PropTypes.any),
 };
 

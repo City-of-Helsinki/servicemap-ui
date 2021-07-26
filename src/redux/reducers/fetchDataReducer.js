@@ -116,7 +116,6 @@ const dataSingle = (state, action, prefix) => {
 
 // Fetch data set reducers
 export const searchResults = (state = dataSetInitialState, action) => dataSetReducer(state, action, 'SEARCH_RESULTS');
-export const units = (state = dataSetInitialState, action) => dataSetReducer(state, action, 'UNITS');
 export const service = (state = dataSetInitialState, action) => dataSetReducer(state, action, 'SERVICE');
 export const unitEvents = (state = dataSingleInitialState, action) => dataSetReducer(state, action, 'SELECTED_UNIT_EVENTS');
 export const reservations = (state = dataSingleInitialState, action) => dataSetReducer(state, action, 'SELECTED_UNIT_RESERVATIONS');

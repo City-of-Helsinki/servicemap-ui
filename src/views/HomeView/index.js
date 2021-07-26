@@ -6,17 +6,9 @@ import styles from './styles';
 
 // Listen to redux state
 const mapStateToProps = (state) => {
-  const { units, user, navigator } = state;
-  const {
-    data, isFetching, count, max,
-  } = units;
-
+  const { user, navigator } = state;
   return {
     unit: state.unit,
-    units: data,
-    isFetching,
-    count,
-    max,
     navigator,
     userLocation: user.position,
   };

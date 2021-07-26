@@ -151,8 +151,8 @@ Navigator.defaultProps = {};
 
 // Listen to redux state
 const mapStateToProps = (state) => {
-  const { breadcrumb, units } = state;
-  const { previousSearch } = units;
+  const { breadcrumb, searchResults } = state;
+  const { previousSearch } = searchResults;
   return {
     breadcrumb,
     previousSearch,

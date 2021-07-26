@@ -9,9 +9,9 @@ import { changeSelectedUnit } from '../../redux/actions/selectedUnit';
 // Listen to redux state
 const mapStateToProps = (state) => {
   const {
-    navigator, units,
+    navigator, searchResults,
   } = state;
-  const { isFetching, previousSearch } = units;
+  const { isFetching, previousSearch } = searchResults;
   return {
     previousSearch,
     isFetching,

@@ -17,7 +17,7 @@ const mapStateToProps = (state) => {
   } = state;
   const unitList = getProcessedData(state);
   const serviceUnitsLoading = state.service.isFetching;
-  const searchUnitsLoading = state.units.isFetching;
+  const searchUnitsLoading = state.searchResults.isFetching;
   const serviceUnits = getServiceUnits(state);
   const highlightedDistrict = getHighlightedDistrict(state);
   const highlightedUnit = getSelectedUnit(state);
