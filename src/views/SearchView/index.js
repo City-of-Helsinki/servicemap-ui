@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import SearchView from './SearchView';
-import { fetchUnits } from '../../redux/actions/unit';
 import fetchSearchResults from '../../redux/actions/search';
 import fetchRedirectService from '../../redux/actions/redirectService';
 import { changeSelectedUnit } from '../../redux/actions/selectedUnit';
