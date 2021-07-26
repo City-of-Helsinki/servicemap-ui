@@ -5,7 +5,6 @@ import { searchResults } from './fetchDataActions';
 // Actions
 const { isFetching, fetchSuccess, fetchProgressUpdate } = searchResults;
 
-// TODO move this somewhere global if used also in unit.js
 const stringifySearchQuery = (data) => {
   try {
     const search = Object.keys(data).map(key => (`${key}:${data[key]}`));
@@ -16,7 +15,7 @@ const stringifySearchQuery = (data) => {
 };
 
 const smFetch = (dispatch, options) => {
-  let results;
+  let results = [];
   const smAPI = new ServiceMapAPI();
 
   const onNext = (total, max) => {
@@ -31,10 +30,12 @@ const smFetch = (dispatch, options) => {
   return results;
 };
 
-const eventsFetch = async (dispatch, options) => {
+const eventsFetch = async (options) => {
   if (options.q) {
-    // TODO: maybe handle this fetch better
     const res = await fetch(`${config.eventsAPI.root}/search/?type=event&page_size=100&start=today&sort=end_time&include=location,location.id&input=${options.q}`);
+    return res.json();
+  } if (options.events) {
+    const res = await fetch(`${config.eventsAPI.root}/event/?type=event&page_size=100&start=today&sort=end_time&include=location,location.id&keyword=${options.events}`);
     return res.json();
   }
   return null;
@@ -53,7 +54,7 @@ const fetchSearchResults = (options = null) => async (dispatch, getState) => {
   // Fetch from servicemap API and linked events API
   const results = await Promise.all([
     smFetch(dispatch, options),
-    eventsFetch(dispatch, options),
+    eventsFetch(options),
   ]);
 
   // Add object type to events
