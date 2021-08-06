@@ -78,7 +78,7 @@ export const findUserLocation = () => async (dispatch) => {
     }
   };
 
-  navigator.geolocation.getCurrentPosition(success, error, { enableHighAccuracy: true });
+  navigator.geolocation.watchPosition(success, error, { enableHighAccuracy: true });
 };
 
 export const changeCustomUserLocation = (
