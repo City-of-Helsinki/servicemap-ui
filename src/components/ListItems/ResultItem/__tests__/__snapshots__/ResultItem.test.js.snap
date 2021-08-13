@@ -455,34 +455,36 @@ exports[`<ResultItem /> should work 1`] = `
         </WithStyles(ForwardRef(ButtonBase))>
       </ForwardRef(ListItem)>
     </WithStyles(ForwardRef(ListItem))>
-    <li
+    <WithStyles(ForwardRef(Divider))
       aria-hidden={true}
+      className="ResultItem-divider-16"
+      component="li"
+      variant="inset"
     >
-      <WithStyles(ForwardRef(Divider))
+      <ForwardRef(Divider)
+        aria-hidden={true}
         className="ResultItem-divider-16"
+        classes={
+          Object {
+            "absolute": "MuiDivider-absolute",
+            "flexItem": "MuiDivider-flexItem",
+            "inset": "MuiDivider-inset",
+            "light": "MuiDivider-light",
+            "middle": "MuiDivider-middle",
+            "root": "MuiDivider-root",
+            "vertical": "MuiDivider-vertical",
+          }
+        }
+        component="li"
         variant="inset"
       >
-        <ForwardRef(Divider)
-          className="ResultItem-divider-16"
-          classes={
-            Object {
-              "absolute": "MuiDivider-absolute",
-              "flexItem": "MuiDivider-flexItem",
-              "inset": "MuiDivider-inset",
-              "light": "MuiDivider-light",
-              "middle": "MuiDivider-middle",
-              "root": "MuiDivider-root",
-              "vertical": "MuiDivider-vertical",
-            }
-          }
-          variant="inset"
-        >
-          <hr
-            className="MuiDivider-root ResultItem-divider-16 MuiDivider-inset"
-          />
-        </ForwardRef(Divider)>
-      </WithStyles(ForwardRef(Divider))>
-    </li>
+        <li
+          aria-hidden={true}
+          className="MuiDivider-root ResultItem-divider-16 MuiDivider-inset"
+          role="separator"
+        />
+      </ForwardRef(Divider)>
+    </WithStyles(ForwardRef(Divider))>
   </ResultItem>
 </WithStyles(ResultItem)>
 `;
