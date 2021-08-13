@@ -95,7 +95,6 @@ const TabLists = ({
     }
     // Update p(page) param to current history
     // Change page parameter in searchParams
-    const searchParams = parseSearchParams(location.search);
     searchParams.p = 1;
 
     if (filteredData[value].id) {
@@ -266,6 +265,11 @@ const TabLists = ({
 
   useEffect(() => {
     setTabIndex(getTabfromUrl());
+    /* Set tab value to url if only one result tab on results page.
+    This makes event units visible on map if search results contains only events */
+    if (filteredData.length === 1 && !searchParams.t) {
+      handleTabChange(null, 0);
+    }
   }, [data]);
 
   useEffect(() => {
