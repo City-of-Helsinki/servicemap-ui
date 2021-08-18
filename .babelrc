@@ -1,12 +1,18 @@
 {
   "presets": [
-    [
-      "react-app", {
-        "useBuiltIns": "entry"
+    ["@babel/preset-env",
+      {
+        "targets": [
+          ">0.2%",
+          "not dead",
+          "not ie > 0",
+          "not op_mini all"
+        ]
       }
-    ]
+    ],
+    "@babel/preset-react"
   ],
   "plugins": [
-    "@babel/plugin-proposal-optional-chaining"
+    "@babel/plugin-transform-runtime"
   ]
 }

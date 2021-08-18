@@ -13,28 +13,6 @@ const js = {
   exclude: /node_modules/,
   loader: 'babel-loader',
   options: {
-    customize: require.resolve(
-      'babel-preset-react-app/webpack-overrides'
-    ),
-
-    plugins: [
-      [
-        require.resolve('babel-plugin-named-asset-import'),
-        {
-          loaderMap: {
-            svg: {
-              ReactComponent: '@svgr/webpack?-svgo,+ref![path]',
-            },
-          },
-        },
-      ],
-      [
-        require.resolve('babel-plugin-transform-class-properties')
-      ],
-      [
-        require.resolve('@babel/plugin-proposal-optional-chaining')
-      ]
-    ],
     // This is a feature of `babel-loader` for webpack (not Babel itself).
     // It enables caching results in ./node_modules/.cache/babel-loader/
     // directory for faster rebuilds.
@@ -123,11 +101,14 @@ const clientConfig = {
   entry: {
     'index.js': path.resolve(__dirname, 'client/client.js'),
   },
-  node: {
-    // Needed to enable importing dotenv in the browser.  Although
-    // dotenv is not used there, the code is shared with the server,
-    // where dotenv *is* used.
-    fs: 'empty'
+  resolve: {
+    fallback: {
+      // Needed to enable importing dotenv in the browser.  Although
+      // dotenv is not used there, the code is shared with the server,
+      // where dotenv *is* used.
+      fs: false,
+      "path": false,
+    }
   },
   module: {
     rules: [
