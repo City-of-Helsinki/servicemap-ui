@@ -56,6 +56,8 @@ const UnitView = (props) => {
   const checkCorrectUnit = unit => unit && unit.id === parseInt(match.params.unit, 10);
 
   const [unit, setUnit] = useState(checkCorrectUnit(stateUnit) ? stateUnit : null);
+  const [unitDistance, setUnitDistance] = useState(distance);
+
   const viewPosition = useRef(null);
 
   const isMobile = useMobileStatus();
@@ -160,6 +162,12 @@ const UnitView = (props) => {
       initializePTVAccessibilitySentences();
     }
   }, [unit]);
+
+  useEffect(() => {
+    if (!unitDistance) {
+      setUnitDistance(distance);
+    }
+  }, [distance]);
 
   if (embed) {
     return null;
@@ -349,7 +357,7 @@ const UnitView = (props) => {
           title={title}
           backButton={!!isMobile}
           titleComponent="h3"
-          distance={distance && distance.text}
+          distance={unitDistance?.text}
         />
       </>
     );
