@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
@@ -103,10 +103,6 @@ const AddressSearchBar = ({
         });
     }
   };
-
-  useEffect(() => {
-    inputRef.current.value = formAddressString(defaultAddress);
-  }, [defaultAddress]);
 
   const showSuggestions = inputRef.current?.value.length > 1 && addressResults?.length;
   // Add info text for location selection
