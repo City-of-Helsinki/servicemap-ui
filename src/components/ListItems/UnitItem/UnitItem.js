@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import UnitHelper from '../../../utils/unitHelper';
 import ResultItem from '../ResultItem';
@@ -19,6 +19,7 @@ const UnitItem = ({
   navigator,
   settings,
 }) => {
+  const [unitDistance, setUnitDistance] = useState(distance);
   const getLocaleText = useLocaleText();
 
   const parseAccessibilityText = () => {
@@ -45,6 +46,12 @@ const UnitItem = ({
   // Parse unit data
   const { id, name } = unit;
 
+  useEffect(() => {
+    if (!unitDistance) {
+      setUnitDistance(distance);
+    }
+  }, [distance]);
+
   // Don't render if not valid unit
   if (!UnitHelper.isValidUnit(unit)) {
     return null;
@@ -58,9 +65,9 @@ const UnitItem = ({
   // Contract type text
   const contractText = UnitHelper.getContractText(unit, intl, getLocaleText) || '';
 
-  const distanceText = distance ? {
-    text: `${distance.distance} ${distance.type}`,
-    srText: `${distance.distance} ${distance.type === 'm'
+  const distanceText = unitDistance ? {
+    text: `${unitDistance.distance} ${unitDistance.type}`,
+    srText: `${unitDistance.distance} ${unitDistance.type === 'm'
       ? intl.formatMessage({ id: 'general.distance.meters' })
       : intl.formatMessage({ id: 'general.distance.kilometers' })}`,
   } : {};
