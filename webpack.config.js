@@ -1,5 +1,6 @@
 const webpack = require('webpack'); //to access built-in plugins
 const path = require('path');
+const nodeExternals = require('webpack-node-externals');
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -74,6 +75,13 @@ const serverConfig = {
   entry: {
     'index.js': path.resolve(__dirname, 'server/server.js'),
   },
+  // This excludes node_modules from server webpack bundle
+  externalsPresets: { node: true },
+  externals: [
+    nodeExternals({ 
+      allowlist: [/\.(?!(?:jsx?|json)$).{1,5}$/i], // This fixes issue with css files
+    })
+  ],
   module: {
     rules: [
       {
