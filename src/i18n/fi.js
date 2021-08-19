@@ -5,6 +5,10 @@ const translations = {
   'app.og.image.alt': 'Palvelukartan logo',
   'app.errorpage.title': 'Virheviestisivu',
 
+  'accept.settings.dialog.description': 'Voit avata tiedot joko esteettömyysasetusten kanssa tai ilman rajauksia.',
+  'accept.settings.dialog.title': 'Katso toimipistettä esteettömyysasetusten kanssa',
+  'accept.settings.dialog.none': 'Ei erityisiä esteettömyysasetuksia',
+
   // Accessibility
   'accessibility': 'Esteettömyys',
   'accessibility.info': 'Esteettömyystiedot',

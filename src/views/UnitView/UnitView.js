@@ -30,6 +30,8 @@ import useMobileStatus from '../../utils/isMobile';
 import UnitHelper from '../../utils/unitHelper';
 import useLocaleText from '../../utils/useLocaleText';
 import paths from '../../../config/paths';
+import { AcceptSettingsDialog } from '../../components';
+import SettingsUtility from '../../utils/settings';
 
 const UnitView = (props) => {
   const {
@@ -59,10 +61,28 @@ const UnitView = (props) => {
   const viewPosition = useRef(null);
 
   const isMobile = useMobileStatus();
-
+  const [openAcceptSettingsDialog, setOpenAcceptSettingsDialog] = useState(false);
   const getLocaleText = useLocaleText();
 
   const map = useSelector(state => state.mapRef);
+
+  const shouldShowAcceptSettingsDialog = () => {
+    const search = new URLSearchParams(location.search);
+    const mobility = search.get('mobility');
+    const senses = search.get('senses')?.split(',') || [];
+    const mobilityValid = !!(mobility && SettingsUtility.isValidMobilitySetting(mobility));
+    const sensesValid = senses.filter(
+      s => SettingsUtility.isValidAccessibilitySenseImpairment(s),
+    ).length > 0;
+    if (mobilityValid || sensesValid) {
+      return true;
+    }
+    return false;
+  };
+
+  useEffect(() => {
+    setOpenAcceptSettingsDialog(shouldShowAcceptSettingsDialog());
+  }, []);
 
   const initializePTVAccessibilitySentences = () => {
     if (unit) {
@@ -397,6 +417,12 @@ const UnitView = (props) => {
       ];
       return (
         <div>
+          {
+            openAcceptSettingsDialog
+            && (
+              <AcceptSettingsDialog setOpen={setOpenAcceptSettingsDialog} />
+            )
+          }
           {
             renderHead()
           }

@@ -5,6 +5,10 @@ const translations = {
   'app.og.image.alt': 'Servicekarta logo',
   'app.errorpage.title': 'Felmeddelandesida',
 
+  'accept.settings.dialog.description': 'Voit avata tiedot joko esteettömyysasetusten kanssa tai ilman rajauksia.', // TODO: Translate
+  'accept.settings.dialog.title': 'Katso toimipistettä esteettömyysasetusten kanssa', // TODO: Translate
+  'accept.settings.dialog.none': 'Ei erityisiä esteettömyysasetuksia', // TODO: Translate
+
   // Accessibility
   'accessibility': 'Tillgänglighet',
   'accessibility.info': 'Tillgänglighetsuppgifter', // TODO: Verify

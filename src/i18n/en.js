@@ -5,6 +5,10 @@ const translations = {
   'app.og.image.alt': 'Servicemap logo',
   'app.errorpage.title': 'Error message page',
 
+  'accept.settings.dialog.description': 'Voit avata tiedot joko esteettömyysasetusten kanssa tai ilman rajauksia.', // TODO: Translate
+  'accept.settings.dialog.title': 'Katso toimipistettä esteettömyysasetusten kanssa', // TODO: Translate
+  'accept.settings.dialog.none': 'Ei erityisiä esteettömyysasetuksia', // TODO: Translate
+
   // Accessibility
   'accessibility': 'Accessibility',
   'accessibility.info': 'Accessibility details',
