@@ -47,14 +47,14 @@ class SettingsUtility {
 
   static isValidAccessibilitySenseImpairment(key) {
     if (SettingsUtility.accessibilityImpairmentKeys.indexOf(key) < 0) {
-      throw new Error(`Invalid value for accessibility sense setting: ${key}`);
+      return false;
     }
     return true;
   }
 
   static isValidMobilitySetting(value) {
     if (SettingsUtility.mobilitySettings.indexOf(value) < 0) {
-      throw new Error(`Invalid value for mobility setting: ${value}`);
+      return false;
     }
     return true;
   }
