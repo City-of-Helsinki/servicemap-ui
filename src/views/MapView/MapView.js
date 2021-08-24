@@ -1,5 +1,5 @@
 /* eslint-disable global-require */
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import {
@@ -197,7 +197,7 @@ const MapView = (props) => {
 
     return () => {
       // Clear map reference on unmount
-      clearMapReference();
+      setMapRef(null);
     };
   }, []);
 
@@ -206,13 +206,6 @@ const MapView = (props) => {
       adjustControlElements();
     }, 1);
   }, [mapObject]);
-
-  useEffect(() => { // Set map ref to redux once map is rendered
-    if (!refSaved && mapRef.current) {
-      saveMapReference();
-      setRefSaved(true);
-    }
-  });
 
   useEffect(() => {
     if (currentPage !== 'unit' || !highlightedUnit || !mapUtility) {
@@ -225,12 +218,11 @@ const MapView = (props) => {
   useEffect(() => { // On map type change
     // Init new map and set new ref to redux
     initializeMap();
-    setRefSaved(false);
   }, [settings.mapType]);
 
   useEffect(() => {
-    if (mapRef.current) {
-      setMapUtility(new MapUtility({ leaflet: mapRef.current.leafletElement }));
+    if (mapElement) {
+      setMapUtility(new MapUtility({ leaflet: mapElement }));
 
       const usp = new URLSearchParams(location.search);
       const lat = usp.get('lat');
@@ -238,13 +230,13 @@ const MapView = (props) => {
       try {
         if (lat && lng) {
           const position = [usp.get('lon'), usp.get('lat')];
-          focusToPosition(mapRef.current.leafletElement, position);
+          focusToPosition(mapElement, position);
         }
       } catch (e) {
-        console.error('Error while attemptin to focus on coordinate:', e);
+        console.warn('Error while attemptin to focus on coordinate:', e);
       }
     }
-  }, [mapRef.current]);
+  }, [mapElement]);
 
   // Attempt to render unit markers on page change or unitList change
   useEffect(() => {
@@ -360,7 +352,6 @@ const MapView = (props) => {
             ? <EventMarkers searchData={unitData} />
             : (
               <MarkerCluster
-                map={mapRef?.current?.leafletElement}
                 data={currentPage === 'unit' && highlightedUnit ? [highlightedUnit] : unitData}
                 measuringMode={measuringMode}
               />
@@ -378,7 +369,7 @@ const MapView = (props) => {
               <Loading />
             </div>
           ) : null}
-          <Districts mapOptions={mapOptions} map={mapRef.current} embedded={embedded} />
+          <Districts mapOptions={mapOptions} embedded={embedded} />
 
           <TransitStops
             map={mapRef.current}
@@ -427,7 +418,6 @@ const MapView = (props) => {
             {!isMobile && !embedded && toggleSidebar ? (
               <HideSidebarButton
                 sidebarHidden={sidebarHidden}
-                mapRef={mapRef}
                 toggleSidebar={toggleSidebar}
               />
             ) : null}

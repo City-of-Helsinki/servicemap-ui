@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -58,7 +58,7 @@ const DataFetcher = ({
 // Listen to redux state
 const mapStateToProps = (state) => {
   const { mapRef, user } = state;
-  const map = mapRef && mapRef.leafletElement;
+  const map = mapRef;
 
   return {
     currentPage: user.page,

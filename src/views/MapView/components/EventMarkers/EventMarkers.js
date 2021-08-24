@@ -47,8 +47,8 @@ const EventMarkers = ({ searchData, classes, navigator }) => {
   };
 
   const closePopup = () => {
-    if (mapRef.leafletElement) {
-      mapRef.leafletElement.closePopup();
+    if (map) {
+      map.closePopup();
     }
   };
 

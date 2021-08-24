@@ -16,9 +16,9 @@ const EntranceMarker = ({ classes }) => {
   const map = useSelector(state => state.mapRef);
 
   const unitPoint = flip(unit.location);
-  const zoomLimit = map.leafletElement.options.detailZoom;
+  const zoomLimit = map.options.detailZoom;
 
-  const shouldShowMarkers = () => map.leafletElement.getZoom() >= zoomLimit;
+  const shouldShowMarkers = () => map.getZoom() >= zoomLimit;
   const [showMarkers, setShowMarkers] = useState(shouldShowMarkers());
 
   const checkMarkerVisibility = () => {
@@ -31,9 +31,9 @@ const EntranceMarker = ({ classes }) => {
 
   useEffect(() => {
     // Add listener for zoom level to check if markers should be shown
-    map.leafletElement.on('zoomend', checkMarkerVisibility);
+    map.on('zoomend', checkMarkerVisibility);
     return () => {
-      map.leafletElement.off('zoomend', checkMarkerVisibility);
+      map.off('zoomend', checkMarkerVisibility);
     };
   }, []);
 
