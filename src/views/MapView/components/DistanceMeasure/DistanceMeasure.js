@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Typography, useTheme } from '@material-ui/core';
 import { renderToStaticMarkup } from 'react-dom/server';
+import { useMapEvents } from 'react-leaflet';
 
 
 const DistanceMeasure = (props) => {
@@ -10,14 +11,19 @@ const DistanceMeasure = (props) => {
   } = props;
 
   const {
-    Marker, Polyline, Tooltip, Popup, useLeaflet,
+    Marker, Polyline, Tooltip, Popup,
   } = global.rL;
 
   const theme = useTheme();
-  const { map } = useLeaflet();
 
   const [clickedPoint, setClickedPoint] = useState(null);
   const [icon, setIcon] = useState(null);
+
+  useMapEvents({
+    click(e) {
+      setClickedPoint(e.latlng);
+    },
+  });
 
   const getDistance = (interval) => {
     let points = lineArray;
@@ -48,7 +54,6 @@ const DistanceMeasure = (props) => {
   }, [clickedPoint]);
 
   useEffect(() => {
-    map.on('click', e => setClickedPoint(e.latlng));
     setMarkerArray(lineArray);
   }, []);
 
@@ -78,15 +83,15 @@ const DistanceMeasure = (props) => {
             zIndexOffset={500}
             keyboard={false}
             icon={icon}
-            onDrag={ev => updateLine(ev, i)}
-            onClick={() => {}}
             draggable
             key={`${point.lat}-${point.lng}`}
             position={point}
-            onMouseOver={(e) => { e.target.openPopup(); }}
-            onMouseOut={(e) => { e.target.closePopup(); }}
-            onFocus={() => {}}
-            onBlur={() => {}}
+            eventHandlers={{
+              click: () => {},
+              mouseOver: e => e.target.openPopup(),
+              mouseOut: e => e.target.closePopup(),
+              drag: e => updateLine(e, i),
+            }}
           >
             {/* Show distance tooltip on last marker */}
             {markerArray.length > 1 && i === markerArray.length - 1 && (

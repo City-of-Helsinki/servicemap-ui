@@ -9,6 +9,7 @@ import {
 import { ButtonBase } from '@material-ui/core';
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
+import { useMap } from 'react-leaflet';
 import isClient from '../../../../utils';
 import { isEmbed } from '../../../../utils/path';
 
@@ -16,7 +17,7 @@ const embedded = isEmbed();
 
 const panOffset = 100;
 
-const PanControl = ({ classes, Control, map }) => {
+  const map = useMap();
   // Button callback function
   const callback = useCallback((direction) => {
     if (!map || !direction) return;
