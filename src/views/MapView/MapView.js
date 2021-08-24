@@ -31,6 +31,7 @@ import PanControl from './components/PanControl';
 import adjustControlElements from './utils';
 import EntranceMarker from './components/EntranceMarker';
 import EventMarkers from './components/EventMarkers';
+import CustomControls from './components/CustomControls';
 
 if (global.window) {
   require('leaflet');
@@ -386,41 +387,36 @@ const MapView = (props) => {
             />
           )}
 
-          <Control position="topleft">
+          <CustomControls position="topleft">
             {!isMobile && !embedded && toggleSidebar ? (
               <HideSidebarButton
                 sidebarHidden={sidebarHidden}
                 toggleSidebar={toggleSidebar}
               />
             ) : null}
-          </Control>
-          <PanControl
-            Control={Control}
-            map={mapRef?.current?.leafletElement}
-          />
-          {
-            !embedded
-            && (
-              <>
-                {/* Custom user location map button */}
-                <Control className="UserLocation" position="bottomright">
-                  <ButtonBase
-                    aria-hidden
-                    aria-label={userLocationAriaLabel}
-                    disabled={!userLocation}
-                    className={`${classes.showLocationButton} ${!userLocation ? classes.locationDisabled : ''}`}
-                    onClick={() => focusOnUser()}
-                    focusVisibleClassName={classes.locationButtonFocus}
-                  >
-                    {userLocation
-                      ? <MyLocation className={classes.showLocationIcon} />
-                      : <LocationDisabled className={classes.showLocationIcon} />
-                    }
-                  </ButtonBase>
-                </Control>
-              </>
-            )
-          }
+          </CustomControls>
+          <CustomControls position="bottomright">
+            {!embedded && (
+              /* Custom user location map button */
+              <div key="userLocation" className="UserLocation">
+                <ButtonBase
+                  aria-hidden
+                  aria-label={userLocationAriaLabel}
+                  disabled={!userLocation}
+                  className={`${classes.showLocationButton} ${!userLocation ? classes.locationDisabled : ''}`}
+                  onClick={() => focusOnUser()}
+                  focusVisibleClassName={classes.locationButtonFocus}
+                >
+                  {userLocation
+                    ? <MyLocation className={classes.showLocationIcon} />
+                    : <LocationDisabled className={classes.showLocationIcon} />
+                  }
+                </ButtonBase>
+              </div>
+            )}
+
+            <PanControl key="panControl" />
+          </CustomControls>
           <CoordinateMarker />
         </Map>
       </>

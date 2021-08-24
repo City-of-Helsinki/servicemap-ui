@@ -38,6 +38,9 @@ const styles = theme => ({
     alignItems: 'center',
     zIndex: theme.zIndex.infront,
   },
+  controlsContainer: {
+    marginBottom: theme.spacing(2),
+  },
   popup: {
     padding: 12,
   },
