@@ -67,12 +67,10 @@ const MapView = (props) => {
     toggleSidebar,
     sidebarHidden,
   } = props;
-  const mapRef = useRef(null);
 
   // State
   const [mapObject, setMapObject] = useState(null);
-  const [mapClickPoint, setMapClickPoint] = useState(null);
-  const [refSaved, setRefSaved] = useState(false);
+  const [mapElement, setMapElement] = useState(null);
   const [prevMap, setPrevMap] = useState(null);
   const [unitData, setUnitData] = useState(null);
   const [mapUtility, setMapUtility] = useState(null);
@@ -155,9 +153,9 @@ const MapView = (props) => {
   };
 
   const initializeMap = () => {
-    if (mapRef.current) {
+    if (mapElement) {
       // If changing map type, save current map viewport values before changing map
-      const map = mapRef.current;
+      const map = mapElement;
       map.defaultZoom = mapObject.options.zoom;
       setPrevMap(map);
     }
@@ -172,7 +170,7 @@ const MapView = (props) => {
   const focusOnUser = () => {
     if (userLocation) {
       focusToPosition(
-        mapRef.current.leafletElement,
+        mapElement,
         [userLocation.longitude, userLocation.latitude],
       );
     } else if (!embedded) {
@@ -317,17 +315,16 @@ const MapView = (props) => {
 
 
   if (global.rL && mapObject) {
-    const { Map, TileLayer } = global.rL || {};
-    const Control = require('react-leaflet-control').default;
+    const { MapContainer, TileLayer } = global.rL || {};
     let center = mapOptions.initialPosition;
     let zoom = isMobile ? mapObject.options.mobileZoom : mapObject.options.zoom;
     if (prevMap) { // If changing map type, use viewport values of previuous map
-      center = prevMap.viewport.center || prevMap.props.center;
+      center = prevMap.getCenter() || prevMap.props.center;
       /* Different map types have different zoom levels
       Use the zoom difference to calculate the new zoom level */
       const zoomDifference = mapObject.options.zoom - prevMap.defaultZoom;
-      zoom = prevMap.viewport.zoom
-        ? prevMap.viewport.zoom + zoomDifference
+      zoom = prevMap.getZoom()
+        ? prevMap.getZoom() + zoomDifference
         : prevMap.props.zoom + zoomDifference;
     }
 
@@ -337,14 +334,12 @@ const MapView = (props) => {
 
     return (
       <>
-        {renderTopBar()}
         {renderEmbedOverlay()}
-        <Map
+        <MapContainer
           tap={false} // This should fix leaflet safari double click bug
           preferCanvas
           className={`${classes.map} ${measuringMode ? classes.measuringCursor : ''} ${embedded || sidebarHidden ? classes.mapNoSidebar : ''} `}
           key={mapObject.options.name}
-          ref={mapRef}
           zoomControl={false}
           doubleClickZoom={false}
           crs={mapObject.crs}
@@ -356,7 +351,10 @@ const MapView = (props) => {
           detailZoom={mapObject.options.detailZoom}
           maxBounds={mapObject.options.mapBounds || mapOptions.defaultMaxBounds}
           maxBoundsViscosity={1.0}
-          onClick={(ev) => { setClickCoordinates(ev); }}
+          whenCreated={(map) => {
+            setMapElement(map);
+            setMapRef(map);
+          }}
         >
           {eventSearch
             ? <EventMarkers searchData={unitData} />
