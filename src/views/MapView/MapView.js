@@ -134,24 +134,6 @@ const MapView = (props) => {
     return mapUnits;
   };
 
-  const setClickCoordinates = (ev) => {
-    if (embedded) return;
-    setMapClickPoint(null);
-    if (document.getElementsByClassName('leaflet-popup').length > 0) {
-      mapRef.current.leafletElement.closePopup();
-    } else {
-      setMapClickPoint(ev.latlng);
-    }
-  };
-
-  const saveMapReference = () => {
-    setMapRef(mapRef.current);
-  };
-
-  const clearMapReference = () => {
-    setMapRef(null);
-  };
-
   const initializeMap = () => {
     if (mapElement) {
       // If changing map type, save current map viewport values before changing map
@@ -378,13 +360,7 @@ const MapView = (props) => {
           />
           {!embedded && !measuringMode && mapClickPoint && (
             // Draw address popoup on mapclick to map
-            <AddressPopup
-              mapClickPoint={mapClickPoint}
-              getAddressNavigatorParams={getAddressNavigatorParams}
-              map={mapRef.current}
-              setAddressLocation={setAddressLocation}
-              navigator={navigator}
-            />
+            <AddressPopup navigator={navigator} />
           )}
 
           {currentPage === 'address' && (
