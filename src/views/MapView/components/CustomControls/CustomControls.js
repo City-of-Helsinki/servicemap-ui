@@ -13,7 +13,7 @@ const POSITION_CLASSES = {
 const CustomControls = ({ position, classes, children }) => {
   useEffect(() => {
     // This prevents control button click propagation
-    const div = global.L.DomUtil.get('controlsContainer');
+    const div = global.L.DomUtil.get(`controlsContainer${position}`);
     global.L.DomEvent.disableClickPropagation(div);
   }, []);
 
@@ -26,7 +26,7 @@ const CustomControls = ({ position, classes, children }) => {
   );
 
   return (
-    <div className={`${positionClass} ${classes.controlsContainer}`} id="controlsContainer">
+    <div className={`${positionClass} ${classes.controlsContainer}`} id={`controlsContainer${position}`}>
       {Array.isArray(children)
         ? children.map(component => (
           renderControl(component)
