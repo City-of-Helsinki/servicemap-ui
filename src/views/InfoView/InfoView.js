@@ -39,7 +39,7 @@ const InfoView = ({
       </ButtonBase>
       <Typography component="h3" variant="body2"><FormattedMessage id="app.title" /></Typography>
       <Typography className={classes.text} variant="body2">
-        Palvelukartalta löydät Espoon, Helsingin, Kauniaisten, Vantaan julkiset toimipisteet ja niiden palvelut.
+        Palvelukartalta löydät Espoon, Helsingin, Kauniaisten, Vantaan ja Kirkkonummen julkiset toimipisteet ja niiden palvelut.
         Esimerkiksi koulut, päiväkodit, terveysasemat. Palvelukartalta löytyy myös muitakin palveluja, esimerkiksi
         HUSin (esimerkiksi röntgenit), HSY:n (esimerkiksi kierrätyspisteet), Aalto-yliopiston ja muita valtion
         palveluja. Yksityisiä palveluja, esimerkiksi turistikohteita (esimerkiksi ravintoloita) tulee palvelukartalle
@@ -157,7 +157,7 @@ const InfoView = ({
       </Typography>
       <Typography component="h4" variant="body2">Kaupunkiasetukset</Typography>
       <Typography className={classes.text} variant="body2">
-        Täältä voit valita joko yhden tai useamman seuraavista kaupungeista: Espoo, Helsinki, Kauniainen, Vantaa.
+        Täältä voit valita joko yhden tai useamman seuraavista kaupungeista: Espoo, Helsinki, Kauniainen, Vantaa, Kirkkonummi
         Kun valitset jonkin kaupungin, hakutulokset kohdistuvat ainoastaan tämän kaupungin tietoihin.
         Jos et ole valinnut yhtäkään kaupunkia, haku kohdistuu kaikkiin kaupunkeihin.
       </Typography>
@@ -386,8 +386,8 @@ const InfoView = ({
       </ButtonBase>
       <Typography component="h3" variant="body2"><FormattedMessage id="app.title" /></Typography>
       <Typography className={classes.text} variant="body2">
-        On the Service Map, you can find the public services units of the cities of Espoo, Helsinki, Kauniainen and
-        Vantaa, and their services – for example, schools, day-care centres and health stations.
+        On the Service Map, you can find the public services units of the cities of Espoo, Helsinki, Kauniainen,
+        Vantaa and Kirkkonummi, and their services – for example, schools, day-care centres and health stations.
         On the Service Map, there are other public services as well, such as HUS's services (for example, X-
         rays), Helsinki Region Environmental Services Authority’s services (e.g. recycling sites), Aalto University’s
         services as well as other governmental services. Individual services such as tourist attractions (for example
@@ -489,7 +489,7 @@ const InfoView = ({
       </Typography>
       <Typography component="h4" variant="body2">City settings</Typography>
       <Typography className={classes.text} variant="body2">
-        Here you can choose one or several of the cities: Espoo, Helsinki, Kauniainen, Vantaa. When you choose a
+        Here you can choose one or several of the cities: Espoo, Helsinki, Kauniainen, Vantaa, Kirkkonummi. When you choose a
         city, the search results concern only this city’s data. If you have not chosen a city, then the search concerns
         all cities.
       </Typography>
@@ -678,8 +678,8 @@ const InfoView = ({
       </ButtonBase>
       <Typography component="h3" variant="body2"><FormattedMessage id="app.title" /></Typography>
       <Typography className={classes.text} variant="body2">
-        På Servicekartan hittar du offentliga verksamhetsställen och service i Esbo, Grankulla, Helsingfors och
-        Vanda stad - exempelvis skolor, daghem och hälsostationer.
+        På Servicekartan hittar du offentliga verksamhetsställen och service i Esbo, Grankulla, Helsingfors,
+        Vanda och Kyrkslätt stad - exempelvis skolor, daghem och hälsostationer.
         På Servicekartan finns även andra offentliga tjänster, såsom HUS service (t.ex. röntgen), HRM:s tjänster
         (t.ex. återvinningsstationer), Aalto-universitetets tjänster samt diverse statliga tjänster. Privata tjänster
         såsom turistobjekt (t.ex. restauranger) kommer till Servicekartan via MyHelsinki-gränssnittet.
