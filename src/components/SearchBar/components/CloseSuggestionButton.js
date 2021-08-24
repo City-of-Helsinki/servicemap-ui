@@ -10,7 +10,7 @@ export const CloseSuggestionButton = ({
   onKeyDown,
   icon,
   srOnly,
-  ...rest,
+  ...rest
 }) => {
   const tabIndex = srOnly ? '-1' : '0';
 
