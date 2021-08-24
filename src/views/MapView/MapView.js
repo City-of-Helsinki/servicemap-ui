@@ -352,13 +352,9 @@ const MapView = (props) => {
             </div>
           ) : null}
           <Districts mapOptions={mapOptions} embedded={embedded} />
+          <TransitStops mapObject={mapObject} />
 
-          <TransitStops
-            map={mapRef.current}
-            mapObject={mapObject}
-            isMobile={isMobile}
-          />
-          {!embedded && !measuringMode && mapClickPoint && (
+          {!embedded && !measuringMode && (
             // Draw address popoup on mapclick to map
             <AddressPopup navigator={navigator} />
           )}
