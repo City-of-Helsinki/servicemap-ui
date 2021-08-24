@@ -115,7 +115,7 @@ const InfoView = ({
         <li><Typography variant="body2">suomenkielinen esiopetusalue</Typography></li>
         <li><Typography variant="body2">suomenkielinen ala-astealue</Typography></li>
         <li><Typography variant="body2">suomenkielinen yläastealue</Typography></li>
-        <li><Typography variant="body2">ruotsinkielinen esiopatusalue</Typography></li>
+        <li><Typography variant="body2">ruotsinkielinen esiopetusalue</Typography></li>
         <li><Typography variant="body2">ruotsinkielinen ala-astealue</Typography></li>
         <li><Typography variant="body2">ruotsinkielinen yläastealue</Typography></li>
         <li><Typography variant="body2">suojelupiiri</Typography></li>
@@ -166,7 +166,6 @@ const InfoView = ({
       <ul>
         <li><Typography variant="body2">palvelukartta</Typography></li>
         <li><Typography variant="body2">suurikontrastinen kartta</Typography></li>
-        <li><Typography variant="body2">ilmakuva</Typography></li>
         <li><Typography variant="body2">opaskartta</Typography></li>
       </ul>
       {/* <Typography className={classes.text} variant="body2">
@@ -207,9 +206,34 @@ const InfoView = ({
         Rekisteriselosteet löydät kootusti hel.fi-portaalista.
         Katso kohdat Kaupunginkanslia: Toimipisterekisterin keskitetty tietovarasto ja Helsingin kaupungin palautejärjestelmä.
       </Typography>
-      <Typography component="h3" variant="body2">Muuta</Typography>
+      <Typography component="h3" variant="body2">Evästeet</Typography>
       <Typography className={classes.text} variant="body2">
-        Palvelukartta on myös Facebookissa ja Twitterissä.
+        Käytämme sivustollamme evästeitä parantaaksemme sivuston suorituskykyä. Sivustolla kerätään automaattisesti alla kuvatut tiedot kävijöistä. Näitä tietoja käytetään sivuston käyttöliittymän ja käyttökokemuksen parantamiseen sekä kävijämäärien tilastolliseen seurantaan. Tietoja ei luovuteta ulkopuolisille tahoille. Sivustolla käytetään evästeitä (cookies) käyttäjäistunnon ylläpitämiseksi. Teknisiin evästeisiin ei kerätä eikä tallenneta käyttäjän yksilöiviä henkilötietoja.
+        Käyttäjällä on mahdollisuus estää evästeiden käyttö muuttamalla selaimensa asetuksia. Sivuston käyttäminen ilman evästeitä saattaa kuitenkin vaikuttaa sivujen toiminnallisuuteen.
+        Palvelun kävijätilastointia varten kerätyt tiedot anonymisoidaan, joten niitä ei voida liittää yksittäiseen henkilöön. Tällaisia tietoja ovat:
+      </Typography>
+      <ul>
+        <li>
+          <Typography variant="body2">IP-osoite, josta verkkosivuille on siirrytty</Typography>
+        </li>
+        <li>
+          <Typography variant="body2">ajankohta</Typography>
+        </li>
+        <li>
+          <Typography variant="body2">palvelussa käytetyt sivut</Typography>
+        </li>
+        <li>
+          <Typography variant="body2">selaintyyppi</Typography>
+        </li>
+        <li>
+          <Typography variant="body2">alueellinen sijaintitieto, josta käyttäjää ei voi yksilöidä.</Typography>
+        </li>
+      </ul>
+      <Typography className={classes.text} variant="body2">
+        {'Lisää tietoa palvelun evästeistä: '}
+        <Link target="_blank" href="https://www.hel.fi/helsinki/fi/kaupunki-ja-hallinto/tietoa-helsingista/tietoa-hel-fista/turvallisuus">
+          Verkkopalvelun tietosuoja ja evästeet | Helsingin kaupunki
+        </Link>
       </Typography>
     </div>
   );
@@ -234,11 +258,11 @@ const InfoView = ({
       <Typography component="h4" variant="body2">Vaatimustenmukaisuustilanne</Typography>
       <Typography className={classes.text} variant="body2">
         Tämä verkkosivusto täyttää lain asettamat kriittiset saavutettavuusvaatimukset
-         WCAG v2.1 -tason AA mukaisesti seuraavin havaituin puuttein.
+        WCAG v2.1 -tason AA mukaisesti seuraavin havaituin puuttein.
       </Typography>
       <Typography component="h3" variant="body2">Havaitut puutteet</Typography>
       <Typography className={classes.text} variant="body2">
-        Palvelukartta.hel.fi sivusto on saavutettava siltä osin, kuin saavutettavuuslaki sitä edellyttää. 
+        Palvelukartta.hel.fi sivusto on saavutettava siltä osin, kuin saavutettavuuslaki sitä edellyttää.
         Palvelukartta noudattaa laissa asetettua pykälää:
       </Typography>
       <Typography className={classes.text} variant="body2">
@@ -267,7 +291,7 @@ const InfoView = ({
         esittää silloin käyttäjälle kaiken edellä kuvatun, karttapohjaan liittyvän ns. metatiedon, kuten klikattavat
         toimipisteet ja kadunnimet. Käyttäjä hyvin nopeasti hukkuisi tällaisen tietotulvan sekaan, ja palvelun käytöstä
         tulisi kohtuuttoman raskasta. Siksi karttaa ei tällä hetkellä paljasteta avustavalle teknologialle, vaan vastaava
-        tieto tarjotaan palvelun hakukentän kautta. 
+        tieto tarjotaan palvelun hakukentän kautta.
       </Typography>
 
       <Typography component="h4" variant="body2">Puutteiden korjaus</Typography>
@@ -498,8 +522,7 @@ const InfoView = ({
       <ul>
         <li><Typography variant="body2">Service map</Typography></li>
         <li><Typography variant="body2">High-contrast map</Typography></li>
-        <li><Typography variant="body2">Aerial map</Typography></li>
-        <li><Typography variant="body2">Aerial map</Typography></li>
+        <li><Typography variant="body2">Guide map</Typography></li>
       </ul>
       <Typography className={classes.text} variant="body2">
         in the accessibility settings you have chosen “I am visually impaired” or “I have color vision deficiency”,
@@ -546,9 +569,35 @@ const InfoView = ({
       <Typography className={classes.text} variant="body2">
         The service has been developed at the ICT Management unit of the Helsinki City Executive Office.
       </Typography>
-      <Typography component="h3" variant="body2">Other</Typography>
+      <Typography component="h3" variant="body2">Cookies</Typography>
       <Typography className={classes.text} variant="body2">
-        The Service Map is also on Facebook and Twitter .
+        We use cookies on our website to improve the performance and content of the site. The website automatically collects the below data about visitors. This data is used to improve the user interface and user experience of the website and to monitor statistically the numbers of visitors. The data is not handed over to external parties.
+        The website uses cookies to maintain the user session. Personal data identifying the user is not collected or recorded in the technical cookies.
+        The user has the possibility to prevent the use of cookies by changing the settings of their browser. However, the use of the website without cookies may affect the functionality of the pages.
+        The data collected for the visitor statistics of the service is anonymized so it cannot be connected to an individual person. This data includes:
+      </Typography>
+      <ul>
+        <li>
+          <Typography variant="body2">the IP address used to access the website</Typography>
+        </li>
+        <li>
+          <Typography variant="body2">the time of accessing the service</Typography>
+        </li>
+        <li>
+          <Typography variant="body2">the pages used in the service</Typography>
+        </li>
+        <li>
+          <Typography variant="body2">the type of browser</Typography>
+        </li>
+        <li>
+          <Typography variant="body2">regional location data, which cannot be used to identify the user</Typography>
+        </li>
+      </ul>
+      <Typography className={classes.text} variant="body2">
+        {'Read more about Data protection of the Hel.fi Service: '}
+        <Link target="_blank" href="https://www.hel.fi/helsinki/en/administration/information/information/safety-of-the-hel.fi/safety">
+          Data protection of the Hel.fi Service | City of Helsinki
+        </Link>
       </Typography>
     </div>
   );
@@ -784,7 +833,6 @@ const InfoView = ({
       <ul>
         <li><Typography variant="body2">servicekartan</Typography></li>
         <li><Typography variant="body2">karta med stora kontraster</Typography></li>
-        <li><Typography variant="body2">flygfoto</Typography></li>
         <li><Typography variant="body2">guidekartan</Typography></li>
       </ul>
       {/* <Typography className={classes.text} variant="body2">
@@ -833,9 +881,34 @@ const InfoView = ({
       <Typography className={classes.text} variant="body2">
           Servicen har utarbetats vid Helsingfors stadskanslis informationsförvaltningsenhet.
       </Typography>
-      <Typography component="h3" variant="body2">Övrigt</Typography>
+      <Typography component="h3" variant="body2">Cookies</Typography>
       <Typography className={classes.text} variant="body2">
-        Servicekartan finns också på Facebook och Twitter.
+        Vi använder cookies på vår webbplats för att förbättra webbplatsens prestanda och innehåll. På webbplatsen samlar vi automatiskt in nedan beskrivna uppgifter om besökarna. Dessa uppgifter används för att förbättra webbplatsens användargränssnitt och användarupplevelsen samt för statistisk uppföljning av antalet besökare. Uppgifterna lämnas inte ut till utomstående.På webbplatsen används cookies för att upprätthålla användarsessionen. Tekniska cookies varken samlar eller lagrar identifierande personuppgifter.
+        Användaren kan neka användningen av cookies i webbläsarens inställningar. Att använda webbplatsen utan cookies kan dock påverka sidornas funktioner.
+        Uppgifterna som samlas in för besöksstatistik om tjänsten anonymiseras så att de inte kan kopplas till enskilda personer. Sådana uppgifter är:
+      </Typography>
+      <ul>
+        <li>
+          <Typography variant="body2">IP-adressen från vilken besökaren kommer till webbplats</Typography>
+        </li>
+        <li>
+          <Typography variant="body2">tidpunkt</Typography>
+        </li>
+        <li>
+          <Typography variant="body2">vilka sidor användaren besökt i tjänsten</Typography>
+        </li>
+        <li>
+          <Typography variant="body2">typ av webbläsare</Typography>
+        </li>
+        <li>
+          <Typography variant="body2">regionala platsdata som inte kan användas för att identifiera användaren.</Typography>
+        </li>
+      </ul>
+      <Typography className={classes.text} variant="body2">
+        {'Läs mera om Helsingfors webbtjänstens dataskydd: '}
+        <Link target="_blank" href="https://www.hel.fi/helsinki/sv/stad-och-forvaltning/information/information/sakerhet">
+          Webbtjänstens dataskydd | Helsingfors stad
+        </Link>
       </Typography>
     </div>
   );
@@ -891,7 +964,7 @@ const InfoView = ({
         metoder som siktar till att säkerställa webbplatsens tillgänglighet i alla arbetsfaser.
       </Typography>
       <Typography className={classes.text} variant="body2">
-         Tillgängligheten är kontrollerad genom revision av en extern expert samt som egen
+        Tillgängligheten är kontrollerad genom revision av en extern expert samt som egen
         edömning.
         Tillgängligheten är kontrollerad med hjälp av automatisk tillgänglighetskontroll samt
         manuell kontroll av webbplatsen och innehållet. Automatiska kontroller har utförts
