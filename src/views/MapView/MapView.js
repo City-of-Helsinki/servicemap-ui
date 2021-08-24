@@ -2,14 +2,11 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import {
-  withStyles, Tooltip as MUITooltip, ButtonBase,
-} from '@material-ui/core';
+import { Tooltip as MUITooltip, ButtonBase } from '@material-ui/core';
 import { MyLocation, LocationDisabled } from '@material-ui/icons';
 import { mapOptions } from './config/mapConfig';
 import CreateMap from './utils/createMap';
 import { focusToPosition } from './utils/mapActions';
-import styles from './styles';
 import Districts from './components/Districts';
 import TransitStops from './components/TransitStops';
 import AddressPopup from './components/AddressPopup';
@@ -49,7 +46,6 @@ const MapView = (props) => {
     intl,
     location,
     settings,
-    setAddressLocation,
     unitList,
     unitsLoading,
     serviceUnits,
@@ -236,7 +232,6 @@ const MapView = (props) => {
 
 
   useEffect(() => {
-    setMapClickPoint(null);
     if (!measuringMode) {
       setMeasuringMarkers([]);
       setMeasuringLine([]);
@@ -244,18 +239,6 @@ const MapView = (props) => {
   }, [measuringMode]);
 
   // Render
-
-  const renderTopBar = () => {
-    if (isMobile) {
-      return (
-        // TODO: search bar disabled from map until it is fixed
-        // <div className={classes.topArea}>
-        //   <SearchBar background="none" />
-        // </div>
-        null
-      );
-    } return null;
-  };
 
   const renderEmbedOverlay = () => {
     if (!embedded) {
@@ -418,14 +401,14 @@ const MapView = (props) => {
             <PanControl key="panControl" />
           </CustomControls>
           <CoordinateMarker />
-        </Map>
+        </MapContainer>
       </>
     );
   }
   return null;
 };
 
-export default withRouter(withStyles(styles)(MapView));
+export default withRouter(MapView);
 
 // Typechecking
 MapView.propTypes = {
@@ -447,7 +430,6 @@ MapView.propTypes = {
   serviceUnits: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
   districtUnits: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
   districtViewFetching: PropTypes.bool.isRequired,
-  setAddressLocation: PropTypes.func.isRequired,
   findUserLocation: PropTypes.func.isRequired,
   setMapRef: PropTypes.func.isRequired,
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
