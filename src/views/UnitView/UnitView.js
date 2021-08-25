@@ -271,10 +271,10 @@ const UnitView = (props) => {
 
     return (
       <div className={classes.content}>
-        <Services
-          listLength={10}
+        <UnitsServicesList
+          listLength={5}
           unit={unit}
-          getLocaleText={getLocaleText}
+          navigator={navigator}
         />
         <UnitDataList
           listLength={5}
