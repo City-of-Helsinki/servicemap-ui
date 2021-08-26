@@ -241,6 +241,7 @@ const translations = {
   'general.pageTitles.home': 'Home page',
   'general.pageTitles.search': 'Search results page',
   'general.pageTitles.unit': 'Service point page',
+  'general.pageTitles.unit.services': 'Service points\' services',
   'general.pageTitles.unit.events': 'Service points\' events',
   'general.pageTitles.unit.reservations': 'Service points\' reservable objects',
   'general.pageTitles.service': 'Service page',
@@ -336,18 +337,20 @@ const translations = {
   'unit.data_source': 'Source: {data_source}',
   'unit.details.notFound': 'Service point info not available.',
   'unit.plural': 'Service points',
+  'unit.distance': 'Distance',
 
   'unit.contact.info': 'Contact information',
   'unit.links': 'Web sites',
   'unit.eServices': 'Electronic services',
   'unit.reservations': 'Reservable objects',
   'unit.events': 'Events',
+  'unit.events.description': 'Tästä löydät tietoa toimipisteen tarjoamista eri tapahtumista', // TODO: translate
   'unit.events.count': `{count, plural,
     =0 {}
     one {# event}
     other {# events}
   }`,
-  'unit.events.more': 'Show more events',
+  'unit.events.more': 'Show more events ({count})',
   'unit.homepage': 'Home page',
   'unit.homepage.missing': 'No home page provided',
   'unit.picture': 'Picture of service point: ',
@@ -369,23 +372,28 @@ const translations = {
   'unit.contact': 'Contact person',
   'unit.school.year': 'School year',
   'unit.opens.new.tab': '(new tab)',
+  'unit.reservations.description': 'Tästä löydät tietoa toimipisteen tarjoamista varattavista tiloista ja tarvikkeista.', // TODO: translate
   'unit.reservations.count': `{count, plural,
     =0 {}
     one {# reservable object}
     other {# reservable objects}
   }`,
-  'unit.reservations.more': 'Show more reservable objects',
+  'unit.reservations.more': 'Show more reservable objects ({count})',
   'unit.call.number': '(call)',
   'unit.list.services': 'Services',
   'unit.list.events': 'Events',
   'unit.list.reservations': 'Reservable objects',
-  'unit.services': 'Services',
-  'unit.services.more': 'Show more services',
+  'unit.services': 'Toimipisteeseen liittyvät palvelut', // TODO: translate
+  'unit.services.description': 'Palvelukuvauksen ohella löydät tietoa kunnan tarjoamista eri asiointikanavista.', // TODO: translate
+  'unit.services.more': 'Show more services ({count})',
   'unit.services.count': `{count, plural,
     =0 {}
     one {# service}
     other {# services}
   }`,
+  'unit.semesters': 'Toimipisteen lukuvuosikohtaiset palvelut.', // TODO: translate
+  'unit.semesters.description': 'Lukuvuosi {semester}', // TODO: translate
+  'unit.semesters.more': 'Show more services ({count})',
   'unit.route': 'Look at the route to this place',
   'unit.route.extra': '(New tab. The HSL Journey Planner is not an accessible service)',
   'unit.socialMedia.title': 'The service point on social media',

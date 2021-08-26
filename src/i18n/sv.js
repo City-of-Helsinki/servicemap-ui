@@ -241,6 +241,7 @@ const translations = {
   'general.pageTitles.home': 'Hemsida',
   'general.pageTitles.search': 'Sökresultatsida',
   'general.pageTitles.unit': 'Vy med verksamhetsställen',
+  'general.pageTitles.unit.services': 'Verksamhetsställets tjänster',
   'general.pageTitles.unit.events': 'Verksamhetsställets evenemang',
   'general.pageTitles.unit.reservations': 'Verksamhetsställets platser som kan reserveras',
   'general.pageTitles.service': 'Tjänstesida',
@@ -336,18 +337,20 @@ const translations = {
   'unit.data_source': 'Källa: {data_source}',
   'unit.details.notFound': 'Verksamhetsställets uppgifter finns inte att tillgå.',
   'unit.plural': 'Verksamhetsställen',
+  'unit.distance': 'Avstånd',
 
   'unit.contact.info': 'Kontaktuppgifter',
   'unit.links': 'På webben',
   'unit.eServices': 'E-tjänster',
   'unit.reservations': 'Objekt som kan reserveras',
   'unit.events': 'Evenemang',
+  'unit.events.description': 'Tästä löydät tietoa toimipisteen tarjoamista eri tapahtumista', // TODO: translate
   'unit.events.count': `{count, plural,
     =0 {}
     one {# evenemang}
     other {# evenemang}
   }`,
-  'unit.events.more': 'Visa fler evenemang',
+  'unit.events.more': 'Visa fler evenemang ({count})',
   'unit.homepage': 'Hemsida',
   'unit.homepage.missing': 'Ingen hemsida har meddelats',
   'unit.picture': 'Bild av verksamhetsstället',
@@ -369,23 +372,28 @@ const translations = {
   'unit.contact': 'Kontaktperson',
   'unit.school.year': 'Läsåret',
   'unit.opens.new.tab': '(ny flik)',
+  'unit.reservations.description': 'Tästä löydät tietoa toimipisteen tarjoamista varattavista tiloista ja tarvikkeista.', // TODO: translate
   'unit.reservations.count': `{count, plural,
     =0 {}
     one {# objekt som kan reserveras}
     other {# objekt som kan reserveras}
   }`,
-  'unit.reservations.more': 'Visa fler objekt som kan reserveras',
+  'unit.reservations.more': 'Visa fler objekt som kan reserveras ({count})',
   'unit.call.number': '(ring)',
   'unit.list.services': 'Tjänster',
   'unit.list.events': 'Evenemang',
   'unit.list.reservations': 'Objekt som kan reserveras',
-  'unit.services': 'Tjänster',
-  'unit.services.more': 'Visa fler tjänster',
+  'unit.services': 'Toimipisteeseen liittyvät palvelut', // TODO: translate
+  'unit.services.description': 'Palvelukuvauksen ohella löydät tietoa kunnan tarjoamista eri asiointikanavista.', // TODO: translate
+  'unit.services.more': 'Visa fler tjänster ({count})',
   'unit.services.count': `{count, plural,
     =0 {}
     one {# tjänst}
     other {# tjänster}
   }`,
+  'unit.semesters': 'Toimipisteen lukuvuosikohtaiset palvelut.', // TODO: translate
+  'unit.semesters.description': 'Lukuvuosi {semester}', // TODO: translate
+  'unit.semesters.more': 'Visa fler tjänster ({count})',
   'unit.route': 'Se vägen till det här stället',
   'unit.route.extra': '(Ny flik. HRT-reseplaneraren är inte en tillgänglig tjänst)',
   'unit.socialMedia.title': 'Verksamhetsstället på sociala medier',
