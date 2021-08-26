@@ -138,6 +138,9 @@ const styles = theme => ({
       },
     },
   },
+  unitMarkerEvent: {
+    borderRadius: 0,
+  },
   markerCircle: {
     alignItems: 'center',
     display: 'flex',
@@ -204,7 +207,8 @@ const styles = theme => ({
     color: theme.palette.primary.main,
   },
   unitTooltipWrapper: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(3),
+    paddingBottom: theme.spacing(2.5),
   },
   unitPopupList: {
     listStyleType: 'none',
