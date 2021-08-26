@@ -25,6 +25,9 @@ const smFetch = (dispatch, options) => {
   if (options.q) {
     smAPI.setOnNext(onNext);
     results = smAPI.search(options.q);
+  } else if (options.service_node) {
+    smAPI.setOnNext(onNext);
+    results = smAPI.serviceNodeSearch(options.service_node);
   }
 
   return results;
@@ -57,8 +60,12 @@ const fetchSearchResults = (options = null) => async (dispatch, getState) => {
     eventsFetch(options),
   ]);
 
+  results[0].forEach((unit) => {
+    unit.object_type = 'unit';
+  });
+
   // Add object type to events
-  const eventResults = results[1].data;
+  const eventResults = results[1]?.data || [];
   eventResults.forEach((unit) => {
     unit.object_type = 'event';
   });

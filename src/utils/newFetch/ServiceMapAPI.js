@@ -28,6 +28,22 @@ export default class ServiceMapAPI extends HttpClient {
     return this.get('search', options);
   }
 
+  serviceNodeSearch = async (idList) => {
+    if (typeof idList !== 'string') {
+      throw new APIFetchError('Invalid query string provided to ServiceMapAPI search method');
+    }
+    const options = {
+      page: 1,
+      page_size: 200,
+      only: 'street_address,location,name,municipality,accessibility_shortcoming_count,service_nodes,contract_type',
+      geometry: true,
+      include: 'service_nodes,services,accessibility_properties,department',
+      service_node: idList,
+    };
+
+    return this.get('unit', options);
+  }
+
   serviceNames = async (idList) => {
     if (typeof idList !== 'string') {
       throw new APIFetchError('Invalid idList string provided to ServiceMapAPI serviceNames method');
