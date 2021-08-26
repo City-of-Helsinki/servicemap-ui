@@ -102,17 +102,18 @@ exports[`<ServiceMapButton /> should work 1`] = `
         }
       }
       margin={false}
+      messageCount={null}
       messageID={null}
       onClick={[Function]}
       role="button"
       small={false}
       style={null}
+      textVariant="caption"
     >
       <WithStyles(ForwardRef(ButtonBase))
         aria-label={null}
         className="ForwardRef-button-1  ForwardRef-marginRight-4  ForwardRef-default-7"
         disabled={false}
-        icon={null}
         onClick={[Function]}
         role="button"
         style={Object {}}
@@ -130,7 +131,6 @@ exports[`<ServiceMapButton /> should work 1`] = `
           }
           disableRipple={true}
           disabled={false}
-          icon={null}
           onClick={[Function]}
           role="button"
           style={Object {}}
@@ -140,7 +140,6 @@ exports[`<ServiceMapButton /> should work 1`] = `
             aria-label={null}
             className="MuiButtonBase-root ForwardRef-button-1  ForwardRef-marginRight-4  ForwardRef-default-7"
             disabled={false}
-            icon={null}
             onBlur={[Function]}
             onClick={[Function]}
             onDragLeave={[Function]}
