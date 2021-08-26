@@ -85,7 +85,7 @@ const UnitDataList = ({
 };
 
 UnitDataList.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.any).isRequired,
+  data: PropTypes.arrayOf(PropTypes.any),
   isFetching: PropTypes.bool,
   listLength: PropTypes.number,
   type: PropTypes.string.isRequired,
@@ -95,6 +95,7 @@ UnitDataList.propTypes = {
 };
 
 UnitDataList.defaultProps = {
+  data: null,
   listLength: 5,
   isFetching: false,
   navigator: null,

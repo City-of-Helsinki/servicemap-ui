@@ -91,7 +91,7 @@ TitledList.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   subtitle: PropTypes.node,
   title: PropTypes.node,
-  description: PropTypes.string,
+  description: PropTypes.node,
   buttonMessageCount: PropTypes.number,
   divider: PropTypes.bool,
   onButtonClick: PropTypes.func,
