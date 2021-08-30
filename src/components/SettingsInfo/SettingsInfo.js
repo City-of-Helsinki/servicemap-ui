@@ -46,7 +46,12 @@ const SettingsInfo = ({
 
   let citySettings = [];
   config.cities.forEach((city) => {
-    citySettings.push(...settings.cities[city] ? [{ text: `${intl.formatMessage({ id: `settings.city.${city}` })}`, icon: <SMIcon icon={`icon-icon-coat-of-arms-${city}`} /> }] : []);
+    citySettings.push(...settings.cities[city]
+      ? [{
+        text: `${intl.formatMessage({ id: `settings.city.${city}` })}`,
+        icon: city === 'kirkkonummi' ? getIcon('kirkkonummiIcon') : <SMIcon icon={`icon-icon-coat-of-arms-${city}`} />,
+      }]
+      : []);
   });
 
   if (!onlyCities && citySettings.length === config.cities.length) {

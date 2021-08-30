@@ -39,7 +39,6 @@
 .icon-icon-coat-of-arms-helsinki:before,
 .icon-icon-coat-of-arms-kauniainen:before,
 .icon-icon-coat-of-arms-vantaa:before,
-.icon-icon-coat-of-arms-kirkkonummi:before,
 .icon-icon-collapse:before,
 .icon-icon-colour-blind:before,
 .icon-icon-copyright:before,
@@ -119,7 +118,6 @@
 .icon-icon-coat-of-arms-helsinki:before { content: "\f129"; }
 .icon-icon-coat-of-arms-kauniainen:before { content: "\f12a"; }
 .icon-icon-coat-of-arms-vantaa:before { content: "\f12b"; }
-.icon-icon-coat-of-arms-kirkkonummi:before { content: "\f129"; } /* FIXME: uses now Helsinki icon as default. Replace with correct one once available */
 .icon-icon-collapse:before { content: "\f107"; }
 .icon-icon-colour-blind:before { content: "\f126"; }
 .icon-icon-copyright:before { content: "\f137"; }
