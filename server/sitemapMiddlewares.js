@@ -2,6 +2,7 @@ import config from '../config';
 import { SitemapStream, streamToPromise } from 'sitemap'
 import { createGzip } from 'zlib'
 import { fetchIDs } from './dataFetcher';
+import { sitemapActive } from './utils';
 
 const fs = require('fs');
 const supportedLanguages = config.supportedLanguages;
@@ -24,11 +25,11 @@ export const getRobotsFile = (req, res, next) => {
   // Returns robots.txt file that points to sitemap location
   if (process.env.DOMAIN) {
     res.type('text/plain');
-    if (process.env.SERVER_TYPE === 'staging') {
+    if (sitemapActive()) {
+      res.send(`User-agent: *\nAllow: /\n\nSitemap: ${process.env.DOMAIN}/sitemap.xml`);
+    } else {
       // Disable crawling if on staging server
       res.send(`User-agent: *\nDisallow: /`);
-    } else {
-      res.send(`User-agent: *\nAllow: /\n\nSitemap: ${process.env.DOMAIN}/sitemap.xml`);
     }
   } else {
     next();

@@ -52,6 +52,7 @@ export const dataStructure = [ // Categorized district data structure
     districts: [
       'neighborhood',
       'postcode_area',
+      'major_district',
     ],
   },
   {

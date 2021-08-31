@@ -20,7 +20,7 @@ test('Unit geometry is drawn on map', async (t) => {
 });
 
 fixture`Unit page geometry test`
-  .page`http://${server.address}:${server.port}/fi/unit/54039`
+  .page`http://${server.address}:${server.port}/fi/unit/56544`
   .beforeEach(async () => {
     await waitForReact();
   });
