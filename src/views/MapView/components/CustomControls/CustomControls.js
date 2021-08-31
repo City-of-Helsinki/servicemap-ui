@@ -41,7 +41,7 @@ const CustomControls = ({ position, classes, children }) => {
 
 CustomControls.propTypes = {
   children: PropTypes.node.isRequired,
-  position: PropTypes.string.isRequired,
+  position: PropTypes.oneOf(Object.keys(POSITION_CLASSES)).isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
