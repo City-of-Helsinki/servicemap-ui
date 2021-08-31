@@ -1,4 +1,5 @@
-import { districtFetch, unitsFetch } from '../../utils/fetch';
+import { districtFetch } from '../../utils/fetch';
+import ServiceMapAPI from '../../utils/newFetch/ServiceMapAPI';
 import {
   dataStructure,
   geographicalDistricts,
@@ -145,14 +146,10 @@ export const fetchAllDistricts = selected => (
 export const fetchDistrictUnitList = nodeID => (
   async (dispatch) => {
     dispatch(startUnitFetch(nodeID));
-    const options = {
-      page: 1,
-      page_size: 1000,
-      division: nodeID,
-    };
     try {
-      const data = await unitsFetch(options);
-      const units = data.results;
+      // TODO: Add progress bar update to here with onNext
+      const smAPI = new ServiceMapAPI();
+      const units = await smAPI.areaUnits(nodeID);
       units.forEach((unit) => {
         unit.object_type = 'unit';
         unit.division_id = nodeID;

@@ -84,7 +84,7 @@ const GeographicalTab = ({
   };
 
   useEffect(() => {
-    if (!selectedDistrictType || geographicalDistricts.includes(selectedDistrictType)) {
+    if (!selectedDistrictType || !geographicalDistricts.includes(selectedDistrictType)) {
       dispatch(setSelectedSubdistricts([]));
       dispatch(setSelectedDistrictServices([]));
       setOpenCategory(null);
