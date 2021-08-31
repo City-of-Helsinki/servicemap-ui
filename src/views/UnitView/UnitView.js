@@ -111,6 +111,8 @@ const UnitView = (props) => {
       window.open(URLs.vantaa);
     } else if (unit.municipality === 'kauniainen') {
       window.open(URLs.kauniainen);
+    } else if (unit.municipality === 'kirkkonummi') {
+      window.open(URLs.kirkkonummi);
     } else {
       navigator.push('unit', { id: unit.id, type: 'feedback' });
     }

@@ -53,7 +53,7 @@ if (typeof settings.OLD_MAP_LINK_EN === 'undefined'
 
 if (typeof settings.CITIES === 'undefined') {
   // If not set default to Helsinki
-  settings.CITIES = 'helsinki,espoo,vantaa,kauniainen';
+  settings.CITIES = 'helsinki,espoo,vantaa,kauniainen,kirkkonummi';
 }
 
 if (typeof settings.SERVICE_MAP_URL === 'undefined') {
@@ -114,19 +114,22 @@ try {
       espoo: 'Espoo',
       helsinki: 'Helsinki',
       kauniainen: 'Kauniainen',
-      vantaa: 'Vantaa'
+      vantaa: 'Vantaa',
+      kirkkonummi: 'Kirkkonummi'
     },
     en: {
       espoo: 'Espoo',
       helsinki: 'Helsinki',
       kauniainen: 'Kauniainen',
-      vantaa: 'Vantaa'
+      vantaa: 'Vantaa',
+      kirkkonummi: 'Kirkkonummi'
     },
     sv: {
       espoo: 'Esbo',
       helsinki: 'Helsingfors',
       kauniainen: 'Grankulla',
-      vantaa: 'Vanda'
+      vantaa: 'Vanda',
+      kirkkonummi: 'Kyrkslätt'
     }
   }
 }
@@ -174,6 +177,7 @@ export default {
     espoo: 'https://easiointi.espoo.fi/efeedback/',
     vantaa: 'https://asiointi.vantaa.fi/anna-palautetta',
     kauniainen: 'https://www.kauniainen.fi/kaupunki_ja_paatoksenteko/osallistu_ja_vaikuta',
+    kirkkonummi: 'https://www.kirkkonummi.fi/osallistu-ja-vaikuta',
   },
   "production": settings.MODE === 'production',
   "initialMapPosition": settings.INITIAL_MAP_POSITION.split(','),
