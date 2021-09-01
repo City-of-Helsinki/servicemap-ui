@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import { Map, Mail, Hearing } from '@material-ui/icons';
 import { Helmet } from 'react-helmet';
 import { useSelector } from 'react-redux';
-import SearchBar from '../../components/SearchBar';
+import { SearchBar } from '../../components';
 import TitleBar from '../../components/TitleBar';
 import Container from '../../components/Container';
 import AccessibilityInfo from './components/AccessibilityInfo';

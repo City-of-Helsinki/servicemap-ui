@@ -18,7 +18,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-const SearchBar = withStyles(styles)(connect(
+export const SearchBar = withStyles(styles)(connect(
   mapStateToProps,
   { changeSelectedUnit, fetchUnits },
 )(SearchBarComponent));
