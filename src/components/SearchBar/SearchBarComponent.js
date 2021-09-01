@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import PropTypes from 'prop-types';
 import {
@@ -7,7 +7,7 @@ import {
 import {
   Search, Cancel,
 } from '@material-ui/icons';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import BackButton from '../BackButton';
 import { keyboardHandler } from '../../utils';
 import SuggestionBox from './components/SuggestionBox';
@@ -15,61 +15,65 @@ import MobileComponent from '../MobileComponent';
 import DesktopComponent from '../DesktopComponent';
 import { CloseSuggestionButton } from './components/CloseSuggestionButton';
 
-class SearchBar extends React.Component {
-  blurDelay = 150;
+let blurTimeout = null;
 
-  blurTimeout = null;
+const SearchBarComponent = ({
+  background,
+  changeSelectedUnit,
+  classes,
+  className,
+  fetchUnits,
+  hideBackButton,
+  navigator,
+  isFetching,
+  isSticky,
+  header,
+  initialValue,
+  margin,
+  previousSearch,
+}) => {
+  const blurDelay = 150;
+  const rootClass = 'SearchBar';
+  const ps = previousSearch
+    && !(previousSearch.includes('service_node:') || previousSearch.includes('events:')) ? previousSearch : null;
 
-  rootClass = 'SearchBar';
+  const intl = useIntl();
 
-  searchRef = null;
+  const [isActive, setIsActive] = useState(false);
+  const [initialSearchValue, setInitialSearchValue] = useState(ps || initialValue || '');
+  const [focusedSuggestion, setFocusedSuggestion] = useState(null);
+  const [updateCount, setUpdateCount] = useState(0);
+  const searchRef = useRef();
 
-  constructor(props) {
-    super(props);
-    const { initialValue, previousSearch } = props;
-
-    this.searchRef = React.createRef();
-    // Avoid service_nodes when setting initial search value
-    const ps = previousSearch
-      && !(previousSearch.includes('service_node:') || previousSearch.includes('events:')) ? previousSearch : null;
-
-    this.state = {
-      initialSearchValue: ps || initialValue || '',
-      isActive: false,
-      focusedSuggestion: null,
-    };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { initialValue } = nextProps;
-    // eslint-disable-next-line react/destructuring-assignment
-    const oldInitialValue = this.props.initialValue;
-
-    if (oldInitialValue !== initialValue) {
-      this.setState({ initialSearchValue: initialValue });
+  useEffect(() => {
+    if (initialSearchValue !== initialValue) {
+      setInitialSearchValue(initialValue);
     }
-    return true;
-  }
+  }, [initialValue]);
 
-  componentWillUnmount() {
-    clearTimeout(this.blurTimeout);
-  }
+  useEffect(() => () => {
+    clearTimeout(blurTimeout);
+  }, []);
 
-  handleArrowClick = (value) => {
-    this.setSearchbarValue(value);
-    this.setState({ focusedSuggestion: null });
-  }
+  const forceUpdate = () => {
+    setUpdateCount(updateCount + 1);
+  };
 
-  setInactive = () => {
-    this.setState({ isActive: false, focusedSuggestion: null });
-  }
+  const setInactive = () => {
+    setIsActive(false);
+    setFocusedSuggestion(null);
+  };
 
-  setSearchbarValue = (value) => {
-    this.searchRef.current.value = value;
-  }
+  const setSearchbarValue = (value) => {
+    searchRef.current.value = value;
+  };
 
-  keyHandler = (e) => {
-    const { focusedSuggestion } = this.state;
+  const handleArrowClick = (value) => {
+    setSearchbarValue(value);
+    setFocusedSuggestion(null);
+  };
+
+  const keyHandler = (e) => {
     const list = document.getElementsByClassName('suggestionList')[0];
     if (e.keyCode === 40 || e.keyCode === 38) {
       e.preventDefault();
@@ -96,20 +100,11 @@ class SearchBar extends React.Component {
           index = increment ? index + 1 : index - 1;
       }
 
-      this.setState({ focusedSuggestion: index });
+      setFocusedSuggestion(index);
     }
-  }
+  };
 
-
-  onSubmit = (e) => {
-    e.preventDefault();
-    const search = this.searchRef.current?.value;
-    this.handleSubmit(search);
-  }
-
-  handleSubmit = (search) => {
-    const { changeSelectedUnit, isFetching } = this.props;
-    const { focusedSuggestion } = this.state;
+  const handleSubmit = (search) => {
     if (isFetching) return;
     let searchQuery;
     if (focusedSuggestion !== null) {
@@ -125,13 +120,10 @@ class SearchBar extends React.Component {
       searchQuery = search;
     }
     if (searchQuery) {
-      const {
-        fetchUnits, navigator, previousSearch,
-      } = this.props;
-      this.setInactive();
+      setInactive();
 
       if (searchQuery !== previousSearch) {
-        this.searchRef.current.value = searchQuery; // Change current search text to new one
+        searchRef.current.value = searchQuery; // Change current search text to new one
         fetchUnits({ q: searchQuery });
         changeSelectedUnit(null);
       }
@@ -140,26 +132,29 @@ class SearchBar extends React.Component {
         navigator.push('search', { q: searchQuery });
       }
     }
-  }
-
-  handleBlur = () => {
-    this.blurTimeout = setTimeout(() => {
-      this.setInactive();
-      clearTimeout(this.blurTimeout);
-    }, this.blurDelay);
-  }
-
-  suggestionBackEvent = () => {
-    this.setInactive();
   };
 
-  activateSearch = () => {
-    this.setState({ focusedSuggestion: null });
-    this.setState({ isActive: true });
-  }
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const search = searchRef.current?.value;
+    handleSubmit(search);
+  };
 
-  closeMobileSuggestions = () => {
-    this.setInactive();
+  const handleBlur = () => {
+    blurTimeout = setTimeout(() => {
+      setInactive();
+      clearTimeout(blurTimeout);
+    }, blurDelay);
+  };
+
+  const activateSearch = () => {
+    setIsActive(true);
+    setFocusedSuggestion(null);
+    setIsActive(true);
+  };
+
+  const closeMobileSuggestions = () => {
+    setInactive();
     setTimeout(() => {
       const elem = document.getElementById('SearchButton');
       if (elem) {
@@ -168,9 +163,8 @@ class SearchBar extends React.Component {
     }, 10);
   };
 
-  renderSuggestionBox = () => {
-    const { isActive, focusedSuggestion } = this.state;
-    const query = this.searchRef.current?.value || '';
+  const renderSuggestionBox = () => {
+    const query = searchRef.current?.value || '';
     const searchQuery = query[query.length - 1] === ' ' ? query.slice(0, -1) : query;
 
     const showSuggestions = isActive;
@@ -185,17 +179,17 @@ class SearchBar extends React.Component {
         instead of individual mobile/desktop components. */}
         <MobileComponent>
           <SuggestionBox
-            closeMobileSuggestions={this.closeMobileSuggestions}
+            closeMobileSuggestions={closeMobileSuggestions}
             visible={showSuggestions}
             focusedSuggestion={focusedSuggestion}
             searchQuery={searchQuery}
-            handleArrowClick={this.handleArrowClick}
-            handleSubmit={this.handleSubmit}
+            handleArrowClick={handleArrowClick}
+            handleSubmit={handleSubmit}
             isMobile
           />
           <CloseSuggestionButton
-            onClick={this.closeMobileSuggestions}
-            onKeyPress={() => { keyboardHandler(this.closeMobileSuggestions, ['space', 'enter']); }}
+            onClick={closeMobileSuggestions}
+            onKeyPress={() => { keyboardHandler(closeMobileSuggestions, ['space', 'enter']); }}
             srOnly
           />
         </MobileComponent>
@@ -204,31 +198,29 @@ class SearchBar extends React.Component {
             visible={showSuggestions}
             focusedSuggestion={focusedSuggestion}
             searchQuery={searchQuery}
-            handleArrowClick={this.handleArrowClick}
-            handleSubmit={this.handleSubmit}
+            handleArrowClick={handleArrowClick}
+            handleSubmit={handleSubmit}
           />
         </DesktopComponent>
       </>
     );
-  }
+  };
 
-  renderInput = (isMobile = false) => {
-    const { classes, hideBackButton, intl } = this.props;
-    const { isActive, focusedSuggestion, initialSearchValue } = this.state;
+  const renderInput = (isMobile = false) => {
     const backButtonEvent = isActive && isMobile
       ? () => {
-        this.setInactive();
+        setInactive();
       }
       : null;
 
     // Style classes
     const backButtonStyles = `${classes.iconButton}`;
     const showSuggestions = isActive;
-    const inputHasValue = this.searchRef.current?.value?.length;
+    const inputHasValue = searchRef.current?.value?.length;
     const listID = inputHasValue ? 'SuggestionList' : 'PreviousList';
     const containerStyles = `${isActive ? classes.containerSticky : classes.containerInactive} ${classes.container}`;
     return (
-      <form id="SearchBar" action="" onSubmit={this.onSubmit} className={containerStyles} autoComplete="off">
+      <form id="SearchBar" action="" onSubmit={onSubmit} className={containerStyles} autoComplete="off">
         {
           (!hideBackButton || (isActive && isMobile))
           && (
@@ -249,14 +241,20 @@ class SearchBar extends React.Component {
             'aria-activedescendant': showSuggestions ? `suggestion${focusedSuggestion}` : null,
           }}
           type="text"
-          inputRef={this.searchRef}
+          inputRef={searchRef}
           className={classes.input}
           defaultValue={initialSearchValue || ''}
           classes={{ focused: classes.fieldFocus }}
-          onChange={() => this.setState({ focusedSuggestion: null })}
-          onFocus={this.activateSearch}
-          onKeyDown={e => keyboardHandler(this.keyHandler(e), ['up, down'])}
-          onBlur={isMobile ? () => {} : this.handleBlur}
+          onChange={() => {
+            if (focusedSuggestion) {
+              setFocusedSuggestion(null);
+            } else {
+              forceUpdate();
+            }
+          }}
+          onFocus={activateSearch}
+          onKeyDown={e => keyboardHandler(keyHandler(e), ['up, down'])}
+          onBlur={isMobile ? () => {} : handleBlur}
           endAdornment={
             inputHasValue
               ? (
@@ -264,12 +262,12 @@ class SearchBar extends React.Component {
                   aria-label={intl.formatMessage({ id: 'search.cancelText' })}
                   className={classes.cancelButton}
                   onClick={() => {
-                    if (this.searchRef?.current) {
+                    if (searchRef?.current) {
                       // Clear blur timeout to keep suggestion box active
-                      clearTimeout(this.blurTimeout);
-                      this.searchRef.current.focus();
+                      clearTimeout(blurTimeout);
+                      searchRef.current.focus();
                     }
-                    this.searchRef.current.value = '';
+                    searchRef.current.value = '';
                   }}
                 >
                   <Cancel />
@@ -298,44 +296,28 @@ class SearchBar extends React.Component {
         </Button>
       </form>
     );
-  }
+  };
 
-  renderText = (isMobile = false) => {
-    const {
-      classes,
-    } = this.props;
-    const { isActive } = this.state;
-
+  const renderText = (isMobile = false) => {
     const textClasses = `${classes.infoText} ${isActive && isMobile ? classes.infoTextSticky : ''}`;
 
     return (
       <Typography align="left" className={textClasses} color="inherit" variant="body2"><FormattedMessage id="search.searchbar.infoText" /></Typography>
     );
-  }
+  };
 
-  renderHeaderText = (isMobile = false) => {
-    const { isActive } = this.state;
-    const { classes, header } = this.props;
+  const renderHeaderText = (isMobile = false) => {
     if (!header || (isMobile && isActive)) {
       return null;
     }
     return (
       <Typography align="left" className={classes.headerText} variant="h5" component="p" color="inherit"><FormattedMessage id="search.searchbar.headerText" /></Typography>
     );
-  }
+  };
 
-  renderMobile = () => {
-    const {
-      background,
-      classes,
-      className,
-      isSticky,
-      header,
-    } = this.props;
-    const { isActive } = this.state;
-
+  const renderMobile = () => {
     const rootClasses = `${
-      this.rootClass
+      rootClass
     } ${
       isActive ? classes.mobileActiveRoot : classes.root
     } ${
@@ -354,83 +336,72 @@ class SearchBar extends React.Component {
       <>
         <div className={rootClasses} style={stickyStyles}>
           {
-            this.renderHeaderText(true)
+            renderHeaderText(true)
           }
           <div className={wrapperClasses}>
             {
-              this.renderText(true)
+              renderText(true)
             }
             <div className={classes.inputContainer}>
               {
-                this.renderInput(true)
+                renderInput(true)
               }
               {
-                this.renderSuggestionBox()
+                renderSuggestionBox()
               }
             </div>
           </div>
         </div>
       </>
     );
-  }
+  };
 
-  render() {
-    const {
-      background,
-      classes,
-      className,
-      isSticky,
-      header,
-      margin,
-    } = this.props;
+  const rootClasses = `${
+    rootClass
+  } ${
+    classes.root
+  } ${
+    typeof isSticky === 'number' ? classes.sticky : ''
+  } ${
+    margin ? classes.bottomMargin : ''
+  } ${
+    header ? classes.headerBackground : ''
+  } ${
+    background === 'default' ? classes.background : ''
+  } ${
+    className
+  }`;
+  const wrapperClasses = classes.wrapper;
+  const stickyStyles = typeof isSticky === 'number' ? { top: isSticky } : null;
 
-    const rootClasses = `${
-      this.rootClass
-    } ${
-      classes.root
-    } ${
-      typeof isSticky === 'number' ? classes.sticky : ''
-    } ${
-      margin ? classes.bottomMargin : ''
-    } ${
-      header ? classes.headerBackground : ''
-    } ${
-      background === 'default' ? classes.background : ''
-    } ${
-      className
-    }`;
-    const wrapperClasses = classes.wrapper;
-    const stickyStyles = typeof isSticky === 'number' ? { top: isSticky } : null;
-
-    return (
-      <>
-        <MobileComponent>
-          {this.renderMobile()}
-        </MobileComponent>
-        <DesktopComponent>
-          <div className={rootClasses} style={stickyStyles}>
+  return (
+    <>
+      <MobileComponent>
+        {renderMobile()}
+      </MobileComponent>
+      <DesktopComponent>
+        <div className={rootClasses} style={stickyStyles}>
+          {
+            renderHeaderText()
+          }
+          {
+            renderText()
+          }
+          <Paper className={wrapperClasses} elevation={1} square>
             {
-              this.renderHeaderText()
+              renderInput()
             }
             {
-              this.renderText()
+              renderSuggestionBox(true)
             }
-            <Paper className={wrapperClasses} elevation={1} square>
-              {
-                this.renderInput()
-              }
-              {
-                this.renderSuggestionBox(true)
-              }
-            </Paper>
-          </div>
-        </DesktopComponent>
-      </>
-    );
-  }
-}
+          </Paper>
+        </div>
+      </DesktopComponent>
+    </>
+  );
+};
 
-SearchBar.propTypes = {
+SearchBarComponent.propTypes = {
   background: PropTypes.oneOf(['default', 'none']),
   changeSelectedUnit: PropTypes.func.isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -440,14 +411,13 @@ SearchBar.propTypes = {
   hideBackButton: PropTypes.bool,
   navigator: PropTypes.objectOf(PropTypes.any),
   initialValue: PropTypes.string,
-  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   isSticky: PropTypes.number,
   isFetching: PropTypes.bool.isRequired,
   previousSearch: PropTypes.oneOfType([PropTypes.string, PropTypes.objectOf(PropTypes.any)]),
   margin: PropTypes.bool,
 };
 
-SearchBar.defaultProps = {
+SearchBarComponent.defaultProps = {
   background: 'default',
   previousSearch: null,
   className: '',
@@ -459,4 +429,4 @@ SearchBar.defaultProps = {
   margin: false,
 };
 
-export default SearchBar;
+export default SearchBarComponent;
