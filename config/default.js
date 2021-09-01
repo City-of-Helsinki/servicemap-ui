@@ -224,4 +224,6 @@ export default {
   "feedbackAdditionalInfoLink": settings.FEEDBACK_ADDITIONAL_INFO_LINK,
   "feedbackIsPublished": (settings.FEEDBACK_IS_PUBLISHED === 'true'),
   "usePtvAccessibilityApi": (settings.USE_PTV_ACCESSIBILITY_API) === 'true',
+  "matomoUrl": settings.MATOMO_URL,
+  "matomoSiteId": settings.MATOMO_SITE_ID,
 }

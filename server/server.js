@@ -19,7 +19,7 @@ import { fetchEventData, fetchSelectedUnitData } from './dataFetcher';
 import IntlPolyfill from 'intl';
 import paths from '../config/paths';
 import legacyRedirector from './legacyRedirector';
-import { matomoTrackingCode, appDynamicsTrackingCode, cookieHubCode } from './externalScripts';
+import { appDynamicsTrackingCode, cookieHubCode } from './externalScripts';
 import { getLastCommit, getVersion } from './version';
 import ieHandler from './ieMiddleware';
 import schedule from 'node-schedule'
@@ -206,6 +206,8 @@ const htmlTemplate = (req, reactDom, preloadedState, css, cssString, locale, hel
         window.nodeEnvSettings.DIGITRANSIT_API = "${process.env.DIGITRANSIT_API}";
         window.nodeEnvSettings.FEEDBACK_URL = "${process.env.FEEDBACK_URL}";
         window.nodeEnvSettings.HEARING_MAP_API = "${process.env.HEARING_MAP_API}";
+        window.nodeEnvSettings.MATOMO_URL = "${process.env.MATOMO_URL}";
+        window.nodeEnvSettings.MATOMO_SITE_ID = "${process.env.MATOMO_SITE_ID}";
         window.nodeEnvSettings.MODE = "${process.env.MODE}";
         window.nodeEnvSettings.INITIAL_MAP_POSITION = "${customValues.initialMapPosition}";
         window.nodeEnvSettings.SERVICE_MAP_URL = "${process.env.SERVICE_MAP_URL}";
@@ -239,7 +241,6 @@ const htmlTemplate = (req, reactDom, preloadedState, css, cssString, locale, hel
       window.PRELOADED_STATE = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')}
     </script>
     <script src="/index.js"></script>
-    ${matomoTrackingCode(process.env.MATOMO_URL, process.env.MATOMO_SITE_ID)}
   </body>
 </html>
 `;
