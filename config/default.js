@@ -66,7 +66,7 @@ if (typeof settings.ACCESSIBLE_MAP_URL === 'undefined') {
 }
 if (typeof settings.ORTOGRAPHIC_MAP_URL === 'undefined') {
   // If not set default to Helsinki
-  settings.ORTOGRAPHIC_MAP_URL = 'https://kartta.hsy.fi/geoserver/gwc/service/wmts?layer=taustakartat_ja_aluejaot:Ortoilmakuva_2017&tilematrixset=ETRS-GK25&Service=WMTS&Request=GetTile&Version=1.0.0&TileMatrix=ETRS-GK25:{z}&TileCol={x}&TileRow={y}&Format=image/jpeg';
+  settings.ORTOGRAPHIC_MAP_URL = 'https://kartta.hsy.fi/geoserver/gwc/service/wmts?layer=taustakartat_ja_aluejaot:Ortoilmakuva_2019&tilematrixset=ETRS-GK25&Service=WMTS&Request=GetTile&Version=1.0.0&TileMatrix=ETRS-GK25:{z}&TileCol={x}&TileRow={y}&Format=image%2Fpng';
 }
 if (typeof settings.GUIDE_MAP_URL === 'undefined') {
   // If not set default to Helsinki
