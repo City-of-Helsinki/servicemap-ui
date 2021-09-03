@@ -26,6 +26,7 @@ export default theme => ({
     flexDirection: 'row',
     width: '100%',
     display: 'flex',
+    alignItems: 'center',
   },
   title: {
     fontSize: 18,
@@ -37,6 +38,7 @@ export default theme => ({
     '&:focus': {
       outlineStyle: 'none',
     },
+    height: 'auto',
   },
   titleLarge: {
     fontSize: 20,
