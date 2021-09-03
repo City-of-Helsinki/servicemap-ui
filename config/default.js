@@ -39,7 +39,7 @@ if (typeof settings.INITIAL_MAP_POSITION === 'undefined') {
 
 if (typeof settings.MAPS === 'undefined') {
     // If not set default to Helsinki
-    settings.MAPS = 'servicemap,guideMap,accessible_map';
+    settings.MAPS = 'servicemap,ortographic,guideMap,accessible_map';
 }
 
 if (typeof settings.OLD_MAP_LINK_EN === 'undefined'
@@ -175,6 +175,8 @@ export default {
   "servicemapURL": settings.SERVICE_MAP_URL,
   "accessibleMapURL": settings.ACCESSIBLE_MAP_URL,
   "ortographicMapURL": settings.ORTOGRAPHIC_MAP_URL,
+  "ortographicWMSURL": settings.ORTOGRAPHIC_WMS_URL,
+  "ortographicWMSLAYER": settings.ORTOGRAPHIC_WMS_LAYER,
   "guideMapURL": settings.GUIDE_MAP_URL,
   "reittiopasURL": settings.REITTIOPAS_URL,
   "outdoorExerciseURL": settings.OUTDOOR_EXERCISE_URL,

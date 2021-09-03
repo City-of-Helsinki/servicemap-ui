@@ -83,6 +83,8 @@ const mapTypes = {
     layer: tileLayers.orthoImageLayer,
     // TODO: maybe have map names and formats as variables from the URL, like in the old version
     generateUrl: () => config.ortographicMapURL,
+    wmsUrl: config.ortographicWMSURL,
+    wmsLayerName: config.ortographicWMSLAYER,
     minZoom: 3,
     maxZoom: 10,
     zoom: 5,

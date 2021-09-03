@@ -318,7 +318,9 @@ const MapView = (props) => {
 
 
   if (global.rL && mapObject) {
-    const { Map, TileLayer, ZoomControl } = global.rL || {};
+    const {
+      Map, TileLayer, WMSTileLayer, ZoomControl,
+    } = global.rL || {};
     const Control = require('react-leaflet-control').default;
     let center = mapOptions.initialPosition;
     let zoom = isMobile ? mapObject.options.mobileZoom : mapObject.options.zoom;
@@ -356,7 +358,6 @@ const MapView = (props) => {
           maxBoundsViscosity={1.0}
           onClick={(ev) => { setClickCoordinates(ev); }}
         >
-
           <MarkerCluster
             map={mapRef?.current?.leafletElement}
             data={unitData}
@@ -365,10 +366,20 @@ const MapView = (props) => {
           {
             renderUnitGeometry()
           }
-          <TileLayer
-            url={mapObject.options.url}
-            attribution={intl.formatMessage({ id: mapObject.options.attribution })}
-          />
+          {mapObject.options.name === 'ortographic' && mapObject.options.wmsUrl !== 'undefined'
+            ? ( // Use WMS serice for ortographic maps, because HSY's WMTS tiling does not work
+              <WMSTileLayer
+                url={mapObject.options.wmsUrl}
+                layers={mapObject.options.wmsLayerName}
+                attribution={intl.formatMessage({ id: mapObject.options.attribution })}
+              />
+            )
+            : (
+              <TileLayer
+                url={mapObject.options.url}
+                attribution={intl.formatMessage({ id: mapObject.options.attribution })}
+              />
+            )}
           {showLoadingScreen() ? (
             <div className={classes.loadingScreen}>
               <Loading />
