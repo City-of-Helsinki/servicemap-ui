@@ -5,6 +5,7 @@ import SettingsUtility from './settings';
 import config from '../../config';
 import { isEmbed } from './path';
 import paths from '../../config/paths';
+import { useSelector } from 'react-redux';
 
 // TODO: If berries are not used anymore, clean this class
 
@@ -169,5 +170,7 @@ class UnitHelper {
     return contractText;
   }
 }
+
+export const useSelectedUnit = () => useSelector(state => state.selectedUnit.unit.data);
 
 export default UnitHelper;

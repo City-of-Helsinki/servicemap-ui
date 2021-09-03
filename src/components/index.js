@@ -4,3 +4,4 @@ export * from './ErrorBoundary/ErrorTrigger';
 
 export * from './ListItems/DistrictItem';
 export * from './Dialog/AcceptSettingsDialog';
+export * from './Dialog/LinkSettingsDialog';

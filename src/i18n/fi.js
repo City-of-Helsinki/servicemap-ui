@@ -277,6 +277,7 @@ const translations = {
   'general.save.changes.done': 'Muutokset tallennettu!',
   'general.save.confirmation': 'Haluatko tallentaa muutokset?',
   'general.search': 'Hae',
+  'general.share.link': 'Jaa linkki',
   'general.tools': 'Työkalut',
   'general.time.short': 'klo',
 
@@ -302,6 +303,11 @@ const translations = {
   'search.loading.units': 'Haetaan toimipisteitä {count} / {max}',
   'search.loading.units.srInfo': 'Haetaan {count} toimipistettä',
   'search.loading.units.simple': 'Haetaan toimipisteitä',
+
+  'link.settings.dialog.title': 'Jaa linkki toimipisteeseen',
+  'link.settings.dialog.tooltip': 'Kopioitu leikepöydälle',
+  'link.settings.dialog.subtitle': 'Jaa linkki esteettömyysasetusten kanssa',
+  'link.settings.dialog.description': 'Esteettömyysasetukset vaikuttavat näytettäviin toimipisteen esteettömyystietoihin ja kartan ulkoasuun.',
 
   // Map
   'map': 'Kartta',

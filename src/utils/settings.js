@@ -13,20 +13,6 @@ const ACCESSIBILITY_MAPPING = {
   hearingAid: 'hearing_aid',
   visuallyImpaired: 'visual_impairment',
 };
-
-// Return active accessibility settings
-export const useAcccessibilitySettings = () => {
-  const userSettings = useSelector(state => state.settings);
-  const accessibiliySettingsValues = [
-    userSettings.mobility,
-    userSettings.colorblind,
-    userSettings.hearingAid,
-    userSettings.visuallyImpaired,
-  ].filter(i => (i !== false && i !== null));
-
-  return accessibiliySettingsValues;
-};
-
 class SettingsUtility {
   static mobilitySettings = ALLOWED.mobility;
 
@@ -160,5 +146,16 @@ class SettingsUtility {
     return activeSettings && activeSettings.length;
   }
 }
+
+// Return active accessibility settings
+export const useAcccessibilitySettings = () => {
+  const userSettings = useSelector(state => state.settings);
+  const accessibiliySettingsValues = [
+    userSettings.mobility,
+    ...SettingsUtility.accessibilityImpairmentKeys.filter(key => userSettings[key]),
+  ].filter(i => (i !== false && i !== null));
+
+  return accessibiliySettingsValues;
+};
 
 export default SettingsUtility;
