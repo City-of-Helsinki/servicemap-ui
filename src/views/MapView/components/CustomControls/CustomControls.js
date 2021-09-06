@@ -11,12 +11,18 @@ const POSITION_CLASSES = {
 };
 
 const CustomControls = ({ position, classes, children }) => {
+  // This converts children into array, even if children prop is single object or array of objects
+  const controls = [children].flat().filter(item => item);
+
   useEffect(() => {
+    if (controls.length) {
     // This prevents control button click propagation
-    const div = global.L.DomUtil.get(`controlsContainer${position}`);
-    global.L.DomEvent.disableClickPropagation(div);
+      const div = global.L.DomUtil.get(`controlsContainer${position}`);
+      global.L.DomEvent.disableClickPropagation(div);
+    }
   }, []);
 
+  if (!controls.length) return null;
   const positionClass = position && POSITION_CLASSES[position];
 
   const renderControl = element => (
@@ -27,22 +33,21 @@ const CustomControls = ({ position, classes, children }) => {
 
   return (
     <div className={`${positionClass} ${classes.controlsContainer}`} id={`controlsContainer${position}`}>
-      {Array.isArray(children)
-        ? children.map(component => (
-          renderControl(component)
-        ))
-        : (
-          renderControl(children)
-        )
-      }
+      {controls.map(component => (
+        renderControl(component)
+      ))}
     </div>
   );
 };
 
 CustomControls.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   position: PropTypes.oneOf(Object.keys(POSITION_CLASSES)).isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
+};
+
+CustomControls.defaultProps = {
+  children: null,
 };
 
 

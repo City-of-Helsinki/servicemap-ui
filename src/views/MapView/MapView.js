@@ -379,7 +379,7 @@ const MapView = (props) => {
             ) : null}
           </CustomControls>
           <CustomControls position="bottomright">
-            {!embedded && (
+            {!embedded ? (
               /* Custom user location map button */
               <div key="userLocation" className="UserLocation">
                 <ButtonBase
@@ -396,7 +396,7 @@ const MapView = (props) => {
                   }
                 </ButtonBase>
               </div>
-            )}
+            ) : null}
 
             <PanControl key="panControl" />
           </CustomControls>
