@@ -19,12 +19,16 @@ const Dialog = ({
   open,
   setOpen,
   referer,
+  onClose,
 }) => {
   const intl = useIntl();
   const dialogRef = useRef();
 
   const handleClose = () => {
     setOpen(false);
+    if (onClose) {
+      onClose();
+    }
     if (referer?.current?.anchorEl) {
       setTimeout(() => {
         referer.current.anchorEl.focus();
@@ -86,6 +90,7 @@ Dialog.propTypes = {
   title: PropTypes.node.isRequired,
   content: PropTypes.node.isRequired,
   actions: PropTypes.node,
+  onClose: PropTypes.func,
   open: PropTypes.bool,
   setOpen: PropTypes.func.isRequired,
   referer: PropTypes.shape({
@@ -97,6 +102,7 @@ Dialog.propTypes = {
 
 Dialog.defaultProps = {
   actions: null,
+  onClose: null,
   open: false,
   referer: null,
 };

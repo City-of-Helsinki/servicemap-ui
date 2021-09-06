@@ -7,7 +7,7 @@ import {
 import React, { useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 // import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import isClient from '../../../utils';
 import SettingsUtility from '../../../utils/settings';
@@ -23,6 +23,7 @@ const AcceptSettingsDialogComponent = ({
 }) => {
   const intl = useIntl();
   const location = useLocation();
+  const history = useHistory();
   const [selected, setSelected] = useState('none');
 
   if (!isClient()) {
@@ -55,6 +56,14 @@ const AcceptSettingsDialogComponent = ({
     return text;
   };
 
+  const resetA11ySearchParams = () => {
+    search.delete('mobility');
+    search.delete('senses');
+    history.replace({
+      search: search.toString(),
+    });
+  };
+
   // Activate settings
   const activateSettings = () => {
     if (selected === 'use') {
@@ -66,6 +75,7 @@ const AcceptSettingsDialogComponent = ({
       });
     }
 
+    resetA11ySearchParams();
     setOpen(false);
   };
 
@@ -85,6 +95,7 @@ const AcceptSettingsDialogComponent = ({
   return (
     <Dialog
       open
+      onClose={() => resetA11ySearchParams()}
       setOpen={setOpen}
       {...rest}
       title={title}
