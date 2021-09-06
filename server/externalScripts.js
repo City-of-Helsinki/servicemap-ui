@@ -32,15 +32,24 @@ export function cookieHubCode (req) {
   
   return `
     <script type="text/javascript">
-      var cpm = {
-        enabled: (location.href.indexOf('/embed/') > -1 ? false : true) // uncomment this line when in production
-      };
-      (function(h,u,b){
-      var d=h.getElementsByTagName("script")[0],e=h.createElement("script");
-      e.async=true;e.src='${cookiehubURL}';
-      e.onload=function(){u.cookiehub.load(b);}
-      d.parentNode.insertBefore(e,d);
-      })(document,window,cpm);
+      document.addEventListener('DOMContentLoaded', function() {
+        var cpm = {
+          enabled: (location.href.indexOf('/embed/') > -1 ? false : true), // uncomment this line when in production
+          onInitialise: function (status) {
+            setTimeout(() => {
+              document.getElementById("ch2-dialog-title").setAttribute('tabindex', 0);
+              document.getElementById("ch2-dialog-description").setAttribute('tabindex', 0);
+              document.getElementsByClassName("ch2-dialog")[0].setAttribute('tabindex', 0);
+            }, 0)
+          }
+        };
+        (function(h,u,b){
+        var d=h.getElementsByTagName("script")[0],e=h.createElement("script");
+        e.async=true;e.src='${cookiehubURL}';
+        e.onload=function(){u.cookiehub.load(b);}
+        d.parentNode.insertBefore(e,d);
+        })(document,window,cpm);
+      });
     </script>
   `;
 };
