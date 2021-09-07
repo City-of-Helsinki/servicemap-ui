@@ -181,7 +181,7 @@ const AreaView = ({
 
   useEffect(() => {
     if (map && !focusTo && !localAddressData.length && selectedDistrictGeometry) {
-      focusDistricts(map.leafletElement, selectedDistrictData);
+      focusDistricts(map, selectedDistrictData);
     }
   }, [selectedDistrictGeometry]);
 

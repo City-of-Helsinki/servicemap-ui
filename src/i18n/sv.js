@@ -51,6 +51,7 @@ const translations = {
   'area.services.nearby.rescue_district': 'Lista över skyddsavsnitten i närområden',
   'area.services.nearby.rescue_sub_district': 'Lista över skyddsunderavsnitten i närområden',
   'area.services.all': 'Lista över verksamhetsställen',
+  'area.services.all.rescue_area': 'Lista över skyddsdistrikten',
   'area.services.all.rescue_district': 'Lista över skyddsavsnitten',
   'area.services.all.rescue_sub_district': 'Lista över skyddsunderavsnitten',
   'area.info': 'Välj ett område, vars tjänster du vill ha information om. Genom att skriva din hemadress i sökfältet öppnas en karta och under fliken Tjänster i området visas de områden och distrikt som du hör till',

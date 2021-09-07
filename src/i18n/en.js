@@ -51,6 +51,7 @@ const translations = {
   'area.services.nearby.rescue_district': 'Civil defence sections in nearby areas as a list',
   'area.services.nearby.rescue_sub_district': 'Civil defence subsections in nearby areas as a list',
   'area.services.all': 'Locations as a list',
+  'area.services.all.rescue_area': 'Civil defence districts as a list',
   'area.services.all.rescue_district': 'Civil defence sections as a list',
   'area.services.all.rescue_sub_district': 'Civil defence subsections as a list',
   'area.info': 'Choose an area, whose services you want information about. Writing your home address in the search field opens a map, and the areas and districts that you belong to are shown under the Services in the area tab.',

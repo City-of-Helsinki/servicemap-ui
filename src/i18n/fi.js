@@ -51,6 +51,7 @@ const translations = {
   'area.services.nearby.rescue_district': 'Lähialueiden suojelulohkot listana',
   'area.services.nearby.rescue_sub_district': 'Lähialueiden suojelualalohkot listana',
   'area.services.all': 'Toimipisteet listana',
+  'area.services.all.rescue_area': 'Suojelupiirit listana',
   'area.services.all.rescue_district': 'Suojelulohkot listana',
   'area.services.all.rescue_sub_district': 'Suojelualalohkot listana',
   'area.info': 'Valitse alue, jonka palveluista haluat tietoa. Kirjoittamalla alla olevaan hakukenttään kotiosoitteesi saat näkyville karttaan ja Alueen palvelut -välilehdelle alueet ja piirit, joihin kuulut',
