@@ -11,6 +11,9 @@
 # production
 /build
 
+# external translations
+/src/i18n/externalTranslations
+
 # misc
 .DS_Store
 .env

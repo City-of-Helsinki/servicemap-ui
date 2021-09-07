@@ -52,6 +52,7 @@ const AreaView = ({
   const districtsFetching = useSelector(state => state.districts.districtsFetching);
   const getLocaleText = useLocaleText();
   const openItems = useSelector(state => state.districts.openItems);
+  const selectedDistrictGeometry = selectedDistrictData[0]?.boundary;
 
   const searchParams = parseSearchParams(location.search);
   const selectedArea = searchParams.selected;
@@ -162,12 +163,12 @@ const AreaView = ({
     // If pending district focus, focus to districts when distitct data is loaded
     if (focusTo && selectedDistrictData.length) {
       if (focusTo === 'districts') {
-        if (selectedDistrictData[0]?.boundary) {
+        if (selectedDistrictGeometry) {
           setFocusTo(null);
           focusDistricts(map, selectedDistrictData);
         }
       } else if (focusTo === 'subdistricts') {
-        if (selectedDistrictData[0]?.boundary) {
+        if (selectedDistrictGeometry) {
           const filtetedDistricts = selectedDistrictData.filter(
             i => selectedSubdistricts.includes(i.ocd_id),
           );
@@ -177,6 +178,12 @@ const AreaView = ({
       }
     }
   }, [selectedDistrictData, focusTo]);
+
+  useEffect(() => {
+    if (map && !focusTo && !localAddressData.length && selectedDistrictGeometry) {
+      focusDistricts(map.leafletElement, selectedDistrictData);
+    }
+  }, [selectedDistrictGeometry]);
 
 
   useEffect(() => {
@@ -208,8 +215,6 @@ const AreaView = ({
       if (searchParams.districts) {
         setSelectedSubdistricts(searchParams.districts.split(','));
         setFocusTo('subdistricts');
-      } else {
-        setFocusTo('districts');
       }
 
       // Set selected geographical services from url parameters

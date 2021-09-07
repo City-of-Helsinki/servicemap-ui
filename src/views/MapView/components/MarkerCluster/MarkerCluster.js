@@ -373,12 +373,17 @@ const MarkerCluster = ({
         );
         const tooltipPermanent = highlightedUnit
           && (highlightedUnit.id === unit.id && UnitHelper.isUnitPage());
+        const unitHasEvents = tooltipPermanent && unit.events?.length;
 
-        const markerClasses = `unit-marker-${unit.id} ${classes.unitMarker}${useContrast ? ' dark' : ''}`;
+        const markerClasses = `unit-marker-${unit.id} ${classes.unitMarker} ${unitHasEvents ? classes.unitMarkerEvent : ''} ${useContrast ? ' dark' : ''}`;
         const markerElem = global.L.marker(
           [unit.location.coordinates[1], unit.location.coordinates[0]],
           {
-            icon: drawMarkerIcon(useContrast, markerClasses),
+            icon: drawMarkerIcon(
+              useContrast,
+              markerClasses,
+              tooltipPermanent && unitHasEvents,
+            ),
             customUnitData: unit,
             keyboard: false,
           },

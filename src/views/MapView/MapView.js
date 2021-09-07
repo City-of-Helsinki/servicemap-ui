@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { Tooltip as MUITooltip, ButtonBase } from '@material-ui/core';
 import { MyLocation, LocationDisabled } from '@material-ui/icons';
+import { useSelector } from 'react-redux';
 import { mapOptions } from './config/mapConfig';
 import CreateMap from './utils/createMap';
 import { focusToPosition } from './utils/mapActions';
@@ -29,6 +30,7 @@ import adjustControlElements from './utils';
 import EntranceMarker from './components/EntranceMarker';
 import EventMarkers from './components/EventMarkers';
 import CustomControls from './components/CustomControls';
+import { getSelectedUnitEvents } from '../../redux/selectors/selectedUnit';
 
 if (global.window) {
   require('leaflet');
@@ -76,6 +78,9 @@ const MapView = (props) => {
 
   const embedded = isEmbed({ url: location.pathname });
   const getAddressNavigatorParams = useNavigationParams();
+
+  // This unassigned selector is used to trigger re-render after events are fetched
+  useSelector(state => getSelectedUnitEvents(state));
 
 
   const getMapUnits = () => {

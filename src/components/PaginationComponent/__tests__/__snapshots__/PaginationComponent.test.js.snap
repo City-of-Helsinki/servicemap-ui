@@ -234,18 +234,19 @@ exports[`<PaginationComponent /> should work 1`] = `
                       }
                     }
                     margin={false}
+                    messageCount={null}
                     messageID={null}
                     onClick={[Function]}
                     role="link"
                     small={false}
                     style={null}
+                    textVariant="caption"
                     variant="contained"
                   >
                     <WithStyles(ForwardRef(ButtonBase))
                       aria-label="Aiempi sivu"
                       className="ForwardRef-button-16  ForwardRef-marginRight-19 injectIntl(PaginationComponent)-button-4 injectIntl(PaginationComponent)-arrowFlip-2 injectIntl(PaginationComponent)-borderBlack-3 ForwardRef-primary-20"
                       disabled={false}
-                      icon={null}
                       onClick={[Function]}
                       role="link"
                       style={Object {}}
@@ -263,7 +264,6 @@ exports[`<PaginationComponent /> should work 1`] = `
                         }
                         disableRipple={true}
                         disabled={false}
-                        icon={null}
                         onClick={[Function]}
                         role="link"
                         style={Object {}}
@@ -273,7 +273,6 @@ exports[`<PaginationComponent /> should work 1`] = `
                           aria-label="Aiempi sivu"
                           className="MuiButtonBase-root ForwardRef-button-16  ForwardRef-marginRight-19 injectIntl(PaginationComponent)-button-4 injectIntl(PaginationComponent)-arrowFlip-2 injectIntl(PaginationComponent)-borderBlack-3 ForwardRef-primary-20"
                           disabled={false}
-                          icon={null}
                           onBlur={[Function]}
                           onClick={[Function]}
                           onDragLeave={[Function]}
@@ -452,18 +451,19 @@ exports[`<PaginationComponent /> should work 1`] = `
                       }
                     }
                     margin={false}
+                    messageCount={null}
                     messageID={null}
                     onClick={[Function]}
                     role="link"
                     small={false}
                     style={null}
+                    textVariant="caption"
                     variant="contained"
                   >
                     <WithStyles(ForwardRef(ButtonBase))
                       aria-label="Seuraava sivu"
                       className="ForwardRef-button-16  ForwardRef-marginRight-19 injectIntl(PaginationComponent)-button-4 injectIntl(PaginationComponent)-borderBlack-3 ForwardRef-primary-20"
                       disabled={false}
-                      icon={null}
                       onClick={[Function]}
                       role="link"
                       style={Object {}}
@@ -481,7 +481,6 @@ exports[`<PaginationComponent /> should work 1`] = `
                         }
                         disableRipple={true}
                         disabled={false}
-                        icon={null}
                         onClick={[Function]}
                         role="link"
                         style={Object {}}
@@ -491,7 +490,6 @@ exports[`<PaginationComponent /> should work 1`] = `
                           aria-label="Seuraava sivu"
                           className="MuiButtonBase-root ForwardRef-button-16  ForwardRef-marginRight-19 injectIntl(PaginationComponent)-button-4 injectIntl(PaginationComponent)-borderBlack-3 ForwardRef-primary-20"
                           disabled={false}
-                          icon={null}
                           onBlur={[Function]}
                           onClick={[Function]}
                           onDragLeave={[Function]}

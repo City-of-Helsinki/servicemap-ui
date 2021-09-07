@@ -13,10 +13,7 @@ import AccessibilityInfo from './components/AccessibilityInfo';
 import ContactInfo from './components/ContactInfo';
 import Highlights from './components/Highlights';
 import ElectronicServices from './components/ElectronicServices';
-import Reservations from './components/Reservations';
 import Description from './components/Description';
-import Services from './components/Services';
-import Events from './components/Events';
 import SMButton from '../../components/ServiceMapButton';
 import TabLists from '../../components/TabLists';
 import { AddressIcon } from '../../components/SMIcon';
@@ -30,6 +27,8 @@ import useMobileStatus from '../../utils/isMobile';
 import UnitHelper from '../../utils/unitHelper';
 import useLocaleText from '../../utils/useLocaleText';
 import paths from '../../../config/paths';
+import UnitDataList from './components/UnitDataList';
+import UnitsServicesList from './components/UnitsServicesList';
 
 const UnitView = (props) => {
   const {
@@ -111,6 +110,8 @@ const UnitView = (props) => {
       window.open(URLs.vantaa);
     } else if (unit.municipality === 'kauniainen') {
       window.open(URLs.kauniainen);
+    } else if (unit.municipality === 'kirkkonummi') {
+      window.open(URLs.kirkkonummi);
     } else {
       navigator.push('unit', { id: unit.id, type: 'feedback' });
     }
@@ -272,16 +273,25 @@ const UnitView = (props) => {
 
     return (
       <div className={classes.content}>
-        <Services
-          listLength={10}
-          unit={unit}
-          getLocaleText={getLocaleText}
-        />
-        <Reservations
+        <UnitsServicesList
           listLength={5}
-          reservationsData={reservationsData}
+          unit={unit}
+          navigator={navigator}
         />
-        <Events classes={classes} listLength={5} eventsData={eventsData} />
+        <UnitDataList
+          listLength={5}
+          data={eventsData.data}
+          isFetching={eventsData.isFetching}
+          type="events"
+          navigator={navigator}
+        />
+        <UnitDataList
+          listLength={5}
+          data={reservationsData.data}
+          isFetching={reservationsData.isFetching}
+          type="reservations"
+          navigator={navigator}
+        />
       </div>
     );
   };
