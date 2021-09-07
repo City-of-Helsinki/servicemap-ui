@@ -64,7 +64,7 @@ const ServiceTab = (props) => {
 
 
   const renderDistrictList = (districList) => {
-    const listDistrictAreas = ['rescue_district', 'rescue_sub_district'].includes(selectedDistrictType);
+    const listDistrictAreas = ['rescue_area', 'rescue_district', 'rescue_sub_district'].includes(selectedDistrictType);
     const DistrictList = listDistrictAreas ? DistrictAreaList : DistrictUnitList;
     return (
       <List disablePadding>
