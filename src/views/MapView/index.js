@@ -39,7 +39,7 @@ const mapStateToProps = (state) => {
     unitList,
     serviceUnits,
     districtUnits,
-    districtViewFetching: !!(districtUnitsFetching.length || districtsFetching.length),
+    districtViewFetching: !!(districtUnitsFetching?.length || districtsFetching?.length),
     unitsLoading: serviceUnitsLoading || searchUnitsLoading,
     currentPage: page,
     userLocation,

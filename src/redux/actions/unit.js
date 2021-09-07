@@ -39,15 +39,19 @@ export const fetchUnits = (
   const onStart = () => dispatch(isFetching(searchQuery));
 
   const onSuccess = (results) => {
-    clearTimeout(fetchTimeout);
-    if (options.q) {
-      saveSearchToHistory(searchQuery, results);
+    if (results) {
+      clearTimeout(fetchTimeout);
+      if (options.q) {
+        saveSearchToHistory(searchQuery, results);
+      } else {
+        results.forEach((unit) => {
+          unit.object_type = 'unit';
+        });
+      }
+      dispatch(fetchSuccess(results));
     } else {
-      results.forEach((unit) => {
-        unit.object_type = 'unit';
-      });
+      dispatch(fetchError('Unit fetch failed'));
     }
-    dispatch(fetchSuccess(results));
   };
 
   const onSuccessEvents = (results) => {
