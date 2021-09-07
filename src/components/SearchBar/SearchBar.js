@@ -13,6 +13,7 @@ import { keyboardHandler } from '../../utils';
 import SuggestionBox from './components/SuggestionBox';
 import MobileComponent from '../MobileComponent';
 import DesktopComponent from '../DesktopComponent';
+import { CloseSuggestionButton } from './components/CloseSuggestionButton';
 
 class SearchBar extends React.Component {
   blurDelay = 150;
@@ -29,7 +30,8 @@ class SearchBar extends React.Component {
 
     this.searchRef = React.createRef();
     // Avoid service_nodes when setting initial search value
-    const ps = previousSearch && previousSearch.indexOf('service_node:') === -1 ? previousSearch : null;
+    const ps = previousSearch
+      && !(previousSearch.includes('service_node:') || previousSearch.includes('events:')) ? previousSearch : null;
 
     this.state = {
       initialSearchValue: ps || initialValue || '',
@@ -113,6 +115,10 @@ class SearchBar extends React.Component {
     if (focusedSuggestion !== null) {
       // Get focused suggestion search string
       const suggestion = document.getElementById(`suggestion${focusedSuggestion}`);
+      if (suggestion?.classList.contains('AreaSuggestion')) {
+        suggestion.click();
+        return;
+      }
       // Omit search restult count from suggestion string
       searchQuery = suggestion?.getElementsByTagName('p')[0].textContent;
     } else if (search && search !== '') {
@@ -172,19 +178,6 @@ class SearchBar extends React.Component {
       return null;
     }
 
-    // Screen reader only element for closing suggestions
-    const closeSuggestionElem = (
-      <Typography
-        role="link"
-        tabIndex="-1"
-        onClick={this.closeMobileSuggestions}
-        onKeyPress={() => { keyboardHandler(this.closeMobileSuggestions, ['space', 'enter']); }}
-        variant="srOnly"
-      >
-        <FormattedMessage id="search.suggestions.hideButton" />
-      </Typography>
-    );
-
     return (
       <>
         <Divider aria-hidden />
@@ -200,7 +193,11 @@ class SearchBar extends React.Component {
             handleSubmit={this.handleSubmit}
             isMobile
           />
-          {closeSuggestionElem}
+          <CloseSuggestionButton
+            onClick={this.closeMobileSuggestions}
+            onKeyPress={() => { keyboardHandler(this.closeMobileSuggestions, ['space', 'enter']); }}
+            srOnly
+          />
         </MobileComponent>
         <DesktopComponent>
           <SuggestionBox
@@ -350,7 +347,7 @@ class SearchBar extends React.Component {
     }  ${
       className
     }`;
-    const wrapperClasses = `${isActive ? classes.mobileWrapper : classes.wrapper}`;
+    const wrapperClasses = `${isActive ? classes.mobileWrapperActive : classes.mobileWrapper}`;
     const stickyStyles = typeof isSticky === 'number' ? { top: isSticky } : null;
 
     return (

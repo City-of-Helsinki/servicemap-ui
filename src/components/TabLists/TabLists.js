@@ -241,6 +241,7 @@ const TabLists = ({
                 }
                 return (
                   <Tab
+                    id={`Tab${index}`}
                     key={`${item.title}`}
                     aria-controls={`tab-content-${index}`}
                     aria-label={item.ariaLabel ? item.ariaLabel : null}
@@ -263,6 +264,16 @@ const TabLists = ({
   useEffect(() => {
     calculateHeaderStylings();
   }, [isMobile]);
+
+
+  useEffect(() => {
+    // Change tab if selected tab is changed on url
+    const tabFromUrl = getTabfromUrl();
+    if (tabFromUrl !== tabIndex) {
+      handleTabChange(null, tabFromUrl);
+    }
+  }, [location]);
+
 
   const render = () => (
     <>
@@ -343,7 +354,7 @@ TabLists.propTypes = {
     beforePagination: PropTypes.node,
     component: PropTypes.node,
     title: PropTypes.string,
-    data: PropTypes.array,
+    data: PropTypes.arrayOf(PropTypes.any),
     itemsPerPage: PropTypes.number,
   })).isRequired,
   changeCustomUserLocation: PropTypes.func.isRequired,

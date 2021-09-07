@@ -10,6 +10,8 @@ import DivisionItem from '../../../../components/ListItems/DivisionItem';
 import { getAddressFromUnit } from '../../../../utils/address';
 import SMAccordion from '../../../../components/SMAccordion';
 import useLocaleText from '../../../../utils/useLocaleText';
+import { getCategoryDistricts } from '../../utils/districtDataHelper';
+import { sortByOriginID } from '../../utils';
 
 const DistrictUnitList = (props) => {
   const {
@@ -36,7 +38,9 @@ const DistrictUnitList = (props) => {
   const renderDistrictUnitItem = (district) => {
     const { unit } = district;
     let title;
-    if (district.type === 'rescue_area') {
+    const rescueAreas = getCategoryDistricts('protection');
+
+    if (rescueAreas.includes(district.type)) {
       title = `${intl.formatMessage({ id: `area.list.${district.type}` })} ${district.origin_id} ${getLocaleText(district.name)}`;
     }
     const streetAddress = getAddressFromUnit(unit, getLocaleText, intl);
@@ -46,7 +50,6 @@ const DistrictUnitList = (props) => {
         divider={false}
         disableTitle={!title}
         customTitle={title}
-        className={classes.divisionItem}
         data={{
           area: district,
           name: district.unit.name || null,
@@ -87,7 +90,19 @@ const DistrictUnitList = (props) => {
         </div>
       );
     }
-    const districtsWithUnits = district.data.filter(obj => obj.unit);
+    const districtsWithUnits = [];
+    district.data.forEach((obj) => {
+      if (obj.unit) {
+        districtsWithUnits.push(obj);
+      }
+      if (obj.overlapping) {
+        obj.overlapping.forEach((i) => {
+          if (i.unit) {
+            districtsWithUnits.push(i);
+          }
+        });
+      }
+    });
 
     if (!districtsWithUnits.length) return null;
 
@@ -97,6 +112,10 @@ const DistrictUnitList = (props) => {
       cityFilteredUnits = districtsWithUnits;
     } else {
       cityFilteredUnits = districtsWithUnits.filter(unit => citySettings[unit.municipality]);
+    }
+
+    if (district.id === 'rescue_area') {
+      sortByOriginID(cityFilteredUnits);
     }
 
     if (selectedAddress && addressDistrict) {
@@ -109,8 +128,8 @@ const DistrictUnitList = (props) => {
         newValue.unit.distance = distanceToAddress(district.unit.location?.coordinates);
         localUnitDistricts.push(newValue);
 
-        if (district.overlaping) {
-          district.overlaping.forEach((obj) => {
+        if (district.overlapping) {
+          district.overlapping.forEach((obj) => {
             if (obj.unit) {
               const newValue = obj;
               newValue.unit.distance = distanceToAddress(obj.unit.location?.coordinates);
@@ -125,8 +144,8 @@ const DistrictUnitList = (props) => {
           const newValue = district;
           newValue.unit.distance = distanceToAddress(district.unit.location?.coordinates);
           otherUnitDistricts.push(newValue);
-          if (district.overlaping) {
-            district.overlaping.forEach((obj) => {
+          if (district.overlapping) {
+            district.overlapping.forEach((obj) => {
               if (obj.unit) {
                 const newValue = obj;
                 newValue.unit.distance = distanceToAddress(obj.unit.location?.coordinates);
@@ -141,8 +160,10 @@ const DistrictUnitList = (props) => {
         return null;
       }
 
-      sortDistricts(localUnitDistricts);
-      sortDistricts(otherUnitDistricts);
+      if (district.id !== 'rescue_area') {
+        sortDistricts(localUnitDistricts);
+        sortDistricts(otherUnitDistricts);
+      }
 
       return (
         <div>

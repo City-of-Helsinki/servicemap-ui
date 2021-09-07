@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<CloseSuggestionButton /> should work 1`] = `
+<div
+  onClick={[Function]}
+  onKeyDown={[Function]}
+  role="button"
+  tabIndex="0"
+>
+  <WithStyles(ForwardRef(Typography))
+    variant="body2"
+  >
+    <MemoizedFormattedMessage
+      id="search.suggestions.hideButton"
+    />
+  </WithStyles(ForwardRef(Typography))>
+  <Memo(ForwardRef(ArrowDownwardIcon)) />
+</div>
+`;

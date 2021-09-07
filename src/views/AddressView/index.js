@@ -10,25 +10,17 @@ import {
   setAdminDistricts,
   setToRender,
 } from '../../redux/actions/address';
-import { getLocaleString } from '../../redux/selectors/locale';
 import styles from './styles';
 import AddressView from './AddressView';
-import { getAddressNavigatorParamsConnector } from '../../utils/address';
 import { formatDistanceObject } from '../../utils';
 import { calculateDistance, getCurrentlyUsedPosition } from '../../redux/selectors/unit';
 
 const mapStateToProps = (state, props) => {
-  const {
-    intl,
-  } = props;
-  const {
-    address, mapRef, user, navigator,
-  } = state;
-  const map = mapRef && mapRef.leafletElement;
-  const getLocaleText = textObject => getLocaleString(state, textObject);
+  const { intl } = props;
+  const { address, mapRef, navigator } = state;
+  const map = mapRef;
   /* TODO: create custom hooks for getAddressNavigatorParams and getDistance
   to prevent re-rendering on every state change */
-  const getAddressNavigatorParams = getAddressNavigatorParamsConnector(getLocaleText, user.locale);
   const currentPosition = getCurrentlyUsedPosition(state);
   const getDistance = unit => formatDistanceObject(intl, calculateDistance(unit, currentPosition));
   const { units, adminDistricts } = address;
@@ -36,7 +28,6 @@ const mapStateToProps = (state, props) => {
     addressData: address.addressData,
     adminDistricts,
     map,
-    getAddressNavigatorParams,
     getDistance,
     navigator,
     units,

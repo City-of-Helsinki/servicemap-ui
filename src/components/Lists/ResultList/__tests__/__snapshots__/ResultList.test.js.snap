@@ -20,7 +20,7 @@ exports[`<ResultList /> should work 1`] = `
         id="testID-result-title-info"
         variant="caption"
       >
-        <FormattedMessage
+        <MemoizedFormattedMessage
           id="search.resultList"
           values={
             Object {

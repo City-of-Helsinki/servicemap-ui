@@ -14,6 +14,7 @@ import useMobileStatus from '../../../utils/isMobile';
 const SuggestionItem = (props) => {
   const {
     classes,
+    className,
     divider,
     text,
     handleItemClick,
@@ -47,11 +48,12 @@ const SuggestionItem = (props) => {
           selected: classes.itemFocus,
         }}
         selected={selected}
-        className="suggestion"
+        className={`suggestion ${className || ''}`}
         onMouseDown={onClick}
         onMouseUp={() => setMouseDown(false)}
         onKeyDown={keyboardHandler(onClick, ['space', 'enter'])}
         onKeyUp={() => setMouseDown(false)}
+        onClick={() => handleItemClick()}
         role={role || 'link'}
         aria-label={`${text} ${subtitle || ''}`}
         id={id}
@@ -143,6 +145,7 @@ SuggestionItem.propTypes = {
   query: PropTypes.string,
   role: PropTypes.string,
   id: PropTypes.string,
+  className: PropTypes.string,
 };
 
 SuggestionItem.defaultProps = {
@@ -155,4 +158,5 @@ SuggestionItem.defaultProps = {
   query: null,
   role: null,
   id: null,
+  className: null,
 };

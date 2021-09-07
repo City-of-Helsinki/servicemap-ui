@@ -77,6 +77,7 @@ const fetchStops = async (map) => {
         if (subwayStations.length) {
         // Find the subwaystation closest to the entrance
           subwayStations.forEach((stop) => {
+            if (!stop.gtfsId) return;
             const distance = Math.sqrt(
               ((stop.lat - entrance.location.coordinates[1]) ** 2)
           + ((stop.lon - entrance.location.coordinates[0]) ** 2),
@@ -88,7 +89,7 @@ const fetchStops = async (map) => {
           });
           // Get the same station's stop for other direction (west/east)
           const otherStop = subwayStations.find(
-            station => station.name === closest.stop.name && station.gtfsId !== closest.stop.gtfsId,
+            station => station.name === closest.stop.name && station?.gtfsId !== closest.stop.gtfsId,
           );
           // Create a new stop from the entrance
           // Give it the stop data of the corresponding station and add it to the list of stops

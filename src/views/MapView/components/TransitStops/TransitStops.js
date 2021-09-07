@@ -1,135 +1,126 @@
-/* eslint-disable global-require */
-import React from 'react';
+/* eslint-disable global-require, no-use-before-define */
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { renderToStaticMarkup } from 'react-dom/server';
+import { useMapEvents } from 'react-leaflet';
 import TransitStopInfo from './TransitStopInfo';
 import { fetchStops } from '../../utils/transitFetch';
 import { transitIconSize } from '../../config/mapConfig';
 import { isEmbed } from '../../../../utils/path';
+import useMobileStatus from '../../../../utils/isMobile';
 
-class TransitStops extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      transitStops: [],
-    };
-  }
+const TransitStops = ({ mapObject, classes }) => {
+  const isMobile = useMobileStatus();
+  const { Marker, Popup } = global.rL;
 
-  componentDidMount() {
-    const { map } = this.props;
-    map.leafletElement.on('moveend', () => {
-      this.handleTransit(map.leafletElement.getZoom());
-    });
-  }
+  const [transitStops, setTransitStops] = useState([]);
 
-  handleTransit = () => {
-    const { transitStops } = this.state;
-    if (this.showTransitStops()) {
-      this.fetchTransitStops();
-    } else if (transitStops.length) {
-      this.clearTransitStops();
-    }
-  }
-
-  fetchTransitStops = () => {
-    const { map } = this.props;
-    fetchStops(map.leafletElement)
-      .then((stops) => {
-        if (this.showTransitStops()) {
-          this.setState({ transitStops: stops });
-        }
-      });
-  }
-
-  clearTransitStops = () => {
-    this.setState({ transitStops: [] });
-  }
+  const map = useMapEvents({
+    moveend() {
+      handleTransit();
+    },
+  });
 
   // Check if transit stops should be shown
-  showTransitStops = () => {
-    const { isMobile, mapObject, map } = this.props;
+  const showTransitStops = () => {
     const transitZoom = isMobile
-      ? mapObject.options.mobileTransitZoom : mapObject.options.transitZoom;
-    const currentZoom = map.leafletElement.getZoom();
+      ? mapObject.options.detailZoom - 1 : mapObject.options.detailZoom;
+    const currentZoom = map.getZoom();
 
     const url = new URL(window.location);
     const embeded = isEmbed({ url: url.toString() });
     const showTransit = !embeded || url.searchParams.get('transit') === '1';
 
     return (currentZoom >= transitZoom) && showTransit;
-  }
+  };
 
-  getTransitIcon = (type) => {
+  const fetchTransitStops = () => {
+    fetchStops(map)
+      .then((stops) => {
+        if (showTransitStops()) {
+          setTransitStops(stops);
+        }
+      });
+  };
+
+  const clearTransitStops = () => {
+    setTransitStops([]);
+  };
+
+  const handleTransit = () => {
+    if (showTransitStops()) {
+      fetchTransitStops();
+    } else if (transitStops.length) {
+      clearTransitStops();
+    }
+  };
+
+  const getTransitIcon = (type) => {
     const { divIcon } = require('leaflet');
-    const { classes } = this.props;
     let icon;
 
     switch (type) {
       case 3: // Bus stops
-        icon = <span className={`${classes.transitIconMap} ${classes.busIconColor} icon-icon-hsl-bus`} />;
+        icon = <span aria-hidden className={`${classes.transitIconMap} ${classes.busIconColor} icon-icon-hsl-bus`} />;
         break;
       case 0: // Tram stops
-        icon = <span className={`${classes.transitIconMap} ${classes.tramIconColor} icon-icon-hsl-tram`} />;
+        icon = <span aria-hidden className={`${classes.transitIconMap} ${classes.tramIconColor} icon-icon-hsl-tram`} />;
         break;
       case 109: // Train stops
-        icon = <span className={`${classes.transitIconMap} ${classes.trainIconColor} icon-icon-hsl-train`} />;
+        icon = <span aria-hidden className={`${classes.transitIconMap} ${classes.trainIconColor} icon-icon-hsl-train`} />;
         break;
       case 1: // Subway stops
-        icon = <span className={`${classes.transitIconMap} ${classes.metroIconColor} icon-icon-hsl-metro`} />;
+        icon = <span aria-hidden className={`${classes.transitIconMap} ${classes.metroIconColor} icon-icon-hsl-metro`} />;
         break;
       case -999: case 4: // Ferry stops
-        icon = <span className={`${classes.transitIconMap} ${classes.ferryIconColor} icon-icon-hsl-ferry`} />;
+        icon = <spanz aria-hidden className={`${classes.transitIconMap} ${classes.ferryIconColor} icon-icon-hsl-ferry`} />;
         break;
       default:
-        icon = <span className={`${classes.transitIconMap} ${classes.busIconColor} icon-icon-hsl-bus`} />;
+        icon = <span aria-hidden className={`${classes.transitIconMap} ${classes.busIconColor} icon-icon-hsl-bus`} />;
         break;
     }
 
     return divIcon({
       html: renderToStaticMarkup(
         <>
-          <span className={`${classes.transitBackground} icon-icon-hsl-background`} />
+          <span aria-hidden className={`${classes.transitBackground} icon-icon-hsl-background`} />
           {icon}
         </>,
       ),
       iconSize: [transitIconSize, transitIconSize],
+      popupAnchor: [0, -13],
     });
-  }
+  };
 
-  closePopup = () => {
-    const { map } = this.props;
-    map.leafletElement.closePopup();
-  }
+  const closePopup = () => {
+    map.closePopup();
+  };
 
-  render() {
-    const { Marker, Popup } = global.rL;
-    const { transitStops } = this.state;
-
-    return (
-      transitStops.map((stop) => {
-        const icon = this.getTransitIcon(stop.vehicleType);
-        return (
-          <Marker
-            icon={icon}
-            key={stop.name.fi + stop.gtfsId}
-            position={[stop.lat, stop.lon]}
-            keyboard={false}
-          >
+  return (
+    transitStops.map((stop) => {
+      const icon = getTransitIcon(stop.vehicleType);
+      return (
+        <Marker
+          icon={icon}
+          key={stop.name.fi + stop.gtfsId}
+          position={[stop.lat, stop.lon]}
+          keyboard={false}
+        >
+          <div aria-hidden>
             <Popup closeButton={false} className="popup" autoPan={false}>
               <TransitStopInfo
                 stop={stop}
-                onCloseClick={() => this.closePopup()}
+                onCloseClick={() => closePopup()}
               />
             </Popup>
-          </Marker>
-        );
-      })
-    );
-  }
-}
+          </div>
+        </Marker>
+      );
+    })
+  );
+};
 
 TransitStops.propTypes = {
-  map: PropTypes.objectOf(PropTypes.any).isRequired,
   mapObject: PropTypes.objectOf(PropTypes.any).isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   isMobile: PropTypes.bool,

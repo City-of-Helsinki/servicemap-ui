@@ -15,15 +15,16 @@ exports[`<DrawerButton /> should work 1`] = `
     active={false}
     classes={
       Object {
-        "disabled": "DrawerButton-disabled-8",
-        "drawerButton": "DrawerButton-drawerButton-3",
-        "drawerButtonActive": "DrawerButton-drawerButtonActive-4",
-        "drawerButtonText": "DrawerButton-drawerButtonText-5",
+        "disabled": "DrawerButton-disabled-9",
+        "drawerButton": "DrawerButton-drawerButton-4",
+        "drawerButtonActive": "DrawerButton-drawerButtonActive-5",
+        "drawerButtonText": "DrawerButton-drawerButtonText-6",
         "drawerContainer": "DrawerButton-drawerContainer-1",
-        "drawerContainerMobile": "DrawerButton-drawerContainerMobile-2",
-        "drawerIcon": "DrawerButton-drawerIcon-6",
-        "drawerIconActive": "DrawerButton-drawerIconActive-7",
-        "itemFocus": "DrawerButton-itemFocus-9",
+        "drawerContainerMobile": "DrawerButton-drawerContainerMobile-3",
+        "drawerIcon": "DrawerButton-drawerIcon-7",
+        "drawerIconActive": "DrawerButton-drawerIconActive-8",
+        "itemFocus": "DrawerButton-itemFocus-10",
+        "scrollContainer": "DrawerButton-scrollContainer-2",
       }
     }
     disableRipple={true}
@@ -37,9 +38,9 @@ exports[`<DrawerButton /> should work 1`] = `
     <WithStyles(ForwardRef(ButtonBase))
       aria-hidden={true}
       aria-label="Drawer button text"
-      className="DrawerButton-drawerButton-3 "
+      className="DrawerButton-drawerButton-4 "
       disableRipple={true}
-      focusVisibleClassName="DrawerButton-itemFocus-9"
+      focusVisibleClassName="DrawerButton-itemFocus-10"
       key="Drawer button text"
       onClick={[Function]}
       role="link"
@@ -48,7 +49,7 @@ exports[`<DrawerButton /> should work 1`] = `
       <ForwardRef(ButtonBase)
         aria-hidden={true}
         aria-label="Drawer button text"
-        className="DrawerButton-drawerButton-3 "
+        className="DrawerButton-drawerButton-4 "
         classes={
           Object {
             "disabled": "Mui-disabled",
@@ -57,7 +58,7 @@ exports[`<DrawerButton /> should work 1`] = `
           }
         }
         disableRipple={true}
-        focusVisibleClassName="DrawerButton-itemFocus-9"
+        focusVisibleClassName="DrawerButton-itemFocus-10"
         onClick={[Function]}
         role="link"
         tabIndex={-1}
@@ -65,7 +66,7 @@ exports[`<DrawerButton /> should work 1`] = `
         <button
           aria-hidden={true}
           aria-label="Drawer button text"
-          className="MuiButtonBase-root DrawerButton-drawerButton-3 "
+          className="MuiButtonBase-root DrawerButton-drawerButton-4 "
           disabled={false}
           onBlur={[Function]}
           onClick={[Function]}
@@ -84,9 +85,9 @@ exports[`<DrawerButton /> should work 1`] = `
           type="button"
         >
           <div
-            className="DrawerButton-drawerIcon-6  "
+            className="DrawerButton-drawerIcon-7  "
           >
-            <ForwardRef>
+            <ForwardRef(SearchIcon)>
               <WithStyles(ForwardRef(SvgIcon))>
                 <ForwardRef(SvgIcon)
                   classes={
@@ -115,17 +116,17 @@ exports[`<DrawerButton /> should work 1`] = `
                   </svg>
                 </ForwardRef(SvgIcon)>
               </WithStyles(ForwardRef(SvgIcon))>
-            </ForwardRef>
+            </ForwardRef(SearchIcon)>
           </div>
           <span
             aria-hidden={true}
           >
             <WithStyles(ForwardRef(Typography))
-              className="DrawerButton-drawerButtonText-5 "
+              className="DrawerButton-drawerButtonText-6 "
               variant="body1"
             >
               <ForwardRef(Typography)
-                className="DrawerButton-drawerButtonText-5 "
+                className="DrawerButton-drawerButtonText-6 "
                 classes={
                   Object {
                     "alignCenter": "MuiTypography-alignCenter",
@@ -163,7 +164,7 @@ exports[`<DrawerButton /> should work 1`] = `
                 variant="body1"
               >
                 <p
-                  className="MuiTypography-root DrawerButton-drawerButtonText-5  MuiTypography-body1"
+                  className="MuiTypography-root DrawerButton-drawerButtonText-6  MuiTypography-body1"
                 >
                   Drawer button text
                 </p>

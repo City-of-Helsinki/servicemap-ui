@@ -30,12 +30,12 @@ test('AddressView does render correct view', async (t) => {
 
   const units = await ReactSelector('UnitItem').count;
   await t
-    .expect(units).gt(1, 'Closeby units tab should show unit items')
+    .expect(units).gt(1, 'Closeby units tab should show unit items', { timeout: 4000 })
   ;
 });
 
 test('AddressView map renders correctly', async (t) => {
-  const zoomOut = await Selector('.leaflet-control-zoom-out');
+  const zoomOut = await Selector('.zoomOut');
   await t
     .click(zoomOut)
     .click(zoomOut)

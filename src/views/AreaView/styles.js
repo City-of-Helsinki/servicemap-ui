@@ -106,10 +106,6 @@ const styles = theme => ({
   addressItem: {
     fontSize: 24,
   },
-  divisionItem: {
-    paddingTop: 14,
-    paddingBottom: 14,
-  },
   areaTitle: {
     display: 'flex',
     alignItems: 'center',
@@ -191,6 +187,10 @@ const styles = theme => ({
   },
   areaSwitch: {
     paddingLeft: theme.spacing(2),
+    display: 'inline-flex',
+    alignItems: 'center',
+    marginLeft: -11,
+    verticalAlign: 'middle',
   },
   labelContainer: {
     marginLeft: theme.spacing(2),

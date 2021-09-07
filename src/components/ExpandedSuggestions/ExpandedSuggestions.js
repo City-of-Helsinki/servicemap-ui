@@ -70,7 +70,7 @@ const ExpandedSuggestions = (props) => {
       fetchController.current = new AbortController();
       const { signal } = fetchController.current;
 
-      createSuggestions(query, signal, locale)
+      createSuggestions(query, signal, locale, intl)
         .then((suggestions) => {
           if (suggestions === 'error') {
             return;
@@ -114,6 +114,7 @@ const ExpandedSuggestions = (props) => {
     <TitleBar
       backButton
       backButtonOnClick={onClick}
+      backButtonText={intl.formatMessage({ id: 'search.closeExpand' })}
       backButtonSrText={intl.formatMessage({ id: 'search.closeExpand' })}
       className={`${classes.titleBar} ExpandedSuggestions-title`}
       titleComponent="h3"

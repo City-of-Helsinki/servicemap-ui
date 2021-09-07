@@ -18,13 +18,15 @@ import fetchAddressUnits from './utils/fetchAddressUnits';
 import fetchAddressData from './utils/fetchAddressData';
 import SMButton from '../../components/ServiceMapButton';
 import TabLists from '../../components/TabLists';
-import { getAddressText, addressMatchParamsToFetchOptions } from '../../utils/address';
+import { getAddressText, addressMatchParamsToFetchOptions, useNavigationParams } from '../../utils/address';
 import DesktopComponent from '../../components/DesktopComponent';
 import MobileComponent from '../../components/MobileComponent';
 import DivisionItem from '../../components/ListItems/DivisionItem';
-import { parseSearchParams } from '../../utils';
 import config from '../../../config';
 import useLocaleText from '../../utils/useLocaleText';
+import { parseSearchParams } from '../../utils';
+import { getCategoryDistricts } from '../AreaView/utils/districtDataHelper';
+import { DistrictItem } from '../../components';
 
 
 const hiddenDivisions = {
@@ -54,6 +56,8 @@ const getEmergencyCareUnit = (division) => {
 
 const AddressView = (props) => {
   const [error, setError] = useState(null);
+  const getAddressNavigatorParams = useNavigationParams();
+  const getLocaleText = useLocaleText();
 
   const {
     addressData,
@@ -62,7 +66,6 @@ const AddressView = (props) => {
     embed,
     intl,
     match,
-    getAddressNavigatorParams,
     getDistance,
     map,
     setAddressData,
@@ -76,7 +79,7 @@ const AddressView = (props) => {
     units,
   } = props;
 
-  const getLocaleText = useLocaleText();
+  const title = getAddressText(addressData, getLocaleText);
 
   const fetchAddressDistricts = (lnglat) => {
     setAdminDistricts(null);
@@ -205,6 +208,22 @@ const AddressView = (props) => {
     // Get emergency division
     const emergencyDiv = adminDistricts.find(x => x.type === 'emergency_care_district');
 
+    // Also add rescue areas that have no units
+    const rescueAreaIDs = getCategoryDistricts('protection');
+    const rescueAreas = adminDistricts.filter((obj, i) => {
+      if (rescueAreaIDs.includes(obj.type)) {
+        if (!obj.unit) {
+          return true;
+        }
+        // Move rescue areas to the end of unit list
+        adminDistricts.push(adminDistricts.splice(i, 1)[0]);
+        return false;
+      }
+      return false;
+    });
+
+    const getCustomRescueAreaTitle = area => `${area.origin_id} - ${getLocaleText(area.name)}`;
+
     const units = divisionsWithUnits.map((x) => {
       const { unit } = x;
       const unitData = unit;
@@ -238,16 +257,23 @@ const AddressView = (props) => {
             units.map((data) => {
               const key = `${data.area.id}`;
               const distance = getDistance(data);
+              const customTitle = rescueAreaIDs.includes(data.area.type)
+                ? `${intl.formatMessage({ id: `area.list.${data.area.type}` })} ${getCustomRescueAreaTitle(data.area)}`
+                : null;
               return (
                 <DivisionItem
                   data={data}
                   distance={distance}
                   divider
                   key={key}
+                  customTitle={customTitle}
                 />
               );
             })
           }
+          {rescueAreas.map(area => (
+            <DistrictItem key={area.id} area={area} />
+          ))}
         </List>
       </>
     );
@@ -261,7 +287,6 @@ const AddressView = (props) => {
   }, [match.url, map]);
 
   // Render component
-  const title = getAddressText(addressData, getLocaleText);
   const tabs = [
     {
       ariaLabel: intl.formatMessage({ id: 'address.nearby' }),
@@ -346,7 +371,6 @@ AddressView.propTypes = {
   map: PropTypes.objectOf(PropTypes.any),
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
-  getAddressNavigatorParams: PropTypes.func.isRequired,
   getDistance: PropTypes.func.isRequired,
   setAddressData: PropTypes.func.isRequired,
   setAddressLocation: PropTypes.func.isRequired,

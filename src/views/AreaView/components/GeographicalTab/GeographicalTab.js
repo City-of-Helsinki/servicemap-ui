@@ -17,6 +17,7 @@ import { getFilteredSubdistrictServices } from '../../../../redux/selectors/dist
 import GeographicalDistrictList from '../GeographicalDistrictList';
 import GeographicalUnitList from '../GeographicalUnitList';
 import useLocaleText from '../../../../utils/useLocaleText';
+import { geographicalDistricts } from '../../utils/districtDataHelper';
 
 
 const GeographicalTab = ({
@@ -37,7 +38,7 @@ const GeographicalTab = ({
   const getLocaleText = useLocaleText();
 
   const [openCategory, setOpenCategory] = useState(
-    useSelector(state => state.districts.openItems).find(item => item === 'neighborhood' || item === 'postcode_area') || [],
+    useSelector(state => state.districts.openItems).find(item => geographicalDistricts.includes(item)) || [],
   );
 
 
@@ -83,7 +84,7 @@ const GeographicalTab = ({
   };
 
   useEffect(() => {
-    if (!selectedDistrictType || (selectedDistrictType !== 'neighborhood' && selectedDistrictType !== 'postcode_area')) {
+    if (!selectedDistrictType || !geographicalDistricts.includes(selectedDistrictType)) {
       dispatch(setSelectedSubdistricts([]));
       dispatch(setSelectedDistrictServices([]));
       setOpenCategory(null);
@@ -117,7 +118,7 @@ const GeographicalTab = ({
 
 
   const render = () => {
-    const districtItems = districtData.filter(obj => obj.id === 'neighborhood' || obj.id === 'postcode_area');
+    const districtItems = districtData.filter(obj => geographicalDistricts.includes(obj.id));
     return (
       <>
         {localAddressData?.address && localAddressData.districts?.length && (

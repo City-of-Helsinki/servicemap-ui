@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
+import { useMap } from 'react-leaflet';
 import { drawMarkerIcon } from '../../utils/drawIcon';
 import { isEmbed } from '../../../../utils/path';
 import { createMarkerClusterLayer, createTooltipContent, createPopupContent } from './clusterUtils';
@@ -47,12 +48,12 @@ const MarkerCluster = ({
   data,
   getDistance,
   highlightedUnit,
-  map,
   navigator,
   settings,
   theme,
   measuringMode,
 }) => {
+  const map = useMap();
   const getLocaleText = useLocaleText();
   const useContrast = theme === 'dark';
   const embeded = isEmbed();
@@ -138,10 +139,20 @@ const MarkerCluster = ({
     const unitClasses = children
       .map(marker => marker?.options?.customUnitData?.id && `unit-marker-${marker.options.customUnitData.id}`)
       .filter(v => !!v);
-    const iconClasses = `unitClusterMarker ${classes.unitClusterMarker} ${unitClasses.join(' ')} ${useContrast ? 'dark' : ''}`;
+    const iconClasses = unitClasses.join(' ');
     const icon = global.L.divIcon({
-      html: `<span aria-hidden="true" tabindex="-1">${cCount}</span>`,
-      className: iconClasses,
+      html: `
+        <div class="${classes.bgCircle} ${classes.markerCircle} ${iconClasses}" aria-hidden="true" tabindex="-1">
+          <div class="${classes.outerCircle} ${classes.markerCircle} ${useContrast ? 'dark' : ''}" aria-hidden="true" tabindex="-1">
+            <div class="${classes.midCircle} ${classes.markerCircle} ${useContrast ? 'dark' : ''}" aria-hidden="true" tabindex="-1">
+              <div class="${classes.innerCircle} ${classes.markerCircle} ${useContrast ? 'dark' : ''}" aria-hidden="true" tabindex="-1">
+                ${cCount}
+              </div>
+            </div>
+          </div>
+        </div>
+      `,
+      className: 'unitClusterMarker',
       iconSize: global.L.point(iconSize, iconSize, true),
     });
     return icon;
@@ -310,6 +321,9 @@ const MarkerCluster = ({
     map.addLayer(mcg);
     // Set cluster to state
     setCluster(mcg);
+    return () => {
+      mcg.clearLayers();
+    };
   }, []);
 
   /**
@@ -359,12 +373,17 @@ const MarkerCluster = ({
         );
         const tooltipPermanent = highlightedUnit
           && (highlightedUnit.id === unit.id && UnitHelper.isUnitPage());
+        const unitHasEvents = tooltipPermanent && unit.events?.length;
 
-        const markerClasses = `unit-marker-${unit.id} ${classes.unitMarker}${useContrast ? ' dark' : ''}`;
+        const markerClasses = `unit-marker-${unit.id} ${classes.unitMarker} ${unitHasEvents ? classes.unitMarkerEvent : ''} ${useContrast ? ' dark' : ''}`;
         const markerElem = global.L.marker(
           [unit.location.coordinates[1], unit.location.coordinates[0]],
           {
-            icon: drawMarkerIcon(useContrast, markerClasses),
+            icon: drawMarkerIcon(
+              useContrast,
+              markerClasses,
+              tooltipPermanent && unitHasEvents,
+            ),
             customUnitData: unit,
             keyboard: false,
           },
@@ -444,11 +463,10 @@ MarkerCluster.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   data: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number,
+      id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     }),
   ).isRequired,
   getDistance: PropTypes.func.isRequired,
-  map: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any).isRequired,
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
   theme: PropTypes.string.isRequired,

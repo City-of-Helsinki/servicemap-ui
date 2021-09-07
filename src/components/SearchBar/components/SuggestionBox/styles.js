@@ -1,4 +1,3 @@
-import config from '../../../../../config';
 
 export default theme => ({
   minimizeLink: {
@@ -15,16 +14,15 @@ export default theme => ({
     },
   },
   suggestionArea: {
+    width: '100%',
     position: 'absolute',
-    right: theme.spacing(3),
-    left: theme.spacing(3),
     zIndex: theme.zIndex.infront,
     backgroundColor: '#fff',
     overflow: 'auto',
     borderRadius: 0,
     borderBottomLeftRadius: theme.spacing(0.5),
     borderBottomRightRadius: theme.spacing(0.5),
-    maxHeight: `calc(80vh - ${config.topBarHeight}px)`,
+    overflowX: 'hidden',
   },
   suggestionAreaMobile: {
     right: 0,
@@ -40,9 +38,13 @@ export default theme => ({
     display: 'flex',
     flexDirection: 'column',
     boxShadow: 'none',
+    overflowX: 'hidden',
   },
   infoText: {
     padding: theme.spacing(1),
     marginLeft: theme.spacing(6),
+  },
+  areaIcon: {
+    margin: 0,
   },
 });

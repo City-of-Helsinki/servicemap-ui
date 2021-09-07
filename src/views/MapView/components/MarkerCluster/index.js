@@ -4,7 +4,7 @@ import MarkerCluster from './MarkerCluster';
 import { formatDistanceObject } from '../../../../utils';
 import { calculateDistance, getCurrentlyUsedPosition } from '../../../../redux/selectors/unit';
 import styles from '../../styles';
-import { getSelectedUnit } from '../../../../redux/selectors/selectedUnit';
+import { getSelectedUnit, getSelectedUnitEvents } from '../../../../redux/selectors/selectedUnit';
 
 
 const mapStateToProps = (state) => {
@@ -16,11 +16,16 @@ const mapStateToProps = (state) => {
     formatDistanceObject(intl, calculateDistance(unit, distanceCoordinates))
   );
   const highlightedUnit = getSelectedUnit(state);
+  const highlightedUnitEvents = getSelectedUnitEvents(state);
+  if (highlightedUnit) {
+    highlightedUnit.events = highlightedUnitEvents.data;
+  }
 
   return {
     currentPage: page,
     getDistance,
     highlightedUnit,
+    highlightedUnitEvents,
     navigator,
     settings,
     theme,

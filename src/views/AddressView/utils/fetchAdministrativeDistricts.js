@@ -3,6 +3,7 @@ import { districtFetch } from '../../../utils/fetch';
 const SORTED_DIVISIONS = [
   'postcode_area',
   'neighborhood',
+  'major_district',
   'health_station_district',
   'maternity_clinic_district',
   'income_support_district',
@@ -23,6 +24,7 @@ const fetchAdministrativeDistricts = async (lnglat) => {
   const districts = [
     'postcode_area',
     'neighborhood',
+    'major_district',
     'health_station_district',
     'maternity_clinic_district',
     'lower_comprehensive_school_district_fi',

@@ -12,6 +12,8 @@ import config from '../../../../../config';
 import SuggestionItem from '../../../ListItems/SuggestionItem';
 import AddressItem from '../../../ListItems/AddressItem';
 import { keyboardHandler } from '../../../../utils';
+import { AreaIcon } from '../../../SMIcon';
+import { CloseSuggestionButton } from '../CloseSuggestionButton';
 
 
 const SuggestionBox = (props) => {
@@ -26,6 +28,7 @@ const SuggestionBox = (props) => {
     isMobile,
     intl,
     locale,
+    navigator,
   } = props;
 
   const [searchQueries, setSearchQueries] = useState(null);
@@ -55,6 +58,12 @@ const SuggestionBox = (props) => {
   });
   */
 
+  const handleAreaItemClick = (area) => {
+    if (navigator) {
+      navigator.push('area', area.id);
+    }
+  };
+
   const slicedSuggestions = () => {
     let suggestionList = searchQueries || null;
     if (suggestionList && suggestionList.length) {
@@ -80,7 +89,7 @@ const SuggestionBox = (props) => {
       fetchController.current = new AbortController();
       const { signal } = fetchController.current;
 
-      createSuggestions(query, signal, locale)
+      createSuggestions(query, signal, locale, intl)
         .then((suggestions) => {
           if (suggestions === 'error') {
             return;
@@ -151,8 +160,25 @@ const SuggestionBox = (props) => {
                     text={item.suggestion}
                     handleArrowClick={handleArrowClick}
                     handleItemClick={() => handleSubmit(item.suggestion)}
-                    divider
+                    divider={i !== suggestionList.length - 1}
                     subtitle={intl.formatMessage({ id: 'search.suggestions.results' }, { count: item.count })}
+                    isMobile
+                    query={suggestionQuery}
+                  />
+                );
+              }
+              if (item.object_type === 'area') {
+                return (
+                  <SuggestionItem
+                    id={`suggestion${i}`}
+                    className="AreaSuggestion"
+                    role="option"
+                    selected={i === focusedSuggestion}
+                    key={`suggestion-${item.suggestion + item.count}`}
+                    icon={<AreaIcon className={classes.areaIcon} />}
+                    text={item.name}
+                    handleItemClick={() => handleAreaItemClick(item)}
+                    divider
                     isMobile
                     query={suggestionQuery}
                   />
@@ -186,9 +212,8 @@ const SuggestionBox = (props) => {
     }
 
     return (
-      <div
+      <CloseSuggestionButton
         className={classes.minimizeLink}
-        role="link"
         onClick={(e) => {
           e.preventDefault();
           closeMobileSuggestions();
@@ -197,11 +222,8 @@ const SuggestionBox = (props) => {
           e.preventDefault();
           keyboardHandler(closeMobileSuggestions, ['space', 'enter'])(e);
         }}
-        tabIndex="0"
-      >
-        <Typography variant="body2"><FormattedMessage id="search.suggestions.hideButton" /></Typography>
-        <ArrowDropUp />
-      </div>
+        icon={<ArrowDropUp />}
+      />
     );
   };
 
@@ -224,7 +246,9 @@ const SuggestionBox = (props) => {
     const sidebar = document.getElementsByClassName('SidebarWrapper')[0];
     const app = document.getElementsByClassName('App')[0];
     if (visible) {
-      sidebar.style.overflow = 'hidden';
+      if (isMobile) {
+        sidebar.style.overflow = 'hidden';
+      }
       if (app) {
         app.style.height = '100%';
       }
@@ -285,6 +309,7 @@ SuggestionBox.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   focusedSuggestion: PropTypes.number,
+  navigator: PropTypes.objectOf(PropTypes.any),
   isMobile: PropTypes.bool,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   locale: PropTypes.oneOf(config.supportedLanguages).isRequired,
@@ -292,6 +317,7 @@ SuggestionBox.propTypes = {
 
 SuggestionBox.defaultProps = {
   closeMobileSuggestions: null,
+  navigator: null,
   visible: false,
   searchQuery: null,
   focusedSuggestion: null,

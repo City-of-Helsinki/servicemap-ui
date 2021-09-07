@@ -3,6 +3,7 @@ import React from 'react';
 import isClient from '../../../../utils';
 import { isEmbed } from '../../../../utils/path';
 import { getAddressFromUnit } from '../../../../utils/address';
+import formatEventDate from '../../../../utils/events';
 
 export const createMarkerClusterLayer = (
   createClusterCustomIcon,
@@ -97,25 +98,38 @@ export const createPopupContent = (unit, classes, getLocaleText, distance, intl,
   ReactDOMServer.renderToStaticMarkup(
     <div className={classes.unitTooltipWrapper}>
       <p className={classes.unitTooltipTitle}>{unit.name && getLocaleText(unit.name)}</p>
-      <div className={classes.unitTooltipSubContainer}>
-        {
-          unit.street_address
-          && (
+      {
+        unit.street_address
+        && (
+          <p className={classes.unitTooltipSubtitle}>
+            {getAddressFromUnit(unit, getLocaleText, intl)}
+          </p>
+        )
+      }
+      {
+        distance
+        && (
+          <p className={`${classes.unitTooltipSubtitle} ${classes.unitTooltipCaption}`}>
+            {intl.formatMessage({ id: 'unit.distance' })}
+            {distance.distance}
+            {distance.type}
+          </p>
+        )
+      }
+      {
+      unit.events?.length
+        ? (
+          <div className={classes.unitTooltipEventContainer}>
+            <hr className={classes.unitTooltipDivider} />
             <p className={classes.unitTooltipSubtitle}>
-              {getAddressFromUnit(unit, getLocaleText, intl)}
+              {unit.events[0].name.fi}
             </p>
-          )
-        }
-        {
-          distance
-          && (
-            <p className={classes.unitTooltipSubtitle}>
-              {distance.distance}
-              {distance.type}
+            <p className={`${classes.unitTooltipSubtitle} ${classes.unitTooltipCaption}`}>
+              {formatEventDate(unit.events[0], intl)}
             </p>
-          )
-        }
-      </div>
+          </div>
+        ) : null
+      }
       {isMobile && (
         <p className={classes.unitTooltipLink}>
           {intl.formatMessage({ id: 'unit.showInformation' })}

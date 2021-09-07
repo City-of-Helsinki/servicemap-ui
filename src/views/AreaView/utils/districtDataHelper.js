@@ -52,6 +52,7 @@ export const dataStructure = [ // Categorized district data structure
     districts: [
       'neighborhood',
       'postcode_area',
+      'major_district',
     ],
   },
   {
@@ -79,14 +80,17 @@ export const dataStructure = [ // Categorized district data structure
   },
 ];
 
+// Get geographical districts
 export const geographicalDistricts = dataStructure.find(obj => obj.id === 'geographical').districts;
+// Get category districts by id
+export const getCategoryDistricts = id => dataStructure.find(obj => obj.id === id)?.districts || [];
 
 
 export const groupDistrictData = (data) => {
   const groupedData = data.reduce((acc, cur) => {
   // Group data by district type and period
     const { start, end } = cur;
-    if (start?.includes(2019)) {
+    if (start?.includes(2020)) {
     // FIXME: temporary solution to hide older school years
       return acc;
     }
@@ -153,20 +157,20 @@ export const parseDistrictGeometry = (results) => {
   let filteredData = [];
   data.forEach((district) => {
     if (!district.boundary) return;
-    // Skip if district is already marked as overlaping with another district
-    if (filteredData.some(obj => obj.overlaping
-    && obj.overlaping.some(item => item.id === district.id))) {
+    // Skip if district is already marked as overlapping with another district
+    if (filteredData.some(obj => obj.overlapping
+    && obj.overlapping.some(item => item.id === district.id))) {
       return;
     }
     const returnItem = district;
 
     // Combine other districts that are duplicates or within this district
-    const overlapingDistricts = data.filter(obj => compareBoundaries(district, obj));
+    const overlappingDistricts = data.filter(obj => compareBoundaries(district, obj));
 
-    if (overlapingDistricts.length) {
-      returnItem.overlaping = overlapingDistricts;
-      // Remove overlaping districts from filtered data if already added
-      overlapingDistricts.forEach((obj) => {
+    if (overlappingDistricts.length) {
+      returnItem.overlapping = overlappingDistricts;
+      // Remove overlapping districts from filtered data if already added
+      overlappingDistricts.forEach((obj) => {
         filteredData = filteredData.filter(item => item.id !== obj.id);
       });
     }

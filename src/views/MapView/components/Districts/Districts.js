@@ -7,11 +7,11 @@ import { FormattedMessage } from 'react-intl';
 import { drawMarkerIcon } from '../../utils/drawIcon';
 import swapCoordinates from '../../utils/swapCoordinates';
 import AddressMarker from '../AddressMarker';
-import useMobileStatus from '../../../../utils/isMobile';
 import { parseSearchParams } from '../../../../utils';
 import config from '../../../../../config';
 import useLocaleText from '../../../../utils/useLocaleText';
-import { geographicalDistricts } from '../../../AreaView/utils/districtDataHelper';
+import { geographicalDistricts, getCategoryDistricts } from '../../../AreaView/utils/districtDataHelper';
+import UnitHelper from '../../../../utils/unitHelper';
 
 
 const Districts = ({
@@ -27,7 +27,7 @@ const Districts = ({
   selectedSubdistricts,
   setSelectedSubdistricts,
   setSelectedDistrictServices,
-  embed,
+  embedded,
   classes,
   navigator,
   intl,
@@ -36,7 +36,6 @@ const Districts = ({
     Polygon, Marker, Tooltip, Popup,
   } = global.rL;
   const useContrast = theme === 'dark';
-  const isMobile = useMobileStatus();
   const location = useLocation();
   const getLocaleText = useLocaleText();
   const citySettings = useSelector(state => state.settings.cities);
@@ -45,6 +44,17 @@ const Districts = ({
 
   const districtOnClick = (e, district) => {
     if (measuringMode) return;
+
+    if (district.type === 'nature_reserve' && config.natureAreaURL !== 'undefined') {
+      setAreaPopup({
+        district,
+        link: `${config.natureAreaURL}${district.origin_id}`,
+        name: district.name,
+        position: e.latlng,
+      });
+    }
+
+    if (embedded) return;
     // Disable normal map click event
     e.originalEvent.view.L.DomEvent.stopPropagation(e);
 
@@ -60,18 +70,11 @@ const Districts = ({
         setSelectedDistrictServices([]);
       }
       setSelectedSubdistricts(newArray);
-    } else if (district.type === 'nature_reserve' && config.natureAreaURL !== 'undefined') {
-      setAreaPopup({
-        district,
-        link: `${config.natureAreaURL}${district.origin_id}`,
-        name: district.name,
-        position: e.latlng,
-      });
     }
   };
 
   const renderDistrictMarkers = (district) => {
-    if (embed && parseSearchParams(location.search).units === 'none') {
+    if (embedded && parseSearchParams(location.search).units === 'none') {
       return null;
     }
     return (
@@ -88,11 +91,7 @@ const Districts = ({
               keyboard={false}
               onClick={() => {
                 if (navigator) {
-                  if (isMobile) {
-                    navigator.replace('unit', { id: district.unit.id });
-                  } else {
-                    navigator.push('unit', { id: district.unit.id });
-                  }
+                  UnitHelper.unitElementClick(navigator, district.unit);
                 }
               }}
             >
@@ -134,7 +133,9 @@ const Districts = ({
           [areas],
         ]}
         color="#ff8400"
-        fillColor="#000"
+        pathOptions={{
+          fillColor: '#000',
+        }}
       />
     );
   };
@@ -149,7 +150,7 @@ const Districts = ({
     if (selectedCities.length) {
       const searchParams = parseSearchParams(location.search);
       filteredData = districtData.filter(district => (searchParams.city
-        ? embed && district.municipality === searchParams.city
+        ? embedded && district.municipality === searchParams.city
         : citySettings[district.municipality]));
     } else {
       filteredData = districtData;
@@ -169,30 +170,51 @@ const Districts = ({
         coords => swapCoordinates(coords),
       );
 
-      const tooltipTitle = district.type === 'rescue_area'
-        ? `${intl.formatMessage({ id: `area.list.${district.type}` })} ${district.origin_id} - ${getLocaleText(district.name)}`
-        : `${getLocaleText(district.name)} - ${intl.formatMessage({ id: `area.list.${district.type}` })}`;
+      // Count units in single area
+      let numberOfUnits = district.overlapping?.length
+        && district.overlapping.map(obj => obj.unit).filter(i => !!i).length;
+      if (district.unit) {
+        numberOfUnits += 1;
+      }
+
+      let tooltipTitle;
+
+      if (numberOfUnits > 1) {
+        tooltipTitle = `${intl.formatMessage({ id: `area.list.${district.type}` })} - ${intl.formatMessage({ id: 'map.unit.cluster.popup.info' }, { count: numberOfUnits })}`;
+      } else if (getCategoryDistricts('protection').includes(district.type)) {
+        tooltipTitle = `${intl.formatMessage({ id: `area.list.${district.type}` })} ${district.origin_id} - ${getLocaleText(district.name)}`;
+      } else if (district.name) {
+        tooltipTitle = `${getLocaleText(district.name)} - ${intl.formatMessage({ id: `area.list.${district.type}` })}`;
+      }
+
+      const mainColor = useContrast ? '#fff' : '#ff8400';
 
       return (
         <Polygon
           interactive={!unitsFetching}
           key={district.id}
-          onClick={e => districtOnClick(e, district)}
           positions={[[area]]}
-          color="#ff8400"
-          fillOpacity={dimmed ? '0.3' : '0'}
-          fillColor={dimmed ? '#000' : '#ff8400'}
-          onMouseOver={(e) => {
-            e.target.openTooltip();
-            e.target.setStyle({ fillOpacity: '0.2' });
+          color={mainColor}
+          dashArray={useContrast ? '2, 10, 10, 10' : null}
+          dashOffset="20"
+          pathOptions={{
+            fillOpacity: dimmed ? '0.3' : '0',
+            fillColor: dimmed ? '#000' : mainColor,
           }}
-          onMouseOut={(e) => {
-            e.target.setStyle({ fillOpacity: dimmed ? '0.3' : '0' });
+          eventHandlers={{
+            click: (e) => {
+              districtOnClick(e, district);
+            },
+            mouseover: (e) => {
+              e.target.openTooltip();
+              e.target.setStyle({ fillOpacity: useContrast ? '0.6' : '0.2' });
+            },
+            mouseout: (e) => {
+              e.target.setStyle({ fillOpacity: dimmed ? '0.3' : '0' });
+            },
           }}
-          onFocus={() => {}}
-          onBlur={() => {}}
         >
-          {district.name && !(district.overlaping && district.overlaping.some(obj => obj.unit)) ? (
+          {tooltipTitle ? (
             <Tooltip
               sticky
               direction="top"
@@ -202,7 +224,7 @@ const Districts = ({
             </Tooltip>
           ) : null}
           {renderDistrictMarkers(district)}
-          {district.overlaping && district.overlaping.map(obj => (
+          {district.overlapping && district.overlapping.map(obj => (
             renderDistrictMarkers(obj)
           ))}
         </Polygon>
@@ -236,7 +258,7 @@ const Districts = ({
           renderSingleDistrict()
         }
         {
-          embed && parseSearchParams(location.search).units !== 'none' && (
+          embedded && parseSearchParams(location.search).units !== 'none' && (
             renderDistrictMarkers(highlightedDistrict)
           )
         }
@@ -279,7 +301,7 @@ Districts.propTypes = {
   selectedSubdistricts: PropTypes.arrayOf(PropTypes.string),
   setSelectedSubdistricts: PropTypes.func.isRequired,
   setSelectedDistrictServices: PropTypes.func.isRequired,
-  embed: PropTypes.bool.isRequired,
+  embedded: PropTypes.bool.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any).isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,

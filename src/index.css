@@ -20,6 +20,8 @@ a, .link {
 a:hover, a:focus, a:active,
 .link:hover, .link:focus, .link:active {
   color: #bb1122 !important;
+  outline: auto !important;
+  outline-color: rgb(71, 131, 235) !important;
 }
 
 a:visited, .link:visited {
@@ -53,6 +55,7 @@ input[type="search"]::-webkit-search-cancel-button{
 }
 
 .leaflet-popup-content {
+  width: 300px;
   margin: 0;
   padding: 0;
 }
@@ -61,8 +64,17 @@ input[type="search"]::-webkit-search-cancel-button{
   margin: 0;
 }
 
+.leaflet-popup-content-wrapper {
+  border-radius: 4px;
+}
+
 .leaflet-popup-close-button {
+  padding: 16px !important;
   font-size: 24px !important;
   color: #4A4A4C !important;
+}
+
+.leaflet-control-attribution {
+  background: #fff !important;
 }
 

@@ -13,16 +13,16 @@ const mapStateToProps = (state) => {
   const {
     mapRef, units, user, settings, serviceTree, redirectService,
   } = state;
-  const map = mapRef && mapRef.leafletElement;
+  const map = mapRef;
   const {
     isFetching, count, max, previousSearch,
   } = units;
   const isRedirectFetching = redirectService.isFetching;
   const unitData = getOrderedData(state);
-  /* TODO: create custom hook for getAddressNavigatorParams to prevent
+  /* TODO: use custom hook for getAddressNavigatorParams to prevent
   re-rendering on every state change */
   const getLocaleText = textObject => getLocaleString(state, textObject);
-  const getAddressNavigatorParams = getAddressNavigatorParamsConnector(getLocaleText, user.locale);
+  const getAddressNavigatorParams = address => getAddressNavigatorParamsConnector(getLocaleText, user.locale, address);
 
   return {
     unit: state.unit,

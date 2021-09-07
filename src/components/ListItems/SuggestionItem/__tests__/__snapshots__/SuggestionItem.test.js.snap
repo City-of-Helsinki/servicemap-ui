@@ -18,6 +18,7 @@ exports[`<SuggestionItem /> should work 1`] = `
         "formatDateToParts": [Function],
         "formatDisplayName": [Function],
         "formatList": [Function],
+        "formatListToParts": [Function],
         "formatMessage": [Function],
         "formatNumber": [Function],
         "formatNumberToParts": [Function],
@@ -49,6 +50,7 @@ exports[`<SuggestionItem /> should work 1`] = `
     text="Title text"
   >
     <SuggestionItem
+      className={null}
       classes={
         Object {
           "container": "SuggestionItem-container-1",
@@ -78,6 +80,7 @@ exports[`<SuggestionItem /> should work 1`] = `
           "formatDateToParts": [Function],
           "formatDisplayName": [Function],
           "formatList": [Function],
+          "formatListToParts": [Function],
           "formatMessage": [Function],
           "formatNumber": [Function],
           "formatNumberToParts": [Function],
@@ -114,7 +117,7 @@ exports[`<SuggestionItem /> should work 1`] = `
       <WithStyles(ForwardRef(ListItem))
         aria-label="Title text Subtitle text"
         button={true}
-        className="suggestion"
+        className="suggestion "
         classes={
           Object {
             "root": "SuggestionItem-listItem-2",
@@ -123,6 +126,7 @@ exports[`<SuggestionItem /> should work 1`] = `
         }
         component="li"
         id={null}
+        onClick={[Function]}
         onKeyDown={[Function]}
         onKeyUp={[Function]}
         onMouseDown={null}
@@ -133,7 +137,7 @@ exports[`<SuggestionItem /> should work 1`] = `
         <ForwardRef(ListItem)
           aria-label="Title text Subtitle text"
           button={true}
-          className="suggestion"
+          className="suggestion "
           classes={
             Object {
               "alignItemsFlexStart": "MuiListItem-alignItemsFlexStart",
@@ -151,6 +155,7 @@ exports[`<SuggestionItem /> should work 1`] = `
           }
           component="li"
           id={null}
+          onClick={[Function]}
           onKeyDown={[Function]}
           onKeyUp={[Function]}
           onMouseDown={null}
@@ -160,11 +165,12 @@ exports[`<SuggestionItem /> should work 1`] = `
         >
           <WithStyles(ForwardRef(ButtonBase))
             aria-label="Title text Subtitle text"
-            className="MuiListItem-root SuggestionItem-listItem-2 suggestion MuiListItem-gutters MuiListItem-button"
+            className="MuiListItem-root SuggestionItem-listItem-2 suggestion  MuiListItem-gutters MuiListItem-button"
             component="li"
             disabled={false}
             focusVisibleClassName="Mui-focusVisible"
             id={null}
+            onClick={[Function]}
             onKeyDown={[Function]}
             onKeyUp={[Function]}
             onMouseDown={null}
@@ -173,7 +179,7 @@ exports[`<SuggestionItem /> should work 1`] = `
           >
             <ForwardRef(ButtonBase)
               aria-label="Title text Subtitle text"
-              className="MuiListItem-root SuggestionItem-listItem-2 suggestion MuiListItem-gutters MuiListItem-button"
+              className="MuiListItem-root SuggestionItem-listItem-2 suggestion  MuiListItem-gutters MuiListItem-button"
               classes={
                 Object {
                   "disabled": "Mui-disabled",
@@ -186,6 +192,7 @@ exports[`<SuggestionItem /> should work 1`] = `
               disabled={false}
               focusVisibleClassName="Mui-focusVisible"
               id={null}
+              onClick={[Function]}
               onKeyDown={[Function]}
               onKeyUp={[Function]}
               onMouseDown={null}
@@ -195,9 +202,10 @@ exports[`<SuggestionItem /> should work 1`] = `
               <li
                 aria-disabled={false}
                 aria-label="Title text Subtitle text"
-                className="MuiButtonBase-root MuiListItem-root SuggestionItem-listItem-2 suggestion MuiListItem-gutters MuiListItem-button"
+                className="MuiButtonBase-root MuiListItem-root SuggestionItem-listItem-2 suggestion  MuiListItem-gutters MuiListItem-button"
                 id={null}
                 onBlur={[Function]}
+                onClick={[Function]}
                 onDragLeave={[Function]}
                 onFocus={[Function]}
                 onKeyDown={[Function]}
@@ -233,7 +241,7 @@ exports[`<SuggestionItem /> should work 1`] = `
                         aria-hidden={true}
                         className="MuiListItemIcon-root SuggestionItem-listIcon-4"
                       >
-                        <ForwardRef>
+                        <ForwardRef(SearchIcon)>
                           <WithStyles(ForwardRef(SvgIcon))>
                             <ForwardRef(SvgIcon)
                               classes={
@@ -262,7 +270,7 @@ exports[`<SuggestionItem /> should work 1`] = `
                               </svg>
                             </ForwardRef(SvgIcon)>
                           </WithStyles(ForwardRef(SvgIcon))>
-                        </ForwardRef>
+                        </ForwardRef(SearchIcon)>
                       </div>
                     </ForwardRef(ListItemIcon)>
                   </WithStyles(ForwardRef(ListItemIcon))>

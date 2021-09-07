@@ -78,7 +78,7 @@ class DropDownMenuButton extends React.Component {
       <div className={classes.root}>
         <Button
           id={id}
-          buttonRef={(node) => {
+          ref={(node) => {
             this.anchorEl = node;
           }}
           aria-controls={open ? panelID : undefined}

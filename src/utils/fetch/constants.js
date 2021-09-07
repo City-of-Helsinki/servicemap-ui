@@ -7,7 +7,7 @@ import config from '../../../config';
 // API handlers
 export const APIHandlers = {
   accessibilitySentences: {
-    url: id => `${config.accessibilitySentenceAPI.root}/` + (config.usePtvAccessibilityApi ? `${id}/sentences/` : `unit/${id}`),
+    url: id => `${config.accessibilitySentenceAPI.root}/${config.usePtvAccessibilityApi ? `${id}/sentences/` : `unit/${id}`}`,
     options: {},
     envName: config.accessibilitySentenceAPI.id,
   },
@@ -57,7 +57,7 @@ export const APIHandlers = {
     url: id => `${config.serviceMapAPI.root}/unit/${id}/`,
     options: {
       accessibility_description: true,
-      include: 'service_nodes,services,keywords,department',
+      include: 'service_nodes,services,keywords,department,entrances',
       geometry: true,
     },
     envName: config.serviceMapAPI.id,
@@ -70,6 +70,15 @@ export const APIHandlers = {
       only: 'street_address,location,name,municipality,accessibility_shortcoming_count,service_nodes,contract_type',
       geometry: true,
       include: 'service_nodes,services,accessibility_properties,department',
+    },
+    envName: config.serviceMapAPI.id,
+  },
+  idFetch: {
+    url: type => `${config.serviceMapAPI.root}/${type}/`,
+    options: {
+      page: 1,
+      page_size: 500,
+      only: 'id',
     },
     envName: config.serviceMapAPI.id,
   },
@@ -87,6 +96,18 @@ export const APIHandlers = {
   event: {
     url: id => `${config.eventsAPI.root}/event/${id}/`,
     options: {},
+    envName: config.eventsAPI.id,
+  },
+  events: {
+    url: `${config.eventsAPI.root}/event/`,
+    options: {
+      type: 'event',
+      page: 1,
+      page_size: 100,
+      include: 'location,location.id',
+      start: 'today',
+      sort: 'end_time',
+    },
     envName: config.eventsAPI.id,
   },
   hearingMaps: {

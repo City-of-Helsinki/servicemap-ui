@@ -4,7 +4,6 @@ import {
   List,
   ListItem,
   Typography,
-  RadioGroup,
   Divider,
 } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
@@ -14,6 +13,7 @@ import { fetchDistrictGeometry, handleOpenItems, setSelectedDistrictType } from 
 import DistrictUnitList from '../DistrictUnitList';
 import DistrictToggleButton from '../DistrictToggleButton';
 import { dataStructure } from '../../utils/districtDataHelper';
+import DistrictAreaList from '../DistrictAreaList';
 
 const ServiceTab = (props) => {
   const {
@@ -34,7 +34,7 @@ const ServiceTab = (props) => {
       dispatch(setSelectedDistrictType(null));
     } else {
       if (!district.data.some(obj => obj.boundary)) {
-        dispatch(fetchDistrictGeometry(district.name));
+        dispatch(fetchDistrictGeometry(district.name, district.period));
       }
       dispatch(setSelectedDistrictType(district.id));
     }
@@ -63,31 +63,35 @@ const ServiceTab = (props) => {
   );
 
 
-  const renderDistrictList = districList => (
-    <List disablePadding>
-      {districList.map((district, i) => (
-        <Fragment key={district.id}>
-          <ListItem
-            key={district.id}
-            divider={districList.length !== i + 1}
-            className={`${classes.listItem} ${classes.areaItem} ${district.id}`}
-          >
-            {renderDistrictItem(district)}
-          </ListItem>
+  const renderDistrictList = (districList) => {
+    const listDistrictAreas = ['rescue_district', 'rescue_sub_district'].includes(selectedDistrictType);
+    const DistrictList = listDistrictAreas ? DistrictAreaList : DistrictUnitList;
+    return (
+      <List disablePadding>
+        {districList.map((district, i) => (
+          <Fragment key={district.id}>
+            <ListItem
+              key={district.id}
+              divider={districList.length !== i + 1}
+              className={`${classes.listItem} ${classes.areaItem} ${district.id}`}
+            >
+              {renderDistrictItem(district)}
+            </ListItem>
 
-          {/* Service list */}
-          {selectedDistrictType === district.id && (
-            <li>
-              <DistrictUnitList
-                district={district}
-                selectedAddress={selectedAddress}
-              />
-            </li>
-          )}
-        </Fragment>
-      ))}
-    </List>
-  );
+            {/* Service list */}
+            {selectedDistrictType === district.id && (
+              <li>
+                <DistrictList
+                  district={district}
+                  selectedAddress={selectedAddress}
+                />
+              </li>
+            )}
+          </Fragment>
+        ))}
+      </List>
+    );
+  };
 
 
   const renderCollapseContent = (item) => {

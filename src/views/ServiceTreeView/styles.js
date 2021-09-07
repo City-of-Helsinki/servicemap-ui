@@ -1,18 +1,13 @@
 export default theme => ({
-  title: {
-    fontSize: 18,
-    color: '#fff',
-    flex: '1 1 auto',
-    textTransform: 'capitalize',
-    textAlign: 'left',
-    paddingBottom: 8,
-  },
   topArea: {
-    background: theme.palette.background.main,
-    paddingTop: 23,
-    paddingLeft: 21,
+    background: theme.palette.background.plain,
+    // paddingTop: theme.spacing(1),
+    paddingLeft: 27,
     paddingRight: 21,
     paddingBottom: theme.spacing(2),
+  },
+  topBarColor: {
+    background: theme.palette.background.plain,
   },
   mainContent: {
     textAlign: 'left',

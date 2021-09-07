@@ -5,13 +5,24 @@ const styles = theme => ({
   map: {
     height: '100%',
     flex: '1 0 auto',
-    '& .leaflet-control button,a': {
+    '& .leaflet-bottom.leaflet-right .leaflet-control button,a': {
       '&:hover': {
         color: '#347865 !important',
       },
       '&:focused': {
         color: '#347865 !important',
-      }
+      },
+    },
+    '&:focus': {
+      margin: '4px 4px 4px 0px',
+      height: 'calc(100% - 8px)',
+      outline: '2px solid transparent',
+      boxShadow: `0 0 0 4px ${theme.palette.focusBorder.main}`,
+    },
+  },
+  mapNoSidebar: {
+    '&:focus': {
+      margin: 4,
     },
   },
   addressLink: {
@@ -26,6 +37,9 @@ const styles = theme => ({
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: theme.zIndex.infront,
+  },
+  controlsContainer: {
+    marginBottom: theme.spacing(2),
   },
   popup: {
     padding: 12,
@@ -65,11 +79,12 @@ const styles = theme => ({
     marginBottom: `${theme.spacing(2)}px !important`,
   },
   embedLogo: {
-    bottom: 0,
+    top: 0,
     left: 0,
     height: 'auto',
     position: 'fixed',
     zIndex: 1000,
+    padding: theme.spacing(1.5),
   },
   userMarker: {
     display: 'flex',
@@ -117,34 +132,6 @@ const styles = theme => ({
     padding: theme.spacing(2),
     textAlign: 'left',
   },
-  unitClusterMarker: {
-    borderRadius: '50%',
-    backgroundColor: theme.palette.primary.highContrast,
-    color: theme.palette.primary.main,
-    fontWeight: 'bold',
-    fontSize: '18px',
-    marginLeft: -20,
-    marginTop: -20,
-    width: 30,
-    height: 30,
-    transform: 'translate3d(415px, 460px, 0px)',
-    zIndex: 460,
-    opacity: 1,
-    outline: 'none',
-    border: `solid ${theme.palette.primary.main}`,
-    justifyContent: 'center',
-    alignItems: 'center',
-    display: 'flex',
-    '&.markerHighlighted': {
-      backgroundColor: theme.palette.primary.main,
-      color: theme.palette.primary.highContrast,
-      borderColor: theme.palette.primary.highContrast,
-      boxShadow: '0px 4px 4px 0px rgba(0,0,0,0.6)',
-      '&.dark': {
-        boxShadow: '0px 4px 4px 0px rgba(255,255,255,0.8)',
-      },
-    },
-  },
   unitMarker: {
     borderRadius: '50%',
     '&.markerHighlighted': {
@@ -152,6 +139,51 @@ const styles = theme => ({
       '&.dark': {
         boxShadow: '0px 4px 4px 0px rgba(255,255,255,0.8)',
       },
+    },
+  },
+  unitMarkerEvent: {
+    borderRadius: 0,
+  },
+  markerCircle: {
+    alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'center',
+    borderRadius: '50%',
+  },
+  bgCircle: {
+    backgroundColor: theme.palette.white.main,
+    width: 40,
+    height: 40,
+    '&.markerHighlighted': {
+      ...theme.focusIndicator,
+    },
+  },
+  outerCircle: {
+    background: 'rgba(0, 22, 183, 0.25)',
+    width: 40,
+    height: 40,
+    '&.dark': {
+      background: theme.palette.white.main,
+    },
+  },
+  midCircle: {
+    background: 'rgba(0, 22, 183, 0.50)',
+    width: 35,
+    height: 35,
+    '&.dark': {
+      background: theme.palette.white.dark,
+    },
+  },
+  innerCircle: {
+    fontFamily: 'Lato',
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#fff',
+    background: 'rgba(0, 22, 183)',
+    width: 30,
+    height: 30,
+    '&.dark': {
+      background: theme.palette.primary.main,
     },
   },
   unitTooltipContainer: {
@@ -171,6 +203,22 @@ const styles = theme => ({
     ...theme.typography.body2,
     margin: theme.spacing(0, 1),
   },
+  unitTooltipCaption: {
+    fontSize: '0.7725rem',
+    lineHeight: '1rem',
+    letterSpacing: '0.025rem',
+  },
+  unitTooltipEventContainer: {
+    paddingLeft: theme.spacing(0.5),
+    paddingTop: theme.spacing(1),
+  },
+  unitTooltipDivider: {
+    backgroundColor: 'rgba(0, 0, 0, 0.12)',
+    height: 1,
+    border: 'none',
+    marginLeft: -8,
+    marginRight: -8,
+  },
   unitTooltipLink: {
     ...theme.typography.body2,
     paddingTop: theme.spacing(1),
@@ -178,7 +226,8 @@ const styles = theme => ({
     color: theme.palette.primary.main,
   },
   unitTooltipWrapper: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(3),
+    paddingBottom: theme.spacing(2.5),
   },
   unitPopupList: {
     listStyleType: 'none',
@@ -256,6 +305,54 @@ const styles = theme => ({
     top: 16,
     left: 16,
   },
+  entranceType: {
+    paddingTop: theme.spacing(0.5),
+  },
+
+  // Event markers
+  popupContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    padding: theme.spacing(2),
+    paddingRight: 0,
+    paddingLeft: 0,
+  },
+  popupTopArea: {
+    paddingRight: theme.spacing(2),
+    paddingLeft: theme.spacing(2),
+  },
+  popoupTitleArea: {
+    display: 'flex',
+  },
+  popupCloseButton: {
+    marginLeft: 'auto',
+    marginBottom: 'auto',
+    marginRight: -theme.spacing(1),
+    marginTop: 3,
+    paddingLeft: theme.spacing(1),
+  },
+  addressContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    paddingBottom: theme.spacing(1),
+  },
+  popupList: {
+    backgroundColor: '#fafafa',
+    boxShadow: 'inset 0px 4px 4px rgba(0, 0, 0, 0.06)',
+    maxHeight: 175,
+    overflow: 'scroll',
+  },
+  popupListItem: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'start',
+    paddingBottom: 0,
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
+  },
+  eventDate: {
+    fontSize: 12,
+  },
 
   // Transit stops
   transitBackground: {
@@ -273,7 +370,7 @@ const styles = theme => ({
     lineHeight: 1,
     textShadow: '-1px 0 #fff, 0 1px #fff, 1px 0 #fff, 0 -1px #fff',
   },
-  transitIconInfo: {
+  infoIcon: {
     fontSize: 18,
     width: 18,
     height: 18,

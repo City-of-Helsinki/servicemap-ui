@@ -1,10 +1,11 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Typography } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
 import { Map, Mail, Hearing } from '@material-ui/icons';
 import { Helmet } from 'react-helmet';
+import { useSelector } from 'react-redux';
 import SearchBar from '../../components/SearchBar';
 import TitleBar from '../../components/TitleBar';
 import Container from '../../components/Container';
@@ -12,14 +13,10 @@ import AccessibilityInfo from './components/AccessibilityInfo';
 import ContactInfo from './components/ContactInfo';
 import Highlights from './components/Highlights';
 import ElectronicServices from './components/ElectronicServices';
-import Reservations from './components/Reservations';
 import Description from './components/Description';
-import Services from './components/Services';
-import Events from './components/Events';
 import SMButton from '../../components/ServiceMapButton';
 import TabLists from '../../components/TabLists';
 import { AddressIcon } from '../../components/SMIcon';
-import FeedbackView from '../FeedbackView';
 import SocialMediaLinks from './components/SocialMediaLinks';
 import UnitLinks from './components/UnitLinks';
 import SimpleListItem from '../../components/ListItems/SimpleListItem';
@@ -29,7 +26,9 @@ import config from '../../../config';
 import useMobileStatus from '../../utils/isMobile';
 import UnitHelper from '../../utils/unitHelper';
 import useLocaleText from '../../utils/useLocaleText';
-import isClient from '../../utils';
+import paths from '../../../config/paths';
+import UnitDataList from './components/UnitDataList';
+import UnitsServicesList from './components/UnitsServicesList';
 
 const UnitView = (props) => {
   const {
@@ -53,18 +52,16 @@ const UnitView = (props) => {
     userLocation,
     location,
   } = props;
-
-  // Display feedback button only for units with these contract types
-  const allowFeedbackIDs = ['municipal_service', 'purchased_service'];
-
   const checkCorrectUnit = unit => unit && unit.id === parseInt(match.params.unit, 10);
 
   const [unit, setUnit] = useState(checkCorrectUnit(stateUnit) ? stateUnit : null);
+  const viewPosition = useRef(null);
 
   const isMobile = useMobileStatus();
 
   const getLocaleText = useLocaleText();
 
+  const map = useSelector(state => state.mapRef);
 
   const initializePTVAccessibilitySentences = () => {
     if (unit) {
@@ -106,36 +103,51 @@ const UnitView = (props) => {
   };
 
   const handleFeedbackClick = () => {
+    const URLs = config.additionalFeedbackURLs;
     if (unit.municipality === 'espoo') {
-      window.open('https://easiointi.espoo.fi/efeedback/');
+      window.open(URLs.espoo);
     } else if (unit.municipality === 'vantaa') {
-      window.open('https://asiointi.vantaa.fi/anna-palautetta');
+      window.open(URLs.vantaa);
     } else if (unit.municipality === 'kauniainen') {
-      window.open('https://www.kauniainen.fi/kaupunki_ja_paatoksenteko/osallistu_ja_vaikuta');
+      window.open(URLs.kauniainen);
+    } else if (unit.municipality === 'kirkkonummi') {
+      window.open(URLs.kirkkonummi);
     } else {
       navigator.push('unit', { id: unit.id, type: 'feedback' });
     }
   };
 
-  const feedbackButton = () => {
-    if (unit.contract_type
-        && unit.contract_type.id
-        && allowFeedbackIDs.includes(unit.contract_type.id)
-    ) {
-      return (
-        <SMButton
-          messageID="home.send.feedback"
-          icon={<Mail />}
-          onClick={() => handleFeedbackClick()}
-          margin
-          role="link"
-        />
-      );
-    } return null;
+  const saveMapPosition = () => {
+    // Remember user's map postition to return to on unmount
+    if (map) {
+      viewPosition.current = {
+        center: map.getCenter(),
+        zoom: map.getZoom(),
+      };
+    }
   };
+
+  const feedbackButton = () => (
+    <SMButton
+      messageID="home.send.feedback"
+      icon={<Mail />}
+      onClick={() => handleFeedbackClick()}
+      margin
+      role="link"
+    />
+  );
 
   useEffect(() => { // On mount
     intializeUnitData();
+    saveMapPosition();
+    return () => { // On unmount
+      // Return map to previous position if returning to search page or service page
+      const isSearchPage = paths.search.regex.test(window.location.href);
+      const isServicePage = paths.service.regex.test(window.location.href);
+      if (map && (isSearchPage || isServicePage)) {
+        map.setView(viewPosition.current.center, viewPosition.current.zoom);
+      }
+    };
   }, []);
 
   useEffect(() => { // If unit changes without the component unmounting, update data
@@ -242,7 +254,7 @@ const UnitView = (props) => {
                   divider
                   icon={<Hearing />}
                   key={item.name}
-                  text={`${item.name} ${intl.formatMessage({ id: 'unit.accessibility.hearingMaps.extra' })}`}
+                  text={`${item.name} ${intl.formatMessage({ id: 'unit.opens.new.tab' })}`}
                   handleItemClick={() => window.open(item.url)}
                 />
               ))}
@@ -261,16 +273,25 @@ const UnitView = (props) => {
 
     return (
       <div className={classes.content}>
-        <Services
-          listLength={10}
-          unit={unit}
-          getLocaleText={getLocaleText}
-        />
-        <Reservations
+        <UnitsServicesList
           listLength={5}
-          reservationsData={reservationsData}
+          unit={unit}
+          navigator={navigator}
         />
-        <Events classes={classes} listLength={5} eventsData={eventsData} />
+        <UnitDataList
+          listLength={5}
+          data={eventsData.data}
+          isFetching={eventsData.isFetching}
+          type="events"
+          navigator={navigator}
+        />
+        <UnitDataList
+          listLength={5}
+          data={reservationsData.data}
+          isFetching={reservationsData.isFetching}
+          type="reservations"
+          navigator={navigator}
+        />
       </div>
     );
   };

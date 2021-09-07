@@ -15,10 +15,16 @@ const fitUnitsToMap = (units, map) => {
     [corner2.lat, corner2.lng],
   ]);
 
+  let unitList = units;
+  unitList = units.map(obj => (obj.object_type === 'event' ? obj.location : obj));
+
   const bounds = [];
-  units.forEach((unit) => {
-    if (unit.object_type === 'unit' && unit.location && unit.location.coordinates) {
-      const unitCoordinates = [unit.location.coordinates[1], unit.location.coordinates[0]];
+
+  unitList.forEach((unit) => {
+    if (!unit) return;
+    const coordinates = unit.location?.coordinates || unit.position?.coordinates;
+    if (unit.object_type === 'unit' && coordinates) {
+      const unitCoordinates = [coordinates[1], coordinates[0]];
       // Check that unit is within map bounds
       if (mapBounds.contains(unitCoordinates)) {
         bounds.push(unitCoordinates);
@@ -67,7 +73,7 @@ const fitBbox = (map, bbox) => {
 };
 
 const panViewToBounds = (map, selectedGeometry, geometryGroup) => {
-  const mapBounds = map.leafletElement.getBounds();
+  const mapBounds = map.getBounds();
   // Get point inside geometry
   const geometryPoint = pointOnFeature(selectedGeometry).geometry.coordinates;
   const pointLatLng = global.L.latLng(geometryPoint);
@@ -75,9 +81,9 @@ const panViewToBounds = (map, selectedGeometry, geometryGroup) => {
   if (!mapBounds.contains(pointLatLng)) {
     try {
       if (geometryGroup?.length) { // If a group of geomteries is given, fit them all to map
-        map.leafletElement.fitBounds(geometryGroup);
+        map.fitBounds(geometryGroup);
       } else {
-        map.leafletElement.fitBounds(selectedGeometry.coordinates);
+        map.fitBounds(selectedGeometry.coordinates);
       }
     } catch (err) {
       console.warn('Fit districts to map failed', err);

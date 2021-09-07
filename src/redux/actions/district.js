@@ -1,4 +1,5 @@
-import { districtFetch, unitsFetch } from '../../utils/fetch';
+import { districtFetch } from '../../utils/fetch';
+import ServiceMapAPI from '../../utils/newFetch/ServiceMapAPI';
 import {
   dataStructure,
   geographicalDistricts,
@@ -21,9 +22,10 @@ const setDistrictData = data => ({
   data,
 });
 
-const updateDistrictData = (type, data) => ({
+const updateDistrictData = (type, data, period) => ({
   type: 'UPDATE_DISTRICT_DATA',
   districtType: type,
+  period,
   data,
 });
 
@@ -89,7 +91,7 @@ const endDistrictFetch = districtType => ({
 });
 
 
-export const fetchDistrictGeometry = type => (
+export const fetchDistrictGeometry = (type, period) => (
   async (dispatch) => {
     const options = {
       page: 1,
@@ -103,8 +105,17 @@ export const fetchDistrictGeometry = type => (
     };
     const onNext = () => {};
     const onSuccess = (results) => {
-      const filteredData = parseDistrictGeometry(results);
-      dispatch(updateDistrictData(type, filteredData));
+      let filteredData = parseDistrictGeometry(results);
+      if (period) {
+        // Filter with start and end year
+        const start = period.slice(0, 4);
+        const end = period.slice(-4);
+        const yearFilteredData = filteredData.filter(item => (
+          item.start.slice(0, 4) === start && item.end.slice(0, 4) === end
+        ));
+        filteredData = yearFilteredData;
+      }
+      dispatch(updateDistrictData(type, filteredData, period));
       dispatch(endDistrictFetch(type));
     };
     districtFetch(options, onStart, onSuccess, null, onNext);
@@ -135,14 +146,10 @@ export const fetchAllDistricts = selected => (
 export const fetchDistrictUnitList = nodeID => (
   async (dispatch) => {
     dispatch(startUnitFetch(nodeID));
-    const options = {
-      page: 1,
-      page_size: 1000,
-      division: nodeID,
-    };
     try {
-      const data = await unitsFetch(options);
-      const units = data.results;
+      // TODO: Add progress bar update to here with onNext
+      const smAPI = new ServiceMapAPI();
+      const units = await smAPI.areaUnits(nodeID);
       units.forEach((unit) => {
         unit.object_type = 'unit';
         unit.division_id = nodeID;
