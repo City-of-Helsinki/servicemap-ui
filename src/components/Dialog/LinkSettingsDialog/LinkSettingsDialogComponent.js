@@ -6,7 +6,7 @@ import {
   Typography,
   Tooltip,
 } from '@material-ui/core';
-import { FileCopy } from '@material-ui/icons';
+import { FileCopy, Share } from '@material-ui/icons';
 import React, { useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
@@ -15,6 +15,29 @@ import SettingsUtility, { useAcccessibilitySettings } from '../../../utils/setti
 import Dialog from '../index';
 import { useSelectedUnit } from '../../../utils/unitHelper';
 import useLocaleText from '../../../utils/useLocaleText';
+
+const CopyTooltip = ({
+  children,
+  ...rest
+}) => (
+  <Tooltip
+    arrow
+    PopperProps={{
+      disablePortal: true,
+    }}
+    disableFocusListener
+    disableHoverListener
+    disableTouchListener
+    placement="top"
+    {...rest}
+  >
+    {children}
+  </Tooltip>
+);
+
+CopyTooltip.propTypes = {
+  children: PropTypes.node.isRequired,
+}
 
 const LinkSettingsDialogComponent = ({
   classes,
@@ -28,7 +51,8 @@ const LinkSettingsDialogComponent = ({
   const unit = useSelectedUnit();
   const a11ySettings = useAcccessibilitySettings();
   const [selected, setSelected] = useState('none');
-  const [copyTooltipOpen, setCopyTooltipOpen] = useState(false);
+  const [copyTooltipOpen1, setCopyTooltipOpen1] = useState(false);
+  const [copyTooltipOpen2, setCopyTooltipOpen2] = useState(false);
   let timeout = null;
 
   useEffect(() => () => {
@@ -41,19 +65,22 @@ const LinkSettingsDialogComponent = ({
 
   const tooltipFadeTime = 2000;
 
-  const delayedTooltipClose = () => {
+  const delayedTooltipClose = (stateSetter) => {
     if (timeout) {
       clearTimeout(timeout);
     }
 
     timeout = setTimeout(() => {
-      setCopyTooltipOpen(false);
+      stateSetter(false);
     }, tooltipFadeTime);
   };
 
+  const actionButtonText = intl.formatMessage({ id: 'link.settings.dialog.buttons.action' });
   const title = intl.formatMessage({ id: 'link.settings.dialog.title' });
   const unitName = (unit && unit.name) ? getLocaleText(unit.name) : '';
   const tooltip = intl.formatMessage({ id: 'link.settings.dialog.tooltip' });
+  const tooltipAria = intl.formatMessage({ id: `link.settings.dialog.tooltip.aria${(selected !== 'none' && '.a11y') || ''}` });
+  const radioAria = intl.formatMessage({ id: 'link.settings.dialog.radio.label' });
 
   const getLinkUrl = () => {
     let url = window.location.href;
@@ -109,11 +136,14 @@ const LinkSettingsDialogComponent = ({
     },
   ];
 
-  const copyToClipboard = () => {
+  const copyToClipboard = (stateSetter) => {
+    if (!stateSetter) {
+      throw new Error('Invalid parameter stateSetter given to copyToClipboard');
+    }
     /* Copy the text inside the text field */
     navigator.clipboard.writeText(url);
-    setCopyTooltipOpen(true);
-    delayedTooltipClose();
+    stateSetter(true);
+    delayedTooltipClose(stateSetter);
   };
 
   return (
@@ -124,23 +154,14 @@ const LinkSettingsDialogComponent = ({
       title={title}
       content={(
         <div>
-          <Tooltip
-            arrow
-            onClose={() => setCopyTooltipOpen(false)}
-            open={copyTooltipOpen}
+          <CopyTooltip
+            open={copyTooltipOpen1}
             title={tooltip}
-            aria-label={tooltip}
-            PopperProps={{
-              disablePortal: true,
-            }}
-            disableFocusListener
-            disableHoverListener
-            disableTouchListener
-            placement="top"
+            aria-label={tooltipAria}
           >
             <ButtonBase
               className={classes.urlContainer}
-              onClick={copyToClipboard}
+              onClick={() => copyToClipboard(setCopyTooltipOpen1)}
               onKeyDown={() => {}}
               role="button"
               tabIndex={0}
@@ -151,12 +172,12 @@ const LinkSettingsDialogComponent = ({
               </div>
               <FileCopy className={classes.linkIcon} />
             </ButtonBase>
-          </Tooltip>
+          </CopyTooltip>
           <Typography variant="subtitle1"><FormattedMessage id="link.settings.dialog.subtitle" /></Typography>
           <Typography variant="body2"><FormattedMessage id="link.settings.dialog.description" /></Typography>
           <div>
             <RadioGroup
-              aria-label={intl.formatMessage({ id: 'download.format' })}
+              aria-label={radioAria}
               className={classes.radioGroup}
               name="setting"
               value={selected}
@@ -182,12 +203,21 @@ const LinkSettingsDialogComponent = ({
           </div>
         </div>
       )}
-      // actions={(
-      //   <SMButton color="primary" role="button" onClick={activateSettings}>
-      //     {intl.formatMessage({ id: 'general.open' })}
-      //   </SMButton>
-      // )
-      // }
+      actions={(
+        <CopyTooltip
+          open={copyTooltipOpen2}
+          title={tooltip}
+          aria-label={tooltipAria}
+        >
+          <ButtonBase
+            className={classes.shareButton}
+            onClick={() => copyToClipboard(setCopyTooltipOpen2)}
+          >
+            {actionButtonText}
+            <Share className={classes.shareIcon} />
+          </ButtonBase>
+        </CopyTooltip>
+      )}
     />
   );
 };

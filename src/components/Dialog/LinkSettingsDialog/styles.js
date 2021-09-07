@@ -25,4 +25,22 @@ export default theme => ({
       backgroundColor: 'rgba(222, 223, 225, 0.50)',
     },
   },
+  shareButton: {
+    boxSizing: 'border-box',
+    borderRadius: 2,
+    color: theme.palette.primary.highContrast,
+    backgroundColor: theme.palette.primary.main,
+    '&:hover': {
+      backgroundColor: theme.palette.primary.light,
+    },
+    '&:disabled': {
+      backgroundColor: theme.palette.disabled.strong,
+    },
+    minHeight: 38,
+    padding: '0 11px',
+  },
+  shareIcon: {
+    fontSize: 16,
+    marginLeft: theme.spacing(1),
+  },
 });
