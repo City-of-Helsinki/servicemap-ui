@@ -73,6 +73,7 @@ export default theme => ({
     paddingLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
     minWidth: 50,
+    flex: '0 0 auto',
   },
   sticky: {
     position: 'sticky',
