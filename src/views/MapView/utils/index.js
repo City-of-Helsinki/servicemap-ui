@@ -8,7 +8,7 @@ const adjustControlElements = () => {
   if (control1) {
     const controls = [control1];
     controls.forEach((v) => {
-      v.style['margin-right'] = '43px';
+      v.style['margin-right'] = '34px';
     });
   }
 };

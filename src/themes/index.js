@@ -1,4 +1,4 @@
-import { createMuiTheme } from '@material-ui/core';
+import { createTheme } from '@material-ui/core/styles';
 
 const focusIndicator = {
   outline: '2px solid transparent',
@@ -251,7 +251,7 @@ export const paletteDark = {
 };
 
 // Themes
-const SMTheme = createMuiTheme({
+const SMTheme = createTheme({
   props,
   overrides: overrides('default'),
   breakpoints,
@@ -263,7 +263,7 @@ const SMTheme = createMuiTheme({
   focusIndicator,
 });
 
-const SMThemeDark = createMuiTheme({
+const SMThemeDark = createTheme({
   props,
   overrides: overrides('dark'),
   breakpoints,

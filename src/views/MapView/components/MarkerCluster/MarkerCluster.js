@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
+import { useMap } from 'react-leaflet';
 import { drawMarkerIcon } from '../../utils/drawIcon';
 import { isEmbed } from '../../../../utils/path';
 import { createMarkerClusterLayer, createTooltipContent, createPopupContent } from './clusterUtils';
@@ -47,12 +48,12 @@ const MarkerCluster = ({
   data,
   getDistance,
   highlightedUnit,
-  map,
   navigator,
   settings,
   theme,
   measuringMode,
 }) => {
+  const map = useMap();
   const getLocaleText = useLocaleText();
   const useContrast = theme === 'dark';
   const embeded = isEmbed();
@@ -466,7 +467,6 @@ MarkerCluster.propTypes = {
     }),
   ).isRequired,
   getDistance: PropTypes.func.isRequired,
-  map: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any).isRequired,
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
   theme: PropTypes.string.isRequired,

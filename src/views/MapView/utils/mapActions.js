@@ -73,7 +73,7 @@ const fitBbox = (map, bbox) => {
 };
 
 const panViewToBounds = (map, selectedGeometry, geometryGroup) => {
-  const mapBounds = map.leafletElement.getBounds();
+  const mapBounds = map.getBounds();
   // Get point inside geometry
   const geometryPoint = pointOnFeature(selectedGeometry).geometry.coordinates;
   const pointLatLng = global.L.latLng(geometryPoint);
@@ -81,9 +81,9 @@ const panViewToBounds = (map, selectedGeometry, geometryGroup) => {
   if (!mapBounds.contains(pointLatLng)) {
     try {
       if (geometryGroup?.length) { // If a group of geomteries is given, fit them all to map
-        map.leafletElement.fitBounds(geometryGroup);
+        map.fitBounds(geometryGroup);
       } else {
-        map.leafletElement.fitBounds(selectedGeometry.coordinates);
+        map.fitBounds(selectedGeometry.coordinates);
       }
     } catch (err) {
       console.warn('Fit districts to map failed', err);

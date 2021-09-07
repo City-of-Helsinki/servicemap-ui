@@ -119,10 +119,10 @@ const UnitView = (props) => {
 
   const saveMapPosition = () => {
     // Remember user's map postition to return to on unmount
-    if (map?.leafletElement) {
+    if (map) {
       viewPosition.current = {
-        center: map.leafletElement.getCenter(),
-        zoom: map.leafletElement.getZoom(),
+        center: map.getCenter(),
+        zoom: map.getZoom(),
       };
     }
   };
@@ -144,8 +144,8 @@ const UnitView = (props) => {
       // Return map to previous position if returning to search page or service page
       const isSearchPage = paths.search.regex.test(window.location.href);
       const isServicePage = paths.service.regex.test(window.location.href);
-      if (map?.leafletElement && (isSearchPage || isServicePage)) {
-        map.leafletElement.setView(viewPosition.current.center, viewPosition.current.zoom);
+      if (map && (isSearchPage || isServicePage)) {
+        map.setView(viewPosition.current.center, viewPosition.current.zoom);
       }
     };
   }, []);

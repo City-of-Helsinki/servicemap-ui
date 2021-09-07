@@ -82,8 +82,8 @@ const AreaView = ({
   );
 
   const focusMapToDistrict = (district) => {
-    if (map?.leafletElement && district?.boundary) {
-      focusDistrict(map.leafletElement, district.boundary.coordinates);
+    if (map && district?.boundary) {
+      focusDistrict(map, district.boundary.coordinates);
     }
   };
 
@@ -108,8 +108,8 @@ const AreaView = ({
 
 
   const getViewState = () => ({
-    center: map.leafletElement.getCenter(),
-    zoom: map.leafletElement.getZoom(),
+    center: map.getCenter(),
+    zoom: map.getZoom(),
   });
 
   const clearRadioButtonValue = useCallback(() => {
@@ -165,7 +165,7 @@ const AreaView = ({
       if (focusTo === 'districts') {
         if (selectedDistrictGeometry) {
           setFocusTo(null);
-          focusDistricts(map.leafletElement, selectedDistrictData);
+          focusDistricts(map, selectedDistrictData);
         }
       } else if (focusTo === 'subdistricts') {
         if (selectedDistrictGeometry) {
@@ -173,7 +173,7 @@ const AreaView = ({
             i => selectedSubdistricts.includes(i.ocd_id),
           );
           setFocusTo(null);
-          focusDistricts(map.leafletElement, filtetedDistricts);
+          focusDistricts(map, filtetedDistricts);
         }
       }
     }
@@ -234,11 +234,11 @@ const AreaView = ({
     } else if (mapState) { // Returning to page, without url parameters
       // Returns map to the previous spot
       const { center, zoom } = mapState;
-      if (map?.leafletElement && center && zoom) map.leafletElement.setView(center, zoom);
+      if (map && center && zoom) map.setView(center, zoom);
     }
   }, []);
 
-  if (!map || !map.leafletElement) {
+  if (!map || !map) {
     return null;
   }
 

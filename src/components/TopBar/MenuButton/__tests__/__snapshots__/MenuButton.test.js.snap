@@ -123,7 +123,7 @@ exports[`<MenuButton /> should work 1`] = `
             <span
               className="MuiButton-label"
             >
-              <ForwardRef>
+              <ForwardRef(MenuIcon)>
                 <WithStyles(ForwardRef(SvgIcon))>
                   <ForwardRef(SvgIcon)
                     classes={
@@ -152,7 +152,7 @@ exports[`<MenuButton /> should work 1`] = `
                     </svg>
                   </ForwardRef(SvgIcon)>
                 </WithStyles(ForwardRef(SvgIcon))>
-              </ForwardRef>
+              </ForwardRef(MenuIcon)>
               <WithStyles(ForwardRef(Typography))
                 color="inherit"
                 variant="body2"
