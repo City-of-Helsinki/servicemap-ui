@@ -344,7 +344,7 @@ const translations = {
   'unit.eServices': 'Electronic services',
   'unit.reservations': 'Reservable objects',
   'unit.events': 'Events',
-  'unit.events.description': 'Tästä löydät tietoa toimipisteen tarjoamista eri tapahtumista', // TODO: translate
+  'unit.events.description': 'Here you can find information about events provided by the unit',
   'unit.events.count': `{count, plural,
     =0 {}
     one {# event}
@@ -372,7 +372,7 @@ const translations = {
   'unit.contact': 'Contact person',
   'unit.school.year': 'School year',
   'unit.opens.new.tab': '(new tab)',
-  'unit.reservations.description': 'Tästä löydät tietoa toimipisteen tarjoamista varattavista tiloista ja tarvikkeista.', // TODO: translate
+  'unit.reservations.description': 'Here you can find information about the unit’s spaces and equipment that may be reserved.',
   'unit.reservations.count': `{count, plural,
     =0 {}
     one {# reservable object}
@@ -383,16 +383,16 @@ const translations = {
   'unit.list.services': 'Services',
   'unit.list.events': 'Events',
   'unit.list.reservations': 'Reservable objects',
-  'unit.services': 'Toimipisteeseen liittyvät palvelut', // TODO: translate
-  'unit.services.description': 'Palvelukuvauksen ohella löydät tietoa kunnan tarjoamista eri asiointikanavista.', // TODO: translate
+  'unit.services': 'Services related to the unit',
+  'unit.services.description': 'Along with the service description, you can find information about different service channels provided by the municipality.',
   'unit.services.more': 'Show more services ({count})',
   'unit.services.count': `{count, plural,
     =0 {}
     one {# service}
     other {# services}
   }`,
-  'unit.semesters': 'Toimipisteen lukuvuosikohtaiset palvelut.', // TODO: translate
-  'unit.semesters.description': 'Lukuvuosi {semester}', // TODO: translate
+  'unit.semesters': 'The unit’s services per school year.',
+  'unit.semesters.description': 'School year {semester}',
   'unit.semesters.more': 'Show more services ({count})',
   'unit.route': 'Look at the route to this place',
   'unit.route.extra': '(New tab. The HSL Journey Planner is not an accessible service)',

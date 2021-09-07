@@ -344,7 +344,7 @@ const translations = {
   'unit.eServices': 'E-tjänster',
   'unit.reservations': 'Objekt som kan reserveras',
   'unit.events': 'Evenemang',
-  'unit.events.description': 'Tästä löydät tietoa toimipisteen tarjoamista eri tapahtumista', // TODO: translate
+  'unit.events.description': 'Här hittar du information om evenemang som erbjuds av verksamhetsstället',
   'unit.events.count': `{count, plural,
     =0 {}
     one {# evenemang}
@@ -372,7 +372,7 @@ const translations = {
   'unit.contact': 'Kontaktperson',
   'unit.school.year': 'Läsåret',
   'unit.opens.new.tab': '(ny flik)',
-  'unit.reservations.description': 'Tästä löydät tietoa toimipisteen tarjoamista varattavista tiloista ja tarvikkeista.', // TODO: translate
+  'unit.reservations.description': 'Här hittar du information om lokaler och redskap som kan bokas vid verksamhetsstället.',
   'unit.reservations.count': `{count, plural,
     =0 {}
     one {# objekt som kan reserveras}
@@ -383,16 +383,16 @@ const translations = {
   'unit.list.services': 'Tjänster',
   'unit.list.events': 'Evenemang',
   'unit.list.reservations': 'Objekt som kan reserveras',
-  'unit.services': 'Toimipisteeseen liittyvät palvelut', // TODO: translate
-  'unit.services.description': 'Palvelukuvauksen ohella löydät tietoa kunnan tarjoamista eri asiointikanavista.', // TODO: translate
+  'unit.services': 'Verksamhetsställets tjänster',
+  'unit.services.description': 'Utöver servicebeskrivningen hittar du information om olika kanaler för uträttning av ärenden som erbjuds av kommunen.',
   'unit.services.more': 'Visa fler tjänster ({count})',
   'unit.services.count': `{count, plural,
     =0 {}
     one {# tjänst}
     other {# tjänster}
   }`,
-  'unit.semesters': 'Toimipisteen lukuvuosikohtaiset palvelut.', // TODO: translate
-  'unit.semesters.description': 'Lukuvuosi {semester}', // TODO: translate
+  'unit.semesters': 'Verksamhetsställets tjänster per läsår.',
+  'unit.semesters.description': 'Läsåret {semester}',
   'unit.semesters.more': 'Visa fler tjänster ({count})',
   'unit.route': 'Se vägen till det här stället',
   'unit.route.extra': '(Ny flik. HRT-reseplaneraren är inte en tillgänglig tjänst)',
