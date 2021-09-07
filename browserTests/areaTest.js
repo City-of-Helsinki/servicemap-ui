@@ -15,7 +15,6 @@ const drawerButtons = ReactSelector('ServiceTab SMAccordion');
 const radioButtons = ReactSelector('DistrictToggleButton');
 
 test('District lists are fetched and rendered correctly', async (t) => {
-  const accordrionList = ReactSelector('ServiceTab SMAccordion List');
   const listLength = await drawerButtons.count;
 
   await t
