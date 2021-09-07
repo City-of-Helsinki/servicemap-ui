@@ -138,6 +138,9 @@ const styles = theme => ({
       },
     },
   },
+  unitMarkerEvent: {
+    borderRadius: 0,
+  },
   markerCircle: {
     alignItems: 'center',
     display: 'flex',
@@ -197,6 +200,22 @@ const styles = theme => ({
     ...theme.typography.body2,
     margin: theme.spacing(0, 1),
   },
+  unitTooltipCaption: {
+    fontSize: '0.7725rem',
+    lineHeight: '1rem',
+    letterSpacing: '0.025rem',
+  },
+  unitTooltipEventContainer: {
+    paddingLeft: theme.spacing(0.5),
+    paddingTop: theme.spacing(1),
+  },
+  unitTooltipDivider: {
+    backgroundColor: 'rgba(0, 0, 0, 0.12)',
+    height: 1,
+    border: 'none',
+    marginLeft: -8,
+    marginRight: -8,
+  },
   unitTooltipLink: {
     ...theme.typography.body2,
     paddingTop: theme.spacing(1),
@@ -204,7 +223,8 @@ const styles = theme => ({
     color: theme.palette.primary.main,
   },
   unitTooltipWrapper: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(3),
+    paddingBottom: theme.spacing(2.5),
   },
   unitPopupList: {
     listStyleType: 'none',
