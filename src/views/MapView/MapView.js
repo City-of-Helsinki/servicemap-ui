@@ -164,6 +164,17 @@ const MapView = (props) => {
       });
   };
 
+  const getCoordinatesFromUrl = () => {
+    // Attempt to get coordinates from URL
+    const usp = new URLSearchParams(location.search);
+    const lat = usp.get('lat');
+    const lng = usp.get('lon');
+    if (!lat || !lng) {
+      return null;
+    }
+    return [lat, lng];
+  };
+
   useEffect(() => { // On map mount
     initializeMap();
     if (!embedded) {
@@ -400,7 +411,7 @@ const MapView = (props) => {
 
             <PanControl key="panControl" />
           </CustomControls>
-          <CoordinateMarker />
+          <CoordinateMarker position={getCoordinatesFromUrl()} />
         </MapContainer>
       </>
     );
