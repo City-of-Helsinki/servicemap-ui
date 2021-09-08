@@ -37,9 +37,9 @@ export function cookieHubCode (req) {
           enabled: (location.href.indexOf('/embed/') > -1 ? false : true), // uncomment this line when in production
           onInitialise: function (status) {
             setTimeout(() => {
-              document.getElementById("ch2-dialog-title").setAttribute('tabindex', 0);
-              document.getElementById("ch2-dialog-description").setAttribute('tabindex', 0);
-              document.getElementsByClassName("ch2-dialog")[0].setAttribute('tabindex', 0);
+              document.getElementById("ch2-dialog-title").setAttribute('tabindex', -1);
+              document.getElementById("ch2-dialog-description").setAttribute('tabindex', -1);
+              document.getElementsByClassName("ch2-dialog")[0].setAttribute('tabindex', -1);
             }, 0)
           }
         };
