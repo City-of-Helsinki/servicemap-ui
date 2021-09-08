@@ -289,7 +289,7 @@ const MapView = (props) => {
 
 
   if (global.rL && mapObject) {
-    const { MapContainer, TileLayer } = global.rL || {};
+    const { MapContainer, TileLayer, WMSTileLayer } = global.rL || {};
     let center = mapOptions.initialPosition;
     let zoom = isMobile ? mapObject.options.mobileZoom : mapObject.options.zoom;
     if (prevMap) { // If changing map type, use viewport values of previuous map
@@ -342,10 +342,20 @@ const MapView = (props) => {
           {
             renderUnitGeometry()
           }
-          <TileLayer
-            url={mapObject.options.url}
-            attribution={intl.formatMessage({ id: mapObject.options.attribution })}
-          />
+          {mapObject.options.name === 'ortographic' && mapObject.options.wmsUrl !== 'undefined'
+            ? ( // Use WMS service for ortographic maps, because HSY's WMTS tiling does not work
+              <WMSTileLayer
+                url={mapObject.options.wmsUrl}
+                layers={mapObject.options.wmsLayerName}
+                attribution={intl.formatMessage({ id: mapObject.options.attribution })}
+              />
+            )
+            : (
+              <TileLayer
+                url={mapObject.options.url}
+                attribution={intl.formatMessage({ id: mapObject.options.attribution })}
+              />
+            )}
           {showLoadingScreen ? (
             <div className={classes.loadingScreen}>
               <Loading />
