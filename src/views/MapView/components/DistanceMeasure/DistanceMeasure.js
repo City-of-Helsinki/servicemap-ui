@@ -15,13 +15,23 @@ const DistanceMeasure = (props) => {
   } = global.rL;
 
   const theme = useTheme();
-
-  const [clickedPoint, setClickedPoint] = useState(null);
   const [icon, setIcon] = useState(null);
 
   useMapEvents({
     click(e) {
-      setClickedPoint(e.latlng);
+      setMarkerArray([...markerArray, e.latlng]);
+      setLineArray([...lineArray, e.latlng]);
+    },
+    zoom() {
+      // Distance markers lose interactive status after zooming. Add it back manually
+      setTimeout(() => {
+        const measureMarkers = document.getElementsByClassName('leaflet-marker-draggable');
+        if (measureMarkers.length) {
+          measureMarkers.forEach((marker) => {
+            marker.classList.add('leaflet-interactive');
+          });
+        }
+      }, 500);
     },
   });
 
@@ -45,16 +55,14 @@ const DistanceMeasure = (props) => {
     setLineArray([...updateArray]);
   };
 
-  useEffect(() => {
-    // When the map is clicked, add new marker and update line between markers
-    if (clickedPoint) {
-      setMarkerArray([...markerArray, clickedPoint]);
-      setLineArray([...lineArray, clickedPoint]);
-    }
-  }, [clickedPoint]);
 
   useEffect(() => {
+    const mapElement = document.getElementsByClassName('leaflet-container')[0];
+    mapElement.style.cursor = 'crosshair';
     setMarkerArray(lineArray);
+    return () => {
+      mapElement.style.cursor = 'grab';
+    };
   }, []);
 
 

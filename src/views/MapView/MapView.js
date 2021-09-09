@@ -312,7 +312,7 @@ const MapView = (props) => {
         <MapContainer
           tap={false} // This should fix leaflet safari double click bug
           preferCanvas
-          className={`${classes.map} ${measuringMode ? classes.measuringCursor : ''} ${embedded || sidebarHidden ? classes.mapNoSidebar : ''} `}
+          className={`${classes.map} ${embedded ? classes.mapNoSidebar : ''} `}
           key={mapObject.options.name}
           zoomControl={false}
           doubleClickZoom={false}

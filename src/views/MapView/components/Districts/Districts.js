@@ -89,11 +89,14 @@ const Districts = ({
               ]}
               icon={drawMarkerIcon(useContrast)}
               keyboard={false}
-              onClick={() => {
-                if (navigator) {
-                  UnitHelper.unitElementClick(navigator, district.unit);
-                }
-              }}
+              eventHandlers={{
+                click: () => {
+                  if (navigator) {
+                    UnitHelper.unitElementClick(navigator, district.unit);
+                  }
+                },
+              }
+              }
             >
               <Tooltip
                 direction="top"

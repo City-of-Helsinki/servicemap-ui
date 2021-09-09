@@ -114,9 +114,6 @@ const styles = theme => ({
   showLocationIcon: {
     color: '#fff',
   },
-  measuringCursor: {
-    cursor: 'crosshair',
-  },
   colorInherit: {
     color: 'inherit',
   },
