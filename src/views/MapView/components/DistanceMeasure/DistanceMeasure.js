@@ -54,7 +54,12 @@ const DistanceMeasure = (props) => {
   }, [clickedPoint]);
 
   useEffect(() => {
+    const mapElement = document.getElementsByClassName('leaflet-container')[0];
+    mapElement.style.cursor = 'crosshair';
     setMarkerArray(lineArray);
+    return () => {
+      mapElement.style.cursor = 'grab';
+    };
   }, []);
 
 
