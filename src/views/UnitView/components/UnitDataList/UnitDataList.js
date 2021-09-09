@@ -9,17 +9,21 @@ import ReservationItem from '../../../../components/ListItems/ReservationItem';
 import ServiceItem from '../../../../components/ListItems/ServiceItem';
 
 const UnitDataList = ({
-  isFetching, data, listLength, type, semester, disableTitle, navigator,
+  data, listLength, type, semester, disableTitle, navigator,
 }) => {
   const location = useLocation();
   const unit = useSelector(state => state.selectedUnit.unit.data);
 
-  if (!data) {
+  const dataItems = data.data;
+  const fullDataLength = data.max;
+  const { isFetching } = data;
+
+  if (!dataItems) {
     return null;
   }
-  const endIndex = listLength > data.length || listLength;
-  const shownData = data.length ? data.slice(0, endIndex) : null;
-  const showButton = data.length > listLength;
+  const endIndex = listLength > dataItems.length || listLength;
+  const shownData = dataItems.length ? dataItems.slice(0, endIndex) : null;
+  const showButton = fullDataLength > listLength;
 
   const onButtonClick = () => {
     if (navigator) {
@@ -70,7 +74,7 @@ const UnitDataList = ({
           divider={false}
           titleComponent="h4"
           buttonMessageID={`unit.${type}.more`}
-          buttonMessageCount={data.length - listLength}
+          buttonMessageCount={fullDataLength - listLength}
           loading={isFetching}
           buttonID={`Unit${type}Button`}
           onButtonClick={showButton ? onButtonClick : null}
@@ -85,8 +89,7 @@ const UnitDataList = ({
 };
 
 UnitDataList.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.any),
-  isFetching: PropTypes.bool,
+  data: PropTypes.objectOf(PropTypes.any),
   listLength: PropTypes.number,
   type: PropTypes.string.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
@@ -97,7 +100,6 @@ UnitDataList.propTypes = {
 UnitDataList.defaultProps = {
   data: null,
   listLength: 5,
-  isFetching: false,
   navigator: null,
   semester: null,
   disableTitle: false,
