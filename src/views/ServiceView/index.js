@@ -11,7 +11,7 @@ import styles from './styles';
 const mapStateToProps = (state) => {
   const { mapRef, service, user } = state;
   const { customPosition } = user;
-  const map = mapRef && mapRef.leafletElement;
+  const map = mapRef;
   const units = getServiceUnits(state);
 
   return {

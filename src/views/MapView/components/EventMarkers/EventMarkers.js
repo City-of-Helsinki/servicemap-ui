@@ -6,6 +6,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { Close } from '@material-ui/icons';
 import { useLocation } from 'react-router-dom';
+import { useMap } from 'react-leaflet';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { getAddressFromUnit } from '../../../../utils/address';
 import formatEventDate from '../../../../utils/events';
@@ -22,7 +23,7 @@ const EventMarkers = ({ searchData, classes, navigator }) => {
   const embeded = isEmbed();
   const theme = useSelector(state => state.user.theme);
   const intl = useIntl();
-  const mapRef = useSelector(state => state.mapRef);
+  const map = useMap();
   const { Marker, Popup } = global.rL;
   const searchParams = parseSearchParams(location.search);
 
@@ -47,8 +48,8 @@ const EventMarkers = ({ searchData, classes, navigator }) => {
   };
 
   const closePopup = () => {
-    if (mapRef.leafletElement) {
-      mapRef.leafletElement.closePopup();
+    if (map) {
+      map.closePopup();
     }
   };
 
@@ -103,7 +104,7 @@ const EventMarkers = ({ searchData, classes, navigator }) => {
       return (
         <Marker
           key={unit.id}
-          icon={drawMarkerIcon(theme === 'dark', `unit-marker-${unit.id}`, [0, -15])}
+          icon={drawMarkerIcon(theme === 'dark', `unit-marker-${unit.id}`, null, [0, -15])}
           onMouseOver={(e) => { e.target.openPopup(); }}
           position={[
             unit.location.coordinates[1],

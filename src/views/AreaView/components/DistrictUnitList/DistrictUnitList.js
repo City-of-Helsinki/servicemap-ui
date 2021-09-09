@@ -70,7 +70,7 @@ const DistrictUnitList = (props) => {
       titleContent={<Typography>{`${title} (${districts.length})`}</Typography>}
       disabled={!districts.length}
       collapseContent={(
-        <List className={classes.serviceListPadding} disablePadding>
+        <List className={`${classes.serviceListPadding} districtUnits`} disablePadding>
           {districts.map(district => (
             renderDistrictUnitItem(district)
           ))}

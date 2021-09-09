@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ButtonBase, Typography } from '@material-ui/core';
-import { FormattedMessage } from 'react-intl';
 
 // ServiceMapButton
 const SMButton = React.forwardRef((props, ref) => {
@@ -15,22 +14,23 @@ const SMButton = React.forwardRef((props, ref) => {
     color,
     icon,
     messageID,
+    messageCount,
     onClick,
     margin,
     style,
     role,
     disabled,
+    textVariant,
     ...rest
   } = props;
   const colorStyle = classes[color] || '';
-  const buttonIcon = icon ? React.cloneElement(icon, { className: classes.buttonIcon }) : null;
   const buttonClasses = `${classes.button} ${small ? classes.smallButton : ''} ${margin ? classes.margin : classes.marginRight} ${className} ${colorStyle}`;
   const textClasses = classes.typography;
 
   let buttonTitle = null;
 
   if (messageID) {
-    buttonTitle = intl.formatMessage({ id: messageID });
+    buttonTitle = intl.formatMessage({ id: messageID }, { count: messageCount });
   }
 
   return (
@@ -40,7 +40,6 @@ const SMButton = React.forwardRef((props, ref) => {
       aria-label={ariaLabel || buttonTitle}
       disabled={disabled}
       className={buttonClasses}
-      icon={buttonIcon}
       onClick={onClick}
       role={role || 'button'}
       style={{
@@ -54,8 +53,8 @@ const SMButton = React.forwardRef((props, ref) => {
       {
         messageID
         && (
-          <Typography aria-hidden color="inherit" component="p" variant="caption" className={textClasses}>
-            <FormattedMessage id={messageID} />
+          <Typography aria-hidden color="inherit" component="p" variant={textVariant || 'caption'} className={textClasses}>
+            {buttonTitle}
           </Typography>
         )
       }
@@ -82,6 +81,8 @@ SMButton.propTypes = {
   role: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
+  textVariant: PropTypes.string,
+  messageCount: PropTypes.number,
 };
 
 SMButton.defaultProps = {
@@ -95,6 +96,8 @@ SMButton.defaultProps = {
   messageID: null,
   style: null,
   disabled: false,
+  textVariant: 'caption',
+  messageCount: null,
 };
 
 export default SMButton;

@@ -89,11 +89,14 @@ const Districts = ({
               ]}
               icon={drawMarkerIcon(useContrast)}
               keyboard={false}
-              onClick={() => {
-                if (navigator) {
-                  UnitHelper.unitElementClick(navigator, district.unit);
-                }
-              }}
+              eventHandlers={{
+                click: () => {
+                  if (navigator) {
+                    UnitHelper.unitElementClick(navigator, district.unit);
+                  }
+                },
+              }
+              }
             >
               <Tooltip
                 direction="top"
@@ -133,7 +136,9 @@ const Districts = ({
           [areas],
         ]}
         color="#ff8400"
-        fillColor="#000"
+        pathOptions={{
+          fillColor: '#000',
+        }}
       />
     );
   };
@@ -191,22 +196,26 @@ const Districts = ({
         <Polygon
           interactive={!unitsFetching}
           key={district.id}
-          onClick={e => districtOnClick(e, district)}
           positions={[[area]]}
           color={mainColor}
           dashArray={useContrast ? '2, 10, 10, 10' : null}
           dashOffset="20"
-          fillOpacity={dimmed ? '0.3' : '0'}
-          fillColor={dimmed ? '#000' : mainColor}
-          onMouseOver={(e) => {
-            e.target.openTooltip();
-            e.target.setStyle({ fillOpacity: useContrast ? '0.6' : '0.2' });
+          pathOptions={{
+            fillOpacity: dimmed ? '0.3' : '0',
+            fillColor: dimmed ? '#000' : mainColor,
           }}
-          onMouseOut={(e) => {
-            e.target.setStyle({ fillOpacity: dimmed ? '0.3' : '0' });
+          eventHandlers={{
+            click: (e) => {
+              districtOnClick(e, district);
+            },
+            mouseover: (e) => {
+              e.target.openTooltip();
+              e.target.setStyle({ fillOpacity: useContrast ? '0.6' : '0.2' });
+            },
+            mouseout: (e) => {
+              e.target.setStyle({ fillOpacity: dimmed ? '0.3' : '0' });
+            },
           }}
-          onFocus={() => {}}
-          onBlur={() => {}}
         >
           {tooltipTitle ? (
             <Tooltip

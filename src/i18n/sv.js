@@ -51,6 +51,7 @@ const translations = {
   'area.services.nearby.rescue_district': 'Lista över skyddsavsnitten i närområden',
   'area.services.nearby.rescue_sub_district': 'Lista över skyddsunderavsnitten i närområden',
   'area.services.all': 'Lista över verksamhetsställen',
+  'area.services.all.rescue_area': 'Lista över skyddsdistrikten',
   'area.services.all.rescue_district': 'Lista över skyddsavsnitten',
   'area.services.all.rescue_sub_district': 'Lista över skyddsunderavsnitten',
   'area.info': 'Välj ett område, vars tjänster du vill ha information om. Genom att skriva din hemadress i sökfältet öppnas en karta och under fliken Tjänster i området visas de områden och distrikt som du hör till',
@@ -245,6 +246,7 @@ const translations = {
   'general.pageTitles.home': 'Hemsida',
   'general.pageTitles.search': 'Sökresultatsida',
   'general.pageTitles.unit': 'Vy med verksamhetsställen',
+  'general.pageTitles.unit.services': 'Verksamhetsställets tjänster',
   'general.pageTitles.unit.events': 'Verksamhetsställets evenemang',
   'general.pageTitles.unit.reservations': 'Verksamhetsställets platser som kan reserveras',
   'general.pageTitles.service': 'Tjänstesida',
@@ -340,18 +342,20 @@ const translations = {
   'unit.data_source': 'Källa: {data_source}',
   'unit.details.notFound': 'Verksamhetsställets uppgifter finns inte att tillgå.',
   'unit.plural': 'Verksamhetsställen',
+  'unit.distance': 'Avstånd',
 
   'unit.contact.info': 'Kontaktuppgifter',
   'unit.links': 'På webben',
   'unit.eServices': 'E-tjänster',
   'unit.reservations': 'Objekt som kan reserveras',
   'unit.events': 'Evenemang',
+  'unit.events.description': 'Här hittar du information om evenemang som erbjuds av verksamhetsstället',
   'unit.events.count': `{count, plural,
     =0 {}
     one {# evenemang}
     other {# evenemang}
   }`,
-  'unit.events.more': 'Visa fler evenemang',
+  'unit.events.more': 'Visa fler evenemang ({count})',
   'unit.homepage': 'Hemsida',
   'unit.homepage.missing': 'Ingen hemsida har meddelats',
   'unit.picture': 'Bild av verksamhetsstället',
@@ -373,23 +377,28 @@ const translations = {
   'unit.contact': 'Kontaktperson',
   'unit.school.year': 'Läsåret',
   'unit.opens.new.tab': '(ny flik)',
+  'unit.reservations.description': 'Här hittar du information om lokaler och redskap som kan bokas vid verksamhetsstället.',
   'unit.reservations.count': `{count, plural,
     =0 {}
     one {# objekt som kan reserveras}
     other {# objekt som kan reserveras}
   }`,
-  'unit.reservations.more': 'Visa fler objekt som kan reserveras',
+  'unit.reservations.more': 'Visa fler objekt som kan reserveras ({count})',
   'unit.call.number': '(ring)',
   'unit.list.services': 'Tjänster',
   'unit.list.events': 'Evenemang',
   'unit.list.reservations': 'Objekt som kan reserveras',
-  'unit.services': 'Tjänster',
-  'unit.services.more': 'Visa fler tjänster',
+  'unit.services': 'Verksamhetsställets tjänster',
+  'unit.services.description': 'Utöver servicebeskrivningen hittar du information om olika kanaler för uträttning av ärenden som erbjuds av kommunen.',
+  'unit.services.more': 'Visa fler tjänster ({count})',
   'unit.services.count': `{count, plural,
     =0 {}
     one {# tjänst}
     other {# tjänster}
   }`,
+  'unit.semesters': 'Verksamhetsställets tjänster per läsår.',
+  'unit.semesters.description': 'Läsåret {semester}',
+  'unit.semesters.more': 'Visa fler tjänster ({count})',
   'unit.route': 'Se vägen till det här stället',
   'unit.route.extra': '(Ny flik. HRT-reseplaneraren är inte en tillgänglig tjänst)',
   'unit.socialMedia.title': 'Verksamhetsstället på sociala medier',

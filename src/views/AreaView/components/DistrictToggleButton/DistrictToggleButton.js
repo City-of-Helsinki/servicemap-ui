@@ -5,7 +5,7 @@ import { Switch } from '@material-ui/core';
 const DistrictToggleButton = ({
   district, onToggle, selected, selectionSize, label, classes, ...rest
 }) => (
-  <div className={classes.areaSwitch}>
+  <div id={district.id} className={classes.areaSwitch}>
     <Switch
       color="primary"
       classes={{ thumb: classes.switchBorder }}

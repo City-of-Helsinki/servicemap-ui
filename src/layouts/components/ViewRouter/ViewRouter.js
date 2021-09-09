@@ -74,6 +74,13 @@ const Unit = () => (
   </TitleWrapper>
 );
 
+const UnitServices = () => (
+  <TitleWrapper messageId="general.pageTitles.unit.services">
+    <PageWrapper headMsgId="general.pageTitles.unit.services" page="unit">
+      <ExtendedData type="services" />
+    </PageWrapper>
+  </TitleWrapper>
+);
 const UnitEvents = () => (
   <TitleWrapper messageId="general.pageTitles.unit.events">
     <PageWrapper headMsgId="general.pageTitles.unit.events" page="unit">
@@ -165,6 +172,7 @@ class ViewRouter extends React.Component {
         <Route exact path="/:lng/unit/:unit/feedback" component={UnitFeedback} />
         <Route exact path="/:lng/unit/:unit/events" component={UnitEvents} />
         <Route exact path="/:lng/unit/:unit/reservations" component={UnitReservations} />
+        <Route exact path="/:lng/unit/:unit/services" component={UnitServices} />
         <Route exact path="/:lng/unit/:unit" component={Unit} />
         <Route path="/:lng/search" component={Search} />
         <Route path="/:lng/services" component={ServiceTree} />

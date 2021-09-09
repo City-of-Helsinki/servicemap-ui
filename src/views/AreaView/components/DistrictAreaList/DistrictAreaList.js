@@ -21,7 +21,8 @@ export const DistrictAreaList = ({
   const districtsWithoutUnits = district.data.filter(d => (
     !d.unit
     && (
-      d.type === 'rescue_district'
+      d.type === 'rescue_area'
+      || d.type === 'rescue_district'
       || d.type === 'rescue_sub_district'
     )
   ));

@@ -18,6 +18,7 @@ exports[`<SuggestionItem /> should work 1`] = `
         "formatDateToParts": [Function],
         "formatDisplayName": [Function],
         "formatList": [Function],
+        "formatListToParts": [Function],
         "formatMessage": [Function],
         "formatNumber": [Function],
         "formatNumberToParts": [Function],
@@ -79,6 +80,7 @@ exports[`<SuggestionItem /> should work 1`] = `
           "formatDateToParts": [Function],
           "formatDisplayName": [Function],
           "formatList": [Function],
+          "formatListToParts": [Function],
           "formatMessage": [Function],
           "formatNumber": [Function],
           "formatNumberToParts": [Function],
@@ -239,7 +241,7 @@ exports[`<SuggestionItem /> should work 1`] = `
                         aria-hidden={true}
                         className="MuiListItemIcon-root SuggestionItem-listIcon-4"
                       >
-                        <ForwardRef>
+                        <ForwardRef(SearchIcon)>
                           <WithStyles(ForwardRef(SvgIcon))>
                             <ForwardRef(SvgIcon)
                               classes={
@@ -268,7 +270,7 @@ exports[`<SuggestionItem /> should work 1`] = `
                               </svg>
                             </ForwardRef(SvgIcon)>
                           </WithStyles(ForwardRef(SvgIcon))>
-                        </ForwardRef>
+                        </ForwardRef(SearchIcon)>
                       </div>
                     </ForwardRef(ListItemIcon)>
                   </WithStyles(ForwardRef(ListItemIcon))>

@@ -10,7 +10,7 @@ const mapStateToProps = (state) => {
   const {
     mapRef, navigator, measuringMode, user,
   } = state;
-  const map = mapRef && mapRef.leafletElement;
+  const map = mapRef;
 
   return {
     mapUtility: map ? new MapUtility({ map }) : null,
