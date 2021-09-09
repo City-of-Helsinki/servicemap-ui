@@ -60,7 +60,7 @@ const UnitsServicesList = ({ unit, listLength, navigator }) => {
   const renderServices = () => (
     <UnitDataList
       listLength={listLength}
-      data={serviceList}
+      data={{ data: serviceList, max: serviceList.length }}
       type="services"
       navigator={navigator}
     />
@@ -71,7 +71,7 @@ const UnitsServicesList = ({ unit, listLength, navigator }) => {
       <UnitDataList
         key={`period-${period}`}
         listLength={listLength}
-        data={subjectList}
+        data={{ data: subjectList, max: subjectList.length }}
         type="semesters"
         semester={period}
         disableTitle={i !== 0}

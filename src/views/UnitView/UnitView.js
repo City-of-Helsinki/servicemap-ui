@@ -280,15 +280,13 @@ const UnitView = (props) => {
         />
         <UnitDataList
           listLength={5}
-          data={eventsData.data}
-          isFetching={eventsData.isFetching}
+          data={eventsData}
           type="events"
           navigator={navigator}
         />
         <UnitDataList
           listLength={5}
-          data={reservationsData.data}
-          isFetching={reservationsData.isFetching}
+          data={reservationsData}
           type="reservations"
           navigator={navigator}
         />
