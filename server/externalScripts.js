@@ -37,9 +37,18 @@ export function cookieHubCode (req) {
           enabled: (location.href.indexOf('/embed/') > -1 ? false : true), // uncomment this line when in production
           onInitialise: function (status) {
             setTimeout(() => {
-              document.getElementById("ch2-dialog-title").setAttribute('tabindex', -1);
-              document.getElementById("ch2-dialog-description").setAttribute('tabindex', -1);
-              document.getElementsByClassName("ch2-dialog")[0].setAttribute('tabindex', -1);
+              var title = document.getElementById("ch2-dialog-title");
+              if (title) {
+                title.setAttribute('tabindex', -1);
+              }
+              var description = document.getElementById("ch2-dialog-description");
+              if (description) {
+                description.setAttribute('tabindex', -1);
+              }
+              var dialog = document.getElementsByClassName("ch2-dialog");
+              if (dialog && dialog[0]) {
+                dialog[0].setAttribute('tabindex', -1);
+              }
             }, 0)
           }
         };
