@@ -53,6 +53,6 @@ export default class ServiceMapAPI extends HttpClient {
       include: 'services',
     };
 
-    return this.get('unit', options);
+    return this.getConcurrent('unit', options);
   }
 }

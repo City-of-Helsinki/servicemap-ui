@@ -30,7 +30,7 @@ const GeographicalDistrictList = ({ district, classes }) => {
       );
       const coordinateArray = districtsToFocus.map(district => district.boundary.coordinates);
       if (districtsToFocus.length === 1) {
-        map.leafletElement.fitBounds(coordinateArray[0]);
+        map.fitBounds(coordinateArray[0]);
       } else {
         panViewToBounds(map, district.boundary, coordinateArray);
       }
