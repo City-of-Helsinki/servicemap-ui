@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route, withRouter } from 'react-router-dom';
-import { useMatomo } from '@datapunt/matomo-tracker-react';
 import SearchView from '../../../views/SearchView';
 import UnitView from '../../../views/UnitView';
 import HomeView from '../../../views/HomeView';
@@ -26,14 +25,6 @@ const TitleWrapper = ({ children, messageId }) => (
 );
 
 const PageWrapper = ({ children, headMsgId, page }) => {
-  const { trackPageView } = useMatomo();
-
-  // Track page view
-  useEffect(() => {
-    setTimeout(() => {
-      trackPageView();
-    }, 100);
-  }, []);
 
   return (
     <>

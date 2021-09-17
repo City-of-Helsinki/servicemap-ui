@@ -8,7 +8,6 @@ import withStyles from 'isomorphic-style-loader/withStyles';
 import {
   Switch, Route, BrowserRouter,
 } from 'react-router-dom';
-import { MatomoProvider, createInstance } from '@datapunt/matomo-tracker-react';
 import styles from './index.css';
 import SMFonts from './service-map-icons.css';
 import HSLFonts from './hsl-icons.css';
@@ -54,18 +53,6 @@ const MetaTags = () => {
   );
 };
 
-let matomoInstance = null;
-if (config.matomoUrl && config.matomoSiteId) {
-  matomoInstance = createInstance({
-    urlBase: `https://${config.matomoUrl}`,
-    siteId: config.matomoSiteId,
-    trackerUrl: `https://${config.matomoUrl}/tracker.php`, // optional, default value: `${urlBase}matomo.php`
-    srcUrl: `https://${config.matomoUrl}/piwik.min.js`, // optional, default value: `${urlBase}matomo.js`
-    disabled: false, // optional, false by default. Makes all tracking calls no-ops if set to true.
-    linkTracking: false, // optional, default value: true
-  });
-}
-
 class App extends React.Component {
   // Remove the server-side injected CSS.
   componentDidMount() {
@@ -75,7 +62,7 @@ class App extends React.Component {
     }
   }
 
-  renderContent = () => {
+  render() {
     const { locale } = this.props;
     const intlData = LocaleUtility.intlData(locale);
 
@@ -97,18 +84,6 @@ class App extends React.Component {
         </IntlProvider>
       </ThemeWrapper>
     );
-  };
-
-  render() {
-    if (matomoInstance) {
-      return (
-        <MatomoProvider value={matomoInstance}>
-          {this.renderContent()}
-        </MatomoProvider>
-      );
-    }
-
-    return this.renderContent();
   }
 }
 

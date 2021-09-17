@@ -6,7 +6,6 @@ import { FormattedMessage } from 'react-intl';
 import { Map, Mail, Hearing } from '@material-ui/icons';
 import { Helmet } from 'react-helmet';
 import { useSelector } from 'react-redux';
-import { useMatomo } from '@datapunt/matomo-tracker-react';
 import { SearchBar } from '../../components';
 import TitleBar from '../../components/TitleBar';
 import Container from '../../components/Container';
@@ -59,17 +58,10 @@ const UnitView = (props) => {
   const viewPosition = useRef(null);
 
   const isMobile = useMobileStatus();
-  const { trackPageView } = useMatomo();
 
   const getLocaleText = useLocaleText();
 
   const map = useSelector(state => state.mapRef);
-
-  const onTabChange = () => {
-    setTimeout(() => {
-      trackPageView();
-    }, 100);
-  };
 
   const initializePTVAccessibilitySentences = () => {
     if (unit) {
@@ -420,7 +412,6 @@ const UnitView = (props) => {
           }
           <TabLists
             data={tabs}
-            onTabChange={onTabChange}
             headerComponents={(
               <>
                 {TopArea}

@@ -8,8 +8,6 @@ import {
   Search, Cancel,
 } from '@material-ui/icons';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { useMatomo } from '@datapunt/matomo-tracker-react';
-import { useSelector } from 'react-redux';
 import BackButton from '../BackButton';
 import { keyboardHandler } from '../../utils';
 import SuggestionBox from './components/SuggestionBox';
@@ -40,8 +38,6 @@ const SearchBarComponent = ({
     && !(previousSearch.includes('service_node:') || previousSearch.includes('events:')) ? previousSearch : null;
 
   const intl = useIntl();
-  const { trackPageView } = useMatomo();
-  const page = useSelector(state => state.user.page);
 
   const [isActive, setIsActive] = useState(false);
   const [initialSearchValue, setInitialSearchValue] = useState(ps || initialValue || '');
@@ -130,13 +126,6 @@ const SearchBarComponent = ({
         searchRef.current.value = searchQuery; // Change current search text to new one
         fetchUnits({ q: searchQuery });
         changeSelectedUnit(null);
-        // Track page view on search while in search view
-        // Otherwise page change handles tracking
-        if (page === 'search') {
-          setTimeout(() => {
-            trackPageView();
-          }, 10);
-        }
       }
 
       if (navigator) {
