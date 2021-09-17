@@ -4,14 +4,73 @@ import { connect } from 'react-redux';
 import { fetchUnits } from '../../redux/actions/unit';
 import { breadcrumbPush, breadcrumbPop, breadcrumbReplace } from '../../redux/actions/breadcrumb';
 import { generatePath } from '../../utils/path';
+import config from '../../../config';
+import SettingsUtility from '../../utils/settings';
+import matomoTracker from '../../utils/tracking';
 
 class Navigator extends React.Component {
   unlisten = null;
+
+  componentDidMount() {
+    const {
+      history,
+      mobility,
+      senses,
+    } = this.props;
+
+    // Initial pageView tracking on first load
+    this.trackPageView({ mobility, senses });
+    if (this.unlisten) {
+      this.unlisten();
+    }
+    // Add event listener to listen history changes and track new pages
+    this.unlisten = history.listen(() => {
+      this.trackPageView({ mobility, senses });
+    });
+  }
+
+  // We need to update history tracking event when settings change
+  componentDidUpdate() {
+    const {
+      history,
+      mobility,
+      senses,
+    } = this.props;
+
+    if (this.unlisten) {
+      this.unlisten();
+    }
+    this.unlisten = history.listen(() => {
+      this.trackPageView({ mobility, senses });
+    });
+  }
 
   componentWillUnmount() {
     // Remove history listener
     if (this.unlisten) {
       this.unlisten();
+    }
+  }
+
+  trackPageView = (settings) => {
+    const { mobility, senses } = settings;
+
+    if (matomoTracker) {
+      setTimeout(() => {
+        matomoTracker.trackPageView({
+          documentTitle: document.title,
+          customDimensions: [
+            {
+              id: config.matomoMobilityDimensionID,
+              value: mobility || '',
+            },
+            {
+              id: config.matomoSensesDimensionID,
+              value: senses.join(','),
+            },
+          ],
+        });
+      }, 400);
     }
   }
 
@@ -38,11 +97,15 @@ class Navigator extends React.Component {
       breadcrumbPop,
       history,
       location,
+      mobility,
+      senses,
     } = this.props;
 
     // If breadcrumb has values go back else take user to home
     if (breadcrumb && breadcrumb.length > 0) {
       history.goBack();
+      // History listen doesn't detect goBack so we need to manually track page
+      this.trackPageView({ mobility, senses });
       breadcrumbPop();
     } else {
       history.push(this.generatePath('home'));
@@ -145,17 +208,29 @@ Navigator.propTypes = {
   history: PropTypes.objectOf(PropTypes.any).isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   match: PropTypes.objectOf(PropTypes.any).isRequired,
+  senses: PropTypes.arrayOf(PropTypes.string),
+  mobility: PropTypes.string,
 };
 
-Navigator.defaultProps = {};
+Navigator.defaultProps = {
+  senses: null,
+  mobility: null,
+};
 
 // Listen to redux state
 const mapStateToProps = (state) => {
-  const { breadcrumb, units } = state;
+  const {
+    breadcrumb,
+    units,
+    settings,
+  } = state;
+
   const { previousSearch } = units;
   return {
     breadcrumb,
     previousSearch,
+    mobility: settings.mobility,
+    senses: SettingsUtility.accessibilityImpairmentKeys.filter(key => settings[key]),
   };
 };
 

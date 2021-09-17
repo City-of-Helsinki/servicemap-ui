@@ -105,6 +105,14 @@ if (typeof settings.SENTRY_DSN_CLIENT === 'undefined') {
   settings.SENTRY_DSN_CLIENT = false;
 }
 
+if (settings.MATOMO_MOBILITY_DIMENSION_ID === 'undefined') {
+  settings.MATOMO_MOBILITY_DIMENSION_ID = undefined;
+}
+
+if (settings.MATOMO_SENSES_DIMENSION_ID === 'undefined') {
+  settings.MATOMO_SENSES_DIMENSION_ID = undefined;
+}
+
 let municipalities;
 try {
   municipalities = require('./municipalities.json');
@@ -224,6 +232,8 @@ export default {
   "feedbackAdditionalInfoLink": settings.FEEDBACK_ADDITIONAL_INFO_LINK,
   "feedbackIsPublished": (settings.FEEDBACK_IS_PUBLISHED === 'true'),
   "usePtvAccessibilityApi": (settings.USE_PTV_ACCESSIBILITY_API) === 'true',
+  "matomoMobilityDimensionID": settings.MATOMO_MOBILITY_DIMENSION_ID,
+  "matomoSensesDimensionID": settings.MATOMO_SENSES_DIMENSION_ID,
   "matomoUrl": settings.MATOMO_URL,
   "matomoSiteId": settings.MATOMO_SITE_ID,
 }
