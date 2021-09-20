@@ -133,7 +133,7 @@ export default class HttpClient {
     return this.fetch(endpoint, this.optionsToSearchParams(newOptions, true), 'count');
   }
 
-  getConcurrent = async (endpoint, options) => {
+  getConcurrent = async (endpoint, options, progressCallback) => {
     if (!options?.page_size) {
       throw APIFetchError('Invalid page_size provided for concurrent search method');
     }
@@ -142,11 +142,20 @@ export default class HttpClient {
     const totalCount = await this.getCount(endpoint, options);
     const numberOfPages = Math.ceil(totalCount / options.page_size);
 
+    // Start progress bar
+    if (progressCallback) {
+      progressCallback({ max: totalCount });
+    }
+
     // Create promises for each search page
     const promises = [];
     for (let i = 1; i <= numberOfPages; i += 1) {
       options.page = i;
-      promises.push(this.getSinglePage(endpoint, options));
+      promises.push(this.getSinglePage(endpoint, options)
+        .then((results) => {
+          if (progressCallback) progressCallback({ count: results.length });
+          return results;
+        }));
     }
 
     const results = await Promise.all(promises);
