@@ -40,9 +40,9 @@ export default class ServiceMapAPI extends HttpClient {
     return this.get('service_node', options);
   }
 
-  areaUnits = async (nodeID) => {
+  areaUnits = async (nodeID, progressCallback) => {
     if (typeof nodeID !== 'string') {
-      throw new APIFetchError('Invalid query string provided to ServiceMapAPI area unit fetch method');
+      throw new APIFetchError('Invalid nodeID string provided to ServiceMapAPI area unit fetch method');
     }
 
     const options = {
@@ -53,6 +53,6 @@ export default class ServiceMapAPI extends HttpClient {
       include: 'services',
     };
 
-    return this.getConcurrent('unit', options);
+    return this.getConcurrent('unit', options, progressCallback);
   }
 }
