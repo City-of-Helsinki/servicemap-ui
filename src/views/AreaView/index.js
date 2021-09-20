@@ -22,7 +22,7 @@ const mapStateToProps = (state) => {
     subdistrictUnits,
     selectedSubdistricts,
     selectedDistrictServices,
-    unitsFetching,
+    unitFetch,
     mapState,
   } = state.districts;
   const map = state.mapRef;
@@ -36,7 +36,7 @@ const mapStateToProps = (state) => {
     subdistrictUnits,
     selectedSubdistricts,
     selectedDistrictServices,
-    unitsFetching,
+    unitsFetching: unitFetch.nodesFetching,
     mapState,
     navigator,
     map,

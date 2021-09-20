@@ -78,6 +78,7 @@ const MapView = (props) => {
 
   const embedded = isEmbed({ url: location.pathname });
   const getAddressNavigatorParams = useNavigationParams();
+  const districtUnitsFetch = useSelector(state => state.districts.unitFetch);
 
   // This unassigned selector is used to trigger re-render after events are fetched
   useSelector(state => getSelectedUnitEvents(state));
@@ -358,7 +359,7 @@ const MapView = (props) => {
             )}
           {showLoadingScreen ? (
             <div className={classes.loadingScreen}>
-              <Loading />
+              <Loading reducer={districtUnitsFetch.isFetching ? districtUnitsFetch : null} />
             </div>
           ) : null}
           <Districts mapOptions={mapOptions} embedded={embedded} />
