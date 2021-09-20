@@ -22,11 +22,11 @@ const smFetch = (dispatch, options) => {
     dispatch(fetchProgressUpdate(total, max));
   };
 
+  smAPI.setOnNext(onNext);
+
   if (options.q) {
-    smAPI.setOnNext(onNext);
     results = smAPI.search(options.q);
   } else if (options.service_node) {
-    smAPI.setOnNext(onNext);
     results = smAPI.serviceNodeSearch(options.service_node);
   }
 
