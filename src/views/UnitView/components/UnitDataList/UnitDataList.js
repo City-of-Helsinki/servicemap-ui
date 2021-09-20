@@ -49,7 +49,7 @@ const UnitDataList = ({
         ))
       );
     }
-    if (type === 'services' || type === 'semesters') {
+    if (type === 'services' || type === 'educationServices') {
       return (
         shownData.map((item, i) => (
           <ServiceItem

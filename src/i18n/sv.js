@@ -396,9 +396,9 @@ const translations = {
     one {# tjänst}
     other {# tjänster}
   }`,
-  'unit.semesters': 'Verksamhetsställets tjänster per läsår.',
-  'unit.semesters.description': 'Läsåret {semester}',
-  'unit.semesters.more': 'Visa fler tjänster ({count})',
+  'unit.educationServices': 'Verksamhetsställets tjänster per läsår',
+  'unit.educationServices.description': 'Läsåret {semester}',
+  'unit.educationServices.more': 'Visa fler tjänster ({count})',
   'unit.route': 'Se vägen till det här stället',
   'unit.route.extra': '(Ny flik. HRT-reseplaneraren är inte en tillgänglig tjänst)',
   'unit.socialMedia.title': 'Verksamhetsstället på sociala medier',
