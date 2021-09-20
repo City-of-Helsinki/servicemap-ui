@@ -296,26 +296,27 @@ test('Search has aria-live element', async(t) => {
 });
 
 test('Search suggestion arrow navigation does loop correctly', async(t) => {
-  // Get SearchBar focused suggestion value
-  const searchbar = ReactSelector('SearchBar');
+  const expectedBoxShadowColor = 'rgb(71, 131, 235)'; // Focus color
+
   // Get SearchBar input
   const input = ReactSelector('WithStyles(ForwardRef(InputBase))');
   await t
     .click(input)
     .pressKey('down');
 
+  // Suggestion items selector
   const items = ReactSelector('SuggestionItem');
   let maxItemIndex = await items.count - 1;
 
   await t
     // After first key down we expect focused suggestion to be at first item
-    .expect(searchbar.getReact(({props, state}) => state.focusedSuggestion)).eql(0, 'Focused suggestion index should be set to first item')
+    .expect(items.nth(0).getStyleProperty('box-shadow')).contains(expectedBoxShadowColor, 'Focused suggestion index should be set to first item')
     .pressKey('up')
     // After pressing key up on first item expect focused suggestion to loop to last item
-    .expect(searchbar.getReact(({props, state}) => state.focusedSuggestion)).eql(maxItemIndex, 'Focused suggestion index should loop to last item')
+    .expect(items.nth(maxItemIndex).getStyleProperty('box-shadow')).contains(expectedBoxShadowColor, 'Focused suggestion index should loop to last item')
     .pressKey('down')
     // After pressing key down on last item expect focused suggestion to loop to first item
-    .expect(searchbar.getReact(({props, state}) => state.focusedSuggestion)).eql(0, 'Focused suggestion index should loop to first item');
+    .expect(items.nth(0).getStyleProperty('box-shadow')).contains(expectedBoxShadowColor, 'Focused suggestion index should loop to first item');
 });
 
 test('SettingsInfo works correctly', async(t) => {
