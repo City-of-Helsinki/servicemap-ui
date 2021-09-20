@@ -89,6 +89,29 @@ const ExtendedData = ({
     );
   };
 
+  const renderEducationServices = () => {
+    const data = selectedUnit.services.filter(unit => unit.period);
+    const titleText = intl.formatMessage({ id: 'unit.educationServices' });
+    const srTitle = `${title} ${titleText}`;
+    return (
+      <div>
+        {
+          renderTitleBar('unit.educationServices')
+        }
+        <PaginatedList
+          id="educationServices"
+          data={data || []}
+          customComponent={service => (
+            <ServiceItem key={service.id} service={service} link={false} />
+          )}
+          srTitle={srTitle}
+          title={titleText}
+          titleComponent="h3"
+        />
+      </div>
+    );
+  };
+
   const renderEvents = () => {
     const { data } = events;
     const titleText = intl.formatMessage({ id: 'unit.events' });
@@ -143,6 +166,8 @@ const ExtendedData = ({
   switch (type) {
     case 'services':
       return renderServices();
+    case 'educationServices':
+      return renderEducationServices();
     case 'events':
       return renderEvents();
     case 'reservations':
