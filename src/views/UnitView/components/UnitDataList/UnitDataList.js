@@ -21,7 +21,7 @@ const UnitDataList = ({
   if (!dataItems) {
     return null;
   }
-  const endIndex = listLength > dataItems.length || listLength;
+  const endIndex = listLength > dataItems.length ? dataItems.length : listLength;
   const shownData = dataItems.length ? dataItems.slice(0, endIndex) : null;
   const showButton = fullDataLength > listLength;
 
