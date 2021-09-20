@@ -38,6 +38,7 @@ const ServiceItem = (props) => {
 
   return (
     <SimpleListItem
+      key={service.id}
       button={link}
       role={role}
       text={uppercaseFirst(text)}

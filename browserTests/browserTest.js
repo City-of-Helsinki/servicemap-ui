@@ -69,7 +69,7 @@ fixture`Map tests`
 
 test('Transit marker visible after zoom', async (t) => {
   const zoomIn  = Selector('.zoomIn');
-  const markers = ReactSelector('Marker');
+  const markers = Selector('.leaflet-marker-icon');
   
   // Zoom in to make transit markers visible
   for(let i = 0; i < 6; i++) {

@@ -10,7 +10,7 @@ import styles from './styles';
 const mapStateToProps = (state) => {
   const { event, mapRef, navigator } = state;
   const selectedUnit = state.selectedUnit.unit.data;
-  const map = mapRef && mapRef.leafletElement;
+  const map = mapRef;
   return {
     event,
     navigator,

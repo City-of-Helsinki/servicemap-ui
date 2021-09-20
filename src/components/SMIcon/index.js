@@ -23,6 +23,7 @@ import servicemapLogoIcon from '../../assets/icons/IconPalvelukarttaPrimary.svg'
 import closeIcon from '../../assets/icons/closeIcon.svg';
 import coordinateMarker from '../../assets/icons/CoordinateMarker.svg';
 import coordinateMarkerContrast from '../../assets/icons/CoordinateMarkerContrast.svg';
+import kirkkonummiIcon from '../../assets/icons/kirkkonummiIcon.svg';
 
 /**
  * Senses
@@ -157,6 +158,9 @@ export const getIcon = (key, props) => {
       return <img aria-hidden alt="" src={coordinateMarker} {...props} />;
     case 'coordinateMarkerContrast':
       return <img aria-hidden alt="" src={coordinateMarkerContrast} {...props} />;
+
+    case 'kirkkonummiIcon':
+      return <img aria-hidden alt="" src={kirkkonummiIcon} {...props} />;
 
     default:
       return null;

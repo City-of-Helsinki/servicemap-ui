@@ -10,7 +10,7 @@ import AddressMarker from '../AddressMarker';
 import { parseSearchParams } from '../../../../utils';
 import config from '../../../../../config';
 import useLocaleText from '../../../../utils/useLocaleText';
-import { geographicalDistricts } from '../../../AreaView/utils/districtDataHelper';
+import { geographicalDistricts, getCategoryDistricts } from '../../../AreaView/utils/districtDataHelper';
 import UnitHelper from '../../../../utils/unitHelper';
 
 
@@ -89,11 +89,14 @@ const Districts = ({
               ]}
               icon={drawMarkerIcon(useContrast)}
               keyboard={false}
-              onClick={() => {
-                if (navigator) {
-                  UnitHelper.unitElementClick(navigator, district.unit);
-                }
-              }}
+              eventHandlers={{
+                click: () => {
+                  if (navigator) {
+                    UnitHelper.unitElementClick(navigator, district.unit);
+                  }
+                },
+              }
+              }
             >
               <Tooltip
                 direction="top"
@@ -133,7 +136,9 @@ const Districts = ({
           [areas],
         ]}
         color="#ff8400"
-        fillColor="#000"
+        pathOptions={{
+          fillColor: '#000',
+        }}
       />
     );
   };
@@ -179,7 +184,7 @@ const Districts = ({
 
       if (numberOfUnits > 1) {
         tooltipTitle = `${intl.formatMessage({ id: `area.list.${district.type}` })} - ${intl.formatMessage({ id: 'map.unit.cluster.popup.info' }, { count: numberOfUnits })}`;
-      } else if (district.type === 'rescue_area' && district.name) {
+      } else if (getCategoryDistricts('protection').includes(district.type)) {
         tooltipTitle = `${intl.formatMessage({ id: `area.list.${district.type}` })} ${district.origin_id} - ${getLocaleText(district.name)}`;
       } else if (district.name) {
         tooltipTitle = `${getLocaleText(district.name)} - ${intl.formatMessage({ id: `area.list.${district.type}` })}`;
@@ -191,22 +196,26 @@ const Districts = ({
         <Polygon
           interactive={!unitsFetching}
           key={district.id}
-          onClick={e => districtOnClick(e, district)}
           positions={[[area]]}
           color={mainColor}
           dashArray={useContrast ? '2, 10, 10, 10' : null}
           dashOffset="20"
-          fillOpacity={dimmed ? '0.3' : '0'}
-          fillColor={dimmed ? '#000' : mainColor}
-          onMouseOver={(e) => {
-            e.target.openTooltip();
-            e.target.setStyle({ fillOpacity: useContrast ? '0.6' : '0.2' });
+          pathOptions={{
+            fillOpacity: dimmed ? '0.3' : '0',
+            fillColor: dimmed ? '#000' : mainColor,
           }}
-          onMouseOut={(e) => {
-            e.target.setStyle({ fillOpacity: dimmed ? '0.3' : '0' });
+          eventHandlers={{
+            click: (e) => {
+              districtOnClick(e, district);
+            },
+            mouseover: (e) => {
+              e.target.openTooltip();
+              e.target.setStyle({ fillOpacity: useContrast ? '0.6' : '0.2' });
+            },
+            mouseout: (e) => {
+              e.target.setStyle({ fillOpacity: dimmed ? '0.3' : '0' });
+            },
           }}
-          onFocus={() => {}}
-          onBlur={() => {}}
         >
           {tooltipTitle ? (
             <Tooltip

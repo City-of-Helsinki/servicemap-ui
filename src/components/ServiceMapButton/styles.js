@@ -3,11 +3,11 @@ export default theme => ({
     minHeight: 38,
     padding: '0 11px',
     boxSizing: 'border-box',
-    borderRadius: 2,
+    borderRadius: 4,
   },
   smallButton: {
-    minHeight: 34,
-    padding: '0 4px',
+    minHeight: 32,
+    padding: '0 8px',
   },
   margin: {
     marginTop: theme.spacing(2),
@@ -54,8 +54,6 @@ export default theme => ({
     },
   },
   typography: {
-    textTransform: 'none',
-    margin: theme.spacing(1),
     fontSize: 14,
   },
 });

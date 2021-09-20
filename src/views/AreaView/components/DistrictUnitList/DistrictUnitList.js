@@ -10,6 +10,8 @@ import DivisionItem from '../../../../components/ListItems/DivisionItem';
 import { getAddressFromUnit } from '../../../../utils/address';
 import SMAccordion from '../../../../components/SMAccordion';
 import useLocaleText from '../../../../utils/useLocaleText';
+import { getCategoryDistricts } from '../../utils/districtDataHelper';
+import { sortByOriginID } from '../../utils';
 
 const DistrictUnitList = (props) => {
   const {
@@ -36,7 +38,9 @@ const DistrictUnitList = (props) => {
   const renderDistrictUnitItem = (district) => {
     const { unit } = district;
     let title;
-    if (district.type === 'rescue_area') {
+    const rescueAreas = getCategoryDistricts('protection');
+
+    if (rescueAreas.includes(district.type)) {
       title = `${intl.formatMessage({ id: `area.list.${district.type}` })} ${district.origin_id} ${getLocaleText(district.name)}`;
     }
     const streetAddress = getAddressFromUnit(unit, getLocaleText, intl);
@@ -46,7 +50,6 @@ const DistrictUnitList = (props) => {
         divider={false}
         disableTitle={!title}
         customTitle={title}
-        className={classes.divisionItem}
         data={{
           area: district,
           name: district.unit.name || null,
@@ -67,7 +70,7 @@ const DistrictUnitList = (props) => {
       titleContent={<Typography>{`${title} (${districts.length})`}</Typography>}
       disabled={!districts.length}
       collapseContent={(
-        <List className={classes.serviceListPadding} disablePadding>
+        <List className={`${classes.serviceListPadding} districtUnits`} disablePadding>
           {districts.map(district => (
             renderDistrictUnitItem(district)
           ))}
@@ -109,6 +112,10 @@ const DistrictUnitList = (props) => {
       cityFilteredUnits = districtsWithUnits;
     } else {
       cityFilteredUnits = districtsWithUnits.filter(unit => citySettings[unit.municipality]);
+    }
+
+    if (district.id === 'rescue_area') {
+      sortByOriginID(cityFilteredUnits);
     }
 
     if (selectedAddress && addressDistrict) {
@@ -153,8 +160,10 @@ const DistrictUnitList = (props) => {
         return null;
       }
 
-      sortDistricts(localUnitDistricts);
-      sortDistricts(otherUnitDistricts);
+      if (district.id !== 'rescue_area') {
+        sortDistricts(localUnitDistricts);
+        sortDistricts(otherUnitDistricts);
+      }
 
       return (
         <div>

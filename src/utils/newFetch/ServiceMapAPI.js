@@ -55,4 +55,20 @@ export default class ServiceMapAPI extends HttpClient {
     };
     return this.get('service_node', options);
   }
+
+  areaUnits = async (nodeID) => {
+    if (typeof nodeID !== 'string') {
+      throw new APIFetchError('Invalid query string provided to ServiceMapAPI area unit fetch method');
+    }
+
+    const options = {
+      page: 1,
+      page_size: 200,
+      division: nodeID,
+      only: 'street_address,location,name,municipality,accessibility_shortcoming_count,service_nodes,contract_type',
+      include: 'services',
+    };
+
+    return this.getConcurrent('unit', options);
+  }
 }

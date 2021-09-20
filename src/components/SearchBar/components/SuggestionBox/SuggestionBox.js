@@ -277,7 +277,9 @@ const SuggestionBox = (props) => {
     const sidebar = document.getElementsByClassName('SidebarWrapper')[0];
     const app = document.getElementsByClassName('App')[0];
     if (visible) {
-      sidebar.style.overflow = 'hidden';
+      if (isMobile) {
+        sidebar.style.overflow = 'hidden';
+      }
       if (app) {
         app.style.height = '100%';
       }

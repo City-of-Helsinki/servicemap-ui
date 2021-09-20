@@ -11,59 +11,59 @@ fixture`Area view test`
     await waitForReact();
   });
 
-const drawerButtons = ReactSelector('AreaTab List ButtonBase');
+const drawerButtons = ReactSelector('ServiceTab SMAccordion');
+const radioButtons = ReactSelector('DistrictToggleButton');
 
 test('District lists are fetched and rendered correctly', async (t) => {
   const listLength = await drawerButtons.count;
 
+  await t
+    .expect(listLength).gt(0, 'No district buttons rendered')
+
   for(let i = 0; i < listLength; i++) {  
     await t 
       .click(drawerButtons.nth(i))
-      .expect(ReactSelector('Collapse List')).ok('District list not rendered correctly')
-      .expect(ReactSelector('Collapse List').childElementCount).gt(0, `Category ${i} did not receive children`)
+
+    const districtList = Selector('.districtList')
+
+    await t
+      .expect(districtList).ok('District list not rendered correctly')
+      .expect(districtList.childElementCount).gt(0, `Category ${i} did not receive children`)
       .click(drawerButtons.nth(i))
   }
 })  
 
-// test('District selection is updated' , async (t) => {
-//   // Select radio button to see if data to draw on map on Districts component changes
-//   await t
-//     .click(drawerButtons.nth(0))
-//     .pressKey('tab')
-//     .pressKey('space')
+test('District selection is updated' , async (t) => {
+  // Select radio button to see if data to draw on map on Districts component changes
+  await t
+    .click(drawerButtons.nth(0))
+    .click(radioButtons.nth(0).child())
 
-//   const districtData = ReactSelector('Districts').getReact(({props}) => props.districtData);
-//   let selectedItem = ReactSelector('Collapse ListItem').nth(0);
+  const districtDataLength = ReactSelector('Districts').getReact(({props}) => props.districtData.length);
+  const secondButton = radioButtons.nth(1);
 
-//   await t
-//     .expect(await districtData).ok('Data not set correctly to Districts component')
-//     // Select another radio button to see if data changes
-//     .pressKey('tab')
-//     .pressKey('space')
-//     .pressKey('enter')
+  await t
+    .expect(await districtDataLength).gt(0, 'Data not set correctly to Districts component')
+    // Select another radio button to see if data changes
+    .click(secondButton.child())
 
-//   const districtDataType = ReactSelector('Districts').getReact(({props}) => props.districtData[0].type);
-//   selectedItem = ReactSelector('Collapse ListItem').nth(1);
+  const districtDataType = ReactSelector('Districts').getReact(({props}) => props.districtData[0].type);
 
-//   await t
-//     .expect(selectedItem.classNames).contains(await districtDataType, 'Data not updated correctly to Districts component')
-// })
+  await t
+    .expect(await secondButton.getAttribute('id')).eql(await districtDataType, 'Data not updated correctly to Districts component')
+})
 
-// test('Unit list functions correctly' , async (t) => {
-//   const tabButtons = ReactSelector('TabLists ButtonBase');
-//   const unitList = ReactSelector('UnitTab List').childElementCount;
-//   const getLocation = ClientFunction(() => document.location.href);
+test('Unit list functions correctly' , async (t) => {
+  const unitList = Selector('.districtUnits')
+  const getLocation = ClientFunction(() => document.location.href);
 
-//   await t
-//     .click(drawerButtons.withText('Terveys'))
-//     .pressKey('tab')
-//     .pressKey('space')
-//     .click(tabButtons.nth(1))
-//     .expect(unitList).gt(0, 'No units listed for selected district')
-//     .pressKey('tab')
-//     .pressKey('enter')
-//     .expect(getLocation()).contains(`${server.address}:${server.port}/fi/unit`);
-// })
+  await t
+    .click(drawerButtons.nth(0))
+    .click(radioButtons.nth(0).child())
+    .expect(unitList.childElementCount).gt(0, 'No units listed for selected district')
+    .click(unitList.child())
+    .expect(getLocation()).contains(`${server.address}:${server.port}/fi/unit`);
+})
 
 test('Address search bar field updates and gets results', async (t, inputText = 'mann') => {
   const addressBar = Selector('#addressSearchbar')

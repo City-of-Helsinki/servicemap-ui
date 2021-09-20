@@ -60,7 +60,7 @@ const DataFetcher = ({
 // Listen to redux state
 const mapStateToProps = (state) => {
   const { mapRef, user } = state;
-  const map = mapRef && mapRef.leafletElement;
+  const map = mapRef;
 
   return {
     currentPage: user.page,

@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import distance from '@turf/distance';
 import flip from '@turf/flip';
 import { FormattedMessage } from 'react-intl';
+import { useMap } from 'react-leaflet';
 import { getSelectedUnit } from '../../../../redux/selectors/selectedUnit';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { drawEntranceMarkreIcon } from '../../utils/drawIcon';
@@ -13,12 +14,12 @@ const EntranceMarker = ({ classes }) => {
   const getLocaleText = useLocaleText();
   const unit = useSelector(state => getSelectedUnit(state));
   const theme = useSelector(state => state.user.theme);
-  const map = useSelector(state => state.mapRef);
+  const map = useMap();
 
   const unitPoint = flip(unit.location);
-  const zoomLimit = map.leafletElement.options.detailZoom;
+  const zoomLimit = map.options.detailZoom;
 
-  const shouldShowMarkers = () => map.leafletElement.getZoom() >= zoomLimit;
+  const shouldShowMarkers = () => map.getZoom() >= zoomLimit;
   const [showMarkers, setShowMarkers] = useState(shouldShowMarkers());
 
   const checkMarkerVisibility = () => {
@@ -31,9 +32,9 @@ const EntranceMarker = ({ classes }) => {
 
   useEffect(() => {
     // Add listener for zoom level to check if markers should be shown
-    map.leafletElement.on('zoomend', checkMarkerVisibility);
+    map.on('zoomend', checkMarkerVisibility);
     return () => {
-      map.leafletElement.off('zoomend', checkMarkerVisibility);
+      map.off('zoomend', checkMarkerVisibility);
     };
   }, []);
 

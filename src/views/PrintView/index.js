@@ -5,7 +5,7 @@ import styles from './styles';
 
 const mapStateToProps = (state) => {
   const { mapRef } = state;
-  const map = mapRef?.leafletElement;
+  const map = mapRef;
 
   return {
     map,

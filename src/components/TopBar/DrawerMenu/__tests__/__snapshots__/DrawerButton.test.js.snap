@@ -87,7 +87,7 @@ exports[`<DrawerButton /> should work 1`] = `
           <div
             className="DrawerButton-drawerIcon-7  "
           >
-            <ForwardRef>
+            <ForwardRef(SearchIcon)>
               <WithStyles(ForwardRef(SvgIcon))>
                 <ForwardRef(SvgIcon)
                   classes={
@@ -116,7 +116,7 @@ exports[`<DrawerButton /> should work 1`] = `
                   </svg>
                 </ForwardRef(SvgIcon)>
               </WithStyles(ForwardRef(SvgIcon))>
-            </ForwardRef>
+            </ForwardRef(SearchIcon)>
           </div>
           <span
             aria-hidden={true}

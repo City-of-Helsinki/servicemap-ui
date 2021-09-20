@@ -48,7 +48,12 @@ const translations = {
   'area.tab.geographical': 'Kaupunginosat ja postinumeroalueet',
   'area.services.local': 'Oman alueesi palvelut',
   'area.services.nearby': 'Lähialueiden toimipisteet listana',
+  'area.services.nearby.rescue_district': 'Lähialueiden suojelulohkot listana',
+  'area.services.nearby.rescue_sub_district': 'Lähialueiden suojelualalohkot listana',
   'area.services.all': 'Toimipisteet listana',
+  'area.services.all.rescue_area': 'Suojelupiirit listana',
+  'area.services.all.rescue_district': 'Suojelulohkot listana',
+  'area.services.all.rescue_sub_district': 'Suojelualalohkot listana',
   'area.info': 'Valitse alue, jonka palveluista haluat tietoa. Kirjoittamalla alla olevaan hakukenttään kotiosoitteesi saat näkyville karttaan ja Alueen palvelut -välilehdelle alueet ja piirit, joihin kuulut',
   'area.choose.district': 'Valitse alue',
   'area.list': 'Alueen valinta',
@@ -57,8 +62,10 @@ const translations = {
   'area.localAddress.postCode': 'Postinumero: {area}',
   'area.geographicalServices.neighborhood': 'Kaupunginosan palvelut ({length})',
   'area.geographicalServices.postcode_area': 'Postinumeroalueen palvelut ({length})',
+  'area.geographicalServices.major_district': 'Suurpiirin palvelut ({length})',
   'area.neighborhood.title': 'Valitse kaupunginosa',
   'area.postcode_area.title': 'Valitse postinumero',
+  'area.major_district.title': 'Valitse suurpiiri',
   'area.noSelection': 'Valitse alue Alueen Valinta -välilehdeltä',
   'area.noUnits': 'Valitsemallasi alueella ei ole toimipisteitä',
   'area.popupLink': 'Näytä alueen tiedot (uusi välilehti)',
@@ -74,6 +81,7 @@ const translations = {
   'area.list.neighborhood': 'Kaupunginosa',
   'area.list.postcode': 'Postinumero',
   'area.list.postcode_area': 'Postinumeroalue',
+  'area.list.major_district': 'Suurpiiri',
   'area.list.rescue_area': 'Suojelupiiri',
   'area.list.rescue_district': 'Suojelulohko',
   'area.list.rescue_sub_district': 'Suojelualalohko',
@@ -89,6 +97,7 @@ const translations = {
   'area.list.resident_parking_zone': 'Asukaspysäköintialueet',
   'area.list.neighborhood.plural': 'Kaupunginosat',
   'area.list.postcode_area.plural': 'Postinumeroalueet',
+  'area.list.major_district.plural': 'Suurpiirit',
   'area.list.rescue_area.plural': 'Suojelupiirit',
   'area.list.rescue_district.plural': 'Suojelulohkot',
   'area.list.rescue_sub_district.plural': 'Suojelualalohkot',
@@ -237,6 +246,7 @@ const translations = {
   'general.pageTitles.home': 'Etusivu',
   'general.pageTitles.search': 'Hakutulossivu',
   'general.pageTitles.unit': 'Toimipistesivu',
+  'general.pageTitles.unit.services': 'Toimipisteen palvelut',
   'general.pageTitles.unit.events': 'Toimipisteen tapahtumat',
   'general.pageTitles.unit.reservations': 'Toimipisteen varattavat kohteet',
   'general.pageTitles.service': 'Palvelusivu',
@@ -333,18 +343,20 @@ const translations = {
   'unit.data_source': 'Lähde: {data_source}',
   'unit.details.notFound': 'Toimipisteen tietoja ei saatavilla.',
   'unit.plural': 'Toimipisteet',
+  'unit.distance': 'Etäisyys: ',
 
   'unit.contact.info': 'Yhteystiedot',
   'unit.links': 'Verkossa',
   'unit.eServices': 'Sähköinen asiointi',
   'unit.reservations': 'Varattavat kohteet',
   'unit.events': 'Toimipisteen tapahtumat',
+  'unit.events.description': 'Tästä löydät tietoa toimipisteen tarjoamista eri tapahtumista',
   'unit.events.count': `{count, plural,
     =0 {}
     one {# tapahtuma}
     other {# tapahtumaa}
   }`,
-  'unit.events.more': 'Näytä lisää tapahtumia',
+  'unit.events.more': 'Näytä lisää tapahtumia ({count})',
   'unit.homepage': 'Kotisivu',
   'unit.homepage.missing': 'Kotisivua ei ilmoitettu',
   'unit.picture': 'Kuva toimipisteestä: ',
@@ -366,23 +378,29 @@ const translations = {
   'unit.contact': 'Yhteyshenkilö',
   'unit.school.year': 'Lukuvuosi',
   'unit.opens.new.tab': '(uusi välilehti)',
+  'unit.reservations.description': 'Tästä löydät tietoa toimipisteen tarjoamista varattavista tiloista ja tarvikkeista.',
+
   'unit.reservations.count': `{count, plural,
     =0 {}
     one {# varattava kohde}
     other {# varattavaa kohdetta}
   }`,
-  'unit.reservations.more': 'Näytä lisää varattavia kohteita',
+  'unit.reservations.more': 'Näytä lisää varattavia kohteita ({count})',
   'unit.call.number': '(soita)',
   'unit.list.services': 'Palvelut',
   'unit.list.events': 'Tapahtumat',
   'unit.list.reservations': 'Varattavat kohteet',
-  'unit.services': 'Palvelut toimipisteessä',
-  'unit.services.more': 'Näytä lisää palveluja',
+  'unit.services': 'Toimipisteeseen liittyvät palvelut',
+  'unit.services.description': 'Palvelukuvauksen ohella löydät tietoa kunnan tarjoamista eri asiointikanavista.',
+  'unit.services.more': 'Näytä lisää palveluja ({count})',
   'unit.services.count': `{count, plural,
     =0 {}
     one {# palvelu}
     other {# palvelua}
   }`,
+  'unit.semesters': 'Toimipisteen lukuvuosikohtaiset palvelut.', // TODO: verify
+  'unit.semesters.description': 'Lukuvuosi {semester}', // TODO: verify
+  'unit.semesters.more': 'Näytä lisää palveluja ({count})',
   'unit.route': 'Katso reitti tänne',
   'unit.route.extra': '(Uusi välilehti. HSL-reittiopas ei ole saavutettava palvelu)',
   'unit.socialMedia.title': 'Toimipiste sosiaalisessa mediassa',

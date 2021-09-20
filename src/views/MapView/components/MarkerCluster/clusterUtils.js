@@ -3,6 +3,7 @@ import React from 'react';
 import isClient from '../../../../utils';
 import { isEmbed } from '../../../../utils/path';
 import { getAddressFromUnit } from '../../../../utils/address';
+import formatEventDate from '../../../../utils/events';
 
 export const createMarkerClusterLayer = (
   createClusterCustomIcon,
@@ -108,11 +109,26 @@ export const createPopupContent = (unit, classes, getLocaleText, distance, intl,
       {
         distance
         && (
-          <p className={classes.unitTooltipSubtitle}>
+          <p className={`${classes.unitTooltipSubtitle} ${classes.unitTooltipCaption}`}>
+            {intl.formatMessage({ id: 'unit.distance' })}
             {distance.distance}
             {distance.type}
           </p>
         )
+      }
+      {
+      unit.events?.length
+        ? (
+          <div className={classes.unitTooltipEventContainer}>
+            <hr className={classes.unitTooltipDivider} />
+            <p className={classes.unitTooltipSubtitle}>
+              {unit.events[0].name.fi}
+            </p>
+            <p className={`${classes.unitTooltipSubtitle} ${classes.unitTooltipCaption}`}>
+              {formatEventDate(unit.events[0], intl)}
+            </p>
+          </div>
+        ) : null
       }
       {isMobile && (
         <p className={classes.unitTooltipLink}>

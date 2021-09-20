@@ -52,6 +52,7 @@ export const dataStructure = [ // Categorized district data structure
     districts: [
       'neighborhood',
       'postcode_area',
+      'major_district',
     ],
   },
   {
@@ -79,7 +80,10 @@ export const dataStructure = [ // Categorized district data structure
   },
 ];
 
+// Get geographical districts
 export const geographicalDistricts = dataStructure.find(obj => obj.id === 'geographical').districts;
+// Get category districts by id
+export const getCategoryDistricts = id => dataStructure.find(obj => obj.id === id)?.districts || [];
 
 
 export const groupDistrictData = (data) => {

@@ -13,7 +13,7 @@ const mapStateToProps = (state) => {
   const {
     mapRef, searchResults, user, settings, serviceTree, redirectService,
   } = state;
-  const map = mapRef && mapRef.leafletElement;
+  const map = mapRef;
   const {
     isFetching, count, max, previousSearch,
   } = searchResults;

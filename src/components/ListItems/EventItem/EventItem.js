@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Event } from '@material-ui/icons';
+import { NoSsr } from '@material-ui/core';
 import ResultItem from '../ResultItem';
 import useLocaleText from '../../../utils/useLocaleText';
 import formatEventDate from '../../../utils/events';
@@ -23,12 +24,36 @@ const EventItem = ({
 
   if (simpleItem) {
     return (
+      <NoSsr key={event.id}>
+        <ResultItem
+          key={event.id}
+          icon={<Event color="primary" />}
+          title={getLocaleText(event.name)}
+          subtitle={dateString}
+          divider={divider}
+          onClick={(e) => {
+            e.preventDefault();
+            if (navigator) {
+              changeSelectedEvent(event);
+              navigator.push('event', event.id);
+            }
+          }}
+          role="link"
+        />
+      </NoSsr>
+    );
+  }
+
+  return (
+    <NoSsr key={event.id}>
       <ResultItem
         key={event.id}
         icon={<Event color="primary" />}
         title={getLocaleText(event.name)}
-        subtitle={dateString}
+        bottomText={dateString}
+        subtitle={getLocaleText(event.location.name)}
         divider={divider}
+        unitId={eventUnitId}
         onClick={(e) => {
           e.preventDefault();
           if (navigator) {
@@ -38,27 +63,7 @@ const EventItem = ({
         }}
         role="link"
       />
-    );
-  }
-
-  return (
-    <ResultItem
-      key={event.id}
-      icon={<Event color="primary" />}
-      title={getLocaleText(event.name)}
-      bottomText={dateString}
-      subtitle={getLocaleText(event.location.name)}
-      divider={divider}
-      unitId={eventUnitId}
-      onClick={(e) => {
-        e.preventDefault();
-        if (navigator) {
-          changeSelectedEvent(event);
-          navigator.push('event', event.id);
-        }
-      }}
-      role="link"
-    />
+    </NoSsr>
   );
 };
 

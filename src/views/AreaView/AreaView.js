@@ -52,6 +52,7 @@ const AreaView = ({
   const districtsFetching = useSelector(state => state.districts.districtsFetching);
   const getLocaleText = useLocaleText();
   const openItems = useSelector(state => state.districts.openItems);
+  const selectedDistrictGeometry = selectedDistrictData[0]?.boundary;
 
   const searchParams = parseSearchParams(location.search);
   const selectedArea = searchParams.selected;
@@ -81,7 +82,9 @@ const AreaView = ({
   );
 
   const focusMapToDistrict = (district) => {
-    focusDistrict(map.leafletElement, district.boundary.coordinates);
+    if (map && district?.boundary) {
+      focusDistrict(map, district.boundary.coordinates);
+    }
   };
 
   const fetchAddressDistricts = async () => {
@@ -105,8 +108,8 @@ const AreaView = ({
 
 
   const getViewState = () => ({
-    center: map.leafletElement.getCenter(),
-    zoom: map.leafletElement.getZoom(),
+    center: map.getCenter(),
+    zoom: map.getZoom(),
   });
 
   const clearRadioButtonValue = useCallback(() => {
@@ -160,21 +163,27 @@ const AreaView = ({
     // If pending district focus, focus to districts when distitct data is loaded
     if (focusTo && selectedDistrictData.length) {
       if (focusTo === 'districts') {
-        if (selectedDistrictData[0]?.boundary) {
+        if (selectedDistrictGeometry) {
           setFocusTo(null);
-          focusDistricts(map.leafletElement, selectedDistrictData);
+          focusDistricts(map, selectedDistrictData);
         }
       } else if (focusTo === 'subdistricts') {
-        if (selectedDistrictData[0]?.boundary) {
+        if (selectedDistrictGeometry) {
           const filtetedDistricts = selectedDistrictData.filter(
             i => selectedSubdistricts.includes(i.ocd_id),
           );
           setFocusTo(null);
-          focusDistricts(map.leafletElement, filtetedDistricts);
+          focusDistricts(map, filtetedDistricts);
         }
       }
     }
   }, [selectedDistrictData, focusTo]);
+
+  useEffect(() => {
+    if (map && !focusTo && !localAddressData.length && selectedDistrictGeometry) {
+      focusDistricts(map, selectedDistrictData);
+    }
+  }, [selectedDistrictGeometry]);
 
 
   useEffect(() => {
@@ -206,8 +215,6 @@ const AreaView = ({
       if (searchParams.districts) {
         setSelectedSubdistricts(searchParams.districts.split(','));
         setFocusTo('subdistricts');
-      } else {
-        setFocusTo('districts');
       }
 
       // Set selected geographical services from url parameters
@@ -227,11 +234,11 @@ const AreaView = ({
     } else if (mapState) { // Returning to page, without url parameters
       // Returns map to the previous spot
       const { center, zoom } = mapState;
-      if (map?.leafletElement && center && zoom) map.leafletElement.setView(center, zoom);
+      if (map && center && zoom) map.setView(center, zoom);
     }
   }, []);
 
-  if (!map || !map.leafletElement) {
+  if (!map || !map) {
     return null;
   }
 
