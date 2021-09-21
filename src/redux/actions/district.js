@@ -153,11 +153,16 @@ export const fetchAllDistricts = selected => (
 export const fetchDistrictUnitList = nodeID => (
   async (dispatch, getState) => {
     try {
-      const progressUpdate = (data) => {
-        dispatch(updateFetchProggress(data));
+      const progressUpdate = (count, max) => {
+        if (!count) { // Start progress bar by setting max value
+          dispatch(updateFetchProggress({ max }));
+        } else { // Update progress
+          dispatch(updateFetchProggress({ count }));
+        }
       };
-      dispatch(startUnitFetch(nodeID));
       const smAPI = new ServiceMapAPI();
+      smAPI.setOnProgressUpdate(progressUpdate);
+      dispatch(startUnitFetch(nodeID));
       const units = await smAPI.areaUnits(nodeID, progressUpdate);
       units.forEach((unit) => {
         unit.object_type = 'unit';
