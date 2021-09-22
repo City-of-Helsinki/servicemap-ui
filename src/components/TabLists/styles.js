@@ -52,7 +52,6 @@ export default theme => ({
   },
   tabSmallFont: {
     fontSize: '12.36px',
-    textTransform: 'none',
   },
   mobileTabFont: {
     fontSize: 11.5,
