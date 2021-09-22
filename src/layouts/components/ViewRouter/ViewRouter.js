@@ -24,12 +24,15 @@ const TitleWrapper = ({ children, messageId }) => (
   </>
 );
 
-const PageWrapper = ({ children, headMsgId, page }) => (
-  <>
-    <PageHandler messageId={headMsgId} page={page} />
-    {children}
-  </>
-);
+const PageWrapper = ({ children, headMsgId, page }) => {
+
+  return (
+    <>
+      <PageHandler messageId={headMsgId} page={page} />
+      {children}
+    </>
+  );
+};
 
 TitleWrapper.propTypes = {
   children: PropTypes.node.isRequired,

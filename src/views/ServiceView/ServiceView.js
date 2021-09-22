@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Typography } from '@material-ui/core';
-import SearchBar from '../../components/SearchBar';
+import { SearchBar } from '../../components';
 import TitleBar from '../../components/TitleBar';
 import { fitUnitsToMap, focusToPosition } from '../MapView/utils/mapActions';
 import Loading from '../../components/Loading';
