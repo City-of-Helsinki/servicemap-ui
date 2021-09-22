@@ -2,8 +2,13 @@ const initialState = {
   highlitedDistrict: null,
   selectedDistrictType: null,
   districtData: [],
-  unitsFetching: [],
   districtsFetching: [],
+  unitFetch: {
+    max: 0,
+    count: 0,
+    isFetching: false,
+    nodesFetching: [],
+  },
   subdistrictUnits: [],
   selectedSubdistricts: [],
   selectedDistrictServices: [],
@@ -127,14 +132,34 @@ export default (state = initialState, action) => {
     case 'START_UNIT_FETCH':
       return {
         ...state,
-        unitsFetching: [...state.unitsFetching, action.node],
+        unitFetch: {
+          ...state.unitFetch,
+          nodesFetching: [...state.unitFetch.nodesFetching, action.node],
+          isFetching: true,
+        },
+      };
+
+    case 'UPDATE_FETCH_PROGRESS':
+      return {
+        ...state,
+        unitFetch: {
+          ...state.unitFetch,
+          count: action.count ? state.unitFetch.count + action.count : state.unitFetch.count,
+          max: action.max ? state.unitFetch.max + action.max : state.unitFetch.max,
+        },
       };
 
     case 'END_UNIT_FETCH':
       return {
         ...state,
-        unitsFetching: [...state.unitsFetching.filter(item => item !== action.node)],
         subdistrictUnits: [...state.subdistrictUnits, ...action.units],
+        unitFetch: {
+          ...state.unitFetch,
+          nodesFetching: [...state.unitFetch.nodesFetching.filter(item => item !== action.node)],
+          isFetching: !action.isLastFetch,
+          max: action.isLastFetch ? 0 : state.unitFetch.max,
+          count: action.isLastFetch ? 0 : state.unitFetch.count,
+        },
       };
 
     case 'START_DISTRICT_FETCH':

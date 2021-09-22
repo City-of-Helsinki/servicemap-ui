@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Map } from '@material-ui/icons';
-import SearchBar from '../../components/SearchBar';
+import { SearchBar } from '../../components';
 import PaperButton from '../../components/PaperButton';
 import { getIcon } from '../../components/SMIcon';
 import MobileComponent from '../../components/MobileComponent';

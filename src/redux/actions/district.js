@@ -74,10 +74,17 @@ const startUnitFetch = node => ({
   node,
 });
 
+const updateFetchProggress = data => ({
+  type: 'UPDATE_FETCH_PROGRESS',
+  count: data.count,
+  max: data.max,
+});
+
 const endUnitFetch = data => ({
   type: 'END_UNIT_FETCH',
   node: data.nodeID,
   units: data.units,
+  isLastFetch: data.isLastFetch,
 });
 
 const startDistrictFetch = districtType => ({
@@ -144,20 +151,33 @@ export const fetchAllDistricts = selected => (
 );
 
 export const fetchDistrictUnitList = nodeID => (
-  async (dispatch) => {
-    dispatch(startUnitFetch(nodeID));
+  async (dispatch, getState) => {
     try {
-      // TODO: Add progress bar update to here with onNext
+      const progressUpdate = (count, max) => {
+        if (!count) { // Start progress bar by setting max value
+          dispatch(updateFetchProggress({ max }));
+        } else { // Update progress
+          dispatch(updateFetchProggress({ count }));
+        }
+      };
       const smAPI = new ServiceMapAPI();
-      const units = await smAPI.areaUnits(nodeID);
+      smAPI.setOnProgressUpdate(progressUpdate);
+      dispatch(startUnitFetch(nodeID));
+      const units = await smAPI.areaUnits(nodeID, progressUpdate);
       units.forEach((unit) => {
         unit.object_type = 'unit';
         unit.division_id = nodeID;
       });
-      dispatch(endUnitFetch({ nodeID, units }));
+
+      // If multiple districts fetching at the same time, last result needs to end search
+      const { nodesFetching } = getState().districts.unitFetch;
+      let isLastFetch;
+      if (nodesFetching.length === 1) isLastFetch = true;
+
+      dispatch(endUnitFetch({ nodeID, units, isLastFetch }));
     } catch (e) {
       console.warn(e);
-      dispatch(endUnitFetch({ nodeID, units: [] }));
+      dispatch(endUnitFetch({ nodeID, units: [], isLastFetch: true }));
     }
   }
 );

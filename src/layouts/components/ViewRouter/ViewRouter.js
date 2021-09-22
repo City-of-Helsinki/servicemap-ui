@@ -24,12 +24,15 @@ const TitleWrapper = ({ children, messageId }) => (
   </>
 );
 
-const PageWrapper = ({ children, headMsgId, page }) => (
-  <>
-    <PageHandler messageId={headMsgId} page={page} />
-    {children}
-  </>
-);
+const PageWrapper = ({ children, headMsgId, page }) => {
+
+  return (
+    <>
+      <PageHandler messageId={headMsgId} page={page} />
+      {children}
+    </>
+  );
+};
 
 TitleWrapper.propTypes = {
   children: PropTypes.node.isRequired,
@@ -78,6 +81,13 @@ const UnitServices = () => (
   <TitleWrapper messageId="general.pageTitles.unit.services">
     <PageWrapper headMsgId="general.pageTitles.unit.services" page="unit">
       <ExtendedData type="services" />
+    </PageWrapper>
+  </TitleWrapper>
+);
+const UnitEducationServices = () => (
+  <TitleWrapper messageId="general.pageTitles.unit.services">
+    <PageWrapper headMsgId="general.pageTitles.unit.services" page="unit">
+      <ExtendedData type="educationServices" />
     </PageWrapper>
   </TitleWrapper>
 );
@@ -173,6 +183,7 @@ class ViewRouter extends React.Component {
         <Route exact path="/:lng/unit/:unit/events" component={UnitEvents} />
         <Route exact path="/:lng/unit/:unit/reservations" component={UnitReservations} />
         <Route exact path="/:lng/unit/:unit/services" component={UnitServices} />
+        <Route exact path="/:lng/unit/:unit/educationServices" component={UnitEducationServices} />
         <Route exact path="/:lng/unit/:unit" component={Unit} />
         <Route path="/:lng/search" component={Search} />
         <Route path="/:lng/services" component={ServiceTree} />
