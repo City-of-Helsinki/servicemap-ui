@@ -60,9 +60,11 @@ const fetchSearchResults = (options = null) => async (dispatch, getState) => {
     eventsFetch(options),
   ]);
 
-  results[0].forEach((unit) => {
-    unit.object_type = 'unit';
-  });
+  if (options.service_node) {
+    results[0].forEach((unit) => {
+      unit.object_type = 'unit';
+    });
+  }
 
   // Add object type to events
   const eventResults = results[1]?.data || [];
