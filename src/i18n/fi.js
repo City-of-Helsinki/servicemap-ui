@@ -398,9 +398,9 @@ const translations = {
     one {# palvelu}
     other {# palvelua}
   }`,
-  'unit.semesters': 'Toimipisteen lukuvuosikohtaiset palvelut.', // TODO: verify
-  'unit.semesters.description': 'Lukuvuosi {semester}', // TODO: verify
-  'unit.semesters.more': 'Näytä lisää palveluja ({count})',
+  'unit.educationServices': 'Toimipisteen lukuvuosikohtaiset palvelut',
+  'unit.educationServices.description': 'Lukuvuosi {semester}',
+  'unit.educationServices.more': 'Näytä lisää palveluja ({count})',
   'unit.route': 'Katso reitti tänne',
   'unit.route.extra': '(Uusi välilehti. HSL-reittiopas ei ole saavutettava palvelu)',
   'unit.socialMedia.title': 'Toimipiste sosiaalisessa mediassa',

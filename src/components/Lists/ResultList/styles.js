@@ -22,6 +22,7 @@ export default theme => ({
     ...theme.typography.body2,
     textTransform: 'uppercase',
     fontWeight: 'bold',
+    textAlign: 'left',
   },
   left: {
     float: 'left',
@@ -30,6 +31,7 @@ export default theme => ({
   right: {
     float: 'right',
     margin: theme.spacing(1),
+    whiteSpace: 'nowrap',
   },
   list: {
     maxHeight: '100%',

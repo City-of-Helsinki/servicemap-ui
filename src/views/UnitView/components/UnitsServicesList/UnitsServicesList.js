@@ -72,7 +72,7 @@ const UnitsServicesList = ({ unit, listLength, navigator }) => {
         key={`period-${period}`}
         listLength={listLength}
         data={{ data: subjectList, max: subjectList.length }}
-        type="semesters"
+        type="educationServices"
         semester={period}
         disableTitle={i !== 0}
         navigator={navigator}
