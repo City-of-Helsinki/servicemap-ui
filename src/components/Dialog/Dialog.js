@@ -52,7 +52,15 @@ const Dialog = ({
 
   return (
     <div>
-      <MUIDialog ref={dialogRef} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+      <MUIDialog
+        ref={dialogRef}
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="form-dialog-title"
+        classes={{
+          root: classes.muiRoot,
+        }}
+      >
         <div className={classes.root}>
           {/* Empty element that makes keyboard focus loop in dialog */}
           <Typography variant="srOnly" aria-hidden tabIndex="0" onFocus={focusToLastElement} />
@@ -61,10 +69,11 @@ const Dialog = ({
               autoFocus
               onClick={handleClose}
               role="link"
+              className={classes.closeButtonTop}
             />
-            <DialogTitle id="form-dialog-title" autoFocus>{title}</DialogTitle>
+            <DialogTitle className={classes.title} id="form-dialog-title" autoFocus>{title}</DialogTitle>
           </div>
-          <DialogContent>
+          <DialogContent className={classes.muiRoot}>
             {content}
           </DialogContent>
           <DialogActions>
@@ -84,7 +93,10 @@ const Dialog = ({
 Dialog.propTypes = {
   classes: PropTypes.shape({
     closeButton: PropTypes.string,
+    closeButtonTop: PropTypes.string,
+    muiRoot: PropTypes.string,
     root: PropTypes.string,
+    title: PropTypes.string,
     topArea: PropTypes.string,
   }).isRequired,
   title: PropTypes.node.isRequired,
