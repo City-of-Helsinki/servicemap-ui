@@ -37,7 +37,7 @@ const CopyTooltip = ({
 
 CopyTooltip.propTypes = {
   children: PropTypes.node.isRequired,
-}
+};
 
 const LinkSettingsDialogComponent = ({
   classes,
@@ -109,12 +109,13 @@ const LinkSettingsDialogComponent = ({
     let text = '';
 
     try {
-      a11ySettings.forEach((v) => {
+      a11ySettings.forEach((v, i) => {
         if (SettingsUtility.isValidMobilitySetting(v)) {
-          text += `${intl.formatMessage({ id: `settings.mobility.${v}` })}.`;
+          text += `${intl.formatMessage({ id: `settings.mobility.${v}` })}`;
         } else if (SettingsUtility.isValidAccessibilitySenseImpairment(v)) {
-          text += ` ${intl.formatMessage({ id: `settings.sense.${v}` })}.`;
+          text += `${intl.formatMessage({ id: `settings.sense.${v}` })}`;
         }
+        text += (i + 1) < a11ySettings.length ? ', ' : '';
       });
     } catch (e) {
       console.warn(`Unable to get settings label: ${e.message}`);
@@ -186,7 +187,7 @@ const LinkSettingsDialogComponent = ({
               }}
             >
               {
-                items.map(item => (
+                items.map(item => item.label !== '' && (
                   <FormControlLabel
                     key={item.label}
                     control={(
@@ -196,6 +197,9 @@ const LinkSettingsDialogComponent = ({
                       )}
                     label={item.label}
                     value={item.value}
+                    classes={{
+                      root: classes.radioGroupItem,
+                    }}
                   />
                 ))
               }
