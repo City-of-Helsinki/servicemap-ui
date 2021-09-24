@@ -41,13 +41,17 @@ const AcceptSettingsDialogComponent = ({
 
     try {
       if (SettingsUtility.isValidMobilitySetting(mobility)) {
-        text += `${intl.formatMessage({ id: `settings.mobility.${mobility}` })}.`;
+        text += `${intl.formatMessage({ id: `settings.mobility.${mobility}` })}`;
+        if (senses.length) {
+          text += ', ';
+        }
       }
 
-      senses.forEach((s) => {
+      senses.forEach((s, i) => {
         if (SettingsUtility.isValidAccessibilitySenseImpairment(s)) {
-          text += ` ${intl.formatMessage({ id: `settings.sense.${s}` })}.`;
+          text += `${intl.formatMessage({ id: `settings.sense.${s}` })}.`;
         }
+        text += (i + 1) < senses.length ? ', ' : '';
       });
     } catch (e) {
       console.warn(`Unable to get settings label: ${e.message}`);
