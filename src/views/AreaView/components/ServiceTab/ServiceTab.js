@@ -152,8 +152,9 @@ const ServiceTab = (props) => {
 
   const renderCategoryItem = (item) => {
     const defaultExpanded = initialOpenItems.includes(item.id) || selectedCategory === item.id;
+    const ariaHidden = item.id === 'parking';
     return (
-      <ListItem key={item.titleID} className={classes.listItem} divider>
+      <ListItem aria-hidden={ariaHidden} key={item.titleID} className={classes.listItem} divider>
         <SMAccordion
           className={classes.accodrion}
           onOpen={() => dispatch(handleOpenItems(item.id))}
