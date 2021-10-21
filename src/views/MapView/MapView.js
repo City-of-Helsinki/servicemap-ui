@@ -79,6 +79,7 @@ const MapView = (props) => {
   const embedded = isEmbed({ url: location.pathname });
   const getAddressNavigatorParams = useNavigationParams();
   const districtUnitsFetch = useSelector(state => state.districts.unitFetch);
+  const parkingAreaUnits = useSelector(state => state.districts.parkingUnits);
 
   // This unassigned selector is used to trigger re-render after events are fetched
   useSelector(state => getSelectedUnitEvents(state));
@@ -125,8 +126,13 @@ const MapView = (props) => {
       }
     } else if (currentPage === 'service' && serviceUnits && !unitsLoading) {
       mapUnits = serviceUnits;
-    } else if (currentPage === 'area' && districtUnits) {
-      mapUnits = districtUnits;
+    } else if (currentPage === 'area') {
+      if (districtUnits) {
+        mapUnits = districtUnits;
+      }
+      if (parkingAreaUnits.length) {
+        mapUnits = parkingAreaUnits;
+      }
     } else if (
       (currentPage === 'unit' || currentPage === 'fullList' || currentPage === 'event')
       && highlightedUnit
@@ -243,6 +249,7 @@ const MapView = (props) => {
     addressUnits,
     serviceUnits,
     districtUnits,
+    parkingAreaUnits,
     highlightedDistrict,
     currentPage,
   ]);
