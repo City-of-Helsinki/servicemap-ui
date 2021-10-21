@@ -144,7 +144,8 @@ const Districts = ({
   };
 
   const renderMultipleDistricts = () => {
-    if (!districtData[0]?.boundary) {
+    const areasWithBoundary = districtData.filter(obj => obj.boundary);
+    if (!areasWithBoundary.length) {
       return null;
     }
 
@@ -152,11 +153,11 @@ const Districts = ({
     let filteredData = [];
     if (selectedCities.length) {
       const searchParams = parseSearchParams(location.search);
-      filteredData = districtData.filter(district => (searchParams.city
+      filteredData = areasWithBoundary.filter(district => (searchParams.city
         ? embedded && district.municipality === searchParams.city
         : citySettings[district.municipality]));
     } else {
-      filteredData = districtData;
+      filteredData = areasWithBoundary;
     }
 
     return filteredData.map((district) => {

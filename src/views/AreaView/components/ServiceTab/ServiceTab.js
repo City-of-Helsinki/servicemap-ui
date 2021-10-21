@@ -9,11 +9,18 @@ import {
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import SMAccordion from '../../../../components/SMAccordion';
-import { fetchDistrictGeometry, handleOpenItems, setSelectedDistrictType } from '../../../../redux/actions/district';
+import {
+  fetchDistrictGeometry,
+  handleOpenItems,
+  setParkingUnits,
+  setSelectedDistrictType,
+  setSelectedParkingAreas,
+} from '../../../../redux/actions/district';
 import DistrictUnitList from '../DistrictUnitList';
 import DistrictToggleButton from '../DistrictToggleButton';
-import { dataStructure } from '../../utils/districtDataHelper';
+import { dataStructure, getDistrictCategory } from '../../utils/districtDataHelper';
 import DistrictAreaList from '../DistrictAreaList';
+import ParkingAreaList from '../ParkingAreaList';
 
 const ServiceTab = (props) => {
   const {
@@ -25,6 +32,8 @@ const ServiceTab = (props) => {
   const dispatch = useDispatch();
   const districtsFetching = useSelector(state => state.districts.districtsFetching);
   const selectedDistrictType = useSelector(state => state.districts.selectedDistrictType);
+  const selectedParkingAreas = useSelector(state => state.districts.selectedParkingAreas);
+  const parkingUnits = useSelector(state => state.districts.parkingUnits);
   const selectedCategory = dataStructure.find(
     data => data.districts.includes(selectedDistrictType),
   )?.id;
@@ -33,6 +42,14 @@ const ServiceTab = (props) => {
     if (selectedDistrictType === district.id) {
       dispatch(setSelectedDistrictType(null));
     } else {
+      if (getDistrictCategory(district.name) !== 'parking') {
+        if (selectedParkingAreas.length) {
+          dispatch(setSelectedParkingAreas([]));
+        }
+        if (parkingUnits.length) {
+          dispatch(setParkingUnits([]));
+        }
+      }
       if (!district.data.some(obj => obj.boundary)) {
         dispatch(fetchDistrictGeometry(district.name, district.period));
       }

@@ -76,6 +76,7 @@ export const dataStructure = [ // Categorized district data structure
     titleID: 'area.list.parking',
     districts: [
       'resident_parking_zone',
+      'parking_payzone',
     ],
   },
 ];
@@ -84,6 +85,10 @@ export const dataStructure = [ // Categorized district data structure
 export const geographicalDistricts = dataStructure.find(obj => obj.id === 'geographical').districts;
 // Get category districts by id
 export const getCategoryDistricts = id => dataStructure.find(obj => obj.id === id)?.districts || [];
+// Get category by district id
+export const getDistrictCategory = districtId => dataStructure.find(
+  obj => obj.districts.includes(districtId),
+)?.id;
 
 
 export const groupDistrictData = (data) => {
