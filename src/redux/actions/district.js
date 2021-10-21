@@ -100,53 +100,37 @@ const endDistrictFetch = districtType => ({
 
 export const fetchDistrictGeometry = (type, period) => (
   async (dispatch) => {
-    const options = {
-      page: 1,
-      page_size: 500,
-      type,
-      geometry: true,
-      unit_include: 'name,location,street_address,address_zip,municipality',
-    };
-    const onStart = () => {
-      dispatch(startDistrictFetch(type));
-    };
-    const onNext = () => {};
-    const onSuccess = (results) => {
-      let filteredData = parseDistrictGeometry(results);
-      if (period) {
-        // Filter with start and end year
-        const start = period.slice(0, 4);
-        const end = period.slice(-4);
-        const yearFilteredData = filteredData.filter(item => (
-          item.start.slice(0, 4) === start && item.end.slice(0, 4) === end
-        ));
-        filteredData = yearFilteredData;
-      }
-      dispatch(updateDistrictData(type, filteredData, period));
-      dispatch(endDistrictFetch(type));
-    };
-    districtFetch(options, onStart, onSuccess, null, onNext);
+    dispatch(startDistrictFetch(type));
+    const smAPI = new ServiceMapAPI();
+    const boundaries = await smAPI.areaGeometry(type);
+    let filteredData = parseDistrictGeometry(boundaries);
+    if (period) {
+      // Filter with start and end year
+      const start = period.slice(0, 4);
+      const end = period.slice(-4);
+      const yearFilteredData = filteredData.filter(item => (
+        item.start.slice(0, 4) === start && item.end.slice(0, 4) === end
+      ));
+      filteredData = yearFilteredData;
+    }
+    dispatch(updateDistrictData(type, filteredData, period));
+    dispatch(endDistrictFetch(type));
   }
 );
 
-export const fetchAllDistricts = selected => (
+export const fetchDistricts = (selected, single) => (
   async (dispatch) => {
-    const categories = dataStructure.map(obj => obj.districts).flat().join(',');
-    const options = {
-      page: 1,
-      page_size: 500,
-      type: categories,
-      geometry: false,
-    };
-    const onStart = () => dispatch(startDistrictFetch('all'));
-    const onNext = () => {};
-    const onSuccess = (result) => {
-      const groupedData = groupDistrictData(result);
-      dispatch(setDistrictData(groupedData));
-      dispatch(endDistrictFetch('all'));
-      if (selected) dispatch(fetchDistrictGeometry(selected));
-    };
-    districtFetch(options, onStart, onSuccess, null, onNext);
+    const categories = single
+      ? selected
+      : dataStructure.map(obj => obj.districts).flat().join(',');
+
+    dispatch(startDistrictFetch(single ? selected : 'all'));
+    const smAPI = new ServiceMapAPI();
+    const areas = await smAPI.areas(categories);
+    const groupedData = groupDistrictData(areas);
+    dispatch(setDistrictData(groupedData));
+    dispatch(endDistrictFetch(single ? selected : 'all'));
+    if (selected) dispatch(fetchDistrictGeometry(selected));
   }
 );
 
