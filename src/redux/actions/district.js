@@ -1,4 +1,3 @@
-import { districtFetch } from '../../utils/fetch';
 import ServiceMapAPI from '../../utils/newFetch/ServiceMapAPI';
 import {
   dataStructure,
@@ -54,6 +53,21 @@ export const setSelectedDistrictServices = services => ({
   services,
 });
 
+export const setSelectedParkingAreas = areas => ({
+  type: 'SET_SELECTED_PARKING_AREAS',
+  areas,
+});
+
+export const addSelectedParkingArea = areaID => ({
+  type: 'ADD_SELECTED_PARKING_AREA',
+  areaID,
+});
+
+export const removeSelectedParkingArea = areaID => ({
+  type: 'REMOVE_SELECTED_PARKING_AREA',
+  areaID,
+});
+
 const addOpenItem = item => ({
   type: 'ADD_OPEN_ITEM',
   item,
@@ -67,6 +81,16 @@ const removeOpenItem = item => ({
 export const setMapState = object => ({
   type: 'SET_MAP_STATE',
   object,
+});
+
+const updateParkingAreas = areas => ({
+  type: 'UPDATE_PARKING_AREAS',
+  areas,
+});
+
+export const setParkingUnits = units => ({
+  type: 'SET_PARKING_UNITS',
+  units,
 });
 
 const startUnitFetch = node => ({
@@ -163,6 +187,30 @@ export const fetchDistrictUnitList = nodeID => (
       console.warn(e);
       dispatch(endUnitFetch({ nodeID, units: [], isLastFetch: true }));
     }
+  }
+);
+
+export const fetchParkingAreaGeometry = areaId => (
+  async (dispatch) => {
+    const type = 'parking_area';
+    const areaNumber = areaId.match(/\d+/g);
+    const options = { extra__class: areaNumber };
+
+    dispatch(startDistrictFetch(areaId));
+    const smAPI = new ServiceMapAPI();
+    const areas = await smAPI.areaGeometry(type, options);
+    dispatch(endDistrictFetch(areaId));
+    dispatch(updateParkingAreas(areas));
+  }
+);
+
+export const fetchParkingUnits = () => (
+  async (dispatch) => {
+    dispatch(startDistrictFetch('parkingUnits'));
+    const smAPI = new ServiceMapAPI();
+    const units = await smAPI.search('pysäköintitalot ja -tilat');
+    dispatch(setParkingUnits(units));
+    dispatch(endDistrictFetch('parkingUnits'));
   }
 );
 
