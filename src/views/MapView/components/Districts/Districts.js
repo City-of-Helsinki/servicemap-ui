@@ -12,6 +12,7 @@ import config from '../../../../../config';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { geographicalDistricts, getCategoryDistricts } from '../../../AreaView/utils/districtDataHelper';
 import UnitHelper from '../../../../utils/unitHelper';
+import ParkingAreas from './ParkingAreas';
 
 
 const Districts = ({
@@ -40,6 +41,7 @@ const Districts = ({
   const getLocaleText = useLocaleText();
   const citySettings = useSelector(state => state.settings.cities);
   const selectedDistrictType = useSelector(state => state.districts.selectedDistrictType);
+  const selectedParkingAreas = useSelector(state => state.districts.selectedParkingAreas);
   const [areaPopup, setAreaPopup] = useState(null);
 
   const districtOnClick = (e, district) => {
@@ -188,7 +190,7 @@ const Districts = ({
       } else if (getCategoryDistricts('protection').includes(district.type)) {
         tooltipTitle = `${intl.formatMessage({ id: `area.list.${district.type}` })} ${district.origin_id} - ${getLocaleText(district.name)}`;
       } else if (district.name) {
-        tooltipTitle = `${getLocaleText(district.name)} - ${intl.formatMessage({ id: `area.list.${district.type}` })}`;
+        tooltipTitle = `${district.extra?.area_key ?? ''} ${getLocaleText(district.name)} - ${intl.formatMessage({ id: `area.list.${district.type}` })}`;
       }
 
       const mainColor = useContrast ? '#fff' : '#ff8400';
@@ -287,6 +289,9 @@ const Districts = ({
             {renderMultipleDistricts()}
             {areaPopup && renderAreaPopup()}
           </>
+        ) : null}
+        {selectedParkingAreas.length ? (
+          <ParkingAreas />
         ) : null}
       </>
     );
