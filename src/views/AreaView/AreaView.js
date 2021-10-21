@@ -15,7 +15,7 @@ import fetchAddress from '../MapView/utils/fetchAddress';
 import TitleBar from '../../components/TitleBar';
 import AddressSearchBar from '../../components/AddressSearchBar';
 import { dataStructure, geographicalDistricts } from './utils/districtDataHelper';
-import { handleOpenItems } from '../../redux/actions/district';
+import { fetchParkingAreaGeometry, fetchParkingUnits, handleOpenItems } from '../../redux/actions/district';
 import SMButton from '../../components/ServiceMapButton';
 import MobileComponent from '../../components/MobileComponent';
 import useLocaleText from '../../utils/useLocaleText';
@@ -28,8 +28,9 @@ const AreaView = ({
   setSelectedDistrictServices,
   setDistrictAddressData,
   setMapState,
+  setSelectedParkingAreas,
   fetchDistrictUnitList,
-  fetchAllDistricts,
+  fetchDistricts,
   unitsFetching,
   districtData,
   districtAddressData,
@@ -185,9 +186,11 @@ const AreaView = ({
     }
   }, [selectedDistrictGeometry]);
 
-
   useEffect(() => {
-    if (selectedAreaType) { // Arriving to page, with url parameters
+    if (searchParams.selected
+      || searchParams.parkingSpaces
+      || searchParams.parkingUnits
+    ) { // Arriving to page, with url parameters
       if (!embed) {
         /* Remove selected area parameter from url, otherwise it will override
         user area selection when returning to area view */
@@ -200,15 +203,31 @@ const AreaView = ({
       }
 
       // Fetch and select area from url parameters
-      if (selectedArea !== selectedDistrictType) {
-        fetchAllDistricts(selectedAreaType);
+      if (selectedArea) {
+        fetchDistricts(selectedAreaType);
         if (!embed) {
           const category = dataStructure.find(
             data => data.districts.includes(selectedAreaType),
           );
           dispatch(handleOpenItems(category.id));
+        } else {
+          fetchDistricts(selectedAreaType, true);
         }
         setSelectedDistrictType(selectedArea);
+      } else if (!embed) {
+        fetchDistricts();
+      }
+
+      // Set selected parking spaces from url parameters
+      if (searchParams.parkingSpaces) {
+        const parkingAreas = searchParams.parkingSpaces.split(',');
+        setSelectedParkingAreas(parkingAreas);
+        parkingAreas.forEach((area) => {
+          dispatch(fetchParkingAreaGeometry(area));
+        });
+      }
+      if (searchParams.parkingUnits) {
+        dispatch(fetchParkingUnits());
       }
 
       // Set selected geographical districts from url parameters and handle map focus
@@ -230,7 +249,7 @@ const AreaView = ({
           .then(data => setSelectedAddress(data));
       }
     } else if (!districtData.length) { // Arriving to page first time, without url parameters
-      fetchAllDistricts();
+      fetchDistricts();
     } else if (mapState) { // Returning to page, without url parameters
       // Returns map to the previous spot
       const { center, zoom } = mapState;
