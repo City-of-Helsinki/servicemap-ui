@@ -94,7 +94,26 @@ const ServiceTab = (props) => {
   };
 
 
+  const renderParkingAreaSelection = (item) => { // Custom implementation for parking areas
+    const districList = districtData.filter(obj => item.districts.some(id => obj.id.includes(id)));
+    const parkingAreas = districList.filter(obj => !obj.id.includes('parking_area'));
+    const parkingSpaces = districList.filter(obj => obj.id.includes('parking_area') && obj.id !== 'parking_area0');
+    return (
+      <>
+        {renderDistrictList(parkingAreas)}
+        <div className={classes.subtitle}>
+          <Typography><FormattedMessage id="area.list.parkingSpaces" /></Typography>
+        </div>
+        <ParkingAreaList areas={parkingSpaces} />
+      </>
+    );
+  };
+
+
   const renderCollapseContent = (item) => {
+    if (item.id === 'parking') {
+      return renderParkingAreaSelection(item);
+    }
     if (item.subCategories) {
       return item.subCategories.map((obj) => {
         const districList = districtData.filter(i => obj.districts.includes(i.name));
