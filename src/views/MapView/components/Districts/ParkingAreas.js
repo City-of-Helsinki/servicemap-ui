@@ -76,6 +76,7 @@ const ParkingAreas = ({ classes }) => {
           <Polygon
             key={area.id}
             positions={boundary}
+            className={classes.parkingLayer}
             color={getColor(area)}
             pathOptions={{
               fillOpacity: '0',
