@@ -75,6 +75,8 @@ const translations = {
   'area.list.education': 'Education',
   'area.list.natureConservation': 'Nature conservation',
   'area.list.parking': 'Parking',
+  'area.list.parking_area': 'Parking areas',
+  'area.list.parking_payzone': 'Parking payzones',
   'area.list.education.finnish': 'Finnish school areas',
   'area.list.education.swedish': 'Swedish school areas',
   'area.list.preschool': 'Pre-school education',
@@ -115,6 +117,7 @@ const translations = {
   'area.list.parkingUnits': 'Pysäköintitalot ja -tilat', // TODO: translate
 
   // TODO: translate all
+  'parkingArea.popup.residentName': 'Alue {letter}',
   'parkingArea.popup.payment1': 'Ilmainen pysäköinti',
   'parkingArea.popup.payment2': 'Ilmainen pysäköinti',
   'parkingArea.popup.payment3': 'Ilmainen pysäköinti',
