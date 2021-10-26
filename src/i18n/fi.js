@@ -116,6 +116,7 @@ const translations = {
   'area.list.parkingSpaces': 'Pysäköintipaikat',
   'area.list.parkingUnits': 'Pysäköintitalot ja -tilat',
 
+  'parkingArea.popup.residentName': 'Alue {letter}',
   'parkingArea.popup.payment1': 'Ilmainen pysäköinti',
   'parkingArea.popup.payment2': 'Ilmainen pysäköinti',
   'parkingArea.popup.payment3': 'Ilmainen pysäköinti',

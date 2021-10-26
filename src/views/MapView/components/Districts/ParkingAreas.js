@@ -108,12 +108,10 @@ const ParkingAreas = ({ classes }) => {
           </Polygon>
         );
       })}
-      {areaPopup ? (
+      {areaPopup?.textContent ? (
         <Popup onClose={() => setAreaPopup(null)} position={areaPopup.position}>
           <div className={classes.areaPopup}>
-            {areaPopup.textContent && (
-              areaPopup.textContent
-            )}
+            {areaPopup.textContent}
           </div>
         </Popup>
       ) : null}
