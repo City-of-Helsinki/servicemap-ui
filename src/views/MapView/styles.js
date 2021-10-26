@@ -75,6 +75,9 @@ const styles = theme => ({
     textAlign: 'center',
     paddingTop: theme.spacing(0.5),
   },
+  parkingLayer: {
+    zIndex: theme.zIndex.infront,
+  },
   marginBottom: {
     marginBottom: `${theme.spacing(2)}px !important`,
   },
