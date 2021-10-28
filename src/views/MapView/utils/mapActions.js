@@ -55,7 +55,8 @@ const focusDistrict = (map, coordinates) => {
 };
 
 const focusDistricts = (map, districts) => {
-  const bounds = districts.map(
+  const filteredData = districts.filter(obj => obj.boundary);
+  const bounds = filteredData.map(
     district => district.boundary.coordinates.map(area => swapCoordinates(area)),
   );
   map.fitBounds(bounds);

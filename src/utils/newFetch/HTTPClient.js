@@ -124,7 +124,7 @@ export default class HttpClient {
 
   getSinglePage = (endpoint, options) => this.fetch(endpoint, this.optionsToSearchParams(options), 'single');
 
-  // This fetches 0 results to get meta data with total result count
+  // This fetches 1 result to get meta data with total result count
   getCount = async (endpoint, options) => {
     const newOptions = {
       ...options,

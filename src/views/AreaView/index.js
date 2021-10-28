@@ -8,8 +8,9 @@ import {
   setSelectedSubdistricts,
   setSelectedDistrictServices,
   setDistrictAddressData,
+  setSelectedParkingAreas,
   fetchDistrictUnitList,
-  fetchAllDistricts,
+  fetchDistricts,
   setMapState,
 } from '../../redux/actions/district';
 import { getDistrictsByType, getAddressDistrict } from '../../redux/selectors/district';
@@ -52,6 +53,7 @@ export default injectIntl(withStyles(styles)(connect(
     setDistrictAddressData,
     setMapState,
     fetchDistrictUnitList,
-    fetchAllDistricts,
+    fetchDistricts,
+    setSelectedParkingAreas,
   },
 )(AreaView)));

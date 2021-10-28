@@ -26,7 +26,12 @@ const ToolMenu = ({
   const getAreaViewParams = () => {
     // Form url with parameters when user clicks embedder from tool menu
     const {
-      districtAddressData, selectedDistrictType, selectedSubdistricts, selectedDistrictServices,
+      districtAddressData,
+      selectedDistrictType,
+      selectedSubdistricts,
+      selectedDistrictServices,
+      selectedParkingAreas,
+      parkingUnits,
     } = districtState;
     const selected = selectedDistrictType
       ? `selected=${selectedDistrictType}` : null;
@@ -34,6 +39,10 @@ const ToolMenu = ({
       ? `districts=${selectedSubdistricts.map(i => i).toString()}` : null;
     const services = selectedDistrictServices.length
       ? `services=${selectedDistrictServices}` : null;
+    const parkingSpaces = selectedParkingAreas.length
+      ? `parkingSpaces=${selectedParkingAreas.join(',')}` : null;
+    const units = parkingUnits.length
+      ? 'parkingUnits=true' : null;
     const addressCoordinates = districtAddressData.address
       ? `lat=${districtAddressData.address.location.coordinates[1]}&lng=${districtAddressData.address.location.coordinates[0]}` : null;
 
@@ -41,6 +50,8 @@ const ToolMenu = ({
       ...(selected ? [selected] : []),
       ...(districts ? [districts] : []),
       ...(services ? [services] : []),
+      ...(parkingSpaces ? [parkingSpaces] : []),
+      ...(units ? [units] : []),
       ...(addressCoordinates ? [addressCoordinates] : []),
     ];
     if (params.length) {
@@ -99,7 +110,7 @@ const ToolMenu = ({
     },
     {
       key: 'printTool',
-      text: intl.formatMessage({ id: 'tool.print'}),
+      text: intl.formatMessage({ id: 'tool.print' }),
       icon: <Print className={classes.smIcon} />,
       onClick: () => {
         if (typeof togglePrintView === 'function') {

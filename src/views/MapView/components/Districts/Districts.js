@@ -12,6 +12,7 @@ import config from '../../../../../config';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { geographicalDistricts, getCategoryDistricts } from '../../../AreaView/utils/districtDataHelper';
 import UnitHelper from '../../../../utils/unitHelper';
+import ParkingAreas from './ParkingAreas';
 
 
 const Districts = ({
@@ -40,6 +41,7 @@ const Districts = ({
   const getLocaleText = useLocaleText();
   const citySettings = useSelector(state => state.settings.cities);
   const selectedDistrictType = useSelector(state => state.districts.selectedDistrictType);
+  const selectedParkingAreas = useSelector(state => state.districts.selectedParkingAreas);
   const [areaPopup, setAreaPopup] = useState(null);
 
   const districtOnClick = (e, district) => {
@@ -144,7 +146,8 @@ const Districts = ({
   };
 
   const renderMultipleDistricts = () => {
-    if (!districtData[0]?.boundary) {
+    const areasWithBoundary = districtData.filter(obj => obj.boundary);
+    if (!areasWithBoundary.length) {
       return null;
     }
 
@@ -152,11 +155,11 @@ const Districts = ({
     let filteredData = [];
     if (selectedCities.length) {
       const searchParams = parseSearchParams(location.search);
-      filteredData = districtData.filter(district => (searchParams.city
+      filteredData = areasWithBoundary.filter(district => (searchParams.city
         ? embedded && district.municipality === searchParams.city
         : citySettings[district.municipality]));
     } else {
-      filteredData = districtData;
+      filteredData = areasWithBoundary;
     }
 
     return filteredData.map((district) => {
@@ -187,7 +190,11 @@ const Districts = ({
       } else if (getCategoryDistricts('protection').includes(district.type)) {
         tooltipTitle = `${intl.formatMessage({ id: `area.list.${district.type}` })} ${district.origin_id} - ${getLocaleText(district.name)}`;
       } else if (district.name) {
-        tooltipTitle = `${getLocaleText(district.name)} - ${intl.formatMessage({ id: `area.list.${district.type}` })}`;
+        if (district.extra?.area_key) {
+          tooltipTitle = `${intl.formatMessage({ id: 'parkingArea.popup.residentName' }, { letter: district.extra.area_key })} (${getLocaleText(district.name)}) - ${intl.formatMessage({ id: `area.list.${district.type}` })}`;
+        } else {
+          tooltipTitle = `${getLocaleText(district.name)} - ${intl.formatMessage({ id: `area.list.${district.type}` })}`;
+        }
       }
 
       const mainColor = useContrast ? '#fff' : '#ff8400';
@@ -286,6 +293,9 @@ const Districts = ({
             {renderMultipleDistricts()}
             {areaPopup && renderAreaPopup()}
           </>
+        ) : null}
+        {selectedParkingAreas.length ? (
+          <ParkingAreas />
         ) : null}
       </>
     );

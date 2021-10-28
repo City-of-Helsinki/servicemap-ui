@@ -75,6 +75,8 @@ const translations = {
   'area.list.education': 'Utbildning',
   'area.list.natureConservation': 'Naturskydd',
   'area.list.parking': 'Parkering',
+  'area.list.parking_area': 'Pysäköintialueet', // TODO: translate
+  'area.list.parking_payzone': 'Maksuvyöhykkeet', // TODO: translate
   'area.list.education.finnish': 'Finska skolområden',
   'area.list.education.swedish': 'Svenska skolområden',
   'area.list.preschool': 'Förskoleundervisning',
@@ -111,6 +113,36 @@ const translations = {
   'area.list.preschool_education_sv.plural': 'Svenskt småbarnspedagogikområden',
   'area.list.nature_reserve.plural': 'Naturskyddsområden',
   'area.list.resident_parking_zone.plural': 'Invånarparkeringsområden',
+  'area.list.parkingSpaces': 'Pysäköintipaikat', // TODO: translate
+  'area.list.parkingUnits': 'Pysäköintitalot ja -tilat', // TODO: translate
+
+  // TODO: translate all
+  'parkingArea.popup.residentName': 'Alue {letter}',
+  'parkingArea.popup.payment1': 'Ilmainen pysäköinti',
+  'parkingArea.popup.payment2': 'Ilmainen pysäköinti',
+  'parkingArea.popup.payment3': 'Ilmainen pysäköinti',
+  'parkingArea.popup.payment4': 'Maksullinen pysäköinti',
+  'parkingArea.popup.payment5': 'Maksullinen pysäköinti',
+  'parkingArea.popup.payment6': 'Maksullinen pysäköinti',
+  'parkingArea.popup.duration1': 'Pysäköinti sallittu enintään: {duration}',
+  'parkingArea.popup.duration2': 'Pysäköinti sallittu enintään: {duration}',
+  'parkingArea.popup.duration3': '',
+  'parkingArea.popup.duration4': 'Pysäköinti sallittu enintään: {duration}',
+  'parkingArea.popup.duration5': 'Pysäköinti sallittu enintään: 4 h',
+  'parkingArea.popup.duration6': '',
+  'parkingArea.popup.validity1': 'Pysäköinnin aikarajoitus voimassa: {validity}',
+  'parkingArea.popup.validity2': 'Pysäköinnin aikarajoitus voimassa: {validity}',
+  'parkingArea.popup.validity3': 'Pysäköinti kielletty: {validity}',
+  'parkingArea.popup.validity4': 'Pysäköinti on maksullista: {validity}',
+  'parkingArea.popup.validity5': 'Pysäköinti on maksullista: {validity}',
+  'parkingArea.popup.validity6': 'Pysäköinti on maksullista: {validity}',
+  'parkingArea.popup.info': 'Tiedot ovat suuntaa-antavia. Tarkista tiedot aina liikennemerkistä.',
+  'parkingArea.popup.info1': 'Rajoitukset eivät koske asukas- ja yrityspysäköintitunnusten omistajia, jos pysäköintipaikka on merkitty asukaspysäköintipaikaksi.',
+  'parkingArea.popup.info2': 'Rajoitukset eivät koske asukas- ja yrityspysäköintitunnusten omistajia, jos pysäköintipaikka on merkitty asukaspysäköintipaikaksi.',
+  'parkingArea.popup.info3': 'Rajoitukset eivät koske asukas- ja yrityspysäköintitunnusten omistajia, jos pysäköintipaikka on merkitty asukaspysäköintipaikaksi.',
+  'parkingArea.popup.info4': 'Maksut ja rajoitukset eivät koske asukas- ja yrityspysäköintitunnusten omistajia, jos pysäköintipaikka on merkitty asukaspysäköintipaikaksi.',
+  'parkingArea.popup.info5': 'Maksut ja rajoitukset eivät koske asukas- ja yrityspysäköintitunnusten omistajia, jos pysäköintipaikka on merkitty asukaspysäköintipaikaksi.',
+  'parkingArea.popup.info6': 'Maksut ja rajoitukset eivät koske asukas- ja yrityspysäköintitunnusten omistajia, jos pysäköintipaikka on merkitty asukaspysäköintipaikaksi.',
 
   // Download dialog
   'download.cropping.title': 'Nuvarande filterinställningar',

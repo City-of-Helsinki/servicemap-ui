@@ -3,13 +3,18 @@ import { useSelector } from 'react-redux';
 
 // This returns correct string from text object according to locale
 const getLocaleString = (locale, obj) => {
-  // Default rerturned string is the first one listed (probably always finnish)
-  let value = obj[Object.keys(obj)[0]];
+  let value;
   Object.keys(obj).forEach((key) => {
     if (key === locale) {
       value = obj[key];
     }
   });
+
+  // Default rerturned string is the first one listed that is not empty string
+  if (!value) {
+    value = Object.values(obj).find(value => value.length);
+  }
+
   return value;
 };
 
