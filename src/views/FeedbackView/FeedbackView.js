@@ -76,7 +76,7 @@ const FeedbackView = ({
         can_be_published: permission,
         service_code: serviceCode,
         service_object_id: selectedUnit.id,
-        service_object_type: 'http://www.hel.fi/servicemap/v2',
+        service_object_type: 'https://www.hel.fi/servicemap/v2',
         service_request_type: 'OTHER',
       }).toString();
     } else if (feedbackType === 'general') {
