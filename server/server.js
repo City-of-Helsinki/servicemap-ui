@@ -63,6 +63,7 @@ setupTests();
 
 // Configure constants
 const app = express();
+app.disable('x-powered-by');
 const supportedLanguages = config.supportedLanguages;
 
 const versionTag = getVersion();

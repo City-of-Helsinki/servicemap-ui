@@ -264,7 +264,7 @@ const legacyRedirector = function(req, res) {
   var resource, specs, url;
   specs = extractSpecification(req);
   if (specs.override === true) {
-    url = req.originalUrl.replace(/\/rdr\/?/, 'http://www.hel.fi/karttaupotus/');
+    url = req.originalUrl.replace(/\/rdr\/?/, 'https://www.hel.fi/karttaupotus/');
     res.redirect(301, url);
     return;
   }
