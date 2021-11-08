@@ -5,9 +5,9 @@ const translations = {
   'app.og.image.alt': 'Servicekarta logo',
   'app.errorpage.title': 'Felmeddelandesida',
 
-  'accept.settings.dialog.description': 'Voit avata tiedot joko esteettömyysasetusten kanssa tai ilman rajauksia.', // TODO: Translate
-  'accept.settings.dialog.title': 'Katso toimipistettä esteettömyysasetusten kanssa', // TODO: Translate
-  'accept.settings.dialog.none': 'Ei erityisiä esteettömyysasetuksia', // TODO: Translate
+  'accept.settings.dialog.description': 'Du kan öppna uppgifterna antigen med tillgänglighetsinställningar eller utan begränsningar.',
+  'accept.settings.dialog.title': 'Se verksamhetsstället med tillgänglighetsinställningar',
+  'accept.settings.dialog.none': 'Inga särskilda tillgänglighetsinställningar',
 
   // Accessibility
   'accessibility': 'Tillgänglighet',
@@ -274,6 +274,7 @@ const translations = {
   'general.save.changes.done': 'Ändringarna har sparats!',
   'general.save.confirmation': 'Vill du spara ändringarna?',
   'general.search': 'Sök',
+  'general.share.link': 'Dela länken',
   'general.time.short': 'kl.',
   'general.tools': 'Verktyg',
   // Readspeaker
@@ -302,6 +303,15 @@ const translations = {
   'search.loading.units': 'Söker verksamhetsställen {count} / {max}',
   'search.loading.units.srInfo': 'Söker {count} verksamhetsställe(n)',
   'search.loading.units.simple': 'Söker verksamhetsställen',
+
+  'link.settings.dialog.title': 'Dela länken till verksamhetsstället',
+  'link.settings.dialog.tooltip': 'Kopierades till klippbordet',
+  'link.settings.dialog.radio.label': 'Länkens innehåll',
+  'link.settings.dialog.tooltip.aria': 'Kopiera sidans länk till klippbordet',
+  'link.settings.dialog.tooltip.aria.a11y': 'Kopiera sidans länk med tillgänglighetsinställningar till klippbordet',
+  'link.settings.dialog.subtitle': 'Dela länken med tillgänglighetsinställningar',
+  'link.settings.dialog.description': 'Tillgänglighetsinställningarna påverkar det visade verksamhetsställets tillgänglighetsuppgifter och kartans utseende.',
+  'link.settings.dialog.buttons.action': 'Kopiera till klippbordet',
 
   // Map
   'map': 'Karta',

@@ -5,9 +5,9 @@ const translations = {
   'app.og.image.alt': 'Servicemap logo',
   'app.errorpage.title': 'Error message page',
 
-  'accept.settings.dialog.description': 'Voit avata tiedot joko esteettömyysasetusten kanssa tai ilman rajauksia.', // TODO: Translate
-  'accept.settings.dialog.title': 'Katso toimipistettä esteettömyysasetusten kanssa', // TODO: Translate
-  'accept.settings.dialog.none': 'Ei erityisiä esteettömyysasetuksia', // TODO: Translate
+  'accept.settings.dialog.description': 'You can open the data either with accessibility settings or without restrictions.',
+  'accept.settings.dialog.title': 'See the location with accessibility settings',
+  'accept.settings.dialog.none': 'No particular accessibility settings',
 
   // Accessibility
   'accessibility': 'Accessibility',
@@ -278,6 +278,7 @@ const translations = {
   'general.save.changes.done': 'Changes have been saved!',
   'general.save.confirmation': 'Would you like to save changes?',
   'general.search': 'Search',
+  'general.share.link': 'Share the link',
   'general.time.short': 'at',
 
   // Home
@@ -302,6 +303,15 @@ const translations = {
   'search.loading.units': 'Searching service points {count} / {max}',
   'search.loading.units.srInfo': 'Searching {count} service point(s)',
   'search.loading.units.simple': 'Searching service points',
+
+  'link.settings.dialog.title': 'Share the link to the location',
+  'link.settings.dialog.tooltip': 'Copied to the clipboard',
+  'link.settings.dialog.radio.label': 'Link contents',
+  'link.settings.dialog.tooltip.aria': 'Copy the site link to the clipboard',
+  'link.settings.dialog.tooltip.aria.a11y': 'Copy the site link with accessibility settings to the clipboard',
+  'link.settings.dialog.subtitle': 'Share the link with accessibility settings',
+  'link.settings.dialog.description': 'The accessibility settings affect the accessibility data of the location shown and the appearance of the map.',
+  'link.settings.dialog.buttons.action': 'Copy to clipboard',
 
   // Map
   'map': 'Map',
