@@ -135,7 +135,7 @@ const AcceptSettingsDialogComponent = ({
         </div>
       )}
       actions={(
-        <SMButton color="primary" role="button" onClick={activateSettings}>
+        <SMButton color="primary" role="button" onClick={activateSettings} className={classes.opnButton}>
           {intl.formatMessage({ id: 'general.open' })}
         </SMButton>
       )
