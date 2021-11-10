@@ -16,7 +16,7 @@ const createSuggestions = async (query, signal, locale, intl) => {
         console.warn('error:', res);
         return 'error';
       }),
-    fetch(`${config.serviceMapAPI.root}/search/?input=${query}&language=${locale}&page=1&page_size=3&type=address`, { signal })
+    fetch(`${config.serviceMapAPI.root}/search/?input=${query}&language=${locale}&page=1&page_size=1&type=address`, { signal })
       .then((res) => {
         if (res.status === 200) {
           return res.json();
