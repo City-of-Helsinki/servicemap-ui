@@ -41,7 +41,11 @@ const createSuggestions = async (query, signal, locale, intl) => {
 
   // Add area suggestions
   const areas = dataStructure.flatMap(item => item.districts);
-  const matchingArea = areas.find(item => intl.formatMessage({ id: `area.list.${item}` }).toLowerCase().includes(query));
+  const searchWords = query.split(' ');
+  let matchingArea;
+  searchWords.forEach((word) => {
+    matchingArea = areas.find(item => intl.formatMessage({ id: `area.list.${item}` }).toLowerCase().includes(word));
+  });
   if (matchingArea) {
     suggestions.push({
       object_type: 'area',
