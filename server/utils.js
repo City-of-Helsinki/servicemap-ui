@@ -1,3 +1,5 @@
+import config from '../config';
+
 const redirectables = [
   {
     check: /^\/(fi|sv|en)(|\/embed)\/unit\?(.+)=/,
@@ -130,3 +132,10 @@ export const parseInitialMapPositionFromHostname = (req, Sentry) => {
 }
 
 export const getRequestFullUrl = (req) => req.protocol + '://' + req.get('host') + req.originalUrl;
+
+export const sitemapActive = () => {
+  return config.production
+    && process.env.DOMAIN
+    && process.env.NODE_ENV === 'production'
+    && process.env.SERVER_TYPE === 'production';
+};

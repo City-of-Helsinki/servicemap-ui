@@ -15,7 +15,7 @@ fixture`Service page coordinate tests`
   });
 
 test('User marker is drawn on map based on coordinates', async (t) => {
-  const marker = ReactSelector('CoordinateMarker Marker');
+  const marker = ReactSelector('CoordinateMarker');
   const coords = await marker.getReact(({props}) => props.position);
 
   await t

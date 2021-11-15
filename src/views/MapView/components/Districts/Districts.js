@@ -12,6 +12,7 @@ import config from '../../../../../config';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { geographicalDistricts, getCategoryDistricts } from '../../../AreaView/utils/districtDataHelper';
 import UnitHelper from '../../../../utils/unitHelper';
+import ParkingAreas from './ParkingAreas';
 
 
 const Districts = ({
@@ -40,6 +41,7 @@ const Districts = ({
   const getLocaleText = useLocaleText();
   const citySettings = useSelector(state => state.settings.cities);
   const selectedDistrictType = useSelector(state => state.districts.selectedDistrictType);
+  const selectedParkingAreas = useSelector(state => state.districts.selectedParkingAreas);
   const [areaPopup, setAreaPopup] = useState(null);
 
   const districtOnClick = (e, district) => {
@@ -89,11 +91,14 @@ const Districts = ({
               ]}
               icon={drawMarkerIcon(useContrast)}
               keyboard={false}
-              onClick={() => {
-                if (navigator) {
-                  UnitHelper.unitElementClick(navigator, district.unit);
-                }
-              }}
+              eventHandlers={{
+                click: () => {
+                  if (navigator) {
+                    UnitHelper.unitElementClick(navigator, district.unit);
+                  }
+                },
+              }
+              }
             >
               <Tooltip
                 direction="top"
@@ -133,13 +138,16 @@ const Districts = ({
           [areas],
         ]}
         color="#ff8400"
-        fillColor="#000"
+        pathOptions={{
+          fillColor: '#000',
+        }}
       />
     );
   };
 
   const renderMultipleDistricts = () => {
-    if (!districtData[0]?.boundary) {
+    const areasWithBoundary = districtData.filter(obj => obj.boundary);
+    if (!areasWithBoundary.length) {
       return null;
     }
 
@@ -147,11 +155,11 @@ const Districts = ({
     let filteredData = [];
     if (selectedCities.length) {
       const searchParams = parseSearchParams(location.search);
-      filteredData = districtData.filter(district => (searchParams.city
+      filteredData = areasWithBoundary.filter(district => (searchParams.city
         ? embedded && district.municipality === searchParams.city
         : citySettings[district.municipality]));
     } else {
-      filteredData = districtData;
+      filteredData = areasWithBoundary;
     }
 
     return filteredData.map((district) => {
@@ -182,7 +190,11 @@ const Districts = ({
       } else if (getCategoryDistricts('protection').includes(district.type)) {
         tooltipTitle = `${intl.formatMessage({ id: `area.list.${district.type}` })} ${district.origin_id} - ${getLocaleText(district.name)}`;
       } else if (district.name) {
-        tooltipTitle = `${getLocaleText(district.name)} - ${intl.formatMessage({ id: `area.list.${district.type}` })}`;
+        if (district.extra?.area_key) {
+          tooltipTitle = `${intl.formatMessage({ id: 'parkingArea.popup.residentName' }, { letter: district.extra.area_key })} (${getLocaleText(district.name)}) - ${intl.formatMessage({ id: `area.list.${district.type}` })}`;
+        } else {
+          tooltipTitle = `${getLocaleText(district.name)} - ${intl.formatMessage({ id: `area.list.${district.type}` })}`;
+        }
       }
 
       const mainColor = useContrast ? '#fff' : '#ff8400';
@@ -191,22 +203,26 @@ const Districts = ({
         <Polygon
           interactive={!unitsFetching}
           key={district.id}
-          onClick={e => districtOnClick(e, district)}
           positions={[[area]]}
           color={mainColor}
           dashArray={useContrast ? '2, 10, 10, 10' : null}
           dashOffset="20"
-          fillOpacity={dimmed ? '0.3' : '0'}
-          fillColor={dimmed ? '#000' : mainColor}
-          onMouseOver={(e) => {
-            e.target.openTooltip();
-            e.target.setStyle({ fillOpacity: useContrast ? '0.6' : '0.2' });
+          pathOptions={{
+            fillOpacity: dimmed ? '0.3' : '0',
+            fillColor: dimmed ? '#000' : mainColor,
           }}
-          onMouseOut={(e) => {
-            e.target.setStyle({ fillOpacity: dimmed ? '0.3' : '0' });
+          eventHandlers={{
+            click: (e) => {
+              districtOnClick(e, district);
+            },
+            mouseover: (e) => {
+              e.target.openTooltip();
+              e.target.setStyle({ fillOpacity: useContrast ? '0.6' : '0.2' });
+            },
+            mouseout: (e) => {
+              e.target.setStyle({ fillOpacity: dimmed ? '0.3' : '0' });
+            },
           }}
-          onFocus={() => {}}
-          onBlur={() => {}}
         >
           {tooltipTitle ? (
             <Tooltip
@@ -277,6 +293,9 @@ const Districts = ({
             {renderMultipleDistricts()}
             {areaPopup && renderAreaPopup()}
           </>
+        ) : null}
+        {selectedParkingAreas.length ? (
+          <ParkingAreas />
         ) : null}
       </>
     );

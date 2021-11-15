@@ -8,8 +8,9 @@ import {
   setSelectedSubdistricts,
   setSelectedDistrictServices,
   setDistrictAddressData,
+  setSelectedParkingAreas,
   fetchDistrictUnitList,
-  fetchAllDistricts,
+  fetchDistricts,
   setMapState,
 } from '../../redux/actions/district';
 import { getDistrictsByType, getAddressDistrict } from '../../redux/selectors/district';
@@ -22,7 +23,7 @@ const mapStateToProps = (state) => {
     subdistrictUnits,
     selectedSubdistricts,
     selectedDistrictServices,
-    unitsFetching,
+    unitFetch,
     mapState,
   } = state.districts;
   const map = state.mapRef;
@@ -36,7 +37,7 @@ const mapStateToProps = (state) => {
     subdistrictUnits,
     selectedSubdistricts,
     selectedDistrictServices,
-    unitsFetching,
+    unitsFetching: unitFetch.nodesFetching,
     mapState,
     navigator,
     map,
@@ -52,6 +53,7 @@ export default injectIntl(withStyles(styles)(connect(
     setDistrictAddressData,
     setMapState,
     fetchDistrictUnitList,
-    fetchAllDistricts,
+    fetchDistricts,
+    setSelectedParkingAreas,
   },
 )(AreaView)));

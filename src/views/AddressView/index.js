@@ -18,7 +18,7 @@ import { calculateDistance, getCurrentlyUsedPosition } from '../../redux/selecto
 const mapStateToProps = (state, props) => {
   const { intl } = props;
   const { address, mapRef, navigator } = state;
-  const map = mapRef && mapRef.leafletElement;
+  const map = mapRef;
   /* TODO: create custom hooks for getAddressNavigatorParams and getDistance
   to prevent re-rendering on every state change */
   const currentPosition = getCurrentlyUsedPosition(state);

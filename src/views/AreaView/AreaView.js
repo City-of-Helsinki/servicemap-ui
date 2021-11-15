@@ -15,7 +15,7 @@ import fetchAddress from '../MapView/utils/fetchAddress';
 import TitleBar from '../../components/TitleBar';
 import AddressSearchBar from '../../components/AddressSearchBar';
 import { dataStructure, geographicalDistricts } from './utils/districtDataHelper';
-import { handleOpenItems } from '../../redux/actions/district';
+import { fetchParkingAreaGeometry, fetchParkingUnits, handleOpenItems } from '../../redux/actions/district';
 import SMButton from '../../components/ServiceMapButton';
 import MobileComponent from '../../components/MobileComponent';
 import useLocaleText from '../../utils/useLocaleText';
@@ -28,8 +28,9 @@ const AreaView = ({
   setSelectedDistrictServices,
   setDistrictAddressData,
   setMapState,
+  setSelectedParkingAreas,
   fetchDistrictUnitList,
-  fetchAllDistricts,
+  fetchDistricts,
   unitsFetching,
   districtData,
   districtAddressData,
@@ -52,6 +53,7 @@ const AreaView = ({
   const districtsFetching = useSelector(state => state.districts.districtsFetching);
   const getLocaleText = useLocaleText();
   const openItems = useSelector(state => state.districts.openItems);
+  const selectedDistrictGeometry = selectedDistrictData[0]?.boundary;
 
   const searchParams = parseSearchParams(location.search);
   const selectedArea = searchParams.selected;
@@ -81,8 +83,8 @@ const AreaView = ({
   );
 
   const focusMapToDistrict = (district) => {
-    if (map?.leafletElement && district?.boundary) {
-      focusDistrict(map.leafletElement, district.boundary.coordinates);
+    if (map && district?.boundary) {
+      focusDistrict(map, district.boundary.coordinates);
     }
   };
 
@@ -107,8 +109,8 @@ const AreaView = ({
 
 
   const getViewState = () => ({
-    center: map.leafletElement.getCenter(),
-    zoom: map.leafletElement.getZoom(),
+    center: map.getCenter(),
+    zoom: map.getZoom(),
   });
 
   const clearRadioButtonValue = useCallback(() => {
@@ -162,25 +164,33 @@ const AreaView = ({
     // If pending district focus, focus to districts when distitct data is loaded
     if (focusTo && selectedDistrictData.length) {
       if (focusTo === 'districts') {
-        if (selectedDistrictData[0]?.boundary) {
+        if (selectedDistrictGeometry) {
           setFocusTo(null);
-          focusDistricts(map.leafletElement, selectedDistrictData);
+          focusDistricts(map, selectedDistrictData);
         }
       } else if (focusTo === 'subdistricts') {
-        if (selectedDistrictData[0]?.boundary) {
+        if (selectedDistrictGeometry) {
           const filtetedDistricts = selectedDistrictData.filter(
             i => selectedSubdistricts.includes(i.ocd_id),
           );
           setFocusTo(null);
-          focusDistricts(map.leafletElement, filtetedDistricts);
+          focusDistricts(map, filtetedDistricts);
         }
       }
     }
   }, [selectedDistrictData, focusTo]);
 
+  useEffect(() => {
+    if (map && !focusTo && !localAddressData.length && selectedDistrictGeometry) {
+      focusDistricts(map, selectedDistrictData);
+    }
+  }, [selectedDistrictGeometry]);
 
   useEffect(() => {
-    if (selectedAreaType) { // Arriving to page, with url parameters
+    if (searchParams.selected
+      || searchParams.parkingSpaces
+      || searchParams.parkingUnits
+    ) { // Arriving to page, with url parameters
       if (!embed) {
         /* Remove selected area parameter from url, otherwise it will override
         user area selection when returning to area view */
@@ -193,23 +203,37 @@ const AreaView = ({
       }
 
       // Fetch and select area from url parameters
-      if (selectedArea !== selectedDistrictType) {
-        fetchAllDistricts(selectedAreaType);
+      if (selectedArea) {
+        fetchDistricts(selectedAreaType);
         if (!embed) {
           const category = dataStructure.find(
             data => data.districts.includes(selectedAreaType),
           );
           dispatch(handleOpenItems(category.id));
+        } else {
+          fetchDistricts(selectedAreaType, true);
         }
         setSelectedDistrictType(selectedArea);
+      } else if (!embed) {
+        fetchDistricts();
+      }
+
+      // Set selected parking spaces from url parameters
+      if (searchParams.parkingSpaces) {
+        const parkingAreas = searchParams.parkingSpaces.split(',');
+        setSelectedParkingAreas(parkingAreas);
+        parkingAreas.forEach((area) => {
+          dispatch(fetchParkingAreaGeometry(area));
+        });
+      }
+      if (searchParams.parkingUnits) {
+        dispatch(fetchParkingUnits());
       }
 
       // Set selected geographical districts from url parameters and handle map focus
       if (searchParams.districts) {
         setSelectedSubdistricts(searchParams.districts.split(','));
         setFocusTo('subdistricts');
-      } else {
-        setFocusTo('districts');
       }
 
       // Set selected geographical services from url parameters
@@ -225,15 +249,15 @@ const AreaView = ({
           .then(data => setSelectedAddress(data));
       }
     } else if (!districtData.length) { // Arriving to page first time, without url parameters
-      fetchAllDistricts();
+      fetchDistricts();
     } else if (mapState) { // Returning to page, without url parameters
       // Returns map to the previous spot
       const { center, zoom } = mapState;
-      if (map?.leafletElement && center && zoom) map.leafletElement.setView(center, zoom);
+      if (map && center && zoom) map.setView(center, zoom);
     }
   }, []);
 
-  if (!map || !map.leafletElement) {
+  if (!map || !map) {
     return null;
   }
 

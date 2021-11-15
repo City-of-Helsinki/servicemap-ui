@@ -10,10 +10,10 @@ exports[`<CloseSuggestionButton /> should work 1`] = `
   <WithStyles(ForwardRef(Typography))
     variant="body2"
   >
-    <FormattedMessage
+    <MemoizedFormattedMessage
       id="search.suggestions.hideButton"
     />
   </WithStyles(ForwardRef(Typography))>
-  <ArrowDownwardIcon />
+  <Memo(ForwardRef(ArrowDownwardIcon)) />
 </div>
 `;

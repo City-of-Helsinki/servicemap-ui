@@ -528,7 +528,10 @@ class Settings extends React.Component {
                         )}
                       label={(
                         <>
-                          <SMIcon icon={`icon-icon-coat-of-arms-${key}`} />
+                          {key === 'kirkkonummi'
+                            ? getIcon('kirkkonummiIcon', { className: classes.icon })
+                            : <SMIcon className={classes.icon} icon={`icon-icon-coat-of-arms-${key}`} />
+                          }
                           <FormattedMessage id={`settings.city.${key}`} />
                         </>
                         )}

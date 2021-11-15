@@ -38,6 +38,9 @@ const styles = theme => ({
     alignItems: 'center',
     zIndex: theme.zIndex.infront,
   },
+  controlsContainer: {
+    marginBottom: theme.spacing(2),
+  },
   popup: {
     padding: 12,
   },
@@ -71,6 +74,9 @@ const styles = theme => ({
   areaLink: {
     textAlign: 'center',
     paddingTop: theme.spacing(0.5),
+  },
+  parkingLayer: {
+    zIndex: theme.zIndex.infront,
   },
   marginBottom: {
     marginBottom: `${theme.spacing(2)}px !important`,
@@ -111,9 +117,6 @@ const styles = theme => ({
   showLocationIcon: {
     color: '#fff',
   },
-  measuringCursor: {
-    cursor: 'crosshair',
-  },
   colorInherit: {
     color: 'inherit',
   },
@@ -137,6 +140,9 @@ const styles = theme => ({
         boxShadow: '0px 4px 4px 0px rgba(255,255,255,0.8)',
       },
     },
+  },
+  unitMarkerEvent: {
+    borderRadius: 0,
   },
   markerCircle: {
     alignItems: 'center',
@@ -197,6 +203,22 @@ const styles = theme => ({
     ...theme.typography.body2,
     margin: theme.spacing(0, 1),
   },
+  unitTooltipCaption: {
+    fontSize: '0.7725rem',
+    lineHeight: '1rem',
+    letterSpacing: '0.025rem',
+  },
+  unitTooltipEventContainer: {
+    paddingLeft: theme.spacing(0.5),
+    paddingTop: theme.spacing(1),
+  },
+  unitTooltipDivider: {
+    backgroundColor: 'rgba(0, 0, 0, 0.12)',
+    height: 1,
+    border: 'none',
+    marginLeft: -8,
+    marginRight: -8,
+  },
   unitTooltipLink: {
     ...theme.typography.body2,
     paddingTop: theme.spacing(1),
@@ -204,7 +226,8 @@ const styles = theme => ({
     color: theme.palette.primary.main,
   },
   unitTooltipWrapper: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(3),
+    paddingBottom: theme.spacing(2.5),
   },
   unitPopupList: {
     listStyleType: 'none',

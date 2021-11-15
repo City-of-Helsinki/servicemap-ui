@@ -8,7 +8,6 @@ import {
 import { FormattedMessage } from 'react-intl';
 import { Map } from '@material-ui/icons';
 import Helmet from 'react-helmet';
-import SearchBar from '../../components/SearchBar';
 import { focusToPosition } from '../MapView/utils/mapActions';
 import fetchAdministrativeDistricts from './utils/fetchAdministrativeDistricts';
 import TitleBar from '../../components/TitleBar';
@@ -26,7 +25,7 @@ import config from '../../../config';
 import useLocaleText from '../../utils/useLocaleText';
 import { parseSearchParams } from '../../utils';
 import { getCategoryDistricts } from '../AreaView/utils/districtDataHelper';
-import { DistrictItem } from '../../components';
+import { DistrictItem, SearchBar } from '../../components';
 
 
 const hiddenDivisions = {

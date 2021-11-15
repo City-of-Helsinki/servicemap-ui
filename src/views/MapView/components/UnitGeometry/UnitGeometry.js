@@ -52,7 +52,7 @@ const UnitGeometry = ({
     } catch (e) {
       console.warn('Unable to process UnitGeometry Polygon click event');
     }
-  }
+  };
 
   const renderPolyline = () => {
     if (geometryData?.type !== 'MultiLineString' || !geometryData?.coordinates) {
@@ -79,7 +79,9 @@ const UnitGeometry = ({
       <Polygon
         positions={geometryData.coordinates}
         color="#ff8400"
-        fillColor="#000"
+        pathOptions={{
+          fillColor: '#000',
+        }}
         onClick={geometryOnClick}
       />
     );

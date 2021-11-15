@@ -10,7 +10,7 @@ import thunk from 'redux-thunk';
 import config from '../config';
 import rootReducer from '../src/redux/rootReducer';
 import App from '../src/App';
-import { makeLanguageHandler, languageSubdomainRedirect, unitRedirect, parseInitialMapPositionFromHostname, getRequestFullUrl } from './utils';
+import { makeLanguageHandler, languageSubdomainRedirect, unitRedirect, parseInitialMapPositionFromHostname, getRequestFullUrl, sitemapActive } from './utils';
 import { setLocale } from '../src/redux/actions/user';
 import { Helmet } from 'react-helmet';
 import { ServerStyleSheets } from '@material-ui/core/styles';
@@ -19,7 +19,7 @@ import { fetchEventData, fetchSelectedUnitData } from './dataFetcher';
 import IntlPolyfill from 'intl';
 import paths from '../config/paths';
 import legacyRedirector from './legacyRedirector';
-import { matomoTrackingCode, appDynamicsTrackingCode, cookieHubCode } from './externalScripts';
+import { appDynamicsTrackingCode, cookieHubCode } from './externalScripts';
 import { getLastCommit, getVersion } from './version';
 import ieHandler from './ieMiddleware';
 import schedule from 'node-schedule'
@@ -51,7 +51,7 @@ const setupTests = () => {
 setupTests();
 
 // Handle sitemap creation
-if (config.production && process.env.DOMAIN) {
+  if (sitemapActive()) {
   // Generate sitemap on start
   generateSitemap();
   // Update sitemap every monday
@@ -63,6 +63,7 @@ if (config.production && process.env.DOMAIN) {
 
 // Configure constants
 const app = express();
+app.disable('x-powered-by');
 const supportedLanguages = config.supportedLanguages;
 
 const versionTag = getVersion();
@@ -93,7 +94,7 @@ app.use(`/`, makeLanguageHandler);
 app.use('/', unitRedirect);
 // Handle treenode redirect
 app.use('/', (req, res, next) => {
-  if (req.query.treenode != null) {
+  if (req.query.treenode != null && process.env.DOMAIN.includes(req.get('host'))) {
     const fullUrl = req.originalUrl.replace(/treenode/g, 'service_node');
     res.redirect(301, fullUrl);
     return;
@@ -206,11 +207,17 @@ const htmlTemplate = (req, reactDom, preloadedState, css, cssString, locale, hel
         window.nodeEnvSettings.DIGITRANSIT_API = "${process.env.DIGITRANSIT_API}";
         window.nodeEnvSettings.FEEDBACK_URL = "${process.env.FEEDBACK_URL}";
         window.nodeEnvSettings.HEARING_MAP_API = "${process.env.HEARING_MAP_API}";
+        window.nodeEnvSettings.MATOMO_MOBILITY_DIMENSION_ID = "${process.env.MATOMO_MOBILITY_DIMENSION_ID}";
+        window.nodeEnvSettings.MATOMO_SENSES_DIMENSION_ID = "${process.env.MATOMO_SENSES_DIMENSION_ID}";
+        window.nodeEnvSettings.MATOMO_URL = "${process.env.MATOMO_URL}";
+        window.nodeEnvSettings.MATOMO_SITE_ID = "${process.env.MATOMO_SITE_ID}";
         window.nodeEnvSettings.MODE = "${process.env.MODE}";
         window.nodeEnvSettings.INITIAL_MAP_POSITION = "${customValues.initialMapPosition}";
         window.nodeEnvSettings.SERVICE_MAP_URL = "${process.env.SERVICE_MAP_URL}";
         window.nodeEnvSettings.ACCESSIBLE_MAP_URL = "${process.env.ACCESSIBLE_MAP_URL}";
         window.nodeEnvSettings.ORTOGRAPHIC_MAP_URL = "${process.env.ORTOGRAPHIC_MAP_URL}";
+        window.nodeEnvSettings.ORTOGRAPHIC_WMS_URL = "${process.env.ORTOGRAPHIC_WMS_URL}";
+        window.nodeEnvSettings.ORTOGRAPHIC_WMS_LAYER = "${process.env.ORTOGRAPHIC_WMS_LAYER}";
         window.nodeEnvSettings.GUIDE_MAP_URL = "${process.env.GUIDE_MAP_URL}";
         window.nodeEnvSettings.REITTIOPAS_URL = "${process.env.REITTIOPAS_URL}";
         window.nodeEnvSettings.OUTDOOR_EXERCISE_URL = "${process.env.OUTDOOR_EXERCISE_URL}";
@@ -237,7 +244,6 @@ const htmlTemplate = (req, reactDom, preloadedState, css, cssString, locale, hel
       window.PRELOADED_STATE = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')}
     </script>
     <script src="/index.js"></script>
-    ${matomoTrackingCode(process.env.MATOMO_URL, process.env.MATOMO_SITE_ID)}
   </body>
 </html>
 `;

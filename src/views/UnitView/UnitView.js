@@ -6,17 +6,14 @@ import { FormattedMessage } from 'react-intl';
 import { Map, Mail, Hearing, Share } from '@material-ui/icons';
 import { Helmet } from 'react-helmet';
 import { useSelector } from 'react-redux';
-import SearchBar from '../../components/SearchBar';
+import { SearchBar } from '../../components';
 import TitleBar from '../../components/TitleBar';
 import Container from '../../components/Container';
 import AccessibilityInfo from './components/AccessibilityInfo';
 import ContactInfo from './components/ContactInfo';
 import Highlights from './components/Highlights';
 import ElectronicServices from './components/ElectronicServices';
-import Reservations from './components/Reservations';
 import Description from './components/Description';
-import Services from './components/Services';
-import Events from './components/Events';
 import SMButton from '../../components/ServiceMapButton';
 import TabLists from '../../components/TabLists';
 import { AddressIcon } from '../../components/SMIcon';
@@ -32,6 +29,8 @@ import useLocaleText from '../../utils/useLocaleText';
 import paths from '../../../config/paths';
 import { AcceptSettingsDialog, LinkSettingsDialog } from '../../components';
 import SettingsUtility from '../../utils/settings';
+import UnitDataList from './components/UnitDataList';
+import UnitsServicesList from './components/UnitsServicesList';
 
 const UnitView = (props) => {
   const {
@@ -132,6 +131,8 @@ const UnitView = (props) => {
       window.open(URLs.vantaa);
     } else if (unit.municipality === 'kauniainen') {
       window.open(URLs.kauniainen);
+    } else if (unit.municipality === 'kirkkonummi') {
+      window.open(URLs.kirkkonummi);
     } else {
       navigator.push('unit', { id: unit.id, type: 'feedback' });
     }
@@ -139,10 +140,10 @@ const UnitView = (props) => {
 
   const saveMapPosition = () => {
     // Remember user's map postition to return to on unmount
-    if (map?.leafletElement) {
+    if (map) {
       viewPosition.current = {
-        center: map.leafletElement.getCenter(),
-        zoom: map.leafletElement.getZoom(),
+        center: map.getCenter(),
+        zoom: map.getZoom(),
       };
     }
   };
@@ -164,8 +165,8 @@ const UnitView = (props) => {
       // Return map to previous position if returning to search page or service page
       const isSearchPage = paths.search.regex.test(window.location.href);
       const isServicePage = paths.service.regex.test(window.location.href);
-      if (map?.leafletElement && (isSearchPage || isServicePage)) {
-        map.leafletElement.setView(viewPosition.current.center, viewPosition.current.zoom);
+      if (map && (isSearchPage || isServicePage)) {
+        map.setView(viewPosition.current.center, viewPosition.current.zoom);
       }
     };
   }, []);
@@ -293,16 +294,23 @@ const UnitView = (props) => {
 
     return (
       <div className={classes.content}>
-        <Services
-          listLength={10}
-          unit={unit}
-          getLocaleText={getLocaleText}
-        />
-        <Reservations
+        <UnitsServicesList
           listLength={5}
-          reservationsData={reservationsData}
+          unit={unit}
+          navigator={navigator}
         />
-        <Events classes={classes} listLength={5} eventsData={eventsData} />
+        <UnitDataList
+          listLength={5}
+          data={eventsData}
+          type="events"
+          navigator={navigator}
+        />
+        <UnitDataList
+          listLength={5}
+          data={reservationsData}
+          type="reservations"
+          navigator={navigator}
+        />
       </div>
     );
   };
