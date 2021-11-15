@@ -53,10 +53,14 @@ const LinkSettingsDialogComponent = ({
   const [selected, setSelected] = useState('none');
   const [copyTooltipOpen1, setCopyTooltipOpen1] = useState(false);
   const [copyTooltipOpen2, setCopyTooltipOpen2] = useState(false);
+  const [showAriaAlert, setShowAriaAlert] = useState(false);
   let timeout = null;
+  let timeoutAriaAlert = null;
+
 
   useEffect(() => () => {
     clearTimeout(timeout);
+    clearTimeout(timeoutAriaAlert);
   }, []);
 
   if (!isClient()) {
@@ -142,9 +146,22 @@ const LinkSettingsDialogComponent = ({
       throw new Error('Invalid parameter stateSetter given to copyToClipboard');
     }
     /* Copy the text inside the text field */
-    navigator.clipboard.writeText(url);
-    stateSetter(true);
-    delayedTooltipClose(stateSetter);
+    navigator.clipboard.writeText(url).then(
+      () => {
+        stateSetter(true);
+        delayedTooltipClose(stateSetter);
+      },
+      (e) => {
+        console.warn(`Error while copying to clipboard: ${e.message}`);
+      },
+    );
+  };
+
+  const toggleAriaLive = () => {
+    setShowAriaAlert(true);
+    timeoutAriaAlert = setTimeout(() => {
+      setShowAriaAlert(false);
+    }, 2000);
   };
 
   return (
@@ -162,7 +179,10 @@ const LinkSettingsDialogComponent = ({
           >
             <ButtonBase
               className={classes.urlContainer}
-              onClick={() => copyToClipboard(setCopyTooltipOpen1)}
+              onClick={() => {
+                toggleAriaLive();
+                copyToClipboard(setCopyTooltipOpen1);
+              }}
               onKeyDown={() => {}}
               role="button"
               tabIndex={0}
@@ -205,6 +225,12 @@ const LinkSettingsDialogComponent = ({
               }
             </RadioGroup>
           </div>
+          {
+            showAriaAlert
+            && (
+              <Typography aria-live="polite" id="copy_link_aria_live" variant="srOnly"><FormattedMessage id="link.settings.dialog.tooltip" /></Typography>
+            )
+          }
         </div>
       )}
       actions={(
@@ -215,7 +241,10 @@ const LinkSettingsDialogComponent = ({
         >
           <ButtonBase
             className={classes.shareButton}
-            onClick={() => copyToClipboard(setCopyTooltipOpen2)}
+            onClick={() => {
+              toggleAriaLive();
+              copyToClipboard(setCopyTooltipOpen2);
+            }}
           >
             {actionButtonText}
             <Share className={classes.shareIcon} />
