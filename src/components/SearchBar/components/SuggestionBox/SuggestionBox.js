@@ -40,7 +40,7 @@ const SuggestionBox = (props) => {
 
   const listRef = useRef(null);
   const fetchController = useRef(null);
-  const maxSuggestionCount = 8;
+  const maxSuggestionCount = 5;
 
   // Component mount action
   useEffect(() => (

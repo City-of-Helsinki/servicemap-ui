@@ -13,14 +13,14 @@ const allowedDirections = [
 ];
 
 const allowedOrders = [
-  'match',
+  // 'match',
   'alphabetical',
   'accessibility',
   'distance',
 ];
 
 const allowedInitialValues = [
-  'match-desc',
+  // 'match-desc',
   'alphabetical-desc',
   'alphabetical-asc',
   'accessibility-desc',
@@ -96,7 +96,7 @@ const ResultOrderer = ({
             className: `${classes.input}`,
           }}
         >
-          <option className={classes.black} value="match-desc">{intl.formatMessage({ id: 'sorting.match.desc' })}</option>
+          {/* <option className={classes.black} value="match-desc">{intl.formatMessage({ id: 'sorting.match.desc' })}</option> */}
           <option className={classes.black} value="alphabetical-desc">{intl.formatMessage({ id: 'sorting.alphabetical.desc' })}</option>
           <option className={classes.black} value="alphabetical-asc">{intl.formatMessage({ id: 'sorting.alphabetical.asc' })}</option>
           <option className={classes.black} value="accessibility-desc">{intl.formatMessage({ id: 'sorting.accessibility.desc' })}</option>
