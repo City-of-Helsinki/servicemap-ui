@@ -187,6 +187,7 @@ const translations = {
   'embedder.options.title': 'Näytä kartalla',
   'embedder.options.label.units': 'Näytä toimipisteet',
   'embedder.options.label.transit': 'Näytä joukkoliikenteen pysäkit (Tarkenna karttaa lähietäisyydelle, jotta joukkoliikennepysäkit näkyvät)',
+  'embedder.options.label.bbox': 'Rajaa upotuskartta esikatseluikkunassa näkyvään alueeseen',
   'embedder.preview.title': 'Kartan esikatselu',
   'embedder.service.title': 'Palvelut',
   'embedder.service.aria.label': 'Valitse näytettävät palvelut',

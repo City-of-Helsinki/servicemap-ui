@@ -5,9 +5,10 @@ import { withRouter } from 'react-router-dom';
 import { Tooltip as MUITooltip, ButtonBase } from '@material-ui/core';
 import { MyLocation, LocationDisabled } from '@material-ui/icons';
 import { useSelector } from 'react-redux';
+import { useMapEvents } from 'react-leaflet';
 import { mapOptions } from './config/mapConfig';
 import CreateMap from './utils/createMap';
-import { focusToPosition } from './utils/mapActions';
+import { focusToPosition, getBoundsFromBbox } from './utils/mapActions';
 import Districts from './components/Districts';
 import TransitStops from './components/TransitStops';
 import AddressPopup from './components/AddressPopup';
@@ -37,6 +38,20 @@ if (global.window) {
   require('leaflet.markercluster');
   global.rL = require('react-leaflet');
 }
+
+const EmbeddedActions = () => {
+  const embedded = isEmbed();
+  const map = useMapEvents({
+    moveend() {
+      if (embedded) {
+        const bounds = map.getBounds();
+        window.parent.postMessage({ bbox: `${bounds.getSouth()},${bounds.getWest()},${bounds.getNorth()},${bounds.getEast()}` });
+      }
+    },
+  });
+
+  return null;
+};
 
 const MapView = (props) => {
   const {
@@ -313,6 +328,7 @@ const MapView = (props) => {
     const showLoadingScreen = districtViewFetching || (embedded && unitsLoading);
     const userLocationAriaLabel = intl.formatMessage({ id: !userLocation ? 'location.notAllowed' : 'location.center' });
     const eventSearch = parseSearchParams(location.search).events;
+    const defaultBounds = parseSearchParams(location.search).bbox;
 
     return (
       <>
@@ -323,9 +339,10 @@ const MapView = (props) => {
           className={`${classes.map} ${embedded ? classes.mapNoSidebar : ''} `}
           key={mapObject.options.name}
           zoomControl={false}
+          bounds={getBoundsFromBbox(defaultBounds?.split(','))}
           doubleClickZoom={false}
           crs={mapObject.crs}
-          center={center}
+          center={!defaultBounds ? center : null}
           zoom={zoom}
           minZoom={mapObject.options.minZoom}
           maxZoom={mapObject.options.maxZoom}
@@ -435,6 +452,7 @@ const MapView = (props) => {
             <PanControl key="panControl" />
           </CustomControls>
           <CoordinateMarker position={getCoordinatesFromUrl()} />
+          <EmbeddedActions />
         </MapContainer>
       </>
     );

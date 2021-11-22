@@ -1,7 +1,16 @@
 import pointOnFeature from '@turf/point-on-feature';
+import { useLocation } from 'react-router-dom';
+import { parseSearchParams } from '../../../utils';
+import { isEmbed } from '../../../utils/path';
 import swapCoordinates from './swapCoordinates';
 
 /* eslint-disable global-require, no-underscore-dangle */
+
+const useMapFocusDisabled = () => {
+  const location = useLocation();
+  const searchParams = parseSearchParams(location.search);
+  return isEmbed() && !!searchParams.bbox;
+};
 
 const fitUnitsToMap = (units, map) => {
   const L = require('leaflet');
@@ -62,14 +71,20 @@ const focusDistricts = (map, districts) => {
   map.fitBounds(bounds);
 };
 
+const getBoundsFromBbox = (bbox) => {
+  if (!bbox) return null;
+  const L = require('leaflet');
+  const sw = L.latLng(bbox.slice(0, 2));
+  const ne = L.latLng(bbox.slice(2, 4));
+  return L.latLngBounds(sw, ne);
+};
+
 const fitBbox = (map, bbox) => {
   if (!map || !bbox || bbox.length !== 4) {
     return;
   }
-  const L = require('leaflet');
-  const sw = L.latLng(bbox.slice(0, 2));
-  const ne = L.latLng(bbox.slice(2, 4));
-  const bounds = L.latLngBounds(sw, ne);
+  const bounds = getBoundsFromBbox(bbox);
+
   map.fitBounds(bounds);
 };
 
@@ -99,4 +114,6 @@ export {
   focusDistrict,
   focusDistricts,
   panViewToBounds,
+  getBoundsFromBbox,
+  useMapFocusDisabled,
 };

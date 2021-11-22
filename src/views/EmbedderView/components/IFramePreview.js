@@ -14,6 +14,7 @@ const IFramePreview = ({
   title,
   titleComponent,
   widthMode,
+  renderBoundsControl,
 }) => {
   if (!embedUrl) {
     return null;
@@ -81,6 +82,7 @@ const IFramePreview = ({
       >
         <FormattedMessage id="embedder.preview.title" />
       </Typography>
+      {renderBoundsControl()}
       <div className={classes.iframeContainer} style={{ width: '100%' }}>
         {
           element
@@ -105,6 +107,7 @@ IFramePreview.propTypes = {
   titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']).isRequired,
   ratioHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   widthMode: PropTypes.string.isRequired,
+  renderBoundsControl: PropTypes.func.isRequired,
 };
 
 IFramePreview.defaultProps = {
