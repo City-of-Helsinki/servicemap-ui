@@ -48,7 +48,7 @@ test('Navigate search view', async (t) => {
     // .expect(select.getReact(({props}) => props.value)).eql('match-desc')
     // .pressKey('down')
     .expect(select.getReact(({props}) => props.value)).eql('alphabetical-desc')
-    .pressKey('up')
+    .pressKey('down')
     .expect(select.getReact(({props}) => props.value)).eql('alphabetical-asc');
   // Test result list navigation
   const items =  ReactSelector('TabLists ResultItem');
