@@ -45,11 +45,11 @@ test('Navigate search view', async (t) => {
     .pressKey('tab') // Tabs to cancel button
     .pressKey('tab') // Tabs to search icon button
     .pressKey('tab') // Result orderer
-    .expect(select.getReact(({props}) => props.value)).eql('match-desc')
-    .pressKey('down')
+    // .expect(select.getReact(({props}) => props.value)).eql('match-desc')
+    // .pressKey('down')
     .expect(select.getReact(({props}) => props.value)).eql('alphabetical-desc')
-    .pressKey('up')
-    .expect(select.getReact(({props}) => props.value)).eql('match-desc');
+    .pressKey('down')
+    .expect(select.getReact(({props}) => props.value)).eql('alphabetical-asc');
   // Test result list navigation
   const items =  ReactSelector('TabLists ResultItem');
   // const secondSearchItems = firstSearchItems.nth(1);

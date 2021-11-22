@@ -40,6 +40,7 @@ const AddressSearchBar = ({
   const inputRef = useRef();
 
   const handleAddressSelect = (address) => {
+    if (!addressResults.length) return;
     if (inputRef.current) {
       inputRef.current.focus();
     }
