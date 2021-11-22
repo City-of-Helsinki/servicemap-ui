@@ -188,6 +188,7 @@ const translations = {
   'embedder.options.title': 'Visa på kartan',
   'embedder.options.label.units': 'Visa verksamhetsställen',
   'embedder.options.label.transit': 'Visa kollektivtrafikens hållplatser (Zooma in kartan för att se hållplatserna)',
+  'embedder.options.label.bbox': 'Rajaa upotuskartta esikatseluikkunassa näkyvään alueeseen', // TODO: translate
   'embedder.preview.title': 'Map preview',
   'embedder.service.title': 'Tjänster',
   'embedder.service.aria.label': 'Välj tjänsterna som visas',

@@ -8,7 +8,7 @@ import {
 import { FormattedMessage } from 'react-intl';
 import { Map } from '@material-ui/icons';
 import Helmet from 'react-helmet';
-import { focusToPosition } from '../MapView/utils/mapActions';
+import { focusToPosition, useMapFocusDisabled } from '../MapView/utils/mapActions';
 import fetchAdministrativeDistricts from './utils/fetchAdministrativeDistricts';
 import TitleBar from '../../components/TitleBar';
 import { AddressIcon } from '../../components/SMIcon';
@@ -79,6 +79,7 @@ const AddressView = (props) => {
   } = props;
 
   const title = getAddressText(addressData, getLocaleText);
+  const mapFocusDisabled = useMapFocusDisabled();
 
   const fetchAddressDistricts = (lnglat) => {
     setAdminDistricts(null);
@@ -140,7 +141,9 @@ const AddressView = (props) => {
           setAddressLocation({ addressCoordinates: address.location.coordinates });
           const { coordinates } = address.location;
 
-          focusToPosition(map, [coordinates[0], coordinates[1]]);
+          if (!mapFocusDisabled) {
+            focusToPosition(map, [coordinates[0], coordinates[1]]);
+          }
           fetchAddressDistricts(coordinates);
           fetchUnits(coordinates);
         } else {

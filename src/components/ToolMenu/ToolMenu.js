@@ -70,9 +70,6 @@ const ToolMenu = ({
 
     const uri = URI(window.location);
     const search = uri.search(true);
-    if (!search.bbox) {
-      search.bbox = mapUtility.getBbox();
-    }
     uri.search(search);
     let searchParams = uri.search();
 

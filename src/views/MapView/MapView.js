@@ -328,6 +328,7 @@ const MapView = (props) => {
     const showLoadingScreen = districtViewFetching || (embedded && unitsLoading);
     const userLocationAriaLabel = intl.formatMessage({ id: !userLocation ? 'location.notAllowed' : 'location.center' });
     const eventSearch = parseSearchParams(location.search).events;
+    const defaultBounds = parseSearchParams(location.search).bbox;
 
     return (
       <>
@@ -338,9 +339,10 @@ const MapView = (props) => {
           className={`${classes.map} ${embedded ? classes.mapNoSidebar : ''} `}
           key={mapObject.options.name}
           zoomControl={false}
+          bounds={getBoundsFromBbox(defaultBounds?.split(','))}
           doubleClickZoom={false}
           crs={mapObject.crs}
-          center={center}
+          center={!defaultBounds ? center : null}
           zoom={zoom}
           minZoom={mapObject.options.minZoom}
           maxZoom={mapObject.options.maxZoom}
@@ -450,6 +452,7 @@ const MapView = (props) => {
             <PanControl key="panControl" />
           </CustomControls>
           <CoordinateMarker position={getCoordinatesFromUrl()} />
+          <EmbeddedActions />
         </MapContainer>
       </>
     );
