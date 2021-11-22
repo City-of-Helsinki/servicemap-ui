@@ -5,9 +5,10 @@ import { withRouter } from 'react-router-dom';
 import { Tooltip as MUITooltip, ButtonBase } from '@material-ui/core';
 import { MyLocation, LocationDisabled } from '@material-ui/icons';
 import { useSelector } from 'react-redux';
+import { useMapEvents } from 'react-leaflet';
 import { mapOptions } from './config/mapConfig';
 import CreateMap from './utils/createMap';
-import { focusToPosition } from './utils/mapActions';
+import { focusToPosition, getBoundsFromBbox } from './utils/mapActions';
 import Districts from './components/Districts';
 import TransitStops from './components/TransitStops';
 import AddressPopup from './components/AddressPopup';
@@ -37,6 +38,20 @@ if (global.window) {
   require('leaflet.markercluster');
   global.rL = require('react-leaflet');
 }
+
+const EmbeddedActions = () => {
+  const embedded = isEmbed();
+  const map = useMapEvents({
+    moveend() {
+      if (embedded) {
+        const bounds = map.getBounds();
+        window.parent.postMessage({ bbox: `${bounds.getSouth()},${bounds.getWest()},${bounds.getNorth()},${bounds.getEast()}` });
+      }
+    },
+  });
+
+  return null;
+};
 
 const MapView = (props) => {
   const {
