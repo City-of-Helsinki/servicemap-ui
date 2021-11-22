@@ -291,11 +291,6 @@ const InfoView = ({
         Käyttäjä hyvin nopeasti hukkuisi tällaisen tietotulvan sekaan, ja palvelun käytöstä tulisi kohtuuttoman raskasta.
         Siksi karttaa ei tällä hetkellä paljasteta avustavalle teknologialle, vaan vastaava tieto tarjotaan palvelun hakukentän kautta.
       </Typography>
-      <Typography component="h4" variant="body2">Selaimen kohdistusevästeiden hyväksymisenkysymyksenyhteydessä</Typography>
-      <Typography className={classes.text} variant="body2">
-        Selaimen kohdistus ei siirry evästeiden hyväksymiseen tai hylkäämiseenautomaattisesti, kun käyttäjä saapuu palveluun.
-        Koska evästekysymystoimii niin sanottuna modaalina, avustavan teknologian varassatoimiva käyttäjä ei välttämättä kykene siirtymään evästekysymyksensisään ja asettamaan evästeasetuksia.
-      </Typography>
       <Typography className={classes.text} variant="body2">
         WCAG 2.4.3 Kohdistusjärjestys
       </Typography>
@@ -666,11 +661,6 @@ const InfoView = ({
         such as clickable service units and street names. The user would very quickly be overwhelmed with such a deluge of information and using the service would be unreasonably burdensome.
         The map is therefore currently not disclosed to assistive technology, but the corresponding data is provided through the service’s search box.
       </Typography>
-      <Typography component="h4" variant="body2">Web browser focus in connection to the prompt about accepting cookies</Typography>
-      <Typography className={classes.text} variant="body2">
-        The web browser focus does not automatically move to accept or reject cookies when the user arrives at the service.
-        As the cookies prompt is a so-called modal function, users who rely on assistive technology may not be able to enter the cookies prompt and set the cookies settings.
-      </Typography>
       <Typography component="h4" variant="body2">Obtaining information in an accessible form</Typography>
       <Typography className={classes.text} variant="body2">
         {`Due to these deficiencies, you can request the non-accessible content from the administrator of this website.
@@ -1021,14 +1011,6 @@ const InfoView = ({
         Detta beror på att skärmläsaren då framför användaren allt som beskrivs ovan, kartunderlagets s.k. metadata, såsom verksamhetsställen och gatunamn som man kan klicka på.
         Användaren drunknar lätt i ett sådant informationsflöde och det blir orimligt tungt att använda tjänsten.
         Därför visas kartan för tillfället inte för tekniska hjälpmedel, utan motsvarande uppgifter erbjuds via tjänstens sökfält.
-      </Typography>
-      <Typography component="h4" variant="body2">
-        Webbläsarens fokus i samband med frågan om godkännande av kakor.
-      </Typography>
-      <Typography className={classes.text} variant="body2">
-        Webbläsarens fokus flyttas inte automatiskt till godkännande eller avvisande av kakor då användaren kommer till tjänsten.
-        Eftersom frågan om kakor fungerar på ett så kallat modalt sätt,
-        kan användare som utnyttjar tekniska hjälpmedel inte nödvändigtvis gå till frågan om kakor och där ställa in inställningarna för kakorna.
       </Typography>
       <Typography component="h4" variant="body2">Få uppgifter i tillgänglig form</Typography>
       <Typography className={classes.text} variant="body2">
