@@ -54,23 +54,24 @@ class Navigator extends React.Component {
 
   trackPageView = (settings) => {
     const { mobility, senses } = settings;
-
-    if (matomoTracker) {
-      setTimeout(() => {
-        matomoTracker.trackPageView({
-          documentTitle: document.title,
-          customDimensions: [
-            {
-              id: config.matomoMobilityDimensionID,
-              value: mobility || '',
-            },
-            {
-              id: config.matomoSensesDimensionID,
-              value: senses.join(','),
-            },
-          ],
-        });
-      }, 400);
+    if (typeof window !== 'undefined' && window?.cookiehub?.hasConsented('analytics')) {
+      if (matomoTracker) {
+        setTimeout(() => {
+          matomoTracker.trackPageView({
+            documentTitle: document.title,
+            customDimensions: [
+              {
+                id: config.matomoMobilityDimensionID,
+                value: mobility || '',
+              },
+              {
+                id: config.matomoSensesDimensionID,
+                value: senses.join(','),
+              },
+            ],
+          });
+        }, 400);
+      }
     }
   }
 
