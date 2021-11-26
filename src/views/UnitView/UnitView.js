@@ -29,6 +29,7 @@ import useLocaleText from '../../utils/useLocaleText';
 import paths from '../../../config/paths';
 import UnitDataList from './components/UnitDataList';
 import UnitsServicesList from './components/UnitsServicesList';
+import PriceInfo from './components/PriceInfo';
 
 const UnitView = (props) => {
   const {
@@ -217,6 +218,7 @@ const UnitView = (props) => {
           <SocialMediaLinks unit={unit} />
           <Highlights unit={unit} />
           <Description unit={unit} />
+          <PriceInfo unit={unit} />
           <UnitLinks unit={unit} />
           <ElectronicServices unit={unit} />
           {!isMobile && feedbackButton()}
