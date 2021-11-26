@@ -393,6 +393,7 @@ const translations = {
   'unit.homepage.missing': 'No home page provided',
   'unit.picture': 'Picture of service point: ',
   'unit.description': 'Service point description',
+  'unit.price': 'Charges',
   'unit.address': 'Address',
   'unit.address.missing': 'No address provided',
   'unit.entrances.main': 'Main entrance',

@@ -393,6 +393,7 @@ const translations = {
   'unit.homepage.missing': 'Ingen hemsida har meddelats',
   'unit.picture': 'Bild av verksamhetsstället',
   'unit.description': 'Information om verksamhetsstället',
+  'unit.price': 'Priser',
   'unit.address': 'Adress',
   'unit.address.missing': 'Ingen adress har meddelats',
   'unit.entrances.main': 'Huvudingång',

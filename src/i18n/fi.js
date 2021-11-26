@@ -393,6 +393,7 @@ const translations = {
   'unit.homepage.missing': 'Kotisivua ei ilmoitettu',
   'unit.picture': 'Kuva toimipisteestä: ',
   'unit.description': 'Tietoa toimipisteestä',
+  'unit.price': 'Hinnat',
   'unit.address': 'Osoite',
   'unit.address.missing': 'Osoitetta ei ilmoitettu',
   'unit.entrances.main': 'Pääsisäänkäynti',
