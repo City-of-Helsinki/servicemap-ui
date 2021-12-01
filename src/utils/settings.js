@@ -161,17 +161,6 @@ export const useAcccessibilitySettings = () => {
 
 export default SettingsUtility;
 
-// Return active accessibility settings
-export const useAcccessibilitySettings = () => {
-  const userSettings = useSelector(state => state.settings);
-  const accessibiliySettingsValues = [
-    userSettings.mobility,
-    ...SettingsUtility.accessibilityImpairmentKeys.filter(key => userSettings[key]),
-  ].filter(i => (i !== false && i !== null));
-
-  return accessibiliySettingsValues;
-};
-
 export const useMobilitySettings = () => {
   const userSettings = useSelector(state => state.settings);
   return userSettings.mobility;
