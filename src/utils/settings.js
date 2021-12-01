@@ -34,14 +34,14 @@ class SettingsUtility {
 
   static isValidAccessibilitySenseImpairment(key) {
     if (SettingsUtility.accessibilityImpairmentKeys.indexOf(key) < 0) {
-      throw new Error(`Invalid value for accessibility sense setting: ${key}`);
+      return false;
     }
     return true;
   }
 
   static isValidMobilitySetting(value) {
     if (SettingsUtility.mobilitySettings.indexOf(value) < 0) {
-      throw new Error(`Invalid value for mobility setting: ${value}`);
+      return false;
     }
     return true;
   }
@@ -148,8 +148,6 @@ class SettingsUtility {
   }
 }
 
-export default SettingsUtility;
-
 // Return active accessibility settings
 export const useAcccessibilitySettings = () => {
   const userSettings = useSelector(state => state.settings);
@@ -160,6 +158,8 @@ export const useAcccessibilitySettings = () => {
 
   return accessibiliySettingsValues;
 };
+
+export default SettingsUtility;
 
 export const useMobilitySettings = () => {
   const userSettings = useSelector(state => state.settings);

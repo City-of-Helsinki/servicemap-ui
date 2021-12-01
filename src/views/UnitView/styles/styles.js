@@ -45,6 +45,14 @@ export default theme => ({
     color: '#0000EE',
     textDecoration: 'underline',
   },
+  linkButton: {
+    color: 'white',
+    textTransform: 'none',
+  },
+  linkButtonIcon: {
+    fontSize: 24,
+    marginLeft: theme.spacing(1.5),
+  },
   left: {
     textAlign: 'left',
     marginLeft: theme.spacing(2),

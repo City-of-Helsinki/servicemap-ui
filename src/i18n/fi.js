@@ -5,6 +5,10 @@ const translations = {
   'app.og.image.alt': 'Palvelukartan logo',
   'app.errorpage.title': 'Virheviestisivu',
 
+  'accept.settings.dialog.description': 'Voit avata tiedot joko esteettömyysasetusten kanssa tai ilman rajauksia.',
+  'accept.settings.dialog.title': 'Katso toimipistettä esteettömyysasetusten kanssa',
+  'accept.settings.dialog.none': 'Ei erityisiä esteettömyysasetuksia',
+
   // Accessibility
   'accessibility': 'Esteettömyys',
   'accessibility.info': 'Esteettömyystiedot',
@@ -311,6 +315,7 @@ const translations = {
   'general.save.changes.done': 'Muutokset tallennettu!',
   'general.save.confirmation': 'Haluatko tallentaa muutokset?',
   'general.search': 'Hae',
+  'general.share.link': 'Jaa linkki',
   'general.tools': 'Työkalut',
   'general.time.short': 'klo',
 
@@ -336,6 +341,15 @@ const translations = {
   'search.loading.units': 'Haetaan toimipisteitä {count} / {max}',
   'search.loading.units.srInfo': 'Haetaan {count} toimipistettä',
   'search.loading.units.simple': 'Haetaan toimipisteitä',
+
+  'link.settings.dialog.title': 'Jaa linkki toimipisteeseen',
+  'link.settings.dialog.tooltip': 'Kopioitu leikepöydälle',
+  'link.settings.dialog.radio.label': 'Linkin sisältö',
+  'link.settings.dialog.tooltip.aria': 'Kopioi sivun linkki leikepöydälle',
+  'link.settings.dialog.tooltip.aria.a11y': 'Kopioi esteettömyyasetukset sisältävä sivun linkki leikepöydälle',
+  'link.settings.dialog.subtitle': 'Jaa linkki esteettömyysasetusten kanssa',
+  'link.settings.dialog.description': 'Esteettömyysasetukset vaikuttavat näytettäviin toimipisteen esteettömyystietoihin ja kartan ulkoasuun.',
+  'link.settings.dialog.buttons.action': 'Kopioi leikepöydälle',
 
   // Map
   'map': 'Kartta',

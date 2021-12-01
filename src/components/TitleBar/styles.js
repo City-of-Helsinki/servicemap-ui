@@ -26,6 +26,7 @@ export default theme => ({
     flexDirection: 'row',
     width: '100%',
     display: 'flex',
+    alignItems: 'center',
   },
   title: {
     fontSize: 18,
@@ -37,6 +38,7 @@ export default theme => ({
     '&:focus': {
       outlineStyle: 'none',
     },
+    height: 'auto',
   },
   titleLarge: {
     fontSize: 20,
@@ -71,6 +73,7 @@ export default theme => ({
     paddingLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
     minWidth: 50,
+    flex: '0 0 auto',
   },
   sticky: {
     position: 'sticky',
