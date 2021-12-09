@@ -30,7 +30,7 @@ const CoordinateMarker = ({ position }) => {
 };
 
 CoordinateMarker.propTypes = {
-  position: PropTypes.arrayOf(PropTypes.number),
+  position: PropTypes.arrayOf(PropTypes.string),
 };
 
 CoordinateMarker.defaultProps = {
