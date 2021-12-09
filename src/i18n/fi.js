@@ -357,7 +357,7 @@ const translations = {
   'map.attribution.osm': '&copy; <a href="http://osm.org/copyright">OpenStreetMapin tekijät</a>',
   'map.attribution.helsinki': '&copy; Helsingin, Espoon, Vantaan ja Kauniaisen kaupungit',
   'map.transit.endStation': 'Päätepysäkki',
-  'map.address.coordinate': 'Jaa sijaintikoordinaatti',
+  'map.address.coordinate': 'Tee linkki GPS-koordinaatteihin',
   'map.address.searching': 'Haetaan osoitetta...',
   'map.address.notFound': 'Osoitetta ei löytynyt',
   'map.address.info': 'Osoitteen tiedot',

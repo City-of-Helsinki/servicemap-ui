@@ -358,7 +358,7 @@ const translations = {
   'map.attribution.osm': '&copy; <a href="http://osm.org/copyright">Upphovsmännen bakom OpenStreetMaps</a>',
   'map.attribution.helsinki': '&copy; Helsingfors, Esbo, Vanda och Grankulla städer',
   'map.transit.endStation': 'Ändhållplats',
-  'map.address.coordinate': 'Dela platskoordinat',
+  'map.address.coordinate': 'Tee linkki GPS-koordinaatteihin', // TODO: translate
   'map.address.searching': 'Söker adress...',
   'map.address.notFound': 'Adressen hittades ej',
   'map.address.info': 'Adressens uppgifter',
