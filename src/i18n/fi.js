@@ -81,6 +81,7 @@ const translations = {
   'area.list.parking': 'Pysäköinti',
   'area.list.parking_area': 'Pysäköintialueet',
   'area.list.parking_payzone': 'Maksuvyöhykkeet',
+  'area.list.parking_payzone.plural': 'Maksuvyöhykkeet',
   'area.list.education.finnish': 'Suomenkieliset koulualueet',
   'area.list.education.swedish': 'Ruotsinkieliset koulualueet',
   'area.list.preschool': 'Esiopetus',
