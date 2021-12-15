@@ -204,6 +204,7 @@ const SuggestionBox = (props) => {
                     divider
                     isMobile
                     query={suggestionQuery}
+                    fullQuery={item.query}
                   />
                 );
               }
