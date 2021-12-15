@@ -110,11 +110,11 @@ const SearchBarComponent = ({
     if (focusedSuggestion !== null) {
       // Get focused suggestion search string
       const suggestion = document.getElementById(`suggestion${focusedSuggestion}`);
-      if (suggestion?.classList.contains('AreaSuggestion')) {
+      if (suggestion?.classList.contains('AreaSuggestion') || suggestion?.classList.contains('AddressSuggestion')) {
         suggestion.click();
         return;
       }
-      // Omit search restult count from suggestion string
+      // Omit search result count from suggestion string
       searchQuery = suggestion?.getElementsByTagName('p')[0].textContent;
     } else if (search && search !== '') {
       searchQuery = search;
@@ -185,6 +185,7 @@ const SearchBarComponent = ({
             searchQuery={searchQuery}
             handleArrowClick={handleArrowClick}
             handleSubmit={handleSubmit}
+            handleBlur={handleBlur}
             isMobile
           />
           <CloseSuggestionButton
@@ -200,6 +201,7 @@ const SearchBarComponent = ({
             searchQuery={searchQuery}
             handleArrowClick={handleArrowClick}
             handleSubmit={handleSubmit}
+            handleBlur={handleBlur}
           />
         </DesktopComponent>
       </>
