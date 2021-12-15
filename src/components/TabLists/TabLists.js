@@ -29,7 +29,7 @@ const TabLists = ({
   const searchParams = parseSearchParams(location.search);
   const filteredData = data.filter(item => item.component || (item.data && item.data.length > 0));
   const getTabfromUrl = () => {
-    let index = data.findIndex(tab => tab.id === searchParams.t);
+    let index = filteredData.findIndex(tab => tab.id === searchParams.t);
     if (index === -1) index = parseInt(searchParams.t, 10) || 0;
     if (filteredData.length <= index) {
       return 0;
@@ -98,8 +98,8 @@ const TabLists = ({
     const searchParams = parseSearchParams(location.search);
     searchParams.p = 1;
 
-    if (data[value].id) {
-      searchParams.t = data[value].id;
+    if (filteredData[value].id) {
+      searchParams.t = filteredData[value].id;
     } else {
       searchParams.t = value;
     }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { ArrowDropUp, Search } from '@material-ui/icons';
+import { ArrowDropUp, LocationOn, Search } from '@material-ui/icons';
 import {
   Paper, List, Typography,
 } from '@material-ui/core';
@@ -10,7 +10,6 @@ import PreviousSearches from '../../PreviousSearches';
 import createSuggestions from '../../createSuggestions';
 import config from '../../../../../config';
 import SuggestionItem from '../../../ListItems/SuggestionItem';
-import AddressItem from '../../../ListItems/AddressItem';
 import { keyboardHandler } from '../../../../utils';
 import { AreaIcon } from '../../../SMIcon';
 import { CloseSuggestionButton } from '../CloseSuggestionButton';
@@ -23,6 +22,7 @@ const SuggestionBox = (props) => {
     searchQuery,
     handleArrowClick,
     handleSubmit,
+    handleBlur,
     classes,
     focusedSuggestion,
     isMobile,
@@ -62,6 +62,11 @@ const SuggestionBox = (props) => {
     if (navigator) {
       navigator.push('area', area.id);
     }
+  };
+
+  const handleAddressItemClick = (item) => {
+    handleBlur();
+    navigator.push('search', { q: item.query, t: 1 });
   };
 
   const slicedSuggestions = () => {
@@ -187,14 +192,18 @@ const SuggestionBox = (props) => {
               if (item.object_type === 'address') {
                 const sortIndex = item.sort_index;
                 return (
-                  <AddressItem
+                  <SuggestionItem
                     id={`suggestion${i}`}
+                    className="AddressSuggestion"
                     role="option"
                     selected={i === focusedSuggestion}
                     key={`address-${sortIndex}`}
-                    address={item}
-                    className="suggestion"
-                    showPostalCode={false}
+                    icon={<LocationOn className={classes.areaIcon} />}
+                    text={item.name}
+                    handleItemClick={() => handleAddressItemClick(item)}
+                    divider
+                    isMobile
+                    query={suggestionQuery}
                   />
                 );
               }
@@ -307,6 +316,7 @@ SuggestionBox.propTypes = {
   searchQuery: PropTypes.string,
   handleArrowClick: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  handleBlur: PropTypes.func.isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   focusedSuggestion: PropTypes.number,
   navigator: PropTypes.objectOf(PropTypes.any),

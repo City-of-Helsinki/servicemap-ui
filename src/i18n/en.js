@@ -503,6 +503,7 @@ const translations = {
   'search.suggestions.expand': 'Search suggestions',
   'search.suggestions.loading': 'Loading suggestions',
   'search.suggestions.error': 'No suggestions',
+  'search.suggestions.addresses': 'Show addresses',
   'search.suggestions.suggestions': '{count} search suggestions',
   // 'search.suggestions.expandSuggestions': '{count} refinement suggestions',
   'search.suggestions.results': '{count} results',
