@@ -77,6 +77,7 @@ const translations = {
   'area.list.parking': 'Parking',
   'area.list.parking_area': 'Parking areas',
   'area.list.parking_payzone': 'Parking payzones',
+  'area.list.parking_payzone.plural': 'Parking payzones',
   'area.list.education.finnish': 'Finnish school areas',
   'area.list.education.swedish': 'Swedish school areas',
   'area.list.preschool': 'Pre-school education',

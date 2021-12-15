@@ -77,6 +77,7 @@ const translations = {
   'area.list.parking': 'Parkering',
   'area.list.parking_area': 'Pysäköintialueet', // TODO: translate
   'area.list.parking_payzone': 'Maksuvyöhykkeet', // TODO: translate
+  'area.list.parking_payzone.plural': 'Maksuvyöhykkeet', // TODO: translate
   'area.list.education.finnish': 'Finska skolområden',
   'area.list.education.swedish': 'Svenska skolområden',
   'area.list.preschool': 'Förskoleundervisning',
