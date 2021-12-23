@@ -13,6 +13,10 @@ const UnitsServicesList = ({ unit, listLength, navigator }) => {
   const [periodList, setPeriodList] = useState([]);
   const [subjectList, setSubjectList] = useState([]);
 
+  const filterDataByYear = years => (
+    subjectList.filter(subj => years.includes(subj.period[0]) && years.includes(subj.period[1]))
+  );
+
   const sortName = (list) => {
     const compare = (a, b) => {
       if (getLocaleText(a.name) < getLocaleText(b.name)) {
@@ -71,7 +75,7 @@ const UnitsServicesList = ({ unit, listLength, navigator }) => {
       <UnitDataList
         key={`period-${period}`}
         listLength={listLength}
-        data={{ data: subjectList, max: subjectList.length }}
+        data={{ data: filterDataByYear(period), max: subjectList.length }}
         type="educationServices"
         semester={period}
         disableTitle={i !== 0}
