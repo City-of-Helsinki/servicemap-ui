@@ -5,6 +5,10 @@ const translations = {
   'app.og.image.alt': 'Servicekarta logo',
   'app.errorpage.title': 'Felmeddelandesida',
 
+  'accept.settings.dialog.description': 'Du kan öppna uppgifterna antigen med tillgänglighetsinställningar eller utan begränsningar.',
+  'accept.settings.dialog.title': 'Se verksamhetsstället med tillgänglighetsinställningar',
+  'accept.settings.dialog.none': 'Inga särskilda tillgänglighetsinställningar',
+
   // Accessibility
   'accessibility': 'Tillgänglighet',
   'accessibility.info': 'Tillgänglighetsuppgifter', // TODO: Verify
@@ -77,6 +81,7 @@ const translations = {
   'area.list.parking': 'Parkering',
   'area.list.parking_area': 'Pysäköintialueet', // TODO: translate
   'area.list.parking_payzone': 'Maksuvyöhykkeet', // TODO: translate
+  'area.list.parking_payzone.plural': 'Maksuvyöhykkeet', // TODO: translate
   'area.list.education.finnish': 'Finska skolområden',
   'area.list.education.swedish': 'Svenska skolområden',
   'area.list.preschool': 'Förskoleundervisning',
@@ -309,6 +314,7 @@ const translations = {
   'general.save.changes.done': 'Ändringarna har sparats!',
   'general.save.confirmation': 'Vill du spara ändringarna?',
   'general.search': 'Sök',
+  'general.share.link': 'Dela länken',
   'general.time.short': 'kl.',
   'general.tools': 'Verktyg',
   // Readspeaker
@@ -338,13 +344,22 @@ const translations = {
   'search.loading.units.srInfo': 'Söker {count} verksamhetsställe(n)',
   'search.loading.units.simple': 'Söker verksamhetsställen',
 
+  'link.settings.dialog.title': 'Dela länken till verksamhetsstället',
+  'link.settings.dialog.tooltip': 'Kopierades till klippbordet',
+  'link.settings.dialog.radio.label': 'Länkens innehåll',
+  'link.settings.dialog.tooltip.aria': 'Kopiera sidans länk till klippbordet',
+  'link.settings.dialog.tooltip.aria.a11y': 'Kopiera sidans länk med tillgänglighetsinställningar till klippbordet',
+  'link.settings.dialog.subtitle': 'Dela länken med tillgänglighetsinställningar',
+  'link.settings.dialog.description': 'Tillgänglighetsinställningarna påverkar det visade verksamhetsställets tillgänglighetsuppgifter och kartans utseende.',
+  'link.settings.dialog.buttons.action': 'Kopiera till klippbordet',
+
   // Map
   'map': 'Karta',
   'map.ariaLabel': 'Kartvy. Kartans uppgifter kan i nuläget granskas endast visuellt.',
   'map.attribution.osm': '&copy; <a href="http://osm.org/copyright">Upphovsmännen bakom OpenStreetMaps</a>',
   'map.attribution.helsinki': '&copy; Helsingfors, Esbo, Vanda och Grankulla städer',
   'map.transit.endStation': 'Ändhållplats',
-  'map.address.coordinate': 'Dela platskoordinat',
+  'map.address.coordinate': 'Tee linkki GPS-koordinaatteihin', // TODO: translate
   'map.address.searching': 'Söker adress...',
   'map.address.notFound': 'Adressen hittades ej',
   'map.address.info': 'Adressens uppgifter',
@@ -490,6 +505,7 @@ const translations = {
   'search.suggestions.expand': 'Sökförslag',
   'search.suggestions.loading': 'Laddar förslag',
   'search.suggestions.error': 'Inga förslag',
+  'search.suggestions.addresses': 'Näytä osoitteet', // TODO: translate
   'search.suggestions.suggestions': '{count} sökförslag',
   // 'search.suggestions.expandSuggestions': '{count} preciseringsförslag',
   'search.suggestions.results': '{count} resultat',

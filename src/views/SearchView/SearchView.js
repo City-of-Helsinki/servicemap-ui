@@ -466,6 +466,7 @@ class SearchView extends React.Component {
     // Data for TabLists component
     const searchResults = [
       {
+        id: 'units',
         ariaLabel: `${intl.formatMessage({ id: 'unit.plural' })} ${intl.formatMessage({ id: 'search.results.short' }, {
           count: groupedData
             .units.length,
@@ -477,6 +478,7 @@ class SearchView extends React.Component {
         title: intl.formatMessage({ id: 'unit.plural' }),
       },
       {
+        id: 'services',
         ariaLabel: `${intl.formatMessage({ id: 'service.plural' })} ${intl.formatMessage({ id: 'search.results.short' }, {
           count: groupedData
             .services.length,
@@ -487,6 +489,7 @@ class SearchView extends React.Component {
         title: intl.formatMessage({ id: 'service.plural' }),
       },
       {
+        id: 'addresses',
         ariaLabel: `${intl.formatMessage({ id: 'address.plural' })} ${intl.formatMessage({ id: 'search.results.short' }, {
           count: groupedData
             .addresses.length,

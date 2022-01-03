@@ -78,7 +78,7 @@ SMButton.propTypes = {
   style: PropTypes.objectOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   children: PropTypes.node,
-  role: PropTypes.string.isRequired,
+  role: PropTypes.oneOf(['button', 'link']).isRequired,
   disabled: PropTypes.bool,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   textVariant: PropTypes.string,

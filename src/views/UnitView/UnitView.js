@@ -1,9 +1,9 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Typography } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
-import { Map, Mail, Hearing } from '@material-ui/icons';
+import { Map, Mail, Hearing, Share } from '@material-ui/icons';
 import { Helmet } from 'react-helmet';
 import { useSelector } from 'react-redux';
 import { SearchBar } from '../../components';
@@ -27,6 +27,8 @@ import useMobileStatus from '../../utils/isMobile';
 import UnitHelper from '../../utils/unitHelper';
 import useLocaleText from '../../utils/useLocaleText';
 import paths from '../../../config/paths';
+import { AcceptSettingsDialog, LinkSettingsDialog } from '../../components';
+import SettingsUtility from '../../utils/settings';
 import UnitDataList from './components/UnitDataList';
 import UnitsServicesList from './components/UnitsServicesList';
 import PriceInfo from './components/PriceInfo';
@@ -59,10 +61,29 @@ const UnitView = (props) => {
   const viewPosition = useRef(null);
 
   const isMobile = useMobileStatus();
-
+  const [openAcceptSettingsDialog, setOpenAcceptSettingsDialog] = useState(false);
+  const [openLinkDialog, setOpenLinkDialog] = useState(false);
   const getLocaleText = useLocaleText();
 
   const map = useSelector(state => state.mapRef);
+
+  const shouldShowAcceptSettingsDialog = () => {
+    const search = new URLSearchParams(location.search);
+    const mobility = search.get('mobility');
+    const senses = search.get('senses')?.split(',') || [];
+    const mobilityValid = !!(mobility && SettingsUtility.isValidMobilitySetting(mobility));
+    const sensesValid = senses.filter(
+      s => SettingsUtility.isValidAccessibilitySenseImpairment(s),
+    ).length > 0;
+    if (mobilityValid || sensesValid) {
+      return true;
+    }
+    return false;
+  };
+
+  useEffect(() => {
+    setOpenAcceptSettingsDialog(shouldShowAcceptSettingsDialog());
+  }, []);
 
   const initializePTVAccessibilitySentences = () => {
     if (unit) {
@@ -347,6 +368,20 @@ const UnitView = (props) => {
 
   const render = () => {
     const title = unit && unit.name ? getLocaleText(unit.name) : '';
+    const onLinkOpenClick = () => {
+      setOpenLinkDialog(true);
+    };
+    const elem = (
+      <Button
+        className={classes.linkButton}
+        onClick={onLinkOpenClick}
+      >
+        <Typography color="inherit" variant="body2">
+          <FormattedMessage id="general.share.link" />
+        </Typography>
+        <Share className={classes.linkButtonIcon} />
+      </Button>
+    );
 
     const TopArea = (
       <>
@@ -359,7 +394,7 @@ const UnitView = (props) => {
           title={title}
           backButton={!!isMobile}
           titleComponent="h3"
-          distance={distance && distance.text}
+          distance={elem}
         />
       </>
     );
@@ -407,6 +442,19 @@ const UnitView = (props) => {
       ];
       return (
         <div>
+          {
+            openAcceptSettingsDialog
+            && (
+              <AcceptSettingsDialog setOpen={setOpenAcceptSettingsDialog} />
+            )
+          }
+          {
+            !openAcceptSettingsDialog
+            && openLinkDialog
+            && (
+              <LinkSettingsDialog setOpen={setOpenLinkDialog} />
+            )
+          }
           {
             renderHead()
           }

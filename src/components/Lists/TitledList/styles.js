@@ -16,9 +16,7 @@ export default theme => ({
     marginRight: theme.spacing(2),
   },
   description: {
-    paddingBottom: theme.spacing(2),
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2),
+    padding: theme.spacing(2),
   },
   titleContainer: {
     display: 'flex',
