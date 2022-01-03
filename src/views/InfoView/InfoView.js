@@ -300,18 +300,15 @@ const InfoView = ({
         Karttanäkymää ei tehdä saavutettavaksi. Ruudunlukijalta kartta on piilotettu.
         Näppäimistöllä pääsee lähentämään ja loitontamaan karttaa, mutta ei pääse kartalla oleviin toimipisteeseen.
       </Typography>
-      <Typography className={classes.text} variant="body2">
-        Evästekyselykorjataan hel.fi sivujen uudistuksen yhteydessä.
-      </Typography>
       <Typography component="h4" variant="body2">Tiedon saanti saavutettavassa muodossa</Typography>
       <Typography className={classes.text} variant="body2">
         {`Mainituista puutteista johtuen saavuttamatta jäävää sisältöä voi pyytää tämän sivuston ylläpitäjältä.
 
           Kaupunginkanslia/ Strategiaosasto/ Digitalisaatioyksikkö
-          mirjam.heikkinen@hel.fi ja henna.niemi@hel.fi`}
+          Palvelukartta@hel.fi`}
       </Typography>
       <Typography component="h4" variant="body2">Saavutettavuusselosteen laatiminen</Typography>
-      <Typography className={classes.text} variant="body2">Tämä seloste on laadittu 11.6.2021</Typography>
+      <Typography className={classes.text} variant="body2">Tämä seloste on laadittu 21.12.2021</Typography>
       <Typography component="h4" variant="body2">Saavutettavuuden arviointi</Typography>
       <Typography className={classes.text} variant="body2">
         Saavutettavuuden arvioinnissa on noudatettu Helsingin kaupungin
@@ -401,7 +398,7 @@ const InfoView = ({
 
       <Typography component="h3" variant="body2">Saavutettavuusselosteen hyväksyntä</Typography>
       <Typography className={classes.text} variant="body2">
-        Tämän selosteen on hyväksynyt 11.6.2021
+        Tämän selosteen on hyväksynyt 21.12.2021
         Kaupunginkanslia/ strategiaosasto/ Digitalisaatioyksikkö
         Helsingin kaupunki
       </Typography>
@@ -666,10 +663,10 @@ const InfoView = ({
         {`Due to these deficiencies, you can request the non-accessible content from the administrator of this website.
 
         Central Administration
-        mirjam.heikkinen@hel.fi and henna.niemi@hel.fi`}
+        Palvelukartta@hel.fi`}
       </Typography>
       <Typography component="h4" variant="body2">Preparing an accessibility statement</Typography>
-      <Typography className={classes.text} variant="body2">This statement was prepared on June 28th, 2021</Typography>
+      <Typography className={classes.text} variant="body2">This statement was prepared on December 21st, 2021</Typography>
       <Typography component="h4" variant="body2">Assessment of accessibility</Typography>
       <Typography className={classes.text} variant="body2">
         The working instruction and procedures of the City of Helsinki were followed when
@@ -758,7 +755,7 @@ const InfoView = ({
       </Typography>
       <Typography component="h3" variant="body2">Approval of the accessibility statement</Typography>
       <Typography className={classes.text} variant="body2">
-        {`This statement was approved by June 28th, 2021
+        {`This statement was approved by December 21st, 2021
           Central Administration
           City of Helsinki `}
       </Typography>
@@ -1017,10 +1014,10 @@ const InfoView = ({
         {`Innehåll som inte kan nås på grund av nämnda brister kan begäras från upprätthållaren av denna webbplats.
 
         Stadskansliet
-        mirjam.heikkinen@hel.fi och henna.niemi@hel.fi`}
+        Palvelukartta@hel.fi`}
       </Typography>
       <Typography component="h4" variant="body2">Utarbetande av tillgänglighetsutlåtande</Typography>
-      <Typography className={classes.text} variant="body2">Detta utlåtande har utarbetats 28.6.2021</Typography>
+      <Typography className={classes.text} variant="body2">Detta utlåtande har utarbetats 21.12.2021</Typography>
       <Typography component="h4" variant="body2">Bedömning av tillgänglighet</Typography>
       <Typography className={classes.text} variant="body2">
         Vid bedömning av tillgänglighet har följts Helsingfors stads arbetsanvisning och
@@ -1107,7 +1104,7 @@ const InfoView = ({
       </Typography>
       <Typography component="h3" variant="body2">Godkännande av tillgänglighetsutlåtande</Typography>
       <Typography className={classes.text} variant="body2">
-        {`Detta utlåtande har godkänts 28.6.2021
+        {`Detta utlåtande har godkänts 21.12.2021
           Stadskansliet
           Helsingfors stad `}
       </Typography>
