@@ -110,14 +110,6 @@ const SuggestionItem = (props) => {
               handleRemoveClick(value);
               return false;
             }}
-            onMouseEnter={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-            }}
-            onMouseOver={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-            }}
           >
             <Typography variant="caption" className={classes.removeText}>Poista</Typography>
           </Button>
