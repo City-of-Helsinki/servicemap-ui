@@ -34,6 +34,12 @@ export default theme => ({
   },
   suggestIconLabel: {
     padding: theme.spacing(1),
+    color: 'rgba(0, 0, 0, 0.87)',
+    textTransform: 'none',
+    '&:hover': {
+      color: '#2242C7',
+      textDecorationLine: 'underline',
+    },
   },
   subtitle: {
     fontSize: '10px',
@@ -46,6 +52,9 @@ export default theme => ({
   },
   text: {
     alignSelf: 'center',
+  },
+  removeText: {
+    color: 'inherit',
   },
   itemFocus: {
     outline: '2px solid transparent',
