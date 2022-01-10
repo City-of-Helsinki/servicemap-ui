@@ -32,8 +32,7 @@ class LocalStorageUtility {
       return null;
     }
 
-    const data = this.storage.getItem(this.generateKey(key));
-    return data;
+    return this.storage.getItem(this.generateKey(key));
   }
 
   static saveItem(key, value) {
