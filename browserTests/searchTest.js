@@ -361,7 +361,7 @@ test('Search suggestion click works correctly', async(t) => {
 
   const items = ReactSelector('SuggestionItem');
   const clickedItem = await items.nth(0);
-  const text = await clickedItem.getReact(({props}) => props.text);
+  const text = await clickedItem.getReact(({props}) => props.fullQuery);
   await t
     .click(clickedItem)
     .expect(getLocation()).contains(`http://${server.address}:${server.port}/fi/search?q=${text}`)

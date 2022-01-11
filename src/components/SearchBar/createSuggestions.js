@@ -1,32 +1,25 @@
 import config from '../../../config';
+import { uppercaseFirst } from '../../utils';
 import { dataStructure } from '../../views/AreaView/utils/districtDataHelper';
 
 // TODO: need city (and locale?) parameters to new search fetch
 
 const createSuggestions = async (query, signal, locale, intl) => {
+  const fetchSuggestions = url => fetch(url, { signal })
+    .then((res) => {
+      if (res.status === 200) {
+        return res.json();
+      }
+      return 'error';
+    })
+    .catch((res) => {
+      console.warn('error:', res);
+      return 'error';
+    });
+
   const data = await Promise.all([
-    fetch(`${config.serviceMapAPI.root}/suggestion/?q=${query}&language=${locale}`, { signal })
-      .then((res) => {
-        if (res.status === 200) {
-          return res.json();
-        }
-        return 'error';
-      })
-      .catch((res) => {
-        console.warn('error:', res);
-        return 'error';
-      }),
-    fetch(`${config.serviceMapAPI.root}/search/?input=${query}&language=${locale}&page=1&page_size=1&type=address`, { signal })
-      .then((res) => {
-        if (res.status === 200) {
-          return res.json();
-        }
-        return 'error';
-      })
-      .catch((res) => {
-        console.warn('error:', res);
-        return 'error';
-      }),
+    fetchSuggestions(`${config.serviceMapAPI.root}/suggestion/?q=${query}&language=${locale}`),
+    fetchSuggestions(`${config.serviceMapAPI.root}/search/?input=${query}&language=${locale}&page=1&page_size=20&type=address`),
   ]);
 
   if (data[0] === 'error' && data[1] === 'error') {
@@ -35,8 +28,17 @@ const createSuggestions = async (query, signal, locale, intl) => {
 
   let suggestions = [];
   // Handle address fetch results
-  if (data[1] !== 'error' && data[1].results && data[1].results.length) {
-    suggestions = [...data[1].results];
+  if (data[1] !== 'error' && data[1].results?.length) {
+    const streets = [...new Set(
+      data[1].results.map(address => address.street.name[locale] || address.steet.name[0]),
+    )];
+    if (streets.length) {
+      suggestions.push({
+        object_type: 'address',
+        query: streets[0],
+        name: `${uppercaseFirst(streets[0])}, ${intl.formatMessage({ id: 'search.suggestions.addresses' })}`,
+      });
+    }
   }
 
   // Add area suggestions
