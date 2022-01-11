@@ -55,9 +55,10 @@ exports[`<SuggestionItem /> should work 1`] = `
         Object {
           "container": "SuggestionItem-container-1",
           "divider": "SuggestionItem-divider-8",
-          "itemFocus": "SuggestionItem-itemFocus-10",
+          "itemFocus": "SuggestionItem-itemFocus-11",
           "listIcon": "SuggestionItem-listIcon-4",
           "listItem": "SuggestionItem-listItem-2",
+          "removeText": "SuggestionItem-removeText-10",
           "subtitle": "SuggestionItem-subtitle-7",
           "suggestIcon": "SuggestionItem-suggestIcon-5",
           "suggestIconLabel": "SuggestionItem-suggestIconLabel-6",
@@ -66,8 +67,8 @@ exports[`<SuggestionItem /> should work 1`] = `
         }
       }
       divider={false}
-      handleArrowClick={null}
       handleItemClick={null}
+      handleRemoveClick={null}
       icon={<UNDEFINED />}
       id={null}
       intl={
@@ -121,7 +122,7 @@ exports[`<SuggestionItem /> should work 1`] = `
         classes={
           Object {
             "root": "SuggestionItem-listItem-2",
-            "selected": "SuggestionItem-itemFocus-10",
+            "selected": "SuggestionItem-itemFocus-11",
           }
         }
         component="li"
@@ -150,7 +151,7 @@ exports[`<SuggestionItem /> should work 1`] = `
               "gutters": "MuiListItem-gutters",
               "root": "MuiListItem-root SuggestionItem-listItem-2",
               "secondaryAction": "MuiListItem-secondaryAction",
-              "selected": "Mui-selected SuggestionItem-itemFocus-10",
+              "selected": "Mui-selected SuggestionItem-itemFocus-11",
             }
           }
           component="li"

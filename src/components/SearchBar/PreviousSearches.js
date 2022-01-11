@@ -1,18 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   List, withStyles, Typography,
 } from '@material-ui/core';
-import { Search } from '@material-ui/icons';
+import { AccessTime } from '@material-ui/icons';
 import { FormattedMessage } from 'react-intl';
 import styles from './styles';
 import SuggestionItem from '../ListItems/SuggestionItem';
+import { getPreviousSearches, removeSearchFromHistory } from './previousSearchData';
 
 const PreviousSearches = ({
-  className, focusIndex, listRef, onClick, history, handleArrowClick,
+  className, focusIndex, listRef, onClick,
 }) => {
+  const [history, setHistory] = useState(getPreviousSearches());
+
+  const handleRemovePrevious = (val) => {
+    const callback = () => setHistory(getPreviousSearches());
+    removeSearchFromHistory(val, callback);
+  };
+
   const renderList = () => {
-    if (history) {
+    if (history?.length) {
       return (
         <>
           <List role="listbox" id="PreviousList" className="suggestionList" ref={listRef}>
@@ -23,9 +31,9 @@ const PreviousSearches = ({
               role="option"
               selected={i === focusIndex}
               key={item}
-              icon={<Search />}
+              icon={<AccessTime />}
               text={item}
-              handleArrowClick={handleArrowClick}
+              handleRemoveClick={val => handleRemovePrevious(val)}
               handleItemClick={() => onClick(item)}
               divider={i !== (history.length - 1)}
             />
@@ -46,7 +54,6 @@ const PreviousSearches = ({
 };
 
 PreviousSearches.propTypes = {
-  history: PropTypes.arrayOf(PropTypes.string),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   focusIndex: PropTypes.number,
   listRef: PropTypes.objectOf(PropTypes.any),
@@ -54,7 +61,6 @@ PreviousSearches.propTypes = {
 };
 
 PreviousSearches.defaultProps = {
-  history: null,
   listRef: null,
   focusIndex: null,
 };

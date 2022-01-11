@@ -34,7 +34,6 @@ const SuggestionBox = (props) => {
   const [searchQueries, setSearchQueries] = useState(null);
   const [loading, setLoading] = useState(false);
   const [suggestionError, setSuggestionError] = useState(false);
-  const [history] = useState(getPreviousSearches());
   // Query word on which suggestion list is based
   const [suggestionQuery, setSuggestionQuery] = useState(null);
 
@@ -122,7 +121,6 @@ const SuggestionBox = (props) => {
       <PreviousSearches
         className={classes.infoText}
         handleArrowClick={handleArrowClick}
-        history={history}
         focusIndex={focusedSuggestion}
         listRef={listRef}
         onClick={val => handleSubmit(val)}
