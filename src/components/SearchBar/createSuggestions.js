@@ -42,15 +42,40 @@ const createSuggestions = async (query, signal, locale, intl) => {
   // Add area suggestions
   const areas = dataStructure.flatMap(item => item.districts);
   const searchWords = query.split(' ');
-  let matchingArea;
+  let matchingAreas = [];
+  let matchingCategories = [];
+
+  // Find matches for area names
   searchWords.forEach((word) => {
-    matchingArea = areas.find(item => intl.formatMessage({ id: `area.list.${item}` }).toLowerCase().includes(word));
+    const matches = areas.filter(item => intl.formatMessage({ id: `area.list.${item.id}` }).toLowerCase().includes(word) || item.searchWords.some(text => text.includes(word)));
+    const categoryMatches = dataStructure.filter(
+      item => item.searchWords?.some(text => text.toLowerCase().includes(word.toLowerCase())),
+    );
+    matchingAreas = [...matchingAreas, ...matches];
+    matchingCategories = [...matchingCategories, ...categoryMatches];
   });
-  if (matchingArea) {
+  const counts = matchingAreas.map(item => item.id).reduce((a, c) => {
+    a[c] = (a[c] || 0) + 1;
+    return a;
+  }, {});
+
+  const maxCount = Math.max(...Object.values(counts));
+  const mostFrequent = Object.keys(counts).find(count => counts[count] === maxCount);
+
+  if (mostFrequent) {
     suggestions.push({
       object_type: 'area',
-      id: matchingArea,
-      name: intl.formatMessage({ id: `area.list.${matchingArea}.plural` }),
+      id: mostFrequent,
+      name: intl.formatMessage({ id: `area.list.${mostFrequent}.plural` }),
+    });
+  }
+
+  if (matchingCategories.length) {
+    const match = matchingCategories[0];
+    suggestions.push({
+      object_type: 'area',
+      id: match.id,
+      name: intl.formatMessage({ id: `area.list.${match.id}` }),
     });
   }
 

@@ -5,6 +5,7 @@ import {
   Paper, List, Typography,
 } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
+import { useDispatch } from 'react-redux';
 import { getPreviousSearches } from '../../previousSearchData';
 import PreviousSearches from '../../PreviousSearches';
 import createSuggestions from '../../createSuggestions';
@@ -14,6 +15,7 @@ import AddressItem from '../../../ListItems/AddressItem';
 import { keyboardHandler } from '../../../../utils';
 import { AreaIcon } from '../../../SMIcon';
 import { CloseSuggestionButton } from '../CloseSuggestionButton';
+import { setSelectedDistrictType } from '../../../../redux/actions/district';
 
 
 const SuggestionBox = (props) => {
@@ -38,6 +40,7 @@ const SuggestionBox = (props) => {
   // Query word on which suggestion list is based
   const [suggestionQuery, setSuggestionQuery] = useState(null);
 
+  const dispatch = useDispatch();
   const listRef = useRef(null);
   const fetchController = useRef(null);
   const maxSuggestionCount = 5;
@@ -60,6 +63,7 @@ const SuggestionBox = (props) => {
 
   const handleAreaItemClick = (area) => {
     if (navigator) {
+      dispatch(setSelectedDistrictType(null));
       navigator.push('area', area.id);
     }
   };
@@ -174,9 +178,9 @@ const SuggestionBox = (props) => {
                     className="AreaSuggestion"
                     role="option"
                     selected={i === focusedSuggestion}
-                    key={`suggestion-${item.suggestion + item.count}`}
+                    key={`suggestion-${item.name}`}
                     icon={<AreaIcon className={classes.areaIcon} />}
-                    text={item.name}
+                    text={`${item.name}, ${intl.formatMessage({ id: 'search.suggestions.areas' })}`}
                     handleItemClick={() => handleAreaItemClick(item)}
                     divider
                     isMobile
