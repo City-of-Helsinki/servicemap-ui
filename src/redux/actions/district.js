@@ -146,7 +146,7 @@ export const fetchDistricts = (selected, single) => (
   async (dispatch) => {
     const categories = single
       ? selected
-      : dataStructure.map(obj => obj.districts).flat().join(',');
+      : dataStructure.map(obj => obj.districts.map(item => item.id)).flat().join(',');
 
     dispatch(startDistrictFetch(single ? selected : 'all'));
     const smAPI = new ServiceMapAPI();
