@@ -46,6 +46,9 @@ export default theme => ({
     fontWeight: 'none',
     lineHeight: '18px',
   },
+  historyText: {
+    color: '#660DD7',
+  },
   divider: {
     marginLeft: theme.spacing(8),
     marginRight: theme.spacing(-2),

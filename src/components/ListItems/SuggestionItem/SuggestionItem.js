@@ -69,6 +69,7 @@ const SuggestionItem = (props) => {
 
             <Typography
               aria-hidden
+              className={handleRemoveClick ? classes.historyText : ''}
               variant="body2"
             >
               {
