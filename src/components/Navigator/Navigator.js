@@ -52,23 +52,18 @@ class Navigator extends React.Component {
     }
   }
 
-  trackPageView = (settings) => {
-    const { mobility, senses } = settings;
+  trackPageView = (settings, noResultsQuery) => {
+    const mobility = settings?.mobility;
+    const senses = settings?.senses;
     if (typeof window !== 'undefined' && window?.cookiehub?.hasConsented('analytics')) {
       if (matomoTracker) {
         setTimeout(() => {
           matomoTracker.trackPageView({
             documentTitle: document.title,
-            customDimensions: [
-              {
-                id: config.matomoMobilityDimensionID,
-                value: mobility || '',
-              },
-              {
-                id: config.matomoSensesDimensionID,
-                value: senses.join(','),
-              },
-            ],
+            customDimensions: noResultsQuery
+              ? [{ id: config.matomoNoResultsDimensionID, value: noResultsQuery }]
+              : [{ id: config.matomoMobilityDimensionID, value: mobility || '' },
+                { id: config.matomoSensesDimensionID, value: senses?.join(',') }],
           });
         }, 400);
       }

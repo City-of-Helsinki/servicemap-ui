@@ -113,6 +113,10 @@ if (settings.MATOMO_SENSES_DIMENSION_ID === 'undefined') {
   settings.MATOMO_SENSES_DIMENSION_ID = undefined;
 }
 
+if (settings.MATOMO_NO_RESULTS_DIMENSION_ID === 'undefined') {
+  settings.MATOMO_NO_RESULTS_DIMENSION_ID = undefined;
+}
+
 let municipalities;
 try {
   municipalities = require('./municipalities.json');
@@ -234,6 +238,7 @@ export default {
   "usePtvAccessibilityApi": (settings.USE_PTV_ACCESSIBILITY_API) === 'true',
   "matomoMobilityDimensionID": settings.MATOMO_MOBILITY_DIMENSION_ID,
   "matomoSensesDimensionID": settings.MATOMO_SENSES_DIMENSION_ID,
+  "matomoNoResultsDimensionID": settings.MATOMO_NO_RESULTS_DIMENSION_ID,
   "matomoUrl": settings.MATOMO_URL,
   "matomoSiteId": settings.MATOMO_SITE_ID,
 }
