@@ -460,6 +460,7 @@ const translations = {
   'search': 'Hae',
   'search.arrowLabel': 'Tarkenna',
   'search.cancelText': 'Tyhjennä hakukenttä',
+  'search.removeSuggestion': 'Poista',
   'search.notFoundWith': 'Ei osumia haulle "{query}".',
   'search.placeholder': 'Hae palvelua tai toimipistettä',
   'search.info': `{count, plural,
