@@ -9,14 +9,21 @@ const PriceInfo = ({ unit }) => {
   const getLocaleText = useLocaleText();
 
   const data = unitSectionFilter(unit.connections, 'PRICE');
-  const text = data.length && data[0].value?.name;
+  let text = '';
 
-  if (!text) return null;
+  // Combine all price info to one text
+  data.forEach((item) => {
+    if (item.value?.name) {
+      text += `${getLocaleText(item.value?.name)}\n`;
+    }
+  });
+
+  if (!text.length) return null;
 
   return (
     <div>
       <DescriptionText
-        description={getLocaleText(text)}
+        description={text}
         title={<FormattedMessage id="unit.price" />}
         titleComponent="h4"
       />
