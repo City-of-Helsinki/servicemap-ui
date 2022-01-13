@@ -304,12 +304,17 @@ class SearchView extends React.Component {
    */
   renderNotFound() {
     const {
-      classes, isFetching, previousSearch, units,
+      classes, isFetching, previousSearch, units, navigator,
     } = this.props;
 
     // These variables should be passed to this function
     const shouldRender = !isFetching && previousSearch && units && !units.length;
     const messageIDs = ['spelling', 'city', 'service', 'address', 'keyword'];
+
+    // Send search query to matomo
+    if (navigator) {
+      navigator.trackPageView(null, previousSearch);
+    }
 
     return shouldRender && (
       <Container className={classes.noVerticalPadding}>
@@ -631,6 +636,7 @@ SearchView.propTypes = {
   map: PropTypes.objectOf(PropTypes.any),
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   query: PropTypes.string,
+  navigator: PropTypes.objectOf(PropTypes.any),
 };
 
 SearchView.defaultProps = {
@@ -645,4 +651,5 @@ SearchView.defaultProps = {
   unitsReducer: null,
   map: null,
   query: null,
+  navigator: null,
 };

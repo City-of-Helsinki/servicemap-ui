@@ -17,6 +17,7 @@ const mapStateToProps = (state) => {
   const {
     isFetching, count, max, previousSearch,
   } = units;
+  const { navigator } = state;
   const isRedirectFetching = redirectService.isFetching;
   const unitData = getOrderedData(state);
   /* TODO: use custom hook for getAddressNavigatorParams to prevent
@@ -38,6 +39,7 @@ const mapStateToProps = (state) => {
     previousSearch,
     settings,
     serviceTree,
+    navigator,
   };
 };
 
