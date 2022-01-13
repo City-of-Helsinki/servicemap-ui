@@ -454,10 +454,12 @@ const translations = {
   'unit.outdoorLink': 'Check the condition of an exercise location in the ulkoliikunta.fi service',
   'unit.seo.description': 'View service point on the map',
   'unit.seo.description.accessibility': 'View accessibility info and service point on the map',
+
   // Search
   'search': 'Search',
   'search.arrowLabel': 'Refine',
   'search.cancelText': 'Clear search text',
+  'search.removeSuggestion': 'Remove',
   'search.notFoundWith': 'No results for search "{query}".',
   'search.placeholder': 'Search for services or locations',
   'search.info': `{count, plural,

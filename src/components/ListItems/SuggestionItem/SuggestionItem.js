@@ -6,6 +6,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import {
   Typography, Divider, Button,
 } from '@material-ui/core';
+import { FormattedMessage } from 'react-intl';
 import BoldedText from '../../BoldedText';
 import { keyboardHandler } from '../../../utils';
 
@@ -112,7 +113,9 @@ const SuggestionItem = (props) => {
               return false;
             }}
           >
-            <Typography variant="caption" className={classes.removeText}>Poista</Typography>
+            <Typography variant="caption" className={classes.removeText}>
+              <FormattedMessage id="search.removeSuggestion" />
+            </Typography>
           </Button>
         )}
       </ListItem>
