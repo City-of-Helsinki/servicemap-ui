@@ -14,7 +14,7 @@ const PriceInfo = ({ unit }) => {
   // Combine all price info to one text
   data.forEach((item) => {
     if (item.value?.name) {
-      text += `${getLocaleText(item.value?.name)}\n`;
+      text += `${getLocaleText(item.value?.name)}\n\n`;
     }
   });
 
