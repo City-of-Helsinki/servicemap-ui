@@ -79,7 +79,6 @@ const TitledList = ({
           <FormattedMessage id="general.loading" />
         </Typography>
       )}
-      <Divider aria-hidden />
     </>
   );
 };

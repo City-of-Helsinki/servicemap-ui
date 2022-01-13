@@ -3,10 +3,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Typography } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
-import { Map, Mail, Hearing, Share } from '@material-ui/icons';
+import {
+  Map, Mail, Hearing, Share,
+} from '@material-ui/icons';
 import { Helmet } from 'react-helmet';
 import { useSelector } from 'react-redux';
-import { SearchBar } from '../../components';
+import { SearchBar, AcceptSettingsDialog, LinkSettingsDialog } from '../../components';
 import TitleBar from '../../components/TitleBar';
 import Container from '../../components/Container';
 import AccessibilityInfo from './components/AccessibilityInfo';
@@ -27,7 +29,6 @@ import useMobileStatus from '../../utils/isMobile';
 import UnitHelper from '../../utils/unitHelper';
 import useLocaleText from '../../utils/useLocaleText';
 import paths from '../../../config/paths';
-import { AcceptSettingsDialog, LinkSettingsDialog } from '../../components';
 import SettingsUtility from '../../utils/settings';
 import UnitDataList from './components/UnitDataList';
 import UnitsServicesList from './components/UnitsServicesList';
@@ -237,6 +238,12 @@ const UnitView = (props) => {
           {/* View Components */}
           <ContactInfo unit={unit} userLocation={userLocation} />
           <SocialMediaLinks unit={unit} />
+          <UnitDataList
+            listLength={3}
+            data={eventsData}
+            type="events"
+            navigator={navigator}
+          />
           <Highlights unit={unit} />
           <Description unit={unit} />
           <PriceInfo unit={unit} />
@@ -299,12 +306,6 @@ const UnitView = (props) => {
         <UnitsServicesList
           listLength={5}
           unit={unit}
-          navigator={navigator}
-        />
-        <UnitDataList
-          listLength={5}
-          data={eventsData}
-          type="events"
           navigator={navigator}
         />
         <UnitDataList
