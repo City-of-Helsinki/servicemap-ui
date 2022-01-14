@@ -31,6 +31,7 @@ class SearchView extends React.Component {
     this.state = {
       serviceRedirect: null,
       expandVisible: null,
+      analyticsSent: null,
     };
   }
 
@@ -76,6 +77,25 @@ class SearchView extends React.Component {
       this.focusMap(nextProps.units);
     }
     return true;
+  }
+
+  // Send information to matomo about search words that produce no results
+  sendNoResultsAnalytics = (previousSearch, navigator) => {
+    this.setState({ analyticsSent: previousSearch });
+    navigator.trackPageView(null, previousSearch);
+  }
+
+  componentDidUpdate = () => {
+    const {
+      isFetching, previousSearch, units, navigator,
+    } = this.props;
+    const { analyticsSent } = this.state;
+
+    const noResults = !isFetching && previousSearch && units && !units.length;
+    // Send search query to matomo
+    if (navigator && noResults && analyticsSent !== previousSearch) {
+      this.sendNoResultsAnalytics(previousSearch, navigator);
+    }
   }
 
   // Handle service redirect for old service parameters if given
@@ -304,17 +324,12 @@ class SearchView extends React.Component {
    */
   renderNotFound() {
     const {
-      classes, isFetching, previousSearch, units, navigator,
+      classes, isFetching, previousSearch, units,
     } = this.props;
 
     // These variables should be passed to this function
     const shouldRender = !isFetching && previousSearch && units && !units.length;
     const messageIDs = ['spelling', 'city', 'service', 'address', 'keyword'];
-
-    // Send search query to matomo
-    if (navigator) {
-      navigator.trackPageView(null, previousSearch);
-    }
 
     return shouldRender && (
       <Container className={classes.noVerticalPadding}>
