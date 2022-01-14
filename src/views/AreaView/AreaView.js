@@ -64,7 +64,8 @@ const AreaView = ({
   const getInitialOpenItems = () => {
     if (selectedAreaType) {
       const category = dataStructure.find(
-        data => data.districts.includes(selectedAreaType),
+        data => data.id === selectedAreaType
+        || data.districts.some(obj => obj.id === selectedAreaType),
       );
       return [category?.id];
     } return openItems;
@@ -95,7 +96,7 @@ const AreaView = ({
       lon: `${selectedAddress.location.coordinates[0]}`,
       page: 1,
       page_size: 200,
-      type: `${dataStructure.map(item => item.districts).join(',')}`,
+      type: `${dataStructure.map(item => item.districts.map(obj => obj.id)).join(',')}`,
       geometry: true,
       unit_include: 'name,location',
     };
@@ -182,7 +183,11 @@ const AreaView = ({
   }, [selectedDistrictData, focusTo]);
 
   useEffect(() => {
-    if (!mapFocusDisabled && map && !focusTo && !localAddressData.length && selectedDistrictGeometry) {
+    if (!mapFocusDisabled
+      && map
+      && !focusTo
+      && !localAddressData.length
+      && selectedDistrictGeometry) {
       focusDistricts(map, selectedDistrictData);
     }
   }, [selectedDistrictGeometry]);
@@ -196,6 +201,7 @@ const AreaView = ({
         /* Remove selected area parameter from url, otherwise it will override
         user area selection when returning to area view */
         history.replace();
+        setSelectedDistrictType(null);
         // Switch to geographical tab if geographical area
         if (geographicalDistricts.includes(selectedAreaType)) {
           const geoTab = document.getElementById('Tab1');
@@ -204,11 +210,11 @@ const AreaView = ({
       }
 
       // Fetch and select area from url parameters
-      if (selectedArea) {
+      if (selectedArea && !dataStructure.some(obj => obj.id === selectedArea)) {
         fetchDistricts(selectedAreaType);
         if (!embed) {
           const category = dataStructure.find(
-            data => data.districts.includes(selectedAreaType),
+            data => data.districts.some(obj => obj.id === selectedAreaType),
           );
           dispatch(handleOpenItems(category.id));
         } else {

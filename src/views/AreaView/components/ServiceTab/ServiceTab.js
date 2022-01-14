@@ -35,7 +35,7 @@ const ServiceTab = (props) => {
   const selectedParkingAreas = useSelector(state => state.districts.selectedParkingAreas);
   const parkingUnits = useSelector(state => state.districts.parkingUnits);
   const selectedCategory = dataStructure.find(
-    data => data.districts.includes(selectedDistrictType),
+    data => data.districts.some(obj => obj.id === selectedDistrictType),
   )?.id;
 
   const handleRadioChange = (district) => {
@@ -112,7 +112,9 @@ const ServiceTab = (props) => {
 
 
   const renderParkingAreaSelection = (item) => { // Custom implementation for parking areas
-    const districList = districtData.filter(obj => item.districts.some(id => obj.id.includes(id)));
+    const districList = districtData.filter(obj => item.districts.some(
+      district => obj.id.includes(district.id),
+    ));
     const parkingAreas = districList.filter(obj => !obj.id.includes('parking_area'));
     const parkingSpaces = districList.filter(obj => obj.id.includes('parking_area') && obj.id !== 'parking_area0');
     return (
@@ -145,7 +147,9 @@ const ServiceTab = (props) => {
       });
     }
 
-    const districList = districtData.filter(i => item.districts.includes(i.name));
+    const districList = districtData.filter(
+      i => item.districts.some(district => district.id === i.name),
+    );
     return renderDistrictList(districList);
   };
 

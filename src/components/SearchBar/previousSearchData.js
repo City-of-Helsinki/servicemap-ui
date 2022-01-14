@@ -127,3 +127,20 @@ export const saveSearchToHistory = (searchWord, results) => {
 
   LocalStorageUtility.saveItem(key, JSON.stringify(jsonData));
 };
+
+export const removeSearchFromHistory = (searchWord, callback) => {
+  const historyKey = searchWord.toLowerCase();
+  const data = LocalStorageUtility.getItem(key);
+  let jsonData;
+  if (!data) {
+    jsonData = {};
+  } else {
+    jsonData = toJson(data);
+  }
+
+  delete jsonData[historyKey];
+
+  LocalStorageUtility.saveItem(key, JSON.stringify(jsonData));
+
+  callback();
+};

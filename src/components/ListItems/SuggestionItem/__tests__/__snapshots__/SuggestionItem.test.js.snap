@@ -54,20 +54,22 @@ exports[`<SuggestionItem /> should work 1`] = `
       classes={
         Object {
           "container": "SuggestionItem-container-1",
-          "divider": "SuggestionItem-divider-8",
-          "itemFocus": "SuggestionItem-itemFocus-10",
+          "divider": "SuggestionItem-divider-9",
+          "historyText": "SuggestionItem-historyText-8",
+          "itemFocus": "SuggestionItem-itemFocus-12",
           "listIcon": "SuggestionItem-listIcon-4",
           "listItem": "SuggestionItem-listItem-2",
+          "removeText": "SuggestionItem-removeText-11",
           "subtitle": "SuggestionItem-subtitle-7",
           "suggestIcon": "SuggestionItem-suggestIcon-5",
           "suggestIconLabel": "SuggestionItem-suggestIconLabel-6",
-          "text": "SuggestionItem-text-9",
+          "text": "SuggestionItem-text-10",
           "textContainer": "SuggestionItem-textContainer-3",
         }
       }
       divider={false}
-      handleArrowClick={null}
       handleItemClick={null}
+      handleRemoveClick={null}
       icon={<UNDEFINED />}
       id={null}
       intl={
@@ -121,7 +123,7 @@ exports[`<SuggestionItem /> should work 1`] = `
         classes={
           Object {
             "root": "SuggestionItem-listItem-2",
-            "selected": "SuggestionItem-itemFocus-10",
+            "selected": "SuggestionItem-itemFocus-12",
           }
         }
         component="li"
@@ -150,7 +152,7 @@ exports[`<SuggestionItem /> should work 1`] = `
               "gutters": "MuiListItem-gutters",
               "root": "MuiListItem-root SuggestionItem-listItem-2",
               "secondaryAction": "MuiListItem-secondaryAction",
-              "selected": "Mui-selected SuggestionItem-itemFocus-10",
+              "selected": "Mui-selected SuggestionItem-itemFocus-12",
             }
           }
           component="li"
@@ -275,7 +277,7 @@ exports[`<SuggestionItem /> should work 1`] = `
                     </ForwardRef(ListItemIcon)>
                   </WithStyles(ForwardRef(ListItemIcon))>
                   <WithStyles(ForwardRef(ListItemText))
-                    className="SuggestionItem-text-9"
+                    className="SuggestionItem-text-10"
                     classes={
                       Object {
                         "root": "SuggestionItem-textContainer-3",
@@ -283,7 +285,7 @@ exports[`<SuggestionItem /> should work 1`] = `
                     }
                   >
                     <ForwardRef(ListItemText)
-                      className="SuggestionItem-text-9"
+                      className="SuggestionItem-text-10"
                       classes={
                         Object {
                           "dense": "MuiListItemText-dense",
@@ -296,7 +298,7 @@ exports[`<SuggestionItem /> should work 1`] = `
                       }
                     >
                       <div
-                        className="MuiListItemText-root SuggestionItem-textContainer-3 SuggestionItem-text-9"
+                        className="MuiListItemText-root SuggestionItem-textContainer-3 SuggestionItem-text-10"
                       >
                         <WithStyles(ForwardRef(Typography))
                           className="MuiListItemText-primary"
@@ -349,10 +351,12 @@ exports[`<SuggestionItem /> should work 1`] = `
                             >
                               <WithStyles(ForwardRef(Typography))
                                 aria-hidden={true}
+                                className=""
                                 variant="body2"
                               >
                                 <ForwardRef(Typography)
                                   aria-hidden={true}
+                                  className=""
                                   classes={
                                     Object {
                                       "alignCenter": "MuiTypography-alignCenter",

@@ -6,10 +6,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import {
   Typography, Divider, Button,
 } from '@material-ui/core';
-import { ArrowUpward } from '@material-ui/icons';
+import { FormattedMessage } from 'react-intl';
 import BoldedText from '../../BoldedText';
 import { keyboardHandler } from '../../../utils';
-import useMobileStatus from '../../../utils/isMobile';
 
 const SuggestionItem = (props) => {
   const {
@@ -18,7 +17,7 @@ const SuggestionItem = (props) => {
     divider,
     text,
     handleItemClick,
-    handleArrowClick,
+    handleRemoveClick,
     icon,
     selected,
     subtitle,
@@ -28,7 +27,6 @@ const SuggestionItem = (props) => {
   } = props;
 
   const [mouseDown, setMouseDown] = useState(false);
-  const isMobile = useMobileStatus();
   const onClick = handleItemClick
     ? (e) => {
       e.preventDefault();
@@ -72,6 +70,7 @@ const SuggestionItem = (props) => {
 
             <Typography
               aria-hidden
+              className={handleRemoveClick ? classes.historyText : ''}
               variant="body2"
             >
               {
@@ -99,28 +98,26 @@ const SuggestionItem = (props) => {
           }
           </ListItemText>
         </span>
-        {
-          isMobile
-          && handleArrowClick
-          && (
-            <Button
-              aria-hidden
-              className={`${classes.suggestIcon}`}
-              classes={{
-                label: classes.suggestIconLabel,
-              }}
-              onMouseDown={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                const value = text.props ? text.props.text : text;
-                handleArrowClick(value);
-                return false;
-              }}
-            >
-              <ArrowUpward style={{ transform: 'rotate(-48deg)' }} />
-            </Button>
-          )
-        }
+        {handleRemoveClick && (
+          <Button
+            aria-hidden
+            className={`${classes.suggestIcon}`}
+            classes={{
+              label: classes.suggestIconLabel,
+            }}
+            onMouseDown={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              const value = text.props ? text.props.text : text;
+              handleRemoveClick(value);
+              return false;
+            }}
+          >
+            <Typography variant="caption" className={classes.removeText}>
+              <FormattedMessage id="search.removeSuggestion" />
+            </Typography>
+          </Button>
+        )}
       </ListItem>
       {divider ? (
         <li aria-hidden>
@@ -137,7 +134,7 @@ SuggestionItem.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   text: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
   icon: PropTypes.objectOf(PropTypes.any),
-  handleArrowClick: PropTypes.func,
+  handleRemoveClick: PropTypes.func,
   handleItemClick: PropTypes.func,
   divider: PropTypes.bool,
   selected: PropTypes.bool,
@@ -150,8 +147,8 @@ SuggestionItem.propTypes = {
 
 SuggestionItem.defaultProps = {
   icon: null,
-  handleArrowClick: null,
   handleItemClick: null,
+  handleRemoveClick: null,
   divider: false,
   selected: false,
   subtitle: null,
