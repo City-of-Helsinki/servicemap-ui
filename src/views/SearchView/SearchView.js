@@ -80,7 +80,7 @@ class SearchView extends React.Component {
   }
 
   // Send information to matomo about search words that produce no results
-  sendNoResultsAnalytics = (previousSearch) => {
+  sendNoResultsAnalytics = (previousSearch, navigator) => {
     this.setState({ analyticsSent: previousSearch });
     navigator.trackPageView(null, previousSearch);
   }
@@ -94,7 +94,7 @@ class SearchView extends React.Component {
     const noResults = !isFetching && previousSearch && units && !units.length;
     // Send search query to matomo
     if (navigator && noResults && analyticsSent !== previousSearch) {
-      this.sendNoResultsAnalytics(previousSearch);
+      this.sendNoResultsAnalytics(previousSearch, navigator);
     }
   }
 
