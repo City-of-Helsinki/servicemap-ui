@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchUnits } from '../../redux/actions/unit';
 import { breadcrumbPush, breadcrumbPop, breadcrumbReplace } from '../../redux/actions/breadcrumb';
-import { generatePath } from '../../utils/path';
+import { generatePath, isEmbed } from '../../utils/path';
 import config from '../../../config';
 import SettingsUtility from '../../utils/settings';
 import matomoTracker from '../../utils/tracking';
@@ -53,10 +53,11 @@ class Navigator extends React.Component {
   }
 
   trackPageView = (settings) => {
-    const mobility = settings?.mobility;
-    const senses = settings?.senses;
-    if (typeof window !== 'undefined' && window?.cookiehub?.hasConsented('analytics')) {
+    const embed = isEmbed();
+    if (typeof window !== 'undefined' && !embed && window?.cookiehub?.hasConsented('analytics')) {
       if (matomoTracker) {
+        const mobility = settings?.mobility;
+        const senses = settings?.senses;
         setTimeout(() => {
           matomoTracker.trackPageView({
             documentTitle: document.title,
