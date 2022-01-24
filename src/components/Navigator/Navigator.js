@@ -52,7 +52,7 @@ class Navigator extends React.Component {
     }
   }
 
-  trackPageView = (settings, noResultsQuery) => {
+  trackPageView = (settings) => {
     const mobility = settings?.mobility;
     const senses = settings?.senses;
     if (typeof window !== 'undefined' && window?.cookiehub?.hasConsented('analytics')) {
@@ -60,10 +60,26 @@ class Navigator extends React.Component {
         setTimeout(() => {
           matomoTracker.trackPageView({
             documentTitle: document.title,
-            customDimensions: noResultsQuery
-              ? [{ id: config.matomoNoResultsDimensionID, value: noResultsQuery }]
-              : [{ id: config.matomoMobilityDimensionID, value: mobility || '' },
-                { id: config.matomoSensesDimensionID, value: senses?.join(',') }],
+            customDimensions: [
+              { id: config.matomoMobilityDimensionID, value: mobility || '' },
+              { id: config.matomoSensesDimensionID, value: senses?.join(',') },
+            ],
+          });
+        }, 400);
+      }
+    }
+  }
+
+  trackNoResultsEvent = (noResultsQuery) => {
+    if (typeof window !== 'undefined' && window?.cookiehub?.hasConsented('analytics')) {
+      if (matomoTracker) {
+        this.unlisten = null;
+        setTimeout(() => {
+          matomoTracker.trackPageView({
+            documentTitle: document.title,
+            customDimensions: [
+              { id: config.matomoNoResultsDimensionID, value: noResultsQuery },
+            ],
           });
         }, 400);
       }

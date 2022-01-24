@@ -87,11 +87,11 @@ class SearchView extends React.Component {
 
   componentDidUpdate = () => {
     const {
-      isFetching, previousSearch, units, navigator,
+      isFetching, previousSearch, max, navigator,
     } = this.props;
     const { analyticsSent } = this.state;
 
-    const noResults = !isFetching && previousSearch && units && !units.length;
+    const noResults = !isFetching && previousSearch && max && !max.length;
     // Send search query to matomo
     if (navigator && noResults && analyticsSent !== previousSearch) {
       this.sendNoResultsAnalytics(previousSearch, navigator);
