@@ -71,7 +71,7 @@ class Navigator extends React.Component {
     }
   }
 
-  trackNoResultsEvent = (noResultsQuery) => {
+  trackNoResultsPage = (noResultsQuery) => {
     if (typeof window !== 'undefined' && window?.cookiehub?.hasConsented('analytics')) {
       if (matomoTracker) {
         this.unlisten = null;

@@ -82,7 +82,7 @@ class SearchView extends React.Component {
   // Send information to matomo about search words that produce no results
   sendNoResultsAnalytics = (previousSearch, navigator) => {
     this.setState({ analyticsSent: previousSearch });
-    navigator.trackPageView(null, previousSearch);
+    navigator.trackNoResultsPage(previousSearch);
   }
 
   componentDidUpdate = () => {
