@@ -40,7 +40,7 @@ class SettingsUtility {
   }
 
   static isValidMobilitySetting(value) {
-    if (!value || SettingsUtility.mobilitySettings.indexOf(value) < 0) {
+    if (SettingsUtility.mobilitySettings.indexOf(value) < 0) {
       return false;
     }
     return true;

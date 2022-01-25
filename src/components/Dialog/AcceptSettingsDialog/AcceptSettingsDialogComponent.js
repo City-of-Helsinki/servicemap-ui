@@ -40,7 +40,7 @@ const AcceptSettingsDialogComponent = ({
     let text = '';
 
     try {
-      if (SettingsUtility.isValidMobilitySetting(mobility)) {
+      if (mobility && SettingsUtility.isValidMobilitySetting(mobility)) {
         text += `${intl.formatMessage({ id: `settings.mobility.${mobility}` })}`;
         if (senses.length) {
           text += ', ';
