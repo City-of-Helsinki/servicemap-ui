@@ -35,7 +35,7 @@ const SearchBarComponent = ({
   const blurDelay = 150;
   const rootClass = 'SearchBar';
   const ps = previousSearch
-    && !(previousSearch.includes('service_node:') || previousSearch.includes('events:')) ? previousSearch : null;
+    && !(previousSearch.includes('service_node:') || previousSearch.includes('events:') || previousSearch.includes('id:')) ? previousSearch : null;
 
   const intl = useIntl();
 
