@@ -491,7 +491,7 @@ class SearchView extends React.Component {
           count: groupedData
             .units.length,
         })}`,
-        beforePagination: showExpandedSearch ? this.renderExpandedSearchButton() : null,
+        // beforePagination: showExpandedSearch ? this.renderExpandedSearchButton() : null,
         component: null,
         data: groupedData.units,
         itemsPerPage: 10,
