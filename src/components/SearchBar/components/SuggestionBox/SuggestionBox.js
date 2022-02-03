@@ -33,7 +33,7 @@ const SuggestionBox = (props) => {
     navigator,
   } = props;
 
-  const [searchQueries, setSearchQueries] = useState(null);
+  const [suggestions, setSuggestions] = useState(null);
   const [loading, setLoading] = useState(false);
   const [suggestionError, setSuggestionError] = useState(false);
   // Query word on which suggestion list is based
@@ -97,23 +97,22 @@ const SuggestionBox = (props) => {
       fetchController.current = new AbortController();
       const { signal } = fetchController.current;
 
-      createSuggestions(query, signal, locale, intl)
-        .then((suggestions) => {
-          if (suggestions === 'error') {
+      createSuggestions(query, signal, locale, getLocaleText)
+        .then((data) => {
+          if (data === 'error') {
             return;
           }
           fetchController.current = null;
-          if (suggestions.length) {
-            setSearchQueries(suggestions);
-            setLoading(false);
+          setLoading(false);
+          if (Object.values(data).some(list => list.length)) {
+            setSuggestions(data);
           } else {
             setSuggestionError(true);
-            setLoading(false);
           }
         });
     } else {
       setLoading(false);
-      setSearchQueries(null);
+      setSuggestions(null);
       if (fetchController.current) {
         fetchController.current.abort();
       }
