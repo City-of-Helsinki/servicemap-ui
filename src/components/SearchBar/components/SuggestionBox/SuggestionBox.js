@@ -1,20 +1,30 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, {
+  useEffect, useState, useRef, useCallback,
+} from 'react';
 import PropTypes from 'prop-types';
-import { ArrowDropUp, LocationOn, Search } from '@material-ui/icons';
+import { ArrowDropUp, LocationOn } from '@material-ui/icons';
 import {
   Paper, List, Typography,
 } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch } from 'react-redux';
-import { getPreviousSearches } from '../../previousSearchData';
 import PreviousSearches from '../../PreviousSearches';
 import createSuggestions from '../../createSuggestions';
 import config from '../../../../../config';
 import SuggestionItem from '../../../ListItems/SuggestionItem';
 import { keyboardHandler } from '../../../../utils';
-import { AreaIcon } from '../../../SMIcon';
+import { getIcon } from '../../../SMIcon';
 import { CloseSuggestionButton } from '../CloseSuggestionButton';
 import { setSelectedDistrictType } from '../../../../redux/actions/district';
+import useLocaleText from '../../../../utils/useLocaleText';
+import UnitIcon from '../../../SMIcon/UnitIcon';
+
+// This defines which suggestion types are show and the order of the suggestions.
+const suggestionTypes = [
+  'addresses',
+  'units',
+  'services',
+];
 
 
 const SuggestionBox = (props) => {
@@ -40,9 +50,62 @@ const SuggestionBox = (props) => {
   const [suggestionQuery, setSuggestionQuery] = useState(null);
 
   const dispatch = useDispatch();
+  const getLocaleText = useLocaleText();
   const listRef = useRef(null);
   const fetchController = useRef(null);
-  const maxSuggestionCount = 5;
+
+  const handleAreaItemClick = (area) => {
+    if (navigator) {
+      dispatch(setSelectedDistrictType(null));
+      navigator.push('area', area.id);
+    }
+  };
+
+  const getAddressText = (item) => {
+    if (item.isExact) {
+      return getLocaleText(item.full_name);
+    }
+    return `${item.street}, ${intl.formatMessage({ id: 'search.suggestions.addresses' })}`;
+  };
+
+  const handleAddressItemClick = useCallback((item) => {
+    let searchText = '';
+    if (item.isExact) {
+      searchText = getLocaleText(item.full_name);
+    } else {
+      searchText = item.street;
+    }
+    handleBlur();
+    navigator.push('search', { q: searchText, t: 1 });
+  }, [handleBlur, navigator, getLocaleText]);
+
+  const suggestionConfig = {
+    addresses: {
+      count: 1,
+      icon: <LocationOn className={classes.areaIcon} />,
+      onClick: item => handleAddressItemClick(item),
+      text: item => getAddressText(item),
+    },
+    units: {
+      count: 5,
+      icon: <UnitIcon />,
+      onClick: item => navigator.push('unit', { id: item.id }),
+      text: item => getLocaleText(item.name),
+    },
+    services: {
+      count: 2,
+      icon: getIcon('serviceDark'),
+      onClick: item => navigator.push('service', item.id),
+      text: item => getLocaleText(item.name),
+    },
+  };
+
+  const getSuggestionList = () => suggestionTypes.flatMap((key) => {
+    const items = suggestions[key].slice(0, suggestionConfig[key].count);
+    items.forEach((item) => { item.type = key; });
+    return items;
+  });
+
 
   // Component mount action
   useEffect(() => (
@@ -60,28 +123,8 @@ const SuggestionBox = (props) => {
   });
   */
 
-  const handleAreaItemClick = (area) => {
-    if (navigator) {
-      dispatch(setSelectedDistrictType(null));
-      navigator.push('area', area.id);
-    }
-  };
-
-  const handleAddressItemClick = (item) => {
-    handleBlur();
-    navigator.push('search', { q: item.query, t: 1 });
-  };
-
-  const slicedSuggestions = () => {
-    let suggestionList = searchQueries || null;
-    if (suggestionList && suggestionList.length) {
-      suggestionList = suggestionList.slice(0, maxSuggestionCount);
-    }
-    return suggestionList;
-  };
-
   const resetSuggestions = () => {
-    setSearchQueries(null);
+    setSuggestions(null);
     setSuggestionError(false);
   };
 
@@ -148,68 +191,30 @@ const SuggestionBox = (props) => {
   );
 
   const renderSuggestionList = () => {
-    const suggestionList = slicedSuggestions();
-
-    if (suggestionList) {
+    if (suggestions) {
+      const suggestionList = getSuggestionList();
       return (
         <>
           <List role="listbox" id="SuggestionList" className="suggestionList" ref={listRef}>
-            {suggestionList.map((item, i) => {
-              if (item.object_type === 'suggestion') {
-                return (
-                  <SuggestionItem
-                    id={`suggestion${i}`}
-                    role="option"
-                    selected={i === focusedSuggestion}
-                    key={`suggestion-${item.suggestion + item.count}`}
-                    icon={<Search />}
-                    text={item.suggestion}
-                    handleArrowClick={handleArrowClick}
-                    handleItemClick={() => handleSubmit(item.suggestion)}
-                    divider={i !== suggestionList.length - 1}
-                    subtitle={intl.formatMessage({ id: 'search.suggestions.results' }, { count: item.count })}
-                    isMobile
-                    query={suggestionQuery}
-                  />
-                );
-              }
-              if (item.object_type === 'area') {
-                return (
-                  <SuggestionItem
-                    id={`suggestion${i}`}
-                    className="AreaSuggestion"
-                    role="option"
-                    selected={i === focusedSuggestion}
-                    key={`suggestion-${item.name}`}
-                    icon={<AreaIcon className={classes.areaIcon} />}
-                    text={`${item.name}, ${intl.formatMessage({ id: 'search.suggestions.areas' })}`}
-                    handleItemClick={() => handleAreaItemClick(item)}
-                    divider
-                    isMobile
-                    query={suggestionQuery}
-                  />
-                );
-              }
-              if (item.object_type === 'address') {
-                const sortIndex = item.sort_index;
-                return (
-                  <SuggestionItem
-                    id={`suggestion${i}`}
-                    className="AddressSuggestion"
-                    role="option"
-                    selected={i === focusedSuggestion}
-                    key={`address-${sortIndex}`}
-                    icon={<LocationOn className={classes.areaIcon} />}
-                    text={item.name}
-                    handleItemClick={() => handleAddressItemClick(item)}
-                    divider
-                    isMobile
-                    query={suggestionQuery}
-                    fullQuery={item.query}
-                  />
-                );
-              }
-              return null;
+            {suggestionList.map((suggestion, i) => {
+              const conf = suggestionConfig[suggestion.type];
+              if (!conf) return null;
+
+              return (
+                <SuggestionItem
+                  id={`suggestion${i}`}
+                  key={suggestion.id}
+                  className={conf.className ? 'AddressSuggestion' : ''}
+                  role="option"
+                  selected={i === focusedSuggestion}
+                  icon={conf.icon}
+                  text={conf.text(suggestion)}
+                  handleItemClick={() => conf.onClick(suggestion)}
+                  divider
+                  isMobile
+                  query={suggestionQuery}
+                />
+              );
             })}
           </List>
         </>
@@ -279,9 +284,9 @@ const SuggestionBox = (props) => {
   if (visible) {
     let component = null;
     let srText = null;
-    if (searchQueries) {
+    if (suggestions) {
       component = renderSuggestionList();
-      const suggestionList = slicedSuggestions();
+      const suggestionList = getSuggestionList();
       srText = intl.formatMessage({ id: 'search.suggestions.suggestions' }, { count: suggestionList.length });
     } else if (loading) {
       component = renderLoading();

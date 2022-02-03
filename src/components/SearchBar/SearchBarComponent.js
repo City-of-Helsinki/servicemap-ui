@@ -40,7 +40,7 @@ const SearchBarComponent = ({
   const intl = useIntl();
 
   const [isActive, setIsActive] = useState(false);
-  const [initialSearchValue, setInitialSearchValue] = useState(ps || initialValue || '');
+  const [initialSearchValue, setInitialSearchValue] = useState(initialValue || ps || '');
   const [focusedSuggestion, setFocusedSuggestion] = useState(null);
   const [updateCount, setUpdateCount] = useState(0);
   const searchRef = useRef();
@@ -108,15 +108,14 @@ const SearchBarComponent = ({
     if (isFetching) return;
     let searchQuery;
     if (focusedSuggestion !== null) {
-      // Get focused suggestion search string
       const suggestion = document.getElementById(`suggestion${focusedSuggestion}`);
-      if (suggestion?.classList.contains('AreaSuggestion') || suggestion?.classList.contains('AddressSuggestion')) {
+      if (!document.querySelector('#PreviousList')) {
         suggestion.click();
         return;
       }
-      // Omit search result count from suggestion string
       searchQuery = suggestion?.getElementsByTagName('p')[0].textContent;
-    } else if (search && search !== '') {
+    }
+    if (search && search !== '') {
       searchQuery = search;
     }
     if (searchQuery) {
