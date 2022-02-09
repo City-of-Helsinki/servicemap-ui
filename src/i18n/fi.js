@@ -530,7 +530,7 @@ const translations = {
   'service.plural': 'Palvelut',
   'service.nearby': 'Palvelut täällä asuville',
   'service.units.empty': 'Palvelulla ei ole toimipisteitä',
-  'service.tab': 'Palvelut ja tapahtumat',
+  'service.tab': 'Palvelut',
   'service.description': 'Katso palveluiden sijainnit ja yhteystiedot',
 
   // Service tree

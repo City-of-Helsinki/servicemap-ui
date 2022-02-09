@@ -528,7 +528,7 @@ const translations = {
   'service.plural': 'Tjänster',
   'service.nearby': 'Närtjänster',
   'service.units.empty': 'Tjänsten har inga verksamhetsställen',
-  'service.tab': 'Tjänster och evenemang',
+  'service.tab': 'Tjänster',
   'service.description': 'Se tjänsternas lägen och kontaktuppgifter',
 
   // Service tree
