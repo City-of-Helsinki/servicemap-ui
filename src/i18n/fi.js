@@ -612,7 +612,7 @@ const translations = {
   'tool.print': 'Tulosta',
 
   'info.title': 'Tietoa palvelusta ja saavutettavuusseloste',
-  'info.statement': 'Saavutettavuusseloste',
+  'info.statement': 'Saavutettavuusseloste (uusi välilehti)',
 
   'alert.close': 'Sulje ilmoitus',
 };
