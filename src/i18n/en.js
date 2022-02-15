@@ -527,7 +527,7 @@ const translations = {
   'service.plural': 'Services',
   'service.nearby': 'Nearby services',
   'service.units.empty': 'Service does not have service points',
-  'service.tab': 'Services and events',
+  'service.tab': 'Services',
   'service.description': 'View locations and contact information of services',
 
   // Service tree
@@ -609,7 +609,7 @@ const translations = {
   'tool.print': 'Print',
 
   'info.title': 'About the service and accessibility statement',
-  'info.statement': 'Accessibility statement',
+  'info.statement': 'Accessibility statement (new tab)',
 
   'alert.close': 'Close the notification',
 };

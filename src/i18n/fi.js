@@ -530,7 +530,7 @@ const translations = {
   'service.plural': 'Palvelut',
   'service.nearby': 'Palvelut täällä asuville',
   'service.units.empty': 'Palvelulla ei ole toimipisteitä',
-  'service.tab': 'Palvelut ja tapahtumat',
+  'service.tab': 'Palvelut',
   'service.description': 'Katso palveluiden sijainnit ja yhteystiedot',
 
   // Service tree
@@ -612,7 +612,7 @@ const translations = {
   'tool.print': 'Tulosta',
 
   'info.title': 'Tietoa palvelusta ja saavutettavuusseloste',
-  'info.statement': 'Saavutettavuusseloste',
+  'info.statement': 'Saavutettavuusseloste (uusi välilehti)',
 
   'alert.close': 'Sulje ilmoitus',
 };
