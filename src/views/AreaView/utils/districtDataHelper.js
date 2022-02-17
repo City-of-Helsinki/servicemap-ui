@@ -104,9 +104,15 @@ export const groupDistrictData = (data) => {
     // FIXME: temporary solution to hide older school years
       return acc;
     }
-    const period = start && end
-      ? `${new Date(start).getFullYear()}-${new Date(end).getFullYear()}`
-      : null;
+    let period;
+
+    if (cur.extra?.schoolyear) {
+      period = cur.extra.schoolyear;
+    } else {
+      period = start && end
+        ? `${new Date(start).getFullYear()}-${new Date(end).getFullYear()}`
+        : null;
+    }
     const currentType = period ? `${cur.type}${period}` : cur.type;
     const duplicate = acc.find(obj => obj.id === currentType);
 
@@ -137,7 +143,11 @@ export const groupDistrictData = (data) => {
 
 const compareBoundaries = (a, b) => {
   // This function checks if district b is within district a or districts are identical
-  if (a.id === b.id || a.start !== b.start || a.end !== b.end) {
+
+  if (a.id === b.id
+    || a.start !== b.start
+    || a.end !== b.end
+    || a.extra?.schoolyear !== b.extra?.schoolyear) {
     return false;
   }
   if (booleanEqual(a.boundary, b.boundary)) {
