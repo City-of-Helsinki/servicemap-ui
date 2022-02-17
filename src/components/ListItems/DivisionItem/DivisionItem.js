@@ -35,7 +35,7 @@ const DivisionItem = ({
   const emergencyCareText = data.emergencyUnitId ? <FormattedMessage id={`address.emergency_care.unit.${data.emergencyUnitId}`} /> : null;
   const emergencyOnClick = () => navigator.push('unit', { id: emergencyUnitId });
 
-  let title = intl.formatMessage({ id: `area.list.${area.type}` });
+  let title = disableTitle ? null : intl.formatMessage({ id: `area.list.${area.type}` });
   if (customTitle) {
     title = customTitle;
   } else {
