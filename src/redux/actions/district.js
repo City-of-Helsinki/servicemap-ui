@@ -132,9 +132,18 @@ export const fetchDistrictGeometry = (type, period) => (
       // Filter with start and end year
       const start = period.slice(0, 4);
       const end = period.slice(-4);
-      const yearFilteredData = filteredData.filter(item => (
-        item.start.slice(0, 4) === start && item.end.slice(0, 4) === end
-      ));
+      const yearFilteredData = filteredData.filter((item) => {
+        if (item.extra?.schoolyear) {
+          if (item.extra?.schoolyear === period) {
+            return true;
+          }
+          return false;
+        }
+        if (item.start.slice(0, 4) === start && item.end.slice(0, 4) === end) {
+          return true;
+        }
+        return false;
+      });
       filteredData = yearFilteredData;
     }
     dispatch(updateDistrictData(type, filteredData, period));
