@@ -98,16 +98,16 @@ const DistrictUnitList = (props) => {
         localArea = true;
       }
       if (obj.units?.length) {
-        if (localArea) obj.units.forEach((unit) => { unit.localUnit = true; });
+        obj.units.forEach((unit) => { unit.localUnit = localArea; });
         unitList.push(...obj.units);
       } else if (obj.unit) {
-        if (localArea) { obj.unit.localUnit = true; }
+        obj.unit.localUnit = localArea;
         unitList.push(obj.unit);
       }
       if (obj.overlapping) {
         obj.overlapping.forEach((i) => {
           if (i.unit) {
-            if (localArea) i.unit.localUnit = true;
+            i.unit.localUnit = localArea;
             unitList.push(i.unit);
           }
         });
