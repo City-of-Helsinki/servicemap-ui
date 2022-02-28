@@ -18,6 +18,10 @@ const dataSet = prefix => ({
     max,
     next,
   }),
+  fetchMoreSuccess: data => ({
+    type: `${prefix}_FETCH_MORE_SUCCESS`,
+    data,
+  }),
   setNewData: data => ({
     type: `${prefix}_SET_NEW_DATA`,
     data,
@@ -55,7 +59,7 @@ const dataSingle = prefix => ({
 });
 
 // Data fetch multiple
-export const units = dataSet('UNITS');
+export const searchResults = dataSet('SEARCH_RESULTS');
 export const service = dataSet('SERVICE');
 export const events = dataSet('SELECTED_UNIT_EVENTS');
 export const reservations = dataSet('SELECTED_UNIT_RESERVATIONS');
