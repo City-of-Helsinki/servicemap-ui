@@ -13,7 +13,7 @@ const Loading = (props) => {
     const {
       count, data, isFetching, max,
     } = reducer;
-    // Render loding text if currently loading information
+    // Render loading text if currently loading information
     if (isFetching) {
       if (max) {
         const progress = (isFetching && count) ? Math.floor((count / max * 100)) : 0;
@@ -52,6 +52,8 @@ Loading.propTypes = {
   progress: PropTypes.number,
   reducer: PropTypes.shape({
     isFetching: PropTypes.bool,
+    count: PropTypes.number,
+    max: PropTypes.number,
     data: PropTypes.oneOfType([
       PropTypes.objectOf(PropTypes.any),
       PropTypes.array,

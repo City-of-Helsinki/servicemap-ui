@@ -24,8 +24,7 @@ const fitUnitsToMap = (units, map) => {
     [corner2.lat, corner2.lng],
   ]);
 
-  let unitList = units;
-  unitList = units.map(obj => (obj.object_type === 'event' ? obj.location : obj));
+  const unitList = units.map(obj => (obj.object_type === 'event' ? obj.location : obj));
 
   const bounds = [];
 

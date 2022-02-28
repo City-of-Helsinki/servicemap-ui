@@ -59,7 +59,7 @@ class ResultList extends React.Component {
           {
             data && data.length
             && data.map((item) => {
-              const { id, object_type, sort_index } = item;
+              const { id, object_type } = item;
               // Figure out correct icon for item
               let itemComponent = null;
               switch (object_type) {
@@ -70,16 +70,14 @@ class ResultList extends React.Component {
                   itemComponent = <ServiceItem key={`service-${id}`} service={item} />;
                   break;
                 case 'address':
-                  itemComponent = <AddressItem key={`address-${sort_index}`} address={item} />;
+                  itemComponent = <AddressItem key={`address-${id}`} address={item} />;
                   break;
                 case 'event':
-                  itemComponent = <EventItem key={`event-${item.id}`} event={item} />;
+                  itemComponent = <EventItem key={`event-${id}`} event={item} />;
                   break;
                 default:
                   if (customComponent && item) {
                     itemComponent = customComponent(item);
-                  } else {
-                    itemComponent = null;
                   }
               }
 

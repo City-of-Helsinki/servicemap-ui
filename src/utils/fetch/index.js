@@ -19,7 +19,6 @@ const wrapperClosure = (key, options = {}) => async (
 };
 
 export const accessibilitySentencesFetch = wrapperClosure('accessibilitySentences');
-export const searchFetch = wrapperClosure('search', APIHandlers.search.options);
 export const unitEventsFetch = wrapperClosure('unitEvents', APIHandlers.unitEvents.options);
 export const selectedUnitFetch = wrapperClosure('unit', APIHandlers.unit.options);
 export const unitsFetch = wrapperClosure('units', APIHandlers.units.options);
