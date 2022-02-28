@@ -31,7 +31,7 @@ export const fetchServiceUnits = serviceId => async (dispatch, getState) => {
   }
 
   if (!municipality) {
-    const citySettings = SettingsUtility.getActiveCitySettings(getState());
+    const citySettings = SettingsUtility.getActiveCitySettings(getState().settings.cities);
     municipality = citySettings.join(',');
   }
 
