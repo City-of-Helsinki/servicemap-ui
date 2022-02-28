@@ -22,7 +22,7 @@ const SearchBarComponent = ({
   changeSelectedUnit,
   classes,
   className,
-  fetchUnits,
+  fetchSearchResults,
   hideBackButton,
   navigator,
   isFetching,
@@ -123,7 +123,7 @@ const SearchBarComponent = ({
 
       if (searchQuery !== previousSearch) {
         searchRef.current.value = searchQuery; // Change current search text to new one
-        fetchUnits({ q: searchQuery });
+        fetchSearchResults({ q: searchQuery });
         changeSelectedUnit(null);
       }
 
@@ -407,7 +407,7 @@ SearchBarComponent.propTypes = {
   changeSelectedUnit: PropTypes.func.isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   className: PropTypes.string,
-  fetchUnits: PropTypes.func.isRequired,
+  fetchSearchResults: PropTypes.func.isRequired,
   header: PropTypes.bool,
   hideBackButton: PropTypes.bool,
   navigator: PropTypes.objectOf(PropTypes.any),

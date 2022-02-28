@@ -18,21 +18,22 @@ const mapStateToProps = (state) => {
   } = state;
   const unitList = getProcessedData(state);
   const serviceUnitsLoading = state.service.isFetching;
-  const searchUnitsLoading = state.units.isFetching;
+  const searchUnitsLoading = state.searchResults.isFetching;
   const serviceUnits = getServiceUnits(state);
   const highlightedDistrict = getHighlightedDistrict(state);
   const highlightedUnit = getSelectedUnit(state);
   const {
     customPosition, locale, page, position,
   } = user;
-  const { adminDistricts, units, toRender } = address;
+  const { adminDistricts, toRender } = address;
+  const addressUnits = address.units;
   const districtUnits = getFilteredSubdistrictUnits(state);
   const districtUnitsFetching = districts.unitFetch.isFetching;
   const { districtsFetching } = districts;
 
   const userLocation = customPosition.coordinates || position.coordinates;
   return {
-    addressUnits: units,
+    addressUnits,
     addressToRender: toRender,
     adminDistricts,
     highlightedDistrict,

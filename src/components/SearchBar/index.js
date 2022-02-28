@@ -1,16 +1,16 @@
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core';
 import styles from './styles';
-import { fetchUnits } from '../../redux/actions/unit';
+import fetchSearchResults from '../../redux/actions/search';
 import { changeSelectedUnit } from '../../redux/actions/selectedUnit';
 import SearchBarComponent from './SearchBarComponent';
 
 // Listen to redux state
 const mapStateToProps = (state) => {
   const {
-    navigator, units,
+    navigator, searchResults,
   } = state;
-  const { isFetching, previousSearch } = units;
+  const { isFetching, previousSearch } = searchResults;
   return {
     previousSearch,
     isFetching,
@@ -20,7 +20,7 @@ const mapStateToProps = (state) => {
 
 export const SearchBar = withStyles(styles)(connect(
   mapStateToProps,
-  { changeSelectedUnit, fetchUnits },
+  { changeSelectedUnit, fetchSearchResults },
 )(SearchBarComponent));
 
 export default SearchBar;

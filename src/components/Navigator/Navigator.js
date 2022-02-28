@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchUnits } from '../../redux/actions/unit';
 import { breadcrumbPush, breadcrumbPop, breadcrumbReplace } from '../../redux/actions/breadcrumb';
 import { generatePath } from '../../utils/path';
 import config from '../../../config';
@@ -217,11 +216,11 @@ Navigator.defaultProps = {
 const mapStateToProps = (state) => {
   const {
     breadcrumb,
-    units,
+    searchResults,
     settings,
   } = state;
 
-  const { previousSearch } = units;
+  const { previousSearch } = searchResults;
   return {
     breadcrumb,
     previousSearch,
@@ -233,7 +232,7 @@ const mapStateToProps = (state) => {
 export default connect(
   mapStateToProps,
   {
-    breadcrumbPush, breadcrumbPop, breadcrumbReplace, fetchUnits,
+    breadcrumbPush, breadcrumbPop, breadcrumbReplace,
   },
   null,
   { forwardRef: true },
