@@ -100,7 +100,9 @@ export const getAddressFromUnit = (unit, getLocaleText, intl) => {
     return '';
   }
   if (!unit.address_zip || !unit.municipality) {
-    return `${getLocaleText(unit.street_address)}`;
+    return typeof unit.street_address === 'string'
+      ? unit.street_address
+      : `${getLocaleText(unit.street_address)}`;
   }
   const { address_zip: addressZip } = unit;
   const postalCode = addressZip ? `, ${addressZip}` : '';
@@ -109,7 +111,7 @@ export const getAddressFromUnit = (unit, getLocaleText, intl) => {
     defaultMessage: ' ',
   });
 
-  return `${getLocaleText(unit.street_address)}${postalCode} ${city}`;
+  return `${typeof unit.street_address === 'string' ? unit.street_address : getLocaleText(unit.street_address)}${postalCode} ${city}`;
 };
 
 export const useNavigationParams = () => {
