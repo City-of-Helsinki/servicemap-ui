@@ -61,14 +61,12 @@ const SuggestionBox = (props) => {
   };
 
   const handleAddressItemClick = useCallback((item) => {
-    let searchText = '';
     if (item.isExact) {
-      searchText = getLocaleText(item.full_name);
+      navigator.push('address', { fullAddress: getLocaleText(item.full_name) });
     } else {
-      searchText = item.street;
+      navigator.push('search', { q: item.street, t: 'addresses' });
     }
     handleBlur();
-    navigator.push('search', { q: searchText, t: 'addresses' });
   }, [handleBlur, navigator, getLocaleText]);
 
 

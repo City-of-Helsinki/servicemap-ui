@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { uppercaseFirst } from '../../../utils';
 import SimpleListItem from '../SimpleListItem';
 import { AddressIcon } from '../../SMIcon';
 import { getAddressText, useNavigationParams } from '../../../utils/address';
@@ -20,19 +19,22 @@ const AddressItem = (props) => {
   const getLocaleText = useLocaleText();
   const getAddressNavigatorParams = useNavigationParams();
 
-  const text = getAddressText(address, getLocaleText, showPostalCode);
+  const text = address.full_name
+    ? getLocaleText(address.full_name)
+    : getAddressText(address, getLocaleText, showPostalCode);
 
   return (
     <SimpleListItem
       className={className}
       button
-      text={uppercaseFirst(text)}
+      text={text}
       icon={<AddressIcon className={classes.icon} />}
       divider
       handleItemClick={(e) => {
         e.preventDefault();
         if (navigator) {
-          navigator.push('address', getAddressNavigatorParams(address));
+          if (address.full_name) navigator.push('address', { fullAddress: getLocaleText(address.full_name) });
+          else navigator.push('address', getAddressNavigatorParams(address));
         }
       }}
       role={role || 'link'}

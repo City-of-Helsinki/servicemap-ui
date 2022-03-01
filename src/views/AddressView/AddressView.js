@@ -8,6 +8,7 @@ import {
 import { FormattedMessage } from 'react-intl';
 import { Map } from '@material-ui/icons';
 import Helmet from 'react-helmet';
+import { useDispatch } from 'react-redux';
 import { focusToPosition, useMapFocusDisabled } from '../MapView/utils/mapActions';
 import fetchAdministrativeDistricts from './utils/fetchAdministrativeDistricts';
 import TitleBar from '../../components/TitleBar';
@@ -15,6 +16,7 @@ import { AddressIcon } from '../../components/SMIcon';
 
 import fetchAddressUnits from './utils/fetchAddressUnits';
 import fetchAddressData from './utils/fetchAddressData';
+import fetchAddressDataFromSearch from './utils/fetchAddressDataFromSearch';
 import SMButton from '../../components/ServiceMapButton';
 import TabLists from '../../components/TabLists';
 import { getAddressText, addressMatchParamsToFetchOptions, useNavigationParams } from '../../utils/address';
@@ -55,8 +57,10 @@ const getEmergencyCareUnit = (division) => {
 
 const AddressView = (props) => {
   const [error, setError] = useState(null);
+  const [isFetching, setIsFetching] = useState(false);
   const getAddressNavigatorParams = useNavigationParams();
   const getLocaleText = useLocaleText();
+  const dispatch = useDispatch();
 
   const {
     addressData,
@@ -78,7 +82,13 @@ const AddressView = (props) => {
     units,
   } = props;
 
-  const title = getAddressText(addressData, getLocaleText);
+  let title = '';
+
+  if (!isFetching) {
+    if (addressData?.full_name) title = getLocaleText(addressData?.full_name);
+    else title = getAddressText(addressData, getLocaleText);
+  }
+
   const mapFocusDisabled = useMapFocusDisabled();
 
   const fetchAddressDistricts = (lnglat) => {
@@ -152,6 +162,37 @@ const AddressView = (props) => {
       });
   };
 
+  const fetchDataFromSearch = () => {
+    const { params } = match;
+    setIsFetching(true);
+    dispatch(fetchAddressDataFromSearch(params.fullAddress))
+      .then((data) => {
+        setIsFetching(false);
+        const address = data.length && data[0];
+        if (!address) {
+          setError(intl.formatMessage({ id: 'address.error' }));
+          return;
+        }
+
+        if (params.fullAddress.toLowerCase() !== getLocaleText(address.full_name).toLowerCase()) {
+          navigator.replace('address', {
+            fullAddress: getLocaleText(address.full_name),
+            embed,
+          });
+        }
+
+        setAddressData(address);
+        setAddressLocation({ addressCoordinates: address.location.coordinates });
+        const { coordinates } = address.location;
+
+        if (!mapFocusDisabled) {
+          focusToPosition(map, [coordinates[0], coordinates[1]]);
+        }
+        fetchAddressDistricts(coordinates);
+        fetchUnits(coordinates);
+      });
+  };
+
   const renderHead = (title) => {
     if (addressData) {
       return (
@@ -190,7 +231,7 @@ const AddressView = (props) => {
   );
 
   const renderNearbyList = () => {
-    if (!units) {
+    if (isFetching || !units) {
       return <Typography><FormattedMessage id="general.loading" /></Typography>;
     } if (units && !units.length) {
       return <Typography><FormattedMessage id="general.noData" /></Typography>;
@@ -200,7 +241,7 @@ const AddressView = (props) => {
 
 
   const renderClosebyServices = () => {
-    if (!adminDistricts) {
+    if (isFetching || !adminDistricts) {
       return <Typography><FormattedMessage id="general.loading" /></Typography>;
     }
     // Get divisions with units
@@ -281,12 +322,6 @@ const AddressView = (props) => {
     );
   };
 
-  // Update view data when match props (url) change
-  useEffect(() => {
-    if (map) {
-      fetchData();
-    }
-  }, [match.url, map]);
 
   // Render component
   const tabs = [
@@ -325,6 +360,18 @@ const AddressView = (props) => {
       tabs[selectedTab].onClick();
     }
   }, []);
+
+  // Update view data when match props (url) change
+  useEffect(() => {
+    if (map) {
+      if (match.params.fullAddress) {
+        // If incomplete address data, fetch from search endpoint instead
+        fetchDataFromSearch();
+      } else {
+        fetchData();
+      }
+    }
+  }, [match.url, map]);
 
   if (embed) {
     return null;
