@@ -86,7 +86,9 @@ export default class HttpClient {
   }
 
   fetch = async (endpoint, options, type) => {
-    this.abortController = new AbortController();
+    if (!this.abortController) {
+      this.abortController = new AbortController();
+    }
     this.status = 'fetching';
 
     const signal = this.abortController?.signal || null;
@@ -201,6 +203,13 @@ export default class HttpClient {
       throw new APIFetchError('Invalid onError provided for HTTPClient');
     }
     this.onError = onError;
+  }
+
+  setAbortController = (controller) => {
+    if (typeof controller !== 'object') {
+      throw new APIFetchError('Invalid abort controller provided for HTTPClient');
+    }
+    this.abortController = controller;
   }
 
   isFetching = () => this.status === 'fetching';

@@ -10,21 +10,14 @@ import { FormattedMessage } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import PreviousSearches from '../../PreviousSearches';
 import createSuggestions from '../../createSuggestions';
-import config from '../../../../../config';
+// import config from '../../../../../config';
 import SuggestionItem from '../../../ListItems/SuggestionItem';
 import { keyboardHandler } from '../../../../utils';
 import { getIcon } from '../../../SMIcon';
 import { CloseSuggestionButton } from '../CloseSuggestionButton';
-import { setSelectedDistrictType } from '../../../../redux/actions/district';
+// import { setSelectedDistrictType } from '../../../../redux/actions/district';
 import useLocaleText from '../../../../utils/useLocaleText';
 import UnitIcon from '../../../SMIcon/UnitIcon';
-
-// This defines which suggestion types are show and the order of the suggestions.
-const suggestionTypes = [
-  'addresses',
-  'units',
-  'services',
-];
 
 
 const SuggestionBox = (props) => {
@@ -39,7 +32,6 @@ const SuggestionBox = (props) => {
     focusedSuggestion,
     isMobile,
     intl,
-    locale,
     navigator,
   } = props;
 
@@ -54,12 +46,12 @@ const SuggestionBox = (props) => {
   const listRef = useRef(null);
   const fetchController = useRef(null);
 
-  const handleAreaItemClick = (area) => {
-    if (navigator) {
-      dispatch(setSelectedDistrictType(null));
-      navigator.push('area', area.id);
-    }
-  };
+  // const handleAreaItemClick = (area) => {
+  //   if (navigator) {
+  //     dispatch(setSelectedDistrictType(null));
+  //     navigator.push('area', area.id);
+  //   }
+  // };
 
   const getAddressText = (item) => {
     if (item.isExact) {
@@ -76,35 +68,8 @@ const SuggestionBox = (props) => {
       searchText = item.street;
     }
     handleBlur();
-    navigator.push('search', { q: searchText, t: 1 });
+    navigator.push('search', { q: searchText, t: 'addresses' });
   }, [handleBlur, navigator, getLocaleText]);
-
-  const suggestionConfig = {
-    addresses: {
-      count: 1,
-      icon: <LocationOn className={classes.areaIcon} />,
-      onClick: item => handleAddressItemClick(item),
-      text: item => getAddressText(item),
-    },
-    units: {
-      count: 5,
-      icon: <UnitIcon />,
-      onClick: item => navigator.push('unit', { id: item.id }),
-      text: item => getLocaleText(item.name),
-    },
-    services: {
-      count: 2,
-      icon: getIcon('serviceDark'),
-      onClick: item => navigator.push('service', item.id),
-      text: item => getLocaleText(item.name),
-    },
-  };
-
-  const getSuggestionList = () => suggestionTypes.flatMap((key) => {
-    const items = suggestions[key].slice(0, suggestionConfig[key].count);
-    items.forEach((item) => { item.type = key; });
-    return items;
-  });
 
 
   // Component mount action
@@ -138,20 +103,21 @@ const SuggestionBox = (props) => {
         fetchController.current.abort();
       }
       fetchController.current = new AbortController();
-      const { signal } = fetchController.current;
 
-      createSuggestions(query, signal, locale, getLocaleText)
+      dispatch(createSuggestions(query, fetchController.current, getLocaleText))
         .then((data) => {
           if (data === 'error') {
             return;
           }
           fetchController.current = null;
           setLoading(false);
-          if (Object.values(data).some(list => list.length)) {
+          if (data.length) {
             setSuggestions(data);
           } else {
             setSuggestionError(true);
           }
+        }).catch(() => {
+          // Do nothing
         });
     } else {
       setLoading(false);
@@ -190,36 +156,49 @@ const SuggestionBox = (props) => {
     </>
   );
 
-  const renderSuggestionList = () => {
-    if (suggestions) {
-      const suggestionList = getSuggestionList();
-      return (
-        <>
-          <List role="listbox" id="SuggestionList" className="suggestionList" ref={listRef}>
-            {suggestionList.map((suggestion, i) => {
-              const conf = suggestionConfig[suggestion.type];
-              if (!conf) return null;
+  const renderSuggestionList = (suggestionList) => {
+    const suggestionConfig = {
+      address: {
+        icon: <LocationOn className={classes.areaIcon} />,
+        onClick: item => handleAddressItemClick(item),
+        text: item => getAddressText(item),
+      },
+      unit: {
+        icon: <UnitIcon />,
+        onClick: item => navigator.push('unit', { id: item.id }),
+        text: item => getLocaleText(item.name),
+      },
+      service: {
+        icon: getIcon('serviceDark'),
+        onClick: item => navigator.push('service', item.id),
+        text: item => getLocaleText(item.name),
+      },
+    };
 
-              return (
-                <SuggestionItem
-                  id={`suggestion${i}`}
-                  key={suggestion.id}
-                  className={conf.className ? 'AddressSuggestion' : ''}
-                  role="option"
-                  selected={i === focusedSuggestion}
-                  icon={conf.icon}
-                  text={conf.text(suggestion)}
-                  handleItemClick={() => conf.onClick(suggestion)}
-                  divider
-                  isMobile
-                  query={suggestionQuery}
-                />
-              );
-            })}
-          </List>
-        </>
-      );
-    } return null;
+    return (
+      <List role="listbox" id="SuggestionList" className="suggestionList" ref={listRef}>
+        {suggestionList.map((suggestion, i) => {
+          const conf = suggestionConfig[suggestion.object_type];
+          if (!conf) return null;
+
+          return (
+            <SuggestionItem
+              id={`suggestion${i}`}
+              key={suggestion.id}
+              className={conf.className ? 'AddressSuggestion' : ''}
+              role="option"
+              selected={i === focusedSuggestion}
+              icon={conf.icon}
+              text={conf.text(suggestion)}
+              handleItemClick={() => conf.onClick(suggestion)}
+              divider
+              isMobile
+              query={suggestionQuery}
+            />
+          );
+        })}
+      </List>
+    );
   };
 
   const renderHideSuggestions = () => {
@@ -285,9 +264,8 @@ const SuggestionBox = (props) => {
     let component = null;
     let srText = null;
     if (suggestions) {
-      component = renderSuggestionList();
-      const suggestionList = getSuggestionList();
-      srText = intl.formatMessage({ id: 'search.suggestions.suggestions' }, { count: suggestionList.length });
+      component = renderSuggestionList(suggestions);
+      srText = intl.formatMessage({ id: 'search.suggestions.suggestions' }, { count: suggestions.length });
     } else if (loading) {
       component = renderLoading();
       srText = null;
@@ -329,7 +307,6 @@ SuggestionBox.propTypes = {
   navigator: PropTypes.objectOf(PropTypes.any),
   isMobile: PropTypes.bool,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
-  locale: PropTypes.oneOf(config.supportedLanguages).isRequired,
 };
 
 SuggestionBox.defaultProps = {

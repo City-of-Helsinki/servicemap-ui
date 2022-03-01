@@ -1,36 +1,34 @@
 // TODO: need city (and locale?) parameters to new search fetch
 
-const createSuggestions = async (query, signal, locale, getLocaleText) => {
-  const fetchSuggestions = url => fetch(url, { signal })
-    .then((res) => {
-      if (res.status === 200) {
-        return res.json();
+import ServiceMapAPI from '../../utils/newFetch/ServiceMapAPI';
+
+const createSuggestions = (query, abortController, getLocaleText) => async () => {
+  const smAPI = new ServiceMapAPI();
+  smAPI.setAbortController(abortController);
+
+  const additionalOptions = {
+    page_size: 10,
+    limit: 2000,
+    unit_limit: 5,
+    service_limit: 2,
+    address_limit: 1,
+  };
+
+  const results = await smAPI.search(query, additionalOptions);
+
+  // Handle address results
+  results.forEach((item) => {
+    if (item.object_type === 'address') {
+      if (getLocaleText(item.full_name).toLowerCase() === query.toLowerCase()) {
+        item.isExact = true;
+      } else {
+        const streetName = getLocaleText(item.full_name).split(/[\d]/)[0].trim();
+        item.street = streetName;
       }
-      return 'error';
-    })
-    .catch((res) => {
-      console.warn('error:', res);
-      return 'error';
-    });
-
-  const data = await fetchSuggestions(`https://palvelukartta-api-test.agw.arodevtest.hel.fi/search?q=${query}&language=${locale}`); // TODO: use url from .env
-
-  if (data === 'error' || !data.results) {
-    return 'error';
-  }
-
-  const { addresses } = data.results;
-
-  if (addresses?.length) {
-    if (getLocaleText(addresses[0].full_name).toLowerCase() === query.toLowerCase()) {
-      addresses[0].isExact = true;
-    } else {
-      const streetName = getLocaleText(addresses[0].full_name).split(/[\d]/)[0].trim();
-      addresses[0].street = streetName;
     }
-  }
+  });
 
-  return data.results;
+  return results;
 };
 
 export default createSuggestions;
