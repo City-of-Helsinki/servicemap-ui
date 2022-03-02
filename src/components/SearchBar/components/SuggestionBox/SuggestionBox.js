@@ -194,7 +194,7 @@ const SuggestionBox = (props) => {
               icon={conf.icon}
               text={text}
               handleItemClick={() => {
-                dispatch(setSearchBarInitialValue(text));
+                dispatch(setSearchBarInitialValue(suggestion.street || text));
                 conf.onClick(suggestion);
               }}
               divider
