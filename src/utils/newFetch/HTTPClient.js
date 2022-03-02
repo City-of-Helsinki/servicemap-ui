@@ -98,15 +98,8 @@ export default class HttpClient {
     if (typeof options !== 'string') {
       this.throwAPIError('Invalid options given to HTTPClient\'s fetch method');
     }
-
-    // FIXME: remove this "fix" when new search is in production
-    let promise;
-    if (endpoint === 'search') {
-      promise = fetch(`https://palvelukartta-api-test.agw.arodevtest.hel.fi/${endpoint}?${options}`, { signal });
-    } else {
-      // Create fetch promise
-      promise = fetch(`${this.baseURL}/${endpoint}?${options}`, { signal });
-    }
+    // Create fetch promise
+    const promise = fetch(`${this.baseURL}/${endpoint}?${options}`, { signal });
 
     // Create timeout for aborting fetch
     this.createTimeout();
