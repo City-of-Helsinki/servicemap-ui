@@ -21,8 +21,8 @@ export default class ServiceMapAPI extends HttpClient {
       page_size: 200,
       limit: 2000,
       unit_limit: 2000,
-      service_limit: 2000,
-      address_limit: 100,
+      service_limit: 500,
+      address_limit: 500,
       ...additionalOptions,
     };
 
