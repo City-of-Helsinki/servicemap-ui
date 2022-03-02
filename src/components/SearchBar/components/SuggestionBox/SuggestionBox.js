@@ -18,6 +18,7 @@ import { CloseSuggestionButton } from '../CloseSuggestionButton';
 // import { setSelectedDistrictType } from '../../../../redux/actions/district';
 import useLocaleText from '../../../../utils/useLocaleText';
 import UnitIcon from '../../../SMIcon/UnitIcon';
+import setSearchBarInitialValue from '../../../../redux/actions/searchBar';
 
 
 const SuggestionBox = (props) => {
@@ -178,6 +179,7 @@ const SuggestionBox = (props) => {
         {suggestionList.map((suggestion, i) => {
           const conf = suggestionConfig[suggestion.object_type];
           if (!conf) return null;
+          const text = conf.text(suggestion);
 
           return (
             <SuggestionItem
@@ -187,8 +189,11 @@ const SuggestionBox = (props) => {
               role="option"
               selected={i === focusedSuggestion}
               icon={conf.icon}
-              text={conf.text(suggestion)}
-              handleItemClick={() => conf.onClick(suggestion)}
+              text={text}
+              handleItemClick={() => {
+                dispatch(setSearchBarInitialValue(text));
+                conf.onClick(suggestion);
+              }}
               divider
               isMobile
               query={suggestionQuery}

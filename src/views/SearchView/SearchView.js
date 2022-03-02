@@ -298,11 +298,7 @@ const SearchView = (props) => {
   }, [searchResultsData]);
 
   const renderSearchBar = () => (
-    <SearchBar
-      expand
-      initialValue={query}
-      className={classes.searchbarPlain}
-    />
+    <SearchBar expand className={classes.searchbarPlain} />
   );
 
   const renderSearchInfo = () => {

@@ -22,7 +22,7 @@ import {
   colorblind, hearingAid, mobility, mapType, visuallyImpaired, cities,
 } from './reducers/settings';
 import {
-  direction, order, mapRef, settingsToggled, measuringMode,
+  direction, order, mapRef, settingsToggled, measuringMode, searchBarInitialValue,
 } from './reducers/simpleReducers';
 
 // Export all redux reducers here
@@ -36,6 +36,7 @@ export default combineReducers({
   measuringMode,
   navigator,
   searchResults,
+  searchBarInitialValue,
   user,
   districts,
   service,
