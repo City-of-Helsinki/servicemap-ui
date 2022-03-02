@@ -52,6 +52,7 @@ const translations = {
   'area.tab.geographical': 'Stadsdelar och postnummerområden',
   'area.services.local': 'Tjänster i ditt eget område',
   'area.services.nearby': 'Lista över verksamhetsställen i närområden',
+  'area.services.nearby.rescue_area': 'Lista över tjänster i närområden', // TODO: correct name to replace "tjänster"
   'area.services.nearby.rescue_district': 'Lista över skyddsavsnitten i närområden',
   'area.services.nearby.rescue_sub_district': 'Lista över skyddsunderavsnitten i närområden',
   'area.services.all': 'Lista över verksamhetsställen',
@@ -528,7 +529,7 @@ const translations = {
   'service.plural': 'Tjänster',
   'service.nearby': 'Närtjänster',
   'service.units.empty': 'Tjänsten har inga verksamhetsställen',
-  'service.tab': 'Tjänster och evenemang',
+  'service.tab': 'Tjänster',
   'service.description': 'Se tjänsternas lägen och kontaktuppgifter',
 
   // Service tree
@@ -610,7 +611,7 @@ const translations = {
   'tool.print': 'Skriv ut',
 
   'info.title': 'Om tjänsten och tillgänglighetsredogörelsen',
-  'info.statement': 'Tillgänglighetsredogörelsen',
+  'info.statement': 'Tillgänglighetsredogörelsen (ny flik)',
 
   'alert.close': 'Stäng meddelande',
 };

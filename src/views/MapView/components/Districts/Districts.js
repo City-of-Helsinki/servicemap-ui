@@ -79,47 +79,48 @@ const Districts = ({
     if (embedded && parseSearchParams(location.search).units === 'none') {
       return null;
     }
-    return (
-      <React.Fragment key={district.id}>
-        {district.unit && district.unit.location ? (
-          <>
-            <Marker
-              customUnitData={district.unit}
-              position={[
-                district.unit.location.coordinates[1],
-                district.unit.location.coordinates[0],
-              ]}
-              icon={drawMarkerIcon(useContrast)}
-              keyboard={false}
-              eventHandlers={{
-                click: () => {
-                  if (navigator) {
-                    UnitHelper.unitElementClick(navigator, district.unit);
-                  }
-                },
+
+    const renderMarker = unit => (
+      unit.location ? (
+        <Marker
+          customUnitData={unit}
+          key={unit.id}
+          position={[
+            unit.location.coordinates[1],
+            unit.location.coordinates[0],
+          ]}
+          icon={drawMarkerIcon(useContrast)}
+          keyboard={false}
+          eventHandlers={{
+            click: () => {
+              if (navigator) {
+                UnitHelper.unitElementClick(navigator, unit);
               }
-              }
+            },
+          }}
+        >
+          <Tooltip
+            direction="top"
+            offset={[1.5, -25]}
+            position={[
+              unit.location.coordinates[1],
+              unit.location.coordinates[0],
+            ]}
+          >
+            <Typography
+              noWrap
+              className={classes.popup}
             >
-              <Tooltip
-                direction="top"
-                offset={[1.5, -25]}
-                position={[
-                  district.unit.location.coordinates[1],
-                  district.unit.location.coordinates[0],
-                ]}
-              >
-                <Typography
-                  noWrap
-                  className={classes.popup}
-                >
-                  {getLocaleText(district.unit.name)}
-                </Typography>
-              </Tooltip>
-            </Marker>
-          </>
-        ) : null}
-      </React.Fragment>
+              {getLocaleText(unit.name)}
+            </Typography>
+          </Tooltip>
+        </Marker>
+      ) : null
     );
+
+    if (district.units?.length) return district.units.map(unit => (renderMarker(unit)));
+    if (district.unit) return renderMarker(district.unit);
+    return null;
   };
 
   const renderSingleDistrict = () => {
@@ -275,7 +276,8 @@ const Districts = ({
 
       </>
     );
-  } if (currentPage === 'area') {
+  }
+  if (currentPage === 'area') {
     return (
       <>
         {selectedAddress ? (

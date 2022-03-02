@@ -225,6 +225,11 @@ export default {
   "oldMapEn": settings.OLD_MAP_LINK_EN,
   "oldMapFi": settings.OLD_MAP_LINK_FI,
   "oldMapSv": settings.OLD_MAP_LINK_SV,
+  "accessibilityStatementURL": {
+    fi: settings.ACCESSIBILITY_STATEMENT_URL_FI,
+    sv: settings.ACCESSIBILITY_STATEMENT_URL_SV,
+    en: settings.ACCESSIBILITY_STATEMENT_URL_EN,
+  },
   "readspeakerLocales": {
     "fi": 'fi_fi',
     "en": 'en_uk',

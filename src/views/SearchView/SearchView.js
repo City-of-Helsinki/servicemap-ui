@@ -80,6 +80,7 @@ const SearchView = (props) => {
       service_node,
       search_language,
       events,
+      units,
     } = searchParams;
 
     const options = {};
@@ -101,6 +102,10 @@ const SearchView = (props) => {
 
       if (events) {
         options.events = events;
+      }
+
+      if (units) {
+        options.id = units;
       }
 
       if (category) {
@@ -198,7 +203,7 @@ const SearchView = (props) => {
       }
     } else {
       // Should fetch if no previous searches but search parameters exist
-      return !!(data.q || data.service || data.service_node || data.events);
+      return !!(data.q || data.service || data.service_node || data.events || data.id);
     }
     return false;
   };

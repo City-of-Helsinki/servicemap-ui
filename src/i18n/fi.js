@@ -52,6 +52,7 @@ const translations = {
   'area.tab.geographical': 'Kaupunginosat ja postinumeroalueet',
   'area.services.local': 'Oman alueesi palvelut',
   'area.services.nearby': 'Lähialueiden toimipisteet listana',
+  'area.services.nearby.rescue_area': 'Lähialueiden palvelut listana', // TODO: correct name to replace "palvelut"
   'area.services.nearby.rescue_district': 'Lähialueiden suojelulohkot listana',
   'area.services.nearby.rescue_sub_district': 'Lähialueiden suojelualalohkot listana',
   'area.services.all': 'Toimipisteet listana',
@@ -530,7 +531,7 @@ const translations = {
   'service.plural': 'Palvelut',
   'service.nearby': 'Palvelut täällä asuville',
   'service.units.empty': 'Palvelulla ei ole toimipisteitä',
-  'service.tab': 'Palvelut ja tapahtumat',
+  'service.tab': 'Palvelut',
   'service.description': 'Katso palveluiden sijainnit ja yhteystiedot',
 
   // Service tree
@@ -612,7 +613,7 @@ const translations = {
   'tool.print': 'Tulosta',
 
   'info.title': 'Tietoa palvelusta ja saavutettavuusseloste',
-  'info.statement': 'Saavutettavuusseloste',
+  'info.statement': 'Saavutettavuusseloste (uusi välilehti)',
 
   'alert.close': 'Sulje ilmoitus',
 };
