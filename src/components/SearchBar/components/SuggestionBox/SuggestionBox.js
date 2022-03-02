@@ -169,7 +169,10 @@ const SuggestionBox = (props) => {
       },
       service: {
         icon: getIcon('serviceDark'),
-        onClick: item => navigator.push('service', item.id),
+        onClick: (item) => {
+          handleBlur();
+          navigator.push('service', item.id);
+        },
         text: item => getLocaleText(item.name),
       },
     };

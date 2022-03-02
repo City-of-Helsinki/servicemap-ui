@@ -82,7 +82,7 @@ const AddressView = (props) => {
     units,
   } = props;
 
-  let title = '';
+  let title = match.params.fullAddress ? match.params.fullAddress : '';
 
   if (!isFetching) {
     if (addressData?.full_name) title = getLocaleText(addressData?.full_name);

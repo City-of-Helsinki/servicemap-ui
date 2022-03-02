@@ -28,7 +28,7 @@ const focusClass = 'TabListFocusTarget';
 
 const SearchView = (props) => {
   const {
-    classes, location, match, intl,
+    classes, location, match, intl, query,
   } = props;
   const [serviceRedirect, setServiceRedirect] = useState(null);
   const [expandVisible, setExpandVisible] = useState(null);
@@ -46,8 +46,6 @@ const SearchView = (props) => {
   const dispatch = useDispatch();
   const embed = isEmbed();
   const isMobile = useMobileStatus();
-
-  const query = null;
 
   const getResultsByType = type => searchResults.filter(item => item.object_type === type);
 
@@ -280,7 +278,7 @@ const SearchView = (props) => {
         dispatch(fetchSearchResults(options));
       }
     }
-  }, []);
+  }, [query]);
 
   useEffect(() => { // Handle new search results
     if (searchResultsData.length) {
@@ -461,7 +459,6 @@ const SearchView = (props) => {
   };
 
 
-  // TODO: better check for single result??
   const redirect = handleSingleResultRedirect();
   if (redirect) {
     return redirect;
@@ -503,4 +500,9 @@ SearchView.propTypes = {
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
+  query: PropTypes.string,
+};
+
+SearchView.defaultProps = {
+  query: null,
 };
