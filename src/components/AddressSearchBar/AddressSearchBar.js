@@ -7,10 +7,10 @@ import {
 import { Clear, Search } from '@material-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { setOrder, setDirection } from '../../redux/actions/sort';
-import config from '../../../config';
-import { keyboardHandler, uppercaseFirst } from '../../utils';
+import { keyboardHandler, formAddressString } from '../../utils';
 import useMobileStatus from '../../utils/isMobile';
 import useLocaleText from '../../utils/useLocaleText';
+import ServiceMapAPI from '../../utils/newFetch/ServiceMapAPI';
 
 const AddressSearchBar = ({
   defaultAddress,
@@ -25,10 +25,6 @@ const AddressSearchBar = ({
   const dispatch = useDispatch();
   const locale = useSelector(state => state.user.locale);
 
-  const formAddressString = address => (address
-    ? `${getLocaleText(address.street.name)} ${address.number}${address.number_end ? address.number_end : ''}${address.letter ? address.letter : ''}, ${uppercaseFirst(address.street.municipality)}`
-    : '');
-
   const isMobile = useMobileStatus();
 
   const [addressResults, setAddressResults] = useState([]);
@@ -39,14 +35,25 @@ const AddressSearchBar = ({
   const suggestionCount = 5;
   const inputRef = useRef();
 
+  const fetchAddressResults = (text) => {
+    const smAPI = new ServiceMapAPI();
+    const fetchOptions = {
+      language: locale,
+      page_size: suggestionCount,
+      type: 'address',
+      address_limit: suggestionCount,
+    };
+    return smAPI.search(text, fetchOptions);
+  };
+
   const handleAddressSelect = (address) => {
     if (!addressResults.length) return;
     if (inputRef.current) {
       inputRef.current.focus();
     }
-    inputRef.current.value = formAddressString(address);
+    inputRef.current.value = formAddressString(address, getLocaleText);
     setAddressResults([]);
-    setCurrentLocation(formAddressString(address));
+    setCurrentLocation(formAddressString(address, getLocaleText));
     dispatch(setDirection('asc'));
     dispatch(setOrder('distance'));
     handleAddressChange(address);
@@ -96,17 +103,13 @@ const AddressSearchBar = ({
       if (currentLocation) {
         setCurrentLocation(null);
       }
-      fetch(`${config.serviceMapAPI.root}/search/?input=${text}&language=${locale}&page=1&page_size=${suggestionCount}&type=address`)
-        .then(res => res.json())
-        .then(data => setAddressResults(data.results))
-        .catch((res) => {
-          console.warn('error:', res);
-        });
+      fetchAddressResults(text)
+        .then(data => setAddressResults(data));
     }
   };
 
   useEffect(() => {
-    inputRef.current.value = formAddressString(defaultAddress);
+    inputRef.current.value = formAddressString(defaultAddress, getLocaleText);
   }, [defaultAddress]);
 
   const showSuggestions = inputRef.current?.value.length > 1 && addressResults?.length;
@@ -146,7 +149,7 @@ const AddressSearchBar = ({
           onBlur={isMobile ? () => {} : e => clearSuggestions(e)}
           onFocus={() => setResultIndex(null)}
           className={`${classes.searchBar} ${inputClassName}`}
-          defaultValue={formAddressString(defaultAddress)}
+          defaultValue={formAddressString(defaultAddress, getLocaleText)}
           onChange={e => handleInputChange(e.target.value)}
           onKeyDown={e => showSuggestions && handleSearchBarKeyPress(e)}
           endAdornment={(
@@ -177,13 +180,13 @@ const AddressSearchBar = ({
                   id={`address-suggestion${i}`}
                   role="option"
                   selected={i === resultIndex}
-                  key={formAddressString(address)}
+                  key={formAddressString(address, getLocaleText)}
                   button
                   onClick={() => handleAddressSelect(address)}
                   onKeyDown={keyboardHandler(() => handleAddressSelect(address), ['space', 'enter'])}
                 >
                   <Typography>
-                    {formAddressString(address)}
+                    {formAddressString(address, getLocaleText)}
                   </Typography>
                 </ListItem>
               ))}

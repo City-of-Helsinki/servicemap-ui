@@ -8,7 +8,7 @@ import { Map } from '@material-ui/icons';
 import { focusDistrict, focusDistricts, useMapFocusDisabled } from '../MapView/utils/mapActions';
 import TabLists from '../../components/TabLists';
 import GeographicalTab from './components/GeographicalTab';
-import { parseSearchParams, uppercaseFirst } from '../../utils';
+import { parseSearchParams, formAddressString } from '../../utils';
 import ServiceTab from './components/ServiceTab';
 import { districtFetch } from '../../utils/fetch';
 import fetchAddress from '../MapView/utils/fetchAddress';
@@ -77,13 +77,6 @@ const AreaView = ({
   // Pending request to focus map to districts. Executed once district data is loaded
   const [focusTo, setFocusTo] = useState(null);
 
-  const formAddressString = useCallback(
-    address => (address
-      ? `${getLocaleText(address.street.name)} ${address.number}${address.number_end ? address.number_end : ''}${address.letter ? address.letter : ''}, ${uppercaseFirst(address.street.municipality)}`
-      : ''),
-    [],
-  );
-
   const focusMapToDistrict = (district) => {
     if (!mapFocusDisabled && map && district?.boundary) {
       focusDistrict(map, district.boundary.coordinates);
@@ -141,7 +134,7 @@ const AreaView = ({
   useEffect(() => {
     if (selectedAddress) {
       if (!selectedAddress.districts
-        || formAddressString(districtAddressData.address) !== formAddressString(selectedAddress)
+        || formAddressString(districtAddressData.address, getLocaleText) !== formAddressString(selectedAddress, getLocaleText)
       ) {
         fetchAddressDistricts();
       }
@@ -279,7 +272,6 @@ const AreaView = ({
   const renderGeographicalTab = () => (
     <GeographicalTab
       initialOpenItems={initialOpenItems}
-      formAddressString={formAddressString}
       clearRadioButtonValue={clearRadioButtonValue}
     />
   );

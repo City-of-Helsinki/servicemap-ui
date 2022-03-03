@@ -18,11 +18,11 @@ import GeographicalDistrictList from '../GeographicalDistrictList';
 import GeographicalUnitList from '../GeographicalUnitList';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { geographicalDistricts } from '../../utils/districtDataHelper';
+import { formAddressString } from '../../../../utils';
 
 
 const GeographicalTab = ({
   initialOpenItems,
-  formAddressString,
   clearRadioButtonValue,
   classes,
 }) => {
@@ -100,7 +100,7 @@ const GeographicalTab = ({
         <Typography component="h3" className={classes.addressInfoText}><FormattedMessage id="area.localAddress.title" /></Typography>
         <div className={classes.addressInfoIconArea}>
           <LocationOn color="primary" className={classes.addressInfoIcon} />
-          <Typography component="p" variant="subtitle1">{formAddressString(localAddressData.address)}</Typography>
+          <Typography component="p" variant="subtitle1">{formAddressString(localAddressData.address, getLocaleText)}</Typography>
         </div>
         {localPostArea ? (
           <Typography className={classes.addressInfoText}>
@@ -208,7 +208,6 @@ const GeographicalTab = ({
 GeographicalTab.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   initialOpenItems: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
-  formAddressString: PropTypes.func.isRequired,
 };
 
 GeographicalTab.defaultProps = {
