@@ -24,17 +24,11 @@ const searchUnits = async (t, search = 'uimastadion') => {
     .pressKey('ctrl+a delete')
     .typeText(input, search)
     .pressKey('enter');
-
-  // Get search list's data length
-  const searchView = ReactSelector('SearchView');
-  const unitCount = await searchView.getReact(({props}) => props.searchResults.length);
-
-  return unitCount;
 }
 
 test('Navigate search view', async (t) => {
   // Test result orderer navigation
-  const unitCount = await searchUnits(t, 'kirjasto');
+  await searchUnits(t, 'kirjasto');
   const input = ReactSelector('WithStyles(ForwardRef(InputBase))').nth(0);
   let select =  ReactSelector('ResultOrderer WithStyles(ForwardRef(Select))');
 
@@ -110,10 +104,9 @@ test('Tab navigation works correctly', async (t) => {
 })
 
 test('Search does list results', async (t) => {
-  // const unitCount = await searchUnits(t);
-  const searchView = ReactSelector('SearchView')
+  const resultList = ReactSelector('ResultList')
   await t
-    .expect(searchView.getReact(({props}) => props.searchResults.length)).gt(5, `Search didn't get results`);
+    .expect(resultList.getReact(({props}) => props.resultCount)).gt(0, `Search didn't get results`);
 });
 
 // Check that address search works and draws marker on map
@@ -280,9 +273,9 @@ test('Tabs accessibility attributes are OK', async(t) => {
 
 test('Search has aria-live element', async(t) => {
   await searchUnits(t, 'kirjasto');
-  const view = ReactSelector('SearchView');
-  const units = await view.getReact(({props}) => props.searchResults ? props.searchResults : []);
-  const unitCount = await units.filter(unit => unit.object_type === 'unit').length
+  const resultList = ReactSelector('PaginatedList')
+  const results = await resultList.getReact(({props}) => props.data || []);
+  const unitCount = await results.filter(result => result.object_type === 'unit').length
   const searchInfo = Selector('.SearchInfo').child(0);
   const siText = await searchInfo.innerText;
   const siAriaLive = await searchInfo.getAttribute('aria-live');
