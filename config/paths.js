@@ -35,15 +35,7 @@ const paths = {
     regex: /\/[a-zA-Z]{2}\/event\/([a-zäö:0-9]+)/
   },
   address: {
-    generate: data => {
-      let url;
-      if (data.fullAddress) { // Handle navigation from new search suggestions list
-        url = `/address/${data.fullAddress}`;
-      } else { // Normal navigation
-        url = `${data.embed ? '/embed/address/' : '/address/'}${data.municipality}/${data.street}/${data.number}`
-      }
-      return url
-    },
+    generate: data => `${data.embed ? '/embed/address/' : '/address/'}${data.municipality}/${data.street}/${data.number}`,
     regex: /\/[a-zA-Z]{2}\/address\/([a-zA-ZäöÄÖ]+)\/([a-zA-ZäöÄÖ])+\/([a-z:0-9]+)/
   },
   info: {

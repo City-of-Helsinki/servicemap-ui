@@ -19,8 +19,8 @@ const AddressItem = (props) => {
   const getLocaleText = useLocaleText();
   const getAddressNavigatorParams = useNavigationParams();
 
-  const text = address.full_name
-    ? getLocaleText(address.full_name)
+  const text = address.name
+    ? getLocaleText(address.name)
     : getAddressText(address, getLocaleText, showPostalCode);
 
   return (
@@ -33,8 +33,7 @@ const AddressItem = (props) => {
       handleItemClick={(e) => {
         e.preventDefault();
         if (navigator) {
-          if (address.full_name) navigator.push('address', { fullAddress: getLocaleText(address.full_name) });
-          else navigator.push('address', getAddressNavigatorParams(address));
+          navigator.push('address', getAddressNavigatorParams(address));
         }
       }}
       role={role || 'link'}

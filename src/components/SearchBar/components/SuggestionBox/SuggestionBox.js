@@ -19,6 +19,7 @@ import { CloseSuggestionButton } from '../CloseSuggestionButton';
 import useLocaleText from '../../../../utils/useLocaleText';
 import UnitIcon from '../../../SMIcon/UnitIcon';
 import setSearchBarInitialValue from '../../../../redux/actions/searchBar';
+import { useNavigationParams } from '../../../../utils/address';
 
 
 const SuggestionBox = (props) => {
@@ -42,6 +43,7 @@ const SuggestionBox = (props) => {
   // Query word on which suggestion list is based
   const [suggestionQuery, setSuggestionQuery] = useState(null);
 
+  const getAddressNavigatorParams = useNavigationParams();
   const dispatch = useDispatch();
   const getLocaleText = useLocaleText();
   const listRef = useRef(null);
@@ -56,16 +58,16 @@ const SuggestionBox = (props) => {
 
   const getAddressText = (item) => {
     if (item.isExact) {
-      return getLocaleText(item.full_name);
+      return getLocaleText(item.name);
     }
-    return `${item.street}, ${intl.formatMessage({ id: 'search.suggestions.addresses' })}`;
+    return `${getLocaleText(item.street?.name)}, ${intl.formatMessage({ id: 'search.suggestions.addresses' })}`;
   };
 
   const handleAddressItemClick = useCallback((item) => {
     if (item.isExact) {
-      navigator.push('address', { fullAddress: getLocaleText(item.full_name) });
+      navigator.push('address', getAddressNavigatorParams(item));
     } else {
-      navigator.push('search', { q: item.street, t: 'addresses' });
+      navigator.push('search', { q: getLocaleText(item.street?.name), t: 'addresses' });
     }
     handleBlur();
   }, [handleBlur, navigator, getLocaleText]);
@@ -187,14 +189,17 @@ const SuggestionBox = (props) => {
           return (
             <SuggestionItem
               id={`suggestion${i}`}
-              key={suggestion.id}
+              key={suggestion.id || suggestion.name.fi}
               className={conf.className ? 'AddressSuggestion' : ''}
               role="option"
               selected={i === focusedSuggestion}
               icon={conf.icon}
               text={text}
               handleItemClick={() => {
-                dispatch(setSearchBarInitialValue(suggestion.street || text));
+                const searchValue = suggestion.object_type === 'address' && !suggestion.isExact
+                  ? getLocaleText(suggestion.street.name)
+                  : text;
+                dispatch(setSearchBarInitialValue(searchValue));
                 conf.onClick(suggestion);
               }}
               divider

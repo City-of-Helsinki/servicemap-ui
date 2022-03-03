@@ -10,6 +10,11 @@ const getTranslatedMunicipality = (address, getLocaleText) => {
   if (!address || !getLocaleText) {
     return null;
   }
+
+  if (address.municipality?.name) {
+    return getLocaleText(address.municipality.name).toLowerCase();
+  }
+
   let municipality = getLocaleText(config.municipality)[address.street.municipality];
   if (municipality && typeof municipality === 'string') {
     municipality = municipality.toLowerCase(); // Transform to lowercase
@@ -48,7 +53,17 @@ export const addressMatchParamsToFetchOptions = (match) => {
 };
 
 export const getAddressNavigatorParamsConnector = (getLocaleText, locale, address) => {
-  if (!address || !address.number || !address.street.name || !address.street.municipality) {
+  /* For now search endpoint and address endpoint return address data with different data stucture.
+  Handle both cases here */
+  const municipalityValue = address.street.municipality?.id
+    || address.municipality?.id
+    || address.street.municipality;
+
+  if (!address
+      || !address.number
+      || !address.street.name
+      || !municipalityValue
+  ) {
     return null;
   }
   if (typeof getLocaleText !== 'function') {
@@ -57,7 +72,7 @@ export const getAddressNavigatorParamsConnector = (getLocaleText, locale, addres
   if (Object.keys(config.municipality).indexOf(locale) === -1) {
     throw Error(`getAddressNavigatorParams locale parameter must be one of ${Object.keys(config.municipality).toString()}`);
   }
-  let municipality = config.municipality[locale][address.street.municipality];
+  let municipality = config.municipality[locale][municipalityValue];
   if (municipality && typeof municipality === 'string') {
     municipality = municipality.toLowerCase(); // Transform to lowercase
   }

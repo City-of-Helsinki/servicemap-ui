@@ -70,7 +70,7 @@ class ResultList extends React.Component {
                   itemComponent = <ServiceItem key={`service-${id}`} service={item} />;
                   break;
                 case 'address':
-                  itemComponent = <AddressItem key={`address-${id}`} address={item} />;
+                  itemComponent = <AddressItem key={`address-${item.municipality.id}-${item.name.fi}`} address={item} />;
                   break;
                 case 'event':
                   itemComponent = <EventItem key={`event-${id}`} event={item} />;

@@ -19,11 +19,8 @@ const createSuggestions = (query, abortController, getLocaleText) => async () =>
   // Handle address results
   results.forEach((item) => {
     if (item.object_type === 'address') {
-      if (getLocaleText(item.full_name).toLowerCase() === query.toLowerCase()) {
+      if (getLocaleText(item.name).toLowerCase() === query.toLowerCase()) {
         item.isExact = true;
-      } else {
-        const streetName = getLocaleText(item.full_name).split(/[\d]/)[0].trim();
-        item.street = streetName;
       }
     }
   });

@@ -39,8 +39,8 @@ const orderUnits = (unitData, sortingParameters) => {
     // Alphabetical ordering
     case 'alphabetical': {
       results.sort((a, b) => {
-        const x = getLocaleString(locale, a.name || a.full_name).toLowerCase();
-        const y = getLocaleString(locale, b.name || b.full_name).toLowerCase();
+        const x = getLocaleString(locale, a.name).toLowerCase();
+        const y = getLocaleString(locale, b.name).toLowerCase();
         if (x > y) { return -1; }
         if (x < y) { return 1; }
         return 0;
