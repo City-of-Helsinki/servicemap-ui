@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 const getLocaleString = (locale, obj) => {
   let value;
   Object.keys(obj).forEach((key) => {
-    if (key === locale) {
+    if (key === locale && obj[key]) {
       value = obj[key];
     }
   });
