@@ -21,6 +21,7 @@ import UnitIcon from '../../../SMIcon/UnitIcon';
 import setSearchBarInitialValue from '../../../../redux/actions/searchBar';
 import { useNavigationParams } from '../../../../utils/address';
 
+const suggestionCount = 8;
 
 const SuggestionBox = (props) => {
   const {
@@ -179,9 +180,20 @@ const SuggestionBox = (props) => {
       },
     };
 
+    // Order suggestion types and slice list
+    const addresses = suggestionList.filter(item => item.object_type === 'address');
+    const units = suggestionList.filter(item => item.object_type === 'unit');
+    const services = suggestionList.filter(item => item.object_type === 'service');
+
+    const orderedSuggestions = [
+      ...addresses,
+      ...services,
+      ...units,
+    ].slice(0, suggestionCount);
+
     return (
       <List role="listbox" id="SuggestionList" className="suggestionList" ref={listRef}>
-        {suggestionList.map((suggestion, i) => {
+        {orderedSuggestions.map((suggestion, i) => {
           const conf = suggestionConfig[suggestion.object_type];
           if (!conf) return null;
           const text = conf.text(suggestion);

@@ -9,8 +9,8 @@ const createSuggestions = (query, abortController, getLocaleText) => async () =>
   const additionalOptions = {
     page_size: 10,
     limit: 2000,
-    unit_limit: 5,
-    service_limit: 2,
+    unit_limit: 10,
+    service_limit: 10,
     address_limit: 1,
   };
 
