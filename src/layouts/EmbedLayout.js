@@ -2,10 +2,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Switch, Route,
+  Switch, Route, useLocation,
 } from 'react-router-dom';
 import { injectIntl } from 'react-intl';
-import { Typography } from '@material-ui/core';
+import { Tooltip as MUITooltip, ButtonBase, Typography } from '@material-ui/core';
+import { useTheme } from '@material-ui/styles';
 import MapView from '../views/MapView';
 import PageHandler from './components/PageHandler';
 import AddressView from '../views/AddressView';
@@ -15,18 +16,21 @@ import UnitView from '../views/UnitView';
 import ServiceView from '../views/ServiceView';
 import DivisionView from '../views/DivisionView';
 import AreaView from '../views/AreaView';
+import { parseSearchParams } from '../utils';
+import HomeLogo from '../components/Logos/HomeLogo';
+import PaginatedList from '../components/Lists/PaginatedList';
+import useMapUnits from '../views/MapView/utils/useMapUnits';
 
-const createContentStyles = (
-  isSmallScreen, landscape, mobileMapOnly, fullMobileMap, settingsOpen,
-) => {
+const createContentStyles = (theme) => {
   const width = 450;
-  const styles = {
+  return {
     activeRoot: {
       margin: 0,
       width: '100%',
       display: 'flex',
       flexWrap: 'nowrap',
       height: '100vh',
+      flexDirection: 'row',
     },
     map: {
       bottom: 0,
@@ -43,23 +47,77 @@ const createContentStyles = (
       width,
       margin: 0,
       overflow: 'auto',
-      visibility: mobileMapOnly && !settingsOpen ? 'hidden' : null,
+      visibility: null,
     },
     topNav: {
       minWidth: width,
     },
+    embedLogo: {
+      top: 0,
+      left: 0,
+      height: 'auto',
+      position: 'fixed',
+      zIndex: 1000,
+      margin: theme.spacing(1.5),
+    },
+    embedSidebarContainer: {
+      minWidth: 220,
+      maxWidth: 'min(40%, 300px)',
+      flexGrow: 1,
+    },
+    unitList: {
+      paddingTop: 36,
+      maxHeight: '100%',
+      overflowY: 'scroll',
+      boxSizing: 'border-box',
+      display: 'flex',
+      flexDirection: 'column',
+    },
   };
-
-  return styles;
 };
 
 const EmbedLayout = ({ intl }) => {
-  const styles = createContentStyles();
+  const theme = useTheme();
+  const styles = createContentStyles(theme);
+  const location = useLocation();
+  const units = useMapUnits();
+  const searchParams = parseSearchParams(location.search);
+
+  const showList = searchParams?.show_list;
+
+  const renderEmbedOverlay = () => {
+    const openApp = () => {
+      const url = window.location.href;
+      window.open(url.replace('/embed', ''));
+    };
+    return (
+      <ButtonBase
+        style={styles.embedLogo}
+        onClick={openApp}
+        aria-label={intl.formatMessage({ id: 'embed.click_prompt_move' })}
+        role="link"
+      >
+        <MUITooltip title={intl.formatMessage({ id: 'embed.click_prompt_move' })}>
+          <HomeLogo aria-hidden />
+        </MUITooltip>
+      </ButtonBase>
+    );
+  };
+
 
   return (
     <>
+      {renderEmbedOverlay()}
       <div style={styles.activeRoot}>
-        <div aria-hidden className="sr-only">
+        <div aria-hidden={!showList} style={styles.embedSidebarContainer} className={!showList ? 'sr-only' : ''}>
+          <div style={styles.unitList}>
+            <PaginatedList
+              id="embeddedResults"
+              data={units}
+              titleComponent="h3"
+              embeddedList
+            />
+          </div>
           <Switch>
             <Route
               path="*/embed/unit/:unit"

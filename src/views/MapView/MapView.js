@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { Tooltip as MUITooltip, ButtonBase } from '@material-ui/core';
+import { ButtonBase } from '@material-ui/core';
 import { MyLocation, LocationDisabled } from '@material-ui/icons';
 import { useSelector } from 'react-redux';
 import { useMapEvents } from 'react-leaflet';
@@ -17,7 +17,6 @@ import fetchAddress from './utils/fetchAddress';
 import { isEmbed } from '../../utils/path';
 import AddressMarker from './components/AddressMarker';
 import { parseSearchParams } from '../../utils';
-import HomeLogo from '../../components/Logos/HomeLogo';
 import DistanceMeasure from './components/DistanceMeasure';
 import Loading from '../../components/Loading';
 import MarkerCluster from './components/MarkerCluster';
@@ -202,23 +201,6 @@ const MapView = (props) => {
 
   // Render
 
-  const renderEmbedOverlay = () => {
-    if (!embedded) {
-      return null;
-    }
-    const openApp = () => {
-      const url = window.location.href;
-      window.open(url.replace('/embed', ''));
-    };
-    return (
-      <ButtonBase onClick={openApp}>
-        <MUITooltip title={intl.formatMessage({ id: 'embed.click_prompt_move' })}>
-          <HomeLogo aria-hidden className={classes.embedLogo} />
-        </MUITooltip>
-      </ButtonBase>
-    );
-  };
-
   const renderUnitGeometry = () => {
     if (highlightedDistrict) return null;
     if (currentPage !== 'unit') {
@@ -255,7 +237,6 @@ const MapView = (props) => {
 
     return (
       <>
-        {renderEmbedOverlay()}
         <MapContainer
           tap={false} // This should fix leaflet safari double click bug
           preferCanvas
