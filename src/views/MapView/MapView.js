@@ -32,6 +32,7 @@ import EntranceMarker from './components/EntranceMarker';
 import EventMarkers from './components/EventMarkers';
 import CustomControls from './components/CustomControls';
 import { getSelectedUnitEvents } from '../../redux/selectors/selectedUnit';
+import useMapUnits from './utils/useMapUnits';
 
 if (global.window) {
   require('leaflet');
@@ -55,18 +56,12 @@ const EmbeddedActions = () => {
 
 const MapView = (props) => {
   const {
-    addressToRender,
-    addressUnits,
-    adminDistricts,
     classes,
     currentPage,
     intl,
     location,
     settings,
-    unitList,
     unitsLoading,
-    serviceUnits,
-    districtUnits,
     districtViewFetching,
     hideUserMarker,
     highlightedUnit,
@@ -86,7 +81,6 @@ const MapView = (props) => {
   const [mapObject, setMapObject] = useState(null);
   const [mapElement, setMapElement] = useState(null);
   const [prevMap, setPrevMap] = useState(null);
-  const [unitData, setUnitData] = useState(null);
   const [mapUtility, setMapUtility] = useState(null);
   const [measuringMarkers, setMeasuringMarkers] = useState([]);
   const [measuringLine, setMeasuringLine] = useState([]);
@@ -94,69 +88,12 @@ const MapView = (props) => {
   const embedded = isEmbed({ url: location.pathname });
   const getAddressNavigatorParams = useNavigationParams();
   const districtUnitsFetch = useSelector(state => state.districts.unitFetch);
-  const parkingAreaUnits = useSelector(state => state.districts.parkingUnits);
+
+  const unitData = useMapUnits();
 
   // This unassigned selector is used to trigger re-render after events are fetched
   useSelector(state => getSelectedUnitEvents(state));
 
-
-  const getMapUnits = () => {
-    let mapUnits = [];
-
-    if (embedded && parseSearchParams(location.search).units === 'none') {
-      return [];
-    }
-    if (currentPage === 'home' && embedded) {
-      mapUnits = unitList;
-    }
-    if (
-      currentPage === 'search'
-      || currentPage === 'division'
-      || (currentPage === 'unit' && unitList.length)
-    ) {
-      mapUnits = unitList;
-    } else if (currentPage === 'address') {
-      switch (addressToRender) {
-        case 'adminDistricts':
-          mapUnits = adminDistricts ? adminDistricts
-            .filter(d => d.unit)
-            .reduce((unique, o) => {
-              // Ignore districts without unit
-              if (!o.unit) {
-                return unique;
-              }
-              // Add only unique units
-              if (!unique.some(obj => obj.id === o.unit.id)) {
-                unique.push(o.unit);
-              }
-              return unique;
-            }, [])
-            : [];
-          break;
-        case 'units':
-          mapUnits = addressUnits;
-          break;
-        default:
-          mapUnits = [];
-      }
-    } else if (currentPage === 'service' && serviceUnits && !unitsLoading) {
-      mapUnits = serviceUnits;
-    } else if (currentPage === 'area') {
-      if (districtUnits) {
-        mapUnits = districtUnits;
-      }
-      if (parkingAreaUnits.length) {
-        mapUnits = parkingAreaUnits;
-      }
-    } else if (
-      (currentPage === 'unit' || currentPage === 'fullList' || currentPage === 'event')
-      && highlightedUnit
-    ) {
-      mapUnits = [highlightedUnit];
-    }
-
-    return mapUnits;
-  };
 
   const initializeMap = () => {
     if (mapElement) {
@@ -254,20 +191,6 @@ const MapView = (props) => {
       }
     }
   }, [mapElement]);
-
-  // Attempt to render unit markers on page change or unitList change
-  useEffect(() => {
-    setUnitData(getMapUnits());
-  }, [
-    unitList,
-    highlightedUnit,
-    addressUnits,
-    serviceUnits,
-    districtUnits,
-    parkingAreaUnits,
-    highlightedDistrict,
-    currentPage,
-  ]);
 
 
   useEffect(() => {
@@ -464,12 +387,6 @@ export default withRouter(MapView);
 
 // Typechecking
 MapView.propTypes = {
-  addressToRender: PropTypes.string,
-  addressUnits: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
-  adminDistricts: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-    ocd_id: PropTypes.string,
-  })),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   currentPage: PropTypes.string.isRequired,
   hideUserMarker: PropTypes.bool,
@@ -479,13 +396,10 @@ MapView.propTypes = {
   isMobile: PropTypes.bool,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
-  serviceUnits: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
-  districtUnits: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
   districtViewFetching: PropTypes.bool.isRequired,
   findUserLocation: PropTypes.func.isRequired,
   setMapRef: PropTypes.func.isRequired,
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
-  unitList: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
   unitsLoading: PropTypes.bool,
   userLocation: PropTypes.objectOf(PropTypes.any),
   locale: PropTypes.string.isRequired,
@@ -495,17 +409,11 @@ MapView.propTypes = {
 };
 
 MapView.defaultProps = {
-  addressToRender: null,
-  addressUnits: null,
-  adminDistricts: null,
   hideUserMarker: false,
   highlightedDistrict: null,
   highlightedUnit: null,
   isMobile: false,
   navigator: null,
-  serviceUnits: null,
-  districtUnits: null,
-  unitList: null,
   unitsLoading: false,
   toggleSidebar: null,
   sidebarHidden: false,
