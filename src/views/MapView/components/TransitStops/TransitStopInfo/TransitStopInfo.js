@@ -9,7 +9,9 @@ import { fetchStopData } from '../../../utils/transitFetch';
 import { getIcon } from '../../../../../components/SMIcon';
 import useLocaleText from '../../../../../utils/useLocaleText';
 
-const TransitStopInfo = ({ stop, onCloseClick, classes }) => {
+const TransitStopInfo = ({
+  stop, onCloseClick, type, classes,
+}) => {
   const getLocaleText = useLocaleText();
   const [stopData, setStopData] = useState({ departureTimes: null, wheelchair: null });
 
@@ -23,6 +25,7 @@ const TransitStopInfo = ({ stop, onCloseClick, classes }) => {
   };
 
   useEffect(() => {
+    if (type === 'bikeStation') return;
     fetchStopData(stop)
       .then((stopData) => {
         if (stopData) {
@@ -104,7 +107,9 @@ const TransitStopInfo = ({ stop, onCloseClick, classes }) => {
         </Typography>
         {getAccessibilityIcon(stopData.wheelchair)}
       </div>
-      {renderDepartureTimes()}
+      {type === 'bikeStation'
+        ? null
+        : renderDepartureTimes()}
     </div>
   );
 };
@@ -113,10 +118,12 @@ TransitStopInfo.propTypes = {
   stop: PropTypes.objectOf(PropTypes.any),
   onCloseClick: PropTypes.func.isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
+  type: PropTypes.string,
 };
 
 TransitStopInfo.defaultProps = {
   stop: {},
+  type: null,
 };
 
 export default TransitStopInfo;

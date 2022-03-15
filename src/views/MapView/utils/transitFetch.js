@@ -160,7 +160,23 @@ const fetchStopData = async (stop) => {
   return data;
 };
 
+
+const fetchBikeStations = async () => fetch(`${config.digitransitAPI.root}`, {
+  method: 'post',
+  headers: { 'Content-Type': 'application/graphql' },
+  body:
+    `{
+      bikeRentalStations {
+        name
+        stationId
+        lat
+        lon
+      }
+    }`,
+}).then(response => response.json());
+
 export {
   fetchStops,
   fetchStopData,
+  fetchBikeStations,
 };

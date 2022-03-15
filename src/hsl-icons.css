@@ -18,6 +18,7 @@
 .icon-icon-hsl-tram:before,
 .icon-icon-hsl-train:before,
 .icon-icon-hsl-metro:before,
+.icon-icon-hsl-bike:before,
 .icon-icon-hsl-ferry:before {
   display: inline-block;
   font-family: "hsl-piktoframe";
@@ -39,3 +40,4 @@
 .icon-icon-hsl-train:before { content: "4"; }
 .icon-icon-hsl-metro:before { content: "5"; }
 .icon-icon-hsl-ferry:before { content: "6"; }
+.icon-icon-hsl-bike:before { content: "7"; }
