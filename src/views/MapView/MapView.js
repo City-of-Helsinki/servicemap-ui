@@ -6,6 +6,8 @@ import { Tooltip as MUITooltip, ButtonBase } from '@material-ui/core';
 import { MyLocation, LocationDisabled } from '@material-ui/icons';
 import { useSelector } from 'react-redux';
 import { useMapEvents } from 'react-leaflet';
+import distance from '@turf/distance';
+import flip from '@turf/flip';
 import { mapOptions } from './config/mapConfig';
 import CreateMap from './utils/createMap';
 import { focusToPosition, getBoundsFromBbox } from './utils/mapActions';
@@ -101,9 +103,10 @@ const MapView = (props) => {
 
 
   const getMapUnits = () => {
+    const searchParams = parseSearchParams(location.search);
     let mapUnits = [];
 
-    if (embedded && parseSearchParams(location.search).units === 'none') {
+    if (embedded && searchParams.units === 'none') {
       return [];
     }
     if (currentPage === 'home' && embedded) {
@@ -112,7 +115,6 @@ const MapView = (props) => {
     if (
       currentPage === 'search'
       || currentPage === 'division'
-      || (currentPage === 'unit' && unitList.length)
     ) {
       mapUnits = unitList;
     } else if (currentPage === 'address') {
@@ -153,6 +155,40 @@ const MapView = (props) => {
       && highlightedUnit
     ) {
       mapUnits = [highlightedUnit];
+    }
+
+    // Add additional service units based on URL parameters
+    if (searchParams.services) {
+      let additionalUnits = serviceUnits;
+      // Filter units within distance
+      if (searchParams.distance && mapUnits.length === 1) {
+        const targetGeometry = mapUnits[0].geometry;
+        if (targetGeometry) {
+          // Function to check if unit coordinates are within the specified distance
+          const isWithinDistance = (unitCoord) => {
+            const checkDistance = (a, b) => (
+              distance(a, b) * 1000 <= searchParams.distance
+            );
+            // If target has only one point as geometry data, compare distance between points
+            if (targetGeometry.type === 'Point') {
+              return checkDistance(flip(targetGeometry), unitCoord);
+            }
+            // Else flatten multiline coordinates to a list of coordinate pairs and check each one
+            return targetGeometry.coordinates.flat().some(coord => checkDistance(coord, unitCoord));
+          };
+
+          // Filter unitlist to include only units within the specified distance
+          additionalUnits = serviceUnits.filter((unit) => {
+            if (unit.id === mapUnits[0].id) return false;
+            if (unit.location?.coordinates) {
+              const unitCoordinates = flip(unit.location);
+              return isWithinDistance(unitCoordinates);
+            }
+            return false;
+          });
+        }
+      }
+      return [...mapUnits, ...additionalUnits];
     }
 
     return mapUnits;
@@ -304,7 +340,8 @@ const MapView = (props) => {
           ? <UnitGeometry key={unit.id} data={unit} />
           : null
       ));
-    } if (highlightedUnit) {
+    }
+    if (highlightedUnit) {
       return <UnitGeometry data={highlightedUnit} />;
     }
     return null;
@@ -359,7 +396,7 @@ const MapView = (props) => {
             ? <EventMarkers searchData={unitData} />
             : (
               <MarkerCluster
-                data={currentPage === 'unit' && highlightedUnit ? [highlightedUnit] : unitData}
+                data={unitData}
                 measuringMode={measuringMode}
               />
             )
