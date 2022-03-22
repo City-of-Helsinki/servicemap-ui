@@ -7,7 +7,7 @@ import {
   Map, Mail, Hearing, Share,
 } from '@material-ui/icons';
 import { Helmet } from 'react-helmet';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { SearchBar, AcceptSettingsDialog, LinkSettingsDialog } from '../../components';
 import TitleBar from '../../components/TitleBar';
 import Container from '../../components/Container';
@@ -33,6 +33,8 @@ import SettingsUtility from '../../utils/settings';
 import UnitDataList from './components/UnitDataList';
 import UnitsServicesList from './components/UnitsServicesList';
 import PriceInfo from './components/PriceInfo';
+import { parseSearchParams } from '../../utils';
+import { fetchServiceUnits } from '../../redux/actions/services';
 
 const UnitView = (props) => {
   const {
@@ -65,6 +67,7 @@ const UnitView = (props) => {
   const [openAcceptSettingsDialog, setOpenAcceptSettingsDialog] = useState(false);
   const [openLinkDialog, setOpenLinkDialog] = useState(false);
   const getLocaleText = useLocaleText();
+  const dispatch = useDispatch();
 
   const map = useSelector(state => state.mapRef);
 
@@ -125,6 +128,14 @@ const UnitView = (props) => {
     }
   };
 
+  const handleServiceFetch = () => {
+    // Fetch additional data based on URL parameters
+    const searchParams = parseSearchParams(location.search);
+    if (searchParams.services) {
+      dispatch(fetchServiceUnits(searchParams.services));
+    }
+  };
+
   const handleFeedbackClick = () => {
     const URLs = config.additionalFeedbackURLs;
     if (unit.municipality === 'espoo') {
@@ -162,6 +173,7 @@ const UnitView = (props) => {
 
   useEffect(() => { // On mount
     intializeUnitData();
+    handleServiceFetch();
     saveMapPosition();
     return () => { // On unmount
       // Return map to previous position if returning to search page or service page
