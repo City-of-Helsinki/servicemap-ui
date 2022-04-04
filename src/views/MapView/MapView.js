@@ -209,7 +209,8 @@ const MapView = (props) => {
           ? <UnitGeometry key={unit.id} data={unit} />
           : null
       ));
-    } if (highlightedUnit) {
+    }
+    if (highlightedUnit) {
       return <UnitGeometry data={highlightedUnit} />;
     }
     return null;
@@ -263,7 +264,7 @@ const MapView = (props) => {
             ? <EventMarkers searchData={unitData} />
             : (
               <MarkerCluster
-                data={currentPage === 'unit' && highlightedUnit ? [highlightedUnit] : unitData}
+                data={unitData}
                 measuringMode={measuringMode}
               />
             )
