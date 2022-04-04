@@ -1,5 +1,7 @@
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import distance from '@turf/distance';
+import flip from '@turf/flip';
 import { getFilteredSubdistrictUnits } from '../../../redux/selectors/district';
 import { getOrderedData } from '../../../redux/selectors/results';
 import { getSelectedUnit } from '../../../redux/selectors/selectedUnit';
@@ -37,6 +39,42 @@ const handleAdrressUnits = (addressToRender, adminDistricts, addressUnits) => {
 };
 
 
+// Add additional service units to unit page if specified on Url parameters
+const handleServiceUnitsFromUrl = (mapUnits, serviceUnits, location) => {
+  const distanceParameter = new URLSearchParams(location.search).get('distance');
+  let additionalUnits = serviceUnits;
+  // Filter units within distance
+  if (distanceParameter && mapUnits.length === 1) {
+    const targetGeometry = mapUnits[0].geometry;
+    if (targetGeometry) {
+      // Function to check if unit coordinates are within the specified distance
+      const isWithinDistance = (unitCoord) => {
+        const checkDistance = (a, b) => (
+          distance(a, b) * 1000 <= distanceParameter
+        );
+          // If target has only one point as geometry data, compare distance between points
+        if (targetGeometry.type === 'Point') {
+          return checkDistance(flip(targetGeometry), unitCoord);
+        }
+        // Else flatten multiline coordinates to a list of coordinate pairs and check each one
+        return targetGeometry.coordinates.flat().some(coord => checkDistance(coord, unitCoord));
+      };
+
+      // Filter unitlist to include only units within the specified distance
+      additionalUnits = serviceUnits.filter((unit) => {
+        if (unit.id === mapUnits[0].id) return false;
+        if (unit.location?.coordinates) {
+          const unitCoordinates = flip(unit.location);
+          return isWithinDistance(unitCoordinates);
+        }
+        return false;
+      });
+    }
+  }
+  return additionalUnits;
+};
+
+
 const useMapUnits = () => {
   const embedded = useEmbedStatus();
   const location = useLocation();
@@ -55,6 +93,7 @@ const useMapUnits = () => {
   const unitsLoading = searchUnitsLoading || serviceUnitsLoading;
 
   const unitParam = new URLSearchParams(location.search).get('units');
+  const servicesParams = new URLSearchParams(location.search).get('services');
 
   if (embedded && unitParam === 'none') {
     return [];
@@ -63,32 +102,46 @@ const useMapUnits = () => {
   const filteredUnits = searchResults.filter(item => item.object_type === 'unit');
 
   // Figure out which units to show on map on different pages
-  switch (currentPage) {
-    case 'search':
-    case 'division':
-      return filteredUnits;
+  const getMapUnits = () => {
+    switch (currentPage) {
+      case 'search':
+      case 'division':
+        return filteredUnits;
 
-    case 'unit':
-    case 'fullList':
-    case 'event':
-      if (highlightedUnit) return [highlightedUnit];
-      return [];
+      case 'unit':
+      case 'fullList':
+      case 'event':
+        if (highlightedUnit) return [highlightedUnit];
+        return [];
 
-    case 'address':
-      return handleAdrressUnits(addressToRender, adminDistricts, addressUnits);
+      case 'address':
+        return handleAdrressUnits(addressToRender, adminDistricts, addressUnits);
 
-    case 'service':
-      if (serviceUnits && !unitsLoading) return serviceUnits;
-      return [];
+      case 'service':
+        if (serviceUnits && !unitsLoading) return serviceUnits;
+        return [];
 
-    case 'area':
-      if (districtUnits) return districtUnits;
-      if (parkingAreaUnits.length) return parkingAreaUnits;
-      return [];
+      case 'area':
+        if (districtUnits) return districtUnits;
+        if (parkingAreaUnits.length) return parkingAreaUnits;
+        return [];
 
-    default:
-      return [];
+      default:
+        return [];
+    }
+  };
+
+  let mapUnits = getMapUnits();
+
+  // Add additional service units on unit page if specified in Url parameters
+  if (servicesParams && currentPage === 'unit') {
+    const additionalUnits = handleServiceUnitsFromUrl(mapUnits, serviceUnits, location);
+    if (additionalUnits?.length) {
+      mapUnits = [...mapUnits, ...additionalUnits];
+    }
   }
+
+  return mapUnits;
 };
 
 export default useMapUnits;
