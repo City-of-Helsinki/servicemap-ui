@@ -36,7 +36,7 @@ export const fetchServiceUnits = serviceIdList => async (dispatch, getState) => 
 
     // Handle fetch
     const smAPI = new ServiceMapAPI();
-    const serviceUnits = await smAPI.services(serviceIdList, options);
+    const serviceUnits = await smAPI.serviceUnits(serviceIdList, options);
 
     // Filter out duplicate units
     const distinctData = Array.from(new Set(serviceUnits.map(x => x.id))).map((id) => {
