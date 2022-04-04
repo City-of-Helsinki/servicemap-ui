@@ -5,6 +5,7 @@ import {
   ListItem, ListItemIcon, Typography, Divider,
 } from '@material-ui/core';
 import { useTheme } from '@material-ui/styles';
+import { keyboardHandler } from '../../../utils';
 import locationIcon from '../../../assets/icons/LocationDefault.svg';
 import locationIconHover from '../../../assets/icons/LocationHover.svg';
 import locationIconContrast from '../../../assets/icons/LocationDefaultContrast.svg';
@@ -89,6 +90,7 @@ const ResultItem = ({
         component="li"
         tabIndex={0}
         onClick={onClick}
+        onKeyDown={keyboardHandler(onClick, ['enter', 'space'])}
         onFocus={unitId ? onMouseEnter : null}
         onBlur={unitId ? onMouseLeave : null}
         onMouseEnter={unitId ? onMouseEnter : null}
