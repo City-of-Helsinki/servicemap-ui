@@ -28,6 +28,22 @@ export default class ServiceMapAPI extends HttpClient {
     return this.get('search', options);
   }
 
+  // Fetch multiple services concurrently
+  services = async (idList, additionalOptions) => {
+    if (typeof idList !== 'string' && typeof idList !== 'number') {
+      throw new APIFetchError('Invalid idList string provided to ServiceMapAPI services method');
+    }
+
+    const options = {
+      service: idList,
+      page_size: 200,
+      only: 'street_address,name,accessibility_shortcoming_count,location,municipality,contract_type',
+      ...additionalOptions,
+    };
+
+    return this.getConcurrent('unit', options);
+  }
+
   serviceNames = async (idList) => {
     if (typeof idList !== 'string') {
       throw new APIFetchError('Invalid idList string provided to ServiceMapAPI serviceNames method');
