@@ -3,6 +3,7 @@ import React from 'react';
 import isClient from '../../../../utils';
 import { getAddressFromUnit } from '../../../../utils/address';
 import formatEventDate from '../../../../utils/events';
+import { isEmbed } from '../../../../utils/path';
 
 export const createMarkerClusterLayer = (
   createClusterCustomIcon,
@@ -26,7 +27,7 @@ export const createMarkerClusterLayer = (
   });
 
   clusterLayer.on('clustermouseover', (a) => {
-    if (clusterMouseover) clusterMouseover(a);
+    if (clusterMouseover && !isEmbed()) clusterMouseover(a);
   });
   // Add click events as alternative way to trigger hover events on mobile
   clusterLayer.on('clusterclick', (a) => {

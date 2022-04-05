@@ -193,6 +193,7 @@ const translations = {
   'embedder.preview.title': 'Map preview',
   'embedder.options.title': 'Show on the map',
   'embedder.options.label.units': 'Show service points',
+  'embedder.options.label.list': 'Näytä toimipisteet listana', // TODO: translate
   'embedder.options.label.transit': 'Show public transport stops (Zoom in the map to see the stops)',
   'embedder.options.label.bbox': 'Limit the embedded map to the area in the preview window',
   'embedder.service.title': 'Services',

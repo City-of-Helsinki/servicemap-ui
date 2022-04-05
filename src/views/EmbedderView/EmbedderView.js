@@ -3,7 +3,7 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Checkbox, FormControlLabel, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import URI from 'urijs';
 import { Helmet } from 'react-helmet';
 import { useSelector } from 'react-redux';
@@ -95,6 +95,7 @@ const EmbedderView = ({
   const [heightMode, setHeightMode] = useState('ratio');
   const [transit, setTransit] = useState(false);
   const [showUnits, setShowUnits] = useState(true);
+  const [showList, setShowList] = useState(false);
   const [restrictBounds, setRestrictBounds] = useState(true);
 
   const boundsRef = useRef([]);
@@ -103,7 +104,7 @@ const EmbedderView = ({
   const selectedBbox = restrictBounds && boundsRef.current;
 
   const embedUrl = getEmbedURL(url, {
-    language, map, city, service, defaultLanguage, transit, showUnits, bbox: selectedBbox,
+    language, map, city, service, defaultLanguage, transit, showUnits, showList, bbox: selectedBbox,
   });
 
   const getTitleText = () => {
@@ -414,29 +415,15 @@ const EmbedderView = ({
     );
   };
 
-  const renderBoundsControl = useCallback(() => (
-    <FormControlLabel
-      control={(
-        <Checkbox
-          color="primary"
-          checked={!!restrictBounds}
-          value="bounds"
-          onChange={() => setRestrictBounds(!restrictBounds)}
-        />
-        )}
-      label={(<FormattedMessage id="embedder.options.label.bbox" />)}
-    />
-  ), [restrictBounds]);
-
 
   const renderMapOptionsControl = () => {
     const controls = [
       {
-        key: 'transit',
-        value: transit,
-        onChange: v => setTransit(v),
+        key: 'bounds',
+        value: restrictBounds,
+        onChange: v => setRestrictBounds(v),
         icon: null,
-        labelId: 'embedder.options.label.transit',
+        labelId: 'embedder.options.label.bbox',
       },
       {
         key: 'units',
@@ -444,6 +431,20 @@ const EmbedderView = ({
         onChange: v => setShowUnits(v),
         icon: null,
         labelId: 'embedder.options.label.units',
+      },
+      {
+        key: 'list',
+        value: showList,
+        onChange: v => setShowList(v),
+        icon: null,
+        labelId: 'embedder.options.label.list',
+      },
+      {
+        key: 'transit',
+        value: transit,
+        onChange: v => setTransit(v),
+        icon: null,
+        labelId: 'embedder.options.label.transit',
       },
     ];
 
@@ -529,7 +530,6 @@ const EmbedderView = ({
               title={iframeTitle}
               titleComponent="h2"
               widthMode={widthMode}
-              renderBoundsControl={renderBoundsControl}
             />
 
             {

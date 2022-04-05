@@ -43,6 +43,7 @@ exports[`<ResultList /> should work 1`] = `
     <injectIntl(WithStyles(Connect(UnitItem)))
       className="unit-63115"
       key="unit-63115"
+      simpleItem={false}
       unit={
         Object {
           "accessibility_properties": Array [],
@@ -74,6 +75,7 @@ exports[`<ResultList /> should work 1`] = `
     <injectIntl(WithStyles(Connect(UnitItem)))
       className="unit-62032"
       key="unit-62032"
+      simpleItem={false}
       unit={
         Object {
           "accessibility_properties": Array [],
