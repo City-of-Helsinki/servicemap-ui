@@ -63,7 +63,7 @@ const createContentStyles = (theme, bottomList) => {
     embedSidebarContainer: bottomList
       ? {
         height: 300,
-        maxHeight: '35%',
+        maxHeight: '40%',
         minHeight: '25%',
       } : {
         minWidth: 220,

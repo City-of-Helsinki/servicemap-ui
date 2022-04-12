@@ -104,6 +104,8 @@ const EmbedderView = ({
 
   const selectedBbox = restrictBounds && boundsRef.current;
 
+  const minHeightWithBottomList = '478px';
+
   const embedUrl = getEmbedURL(url, {
     language,
     map,
@@ -184,7 +186,10 @@ const EmbedderView = ({
     if (!url) {
       return '';
     }
-    const renderWrapperStyle = () => `position: relative; width:100%; padding-bottom:${ratioHeight}%;`;
+    const renderWrapperStyle = () => (showListBottom
+      ? `position: relative; width:100%; padding-bottom: max(${ratioHeight}%, ${minHeightWithBottomList});`
+      : `position: relative; width:100%; padding-bottom:${ratioHeight}%;`
+    );
     let height;
     let html;
     if (heightMode === 'fixed') { height = fixedHeight; }
@@ -203,7 +208,8 @@ const EmbedderView = ({
         iframeConfig.style && iframeConfig.style.width && iframeConfig.style.width
       ) : customWidth;
       const widthUnit = width !== '100%' ? 'px' : '';
-      html = `<iframe title="${iframeTitle}" style="border: none; width: ${width}${widthUnit}; height: ${height}px;"
+      const heightValue = showListBottom ? `height: max(${height}px, ${minHeightWithBottomList})` : `height: ${height}px`;
+      html = `<iframe title="${iframeTitle}" style="border: none; width: ${width}${widthUnit}; ${heightValue};"
                   src="${url}"></iframe>`;
     }
     return html;
@@ -215,6 +221,7 @@ const EmbedderView = ({
     widthMode,
     ratioHeight,
     iframeConfig.style,
+    showListBottom,
   ]);
 
   const showCities = (embedUrl) => {
@@ -553,6 +560,8 @@ const EmbedderView = ({
               title={iframeTitle}
               titleComponent="h2"
               widthMode={widthMode}
+              bottomList={showListBottom}
+              minHeightWithBottomList={minHeightWithBottomList}
             />
 
             {
