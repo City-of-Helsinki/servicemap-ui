@@ -35,14 +35,17 @@ const PaginatedList = ({
 
   if (embeddedList) { // Handle embedded list size dynamically based on screen height
     const listItemHeight = 38;
-    const offsetHeight = 100;
+    const offsetHeight = embeddedList === 'bottom' ? 48 : 100;
     const listHeight = windowHeight - offsetHeight;
-    itemCount = Math.max(4, Math.floor(listHeight / listItemHeight));
+    itemCount = Math.max(3, Math.floor(listHeight / listItemHeight));
   }
 
   // Track window size change on embedded list view
   useLayoutEffect(() => {
-    const updateSize = () => setWindowHeight(window.innerHeight);
+    const updateSize = () => {
+      const listContainerSize = document.getElementById('unitListContainer')?.clientHeight;
+      setWindowHeight(listContainerSize || window.innerHeight);
+    };
     if (embeddedList) {
       window.addEventListener('resize', updateSize);
       updateSize();
@@ -126,7 +129,7 @@ const PaginatedList = ({
         title={title}
         titleComponent={titleComponent}
         customComponent={customComponent}
-        embeddedList={embeddedList}
+        embeddedList={!!embeddedList}
       />
       {
         beforePagination || null
@@ -138,7 +141,7 @@ const PaginatedList = ({
             current={adjustedCurrentPage}
             pageCount={pageCount}
             handlePageChange={handlePageChange}
-            embeddedList={embeddedList}
+            embeddedList={!!embeddedList}
           />
         )
       }
@@ -156,7 +159,7 @@ PaginatedList.propTypes = {
   srTitle: PropTypes.string,
   title: PropTypes.string,
   titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']).isRequired,
-  embeddedList: PropTypes.bool,
+  embeddedList: PropTypes.string,
 };
 
 PaginatedList.defaultProps = {
@@ -166,7 +169,7 @@ PaginatedList.defaultProps = {
   navigator: null,
   srTitle: null,
   title: null,
-  embeddedList: false,
+  embeddedList: null,
 };
 
 export default PaginatedList;

@@ -95,7 +95,8 @@ const EmbedderView = ({
   const [heightMode, setHeightMode] = useState('ratio');
   const [transit, setTransit] = useState(false);
   const [showUnits, setShowUnits] = useState(true);
-  const [showList, setShowList] = useState(false);
+  const [showListSide, setShowListSide] = useState(false);
+  const [showListBottom, setShowListBottom] = useState(false);
   const [restrictBounds, setRestrictBounds] = useState(true);
 
   const boundsRef = useRef([]);
@@ -104,7 +105,16 @@ const EmbedderView = ({
   const selectedBbox = restrictBounds && boundsRef.current;
 
   const embedUrl = getEmbedURL(url, {
-    language, map, city, service, defaultLanguage, transit, showUnits, showList, bbox: selectedBbox,
+    language,
+    map,
+    city,
+    service,
+    defaultLanguage,
+    transit,
+    showUnits,
+    showListSide,
+    showListBottom,
+    bbox: selectedBbox,
   });
 
   const getTitleText = () => {
@@ -433,11 +443,24 @@ const EmbedderView = ({
         labelId: 'embedder.options.label.units',
       },
       {
-        key: 'list',
-        value: showList,
-        onChange: v => setShowList(v),
+        key: 'listSide',
+        value: showListSide,
+        onChange: (v) => {
+          setShowListSide(v);
+          setShowListBottom(false);
+        },
         icon: null,
-        labelId: 'embedder.options.label.list',
+        labelId: 'embedder.options.label.list.side',
+      },
+      {
+        key: 'listBottom',
+        value: showListBottom,
+        onChange: (v) => {
+          setShowListBottom(v);
+          setShowListSide(false);
+        },
+        icon: null,
+        labelId: 'embedder.options.label.list.bottom',
       },
       {
         key: 'transit',
