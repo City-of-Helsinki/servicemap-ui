@@ -95,7 +95,8 @@ const EmbedderView = ({
   const [heightMode, setHeightMode] = useState('ratio');
   const [transit, setTransit] = useState(false);
   const [showUnits, setShowUnits] = useState(true);
-  const [showList, setShowList] = useState(false);
+  const [showListSide, setShowListSide] = useState(false);
+  const [showListBottom, setShowListBottom] = useState(false);
   const [restrictBounds, setRestrictBounds] = useState(true);
 
   const boundsRef = useRef([]);
@@ -103,8 +104,19 @@ const EmbedderView = ({
 
   const selectedBbox = restrictBounds && boundsRef.current;
 
+  const minHeightWithBottomList = '478px';
+
   const embedUrl = getEmbedURL(url, {
-    language, map, city, service, defaultLanguage, transit, showUnits, showList, bbox: selectedBbox,
+    language,
+    map,
+    city,
+    service,
+    defaultLanguage,
+    transit,
+    showUnits,
+    showListSide,
+    showListBottom,
+    bbox: selectedBbox,
   });
 
   const getTitleText = () => {
@@ -174,7 +186,10 @@ const EmbedderView = ({
     if (!url) {
       return '';
     }
-    const renderWrapperStyle = () => `position: relative; width:100%; padding-bottom:${ratioHeight}%;`;
+    const renderWrapperStyle = () => (showListBottom
+      ? `position: relative; width:100%; padding-bottom: max(${ratioHeight}%, ${minHeightWithBottomList});`
+      : `position: relative; width:100%; padding-bottom:${ratioHeight}%;`
+    );
     let height;
     let html;
     if (heightMode === 'fixed') { height = fixedHeight; }
@@ -193,7 +208,8 @@ const EmbedderView = ({
         iframeConfig.style && iframeConfig.style.width && iframeConfig.style.width
       ) : customWidth;
       const widthUnit = width !== '100%' ? 'px' : '';
-      html = `<iframe title="${iframeTitle}" style="border: none; width: ${width}${widthUnit}; height: ${height}px;"
+      const heightValue = showListBottom ? `height: max(${height}px, ${minHeightWithBottomList})` : `height: ${height}px`;
+      html = `<iframe title="${iframeTitle}" style="border: none; width: ${width}${widthUnit}; ${heightValue};"
                   src="${url}"></iframe>`;
     }
     return html;
@@ -205,6 +221,7 @@ const EmbedderView = ({
     widthMode,
     ratioHeight,
     iframeConfig.style,
+    showListBottom,
   ]);
 
   const showCities = (embedUrl) => {
@@ -433,11 +450,24 @@ const EmbedderView = ({
         labelId: 'embedder.options.label.units',
       },
       {
-        key: 'list',
-        value: showList,
-        onChange: v => setShowList(v),
+        key: 'listSide',
+        value: showListSide,
+        onChange: (v) => {
+          setShowListSide(v);
+          setShowListBottom(false);
+        },
         icon: null,
-        labelId: 'embedder.options.label.list',
+        labelId: 'embedder.options.label.list.side',
+      },
+      {
+        key: 'listBottom',
+        value: showListBottom,
+        onChange: (v) => {
+          setShowListBottom(v);
+          setShowListSide(false);
+        },
+        icon: null,
+        labelId: 'embedder.options.label.list.bottom',
       },
       {
         key: 'transit',
@@ -530,6 +560,8 @@ const EmbedderView = ({
               title={iframeTitle}
               titleComponent="h2"
               widthMode={widthMode}
+              bottomList={showListBottom}
+              minHeightWithBottomList={minHeightWithBottomList}
             />
 
             {
