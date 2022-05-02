@@ -23,7 +23,7 @@ const ExtendedData = ({
   const getLocaleText = useLocaleText();
   const selectedUnit = useSelector(state => state.selectedUnit?.unit?.data);
   const intl = useIntl();
-  const { unit } = useParams();
+  const { unit, period } = useParams();
   const title = currentUnit && currentUnit.name ? getLocaleText(currentUnit.name) : '';
 
   useEffect(() => {
@@ -90,7 +90,15 @@ const ExtendedData = ({
   };
 
   const renderEducationServices = () => {
-    const data = selectedUnit.services.filter(unit => unit.period);
+    const data = selectedUnit.services.filter((unit) => {
+      if (unit.period) {
+        // Show only units that have correct period data
+        const unitPeriod = `${unit.period[0]}–${unit.period[1]}`;
+        if (period && period === unitPeriod) return true;
+      }
+      return false;
+    });
+
     const titleText = intl.formatMessage({ id: 'unit.educationServices' });
     const srTitle = `${title} ${titleText}`;
     return (

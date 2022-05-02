@@ -9,13 +9,13 @@ import ReservationItem from '../../../../components/ListItems/ReservationItem';
 import ServiceItem from '../../../../components/ListItems/ServiceItem';
 
 const UnitDataList = ({
-  data, listLength, type, semester, disableTitle, navigator,
+  data, listLength, type, period, disableTitle, navigator,
 }) => {
   const location = useLocation();
   const unit = useSelector(state => state.selectedUnit.unit.data);
 
   const dataItems = data.data;
-  const fullDataLength = data.max;
+  const fullDataLength = data.data.length;
   const { isFetching } = data;
 
   if (!dataItems) {
@@ -31,7 +31,7 @@ const UnitDataList = ({
         ...location,
         hash: `Unit${type}Button`,
       });
-      navigator.push('unit', { id: unit.id, type });
+      navigator.push('unit', { id: unit.id, type, period });
     }
   };
 
@@ -69,7 +69,7 @@ const UnitDataList = ({
       <div>
         <TitledList
           title={!disableTitle ? <FormattedMessage id={`unit.${type}`} /> : null}
-          description={<FormattedMessage id={`unit.${type}.description`} values={semester ? { semester } : null} />}
+          description={<FormattedMessage id={`unit.${type}.description`} values={period ? { period } : null} />}
           detailedTitle
           divider={false}
           titleComponent="h4"
@@ -93,7 +93,7 @@ UnitDataList.propTypes = {
   listLength: PropTypes.number,
   type: PropTypes.string.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
-  semester: PropTypes.string,
+  period: PropTypes.string,
   disableTitle: PropTypes.bool,
 };
 
@@ -101,7 +101,7 @@ UnitDataList.defaultProps = {
   data: null,
   listLength: 5,
   navigator: null,
-  semester: null,
+  period: null,
   disableTitle: false,
 };
 

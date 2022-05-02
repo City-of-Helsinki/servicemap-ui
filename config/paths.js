@@ -13,7 +13,7 @@ const paths = {
     regex: /\/[a-zA-Z]{2}\/search/
   },
   unit: {
-    generate: data => `/unit/${data.id || ''}${data.type ? '/' + data.type : ''}`,
+    generate: data => `/unit/${data.id || ''}${data.type ? '/' + data.type : ''}${data.period ? '/' + data.period : ''}`,
     regex: /\/[a-zA-Z]{2}\/unit\/([0-9]+)/
   },
   service: {
