@@ -18,8 +18,7 @@ import { getLocale } from './redux/selectors/locale';
 import { changeLocaleAction } from './redux/actions/user';
 import DefaultLayout from './layouts';
 import EmbedLayout from './layouts/EmbedLayout';
-import Navigator from './components/Navigator';
-import DataFetcher from './components/DataFetchers/DataFetcher';
+import { DataFetcher, Navigator } from './components';
 import EmbedderView from './views/EmbedderView';
 
 import '@formatjs/intl-pluralrules/polyfill';
