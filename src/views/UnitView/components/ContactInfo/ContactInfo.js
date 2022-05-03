@@ -146,6 +146,7 @@ const ContactInfo = ({
       currentLocationString = `${userAddress}::${latitude},${longitude}`;
     }
     let url = '';
+    let extraText = '';
 
     switch (unit.municipality) {
       case 'Helsinki':
@@ -154,9 +155,11 @@ const ContactInfo = ({
       case 'Kauniainen':
       case 'Kerava':
         url = config.reittiopasURL;
+        extraText = intl.formatMessage({ id: 'unit.route.extra.hsl' });
         break;
       default:
         url = config.digiTransitURL;
+        extraText = intl.formatMessage({ id: 'unit.route.extra.digitransit' });
     }
 
     const destinationString = `${getLocaleText(unit.name)}, ${unit.municipality}::${unitLocation.coordinates[1]},${unitLocation.coordinates[0]}`;
@@ -167,7 +170,7 @@ const ContactInfo = ({
       value: {
         www: routeUrl,
         name: intl.formatMessage({ id: 'unit.route' }),
-        extraText: intl.formatMessage({ id: 'unit.route.extra' }),
+        extraText,
       },
     };
     data.push(route);
