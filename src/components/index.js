@@ -1,5 +1,6 @@
 import Navigator from './Navigator';
 import DataFetcher from './DataFetchers/DataFetcher';
+import NewsInfo from './NewsInfo';
 
 export * from './ErrorBoundary/ErrorBoundary';
 export * from './ErrorBoundary/ErrorComponent';
@@ -13,4 +14,5 @@ export * from './SearchBar';
 export {
   DataFetcher,
   Navigator,
+  NewsInfo,
 };
