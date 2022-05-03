@@ -1,6 +1,8 @@
 import Navigator from './Navigator';
 import DataFetcher from './DataFetchers/DataFetcher';
 import NewsInfo from './NewsInfo';
+import Settings from './Settings';
+import TopBar from './TopBar';
 
 export * from './ErrorBoundary/ErrorBoundary';
 export * from './ErrorBoundary/ErrorComponent';
@@ -15,4 +17,6 @@ export {
   DataFetcher,
   Navigator,
   NewsInfo,
+  Settings,
+  TopBar,
 };

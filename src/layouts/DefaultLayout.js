@@ -6,8 +6,6 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Typography } from '@material-ui/core';
 import MapView from '../views/MapView';
 import config from '../../config';
-import TopBar from '../components/TopBar';
-import Settings from '../components/Settings';
 import ViewRouter from './components/ViewRouter';
 import DesktopComponent from '../components/DesktopComponent';
 import useMobileStatus from '../utils/isMobile';
@@ -18,7 +16,7 @@ import { PrintProvider } from '../context/PrintContext';
 import { viewTitleID } from '../utils/accessibility';
 import ErrorBoundary from '../components/ErrorBoundary';
 import { ErrorProvider } from '../context/ErrorContext';
-import { ErrorComponent } from '../components';
+import { ErrorComponent, TopBar, Settings } from '../components';
 
 const { smallScreenBreakpoint } = config;
 
