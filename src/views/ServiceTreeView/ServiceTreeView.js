@@ -11,7 +11,7 @@ import config from '../../../config';
 import SMButton from '../../components/ServiceMapButton';
 import SMAccordion from '../../components/SMAccordion';
 import useLocaleText from '../../utils/useLocaleText';
-import TitleBar from '../../components/TitleBar';
+import { TitleBar } from '../../components';
 
 const ServiceTreeView = (props) => {
   const {

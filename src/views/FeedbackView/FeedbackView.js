@@ -6,12 +6,14 @@ import {
 } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
 import { Prompt } from 'react-router-dom';
-import TitleBar from '../../components/TitleBar';
 import SMButton from '../../components/ServiceMapButton';
 import config from '../../../config';
 import DesktopComponent from '../../components/DesktopComponent';
 import { focusToViewTitle } from '../../utils/accessibility';
 import useLocaleText from '../../utils/useLocaleText';
+import {
+  TitleBar,
+} from '../../components';
 
 const FeedbackView = ({
   classes, navigator, intl, location, selectedUnit,

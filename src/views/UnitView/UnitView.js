@@ -13,8 +13,8 @@ import {
   LinkSettingsDialog,
   SearchBar,
   TabLists,
+  TitleBar,
 } from '../../components';
-import TitleBar from '../../components/TitleBar';
 import Container from '../../components/Container';
 import AccessibilityInfo from './components/AccessibilityInfo';
 import ContactInfo from './components/ContactInfo';

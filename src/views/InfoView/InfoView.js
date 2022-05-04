@@ -6,8 +6,8 @@ import { FormattedMessage } from 'react-intl';
 import {
   Typography, ButtonBase, Link, NoSsr,
 } from '@material-ui/core';
-import TitleBar from '../../components/TitleBar';
 import config from '../../../config';
+import { TitleBar } from '../../components';
 
 const InfoView = ({ classes, locale }) => {
   const a11yURLs = config.accessibilityStatementURL;

@@ -5,8 +5,7 @@ import PropTypes from 'prop-types';
 // TODO Remove this when redux selected event is used
 import { AccessTime, Phone, Event } from '@material-ui/icons';
 import DescriptionText from '../../components/DescriptionText';
-import { SearchBar } from '../../components';
-import TitleBar from '../../components/TitleBar';
+import { SearchBar, TitleBar } from '../../components';
 import SimpleListItem from '../../components/ListItems/SimpleListItem';
 import UnitItem from '../../components/ListItems/UnitItem';
 import TitledList from '../../components/Lists/TitledList';
