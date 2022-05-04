@@ -6,9 +6,14 @@ import TopBar from './TopBar';
 import DesktopComponent from './DesktopComponent';
 import FocusableSRLinks from './FocusableSRLinks';
 import AlertBox from './AlertBox';
+import DivisionItem from './ListItems/DivisionItem';
 import ErrorBoundary from './ErrorBoundary';
 import HomeLogo from './Logos/HomeLogo';
+import MobileComponent from './MobileComponent';
 import PaginatedList from './Lists/PaginatedList';
+import TabLists from './TabLists';
+import TitleBar from './TitleBar';
+import SMButton from './ServiceMapButton';
 
 export * from './ErrorBoundary/ErrorBoundary';
 export * from './ErrorBoundary/ErrorComponent';
@@ -18,17 +23,23 @@ export * from './ListItems/DistrictItem';
 export * from './Dialog/AcceptSettingsDialog';
 export * from './Dialog/LinkSettingsDialog';
 export * from './SearchBar';
+export * from './SMIcon';
 
 export {
   AlertBox,
   DataFetcher,
   DesktopComponent,
+  DivisionItem,
   ErrorBoundary,
   FocusableSRLinks,
   HomeLogo,
+  MobileComponent,
   Navigator,
   NewsInfo,
   PaginatedList,
   Settings,
+  SMButton,
+  TabLists,
+  TitleBar,
   TopBar,
 };

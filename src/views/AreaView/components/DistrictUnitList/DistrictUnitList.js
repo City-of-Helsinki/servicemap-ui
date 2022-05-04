@@ -6,11 +6,11 @@ import { Divider, List, Typography } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
 import { formatDistanceObject } from '../../../../utils';
 import { getAddressDistrict } from '../../../../redux/selectors/district';
-import DivisionItem from '../../../../components/ListItems/DivisionItem';
 import { getAddressFromUnit } from '../../../../utils/address';
 import SMAccordion from '../../../../components/SMAccordion';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { sortByOriginID } from '../../utils';
+import { DivisionItem } from '../../../../components';
 
 const DistrictUnitList = (props) => {
   const {
