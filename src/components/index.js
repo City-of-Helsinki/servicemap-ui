@@ -16,6 +16,7 @@ import TabLists from './TabLists';
 import TitleBar from './TitleBar';
 import SettingsInfo from './SettingsInfo';
 import SMButton from './ServiceMapButton';
+import SMAccordion from './SMAccordion';
 
 export * from './ErrorBoundary/ErrorBoundary';
 export * from './ErrorBoundary/ErrorComponent';
@@ -42,6 +43,7 @@ export {
   PaginatedList,
   Settings,
   SettingsInfo,
+  SMAccordion,
   SMButton,
   TabLists,
   TitleBar,

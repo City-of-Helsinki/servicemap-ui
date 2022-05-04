@@ -8,7 +8,6 @@ import {
 } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import SMAccordion from '../../../../components/SMAccordion';
 import {
   fetchDistrictGeometry,
   handleOpenItems,
@@ -21,6 +20,9 @@ import DistrictToggleButton from '../DistrictToggleButton';
 import { dataStructure, getDistrictCategory } from '../../utils/districtDataHelper';
 import DistrictAreaList from '../DistrictAreaList';
 import ParkingAreaList from '../ParkingAreaList';
+import {
+  SMAccordion,
+} from '../../../../components';
 
 const ServiceTab = (props) => {
   const {

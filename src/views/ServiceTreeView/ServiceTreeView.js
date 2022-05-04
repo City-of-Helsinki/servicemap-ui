@@ -8,9 +8,8 @@ import {
 } from '@material-ui/icons';
 import { FormattedMessage } from 'react-intl';
 import config from '../../../config';
-import SMAccordion from '../../components/SMAccordion';
 import useLocaleText from '../../utils/useLocaleText';
-import { SMButton, TitleBar } from '../../components';
+import { SMAccordion, SMButton, TitleBar } from '../../components';
 
 const ServiceTreeView = (props) => {
   const {
