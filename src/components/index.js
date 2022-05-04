@@ -14,6 +14,7 @@ import MobileComponent from './MobileComponent';
 import PaginatedList from './Lists/PaginatedList';
 import TabLists from './TabLists';
 import TitleBar from './TitleBar';
+import SettingsInfo from './SettingsInfo';
 import SMButton from './ServiceMapButton';
 
 export * from './ErrorBoundary/ErrorBoundary';
@@ -40,6 +41,7 @@ export {
   NewsInfo,
   PaginatedList,
   Settings,
+  SettingsInfo,
   SMButton,
   TabLists,
   TitleBar,
