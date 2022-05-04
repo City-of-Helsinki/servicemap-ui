@@ -7,7 +7,6 @@ import DesktopComponent from './DesktopComponent';
 import FocusableSRLinks from './FocusableSRLinks';
 import AddressSearchBar from './AddressSearchBar';
 import AlertBox from './AlertBox';
-import DivisionItem from './ListItems/DivisionItem';
 import ErrorBoundary from './ErrorBoundary';
 import HomeLogo from './Logos/HomeLogo';
 import MobileComponent from './MobileComponent';
@@ -17,6 +16,9 @@ import TitleBar from './TitleBar';
 import SettingsInfo from './SettingsInfo';
 import SMButton from './ServiceMapButton';
 import SMAccordion from './SMAccordion';
+
+import DivisionItem from './ListItems/DivisionItem';
+import UnitItem from './ListItems/UnitItem';
 
 export * from './ErrorBoundary/ErrorBoundary';
 export * from './ErrorBoundary/ErrorComponent';
@@ -48,4 +50,5 @@ export {
   TabLists,
   TitleBar,
   TopBar,
+  UnitItem,
 };

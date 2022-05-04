@@ -6,13 +6,13 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import UnitItem from '../../../../components/ListItems/UnitItem';
 import { addSelectedDistrictService, handleOpenItems, removeSelectedDistrictService } from '../../../../redux/actions/district';
 import { getFilteredSubdistrictServices } from '../../../../redux/selectors/district';
 import { uppercaseFirst } from '../../../../utils';
 import useLocaleText from '../../../../utils/useLocaleText';
 import {
   SMAccordion,
+  UnitItem,
 } from '../../../../components';
 
 
