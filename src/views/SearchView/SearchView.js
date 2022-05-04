@@ -10,6 +10,8 @@ import { injectIntl, FormattedMessage } from 'react-intl';
 import styles from './styles';
 import Loading from '../../components/Loading';
 import {
+  DesktopComponent,
+  MobileComponent,
   SearchBar,
   SettingsInfo,
   SMButton,
@@ -20,8 +22,6 @@ import { parseSearchParams, getSearchParam, keyboardHandler } from '../../utils'
 import Container from '../../components/Container';
 import { generatePath } from '../../utils/path';
 import ExpandedSuggestions from '../../components/ExpandedSuggestions';
-import DesktopComponent from '../../components/DesktopComponent';
-import MobileComponent from '../../components/MobileComponent';
 import { viewTitleID } from '../../utils/accessibility';
 
 class SearchView extends React.Component {

@@ -7,10 +7,10 @@ import {
 import { FormattedMessage } from 'react-intl';
 import { Prompt } from 'react-router-dom';
 import config from '../../../config';
-import DesktopComponent from '../../components/DesktopComponent';
 import { focusToViewTitle } from '../../utils/accessibility';
 import useLocaleText from '../../utils/useLocaleText';
 import {
+  DesktopComponent,
   SMButton,
   TitleBar,
 } from '../../components';

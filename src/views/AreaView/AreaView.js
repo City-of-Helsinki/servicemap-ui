@@ -13,10 +13,10 @@ import { districtFetch } from '../../utils/fetch';
 import fetchAddress from '../MapView/utils/fetchAddress';
 import { dataStructure, geographicalDistricts } from './utils/districtDataHelper';
 import { fetchParkingAreaGeometry, fetchParkingUnits, handleOpenItems } from '../../redux/actions/district';
-import MobileComponent from '../../components/MobileComponent';
 import useLocaleText from '../../utils/useLocaleText';
 import {
   AddressSearchBar,
+  MobileComponent,
   TabLists,
   TitleBar,
   SettingsInfo,
