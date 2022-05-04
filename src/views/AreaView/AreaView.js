@@ -11,14 +11,13 @@ import { parseSearchParams, uppercaseFirst } from '../../utils';
 import ServiceTab from './components/ServiceTab';
 import { districtFetch } from '../../utils/fetch';
 import fetchAddress from '../MapView/utils/fetchAddress';
-import AddressSearchBar from '../../components/AddressSearchBar';
 import { dataStructure, geographicalDistricts } from './utils/districtDataHelper';
 import { fetchParkingAreaGeometry, fetchParkingUnits, handleOpenItems } from '../../redux/actions/district';
 import SMButton from '../../components/ServiceMapButton';
 import MobileComponent from '../../components/MobileComponent';
 import useLocaleText from '../../utils/useLocaleText';
 import SettingsInfo from '../../components/SettingsInfo';
-import { TabLists, TitleBar } from '../../components';
+import { AddressSearchBar, TabLists, TitleBar } from '../../components';
 
 
 const AreaView = ({

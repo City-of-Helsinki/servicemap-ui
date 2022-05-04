@@ -5,6 +5,7 @@ import Settings from './Settings';
 import TopBar from './TopBar';
 import DesktopComponent from './DesktopComponent';
 import FocusableSRLinks from './FocusableSRLinks';
+import AddressSearchBar from './AddressSearchBar';
 import AlertBox from './AlertBox';
 import DivisionItem from './ListItems/DivisionItem';
 import ErrorBoundary from './ErrorBoundary';
@@ -26,6 +27,7 @@ export * from './SearchBar';
 export * from './SMIcon';
 
 export {
+  AddressSearchBar,
   AlertBox,
   DataFetcher,
   DesktopComponent,
