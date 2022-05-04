@@ -16,9 +16,9 @@ import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { NumberCircleMaker } from '../MapView/utils/drawIcon';
 import CreateMap from '../MapView/utils/createMap';
-import SMButton from '../../components/ServiceMapButton';
 import paths from '../../../config/paths';
 import useLocaleText from '../../utils/useLocaleText';
+import { SMButton } from '../../components';
 
 const StyledTableRow = withStyles(theme => ({
   root: {

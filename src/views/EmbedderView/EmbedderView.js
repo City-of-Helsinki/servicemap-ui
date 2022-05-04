@@ -13,13 +13,13 @@ import { getEmbedURL, getLanguage } from './utils/utils';
 import EmbedController from './components/EmbedController';
 import IFramePreview from './components/IFramePreview';
 import CloseButton from '../../components/CloseButton';
-import SMButton from '../../components/ServiceMapButton';
 import paths from '../../../config/paths';
 import embedderConfig from './embedderConfig';
 import SettingsUtility from '../../utils/settings';
 import useLocaleText from '../../utils/useLocaleText';
 import { useUserLocale } from '../../utils/user';
 import EmbedHTML from './components/EmbedHTML';
+import { SMButton } from '../../components';
 
 
 const hideCitiesIn = [

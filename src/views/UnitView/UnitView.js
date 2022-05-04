@@ -12,6 +12,7 @@ import {
   AcceptSettingsDialog,
   LinkSettingsDialog,
   SearchBar,
+  SMButton,
   TabLists,
   TitleBar,
 } from '../../components';
@@ -21,7 +22,6 @@ import ContactInfo from './components/ContactInfo';
 import Highlights from './components/Highlights';
 import ElectronicServices from './components/ElectronicServices';
 import Description from './components/Description';
-import SMButton from '../../components/ServiceMapButton';
 import { AddressIcon } from '../../components/SMIcon';
 import SocialMediaLinks from './components/SocialMediaLinks';
 import UnitLinks from './components/UnitLinks';
