@@ -17,7 +17,14 @@ import SettingsInfo from './SettingsInfo';
 import SMButton from './ServiceMapButton';
 import SMAccordion from './SMAccordion';
 
+import AddressItem from './ListItems/AddressItem';
+import EventItem from './ListItems/EventItem';
 import DivisionItem from './ListItems/DivisionItem';
+import ReservationItem from './ListItems/ReservationItem';
+import ResultItem from './ListItems/ResultItem';
+import ServiceItem from './ListItems/ServiceItem';
+import SimpleListItem from './ListItems/SimpleListItem';
+import SuggestionItem from './ListItems/SuggestionItem';
 import UnitItem from './ListItems/UnitItem';
 
 export * from './ErrorBoundary/ErrorBoundary';
@@ -31,22 +38,29 @@ export * from './SearchBar';
 export * from './SMIcon';
 
 export {
+  AddressItem,
   AddressSearchBar,
   AlertBox,
   DataFetcher,
   DesktopComponent,
   DivisionItem,
   ErrorBoundary,
+  EventItem,
   FocusableSRLinks,
   HomeLogo,
   MobileComponent,
   Navigator,
   NewsInfo,
   PaginatedList,
+  ReservationItem,
+  ResultItem,
+  ServiceItem,
   Settings,
   SettingsInfo,
+  SimpleListItem,
   SMAccordion,
   SMButton,
+  SuggestionItem,
   TabLists,
   TitleBar,
   TopBar,

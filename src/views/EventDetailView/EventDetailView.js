@@ -5,8 +5,12 @@ import PropTypes from 'prop-types';
 // TODO Remove this when redux selected event is used
 import { AccessTime, Phone, Event } from '@material-ui/icons';
 import DescriptionText from '../../components/DescriptionText';
-import { SearchBar, TitleBar, UnitItem } from '../../components';
-import SimpleListItem from '../../components/ListItems/SimpleListItem';
+import {
+  SearchBar,
+  SimpleListItem,
+  TitleBar,
+  UnitItem,
+} from '../../components';
 import TitledList from '../../components/Lists/TitledList';
 import UnitHelper from '../../utils/unitHelper';
 import { eventFetch } from '../../utils/fetch';

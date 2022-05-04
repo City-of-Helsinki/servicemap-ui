@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import EventItem from '../../../../components/ListItems/EventItem';
 import PaginatedList from '../../../../components/Lists/PaginatedList';
 import Loading from '../../../../components/Loading';
-import ReservationItem from '../../../../components/ListItems/ReservationItem';
 import useLocaleText from '../../../../utils/useLocaleText';
-import ServiceItem from '../../../../components/ListItems/ServiceItem';
-import { TitleBar } from '../../../../components';
+import {
+  EventItem,
+  ReservationItem,
+  ServiceItem,
+  TitleBar,
+} from '../../../../components';
 
 const ExtendedData = ({
   currentUnit,

@@ -12,6 +12,7 @@ import {
   AcceptSettingsDialog,
   LinkSettingsDialog,
   SearchBar,
+  SimpleListItem,
   SMButton,
   TabLists,
   TitleBar,
@@ -25,7 +26,6 @@ import Description from './components/Description';
 import { AddressIcon } from '../../components/SMIcon';
 import SocialMediaLinks from './components/SocialMediaLinks';
 import UnitLinks from './components/UnitLinks';
-import SimpleListItem from '../../components/ListItems/SimpleListItem';
 import TitledList from '../../components/Lists/TitledList';
 import ReadSpeakerButton from '../../components/ReadSpeakerButton';
 import config from '../../../config';
