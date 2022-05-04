@@ -7,6 +7,8 @@ import DesktopComponent from './DesktopComponent';
 import FocusableSRLinks from './FocusableSRLinks';
 import AlertBox from './AlertBox';
 import ErrorBoundary from './ErrorBoundary';
+import HomeLogo from './Logos/HomeLogo';
+import PaginatedList from './Lists/PaginatedList';
 
 export * from './ErrorBoundary/ErrorBoundary';
 export * from './ErrorBoundary/ErrorComponent';
@@ -23,8 +25,10 @@ export {
   DesktopComponent,
   ErrorBoundary,
   FocusableSRLinks,
+  HomeLogo,
   Navigator,
   NewsInfo,
+  PaginatedList,
   Settings,
   TopBar,
 };

@@ -17,9 +17,8 @@ import ServiceView from '../views/ServiceView';
 import DivisionView from '../views/DivisionView';
 import AreaView from '../views/AreaView';
 import { parseSearchParams } from '../utils';
-import HomeLogo from '../components/Logos/HomeLogo';
-import PaginatedList from '../components/Lists/PaginatedList';
 import useMapUnits from '../views/MapView/utils/useMapUnits';
+import { HomeLogo, PaginatedList } from '../components';
 
 const createContentStyles = (theme, bottomList) => {
   const width = 450;
