@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Typography } from '@material-ui/core';
 import { Map } from '@material-ui/icons';
 import { focusDistrict, focusDistricts, useMapFocusDisabled } from '../MapView/utils/mapActions';
-import TabLists from '../../components/TabLists';
 import GeographicalTab from './components/GeographicalTab';
 import { parseSearchParams, uppercaseFirst } from '../../utils';
 import ServiceTab from './components/ServiceTab';
@@ -20,6 +19,7 @@ import SMButton from '../../components/ServiceMapButton';
 import MobileComponent from '../../components/MobileComponent';
 import useLocaleText from '../../utils/useLocaleText';
 import SettingsInfo from '../../components/SettingsInfo';
+import { TabLists } from '../../components';
 
 
 const AreaView = ({

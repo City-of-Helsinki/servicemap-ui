@@ -8,7 +8,12 @@ import {
 } from '@material-ui/icons';
 import { Helmet } from 'react-helmet';
 import { useDispatch, useSelector } from 'react-redux';
-import { SearchBar, AcceptSettingsDialog, LinkSettingsDialog } from '../../components';
+import {
+  AcceptSettingsDialog,
+  LinkSettingsDialog,
+  SearchBar,
+  TabLists,
+} from '../../components';
 import TitleBar from '../../components/TitleBar';
 import Container from '../../components/Container';
 import AccessibilityInfo from './components/AccessibilityInfo';
@@ -17,7 +22,6 @@ import Highlights from './components/Highlights';
 import ElectronicServices from './components/ElectronicServices';
 import Description from './components/Description';
 import SMButton from '../../components/ServiceMapButton';
-import TabLists from '../../components/TabLists';
 import { AddressIcon } from '../../components/SMIcon';
 import SocialMediaLinks from './components/SocialMediaLinks';
 import UnitLinks from './components/UnitLinks';

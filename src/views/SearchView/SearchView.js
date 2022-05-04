@@ -9,10 +9,9 @@ import {
 import { injectIntl, FormattedMessage } from 'react-intl';
 import styles from './styles';
 import Loading from '../../components/Loading';
-import { SearchBar } from '../../components';
+import { SearchBar, TabLists } from '../../components';
 import { fitUnitsToMap } from '../MapView/utils/mapActions';
 import { parseSearchParams, getSearchParam, keyboardHandler } from '../../utils';
-import TabLists from '../../components/TabLists';
 import SMButton from '../../components/ServiceMapButton';
 import Container from '../../components/Container';
 import { generatePath } from '../../utils/path';
