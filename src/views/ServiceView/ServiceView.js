@@ -6,13 +6,13 @@ import { Typography } from '@material-ui/core';
 import {
   DesktopComponent,
   MobileComponent,
+  PaginatedList,
   SearchBar,
   TitleBar,
 } from '../../components';
 import { fitUnitsToMap, focusToPosition } from '../MapView/utils/mapActions';
 import Loading from '../../components/Loading';
 import Container from '../../components/Container';
-import PaginatedList from '../../components/Lists/PaginatedList';
 import ResultOrderer from '../../components/ResultOrderer';
 import { getIcon } from '../../components/SMIcon';
 import coordinateIsActive from '../../utils/coordinate';

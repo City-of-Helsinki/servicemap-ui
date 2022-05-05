@@ -12,7 +12,6 @@ import CloseButton from './CloseButton';
 import ErrorBoundary from './ErrorBoundary';
 import HomeLogo from './Logos/HomeLogo';
 import MobileComponent from './MobileComponent';
-import PaginatedList from './Lists/PaginatedList';
 import TabLists from './TabLists';
 import TitleBar from './TitleBar';
 import SettingsInfo from './SettingsInfo';
@@ -20,6 +19,12 @@ import SMButton from './ServiceMapButton';
 import SMRadio from './SMRadio';
 import SMAccordion from './SMAccordion';
 
+// Lists
+import PaginatedList from './Lists/PaginatedList';
+import ResultList from './Lists/ResultList';
+import TitledList from './Lists/TitledList';
+
+// List items
 import AddressItem from './ListItems/AddressItem';
 import EventItem from './ListItems/EventItem';
 import DivisionItem from './ListItems/DivisionItem';
@@ -59,6 +64,7 @@ export {
   PaginatedList,
   ReservationItem,
   ResultItem,
+  ResultList,
   ServiceItem,
   Settings,
   SettingsInfo,
@@ -69,6 +75,7 @@ export {
   SuggestionItem,
   TabLists,
   TitleBar,
+  TitledList,
   TopBar,
   UnitItem,
 };

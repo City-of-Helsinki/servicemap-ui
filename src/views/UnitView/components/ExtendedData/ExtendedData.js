@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import PaginatedList from '../../../../components/Lists/PaginatedList';
 import Loading from '../../../../components/Loading';
 import useLocaleText from '../../../../utils/useLocaleText';
 import {
   EventItem,
+  PaginatedList,
   ReservationItem,
   ServiceItem,
   TitleBar,

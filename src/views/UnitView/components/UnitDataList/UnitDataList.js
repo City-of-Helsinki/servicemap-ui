@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import TitledList from '../../../../components/Lists/TitledList';
 import {
   EventItem,
   ReservationItem,
   ServiceItem,
+  TitledList,
 } from '../../../../components';
 
 const UnitDataList = ({

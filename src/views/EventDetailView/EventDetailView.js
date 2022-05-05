@@ -9,9 +9,9 @@ import {
   SearchBar,
   SimpleListItem,
   TitleBar,
+  TitledList,
   UnitItem,
 } from '../../components';
-import TitledList from '../../components/Lists/TitledList';
 import UnitHelper from '../../utils/unitHelper';
 import { eventFetch } from '../../utils/fetch';
 import { focusToPosition } from '../MapView/utils/mapActions';

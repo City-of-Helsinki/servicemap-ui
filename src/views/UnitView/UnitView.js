@@ -16,6 +16,7 @@ import {
   SMButton,
   TabLists,
   TitleBar,
+  TitledList,
 } from '../../components';
 import Container from '../../components/Container';
 import AccessibilityInfo from './components/AccessibilityInfo';
@@ -26,7 +27,6 @@ import Description from './components/Description';
 import { AddressIcon } from '../../components/SMIcon';
 import SocialMediaLinks from './components/SocialMediaLinks';
 import UnitLinks from './components/UnitLinks';
-import TitledList from '../../components/Lists/TitledList';
 import ReadSpeakerButton from '../../components/ReadSpeakerButton';
 import config from '../../../config';
 import useMobileStatus from '../../utils/isMobile';
