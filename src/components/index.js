@@ -3,10 +3,12 @@ import DataFetcher from './DataFetchers/DataFetcher';
 import NewsInfo from './NewsInfo';
 import Settings from './Settings';
 import TopBar from './TopBar';
+import DescriptionText from './DescriptionText';
 import DesktopComponent from './DesktopComponent';
 import FocusableSRLinks from './FocusableSRLinks';
 import AddressSearchBar from './AddressSearchBar';
 import AlertBox from './AlertBox';
+import CloseButton from './CloseButton';
 import ErrorBoundary from './ErrorBoundary';
 import HomeLogo from './Logos/HomeLogo';
 import MobileComponent from './MobileComponent';
@@ -15,6 +17,7 @@ import TabLists from './TabLists';
 import TitleBar from './TitleBar';
 import SettingsInfo from './SettingsInfo';
 import SMButton from './ServiceMapButton';
+import SMRadio from './SMRadio';
 import SMAccordion from './SMAccordion';
 
 import AddressItem from './ListItems/AddressItem';
@@ -41,7 +44,9 @@ export {
   AddressItem,
   AddressSearchBar,
   AlertBox,
+  CloseButton,
   DataFetcher,
+  DescriptionText,
   DesktopComponent,
   DivisionItem,
   ErrorBoundary,
@@ -60,6 +65,7 @@ export {
   SimpleListItem,
   SMAccordion,
   SMButton,
+  SMRadio,
   SuggestionItem,
   TabLists,
   TitleBar,

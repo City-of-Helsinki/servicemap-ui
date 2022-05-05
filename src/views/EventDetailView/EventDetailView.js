@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 
 // TODO Remove this when redux selected event is used
 import { AccessTime, Phone, Event } from '@material-ui/icons';
-import DescriptionText from '../../components/DescriptionText';
 import {
+  DescriptionText,
   SearchBar,
   SimpleListItem,
   TitleBar,
