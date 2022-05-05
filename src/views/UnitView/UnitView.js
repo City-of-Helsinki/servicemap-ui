@@ -12,6 +12,7 @@ import {
   AcceptSettingsDialog,
   Container,
   LinkSettingsDialog,
+  ReadSpeakerButton,
   SearchBar,
   SimpleListItem,
   SMButton,
@@ -27,7 +28,6 @@ import Description from './components/Description';
 import { AddressIcon } from '../../components/SMIcon';
 import SocialMediaLinks from './components/SocialMediaLinks';
 import UnitLinks from './components/UnitLinks';
-import ReadSpeakerButton from '../../components/ReadSpeakerButton';
 import config from '../../../config';
 import useMobileStatus from '../../utils/isMobile';
 import UnitHelper from '../../utils/unitHelper';

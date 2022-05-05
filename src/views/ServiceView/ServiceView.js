@@ -9,11 +9,11 @@ import {
   Loading,
   MobileComponent,
   PaginatedList,
+  ResultOrderer,
   SearchBar,
   TitleBar,
 } from '../../components';
 import { fitUnitsToMap, focusToPosition } from '../MapView/utils/mapActions';
-import ResultOrderer from '../../components/ResultOrderer';
 import { getIcon } from '../../components/SMIcon';
 import coordinateIsActive from '../../utils/coordinate';
 import useLocaleText from '../../utils/useLocaleText';

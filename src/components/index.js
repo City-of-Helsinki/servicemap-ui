@@ -15,12 +15,15 @@ import HomeLogo from './Logos/HomeLogo';
 import Loading from './Loading';
 import MobileComponent from './MobileComponent';
 import PaperButton from './PaperButton';
-import TabLists from './TabLists';
-import TitleBar from './TitleBar';
+import ReadSpeakerButton from './ReadSpeakerButton';
+import ResultOrderer from './ResultOrderer';
 import SettingsInfo from './SettingsInfo';
+import SettingsText from './SettingsText';
 import SMButton from './ServiceMapButton';
 import SMRadio from './SMRadio';
 import SMAccordion from './SMAccordion';
+import TabLists from './TabLists';
+import TitleBar from './TitleBar';
 
 // Lists
 import PaginatedList from './Lists/PaginatedList';
@@ -68,12 +71,15 @@ export {
   NewsInfo,
   PaginatedList,
   PaperButton,
+  ReadSpeakerButton,
   ReservationItem,
   ResultItem,
   ResultList,
+  ResultOrderer,
   ServiceItem,
   Settings,
   SettingsInfo,
+  SettingsText,
   SimpleListItem,
   SMAccordion,
   SMButton,
