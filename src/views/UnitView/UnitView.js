@@ -10,6 +10,7 @@ import { Helmet } from 'react-helmet';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   AcceptSettingsDialog,
+  AddressIcon,
   Container,
   LinkSettingsDialog,
   ReadSpeakerButton,
@@ -25,7 +26,6 @@ import ContactInfo from './components/ContactInfo';
 import Highlights from './components/Highlights';
 import ElectronicServices from './components/ElectronicServices';
 import Description from './components/Description';
-import { AddressIcon } from '../../components/SMIcon';
 import SocialMediaLinks from './components/SocialMediaLinks';
 import UnitLinks from './components/UnitLinks';
 import config from '../../../config';

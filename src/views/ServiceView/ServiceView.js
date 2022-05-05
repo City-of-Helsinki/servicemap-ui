@@ -6,6 +6,7 @@ import { Typography } from '@material-ui/core';
 import {
   Container,
   DesktopComponent,
+  getIcon,
   Loading,
   MobileComponent,
   PaginatedList,
@@ -14,7 +15,6 @@ import {
   TitleBar,
 } from '../../components';
 import { fitUnitsToMap, focusToPosition } from '../MapView/utils/mapActions';
-import { getIcon } from '../../components/SMIcon';
 import coordinateIsActive from '../../utils/coordinate';
 import useLocaleText from '../../utils/useLocaleText';
 

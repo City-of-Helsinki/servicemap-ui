@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Map } from '@material-ui/icons';
 import {
+  getIcon,
   MobileComponent,
   NewsInfo,
   PaperButton,
   SearchBar,
 } from '../../components';
-import { getIcon } from '../../components/SMIcon';
 import config from '../../../config';
 import { useNavigationParams } from '../../utils/address';
 import useLocaleText from '../../utils/useLocaleText';

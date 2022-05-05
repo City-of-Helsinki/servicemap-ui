@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { useSelector } from 'react-redux';
-import { getIcon } from '../../../../components/SMIcon';
+import { getIcon } from '../../../../components';
 
 
 const CoordinateMarker = ({ position }) => {
