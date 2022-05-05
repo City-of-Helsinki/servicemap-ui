@@ -1,8 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Map } from '@material-ui/icons';
-import { MobileComponent, NewsInfo, SearchBar } from '../../components';
-import PaperButton from '../../components/PaperButton';
+import {
+  MobileComponent,
+  NewsInfo,
+  PaperButton,
+  SearchBar,
+} from '../../components';
 import { getIcon } from '../../components/SMIcon';
 import config from '../../../config';
 import { useNavigationParams } from '../../utils/address';

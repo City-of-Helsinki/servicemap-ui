@@ -5,13 +5,13 @@ import { FormattedMessage } from 'react-intl';
 import { Typography } from '@material-ui/core';
 import {
   DesktopComponent,
+  Loading,
   MobileComponent,
   PaginatedList,
   SearchBar,
   TitleBar,
 } from '../../components';
 import { fitUnitsToMap, focusToPosition } from '../MapView/utils/mapActions';
-import Loading from '../../components/Loading';
 import Container from '../../components/Container';
 import ResultOrderer from '../../components/ResultOrderer';
 import { getIcon } from '../../components/SMIcon';

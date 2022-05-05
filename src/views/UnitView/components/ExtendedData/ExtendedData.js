@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import Loading from '../../../../components/Loading';
 import useLocaleText from '../../../../utils/useLocaleText';
 import {
   EventItem,
+  Loading,
   PaginatedList,
   ReservationItem,
   ServiceItem,

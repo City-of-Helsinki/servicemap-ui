@@ -8,9 +8,9 @@ import {
 } from '@material-ui/core';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import styles from './styles';
-import Loading from '../../components/Loading';
 import {
   DesktopComponent,
+  Loading,
   MobileComponent,
   SearchBar,
   SettingsInfo,

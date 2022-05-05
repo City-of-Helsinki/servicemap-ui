@@ -11,7 +11,9 @@ import AlertBox from './AlertBox';
 import CloseButton from './CloseButton';
 import ErrorBoundary from './ErrorBoundary';
 import HomeLogo from './Logos/HomeLogo';
+import Loading from './Loading';
 import MobileComponent from './MobileComponent';
+import PaperButton from './PaperButton';
 import TabLists from './TabLists';
 import TitleBar from './TitleBar';
 import SettingsInfo from './SettingsInfo';
@@ -58,10 +60,12 @@ export {
   EventItem,
   FocusableSRLinks,
   HomeLogo,
+  Loading,
   MobileComponent,
   Navigator,
   NewsInfo,
   PaginatedList,
+  PaperButton,
   ReservationItem,
   ResultItem,
   ResultList,
