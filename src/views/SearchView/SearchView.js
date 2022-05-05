@@ -9,6 +9,7 @@ import {
 import { injectIntl, FormattedMessage } from 'react-intl';
 import styles from './styles';
 import {
+  Container,
   DesktopComponent,
   Loading,
   MobileComponent,
@@ -19,7 +20,6 @@ import {
 } from '../../components';
 import { fitUnitsToMap } from '../MapView/utils/mapActions';
 import { parseSearchParams, getSearchParam, keyboardHandler } from '../../utils';
-import Container from '../../components/Container';
 import { generatePath } from '../../utils/path';
 import ExpandedSuggestions from '../../components/ExpandedSuggestions';
 import { viewTitleID } from '../../utils/accessibility';

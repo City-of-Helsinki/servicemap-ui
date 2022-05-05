@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Typography } from '@material-ui/core';
 import {
+  Container,
   DesktopComponent,
   Loading,
   MobileComponent,
@@ -12,7 +13,6 @@ import {
   TitleBar,
 } from '../../components';
 import { fitUnitsToMap, focusToPosition } from '../MapView/utils/mapActions';
-import Container from '../../components/Container';
 import ResultOrderer from '../../components/ResultOrderer';
 import { getIcon } from '../../components/SMIcon';
 import coordinateIsActive from '../../utils/coordinate';

@@ -6,12 +6,11 @@ import {
 import { Warning, VerifiedUser, Accessibility } from '@material-ui/icons';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch } from 'react-redux';
-import Container from '../../../../components/Container';
 import SettingsUtility from '../../../../utils/settings';
 import useLocaleText from '../../../../utils/useLocaleText';
 import SettingsText from '../../../../components/SettingsText';
 import { toggleSettings } from '../../../../redux/actions/settings';
-import { Loading } from '../../../../components';
+import { Container, Loading } from '../../../../components';
 
 const AccessibilityInfo = (props) => {
   const {

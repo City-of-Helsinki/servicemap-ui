@@ -9,6 +9,7 @@ import FocusableSRLinks from './FocusableSRLinks';
 import AddressSearchBar from './AddressSearchBar';
 import AlertBox from './AlertBox';
 import CloseButton from './CloseButton';
+import Container from './Container';
 import ErrorBoundary from './ErrorBoundary';
 import HomeLogo from './Logos/HomeLogo';
 import Loading from './Loading';
@@ -52,6 +53,7 @@ export {
   AddressSearchBar,
   AlertBox,
   CloseButton,
+  Container,
   DataFetcher,
   DescriptionText,
   DesktopComponent,

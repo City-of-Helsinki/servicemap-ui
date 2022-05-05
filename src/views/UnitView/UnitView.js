@@ -10,6 +10,7 @@ import { Helmet } from 'react-helmet';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   AcceptSettingsDialog,
+  Container,
   LinkSettingsDialog,
   SearchBar,
   SimpleListItem,
@@ -18,7 +19,6 @@ import {
   TitleBar,
   TitledList,
 } from '../../components';
-import Container from '../../components/Container';
 import AccessibilityInfo from './components/AccessibilityInfo';
 import ContactInfo from './components/ContactInfo';
 import Highlights from './components/Highlights';
