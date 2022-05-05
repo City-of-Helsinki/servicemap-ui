@@ -11,6 +11,7 @@ import styles from './styles';
 import {
   Container,
   DesktopComponent,
+  ExpandedSuggestions,
   Loading,
   MobileComponent,
   SearchBar,
@@ -21,7 +22,6 @@ import {
 import { fitUnitsToMap } from '../MapView/utils/mapActions';
 import { parseSearchParams, getSearchParam, keyboardHandler } from '../../utils';
 import { generatePath } from '../../utils/path';
-import ExpandedSuggestions from '../../components/ExpandedSuggestions';
 import { viewTitleID } from '../../utils/accessibility';
 
 class SearchView extends React.Component {
