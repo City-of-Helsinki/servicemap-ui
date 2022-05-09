@@ -148,18 +148,12 @@ const ContactInfo = ({
     let url = '';
     let extraText = '';
 
-    switch (unit.municipality) {
-      case 'Helsinki':
-      case 'Espoo':
-      case 'Vantaa':
-      case 'Kauniainen':
-      case 'Kerava':
-        url = config.reittiopasURL;
-        extraText = intl.formatMessage({ id: 'unit.route.extra.hsl' });
-        break;
-      default:
-        url = config.digiTransitURL;
-        extraText = intl.formatMessage({ id: 'unit.route.extra.digitransit' });
+    if (config.hslRouteGuideCities?.includes(unit.municipality)) {
+      url = config.hslRouteGuideURL;
+      extraText = intl.formatMessage({ id: 'unit.route.extra.hslRouteGuide' });
+    } else {
+      url = config.reittiopasURL;
+      extraText = intl.formatMessage({ id: 'unit.route.extra.routeGuide' });
     }
 
     const destinationString = `${getLocaleText(unit.name)}, ${unit.municipality}::${unitLocation.coordinates[1]},${unitLocation.coordinates[0]}`;
