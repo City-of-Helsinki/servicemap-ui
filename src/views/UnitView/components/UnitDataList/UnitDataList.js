@@ -15,7 +15,7 @@ const UnitDataList = ({
   const unit = useSelector(state => state.selectedUnit.unit.data);
 
   const dataItems = data.data;
-  const fullDataLength = data.data.length;
+  const fullDataLength = dataItems?.length || data.max;
   const { isFetching } = data;
 
   if (!dataItems) {
