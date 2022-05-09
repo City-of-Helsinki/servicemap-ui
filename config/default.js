@@ -77,6 +77,10 @@ if (typeof settings.REITTIOPAS_URL === 'undefined') {
   settings.REITTIOPAS_URL = 'https://reittiopas.hsl.fi/reitti/';
 }
 
+if (typeof settings.DIGITRANSIT_URL === 'undefined') {
+  settings.DIGITRANSIT_URL = 'https://opas.matka.fi/reitti/';
+}
+
 if (typeof settings.SHOW_AREA_SELECTION === 'undefined') {
   // If not set default to Helsinki
   settings.SHOW_AREA_SELECTION = true;
@@ -200,6 +204,7 @@ export default {
   "ortographicWMSLAYER": settings.ORTOGRAPHIC_WMS_LAYER,
   "guideMapURL": settings.GUIDE_MAP_URL,
   "reittiopasURL": settings.REITTIOPAS_URL,
+  "digiTransitURL": settings.DIGITRANSIT_URL,
   "outdoorExerciseURL": settings.OUTDOOR_EXERCISE_URL,
   "natureAreaURL": settings.NATURE_AREA_URL,
   "cities": settings.CITIES.split(','),
