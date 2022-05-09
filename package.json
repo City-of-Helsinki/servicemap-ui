@@ -30,7 +30,7 @@
     "leaflet.markercluster": "^1.4.1",
     "node-fetch": "^2.6.7",
     "node-schedule": "^2.0.0",
-    "nodemon": "^1.19.4",
+    "nodemon": "^2.0.16",
     "proj4leaflet": "^1.0.2",
     "prop-types": "^15.7.2",
     "react": "^16.8.2",
