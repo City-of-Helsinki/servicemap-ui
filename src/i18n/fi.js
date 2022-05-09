@@ -450,7 +450,7 @@ const translations = {
     other {# palvelua}
   }`,
   'unit.educationServices': 'Toimipisteen lukuvuosikohtaiset palvelut',
-  'unit.educationServices.description': 'Lukuvuosi {semester}',
+  'unit.educationServices.description': 'Lukuvuosi {period}',
   'unit.educationServices.more': 'Näytä lisää palveluja ({count})',
   'unit.route': 'Katso reitti tänne',
   'unit.route.extra.hsl': '(Uusi välilehti. HSL-reittiopas ei ole saavutettava palvelu)',

@@ -449,7 +449,7 @@ const translations = {
     other {# tjänster}
   }`,
   'unit.educationServices': 'Verksamhetsställets tjänster per läsår',
-  'unit.educationServices.description': 'Läsåret {semester}',
+  'unit.educationServices.description': 'Läsåret {period}',
   'unit.educationServices.more': 'Visa fler tjänster ({count})',
   'unit.route': 'Se vägen till det här stället',
   'unit.route.extra.hsl': '(Ny flik. HRT-reseplaneraren är inte en tillgänglig tjänst)',

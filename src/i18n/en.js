@@ -448,7 +448,7 @@ const translations = {
     other {# services}
   }`,
   'unit.educationServices': 'The unit’s services per school year',
-  'unit.educationServices.description': 'School year {semester}',
+  'unit.educationServices.description': 'School year {period}',
   'unit.educationServices.more': 'Show more services ({count})',
   'unit.route': 'Look at the route to this place',
   'unit.route.extra.hsl': '(New tab. The HSL Journey Planner is not an accessible service)',

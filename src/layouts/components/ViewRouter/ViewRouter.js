@@ -183,7 +183,7 @@ class ViewRouter extends React.Component {
         <Route exact path="/:lng/unit/:unit/events" component={UnitEvents} />
         <Route exact path="/:lng/unit/:unit/reservations" component={UnitReservations} />
         <Route exact path="/:lng/unit/:unit/services" component={UnitServices} />
-        <Route exact path="/:lng/unit/:unit/educationServices" component={UnitEducationServices} />
+        <Route exact path="/:lng/unit/:unit/educationServices/:period?" component={UnitEducationServices} />
         <Route exact path="/:lng/unit/:unit" component={Unit} />
         <Route path="/:lng/search" component={Search} />
         <Route path="/:lng/services" component={ServiceTree} />
