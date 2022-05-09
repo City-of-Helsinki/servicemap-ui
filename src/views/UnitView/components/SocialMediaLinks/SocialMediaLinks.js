@@ -6,8 +6,8 @@ import {
 import DefaultIcon from '@material-ui/icons/Public';
 import { FormattedMessage } from 'react-intl';
 import unitSectionFilter from '../../utils/unitSectionFilter';
-import { getIcon } from '../../../../components/SMIcon';
 import useLocaleText from '../../../../utils/useLocaleText';
+import { getIcon } from '../../../../components';
 
 const SocialMediaLinks = ({ unit, classes }) => {
   const getLocaleText = useLocaleText();

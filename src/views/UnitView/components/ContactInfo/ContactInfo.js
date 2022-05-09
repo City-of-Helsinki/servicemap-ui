@@ -10,8 +10,8 @@ import InfoList from '../InfoList';
 import unitSectionFilter from '../../utils/unitSectionFilter';
 import { getAddressFromUnit } from '../../../../utils/address';
 import useLocaleText from '../../../../utils/useLocaleText';
-import SMAccordion from '../../../../components/SMAccordion';
 import { parseSearchParams, stringifySearchParams } from '../../../../utils';
+import { SMAccordion } from '../../../../components';
 
 const ContactInfo = ({
   unit, userLocation, intl, classes,

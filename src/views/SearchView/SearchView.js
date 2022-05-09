@@ -8,18 +8,20 @@ import {
 } from '@material-ui/core';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import styles from './styles';
-import Loading from '../../components/Loading';
-import { SearchBar } from '../../components';
+import {
+  Container,
+  DesktopComponent,
+  ExpandedSuggestions,
+  Loading,
+  MobileComponent,
+  SearchBar,
+  SettingsInfo,
+  SMButton,
+  TabLists,
+} from '../../components';
 import { fitUnitsToMap } from '../MapView/utils/mapActions';
 import { parseSearchParams, getSearchParam, keyboardHandler } from '../../utils';
-import TabLists from '../../components/TabLists';
-import SMButton from '../../components/ServiceMapButton';
-import Container from '../../components/Container';
 import { generatePath } from '../../utils/path';
-import ExpandedSuggestions from '../../components/ExpandedSuggestions';
-import SettingsInfo from '../../components/SettingsInfo';
-import DesktopComponent from '../../components/DesktopComponent';
-import MobileComponent from '../../components/MobileComponent';
 import { viewTitleID } from '../../utils/accessibility';
 
 class SearchView extends React.Component {

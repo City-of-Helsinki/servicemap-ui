@@ -18,7 +18,6 @@ import { isEmbed } from '../../utils/path';
 import AddressMarker from './components/AddressMarker';
 import { parseSearchParams } from '../../utils';
 import DistanceMeasure from './components/DistanceMeasure';
-import Loading from '../../components/Loading';
 import MarkerCluster from './components/MarkerCluster';
 import UnitGeometry from './components/UnitGeometry';
 import MapUtility from './utils/mapUtility';
@@ -32,6 +31,7 @@ import EventMarkers from './components/EventMarkers';
 import CustomControls from './components/CustomControls';
 import { getSelectedUnitEvents } from '../../redux/selectors/selectedUnit';
 import useMapUnits from './utils/useMapUnits';
+import { Loading } from '../../components';
 
 if (global.window) {
   require('leaflet');

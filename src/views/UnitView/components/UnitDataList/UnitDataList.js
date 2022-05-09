@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import TitledList from '../../../../components/Lists/TitledList';
-import EventItem from '../../../../components/ListItems/EventItem';
-import ReservationItem from '../../../../components/ListItems/ReservationItem';
-import ServiceItem from '../../../../components/ListItems/ServiceItem';
+import {
+  EventItem,
+  ReservationItem,
+  ServiceItem,
+  TitledList,
+} from '../../../../components';
 
 const UnitDataList = ({
   data, listLength, type, semester, disableTitle, navigator,
