@@ -450,10 +450,11 @@ const translations = {
     other {# palvelua}
   }`,
   'unit.educationServices': 'Toimipisteen lukuvuosikohtaiset palvelut',
-  'unit.educationServices.description': 'Lukuvuosi {semester}',
+  'unit.educationServices.description': 'Lukuvuosi {period}',
   'unit.educationServices.more': 'Näytä lisää palveluja ({count})',
   'unit.route': 'Katso reitti tänne',
-  'unit.route.extra': '(Uusi välilehti. HSL-reittiopas ei ole saavutettava palvelu)',
+  'unit.route.extra.hslRouteGuide': '(Uusi välilehti. HSL-reittiopas ei ole saavutettava palvelu)',
+  'unit.route.extra.routeGuide': '(Uusi välilehti. Matka.fi-reittiopas ei ole saavutettava palvelu)',
   'unit.socialMedia.title': 'Toimipiste sosiaalisessa mediassa',
   'unit.outdoorLink': 'Katso liikuntapaikan kunto ulkoliikunta.fi palvelusta',
   'unit.seo.description': 'Katso sijainti kartalla',
