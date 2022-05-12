@@ -41,7 +41,9 @@ export default class HttpClient {
     Object.keys(options).forEach((key) => {
       if (Object.prototype.hasOwnProperty.call(options, key)) {
         const value = options[key];
-        params.set(key, value);
+        if (value) {
+          params.set(key, value);
+        }
       }
     });
 
