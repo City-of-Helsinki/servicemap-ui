@@ -1,4 +1,4 @@
-const URI = require('urijs');
+import URI from 'urijs';
 
 export const getEmbedURL = (url, params = {}) => {
   if (!url) {
