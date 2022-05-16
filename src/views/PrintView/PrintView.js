@@ -12,6 +12,7 @@ import {
   TableBody,
   Typography,
 } from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { NumberCircleMaker } from '../MapView/utils/drawIcon';
@@ -260,7 +261,7 @@ const PrintView = ({
   return (
     <div ref={dialogRef} role="dialog" className={classes.wrapper}>
       {/* Empty element that makes keyboard focus loop in dialog */}
-      <Typography variant="srOnly" aria-hidden tabIndex="0" onFocus={focusToLastElement} />
+      <Typography style={visuallyHidden} aria-hidden tabIndex="0" onFocus={focusToLastElement} />
       <div className={classes.container}>
         <div className={classes.buttonContainer}>
           <SMButton
@@ -365,7 +366,7 @@ const PrintView = ({
         </div>
       </div>
       {/* Empty element that makes keyboard focus loop in dialog */}
-      <Typography variant="srOnly" aria-hidden tabIndex="0" onFocus={focusToFirstElement} />
+      <Typography style={visuallyHidden} aria-hidden tabIndex="0" onFocus={focusToFirstElement} />
     </div>
   );
 };

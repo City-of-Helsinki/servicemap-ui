@@ -7,6 +7,7 @@ import {
 import { injectIntl } from 'react-intl';
 import { Tooltip as MUITooltip, ButtonBase, Typography } from '@mui/material';
 import { useTheme } from '@mui/styles';
+import { visuallyHidden } from '@mui/utils';
 import MapView from '../views/MapView';
 import PageHandler from './components/PageHandler';
 import AddressView from '../views/AddressView';
@@ -189,7 +190,7 @@ const EmbedLayout = ({ intl }) => {
             />
           </Switch>
         </div>
-        <Typography variant="srOnly">{intl.formatMessage({ id: 'map.ariaLabel' })}</Typography>
+        <Typography style={visuallyHidden}>{intl.formatMessage({ id: 'map.ariaLabel' })}</Typography>
         <div aria-hidden tabIndex="-1" style={styles.map}>
           <MapView />
         </div>

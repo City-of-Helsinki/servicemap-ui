@@ -7,6 +7,7 @@ import {
   Tooltip,
 } from '@mui/material';
 import { FileCopy, Share } from '@mui/icons-material';
+import { visuallyHidden } from '@mui/utils';
 import React, { useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
@@ -228,7 +229,7 @@ const LinkSettingsDialogComponent = ({
           {
             showAriaAlert
             && (
-              <Typography aria-live="polite" id="copy_link_aria_live" variant="srOnly"><FormattedMessage id="link.settings.dialog.tooltip" /></Typography>
+              <Typography aria-live="polite" id="copy_link_aria_live" style={visuallyHidden}><FormattedMessage id="link.settings.dialog.tooltip" /></Typography>
             )
           }
         </div>

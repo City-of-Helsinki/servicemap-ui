@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {
   Button, Typography, AppBar, Toolbar, ButtonBase, NoSsr,
 } from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import { Map } from '@mui/icons-material';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
@@ -246,7 +247,7 @@ const TopBar = (props) => {
             <DesktopComponent>
               {!smallScreen ? (
                 <div className={classes.settingsButtonsContainer}>
-                  <Typography component="h2" variant="srOnly">
+                  <Typography component="h2" style={visuallyHidden}>
                     <FormattedMessage id="settings" />
                   </Typography>
                   {renderSettingsButtons()}

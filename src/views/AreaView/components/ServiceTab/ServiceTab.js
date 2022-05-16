@@ -6,6 +6,7 @@ import {
   Typography,
   Divider,
 } from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -193,7 +194,7 @@ const ServiceTab = (props) => {
 
   return (
     <div>
-      <Typography variant="srOnly" component="h3">
+      <Typography style={visuallyHidden} component="h3">
         <FormattedMessage id="area.list" />
       </Typography>
       <List>

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { visuallyHidden } from '@mui/utils';
 import { Typography } from '@mui/material';
 import { viewTitleID } from '../../../../utils/accessibility';
 
@@ -55,7 +56,7 @@ class ViewTitle extends React.Component {
     }
 
     return (
-      <Typography id={viewTitleID} variant="srOnly" component="h2" tabIndex="-1" ref={this.titleRef}>
+      <Typography id={viewTitleID} style={visuallyHidden} component="h2" tabIndex="-1" ref={this.titleRef}>
         <FormattedMessage id={message + type} />
       </Typography>
     );

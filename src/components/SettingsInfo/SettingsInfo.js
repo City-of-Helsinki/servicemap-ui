@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {
   Typography, Divider, ButtonBase, NoSsr,
 } from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import { FormattedMessage } from 'react-intl';
 import Container from '../Container';
 import {
@@ -66,7 +67,7 @@ const SettingsInfo = ({
 
   return (
     <NoSsr>
-      <Typography component="h3" variant="srOnly">
+      <Typography component="h3" style={visuallyHidden}>
         <FormattedMessage id="settings.info.heading" />
       </Typography>
       {!noDivider && (
@@ -98,7 +99,7 @@ const SettingsInfo = ({
             <FormattedMessage id={titleText} />
           </Typography>
         </ButtonBase>
-        <Typography aria-hidden id="SettingsInfo-srTitle" variant="srOnly">
+        <Typography aria-hidden id="SettingsInfo-srTitle" style={visuallyHidden}>
           <FormattedMessage id={titleText} />
           <FormattedMessage id="settings.aria.open" />
         </Typography>

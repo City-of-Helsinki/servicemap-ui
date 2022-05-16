@@ -6,6 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import {
   Map, Mail, Hearing, Share,
 } from '@mui/icons-material';
+import { visuallyHidden } from '@mui/utils';
 import { Helmet } from 'react-helmet';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -209,7 +210,7 @@ const UnitView = (props) => {
   const renderTitleForRS = () => {
     const title = unit && unit.name ? getLocaleText(unit.name) : '';
     return (
-      <Typography variant="srOnly" aria-hidden>{title}</Typography>
+      <Typography style={visuallyHidden} aria-hidden>{title}</Typography>
     );
   };
 

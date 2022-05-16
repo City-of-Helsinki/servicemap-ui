@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import {
   Tabs, Tab, Typography,
 } from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import { FormattedMessage } from 'react-intl';
 import { parseSearchParams, stringifySearchParams } from '../../utils';
 import ResultOrderer from '../ResultOrderer';
@@ -203,7 +204,7 @@ const TabLists = ({
           focusClass
           && focusText
           && (
-            <Typography variant="srOnly" className={focusClass} tabIndex="-1">{focusText}</Typography>
+            <Typography style={visuallyHidden} className={focusClass} tabIndex="-1">{focusText}</Typography>
           )
         }
         <Tabs

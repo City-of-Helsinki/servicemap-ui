@@ -5,6 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { Typography } from '@mui/material';
 import { Map } from '@mui/icons-material';
+import { visuallyHidden } from '@mui/utils';
 import { focusDistrict, focusDistricts, useMapFocusDisabled } from '../MapView/utils/mapActions';
 import GeographicalTab from './components/GeographicalTab';
 import { parseSearchParams, uppercaseFirst } from '../../utils';
@@ -344,7 +345,7 @@ const AreaView = ({
             )}
           </MobileComponent>
           <div className={classes.loadingText}>
-            <Typography variant="srOnly" aria-live="assertive">
+            <Typography style={visuallyHidden} aria-live="assertive">
               {districtsFetching.length
                 ? <FormattedMessage id="general.loading" />
                 : <FormattedMessage id="general.loading.done" />
