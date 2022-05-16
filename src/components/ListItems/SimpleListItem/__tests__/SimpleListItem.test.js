@@ -1,7 +1,7 @@
 // Link.react.test.js
 import React from 'react';
-import { createMount } from '@material-ui/core/test-utils';
 import { MuiThemeProvider } from '@material-ui/core';
+import { fireEvent, render } from '@testing-library/react';
 import themes from '../../../../themes';
 import SimpleListItem from '../index';
 
@@ -17,96 +17,96 @@ const Providers = ({ children }) => (
   </MuiThemeProvider>
 );
 
+const renderWithProviders = component => render(component, { wrapper: Providers });
+
 describe('<SimpleListItem />', () => {
-  // let render;
-  let mount;
-
-  beforeEach(() => {
-    // render = createRender({ wrappingComponent: Providers });
-    mount = createMount({ wrappingComponent: Providers });
-  });
-
-  afterEach(() => {
-    mount.cleanUp();
-  });
-
-  const resetMount = () => {
-    mount.cleanUp();
-    mount = createMount({ wrappingComponent: Providers });
-  };
-
   it('should work', () => {
-    const component = mount(<SimpleListItem {...mockProps} />);
-    expect(component).toMatchSnapshot();
+    const { container } = renderWithProviders(<SimpleListItem {...mockProps} />);
+    expect(container).toMatchSnapshot();
   });
 
   it('simulates click event', () => {
     const mockCallBack = jest.fn();
-    const component = mount(
+    const { getByRole } = renderWithProviders(
       <SimpleListItem {...mockProps} handleItemClick={mockCallBack} button />
     );
 
-    component.find('ForwardRef(ListItem)').simulate('click');
+    fireEvent.click(getByRole('listitem'));
+
     expect(mockCallBack.mock.calls.length).toEqual(1);
   });
 
-  it('simulates keyboard event', () => {
+  it('simulates keyboard event', async () => {
     const mockCallBack = jest.fn();
-    const component = mount(
+    const { getByRole } = renderWithProviders(
       <SimpleListItem {...mockProps} handleItemClick={mockCallBack} button />
     );
 
-    component.find('ForwardRef(ListItem)').simulate('keyDown', { which: 13 });
-    component.find('ForwardRef(ListItem)').simulate('keyDown', { which: 32 });
+    fireEvent.keyDown(getByRole('listitem'), {
+      key: 'Enter',
+      code: 'Enter',
+      keyCode: 13,
+      charCode: 13,
+    });
+    fireEvent.keyDown(getByRole('listitem'), {
+      key: 'Space',
+      code: 'Space',
+      keyCode: 32,
+      charCode: 32,
+    });
+
     expect(mockCallBack.mock.calls.length).toEqual(2);
   });
 
   it('does show text correctly', () => {
-    const component = mount(<SimpleListItem {...mockProps} />);
+    const { getByText } = renderWithProviders(<SimpleListItem {...mockProps} />);
 
-    const p = component.find('p');
-    expect(p.at(0).text()).toEqual(mockProps.text);
+    expect(getByText(mockProps.text)).toBeInTheDocument();
   });
 
   it('does set select correctly', () => {
-    let component = mount(<SimpleListItem {...mockProps} />);
-    expect(component.find('ForwardRef(ListItem)').props().selected).toBeFalsy();
+    const { getAllByRole } = renderWithProviders(
+      <>
+        <SimpleListItem {...mockProps} />
+        <SimpleListItem {...mockProps} selected />
+      </>,
+    );
+    expect(getAllByRole('listitem')[0].classList.contains('Mui-selected')).toBeFalsy();
 
-    resetMount();
-
-    component = mount(<SimpleListItem {...mockProps} selected />);
-    expect(component.find('ForwardRef(ListItem)').props().selected).toBeTruthy();
+    expect(getAllByRole('listitem')[1].classList.contains('Mui-selected')).toBeTruthy();
   });
 
   it('does set divider correctly', () => {
-    let component = mount(<SimpleListItem {...mockProps} />);
-    expect(component.find('ForwardRef(Divider)').exists()).toBeFalsy();
+    const { container, getAllByRole } = renderWithProviders(
+      <>
+        <SimpleListItem {...mockProps} />
+        <SimpleListItem {...mockProps} divider />
+      </>,
+    );
 
-    resetMount();
-
-    component = mount(<SimpleListItem {...mockProps} divider />);
-    expect(component.find('ForwardRef(Divider)').exists()).toBeTruthy();
+    expect(getAllByRole('listitem')[0].querySelector('hr')).not.toBeInTheDocument();
+    expect(container.querySelector('hr')).toBeInTheDocument();
   });
 
   it('does use default accessibility attributes correctly', () => {
-    const component = mount(<SimpleListItem {...mockProps} />);
+    const { container, getByText, getByRole } = renderWithProviders(<SimpleListItem {...mockProps} />);
 
-    const srText = component.find('span').at(0);
-    const text = component.find('p').at(0);
+    const srText = container.querySelector('span');
+    const text = getByText(mockProps.text, { selector: 'p' });
 
     // Expect screen reader texts to render correctly
-    expect(component.find('ForwardRef(ListItem)').text().indexOf(mockProps.text) !== -1).toBeTruthy();
+    expect(getByRole('listitem').textContent.indexOf(mockProps.text) !== -1).toBeTruthy();
     // Expect aria-hidden attributes to be placed correctly
-    expect(srText.props()['aria-hidden']).toBeFalsy();
-    expect(text.props()['aria-hidden']).toBeFalsy();
+    expect(srText.getAttribute('aria-hidden')).toBeFalsy();
+    expect(text.getAttribute('aria-hidden')).toBeFalsy();
     // Expect role to be set
-    expect(component.find('ForwardRef(ListItem)').props().role).toEqual(null);
+    expect(getByRole('listitem').getAttribute('role')).toEqual(null);
     // Expect element to have tabIndex -1
-    expect(component.find('ForwardRef(ListItem)').props().tabIndex).toEqual(-1);
+    expect(getByRole('listitem').tabIndex).toEqual(-1);
   });
 
   it('does use given accessibility attributes correctly', () => {
-    const component = mount(
+    const { container, getByRole } = renderWithProviders(
       <SimpleListItem
         {...mockProps}
         role="button"
@@ -116,23 +116,23 @@ describe('<SimpleListItem />', () => {
       />,
     );
 
-    const srText = component.find('span').at(0);
-    const visibleText = component.find('p').at(0);
-    const srTextContains = srText.text().indexOf('Screen reader text') !== -1;
-    const visibleTextContains = visibleText.text().indexOf(mockProps.text) !== -1;
+    const srText = container.querySelector('span');
+    const visibleText = container.querySelector('p');
+    const srTextContains = srText.textContent.indexOf('Screen reader text') !== -1;
+    const visibleTextContains = visibleText.textContent.indexOf(mockProps.text) !== -1;
 
     // Expect aria-hidden attributes to be placed correctly
-    expect(srText.props()['aria-hidden']).toBeFalsy();
-    expect(visibleText.props()['aria-hidden']).toBeFalsy();
+    expect(srText.getAttribute('aria-hidden')).toBeFalsy();
+    expect(visibleText.getAttribute('aria-hidden')).toBeFalsy();
     // Expect visible text to contain given attribute
     expect(visibleTextContains).toBeTruthy();
     // Expect screen reader only text to exist in separate span element
     expect(srTextContains).toBeTruthy();
     // Expect role to be set
-    expect(component.props().role).toEqual('button');
+    expect(getByRole('button')).toBeInTheDocument();
     // Expect divider element to be hidden from screen readers
-    expect(component.find('li').at(1).props()['aria-hidden']).toBeTruthy();
+    expect(container.querySelector('li[aria-hidden="true"')).toBeInTheDocument();
     // Expect element to have tabIndex 0
-    expect(component.find('ForwardRef(ListItem)').props().tabIndex).toEqual(0);
+    expect(getByRole('button').tabIndex).toEqual(0);
   });
 });
