@@ -1,4 +1,4 @@
-import { ButtonBase, Typography } from '@material-ui/core';
+import { ButtonBase, Typography } from '@mui/material';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';

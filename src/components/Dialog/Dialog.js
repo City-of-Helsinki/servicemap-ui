@@ -5,7 +5,7 @@ import {
   DialogContent,
   DialogTitle,
   Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 import SMButton from '../ServiceMapButton';

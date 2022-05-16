@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
   InputBase, IconButton, Paper, List, ListItem, Typography, Divider,
-} from '@material-ui/core';
-import { Clear, Search } from '@material-ui/icons';
+} from '@mui/material';
+import { Clear, Search } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
 import { setOrder, setDirection } from '../../redux/actions/sort';
 import config from '../../../config';

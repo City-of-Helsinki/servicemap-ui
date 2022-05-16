@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import {
   Tabs, Tab, Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import { parseSearchParams, stringifySearchParams } from '../../utils';
 import ResultOrderer from '../ResultOrderer';

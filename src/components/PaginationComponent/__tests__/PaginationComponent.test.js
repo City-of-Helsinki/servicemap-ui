@@ -1,7 +1,7 @@
 // Link.react.test.js
 import React from 'react';
-import { createMount } from '@material-ui/core/test-utils';
-import { MuiThemeProvider } from '@material-ui/core';
+import { createMount } from '@mui/material/test-utils';
+import { MuiThemeProvider } from '@mui/material';
 import { IntlProvider } from 'react-intl';
 import themes from '../../../themes';
 import PaginationComponent from '../index';

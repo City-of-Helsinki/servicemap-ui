@@ -1,11 +1,11 @@
 // CloseSuggestionButton.test.js
 import React from 'react';
-import { createMount, createShallow } from '@material-ui/core/test-utils';
-import { MuiThemeProvider } from '@material-ui/core';
+import { createMount, createShallow } from '@mui/material/test-utils';
+import { MuiThemeProvider } from '@mui/material';
 import { IntlProvider } from 'react-intl';
 import themes from '../../../../themes';
 import { CloseSuggestionButton } from '../CloseSuggestionButton';
-import { ArrowDownward } from '@material-ui/icons';
+import { ArrowDownward } from '@mui/icons-material';
 
 // Mock props for intl provider
 const intlMock = {

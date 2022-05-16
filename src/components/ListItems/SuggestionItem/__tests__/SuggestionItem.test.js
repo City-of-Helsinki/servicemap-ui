@@ -1,9 +1,9 @@
 // // Link.react.test.js
 import React from 'react';
-import { createMount } from '@material-ui/core/test-utils';
-import { MuiThemeProvider } from '@material-ui/core';
+import { createMount } from '@mui/material/test-utils';
+import { MuiThemeProvider } from '@mui/material';
 import { IntlProvider } from 'react-intl';
-import { Search } from '@material-ui/icons';
+import { Search } from '@mui/icons-material';
 import { fireEvent, render } from '@testing-library/react';
 import themes from '../../../../themes';
 import SuggestionItem from '../index';

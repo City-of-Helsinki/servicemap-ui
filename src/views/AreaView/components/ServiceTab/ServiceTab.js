@@ -5,7 +5,7 @@ import {
   ListItem,
   Typography,
   Divider,
-} from '@material-ui/core';
+} from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import {

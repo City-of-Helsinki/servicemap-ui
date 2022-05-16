@@ -1,7 +1,7 @@
 // // Link.react.test.js
 import React from 'react';
 import { render } from '@testing-library/react';
-import { MuiThemeProvider } from '@material-ui/core';
+import { MuiThemeProvider } from '@mui/material';
 import themes from '../../../themes';
 import SMRadio from '../index';
 

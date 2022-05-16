@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
-import { Typography, withStyles, ButtonBase } from '@material-ui/core';
+import { Typography, ButtonBase } from '@mui/material';
+import { withStyles } from '@mui/styles';
 import styles from './styles';
 import { keyboardHandler } from '../../utils';
 

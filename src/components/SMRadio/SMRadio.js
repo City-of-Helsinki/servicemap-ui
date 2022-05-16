@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   FormControl, FormLabel, RadioGroup, FormControlLabel, Radio,
-} from '@material-ui/core';
+} from '@mui/material';
 
 const SMRadio = ({
   controls, initialValue, name, label, onChange, ...rest

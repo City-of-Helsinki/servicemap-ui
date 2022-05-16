@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 import URI from 'urijs';
 import {
   Build, Code, GetApp, Print,
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 import { useSelector } from 'react-redux';
 import DropDownMenuButton from '../DropDownMenuButton';
 import SMIcon from '../SMIcon/SMIcon';

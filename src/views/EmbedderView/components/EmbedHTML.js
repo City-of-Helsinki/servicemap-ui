@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Paper, TextField, Typography } from '@material-ui/core';
+import { Paper, TextField, Typography } from '@mui/material';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { getEmbedURL } from '../utils/utils';
 

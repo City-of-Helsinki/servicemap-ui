@@ -1,4 +1,4 @@
-import { withStyles } from '@material-ui/core';
+import { withStyles } from '@mui/styles';
 import AddressPopup from './AddressPopup';
 import styles from '../../styles';
 

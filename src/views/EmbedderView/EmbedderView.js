@@ -3,7 +3,7 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Typography } from '@material-ui/core';
+import { Typography } from '@mui/material';
 import URI from 'urijs';
 import { Helmet } from 'react-helmet';
 import { useSelector } from 'react-redux';

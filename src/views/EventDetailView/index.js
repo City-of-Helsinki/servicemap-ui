@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { withStyles } from '@material-ui/core';
+import { withStyles } from '@mui/styles';
 import { withRouter } from 'react-router-dom';
 import { injectIntl } from 'react-intl';
 import EventDetailView from './EventDetailView';

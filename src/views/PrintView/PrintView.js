@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useEffect, useState, useRef } from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@mui/styles';
 import { useIntl } from 'react-intl';
 import {
   TableContainer,
@@ -11,7 +11,7 @@ import {
   TableCell,
   TableBody,
   Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { NumberCircleMaker } from '../MapView/utils/drawIcon';

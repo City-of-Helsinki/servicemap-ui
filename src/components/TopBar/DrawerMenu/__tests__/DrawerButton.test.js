@@ -1,8 +1,8 @@
 // Link.react.test.js
 import React from 'react';
-import { createMount } from '@material-ui/core/test-utils';
-import { MuiThemeProvider, Typography } from '@material-ui/core';
-import { Search } from '@material-ui/icons';
+import { createMount } from '@mui/material/test-utils';
+import { MuiThemeProvider, Typography } from '@mui/material';
+import { Search } from '@mui/icons-material';
 import DrawerButton from '../DrawerButton';
 import themes from '../../../../themes';
 

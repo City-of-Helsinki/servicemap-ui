@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Typography } from '@material-ui/core';
+import { Button, Typography } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import { getIcon } from '../SMIcon';
 import LocalStorageUtility from '../../utils/localStorage';

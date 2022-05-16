@@ -1,11 +1,11 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Typography } from '@material-ui/core';
+import { Button, Typography } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import {
   Map, Mail, Hearing, Share,
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 import { Helmet } from 'react-helmet';
 import { useDispatch, useSelector } from 'react-redux';
 import {

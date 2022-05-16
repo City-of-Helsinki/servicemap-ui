@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Typography, Link } from '@material-ui/core';
+import { Typography, Link } from '@mui/material';
 import unitSectionFilter from '../../utils/unitSectionFilter';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { DescriptionText } from '../../../../components';

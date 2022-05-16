@@ -5,8 +5,8 @@ import {
   Switch, Route, useLocation,
 } from 'react-router-dom';
 import { injectIntl } from 'react-intl';
-import { Tooltip as MUITooltip, ButtonBase, Typography } from '@material-ui/core';
-import { useTheme } from '@material-ui/styles';
+import { Tooltip as MUITooltip, ButtonBase, Typography } from '@mui/material';
+import { useTheme } from '@mui/styles';
 import MapView from '../views/MapView';
 import PageHandler from './components/PageHandler';
 import AddressView from '../views/AddressView';

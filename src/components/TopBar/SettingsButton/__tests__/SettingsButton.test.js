@@ -1,6 +1,6 @@
 import React from 'react';
-import { createShallow } from '@material-ui/core/test-utils';
-import { MuiThemeProvider } from '@material-ui/core';
+import { createShallow } from '@mui/material/test-utils';
+import { MuiThemeProvider } from '@mui/material';
 import SettingsButton from '../SettingsButton';
 import themes from '../../../../themes';
 

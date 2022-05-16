@@ -3,8 +3,8 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   ListItem, ListItemIcon, Typography, Divider,
-} from '@material-ui/core';
-import { useTheme } from '@material-ui/styles';
+} from '@mui/material';
+import { useTheme } from '@mui/styles';
 import { keyboardHandler } from '../../../utils';
 import locationIcon from '../../../assets/icons/LocationDefault.svg';
 import locationIconHover from '../../../assets/icons/LocationHover.svg';

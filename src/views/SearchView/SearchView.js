@@ -4,8 +4,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter, Redirect } from 'react-router-dom';
 import {
-  Paper, withStyles, Typography, Link, NoSsr, Divider,
-} from '@material-ui/core';
+  Paper, Typography, Link, NoSsr, Divider,
+} from '@mui/material';
+import { withStyles } from '@mui/styles';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import styles from './styles';
 import {

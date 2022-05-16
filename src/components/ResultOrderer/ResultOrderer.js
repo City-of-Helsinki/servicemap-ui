@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
   FormControl, Select, Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 import { useAcccessibilitySettings } from '../../utils/settings';
 
 const allowedDirections = [

@@ -4,9 +4,9 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   Typography, Divider, List, ButtonBase,
-} from '@material-ui/core';
+} from '@mui/material';
 import { FormattedMessage } from 'react-intl';
-import { Map } from '@material-ui/icons';
+import { Map } from '@mui/icons-material';
 import Helmet from 'react-helmet';
 import { focusToPosition, useMapFocusDisabled } from '../MapView/utils/mapActions';
 import fetchAdministrativeDistricts from './utils/fetchAdministrativeDistricts';

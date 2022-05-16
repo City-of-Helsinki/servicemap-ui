@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { Typography } from '@material-ui/core';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { Typography } from '@mui/material';
 import MapView from '../views/MapView';
 import config from '../../config';
 import ViewRouter from './components/ViewRouter';

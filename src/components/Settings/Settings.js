@@ -13,7 +13,7 @@ import {
   Radio,
   FormLabel,
   FormControl,
-} from '@material-ui/core';
+} from '@mui/material';
 import SettingsUtility from '../../utils/settings';
 import Container from '../Container';
 import {

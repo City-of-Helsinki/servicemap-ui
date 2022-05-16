@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
   ButtonBase, Divider, ListItem, Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 import { useHistory, useLocation } from 'react-router-dom';
 import config from '../../../../../config';
 import InfoList from '../InfoList';
