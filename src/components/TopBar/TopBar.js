@@ -17,6 +17,7 @@ import LocaleUtility from '../../utils/locale';
 import { useNavigationParams } from '../../utils/address';
 import SettingsButton from './SettingsButton';
 import MenuButton from './MenuButton';
+import paths from '../../../config/paths';
 
 const TopBar = (props) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -26,6 +27,7 @@ const TopBar = (props) => {
   const getAddressNavigatorParams = useNavigationParams();
 
   const {
+    simpleElement,
     settingsOpen,
     classes,
     toggleSettings,
@@ -150,6 +152,7 @@ const TopBar = (props) => {
   };
 
   const handleNavigation = (target, data) => {
+    const isHomePage = paths.home.regex.test(window.location.href);
     // Hide settings and map if open
     toggleSettings();
     if (location.search.indexOf('showMap=true') > -1) {
@@ -158,7 +161,7 @@ const TopBar = (props) => {
 
     switch (target) {
       case 'home':
-        if (currentPage !== 'home') {
+        if (!isHomePage) {
           navigator.push('home');
         } else {
           setTimeout(() => {
@@ -208,7 +211,7 @@ const TopBar = (props) => {
     } ${
       pageType === 'mobile' ? classes.toolbarBlackMobile : ''
     }`;
-    const contrastAriaLabel = intl.formatMessage({ id: `general.contrast.ariaLabel.${theme === 'dark' ? 'off' : 'on'}` })
+    const contrastAriaLabel = intl.formatMessage({ id: `general.contrast.ariaLabel.${theme === 'dark' ? 'off' : 'on'}` });
     return (
       <>
         <AppBar className={classes.appBar}>
@@ -236,35 +239,41 @@ const TopBar = (props) => {
                 <HomeLogo aria-hidden contrast={theme === 'dark'} className={classes.logo} />
               </NoSsr>
             </ButtonBase>
-            <MobileComponent>
-              <div className={classes.mobileButtonContainer}>
-                {renderMapButton()}
-                {renderMenuButton(pageType)}
-              </div>
-              {renderDrawerMenu(pageType)}
-            </MobileComponent>
-            <DesktopComponent>
-              {!smallScreen ? (
-                <div className={classes.settingsButtonsContainer}>
-                  <Typography component="h2" variant="srOnly">
-                    <FormattedMessage id="settings" />
-                  </Typography>
-                  {renderSettingsButtons()}
-                </div>
-              ) : (
+            {simpleElement // SimpleElement prop removes top bar buttons
+              ? null
+              : (
                 <>
-                  <div className={classes.mobileButtonContainer}>
-                    {renderMenuButton()}
-                  </div>
-                  {renderDrawerMenu(pageType)}
+                  <MobileComponent>
+                    <div className={classes.mobileButtonContainer}>
+                      {renderMapButton()}
+                      {renderMenuButton(pageType)}
+                    </div>
+                    {renderDrawerMenu(pageType)}
+                  </MobileComponent>
+                  <DesktopComponent>
+                    {!smallScreen ? (
+                      <div className={classes.settingsButtonsContainer}>
+                        <Typography component="h2" variant="srOnly">
+                          <FormattedMessage id="settings" />
+                        </Typography>
+                        {renderSettingsButtons()}
+                      </div>
+                    ) : (
+                      <>
+                        <div className={classes.mobileButtonContainer}>
+                          {renderMenuButton()}
+                        </div>
+                        {renderDrawerMenu(pageType)}
+                      </>
+                    )}
+                    {
+                      !smallScreen && (
+                        <ToolMenu />
+                      )
+                    }
+                  </DesktopComponent>
                 </>
               )}
-              {
-                !smallScreen && (
-                  <ToolMenu />
-                )
-              }
-            </DesktopComponent>
           </Toolbar>
         </AppBar>
         {/* This empty toolbar fixes the issue where App bar hides the top page content */}
@@ -300,11 +309,13 @@ TopBar.propTypes = {
   smallScreen: PropTypes.bool.isRequired,
   theme: PropTypes.string.isRequired,
   toggleSettings: PropTypes.func.isRequired,
+  simpleElement: PropTypes.bool,
 };
 
 TopBar.defaultProps = {
   navigator: null,
   settingsOpen: null,
+  simpleElement: false,
 };
 
 export default TopBar;
