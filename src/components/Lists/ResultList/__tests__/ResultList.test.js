@@ -1,6 +1,6 @@
 // Link.react.test.js
 import React from 'react';
-import { MuiThemeProvider } from '@mui/material';
+import { ThemeProvider } from '@mui/material/styles';
 import { IntlProvider } from 'react-intl';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
@@ -74,9 +74,9 @@ const Providers = ({ children }) => {
   return (
     <Provider store={store}>
       <IntlProvider {...intlMock}>
-        <MuiThemeProvider theme={themes.SMTheme}>
+        <ThemeProvider theme={themes.SMTheme}>
           {children}
-        </MuiThemeProvider>
+        </ThemeProvider>
       </IntlProvider>
     </Provider>
   );

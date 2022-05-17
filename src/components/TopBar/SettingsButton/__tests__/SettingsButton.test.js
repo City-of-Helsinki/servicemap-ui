@@ -1,6 +1,6 @@
 import React from 'react';
 import { createShallow } from '@mui/material/test-utils';
-import { MuiThemeProvider } from '@mui/material';
+import { ThemeProvider } from '@mui/material/styles';
 import SettingsButton from '../SettingsButton';
 import themes from '../../../../themes';
 
@@ -15,9 +15,9 @@ const mockProps = {
 
 // eslint-disable-next-line react/prop-types
 const Providers = ({ children }) => (
-  <MuiThemeProvider theme={themes.SMTheme}>
+  <ThemeProvider theme={themes.SMTheme}>
     {children}
-  </MuiThemeProvider>
+  </ThemeProvider>
 );
 
 

@@ -1,7 +1,7 @@
 // Link.react.test.js
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
-import { MuiThemeProvider } from '@mui/material';
+import { ThemeProvider } from '@mui/material/styles';
 import themes from '../../../../themes';
 import ResultItem from '../index';
 
@@ -18,9 +18,9 @@ const mockProps = {
 
 // eslint-disable-next-line react/prop-types
 const Providers = ({ children }) => (
-  <MuiThemeProvider theme={themes.SMTheme}>
+  <ThemeProvider theme={themes.SMTheme}>
     {children}
-  </MuiThemeProvider>
+  </ThemeProvider>
 );
 
 const renderWithProviders = component => render(component, { wrapper: Providers });

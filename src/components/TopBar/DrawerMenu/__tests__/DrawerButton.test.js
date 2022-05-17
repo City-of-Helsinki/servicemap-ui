@@ -20,9 +20,9 @@ const buttonMockProps = {
 
 // eslint-disable-next-line react/prop-types
 const Providers = ({ children }) => (
-  <MuiThemeProvider theme={themes.SMTheme}>
+  <ThemeProvider theme={themes.SMTheme}>
     {children}
-  </MuiThemeProvider>
+  </ThemeProvider>
 );
 
 describe('<DrawerButton />', () => {

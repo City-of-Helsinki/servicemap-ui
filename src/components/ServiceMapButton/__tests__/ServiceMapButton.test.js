@@ -2,7 +2,7 @@
 import React from 'react';
 import { IntlProvider } from 'react-intl';
 import { createMount } from '@mui/material/test-utils';
-import { MuiThemeProvider } from '@mui/material';
+import { ThemeProvider } from '@mui/material/styles';
 import ServiceMapButton from '../index';
 import themes from '../../../themes';
 
@@ -24,9 +24,9 @@ const buttonMockProps = {
 // eslint-disable-next-line react/prop-types
 const Providers = ({ children }) => (
   <IntlProvider {...intlMock}>
-    <MuiThemeProvider theme={themes.SMTheme}>
+    <ThemeProvider theme={themes.SMTheme}>
       {children}
-    </MuiThemeProvider>
+    </ThemeProvider>
   </IntlProvider>
 );
 

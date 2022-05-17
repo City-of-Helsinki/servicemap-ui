@@ -1,7 +1,7 @@
 // Link.react.test.js
 import React from 'react';
 import { createMount } from '@mui/material/test-utils';
-import { MuiThemeProvider } from '@mui/material';
+import { ThemeProvider } from '@mui/material/styles';
 import { IntlProvider } from 'react-intl';
 import themes from '../../../themes';
 import PaginationComponent from '../index';
@@ -29,9 +29,9 @@ const mockProps = {
 // eslint-disable-next-line react/prop-types
 const Providers = ({ children }) => (
   <IntlProvider {...intlMock}>
-    <MuiThemeProvider theme={themes.SMTheme}>
+    <ThemeProvider theme={themes.SMTheme}>
       {children}
-    </MuiThemeProvider>
+    </ThemeProvider>
   </IntlProvider>
 );
 
