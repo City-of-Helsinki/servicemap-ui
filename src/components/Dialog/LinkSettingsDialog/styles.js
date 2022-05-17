@@ -14,14 +14,14 @@ export default theme => ({
   radioGroup: {
     flexWrap: 'nowrap',
     flexDirection: 'row',
-    margin: `${theme.spacing(2)}px 0`,
+    margin: `${theme.spacing(2)} 0`,
     [theme.breakpoints.down('sm')]: {
       flexDirection: 'column',
     },
   },
   radioGroupItem: {
     [theme.breakpoints.down('sm')]: {
-      margin: `${theme.spacing(1)}px 0`,
+      margin: `${theme.spacing(1)} 0`,
     },
   },
   urlContainer: {
@@ -29,8 +29,8 @@ export default theme => ({
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: 'rgba(222, 223, 225, 0.25)',
-    padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
-    margin: `0 0 ${theme.spacing(3)}px 0`,
+    padding: `${theme.spacing(1)} ${theme.spacing(2)}`,
+    margin: `0 0 ${theme.spacing(3)} 0`,
     border: '1px solid #DEDFE1',
     width: '100%',
     textAlign: 'left',

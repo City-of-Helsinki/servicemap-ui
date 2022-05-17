@@ -31,7 +31,7 @@ const StyledTableRow = withStyles(theme => ({
 
 const StyledTableCell = withStyles(theme => ({
   root: {
-    padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
+    padding: `${theme.spacing(1)} ${theme.spacing(2)}`,
   },
 }))(TableCell);
 

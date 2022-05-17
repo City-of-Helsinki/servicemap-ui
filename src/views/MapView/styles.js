@@ -79,7 +79,7 @@ const styles = theme => ({
     zIndex: theme.zIndex.infront,
   },
   marginBottom: {
-    marginBottom: `${theme.spacing(2)}px !important`,
+    marginBottom: `${theme.spacing(2)} !important`,
   },
   embedLogo: {
     top: 0,
