@@ -13,6 +13,7 @@ export default {
       height: 34,
       lineHeight: '30px',
       padding: 0,
+      pointerEvents: 'auto',
     },
   },
   top: {
