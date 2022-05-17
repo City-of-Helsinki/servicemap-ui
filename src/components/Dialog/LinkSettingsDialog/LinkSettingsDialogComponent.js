@@ -172,7 +172,7 @@ const LinkSettingsDialogComponent = ({
       {...rest}
       title={title}
       content={(
-        <div>
+        <div className={classes.container}>
           <CopyTooltip
             open={copyTooltipOpen1}
             title={tooltip}

@@ -16,7 +16,6 @@ const CloseButton = ({
   <Button
     aria-label={intl.formatMessage({ id: 'general.close' })}
     className={`${classes.flexBase} ${classes.button} ${className || ''}`}
-    classes={{ label: classes.buttonLabel }}
     onClick={() => {
       onClick();
     }}

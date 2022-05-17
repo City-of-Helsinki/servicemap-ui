@@ -98,6 +98,7 @@ export default theme => ({
     '& svg': {
       fontSize: 28,
     },
+    flexDirection: 'column',
   },
   searchButtonFocus: {
     boxShadow: '0 0 0 4px #fff !important',

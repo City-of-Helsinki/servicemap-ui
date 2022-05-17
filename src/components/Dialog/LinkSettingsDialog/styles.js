@@ -1,5 +1,8 @@
 
 export default theme => ({
+  container: {
+    padding: theme.spacing(1),
+  },
   linkText: {
     color: theme.palette.primary.main,
     wordBreak: 'break-word',

@@ -86,7 +86,7 @@ const ResultOrderer = ({
           native
           value={`${order}-${direction}`}
           onChange={defaultHandleChange}
-          classes={{ select: classes.elementFocus }}
+          classes={{ select: classes.selectElement }}
           inputProps={{
             name: 'result-sorter',
             id: 'result-sorter',
