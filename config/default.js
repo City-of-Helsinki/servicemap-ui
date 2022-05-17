@@ -117,6 +117,11 @@ if (settings.MATOMO_NO_RESULTS_DIMENSION_ID === 'undefined') {
   settings.MATOMO_NO_RESULTS_DIMENSION_ID = undefined;
 }
 
+if (typeof settings.EMBEDDER_DOCUMENTATION_URL === 'undefined') {
+  settings.EMBEDDER_DOCUMENTATION_URL = 'https://kaupunkialustana.hel.fi/palvelukartta/palvelukartan-upotusohjeet/';
+}
+
+
 let municipalities;
 try {
   municipalities = require('./municipalities.json');
@@ -202,6 +207,7 @@ export default {
   "reittiopasURL": settings.REITTIOPAS_URL,
   "outdoorExerciseURL": settings.OUTDOOR_EXERCISE_URL,
   "natureAreaURL": settings.NATURE_AREA_URL,
+  "embedderDocumentationUrl": settings.EMBEDDER_DOCUMENTATION_URL,
   "cities": settings.CITIES.split(','),
   "maps": settings.MAPS.split(','),
   "smallContentAreaBreakpoint": 449,

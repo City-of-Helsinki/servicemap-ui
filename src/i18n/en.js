@@ -201,8 +201,11 @@ const translations = {
   'embedder.service.common': 'The city resident\'s most common everyday service points are shown on the map: schools, daycares and health stations.',
   'embedder.service.all': 'All service points are shown on the map. Too extensive area borders slow down the embedding and decreases its clarity.',
   'embedder.title': 'Embedding tool',
-  'embedder.title.info': 'If you want to make an embedding from a search result, start by making the search.',
-  'embedder.url.title': 'Copy the address',
+  'embedder.title.info': 'Palvelukartan upotustyökalulla voit upottaa Palvelukartan yksittäisiä näkymiä osaksi mitä tahansa verkkosivua.', // TODO: translate
+  'embedder.info.title': 'Ohjeet upotustyökalun käyttöön', // TODO: translate
+  'embedder.info.description': 'Valitse alla olevasta valikoimasta karttanäkymään haluamasi toiminnallisuudet. Kopioi kartanalta URL-linkki tai html-koodi käyttöösi.\n\n Tarkemmat ohjeet upotustyökalun käyttöön eri tilanteissa löydät', // TODO: translate
+  'embedder.info.link': 'täältä (uusi välilehti)', // TODO: translate
+  'embedder.url.title': 'Copy URL',
   'embedder.width.title': 'Width of the embedding',
   'embedder.width.aria.label': 'Choose width of the embedding',
   'embedder.width.auto.label': 'Automatic width. The embedding fills the width of the element in which it has been placed. In this preview, the embedding has been placed in a standard-width element, which has been outlined with a broken line. ',
