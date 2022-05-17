@@ -21,9 +21,9 @@ const tooltipOptions = (permanent, classes) => ({
   offset: [0, -25],
 });
 
-const popupOptions = () => ({
+const popupOptions = isMobile => ({
   autoClose: false,
-  autoPan: false,
+  autoPan: !!isMobile,
   closeButton: true,
   closeOnClick: false,
   direction: 'top',
@@ -389,7 +389,7 @@ const MarkerCluster = ({
           },
         ).bindPopup(
           popupContent,
-          popupOptions(),
+          popupOptions(isMobile),
         );
 
         if (isMobile) {
