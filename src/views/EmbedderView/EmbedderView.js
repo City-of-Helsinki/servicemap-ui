@@ -434,7 +434,49 @@ const EmbedderView = ({
   };
 
 
-  const renderMapOptionsControl = () => {
+  const renderMapControls = useCallback(() => (
+    <div className={classes.mapControlContainer}>
+      {/* Map bounds */}
+      <FormControlLabel
+        control={(
+          <Checkbox
+            color="primary"
+            checked={!!restrictBounds}
+            value="bounds"
+            onChange={() => setRestrictBounds(!restrictBounds)}
+          />
+        )}
+        label={(<FormattedMessage id="embedder.options.label.bbox" />)}
+      />
+      {/* Side list */}
+      <FormControlLabel
+        control={(
+          <Checkbox
+            color="primary"
+            checked={!!showListSide}
+            value="listSide"
+            onChange={() => setShowListSide(!showListSide)}
+          />
+      )}
+        label={(<FormattedMessage id="embedder.options.label.list.side" />)}
+      />
+      {/* Bottom list */}
+      <FormControlLabel
+        control={(
+          <Checkbox
+            color="primary"
+            checked={!!showListBottom}
+            value="listBottom"
+            onChange={() => setShowListBottom(!showListBottom)}
+          />
+        )}
+        label={(<FormattedMessage id="embedder.options.label.list.bottom" />)}
+      />
+    </div>
+  ), [showListSide, showListBottom, restrictBounds]);
+
+
+  const renderMarkerOptionsControl = () => {
     const controls = [
       {
         key: 'bounds',
@@ -449,26 +491,6 @@ const EmbedderView = ({
         onChange: v => setShowUnits(v),
         icon: null,
         labelId: 'embedder.options.label.units',
-      },
-      {
-        key: 'listSide',
-        value: showListSide,
-        onChange: (v) => {
-          setShowListSide(v);
-          setShowListBottom(false);
-        },
-        icon: null,
-        labelId: 'embedder.options.label.list.side',
-      },
-      {
-        key: 'listBottom',
-        value: showListBottom,
-        onChange: (v) => {
-          setShowListBottom(v);
-          setShowListSide(false);
-        },
-        icon: null,
-        labelId: 'embedder.options.label.list.bottom',
       },
       {
         key: 'transit',
@@ -558,7 +580,7 @@ const EmbedderView = ({
                 renderHeightControl()
               }
                 {
-                renderMapOptionsControl()
+                renderMarkerOptionsControl()
               }
               </form>
             </div>
@@ -578,7 +600,7 @@ const EmbedderView = ({
                 title={iframeTitle}
                 titleComponent="h2"
                 widthMode={widthMode}
-                renderBoundsControl={renderBoundsControl}
+                renderMapControls={renderMapControls}
                 bottomList={showListBottom}
                 minHeightWithBottomList={minHeightWithBottomList}
               />
@@ -626,6 +648,7 @@ EmbedderView.propTypes = {
     divider: PropTypes.string,
     infoTitle: PropTypes.string,
     infoText: PropTypes.string,
+    mapControlContainer: PropTypes.string,
   }).isRequired,
   location: PropTypes.shape({
     hash: PropTypes.string,

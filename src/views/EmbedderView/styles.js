@@ -138,6 +138,10 @@ export default (theme) => {
       flexDirection: 'row',
       overflow: 'hidden',
     },
+    mapControlContainer: {
+      display: 'flex',
+      flexDirection: 'column',
+    },
     infoText: {
       whiteSpace: 'pre-line',
       lineHeight: '1.5rem',
