@@ -7,7 +7,7 @@ import { useMapEvents } from 'react-leaflet';
 import fetchAddress from '../../utils/fetchAddress';
 import { getAddressText, useNavigationParams } from '../../../../utils/address';
 import useLocaleText from '../../../../utils/useLocaleText';
-import SMButton from '../../../../components/ServiceMapButton';
+import { SMButton } from '../../../../components';
 
 const AddressPopup = ({
   classes,

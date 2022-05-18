@@ -8,22 +8,26 @@ import {
 } from '@material-ui/icons';
 import { Helmet } from 'react-helmet';
 import { useDispatch, useSelector } from 'react-redux';
-import { SearchBar, AcceptSettingsDialog, LinkSettingsDialog } from '../../components';
-import TitleBar from '../../components/TitleBar';
-import Container from '../../components/Container';
+import {
+  AcceptSettingsDialog,
+  AddressIcon,
+  Container,
+  LinkSettingsDialog,
+  ReadSpeakerButton,
+  SearchBar,
+  SimpleListItem,
+  SMButton,
+  TabLists,
+  TitleBar,
+  TitledList,
+} from '../../components';
 import AccessibilityInfo from './components/AccessibilityInfo';
 import ContactInfo from './components/ContactInfo';
 import Highlights from './components/Highlights';
 import ElectronicServices from './components/ElectronicServices';
 import Description from './components/Description';
-import SMButton from '../../components/ServiceMapButton';
-import TabLists from '../../components/TabLists';
-import { AddressIcon } from '../../components/SMIcon';
 import SocialMediaLinks from './components/SocialMediaLinks';
 import UnitLinks from './components/UnitLinks';
-import SimpleListItem from '../../components/ListItems/SimpleListItem';
-import TitledList from '../../components/Lists/TitledList';
-import ReadSpeakerButton from '../../components/ReadSpeakerButton';
 import config from '../../../config';
 import useMobileStatus from '../../utils/isMobile';
 import UnitHelper from '../../utils/unitHelper';

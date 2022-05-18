@@ -127,7 +127,7 @@ const TabLists = ({
 
     // Reset scroll to avoid scrolled sticky  elements having inconsistent offsetTop
     const elem = document.getElementsByClassName(sidebarClass)[0];
-    elem.scrollTop = 0;
+    if (elem) elem.scrollTop = 0;
 
     // Calculate height by looping through Tabs root element's previous siblings
     // Change sidebar scroll to match TabList header's sticky elements' combined height

@@ -37,7 +37,7 @@ const embedderConfig = {
     },
     frameBorder: 0,
   },
-  DEFAULT_CUSTOM_WIDTH: '400',
+  DEFAULT_CUSTOM_WIDTH: '500',
   BASE_URL: '/embedder',
 };
 

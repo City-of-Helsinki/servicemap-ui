@@ -43,6 +43,7 @@ exports[`<PaginationComponent /> should work 1`] = `
         }
       }
       current={2}
+      embeddedList={false}
       handlePageChange={[MockFunction]}
       intl={
         Object {

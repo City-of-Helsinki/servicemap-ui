@@ -14,7 +14,8 @@ const IFramePreview = ({
   title,
   titleComponent,
   widthMode,
-  renderBoundsControl,
+  bottomList,
+  minHeightWithBottomList,
 }) => {
   if (!embedUrl) {
     return null;
@@ -22,7 +23,7 @@ const IFramePreview = ({
   const wrapperStyleObject = () => ({
     position: 'relative',
     width: '100%',
-    paddingBottom: `${ratioHeight}%`,
+    paddingBottom: bottomList ? `max(${ratioHeight}%, 478px)` : `${ratioHeight}%`,
   });
   const iframeConfig = embedderConfig.DEFAULT_IFRAME_PROPERTIES || {};
   const hasContainer = heightMode === 'ratio' && widthMode === 'auto';
@@ -50,7 +51,10 @@ const IFramePreview = ({
     left: hasContainer ? 0 : null,
     // border: 'none',
     width: hasContainer ? '100%' : `${width}${widthUnit}`,
-    height: hasContainer ? '100%' : `${height}px`,
+    height: hasContainer ? '100%'
+      : bottomList
+        ? `max(${height}px, ${minHeightWithBottomList})`
+        : `${height}px`,
   };
   const element = hasContainer ? (
     <div style={wrapperStyleObject()}>
@@ -82,7 +86,6 @@ const IFramePreview = ({
       >
         <FormattedMessage id="embedder.preview.title" />
       </Typography>
-      {renderBoundsControl()}
       <div className={classes.iframeContainer} style={{ width: '100%' }}>
         {
           element
@@ -107,13 +110,15 @@ IFramePreview.propTypes = {
   titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']).isRequired,
   ratioHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   widthMode: PropTypes.string.isRequired,
-  renderBoundsControl: PropTypes.func.isRequired,
+  bottomList: PropTypes.bool,
+  minHeightWithBottomList: PropTypes.string.isRequired,
 };
 
 IFramePreview.defaultProps = {
   customWidth: null,
   fixedHeight: null,
   ratioHeight: null,
+  bottomList: false,
 };
 
 export default IFramePreview;

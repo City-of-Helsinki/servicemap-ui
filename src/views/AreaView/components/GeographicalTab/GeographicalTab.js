@@ -4,7 +4,6 @@ import { List, Typography, ListItem } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
 import { FormatListBulleted, LocationOn } from '@material-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
-import SMAccordion from '../../../../components/SMAccordion';
 import DistrictToggleButton from '../DistrictToggleButton';
 import {
   fetchDistrictGeometry,
@@ -18,6 +17,9 @@ import GeographicalDistrictList from '../GeographicalDistrictList';
 import GeographicalUnitList from '../GeographicalUnitList';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { geographicalDistricts } from '../../utils/districtDataHelper';
+import {
+  SMAccordion,
+} from '../../../../components';
 
 
 const GeographicalTab = ({

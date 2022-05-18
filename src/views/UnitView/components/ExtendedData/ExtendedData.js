@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import EventItem from '../../../../components/ListItems/EventItem';
-import PaginatedList from '../../../../components/Lists/PaginatedList';
-import TitleBar from '../../../../components/TitleBar';
-import Loading from '../../../../components/Loading';
-import ReservationItem from '../../../../components/ListItems/ReservationItem';
 import useLocaleText from '../../../../utils/useLocaleText';
-import ServiceItem from '../../../../components/ListItems/ServiceItem';
+import {
+  EventItem,
+  Loading,
+  PaginatedList,
+  ReservationItem,
+  ServiceItem,
+  TitleBar,
+} from '../../../../components';
 
 const ExtendedData = ({
   currentUnit,
@@ -23,7 +25,7 @@ const ExtendedData = ({
   const getLocaleText = useLocaleText();
   const selectedUnit = useSelector(state => state.selectedUnit?.unit?.data);
   const intl = useIntl();
-  const { unit } = useParams();
+  const { unit, period } = useParams();
   const title = currentUnit && currentUnit.name ? getLocaleText(currentUnit.name) : '';
 
   useEffect(() => {
@@ -90,7 +92,15 @@ const ExtendedData = ({
   };
 
   const renderEducationServices = () => {
-    const data = selectedUnit.services.filter(unit => unit.period);
+    const data = selectedUnit.services.filter((unit) => {
+      if (unit.period) {
+        // Show only units that have correct period data
+        const unitPeriod = `${unit.period[0]}–${unit.period[1]}`;
+        if (period && period === unitPeriod) return true;
+      }
+      return false;
+    });
+
     const titleText = intl.formatMessage({ id: 'unit.educationServices' });
     const srTitle = `${title} ${titleText}`;
     return (

@@ -27,6 +27,7 @@ const ResultItem = ({
   padded,
   extendedClasses,
   unitId,
+  simpleItem,
   ...rest
 }) => {
   const theme = useTheme();
@@ -105,8 +106,8 @@ const ResultItem = ({
           </ListItemIcon>
           )
         }
-        <div className={classes.itemTextContainer}>
-          <div className={classes.topRow || ''}>
+        <div className={`${classes.itemTextContainer}  ${simpleItem ? classes.compactTextContainer : ''}`}>
+          <div className={`${classes.topRow || ''}`}>
             {
               // SROnly element with full readable text
             }
@@ -122,7 +123,7 @@ const ResultItem = ({
               // Title
             }
             <Typography
-              className={`${classes.title || ''}  ${typographyClasses.title || ''} ResultItem-title`}
+              className={`${classes.title || ''}  ${typographyClasses.title || ''} ${simpleItem ? classes.compactItem : ''} ResultItem-title`}
               component="p"
               role="textbox"
               variant="body2"
@@ -188,7 +189,10 @@ const ResultItem = ({
       </ListItem>
       {divider && (
         <li aria-hidden>
-          <Divider className={classes.divider} variant="inset" />
+          <Divider
+            className={simpleItem ? classes.shortDivider : classes.divider}
+            variant={icon ? 'inset' : 'fullWidth'}
+          />
         </li>
       )}
     </>
@@ -224,6 +228,7 @@ ResultItem.propTypes = {
   selected: PropTypes.bool,
   unitId: PropTypes.number,
   padded: PropTypes.bool,
+  simpleItem: PropTypes.bool,
 };
 
 ResultItem.defaultProps = {
@@ -241,4 +246,5 @@ ResultItem.defaultProps = {
   srLabel: null,
   selected: false,
   padded: false,
+  simpleItem: false,
 };

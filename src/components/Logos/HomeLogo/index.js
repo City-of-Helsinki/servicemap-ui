@@ -13,7 +13,7 @@ import styles from './styles';
 import config from '../../../../config';
 import { useUserLocale } from '../../../utils/user';
 
-const HomeLogo = (props) => {
+const HomeLogo = React.forwardRef((props, ref) => {
   const {
     contrast, classes, ...rest
   } = props;
@@ -43,12 +43,11 @@ const HomeLogo = (props) => {
   const logo = getLogo(config.production, contrast);
 
   return (
-    <div role="img" {...rest}>
+    <div ref={ref} role="img" {...rest}>
       <img src={logo} alt="" className={classes.icon} />
     </div>
   );
-};
-
+});
 
 HomeLogo.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,

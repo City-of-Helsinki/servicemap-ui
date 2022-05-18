@@ -6,8 +6,8 @@ import { FormattedMessage } from 'react-intl';
 import { Typography, ButtonBase } from '@material-ui/core';
 import { Close } from '@material-ui/icons';
 import { fetchStopData } from '../../../utils/transitFetch';
-import { getIcon } from '../../../../../components/SMIcon';
 import useLocaleText from '../../../../../utils/useLocaleText';
+import { getIcon } from '../../../../../components';
 
 const TransitStopInfo = ({
   stop, onCloseClick, type, classes,

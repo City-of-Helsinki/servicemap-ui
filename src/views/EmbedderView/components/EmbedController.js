@@ -14,8 +14,8 @@ import {
   Checkbox,
 } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
-import SMRadio from '../../../components/SMRadio';
 import styles from '../styles';
+import { SMRadio } from '../../../components';
 
 
 const customStyles = () => ({

@@ -19,20 +19,23 @@ exports[`<ResultItem /> should work 1`] = `
       Object {
         "bottomContainer": "ResultItem-bottomContainer-5",
         "bottomHighlight": "ResultItem-bottomHighlight-6",
-        "bottomRow": "ResultItem-bottomRow-11",
-        "caption": "ResultItem-caption-14",
-        "divider": "ResultItem-divider-16",
+        "bottomRow": "ResultItem-bottomRow-12",
+        "caption": "ResultItem-caption-15",
+        "compactItem": "ResultItem-compactItem-19",
+        "compactTextContainer": "ResultItem-compactTextContainer-10",
+        "divider": "ResultItem-divider-17",
         "itemTextContainer": "ResultItem-itemTextContainer-9",
         "listItem": "ResultItem-listItem-2",
         "listItemIcon": "ResultItem-listItemIcon-3",
         "listItemIconPadded": "ResultItem-listItemIconPadded-4",
         "listItemPadded": "ResultItem-listItemPadded-1",
-        "marginLeft": "ResultItem-marginLeft-12",
+        "marginLeft": "ResultItem-marginLeft-13",
         "noMargin": "ResultItem-noMargin-8",
-        "rightColumn": "ResultItem-rightColumn-13",
-        "text": "ResultItem-text-15",
+        "rightColumn": "ResultItem-rightColumn-14",
+        "shortDivider": "ResultItem-shortDivider-18",
+        "text": "ResultItem-text-16",
         "title": "ResultItem-title-7",
-        "topRow": "ResultItem-topRow-10",
+        "topRow": "ResultItem-topRow-11",
       }
     }
     distance={
@@ -48,6 +51,7 @@ exports[`<ResultItem /> should work 1`] = `
     padded={false}
     role="link"
     selected={false}
+    simpleItem={false}
     srLabel={null}
     subtitle="Subtitle text"
     title="Title text"
@@ -152,11 +156,11 @@ exports[`<ResultItem /> should work 1`] = `
               tabIndex={0}
             >
               <div
-                className="ResultItem-itemTextContainer-9"
+                className="ResultItem-itemTextContainer-9  "
                 key=".1"
               >
                 <div
-                  className="ResultItem-topRow-10"
+                  className="ResultItem-topRow-11"
                 >
                   <WithStyles(ForwardRef(Typography))
                     className="ResultItem-title-7 ResultItem-srOnly"
@@ -217,14 +221,14 @@ exports[`<ResultItem /> should work 1`] = `
                   </WithStyles(ForwardRef(Typography))>
                   <WithStyles(ForwardRef(Typography))
                     aria-hidden="true"
-                    className="ResultItem-title-7   ResultItem-title"
+                    className="ResultItem-title-7    ResultItem-title"
                     component="p"
                     role="textbox"
                     variant="body2"
                   >
                     <ForwardRef(Typography)
                       aria-hidden="true"
-                      className="ResultItem-title-7   ResultItem-title"
+                      className="ResultItem-title-7    ResultItem-title"
                       classes={
                         Object {
                           "alignCenter": "MuiTypography-alignCenter",
@@ -265,7 +269,7 @@ exports[`<ResultItem /> should work 1`] = `
                     >
                       <p
                         aria-hidden="true"
-                        className="MuiTypography-root ResultItem-title-7   ResultItem-title MuiTypography-body2"
+                        className="MuiTypography-root ResultItem-title-7    ResultItem-title MuiTypography-body2"
                         role="textbox"
                       >
                         Title text
@@ -273,17 +277,17 @@ exports[`<ResultItem /> should work 1`] = `
                     </ForwardRef(Typography)>
                   </WithStyles(ForwardRef(Typography))>
                   <div
-                    className="ResultItem-rightColumn-13"
+                    className="ResultItem-rightColumn-14"
                   >
                     <WithStyles(ForwardRef(Typography))
                       aria-hidden="true"
-                      className="ResultItem-caption-14 ResultItem-text-15 ResultItem-marginLeft-12  ResultItem-distance"
+                      className="ResultItem-caption-15 ResultItem-text-16 ResultItem-marginLeft-13  ResultItem-distance"
                       component="p"
                       variant="caption"
                     >
                       <ForwardRef(Typography)
                         aria-hidden="true"
-                        className="ResultItem-caption-14 ResultItem-text-15 ResultItem-marginLeft-12  ResultItem-distance"
+                        className="ResultItem-caption-15 ResultItem-text-16 ResultItem-marginLeft-13  ResultItem-distance"
                         classes={
                           Object {
                             "alignCenter": "MuiTypography-alignCenter",
@@ -323,7 +327,7 @@ exports[`<ResultItem /> should work 1`] = `
                       >
                         <p
                           aria-hidden="true"
-                          className="MuiTypography-root ResultItem-caption-14 ResultItem-text-15 ResultItem-marginLeft-12  ResultItem-distance MuiTypography-caption"
+                          className="MuiTypography-root ResultItem-caption-15 ResultItem-text-16 ResultItem-marginLeft-13  ResultItem-distance MuiTypography-caption"
                         >
                           100m
                         </p>
@@ -335,13 +339,13 @@ exports[`<ResultItem /> should work 1`] = `
                   <div>
                     <WithStyles(ForwardRef(Typography))
                       aria-hidden="true"
-                      className="ResultItem-noMargin-8 ResultItem-text-15  ResultItem-subtitle"
+                      className="ResultItem-noMargin-8 ResultItem-text-16  ResultItem-subtitle"
                       component="p"
                       variant="caption"
                     >
                       <ForwardRef(Typography)
                         aria-hidden="true"
-                        className="ResultItem-noMargin-8 ResultItem-text-15  ResultItem-subtitle"
+                        className="ResultItem-noMargin-8 ResultItem-text-16  ResultItem-subtitle"
                         classes={
                           Object {
                             "alignCenter": "MuiTypography-alignCenter",
@@ -381,7 +385,7 @@ exports[`<ResultItem /> should work 1`] = `
                       >
                         <p
                           aria-hidden="true"
-                          className="MuiTypography-root ResultItem-noMargin-8 ResultItem-text-15  ResultItem-subtitle MuiTypography-caption"
+                          className="MuiTypography-root ResultItem-noMargin-8 ResultItem-text-16  ResultItem-subtitle MuiTypography-caption"
                         >
                           Subtitle text
                         </p>
@@ -459,11 +463,11 @@ exports[`<ResultItem /> should work 1`] = `
       aria-hidden={true}
     >
       <WithStyles(ForwardRef(Divider))
-        className="ResultItem-divider-16"
-        variant="inset"
+        className="ResultItem-divider-17"
+        variant="fullWidth"
       >
         <ForwardRef(Divider)
-          className="ResultItem-divider-16"
+          className="ResultItem-divider-17"
           classes={
             Object {
               "absolute": "MuiDivider-absolute",
@@ -475,10 +479,10 @@ exports[`<ResultItem /> should work 1`] = `
               "vertical": "MuiDivider-vertical",
             }
           }
-          variant="inset"
+          variant="fullWidth"
         >
           <hr
-            className="MuiDivider-root ResultItem-divider-16 MuiDivider-inset"
+            className="MuiDivider-root ResultItem-divider-17"
           />
         </ForwardRef(Divider)>
       </WithStyles(ForwardRef(Divider))>
