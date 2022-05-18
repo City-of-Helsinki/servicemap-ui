@@ -1,216 +1,35 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<MenuButton /> should work 1`] = `
-<MenuButton
-  classes={Object {}}
-  drawerOpen={false}
-  pageType={null}
-  toggleDrawerMenu={[Function]}
->
-  <WithStyles(ForwardRef(Button))
-    aria-expanded={false}
+<div>
+  <button
+    aria-expanded="false"
     aria-haspopup="true"
     aria-label="Valikko"
-    className="undefined undefined"
-    classes={
-      Object {
-        "label": undefined,
-      }
-    }
+    class="MuiButtonBase-root MuiButton-root MuiButton-text undefined undefined"
     id="MenuButton"
-    onClick={[Function]}
+    tabindex="0"
+    type="button"
   >
-    <ForwardRef(Button)
-      aria-expanded={false}
-      aria-haspopup="true"
-      aria-label="Valikko"
-      className="undefined undefined"
-      classes={
-        Object {
-          "colorInherit": "MuiButton-colorInherit",
-          "contained": "MuiButton-contained",
-          "containedPrimary": "MuiButton-containedPrimary",
-          "containedSecondary": "MuiButton-containedSecondary",
-          "containedSizeLarge": "MuiButton-containedSizeLarge",
-          "containedSizeSmall": "MuiButton-containedSizeSmall",
-          "disableElevation": "MuiButton-disableElevation",
-          "disabled": "Mui-disabled",
-          "endIcon": "MuiButton-endIcon",
-          "focusVisible": "Mui-focusVisible",
-          "fullWidth": "MuiButton-fullWidth",
-          "iconSizeLarge": "MuiButton-iconSizeLarge",
-          "iconSizeMedium": "MuiButton-iconSizeMedium",
-          "iconSizeSmall": "MuiButton-iconSizeSmall",
-          "label": "MuiButton-label",
-          "outlined": "MuiButton-outlined",
-          "outlinedPrimary": "MuiButton-outlinedPrimary",
-          "outlinedSecondary": "MuiButton-outlinedSecondary",
-          "outlinedSizeLarge": "MuiButton-outlinedSizeLarge",
-          "outlinedSizeSmall": "MuiButton-outlinedSizeSmall",
-          "root": "MuiButton-root",
-          "sizeLarge": "MuiButton-sizeLarge",
-          "sizeSmall": "MuiButton-sizeSmall",
-          "startIcon": "MuiButton-startIcon",
-          "text": "MuiButton-text",
-          "textPrimary": "MuiButton-textPrimary",
-          "textSecondary": "MuiButton-textSecondary",
-          "textSizeLarge": "MuiButton-textSizeLarge",
-          "textSizeSmall": "MuiButton-textSizeSmall",
-        }
-      }
-      disableFocusRipple={true}
-      disableRipple={true}
-      id="MenuButton"
-      onClick={[Function]}
+    <span
+      class="MuiButton-label"
     >
-      <WithStyles(ForwardRef(ButtonBase))
-        aria-expanded={false}
-        aria-haspopup="true"
-        aria-label="Valikko"
-        className="MuiButton-root MuiButton-text undefined undefined"
-        component="button"
-        disableRipple={true}
-        disabled={false}
-        focusRipple={false}
-        focusVisibleClassName="Mui-focusVisible"
-        id="MenuButton"
-        onClick={[Function]}
-        type="button"
+      <svg
+        aria-hidden="true"
+        class="MuiSvgIcon-root"
+        focusable="false"
+        viewBox="0 0 24 24"
       >
-        <ForwardRef(ButtonBase)
-          aria-expanded={false}
-          aria-haspopup="true"
-          aria-label="Valikko"
-          className="MuiButton-root MuiButton-text undefined undefined"
-          classes={
-            Object {
-              "disabled": "Mui-disabled",
-              "focusVisible": "Mui-focusVisible",
-              "root": "MuiButtonBase-root",
-            }
-          }
-          component="button"
-          disableRipple={true}
-          disabled={false}
-          focusRipple={false}
-          focusVisibleClassName="Mui-focusVisible"
-          id="MenuButton"
-          onClick={[Function]}
-          type="button"
-        >
-          <button
-            aria-expanded={false}
-            aria-haspopup="true"
-            aria-label="Valikko"
-            className="MuiButtonBase-root MuiButton-root MuiButton-text undefined undefined"
-            disabled={false}
-            id="MenuButton"
-            onBlur={[Function]}
-            onClick={[Function]}
-            onDragLeave={[Function]}
-            onFocus={[Function]}
-            onKeyDown={[Function]}
-            onKeyUp={[Function]}
-            onMouseDown={[Function]}
-            onMouseLeave={[Function]}
-            onMouseUp={[Function]}
-            onTouchEnd={[Function]}
-            onTouchMove={[Function]}
-            onTouchStart={[Function]}
-            tabIndex={0}
-            type="button"
-          >
-            <span
-              className="MuiButton-label"
-            >
-              <ForwardRef(MenuIcon)>
-                <WithStyles(ForwardRef(SvgIcon))>
-                  <ForwardRef(SvgIcon)
-                    classes={
-                      Object {
-                        "colorAction": "MuiSvgIcon-colorAction",
-                        "colorDisabled": "MuiSvgIcon-colorDisabled",
-                        "colorError": "MuiSvgIcon-colorError",
-                        "colorPrimary": "MuiSvgIcon-colorPrimary",
-                        "colorSecondary": "MuiSvgIcon-colorSecondary",
-                        "fontSizeInherit": "MuiSvgIcon-fontSizeInherit",
-                        "fontSizeLarge": "MuiSvgIcon-fontSizeLarge",
-                        "fontSizeSmall": "MuiSvgIcon-fontSizeSmall",
-                        "root": "MuiSvgIcon-root",
-                      }
-                    }
-                  >
-                    <svg
-                      aria-hidden={true}
-                      className="MuiSvgIcon-root"
-                      focusable="false"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
-                      />
-                    </svg>
-                  </ForwardRef(SvgIcon)>
-                </WithStyles(ForwardRef(SvgIcon))>
-              </ForwardRef(MenuIcon)>
-              <WithStyles(ForwardRef(Typography))
-                color="inherit"
-                variant="body2"
-              >
-                <ForwardRef(Typography)
-                  classes={
-                    Object {
-                      "alignCenter": "MuiTypography-alignCenter",
-                      "alignJustify": "MuiTypography-alignJustify",
-                      "alignLeft": "MuiTypography-alignLeft",
-                      "alignRight": "MuiTypography-alignRight",
-                      "body1": "MuiTypography-body1",
-                      "body2": "MuiTypography-body2",
-                      "button": "MuiTypography-button",
-                      "caption": "MuiTypography-caption",
-                      "colorError": "MuiTypography-colorError",
-                      "colorInherit": "MuiTypography-colorInherit",
-                      "colorPrimary": "MuiTypography-colorPrimary",
-                      "colorSecondary": "MuiTypography-colorSecondary",
-                      "colorTextPrimary": "MuiTypography-colorTextPrimary",
-                      "colorTextSecondary": "MuiTypography-colorTextSecondary",
-                      "displayBlock": "MuiTypography-displayBlock",
-                      "displayInline": "MuiTypography-displayInline",
-                      "gutterBottom": "MuiTypography-gutterBottom",
-                      "h1": "MuiTypography-h1",
-                      "h2": "MuiTypography-h2",
-                      "h3": "MuiTypography-h3",
-                      "h4": "MuiTypography-h4",
-                      "h5": "MuiTypography-h5",
-                      "h6": "MuiTypography-h6",
-                      "noWrap": "MuiTypography-noWrap",
-                      "overline": "MuiTypography-overline",
-                      "paragraph": "MuiTypography-paragraph",
-                      "root": "MuiTypography-root",
-                      "srOnly": "MuiTypography-srOnly",
-                      "subtitle1": "MuiTypography-subtitle1",
-                      "subtitle2": "MuiTypography-subtitle2",
-                    }
-                  }
-                  color="inherit"
-                  variant="body2"
-                >
-                  <p
-                    className="MuiTypography-root MuiTypography-body2 MuiTypography-colorInherit"
-                  >
-                    <FormattedMessage
-                      id="general.menu"
-                    >
-                      Valikko
-                    </FormattedMessage>
-                  </p>
-                </ForwardRef(Typography)>
-              </WithStyles(ForwardRef(Typography))>
-            </span>
-          </button>
-        </ForwardRef(ButtonBase)>
-      </WithStyles(ForwardRef(ButtonBase))>
-    </ForwardRef(Button)>
-  </WithStyles(ForwardRef(Button))>
-</MenuButton>
+        <path
+          d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
+        />
+      </svg>
+      <p
+        class="MuiTypography-root MuiTypography-body2 MuiTypography-colorInherit"
+      >
+        Valikko
+      </p>
+    </span>
+  </button>
+</div>
 `;
