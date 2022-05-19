@@ -1,6 +1,5 @@
 // // Link.react.test.js
 import React from 'react';
-import { createMount } from '@mui/material/test-utils';
 import { ThemeProvider } from '@mui/material/styles';
 import { IntlProvider } from 'react-intl';
 import { Search } from '@mui/icons-material';
@@ -36,7 +35,6 @@ const Providers = ({ children }) => (
 const renderWithProviders = component => render(component, { wrapper: Providers });
 
 describe('<SuggestionItem />', () => {
-
   it('should work', () => {
     const { container } = renderWithProviders(<SuggestionItem {...mockProps} />);
     expect(container).toMatchSnapshot();

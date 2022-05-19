@@ -3,17 +3,18 @@
 exports[`<SimpleListItem /> should work 1`] = `
 <div>
   <li
-    class="MuiListItem-root SimpleListItem-listItem-1 null  MuiListItem-gutters"
+    class="SimpleListItem-listItem-1 MuiListItem-root MuiListItem-gutters MuiListItem-padding null  css-sn7obt-MuiListItem-root"
     tabindex="-1"
   >
     <div
-      class="MuiListItemText-root SimpleListItem-textContainer-2"
+      class="SimpleListItem-textContainer-2 MuiListItemText-root css-vt7cuc-MuiListItemText-root"
     >
       <p
-        class="MuiTypography-root null  MuiTypography-body2 MuiTypography-colorInherit"
+        class="null  MuiTypography-root MuiTypography-body2 css-q91igz-MuiTypography-root"
       >
-        <span
-          class="MuiTypography-root MuiTypography-srOnly"
+        <p
+          class="MuiTypography-root MuiTypography-body2 css-1ak20dk-MuiTypography-root"
+          style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
         />
         Title text
       </p>
