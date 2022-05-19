@@ -1,6 +1,6 @@
 // Link.react.test.js
 import React from 'react';
-import { createMount } from '@mui/material/test-utils';
+import { fireEvent, render } from '@testing-library/react';
 import { ThemeProvider } from '@mui/material/styles';
 import { IntlProvider } from 'react-intl';
 import themes from '../../../themes';
@@ -35,29 +35,20 @@ const Providers = ({ children }) => (
   </IntlProvider>
 );
 
+const renderWithProviders = component => render(component, { wrapper: Providers });
+
 describe('<PaginationComponent />', () => {
-  // let render;
-  let mount;
-
-  beforeEach(() => {
-    // render = createRender({ wrappingComponent: Providers });
-    mount = createMount({ wrappingComponent: Providers });
-  });
-
-  afterEach(() => {
-    mount.cleanUp();
-  });
-
   it('should work', () => {
-    const component = mount(<PaginationComponent {...mockProps} />);
-    expect(component).toMatchSnapshot();
+    const { container } = renderWithProviders(<PaginationComponent {...mockProps} />);
+    expect(container).toMatchSnapshot();
   });
 
   it('simulates handlePageChange on click event', () => {
     const mockCallBack = jest.fn((newCurrent, totalCount) => ({ newCurrent, totalCount }));
-    const component = mount(<PaginationComponent {...mockProps} handlePageChange={mockCallBack} />);
+    const { getAllByRole } = renderWithProviders(<PaginationComponent {...mockProps} handlePageChange={mockCallBack} />);
 
-    component.find('PageElement ForwardRef(ButtonBase)').at(2).simulate('click');
+    // component.find('PageElement ForwardRef(ButtonBase)').at(2).simulate('click');
+    fireEvent.click(getAllByRole('link')[1]);
     expect(mockCallBack.mock.calls.length).toEqual(1);
 
     // Expect handlePageChange to get first argument (newCurrent) correctly
@@ -67,27 +58,27 @@ describe('<PaginationComponent />', () => {
   });
 
   it('does set active correctly', () => {
-    const component = mount(<PaginationComponent {...mockProps} />);
-    expect(component.find('PageElement ForwardRef(ButtonBase)').at(mockProps.current - 1).props().disabled).toBeTruthy();
+    const { getAllByRole } = renderWithProviders(<PaginationComponent {...mockProps} />);
+    expect(getAllByRole('link')[mockProps.current + 1]).toBeDisabled();
   });
 
   it('does use default accessibility attributes correctly', () => {
-    const component = mount(<PaginationComponent {...mockProps} current={1} />);
+    const { getAllByRole } = renderWithProviders(<PaginationComponent {...mockProps} current={1} />);
 
-    const buttons = component.find('ForwardRef(ButtonBase)');
+    const buttons = getAllByRole('link');
 
     // Test previous page button accessibility
-    expect(buttons.at(0).props()['aria-label']).toEqual(intlMock.messages['general.pagination.previous']);
-    expect(buttons.at(0).props().disabled).toBeTruthy();
-    expect(buttons.at(0).props().role).toEqual('link');
+    expect(buttons[0]).toHaveAttribute('aria-label', intlMock.messages['general.pagination.previous']);
+    expect(buttons[0]).toBeDisabled();
+    expect(buttons[0]).toHaveAttribute('role', 'link');
     // Test next page button accessibility
-    expect(buttons.at(1).props()['aria-label']).toEqual(intlMock.messages['general.pagination.next']);
-    expect(buttons.at(1).props().disabled).toBeFalsy();
-    expect(buttons.at(1).props().role).toEqual('link');
+    expect(buttons[1]).toHaveAttribute('aria-label', intlMock.messages['general.pagination.next']);
+    expect(buttons[1]).not.toBeDisabled();
+    expect(buttons[1]).toHaveAttribute('role', 'link');
 
     // Expect page 1 button to have opened text
-    expect(buttons.at(2).find('span').at(0).text()).toEqual('Sivu 1, avattu');
+    expect(buttons[2].querySelectorAll('p')[1]).toHaveTextContent('Sivu 1, avattu');
     // expect page 2 button to have open new page text
-    expect(buttons.at(3).find('span').at(0).text()).toEqual('Avaa sivu 2');
+    expect(buttons[3].querySelectorAll('p')[1]).toHaveTextContent('Avaa sivu 2');
   });
 });
