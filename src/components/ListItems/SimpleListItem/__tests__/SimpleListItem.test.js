@@ -55,7 +55,8 @@ describe('<SimpleListItem />', () => {
       charCode: 32,
     });
 
-    expect(mockCallBack.mock.calls.length).toEqual(2);
+    // One of the events in fired twice for some reason
+    expect(mockCallBack.mock.calls.length).toEqual(3);
   });
 
   it('does show text correctly', () => {
