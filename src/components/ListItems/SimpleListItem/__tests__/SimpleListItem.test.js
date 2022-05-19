@@ -39,7 +39,7 @@ describe('<SimpleListItem />', () => {
   it('simulates keyboard event', async () => {
     const mockCallBack = jest.fn();
     const { getByRole } = renderWithProviders(
-      <SimpleListItem {...mockProps} handleItemClick={mockCallBack} button />
+      <SimpleListItem {...mockProps} handleItemClick={mockCallBack} button />,
     );
 
     fireEvent.keyDown(getByRole('listitem'), {
@@ -89,9 +89,11 @@ describe('<SimpleListItem />', () => {
   });
 
   it('does use default accessibility attributes correctly', () => {
-    const { container, getByText, getByRole } = renderWithProviders(<SimpleListItem {...mockProps} />);
+    const { container, getByText, getByRole } = renderWithProviders(
+      <SimpleListItem {...mockProps} />,
+    );
 
-    const srText = container.querySelector('span');
+    const srText = container.querySelectorAll('p')[1];
     const text = getByText(mockProps.text, { selector: 'p' });
 
     // Expect screen reader texts to render correctly
@@ -116,7 +118,7 @@ describe('<SimpleListItem />', () => {
       />,
     );
 
-    const srText = container.querySelector('span');
+    const srText = container.querySelectorAll('p')[1];
     const visibleText = container.querySelector('p');
     const srTextContains = srText.textContent.indexOf('Screen reader text') !== -1;
     const visibleTextContains = visibleText.textContent.indexOf(mockProps.text) !== -1;

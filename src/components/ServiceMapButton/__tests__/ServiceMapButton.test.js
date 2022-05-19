@@ -1,7 +1,7 @@
 // Link.react.test.js
 import React from 'react';
 import { IntlProvider } from 'react-intl';
-import { createMount } from '@mui/material/test-utils';
+import { fireEvent, render } from '@testing-library/react';
 import { ThemeProvider } from '@mui/material/styles';
 import ServiceMapButton from '../index';
 import themes from '../../../themes';
@@ -30,79 +30,69 @@ const Providers = ({ children }) => (
   </IntlProvider>
 );
 
+const renderWithProviders = component => render(component, { wrapper: Providers });
+
 describe('<ServiceMapButton />', () => {
-  // let render;
-  let mount;
-
-  beforeEach(() => {
-    // render = createRender({ wrappingComponent: Providers });
-    mount = createMount({ wrappingComponent: Providers });
-  });
-
-  afterEach(() => {
-    mount.cleanUp();
-  });
-
   it('should work', () => {
-    const component = mount(
+    const { container } = renderWithProviders(
       <ServiceMapButton {...buttonMockProps}>Test</ServiceMapButton>,
     );
-    expect(component).toMatchSnapshot();
+    expect(container).toMatchSnapshot();
   });
 
   it('does show text using children', () => {
-    const component = mount(
+    const { getByRole } = renderWithProviders(
       <ServiceMapButton {...buttonMockProps}>Test</ServiceMapButton>,
     );
-    expect(component.text()).toEqual('Test');
+    expect(getByRole('button')).toHaveTextContent('Test');
   });
 
   it('does show text using intl message id', () => {
-    const component = mount(
+    const { getByRole } = renderWithProviders(
       <ServiceMapButton {...buttonMockProps} messageID="button.text" />,
     );
-    expect(component.text()).toEqual(intlMock.messages['button.text']);
+    expect(getByRole('button')).toHaveTextContent(intlMock.messages['button.text']);
   });
 
   it('simulates click event', () => {
     const mockCallBack = jest.fn();
-    const component = mount(
+    const { getByRole } = renderWithProviders(
       <ServiceMapButton
         {...buttonMockProps}
         onClick={mockCallBack}
       />,
     );
-    component.find('button').simulate('click');
+    fireEvent.click(getByRole('button'));
     expect(mockCallBack.mock.calls.length).toEqual(1);
   });
 
   it('does render default accessibility attributes correctly', () => {
-    const component = mount(
+    const { getByRole } = renderWithProviders(
       <ServiceMapButton
         {...buttonMockProps}
         messageID="button.text"
       />,
     );
-    const buttonBase = component.find('ForwardRef(ButtonBase)');
-    const p = component.find('p');
+    const buttonBase = getByRole('button');
+    const p = buttonBase.querySelector('p');
     // Expect aria-label to be same as given text
-    expect(buttonBase.props()['aria-label']).toEqual(intlMock.messages['button.text']);
+    expect(buttonBase).toHaveAttribute('aria-label', intlMock.messages['button.text']);
     // Expect visible text to be hidden from screen readers
-    expect(p.props()['aria-hidden']).toEqual(true);
+    expect(p).toHaveAttribute('aria-hidden', 'true');
     // Expect visible text to be same as aria-label
-    expect(p.text()).toEqual(buttonBase.props()['aria-label']);
+    expect(p).toHaveTextContent(intlMock.messages['button.text']);
   });
 
   it('does use given accessibility attributes correctly', () => {
-    const component = mount(
+    const { getByRole } = renderWithProviders(
       <ServiceMapButton
         {...buttonMockProps}
         aria-label="Testing label"
         role="link"
       />,
     );
-    const buttonBase = component.find('ForwardRef(ButtonBase)');
-    expect(buttonBase.props().role).toEqual('link');
-    expect(buttonBase.props()['aria-label']).toEqual('Testing label');
+    const buttonBase = getByRole('link');
+    expect(buttonBase).toHaveAttribute('role', 'link');
+    expect(buttonBase).toHaveAttribute('aria-label', 'Testing label');
   });
 });
