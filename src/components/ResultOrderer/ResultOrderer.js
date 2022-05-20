@@ -84,6 +84,7 @@ const ResultOrderer = ({
           disabled={disabled}
           className={classes.select}
           native
+          variant="standard"
           value={`${order}-${direction}`}
           onChange={defaultHandleChange}
           classes={{ select: classes.selectElement }}
