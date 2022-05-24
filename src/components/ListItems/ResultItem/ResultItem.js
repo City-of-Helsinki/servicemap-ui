@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {
   ListItem, ListItemIcon, Typography, Divider,
 } from '@material-ui/core';
-import { useTheme } from '@material-ui/styles';
+import { useSelector } from 'react-redux';
 import { keyboardHandler } from '../../../utils';
 import locationIcon from '../../../assets/icons/LocationDefault.svg';
 import locationIconHover from '../../../assets/icons/LocationHover.svg';
@@ -30,7 +30,7 @@ const ResultItem = ({
   simpleItem,
   ...rest
 }) => {
-  const theme = useTheme();
+  const theme = useSelector(state => state.user.theme);
 
   const resetMarkerHighlight = () => {
     // Handle marker highlight removal
