@@ -74,7 +74,13 @@ input[type="search"]::-webkit-search-cancel-button{
   color: #4A4A4C !important;
 }
 
+/* This allows clicks to go through control background to the map. Control buttons need style: pointer-events: auto */
+.leaflet-control {
+  pointer-events: none; 
+}
+
 .leaflet-control-attribution {
   background: #fff !important;
+  pointer-events: auto;
 }
 

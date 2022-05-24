@@ -52,7 +52,7 @@ const createContentStyles = (theme, bottomList) => {
       minWidth: width,
     },
     embedLogo: {
-      top: 0,
+      bottom: 0,
       left: 0,
       height: 'auto',
       position: 'fixed',
