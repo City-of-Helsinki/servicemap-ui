@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ButtonBase, Typography } from '@material-ui/core';
+import { ButtonBase, Typography } from '@mui/material';
 
 // ServiceMapButton
 const SMButton = React.forwardRef((props, ref) => {

@@ -3,9 +3,8 @@
 exports[`<SuggestionItem /> should work 1`] = `
 <div>
   <li
-    aria-disabled="false"
     aria-label="Title text Subtitle text"
-    class="MuiButtonBase-root MuiListItem-root SuggestionItem-listItem-2 suggestion  MuiListItem-gutters MuiListItem-button"
+    class="MuiButtonBase-root SuggestionItem-listItem-2 MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button suggestion  css-1cs8ifn-MuiButtonBase-root-MuiListItem-root"
     role="link"
     tabindex="0"
   >
@@ -14,11 +13,12 @@ exports[`<SuggestionItem /> should work 1`] = `
     >
       <div
         aria-hidden="true"
-        class="MuiListItemIcon-root SuggestionItem-listIcon-4"
+        class="MuiListItemIcon-root SuggestionItem-listIcon-4 css-cveggr-MuiListItemIcon-root"
       >
         <svg
           aria-hidden="true"
-          class="MuiSvgIcon-root"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-6yqi1c-MuiSvgIcon-root"
+          data-testid="SearchIcon"
           focusable="false"
           viewBox="0 0 24 24"
         >
@@ -28,20 +28,20 @@ exports[`<SuggestionItem /> should work 1`] = `
         </svg>
       </div>
       <div
-        class="MuiListItemText-root SuggestionItem-textContainer-3 SuggestionItem-text-10"
+        class="SuggestionItem-textContainer-3 MuiListItemText-root SuggestionItem-text-10 css-vt7cuc-MuiListItemText-root"
       >
         <span
-          class="MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock"
+          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10wsksd-MuiTypography-root"
         >
           <p
             aria-hidden="true"
-            class="MuiTypography-root MuiTypography-body2"
+            class="MuiTypography-root MuiTypography-body2 css-1ak20dk-MuiTypography-root"
           >
             Title text
           </p>
           <p
             aria-hidden="true"
-            class="MuiTypography-root SuggestionItem-subtitle-7 MuiTypography-body2"
+            class="MuiTypography-root MuiTypography-body2 SuggestionItem-subtitle-7 css-1ak20dk-MuiTypography-root"
           >
             Subtitle text
           </p>

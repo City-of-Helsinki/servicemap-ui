@@ -44,7 +44,8 @@ export default theme => ({
   icon: {
     color: 'inherit',
   },
-  elementFocus: {
+  selectElement: {
+    padding: theme.spacing(1.5),
     '&:focus': {
       boxShadow: '0 0 0 3px #fff',
     },

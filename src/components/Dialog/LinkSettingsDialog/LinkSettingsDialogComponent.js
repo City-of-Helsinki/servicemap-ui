@@ -5,8 +5,9 @@ import {
   RadioGroup,
   Typography,
   Tooltip,
-} from '@material-ui/core';
-import { FileCopy, Share } from '@material-ui/icons';
+} from '@mui/material';
+import { FileCopy, Share } from '@mui/icons-material';
+import { visuallyHidden } from '@mui/utils';
 import React, { useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
@@ -171,7 +172,7 @@ const LinkSettingsDialogComponent = ({
       {...rest}
       title={title}
       content={(
-        <div>
+        <div className={classes.container}>
           <CopyTooltip
             open={copyTooltipOpen1}
             title={tooltip}
@@ -228,7 +229,7 @@ const LinkSettingsDialogComponent = ({
           {
             showAriaAlert
             && (
-              <Typography aria-live="polite" id="copy_link_aria_live" variant="srOnly"><FormattedMessage id="link.settings.dialog.tooltip" /></Typography>
+              <Typography aria-live="polite" id="copy_link_aria_live" style={visuallyHidden}><FormattedMessage id="link.settings.dialog.tooltip" /></Typography>
             )
           }
         </div>

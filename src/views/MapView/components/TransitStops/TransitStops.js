@@ -124,7 +124,7 @@ const TransitStops = ({ mapObject, classes }) => {
             keyboard={false}
           >
             <div aria-hidden>
-              <Popup closeButton={false} className="popup" autoPan={false}>
+              <Popup closeButton={false} className="popup" autoPan={isMobile}>
                 <TransitStopInfo
                   stop={stop}
                   onCloseClick={() => closePopup()}
@@ -144,7 +144,7 @@ const TransitStops = ({ mapObject, classes }) => {
             keyboard={false}
           >
             <div aria-hidden>
-              <Popup closeButton={false} className="popup" autoPan={false}>
+              <Popup closeButton={false} className="popup" autoPan={isMobile}>
                 <TransitStopInfo
                   stop={station}
                   type="bikeStation"

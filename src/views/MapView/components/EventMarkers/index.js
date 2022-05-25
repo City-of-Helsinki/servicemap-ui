@@ -1,4 +1,4 @@
-import { withStyles } from '@material-ui/styles';
+import { withStyles } from '@mui/styles';
 import { connect } from 'react-redux';
 import EventMarkers from './EventMarkers';
 import styles from '../../styles';

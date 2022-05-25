@@ -16,6 +16,7 @@ export default theme => ({
   },
   selected: {
     fontWeight: '700 !important',
+    color: 'black !important',
   },
   tab: {
     minWidth: 0,
@@ -26,6 +27,7 @@ export default theme => ({
     [theme.breakpoints.only('sm')]: {
       letterSpacing: 'normal',
     },
+    color: 'black',
   },
   tabFocus: {
     outline: `4px solid ${theme.palette.primary.highContrast} !important`,

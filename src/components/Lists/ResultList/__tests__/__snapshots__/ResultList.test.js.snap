@@ -7,7 +7,7 @@ exports[`<ResultList /> should work 1`] = `
       <div>
         <h3
           aria-labelledby="testID-result-title testID-result-title-info"
-          class="MuiTypography-root undefined undefined SearchResultTitle MuiTypography-subtitle1"
+          class="MuiTypography-root MuiTypography-subtitle1 undefined undefined SearchResultTitle css-dlbwt1-MuiTypography-root"
           id="testID-result-title"
           tabindex="-1"
         >
@@ -15,7 +15,7 @@ exports[`<ResultList /> should work 1`] = `
         </h3>
         <p
           aria-hidden="true"
-          class="MuiTypography-root MuiTypography-caption"
+          class="MuiTypography-root MuiTypography-caption css-r3hlsg-MuiTypography-root"
           id="testID-result-title-info"
         >
           Search result text
@@ -24,23 +24,22 @@ exports[`<ResultList /> should work 1`] = `
     </div>
     <hr
       aria-hidden="true"
-      class="MuiDivider-root"
+      class="MuiDivider-root MuiDivider-fullWidth css-9mgopn-MuiDivider-root"
     />
     <p>
       Test before list
     </p>
     <ul
-      class="MuiList-root MuiList-padding"
+      class="MuiList-root MuiList-padding css-h4y409-MuiList-root"
       id="testID"
     >
       <li
-        aria-disabled="false"
-        class="MuiButtonBase-root MuiListItem-root ResultItem-listItem-3 MuiListItem-gutters MuiListItem-button"
+        class="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button ResultItem-listItem-3 css-1cs8ifn-MuiButtonBase-root-MuiListItem-root"
         role="link"
         tabindex="0"
       >
         <div
-          class="MuiListItemIcon-root ResultItem-listItemIcon-4"
+          class="MuiListItemIcon-root ResultItem-listItemIcon-4 css-cveggr-MuiListItemIcon-root"
         >
           <img
             alt=""
@@ -56,7 +55,8 @@ exports[`<ResultList /> should work 1`] = `
             class="ResultItem-topRow-12"
           >
             <p
-              class="MuiTypography-root ResultItem-title-8 ResultItem-srOnly MuiTypography-srOnly"
+              class="MuiTypography-root MuiTypography-body2 ResultItem-title-8 ResultItem-srOnly css-1ak20dk-MuiTypography-root"
+              style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
             >
               
     Lippulaivan kirjasto 
@@ -68,7 +68,7 @@ exports[`<ResultList /> should work 1`] = `
             </p>
             <p
               aria-hidden="true"
-              class="MuiTypography-root ResultItem-title-8  Connect(UnitItem)-title-1  ResultItem-title MuiTypography-body2"
+              class="MuiTypography-root MuiTypography-body2 ResultItem-title-8  Connect(UnitItem)-title-1  ResultItem-title css-1ak20dk-MuiTypography-root"
               role="textbox"
             >
               Lippulaivan kirjasto
@@ -78,7 +78,7 @@ exports[`<ResultList /> should work 1`] = `
             <div>
               <p
                 aria-hidden="true"
-                class="MuiTypography-root ResultItem-noMargin-9 ResultItem-text-17  ResultItem-subtitle MuiTypography-caption"
+                class="MuiTypography-root MuiTypography-caption ResultItem-noMargin-9 ResultItem-text-17  ResultItem-subtitle css-r3hlsg-MuiTypography-root"
               >
                 Kunnallinen palvelu
               </p>
@@ -90,17 +90,16 @@ exports[`<ResultList /> should work 1`] = `
         aria-hidden="true"
       >
         <hr
-          class="MuiDivider-root ResultItem-divider-18 MuiDivider-inset"
+          class="MuiDivider-root MuiDivider-inset ResultItem-divider-18 css-uls1yk-MuiDivider-root"
         />
       </li>
       <li
-        aria-disabled="false"
-        class="MuiButtonBase-root MuiListItem-root ResultItem-listItem-3 MuiListItem-gutters MuiListItem-button"
+        class="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button ResultItem-listItem-3 css-1cs8ifn-MuiButtonBase-root-MuiListItem-root"
         role="link"
         tabindex="0"
       >
         <div
-          class="MuiListItemIcon-root ResultItem-listItemIcon-4"
+          class="MuiListItemIcon-root ResultItem-listItemIcon-4 css-cveggr-MuiListItemIcon-root"
         >
           <img
             alt=""
@@ -116,7 +115,8 @@ exports[`<ResultList /> should work 1`] = `
             class="ResultItem-topRow-12"
           >
             <p
-              class="MuiTypography-root ResultItem-title-8 ResultItem-srOnly MuiTypography-srOnly"
+              class="MuiTypography-root MuiTypography-body2 ResultItem-title-8 ResultItem-srOnly css-1ak20dk-MuiTypography-root"
+              style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
             >
               
     Kivistön kirjasto 
@@ -128,7 +128,7 @@ exports[`<ResultList /> should work 1`] = `
             </p>
             <p
               aria-hidden="true"
-              class="MuiTypography-root ResultItem-title-8  Connect(UnitItem)-title-1  ResultItem-title MuiTypography-body2"
+              class="MuiTypography-root MuiTypography-body2 ResultItem-title-8  Connect(UnitItem)-title-1  ResultItem-title css-1ak20dk-MuiTypography-root"
               role="textbox"
             >
               Kivistön kirjasto
@@ -138,7 +138,7 @@ exports[`<ResultList /> should work 1`] = `
             <div>
               <p
                 aria-hidden="true"
-                class="MuiTypography-root ResultItem-noMargin-9 ResultItem-text-17  ResultItem-subtitle MuiTypography-caption"
+                class="MuiTypography-root MuiTypography-caption ResultItem-noMargin-9 ResultItem-text-17  ResultItem-subtitle css-r3hlsg-MuiTypography-root"
               >
                 Kunnallinen palvelu
               </p>
@@ -150,7 +150,7 @@ exports[`<ResultList /> should work 1`] = `
         aria-hidden="true"
       >
         <hr
-          class="MuiDivider-root ResultItem-divider-18 MuiDivider-inset"
+          class="MuiDivider-root MuiDivider-inset ResultItem-divider-18 css-uls1yk-MuiDivider-root"
         />
       </li>
     </ul>

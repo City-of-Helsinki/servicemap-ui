@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Button, useMediaQuery,
-} from '@material-ui/core';
+} from '@mui/material';
 import SettingsText from '../../SettingsText';
 
 const SettingsButton = ({

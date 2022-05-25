@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { withStyles } from '@material-ui/core';
+import { withStyles } from '@mui/styles';
 import HomeView from './HomeView';
 import { toggleSettings } from '../../redux/actions/settings';
 import styles from './styles';

@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Typography, List, ListItem, ListItemIcon, ListItemText, Divider, NoSsr, ButtonBase,
-} from '@material-ui/core';
-import { Warning, VerifiedUser, Accessibility } from '@material-ui/icons';
+} from '@mui/material';
+import { Warning, VerifiedUser, Accessibility } from '@mui/icons-material';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import SettingsUtility from '../../../../utils/settings';
