@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { ArrowDropUp, LocationOn, Search } from '@material-ui/icons';
+import { ArrowDropUp, LocationOn, Search } from '@mui/icons-material';
 import {
   Paper, List, Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import { getPreviousSearches } from '../../previousSearchData';

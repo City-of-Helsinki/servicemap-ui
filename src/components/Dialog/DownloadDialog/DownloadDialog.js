@@ -8,8 +8,8 @@ import {
   Radio,
   RadioGroup,
   Typography,
-} from '@material-ui/core';
-import { OpenInNew } from '@material-ui/icons';
+} from '@mui/material';
+import { OpenInNew } from '@mui/icons-material';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import Dialog from '../index';

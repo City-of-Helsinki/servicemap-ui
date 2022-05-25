@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Typography, LinearProgress, withStyles } from '@material-ui/core';
+import { Typography, LinearProgress } from '@mui/material';
+import { withStyles } from '@mui/styles';
 import { FormattedMessage } from 'react-intl';
 import styles from './styles';
 

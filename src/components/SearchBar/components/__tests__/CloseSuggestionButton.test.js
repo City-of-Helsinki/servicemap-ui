@@ -1,11 +1,11 @@
 // CloseSuggestionButton.test.js
 import React from 'react';
-import { createMount, createShallow } from '@material-ui/core/test-utils';
-import { MuiThemeProvider } from '@material-ui/core';
+import { fireEvent, render } from '@testing-library/react';
+import { ThemeProvider } from '@mui/material/styles';
 import { IntlProvider } from 'react-intl';
+import { ArrowDownward } from '@mui/icons-material';
 import themes from '../../../../themes';
 import { CloseSuggestionButton } from '../CloseSuggestionButton';
-import { ArrowDownward } from '@material-ui/icons';
 
 // Mock props for intl provider
 const intlMock = {
@@ -28,77 +28,92 @@ const mockProps = {
 // eslint-disable-next-line react/prop-types
 const Providers = ({ children }) => (
   <IntlProvider {...intlMock}>
-    <MuiThemeProvider theme={themes.SMTheme}>
+    <ThemeProvider theme={themes.SMTheme}>
       {children}
-    </MuiThemeProvider>
+    </ThemeProvider>
   </IntlProvider>
 );
 
+const renderWithProviders = component => render(component, { wrapper: Providers });
+
 describe('<CloseSuggestionButton />', () => {
-  // let render;
-  let mount;
-  let shallow;
-
-  beforeEach(() => {
-    // render = createRender({ wrappingComponent: Providers });
-    mount = createMount({ wrappingComponent: Providers });
-    shallow = createShallow({ wrappingComponent: Providers });
-  });
-
-  afterEach(() => {
-    mount.cleanUp();
-  });
-
   it('should work', () => {
-    const component = shallow(<CloseSuggestionButton {...mockProps} />);
-    expect(component).toMatchSnapshot();
+    const { container } = renderWithProviders(<CloseSuggestionButton {...mockProps} />);
+    expect(container).toMatchSnapshot();
   });
 
   it('simulates click event', () => {
     const mockCallBack = jest.fn();
-    const component = mount(<CloseSuggestionButton {...mockProps} onClick={mockCallBack} />);
+    const { getByRole } = renderWithProviders(
+      <CloseSuggestionButton {...mockProps} onClick={mockCallBack} />
+    );
 
-    component.find('div').simulate('click');
+    fireEvent.click(getByRole('button'));
     expect(mockCallBack.mock.calls.length).toEqual(1);
   });
 
   it('simulates keyboard event', () => {
     const mockCallBack = jest.fn();
-    const component = mount(<CloseSuggestionButton {...mockProps} onKeyDown={mockCallBack} />);
+    const { getAllByRole } = renderWithProviders(
+      <>
+        <CloseSuggestionButton {...mockProps} onKeyDown={mockCallBack} />
+        <CloseSuggestionButton {...mockProps} onKeyPress={mockCallBack} srOnly />
+      </>,
+    );
 
-    component.find('div').simulate('keyDown', { which: 13 });
-    component.find('div').simulate('keyDown', { which: 32 });
+    fireEvent.keyDown(getAllByRole('button')[0], {
+      key: 'Enter',
+      code: 'Enter',
+      keyCode: 13,
+      charCode: 13,
+    });
+    fireEvent.keyDown(getAllByRole('button')[0], {
+      key: 'Space',
+      code: 'Space',
+      keyCode: 32,
+      charCode: 32,
+    });
+
     expect(mockCallBack.mock.calls.length).toEqual(2);
 
     // Sr only element
-    const component2 = mount(<CloseSuggestionButton {...mockProps} onKeyPress={mockCallBack} srOnly />);
-
-    component2.find('span').simulate('keyPress', { which: 13 });
-    component2.find('span').simulate('keyPress', { which: 32 });
+    fireEvent.keyPress(getAllByRole('button', { selector: 'p' })[1], {
+      key: 'Enter',
+      code: 'Enter',
+      keyCode: 13,
+      charCode: 13,
+    });
+    fireEvent.keyPress(getAllByRole('button', { selector: 'p' })[1], {
+      key: 'Space',
+      code: 'Space',
+      keyCode: 32,
+      charCode: 32,
+    });
     expect(mockCallBack.mock.calls.length).toEqual(4);
   });
 
   it('does show text correctly', () => {
-    const component = mount(<CloseSuggestionButton {...mockProps} />);
+    const { container } = renderWithProviders(<CloseSuggestionButton {...mockProps} />);
 
-    const p = component.find('div p');
-    expect(p.text()).toEqual(`${intlMock.messages['search.suggestions.hideButton']}`);
+    expect(container.querySelector('p')).toHaveTextContent(`${intlMock.messages['search.suggestions.hideButton']}`);
   });
 
   it('does use accessibility attributes correctly', () => {
     // Visible element
-    const component = shallow(<CloseSuggestionButton {...mockProps} />);
-    const button = component.find('div');
+    const { getAllByRole } = renderWithProviders(
+      <>
+        <CloseSuggestionButton {...mockProps} />
+        <CloseSuggestionButton {...mockProps} srOnly />
+      </>,
+    );
 
-    expect(button.props()['role']).toEqual('button');
-    expect(button.props()['aria-hidden']).toBeFalsy();
-    expect(button.props().tabIndex).toEqual('0');
+    expect(getAllByRole('button')[0]).toHaveAttribute('role', 'button');
+    expect(getAllByRole('button')[0]).not.toHaveAttribute('aria-hidden');
+    expect(getAllByRole('button')[0]).toHaveAttribute('tabindex', '0');
 
     // SrOnly element
-    const srComponent = shallow(<CloseSuggestionButton {...mockProps} srOnly />);
-
-    expect(srComponent.props()['role']).toEqual('button');
-    expect(srComponent.props()['aria-hidden']).toBeFalsy();
-    expect(srComponent.props().tabIndex).toEqual('-1');
+    expect(getAllByRole('button')[1]).toHaveAttribute('role', 'button');
+    expect(getAllByRole('button')[1]).not.toHaveAttribute('aria-hidden');
+    expect(getAllByRole('button')[1]).toHaveAttribute('tabindex', '-1');
   });
 });

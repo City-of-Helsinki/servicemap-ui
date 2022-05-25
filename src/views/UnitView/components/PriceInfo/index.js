@@ -1,4 +1,4 @@
-import { withStyles } from '@material-ui/core';
+import { withStyles } from '@mui/styles';
 import PriceInfo from './PriceInfo';
 import styles from '../../styles/styles';
 

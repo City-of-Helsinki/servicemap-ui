@@ -1,4 +1,4 @@
-import { Divider, ListItem, Typography } from '@material-ui/core';
+import { Divider, ListItem, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 import React, { Fragment } from 'react';
 import { useIntl } from 'react-intl';

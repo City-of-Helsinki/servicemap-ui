@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Map } from '@material-ui/icons';
+import { Map } from '@mui/icons-material';
 import {
   getIcon,
   MobileComponent,

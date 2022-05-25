@@ -1,5 +1,5 @@
-import { Warning } from '@material-ui/icons';
-import { ServerStyleSheets, withStyles } from '@material-ui/styles';
+import { Warning } from '@mui/icons-material';
+import { ServerStyleSheets, withStyles } from '@mui/styles';
 import StyleContext from 'isomorphic-style-loader/StyleContext';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';

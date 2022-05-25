@@ -3,7 +3,7 @@ import {
   Radio,
   RadioGroup,
   Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 import React, { useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 // import { useSelector } from 'react-redux';

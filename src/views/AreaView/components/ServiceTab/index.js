@@ -1,4 +1,4 @@
-import { withStyles } from '@material-ui/core';
+import { withStyles } from '@mui/styles';
 import ServiceTab from './ServiceTab';
 import styles from '../../styles';
 

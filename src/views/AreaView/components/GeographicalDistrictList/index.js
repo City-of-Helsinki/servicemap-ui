@@ -1,4 +1,4 @@
-import { withStyles } from '@material-ui/core';
+import { withStyles } from '@mui/styles';
 import GeographicalDistrictList from './GeographicalDistrictList';
 import styles from '../../styles';
 

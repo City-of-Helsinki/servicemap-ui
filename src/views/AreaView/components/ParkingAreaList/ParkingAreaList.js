@@ -1,6 +1,6 @@
 import {
   Checkbox, FormControlLabel, List, ListItem, Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 import PropTypes from 'prop-types';
 import React, { Fragment, useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
