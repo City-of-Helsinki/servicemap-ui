@@ -27,7 +27,7 @@ test('District lists are fetched and rendered correctly', async (t) => {
     const districtList = Selector('.districtList')
 
     await t
-      .expect(districtList).ok('District list not rendered correctly')
+      .expect(districtList.exists).ok('District list not rendered correctly')
       .expect(districtList.childElementCount).gt(0, `Category ${i} did not receive children`)
       .click(drawerButtons.nth(i))
   }
@@ -67,16 +67,17 @@ test('Unit list functions correctly' , async (t) => {
 
 test('Address search bar field updates and gets results', async (t, inputText = 'mann') => {
   const addressBar = Selector('#addressSearchbar')
-  const suggestions = ReactSelector('AddressSearchBar WithStyles(ForwardRef(ListItem))');
+  const suggestions = Selector('#address-results div[role="option"]');
 
   await t
     .typeText(addressBar, inputText)
     .expect(suggestions.count).gt(0)
 
   const suggestion = suggestions.nth(0);
+  const suggestionText = await suggestion.textContent;
 
   await t
     .pressKey('down')
     .pressKey('enter')
-    .expect(addressBar.value).eql(await suggestion.textContent, 'Address search bar did not update text when suggesttion was selected');
+    .expect(addressBar.value).eql(suggestionText, 'Address search bar did not update text when suggesttion was selected');
 });
