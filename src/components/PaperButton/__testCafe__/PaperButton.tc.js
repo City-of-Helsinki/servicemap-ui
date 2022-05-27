@@ -1,9 +1,9 @@
 /* eslint-disable no-await-in-loop */
-import { ReactSelector } from 'testcafe-react-selectors';
+import { Selector } from 'testcafe';
 import { paletteDefault } from '../../../themes';
 
 const PaperButtonTest = async (t) => {
-  const paperButtons = ReactSelector('PaperButton');
+  const paperButtons = Selector('SM-PaperButton');
   const count = await paperButtons.count;
   // eslint-disable-next-line no-plusplus
   for (let i = 0; i < count; i++) {
