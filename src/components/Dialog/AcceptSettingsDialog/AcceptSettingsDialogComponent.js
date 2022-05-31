@@ -18,6 +18,7 @@ const AcceptSettingsDialogComponent = ({
   classes,
   activateSetting,
   resetAccessibilitySettings,
+  settingType,
   setOpen,
   ...rest
 }) => {
@@ -33,14 +34,27 @@ const AcceptSettingsDialogComponent = ({
   const search = new URLSearchParams(location.search);
   const mobility = search.get('mobility');
   const senses = search.get('senses')?.split(',') || [];
+  const cities = search.get('citySetting')?.split(',') || [];
 
-  const title = intl.formatMessage({ id: 'accept.settings.dialog.title' });
+  const title = settingType === 'city'
+    ? intl.formatMessage({ id: 'accept.settings.dialog.title.city' })
+    : intl.formatMessage({ id: 'accept.settings.dialog.title' });
+
+  const descriptionId = settingType === 'city'
+    ? 'accept.settings.dialog.description.city'
+    : 'accept.settings.dialog.description';
+
+  const acceptSettingsRadio = settingType === 'city'
+    ? intl.formatMessage({ id: 'accept.settings.dialog.none.city' })
+    : intl.formatMessage({ id: 'accept.settings.dialog.none' });
 
   const getSettingsLabel = () => {
     let text = '';
 
     try {
-      if (mobility && SettingsUtility.isValidMobilitySetting(mobility)) {
+      if (settingType === 'city' && cities.length) {
+        text = cities.join(', ');
+      } else if (mobility && SettingsUtility.isValidMobilitySetting(mobility)) {
         text += `${intl.formatMessage({ id: `settings.mobility.${mobility}` })}`;
         if (senses.length) {
           text += ', ';
@@ -71,12 +85,20 @@ const AcceptSettingsDialogComponent = ({
   // Activate settings
   const activateSettings = () => {
     if (selected === 'use') {
-      resetAccessibilitySettings();
+      if (settingType === 'city') {
+        const settingObj = {};
+        cities.forEach((city) => {
+          settingObj[city] = true;
+        });
+        activateSetting('city', settingObj);
+      } else {
+        resetAccessibilitySettings();
 
-      activateSetting('mobility', mobility);
-      senses.forEach((s) => {
-        activateSetting(s);
-      });
+        activateSetting('mobility', mobility);
+        senses.forEach((s) => {
+          activateSetting(s);
+        });
+      }
     }
 
     resetA11ySearchParams();
@@ -92,7 +114,7 @@ const AcceptSettingsDialogComponent = ({
     {
       value: 'none',
       checked: false,
-      label: intl.formatMessage({ id: 'accept.settings.dialog.none' }),
+      label: acceptSettingsRadio,
     },
   ];
 
@@ -105,7 +127,7 @@ const AcceptSettingsDialogComponent = ({
       title={title}
       content={(
         <div>
-          <Typography variant="body2"><FormattedMessage id="accept.settings.dialog.description" /></Typography>
+          <Typography variant="body2"><FormattedMessage id={descriptionId} /></Typography>
           <div>
             <RadioGroup
               aria-label={intl.formatMessage({ id: 'download.format' })}
@@ -149,6 +171,11 @@ AcceptSettingsDialogComponent.propTypes = {
   activateSetting: PropTypes.func.isRequired,
   resetAccessibilitySettings: PropTypes.func.isRequired,
   setOpen: PropTypes.func.isRequired,
+  settingType: PropTypes.string,
+};
+
+AcceptSettingsDialogComponent.defaultProps = {
+  settingType: null,
 };
 
 export default AcceptSettingsDialogComponent;

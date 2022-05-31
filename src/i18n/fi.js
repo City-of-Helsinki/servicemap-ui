@@ -6,8 +6,11 @@ const translations = {
   'app.errorpage.title': 'Virheviestisivu',
 
   'accept.settings.dialog.description': 'Voit avata tiedot joko esteettömyysasetusten kanssa tai ilman rajauksia.',
+  'accept.settings.dialog.description.city': 'Voit avata tulokset joko kaupunkiasetusten kanssa tai ilman rajauksia.',
   'accept.settings.dialog.title': 'Katso toimipistettä esteettömyysasetusten kanssa',
+  'accept.settings.dialog.title.city': 'Katso tuloksia kaupunkirajausten kanssa',
   'accept.settings.dialog.none': 'Ei erityisiä esteettömyysasetuksia',
+  'accept.settings.dialog.none.city': 'Ei kaupunkirajauksia',
 
   // Accessibility
   'accessibility': 'Esteettömyys',

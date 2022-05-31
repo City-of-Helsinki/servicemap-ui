@@ -6,8 +6,11 @@ const translations = {
   'app.errorpage.title': 'Error message page',
 
   'accept.settings.dialog.description': 'You can open the data either with accessibility settings or without restrictions.',
+  'accept.settings.dialog.description.city': 'Voit avata tulokset joko kaupunkiasetusten kanssa tai ilman rajauksia.', // TODO: translate
   'accept.settings.dialog.title': 'See the location with accessibility settings',
+  'accept.settings.dialog.title.city': 'Katso tuloksia kaupunkirajausten kanssa', // TODO: translate
   'accept.settings.dialog.none': 'No particular accessibility settings',
+  'accept.settings.dialog.none.city': 'Ei kaupunkirajauksia', // TODO: translate
 
   // Accessibility
   'accessibility': 'Accessibility',

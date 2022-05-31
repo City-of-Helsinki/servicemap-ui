@@ -6,8 +6,11 @@ const translations = {
   'app.errorpage.title': 'Felmeddelandesida',
 
   'accept.settings.dialog.description': 'Du kan öppna uppgifterna antigen med tillgänglighetsinställningar eller utan begränsningar.',
+  'accept.settings.dialog.description.city': 'Voit avata tulokset joko kaupunkiasetusten kanssa tai ilman rajauksia.', // TODO: translate
   'accept.settings.dialog.title': 'Se verksamhetsstället med tillgänglighetsinställningar',
+  'accept.settings.dialog.title.city': 'Katso tuloksia kaupunkirajausten kanssa', // TODO: translate
   'accept.settings.dialog.none': 'Inga särskilda tillgänglighetsinställningar',
+  'accept.settings.dialog.none.city': 'Ei kaupunkirajauksia', // TODO: translate
 
   // Accessibility
   'accessibility': 'Tillgänglighet',
