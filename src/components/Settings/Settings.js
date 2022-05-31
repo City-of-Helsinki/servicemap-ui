@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import {
   Typography,
   Divider,
@@ -14,6 +14,8 @@ import {
   FormLabel,
   FormControl,
 } from '@material-ui/core';
+import { useSelector } from 'react-redux';
+import { useHistory, useLocation } from 'react-router-dom';
 import SettingsUtility from '../../utils/settings';
 import Container from '../Container';
 import {
@@ -27,25 +29,38 @@ import SettingsTitle from './SettingsTitle';
 import TitleBar from '../TitleBar';
 import SMButton from '../ServiceMapButton';
 import config from '../../../config';
+import { parseSearchParams, stringifySearchParams } from '../../utils';
+import useMobileStatus from '../../utils/isMobile';
 
-class Settings extends React.Component {
-  buttonID = 'SettingsButton';
+const Settings = ({
+  classes,
+  settings,
+  toggleSettings,
+  toggleHearingAid,
+  toggleColorblind,
+  toggleVisuallyImpaired,
+  setMobility,
+  setMapType,
+  toggleCity,
+  changeTheme,
+}) => {
+  const history = useHistory();
+  const location = useLocation();
+  const intl = useIntl();
+  const isMobile = useMobileStatus();
 
-  constructor(props) {
-    super(props);
-    this.dialogRef = React.createRef();
-    this.closeButtonRef = React.createRef();
-    this.state = {
-      alert: false,
-      currentSettings: {},
-      previousSettings: null,
-      saved: false,
-    };
-  }
+  const dialogRef = useRef();
+  const closeButtonRef = useRef();
 
-  componentDidMount() {
-    const { current } = this.state;
-    const { settings } = this.props;
+  const [alert, setAlert] = useState(false);
+  const [currentSettings, setCurrentSettings] = useState({});
+  const [previousSettings, setPreviousSettings] = useState(null);
+  const [saved, setSaved] = useState(false);
+
+  const currentPage = useSelector(state => state.user.page);
+
+  useEffect(() => {
+    // const { current } = this.state;
     const {
       colorblind,
       hearingAid,
@@ -56,7 +71,7 @@ class Settings extends React.Component {
 
     // Create current settings from redux data
     const newCurrent = {
-      ...current,
+      ...currentSettings, // TODO: Does this work?
       colorblind,
       hearingAid,
       mobility: mobility !== null ? mobility : 'none',
@@ -70,26 +85,21 @@ class Settings extends React.Component {
       ...newCurrent,
       cities: { ...newCurrent.cities },
     };
-    this.setState({
-      currentSettings: newCurrent,
-      previousSettings: initialPreviousSearch,
-    });
+
+    setCurrentSettings(newCurrent);
+    setPreviousSettings(initialPreviousSearch);
 
     setTimeout(() => {
       const settingsTitle = document.getElementsByClassName('TitleText')[0];
       settingsTitle.focus();
     }, 1);
-  }
+  }, []);
 
-  componentWillUnmount() {
-  }
 
   /**
    * Check if settings have changed compared to redux settings
    */
-  settingsHaveChanged() {
-    const { currentSettings } = this.state;
-    const { settings } = this.props;
+  const settingsHaveChanged = () => {
     let changed = false;
     let settingsByType = currentSettings;
 
@@ -135,55 +145,31 @@ class Settings extends React.Component {
     });
 
     return changed;
-  }
+  };
 
-  setNewPreviousSettings(previousSettings) {
-    this.setState({
-      previousSettings: {
-        ...previousSettings,
-        cities: {
-          ...previousSettings.cities,
-        },
+  const setNewPreviousSettings = (previousSettings) => {
+    setSaved(true);
+    setPreviousSettings({
+      ...previousSettings,
+      cities: {
+        ...previousSettings.cities,
       },
-      saved: true,
     });
-  }
+  };
 
-  setAlert(alert = false) {
-    this.setState({
-      alert,
-    });
-  }
-
-  focusToFirstElement = () => {
-    const dialog = this.dialogRef.current;
+  const focusToFirstElement = () => {
+    const dialog = dialogRef.current;
     const buttons = dialog.querySelectorAll('button');
     buttons[0].focus();
-  }
+  };
 
-  focusToLastElement = () => {
-    const dialog = this.dialogRef.current;
+  const focusToLastElement = () => {
+    const dialog = dialogRef.current;
     const buttons = dialog.querySelectorAll('button');
     buttons[buttons.length - 1].focus();
-  }
+  };
 
-  /**
-   * Toggle settings container visible/hidden
-   */
-  toggleSettingsContainer() {
-    const { toggleSettings } = this.props;
-    // Focus back to settings button if container will be closed
-    this.focusToBaseElement();
-
-    this.setState({
-      saved: false,
-    });
-    toggleSettings();
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  focusToBaseElement() {
-    const { settings } = this.props;
+  const focusToBaseElement = () => {
     setTimeout(() => {
       let elem;
       if (settings.toggled === 'search' || settings.toggled === 'area') {
@@ -197,15 +183,24 @@ class Settings extends React.Component {
         elem.focus();
       }
     }, 1);
-  }
+  };
+
+  /**
+   * Toggle settings container visible/hidden
+   */
+  const toggleSettingsContainer = () => {
+    // Focus back to settings button if container will be closed
+    focusToBaseElement();
+    setSaved(false);
+    toggleSettings();
+  };
 
   /**
    * Change current settings in state
    * @param {string} key - identifier used to save value to state's current object
    * @param {*} value - new value
    */
-  handleChange(key, value) {
-    const { currentSettings } = this.state;
+  const handleChange = (key, value) => {
     const newCurrent = {
       ...currentSettings,
     };
@@ -215,43 +210,26 @@ class Settings extends React.Component {
       newCurrent[key] = value;
     }
 
-    this.setState({
-      currentSettings: newCurrent,
-    });
-  }
+    setCurrentSettings(newCurrent);
+  };
 
   /**
    * Reset current setting selections
    */
-  resetCurrentSelections() {
-    const { previousSettings } = this.state;
-    this.setState({
-      currentSettings: {
-        ...previousSettings,
-        cities: {
-          ...previousSettings.cities,
-        },
+  const resetCurrentSelections = () => {
+    setSaved(false);
+    setCurrentSettings({
+      ...previousSettings,
+      cities: {
+        ...previousSettings.cities,
       },
-      saved: false,
     });
-  }
+  };
 
   /**
    * Save new settings to redux
    */
-  saveSettings(focusTarget) {
-    const { currentSettings } = this.state;
-    const {
-      toggleHearingAid,
-      toggleColorblind,
-      toggleVisuallyImpaired,
-      setMobility,
-      setMapType,
-      toggleCity,
-      changeTheme,
-      settings,
-    } = this.props;
-
+  const saveSettings = (focusTarget) => {
     // Check if theme and map should be changed based on settings
 
     if (currentSettings.colorblind) {
@@ -319,18 +297,15 @@ class Settings extends React.Component {
     }
 
     // Set new settings as previous
-    this.setNewPreviousSettings(currentSettings);
-    this.setAlert(true);
+    setNewPreviousSettings(currentSettings);
+    setAlert(true);
 
     if (focusTarget) {
       focusTarget.focus();
     }
-  }
+  };
 
-  renderSenseSettings(close) {
-    const { currentSettings } = this.state;
-    const { classes, intl } = this.props;
-
+  const renderSenseSettings = (close) => {
     const senseSettingList = {
       colorblind: {
         labelId: 'settings.sense.colorblind',
@@ -355,7 +330,7 @@ class Settings extends React.Component {
           <SettingsTitle
             id="SenseSettings"
             classes={classes}
-            close={close ? () => this.toggleSettingsContainer() : null}
+            close={close ? () => toggleSettingsContainer() : null}
             intl={intl}
             titleID="settings.sense.title"
           />
@@ -374,8 +349,8 @@ class Settings extends React.Component {
                             checked={!!item.value}
                             value={key}
                             onChange={() => {
-                              this.setAlert(false);
-                              this.handleChange(key, !item.value);
+                              setAlert(false);
+                              handleChange(key, !item.value);
                             }}
                           />
                         )}
@@ -398,18 +373,9 @@ class Settings extends React.Component {
         <Divider aria-hidden="true" />
       </>
     );
-  }
+  };
 
-  renderLanguageSettings() {
-    // eslint-disable-next-line no-unused-vars
-    const { settings } = this.props;
-    return null;
-  }
-
-  renderMobilitySettings(close) {
-    const { currentSettings } = this.state;
-    const { classes, intl, setMobility } = this.props;
-
+  const renderMobilitySettings = (close) => {
     // Check that currentSettings isn't empty
     if (Object.entries(currentSettings).length !== 0 && currentSettings.constructor === Object) {
       const mobilitySettings = {};
@@ -440,7 +406,7 @@ class Settings extends React.Component {
                   classes={classes}
                   titleID="settings.mobility.title"
                   intl={intl}
-                  close={close ? () => this.toggleSettingsContainer() : null}
+                  close={close ? () => toggleSettingsContainer() : null}
                 />
               </FormLabel>
               <RadioGroup
@@ -451,8 +417,8 @@ class Settings extends React.Component {
                 name="mobility"
                 value={currentSettings.mobility}
                 onChange={(event, value) => {
-                  this.handleChange('mobility', value);
-                  this.setAlert(false);
+                  handleChange('mobility', value);
+                  setAlert(false);
                 }}
               >
                 {
@@ -489,12 +455,9 @@ class Settings extends React.Component {
         </>
       );
     } return (null);
-  }
+  };
 
-  renderCitySettings = (close) => {
-    const { currentSettings } = this.state;
-    const { classes, intl } = this.props;
-
+  const renderCitySettings = (close) => {
     if (!currentSettings.cities) return null;
 
     const citySettingsList = config.cities;
@@ -505,7 +468,7 @@ class Settings extends React.Component {
           <SettingsTitle
             classes={classes}
             intl={intl}
-            close={close ? () => this.toggleSettingsContainer() : null}
+            close={close ? () => toggleSettingsContainer() : null}
             id="CitySettings"
             titleID="settings.city.title"
           />
@@ -521,8 +484,8 @@ class Settings extends React.Component {
                           checked={!!currentSettings.cities[key]}
                           value={key}
                           onChange={() => {
-                            this.setAlert(false);
-                            this.handleChange(key, !currentSettings.cities[key]);
+                            setAlert(false);
+                            handleChange(key, !currentSettings.cities[key]);
                           }}
                         />
                         )}
@@ -547,10 +510,7 @@ class Settings extends React.Component {
     );
   };
 
-  renderMapSettings = (close) => {
-    const { classes, intl, setMapType } = this.props;
-    const { currentSettings } = this.state;
-
+  const renderMapSettings = (close) => {
     // Check that currentSettings isn't empty
     if (Object.entries(currentSettings).length !== 0 && currentSettings.constructor === Object) {
       const mapSettings = {};
@@ -571,7 +531,7 @@ class Settings extends React.Component {
                 <SettingsTitle
                   classes={classes}
                   titleID="settings.map.title"
-                  close={close ? () => this.toggleSettingsContainer() : null}
+                  close={close ? () => toggleSettingsContainer() : null}
                   intl={intl}
                 />
               </FormLabel>
@@ -583,8 +543,8 @@ class Settings extends React.Component {
                 name="mapType"
                 value={currentSettings.mapType}
                 onChange={(event, value) => {
-                  this.handleChange('mapType', value);
-                  this.setAlert(false);
+                  handleChange('mapType', value);
+                  setAlert(false);
                 }}
               >
                 {Object.keys(mapSettings).map((key) => {
@@ -614,11 +574,10 @@ class Settings extends React.Component {
         </>
       );
     } return null;
-  }
+  };
 
-  renderConfirmationBox() {
-    const { classes, isMobile } = this.props;
-    const containerClasses = ` ${this.settingsHaveChanged() ? classes.stickyContainer : classes.hidden} ${isMobile ? classes.stickyMobile : ''}`;
+  const renderConfirmationBox = () => {
+    const containerClasses = ` ${settingsHaveChanged() ? classes.stickyContainer : classes.hidden} ${isMobile ? classes.stickyMobile : ''}`;
 
     return (
       <Container className={`SettingsConfirmation ${containerClasses}`} paper>
@@ -631,8 +590,8 @@ class Settings extends React.Component {
             role="button"
             messageID="general.save"
             onClick={() => {
-              const focusTarget = this.dialogRef.current.querySelector('h2');
-              this.saveSettings(focusTarget);
+              const focusTarget = dialogRef.current.querySelector('h2');
+              saveSettings(focusTarget);
             }}
             color="primary"
           />
@@ -641,17 +600,16 @@ class Settings extends React.Component {
             role="button"
             messageID="general.cancel"
             onClick={() => {
-              this.resetCurrentSelections();
-              this.dialogRef.current.querySelector('h2').focus();
+              resetCurrentSelections();
+              dialogRef.current.querySelector('h2').focus();
             }}
           />
         </Container>
       </Container>
     );
-  }
+  };
 
-  renderSaveAlert() {
-    const { classes, isMobile } = this.props;
+  const renderSaveAlert = () => {
     const containerClasses = `SettingsAlert ${classes.alert} ${isMobile ? classes.stickyMobile : ''}`;
     const typographyClasses = `${classes.flexBase} ${classes.alertText}`;
 
@@ -660,51 +618,49 @@ class Settings extends React.Component {
         <Typography color="inherit" className={typographyClasses}><FormattedMessage id="general.save.changes.done" /></Typography>
       </Container>
     );
-  }
+  };
 
-  render() {
-    const { classes, settings, intl } = this.props;
-    const { alert, saved } = this.state;
+  const render = () => {
     const settingsPage = settings.toggled;
-    const settingsHaveChanged = this.settingsHaveChanged();
-    const settingsHaveBeenSaved = !settingsHaveChanged && saved;
-    const showAlert = !settingsHaveChanged && alert;
+    const settingsChanged = settingsHaveChanged();
+    const settingsHaveBeenSaved = !settingsChanged && saved;
+    const showAlert = !settingsChanged && alert;
 
     let pageContent = (
       <>
-        {this.renderSenseSettings('close')}
-        {this.renderMobilitySettings()}
-        {this.renderCitySettings()}
-        {this.renderMapSettings()}
+        {renderSenseSettings('close')}
+        {renderMobilitySettings()}
+        {renderCitySettings()}
+        {renderMapSettings()}
       </>
     );
 
     if (settingsPage === 'citySettings' || settingsPage === 'area') {
-      pageContent = this.renderCitySettings('close');
+      pageContent = renderCitySettings('close');
     } else if (settingsPage === 'mapSettings') {
-      pageContent = this.renderMapSettings('close');
+      pageContent = renderMapSettings('close');
     } else if (settingsPage === 'accessibilitySettings') {
       pageContent = (
         <>
-          {this.renderSenseSettings('close')}
-          {this.renderMobilitySettings()}
+          {renderSenseSettings('close')}
+          {renderMobilitySettings()}
         </>
       );
     }
 
     return (
-      <div id="SettingsContainer" className={`${classes.container}`} ref={this.dialogRef} role="dialog">
+      <div id="SettingsContainer" className={`${classes.container}`} ref={dialogRef} role="dialog">
         {/* Empty element that makes keyboard focus loop in dialog */}
-        <Typography variant="srOnly" aria-hidden tabIndex="0" onFocus={() => this.focusToLastElement()} />
+        <Typography variant="srOnly" aria-hidden tabIndex="0" onFocus={() => focusToLastElement()} />
 
         <TitleBar id="SettingsTitle" titleComponent="h2" title={<FormattedMessage id={`settings.${settingsPage}.long`} />} />
         <>
           {showAlert && (
-            this.renderSaveAlert()
+            renderSaveAlert()
           )}
 
-          {settingsHaveChanged && (
-            this.renderConfirmationBox()
+          {settingsChanged && (
+            renderConfirmationBox()
           )}
 
           {pageContent}
@@ -712,23 +668,23 @@ class Settings extends React.Component {
             <SMButton
               small
               role="button"
-              disabled={!settingsHaveChanged}
-              onClick={() => this.saveSettings(this.closeButtonRef.current)}
+              disabled={!settingsChanged}
+              onClick={() => saveSettings(closeButtonRef.current)}
               messageID="general.save.changes"
               color="primary"
             />
             <SMButton
-              innerRef={this.closeButtonRef}
+              innerRef={closeButtonRef}
               aria-label={intl.formatMessage({ id: 'general.closeSettings' })}
               small
               role="button"
-              onClick={() => this.toggleSettingsContainer()}
+              onClick={() => toggleSettingsContainer()}
               messageID="general.close"
             />
           </Container>
 
           <Typography aria-live="polite" variant="srOnly">
-            {settingsHaveChanged && (
+            {settingsChanged && (
               <FormattedMessage id="settings.aria.changed" />
             )}
             {settingsHaveBeenSaved && (
@@ -737,11 +693,13 @@ class Settings extends React.Component {
           </Typography>
         </>
         {/* Empty element that makes keyboard focus loop in dialog */}
-        <Typography variant="srOnly" aria-hidden tabIndex="0" onFocus={() => this.focusToFirstElement()} />
+        <Typography variant="srOnly" aria-hidden tabIndex="0" onFocus={() => focusToFirstElement()} />
       </div>
     );
-  }
-}
+  };
+
+  return render();
+};
 
 Settings.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
