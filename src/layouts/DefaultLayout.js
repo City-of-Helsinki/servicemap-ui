@@ -177,7 +177,6 @@ const DefaultLayout = (props) => {
                 {settingsToggled && (
                   <Settings
                     key={settingsToggled}
-                    isMobile={!!isMobile}
                   />
                 )}
                 <div style={styles.sidebarContent} aria-hidden={!!settingsToggled}>

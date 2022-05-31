@@ -31,6 +31,7 @@ const mapStateToProps = (state) => {
     unitsReducer: units,
     isFetching,
     isRedirectFetching,
+    initialLoad: user.initialLoad,
     count,
     citySettings: SettingsUtility.getActiveCitySettings(state),
     getAddressNavigatorParams,

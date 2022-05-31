@@ -93,6 +93,9 @@ export const activateSetting = (setting, value) => async (dispatch) => {
     case 'visuallyImpaired':
       dispatch(toggleVisuallyImpaired(true));
       break;
+    case 'city':
+      dispatch(toggleCity(value));
+      break;
     default:
   }
 };

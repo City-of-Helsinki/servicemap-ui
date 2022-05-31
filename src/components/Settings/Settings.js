@@ -303,6 +303,23 @@ const Settings = ({
     if (focusTarget) {
       focusTarget.focus();
     }
+
+    // If on search page, add city settings to url to make link sharing more consistent
+    if (currentPage === 'search') {
+      const selectedCities = Object.keys(currentSettings.cities).filter(
+        city => currentSettings.cities[city] === true,
+      );
+
+      const searchParams = parseSearchParams(location.search);
+      if (selectedCities.length) {
+        searchParams.citySetting = selectedCities.join(',');
+      } else {
+        delete searchParams.citySetting;
+      }
+      history.replace({
+        search: stringifySearchParams(searchParams),
+      });
+    }
   };
 
   const renderSenseSettings = (close) => {
