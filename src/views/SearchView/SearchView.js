@@ -9,9 +9,11 @@ import {
 import { injectIntl, FormattedMessage } from 'react-intl';
 import styles from './styles';
 import Loading from '../../components/Loading';
-import { SearchBar } from '../../components';
+import { AcceptSettingsDialog, SearchBar } from '../../components';
 import { fitUnitsToMap } from '../MapView/utils/mapActions';
-import { parseSearchParams, getSearchParam, keyboardHandler } from '../../utils';
+import {
+  parseSearchParams, getSearchParam, keyboardHandler, stringifySearchParams,
+} from '../../utils';
 import TabLists from '../../components/TabLists';
 import SMButton from '../../components/ServiceMapButton';
 import Container from '../../components/Container';
@@ -32,12 +34,13 @@ class SearchView extends React.Component {
       serviceRedirect: null,
       expandVisible: null,
       analyticsSent: null,
+      openAcceptSettingsDialog: false,
     };
   }
 
   componentDidMount() {
     const {
-      fetchUnits, units,
+      fetchUnits, units, citySettings, location, history, initialLoad,
     } = this.props;
     const options = this.searchParamData();
 
@@ -45,6 +48,25 @@ class SearchView extends React.Component {
     const handlingRedirect = this.handleServiceRedirect();
     if (handlingRedirect) {
       return;
+    }
+
+    const searchParams = parseSearchParams(location.search);
+    const citySettingString = citySettings.join(',');
+
+    // If url city params are present, open settings dialog
+    if (!initialLoad
+      && searchParams.citySetting
+      && searchParams.citySetting !== citySettingString
+    ) {
+      this.setState({ openAcceptSettingsDialog: true });
+    }
+
+    // Add city sttings to url to make link sharing more consistent
+    if (!searchParams.citySetting && citySettings.length) {
+      searchParams.citySetting = citySettingString;
+      history.replace({
+        search: stringifySearchParams(searchParams),
+      });
     }
 
     if (this.shouldFetch() && Object.keys(options).length) {
@@ -578,7 +600,7 @@ class SearchView extends React.Component {
     const {
       classes, isFetching, embed, unitsReducer,
     } = this.props;
-    const { expandVisible } = this.state;
+    const { expandVisible, openAcceptSettingsDialog } = this.state;
 
     const redirect = this.handleSingleResultRedirect();
 
@@ -598,6 +620,12 @@ class SearchView extends React.Component {
       <div
         className={classes.root}
       >
+        {
+          openAcceptSettingsDialog
+          && (
+            <AcceptSettingsDialog settingType="city" setOpen={val => this.setState({ openAcceptSettingsDialog: val })} />
+          )
+        }
         {
           this.renderSearchBar()
         }
@@ -640,6 +668,7 @@ export default withRouter(injectIntl(withStyles(styles)(SearchView)));
 // Typechecking
 SearchView.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
+  citySettings: PropTypes.arrayOf(PropTypes.string).isRequired,
   embed: PropTypes.bool,
   fetchUnits: PropTypes.func,
   fetchRedirectService: PropTypes.func,
@@ -647,7 +676,7 @@ SearchView.propTypes = {
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   isFetching: PropTypes.bool,
   isRedirectFetching: PropTypes.bool,
-  // eslint-disable-next-line react/no-unused-prop-types
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   max: PropTypes.number,
   previousSearch: PropTypes.oneOfType([PropTypes.string, PropTypes.objectOf(PropTypes.any)]),
@@ -657,6 +686,7 @@ SearchView.propTypes = {
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   query: PropTypes.string,
   navigator: PropTypes.objectOf(PropTypes.any),
+  initialLoad: PropTypes.bool.isRequired,
 };
 
 SearchView.defaultProps = {
