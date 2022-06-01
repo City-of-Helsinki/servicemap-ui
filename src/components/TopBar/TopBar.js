@@ -27,7 +27,7 @@ const TopBar = (props) => {
   const getAddressNavigatorParams = useNavigationParams();
 
   const {
-    simpleElement,
+    hideButtons,
     settingsOpen,
     classes,
     toggleSettings,
@@ -239,7 +239,7 @@ const TopBar = (props) => {
                 <HomeLogo aria-hidden contrast={theme === 'dark'} className={classes.logo} />
               </NoSsr>
             </ButtonBase>
-            {simpleElement // SimpleElement prop removes top bar buttons
+            {hideButtons
               ? null
               : (
                 <>
@@ -309,13 +309,13 @@ TopBar.propTypes = {
   smallScreen: PropTypes.bool.isRequired,
   theme: PropTypes.string.isRequired,
   toggleSettings: PropTypes.func.isRequired,
-  simpleElement: PropTypes.bool,
+  hideButtons: PropTypes.bool,
 };
 
 TopBar.defaultProps = {
   navigator: null,
   settingsOpen: null,
-  simpleElement: false,
+  hideButtons: false,
 };
 
 export default TopBar;

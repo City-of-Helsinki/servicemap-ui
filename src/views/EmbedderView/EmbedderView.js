@@ -508,7 +508,7 @@ const EmbedderView = ({
 
   return (
     <>
-      <TopBar smallScreen={false} simpleElement />
+      <TopBar smallScreen={false} hideButtons />
       <div ref={dialogRef}>
         {
           renderHeadInfo()
