@@ -192,6 +192,8 @@ const translations = {
   'embedder.map.aria.label': 'Valitse taustakartta',
   'embedder.options.title': 'Näytä kartalla',
   'embedder.options.label.units': 'Näytä toimipisteet',
+  'embedder.options.list.title': 'Toimipistelista',
+  'embedder.options.label.list.none': 'Piilota toimipistelista',
   'embedder.options.label.list.side': 'Näytä toimipisteet listana (kartan vieressä)',
   'embedder.options.label.list.bottom': 'Näytä toimipisteet listana (kartan alla)',
   'embedder.options.label.transit': 'Näytä joukkoliikenteen pysäkit (Tarkenna karttaa lähietäisyydelle, jotta joukkoliikennepysäkit näkyvät)',

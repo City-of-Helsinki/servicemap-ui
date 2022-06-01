@@ -193,6 +193,8 @@ const translations = {
   'embedder.preview.title': 'Map preview',
   'embedder.options.title': 'Show on the map',
   'embedder.options.label.units': 'Show service points',
+  'embedder.options.list.title': 'Toimipistelista', // TODO: translate
+  'embedder.options.label.list.none': 'Piilota toimipistelista', // TODO: translate
   'embedder.options.label.list.side': 'Näytä toimipisteet listana (kartan vieressä)', // TODO: translate
   'embedder.options.label.list.bottom': 'Näytä toimipisteet listana (kartan alla)', // TODO: translate
   'embedder.options.label.transit': 'Show public transport stops (Zoom in the map to see the stops)',

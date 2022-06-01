@@ -98,9 +98,8 @@ const EmbedderView = ({
   const [heightMode, setHeightMode] = useState('ratio');
   const [transit, setTransit] = useState(false);
   const [showUnits, setShowUnits] = useState(true);
-  const [showListSide, setShowListSide] = useState(false);
-  const [showListBottom, setShowListBottom] = useState(false);
   const [restrictBounds, setRestrictBounds] = useState(true);
+  const [showUnitList, setShowUnitList] = useState(false);
 
   const boundsRef = useRef([]);
   const dialogRef = useRef();
@@ -117,8 +116,7 @@ const EmbedderView = ({
     defaultLanguage,
     transit,
     showUnits,
-    showListSide,
-    showListBottom,
+    showUnitList,
     bbox: selectedBbox,
   });
 
@@ -186,6 +184,7 @@ const EmbedderView = ({
 
   // Figure out embed html
   const createEmbedHTML = useCallback((url) => {
+    const showListBottom = showUnitList === 'bottom';
     if (!url) {
       return '';
     }
@@ -222,7 +221,7 @@ const EmbedderView = ({
     widthMode,
     ratioHeight,
     iframeConfig.style,
-    showListBottom,
+    showUnitList,
   ]);
 
   const showCities = (embedUrl) => {
@@ -449,7 +448,7 @@ const EmbedderView = ({
         label={(<FormattedMessage id="embedder.options.label.bbox" />)}
       />
     </div>
-  ), [showListSide, showListBottom, restrictBounds]);
+  ), [restrictBounds]);
 
 
   const renderMarkerOptionsControl = () => {
@@ -460,20 +459,6 @@ const EmbedderView = ({
         onChange: v => setShowUnits(v),
         icon: null,
         labelId: 'embedder.options.label.units',
-      },
-      {
-        key: 'listSide',
-        value: showListSide,
-        onChange: v => setShowListSide(v),
-        icon: null,
-        labelId: 'embedder.options.label.list.side',
-      },
-      {
-        key: 'listBottom',
-        value: showListBottom,
-        onChange: v => setShowListBottom(v),
-        icon: null,
-        labelId: 'embedder.options.label.list.bottom',
       },
       {
         key: 'transit',
@@ -490,6 +475,29 @@ const EmbedderView = ({
         titleComponent="h2"
         checkboxControls={controls}
         checkboxLabelledBy="embedder.options.title"
+      />
+    );
+  };
+
+  /**
+ * Render unit list controls
+ */
+  const renderListOptionsControl = () => {
+    const controls = [
+      { label: intl.formatMessage({ id: 'embedder.options.label.list.none' }), value: 'false' },
+      { label: intl.formatMessage({ id: 'embedder.options.label.list.side' }), value: 'side' },
+      { label: intl.formatMessage({ id: 'embedder.options.label.list.bottom' }), value: 'bottom' },
+    ];
+
+    return (
+      <EmbedController
+        titleID="embedder.options.list.title"
+        titleComponent="h2"
+        radioAriaLabel={intl.formatMessage({ id: 'embedder.options.list.title' })}
+        radioName="unitList"
+        radioValue={showUnitList}
+        radioControls={controls}
+        radioOnChange={(e, v) => setShowUnitList(v)}
       />
     );
   };
@@ -565,6 +573,9 @@ const EmbedderView = ({
                 {
                 renderMarkerOptionsControl()
               }
+                {
+                renderListOptionsControl()
+              }
               </form>
             </div>
 
@@ -584,7 +595,7 @@ const EmbedderView = ({
                 titleComponent="h2"
                 widthMode={widthMode}
                 renderMapControls={renderMapControls}
-                bottomList={showListBottom}
+                bottomList={showUnitList === 'bottom'}
                 minHeightWithBottomList={minHeightWithBottomList}
               />
 

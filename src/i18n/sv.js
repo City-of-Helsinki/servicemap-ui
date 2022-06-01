@@ -192,6 +192,8 @@ const translations = {
   'embedder.map.title': 'Bakgrundskarta',
   'embedder.map.aria.label': 'Välj bakgrundskarta',
   'embedder.options.title': 'Visa på kartan',
+  'embedder.options.list.title': 'Toimipistelista', // TODO: translate
+  'embedder.options.label.list.none': 'Piilota toimipistelista', // TODO: translate
   'embedder.options.label.list.side': 'Näytä toimipisteet listana (kartan vieressä)', // TODO: translate
   'embedder.options.label.list.bottom': 'Näytä toimipisteet listana (kartan alla)', // TODO: translate
   'embedder.options.label.units': 'Visa verksamhetsställen',
