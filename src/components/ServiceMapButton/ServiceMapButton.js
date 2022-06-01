@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { ButtonBase, Typography } from '@mui/material';
 
 // ServiceMapButton
-const SMButton = React.forwardRef((props, ref) => {
+const SMButton = (props) => {
   const {
     'aria-label': ariaLabel,
     children,
@@ -21,6 +21,7 @@ const SMButton = React.forwardRef((props, ref) => {
     role,
     disabled,
     textVariant,
+    passingRef,
     ...rest
   } = props;
   const colorStyle = classes[color] || '';
@@ -36,7 +37,7 @@ const SMButton = React.forwardRef((props, ref) => {
   return (
     <ButtonBase
       {...rest}
-      ref={ref}
+      ref={passingRef}
       aria-label={ariaLabel || buttonTitle}
       disabled={disabled}
       className={buttonClasses}
@@ -64,7 +65,7 @@ const SMButton = React.forwardRef((props, ref) => {
       }
     </ButtonBase>
   );
-});
+};
 
 SMButton.propTypes = {
   'aria-label': PropTypes.string,
@@ -83,6 +84,7 @@ SMButton.propTypes = {
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   textVariant: PropTypes.string,
   messageCount: PropTypes.number,
+  passingRef: PropTypes.shape({ current: PropTypes.objectOf(PropTypes.any) }),
 };
 
 SMButton.defaultProps = {
@@ -98,6 +100,7 @@ SMButton.defaultProps = {
   disabled: false,
   textVariant: 'caption',
   messageCount: null,
+  passingRef: null,
 };
 
 export default SMButton;
