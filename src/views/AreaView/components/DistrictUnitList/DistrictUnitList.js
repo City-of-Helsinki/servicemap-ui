@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import distance from '@turf/distance';
 import { useSelector } from 'react-redux';
-import { Divider, List, Typography } from '@material-ui/core';
+import { Divider, List, Typography } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import { formatDistanceObject } from '../../../../utils';
 import { getAddressDistrict } from '../../../../redux/selectors/district';

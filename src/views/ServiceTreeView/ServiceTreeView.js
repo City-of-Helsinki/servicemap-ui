@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   List, ListItem, Collapse, Checkbox, Typography, ButtonBase, NoSsr, Divider,
-} from '@material-ui/core';
+} from '@mui/material';
 import {
   ArrowDropUp, ArrowDropDown, Search, Cancel,
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 import { FormattedMessage } from 'react-intl';
 import config from '../../../config';
 import useLocaleText from '../../utils/useLocaleText';

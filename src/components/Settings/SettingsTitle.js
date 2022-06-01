@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
   Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 import Container from '../Container';
 import CloseButton from '../CloseButton';
 

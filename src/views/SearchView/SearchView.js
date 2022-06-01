@@ -4,8 +4,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter, Redirect } from 'react-router-dom';
 import {
-  Paper, withStyles, Typography, Link, NoSsr, Divider,
-} from '@material-ui/core';
+  Paper, Typography, Link, NoSsr, Divider,
+} from '@mui/material';
+import { withStyles } from '@mui/styles';
+import { visuallyHidden } from '@mui/utils';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import styles from './styles';
 import {
@@ -391,7 +393,7 @@ class SearchView extends React.Component {
           tabIndex="-1"
           onClick={this.skipToContent}
           onKeyPress={() => { keyboardHandler(this.skipToContent(), ['space', 'enter']); }}
-          variant="srOnly"
+          style={visuallyHidden}
         >
           <FormattedMessage id="search.skipLink" />
         </Typography>
@@ -557,7 +559,7 @@ class SearchView extends React.Component {
     } = this.props;
 
     return (
-      <Typography className={classes.srOnly} variant="srOnly" component="h3" tabIndex="-1">
+      <Typography className={classes.srOnly} style={visuallyHidden} component="h3" tabIndex="-1">
         {
           !isFetching
           && (
@@ -627,7 +629,7 @@ class SearchView extends React.Component {
           // Jump link back to beginning of current page
         }
         <DesktopComponent>
-          <Typography variant="srOnly" component="h3">
+          <Typography style={visuallyHidden} component="h3">
             <Link href={`#${viewTitleID}`} tabIndex="-1">
               <FormattedMessage id="general.return.viewTitle" />
             </Link>

@@ -2,8 +2,9 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { Typography } from '@material-ui/core';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { Typography } from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import MapView from '../views/MapView';
 import config from '../../config';
 import ViewRouter from './components/ViewRouter';
@@ -186,7 +187,7 @@ const DefaultLayout = (props) => {
                   <ViewRouter />
                 </div>
               </main>
-              <Typography variant="srOnly">{intl.formatMessage({ id: 'map.ariaLabel' })}</Typography>
+              <Typography style={visuallyHidden}>{intl.formatMessage({ id: 'map.ariaLabel' })}</Typography>
               <div
                 aria-hidden
                 tabIndex="-1"

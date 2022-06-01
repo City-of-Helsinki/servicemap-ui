@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
   FormControl, Select, Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 import { useAcccessibilitySettings } from '../../utils/settings';
 
 const allowedDirections = [
@@ -84,9 +84,10 @@ const ResultOrderer = ({
           disabled={disabled}
           className={classes.select}
           native
+          variant="standard"
           value={`${order}-${direction}`}
           onChange={defaultHandleChange}
-          classes={{ select: classes.elementFocus }}
+          classes={{ select: classes.selectElement }}
           inputProps={{
             name: 'result-sorter',
             id: 'result-sorter',

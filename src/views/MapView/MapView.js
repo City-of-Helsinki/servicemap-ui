@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { ButtonBase } from '@material-ui/core';
-import { MyLocation, LocationDisabled } from '@material-ui/icons';
+import { ButtonBase } from '@mui/material';
+import { MyLocation, LocationDisabled } from '@mui/icons-material';
 import { useSelector } from 'react-redux';
 import { useMapEvents } from 'react-leaflet';
 import { mapOptions } from './config/mapConfig';

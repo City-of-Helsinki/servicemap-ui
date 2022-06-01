@@ -3,8 +3,9 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   ListItem, ListItemIcon, Typography, Divider,
-} from '@material-ui/core';
-import { useTheme } from '@material-ui/styles';
+} from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
+import { useSelector } from 'react-redux';
 import { keyboardHandler } from '../../../utils';
 import locationIcon from '../../../assets/icons/LocationDefault.svg';
 import locationIconHover from '../../../assets/icons/LocationHover.svg';
@@ -30,7 +31,7 @@ const ResultItem = ({
   simpleItem,
   ...rest
 }) => {
-  const theme = useTheme();
+  const theme = useSelector(state => state.user.theme);
 
   const resetMarkerHighlight = () => {
     // Handle marker highlight removal
@@ -114,7 +115,7 @@ const ResultItem = ({
             <Typography
               className={`${classes.title || ''} ResultItem-srOnly`}
               component="p"
-              variant="srOnly"
+              style={visuallyHidden}
             >
               {srText}
             </Typography>

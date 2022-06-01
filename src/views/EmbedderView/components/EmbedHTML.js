@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   ClickAwayListener, InputAdornment, OutlinedInput, Tooltip, Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 import { useIntl } from 'react-intl';
-import { FileCopy } from '@material-ui/icons';
+import { FileCopy } from '@mui/icons-material';
 import { getEmbedURL } from '../utils/utils';
 import SMButton from '../../../components/ServiceMapButton';
 

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
   Checkbox, Divider, FormControlLabel, Typography, Link,
-} from '@material-ui/core';
+} from '@mui/material';
 import URI from 'urijs';
 import { Helmet } from 'react-helmet';
 import { useSelector } from 'react-redux';
