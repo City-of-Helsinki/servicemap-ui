@@ -13,7 +13,7 @@ fixture`Search unit geometry test`
 
 test('Unit geometry is drawn on map', async (t) => {
   const polygon = Selector('.leaflet-pane .leaflet-overlay-pane').find('canvas');
-  const listItem = ReactSelector('UnitItem').nth(0);
+  const listItem = Selector('#paginatedList-Toimipisteet-results li[role="link"]').nth(0);
   await t
     .click(listItem)
     .expect(polygon.exists).ok('Unit geometry not drawn on map');
