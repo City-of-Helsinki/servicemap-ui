@@ -54,7 +54,12 @@ const getPreloadedState = () => {
   return state;
 };
 
-const preloadedState = getPreloadedState();
+let preloadedState = getPreloadedState();
+
+// Do not use user settings on embedded views
+if (window.location.pathname.includes('/embed/')) {
+  preloadedState = {};
+}
 
 // Create Redux store with initial state
 const store = createStore(rootReducer, preloadedState, applyMiddleware(thunk));

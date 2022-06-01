@@ -144,7 +144,7 @@ class SearchView extends React.Component {
   }
 
   searchParamData = (props = null, includeService = false) => {
-    const { location, citySettings } = props || this.props;
+    const { location, citySettings, embed } = props || this.props;
     const { serviceRedirect } = this.state;
     const redirectNode = serviceRedirect;
     const searchParams = parseSearchParams(location.search);
@@ -215,10 +215,11 @@ class SearchView extends React.Component {
       }
     }
 
-    const settingMunicipality = citySettings && citySettings.join(',');
+    const settingMunicipality = citySettings && !embed && citySettings.join(',');
 
     // Parse municipality
     if (municipality || city || settingMunicipality) {
+      console.log('setting this:', municipality, 'or this', city, 'or this:', settingMunicipality);
       options.municipality = municipality || city || settingMunicipality;
     }
 
