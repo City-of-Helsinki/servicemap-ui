@@ -20,8 +20,8 @@ fixture`TestCafe Axe test: frontpage`
   });
 
   focusIndicatorTest()
-  componentContrastTest('SMButton');
-  componentContrastTest('BackButton');
+  componentContrastTest('.SMButton');
+  componentContrastTest('.SMBackButton');
 
 
 fixture`TestCafe Axe test: search page`
@@ -32,8 +32,8 @@ fixture`TestCafe Axe test: search page`
   });
 
   focusIndicatorTest()
-  componentContrastTest('SMButton');
-  componentContrastTest('BackButton');
+  componentContrastTest('.SMButton');
+  componentContrastTest('.SMBackButton');
 
 
 fixture`TestCafe Axe test: unit page`
@@ -44,8 +44,8 @@ fixture`TestCafe Axe test: unit page`
   });
 
   focusIndicatorTest()
-  componentContrastTest('SMButton');
-  componentContrastTest('BackButton');
+  componentContrastTest('.SMButton');
+  componentContrastTest('.SMBackButton');
 
 
 fixture`TestCafe Axe test: service page`
@@ -56,8 +56,8 @@ fixture`TestCafe Axe test: service page`
   });
 
   focusIndicatorTest()
-  componentContrastTest('SMButton');
-  componentContrastTest('BackButton');
+  componentContrastTest('.SMButton');
+  componentContrastTest('.SMBackButton');
 
 
 fixture`TestCafe Axe test: address page`
@@ -68,8 +68,8 @@ fixture`TestCafe Axe test: address page`
   });
 
   focusIndicatorTest()
-  componentContrastTest('SMButton');
-  componentContrastTest('BackButton');
+  componentContrastTest('.SMButton');
+  componentContrastTest('.SMBackButton');
 
 
 fixture`TestCafe Axe test: area page`
@@ -80,8 +80,8 @@ fixture`TestCafe Axe test: area page`
   });
 
   focusIndicatorTest()
-  componentContrastTest('SMButton');
-  componentContrastTest('BackButton');
+  componentContrastTest('.SMButton');
+  componentContrastTest('.SMBackButton');
 
 
 fixture`TestCafe Axe test: service tree page`
@@ -92,8 +92,8 @@ fixture`TestCafe Axe test: service tree page`
   });
 
   focusIndicatorTest()
-  componentContrastTest('SMButton');
-  componentContrastTest('BackButton');
+  componentContrastTest('.SMButton');
+  componentContrastTest('.SMBackButton');
 
 
 // This page expires when the event is done
@@ -105,6 +105,6 @@ fixture`TestCafe Axe test: event page`
   });
 
   focusIndicatorTest()
-  componentContrastTest('SMButton');
-  componentContrastTest('BackButton');
+  componentContrastTest('.SMButton');
+  componentContrastTest('.SMBackButton');
 

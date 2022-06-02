@@ -25,7 +25,7 @@ const SMButton = (props) => {
     ...rest
   } = props;
   const colorStyle = classes[color] || '';
-  const buttonClasses = `${classes.button} ${small ? classes.smallButton : ''} ${margin ? classes.margin : classes.marginRight} ${className} ${colorStyle}`;
+  const buttonClasses = `SMButton ${classes.button} ${small ? classes.smallButton : ''} ${margin ? classes.margin : classes.marginRight} ${className} ${colorStyle}`;
   const textClasses = classes.typography;
 
   let buttonTitle = null;
