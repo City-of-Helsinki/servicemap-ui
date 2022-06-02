@@ -1,5 +1,4 @@
 import { createTheme } from '@mui/material/styles';
-import { adaptV4Theme } from '@mui/material'
 
 const focusIndicator = {
   outline: '2px solid transparent',
@@ -81,6 +80,94 @@ const overrides = theme => ({
     root: {
       padding: 12,
       marginRight: 8,
+    },
+  },
+});
+
+const components = theme => ({
+  MuiListItem: {
+    styleOverrides: {
+      button: {
+        '&:hover': {
+          backgroundColor: '#DEDEDE',
+        },
+      },
+    },
+  },
+  MuiButtonBase: {
+    defaultProps: {
+      disableRipple: true,
+    },
+    styleOverrides: {
+      root: {
+        // Default keyboard focus indicator for buttons
+        '&:focus': theme === 'dark' ? focusIndicatorDark : focusIndicator,
+        '&.Mui-focusVisible': theme === 'dark' ? focusIndicatorDark : focusIndicator,
+      },
+    },
+  },
+  MuiButton: {
+    defaultProps: {
+      disableFocusRipple: true,
+      disableRipple: true,
+    },
+    styleOverrides: {
+      root: {
+        transition: 'none',
+      },
+    },
+  },
+  MuiInputBase: {
+    styleOverrides: {
+      // Default keyboard focus indicator for input fields
+      root: {
+        '&:focused': theme === 'dark' ? focusIndicatorDark : focusIndicator,
+        '&.Mui-focused': theme === 'dark' ? focusIndicatorDark : focusIndicator,
+      },
+    },
+  },
+  MuiRadio: {
+    styleOverrides: {
+      root: {
+        '&.Mui-focusVisible': theme === 'dark' ? focusIndicatorDark : focusIndicator,
+        marginRight: 8,
+      },
+    },
+  },
+  MuiCheckbox: {
+    styleOverrides: {
+      root: {
+        '&.Mui-focusVisible': theme === 'dark' ? focusIndicatorDark : focusIndicator,
+        marginRight: 8,
+      },
+    },
+  },
+  MuiListItemText: {
+    styleOverrides: {
+      root: {
+        marginTop: 0,
+        marginBottom: 0,
+      },
+    },
+  },
+  MuiSvgIcon: {
+    styleOverrides: {
+      root: {
+        fontSize: 24,
+      },
+    },
+  },
+  MuiTypography: {
+    defaultProps: {
+      variant: 'body2',
+    },
+  },
+  PrivateSwitchBase: {
+    styleOverrides: {
+      root: {
+        padding: 12,
+        marginRight: 8,
+      },
     },
   },
 });
@@ -268,9 +355,9 @@ export const paletteDark = {
 };
 
 // Themes
-const SMTheme = createTheme(adaptV4Theme({
+const SMTheme = createTheme({
   props,
-  overrides: overrides('default'),
+  components: components('default'),
   breakpoints,
   typography,
   spacing,
@@ -278,11 +365,11 @@ const SMTheme = createTheme(adaptV4Theme({
   palette: paletteDefault,
   zIndex,
   focusIndicator,
-}));
+});
 
-const SMThemeDark = createTheme(adaptV4Theme({
+const SMThemeDark = createTheme({
   props,
-  overrides: overrides('dark'),
+  components: components('dark'),
   breakpoints,
   typography,
   spacing,
@@ -290,7 +377,7 @@ const SMThemeDark = createTheme(adaptV4Theme({
   palette: paletteDark,
   zIndex,
   focusIndicator: focusIndicatorDark,
-}));
+});
 
 
 export default { SMTheme, SMThemeDark };
