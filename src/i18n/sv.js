@@ -277,6 +277,7 @@ const translations = {
   'general.closeSettings': 'Stäng inställningarna',
   'general.fetching': 'Laddar data...',
   'general.home': 'Hem',
+  'general.home.logo.ariaLabel': 'Servicekarta - Gå till startsidan',
   'general.noData': 'Data finns inte',
   'general.news.alert.title': 'Meddelandefönster',
   'general.news.alert.close.aria': 'Stäng meddelandefönstret',
