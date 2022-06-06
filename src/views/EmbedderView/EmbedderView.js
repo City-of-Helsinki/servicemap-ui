@@ -99,7 +99,7 @@ const EmbedderView = ({
   const [transit, setTransit] = useState(false);
   const [showUnits, setShowUnits] = useState(true);
   const [restrictBounds, setRestrictBounds] = useState(true);
-  const [showUnitList, setShowUnitList] = useState(false);
+  const [showUnitList, setShowUnitList] = useState('none');
 
   const boundsRef = useRef([]);
   const dialogRef = useRef();
@@ -484,7 +484,7 @@ const EmbedderView = ({
  */
   const renderListOptionsControl = () => {
     const controls = [
-      { label: intl.formatMessage({ id: 'embedder.options.label.list.none' }), value: 'false' },
+      { label: intl.formatMessage({ id: 'embedder.options.label.list.none' }), value: 'none' },
       { label: intl.formatMessage({ id: 'embedder.options.label.list.side' }), value: 'side' },
       { label: intl.formatMessage({ id: 'embedder.options.label.list.bottom' }), value: 'bottom' },
     ];

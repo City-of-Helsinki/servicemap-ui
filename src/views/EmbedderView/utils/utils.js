@@ -37,7 +37,7 @@ export const getEmbedURL = (url, params = {}) => {
   if (params.showUnits === false) {
     data.units = 'none';
   }
-  if (params.showUnitList) {
+  if (params.showUnitList && params.showUnitList !== 'none') {
     data.show_list = params.showUnitList;
   }
   if (params.bbox) {
