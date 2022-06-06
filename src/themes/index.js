@@ -26,64 +26,6 @@ const props = {
   },
 };
 
-const overrides = theme => ({
-  MuiListItem: {
-    button: {
-      '&:hover': {
-        backgroundColor: '#DEDEDE',
-      },
-    },
-  },
-  MuiButtonBase: {
-    root: {
-      // Default keyboard focus indicator for buttons
-      '&:focus': theme === 'dark' ? focusIndicatorDark : focusIndicator,
-      '&.Mui-focusVisible': theme === 'dark' ? focusIndicatorDark : focusIndicator,
-    },
-  },
-  MuiButton: {
-    root: {
-      transition: 'none',
-    },
-  },
-  MuiInputBase: {
-    // Default keyboard focus indicator for input fields
-    root: {
-      '&:focused': theme === 'dark' ? focusIndicatorDark : focusIndicator,
-      '&.Mui-focused': theme === 'dark' ? focusIndicatorDark : focusIndicator,
-    },
-  },
-  MuiRadio: {
-    root: {
-      '&.Mui-focusVisible': theme === 'dark' ? focusIndicatorDark : focusIndicator,
-      marginRight: 8,
-    },
-  },
-  MuiCheckbox: {
-    root: {
-      '&.Mui-focusVisible': theme === 'dark' ? focusIndicatorDark : focusIndicator,
-      marginRight: 8,
-    },
-  },
-  MuiListItemText: {
-    root: {
-      marginTop: 0,
-      marginBottom: 0,
-    },
-  },
-  MuiSvgIcon: {
-    root: {
-      fontSize: 24,
-    },
-  },
-  PrivateSwitchBase: {
-    root: {
-      padding: 12,
-      marginRight: 8,
-    },
-  },
-});
-
 const components = theme => ({
   MuiListItem: {
     styleOverrides: {
