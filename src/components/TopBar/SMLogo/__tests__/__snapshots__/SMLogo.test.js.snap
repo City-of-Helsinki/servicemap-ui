@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SMLogo /> should work 1`] = `
+<div>
+  <button
+    aria-label="Palvelukartta - Siirry etusivulle"
+    class="MuiButtonBase-root css-194wrg2-MuiButtonBase-root"
+    role="link"
+    tabindex="0"
+    type="button"
+  >
+    <div
+      aria-hidden="true"
+      class="SMLogoComponent-logo-6"
+      role="img"
+    >
+      <img
+        alt=""
+        class="ForwardRef-icon-26"
+        src="test-file-stub"
+      />
+    </div>
+  </button>
+</div>
+`;
