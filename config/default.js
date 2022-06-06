@@ -39,7 +39,7 @@ if (typeof settings.INITIAL_MAP_POSITION === 'undefined') {
 
 if (typeof settings.MAPS === 'undefined') {
     // If not set default to Helsinki
-    settings.MAPS = 'servicemap,guideMap,accessible_map';
+    settings.MAPS = 'servicemap,ortographic,guideMap,accessible_map';
 }
 
 if (typeof settings.OLD_MAP_LINK_EN === 'undefined'
@@ -53,7 +53,7 @@ if (typeof settings.OLD_MAP_LINK_EN === 'undefined'
 
 if (typeof settings.CITIES === 'undefined') {
   // If not set default to Helsinki
-  settings.CITIES = 'helsinki,espoo,vantaa,kauniainen';
+  settings.CITIES = 'helsinki,espoo,vantaa,kauniainen,kirkkonummi';
 }
 
 if (typeof settings.SERVICE_MAP_URL === 'undefined') {
@@ -66,7 +66,7 @@ if (typeof settings.ACCESSIBLE_MAP_URL === 'undefined') {
 }
 if (typeof settings.ORTOGRAPHIC_MAP_URL === 'undefined') {
   // If not set default to Helsinki
-  settings.ORTOGRAPHIC_MAP_URL = 'https://kartta.hsy.fi/geoserver/gwc/service/wmts?layer=taustakartat_ja_aluejaot:Ortoilmakuva_2017&tilematrixset=ETRS-GK25&Service=WMTS&Request=GetTile&Version=1.0.0&TileMatrix=ETRS-GK25:{z}&TileCol={x}&TileRow={y}&Format=image/jpeg';
+  settings.ORTOGRAPHIC_MAP_URL = 'https://kartta.hsy.fi/geoserver/gwc/service/wmts?layer=taustakartat_ja_aluejaot:Ortoilmakuva_2019&tilematrixset=ETRS-GK25&Service=WMTS&Request=GetTile&Version=1.0.0&TileMatrix=ETRS-GK25:{z}&TileCol={x}&TileRow={y}&Format=image%2Fpng';
 }
 if (typeof settings.GUIDE_MAP_URL === 'undefined') {
   // If not set default to Helsinki
@@ -74,7 +74,15 @@ if (typeof settings.GUIDE_MAP_URL === 'undefined') {
 }
 
 if (typeof settings.REITTIOPAS_URL === 'undefined') {
-  settings.REITTIOPAS_URL = 'https://reittiopas.hsl.fi/reitti/';
+  settings.REITTIOPAS_URL = 'https://opas.matka.fi/reitti/';
+}
+
+if (typeof settings.HSL_ROUTE_GUIDE_URL === 'undefined') {
+  settings.HSL_ROUTE_GUIDE_URL = 'https://reittiopas.hsl.fi/reitti/';
+}
+
+if (typeof settings.HSL_ROUTE_GUIDE_CITIES === 'undefined') {
+  settings.HSL_ROUTE_GUIDE_CITIES = 'helsinki,espoo,vantaa,kauniainen,kerava';
 }
 
 if (typeof settings.SHOW_AREA_SELECTION === 'undefined') {
@@ -105,6 +113,18 @@ if (typeof settings.SENTRY_DSN_CLIENT === 'undefined') {
   settings.SENTRY_DSN_CLIENT = false;
 }
 
+if (settings.MATOMO_MOBILITY_DIMENSION_ID === 'undefined') {
+  settings.MATOMO_MOBILITY_DIMENSION_ID = undefined;
+}
+
+if (settings.MATOMO_SENSES_DIMENSION_ID === 'undefined') {
+  settings.MATOMO_SENSES_DIMENSION_ID = undefined;
+}
+
+if (settings.MATOMO_NO_RESULTS_DIMENSION_ID === 'undefined') {
+  settings.MATOMO_NO_RESULTS_DIMENSION_ID = undefined;
+}
+
 let municipalities;
 try {
   municipalities = require('./municipalities.json');
@@ -114,19 +134,22 @@ try {
       espoo: 'Espoo',
       helsinki: 'Helsinki',
       kauniainen: 'Kauniainen',
-      vantaa: 'Vantaa'
+      vantaa: 'Vantaa',
+      kirkkonummi: 'Kirkkonummi'
     },
     en: {
       espoo: 'Espoo',
       helsinki: 'Helsinki',
       kauniainen: 'Kauniainen',
-      vantaa: 'Vantaa'
+      vantaa: 'Vantaa',
+      kirkkonummi: 'Kirkkonummi'
     },
     sv: {
       espoo: 'Esbo',
       helsinki: 'Helsingfors',
       kauniainen: 'Grankulla',
-      vantaa: 'Vanda'
+      vantaa: 'Vanda',
+      kirkkonummi: 'Kyrkslätt'
     }
   }
 }
@@ -174,17 +197,22 @@ export default {
     espoo: 'https://easiointi.espoo.fi/efeedback/',
     vantaa: 'https://asiointi.vantaa.fi/anna-palautetta',
     kauniainen: 'https://www.kauniainen.fi/kaupunki_ja_paatoksenteko/osallistu_ja_vaikuta',
+    kirkkonummi: 'https://www.kirkkonummi.fi/osallistu-ja-vaikuta',
   },
   "production": settings.MODE === 'production',
   "initialMapPosition": settings.INITIAL_MAP_POSITION.split(','),
   "servicemapURL": settings.SERVICE_MAP_URL,
   "accessibleMapURL": settings.ACCESSIBLE_MAP_URL,
   "ortographicMapURL": settings.ORTOGRAPHIC_MAP_URL,
+  "ortographicWMSURL": settings.ORTOGRAPHIC_WMS_URL,
+  "ortographicWMSLAYER": settings.ORTOGRAPHIC_WMS_LAYER,
   "guideMapURL": settings.GUIDE_MAP_URL,
   "reittiopasURL": settings.REITTIOPAS_URL,
+  "hslRouteGuideURL": settings.HSL_ROUTE_GUIDE_URL,
   "outdoorExerciseURL": settings.OUTDOOR_EXERCISE_URL,
   "natureAreaURL": settings.NATURE_AREA_URL,
   "cities": settings.CITIES.split(','),
+  "hslRouteGuideCities": settings.HSL_ROUTE_GUIDE_CITIES.split(','),
   "maps": settings.MAPS.split(','),
   "smallContentAreaBreakpoint": 449,
   "mobileUiBreakpoint": 699,
@@ -207,6 +235,11 @@ export default {
   "oldMapEn": settings.OLD_MAP_LINK_EN,
   "oldMapFi": settings.OLD_MAP_LINK_FI,
   "oldMapSv": settings.OLD_MAP_LINK_SV,
+  "accessibilityStatementURL": {
+    fi: settings.ACCESSIBILITY_STATEMENT_URL_FI,
+    sv: settings.ACCESSIBILITY_STATEMENT_URL_SV,
+    en: settings.ACCESSIBILITY_STATEMENT_URL_EN,
+  },
   "readspeakerLocales": {
     "fi": 'fi_fi',
     "en": 'en_uk',
@@ -218,4 +251,9 @@ export default {
   "feedbackAdditionalInfoLink": settings.FEEDBACK_ADDITIONAL_INFO_LINK,
   "feedbackIsPublished": (settings.FEEDBACK_IS_PUBLISHED === 'true'),
   "usePtvAccessibilityApi": (settings.USE_PTV_ACCESSIBILITY_API) === 'true',
+  "matomoMobilityDimensionID": settings.MATOMO_MOBILITY_DIMENSION_ID,
+  "matomoSensesDimensionID": settings.MATOMO_SENSES_DIMENSION_ID,
+  "matomoNoResultsDimensionID": settings.MATOMO_NO_RESULTS_DIMENSION_ID,
+  "matomoUrl": settings.MATOMO_URL,
+  "matomoSiteId": settings.MATOMO_SITE_ID,
 }

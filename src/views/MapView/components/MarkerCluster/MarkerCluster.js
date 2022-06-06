@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
+import { useMap } from 'react-leaflet';
 import { drawMarkerIcon } from '../../utils/drawIcon';
 import { isEmbed } from '../../../../utils/path';
 import { createMarkerClusterLayer, createTooltipContent, createPopupContent } from './clusterUtils';
@@ -20,9 +21,9 @@ const tooltipOptions = (permanent, classes) => ({
   offset: [0, -25],
 });
 
-const popupOptions = () => ({
+const popupOptions = isMobile => ({
   autoClose: false,
-  autoPan: false,
+  autoPan: !!isMobile,
   closeButton: true,
   closeOnClick: false,
   direction: 'top',
@@ -47,12 +48,12 @@ const MarkerCluster = ({
   data,
   getDistance,
   highlightedUnit,
-  map,
   navigator,
   settings,
   theme,
   measuringMode,
 }) => {
+  const map = useMap();
   const getLocaleText = useLocaleText();
   const useContrast = theme === 'dark';
   const embeded = isEmbed();
@@ -97,12 +98,12 @@ const MarkerCluster = ({
   const openHighlightUnitPopup = (mapLayers) => {
     const highlightedMarker = getHighlightedMarker(mapLayers);
     if (highlightedMarker && UnitHelper.isUnitPage()) {
-      const tooltipContent = getUnitPopupContent(clusterData.highlightedUnit);
       // Close all open popups
       map.eachLayer((layer) => {
         layer.closePopup();
       });
       if (highlightedMarker instanceof global.L.MarkerCluster) {
+        const tooltipContent = getUnitPopupContent(clusterData.highlightedUnit);
         highlightedMarker.bindPopup(tooltipContent, popupOptions()).openPopup();
       } else {
         highlightedMarker.openPopup();
@@ -372,18 +373,23 @@ const MarkerCluster = ({
         );
         const tooltipPermanent = highlightedUnit
           && (highlightedUnit.id === unit.id && UnitHelper.isUnitPage());
+        const unitHasEvents = tooltipPermanent && unit.events?.length;
 
-        const markerClasses = `unit-marker-${unit.id} ${classes.unitMarker}${useContrast ? ' dark' : ''}`;
+        const markerClasses = `unit-marker-${unit.id} ${classes.unitMarker} ${unitHasEvents ? classes.unitMarkerEvent : ''} ${useContrast ? ' dark' : ''}`;
         const markerElem = global.L.marker(
           [unit.location.coordinates[1], unit.location.coordinates[0]],
           {
-            icon: drawMarkerIcon(useContrast, markerClasses),
+            icon: drawMarkerIcon(
+              useContrast,
+              markerClasses,
+              tooltipPermanent && unitHasEvents,
+            ),
             customUnitData: unit,
             keyboard: false,
           },
         ).bindPopup(
           popupContent,
-          popupOptions(),
+          popupOptions(isMobile),
         );
 
         if (isMobile) {
@@ -405,7 +411,7 @@ const MarkerCluster = ({
           setNewHighlightedMarker(markerElem);
         }
 
-        if (unitListFiltered.length > 1 || embeded) {
+        if (unitListFiltered.length > 1) {
           markerElem.on('click', () => {
             setNewHighlightedMarker(markerElem);
             if (!isMobile) {
@@ -461,7 +467,6 @@ MarkerCluster.propTypes = {
     }),
   ).isRequired,
   getDistance: PropTypes.func.isRequired,
-  map: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any).isRequired,
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
   theme: PropTypes.string.isRequired,

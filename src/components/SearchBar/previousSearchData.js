@@ -2,7 +2,7 @@ import LocalStorageUtility from '../../utils/localStorage';
 
 const toJson = (data = '{}') => JSON.parse(data);
 const key = 'history';
-const historyCount = 10;
+const historyCount = 5;
 const nextUpdateKey = 'history:updated';
 const halfDay = 43200000; // Half day in milliseconds
 
@@ -126,4 +126,21 @@ export const saveSearchToHistory = (searchWord, results) => {
   updateWeights(jsonData);
 
   LocalStorageUtility.saveItem(key, JSON.stringify(jsonData));
+};
+
+export const removeSearchFromHistory = (searchWord, callback) => {
+  const historyKey = searchWord.toLowerCase();
+  const data = LocalStorageUtility.getItem(key);
+  let jsonData;
+  if (!data) {
+    jsonData = {};
+  } else {
+    jsonData = toJson(data);
+  }
+
+  delete jsonData[historyKey];
+
+  LocalStorageUtility.saveItem(key, JSON.stringify(jsonData));
+
+  callback();
 };

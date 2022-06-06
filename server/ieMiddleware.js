@@ -1,11 +1,11 @@
-import { Warning } from '@material-ui/icons';
-import { ServerStyleSheets, withStyles } from '@material-ui/styles';
+import { Warning } from '@mui/icons-material';
+import { ServerStyleSheets, withStyles } from '@mui/styles';
 import StyleContext from 'isomorphic-style-loader/StyleContext';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { Provider } from 'react-redux';
 import ThemeWrapper from '../src/themes/ThemeWrapper';
-import { appDynamicsTrackingCode, cookieHubCode, matomoTrackingCode } from './externalScripts';
+import { appDynamicsTrackingCode, cookieHubCode } from './externalScripts';
 
 // Check if user agent is Internet Explorer
 function isIE(userAgent) {
@@ -40,7 +40,6 @@ const IEHTML = (req, reactDom, css, cssString) => `
 <body>
   <style>${[...css].join('')}</style>
   <div id="app">${reactDom}</div>
-  ${matomoTrackingCode(process.env.MATOMO_URL, process.env.MATOMO_SITE_ID)}
 </body>
 </html>
 `;

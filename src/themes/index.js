@@ -1,4 +1,5 @@
-import { createMuiTheme } from '@material-ui/core';
+import { createTheme } from '@mui/material/styles';
+import { adaptV4Theme } from '@mui/material'
 
 const focusIndicator = {
   outline: '2px solid transparent',
@@ -37,7 +38,8 @@ const overrides = theme => ({
   MuiButtonBase: {
     root: {
       // Default keyboard focus indicator for buttons
-      '&$focusVisible': theme === 'dark' ? focusIndicatorDark : focusIndicator,
+      '&:focus': theme === 'dark' ? focusIndicatorDark : focusIndicator,
+      '&.Mui-focusVisible': theme === 'dark' ? focusIndicatorDark : focusIndicator,
     },
   },
   MuiButton: {
@@ -47,7 +49,22 @@ const overrides = theme => ({
   },
   MuiInputBase: {
     // Default keyboard focus indicator for input fields
-    root: { '&$focused': theme === 'dark' ? focusIndicatorDark : focusIndicator },
+    root: {
+      '&:focused': theme === 'dark' ? focusIndicatorDark : focusIndicator,
+      '&.Mui-focused': theme === 'dark' ? focusIndicatorDark : focusIndicator,
+    },
+  },
+  MuiRadio: {
+    root: {
+      '&.Mui-focusVisible': theme === 'dark' ? focusIndicatorDark : focusIndicator,
+      marginRight: 8,
+    },
+  },
+  MuiCheckbox: {
+    root: {
+      '&.Mui-focusVisible': theme === 'dark' ? focusIndicatorDark : focusIndicator,
+      marginRight: 8,
+    },
   },
   MuiListItemText: {
     root: {
@@ -251,7 +268,7 @@ export const paletteDark = {
 };
 
 // Themes
-const SMTheme = createMuiTheme({
+const SMTheme = createTheme(adaptV4Theme({
   props,
   overrides: overrides('default'),
   breakpoints,
@@ -261,9 +278,9 @@ const SMTheme = createMuiTheme({
   palette: paletteDefault,
   zIndex,
   focusIndicator,
-});
+}));
 
-const SMThemeDark = createMuiTheme({
+const SMThemeDark = createTheme(adaptV4Theme({
   props,
   overrides: overrides('dark'),
   breakpoints,
@@ -273,7 +290,7 @@ const SMThemeDark = createMuiTheme({
   palette: paletteDark,
   zIndex,
   focusIndicator: focusIndicatorDark,
-});
+}));
 
 
 export default { SMTheme, SMThemeDark };

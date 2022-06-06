@@ -5,6 +5,10 @@ const translations = {
   'app.og.image.alt': 'Servicekarta logo',
   'app.errorpage.title': 'Felmeddelandesida',
 
+  'accept.settings.dialog.description': 'Du kan öppna uppgifterna antigen med tillgänglighetsinställningar eller utan begränsningar.',
+  'accept.settings.dialog.title': 'Se verksamhetsstället med tillgänglighetsinställningar',
+  'accept.settings.dialog.none': 'Inga särskilda tillgänglighetsinställningar',
+
   // Accessibility
   'accessibility': 'Tillgänglighet',
   'accessibility.info': 'Tillgänglighetsuppgifter', // TODO: Verify
@@ -48,9 +52,11 @@ const translations = {
   'area.tab.geographical': 'Stadsdelar och postnummerområden',
   'area.services.local': 'Tjänster i ditt eget område',
   'area.services.nearby': 'Lista över verksamhetsställen i närområden',
+  'area.services.nearby.rescue_area': 'Lista över tjänster i närområden', // TODO: correct name to replace "tjänster"
   'area.services.nearby.rescue_district': 'Lista över skyddsavsnitten i närområden',
   'area.services.nearby.rescue_sub_district': 'Lista över skyddsunderavsnitten i närområden',
   'area.services.all': 'Lista över verksamhetsställen',
+  'area.services.all.rescue_area': 'Lista över skyddsdistrikten',
   'area.services.all.rescue_district': 'Lista över skyddsavsnitten',
   'area.services.all.rescue_sub_district': 'Lista över skyddsunderavsnitten',
   'area.info': 'Välj ett område, vars tjänster du vill ha information om. Genom att skriva din hemadress i sökfältet öppnas en karta och under fliken Tjänster i området visas de områden och distrikt som du hör till',
@@ -61,8 +67,10 @@ const translations = {
   'area.localAddress.postCode': 'Postnummer: {area}',
   'area.geographicalServices.neighborhood': 'Tjänster i stadsdelen ({length})',
   'area.geographicalServices.postcode_area': 'Tjänster i postnummerområdet ({length})',
+  'area.geographicalServices.major_district': 'Tjänster i stordistriktet ({length})',
   'area.neighborhood.title': 'Välj stadsdel',
   'area.postcode_area.title': 'Välj postnummer',
+  'area.major_district.title': 'Välj stordistrikt',
   'area.noSelection': 'Väl område under fliken Val av område',
   'area.noUnits': 'Det finns inga verksamhetsställen i ditt valda område',
   'area.popupLink': 'Visa uppgifterna för området (ny flik)',
@@ -72,12 +80,16 @@ const translations = {
   'area.list.education': 'Utbildning',
   'area.list.natureConservation': 'Naturskydd',
   'area.list.parking': 'Parkering',
+  'area.list.parking_area': 'Parkeringsområden',
+  'area.list.parking_payzone': 'Avgiftszoner',
+  'area.list.parking_payzone.plural': 'Avgiftszoner',
   'area.list.education.finnish': 'Finska skolområden',
   'area.list.education.swedish': 'Svenska skolområden',
   'area.list.preschool': 'Förskoleundervisning',
   'area.list.neighborhood': 'Stadsdel',
   'area.list.postcode': 'Postnummer',
   'area.list.postcode_area': 'Postnummerområde',
+  'area.list.major_district': 'Stordistrikt',
   'area.list.rescue_area': 'Skyddsdistrikt',
   'area.list.rescue_district': 'Skyddsavsnitt',
   'area.list.rescue_sub_district': 'Skyddsunderavsnitt',
@@ -93,6 +105,7 @@ const translations = {
   'area.list.resident_parking_zone': 'Invånarparkeringsområden',
   'area.list.neighborhood.plural': 'Stadsdelar',
   'area.list.postcode_area.plural': 'Postnummerområden',
+  'area.list.major_district.plural': 'Stordistrikten',
   'area.list.rescue_area.plural': 'Skyddsdistrikten',
   'area.list.rescue_district.plural': 'Skyddsavsnitten',
   'area.list.rescue_sub_district.plural': 'Skyddsunderavsnitten',
@@ -106,6 +119,36 @@ const translations = {
   'area.list.preschool_education_sv.plural': 'Svenskt småbarnspedagogikområden',
   'area.list.nature_reserve.plural': 'Naturskyddsområden',
   'area.list.resident_parking_zone.plural': 'Invånarparkeringsområden',
+  'area.list.parkingSpaces': 'Parkeringsplatser',
+  'area.list.parkingUnits': 'Parkeringshus',
+
+  // TODO: translate all
+  'parkingArea.popup.residentName': 'Zon {letter}',
+  'parkingArea.popup.payment1': 'Gratis parkering',
+  'parkingArea.popup.payment2': 'Gratis parkering',
+  'parkingArea.popup.payment3': 'Gratis parkering',
+  'parkingArea.popup.payment4': 'Parkering mot avgift',
+  'parkingArea.popup.payment5': 'Parkering mot avgift',
+  'parkingArea.popup.payment6': 'Parkering mot avgift',
+  'parkingArea.popup.duration1': 'Parkering tillåten högst: {duration}',
+  'parkingArea.popup.duration2': 'Parkering tillåten högst: {duration}',
+  'parkingArea.popup.duration3': '',
+  'parkingArea.popup.duration4': 'Parkering tillåten högst: {duration}',
+  'parkingArea.popup.duration5': 'Parkering tillåten högst: 4 h',
+  'parkingArea.popup.duration6': '',
+  'parkingArea.popup.validity1': 'Tidsbegränsning gäller för parkering: {validity}',
+  'parkingArea.popup.validity2': 'Tidsbegränsning gäller för parkering: {validity}',
+  'parkingArea.popup.validity3': 'Parkering förbjuden: {validity}',
+  'parkingArea.popup.validity4': 'Parkeringen är avgiftsbelagd: {validity}',
+  'parkingArea.popup.validity5': 'Parkeringen är avgiftsbelagd: {validity}',
+  'parkingArea.popup.validity6': 'Parkeringen är avgiftsbelagd: {validity}',
+  'parkingArea.popup.info': 'Uppgifterna är riktgivande. Kontrollera alltid uppgifterna på trafikmärket.',
+  'parkingArea.popup.info1': 'Begränsningarna gäller inte personer med boende- eller företagsparkeringstillstånd om parkeringsplatsen har markerats som boendeparkeringsplats.',
+  'parkingArea.popup.info2': 'Begränsningarna gäller inte personer med boende- eller företagsparkeringstillstånd om parkeringsplatsen har markerats som boendeparkeringsplats.',
+  'parkingArea.popup.info3': 'Begränsningarna gäller inte personer med boende- eller företagsparkeringstillstånd om parkeringsplatsen har markerats som boendeparkeringsplats.',
+  'parkingArea.popup.info4': 'Avgifterna och begränsningarna gäller inte personer med boende- eller företagsparkeringstillstånd om parkeringsplatsen har markerats som boendeparkeringsplats.',
+  'parkingArea.popup.info5': 'Avgifterna och begränsningarna gäller inte personer med boende- eller företagsparkeringstillstånd om parkeringsplatsen har markerats som boendeparkeringsplats.',
+  'parkingArea.popup.info6': 'Avgifterna och begränsningarna gäller inte personer med boende- eller företagsparkeringstillstånd om parkeringsplatsen har markerats som boendeparkeringsplats.',
 
   // Download dialog
   'download.cropping.title': 'Nuvarande filterinställningar',
@@ -149,8 +192,11 @@ const translations = {
   'embedder.map.title': 'Bakgrundskarta',
   'embedder.map.aria.label': 'Välj bakgrundskarta',
   'embedder.options.title': 'Visa på kartan',
+  'embedder.options.label.list.side': 'Näytä toimipisteet listana (kartan vieressä)', // TODO: translate
+  'embedder.options.label.list.bottom': 'Näytä toimipisteet listana (kartan alla)', // TODO: translate
   'embedder.options.label.units': 'Visa verksamhetsställen',
   'embedder.options.label.transit': 'Visa kollektivtrafikens hållplatser (Zooma in kartan för att se hållplatserna)',
+  'embedder.options.label.bbox': 'Begränsa den inbäddade kartan till området i förhandsgranskningsfönstret',
   'embedder.preview.title': 'Map preview',
   'embedder.service.title': 'Tjänster',
   'embedder.service.aria.label': 'Välj tjänsterna som visas',
@@ -241,6 +287,7 @@ const translations = {
   'general.pageTitles.home': 'Hemsida',
   'general.pageTitles.search': 'Sökresultatsida',
   'general.pageTitles.unit': 'Vy med verksamhetsställen',
+  'general.pageTitles.unit.services': 'Verksamhetsställets tjänster',
   'general.pageTitles.unit.events': 'Verksamhetsställets evenemang',
   'general.pageTitles.unit.reservations': 'Verksamhetsställets platser som kan reserveras',
   'general.pageTitles.service': 'Tjänstesida',
@@ -270,6 +317,7 @@ const translations = {
   'general.save.changes.done': 'Ändringarna har sparats!',
   'general.save.confirmation': 'Vill du spara ändringarna?',
   'general.search': 'Sök',
+  'general.share.link': 'Dela länken',
   'general.time.short': 'kl.',
   'general.tools': 'Verktyg',
   // Readspeaker
@@ -299,13 +347,22 @@ const translations = {
   'search.loading.units.srInfo': 'Söker {count} verksamhetsställe(n)',
   'search.loading.units.simple': 'Söker verksamhetsställen',
 
+  'link.settings.dialog.title': 'Dela länken till verksamhetsstället',
+  'link.settings.dialog.tooltip': 'Kopierades till klippbordet',
+  'link.settings.dialog.radio.label': 'Länkens innehåll',
+  'link.settings.dialog.tooltip.aria': 'Kopiera sidans länk till klippbordet',
+  'link.settings.dialog.tooltip.aria.a11y': 'Kopiera sidans länk med tillgänglighetsinställningar till klippbordet',
+  'link.settings.dialog.subtitle': 'Dela länken med tillgänglighetsinställningar',
+  'link.settings.dialog.description': 'Tillgänglighetsinställningarna påverkar det visade verksamhetsställets tillgänglighetsuppgifter och kartans utseende.',
+  'link.settings.dialog.buttons.action': 'Kopiera till klippbordet',
+
   // Map
   'map': 'Karta',
   'map.ariaLabel': 'Kartvy. Kartans uppgifter kan i nuläget granskas endast visuellt.',
   'map.attribution.osm': '&copy; <a href="http://osm.org/copyright">Upphovsmännen bakom OpenStreetMaps</a>',
   'map.attribution.helsinki': '&copy; Helsingfors, Esbo, Vanda och Grankulla städer',
   'map.transit.endStation': 'Ändhållplats',
-  'map.address.coordinate': 'Dela platskoordinat',
+  'map.address.coordinate': 'Tee linkki GPS-koordinaatteihin', // TODO: translate
   'map.address.searching': 'Söker adress...',
   'map.address.notFound': 'Adressen hittades ej',
   'map.address.info': 'Adressens uppgifter',
@@ -336,22 +393,25 @@ const translations = {
   'unit.data_source': 'Källa: {data_source}',
   'unit.details.notFound': 'Verksamhetsställets uppgifter finns inte att tillgå.',
   'unit.plural': 'Verksamhetsställen',
+  'unit.distance': 'Avstånd',
 
   'unit.contact.info': 'Kontaktuppgifter',
   'unit.links': 'På webben',
   'unit.eServices': 'E-tjänster',
   'unit.reservations': 'Objekt som kan reserveras',
   'unit.events': 'Evenemang',
+  'unit.events.description': 'Här hittar du information om evenemang som erbjuds av verksamhetsstället',
   'unit.events.count': `{count, plural,
     =0 {}
     one {# evenemang}
     other {# evenemang}
   }`,
-  'unit.events.more': 'Visa fler evenemang',
+  'unit.events.more': 'Visa fler evenemang ({count})',
   'unit.homepage': 'Hemsida',
   'unit.homepage.missing': 'Ingen hemsida har meddelats',
   'unit.picture': 'Bild av verksamhetsstället',
   'unit.description': 'Information om verksamhetsstället',
+  'unit.price': 'Priser',
   'unit.address': 'Adress',
   'unit.address.missing': 'Ingen adress har meddelats',
   'unit.entrances.main': 'Huvudingång',
@@ -369,25 +429,31 @@ const translations = {
   'unit.contact': 'Kontaktperson',
   'unit.school.year': 'Läsåret',
   'unit.opens.new.tab': '(ny flik)',
+  'unit.reservations.description': 'Här hittar du information om lokaler och redskap som kan bokas vid verksamhetsstället.',
   'unit.reservations.count': `{count, plural,
     =0 {}
     one {# objekt som kan reserveras}
     other {# objekt som kan reserveras}
   }`,
-  'unit.reservations.more': 'Visa fler objekt som kan reserveras',
+  'unit.reservations.more': 'Visa fler objekt som kan reserveras ({count})',
   'unit.call.number': '(ring)',
   'unit.list.services': 'Tjänster',
   'unit.list.events': 'Evenemang',
   'unit.list.reservations': 'Objekt som kan reserveras',
-  'unit.services': 'Tjänster',
-  'unit.services.more': 'Visa fler tjänster',
+  'unit.services': 'Verksamhetsställets tjänster',
+  'unit.services.description': 'Utöver servicebeskrivningen hittar du information om olika kanaler för uträttning av ärenden som erbjuds av kommunen.',
+  'unit.services.more': 'Visa fler tjänster ({count})',
   'unit.services.count': `{count, plural,
     =0 {}
     one {# tjänst}
     other {# tjänster}
   }`,
+  'unit.educationServices': 'Verksamhetsställets tjänster per läsår',
+  'unit.educationServices.description': 'Läsåret {period}',
+  'unit.educationServices.more': 'Visa fler tjänster ({count})',
   'unit.route': 'Se vägen till det här stället',
-  'unit.route.extra': '(Ny flik. HRT-reseplaneraren är inte en tillgänglig tjänst)',
+  'unit.route.extra.hslRouteGuide': '(Ny flik. HRT-reseplaneraren är inte en tillgänglig tjänst)',
+  'unit.route.extra.routeGuide': '(Ny flik. Matka.fi-reseplaneraren är inte en tillgänglig tjänst)',
   'unit.socialMedia.title': 'Verksamhetsstället på sociala medier',
   'unit.outdoorLink': 'Kolla skicket på en motionsplats i tjänsten ulkoliikunta.fi',
   'unit.seo.description': 'Se läget på kartan',
@@ -397,6 +463,7 @@ const translations = {
   'search': 'Sök',
   'search.arrowLabel': 'Precisera',
   'search.cancelText': 'Töm sökfältet',
+  'search.removeSuggestion': 'Remove', // TODO: translate
   'search.notFoundWith': 'Inga träffar för sökningen "{query}".',
   'search.placeholder': 'Sök tjänst eller verksamhetsställe',
   'search.info': `{count, plural,
@@ -443,6 +510,8 @@ const translations = {
   'search.suggestions.expand': 'Sökförslag',
   'search.suggestions.loading': 'Laddar förslag',
   'search.suggestions.error': 'Inga förslag',
+  'search.suggestions.areas': 'Näytä alueet', // TODO: translate
+  'search.suggestions.addresses': 'Näytä osoitteet', // TODO: translate
   'search.suggestions.suggestions': '{count} sökförslag',
   // 'search.suggestions.expandSuggestions': '{count} preciseringsförslag',
   'search.suggestions.results': '{count} resultat',
@@ -463,7 +532,7 @@ const translations = {
   'service.plural': 'Tjänster',
   'service.nearby': 'Närtjänster',
   'service.units.empty': 'Tjänsten har inga verksamhetsställen',
-  'service.tab': 'Tjänster och evenemang',
+  'service.tab': 'Tjänster',
   'service.description': 'Se tjänsternas lägen och kontaktuppgifter',
 
   // Service tree
@@ -545,7 +614,7 @@ const translations = {
   'tool.print': 'Skriv ut',
 
   'info.title': 'Om tjänsten och tillgänglighetsredogörelsen',
-  'info.statement': 'Tillgänglighetsredogörelsen',
+  'info.statement': 'Tillgänglighetsredogörelsen (ny flik)',
 
   'alert.close': 'Stäng meddelande',
 };

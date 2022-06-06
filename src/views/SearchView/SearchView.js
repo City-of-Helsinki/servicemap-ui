@@ -4,22 +4,26 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter, Redirect } from 'react-router-dom';
 import {
-  Paper, withStyles, Typography, Link, NoSsr, Divider,
-} from '@material-ui/core';
+  Paper, Typography, Link, NoSsr, Divider,
+} from '@mui/material';
+import { withStyles } from '@mui/styles';
+import { visuallyHidden } from '@mui/utils';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import styles from './styles';
-import Loading from '../../components/Loading';
-import SearchBar from '../../components/SearchBar';
+import {
+  Container,
+  DesktopComponent,
+  ExpandedSuggestions,
+  Loading,
+  MobileComponent,
+  SearchBar,
+  SettingsInfo,
+  SMButton,
+  TabLists,
+} from '../../components';
 import { fitUnitsToMap } from '../MapView/utils/mapActions';
 import { parseSearchParams, getSearchParam, keyboardHandler } from '../../utils';
-import TabLists from '../../components/TabLists';
-import SMButton from '../../components/ServiceMapButton';
-import Container from '../../components/Container';
 import { generatePath } from '../../utils/path';
-import ExpandedSuggestions from '../../components/ExpandedSuggestions';
-import SettingsInfo from '../../components/SettingsInfo';
-import DesktopComponent from '../../components/DesktopComponent';
-import MobileComponent from '../../components/MobileComponent';
 import { viewTitleID } from '../../utils/accessibility';
 
 class SearchView extends React.Component {
@@ -31,6 +35,7 @@ class SearchView extends React.Component {
     this.state = {
       serviceRedirect: null,
       expandVisible: null,
+      analyticsSent: null,
     };
   }
 
@@ -76,6 +81,25 @@ class SearchView extends React.Component {
       this.focusMap(nextProps.units);
     }
     return true;
+  }
+
+  // Send information to matomo about search words that produce no results
+  sendNoResultsAnalytics = (previousSearch, navigator) => {
+    this.setState({ analyticsSent: previousSearch });
+    navigator.trackNoResultsPage(previousSearch);
+  }
+
+  componentDidUpdate = () => {
+    const {
+      isFetching, previousSearch, max, navigator,
+    } = this.props;
+    const { analyticsSent } = this.state;
+
+    const noResults = !isFetching && previousSearch && max && !max.length;
+    // Send search query to matomo
+    if (navigator && noResults && analyticsSent !== previousSearch) {
+      this.sendNoResultsAnalytics(previousSearch, navigator);
+    }
   }
 
   // Handle service redirect for old service parameters if given
@@ -138,6 +162,7 @@ class SearchView extends React.Component {
       service_node,
       search_language,
       events,
+      units,
     } = searchParams;
 
     const options = {};
@@ -159,6 +184,10 @@ class SearchView extends React.Component {
 
       if (events) {
         options.events = events;
+      }
+
+      if (units) {
+        options.id = units;
       }
 
       if (category) {
@@ -220,7 +249,7 @@ class SearchView extends React.Component {
       }
     } else {
       // Should fetch if no previous searches but search parameters exist
-      return !!(data.q || data.service || data.service_node || data.events);
+      return !!(data.q || data.service || data.service_node || data.events || data.id);
     }
     return false;
   }
@@ -364,7 +393,7 @@ class SearchView extends React.Component {
           tabIndex="-1"
           onClick={this.skipToContent}
           onKeyPress={() => { keyboardHandler(this.skipToContent(), ['space', 'enter']); }}
-          variant="srOnly"
+          style={visuallyHidden}
         >
           <FormattedMessage id="search.skipLink" />
         </Typography>
@@ -466,6 +495,7 @@ class SearchView extends React.Component {
     // Data for TabLists component
     const searchResults = [
       {
+        id: 'units',
         ariaLabel: `${intl.formatMessage({ id: 'unit.plural' })} ${intl.formatMessage({ id: 'search.results.short' }, {
           count: groupedData
             .units.length,
@@ -477,6 +507,7 @@ class SearchView extends React.Component {
         title: intl.formatMessage({ id: 'unit.plural' }),
       },
       {
+        id: 'services',
         ariaLabel: `${intl.formatMessage({ id: 'service.plural' })} ${intl.formatMessage({ id: 'search.results.short' }, {
           count: groupedData
             .services.length,
@@ -487,6 +518,7 @@ class SearchView extends React.Component {
         title: intl.formatMessage({ id: 'service.plural' }),
       },
       {
+        id: 'addresses',
         ariaLabel: `${intl.formatMessage({ id: 'address.plural' })} ${intl.formatMessage({ id: 'search.results.short' }, {
           count: groupedData
             .addresses.length,
@@ -527,7 +559,7 @@ class SearchView extends React.Component {
     } = this.props;
 
     return (
-      <Typography className={classes.srOnly} variant="srOnly" component="h3" tabIndex="-1">
+      <Typography className={classes.srOnly} style={visuallyHidden} component="h3" tabIndex="-1">
         {
           !isFetching
           && (
@@ -597,7 +629,7 @@ class SearchView extends React.Component {
           // Jump link back to beginning of current page
         }
         <DesktopComponent>
-          <Typography variant="srOnly" component="h3">
+          <Typography style={visuallyHidden} component="h3">
             <Link href={`#${viewTitleID}`} tabIndex="-1">
               <FormattedMessage id="general.return.viewTitle" />
             </Link>
@@ -628,6 +660,7 @@ SearchView.propTypes = {
   map: PropTypes.objectOf(PropTypes.any),
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   query: PropTypes.string,
+  navigator: PropTypes.objectOf(PropTypes.any),
 };
 
 SearchView.defaultProps = {
@@ -642,4 +675,5 @@ SearchView.defaultProps = {
   unitsReducer: null,
   map: null,
   query: null,
+  navigator: null,
 };

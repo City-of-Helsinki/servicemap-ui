@@ -124,7 +124,7 @@ export const fetchSelectedUnitData = (req, res, next) => {
       }
       data.complete = true;
       store.dispatch(changeSelectedUnit(data));
-      if (data.keywords.fi.includes('kuuluvuuskartta')) {
+      if (data.keywords.fi?.includes('kuuluvuuskartta')) {
         hearingMapsFetch(null, null, hearingMapsFetchEnd, fetchOnError, null, id, controller);
       }
       response();

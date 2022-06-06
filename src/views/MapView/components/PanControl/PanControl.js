@@ -5,10 +5,11 @@ import {
   ArrowLeft,
   ArrowRight,
   Remove,
-} from '@material-ui/icons';
-import { ButtonBase } from '@material-ui/core';
+} from '@mui/icons-material';
+import { ButtonBase } from '@mui/material';
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
+import { useMap } from 'react-leaflet';
 import isClient from '../../../../utils';
 import { isEmbed } from '../../../../utils/path';
 
@@ -16,7 +17,8 @@ const embedded = isEmbed();
 
 const panOffset = 100;
 
-const PanControl = ({ classes, Control, map }) => {
+const PanControl = ({ classes }) => {
+  const map = useMap();
   // Button callback function
   const callback = useCallback((direction) => {
     if (!map || !direction) return;
@@ -85,74 +87,72 @@ const PanControl = ({ classes, Control, map }) => {
   }
 
   return (
-    <Control position="bottomright">
-      <div className={classes.container}>
-        {!embedded && (
-          <>
-            <ButtonBase
-              type="button"
-              aria-hidden
-              className={classes.top}
-              onClick={() => callback('up')}
-              onKeyDown={keyboardCallback}
-              tabIndex="0"
-            >
-              <ArrowDropUp />
-            </ButtonBase>
-            <ButtonBase
-              type="button"
-              aria-hidden
-              className={classes.left}
-              onClick={() => callback('left')}
-              onKeyDown={keyboardCallback}
-              tabIndex="0"
-            >
-              <ArrowLeft />
-            </ButtonBase>
-            <ButtonBase
-              type="button"
-              aria-hidden
-              className={classes.right}
-              onClick={() => callback('right')}
-              onKeyDown={keyboardCallback}
-              tabIndex="0"
-            >
-              <ArrowRight />
-            </ButtonBase>
-            <ButtonBase
-              type="button"
-              aria-hidden
-              className={classes.bottom}
-              onClick={() => callback('down')}
-              onKeyDown={keyboardCallback}
-              tabIndex="0"
-            >
-              <ArrowDropDown />
-            </ButtonBase>
-          </>
-        )}
-        <ButtonBase
-          type="button"
-          aria-hidden
-          className={`${classes.zoomIn} ${embedded ? classes.embedded : ''} zoomIn `}
-          onClick={() => callback('in')}
-          onKeyDown={keyboardCallback}
-          tabIndex="0"
-        >
-          <Add />
-        </ButtonBase>
-        <ButtonBase
-          type="button"
-          aria-hidden
-          className={`${classes.zoomOut} ${embedded ? classes.embedded : ''} zoomOut`}
-          onClick={() => callback('out')}
-          onKeyDown={keyboardCallback}
-          tabIndex="0"
-        >
-          <Remove />
-        </ButtonBase>
-      </div>
-    </Control>
+    <div className={classes.container}>
+      {!embedded && (
+        <>
+          <ButtonBase
+            type="button"
+            aria-hidden
+            className={classes.top}
+            onClick={() => callback('up')}
+            onKeyDown={keyboardCallback}
+            tabIndex="0"
+          >
+            <ArrowDropUp />
+          </ButtonBase>
+          <ButtonBase
+            type="button"
+            aria-hidden
+            className={classes.left}
+            onClick={() => callback('left')}
+            onKeyDown={keyboardCallback}
+            tabIndex="0"
+          >
+            <ArrowLeft />
+          </ButtonBase>
+          <ButtonBase
+            type="button"
+            aria-hidden
+            className={classes.right}
+            onClick={() => callback('right')}
+            onKeyDown={keyboardCallback}
+            tabIndex="0"
+          >
+            <ArrowRight />
+          </ButtonBase>
+          <ButtonBase
+            type="button"
+            aria-hidden
+            className={classes.bottom}
+            onClick={() => callback('down')}
+            onKeyDown={keyboardCallback}
+            tabIndex="0"
+          >
+            <ArrowDropDown />
+          </ButtonBase>
+        </>
+      )}
+      <ButtonBase
+        type="button"
+        aria-hidden
+        className={`${classes.zoomIn} ${embedded ? classes.embedded : ''} zoomIn `}
+        onClick={() => callback('in')}
+        onKeyDown={keyboardCallback}
+        tabIndex="0"
+      >
+        <Add />
+      </ButtonBase>
+      <ButtonBase
+        type="button"
+        aria-hidden
+        className={`${classes.zoomOut} ${embedded ? classes.embedded : ''} zoomOut`}
+        onClick={() => callback('out')}
+        onKeyDown={keyboardCallback}
+        tabIndex="0"
+      >
+        <Remove />
+      </ButtonBase>
+    </div>
   );
 };
 
@@ -166,12 +166,6 @@ PanControl.propTypes = {
     zoomIn: PropTypes.string,
     zoomOut: PropTypes.string,
     embedded: PropTypes.string,
-  }).isRequired,
-  Control: PropTypes.objectOf(PropTypes.any).isRequired,
-  map: PropTypes.shape({
-    panBy: PropTypes.func,
-    zoomIn: PropTypes.func,
-    zoomOut: PropTypes.func,
   }).isRequired,
 };
 

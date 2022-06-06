@@ -1,19 +1,27 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<CloseSuggestionButton /> should work 1`] = `
-<div
-  onClick={[Function]}
-  onKeyDown={[Function]}
-  role="button"
-  tabIndex="0"
->
-  <WithStyles(ForwardRef(Typography))
-    variant="body2"
+<div>
+  <div
+    role="button"
+    tabindex="0"
   >
-    <FormattedMessage
-      id="search.suggestions.hideButton"
-    />
-  </WithStyles(ForwardRef(Typography))>
-  <ArrowDownwardIcon />
+    <p
+      class="MuiTypography-root MuiTypography-body2 css-1ak20dk-MuiTypography-root"
+    >
+      Hide the list of suggestions
+    </p>
+    <svg
+      aria-hidden="true"
+      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-6yqi1c-MuiSvgIcon-root"
+      data-testid="ArrowDownwardIcon"
+      focusable="false"
+      viewBox="0 0 24 24"
+    >
+      <path
+        d="m20 12-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"
+      />
+    </svg>
+  </div>
 </div>
 `;

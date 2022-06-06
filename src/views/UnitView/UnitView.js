@@ -1,35 +1,45 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Typography } from '@material-ui/core';
+import { Button, Typography } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
-import { Map, Mail, Hearing } from '@material-ui/icons';
+import {
+  Map, Mail, Hearing, Share,
+} from '@mui/icons-material';
+import { visuallyHidden } from '@mui/utils';
 import { Helmet } from 'react-helmet';
-import { useSelector } from 'react-redux';
-import SearchBar from '../../components/SearchBar';
-import TitleBar from '../../components/TitleBar';
-import Container from '../../components/Container';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  AcceptSettingsDialog,
+  AddressIcon,
+  Container,
+  LinkSettingsDialog,
+  ReadSpeakerButton,
+  SearchBar,
+  SimpleListItem,
+  SMButton,
+  TabLists,
+  TitleBar,
+  TitledList,
+} from '../../components';
 import AccessibilityInfo from './components/AccessibilityInfo';
 import ContactInfo from './components/ContactInfo';
 import Highlights from './components/Highlights';
 import ElectronicServices from './components/ElectronicServices';
-import Reservations from './components/Reservations';
 import Description from './components/Description';
-import Services from './components/Services';
-import Events from './components/Events';
-import SMButton from '../../components/ServiceMapButton';
-import TabLists from '../../components/TabLists';
-import { AddressIcon } from '../../components/SMIcon';
 import SocialMediaLinks from './components/SocialMediaLinks';
 import UnitLinks from './components/UnitLinks';
-import SimpleListItem from '../../components/ListItems/SimpleListItem';
-import TitledList from '../../components/Lists/TitledList';
-import ReadSpeakerButton from '../../components/ReadSpeakerButton';
 import config from '../../../config';
 import useMobileStatus from '../../utils/isMobile';
 import UnitHelper from '../../utils/unitHelper';
 import useLocaleText from '../../utils/useLocaleText';
 import paths from '../../../config/paths';
+import SettingsUtility from '../../utils/settings';
+import UnitDataList from './components/UnitDataList';
+import UnitsServicesList from './components/UnitsServicesList';
+import PriceInfo from './components/PriceInfo';
+import { parseSearchParams } from '../../utils';
+import { fetchServiceUnits } from '../../redux/actions/services';
 
 const UnitView = (props) => {
   const {
@@ -56,15 +66,34 @@ const UnitView = (props) => {
   const checkCorrectUnit = unit => unit && unit.id === parseInt(match.params.unit, 10);
 
   const [unit, setUnit] = useState(checkCorrectUnit(stateUnit) ? stateUnit : null);
-  const [unitDistance, setUnitDistance] = useState(distance);
 
   const viewPosition = useRef(null);
 
   const isMobile = useMobileStatus();
-
+  const [openAcceptSettingsDialog, setOpenAcceptSettingsDialog] = useState(false);
+  const [openLinkDialog, setOpenLinkDialog] = useState(false);
   const getLocaleText = useLocaleText();
+  const dispatch = useDispatch();
 
   const map = useSelector(state => state.mapRef);
+
+  const shouldShowAcceptSettingsDialog = () => {
+    const search = new URLSearchParams(location.search);
+    const mobility = search.get('mobility');
+    const senses = search.get('senses')?.split(',') || [];
+    const mobilityValid = !!(mobility && SettingsUtility.isValidMobilitySetting(mobility));
+    const sensesValid = senses.filter(
+      s => SettingsUtility.isValidAccessibilitySenseImpairment(s),
+    ).length > 0;
+    if (mobilityValid || sensesValid) {
+      return true;
+    }
+    return false;
+  };
+
+  useEffect(() => {
+    setOpenAcceptSettingsDialog(shouldShowAcceptSettingsDialog());
+  }, []);
 
   const initializePTVAccessibilitySentences = () => {
     if (unit) {
@@ -105,6 +134,14 @@ const UnitView = (props) => {
     }
   };
 
+  const handleServiceFetch = () => {
+    // Fetch additional data based on URL parameters
+    const searchParams = parseSearchParams(location.search);
+    if (searchParams.services) {
+      dispatch(fetchServiceUnits(searchParams.services));
+    }
+  };
+
   const handleFeedbackClick = () => {
     const URLs = config.additionalFeedbackURLs;
     if (unit.municipality === 'espoo') {
@@ -113,6 +150,8 @@ const UnitView = (props) => {
       window.open(URLs.vantaa);
     } else if (unit.municipality === 'kauniainen') {
       window.open(URLs.kauniainen);
+    } else if (unit.municipality === 'kirkkonummi') {
+      window.open(URLs.kirkkonummi);
     } else {
       navigator.push('unit', { id: unit.id, type: 'feedback' });
     }
@@ -120,10 +159,10 @@ const UnitView = (props) => {
 
   const saveMapPosition = () => {
     // Remember user's map postition to return to on unmount
-    if (map?.leafletElement) {
+    if (map) {
       viewPosition.current = {
-        center: map.leafletElement.getCenter(),
-        zoom: map.leafletElement.getZoom(),
+        center: map.getCenter(),
+        zoom: map.getZoom(),
       };
     }
   };
@@ -140,13 +179,14 @@ const UnitView = (props) => {
 
   useEffect(() => { // On mount
     intializeUnitData();
+    handleServiceFetch();
     saveMapPosition();
     return () => { // On unmount
       // Return map to previous position if returning to search page or service page
       const isSearchPage = paths.search.regex.test(window.location.href);
       const isServicePage = paths.service.regex.test(window.location.href);
-      if (map?.leafletElement && (isSearchPage || isServicePage)) {
-        map.leafletElement.setView(viewPosition.current.center, viewPosition.current.zoom);
+      if (map && (isSearchPage || isServicePage)) {
+        map.setView(viewPosition.current.center, viewPosition.current.zoom);
       }
     };
   }, []);
@@ -163,11 +203,6 @@ const UnitView = (props) => {
     }
   }, [unit]);
 
-  useEffect(() => {
-    if (!unitDistance) {
-      setUnitDistance(distance);
-    }
-  }, [distance]);
 
   if (embed) {
     return null;
@@ -177,7 +212,7 @@ const UnitView = (props) => {
   const renderTitleForRS = () => {
     const title = unit && unit.name ? getLocaleText(unit.name) : '';
     return (
-      <Typography variant="srOnly" aria-hidden>{title}</Typography>
+      <Typography style={visuallyHidden} aria-hidden>{title}</Typography>
     );
   };
 
@@ -222,8 +257,15 @@ const UnitView = (props) => {
           {/* View Components */}
           <ContactInfo unit={unit} userLocation={userLocation} />
           <SocialMediaLinks unit={unit} />
+          <UnitDataList
+            listLength={3}
+            data={eventsData}
+            type="events"
+            navigator={navigator}
+          />
           <Highlights unit={unit} />
           <Description unit={unit} />
+          <PriceInfo unit={unit} />
           <UnitLinks unit={unit} />
           <ElectronicServices unit={unit} />
           {!isMobile && feedbackButton()}
@@ -280,16 +322,17 @@ const UnitView = (props) => {
 
     return (
       <div className={classes.content}>
-        <Services
-          listLength={10}
-          unit={unit}
-          getLocaleText={getLocaleText}
-        />
-        <Reservations
+        <UnitsServicesList
           listLength={5}
-          reservationsData={reservationsData}
+          unit={unit}
+          navigator={navigator}
         />
-        <Events classes={classes} listLength={5} eventsData={eventsData} />
+        <UnitDataList
+          listLength={5}
+          data={reservationsData}
+          type="reservations"
+          navigator={navigator}
+        />
       </div>
     );
   };
@@ -345,6 +388,20 @@ const UnitView = (props) => {
 
   const render = () => {
     const title = unit && unit.name ? getLocaleText(unit.name) : '';
+    const onLinkOpenClick = () => {
+      setOpenLinkDialog(true);
+    };
+    const elem = (
+      <Button
+        className={classes.linkButton}
+        onClick={onLinkOpenClick}
+      >
+        <Typography color="inherit" variant="body2">
+          <FormattedMessage id="general.share.link" />
+        </Typography>
+        <Share className={classes.linkButtonIcon} />
+      </Button>
+    );
 
     const TopArea = (
       <>
@@ -357,7 +414,7 @@ const UnitView = (props) => {
           title={title}
           backButton={!!isMobile}
           titleComponent="h3"
-          distance={unitDistance?.text}
+          distance={elem}
         />
       </>
     );
@@ -405,6 +462,19 @@ const UnitView = (props) => {
       ];
       return (
         <div>
+          {
+            openAcceptSettingsDialog
+            && (
+              <AcceptSettingsDialog setOpen={setOpenAcceptSettingsDialog} />
+            )
+          }
+          {
+            !openAcceptSettingsDialog
+            && openLinkDialog
+            && (
+              <LinkSettingsDialog setOpen={setOpenLinkDialog} />
+            )
+          }
           {
             renderHead()
           }

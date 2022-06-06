@@ -1,25 +1,20 @@
-import React, { useEffect } from 'react';
+/* eslint-disable max-len */
+
+import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Typography, ButtonBase, Link } from '@material-ui/core';
-import TitleBar from '../../components/TitleBar';
+import {
+  Typography, ButtonBase, Link, NoSsr,
+} from '@mui/material';
 import config from '../../../config';
-import { focusToViewTitle } from '../../utils/accessibility';
+import { TitleBar } from '../../components';
 
-const InfoView = ({
-  classes, location, locale, navigator,
-}) => {
-  const content = location.pathname.includes('accessibility') ? 'accessibilityInfo' : 'generalInfo';
-
-  useEffect(() => {
-    setTimeout(() => {
-      focusToViewTitle();
-    }, 1);
-  }, [content]);
+const InfoView = ({ classes, locale }) => {
+  const a11yURLs = config.accessibilityStatementURL;
+  const localeUrl = !a11yURLs[locale] || a11yURLs[locale] === 'undefined' ? null : a11yURLs[locale];
 
   const handleClick = () => {
-    document.getElementsByClassName('SidebarWrapper')[0].scrollTo(0, 0);
-    navigator.push('infoAccessibility');
+    window.open(localeUrl);
   };
 
   const renderTitlebar = () => (
@@ -33,13 +28,17 @@ const InfoView = ({
   );
   const renderFinnishInfo = () => (
     <div className={classes.textContainer}>
-      <Typography component="h3" variant="body2">Palvelukartan saavutettavuus</Typography>
-      <ButtonBase className={classes.linkButton} role="link" onClick={() => handleClick()}>
-        <Typography color="inherit" variant="body2"><FormattedMessage id="info.statement" /></Typography>
-      </ButtonBase>
+      {localeUrl ? (
+        <>
+          <Typography component="h3" variant="body2">Palvelukartan saavutettavuus</Typography>
+          <ButtonBase className={classes.linkButton} role="link" onClick={() => handleClick()}>
+            <Typography color="inherit" variant="body2"><FormattedMessage id="info.statement" /></Typography>
+          </ButtonBase>
+        </>
+      ) : null}
       <Typography component="h3" variant="body2"><FormattedMessage id="app.title" /></Typography>
       <Typography className={classes.text} variant="body2">
-        Palvelukartalta löydät Espoon, Helsingin, Kauniaisten, Vantaan julkiset toimipisteet ja niiden palvelut.
+        Palvelukartalta löydät Espoon, Helsingin, Kauniaisten, Vantaan ja Kirkkonummen julkiset toimipisteet ja niiden palvelut.
         Esimerkiksi koulut, päiväkodit, terveysasemat. Palvelukartalta löytyy myös muitakin palveluja, esimerkiksi
         HUSin (esimerkiksi röntgenit), HSY:n (esimerkiksi kierrätyspisteet), Aalto-yliopiston ja muita valtion
         palveluja. Yksityisiä palveluja, esimerkiksi turistikohteita (esimerkiksi ravintoloita) tulee palvelukartalle
@@ -115,7 +114,7 @@ const InfoView = ({
         <li><Typography variant="body2">suomenkielinen esiopetusalue</Typography></li>
         <li><Typography variant="body2">suomenkielinen ala-astealue</Typography></li>
         <li><Typography variant="body2">suomenkielinen yläastealue</Typography></li>
-        <li><Typography variant="body2">ruotsinkielinen esiopatusalue</Typography></li>
+        <li><Typography variant="body2">ruotsinkielinen esiopetusalue</Typography></li>
         <li><Typography variant="body2">ruotsinkielinen ala-astealue</Typography></li>
         <li><Typography variant="body2">ruotsinkielinen yläastealue</Typography></li>
         <li><Typography variant="body2">suojelupiiri</Typography></li>
@@ -157,7 +156,7 @@ const InfoView = ({
       </Typography>
       <Typography component="h4" variant="body2">Kaupunkiasetukset</Typography>
       <Typography className={classes.text} variant="body2">
-        Täältä voit valita joko yhden tai useamman seuraavista kaupungeista: Espoo, Helsinki, Kauniainen, Vantaa.
+        Täältä voit valita joko yhden tai useamman seuraavista kaupungeista: Espoo, Helsinki, Kauniainen, Vantaa, Kirkkonummi
         Kun valitset jonkin kaupungin, hakutulokset kohdistuvat ainoastaan tämän kaupungin tietoihin.
         Jos et ole valinnut yhtäkään kaupunkia, haku kohdistuu kaikkiin kaupunkeihin.
       </Typography>
@@ -166,7 +165,6 @@ const InfoView = ({
       <ul>
         <li><Typography variant="body2">palvelukartta</Typography></li>
         <li><Typography variant="body2">suurikontrastinen kartta</Typography></li>
-        <li><Typography variant="body2">ilmakuva</Typography></li>
         <li><Typography variant="body2">opaskartta</Typography></li>
       </ul>
       {/* <Typography className={classes.text} variant="body2">
@@ -207,188 +205,53 @@ const InfoView = ({
         Rekisteriselosteet löydät kootusti hel.fi-portaalista.
         Katso kohdat Kaupunginkanslia: Toimipisterekisterin keskitetty tietovarasto ja Helsingin kaupungin palautejärjestelmä.
       </Typography>
-      <Typography component="h3" variant="body2">Muuta</Typography>
+      <Typography component="h3" variant="body2">Evästeet</Typography>
       <Typography className={classes.text} variant="body2">
-        Palvelukartta on myös Facebookissa ja Twitterissä.
+        Käytämme sivustollamme evästeitä parantaaksemme sivuston suorituskykyä. Sivustolla kerätään automaattisesti alla kuvatut tiedot kävijöistä. Näitä tietoja käytetään sivuston käyttöliittymän ja käyttökokemuksen parantamiseen sekä kävijämäärien tilastolliseen seurantaan. Tietoja ei luovuteta ulkopuolisille tahoille. Sivustolla käytetään evästeitä (cookies) käyttäjäistunnon ylläpitämiseksi. Teknisiin evästeisiin ei kerätä eikä tallenneta käyttäjän yksilöiviä henkilötietoja.
+        Käyttäjällä on mahdollisuus estää evästeiden käyttö muuttamalla selaimensa asetuksia. Sivuston käyttäminen ilman evästeitä saattaa kuitenkin vaikuttaa sivujen toiminnallisuuteen.
+        Palvelun kävijätilastointia varten kerätyt tiedot anonymisoidaan, joten niitä ei voida liittää yksittäiseen henkilöön. Tällaisia tietoja ovat:
       </Typography>
-    </div>
-  );
-
-  const renderFinnishA11y = () => (
-    <div className={classes.textContainer}>
-      <Typography component="h3" variant="body2">Saavutettavuusseloste, päivitetään seuraavaksi maaliskuussa 2021</Typography>
+      <ul>
+        <li>
+          <Typography variant="body2">IP-osoite, josta verkkosivuille on siirrytty</Typography>
+        </li>
+        <li>
+          <Typography variant="body2">ajankohta</Typography>
+        </li>
+        <li>
+          <Typography variant="body2">palvelussa käytetyt sivut</Typography>
+        </li>
+        <li>
+          <Typography variant="body2">selaintyyppi</Typography>
+        </li>
+        <li>
+          <Typography variant="body2">alueellinen sijaintitieto, josta käyttäjää ei voi yksilöidä.</Typography>
+        </li>
+      </ul>
       <Typography className={classes.text} variant="body2">
-        Tämä saavutettavuusseloste koskee Helsingin kaupungin palvelukartta.hel.fi -verkkosivustoa. Sivuston osoite on https://palvelukartta.hel.fi/.
-      </Typography>
-      <Typography component="h4" variant="body2">Sivustoa koskevat lain säädökset</Typography>
-      <Typography className={classes.text} variant="body2">
-        Tämä sivusto on julkaistu 23.9.2018 jälkeen.
-        Sivuston tulee täyttää lain edellyttämät saavutettavuuden vaatimukset
-      </Typography>
-      <Typography component="h4" variant="body2">Kaupungin tavoite</Typography>
-      <Typography className={classes.text} variant="body2">
-        Digitaalisten palveluiden saavutettavuudessa Helsingin tavoitteena on pyrkiä
-        vähintään WCAG ohjeiston mukaiseen AA- tai sitä parempaan tasoon,
-        mikäli se on kohtuudella mahdollista.
-      </Typography>
-      <Typography component="h4" variant="body2">Vaatimustenmukaisuustilanne</Typography>
-      <Typography className={classes.text} variant="body2">
-        Tämä verkkosivusto täyttää lain asettamat kriittiset saavutettavuusvaatimukset
-         WCAG v2.1 -tason AA mukaisesti seuraavin havaituin puuttein.
-      </Typography>
-      <Typography component="h3" variant="body2">Havaitut puutteet</Typography>
-      <Typography className={classes.text} variant="body2">
-        Palvelukartta.hel.fi sivusto on saavutettava siltä osin, kuin saavutettavuuslaki sitä edellyttää. 
-        Palvelukartta noudattaa laissa asetettua pykälää:
-      </Typography>
-      <Typography className={classes.text} variant="body2">
-        3 § Lain soveltamisala 5) verkkokarttoihin ja karttapalveluihin; jos kuitenkin palveluntarjoajan digitaalisessa
-        palvelussa oleva kartta on tarkoitettu navigointikäyttöön, sen olennainen käyttäjää opastava tietosisältö on
-        kuitenkin tarjottava vaihtoehtoisella tavalla saavutettavuusvaatimukset täyttävässä digitaalisessa muodossa;
-      </Typography>
-      <Typography className={classes.text} variant="body2">
-        Perustelu: Palvelukartan käyttöliittymä tarjoaa kaiken kartassa esitettävän, palvelun käytön kannalta keskeisen
-        tiedon vaihtoehtoisessa, saavutettavassa muodossa. Tiedot esitetään käyttöliittymän osassa, jossa palvelun
-        hakukenttä sijaitsee. Selausjärjestyksessä tiedot ovat hakukentän jälkeen ja edelleen mm. toimipistenäkymän
-        välilehdissä sekä pelkän osoitteen (esim. kadun nimi) perusteella tehdyn haun tuloksissa. Käyttäjä voi mm. tutkia,
-        mitä palveluun tallennettuja toimipisteitä kyseiseltä kadulta löytyy, mikäli toimipistettä ei halua etsiä suoralla
-        osoitteella tai toimipisteen nimellä. Kartan visuaalinen tarkastelu tai sen kohteiden klikkaaminen ei siten ole
-        ainoa keino, jolla käyttäjä voi osoite- tai toimipistetietoja selvittää, tai toimipisteitä etsiä. Kartta auttaa
-        niitä käyttäjiä, jotka sitä kykenevät hyödyntämään, mutta kartta ei ole ainoa keino palvelun käyttämiseen.
-      </Typography>
-      <Typography className={classes.text} variant="body2">
-        Kartta on palvelussa tietoisesti piilotettu avustavalta tekniikalta. Syynä on, että karttapohja sisältää lukuisia
-        tietoja, jotka ovat oltava teknisesti osa sivun sisältöä, jotta kartta voidaan piirtää oikein ja jotta käyttäjä voi
-        näitä kohteita klikata (tällaisia tietoja ovat mm. kadunnimet ja kadulla sijaitsevat toimipisteet).
-      </Typography>
-      <Typography className={classes.text} variant="body2">
-        Jos kartta asetetaan sivulle täysin "paljaana" eikä sitä piiloteta ruudunlukuohjelmalta, muuttuu palvelun käyttö
-        kohtuuttoman vaikeaksi henkilöille, jotka eivät palvelua voi näönvaraisesti tarkastella. Syynä on, että ruudunlukija
-        esittää silloin käyttäjälle kaiken edellä kuvatun, karttapohjaan liittyvän ns. metatiedon, kuten klikattavat
-        toimipisteet ja kadunnimet. Käyttäjä hyvin nopeasti hukkuisi tällaisen tietotulvan sekaan, ja palvelun käytöstä
-        tulisi kohtuuttoman raskasta. Siksi karttaa ei tällä hetkellä paljasteta avustavalle teknologialle, vaan vastaava
-        tieto tarjotaan palvelun hakukentän kautta. 
-      </Typography>
-
-      <Typography component="h4" variant="body2">Puutteiden korjaus</Typography>
-      <Typography className={classes.text} variant="body2">
-        Karttanäkymää ei tehdä saavutettavaksi. Ruudunlukijalta kartta on piilotettu.
-        Näppäimistöllä pääsee lähentämään ja loitontamaan karttaa, mutta ei pääse kartalla oleviin toimipisteeseen.
-      </Typography>
-      <Typography component="h4" variant="body2">Tiedon saanti saavutettavassa muodossa</Typography>
-      <Typography className={classes.text} variant="body2">
-        {`Mainituista puutteista johtuen saavuttamatta jäävää sisältöä voi pyytää tämän sivustonylläpitäjältä.
-
-          Kaupunginkanslia/ Strategiaosasto/ Tietohallinto
-          mirjam.heikkinen@hel.fi ja henna.niemi@hel.fi`}
-      </Typography>
-      <Typography component="h4" variant="body2">Saavutettavuusselosteen laatiminen</Typography>
-      <Typography className={classes.text} variant="body2">Tämä seloste on laadittu 27.1.2020</Typography>
-      <Typography component="h4" variant="body2">Saavutettavuuden arviointi</Typography>
-      <Typography className={classes.text} variant="body2">
-        Saavutettavuuden arvioinnissa on noudatettu Helsingin kaupungin
-        työohjetta ja menetelmiä, jotka
-        pyrkivät varmistamaan sivuston saavutettavuuden kaikissa työvaiheissa.
-      </Typography>
-      <Typography className={classes.text} variant="body2">
-        Saavutettavuus on tarkistettu käyttäen ohjelmallista saavutettavuustarkistusta
-        sekä sivuston ja sisällön manuaalista tarkistusta.
-        Ohjelmalliset tarkistukset on suoritettu käyttäen Google Chrome
-        selaimen Lighthouse arviointityökalua, Deque Systems Inc. valmistamaa axe selainlaajennosta,
-        sekä Siteimprove selainlaajennosta.
-      </Typography>
-      <Typography className={classes.text} variant="body2">
-        Arviointityökalujen raportoimat epäkohdat on tarkastettu ja tarvittaessa korjattu.
-      </Typography>
-      <Typography className={classes.text} variant="body2">
-        {`Ulkopuolisen asiantuntija-auditoinnin on suorittanut Annanpura Oy Auditointiraportti on
-          ladattavissa osoitteesta: https://www.hel.fi/static/liitteet-
-          2019/Helsinki/Saavutettavuusselosteet/Palvelukartta-auditointiraportti.pdf`}
-      </Typography>
-      <Typography component="h4" variant="body2">Saavutettavuusselosteen päivittäminen</Typography>
-      <Typography className={classes.text} variant="body2">
-        Sivuston saavutettavuudesta huolehditaan jatkuvalla valvonnalla
-        tekniikan tai sisällön muuttuessa, sekä määräajoin suoritettavalla tarkistuksella.
-        Tätä selostetta päivitetään sivuston muutosten ja
-        saavutettavuuden tarkistusten yhteydessä.
-      </Typography>
-      <Typography component="h3" variant="body2">Palaute ja yhteystiedot</Typography>
-      <Typography className={classes.text} variant="body2">
-        {`Sivuston saavutettavuudesta vastaa
-          Helsingin kaupunki/ kaupunginkanslia/ strategiaosasto/ tietohallinto
-          mirjam.heikkinen@hel.fi ja henna.niemi@hel.fi`}
-      </Typography>
-      <Typography component="h4" variant="body2">Ilmoittaminen ei-saavutettavasta sisällöstä</Typography>
-      <Typography className={classes.text} variant="body2">
-        Mikäli käyttäjä kokee, etteivät saavutettavuuden vaatimukset kuitenkaan täyty,
-        voi tästä tehdäilmoituksen sähköpostilla helsinki.palaute@hel.fi
-        tai palautelomakkeella www.hel.fi/palaute.
-      </Typography>
-      <Typography component="h4" variant="body2">Tietojen pyytäminen saavutettavassa muodossa</Typography>
-      <Typography className={classes.text} variant="body2">
-        Mikäli käyttäjä ei koe saavansa sivuston sisältöä saavutettavassa muodossa,
-        voi käyttäjä pyytää näitä tietoja sähköpostilla
-        helsinki.palaute@hel.fi tai palautelomakkeella www.hel.fi/palaute.
-        Tiedusteluun pyritään vastaamaan kohtuullisessa ajassa.
-      </Typography>
-      <Typography component="h3" variant="body2">Saavutettavuuden oikeussuoja, Täytäntöönpanomenettelyt</Typography>
-      <Typography className={classes.text} variant="body2">
-        Mikäli henkilö kokee, ettei hänen ilmoitukseensa tai
-        tiedusteluunsa ole vastattu tai vastaus ei ole
-        tyydyttävä, voi asiasta tehdä ilmoituksen Etelä-Suomen aluehallintovirastoon. Etelä-Suomen
-        aluehallintoviraston sivulla kerrotaan tarkasti, miten asia käsitellään.
-      </Typography>
-      <Typography className={classes.text} variant="body2">
-        {`Etelä-Suomen aluehallintovirasto
-        Saavutettavuuden valvonnan yksikkö
-        www.saavutettavuusvaatimukset.fi
-        saavutettavuus@avi.fi
-        Puhelinvaihde: 0295 016 000
-        Avoinna: ma-pe klo 8.00 – 16.15`}
-      </Typography>
-      <Typography component="h3" variant="body2">Helsingin kaupunki ja saavutettavuus</Typography>
-      <Typography className={classes.text} variant="body2">
-        Helsingin kaupungin tavoitteena on olla kaikille esteetön ja saavutettava
-        kaupunki. Kaupungin tavoitteena on, että Helsingissä on kaikkien
-        kaupunkilaisten mahdollisimman helppo liikkua ja toimia ja että kaikki
-        sisältö ja palvelut olisivat kaikkien saavutettavissa.
-      </Typography>
-      <Typography className={classes.text} variant="body2">
-        Kaupunki edistää digitaalisten palveluiden saavutettavuutta yhdenmukaistamalla julkaisutyötä
-        ja järjestämällä saavutettavuuteen keskittyvää koulutusta henkilökunnalleen.
-      </Typography>
-      <Typography className={classes.text} variant="body2">
-        Sivustojen saavutettavuuden tasoa seurataan jatkuvasti sivustoja ylläpidettäessä.
-        Havaittuihin puutteisiin reagoidaan välittömästi. Tarvittavat muutokset pyritään
-        suorittamaan mahdollisimman nopeasti.
-      </Typography>
-      <Typography component="h4" variant="body2">Vammaiset ja avustavien teknologioiden käyttäjät</Typography>
-      <Typography className={classes.text} variant="body2">
-        Kaupunki tarjoaa neuvontaa ja tukea vammaisille ja avustavien teknologioiden käyttäjille.
-        Tukea on saatavilla kaupungin sivuilla ilmoitetuista neuvontasivuilta sekä
-        puhelinneuvonnasta.
-      </Typography>
-
-      <Typography component="h3" variant="body2">Saavutettavuusselosteen hyväksyntä</Typography>
-      <Typography className={classes.text} variant="body2">
-        Tämän selosteen on hyväksynyt 27.2.2020
-        Kaupunginkanslia/ strategiaosasto/ tietohallinto
-        Helsingin kaupunki
+        {'Lisää tietoa palvelun evästeistä: '}
+        <Link target="_blank" href="https://www.hel.fi/helsinki/fi/kaupunki-ja-hallinto/tietoa-helsingista/tietoa-hel-fista/turvallisuus">
+          Verkkopalvelun tietosuoja ja evästeet | Helsingin kaupunki
+        </Link>
       </Typography>
     </div>
   );
 
   const renderEnglishInfo = () => (
     <div className={classes.textContainer}>
-      <Typography component="h3" variant="body2">Accessibility of the Service Map</Typography>
-      <ButtonBase className={classes.linkButton} role="link" onClick={() => handleClick()}>
-        <Typography color="inherit" variant="body2"><FormattedMessage id="info.statement" /></Typography>
-      </ButtonBase>
+      {localeUrl ? (
+        <>
+          <Typography component="h3" variant="body2">Accessibility of the Service Map</Typography>
+          <ButtonBase className={classes.linkButton} role="link" onClick={() => handleClick()}>
+            <Typography color="inherit" variant="body2"><FormattedMessage id="info.statement" /></Typography>
+          </ButtonBase>
+        </>
+      ) : null}
       <Typography component="h3" variant="body2"><FormattedMessage id="app.title" /></Typography>
       <Typography className={classes.text} variant="body2">
-        On the Service Map, you can find the public services units of the cities of Espoo, Helsinki, Kauniainen and
-        Vantaa, and their services – for example, schools, day-care centres and health stations.
-        On the Service Map, there are other public services as well, such as HUS's services (for example, X-
+        On the Service Map, you can find the public services units of the cities of Espoo, Helsinki, Kauniainen,
+        Vantaa and Kirkkonummi, and their services – for example, schools, day-care centres and health stations.
+        On the Service Map, there are other public services as well, such as HUS&apos;s services (for example, X-
         rays), Helsinki Region Environmental Services Authority’s services (e.g. recycling sites), Aalto University’s
         services as well as other governmental services. Individual services such as tourist attractions (for example
         restaurants) are added to the Service Map through the MyHelsinki API.
@@ -489,7 +352,7 @@ const InfoView = ({
       </Typography>
       <Typography component="h4" variant="body2">City settings</Typography>
       <Typography className={classes.text} variant="body2">
-        Here you can choose one or several of the cities: Espoo, Helsinki, Kauniainen, Vantaa. When you choose a
+        Here you can choose one or several of the cities: Espoo, Helsinki, Kauniainen, Vantaa, Kirkkonummi. When you choose a
         city, the search results concern only this city’s data. If you have not chosen a city, then the search concerns
         all cities.
       </Typography>
@@ -498,8 +361,7 @@ const InfoView = ({
       <ul>
         <li><Typography variant="body2">Service map</Typography></li>
         <li><Typography variant="body2">High-contrast map</Typography></li>
-        <li><Typography variant="body2">Aerial map</Typography></li>
-        <li><Typography variant="body2">Aerial map</Typography></li>
+        <li><Typography variant="body2">Guide map</Typography></li>
       </ul>
       <Typography className={classes.text} variant="body2">
         in the accessibility settings you have chosen “I am visually impaired” or “I have color vision deficiency”,
@@ -534,152 +396,65 @@ const InfoView = ({
         </li>
       </ul>
       <Typography className={classes.text} variant="body2">
-        The data of the services and service units are open data and available through the REST-API, which is
-        offered through the Service Map's back-end application. The data of the Service Map can be used freely,
+        The data of the services and service units are open data and available through the REST-API, which is
+        offered through the Service Map&apos;s back-end application. The data of the Service Map can be used freely,
         with the exception of photographs of sculptures and public art, which are protected by copyright and
         cannot be used for commercial purposes.
         The Service Map’s background maps “Service Map” and “High-contrast map” are compiled of
-        OpenStreetMap service’s data, whose copyright belongs to the makers of OpenStreetMap.
-        The file descriptions collection can be found on the hel.fi website. Check “Pääkaupunkiseudun toimipiste- ja
-        palvelurekisteri” and “Osallisuuden ja palautteiden rekisteri”.
+        OpenStreetMap service’s data, whose copyright belongs to the makers of OpenStreetMap.
+        The file descriptions collection can be found on the hel.fi website. Check “Pääkaupunkiseudun toimipiste- ja
+        palvelurekisteri” and “Osallisuuden ja palautteiden rekisteri”.
       </Typography>
       <Typography className={classes.text} variant="body2">
-        The service has been developed at the ICT Management unit of the Helsinki City Executive Office.
+        The service has been developed at the ICT Management unit of the Helsinki City Executive Office.
       </Typography>
-      <Typography component="h3" variant="body2">Other</Typography>
+      <Typography component="h3" variant="body2">Cookies</Typography>
       <Typography className={classes.text} variant="body2">
-        The Service Map is also on Facebook and Twitter .
+        We use cookies on our website to improve the performance and content of the site. The website automatically collects the below data about visitors. This data is used to improve the user interface and user experience of the website and to monitor statistically the numbers of visitors. The data is not handed over to external parties.
+        The website uses cookies to maintain the user session. Personal data identifying the user is not collected or recorded in the technical cookies.
+        The user has the possibility to prevent the use of cookies by changing the settings of their browser. However, the use of the website without cookies may affect the functionality of the pages.
+        The data collected for the visitor statistics of the service is anonymized so it cannot be connected to an individual person. This data includes:
       </Typography>
-    </div>
-  );
-
-  const renderEnglishA11y = () => (
-    <div className={classes.textContainer}>
-      <Typography component="h3" variant="body2">Accessibility statement, will be updated in march 2021</Typography>
+      <ul>
+        <li>
+          <Typography variant="body2">the IP address used to access the website</Typography>
+        </li>
+        <li>
+          <Typography variant="body2">the time of accessing the service</Typography>
+        </li>
+        <li>
+          <Typography variant="body2">the pages used in the service</Typography>
+        </li>
+        <li>
+          <Typography variant="body2">the type of browser</Typography>
+        </li>
+        <li>
+          <Typography variant="body2">regional location data, which cannot be used to identify the user</Typography>
+        </li>
+      </ul>
       <Typography className={classes.text} variant="body2">
-        This accessibility statement applies to the website Servicemap of the City of
-        Helsinki. The site address is https://servicemap.hel.fi/.
-      </Typography>
-      <Typography component="h4" variant="body2">Statutory provisions applicable to the website</Typography>
-      <Typography className={classes.text} variant="body2">
-        This website was published after 23 September 2018. The website must fulfil
-        statutory accessibility requirements.
-      </Typography>
-      <Typography component="h4" variant="body2">The objective of the city</Typography>
-      <Typography className={classes.text} variant="body2">
-        As regards the accessibility of digital services, Helsinki aims to reach at least Level
-        AA or above as set forth in the WCAG guidelines in so far as is reasonably
-        practical.
-      </Typography>
-      <Typography component="h4" variant="body2">Compliance status</Typography>
-      <Typography className={classes.text} variant="body2">
-        This website meets the statutory critical accessibility requirements in accordance
-        with Level AA of the WCAG v2.1 with the following deficiencies.
-      </Typography>
-      <Typography component="h4" variant="body2">Non-accessible content</Typography>
-      <Typography className={classes.text} variant="body2">
-        The content mentioned below does not yet meet all of the statutory accessibility
-        requirements.
-      </Typography>
-      <Typography component="h3" variant="body2">Deficiencies found</Typography>
-      <Typography className={classes.text} variant="body2">
-        Minor contrast deficiencies
-        Mobile version not checked yet
-      </Typography>
-      <Typography component="h4" variant="body2">Correcting deficiencies</Typography>
-      <Typography className={classes.text} variant="body2">
-        The shortcomings will be corrected by 28.2.2020.
-        The work is done together with Annanpura Oy.
-      </Typography>
-      <Typography component="h4" variant="body2">Obtaining information in an accessible form</Typography>
-      <Typography className={classes.text} variant="body2">
-        {`Due to these deficiencies, you can request the non-accessible content from the administrator of this website.
-
-        Central Administration
-        mirjam.heikkinen@hel.fi and henna.niemi@hel.fi`}
-      </Typography>
-      <Typography component="h4" variant="body2">Preparing an accessibility statement</Typography>
-      <Typography className={classes.text} variant="body2">This statement was prepared on January 27th, 2020</Typography>
-      <Typography component="h4" variant="body2">Assessment of accessibility</Typography>
-      <Typography className={classes.text} variant="body2">
-        The working instruction and procedures of the City of Helsinki were followed when
-        evaluating the accessibility of the site, with the aim of ensuring that websites are
-        accessible in all stages of the work process.
-      </Typography>
-      <Typography className={classes.text} variant="body2">
-        Accessibility was evaluated by means of an audit by a third-party expert as well as
-        self-evaluation.
-        Accessibility was evaluated using a programmatic accessibility auditing tool as well
-        as by manually reviewing the site and content. Programmatic evaluations were
-        carried out using the Lighthouse review tool in Google Chrome browser, the axe
-        browser extension by Deque Systems Inc. and the Siteimprove browser extension.
-      </Typography>
-      <Typography className={classes.text} variant="body2">
-        Defects reported by the evaluation tools were reviewed and, if necessary,
-        corrected.
-      </Typography>
-      <Typography className={classes.text} variant="body2">
-        {`The third-party expert audit was carried out by Annanpura Ltd. The audit report can
-          be downloaded at: https://www.hel.fi/static/liitteet-
-          2019/Helsinki/Saavutettavuusselosteet/Palvelukartta-auditointiraportti.pdf (in
-          finnish)`}
-      </Typography>
-      <Typography component="h4" variant="body2">Updating the accessibility statement</Typography>
-      <Typography className={classes.text} variant="body2">
-        When website technology or content changes, its accessibility must be ensured
-        through constant monitoring and periodic checks. This statement will be updated in
-        conjunction with website changes and accessibility evaluations.
-      </Typography>
-      <Typography component="h3" variant="body2">Feedback and contact information</Typography>
-      <Typography className={classes.text} variant="body2">
-        {`The entity responsible for site accessibility:
-
-        Central Administration
-
-        mirjam.heikkinen@hel.fi and henna.niemi@hel.fi`}
-      </Typography>
-      <Typography component="h4" variant="body2">Reporting non-accessible content</Typography>
-      <Typography className={classes.text} variant="body2">
-        {`If a user feels that accessibility requirements have not been met, they can report the issue by e-mail to helsinki.palaute@hel.fi or through the feedback form at
-        https://www.hel.fi/helsinki/en/administration/participate/feedback.`}
-      </Typography>
-      <Typography component="h4" variant="body2">Requesting information in an accessible format</Typography>
-      <Typography className={classes.text} variant="body2">
-        If a user feels that content on a website is not available in an accessible format,
-        they can request for this information by e-mail at helsinki.palaute@hel.fi or through
-        the feedback form at
-        https://www.hel.fi/helsinki/en/administration/participate/feedback. The aim is to
-        reply to the enquiry within a reasonable time frame.
-      </Typography>
-      <Typography component="h3" variant="body2">Legal protection of accessibility, Enforcement procedure</Typography>
-      <Typography className={classes.text} variant="body2">
-        If a user feels that their report or enquiry has not received a response or that the
-        response is unsatisfactory, they can report the issue to the Regional State
-        Administrative Agency of Southern Finland. The website of the Regional State
-        Administrative Agency of Southern Finland explains in detail how the matter will be
-        processed.
-      </Typography>
-      <Typography className={classes.text} variant="body2">
-        {`Regional State Administrative Agency of Southern Finland
-          Accessibility monitoring unit
-          www.saavutettavuusvaatimukset.fi
-          saavutettavuus@avi.fi
-          Telephone exchange +358 295 016 000
-          Open: Mon-Fri at 8:00–16:15`}
+        {'Read more about Data protection of the Hel.fi Service: '}
+        <Link target="_blank" href="https://www.hel.fi/helsinki/en/administration/information/information/safety-of-the-hel.fi/safety">
+          Data protection of the Hel.fi Service | City of Helsinki
+        </Link>
       </Typography>
     </div>
   );
 
   const renderSwedishInfo = () => (
     <div className={classes.textContainer}>
-      <Typography component="h3" variant="body2">Servicekartans tillgänglighet</Typography>
-      <ButtonBase className={classes.linkButton} role="link" onClick={() => handleClick()}>
-        <Typography color="inherit" variant="body2"><FormattedMessage id="info.statement" /></Typography>
-      </ButtonBase>
+      {localeUrl ? (
+        <>
+          <Typography component="h3" variant="body2">Servicekartans tillgänglighet</Typography>
+          <ButtonBase className={classes.linkButton} role="link" onClick={() => handleClick()}>
+            <Typography color="inherit" variant="body2"><FormattedMessage id="info.statement" /></Typography>
+          </ButtonBase>
+        </>
+      ) : null}
       <Typography component="h3" variant="body2"><FormattedMessage id="app.title" /></Typography>
       <Typography className={classes.text} variant="body2">
-        På Servicekartan hittar du offentliga verksamhetsställen och service i Esbo, Grankulla, Helsingfors och
-        Vanda stad - exempelvis skolor, daghem och hälsostationer.
+        På Servicekartan hittar du offentliga verksamhetsställen och service i Esbo, Grankulla, Helsingfors,
+        Vanda och Kyrkslätt stad - exempelvis skolor, daghem och hälsostationer.
         På Servicekartan finns även andra offentliga tjänster, såsom HUS service (t.ex. röntgen), HRM:s tjänster
         (t.ex. återvinningsstationer), Aalto-universitetets tjänster samt diverse statliga tjänster. Privata tjänster
         såsom turistobjekt (t.ex. restauranger) kommer till Servicekartan via MyHelsinki-gränssnittet.
@@ -784,7 +559,6 @@ const InfoView = ({
       <ul>
         <li><Typography variant="body2">servicekartan</Typography></li>
         <li><Typography variant="body2">karta med stora kontraster</Typography></li>
-        <li><Typography variant="body2">flygfoto</Typography></li>
         <li><Typography variant="body2">guidekartan</Typography></li>
       </ul>
       {/* <Typography className={classes.text} variant="body2">
@@ -831,126 +605,36 @@ const InfoView = ({
         delaktighet och respons”.
       </Typography>
       <Typography className={classes.text} variant="body2">
-          Servicen har utarbetats vid Helsingfors stadskanslis informationsförvaltningsenhet.
+        Servicen har utarbetats vid Helsingfors stadskanslis informationsförvaltningsenhet.
       </Typography>
-      <Typography component="h3" variant="body2">Övrigt</Typography>
+      <Typography component="h3" variant="body2">Cookies</Typography>
       <Typography className={classes.text} variant="body2">
-        Servicekartan finns också på Facebook och Twitter.
+        Vi använder cookies på vår webbplats för att förbättra webbplatsens prestanda och innehåll. På webbplatsen samlar vi automatiskt in nedan beskrivna uppgifter om besökarna. Dessa uppgifter används för att förbättra webbplatsens användargränssnitt och användarupplevelsen samt för statistisk uppföljning av antalet besökare. Uppgifterna lämnas inte ut till utomstående.På webbplatsen används cookies för att upprätthålla användarsessionen. Tekniska cookies varken samlar eller lagrar identifierande personuppgifter.
+        Användaren kan neka användningen av cookies i webbläsarens inställningar. Att använda webbplatsen utan cookies kan dock påverka sidornas funktioner.
+        Uppgifterna som samlas in för besöksstatistik om tjänsten anonymiseras så att de inte kan kopplas till enskilda personer. Sådana uppgifter är:
       </Typography>
-    </div>
-  );
-
-  const renderSwedishA11y = () => (
-    <div className={classes.textContainer}>
-      <Typography component="h3" variant="body2">Tillgänglighetsutlåtande, uppdateras kommer i mars 2021</Typography>
+      <ul>
+        <li>
+          <Typography variant="body2">IP-adressen från vilken besökaren kommer till webbplats</Typography>
+        </li>
+        <li>
+          <Typography variant="body2">tidpunkt</Typography>
+        </li>
+        <li>
+          <Typography variant="body2">vilka sidor användaren besökt i tjänsten</Typography>
+        </li>
+        <li>
+          <Typography variant="body2">typ av webbläsare</Typography>
+        </li>
+        <li>
+          <Typography variant="body2">regionala platsdata som inte kan användas för att identifiera användaren.</Typography>
+        </li>
+      </ul>
       <Typography className={classes.text} variant="body2">
-        Detta tillgänglighetsutlåtande gäller Helsingfors stads webbplats Servicekarta.
-        Webbplatsens adress är https://servicekarta.hel.fi.
-      </Typography>
-      <Typography component="h4" variant="body2">Lagbestämmelser som gäller webbplatsen</Typography>
-      <Typography className={classes.text} variant="body2">
-        Denna webbplats har offentliggjorts efter 23.9.2018. Webbplatsen ska uppfylla
-        lagens krav på tillgänglighet.
-      </Typography>
-      <Typography component="h4" variant="body2">Stadens mål</Typography>
-      <Typography className={classes.text} variant="body2">
-        När det gäller tillgänglighet till digitala tjänster har Helsingfors stad som mål att
-        uppnå minst nivå AA eller bättre enligt WCAG-anvisningarna, om det är rimligt.
-      </Typography>
-      <Typography component="h4" variant="body2">Fullgörandestatus</Typography>
-      <Typography className={classes.text} variant="body2">
-        Denna webbplats uppfyller lagstadgade kritiska tillgänglighetskrav enligt nivå AA i
-        WCAG v2.1 med följande observerade brister.
-      </Typography>
-      <Typography component="h4" variant="body2">Icke tillgängligt innehåll</Typography>
-      <Typography className={classes.text} variant="body2">
-        Nedan angivet innehåll uppfyller ännu ej alla lagstadgade tillgänglighetskrav.
-      </Typography>
-      <Typography component="h3" variant="body2">Observerade brister</Typography>
-      <Typography className={classes.text} variant="body2">
-        Brist på tillgänglighet för den första produktionsversionen:
-        Mindre kontrastfel
-      </Typography>
-      <Typography component="h4" variant="body2">Rättning av brister</Typography>
-      <Typography className={classes.text} variant="body2">
-        Bristerna korrigeras senast 28.2.2020.
-        Arbetet utförs tillsammans med Annanpura Oy.
-      </Typography>
-      <Typography component="h4" variant="body2">Få uppgifter i tillgänglig form</Typography>
-      <Typography className={classes.text} variant="body2">
-        {`Innehåll som inte kan nås på grund av nämnda brister kan begäras från upprätthållaren av denna webbplats.
-
-        Stadskansliet
-        mirjam.heikkinen@hel.fi och henna.niemi@hel.fi`}
-      </Typography>
-      <Typography component="h4" variant="body2">Utarbetande av tillgänglighetsutlåtande</Typography>
-      <Typography className={classes.text} variant="body2">Detta utlåtande har utarbetats 27.1.2020</Typography>
-      <Typography component="h4" variant="body2">Bedömning av tillgänglighet</Typography>
-      <Typography className={classes.text} variant="body2">
-        Vid bedömning av tillgänglighet har följts Helsingfors stads arbetsanvisning och
-        metoder som siktar till att säkerställa webbplatsens tillgänglighet i alla arbetsfaser.
-      </Typography>
-      <Typography className={classes.text} variant="body2">
-         Tillgängligheten är kontrollerad genom revision av en extern expert samt som egen
-        edömning.
-        Tillgängligheten är kontrollerad med hjälp av automatisk tillgänglighetskontroll samt
-        manuell kontroll av webbplatsen och innehållet. Automatiska kontroller har utförts
-        med användning av bedömningsverktyget Lighthouse i webbläsaren Google
-        Chrome, webbläsartillägget axe från Deque Systems Inc. samt webbläsartillägget
-        Siteimprove.
-      </Typography>
-      <Typography className={classes.text} variant="body2">
-        Missförhållanden som bedömningsverktygen rapporterat har kontrollerats och vid
-        behov korrigerats.
-      </Typography>
-      <Typography className={classes.text} variant="body2">
-        {`Den externa expertrevisionen har utförts av Annanpura Oy Revisionsrapporten kan
-          laddas ner från: https://www.hel.fi/static/liitteet-
-          2019/Helsinki/Saavutettavuusselosteet/Palvelukartta-auditointiraportti.pdf (på
-          finska)`}
-      </Typography>
-      <Typography component="h4" variant="body2">Uppdatering av tillgänglighetsutlåtande</Typography>
-      <Typography className={classes.text} variant="body2">
-        Webbplatsens tillgänglighet kontrolleras genom kontinuerlig tillsyn när tekniken eller
-        innehållet förändras, samt granskning med regelbundna intervall. Detta utlåtande
-        uppdateras i samband med ändringar av webbplatsen samt granskningar av
-        tillgänglighet.
-      </Typography>
-      <Typography component="h3" variant="body2">Återkoppling och kontaktuppgifter</Typography>
-      <Typography className={classes.text} variant="body2">
-        {`För webbplatsens tillgänglighet svarar
-
-          Stadskansliet
-          mirjam.heikkinen@hel.fi och henna.niemi@hel.fi`}
-      </Typography>
-      <Typography component="h4" variant="body2">Anmälan om ej tillgängligt innehåll</Typography>
-      <Typography className={classes.text} variant="body2">
-        {`Om användaren upplever att kraven på tillgänglighet ändå inte uppfylls kan detta
-          anmälas per e-post helsinki.palaute@hel.fi eller med responsformulär på
-          www.hel.fi/palaute .`}
-      </Typography>
-      <Typography component="h4" variant="body2">Begäran om uppgifter i tillgänglig form</Typography>
-      <Typography className={classes.text} variant="body2">
-        Om användaren inte upplever sig få webbplatsens innehåll i tillgänglig form, kan
-        användaren begära dessa uppgifter per e-post helsinki.palaute@hel.fi eller med
-        responsformulär på www.hel.fi/palaute . Strävan är att svara på förfrågan inom
-        rimlig tid.
-      </Typography>
-      <Typography component="h3" variant="body2">Rättsskydd för tillgänglighet, Verkställighetsförfarande</Typography>
-      <Typography className={classes.text} variant="body2">
-        Om en person upplever att svar inte har erhållits på hans eller hennes anmälan
-        eller förfrågan, eller om svaret inte är tillfredsställande, kan saken anmälas till
-        regionförvaltningsverket i Södra Finland. På webbplatsen för
-        regionförvaltningsverket i Södra Finland finns detaljerad information om hur saken
-        behandlas.
-      </Typography>
-      <Typography className={classes.text} variant="body2">
-        {`Regionförvaltningsverket i Södra Finland
-          Enheten för tillgänglighetstillsyn
-          www.saavutettavuusvaatimukset.fi
-          saavutettavuus@avi.fi
-          Telefonväxel +358 295 016 000
-          Öppet: må–fr kl. 8.00–16.15`}
+        {'Läs mera om Helsingfors webbtjänstens dataskydd: '}
+        <Link target="_blank" href="https://www.hel.fi/helsinki/sv/stad-och-forvaltning/information/information/sakerhet">
+          Webbtjänstens dataskydd | Helsingfors stad
+        </Link>
       </Typography>
     </div>
   );
@@ -964,26 +648,19 @@ const InfoView = ({
       <div className={classes.pageContainer}>
         {renderTitlebar()}
         {locale === 'fi' && (
-          content === 'generalInfo'
-            ? renderFinnishInfo()
-            : renderFinnishA11y()
+          renderFinnishInfo()
         )}
         {locale === 'en' && (
-          content === 'generalInfo'
-            ? renderEnglishInfo()
-            : renderEnglishA11y()
+          renderEnglishInfo()
         )}
         {locale === 'sv' && (
-          content === 'generalInfo'
-            ? renderSwedishInfo()
-            : renderSwedishA11y()
+          renderSwedishInfo()
         )}
-        {
-        config.version || config.commit
-          ? (
-            <Typography align="left" aria-hidden="true" className={classes.text}>{versionText}</Typography>
-          ) : null
-      }
+        <NoSsr>
+          {config.version || config.commit
+            ? <Typography align="left" aria-hidden="true" className={classes.text}>{versionText}</Typography>
+            : null}
+        </NoSsr>
       </div>
     </div>
   );
@@ -992,9 +669,7 @@ const InfoView = ({
 // Typechecking
 InfoView.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  location: PropTypes.objectOf(PropTypes.any).isRequired,
   locale: PropTypes.string.isRequired,
-  navigator: PropTypes.objectOf(PropTypes.any),
 };
 
 export default InfoView;

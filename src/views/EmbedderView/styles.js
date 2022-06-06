@@ -1,5 +1,4 @@
 export default (theme) => {
-  const formPaperHorizontalPadding = theme.spacing(3);
   return {
     appBar: {
       position: 'relative',
@@ -24,7 +23,7 @@ export default (theme) => {
       right: 0,
     },
     container: {
-      margin: `0 10% ${theme.spacing(3)}px 10%`,
+      margin: `0 10% ${theme.spacing(3)} 10%`,
     },
     iframeContainer: {
       width: '100%',
@@ -33,19 +32,19 @@ export default (theme) => {
       border: '3px dashed #666',
     },
     formContainer: {
-      margin: `${theme.spacing(2)}px 0`,
+      margin: `${theme.spacing(2)} 0`,
     },
     marginBottom: {
       marginBottom: theme.spacing(2),
     },
     formContainerPaper: {
-      minWidth: `calc(100% - ${formPaperHorizontalPadding * 2}px)`,
+      minWidth: `calc(100% - ${theme.spacing(6)})`,
       display: 'inline-block',
-      margin: `${theme.spacing(3)}px 0`,
-      padding: `${theme.spacing(2)}px ${formPaperHorizontalPadding}px`,
+      margin: `${theme.spacing(3)} 0`,
+      padding: `${theme.spacing(2)} ${theme.spacing(3)}`,
       textAlign: 'left',
       '& label': {
-        margin: `${theme.spacing(1)}px 0`,
+        margin: `${theme.spacing(1)} 0`,
       },
       '& fieldset': {
         margin: '0 -12px',
@@ -78,7 +77,7 @@ export default (theme) => {
       marginBottom: theme.spacing(3),
     },
     titleContainer: {
-      margin: `${theme.spacing(2)}px 0`,
+      margin: `${theme.spacing(2)} 0`,
       padding: theme.spacing(3),
       position: 'relative',
     },

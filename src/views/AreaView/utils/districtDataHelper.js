@@ -8,25 +8,26 @@ export const dataStructure = [ // Categorized district data structure
     id: 'health',
     titleID: 'area.list.health',
     districts: [
-      'health_station_district',
-      'maternity_clinic_district',
+      { id: 'health_station_district', searchWords: ['terveysasema', 'terveys- ja hyvinvointialue', 'terveyskeskus', 'terkkari', 'lääkäri', 'omalääkäri', 'oma terveydenhoitaja', 'lähiterveysasema', 'lähin terveysasema'] },
+      { id: 'maternity_clinic_district', searchWords: ['neuvolat', 'neuvola-alueet', 'omaneuvola', 'oma neuvola'] },
     ],
   },
   {
     id: 'education',
     titleID: 'area.list.education',
+    searchWords: ['koulu', 'koulut', 'koulu ruotsi', 'ruotsinkieliset koulut', 'oppilaaksiotto', 'oppilaaksiottoalueet', 'koulualueet', 'oma koulu', 'lähikoulu'],
     districts: [
-      'lower_comprehensive_school_district_fi',
-      'lower_comprehensive_school_district_sv',
-      'upper_comprehensive_school_district_fi',
-      'upper_comprehensive_school_district_sv',
+      { id: 'lower_comprehensive_school_district_fi', searchWords: ['ala-aste', 'alakoulu', 'ala-aste suomi', 'alakoulu suomi'] },
+      { id: 'lower_comprehensive_school_district_sv', searchWords: ['ala-aste', 'ruotsi', 'alakoulu ruotsi'] },
+      { id: 'upper_comprehensive_school_district_fi', searchWords: ['yläaste', 'yläkoulu', 'yläaste suomi', 'yläkoulu suomi'] },
+      { id: 'upper_comprehensive_school_district_sv', searchWords: ['yläaste ruotsi', 'yläkoulu ruotsi'] },
     ],
     subCategories: [
       {
         titleID: 'area.list.education.finnish',
         districts: [
           'lower_comprehensive_school_district_fi',
-          'upper_comprehensive_school_district_fi',
+          'upper_comprehensive_school_district_fi', // TODO: Hmmm
         ],
       },
       {
@@ -41,48 +42,58 @@ export const dataStructure = [ // Categorized district data structure
   {
     id: 'preschool',
     titleID: 'area.list.preschool',
+    searchWords: ['eskarit', 'esikoulut'],
     districts: [
-      'preschool_education_fi',
-      'preschool_education_sv',
+      { id: 'preschool_education_fi', searchWords: ['esikoulu', 'esikoulu suomi', 'eskari', 'esiopetus'] },
+      { id: 'preschool_education_sv', searchWords: ['esikoulu ruotsi', 'eskari ruotsi', 'eskari ruotsinkielinen', 'esiopetus ruotsi'] },
     ],
   },
   {
     id: 'geographical',
     titleID: 'area.list.geographical',
     districts: [
-      'neighborhood',
-      'postcode_area',
+      { id: 'neighborhood', searchWords: ['kaupunginosat'] },
+      { id: 'postcode_area', searchWords: ['postinumerot'] },
+      { id: 'major_district', searchWords: ['suurpiirit'] },
     ],
   },
   {
     id: 'protection',
     titleID: 'area.list.protection',
+    searchWords: ['VSS', 'väestönsuojelu'],
     districts: [
-      'rescue_area',
-      'rescue_district',
-      'rescue_sub_district',
+      { id: 'rescue_area', searchWords: ['suojelupiirit'] },
+      { id: 'rescue_district', searchWords: ['suojelulohkot'] },
+      { id: 'rescue_sub_district', searchWords: ['suojelualalohkot'] },
     ],
   },
   {
     id: 'nature',
     titleID: 'area.list.natureConservation',
     districts: [
-      'nature_reserve',
+      { id: 'nature_reserve', searchWords: ['luonnonsuojelualueet', 'luonnonsuojelu'] },
     ],
   },
   {
     id: 'parking',
     titleID: 'area.list.parking',
     districts: [
-      'resident_parking_zone',
+      { id: 'resident_parking_zone', searchWords: ['asukaspysäköinti', 'tunnuksellinen pysäköinti'] },
+      { id: 'parking_payzone', searchWords: ['maksuvyöhykkeet'] },
     ],
   },
 ];
 
 // Get geographical districts
-export const geographicalDistricts = dataStructure.find(obj => obj.id === 'geographical').districts;
+export const geographicalDistricts = dataStructure.find(obj => obj.id === 'geographical').districts.map(obj => obj.id);
 // Get category districts by id
-export const getCategoryDistricts = id => dataStructure.find(obj => obj.id === id)?.districts || [];
+export const getCategoryDistricts = id => (
+  dataStructure.find(obj => obj.id === id)?.districts.map(obj => obj.id) || []
+);
+// Get category by district id
+export const getDistrictCategory = districtId => dataStructure.find(
+  obj => obj.districts.some(area => area.id === districtId),
+)?.id;
 
 
 export const groupDistrictData = (data) => {
@@ -93,9 +104,15 @@ export const groupDistrictData = (data) => {
     // FIXME: temporary solution to hide older school years
       return acc;
     }
-    const period = start && end
-      ? `${new Date(start).getFullYear()}-${new Date(end).getFullYear()}`
-      : null;
+    let period;
+
+    if (cur.extra?.schoolyear) {
+      period = cur.extra.schoolyear;
+    } else {
+      period = start && end
+        ? `${new Date(start).getFullYear()}-${new Date(end).getFullYear()}`
+        : null;
+    }
     const currentType = period ? `${cur.type}${period}` : cur.type;
     const duplicate = acc.find(obj => obj.id === currentType);
 
@@ -118,7 +135,7 @@ export const groupDistrictData = (data) => {
   );
 
   // Sort by data structure order
-  const categoryOrder = dataStructure.flatMap(obj => obj.districts);
+  const categoryOrder = dataStructure.flatMap(obj => obj.districts.map(area => area.id));
   groupedData.sort((a, b) => categoryOrder.indexOf(a.name) - categoryOrder.indexOf(b.name));
 
   return groupedData;
@@ -126,7 +143,11 @@ export const groupDistrictData = (data) => {
 
 const compareBoundaries = (a, b) => {
   // This function checks if district b is within district a or districts are identical
-  if (a.id === b.id || a.start !== b.start || a.end !== b.end) {
+
+  if (a.id === b.id
+    || a.start !== b.start
+    || a.end !== b.end
+    || a.extra?.schoolyear !== b.extra?.schoolyear) {
     return false;
   }
   if (booleanEqual(a.boundary, b.boundary)) {

@@ -1,261 +1,30 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<PageElement /> should work 1`] = `
-<injectIntl(WithStyles(PageElement))
-  isActive={false}
-  number={2}
-  onClick={[MockFunction]}
->
-  <WithStyles(PageElement)
-    intl={
-      Object {
-        "defaultFormats": Object {},
-        "defaultLocale": "en",
-        "defaultRichTextElements": undefined,
-        "formatDate": [Function],
-        "formatDateTimeRange": [Function],
-        "formatDateToParts": [Function],
-        "formatDisplayName": [Function],
-        "formatList": [Function],
-        "formatMessage": [Function],
-        "formatNumber": [Function],
-        "formatNumberToParts": [Function],
-        "formatPlural": [Function],
-        "formatRelativeTime": [Function],
-        "formatTime": [Function],
-        "formatTimeToParts": [Function],
-        "formats": Object {},
-        "formatters": Object {
-          "getDateTimeFormat": [Function],
-          "getDisplayNames": [Function],
-          "getListFormat": [Function],
-          "getMessageFormat": [Function],
-          "getNumberFormat": [Function],
-          "getPluralRules": [Function],
-          "getRelativeTimeFormat": [Function],
-        },
-        "locale": "en",
-        "messages": Object {
-          "general.pagination.currentlyOpenedPage": "Sivu {count}, avattu",
-          "general.pagination.openPage": "Open page {count}",
-        },
-        "onError": [Function],
-        "textComponent": Symbol(react.fragment),
-        "timeZone": undefined,
-        "wrapRichTextChunksInFragment": false,
-      }
-    }
-    isActive={false}
-    number={2}
-    onClick={[MockFunction]}
-  >
-    <PageElement
-      className=""
-      classes={
-        Object {
-          "arrowFlip": "PageElement-arrowFlip-2",
-          "arrowIcon": "PageElement-arrowIcon-1",
-          "borderBlack": "PageElement-borderBlack-3",
-          "button": "PageElement-button-4",
-          "buttonContainer": "PageElement-buttonContainer-5",
-          "list": "PageElement-list-6",
-          "listContainer": "PageElement-listContainer-7",
-          "pageElement": "PageElement-pageElement-8",
-          "pageElementActive": "PageElement-pageElementActive-9",
-          "pageItem": "PageElement-pageItem-10",
-        }
-      }
-      intl={
-        Object {
-          "defaultFormats": Object {},
-          "defaultLocale": "en",
-          "defaultRichTextElements": undefined,
-          "formatDate": [Function],
-          "formatDateTimeRange": [Function],
-          "formatDateToParts": [Function],
-          "formatDisplayName": [Function],
-          "formatList": [Function],
-          "formatMessage": [Function],
-          "formatNumber": [Function],
-          "formatNumberToParts": [Function],
-          "formatPlural": [Function],
-          "formatRelativeTime": [Function],
-          "formatTime": [Function],
-          "formatTimeToParts": [Function],
-          "formats": Object {},
-          "formatters": Object {
-            "getDateTimeFormat": [Function],
-            "getDisplayNames": [Function],
-            "getListFormat": [Function],
-            "getMessageFormat": [Function],
-            "getNumberFormat": [Function],
-            "getPluralRules": [Function],
-            "getRelativeTimeFormat": [Function],
-          },
-          "locale": "en",
-          "messages": Object {
-            "general.pagination.currentlyOpenedPage": "Sivu {count}, avattu",
-            "general.pagination.openPage": "Open page {count}",
-          },
-          "onError": [Function],
-          "textComponent": Symbol(react.fragment),
-          "timeZone": undefined,
-          "wrapRichTextChunksInFragment": false,
-        }
-      }
-      isActive={false}
-      number={2}
-      onClick={[MockFunction]}
+<div>
+  <li>
+    <button
+      class="MuiButtonBase-root css-194wrg2-MuiButtonBase-root"
+      role="link"
+      tabindex="0"
+      type="button"
     >
-      <li>
-        <WithStyles(ForwardRef(ButtonBase))
-          disabled={false}
-          onClick={[MockFunction]}
-          onKeyDown={[Function]}
-          role="link"
-          tabIndex="0"
+      <p
+        class="MuiTypography-root MuiTypography-subtitle1  PageElement-pageItem-10 PageElement-pageElement-8 css-dlbwt1-MuiTypography-root"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body2 css-1ak20dk-MuiTypography-root"
+          style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
         >
-          <ForwardRef(ButtonBase)
-            classes={
-              Object {
-                "disabled": "Mui-disabled",
-                "focusVisible": "Mui-focusVisible",
-                "root": "MuiButtonBase-root",
-              }
-            }
-            disableRipple={true}
-            disabled={false}
-            onClick={[MockFunction]}
-            onKeyDown={[Function]}
-            role="link"
-            tabIndex="0"
-          >
-            <button
-              className="MuiButtonBase-root"
-              disabled={false}
-              onBlur={[Function]}
-              onClick={[MockFunction]}
-              onDragLeave={[Function]}
-              onFocus={[Function]}
-              onKeyDown={[Function]}
-              onKeyUp={[Function]}
-              onMouseDown={[Function]}
-              onMouseLeave={[Function]}
-              onMouseUp={[Function]}
-              onTouchEnd={[Function]}
-              onTouchMove={[Function]}
-              onTouchStart={[Function]}
-              role="link"
-              tabIndex="0"
-              type="button"
-            >
-              <WithStyles(ForwardRef(Typography))
-                className=" PageElement-pageItem-10 PageElement-pageElement-8"
-                component="p"
-                variant="subtitle1"
-              >
-                <ForwardRef(Typography)
-                  className=" PageElement-pageItem-10 PageElement-pageElement-8"
-                  classes={
-                    Object {
-                      "alignCenter": "MuiTypography-alignCenter",
-                      "alignJustify": "MuiTypography-alignJustify",
-                      "alignLeft": "MuiTypography-alignLeft",
-                      "alignRight": "MuiTypography-alignRight",
-                      "body1": "MuiTypography-body1",
-                      "body2": "MuiTypography-body2",
-                      "button": "MuiTypography-button",
-                      "caption": "MuiTypography-caption",
-                      "colorError": "MuiTypography-colorError",
-                      "colorInherit": "MuiTypography-colorInherit",
-                      "colorPrimary": "MuiTypography-colorPrimary",
-                      "colorSecondary": "MuiTypography-colorSecondary",
-                      "colorTextPrimary": "MuiTypography-colorTextPrimary",
-                      "colorTextSecondary": "MuiTypography-colorTextSecondary",
-                      "displayBlock": "MuiTypography-displayBlock",
-                      "displayInline": "MuiTypography-displayInline",
-                      "gutterBottom": "MuiTypography-gutterBottom",
-                      "h1": "MuiTypography-h1",
-                      "h2": "MuiTypography-h2",
-                      "h3": "MuiTypography-h3",
-                      "h4": "MuiTypography-h4",
-                      "h5": "MuiTypography-h5",
-                      "h6": "MuiTypography-h6",
-                      "noWrap": "MuiTypography-noWrap",
-                      "overline": "MuiTypography-overline",
-                      "paragraph": "MuiTypography-paragraph",
-                      "root": "MuiTypography-root",
-                      "srOnly": "MuiTypography-srOnly",
-                      "subtitle1": "MuiTypography-subtitle1",
-                      "subtitle2": "MuiTypography-subtitle2",
-                    }
-                  }
-                  component="p"
-                  variant="subtitle1"
-                >
-                  <p
-                    className="MuiTypography-root  PageElement-pageItem-10 PageElement-pageElement-8 MuiTypography-subtitle1"
-                  >
-                    <WithStyles(ForwardRef(Typography))
-                      variant="srOnly"
-                    >
-                      <ForwardRef(Typography)
-                        classes={
-                          Object {
-                            "alignCenter": "MuiTypography-alignCenter",
-                            "alignJustify": "MuiTypography-alignJustify",
-                            "alignLeft": "MuiTypography-alignLeft",
-                            "alignRight": "MuiTypography-alignRight",
-                            "body1": "MuiTypography-body1",
-                            "body2": "MuiTypography-body2",
-                            "button": "MuiTypography-button",
-                            "caption": "MuiTypography-caption",
-                            "colorError": "MuiTypography-colorError",
-                            "colorInherit": "MuiTypography-colorInherit",
-                            "colorPrimary": "MuiTypography-colorPrimary",
-                            "colorSecondary": "MuiTypography-colorSecondary",
-                            "colorTextPrimary": "MuiTypography-colorTextPrimary",
-                            "colorTextSecondary": "MuiTypography-colorTextSecondary",
-                            "displayBlock": "MuiTypography-displayBlock",
-                            "displayInline": "MuiTypography-displayInline",
-                            "gutterBottom": "MuiTypography-gutterBottom",
-                            "h1": "MuiTypography-h1",
-                            "h2": "MuiTypography-h2",
-                            "h3": "MuiTypography-h3",
-                            "h4": "MuiTypography-h4",
-                            "h5": "MuiTypography-h5",
-                            "h6": "MuiTypography-h6",
-                            "noWrap": "MuiTypography-noWrap",
-                            "overline": "MuiTypography-overline",
-                            "paragraph": "MuiTypography-paragraph",
-                            "root": "MuiTypography-root",
-                            "srOnly": "MuiTypography-srOnly",
-                            "subtitle1": "MuiTypography-subtitle1",
-                            "subtitle2": "MuiTypography-subtitle2",
-                          }
-                        }
-                        variant="srOnly"
-                      >
-                        <span
-                          className="MuiTypography-root MuiTypography-srOnly"
-                        >
-                          Open page 2
-                        </span>
-                      </ForwardRef(Typography)>
-                    </WithStyles(ForwardRef(Typography))>
-                    <span
-                      aria-hidden="true"
-                    >
-                      2
-                    </span>
-                  </p>
-                </ForwardRef(Typography)>
-              </WithStyles(ForwardRef(Typography))>
-            </button>
-          </ForwardRef(ButtonBase)>
-        </WithStyles(ForwardRef(ButtonBase))>
-      </li>
-    </PageElement>
-  </WithStyles(PageElement)>
-</injectIntl(WithStyles(PageElement))>
+          Open page 2
+        </p>
+        <span
+          aria-hidden="true"
+        >
+          2
+        </span>
+      </p>
+    </button>
+  </li>
+</div>
 `;

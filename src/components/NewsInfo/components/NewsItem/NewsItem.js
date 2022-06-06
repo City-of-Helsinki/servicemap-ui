@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/styles';
-import { Link, Paper, Typography } from '@material-ui/core';
+import { withStyles } from '@mui/styles';
+import { Link, Paper, Typography } from '@mui/material';
 import { getIcon } from '../../../SMIcon';
 import styles from './styles';
 import useLocaleText from '../../../../utils/useLocaleText';

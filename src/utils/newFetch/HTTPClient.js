@@ -26,7 +26,7 @@ export default class HttpClient {
 
   onError;
 
-  onNext;
+  onProgressUpdate;
 
   constructor(baseURL) {
     this.baseURL = baseURL;
@@ -59,8 +59,8 @@ export default class HttpClient {
       .then(response => response.json())
       .then(async (response) => {
         const combinedResults = [...results, ...response.results];
-        if (this.onNext) {
-          this.onNext(combinedResults.length, response.count);
+        if (this.onProgressUpdate) {
+          this.onProgressUpdate(combinedResults.length, response.count);
         }
         if (response.next) {
           return this.fetchNext(response.next, combinedResults);
@@ -69,17 +69,23 @@ export default class HttpClient {
       });
   }
 
-  handleResults = async (response) => {
+  handleResults = async (response, type) => {
+    if (type && type === 'count') {
+      return response.count;
+    }
+    if (this.onProgressUpdate) {
+      this.onProgressUpdate(response.results.length, response.count);
+    }
+    if (type && type === 'single') {
+      return response.results;
+    }
     if (response.next) {
-      if (this.onNext) {
-        this.onNext(response.results.length, response.count);
-      }
       return this.fetchNext(response.next, response.results);
     }
     return response.results;
   }
 
-  fetch = async (endpoint, options) => {
+  fetch = async (endpoint, options, type) => {
     this.abortController = new AbortController();
     this.status = 'fetching';
 
@@ -100,7 +106,7 @@ export default class HttpClient {
     return promise
       .then(response => response.json())
       .then(async (data) => {
-        const results = await this.handleResults(data);
+        const results = await this.handleResults(data, type);
         this.clearTimeout();
         this.status = 'done';
         return results;
@@ -115,6 +121,42 @@ export default class HttpClient {
   }
 
   get = async (endpoint, options) => this.fetch(endpoint, this.optionsToSearchParams(options));
+
+  getSinglePage = (endpoint, options) => this.fetch(endpoint, this.optionsToSearchParams(options), 'single');
+
+  // This fetches 1 result to get meta data with total result count
+  getCount = async (endpoint, options) => {
+    const newOptions = {
+      ...options,
+      page_size: 1,
+    };
+    return this.fetch(endpoint, this.optionsToSearchParams(newOptions, true), 'count');
+  }
+
+  getConcurrent = async (endpoint, options) => {
+    if (!options?.page_size) {
+      throw APIFetchError('Invalid page_size provided for concurrent search method');
+    }
+
+    // Get amount of search pages
+    const totalCount = await this.getCount(endpoint, options);
+    const numberOfPages = Math.ceil(totalCount / options.page_size);
+
+    // Start progress bar
+    if (this.onProgressUpdate) {
+      this.onProgressUpdate(null, totalCount);
+    }
+
+    // Create promises for each search page
+    const promises = [];
+    for (let i = 1; i <= numberOfPages; i += 1) {
+      options.page = i;
+      promises.push(this.getSinglePage(endpoint, options));
+    }
+
+    const results = await Promise.all(promises);
+    return results.flat();
+  }
 
   throwAPIError = (msg, e) => {
     this.status = 'error';
@@ -147,11 +189,11 @@ export default class HttpClient {
     }
   }
 
-  setOnNext = (onNext) => {
-    if (typeof onNext !== 'function') {
-      throw new APIFetchError('Invalid onNext provided for HTTPClient');
+  setOnProgressUpdate = (onProgressUpdate) => {
+    if (typeof onProgressUpdate !== 'function') {
+      throw new APIFetchError('Invalid onProgressUpdate provided for HTTPClient');
     }
-    this.onNext = onNext;
+    this.onProgressUpdate = onProgressUpdate;
   }
 
   setOnError = (onError) => {

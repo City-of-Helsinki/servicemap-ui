@@ -18,6 +18,7 @@ const UnitItem = ({
   divider,
   navigator,
   settings,
+  simpleItem,
 }) => {
   const [unitDistance, setUnitDistance] = useState(distance);
   const getLocaleText = useLocaleText();
@@ -72,29 +73,49 @@ const UnitItem = ({
       : intl.formatMessage({ id: 'general.distance.kilometers' })}`,
   } : {};
 
+  if (!simpleItem) {
+    return (
+      <ResultItem
+        title={getLocaleText(name)}
+        subtitle={contractText}
+        bottomText={accessText}
+        bottomHighlight={problemCount !== null && typeof problemCount !== 'undefined'}
+        extendedClasses={{
+          typography: {
+            title: classes.title,
+          },
+        }}
+        distance={distanceText}
+        icon={icon}
+        onClick={(e) => {
+          e.preventDefault();
+          if (onClick) {
+            onClick();
+          } else if (navigator) {
+            navigator.push('unit', { id });
+          }
+        }}
+        unitId={id}
+        padded={padded}
+        divider={divider}
+      />
+    );
+  }
   return (
     <ResultItem
       title={getLocaleText(name)}
-      subtitle={contractText}
-      bottomText={accessText}
-      bottomHighlight={problemCount !== null && typeof problemCount !== 'undefined'}
+      simpleItem={simpleItem}
       extendedClasses={{
         typography: {
           title: classes.title,
         },
       }}
       distance={distanceText}
-      icon={icon}
       onClick={(e) => {
         e.preventDefault();
-        if (onClick) {
-          onClick();
-        } else if (navigator) {
-          navigator.push('unit', { id });
-        }
+        UnitHelper.unitElementClick(navigator, unit);
       }}
       unitId={id}
-      padded={padded}
       divider={divider}
     />
   );
@@ -117,6 +138,7 @@ UnitItem.propTypes = {
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
   padded: PropTypes.bool,
   divider: PropTypes.bool,
+  simpleItem: PropTypes.bool,
 };
 
 UnitItem.defaultProps = {
@@ -126,4 +148,5 @@ UnitItem.defaultProps = {
   navigator: null,
   padded: false,
   divider: true,
+  simpleItem: false,
 };

@@ -33,7 +33,6 @@ const CreateMap = (mapType, locale) => {
     origin: layer.origin,
     resolutions: layer.resolutions,
     bounds,
-    transformation: new L.Transformation(1, -bounds.min.x, -1, bounds.max.y),
   };
   const crs = new L.Proj.CRS(layer.crsName, layer.projDef, crsOpts);
   const mapBase = { crs, options };

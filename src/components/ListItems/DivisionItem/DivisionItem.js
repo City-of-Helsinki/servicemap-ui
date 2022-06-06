@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Typography, ListItem, Divider, ButtonBase,
-} from '@material-ui/core';
+} from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import { FormattedMessage } from 'react-intl';
 import UnitIcon from '../../SMIcon/UnitIcon';
 import SMLink from '../../Link';
@@ -35,7 +36,7 @@ const DivisionItem = ({
   const emergencyCareText = data.emergencyUnitId ? <FormattedMessage id={`address.emergency_care.unit.${data.emergencyUnitId}`} /> : null;
   const emergencyOnClick = () => navigator.push('unit', { id: emergencyUnitId });
 
-  let title = intl.formatMessage({ id: `area.list.${area.type}` });
+  let title = disableTitle ? null : intl.formatMessage({ id: `area.list.${area.type}` });
   if (customTitle) {
     title = customTitle;
   } else {
@@ -89,7 +90,7 @@ const DivisionItem = ({
           }
           <Typography
             component="p"
-            variant="srOnly"
+            style={visuallyHidden}
           >
             {srText}
           </Typography>

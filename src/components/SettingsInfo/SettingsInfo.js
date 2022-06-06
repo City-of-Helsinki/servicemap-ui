@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Typography, Divider, ButtonBase, NoSsr,
-} from '@material-ui/core';
+} from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import { FormattedMessage } from 'react-intl';
 import Container from '../Container';
 import {
@@ -46,7 +47,12 @@ const SettingsInfo = ({
 
   let citySettings = [];
   config.cities.forEach((city) => {
-    citySettings.push(...settings.cities[city] ? [{ text: `${intl.formatMessage({ id: `settings.city.${city}` })}`, icon: <SMIcon icon={`icon-icon-coat-of-arms-${city}`} /> }] : []);
+    citySettings.push(...settings.cities[city]
+      ? [{
+        text: `${intl.formatMessage({ id: `settings.city.${city}` })}`,
+        icon: city === 'kirkkonummi' ? getIcon('kirkkonummiIcon') : <SMIcon icon={`icon-icon-coat-of-arms-${city}`} />,
+      }]
+      : []);
   });
 
   if (!onlyCities && citySettings.length === config.cities.length) {
@@ -61,7 +67,7 @@ const SettingsInfo = ({
 
   return (
     <NoSsr>
-      <Typography component="h3" variant="srOnly">
+      <Typography component="h3" style={visuallyHidden}>
         <FormattedMessage id="settings.info.heading" />
       </Typography>
       {!noDivider && (
@@ -93,7 +99,7 @@ const SettingsInfo = ({
             <FormattedMessage id={titleText} />
           </Typography>
         </ButtonBase>
-        <Typography aria-hidden id="SettingsInfo-srTitle" variant="srOnly">
+        <Typography aria-hidden id="SettingsInfo-srTitle" style={visuallyHidden}>
           <FormattedMessage id={titleText} />
           <FormattedMessage id="settings.aria.open" />
         </Typography>

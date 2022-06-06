@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
-import { withStyles } from '@material-ui/core';
+import { withStyles } from '@mui/styles';
 import BackButton from './BackButton';
 import styles from './styles';
 

@@ -1,8 +1,9 @@
 import ReactDOMServer from 'react-dom/server';
 import React from 'react';
 import isClient from '../../../../utils';
-import { isEmbed } from '../../../../utils/path';
 import { getAddressFromUnit } from '../../../../utils/address';
+import formatEventDate from '../../../../utils/events';
+import { isEmbed } from '../../../../utils/path';
 
 export const createMarkerClusterLayer = (
   createClusterCustomIcon,
@@ -14,10 +15,6 @@ export const createMarkerClusterLayer = (
   if (!isClient()) {
     return null;
   }
-  let embeded = false;
-  if (global.window) {
-    embeded = isEmbed();
-  }
 
   const clusterLayer = global.L.markerClusterGroup({
     animate: true,
@@ -26,25 +23,18 @@ export const createMarkerClusterLayer = (
     iconCreateFunction: createClusterCustomIcon,
     maxClusterRadius: 40,
     removeOutsideVisibleBounds: true,
-    zoomToBoundsOnClick: !embeded,
+    zoomToBoundsOnClick: true,
   });
 
-  if (!embeded) {
-    clusterLayer.on('clustermouseover', (a) => {
-      if (clusterMouseover) clusterMouseover(a);
-    });
-    // Add click events as alternative way to trigger hover events on mobile
-    clusterLayer.on('clusterclick', (a) => {
-      if (clusterMouseover && showListOfUnits()) {
-        clusterMouseover(a);
-      }
-    });
-  } else {
-    // Add cluster click when embeded
-    clusterLayer.on('clusterclick', () => {
-      window.open(window.location.href.replace('/embed', ''));
-    });
-  }
+  clusterLayer.on('clustermouseover', (a) => {
+    if (clusterMouseover && !isEmbed()) clusterMouseover(a);
+  });
+  // Add click events as alternative way to trigger hover events on mobile
+  clusterLayer.on('clusterclick', (a) => {
+    if (clusterMouseover && showListOfUnits()) {
+      clusterMouseover(a);
+    }
+  });
 
   // Hide clusters and markers from keyboard after clustering animations are done
   clusterLayer.on('animationend', (a) => {
@@ -108,11 +98,26 @@ export const createPopupContent = (unit, classes, getLocaleText, distance, intl,
       {
         distance
         && (
-          <p className={classes.unitTooltipSubtitle}>
+          <p className={`${classes.unitTooltipSubtitle} ${classes.unitTooltipCaption}`}>
+            {intl.formatMessage({ id: 'unit.distance' })}
             {distance.distance}
             {distance.type}
           </p>
         )
+      }
+      {
+      unit.events?.length
+        ? (
+          <div className={classes.unitTooltipEventContainer}>
+            <hr className={classes.unitTooltipDivider} />
+            <p className={classes.unitTooltipSubtitle}>
+              {unit.events[0].name.fi}
+            </p>
+            <p className={`${classes.unitTooltipSubtitle} ${classes.unitTooltipCaption}`}>
+              {formatEventDate(unit.events[0], intl)}
+            </p>
+          </div>
+        ) : null
       }
       {isMobile && (
         <p className={classes.unitTooltipLink}>

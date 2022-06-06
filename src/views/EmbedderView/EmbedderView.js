@@ -1,9 +1,9 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, {
+  useState, useRef, useEffect, useCallback,
+} from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import {
-  Typography, Paper, TextField,
-} from '@material-ui/core';
+import { Typography } from '@mui/material';
 import URI from 'urijs';
 import { Helmet } from 'react-helmet';
 import { useSelector } from 'react-redux';
@@ -12,13 +12,13 @@ import isClient, { uppercaseFirst } from '../../utils';
 import { getEmbedURL, getLanguage } from './utils/utils';
 import EmbedController from './components/EmbedController';
 import IFramePreview from './components/IFramePreview';
-import CloseButton from '../../components/CloseButton';
-import SMButton from '../../components/ServiceMapButton';
 import paths from '../../../config/paths';
 import embedderConfig from './embedderConfig';
 import SettingsUtility from '../../utils/settings';
 import useLocaleText from '../../utils/useLocaleText';
 import { useUserLocale } from '../../utils/user';
+import EmbedHTML from './components/EmbedHTML';
+import { CloseButton, SMButton } from '../../components';
 
 
 const hideCitiesIn = [
@@ -94,12 +94,28 @@ const EmbedderView = ({
   const [heightMode, setHeightMode] = useState('ratio');
   const [transit, setTransit] = useState(false);
   const [showUnits, setShowUnits] = useState(true);
+  const [showListSide, setShowListSide] = useState(false);
+  const [showListBottom, setShowListBottom] = useState(false);
+  const [restrictBounds, setRestrictBounds] = useState(true);
 
+  const boundsRef = useRef([]);
   const dialogRef = useRef();
 
-  const renderWrapperStyle = () => `position: relative; width:100%; padding-bottom:${ratioHeight}%;`;
+  const selectedBbox = restrictBounds && boundsRef.current;
+
+  const minHeightWithBottomList = '478px';
+
   const embedUrl = getEmbedURL(url, {
-    language, map, city, service, defaultLanguage, transit, showUnits,
+    language,
+    map,
+    city,
+    service,
+    defaultLanguage,
+    transit,
+    showUnits,
+    showListSide,
+    showListBottom,
+    bbox: selectedBbox,
   });
 
   const getTitleText = () => {
@@ -134,6 +150,10 @@ const EmbedderView = ({
     buttons[0].focus();
   };
 
+  const setBoundsRef = useCallback((bounds) => {
+    boundsRef.current = bounds;
+  }, []);
+
   useEffect(() => {
     focusToFirstElement();
 
@@ -161,10 +181,14 @@ const EmbedderView = ({
   };
 
   // Figure out embed html
-  const embedHTML = (url) => {
+  const createEmbedHTML = useCallback((url) => {
     if (!url) {
       return '';
     }
+    const renderWrapperStyle = () => (showListBottom
+      ? `position: relative; width:100%; padding-bottom: max(${ratioHeight}%, ${minHeightWithBottomList});`
+      : `position: relative; width:100%; padding-bottom:${ratioHeight}%;`
+    );
     let height;
     let html;
     if (heightMode === 'fixed') { height = fixedHeight; }
@@ -172,7 +196,7 @@ const EmbedderView = ({
       if (widthMode === 'auto') {
         html = `<div style="${renderWrapperStyle()}">
           <iframe title="${iframeTitle}" style="position: absolute; top: 0; left: 0; border: none; width: 100%; height: 100%;"
-          src="${embedUrl}"></iframe></div>`;
+          src="${url}"></iframe></div>`;
       } else {
         height = parseInt(parseInt(customWidth, 10) * (parseInt(ratioHeight, 10) / 100.0), 10);
       }
@@ -183,11 +207,21 @@ const EmbedderView = ({
         iframeConfig.style && iframeConfig.style.width && iframeConfig.style.width
       ) : customWidth;
       const widthUnit = width !== '100%' ? 'px' : '';
-      html = `<iframe title="${iframeTitle}" style="border: none; width: ${width}${widthUnit}; height: ${height}px;"
-                  src="${embedUrl}"></iframe>`;
+      const heightValue = showListBottom ? `height: max(${height}px, ${minHeightWithBottomList})` : `height: ${height}px`;
+      html = `<iframe title="${iframeTitle}" style="border: none; width: ${width}${widthUnit}; ${heightValue};"
+                  src="${url}"></iframe>`;
     }
     return html;
-  };
+  }, [
+    customWidth,
+    fixedHeight,
+    heightMode,
+    iframeTitle,
+    widthMode,
+    ratioHeight,
+    iframeConfig.style,
+    showListBottom,
+  ]);
 
   const showCities = (embedUrl) => {
     const originalUrl = embedUrl.replace('/embed', '');
@@ -209,52 +243,6 @@ const EmbedderView = ({
       }
     });
     return show;
-  };
-
-  /**
-   * Renders embed HTMl based on options
-   */
-  const renderEmbedHTML = () => {
-    const htmlText = embedHTML(data.url);
-    const textFieldClass = `${classes.textField} ${classes.marginBottom}`;
-
-    return (
-      <Paper className={classes.formContainerPaper}>
-        {
-          /* Embed address */
-        }
-        <Typography
-          align="left"
-          className={classes.marginBottom}
-          variant="h5"
-          component="h2"
-        >
-          <FormattedMessage id="embedder.url.title" />
-        </Typography>
-        <TextField
-          id="embed-address"
-          className={textFieldClass}
-          value={embedUrl}
-          margin="normal"
-          variant="outlined"
-          inputProps={{ 'aria-label': intl.formatMessage({ id: 'embedder.url.title' }) }}
-        />
-        {
-          /* Embed HTML code */
-        }
-        <Typography
-          align="left"
-          className={classes.marginBottom}
-          variant="h5"
-          component="h2"
-        >
-          <FormattedMessage id="embedder.code.title" />
-        </Typography>
-        <pre className={classes.pre}>
-          { htmlText }
-        </pre>
-      </Paper>
-    );
   };
 
   /**
@@ -443,14 +431,15 @@ const EmbedderView = ({
     );
   };
 
+
   const renderMapOptionsControl = () => {
     const controls = [
       {
-        key: 'transit',
-        value: transit,
-        onChange: v => setTransit(v),
+        key: 'bounds',
+        value: restrictBounds,
+        onChange: v => setRestrictBounds(v),
         icon: null,
-        labelId: 'embedder.options.label.transit',
+        labelId: 'embedder.options.label.bbox',
       },
       {
         key: 'units',
@@ -458,6 +447,33 @@ const EmbedderView = ({
         onChange: v => setShowUnits(v),
         icon: null,
         labelId: 'embedder.options.label.units',
+      },
+      {
+        key: 'listSide',
+        value: showListSide,
+        onChange: (v) => {
+          setShowListSide(v);
+          setShowListBottom(false);
+        },
+        icon: null,
+        labelId: 'embedder.options.label.list.side',
+      },
+      {
+        key: 'listBottom',
+        value: showListBottom,
+        onChange: (v) => {
+          setShowListBottom(v);
+          setShowListSide(false);
+        },
+        icon: null,
+        labelId: 'embedder.options.label.list.bottom',
+      },
+      {
+        key: 'transit',
+        value: transit,
+        onChange: v => setTransit(v),
+        icon: null,
+        labelId: 'embedder.options.label.transit',
       },
     ];
 
@@ -543,15 +559,21 @@ const EmbedderView = ({
               title={iframeTitle}
               titleComponent="h2"
               widthMode={widthMode}
+              bottomList={showListBottom}
+              minHeightWithBottomList={minHeightWithBottomList}
             />
 
             {
               renderMapOptionsControl()
             }
           </form>
-          {
-            renderEmbedHTML()
-          }
+          <EmbedHTML
+            classes={classes}
+            url={embedUrl}
+            createEmbedHTML={createEmbedHTML}
+            setBoundsRef={setBoundsRef}
+            restrictBounds={restrictBounds}
+          />
           <SMButton
             aria-label={intl.formatMessage({ id: 'embedder.close' })}
             className={classes.button}

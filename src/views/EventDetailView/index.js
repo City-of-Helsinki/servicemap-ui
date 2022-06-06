@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { withStyles } from '@material-ui/core';
+import { withStyles } from '@mui/styles';
 import { withRouter } from 'react-router-dom';
 import { injectIntl } from 'react-intl';
 import EventDetailView from './EventDetailView';
@@ -10,7 +10,7 @@ import styles from './styles';
 const mapStateToProps = (state) => {
   const { event, mapRef, navigator } = state;
   const selectedUnit = state.selectedUnit.unit.data;
-  const map = mapRef && mapRef.leafletElement;
+  const map = mapRef;
   return {
     event,
     navigator,

@@ -15,6 +15,9 @@ export default theme => ({
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(2),
   },
+  description: {
+    padding: theme.spacing(2),
+  },
   titleContainer: {
     display: 'flex',
     alignItems: 'center',
@@ -29,5 +32,9 @@ export default theme => ({
   loadingText: {
     margin: 20,
     height: 34,
+  },
+  buttonIcon: {
+    order: 2,
+    marginRight: theme.spacing(-0.5),
   },
 });

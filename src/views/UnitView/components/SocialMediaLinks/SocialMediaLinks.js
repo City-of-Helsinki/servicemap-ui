@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   List, ListItem, Divider, Typography,
-} from '@material-ui/core';
-import DefaultIcon from '@material-ui/icons/Public';
+} from '@mui/material';
+import DefaultIcon from '@mui/icons-material/Public';
 import { FormattedMessage } from 'react-intl';
 import unitSectionFilter from '../../utils/unitSectionFilter';
-import { getIcon } from '../../../../components/SMIcon';
 import useLocaleText from '../../../../utils/useLocaleText';
+import { getIcon } from '../../../../components';
 
 const SocialMediaLinks = ({ unit, classes }) => {
   const getLocaleText = useLocaleText();

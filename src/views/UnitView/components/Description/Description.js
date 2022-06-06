@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Typography, Link } from '@material-ui/core';
+import { Typography, Link } from '@mui/material';
 import unitSectionFilter from '../../utils/unitSectionFilter';
-import DescriptionText from '../../../../components/DescriptionText';
 import useLocaleText from '../../../../utils/useLocaleText';
+import { DescriptionText } from '../../../../components';
 
 const Description = ({ unit, classes }) => {
   const getLocaleText = useLocaleText();

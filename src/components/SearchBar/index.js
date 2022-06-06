@@ -1,10 +1,9 @@
 import { connect } from 'react-redux';
-import { withStyles } from '@material-ui/core';
-import { injectIntl } from 'react-intl';
-import SearchBar from './SearchBar';
+import { withStyles } from '@mui/styles';
 import styles from './styles';
 import { fetchUnits } from '../../redux/actions/unit';
 import { changeSelectedUnit } from '../../redux/actions/selectedUnit';
+import SearchBarComponent from './SearchBarComponent';
 
 // Listen to redux state
 const mapStateToProps = (state) => {
@@ -19,7 +18,9 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default withStyles(styles)(injectIntl(connect(
+export const SearchBar = withStyles(styles)(connect(
   mapStateToProps,
   { changeSelectedUnit, fetchUnits },
-)(SearchBar)));
+)(SearchBarComponent));
+
+export default SearchBar;

@@ -1,10 +1,10 @@
 // Link.react.test.js
 import React from 'react';
-import { createShallow } from '@material-ui/core/test-utils';
-import { MuiThemeProvider } from '@material-ui/core';
+import { ThemeProvider } from '@mui/material/styles';
 import { IntlProvider } from 'react-intl';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
+import { render } from '@testing-library/react';
 import themes from '../../../../themes';
 import ResultList from '../ResultList';
 import { initialState } from '../../../../redux/reducers/user';
@@ -74,36 +74,31 @@ const Providers = ({ children }) => {
   return (
     <Provider store={store}>
       <IntlProvider {...intlMock}>
-        <MuiThemeProvider theme={themes.SMTheme}>
+        <ThemeProvider theme={themes.SMTheme}>
           {children}
-        </MuiThemeProvider>
+        </ThemeProvider>
       </IntlProvider>
     </Provider>
   );
 };
 
+const renderWithProviders = component => render(component, { wrapper: Providers });
+
 describe('<ResultList />', () => {
-  // let render;
-  let shallow;
-
-  beforeEach(() => {
-    shallow = createShallow({ wrappingComponent: Providers });
-  });
-
   it('should work', () => {
-    const component = shallow(<ResultList {...mockProps} />);
-    expect(component).toMatchSnapshot();
+    const { container } = renderWithProviders(<ResultList {...mockProps} />);
+    expect(container).toMatchSnapshot();
   });
 
   it('does render list', () => {
-    const component = shallow(<ResultList {...mockProps} />);
-    const count = component.find('injectIntl(WithStyles(Connect(UnitItem)))').length;
+    const { getAllByRole } = renderWithProviders(<ResultList {...mockProps} />);
+    const count = getAllByRole('link', { selector: 'li' }).length;
     expect(count === 2).toBeTruthy();
   });
 
   it('does render beforeList', () => {
-    const component = shallow(<ResultList {...mockProps} />);
-    const text = component.find('p').at(0).text();
+    const { getByText } = renderWithProviders(<ResultList {...mockProps} />);
+    const text = getByText('Test before list').textContent;
     expect(text).toEqual('Test before list');
   });
 });

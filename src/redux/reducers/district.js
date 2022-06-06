@@ -2,11 +2,19 @@ const initialState = {
   highlitedDistrict: null,
   selectedDistrictType: null,
   districtData: [],
-  unitsFetching: [],
   districtsFetching: [],
+  unitFetch: {
+    max: 0,
+    count: 0,
+    isFetching: false,
+    nodesFetching: [],
+  },
+  parkingAreas: [],
+  parkingUnits: [],
   subdistrictUnits: [],
   selectedSubdistricts: [],
   selectedDistrictServices: [],
+  selectedParkingAreas: [],
   openItems: [],
   mapState: null,
   districtAddressData: {
@@ -47,6 +55,12 @@ export default (state = initialState, action) => {
       };
 
     case 'UPDATE_DISTRICT_DATA':
+      if (!state.districtData.length) {
+        return {
+          ...state,
+          districtData: action.data,
+        };
+      }
       if (action.period) {
         return {
           ...state,
@@ -106,6 +120,26 @@ export default (state = initialState, action) => {
         selectedDistrictServices: action.services,
       };
 
+    case 'SET_SELECTED_PARKING_AREAS':
+      return {
+        ...state,
+        selectedParkingAreas: action.areas,
+      };
+
+    case 'ADD_SELECTED_PARKING_AREA':
+      return {
+        ...state,
+        selectedParkingAreas: [...state.selectedParkingAreas, action.areaID],
+      };
+
+    case 'REMOVE_SELECTED_PARKING_AREA':
+      return {
+        ...state,
+        selectedParkingAreas: [
+          ...state.selectedParkingAreas.filter(item => item !== action.areaID),
+        ],
+      };
+
     case 'ADD_OPEN_ITEM':
       return {
         ...state,
@@ -127,14 +161,34 @@ export default (state = initialState, action) => {
     case 'START_UNIT_FETCH':
       return {
         ...state,
-        unitsFetching: [...state.unitsFetching, action.node],
+        unitFetch: {
+          ...state.unitFetch,
+          nodesFetching: [...state.unitFetch.nodesFetching, action.node],
+          isFetching: true,
+        },
+      };
+
+    case 'UPDATE_FETCH_PROGRESS':
+      return {
+        ...state,
+        unitFetch: {
+          ...state.unitFetch,
+          count: action.count ? state.unitFetch.count + action.count : state.unitFetch.count,
+          max: action.max ? state.unitFetch.max + action.max : state.unitFetch.max,
+        },
       };
 
     case 'END_UNIT_FETCH':
       return {
         ...state,
-        unitsFetching: [...state.unitsFetching.filter(item => item !== action.node)],
         subdistrictUnits: [...state.subdistrictUnits, ...action.units],
+        unitFetch: {
+          ...state.unitFetch,
+          nodesFetching: [...state.unitFetch.nodesFetching.filter(item => item !== action.node)],
+          isFetching: !action.isLastFetch,
+          max: action.isLastFetch ? 0 : state.unitFetch.max,
+          count: action.isLastFetch ? 0 : state.unitFetch.count,
+        },
       };
 
     case 'START_DISTRICT_FETCH':
@@ -149,6 +203,18 @@ export default (state = initialState, action) => {
         districtsFetching: [
           ...state.districtsFetching.filter(item => item !== action.districtType),
         ],
+      };
+
+    case 'UPDATE_PARKING_AREAS':
+      return {
+        ...state,
+        parkingAreas: [...state.parkingAreas, ...action.areas],
+      };
+
+    case 'SET_PARKING_UNITS':
+      return {
+        ...state,
+        parkingUnits: action.units,
       };
 
     default:

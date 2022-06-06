@@ -13,7 +13,8 @@ import {
   Radio,
   FormLabel,
   FormControl,
-} from '@material-ui/core';
+} from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import SettingsUtility from '../../utils/settings';
 import Container from '../Container';
 import {
@@ -528,7 +529,10 @@ class Settings extends React.Component {
                         )}
                       label={(
                         <>
-                          <SMIcon icon={`icon-icon-coat-of-arms-${key}`} />
+                          {key === 'kirkkonummi'
+                            ? getIcon('kirkkonummiIcon', { className: classes.icon })
+                            : <SMIcon className={classes.icon} icon={`icon-icon-coat-of-arms-${key}`} />
+                          }
                           <FormattedMessage id={`settings.city.${key}`} />
                         </>
                         )}
@@ -692,7 +696,7 @@ class Settings extends React.Component {
     return (
       <div id="SettingsContainer" className={`${classes.container}`} ref={this.dialogRef} role="dialog">
         {/* Empty element that makes keyboard focus loop in dialog */}
-        <Typography variant="srOnly" aria-hidden tabIndex="0" onFocus={() => this.focusToLastElement()} />
+        <Typography style={visuallyHidden} aria-hidden tabIndex="0" onFocus={() => this.focusToLastElement()} />
 
         <TitleBar id="SettingsTitle" titleComponent="h2" title={<FormattedMessage id={`settings.${settingsPage}.long`} />} />
         <>
@@ -724,7 +728,7 @@ class Settings extends React.Component {
             />
           </Container>
 
-          <Typography aria-live="polite" variant="srOnly">
+          <Typography aria-live="polite" style={visuallyHidden}>
             {settingsHaveChanged && (
               <FormattedMessage id="settings.aria.changed" />
             )}
@@ -734,7 +738,7 @@ class Settings extends React.Component {
           </Typography>
         </>
         {/* Empty element that makes keyboard focus loop in dialog */}
-        <Typography variant="srOnly" aria-hidden tabIndex="0" onFocus={() => this.focusToFirstElement()} />
+        <Typography style={visuallyHidden} aria-hidden tabIndex="0" onFocus={() => this.focusToFirstElement()} />
       </div>
     );
   }

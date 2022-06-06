@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import getItemIconData from '../../constants/itemIconData';
-import SimpleListItem from '../../../../components/ListItems/SimpleListItem';
-import TitledList from '../../../../components/Lists/TitledList';
 import useLocaleText from '../../../../utils/useLocaleText';
+import { SimpleListItem, TitledList } from '../../../../components';
 
 const InfoList = ({
   data, title, titleComponent, intl,

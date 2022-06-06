@@ -2,14 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   List, Typography, Divider,
-} from '@material-ui/core';
+} from '@mui/material';
 import { FormattedMessage } from 'react-intl';
+import { ArrowDropDown } from '@mui/icons-material';
 import SMButton from '../../ServiceMapButton';
 
 const TitledList = ({
   children,
   classes,
   buttonMessageID,
+  buttonMessageCount,
   buttonID,
   title,
   titleComponent,
@@ -17,20 +19,22 @@ const TitledList = ({
   onButtonClick,
   loading,
   subtitle,
+  description,
 }) => {
   const list = children;
 
   return (
     <>
-      <div className={`${classes.titleContainer} ${classes.marginHorizontal}`}>
-        <Typography
-          className={`${classes.left} ${classes.marginVertical}`}
-          component={titleComponent}
-          variant="subtitle1"
-        >
-          {title}
-        </Typography>
-        {
+      {title ? (
+        <div className={`${classes.titleContainer} ${classes.marginHorizontal}`}>
+          <Typography
+            className={`${classes.left} ${classes.marginVertical}`}
+            component={titleComponent}
+            variant="subtitle1"
+          >
+            {title}
+          </Typography>
+          {
           subtitle
           && (
             <Typography
@@ -42,7 +46,11 @@ const TitledList = ({
             </Typography>
           )
         }
-      </div>
+        </div>
+      ) : null}
+      {description && (
+        <Typography align="left" className={classes.description}>{description}</Typography>
+      )}
       {divider ? (
         <Divider className={classes.divider} aria-hidden="true" />
       ) : null }
@@ -54,7 +62,11 @@ const TitledList = ({
         <SMButton
           id={buttonID}
           role="link"
+          small
           messageID={buttonMessageID}
+          messageCount={buttonMessageCount}
+          icon={<ArrowDropDown className={classes.buttonIcon} />}
+          textVariant="button"
           onClick={(e) => {
             e.preventDefault();
             onButtonClick();
@@ -77,7 +89,9 @@ TitledList.propTypes = {
   children: PropTypes.node.isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   subtitle: PropTypes.node,
-  title: PropTypes.node.isRequired,
+  title: PropTypes.node,
+  description: PropTypes.node,
+  buttonMessageCount: PropTypes.number,
   divider: PropTypes.bool,
   onButtonClick: PropTypes.func,
   titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']),
@@ -89,6 +103,9 @@ TitledList.defaultProps = {
   titleComponent: 'h3',
   divider: true,
   onButtonClick: null,
+  title: null,
+  description: null,
+  buttonMessageCount: null,
   subtitle: null,
   buttonMessageID: null,
   loading: false,

@@ -3,23 +3,26 @@ import PropTypes from 'prop-types';
 import { useHistory, useLocation } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { Typography } from '@material-ui/core';
-import { Map } from '@material-ui/icons';
-import { focusDistrict, focusDistricts } from '../MapView/utils/mapActions';
-import TabLists from '../../components/TabLists';
+import { Typography } from '@mui/material';
+import { Map } from '@mui/icons-material';
+import { visuallyHidden } from '@mui/utils';
+import { focusDistrict, focusDistricts, useMapFocusDisabled } from '../MapView/utils/mapActions';
 import GeographicalTab from './components/GeographicalTab';
 import { parseSearchParams, uppercaseFirst } from '../../utils';
 import ServiceTab from './components/ServiceTab';
 import { districtFetch } from '../../utils/fetch';
 import fetchAddress from '../MapView/utils/fetchAddress';
-import TitleBar from '../../components/TitleBar';
-import AddressSearchBar from '../../components/AddressSearchBar';
 import { dataStructure, geographicalDistricts } from './utils/districtDataHelper';
-import { handleOpenItems } from '../../redux/actions/district';
-import SMButton from '../../components/ServiceMapButton';
-import MobileComponent from '../../components/MobileComponent';
+import { fetchParkingAreaGeometry, fetchParkingUnits, handleOpenItems } from '../../redux/actions/district';
 import useLocaleText from '../../utils/useLocaleText';
-import SettingsInfo from '../../components/SettingsInfo';
+import {
+  AddressSearchBar,
+  MobileComponent,
+  TabLists,
+  TitleBar,
+  SettingsInfo,
+  SMButton,
+} from '../../components';
 
 
 const AreaView = ({
@@ -28,8 +31,9 @@ const AreaView = ({
   setSelectedDistrictServices,
   setDistrictAddressData,
   setMapState,
+  setSelectedParkingAreas,
   fetchDistrictUnitList,
-  fetchAllDistricts,
+  fetchDistricts,
   unitsFetching,
   districtData,
   districtAddressData,
@@ -52,16 +56,19 @@ const AreaView = ({
   const districtsFetching = useSelector(state => state.districts.districtsFetching);
   const getLocaleText = useLocaleText();
   const openItems = useSelector(state => state.districts.openItems);
+  const selectedDistrictGeometry = selectedDistrictData[0]?.boundary;
 
   const searchParams = parseSearchParams(location.search);
   const selectedArea = searchParams.selected;
   // Get area parameter without year data
   const selectedAreaType = selectedArea?.split(/([0-9]+)/)[0];
+  const mapFocusDisabled = useMapFocusDisabled();
 
   const getInitialOpenItems = () => {
     if (selectedAreaType) {
       const category = dataStructure.find(
-        data => data.districts.includes(selectedAreaType),
+        data => data.id === selectedAreaType
+        || data.districts.some(obj => obj.id === selectedAreaType),
       );
       return [category?.id];
     } return openItems;
@@ -81,8 +88,8 @@ const AreaView = ({
   );
 
   const focusMapToDistrict = (district) => {
-    if (map?.leafletElement && district?.boundary) {
-      focusDistrict(map.leafletElement, district.boundary.coordinates);
+    if (!mapFocusDisabled && map && district?.boundary) {
+      focusDistrict(map, district.boundary.coordinates);
     }
   };
 
@@ -92,7 +99,7 @@ const AreaView = ({
       lon: `${selectedAddress.location.coordinates[0]}`,
       page: 1,
       page_size: 200,
-      type: `${dataStructure.map(item => item.districts).join(',')}`,
+      type: `${dataStructure.map(item => item.districts.map(obj => obj.id)).join(',')}`,
       geometry: true,
       unit_include: 'name,location',
     };
@@ -107,8 +114,8 @@ const AreaView = ({
 
 
   const getViewState = () => ({
-    center: map.leafletElement.getCenter(),
-    zoom: map.leafletElement.getZoom(),
+    center: map.getCenter(),
+    zoom: map.getZoom(),
   });
 
   const clearRadioButtonValue = useCallback(() => {
@@ -160,31 +167,44 @@ const AreaView = ({
 
   useEffect(() => {
     // If pending district focus, focus to districts when distitct data is loaded
-    if (focusTo && selectedDistrictData.length) {
+    if (!mapFocusDisabled && focusTo && selectedDistrictData.length) {
       if (focusTo === 'districts') {
-        if (selectedDistrictData[0]?.boundary) {
+        if (selectedDistrictGeometry) {
           setFocusTo(null);
-          focusDistricts(map.leafletElement, selectedDistrictData);
+          focusDistricts(map, selectedDistrictData);
         }
       } else if (focusTo === 'subdistricts') {
-        if (selectedDistrictData[0]?.boundary) {
+        if (selectedDistrictGeometry) {
           const filtetedDistricts = selectedDistrictData.filter(
             i => selectedSubdistricts.includes(i.ocd_id),
           );
           setFocusTo(null);
-          focusDistricts(map.leafletElement, filtetedDistricts);
+          focusDistricts(map, filtetedDistricts);
         }
       }
     }
   }, [selectedDistrictData, focusTo]);
 
+  useEffect(() => {
+    if (!mapFocusDisabled
+      && map
+      && !focusTo
+      && !localAddressData.length
+      && selectedDistrictGeometry) {
+      focusDistricts(map, selectedDistrictData);
+    }
+  }, [selectedDistrictGeometry]);
 
   useEffect(() => {
-    if (selectedAreaType) { // Arriving to page, with url parameters
+    if (searchParams.selected
+      || searchParams.parkingSpaces
+      || searchParams.parkingUnits
+    ) { // Arriving to page, with url parameters
       if (!embed) {
         /* Remove selected area parameter from url, otherwise it will override
         user area selection when returning to area view */
         history.replace();
+        setSelectedDistrictType(null);
         // Switch to geographical tab if geographical area
         if (geographicalDistricts.includes(selectedAreaType)) {
           const geoTab = document.getElementById('Tab1');
@@ -193,23 +213,37 @@ const AreaView = ({
       }
 
       // Fetch and select area from url parameters
-      if (selectedArea !== selectedDistrictType) {
-        fetchAllDistricts(selectedAreaType);
+      if (selectedArea && !dataStructure.some(obj => obj.id === selectedArea)) {
+        fetchDistricts(selectedAreaType);
         if (!embed) {
           const category = dataStructure.find(
-            data => data.districts.includes(selectedAreaType),
+            data => data.districts.some(obj => obj.id === selectedAreaType),
           );
           dispatch(handleOpenItems(category.id));
+        } else {
+          fetchDistricts(selectedAreaType, true);
         }
         setSelectedDistrictType(selectedArea);
+      } else if (!embed) {
+        fetchDistricts();
+      }
+
+      // Set selected parking spaces from url parameters
+      if (searchParams.parkingSpaces) {
+        const parkingAreas = searchParams.parkingSpaces.split(',');
+        setSelectedParkingAreas(parkingAreas);
+        parkingAreas.forEach((area) => {
+          dispatch(fetchParkingAreaGeometry(area));
+        });
+      }
+      if (searchParams.parkingUnits) {
+        dispatch(fetchParkingUnits());
       }
 
       // Set selected geographical districts from url parameters and handle map focus
-      if (searchParams.districts) {
+      if (searchParams.districts && !mapFocusDisabled) {
         setSelectedSubdistricts(searchParams.districts.split(','));
         setFocusTo('subdistricts');
-      } else {
-        setFocusTo('districts');
       }
 
       // Set selected geographical services from url parameters
@@ -225,15 +259,15 @@ const AreaView = ({
           .then(data => setSelectedAddress(data));
       }
     } else if (!districtData.length) { // Arriving to page first time, without url parameters
-      fetchAllDistricts();
+      fetchDistricts();
     } else if (mapState) { // Returning to page, without url parameters
       // Returns map to the previous spot
       const { center, zoom } = mapState;
-      if (map?.leafletElement && center && zoom) map.leafletElement.setView(center, zoom);
+      if (!map && center && zoom) map.setView(center, zoom);
     }
   }, []);
 
-  if (!map || !map.leafletElement) {
+  if (!map || !map) {
     return null;
   }
 
@@ -311,7 +345,7 @@ const AreaView = ({
             )}
           </MobileComponent>
           <div className={classes.loadingText}>
-            <Typography variant="srOnly" aria-live="assertive">
+            <Typography style={visuallyHidden} aria-live="assertive">
               {districtsFetching.length
                 ? <FormattedMessage id="general.loading" />
                 : <FormattedMessage id="general.loading.done" />

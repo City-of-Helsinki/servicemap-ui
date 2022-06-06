@@ -96,20 +96,28 @@ export const getAddressText = (address, getLocaleText, showPostalCode = true) =>
 };
 
 export const getAddressFromUnit = (unit, getLocaleText, intl) => {
+  let address = '';
   if (!unit || !unit.street_address) {
-    return '';
+    return address;
   }
-  if (!unit.address_zip || !unit.municipality) {
-    return `${getLocaleText(unit.street_address)}`;
+  address += getLocaleText(unit.street_address);
+  if (unit.address_zip) {
+    const { address_zip: addressZip } = unit;
+    const postalCode = addressZip ? `, ${addressZip}` : '';
+    address += postalCode;
   }
-  const { address_zip: addressZip } = unit;
-  const postalCode = addressZip ? `, ${addressZip}` : '';
-  const city = intl.formatMessage({
-    id: `settings.city.${unit.municipality}`,
-    defaultMessage: ' ',
-  });
+  if (unit.municipality) {
+    if (!unit.address_zip) {
+      address += ',';
+    }
+    const city = intl.formatMessage({
+      id: `settings.city.${unit.municipality}`,
+      defaultMessage: typeof unit.municipality === 'string' ? uppercaseFirst(unit.municipality) : ' ',
+    });
+    address += ` ${city}`;
+  }
 
-  return `${getLocaleText(unit.street_address)}${postalCode} ${city}`;
+  return address;
 };
 
 export const useNavigationParams = () => {

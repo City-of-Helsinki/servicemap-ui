@@ -14,19 +14,6 @@ const ACCESSIBILITY_MAPPING = {
   visuallyImpaired: 'visual_impairment',
 };
 
-// Return active accessibility settings
-export const useAcccessibilitySettings = () => {
-  const userSettings = useSelector(state => state.settings);
-  const accessibiliySettingsValues = [
-    userSettings.mobility,
-    userSettings.colorblind,
-    userSettings.hearingAid,
-    userSettings.visuallyImpaired,
-  ].filter(i => (i !== false && i !== null));
-
-  return accessibiliySettingsValues;
-};
-
 class SettingsUtility {
   static mobilitySettings = ALLOWED.mobility;
 
@@ -47,14 +34,14 @@ class SettingsUtility {
 
   static isValidAccessibilitySenseImpairment(key) {
     if (SettingsUtility.accessibilityImpairmentKeys.indexOf(key) < 0) {
-      throw new Error(`Invalid value for accessibility sense setting: ${key}`);
+      return false;
     }
     return true;
   }
 
   static isValidMobilitySetting(value) {
     if (SettingsUtility.mobilitySettings.indexOf(value) < 0) {
-      throw new Error(`Invalid value for mobility setting: ${value}`);
+      return false;
     }
     return true;
   }
@@ -161,4 +148,25 @@ class SettingsUtility {
   }
 }
 
+// Return active accessibility settings
+export const useAcccessibilitySettings = () => {
+  const userSettings = useSelector(state => state.settings);
+  const accessibiliySettingsValues = [
+    userSettings.mobility,
+    ...SettingsUtility.accessibilityImpairmentKeys.filter(key => userSettings[key]),
+  ].filter(i => (i !== false && i !== null));
+
+  return accessibiliySettingsValues;
+};
+
 export default SettingsUtility;
+
+export const useMobilitySettings = () => {
+  const userSettings = useSelector(state => state.settings);
+  return userSettings.mobility;
+};
+
+export const useSenseSettings = () => {
+  const userSettings = useSelector(state => state.settings);
+  return SettingsUtility.accessibilityImpairmentKeys.filter(key => userSettings[key]);
+};

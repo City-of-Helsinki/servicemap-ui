@@ -1,7 +1,7 @@
 
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { withStyles } from '@material-ui/core';
+import { withStyles } from '@mui/styles';
 import { injectIntl } from 'react-intl';
 import { fetchService } from '../../redux/actions/services';
 import ServiceView from './ServiceView';
@@ -11,7 +11,7 @@ import styles from './styles';
 const mapStateToProps = (state) => {
   const { mapRef, service, user } = state;
   const { customPosition } = user;
-  const map = mapRef && mapRef.leafletElement;
+  const map = mapRef;
   const units = getServiceUnits(state);
 
   return {

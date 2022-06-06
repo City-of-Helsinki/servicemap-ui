@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { List, Typography, ListItem } from '@material-ui/core';
+import { List, Typography, ListItem } from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import { FormattedMessage } from 'react-intl';
-import { FormatListBulleted, LocationOn } from '@material-ui/icons';
+import { FormatListBulleted, LocationOn } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
-import SMAccordion from '../../../../components/SMAccordion';
 import DistrictToggleButton from '../DistrictToggleButton';
 import {
   fetchDistrictGeometry,
@@ -17,6 +17,10 @@ import { getFilteredSubdistrictServices } from '../../../../redux/selectors/dist
 import GeographicalDistrictList from '../GeographicalDistrictList';
 import GeographicalUnitList from '../GeographicalUnitList';
 import useLocaleText from '../../../../utils/useLocaleText';
+import { geographicalDistricts } from '../../utils/districtDataHelper';
+import {
+  SMAccordion,
+} from '../../../../components';
 
 
 const GeographicalTab = ({
@@ -37,7 +41,7 @@ const GeographicalTab = ({
   const getLocaleText = useLocaleText();
 
   const [openCategory, setOpenCategory] = useState(
-    useSelector(state => state.districts.openItems).find(item => item === 'neighborhood' || item === 'postcode_area') || [],
+    useSelector(state => state.districts.openItems).find(item => geographicalDistricts.includes(item)) || [],
   );
 
 
@@ -83,7 +87,7 @@ const GeographicalTab = ({
   };
 
   useEffect(() => {
-    if (!selectedDistrictType || (selectedDistrictType !== 'neighborhood' && selectedDistrictType !== 'postcode_area')) {
+    if (!selectedDistrictType || !geographicalDistricts.includes(selectedDistrictType)) {
       dispatch(setSelectedSubdistricts([]));
       dispatch(setSelectedDistrictServices([]));
       setOpenCategory(null);
@@ -117,13 +121,13 @@ const GeographicalTab = ({
 
 
   const render = () => {
-    const districtItems = districtData.filter(obj => obj.id === 'neighborhood' || obj.id === 'postcode_area');
+    const districtItems = districtData.filter(obj => geographicalDistricts.includes(obj.id));
     return (
       <>
         {localAddressData?.address && localAddressData.districts?.length && (
           renderAddressInfo()
         )}
-        <Typography variant="srOnly" component="h3">
+        <Typography style={visuallyHidden} component="h3">
           <FormattedMessage id="area.list" />
         </Typography>
         <List>

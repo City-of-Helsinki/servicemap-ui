@@ -15,7 +15,7 @@ fixture`Service page coordinate tests`
   });
 
 test('User marker is drawn on map based on coordinates', async (t) => {
-  const marker = ReactSelector('CoordinateMarker Marker');
+  const marker = ReactSelector('CoordinateMarker');
   const coords = await marker.getReact(({props}) => props.position);
 
   await t
@@ -40,8 +40,8 @@ test('Keyboard navigation is OK', async (t) => {
     .click(input)
     .pressKey('tab') // Tabs to search icon button
     .pressKey('tab') // Result orderer
-    .expect(select.getReact(({props}) => props.value)).eql('match-desc')
-    .pressKey('down')
+    // .expect(select.getReact(({props}) => props.value)).eql('match-desc')
+    // .pressKey('down')
     .expect(select.getReact(({props}) => props.value)).eql('alphabetical-desc')
     .pressKey('down') 
     .expect(select.getReact(({props}) => props.value)).eql('alphabetical-asc')

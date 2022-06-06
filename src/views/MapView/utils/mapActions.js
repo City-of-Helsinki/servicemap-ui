@@ -1,7 +1,16 @@
 import pointOnFeature from '@turf/point-on-feature';
+import { useLocation } from 'react-router-dom';
+import { parseSearchParams } from '../../../utils';
+import { isEmbed } from '../../../utils/path';
 import swapCoordinates from './swapCoordinates';
 
 /* eslint-disable global-require, no-underscore-dangle */
+
+const useMapFocusDisabled = () => {
+  const location = useLocation();
+  const searchParams = parseSearchParams(location.search);
+  return isEmbed() && !!searchParams.bbox;
+};
 
 const fitUnitsToMap = (units, map) => {
   const L = require('leaflet');
@@ -33,7 +42,10 @@ const fitUnitsToMap = (units, map) => {
   });
   if (bounds.length > 0) {
     try {
-      map.fitBounds(bounds, { padding: [15, 15], maxZoom: maxZoom - 1 });
+      setTimeout(() => {
+        map.invalidateSize();
+        map.fitBounds(bounds, { padding: [15, 15], maxZoom: maxZoom - 1 });
+      }, 1);
     } catch (err) {
       console.warn('Fit units to map failed', err);
     }
@@ -55,25 +67,32 @@ const focusDistrict = (map, coordinates) => {
 };
 
 const focusDistricts = (map, districts) => {
-  const bounds = districts.map(
+  const filteredData = districts.filter(obj => obj.boundary);
+  const bounds = filteredData.map(
     district => district.boundary.coordinates.map(area => swapCoordinates(area)),
   );
   map.fitBounds(bounds);
+};
+
+const getBoundsFromBbox = (bbox) => {
+  if (!bbox) return null;
+  const L = require('leaflet');
+  const sw = L.latLng(bbox.slice(0, 2));
+  const ne = L.latLng(bbox.slice(2, 4));
+  return L.latLngBounds(sw, ne);
 };
 
 const fitBbox = (map, bbox) => {
   if (!map || !bbox || bbox.length !== 4) {
     return;
   }
-  const L = require('leaflet');
-  const sw = L.latLng(bbox.slice(0, 2));
-  const ne = L.latLng(bbox.slice(2, 4));
-  const bounds = L.latLngBounds(sw, ne);
+  const bounds = getBoundsFromBbox(bbox);
+
   map.fitBounds(bounds);
 };
 
 const panViewToBounds = (map, selectedGeometry, geometryGroup) => {
-  const mapBounds = map.leafletElement.getBounds();
+  const mapBounds = map.getBounds();
   // Get point inside geometry
   const geometryPoint = pointOnFeature(selectedGeometry).geometry.coordinates;
   const pointLatLng = global.L.latLng(geometryPoint);
@@ -81,9 +100,9 @@ const panViewToBounds = (map, selectedGeometry, geometryGroup) => {
   if (!mapBounds.contains(pointLatLng)) {
     try {
       if (geometryGroup?.length) { // If a group of geomteries is given, fit them all to map
-        map.leafletElement.fitBounds(geometryGroup);
+        map.fitBounds(geometryGroup);
       } else {
-        map.leafletElement.fitBounds(selectedGeometry.coordinates);
+        map.fitBounds(selectedGeometry.coordinates);
       }
     } catch (err) {
       console.warn('Fit districts to map failed', err);
@@ -98,4 +117,6 @@ export {
   focusDistrict,
   focusDistricts,
   panViewToBounds,
+  getBoundsFromBbox,
+  useMapFocusDisabled,
 };

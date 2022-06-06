@@ -5,8 +5,8 @@ import {
   ClickAwayListener,
   Typography,
   ButtonBase,
-} from '@material-ui/core';
-import { ArrowDropUp, ArrowDropDown } from '@material-ui/icons';
+} from '@mui/material';
+import { ArrowDropUp, ArrowDropDown } from '@mui/icons-material';
 import { keyboardHandler } from '../../utils';
 
 class DropDownMenuButton extends React.Component {
@@ -78,7 +78,7 @@ class DropDownMenuButton extends React.Component {
       <div className={classes.root}>
         <Button
           id={id}
-          buttonRef={(node) => {
+          ref={(node) => {
             this.anchorEl = node;
           }}
           aria-controls={open ? panelID : undefined}

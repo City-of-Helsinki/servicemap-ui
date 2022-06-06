@@ -3,7 +3,8 @@
 ## Requirements 
 Using following:
 * Node LTS (v14)
-* npm (v6.4.1)
+* npm (v6)
+If you are using NVM you can also use `nvm use` to get correct version.
 
 For development:
 * Eslint extended from `airbnb` configuration.

@@ -3,7 +3,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import {
   Tabs, Tab, Typography,
-} from '@material-ui/core';
+} from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import { FormattedMessage } from 'react-intl';
 import { parseSearchParams, stringifySearchParams } from '../../utils';
 import ResultOrderer from '../ResultOrderer';
@@ -29,7 +30,7 @@ const TabLists = ({
   const searchParams = parseSearchParams(location.search);
   const filteredData = data.filter(item => item.component || (item.data && item.data.length > 0));
   const getTabfromUrl = () => {
-    let index = data.findIndex(tab => tab.id === searchParams.t);
+    let index = filteredData.findIndex(tab => tab.id === searchParams.t);
     if (index === -1) index = parseInt(searchParams.t, 10) || 0;
     if (filteredData.length <= index) {
       return 0;
@@ -98,8 +99,8 @@ const TabLists = ({
     const searchParams = parseSearchParams(location.search);
     searchParams.p = 1;
 
-    if (data[value].id) {
-      searchParams.t = data[value].id;
+    if (filteredData[value].id) {
+      searchParams.t = filteredData[value].id;
     } else {
       searchParams.t = value;
     }
@@ -127,7 +128,7 @@ const TabLists = ({
 
     // Reset scroll to avoid scrolled sticky  elements having inconsistent offsetTop
     const elem = document.getElementsByClassName(sidebarClass)[0];
-    elem.scrollTop = 0;
+    if (elem) elem.scrollTop = 0;
 
     // Calculate height by looping through Tabs root element's previous siblings
     // Change sidebar scroll to match TabList header's sticky elements' combined height
@@ -203,7 +204,7 @@ const TabLists = ({
           focusClass
           && focusText
           && (
-            <Typography variant="srOnly" className={focusClass} tabIndex="-1">{focusText}</Typography>
+            <Typography style={visuallyHidden} className={focusClass} tabIndex="-1">{focusText}</Typography>
           )
         }
         <Tabs

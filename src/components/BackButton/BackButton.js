@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   IconButton, Typography, Button, ButtonBase,
-} from '@material-ui/core';
-import { ArrowBack } from '@material-ui/icons';
+} from '@mui/material';
+import { ArrowBack } from '@mui/icons-material';
 import { getPathName } from '../../utils/path';
 
 const BackButton = (props) => {

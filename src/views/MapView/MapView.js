@@ -1,15 +1,14 @@
 /* eslint-disable global-require */
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import {
-  withStyles, Tooltip as MUITooltip, ButtonBase,
-} from '@material-ui/core';
-import { MyLocation, LocationDisabled } from '@material-ui/icons';
+import { ButtonBase } from '@mui/material';
+import { MyLocation, LocationDisabled } from '@mui/icons-material';
+import { useSelector } from 'react-redux';
+import { useMapEvents } from 'react-leaflet';
 import { mapOptions } from './config/mapConfig';
 import CreateMap from './utils/createMap';
-import { focusToPosition } from './utils/mapActions';
-import styles from './styles';
+import { focusToPosition, getBoundsFromBbox } from './utils/mapActions';
 import Districts from './components/Districts';
 import TransitStops from './components/TransitStops';
 import AddressPopup from './components/AddressPopup';
@@ -18,9 +17,7 @@ import fetchAddress from './utils/fetchAddress';
 import { isEmbed } from '../../utils/path';
 import AddressMarker from './components/AddressMarker';
 import { parseSearchParams } from '../../utils';
-import HomeLogo from '../../components/Logos/HomeLogo';
 import DistanceMeasure from './components/DistanceMeasure';
-import Loading from '../../components/Loading';
 import MarkerCluster from './components/MarkerCluster';
 import UnitGeometry from './components/UnitGeometry';
 import MapUtility from './utils/mapUtility';
@@ -31,6 +28,10 @@ import PanControl from './components/PanControl';
 import adjustControlElements from './utils';
 import EntranceMarker from './components/EntranceMarker';
 import EventMarkers from './components/EventMarkers';
+import CustomControls from './components/CustomControls';
+import { getSelectedUnitEvents } from '../../redux/selectors/selectedUnit';
+import useMapUnits from './utils/useMapUnits';
+import { Loading } from '../../components';
 
 if (global.window) {
   require('leaflet');
@@ -38,21 +39,28 @@ if (global.window) {
   global.rL = require('react-leaflet');
 }
 
+const EmbeddedActions = () => {
+  const embedded = isEmbed();
+  const map = useMapEvents({
+    moveend() {
+      if (embedded) {
+        const bounds = map.getBounds();
+        window.parent.postMessage({ bbox: `${bounds.getSouth()},${bounds.getWest()},${bounds.getNorth()},${bounds.getEast()}` });
+      }
+    },
+  });
+
+  return null;
+};
+
 const MapView = (props) => {
   const {
-    addressToRender,
-    addressUnits,
-    adminDistricts,
     classes,
     currentPage,
     intl,
     location,
     settings,
-    setAddressLocation,
-    unitList,
     unitsLoading,
-    serviceUnits,
-    districtUnits,
     districtViewFetching,
     hideUserMarker,
     highlightedUnit,
@@ -67,97 +75,29 @@ const MapView = (props) => {
     toggleSidebar,
     sidebarHidden,
   } = props;
-  const mapRef = useRef(null);
 
   // State
   const [mapObject, setMapObject] = useState(null);
-  const [mapClickPoint, setMapClickPoint] = useState(null);
-  const [refSaved, setRefSaved] = useState(false);
+  const [mapElement, setMapElement] = useState(null);
   const [prevMap, setPrevMap] = useState(null);
-  const [unitData, setUnitData] = useState(null);
   const [mapUtility, setMapUtility] = useState(null);
   const [measuringMarkers, setMeasuringMarkers] = useState([]);
   const [measuringLine, setMeasuringLine] = useState([]);
 
   const embedded = isEmbed({ url: location.pathname });
   const getAddressNavigatorParams = useNavigationParams();
+  const districtUnitsFetch = useSelector(state => state.districts.unitFetch);
 
+  const unitData = useMapUnits();
 
-  const getMapUnits = () => {
-    let mapUnits = [];
+  // This unassigned selector is used to trigger re-render after events are fetched
+  useSelector(state => getSelectedUnitEvents(state));
 
-    if (embedded && parseSearchParams(location.search).units === 'none') {
-      return [];
-    }
-    if (currentPage === 'home' && embedded) {
-      mapUnits = unitList;
-    }
-    if (
-      currentPage === 'search'
-      || currentPage === 'division'
-      || (currentPage === 'unit' && unitList.length)
-    ) {
-      mapUnits = unitList;
-    } else if (currentPage === 'address') {
-      switch (addressToRender) {
-        case 'adminDistricts':
-          mapUnits = adminDistricts ? adminDistricts
-            .filter(d => d.unit)
-            .reduce((unique, o) => {
-              // Ignore districts without unit
-              if (!o.unit) {
-                return unique;
-              }
-              // Add only unique units
-              if (!unique.some(obj => obj.id === o.unit.id)) {
-                unique.push(o.unit);
-              }
-              return unique;
-            }, [])
-            : [];
-          break;
-        case 'units':
-          mapUnits = addressUnits;
-          break;
-        default:
-          mapUnits = [];
-      }
-    } else if (currentPage === 'service' && serviceUnits && !unitsLoading) {
-      mapUnits = serviceUnits;
-    } else if (currentPage === 'area' && districtUnits) {
-      mapUnits = districtUnits;
-    } else if (
-      (currentPage === 'unit' || currentPage === 'fullList' || currentPage === 'event')
-      && highlightedUnit
-    ) {
-      mapUnits = [highlightedUnit];
-    }
-
-    return mapUnits;
-  };
-
-  const setClickCoordinates = (ev) => {
-    if (embedded) return;
-    setMapClickPoint(null);
-    if (document.getElementsByClassName('leaflet-popup').length > 0) {
-      mapRef.current.leafletElement.closePopup();
-    } else {
-      setMapClickPoint(ev.latlng);
-    }
-  };
-
-  const saveMapReference = () => {
-    setMapRef(mapRef.current);
-  };
-
-  const clearMapReference = () => {
-    setMapRef(null);
-  };
 
   const initializeMap = () => {
-    if (mapRef.current) {
+    if (mapElement) {
       // If changing map type, save current map viewport values before changing map
-      const map = mapRef.current;
+      const map = mapElement;
       map.defaultZoom = mapObject.options.zoom;
       setPrevMap(map);
     }
@@ -172,7 +112,7 @@ const MapView = (props) => {
   const focusOnUser = () => {
     if (userLocation) {
       focusToPosition(
-        mapRef.current.leafletElement,
+        mapElement,
         [userLocation.longitude, userLocation.latitude],
       );
     } else if (!embedded) {
@@ -187,6 +127,17 @@ const MapView = (props) => {
       });
   };
 
+  const getCoordinatesFromUrl = () => {
+    // Attempt to get coordinates from URL
+    const usp = new URLSearchParams(location.search);
+    const lat = usp.get('lat');
+    const lng = usp.get('lon');
+    if (!lat || !lng) {
+      return null;
+    }
+    return [lat, lng];
+  };
+
   useEffect(() => { // On map mount
     initializeMap();
     if (!embedded) {
@@ -199,7 +150,7 @@ const MapView = (props) => {
 
     return () => {
       // Clear map reference on unmount
-      clearMapReference();
+      setMapRef(null);
     };
   }, []);
 
@@ -208,13 +159,6 @@ const MapView = (props) => {
       adjustControlElements();
     }, 1);
   }, [mapObject]);
-
-  useEffect(() => { // Set map ref to redux once map is rendered
-    if (!refSaved && mapRef.current) {
-      saveMapReference();
-      setRefSaved(true);
-    }
-  });
 
   useEffect(() => {
     if (currentPage !== 'unit' || !highlightedUnit || !mapUtility) {
@@ -227,12 +171,11 @@ const MapView = (props) => {
   useEffect(() => { // On map type change
     // Init new map and set new ref to redux
     initializeMap();
-    setRefSaved(false);
   }, [settings.mapType]);
 
   useEffect(() => {
-    if (mapRef.current) {
-      setMapUtility(new MapUtility({ leaflet: mapRef.current.leafletElement }));
+    if (mapElement) {
+      setMapUtility(new MapUtility({ leaflet: mapElement }));
 
       const usp = new URLSearchParams(location.search);
       const lat = usp.get('lat');
@@ -240,30 +183,16 @@ const MapView = (props) => {
       try {
         if (lat && lng) {
           const position = [usp.get('lon'), usp.get('lat')];
-          focusToPosition(mapRef.current.leafletElement, position);
+          focusToPosition(mapElement, position);
         }
       } catch (e) {
-        console.error('Error while attemptin to focus on coordinate:', e);
+        console.warn('Error while attemptin to focus on coordinate:', e);
       }
     }
-  }, [mapRef.current]);
-
-  // Attempt to render unit markers on page change or unitList change
-  useEffect(() => {
-    setUnitData(getMapUnits());
-  }, [
-    unitList,
-    highlightedUnit,
-    addressUnits,
-    serviceUnits,
-    districtUnits,
-    highlightedDistrict,
-    currentPage,
-  ]);
+  }, [mapElement]);
 
 
   useEffect(() => {
-    setMapClickPoint(null);
     if (!measuringMode) {
       setMeasuringMarkers([]);
       setMeasuringLine([]);
@@ -271,35 +200,6 @@ const MapView = (props) => {
   }, [measuringMode]);
 
   // Render
-
-  const renderTopBar = () => {
-    if (isMobile) {
-      return (
-        // TODO: search bar disabled from map until it is fixed
-        // <div className={classes.topArea}>
-        //   <SearchBar background="none" />
-        // </div>
-        null
-      );
-    } return null;
-  };
-
-  const renderEmbedOverlay = () => {
-    if (!embedded) {
-      return null;
-    }
-    const openApp = () => {
-      const url = window.location.href;
-      window.open(url.replace('/embed', ''));
-    };
-    return (
-      <ButtonBase onClick={openApp}>
-        <MUITooltip title={intl.formatMessage({ id: 'embed.click_prompt_move' })}>
-          <HomeLogo aria-hidden className={classes.embedLogo} />
-        </MUITooltip>
-      </ButtonBase>
-    );
-  };
 
   const renderUnitGeometry = () => {
     if (highlightedDistrict) return null;
@@ -309,7 +209,8 @@ const MapView = (props) => {
           ? <UnitGeometry key={unit.id} data={unit} />
           : null
       ));
-    } if (highlightedUnit) {
+    }
+    if (highlightedUnit) {
       return <UnitGeometry data={highlightedUnit} />;
     }
     return null;
@@ -317,38 +218,36 @@ const MapView = (props) => {
 
 
   if (global.rL && mapObject) {
-    const { Map, TileLayer } = global.rL || {};
-    const Control = require('react-leaflet-control').default;
+    const { MapContainer, TileLayer, WMSTileLayer } = global.rL || {};
     let center = mapOptions.initialPosition;
     let zoom = isMobile ? mapObject.options.mobileZoom : mapObject.options.zoom;
     if (prevMap) { // If changing map type, use viewport values of previuous map
-      center = prevMap.viewport.center || prevMap.props.center;
+      center = prevMap.getCenter() || prevMap.props.center;
       /* Different map types have different zoom levels
       Use the zoom difference to calculate the new zoom level */
       const zoomDifference = mapObject.options.zoom - prevMap.defaultZoom;
-      zoom = prevMap.viewport.zoom
-        ? prevMap.viewport.zoom + zoomDifference
+      zoom = prevMap.getZoom()
+        ? prevMap.getZoom() + zoomDifference
         : prevMap.props.zoom + zoomDifference;
     }
 
     const showLoadingScreen = districtViewFetching || (embedded && unitsLoading);
     const userLocationAriaLabel = intl.formatMessage({ id: !userLocation ? 'location.notAllowed' : 'location.center' });
     const eventSearch = parseSearchParams(location.search).events;
+    const defaultBounds = parseSearchParams(location.search).bbox;
 
     return (
       <>
-        {renderTopBar()}
-        {renderEmbedOverlay()}
-        <Map
+        <MapContainer
           tap={false} // This should fix leaflet safari double click bug
           preferCanvas
-          className={`${classes.map} ${measuringMode ? classes.measuringCursor : ''} ${embedded || sidebarHidden ? classes.mapNoSidebar : ''} `}
+          className={`${classes.map} ${embedded ? classes.mapNoSidebar : ''} `}
           key={mapObject.options.name}
-          ref={mapRef}
           zoomControl={false}
+          bounds={getBoundsFromBbox(defaultBounds?.split(','))}
           doubleClickZoom={false}
           crs={mapObject.crs}
-          center={center}
+          center={!defaultBounds ? center : null}
           zoom={zoom}
           minZoom={mapObject.options.minZoom}
           maxZoom={mapObject.options.maxZoom}
@@ -356,14 +255,16 @@ const MapView = (props) => {
           detailZoom={mapObject.options.detailZoom}
           maxBounds={mapObject.options.mapBounds || mapOptions.defaultMaxBounds}
           maxBoundsViscosity={1.0}
-          onClick={(ev) => { setClickCoordinates(ev); }}
+          whenCreated={(map) => {
+            setMapElement(map);
+            setMapRef(map);
+          }}
         >
           {eventSearch
             ? <EventMarkers searchData={unitData} />
             : (
               <MarkerCluster
-                map={mapRef?.current?.leafletElement}
-                data={currentPage === 'unit' && highlightedUnit ? [highlightedUnit] : unitData}
+                data={unitData}
                 measuringMode={measuringMode}
               />
             )
@@ -371,31 +272,31 @@ const MapView = (props) => {
           {
             renderUnitGeometry()
           }
-          <TileLayer
-            url={mapObject.options.url}
-            attribution={intl.formatMessage({ id: mapObject.options.attribution })}
-          />
+          {mapObject.options.name === 'ortographic' && mapObject.options.wmsUrl !== 'undefined'
+            ? ( // Use WMS service for ortographic maps, because HSY's WMTS tiling does not work
+              <WMSTileLayer
+                url={mapObject.options.wmsUrl}
+                layers={mapObject.options.wmsLayerName}
+                attribution={intl.formatMessage({ id: mapObject.options.attribution })}
+              />
+            )
+            : (
+              <TileLayer
+                url={mapObject.options.url}
+                attribution={intl.formatMessage({ id: mapObject.options.attribution })}
+              />
+            )}
           {showLoadingScreen ? (
             <div className={classes.loadingScreen}>
-              <Loading />
+              <Loading reducer={districtUnitsFetch.isFetching ? districtUnitsFetch : null} />
             </div>
           ) : null}
-          <Districts mapOptions={mapOptions} map={mapRef.current} embedded={embedded} />
+          <Districts mapOptions={mapOptions} embedded={embedded} />
+          <TransitStops mapObject={mapObject} />
 
-          <TransitStops
-            map={mapRef.current}
-            mapObject={mapObject}
-            isMobile={isMobile}
-          />
-          {!embedded && !measuringMode && mapClickPoint && (
+          {!embedded && !measuringMode && (
             // Draw address popoup on mapclick to map
-            <AddressPopup
-              mapClickPoint={mapClickPoint}
-              getAddressNavigatorParams={getAddressNavigatorParams}
-              map={mapRef.current}
-              setAddressLocation={setAddressLocation}
-              navigator={navigator}
-            />
+            <AddressPopup navigator={navigator} />
           )}
 
           {currentPage === 'address' && (
@@ -425,60 +326,49 @@ const MapView = (props) => {
             />
           )}
 
-          <Control position="topleft">
+          <CustomControls position="topleft">
             {!isMobile && !embedded && toggleSidebar ? (
               <HideSidebarButton
                 sidebarHidden={sidebarHidden}
-                mapRef={mapRef}
                 toggleSidebar={toggleSidebar}
               />
             ) : null}
-          </Control>
-          <PanControl
-            Control={Control}
-            map={mapRef?.current?.leafletElement}
-          />
-          {
-            !embedded
-            && (
-              <>
-                {/* Custom user location map button */}
-                <Control className="UserLocation" position="bottomright">
-                  <ButtonBase
-                    aria-hidden
-                    aria-label={userLocationAriaLabel}
-                    disabled={!userLocation}
-                    className={`${classes.showLocationButton} ${!userLocation ? classes.locationDisabled : ''}`}
-                    onClick={() => focusOnUser()}
-                    focusVisibleClassName={classes.locationButtonFocus}
-                  >
-                    {userLocation
-                      ? <MyLocation className={classes.showLocationIcon} />
-                      : <LocationDisabled className={classes.showLocationIcon} />
-                    }
-                  </ButtonBase>
-                </Control>
-              </>
-            )
-          }
-          <CoordinateMarker />
-        </Map>
+          </CustomControls>
+          <CustomControls position="bottomright">
+            {!embedded ? (
+              /* Custom user location map button */
+              <div key="userLocation" className="UserLocation">
+                <ButtonBase
+                  aria-hidden
+                  aria-label={userLocationAriaLabel}
+                  disabled={!userLocation}
+                  className={`${classes.showLocationButton} ${!userLocation ? classes.locationDisabled : ''}`}
+                  onClick={() => focusOnUser()}
+                  focusVisibleClassName={classes.locationButtonFocus}
+                >
+                  {userLocation
+                    ? <MyLocation className={classes.showLocationIcon} />
+                    : <LocationDisabled className={classes.showLocationIcon} />
+                  }
+                </ButtonBase>
+              </div>
+            ) : null}
+
+            <PanControl key="panControl" />
+          </CustomControls>
+          <CoordinateMarker position={getCoordinatesFromUrl()} />
+          <EmbeddedActions />
+        </MapContainer>
       </>
     );
   }
   return null;
 };
 
-export default withRouter(withStyles(styles)(MapView));
+export default withRouter(MapView);
 
 // Typechecking
 MapView.propTypes = {
-  addressToRender: PropTypes.string,
-  addressUnits: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
-  adminDistricts: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-    ocd_id: PropTypes.string,
-  })),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   currentPage: PropTypes.string.isRequired,
   hideUserMarker: PropTypes.bool,
@@ -488,14 +378,10 @@ MapView.propTypes = {
   isMobile: PropTypes.bool,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
-  serviceUnits: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
-  districtUnits: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
   districtViewFetching: PropTypes.bool.isRequired,
-  setAddressLocation: PropTypes.func.isRequired,
   findUserLocation: PropTypes.func.isRequired,
   setMapRef: PropTypes.func.isRequired,
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
-  unitList: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
   unitsLoading: PropTypes.bool,
   userLocation: PropTypes.objectOf(PropTypes.any),
   locale: PropTypes.string.isRequired,
@@ -505,17 +391,11 @@ MapView.propTypes = {
 };
 
 MapView.defaultProps = {
-  addressToRender: null,
-  addressUnits: null,
-  adminDistricts: null,
   hideUserMarker: false,
   highlightedDistrict: null,
   highlightedUnit: null,
   isMobile: false,
   navigator: null,
-  serviceUnits: null,
-  districtUnits: null,
-  unitList: null,
   unitsLoading: false,
   toggleSidebar: null,
   sidebarHidden: false,

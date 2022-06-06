@@ -1,6 +1,6 @@
 import {
   Checkbox, FormControlLabel, List, ListItem, Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
@@ -29,7 +29,11 @@ const GeographicalDistrictList = ({ district, classes }) => {
         district => newArray.includes(district.ocd_id),
       );
       const coordinateArray = districtsToFocus.map(district => district.boundary.coordinates);
-      panViewToBounds(map, district.boundary, coordinateArray);
+      if (districtsToFocus.length === 1) {
+        map.fitBounds(coordinateArray[0]);
+      } else {
+        panViewToBounds(map, district.boundary, coordinateArray);
+      }
     } else {
       newArray = selectedSubdistricts.filter(i => i !== district.ocd_id);
     }
