@@ -13,7 +13,7 @@ import App from '../src/App';
 import { makeLanguageHandler, languageSubdomainRedirect, unitRedirect, parseInitialMapPositionFromHostname, getRequestFullUrl, sitemapActive } from './utils';
 import { setLocale } from '../src/redux/actions/user';
 import { Helmet } from 'react-helmet';
-import { ServerStyleSheets } from '@material-ui/core/styles';
+import { ServerStyleSheets } from '@mui/styles';
 import fetch from 'node-fetch';
 import { fetchEventData, fetchSelectedUnitData } from './dataFetcher';
 import IntlPolyfill from 'intl';
@@ -207,6 +207,8 @@ const htmlTemplate = (req, reactDom, preloadedState, css, cssString, locale, hel
         window.nodeEnvSettings.DIGITRANSIT_API = "${process.env.DIGITRANSIT_API}";
         window.nodeEnvSettings.FEEDBACK_URL = "${process.env.FEEDBACK_URL}";
         window.nodeEnvSettings.HEARING_MAP_API = "${process.env.HEARING_MAP_API}";
+        window.nodeEnvSettings.HSL_ROUTE_GUIDE_URL = "${process.env.HSL_ROUTE_GUIDE_URL}";
+        window.nodeEnvSettings.HSL_ROUTE_GUIDE_CITIES = "${process.env.HSL_ROUTE_GUIDE_CITIES}";
         window.nodeEnvSettings.MATOMO_MOBILITY_DIMENSION_ID = "${process.env.MATOMO_MOBILITY_DIMENSION_ID}";
         window.nodeEnvSettings.MATOMO_SENSES_DIMENSION_ID = "${process.env.MATOMO_SENSES_DIMENSION_ID}";
         window.nodeEnvSettings.MATOMO_NO_RESULTS_DIMENSION_ID = "${process.env.MATOMO_NO_RESULTS_DIMENSION_ID}";

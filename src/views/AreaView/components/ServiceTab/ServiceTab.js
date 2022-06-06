@@ -5,10 +5,10 @@ import {
   ListItem,
   Typography,
   Divider,
-} from '@material-ui/core';
+} from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import SMAccordion from '../../../../components/SMAccordion';
 import {
   fetchDistrictGeometry,
   handleOpenItems,
@@ -21,6 +21,9 @@ import DistrictToggleButton from '../DistrictToggleButton';
 import { dataStructure, getDistrictCategory } from '../../utils/districtDataHelper';
 import DistrictAreaList from '../DistrictAreaList';
 import ParkingAreaList from '../ParkingAreaList';
+import {
+  SMAccordion,
+} from '../../../../components';
 
 const ServiceTab = (props) => {
   const {
@@ -191,7 +194,7 @@ const ServiceTab = (props) => {
 
   return (
     <div>
-      <Typography variant="srOnly" component="h3">
+      <Typography style={visuallyHidden} component="h3">
         <FormattedMessage id="area.list" />
       </Typography>
       <List>

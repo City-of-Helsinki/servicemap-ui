@@ -195,6 +195,8 @@ const translations = {
   'embedder.map.title': 'Bakgrundskarta',
   'embedder.map.aria.label': 'Välj bakgrundskarta',
   'embedder.options.title': 'Visa på kartan',
+  'embedder.options.label.list.side': 'Näytä toimipisteet listana (kartan vieressä)', // TODO: translate
+  'embedder.options.label.list.bottom': 'Näytä toimipisteet listana (kartan alla)', // TODO: translate
   'embedder.options.label.units': 'Visa verksamhetsställen',
   'embedder.options.label.transit': 'Visa kollektivtrafikens hållplatser (Zooma in kartan för att se hållplatserna)',
   'embedder.options.label.bbox': 'Begränsa den inbäddade kartan till området i förhandsgranskningsfönstret',
@@ -450,10 +452,11 @@ const translations = {
     other {# tjänster}
   }`,
   'unit.educationServices': 'Verksamhetsställets tjänster per läsår',
-  'unit.educationServices.description': 'Läsåret {semester}',
+  'unit.educationServices.description': 'Läsåret {period}',
   'unit.educationServices.more': 'Visa fler tjänster ({count})',
   'unit.route': 'Se vägen till det här stället',
-  'unit.route.extra': '(Ny flik. HRT-reseplaneraren är inte en tillgänglig tjänst)',
+  'unit.route.extra.hslRouteGuide': '(Ny flik. HRT-reseplaneraren är inte en tillgänglig tjänst)',
+  'unit.route.extra.routeGuide': '(Ny flik. Matka.fi-reseplaneraren är inte en tillgänglig tjänst)',
   'unit.socialMedia.title': 'Verksamhetsstället på sociala medier',
   'unit.outdoorLink': 'Kolla skicket på en motionsplats i tjänsten ulkoliikunta.fi',
   'unit.seo.description': 'Se läget på kartan',

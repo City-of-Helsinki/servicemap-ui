@@ -13,9 +13,10 @@ import {
   Radio,
   FormLabel,
   FormControl,
-} from '@material-ui/core';
+} from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
+import { visuallyHidden } from '@mui/utils';
 import SettingsUtility from '../../utils/settings';
 import Container from '../Container';
 import {
@@ -668,7 +669,7 @@ const Settings = ({
     return (
       <div id="SettingsContainer" className={`${classes.container}`} ref={dialogRef} role="dialog">
         {/* Empty element that makes keyboard focus loop in dialog */}
-        <Typography variant="srOnly" aria-hidden tabIndex="0" onFocus={() => focusToLastElement()} />
+        <Typography style={visuallyHidden} aria-hidden tabIndex="0" onFocus={() => focusToLastElement()} />
 
         <TitleBar id="SettingsTitle" titleComponent="h2" title={<FormattedMessage id={`settings.${settingsPage}.long`} />} />
         <>
@@ -700,7 +701,7 @@ const Settings = ({
             />
           </Container>
 
-          <Typography aria-live="polite" variant="srOnly">
+          <Typography aria-live="polite" style={visuallyHidden}>
             {settingsChanged && (
               <FormattedMessage id="settings.aria.changed" />
             )}
@@ -710,7 +711,7 @@ const Settings = ({
           </Typography>
         </>
         {/* Empty element that makes keyboard focus loop in dialog */}
-        <Typography variant="srOnly" aria-hidden tabIndex="0" onFocus={() => focusToFirstElement()} />
+        <Typography style={visuallyHidden} aria-hidden tabIndex="0" onFocus={() => this.focusToFirstElement()} />
       </div>
     );
   };

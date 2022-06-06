@@ -79,7 +79,7 @@ const styles = theme => ({
     zIndex: theme.zIndex.infront,
   },
   marginBottom: {
-    marginBottom: `${theme.spacing(2)}px !important`,
+    marginBottom: `${theme.spacing(2)} !important`,
   },
   embedLogo: {
     top: 0,
@@ -379,7 +379,6 @@ const styles = theme => ({
     marginRight: 4,
   },
   tranistInfoContainer: {
-    width: 230,
     padding: theme.spacing(2),
     display: 'flex',
     flexDirection: 'column',
@@ -435,6 +434,9 @@ const styles = theme => ({
   },
   metroIconColor: {
     color: '#FF6319',
+  },
+  bikeIconColor: {
+    color: '#fcb919',
   },
   ferryIconColor: {
     color: '#00B9E4',

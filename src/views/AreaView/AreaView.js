@@ -3,23 +3,26 @@ import PropTypes from 'prop-types';
 import { useHistory, useLocation } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { Typography } from '@material-ui/core';
-import { Map } from '@material-ui/icons';
+import { Typography } from '@mui/material';
+import { Map } from '@mui/icons-material';
+import { visuallyHidden } from '@mui/utils';
 import { focusDistrict, focusDistricts, useMapFocusDisabled } from '../MapView/utils/mapActions';
-import TabLists from '../../components/TabLists';
 import GeographicalTab from './components/GeographicalTab';
 import { parseSearchParams, uppercaseFirst } from '../../utils';
 import ServiceTab from './components/ServiceTab';
 import { districtFetch } from '../../utils/fetch';
 import fetchAddress from '../MapView/utils/fetchAddress';
-import TitleBar from '../../components/TitleBar';
-import AddressSearchBar from '../../components/AddressSearchBar';
 import { dataStructure, geographicalDistricts } from './utils/districtDataHelper';
 import { fetchParkingAreaGeometry, fetchParkingUnits, handleOpenItems } from '../../redux/actions/district';
-import SMButton from '../../components/ServiceMapButton';
-import MobileComponent from '../../components/MobileComponent';
 import useLocaleText from '../../utils/useLocaleText';
-import SettingsInfo from '../../components/SettingsInfo';
+import {
+  AddressSearchBar,
+  MobileComponent,
+  TabLists,
+  TitleBar,
+  SettingsInfo,
+  SMButton,
+} from '../../components';
 
 
 const AreaView = ({
@@ -342,7 +345,7 @@ const AreaView = ({
             )}
           </MobileComponent>
           <div className={classes.loadingText}>
-            <Typography variant="srOnly" aria-live="assertive">
+            <Typography style={visuallyHidden} aria-live="assertive">
               {districtsFetching.length
                 ? <FormattedMessage id="general.loading" />
                 : <FormattedMessage id="general.loading.done" />

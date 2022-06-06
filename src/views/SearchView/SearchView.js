@@ -4,24 +4,29 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter, Redirect } from 'react-router-dom';
 import {
-  Paper, withStyles, Typography, Link, NoSsr, Divider,
-} from '@material-ui/core';
+  Paper, Typography, Link, NoSsr, Divider,
+} from '@mui/material';
+import { withStyles } from '@mui/styles';
+import { visuallyHidden } from '@mui/utils';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import styles from './styles';
-import Loading from '../../components/Loading';
-import { AcceptSettingsDialog, SearchBar } from '../../components';
+import {
+  AcceptSettingsDialog,
+  Container,
+  DesktopComponent,
+  ExpandedSuggestions,
+  Loading,
+  MobileComponent,
+  SearchBar,
+  SettingsInfo,
+  SMButton,
+  TabLists,
+} from '../../components';
 import { fitUnitsToMap } from '../MapView/utils/mapActions';
 import {
   parseSearchParams, getSearchParam, keyboardHandler, stringifySearchParams,
 } from '../../utils';
-import TabLists from '../../components/TabLists';
-import SMButton from '../../components/ServiceMapButton';
-import Container from '../../components/Container';
 import { generatePath } from '../../utils/path';
-import ExpandedSuggestions from '../../components/ExpandedSuggestions';
-import SettingsInfo from '../../components/SettingsInfo';
-import DesktopComponent from '../../components/DesktopComponent';
-import MobileComponent from '../../components/MobileComponent';
 import { viewTitleID } from '../../utils/accessibility';
 
 class SearchView extends React.Component {
@@ -409,7 +414,7 @@ class SearchView extends React.Component {
           tabIndex="-1"
           onClick={this.skipToContent}
           onKeyPress={() => { keyboardHandler(this.skipToContent(), ['space', 'enter']); }}
-          variant="srOnly"
+          style={visuallyHidden}
         >
           <FormattedMessage id="search.skipLink" />
         </Typography>
@@ -575,7 +580,7 @@ class SearchView extends React.Component {
     } = this.props;
 
     return (
-      <Typography className={classes.srOnly} variant="srOnly" component="h3" tabIndex="-1">
+      <Typography className={classes.srOnly} style={visuallyHidden} component="h3" tabIndex="-1">
         {
           !isFetching
           && (
@@ -651,7 +656,7 @@ class SearchView extends React.Component {
           // Jump link back to beginning of current page
         }
         <DesktopComponent>
-          <Typography variant="srOnly" component="h3">
+          <Typography style={visuallyHidden} component="h3">
             <Link href={`#${viewTitleID}`} tabIndex="-1">
               <FormattedMessage id="general.return.viewTitle" />
             </Link>

@@ -2,15 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import distance from '@turf/distance';
 import { useSelector } from 'react-redux';
-import { Divider, List, Typography } from '@material-ui/core';
+import { Divider, List, Typography } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import { formatDistanceObject } from '../../../../utils';
 import { getAddressDistrict } from '../../../../redux/selectors/district';
-import DivisionItem from '../../../../components/ListItems/DivisionItem';
 import { getAddressFromUnit } from '../../../../utils/address';
-import SMAccordion from '../../../../components/SMAccordion';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { sortByOriginID } from '../../utils';
+import { DivisionItem, SMAccordion } from '../../../../components';
 
 const DistrictUnitList = (props) => {
   const {

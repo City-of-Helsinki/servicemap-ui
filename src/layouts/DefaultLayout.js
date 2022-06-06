@@ -2,23 +2,26 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { Typography } from '@material-ui/core';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { Typography } from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import MapView from '../views/MapView';
 import config from '../../config';
-import TopBar from '../components/TopBar';
-import Settings from '../components/Settings';
 import ViewRouter from './components/ViewRouter';
-import DesktopComponent from '../components/DesktopComponent';
 import useMobileStatus from '../utils/isMobile';
-import FocusableSRLinks from '../components/FocusableSRLinks';
-import AlertBox from '../components/AlertBox';
 import PrintView from '../views/PrintView';
 import { PrintProvider } from '../context/PrintContext';
 import { viewTitleID } from '../utils/accessibility';
-import ErrorBoundary from '../components/ErrorBoundary';
 import { ErrorProvider } from '../context/ErrorContext';
-import { ErrorComponent } from '../components';
+import {
+  AlertBox,
+  DesktopComponent,
+  ErrorBoundary,
+  ErrorComponent,
+  FocusableSRLinks,
+  TopBar,
+  Settings,
+} from '../components';
 
 const { smallScreenBreakpoint } = config;
 
@@ -183,7 +186,7 @@ const DefaultLayout = (props) => {
                   <ViewRouter />
                 </div>
               </main>
-              <Typography variant="srOnly">{intl.formatMessage({ id: 'map.ariaLabel' })}</Typography>
+              <Typography style={visuallyHidden}>{intl.formatMessage({ id: 'map.ariaLabel' })}</Typography>
               <div
                 aria-hidden
                 tabIndex="-1"

@@ -21,9 +21,9 @@ const tooltipOptions = (permanent, classes) => ({
   offset: [0, -25],
 });
 
-const popupOptions = () => ({
+const popupOptions = isMobile => ({
   autoClose: false,
-  autoPan: false,
+  autoPan: !!isMobile,
   closeButton: true,
   closeOnClick: false,
   direction: 'top',
@@ -98,12 +98,12 @@ const MarkerCluster = ({
   const openHighlightUnitPopup = (mapLayers) => {
     const highlightedMarker = getHighlightedMarker(mapLayers);
     if (highlightedMarker && UnitHelper.isUnitPage()) {
-      const tooltipContent = getUnitPopupContent(clusterData.highlightedUnit);
       // Close all open popups
       map.eachLayer((layer) => {
         layer.closePopup();
       });
       if (highlightedMarker instanceof global.L.MarkerCluster) {
+        const tooltipContent = getUnitPopupContent(clusterData.highlightedUnit);
         highlightedMarker.bindPopup(tooltipContent, popupOptions()).openPopup();
       } else {
         highlightedMarker.openPopup();
@@ -389,7 +389,7 @@ const MarkerCluster = ({
           },
         ).bindPopup(
           popupContent,
-          popupOptions(),
+          popupOptions(isMobile),
         );
 
         if (isMobile) {

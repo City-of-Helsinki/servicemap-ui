@@ -77,6 +77,8 @@ const styles = theme => ({
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
+    flexDirection: 'column',
+    color: 'black',
   },
   settingsButtonPressed: {
     marginBottom: -2,

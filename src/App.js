@@ -18,8 +18,7 @@ import { getLocale } from './redux/selectors/locale';
 import { changeLocaleAction } from './redux/actions/user';
 import DefaultLayout from './layouts';
 import EmbedLayout from './layouts/EmbedLayout';
-import Navigator from './components/Navigator';
-import DataFetcher from './components/DataFetchers/DataFetcher';
+import { DataFetcher, Navigator } from './components';
 import EmbedderView from './views/EmbedderView';
 
 import '@formatjs/intl-pluralrules/polyfill';
@@ -35,6 +34,7 @@ import ThemeWrapper from './themes/ThemeWrapper';
 import LocaleUtility from './utils/locale';
 import config from '../config';
 import ogImage from './assets/images/servicemap-meta-img.png';
+import { StyledEngineProvider } from '@mui/material';
 
 // General meta tags for app
 const MetaTags = () => {
@@ -67,22 +67,24 @@ class App extends React.Component {
     const intlData = LocaleUtility.intlData(locale);
 
     return (
-      <ThemeWrapper>
-        <IntlProvider {...intlData}>
-          <MetaTags />
-          {/* <StylesProvider generateClassName={generateClassName}> */}
-          <div className="App">
-            <Switch>
-              <Route path="*/embedder" component={EmbedderView} />
-              <Route path="*/embed" component={EmbedLayout} />
-              <Route render={() => <DefaultLayout />} />
-            </Switch>
-            <Navigator />
-            <DataFetcher />
-          </div>
-          {/* </StylesProvider> */}
-        </IntlProvider>
-      </ThemeWrapper>
+      <StyledEngineProvider injectFirst>
+        <ThemeWrapper>
+          <IntlProvider {...intlData}>
+            <MetaTags />
+            {/* <StylesProvider generateClassName={generateClassName}> */}
+            <div className="App">
+              <Switch>
+                <Route path="*/embedder" component={EmbedderView} />
+                <Route path="*/embed" component={EmbedLayout} />
+                <Route render={() => <DefaultLayout />} />
+              </Switch>
+              <Navigator />
+              <DataFetcher />
+            </div>
+            {/* </StylesProvider> */}
+          </IntlProvider>
+        </ThemeWrapper>
+      </StyledEngineProvider>
     );
   }
 }

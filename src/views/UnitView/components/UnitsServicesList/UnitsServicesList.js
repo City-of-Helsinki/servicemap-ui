@@ -77,7 +77,7 @@ const UnitsServicesList = ({ unit, listLength, navigator }) => {
         listLength={listLength}
         data={{ data: filterDataByYear(period), max: subjectList.length }}
         type="educationServices"
-        semester={period}
+        period={period}
         disableTitle={i !== 0}
         navigator={navigator}
       />

@@ -1,4 +1,4 @@
-const URI = require('urijs');
+import URI from 'urijs';
 
 export const getEmbedURL = (url, params = {}) => {
   if (!url) {
@@ -36,6 +36,12 @@ export const getEmbedURL = (url, params = {}) => {
   }
   if (params.showUnits === false) {
     data.units = 'none';
+  }
+  if (params.showListSide) {
+    data.show_list = 'side';
+  }
+  if (params.showListBottom) {
+    data.show_list = 'bottom';
   }
   if (params.bbox) {
     data.bbox = params.bbox;

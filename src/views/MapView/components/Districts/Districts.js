@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Typography, Link } from '@material-ui/core';
+import { Typography, Link } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
