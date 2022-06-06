@@ -20,7 +20,7 @@ const getLocation = ClientFunction(() => document.location.href);
 
 
 test('Language does change', async (t) => {
-  const languageButtons = ReactSelector('WithStyles(ForwardRef(ButtonBase))');
+  const languageButtons = Selector('header button');
   const title = Selector('.app-title');
   let text = await languageButtons.nth(2).innerText;
 
@@ -51,7 +51,7 @@ test('Language does change', async (t) => {
 });
 
 test('Contrast does change', async (t) => {
-  const contrastButton = ReactSelector('WithStyles(ForwardRef(ButtonBase))').nth(4);
+  const contrastButton = Selector('header button').nth(4);
   const searchbarContainer = Selector('main').find('.SearchBar');
 
   await t
