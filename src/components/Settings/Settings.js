@@ -719,7 +719,7 @@ class Settings extends React.Component {
               color="primary"
             />
             <SMButton
-              innerRef={this.closeButtonRef}
+              passingRef={this.closeButtonRef}
               aria-label={intl.formatMessage({ id: 'general.closeSettings' })}
               small
               role="button"
