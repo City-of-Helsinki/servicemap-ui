@@ -1,5 +1,6 @@
 const styles = theme => ({
   hideSidebarButton: {
+    pointerEvents: 'auto',
     maxWidth: 50,
     minWidth: 50,
     height: 40,
