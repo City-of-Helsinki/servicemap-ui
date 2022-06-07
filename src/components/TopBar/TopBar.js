@@ -41,6 +41,9 @@ const TopBar = (props) => {
     smallScreen,
   } = props;
 
+
+  const isHomePage = paths.home.regex.test(location.pathname);
+
   const renderSettingsButtons = () => {
     const settingsCategories = [
       { type: 'citySettings' },
@@ -153,7 +156,6 @@ const TopBar = (props) => {
   };
 
   const handleNavigation = (target, data) => {
-    const isHomePage = paths.home.regex.test(window.location.href);
     // Hide settings and map if open
     toggleSettings();
     if (location.search.indexOf('showMap=true') > -1) {
@@ -219,7 +221,12 @@ const TopBar = (props) => {
           {/* Toolbar black area */}
           <Toolbar className={toolbarBlackClass}>
             <div className={classes.toolbarBlackContainer}>
-              <ButtonBase role="link" onClick={() => handleNavigation('home')} focusVisibleClassName={classes.topButtonFocused}>
+              <ButtonBase
+                aria-current={isHomePage ? 'page' : false}
+                role="link"
+                onClick={() => handleNavigation('home')}
+                focusVisibleClassName={classes.topButtonFocused}
+              >
                 <Typography className={fontClass} color="inherit" variant="body2">
                   <FormattedMessage id="general.frontPage" />
                 </Typography>
