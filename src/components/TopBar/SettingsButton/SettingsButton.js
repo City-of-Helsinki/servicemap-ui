@@ -13,7 +13,7 @@ const SettingsButton = ({
 
   const isSelected = settingsOpen === type;
 
-  const buttonClass = () => `
+  const buttonClass = `
     ${classes.settingsButton} ${(isSelected && classes.settingsButtonPressed) || ''}
     ${(minWidth && maxWidth && classes.smallScreen) || ''}
   `;
@@ -23,7 +23,7 @@ const SettingsButton = ({
       aria-haspopup="dialog"
       id={`SettingsButton${type}`}
       classes={{ label: classes.buttonLabel }}
-      className={buttonClass(type)}
+      className={buttonClass}
       onClick={onClick}
       role="button"
     >
