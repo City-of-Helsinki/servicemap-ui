@@ -78,6 +78,7 @@ const TopBar = (props) => {
     const mapPage = location.search.indexOf('showMap=true') > -1;
     return (
       <Button
+        aria-current={mapPage ? 'page' : false}
         aria-hidden
         className={mapPage ? classes.toolbarButtonPressed : classes.toolbarButton}
         classes={{ label: classes.buttonLabel }}
