@@ -122,6 +122,7 @@ const TopBar = (props) => {
         {LocaleUtility.availableLocales
           .map(currentLocale => (
             <ButtonBase
+              aria-current={currentLocale === locale ? 'true' : false}
               role="link"
               key={currentLocale}
               focusVisibleClassName={classes.topButtonFocused}
