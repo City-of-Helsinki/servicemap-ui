@@ -90,6 +90,7 @@ const ToolMenu = ({
     // Example shape
     {
       key: 'embedder.title',
+      id: 'EmbedderToolMenuButton',
       text: intl.formatMessage({ id: 'embedder.title' }),
       icon: <Code />,
       onClick: () => {
@@ -99,6 +100,7 @@ const ToolMenu = ({
     },
     {
       key: 'downloadTool',
+      id: 'DownloadToolMenuButton',
       text: intl.formatMessage({ id: 'tool.download' }),
       icon: <GetApp />,
       onClick: () => {
@@ -107,6 +109,7 @@ const ToolMenu = ({
     },
     {
       key: 'printTool',
+      id: 'PrintToolMenuButton',
       text: intl.formatMessage({ id: 'tool.print' }),
       icon: <Print className={classes.smIcon} />,
       onClick: () => {
@@ -117,6 +120,7 @@ const ToolMenu = ({
     },
     {
       key: 'measuringTool',
+      id: 'MesuringToolMenuButton',
       text: measuringMode ? intl.formatMessage({ id: 'tool.measuring.stop' }) : intl.formatMessage({ id: 'tool.measuring' }),
       icon: <SMIcon className={classes.smIcon} icon="icon-icon-measuring-tool" />,
       ariaHidden: false,
