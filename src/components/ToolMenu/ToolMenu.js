@@ -119,7 +119,7 @@ const ToolMenu = ({
       key: 'measuringTool',
       text: measuringMode ? intl.formatMessage({ id: 'tool.measuring.stop' }) : intl.formatMessage({ id: 'tool.measuring' }),
       icon: <SMIcon className={classes.smIcon} icon="icon-icon-measuring-tool" />,
-      ariaHidden: true,
+      ariaHidden: false,
       onClick: () => {
         setMeasuringMode(!measuringMode);
       },

@@ -613,7 +613,7 @@ const translations = {
 
   // Tools
   'tool.download': 'Download data',
-  'tool.measuring': 'Measure distance (mouse only)',
+  'tool.measuring': 'Measure distance (accessible only visually and with a mouse)',
   'tool.measuring.stop': 'Stop measuring',
   'tool.print': 'Print',
 
