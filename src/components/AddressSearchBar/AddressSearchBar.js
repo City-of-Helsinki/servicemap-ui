@@ -7,6 +7,7 @@ import {
 import { Clear, Search } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
 import { visuallyHidden } from '@mui/utils';
+import { styled } from '@mui/material/styles';
 import { setOrder, setDirection } from '../../redux/actions/sort';
 import config from '../../../config';
 import { keyboardHandler, uppercaseFirst } from '../../utils';
@@ -19,7 +20,6 @@ const AddressSearchBar = ({
   title,
   containerClassName,
   inputClassName,
-  classes,
   intl,
 }) => {
   const getLocaleText = useLocaleText();
@@ -132,7 +132,7 @@ const AddressSearchBar = ({
     <div className={containerClassName}>
       <Typography color="inherit">{title}</Typography>
       <form action="" onSubmit={e => handleSubmit(e)}>
-        <InputBase
+        <StyledInputBase
           id="addressSearchbar"
           autoComplete="off"
           inputRef={inputRef}
@@ -146,25 +146,24 @@ const AddressSearchBar = ({
           type="text"
           onBlur={isMobile ? () => {} : e => clearSuggestions(e)}
           onFocus={() => setResultIndex(null)}
-          className={`${classes.searchBar} ${inputClassName}`}
+          className={`${inputClassName}`}
           defaultValue={formAddressString(defaultAddress)}
           onChange={e => handleInputChange(e.target.value)}
           onKeyDown={e => showSuggestions && handleSearchBarKeyPress(e)}
           endAdornment={(
             <>
-              <Search aria-hidden className={classes.searchIcon} />
-              <Divider aria-hidden className={classes.divider} />
-              <IconButton
+              <StyledSearch aria-hidden />
+              <StyledDivider aria-hidden />
+              <StyledIconButton
                 aria-label={intl.formatMessage({ id: 'search.cancelText' })}
                 onClick={() => {
                   setCleared(true);
                   handleAddressChange(null);
                   inputRef.current.value = '';
                 }}
-                className={classes.IconButton}
               >
-                <Clear className={classes.clearButton} />
-              </IconButton>
+                <StyledClear />
+              </StyledIconButton>
             </>
           )}
         />
@@ -196,8 +195,39 @@ const AddressSearchBar = ({
   );
 };
 
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  paddingLeft: theme.spacing(2),
+  marginTop: theme.spacing(1),
+  border: '1px solid #ACACAC',
+  borderRadius: 4,
+  width: '100%',
+  height: '80%',
+  boxSizing: 'border-box',
+  backgroundColor: '#fff',
+}));
+
+const StyledClear = styled(Clear)(() => ({
+  fontSize: 22,
+}));
+
+const StyledSearch = styled(Search)(({ theme }) => ({
+  color: 'rgba(0, 0, 0, 0.54)',
+  fontSize: 22,
+  padding: theme.spacing(1),
+}));
+
+const StyledDivider = styled(Divider)(() => ({
+  width: 1,
+  height: 24,
+  margin: 4,
+}));
+
+const StyledIconButton = styled(IconButton)(({ theme }) => ({
+  margiRight: theme.spacing(0.5),
+  padding: theme.spacing(1),
+}));
+
 AddressSearchBar.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   defaultAddress: PropTypes.objectOf(PropTypes.any),
   handleAddressChange: PropTypes.func.isRequired,
