@@ -58,30 +58,30 @@ test('ToolMenu should move focus correctly on tool selection', async (t) => {
     .click(toolMenu)
     .click(toolMenuItems.nth(0)) // Click embedder tool
     .expect(embedderCloseButton.focused).ok('Focus should move to embedder view close button')
+    .click(embedderCloseButton)
   ;
 
   // Embedder tool selection should move focus correctly
   const downloadDialogCloseButton = Selector('button[aria-label="Sulje"]');
   await t
-    .navigateTo(page)
     .click(toolMenu)
     .click(toolMenuItems.nth(1)) // Click download tool
     .expect(downloadDialogCloseButton.focused).ok('Focus should move to download dialog close button')
+    .click(downloadDialogCloseButton)
   ;
 
   // Embedder tool selection should move focus correctly
   const printToolCloseButton = Selector('button[aria-label="Sulje näkymä"]');
   await t
-    .navigateTo(page)
     .click(toolMenu)
     .click(toolMenuItems.nth(2)) // Click download tool
     .expect(printToolCloseButton.focused).ok('Focus should move to print tool\'s close button')
+    .click(printToolCloseButton)
   ;
 
   // Measuring tool selection should move focus correctly
   const measuringCloseButton = Selector('#MeasuringStopButton');
   await t
-    .navigateTo(page)
     .click(toolMenu)
     .click(toolMenuItems.nth(3)) // Click measuring tool
     .expect(measuringCloseButton.focused).ok('Focus should move to #MeasuringStopButton')
