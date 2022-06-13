@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Drawer,
-} from '@material-ui/core';
-import { Map } from '@material-ui/icons';
+} from '@mui/material';
+import { Map } from '@mui/icons-material';
 import { getIcon } from '../../SMIcon';
 import DrawerButton from './DrawerButton';
 import useLocaleText from '../../../utils/useLocaleText';

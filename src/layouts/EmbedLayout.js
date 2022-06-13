@@ -5,8 +5,9 @@ import {
   Switch, Route, useLocation,
 } from 'react-router-dom';
 import { injectIntl } from 'react-intl';
-import { Tooltip as MUITooltip, ButtonBase, Typography } from '@material-ui/core';
-import { useTheme } from '@material-ui/styles';
+import { Tooltip as MUITooltip, ButtonBase, Typography } from '@mui/material';
+import { useTheme } from '@mui/styles';
+import { visuallyHidden } from '@mui/utils';
 import MapView from '../views/MapView';
 import PageHandler from './components/PageHandler';
 import AddressView from '../views/AddressView';
@@ -20,7 +21,9 @@ import { parseSearchParams } from '../utils';
 import useMapUnits from '../views/MapView/utils/useMapUnits';
 import { HomeLogo, PaginatedList } from '../components';
 
-const createContentStyles = (theme, bottomList) => {
+const createContentStyles = (theme, unitListPosition) => {
+  const bottomList = unitListPosition === 'bottom';
+  const sideList = unitListPosition === 'side';
   const width = 450;
   return {
     activeRoot: {
@@ -52,12 +55,14 @@ const createContentStyles = (theme, bottomList) => {
       minWidth: width,
     },
     embedLogo: {
-      top: 0,
-      left: 0,
+      top: sideList ? 0 : null,
+      bottom: sideList ? null : 0,
+      left: bottomList ? null : 0,
+      right: bottomList ? 0 : null,
       height: 'auto',
       position: 'fixed',
       zIndex: 1000,
-      margin: theme.spacing(1.5),
+      margin: bottomList ? theme.spacing(2) : theme.spacing(1.5),
     },
     embedSidebarContainer: bottomList
       ? {
@@ -72,7 +77,7 @@ const createContentStyles = (theme, bottomList) => {
     unitList: {
       paddingTop: bottomList ? 0 : 36,
       maxHeight: '100%',
-      overflowY: 'scroll',
+      overflowY: 'auto',
       boxSizing: 'border-box',
       display: 'flex',
       flexDirection: 'column',
@@ -87,9 +92,8 @@ const EmbedLayout = ({ intl }) => {
   const searchParams = parseSearchParams(location.search);
 
   const showList = searchParams?.show_list;
-  const bottomUnitList = showList && showList === 'bottom';
 
-  const styles = createContentStyles(theme, bottomUnitList);
+  const styles = createContentStyles(theme, showList);
 
   const renderEmbedOverlay = () => {
     const openApp = () => {
@@ -189,7 +193,7 @@ const EmbedLayout = ({ intl }) => {
             />
           </Switch>
         </div>
-        <Typography variant="srOnly">{intl.formatMessage({ id: 'map.ariaLabel' })}</Typography>
+        <Typography style={visuallyHidden}>{intl.formatMessage({ id: 'map.ariaLabel' })}</Typography>
         <div aria-hidden tabIndex="-1" style={styles.map}>
           <MapView />
         </div>

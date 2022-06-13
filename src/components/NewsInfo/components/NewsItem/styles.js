@@ -8,7 +8,7 @@ export default theme => ({
     '& .row': {
       display: 'flex',
       alignItems: 'center',
-      padding: `0 ${theme.spacing(2)}px`,
+      padding: `0 ${theme.spacing(2)}`,
     },
     '& .column': {
       display: 'flex',

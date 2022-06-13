@@ -1,214 +1,24 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<SimpleListItem /> should work 1`] = `
-<WithStyles(SimpleListItem)
-  text="Title text"
->
-  <SimpleListItem
-    button={false}
-    className={null}
-    classes={
-      Object {
-        "divider": "SimpleListItem-divider-6",
-        "itemFocus": "SimpleListItem-itemFocus-7",
-        "link": "SimpleListItem-link-3",
-        "listIcon": "SimpleListItem-listIcon-5",
-        "listItem": "SimpleListItem-listItem-1",
-        "textContainer": "SimpleListItem-textContainer-2",
-        "whiteText": "SimpleListItem-whiteText-4",
-      }
-    }
-    dark={false}
-    divider={false}
-    handleItemClick={null}
-    icon={null}
-    id={null}
-    link={false}
-    role={null}
-    selected={false}
-    srText={null}
-    text="Title text"
+<div>
+  <li
+    class="SimpleListItem-listItem-1 MuiListItem-root MuiListItem-gutters MuiListItem-padding null  css-sn7obt-MuiListItem-root"
+    tabindex="-1"
   >
-    <WithStyles(ForwardRef(ListItem))
-      button={false}
-      className="null "
-      classes={
-        Object {
-          "root": "SimpleListItem-listItem-1",
-          "selected": "SimpleListItem-itemFocus-7",
-        }
-      }
-      component="li"
-      id={null}
-      onClick={null}
-      onKeyDown={null}
-      role={null}
-      selected={false}
-      tabIndex={-1}
+    <div
+      class="SimpleListItem-textContainer-2 MuiListItemText-root css-vt7cuc-MuiListItemText-root"
     >
-      <ForwardRef(ListItem)
-        button={false}
-        className="null "
-        classes={
-          Object {
-            "alignItemsFlexStart": "MuiListItem-alignItemsFlexStart",
-            "button": "MuiListItem-button",
-            "container": "MuiListItem-container",
-            "dense": "MuiListItem-dense",
-            "disabled": "Mui-disabled",
-            "divider": "MuiListItem-divider",
-            "focusVisible": "Mui-focusVisible",
-            "gutters": "MuiListItem-gutters",
-            "root": "MuiListItem-root SimpleListItem-listItem-1",
-            "secondaryAction": "MuiListItem-secondaryAction",
-            "selected": "Mui-selected SimpleListItem-itemFocus-7",
-          }
-        }
-        component="li"
-        id={null}
-        onClick={null}
-        onKeyDown={null}
-        role={null}
-        selected={false}
-        tabIndex={-1}
+      <p
+        class="null  MuiTypography-root MuiTypography-body2 css-q91igz-MuiTypography-root"
       >
-        <li
-          className="MuiListItem-root SimpleListItem-listItem-1 null  MuiListItem-gutters"
-          disabled={false}
-          id={null}
-          onClick={null}
-          onKeyDown={null}
-          role={null}
-          tabIndex={-1}
-        >
-          <WithStyles(ForwardRef(ListItemText))
-            classes={
-              Object {
-                "root": "SimpleListItem-textContainer-2",
-              }
-            }
-            key=".1"
-          >
-            <ForwardRef(ListItemText)
-              classes={
-                Object {
-                  "dense": "MuiListItemText-dense",
-                  "inset": "MuiListItemText-inset",
-                  "multiline": "MuiListItemText-multiline",
-                  "primary": "MuiListItemText-primary",
-                  "root": "MuiListItemText-root SimpleListItem-textContainer-2",
-                  "secondary": "MuiListItemText-secondary",
-                }
-              }
-            >
-              <div
-                className="MuiListItemText-root SimpleListItem-textContainer-2"
-              >
-                <WithStyles(ForwardRef(Typography))
-                  classes={
-                    Object {
-                      "root": "null ",
-                    }
-                  }
-                  color="inherit"
-                  variant="body2"
-                >
-                  <ForwardRef(Typography)
-                    classes={
-                      Object {
-                        "alignCenter": "MuiTypography-alignCenter",
-                        "alignJustify": "MuiTypography-alignJustify",
-                        "alignLeft": "MuiTypography-alignLeft",
-                        "alignRight": "MuiTypography-alignRight",
-                        "body1": "MuiTypography-body1",
-                        "body2": "MuiTypography-body2",
-                        "button": "MuiTypography-button",
-                        "caption": "MuiTypography-caption",
-                        "colorError": "MuiTypography-colorError",
-                        "colorInherit": "MuiTypography-colorInherit",
-                        "colorPrimary": "MuiTypography-colorPrimary",
-                        "colorSecondary": "MuiTypography-colorSecondary",
-                        "colorTextPrimary": "MuiTypography-colorTextPrimary",
-                        "colorTextSecondary": "MuiTypography-colorTextSecondary",
-                        "displayBlock": "MuiTypography-displayBlock",
-                        "displayInline": "MuiTypography-displayInline",
-                        "gutterBottom": "MuiTypography-gutterBottom",
-                        "h1": "MuiTypography-h1",
-                        "h2": "MuiTypography-h2",
-                        "h3": "MuiTypography-h3",
-                        "h4": "MuiTypography-h4",
-                        "h5": "MuiTypography-h5",
-                        "h6": "MuiTypography-h6",
-                        "noWrap": "MuiTypography-noWrap",
-                        "overline": "MuiTypography-overline",
-                        "paragraph": "MuiTypography-paragraph",
-                        "root": "MuiTypography-root null ",
-                        "srOnly": "MuiTypography-srOnly",
-                        "subtitle1": "MuiTypography-subtitle1",
-                        "subtitle2": "MuiTypography-subtitle2",
-                      }
-                    }
-                    color="inherit"
-                    variant="body2"
-                  >
-                    <p
-                      className="MuiTypography-root null  MuiTypography-body2 MuiTypography-colorInherit"
-                    >
-                      <WithStyles(ForwardRef(Typography))
-                        variant="srOnly"
-                      >
-                        <ForwardRef(Typography)
-                          classes={
-                            Object {
-                              "alignCenter": "MuiTypography-alignCenter",
-                              "alignJustify": "MuiTypography-alignJustify",
-                              "alignLeft": "MuiTypography-alignLeft",
-                              "alignRight": "MuiTypography-alignRight",
-                              "body1": "MuiTypography-body1",
-                              "body2": "MuiTypography-body2",
-                              "button": "MuiTypography-button",
-                              "caption": "MuiTypography-caption",
-                              "colorError": "MuiTypography-colorError",
-                              "colorInherit": "MuiTypography-colorInherit",
-                              "colorPrimary": "MuiTypography-colorPrimary",
-                              "colorSecondary": "MuiTypography-colorSecondary",
-                              "colorTextPrimary": "MuiTypography-colorTextPrimary",
-                              "colorTextSecondary": "MuiTypography-colorTextSecondary",
-                              "displayBlock": "MuiTypography-displayBlock",
-                              "displayInline": "MuiTypography-displayInline",
-                              "gutterBottom": "MuiTypography-gutterBottom",
-                              "h1": "MuiTypography-h1",
-                              "h2": "MuiTypography-h2",
-                              "h3": "MuiTypography-h3",
-                              "h4": "MuiTypography-h4",
-                              "h5": "MuiTypography-h5",
-                              "h6": "MuiTypography-h6",
-                              "noWrap": "MuiTypography-noWrap",
-                              "overline": "MuiTypography-overline",
-                              "paragraph": "MuiTypography-paragraph",
-                              "root": "MuiTypography-root",
-                              "srOnly": "MuiTypography-srOnly",
-                              "subtitle1": "MuiTypography-subtitle1",
-                              "subtitle2": "MuiTypography-subtitle2",
-                            }
-                          }
-                          variant="srOnly"
-                        >
-                          <span
-                            className="MuiTypography-root MuiTypography-srOnly"
-                          />
-                        </ForwardRef(Typography)>
-                      </WithStyles(ForwardRef(Typography))>
-                      Title text
-                    </p>
-                  </ForwardRef(Typography)>
-                </WithStyles(ForwardRef(Typography))>
-              </div>
-            </ForwardRef(ListItemText)>
-          </WithStyles(ForwardRef(ListItemText))>
-        </li>
-      </ForwardRef(ListItem)>
-    </WithStyles(ForwardRef(ListItem))>
-  </SimpleListItem>
-</WithStyles(SimpleListItem)>
+        <p
+          class="MuiTypography-root MuiTypography-body2 css-1ak20dk-MuiTypography-root"
+          style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
+        />
+        Title text
+      </p>
+    </div>
+  </li>
+</div>
 `;

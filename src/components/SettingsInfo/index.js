@@ -1,6 +1,6 @@
 import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
-import { withStyles } from '@material-ui/core';
+import { withStyles } from '@mui/styles';
 import { toggleSettings } from '../../redux/actions/settings';
 import SettingsInfo from './SettingsInfo';
 import styles from './styles';

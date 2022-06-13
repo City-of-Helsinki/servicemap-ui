@@ -1,4 +1,4 @@
-import { withStyles } from '@material-ui/core';
+import { withStyles } from '@mui/styles';
 import DropDownMenuButton from './DropDownMenuButton';
 import styles from './styles';
 

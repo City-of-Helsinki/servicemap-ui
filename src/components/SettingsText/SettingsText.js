@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {
   NoSsr,
   Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
 import config from '../../../config';

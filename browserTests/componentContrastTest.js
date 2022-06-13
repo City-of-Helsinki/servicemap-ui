@@ -1,14 +1,14 @@
 import { getContrast, getParentElementBG, getElementBG } from '../src/utils/componentContrast';
-import { ReactSelector } from 'testcafe-react-selectors';
+import { Selector } from 'testcafe';
 
-export default (component) => {
-  const getComponentName = () => {
-    return component;
+export default (componentSelectorQuery) => {
+  const getComponentSelectorQuery = () => {
+    return componentSelectorQuery;
   }
 
-  test('Component has good contrast ratio with background', async (t) => {
-    const componentName = getComponentName();
-    const elements = ReactSelector(`main ${componentName}`);
+  test(`Component with selector ${getComponentSelectorQuery()} has good contrast ratio with background`, async (t) => {
+    const elements = Selector(getComponentSelectorQuery());
+    
     const elementsCount = await elements.count;
 
     for (let i = 0; i < elementsCount; i++) {
@@ -29,7 +29,7 @@ export default (component) => {
         const borderContrast = getContrast(await parentBackground, elementBorder)
         const highestContrast = Math.max(borderContrast, elementContrast);
       await t
-        .expect(highestContrast).gt(3, `Component ${componentName} contrast with background is too low`)
+        .expect(highestContrast).gt(3, `Component with selector ${getComponentSelectorQuery()} contrast with background is too low`)
     } else {
       console.warn('Element background is image or gradient color, check contrast manually')
     }}

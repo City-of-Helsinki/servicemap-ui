@@ -12,8 +12,8 @@ fixture`Address view test`
 
 test('AddressView does render correct view', async (t) => {
   const title = await ReactSelector('TitleBar').getReact(({props}) => props.title);
-  const tab1 = await ReactSelector('TabLists WithStyles(ForwardRef(Tab))').nth(0).textContent;
-  const tab2 = ReactSelector('TabLists WithStyles(ForwardRef(Tab))').nth(1);
+  const tab1 = await Selector('div[role="tablist"] button').nth(0).textContent;
+  const tab2 = Selector('div[role="tablist"] button').nth(1);
   const tab2Text = await tab2.textContent;
   
   await t
@@ -49,7 +49,7 @@ test('AddressView map renders correctly', async (t) => {
   ;
 
   // Change to nearby tab and expect markers to appear
-  const closebyTab = await ReactSelector('TabLists WithStyles(ForwardRef(Tab))').nth(1);
+  const closebyTab = await Selector('div[role="tablist"] button').nth(1);
   await t
     .click(closebyTab)
     .wait(500)
