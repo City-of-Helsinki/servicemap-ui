@@ -31,7 +31,7 @@ export default theme => ({
     backgroundColor: '#f5f5f5',
   },
   text: {
-    fontSize: '15px',
+    fontSize: '0.938rem',
     lineHeight: '18px',
   },
   iconRight: {
@@ -79,12 +79,12 @@ export default theme => ({
     marginBottom: theme.spacing(1),
   },
   selectionText: {
-    fontSize: 12,
+    fontSize: '0.75rem',
     paddingRight: theme.spacing(2),
     color: '#fff',
   },
   deleteText: {
-    fontSize: 12,
+    fontSize: '0.75rem',
     paddingRight: theme.spacing(1),
     color: '#fff',
   },

@@ -236,7 +236,7 @@ const styles = theme => ({
     maxHeight: '25vh',
     '& .popup-distance': {
       fontWeight: 'normal',
-      fontSize: '14px',
+      fontSize: '0.875rem',
     },
     '& li': {
       display: 'flex',
@@ -351,7 +351,7 @@ const styles = theme => ({
     paddingRight: theme.spacing(2),
   },
   eventDate: {
-    fontSize: 12,
+    fontSize: '0.75rem',
   },
 
   // Transit stops
@@ -399,7 +399,7 @@ const styles = theme => ({
   },
   departureTime: {
     width: '15%',
-    fontSize: 13,
+    fontSize: '0.813rem',
   },
   departureVehicle: {
     width: '38%',
@@ -410,7 +410,7 @@ const styles = theme => ({
     fontWeight: 'bold',
   },
   routeName: {
-    fontSize: 12,
+    fontSize: '0.75rem',
     width: '55%',
     overflow: 'hidden',
     whiteSpace: 'nowrap',
@@ -420,7 +420,7 @@ const styles = theme => ({
     marginLeft: 'auto',
   },
   closeText: {
-    fontSize: 12,
+    fontSize: '0.75rem',
     color: 'rgba(0,0,0,0.6)',
   },
   busIconColor: {

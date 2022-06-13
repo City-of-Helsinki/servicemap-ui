@@ -16,7 +16,7 @@ export default theme => ({
     padding: theme.spacing(1, 2),
   },
   infoItemText: {
-    fontSize: 11,
+    fontSize: '0.688rem',
     lineHeight: '13px',
   },
   settingsLink: {

@@ -38,7 +38,7 @@ export default theme => ({
   },
   iconRight: {
     marginLeft: 'auto',
-    fontSize: 24,
+    fontSize: '1.5rem',
   },
   menuItem: {
     padding: theme.spacing(1),

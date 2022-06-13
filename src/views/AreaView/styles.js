@@ -16,7 +16,7 @@ const styles = theme => ({
     display: 'flex',
   },
   deleteLink: {
-    fontSize: 14,
+    fontSize: '0.875rem',
     color: '#3344dd',
     textDecoration: 'underline',
     marginLeft: theme.spacing(1),
@@ -104,7 +104,7 @@ const styles = theme => ({
     boxShadow: `0 0 0 4px ${theme.palette.focusBorder.main}`,
   },
   addressItem: {
-    fontSize: 24,
+    fontSize: '1.5rem',
   },
   areaTitle: {
     display: 'flex',
@@ -121,7 +121,7 @@ const styles = theme => ({
     fontSize: 24,
   },
   selectedAddress: {
-    fontSize: 18,
+    fontSize: '1.125rem',
   },
   subdistrictContainer: {
     flexDirection: 'column',

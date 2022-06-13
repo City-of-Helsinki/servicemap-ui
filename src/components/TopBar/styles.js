@@ -46,7 +46,7 @@ const styles = theme => ({
   toolbarBlackContainer: {
     justifyContent: 'space-around',
     display: 'flex',
-    width: 450,
+    width: '28rem',
     color: '#fff',
   },
   topButtonFocused: {

@@ -16,7 +16,7 @@ export default theme => ({
     color: '#2228af',
     cursor: 'pointer',
     display: 'inline-block',
-    fontSize: '14px',
+    fontSize: '0.875rem',
     lineHeight: '20px',
     margin: '8px 12px',
     minHeight: '32px',

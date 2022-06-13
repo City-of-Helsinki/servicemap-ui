@@ -10,7 +10,7 @@ const styles = theme => ({
     backgroundColor: '#fff',
   },
   clearButton: {
-    fontSize: 22,
+    fontSize: '1.375rem',
   },
   divider: {
     width: 1,
@@ -23,7 +23,7 @@ const styles = theme => ({
   },
   searchIcon: {
     color: 'rgba(0, 0, 0, 0.54)',
-    fontSize: 22,
+    fontSize: '1.375rem',
     padding: theme.spacing(1),
   },
 });

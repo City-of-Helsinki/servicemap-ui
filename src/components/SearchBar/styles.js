@@ -176,7 +176,7 @@ export default theme => ({
   },
   cancelButton: {
     '& svg': {
-      fontSize: 14,
+      fontSize: '0.875rem',
     },
   },
   closeButton: {

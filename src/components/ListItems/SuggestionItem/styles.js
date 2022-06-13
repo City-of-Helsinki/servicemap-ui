@@ -42,7 +42,7 @@ export default theme => ({
     },
   },
   subtitle: {
-    fontSize: '10px',
+    fontSize: '0.625rem',
     fontWeight: 'none',
     lineHeight: '18px',
   },
