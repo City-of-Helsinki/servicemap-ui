@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Button, Typography, AppBar, Toolbar, ButtonBase, NoSsr,
+  Button, Typography, AppBar, Toolbar, ButtonBase,
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { Map } from '@mui/icons-material';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
-import HomeLogo from '../Logos/HomeLogo';
 import DrawerMenu from './DrawerMenu';
 import DesktopComponent from '../DesktopComponent';
 import MobileComponent from '../MobileComponent';
@@ -19,6 +18,7 @@ import { useNavigationParams } from '../../utils/address';
 import SettingsButton from './SettingsButton';
 import MenuButton from './MenuButton';
 import paths from '../../../config/paths';
+import SMLogo from './SMLogo';
 
 const TopBar = (props) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -235,11 +235,7 @@ const TopBar = (props) => {
 
           {/* Toolbar white area */}
           <Toolbar disableGutters className={pageType === 'mobile' ? classes.toolbarWhiteMobile : classes.toolbarWhite}>
-            <ButtonBase aria-label={intl.formatMessage({ id: 'general.back.goToHome' })} role="link" onClick={() => handleNavigation('home')}>
-              <NoSsr>
-                <HomeLogo aria-hidden contrast={theme === 'dark'} className={classes.logo} />
-              </NoSsr>
-            </ButtonBase>
+            <SMLogo onClick={() => handleNavigation('home')} />
             {hideButtons
               ? null
               : (
