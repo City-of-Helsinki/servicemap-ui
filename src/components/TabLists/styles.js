@@ -28,6 +28,10 @@ export default theme => ({
       letterSpacing: 'normal',
     },
     color: 'black',
+    '&:focus': {
+      boxShadow: 'none',
+      zIndex: 0,
+    },
   },
   tabFocus: {
     outline: `4px solid ${theme.palette.primary.highContrast} !important`,
