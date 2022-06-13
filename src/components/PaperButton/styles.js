@@ -58,7 +58,7 @@ export default theme => ({
   },
   text: {
     textTransform: 'none',
-    lineHeight: '18px',
+    lineHeight: '1.125rem',
     color: 'rgba(0, 0, 0, 0.87)',
   },
   noBorder: {

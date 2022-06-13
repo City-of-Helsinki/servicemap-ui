@@ -17,7 +17,7 @@ export default theme => ({
     cursor: 'pointer',
     display: 'inline-block',
     fontSize: '0.875rem',
-    lineHeight: '20px',
+    lineHeight: '1.25rem',
     margin: '8px 12px',
     minHeight: '32px',
     textDecoration: 'underline',

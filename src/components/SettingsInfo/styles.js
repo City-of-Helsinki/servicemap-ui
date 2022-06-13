@@ -17,7 +17,7 @@ export default theme => ({
   },
   infoItemText: {
     fontSize: '0.688rem',
-    lineHeight: '13px',
+    lineHeight: '0.813rem',
   },
   settingsLink: {
     justifyContent: 'left',

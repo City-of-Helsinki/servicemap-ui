@@ -32,7 +32,7 @@ export default theme => ({
   },
   text: {
     fontSize: '0.938rem',
-    lineHeight: '18px',
+    lineHeight: '1.125rem',
   },
   iconRight: {
     marginLeft: 'auto',
