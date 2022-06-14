@@ -615,7 +615,7 @@ const translations = {
 
   // Tools
   'tool.download': 'Exportera',
-  'tool.measuring': 'Mät avstånd (endast med mus)',
+  'tool.measuring': 'Mät avstånd (granskas endast visuellt och med mus)',
   'tool.measuring.stop': 'Sluta mäta',
   'tool.print': 'Skriv ut',
 

@@ -617,7 +617,7 @@ const translations = {
 
   // Tools
   'tool.download': 'Lataa tiedot',
-  'tool.measuring': 'Mittaa etäisyys (käytettävissä vain hiirellä)',
+  'tool.measuring': 'Mittaa etäisyys (käytettävissä vain näönvaraisesti hiirellä)',
   'tool.measuring.stop': 'Lopeta mittaus',
   'tool.print': 'Tulosta',
 
