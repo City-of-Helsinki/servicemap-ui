@@ -21,8 +21,10 @@ test('ToolMenu does close correctly', async (t) => {
   await t
     .click(toolMenu)
     .expect(toolMenuItems.exists).ok('ToolMenuPanel should exist and have items')
-    .pressKey('esc') // Pressing esc on ToolMenuButton should not close menu
-    .expect(toolMenuItems.exists).ok('ToolMenuPanel should exist and have items after esc is pressed while on ToolMenuButton')
+    .pressKey('esc') // Pressing esc on ToolMenuButton should close menu
+    .expect(toolMenuItems.exists).notOk('ToolMenuPanel should not exist after pressing esc on ToolMenuButton')
+    .click(toolMenu)
+    .expect(toolMenuItems.exists).ok('ToolMenuPanel should exist and have items')
     .pressKey('tab') // Tab to first element
     .pressKey('esc') // Pressing esc while focused on menu item should close the panel
     .expect(toolMenuItems.exists).notOk('ToolMenuPanel should not exists after closing panel')
@@ -45,6 +47,14 @@ test('ToolMenu does close correctly', async (t) => {
     .expect(toolMenuItems.exists).ok('ToolMenuPanel should exist and have items')
     .pressKey('tab') // Tab outside of ToolMenuPanel which should close the menu
     .expect(toolMenuItems.exists).notOk('ToolMenuPanel should not exists after moving focus out of ToolMenuPanel')
+  ;
+
+  // Moving focus out of ToolMenuButton while panel is open should close panel
+  await t
+    .click(toolMenu)
+    .expect(toolMenuItems.exists).ok('ToolMenuPanel should exist and have items')
+    .pressKey('shift+tab') // Move focus backwards out of ToolMenuButton to settings buttons
+    .expect(toolMenuItems.exists).notOk('ToolMenuPanel should not exists after moving focus out of ToolMenuButton away from panel')
   ;
 });
 

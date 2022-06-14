@@ -19,9 +19,6 @@ class DropDownMenuButton extends React.Component {
   };
 
   handleClose = (event, refocus = false) => {
-    if (this.anchorEl.contains(event.target)) {
-      return;
-    }
 
     this.setState({ open: false });
     // If refocus set to true focus back to DropDownMenuButton
@@ -101,6 +98,7 @@ class DropDownMenuButton extends React.Component {
           aria-controls={open ? panelID : undefined}
           aria-haspopup="true"
           aria-expanded={open}
+          onBlur={this.closeMenuOnFocusExit}
           onClick={this.handleToggle}
           onKeyDown={(e) => {
             if (open) {

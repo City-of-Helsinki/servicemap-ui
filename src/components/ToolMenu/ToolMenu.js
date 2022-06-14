@@ -8,7 +8,6 @@ import {
 import { useSelector } from 'react-redux';
 import DropDownMenuButton from '../DropDownMenuButton';
 import SMIcon from '../SMIcon/SMIcon';
-import SMButton from '../ServiceMapButton';
 import PrintContext from '../../context/PrintContext';
 import DownloadDialog from '../Dialog/DownloadDialog';
 import MeasuringStopButton from './MeasuringStopButton';
@@ -22,7 +21,6 @@ const ToolMenu = ({
   const location = useLocation();
   const [openDownload, setOpenDownload] = React.useState(false);
   const toolMenuButton = React.useRef();
-  const closeMeasuringButton = React.useRef();
   const districtState = useSelector(state => state.districts);
 
   const getAreaViewParams = () => {
