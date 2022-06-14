@@ -72,7 +72,6 @@ const styles = theme => ({
       textAlign: 'left',
     },
     maxWidth: 350,
-    maxHeight: 58,
     flex: '0 1 auto',
     overflow: 'hidden',
     textOverflow: 'ellipsis',

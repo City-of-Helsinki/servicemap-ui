@@ -41,6 +41,7 @@ export default theme => ({
     paddingTop: theme.spacing(3),
     paddingBottom: theme.spacing(3),
     fontSize: 'clamp(0.8rem, 1.8vw, 0.875rem)',
+    overflowWrap: 'anywhere',
   },
   mobileTabFont: {
     fontSize: '0.719rem',

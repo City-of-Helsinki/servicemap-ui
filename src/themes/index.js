@@ -141,7 +141,7 @@ const zIndex = {
 
 const typography = {
   useNextVariants: true,
-  fontSize: '1rem',
+  fontSize: 16,
   // Use the system font instead of the default Roboto font.
   fontFamily: [
     'Lato',
