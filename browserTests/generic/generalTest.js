@@ -2,7 +2,7 @@
 import { Selector, ClientFunction } from 'testcafe';
 import { waitForReact } from 'testcafe-react-selectors';
 
-import config from './config';
+import config from '../config';
 const { server } = config;
 
 const page = `http://${server.address}:${server.port}/fi/`;

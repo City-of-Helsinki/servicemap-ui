@@ -1,4 +1,4 @@
-import { getContrast, getParentElementBG, getElementBG } from '../src/utils/componentContrast';
+import { getContrast, getParentElementBG, getElementBG } from '../../src/utils/componentContrast';
 import { Selector } from 'testcafe';
 
 export default (componentSelectorQuery) => {

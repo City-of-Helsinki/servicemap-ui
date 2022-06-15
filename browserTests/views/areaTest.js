@@ -2,7 +2,7 @@
 import { waitForReact, ReactSelector } from 'testcafe-react-selectors';
 import { ClientFunction, Selector } from 'testcafe';
 
-import config from './config';
+import config from '../config';
 const { server } = config;
 
 fixture`Area view test`
@@ -82,7 +82,7 @@ test('Address search bar field updates and gets results', async (t, inputText = 
     .expect(addressBar.value).eql(suggestionText, 'Address search bar did not update text when suggesttion was selected');
 });
 
-test.only('Embeder tool does not crash area view', async (t) => {
+test('Embeder tool does not crash area view', async (t) => {
   const toolMenuButton = Selector('#ToolMenuButton')
   const toolMenu = Selector('#ToolMenuPanel')
   const closeEmbedderButton = Selector('button[class*="closeButton"]')

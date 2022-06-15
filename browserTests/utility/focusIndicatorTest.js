@@ -1,5 +1,5 @@
 import { Selector, ClientFunction } from 'testcafe';
-import { getContrast, getElementBG, getParentElementBG, getFocusedElement } from '../src/utils/componentContrast';
+import { getContrast, getElementBG, getParentElementBG, getFocusedElement } from '../../src/utils/componentContrast';
 
 export default () => {
   test('Input fields have correct focus indicators', async (t) => {
