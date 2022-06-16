@@ -26,7 +26,7 @@ const styles = theme => ({
     },
   },
   addressLink: {
-    color: theme.palette.primary.main,
+    color: theme.palette.link.main,
     textDecoration: 'underline',
   },
   loadingScreen: {
@@ -60,7 +60,7 @@ const styles = theme => ({
     paddingBottom: theme.spacing(2),
   },
   coordinateLink: {
-    color: theme.palette.primary.main,
+    color: theme.palette.link.main,
     wordBreak: 'break-word',
     textAlign: 'left',
     maxWidth: 240,
@@ -224,7 +224,7 @@ const styles = theme => ({
     ...theme.typography.body2,
     paddingTop: theme.spacing(1),
     textAlign: 'center',
-    color: theme.palette.primary.main,
+    color: theme.palette.primary.link,
   },
   unitTooltipWrapper: {
     padding: theme.spacing(3),

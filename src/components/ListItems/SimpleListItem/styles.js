@@ -15,7 +15,7 @@ export default theme => ({
     whiteSpace: 'pre-line',
   },
   link: {
-    color: '#0000EE',
+    color: theme.palette.link.main,
     textDecoration: 'underline',
   },
   whiteText: {
