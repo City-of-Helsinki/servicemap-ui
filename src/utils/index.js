@@ -14,6 +14,8 @@ export const isRetina = () => {
 
 export const uppercaseFirst = val => val.charAt(0).toUpperCase() + val.slice(1);
 
+export const validateEmail = email => /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email);
+
 // Function for parsing react router search params
 export const parseSearchParams = (searchParams) => {
   if (typeof searchParams !== 'string' || searchParams.length < 1) {

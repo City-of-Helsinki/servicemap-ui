@@ -233,7 +233,9 @@ const translations = {
   'feedback.sending': 'Sänder...',
   'feedback.send.error': 'Skicka respons. Obligatoriska fält måste fyllas i',
   'feedback.error.required': 'Obligatoriskt fält',
-  'feedback.srError.required': 'Respons måste fyllas i',
+  'feedback.error.email.invalid': 'Email is not valid', // TODO translate
+  'feedback.srError.email.invalid': 'Email should be in valid form', // TODO translate
+  'feedback.srError.feedback.required': 'Respons måste fyllas i',
   'feedback.modal.confirm': 'OK',
   'feedback.modal.leave': 'Är du säker på att du vill lämna den här sidan?',
   'feedback.modal.success': 'Tack för din respons!',

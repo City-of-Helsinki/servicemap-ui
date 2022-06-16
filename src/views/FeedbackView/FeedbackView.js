@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Warning } from '@mui/icons-material';
 import {
-  Typography, InputBase, Checkbox, FormControl, Dialog, ButtonBase, DialogTitle, DialogContent,
+  Typography, InputBase, Checkbox, FormControl, Dialog, ButtonBase, DialogTitle, DialogContent, TextField,
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { FormattedMessage } from 'react-intl';
@@ -15,6 +15,7 @@ import {
   SMButton,
   TitleBar,
 } from '../../components';
+import { validateEmail } from '../../utils';
 
 const FeedbackView = ({
   classes, navigator, intl, location, selectedUnit,
@@ -27,6 +28,16 @@ const FeedbackView = ({
   const [fbFieldVisited, setFbFieldVisited] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [sending, setSending] = useState(false);
+  const [formFields, setFormFields] = useState({
+    email: {
+      error: false,
+      errorMessageId: null,
+    },
+    feedback: {
+      error: false,
+      errorMessageId: null,
+    },
+  });
 
   const feedbackMaxLength = 5000;
   const feedbackType = location.pathname.includes('unit') ? 'unit' : 'general';
@@ -51,11 +62,104 @@ const FeedbackView = ({
     setPermission(false);
   };
 
+  const resetFormFieldError = (field) => {
+    if (Object.prototype.hasOwnProperty.call(formFields, field)) {
+      const newFormFields = {
+        ...formFields,
+      };
+
+      newFormFields[field] = {
+        error: false,
+        errorMessageId: null,
+      };
+
+      setFormFields(newFormFields);
+    }
+  };
+
+  const validateEmailField = (fFields) => {
+    let valid = true;
+    let newFormFields = {
+      ...formFields,
+    };
+    if (fFields) {
+      newFormFields = {
+        ...fFields,
+      };
+    }
+
+    if (!email) {
+      newFormFields.email = {
+        error: false,
+        errorMessageId: null,
+      };
+    } else if (!validateEmail(email)) {
+      valid = false;
+      newFormFields.email = {
+        error: true,
+        errorMessageId: 'feedback.error.email.invalid',
+      };
+    }
+
+    if (typeof fFields === 'undefined') {
+      setFormFields(newFormFields);
+    }
+    return valid;
+  };
+
+  const validateFeedbackField = (fFields) => {
+    let valid = true;
+    let newFormFields = {
+      ...formFields,
+    };
+    if (fFields) {
+      newFormFields = {
+        ...fFields,
+      };
+    }
+
+    // Check that string is not empty or only whitespaces
+    if (feedback?.replace(/\s/g, '').length > 0) {
+      newFormFields.feedback = {
+        error: false,
+        errorMessageId: null,
+      };
+    } else {
+      valid = false;
+      newFormFields.feedback = {
+        error: true,
+        errorMessageId: 'feedback.error.required',
+      };
+    }
+
+    if (typeof fFields === 'undefined') {
+      setFormFields(newFormFields);
+    }
+
+    return valid;
+  };
+
+  const validateForm = () => {
+    let valid = true;
+
+    if (!validateEmailField()) {
+      valid = false;
+    }
+
+    if (!validateFeedbackField()) {
+      valid = false;
+    }
+
+    return valid;
+  };
+
   const handleChange = (type, event) => {
     if (type === 'email') {
       setEmail(event.target.value);
+      resetFormFieldError('email');
     } else if (type === 'feedback') {
       setFeedback(event.target.value);
+      resetFormFieldError('feedback');
     }
   };
 
@@ -66,6 +170,17 @@ const FeedbackView = ({
     : null;
   const backButtonSrText = backButtonCallback ? intl.formatMessage({ id: 'general.back.unit' }) : null;
   const handleSend = () => {
+    setSending(!sending);
+    if (!validateForm()) {
+      setTimeout(() => {
+        // Take focus back to first invalid form element
+        const focusTarget = document.querySelectorAll('form [aria-invalid="true"]');
+        if (focusTarget?.length > 0) {
+          focusTarget[0].focus();
+        }
+      }, 150);
+      return;
+    }
     setSending(true);
 
     let body;
@@ -197,12 +312,35 @@ const FeedbackView = ({
             <Typography className={classes.title}><FormattedMessage id="feedback.email.info" /></Typography>
             <Typography id="emailTitle" className={classes.subtitle}><FormattedMessage id="feedback.email" /></Typography>
             <InputBase
+              autoComplete="email"
+              type="email"
               className={classes.inputField}
-              classes={{ input: classes.input }}
+              classes={{ input: `${classes.input} ${formFields.email.error ? classes.errorField : ''}` }}
               onChange={e => handleChange('email', e)}
-              inputProps={{ 'aria-labelledby': 'emailTitle' }}
+              onBlur={() => validateEmailField()}
+              inputProps={{
+                maxLength: feedbackMaxLength,
+                'aria-invalid': !!formFields.email.error,
+                'aria-labelledby': !formFields.email.error ? 'emailTitle' : 'srErrorEmail',
+              }}
             />
           </FormControl>
+          <div className={classes.inputInfo}>
+            {formFields.email.error && (
+              <>
+                <div aria-hidden className={classes.errorContainer}>
+                  <Warning className={classes.errorIcon} />
+                  &nbsp;
+                  <Typography color="inherit" aria-hidden className={classes.errorText}>
+                    {intl.formatMessage({ id: formFields.email.errorMessageId })}
+                  </Typography>
+                </div>
+                <Typography id="srErrorEmail" role="alert" style={visuallyHidden}>
+                  <FormattedMessage id="feedback.srError.email.invalid" />
+                </Typography>
+              </>
+            )}
+          </div>
 
           {/* Feedback field */}
           <FormControl>
@@ -212,30 +350,30 @@ const FeedbackView = ({
               className={classes.inputField}
               multiline
               rows="5"
-              classes={{ input: `${classes.input} ${errorMessage ? classes.errorField : ''}` }}
+              classes={{ input: `${classes.input} ${formFields.feedback.error ? classes.errorField : ''}` }}
               onChange={e => handleChange('feedback', e)}
-              onBlur={!fbFieldVisited ? () => setFbFieldVisited(true) : null}
+              onBlur={() => validateFeedbackField()}
               inputProps={{
                 maxLength: feedbackMaxLength,
-                'aria-invalid': !!errorMessage,
-                'aria-labelledby': !errorMessage ? 'feedbackTitle' : 'srError',
+                'aria-invalid': !!formFields.feedback.error,
+                'aria-labelledby': !formFields.feedback.error ? 'feedbackTitle' : 'srErrorFeedback',
               }}
             />
           </FormControl>
           <div className={classes.inputInfo}>
-            {errorMessage && (
-              <div aria-hidden className={classes.errorContainer}>
-                <Warning className={classes.errorIcon} />
-                &nbsp;
-                <Typography color="inherit" aria-hidden className={classes.errorText}>
-                  {errorMessage}
+            {formFields.feedback.error && (
+              <>
+                <div aria-hidden className={classes.errorContainer}>
+                  <Warning className={classes.errorIcon} />
+                  &nbsp;
+                  <Typography color="inherit" aria-hidden className={classes.errorText}>
+                    {intl.formatMessage({ id: formFields.feedback.errorMessageId })}
+                  </Typography>
+                </div>
+                <Typography id="srErrorFeedback" role="alert" style={visuallyHidden}>
+                  <FormattedMessage id="feedback.srError.feedback.required" />
                 </Typography>
-              </div>
-            )}
-            {fbFieldVisited && !feedbackLength && (
-              <Typography id="srError" role="alert" style={visuallyHidden}>
-                <FormattedMessage id="feedback.srError.required" />
-              </Typography>
+              </>
             )}
             <Typography aria-hidden className={`${classes.characterInfo} ${feedbackFull ? classes.characterInfoError : ''}`}>
               {`${feedbackLength}/${feedbackMaxLength}`}
@@ -255,8 +393,6 @@ const FeedbackView = ({
           </ButtonBase>
           <SMButton
             role="button"
-            disabled={!feedback || errorMessage || sending}
-            aria-label={!feedback || errorMessage ? intl.formatMessage({ id: 'feedback.send.error' }) : null}
             onClick={() => handleSend()}
             messageID={sending ? 'feedback.sending' : 'feedback.send'}
             color="primary"
