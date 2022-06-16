@@ -16,6 +16,7 @@ export default theme => ({
   },
   link: {
     color: '#0000EE',
+    textDecoration: 'underline',
   },
   whiteText: {
     color: '#fff',

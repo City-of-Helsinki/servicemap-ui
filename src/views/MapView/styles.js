@@ -27,6 +27,7 @@ const styles = theme => ({
   },
   addressLink: {
     color: theme.palette.primary.main,
+    textDecoration: 'underline',
   },
   loadingScreen: {
     height: '100%',
