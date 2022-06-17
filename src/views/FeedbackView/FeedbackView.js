@@ -17,33 +17,35 @@ import {
 } from '../../components';
 import { validateEmail } from '../../utils';
 
+const formFieldInitialState = {
+  email: {
+    value: null,
+    error: false,
+    errorMessageId: null,
+  },
+  feedback: {
+    value: null,
+    error: false,
+    errorMessageId: null,
+  },
+};
+
 const FeedbackView = ({
   classes, navigator, intl, location, selectedUnit,
 }) => {
   const getLocaleText = useLocaleText();
   // State
-  const [email, setEmail] = useState(null);
-  const [feedback, setFeedback] = useState(null);
   const [permission, setPermission] = useState(false);
-  const [fbFieldVisited, setFbFieldVisited] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [sending, setSending] = useState(false);
-  const [formFields, setFormFields] = useState({
-    email: {
-      error: false,
-      errorMessageId: null,
-    },
-    feedback: {
-      error: false,
-      errorMessageId: null,
-    },
-  });
+  const [formFields, setFormFields] = useState(formFieldInitialState);
 
   const feedbackMaxLength = 5000;
   const feedbackType = location.pathname.includes('unit') ? 'unit' : 'general';
-  const feedbackLength = feedback ? feedback.length : 0;
+  const feedbackLength = formFields?.feedback?.value ? formFields.feedback.value.length : 0;
   const feedbackFull = feedbackLength >= feedbackMaxLength;
-  const errorMessage = fbFieldVisited && feedbackLength === 0 ? intl.formatMessage({ id: 'feedback.error.required' }) : null;
+  const email = formFields.email.value;
+  const feedback = formFields.feedback.value;
 
   const isUnitFeedback = feedbackType === 'unit';
 
@@ -56,86 +58,46 @@ const FeedbackView = ({
   }, []);
 
   const resetForm = () => {
-    setEmail(null);
-    setFbFieldVisited(false);
-    setFeedback(null);
+    setFormFields(formFieldInitialState);
     setPermission(false);
   };
 
-  const resetFormFieldError = (field) => {
-    if (Object.prototype.hasOwnProperty.call(formFields, field)) {
-      const newFormFields = {
-        ...formFields,
-      };
-
-      newFormFields[field] = {
-        error: false,
-        errorMessageId: null,
-      };
-
-      setFormFields(newFormFields);
-    }
-  };
-
-  const validateEmailField = (fFields) => {
+  const validateEmailField = () => {
     let valid = true;
-    let newFormFields = {
+    const newFormFields = {
       ...formFields,
     };
-    if (fFields) {
-      newFormFields = {
-        ...fFields,
-      };
-    }
 
-    if (!email) {
-      newFormFields.email = {
-        error: false,
-        errorMessageId: null,
-      };
-    } else if (!validateEmail(email)) {
+    if (!newFormFields?.email?.value) {
+      newFormFields.email.error = false;
+      newFormFields.email.errorMessageId = null;
+    } else if (!validateEmail(newFormFields.email.value)) {
       valid = false;
-      newFormFields.email = {
-        error: true,
-        errorMessageId: 'feedback.error.email.invalid',
-      };
+      newFormFields.email.error = true;
+      newFormFields.email.errorMessageId = 'feedback.error.email.invalid';
     }
 
-    if (typeof fFields === 'undefined') {
-      setFormFields(newFormFields);
-    }
+    setFormFields(newFormFields);
     return valid;
   };
 
-  const validateFeedbackField = (fFields) => {
+  const validateFeedbackField = () => {
     let valid = true;
-    let newFormFields = {
+    const newFormFields = {
       ...formFields,
     };
-    if (fFields) {
-      newFormFields = {
-        ...fFields,
-      };
-    }
 
     // Check that string is not empty or only whitespaces
-    if (feedback?.replace(/\s/g, '').length > 0) {
-      newFormFields.feedback = {
-        error: false,
-        errorMessageId: null,
-      };
+    if (newFormFields.feedback?.value?.replace(/\s/g, '').length > 0) {
+      newFormFields.feedback.error = false;
+      newFormFields.feedback.errorMessageId = null;
     } else {
       valid = false;
-      newFormFields.feedback = {
-        error: true,
-        errorMessageId: 'feedback.error.required',
-      };
+      newFormFields.feedback.error = true;
+      newFormFields.feedback.errorMessageId = 'feedback.error.required';
     }
 
-    if (typeof fFields === 'undefined') {
-      setFormFields(newFormFields);
-    }
-
+    setFormFields(newFormFields);
     return valid;
   };
 
@@ -154,12 +116,16 @@ const FeedbackView = ({
   };
 
   const handleChange = (type, event) => {
-    if (type === 'email') {
-      setEmail(event.target.value);
-      resetFormFieldError('email');
-    } else if (type === 'feedback') {
-      setFeedback(event.target.value);
-      resetFormFieldError('feedback');
+    if (Object.prototype.hasOwnProperty.call(formFields, type)) {
+      const newFormFields = {
+        ...formFields,
+      };
+      newFormFields[type] = {
+        value: event.target.value,
+        error: false,
+        errorMessageId: null,
+      };
+      setFormFields(newFormFields);
     }
   };
 
@@ -170,7 +136,6 @@ const FeedbackView = ({
     : null;
   const backButtonSrText = backButtonCallback ? intl.formatMessage({ id: 'general.back.unit' }) : null;
   const handleSend = () => {
-    setSending(!sending);
     if (!validateForm()) {
       setTimeout(() => {
         // Take focus back to first invalid form element
@@ -189,8 +154,8 @@ const FeedbackView = ({
       // When accessibility options are added to feedback, different service codes will be used
       const serviceCode = 1363;
       body = new URLSearchParams({
-        description: feedback,
-        email,
+        description: formFields.feedback.value,
+        email: formFields.email.value,
         can_be_published: permission,
         service_code: serviceCode,
         service_object_id: selectedUnit.id,
@@ -200,8 +165,8 @@ const FeedbackView = ({
     } else if (feedbackType === 'general') {
       const serviceCode = 1363;
       body = new URLSearchParams({
-        description: feedback,
-        email,
+        description: formFields.feedback.value,
+        email: formFields.email.value,
         internal_feedback: true,
         can_be_published: permission,
         service_code: serviceCode,
