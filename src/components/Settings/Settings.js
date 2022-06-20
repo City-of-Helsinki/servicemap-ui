@@ -713,7 +713,6 @@ class Settings extends React.Component {
             <SMButton
               small
               role="button"
-              disabled={!settingsHaveChanged}
               onClick={() => this.saveSettings(this.closeButtonRef.current)}
               messageID="general.save.changes"
               color="primary"
