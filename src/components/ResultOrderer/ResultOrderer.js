@@ -77,7 +77,7 @@ const ResultOrderer = ({
   return (
     <form className={classes.root} autoComplete="off">
       <FormControl className={classes.formControl}>
-        <Typography color="inherit" variant="caption" className={classes.inputLabel}>
+        <Typography color="inherit" variant="caption" component="label" for="result-sorter" className={classes.inputLabel}>
           <FormattedMessage id="sorting.label" />
         </Typography>
         <Select
