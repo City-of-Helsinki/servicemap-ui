@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { Selector, ClientFunction } from 'testcafe';
 import { waitForReact, ReactSelector } from 'testcafe-react-selectors';
-import config from './config';
+import config from '../config';
 
 const { server } = config;
 
