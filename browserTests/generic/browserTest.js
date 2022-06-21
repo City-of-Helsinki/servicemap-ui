@@ -60,29 +60,3 @@ test('Contrast does change', async (t) => {
     .expect(searchbarContainer.getStyleProperty('background-image')).contains(paletteDark.background.front)
   ;
 });
-
-fixture`Map tests`
-  .page`http://${server.address}:${server.port}/fi`
-  .beforeEach(async () => {
-    await waitForReact();
-  });
-
-test('Transit marker visible after zoom', async (t) => {
-  const zoomIn  = Selector('.zoomIn');
-  const markers = Selector('.leaflet-marker-icon');
-  
-  // Zoom in to make transit markers visible
-  for(let i = 0; i < 6; i++) {
-    await t 
-      .click(zoomIn)
-      .wait(100)
-  }
-  await t
-  // Wait for markers to appear
-    .wait(2000)
-
-  const markerCount = await markers.count
-
-  await t
-    .expect(markerCount).gt(0, 'no transit markers found on high zoom')
-});
