@@ -42,7 +42,7 @@ export default theme => ({
     borderBottom: '1px solid rgba(0,0,0,0.2)',
   },
   link: {
-    color: '#0000EE',
+    color: theme.palette.link.main,
     textDecoration: 'underline',
   },
   linkButton: {
@@ -149,7 +149,7 @@ export default theme => ({
   },
   accessibilityLink: {
     paddingTop: theme.spacing(1),
-    color: '#0000EE',
+    color: theme.palette.link.main,
   },
   callInfoText: {
     whiteSpace: 'pre-line',

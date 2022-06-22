@@ -32,6 +32,7 @@ export default theme => ({
     textAlign: 'left',
   },
   areaLink: {
+    color: theme.palette.link.main,
     textDecoration: 'underline',
     marginBottom: theme.spacing(1),
     marginTop: theme.spacing(1),
