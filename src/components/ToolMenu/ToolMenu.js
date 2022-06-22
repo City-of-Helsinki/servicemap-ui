@@ -8,9 +8,9 @@ import {
 import { useSelector } from 'react-redux';
 import DropDownMenuButton from '../DropDownMenuButton';
 import SMIcon from '../SMIcon/SMIcon';
-import SMButton from '../ServiceMapButton';
 import PrintContext from '../../context/PrintContext';
 import DownloadDialog from '../Dialog/DownloadDialog';
+import MeasuringStopButton from './MeasuringStopButton';
 
 const ToolMenuButtonID = 'ToolMenuButton';
 
@@ -90,6 +90,7 @@ const ToolMenu = ({
     // Example shape
     {
       key: 'embedder.title',
+      id: 'EmbedderToolMenuButton',
       text: intl.formatMessage({ id: 'embedder.title' }),
       icon: <Code />,
       onClick: () => {
@@ -99,6 +100,7 @@ const ToolMenu = ({
     },
     {
       key: 'downloadTool',
+      id: 'DownloadToolMenuButton',
       text: intl.formatMessage({ id: 'tool.download' }),
       icon: <GetApp />,
       onClick: () => {
@@ -107,6 +109,7 @@ const ToolMenu = ({
     },
     {
       key: 'printTool',
+      id: 'PrintToolMenuButton',
       text: intl.formatMessage({ id: 'tool.print' }),
       icon: <Print className={classes.smIcon} />,
       onClick: () => {
@@ -117,9 +120,10 @@ const ToolMenu = ({
     },
     {
       key: 'measuringTool',
+      id: 'MesuringToolMenuButton',
       text: measuringMode ? intl.formatMessage({ id: 'tool.measuring.stop' }) : intl.formatMessage({ id: 'tool.measuring' }),
       icon: <SMIcon className={classes.smIcon} icon="icon-icon-measuring-tool" />,
-      ariaHidden: true,
+      ariaHidden: false,
       onClick: () => {
         setMeasuringMode(!measuringMode);
       },
@@ -144,14 +148,7 @@ const ToolMenu = ({
         menuItems={menuItems}
       />
       {measuringMode && (
-        <SMButton
-          aria-hidden="true"
-          className={classes.measuringButton}
-          color="primary"
-          role="button"
-          messageID="tool.measuring.stop"
-          onClick={() => setMeasuringMode(false)}
-        />
+        <MeasuringStopButton onClick={() => setMeasuringMode(false)} />
       )}
       <DownloadDialog open={openDownload} setOpen={setOpenDownload} referer={toolMenuButton} />
     </>

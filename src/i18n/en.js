@@ -276,6 +276,7 @@ const translations = {
   'general.closeSettings': 'Close settings',
   'general.fetching': 'Loading data...',
   'general.home': 'Home',
+  'general.home.logo.ariaLabel': 'Servicemap - Go to home page',
   'general.noData': 'No data available',
   'general.news.alert.title': 'Notification window',
   'general.news.alert.close.aria': 'Close notification window',
@@ -613,7 +614,7 @@ const translations = {
 
   // Tools
   'tool.download': 'Download data',
-  'tool.measuring': 'Measure distance (mouse only)',
+  'tool.measuring': 'Measure distance (accessible only visually and with a mouse)',
   'tool.measuring.stop': 'Stop measuring',
   'tool.print': 'Print',
 

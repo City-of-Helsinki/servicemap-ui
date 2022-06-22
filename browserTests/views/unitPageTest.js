@@ -1,5 +1,5 @@
 import { waitForReact } from 'testcafe-react-selectors';
-import config from './config';
+import config from '../config';
 import { Selector } from 'testcafe';
 
 const { server } = config;

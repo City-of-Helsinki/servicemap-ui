@@ -276,6 +276,7 @@ const translations = {
   'general.closeSettings': 'Sulje asetukset',
   'general.fetching': 'Ladataan tietoja...',
   'general.home': 'Koti',
+  'general.home.logo.ariaLabel': 'Palvelukartta - Siirry etusivulle',
   'general.noData': 'Tietoa ei saatavilla',
   'general.news.alert.title': 'Ilmoitusikkuna',
   'general.news.alert.close.aria': 'Sulje ilmoitusikkuna',
@@ -616,7 +617,7 @@ const translations = {
 
   // Tools
   'tool.download': 'Lataa tiedot',
-  'tool.measuring': 'Mittaa etäisyys (käytettävissä vain hiirellä)',
+  'tool.measuring': 'Mittaa etäisyys (käytettävissä vain näönvaraisesti hiirellä)',
   'tool.measuring.stop': 'Lopeta mittaus',
   'tool.print': 'Tulosta',
 

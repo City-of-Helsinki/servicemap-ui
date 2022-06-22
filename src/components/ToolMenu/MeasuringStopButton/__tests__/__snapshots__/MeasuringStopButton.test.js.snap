@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<MeasuringStopButton /> should work 1`] = `
+<div>
+  <button
+    aria-label="Lopeta mittaus"
+    class="MuiButtonBase-root SMButton SMButton-button-7  SMButton-marginRight-10 MeasuringStopButtonComponent-measuringButton-6 SMButton-primary-11 css-194wrg2-MuiButtonBase-root"
+    id="MeasuringStopButton"
+    role="button"
+    tabindex="0"
+    type="button"
+    variant="contained"
+  >
+    <p
+      aria-hidden="true"
+      class="MuiTypography-root MuiTypography-caption SMButton-typography-14 css-o763o0-MuiTypography-root"
+    >
+      Lopeta mittaus
+    </p>
+  </button>
+</div>
+`;

@@ -1,9 +1,9 @@
 /* eslint-disable */
 import { Selector, ClientFunction } from 'testcafe';
 import { waitForReact, ReactSelector } from 'testcafe-react-selectors';
-import { viewTitleID } from '../src/utils/accessibility';
+import { viewTitleID } from '../../src/utils/accessibility';
 
-import config from './config';
+import config from '../config';
 const { server } = config;
 
 fixture`Search view test`

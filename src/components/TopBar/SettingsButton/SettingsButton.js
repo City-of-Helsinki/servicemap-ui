@@ -10,16 +10,20 @@ const SettingsButton = ({
 }) => {
   const minWidth = useMediaQuery('(min-width:900px)');
   const maxWidth = useMediaQuery('(max-width: 1100px)');
-  const buttonClass = type => `
-    ${classes.settingsButton} ${(settingsOpen === type && classes.settingsButtonPressed) || ''}
+
+  const isSelected = settingsOpen === type;
+
+  const buttonClass = `
+    ${classes.settingsButton} ${(isSelected && classes.settingsButtonPressed) || ''}
     ${(minWidth && maxWidth && classes.smallScreen) || ''}
   `;
   return (
     <Button
+      aria-current={isSelected ? 'page' : false}
       aria-haspopup="dialog"
       id={`SettingsButton${type}`}
       classes={{ label: classes.buttonLabel }}
-      className={buttonClass(type)}
+      className={buttonClass}
       onClick={onClick}
       role="button"
     >
