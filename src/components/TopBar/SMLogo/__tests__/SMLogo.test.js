@@ -34,7 +34,7 @@ const Providers = ({ children }) => {
       </IntlProvider>
     </Provider>
   );
-}
+};
 
 const renderWithProviders = component => render(component, { wrapper: Providers });
 
@@ -62,6 +62,8 @@ describe('<SMLogo />', () => {
     const buttonBase = container.querySelector('button');
     // Expect role to be link
     expect(buttonBase).toHaveAttribute('role', 'link');
+    // Since we are mocking home path for location aria-current should be page
+    expect(buttonBase).toHaveAttribute('aria-current', 'page');
     // Home logo which is image should containe image text in aria label
     // so aria label should contain "Palvelukartta" text in addition to action description
     expect(buttonBase).toHaveAttribute('aria-label', 'Palvelukartta - Siirry etusivulle');
