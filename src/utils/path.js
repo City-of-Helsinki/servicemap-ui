@@ -52,3 +52,11 @@ export const generatePath = (path, locale = config.defaultLocale, data = null, e
   }
   return null;
 };
+
+// Check if pathname string equals home page path
+export const isHomePage = (pathname) => {
+  if (typeof pathname === 'string') {
+    return paths.home.regex.test(pathname);
+  }
+  return false;
+};

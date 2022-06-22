@@ -17,8 +17,8 @@ import LocaleUtility from '../../utils/locale';
 import { useNavigationParams } from '../../utils/address';
 import SettingsButton from './SettingsButton';
 import MenuButton from './MenuButton';
-import paths from '../../../config/paths';
 import SMLogo from './SMLogo';
+import { isHomePage } from '../../utils/path';
 
 const TopBar = (props) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -26,6 +26,7 @@ const TopBar = (props) => {
   const location = useLocation();
   const intl = useIntl();
   const getAddressNavigatorParams = useNavigationParams();
+  const isOnHomePage = isHomePage(location?.pathname);
 
   const {
     hideButtons,
@@ -40,9 +41,6 @@ const TopBar = (props) => {
     currentPage,
     smallScreen,
   } = props;
-
-
-  const isHomePage = paths.home.regex.test(location.pathname);
 
   const renderSettingsButtons = () => {
     const settingsCategories = [
@@ -166,7 +164,7 @@ const TopBar = (props) => {
 
     switch (target) {
       case 'home':
-        if (!isHomePage) {
+        if (!isOnHomePage) {
           navigator.push('home');
         } else {
           setTimeout(() => {
@@ -224,7 +222,7 @@ const TopBar = (props) => {
           <Toolbar className={toolbarBlackClass}>
             <div className={classes.toolbarBlackContainer}>
               <ButtonBase
-                aria-current={isHomePage ? 'page' : false}
+                aria-current={isOnHomePage ? 'page' : false}
                 role="link"
                 onClick={() => handleNavigation('home')}
                 focusVisibleClassName={classes.topButtonFocused}
