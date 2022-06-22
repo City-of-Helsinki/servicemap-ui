@@ -10,13 +10,6 @@ import LanguageMenu from '../index';
 import { initialState } from '../../../../redux/reducers/user';
 import finnishTranslations from '../../../../i18n/fi';
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useLocation: jest.fn().mockImplementation(() => ({
-    pathname: '/fi/',
-  })),
-}));
-
 // Mock props for intl provider
 const intlMock = {
   locale: 'fi',
