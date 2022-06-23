@@ -55,8 +55,7 @@ const EmbedderView = ({
   let { url } = data;
   const { ratio } = data;
   if (url) {
-    const parameters = smurl.explode(url);
-    url = smurl.strip(url, parameters);
+    url = smurl.strip(url);
   }
   let search = {};
   if (url) {
