@@ -225,6 +225,9 @@ const EmbedderView = ({
   ]);
 
   const showCities = (embedUrl) => {
+    if (typeof embedUrl !== 'string') {
+      return false;
+    }
     const originalUrl = embedUrl.replace('/embed', '');
     let show = true;
     hideCitiesIn.forEach((r) => {
@@ -236,6 +239,9 @@ const EmbedderView = ({
   };
 
   const showServices = (embedUrl) => {
+    if (typeof embedUrl !== 'string') {
+      return false;
+    }
     const originalUrl = embedUrl.replace('/embed', '');
     let show = true;
     hideServicesIn.forEach((r) => {
