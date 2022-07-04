@@ -9,6 +9,7 @@ export const getSubdistrictUnits = state => state.districts.subdistrictUnits;
 const getSubdistrictSelection = state => state.districts.selectedSubdistricts;
 const getSelectedDistrictServices = state => state.districts.selectedDistrictServices;
 const getCitySettings = state => state.settings.cities;
+export const getParkingUnits = state => state.districts.parkingUnits.filter(unit => unit.object_type === 'unit');
 
 export const getDistrictsByType = createSelector(
   [getSelectedDistrict, getDistrictData, getCitySettings],
