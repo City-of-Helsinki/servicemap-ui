@@ -40,6 +40,33 @@ export const getAddressDistrict = createSelector(
   },
 );
 
+// Get units that are tied to each area object
+export const getDistrictPrimaryUnits = createSelector(
+  [getDistrictsByType],
+  (districts) => {
+    const primaryUnits = [];
+
+    // Function to handle unit and add it to the list
+    const checkUnit = (unit) => {
+      if (unit.location) {
+        unit.object_type = 'unit';
+        primaryUnits.push(unit);
+      }
+    };
+
+    districts.forEach((area) => {
+      // If area data has units as list, iterate through it
+      if (area.units?.length) {
+        area.units.forEach(unit => checkUnit(unit));
+      } else if (area.unit) {
+        checkUnit(area.unit);
+      }
+    });
+
+    return primaryUnits;
+  },
+);
+
 // Get selected geographical district units
 export const getFilteredSubdistrictServices = createSelector(
   [getSubdistrictSelection, getSubdistrictUnits, getCitySettings],

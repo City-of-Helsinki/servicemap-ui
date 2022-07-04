@@ -234,10 +234,6 @@ const Districts = ({
               {tooltipTitle}
             </Tooltip>
           ) : null}
-          {renderDistrictMarkers(district)}
-          {district.overlapping && district.overlapping.map(obj => (
-            renderDistrictMarkers(obj)
-          ))}
         </Polygon>
       );
     });
