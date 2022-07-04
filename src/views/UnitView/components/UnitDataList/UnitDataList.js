@@ -55,7 +55,6 @@ const UnitDataList = ({
           <ServiceItem
             key={item.id}
             service={item}
-            link={false}
             divider={i !== shownData.length - 1}
           />
         ))

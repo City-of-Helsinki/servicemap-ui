@@ -7,7 +7,7 @@ import useLocaleText from '../../../utils/useLocaleText';
 
 const ServiceItem = (props) => {
   const {
-    currentService, service, navigator, setNewCurrentService, link, classes, divider,
+    service, classes, divider,
   } = props;
   const [icon, setIcon] = useState(<img alt="" src={null} style={{ height: 24 }} aria-hidden="true" />);
   const getLocaleText = useLocaleText();
@@ -24,27 +24,12 @@ const ServiceItem = (props) => {
     text += `: ${getLocaleText(service.clarification)}`;
   }
 
-  const onClick = link ? (e) => {
-    e.preventDefault();
-
-    if (!currentService || currentService.id !== service.id) {
-      setNewCurrentService(service);
-    }
-    if (navigator) {
-      navigator.push('service', service.id);
-    }
-  } : null;
-  const role = link ? 'link' : null;
-
   return (
     <SimpleListItem
       key={service.id}
-      button={link}
-      role={role}
       text={uppercaseFirst(text)}
       icon={icon}
       divider={divider}
-      handleItemClick={onClick}
     />
   );
 };
@@ -53,17 +38,10 @@ export default ServiceItem;
 
 ServiceItem.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  currentService: PropTypes.objectOf(PropTypes.any),
-  navigator: PropTypes.objectOf(PropTypes.any),
   service: PropTypes.objectOf(PropTypes.any).isRequired,
-  setNewCurrentService: PropTypes.func.isRequired,
-  link: PropTypes.bool,
   divider: PropTypes.bool,
 };
 
 ServiceItem.defaultProps = {
-  currentService: null,
-  navigator: null,
-  link: true,
   divider: true,
 };
