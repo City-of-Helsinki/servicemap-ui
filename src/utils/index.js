@@ -199,8 +199,21 @@ export const addSearchParametersToObject = (obj, params) => {
 // Forms string string by combining address data values
 export const formAddressString = (address, getLocaleText) => {
   if (address) {
-    if (address.name && address.municipality?.name) return `${getLocaleText(address.name)}, ${getLocaleText(address.municipality.name)}`;
-    return `${getLocaleText(address.street.name)} ${address.number}${address.number_end ? address.number_end : ''}${address.letter ? address.letter : ''}, ${uppercaseFirst(address.street.municipality)}`;
+    const name = address.name
+      ? getLocaleText(address.name)
+      : getLocaleText(address.street.name);
+    const municipality = address.municipality?.name
+      ? getLocaleText(address.municipality.name)
+      : uppercaseFirst(address.municipality);
+
+    const number = `${address.number}${address.number_end ? address.number_end : ''}`;
+    const letter = address.letter || '';
+
+    if (address.name) {
+      return `${name}, ${municipality}`;
+    }
+
+    return `${name} ${number}${letter}, ${municipality}`;
   }
   return '';
 };
