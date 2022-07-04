@@ -26,6 +26,9 @@ const smFetch = (dispatch, options) => {
     const { q, ...additionalOptions } = options;
     smAPI.setOnProgressUpdate(onProgressUpdate);
     results = smAPI.search(options.q, additionalOptions);
+  } else if (options.serviceId) {
+    smAPI.setOnProgressUpdate(onProgressUpdate);
+    results = smAPI.serviceUnits(options.serviceId);
   } else if (options.service_node) {
     smAPI.setOnProgressUpdate(onProgressUpdate);
     results = smAPI.serviceNodeSearch(options.service_node);
@@ -49,7 +52,7 @@ const fetchSearchResults = (options = null) => async (dispatch, getState) => {
   if (options.q) {
     saveSearchToHistory(searchQuery, results);
   }
-  if (options.service_node) {
+  if (options.service_node || options.serviceId) {
     results.forEach((item) => {
       item.object_type = 'unit';
     });

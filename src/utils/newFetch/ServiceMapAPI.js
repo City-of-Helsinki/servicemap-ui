@@ -26,6 +26,8 @@ export default class ServiceMapAPI extends HttpClient {
       ...additionalOptions,
     };
 
+    /* TODO: should use getConcurrent here instead.
+    Progress updater needs to be updated to allow concurrency first. */
     return this.get('search', options);
   }
 
@@ -42,6 +44,26 @@ export default class ServiceMapAPI extends HttpClient {
       service_node: idList,
     };
 
+    /* TODO: should use getConcurrent here instead.
+    Progress updater needs to be updated to allow concurrency first. */
+    return this.get('unit', options);
+  }
+
+  serviceUnits = async (serviceId) => {
+    if (typeof serviceId !== 'string') {
+      throw new APIFetchError('Invalid id string provided to ServiceMapAPI serviceUnits method');
+    }
+
+    const options = {
+      service: serviceId,
+      page: 1,
+      page_size: 200,
+      only: 'street_address,name,accessibility_shortcoming_count,location,municipality,contract_type',
+      geometry: true,
+    };
+
+    /* TODO: should use getConcurrent here instead.
+    Progress updater needs to be updated to allow concurrency first. */
     return this.get('unit', options);
   }
 

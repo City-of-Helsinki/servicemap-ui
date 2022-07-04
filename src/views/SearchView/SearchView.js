@@ -77,6 +77,7 @@ const SearchView = (props) => {
       city,
       municipality,
       service,
+      serviceId,
       service_node,
       search_language,
       events,
@@ -90,6 +91,11 @@ const SearchView = (props) => {
       // Parse service
       if (includeService && service) {
         options.service = service;
+      }
+
+      // Parse service units
+      if (serviceId) {
+        options.serviceId = serviceId;
       }
 
       // Parse service_node
@@ -199,11 +205,20 @@ const SearchView = (props) => {
     // Should fetch if previousSearch has changed and data has required parameters
     if (previousSearch) {
       if (data.q !== previousSearch && stringifySearchQuery(data) !== previousSearch) {
-        return !!(data.q || data.service || data.service_node || data.events);
+        return !!(data.q
+          || data.service
+          || data.service_node
+          || data.serviceId
+          || data.events);
       }
     } else {
       // Should fetch if no previous searches but search parameters exist
-      return !!(data.q || data.service || data.service_node || data.events || data.id);
+      return !!(data.q
+        || data.service
+        || data.service_node
+        || data.serviceId
+        || data.events
+        || data.id);
     }
     return false;
   };

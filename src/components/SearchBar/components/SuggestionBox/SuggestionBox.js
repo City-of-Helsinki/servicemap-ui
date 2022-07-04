@@ -10,12 +10,10 @@ import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import PreviousSearches from '../../PreviousSearches';
 import createSuggestions from '../../createSuggestions';
-// import config from '../../../../../config';
 import SuggestionItem from '../../../ListItems/SuggestionItem';
 import { keyboardHandler } from '../../../../utils';
 import { getIcon } from '../../../SMIcon';
 import { CloseSuggestionButton } from '../CloseSuggestionButton';
-// import { setSelectedDistrictType } from '../../../../redux/actions/district';
 import useLocaleText from '../../../../utils/useLocaleText';
 import UnitIcon from '../../../SMIcon/UnitIcon';
 import setSearchBarInitialValue from '../../../../redux/actions/searchBar';
@@ -180,7 +178,15 @@ const SuggestionBox = (props) => {
         icon: getIcon('serviceDark'),
         onClick: (item) => {
           handleBlur();
-          navigator.push('service', item.id);
+          navigator.push('search', { serviceId: item.id });
+        },
+        text: item => getLocaleText(item.name),
+      },
+      servicenode: {
+        icon: getIcon('serviceDark'),
+        onClick: (item) => {
+          handleBlur();
+          navigator.push('search', { service_node: item.ids.join(',') });
         },
         text: item => getLocaleText(item.name),
       },
@@ -190,9 +196,11 @@ const SuggestionBox = (props) => {
     const addresses = suggestionList.filter(item => item.object_type === 'address');
     const units = suggestionList.filter(item => item.object_type === 'unit');
     const services = suggestionList.filter(item => item.object_type === 'service');
+    const servicenodes = suggestionList.filter(item => item.object_type === 'servicenode');
 
     const orderedSuggestions = [
       ...addresses,
+      ...servicenodes,
       ...services,
       ...units,
     ].slice(0, suggestionCount);
