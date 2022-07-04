@@ -9,6 +9,7 @@ import { getServiceUnits } from '../../../redux/selectors/service';
 import { useEmbedStatus } from '../../../utils/path';
 
 
+// Helper function to handle address view units
 const handleAdrressUnits = (addressToRender, adminDistricts, addressUnits) => {
   let mapUnits = [];
   switch (addressToRender) {
@@ -39,7 +40,7 @@ const handleAdrressUnits = (addressToRender, adminDistricts, addressUnits) => {
 };
 
 
-// Add additional service units to unit page if specified on Url parameters
+// Helper function to add additional service units to unit page if specified on Url parameters
 const handleServiceUnitsFromUrl = (mapUnits, serviceUnits, location) => {
   const distanceParameter = new URLSearchParams(location.search).get('distance');
   let additionalUnits = serviceUnits;
@@ -74,6 +75,11 @@ const handleServiceUnitsFromUrl = (mapUnits, serviceUnits, location) => {
   return additionalUnits;
 };
 
+
+/*
+  This hook servers as the single global source that defines which units
+  should be rendered to map on each page
+*/
 
 const useMapUnits = () => {
   const embedded = useEmbedStatus();
