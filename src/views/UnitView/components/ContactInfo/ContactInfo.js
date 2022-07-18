@@ -14,7 +14,7 @@ import SMAccordion from '../../../../components/SMAccordion';
 import { parseSearchParams, stringifySearchParams } from '../../../../utils';
 
 const ContactInfo = ({
-  unit, userLocation, intl, classes,
+  unit, userLocation, intl, classes, headingLevel,
 }) => {
   const history = useHistory();
   const location = useLocation();
@@ -164,7 +164,7 @@ const ContactInfo = ({
     <InfoList
       data={data}
       title={<FormattedMessage id="unit.contact.info" />}
-      titleComponent="h4"
+      titleComponent={headingLevel}
     />
   );
 };
@@ -174,10 +174,12 @@ ContactInfo.propTypes = {
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   userLocation: PropTypes.objectOf(PropTypes.any),
+  headingLevel: PropTypes.string,
 };
 
 ContactInfo.defaultProps = {
   userLocation: null,
+  headingLevel: 'h4',
 };
 
 export default ContactInfo;

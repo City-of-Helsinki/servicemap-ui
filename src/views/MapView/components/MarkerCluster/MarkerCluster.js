@@ -411,7 +411,7 @@ const MarkerCluster = ({
           setNewHighlightedMarker(markerElem);
         }
 
-        if (unitListFiltered.length > 1) {
+        if (unitListFiltered.length > 1 || embeded) {
           markerElem.on('click', () => {
             setNewHighlightedMarker(markerElem);
             if (!isMobile) {
