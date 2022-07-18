@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   Switch, Route, useLocation,
@@ -7,6 +7,8 @@ import {
 import { injectIntl } from 'react-intl';
 import { Tooltip as MUITooltip, ButtonBase, Typography } from '@material-ui/core';
 import { useTheme } from '@material-ui/styles';
+import { useSelector } from 'react-redux';
+import { OpenInNew, Map } from '@material-ui/icons';
 import MapView from '../views/MapView';
 import PageHandler from './components/PageHandler';
 import AddressView from '../views/AddressView';
@@ -20,6 +22,11 @@ import { parseSearchParams } from '../utils';
 import HomeLogo from '../components/Logos/HomeLogo';
 import PaginatedList from '../components/Lists/PaginatedList';
 import useMapUnits from '../views/MapView/utils/useMapUnits';
+import Dialog from '../components/Dialog';
+import SMButton from '../components/ServiceMapButton';
+import useLocaleText from '../utils/useLocaleText';
+import ContactInfo from '../views/UnitView/components/ContactInfo';
+import { focusToPosition } from '../views/MapView/utils/mapActions';
 
 const createContentStyles = (theme, bottomList) => {
   const width = 450;
@@ -84,13 +91,72 @@ const createContentStyles = (theme, bottomList) => {
 const EmbedLayout = ({ intl }) => {
   const theme = useTheme();
   const location = useLocation();
+  const navigator = useSelector(state => state.navigator);
+  const getLocaleText = useLocaleText();
   const units = useMapUnits();
   const searchParams = parseSearchParams(location.search);
+  const map = useSelector(state => state.mapRef);
 
   const showList = searchParams?.show_list;
+  const selectedUnit = searchParams?.selectedUnit;
   const bottomUnitList = showList && showList === 'bottom';
 
+  const [selectedUnitData, setSelectedUnitData] = useState(null);
+
   const styles = createContentStyles(theme, bottomUnitList);
+
+
+  useEffect(() => { // Handle shown embedded unit data
+    if (selectedUnit && units.length) {
+      const unitData = units.find(unit => unit.id.toString() === selectedUnit);
+      setSelectedUnitData(unitData);
+    }
+    if (!selectedUnit && selectedUnitData) {
+      setSelectedUnitData(null);
+    }
+  }, [selectedUnit, units, selectedUnitData]);
+
+  const closeDialog = () => {
+    navigator.removeParameter('selectedUnit');
+  };
+
+  // Dialog to show selected unit basic information
+  const renderEmbeddedUnitInfo = () => (
+    <Dialog
+      setOpen={setSelectedUnitData}
+      onClose={closeDialog}
+      open={!!selectedUnitData}
+      title={getLocaleText(selectedUnitData.name)}
+      content={(<ContactInfo unit={selectedUnitData} headingLevel="h3" />)}
+      actions={(
+        <>
+          <SMButton // Show on map button
+            icon={<Map style={{ paddingRight: 8 }} />}
+            style={{ marginRight: 'auto' }}
+            aria-hidden
+            messageID="general.showOnMap"
+            onClick={() => {
+              navigator.removeParameter('selectedUnit');
+              focusToPosition(map, selectedUnitData.location.coordinates);
+            }}
+            margin
+            role="link"
+          />
+          <SMButton // Open on servicemap button
+            icon={<OpenInNew style={{ paddingRight: 8 }} />}
+            color="primary"
+            role="link"
+            messageID="unit.showInformation"
+            onClick={() => {
+              const { origin } = window.location;
+              const path = navigator.generatePath('unit', { id: selectedUnitData.id });
+              window.open(`${origin}${path}`);
+            }}
+          />
+        </>
+      )}
+    />
+  );
 
   const renderEmbedOverlay = () => {
     const openApp = () => {
@@ -191,6 +257,9 @@ const EmbedLayout = ({ intl }) => {
           </Switch>
         </div>
         <Typography variant="srOnly">{intl.formatMessage({ id: 'map.ariaLabel' })}</Typography>
+
+        {selectedUnitData ? renderEmbeddedUnitInfo() : null}
+
         <div aria-hidden tabIndex="-1" style={styles.map}>
           <MapView />
         </div>

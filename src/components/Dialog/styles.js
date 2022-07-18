@@ -8,6 +8,7 @@ export default theme => ({
   },
   muiRoot: {
     padding: 0,
+    overflow: 'visible',
   },
   root: {
     padding: theme.spacing(3),
