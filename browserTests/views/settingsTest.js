@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { Selector, ClientFunction } from 'testcafe';
 import { waitForReact, ReactSelector } from 'testcafe-react-selectors';
-import config from './config';
+import config from '../config';
 
 const { server } = config;
 
@@ -23,7 +23,7 @@ test('Settings does opens and closes correctly', async (t) => {
   await openSettings(t);
 
   const title = Selector('.TitleText');
-  const closeButton = ReactSelector('Settings').findReact('WithStyles(ForwardRef(ButtonBase))');
+  const closeButton = Selector('#SettingsContainer button').nth(0);
   await t
     .expect(title.focused).ok()
     .expect(title.innerText).eql('Esteettömyysasetukset')
@@ -36,15 +36,14 @@ test('Settings does work like dialog', async (t) => {
   openSettings(t);
 
   const settingsContainer = Selector('#SettingsContainer');
-  const buttons = ReactSelector('Settings').findReact('WithStyles(ForwardRef(ButtonBase))');
+  const buttons = settingsContainer.find('button');
   const buttonCount = await buttons.count;
   const closeButton = buttons.nth(0);
 
   await t
     .expect(settingsContainer.getAttribute('role')).eql('dialog', "Expected container to have role dialog")
-    .click(ReactSelector('Settings').find('span').nth(0))
     .pressKey('tab') // Tab to close button
-    .pressKey('shift+tab') // Shift tab back to 
+    .pressKey('shift+tab') // Shift tab back to
     .expect(buttons.nth(buttonCount - 1).focused).ok('Expected dialog to loop backwards to last element of dialog')
     .pressKey('tab')
     .expect(closeButton.focused).ok('Expected close button to be focused after looping back to start')
@@ -77,12 +76,12 @@ test('Settings radio and checkbox buttons are grouped', async (t) => {
 test('Settings saves correctly', async (t) => {
   openSettings(t);
 
-  const settings = ReactSelector('Settings');
+  const settings = Selector('#SettingsContainer');
   const checkboxGroup = settings.find('[aria-labelledby=SenseSettings]');
   const checkboxes = checkboxGroup.find('input[type=checkbox]');
   const topSaveButton = settings.find('button[aria-label="Tallenna"]').nth(0);
   const bottomSaveButton = settings.find('button[aria-label="Tallenna asetukset"]').nth(0);
-  const ariaLiveElement = settings.find('span[aria-live=polite]').nth(0);
+  const ariaLiveElement = settings.find('p[aria-live="polite"]').nth(0);
   const closeButton = settings.find('button[aria-label="Sulje asetukset"]').nth(1);
 
   await t

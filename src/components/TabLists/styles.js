@@ -16,6 +16,7 @@ export default theme => ({
   },
   selected: {
     fontWeight: '700 !important',
+    color: 'black !important',
   },
   tab: {
     minWidth: 0,
@@ -25,6 +26,11 @@ export default theme => ({
     borderBottom: '6px solid #DEDEDE',
     [theme.breakpoints.only('sm')]: {
       letterSpacing: 'normal',
+    },
+    color: 'black',
+    '&:focus': {
+      boxShadow: 'none',
+      zIndex: 0,
     },
   },
   tabFocus: {

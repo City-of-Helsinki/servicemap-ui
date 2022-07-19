@@ -5,10 +5,11 @@ import {
   Switch, Route, useLocation,
 } from 'react-router-dom';
 import { injectIntl } from 'react-intl';
-import { Tooltip as MUITooltip, ButtonBase, Typography } from '@material-ui/core';
-import { useTheme } from '@material-ui/styles';
+import { Tooltip as MUITooltip, ButtonBase, Typography } from '@mui/material';
+import { useTheme } from '@mui/styles';
 import { useSelector } from 'react-redux';
-import { OpenInNew, Map } from '@material-ui/icons';
+import { OpenInNew, Map } from '@mui/icons-material';
+import { visuallyHidden } from '@mui/utils';
 import MapView from '../views/MapView';
 import PageHandler from './components/PageHandler';
 import AddressView from '../views/AddressView';
@@ -19,16 +20,17 @@ import ServiceView from '../views/ServiceView';
 import DivisionView from '../views/DivisionView';
 import AreaView from '../views/AreaView';
 import { parseSearchParams } from '../utils';
-import HomeLogo from '../components/Logos/HomeLogo';
-import PaginatedList from '../components/Lists/PaginatedList';
 import useMapUnits from '../views/MapView/utils/useMapUnits';
-import Dialog from '../components/Dialog';
-import SMButton from '../components/ServiceMapButton';
+import {
+  HomeLogo, PaginatedList, Dialog, SMButton,
+} from '../components';
 import useLocaleText from '../utils/useLocaleText';
 import ContactInfo from '../views/UnitView/components/ContactInfo';
 import { focusToPosition } from '../views/MapView/utils/mapActions';
 
-const createContentStyles = (theme, bottomList) => {
+const createContentStyles = (theme, unitListPosition) => {
+  const bottomList = unitListPosition === 'bottom';
+  const sideList = unitListPosition === 'side';
   const width = 450;
   return {
     activeRoot: {
@@ -60,12 +62,14 @@ const createContentStyles = (theme, bottomList) => {
       minWidth: width,
     },
     embedLogo: {
-      top: 0,
-      left: 0,
+      top: sideList ? 0 : null,
+      bottom: sideList ? null : 0,
+      left: bottomList ? null : 0,
+      right: bottomList ? 0 : null,
       height: 'auto',
       position: 'fixed',
       zIndex: 1000,
-      margin: theme.spacing(1.5),
+      margin: bottomList ? theme.spacing(2) : theme.spacing(1.5),
     },
     embedSidebarContainer: bottomList
       ? {
@@ -80,7 +84,7 @@ const createContentStyles = (theme, bottomList) => {
     unitList: {
       paddingTop: bottomList ? 0 : 36,
       maxHeight: '100%',
-      overflowY: 'scroll',
+      overflowY: 'auto',
       boxSizing: 'border-box',
       display: 'flex',
       flexDirection: 'column',
@@ -99,11 +103,10 @@ const EmbedLayout = ({ intl }) => {
 
   const showList = searchParams?.show_list;
   const selectedUnit = searchParams?.selectedUnit;
-  const bottomUnitList = showList && showList === 'bottom';
 
   const [selectedUnitData, setSelectedUnitData] = useState(null);
 
-  const styles = createContentStyles(theme, bottomUnitList);
+  const styles = createContentStyles(theme, showList);
 
 
   useEffect(() => { // Handle shown embedded unit data
@@ -256,7 +259,7 @@ const EmbedLayout = ({ intl }) => {
             />
           </Switch>
         </div>
-        <Typography variant="srOnly">{intl.formatMessage({ id: 'map.ariaLabel' })}</Typography>
+        <Typography style={visuallyHidden}>{intl.formatMessage({ id: 'map.ariaLabel' })}</Typography>
 
         {selectedUnitData ? renderEmbeddedUnitInfo() : null}
 

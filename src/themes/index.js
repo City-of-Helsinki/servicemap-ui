@@ -1,4 +1,4 @@
-import { createTheme } from '@material-ui/core/styles';
+import { createTheme } from '@mui/material/styles';
 
 const focusIndicator = {
   outline: '2px solid transparent',
@@ -26,44 +26,90 @@ const props = {
   },
 };
 
-const overrides = theme => ({
+const components = theme => ({
   MuiListItem: {
-    button: {
-      '&:hover': {
-        backgroundColor: '#DEDEDE',
+    styleOverrides: {
+      button: {
+        '&:hover': {
+          backgroundColor: '#DEDEDE',
+        },
       },
     },
   },
   MuiButtonBase: {
-    root: {
-      // Default keyboard focus indicator for buttons
-      '&$focusVisible': theme === 'dark' ? focusIndicatorDark : focusIndicator,
+    defaultProps: {
+      disableRipple: true,
+    },
+    styleOverrides: {
+      root: {
+        // Default keyboard focus indicator for buttons
+        '&:focus': theme === 'dark' ? focusIndicatorDark : focusIndicator,
+        '&.Mui-focusVisible': theme === 'dark' ? focusIndicatorDark : focusIndicator,
+      },
     },
   },
   MuiButton: {
-    root: {
-      transition: 'none',
+    defaultProps: {
+      disableFocusRipple: true,
+      disableRipple: true,
+    },
+    styleOverrides: {
+      root: {
+        transition: 'none',
+      },
     },
   },
   MuiInputBase: {
-    // Default keyboard focus indicator for input fields
-    root: { '&$focused': theme === 'dark' ? focusIndicatorDark : focusIndicator },
+    styleOverrides: {
+      // Default keyboard focus indicator for input fields
+      root: {
+        '&:focused': theme === 'dark' ? focusIndicatorDark : focusIndicator,
+        '&.Mui-focused': theme === 'dark' ? focusIndicatorDark : focusIndicator,
+      },
+    },
+  },
+  MuiRadio: {
+    styleOverrides: {
+      root: {
+        '&.Mui-focusVisible': theme === 'dark' ? focusIndicatorDark : focusIndicator,
+        marginRight: 8,
+      },
+    },
+  },
+  MuiCheckbox: {
+    styleOverrides: {
+      root: {
+        '&.Mui-focusVisible': theme === 'dark' ? focusIndicatorDark : focusIndicator,
+        marginRight: 8,
+      },
+    },
   },
   MuiListItemText: {
-    root: {
-      marginTop: 0,
-      marginBottom: 0,
+    styleOverrides: {
+      root: {
+        marginTop: 0,
+        marginBottom: 0,
+      },
     },
   },
   MuiSvgIcon: {
-    root: {
-      fontSize: 24,
+    styleOverrides: {
+      root: {
+        fontSize: 24,
+      },
+    },
+  },
+  MuiTypography: {
+    defaultProps: {
+      variant: 'body2',
     },
   },
   PrivateSwitchBase: {
-    root: {
-      padding: 12,
-      marginRight: 8,
+    styleOverrides: {
+      root: {
+        padding: 12,
+        marginRight: 8,
+      },
     },
   },
 });
@@ -206,6 +252,9 @@ export const paletteDefault = {
     background: 'rgb(25, 100, 230)',
     border: '#fff',
   },
+  link: {
+    main: '#3333FF',
+  },
 };
 
 // Color palette for dark theme
@@ -248,12 +297,15 @@ export const paletteDark = {
     background: '#A6A6A6',
     border: '#fff',
   },
+  link: {
+    main: '#3333FF',
+  },
 };
 
 // Themes
 const SMTheme = createTheme({
   props,
-  overrides: overrides('default'),
+  components: components('default'),
   breakpoints,
   typography,
   spacing,
@@ -265,7 +317,7 @@ const SMTheme = createTheme({
 
 const SMThemeDark = createTheme({
   props,
-  overrides: overrides('dark'),
+  components: components('dark'),
   breakpoints,
   typography,
   spacing,

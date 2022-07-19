@@ -1,29 +1,34 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Typography } from '@material-ui/core';
+import { Button, Typography } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import {
   Map, Mail, Hearing, Share,
-} from '@material-ui/icons';
+} from '@mui/icons-material';
+import { visuallyHidden } from '@mui/utils';
 import { Helmet } from 'react-helmet';
 import { useDispatch, useSelector } from 'react-redux';
-import { SearchBar, AcceptSettingsDialog, LinkSettingsDialog } from '../../components';
-import TitleBar from '../../components/TitleBar';
-import Container from '../../components/Container';
+import {
+  AcceptSettingsDialog,
+  AddressIcon,
+  Container,
+  LinkSettingsDialog,
+  ReadSpeakerButton,
+  SearchBar,
+  SimpleListItem,
+  SMButton,
+  TabLists,
+  TitleBar,
+  TitledList,
+} from '../../components';
 import AccessibilityInfo from './components/AccessibilityInfo';
 import ContactInfo from './components/ContactInfo';
 import Highlights from './components/Highlights';
 import ElectronicServices from './components/ElectronicServices';
 import Description from './components/Description';
-import SMButton from '../../components/ServiceMapButton';
-import TabLists from '../../components/TabLists';
-import { AddressIcon } from '../../components/SMIcon';
 import SocialMediaLinks from './components/SocialMediaLinks';
 import UnitLinks from './components/UnitLinks';
-import SimpleListItem from '../../components/ListItems/SimpleListItem';
-import TitledList from '../../components/Lists/TitledList';
-import ReadSpeakerButton from '../../components/ReadSpeakerButton';
 import config from '../../../config';
 import useMobileStatus from '../../utils/isMobile';
 import UnitHelper from '../../utils/unitHelper';
@@ -205,7 +210,7 @@ const UnitView = (props) => {
   const renderTitleForRS = () => {
     const title = unit && unit.name ? getLocaleText(unit.name) : '';
     return (
-      <Typography variant="srOnly" aria-hidden>{title}</Typography>
+      <Typography style={visuallyHidden} aria-hidden>{title}</Typography>
     );
   };
 

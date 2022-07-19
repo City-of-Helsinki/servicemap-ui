@@ -4,28 +4,31 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   Typography, Divider, List, ButtonBase,
-} from '@material-ui/core';
+} from '@mui/material';
 import { FormattedMessage } from 'react-intl';
-import { Map } from '@material-ui/icons';
+import { Map } from '@mui/icons-material';
 import Helmet from 'react-helmet';
 import { focusToPosition, useMapFocusDisabled } from '../MapView/utils/mapActions';
 import fetchAdministrativeDistricts from './utils/fetchAdministrativeDistricts';
-import TitleBar from '../../components/TitleBar';
-import { AddressIcon } from '../../components/SMIcon';
 
 import fetchAddressUnits from './utils/fetchAddressUnits';
 import fetchAddressData from './utils/fetchAddressData';
-import SMButton from '../../components/ServiceMapButton';
-import TabLists from '../../components/TabLists';
 import { getAddressText, addressMatchParamsToFetchOptions, useNavigationParams } from '../../utils/address';
-import DesktopComponent from '../../components/DesktopComponent';
-import MobileComponent from '../../components/MobileComponent';
-import DivisionItem from '../../components/ListItems/DivisionItem';
 import config from '../../../config';
 import useLocaleText from '../../utils/useLocaleText';
 import { parseSearchParams } from '../../utils';
 import { getCategoryDistricts } from '../AreaView/utils/districtDataHelper';
-import { DistrictItem, SearchBar } from '../../components';
+import {
+  AddressIcon,
+  DesktopComponent,
+  DivisionItem,
+  DistrictItem,
+  MobileComponent,
+  SearchBar,
+  SMButton,
+  TabLists,
+  TitleBar,
+} from '../../components';
 
 
 const hiddenDivisions = {

@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ArrowForwardIos } from '@material-ui/icons';
+import { ArrowForwardIos } from '@mui/icons-material';
 import Container from '../Container';
 import PageElement from './PageElement';
 import SMButton from '../ServiceMapButton';

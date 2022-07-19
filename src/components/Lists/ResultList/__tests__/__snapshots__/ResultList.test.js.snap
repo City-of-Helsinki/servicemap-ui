@@ -4,106 +4,156 @@ exports[`<ResultList /> should work 1`] = `
 <div>
   <div>
     <div>
-      <WithStyles(ForwardRef(Typography))
-        aria-labelledby="testID-result-title testID-result-title-info"
-        className="undefined undefined SearchResultTitle"
-        component="h3"
-        id="testID-result-title"
-        tabIndex="-1"
-        variant="subtitle1"
-      >
-        Title text
-      </WithStyles(ForwardRef(Typography))>
-      <WithStyles(ForwardRef(Typography))
-        aria-hidden="true"
-        component="p"
-        id="testID-result-title-info"
-        variant="caption"
-      >
-        <MemoizedFormattedMessage
-          id="search.resultList"
-          values={
-            Object {
-              "count": 5,
-            }
-          }
-        />
-      </WithStyles(ForwardRef(Typography))>
+      <div>
+        <h3
+          aria-labelledby="testID-result-title testID-result-title-info"
+          class="MuiTypography-root MuiTypography-subtitle1 undefined undefined SearchResultTitle css-dlbwt1-MuiTypography-root"
+          id="testID-result-title"
+          tabindex="-1"
+        >
+          Title text
+        </h3>
+        <p
+          aria-hidden="true"
+          class="MuiTypography-root MuiTypography-caption css-r3hlsg-MuiTypography-root"
+          id="testID-result-title-info"
+        >
+          Search result text
+        </p>
+      </div>
     </div>
+    <hr
+      aria-hidden="true"
+      class="MuiDivider-root MuiDivider-fullWidth css-9mgopn-MuiDivider-root"
+    />
+    <p>
+      Test before list
+    </p>
+    <ul
+      class="MuiList-root MuiList-padding css-h4y409-MuiList-root"
+      id="testID"
+    >
+      <li
+        class="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button ResultItem-listItem-3 css-1cs8ifn-MuiButtonBase-root-MuiListItem-root"
+        role="link"
+        tabindex="0"
+      >
+        <div
+          class="MuiListItemIcon-root ResultItem-listItemIcon-4 css-cveggr-MuiListItemIcon-root"
+        >
+          <img
+            alt=""
+            aria-hidden="true"
+            class="Connect(UnitIcon)-icon-21 "
+            src="data:image/png;base64,00"
+          />
+        </div>
+        <div
+          class="ResultItem-itemTextContainer-10  "
+        >
+          <div
+            class="ResultItem-topRow-12"
+          >
+            <p
+              class="MuiTypography-root MuiTypography-body2 ResultItem-title-8 ResultItem-srOnly css-1ak20dk-MuiTypography-root"
+              style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
+            >
+              
+    Lippulaivan kirjasto 
+    Kunnallinen palvelu 
+     
+     
+    
+  
+            </p>
+            <p
+              aria-hidden="true"
+              class="MuiTypography-root MuiTypography-body2 ResultItem-title-8  Connect(UnitItem)-title-1  ResultItem-title css-1ak20dk-MuiTypography-root"
+              role="textbox"
+            >
+              Lippulaivan kirjasto
+            </p>
+          </div>
+          <div>
+            <div>
+              <p
+                aria-hidden="true"
+                class="MuiTypography-root MuiTypography-caption ResultItem-noMargin-9 ResultItem-text-17  ResultItem-subtitle css-r3hlsg-MuiTypography-root"
+              >
+                Kunnallinen palvelu
+              </p>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li
+        aria-hidden="true"
+      >
+        <hr
+          class="MuiDivider-root MuiDivider-inset ResultItem-divider-18 css-uls1yk-MuiDivider-root"
+        />
+      </li>
+      <li
+        class="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button ResultItem-listItem-3 css-1cs8ifn-MuiButtonBase-root-MuiListItem-root"
+        role="link"
+        tabindex="0"
+      >
+        <div
+          class="MuiListItemIcon-root ResultItem-listItemIcon-4 css-cveggr-MuiListItemIcon-root"
+        >
+          <img
+            alt=""
+            aria-hidden="true"
+            class="Connect(UnitIcon)-icon-21 "
+            src="data:image/png;base64,00"
+          />
+        </div>
+        <div
+          class="ResultItem-itemTextContainer-10  "
+        >
+          <div
+            class="ResultItem-topRow-12"
+          >
+            <p
+              class="MuiTypography-root MuiTypography-body2 ResultItem-title-8 ResultItem-srOnly css-1ak20dk-MuiTypography-root"
+              style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
+            >
+              
+    Kivistön kirjasto 
+    Kunnallinen palvelu 
+     
+     
+    
+  
+            </p>
+            <p
+              aria-hidden="true"
+              class="MuiTypography-root MuiTypography-body2 ResultItem-title-8  Connect(UnitItem)-title-1  ResultItem-title css-1ak20dk-MuiTypography-root"
+              role="textbox"
+            >
+              Kivistön kirjasto
+            </p>
+          </div>
+          <div>
+            <div>
+              <p
+                aria-hidden="true"
+                class="MuiTypography-root MuiTypography-caption ResultItem-noMargin-9 ResultItem-text-17  ResultItem-subtitle css-r3hlsg-MuiTypography-root"
+              >
+                Kunnallinen palvelu
+              </p>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li
+        aria-hidden="true"
+      >
+        <hr
+          class="MuiDivider-root MuiDivider-inset ResultItem-divider-18 css-uls1yk-MuiDivider-root"
+        />
+      </li>
+    </ul>
   </div>
-  <WithStyles(ForwardRef(Divider))
-    aria-hidden="true"
-  />
-  <p>
-    Test before list
-  </p>
-  <WithStyles(ForwardRef(List))
-    id="testID"
-  >
-    <injectIntl(WithStyles(Connect(UnitItem)))
-      className="unit-63115"
-      key="unit-63115"
-      simpleItem={false}
-      unit={
-        Object {
-          "accessibility_properties": Array [],
-          "accessibility_shortcoming_count": Object {},
-          "contract_type": Object {
-            "description": Object {
-              "en": "municipal service",
-              "fi": "kunnallinen palvelu",
-              "sv": "kommunal tjänst",
-            },
-            "id": "municipal_service",
-          },
-          "id": 63115,
-          "municipality": "espoo",
-          "name": Object {
-            "en": "Lippulaiva library",
-            "fi": "Lippulaivan kirjasto",
-            "sv": "Lippulaivabiblioteket",
-          },
-          "object_type": "unit",
-          "street_address": Object {
-            "en": "Merikarhunkuja 11",
-            "fi": "Merikarhunkuja 11",
-            "sv": "Sjöbjörnsgränden 11",
-          },
-        }
-      }
-    />
-    <injectIntl(WithStyles(Connect(UnitItem)))
-      className="unit-62032"
-      key="unit-62032"
-      simpleItem={false}
-      unit={
-        Object {
-          "accessibility_properties": Array [],
-          "accessibility_shortcoming_count": Object {},
-          "contract_type": Object {
-            "description": Object {
-              "en": "municipal service",
-              "fi": "kunnallinen palvelu",
-              "sv": "kommunal tjänst",
-            },
-            "id": "municipal_service",
-          },
-          "id": 62032,
-          "municipality": "vantaa",
-          "name": Object {
-            "en": "Kivistö Library",
-            "fi": "Kivistön kirjasto",
-            "sv": "Kivistö bibliotek",
-          },
-          "object_type": "unit",
-          "street_address": Object {
-            "en": "Topaasikuja 11",
-            "fi": "Topaasikuja 11",
-            "sv": "Topasgränden 11",
-          },
-        }
-      }
-    />
-  </WithStyles(ForwardRef(List))>
 </div>
 `;

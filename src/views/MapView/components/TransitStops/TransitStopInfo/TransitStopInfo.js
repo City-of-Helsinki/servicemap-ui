@@ -1,13 +1,13 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import Accessible from '@material-ui/icons/Accessible';
+import Accessible from '@mui/icons-material/Accessible';
 import { FormattedMessage } from 'react-intl';
-import { Typography, ButtonBase } from '@material-ui/core';
-import { Close } from '@material-ui/icons';
+import { Typography, ButtonBase } from '@mui/material';
+import { Close } from '@mui/icons-material';
 import { fetchStopData } from '../../../utils/transitFetch';
-import { getIcon } from '../../../../../components/SMIcon';
 import useLocaleText from '../../../../../utils/useLocaleText';
+import { getIcon } from '../../../../../components';
 
 const TransitStopInfo = ({
   stop, onCloseClick, type, classes,

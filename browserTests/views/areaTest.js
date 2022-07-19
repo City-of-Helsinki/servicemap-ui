@@ -2,7 +2,7 @@
 import { waitForReact, ReactSelector } from 'testcafe-react-selectors';
 import { ClientFunction, Selector } from 'testcafe';
 
-import config from './config';
+import config from '../config';
 const { server } = config;
 
 fixture`Area view test`
@@ -27,7 +27,7 @@ test('District lists are fetched and rendered correctly', async (t) => {
     const districtList = Selector('.districtList')
 
     await t
-      .expect(districtList).ok('District list not rendered correctly')
+      .expect(districtList.exists).ok('District list not rendered correctly')
       .expect(districtList.childElementCount).gt(0, `Category ${i} did not receive children`)
       .click(drawerButtons.nth(i))
   }
@@ -67,16 +67,29 @@ test('Unit list functions correctly' , async (t) => {
 
 test('Address search bar field updates and gets results', async (t, inputText = 'mann') => {
   const addressBar = Selector('#addressSearchbar')
-  const suggestions = ReactSelector('AddressSearchBar WithStyles(ForwardRef(ListItem))');
+  const suggestions = Selector('#address-results div[role="option"]');
 
   await t
     .typeText(addressBar, inputText)
     .expect(suggestions.count).gt(0)
 
   const suggestion = suggestions.nth(0);
+  const suggestionText = await suggestion.textContent;
 
   await t
     .pressKey('down')
     .pressKey('enter')
-    .expect(addressBar.value).eql(await suggestion.textContent, 'Address search bar did not update text when suggesttion was selected');
+    .expect(addressBar.value).eql(suggestionText, 'Address search bar did not update text when suggesttion was selected');
 });
+
+test('Embeder tool does not crash area view', async (t) => {
+  const toolMenuButton = Selector('#ToolMenuButton')
+  const toolMenu = Selector('#ToolMenuPanel')
+  const closeEmbedderButton = Selector('button[class*="closeButton"]')
+  await t
+    .click(toolMenuButton)
+    .click(toolMenu.child(0))
+    .click(closeEmbedderButton)
+    .expect(toolMenuButton.exists).ok('Area view was not rendered correctly')
+});
+

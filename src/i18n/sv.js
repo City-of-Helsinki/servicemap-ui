@@ -192,6 +192,8 @@ const translations = {
   'embedder.map.title': 'Bakgrundskarta',
   'embedder.map.aria.label': 'Välj bakgrundskarta',
   'embedder.options.title': 'Visa på kartan',
+  'embedder.options.list.title': 'Toimipistelista', // TODO: translate
+  'embedder.options.label.list.none': 'Piilota toimipistelista', // TODO: translate
   'embedder.options.label.list.side': 'Näytä toimipisteet listana (kartan vieressä)', // TODO: translate
   'embedder.options.label.list.bottom': 'Näytä toimipisteet listana (kartan alla)', // TODO: translate
   'embedder.options.label.units': 'Visa verksamhetsställen',
@@ -204,8 +206,11 @@ const translations = {
   'embedder.service.common': 'På kartan visas de vanligaste verksamhetsställena i stadsbons vardag: skolor, daghem och hälsostationer.',
   'embedder.service.all': 'Alla verksamhetsställen visas på kartan. För omfattande områdesgränser gör inbäddningen långsammare och otydligare.',
   'embedder.title': 'Inbäddningsverktyg',
-  'embedder.title.info': 'Om du vill göra en inbäddning enligt sökresultat, börja med att göra sökningen.',
-  'embedder.url.title': 'Kopiera adressen',
+  'embedder.title.info': 'Palvelukartan upotustyökalulla voit upottaa Palvelukartan yksittäisiä näkymiä osaksi mitä tahansa verkkosivua.', // TODO: translate
+  'embedder.info.title': 'Ohjeet upotustyökalun käyttöön', // TODO: translate
+  'embedder.info.description': 'Valitse alla olevasta valikoimasta karttanäkymään haluamasi toiminnallisuudet. Kopioi kartanalta URL-linkki tai html-koodi käyttöösi.\n\n Tarkemmat ohjeet upotustyökalun käyttöön eri tilanteissa löydät', // TODO: translate
+  'embedder.info.link': 'täältä (uusi välilehti)', // TODO: translate
+  'embedder.url.title': 'Kopiera URL',
   'embedder.width.title': 'Inbäddningens bredd',
   'embedder.width.aria.label': 'Välj inbäddningens bredd',
   'embedder.width.auto.label': 'Automatisk bredd. Inbäddningen fyller bredden av elementet som den har placerats i. I den här förhandsgranskningen har inbäddningen placeats i ett element med standardbredd markerat med en streckad linje.',
@@ -272,6 +277,7 @@ const translations = {
   'general.closeSettings': 'Stäng inställningarna',
   'general.fetching': 'Laddar data...',
   'general.home': 'Hem',
+  'general.home.logo.ariaLabel': 'Servicekarta - Gå till startsidan',
   'general.noData': 'Data finns inte',
   'general.news.alert.title': 'Meddelandefönster',
   'general.news.alert.close.aria': 'Stäng meddelandefönstret',
@@ -449,10 +455,11 @@ const translations = {
     other {# tjänster}
   }`,
   'unit.educationServices': 'Verksamhetsställets tjänster per läsår',
-  'unit.educationServices.description': 'Läsåret {semester}',
+  'unit.educationServices.description': 'Läsåret {period}',
   'unit.educationServices.more': 'Visa fler tjänster ({count})',
   'unit.route': 'Se vägen till det här stället',
-  'unit.route.extra': '(Ny flik. HRT-reseplaneraren är inte en tillgänglig tjänst)',
+  'unit.route.extra.hslRouteGuide': '(Ny flik. HRT-reseplaneraren är inte en tillgänglig tjänst)',
+  'unit.route.extra.routeGuide': '(Ny flik. Matka.fi-reseplaneraren är inte en tillgänglig tjänst)',
   'unit.socialMedia.title': 'Verksamhetsstället på sociala medier',
   'unit.outdoorLink': 'Kolla skicket på en motionsplats i tjänsten ulkoliikunta.fi',
   'unit.seo.description': 'Se läget på kartan',
@@ -608,7 +615,7 @@ const translations = {
 
   // Tools
   'tool.download': 'Exportera',
-  'tool.measuring': 'Mät avstånd (endast med mus)',
+  'tool.measuring': 'Mät avstånd (granskas endast visuellt och med mus)',
   'tool.measuring.stop': 'Sluta mäta',
   'tool.print': 'Skriv ut',
 

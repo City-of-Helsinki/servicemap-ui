@@ -1,25 +1,29 @@
+/* eslint-disable camelcase */
 import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory, useLocation } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { Typography } from '@material-ui/core';
-import { Map } from '@material-ui/icons';
+import { Typography } from '@mui/material';
+import { Map } from '@mui/icons-material';
+import { visuallyHidden } from '@mui/utils';
 import { focusDistrict, focusDistricts, useMapFocusDisabled } from '../MapView/utils/mapActions';
-import TabLists from '../../components/TabLists';
 import GeographicalTab from './components/GeographicalTab';
 import { parseSearchParams, uppercaseFirst } from '../../utils';
 import ServiceTab from './components/ServiceTab';
 import { districtFetch } from '../../utils/fetch';
 import fetchAddress from '../MapView/utils/fetchAddress';
-import TitleBar from '../../components/TitleBar';
-import AddressSearchBar from '../../components/AddressSearchBar';
 import { dataStructure, geographicalDistricts } from './utils/districtDataHelper';
 import { fetchParkingAreaGeometry, fetchParkingUnits, handleOpenItems } from '../../redux/actions/district';
-import SMButton from '../../components/ServiceMapButton';
-import MobileComponent from '../../components/MobileComponent';
 import useLocaleText from '../../utils/useLocaleText';
-import SettingsInfo from '../../components/SettingsInfo';
+import {
+  AddressSearchBar,
+  MobileComponent,
+  TabLists,
+  TitleBar,
+  SettingsInfo,
+  SMButton,
+} from '../../components';
 
 
 const AreaView = ({
@@ -58,7 +62,7 @@ const AreaView = ({
   const searchParams = parseSearchParams(location.search);
   const selectedArea = searchParams.selected;
   // Get area parameter without year data
-  const selectedAreaType = selectedArea?.split(/([0-9]+)/)[0];
+  const selectedAreaType = selectedArea?.split(/([\d]+)/)[0];
   const mapFocusDisabled = useMapFocusDisabled();
 
   const getInitialOpenItems = () => {
@@ -77,12 +81,17 @@ const AreaView = ({
   // Pending request to focus map to districts. Executed once district data is loaded
   const [focusTo, setFocusTo] = useState(null);
 
-  const formAddressString = useCallback(
-    address => (address
-      ? `${getLocaleText(address.street.name)} ${address.number}${address.number_end ? address.number_end : ''}${address.letter ? address.letter : ''}, ${uppercaseFirst(address.street.municipality)}`
-      : ''),
-    [],
-  );
+  const formAddressString = useCallback((address) => {
+    if (!address) return '';
+    const {
+      street,
+      number,
+      number_end,
+      letter,
+    } = address;
+    return `${getLocaleText(street.name)} ${number}${number_end || ''}${letter || ''}, ${uppercaseFirst(street.municipality)}`;
+  }, [getLocaleText]);
+
 
   const focusMapToDistrict = (district) => {
     if (!mapFocusDisabled && map && district?.boundary) {
@@ -260,11 +269,11 @@ const AreaView = ({
     } else if (mapState) { // Returning to page, without url parameters
       // Returns map to the previous spot
       const { center, zoom } = mapState;
-      if (!map && center && zoom) map.setView(center, zoom);
+      if (map && center && zoom) map.setView(center, zoom);
     }
   }, []);
 
-  if (!map || !map) {
+  if (!map) {
     return null;
   }
 
@@ -342,7 +351,7 @@ const AreaView = ({
             )}
           </MobileComponent>
           <div className={classes.loadingText}>
-            <Typography variant="srOnly" aria-live="assertive">
+            <Typography style={visuallyHidden} aria-live="assertive">
               {districtsFetching.length
                 ? <FormattedMessage id="general.loading" />
                 : <FormattedMessage id="general.loading.done" />

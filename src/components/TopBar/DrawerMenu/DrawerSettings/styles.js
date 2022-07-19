@@ -17,7 +17,7 @@ export default theme => ({
     justifyContent: 'left',
   },
   textContainer: {
-    padding: `${theme.spacing(1)}px 0`,
+    padding: `${theme.spacing(1)} 0`,
   },
   link: {
     textDecoration: 'underline',

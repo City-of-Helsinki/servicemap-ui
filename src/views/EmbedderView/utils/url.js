@@ -1,7 +1,6 @@
 /* eslint-disable no-param-reassign */
+import URI from 'urijs';
 import embedderConfig from '../embedderConfig';
-
-const URI = require('urijs');
 
 const joinQueries = (query) => {
   const data = query;

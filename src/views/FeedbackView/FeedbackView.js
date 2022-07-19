@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Warning } from '@material-ui/icons';
+import { Warning } from '@mui/icons-material';
 import {
   Typography, InputBase, Checkbox, FormControl, Dialog, ButtonBase, DialogTitle, DialogContent,
-} from '@material-ui/core';
+} from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import { FormattedMessage } from 'react-intl';
 import { Prompt } from 'react-router-dom';
-import TitleBar from '../../components/TitleBar';
-import SMButton from '../../components/ServiceMapButton';
 import config from '../../../config';
-import DesktopComponent from '../../components/DesktopComponent';
 import { focusToViewTitle } from '../../utils/accessibility';
 import useLocaleText from '../../utils/useLocaleText';
+import {
+  DesktopComponent,
+  SMButton,
+  TitleBar,
+} from '../../components';
 
 const FeedbackView = ({
   classes, navigator, intl, location, selectedUnit,
@@ -230,7 +233,7 @@ const FeedbackView = ({
               </div>
             )}
             {fbFieldVisited && !feedbackLength && (
-              <Typography id="srError" role="alert" variant="srOnly">
+              <Typography id="srError" role="alert" style={visuallyHidden}>
                 <FormattedMessage id="feedback.srError.required" />
               </Typography>
             )}

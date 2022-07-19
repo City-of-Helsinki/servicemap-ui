@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useEffect, useState, useRef } from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@mui/styles';
 import { useIntl } from 'react-intl';
 import {
   TableContainer,
@@ -11,14 +11,15 @@ import {
   TableCell,
   TableBody,
   Typography,
-} from '@material-ui/core';
+} from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { NumberCircleMaker } from '../MapView/utils/drawIcon';
 import CreateMap from '../MapView/utils/createMap';
-import SMButton from '../../components/ServiceMapButton';
 import paths from '../../../config/paths';
 import useLocaleText from '../../utils/useLocaleText';
+import { SMButton } from '../../components';
 
 const StyledTableRow = withStyles(theme => ({
   root: {
@@ -30,7 +31,7 @@ const StyledTableRow = withStyles(theme => ({
 
 const StyledTableCell = withStyles(theme => ({
   root: {
-    padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
+    padding: `${theme.spacing(1)} ${theme.spacing(2)}`,
   },
 }))(TableCell);
 
@@ -260,7 +261,7 @@ const PrintView = ({
   return (
     <div ref={dialogRef} role="dialog" className={classes.wrapper}>
       {/* Empty element that makes keyboard focus loop in dialog */}
-      <Typography variant="srOnly" aria-hidden tabIndex="0" onFocus={focusToLastElement} />
+      <Typography style={visuallyHidden} aria-hidden tabIndex="0" onFocus={focusToLastElement} />
       <div className={classes.container}>
         <div className={classes.buttonContainer}>
           <SMButton
@@ -365,7 +366,7 @@ const PrintView = ({
         </div>
       </div>
       {/* Empty element that makes keyboard focus loop in dialog */}
-      <Typography variant="srOnly" aria-hidden tabIndex="0" onFocus={focusToFirstElement} />
+      <Typography style={visuallyHidden} aria-hidden tabIndex="0" onFocus={focusToFirstElement} />
     </div>
   );
 };

@@ -1,43 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<FocusableSRLinks /> should work 1`] = `
-<WithStyles(FocusableSRLinks)
-  items={
-    Array [
-      Object {
-        "href": "#test-href",
-        "text": "Title text",
-      },
-    ]
-  }
->
-  <FocusableSRLinks
-    classes={
-      Object {
-        "srFocused": "FocusableSRLinks-srFocused-2",
-        "srFocusedContainer": "FocusableSRLinks-srFocusedContainer-1",
-      }
-    }
-    items={
-      Array [
-        Object {
-          "href": "#test-href",
-          "text": "Title text",
-        },
-      ]
-    }
+<div>
+  <div
+    class="FocusableSRLinks-srFocusedContainer-1"
   >
-    <div
-      className="FocusableSRLinks-srFocusedContainer-1"
+    <a
+      class="FocusableSRLinks-srFocused-2"
+      href="#test-href"
     >
-      <a
-        className="FocusableSRLinks-srFocused-2"
-        href="#test-href"
-        key="#test-href"
-      >
-        Title text
-      </a>
-    </div>
-  </FocusableSRLinks>
-</WithStyles(FocusableSRLinks)>
+      Title text
+    </a>
+  </div>
+</div>
 `;

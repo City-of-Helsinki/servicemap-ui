@@ -5,8 +5,8 @@ import {
   ArrowLeft,
   ArrowRight,
   Remove,
-} from '@material-ui/icons';
-import { ButtonBase } from '@material-ui/core';
+} from '@mui/icons-material';
+import { ButtonBase } from '@mui/material';
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useMap } from 'react-leaflet';

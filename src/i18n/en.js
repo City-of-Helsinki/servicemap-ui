@@ -193,6 +193,8 @@ const translations = {
   'embedder.preview.title': 'Map preview',
   'embedder.options.title': 'Show on the map',
   'embedder.options.label.units': 'Show service points',
+  'embedder.options.list.title': 'Toimipistelista', // TODO: translate
+  'embedder.options.label.list.none': 'Piilota toimipistelista', // TODO: translate
   'embedder.options.label.list.side': 'Näytä toimipisteet listana (kartan vieressä)', // TODO: translate
   'embedder.options.label.list.bottom': 'Näytä toimipisteet listana (kartan alla)', // TODO: translate
   'embedder.options.label.transit': 'Show public transport stops (Zoom in the map to see the stops)',
@@ -203,8 +205,11 @@ const translations = {
   'embedder.service.common': 'The city resident\'s most common everyday service points are shown on the map: schools, daycares and health stations.',
   'embedder.service.all': 'All service points are shown on the map. Too extensive area borders slow down the embedding and decreases its clarity.',
   'embedder.title': 'Embedding tool',
-  'embedder.title.info': 'If you want to make an embedding from a search result, start by making the search.',
-  'embedder.url.title': 'Copy the address',
+  'embedder.title.info': 'Palvelukartan upotustyökalulla voit upottaa Palvelukartan yksittäisiä näkymiä osaksi mitä tahansa verkkosivua.', // TODO: translate
+  'embedder.info.title': 'Ohjeet upotustyökalun käyttöön', // TODO: translate
+  'embedder.info.description': 'Valitse alla olevasta valikoimasta karttanäkymään haluamasi toiminnallisuudet. Kopioi kartanalta URL-linkki tai html-koodi käyttöösi.\n\n Tarkemmat ohjeet upotustyökalun käyttöön eri tilanteissa löydät', // TODO: translate
+  'embedder.info.link': 'täältä (uusi välilehti)', // TODO: translate
+  'embedder.url.title': 'Copy URL',
   'embedder.width.title': 'Width of the embedding',
   'embedder.width.aria.label': 'Choose width of the embedding',
   'embedder.width.auto.label': 'Automatic width. The embedding fills the width of the element in which it has been placed. In this preview, the embedding has been placed in a standard-width element, which has been outlined with a broken line. ',
@@ -271,6 +276,7 @@ const translations = {
   'general.closeSettings': 'Close settings',
   'general.fetching': 'Loading data...',
   'general.home': 'Home',
+  'general.home.logo.ariaLabel': 'Servicemap - Go to home page',
   'general.noData': 'No data available',
   'general.news.alert.title': 'Notification window',
   'general.news.alert.close.aria': 'Close notification window',
@@ -448,10 +454,11 @@ const translations = {
     other {# services}
   }`,
   'unit.educationServices': 'The unit’s services per school year',
-  'unit.educationServices.description': 'School year {semester}',
+  'unit.educationServices.description': 'School year {period}',
   'unit.educationServices.more': 'Show more services ({count})',
   'unit.route': 'Look at the route to this place',
-  'unit.route.extra': '(New tab. The HSL Journey Planner is not an accessible service)',
+  'unit.route.extra.hslRouteGuide': '(New tab. The HSL Journey Planner is not an accessible service)',
+  'unit.route.extra.routeGuide': '(New tab. The Matka.fi Journey Planner is not an accessible service)',
   'unit.socialMedia.title': 'The service point on social media',
   'unit.outdoorLink': 'Check the condition of an exercise location in the ulkoliikunta.fi service',
   'unit.seo.description': 'View service point on the map',
@@ -607,7 +614,7 @@ const translations = {
 
   // Tools
   'tool.download': 'Download data',
-  'tool.measuring': 'Measure distance (mouse only)',
+  'tool.measuring': 'Measure distance (accessible only visually and with a mouse)',
   'tool.measuring.stop': 'Stop measuring',
   'tool.print': 'Print',
 

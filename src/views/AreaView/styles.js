@@ -15,12 +15,6 @@ const styles = theme => ({
     textAlign: 'start',
     display: 'flex',
   },
-  deleteLink: {
-    fontSize: 14,
-    color: '#3344dd',
-    textDecoration: 'underline',
-    marginLeft: theme.spacing(1),
-  },
   list: {
     paddingLeft: 10,
   },

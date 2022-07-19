@@ -74,7 +74,15 @@ if (typeof settings.GUIDE_MAP_URL === 'undefined') {
 }
 
 if (typeof settings.REITTIOPAS_URL === 'undefined') {
-  settings.REITTIOPAS_URL = 'https://reittiopas.hsl.fi/reitti/';
+  settings.REITTIOPAS_URL = 'https://opas.matka.fi/reitti/';
+}
+
+if (typeof settings.HSL_ROUTE_GUIDE_URL === 'undefined') {
+  settings.HSL_ROUTE_GUIDE_URL = 'https://reittiopas.hsl.fi/reitti/';
+}
+
+if (typeof settings.HSL_ROUTE_GUIDE_CITIES === 'undefined') {
+  settings.HSL_ROUTE_GUIDE_CITIES = 'helsinki,espoo,vantaa,kauniainen,kerava';
 }
 
 if (typeof settings.SHOW_AREA_SELECTION === 'undefined') {
@@ -116,6 +124,11 @@ if (settings.MATOMO_SENSES_DIMENSION_ID === 'undefined') {
 if (settings.MATOMO_NO_RESULTS_DIMENSION_ID === 'undefined') {
   settings.MATOMO_NO_RESULTS_DIMENSION_ID = undefined;
 }
+
+if (typeof settings.EMBEDDER_DOCUMENTATION_URL === 'undefined') {
+  settings.EMBEDDER_DOCUMENTATION_URL = 'https://kaupunkialustana.hel.fi/palvelukartta/palvelukartan-upotusohjeet/';
+}
+
 
 let municipalities;
 try {
@@ -200,9 +213,12 @@ export default {
   "ortographicWMSLAYER": settings.ORTOGRAPHIC_WMS_LAYER,
   "guideMapURL": settings.GUIDE_MAP_URL,
   "reittiopasURL": settings.REITTIOPAS_URL,
+  "hslRouteGuideURL": settings.HSL_ROUTE_GUIDE_URL,
   "outdoorExerciseURL": settings.OUTDOOR_EXERCISE_URL,
   "natureAreaURL": settings.NATURE_AREA_URL,
+  "embedderDocumentationUrl": settings.EMBEDDER_DOCUMENTATION_URL,
   "cities": settings.CITIES.split(','),
+  "hslRouteGuideCities": settings.HSL_ROUTE_GUIDE_CITIES.split(','),
   "maps": settings.MAPS.split(','),
   "smallContentAreaBreakpoint": 449,
   "mobileUiBreakpoint": 699,

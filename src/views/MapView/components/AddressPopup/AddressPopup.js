@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { ButtonBase, Typography } from '@material-ui/core';
+import { ButtonBase, Typography } from '@mui/material';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -7,7 +7,7 @@ import { useMapEvents } from 'react-leaflet';
 import fetchAddress from '../../utils/fetchAddress';
 import { getAddressText, useNavigationParams } from '../../../../utils/address';
 import useLocaleText from '../../../../utils/useLocaleText';
-import SMButton from '../../../../components/ServiceMapButton';
+import { SMButton } from '../../../../components';
 
 const AddressPopup = ({
   classes,

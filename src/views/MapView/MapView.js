@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { ButtonBase } from '@material-ui/core';
-import { MyLocation, LocationDisabled } from '@material-ui/icons';
+import { ButtonBase } from '@mui/material';
+import { MyLocation, LocationDisabled } from '@mui/icons-material';
 import { useSelector } from 'react-redux';
 import { useMapEvents } from 'react-leaflet';
 import { mapOptions } from './config/mapConfig';
@@ -18,7 +18,6 @@ import { isEmbed } from '../../utils/path';
 import AddressMarker from './components/AddressMarker';
 import { parseSearchParams } from '../../utils';
 import DistanceMeasure from './components/DistanceMeasure';
-import Loading from '../../components/Loading';
 import MarkerCluster from './components/MarkerCluster';
 import UnitGeometry from './components/UnitGeometry';
 import MapUtility from './utils/mapUtility';
@@ -32,6 +31,7 @@ import EventMarkers from './components/EventMarkers';
 import CustomControls from './components/CustomControls';
 import { getSelectedUnitEvents } from '../../redux/selectors/selectedUnit';
 import useMapUnits from './utils/useMapUnits';
+import { Loading } from '../../components';
 
 if (global.window) {
   require('leaflet');
