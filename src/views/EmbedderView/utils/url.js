@@ -71,8 +71,10 @@ export const transform = (url, {
   return uri.toString();
 };
 
-export const strip = (url, parameters) => {
+// Removes query params p and bbox
+export const strip = (url) => {
   const uri = URI(url);
+  const parameters = explode(url);
   const query = uri.search(true);
   if (query.p != null) {
     delete query.p;
@@ -93,16 +95,6 @@ export const strip = (url, parameters) => {
  */
 export const verify = (url) => {
   const uri = URI(url);
-  const domain = uri.domain();
-  const subdomain = uri.subdomain();
-  const subdomainParts = subdomain.split('.');
-  subdomainParts.shift(); // Remove language part
-  let subdomainsRest = null;
-  if (subdomainParts.length === 0) {
-    subdomainsRest = null;
-  } else {
-    subdomainsRest = subdomainParts.join('.');
-  }
   const host = uri.hostname();
   const query = uri.search(true);
   const { ratio } = query;
@@ -122,24 +114,8 @@ export const verify = (url) => {
     };
   }
 
-  // Verify that subdomain is one of allowed
-  let result = false;
-  Object.keys(embedderConfig.SUBDOMAINS).forEach((key) => {
-    if (!Object.prototype.hasOwnProperty.call(embedderConfig.SUBDOMAINS, key)) {
-      return;
-    }
-    let restSubdomains = '';
-    if (subdomainsRest != null) {
-      restSubdomains = `${subdomainsRest}.`;
-    }
-    const subdomain = embedderConfig.SUBDOMAINS[key];
-    if (host === `${subdomain}.${restSubdomains}${domain}`) {
-      result = uri.toString();
-    }
-  });
-
   return {
-    url: result,
+    url: uri.toString(),
     ratio,
   };
 };
