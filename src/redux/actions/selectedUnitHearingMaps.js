@@ -6,9 +6,9 @@ const {
 } = hearingMaps;
 
 export const fetchHearingMaps = id => async (dispatch) => {
-  dispatch(isFetching());
   const hearingMapAPI = new HearingMapAPI();
   try {
+    dispatch(isFetching());
     const data = await hearingMapAPI.hearingMaps(id);
     dispatch(fetchSuccess({ id, data: data || [] }));
   } catch (e) {
