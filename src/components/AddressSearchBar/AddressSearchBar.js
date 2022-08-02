@@ -207,12 +207,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const StyledClear = styled(Clear)(() => ({
-  fontSize: 22,
+  fontSize: '1.375rem',
 }));
 
 const StyledSearch = styled(Search)(({ theme }) => ({
   color: 'rgba(0, 0, 0, 0.54)',
-  fontSize: 22,
+  fontSize: '1.375rem',
   padding: theme.spacing(1),
 }));
 
