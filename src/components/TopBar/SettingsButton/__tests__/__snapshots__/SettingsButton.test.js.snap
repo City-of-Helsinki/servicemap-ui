@@ -20,7 +20,7 @@ exports[`<SettingsButton /> should work 1`] = `
       City settings
     </p>
     <p
-      class="MuiTypography-root MuiTypography-body2 SettingsText-text-3 css-1ak20dk-MuiTypography-root"
+      class="MuiTypography-root MuiTypography-body2 SettingsTextCurrentSettings SettingsText-text-3 css-1ak20dk-MuiTypography-root"
     >
       Cities all
     </p>
