@@ -131,13 +131,13 @@ const AccessibilityInfo = (props) => {
                     <Warning />
                   </ListItemIcon>
                   <ListItemText>
-                    <Typography className={classes.listTitle} component={heading} variant="body2" align="left">
+                    <Typography className={`AccessibilityInfoShortcomingTitle ${classes.listTitle}`} component={heading} variant="body2" align="left">
                       {title}
                     </Typography>
                     <ul className={classes.list}>
                       {
                         shortcomings.map(shortcoming => (
-                          <li key={shortcoming} className={classes.listItem}>
+                          <li key={shortcoming} className={`AccessibilityInfoShortcoming ${classes.listItem}`}>
                             <Typography component="p" variant="body2">
                               {shortcoming}
                             </Typography>

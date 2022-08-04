@@ -247,6 +247,7 @@ const FeedbackView = ({
         <div className={classes.bottomArea}>
           <Typography className={classes.infoText}><FormattedMessage id="feedback.additionalInfo" /></Typography>
           <ButtonBase
+            id="FeedbackInfoLink"
             className={classes.link}
             role="link"
             onClick={() => window.open(config.feedbackAdditionalInfoLink)}
