@@ -1,8 +1,9 @@
 /* eslint-disable */
 import { waitForReact, ReactSelector } from 'testcafe-react-selectors';
-import { ClientFunction, Selector } from 'testcafe';
+import { Selector } from 'testcafe';
 
 import config from '../config';
+import { getLocation } from '../utility';
 const { server } = config;
 
 fixture`Area view test`
@@ -55,7 +56,6 @@ test('District selection is updated' , async (t) => {
 
 test('Unit list functions correctly' , async (t) => {
   const unitList = Selector('.districtUnits')
-  const getLocation = ClientFunction(() => document.location.href);
 
   await t
     .click(drawerButtons.nth(0))
