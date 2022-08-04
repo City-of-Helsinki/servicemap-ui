@@ -62,6 +62,31 @@ test('Unit page show more events should take user to events list', async (t) => 
     .expect(getLocation()).contains('/fi/unit/51342/events')
 });
 
+// ENTERING EVENT PAGE GIVES AN UNDEFINED ERROR WHICH CAN'T BE REPLICATED ON MY OWN
+// THIS BREAKS WHEN ERROR IS THROWN BUT DOES WORK WITH --skip-js-errors WHICH MEANS TEST WORKS FINE
+// IF ERROR CAN BE SOLVED THIS TEST CAN BE UNCOMMENTED
+// test('Unit page event click does take to events page', async (t) => {
+//   const showMoreEventsButton = await Selector('#UniteventsButton');
+//   const eventLink = Selector('main li[role="link"]');
+//   const eventTitle = Selector('main h3[class*="TitleText"');
+//   const eventBackButton = Selector(`button[aria-label="${finnish['general.back.unit']}"`);
+
+//   await t
+//     .expect(showMoreEventsButton.exists).ok('Show more events button should exist')
+//     .click(showMoreEventsButton)
+//   ;
+
+//   const firstEventName = await eventLink.nth(0).find('p').nth(1).textContent;
+//   const secondEventName = await eventLink.nth(1).find('p').nth(1).textContent;
+
+//   await t
+//     .click(eventLink.nth(0))
+//     .expect(eventTitle.textContent).eql(firstEventName, 'Title for first event should be same as name in events list')
+//     .click(eventBackButton)
+//     .click(eventLink.nth(1))
+//     .expect(eventTitle.textContent).eql(secondEventName, 'Title for second event should be same as name in events list')
+// });
+
 
 test('Unit page feedback button should take unit feedback page', async (t) => {
   const feedbackButton = await Selector('#UnitFeedbackButton');
@@ -191,7 +216,7 @@ test('Unit view services tab lists work correctly', async (t) => {
   const serviceTab = Selector('div[role="tablist"] button').nth(2);
   const moreServicesButton = Selector('#UnitservicesButton');
   const serviceTitle = Selector('.ExtendedData-title h3');
-  const backButton = Selector('button[aria-label="Palaa toimipistesivulle"');
+  const backButton = Selector(`button[aria-label="${finnish['general.back.unit']}"`);
   const reservableObjects = Selector('#tab-content-2 li[role="link"]')
 
   await t
