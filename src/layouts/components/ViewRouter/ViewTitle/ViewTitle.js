@@ -56,7 +56,7 @@ class ViewTitle extends React.Component {
     }
 
     return (
-      <Typography id={viewTitleID} style={visuallyHidden} component="h2" tabIndex="-1" ref={this.titleRef}>
+      <Typography id={viewTitleID} style={visuallyHidden} component="h2" tabIndex={-1} ref={this.titleRef}>
         <FormattedMessage id={message + type} />
       </Typography>
     );

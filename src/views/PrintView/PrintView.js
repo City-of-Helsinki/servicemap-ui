@@ -261,7 +261,7 @@ const PrintView = ({
   return (
     <div ref={dialogRef} role="dialog" className={classes.wrapper}>
       {/* Empty element that makes keyboard focus loop in dialog */}
-      <Typography style={visuallyHidden} aria-hidden tabIndex="0" onFocus={focusToLastElement} />
+      <Typography style={visuallyHidden} aria-hidden tabIndex={0} onFocus={focusToLastElement} />
       <div className={classes.container}>
         <div className={classes.buttonContainer}>
           <SMButton
@@ -285,7 +285,7 @@ const PrintView = ({
           aria-label={intl.formatMessage({ id: 'map.ariaLabel' })}
           id="print-map"
           className={classes.map}
-          tabIndex="-1"
+          tabIndex={-1}
         />
         <div>
           <TableContainer component={Paper} className={classes.table}>
