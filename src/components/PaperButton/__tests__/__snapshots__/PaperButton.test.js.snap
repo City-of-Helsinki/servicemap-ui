@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<PaperButton /> should work 1`] = `
+<div>
+  <div
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 Container-root-9 Container-margin-11   SM-PaperButton PaperButton-container-1    css-1ps6pg7-MuiPaper-root"
+  >
+    <button
+      aria-label="Näytä lähellä olevat palvelut Sijaintia ei sallittu "
+      class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root PaperButton-iconButton-3 css-w2lxu-MuiButtonBase-root-MuiButton-root"
+      role="link"
+      tabindex="0"
+      type="button"
+    >
+      <div
+        class="PaperButton-iconContainer-4 "
+      >
+        <svg
+          class="PaperButton-icon-5"
+          height="16px"
+          version="1.1"
+          viewBox="0 0 16 16"
+          width="16px"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g
+            fill="none"
+            fill-rule="evenodd"
+            stroke="none"
+            stroke-width="1"
+          >
+            <g
+              fill="inherit"
+              fill-rule="nonzero"
+              transform="translate(-60.000000, -403.000000)"
+            >
+              <g
+                transform="translate(60.000000, 403.000000)"
+              >
+                <path
+                  d="M12.1463333,4.21533333 C12.1463333,1.909 10.277,0.0396666667 7.97033333,0.0396666667 C5.66366667,0.0396666667 3.79466667,1.909 3.79466667,4.21533333 C3.79466667,7.51966667 7.97033333,12.4093333 7.97033333,12.4093333 C7.97033333,12.4093333 12.1463333,7.50266667 12.1463333,4.21533333 Z M5.911,3.966 C5.911,2.82833333 6.83333333,1.90633333 7.97066667,1.90633333 C9.108,1.90633333 10.0303333,2.82833333 10.0303333,3.966 C10.0303333,5.10366667 9.108,6.02566667 7.97066667,6.02566667 C6.83333333,6.02566667 5.911,5.10366667 5.911,3.966 Z"
+                />
+                <circle
+                  cx="7.97033333"
+                  cy="3.966"
+                  r="1.01266667"
+                />
+                <path
+                  d="M10.3313333,10.9566667 C9.991,11.4486667 9.67166667,11.877 9.40566667,12.221 C12.0443333,12.3796667 13.7736667,12.9493333 14.417,13.373 C13.6633333,13.87 11.424,14.5686667 7.971,14.5686667 C4.51833333,14.5686667 2.27866667,13.8696667 1.525,13.373 C2.16833333,12.9493333 3.89633333,12.38 6.53233333,12.2213333 C6.26566667,11.8773333 5.946,11.4493333 5.60533333,10.9573333 C2.35833333,11.277 0,12.2376667 0,13.3726667 C0,14.7693333 3.569,15.902 7.971,15.902 C12.3733333,15.902 15.9416667,14.77 15.9416667,13.3726667 C15.9423333,12.237 13.5813333,11.276 10.3313333,10.9566667 Z"
+                />
+              </g>
+            </g>
+          </g>
+        </svg>
+      </div>
+      <div>
+        <p
+          aria-hidden="true"
+          class="MuiTypography-root MuiTypography-body2 PaperButton-text-7 css-1ak20dk-MuiTypography-root"
+        >
+          Näytä lähellä olevat palvelut
+        </p>
+        <span
+          aria-hidden="true"
+          class="MuiTypography-root MuiTypography-caption PaperButton-text-7 css-r3hlsg-MuiTypography-root"
+        >
+          Sijaintia ei sallittu
+        </span>
+      </div>
+    </button>
+  </div>
+</div>
+`;
