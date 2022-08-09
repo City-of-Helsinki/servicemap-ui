@@ -173,6 +173,7 @@ const UnitView = (props) => {
       onClick={() => handleFeedbackClick()}
       margin
       role="link"
+      id="UnitFeedbackButton"
     />
   );
 
