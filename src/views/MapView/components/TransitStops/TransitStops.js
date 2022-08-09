@@ -139,7 +139,7 @@ const TransitStops = ({ mapObject, classes }) => {
         return (
           <Marker
             icon={icon}
-            key={station.name}
+            key={`${station.name}+${station.stationId}`}
             position={[station.lat, station.lon]}
             keyboard={false}
           >
