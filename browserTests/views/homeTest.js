@@ -5,10 +5,9 @@ import { waitForReact } from 'testcafe-react-selectors';
 import finnish from '../../src/i18n/fi';
 import config from '../config';
 import PaperButtonTest from '../components/PaperButton.tc';
+import { getLocation } from '../utility';
 const { server } = config;
 
-// MOVE TO UTILITY AFTER DEVELOP IS UPDATE AND REBASED
-const getLocation = ClientFunction(() => document.location.href);
 const viewUrl = `http://${server.address}:${server.port}/fi/`;
 
 fixture`Home view test`
