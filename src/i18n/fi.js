@@ -232,9 +232,9 @@ const translations = {
   'feedback.sending': 'Lähetetään...',
   'feedback.send.error': 'Lähetä palaute. Pakollinen kenttä täyttämättä',
   'feedback.error.required': 'Pakollinen kenttä',
-  'feedback.error.email.invalid': 'Sähköposti ei kelpaa',
-  'feedback.srError.email.invalid': 'Sähköpostin pitää olla oikeassa muodossa', // TODO
-  'feedback.srError.feedback.required': 'Palaute ei saa olla tyhjä',
+  'feedback.error.email.invalid': 'Sähköpostin pitää olla oikeassa muodossa',
+  'feedback.srError.email.invalid': 'Sähköpostiosoite on virheellinen. Korjaa sähköpostiosoite.',
+  'feedback.srError.feedback.required': 'Palaute puuttuu. Kirjoita palaute.',
   'feedback.modal.confirm': 'OK',
   'feedback.modal.leave': 'Haluatko varmasti poistua tältä sivulta?',
   'feedback.modal.success': 'Kiitos palautteestasi!',
