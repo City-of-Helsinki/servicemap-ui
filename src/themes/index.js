@@ -43,7 +43,6 @@ const components = theme => ({
     styleOverrides: {
       root: {
         // Default keyboard focus indicator for buttons
-        '&:focus': theme === 'dark' ? focusIndicatorDark : focusIndicator,
         '&.Mui-focusVisible': theme === 'dark' ? focusIndicatorDark : focusIndicator,
       },
     },
@@ -63,7 +62,6 @@ const components = theme => ({
     styleOverrides: {
       // Default keyboard focus indicator for input fields
       root: {
-        '&:focused': theme === 'dark' ? focusIndicatorDark : focusIndicator,
         '&.Mui-focused': theme === 'dark' ? focusIndicatorDark : focusIndicator,
       },
     },
