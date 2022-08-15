@@ -298,7 +298,7 @@ const SearchView = (props) => {
         dispatch(fetchSearchResults(options));
       }
     }
-  }, [query]);
+  }, [match.params]);
 
   useEffect(() => { // Handle new search results
     if (searchResultsData.length) {
