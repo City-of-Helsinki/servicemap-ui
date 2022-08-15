@@ -167,7 +167,9 @@ test('Unit page links do work correctly', async (t) => {
     .closeWindow() // Since hsl link opens in new window we need to close it
     .navigateTo(testUrl)
   ;
+});
 
+test.only('Unit view hearing map link opens correctly', async (t) => {
   // Test accessibility hearing map link
   const aLinks = Selector('#tab-content-1 li[role="link"]');
   const accessibilityTab = Selector('div[role="tablist"] button').nth(1);
@@ -181,6 +183,7 @@ test('Unit page links do work correctly', async (t) => {
     .click(hearingMapLink)
     .expect(getLocation()).contains('https://kuulokuvat.fi')
     .closeWindow() // Since hearing map link opens in new window we need to close it
+  ;
 });
 
 
