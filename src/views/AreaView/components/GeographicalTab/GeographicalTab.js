@@ -18,7 +18,7 @@ import GeographicalDistrictList from '../GeographicalDistrictList';
 import GeographicalUnitList from '../GeographicalUnitList';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { geographicalDistricts } from '../../utils/districtDataHelper';
-import { formAddressString } from '../../../../utils';
+import { getAddressText } from '../../../../utils/address';
 
 
 const GeographicalTab = ({
@@ -100,7 +100,7 @@ const GeographicalTab = ({
         <Typography component="h3" className={classes.addressInfoText}><FormattedMessage id="area.localAddress.title" /></Typography>
         <div className={classes.addressInfoIconArea}>
           <LocationOn color="primary" className={classes.addressInfoIcon} />
-          <Typography component="p" variant="subtitle1">{formAddressString(localAddressData.address, getLocaleText)}</Typography>
+          <Typography component="p" variant="subtitle1">{getAddressText(localAddressData.address, getLocaleText)}</Typography>
         </div>
         {localPostArea ? (
           <Typography className={classes.addressInfoText}>

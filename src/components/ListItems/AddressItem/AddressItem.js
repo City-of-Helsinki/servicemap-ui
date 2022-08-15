@@ -19,14 +19,8 @@ const AddressItem = (props) => {
   const getLocaleText = useLocaleText();
   const getAddressNavigatorParams = useNavigationParams();
 
-  let text;
+  const text = getAddressText(address, getLocaleText, showPostalCode);
 
-  // If complete address name is found in data, use it
-  if (address.name) {
-    text = `${getLocaleText(address.name)}, ${address.municipality?.name ? getLocaleText(address.municipality.name) : ''}`;
-  } else {
-    text = getAddressText(address, getLocaleText, showPostalCode);
-  }
 
   return (
     <SimpleListItem

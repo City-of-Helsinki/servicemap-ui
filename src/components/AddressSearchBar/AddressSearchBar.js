@@ -7,10 +7,11 @@ import {
 import { Clear, Search } from '@material-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { setOrder, setDirection } from '../../redux/actions/sort';
-import { keyboardHandler, formAddressString } from '../../utils';
+import { keyboardHandler } from '../../utils';
 import useMobileStatus from '../../utils/isMobile';
 import useLocaleText from '../../utils/useLocaleText';
 import ServiceMapAPI from '../../utils/newFetch/ServiceMapAPI';
+import { getAddressText } from '../../utils/address';
 
 const AddressSearchBar = ({
   defaultAddress,
@@ -51,9 +52,9 @@ const AddressSearchBar = ({
     if (inputRef.current) {
       inputRef.current.focus();
     }
-    inputRef.current.value = formAddressString(address, getLocaleText);
+    inputRef.current.value = getAddressText(address, getLocaleText);
     setAddressResults([]);
-    setCurrentLocation(formAddressString(address, getLocaleText));
+    setCurrentLocation(getAddressText(address, getLocaleText));
     dispatch(setDirection('asc'));
     dispatch(setOrder('distance'));
     handleAddressChange(address);
@@ -109,7 +110,7 @@ const AddressSearchBar = ({
   };
 
   useEffect(() => {
-    inputRef.current.value = formAddressString(defaultAddress, getLocaleText);
+    inputRef.current.value = getAddressText(defaultAddress, getLocaleText);
   }, [defaultAddress]);
 
   const showSuggestions = inputRef.current?.value.length > 1 && addressResults?.length;
@@ -149,7 +150,7 @@ const AddressSearchBar = ({
           onBlur={isMobile ? () => {} : e => clearSuggestions(e)}
           onFocus={() => setResultIndex(null)}
           className={`${classes.searchBar} ${inputClassName}`}
-          defaultValue={formAddressString(defaultAddress, getLocaleText)}
+          defaultValue={getAddressText(defaultAddress, getLocaleText)}
           onChange={e => handleInputChange(e.target.value)}
           onKeyDown={e => showSuggestions && handleSearchBarKeyPress(e)}
           endAdornment={(
@@ -180,13 +181,13 @@ const AddressSearchBar = ({
                   id={`address-suggestion${i}`}
                   role="option"
                   selected={i === resultIndex}
-                  key={formAddressString(address, getLocaleText)}
+                  key={getAddressText(address, getLocaleText)}
                   button
                   onClick={() => handleAddressSelect(address)}
                   onKeyDown={keyboardHandler(() => handleAddressSelect(address), ['space', 'enter'])}
                 >
                   <Typography>
-                    {formAddressString(address, getLocaleText)}
+                    {getAddressText(address, getLocaleText)}
                   </Typography>
                 </ListItem>
               ))}

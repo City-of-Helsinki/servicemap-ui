@@ -8,7 +8,7 @@ import { Map } from '@material-ui/icons';
 import { focusDistrict, focusDistricts, useMapFocusDisabled } from '../MapView/utils/mapActions';
 import TabLists from '../../components/TabLists';
 import GeographicalTab from './components/GeographicalTab';
-import { parseSearchParams, formAddressString } from '../../utils';
+import { parseSearchParams } from '../../utils';
 import ServiceTab from './components/ServiceTab';
 import { districtFetch } from '../../utils/fetch';
 import fetchAddress from '../MapView/utils/fetchAddress';
@@ -20,6 +20,7 @@ import SMButton from '../../components/ServiceMapButton';
 import MobileComponent from '../../components/MobileComponent';
 import useLocaleText from '../../utils/useLocaleText';
 import SettingsInfo from '../../components/SettingsInfo';
+import { getAddressText } from '../../utils/address';
 
 
 const AreaView = ({
@@ -134,7 +135,7 @@ const AreaView = ({
   useEffect(() => {
     if (selectedAddress) {
       if (!selectedAddress.districts
-        || formAddressString(districtAddressData.address, getLocaleText) !== formAddressString(selectedAddress, getLocaleText)
+        || getAddressText(districtAddressData.address, getLocaleText) !== getAddressText(selectedAddress, getLocaleText)
       ) {
         fetchAddressDistricts();
       }
