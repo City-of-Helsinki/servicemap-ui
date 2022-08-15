@@ -14,7 +14,7 @@ exports[`<SMRadio /> should work 1`] = `
         class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
       >
         <span
-          class="MuiRadio-root MuiRadio-colorPrimary MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary PrivateSwitchBase-root Mui-checked css-c4fkc1-MuiButtonBase-root-MuiRadio-root"
+          class="MuiRadio-root MuiRadio-colorPrimary MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary PrivateSwitchBase-root Mui-checked css-1ayw5pd-MuiButtonBase-root-MuiRadio-root"
         >
           <input
             checked=""
@@ -60,7 +60,7 @@ exports[`<SMRadio /> should work 1`] = `
         class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
       >
         <span
-          class="MuiRadio-root MuiRadio-colorPrimary MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary PrivateSwitchBase-root css-c4fkc1-MuiButtonBase-root-MuiRadio-root"
+          class="MuiRadio-root MuiRadio-colorPrimary MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary PrivateSwitchBase-root css-1ayw5pd-MuiButtonBase-root-MuiRadio-root"
         >
           <input
             class="PrivateSwitchBase-input css-1m9pwf3"
@@ -105,7 +105,7 @@ exports[`<SMRadio /> should work 1`] = `
         class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
       >
         <span
-          class="MuiRadio-root MuiRadio-colorPrimary MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary PrivateSwitchBase-root css-c4fkc1-MuiButtonBase-root-MuiRadio-root"
+          class="MuiRadio-root MuiRadio-colorPrimary MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary PrivateSwitchBase-root css-1ayw5pd-MuiButtonBase-root-MuiRadio-root"
         >
           <input
             class="PrivateSwitchBase-input css-1m9pwf3"
