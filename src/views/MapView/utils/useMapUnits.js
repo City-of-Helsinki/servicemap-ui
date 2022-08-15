@@ -95,8 +95,6 @@ const useMapUnits = () => {
   const parkingAreaUnits = useSelector(state => getParkingUnits(state));
   const highlightedUnit = useSelector(state => getSelectedUnit(state));
 
-  const areaViewUnits = [...districtPrimaryUnits, ...districtServiceUnits];
-
   const searchUnitsLoading = useSelector(state => state.units.isFetching);
   const serviceUnitsLoading = useSelector(state => state.service.isFetching);
   const unitsLoading = searchUnitsLoading || serviceUnitsLoading;
@@ -132,7 +130,8 @@ const useMapUnits = () => {
 
       case 'area':
         return [
-          ...(areaViewUnits.length ? areaViewUnits : []),
+          ...(districtPrimaryUnits.length ? districtPrimaryUnits : []),
+          ...(districtServiceUnits.length ? districtServiceUnits : []),
           ...(parkingAreaUnits.length ? parkingAreaUnits : []),
         ];
 

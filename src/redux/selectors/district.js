@@ -19,10 +19,7 @@ export const getDistrictsByType = createSelector(
       const selectedCities = Object.values(citySettings).filter(city => city);
       // Filter distircts by user city settings
       if (districtType && selectedCities.length) {
-        const cityFilteredDistricts = districtType.data.filter(
-          district => citySettings[district.municipality],
-        );
-        return cityFilteredDistricts;
+        return districtType.data.filter(district => citySettings[district.municipality]);
       }
       return districtType ? districtType.data : [];
     }
@@ -34,8 +31,7 @@ export const getAddressDistrict = createSelector(
   [getDistrictsByType, getAddressDistrictData],
   (districts, addressDistricts) => {
     if (districts && addressDistricts) {
-      const district = districts.find(obj => addressDistricts.some(i => i.id === obj.id));
-      return district;
+      return districts.find(obj => addressDistricts.some(i => i.id === obj.id));
     }
     return null;
   },
