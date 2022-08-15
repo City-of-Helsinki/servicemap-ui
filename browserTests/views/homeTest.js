@@ -16,7 +16,7 @@ fixture`Home view test`
     await waitForReact();
   });
 
-test.only('PaperButtons work correctly', async (t) => {
+test('PaperButtons work correctly', async (t) => {
   await PaperButtonTest(t);
 });
 
