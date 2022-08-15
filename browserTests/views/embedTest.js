@@ -5,7 +5,7 @@ import { waitForReact, ReactSelector } from 'testcafe-react-selectors';
 import config from '../config';
 const { server } = config;
 
-fixture`Division view test`
+fixture`Embed view test`
   .page`http://${server.address}:${server.port}/fi/embed/division/kunta:helsinki/kaupunginosa:029?level=all`
   .beforeEach(async () => {
     await waitForReact();
