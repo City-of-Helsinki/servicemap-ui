@@ -20,6 +20,7 @@ const TitledList = ({
   loading,
   subtitle,
   description,
+  id,
 }) => {
   const list = children;
 
@@ -96,6 +97,7 @@ TitledList.propTypes = {
   onButtonClick: PropTypes.func,
   titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']),
   loading: PropTypes.bool,
+  id: PropTypes.string,
 };
 
 TitledList.defaultProps = {
@@ -109,6 +111,7 @@ TitledList.defaultProps = {
   subtitle: null,
   buttonMessageID: null,
   loading: false,
+  id: null,
 };
 
 export default TitledList;

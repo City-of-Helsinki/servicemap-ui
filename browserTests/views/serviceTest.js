@@ -1,11 +1,11 @@
 import { waitForReact, ReactSelector } from 'testcafe-react-selectors';
-import { ClientFunction, Selector } from 'testcafe';
-import config from './config';
+import { Selector } from 'testcafe';
+import config from '../config';
+import { getLocation } from '../utility';
 
 const { server } = config;
 
 const coordinates = ['60.281936', '24.949933'];
-const getLocation = ClientFunction(() => document.location.href);
 
 /* eslint-disable */
 fixture`Service page coordinate tests`

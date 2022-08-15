@@ -238,7 +238,7 @@ const FeedbackView = ({
         && (
           <Dialog open={!!modalOpen} onEntered={() => document.getElementById('dialog-title').focus()}>
             <div className={classes.modalContainer}>
-              <DialogTitle tabIndex="-1" id="dialog-title">
+              <DialogTitle tabIndex={-1} id="dialog-title">
                 <Typography aria-live="polite" className={classes.modalTitle}>
                   <FormattedMessage id={modalOpen === 'send' ? 'feedback.modal.success' : 'feedback.modal.error'} />
                 </Typography>
@@ -356,6 +356,7 @@ const FeedbackView = ({
         <div className={classes.bottomArea}>
           <Typography className={classes.infoText}><FormattedMessage id="feedback.additionalInfo" /></Typography>
           <ButtonBase
+            id="FeedbackInfoLink"
             className={classes.link}
             role="link"
             onClick={() => window.open(config.feedbackAdditionalInfoLink)}

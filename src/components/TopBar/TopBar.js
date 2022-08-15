@@ -6,26 +6,25 @@ import {
 import { visuallyHidden } from '@mui/utils';
 import { Map } from '@mui/icons-material';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import { useLocation } from 'react-router-dom';
 import DrawerMenu from './DrawerMenu';
 import DesktopComponent from '../DesktopComponent';
 import MobileComponent from '../MobileComponent';
 import ToolMenu from '../ToolMenu';
 import { focusToViewTitle } from '../../utils/accessibility';
-import LocaleUtility from '../../utils/locale';
 import { useNavigationParams } from '../../utils/address';
 import SettingsButton from './SettingsButton';
 import MenuButton from './MenuButton';
-import paths from '../../../config/paths';
 import SMLogo from './SMLogo';
+import { isHomePage } from '../../utils/path';
+import LanguageMenu from './LanguageMenu';
 
 const TopBar = (props) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const locale = useSelector(state => state.user.locale);
   const location = useLocation();
   const intl = useIntl();
   const getAddressNavigatorParams = useNavigationParams();
+  const isOnHomePage = isHomePage(location?.pathname);
 
   const {
     hideButtons,
@@ -75,6 +74,7 @@ const TopBar = (props) => {
     const mapPage = location.search.indexOf('showMap=true') > -1;
     return (
       <Button
+        aria-current={mapPage ? 'page' : false}
         aria-hidden
         className={mapPage ? classes.toolbarButtonPressed : classes.toolbarButton}
         classes={{ label: classes.buttonLabel }}
@@ -112,48 +112,12 @@ const TopBar = (props) => {
     />
   );
 
-  const renderLanguages = (pageType) => {
-    const typographyClass = className => `${pageType === 'mobile' ? classes.mobileFont : ''} ${className || ''}`;
-    return (
-      <>
-        {LocaleUtility.availableLocales
-          .map(currentLocale => (
-            <ButtonBase
-              role="link"
-              key={currentLocale}
-              focusVisibleClassName={classes.topButtonFocused}
-              lang={currentLocale}
-              onClick={() => {
-                const newLocation = location;
-                const newPath = location.pathname.replace(/^\/[a-zA-Z]{2}/, `/${currentLocale}`);
-                newLocation.pathname = newPath;
-                window.location = `${newLocation.pathname}${newLocation.search}`;
-              }}
-            >
-              <Typography
-                className={typographyClass(
-                  currentLocale === locale
-                    ? classes.bold
-                    : classes.greyText,
-                )}
-                color="inherit"
-                variant="body2"
-              >
-                <FormattedMessage id={`general.language.${currentLocale}`} />
-              </Typography>
-            </ButtonBase>
-          ))}
-      </>
-    );
-  };
-
   const handleContrastChange = () => {
     changeTheme(theme === 'default' ? 'dark' : 'default');
     setMapType(theme === 'default' ? 'accessible_map' : 'servicemap');
   };
 
   const handleNavigation = (target, data) => {
-    const isHomePage = paths.home.regex.test(window.location.href);
     // Hide settings and map if open
     toggleSettings();
     if (location.search.indexOf('showMap=true') > -1) {
@@ -162,7 +126,7 @@ const TopBar = (props) => {
 
     switch (target) {
       case 'home':
-        if (!isHomePage) {
+        if (!isOnHomePage) {
           navigator.push('home');
         } else {
           setTimeout(() => {
@@ -219,13 +183,18 @@ const TopBar = (props) => {
           {/* Toolbar black area */}
           <Toolbar className={toolbarBlackClass}>
             <div className={classes.toolbarBlackContainer}>
-              <ButtonBase role="link" onClick={() => handleNavigation('home')} focusVisibleClassName={classes.topButtonFocused}>
+              <ButtonBase
+                aria-current={isOnHomePage ? 'page' : false}
+                role="link"
+                onClick={() => handleNavigation('home')}
+                focusVisibleClassName={classes.topButtonFocused}
+              >
                 <Typography className={fontClass} color="inherit" variant="body2">
                   <FormattedMessage id="general.frontPage" />
                 </Typography>
               </ButtonBase>
               <Typography aria-hidden color="inherit">|</Typography>
-              {renderLanguages(pageType)}
+              <LanguageMenu mobile={pageType === 'mobile'} />
               <Typography aria-hidden color="inherit">|</Typography>
               <ButtonBase role="button" onClick={() => handleContrastChange()} focusVisibleClassName={classes.topButtonFocused} aria-label={contrastAriaLabel}>
                 <Typography className={fontClass} color="inherit" variant="body2"><FormattedMessage id="general.contrast" /></Typography>

@@ -1,8 +1,8 @@
 /* eslint-disable */
 import axeCheck from 'axe-testcafe';
-import config from './config';
-import focusIndicatorTest from './focusIndicatorTest';
-import componentContrastTest from './componentContrastTest';
+import config from '../config';
+import focusIndicatorTest from '../utility/focusIndicatorTest';
+import componentContrastTest from '../utility/componentContrastTest';
 
 const { server } = config;
 

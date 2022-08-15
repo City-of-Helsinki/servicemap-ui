@@ -1,9 +1,10 @@
 /* eslint-disable */
-import { Selector, ClientFunction } from 'testcafe';
+import { Selector } from 'testcafe';
 import { waitForReact, ReactSelector } from 'testcafe-react-selectors';
-import { viewTitleID } from '../src/utils/accessibility';
+import { viewTitleID } from '../../src/utils/accessibility';
 
-import config from './config';
+import config from '../config';
+import { getLocation } from '../utility';
 const { server } = config;
 
 fixture`Search view test`
@@ -11,8 +12,6 @@ fixture`Search view test`
   .beforeEach(async () => {
     await waitForReact();
   });
-
-const getLocation = ClientFunction(() => document.location.href);
 
 const searchUnits = async (t, search = 'uimastadion') => {
   const input = Selector('#SearchBar input');
