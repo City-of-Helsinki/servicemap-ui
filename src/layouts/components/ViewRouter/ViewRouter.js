@@ -189,7 +189,7 @@ class ViewRouter extends React.Component {
         <Route path="/:lng/services" component={ServiceTree} />
         <Route path="/:lng/service/:service" component={Service} />
         <Route path="/:lng/event/:event" component={Event} />
-        <Route path="/:lng/address/:municipality/:street/:number" component={Address} />
+        <Route path="/:lng/address/:municipality/:street" component={Address} />
         <Route exact path="/:lng/feedback/" component={Feedback} />
         <Route exact path="/:lng/area/" component={Area} />
         <Route
