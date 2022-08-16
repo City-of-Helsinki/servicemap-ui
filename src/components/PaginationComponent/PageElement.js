@@ -19,7 +19,7 @@ const PageElement = ({
         disabled={isActive}
         onClick={onClick}
         onKeyDown={keyboardHandler(onClick, ['space', 'enter'])}
-        tabIndex={isActive ? '-1' : '0'}
+        tabIndex={isActive ? -1 : 0}
       >
         <Typography
           variant="subtitle1"

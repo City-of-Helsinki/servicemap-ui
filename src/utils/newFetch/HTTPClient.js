@@ -1,6 +1,9 @@
 import AbortController from 'abort-controller';
 import config from '../../../config';
 
+export const hearingMapAPIName = 'hearingmap';
+export const serviceMapAPIName = 'servicemap';
+
 export class APIFetchError extends Error {
   constructor(props) {
     super(props);
@@ -28,8 +31,9 @@ export default class HttpClient {
 
   onProgressUpdate;
 
-  constructor(baseURL) {
+  constructor(baseURL, apiName) {
     this.baseURL = baseURL;
+    this.apiName = apiName;
   }
 
   optionsToSearchParams = (options) => {
@@ -69,7 +73,7 @@ export default class HttpClient {
       });
   }
 
-  handleResults = async (response, type) => {
+  handleServiceMapResults = async (response, type) => {
     if (type && type === 'count') {
       return response.count;
     }
@@ -83,6 +87,15 @@ export default class HttpClient {
       return this.fetchNext(response.next, response.results);
     }
     return response.results;
+  }
+
+  handleResults = async (response, type) => {
+    if (this.apiName === serviceMapAPIName) {
+      return this.handleServiceMapResults(response, type);
+    }
+
+    // Default to given response
+    return response;
   }
 
   fetch = async (endpoint, options, type) => {
