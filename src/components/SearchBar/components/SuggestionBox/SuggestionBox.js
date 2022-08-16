@@ -49,6 +49,7 @@ const SuggestionBox = (props) => {
   const listRef = useRef(null);
   const fetchController = useRef(null);
 
+  const locale = useSelector(state => state.user.locale);
   const citySettings = useSelector((state) => {
     const { cities } = state.settings;
     return config.cities.filter(c => cities[c]);
@@ -110,7 +111,13 @@ const SuggestionBox = (props) => {
       }
       fetchController.current = new AbortController();
 
-      dispatch(createSuggestions(query, fetchController.current, getLocaleText, citySettings))
+      dispatch(createSuggestions(
+        query,
+        fetchController.current,
+        getLocaleText,
+        citySettings,
+        locale,
+      ))
         .then((data) => {
           if (data === 'error') {
             return;

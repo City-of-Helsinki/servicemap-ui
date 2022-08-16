@@ -40,9 +40,13 @@ const smFetch = (dispatch, options) => {
 
 const fetchSearchResults = (options = null) => async (dispatch, getState) => {
   const stateSearchResults = getState().searchResults;
+  const { locale } = getState().user;
+
   if (stateSearchResults.isFetching) {
     throw Error('Unable to fetch search results because previous fetch is still active');
   }
+
+  options.language = locale;
 
   const searchQuery = options.q ? options.q : stringifySearchQuery(options);
   dispatch(isFetching(searchQuery));
