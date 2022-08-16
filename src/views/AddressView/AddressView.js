@@ -197,12 +197,8 @@ const AddressView = (props) => {
 
 
   const renderClosebyServices = () => {
-    if (isFetching) {
+    if (isFetching || !adminDistricts) {
       return <Typography><FormattedMessage id="general.loading" /></Typography>;
-    }
-    // TODO: should do proper loading/finished state dislpay message
-    if (!adminDistricts) {
-      return <Typography />;
     }
     // Get divisions with units
     const divisionsWithUnits = adminDistricts
