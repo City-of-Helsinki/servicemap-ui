@@ -29,7 +29,7 @@ const SocialMediaLinks = ({ unit, classes }) => {
                 onClick={() => link.value.www && window.open(getLocaleText(link.value.www))}
                 className={classes.someItem}
               >
-                {getIcon(link.value.name.fi.toLowerCase())
+                {getIcon(getLocaleText(link.value.name).toLowerCase())
                   || <DefaultIcon className={classes.defaultIcon} />
                 }
                 <Typography className={classes.itemText}>
