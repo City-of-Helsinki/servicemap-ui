@@ -1,10 +1,11 @@
 /* eslint-disable */
-import { Selector, ClientFunction } from 'testcafe';
+import { Selector } from 'testcafe';
 
-import { waitForReact, ReactSelector } from 'testcafe-react-selectors';
+import { waitForReact } from 'testcafe-react-selectors';
 
 import { paletteDefault, paletteDark } from '../../src/themes'
 import config from '../config';
+import { getLocation } from '../utility';
 const { server } = config;
 
 const siteRoot = `http://${server.address}:${server.port}`;
@@ -15,9 +16,6 @@ fixture`General tests`
   .beforeEach(async () => {
     await waitForReact();
   });
-
-const getLocation = ClientFunction(() => document.location.href);
-
 
 test('Language does change', async (t) => {
   const languageButtons = Selector('header button');

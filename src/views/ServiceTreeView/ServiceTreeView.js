@@ -408,6 +408,7 @@ const ServiceTreeView = (props) => {
     const selectedString = selectedList.map(i => getLocaleText(i.name)).join(', ');
     return (
       <SMButton
+        id="ServiceTreeSearchButton"
         aria-label={selectedList.length
           ? intl.formatMessage({ id: 'services.search.sr.selected' }, { services: selectedString })
           : intl.formatMessage({ id: 'services.search.sr' })}

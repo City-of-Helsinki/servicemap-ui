@@ -2,6 +2,7 @@
 import { Selector, ClientFunction } from 'testcafe';
 import { waitForReact, ReactSelector } from 'testcafe-react-selectors';
 import config from '../config';
+import finnish from '../../src/i18n/fi';
 
 const { server } = config;
 
@@ -12,24 +13,48 @@ fixture`Settings view tests`
     await waitForReact();
   });
 
-const openSettings = async t => {
-  const openButton = Selector('#SettingsButtonaccessibilitySettings');
+const openSettings = async (t, selector) => {
+  const openButton = selector ? selector : Selector('#SettingsButtonaccessibilitySettings');
   await t
     .click(openButton)
   ;
+  return openButton;
 }
 
 test('Settings does opens and closes correctly', async (t) => {
-  await openSettings(t);
-
   const title = Selector('.TitleText');
   const closeButton = Selector('#SettingsContainer button').nth(0);
+
+  // City settings does open correctly
+  const openCitySettingsButton = await openSettings(t, Selector('#SettingsButtoncitySettings'));
   await t
     .expect(title.focused).ok()
-    .expect(title.innerText).eql('Esteettömyysasetukset')
+    .expect(title.innerText).eql(finnish['settings.citySettings.long'])
     .click(closeButton)
     .expect(Selector('.SettingsContainer').exists).notOk()
+    .expect(openCitySettingsButton.focused).ok('Button that opened Settings should be focused after closing')
   ;
+
+  // Map settings does open correctly
+  const openMapSettingsButton = await openSettings(t, Selector('#SettingsButtonmapSettings'));
+  await t
+    .expect(title.focused).ok()
+    .expect(title.innerText).eql(finnish['settings.mapSettings.long'])
+    .click(closeButton)
+    .expect(Selector('.SettingsContainer').exists).notOk()
+    .expect(openMapSettingsButton.focused).ok('Button that opened Settings should be focused after closing')
+  ;
+
+  // Accessibility settings does open correctly
+  const openAccessibilitySettingsButton = await openSettings(t, Selector('#SettingsButtonaccessibilitySettings'));
+  await t
+    .expect(title.focused).ok()
+    .expect(title.innerText).eql(finnish['settings.accessibilitySettings.long'])
+    .click(closeButton)
+    .expect(Selector('.SettingsContainer').exists).notOk()
+    .expect(openAccessibilitySettingsButton.focused).ok('Button that opened Settings should be focused after closing')
+  ;
+
 });
 
 test('Settings does work like dialog', async (t) => {

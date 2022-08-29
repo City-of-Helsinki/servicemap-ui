@@ -696,7 +696,7 @@ class Settings extends React.Component {
     return (
       <div id="SettingsContainer" className={`${classes.container}`} ref={this.dialogRef} role="dialog">
         {/* Empty element that makes keyboard focus loop in dialog */}
-        <Typography style={visuallyHidden} aria-hidden tabIndex="0" onFocus={() => this.focusToLastElement()} />
+        <Typography style={visuallyHidden} aria-hidden tabIndex={0} onFocus={() => this.focusToLastElement()} />
 
         <TitleBar id="SettingsTitle" titleComponent="h2" title={<FormattedMessage id={`settings.${settingsPage}.long`} />} />
         <>
@@ -713,7 +713,6 @@ class Settings extends React.Component {
             <SMButton
               small
               role="button"
-              disabled={!settingsHaveChanged}
               onClick={() => this.saveSettings(this.closeButtonRef.current)}
               messageID="general.save.changes"
               color="primary"
@@ -738,7 +737,7 @@ class Settings extends React.Component {
           </Typography>
         </>
         {/* Empty element that makes keyboard focus loop in dialog */}
-        <Typography style={visuallyHidden} aria-hidden tabIndex="0" onFocus={() => this.focusToFirstElement()} />
+        <Typography style={visuallyHidden} aria-hidden tabIndex={0} onFocus={() => this.focusToFirstElement()} />
       </div>
     );
   }
