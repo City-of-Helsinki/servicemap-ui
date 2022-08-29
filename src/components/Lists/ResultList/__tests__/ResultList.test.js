@@ -101,4 +101,20 @@ describe('<ResultList />', () => {
     const text = getByText('Test before list').textContent;
     expect(text).toEqual('Test before list');
   });
+
+  it('does render accessibility attributes correctly', () => {
+    const { getAllByRole } = renderWithProviders(<ResultList {...mockProps} />);
+    const items = getAllByRole('link', { selector: 'li' });
+    const firstItem = items[0];
+    const firstItemSRText = firstItem.querySelectorAll('p')[0];
+    const firstItemResultTitle = firstItem.querySelectorAll('p')[1];
+
+    // List item's image should be aria-hidden
+    expect(firstItem.querySelector('img').getAttribute('aria-hidden')).toBeTruthy();
+    expect(firstItem.getAttribute('role')).toEqual('link');
+    expect(firstItem.getAttribute('tabIndex')).toEqual('0');
+    expect(firstItemSRText.className.indexOf('ResultItem-title') > 0).toBeTruthy();
+    expect(firstItemResultTitle.className.indexOf('ResultItem-title') > 0).toBeTruthy();
+    expect(firstItemResultTitle.getAttribute('aria-hidden')).toBeTruthy();
+  });
 });
