@@ -126,6 +126,23 @@ export default (pageUrl) => {
       // Focus target should be screen reader text with pagination information
       .expect(focusTarget.innerText).contains('sivu 2 kautta')
     ;
-  });   
+  });
+
+  test('Pagination\'s page defaults correctly', async(t) => {
+    const pagination = ReactSelector('PaginationComponent');
+    // 4th button is second page element
+    const secondPageElement = pagination.find('button').nth(3);
+    const location = await getLocation();
+    const url = new URL(location);
+    url.searchParams.set('p', '2');
+
+    await t
+      .navigateTo(url.toString())
+      // Expect second page to be out of tabindex because it's active
+      .expect(secondPageElement.getAttribute('tabindex')).eql('-1')
+      // Expect second page to be disabled because it's active
+      .expect(secondPageElement.getAttribute('disabled')).eql('')
+    ;
+  });
 }
 
