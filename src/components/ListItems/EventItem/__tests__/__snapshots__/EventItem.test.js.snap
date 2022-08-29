@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<EventItem /> should work 1`] = `
+<div>
+  <li
+    class="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button ResultItem-listItem-2 css-16e6fe9-MuiButtonBase-root-MuiListItem-root"
+    role="link"
+    tabindex="0"
+  >
+    <div
+      class="MuiListItemIcon-root ResultItem-listItemIcon-3 css-cveggr-MuiListItemIcon-root"
+    >
+      <svg
+        aria-hidden="true"
+        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-6yqi1c-MuiSvgIcon-root"
+        data-testid="EventIcon"
+        focusable="false"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"
+        />
+      </svg>
+    </div>
+    <div
+      class="ResultItem-itemTextContainer-9  "
+    >
+      <div
+        class="ResultItem-topRow-11"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body2 ResultItem-title-7 ResultItem-srOnly css-1ak20dk-MuiTypography-root"
+          style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
+        >
+          
+    Tapahtuma kerho 
+    Tapahtuma kerhon paikka 
+     
+    Wed 8/31 general.time.short 9:00 PM 
+    
+  
+        </p>
+        <p
+          aria-hidden="true"
+          class="MuiTypography-root MuiTypography-body2 ResultItem-title-7    ResultItem-title css-1ak20dk-MuiTypography-root"
+          role="textbox"
+        >
+          Tapahtuma kerho
+        </p>
+      </div>
+      <div>
+        <div>
+          <p
+            aria-hidden="true"
+            class="MuiTypography-root MuiTypography-caption ResultItem-noMargin-8 ResultItem-text-16  ResultItem-subtitle css-r3hlsg-MuiTypography-root"
+          >
+            Tapahtuma kerhon paikka
+          </p>
+        </div>
+        <div
+          class="ResultItem-bottomContainer-5 "
+        >
+          <p
+            aria-hidden="true"
+            class="MuiTypography-root MuiTypography-caption   ResultItem-bottom css-o763o0-MuiTypography-root"
+          >
+            Wed 8/31 general.time.short 9:00 PM
+          </p>
+        </div>
+      </div>
+    </div>
+  </li>
+  <li
+    aria-hidden="true"
+  >
+    <hr
+      class="MuiDivider-root MuiDivider-inset ResultItem-divider-17 css-uls1yk-MuiDivider-root"
+    />
+  </li>
+</div>
+`;
