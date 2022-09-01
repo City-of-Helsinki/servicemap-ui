@@ -36,9 +36,7 @@ const mockProps = {
 const intlMock = {
   locale: 'en',
   messages: {
-    'unit.accessibility.noInfo': 'No info',
-    'unit.accessibility.ok': 'Accessibility ok',
-    'unit.accessibility.problems': '{count} accessibility problems'
+    'general.time.short': 'at',
   },
 };
 
@@ -68,10 +66,6 @@ const Providers = ({ children }) => {
 const renderWithProviders = component => render(component, { wrapper: Providers });
 
 describe('<EventItem />', () => {
-  it('should work', () => {
-    const { container } = renderWithProviders(<EventItem {...mockProps} />);
-    expect(container).toMatchSnapshot();
-  });
 
   it('does render accessibility attributes correctly', () => {
     const { container } = renderWithProviders(<EventItem {...mockProps} />);
