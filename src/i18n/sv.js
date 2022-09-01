@@ -456,6 +456,7 @@ const translations = {
     one {# tjänst}
     other {# tjänster}
   }`,
+  'unit.subgroup.title': 'See group specific contanct information', // TODO: Translate
   'unit.educationServices': 'Verksamhetsställets tjänster per läsår',
   'unit.educationServices.description': 'Läsåret {period}',
   'unit.educationServices.more': 'Visa fler tjänster ({count})',
