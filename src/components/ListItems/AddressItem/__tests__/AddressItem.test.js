@@ -1,12 +1,7 @@
 import React from 'react';
-import { ThemeProvider } from '@mui/material/styles';
-import { IntlProvider } from 'react-intl';
-import { Provider } from 'react-redux';
-import configureStore from 'redux-mock-store';
-import { render } from '@testing-library/react';
-import themes from '../../../../themes';
 import { initialState } from '../../../../redux/reducers/user';
 import AddressItem from '../index';
+import { getRenderWithProviders } from '../../../../../jestUtils';
 
 const mockData = {
   "name": {
@@ -23,36 +18,14 @@ const mockProps = {
   service: mockData,
 };
 
-// Mock props for intl provider
-const intlMock = {
-  locale: 'en',
-  messages: {},
-};
 
-const mockStore = configureStore([]);
-
-// eslint-disable-next-line react/prop-types
-const Providers = ({ children }) => {
-  const store = mockStore({
-    user: initialState,
-    settings: {},
-    service: {
-      current: null,
-    },
-  });
-
-  return (
-    <Provider store={store}>
-      <IntlProvider {...intlMock}>
-        <ThemeProvider theme={themes.SMTheme}>
-          {children}
-        </ThemeProvider>
-      </IntlProvider>
-    </Provider>
-  );
-};
-
-const renderWithProviders = component => render(component, { wrapper: Providers });
+const renderWithProviders = getRenderWithProviders({
+  user: initialState,
+  settings: {},
+  service: {
+    current: null,
+  },
+})
 
 describe('<AddressItem />', () => {
   it('should work', () => {

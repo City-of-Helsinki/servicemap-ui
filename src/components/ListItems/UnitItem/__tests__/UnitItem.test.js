@@ -1,12 +1,7 @@
 import React from 'react';
-import { ThemeProvider } from '@mui/material/styles';
-import { IntlProvider } from 'react-intl';
-import { Provider } from 'react-redux';
-import configureStore from 'redux-mock-store';
-import { render } from '@testing-library/react';
-import themes from '../../../../themes';
 import { initialState } from '../../../../redux/reducers/user';
 import UnitItem from '../index';
+import { getRenderWithProviders } from '../../../../../jestUtils';
 
 const mockData = {
   accessibility_properties: [],
@@ -29,39 +24,10 @@ const mockProps = {
   simpleItem: false,
 };
 
-// Mock props for intl provider
-const intlMock = {
-  locale: 'en',
-  messages: {
-    'unit.accessibility.noInfo': 'No info',
-    'unit.accessibility.ok': 'Accessibility ok',
-    'unit.accessibility.problems': '{count} accessibility problems'
-  },
-};
-
-// simpleItem={embeddedList} key={`unit-${id}`} className={`unit-${id}`} unit={item}
-
-const mockStore = configureStore([]);
-
-// eslint-disable-next-line react/prop-types
-const Providers = ({ children }) => {
-  const store = mockStore({
-    user: initialState,
-    settings: {},
-  });
-
-  return (
-    <Provider store={store}>
-      <IntlProvider {...intlMock}>
-        <ThemeProvider theme={themes.SMTheme}>
-          {children}
-        </ThemeProvider>
-      </IntlProvider>
-    </Provider>
-  );
-};
-
-const renderWithProviders = component => render(component, { wrapper: Providers });
+const renderWithProviders = getRenderWithProviders({
+  user: initialState,
+  settings: {},
+});
 
 describe('<UnitItem />', () => {
   it('should work', () => {
