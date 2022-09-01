@@ -21,6 +21,7 @@ import { geographicalDistricts } from '../../utils/districtDataHelper';
 import {
   SMAccordion,
 } from '../../../../components';
+import matomoTracker from '../../../../utils/tracking';
 
 
 const GeographicalTab = ({
@@ -63,6 +64,17 @@ const GeographicalTab = ({
     setOpenCategory(id);
     dispatch(handleOpenGeographicalCategory(id));
   };
+
+  const handleDistrictServicesButtonClick = () => {
+    // Track mobile map button clicks
+    if (matomoTracker) {
+      matomoTracker.trackEvent({
+        category: 'servicemap',
+        action: 'click-event',
+        name: 'area-view-district-services-accordion',
+      });
+    }
+  }
 
   const handleRadioChange = (district, e) => {
     e.stopPropagation();
@@ -167,7 +179,7 @@ const GeographicalTab = ({
                         className={classes.unitsAccordion}
                         adornment={<FormatListBulleted className={classes.iconPadding} />}
                         titleContent={(
-                          <Typography className={classes.captionText} variant="caption">
+                          <Typography className={classes.captionText} variant="caption" onClick={handleDistrictServicesButtonClick}>
                             <FormattedMessage
                               id={`area.geographicalServices.${district.id}`}
                               values={{ length: filteredSubdistrictUnitsLength }}

@@ -18,6 +18,7 @@ import MenuButton from './MenuButton';
 import SMLogo from './SMLogo';
 import { isHomePage } from '../../utils/path';
 import LanguageMenu from './LanguageMenu';
+import matomoTracker from '../../utils/tracking';
 
 const TopBar = (props) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -80,6 +81,16 @@ const TopBar = (props) => {
         classes={{ label: classes.buttonLabel }}
         onClick={(e) => {
           e.preventDefault();
+
+          // Track mobile map button clicks
+          if (matomoTracker) {
+            matomoTracker.trackEvent({
+              category: 'servicemap',
+              action: 'click-event',
+              name: 'mobile-map-button',
+            });
+          }
+
           if (settingsOpen) {
             toggleSettings();
           }
