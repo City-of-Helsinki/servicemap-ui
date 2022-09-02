@@ -182,7 +182,7 @@ const TopBar = (props) => {
         <AppBar className={classes.appBar}>
           {/* Toolbar black area */}
           <Toolbar className={toolbarBlackClass}>
-            <nav>
+            <nav aria-label={intl.formatMessage({ id: 'app.navigation.language' })}>
               <div className={classes.toolbarBlackContainer}>
                 <ButtonBase
                   aria-current={isOnHomePage ? 'page' : false}
@@ -219,7 +219,7 @@ const TopBar = (props) => {
                     {renderDrawerMenu(pageType)}
                   </MobileComponent>
                   <DesktopComponent>
-                    <nav>
+                    <nav aria-lablel={intl.formatMessage({ id: 'app.navigation.settings' })}className={classes.settingsButtonsContainer}>
                       {!smallScreen ? (
                         <div className={classes.settingsButtonsContainer}>
                           <Typography component="h2" style={visuallyHidden}>

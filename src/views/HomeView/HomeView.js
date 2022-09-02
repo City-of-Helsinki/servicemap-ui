@@ -11,6 +11,7 @@ import {
 import config from '../../../config';
 import { useNavigationParams } from '../../utils/address';
 import useLocaleText from '../../utils/useLocaleText';
+import { useIntl } from 'react-intl';
 
 const HomeView = (props) => {
   const {
@@ -18,6 +19,7 @@ const HomeView = (props) => {
   } = props;
 
   const getLocaleText = useLocaleText();
+  const { formatMessage } = useIntl()
   const getAddressNavigatorParams = useNavigationParams();
 
 
@@ -46,7 +48,7 @@ const HomeView = (props) => {
     return (
       <div className={classes.background}>
         <div className={classes.buttonContainer}>
-          <nav>
+          <nav aria-label={formatMessage({ id: `app.navigation.home` })}>
             {areaSelection}
             <PaperButton
               messageID="home.buttons.closeByServices"
