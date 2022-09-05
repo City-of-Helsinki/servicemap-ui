@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<UnitItem /> should work 1`] = `
+<div>
+  <li
+    class="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button ResultItem-listItem-3 css-16e6fe9-MuiButtonBase-root-MuiListItem-root"
+    role="link"
+    tabindex="0"
+  >
+    <div
+      class="MuiListItemIcon-root ResultItem-listItemIcon-4 css-cveggr-MuiListItemIcon-root"
+    >
+      <img
+        alt=""
+        aria-hidden="true"
+        class="Connect(UnitIcon)-icon-21 "
+        src="data:image/png;base64,00"
+      />
+    </div>
+    <div
+      class="ResultItem-itemTextContainer-10  "
+    >
+      <div
+        class="ResultItem-topRow-12"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body2 ResultItem-title-8 ResultItem-srOnly css-1ak20dk-MuiTypography-root"
+          style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
+        >
+          
+    Lippulaivan kirjasto 
+    Kunnallinen palvelu 
+     
+     
+    
+  
+        </p>
+        <p
+          aria-hidden="true"
+          class="MuiTypography-root MuiTypography-body2 ResultItem-title-8  Connect(UnitItem)-title-1  ResultItem-title css-1ak20dk-MuiTypography-root"
+          role="textbox"
+        >
+          Lippulaivan kirjasto
+        </p>
+      </div>
+      <div>
+        <div>
+          <p
+            aria-hidden="true"
+            class="MuiTypography-root MuiTypography-caption ResultItem-noMargin-9 ResultItem-text-17  ResultItem-subtitle css-r3hlsg-MuiTypography-root"
+          >
+            Kunnallinen palvelu
+          </p>
+        </div>
+      </div>
+    </div>
+  </li>
+  <li
+    aria-hidden="true"
+  >
+    <hr
+      class="MuiDivider-root MuiDivider-inset ResultItem-divider-18 css-uls1yk-MuiDivider-root"
+    />
+  </li>
+</div>
+`;
