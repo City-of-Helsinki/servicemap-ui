@@ -1,24 +1,21 @@
-import React, {
-  useEffect, useState, useRef, useCallback,
-} from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { ArrowDropUp, LocationOn } from '@material-ui/icons';
+import { AccessTime, ArrowDropUp, LocationOn } from '@material-ui/icons';
 import {
   Paper, List, Typography,
 } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import PreviousSearches from '../../PreviousSearches';
 import createSuggestions from '../../createSuggestions';
 import SuggestionItem from '../../../ListItems/SuggestionItem';
-import { keyboardHandler } from '../../../../utils';
+import { keyboardHandler, uppercaseFirst } from '../../../../utils';
 import { getIcon } from '../../../SMIcon';
 import { CloseSuggestionButton } from '../CloseSuggestionButton';
 import useLocaleText from '../../../../utils/useLocaleText';
 import UnitIcon from '../../../SMIcon/UnitIcon';
-import setSearchBarInitialValue from '../../../../redux/actions/searchBar';
-import { useNavigationParams } from '../../../../utils/address';
 import config from '../../../../../config';
+import { getPreviousSearches, removeSearchFromHistory, saveSearchToHistory } from '../../previousSearchData';
+import { useNavigationParams } from '../../../../utils/address';
 
 const suggestionCount = 8;
 
@@ -27,7 +24,6 @@ const SuggestionBox = (props) => {
     closeMobileSuggestions,
     visible,
     searchQuery,
-    handleArrowClick,
     handleSubmit,
     handleBlur,
     classes,
@@ -38,45 +34,29 @@ const SuggestionBox = (props) => {
   } = props;
 
   const [suggestions, setSuggestions] = useState(null);
+  const [history, setHistory] = useState(getPreviousSearches());
   const [loading, setLoading] = useState(false);
   const [suggestionError, setSuggestionError] = useState(false);
   // Query word on which suggestion list is based
   const [suggestionQuery, setSuggestionQuery] = useState(null);
 
-  const getAddressNavigatorParams = useNavigationParams();
   const dispatch = useDispatch();
   const getLocaleText = useLocaleText();
+  const getAddressNavigatorParams = useNavigationParams();
   const listRef = useRef(null);
   const fetchController = useRef(null);
 
-  const locale = useSelector(state => state.user.locale);
   const citySettings = useSelector((state) => {
     const { cities } = state.settings;
     return config.cities.filter(c => cities[c]);
   });
 
-  // const handleAreaItemClick = (area) => {
-  //   if (navigator) {
-  //     dispatch(setSelectedDistrictType(null));
-  //     navigator.push('area', area.id);
-  //   }
-  // };
-
   const getAddressText = (item) => {
     if (item.isExact) {
-      return getLocaleText(item.name);
+      return `${getLocaleText(item.name)}, ${getLocaleText(item.municipality.name)}`;
     }
-    return `${getLocaleText(item.street?.name)}, ${intl.formatMessage({ id: 'search.suggestions.addresses' })}`;
+    return `${getLocaleText(item.name)}, ${intl.formatMessage({ id: 'search.suggestions.addresses' })}`;
   };
-
-  const handleAddressItemClick = useCallback((item) => {
-    if (item.isExact) {
-      navigator.push('address', getAddressNavigatorParams(item));
-    } else {
-      navigator.push('search', { q: getLocaleText(item.street?.name), t: 'addresses' });
-    }
-    handleBlur();
-  }, [handleBlur, navigator, getLocaleText]);
 
 
   // Component mount action
@@ -88,16 +68,15 @@ const SuggestionBox = (props) => {
       }
     }), []);
 
-  /* TODO: Utilize city information with search queries
-  let cities = []
-  config.cities.forEach((city) => {
-    cities.push( ...settings[city] ? [city] : []);
-  });
-  */
 
   const resetSuggestions = () => {
     setSuggestions(null);
     setSuggestionError(false);
+  };
+
+  const handleRemovePrevious = (suggestion) => {
+    const callback = () => setHistory(getPreviousSearches());
+    removeSearchFromHistory(suggestion, callback);
   };
 
   const generateSuggestions = (query) => {
@@ -116,7 +95,6 @@ const SuggestionBox = (props) => {
         fetchController.current,
         getLocaleText,
         citySettings,
-        locale,
       ))
         .then((data) => {
           if (data === 'error') {
@@ -141,18 +119,6 @@ const SuggestionBox = (props) => {
     }
   };
 
-  const renderSearchHistory = () => (
-    <>
-      <PreviousSearches
-        className={classes.infoText}
-        handleArrowClick={handleArrowClick}
-        focusIndex={focusedSuggestion}
-        listRef={listRef}
-        onClick={val => handleSubmit(val)}
-      />
-    </>
-  );
-
   const renderNoResults = () => (
     <>
       <Typography align="left" className={classes.infoText}>
@@ -169,52 +135,94 @@ const SuggestionBox = (props) => {
     </>
   );
 
-  const renderSuggestionList = (suggestionList) => {
+  const renderSuggestionList = (type = 'suggestion') => {
     const suggestionConfig = {
       address: {
-        icon: <LocationOn className={classes.areaIcon} />,
-        onClick: item => handleAddressItemClick(item),
         text: item => getAddressText(item),
+        icon: <LocationOn className={classes.areaIcon} />,
+        onClick: (item) => {
+          handleBlur();
+          saveSearchToHistory(getAddressText(item), item);
+          if (item.isExact) {
+            navigator.push('address', getAddressNavigatorParams(item));
+          } else {
+            navigator.push('search', { address: getLocaleText(item.name) });
+          }
+        },
       },
       unit: {
-        icon: <UnitIcon />,
-        onClick: item => navigator.push('unit', { id: item.id }),
         text: item => getLocaleText(item.name),
+        icon: <UnitIcon />,
+        onClick: (item) => {
+          saveSearchToHistory(getLocaleText(item.name), item);
+          navigator.push('unit', { id: item.id });
+        },
       },
       service: {
+        text: item => getLocaleText(item.name),
         icon: getIcon('serviceDark'),
         onClick: (item) => {
           handleBlur();
-          navigator.push('search', { serviceId: item.id });
+          saveSearchToHistory(getLocaleText(item.name), item);
+          navigator.push('search', { service_id: item.id });
         },
-        text: item => getLocaleText(item.name),
       },
       servicenode: {
+        text: item => getLocaleText(item.name),
         icon: getIcon('serviceDark'),
         onClick: (item) => {
           handleBlur();
+          saveSearchToHistory(getLocaleText(item.name), item);
           navigator.push('search', { service_node: item.ids.join(',') });
         },
-        text: item => getLocaleText(item.name),
+      },
+      searchHistory: {
+        text: item => item.text,
+        icon: <AccessTime />,
+        onClick: (item) => {
+          handleBlur();
+          handleSubmit(item.text);
+        },
       },
     };
 
-    // Order suggestion types and slice list
-    const addresses = suggestionList.filter(item => item.object_type === 'address');
-    const units = suggestionList.filter(item => item.object_type === 'unit');
-    const services = suggestionList.filter(item => item.object_type === 'service');
-    const servicenodes = suggestionList.filter(item => item.object_type === 'servicenode');
+    let listId;
+    let suggestionList = [];
 
-    const orderedSuggestions = [
-      ...addresses,
-      ...servicenodes,
-      ...services,
-      ...units,
-    ].slice(0, suggestionCount);
+    // Define if component should show search history or search suggestions
+    if (type === 'history') {
+      listId = 'PreviousList';
+      suggestionList = history;
+    } else {
+      listId = 'SuggestionList';
+      // Order suggestion types and slice list
+      const addresses = suggestions.filter(item => item.object_type === 'address');
+      const units = suggestions.filter(item => item.object_type === 'unit');
+      const services = suggestions.filter(item => item.object_type === 'service');
+      const servicenodes = suggestions.filter(item => item.object_type === 'servicenode');
+
+      const orderedSuggestions = [
+        ...addresses,
+        ...servicenodes,
+        ...services,
+        ...units,
+      ].slice(0, suggestionCount);
+
+      suggestionList = orderedSuggestions;
+    }
+
+    // If no searches in search history, display info text
+    if (type === 'history' && !suggestionList.length) {
+      return (
+        <Typography align="left" aria-live="polite" className={classes.infoText}>
+          <FormattedMessage id="search.suggestions.noHistory" />
+        </Typography>
+      );
+    }
 
     return (
-      <List role="listbox" id="SuggestionList" className="suggestionList" ref={listRef}>
-        {orderedSuggestions.map((suggestion, i) => {
+      <List role="listbox" id={listId} className="suggestionList" ref={listRef}>
+        {suggestionList.map((suggestion, i) => {
           const conf = suggestionConfig[suggestion.object_type];
           if (!conf) return null;
           const text = conf.text(suggestion);
@@ -222,19 +230,16 @@ const SuggestionBox = (props) => {
           return (
             <SuggestionItem
               id={`suggestion${i}`}
-              key={suggestion.id || suggestion.name.fi}
-              className={conf.className ? 'AddressSuggestion' : ''}
+              key={suggestion.id || text}
               role="option"
               selected={i === focusedSuggestion}
               icon={conf.icon}
-              text={text}
-              handleItemClick={() => {
-                const searchValue = suggestion.object_type === 'address' && !suggestion.isExact
-                  ? getLocaleText(suggestion.street.name)
-                  : text;
-                dispatch(setSearchBarInitialValue(searchValue));
-                conf.onClick(suggestion);
-              }}
+              text={uppercaseFirst(text)}
+              handleItemClick={() => conf.onClick(suggestion)}
+              handleRemoveClick={type === 'history'
+                ? () => handleRemovePrevious(suggestion)
+                : null
+              }
               divider
               isMobile
               query={suggestionQuery}
@@ -308,7 +313,7 @@ const SuggestionBox = (props) => {
     let component = null;
     let srText = null;
     if (suggestions) {
-      component = renderSuggestionList(suggestions);
+      component = renderSuggestionList('suggestion');
       srText = intl.formatMessage({ id: 'search.suggestions.suggestions' }, { count: suggestions.length });
     } else if (loading) {
       component = renderLoading();
@@ -317,7 +322,7 @@ const SuggestionBox = (props) => {
       component = renderNoResults();
       srText = intl.formatMessage({ id: 'search.suggestions.error' });
     } else {
-      component = renderSearchHistory();
+      component = renderSuggestionList('history');
     }
 
     const containerStyles = isMobile
@@ -343,7 +348,6 @@ SuggestionBox.propTypes = {
   closeMobileSuggestions: PropTypes.func,
   visible: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   searchQuery: PropTypes.string,
-  handleArrowClick: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   handleBlur: PropTypes.func.isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,

@@ -8,17 +8,16 @@ import {
   Search, Cancel,
 } from '@material-ui/icons';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { useDispatch, useSelector } from 'react-redux';
-import { useRouteMatch } from 'react-router-dom';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import BackButton from '../BackButton';
-import { keyboardHandler, parseSearchParams, uppercaseFirst } from '../../utils';
+import { keyboardHandler, uppercaseFirst, useQuery } from '../../utils';
 import SuggestionBox from './components/SuggestionBox';
 import MobileComponent from '../MobileComponent';
 import DesktopComponent from '../DesktopComponent';
 import { CloseSuggestionButton } from './components/CloseSuggestionButton';
-import setSearchBarInitialValue from '../../redux/actions/searchBar';
 import paths from '../../../config/paths';
+import useLocaleText from '../../utils/useLocaleText';
+import { getPreviousSearches } from './previousSearchData';
 
 let blurTimeout = null;
 
@@ -44,9 +43,9 @@ const SearchBarComponent = ({
   const [isActive, setIsActive] = useState(false);
   const [focusedSuggestion, setFocusedSuggestion] = useState(null);
   const [updateCount, setUpdateCount] = useState(0);
-  const initialSearchValue = useSelector(state => state.searchBarInitialValue);
-  const dispatch = useDispatch();
+  const getLocaleText = useLocaleText();
   const location = useLocation();
+  const queryParams = useQuery();
   const searchRef = useRef();
 
   const setSearchbarValue = (value) => {
@@ -59,18 +58,39 @@ const SearchBarComponent = ({
   }, []);
 
   useEffect(() => {
-    // If mounting search page with no initial search bar value, use value from url
+    // If mounting search page show correct search text in searchbar
     const isSearchPage = paths.search.regex.test(location.pathname);
-    if (!initialSearchValue && isSearchPage) {
-      const searchParams = parseSearchParams(location.search);
-      // if (searchParams?.q)
-      if (searchParams?.q) {
-        const searchText = uppercaseFirst(searchParams.q);
-        setSearchbarValue(searchText);
-        dispatch(setSearchBarInitialValue(searchText));
+    if (isSearchPage) {
+      if (queryParams.q) {
+        setSearchbarValue(queryParams.q);
+        return;
+      }
+
+      const history = getPreviousSearches();
+      // Get correct history item by comparing url params to search history entries
+      const historyItem = history.find((item) => {
+        if (queryParams.address) {
+          return item.object_type === 'address' && getLocaleText(item.name) === queryParams.address;
+        }
+        if (queryParams.service_id) {
+          return item.object_type === 'service' && item.id.toString() === queryParams.service_id;
+        }
+        if (queryParams.service_node) {
+          return item.object_type === 'servicenode' && item.ids.toString() === queryParams.service_node;
+        }
+        return null;
+      });
+
+      if (historyItem) {
+        let text = historyItem.name ? getLocaleText(historyItem.name) : historyItem.searchText;
+        if (queryParams.address) {
+          // Remove extra text from address suggestion text
+          [text] = text.split(',');
+        }
+        setSearchbarValue(uppercaseFirst(text));
       }
     }
-  }, []);
+  }, [queryParams]);
 
   const forceUpdate = () => {
     setUpdateCount(updateCount + 1);
@@ -136,7 +156,6 @@ const SearchBarComponent = ({
 
       if (searchQuery !== previousSearch) {
         setSearchbarValue(searchQuery); // Change current search text to new one
-        dispatch(setSearchBarInitialValue(searchQuery));
         fetchSearchResults({ q: searchQuery });
         changeSelectedUnit(null);
       }
@@ -258,7 +277,6 @@ const SearchBarComponent = ({
           type="text"
           inputRef={searchRef}
           className={classes.input}
-          defaultValue={initialSearchValue || ''}
           classes={{ focused: classes.fieldFocus }}
           onChange={() => {
             if (focusedSuggestion) {
@@ -283,7 +301,6 @@ const SearchBarComponent = ({
                       searchRef.current.focus();
                     }
                     setSearchbarValue('');
-                    dispatch(setSearchBarInitialValue(null));
                   }}
                 >
                   <Cancel />
