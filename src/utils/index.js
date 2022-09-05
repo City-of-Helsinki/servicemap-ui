@@ -1,5 +1,7 @@
 /* eslint-disable camelcase */
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useMemo } from 'react';
+import { useLocation } from 'react-router-dom';
 import URI from 'urijs';
 import config from '../../config';
 
@@ -53,6 +55,19 @@ export const stringifySearchParams = (searchParams) => {
   const string = searchParamsObject.toString().replace(/[+]/g, ' ');
 
   return string;
+};
+
+// Custom hook for getting url query parameters as object
+export const useQuery = () => {
+  const { search } = useLocation();
+  return useMemo(() => {
+    const queryParams = new URLSearchParams(search);
+    const queryObject = {};
+    queryParams.forEach((value, key) => {
+      queryObject[key] = value;
+    });
+    return queryObject;
+  }, [search]);
 };
 
 // Keyboard handler
