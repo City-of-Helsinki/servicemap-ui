@@ -510,7 +510,7 @@ const translations = {
   'search.suggestions.loading': 'Ladataan ehdotuksia',
   'search.suggestions.error': 'Ei ehdotuksia',
   'search.suggestions.areas': 'Näytä alueet',
-  'search.suggestions.addresses': 'Näytä osoitteet',
+  'search.suggestions.addresses': 'Hae osoitteella',
   'search.suggestions.suggestions': '{count} hakuehdotusta',
   // 'search.suggestions.expandSuggestions': '{count} tarkennusehdotusta',
   'search.suggestions.results': '{count} tulosta',
