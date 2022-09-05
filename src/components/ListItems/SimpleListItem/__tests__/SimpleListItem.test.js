@@ -1,23 +1,15 @@
 // Link.react.test.js
 import React from 'react';
-import { ThemeProvider } from '@mui/material/styles';
-import { fireEvent, render } from '@testing-library/react';
-import themes from '../../../../themes';
+import { fireEvent } from '@testing-library/react';
 import SimpleListItem from '../index';
+import { getRenderWithProviders } from '../../../../../jestUtils';
 
 // Generic required props for SimpleListItem
 const mockProps = {
   text: 'Title text',
 };
 
-// eslint-disable-next-line react/prop-types
-const Providers = ({ children }) => (
-  <ThemeProvider theme={themes.SMTheme}>
-    {children}
-  </ThemeProvider>
-);
-
-const renderWithProviders = component => render(component, { wrapper: Providers });
+const renderWithProviders = getRenderWithProviders({});
 
 describe('<SimpleListItem />', () => {
   it('should work', () => {

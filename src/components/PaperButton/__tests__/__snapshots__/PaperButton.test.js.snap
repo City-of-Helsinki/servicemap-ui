@@ -6,7 +6,7 @@ exports[`<PaperButton /> should work 1`] = `
     class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 Container-root-9 Container-margin-11   SM-PaperButton PaperButton-container-1    css-1ps6pg7-MuiPaper-root"
   >
     <button
-      aria-label="Näytä lähellä olevat palvelut Sijaintia ei sallittu "
+      aria-label="Show nearby services Location not allowed "
       class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root PaperButton-iconButton-3 css-1p2nkht-MuiButtonBase-root-MuiButton-root"
       role="link"
       tabindex="0"
@@ -58,13 +58,13 @@ exports[`<PaperButton /> should work 1`] = `
           aria-hidden="true"
           class="MuiTypography-root MuiTypography-body2 PaperButton-text-7 css-1ak20dk-MuiTypography-root"
         >
-          Näytä lähellä olevat palvelut
+          Show nearby services
         </p>
         <span
           aria-hidden="true"
           class="MuiTypography-root MuiTypography-caption PaperButton-text-7 css-r3hlsg-MuiTypography-root"
         >
-          Sijaintia ei sallittu
+          Location not allowed
         </span>
       </div>
     </button>

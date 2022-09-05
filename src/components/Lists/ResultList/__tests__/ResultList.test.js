@@ -1,13 +1,8 @@
 // Link.react.test.js
 import React from 'react';
-import { ThemeProvider } from '@mui/material/styles';
-import { IntlProvider } from 'react-intl';
-import { Provider } from 'react-redux';
-import configureStore from 'redux-mock-store';
-import { render } from '@testing-library/react';
-import themes from '../../../../themes';
 import ResultList from '../ResultList';
 import { initialState } from '../../../../redux/reducers/user';
+import { getRenderWithProviders } from '../../../../../jestUtils';
 
 const mockData = [
   {
@@ -53,36 +48,10 @@ const mockProps = {
   titleComponent: 'h3',
 };
 
-// Mock props for intl provider
-const intlMock = {
-  locale: 'en',
-  messages: {
-    'search.resultList': 'Search result text',
-    'general.pagination.pageCount': 'Page {current} of {max}',
-  },
-};
-
-const mockStore = configureStore([]);
-
-// eslint-disable-next-line react/prop-types
-const Providers = ({ children }) => {
-  const store = mockStore({
-    user: initialState,
-    settings: {},
-  });
-
-  return (
-    <Provider store={store}>
-      <IntlProvider {...intlMock}>
-        <ThemeProvider theme={themes.SMTheme}>
-          {children}
-        </ThemeProvider>
-      </IntlProvider>
-    </Provider>
-  );
-};
-
-const renderWithProviders = component => render(component, { wrapper: Providers });
+const renderWithProviders = getRenderWithProviders({
+  user: initialState,
+  settings: {},
+});
 
 describe('<ResultList />', () => {
   it('should work', () => {

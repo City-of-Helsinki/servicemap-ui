@@ -1,29 +1,12 @@
 // Link.react.test.js
 import React from 'react';
-import { IntlProvider } from 'react-intl';
-import { fireEvent, render } from '@testing-library/react';
-import { ThemeProvider } from '@mui/material/styles';
+import { fireEvent } from '@testing-library/react';
 import MeasuringStopButton from '../index';
-import themes from '../../../../themes';
-import finnishTranslations from '../../../../i18n/fi';
+import { getRenderWithProviders } from '../../../../../jestUtils';
+import englishTranslations from '../../../../i18n/en';
 
-// Mock props for intl provider
-const intlMock = {
-  locale: 'fi',
-  messages: finnishTranslations,
-  wrapRichTextChunksInFragment: false,
-};
 
-// eslint-disable-next-line react/prop-types
-const Providers = ({ children }) => (
-  <IntlProvider {...intlMock}>
-    <ThemeProvider theme={themes.SMTheme}>
-      {children}
-    </ThemeProvider>
-  </IntlProvider>
-);
-
-const renderWithProviders = component => render(component, { wrapper: Providers });
+const renderWithProviders = getRenderWithProviders({});
 
 describe('<MeasuringStopButton />', () => {
   it('should work', () => {
@@ -50,7 +33,7 @@ describe('<MeasuringStopButton />', () => {
     );
     const buttonBase = getByRole('button');
     const p = buttonBase.querySelector('p');
-    const contentText = finnishTranslations['tool.measuring.stop'];
+    const contentText = englishTranslations['tool.measuring.stop'];
     // Expect aria-label to be same as text content
     expect(buttonBase).toHaveAttribute('aria-label', contentText);
     // Expect aria-hidden to be false Eficode report 05-2022 page 47
