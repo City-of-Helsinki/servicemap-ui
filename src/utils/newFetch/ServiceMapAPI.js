@@ -12,7 +12,7 @@ export default class ServiceMapAPI extends HttpClient {
     super(config.serviceMapAPI.root);
   }
 
-  search = async (query, additionalOptions) => {
+  search = async (query, additionalOptions, concurrentSearch) => {
     if (typeof query !== 'string') {
       throw new APIFetchError('Invalid query string provided to ServiceMapAPI search method');
     }
@@ -22,16 +22,19 @@ export default class ServiceMapAPI extends HttpClient {
       limit: 2000,
       unit_limit: 2000,
       service_limit: 500,
-      address_limit: 500,
+      address_limit: 700,
       ...additionalOptions,
     };
 
     /* TODO: should use getConcurrent here instead.
     Progress updater needs to be updated to allow concurrency first. */
-    return this.get('search', options);
+    if (concurrentSearch) {
+      return this.getConcurrent('search', options);
+    }
+    return this.getConcurrent('search', options);
   }
 
-  serviceNodeSearch = async (idList) => {
+  serviceNodeSearch = async (idList, additionalOptions) => {
     if (typeof idList !== 'string') {
       throw new APIFetchError('Invalid query string provided to ServiceMapAPI search method');
     }
@@ -42,6 +45,7 @@ export default class ServiceMapAPI extends HttpClient {
       geometry: true,
       include: 'service_nodes,services,accessibility_properties,department',
       service_node: idList,
+      ...additionalOptions,
     };
 
     /* TODO: should use getConcurrent here instead.
@@ -49,7 +53,7 @@ export default class ServiceMapAPI extends HttpClient {
     return this.get('unit', options);
   }
 
-  serviceUnits = async (serviceId) => {
+  serviceUnits = async (serviceId, additionalOptions) => {
     if (typeof serviceId !== 'string') {
       throw new APIFetchError('Invalid id string provided to ServiceMapAPI serviceUnits method');
     }
@@ -60,6 +64,7 @@ export default class ServiceMapAPI extends HttpClient {
       page_size: 200,
       only: 'street_address,name,accessibility_shortcoming_count,location,municipality,contract_type',
       geometry: true,
+      ...additionalOptions,
     };
 
     /* TODO: should use getConcurrent here instead.
@@ -137,5 +142,17 @@ export default class ServiceMapAPI extends HttpClient {
     };
 
     return this.getSinglePage('administrative_division', options);
+  }
+
+  units = async (additionalOptions) => {
+    const options = {
+      page_size: 200,
+      only: 'street_address,location,name,municipality,accessibility_shortcoming_count,service_nodes,contract_type',
+      include: 'service_nodes,services,accessibility_properties,department',
+      geometry: true,
+      ...additionalOptions,
+    };
+
+    return this.getConcurrent('unit', options);
   }
 }
