@@ -557,6 +557,7 @@ const translations = {
   'services.search.sr.selected': 'Sök med tjänsterna: {services}',
   'services.category.select': 'Alla',
   'services.category.open': 'Öppna kategori',
+  'services.info': 'Before you can perform a search you must choose atleast one search criteria from service tree', // TODO translate
   'services.tree.level': 'Nivå',
 
   // Settings

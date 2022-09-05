@@ -556,6 +556,7 @@ const translations = {
   'services.search.sr.selected': 'Perform search with services: {services}',
   'services.category.select': 'All',
   'services.category.open': 'Open category',
+  'services.info': 'Before you can perform a search you must choose atleast one search criteria from service tree',
   'services.tree.level': 'Level',
 
   // Settings
