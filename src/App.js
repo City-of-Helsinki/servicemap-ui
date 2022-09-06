@@ -8,6 +8,7 @@ import withStyles from 'isomorphic-style-loader/withStyles';
 import {
   Switch, Route, BrowserRouter,
 } from 'react-router-dom';
+import { StyledEngineProvider } from '@mui/material';
 import styles from './index.css';
 import SMFonts from './service-map-icons.css';
 import HSLFonts from './hsl-icons.css';
@@ -34,7 +35,6 @@ import ThemeWrapper from './themes/ThemeWrapper';
 import LocaleUtility from './utils/locale';
 import config from '../config';
 import ogImage from './assets/images/servicemap-meta-img.png';
-import { StyledEngineProvider } from '@mui/material';
 
 // General meta tags for app
 const MetaTags = () => {
@@ -67,7 +67,7 @@ class App extends React.Component {
     const intlData = LocaleUtility.intlData(locale);
 
     return (
-      <StyledEngineProvider injectFirst>
+      <StyledEngineProvider>
         <ThemeWrapper>
           <IntlProvider {...intlData}>
             <MetaTags />

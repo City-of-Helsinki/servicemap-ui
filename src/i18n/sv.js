@@ -233,7 +233,9 @@ const translations = {
   'feedback.sending': 'Sänder...',
   'feedback.send.error': 'Skicka respons. Obligatoriska fält måste fyllas i',
   'feedback.error.required': 'Obligatoriskt fält',
-  'feedback.srError.required': 'Respons måste fyllas i',
+  'feedback.error.email.invalid': 'E-postadressen ska skrivas i rätt form.',
+  'feedback.srError.email.invalid': 'E-postadressen är felaktig. Korrigera adressen.',
+  'feedback.srError.feedback.required': 'Responsen fattas. Skriv din respons.',
   'feedback.modal.confirm': 'OK',
   'feedback.modal.leave': 'Är du säker på att du vill lämna den här sidan?',
   'feedback.modal.success': 'Tack för din respons!',
@@ -277,6 +279,7 @@ const translations = {
   'general.closeSettings': 'Stäng inställningarna',
   'general.fetching': 'Laddar data...',
   'general.home': 'Hem',
+  'general.home.logo.ariaLabel': 'Servicekarta - Gå till startsidan',
   'general.noData': 'Data finns inte',
   'general.news.alert.title': 'Meddelandefönster',
   'general.news.alert.close.aria': 'Stäng meddelandefönstret',
@@ -614,7 +617,7 @@ const translations = {
 
   // Tools
   'tool.download': 'Exportera',
-  'tool.measuring': 'Mät avstånd (endast med mus)',
+  'tool.measuring': 'Mät avstånd (granskas endast visuellt och med mus)',
   'tool.measuring.stop': 'Sluta mäta',
   'tool.print': 'Skriv ut',
 

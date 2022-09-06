@@ -5,7 +5,7 @@ exports[`<DrawerButton /> should work 1`] = `
   <button
     aria-hidden="true"
     aria-label="Drawer button text"
-    class="MuiButtonBase-root DrawerButton-drawerButton-4  css-194wrg2-MuiButtonBase-root"
+    class="MuiButtonBase-root DrawerButton-drawerButton-4  css-fvdnvy-MuiButtonBase-root"
     role="link"
     tabindex="-1"
     type="button"

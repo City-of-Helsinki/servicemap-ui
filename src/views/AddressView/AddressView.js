@@ -250,6 +250,7 @@ const AddressView = (props) => {
               setDistrictAddressData({ address: addressData });
               navigator.push('area');
             }}
+            id="areaViewLink"
           >
             <Typography align="left" variant="body2">
               <FormattedMessage id="address.area.link" />

@@ -55,8 +55,7 @@ const EmbedderView = ({
   let { url } = data;
   const { ratio } = data;
   if (url) {
-    const parameters = smurl.explode(url);
-    url = smurl.strip(url, parameters);
+    url = smurl.strip(url);
   }
   let search = {};
   if (url) {
@@ -225,6 +224,9 @@ const EmbedderView = ({
   ]);
 
   const showCities = (embedUrl) => {
+    if (typeof embedUrl !== 'string') {
+      return false;
+    }
     const originalUrl = embedUrl.replace('/embed', '');
     let show = true;
     hideCitiesIn.forEach((r) => {
@@ -236,6 +238,9 @@ const EmbedderView = ({
   };
 
   const showServices = (embedUrl) => {
+    if (typeof embedUrl !== 'string') {
+      return false;
+    }
     const originalUrl = embedUrl.replace('/embed', '');
     let show = true;
     hideServicesIn.forEach((r) => {

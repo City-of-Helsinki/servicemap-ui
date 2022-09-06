@@ -26,13 +26,13 @@ const styles = theme => ({
     paddingBottom: theme.spacing(1),
   },
   link: {
-    color: '#0000EE',
+    color: theme.palette.link.main,
   },
   linkButton: {
     padding: theme.spacing(2),
     paddingTop: 0,
     fontSize: '1rem',
-    color: '#0000EE',
+    color: theme.palette.link.main,
     textDecoration: 'underline',
   },
 });

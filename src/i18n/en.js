@@ -232,7 +232,9 @@ const translations = {
   'feedback.sending': 'Sending...',
   'feedback.send.error': 'Send feedback. Mandatory field is empty',
   'feedback.error.required': 'Mandatory field',
-  'feedback.srError.required': 'Feedback is required',
+  'feedback.error.email.invalid': 'The email must be written correctly.',
+  'feedback.srError.email.invalid': 'The email is faulty. Please correct it.',
+  'feedback.srError.feedback.required': 'No feedback submitted. Please write your feedback.',
   'feedback.modal.confirm': 'OK',
   'feedback.modal.leave': 'Are you sure you want to leave the page?',
   'feedback.modal.success': 'Thank you for your feedback!',
@@ -276,6 +278,7 @@ const translations = {
   'general.closeSettings': 'Close settings',
   'general.fetching': 'Loading data...',
   'general.home': 'Home',
+  'general.home.logo.ariaLabel': 'Servicemap - Go to home page',
   'general.noData': 'No data available',
   'general.news.alert.title': 'Notification window',
   'general.news.alert.close.aria': 'Close notification window',
@@ -613,7 +616,7 @@ const translations = {
 
   // Tools
   'tool.download': 'Download data',
-  'tool.measuring': 'Measure distance (mouse only)',
+  'tool.measuring': 'Measure distance (accessible only visually and with a mouse)',
   'tool.measuring.stop': 'Stop measuring',
   'tool.print': 'Print',
 

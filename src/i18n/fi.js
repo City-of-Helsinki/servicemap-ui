@@ -232,7 +232,9 @@ const translations = {
   'feedback.sending': 'Lähetetään...',
   'feedback.send.error': 'Lähetä palaute. Pakollinen kenttä täyttämättä',
   'feedback.error.required': 'Pakollinen kenttä',
-  'feedback.srError.required': 'Palaute ei saa olla tyhjä',
+  'feedback.error.email.invalid': 'Sähköpostin pitää olla oikeassa muodossa',
+  'feedback.srError.email.invalid': 'Sähköpostiosoite on virheellinen. Korjaa sähköpostiosoite.',
+  'feedback.srError.feedback.required': 'Palaute puuttuu. Kirjoita palaute.',
   'feedback.modal.confirm': 'OK',
   'feedback.modal.leave': 'Haluatko varmasti poistua tältä sivulta?',
   'feedback.modal.success': 'Kiitos palautteestasi!',
@@ -276,6 +278,7 @@ const translations = {
   'general.closeSettings': 'Sulje asetukset',
   'general.fetching': 'Ladataan tietoja...',
   'general.home': 'Koti',
+  'general.home.logo.ariaLabel': 'Palvelukartta - Siirry etusivulle',
   'general.noData': 'Tietoa ei saatavilla',
   'general.news.alert.title': 'Ilmoitusikkuna',
   'general.news.alert.close.aria': 'Sulje ilmoitusikkuna',
@@ -616,7 +619,7 @@ const translations = {
 
   // Tools
   'tool.download': 'Lataa tiedot',
-  'tool.measuring': 'Mittaa etäisyys (käytettävissä vain hiirellä)',
+  'tool.measuring': 'Mittaa etäisyys (käytettävissä vain näönvaraisesti hiirellä)',
   'tool.measuring.stop': 'Lopeta mittaus',
   'tool.print': 'Tulosta',
 

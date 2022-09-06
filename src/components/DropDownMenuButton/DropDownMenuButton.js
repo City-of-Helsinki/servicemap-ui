@@ -18,17 +18,28 @@ class DropDownMenuButton extends React.Component {
     this.setState(state => ({ open: !state.open }));
   };
 
-  handleClose = (event) => {
-    if (this.anchorEl.contains(event.target)) {
-      return;
-    }
+  handleClose = (event, refocus = false) => {
 
     this.setState({ open: false });
+    // If refocus set to true focus back to DropDownMenuButton
+    if (refocus && this.anchorEl) {
+      this.anchorEl.focus();
+    }
   };
 
   handleItemClick = (event, item) => {
     this.handleClose(event);
     item.onClick();
+  }
+
+  // Menu should close if user leaves the selection area
+  closeMenuOnFocusExit = (event) => {
+    const { menuItems } = this.props;
+    const menuItemIds = menuItems.map(v => v.id);
+
+    if (!menuItemIds.includes(event?.relatedTarget.id)) {
+      this.handleClose(event);
+    }
   }
 
   renderMenu = () => {
@@ -46,13 +57,16 @@ class DropDownMenuButton extends React.Component {
           {
             menuItems.map(v => (
               <ButtonBase
+                id={v.id}
                 key={v.key}
                 className={classes.menuItem}
                 role="link"
                 onClick={e => this.handleItemClick(e, v)}
-                onKeyPress={e => keyboardHandler(this.handleItemClick(e, v), ['space', 'enter'])}
+                onKeyDown={keyboardHandler(e => this.handleClose(e, true), ['esc'])}
+                onKeyPress={keyboardHandler(this.handleItemClick, ['space', 'enter'])}
+                onBlur={this.closeMenuOnFocusExit}
                 component="span"
-                tabIndex="0"
+                tabIndex={0}
                 aria-hidden={v.ariaHidden}
               >
                 <span>{v.icon}</span>
@@ -84,7 +98,13 @@ class DropDownMenuButton extends React.Component {
           aria-controls={open ? panelID : undefined}
           aria-haspopup="true"
           aria-expanded={open}
+          onBlur={this.closeMenuOnFocusExit}
           onClick={this.handleToggle}
+          onKeyDown={(e) => {
+            if (open) {
+              keyboardHandler(this.handleClose, ['esc'])(e);
+            }
+          }}
           className={classes.button}
         >
           {
@@ -117,6 +137,7 @@ DropDownMenuButton.propTypes = {
   id: PropTypes.string,
   menuItems: PropTypes.arrayOf(PropTypes.shape({
     key: PropTypes.string.isRequired,
+    id: PropTypes.string,
     text: PropTypes.string.isRequired,
     onClick: PropTypes.func.isRequired,
   })).isRequired,

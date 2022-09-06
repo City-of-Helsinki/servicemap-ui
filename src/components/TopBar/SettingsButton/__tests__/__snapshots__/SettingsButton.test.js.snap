@@ -3,11 +3,12 @@
 exports[`<SettingsButton /> should work 1`] = `
 <div>
   <button
+    aria-current="page"
     aria-haspopup="dialog"
     class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root 
     undefined 
     
-   css-w2lxu-MuiButtonBase-root-MuiButton-root"
+   css-1p2nkht-MuiButtonBase-root-MuiButton-root"
     id="SettingsButtoncitySettings"
     role="button"
     tabindex="0"
@@ -19,7 +20,7 @@ exports[`<SettingsButton /> should work 1`] = `
       City settings
     </p>
     <p
-      class="MuiTypography-root MuiTypography-body2 SettingsText-text-3 css-1ak20dk-MuiTypography-root"
+      class="MuiTypography-root MuiTypography-body2 SettingsTextCurrentSettings SettingsText-text-3 css-1ak20dk-MuiTypography-root"
     >
       Cities all
     </p>
