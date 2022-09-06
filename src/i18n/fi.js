@@ -559,6 +559,7 @@ const translations = {
   'services.search.sr.selected': 'Tee haku palveluilla: {services}',
   'services.category.select': 'Kaikki',
   'services.category.open': 'Avaa kategoria',
+  'services.info': 'Valitse vähintään yksi palvelu alla olevasta palveluluettelosta, että voit suorittaa haun.',
   'services.tree.level': 'Taso',
 
   // Settings
