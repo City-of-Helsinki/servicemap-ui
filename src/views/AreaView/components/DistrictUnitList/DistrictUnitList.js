@@ -90,14 +90,18 @@ const DistrictUnitList = (props) => {
       sortByOriginID(cityFilteredDistricts);
     }
 
-    const unitList = [];
+    let unitList = [];
     cityFilteredDistricts.forEach((obj) => {
       let localArea = false;
       if (selectedAddress && addressDistrict?.id === obj.id) {
         localArea = true;
       }
       if (obj.units?.length) {
-        obj.units.forEach((unit) => { unit.localUnit = localArea; });
+        obj.units
+          .filter(unit => typeof unit === 'object')
+          .forEach((unit) => {
+            unit.localUnit = localArea;
+          });
         unitList.push(...obj.units);
       } else if (obj.unit) {
         obj.unit.localUnit = localArea;
@@ -112,6 +116,9 @@ const DistrictUnitList = (props) => {
         });
       }
     });
+
+    // Filter out non unit objects
+    unitList = unitList.filter(u => typeof u === 'object' && typeof u.id === 'number');
 
     if (selectedAddress && addressDistrict) {
       unitList.forEach((unit) => {
