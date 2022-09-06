@@ -47,7 +47,7 @@ export default theme => ({
     padding: theme.spacing(0.5),
     textTransform: 'none',
     '& svg': {
-      fontSize: 28,
+      fontSize: '1.75rem',
     },
   },
   iconButtonSearchLabel: {

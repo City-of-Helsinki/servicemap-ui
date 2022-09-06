@@ -9,7 +9,7 @@ const styles = theme => ({
     textAlign: 'left',
     '& h3': {
       fontWeight: 'bold',
-      fontSize: 17,
+      fontSize: '1.063rem',
       padding: theme.spacing(2),
       paddingBottom: theme.spacing(1),
     },
@@ -31,7 +31,7 @@ const styles = theme => ({
   linkButton: {
     padding: theme.spacing(2),
     paddingTop: 0,
-    fontSize: 16,
+    fontSize: '1rem',
     color: theme.palette.link.main,
     textDecoration: 'underline',
   },

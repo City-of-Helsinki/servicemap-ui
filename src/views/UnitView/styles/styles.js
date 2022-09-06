@@ -96,7 +96,7 @@ export default theme => ({
   imageCaption: {
     width: '100%',
     minHeight: 31,
-    fontSize: 12,
+    fontSize: '0.75rem',
     lineHeight: '15px',
     position: 'absolute',
     display: 'flex',

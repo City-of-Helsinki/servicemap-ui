@@ -29,7 +29,7 @@ export default theme => ({
     alignItems: 'center',
   },
   title: {
-    fontSize: 18,
+    fontSize: '1.125rem',
     color: 'inherit',
     flex: '1 1 auto',
     textTransform: 'none',
@@ -41,7 +41,7 @@ export default theme => ({
     height: 'auto',
   },
   titleLarge: {
-    fontSize: 20,
+    fontSize: '1.25rem',
     fontWeight: 'bold',
   },
   iconButton: {
@@ -51,7 +51,7 @@ export default theme => ({
     padding: 0,
     margin: theme.spacing(1),
     marginTop: 0,
-    fontSize: 18,
+    fontSize: '1.125rem',
   },
   icon: {
     display: 'flex',
@@ -67,7 +67,7 @@ export default theme => ({
     color: '#000',
   },
   distance: {
-    fontSize: 16,
+    fontSize: '1rem',
     color: 'inherit',
     marginLeft: 'auto',
     paddingLeft: theme.spacing(1),
