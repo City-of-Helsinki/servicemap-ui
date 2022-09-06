@@ -5,7 +5,7 @@ exports[`<MenuButton /> should work 1`] = `
   <button
     aria-expanded="false"
     aria-haspopup="true"
-    aria-label="Valikko"
+    aria-label="Menu"
     class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root undefined undefined css-1p2nkht-MuiButtonBase-root-MuiButton-root"
     id="MenuButton"
     tabindex="0"
@@ -25,7 +25,7 @@ exports[`<MenuButton /> should work 1`] = `
     <p
       class="MuiTypography-root MuiTypography-body2 css-q91igz-MuiTypography-root"
     >
-      Valikko
+      Menu
     </p>
   </button>
 </div>

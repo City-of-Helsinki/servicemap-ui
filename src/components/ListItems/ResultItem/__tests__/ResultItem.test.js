@@ -1,12 +1,9 @@
 // Link.react.test.js
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
-import { ThemeProvider } from '@mui/material/styles';
-import { Provider } from 'react-redux';
-import configureStore from 'redux-mock-store';
-import themes from '../../../../themes';
+import { fireEvent } from '@testing-library/react';
 import ResultItem from '../index';
 import { initialState } from '../../../../redux/reducers/user';
+import { getRenderWithProviders } from '../../../../../jestUtils';
 
 // Generic required props for ResultItem
 const mockProps = {
@@ -19,23 +16,9 @@ const mockProps = {
   subtitle: 'Subtitle text',
 };
 
-const mockStore = configureStore([]);
-
-// eslint-disable-next-line react/prop-types
-const Providers = ({ children }) => {
-  const store = mockStore({
-    user: initialState,
-  });
-  return (
-    <Provider store={store}>
-      <ThemeProvider theme={themes.SMTheme}>
-        {children}
-      </ThemeProvider>
-    </Provider>
-  );
-};
-
-const renderWithProviders = component => render(component, { wrapper: Providers });
+const renderWithProviders = getRenderWithProviders({
+  user: initialState,
+});
 
 describe('<ResultItem />', () => {
   it('should work', () => {

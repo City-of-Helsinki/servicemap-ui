@@ -13,6 +13,7 @@ const mockStore = configureStore([]);
 const intlMock = {
   locale: 'en',
   messages: english,
+  wrapRichTextChunksInFragment: false,
 };
 
 const Providers = (mockState) => ({ children }) => {
