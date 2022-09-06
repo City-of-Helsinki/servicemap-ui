@@ -1,7 +1,7 @@
 import LocalStorageUtility from '../../utils/localStorage';
 
 const toJson = (data = '[]') => JSON.parse(data);
-const key = 'history';
+const key = 'history:new';
 const historyCount = 5;
 const nextUpdateKey = 'history:updated';
 const halfDay = 43200000; // Half day in milliseconds
