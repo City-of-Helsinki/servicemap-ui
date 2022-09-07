@@ -169,7 +169,7 @@ test('Unit page links do work correctly', async (t) => {
   ;
 });
 
-test.only('Unit view hearing map link opens correctly', async (t) => {
+test('Unit view hearing map link opens correctly', async (t) => {
   // Test accessibility hearing map link
   const aLinks = Selector('#tab-content-1 li[role="link"]');
   const accessibilityTab = Selector('div[role="tablist"] button').nth(1);
