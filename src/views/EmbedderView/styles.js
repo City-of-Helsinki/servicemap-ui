@@ -80,7 +80,7 @@ export default (theme) => {
       borderRadius: 2,
       color: '#191919',
       display: 'block',
-      fontSize: 14,
+      fontSize: '0.875rem',
       lineHeight: 1.42857143,
       margin: '0 0 10.5px',
       padding: 10,
@@ -96,7 +96,7 @@ export default (theme) => {
     textField: {
       width: '100%',
       height: 60,
-      fontSize: 14.6,
+      fontSize: '0.913rem',
       borderRadius: '8px',
     },
     htmlField: {

@@ -5,6 +5,8 @@ import { viewTitleID } from '../../src/utils/accessibility';
 
 import config from '../config';
 import { getLocation } from '../utility';
+import paginationTest from '../utility/paginationTest';
+import resultOrdererTest from '../utility/resultOrdererTest';
 const { server } = config;
 
 fixture`Search view test`
@@ -30,6 +32,12 @@ const searchUnits = async (t, search = 'uimastadion') => {
 
   return unitCount;
 }
+
+// Test result orderer
+resultOrdererTest();
+
+// Test pagination functionality
+paginationTest();
 
 test('Navigate search view', async (t) => {
   // Test result orderer navigation
@@ -367,23 +375,4 @@ test('Search suggestion click works correctly', async(t) => {
     .click(Selector('#SuggestionList li[role="option"]').nth(0))
     .expect(getLocation()).contains(`http://${server.address}:${server.port}/fi/search?q=${text}`)
     
-});
-
-fixture`Pagination tests`
-  .page`http://${server.address}:${server.port}/fi/search?q=kirjasto&p=2`
-  .beforeEach(async () => {
-    await waitForReact();
-  });
-
-test('Pagination\'s page defaults correctly', async(t) => {
-  const pagination = ReactSelector('PaginationComponent');
-  // 4th button is second page element
-  const secondPageElement = pagination.find('button').nth(3);
-
-  await t
-    // Expect second page to be out of tabindex because it's active
-    .expect(secondPageElement.getAttribute('tabindex')).eql('-1')
-    // Expect second page to be disabled because it's active
-    .expect(secondPageElement.getAttribute('disabled')).eql('')
-  ;
 });

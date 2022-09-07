@@ -1,19 +1,9 @@
 // Link.react.test.js
 import React from 'react';
-import { IntlProvider } from 'react-intl';
-import { fireEvent, render } from '@testing-library/react';
-import { ThemeProvider } from '@mui/material/styles';
+import { fireEvent } from '@testing-library/react';
 import ServiceMapButton from '../index';
-import themes from '../../../themes';
-
-// Mock props for intl provider
-const intlMock = {
-  locale: 'en',
-  messages: {
-    'button.text': 'Button text',
-  },
-  wrapRichTextChunksInFragment: false,
-};
+import { getRenderWithProviders } from '../../../../jestUtils';
+import englishTranslations from '../../../i18n/en';
 
 // Generic required props for ServiceMapButton
 const buttonMockProps = {
@@ -21,16 +11,7 @@ const buttonMockProps = {
   role: 'button',
 };
 
-// eslint-disable-next-line react/prop-types
-const Providers = ({ children }) => (
-  <IntlProvider {...intlMock}>
-    <ThemeProvider theme={themes.SMTheme}>
-      {children}
-    </ThemeProvider>
-  </IntlProvider>
-);
-
-const renderWithProviders = component => render(component, { wrapper: Providers });
+const renderWithProviders = getRenderWithProviders({});
 
 describe('<ServiceMapButton />', () => {
   it('should work', () => {
@@ -49,9 +30,9 @@ describe('<ServiceMapButton />', () => {
 
   it('does show text using intl message id', () => {
     const { getByRole } = renderWithProviders(
-      <ServiceMapButton {...buttonMockProps} messageID="button.text" />,
+      <ServiceMapButton {...buttonMockProps} messageID="app.title" />,
     );
-    expect(getByRole('button')).toHaveTextContent(intlMock.messages['button.text']);
+    expect(getByRole('button')).toHaveTextContent(englishTranslations['app.title']);
   });
 
   it('simulates click event', () => {
@@ -70,17 +51,17 @@ describe('<ServiceMapButton />', () => {
     const { getByRole } = renderWithProviders(
       <ServiceMapButton
         {...buttonMockProps}
-        messageID="button.text"
+        messageID="app.title"
       />,
     );
     const buttonBase = getByRole('button');
     const p = buttonBase.querySelector('p');
     // Expect aria-label to be same as given text
-    expect(buttonBase).toHaveAttribute('aria-label', intlMock.messages['button.text']);
+    expect(buttonBase).toHaveAttribute('aria-label', englishTranslations['app.title']);
     // Expect visible text to be hidden from screen readers
     expect(p).toHaveAttribute('aria-hidden', 'true');
     // Expect visible text to be same as aria-label
-    expect(p).toHaveTextContent(intlMock.messages['button.text']);
+    expect(p).toHaveTextContent(englishTranslations['app.title']);
   });
 
   it('does use given accessibility attributes correctly', () => {

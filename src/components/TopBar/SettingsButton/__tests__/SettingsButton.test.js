@@ -1,12 +1,6 @@
 import React from 'react';
-import { render } from '@testing-library/react';
-import { ThemeProvider } from '@mui/material/styles';
-import configureStore from 'redux-mock-store';
-import { Provider } from 'react-redux';
 import SettingsButton from '../SettingsButton';
-import themes from '../../../../themes';
-import initialState from '../../../../redux/rootReducer';
-import { IntlProvider } from 'react-intl';
+import { getRenderWithProviders } from '../../../../../jestUtils';
 
 
 const mockProps = {
@@ -17,41 +11,16 @@ const mockProps = {
   onClick: () => {},
 };
 
-// Mock props for intl provider
-const intlMock = {
-  locale: 'en',
-  messages: {
-    'settings.city.all': 'Cities all',
-    'settings.citySettings': 'City settings',
+const renderWithProviders = getRenderWithProviders({
+  settings: {
+    visuallyImpaired: false,
+    colorblind: false,
+    hearingAid: false,
+    mapType: 'servicemap',
+    mobility: 'none',
+    cities: 'helsinki',
   },
-};
-
-const mockStore = configureStore([]);
-
-// eslint-disable-next-line react/prop-types
-const Providers = ({ children }) => {
-  const store = mockStore({
-    settings: {
-      visuallyImpaired: false,
-      colorblind: false,
-      hearingAid: false,
-      mapType: 'servicemap',
-      mobility: 'none',
-      cities: 'helsinki',
-    },
-  });
-  return (
-    <Provider store={store}>
-      <IntlProvider {...intlMock}>
-        <ThemeProvider theme={themes.SMTheme}>
-          {children}
-        </ThemeProvider>
-      </IntlProvider>
-    </Provider>
-  );
-};
-
-const renderWithProviders = component => render(component, { wrapper: Providers });
+});
 
 describe('<SettingsButton />', () => {
   it('should work', () => {

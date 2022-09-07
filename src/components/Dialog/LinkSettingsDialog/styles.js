@@ -54,7 +54,7 @@ export default theme => ({
     padding: '0 11px',
   },
   shareIcon: {
-    fontSize: 16,
+    fontSize: '1rem',
     marginLeft: theme.spacing(1),
   },
 });

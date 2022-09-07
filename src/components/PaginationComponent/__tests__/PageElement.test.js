@@ -1,10 +1,8 @@
 // Link.react.test.js
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
-import { ThemeProvider } from '@mui/material/styles';
-import { IntlProvider } from 'react-intl';
-import themes from '../../../themes';
+import { fireEvent } from '@testing-library/react';
 import PageElement from '../PageElement';
+import { getRenderWithProviders } from '../../../../jestUtils';
 
 // Mock props for intl provider
 const intlMock = {
@@ -23,16 +21,7 @@ const mockProps = {
   isActive: false,
 };
 
-// eslint-disable-next-line react/prop-types
-const Providers = ({ children }) => (
-  <IntlProvider {...intlMock}>
-    <ThemeProvider theme={themes.SMTheme}>
-      {children}
-    </ThemeProvider>
-  </IntlProvider>
-);
-
-const renderWithProviders = component => render(component, { wrapper: Providers });
+const renderWithProviders = getRenderWithProviders({});
 
 describe('<PageElement />', () => {
   it('should work', () => {
@@ -103,7 +92,7 @@ describe('<PageElement />', () => {
       />,
     );
 
-    expect(container.querySelectorAll('p')[1]).toHaveTextContent(`Sivu ${mockProps.number}, avattu`);
+    expect(container.querySelectorAll('p')[1]).toHaveTextContent(`Page ${mockProps.number} currently opened`);
 
     // Expect element to have tabIndex -1
     expect(getByRole('link')).toHaveAttribute('tabindex', '-1');

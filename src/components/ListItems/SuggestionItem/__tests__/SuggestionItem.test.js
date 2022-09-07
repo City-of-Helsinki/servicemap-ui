@@ -1,20 +1,9 @@
 // // Link.react.test.js
 import React from 'react';
-import { ThemeProvider } from '@mui/material/styles';
-import { IntlProvider } from 'react-intl';
 import { Search } from '@mui/icons-material';
-import { fireEvent, render } from '@testing-library/react';
-import themes from '../../../../themes';
+import { fireEvent } from '@testing-library/react';
 import SuggestionItem from '../index';
-
-// Mock props for intl provider
-const intlMock = {
-  locale: 'en',
-  messages: {
-    'search.arrowLabel': 'Arrow button label',
-  },
-  wrapRichTextChunksInFragment: false,
-};
+import { getRenderWithProviders } from '../../../../../jestUtils';
 
 // Generic required props for SimpleListItem
 const mockProps = {
@@ -23,16 +12,7 @@ const mockProps = {
   icon: <Search />,
 };
 
-// eslint-disable-next-line react/prop-types
-const Providers = ({ children }) => (
-  <IntlProvider {...intlMock}>
-    <ThemeProvider theme={themes.SMTheme}>
-      {children}
-    </ThemeProvider>
-  </IntlProvider>
-);
-
-const renderWithProviders = component => render(component, { wrapper: Providers });
+const renderWithProviders = getRenderWithProviders({});
 
 describe('<SuggestionItem />', () => {
   it('should work', () => {

@@ -14,7 +14,7 @@ export default theme => ({
     alignItems: 'center',
   },
   icon: {
-    fontSize: 24,
+    fontSize: '1.5rem',
     transition: '0.3s',
     marginLeft: 'auto',
     color: theme.palette.primary.main,

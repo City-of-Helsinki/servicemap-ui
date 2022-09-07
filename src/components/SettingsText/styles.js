@@ -25,7 +25,7 @@ export default theme => ({
     fontWeight: 'bold',
     lineHeight: '24px',
     textAlign: 'left',
-    fontSize: 14,
+    fontSize: '0.875rem',
   },
   textPlain: {
     display: '-webkit-box',

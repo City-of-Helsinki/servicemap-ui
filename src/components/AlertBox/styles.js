@@ -12,7 +12,7 @@ export default theme => ({
     height: 32,
   },
   cancelIcon: {
-    fontSize: 16,
+    fontSize: '1rem',
   },
   textContent: {
     textAlign: 'left',
@@ -28,7 +28,7 @@ export default theme => ({
   },
   closeButton: {
     textTransform: 'initial',
-    fontSize: 12,
+    fontSize: '0.75rem',
     position: 'absolute',
     top: 0,
     right: 0,

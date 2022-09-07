@@ -4,6 +4,9 @@ const translations = {
   'app.description': 'Find services near your home',
   'app.og.image.alt': 'Servicemap logo',
   'app.errorpage.title': 'Error message page',
+  'app.navigation.language': 'Language and contrast',
+  'app.navigation.home': 'Home',
+  'app.navigation.settings': 'Settings',
 
   'accept.settings.dialog.description': 'You can open the data either with accessibility settings or without restrictions.',
   'accept.settings.dialog.title': 'See the location with accessibility settings',
@@ -556,6 +559,7 @@ const translations = {
   'services.search.sr.selected': 'Perform search with services: {services}',
   'services.category.select': 'All',
   'services.category.open': 'Open category',
+  'services.info': 'Before you can perform a search you must choose at least one service from services list below.',
   'services.tree.level': 'Level',
 
   // Settings

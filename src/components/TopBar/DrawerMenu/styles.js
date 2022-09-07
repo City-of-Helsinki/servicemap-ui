@@ -38,7 +38,7 @@ const styles = () => ({
     backgroundColor: '#141823',
   },
   drawerButtonText: {
-    lineHeight: '18px',
+    lineHeight: '1.125rem',
     color: 'inherit',
   },
   drawerIcon: {

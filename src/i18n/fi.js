@@ -4,6 +4,9 @@ const translations = {
   'app.description': 'Pääkaupunkiseudun kaikki julkiset palvelut ulottuvillasi.',
   'app.og.image.alt': 'Palvelukartan logo',
   'app.errorpage.title': 'Virheviestisivu',
+  'app.navigation.language': 'Kieli ja kontrasti',
+  'app.navigation.home': 'Koti',
+  'app.navigation.settings': 'Asetukset',
 
   'accept.settings.dialog.description': 'Voit avata tiedot joko esteettömyysasetusten kanssa tai ilman rajauksia.',
   'accept.settings.dialog.title': 'Katso toimipistettä esteettömyysasetusten kanssa',
@@ -559,6 +562,7 @@ const translations = {
   'services.search.sr.selected': 'Tee haku palveluilla: {services}',
   'services.category.select': 'Kaikki',
   'services.category.open': 'Avaa kategoria',
+  'services.info': 'Valitse vähintään yksi palvelu alla olevasta palveluluettelosta, että voit suorittaa haun.',
   'services.tree.level': 'Taso',
 
   // Settings
