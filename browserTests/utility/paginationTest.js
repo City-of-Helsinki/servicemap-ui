@@ -69,8 +69,7 @@ export default (pageUrl) => {
   });
   
   test('Pagination\'s page change focuses correctly', async(t) => {
-    const resultList = ReactSelector('ResultList');
-    const focusTarget = resultList.find('p').nth(1);
+    const focusTarget = Selector('#PaginatedListFocusTarget');
     const pagination = ReactSelector('PaginationComponent');
     const buttons = pagination.find('button');
   
