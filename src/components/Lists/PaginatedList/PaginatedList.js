@@ -115,7 +115,7 @@ const PaginatedList = ({
   const shownData = data.slice(startIndex, endIndex);
   const additionalText = `${intl.formatMessage({ id: 'general.pagination.pageCount' }, { current: adjustedCurrentPage, max: pageCount })}`;
   const beforeList = (
-    <Typography ref={focusTarget} style={visuallyHidden} component="p" tabIndex="-1">
+    <Typography id="PaginatedListFocusTarget" ref={focusTarget} style={visuallyHidden} component="p" tabIndex="-1">
       {`${srTitle || ''} ${additionalText}`}
     </Typography>
   );
