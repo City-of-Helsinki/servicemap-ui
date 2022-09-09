@@ -9,8 +9,10 @@ import paginationTest from '../utility/paginationTest';
 import resultOrdererTest from '../utility/resultOrdererTest';
 const { server } = config;
 
+const searchPage = `http://${server.address}:${server.port}/fi/search?q=kirjasto`;
+
 fixture`Search view test`
-  .page`http://${server.address}:${server.port}/fi/search?q=uimastadion`
+  .page`${searchPage}`
   .beforeEach(async () => {
     await waitForReact();
   });
@@ -37,7 +39,7 @@ const searchUnits = async (t, search = 'uimastadion') => {
 resultOrdererTest();
 
 // Test pagination functionality
-paginationTest();
+paginationTest(searchPage);
 
 test('Navigate search view', async (t) => {
   // Test result orderer navigation

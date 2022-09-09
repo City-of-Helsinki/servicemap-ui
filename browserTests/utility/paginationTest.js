@@ -1,68 +1,24 @@
 import { ReactSelector } from 'testcafe-react-selectors';
-import { Selector } from 'testcafe';
+import { ClientFunction, Selector } from 'testcafe';
 import { getLocation } from '.';
 
 export default (pageUrl) => {
   test('Keyboard navigation is OK', async (t) => {
-    const input = Selector('#SearchBar input');
-    let select = Selector('#result-sorter')
-    const listItems = Selector('#paginatedList-events li[role="link"]')
-  
-    const alphaDescText = await listItems.nth(0).textContent;
-  
-    // Use keyboard to change result ordering
-    await t
-      .click(input)
-      .pressKey('tab') // Tabs to search icon button
-      .pressKey('tab') // Result orderer
-      // .expect(select.getReact(({props}) => props.value)).eql('match-desc')
-      // .pressKey('down')
-      .pressKey('down');
-  
-    const alphaAscText = await listItems.nth(0).textContent;
-    await t
-      .expect(alphaAscText).notEql(alphaDescText)
-      .pressKey('down');
-  
-    const accessibilityDescText = await listItems.nth(0).textContent;
-    await t
-      .expect(accessibilityDescText).notEql(alphaAscText)
-      .pressKey('up');
-    
-    const accessibilityAscText = await listItems.nth(0).textContent;
-    await t
-      .expect(accessibilityAscText).notEql(accessibilityDescText)
-    ;
-  
-    // Use keyboard to navigate result list
-    await t
-      .pressKey('tab')
-      .expect(listItems.nth(0).focused).ok()
-      .pressKey('tab')
-      .expect(listItems.nth(1).focused).ok()
-      .pressKey('shift+tab')
-      .expect(listItems.nth(0).focused).ok()
-    ;
   
     const pagination = ReactSelector('PaginationComponent');
     const buttons = pagination.find('button');
-    const location = getLocation();
     await t
       // Click next page button
       .click(buttons.nth(1))
       // Focus is lost to start of the page after button click
       // Pagination moves focus to p element with tabindex -1 which doesn't seem to work
       // with testCafe tests but works on live version
-      .expect(location).contains(pageUrl)
-      .expect(location).contains('p=2')
-      .click(select) // Click select to move focus back to view
+      .expect(getLocation()).contains(pageUrl)
+      .expect(getLocation()).contains('p=2')
     ;
-    
-    // After clicking to change page focus is moved to start of the list
-    // We need to move back to page navigation
-    for (let i = 0; i < 12; i++) {
-      await t.pressKey('tab');
-    }
+
+    const focusNextButton = await ClientFunction(() => document.getElementById('PaginationNextButton').focus());
+    await focusNextButton();
   
     // Check keyboard navigation
     await t
@@ -76,7 +32,7 @@ export default (pageUrl) => {
       .pressKey('tab') // 3 page button
       .expect(buttons.nth(4).focused).ok()
       .pressKey('enter')
-      .expect(location).contains('p=3')
+      .expect(getLocation()).contains('p=3')
     ;
   });
   
@@ -93,17 +49,16 @@ export default (pageUrl) => {
       .expect(previousPageButton.getAttribute('tabindex')).eql('0')
     ;
   
-    const location = getLocation();
     await t
       // Expect page id to exists in url
-      .expect(location).contains(pageUrl)
-      .expect(location).contains('p=2')
+      .expect(getLocation()).contains(pageUrl)
+      .expect(getLocation()).contains('p=2')
       // Expect 2nd page element to be set active and have related attributes
       .expect(buttons.nth(3).getAttribute('disabled')).eql('')
       .expect(buttons.nth(3).getAttribute('tabindex')).eql('-1')
       // Click 3rd page element
       .click(buttons.nth(4))
-      .expect(location).contains('p=3')
+      .expect(getLocation()).contains('p=3')
       // Expect 2nd page element to reset attributes
       .expect(buttons.nth(3).getAttribute('disabled')).notOk()
       .expect(buttons.nth(3).getAttribute('tabindex')).eql('0')
