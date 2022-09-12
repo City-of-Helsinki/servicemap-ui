@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { withStyles } from '@material-ui/styles';
+import { withStyles } from '@mui/styles';
 import MarkerCluster from './MarkerCluster';
 import { formatDistanceObject } from '../../../../utils';
 import { calculateDistance, getCurrentlyUsedPosition } from '../../../../redux/selectors/unit';

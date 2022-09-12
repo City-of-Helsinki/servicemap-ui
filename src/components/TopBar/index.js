@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { withStyles } from '@material-ui/core';
+import { withStyles } from '@mui/styles';
 import styles from './styles';
 import TopBar from './TopBar';
 import { setMapType, toggleSettings } from '../../redux/actions/settings';

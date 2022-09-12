@@ -5,22 +5,46 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useRouteMatch } from 'react-router-dom';
 import {
-  Container, Divider, Link, NoSsr, Paper, Typography,
-} from '@material-ui/core';
+  Paper, Typography, Link, NoSsr, Divider,
+} from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import { FormattedMessage, useIntl } from 'react-intl';
 import fetchSearchResults from '../../redux/actions/search';
 import fetchRedirectService from '../../redux/actions/redirectService';
 import { parseSearchParams, getSearchParam, keyboardHandler } from '../../utils';
 import { fitUnitsToMap } from '../MapView/utils/mapActions';
-import { SearchBar } from '../../components';
 import { isEmbed } from '../../utils/path';
 import { useNavigationParams } from '../../utils/address';
 import useMobileStatus from '../../utils/isMobile';
-import Loading from '../../components/Loading';
-import TabLists from '../../components/TabLists';
-import SettingsInfo from '../../components/SettingsInfo';
 import { viewTitleID } from '../../utils/accessibility';
 import { getOrderedData } from '../../redux/selectors/results';
+import {
+  Container,
+  Loading,
+  SearchBar,
+  SettingsInfo,
+  TabLists,
+} from '../../components';
+// =======
+// import { withStyles } from '@mui/styles';
+// import { visuallyHidden } from '@mui/utils';
+// import { injectIntl, FormattedMessage } from 'react-intl';
+// import styles from './styles';
+// import {
+//   Container,
+//   DesktopComponent,
+//   ExpandedSuggestions,
+//   Loading,
+//   MobileComponent,
+//   SearchBar,
+//   SettingsInfo,
+//   SMButton,
+//   TabLists,
+// } from '../../components';
+// import { fitUnitsToMap } from '../MapView/utils/mapActions';
+// import { parseSearchParams, getSearchParam, keyboardHandler } from '../../utils';
+// import { generatePath } from '../../utils/path';
+// >>>>>>> develop
 
 
 const focusClass = 'TabListFocusTarget';
@@ -284,12 +308,12 @@ const SearchView = (props) => {
       <NoSsr>
         <Typography
           role="link"
-          tabIndex="-1"
+          tabIndex={-1}
           onClick={() => skipToContent()}
           onKeyPress={() => {
             keyboardHandler(() => skipToContent(), ['space', 'enter']);
           }}
-          variant="srOnly"
+          style={visuallyHidden}
         >
           <FormattedMessage id="search.skipLink" />
         </Typography>
@@ -310,7 +334,7 @@ const SearchView = (props) => {
     const { isFetching, max } = searchFetchState;
     return (
       <Paper className={!isFetching ? classes.noPadding : ''} elevation={1} square aria-live="polite">
-        <Typography className={classes.srOnly} variant="srOnly" component="h3" tabIndex="-1">
+        <Typography className={classes.srOnly} variant="srOnly" component="h3" tabIndex={-1}>
           {!isFetching && (
             <FormattedMessage id="search.results.title" />
           )}
@@ -398,9 +422,7 @@ const SearchView = (props) => {
   */
   const renderNotFound = () => {
     const { previousSearch, isFetching } = searchFetchState;
-
     const shouldRender = !isFetching && previousSearch && !searchResults.length;
-
     const messageIDs = ['spelling', 'city', 'service', 'address', 'keyword'];
 
     return shouldRender ? (
@@ -449,7 +471,7 @@ const SearchView = (props) => {
       {isMobile ? (
         // Jump link back to beginning of current page
         <Typography variant="srOnly" component="h3">
-          <Link href={`#${viewTitleID}`} tabIndex="-1">
+          <Link href={`#${viewTitleID}`} tabIndex={-1}>
             <FormattedMessage id="general.return.viewTitle" />
           </Link>
         </Typography>

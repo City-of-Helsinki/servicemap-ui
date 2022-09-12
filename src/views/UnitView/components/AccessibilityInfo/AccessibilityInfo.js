@@ -2,16 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Typography, List, ListItem, ListItemIcon, ListItemText, Divider, NoSsr, ButtonBase,
-} from '@material-ui/core';
-import { Warning, VerifiedUser, Accessibility } from '@material-ui/icons';
+} from '@mui/material';
+import { Warning, VerifiedUser, Accessibility } from '@mui/icons-material';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch } from 'react-redux';
-import Container from '../../../../components/Container';
 import SettingsUtility from '../../../../utils/settings';
-import Loading from '../../../../components/Loading';
 import useLocaleText from '../../../../utils/useLocaleText';
-import SettingsText from '../../../../components/SettingsText';
 import { toggleSettings } from '../../../../redux/actions/settings';
+import { Container, Loading, SettingsText } from '../../../../components';
 
 const AccessibilityInfo = (props) => {
   const {
@@ -133,13 +131,13 @@ const AccessibilityInfo = (props) => {
                     <Warning />
                   </ListItemIcon>
                   <ListItemText>
-                    <Typography className={classes.listTitle} component={heading} variant="body2" align="left">
+                    <Typography className={`AccessibilityInfoShortcomingTitle ${classes.listTitle}`} component={heading} variant="body2" align="left">
                       {title}
                     </Typography>
                     <ul className={classes.list}>
                       {
                         shortcomings.map(shortcoming => (
-                          <li key={shortcoming} className={classes.listItem}>
+                          <li key={shortcoming} className={`AccessibilityInfoShortcoming ${classes.listItem}`}>
                             <Typography component="p" variant="body2">
                               {shortcoming}
                             </Typography>

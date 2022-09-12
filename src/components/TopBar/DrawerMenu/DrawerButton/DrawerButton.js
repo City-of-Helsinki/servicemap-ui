@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Typography, ButtonBase, withStyles,
-} from '@material-ui/core';
+  Typography, ButtonBase,
+} from '@mui/material';
+import { withStyles } from '@mui/styles';
 import styles from '../styles';
 
 

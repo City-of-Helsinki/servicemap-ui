@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
-import { Typography, withStyles, ButtonBase } from '@material-ui/core';
+import { Typography, ButtonBase } from '@mui/material';
+import { withStyles } from '@mui/styles';
+import { visuallyHidden } from '@mui/utils';
 import styles from './styles';
 import { keyboardHandler } from '../../utils';
 
@@ -17,7 +19,7 @@ const PageElement = ({
         disabled={isActive}
         onClick={onClick}
         onKeyDown={keyboardHandler(onClick, ['space', 'enter'])}
-        tabIndex={isActive ? '-1' : '0'}
+        tabIndex={isActive ? -1 : 0}
       >
         <Typography
           variant="subtitle1"
@@ -25,7 +27,7 @@ const PageElement = ({
           className={newClassName}
           {...rest}
         >
-          <Typography variant="srOnly">
+          <Typography style={visuallyHidden}>
             {
             isActive
               ? intl.formatMessage({ id: 'general.pagination.currentlyOpenedPage' }, { count: number })

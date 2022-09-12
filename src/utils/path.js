@@ -1,3 +1,4 @@
+import { useRouteMatch } from 'react-router-dom/cjs/react-router-dom.min';
 import paths from '../../config/paths';
 import config from '../../config';
 import isClient from '.';
@@ -6,6 +7,12 @@ export const isEmbed = (match) => {
   if (!match) {
     return isClient() && !!paths.embed.regex.exec(window.location);
   }
+  return match.url && !!paths.embed.regex.exec(match.url);
+};
+
+// This is a hook implementation of isEmbed functionality
+export const useEmbedStatus = () => {
+  const match = useRouteMatch();
   return match.url && !!paths.embed.regex.exec(match.url);
 };
 
@@ -44,4 +51,12 @@ export const generatePath = (path, locale = config.defaultLocale, data = null, e
     return `/${locale || config.defaultLocale}${embed ? '/embed' : ''}${pathString}`; // Return path with locale
   }
   return null;
+};
+
+// Check if pathname string equals home page path
+export const isHomePage = (pathname) => {
+  if (typeof pathname === 'string') {
+    return paths.home.regex.test(pathname);
+  }
+  return false;
 };

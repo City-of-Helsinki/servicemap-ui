@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   IconButton, Typography, Button, ButtonBase,
-} from '@material-ui/core';
-import { ArrowBack } from '@material-ui/icons';
+} from '@mui/material';
+import { ArrowBack } from '@mui/icons-material';
 import { getPathName } from '../../utils/path';
 
 const BackButton = (props) => {
@@ -46,13 +46,15 @@ const BackButton = (props) => {
   const buttonText = intl.formatMessage({ id: textId, defaultMessage });
   // Set button text as state, so that it does not change
   const [buttonTitle] = useState(buttonText);
+  let classNames = 'SMBackButton';
 
 
   if (variant === 'icon') {
+    classNames += ` ${className}`;
     return (
       <IconButton
         role="link"
-        className={className}
+        className={classNames}
         style={style}
         aria-hidden={srHidden}
         aria-label={ariaLabel || buttonText}
@@ -72,10 +74,11 @@ const BackButton = (props) => {
   }
 
   if (variant === 'container') {
+    classNames += ` ${classes.containerButton} ${className}`;
     return (
       <ButtonBase
         role="link"
-        className={`${classes.containerButton} ${className}`}
+        className={classNames}
         style={style}
         aria-hidden={srHidden}
         aria-label={ariaLabel || buttonTitle}
@@ -100,6 +103,7 @@ const BackButton = (props) => {
     <Button
       aria-hidden={srHidden}
       aria-label={ariaLabel || buttonText}
+      className={classNames}
       role="link"
       variant="contained"
       color="primary"

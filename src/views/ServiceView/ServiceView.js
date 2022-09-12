@@ -2,17 +2,19 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Typography } from '@material-ui/core';
-import { SearchBar } from '../../components';
-import TitleBar from '../../components/TitleBar';
+import { Typography } from '@mui/material';
+import {
+  Container,
+  DesktopComponent,
+  getIcon,
+  Loading,
+  MobileComponent,
+  PaginatedList,
+  ResultOrderer,
+  SearchBar,
+  TitleBar,
+} from '../../components';
 import { fitUnitsToMap, focusToPosition } from '../MapView/utils/mapActions';
-import Loading from '../../components/Loading';
-import Container from '../../components/Container';
-import PaginatedList from '../../components/Lists/PaginatedList';
-import ResultOrderer from '../../components/ResultOrderer';
-import { getIcon } from '../../components/SMIcon';
-import DesktopComponent from '../../components/DesktopComponent';
-import MobileComponent from '../../components/MobileComponent';
 import coordinateIsActive from '../../utils/coordinate';
 import useLocaleText from '../../utils/useLocaleText';
 

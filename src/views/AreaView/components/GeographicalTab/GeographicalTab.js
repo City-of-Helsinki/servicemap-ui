@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { List, Typography, ListItem } from '@material-ui/core';
+import { List, Typography, ListItem } from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import { FormattedMessage } from 'react-intl';
-import { FormatListBulleted, LocationOn } from '@material-ui/icons';
+import { FormatListBulleted, LocationOn } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
-import SMAccordion from '../../../../components/SMAccordion';
 import DistrictToggleButton from '../DistrictToggleButton';
 import {
   fetchDistrictGeometry,
@@ -19,6 +19,9 @@ import GeographicalUnitList from '../GeographicalUnitList';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { geographicalDistricts } from '../../utils/districtDataHelper';
 import { getAddressText } from '../../../../utils/address';
+import {
+  SMAccordion,
+} from '../../../../components';
 
 
 const GeographicalTab = ({
@@ -124,7 +127,7 @@ const GeographicalTab = ({
         {localAddressData?.address && localAddressData.districts?.length && (
           renderAddressInfo()
         )}
-        <Typography variant="srOnly" component="h3">
+        <Typography style={visuallyHidden} component="h3">
           <FormattedMessage id="area.list" />
         </Typography>
         <List>

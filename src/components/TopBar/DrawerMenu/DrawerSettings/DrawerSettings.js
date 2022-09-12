@@ -1,4 +1,5 @@
-import { ButtonBase, Typography } from '@material-ui/core';
+import { ButtonBase, Typography } from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
@@ -15,7 +16,7 @@ const DrawerSettings = ({ classes, onClick }) => {
       </div>
       <span className={classes.buttonLabel}>
         <Typography component="p" variant="body1"><FormattedMessage id="home.buttons.settings" /></Typography>
-        <Typography component="p" variant="srOnly"><FormattedMessage id="settings.drawer.aria.title" /></Typography>
+        <Typography component="p" style={visuallyHidden}><FormattedMessage id="settings.drawer.aria.title" /></Typography>
         {
           settings.map(s => (
             <div key={s} className={classes.textContainer}>

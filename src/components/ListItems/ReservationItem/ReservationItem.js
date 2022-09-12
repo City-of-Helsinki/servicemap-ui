@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { EventAvailable } from '@material-ui/icons';
+import { EventAvailable } from '@mui/icons-material';
 import SimpleListItem from '../SimpleListItem';
 import useLocaleText from '../../../utils/useLocaleText';
 

@@ -41,6 +41,12 @@ export default theme => ({
     margin: 0,
     marginLeft: theme.spacing(2),
   },
+  compactTextContainer: {
+    width: '100%',
+    marginLeft: 0,
+    paddingLeft: theme.spacing(1),
+    boxSizing: 'border-box',
+  },
   topRow: {
     display: 'flex',
     width: '100%',
@@ -66,5 +72,13 @@ export default theme => ({
   },
   divider: {
     marginRight: theme.spacing(-2),
+  },
+  shortDivider: {
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(-2),
+  },
+  compactItem: {
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
   },
 });

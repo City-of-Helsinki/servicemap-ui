@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
   InputBase, IconButton, Paper, List, ListItem, Typography, Divider,
-} from '@material-ui/core';
-import { Clear, Search } from '@material-ui/icons';
+} from '@mui/material';
+import { Clear, Search } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
+import { visuallyHidden } from '@mui/utils';
+import { styled } from '@mui/material/styles';
 import { setOrder, setDirection } from '../../redux/actions/sort';
 import { keyboardHandler } from '../../utils';
 import useMobileStatus from '../../utils/isMobile';
@@ -19,7 +21,6 @@ const AddressSearchBar = ({
   title,
   containerClassName,
   inputClassName,
-  classes,
   intl,
 }) => {
   const getLocaleText = useLocaleText();
@@ -135,7 +136,7 @@ const AddressSearchBar = ({
     <div className={containerClassName}>
       <Typography color="inherit">{title}</Typography>
       <form action="" onSubmit={e => handleSubmit(e)}>
-        <InputBase
+        <StyledInputBase
           id="addressSearchbar"
           autoComplete="off"
           inputRef={inputRef}
@@ -149,35 +150,34 @@ const AddressSearchBar = ({
           type="text"
           onBlur={isMobile ? () => {} : e => clearSuggestions(e)}
           onFocus={() => setResultIndex(null)}
-          className={`${classes.searchBar} ${inputClassName}`}
+          className={inputClassName}
           defaultValue={getAddressText(defaultAddress, getLocaleText)}
           onChange={e => handleInputChange(e.target.value)}
           onKeyDown={e => showSuggestions && handleSearchBarKeyPress(e)}
           endAdornment={(
             <>
-              <Search aria-hidden className={classes.searchIcon} />
-              <Divider aria-hidden className={classes.divider} />
-              <IconButton
+              <StyledSearch aria-hidden />
+              <StyledDivider aria-hidden />
+              <StyledIconButton
                 aria-label={intl.formatMessage({ id: 'search.cancelText' })}
                 onClick={() => {
                   setCleared(true);
                   handleAddressChange(null);
                   inputRef.current.value = '';
                 }}
-                className={classes.IconButton}
               >
-                <Clear className={classes.clearButton} />
-              </IconButton>
+                <StyledClear />
+              </StyledIconButton>
             </>
           )}
         />
-        <Typography aria-live="polite" id="resultLength" variant="srOnly">{infoText}</Typography>
+        <Typography aria-live="polite" id="resultLength" style={visuallyHidden}>{infoText}</Typography>
         {showSuggestions ? (
           <Paper>
             <List role="listbox" id="address-results">
               {addressResults.map((address, i) => (
                 <ListItem
-                  tabIndex="-1"
+                  tabIndex={-1}
                   id={`address-suggestion${i}`}
                   role="option"
                   selected={i === resultIndex}
@@ -199,8 +199,39 @@ const AddressSearchBar = ({
   );
 };
 
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  paddingLeft: theme.spacing(2),
+  marginTop: theme.spacing(1),
+  border: '1px solid #ACACAC',
+  borderRadius: 4,
+  width: '100%',
+  height: '80%',
+  boxSizing: 'border-box',
+  backgroundColor: '#fff',
+}));
+
+const StyledClear = styled(Clear)(() => ({
+  fontSize: '1.375rem',
+}));
+
+const StyledSearch = styled(Search)(({ theme }) => ({
+  color: 'rgba(0, 0, 0, 0.54)',
+  fontSize: '1.375rem',
+  padding: theme.spacing(1),
+}));
+
+const StyledDivider = styled(Divider)(() => ({
+  width: 1,
+  height: 24,
+  margin: 4,
+}));
+
+const StyledIconButton = styled(IconButton)(({ theme }) => ({
+  margiRight: theme.spacing(0.5),
+  padding: theme.spacing(1),
+}));
+
 AddressSearchBar.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   defaultAddress: PropTypes.objectOf(PropTypes.any),
   handleAddressChange: PropTypes.func.isRequired,

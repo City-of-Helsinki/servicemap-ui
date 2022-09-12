@@ -3,8 +3,9 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   ListItem, ListItemIcon, Typography, Divider,
-} from '@material-ui/core';
-import { useTheme } from '@material-ui/styles';
+} from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
+import { useSelector } from 'react-redux';
 import locationIcon from '../../../assets/icons/LocationDefault.svg';
 import locationIconHover from '../../../assets/icons/LocationHover.svg';
 import locationIconContrast from '../../../assets/icons/LocationDefaultContrast.svg';
@@ -26,9 +27,10 @@ const ResultItem = ({
   padded,
   extendedClasses,
   unitId,
+  simpleItem,
   ...rest
 }) => {
-  const theme = useTheme();
+  const theme = useSelector(state => state.user.theme);
 
   const resetMarkerHighlight = () => {
     // Handle marker highlight removal
@@ -103,15 +105,15 @@ const ResultItem = ({
           </ListItemIcon>
           )
         }
-        <div className={classes.itemTextContainer}>
-          <div className={classes.topRow || ''}>
+        <div className={`${classes.itemTextContainer}  ${simpleItem ? classes.compactTextContainer : ''}`}>
+          <div className={`${classes.topRow || ''}`}>
             {
               // SROnly element with full readable text
             }
             <Typography
               className={`${classes.title || ''} ResultItem-srOnly`}
               component="p"
-              variant="srOnly"
+              style={visuallyHidden}
             >
               {srText}
             </Typography>
@@ -120,7 +122,7 @@ const ResultItem = ({
               // Title
             }
             <Typography
-              className={`${classes.title || ''}  ${typographyClasses.title || ''} ResultItem-title`}
+              className={`${classes.title || ''}  ${typographyClasses.title || ''} ${simpleItem ? classes.compactItem : ''} ResultItem-title`}
               component="p"
               role="textbox"
               variant="body2"
@@ -186,7 +188,10 @@ const ResultItem = ({
       </ListItem>
       {divider && (
         <li aria-hidden>
-          <Divider className={classes.divider} variant="inset" />
+          <Divider
+            className={simpleItem ? classes.shortDivider : classes.divider}
+            variant={icon ? 'inset' : 'fullWidth'}
+          />
         </li>
       )}
     </>
@@ -222,6 +227,7 @@ ResultItem.propTypes = {
   selected: PropTypes.bool,
   unitId: PropTypes.number,
   padded: PropTypes.bool,
+  simpleItem: PropTypes.bool,
 };
 
 ResultItem.defaultProps = {
@@ -239,4 +245,5 @@ ResultItem.defaultProps = {
   srLabel: null,
   selected: false,
   padded: false,
+  simpleItem: false,
 };

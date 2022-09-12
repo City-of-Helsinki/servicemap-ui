@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   List, Typography, Divider,
-} from '@material-ui/core';
+} from '@mui/material';
 import { FormattedMessage } from 'react-intl';
-import { ArrowDropDown } from '@material-ui/icons';
+import { ArrowDropDown } from '@mui/icons-material';
 import SMButton from '../../ServiceMapButton';
 
 const TitledList = ({
@@ -20,6 +20,7 @@ const TitledList = ({
   loading,
   subtitle,
   description,
+  id,
 }) => {
   const list = children;
 
@@ -96,6 +97,7 @@ TitledList.propTypes = {
   onButtonClick: PropTypes.func,
   titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']),
   loading: PropTypes.bool,
+  id: PropTypes.string,
 };
 
 TitledList.defaultProps = {
@@ -109,6 +111,7 @@ TitledList.defaultProps = {
   subtitle: null,
   buttonMessageID: null,
   loading: false,
+  id: null,
 };
 
 export default TitledList;

@@ -2,10 +2,10 @@ import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import {
   AccessTime, ArrowDropUp, LocationOn, Search,
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 import {
   Paper, List, Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import createSuggestions from '../../createSuggestions';

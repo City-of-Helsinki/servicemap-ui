@@ -1,13 +1,8 @@
 // Link.react.test.js
 import React from 'react';
-import { createShallow } from '@material-ui/core/test-utils';
-import { MuiThemeProvider } from '@material-ui/core';
-import { IntlProvider } from 'react-intl';
-import { Provider } from 'react-redux';
-import configureStore from 'redux-mock-store';
-import themes from '../../../../themes';
 import ResultList from '../ResultList';
 import { initialState } from '../../../../redux/reducers/user';
+import { getRenderWithProviders } from '../../../../../jestUtils';
 
 const mockData = [
   {
@@ -53,57 +48,42 @@ const mockProps = {
   titleComponent: 'h3',
 };
 
-// Mock props for intl provider
-const intlMock = {
-  locale: 'en',
-  messages: {
-    'search.resultList': 'Search result text',
-    'general.pagination.pageCount': 'Page {current} of {max}',
-  },
-};
-
-const mockStore = configureStore([]);
-
-// eslint-disable-next-line react/prop-types
-const Providers = ({ children }) => {
-  const store = mockStore({
-    user: initialState,
-    settings: {},
-  });
-
-  return (
-    <Provider store={store}>
-      <IntlProvider {...intlMock}>
-        <MuiThemeProvider theme={themes.SMTheme}>
-          {children}
-        </MuiThemeProvider>
-      </IntlProvider>
-    </Provider>
-  );
-};
+const renderWithProviders = getRenderWithProviders({
+  user: initialState,
+  settings: {},
+});
 
 describe('<ResultList />', () => {
-  // let render;
-  let shallow;
-
-  beforeEach(() => {
-    shallow = createShallow({ wrappingComponent: Providers });
-  });
-
   it('should work', () => {
-    const component = shallow(<ResultList {...mockProps} />);
-    expect(component).toMatchSnapshot();
+    const { container } = renderWithProviders(<ResultList {...mockProps} />);
+    expect(container).toMatchSnapshot();
   });
 
   it('does render list', () => {
-    const component = shallow(<ResultList {...mockProps} />);
-    const count = component.find('injectIntl(WithStyles(Connect(UnitItem)))').length;
+    const { getAllByRole } = renderWithProviders(<ResultList {...mockProps} />);
+    const count = getAllByRole('link', { selector: 'li' }).length;
     expect(count === 2).toBeTruthy();
   });
 
   it('does render beforeList', () => {
-    const component = shallow(<ResultList {...mockProps} />);
-    const text = component.find('p').at(0).text();
+    const { getByText } = renderWithProviders(<ResultList {...mockProps} />);
+    const text = getByText('Test before list').textContent;
     expect(text).toEqual('Test before list');
+  });
+
+  it('does render accessibility attributes correctly', () => {
+    const { getAllByRole } = renderWithProviders(<ResultList {...mockProps} />);
+    const items = getAllByRole('link', { selector: 'li' });
+    const firstItem = items[0];
+    const firstItemSRText = firstItem.querySelectorAll('p')[0];
+    const firstItemResultTitle = firstItem.querySelectorAll('p')[1];
+
+    // List item's image should be aria-hidden
+    expect(firstItem.querySelector('img').getAttribute('aria-hidden')).toBeTruthy();
+    expect(firstItem.getAttribute('role')).toEqual('link');
+    expect(firstItem.getAttribute('tabIndex')).toEqual('0');
+    expect(firstItemSRText.className.indexOf('ResultItem-title') > 0).toBeTruthy();
+    expect(firstItemResultTitle.className.indexOf('ResultItem-title') > 0).toBeTruthy();
+    expect(firstItemResultTitle.getAttribute('aria-hidden')).toBeTruthy();
   });
 });

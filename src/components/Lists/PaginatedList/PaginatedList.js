@@ -1,8 +1,11 @@
 /* eslint-disable react/no-multi-comp */
-import React, { useEffect, useRef, useState } from 'react';
+import React, {
+  useEffect, useLayoutEffect, useRef, useState,
+} from 'react';
 import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
-import { Typography } from '@material-ui/core';
+import { Typography } from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import { useIntl } from 'react-intl';
 import ResultList from '../ResultList';
 import PaginationComponent from '../../PaginationComponent';
@@ -18,14 +21,39 @@ const PaginatedList = ({
   srTitle,
   title,
   titleComponent,
+  embeddedList,
 }) => {
   const location = useLocation();
   const searchPageNum = parseInt(new URLSearchParams(location.search).get('p'), 10); // Get query parameter
   const defaultPageNum = !Number.isNaN(searchPageNum) ? searchPageNum : 1;
   const [currentPage, setCurrentPage] = useState(defaultPageNum);
+  const [windowHeight, setWindowHeight] = useState(0);
   const intl = useIntl();
   const focusTarget = useRef();
   const isFirstRun = useRef(true);
+
+  let itemCount = itemsPerPage;
+
+  if (embeddedList) { // Handle embedded list size dynamically based on screen height
+    const listItemHeight = 38;
+    const offsetHeight = embeddedList === 'bottom' ? 48 : 100;
+    const listHeight = windowHeight - offsetHeight;
+    itemCount = Math.max(3, Math.floor(listHeight / listItemHeight));
+  }
+
+  // Track window size change on embedded list view
+  useLayoutEffect(() => {
+    const updateSize = () => {
+      const listContainerSize = document.getElementById('unitListContainer')?.clientHeight;
+      setWindowHeight(listContainerSize || window.innerHeight);
+    };
+    if (embeddedList) {
+      window.addEventListener('resize', updateSize);
+      updateSize();
+    }
+    return () => window.removeEventListener('resize', updateSize);
+  }, [embeddedList]);
+
 
   useEffect(() => {
     // Prevent focusing on component mount
@@ -69,8 +97,7 @@ const PaginatedList = ({
   // Calculate pageCount
   const calculatePageCount = (data) => {
     if (data && data.length) {
-      const newPageCount = Math.ceil(data.length / itemsPerPage);
-      return newPageCount;
+      return Math.ceil(data.length / itemCount);
     }
     return null;
   };
@@ -79,16 +106,16 @@ const PaginatedList = ({
   const adjustedCurrentPage = currentPage > pageCount ? pageCount : currentPage;
 
   // Calculate shown data
-  const endIndex = data.length >= itemsPerPage
-    ? adjustedCurrentPage * itemsPerPage
+  const endIndex = data.length >= itemCount
+    ? adjustedCurrentPage * itemCount
     : data.length;
   const startIndex = adjustedCurrentPage > 1
-    ? (adjustedCurrentPage - 1) * itemsPerPage
+    ? (adjustedCurrentPage - 1) * itemCount
     : 0;
   const shownData = data.slice(startIndex, endIndex);
   const additionalText = `${intl.formatMessage({ id: 'general.pagination.pageCount' }, { current: adjustedCurrentPage, max: pageCount })}`;
   const beforeList = (
-    <Typography innerRef={focusTarget} variant="srOnly" component="p" tabIndex="-1">
+    <Typography id="PaginatedListFocusTarget" ref={focusTarget} style={visuallyHidden} component="p" tabIndex="-1">
       {`${srTitle || ''} ${additionalText}`}
     </Typography>
   );
@@ -103,6 +130,7 @@ const PaginatedList = ({
         title={title}
         titleComponent={titleComponent}
         customComponent={customComponent}
+        embeddedList={!!embeddedList}
       />
       {
         beforePagination || null
@@ -114,6 +142,7 @@ const PaginatedList = ({
             current={adjustedCurrentPage}
             pageCount={pageCount}
             handlePageChange={handlePageChange}
+            embeddedList={!!embeddedList}
           />
         )
       }
@@ -131,6 +160,7 @@ PaginatedList.propTypes = {
   srTitle: PropTypes.string,
   title: PropTypes.string,
   titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']).isRequired,
+  embeddedList: PropTypes.string,
 };
 
 PaginatedList.defaultProps = {
@@ -140,6 +170,7 @@ PaginatedList.defaultProps = {
   navigator: null,
   srTitle: null,
   title: null,
+  embeddedList: null,
 };
 
 export default PaginatedList;

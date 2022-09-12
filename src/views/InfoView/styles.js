@@ -9,7 +9,7 @@ const styles = theme => ({
     textAlign: 'left',
     '& h3': {
       fontWeight: 'bold',
-      fontSize: 17,
+      fontSize: '1.063rem',
       padding: theme.spacing(2),
       paddingBottom: theme.spacing(1),
     },
@@ -26,13 +26,13 @@ const styles = theme => ({
     paddingBottom: theme.spacing(1),
   },
   link: {
-    color: '#0000EE',
+    color: theme.palette.link.main,
   },
   linkButton: {
     padding: theme.spacing(2),
     paddingTop: 0,
-    fontSize: 16,
-    color: '#0000EE',
+    fontSize: '1rem',
+    color: theme.palette.link.main,
     textDecoration: 'underline',
   },
 });

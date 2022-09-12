@@ -25,7 +25,7 @@ export default theme => ({
   select: {
     color: 'inherit',
     flex: '1 0 auto',
-    fontSize: 12,
+    fontSize: '0.75rem',
     lineHeight: `${15}px`,
     marginTop: 0,
     '&:before': {
@@ -44,7 +44,8 @@ export default theme => ({
   icon: {
     color: 'inherit',
   },
-  elementFocus: {
+  selectElement: {
+    padding: theme.spacing(1.5),
     '&:focus': {
       boxShadow: '0 0 0 3px #fff',
     },

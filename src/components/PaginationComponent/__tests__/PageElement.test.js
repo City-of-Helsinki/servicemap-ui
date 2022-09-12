@@ -1,10 +1,8 @@
 // Link.react.test.js
 import React from 'react';
-import { createMount } from '@material-ui/core/test-utils';
-import { MuiThemeProvider } from '@material-ui/core';
-import { IntlProvider } from 'react-intl';
-import themes from '../../../themes';
+import { fireEvent } from '@testing-library/react';
 import PageElement from '../PageElement';
+import { getRenderWithProviders } from '../../../../jestUtils';
 
 // Mock props for intl provider
 const intlMock = {
@@ -23,93 +21,80 @@ const mockProps = {
   isActive: false,
 };
 
-// eslint-disable-next-line react/prop-types
-const Providers = ({ children }) => (
-  <IntlProvider {...intlMock}>
-    <MuiThemeProvider theme={themes.SMTheme}>
-      {children}
-    </MuiThemeProvider>
-  </IntlProvider>
-);
+const renderWithProviders = getRenderWithProviders({});
 
 describe('<PageElement />', () => {
-  // let render;
-  let mount;
-
-  beforeEach(() => {
-    // render = createRender({ wrappingComponent: Providers });
-    mount = createMount({ wrappingComponent: Providers });
-  });
-
-  afterEach(() => {
-    mount.cleanUp();
-  });
-
   it('should work', () => {
-    const component = mount(<PageElement {...mockProps} />);
-    expect(component).toMatchSnapshot();
+    const { container } = renderWithProviders(<PageElement {...mockProps} />);
+    expect(container).toMatchSnapshot();
   });
 
   it('simulates click event', () => {
     const mockCallBack = jest.fn();
-    const component = mount(<PageElement {...mockProps} onClick={mockCallBack} />);
+    const { getByRole } = renderWithProviders(<PageElement {...mockProps} onClick={mockCallBack} />);
 
-    component.find('ForwardRef(ButtonBase)').simulate('click');
+    fireEvent.click(getByRole('link'));
     expect(mockCallBack.mock.calls.length).toEqual(1);
   });
 
   it('simulates keyboard event', () => {
     const mockCallBack = jest.fn();
-    const component = mount(<PageElement {...mockProps} onClick={mockCallBack} />);
+    const { getByRole } = renderWithProviders(<PageElement {...mockProps} onClick={mockCallBack} />);
 
-    component.find('ForwardRef(ButtonBase)').simulate('keyDown', { which: 13 });
-    component.find('ForwardRef(ButtonBase)').simulate('keyDown', { which: 32 });
+    fireEvent.keyDown(getByRole('link'), {
+      key: 'Enter',
+      code: 'Enter',
+      keyCode: 13,
+      charCode: 13,
+    });
+    fireEvent.keyDown(getByRole('link'), {
+      key: 'Space',
+      code: 'Space',
+      keyCode: 32,
+      charCode: 32,
+    });
+
     expect(mockCallBack.mock.calls.length).toEqual(2);
   });
 
   it('does show text correctly', () => {
-    const component = mount(<PageElement {...mockProps} />);
-
-    const p = component.find('p span');
-    expect(p.at(1).text()).toEqual(`${mockProps.number}`);
+    const { container } = renderWithProviders(<PageElement {...mockProps} />);
+    expect(container.querySelector('span')).toHaveTextContent(`${mockProps.number}`);
   });
 
   it('does set active correctly', () => {
-    const component = mount(<PageElement {...mockProps} isActive />);
-    expect(component.find('ForwardRef(ButtonBase)').props().disabled).toBeTruthy();
+    const { getByRole } = renderWithProviders(<PageElement {...mockProps} isActive />);
+    expect(getByRole('link')).toBeDisabled();
   });
 
   it('does use default accessibility attributes correctly', () => {
-    const component = mount(<PageElement {...mockProps} />);
+    const { container, getByRole } = renderWithProviders(<PageElement {...mockProps} />);
 
     // Expect screen reader texts to render correctly
-    const srText = component.find('p span').at(0).text();
-    expect(srText).toEqual('Open page 2');
+    expect(container.querySelectorAll('p')[1]).toHaveTextContent('Open page 2');
 
     // // Expect aria-hidden attributes to be placed correctly
-    const spans = component.find('p span');
-    expect(spans.at(0).props()['aria-hidden']).toBeFalsy();
-    expect(spans.at(1).props()['aria-hidden']).toBeTruthy();
+    expect(container.querySelectorAll('p')[1]).not.toHaveAttribute('aria-hidden');
+    expect(container.querySelector('span')).toHaveAttribute('aria-hidden');
 
     // // Expect role to be set to link
-    expect(component.find('ForwardRef(ButtonBase)').props().role).toEqual('link');
+    expect(getByRole('link')).toHaveAttribute('role', 'link');
 
     // // Expect element to have tabIndex 0
-    expect(component.find('ForwardRef(ButtonBase)').props().tabIndex).toEqual('0');
+    expect(getByRole('link')).toHaveAttribute('tabindex', '0');
   });
 
   it('does use given accessibility attributes correctly', () => {
-    const component = mount(
+    const { container, getByRole } = renderWithProviders(
       <PageElement
         {...mockProps}
         isActive
       />,
     );
 
-    const srText = component.find('p span').at(0).text();
-    expect(srText).toEqual(`Sivu ${mockProps.number}, avattu`);
+    expect(container.querySelectorAll('p')[1]).toHaveTextContent(`Page ${mockProps.number} currently opened`);
 
-    // // Expect element to have tabIndex -1
-    expect(component.find('ForwardRef(ButtonBase)').props().tabIndex).toEqual('-1');
+    // Expect element to have tabIndex -1
+    expect(getByRole('link')).toHaveAttribute('tabindex', '-1');
   });
 });

@@ -3,10 +3,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   InputBase, Paper, Typography, Button, IconButton, Divider,
-} from '@material-ui/core';
+} from '@mui/material';
 import {
   Search, Cancel,
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import BackButton from '../BackButton';
@@ -180,6 +180,11 @@ const SearchBarComponent = ({
   };
 
   const activateSearch = () => {
+    // Fix problem with iOS keyboard pushing content outside of view
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+      document.body.scrollTop = 0;
+    }, 100);
     setIsActive(true);
     setFocusedSuggestion(null);
     setIsActive(true);

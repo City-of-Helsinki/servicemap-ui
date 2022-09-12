@@ -1,6 +1,7 @@
 /* eslint-disable prefer-destructuring */
 import { useCallback } from 'react';
 import useLocaleText from './useLocaleText';
+import { uppercaseFirst } from '.';
 
 
 export const addressMatchParamsToFetchOptions = (match) => {
@@ -74,7 +75,7 @@ export const getAddressFromUnit = (unit, getLocaleText, intl) => {
   const postalCode = addressZip ? `, ${addressZip}` : '';
   const city = intl.formatMessage({
     id: `settings.city.${unit.municipality}`,
-    defaultMessage: ' ',
+    defaultMessage: typeof unit.municipality === 'string' ? uppercaseFirst(unit.municipality) : ' ',
   });
 
   return `${typeof unit.street_address === 'string' ? unit.street_address : getLocaleText(unit.street_address)}${postalCode} ${city}`;

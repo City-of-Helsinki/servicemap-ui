@@ -1,31 +1,33 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Button, Typography, AppBar, Toolbar, ButtonBase, NoSsr,
-} from '@material-ui/core';
-import { Map } from '@material-ui/icons';
+  Button, Typography, AppBar, Toolbar, ButtonBase,
+} from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
+import { Map } from '@mui/icons-material';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
-import HomeLogo from '../Logos/HomeLogo';
+import { useLocation } from 'react-router-dom';
 import DrawerMenu from './DrawerMenu';
 import DesktopComponent from '../DesktopComponent';
 import MobileComponent from '../MobileComponent';
 import ToolMenu from '../ToolMenu';
 import { focusToViewTitle } from '../../utils/accessibility';
-import LocaleUtility from '../../utils/locale';
 import { useNavigationParams } from '../../utils/address';
 import SettingsButton from './SettingsButton';
 import MenuButton from './MenuButton';
+import SMLogo from './SMLogo';
+import { isHomePage } from '../../utils/path';
+import LanguageMenu from './LanguageMenu';
 
 const TopBar = (props) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const locale = useSelector(state => state.user.locale);
   const location = useLocation();
   const intl = useIntl();
   const getAddressNavigatorParams = useNavigationParams();
+  const isOnHomePage = isHomePage(location?.pathname);
 
   const {
+    hideButtons,
     settingsOpen,
     classes,
     toggleSettings,
@@ -72,6 +74,7 @@ const TopBar = (props) => {
     const mapPage = location.search.indexOf('showMap=true') > -1;
     return (
       <Button
+        aria-current={mapPage ? 'page' : false}
         aria-hidden
         className={mapPage ? classes.toolbarButtonPressed : classes.toolbarButton}
         classes={{ label: classes.buttonLabel }}
@@ -109,41 +112,6 @@ const TopBar = (props) => {
     />
   );
 
-  const renderLanguages = (pageType) => {
-    const typographyClass = className => `${pageType === 'mobile' ? classes.mobileFont : ''} ${className || ''}`;
-    return (
-      <>
-        {LocaleUtility.availableLocales
-          .map(currentLocale => (
-            <ButtonBase
-              role="link"
-              key={currentLocale}
-              focusVisibleClassName={classes.topButtonFocused}
-              lang={currentLocale}
-              onClick={() => {
-                const newLocation = location;
-                const newPath = location.pathname.replace(/^\/[a-zA-Z]{2}/, `/${currentLocale}`);
-                newLocation.pathname = newPath;
-                window.location = `${newLocation.pathname}${newLocation.search}`;
-              }}
-            >
-              <Typography
-                className={typographyClass(
-                  currentLocale === locale
-                    ? classes.bold
-                    : classes.greyText,
-                )}
-                color="inherit"
-                variant="body2"
-              >
-                <FormattedMessage id={`general.language.${currentLocale}`} />
-              </Typography>
-            </ButtonBase>
-          ))}
-      </>
-    );
-  };
-
   const handleContrastChange = () => {
     changeTheme(theme === 'default' ? 'dark' : 'default');
     setMapType(theme === 'default' ? 'accessible_map' : 'servicemap');
@@ -158,7 +126,7 @@ const TopBar = (props) => {
 
     switch (target) {
       case 'home':
-        if (currentPage !== 'home') {
+        if (!isOnHomePage) {
           navigator.push('home');
         } else {
           setTimeout(() => {
@@ -208,63 +176,74 @@ const TopBar = (props) => {
     } ${
       pageType === 'mobile' ? classes.toolbarBlackMobile : ''
     }`;
-    const contrastAriaLabel = intl.formatMessage({ id: `general.contrast.ariaLabel.${theme === 'dark' ? 'off' : 'on'}` })
+    const contrastAriaLabel = intl.formatMessage({ id: `general.contrast.ariaLabel.${theme === 'dark' ? 'off' : 'on'}` });
     return (
       <>
         <AppBar className={classes.appBar}>
           {/* Toolbar black area */}
           <Toolbar className={toolbarBlackClass}>
-            <div className={classes.toolbarBlackContainer}>
-              <ButtonBase role="link" onClick={() => handleNavigation('home')} focusVisibleClassName={classes.topButtonFocused}>
-                <Typography className={fontClass} color="inherit" variant="body2">
-                  <FormattedMessage id="general.frontPage" />
-                </Typography>
-              </ButtonBase>
-              <Typography aria-hidden color="inherit">|</Typography>
-              {renderLanguages(pageType)}
-              <Typography aria-hidden color="inherit">|</Typography>
-              <ButtonBase role="button" onClick={() => handleContrastChange()} focusVisibleClassName={classes.topButtonFocused} aria-label={contrastAriaLabel}>
-                <Typography className={fontClass} color="inherit" variant="body2"><FormattedMessage id="general.contrast" /></Typography>
-              </ButtonBase>
-            </div>
+            <nav aria-label={intl.formatMessage({ id: 'app.navigation.language' })}>
+              <div className={classes.toolbarBlackContainer}>
+                <ButtonBase
+                  aria-current={isOnHomePage ? 'page' : false}
+                  role="link"
+                  onClick={() => handleNavigation('home')}
+                  focusVisibleClassName={classes.topButtonFocused}
+                >
+                  <Typography className={fontClass} color="inherit" variant="body2">
+                    <FormattedMessage id="general.frontPage" />
+                  </Typography>
+                </ButtonBase>
+                <Typography aria-hidden color="inherit">|</Typography>
+                <LanguageMenu mobile={pageType === 'mobile'} />
+                <Typography aria-hidden color="inherit">|</Typography>
+                <ButtonBase role="button" onClick={() => handleContrastChange()} focusVisibleClassName={classes.topButtonFocused} aria-label={contrastAriaLabel}>
+                  <Typography className={fontClass} color="inherit" variant="body2"><FormattedMessage id="general.contrast" /></Typography>
+                </ButtonBase>
+              </div>
+            </nav>
           </Toolbar>
 
           {/* Toolbar white area */}
           <Toolbar disableGutters className={pageType === 'mobile' ? classes.toolbarWhiteMobile : classes.toolbarWhite}>
-            <ButtonBase aria-label={intl.formatMessage({ id: 'general.back.goToHome' })} role="link" onClick={() => handleNavigation('home')}>
-              <NoSsr>
-                <HomeLogo aria-hidden contrast={theme === 'dark'} className={classes.logo} />
-              </NoSsr>
-            </ButtonBase>
-            <MobileComponent>
-              <div className={classes.mobileButtonContainer}>
-                {renderMapButton()}
-                {renderMenuButton(pageType)}
-              </div>
-              {renderDrawerMenu(pageType)}
-            </MobileComponent>
-            <DesktopComponent>
-              {!smallScreen ? (
-                <div className={classes.settingsButtonsContainer}>
-                  <Typography component="h2" variant="srOnly">
-                    <FormattedMessage id="settings" />
-                  </Typography>
-                  {renderSettingsButtons()}
-                </div>
-              ) : (
+            <SMLogo onClick={() => handleNavigation('home')} />
+            {hideButtons
+              ? null
+              : (
                 <>
-                  <div className={classes.mobileButtonContainer}>
-                    {renderMenuButton()}
-                  </div>
-                  {renderDrawerMenu(pageType)}
+                  <MobileComponent>
+                    <div className={classes.mobileButtonContainer}>
+                      {renderMapButton()}
+                      {renderMenuButton(pageType)}
+                    </div>
+                    {renderDrawerMenu(pageType)}
+                  </MobileComponent>
+                  <DesktopComponent>
+                    <nav aria-label={intl.formatMessage({ id: 'app.navigation.settings' })} className={classes.settingsButtonsContainer}>
+                      {!smallScreen ? (
+                        <div className={classes.settingsButtonsContainer}>
+                          <Typography component="h2" style={visuallyHidden}>
+                            <FormattedMessage id="settings" />
+                          </Typography>
+                          {renderSettingsButtons()}
+                        </div>
+                      ) : (
+                        <>
+                          <div className={classes.mobileButtonContainer}>
+                            {renderMenuButton()}
+                          </div>
+                          {renderDrawerMenu(pageType)}
+                        </>
+                      )}
+                    </nav>
+                    {
+                      !smallScreen && (
+                        <ToolMenu />
+                      )
+                    }
+                  </DesktopComponent>
                 </>
               )}
-              {
-                !smallScreen && (
-                  <ToolMenu />
-                )
-              }
-            </DesktopComponent>
           </Toolbar>
         </AppBar>
         {/* This empty toolbar fixes the issue where App bar hides the top page content */}
@@ -300,11 +279,13 @@ TopBar.propTypes = {
   smallScreen: PropTypes.bool.isRequired,
   theme: PropTypes.string.isRequired,
   toggleSettings: PropTypes.func.isRequired,
+  hideButtons: PropTypes.bool,
 };
 
 TopBar.defaultProps = {
   navigator: null,
   settingsOpen: null,
+  hideButtons: false,
 };
 
 export default TopBar;

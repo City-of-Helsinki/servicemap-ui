@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {
   NoSsr,
   Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
 import config from '../../../config';
@@ -85,7 +85,7 @@ const SettingsText = ({ classes, type, variant }) => {
       >
         <FormattedMessage id={`settings.${type}`} />
       </Typography>
-      <Typography component="p" className={text}>
+      <Typography component="p" className={`SettingsTextCurrentSettings ${text}`}>
         {settings.map((s, i) => (
           <React.Fragment key={s.id}>
             {s.icon}

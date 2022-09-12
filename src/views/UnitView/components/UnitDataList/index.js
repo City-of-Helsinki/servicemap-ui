@@ -1,4 +1,4 @@
-import { withStyles } from '@material-ui/core';
+import { withStyles } from '@mui/styles';
 import styles from '../../styles/styles';
 import UnitDataList from './UnitDataList';
 

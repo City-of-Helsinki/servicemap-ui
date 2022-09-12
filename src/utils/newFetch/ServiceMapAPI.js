@@ -1,5 +1,5 @@
 import config from '../../../config';
-import HttpClient, { APIFetchError } from './HTTPClient';
+import HttpClient, { APIFetchError, serviceMapAPIName } from './HTTPClient';
 
 export default class ServiceMapAPI extends HttpClient {
   constructor() {
@@ -9,7 +9,7 @@ export default class ServiceMapAPI extends HttpClient {
     ) {
       throw new APIFetchError('ServicemapAPI baseURL missing');
     }
-    super(config.serviceMapAPI.root);
+    super(config.serviceMapAPI.root, serviceMapAPIName);
   }
 
   search = async (query, additionalOptions, concurrentSearch) => {
@@ -70,6 +70,22 @@ export default class ServiceMapAPI extends HttpClient {
     /* TODO: should use getConcurrent here instead.
     Progress updater needs to be updated to allow concurrency first. */
     return this.get('unit', options);
+  }
+
+  // Fetch units of multiple services concurrently
+  serviceUnits = async (idList, additionalOptions) => {
+    if (typeof idList !== 'string' && typeof idList !== 'number') {
+      throw new APIFetchError('Invalid idList string provided to ServiceMapAPI services method');
+    }
+
+    const options = {
+      service: idList,
+      page_size: 200,
+      only: 'street_address,name,accessibility_shortcoming_count,location,municipality,contract_type',
+      ...additionalOptions,
+    };
+
+    return this.getConcurrent('unit', options);
   }
 
   serviceNames = async (idList) => {

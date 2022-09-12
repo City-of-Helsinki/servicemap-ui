@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import URI from 'urijs';
@@ -15,6 +15,8 @@ export const isRetina = () => {
 };
 
 export const uppercaseFirst = val => val.charAt(0).toUpperCase() + val.slice(1);
+
+export const validateEmail = email => /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email);
 
 // Function for parsing react router search params
 export const parseSearchParams = (searchParams) => {

@@ -5,8 +5,8 @@ import {
   ArrowLeft,
   ArrowRight,
   Remove,
-} from '@material-ui/icons';
-import { ButtonBase } from '@material-ui/core';
+} from '@mui/icons-material';
+import { ButtonBase } from '@mui/material';
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useMap } from 'react-leaflet';
@@ -96,7 +96,7 @@ const PanControl = ({ classes }) => {
             className={classes.top}
             onClick={() => callback('up')}
             onKeyDown={keyboardCallback}
-            tabIndex="0"
+            tabIndex={0}
           >
             <ArrowDropUp />
           </ButtonBase>
@@ -106,7 +106,7 @@ const PanControl = ({ classes }) => {
             className={classes.left}
             onClick={() => callback('left')}
             onKeyDown={keyboardCallback}
-            tabIndex="0"
+            tabIndex={0}
           >
             <ArrowLeft />
           </ButtonBase>
@@ -116,7 +116,7 @@ const PanControl = ({ classes }) => {
             className={classes.right}
             onClick={() => callback('right')}
             onKeyDown={keyboardCallback}
-            tabIndex="0"
+            tabIndex={0}
           >
             <ArrowRight />
           </ButtonBase>
@@ -126,7 +126,7 @@ const PanControl = ({ classes }) => {
             className={classes.bottom}
             onClick={() => callback('down')}
             onKeyDown={keyboardCallback}
-            tabIndex="0"
+            tabIndex={0}
           >
             <ArrowDropDown />
           </ButtonBase>
@@ -138,7 +138,7 @@ const PanControl = ({ classes }) => {
         className={`${classes.zoomIn} ${embedded ? classes.embedded : ''} zoomIn `}
         onClick={() => callback('in')}
         onKeyDown={keyboardCallback}
-        tabIndex="0"
+        tabIndex={0}
       >
         <Add />
       </ButtonBase>
@@ -148,7 +148,7 @@ const PanControl = ({ classes }) => {
         className={`${classes.zoomOut} ${embedded ? classes.embedded : ''} zoomOut`}
         onClick={() => callback('out')}
         onKeyDown={keyboardCallback}
-        tabIndex="0"
+        tabIndex={0}
       >
         <Remove />
       </ButtonBase>

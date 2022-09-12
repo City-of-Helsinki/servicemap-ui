@@ -1,10 +1,10 @@
 /* eslint-disable global-require, no-use-before-define */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { useMapEvents } from 'react-leaflet';
 import TransitStopInfo from './TransitStopInfo';
-import { fetchStops } from '../../utils/transitFetch';
+import { fetchBikeStations, fetchStops } from '../../utils/transitFetch';
 import { transitIconSize } from '../../config/mapConfig';
 import { isEmbed } from '../../../../utils/path';
 import useMobileStatus from '../../../../utils/isMobile';
@@ -14,6 +14,7 @@ const TransitStops = ({ mapObject, classes }) => {
   const { Marker, Popup } = global.rL;
 
   const [transitStops, setTransitStops] = useState([]);
+  const [rentalBikeStations, setRentalBikeStations] = useState([]);
 
   const map = useMapEvents({
     moveend() {
@@ -55,6 +56,16 @@ const TransitStops = ({ mapObject, classes }) => {
     }
   };
 
+  useEffect(() => {
+    if (!rentalBikeStations.length) {
+      fetchBikeStations()
+        .then((stations) => {
+          const list = stations?.data?.bikeRentalStations;
+          if (list?.length) setRentalBikeStations(list);
+        });
+    }
+  }, []);
+
   const getTransitIcon = (type) => {
     const { divIcon } = require('leaflet');
     let icon;
@@ -71,6 +82,9 @@ const TransitStops = ({ mapObject, classes }) => {
         break;
       case 1: // Subway stops
         icon = <span aria-hidden className={`${classes.transitIconMap} ${classes.metroIconColor} icon-icon-hsl-metro`} />;
+        break;
+      case 7: // Bike stations
+        icon = <span aria-hidden className={`${classes.transitIconMap} ${classes.bikeIconColor} icon-icon-hsl-bike`} />;
         break;
       case -999: case 4: // Ferry stops
         icon = <spanz aria-hidden className={`${classes.transitIconMap} ${classes.ferryIconColor} icon-icon-hsl-ferry`} />;
@@ -96,38 +110,61 @@ const TransitStops = ({ mapObject, classes }) => {
     map.closePopup();
   };
 
+  if (!showTransitStops()) return null;
+
   return (
-    transitStops.map((stop) => {
-      const icon = getTransitIcon(stop.vehicleType);
-      return (
-        <Marker
-          icon={icon}
-          key={stop.name.fi + stop.gtfsId}
-          position={[stop.lat, stop.lon]}
-          keyboard={false}
-        >
-          <div aria-hidden>
-            <Popup closeButton={false} className="popup" autoPan={false}>
-              <TransitStopInfo
-                stop={stop}
-                onCloseClick={() => closePopup()}
-              />
-            </Popup>
-          </div>
-        </Marker>
-      );
-    })
+    <>
+      {transitStops.map((stop) => {
+        const icon = getTransitIcon(stop.vehicleType);
+        return (
+          <Marker
+            icon={icon}
+            key={stop.name.fi + stop.gtfsId}
+            position={[stop.lat, stop.lon]}
+            keyboard={false}
+          >
+            <div aria-hidden>
+              <Popup closeButton={false} className="popup" autoPan={isMobile}>
+                <TransitStopInfo
+                  stop={stop}
+                  onCloseClick={() => closePopup()}
+                />
+              </Popup>
+            </div>
+          </Marker>
+        );
+      })}
+      {rentalBikeStations.map((station) => {
+        const icon = getTransitIcon(7);
+        return (
+          <Marker
+            icon={icon}
+            key={`${station.name}+${station.stationId}`}
+            position={[station.lat, station.lon]}
+            keyboard={false}
+          >
+            <div aria-hidden>
+              <Popup closeButton={false} className="popup" autoPan={isMobile}>
+                <TransitStopInfo
+                  stop={station}
+                  type="bikeStation"
+                  onCloseClick={() => closePopup()}
+                />
+              </Popup>
+            </div>
+          </Marker>
+        );
+      })}
+    </>
   );
 };
 
 TransitStops.propTypes = {
   mapObject: PropTypes.objectOf(PropTypes.any).isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  isMobile: PropTypes.bool,
 };
 
 TransitStops.defaultProps = {
-  isMobile: false,
 };
 
 export default TransitStops;

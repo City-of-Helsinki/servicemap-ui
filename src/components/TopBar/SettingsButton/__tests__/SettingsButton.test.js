@@ -1,8 +1,6 @@
 import React from 'react';
-import { createShallow } from '@material-ui/core/test-utils';
-import { MuiThemeProvider } from '@material-ui/core';
 import SettingsButton from '../SettingsButton';
-import themes from '../../../../themes';
+import { getRenderWithProviders } from '../../../../../jestUtils';
 
 
 const mockProps = {
@@ -13,34 +11,31 @@ const mockProps = {
   onClick: () => {},
 };
 
-// eslint-disable-next-line react/prop-types
-const Providers = ({ children }) => (
-  <MuiThemeProvider theme={themes.SMTheme}>
-    {children}
-  </MuiThemeProvider>
-);
-
+const renderWithProviders = getRenderWithProviders({
+  settings: {
+    visuallyImpaired: false,
+    colorblind: false,
+    hearingAid: false,
+    mapType: 'servicemap',
+    mobility: 'none',
+    cities: 'helsinki',
+  },
+});
 
 describe('<SettingsButton />', () => {
-  let shallow;
-
-  beforeEach(() => {
-    shallow = createShallow({ wrappingComponent: Providers });
-  });
-
   it('should work', () => {
-    const component = shallow(<SettingsButton {...mockProps} />);
-    expect(component).toMatchSnapshot();
+    const { container } = renderWithProviders(<SettingsButton {...mockProps} />);
+    expect(container).toMatchSnapshot();
   });
 
   it('does use correct aria arrtibutes', () => {
-    const component = shallow(<SettingsButton {...mockProps} />);
+    const { container } = renderWithProviders(<SettingsButton {...mockProps} />);
     /*
       The following aria-attributes are based on the accessibility testing report from 26.4.2021
     */
     // Expect button role to be button
-    expect(component.props().role).toEqual('button');
+    expect(container.querySelector('button')).toHaveAttribute('role', 'button');
     // Expect button aria-haspopup value to be dialog
-    expect(component.props()['aria-haspopup']).toEqual('dialog');
+    expect(container.querySelector('button')).toHaveAttribute('aria-haspopup', 'dialog');
   });
 });

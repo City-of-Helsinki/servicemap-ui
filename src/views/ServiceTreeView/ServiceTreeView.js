@@ -2,16 +2,14 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   List, ListItem, Collapse, Checkbox, Typography, ButtonBase, NoSsr, Divider,
-} from '@material-ui/core';
+} from '@mui/material';
 import {
   ArrowDropUp, ArrowDropDown, Search, Cancel,
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 import { FormattedMessage } from 'react-intl';
 import config from '../../../config';
-import SMButton from '../../components/ServiceMapButton';
-import SMAccordion from '../../components/SMAccordion';
 import useLocaleText from '../../utils/useLocaleText';
-import TitleBar from '../../components/TitleBar';
+import { SMAccordion, SMButton, TitleBar } from '../../components';
 
 const ServiceTreeView = (props) => {
   const {
@@ -410,6 +408,7 @@ const ServiceTreeView = (props) => {
     const selectedString = selectedList.map(i => getLocaleText(i.name)).join(', ');
     return (
       <SMButton
+        id="ServiceTreeSearchButton"
         aria-label={selectedList.length
           ? intl.formatMessage({ id: 'services.search.sr.selected' }, { services: selectedString })
           : intl.formatMessage({ id: 'services.search.sr' })}
@@ -449,6 +448,7 @@ const ServiceTreeView = (props) => {
         {renderSelectionList(selectedList)}
       </div>
       <div className={classes.mainContent}>
+        <Typography className={classes.guidanceInfoText} variant="body2">{intl.formatMessage({ id: 'services.info' })}</Typography>
         {renderSearchButton(selectedList)}
         {renderServiceNodeList()}
       </div>

@@ -18,6 +18,7 @@ const wrapperClosure = (key, options = {}) => async (
   return response;
 };
 
+// OLD FETCH IMPLEMENTAION PLEASE USE NEW FETCH IMPLEMENTATION FOR NEW FETCHES
 export const accessibilitySentencesFetch = wrapperClosure('accessibilitySentences');
 export const unitEventsFetch = wrapperClosure('unitEvents', APIHandlers.unitEvents.options);
 export const selectedUnitFetch = wrapperClosure('unit', APIHandlers.unit.options);
@@ -29,5 +30,4 @@ export const districtFetch = wrapperClosure('district');
 export const eventFetch = wrapperClosure('event');
 export const reservationsFetch = wrapperClosure('reservations', APIHandlers.reservations.options);
 export const serviceRedirectFetch = wrapperClosure('serviceRedirect');
-export const hearingMapsFetch = wrapperClosure('hearingMaps');
 export const idFetch = wrapperClosure('idFetch', APIHandlers.idFetch.options);

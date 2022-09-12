@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import {
   ButtonBase, List, ListItem, Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { Close } from '@material-ui/icons';
+import { Close } from '@mui/icons-material';
 import { useLocation } from 'react-router-dom';
 import { useMap } from 'react-leaflet';
 import useLocaleText from '../../../../utils/useLocaleText';

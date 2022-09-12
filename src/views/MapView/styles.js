@@ -26,7 +26,8 @@ const styles = theme => ({
     },
   },
   addressLink: {
-    color: theme.palette.primary.main,
+    color: theme.palette.link.main,
+    textDecoration: 'underline',
   },
   loadingScreen: {
     height: '100%',
@@ -59,7 +60,7 @@ const styles = theme => ({
     paddingBottom: theme.spacing(2),
   },
   coordinateLink: {
-    color: theme.palette.primary.main,
+    color: theme.palette.link.main,
     wordBreak: 'break-word',
     textAlign: 'left',
     maxWidth: 240,
@@ -79,7 +80,7 @@ const styles = theme => ({
     zIndex: theme.zIndex.infront,
   },
   marginBottom: {
-    marginBottom: `${theme.spacing(2)}px !important`,
+    marginBottom: `${theme.spacing(2)} !important`,
   },
   embedLogo: {
     top: 0,
@@ -223,7 +224,7 @@ const styles = theme => ({
     ...theme.typography.body2,
     paddingTop: theme.spacing(1),
     textAlign: 'center',
-    color: theme.palette.primary.main,
+    color: theme.palette.primary.link,
   },
   unitTooltipWrapper: {
     padding: theme.spacing(3),
@@ -236,7 +237,7 @@ const styles = theme => ({
     maxHeight: '25vh',
     '& .popup-distance': {
       fontWeight: 'normal',
-      fontSize: '14px',
+      fontSize: '0.875rem',
     },
     '& li': {
       display: 'flex',
@@ -351,7 +352,7 @@ const styles = theme => ({
     paddingRight: theme.spacing(2),
   },
   eventDate: {
-    fontSize: 12,
+    fontSize: '0.75rem',
   },
 
   // Transit stops
@@ -379,7 +380,6 @@ const styles = theme => ({
     marginRight: 4,
   },
   tranistInfoContainer: {
-    width: 230,
     padding: theme.spacing(2),
     display: 'flex',
     flexDirection: 'column',
@@ -400,7 +400,7 @@ const styles = theme => ({
   },
   departureTime: {
     width: '15%',
-    fontSize: 13,
+    fontSize: '0.813rem',
   },
   departureVehicle: {
     width: '38%',
@@ -411,7 +411,7 @@ const styles = theme => ({
     fontWeight: 'bold',
   },
   routeName: {
-    fontSize: 12,
+    fontSize: '0.75rem',
     width: '55%',
     overflow: 'hidden',
     whiteSpace: 'nowrap',
@@ -421,7 +421,7 @@ const styles = theme => ({
     marginLeft: 'auto',
   },
   closeText: {
-    fontSize: 12,
+    fontSize: '0.75rem',
     color: 'rgba(0,0,0,0.6)',
   },
   busIconColor: {
@@ -435,6 +435,9 @@ const styles = theme => ({
   },
   metroIconColor: {
     color: '#FF6319',
+  },
+  bikeIconColor: {
+    color: '#fcb919',
   },
   ferryIconColor: {
     color: '#00B9E4',

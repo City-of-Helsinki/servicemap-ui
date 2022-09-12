@@ -14,7 +14,7 @@ export default theme => ({
     marginRight: theme.spacing(2),
     whiteSpace: 'pre-line',
     '& p': {
-      lineHeight: '18px',
+      lineHeight: '1.125rem',
     },
   },
   listIcon: {
@@ -42,9 +42,9 @@ export default theme => ({
     },
   },
   subtitle: {
-    fontSize: '10px',
+    fontSize: '0.625rem',
     fontWeight: 'none',
-    lineHeight: '18px',
+    lineHeight: '1.125rem',
   },
   historyText: {
     color: '#660DD7',

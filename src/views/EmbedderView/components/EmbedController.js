@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import {
   Typography,
   Paper,
-  withStyles,
   InputBase,
   Divider,
   Button,
@@ -12,10 +11,11 @@ import {
   FormControlLabel,
   ListItem,
   Checkbox,
-} from '@material-ui/core';
+} from '@mui/material';
+import { withStyles } from '@mui/styles';
 import { FormattedMessage } from 'react-intl';
-import SMRadio from '../../../components/SMRadio';
 import styles from '../styles';
+import { SMRadio } from '../../../components';
 
 
 const customStyles = () => ({

@@ -18,7 +18,7 @@ export default theme => ({
     fontWeight: 'bold',
   },
   areaIcon: {
-    fontSize: 20,
+    fontSize: '1.25rem',
     marginLeft: 0,
     marginRight: theme.spacing(2),
   },

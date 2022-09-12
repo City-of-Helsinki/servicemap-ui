@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { List, ListItem, Typography } from '@material-ui/core';
-import { withStyles } from '@material-ui/styles';
+import { List, ListItem, Typography } from '@mui/material';
+import { withStyles } from '@mui/styles';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import styles from '../../styles';

@@ -98,6 +98,7 @@ export default theme => ({
     '& svg': {
       fontSize: 28,
     },
+    flexDirection: 'column',
   },
   searchButtonFocus: {
     boxShadow: '0 0 0 4px #fff !important',
@@ -135,7 +136,7 @@ export default theme => ({
     paddingLeft: '18px',
   },
   subtitleText: {
-    lineHeight: '32px',
+    lineHeight: '2rem',
   },
   expandTitle: {
     alignSelf: 'center',
@@ -175,7 +176,7 @@ export default theme => ({
   },
   cancelButton: {
     '& svg': {
-      fontSize: 14,
+      fontSize: '0.875rem',
     },
   },
   closeButton: {

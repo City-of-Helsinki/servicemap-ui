@@ -41,7 +41,10 @@ const fitUnitsToMap = (units, map) => {
   });
   if (bounds.length > 0) {
     try {
-      map.fitBounds(bounds, { padding: [15, 15], maxZoom: maxZoom - 1 });
+      setTimeout(() => {
+        map.invalidateSize();
+        map.fitBounds(bounds, { padding: [15, 15], maxZoom: maxZoom - 1 });
+      }, 1);
     } catch (err) {
       console.warn('Fit units to map failed', err);
     }

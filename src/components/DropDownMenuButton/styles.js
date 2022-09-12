@@ -17,6 +17,7 @@ export default theme => ({
       marginRight: theme.spacing(2),
       textTransform: 'none',
     },
+    color: 'black',
   },
   icon: {
     boxShadow: `0 4px 8px 0 ${theme.palette.detail.alpha}`,
@@ -37,7 +38,7 @@ export default theme => ({
   },
   iconRight: {
     marginLeft: 'auto',
-    fontSize: 24,
+    fontSize: '1.5rem',
   },
   menuItem: {
     padding: theme.spacing(1),

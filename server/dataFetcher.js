@@ -1,10 +1,11 @@
 import AbortController from 'abort-controller';
 import paths from '../config/paths';
-import { eventFetch, selectedUnitFetch, unitEventsFetch, accessibilitySentencesFetch, reservationsFetch, hearingMapsFetch, idFetch } from '../src/utils/fetch';
+import { eventFetch, selectedUnitFetch, unitEventsFetch, accessibilitySentencesFetch, reservationsFetch, idFetch } from '../src/utils/fetch';
 import { changeSelectedEvent } from '../src/redux/actions/event';
 import { changeSelectedUnit } from '../src/redux/actions/selectedUnit';
 import { changeAccessibilitySentences } from '../src/redux/actions/selectedUnitAccessibility';
 import { events, reservations, hearingMaps } from '../src/redux/actions/fetchDataActions';
+import HearingMapAPI from '../src/utils/newFetch/HearingMapAPI';
 
 const timeoutTimer = process.env.SSR_FETCH_TIMEOUT;
 
@@ -117,15 +118,24 @@ export const fetchSelectedUnitData = (req, res, next) => {
     }
 
     // Fetch unit view data
-    const selectedUnitFetchEnd = (data) => {
+    const selectedUnitFetchEnd = async (data) => {
       if (!store || !store.dispatch || !data) {
         response();
         return;
       }
       data.complete = true;
       store.dispatch(changeSelectedUnit(data));
-      if (data.keywords.fi.includes('kuuluvuuskartta')) {
-        hearingMapsFetch(null, null, hearingMapsFetchEnd, fetchOnError, null, id, controller);
+      if (data.keywords.fi?.includes('kuuluvuuskartta')) {
+        const hearingMapAPI = new HearingMapAPI();
+        const {
+          fetchSuccess, fetchError,
+        } = hearingMaps;
+        try {
+          const data = await hearingMapAPI.hearingMaps(id);
+          store.dispatch(fetchSuccess({id, data}));
+        } catch (e) {
+          store.dispatch(fetchError(e.message));
+        }
       }
       response();
     }
@@ -171,20 +181,6 @@ export const fetchSelectedUnitData = (req, res, next) => {
       response();
     }
     reservationsFetch({ unit: `tprek:${id}` }, null, reservationFetchEnd, fetchOnError, null, null, controller)
-
-    // Fetch hearing maps for unit if unit has keyword "kuuluvuuskartta"
-    const hearingMapsFetchEnd = (data) => {
-      if (!store || !store.dispatch || !data) {
-        response();
-        return;
-      }
-      const {
-        fetchSuccess,
-      } = hearingMaps;
-      store.dispatch(fetchSuccess({id, data}));
-      response();
-    }
-
 
   } catch(e) {
     console.log('Error in fetchSelectedUnitData', e.message);
