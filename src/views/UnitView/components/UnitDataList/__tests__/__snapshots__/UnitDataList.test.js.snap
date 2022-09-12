@@ -1,0 +1,214 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<UnitDataList /> should work 1`] = `
+<div>
+  <div>
+    <div
+      class="TitledList-titleContainer-6 TitledList-marginHorizontal-4"
+    >
+      <h4
+        class="MuiTypography-root MuiTypography-subtitle1 TitledList-left-1 TitledList-marginVertical-3 css-dlbwt1-MuiTypography-root"
+      >
+        Events
+      </h4>
+    </div>
+    <p
+      class="MuiTypography-root MuiTypography-body2 MuiTypography-alignLeft TitledList-description-5 css-10dderv-MuiTypography-root"
+    >
+      Here you can find information about events provided by the unit
+    </p>
+    <ul
+      class="MuiList-root css-1mk9mw3-MuiList-root"
+    >
+      <li
+        class="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button ResultItem-listItem-11 css-16e6fe9-MuiButtonBase-root-MuiListItem-root"
+        role="link"
+        tabindex="0"
+      >
+        <div
+          class="MuiListItemIcon-root ResultItem-listItemIcon-12 css-cveggr-MuiListItemIcon-root"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium css-tp7oeh-MuiSvgIcon-root"
+            data-testid="EventIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"
+            />
+          </svg>
+        </div>
+        <div
+          class="ResultItem-itemTextContainer-18  "
+        >
+          <div
+            class="ResultItem-topRow-20"
+          >
+            <p
+              class="MuiTypography-root MuiTypography-body2 ResultItem-title-16 ResultItem-srOnly css-1ak20dk-MuiTypography-root"
+              style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
+            >
+              
+    Suomen kielen kielikahvila 
+    today at 5:00 PM 
+     
+     
+    
+  
+            </p>
+            <p
+              aria-hidden="true"
+              class="MuiTypography-root MuiTypography-body2 ResultItem-title-16    ResultItem-title css-1ak20dk-MuiTypography-root"
+              role="textbox"
+            >
+              Suomen kielen kielikahvila
+            </p>
+          </div>
+          <div>
+            <div>
+              <p
+                aria-hidden="true"
+                class="MuiTypography-root MuiTypography-caption ResultItem-noMargin-17 ResultItem-text-25  ResultItem-subtitle css-r3hlsg-MuiTypography-root"
+              >
+                today at 5:00 PM
+              </p>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li
+        aria-hidden="true"
+      >
+        <hr
+          class="MuiDivider-root MuiDivider-inset ResultItem-divider-26 css-uls1yk-MuiDivider-root"
+        />
+      </li>
+      <li
+        class="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button ResultItem-listItem-11 css-16e6fe9-MuiButtonBase-root-MuiListItem-root"
+        role="link"
+        tabindex="0"
+      >
+        <div
+          class="MuiListItemIcon-root ResultItem-listItemIcon-12 css-cveggr-MuiListItemIcon-root"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium css-tp7oeh-MuiSvgIcon-root"
+            data-testid="EventIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"
+            />
+          </svg>
+        </div>
+        <div
+          class="ResultItem-itemTextContainer-18  "
+        >
+          <div
+            class="ResultItem-topRow-20"
+          >
+            <p
+              class="MuiTypography-root MuiTypography-body2 ResultItem-title-16 ResultItem-srOnly css-1ak20dk-MuiTypography-root"
+              style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
+            >
+              
+    R&A x Armas: Vanhenemisen estetiikka 
+    today at 7:00 PM 
+     
+     
+    
+  
+            </p>
+            <p
+              aria-hidden="true"
+              class="MuiTypography-root MuiTypography-body2 ResultItem-title-16    ResultItem-title css-1ak20dk-MuiTypography-root"
+              role="textbox"
+            >
+              R&A x Armas: Vanhenemisen estetiikka
+            </p>
+          </div>
+          <div>
+            <div>
+              <p
+                aria-hidden="true"
+                class="MuiTypography-root MuiTypography-caption ResultItem-noMargin-17 ResultItem-text-25  ResultItem-subtitle css-r3hlsg-MuiTypography-root"
+              >
+                today at 7:00 PM
+              </p>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li
+        aria-hidden="true"
+      >
+        <hr
+          class="MuiDivider-root MuiDivider-inset ResultItem-divider-26 css-uls1yk-MuiDivider-root"
+        />
+      </li>
+      <li
+        class="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button ResultItem-listItem-11 css-16e6fe9-MuiButtonBase-root-MuiListItem-root"
+        role="link"
+        tabindex="0"
+      >
+        <div
+          class="MuiListItemIcon-root ResultItem-listItemIcon-12 css-cveggr-MuiListItemIcon-root"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium css-tp7oeh-MuiSvgIcon-root"
+            data-testid="EventIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"
+            />
+          </svg>
+        </div>
+        <div
+          class="ResultItem-itemTextContainer-18  "
+        >
+          <div
+            class="ResultItem-topRow-20"
+          >
+            <p
+              class="MuiTypography-root MuiTypography-body2 ResultItem-title-16 ResultItem-srOnly css-1ak20dk-MuiTypography-root"
+              style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
+            >
+              
+    Digital guidance for seniors 
+    tomorrow at 11:00 AM 
+     
+     
+    
+  
+            </p>
+            <p
+              aria-hidden="true"
+              class="MuiTypography-root MuiTypography-body2 ResultItem-title-16    ResultItem-title css-1ak20dk-MuiTypography-root"
+              role="textbox"
+            >
+              Digital guidance for seniors
+            </p>
+          </div>
+          <div>
+            <div>
+              <p
+                aria-hidden="true"
+                class="MuiTypography-root MuiTypography-caption ResultItem-noMargin-17 ResultItem-text-25  ResultItem-subtitle css-r3hlsg-MuiTypography-root"
+              >
+                tomorrow at 11:00 AM
+              </p>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+`;
