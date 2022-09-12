@@ -106,6 +106,17 @@ export default class ServiceMapAPI extends HttpClient {
     };
     return this.get('service_node', options);
   }
+  
+  statisticalGeometry = async () => {
+    const options = {
+      page: 1,
+      page_size: 500,
+      geometry: true,
+      type: 'statistical_district'
+    };
+    return this.getConcurrent('administrative_division', options);
+
+  }
 
   areas = async (idList, geometry, additionalOptions) => {
     if (typeof idList !== 'string') {
