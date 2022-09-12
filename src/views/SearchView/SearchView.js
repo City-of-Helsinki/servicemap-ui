@@ -390,7 +390,7 @@ class SearchView extends React.Component {
       <NoSsr>
         <Typography
           role="link"
-          tabIndex="-1"
+          tabIndex={-1}
           onClick={this.skipToContent}
           onKeyPress={() => { keyboardHandler(this.skipToContent(), ['space', 'enter']); }}
           style={visuallyHidden}
@@ -559,7 +559,7 @@ class SearchView extends React.Component {
     } = this.props;
 
     return (
-      <Typography className={classes.srOnly} style={visuallyHidden} component="h3" tabIndex="-1">
+      <Typography className={classes.srOnly} style={visuallyHidden} component="h3" tabIndex={-1}>
         {
           !isFetching
           && (
@@ -630,7 +630,7 @@ class SearchView extends React.Component {
         }
         <DesktopComponent>
           <Typography style={visuallyHidden} component="h3">
-            <Link href={`#${viewTitleID}`} tabIndex="-1">
+            <Link href={`#${viewTitleID}`} tabIndex={-1}>
               <FormattedMessage id="general.return.viewTitle" />
             </Link>
           </Typography>

@@ -29,7 +29,7 @@ export default theme => ({
   },
   itemText: {
     color: '#2242C7',
-    fontSize: 14,
+    fontSize: '0.875rem',
   },
   defaultIcon: {
     height: 25,

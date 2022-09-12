@@ -1,10 +1,9 @@
 // Link.react.test.js
 import React from 'react';
-import { ThemeProvider } from '@mui/material/styles';
 import { Search } from '@mui/icons-material';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
 import DrawerButton from '../DrawerButton';
-import themes from '../../../../themes';
+import { getRenderWithProviders } from '../../../../../jestUtils';
 
 // Generic required props for ServiceMapButton
 const buttonMockProps = {
@@ -18,14 +17,7 @@ const buttonMockProps = {
   subText: 'Drawer button subtext',
 };
 
-// eslint-disable-next-line react/prop-types
-const Providers = ({ children }) => (
-  <ThemeProvider theme={themes.SMTheme}>
-    {children}
-  </ThemeProvider>
-);
-
-const renderWithProviders = component => render(component, { wrapper: Providers });
+const renderWithProviders = getRenderWithProviders({});
 
 describe('<DrawerButton />', () => {
   it('should work', () => {

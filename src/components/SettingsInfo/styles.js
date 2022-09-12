@@ -16,8 +16,8 @@ export default theme => ({
     padding: theme.spacing(1, 2),
   },
   infoItemText: {
-    fontSize: 11,
-    lineHeight: '13px',
+    fontSize: '0.688rem',
+    lineHeight: '0.813rem',
   },
   settingsLink: {
     justifyContent: 'left',

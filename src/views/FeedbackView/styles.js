@@ -18,7 +18,7 @@ export default theme => ({
     padding: 0,
   },
   input: {
-    fontSize: 12,
+    fontSize: '0.75rem',
     lineHeight: '20px',
     padding: 10,
     paddingLeft: 14,
@@ -40,10 +40,10 @@ export default theme => ({
     color: `${theme.palette.warning.main}`,
   },
   errorIcon: {
-    fontSize: 16,
+    fontSize: '1rem',
   },
   errorText: {
-    fontSize: 12,
+    fontSize: '0.75rem',
     margin: 0,
   },
   errorField: {
@@ -62,12 +62,12 @@ export default theme => ({
     paddingTop: 16,
     paddingBottom: 14,
     paddingRight: 16,
-    fontSize: 14,
+    fontSize: '0.875rem',
     fontWeight: 'bold',
   },
   subtitle: {
     paddingLeft: 8,
-    fontSize: 12,
+    fontSize: '0.75rem',
   },
   checkbox: {
     display: 'flex',
@@ -101,6 +101,7 @@ export default theme => ({
     marginTop: 14,
   },
   link: {
+    color: theme.palette.link.main,
     marginTop: 14,
     marginBottom: 26,
     textAlign: 'left',
@@ -117,7 +118,7 @@ export default theme => ({
     color: '#fff',
   },
   modalTitle: {
-    fontSize: 16,
+    fontSize: '1rem',
     fontWeight: 'bold',
     textAlign: 'center',
   },

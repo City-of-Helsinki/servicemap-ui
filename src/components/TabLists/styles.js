@@ -28,6 +28,10 @@ export default theme => ({
       letterSpacing: 'normal',
     },
     color: 'black',
+    '&:focus': {
+      boxShadow: 'none',
+      zIndex: 0,
+    },
   },
   tabFocus: {
     outline: `4px solid ${theme.palette.primary.highContrast} !important`,
@@ -40,10 +44,11 @@ export default theme => ({
     paddingRight: 0,
     paddingTop: theme.spacing(3),
     paddingBottom: theme.spacing(3),
-    fontSize: 'clamp(13px, 1.8vw, 14px)',
+    fontSize: 'clamp(0.8rem, 1.8vw, 0.875rem)',
+    overflowWrap: 'anywhere',
   },
   mobileTabFont: {
-    fontSize: 11.5,
+    fontSize: '0.719rem',
   },
   addressBar: {
     padding: theme.spacing(3),

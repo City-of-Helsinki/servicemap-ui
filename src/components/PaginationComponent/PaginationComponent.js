@@ -45,6 +45,7 @@ class PaginationComponent extends React.Component {
         {
           // Button backwards one page
           <SMButton
+            id="PaginationPreviousButton"
             aria-label={intl.formatMessage({ id: 'general.pagination.previous' })}
             className={`${classes.button} ${classes.arrowFlip} ${buttonClass}`}
             onClick={(e) => {
@@ -62,6 +63,7 @@ class PaginationComponent extends React.Component {
         {
           // Button forward one page
           <SMButton
+            id="PaginationNextButton"
             aria-label={intl.formatMessage({ id: 'general.pagination.next' })}
             className={`${classes.button} ${buttonClass}`}
             onClick={(e) => {
