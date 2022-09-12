@@ -66,6 +66,7 @@ const UnitView = (props) => {
   const checkCorrectUnit = unit => unit && unit.id === parseInt(match.params.unit, 10);
 
   const [unit, setUnit] = useState(checkCorrectUnit(stateUnit) ? stateUnit : null);
+
   const viewPosition = useRef(null);
 
   const isMobile = useMobileStatus();
@@ -202,6 +203,7 @@ const UnitView = (props) => {
       initializePTVAccessibilitySentences();
     }
   }, [unit]);
+
 
   if (embed) {
     return null;
