@@ -11,7 +11,6 @@ import AlertBox from './AlertBox';
 import CloseButton from './CloseButton';
 import Container from './Container';
 import ErrorBoundary from './ErrorBoundary';
-import ExpandedSuggestions from './ExpandedSuggestions';
 import HomeLogo from './Logos/HomeLogo';
 import Loading from './Loading';
 import MobileComponent from './MobileComponent';
@@ -64,7 +63,6 @@ export {
   DivisionItem,
   ErrorBoundary,
   EventItem,
-  ExpandedSuggestions,
   FocusableSRLinks,
   HomeLogo,
   Loading,

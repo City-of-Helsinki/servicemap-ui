@@ -25,27 +25,6 @@ import {
   SettingsInfo,
   TabLists,
 } from '../../components';
-// =======
-// import { withStyles } from '@mui/styles';
-// import { visuallyHidden } from '@mui/utils';
-// import { injectIntl, FormattedMessage } from 'react-intl';
-// import styles from './styles';
-// import {
-//   Container,
-//   DesktopComponent,
-//   ExpandedSuggestions,
-//   Loading,
-//   MobileComponent,
-//   SearchBar,
-//   SettingsInfo,
-//   SMButton,
-//   TabLists,
-// } from '../../components';
-// import { fitUnitsToMap } from '../MapView/utils/mapActions';
-// import { parseSearchParams, getSearchParam, keyboardHandler } from '../../utils';
-// import { generatePath } from '../../utils/path';
-// >>>>>>> develop
-
 
 const focusClass = 'TabListFocusTarget';
 
@@ -334,7 +313,7 @@ const SearchView = (props) => {
     const { isFetching, max } = searchFetchState;
     return (
       <Paper className={!isFetching ? classes.noPadding : ''} elevation={1} square aria-live="polite">
-        <Typography className={classes.srOnly} variant="srOnly" component="h3" tabIndex={-1}>
+        <Typography style={visuallyHidden} component="h3" tabIndex={-1}>
           {!isFetching && (
             <FormattedMessage id="search.results.title" />
           )}
@@ -470,7 +449,7 @@ const SearchView = (props) => {
       {renderNotFound()}
       {isMobile ? (
         // Jump link back to beginning of current page
-        <Typography variant="srOnly" component="h3">
+        <Typography style={visuallyHidden} component="h3">
           <Link href={`#${viewTitleID}`} tabIndex={-1}>
             <FormattedMessage id="general.return.viewTitle" />
           </Link>

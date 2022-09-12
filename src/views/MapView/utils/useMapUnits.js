@@ -88,7 +88,7 @@ const useMapUnits = () => {
   const parkingAreaUnits = useSelector(state => state.districts.parkingUnits);
   const highlightedUnit = useSelector(state => getSelectedUnit(state));
 
-  const searchUnitsLoading = useSelector(state => state.units.isFetching);
+  const searchUnitsLoading = useSelector(state => state.searchResults.isFetching);
   const serviceUnitsLoading = useSelector(state => state.service.isFetching);
   const unitsLoading = searchUnitsLoading || serviceUnitsLoading;
 

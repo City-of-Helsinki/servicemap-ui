@@ -1,4 +1,4 @@
-import { withStyles } from '@material-ui/styles';
+import { withStyles } from '@mui/styles';
 import SearchView from './SearchView';
 import styles from './styles';
 

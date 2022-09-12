@@ -22,7 +22,7 @@ const smFetch = (dispatch, options) => {
   } else if (options.service_id) { // Service fetch
     const { service_id, ...additionalOptions } = options;
     smAPI.setOnProgressUpdate(onProgressUpdate);
-    results = smAPI.serviceUnits(service_id, additionalOptions);
+    results = smAPI.serviceUnitSearch(service_id, additionalOptions);
   } else if (options.service_node) { // Service  node fetch
     const { service_node, ...additionalOptions } = options;
     smAPI.setOnProgressUpdate(onProgressUpdate);

@@ -19,8 +19,8 @@ export default class ServiceMapAPI extends HttpClient {
     const options = { // TODO: adjust these values for best results and performance
       q: query,
       page_size: 200,
-      limit: 2000,
-      unit_limit: 2000,
+      limit: 3000,
+      unit_limit: 3000,
       service_limit: 500,
       address_limit: 700,
       ...additionalOptions,
@@ -53,7 +53,7 @@ export default class ServiceMapAPI extends HttpClient {
     return this.get('unit', options);
   }
 
-  serviceUnits = async (serviceId, additionalOptions) => {
+  serviceUnitSearch = async (serviceId, additionalOptions) => {
     if (typeof serviceId !== 'string') {
       throw new APIFetchError('Invalid id string provided to ServiceMapAPI serviceUnits method');
     }
@@ -81,6 +81,7 @@ export default class ServiceMapAPI extends HttpClient {
     const options = {
       service: idList,
       page_size: 200,
+      geometry: true,
       only: 'street_address,name,accessibility_shortcoming_count,location,municipality,contract_type',
       ...additionalOptions,
     };
