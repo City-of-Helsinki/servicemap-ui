@@ -20,6 +20,7 @@ const ContactInfo = ({
   const location = useLocation();
   const getLocaleText = useLocaleText();
   const additionalEntrances = unit?.entrances?.filter(entrance => !entrance.is_main_entrance);
+  const subgroupContacts = unit?.connections?.filter(c => c.section_type === 'SUBGROUP');
 
   const address = {
     type: 'ADDRESS',
@@ -29,7 +30,7 @@ const ContactInfo = ({
   const phone = {
     type: 'PHONE',
     value: unit.phone ? { phone: unit.phone } : intl.formatMessage({ id: 'unit.phone.missing' }),
-    noDivider: unit.call_charge_info && unit.call_charge_info.fi !== 'pvm/mpm', // TODO: fix this hard coded value when unit data returns call charge boolean
+    noDivider: (unit.call_charge_info && unit.call_charge_info.fi !== 'pvm/mpm') || (subgroupContacts && subgroupContacts.length > 0), // TODO: fix this hard coded value when unit data returns call charge boolean
   };
   const email = {
     type: 'EMAIL',
@@ -114,6 +115,37 @@ const ContactInfo = ({
     ),
   };
 
+  const subgroups = {
+    component: subgroupContacts?.length > 0 && (
+      <React.Fragment key="entrances">
+        <ListItem className={classes.accordionItem}>
+          <SMAccordion
+            className={classes.accordionRoot}
+            disableUnmount
+            titleContent={<Typography><FormattedMessage id="unit.subgroup.title" /></Typography>}
+            collapseContent={(
+              <div className={classes.accordionContaianer}>
+                {subgroupContacts.map(subgroup => (
+                  subgroup.contact_person ? (
+                    <div key={subgroup.contact_person} className={classes.subgroupItem}>
+                      <Typography key={subgroup.contact_person}>
+                        {`${subgroup.contact_person}, ${getLocaleText(subgroup.name)}, `}
+                      </Typography>
+                      <a href={`tel:${subgroup.phone}`}>{subgroup.phone}</a>
+                    </div>
+                  ) : null
+                ))}
+              </div>
+              )}
+          />
+        </ListItem>
+        <li aria-hidden>
+          <Divider className={classes.dividerShort} />
+        </li>
+      </React.Fragment>
+    ),
+  };
+
   // For infomration that is in data's connections array, use unitSectionFilter
   const hours = unitSectionFilter(unit.connections, 'OPENING_HOURS');
   const contact = unitSectionFilter(unit.connections, 'PHONE_OR_EMAIL');
@@ -124,6 +156,7 @@ const ContactInfo = ({
     address,
     entrances,
     phone,
+    subgroups,
     callInformation,
     email,
     website,
