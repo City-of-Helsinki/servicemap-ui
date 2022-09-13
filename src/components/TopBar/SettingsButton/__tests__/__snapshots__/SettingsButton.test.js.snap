@@ -8,7 +8,7 @@ exports[`<SettingsButton /> should work 1`] = `
     class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root 
     undefined 
     
-   css-w2lxu-MuiButtonBase-root-MuiButton-root"
+   css-1p2nkht-MuiButtonBase-root-MuiButton-root"
     id="SettingsButtoncitySettings"
     role="button"
     tabindex="0"
@@ -17,12 +17,12 @@ exports[`<SettingsButton /> should work 1`] = `
     <p
       class="MuiTypography-root MuiTypography-subtitle1 SettingsText-title-1 css-dlbwt1-MuiTypography-root"
     >
-      City settings
+      City
     </p>
     <p
-      class="MuiTypography-root MuiTypography-body2 SettingsText-text-3 css-1ak20dk-MuiTypography-root"
+      class="MuiTypography-root MuiTypography-body2 SettingsTextCurrentSettings SettingsText-text-3 css-1ak20dk-MuiTypography-root"
     >
-      Cities all
+      Show all
     </p>
   </button>
 </div>

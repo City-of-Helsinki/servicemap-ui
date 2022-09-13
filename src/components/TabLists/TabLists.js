@@ -204,7 +204,7 @@ const TabLists = ({
           focusClass
           && focusText
           && (
-            <Typography style={visuallyHidden} className={focusClass} tabIndex="-1">{focusText}</Typography>
+            <Typography style={visuallyHidden} className={focusClass} tabIndex={-1}>{focusText}</Typography>
           )
         }
         <Tabs

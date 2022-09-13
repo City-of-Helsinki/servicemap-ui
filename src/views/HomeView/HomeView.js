@@ -11,6 +11,7 @@ import {
 import config from '../../../config';
 import { useNavigationParams } from '../../utils/address';
 import useLocaleText from '../../utils/useLocaleText';
+import { useIntl } from 'react-intl';
 
 const HomeView = (props) => {
   const {
@@ -18,6 +19,7 @@ const HomeView = (props) => {
   } = props;
 
   const getLocaleText = useLocaleText();
+  const { formatMessage } = useIntl()
   const getAddressNavigatorParams = useNavigationParams();
 
 
@@ -46,59 +48,61 @@ const HomeView = (props) => {
     return (
       <div className={classes.background}>
         <div className={classes.buttonContainer}>
-          {areaSelection}
-          <PaperButton
-            messageID="home.buttons.closeByServices"
-            icon={getIcon('location')}
-            link
-            disabled={noUserLocation}
-            onClick={() => {
-              navigator.push('address', getAddressNavigatorParams(userLocation.addressData));
-            }}
-            subtitleID={subtitleID && subtitleID}
-          />
-          <PaperButton
-            messageID="home.buttons.services"
-            icon={getIcon('serviceList')}
-            link
-            onClick={() => navigator.push('serviceTree')}
-          />
-          <MobileComponent>
+          <nav aria-label={formatMessage({ id: `app.navigation.home` })}>
+            {areaSelection}
             <PaperButton
-              messageID="home.buttons.settings"
-              icon={getIcon('accessibility')}
+              messageID="home.buttons.closeByServices"
+              icon={getIcon('location')}
               link
-              onClick={() => toggleSettings('mobile')}
+              disabled={noUserLocation}
+              onClick={() => {
+                navigator.push('address', getAddressNavigatorParams(userLocation.addressData));
+              }}
+              subtitleID={subtitleID && subtitleID}
             />
-          </MobileComponent>
-          <PaperButton
-            messageID="home.send.feedback"
-            icon={getIcon('feedback')}
-            link
-            onClick={() => navigator.push('feedback')}
-          />
-          <PaperButton
-            id="home-paper-info-button"
-            messageID="info.title"
-            icon={getIcon('help')}
-            link
-            onClick={() => {
-              navigator.push('info', null, 'home-paper-info-button');
-            }}
-          />
-          <PaperButton
-            messageID="home.old.link"
-            newTab
-            icon={<Map />}
-            link
-            onClick={() => {
-              window.open(getLocaleText({
-                fi: config.oldMapFi,
-                sv: config.oldMapSv,
-                en: config.oldMapEn,
-              }));
-            }}
-          />
+            <PaperButton
+              messageID="home.buttons.services"
+              icon={getIcon('serviceList')}
+              link
+              onClick={() => navigator.push('serviceTree')}
+            />
+            <MobileComponent>
+              <PaperButton
+                messageID="home.buttons.settings"
+                icon={getIcon('accessibility')}
+                link
+                onClick={() => toggleSettings('mobile')}
+              />
+            </MobileComponent>
+            <PaperButton
+              messageID="home.send.feedback"
+              icon={getIcon('feedback')}
+              link
+              onClick={() => navigator.push('feedback')}
+            />
+            <PaperButton
+              id="home-paper-info-button"
+              messageID="info.title"
+              icon={getIcon('help')}
+              link
+              onClick={() => {
+                navigator.push('info', null, 'home-paper-info-button');
+              }}
+            />
+            <PaperButton
+              messageID="home.old.link"
+              newTab
+              icon={<Map />}
+              link
+              onClick={() => {
+                window.open(getLocaleText({
+                  fi: config.oldMapFi,
+                  sv: config.oldMapSv,
+                  en: config.oldMapEn,
+                }));
+              }}
+            />
+          </nav>
           <NewsInfo showCount={2} />
         </div>
       </div>

@@ -4,6 +4,9 @@ const translations = {
   'app.description': 'Alla tjänster i huvudstadsregionen inom räckhåll.',
   'app.og.image.alt': 'Servicekarta logo',
   'app.errorpage.title': 'Felmeddelandesida',
+  'app.navigation.language': 'Språk och kontrast',
+  'app.navigation.home': 'Hem',
+  'app.navigation.settings': 'Inställningar',
 
   'accept.settings.dialog.description': 'Du kan öppna uppgifterna antigen med tillgänglighetsinställningar eller utan begränsningar.',
   'accept.settings.dialog.title': 'Se verksamhetsstället med tillgänglighetsinställningar',
@@ -233,7 +236,9 @@ const translations = {
   'feedback.sending': 'Sänder...',
   'feedback.send.error': 'Skicka respons. Obligatoriska fält måste fyllas i',
   'feedback.error.required': 'Obligatoriskt fält',
-  'feedback.srError.required': 'Respons måste fyllas i',
+  'feedback.error.email.invalid': 'E-postadressen ska skrivas i rätt form.',
+  'feedback.srError.email.invalid': 'E-postadressen är felaktig. Korrigera adressen.',
+  'feedback.srError.feedback.required': 'Responsen fattas. Skriv din respons.',
   'feedback.modal.confirm': 'OK',
   'feedback.modal.leave': 'Är du säker på att du vill lämna den här sidan?',
   'feedback.modal.success': 'Tack för din respons!',
@@ -454,6 +459,7 @@ const translations = {
     one {# tjänst}
     other {# tjänster}
   }`,
+  'unit.subgroup.title': 'Se gruppspecifika kontaktuppgifter',
   'unit.educationServices': 'Verksamhetsställets tjänster per läsår',
   'unit.educationServices.description': 'Läsåret {period}',
   'unit.educationServices.more': 'Visa fler tjänster ({count})',
@@ -555,6 +561,7 @@ const translations = {
   'services.search.sr.selected': 'Sök med tjänsterna: {services}',
   'services.category.select': 'Alla',
   'services.category.open': 'Öppna kategori',
+  'services.info': 'Välj minst en tjänst från listan över tjänster nedan som du kan utföra sökningen.',
   'services.tree.level': 'Nivå',
 
   // Settings

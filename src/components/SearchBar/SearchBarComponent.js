@@ -148,6 +148,11 @@ const SearchBarComponent = ({
   };
 
   const activateSearch = () => {
+    // Fix problem with iOS keyboard pushing content outside of view
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+      document.body.scrollTop = 0;
+    }, 100);
     setIsActive(true);
     setFocusedSuggestion(null);
     setIsActive(true);

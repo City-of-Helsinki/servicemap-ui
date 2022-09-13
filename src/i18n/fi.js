@@ -4,6 +4,9 @@ const translations = {
   'app.description': 'Pääkaupunkiseudun kaikki julkiset palvelut ulottuvillasi.',
   'app.og.image.alt': 'Palvelukartan logo',
   'app.errorpage.title': 'Virheviestisivu',
+  'app.navigation.language': 'Kieli ja kontrasti',
+  'app.navigation.home': 'Koti',
+  'app.navigation.settings': 'Asetukset',
 
   'accept.settings.dialog.description': 'Voit avata tiedot joko esteettömyysasetusten kanssa tai ilman rajauksia.',
   'accept.settings.dialog.title': 'Katso toimipistettä esteettömyysasetusten kanssa',
@@ -232,7 +235,9 @@ const translations = {
   'feedback.sending': 'Lähetetään...',
   'feedback.send.error': 'Lähetä palaute. Pakollinen kenttä täyttämättä',
   'feedback.error.required': 'Pakollinen kenttä',
-  'feedback.srError.required': 'Palaute ei saa olla tyhjä',
+  'feedback.error.email.invalid': 'Sähköpostin pitää olla oikeassa muodossa',
+  'feedback.srError.email.invalid': 'Sähköpostiosoite on virheellinen. Korjaa sähköpostiosoite.',
+  'feedback.srError.feedback.required': 'Palaute puuttuu. Kirjoita palaute.',
   'feedback.modal.confirm': 'OK',
   'feedback.modal.leave': 'Haluatko varmasti poistua tältä sivulta?',
   'feedback.modal.success': 'Kiitos palautteestasi!',
@@ -455,6 +460,7 @@ const translations = {
     one {# palvelu}
     other {# palvelua}
   }`,
+  'unit.subgroup.title': 'Katso ryhmäkohtaiset yhteystiedot',
   'unit.educationServices': 'Toimipisteen lukuvuosikohtaiset palvelut',
   'unit.educationServices.description': 'Lukuvuosi {period}',
   'unit.educationServices.more': 'Näytä lisää palveluja ({count})',
@@ -557,6 +563,7 @@ const translations = {
   'services.search.sr.selected': 'Tee haku palveluilla: {services}',
   'services.category.select': 'Kaikki',
   'services.category.open': 'Avaa kategoria',
+  'services.info': 'Valitse vähintään yksi palvelu alla olevasta palveluluettelosta, että voit suorittaa haun.',
   'services.tree.level': 'Taso',
 
   // Settings

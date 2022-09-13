@@ -1,5 +1,5 @@
 import config from '../../../config';
-import HttpClient, { APIFetchError } from './HTTPClient';
+import HttpClient, { APIFetchError, serviceMapAPIName } from './HTTPClient';
 
 export default class ServiceMapAPI extends HttpClient {
   constructor() {
@@ -9,7 +9,7 @@ export default class ServiceMapAPI extends HttpClient {
     ) {
       throw new APIFetchError('ServicemapAPI baseURL missing');
     }
-    super(config.serviceMapAPI.root);
+    super(config.serviceMapAPI.root, serviceMapAPIName);
   }
 
   search = async (query) => {

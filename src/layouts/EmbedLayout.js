@@ -194,7 +194,7 @@ const EmbedLayout = ({ intl }) => {
           </Switch>
         </div>
         <Typography style={visuallyHidden}>{intl.formatMessage({ id: 'map.ariaLabel' })}</Typography>
-        <div aria-hidden tabIndex="-1" style={styles.map}>
+        <div aria-hidden tabIndex={-1} style={styles.map}>
           <MapView />
         </div>
       </div>

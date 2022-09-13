@@ -4,6 +4,9 @@ const translations = {
   'app.description': 'Find services near your home',
   'app.og.image.alt': 'Servicemap logo',
   'app.errorpage.title': 'Error message page',
+  'app.navigation.language': 'Language and contrast',
+  'app.navigation.home': 'Home',
+  'app.navigation.settings': 'Settings',
 
   'accept.settings.dialog.description': 'You can open the data either with accessibility settings or without restrictions.',
   'accept.settings.dialog.title': 'See the location with accessibility settings',
@@ -232,7 +235,9 @@ const translations = {
   'feedback.sending': 'Sending...',
   'feedback.send.error': 'Send feedback. Mandatory field is empty',
   'feedback.error.required': 'Mandatory field',
-  'feedback.srError.required': 'Feedback is required',
+  'feedback.error.email.invalid': 'The email must be written correctly.',
+  'feedback.srError.email.invalid': 'The email is faulty. Please correct it.',
+  'feedback.srError.feedback.required': 'No feedback submitted. Please write your feedback.',
   'feedback.modal.confirm': 'OK',
   'feedback.modal.leave': 'Are you sure you want to leave the page?',
   'feedback.modal.success': 'Thank you for your feedback!',
@@ -453,6 +458,7 @@ const translations = {
     one {# service}
     other {# services}
   }`,
+  'unit.subgroup.title': 'See group specific contanct information',
   'unit.educationServices': 'The unit’s services per school year',
   'unit.educationServices.description': 'School year {period}',
   'unit.educationServices.more': 'Show more services ({count})',
@@ -554,6 +560,7 @@ const translations = {
   'services.search.sr.selected': 'Perform search with services: {services}',
   'services.category.select': 'All',
   'services.category.open': 'Open category',
+  'services.info': 'Before you can perform a search you must choose at least one service from services list below.',
   'services.tree.level': 'Level',
 
   // Settings

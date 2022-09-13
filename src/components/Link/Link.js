@@ -10,7 +10,7 @@ const Link = ({
   <span
     className={`${classes.link} ${className || ''} link`}
     role="link"
-    tabIndex="0"
+    tabIndex={0}
     onClick={onClick}
     onKeyPress={onClick}
   >
