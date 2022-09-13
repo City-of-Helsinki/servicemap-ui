@@ -117,7 +117,9 @@ export default class HttpClient {
     const promise = fetch(`${this.baseURL}/${endpoint}?${options}`, { signal });
 
     // Create timeout for aborting fetch
-    this.createTimeout();
+    if (!this.timeout) {
+      this.createTimeout();
+    }
 
     // Preform fetch
     return promise
@@ -168,7 +170,11 @@ export default class HttpClient {
     const promises = [];
     for (let i = 1; i <= numberOfPages; i += 1) {
       options.page = i;
-      promises.push(this.getSinglePage(endpoint, options));
+      const promise = this.getSinglePage(endpoint, options);
+      promises.push(promise.then((results) => {
+        this.clearTimeout();
+        return results;
+      }));
     }
 
     const results = await Promise.all(promises);
