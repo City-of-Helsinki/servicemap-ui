@@ -18,11 +18,12 @@ export default class ServiceMapAPI extends HttpClient {
     }
     const options = { // TODO: adjust these values for best results and performance
       q: query,
-      page_size: 200,
-      limit: 3000,
-      unit_limit: 3000,
+      page_size: 400,
+      limit: 2500,
+      unit_limit: 2500,
       service_limit: 500,
       address_limit: 700,
+      administrativedivision_limit: 1,
       ...additionalOptions,
     };
 
@@ -35,7 +36,8 @@ export default class ServiceMapAPI extends HttpClient {
     }
     const options = {
       q: query,
-      limit: 2000,
+      limit: 2500,
+      administrativedivision_limit: 1,
       ...additionalOptions,
     };
 
@@ -56,9 +58,7 @@ export default class ServiceMapAPI extends HttpClient {
       ...additionalOptions,
     };
 
-    /* TODO: should use getConcurrent here instead.
-    Progress updater needs to be updated to allow concurrency first. */
-    return this.get('unit', options);
+    return this.getConcurrent('unit', options);
   }
 
   serviceUnitSearch = async (serviceId, additionalOptions) => {
@@ -75,9 +75,7 @@ export default class ServiceMapAPI extends HttpClient {
       ...additionalOptions,
     };
 
-    /* TODO: should use getConcurrent here instead.
-    Progress updater needs to be updated to allow concurrency first. */
-    return this.get('unit', options);
+    return this.getConcurrent('unit', options);
   }
 
   // Fetch units of multiple services concurrently
