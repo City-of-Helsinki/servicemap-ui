@@ -17,7 +17,6 @@ const createSuggestions = (
 
   const additionalOptions = {
     page_size: pageSize,
-    limit: 2000,
     unit_limit: unitLimit,
     service_limit: serviceLimit,
     address_limit: addressLimit,
@@ -25,7 +24,7 @@ const createSuggestions = (
     municipality: citySettings.join(','),
   };
 
-  const results = await smAPI.search(query, additionalOptions);
+  const results = await smAPI.searchSuggestions(query, additionalOptions);
 
   let filteredResults = results;
 

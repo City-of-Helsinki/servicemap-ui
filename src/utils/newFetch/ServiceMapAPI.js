@@ -29,6 +29,19 @@ export default class ServiceMapAPI extends HttpClient {
     return this.getConcurrent('search', options);
   }
 
+  searchSuggestions = async (query, additionalOptions) => {
+    if (typeof query !== 'string') {
+      throw new APIFetchError('Invalid query string provided to ServiceMapAPI search method');
+    }
+    const options = {
+      q: query,
+      limit: 2000,
+      ...additionalOptions,
+    };
+
+    return this.getSinglePage('search', options);
+  }
+
   serviceNodeSearch = async (idList, additionalOptions) => {
     if (typeof idList !== 'string') {
       throw new APIFetchError('Invalid query string provided to ServiceMapAPI search method');
