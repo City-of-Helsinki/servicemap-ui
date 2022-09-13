@@ -37,7 +37,7 @@ export default class ServiceMapAPI extends HttpClient {
     const options = {
       service: idList,
       page_size: 200,
-      only: 'street_address,name,accessibility_shortcoming_count,location,municipality,contract_type',
+      only: 'street_address,phone,call_charge_info,email,www,name,accessibility_shortcoming_count,location,municipality,contract_type,connections,picture_url',
       ...additionalOptions,
     };
 

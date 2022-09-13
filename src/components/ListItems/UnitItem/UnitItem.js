@@ -106,7 +106,11 @@ const UnitItem = ({
       distance={distanceText}
       onClick={(e) => {
         e.preventDefault();
-        UnitHelper.unitElementClick(navigator, unit);
+        if (onClick) {
+          onClick();
+        } else {
+          UnitHelper.unitElementClick(navigator, unit);
+        }
       }}
       unitId={id}
       divider={divider}
