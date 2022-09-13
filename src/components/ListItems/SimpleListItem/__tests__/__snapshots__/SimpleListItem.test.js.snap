@@ -3,14 +3,14 @@
 exports[`<SimpleListItem /> should work 1`] = `
 <div>
   <li
-    class="MuiListItem-root SimpleListItem-listItem-1 MuiListItem-gutters MuiListItem-padding null  css-sn7obt-MuiListItem-root"
+    class="SimpleListItem-listItem-1 MuiListItem-root MuiListItem-gutters MuiListItem-padding null  css-sn7obt-MuiListItem-root"
     tabindex="-1"
   >
     <div
-      class="MuiListItemText-root SimpleListItem-textContainer-2 css-vt7cuc-MuiListItemText-root"
+      class="SimpleListItem-textContainer-2 MuiListItemText-root css-vt7cuc-MuiListItemText-root"
     >
       <p
-        class="MuiTypography-root null  MuiTypography-body2 css-q91igz-MuiTypography-root"
+        class="null  MuiTypography-root MuiTypography-body2 css-q91igz-MuiTypography-root"
       >
         <p
           class="MuiTypography-root MuiTypography-body2 css-1ak20dk-MuiTypography-root"
