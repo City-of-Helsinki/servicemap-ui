@@ -460,6 +460,7 @@ const translations = {
     one {# palvelu}
     other {# palvelua}
   }`,
+  'unit.subgroup.title': 'Katso ryhmäkohtaiset yhteystiedot',
   'unit.educationServices': 'Toimipisteen lukuvuosikohtaiset palvelut',
   'unit.educationServices.description': 'Lukuvuosi {period}',
   'unit.educationServices.more': 'Näytä lisää palveluja ({count})',

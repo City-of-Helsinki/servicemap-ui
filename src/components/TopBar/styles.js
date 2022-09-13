@@ -58,6 +58,10 @@ const styles = theme => ({
   greyText: {
     color: '#CCCBCB',
   },
+  navContainer: {
+    display: 'flex',
+    flex: '1 1 auto',
+  },
   settingsButtonsContainer: {
     paddingLeft: 50,
     display: 'flex',

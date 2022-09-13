@@ -219,7 +219,7 @@ const TopBar = (props) => {
                     {renderDrawerMenu(pageType)}
                   </MobileComponent>
                   <DesktopComponent>
-                    <nav aria-label={intl.formatMessage({ id: 'app.navigation.settings' })} className={classes.settingsButtonsContainer}>
+                    <nav aria-label={intl.formatMessage({ id: 'app.navigation.settings' })} className={classes.navContainer}>
                       {!smallScreen ? (
                         <div className={classes.settingsButtonsContainer}>
                           <Typography component="h2" style={visuallyHidden}>
