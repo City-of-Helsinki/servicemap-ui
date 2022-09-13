@@ -17,7 +17,7 @@ import DesktopComponent from '../DesktopComponent';
 import { CloseSuggestionButton } from './components/CloseSuggestionButton';
 import paths from '../../../config/paths';
 import useLocaleText from '../../utils/useLocaleText';
-import { getPreviousSearches } from './previousSearchData';
+import { getFullHistory } from './previousSearchData';
 
 let blurTimeout = null;
 
@@ -66,7 +66,7 @@ const SearchBarComponent = ({
         return;
       }
 
-      const history = getPreviousSearches();
+      const history = getFullHistory();
       // Get correct history item by comparing url params to search history entries
       const historyItem = history.find((item) => {
         if (queryParams.address) {

@@ -43,10 +43,15 @@ export const getPreviousSearches = () => {
 
   if (jsonHistory) {
     // Sort history
-    const sortedHistory = jsonHistory.sort((a, b) => a.weightedLastSearch - b.weightedLastSearch);
+    const sortedHistory = jsonHistory.sort((a, b) => b.weightedLastSearch - a.weightedLastSearch);
     return sortedHistory.slice(0, historyCount);
   }
   return null;
+};
+
+export const getFullHistory = () => {
+  const history = LocalStorageUtility.getItem(key);
+  return toJson(history);
 };
 
 export const saveSearchToHistory = (searchWord, searchItem) => {
