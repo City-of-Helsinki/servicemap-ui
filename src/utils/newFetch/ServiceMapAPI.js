@@ -12,7 +12,7 @@ export default class ServiceMapAPI extends HttpClient {
     super(config.serviceMapAPI.root, serviceMapAPIName);
   }
 
-  search = async (query, additionalOptions, concurrentSearch) => {
+  search = async (query, additionalOptions) => {
     if (typeof query !== 'string') {
       throw new APIFetchError('Invalid query string provided to ServiceMapAPI search method');
     }
@@ -26,11 +26,6 @@ export default class ServiceMapAPI extends HttpClient {
       ...additionalOptions,
     };
 
-    /* TODO: should use getConcurrent here instead.
-    Progress updater needs to be updated to allow concurrency first. */
-    if (concurrentSearch) {
-      return this.getConcurrent('search', options);
-    }
     return this.getConcurrent('search', options);
   }
 

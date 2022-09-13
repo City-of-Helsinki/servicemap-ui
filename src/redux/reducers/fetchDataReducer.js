@@ -45,6 +45,12 @@ const dataSetReducer = (state, action, prefix) => {
         max: action.max,
         next: action.next,
       };
+    case `${prefix}_FETCH_PROGRESS_UPDATE_CONCURRENT`:
+      return {
+        ...state,
+        count: state.count + action.count,
+        max: action.max,
+      };
     case `${prefix}_SET_NEW_DATA`:
       return {
         ...state,

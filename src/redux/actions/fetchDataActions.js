@@ -18,6 +18,11 @@ const dataSet = prefix => ({
     max,
     next,
   }),
+  fetchProgressUpdateConcurrent: (count, max) => ({
+    type: `${prefix}_FETCH_PROGRESS_UPDATE_CONCURRENT`,
+    count,
+    max,
+  }),
   fetchMoreSuccess: data => ({
     type: `${prefix}_FETCH_MORE_SUCCESS`,
     data,

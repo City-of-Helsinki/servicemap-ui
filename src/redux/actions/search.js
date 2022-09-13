@@ -4,7 +4,9 @@ import { getLocaleString } from '../selectors/locale';
 import { searchResults } from './fetchDataActions';
 
 // Actions
-const { isFetching, fetchSuccess, fetchProgressUpdate } = searchResults;
+const {
+  isFetching, fetchSuccess, fetchProgressUpdateConcurrent,
+} = searchResults;
 
 
 const smFetch = (dispatch, options) => {
@@ -12,7 +14,7 @@ const smFetch = (dispatch, options) => {
   const smAPI = new ServiceMapAPI();
 
   const onProgressUpdate = (total, max) => {
-    dispatch(fetchProgressUpdate(total, max));
+    dispatch(fetchProgressUpdateConcurrent(total, max));
   };
 
   if (options.q) { // General text search
