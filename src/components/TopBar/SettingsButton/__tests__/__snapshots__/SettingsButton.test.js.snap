@@ -5,7 +5,7 @@ exports[`<SettingsButton /> should work 1`] = `
   <button
     aria-current="page"
     aria-haspopup="dialog"
-    class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root 
+    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium 
     undefined 
     
    css-1p2nkht-MuiButtonBase-root-MuiButton-root"

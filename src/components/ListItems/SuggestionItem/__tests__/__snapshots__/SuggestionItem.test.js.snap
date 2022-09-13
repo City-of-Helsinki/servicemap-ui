@@ -4,7 +4,7 @@ exports[`<SuggestionItem /> should work 1`] = `
 <div>
   <li
     aria-label="Title text Subtitle text"
-    class="MuiButtonBase-root SuggestionItem-listItem-2 MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button suggestion  css-16e6fe9-MuiButtonBase-root-MuiListItem-root"
+    class="MuiButtonBase-root MuiListItem-root SuggestionItem-listItem-2 MuiListItem-gutters MuiListItem-padding MuiListItem-button suggestion  css-16e6fe9-MuiButtonBase-root-MuiListItem-root"
     role="link"
     tabindex="0"
   >
@@ -28,7 +28,7 @@ exports[`<SuggestionItem /> should work 1`] = `
         </svg>
       </div>
       <div
-        class="SuggestionItem-textContainer-3 MuiListItemText-root SuggestionItem-text-10 css-vt7cuc-MuiListItemText-root"
+        class="MuiListItemText-root SuggestionItem-textContainer-3 SuggestionItem-text-10 css-vt7cuc-MuiListItemText-root"
       >
         <span
           class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10wsksd-MuiTypography-root"
