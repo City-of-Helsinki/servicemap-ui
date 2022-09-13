@@ -458,6 +458,7 @@ const translations = {
     one {# service}
     other {# services}
   }`,
+  'unit.subgroup.title': 'See group specific contanct information',
   'unit.educationServices': 'The unit’s services per school year',
   'unit.educationServices.description': 'School year {period}',
   'unit.educationServices.more': 'Show more services ({count})',

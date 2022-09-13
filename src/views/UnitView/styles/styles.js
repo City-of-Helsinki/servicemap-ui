@@ -154,4 +154,7 @@ export default theme => ({
   callInfoText: {
     whiteSpace: 'pre-line',
   },
+  subgroupItem: {
+    marginBottom: theme.spacing(2),
+  },
 });
