@@ -3,9 +3,8 @@
 exports[`<ServiceItem /> should work 1`] = `
 <div>
   <li
-    class="MuiButtonBase-root SimpleListItem-listItem-2 MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button null  css-16e6fe9-MuiButtonBase-root-MuiListItem-root"
-    role="link"
-    tabindex="0"
+    class="MuiListItem-root SimpleListItem-listItem-2 MuiListItem-gutters MuiListItem-padding null  css-sn7obt-MuiListItem-root"
+    tabindex="-1"
   >
     <div
       aria-hidden="true"
@@ -20,10 +19,10 @@ exports[`<ServiceItem /> should work 1`] = `
       />
     </div>
     <div
-      class="SimpleListItem-textContainer-3 MuiListItemText-root css-vt7cuc-MuiListItemText-root"
+      class="MuiListItemText-root SimpleListItem-textContainer-3 css-vt7cuc-MuiListItemText-root"
     >
       <p
-        class="null  MuiTypography-root MuiTypography-body2 css-q91igz-MuiTypography-root"
+        class="MuiTypography-root null  MuiTypography-body2 css-q91igz-MuiTypography-root"
       >
         <p
           class="MuiTypography-root MuiTypography-body2 css-1ak20dk-MuiTypography-root"
