@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Switch, Route, withRouter } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import SearchView from '../../../views/SearchView';
 import UnitView from '../../../views/UnitView';
 import HomeView from '../../../views/HomeView';
@@ -24,15 +24,12 @@ const TitleWrapper = ({ children, messageId }) => (
   </>
 );
 
-const PageWrapper = ({ children, headMsgId, page }) => {
-
-  return (
-    <>
-      <PageHandler messageId={headMsgId} page={page} />
-      {children}
-    </>
-  );
-};
+const PageWrapper = ({ children, headMsgId, page }) => (
+  <>
+    <PageHandler messageId={headMsgId} page={page} />
+    {children}
+  </>
+);
 
 TitleWrapper.propTypes = {
   children: PropTypes.node.isRequired,
@@ -58,16 +55,13 @@ const Home = () => (
   </TitleWrapper>
 );
 
-const Search = withRouter(({ location }) => {
-  const query = new URLSearchParams(location.search).get('q'); // Get query parameter
-  return (
-    <TitleWrapper messageId="general.pageTitles.search">
-      <PageWrapper headMsgId="search.results.title" page="search">
-        <SearchView query={query} />
-      </PageWrapper>
-    </TitleWrapper>
-  );
-});
+const Search = () => (
+  <TitleWrapper messageId="general.pageTitles.search">
+    <PageWrapper headMsgId="search.results.title" page="search">
+      <SearchView />
+    </PageWrapper>
+  </TitleWrapper>
+);
 
 const Unit = () => (
   <TitleWrapper messageId="general.pageTitles.unit">
@@ -189,7 +183,7 @@ class ViewRouter extends React.Component {
         <Route path="/:lng/services" component={ServiceTree} />
         <Route path="/:lng/service/:service" component={Service} />
         <Route path="/:lng/event/:event" component={Event} />
-        <Route path="/:lng/address/:municipality/:street/:number" component={Address} />
+        <Route path="/:lng/address/:municipality/:street" component={Address} />
         <Route exact path="/:lng/feedback/" component={Feedback} />
         <Route exact path="/:lng/area/" component={Area} />
         <Route

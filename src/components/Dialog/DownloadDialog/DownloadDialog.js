@@ -29,7 +29,7 @@ const DownloadDialog = ({
   const page = useSelector(state => state.user.page);
   const selectedUnit = useSelector(state => state.selectedUnit.unit.data);
   const service = useSelector(state => state.service.current);
-  const searchQuery = useSelector(state => state.units.previousSearch);
+  const searchQuery = useSelector(state => state.searchResults.previousSearch);
   const intl = useIntl();
   const icon = getIcon('serviceDark', { className: classes.icon });
   const location = useLocation();

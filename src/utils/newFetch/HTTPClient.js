@@ -45,7 +45,9 @@ export default class HttpClient {
     Object.keys(options).forEach((key) => {
       if (Object.prototype.hasOwnProperty.call(options, key)) {
         const value = options[key];
-        params.set(key, value);
+        if (value) {
+          params.set(key, value);
+        }
       }
     });
 
@@ -99,7 +101,9 @@ export default class HttpClient {
   }
 
   fetch = async (endpoint, options, type) => {
-    this.abortController = new AbortController();
+    if (!this.abortController) {
+      this.abortController = new AbortController();
+    }
     this.status = 'fetching';
 
     const signal = this.abortController?.signal || null;
@@ -113,7 +117,9 @@ export default class HttpClient {
     const promise = fetch(`${this.baseURL}/${endpoint}?${options}`, { signal });
 
     // Create timeout for aborting fetch
-    this.createTimeout();
+    if (!this.timeout) {
+      this.createTimeout();
+    }
 
     // Preform fetch
     return promise
@@ -164,7 +170,11 @@ export default class HttpClient {
     const promises = [];
     for (let i = 1; i <= numberOfPages; i += 1) {
       options.page = i;
-      promises.push(this.getSinglePage(endpoint, options));
+      const promise = this.getSinglePage(endpoint, options);
+      promises.push(promise.then((results) => {
+        this.clearTimeout();
+        return results;
+      }));
     }
 
     const results = await Promise.all(promises);
@@ -214,6 +224,13 @@ export default class HttpClient {
       throw new APIFetchError('Invalid onError provided for HTTPClient');
     }
     this.onError = onError;
+  }
+
+  setAbortController = (controller) => {
+    if (typeof controller !== 'object') {
+      throw new APIFetchError('Invalid abort controller provided for HTTPClient');
+    }
+    this.abortController = controller;
   }
 
   isFetching = () => this.status === 'fetching';

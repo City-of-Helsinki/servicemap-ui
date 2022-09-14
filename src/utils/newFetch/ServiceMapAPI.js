@@ -12,20 +12,70 @@ export default class ServiceMapAPI extends HttpClient {
     super(config.serviceMapAPI.root, serviceMapAPIName);
   }
 
-  search = async (query) => {
+  search = async (query, additionalOptions) => {
     if (typeof query !== 'string') {
+      throw new APIFetchError('Invalid query string provided to ServiceMapAPI search method');
+    }
+    const options = { // TODO: adjust these values for best results and performance
+      q: query,
+      page_size: 400,
+      limit: 2500,
+      unit_limit: 2500,
+      service_limit: 500,
+      address_limit: 700,
+      administrativedivision_limit: 1,
+      ...additionalOptions,
+    };
+
+    return this.getConcurrent('search', options);
+  }
+
+  searchSuggestions = async (query, additionalOptions) => {
+    if (typeof query !== 'string') {
+      throw new APIFetchError('Invalid query string provided to ServiceMapAPI search method');
+    }
+    const options = {
+      q: query,
+      limit: 2500,
+      administrativedivision_limit: 1,
+      ...additionalOptions,
+    };
+
+    return this.getSinglePage('search', options);
+  }
+
+  serviceNodeSearch = async (idList, additionalOptions) => {
+    if (typeof idList !== 'string') {
       throw new APIFetchError('Invalid query string provided to ServiceMapAPI search method');
     }
     const options = {
       page: 1,
       page_size: 200,
-      only: 'unit.street_address,unit.location,unit.name,unit.municipality,unit.accessibility_shortcoming_count,unit.contract_type',
+      only: 'street_address,location,name,municipality,accessibility_shortcoming_count,service_nodes,contract_type',
       geometry: true,
-      include: 'unit.department',
-      q: query,
+      include: 'service_nodes,services,accessibility_properties,department',
+      service_node: idList,
+      ...additionalOptions,
     };
 
-    return this.get('search', options);
+    return this.getConcurrent('unit', options);
+  }
+
+  serviceUnitSearch = async (serviceId, additionalOptions) => {
+    if (typeof serviceId !== 'string') {
+      throw new APIFetchError('Invalid id string provided to ServiceMapAPI serviceUnits method');
+    }
+
+    const options = {
+      service: serviceId,
+      page: 1,
+      page_size: 200,
+      only: 'street_address,name,accessibility_shortcoming_count,location,municipality,contract_type',
+      geometry: true,
+      ...additionalOptions,
+    };
+
+    return this.getConcurrent('unit', options);
   }
 
   // Fetch units of multiple services concurrently
@@ -37,6 +87,7 @@ export default class ServiceMapAPI extends HttpClient {
     const options = {
       service: idList,
       page_size: 200,
+      geometry: true,
       only: 'street_address,phone,call_charge_info,email,www,name,accessibility_shortcoming_count,location,municipality,contract_type,connections,picture_url',
       ...additionalOptions,
     };
@@ -114,5 +165,17 @@ export default class ServiceMapAPI extends HttpClient {
     };
 
     return this.getSinglePage('administrative_division', options);
+  }
+
+  units = async (additionalOptions) => {
+    const options = {
+      page_size: 200,
+      only: 'street_address,location,name,municipality,accessibility_shortcoming_count,service_nodes,contract_type',
+      include: 'service_nodes,services,accessibility_properties,department',
+      geometry: true,
+      ...additionalOptions,
+    };
+
+    return this.getConcurrent('unit', options);
   }
 }

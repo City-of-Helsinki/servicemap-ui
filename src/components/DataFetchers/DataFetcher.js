@@ -1,18 +1,16 @@
 import { useEffect } from 'react';
-import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { fetchUnits } from '../../redux/actions/unit';
+import fetchSearchResults from '../../redux/actions/search';
 import { fitBbox } from '../../views/MapView/utils/mapActions';
 import { searchParamFetchOptions } from './helpers';
 import { getSearchParam } from '../../utils';
 
-const DataFetcher = ({
-  currentPage,
-  fetchUnits,
-  location,
-  map,
-}) => {
+const DataFetcher = ({ location }) => {
+  const currentPage = useSelector(state => state.user.page);
+  const map = useSelector(state => state.mapRef);
+  const dispatch = useDispatch();
+
   /**
    * Handle bbox fetching
    */
@@ -34,7 +32,7 @@ const DataFetcher = ({
       return false;
     }
 
-    fetchUnits(options);
+    dispatch(fetchSearchResults(options));
     return true;
   };
 
@@ -55,30 +53,4 @@ const DataFetcher = ({
   return null;
 };
 
-// Listen to redux state
-const mapStateToProps = (state) => {
-  const { mapRef, user } = state;
-  const map = mapRef;
-
-  return {
-    currentPage: user.page,
-    map,
-  };
-};
-
-export default withRouter(connect(
-  mapStateToProps,
-  {
-    fetchUnits,
-  },
-)(DataFetcher));
-
-// Typechecking
-DataFetcher.propTypes = {
-  fetchUnits: PropTypes.func.isRequired,
-  map: PropTypes.objectOf(PropTypes.any),
-};
-
-DataFetcher.defaultProps = {
-  map: null,
-};
+export default withRouter(DataFetcher);

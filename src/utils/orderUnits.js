@@ -12,14 +12,15 @@ const orderUnits = (unitData, sortingParameters) => {
   switch (order) {
     // Accessibility
     case 'accessibility': {
-      results.forEach((element) => {
+      // Exclude other result types than units from accessibility sorting.
+      const unitResults = results.filter(result => result.object_type === 'unit');
+      const otherResults = results.filter(result => result.object_type !== 'unit');
+
+      unitResults.forEach((element) => {
         // eslint-disable-next-line no-param-reassign
         element.shorcomingCount = UnitHelper.getShortcomingCount(element, settings);
       });
-      results.sort((a, b) => {
-        if (a.object_type !== 'unit' || b.object_type !== 'unit') {
-          return 0;
-        }
+      unitResults.sort((a, b) => {
         const aSC = a.shorcomingCount;
         const bSC = b.shorcomingCount;
 
@@ -30,17 +31,20 @@ const orderUnits = (unitData, sortingParameters) => {
         return 0;
       });
 
-      // If reversed alphabetical ordering
-      if (direction === 'desc') {
-        results.reverse();
-      }
+      // Combine split arrays back together
+      results = [...unitResults, ...otherResults];
       break;
     }
     // Alphabetical ordering
     case 'alphabetical': {
-      results.sort((a, b) => {
-        const x = getLocaleString(locale, a.name || a.street.name).toLowerCase();
-        const y = getLocaleString(locale, b.name || b.street.name).toLowerCase();
+      // Exclude addressess from alphabetical ordering (addresses should only use the default order)
+      const addressResults = results.filter(result => result.object_type === 'address');
+      const otherResults = results.filter(result => result.object_type !== 'address');
+
+      otherResults.sort((a, b) => {
+        if (a.object_type === 'address' || b.object_type === 'address') return 0;
+        const x = getLocaleString(locale, a.name).toLowerCase();
+        const y = getLocaleString(locale, b.name).toLowerCase();
         if (x > y) { return -1; }
         if (x < y) { return 1; }
         return 0;
@@ -48,18 +52,21 @@ const orderUnits = (unitData, sortingParameters) => {
 
       // If reversed alphabetical ordering
       if (direction === 'desc') {
-        results.reverse();
+        otherResults.reverse();
       }
+
+      // Combine split arrays back together
+      results = [...otherResults, ...addressResults];
       break;
     }
     case 'distance': {
       const unitsWithoutLocation = results.filter(unit => unit.location === null);
-      const filteredLsit = results.filter(unit => unit.location !== null);
-      filteredLsit.forEach((element) => {
+      const filteredList = results.filter(unit => unit.location !== null);
+      filteredList.forEach((element) => {
         // eslint-disable-next-line no-param-reassign
         element.distanceFromUser = calculateDistance(element, usedPosition);
       });
-      filteredLsit.sort((a, b) => {
+      filteredList.sort((a, b) => {
         const aDistance = a.distanceFromUser;
         const bDistance = b.distanceFromUser;
         if (aDistance < bDistance) return -1;
@@ -67,12 +74,7 @@ const orderUnits = (unitData, sortingParameters) => {
         return 0;
       });
 
-      // If reversed distance ordering
-      if (direction === 'desc') {
-        filteredLsit.reverse();
-      }
-
-      results = [...filteredLsit, ...unitsWithoutLocation];
+      results = [...filteredList, ...unitsWithoutLocation];
       break;
     }
     // Ordering based on match score

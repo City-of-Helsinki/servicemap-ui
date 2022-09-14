@@ -66,7 +66,7 @@ const ServiceView = (props) => {
     if (shouldFetch()) {
       fetchService(match.params?.service);
     }
-  }, []);
+  }, [match.params.service]);
 
   useEffect(() => {
     if (coordinateIsActive(location)) {
