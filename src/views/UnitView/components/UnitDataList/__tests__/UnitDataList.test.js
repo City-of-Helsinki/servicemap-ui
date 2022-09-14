@@ -8,14 +8,10 @@ const mockData = {
     {
       id: 'helmet:241163',
       name: { fi: 'Suomen kielen kielikahvila' },
-      start_time: '2022-09-12T14:00:00Z',
-      end_time: '2022-09-12T15:30:00Z',
     },
     {
       id: 'helmet:241975',
       name: { fi: 'R&A x Armas: Vanhenemisen estetiikka' },
-      start_time: '2022-09-12T16:00:00Z',
-      end_time: '2022-09-12T17:00:00Z',
     },
     {
       id: 'helmet:239092',
@@ -24,19 +20,13 @@ const mockData = {
         sv: 'Digital handledning',
         en: 'Digital guidance for seniors',
       },
-      start_time: '2022-09-13T08:00:00Z',
-      end_time: '2022-09-13T11:00:00Z',
     },
     {
       id: 'helmet:242249',
       name: { fi: 'Marttojen neulontaklinikka: kaarrokeneule omille mitoille' },
-      start_time: '2022-09-13T14:30:00Z',
-      end_time: '2022-09-13T16:30:00Z',
     },
     {
       id: 'helmet:242089',
-      start_time: '2022-09-13T14:30:00Z',
-      end_time: '2022-09-13T16:30:00Z',
       name: { fi: 'Marttojen neulontaklinikka' },
     },
   ],

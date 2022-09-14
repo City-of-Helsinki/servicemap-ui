@@ -52,7 +52,7 @@ exports[`<UnitDataList /> should work 1`] = `
             >
               
     Suomen kielen kielikahvila 
-    today at 5:00 PM 
+     
      
      
     
@@ -65,16 +65,6 @@ exports[`<UnitDataList /> should work 1`] = `
             >
               Suomen kielen kielikahvila
             </p>
-          </div>
-          <div>
-            <div>
-              <p
-                aria-hidden="true"
-                class="MuiTypography-root MuiTypography-caption ResultItem-noMargin-17 ResultItem-text-25  ResultItem-subtitle css-r3hlsg-MuiTypography-root"
-              >
-                today at 5:00 PM
-              </p>
-            </div>
           </div>
         </div>
       </li>
@@ -117,7 +107,7 @@ exports[`<UnitDataList /> should work 1`] = `
             >
               
     R&A x Armas: Vanhenemisen estetiikka 
-    today at 7:00 PM 
+     
      
      
     
@@ -130,16 +120,6 @@ exports[`<UnitDataList /> should work 1`] = `
             >
               R&A x Armas: Vanhenemisen estetiikka
             </p>
-          </div>
-          <div>
-            <div>
-              <p
-                aria-hidden="true"
-                class="MuiTypography-root MuiTypography-caption ResultItem-noMargin-17 ResultItem-text-25  ResultItem-subtitle css-r3hlsg-MuiTypography-root"
-              >
-                today at 7:00 PM
-              </p>
-            </div>
           </div>
         </div>
       </li>
@@ -182,7 +162,7 @@ exports[`<UnitDataList /> should work 1`] = `
             >
               
     Digital guidance for seniors 
-    tomorrow at 11:00 AM 
+     
      
      
     
@@ -195,16 +175,6 @@ exports[`<UnitDataList /> should work 1`] = `
             >
               Digital guidance for seniors
             </p>
-          </div>
-          <div>
-            <div>
-              <p
-                aria-hidden="true"
-                class="MuiTypography-root MuiTypography-caption ResultItem-noMargin-17 ResultItem-text-25  ResultItem-subtitle css-r3hlsg-MuiTypography-root"
-              >
-                tomorrow at 11:00 AM
-              </p>
-            </div>
           </div>
         </div>
       </li>
