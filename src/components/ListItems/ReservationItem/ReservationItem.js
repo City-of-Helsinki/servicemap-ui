@@ -9,6 +9,7 @@ const ReservationItem = ({ reservation, intl, divider }) => {
   return (
     <SimpleListItem
       key={reservation.id}
+      className="reservationItem"
       icon={<EventAvailable color="primary" />}
       link
       text={`${getLocaleText(reservation.name)} ${intl.formatMessage({ id: 'unit.opens.new.tab' })}`}

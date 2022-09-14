@@ -67,6 +67,8 @@ const SearchBarComponent = ({
       }
 
       const history = getFullHistory();
+      if (!history) return;
+
       // Get correct history item by comparing url params to search history entries
       const historyItem = history.find((item) => {
         if (queryParams.address) {
