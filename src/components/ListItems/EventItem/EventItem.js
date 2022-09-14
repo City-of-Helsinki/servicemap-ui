@@ -23,6 +23,7 @@ const EventItem = ({
       <NoSsr key={event.id}>
         <ResultItem
           key={event.id}
+          data-testid="EventItem"
           icon={<Event color="primary" />}
           title={getLocaleText(event.name)}
           subtitle={dateString}
