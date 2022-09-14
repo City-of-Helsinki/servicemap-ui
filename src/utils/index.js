@@ -1,9 +1,7 @@
 /* eslint-disable camelcase */
-import useMediaQuery from '@mui/material/useMediaQuery';
 import { useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import URI from 'urijs';
-import config from '../../config';
 
 const isClient = () => typeof window !== 'undefined';
 
@@ -147,22 +145,6 @@ export const arraysEqual = (a, b) => {
     if (a[i] !== b[i]) return false;
   }
   return true;
-};
-/**
- * USE ONLY IN SIMPLE COMPONENTS because mediaquery hook
- * Check if sidebar content is small
- * Return true if smaller than smallContent treshold
- * or smallscreen but not mobile
- */
-export const isSmallContentArea = () => {
-  const { smallContentAreaBreakpoint, mobileUiBreakpoint, smallScreenBreakpoint } = config;
-  const smallContent = useMediaQuery(`(max-width:${smallContentAreaBreakpoint}px)`);
-  const smallScreen = useMediaQuery(`(max-width:${smallScreenBreakpoint}px)`);
-  const notMobile = useMediaQuery(`(min-width:${mobileUiBreakpoint}px)`);
-  return (
-    smallContent
-    || (smallScreen && notMobile)
-  );
 };
 
 export const getSearchParam = (location, key) => {
