@@ -8,12 +8,16 @@ import {
   Search, Cancel,
 } from '@mui/icons-material';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import BackButton from '../BackButton';
-import { keyboardHandler } from '../../utils';
+import { keyboardHandler, uppercaseFirst, useQuery } from '../../utils';
 import SuggestionBox from './components/SuggestionBox';
 import MobileComponent from '../MobileComponent';
 import DesktopComponent from '../DesktopComponent';
 import { CloseSuggestionButton } from './components/CloseSuggestionButton';
+import paths from '../../../config/paths';
+import useLocaleText from '../../utils/useLocaleText';
+import { getFullHistory } from './previousSearchData';
 
 let blurTimeout = null;
 
@@ -22,38 +26,73 @@ const SearchBarComponent = ({
   changeSelectedUnit,
   classes,
   className,
-  fetchUnits,
+  fetchSearchResults,
   hideBackButton,
   navigator,
   isFetching,
   isSticky,
   header,
-  initialValue,
   margin,
   previousSearch,
 }) => {
   const blurDelay = 150;
   const rootClass = 'SearchBar';
-  const ps = previousSearch
-    && !(previousSearch.includes('service_node:') || previousSearch.includes('events:') || previousSearch.includes('id:')) ? previousSearch : null;
 
   const intl = useIntl();
 
   const [isActive, setIsActive] = useState(false);
-  const [initialSearchValue, setInitialSearchValue] = useState(ps || initialValue || '');
   const [focusedSuggestion, setFocusedSuggestion] = useState(null);
   const [updateCount, setUpdateCount] = useState(0);
+  const getLocaleText = useLocaleText();
+  const location = useLocation();
+  const queryParams = useQuery();
   const searchRef = useRef();
 
-  useEffect(() => {
-    if (initialSearchValue !== initialValue) {
-      setInitialSearchValue(initialValue);
-    }
-  }, [initialValue]);
+  const setSearchbarValue = (value) => {
+    searchRef.current.value = value;
+  };
 
   useEffect(() => () => {
+    // Unmount
     clearTimeout(blurTimeout);
   }, []);
+
+  useEffect(() => {
+    // If mounting search page show correct search text in searchbar
+    const isSearchPage = paths.search.regex.test(location.pathname);
+    if (isSearchPage) {
+      if (queryParams.q) {
+        setSearchbarValue(queryParams.q);
+        return;
+      }
+
+      const history = getFullHistory();
+      if (!history) return;
+
+      // Get correct history item by comparing url params to search history entries
+      const historyItem = history.find((item) => {
+        if (queryParams.address) {
+          return item.object_type === 'address' && getLocaleText(item.name) === queryParams.address;
+        }
+        if (queryParams.service_id) {
+          return item.object_type === 'service' && item.id.toString() === queryParams.service_id;
+        }
+        if (queryParams.service_node) {
+          return item.object_type === 'servicenode' && item.ids.toString() === queryParams.service_node;
+        }
+        return null;
+      });
+
+      if (historyItem) {
+        let text = historyItem.name ? getLocaleText(historyItem.name) : historyItem.searchText;
+        if (queryParams.address) {
+          // Remove extra text from address suggestion text
+          [text] = text.split(',');
+        }
+        setSearchbarValue(uppercaseFirst(text));
+      }
+    }
+  }, [queryParams]);
 
   const forceUpdate = () => {
     setUpdateCount(updateCount + 1);
@@ -62,10 +101,6 @@ const SearchBarComponent = ({
   const setInactive = () => {
     setIsActive(false);
     setFocusedSuggestion(null);
-  };
-
-  const setSearchbarValue = (value) => {
-    searchRef.current.value = value;
   };
 
   const handleArrowClick = (value) => {
@@ -108,23 +143,22 @@ const SearchBarComponent = ({
     if (isFetching) return;
     let searchQuery;
     if (focusedSuggestion !== null) {
-      // Get focused suggestion search string
       const suggestion = document.getElementById(`suggestion${focusedSuggestion}`);
-      if (suggestion?.classList.contains('AreaSuggestion') || suggestion?.classList.contains('AddressSuggestion')) {
+      if (!document.querySelector('#PreviousList')) {
         suggestion.click();
         return;
       }
-      // Omit search result count from suggestion string
       searchQuery = suggestion?.getElementsByTagName('p')[0].textContent;
-    } else if (search && search !== '') {
+    }
+    if (search && search !== '') {
       searchQuery = search;
     }
     if (searchQuery) {
       setInactive();
 
       if (searchQuery !== previousSearch) {
-        searchRef.current.value = searchQuery; // Change current search text to new one
-        fetchUnits({ q: searchQuery });
+        setSearchbarValue(searchQuery); // Change current search text to new one
+        fetchSearchResults({ q: searchQuery });
         changeSelectedUnit(null);
       }
 
@@ -250,7 +284,6 @@ const SearchBarComponent = ({
           type="text"
           inputRef={searchRef}
           className={classes.input}
-          defaultValue={initialSearchValue || ''}
           classes={{ focused: classes.fieldFocus }}
           onChange={() => {
             if (focusedSuggestion) {
@@ -274,7 +307,7 @@ const SearchBarComponent = ({
                       clearTimeout(blurTimeout);
                       searchRef.current.focus();
                     }
-                    searchRef.current.value = '';
+                    setSearchbarValue('');
                   }}
                 >
                   <Cancel />
@@ -413,11 +446,10 @@ SearchBarComponent.propTypes = {
   changeSelectedUnit: PropTypes.func.isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   className: PropTypes.string,
-  fetchUnits: PropTypes.func.isRequired,
+  fetchSearchResults: PropTypes.func.isRequired,
   header: PropTypes.bool,
   hideBackButton: PropTypes.bool,
   navigator: PropTypes.objectOf(PropTypes.any),
-  initialValue: PropTypes.string,
   isSticky: PropTypes.number,
   isFetching: PropTypes.bool.isRequired,
   previousSearch: PropTypes.oneOfType([PropTypes.string, PropTypes.objectOf(PropTypes.any)]),
@@ -430,7 +462,6 @@ SearchBarComponent.defaultProps = {
   className: '',
   header: false,
   hideBackButton: false,
-  initialValue: null,
   isSticky: null,
   navigator: null,
   margin: false,

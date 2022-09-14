@@ -4,6 +4,9 @@ const translations = {
   'app.description': 'Alla tjänster i huvudstadsregionen inom räckhåll.',
   'app.og.image.alt': 'Servicekarta logo',
   'app.errorpage.title': 'Felmeddelandesida',
+  'app.navigation.language': 'Språk och kontrast',
+  'app.navigation.home': 'Hem',
+  'app.navigation.settings': 'Inställningar',
 
   'accept.settings.dialog.description': 'Du kan öppna uppgifterna antigen med tillgänglighetsinställningar eller utan begränsningar.',
   'accept.settings.dialog.title': 'Se verksamhetsstället med tillgänglighetsinställningar',
@@ -456,6 +459,7 @@ const translations = {
     one {# tjänst}
     other {# tjänster}
   }`,
+  'unit.subgroup.title': 'Se gruppspecifika kontaktuppgifter',
   'unit.educationServices': 'Verksamhetsställets tjänster per läsår',
   'unit.educationServices.description': 'Läsåret {period}',
   'unit.educationServices.more': 'Visa fler tjänster ({count})',
@@ -519,7 +523,7 @@ const translations = {
   'search.suggestions.loading': 'Laddar förslag',
   'search.suggestions.error': 'Inga förslag',
   'search.suggestions.areas': 'Näytä alueet', // TODO: translate
-  'search.suggestions.addresses': 'Näytä osoitteet', // TODO: translate
+  'search.suggestions.addresses': 'Hae osoitteella', // TODO: translate
   'search.suggestions.suggestions': '{count} sökförslag',
   // 'search.suggestions.expandSuggestions': '{count} preciseringsförslag',
   'search.suggestions.results': '{count} resultat',
@@ -557,6 +561,7 @@ const translations = {
   'services.search.sr.selected': 'Sök med tjänsterna: {services}',
   'services.category.select': 'Alla',
   'services.category.open': 'Öppna kategori',
+  'services.info': 'Välj minst en tjänst från listan över tjänster nedan som du kan utföra sökningen.',
   'services.tree.level': 'Nivå',
 
   // Settings

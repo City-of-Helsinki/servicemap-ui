@@ -4,6 +4,9 @@ const translations = {
   'app.description': 'Pääkaupunkiseudun kaikki julkiset palvelut ulottuvillasi.',
   'app.og.image.alt': 'Palvelukartan logo',
   'app.errorpage.title': 'Virheviestisivu',
+  'app.navigation.language': 'Kieli ja kontrasti',
+  'app.navigation.home': 'Koti',
+  'app.navigation.settings': 'Asetukset',
 
   'accept.settings.dialog.description': 'Voit avata tiedot joko esteettömyysasetusten kanssa tai ilman rajauksia.',
   'accept.settings.dialog.title': 'Katso toimipistettä esteettömyysasetusten kanssa',
@@ -457,6 +460,7 @@ const translations = {
     one {# palvelu}
     other {# palvelua}
   }`,
+  'unit.subgroup.title': 'Katso ryhmäkohtaiset yhteystiedot',
   'unit.educationServices': 'Toimipisteen lukuvuosikohtaiset palvelut',
   'unit.educationServices.description': 'Lukuvuosi {period}',
   'unit.educationServices.more': 'Näytä lisää palveluja ({count})',
@@ -521,7 +525,7 @@ const translations = {
   'search.suggestions.loading': 'Ladataan ehdotuksia',
   'search.suggestions.error': 'Ei ehdotuksia',
   'search.suggestions.areas': 'Näytä alueet',
-  'search.suggestions.addresses': 'Näytä osoitteet',
+  'search.suggestions.addresses': 'Hae osoitteella',
   'search.suggestions.suggestions': '{count} hakuehdotusta',
   // 'search.suggestions.expandSuggestions': '{count} tarkennusehdotusta',
   'search.suggestions.results': '{count} tulosta',
@@ -559,6 +563,7 @@ const translations = {
   'services.search.sr.selected': 'Tee haku palveluilla: {services}',
   'services.category.select': 'Kaikki',
   'services.category.open': 'Avaa kategoria',
+  'services.info': 'Valitse vähintään yksi palvelu alla olevasta palveluluettelosta, että voit suorittaa haun.',
   'services.tree.level': 'Taso',
 
   // Settings

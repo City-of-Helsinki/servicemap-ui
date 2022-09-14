@@ -9,6 +9,7 @@ export const getSubdistrictUnits = state => state.districts.subdistrictUnits;
 const getSubdistrictSelection = state => state.districts.selectedSubdistricts;
 const getSelectedDistrictServices = state => state.districts.selectedDistrictServices;
 const getCitySettings = state => state.settings.cities;
+export const getParkingUnits = state => state.districts.parkingUnits.filter(unit => unit.object_type === 'unit');
 
 export const getDistrictsByType = createSelector(
   [getSelectedDistrict, getDistrictData, getCitySettings],
@@ -18,10 +19,7 @@ export const getDistrictsByType = createSelector(
       const selectedCities = Object.values(citySettings).filter(city => city);
       // Filter distircts by user city settings
       if (districtType && selectedCities.length) {
-        const cityFilteredDistricts = districtType.data.filter(
-          district => citySettings[district.municipality],
-        );
-        return cityFilteredDistricts;
+        return districtType.data.filter(district => citySettings[district.municipality]);
       }
       return districtType ? districtType.data : [];
     }
@@ -33,10 +31,36 @@ export const getAddressDistrict = createSelector(
   [getDistrictsByType, getAddressDistrictData],
   (districts, addressDistricts) => {
     if (districts && addressDistricts) {
-      const district = districts.find(obj => addressDistricts.some(i => i.id === obj.id));
-      return district;
+      return districts.find(obj => addressDistricts.some(i => i.id === obj.id));
     }
     return null;
+  },
+);
+
+// Get units that are tied to each area object
+export const getDistrictPrimaryUnits = createSelector(
+  [getDistrictsByType],
+  (districts) => {
+    const primaryUnits = [];
+
+    // Function to handle unit and add it to the list
+    const checkUnit = (unit) => {
+      if (unit.location) {
+        unit.object_type = 'unit';
+        primaryUnits.push(unit);
+      }
+    };
+
+    districts.forEach((area) => {
+      // If area data has units as list, iterate through it
+      if (area.units?.length) {
+        area.units.forEach(unit => checkUnit(unit));
+      } else if (area.unit) {
+        checkUnit(area.unit);
+      }
+    });
+
+    return primaryUnits;
   },
 );
 

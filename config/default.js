@@ -125,6 +125,14 @@ if (settings.MATOMO_NO_RESULTS_DIMENSION_ID === 'undefined') {
   settings.MATOMO_NO_RESULTS_DIMENSION_ID = undefined;
 }
 
+if (settings.MATOMO_URL === 'undefined') {
+  settings.MATOMO_URL = undefined;
+}
+
+if (settings.MATOMO_SITE_ID === 'undefined') {
+  settings.MATOMO_SITE_ID = undefined;
+}
+
 if (typeof settings.EMBEDDER_DOCUMENTATION_URL === 'undefined') {
   settings.EMBEDDER_DOCUMENTATION_URL = 'https://kaupunkialustana.hel.fi/palvelukartta/palvelukartan-upotusohjeet/';
 }

@@ -17,7 +17,14 @@ const UnitDataList = ({
   const unit = useSelector(state => state.selectedUnit.unit.data);
 
   const dataItems = data.data;
-  const fullDataLength = dataItems?.length || data.max;
+  let fullDataLength;
+
+  if (type === 'educationServices') {
+    fullDataLength = dataItems?.length;
+  } else {
+    fullDataLength = data.max;
+  }
+
   const { isFetching } = data;
 
   if (!dataItems) {
@@ -57,7 +64,6 @@ const UnitDataList = ({
           <ServiceItem
             key={item.id}
             service={item}
-            link={false}
             divider={i !== shownData.length - 1}
           />
         ))

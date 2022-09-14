@@ -5,7 +5,7 @@ import { focusDistrict } from '../MapView/utils/mapActions';
 import { parseSearchParams } from '../../utils';
 
 const DivisionView = ({
-  fetchUnits,
+  fetchSearchResults,
   highlightedDistrict,
   location,
   map,
@@ -36,7 +36,7 @@ const DivisionView = ({
     }
 
     if (options) {
-      fetchUnits(options);
+      fetchSearchResults(options);
       fetchDivisionDistrict(options.division)
         .then((data) => {
           setHighlightedDistrict(data[0]);
@@ -62,7 +62,7 @@ export default DivisionView;
 
 // Typechecking
 DivisionView.propTypes = {
-  fetchUnits: PropTypes.func.isRequired,
+  fetchSearchResults: PropTypes.func.isRequired,
   highlightedDistrict: PropTypes.objectOf(PropTypes.any),
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   map: PropTypes.objectOf(PropTypes.any),

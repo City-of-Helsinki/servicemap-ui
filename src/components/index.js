@@ -11,7 +11,6 @@ import AlertBox from './AlertBox';
 import CloseButton from './CloseButton';
 import Container from './Container';
 import ErrorBoundary from './ErrorBoundary';
-import ExpandedSuggestions from './ExpandedSuggestions';
 import HomeLogo from './Logos/HomeLogo';
 import Loading from './Loading';
 import MobileComponent from './MobileComponent';
@@ -25,6 +24,7 @@ import SMRadio from './SMRadio';
 import SMAccordion from './SMAccordion';
 import TabLists from './TabLists';
 import TitleBar from './TitleBar';
+import Dialog from './Dialog';
 
 // Lists
 import PaginatedList from './Lists/PaginatedList';
@@ -64,7 +64,6 @@ export {
   DivisionItem,
   ErrorBoundary,
   EventItem,
-  ExpandedSuggestions,
   FocusableSRLinks,
   HomeLogo,
   Loading,
@@ -92,4 +91,5 @@ export {
   TitledList,
   TopBar,
   UnitItem,
+  Dialog,
 };

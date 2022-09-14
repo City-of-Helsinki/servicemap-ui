@@ -24,7 +24,7 @@ export default theme => ({
   },
   button: {
     textTransform: 'none',
-    fontSize: 12,
+    fontSize: '0.75rem',
   },
   buttonLabel: {
     display: 'flex',
@@ -119,7 +119,7 @@ export default theme => ({
     background: theme.palette.background.main,
   },
   pageTitleText: {
-    fontSize: 18,
+    fontSize: '1.125rem',
     color: '#fff',
   },
   radioGroup: {

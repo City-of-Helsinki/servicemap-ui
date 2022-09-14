@@ -45,6 +45,12 @@ const dataSetReducer = (state, action, prefix) => {
         max: action.max,
         next: action.next,
       };
+    case `${prefix}_FETCH_PROGRESS_UPDATE_CONCURRENT`:
+      return {
+        ...state,
+        count: state.count + action.count,
+        max: action.max,
+      };
     case `${prefix}_SET_NEW_DATA`:
       return {
         ...state,
@@ -115,7 +121,7 @@ const dataSingle = (state, action, prefix) => {
 
 
 // Fetch data set reducers
-export const units = (state = dataSetInitialState, action) => dataSetReducer(state, action, 'UNITS');
+export const searchResults = (state = dataSetInitialState, action) => dataSetReducer(state, action, 'SEARCH_RESULTS');
 export const service = (state = dataSetInitialState, action) => dataSetReducer(state, action, 'SERVICE');
 export const unitEvents = (state = dataSingleInitialState, action) => dataSetReducer(state, action, 'SELECTED_UNIT_EVENTS');
 export const reservations = (state = dataSingleInitialState, action) => dataSetReducer(state, action, 'SELECTED_UNIT_RESERVATIONS');

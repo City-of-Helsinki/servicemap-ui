@@ -54,6 +54,6 @@ export default theme => ({
     },
   },
   typography: {
-    fontSize: 14,
+    fontSize: '0.875rem',
   },
 });

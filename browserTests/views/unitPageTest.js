@@ -220,7 +220,7 @@ test('Unit view services tab lists work correctly', async (t) => {
   const moreServicesButton = Selector('#UnitservicesButton');
   const serviceTitle = Selector('.ExtendedData-title h3');
   const backButton = Selector(`button[aria-label="${finnish['general.back.unit']}"`);
-  const reservableObjects = Selector('#tab-content-2 li[role="link"]')
+  const reservableObjects = Selector('li[class*="reservationItem"]')
 
   await t
     .click(serviceTab)
@@ -258,4 +258,3 @@ test('Unit view share link does work correctly', async (t) => {
     .expect(copyLinkButton.textContent).contains('mobility=wheelchair', 'Link should contain mobility settings')
   ;
 });
-

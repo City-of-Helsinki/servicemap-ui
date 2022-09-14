@@ -448,6 +448,7 @@ const ServiceTreeView = (props) => {
         {renderSelectionList(selectedList)}
       </div>
       <div className={classes.mainContent}>
+        <Typography className={classes.guidanceInfoText} variant="body2">{intl.formatMessage({ id: 'services.info' })}</Typography>
         {renderSearchButton(selectedList)}
         {renderServiceNodeList()}
       </div>

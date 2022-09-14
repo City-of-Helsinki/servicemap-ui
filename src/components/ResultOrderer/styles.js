@@ -25,7 +25,7 @@ export default theme => ({
   select: {
     color: 'inherit',
     flex: '1 0 auto',
-    fontSize: 12,
+    fontSize: '0.75rem',
     lineHeight: `${15}px`,
     marginTop: 0,
     '&:before': {

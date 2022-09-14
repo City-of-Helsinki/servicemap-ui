@@ -26,12 +26,15 @@ export const filterEmptyServices = cities => (obj) => {
   return hasUnits;
 };
 
-export const filterCities = (cities, onlyUnits = false) => unit => cities.length === 0 || !unit.municipality || (!onlyUnits && unit.object_type !== 'unit') || cities.includes(unit.municipality);
+export const filterCities = (cities, onlyUnits = false) => (result) => {
+  const resultMunicipality = result.municipality?.id || result.municipality;
+  return (cities.length === 0)
+    || (!resultMunicipality)
+    || (onlyUnits && result.object_type === 'unit')
+    || (cities.includes(resultMunicipality));
+};
 
 export const filterResultTypes = () => (obj) => {
   const allowedTypes = ['unit', 'service', 'address', 'event'];
-  if (allowedTypes.includes(obj.object_type)) {
-    return true;
-  }
-  return false;
+  return (allowedTypes.includes(obj.object_type));
 };

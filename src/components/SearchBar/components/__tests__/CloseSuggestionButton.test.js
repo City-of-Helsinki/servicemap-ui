@@ -1,20 +1,10 @@
 // CloseSuggestionButton.test.js
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
-import { ThemeProvider } from '@mui/material/styles';
-import { IntlProvider } from 'react-intl';
+import { fireEvent } from '@testing-library/react';
 import { ArrowDownward } from '@mui/icons-material';
-import themes from '../../../../themes';
 import { CloseSuggestionButton } from '../CloseSuggestionButton';
-
-// Mock props for intl provider
-const intlMock = {
-  locale: 'en',
-  messages: {
-    'search.suggestions.hideButton': 'Hide the list of suggestions',
-  },
-  wrapRichTextChunksInFragment: false,
-};
+import { getRenderWithProviders } from '../../../../../jestUtils';
+import englishTranslations from '../../../../i18n/en';
 
 // Generic required props for ResultItem
 const mockProps = {
@@ -25,16 +15,7 @@ const mockProps = {
   srOnly: false,
 };
 
-// eslint-disable-next-line react/prop-types
-const Providers = ({ children }) => (
-  <IntlProvider {...intlMock}>
-    <ThemeProvider theme={themes.SMTheme}>
-      {children}
-    </ThemeProvider>
-  </IntlProvider>
-);
-
-const renderWithProviders = component => render(component, { wrapper: Providers });
+const renderWithProviders = getRenderWithProviders({});
 
 describe('<CloseSuggestionButton />', () => {
   it('should work', () => {
@@ -95,7 +76,7 @@ describe('<CloseSuggestionButton />', () => {
   it('does show text correctly', () => {
     const { container } = renderWithProviders(<CloseSuggestionButton {...mockProps} />);
 
-    expect(container.querySelector('p')).toHaveTextContent(`${intlMock.messages['search.suggestions.hideButton']}`);
+    expect(container.querySelector('p')).toHaveTextContent(`${englishTranslations['search.suggestions.hideButton']}`);
   });
 
   it('does use accessibility attributes correctly', () => {
