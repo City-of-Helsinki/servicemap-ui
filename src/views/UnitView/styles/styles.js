@@ -121,7 +121,7 @@ export default theme => ({
     alignItems: 'end',
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
-    marginBottom: theme.spacing(1),
+    marginTop: theme.spacing(1),
   },
   feedbackButton: {
     marginLeft: theme.spacing(2),

@@ -1,4 +1,5 @@
 const formatEventDate = (event, intl) => {
+  if (!event.start_time || !event.end_time) return '';
   const timeString = intl.formatMessage({ id: 'general.time.short' });
   const start = new Date(event.start_time);
   const end = new Date(event.end_time);

@@ -32,6 +32,17 @@ export const APIHandlers = {
     },
     envName: config.serviceMapAPI.id,
   },
+  search: {
+    url: `${config.serviceMapAPI.root}/search/`,
+    options: {
+      page: 1,
+      page_size: 200,
+      only: 'unit.street_address,unit.location,unit.name,unit.municipality,unit.contract_type,unit.phone,unit.call_charge_info,unit.email,unit.www,unit.connections,unit.picture_url',
+      geometry: true,
+      include: 'unit.department',
+    },
+    envName: config.serviceMapAPI.id,
+  },
   service: {
     url: id => `${config.serviceMapAPI.root}/service/${id}/`,
     options: {},

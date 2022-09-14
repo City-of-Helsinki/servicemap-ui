@@ -210,6 +210,22 @@ class Navigator extends React.Component {
     this.goBack();
   }
 
+  setParameter = (param, value) => {
+    const { history } = this.props;
+    const url = new URL(window.location);
+
+    url.searchParams.set(param, value);
+    history.replace(url.pathname + url.search);
+  }
+
+  removeParameter = (param) => {
+    const { history } = this.props;
+    const url = new URL(window.location);
+
+    url.searchParams.delete(param);
+    history.replace(url.pathname + url.search);
+  }
+
   render = () => null;
 }
 

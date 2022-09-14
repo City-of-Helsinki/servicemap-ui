@@ -17,7 +17,14 @@ const UnitDataList = ({
   const unit = useSelector(state => state.selectedUnit.unit.data);
 
   const dataItems = data.data;
-  const fullDataLength = dataItems?.length || data.max;
+  let fullDataLength;
+
+  if (type === 'educationServices') {
+    fullDataLength = dataItems?.length;
+  } else {
+    fullDataLength = data.max;
+  }
+
   const { isFetching } = data;
 
   if (!dataItems) {

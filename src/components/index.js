@@ -24,6 +24,7 @@ import SMRadio from './SMRadio';
 import SMAccordion from './SMAccordion';
 import TabLists from './TabLists';
 import TitleBar from './TitleBar';
+import Dialog from './Dialog';
 
 // Lists
 import PaginatedList from './Lists/PaginatedList';
@@ -90,4 +91,5 @@ export {
   TitledList,
   TopBar,
   UnitItem,
+  Dialog,
 };
