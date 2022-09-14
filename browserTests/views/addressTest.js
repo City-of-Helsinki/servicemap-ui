@@ -6,7 +6,7 @@ import config from '../config';
 import { getLocation } from '../utility';
 
 const { server } = config;
-const testLocation = `http://${server.address}:${server.port}/fi/address/helsinki/Topeliuksenkatu/27`;
+const testLocation = `http://${server.address}:${server.port}/fi/address/helsinki/Topeliuksenkatu 27`;
 
 fixture`Address view test`
   .page`${testLocation}`
@@ -21,7 +21,7 @@ test('AddressView does render correct view', async (t) => {
   const tab2Text = await tab2.textContent;
   
   await t
-    .expect(title).eql('Topeliuksenkatu 27, 00250 Helsinki')
+    .expect(title).eql('Topeliuksenkatu 27,  Helsinki')
     .expect(tab1).eql('Palvelualueet')
     .expect(tab2Text.indexOf('Lähellä')).eql(0, 'Tab text should include text "Lähellä"')
     ;
