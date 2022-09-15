@@ -38,6 +38,9 @@ const smFetch = (dispatch, options) => {
       smAPI.search(address, addressFetchOptions, true),
       smAPI.units(unitFetchOptions),
     ]);
+  } else if (options.id) {
+    const unitFetchOptions = { id: options.id };
+    results = smAPI.units(unitFetchOptions);
   }
 
   return results;
@@ -48,7 +51,11 @@ const fetchSearchResults = (options = null) => async (dispatch, getState) => {
   const searchFetchState = getState().searchResults;
   const { locale } = getState().user;
 
-  const searchQuery = options.q || options.address || options.service_node || options.service_id;
+  const searchQuery = options.q
+    || options.address
+    || options.service_node
+    || options.service_id
+    || options.id;
 
   if (searchFetchState.isFetching) {
     throw Error('Unable to fetch search results because previous fetch is still active');
@@ -66,8 +73,8 @@ const fetchSearchResults = (options = null) => async (dispatch, getState) => {
     if (options.q) {
       saveSearchToHistory(searchQuery, { object_type: 'searchHistory', text: searchQuery });
     }
-    // Handle service and sercice node results
-    if (options.service_node || options.service_id) {
+    // Handle unit results that have no object_type
+    if (options.service_node || options.service_id || options.id) {
       results.forEach((item) => {
         item.object_type = 'unit';
       });
