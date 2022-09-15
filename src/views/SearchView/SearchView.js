@@ -202,7 +202,8 @@ const SearchView = (props) => {
       || data.address
       || data.service_node
       || data.service_id
-      || data.id;
+      || data.id
+      || data.events;
 
     // Should fetch if previousSearch has changed and data has required parameters
     if (previousSearch) {
