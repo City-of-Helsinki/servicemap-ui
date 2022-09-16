@@ -172,19 +172,19 @@ const SearchView = (props) => {
       setServiceRedirect(null);
 
       // Fetch service_node for given old service data
-      dispatch(fetchRedirectService({ service: options.service }, (data) => {
-        // Success
-        if (data.service_node) {
-          // Need to stringify current search params for unit fetch
-          // Otherwise componentDidMount shouldFetch will compare previous searches incorrectly
-          delete options.service;
-          options.service_node = `${(options.service_node ? `${options.service_node},` : '')}${data.service_node}`;
+      // dispatch(fetchRedirectService({ service: options.service }, (data) => {
+      //   // Success
+      //   if (data.service_node) {
+      //     // Need to stringify current search params for unit fetch
+      //     // Otherwise componentDidMount shouldFetch will compare previous searches incorrectly
+      //     delete options.service;
+      //     options.service_node = `${(options.service_node ? `${options.service_node},` : '')}${data.service_node}`;
 
-          // Set serviceRedirect and fetch units
-          dispatch(fetchSearchResults(options));
-          setServiceRedirect(options.service_node);
-        }
-      }));
+      //     // Set serviceRedirect and fetch units
+      //     dispatch(fetchSearchResults(options));
+      //     setServiceRedirect(options.service_node);
+      //   }
+      // }));
       return true;
     }
     return false;
