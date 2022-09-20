@@ -14,6 +14,7 @@ import useMobileStatus from '../../utils/isMobile';
 import useLocaleText from '../../utils/useLocaleText';
 import ServiceMapAPI from '../../utils/newFetch/ServiceMapAPI';
 import { getAddressText } from '../../utils/address';
+import { focusToPosition } from '../../views/MapView/utils/mapActions';
 
 const AddressSearchBar = ({
   defaultAddress,
@@ -25,9 +26,8 @@ const AddressSearchBar = ({
 }) => {
   const getLocaleText = useLocaleText();
   const dispatch = useDispatch();
-  const locale = useSelector(state => state.user.locale);
-
   const isMobile = useMobileStatus();
+  const map = useSelector(state => state.mapRef);
 
   const [addressResults, setAddressResults] = useState([]);
   const [resultIndex, setResultIndex] = useState(null);
@@ -62,6 +62,7 @@ const AddressSearchBar = ({
     dispatch(setDirection('asc'));
     dispatch(setOrder('distance'));
     handleAddressChange(address);
+    focusToPosition(map, address.location?.coordinates);
   };
 
   const handleSearchBarKeyPress = (e) => {
