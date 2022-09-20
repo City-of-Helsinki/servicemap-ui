@@ -40,7 +40,6 @@ const AddressSearchBar = ({
   const fetchAddressResults = (text) => {
     const smAPI = new ServiceMapAPI();
     const fetchOptions = {
-      language: locale,
       page_size: suggestionCount,
       type: 'address',
       address_limit: suggestionCount,
