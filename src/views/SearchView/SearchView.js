@@ -10,7 +10,6 @@ import {
 import { visuallyHidden } from '@mui/utils';
 import { FormattedMessage, useIntl } from 'react-intl';
 import fetchSearchResults from '../../redux/actions/search';
-import fetchRedirectService from '../../redux/actions/redirectService';
 import { parseSearchParams, getSearchParam, keyboardHandler } from '../../utils';
 import { fitUnitsToMap } from '../MapView/utils/mapActions';
 import { isEmbed } from '../../utils/path';
@@ -160,36 +159,6 @@ const SearchView = (props) => {
     return options;
   };
 
-  // Handle service redirect for old service parameters if given
-  // Will fetch new service_node from redirect endpoint with service parameter
-  const handleServiceRedirect = () => {
-    if (isRedirectFetching) {
-      return true;
-    }
-    const options = getSearchParamData(true);
-    if (options.service && serviceRedirect !== options.service) {
-      // Reset serviceRedirect
-      setServiceRedirect(null);
-
-      // Fetch service_node for given old service data
-      // dispatch(fetchRedirectService({ service: options.service }, (data) => {
-      //   // Success
-      //   if (data.service_node) {
-      //     // Need to stringify current search params for unit fetch
-      //     // Otherwise componentDidMount shouldFetch will compare previous searches incorrectly
-      //     delete options.service;
-      //     options.service_node = `${(options.service_node ? `${options.service_node},` : '')}${data.service_node}`;
-
-      //     // Set serviceRedirect and fetch units
-      //     dispatch(fetchSearchResults(options));
-      //     setServiceRedirect(options.service_node);
-      //   }
-      // }));
-      return true;
-    }
-    return false;
-  };
-
   // Check if view will fetch data because sreach params has changed
   const shouldFetch = () => {
     const { isFetching, previousSearch } = searchFetchState;
@@ -244,13 +213,8 @@ const SearchView = (props) => {
 
   useEffect(() => {
     const options = getSearchParamData();
-    // Handle old service value redirects
-    const handlingRedirect = handleServiceRedirect();
-
-    if (!handlingRedirect) {
-      if (shouldFetch() && Object.keys(options).length) {
-        dispatch(fetchSearchResults(options));
-      }
+    if (shouldFetch() && Object.keys(options).length) {
+      dispatch(fetchSearchResults(options));
     }
   }, [match.params]);
 
