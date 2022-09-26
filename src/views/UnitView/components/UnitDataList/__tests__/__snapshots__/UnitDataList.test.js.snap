@@ -1,0 +1,214 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<UnitDataList /> should work 1`] = `
+<div>
+  <div>
+    <div
+      class="TitledList-titleContainer-6 TitledList-marginHorizontal-4"
+    >
+      <h4
+        class="MuiTypography-root MuiTypography-subtitle1 TitledList-left-1 TitledList-marginVertical-3 css-dlbwt1-MuiTypography-root"
+      >
+        Events
+      </h4>
+    </div>
+    <p
+      class="MuiTypography-root MuiTypography-body2 MuiTypography-alignLeft TitledList-description-5 css-10dderv-MuiTypography-root"
+    >
+      Here you can find information about events provided by the unit
+    </p>
+    <ul
+      class="MuiList-root css-1mk9mw3-MuiList-root"
+    >
+      <li
+        class="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button ResultItem-listItem-19 css-16e6fe9-MuiButtonBase-root-MuiListItem-root"
+        data-testid="EventItem"
+        role="link"
+        tabindex="0"
+      >
+        <div
+          class="MuiListItemIcon-root ResultItem-listItemIcon-20 css-cveggr-MuiListItemIcon-root"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium css-tp7oeh-MuiSvgIcon-root"
+            data-testid="EventIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"
+            />
+          </svg>
+        </div>
+        <div
+          class="ResultItem-itemTextContainer-26  "
+        >
+          <div
+            class="ResultItem-topRow-28"
+          >
+            <p
+              class="MuiTypography-root MuiTypography-body2 ResultItem-title-24 ResultItem-srOnly css-1ak20dk-MuiTypography-root"
+              style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
+            >
+              
+    Suomen kielen kielikahvila 
+     
+     
+     
+    
+  
+            </p>
+            <p
+              aria-hidden="true"
+              class="MuiTypography-root MuiTypography-body2 ResultItem-title-24    ResultItem-title css-1ak20dk-MuiTypography-root"
+              role="textbox"
+            >
+              Suomen kielen kielikahvila
+            </p>
+          </div>
+        </div>
+      </li>
+      <li
+        aria-hidden="true"
+      >
+        <hr
+          class="MuiDivider-root MuiDivider-inset ResultItem-divider-34 css-uls1yk-MuiDivider-root"
+        />
+      </li>
+      <li
+        class="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button ResultItem-listItem-19 css-16e6fe9-MuiButtonBase-root-MuiListItem-root"
+        data-testid="EventItem"
+        role="link"
+        tabindex="0"
+      >
+        <div
+          class="MuiListItemIcon-root ResultItem-listItemIcon-20 css-cveggr-MuiListItemIcon-root"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium css-tp7oeh-MuiSvgIcon-root"
+            data-testid="EventIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"
+            />
+          </svg>
+        </div>
+        <div
+          class="ResultItem-itemTextContainer-26  "
+        >
+          <div
+            class="ResultItem-topRow-28"
+          >
+            <p
+              class="MuiTypography-root MuiTypography-body2 ResultItem-title-24 ResultItem-srOnly css-1ak20dk-MuiTypography-root"
+              style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
+            >
+              
+    R&A x Armas: Vanhenemisen estetiikka 
+     
+     
+     
+    
+  
+            </p>
+            <p
+              aria-hidden="true"
+              class="MuiTypography-root MuiTypography-body2 ResultItem-title-24    ResultItem-title css-1ak20dk-MuiTypography-root"
+              role="textbox"
+            >
+              R&A x Armas: Vanhenemisen estetiikka
+            </p>
+          </div>
+        </div>
+      </li>
+      <li
+        aria-hidden="true"
+      >
+        <hr
+          class="MuiDivider-root MuiDivider-inset ResultItem-divider-34 css-uls1yk-MuiDivider-root"
+        />
+      </li>
+      <li
+        class="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button ResultItem-listItem-19 css-16e6fe9-MuiButtonBase-root-MuiListItem-root"
+        data-testid="EventItem"
+        role="link"
+        tabindex="0"
+      >
+        <div
+          class="MuiListItemIcon-root ResultItem-listItemIcon-20 css-cveggr-MuiListItemIcon-root"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium css-tp7oeh-MuiSvgIcon-root"
+            data-testid="EventIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"
+            />
+          </svg>
+        </div>
+        <div
+          class="ResultItem-itemTextContainer-26  "
+        >
+          <div
+            class="ResultItem-topRow-28"
+          >
+            <p
+              class="MuiTypography-root MuiTypography-body2 ResultItem-title-24 ResultItem-srOnly css-1ak20dk-MuiTypography-root"
+              style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
+            >
+              
+    Digital guidance for seniors 
+     
+     
+     
+    
+  
+            </p>
+            <p
+              aria-hidden="true"
+              class="MuiTypography-root MuiTypography-body2 ResultItem-title-24    ResultItem-title css-1ak20dk-MuiTypography-root"
+              role="textbox"
+            >
+              Digital guidance for seniors
+            </p>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <button
+      aria-label="Show more events (2)"
+      class="MuiButtonBase-root SMButton SMButton-button-10 SMButton-smallButton-11 SMButton-margin-12  SMButton-default-16 css-fvdnvy-MuiButtonBase-root"
+      id="UniteventsButton"
+      role="link"
+      tabindex="0"
+      type="button"
+      variant="contained"
+    >
+      <svg
+        aria-hidden="true"
+        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium TitledList-buttonIcon-9 css-6yqi1c-MuiSvgIcon-root"
+        data-testid="ArrowDropDownIcon"
+        focusable="false"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="m7 10 5 5 5-5z"
+        />
+      </svg>
+      <p
+        aria-hidden="true"
+        class="MuiTypography-root MuiTypography-button SMButton-typography-17 css-kkeniz-MuiTypography-root"
+      >
+        Show more events (2)
+      </p>
+    </button>
+  </div>
+</div>
+`;

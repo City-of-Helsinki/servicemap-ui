@@ -61,7 +61,7 @@ fixture`TestCafe Axe test: service page`
 
 
 fixture`TestCafe Axe test: address page`
-  .page`http://${server.address}:${config.server.port}/fi/address/helsinki/Fleminginkatu/1`;
+  .page`http://${server.address}:${config.server.port}/fi/address/helsinki/Fleminginkatu 1`;
 
   test('Automated accessibility testing', async (t) => {
     await axeCheckHandler(t);

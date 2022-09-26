@@ -8,12 +8,14 @@ import {
 import { FormattedMessage } from 'react-intl';
 import { Map } from '@mui/icons-material';
 import Helmet from 'react-helmet';
+import { useSelector } from 'react-redux';
+import { useLocation, useRouteMatch } from 'react-router-dom';
 import { focusToPosition, useMapFocusDisabled } from '../MapView/utils/mapActions';
 import fetchAdministrativeDistricts from './utils/fetchAdministrativeDistricts';
 
 import fetchAddressUnits from './utils/fetchAddressUnits';
 import fetchAddressData from './utils/fetchAddressData';
-import { getAddressText, addressMatchParamsToFetchOptions, useNavigationParams } from '../../utils/address';
+import { getAddressText } from '../../utils/address';
 import config from '../../../config';
 import useLocaleText from '../../utils/useLocaleText';
 import { parseSearchParams } from '../../utils';
@@ -58,8 +60,11 @@ const getEmergencyCareUnit = (division) => {
 
 const AddressView = (props) => {
   const [error, setError] = useState(null);
-  const getAddressNavigatorParams = useNavigationParams();
+  const [isFetching, setIsFetching] = useState(false);
   const getLocaleText = useLocaleText();
+  const match = useRouteMatch();
+  const location = useLocation();
+  const searchResults = useSelector(state => state.searchResults.data);
 
   const {
     addressData,
@@ -67,7 +72,6 @@ const AddressView = (props) => {
     classes,
     embed,
     intl,
-    match,
     getDistance,
     map,
     setAddressData,
@@ -77,11 +81,15 @@ const AddressView = (props) => {
     setAdminDistricts,
     setToRender,
     navigator,
-    location,
     units,
   } = props;
 
-  const title = getAddressText(addressData, getLocaleText);
+  let title = '';
+
+  if (!isFetching) {
+    title = getAddressText(addressData, getLocaleText);
+  }
+
   const mapFocusDisabled = useMapFocusDisabled();
 
   const fetchAddressDistricts = (lnglat) => {
@@ -102,60 +110,48 @@ const AddressView = (props) => {
       });
   };
 
-  const compareAddress = (newAdddress) => {
-    if (!newAdddress) return false;
-    const compareValues = (a, b) => {
-      if ((!a && !b) || a === b) {
-        return true;
-      }
-      return false;
-    };
+  const handleAddressData = (address) => {
+    setAddressData(address);
+    setAddressLocation({ addressCoordinates: address.location.coordinates });
+    const { coordinates } = address.location;
 
-    return addressData
-      && compareValues(newAdddress.street, getLocaleText(addressData.street.name))
-      && compareValues(newAdddress.number, addressData.number)
-      && compareValues(newAdddress.number_end, addressData.number_end)
-      && compareValues(newAdddress.letter, addressData.letter);
+    if (!mapFocusDisabled) {
+      focusToPosition(map, [coordinates[0], coordinates[1]]);
+    }
+    fetchAddressDistricts(coordinates);
+    fetchUnits(coordinates);
   };
 
   const fetchData = () => {
-    const options = match ? addressMatchParamsToFetchOptions(match) : {};
-
-    const isSameAddress = compareAddress(options);
-    if (isSameAddress) return;
+    const { municipality, street } = match.params;
 
     setAddressUnits([]);
 
-    fetchAddressData(options)
-      .then((data) => {
-        const address = data;
-        if (address) {
-          // Check if address data is in different language
-          // and move navigation to address page with correct language
-          const { params } = match;
-
-          if (params.street.toLowerCase() !== getLocaleText(address.street.name).toLowerCase()) {
-            navigator.replace('address', {
-              ...getAddressNavigatorParams(address),
-              embed,
-            });
-          }
-          setAddressData(address);
-          setAddressLocation({ addressCoordinates: address.location.coordinates });
-          const { coordinates } = address.location;
-
-          if (!mapFocusDisabled) {
-            focusToPosition(map, [coordinates[0], coordinates[1]]);
-          }
-          fetchAddressDistricts(coordinates);
-          fetchUnits(coordinates);
+    setIsFetching(true);
+    fetchAddressData(municipality, street)
+      .then((address) => {
+        setIsFetching(false);
+        if (address?.length) {
+          handleAddressData(address[0]);
         } else {
           setError(intl.formatMessage({ id: 'address.error' }));
         }
       });
   };
 
-  const renderHead = (title) => {
+  // Gets address data from previously fetched search results
+  const getAddressFromSearch = () => {
+    if (!searchResults.length) return null;
+    const addressNameFromParams = match.params.street;
+    const municipalityFromParams = match.params.municipality.toLowerCase();
+    return searchResults.find(item => (
+      addressNameFromParams === getLocaleText(item.name)
+      && municipalityFromParams === item.municipality.id
+    ));
+  };
+
+
+  const renderHead = () => {
     if (addressData) {
       return (
         <Helmet>
@@ -167,7 +163,7 @@ const AddressView = (props) => {
     } return null;
   };
 
-  const renderTopBar = title => (
+  const renderTopBar = () => (
     <>
       <DesktopComponent>
         <SearchBar margin />
@@ -193,9 +189,10 @@ const AddressView = (props) => {
   );
 
   const renderNearbyList = () => {
-    if (!units) {
+    if (isFetching || !units) {
       return <Typography><FormattedMessage id="general.loading" /></Typography>;
-    } if (units && !units.length) {
+    }
+    if (units && !units.length) {
       return <Typography><FormattedMessage id="general.noData" /></Typography>;
     }
     return null;
@@ -203,7 +200,7 @@ const AddressView = (props) => {
 
 
   const renderClosebyServices = () => {
-    if (!adminDistricts) {
+    if (isFetching || !adminDistricts) {
       return <Typography><FormattedMessage id="general.loading" /></Typography>;
     }
     // Get divisions with units
@@ -285,12 +282,6 @@ const AddressView = (props) => {
     );
   };
 
-  // Update view data when match props (url) change
-  useEffect(() => {
-    if (map) {
-      fetchData();
-    }
-  }, [match.url, map]);
 
   // Render component
   const tabs = [
@@ -322,6 +313,7 @@ const AddressView = (props) => {
     tabs.unshift(nearbyServicesTab);
   }
 
+
   useEffect(() => {
     const searchParams = parseSearchParams(location.search);
     const selectedTab = parseInt(searchParams.t, 10) || 0;
@@ -330,14 +322,28 @@ const AddressView = (props) => {
     }
   }, []);
 
+  // Update view data when match props (url) change
+  useEffect(() => {
+    if (map) {
+      // If navigating from search page, address data should already be in search results
+      const addressFromSearch = getAddressFromSearch();
+      if (addressFromSearch) {
+        handleAddressData(addressFromSearch);
+      } else {
+        fetchData();
+      }
+    }
+  }, [match.url, map]);
+
+
   if (embed) {
     return null;
   }
 
   return (
     <div>
-      {renderHead(title)}
-      {renderTopBar(title)}
+      {renderHead()}
+      {renderTopBar()}
       <TabLists
         data={tabs}
         headerComponents={(
@@ -373,7 +379,6 @@ AddressView.propTypes = {
   adminDistricts: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number,
   })),
-  match: PropTypes.objectOf(PropTypes.any),
   map: PropTypes.objectOf(PropTypes.any),
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
@@ -395,7 +400,6 @@ AddressView.propTypes = {
 AddressView.defaultProps = {
   addressData: null,
   adminDistricts: null,
-  match: {},
   map: null,
   navigator: null,
   embed: false,

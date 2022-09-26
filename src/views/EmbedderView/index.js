@@ -12,7 +12,7 @@ const mapStateToProps = (state) => {
   const { mapType } = settings;
 
   return {
-    citySettings: SettingsUtility.getActiveCitySettings(state),
+    citySettings: SettingsUtility.getActiveCitySettings(settings.cities),
     mapType,
     navigator,
   };

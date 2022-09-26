@@ -147,8 +147,13 @@ const ContactInfo = ({
   };
 
   // For infomration that is in data's connections array, use unitSectionFilter
-  const hours = unitSectionFilter(unit.connections, 'OPENING_HOURS');
-  const contact = unitSectionFilter(unit.connections, 'PHONE_OR_EMAIL');
+  let hours = [];
+  let contact = [];
+
+  if (unit.connections) {
+    hours = unitSectionFilter(unit.connections, 'OPENING_HOURS');
+    contact = unitSectionFilter(unit.connections, 'PHONE_OR_EMAIL');
+  }
 
 
   // Form data array

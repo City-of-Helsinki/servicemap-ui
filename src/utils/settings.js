@@ -82,12 +82,11 @@ class SettingsUtility {
 
   /**
    * Return active city settings from redux state
-   * @param {*} state
+   * @param {*} citySettings - City settings from state
    * @returns {array} - Array of city settings which are active
    */
-  static getActiveCitySettings(state) {
+  static getActiveCitySettings(citySettings) {
     const result = [];
-    const citySettings = state?.settings?.cities;
     SettingsUtility.citySettings.forEach((city) => {
       if (
         Object.prototype.hasOwnProperty.call(citySettings, (city))

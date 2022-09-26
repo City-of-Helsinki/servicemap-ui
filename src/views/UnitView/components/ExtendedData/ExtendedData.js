@@ -81,7 +81,7 @@ const ExtendedData = ({
           id="services"
           data={data || []}
           customComponent={service => (
-            <ServiceItem key={service.id} service={service} link={false} />
+            <ServiceItem key={service.id} service={service} />
           )}
           srTitle={srTitle}
           title={titleText}
@@ -112,7 +112,7 @@ const ExtendedData = ({
           id="educationServices"
           data={data || []}
           customComponent={service => (
-            <ServiceItem key={service.id} service={service} link={false} />
+            <ServiceItem key={service.id} service={service} />
           )}
           srTitle={srTitle}
           title={titleText}

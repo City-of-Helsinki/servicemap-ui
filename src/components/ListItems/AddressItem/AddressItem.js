@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { uppercaseFirst } from '../../../utils';
 import SimpleListItem from '../SimpleListItem';
 import { AddressIcon } from '../../SMIcon';
 import { getAddressText, useNavigationParams } from '../../../utils/address';
@@ -22,11 +21,12 @@ const AddressItem = (props) => {
 
   const text = getAddressText(address, getLocaleText, showPostalCode);
 
+
   return (
     <SimpleListItem
       className={className}
       button
-      text={uppercaseFirst(text)}
+      text={text}
       icon={<AddressIcon className={classes.icon} />}
       divider
       handleItemClick={(e) => {

@@ -64,7 +64,10 @@ export const createTooltipContent = (unit, classes, getLocaleText, distance) => 
           unit.street_address
           && (
             <p className={classes.unitTooltipSubtitle}>
-              {getLocaleText(unit.street_address)}
+              {typeof unit.street_address === 'string'
+                ? unit.street_address
+                : getLocaleText(unit.street_address)
+              }
             </p>
           )
         }

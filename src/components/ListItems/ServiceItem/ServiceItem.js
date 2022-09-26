@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 import { getIcon } from '../../SMIcon';
 import { uppercaseFirst } from '../../../utils';
 import SimpleListItem from '../SimpleListItem';
 import useLocaleText from '../../../utils/useLocaleText';
+import { setNewCurrentService } from '../../../redux/actions/services';
 
 const ServiceItem = (props) => {
   const {
-    currentService, service, navigator, setNewCurrentService, link, classes, divider,
+    service, classes, divider, link, navigator,
   } = props;
   const [icon, setIcon] = useState(<img alt="" src={null} style={{ height: 24 }} aria-hidden="true" />);
   const getLocaleText = useLocaleText();
+  const dispatch = useDispatch();
+  const currentService = useSelector(state => state.service.current);
 
 
   useEffect(() => {
@@ -28,22 +32,24 @@ const ServiceItem = (props) => {
     e.preventDefault();
 
     if (!currentService || currentService.id !== service.id) {
-      setNewCurrentService(service);
+      dispatch(setNewCurrentService(service));
     }
     if (navigator) {
       navigator.push('service', service.id);
     }
   } : null;
+
   const role = link ? 'link' : null;
+
 
   return (
     <SimpleListItem
       key={service.id}
-      button={link}
-      role={role}
       text={uppercaseFirst(text)}
       icon={icon}
       divider={divider}
+      button={link}
+      role={role}
       handleItemClick={onClick}
     />
   );
@@ -53,17 +59,14 @@ export default ServiceItem;
 
 ServiceItem.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  currentService: PropTypes.objectOf(PropTypes.any),
-  navigator: PropTypes.objectOf(PropTypes.any),
   service: PropTypes.objectOf(PropTypes.any).isRequired,
-  setNewCurrentService: PropTypes.func.isRequired,
-  link: PropTypes.bool,
   divider: PropTypes.bool,
+  link: PropTypes.bool,
+  navigator: PropTypes.objectOf(PropTypes.any),
 };
 
 ServiceItem.defaultProps = {
-  currentService: null,
   navigator: null,
-  link: true,
   divider: true,
+  link: true,
 };

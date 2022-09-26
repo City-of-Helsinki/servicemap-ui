@@ -1,56 +1,11 @@
 import LocalStorageUtility from '../../utils/localStorage';
 
-const toJson = (data = '{}') => JSON.parse(data);
-const key = 'history';
+const toJson = (data = '[]') => JSON.parse(data);
+const key = 'history:new';
 const historyCount = 5;
 const nextUpdateKey = 'history:updated';
 const halfDay = 43200000; // Half day in milliseconds
 
-const sortHistory = sortedObject => (a, b) => {
-  if (
-    Object.prototype.hasOwnProperty.call(sortedObject, a)
-    && Object.prototype.hasOwnProperty.call(sortedObject, b)
-  ) {
-    const aCount = sortedObject[a].weightedLastSearch;
-    const bCount = sortedObject[b].weightedLastSearch;
-    return aCount < bCount ? 1 : -1;
-  }
-  return 0;
-};
-
-// Format single history object to correct format and return new data object
-const formatSingleHistoryObject = (current) => {
-  const today = new Date();
-  if (!current) {
-    return {
-      weight: 1,
-      weightedLastSearch: today.getTime(),
-    };
-  }
-
-  let data = {};
-  // Create new correctly formatted data object if current is old data
-  if (typeof current === 'number') {
-    data = {
-      weight: current,
-      weightedLastSearch: today.getTime() + current * halfDay,
-    };
-    return data;
-  }
-
-  // Update current data object weights and weightedLastSearch
-  const searchWeight = (
-    current
-    && current?.weight > 0
-      ? today.getTime() + current.weight * halfDay
-      : today.getTime()
-  );
-  data = {
-    weight: current && typeof current?.weight === 'number' ? current.weight + 1 : 1,
-    weightedLastSearch: searchWeight,
-  };
-  return data;
-};
 
 // Update weights every 5 days
 const updateWeights = (jsonData) => {
@@ -65,25 +20,13 @@ const updateWeights = (jsonData) => {
 
   // if 5 days has passed since last update
   const shouldUpdate = nextUpdateDate.getTime() < today.getTime();
-  const keys = Object.keys(jsonData);
 
   if (shouldUpdate) {
     try {
-      keys.forEach((key) => {
-        if (Object.prototype.hasOwnProperty.call(jsonData, key)) {
-          const current = jsonData[key];
-          // If old data still exists change to new format
-          if (typeof current === 'number') {
-            jsonData[key] = {
-              weight: current,
-              weightedLastSearch: new Date().getTime(),
-            };
-            return;
-          }
-          current.weight -= 1;
-          if (current.weight < 0) {
-            current.weight = 0;
-          }
+      jsonData.forEach((item) => {
+        item.weight -= 1;
+        if (item.weight < 0) {
+          item.weight = 0;
         }
       });
     } catch (e) {
@@ -100,45 +43,68 @@ export const getPreviousSearches = () => {
 
   if (jsonHistory) {
     // Sort history
-    const historyKeys = Object.keys(jsonHistory).sort(sortHistory(jsonHistory));
-    const searchHistory = historyKeys.slice(0, historyCount);
-    return searchHistory;
+    const sortedHistory = jsonHistory.sort((a, b) => b.weightedLastSearch - a.weightedLastSearch);
+    return sortedHistory.slice(0, historyCount);
   }
   return null;
 };
 
-export const saveSearchToHistory = (searchWord, results) => {
-  if (!results || !results.length || searchWord === '') {
-    return;
-  }
-  const historyKey = searchWord.toLowerCase();
+export const getFullHistory = () => {
+  const history = LocalStorageUtility.getItem(key);
+  return toJson(history);
+};
+
+export const saveSearchToHistory = (searchWord, searchItem) => {
+  if (!searchWord || searchWord === '' || !searchItem) return;
+  const today = new Date();
+
   const data = LocalStorageUtility.getItem(key);
-  let jsonData;
-  if (!data) {
-    jsonData = {};
-  } else {
+  let jsonData = [];
+  if (data) {
     jsonData = toJson(data);
   }
 
-  const current = jsonData[historyKey];
-  jsonData[historyKey] = formatSingleHistoryObject(current);
+  const current = jsonData.find(item => (
+    item.searchText.toLowerCase() === searchWord.toLowerCase()
+    && item.object_type === searchItem.object_type
+  ));
+
+  if (!current) {
+    // Add new item to search history
+    jsonData.push({
+      searchText: searchWord,
+      ...searchItem,
+      weight: 1,
+      weightedLastSearch: today.getTime(),
+    });
+  } else {
+    // Update previously searched item weights
+    const searchWeight = (current.weight > 0
+      ? today.getTime() + current.weight * halfDay
+      : today.getTime()
+    );
+    current.weightedLastSearch = searchWeight;
+    current.weight = typeof current.weight === 'number' ? current.weight + 1 : 1;
+  }
 
   updateWeights(jsonData);
 
   LocalStorageUtility.saveItem(key, JSON.stringify(jsonData));
 };
 
-export const removeSearchFromHistory = (searchWord, callback) => {
-  const historyKey = searchWord.toLowerCase();
+export const removeSearchFromHistory = (suggestion, callback) => {
   const data = LocalStorageUtility.getItem(key);
-  let jsonData;
-  if (!data) {
-    jsonData = {};
-  } else {
+  let jsonData = [];
+  if (data) {
     jsonData = toJson(data);
   }
 
-  delete jsonData[historyKey];
+  // Remove matching item from history
+  jsonData = jsonData.filter(item => (
+    !(item.searchText === suggestion.searchText
+      && item.object_type === suggestion.object_type
+    )
+  ));
 
   LocalStorageUtility.saveItem(key, JSON.stringify(jsonData));
 

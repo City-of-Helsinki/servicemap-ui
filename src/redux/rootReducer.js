@@ -4,7 +4,7 @@ import navigator from './reducers/navigator';
 import {
   alertErrors,
   alertNews,
-  units,
+  searchResults,
   service,
   selectedUnit,
   accessibilitySentences,
@@ -35,7 +35,7 @@ export default combineReducers({
   mapRef,
   measuringMode,
   navigator,
-  units,
+  searchResults,
   user,
   districts,
   service,

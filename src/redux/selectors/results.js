@@ -6,8 +6,8 @@ import isClient from '../../utils';
 import orderUnits from '../../utils/orderUnits';
 import getSortingParameters from './ordering';
 
-const isFetching = state => state.units.isFetching;
-const units = state => state.units.data;
+const isFetching = state => state.searchResults.isFetching;
+const results = state => state.searchResults.data;
 const settings = state => state.settings;
 
 /**
@@ -45,7 +45,7 @@ const getFilteredData = (data, options, settings) => {
  * Gets unordered processed result data for rendering search results
  */
 export const getProcessedData = createSelector(
-  [units, isFetching, settings],
+  [results, isFetching, settings],
   (data, isFetching, settings) => {
     // Prevent processing data if fetch is in process
     if (isFetching) return [];
@@ -56,8 +56,7 @@ export const getProcessedData = createSelector(
       options.municipality = overrideMunicipality;
     }
 
-    const filteredData = getFilteredData(data, options, settings);
-    return filteredData;
+    return getFilteredData(data, options, settings);
   },
 );
 
@@ -70,7 +69,6 @@ export const getOrderedData = createSelector(
     if (!unitData) {
       throw new Error('Invalid data provided to getOrderedData selector');
     }
-    const orderedUnits = orderUnits(unitData, sortingParameters);
-    return orderedUnits;
+    return orderUnits(unitData, sortingParameters);
   },
 );

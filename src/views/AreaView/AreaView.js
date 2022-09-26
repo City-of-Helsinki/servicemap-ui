@@ -9,7 +9,7 @@ import { Map } from '@mui/icons-material';
 import { visuallyHidden } from '@mui/utils';
 import { focusDistrict, focusDistricts, useMapFocusDisabled } from '../MapView/utils/mapActions';
 import GeographicalTab from './components/GeographicalTab';
-import { parseSearchParams, uppercaseFirst } from '../../utils';
+import { parseSearchParams } from '../../utils';
 import ServiceTab from './components/ServiceTab';
 import { districtFetch } from '../../utils/fetch';
 import fetchAddress from '../MapView/utils/fetchAddress';
@@ -17,6 +17,7 @@ import { dataStructure, geographicalDistricts } from './utils/districtDataHelper
 import { fetchParkingAreaGeometry, fetchParkingUnits, handleOpenItems } from '../../redux/actions/district';
 import useLocaleText from '../../utils/useLocaleText';
 import { getAddressDistrict } from '../../redux/selectors/district';
+import { getAddressText } from '../../utils/address';
 import {
   AddressSearchBar,
   MobileComponent,
@@ -81,18 +82,6 @@ const AreaView = ({
   // Pending request to focus map to districts. Executed once district data is loaded
   const [focusTo, setFocusTo] = useState(null);
 
-  const formAddressString = useCallback((address) => {
-    if (!address) return '';
-    const {
-      street,
-      number,
-      number_end,
-      letter,
-    } = address;
-    return `${getLocaleText(street.name)} ${number}${number_end || ''}${letter || ''}, ${uppercaseFirst(street.municipality)}`;
-  }, [getLocaleText]);
-
-
   const focusMapToDistrict = (district) => {
     if (!mapFocusDisabled && map && district?.boundary) {
       focusDistrict(map, district.boundary.coordinates);
@@ -149,7 +138,7 @@ const AreaView = ({
   useEffect(() => {
     if (selectedAddress) {
       if (!selectedAddress.districts
-        || formAddressString(districtAddressData.address) !== formAddressString(selectedAddress)
+        || getAddressText(districtAddressData.address, getLocaleText) !== getAddressText(selectedAddress, getLocaleText)
       ) {
         fetchAddressDistricts();
       }
@@ -287,7 +276,6 @@ const AreaView = ({
   const renderGeographicalTab = () => (
     <GeographicalTab
       initialOpenItems={initialOpenItems}
-      formAddressString={formAddressString}
       clearRadioButtonValue={clearRadioButtonValue}
     />
   );
