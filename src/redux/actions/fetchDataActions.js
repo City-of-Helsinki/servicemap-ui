@@ -35,6 +35,23 @@ const dataSet = prefix => ({
     type: `${prefix}_SET_NEW_CURRENT`,
     current,
   }),
+  isAdditiveFetching: search => ({
+    type: `${prefix}_ADDITIVE_IS_FETCHING`,
+    search,
+  }),
+  fetchAdditiveError: errorMessage => ({
+    type: `${prefix}_ADDITIVE_FETCH_HAS_ERRORED`,
+    errorMessage,
+  }),
+  fetchAdditiveProgressUpdate: data => ({
+    type: `${prefix}_ADDITIVE_FETCH_PROGRESS_UPDATE`,
+    count: data.count,
+    max: data.max,
+  }),
+  fetchAdditiveSuccess: data => ({
+    type: `${prefix}_ADDITIVE_FETCH_DATA_SUCCESS`,
+    data,
+  }),
 });
 
 // Actions for fetching singles
@@ -70,6 +87,8 @@ export const events = dataSet('SELECTED_UNIT_EVENTS');
 export const reservations = dataSet('SELECTED_UNIT_RESERVATIONS');
 export const alertNews = dataSet('ALERT_NEWS');
 export const alertErrors = dataSet('ALERT_ERRORS');
+export const statisticalDistrictUnits = dataSet('STATISTICAL_DISTRICT_UNITS');
+export const statisticalDistrictServices = dataSet('STATISTICAL_DISTRICT_SERVICES');
 
 // Data fetch single
 export const selectedUnit = dataSingle('SELECTED_UNIT');
