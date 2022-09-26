@@ -16,6 +16,7 @@ import fetchAddress from '../MapView/utils/fetchAddress';
 import { dataStructure, geographicalDistricts } from './utils/districtDataHelper';
 import { fetchParkingAreaGeometry, fetchParkingUnits, handleOpenItems } from '../../redux/actions/district';
 import useLocaleText from '../../utils/useLocaleText';
+import { getAddressDistrict } from '../../redux/selectors/district';
 import {
   AddressSearchBar,
   MobileComponent,
@@ -39,7 +40,6 @@ const AreaView = ({
   districtData,
   districtAddressData,
   selectedDistrictData,
-  addressDistrict,
   subdistrictUnits,
   selectedSubdistricts,
   mapState,
@@ -52,7 +52,7 @@ const AreaView = ({
   const dispatch = useDispatch();
   const location = useLocation();
   const history = useHistory();
-  const localAddressData = useSelector(state => state.districts.districtAddressData);
+  const addressDistrict = useSelector(state => getAddressDistrict(state));
   const selectedDistrictType = useSelector(state => state.districts.selectedDistrictType);
   const districtsFetching = useSelector(state => state.districts.districtsFetching);
   const getLocaleText = useLocaleText();
@@ -141,8 +141,7 @@ const AreaView = ({
   useEffect(() => {
     // Focus map to local district when new address is selected
     if (selectedAddress && addressDistrict) {
-      const district = localAddressData.districts.find(obj => obj.id === addressDistrict.id);
-      focusMapToDistrict(district);
+      focusMapToDistrict(addressDistrict);
     }
   }, [addressDistrict, map]);
 
@@ -195,7 +194,7 @@ const AreaView = ({
     if (!mapFocusDisabled
       && map
       && !focusTo
-      && !localAddressData.length
+      && !addressDistrict
       && selectedDistrictGeometry) {
       focusDistricts(map, selectedDistrictData);
     }
