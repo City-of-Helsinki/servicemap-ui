@@ -115,6 +115,7 @@ const SearchView = (props) => {
         options.events = events;
       }
 
+      // This is used when embedding a specified list of units by IDs
       if (units) {
         options.id = units;
       }
@@ -198,7 +199,12 @@ const SearchView = (props) => {
       return false;
     }
     const data = getSearchParamData();
-    const searchQuery = data.q || data.address || data.service_node || data.service_id;
+    const searchQuery = data.q
+      || data.address
+      || data.service_node
+      || data.service_id
+      || data.id
+      || data.events;
 
     // Should fetch if previousSearch has changed and data has required parameters
     if (previousSearch) {
