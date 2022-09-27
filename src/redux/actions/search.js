@@ -1,4 +1,5 @@
 import { saveSearchToHistory } from '../../components/SearchBar/previousSearchData';
+import LinkedEventsAPI from '../../utils/newFetch/LinkedEventsAPI';
 import ServiceMapAPI from '../../utils/newFetch/ServiceMapAPI';
 import { getLocaleString } from '../selectors/locale';
 import { searchResults } from './fetchDataActions';
@@ -38,6 +39,12 @@ const smFetch = (dispatch, options) => {
       smAPI.search(address, addressFetchOptions, true),
       smAPI.units(unitFetchOptions),
     ]);
+  } else if (options.id) {
+    const unitFetchOptions = { id: options.id };
+    results = smAPI.units(unitFetchOptions);
+  } else if (options.events) {
+    const eventsAPI = new LinkedEventsAPI();
+    results = eventsAPI.eventsByKeyword(options.events);
   }
 
   return results;
@@ -48,7 +55,12 @@ const fetchSearchResults = (options = null) => async (dispatch, getState) => {
   const searchFetchState = getState().searchResults;
   const { locale } = getState().user;
 
-  const searchQuery = options.q || options.address || options.service_node || options.service_id;
+  const searchQuery = options.q
+    || options.address
+    || options.service_node
+    || options.service_id
+    || options.id
+    || options.events;
 
   if (searchFetchState.isFetching) {
     throw Error('Unable to fetch search results because previous fetch is still active');
@@ -66,8 +78,8 @@ const fetchSearchResults = (options = null) => async (dispatch, getState) => {
     if (options.q) {
       saveSearchToHistory(searchQuery, { object_type: 'searchHistory', text: searchQuery });
     }
-    // Handle service and sercice node results
-    if (options.service_node || options.service_id) {
+    // Handle unit results that have no object_type
+    if (options.service_node || options.service_id || options.id) {
       results.forEach((item) => {
         item.object_type = 'unit';
       });
@@ -84,6 +96,19 @@ const fetchSearchResults = (options = null) => async (dispatch, getState) => {
         );
       }
       results = [...addressData, ...unitData];
+    }
+    // Handle event search results
+    if (options.events) {
+      results.forEach((event) => {
+        event.object_type = 'event';
+        const eventUnit = event.location;
+        if (eventUnit) {
+          eventUnit.object_type = 'unit';
+          if (typeof eventUnit.id === 'string') {
+            eventUnit.id = parseInt(eventUnit.id.match(/[0-9]+/g), 10);
+          }
+        }
+      });
     }
   }
 
