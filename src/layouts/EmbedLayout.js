@@ -231,7 +231,7 @@ const EmbedLayout = ({ intl }) => {
               )}
             />
             <Route
-              path="*/embed/address/:municipality/:street/:number/"
+              path="*/embed/address/:municipality/:street"
               render={() => (
                 <>
                   <PageHandler embed page="address" />

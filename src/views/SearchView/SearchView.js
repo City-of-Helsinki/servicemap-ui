@@ -33,6 +33,7 @@ const SearchView = (props) => {
   const [analyticsSent, setAnalyticsSent] = useState(null);
 
   const searchResults = useSelector(state => getOrderedData(state));
+  const unorderedSearchResults = useSelector(state => state.searchResults.data);
   const searchFetchState = useSelector(state => state.searchResults);
   const isRedirectFetching = useSelector(state => state.redirectService.isFetching);
   const map = useSelector(state => state.mapRef);
@@ -113,6 +114,7 @@ const SearchView = (props) => {
         options.events = events;
       }
 
+      // This is used when embedding a specified list of units by IDs
       if (units) {
         options.id = units;
       }
@@ -166,7 +168,12 @@ const SearchView = (props) => {
       return false;
     }
     const data = getSearchParamData();
-    const searchQuery = data.q || data.address || data.service_node || data.service_id;
+    const searchQuery = data.q
+      || data.address
+      || data.service_node
+      || data.service_id
+      || data.id
+      || data.events;
 
     // Should fetch if previousSearch has changed and data has required parameters
     if (previousSearch) {
@@ -224,19 +231,24 @@ const SearchView = (props) => {
       if (searchResults.length === 1) {
         handleSingleResultRedirect();
       } else {
-      // Focus map to new search results units
+        // Focus map to new search results units
         const units = getResultsByType('unit');
         if (units.length) focusMap(units);
       }
     } else {
       // Send analytics report if search query did not return results
       const { previousSearch, isFetching } = searchFetchState;
-      if (navigator && previousSearch && !isFetching && analyticsSent !== previousSearch) {
+      if (
+        navigator
+        && previousSearch
+        && !isFetching
+        && analyticsSent !== previousSearch
+      ) {
         setAnalyticsSent(previousSearch);
         navigator.trackPageView(null, previousSearch);
       }
     }
-  }, [JSON.stringify(searchResults)]);
+  }, [JSON.stringify(unorderedSearchResults)]);
 
   const renderSearchBar = () => (
     <SearchBar expand className={classes.searchbarPlain} />
