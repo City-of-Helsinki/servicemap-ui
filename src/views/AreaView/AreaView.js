@@ -53,7 +53,7 @@ const AreaView = ({
   const dispatch = useDispatch();
   const location = useLocation();
   const history = useHistory();
-  const addressDistrict = useSelector(state => getAddressDistrict(state));
+  const addressDistrict = useSelector(getAddressDistrict);
   const selectedDistrictType = useSelector(state => state.districts.selectedDistrictType);
   const districtsFetching = useSelector(state => state.districts.districtsFetching);
   const getLocaleText = useLocaleText();
