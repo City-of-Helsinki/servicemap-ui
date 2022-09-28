@@ -147,11 +147,13 @@ export const getOrderedStatisticalDistrictServices = createSelector(
       if (typeof locale !== 'string') {
         return services;
       }
-      return services.sort((a, b) => {
-        if (a.name[locale] > b.name[locale]) return 1;
-        if (a.name[locale] < b.name[locale]) return -1;
-        return 0;
-      });
+      return services
+        .filter(s => s.unit_count?.total > 0) // Filter out services without units
+        .sort((a, b) => {
+          if (a.name[locale] > b.name[locale]) return 1;
+          if (a.name[locale] < b.name[locale]) return -1;
+          return 0;
+        });
     }
 
     return [];

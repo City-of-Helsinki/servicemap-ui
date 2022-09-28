@@ -53,6 +53,7 @@ const translations = {
   'area.searchbar.infoText.optional': '(optional)',
   'area.tab.publicServices': 'Public service areas',
   'area.tab.geographical': 'Neighbourhoods and postal code areas',
+  'area.tab.statisticalDistricts': 'Population registry', //TODO: Verify
   'area.services.local': 'Services in your own area',
   'area.services.nearby': 'Locations in nearby areas as a list',
   'area.services.nearby.rescue_area': 'Services in nearby areas as a list', // TODO: correct name to replace "Services"
@@ -71,9 +72,16 @@ const translations = {
   'area.geographicalServices.neighborhood': 'Services of the neighbourhood ({length})',
   'area.geographicalServices.postcode_area': 'Services of the postal code area ({length})',
   'area.geographicalServices.major_district': 'Services of the major district ({length})',
+  'area.geographicalServices.statistical_district': 'Service of the statistical district({length})',
   'area.neighborhood.title': 'Choose neighbourhood',
   'area.postcode_area.title': 'Choose postal code',
   'area.major_district.title': 'Choose major district',
+  'area.statisticalDistrict.title': 'Choose statistical district',
+  'area.statisticalDistrict.label': '{count} people, {percent}% of population',
+  'area.statisticalDistrict.label.total': '{count} henkilöä', // TODO Translate
+  'area.statisticalDistrict.label.people': '{count} henkilöä', // TODO Translate
+  'area.statisticalDistrict.label.percent': '{percent}% väestöstä', // TODO Translate
+  'area.statisticalDistrict.label.noResults': 'Population registry information not available', // TODO: Verify
   'area.noSelection': 'Choose area from the Choice of Area tab',
   'area.noUnits': 'There are no service points in your chosen area',
   'area.popupLink': 'Show the details for the area (new tab)',

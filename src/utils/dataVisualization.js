@@ -34,8 +34,9 @@ class DataVisualization {
     population_forecast: `${this.FORECAST_YEAR}_population_forecast`,
   }
 
-  COLOR = "#000";
-  COLOR_CONTRAST = "#0800ff"
+  COLOR = '#000';
+
+  COLOR_CONTRAST = '#0800ff';
 
   getYearBasedCategory = (forecast) => `${forecast ? this.CATEGORIES.population_forecast : this.CATEGORIES.population_age}`
 

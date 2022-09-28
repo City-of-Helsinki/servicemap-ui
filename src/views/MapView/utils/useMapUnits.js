@@ -7,6 +7,7 @@ import { getOrderedData } from '../../../redux/selectors/results';
 import { getSelectedUnit } from '../../../redux/selectors/selectedUnit';
 import { getServiceUnits } from '../../../redux/selectors/service';
 import { useEmbedStatus } from '../../../utils/path';
+import { getServiceFilteredStatisticalDistrictUnits } from '../../../redux/selectors/statisticalDistrict';
 
 
 // Helper function to handle address view units
@@ -92,6 +93,7 @@ const useMapUnits = () => {
   const serviceUnits = useSelector(state => getServiceUnits(state));
   const districtPrimaryUnits = useSelector(state => getDistrictPrimaryUnits(state));
   const districtServiceUnits = useSelector(state => getFilteredSubdistrictUnits(state));
+  const statisticalDistrictUnits = useSelector(getServiceFilteredStatisticalDistrictUnits);
   const parkingAreaUnits = useSelector(state => getParkingUnits(state));
   const highlightedUnit = useSelector(state => getSelectedUnit(state));
 
@@ -99,8 +101,10 @@ const useMapUnits = () => {
   const serviceUnitsLoading = useSelector(state => state.service.isFetching);
   const unitsLoading = searchUnitsLoading || serviceUnitsLoading;
 
-  const unitParam = new URLSearchParams(location.search).get('units');
-  const servicesParams = new URLSearchParams(location.search).get('services');
+  const searchParams = new URLSearchParams(location.search);
+  const unitParam = searchParams.get('units');
+  const servicesParams = searchParams.get('services');
+  const statisticalTabOpen = searchParams.get('t') === '2';
 
   if (embedded && unitParam === 'none') {
     return [];
@@ -133,6 +137,10 @@ const useMapUnits = () => {
           ...(districtPrimaryUnits.length ? districtPrimaryUnits : []),
           ...(districtServiceUnits.length ? districtServiceUnits : []),
           ...(parkingAreaUnits.length ? parkingAreaUnits : []),
+          ...(statisticalDistrictUnits.length && statisticalTabOpen
+            ? statisticalDistrictUnits
+            : []
+          ),
         ];
 
       default:

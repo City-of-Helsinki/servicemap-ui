@@ -53,6 +53,7 @@ const translations = {
   'area.searchbar.infoText.optional': '(valfri)',
   'area.tab.publicServices': 'Områden för offentliga tjänster',
   'area.tab.geographical': 'Stadsdelar och postnummerområden',
+  'area.tab.statisticalDistricts': 'Population registry', // TODO: Translate
   'area.services.local': 'Tjänster i ditt eget område',
   'area.services.nearby': 'Lista över verksamhetsställen i närområden',
   'area.services.nearby.rescue_area': 'Lista över tjänster i närområden', // TODO: correct name to replace "tjänster"
@@ -71,9 +72,16 @@ const translations = {
   'area.geographicalServices.neighborhood': 'Tjänster i stadsdelen ({length})',
   'area.geographicalServices.postcode_area': 'Tjänster i postnummerområdet ({length})',
   'area.geographicalServices.major_district': 'Tjänster i stordistriktet ({length})',
+  'area.geographicalServices.statistical_district': 'Service of the statistical district({length})', // TODO translate
   'area.neighborhood.title': 'Välj stadsdel',
   'area.postcode_area.title': 'Välj postnummer',
   'area.major_district.title': 'Välj stordistrikt',
+  'area.statisticalDistrict.title': 'Choose statistical district', // TODO Translate
+  'area.statisticalDistrict.label': '{count} people, {percent}% of population', // TODO Translate
+  'area.statisticalDistrict.label.total': '{count} henkilöä', // TODO Translate
+  'area.statisticalDistrict.label.people': '{count} henkilöä', // TODO Translate
+  'area.statisticalDistrict.label.percent': '{percent}% väestöstä', // TODO Translate
+  'area.statisticalDistrict.label.noResults': 'Population registry information not available',  // TODO Translate
   'area.noSelection': 'Väl område under fliken Val av område',
   'area.noUnits': 'Det finns inga verksamhetsställen i ditt valda område',
   'area.popupLink': 'Visa uppgifterna för området (ny flik)',

@@ -305,6 +305,7 @@ const MapView = (props) => {
               <Loading reducer={showLoadingReducer} hideNumbers={hideLoadingNumbers} />
             </div>
           ) : null}
+          <StatisticalDistricts />
           <Districts mapOptions={mapOptions} embedded={embedded} />
           <TransitStops mapObject={mapObject} />
 
