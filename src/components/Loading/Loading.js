@@ -7,7 +7,7 @@ import styles from './styles';
 
 const Loading = (props) => {
   const {
-    children, classes, text, intl, progress, reducer,
+    children, classes, hideNumbers, text, intl, progress, reducer,
   } = props;
 
   if (reducer) {
@@ -21,7 +21,7 @@ const Loading = (props) => {
         const text = intl && intl.formatMessage({ id: 'search.loading.units' }, { count, max });
         return (
           <div className={classes.root}>
-            <Typography variant="body2" aria-hidden="true">{text || <FormattedMessage id="general.fetching" />}</Typography>
+            <Typography variant="body2" aria-hidden="true">{(!hideNumbers && text) || <FormattedMessage id="general.fetching" />}</Typography>
             <LinearProgress variant="determinate" value={Math.min(progress, 100)} />
           </div>
         );
@@ -49,6 +49,7 @@ export default withStyles(styles)(Loading);
 Loading.propTypes = {
   children: PropTypes.node,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
+  hideNumbers: PropTypes.bool,
   text: PropTypes.string,
   progress: PropTypes.number,
   reducer: PropTypes.shape({
@@ -65,6 +66,7 @@ Loading.propTypes = {
 
 Loading.defaultProps = {
   children: null,
+  hideNumbers: false,
   text: null,
   reducer: null,
   progress: null,
