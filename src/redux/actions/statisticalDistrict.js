@@ -1,7 +1,9 @@
-import dataVisualization from "../../utils/dataVisualization";
-import ServiceMapAPI from "../../utils/newFetch/ServiceMapAPI";
-import { calculateProportion } from "../../utils/statisticalDistrict";
-import { statisticalDistrictActions } from "../reducers/statisticalDistrict";
+import dataVisualization from '../../utils/dataVisualization';
+import ServiceMapAPI from '../../utils/newFetch/ServiceMapAPI';
+import { calculateProportion } from '../../utils/statisticalDistrict';
+import swapCoordinates from '../../views/MapView/utils/swapCoordinates';
+import { statisticalDistrictActions } from '../reducers/statisticalDistrict';
+import { statisticalDistrictUnits, statisticalDistrictServices } from './fetchDataActions';
 
 const isFetching = () => ({
   type: statisticalDistrictActions.FETCH,
@@ -23,59 +25,83 @@ const setSelection = (selection, proportionScales) => ({
   proportionScales,
 });
 
+const setServiceSelection = service => ({
+  type: statisticalDistrictActions.ADD_SERVICE_SELECTION,
+  service,
+});
+
+const removeServiceSelection = service => ({
+  type: statisticalDistrictActions.REMOVE_SERVICE_SELECTION,
+  service,
+});
+
 // Normalize statistical district item
 const normalizeItem = (item) => {
-  const { boundary, id, name, ocd_id, extra, } = item;
-  const categories = item?.extra?.statistical_data;
-  const extraData = {};
-  // Format statistical data to include proportions
-  if (categories) {
-    const categoryKeys = Object.keys(categories);
-    categoryKeys.forEach(key => {
-      const dataKeys = Object.keys(categories[key]);
-      const dataValues = {};
-      const total = categories[key]['total'];
-      dataKeys
-        .forEach(k => {
-          const dataPoint = categories[key][k];
-          if (dataVisualization.isTotal(k)) {
-            dataValues[k] = {
-              ...categories[key][k],
-            }
-          } else {
-            dataValues[k] = {
-              ...categories[key][k],
-              proportion: calculateProportion(+total.value, +dataPoint.value)
-            }
-          }
-        });
-      extraData[key] = dataValues
-    });
-
-  }
-  
-  return {
+  const {
     boundary,
     id,
     name,
     ocd_id,
+    extra,
+    municipality,
+  } = item;
+  const categories = extra?.statistical_data;
+  const extraData = {};
+  // Format statistical data to include proportions
+  if (categories) {
+    const categoryKeys = Object.keys(categories);
+    categoryKeys.forEach((key) => {
+      const dataKeys = Object.keys(categories[key]);
+      const dataValues = {};
+      const { total } = categories[key];
+      dataKeys
+        .forEach((k) => {
+          const dataPoint = categories[key][k];
+          if (dataVisualization.isTotal(k)) {
+            dataValues[k] = {
+              ...categories[key][k],
+            };
+          } else {
+            dataValues[k] = {
+              ...categories[key][k],
+              proportion: calculateProportion(+total.value, +dataPoint.value)
+            };
+          }
+        });
+      extraData[key] = dataValues;
+    });
+  }
+
+  const adjustedBoundary = {
+    ...boundary,
+    coordinates: boundary.coordinates.map(
+      coords => swapCoordinates(coords),
+    ),
+  };
+
+  return {
+    boundary: adjustedBoundary,
+    id,
+    municipality,
+    name,
+    ocd_id,
     data: extraData,
   };
-}
+};
 
 // Normalize statistical districts
 const normalizeData = (data) => {
   const normalizedData = [];
   if (data.length > 0) {
     data
-      .filter(item => {
+      .filter((item) => {
         const hasData = !!item?.extra?.statistical_data;
         return hasData && item.type === 'statistical_district';
       })
       .map(item => normalizedData.push(normalizeItem(item)));
   }
   return normalizedData;
-}
+};
 
 
 export const fetchStatisticalDistricts = () => (
@@ -86,36 +112,86 @@ export const fetchStatisticalDistricts = () => (
       const data = await smAPI.statisticalGeometry();
       dispatch(fetchSuccess(normalizeData(data)));
     } catch (e) {
-      console.log(e)
-      dispatch(fetchErrored(e.message))
+      console.warn(e);
+      dispatch(fetchErrored(e.message));
+    }
+  }
+);
+
+export const fetchServices = () => (
+  async (dispatch) => {
+    const onProgressUpdateConcurrent = (total, max) => {
+      dispatch(statisticalDistrictServices.fetchProgressUpdateConcurrent(total, max));
+    };
+    try {
+      dispatch(statisticalDistrictServices.isFetching());
+      const smAPI = new ServiceMapAPI();
+      smAPI.setOnProgressUpdate(onProgressUpdateConcurrent);
+      const data = await smAPI.services();
+      dispatch(statisticalDistrictServices.fetchSuccess(data));
+    } catch (e) {
+      dispatch(statisticalDistrictServices.fetchError(e.message));
+    }
+  }
+);
+
+export const fetchStatisticalDistrictServiceUnits = serviceID => (
+  async (dispatch) => {
+    if (typeof serviceID !== 'number') {
+      throw new Error('Invalid serviceID provided to fetchServiceUnits');
+    }
+
+    const progressUpdate = (count, max) => {
+      if (!count) { // Start progress bar by setting max value
+        dispatch(statisticalDistrictUnits.fetchAdditiveProgressUpdate({ max }));
+      } else { // Update progress
+        dispatch(statisticalDistrictUnits.fetchAdditiveProgressUpdate({ count }));
+      }
+    };
+    try {
+      dispatch(statisticalDistrictUnits.isAdditiveFetching());
+      const smAPI = new ServiceMapAPI();
+      smAPI.setOnProgressUpdate(progressUpdate);
+      const options = {
+        only: 'name,location,municipality,contract_type',
+        include: 'services',
+      };
+      const data = await smAPI.serviceUnitSearch(`${serviceID}`, options);
+      data.forEach((unit) => {
+        unit.object_type = 'unit';
+      });
+      dispatch(statisticalDistrictUnits.fetchAdditiveSuccess(data));
+    } catch (e) {
+      console.warn(e);
+      dispatch(statisticalDistrictUnits.fetchAdditiveError(e.message));
     }
   }
 );
 
 const getSelectedCategory = (item, forecast) => {
   const category = item?.data[dataVisualization.getYearBasedCategory(forecast)]
-  if (typeof category === 'object' ) {
+  if (typeof category === 'object') {
     return category;
   }
   return undefined;
-}
+};
 
 const calculateProportionScales = (data, section, isForecast) => {
   let proportionScales = {};
   if (dataVisualization.isTotal(section)) {
     const proportions = data.reduce((result, element) => {
       const selectedCategory = getSelectedCategory(element, isForecast);
-      if (selectedCategory && !isNaN(selectedCategory[section].value)) {
+      if (selectedCategory && !Number.isNaN(selectedCategory[section].value)) {
         result.push(selectedCategory[section].value);
       }
       return result;
-    }, [])
+    }, []);
     if (proportions.length > 0) {
       const max = Math.max(...proportions);
       proportionScales = {
         min: 0,
         average: max / 2,
-        max: max,
+        max,
       };
     }
   } else {
@@ -125,7 +201,7 @@ const calculateProportionScales = (data, section, isForecast) => {
         result.push(selectedCategory[section].proportion);
       }
       return result;
-    }, [])
+    }, []);
     if (proportions.length > 0) {
       const max = Math.max(...proportions);
       proportionScales = {
@@ -136,33 +212,60 @@ const calculateProportionScales = (data, section, isForecast) => {
     }
   }
   return proportionScales;
-}
+};
 
 export const selectStatisticalDistrict = (section, isForecast = false) => (
   async (dispatch, getState) => {
     // Calculate scales
-    const { data } = getState().statisticalDistrict;
+    const { data } = getState().statisticalDistrict.districts;
     const proportionScales = calculateProportionScales(data, section, isForecast);
 
 
-    dispatch(setSelection({ forecast: isForecast, section, proportionScales}))
+    dispatch(setSelection({ forecast: isForecast, section, proportionScales }));
   }
-)
+);
 
-export const addAreaSelection = (selection) => (
+export const addAreaSelection = selection => (
   async (dispatch) => {
     dispatch({
       type: statisticalDistrictActions.ADD_AREA_SELECTION,
       selection,
     });
   }
-)
+);
 
-export const removeAreaSelection = (selection) => (
+export const removeAreaSelection = selection => (
   async (dispatch) => {
     dispatch({
       type: statisticalDistrictActions.REMOVE_AREA_SELECTION,
       selection,
     });
   }
-)
+);
+
+export const replaceAreaSelection = selectedAreas => (
+  async (dispatch) => {
+    dispatch({
+      type: statisticalDistrictActions.REPLACE_AREA_SELECTION,
+      selectedAreas,
+    });
+  }
+);
+
+export const addSelectedService = service => (
+  async (dispatch) => {
+    dispatch(setServiceSelection(service));
+  }
+);
+
+export const removeSelectedService = service => (
+  async (dispatch) => {
+    dispatch(removeServiceSelection(service));
+  }
+);
+
+export const setNewStatisticalDistrictUnitData = data => (
+  async (dispatch) => {
+    dispatch(statisticalDistrictUnits.setNewData(data));
+  }
+);
