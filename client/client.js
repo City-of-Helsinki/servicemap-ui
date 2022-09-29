@@ -5,6 +5,7 @@ import 'whatwg-fetch';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import * as Sentry from "@sentry/react";
+import { Integrations } from "@sentry/tracing";
 import { Helmet } from 'react-helmet';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
@@ -16,13 +17,18 @@ import App from '../src/App';
 import SettingsUtility from '../src/utils/settings';
 import LocalStorageUtility from '../src/utils/localStorage';
 import favicon from '../src/assets/icons/favicon.ico';
-import config from '../config';
+import config from '../config/index';
 import createEmotionCache from '../server/createEmotionCache';
 import { CacheProvider } from '@emotion/react';
 
 if (config.sentryDSN) {
   Sentry.init({
     dsn: config.sentryDSN,
+    integrations: [new Integrations.BrowserTracing()],
+    // Set tracesSampleRate to 1.0 to capture 100%
+    // of transactions for performance monitoring.
+    // We recommend adjusting this value in production
+    tracesSampleRate: 1.0,
     ignoreErrors: [
       'AbortError',
       // Ignore fetch related common errors
@@ -32,6 +38,10 @@ if (config.sentryDSN) {
       /adrum/,
     ],
   });
+  Sentry.setContext("environment", {
+    name: "UI Client"
+  });
+  console.log('Initialized Sentry React client');
 }
 
 if (!global.AbortController) {

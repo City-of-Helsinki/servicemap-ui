@@ -109,8 +109,8 @@ if (typeof settings.USE_PTV_ACCESSIBILITY_API === 'undefined') {
   settings.USE_PTV_ACCESSIBILITY_API = false;
 }
 
-if (typeof settings.SENTRY_DSN_CLIENT === 'undefined') {
-  settings.SENTRY_DSN_CLIENT = false;
+if (typeof settings.SENTRY_DSN === 'undefined') {
+  settings.SENTRY_DSN = false;
 }
 
 if (settings.MATOMO_MOBILITY_DIMENSION_ID === 'undefined') {
@@ -259,7 +259,7 @@ export default {
     "en": 'en_uk',
     "sv": 'sv_se',
   },
-  "sentryDSN": (settings.SENTRY_DSN_CLIENT !== 'false') ? settings.SENTRY_DSN_CLIENT : false,
+  "sentryDSN": (settings.SENTRY_DSN !== 'false') ? settings.SENTRY_DSN : false,
   "showAreaSelection": (settings.SHOW_AREA_SELECTION === 'true'),
   "showReadSpeakerButton": (settings.READ_SPEAKER_URL !== 'false' && settings.READ_SPEAKER_URL !== false),
   "feedbackAdditionalInfoLink": settings.FEEDBACK_ADDITIONAL_INFO_LINK,
