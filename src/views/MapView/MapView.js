@@ -34,7 +34,7 @@ import useMapUnits from './utils/useMapUnits';
 import { Loading } from '../../components';
 import StatisticalDistricts from './components/StatisticalDistricts';
 import { getStatisticalDistrictUnitsState } from '../../redux/selectors/statisticalDistrict';
-import SimpleStatisticalComponent from '../../components/SimpleStatisticalComponent';
+import SimpleStatisticalComponent from './components/StatisticalDataMapInfo';
 
 if (global.window) {
   require('leaflet');
@@ -348,6 +348,9 @@ const MapView = (props) => {
                 toggleSidebar={toggleSidebar}
               />
             ) : null}
+          </CustomControls>
+          <CustomControls position="topright">
+            <SimpleStatisticalComponent />
           </CustomControls>
           <CustomControls position="bottomright">
             {!embedded ? (
