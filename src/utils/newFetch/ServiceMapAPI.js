@@ -107,6 +107,15 @@ export default class ServiceMapAPI extends HttpClient {
     return this.get('service_node', options);
   }
 
+  // Fetch list of all services
+  services = async () => {
+    const options = {
+      page: '1',
+      page_size: '500',
+    };
+    return this.getConcurrent('service', options);
+  }
+
   statisticalGeometry = async () => {
     const options = {
       page: 1,

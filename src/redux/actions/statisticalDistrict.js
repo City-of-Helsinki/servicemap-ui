@@ -178,39 +178,42 @@ const getSelectedCategory = (item, forecast) => {
 
 const calculateProportionScales = (data, section, isForecast) => {
   let proportionScales = {};
-  if (dataVisualization.isTotal(section)) {
-    const proportions = data.reduce((result, element) => {
-      const selectedCategory = getSelectedCategory(element, isForecast);
-      if (selectedCategory && !Number.isNaN(selectedCategory[section].value)) {
-        result.push(selectedCategory[section].value);
+  if (section) {
+    if (dataVisualization.isTotal(section)) {
+      const proportions = data.reduce((result, element) => {
+        const selectedCategory = getSelectedCategory(element, isForecast);
+        if (selectedCategory && !Number.isNaN(selectedCategory[section].value)) {
+          result.push(selectedCategory[section].value);
+        }
+        return result;
+      }, []);
+      if (proportions.length > 0) {
+        const max = Math.max(...proportions);
+        proportionScales = {
+          min: 0,
+          average: max / 2,
+          max,
+        };
       }
-      return result;
-    }, []);
-    if (proportions.length > 0) {
-      const max = Math.max(...proportions);
-      proportionScales = {
-        min: 0,
-        average: max / 2,
-        max,
-      };
-    }
-  } else {
-    const proportions = data.reduce((result, element) => {
-      const selectedCategory = getSelectedCategory(element, isForecast);
-      if (selectedCategory) {
-        result.push(selectedCategory[section].proportion);
+    } else {
+      const proportions = data.reduce((result, element) => {
+        const selectedCategory = getSelectedCategory(element, isForecast);
+        if (selectedCategory) {
+          result.push(selectedCategory[section].proportion);
+        }
+        return result;
+      }, []);
+      if (proportions.length > 0) {
+        const max = Math.max(...proportions);
+        proportionScales = {
+          min: 0.00,
+          average: parseFloat((max / 2).toFixed(2)),
+          max: parseFloat(max.toFixed(2)),
+        };
       }
-      return result;
-    }, []);
-    if (proportions.length > 0) {
-      const max = Math.max(...proportions);
-      proportionScales = {
-        min: 0.00,
-        average: parseFloat((max / 2).toFixed(2)),
-        max: parseFloat(max.toFixed(2)),
-      };
     }
   }
+
   return proportionScales;
 };
 

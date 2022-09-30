@@ -45,6 +45,15 @@ const styles = theme => ({
     paddingBottom: theme.spacing(1),
     paddingLeft: 26,
   },
+  municipalityAdjustedCheckboxPadding: {
+    paddingLeft: theme.spacing(6),
+    display: 'flex',
+    flex: '1 1 auto',
+  },
+  municipalityCheckbox: {
+    padding: 0,
+    margin: 0,
+  },
   municipalitySubtitle: {
     height: 48,
     display: 'flex',
@@ -116,6 +125,12 @@ const styles = theme => ({
   },
   selectedAddress: {
     fontSize: '1.125rem',
+  },
+  statisticalCategoryTitle: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    flex: '1 1 auto',
   },
   subdistrictContainer: {
     flexDirection: 'column',
@@ -213,6 +228,22 @@ const styles = theme => ({
   },
   switchBorder: {
     border: '1px solid #949494',
+  },
+  serviceFilter: {
+    backgroundColor: theme.palette.white.main,
+  },
+  serviceFilterContainer: {
+    padding: theme.spacing(2),
+    paddingLeft: 72,
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  serviceFilterText: {
+    paddingBottom: theme.spacing(1),
+    fontWeight: 'bold',
+  },
+  serviceFilterInput: {
+    padding: theme.spacing(1),
   },
   servciceList: {
     paddingTop: theme.spacing(2),

@@ -25,6 +25,7 @@ import {
   SettingsInfo,
   SMButton,
 } from '../../components';
+import StatisticalDistrictList from './components/StatisticalDistrictList';
 
 
 const AreaView = ({
@@ -291,6 +292,10 @@ const AreaView = ({
       {
         component: renderGeographicalTab(),
         title: intl.formatMessage({ id: 'area.tab.geographical' }),
+      },
+      {
+        component: <StatisticalDistrictList />,
+        title: intl.formatMessage({ id: 'area.tab.statisticalDistricts' }),
       },
     ];
     if (!embed) {

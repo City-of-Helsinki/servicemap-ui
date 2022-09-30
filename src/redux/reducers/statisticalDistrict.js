@@ -7,7 +7,7 @@ const initialState = {
   data: [],
   selection: {
     forecast: false,
-    section: null,
+    section: undefined,
     proportionScales: {},
   },
   selectedAreas: {},
