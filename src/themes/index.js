@@ -213,17 +213,12 @@ const typography = {
 // Color palette for normal theme
 export const paletteDefault = {
   primary: {
-    main: 'rgb(25, 100, 230)',
+    main: 'rgb(10, 26, 175)',
     highContrast: '#fff',
   },
   secondary: {
     main: 'rgb(43, 47, 57)',
     hover: '#1d39ad',
-  },
-  background: {
-    main: 'linear-gradient(340.58deg, rgb(11, 123, 237) 0%, rgb(20, 108, 232) 67.04%, rgb(25, 100, 230) 100%)',
-    plain: 'rgb(20, 108, 232)',
-    front: 'linear-gradient(340.58deg, rgb(11, 123, 237) 0%, rgb(20, 108, 232) 67.04%, rgb(25, 100, 230) 100%)',
   },
   white: {
     light: '#f2f2f2',
@@ -232,8 +227,8 @@ export const paletteDefault = {
     contrastText: '#000',
   },
   detail: {
-    main: 'rgb(25, 100, 230)',
-    alpha: 'rgba(25,100,230,0.5)',
+    main: 'rgb(10, 26, 175)',
+    alpha: 'rgb(10, 26, 175, 0.5)',
   },
   disabled: {
     main: 'rgb(239, 239, 239)',
@@ -247,7 +242,7 @@ export const paletteDefault = {
   },
   measuringStroke: {
     main: '#fff',
-    background: 'rgb(25, 100, 230)',
+    background: 'rgb(10, 26, 175)',
     border: '#fff',
   },
   link: {

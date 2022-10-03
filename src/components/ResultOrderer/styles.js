@@ -6,7 +6,7 @@ export default theme => ({
     display: 'flex',
     flexWrap: 'wrap',
     flex: '0 0 auto',
-    background: theme.palette.background.plain,
+    background: theme.palette.primary.main,
     color: theme.palette.primary.highContrast,
     padding: theme.spacing(0, 3, 3, 3),
   },

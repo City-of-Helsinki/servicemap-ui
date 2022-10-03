@@ -53,7 +53,7 @@ export default theme => ({
   addressBar: {
     padding: theme.spacing(3),
     paddingTop: 0,
-    backgroundColor: theme.palette.background.plain,
+    backgroundColor: theme.palette.primary.main,
     color: '#fff',
     textAlign: 'left',
   },

@@ -1,13 +1,13 @@
 export default theme => ({
   topArea: {
-    background: theme.palette.background.plain,
+    background: theme.palette.primary.main,
     // paddingTop: theme.spacing(1),
     paddingLeft: 27,
     paddingRight: 21,
     paddingBottom: theme.spacing(2),
   },
   topBarColor: {
-    background: theme.palette.background.plain,
+    background: theme.palette.primary.main,
   },
   mainContent: {
     textAlign: 'left',

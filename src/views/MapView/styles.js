@@ -122,7 +122,7 @@ const styles = theme => ({
     color: 'inherit',
   },
   topArea: {
-    background: theme.palette.background.main,
+    background: theme.palette.primary.main,
     color: theme.palette.primary.highContrast,
     position: 'fixed',
     top: config.topBarHeightMobile,
