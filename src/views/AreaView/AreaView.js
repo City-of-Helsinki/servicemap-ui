@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 import { useHistory, useLocation } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { Typography } from '@mui/material';
+import { List, ListItem, Typography } from '@mui/material';
 import { Map } from '@mui/icons-material';
 import { visuallyHidden } from '@mui/utils';
 import { focusDistrict, focusDistricts, useMapFocusDisabled } from '../MapView/utils/mapActions';
 import GeographicalTab from './components/GeographicalTab';
-import { parseSearchParams } from '../../utils';
+import { parseSearchParams, stringifySearchParams } from '../../utils';
 import ServiceTab from './components/ServiceTab';
 import { districtFetch } from '../../utils/fetch';
 import fetchAddress from '../MapView/utils/fetchAddress';
@@ -20,10 +20,10 @@ import { getAddressText } from '../../utils/address';
 import {
   AddressSearchBar,
   MobileComponent,
-  TabLists,
   TitleBar,
   SettingsInfo,
   SMButton,
+  SMAccordion,
 } from '../../components';
 import StatisticalDistrictList from './components/StatisticalDistrictList';
 
@@ -66,6 +66,8 @@ const AreaView = ({
   // Get area parameter without year data
   const selectedAreaType = selectedArea?.split(/([\d]+)/)[0];
   const mapFocusDisabled = useMapFocusDisabled();
+  // Selected category handling
+  const [areaSelection, setAreaSelection] = useState(null);
 
   const getInitialOpenItems = () => {
     if (selectedAreaType) {
@@ -282,9 +284,31 @@ const AreaView = ({
     />
   );
 
+  const areaSectionSelection = (open, i) => {
+    setAreaSelection(!open ? i : null);
+    if (selectedDistrictType) {
+      clearRadioButtonValue();
+    }
+    // Since TabList component was changed in favor of Accordion this
+    // updates tab search param for keeping similar functionality as
+    // with TabList component
+    if (typeof i === 'number') {
+      searchParams.t = i;
+      // Get new search search params string
+      const searchString = stringifySearchParams(searchParams);
+      // Update select param to current history
+      if (navigator) {
+        navigator.replace({
+          ...location,
+          search: `?${searchString || ''}`,
+        });
+      }
+    }
+  };
+
 
   const render = () => {
-    const tabs = [
+    const categories = [
       {
         component: renderServiceTab(),
         title: intl.formatMessage({ id: 'area.tab.publicServices' }),
@@ -319,10 +343,31 @@ const AreaView = ({
               )}
             />
           </div>
-          <TabLists
-            onTabChange={() => (selectedDistrictType ? clearRadioButtonValue() : null)}
-            data={tabs}
-          />
+          <List>
+            {
+              categories.map((category, i) => (
+                <ListItem
+                  divider
+                  disableGutters
+                  key={category.title}
+                  className={`${classes.listItem}`}
+                >
+                  <SMAccordion // Top level categories
+                    defaultOpen={false}
+                    onOpen={(e, open) => areaSectionSelection(open, i)}
+                    isOpen={areaSelection === i}
+                    elevated={areaSelection === i}
+                    titleContent={(
+                      <Typography variant="subtitle1">
+                        {category.title}
+                      </Typography>
+                    )}
+                    collapseContent={category.component}
+                  />
+                </ListItem>
+              ))
+            }
+          </List>
           <SettingsInfo
             onlyCities
             title="settings.info.title.city"
