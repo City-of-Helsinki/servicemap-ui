@@ -35,6 +35,11 @@ const removeServiceSelection = service => ({
   service,
 });
 
+const setSelectedCategory = selectedCategory => ({
+  type: statisticalDistrictActions.SET_SELECTED_CATEGORY,
+  selectedCategory,
+});
+
 // Normalize statistical district item
 const normalizeItem = (item) => {
   const {
@@ -270,5 +275,11 @@ export const removeSelectedService = service => (
 export const setNewStatisticalDistrictUnitData = data => (
   async (dispatch) => {
     dispatch(statisticalDistrictUnits.setNewData(data));
+  }
+);
+
+export const selectCategory = category => (
+  async (dispatch) => {
+    dispatch(setSelectedCategory(category));
   }
 );

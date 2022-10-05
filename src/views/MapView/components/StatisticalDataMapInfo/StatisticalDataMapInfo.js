@@ -6,12 +6,14 @@ import { Typography } from '@mui/material';
 import { getTheme } from '../../../../redux/selectors/user';
 import dataVisualization from '../../../../utils/dataVisualization';
 import ColorIndicator from './ColorIndicator';
+import { getStatisticalDistrictSelectedCategory, getStatisticalDistrictSelection } from '../../../../redux/selectors/statisticalDistrict';
 
 const StatisticalDataMapInfoComponent = () => {
   const {
     proportionScales,
     section,
-  } = useSelector(state => state.statisticalDistrict.districts.selection);
+  } = useSelector(getStatisticalDistrictSelection);
+  const category = useSelector(getStatisticalDistrictSelectedCategory);
   const theme = useSelector(getTheme);
   const useContrast = theme === 'dark';
 
@@ -25,6 +27,9 @@ const StatisticalDataMapInfoComponent = () => {
 
   return (
     <StyledContainer aria-hidden>
+      <StyledTitle variant="body1">
+        <FormattedMessage id={`area.list.statistic.${category}`} />
+      </StyledTitle>
       <StyledText variant="body2">
         <FormattedMessage id={`area.list.statistic.${section}`} />
       </StyledText>
@@ -34,7 +39,7 @@ const StatisticalDataMapInfoComponent = () => {
           <ColorIndicator
             gradientColor={useContrast ? dataVisualization.COLOR_CONTRAST : dataVisualization.COLOR}
             left={dataVisualization.isTotal(section) ? proportionScales.min : `${proportionScales.min.toFixed(0)}%`}
-            middle={dataVisualization.isTotal(section) ? proportionScales.average : `${proportionScales.average.toFixed(0)}%`}
+            middle={dataVisualization.isTotal(section) ? proportionScales.average.toFixed(0) : `${proportionScales.average.toFixed(0)}%`}
             right={dataVisualization.isTotal(section) ? proportionScales.max : `${proportionScales.max.toFixed(0)}%`}
           />
         )
@@ -51,6 +56,12 @@ const StyledContainer = styled('div')(({ theme }) => ({
 }));
 
 const StyledText = styled(Typography)(({ theme }) => ({
+  textAlign: 'left',
+  marginLeft: theme.spacing(0.5),
+}));
+
+const StyledTitle = styled(Typography)(({ theme }) => ({
+  fontWeight: 'bold',
   textAlign: 'left',
   marginLeft: theme.spacing(0.5),
 }));

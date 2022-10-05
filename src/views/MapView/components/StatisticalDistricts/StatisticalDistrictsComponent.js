@@ -9,6 +9,7 @@ import {
   getStatisticalDistrictAreaSelections,
   getSelectedStatisticalDistricts,
   getStatisticalDistrictSelection,
+  getStatisticalDistrictSelectedCategory,
 } from '../../../../redux/selectors/statisticalDistrict';
 import { getPage, getTheme } from '../../../../redux/selectors/user';
 import dataVisualization from '../../../../utils/dataVisualization';
@@ -92,6 +93,7 @@ const StatisticalDistrictTooltip = ({
   const { section } = useSelector(getStatisticalDistrictSelection);
   const getLocaleText = useLocaleText();
   const { formatMessage } = useIntl();
+  const category = useSelector(getStatisticalDistrictSelectedCategory);
   const isTotal = section === 'total';
   const hasValue = typeof district?.selectedValue === 'number';
   const values = {
@@ -108,10 +110,11 @@ const StatisticalDistrictTooltip = ({
     { id: 'area.statisticalDistrict.label.percent' },
     values,
   );
+  const categoryText = formatMessage({ id: `area.list.statistic.${category}` });
   const sectionText = formatMessage({ id: `area.list.statistic.${section}` });
   const currentSectionText = formatMessage(
     { id: 'area.statisticalDistrict.section' },
-    { text: sectionText },
+    { text: `${categoryText}, ${sectionText}` },
   );
   return (
     <StyledContainer>

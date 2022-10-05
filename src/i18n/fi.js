@@ -134,6 +134,8 @@ const translations = {
   'area.list.resident_parking_zone.plural': 'Asukaspysäköintialueet',
   'area.list.parkingSpaces': 'Pysäköintipaikat',
   'area.list.parkingUnits': 'Pysäköintitalot ja -tilat',
+  'area.list.statistic.byAge': 'Ikä',
+  'area.list.statistic.forecast': 'Väestöennuste',
   'area.list.statistic.total': 'Koko väestö',
   'area.list.statistic.0-6': 'Ikä 0-6 vuotta',
   'area.list.statistic.7-17': 'Ikä 7-17 vuotta',

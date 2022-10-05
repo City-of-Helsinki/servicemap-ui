@@ -27,7 +27,8 @@ class DataVisualization {
   };
 
   CURRENT_YEAR = new Date().getFullYear() - 1;
-  FORECAST_YEAR = new Date().getFullYear() + 6;
+
+  FORECAST_YEAR = new Date().getFullYear() + 5;
 
   CATEGORIES = {
     population_age: `${this.CURRENT_YEAR}_population_by_age`,
@@ -38,7 +39,7 @@ class DataVisualization {
 
   COLOR_CONTRAST = '#0800ff';
 
-  getYearBasedCategory = (forecast) => `${forecast ? this.CATEGORIES.population_forecast : this.CATEGORIES.population_age}`
+  getYearBasedCategory = forecast => `${forecast ? this.CATEGORIES.population_forecast : this.CATEGORIES.population_age}`
 
   getStatisticsLayer = name => this.STATISTICS_DATASETS[name];
 
@@ -48,7 +49,7 @@ class DataVisualization {
 
   getForecastsLayers = () => Object.keys(this.FORECAST_DATASETS);
 
-  isTotal = (value) => value === 'total'
+  isTotal = value => value === 'total'
 }
 
 export default new DataVisualization();

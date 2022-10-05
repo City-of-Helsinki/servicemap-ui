@@ -12,6 +12,7 @@ const initialState = {
   },
   selectedAreas: {},
   selectedServices: {},
+  selectedCategory: null,
 };
 
 export const statisticalDistrictActions = {
@@ -24,6 +25,7 @@ export const statisticalDistrictActions = {
   REPLACE_AREA_SELECTION: 'STATISTICAL_DISTRICT_REPLACE_AREA_SELECTION',
   ADD_SERVICE_SELECTION: 'STATISTICAL_DISTRICT_ADD_SERVICE_SELECTION',
   REMOVE_SERVICE_SELECTION: 'STATISTICAL_DISTRICT_REMOVE_SERVICE_SELECTION',
+  SET_SELECTED_CATEGORY: 'STATISTICAL_DISTRICT_SET_SELECTED_CATEGORY',
 };
 
 
@@ -87,6 +89,12 @@ const statisticalDistrict = (state = initialState, action) => {
           ...state.selectedServices,
           [action.service]: false,
         },
+      };
+    case statisticalDistrictActions.SET_SELECTED_CATEGORY:
+      return {
+        ...state,
+        selectedCategory: action.selectedCategory,
+        selection: initialState.selection,
       };
     default:
       return state;
