@@ -27,13 +27,13 @@ const PageElement = ({
           className={newClassName}
           {...rest}
         >
-          <Typography style={visuallyHidden}>
+          <span style={visuallyHidden}>
             {
             isActive
               ? intl.formatMessage({ id: 'general.pagination.currentlyOpenedPage' }, { count: number })
               : intl.formatMessage({ id: 'general.pagination.openPage' }, { count: number })
           }
-          </Typography>
+          </span>
           <span aria-hidden="true">
             {number}
           </span>
