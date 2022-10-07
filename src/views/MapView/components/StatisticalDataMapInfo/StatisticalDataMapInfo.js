@@ -38,9 +38,9 @@ const StatisticalDataMapInfoComponent = () => {
         && (
           <ColorIndicator
             gradientColor={useContrast ? dataVisualization.COLOR_CONTRAST : dataVisualization.COLOR}
-            left={dataVisualization.isTotal(section) ? proportionScales.min : `${proportionScales.min.toFixed(0)}%`}
-            middle={dataVisualization.isTotal(section) ? proportionScales.average.toFixed(0) : `${proportionScales.average.toFixed(0)}%`}
-            right={dataVisualization.isTotal(section) ? proportionScales.max : `${proportionScales.max.toFixed(0)}%`}
+            left={dataVisualization.isTotal(section) ? `${proportionScales.min}` : `${proportionScales.min.toFixed(0)}%`}
+            middle={dataVisualization.isTotal(section) ? `${proportionScales.average.toFixed(0)}` : `${proportionScales.average.toFixed(0)}%`}
+            right={dataVisualization.isTotal(section) ? `${proportionScales.max}` : `${proportionScales.max.toFixed(0)}%`}
           />
         )
       }

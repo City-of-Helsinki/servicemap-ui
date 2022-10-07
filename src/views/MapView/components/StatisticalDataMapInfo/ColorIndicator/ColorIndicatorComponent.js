@@ -9,7 +9,11 @@ const ColorIndicatorComponent = ({
   right,
 }) => (
   <StyledColorIndicatorContainer className="ColorIndicatorContainer">
-    <StyledColorGradiant gradientColor={gradientColor} />
+    <StyledColorGradiant
+      style={{
+        background: `linear-gradient(to right, rgba(0,0,0,0), ${gradientColor})`,
+      }}
+    />
     <StyledTextContent>
       <StyledSpan>{left}</StyledSpan>
       <StyledSpan>{middle}</StyledSpan>
@@ -33,7 +37,6 @@ const StyledColorIndicatorContainer = styled('div')`
 `;
 
 const StyledColorGradiant = styled('div')`
-  background: linear-gradient(to right, ${props => `rgba(0,0,0,0), ${props.gradientColor}`});
   flex: 1 0 auto;
   height: 22px;
 `;
@@ -48,5 +51,3 @@ const StyledTextContent = styled('div')`
   flex-direction: row;
 
 `;
-
-
