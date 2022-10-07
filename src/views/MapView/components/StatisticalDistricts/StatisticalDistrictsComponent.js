@@ -142,7 +142,7 @@ const StatisticalDistrictTooltip = ({
 StatisticalDistrictTooltip.propTypes = {
   district: PropTypes.shape({
     selectedValue: PropTypes.number,
-    selectedProportion: PropTypes.string,
+    selectedProportion: PropTypes.number,
     selectedScaleAdjustedProportion: PropTypes.number,
     name: PropTypes.shape({
       fi: PropTypes.string,
