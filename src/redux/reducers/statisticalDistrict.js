@@ -48,11 +48,20 @@ const statisticalDistrict = (state = initialState, action) => {
         ...state,
         data: action.data,
       };
-    case statisticalDistrictActions.SET_SELECTION:
+    case statisticalDistrictActions.SET_SELECTION: {
+      // When selection changes set all selectedAreas to false
+      // Setting areas false prevents new fetches when selected again
+      const newSelectedServices = {};
+      Object.keys(state.selectedServices).forEach((key) => {
+        newSelectedServices[key] = false;
+      });
       return {
         ...state,
         selection: action.selection,
+        selectedServices: newSelectedServices,
+        selectedAreas: {},
       };
+    }
     case statisticalDistrictActions.ADD_AREA_SELECTION:
       return {
         ...state,
