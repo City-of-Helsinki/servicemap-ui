@@ -1,14 +1,21 @@
 import {
-  Checkbox, IconButton, InputBase, List, ListItem, Typography,
+  Button,
+  Checkbox,
+  IconButton,
+  InputBase,
+  List,
+  ListItem,
+  Typography,
 } from '@mui/material';
 import React, {
-  useMemo, useState,
+  useMemo, useRef, useState,
 } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import { Clear } from '@mui/icons-material';
-import { useIntl } from 'react-intl';
-import { uppercaseFirst } from '../../../../utils';
+import { Clear, Filter } from '@mui/icons-material';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { styled } from '@mui/material/styles';
+import { keyboardHandler, uppercaseFirst } from '../../../../utils';
 import useLocaleText from '../../../../utils/useLocaleText';
 import {
   SMAccordion,
@@ -49,6 +56,7 @@ const StatisticalDistrictUnitListComponent = ({
   selectedServices,
   title,
 }) => {
+  const inputRef = useRef();
   const { formatMessage } = useIntl();
   const getLocaleText = useLocaleText();
   const statisticalDistrictUnits = useSelector(getServiceFilteredStatisticalDistrictUnits);
@@ -61,46 +69,66 @@ const StatisticalDistrictUnitListComponent = ({
     return getLocaleText(category.name).includes(filterValue);
   });
 
+  const handlefilterButtonClick = () => {
+    if (inputRef) {
+      setFilterValue(inputRef.current.value);
+    }
+  };
+
   // Render list of units for neighborhood and postcode-area subdistricts
   const renderServiceList = useMemo(() => (
     <div className={classes.unitListArea}>
       <div className={classes.serviceFilterContainer}>
         {
           typeof title === 'string' && (
-            <Typography className={classes.serviceFilterText} variant="body2">{title}</Typography>
+            <Typography id="ServiceListTitle" className={classes.serviceFilterText} variant="body2">{title}</Typography>
           )
         }
-        <InputBase
-          inputProps={{
-            className: classes.serviceFilterInput,
-            // role: 'combobox',
-            // 'aria-haspopup': !!showSuggestions,
-            // 'aria-label': formatMessage({ id: 'search.searchField' }),
-            // 'aria-owns': showSuggestions ? listID : null,
-            // 'aria-activedescendant': showSuggestions ? `suggestion${focusedSuggestion}` : null,
-          }}
-          value={filterValue}
-          type="text"
-          className={classes.serviceFilter}
-          onChange={(e) => {
-            setFilterValue(e.currentTarget.value);
-          }}
-          endAdornment={
-            filterValue
-              ? (
-                <IconButton
-                  aria-label={formatMessage({ id: 'search.cancelText' })}
-                  className={classes.cancelButton}
-                  onClick={() => {
-                    setFilterValue('');
-                  }}
-                >
-                  <Clear />
-                </IconButton>
-              )
-              : null
-          }
-        />
+        <StyledRowContainer>
+          <InputBase
+            inputRef={inputRef}
+            inputProps={{
+              className: classes.serviceFilterInput,
+              'aria-labelledby': 'ServiceListTitle',
+            }}
+            type="text"
+            className={classes.serviceFilter}
+            onKeyPress={keyboardHandler(() => handlefilterButtonClick(), ['enter'])}
+            endAdornment={
+              filterValue
+                ? (
+                  <IconButton
+                    aria-label={formatMessage({ id: 'search.cancelText' })}
+                    className={classes.cancelButton}
+                    onClick={() => {
+                      inputRef.current.value = '';
+                      setFilterValue('');
+                    }}
+                  >
+                    <Clear />
+                  </IconButton>
+                )
+                : null
+            }
+          />
+          <Button
+            id="ServiceListFilterButton"
+            aria-label={formatMessage({ id: 'area.statisticalDistrict.service.filter.button.aria' })}
+            className={classes.serviceFilterButton}
+            disableRipple
+            disableFocusRipple
+            classes={{
+              label: classes.serviceFilterButtonLabel,
+              focusVisible: classes.serviceFilterButtonFocus,
+            }}
+            onClick={handlefilterButtonClick}
+            color="secondary"
+            variant="contained"
+          >
+            <Filter />
+            <Typography variant="caption" color="inherit"><FormattedMessage id="area.statisticalDistrict.service.filter.button" /></Typography>
+          </Button>
+        </StyledRowContainer>
       </div>
       <List disablePadding>
         {filteredServiceList.map((service) => {
@@ -171,3 +199,10 @@ UnitCheckbox.defaultProps = {
 };
 
 export default StatisticalDistrictUnitListComponent;
+
+
+const StyledRowContainer = styled('div')`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;

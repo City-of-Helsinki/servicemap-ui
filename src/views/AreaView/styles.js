@@ -231,6 +231,27 @@ const styles = theme => ({
   },
   serviceFilter: {
     backgroundColor: theme.palette.white.main,
+    flex: '1 0 auto',
+  },
+  serviceFilterButton: {
+    flex: '0 0 auto',
+    borderRadius: 0,
+    borderTopRightRadius: 4,
+    borderBottomRightRadius: 4,
+    boxShadow: 'none',
+    padding: theme.spacing(1, 2),
+    textTransform: 'none',
+    '& svg': {
+      fontSize: 20,
+      marginBottom: theme.spacing(0.5),
+    },
+    flexDirection: 'column',
+  },
+  serviceFilterButtonFocus: {
+    boxShadow: `0 0 0 4px ${theme.palette.focusBorder.main} !important`,
+  },
+  serviceFilterButtonLabel: {
+    flexDirection: 'column',
   },
   serviceFilterContainer: {
     padding: theme.spacing(2),
@@ -243,7 +264,7 @@ const styles = theme => ({
     fontWeight: 'bold',
   },
   serviceFilterInput: {
-    padding: theme.spacing(1),
+    margin: theme.spacing(1),
   },
   servciceList: {
     paddingTop: theme.spacing(2),

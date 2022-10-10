@@ -46,7 +46,7 @@ const StatisticalDistrictListContentComponent = ({
     }
   };
 
-  const handleMultiSelect = (e, toBeChecked, city) => {
+  const handleMultiSelect = (toBeChecked, city) => {
     if (toBeChecked) {
       setCitySelections([...citySelections, city]);
       const newAreaSelections = {
@@ -118,7 +118,7 @@ const StatisticalDistrictListContentComponent = ({
                     <Checkbox
                       color="primary"
                       icon={<span className={classes.checkBoxIcon} />}
-                      onChange={e => handleMultiSelect(e, !isChecked, municipality)}
+                      onChange={() => handleMultiSelect(!isChecked, municipality)}
                       checked={isChecked}
                     />
                   )}
