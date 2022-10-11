@@ -1,7 +1,7 @@
 import {
-  ButtonBase, Menu, MenuItem, Typography,
+  ButtonBase, Divider, Menu, MenuItem, Typography,
 } from '@mui/material';
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
@@ -69,6 +69,7 @@ const LanguageMenuComponent = ({
   return (
     <>
       <MobileNavButton
+        id="mobile-lang-button"
         text={<FormattedMessage id={`general.language.${locale}`} />}
         icon={<Language />}
         aria-haspopup="true"
@@ -80,19 +81,23 @@ const LanguageMenuComponent = ({
         }}
       />
       <Menu
-        id="basic-menu"
+        sx={{ ml: '-18px' }}
         anchorEl={langAnchorEl}
         open={!!langAnchorEl}
         onClose={() => handleMobileClose()}
         MenuListProps={{
-          'aria-labelledby': 'basic-button',
+          'aria-labelledby': 'mobile-lang-button',
+          sx: { p: 0 },
         }}
       >
         {LocaleUtility.availableLocales
           .map(currentLocale => (
-            <MenuItem key={currentLocale} onClick={() => handleMobileClose(currentLocale)}>
-              <Typography><FormattedMessage id={`general.language.${currentLocale}`} /></Typography>
-            </MenuItem>
+            <Fragment key={currentLocale}>
+              <MenuItem sx={{ pt: 0, pb: 0, justifyContent: 'center' }} onClick={() => handleMobileClose(currentLocale)}>
+                <Typography><FormattedMessage id={`general.language.${currentLocale}`} /></Typography>
+              </MenuItem>
+              <Divider sx={{ m: '0 !important' }} />
+            </Fragment>
           ))
         }
       </Menu>
