@@ -310,7 +310,8 @@ const translations = {
   'general.pageTitles.info': 'Info page',
   'general.pageTitles.feedback': 'Feedback page',
   'general.pageTitles.area': 'Area page',
-  'general.tools': 'Tools',
+  'general.pageLink.area': 'Alueesi palvelut', // TODO: translate
+  'general.tools': 'Map Tools',
   // Readspeaker
   'general.readspeaker.buttonText': 'Listen',
   'general.readspeaker.title': 'Listen with ReadSpeaker webReader',
@@ -368,6 +369,8 @@ const translations = {
 
   // Map
   'map': 'Map',
+  'map.open': 'Open Map',
+  'map.close': 'Close Map',
   'map.ariaLabel': 'Map. Currently map information is only accessible visually.',
   'map.attribution.osm': '&copy; <a href="http://osm.org/copyright">OpenStreetMap contributors</a>',
   'map.attribution.helsinki': '&copy; Cities of Helsinki, Espoo, Vantaa ja Kauniainen',
@@ -621,12 +624,12 @@ const translations = {
 
   // Tools
   'tool.download': 'Download data',
-  'tool.measuring': 'Measure distance (accessible only visually and with a mouse)',
+  'tool.measuring': 'Measure distance with a mouse',
   'tool.measuring.stop': 'Stop measuring',
   'tool.print': 'Print',
 
   'info.title': 'About the service and accessibility statement',
-  'info.statement': 'Accessibility statement (new tab)',
+  'info.statement': 'Accessibility statement',
 
   'alert.close': 'Close the notification',
 };

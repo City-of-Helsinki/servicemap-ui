@@ -310,6 +310,7 @@ const translations = {
   'general.pageTitles.info': 'Tietoa palvelusta',
   'general.pageTitles.feedback': 'Palautesivu',
   'general.pageTitles.area': 'Aluesivu',
+  'general.pageLink.area': 'Alueesi palvelut',
   // Readspeaker
   'general.readspeaker.buttonText': 'Kuuntele',
   'general.readspeaker.title': 'Kuuntele ReadSpeaker webReaderilla',
@@ -331,7 +332,7 @@ const translations = {
   'general.save.confirmation': 'Haluatko tallentaa muutokset?',
   'general.search': 'Hae',
   'general.share.link': 'Jaa linkki',
-  'general.tools': 'Työkalut',
+  'general.tools': 'Karttatyökalut',
   'general.time.short': 'klo',
 
   // Home
@@ -368,6 +369,8 @@ const translations = {
 
   // Map
   'map': 'Kartta',
+  'map.open': 'Avaa Kartta',
+  'map.close': 'Sulje Kartta',
   'map.ariaLabel': 'Karttanäkymä. Kartan tietoja voi tarkastella tällä hetkellä vain näönvaraisesti.',
   'map.attribution.osm': '&copy; <a href="http://osm.org/copyright">OpenStreetMapin tekijät</a>',
   'map.attribution.helsinki': '&copy; Helsingin, Espoon, Vantaan ja Kauniaisen kaupungit',
@@ -624,12 +627,12 @@ const translations = {
 
   // Tools
   'tool.download': 'Lataa tiedot',
-  'tool.measuring': 'Mittaa etäisyys (käytettävissä vain näönvaraisesti hiirellä)',
+  'tool.measuring': 'Mittaa etäisyys hiirellä',
   'tool.measuring.stop': 'Lopeta mittaus',
   'tool.print': 'Tulosta',
 
   'info.title': 'Tietoa palvelusta ja saavutettavuusseloste',
-  'info.statement': 'Saavutettavuusseloste (uusi välilehti)',
+  'info.statement': 'Saavutettavuusseloste',
 
   'alert.close': 'Sulje ilmoitus',
 };
