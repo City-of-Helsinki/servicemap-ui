@@ -63,17 +63,17 @@ exports[`<PaginationComponent /> should work 1`] = `
             <p
               class="MuiTypography-root MuiTypography-subtitle1  PageElement-pageItem-33 PageElement-pageElement-31 css-dlbwt1-MuiTypography-root"
             >
-              <p
-                class="MuiTypography-root MuiTypography-body2 css-1ak20dk-MuiTypography-root"
-                style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
-              >
-                Open page 1
-              </p>
               <span
                 aria-hidden="true"
               >
                 1
               </span>
+            </p>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-1ak20dk-MuiTypography-root"
+              style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
+            >
+              Open page 1
             </p>
           </button>
         </li>
@@ -88,18 +88,18 @@ exports[`<PaginationComponent /> should work 1`] = `
             <p
               class="MuiTypography-root MuiTypography-subtitle1  PageElement-pageItem-33 PageElement-pageElementActive-32 css-dlbwt1-MuiTypography-root"
             >
-              <p
-                class="MuiTypography-root MuiTypography-body2 css-1ak20dk-MuiTypography-root"
-                style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
-              >
-                Page 2 currently opened
-              </p>
               <span
                 aria-hidden="true"
               >
                 2
               </span>
             </p>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-1ak20dk-MuiTypography-root"
+              style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
+            >
+              Page 2 currently opened
+            </p>
           </button>
         </li>
         <li>
@@ -112,41 +112,17 @@ exports[`<PaginationComponent /> should work 1`] = `
             <p
               class="MuiTypography-root MuiTypography-subtitle1  PageElement-pageItem-33 PageElement-pageElement-31 css-dlbwt1-MuiTypography-root"
             >
-              <p
-                class="MuiTypography-root MuiTypography-body2 css-1ak20dk-MuiTypography-root"
-                style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
-              >
-                Open page 3
-              </p>
               <span
                 aria-hidden="true"
               >
                 3
               </span>
             </p>
-          </button>
-        </li>
-        <li>
-          <button
-            class="MuiButtonBase-root css-fvdnvy-MuiButtonBase-root"
-            role="link"
-            tabindex="0"
-            type="button"
-          >
             <p
-              class="MuiTypography-root MuiTypography-subtitle1  PageElement-pageItem-33 PageElement-pageElement-31 css-dlbwt1-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body2 css-1ak20dk-MuiTypography-root"
+              style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
             >
-              <p
-                class="MuiTypography-root MuiTypography-body2 css-1ak20dk-MuiTypography-root"
-                style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
-              >
-                Open page 4
-              </p>
-              <span
-                aria-hidden="true"
-              >
-                4
-              </span>
+              Open page 3
             </p>
           </button>
         </li>
@@ -160,17 +136,41 @@ exports[`<PaginationComponent /> should work 1`] = `
             <p
               class="MuiTypography-root MuiTypography-subtitle1  PageElement-pageItem-33 PageElement-pageElement-31 css-dlbwt1-MuiTypography-root"
             >
-              <p
-                class="MuiTypography-root MuiTypography-body2 css-1ak20dk-MuiTypography-root"
-                style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
+              <span
+                aria-hidden="true"
               >
-                Open page 5
-              </p>
+                4
+              </span>
+            </p>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-1ak20dk-MuiTypography-root"
+              style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
+            >
+              Open page 4
+            </p>
+          </button>
+        </li>
+        <li>
+          <button
+            class="MuiButtonBase-root css-fvdnvy-MuiButtonBase-root"
+            role="link"
+            tabindex="0"
+            type="button"
+          >
+            <p
+              class="MuiTypography-root MuiTypography-subtitle1  PageElement-pageItem-33 PageElement-pageElement-31 css-dlbwt1-MuiTypography-root"
+            >
               <span
                 aria-hidden="true"
               >
                 5
               </span>
+            </p>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-1ak20dk-MuiTypography-root"
+              style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
+            >
+              Open page 5
             </p>
           </button>
         </li>
