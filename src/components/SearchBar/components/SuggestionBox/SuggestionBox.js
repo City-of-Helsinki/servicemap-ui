@@ -18,6 +18,7 @@ import UnitIcon from '../../../SMIcon/UnitIcon';
 import config from '../../../../../config';
 import { getPreviousSearches, removeSearchFromHistory, saveSearchToHistory } from '../../previousSearchData';
 import { useNavigationParams } from '../../../../utils/address';
+import { getLocale } from '../../../../redux/selectors/locale';
 
 const suggestionCount = 8;
 
@@ -43,6 +44,7 @@ const SuggestionBox = (props) => {
   const [suggestionQuery, setSuggestionQuery] = useState(null);
 
   const dispatch = useDispatch();
+  const locale = useSelector(getLocale);
   const getLocaleText = useLocaleText();
   const getAddressNavigatorParams = useNavigationParams();
   const listRef = useRef(null);
@@ -97,6 +99,7 @@ const SuggestionBox = (props) => {
         fetchController.current,
         getLocaleText,
         citySettings,
+        locale,
       ))
         .then((data) => {
           if (data === 'error') {
