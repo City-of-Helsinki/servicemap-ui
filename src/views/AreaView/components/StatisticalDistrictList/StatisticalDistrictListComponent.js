@@ -6,10 +6,12 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import {
   List,
   ListItem,
+  styled,
   Typography,
 } from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import dataVisualization from '../../../../utils/dataVisualization';
-import { SMAccordion } from '../../../../components';
+import { Loading, SMAccordion } from '../../../../components';
 import DistrictToggleButton from '../DistrictToggleButton';
 import {
   getStatisticalDistrictAreaSelections,
@@ -17,6 +19,7 @@ import {
   getStatisticalDistrictSelection,
   getStatisticalDistrictUnits,
   getStatisticalDistrictSelectedCategory,
+  getStatisticalDistrictsIsFetching,
 } from '../../../../redux/selectors/statisticalDistrict';
 import {
   addSelectedService,
@@ -47,6 +50,7 @@ const StatisticalDistrictListComponent = ({
   const selectedServices = useSelector(getStatisticalDistrictSelectedServices);
   const selectedAreas = useSelector(getStatisticalDistrictAreaSelections);
   const selectedCategory = useSelector(getStatisticalDistrictSelectedCategory);
+  const isFetchingDistricts = useSelector(getStatisticalDistrictsIsFetching);
 
   useEffect(() => {
     dispatch(fetchStatisticalDistricts());
@@ -167,6 +171,7 @@ const StatisticalDistrictListComponent = ({
             defaultOpen={false}
             onOpen={(e, open) => handleCategoryAccoridonToggle(key, !open)}
             isOpen={selected}
+            disabled={isFetchingDistricts}
             elevated={selected}
             titleContent={(
               <Typography id={`${key}Name`}>
@@ -185,7 +190,29 @@ const StatisticalDistrictListComponent = ({
 
   return (
     <List>
-      {renderLayerCategories()}
+      <>
+        <Typography style={visuallyHidden} aria-live="assertive">
+          {isFetchingDistricts
+            ? <FormattedMessage id="general.loading" />
+            : <FormattedMessage id="general.loading.done" />
+          }
+        </Typography>
+        { isFetchingDistricts
+          ? (
+            <StyledLoadingContainer>
+              <Loading
+                reducer={{
+                  isFetching: isFetchingDistricts,
+                }}
+              />
+            </StyledLoadingContainer>
+          ) : (
+            <List>
+              {renderLayerCategories()}
+            </List>
+          )
+        }
+      </>
     </List>
   );
 };
@@ -195,3 +222,9 @@ StatisticalDistrictListComponent.propTypes = {
 };
 
 export default StatisticalDistrictListComponent;
+
+const StyledLoadingContainer = styled('div')(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'center',
+  padding: theme.spacing(1),
+}));

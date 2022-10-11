@@ -23,6 +23,9 @@ export const getStatisticalDistrictServiceIsFetching = state => (
 export const getStatisticalDistrictSelectedCategory = state => (
   state.statisticalDistrict.districts.selectedCategory
 );
+export const getStatisticalDistrictsIsFetching = state => (
+  state.statisticalDistrict.districts.isFetching
+);
 const getData = state => state.statisticalDistrict.districts.data;
 
 const getSelectedValue = (item, section, forecast) => {

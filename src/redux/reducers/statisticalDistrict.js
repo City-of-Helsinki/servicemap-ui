@@ -46,6 +46,7 @@ const statisticalDistrict = (state = initialState, action) => {
     case statisticalDistrictActions.FETCH_SUCCESS:
       return {
         ...state,
+        isFetching: false,
         data: action.data,
       };
     case statisticalDistrictActions.SET_SELECTION: {
