@@ -5,8 +5,9 @@ import {
   ClickAwayListener,
   Typography,
   ButtonBase,
+  Divider,
 } from '@mui/material';
-import { ArrowDropUp, ArrowDropDown } from '@mui/icons-material';
+import { FormattedMessage } from 'react-intl';
 import { keyboardHandler } from '../../utils';
 
 class DropDownMenuButton extends React.Component {
@@ -54,24 +55,36 @@ class DropDownMenuButton extends React.Component {
           className={classes.menuPanel}
           role="region"
         >
+          <Typography sx={{
+            textAlign: 'left', fontWeight: 700, fontSize: '1.03rem', pb: 1,
+          }}
+          >
+            <FormattedMessage id="general.tools" />
+          </Typography>
           {
-            menuItems.map(v => (
-              <ButtonBase
-                id={v.id}
-                key={v.key}
-                className={classes.menuItem}
-                role="link"
-                onClick={e => this.handleItemClick(e, v)}
-                onKeyDown={keyboardHandler(e => this.handleClose(e, true), ['esc'])}
-                onKeyPress={keyboardHandler(this.handleItemClick, ['space', 'enter'])}
-                onBlur={this.closeMenuOnFocusExit}
-                component="span"
-                tabIndex={0}
-                aria-hidden={v.ariaHidden}
-              >
-                <span>{v.icon}</span>
-                <Typography component="p" variant="body2">{v.text}</Typography>
-              </ButtonBase>
+            menuItems.map((v, i) => (
+              <>
+                <ButtonBase
+                  id={v.id}
+                  key={v.key}
+                  className={classes.menuItem}
+                  role="link"
+                  onClick={e => this.handleItemClick(e, v)}
+                  onKeyDown={keyboardHandler(e => this.handleClose(e, true), ['esc'])}
+                  onKeyPress={keyboardHandler(this.handleItemClick, ['space', 'enter'])}
+                  onBlur={this.closeMenuOnFocusExit}
+                  component="span"
+                  tabIndex={0}
+                  aria-hidden={v.ariaHidden}
+                >
+                  <span>{v.icon}</span>
+                  <Typography sx={{ pl: 3, fontWeight: 700 }} variant="subtitle1">{v.text}</Typography>
+                </ButtonBase>
+                {i !== menuItems.length - 1
+                  ? <Divider aria-hidden />
+                  : null
+                }
+              </>
             ))
           }
         </div>
@@ -84,9 +97,6 @@ class DropDownMenuButton extends React.Component {
       buttonIcon, buttonText, classes, id, panelID,
     } = this.props;
     const { open } = this.state;
-    const arrowIcon = open
-      ? <ArrowDropUp className={classes.iconRight} />
-      : <ArrowDropDown className={classes.iconRight} />;
 
     return (
       <div className={classes.root}>
@@ -113,7 +123,6 @@ class DropDownMenuButton extends React.Component {
             )
           }
           <Typography component="p" variant="subtitle1">{buttonText}</Typography>
-          {arrowIcon}
         </Button>
         {
           open && this.renderMenu()
