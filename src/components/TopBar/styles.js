@@ -20,8 +20,11 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
   },
-  logo: {
+  logoMobile: {
     height: 25,
+  },
+  logo: {
+    height: 29,
   },
   mobileFont: {
     ...theme.typography.caption,
