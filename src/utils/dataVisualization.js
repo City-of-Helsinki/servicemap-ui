@@ -26,6 +26,10 @@ class DataVisualization {
     forecast: 'ennuste',
   };
 
+  POPULATION_BY_AGE_STRING = '_population_by_age';
+
+  POPULATION_FORECAST_STRING = '_population_forecast';
+
   CURRENT_YEAR = new Date().getFullYear() - 1;
 
   FORECAST_YEAR = new Date().getFullYear() + 5;
@@ -50,6 +54,14 @@ class DataVisualization {
   getForecastsLayers = () => Object.keys(this.FORECAST_DATASETS);
 
   isTotal = value => value === 'total'
+
+  isForecast = category => typeof category === 'string' && category.indexOf(this.POPULATION_FORECAST_STRING) > -1;
+
+  isByAge = category => typeof category === 'string' && category.indexOf(this.POPULATION_BY_AGE_STRING) > -1;
+
+  getYearByAge = category => (this.isByAge(category) ? parseInt(category.slice(0, category.indexOf(this.POPULATION_BY_AGE_STRING))) : undefined)
+
+  getYearForecast = category => (this.isForecast(category) ? parseInt(category.slice(0, category.indexOf(this.POPULATION_BY_AGE_STRING))) : undefined);
 }
 
 export default new DataVisualization();

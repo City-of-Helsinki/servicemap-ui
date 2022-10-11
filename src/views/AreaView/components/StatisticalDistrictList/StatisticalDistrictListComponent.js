@@ -10,7 +10,6 @@ import {
   Typography,
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
-import dataVisualization from '../../../../utils/dataVisualization';
 import { Loading, SMAccordion } from '../../../../components';
 import DistrictToggleButton from '../DistrictToggleButton';
 import {
@@ -20,6 +19,7 @@ import {
   getStatisticalDistrictUnits,
   getStatisticalDistrictSelectedCategory,
   getStatisticalDistrictsIsFetching,
+  getStatisticalDistrictCategories,
 } from '../../../../redux/selectors/statisticalDistrict';
 import {
   addSelectedService,
@@ -40,11 +40,7 @@ const StatisticalDistrictListComponent = ({
   const dispatch = useDispatch();
   const { formatMessage } = useIntl();
   const { section } = useSelector(getStatisticalDistrictSelection);
-  // Keys in this object are currently used to get text translation IDs
-  const layerCategories = {
-    byAge: dataVisualization.getStatisticsLayers(),
-    forecast: dataVisualization.getForecastsLayers(),
-  };
+  const layerCategories = useSelector(getStatisticalDistrictCategories);
   const units = useSelector(getStatisticalDistrictUnits);
   const filteredSubdistrictUnitsLength = units?.length || 0;
   const selectedServices = useSelector(getStatisticalDistrictSelectedServices);
@@ -85,12 +81,11 @@ const StatisticalDistrictListComponent = ({
   };
 
   const renderLayers = (category) => {
-    const layers = layerCategories[category];
     let component = null;
-    if (layers) {
-      const isForecast = category === 'forecast';
+    if (category?.layers) {
+      const isForecast = category?.type === 'forecast';
       component = (
-        layers.map((layer) => {
+        category.layers.map((layer) => {
           const selected = section === layer;
           const serviceTitle = formatMessage({ id: 'area.statisticalDistrict.service.filter' });
           const disableServicesAccordion = !Object.keys(selectedAreas).some(a => selectedAreas[a]);
@@ -159,7 +154,8 @@ const StatisticalDistrictListComponent = ({
 
   const renderLayerCategories = () => (
     Object.keys(layerCategories).map((key) => {
-      const selected = key === selectedCategory;
+      const layerCategory = layerCategories[key];
+      const selected = layerCategory.type === selectedCategory;
       return (
         <ListItem
           divider
@@ -169,18 +165,18 @@ const StatisticalDistrictListComponent = ({
         >
           <SMAccordion // Top level categories
             defaultOpen={false}
-            onOpen={(e, open) => handleCategoryAccoridonToggle(key, !open)}
+            onOpen={(e, open) => handleCategoryAccoridonToggle(layerCategory.type, !open)}
             isOpen={selected}
             disabled={isFetchingDistricts}
             elevated={selected}
             titleContent={(
               <Typography id={`${key}Name`}>
-                <FormattedMessage id={`area.list.statistic.${key}`} />
+                <FormattedMessage id={`area.list.statistic.${layerCategory.type}`} />
               </Typography>
             )}
             collapseContent={(
               <List>
-                {renderLayers(key)}
+                {renderLayers(layerCategory)}
               </List>
             )}
           />

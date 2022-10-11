@@ -168,3 +168,67 @@ export const getOrderedStatisticalDistrictServices = createSelector(
     return [];
   },
 );
+
+export const getStatisticalDistrictCategories = createSelector(
+  [getData],
+  (data) => {
+    const categoryLayers = {};
+    const ageCategories = [];
+    const forecastCategories = [];
+
+    // Go through data and populate age and forecast categories
+    data.forEach((district) => {
+      // District statistical data
+      const sData = district?.data;
+      if (sData) {
+        // All categories in district's statistical data
+        const districtCategories = Object.keys(sData);
+        districtCategories.forEach((category) => {
+          const yearByAge = dataVisualization.getYearByAge(category);
+          const yearForecast = dataVisualization.getYearForecast(category);
+          if (yearByAge && !ageCategories.some(c => c.category === category)) {
+            ageCategories.push({
+              category,
+              layers: dataVisualization.getStatisticsLayers(),
+              year: yearByAge,
+              // Type is used to identify category and get translations
+              type: 'byAge',
+            });
+          } else if (yearForecast && !forecastCategories.some(c => c.category === category)) {
+            forecastCategories.push({
+              category,
+              layers: dataVisualization.getForecastsLayers(),
+              year: yearForecast,
+              // Type is used to identify category and get translations
+              type: 'forecast',
+            });
+          }
+        });
+      }
+    });
+
+    // Reduce to show only newest for each category
+    const mostRecentAgeCategory = ageCategories.reduce(
+      (mostRecent, category) => (
+        mostRecent && mostRecent.year > category.year ? mostRecent : category
+      ),
+      undefined,
+    );
+    if (mostRecentAgeCategory) {
+      categoryLayers[mostRecentAgeCategory.category] = mostRecentAgeCategory;
+    }
+
+    // Reduce to show only newest for each category
+    const mostRecentForecastCategory = forecastCategories.reduce(
+      (mostRecent, category) => (
+        mostRecent && mostRecent.year > category.year ? mostRecent : category
+      ),
+      undefined,
+    );
+    if (mostRecentForecastCategory) {
+      categoryLayers[mostRecentForecastCategory.category] = mostRecentForecastCategory;
+    }
+
+    return categoryLayers;
+  },
+);
