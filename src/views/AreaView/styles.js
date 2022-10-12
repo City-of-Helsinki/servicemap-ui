@@ -55,9 +55,9 @@ const styles = theme => ({
     margin: 0,
   },
   municipalitySubtitle: {
-    height: 48,
     display: 'flex',
-    alignItems: 'center',
+    flexDirection: 'column',
+    alignItems: 'start',
     paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(1),
     paddingLeft: theme.spacing(4),

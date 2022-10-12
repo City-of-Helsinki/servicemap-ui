@@ -78,6 +78,12 @@ const GeographicalDistrictList = ({ district, classes }) => {
         <Typography component="h4" className={classes.bold}>
           <FormattedMessage id={`area.${district.name}.title`} />
         </Typography>
+        {
+          cityFilteredData.length === 0
+          && (
+            <Typography variant="body2"><FormattedMessage id="area.city.selection.empty" /></Typography>
+          )
+        }
       </div>
       {cityFilteredData.map((data) => {
         const { municipality } = data[0];

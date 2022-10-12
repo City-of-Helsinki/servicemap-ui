@@ -104,6 +104,12 @@ const StatisticalDistrictListContentComponent = ({
         <Typography component="h4" className={classes.bold}>
           <FormattedMessage id="area.statisticalDistrict.title" />
         </Typography>
+        {
+          cityFilteredData.length === 0
+          && (
+            <Typography variant="body2"><FormattedMessage id="area.city.selection.empty" /></Typography>
+          )
+        }
       </div>
       {
         cityFilteredData.map((data) => {
