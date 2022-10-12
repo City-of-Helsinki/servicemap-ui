@@ -12,7 +12,7 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import { Clear, Filter } from '@mui/icons-material';
+import { Clear } from '@mui/icons-material';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { styled } from '@mui/material/styles';
 import { keyboardHandler, uppercaseFirst } from '../../../../utils';
@@ -125,7 +125,6 @@ const StatisticalDistrictUnitListComponent = ({
             color="secondary"
             variant="contained"
           >
-            <Filter />
             <Typography variant="caption" color="inherit"><FormattedMessage id="area.statisticalDistrict.service.filter.button" /></Typography>
           </Button>
         </StyledRowContainer>
