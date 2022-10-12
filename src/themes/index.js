@@ -2,13 +2,15 @@ import { createTheme } from '@mui/material/styles';
 
 const focusIndicator = {
   outline: '2px solid transparent',
-  boxShadow: '0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(71, 131, 235), 0 0 0 8px rgb(255, 255, 255)',
+  boxShadow:
+    '0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(71, 131, 235), 0 0 0 8px rgb(255, 255, 255)',
   zIndex: '1',
 };
 
 const focusIndicatorDark = {
   outline: '2px solid transparent',
-  boxShadow: '0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(0, 0, 0), 0 0 0 8px rgb(255, 255, 255)',
+  boxShadow:
+    '0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(0, 0, 0), 0 0 0 8px rgb(255, 255, 255)',
   zIndex: '1',
 };
 
@@ -26,7 +28,7 @@ const props = {
   },
 };
 
-const components = theme => ({
+const components = (theme) => ({
   MuiListItem: {
     styleOverrides: {
       button: {
@@ -43,7 +45,8 @@ const components = theme => ({
     styleOverrides: {
       root: {
         // Default keyboard focus indicator for buttons
-        '&.Mui-focusVisible': theme === 'dark' ? focusIndicatorDark : focusIndicator,
+        '&.Mui-focusVisible':
+          theme === 'dark' ? focusIndicatorDark : focusIndicator,
       },
     },
   },
@@ -69,7 +72,8 @@ const components = theme => ({
   MuiRadio: {
     styleOverrides: {
       root: {
-        '&.Mui-focusVisible': theme === 'dark' ? focusIndicatorDark : focusIndicator,
+        '&.Mui-focusVisible':
+          theme === 'dark' ? focusIndicatorDark : focusIndicator,
         marginRight: 8,
       },
     },
@@ -77,7 +81,8 @@ const components = theme => ({
   MuiCheckbox: {
     styleOverrides: {
       root: {
-        '&.Mui-focusVisible': theme === 'dark' ? focusIndicatorDark : focusIndicator,
+        '&.Mui-focusVisible':
+          theme === 'dark' ? focusIndicatorDark : focusIndicator,
         marginRight: 8,
       },
     },
@@ -141,9 +146,7 @@ const typography = {
   useNextVariants: true,
   fontSize: 16,
   // Use the system font instead of the default Roboto font.
-  fontFamily: [
-    'Lato',
-  ].join(','),
+  fontFamily: ['Lato'].join(','),
   body1: {
     fontSize: '1.043rem',
     letterSpacing: '0.03125rem', // 0.5px
@@ -210,6 +213,12 @@ const typography = {
   },
 };
 
+// Color palette from Helsinki Design System
+const colors = {
+  lightGray: 'rgba(222, 222, 222, 1)',
+  black03: '#F4F4F4',
+};
+
 // Color palette for normal theme
 export const paletteDefault = {
   primary: {
@@ -248,6 +257,12 @@ export const paletteDefault = {
   link: {
     main: '#3333FF',
   },
+  border: {
+    main: colors.lightGray,
+  },
+  hover: {
+    main: colors.black03,
+  },
 };
 
 // Color palette for dark theme
@@ -263,7 +278,8 @@ export const paletteDark = {
   background: {
     main: '#4A4A4C',
     plain: '#4A4A4C',
-    front: 'linear-gradient(326.21deg, rgba(0, 0, 0, 0.79) 0%, rgba(71, 71, 71, 0.79) 100%)',
+    front:
+      'linear-gradient(326.21deg, rgba(0, 0, 0, 0.79) 0%, rgba(71, 71, 71, 0.79) 100%)',
   },
   white: {
     light: '#f2f2f2',
@@ -319,6 +335,5 @@ const SMThemeDark = createTheme({
   zIndex,
   focusIndicator: focusIndicatorDark,
 });
-
 
 export default { SMTheme, SMThemeDark };
