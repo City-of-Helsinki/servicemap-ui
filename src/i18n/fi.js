@@ -86,6 +86,7 @@ const translations = {
   'area.statisticalDistrict.service.filter.button.aria': 'Suodata väestötietoalueiden palveluita',
   'area.statisticalDistrict.title': 'Valitse väestötietoalue',
   'area.statisticalDistrict.section': 'Rajaus: {text}',
+  'area.statisticalDistrict.noData': 'Tietoja ei pystytty hakemaan',
   'area.noSelection': 'Valitse alue Alueen Valinta -välilehdeltä',
   'area.noUnits': 'Valitsemallasi alueella ei ole toimipisteitä',
   'area.popupLink': 'Näytä alueen tiedot (uusi välilehti)',

@@ -152,37 +152,48 @@ const StatisticalDistrictListComponent = ({
     return component;
   };
 
-  const renderLayerCategories = () => (
-    Object.keys(layerCategories).map((key) => {
-      const layerCategory = layerCategories[key];
-      const selected = layerCategory.type === selectedCategory;
+  const renderLayerCategories = () => {
+    const layerCategoryKeys = Object.keys(layerCategories);
+    if (layerCategoryKeys.length) {
       return (
-        <ListItem
-          divider
-          disableGutters
-          key={key}
-          className={`${classes.listItem} ${key}`}
-        >
-          <SMAccordion // Top level categories
-            defaultOpen={false}
-            onOpen={(e, open) => handleCategoryAccoridonToggle(layerCategory.type, !open)}
-            isOpen={selected}
-            disabled={isFetchingDistricts}
-            elevated={selected}
-            titleContent={(
-              <Typography id={`${key}Name`}>
-                <FormattedMessage id={`area.list.statistic.${layerCategory.type}`} />
-              </Typography>
-            )}
-            collapseContent={(
-              <List>
-                {renderLayers(layerCategory)}
-              </List>
-            )}
-          />
-        </ListItem>
+        <List>
+          {
+            layerCategoryKeys.map((key) => {
+              const layerCategory = layerCategories[key];
+              const selected = layerCategory.type === selectedCategory;
+              return (
+                <ListItem
+                  divider
+                  disableGutters
+                  key={key}
+                  className={`${classes.listItem} ${key}`}
+                >
+                  <SMAccordion // Top level categories
+                    defaultOpen={false}
+                    onOpen={(e, open) => handleCategoryAccoridonToggle(layerCategory.type, !open)}
+                    isOpen={selected}
+                    disabled={isFetchingDistricts}
+                    elevated={selected}
+                    titleContent={(
+                      <Typography id={`${key}Name`}>
+                        <FormattedMessage id={`area.list.statistic.${layerCategory.type}`} />
+                      </Typography>
+                    )}
+                    collapseContent={(
+                      <List>
+                        {renderLayers(layerCategory)}
+                      </List>
+                    )}
+                  />
+                </ListItem>
+              );
+            })
+          }
+        </List>
       );
-    }));
+    }
+    return <StyledNoDataTypography aria-live="polite" variant="body2"><FormattedMessage id="area.statisticalDistrict.noData" /></StyledNoDataTypography>;
+  };
 
   return (
     <List>
@@ -202,11 +213,7 @@ const StatisticalDistrictListComponent = ({
                 }}
               />
             </StyledLoadingContainer>
-          ) : (
-            <List>
-              {renderLayerCategories()}
-            </List>
-          )
+          ) : renderLayerCategories()
         }
       </>
     </List>
@@ -223,4 +230,8 @@ const StyledLoadingContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   justifyContent: 'center',
   padding: theme.spacing(1),
+}));
+
+const StyledNoDataTypography = styled(Typography)(({ theme }) => ({
+  margin: `${theme.spacing(0.5)} ${theme.spacing(2)}`,
 }));

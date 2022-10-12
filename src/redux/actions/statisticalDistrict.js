@@ -10,7 +10,7 @@ const isFetching = () => ({
 });
 
 const fetchErrored = error => ({
-  type: statisticalDistrictActions.FETCH,
+  type: statisticalDistrictActions.FETCH_ERROR,
   error,
 });
 
