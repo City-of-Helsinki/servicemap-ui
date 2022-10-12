@@ -46,6 +46,12 @@ const styles = theme => ({
     paddingLeft: 26,
   },
   municipalityAdjustedCheckboxPadding: {
+    paddingLeft: theme.spacing(2),
+    marginRight: 0,
+    display: 'flex',
+    flex: '1 1 auto',
+  },
+  statisticalAreaAdjustedCheckboxPadding: {
     paddingLeft: theme.spacing(6),
     display: 'flex',
     flex: '1 1 auto',

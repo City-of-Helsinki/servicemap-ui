@@ -354,11 +354,12 @@ const AreaView = ({
                 >
                   <SMAccordion // Top level categories
                     defaultOpen={false}
+                    disableUnmount
                     onOpen={(e, open) => areaSectionSelection(open, i)}
                     isOpen={areaSelection === i}
                     elevated={areaSelection === i}
                     titleContent={(
-                      <Typography variant="subtitle1">
+                      <Typography component="h3" variant="subtitle1">
                         {category.title}
                       </Typography>
                     )}

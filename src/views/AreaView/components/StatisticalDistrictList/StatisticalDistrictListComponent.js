@@ -41,6 +41,7 @@ const StatisticalDistrictListComponent = ({
   const { formatMessage } = useIntl();
   const { section } = useSelector(getStatisticalDistrictSelection);
   const layerCategories = useSelector(getStatisticalDistrictCategories);
+  const layerCategoryKeys = Object.keys(layerCategories);
   const units = useSelector(getStatisticalDistrictUnits);
   const filteredSubdistrictUnitsLength = units?.length || 0;
   const selectedServices = useSelector(getStatisticalDistrictSelectedServices);
@@ -96,7 +97,7 @@ const StatisticalDistrictListComponent = ({
               key={layer}
               className={`${classes.listItem} ${layer}`}
             >
-              <SMAccordion // Top level categories
+              <SMAccordion // Layers in top level category
                 defaultOpen={false}
                 onOpen={(e, open) => handleAccordionToggle(layer, !open, isForecast)}
                 isOpen={selected}
@@ -110,7 +111,7 @@ const StatisticalDistrictListComponent = ({
                   />
                 )}
                 titleContent={(
-                  <Typography id={`${layer}Name`}>
+                  <Typography id={`${layer}Name`} component="h4">
                     <FormattedMessage id={`area.list.statistic.${layer}`} />
                   </Typography>
                 )}
@@ -153,7 +154,6 @@ const StatisticalDistrictListComponent = ({
   };
 
   const renderLayerCategories = () => {
-    const layerCategoryKeys = Object.keys(layerCategories);
     if (layerCategoryKeys.length) {
       return (
         <List>
@@ -171,6 +171,7 @@ const StatisticalDistrictListComponent = ({
                 >
                   <SMAccordion // Top level categories
                     defaultOpen={false}
+                    disableUnmount
                     onOpen={(e, open) => handleCategoryAccoridonToggle(layerCategory.type, !open)}
                     isOpen={selected}
                     disabled={isFetchingDistricts}
@@ -197,27 +198,19 @@ const StatisticalDistrictListComponent = ({
   };
 
   return (
-    <List>
-      <>
-        <Typography style={visuallyHidden} aria-live="assertive">
-          {isFetchingDistricts
-            ? <FormattedMessage id="general.loading" />
-            : <FormattedMessage id="general.loading.done" />
-          }
-        </Typography>
-        { isFetchingDistricts
-          ? (
-            <StyledLoadingContainer>
-              <Loading
-                reducer={{
-                  isFetching: isFetchingDistricts,
-                }}
-              />
-            </StyledLoadingContainer>
-          ) : renderLayerCategories()
-        }
-      </>
-    </List>
+    <>
+      { isFetchingDistricts
+        ? (
+          <StyledLoadingContainer>
+            <Loading
+              reducer={{
+                isFetching: isFetchingDistricts,
+              }}
+            />
+          </StyledLoadingContainer>
+        ) : renderLayerCategories()
+      }
+    </>
   );
 };
 

@@ -10,6 +10,7 @@ import {
   Typography,
 } from '@mui/material';
 import { withStyles } from '@mui/styles';
+import { visuallyHidden } from '@mui/utils';
 import styles from '../../styles';
 import {
   getStatisticalDistrictAreaSelections,
@@ -102,7 +103,7 @@ const StatisticalDistrictListContentComponent = ({
   return (
     <>
       <div className={classes.municipalitySubtitle}>
-        <Typography component="h4" className={classes.bold}>
+        <Typography component="h5" className={classes.bold}>
           <FormattedMessage id="area.statisticalDistrict.title" />
         </Typography>
         {
@@ -122,15 +123,28 @@ const StatisticalDistrictListContentComponent = ({
                 defaultOpen={false}
                 disableUnmount
                 adornment={(
-                  <Checkbox
-                    color="primary"
-                    icon={<span className={classes.checkBoxIcon} />}
-                    onChange={() => handleMultiSelect(!isChecked, municipality)}
-                    checked={isChecked}
+                  <FormControlLabel
+                    className={classes.municipalityAdjustedCheckboxPadding}
+                    classes={{
+                      label: classes.statisticalCategoryTitle,
+                    }}
+                    control={(
+                      <Checkbox
+                        color="primary"
+                        icon={<span className={classes.checkBoxIcon} />}
+                        onChange={() => handleMultiSelect(!isChecked, municipality)}
+                        checked={isChecked}
+                      />
+                  )}
+                    label={(
+                      <Typography style={visuallyHidden} variant="body2" className={classes.bold}>
+                        <FormattedMessage id={`settings.city.${municipality}`} />
+                      </Typography>
+                    )}
                   />
                 )}
                 titleContent={(
-                  <Typography component="h5" className={classes.bold}>
+                  <Typography component="h6" className={classes.bold}>
                     <FormattedMessage id={`settings.city.${municipality}`} />
                   </Typography>
                 )}
@@ -140,7 +154,7 @@ const StatisticalDistrictListContentComponent = ({
                       data.map(district => (
                         <ListItem className={`${classes.listItem} ${classes.areaItem}`} key={district.id} divider>
                           <FormControlLabel
-                            className={classes.municipalityAdjustedCheckboxPadding}
+                            className={classes.statisticalAreaAdjustedCheckboxPadding}
                             classes={{
                               label: classes.statisticalCategoryTitle,
                             }}
