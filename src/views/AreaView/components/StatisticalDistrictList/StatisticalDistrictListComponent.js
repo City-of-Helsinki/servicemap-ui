@@ -161,6 +161,7 @@ const StatisticalDistrictListComponent = ({
             layerCategoryKeys.map((key) => {
               const layerCategory = layerCategories[key];
               const selected = layerCategory.type === selectedCategory;
+              const titleText = `${formatMessage({ id: `area.list.statistic.${layerCategory.type}` })} ${layerCategory.year}`;
               return (
                 <ListItem
                   divider
@@ -176,7 +177,7 @@ const StatisticalDistrictListComponent = ({
                     elevated={selected}
                     titleContent={(
                       <Typography id={`${key}Name`}>
-                        <FormattedMessage id={`area.list.statistic.${layerCategory.type}`} />
+                        {titleText}
                       </Typography>
                     )}
                     collapseContent={(
