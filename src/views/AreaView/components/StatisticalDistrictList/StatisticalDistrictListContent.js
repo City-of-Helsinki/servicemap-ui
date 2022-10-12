@@ -22,6 +22,7 @@ import {
   replaceAreaSelection,
 } from '../../../../redux/actions/statisticalDistrict';
 import useLocaleText from '../../../../utils/useLocaleText';
+import { SMAccordion } from '../../../../components';
 
 
 const StatisticalDistrictListContentComponent = ({
@@ -117,56 +118,57 @@ const StatisticalDistrictListContentComponent = ({
           const isChecked = citySelections.some(v => v === municipality);
           return (
             <React.Fragment key={municipality}>
-              <div className={classes.municipalitySubtitle}>
-                <FormControlLabel
-                  className={classes.municipalityCheckbox}
-                  control={(
-                    <Checkbox
-                      color="primary"
-                      icon={<span className={classes.checkBoxIcon} />}
-                      onChange={() => handleMultiSelect(!isChecked, municipality)}
-                      checked={isChecked}
-                    />
-                  )}
-                  label={(
-                    <Typography component="h5" className={classes.bold}>
-                      <FormattedMessage id={`settings.city.${municipality}`} />
-                    </Typography>
-                  )}
-                />
-              </div>
-              <List disablePadding>
-                {
-                  data.map(district => (
-                    <ListItem className={`${classes.listItem} ${classes.areaItem}`} key={district.id} divider>
-                      <FormControlLabel
-                        className={classes.municipalityAdjustedCheckboxPadding}
-                        classes={{
-                          label: classes.statisticalCategoryTitle,
-                        }}
-                        control={(
-                          <Checkbox
-                            color="primary"
-                            icon={<span className={classes.checkBoxIcon} />}
-                            onChange={e => handleCheckboxChange(e, district)}
-                            checked={areaSelections[`${district.id}`] || false}
+              <SMAccordion // City list accordion
+                defaultOpen={false}
+                disableUnmount
+                adornment={(
+                  <Checkbox
+                    color="primary"
+                    icon={<span className={classes.checkBoxIcon} />}
+                    onChange={() => handleMultiSelect(!isChecked, municipality)}
+                    checked={isChecked}
+                  />
+                )}
+                titleContent={(
+                  <Typography component="h5" className={classes.bold}>
+                    <FormattedMessage id={`settings.city.${municipality}`} />
+                  </Typography>
+                )}
+                collapseContent={(
+                  <List disablePadding>
+                    {
+                      data.map(district => (
+                        <ListItem className={`${classes.listItem} ${classes.areaItem}`} key={district.id} divider>
+                          <FormControlLabel
+                            className={classes.municipalityAdjustedCheckboxPadding}
+                            classes={{
+                              label: classes.statisticalCategoryTitle,
+                            }}
+                            control={(
+                              <Checkbox
+                                color="primary"
+                                icon={<span className={classes.checkBoxIcon} />}
+                                onChange={e => handleCheckboxChange(e, district)}
+                                checked={areaSelections[`${district.id}`] || false}
+                              />
+                          )}
+                            label={(
+                              <>
+                                <Typography variant="body2">
+                                  {`${getLocaleText(district.name)}`}
+                                </Typography>
+                                <Typography variant="body2">
+                                  {getDistrictDataInfo(district)}
+                                </Typography>
+                              </>
+                            )}
                           />
-                      )}
-                        label={(
-                          <>
-                            <Typography variant="body2">
-                              {`${getLocaleText(district.name)}`}
-                            </Typography>
-                            <Typography variant="body2">
-                              {getDistrictDataInfo(district)}
-                            </Typography>
-                          </>
-                        )}
-                      />
-                    </ListItem>
-                  ))
-                }
-              </List>
+                        </ListItem>
+                      ))
+                    }
+                  </List>
+                )}
+              />
             </React.Fragment>
           );
         })
