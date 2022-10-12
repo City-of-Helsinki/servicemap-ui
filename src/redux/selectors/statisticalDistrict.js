@@ -37,11 +37,17 @@ const getSelectedValue = (item, section, forecast) => {
 };
 
 const calculateScaleAdjustedProportion = (proportion, scales) => {
+  let adjustedProportion;
   if (Number.isNaN(proportion) || Number.isNaN(scales.min) || Number.isNaN(scales.max)) {
-    return 0;
+    adjustedProportion = 0;
   }
   // Adjust proportions between 0-0.8
-  return 0.8 * (proportion - scales.min) / (scales.max - scales.min);
+  adjustedProportion = 0.8 * (proportion - scales.min) / (scales.max - scales.min);
+  if (Number.isNaN(adjustedProportion)) {
+    adjustedProportion = 0;
+  }
+
+  return adjustedProportion;
 };
 
 export const getSelectedStatisticalDistricts = createSelector(
