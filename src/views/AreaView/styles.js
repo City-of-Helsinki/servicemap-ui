@@ -18,6 +18,14 @@ const styles = theme => ({
   list: {
     paddingLeft: 10,
   },
+  listNoPadding: {
+    padding: 0,
+    marginTop: theme.spacing(0),
+    marginBottom: theme.spacing(0),
+    '& li:last-of-type': {
+      borderBottom: 'none',
+    },
+  },
   subsistrictAccordion: {
     padding: 0,
     marginLeft: -11,

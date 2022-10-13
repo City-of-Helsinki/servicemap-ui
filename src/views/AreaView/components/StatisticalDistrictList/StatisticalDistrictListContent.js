@@ -149,7 +149,7 @@ const StatisticalDistrictListContentComponent = ({
                   </Typography>
                 )}
                 collapseContent={(
-                  <List disablePadding>
+                  <List className={classes.listNoPadding}>
                     {
                       data.map(district => (
                         <ListItem className={`${classes.listItem} ${classes.areaItem}`} key={district.id} divider>

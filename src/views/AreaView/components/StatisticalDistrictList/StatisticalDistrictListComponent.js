@@ -9,7 +9,6 @@ import {
   styled,
   Typography,
 } from '@mui/material';
-import { visuallyHidden } from '@mui/utils';
 import { Loading, SMAccordion } from '../../../../components';
 import DistrictToggleButton from '../DistrictToggleButton';
 import {
@@ -156,7 +155,7 @@ const StatisticalDistrictListComponent = ({
   const renderLayerCategories = () => {
     if (layerCategoryKeys.length) {
       return (
-        <List>
+        <List className={classes.listNoPadding}>
           {
             layerCategoryKeys.map((key) => {
               const layerCategory = layerCategories[key];
@@ -182,7 +181,7 @@ const StatisticalDistrictListComponent = ({
                       </Typography>
                     )}
                     collapseContent={(
-                      <List>
+                      <List className={classes.listNoPadding}>
                         {renderLayers(layerCategory)}
                       </List>
                     )}
