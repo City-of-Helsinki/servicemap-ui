@@ -11,11 +11,11 @@ import WarningIcon from '@mui/icons-material/Warning';
 import RouteIcon from '@mui/icons-material/DirectionsBus';
 
 const getItemIconData = (type, data) => {
-  if (type === 'LINK' || type === 'ESERVICE_LINK' || (type === 'OPENING_HOURS' && data.www)) {
+  if (type === 'LINK' || type === 'ESERVICE_LINK' || (type === 'OPENING_HOURS' && data.www) || (type === 'OPENING_HOUR_OBJECT' && data.www)) {
     return <OpenLinkIcon />;
   } if (type === 'ADDRESS') {
     return <AddressIcon />;
-  } if (type === 'OPENING_HOURS') {
+  } if (type === 'OPENING_HOURS' || type === 'OPENING_HOUR_OBJECT') {
     return <HoursIcon />;
   } if (type === 'PHONE') {
     return <PhoneIcon />;
