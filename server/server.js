@@ -2,6 +2,7 @@ import express from 'express';
 import path from 'path';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
+import * as Sentry from "@sentry/node";
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router-dom';
@@ -30,12 +31,14 @@ import { generateSitemap, getRobotsFile, getSitemap } from './sitemapMiddlewares
 import createEmotionCache from './createEmotionCache';
 
 // Get sentry dsn from environtment variables
-const sentryDSN = process.env.SENTRY_DSN_SERVER;
-let Sentry = null;
+const sentryDSN = process.env.SENTRY_DSN;
 
 if (sentryDSN) {
-  Sentry = require('@sentry/node');
+  // Sentry = require('@sentry/node');
   Sentry.init({ dsn: sentryDSN });
+  Sentry.setContext("environment", {
+    name: "UI Server"
+  });
   console.log(`Initialized Sentry client with DSN ${sentryDSN}`);
 }
 
@@ -76,7 +79,7 @@ const versionCommit = getLastCommit();
 app.set('trust proxy', true);
 
 // The request handler must be the first middleware on the app
-if (Sentry) {
+if (sentryDSN) {
   app.use(Sentry.Handlers.requestHandler());
 }
 // Add static folder
@@ -157,7 +160,7 @@ app.get('/*', (req, res, next) => {
 });
 
 // The error handler must be before any other error middleware
-if (Sentry) {
+if (sentryDSN) {
   app.use(Sentry.Handlers.errorHandler());
 }
 
@@ -251,7 +254,7 @@ const htmlTemplate = (req, reactDom, preloadedState, css, cssString, emotionCss,
         window.nodeEnvSettings.FEEDBACK_ADDITIONAL_INFO_LINK = "${process.env.FEEDBACK_ADDITIONAL_INFO_LINK}";
         window.nodeEnvSettings.FEEDBACK_IS_PUBLISHED = "${process.env.FEEDBACK_IS_PUBLISHED}";
         window.nodeEnvSettings.USE_PTV_ACCESSIBILITY_API = "${process.env.USE_PTV_ACCESSIBILITY_API}";
-        window.nodeEnvSettings.SENTRY_DSN_CLIENT = "${process.env.SENTRY_DSN_CLIENT}";
+        window.nodeEnvSettings.SENTRY_DSN = "${process.env.SENTRY_DSN}";
 
         window.appVersion = {};
         window.appVersion.tag = "${versionTag}";
