@@ -151,7 +151,6 @@ const GeographicalTab = ({
                       selected={selected}
                       district={district}
                       onToggle={e => handleRadioChange(district, e)}
-                      aria-hidden
                     />
                   )}
                   titleContent={(
