@@ -74,6 +74,7 @@ const InfoList = ({
       case 'EMAIL':
         return `${intl.formatMessage({ id: 'unit.email' })}: `;
       case 'OPENING_HOURS':
+      case 'OPENING_HOUR_OBJECT':
         if (data.value.www) {
           return `${intl.formatMessage({ id: 'unit.opening.hours.info' })}: `;
         }
