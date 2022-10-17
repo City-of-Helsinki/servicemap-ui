@@ -107,6 +107,9 @@ const StatisticalDistrictListComponent = ({
                     district={{ id: layer }}
                     onToggle={() => handleAccordionToggle(layer, section !== layer, isForecast)}
                     aria-hidden
+                    inputProps={{
+                      tabindex: '-1',
+                    }}
                   />
                 )}
                 titleContent={(
