@@ -85,6 +85,7 @@ const translations = {
   'area.statisticalDistrict.service.filter': 'Väestötietoalueiden palvelujen suodatus',
   'area.statisticalDistrict.service.filter.button': 'Suodata',
   'area.statisticalDistrict.service.filter.button.aria': 'Suodata väestötietoalueiden palveluita',
+  'area.statisticalDistrict.service.filter.aria.notification': 'Väestötietoalueiden palvelut suodatettu sanalla {filterValue}',
   'area.statisticalDistrict.title': 'Valitse väestötietoalue',
   'area.statisticalDistrict.section': 'Rajaus: {text}',
   'area.statisticalDistrict.noData': 'Tietoja ei pystytty hakemaan',

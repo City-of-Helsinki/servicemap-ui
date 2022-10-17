@@ -15,6 +15,7 @@ import { useSelector } from 'react-redux';
 import { Clear } from '@mui/icons-material';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { styled } from '@mui/material/styles';
+import { visuallyHidden } from '@mui/utils';
 import { keyboardHandler, uppercaseFirst } from '../../../../utils';
 import useLocaleText from '../../../../utils/useLocaleText';
 import {
@@ -42,7 +43,6 @@ const UnitCheckbox = ({
     <Checkbox
       color="primary"
       icon={<span className={classes.checkBoxIcon} />}
-      aria-hidden
       checked={checked}
       onChange={e => handleChange(e)}
     />
@@ -129,6 +129,12 @@ const StatisticalDistrictUnitListComponent = ({
           </Button>
         </StyledRowContainer>
       </div>
+      <Typography aria-live="assertive" variant="body2" style={visuallyHidden}>
+        {
+          filterValue && filterValue !== ''
+          && formatMessage({ id: 'area.statisticalDistrict.service.filter.aria.notification' }, { filterValue })
+        }
+      </Typography>
       <List disablePadding>
         {filteredServiceList.map((service) => {
           const units = statisticalDistrictUnits
