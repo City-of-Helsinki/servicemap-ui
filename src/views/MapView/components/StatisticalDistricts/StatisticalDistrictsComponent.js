@@ -64,8 +64,7 @@ const StatisticalDistrictsComponent = () => {
           fillOpacity: district.selectedScaleAdjustedProportion,
           fillColor,
           color: borderColor,
-          opacity: selected ? 0.8 : 1,
-          weight: selected ? 3 : 3,
+          weight: 3,
         }}
         eventHandlers={{}}
         style={styles}
