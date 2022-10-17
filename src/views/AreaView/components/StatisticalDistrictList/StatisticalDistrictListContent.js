@@ -118,6 +118,7 @@ const StatisticalDistrictListContentComponent = ({
         cityFilteredData.map((data) => {
           const { municipality } = data[0];
           const isChecked = citySelections.some(v => v === municipality);
+          const childIsChecked = data.some(node => areaSelections[`${node.id}`]);
           return (
             <React.Fragment key={municipality}>
               <SMAccordion // City list accordion
@@ -135,6 +136,7 @@ const StatisticalDistrictListContentComponent = ({
                         icon={<span className={classes.checkBoxIcon} />}
                         onChange={() => handleMultiSelect(!isChecked, municipality)}
                         checked={isChecked}
+                        indeterminate={childIsChecked && !isChecked}
                       />
                   )}
                     label={(
