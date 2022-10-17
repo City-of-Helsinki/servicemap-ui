@@ -13,7 +13,6 @@ const styles = theme => ({
     height: topBarHeightMobile,
   },
   appBar: {
-    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
     zIndex: theme.zIndex.appBar,
   },
   buttonLabel: {
@@ -89,6 +88,7 @@ const styles = theme => ({
     lineHeight: 1,
   },
   toolbarWhite: {
+    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
@@ -98,10 +98,10 @@ const styles = theme => ({
     zIndex: theme.zIndex.infront,
   },
   toolbarWhiteMobile: {
+    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
     paddingLeft: theme.spacing(1.5),
     height: 78,
     backgroundColor: '#fff',
-    zIndex: theme.zIndex.infront,
   },
   largeButton: {
     height: 66,
