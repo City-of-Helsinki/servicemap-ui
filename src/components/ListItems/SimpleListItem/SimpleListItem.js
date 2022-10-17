@@ -58,9 +58,9 @@ const SimpleListItem = (props) => {
             variant="body2"
             classes={{ root: `${link ? classes.link : null} ${dark ? classes.whiteText : ''}` }}
           >
-            <Typography style={visuallyHidden}>{srText}</Typography>
             {text}
           </Typography>
+          <Typography style={visuallyHidden}>{srText}</Typography>
         </ListItemText>
       </ListItem>
       {divider && (

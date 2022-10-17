@@ -9,15 +9,19 @@ exports[`<SimpleListItem /> should work 1`] = `
     <div
       class="SimpleListItem-textContainer-2 MuiListItemText-root css-vt7cuc-MuiListItemText-root"
     >
-      <p
-        class="null  MuiTypography-root MuiTypography-body2 css-q91igz-MuiTypography-root"
+      <span
+        class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10wsksd-MuiTypography-root"
       >
+        <p
+          class="null  MuiTypography-root MuiTypography-body2 css-q91igz-MuiTypography-root"
+        >
+          Title text
+        </p>
         <p
           class="MuiTypography-root MuiTypography-body2 css-1ak20dk-MuiTypography-root"
           style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
         />
-        Title text
-      </p>
+      </span>
     </div>
   </li>
 </div>
