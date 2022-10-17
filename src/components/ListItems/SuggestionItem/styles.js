@@ -30,7 +30,8 @@ export default theme => ({
     color: '#757575',
     height: 'auto',
     margin: 0,
-    padding: 0,
+    padding: theme.spacing(2),
+    marginRight: theme.spacing(-1),
   },
   suggestIconLabel: {
     padding: theme.spacing(1),
