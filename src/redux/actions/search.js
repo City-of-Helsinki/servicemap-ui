@@ -45,6 +45,8 @@ const smFetch = (dispatch, options) => {
   } else if (options.events) {
     const eventsAPI = new LinkedEventsAPI();
     results = eventsAPI.eventsByKeyword(options.events);
+  } else if (options.level) {
+    results = smAPI.units(options);
   }
 
   return results;
@@ -79,7 +81,7 @@ const fetchSearchResults = (options = null) => async (dispatch, getState) => {
       saveSearchToHistory(searchQuery, { object_type: 'searchHistory', text: searchQuery });
     }
     // Handle unit results that have no object_type
-    if (options.service_node || options.service_id || options.id) {
+    if (options.service_node || options.service_id || options.id || options.level) {
       results.forEach((item) => {
         item.object_type = 'unit';
       });
