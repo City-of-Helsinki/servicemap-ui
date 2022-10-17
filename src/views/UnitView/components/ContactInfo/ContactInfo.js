@@ -147,11 +147,13 @@ const ContactInfo = ({
   };
 
   // For infomration that is in data's connections array, use unitSectionFilter
-  let hours = [];
+  let openingHours = [];
   let contact = [];
 
   if (unit.connections) {
-    hours = unitSectionFilter(unit.connections, 'OPENING_HOURS');
+    const hours = unitSectionFilter(unit.connections, 'OPENING_HOURS');
+    const hoursObject = unitSectionFilter(unit.connections, 'OPENING_HOUR_OBJECT');
+    openingHours = [...hours, ...hoursObject];
     contact = unitSectionFilter(unit.connections, 'PHONE_OR_EMAIL');
   }
 
@@ -166,7 +168,7 @@ const ContactInfo = ({
     email,
     website,
     ...contact.length ? contact : [],
-    ...hours.length ? hours : [{ type: 'OPENING_HOURS', value: intl.formatMessage({ id: 'unit.opening.hours.missing' }) }],
+    ...openingHours.length ? openingHours : [{ type: 'OPENING_HOURS', value: intl.formatMessage({ id: 'unit.opening.hours.missing' }) }],
   ];
 
   // Add route info to data in location exists
