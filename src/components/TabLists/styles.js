@@ -7,23 +7,17 @@ export default theme => ({
     color: theme.palette.white.contrastText,
     boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
   },
-  indicator: {
-    backgroundColor: theme.palette.detail.main,
-    height: 6,
-  },
   resultList: {
     backgroundColor: 'white',
   },
   selected: {
     fontWeight: '700 !important',
-    color: 'black !important',
+    color: `${theme.palette.primary.main} !important`,
   },
   tab: {
     minWidth: 0,
     fontWeight: 'normal',
     flex: '1 1',
-    opacity: 1,
-    borderBottom: '6px solid #DEDEDE',
     [theme.breakpoints.only('sm')]: {
       letterSpacing: 'normal',
     },
@@ -40,11 +34,8 @@ export default theme => ({
     backgroundColor: 'rgba(0, 0, 0, 0.08)',
   },
   tabLabelContainer: {
-    paddingLeft: 0,
-    paddingRight: 0,
-    paddingTop: theme.spacing(3),
-    paddingBottom: theme.spacing(3),
-    fontSize: 'clamp(0.8rem, 1.8vw, 0.875rem)',
+    padding: theme.spacing(1),
+    fontSize: 'clamp(0.8rem, 1.8vw, 0.9rem)',
     overflowWrap: 'anywhere',
   },
   mobileTabFont: {

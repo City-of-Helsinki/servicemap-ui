@@ -210,9 +210,6 @@ const TabLists = ({
         <Tabs
           ref={tabsRef}
           className={`sticky ${classes.root}`}
-          classes={{
-            indicator: classes.indicator,
-          }}
           value={tabIndex}
           onChange={handleTabChange}
           variant="fullWidth"
