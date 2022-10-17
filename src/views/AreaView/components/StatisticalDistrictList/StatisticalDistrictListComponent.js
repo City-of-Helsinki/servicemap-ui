@@ -51,6 +51,10 @@ const StatisticalDistrictListComponent = ({
   useEffect(() => {
     dispatch(fetchStatisticalDistricts());
     dispatch(fetchServices());
+    return () => {
+      // Clean up selections by setting selected category to undefined
+      dispatch(selectCategory(undefined));
+    };
   }, []);
 
   const handleUnitCheckboxChange = useCallback((event, id) => {
@@ -76,7 +80,7 @@ const StatisticalDistrictListComponent = ({
     if (opening) {
       dispatch(selectCategory(category));
     } else {
-      dispatch(selectCategory(null));
+      dispatch(selectCategory(undefined));
     }
   };
 
