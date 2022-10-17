@@ -7,6 +7,7 @@ import {
   FormControlLabel,
   List,
   ListItem,
+  styled,
   Typography,
 } from '@mui/material';
 import { withStyles } from '@mui/styles';
@@ -167,14 +168,14 @@ const StatisticalDistrictListContentComponent = ({
                               />
                           )}
                             label={(
-                              <>
-                                <Typography variant="body2">
+                              <StyledLabelTypography variant="body2">
+                                <span>
                                   {`${getLocaleText(district.name)}`}
-                                </Typography>
-                                <Typography variant="body2">
+                                </span>
+                                <span>
                                   {getDistrictDataInfo(district)}
-                                </Typography>
-                              </>
+                                </span>
+                              </StyledLabelTypography>
                             )}
                           />
                         </ListItem>
@@ -198,3 +199,8 @@ StatisticalDistrictListContentComponent.propTypes = {
 const StatisticalDistrictListContent = withStyles(styles)(StatisticalDistrictListContentComponent);
 
 export default StatisticalDistrictListContent;
+
+const StyledLabelTypography = styled(Typography)`
+  display: flex;
+  flex-direction: column;
+`;
