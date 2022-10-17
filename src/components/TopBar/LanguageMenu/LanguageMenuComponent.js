@@ -92,12 +92,9 @@ const LanguageMenuComponent = ({
       >
         {LocaleUtility.availableLocales
           .map(currentLocale => (
-            <Fragment key={currentLocale}>
-              <MenuItem sx={{ pt: 0, pb: 0, justifyContent: 'center' }} onClick={() => handleMobileClose(currentLocale)}>
-                <Typography><FormattedMessage id={`general.language.${currentLocale}`} /></Typography>
-              </MenuItem>
-              <Divider sx={{ m: '0 !important' }} />
-            </Fragment>
+            <MenuItem key={currentLocale} sx={{ pt: 0, pb: 0, justifyContent: 'center' }} onClick={() => handleMobileClose(currentLocale)}>
+              <Typography><FormattedMessage id={`general.language.${currentLocale}`} /></Typography>
+            </MenuItem>
           ))
         }
       </Menu>
