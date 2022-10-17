@@ -18,16 +18,13 @@ test('AddressView does render correct view', async (t) => {
   const title = await ReactSelector('TitleBar').getReact(({props}) => props.title);
   const tab1 = await Selector('div[role="tablist"] button').nth(0).textContent;
   const tab2 = Selector('div[role="tablist"] button').nth(1);
+  const divisions = ReactSelector('DivisionItem').count;
   const tab2Text = await tab2.textContent;
   
   await t
     .expect(title).eql('Topeliuksenkatu 27,  Helsinki')
     .expect(tab1).eql('Palvelualueet')
     .expect(tab2Text.indexOf('Lähellä')).eql(0, 'Tab text should include text "Lähellä"')
-    ;
-
-  const divisions = await ReactSelector('DivisionItem').count;
-  await t
     .expect(divisions).gt(1, 'First tab should show divisions')
     .click(tab2)
   ;
