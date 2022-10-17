@@ -88,25 +88,21 @@ const LinkSettingsDialogComponent = ({
   const radioAria = intl.formatMessage({ id: 'link.settings.dialog.radio.label' });
 
   const getLinkUrl = () => {
-    let url = window.location.href;
+    const url = new URL(window.location.href);
     if (a11ySettings.length && selected !== 'none') {
-      url += '?';
       const mobility = a11ySettings.filter(v => SettingsUtility.isValidMobilitySetting(v));
       const senses = a11ySettings
         .filter(v => SettingsUtility.isValidAccessibilitySenseImpairment(v));
 
       if (mobility.length) {
-        url += `mobility=${mobility[0]}`;
+        url.searchParams.append('mobility', mobility[0]);
       }
 
       if (senses.length) {
-        url += `${mobility && '&'}senses=`;
-        senses.forEach((v, i) => {
-          url += `${(i > 0 && ',') || ''}${v}`;
-        });
+        url.searchParams.append('senses', senses.join(','));
       }
     }
-    return url;
+    return url.toString();
   };
   const url = getLinkUrl();
 
