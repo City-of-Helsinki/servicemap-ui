@@ -24,10 +24,10 @@ const orderUnits = (unitData, sortingParameters) => {
         const aSC = a.shorcomingCount;
         const bSC = b.shorcomingCount;
 
-        if (aSC === null || (aSC === null && bSC === null)) { return -1; }
-        if (bSC === null) { return 1; }
-        if (aSC > bSC) { return -1; }
-        if (aSC < bSC) { return 1; }
+        if (aSC === null || (aSC === null && bSC === null)) return 1;
+        if (bSC === null) return -1;
+        if (aSC > bSC) return 1;
+        if (aSC < bSC) return -1;
         return 0;
       });
 
