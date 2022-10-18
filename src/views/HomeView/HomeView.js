@@ -17,7 +17,6 @@ const HomeView = (props) => {
       areaSelection = (
         <CardSmall
           image={areaServices}
-          alt='Doctor seeing a patient'
           headerMessageID='area.services.local'
           messageID='home.buttons.area'
           onClick={() => navigator.push('area')}
@@ -30,7 +29,6 @@ const HomeView = (props) => {
         {areaSelection}
         <CardSmall
           image={serviceTree}
-          alt='Children playing'
           headerMessageID='general.pageTitles.serviceTree.title'
           messageID='home.buttons.services'
           onClick={() => navigator.push('serviceTree')}

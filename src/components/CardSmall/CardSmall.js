@@ -13,7 +13,7 @@ import styled from '@emotion/styled';
 
 const CardSmall = ({ headerMessageID, messageID, onClick, image }) => {
   return (
-    <ButtonBase onClick={onClick}>
+    <ButtonBase onClick={onClick} role="link">
       <StyledCard>
         <StyledCardMedia
           component='img'
