@@ -157,4 +157,23 @@ export default theme => ({
   subgroupItem: {
     marginBottom: theme.spacing(2),
   },
+  unitLocationContainer: {
+    height: 225,
+    position: 'relative',
+  },
+  mapButton: {
+    position: 'absolute',
+    right: 16,
+    margin: 0,
+    top: 16,
+    zIndex: 51,
+    minHeight: 36,
+    borderRadius: '8px',
+    paddingLeft: theme.spacing(1.5),
+    paddingRight: theme.spacing(1.75),
+  },
+  mapContainer: {
+    height: '100%',
+    pointerEvents: 'none',
+  },
 });

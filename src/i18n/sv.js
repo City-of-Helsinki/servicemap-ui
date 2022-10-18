@@ -380,6 +380,8 @@ const translations = {
   'map.unit.cluster.popup.info': '{count} verksamhetsställen', // TODO: Verify
   'map.button.sidebar.hide': 'Minska sidopanelen',
   'map.button.sidebar.show': 'Utvidga sidopanelen',
+  'map.button.expand': 'Laajenna', // TODO: translate
+  'map.button.expand.aria': 'Avaa kartta', // TODO: translate
 
   // Print
   'print.alert': 'Använd utskriftsalternativet i verktygsmenyn',
