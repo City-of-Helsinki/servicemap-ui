@@ -74,6 +74,7 @@ const MapView = (props) => {
     measuringMode,
     toggleSidebar,
     sidebarHidden,
+    disableInteraction,
   } = props;
 
   // State
@@ -266,6 +267,7 @@ const MapView = (props) => {
               <MarkerCluster
                 data={unitData}
                 measuringMode={measuringMode}
+                disableInteraction={disableInteraction}
               />
             )
           }
@@ -334,28 +336,32 @@ const MapView = (props) => {
               />
             ) : null}
           </CustomControls>
-          <CustomControls position="bottomright">
-            {!embedded ? (
-              /* Custom user location map button */
-              <div key="userLocation" className="UserLocation">
-                <ButtonBase
-                  aria-hidden
-                  aria-label={userLocationAriaLabel}
-                  disabled={!userLocation}
-                  className={`${classes.showLocationButton} ${!userLocation ? classes.locationDisabled : ''}`}
-                  onClick={() => focusOnUser()}
-                  focusVisibleClassName={classes.locationButtonFocus}
-                >
-                  {userLocation
-                    ? <MyLocation className={classes.showLocationIcon} />
-                    : <LocationDisabled className={classes.showLocationIcon} />
+          {!disableInteraction
+            ? (
+              <CustomControls position="bottomright">
+                {!embedded ? (
+                /* Custom user location map button */
+                  <div key="userLocation" className="UserLocation">
+                    <ButtonBase
+                      aria-hidden
+                      aria-label={userLocationAriaLabel}
+                      disabled={!userLocation}
+                      className={`${classes.showLocationButton} ${!userLocation ? classes.locationDisabled : ''}`}
+                      onClick={() => focusOnUser()}
+                      focusVisibleClassName={classes.locationButtonFocus}
+                    >
+                      {userLocation
+                        ? <MyLocation className={classes.showLocationIcon} />
+                        : <LocationDisabled className={classes.showLocationIcon} />
                   }
-                </ButtonBase>
-              </div>
-            ) : null}
+                    </ButtonBase>
+                  </div>
+                ) : null}
 
-            <PanControl key="panControl" />
-          </CustomControls>
+                <PanControl key="panControl" />
+              </CustomControls>
+            )
+            : null}
           <CoordinateMarker position={getCoordinatesFromUrl()} />
           <EmbeddedActions />
         </MapContainer>
@@ -388,6 +394,7 @@ MapView.propTypes = {
   measuringMode: PropTypes.bool.isRequired,
   toggleSidebar: PropTypes.func,
   sidebarHidden: PropTypes.bool,
+  disableInteraction: PropTypes.bool,
 };
 
 MapView.defaultProps = {
@@ -400,4 +407,5 @@ MapView.defaultProps = {
   toggleSidebar: null,
   sidebarHidden: false,
   userLocation: null,
+  disableInteraction: false,
 };
