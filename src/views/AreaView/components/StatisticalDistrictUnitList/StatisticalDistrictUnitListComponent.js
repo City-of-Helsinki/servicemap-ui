@@ -140,8 +140,8 @@ const StatisticalDistrictUnitListComponent = ({
         {filteredServiceList.map((service) => {
           const units = statisticalDistrictUnits
             .filter(u => u?.services?.some(s => s.id === service.id));
-          const titleText = `${uppercaseFirst(getLocaleText(service.name))} ${units.length ? `(${units.length})` : ''}`;
-          const disableUnitAccordion = units.length === 0;
+          const disableUnitAccordion = !selectedServices[service.id] || units.length === 0;
+          const titleText = `${uppercaseFirst(getLocaleText(service.name))} ${selectedServices[service.id] ? `(${units.length})` : ''}`;
           return (
             <ListItem
               key={`${service.id}${service.period ? service.period[0] : ''}`}
