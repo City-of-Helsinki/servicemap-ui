@@ -3,6 +3,7 @@ import ServiceMapAPI from '../../utils/newFetch/ServiceMapAPI';
 import { calculateProportion } from '../../utils/statisticalDistrict';
 import swapCoordinates from '../../views/MapView/utils/swapCoordinates';
 import { statisticalDistrictActions } from '../reducers/statisticalDistrict';
+import { getStatisticalDistrictUnits } from '../selectors/statisticalDistrict';
 import { statisticalDistrictUnits, statisticalDistrictServices } from './fetchDataActions';
 
 const isFetching = () => ({
@@ -108,7 +109,7 @@ const normalizeData = (data) => {
   return normalizedData;
 };
 
-
+// Fetch statistical districts with geometry
 export const fetchStatisticalDistricts = () => (
   async (dispatch) => {
     try {
@@ -123,6 +124,7 @@ export const fetchStatisticalDistricts = () => (
   }
 );
 
+// Fetch services for statistical distrcts
 export const fetchServices = () => (
   async (dispatch) => {
     const onProgressUpdateConcurrent = (total, max) => {
@@ -140,11 +142,14 @@ export const fetchServices = () => (
   }
 );
 
+// Fetch statistical district units based on selected service
 export const fetchStatisticalDistrictServiceUnits = serviceID => (
-  async (dispatch) => {
+  async (dispatch, getState) => {
     if (typeof serviceID !== 'number') {
       throw new Error('Invalid serviceID provided to fetchServiceUnits');
     }
+
+    const oldUnits = getStatisticalDistrictUnits(getState());
 
     const progressUpdate = (count, max) => {
       if (!count) { // Start progress bar by setting max value
@@ -165,7 +170,9 @@ export const fetchStatisticalDistrictServiceUnits = serviceID => (
       data.forEach((unit) => {
         unit.object_type = 'unit';
       });
-      dispatch(statisticalDistrictUnits.fetchAdditiveSuccess(data));
+      const filteredData = data.filter(unit => !oldUnits.some(oUnit => oUnit.id === unit.id));
+
+      dispatch(statisticalDistrictUnits.fetchAdditiveSuccess(filteredData));
     } catch (e) {
       console.warn(e);
       dispatch(statisticalDistrictUnits.fetchAdditiveError(e.message));
@@ -181,6 +188,7 @@ const getSelectedCategory = (item, forecast) => {
   return undefined;
 };
 
+// Calculate proportion scales based on current selection and data
 const calculateProportionScales = (data, section, isForecast) => {
   let proportionScales = {};
   if (section) {
@@ -222,6 +230,7 @@ const calculateProportionScales = (data, section, isForecast) => {
   return proportionScales;
 };
 
+// Select statistical district section
 export const selectStatisticalDistrict = (section, isForecast = false) => (
   async (dispatch, getState) => {
     // Calculate scales
@@ -233,6 +242,7 @@ export const selectStatisticalDistrict = (section, isForecast = false) => (
   }
 );
 
+// Add selection to areaSelections
 export const addAreaSelection = selection => (
   async (dispatch) => {
     dispatch({
@@ -242,6 +252,7 @@ export const addAreaSelection = selection => (
   }
 );
 
+// Remove selection from areaSelections
 export const removeAreaSelection = selection => (
   async (dispatch) => {
     dispatch({
@@ -251,6 +262,7 @@ export const removeAreaSelection = selection => (
   }
 );
 
+// Replace areaSelections
 export const replaceAreaSelection = selectedAreas => (
   async (dispatch) => {
     dispatch({
@@ -260,18 +272,21 @@ export const replaceAreaSelection = selectedAreas => (
   }
 );
 
+// Add selected service
 export const addSelectedService = service => (
   async (dispatch) => {
     dispatch(setServiceSelection(service));
   }
 );
 
+// Remove selected service
 export const removeSelectedService = service => (
   async (dispatch) => {
     dispatch(removeServiceSelection(service));
   }
 );
 
+// Set new statistical district unit data 
 export const setNewStatisticalDistrictUnitData = data => (
   async (dispatch) => {
     dispatch(statisticalDistrictUnits.setNewData(data));
