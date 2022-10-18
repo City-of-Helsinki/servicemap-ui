@@ -65,7 +65,7 @@ const StatisticalDistrictListContentComponent = ({
       dispatch(replaceAreaSelection(newAreaSelections));
     } else {
       // Handle unchecking city selection
-      setCitySelections([citySelections.filter(v => v !== city)]);
+      setCitySelections(citySelections.filter(v => v !== city));
       const toBeRemovedSelections = cityFilteredData
         .filter(v => v[0].municipality === city)[0]
         .map(district => district.id);
