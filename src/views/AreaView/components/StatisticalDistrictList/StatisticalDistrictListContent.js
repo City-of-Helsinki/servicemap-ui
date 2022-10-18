@@ -133,16 +133,14 @@ const StatisticalDistrictListContentComponent = ({
                     control={(
                       <Checkbox
                         color="primary"
+                        inputProps={{
+                          'aria-label': formatMessage({ id: `settings.city.${municipality}` }),
+                        }}
                         icon={<span className={classes.checkBoxIcon} />}
                         onChange={() => handleMultiSelect(!isChecked, municipality)}
                         checked={isChecked}
                         indeterminate={childIsChecked && !isChecked}
                       />
-                  )}
-                    label={(
-                      <Typography style={visuallyHidden} variant="body2" className={classes.bold}>
-                        <FormattedMessage id={`settings.city.${municipality}`} />
-                      </Typography>
                     )}
                   />
                 )}
@@ -164,13 +162,16 @@ const StatisticalDistrictListContentComponent = ({
                             control={(
                               <Checkbox
                                 color="primary"
+                                inputProps={{
+                                  'aria-label': `${getLocaleText(district.name)}, ${getDistrictDataInfo(district)}`,
+                                }}
                                 icon={<span className={classes.checkBoxIcon} />}
                                 onChange={e => handleCheckboxChange(e, district)}
                                 checked={areaSelections[`${district.id}`] || false}
                               />
                           )}
                             label={(
-                              <StyledLabelTypography variant="body2">
+                              <StyledLabelTypography variant="body2" aria-hidden>
                                 <span>
                                   {`${getLocaleText(district.name)}`}
                                 </span>

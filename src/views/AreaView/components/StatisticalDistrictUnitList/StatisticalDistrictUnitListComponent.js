@@ -30,7 +30,7 @@ import {
 
 // Custom uncontrolled checkbox that allows default value
 const UnitCheckbox = ({
-  handleUnitCheckboxChange, id, defaultChecked, classes,
+  handleUnitCheckboxChange, id, defaultChecked, classes, inputProps,
 }) => {
   const [checked, setChecked] = useState(defaultChecked);
 
@@ -42,6 +42,7 @@ const UnitCheckbox = ({
   return (
     <Checkbox
       color="primary"
+      inputProps={inputProps}
       icon={<span className={classes.checkBoxIcon} />}
       checked={checked}
       onChange={e => handleChange(e)}
@@ -164,6 +165,9 @@ const StatisticalDistrictUnitListComponent = ({
                     handleUnitCheckboxChange={handleUnitCheckboxChange}
                     classes={classes}
                     defaultChecked={!!initialCheckedItems[service.id]}
+                    inputProps={{
+                      'aria-label': titleText,
+                    }}
                   />
                 )}
                 collapseContent={(
@@ -197,10 +201,14 @@ UnitCheckbox.propTypes = {
   handleUnitCheckboxChange: PropTypes.func.isRequired,
   defaultChecked: PropTypes.bool,
   id: PropTypes.number.isRequired,
+  inputProps: PropTypes.shape({
+    'aria-label': PropTypes.string,
+  }),
 };
 
 UnitCheckbox.defaultProps = {
   defaultChecked: false,
+  inputProps: {},
 };
 
 export default StatisticalDistrictUnitListComponent;
