@@ -1,19 +1,5 @@
 import { createTheme } from '@mui/material/styles';
 
-const focusIndicator = {
-  outline: '2px solid transparent',
-  boxShadow:
-    '0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(71, 131, 235), 0 0 0 8px rgb(255, 255, 255)',
-  zIndex: '1',
-};
-
-const focusIndicatorDark = {
-  outline: '2px solid transparent',
-  boxShadow:
-    '0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(0, 0, 0), 0 0 0 8px rgb(255, 255, 255)',
-  zIndex: '1',
-};
-
 const props = {
   // Globally disable all default mui focus effects
   MuiButtonBase: {
@@ -309,6 +295,26 @@ export const paletteDark = {
   link: {
     main: '#3333FF',
   },
+  border: {
+    main: colors.lightGray,
+  },
+  hover: {
+    main: colors.black03,
+  },
+};
+
+const focusIndicator = {
+  outline: '2px solid transparent',
+  borderRadius: '4px',
+  boxShadow: `0 0 0 2px rgb(255, 255, 255), 0 0 0 6px ${paletteDefault.primary.main}, 0 0 0 8px rgb(255, 255, 255)`,
+  zIndex: '1',
+};
+
+const focusIndicatorDark = {
+  outline: '2px solid transparent',
+  boxShadow:
+    '0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(0, 0, 0), 0 0 0 8px rgb(255, 255, 255)',
+  zIndex: '1',
 };
 
 // Themes

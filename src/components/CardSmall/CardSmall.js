@@ -10,17 +10,15 @@ import {
 } from '@mui/material';
 import { ArrowForward } from '@mui/icons-material';
 import styled from '@emotion/styled';
-import mapBackground from '../../assets/images/front-page-map-bg.png';
 
-const CardSmall = ({ headerMessageID, messageID, onClick }) => {
+const CardSmall = ({ headerMessageID, messageID, onClick, image }) => {
   return (
     <ButtonBase onClick={onClick}>
       <StyledCard>
         <StyledCardMedia
           component='img'
           height='auto'
-          image={mapBackground}
-          alt='map of helsinki'
+          image={image}
           aria-hidden
         />
         <StyledCardContent>
@@ -51,6 +49,9 @@ const StyledCard = styled(Card)(({ theme }) => ({
     backgroundColor: theme.palette.hover.main,
     transition: '0.2s',
   },
+  '&:hover svg': {
+    // color: theme.palette.primary.main,
+  },
 }));
 
 const StyledCardMedia = styled(CardMedia)(({ theme }) => ({
@@ -62,12 +63,13 @@ const StyledCardContent = styled(CardContent)(({ theme }) => ({
   flexDirection: 'row',
   width: '100%',
   alignItems: 'center',
-  padding: theme.spacing(3), // Designin mukaan padding pitäisi olla 16px, mutta MUI teema ajaa sen yli.
+  padding: `${theme.spacing(2)} !important`,
 }));
 
 const StyledTextContainer = styled.div(({ theme }) => ({
   flexDirection: 'column',
   textAlign: 'left',
+  paddingRight: theme.spacing(1),
 }));
 
 const StyledArrowForward = styled(ArrowForward)(({ theme }) => ({
@@ -78,6 +80,7 @@ CardSmall.propTypes = {
   headerMessageID: PropTypes.string.isRequired,
   messageID: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
+  image: PropTypes.string.isRequired,
 };
 
 export default CardSmall;

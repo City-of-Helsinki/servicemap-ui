@@ -1,42 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Map } from '@mui/icons-material';
-import { useIntl } from 'react-intl';
 import styled from '@emotion/styled';
-import {
-  getIcon,
-  MobileComponent,
-  NewsInfo,
-  PaperButton,
-  SearchBar,
-} from '../../components';
+import { NewsInfo, SearchBar } from '../../components';
 import config from '../../../config';
-import { useNavigationParams } from '../../utils/address';
-import useLocaleText from '../../utils/useLocaleText';
 import CardSmall from '../../components/CardSmall/CardSmall';
+import areaServices from '../../assets/images/area-services.png';
+import serviceTree from '../../assets/images/service-tree.png';
 
 const HomeView = (props) => {
-  const { classes, toggleSettings, navigator, userLocation } = props;
-
-  const getLocaleText = useLocaleText();
-  const { formatMessage } = useIntl();
-  const getAddressNavigatorParams = useNavigationParams();
+  const { navigator } = props;
 
   const renderNavigationOptions = () => {
-    const noUserLocation =
-      !userLocation || !userLocation.coordinates || !userLocation.addressData;
-
-    const notFoundText = noUserLocation ? 'location.notFound' : null;
-    const subtitleID =
-      userLocation && userLocation.allowed
-        ? notFoundText
-        : 'location.notAllowed';
-
     let areaSelection = null;
 
     if (config.showAreaSelection) {
       areaSelection = (
         <CardSmall
+          image={areaServices}
+          alt='Doctor seeing a patient'
           headerMessageID='area.services.local'
           messageID='home.buttons.area'
           onClick={() => navigator.push('area')}
@@ -48,7 +29,9 @@ const HomeView = (props) => {
       <StyledContainer>
         {areaSelection}
         <CardSmall
-          headerMessageID='area.services.local'
+          image={serviceTree}
+          alt='Children playing'
+          headerMessageID='general.pageTitles.serviceTree.title'
           messageID='home.buttons.services'
           onClick={() => navigator.push('serviceTree')}
         />
@@ -67,7 +50,6 @@ const HomeView = (props) => {
 
 const StyledContainer = styled.div(({ theme }) => ({
   paddingTop: theme.spacing(1),
-  // paddingBottom: theme.spacing(1),
   paddingLeft: theme.spacing(3),
   paddingRight: theme.spacing(2),
   paddingBottom: theme.spacing(4),
@@ -78,12 +60,8 @@ export default HomeView;
 // Typechecking
 HomeView.propTypes = {
   navigator: PropTypes.objectOf(PropTypes.any),
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  toggleSettings: PropTypes.func.isRequired,
-  userLocation: PropTypes.objectOf(PropTypes.any),
 };
 
 HomeView.defaultProps = {
   navigator: null,
-  userLocation: null,
 };
