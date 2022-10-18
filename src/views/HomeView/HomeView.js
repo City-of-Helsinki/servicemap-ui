@@ -4,8 +4,8 @@ import styled from '@emotion/styled';
 import { NewsInfo, SearchBar } from '../../components';
 import config from '../../../config';
 import CardSmall from '../../components/CardSmall/CardSmall';
-import areaServices from '../../assets/images/area-services.png';
-import serviceTree from '../../assets/images/service-tree.png';
+import areaServices from '../../assets/images/area-services.jpg';
+import serviceTree from '../../assets/images/service-tree.jpg';
 
 const HomeView = (props) => {
   const { navigator } = props;
