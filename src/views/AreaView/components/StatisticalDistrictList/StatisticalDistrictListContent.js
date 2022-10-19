@@ -11,7 +11,6 @@ import {
   Typography,
 } from '@mui/material';
 import { withStyles } from '@mui/styles';
-import { visuallyHidden } from '@mui/utils';
 import styles from '../../styles';
 import {
   getStatisticalDistrictAreaSelections,
@@ -145,7 +144,7 @@ const StatisticalDistrictListContentComponent = ({
                   />
                 )}
                 titleContent={(
-                  <Typography component="h6" className={classes.bold}>
+                  <Typography component="h6" variant="body2">
                     <FormattedMessage id={`settings.city.${municipality}`} />
                   </Typography>
                 )}

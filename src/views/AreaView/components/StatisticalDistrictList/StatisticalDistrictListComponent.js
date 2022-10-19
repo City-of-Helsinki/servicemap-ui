@@ -112,7 +112,7 @@ const StatisticalDistrictListComponent = ({
                     onToggle={() => handleAccordionToggle(layer, section !== layer, isForecast)}
                     aria-hidden
                     inputProps={{
-                      tabindex: '-1',
+                      tabIndex: '-1',
                     }}
                   />
                 )}
@@ -145,6 +145,9 @@ const StatisticalDistrictListComponent = ({
                         />
                       )}
                     />
+                    <StyledInfoText component="p" variant="caption">
+                      <FormattedMessage id="area.statisticalDistrict.info" />
+                    </StyledInfoText>
                     <StatisticalDistrictListContent
                       shownLayer={layer}
                     />
@@ -234,4 +237,12 @@ const StyledLoadingContainer = styled('div')(({ theme }) => ({
 
 const StyledNoDataTypography = styled(Typography)(({ theme }) => ({
   margin: `${theme.spacing(0.5)} ${theme.spacing(2)}`,
+}));
+
+const StyledInfoText = styled(Typography)(({ theme }) => ({
+  backgroundColor: 'rgba(222, 222, 222, 0.56)',
+  padding: `${theme.spacing(2)} ${theme.spacing(4)}`,
+  paddingLeft: theme.spacing(10),
+  fontWeight: 'normal',
+  color: 'black',
 }));

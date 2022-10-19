@@ -77,6 +77,7 @@ const translations = {
   'area.neighborhood.title': 'Valitse kaupunginosa',
   'area.postcode_area.title': 'Valitse postinumero',
   'area.major_district.title': 'Valitse suurpiiri',
+  'area.statisticalDistrict.info': 'Valitse ensin väestötietoalue, jonka jälkeen voit selata alueen palveluita',
   'area.statisticalDistrict.label': '{count} henkilöä, {percent}% alueen koko väestöstä',
   'area.statisticalDistrict.label.total': '{count} henkilöä',
   'area.statisticalDistrict.label.people': '{count} henkilöä',
