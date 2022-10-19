@@ -14,10 +14,16 @@ fixture`Area view test`
 
 const drawerButtons = ReactSelector('ServiceTab SMAccordion');
 const radioButtons = ReactSelector('DistrictToggleButton');
+const accordions = ReactSelector('SMAccordion');
 
 test('District lists are fetched and rendered correctly', async (t) => {
-  const listLength = await drawerButtons.count;
+  const rootAccordionLength = await accordions.count;
 
+  await t
+    .expect(rootAccordionLength).eql(3, 'Expect 3 accordions to exist for each section in AreaView')
+    .click(accordions.nth(0));
+    
+  const listLength = await drawerButtons.count;
   await t
     .expect(listLength).gt(0, 'No district buttons rendered')
 
@@ -37,6 +43,7 @@ test('District lists are fetched and rendered correctly', async (t) => {
 test('District selection is updated' , async (t) => {
   // Select radio button to see if data to draw on map on Districts component changes
   await t
+    .click(accordions.nth(0))
     .click(drawerButtons.nth(0))
     .click(radioButtons.nth(0).child())
 
@@ -58,6 +65,7 @@ test('Unit list functions correctly' , async (t) => {
   const unitList = Selector('.districtUnits')
 
   await t
+    .click(accordions.nth(0))
     .click(drawerButtons.nth(0))
     .click(radioButtons.nth(0).child())
     .expect(unitList.childElementCount).gt(0, 'No units listed for selected district')
