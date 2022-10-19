@@ -9,7 +9,7 @@
     "@formatjs/intl-pluralrules": "^1.5.9",
     "@formatjs/intl-relativetimeformat": "^4.5.16",
     "@mui/icons-material": "^5.10.6",
-    "@mui/material": "^5.7.0",
+    "@mui/material": "^5.10.7",
     "@mui/styles": "^5.7.0",
     "@mui/utils": "^5.10.6",
     "@sentry/node": "^5.27.5",
