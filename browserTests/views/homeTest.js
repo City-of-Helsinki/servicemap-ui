@@ -29,10 +29,9 @@ test('Test home page navigation button clicks take user to correct pages', async
   const servicesButton = paperButtons.nth(2);
   const feedbackButton = paperButtons.nth(3);
   const infoButton = paperButtons.nth(4);
-  const oldServicemapButton = paperButtons.nth(5);
 
   await t
-    .expect(paperButtons.count).eql(6, 'HomeView should have navigation buttons rendered')
+    .expect(paperButtons.count).eql(5, 'HomeView should have navigation buttons rendered')
     // Test area button
     .click(areaButton)
     .expect(getLocation()).contains(`${viewUrl}area`)
@@ -49,9 +48,6 @@ test('Test home page navigation button clicks take user to correct pages', async
     .click(infoButton)
     .expect(getLocation()).contains(`${viewUrl}info`)
     .click(backButton)
-    // Test old servicemap link button
-    .click(oldServicemapButton)
-    .expect(getLocation()).contains('palvelukartta-vanha.hel.fi')
   ;
 });
 

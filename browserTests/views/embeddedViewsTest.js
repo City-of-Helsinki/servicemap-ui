@@ -98,7 +98,7 @@ fixture`Embed view test`
 
   // Division url
   test.page`http://${server.address}:${server.port}/fi/embed/division/kunta:helsinki/kaupunginosa:029?level=all`
-  .only('Division url shows units and area correctly', async (t) => {
+  ('Division url shows units and area correctly', async (t) => {
     const district = Selector('.leaflet-pane .leaflet-overlay-pane').find('canvas').exists;
     
     await t
