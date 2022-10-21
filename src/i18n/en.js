@@ -44,7 +44,7 @@ const translations = {
   'address.emergency_care.common.link': 'https://www.hus.fi/en/patient/hospitals-and-other-units/new-childrens-hospital',
   'address.emergency_care.unit.26107': 'Malmi hospital',
   'address.emergency_care.unit.26104': 'Haartman hospital',
-  'address.emergency_care.link': 'http://www.hel.fi/www/Helsinki/fi/sosiaali-ja-terveyspalvelut/terveyspalvelut/paivystys/',
+  'address.emergency_care.link': 'https://www.hel.fi/en/health-and-social-services/health-care/urgent-and-emergency-care',
   'address.emergency_care.link.text': '[<a>emergency webpages</a>]',
 
   // Area

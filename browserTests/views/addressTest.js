@@ -112,7 +112,7 @@ test('AddressView health station links work correctly', async (t) => {
     // .expect(unitTitle.textContent).contains('Haarmanin sairaala')
     // .navigateTo(testLocation)
     .click(links.nth(2))
-    .expect(getLocation()).eql('https://www.hel.fi/helsinki/fi/sosiaali-ja-terveyspalvelut/terveyspalvelut/paivystys')
+    .expect(getLocation()).eql('https://www.hel.fi/fi/sosiaali-ja-terveyspalvelut/terveydenhoito/kiireellinen-hoito-ja-terveyskeskuspaivystys')
     .navigateTo(testLocation)
   ;
 });

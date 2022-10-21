@@ -44,7 +44,7 @@ const translations = {
   'address.emergency_care.common.link': 'https://www.hus.fi/sv/patienten/sjukhus/nya-barnsjukhuset',
   'address.emergency_care.unit.26107': 'Malms sjukhuset',
   'address.emergency_care.unit.26104': 'Haartmanska sjukhuset',
-  'address.emergency_care.link': 'http://www.hel.fi/www/Helsinki/fi/sosiaali-ja-terveyspalvelut/terveyspalvelut/paivystys/',
+  'address.emergency_care.link': 'https://www.hel.fi/sv/social-och-halsovardstjanster/halsovard/bradskande-vard-och-halsocentralsjour',
   'address.emergency_care.link.text': '[<a>joursidor</a>]',
 
   // Area
