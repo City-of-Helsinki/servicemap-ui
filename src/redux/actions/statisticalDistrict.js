@@ -70,7 +70,7 @@ const normalizeItem = (item) => {
           } else {
             dataValues[k] = {
               ...categories[key][k],
-              proportion: calculateProportion(+total.value, +dataPoint.value)
+              proportion: calculateProportion( 0 + total.value, 0 + dataPoint.value)
             };
           }
         });
