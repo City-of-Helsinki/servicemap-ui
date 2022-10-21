@@ -4,6 +4,7 @@ import flip from '@turf/flip';
 import dataVisualization from '../../utils/dataVisualization';
 import { getCitySettings } from './settings';
 import { getLocale } from './user';
+import { unitsSortAlphabetically } from '../../utils/units';
 
 export const getStatisticalDistrictSelection = state => (
   state.statisticalDistrict.districts.selection
@@ -134,8 +135,8 @@ export const getAreaSelectionBounds = createSelector(
 
 // Get area view units filtered by area view unit tab checkbox selection
 export const getServiceFilteredStatisticalDistrictUnits = createSelector(
-  [getStatisticalDistrictUnits, getStatisticalDistrictSelectedServices, getAreaSelectionBounds],
-  (districtUnits, selectedServices, selectedAreaBounds) => {
+  [getStatisticalDistrictUnits, getStatisticalDistrictSelectedServices, getAreaSelectionBounds, getLocale],
+  (districtUnits, selectedServices, selectedAreaBounds, locale) => {
     const serviceFilterKeys = Object.keys(selectedServices);
     if (serviceFilterKeys?.length) {
       const units = districtUnits.filter((unit) => {
@@ -147,7 +148,7 @@ export const getServiceFilteredStatisticalDistrictUnits = createSelector(
             && selectedAreaBounds.some(a => booleanPointInPolygon(unitCoords, a))
           ) && unit?.services?.some(service => !!selectedServices[service.id])
         );
-      });
+      }).sort(unitsSortAlphabetically(locale));
       return units;
     }
 
