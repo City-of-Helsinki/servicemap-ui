@@ -52,8 +52,10 @@ const calculateScaleAdjustedProportion = (proportion, scales) => {
 };
 
 export const getSelectedStatisticalDistricts = createSelector(
-  [getStatisticalDistrictSelection, getData, getStatisticalDistrictAreaSelections],
-  (selection, data) => {
+  [getStatisticalDistrictSelection, getData, getCitySettings],
+  (selection, data, citySettings) => {
+    // Create array of selected cities
+    const selectedCities = Object.keys(citySettings).filter(city => citySettings[city]);
     let selectedDivisions = [];
     const { forecast, proportionScales, section } = selection;
 
@@ -75,7 +77,9 @@ export const getSelectedStatisticalDistricts = createSelector(
             selectedScaleAdjustedProportion,
             selectedValue,
           };
-        });
+        })
+        // Filter out district based on city settings
+        .filter(district => selectedCities.includes(district.municipality));
     }
 
     return selectedDivisions.sort((a, b) => {
