@@ -77,9 +77,14 @@ export const getSelectedStatisticalDistricts = createSelector(
             selectedScaleAdjustedProportion,
             selectedValue,
           };
-        })
-        // Filter out district based on city settings
-        .filter(district => selectedCities.includes(district.municipality));
+        });
+
+      // Filter out district based on city settings
+      if (selectedCities.length > 0) {
+        selectedDivisions = selectedDivisions.filter(
+          district => selectedCities.includes(district.municipality),
+        );
+      }
     }
 
     return selectedDivisions.sort((a, b) => {
@@ -91,7 +96,7 @@ export const getSelectedStatisticalDistricts = createSelector(
 );
 
 // Get city filtered district data
-export const getCityFilteredDistricts = createSelector(
+export const getCityGroupedData = createSelector(
   [getSelectedStatisticalDistricts, getCitySettings],
   (data, citySettings) => {
     const groupedData = data.reduce((acc, cur) => {
@@ -104,22 +109,13 @@ export const getCityFilteredDistricts = createSelector(
       return acc;
     }, []);
 
-    // Filter data with city settings
-    const selectedCities = Object.values(citySettings).filter(city => city);
-    let cityFilteredData = [];
-    if (!selectedCities.length) {
-      cityFilteredData = groupedData;
-    } else {
-      cityFilteredData = groupedData.filter(data => citySettings[data[0].municipality]);
-    }
-
     // Reorder data order by municipality
     const citiesInOrder = Object.keys(citySettings);
-    cityFilteredData.sort(
+    groupedData.sort(
       (a, b) => citiesInOrder.indexOf(a[0].municipality) - citiesInOrder.indexOf(b[0].municipality),
     );
 
-    return cityFilteredData;
+    return groupedData;
   },
 );
 

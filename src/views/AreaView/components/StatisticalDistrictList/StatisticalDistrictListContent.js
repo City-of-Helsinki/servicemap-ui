@@ -14,7 +14,7 @@ import { withStyles } from '@mui/styles';
 import styles from '../../styles';
 import {
   getStatisticalDistrictAreaSelections,
-  getCityFilteredDistricts,
+  getCityGroupedData,
   getStatisticalDistrictSelection,
 } from '../../../../redux/selectors/statisticalDistrict';
 import {
@@ -31,7 +31,7 @@ const StatisticalDistrictListContentComponent = ({
   classes,
 }) => {
   const dispatch = useDispatch();
-  const cityFilteredData = useSelector(getCityFilteredDistricts);
+  const cityFilteredData = useSelector(getCityGroupedData);
   const getLocaleText = useLocaleText();
   const areaSelections = useSelector(getStatisticalDistrictAreaSelections);
   const selection = useSelector(getStatisticalDistrictSelection);
