@@ -44,6 +44,14 @@ const StatisticalDataMapInfoComponent = () => {
           />
         )
       }
+      {
+        !dataVisualization.isTotal(section)
+        && (
+          <StyledBottomText component="p" variant="caption">
+            <FormattedMessage id="area.statisticalDistrict.label.percent" values={{ percent: '' }} />
+          </StyledBottomText>
+        )
+      }
     </StyledContainer>
   );
 };
@@ -64,4 +72,10 @@ const StyledTitle = styled(Typography)(({ theme }) => ({
   fontWeight: 'bold',
   textAlign: 'left',
   marginLeft: theme.spacing(0.5),
+}));
+
+const StyledBottomText = styled(Typography)(({ theme }) => ({
+  color: '#000',
+  fontWeight: 'normal',
+  margin: `${theme.spacing(0.5)} ${theme.spacing(1)}`,
 }));

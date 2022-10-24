@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
+import { Typography } from '@mui/material';
 
 const ColorIndicatorComponent = ({
   gradientColor,
@@ -14,7 +15,7 @@ const ColorIndicatorComponent = ({
         background: `linear-gradient(to right, rgba(0,0,0,0), ${gradientColor})`,
       }}
     />
-    <StyledTextContent>
+    <StyledTextContent component="p" variant="caption">
       <StyledSpan>{left}</StyledSpan>
       <StyledSpan>{middle}</StyledSpan>
       <StyledSpan>{right}</StyledSpan>
@@ -31,10 +32,11 @@ ColorIndicatorComponent.propTypes = {
 
 export default ColorIndicatorComponent;
 
-const StyledColorIndicatorContainer = styled('div')`
-  display: flex;
-  flex-direction: column;
-`;
+const StyledColorIndicatorContainer = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  marginTop: theme.spacing(1),
+}));
 
 const StyledColorGradiant = styled('div')`
   flex: 1 0 auto;
@@ -46,8 +48,10 @@ const StyledSpan = styled('span')`
   margin-bottom: 0;
 `;
 
-const StyledTextContent = styled('div')`
+const StyledTextContent = styled(Typography)`
   display: flex;
   flex-direction: row;
-
+  justify-content: space-between;
+  color: #000;
+  font-weight: normal;
 `;
