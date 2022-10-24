@@ -70,7 +70,7 @@ const normalizeItem = (item) => {
           } else {
             dataValues[k] = {
               ...categories[key][k],
-              proportion: calculateProportion( 0 + total.value, 0 + dataPoint.value)
+              proportion: calculateProportion(+total.value, +dataPoint.value),
             };
           }
         });
@@ -211,7 +211,7 @@ const calculateProportionScales = (data, section, isForecast) => {
     } else {
       const proportions = data.reduce((result, element) => {
         const selectedCategory = getSelectedCategory(element, isForecast);
-        if (selectedCategory) {
+        if (selectedCategory && !Number.isNaN(selectedCategory[section].proportion)) {
           result.push(selectedCategory[section].proportion);
         }
         return result;
