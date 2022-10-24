@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -24,6 +24,7 @@ import {
 } from '../../../../redux/actions/statisticalDistrict';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { SMAccordion } from '../../../../components';
+import { focusDistricts } from '../../../MapView/utils/mapActions';
 
 
 const StatisticalDistrictListContentComponent = ({
@@ -36,6 +37,20 @@ const StatisticalDistrictListContentComponent = ({
   const selection = useSelector(getStatisticalDistrictSelection);
   const [citySelections, setCitySelections] = useState([]);
   const { formatMessage } = useIntl();
+  const map = useSelector(state => state.mapRef);
+
+  useEffect(() => {
+    // Focus to districts when area selections change
+    let districtsToFocus = cityFilteredData.flat();
+    const filteredData = districtsToFocus.filter(district => areaSelections[district.id]);
+    if (filteredData.length > 0) {
+      districtsToFocus = filteredData;
+    }
+
+    if (districtsToFocus.length > 0) {
+      focusDistricts(map, districtsToFocus);
+    }
+  }, [areaSelections, cityFilteredData]);
 
   const handleCheckboxChange = (e, district) => {
     const { id } = district;
