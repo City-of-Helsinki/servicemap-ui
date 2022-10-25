@@ -4,7 +4,7 @@ exports[`<MeasuringStopButton /> should work 1`] = `
 <div>
   <button
     aria-label="Stop measuring"
-    class="MuiButtonBase-root SMButton SMButton-button-7  SMButton-marginRight-10 MeasuringStopButtonComponent-measuringButton-6 SMButton-primary-11 css-fvdnvy-MuiButtonBase-root"
+    class="MuiButtonBase-root Mui-focusVisible SMButton SMButton-button-7  SMButton-marginRight-10 MeasuringStopButtonComponent-measuringButton-6 SMButton-primary-11 css-fvdnvy-MuiButtonBase-root"
     id="MeasuringStopButton"
     role="button"
     tabindex="0"

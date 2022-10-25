@@ -24,10 +24,10 @@ const orderUnits = (unitData, sortingParameters) => {
         const aSC = a.shorcomingCount;
         const bSC = b.shorcomingCount;
 
-        if (aSC === null || (aSC === null && bSC === null)) { return -1; }
-        if (bSC === null) { return 1; }
-        if (aSC > bSC) { return -1; }
-        if (aSC < bSC) { return 1; }
+        if (aSC === null || (aSC === null && bSC === null)) return 1;
+        if (bSC === null) return -1;
+        if (aSC > bSC) return 1;
+        if (aSC < bSC) return -1;
         return 0;
       });
 
@@ -62,13 +62,9 @@ const orderUnits = (unitData, sortingParameters) => {
     case 'distance': {
       const unitsWithoutLocation = results.filter(unit => unit.location === null);
       const filteredList = results.filter(unit => unit.location !== null);
-      filteredList.forEach((element) => {
-        // eslint-disable-next-line no-param-reassign
-        element.distanceFromUser = calculateDistance(element, usedPosition);
-      });
       filteredList.sort((a, b) => {
-        const aDistance = a.distanceFromUser;
-        const bDistance = b.distanceFromUser;
+        const aDistance = calculateDistance(a, usedPosition);
+        const bDistance = calculateDistance(b, usedPosition);
         if (aDistance < bDistance) return -1;
         if (aDistance > bDistance) return 1;
         return 0;

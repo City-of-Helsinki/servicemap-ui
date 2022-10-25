@@ -10,7 +10,6 @@ import {
 import { visuallyHidden } from '@mui/utils';
 import { FormattedMessage, useIntl } from 'react-intl';
 import fetchSearchResults from '../../redux/actions/search';
-import fetchRedirectService from '../../redux/actions/redirectService';
 import { parseSearchParams, getSearchParam, keyboardHandler } from '../../utils';
 import { fitUnitsToMap } from '../MapView/utils/mapActions';
 import { isEmbed } from '../../utils/path';
@@ -34,6 +33,7 @@ const SearchView = (props) => {
   const [analyticsSent, setAnalyticsSent] = useState(null);
 
   const searchResults = useSelector(state => getOrderedData(state));
+  const unorderedSearchResults = useSelector(state => state.searchResults.data);
   const searchFetchState = useSelector(state => state.searchResults);
   const isRedirectFetching = useSelector(state => state.redirectService.isFetching);
   const map = useSelector(state => state.mapRef);
@@ -114,6 +114,7 @@ const SearchView = (props) => {
         options.events = events;
       }
 
+      // This is used when embedding a specified list of units by IDs
       if (units) {
         options.id = units;
       }
@@ -160,36 +161,6 @@ const SearchView = (props) => {
     return options;
   };
 
-  // Handle service redirect for old service parameters if given
-  // Will fetch new service_node from redirect endpoint with service parameter
-  const handleServiceRedirect = () => {
-    if (isRedirectFetching) {
-      return true;
-    }
-    const options = getSearchParamData(true);
-    if (options.service && serviceRedirect !== options.service) {
-      // Reset serviceRedirect
-      setServiceRedirect(null);
-
-      // Fetch service_node for given old service data
-      dispatch(fetchRedirectService({ service: options.service }, (data) => {
-        // Success
-        if (data.service_node) {
-          // Need to stringify current search params for unit fetch
-          // Otherwise componentDidMount shouldFetch will compare previous searches incorrectly
-          delete options.service;
-          options.service_node = `${(options.service_node ? `${options.service_node},` : '')}${data.service_node}`;
-
-          // Set serviceRedirect and fetch units
-          dispatch(fetchSearchResults(options));
-          setServiceRedirect(options.service_node);
-        }
-      }));
-      return true;
-    }
-    return false;
-  };
-
   // Check if view will fetch data because sreach params has changed
   const shouldFetch = () => {
     const { isFetching, previousSearch } = searchFetchState;
@@ -197,7 +168,12 @@ const SearchView = (props) => {
       return false;
     }
     const data = getSearchParamData();
-    const searchQuery = data.q || data.address || data.service_node || data.service_id;
+    const searchQuery = data.q
+      || data.address
+      || data.service_node
+      || data.service_id
+      || data.id
+      || data.events;
 
     // Should fetch if previousSearch has changed and data has required parameters
     if (previousSearch) {
@@ -244,13 +220,8 @@ const SearchView = (props) => {
 
   useEffect(() => {
     const options = getSearchParamData();
-    // Handle old service value redirects
-    const handlingRedirect = handleServiceRedirect();
-
-    if (!handlingRedirect) {
-      if (shouldFetch() && Object.keys(options).length) {
-        dispatch(fetchSearchResults(options));
-      }
+    if (shouldFetch() && Object.keys(options).length) {
+      dispatch(fetchSearchResults(options));
     }
   }, [match.params]);
 
@@ -260,19 +231,24 @@ const SearchView = (props) => {
       if (searchResults.length === 1) {
         handleSingleResultRedirect();
       } else {
-      // Focus map to new search results units
+        // Focus map to new search results units
         const units = getResultsByType('unit');
         if (units.length) focusMap(units);
       }
     } else {
       // Send analytics report if search query did not return results
       const { previousSearch, isFetching } = searchFetchState;
-      if (navigator && previousSearch && !isFetching && analyticsSent !== previousSearch) {
+      if (
+        navigator
+        && previousSearch
+        && !isFetching
+        && analyticsSent !== previousSearch
+      ) {
         setAnalyticsSent(previousSearch);
         navigator.trackPageView(null, previousSearch);
       }
     }
-  }, [JSON.stringify(searchResults)]);
+  }, [JSON.stringify(unorderedSearchResults)]);
 
   const renderSearchBar = () => (
     <SearchBar expand className={classes.searchbarPlain} />

@@ -110,7 +110,10 @@ const useMapUnits = () => {
     return [];
   }
 
-  const filteredUnits = searchResults.filter(item => item.object_type === 'unit');
+  const filteredUnits = searchResults.filter(item => (
+    item.object_type === 'unit'
+    || (item.object_type === 'event' && item.location)
+  ));
 
   // Figure out which units to show on map on different pages
   const getMapUnits = () => {

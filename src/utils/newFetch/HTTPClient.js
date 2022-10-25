@@ -3,6 +3,7 @@ import config from '../../../config';
 
 export const hearingMapAPIName = 'hearingmap';
 export const serviceMapAPIName = 'servicemap';
+export const LinkedEventsAPIName = 'linkedEvens';
 
 export class APIFetchError extends Error {
   constructor(props) {
@@ -91,9 +92,29 @@ export default class HttpClient {
     return response.results;
   }
 
+  handleLinkedEventsResults = async (response, type) => {
+    if (type && type === 'count') {
+      return response.meta.count;
+    }
+    if (this.onProgressUpdate) {
+      this.onProgressUpdate(response.data.length, response.meta.count);
+    }
+    if (type && type === 'single') {
+      return response.data;
+    }
+    if (response.next) {
+      return this.fetchNext(response.meta.next, response.data);
+    }
+
+    return response.data;
+  }
+
   handleResults = async (response, type) => {
     if (this.apiName === serviceMapAPIName) {
       return this.handleServiceMapResults(response, type);
+    }
+    if (this.apiName === LinkedEventsAPIName) {
+      return this.handleLinkedEventsResults(response, type);
     }
 
     // Default to given response

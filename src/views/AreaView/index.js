@@ -13,7 +13,7 @@ import {
   fetchDistricts,
   setMapState,
 } from '../../redux/actions/district';
-import { getDistrictsByType, getAddressDistrict } from '../../redux/selectors/district';
+import { getDistrictsByType } from '../../redux/selectors/district';
 
 const mapStateToProps = (state) => {
   const { navigator } = state;
@@ -28,12 +28,10 @@ const mapStateToProps = (state) => {
   } = state.districts;
   const map = state.mapRef;
   const selectedDistrictData = getDistrictsByType(state);
-  const addressDistrict = getAddressDistrict(state);
   return {
     districtData,
     selectedDistrictData,
     districtAddressData,
-    addressDistrict,
     subdistrictUnits,
     selectedSubdistricts,
     selectedDistrictServices,

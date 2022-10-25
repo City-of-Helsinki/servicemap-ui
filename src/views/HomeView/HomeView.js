@@ -89,19 +89,6 @@ const HomeView = (props) => {
                 navigator.push('info', null, 'home-paper-info-button');
               }}
             />
-            <PaperButton
-              messageID="home.old.link"
-              newTab
-              icon={<Map />}
-              link
-              onClick={() => {
-                window.open(getLocaleText({
-                  fi: config.oldMapFi,
-                  sv: config.oldMapSv,
-                  en: config.oldMapEn,
-                }));
-              }}
-            />
           </nav>
           <NewsInfo showCount={2} />
         </div>

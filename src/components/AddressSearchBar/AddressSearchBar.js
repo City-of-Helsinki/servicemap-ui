@@ -14,6 +14,7 @@ import useMobileStatus from '../../utils/isMobile';
 import useLocaleText from '../../utils/useLocaleText';
 import ServiceMapAPI from '../../utils/newFetch/ServiceMapAPI';
 import { getAddressText } from '../../utils/address';
+import { focusToPosition } from '../../views/MapView/utils/mapActions';
 
 const AddressSearchBar = ({
   defaultAddress,
@@ -25,27 +26,29 @@ const AddressSearchBar = ({
 }) => {
   const getLocaleText = useLocaleText();
   const dispatch = useDispatch();
-  const locale = useSelector(state => state.user.locale);
-
   const isMobile = useMobileStatus();
+  const map = useSelector(state => state.mapRef);
 
   const [addressResults, setAddressResults] = useState([]);
   const [resultIndex, setResultIndex] = useState(null);
   const [currentLocation, setCurrentLocation] = useState(null);
   const [cleared, setCleared] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
 
   const suggestionCount = 5;
   const inputRef = useRef();
 
-  const fetchAddressResults = (text) => {
+  const fetchAddressResults = async (text) => {
     const smAPI = new ServiceMapAPI();
     const fetchOptions = {
-      language: locale,
       page_size: suggestionCount,
       type: 'address',
       address_limit: suggestionCount,
     };
-    return smAPI.search(text, fetchOptions);
+    setIsFetching(true);
+    const results = smAPI.search(text, fetchOptions);
+    setIsFetching(false);
+    return results;
   };
 
   const handleAddressSelect = (address) => {
@@ -59,6 +62,7 @@ const AddressSearchBar = ({
     dispatch(setDirection('asc'));
     dispatch(setOrder('distance'));
     handleAddressChange(address);
+    focusToPosition(map, address.location?.coordinates);
   };
 
   const handleSearchBarKeyPress = (e) => {
@@ -106,8 +110,10 @@ const AddressSearchBar = ({
         setCurrentLocation(null);
       }
       fetchAddressResults(text)
-        .then(data => setAddressResults(data));
-    }
+        .then((data) => {
+          if (!isFetching) setAddressResults(data);
+        });
+    } else if (addressResults.length) setAddressResults([]);
   };
 
   useEffect(() => {
