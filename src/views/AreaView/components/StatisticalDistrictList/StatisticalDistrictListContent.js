@@ -35,7 +35,6 @@ const StatisticalDistrictListContentComponent = ({
   const getLocaleText = useLocaleText();
   const areaSelections = useSelector(getStatisticalDistrictAreaSelections);
   const selection = useSelector(getStatisticalDistrictSelection);
-  const [citySelections, setCitySelections] = useState([]);
   const { formatMessage } = useIntl();
   const map = useSelector(state => state.mapRef);
 
@@ -65,7 +64,6 @@ const StatisticalDistrictListContentComponent = ({
 
   const handleMultiSelect = (toBeChecked, city) => {
     if (toBeChecked) {
-      setCitySelections([...citySelections, city]);
       const newAreaSelections = {
         ...areaSelections,
       };
@@ -78,8 +76,6 @@ const StatisticalDistrictListContentComponent = ({
       });
       dispatch(replaceAreaSelection(newAreaSelections));
     } else {
-      // Handle unchecking city selection
-      setCitySelections(citySelections.filter(v => v !== city));
       const toBeRemovedSelections = cityFilteredData
         .filter(v => v[0].municipality === city)[0]
         .map(district => district.id);
@@ -132,8 +128,10 @@ const StatisticalDistrictListContentComponent = ({
         {
           cityFilteredData.map((data) => {
             const { municipality } = data[0];
-            const isChecked = citySelections.some(v => v === municipality);
-            const childIsChecked = data.some(node => areaSelections[`${node.id}`]);
+            const someChildIsChecked = data.some(node => areaSelections[`${node.id}`]);
+            const someChildNotChecked = data.some(node => !areaSelections[`${node.id}`]);
+            const isChecked = someChildIsChecked && !someChildNotChecked;
+            const isIndeterminate = someChildIsChecked && someChildNotChecked;
             return (
               <ListItem
                 divider
@@ -160,7 +158,7 @@ const StatisticalDistrictListContentComponent = ({
                             icon={<span className={classes.checkBoxIcon} />}
                             onChange={() => handleMultiSelect(!isChecked, municipality)}
                             checked={isChecked}
-                            indeterminate={childIsChecked && !isChecked}
+                            indeterminate={isIndeterminate}
                           />
                         )}
                       />
