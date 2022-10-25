@@ -157,14 +157,25 @@ export const getServiceFilteredStatisticalDistrictUnits = createSelector(
 );
 
 export const getOrderedStatisticalDistrictServices = createSelector(
-  [getStatisticalDistrictServices, getLocale],
-  (services, locale) => {
+  [getStatisticalDistrictServices, getLocale, getCitySettings],
+  (services, locale, citySettings) => {
     if (services.length) {
       if (typeof locale !== 'string') {
         return services;
       }
+
+      const selectedCities = Object.keys(citySettings).filter(city => citySettings[city]);
       return services
-        .filter(s => s.unit_count?.total > 0) // Filter out services without units
+        .filter((s) => {
+          // Filter services that have any units or with city
+          // selections active if selected cities has units
+          const selectedCitiesHasUnits = selectedCities.some(c => s?.unit_count?.municipality[c]);
+          return s.unit_count?.total > 0
+                && (
+                  selectedCities.length === 0
+                  || selectedCitiesHasUnits
+                );
+        }) // Filter out services without units
         .sort((a, b) => {
           if (a.name[locale] > b.name[locale]) return 1;
           if (a.name[locale] < b.name[locale]) return -1;
