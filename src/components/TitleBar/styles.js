@@ -6,7 +6,7 @@ export default theme => ({
   container: {
     display: 'flex',
     alignItems: 'center',
-    minHeight: 44,
+    height: 44,
     background: theme.palette.primary.main,
     boxShadow: '0 2px 4px 0 rgba(0,0,0,0.5)',
     color: '#fff',
@@ -18,6 +18,7 @@ export default theme => ({
     alignItems: 'flex-start',
     paddingLeft: theme.spacing(2),
     paddingBottom: theme.spacing(1),
+    height: 72,
   },
   textBar: {
     paddingLeft: theme.spacing(3),
