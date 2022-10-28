@@ -7,6 +7,7 @@ const SMAccordion = ({
   isOpen,
   defaultOpen,
   adornment,
+  adornmentSeparated,
   titleContent,
   collapseContent,
   onOpen,
@@ -52,7 +53,7 @@ const SMAccordion = ({
   return (
     <div className={classes.accordionContainer}>
       <div className={`${classes.accordion} ${className}`}>
-        {adornment}
+        {adornmentSeparated && adornment}
         {!simpleItem ? (
           <ButtonBase
             disabled={disabled}
@@ -61,6 +62,7 @@ const SMAccordion = ({
             aria-expanded={openState}
             onClick={e => handleOpen(e)}
           >
+            {!adornmentSeparated && adornment}
             {titleContent}
             {icon}
           </ButtonBase>
@@ -84,6 +86,7 @@ SMAccordion.propTypes = {
     [PropTypes.arrayOf(PropTypes.any), PropTypes.objectOf(PropTypes.any)],
   ),
   adornment: PropTypes.objectOf(PropTypes.any),
+  adornmentSeparated: PropTypes.bool,
   onOpen: PropTypes.func,
   disabled: PropTypes.bool,
   simpleItem: PropTypes.bool,
@@ -99,6 +102,7 @@ SMAccordion.defaultProps = {
   defaultOpen: false,
   collapseContent: null,
   adornment: null,
+  adornmentSeparated: true,
   onOpen: () => {},
   disabled: false,
   simpleItem: false,
