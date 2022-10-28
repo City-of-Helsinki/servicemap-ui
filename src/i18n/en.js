@@ -49,11 +49,12 @@ const translations = {
 
   // Area
   // TODO: clean unused translations
+  'area.city.selection.empty': 'No areas were found with city selections',
   'area.searchbar.infoText.address': 'Write your home address',
   'area.searchbar.infoText.optional': '(optional)',
   'area.tab.publicServices': 'Public service areas',
   'area.tab.geographical': 'Neighbourhoods and postal code areas',
-  'area.tab.statisticalDistricts': 'Population registry', //TODO: Verify
+  'area.tab.statisticalDistricts': 'Demographic data',
   'area.services.local': 'Services in your own area',
   'area.services.nearby': 'Locations in nearby areas as a list',
   'area.services.nearby.rescue_area': 'Services in nearby areas as a list', // TODO: correct name to replace "Services"
@@ -72,16 +73,23 @@ const translations = {
   'area.geographicalServices.neighborhood': 'Services of the neighbourhood ({length})',
   'area.geographicalServices.postcode_area': 'Services of the postal code area ({length})',
   'area.geographicalServices.major_district': 'Services of the major district ({length})',
-  'area.geographicalServices.statistical_district': 'Service of the statistical district({length})',
+  'area.geographicalServices.statistical_district': 'Demographic data area services',
   'area.neighborhood.title': 'Choose neighbourhood',
   'area.postcode_area.title': 'Choose postal code',
   'area.major_district.title': 'Choose major district',
-  'area.statisticalDistrict.title': 'Choose statistical district',
-  'area.statisticalDistrict.label': '{count} people, {percent}% of population',
-  'area.statisticalDistrict.label.total': '{count} henkilöä', // TODO Translate
-  'area.statisticalDistrict.label.people': '{count} henkilöä', // TODO Translate
-  'area.statisticalDistrict.label.percent': '{percent}% väestöstä', // TODO Translate
-  'area.statisticalDistrict.label.noResults': 'Population registry information not available', // TODO: Verify
+  'area.statisticalDistrict.info': 'First, select a population data area, and then you can browse the area\'s services',
+  'area.statisticalDistrict.title': 'Select a population data area',
+  'area.statisticalDistrict.section': 'Cropping: {text}',
+  'area.statisticalDistrict.noData': 'Information could not be retrieved',
+  'area.statisticalDistrict.label': '{count} people, {percent}% of the entire population of the area',
+  'area.statisticalDistrict.label.total': '{count} people',
+  'area.statisticalDistrict.label.people': '{count} people',
+  'area.statisticalDistrict.label.percent': '{percent}% of the entire population of the area',
+  'area.statisticalDistrict.label.noResults': 'Population data information is not available',
+  'area.statisticalDistrict.service.filter': 'Filtering of services for population data areas',
+  'area.statisticalDistrict.service.filter.button': 'Filter',
+  'area.statisticalDistrict.service.filter.button.aria': 'Filter the services of population data areas',
+  'area.statisticalDistrict.service.filter.aria.notification': 'Population data area services filtered with {filterValue}',
   'area.noSelection': 'Choose area from the Choice of Area tab',
   'area.noUnits': 'There are no service points in your chosen area',
   'area.popupLink': 'Show the details for the area (new tab)',
@@ -132,6 +140,15 @@ const translations = {
   'area.list.resident_parking_zone.plural': 'Residential parking areas',
   'area.list.parkingSpaces': 'Parking lots',
   'area.list.parkingUnits': 'Parking garages and car parks',
+  'area.list.statistic.byAge': 'Age',
+  'area.list.statistic.forecast': 'Population forecast',
+  'area.list.statistic.total': 'All population',
+  'area.list.statistic.0-6': 'Age 0-6 years',
+  'area.list.statistic.7-17': 'Age 7-17 years',
+  'area.list.statistic.18-29': 'Age 18-29 years',
+  'area.list.statistic.30-49': 'Age 30-49 years',
+  'area.list.statistic.50-64': 'Age 50-64 years',
+  'area.list.statistic.65+': 'Age over 64 years',
 
   'parkingArea.popup.residentName': 'Zone {letter}',
   'parkingArea.popup.payment1': 'Free parking',
