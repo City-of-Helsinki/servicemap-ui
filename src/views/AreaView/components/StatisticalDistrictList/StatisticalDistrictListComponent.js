@@ -9,6 +9,7 @@ import {
   styled,
   Typography,
 } from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import { Loading, SMAccordion } from '../../../../components';
 import DistrictToggleButton from '../DistrictToggleButton';
 import {
@@ -117,12 +118,18 @@ const StatisticalDistrictListComponent = ({
                   />
                 )}
                 titleContent={(
-                  <Typography id={`${layer}Name`} component="h4">
+                  <Typography id={`${layer}Name`} component="p">
                     <FormattedMessage id={`area.list.statistic.${layer}`} />
                   </Typography>
                 )}
                 collapseContent={(
                   <div className={classes.districtServiceList}>
+                    <Typography component="h3" style={visuallyHidden}>
+                      <FormattedMessage id="area.tab.statisticalDistricts" />
+                      <FormattedMessage id={`area.list.statistic.${category.type}`} />
+                      {category.year}
+                      <FormattedMessage id={`area.list.statistic.${layer}`} />
+                    </Typography>
                     <SMAccordion // Unit list accordion
                       defaultOpen={false}
                       disableUnmount

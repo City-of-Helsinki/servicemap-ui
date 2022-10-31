@@ -358,7 +358,7 @@ const AreaView = ({
                     isOpen={areaSelection === i}
                     elevated={areaSelection === i}
                     titleContent={(
-                      <Typography component="h3" variant="subtitle1">
+                      <Typography component="p" variant="subtitle1">
                         {category.title}
                       </Typography>
                     )}

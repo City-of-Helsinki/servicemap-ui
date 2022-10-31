@@ -114,7 +114,7 @@ const StatisticalDistrictListContentComponent = ({
   return (
     <>
       <div className={classes.municipalitySubtitle}>
-        <Typography component="h5" className={classes.bold}>
+        <Typography component="p" className={classes.bold}>
           <FormattedMessage id="area.statisticalDistrict.title" />
         </Typography>
         {
@@ -164,7 +164,7 @@ const StatisticalDistrictListContentComponent = ({
                       />
                     )}
                     titleContent={(
-                      <Typography component="h6" variant="body2">
+                      <Typography component="p" variant="body2">
                         <FormattedMessage id={`settings.city.${municipality}`} />
                       </Typography>
                     )}
