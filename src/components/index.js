@@ -19,6 +19,7 @@ import ReadSpeakerButton from './ReadSpeakerButton';
 import ResultOrderer from './ResultOrderer';
 import SettingsInfo from './SettingsInfo';
 import SettingsText from './SettingsText';
+import SettingsComponent from './SettingsComponent/SettingsComponent';
 import SMButton from './ServiceMapButton';
 import SMRadio from './SMRadio';
 import SMAccordion from './SMAccordion';
@@ -81,6 +82,7 @@ export {
   Settings,
   SettingsInfo,
   SettingsText,
+  SettingsComponent,
   SimpleListItem,
   SMAccordion,
   SMButton,
