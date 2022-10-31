@@ -4,7 +4,6 @@ import { withStyles } from '@mui/styles';
 import { withRouter } from 'react-router-dom';
 import TabLists from './TabLists';
 import styles from './styles';
-import { changeCustomUserLocation } from '../../redux/actions/user';
 
 // Listen to redux state
 const mapStateToProps = (state) => {
@@ -18,5 +17,4 @@ const mapStateToProps = (state) => {
 
 export default connect(
   mapStateToProps,
-  { changeCustomUserLocation },
 )(injectIntl(withRouter(withStyles(styles)(TabLists))));

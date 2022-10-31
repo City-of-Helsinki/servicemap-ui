@@ -302,7 +302,6 @@ const AreaView = ({
           />
           <div className={classes.addressArea}>
             <AddressSearchBar
-              defaultAddress={districtAddressData.address}
               handleAddressChange={setSelectedAddress}
               title={(
                 <>
