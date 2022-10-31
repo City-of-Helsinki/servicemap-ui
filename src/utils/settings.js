@@ -3,7 +3,7 @@ import LocalStorageUtility from './localStorage';
 import config from '../../config';
 
 const ALLOWED = {
-  mobility: [null, 'wheelchair', 'reduced_mobility', 'rollator', 'stroller'],
+  mobility: [null, 'none', 'wheelchair', 'reduced_mobility', 'rollator', 'stroller'],
   city: [null, ...config.cities],
   map: config.maps,
 };
