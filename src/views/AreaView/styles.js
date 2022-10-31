@@ -200,7 +200,7 @@ const styles = theme => ({
     backgroundColor: 'rgba(222, 222, 222, 0.12)',
   },
   districtServiceList: {
-    backgroundColor: 'rgb(245,245,245)',
+    // backgroundColor: 'rgb(245,245,245)',
     boxShadow: 'inset 0px 4px 4px rgba(0, 0, 0, 0.06)',
   },
   geogrpahicalDiststrictlist: {
@@ -287,11 +287,23 @@ const styles = theme => ({
   serviceFilterInput: {
     margin: theme.spacing(1),
   },
-  servciceList: {
+  serviceList: {
     paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(2),
-    paddingLeft: 77,
+    paddingLeft: theme.spacing(9),
+    // backgroundColor: 'rgb(230,243,254)',
+  },
+  highlightedServiceList: {
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
+    paddingLeft: theme.spacing(9),
     backgroundColor: 'rgb(230,243,254)',
+  },
+  leftPadding: {
+    paddingLeft: theme.spacing(9),
+  },
+  leftPadding6: {
+    paddingLeft: theme.spacing(6),
   },
   serviceListPadding: {
     paddingLeft: 72,
@@ -316,6 +328,9 @@ const styles = theme => ({
   addressInfoIcon: {
     width: 50,
     paddingRight: theme.spacing(1.5),
+  },
+  geographicalDistrictListContainer: {
+    paddingLeft: theme.spacing(6),
   },
 });
 

@@ -32,6 +32,7 @@ import {
 } from '../../../../redux/actions/statisticalDistrict';
 import StatisticalDistrictUnitList from '../StatisticalDistrictUnitList';
 import StatisticalDistrictListContent from './StatisticalDistrictListContent';
+import SMAccordionListItem from '../../../../components/ListItems/SMAccordionListItem';
 
 
 const StatisticalDistrictListComponent = ({
@@ -95,73 +96,118 @@ const StatisticalDistrictListComponent = ({
           const serviceTitle = formatMessage({ id: 'area.statisticalDistrict.service.filter' });
           const disableServicesAccordion = !Object.keys(selectedAreas).some(a => selectedAreas[a]);
           return (
-            <ListItem
-              divider
-              disableGutters
-              key={layer}
-              className={`${classes.listItem} ${layer}`}
-            >
-              <SMAccordion // Layers in top level category
-                defaultOpen={false}
-                onOpen={(e, open) => handleAccordionToggle(layer, !open, isForecast)}
-                isOpen={selected}
-                elevated={selected}
-                adornment={(
-                  <DistrictToggleButton
-                    selected={selected}
-                    district={{ id: layer }}
-                    onToggle={() => handleAccordionToggle(layer, section !== layer, isForecast)}
-                    aria-hidden
-                    inputProps={{
-                      tabIndex: '-1',
-                    }}
-                  />
-                )}
-                titleContent={(
-                  <Typography id={`${layer}Name`} component="p">
+            <SMAccordionListItem
+              id={layer}
+              level={3}
+              onSelection={(e, open) => handleAccordionToggle(layer, !open, isForecast)}
+              selected={selected}
+              checkbox="switch"
+              title={(
+                <Typography id={`${layer}Name`} component="h4">
+                  <FormattedMessage id={`area.list.statistic.${layer}`} />
+                </Typography>
+              )}
+              content={(
+                <div className={classes.districtServiceList}>
+                  <Typography component="h3" style={visuallyHidden}>
+                    <FormattedMessage id="area.tab.statisticalDistricts" />
+                    <FormattedMessage id={`area.list.statistic.${category.type}`} />
+                    {category.year}
                     <FormattedMessage id={`area.list.statistic.${layer}`} />
                   </Typography>
-                )}
-                collapseContent={(
-                  <div className={classes.districtServiceList}>
-                    <Typography component="h3" style={visuallyHidden}>
-                      <FormattedMessage id="area.tab.statisticalDistricts" />
-                      <FormattedMessage id={`area.list.statistic.${category.type}`} />
-                      {category.year}
-                      <FormattedMessage id={`area.list.statistic.${layer}`} />
-                    </Typography>
-                    <SMAccordion // Unit list accordion
-                      defaultOpen={false}
-                      disableUnmount
-                      disabled={disableServicesAccordion}
-                      className={classes.unitsAccordion}
-                      adornment={<FormatListBulleted className={classes.iconPadding} />}
-                      titleContent={(
-                        <Typography className={classes.captionText} variant="caption">
-                          <FormattedMessage
-                            id="area.geographicalServices.statistical_district"
-                            values={{ length: filteredSubdistrictUnitsLength }}
-                          />
-                        </Typography>
-                      )}
-                      collapseContent={(
-                        <StatisticalDistrictUnitList
-                          handleUnitCheckboxChange={handleUnitCheckboxChange}
-                          selectedServices={selectedServices}
-                          title={serviceTitle}
+                  <SMAccordion // Unit list accordion
+                    defaultOpen={false}
+                    disableUnmount
+                    disabled={disableServicesAccordion}
+                    className={classes.unitsAccordion}
+                    adornment={<FormatListBulleted className={classes.iconPadding} />}
+                    titleContent={(
+                      <Typography className={classes.captionText} variant="caption">
+                        <FormattedMessage
+                          id="area.geographicalServices.statistical_district"
+                          values={{ length: filteredSubdistrictUnitsLength }}
                         />
-                      )}
-                    />
-                    <StyledInfoText component="p" variant="caption">
-                      <FormattedMessage id="area.statisticalDistrict.info" />
-                    </StyledInfoText>
-                    <StatisticalDistrictListContent
-                      shownLayer={layer}
-                    />
-                  </div>
-                )}
-              />
-            </ListItem>
+                      </Typography>
+                    )}
+                    collapseContent={(
+                      <StatisticalDistrictUnitList
+                        handleUnitCheckboxChange={handleUnitCheckboxChange}
+                        selectedServices={selectedServices}
+                        title={serviceTitle}
+                      />
+                    )}
+                  />
+                  <StyledInfoText component="p" variant="caption">
+                    <FormattedMessage id="area.statisticalDistrict.info" />
+                  </StyledInfoText>
+                  <StatisticalDistrictListContent
+                    shownLayer={layer}
+                  />
+                </div>
+              )}
+
+            />
+            // <ListItem
+            //   divider
+            //   disableGutters
+            //   key={layer}
+            //   className={`${classes.listItem} ${layer}`}
+            // >
+            //   <SMAccordion // Layers in top level category
+            //     defaultOpen={false}
+            //     onOpen={(e, open) => handleAccordionToggle(layer, !open, isForecast)}
+            //     isOpen={selected}
+            //     elevated={selected}
+            //     adornment={(
+            //       <DistrictToggleButton
+            //         selected={selected}
+            //         district={{ id: layer }}
+            //         onToggle={() => handleAccordionToggle(layer, section !== layer, isForecast)}
+            //         aria-hidden
+            //         inputProps={{
+            //           tabIndex: '-1',
+            //         }}
+            //       />
+            //     )}
+            //     titleContent={(
+            //       <Typography id={`${layer}Name`} component="h4">
+            //         <FormattedMessage id={`area.list.statistic.${layer}`} />
+            //       </Typography>
+            //     )}
+            //     collapseContent={(
+            //       <div className={classes.districtServiceList}>
+            //         <SMAccordion // Unit list accordion
+            //           defaultOpen={false}
+            //           disableUnmount
+            //           disabled={disableServicesAccordion}
+            //           className={classes.unitsAccordion}
+            //           adornment={<FormatListBulleted className={classes.iconPadding} />}
+            //           titleContent={(
+            //             <Typography className={classes.captionText} variant="caption">
+            //               <FormattedMessage
+            //                 id="area.geographicalServices.statistical_district"
+            //                 values={{ length: filteredSubdistrictUnitsLength }}
+            //               />
+            //             </Typography>
+            //           )}
+            //           collapseContent={(
+            //             <StatisticalDistrictUnitList
+            //               handleUnitCheckboxChange={handleUnitCheckboxChange}
+            //               selectedServices={selectedServices}
+            //               title={serviceTitle}
+            //             />
+            //           )}
+            //         />
+            //         <StyledInfoText component="p" variant="caption">
+            //           <FormattedMessage id="area.statisticalDistrict.info" />
+            //         </StyledInfoText>
+            //         <StatisticalDistrictListContent
+            //           shownLayer={layer}
+            //         />
+            //       </div>
+            //     )}
+            //   />
+            // </ListItem>
           );
         })
       );
@@ -179,31 +225,47 @@ const StatisticalDistrictListComponent = ({
               const selected = layerCategory.type === selectedCategory;
               const titleText = `${formatMessage({ id: `area.list.statistic.${layerCategory.type}` })} ${layerCategory.year}`;
               return (
-                <ListItem
-                  divider
-                  disableGutters
-                  key={key}
-                  className={`${classes.listItem} ${key}`}
-                >
-                  <SMAccordion // Top level categories
-                    defaultOpen={false}
-                    disableUnmount
-                    onOpen={(e, open) => handleCategoryAccoridonToggle(layerCategory.type, !open)}
-                    isOpen={selected}
-                    disabled={isFetchingDistricts}
-                    elevated={selected}
-                    titleContent={(
-                      <Typography id={`${key}Name`}>
-                        {titleText}
-                      </Typography>
-                    )}
-                    collapseContent={(
-                      <List className={classes.listNoPadding}>
-                        {renderLayers(layerCategory)}
-                      </List>
-                    )}
-                  />
-                </ListItem>
+                <SMAccordionListItem
+                  id={key}
+                  level={2}
+                  title={(
+                    <Typography id={`${key}Name`}>
+                      {titleText}
+                    </Typography>
+                  )}
+                  content={(
+                    <List className={classes.listNoPadding}>
+                      {renderLayers(layerCategory)}
+                    </List>
+                  )}
+                  onSelection={(e, open) => handleCategoryAccoridonToggle(layerCategory.type, !open)}
+                  selected={selected}
+                />
+                // <ListItem
+                //   divider
+                //   disableGutters
+                //   key={key}
+                //   className={`${classes.listItem} ${key}`}
+                // >
+                //   <SMAccordion // Top level categories
+                //     defaultOpen={false}
+                //     disableUnmount
+                //     onOpen={(e, open) => handleCategoryAccoridonToggle(layerCategory.type, !open)}
+                //     isOpen={selected}
+                //     disabled={isFetchingDistricts}
+                //     elevated={selected}
+                //     titleContent={(
+                //       <Typography id={`${key}Name`}>
+                //         {titleText}
+                //       </Typography>
+                //     )}
+                //     collapseContent={(
+                //       <List className={classes.listNoPadding}>
+                //         {renderLayers(layerCategory)}
+                //       </List>
+                //     )}
+                //   />
+                // </ListItem>
               );
             })
           }

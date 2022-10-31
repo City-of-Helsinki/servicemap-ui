@@ -25,6 +25,7 @@ import {
 import useLocaleText from '../../../../utils/useLocaleText';
 import { SMAccordion } from '../../../../components';
 import { focusDistricts } from '../../../MapView/utils/mapActions';
+import SMAccordionListItem from '../../../../components/ListItems/SMAccordionListItem';
 
 
 const StatisticalDistrictListContentComponent = ({
@@ -128,7 +129,7 @@ const StatisticalDistrictListContentComponent = ({
   return (
     <>
       <div className={classes.municipalitySubtitle}>
-        <Typography component="p" className={classes.bold}>
+        <Typography component="p" className={`${classes.bold} ${classes.leftPadding6}`}>
           <FormattedMessage id="area.statisticalDistrict.title" />
         </Typography>
         {
@@ -147,81 +148,136 @@ const StatisticalDistrictListContentComponent = ({
             const isChecked = someChildIsChecked && !someChildNotChecked;
             const isIndeterminate = someChildIsChecked && someChildNotChecked;
             return (
-              <ListItem
-                divider
-                disableGutters
-                key={municipality}
-                className={`${classes.listItem}`}
-              >
-                <React.Fragment key={municipality}>
-                  <SMAccordion // City list accordion
-                    defaultOpen={false}
-                    disableUnmount
-                    adornment={(
-                      <FormControlLabel
-                        className={classes.municipalityAdjustedCheckboxPadding}
-                        classes={{
-                          label: classes.statisticalCategoryTitle,
-                        }}
-                        control={(
-                          <Checkbox
-                            color="primary"
-                            inputProps={{
-                              'aria-label': formatMessage({ id: `settings.city.${municipality}` }),
+              <SMAccordionListItem
+                id={municipality}
+                level={4}
+                checkbox="default"
+                checkboxProps={{
+                  inputProps: {
+                    'aria-label': formatMessage({ id: `settings.city.${municipality}` }),
+                  },
+                  indeterminate: isIndeterminate,
+                  onChange: () => handleMultiSelect(!isChecked, municipality),
+                  checked: isChecked,
+                }}
+                title={(
+                  <Typography component="p" variant="body2">
+                    <FormattedMessage id={`settings.city.${municipality}`} />
+                  </Typography>
+                )}
+                content={(
+                  <List className={classes.listNoPadding}>
+                    {
+                      data.map(district => (
+                        <ListItem className={`${classes.listItem} ${classes.areaItem} ${classes.leftPadding}`} key={district.id}>
+                          <FormControlLabel
+                            className={classes.statisticalAreaAdjustedCheckboxPadding}
+                            classes={{
+                              label: classes.statisticalCategoryTitle,
                             }}
-                            icon={<span className={classes.checkBoxIcon} />}
-                            onChange={() => handleMultiSelect(!isChecked, municipality)}
-                            checked={isChecked}
-                            indeterminate={isIndeterminate}
-                          />
-                        )}
-                      />
-                    )}
-                    titleContent={(
-                      <Typography component="p" variant="body2">
-                        <FormattedMessage id={`settings.city.${municipality}`} />
-                      </Typography>
-                    )}
-                    collapseContent={(
-                      <List className={classes.listNoPadding}>
-                        {
-                          data.map(district => (
-                            <ListItem className={`${classes.listItem} ${classes.areaItem}`} key={district.id} divider>
-                              <FormControlLabel
-                                className={classes.statisticalAreaAdjustedCheckboxPadding}
-                                classes={{
-                                  label: classes.statisticalCategoryTitle,
+                            control={(
+                              <Checkbox
+                                color="primary"
+                                inputProps={{
+                                  'aria-label': `${getLocaleText(district.name)}, ${getDistrictDataInfo(district)}`,
                                 }}
-                                control={(
-                                  <Checkbox
-                                    color="primary"
-                                    inputProps={{
-                                      'aria-label': `${getLocaleText(district.name)}, ${getDistrictDataInfo(district)}`,
-                                    }}
-                                    icon={<span className={classes.checkBoxIcon} />}
-                                    onChange={e => handleCheckboxChange(e, district)}
-                                    checked={areaSelections[`${district.id}`] || false}
-                                  />
-                              )}
-                                label={(
-                                  <StyledLabelTypography variant="body2" aria-hidden className={classes.statisticalDistrictListItemLabel}>
-                                    <span>
-                                      {`${getLocaleText(district.name)}`}
-                                    </span>
-                                    <span className={classes.statisticalDistrictListItemLabelInfo}>
-                                      {getDistrictDataInfo(district)}
-                                    </span>
-                                  </StyledLabelTypography>
-                                )}
+                                icon={<span className={classes.checkBoxIcon} />}
+                                onChange={e => handleCheckboxChange(e, district)}
+                                checked={areaSelections[`${district.id}`] || false}
                               />
-                            </ListItem>
-                          ))
-                        }
-                      </List>
-                    )}
-                  />
-                </React.Fragment>
-              </ListItem>
+                          )}
+                            label={(
+                              <StyledLabelTypography variant="body2" aria-hidden className={classes.statisticalDistrictListItemLabel}>
+                                <span>
+                                  {`${getLocaleText(district.name)}`}
+                                </span>
+                                <span className={classes.statisticalDistrictListItemLabelInfo}>
+                                  {getDistrictDataInfo(district)}
+                                </span>
+                              </StyledLabelTypography>
+                            )}
+                          />
+                        </ListItem>
+                      ))
+                    }
+                  </List>
+                )}
+              />
+              // <ListItem
+              //   divider
+              //   disableGutters
+              //   key={municipality}
+              //   className={`${classes.listItem}`}
+              // >
+              //   <React.Fragment key={municipality}>
+              //     <SMAccordion // City list accordion
+              //       defaultOpen={false}
+              //       disableUnmount
+              //       adornment={(
+              //         <FormControlLabel
+              //           className={classes.municipalityAdjustedCheckboxPadding}
+              //           classes={{
+              //             label: classes.statisticalCategoryTitle,
+              //           }}
+              //           control={(
+              //             <Checkbox
+              //               color="primary"
+              //               inputProps={{
+              //                 'aria-label': formatMessage({ id: `settings.city.${municipality}` }),
+              //               }}
+              //               icon={<span className={classes.checkBoxIcon} />}
+              //               onChange={() => handleMultiSelect(!isChecked, municipality)}
+              //               checked={isChecked}
+              //               indeterminate={isIndeterminate}
+              //             />
+              //           )}
+              //         />
+              //       )}
+              //       titleContent={(
+              //         <Typography component="h6" variant="body2">
+              //           <FormattedMessage id={`settings.city.${municipality}`} />
+              //         </Typography>
+              //       )}
+              //       collapseContent={(
+              //         <List className={classes.listNoPadding}>
+              //           {
+              //             data.map(district => (
+              //               <ListItem className={`${classes.listItem} ${classes.areaItem}`} key={district.id} divider>
+              //                 <FormControlLabel
+              //                   className={classes.statisticalAreaAdjustedCheckboxPadding}
+              //                   classes={{
+              //                     label: classes.statisticalCategoryTitle,
+              //                   }}
+              //                   control={(
+              //                     <Checkbox
+              //                       color="primary"
+              //                       inputProps={{
+              //                         'aria-label': `${getLocaleText(district.name)}, ${getDistrictDataInfo(district)}`,
+              //                       }}
+              //                       icon={<span className={classes.checkBoxIcon} />}
+              //                       onChange={e => handleCheckboxChange(e, district)}
+              //                       checked={areaSelections[`${district.id}`] || false}
+              //                     />
+              //                 )}
+              //                   label={(
+              //                     <StyledLabelTypography variant="body2" aria-hidden>
+              //                       <span>
+              //                         {`${getLocaleText(district.name)}`}
+              //                       </span>
+              //                       <span>
+              //                         {getDistrictDataInfo(district)}
+              //                       </span>
+              //                     </StyledLabelTypography>
+              //                   )}
+              //                 />
+              //               </ListItem>
+              //             ))
+              //           }
+              //         </List>
+              //       )}
+              //     />
+              //   </React.Fragment>
+              // </ListItem>
             );
           })
         }

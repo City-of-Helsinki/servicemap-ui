@@ -86,7 +86,7 @@ const ParkingAreaList = ({ areas, classes }) => {
           <Fragment key={fullId}>
             <ListItem
               key={fullId}
-              divider={areas.length !== i + 1}
+              // divider={areas.length !== i + 1}
               className={`${classes.listItem} ${classes.areaItem} ${fullId}`}
             >
               <FormControlLabel
@@ -116,7 +116,7 @@ const ParkingAreaList = ({ areas, classes }) => {
       <Fragment>
         <ListItem
           key="parkingSpaces"
-          divider
+          // divider
           className={`${classes.listItem} ${classes.areaItem} parkingSpaces`}
         >
           <FormControlLabel

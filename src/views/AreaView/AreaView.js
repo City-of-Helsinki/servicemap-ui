@@ -5,7 +5,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { List, ListItem, Typography } from '@mui/material';
-import { Map } from '@mui/icons-material';
+import { BusinessCenter, Clear, EscalatorWarning, LocationCity, Map, Star } from '@mui/icons-material';
 import { visuallyHidden } from '@mui/utils';
 import { focusDistrict, focusDistricts, useMapFocusDisabled } from '../MapView/utils/mapActions';
 import GeographicalTab from './components/GeographicalTab';
@@ -24,9 +24,9 @@ import {
   TitleBar,
   SettingsInfo,
   SMButton,
-  SMAccordion,
 } from '../../components';
 import StatisticalDistrictList from './components/StatisticalDistrictList';
+import SMAccordionListItem from '../../components/ListItems/SMAccordionListItem';
 
 
 const AreaView = ({
@@ -60,6 +60,8 @@ const AreaView = ({
   const getLocaleText = useLocaleText();
   const openItems = useSelector(state => state.districts.openItems);
   const selectedDistrictGeometry = selectedDistrictData[0]?.boundary;
+  const [open, setOpen] = useState(true);
+  const onOpen = (e, open) => setOpen(!open);
 
   const searchParams = parseSearchParams(location.search);
   const selectedArea = searchParams.selected;
@@ -309,16 +311,22 @@ const AreaView = ({
   const render = () => {
     const categories = [
       {
+        id: 'serviceTab',
         component: renderServiceTab(),
+        icon: <BusinessCenter />,
         title: intl.formatMessage({ id: 'area.tab.publicServices' }),
       },
       {
+        id: 'geographicalTab',
         component: renderGeographicalTab(),
+        icon: <LocationCity />,
         title: intl.formatMessage({ id: 'area.tab.geographical' }),
       },
       {
+        id: 'statisticalTab',
         component: <StatisticalDistrictList />,
         title: intl.formatMessage({ id: 'area.tab.statisticalDistricts' }),
+        icon: <EscalatorWarning />,
       },
     ];
     if (!embed) {
@@ -345,27 +353,41 @@ const AreaView = ({
           <List>
             {
               categories.map((category, i) => (
-                <ListItem
+                <SMAccordionListItem
+                  title={category.title}
+                  level={1}
+                  content={category.component}
                   divider
-                  disableGutters
-                  key={category.title}
-                  className={`${classes.listItem}`}
-                >
-                  <SMAccordion // Top level categories
-                    defaultOpen={false}
-                    disableUnmount
-                    onOpen={(e, open) => areaSectionSelection(open, i)}
-                    isOpen={areaSelection === i}
-                    elevated={areaSelection === i}
-                    titleContent={(
-                      <Typography component="p" variant="subtitle1">
-                        {category.title}
-                      </Typography>
-                    )}
-                    collapseContent={category.component}
-                  />
-                </ListItem>
+                  icon={category.icon}
+                  id={category.id}
+                  onSelection={(e, open) => areaSectionSelection(open, i)}
+                  selected={areaSelection === i}
+                />
               ))
+            }
+            {
+              // categories.map((category, i) => (
+              //   <ListItem
+              //     divider
+              //     disableGutters
+              //     key={category.title}
+              //     className={`${classes.listItem}`}
+              //   >
+              //     <SMAccordion // Top level categories
+              //       defaultOpen={false}
+              //       disableUnmount
+              //       onOpen={(e, open) => areaSectionSelection(open, i)}
+              //       isOpen={areaSelection === i}
+              //       elevated={areaSelection === i}
+              //       titleContent={(
+              //         <Typography component="h3" variant="subtitle1">
+              //           {category.title}
+              //         </Typography>
+              //       )}
+              //       collapseContent={category.component}
+              //     />
+              //   </ListItem>
+              // ))
             }
           </List>
           <SettingsInfo
@@ -403,6 +425,90 @@ const AreaView = ({
   };
 
   return render();
+
+  // const level5Content = (
+  //   <SMAccordionListItem
+  //     title="List Item level 5"
+  //     level={5}
+  //     // content="test"
+  //     icon={<Clear />}
+  //     id="test5"
+  //     onSelection={onOpen}
+  //     selected={open}
+  //     subtitle="Secondary"
+  //     checkbox
+  //   />
+  // );
+
+  // const level4Content = (
+  //   <SMAccordionListItem
+  //     title="List Item level 4"
+  //     level={4}
+  //     content={level5Content}
+  //     // icon={<Clear />}
+  //     id="test4"
+  //     onSelection={onOpen}
+  //     selected={open}
+  //     checkbox="default"
+  //   />
+  // );
+
+  // const level3Content = (
+  //   <SMAccordionListItem
+  //     title="List Item level 3"
+  //     level={3}
+  //     content={level4Content}
+  //     // icon={(
+  //     //   <DistrictToggleButton
+  //     //     selected={open}
+  //     //     district={{ id: 'layer' }}
+  //     //     onToggle={() => console.log('DistrictToggleButton')}
+  //     //     aria-hidden
+  //     //     inputProps={{
+  //     //       tabIndex: '-1',
+  //     //     }}
+  //     //   />
+  //     // )}
+  //     id="test3"
+  //     onSelection={onOpen}
+  //     selected={open}
+  //     subtitle="Test subtitle"
+  //     checkbox="switch"
+  //   />
+  // );
+
+  // const level2Content = (
+  //   <SMAccordionListItem
+  //     title="List Item level 2"
+  //     level={2}
+  //     content={level3Content}
+  //     icon={<Star />}
+  //     id="test2"
+  //     onSelection={onOpen}
+  //     selected={open}
+  //     checkbox={false}
+  //   />
+  // );
+
+  // // return render();
+  // return (
+  //   <SMAccordionListItem
+  //     // title={(
+  //     //   <Typography id="TestName">
+  //     //     Test title
+  //     //   </Typography>
+  //     // )}
+  //     title="List Item level 1"
+  //     level={1}
+  //     content={level2Content}
+  //     // icon={<Clear />}
+  //     id="test"
+  //     onSelection={onOpen}
+  //     selected={open}
+  //     subtitle="Test subtitle"
+  //     checkbox={false}
+  //   />
+  // );
 };
 
 AreaView.propTypes = {

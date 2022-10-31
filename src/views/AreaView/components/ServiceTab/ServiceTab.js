@@ -24,6 +24,7 @@ import ParkingAreaList from '../ParkingAreaList';
 import {
   SMAccordion,
 } from '../../../../components';
+import SMAccordionListItem from '../../../../components/ListItems/SMAccordionListItem';
 
 const ServiceTab = (props) => {
   const {
@@ -89,25 +90,62 @@ const ServiceTab = (props) => {
     return (
       <List className="districtList" disablePadding>
         {districList.map((district, i) => (
-          <Fragment key={district.id}>
-            <ListItem
-              key={district.id}
-              divider={districList.length !== i + 1}
-              className={`${classes.listItem} ${classes.areaItem} ${district.id}`}
-            >
-              {renderDistrictItem(district)}
-            </ListItem>
-
-            {/* Service list */}
-            {selectedDistrictType === district.id && (
-              <li>
-                <DistrictList
-                  district={district}
-                  selectedAddress={selectedAddress}
-                />
-              </li>
+          
+          <SMAccordionListItem
+            id={district.id}
+            title={(
+              <>
+                <Typography id={`${district.id}Name`} aria-hidden>
+                  <FormattedMessage id={`area.list.${district.name}`} />
+                </Typography>
+                {district.period && (
+                  <Typography id={`${district.id}Period`} aria-hidden className={classes.captionText} variant="caption">
+                    {district.period}
+                  </Typography>
+                )}
+              </>
             )}
-          </Fragment>
+            level={3}
+            content={(
+              <>
+                {selectedDistrictType === district.id && (
+                  <DistrictList
+                    district={district}
+                    selectedAddress={selectedAddress}
+                  />
+                )}
+              </>
+            )}
+            onSelection={() => handleRadioChange(district)}
+            selected={selectedDistrictType === district.id}
+            checkbox="switch"
+            switchProps={{
+              'aria-hidden': true,
+              inputProps: {
+                tabIndex: '-1',
+              },
+            }}
+            // checkbox
+          />
+          // <Fragment key={district.id}>
+          //   <ListItem
+          //     key={district.id}
+          //     divider={districList.length !== i + 1}
+          //     className={`${classes.listItem} ${classes.areaItem} ${district.id}`}
+          //   >
+          //     {renderDistrictItem(district)}
+          //   </ListItem>
+
+          //   {/* Service list */}
+          //   {selectedDistrictType === district.id && (
+          //     <li>
+          //       <DistrictList
+          //         district={district}
+          //         selectedAddress={selectedAddress}
+          //       />
+          //     </li>
+          //   )}
+          // </Fragment>
         ))}
       </List>
     );
@@ -123,10 +161,12 @@ const ServiceTab = (props) => {
     return (
       <>
         {renderDistrictList(parkingAreas)}
-        <div className={classes.subtitle}>
-          <Typography><FormattedMessage id="area.list.parkingSpaces" /></Typography>
+        <div className={classes.leftPadding}>
+          <div className={classes.subtitle}>
+            <Typography><FormattedMessage id="area.list.parkingSpaces" /></Typography>
+          </div>
+          <ParkingAreaList areas={parkingSpaces} />
         </div>
-        <ParkingAreaList areas={parkingSpaces} />
       </>
     );
   };
@@ -141,7 +181,7 @@ const ServiceTab = (props) => {
         const districList = districtData.filter(i => obj.districts.includes(i.name));
         return (
           <React.Fragment key={obj.titleID}>
-            <div className={classes.subtitle}>
+            <div className={`${classes.subtitle} ${classes.leftPadding}`}>
               <Typography><FormattedMessage id={obj.titleID} /></Typography>
             </div>
             {renderDistrictList(districList)}
@@ -161,23 +201,44 @@ const ServiceTab = (props) => {
     const defaultExpanded = initialOpenItems.includes(item.id) || selectedCategory === item.id;
     const ariaHidden = item.id === 'parking';
     return (
-      <ListItem aria-hidden={ariaHidden} key={item.titleID} className={classes.listItem} divider>
-        <SMAccordion
-          className={classes.accodrion}
-          onOpen={() => dispatch(handleOpenItems(item.id))}
-          defaultOpen={defaultExpanded}
-          titleContent={<Typography id={`${item.id}-content`} className={classes.bold}><FormattedMessage id={item.titleID} /></Typography>}
-          collapseContent={(
-            <>
-              <Divider aria-hidden />
-              <div className={classes.collapseArea}>
-                {renderCollapseContent(item)}
-              </div>
-            </>
-          )}
-        />
-      </ListItem>
+      <SMAccordionListItem
+        defaultOpen={defaultExpanded}
+        divider
+        title={<Typography id={`${item.id}-content`}><FormattedMessage id={item.titleID} /></Typography>}
+        level={2}
+        content={(
+          <>
+            <Divider aria-hidden />
+            <div className={classes.collapseArea}>
+              {renderCollapseContent(item)}
+            </div>
+          </>
+        )}
+        id={item.titleID}
+        onSelection={() => dispatch(handleOpenItems(item.id))}
+        listItemProps={{
+          'aria-hidden': ariaHidden,
+        }}
+      />
     );
+    // return (
+    //   <ListItem aria-hidden={ariaHidden} key={item.titleID} className={classes.listItem} divider>
+    //     <SMAccordion
+    //       className={classes.accodrion}
+    //       onOpen={() => dispatch(handleOpenItems(item.id))}
+    //       defaultOpen={defaultExpanded}
+    //       titleContent={<Typography id={`${item.id}-content`} className={classes.bold}><FormattedMessage id={item.titleID} /></Typography>}
+    //       collapseContent={(
+    //         <>
+    //           <Divider aria-hidden />
+    //           <div className={classes.collapseArea}>
+    //             {renderCollapseContent(item)}
+    //           </div>
+    //         </>
+    //       )}
+    //     />
+    //   </ListItem>
+    // );
   };
 
   const districtCategoryList = dataStructure.filter(obj => obj.id !== 'geographical');

@@ -22,6 +22,7 @@ import { getAddressText } from '../../../../utils/address';
 import {
   SMAccordion,
 } from '../../../../components';
+import SMAccordionListItem from '../../../../components/ListItems/SMAccordionListItem';
 
 
 const GeographicalTab = ({
@@ -135,59 +136,98 @@ const GeographicalTab = ({
             const opened = openCategory === district.id;
             const selected = selectedDistrictType === district.id;
             return (
-              <ListItem
-                divider
-                disableGutters
-                key={district.id}
-                className={`${classes.listItem} ${district.id}`}
-              >
-                <SMAccordion // Top level categories (neighborhood and postcode area)
-                  defaultOpen={initialOpenItems.includes(district.id)}
-                  onOpen={(e, open) => handleAccordionToggle(district, !open)}
-                  isOpen={opened}
-                  elevated={opened}
-                  adornment={(
-                    <DistrictToggleButton
-                      selected={selected}
-                      district={district}
-                      onToggle={e => handleRadioChange(district, e)}
-                      aria-hidden
-                    />
-                  )}
-                  titleContent={(
-                    <Typography id={`${district.id}Name`}>
-                      <FormattedMessage id={`area.list.${district.name}`} />
-                    </Typography>
-                  )}
-                  collapseContent={(
-                    <div className={classes.districtServiceList}>
-                      <SMAccordion // Unit list accordion
-                        defaultOpen={initialOpenItems.some(item => typeof item === 'number')}
-                        disabled={!filteredSubdistrictUnitsLength}
-                        className={classes.unitsAccordion}
-                        adornment={<FormatListBulleted className={classes.iconPadding} />}
-                        titleContent={(
-                          <Typography className={classes.captionText} variant="caption">
-                            <FormattedMessage
-                              id={`area.geographicalServices.${district.id}`}
-                              values={{ length: filteredSubdistrictUnitsLength }}
-                            />
-                          </Typography>
-                        )}
-                        collapseContent={(
-                          <GeographicalUnitList
-                            initialOpenItems={initialOpenItems}
+              <SMAccordionListItem
+                id={district.id}
+                onSelection={(e, open) => handleAccordionToggle(district, !open)}
+                selected={opened}
+                level={2}
+                title={(
+                  <Typography id={`${district.id}Name`}>
+                    <FormattedMessage id={`area.list.${district.name}`} />
+                  </Typography>
+                )}
+                content={(
+                  <div className={classes.districtServiceList}>
+                    <SMAccordion // Unit list accordion
+                      defaultOpen={initialOpenItems.some(item => typeof item === 'number')}
+                      disabled={!filteredSubdistrictUnitsLength}
+                      className={classes.unitsAccordion}
+                      adornment={<FormatListBulleted className={classes.iconPadding} />}
+                      titleContent={(
+                        <Typography className={classes.captionText} variant="caption">
+                          <FormattedMessage
+                            id={`area.geographicalServices.${district.id}`}
+                            values={{ length: filteredSubdistrictUnitsLength }}
                           />
-                        )}
-                      />
-                      <GeographicalDistrictList // District selection list
-                        district={district}
-                        map={map}
-                      />
-                    </div>
-                  )}
-                />
-              </ListItem>
+                        </Typography>
+                      )}
+                      collapseContent={(
+                        <GeographicalUnitList
+                          initialOpenItems={initialOpenItems}
+                        />
+                      )}
+                    />
+                    <GeographicalDistrictList // District selection list
+                      district={district}
+                      map={map}
+                    />
+                  </div>
+                )}
+                checkbox="switch"
+              />
+              // <ListItem
+              //   divider
+              //   disableGutters
+              //   key={district.id}
+              //   className={`${classes.listItem} ${district.id}`}
+              // >
+              //   <SMAccordion // Top level categories (neighborhood and postcode area)
+              //     defaultOpen={inessage id={`area.list.${district.name}`} />
+              //     onOpen={(e, open) => handleAccordionToggle(district, !open)}
+              //     isOpen={opened}
+              //     elevated={opened}
+              //     adornment={(
+              //       <DistrictToggleButton
+              //         selected={selected}
+              //         district={district}
+              //         onToggle={e => handleRadioChange(district, e)}
+              //         aria-hidden
+              //       />
+              //     )}
+              //     titleContent={(
+              //       <Typography id={`${district.id}Name`}>
+              //         <FormattedMessage id={`area.list.${district.name}`} />
+              //       </Typography>
+              //     )}
+              //     collapseContent={(
+              //       <div className={classes.districtServiceList}>
+              //         <SMAccordion // Unit list accordion
+              //           defaultOpen={initialOpenItems.some(item => typeof item === 'number')}
+              //           disabled={!filteredSubdistrictUnitsLength}
+              //           className={classes.unitsAccordion}
+              //           adornment={<FormatListBulleted className={classes.iconPadding} />}
+              //           titleContent={(
+              //             <Typography className={classes.captionText} variant="caption">
+              //               <FormattedMessage
+              //                 id={`area.geographicalServices.${district.id}`}
+              //                 values={{ length: filteredSubdistrictUnitsLength }}
+              //               />
+              //             </Typography>
+              //           )}
+              //           collapseContent={(
+              //             <GeographicalUnitList
+              //               initialOpenItems={initialOpenItems}
+              //             />
+              //           )}
+              //         />
+              //         <GeographicalDistrictList // District selection list
+              //           district={district}
+              //           map={map}
+              //         />
+              //       </div>
+              //     )}
+              //   />
+              // </ListItem>
             );
           })}
         </List>

@@ -73,9 +73,9 @@ const GeographicalDistrictList = ({ district, classes }) => {
   );
 
   return (
-    <>
+    <div className={classes.geographicalDistrictListContainer}>
       <div className={classes.municipalitySubtitle}>
-        <Typography component="h5" className={classes.bold}>
+        <Typography component="p" className={classes.bold}>
           <FormattedMessage id={`area.${district.name}.title`} />
         </Typography>
         {
@@ -90,7 +90,7 @@ const GeographicalDistrictList = ({ district, classes }) => {
         return (
           <React.Fragment key={municipality}>
             <div className={classes.municipalitySubtitle}>
-              <Typography component="h6" className={classes.bold}>
+              <Typography component="p" className={classes.bold}>
                 <FormattedMessage id={`settings.city.${municipality}`} />
               </Typography>
             </div>
@@ -115,7 +115,7 @@ const GeographicalDistrictList = ({ district, classes }) => {
           </React.Fragment>
         );
       })}
-    </>
+    </div>
   );
 };
 
