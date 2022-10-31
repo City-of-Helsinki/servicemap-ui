@@ -107,6 +107,26 @@ export default class ServiceMapAPI extends HttpClient {
     return this.get('service_node', options);
   }
 
+  // Fetch list of all services
+  services = async () => {
+    const options = {
+      page: '1',
+      page_size: '500',
+    };
+    return this.getConcurrent('service', options);
+  }
+
+  statisticalGeometry = async () => {
+    const options = {
+      page: 1,
+      page_size: 500,
+      geometry: true,
+      type: 'statistical_district'
+    };
+    return this.getConcurrent('administrative_division', options);
+
+  }
+
   areas = async (idList, geometry, additionalOptions) => {
     if (typeof idList !== 'string') {
       throw new APIFetchError('Invalid idList string provided to ServiceMapAPI areas method');
@@ -136,7 +156,7 @@ export default class ServiceMapAPI extends HttpClient {
     return this.getConcurrent('administrative_division', options);
   }
 
-  areaUnits = async (nodeID, progressCallback) => {
+  areaUnits = async (nodeID) => {
     if (typeof nodeID !== 'string') {
       throw new APIFetchError('Invalid nodeID string provided to ServiceMapAPI area unit fetch method');
     }
@@ -149,7 +169,7 @@ export default class ServiceMapAPI extends HttpClient {
       include: 'services',
     };
 
-    return this.getConcurrent('unit', options, progressCallback);
+    return this.getConcurrent('unit', options);
   }
 
   parkingAreaInfo = async (parkingID) => {

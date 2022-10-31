@@ -127,10 +127,10 @@ const GeographicalTab = ({
         {localAddressData?.address && localAddressData.districts?.length && (
           renderAddressInfo()
         )}
-        <Typography style={visuallyHidden} component="h3">
+        <Typography style={visuallyHidden} component="h4">
           <FormattedMessage id="area.list" />
         </Typography>
-        <List>
+        <List className={classes.listNoPadding}>
           {districtItems.map((district) => {
             const opened = openCategory === district.id;
             const selected = selectedDistrictType === district.id;

@@ -30,6 +30,7 @@ export default theme => ({
     height: '100%',
     justifyContent: 'left',
     textAlign: 'start',
+    wordBreak: 'break-word',
   },
   collapseContainer: {
     width: '100%',

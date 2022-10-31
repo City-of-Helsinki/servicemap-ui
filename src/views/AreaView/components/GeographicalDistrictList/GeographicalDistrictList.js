@@ -75,16 +75,22 @@ const GeographicalDistrictList = ({ district, classes }) => {
   return (
     <>
       <div className={classes.municipalitySubtitle}>
-        <Typography component="h4" className={classes.bold}>
+        <Typography component="h5" className={classes.bold}>
           <FormattedMessage id={`area.${district.name}.title`} />
         </Typography>
+        {
+          cityFilteredData.length === 0
+          && (
+            <Typography variant="body2"><FormattedMessage id="area.city.selection.empty" /></Typography>
+          )
+        }
       </div>
       {cityFilteredData.map((data) => {
         const { municipality } = data[0];
         return (
           <React.Fragment key={municipality}>
             <div className={classes.municipalitySubtitle}>
-              <Typography component="h5" className={classes.bold}>
+              <Typography component="h6" className={classes.bold}>
                 <FormattedMessage id={`settings.city.${municipality}`} />
               </Typography>
             </div>

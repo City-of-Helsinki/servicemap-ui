@@ -8,9 +8,10 @@ const dataSetInitialState = {
   max: 0,
   next: null,
   previousSearch: null,
+  activeFetches: 0,
 };
 
-const dataSetReducer = (state, action, prefix) => {
+export const dataSetReducer = (state, action, prefix) => {
   switch (action.type) {
     case `${prefix}_IS_FETCHING`:
       return {
@@ -63,6 +64,41 @@ const dataSetReducer = (state, action, prefix) => {
         errorMessage: null,
         isFetching: false,
         data: [],
+      };
+    case `${prefix}_ADDITIVE_IS_FETCHING`:
+      return {
+        ...state,
+        isFetching: true,
+        errorMessage: null,
+        previousSearch: action.search,
+        count: state.activeFetches > 0 ? state.count : 0,
+        max: state.activeFetches > 0 ? state.max : 0,
+        next: null,
+        activeFetches: state.activeFetches + 1,
+      };
+    case `${prefix}_ADDITIVE_FETCH_PROGRESS_UPDATE`:
+      return {
+        ...state,
+        count: action.count ? state.count + action.count : state.count,
+        max: action.max ? state.max + action.max : state.max,
+      };
+    case `${prefix}_ADDITIVE_FETCH_HAS_ERRORED`:
+      return {
+        ...state,
+        isFetching: state.activeFetches - 1,
+        errorMessage: action.errorMessage,
+        count: 0,
+        max: 0,
+        activeFetches: state.activeFetches - 1,
+      };
+    case `${prefix}_ADDITIVE_FETCH_DATA_SUCCESS`:
+      return {
+        ...state,
+        isFetching: state.activeFetches - 1 > 0,
+        errorMessage: null,
+        data: [...state.data, ...action.data],
+        count: state.activeFetches - 1 > 0 ? state.count : [...state.data, ...action.data].length,
+        activeFetches: state.activeFetches - 1,
       };
     default:
       return state;
@@ -123,6 +159,8 @@ const dataSingle = (state, action, prefix) => {
 // Fetch data set reducers
 export const searchResults = (state = dataSetInitialState, action) => dataSetReducer(state, action, 'SEARCH_RESULTS');
 export const service = (state = dataSetInitialState, action) => dataSetReducer(state, action, 'SERVICE');
+export const statisticalDistrictUnits = (state = dataSetInitialState, action) => dataSetReducer(state, action, 'STATISTICAL_DISTRICT_UNITS');
+export const statisticalDistrictServices = (state = dataSetInitialState, action) => dataSetReducer(state, action, 'STATISTICAL_DISTRICT_SERVICES');
 export const unitEvents = (state = dataSingleInitialState, action) => dataSetReducer(state, action, 'SELECTED_UNIT_EVENTS');
 export const reservations = (state = dataSingleInitialState, action) => dataSetReducer(state, action, 'SELECTED_UNIT_RESERVATIONS');
 export const alertNews = (state = dataSingleInitialState, action) => dataSetReducer(state, action, 'ALERT_NEWS');

@@ -180,7 +180,7 @@ export const fetchDistrictUnitList = nodeID => (
       const smAPI = new ServiceMapAPI();
       smAPI.setOnProgressUpdate(progressUpdate);
       dispatch(startUnitFetch(nodeID));
-      const units = await smAPI.areaUnits(nodeID, progressUpdate);
+      const units = await smAPI.areaUnits(nodeID);
       units.forEach((unit) => {
         unit.object_type = 'unit';
         unit.division_id = nodeID;
