@@ -64,6 +64,13 @@ const styles = theme => ({
     display: 'flex',
     flex: '1 1 auto',
   },
+  statisticalDistrictListItemLabel: {
+    margin: `${theme.spacing(1)} 0`,
+  },
+  statisticalDistrictListItemLabelInfo: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
   municipalityCheckbox: {
     padding: 0,
     margin: 0,

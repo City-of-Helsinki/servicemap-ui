@@ -102,6 +102,20 @@ const StatisticalDistrictListContentComponent = ({
       id = 'area.statisticalDistrict.label';
     }
 
+    if (!isTotal) {
+      return (
+        <>
+          <span>
+            <FormattedMessage id="area.statisticalDistrict.label.people" values={{ count: district.selectedValue }} />
+            ,
+          </span>
+          <span>
+            <FormattedMessage id="area.statisticalDistrict.label.percent" values={{ percent: district.selectedProportion.toFixed(2) }} />
+          </span>
+        </>
+      );
+    }
+
     return formatMessage(
       { id },
       {
@@ -190,11 +204,11 @@ const StatisticalDistrictListContentComponent = ({
                                   />
                               )}
                                 label={(
-                                  <StyledLabelTypography variant="body2" aria-hidden>
+                                  <StyledLabelTypography variant="body2" aria-hidden className={classes.statisticalDistrictListItemLabel}>
                                     <span>
                                       {`${getLocaleText(district.name)}`}
                                     </span>
-                                    <span>
+                                    <span className={classes.statisticalDistrictListItemLabelInfo}>
                                       {getDistrictDataInfo(district)}
                                     </span>
                                   </StyledLabelTypography>
