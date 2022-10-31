@@ -155,7 +155,7 @@ export default class HttpClient {
         if (e.name === 'AbortError') {
           this.throwAPIError(`Error ${endpoint} fetch aborted`, e);
         } else {
-          this.throwAPIError(`Error while fetching ${endpoint}:`, e);
+          this.throwAPIError(`Error while fetching ${endpoint}: ${e.message}`, e);
         }
       });
   }

@@ -18,6 +18,14 @@ const styles = theme => ({
   list: {
     paddingLeft: 10,
   },
+  listNoPadding: {
+    padding: 0,
+    marginTop: theme.spacing(0),
+    marginBottom: theme.spacing(0),
+    '& li:last-of-type': {
+      borderBottom: 'none',
+    },
+  },
   subsistrictAccordion: {
     padding: 0,
     marginLeft: -11,
@@ -45,10 +53,25 @@ const styles = theme => ({
     paddingBottom: theme.spacing(1),
     paddingLeft: 26,
   },
-  municipalitySubtitle: {
-    height: 48,
+  municipalityAdjustedCheckboxPadding: {
+    paddingLeft: theme.spacing(2),
+    marginRight: 0,
     display: 'flex',
-    alignItems: 'center',
+    flex: '1 1 auto',
+  },
+  statisticalAreaAdjustedCheckboxPadding: {
+    paddingLeft: theme.spacing(6),
+    display: 'flex',
+    flex: '1 1 auto',
+  },
+  municipalityCheckbox: {
+    padding: 0,
+    margin: 0,
+  },
+  municipalitySubtitle: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'start',
     paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(1),
     paddingLeft: theme.spacing(4),
@@ -116,6 +139,12 @@ const styles = theme => ({
   },
   selectedAddress: {
     fontSize: '1.125rem',
+  },
+  statisticalCategoryTitle: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    flex: '1 1 auto',
   },
   subdistrictContainer: {
     flexDirection: 'column',
@@ -213,6 +242,43 @@ const styles = theme => ({
   },
   switchBorder: {
     border: '1px solid #949494',
+  },
+  serviceFilter: {
+    backgroundColor: theme.palette.white.main,
+    flex: '1 0 auto',
+  },
+  serviceFilterButton: {
+    flex: '0 0 auto',
+    borderRadius: 0,
+    borderTopRightRadius: 4,
+    borderBottomRightRadius: 4,
+    boxShadow: 'none',
+    padding: theme.spacing(1, 2),
+    textTransform: 'none',
+    '& svg': {
+      fontSize: 20,
+      marginBottom: theme.spacing(0.5),
+    },
+    flexDirection: 'column',
+  },
+  serviceFilterButtonFocus: {
+    boxShadow: `0 0 0 4px ${theme.palette.focusBorder.main} !important`,
+  },
+  serviceFilterButtonLabel: {
+    flexDirection: 'column',
+  },
+  serviceFilterContainer: {
+    padding: theme.spacing(2),
+    paddingLeft: 72,
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  serviceFilterText: {
+    paddingBottom: theme.spacing(1),
+    fontWeight: 'bold',
+  },
+  serviceFilterInput: {
+    margin: theme.spacing(1),
   },
   servciceList: {
     paddingTop: theme.spacing(2),

@@ -24,6 +24,7 @@ import {
 import {
   direction, order, mapRef, settingsToggled, measuringMode,
 } from './reducers/simpleReducers';
+import statisticalDistrict from './reducers/statisticalDistrict';
 
 // Export all redux reducers here
 export default combineReducers({
@@ -62,5 +63,6 @@ export default combineReducers({
     direction,
     order,
   }),
+  statisticalDistrict,
   redirectService,
 });

@@ -32,6 +32,9 @@ import CustomControls from './components/CustomControls';
 import { getSelectedUnitEvents } from '../../redux/selectors/selectedUnit';
 import useMapUnits from './utils/useMapUnits';
 import { Loading } from '../../components';
+import StatisticalDistricts from './components/StatisticalDistricts';
+import { getStatisticalDistrictUnitsState } from '../../redux/selectors/statisticalDistrict';
+import SimpleStatisticalComponent from './components/StatisticalDataMapInfo';
 
 if (global.window) {
   require('leaflet');
@@ -87,6 +90,7 @@ const MapView = (props) => {
   const embedded = isEmbed({ url: location.pathname });
   const getAddressNavigatorParams = useNavigationParams();
   const districtUnitsFetch = useSelector(state => state.districts.unitFetch);
+  const statisticalDistrictFetch = useSelector(getStatisticalDistrictUnitsState);
 
   const unitData = useMapUnits();
 
@@ -231,7 +235,17 @@ const MapView = (props) => {
         : prevMap.props.zoom + zoomDifference;
     }
 
-    const showLoadingScreen = districtViewFetching || (embedded && unitsLoading);
+    const showLoadingScreen = statisticalDistrictFetch.isFetching
+      || districtViewFetching
+      || (embedded && unitsLoading);
+    let showLoadingReducer = null;
+    let hideLoadingNumbers = false;
+    if (statisticalDistrictFetch.isFetching) {
+      showLoadingReducer = statisticalDistrictFetch;
+      hideLoadingNumbers = true;
+    } else if (districtViewFetching) {
+      showLoadingReducer = districtUnitsFetch;
+    }
     const userLocationAriaLabel = intl.formatMessage({ id: !userLocation ? 'location.notAllowed' : 'location.center' });
     const eventSearch = parseSearchParams(location.search).events;
     const defaultBounds = parseSearchParams(location.search).bbox;
@@ -288,9 +302,10 @@ const MapView = (props) => {
             )}
           {showLoadingScreen ? (
             <div className={classes.loadingScreen}>
-              <Loading reducer={districtUnitsFetch.isFetching ? districtUnitsFetch : null} />
+              <Loading reducer={showLoadingReducer} hideNumbers={hideLoadingNumbers} />
             </div>
           ) : null}
+          <StatisticalDistricts />
           <Districts mapOptions={mapOptions} embedded={embedded} />
           <TransitStops mapObject={mapObject} />
 
@@ -333,6 +348,9 @@ const MapView = (props) => {
                 toggleSidebar={toggleSidebar}
               />
             ) : null}
+          </CustomControls>
+          <CustomControls position="topright">
+            <SimpleStatisticalComponent />
           </CustomControls>
           <CustomControls position="bottomright">
             {!embedded ? (
