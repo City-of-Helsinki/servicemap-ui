@@ -7,7 +7,7 @@ export default theme => ({
     display: 'flex',
     alignItems: 'center',
     minHeight: 44,
-    background: theme.palette.background.main,
+    background: theme.palette.primary.main,
     boxShadow: '0 2px 4px 0 rgba(0,0,0,0.5)',
     color: '#fff',
     padding: theme.spacing(1),

@@ -1,6 +1,6 @@
 export default theme => ({
   background: {
-    background: theme.palette.background.main,
+    background: theme.palette.primary.main,
   },
   root: {
     color: theme.palette.primary.highContrast,
@@ -128,7 +128,7 @@ export default theme => ({
     margin: theme.spacing(3, 0.5, 1, 0.5),
   },
   headerBackground: {
-    background: theme.palette.background.front,
+    background: theme.palette.primary.main,
   },
   suggestionSubtitle: {
     display: 'flex',
