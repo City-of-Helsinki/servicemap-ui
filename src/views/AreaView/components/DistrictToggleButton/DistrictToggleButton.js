@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Switch } from '@mui/material';
+import { SMSwitch } from '../../../../components';
 
 const DistrictToggleButton = ({
   district, onToggle, selected, selectionSize, label, classes, inputProps, ...rest
 }) => (
   <div id={district.id} className={classes.areaSwitch}>
-    <Switch
+    <SMSwitch
       color="primary"
       classes={{ thumb: classes.switchBorder }}
       size="small"
