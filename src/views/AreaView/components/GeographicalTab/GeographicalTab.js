@@ -130,19 +130,20 @@ const GeographicalTab = ({
         <Typography style={visuallyHidden} component="h4">
           <FormattedMessage id="area.list" />
         </Typography>
-        <List className={classes.listNoPadding}>
+        <List className={`${classes.listNoPadding} ${classes.listLevelTwo}`}>
           {districtItems.map((district) => {
             const opened = openCategory === district.id;
             const selected = selectedDistrictType === district.id;
             return (
               <ListItem
-                divider
+                // divider
                 disableGutters
                 key={district.id}
                 className={`${classes.listItem} ${district.id}`}
               >
                 <SMAccordion // Top level categories (neighborhood and postcode area)
                   defaultOpen={initialOpenItems.includes(district.id)}
+                  className={classes.geographicalCategoryListAccordion}
                   onOpen={(e, open) => handleAccordionToggle(district, !open)}
                   isOpen={opened}
                   elevated={opened}
@@ -160,7 +161,7 @@ const GeographicalTab = ({
                     </Typography>
                   )}
                   collapseContent={(
-                    <div className={classes.districtServiceList}>
+                    <div className={`${classes.districtServiceList} ${classes.listLevelThree}`}>
                       <SMAccordion // Unit list accordion
                         defaultOpen={initialOpenItems.some(item => typeof item === 'number')}
                         disabled={!filteredSubdistrictUnitsLength}

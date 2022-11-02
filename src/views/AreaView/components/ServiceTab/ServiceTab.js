@@ -87,12 +87,11 @@ const ServiceTab = (props) => {
     const listDistrictAreas = ['rescue_area', 'rescue_district', 'rescue_sub_district'].includes(selectedDistrictType);
     const DistrictList = listDistrictAreas ? DistrictAreaList : DistrictUnitList;
     return (
-      <List className="districtList" disablePadding>
-        {districList.map((district, i) => (
+      <List className={`districtList ${classes.listLevelThree}`} disablePadding>
+        {districList.map(district => (
           <Fragment key={district.id}>
             <ListItem
               key={district.id}
-              divider={districList.length !== i + 1}
               className={`${classes.listItem} ${classes.areaItem} ${district.id}`}
             >
               {renderDistrictItem(district)}
@@ -123,7 +122,7 @@ const ServiceTab = (props) => {
     return (
       <>
         {renderDistrictList(parkingAreas)}
-        <div className={classes.subtitle}>
+        <div className={classes.serviceTabSubtitle}>
           <Typography><FormattedMessage id="area.list.parkingSpaces" /></Typography>
         </div>
         <ParkingAreaList areas={parkingSpaces} />
@@ -141,7 +140,7 @@ const ServiceTab = (props) => {
         const districList = districtData.filter(i => obj.districts.includes(i.name));
         return (
           <React.Fragment key={obj.titleID}>
-            <div className={classes.subtitle}>
+            <div className={classes.serviceTabSubtitle}>
               <Typography><FormattedMessage id={obj.titleID} /></Typography>
             </div>
             {renderDistrictList(districList)}
@@ -163,7 +162,7 @@ const ServiceTab = (props) => {
     return (
       <ListItem aria-hidden={ariaHidden} key={item.titleID} className={classes.listItem} divider>
         <SMAccordion
-          className={classes.accodrion}
+          className={classes.accordion}
           onOpen={() => dispatch(handleOpenItems(item.id))}
           defaultOpen={defaultExpanded}
           titleContent={<Typography id={`${item.id}-content`} className={classes.bold}><FormattedMessage id={item.titleID} /></Typography>}
@@ -197,7 +196,7 @@ const ServiceTab = (props) => {
       <Typography style={visuallyHidden} component="h4">
         <FormattedMessage id="area.list" />
       </Typography>
-      <List>
+      <List className={classes.listLevelTwo}>
         {districtCategoryList.map(item => renderCategoryItem(item))}
       </List>
     </div>
