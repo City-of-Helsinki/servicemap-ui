@@ -196,7 +196,7 @@ const ServiceTab = (props) => {
       <Typography style={visuallyHidden} component="h3">
         <FormattedMessage id="area.list" />
       </Typography>
-      <List className={classes.listLevelTwo}>
+      <List className={`${classes.listLevelTwo} ${classes.serviceTabCategoryList}`}>
         {districtCategoryList.map(item => renderCategoryItem(item))}
       </List>
     </div>

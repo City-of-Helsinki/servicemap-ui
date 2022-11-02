@@ -68,6 +68,11 @@ const styles = theme => ({
     paddingBottom: theme.spacing(1),
     paddingLeft: 26,
   },
+  serviceTabCategoryList: {
+    '& > li:last-of-type': {
+      borderBottom: 'none',
+    },
+  },
   serviceTabSubtitle: {
     height: 48,
     display: 'flex',
