@@ -7,12 +7,13 @@ import styles from './styles';
 // Listen to redux state
 const mapStateToProps = (state) => {
   const { alerts } = state;
-  const { errors, news } = alerts;
+  const { errors } = alerts;
 
   return {
     errors: errors.data || [],
-    news: news.data || [],
   };
 };
 
-export default withStyles(styles)(injectIntl(connect(mapStateToProps)(AlertBox)));
+export default withStyles(styles)(
+  injectIntl(connect(mapStateToProps)(AlertBox))
+);

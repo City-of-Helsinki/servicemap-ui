@@ -5,6 +5,7 @@ import { Link, Paper, Typography } from '@mui/material';
 import { getIcon } from '../../../SMIcon';
 import styles from './styles';
 import useLocaleText from '../../../../utils/useLocaleText';
+import ServiceMapButton from '../../../ServiceMapButton';
 
 const NewsItem = ({ classes, item }) => {
   const getLocaleText = useLocaleText();
@@ -30,36 +31,36 @@ const NewsItem = ({ classes, item }) => {
 
   return (
     <Paper className={classes.container}>
-      <div className="row padding">
+      <div className='row padding'>
         {icon}
         <div className={`column ${classes.titleContainer}`}>
-          <Typography variant="subtitle1" component="h4">{tTitle}</Typography>
+          <Typography variant='subtitle1' component='h4'>
+            {tTitle}
+          </Typography>
         </div>
       </div>
-      {
-        imgSrc
-        && (
-          <img alt="" src={imgSrc} className={classes.image} />
-        )
-      }
+      {imgSrc && <img alt='' src={imgSrc} className={classes.image} />}
 
-      <div className={`column ${!imgSrc ? classes.hidePaddingTop : ''} ${classes.bottomContent}`}>
-        <Typography
-          align="left"
-          component="p"
-          variant="body2"
-        >
+      <div
+        className={`column ${!imgSrc ? classes.hidePaddingTop : ''} ${
+          classes.bottomContent
+        }`}
+      >
+        <Typography align='left' component='p' variant='body2'>
           {tLeadParagraph}
         </Typography>
-        {
-          teUrlTitle
-          && urlHref
-          && (
-            <Link href={urlHref} target="_blank">
-              <Typography align="left" variant="body2" component="p">{teUrlTitle}</Typography>
-            </Link>
-          )
-        }
+        {teUrlTitle && urlHref && (
+          <ServiceMapButton
+            onClick={() => window.open(urlHref)}
+            role='link'
+            color='primary'
+            className={classes.newsButton}
+          >
+            <Typography align='left' variant='body2' component='p'>
+              {teUrlTitle}
+            </Typography>
+          </ServiceMapButton>
+        )}
       </div>
     </Paper>
   );
@@ -67,6 +68,7 @@ const NewsItem = ({ classes, item }) => {
 
 NewsItem.propTypes = {
   classes: PropTypes.shape({
+    newsButton: PropTypes.string,
     bottomContent: PropTypes.string,
     container: PropTypes.string,
     hidePaddingTop: PropTypes.string,
@@ -92,6 +94,5 @@ NewsItem.propTypes = {
     }),
   }).isRequired,
 };
-
 
 export default withStyles(styles)(NewsItem);
