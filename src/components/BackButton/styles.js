@@ -7,7 +7,7 @@ export default theme => ({
   },
   containerText: {
     color: 'inherit',
-    fontSize: '0.875rem',
+    fontSize: '0.773rem',
     paddingLeft: theme.spacing(1),
   },
 });

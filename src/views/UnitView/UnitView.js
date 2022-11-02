@@ -402,7 +402,7 @@ const UnitView = (props) => {
         className={classes.linkButton}
         onClick={onLinkOpenClick}
       >
-        <Typography color="inherit" variant="body2">
+        <Typography fontSize="0.773rem" color="inherit" variant="body2">
           <FormattedMessage id="general.share.link" />
         </Typography>
         <Share className={classes.linkButtonIcon} />
@@ -416,11 +416,10 @@ const UnitView = (props) => {
         )}
         <TitleBar
           sticky
-          icon={!isMobile ? <AddressIcon className={classes.icon} /> : null}
           title={title}
           backButton={!!isMobile}
           titleComponent="h3"
-          distance={elem}
+          shareLink={elem}
         />
       </>
     );

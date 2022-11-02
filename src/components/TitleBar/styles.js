@@ -6,7 +6,7 @@ export default theme => ({
   container: {
     display: 'flex',
     alignItems: 'center',
-    minHeight: 44,
+    height: 44,
     background: theme.palette.primary.main,
     boxShadow: '0 2px 4px 0 rgba(0,0,0,0.5)',
     color: '#fff',
@@ -17,10 +17,19 @@ export default theme => ({
     flexDirection: 'column',
     alignItems: 'flex-start',
     paddingLeft: theme.spacing(2),
-    paddingBottom: theme.spacing(2),
+    paddingBottom: theme.spacing(1),
+    height: 72,
   },
   textBar: {
-    paddingLeft: 36,
+    paddingLeft: theme.spacing(3),
+  },
+  linkContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    paddingBottom: theme.spacing(1.5),
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+    },
   },
   titleContainer: {
     flexDirection: 'row',
@@ -34,7 +43,6 @@ export default theme => ({
     flex: '1 1 auto',
     textTransform: 'none',
     textAlign: 'left',
-    marginLeft: 10,
     '&:focus': {
       outlineStyle: 'none',
     },
@@ -49,9 +57,9 @@ export default theme => ({
     color: 'inherit',
     flex: '0 1 auto',
     padding: 0,
-    margin: theme.spacing(1),
-    marginTop: 0,
+    margin: 0,
     fontSize: '1.125rem',
+    marginLeft: theme.spacing(-0.5),
   },
   icon: {
     display: 'flex',

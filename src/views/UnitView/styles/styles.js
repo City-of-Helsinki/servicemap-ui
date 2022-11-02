@@ -48,6 +48,7 @@ export default theme => ({
   linkButton: {
     color: 'white',
     textTransform: 'none',
+    marginLeft: 'auto',
   },
   linkButtonIcon: {
     fontSize: 24,

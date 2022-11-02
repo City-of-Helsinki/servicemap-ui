@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
-  List, ListItem, Collapse, Checkbox, Typography, ButtonBase, NoSsr, Divider,
+  List, Checkbox, Typography,
 } from '@mui/material';
-import {
-  ArrowDropUp, ArrowDropDown, Search, Cancel,
-} from '@mui/icons-material';
-import { FormattedMessage } from 'react-intl';
+import { Search } from '@mui/icons-material';
+import styled from '@emotion/styled';
 import config from '../../../config';
 import useLocaleText from '../../utils/useLocaleText';
 import { SMAccordion, SMButton, TitleBar } from '../../components';
@@ -28,8 +26,6 @@ const ServiceTreeView = (props) => {
   const [services, setServices] = useState(prevServices);
   const [opened, setOpened] = useState(prevOpened);
   const [selected, setSelected] = useState(prevSelected);
-  const [selectedOpen, setSelectedOpen] = useState(false);
-
 
   let citySettings = [];
   config.cities.forEach((city) => {
@@ -155,33 +151,6 @@ const ServiceTreeView = (props) => {
       setSelected([...selected, ...newState]);
       e.stopPropagation();
     }
-  };
-
-  const focusTitle = () => {
-    const title = document.getElementsByClassName('TitleText')[0];
-    title.focus();
-  };
-
-  // Remove selection and refocus
-  const handleRemoveSelection = (e, item, focus = false) => {
-    handleCheckboxClick(e, item);
-    // If focus set to true
-    // Attempt to focus to either previous or next sibling in list
-    if (focus) {
-      const sibling = e.currentTarget.parentNode?.previousSibling?.childNodes[1]
-        || e.currentTarget.parentNode?.nextSibling?.childNodes[1];
-      if (sibling) {
-        sibling.focus();
-      } else {
-        focusTitle();
-      }
-    }
-  };
-
-  // Clear selections and focus to title
-  const handleRemoveAllSelections = () => {
-    setSelected([]);
-    focusTitle();
   };
 
   const drawCheckboxLines = (isOpen, level, id) => {
@@ -318,115 +287,6 @@ const ServiceTreeView = (props) => {
     </List>
   );
 
-  const renderSelectedCities = () => {
-    const cityString = citySettings.join(', ');
-    return (
-      <NoSsr>
-        <div className={classes.infoContainer}>
-          {citySettings.length ? (
-            <>
-              <Typography className={`${classes.infoText} ${classes.bold}`}>
-                <FormattedMessage id="settings.city.info" values={{ count: citySettings.length }} />
-                : &nbsp;
-              </Typography>
-              <Typography className={classes.infoText}>
-                {cityString}
-              </Typography>
-            </>
-          ) : null}
-        </div>
-      </NoSsr>
-    );
-  };
-
-  const renderSelectionList = selectedList => (
-    <>
-      <div className={classes.infoContainer}>
-        <ButtonBase
-          aria-expanded={selectedOpen}
-          disabled={!selectedList.length}
-          onClick={() => setSelectedOpen(!selectedOpen)}
-          className={classes.selectionsButton}
-          focusVisibleClassName={classes.selectionFocus}
-        >
-          <Typography className={`${classes.selectionText} ${classes.bold}`}>
-            <FormattedMessage id="services.selections" values={{ count: selectedList.length }} />
-          </Typography>
-          {selectedOpen
-            ? <ArrowDropUp className={classes.white} />
-            : <ArrowDropDown className={classes.white} />}
-        </ButtonBase>
-
-        {selectedList.length ? (
-          <ButtonBase
-            className={classes.right}
-            disabled={!selectedList.length}
-            onClick={() => handleRemoveAllSelections()}
-            focusVisibleClassName={classes.selectionFocus}
-          >
-            <Typography className={classes.deleteText}>
-              <FormattedMessage id="services.selections.delete.all" />
-            </Typography>
-            <Cancel className={classes.deleteIcon} />
-          </ButtonBase>
-        ) : null}
-      </div>
-      <Divider aria-hidden className={classes.whiteDivider} />
-
-      <Collapse aria-hidden={!selectedOpen} in={selectedOpen}>
-        {selectedOpen && (
-        <List className={classes.seleectionList} disablePadding>
-          {selectedList.map(item => (
-            item.name && (
-              <ListItem dense key={item.id} disableGutters>
-                <Typography className={classes.selectionText} aria-hidden variant="body2">
-                  {getLocaleText(item.name)}
-                </Typography>
-                <ButtonBase
-                  className={classes.right}
-                  aria-label={intl.formatMessage({ id: 'services.selections.delete.sr' }, { service: getLocaleText(item.name) })}
-                  onClick={e => handleRemoveSelection(e, item, true)}
-                  focusVisibleClassName={classes.selectionFocus}
-                >
-                  <Typography className={classes.deleteText} variant="body2">
-                    <FormattedMessage id="services.selections.delete" />
-                  </Typography>
-                  <Cancel className={classes.deleteIcon} />
-                </ButtonBase>
-              </ListItem>
-            )
-          ))}
-        </List>
-        )}
-        {selectedList.length ? <Divider aria-hidden className={classes.whiteDivider} /> : null}
-      </Collapse>
-    </>
-  );
-
-  const renderSearchButton = (selectedList) => {
-    const ids = selectedList.map(i => i.id);
-    const selectedString = selectedList.map(i => getLocaleText(i.name)).join(', ');
-    return (
-      <SMButton
-        id="ServiceTreeSearchButton"
-        aria-label={selectedList.length
-          ? intl.formatMessage({ id: 'services.search.sr.selected' }, { services: selectedString })
-          : intl.formatMessage({ id: 'services.search.sr' })}
-        margin
-        className={classes.searchButton}
-        disabled={!selectedList.length}
-        icon={<Search />}
-        messageID="services.search"
-        onClick={() => {
-          setTreeState({ services, selected, opened });
-          navigator.push('search', { service_node: ids });
-        }}
-        role="link"
-      />
-    );
-  };
-
-
   // If node's parent is also checked, add only parent to list of selected nodes for search
   const selectedList = [];
   selected.forEach((e) => {
@@ -435,26 +295,54 @@ const ServiceTreeView = (props) => {
     }
   });
 
+  const ids = selectedList.map(i => i.id);
+
   return (
-    <>
+    <StyledFlexContainer>
       <TitleBar
         title={intl.formatMessage({ id: 'general.pageTitles.serviceTree.title' })}
         titleComponent="h3"
         backButton
         className={classes.topBarColor}
       />
-      <div className={classes.topArea}>
-        {renderSelectedCities()}
-        {renderSelectionList(selectedList)}
-      </div>
+      <Typography className={classes.guidanceInfoText} variant="body2">{intl.formatMessage({ id: 'services.info' })}</Typography>
       <div className={classes.mainContent}>
-        <Typography className={classes.guidanceInfoText} variant="body2">{intl.formatMessage({ id: 'services.info' })}</Typography>
-        {renderSearchButton(selectedList)}
         {renderServiceNodeList()}
       </div>
-    </>
+      <StyledFloatingDiv>
+        <SMButton
+          className={classes.searchButton}
+          color="primary"
+          disabled={!ids.length}
+          icon={<Search />}
+          messageID="services.search"
+          onClick={() => {
+            setTreeState({ services, selected, opened });
+            navigator.push('search', { service_node: ids });
+          }}
+        />
+      </StyledFloatingDiv>
+    </StyledFlexContainer>
   );
 };
+
+const StyledFlexContainer = styled.div(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  height: '100%',
+}));
+
+const StyledFloatingDiv = styled.div(({ theme }) => ({
+  display: 'flex',
+  width: '100%',
+  padding: theme.spacing(2),
+  position: 'sticky',
+  bottom: 0,
+  backgroundColor: '#fff',
+  marginTop: 'auto',
+  boxSizing: 'border-box',
+  boxShadow: '0px -4px 4px rgba(0, 0, 0, 0.36)',
+}));
 
 ServiceTreeView.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
