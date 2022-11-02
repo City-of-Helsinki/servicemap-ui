@@ -26,11 +26,11 @@ export default theme => ({
   wrapper: {
     position: 'relative',
     flex: '0 1 auto',
-    borderRadius: 4,
+    borderRadius: '4px',
   },
   mobileWrapper: {
     flex: '0 1 auto',
-    borderRadius: 4,
+    borderRadius: '4px',
   },
   mobileWrapperActive: {
     flex: '0 1 auto',
@@ -40,6 +40,7 @@ export default theme => ({
   container: {
     alignItems: 'center',
     display: 'flex',
+    height: 54,
     flex: '0 0 auto',
     backgroundColor: '#fff',
     border: '1px solid #ACACAC',
@@ -58,7 +59,8 @@ export default theme => ({
     justifyContent: 'center',
     display: 'flex',
     flexDirection: 'column',
-    padding: theme.spacing(1, 0.5),
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(0.5),
   },
   infoTextSticky: {
     backgroundColor: theme.palette.primary.main,
@@ -89,22 +91,26 @@ export default theme => ({
   },
   iconButtonSearch: {
     flex: '0 0 auto',
+    width: 87,
+    height: '100%',
     borderRadius: 0,
     borderTopRightRadius: 4,
     borderBottomRightRadius: 4,
     boxShadow: 'none',
     padding: theme.spacing(0.5, 0),
+    backgroundColor: theme.palette.primary.main,
+    color: '#fff',
+    display: 'flex',
+    flexDirection: 'row',
     textTransform: 'none',
-    '& svg': {
-      fontSize: 28,
+    '&:hover': {
+      backgroundColor: 'rgb(30, 32, 39)',
+      transition: '0.5s',
     },
-    flexDirection: 'column',
-  },
-  searchButtonFocus: {
-    boxShadow: '0 0 0 4px #fff !important',
-  },
-  iconButtonSearchLabel: {
-    flexDirection: 'column',
+    '& svg': {
+      fontSize: 24,
+      paddingLeft: theme.spacing(0.5),
+    },
   },
   icon: {
     flex: '0 1 auto',
