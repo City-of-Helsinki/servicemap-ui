@@ -2,26 +2,26 @@ import config from '../../../../config';
 
 const { topBarHeight, topBarHeightMobile } = config;
 
-const styles = () => ({
+const styles = theme => ({
   drawerContainer: {
-    color: '#fff',
     top: topBarHeight,
-    backgroundColor: '#353638',
-    maxWidth: 350,
-    padding: 2,
+    backgroundColor: '#fff',
+    width: '100%',
     overflow: 'visible',
+    zIndex: theme.zIndex.infront,
   },
   scrollContainer: {
+    display: 'flex',
+    flexDirection: 'column',
     height: `calc(100vh - ${config.topBarHeight}px)`,
     overflowY: 'auto',
   },
   drawerContainerMobile: {
-    color: '#fff',
     top: topBarHeightMobile,
-    backgroundColor: '#353638',
-    maxWidth: 350,
-    padding: 2,
+    backgroundColor: '#fff',
+    width: '100%',
     overflow: 'visible',
+    zIndex: theme.zIndex.behind,
   },
   drawerButton: {
     color: 'inherit',

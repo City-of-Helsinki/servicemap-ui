@@ -126,6 +126,7 @@ const zIndex = {
   forward: 50,
   sticky: 51,
   infront: 900,
+  appBar: 1200,
 };
 
 const typography = {
