@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
 import URI from 'urijs';
 import {
-  Build, Code, GetApp, Print,
+  Code, GetApp, Print, Settings,
 } from '@mui/icons-material';
 import { useSelector } from 'react-redux';
 import DropDownMenuButton from '../DropDownMenuButton';
@@ -142,7 +142,7 @@ const ToolMenu = ({
         id={ToolMenuButtonID}
         ref={toolMenuButton}
         panelID="ToolMenuPanel"
-        buttonIcon={<Build />}
+        buttonIcon={<Settings />}
         buttonText={toolMenuText}
         menuAriaLabel={toolMenuText}
         menuItems={menuItems}

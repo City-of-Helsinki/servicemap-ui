@@ -336,6 +336,8 @@ const translations = {
   'general.pageTitles.info': 'Infosida',
   'general.pageTitles.feedback': 'Responssida',
   'general.pageTitles.area': 'Områdessida',
+  'general.pageLink.area': 'Alueesi palvelut', // TODO: translate
+
 
   // General - Pagination
   'general.pagination.previous': 'Föregående sida',
@@ -355,7 +357,7 @@ const translations = {
   'general.search': 'Sök',
   'general.share.link': 'Dela länken',
   'general.time.short': 'kl.',
-  'general.tools': 'Verktyg',
+  'general.tools': 'Karttatyökalut', // TODO: translate
   // Readspeaker
   'general.readspeaker.buttonText': 'Lyssna', // TODO: verify
   'general.readspeaker.title': 'Lyssna med ReadSpeaker webReader', // TODO: verify
@@ -394,6 +396,8 @@ const translations = {
 
   // Map
   'map': 'Karta',
+  'map.open': 'Öppna Karta',
+  'map.close': 'Stäng Karta',
   'map.ariaLabel': 'Kartvy. Kartans uppgifter kan i nuläget granskas endast visuellt.',
   'map.attribution.osm': '&copy; <a href="http://osm.org/copyright">Upphovsmännen bakom OpenStreetMaps</a>',
   'map.attribution.helsinki': '&copy; Helsingfors, Esbo, Vanda och Grankulla städer',
@@ -647,12 +651,12 @@ const translations = {
 
   // Tools
   'tool.download': 'Exportera',
-  'tool.measuring': 'Mät avstånd (granskas endast visuellt och med mus)',
+  'tool.measuring': 'Mittaa etäisyys hiirellä', // TODO: translate
   'tool.measuring.stop': 'Sluta mäta',
   'tool.print': 'Skriv ut',
 
   'info.title': 'Om tjänsten och tillgänglighetsredogörelsen',
-  'info.statement': 'Tillgänglighetsredogörelsen (ny flik)',
+  'info.statement': 'Tillgänglighetsredogörelsen',
 
   'alert.close': 'Stäng meddelande',
 };
