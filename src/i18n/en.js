@@ -408,6 +408,8 @@ const translations = {
   'map.unit.cluster.popup.info': '{count} service points',
   'map.button.sidebar.hide': 'Hide sidebar',
   'map.button.sidebar.show': 'Show sidebar',
+  'map.button.expand': 'Expand',
+  'map.button.expand.aria': 'Open map',
 
   // Print
   'print.alert': 'Use the toolbox printing option',

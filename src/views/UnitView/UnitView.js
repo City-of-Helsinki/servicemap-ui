@@ -1,14 +1,15 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Typography } from '@mui/material';
+import { Button, ButtonBase, Typography } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import {
-  Map, Mail, Hearing, Share,
+  Map, Mail, Hearing, Share, Expand, OpenInFull,
 } from '@mui/icons-material';
 import { visuallyHidden } from '@mui/utils';
 import { Helmet } from 'react-helmet';
 import { useDispatch, useSelector } from 'react-redux';
+import styled from '@emotion/styled';
 import {
   AcceptSettingsDialog,
   AddressIcon,
@@ -40,6 +41,7 @@ import UnitsServicesList from './components/UnitsServicesList';
 import PriceInfo from './components/PriceInfo';
 import { parseSearchParams } from '../../utils';
 import { fetchServiceUnits } from '../../redux/actions/services';
+import MapView from '../MapView';
 
 const UnitView = (props) => {
   const {
@@ -336,25 +338,6 @@ const UnitView = (props) => {
     );
   };
 
-  const renderMobileButtons = () => (
-    <div className={classes.mobileButtonArea}>
-      <SMButton
-        aria-hidden
-        messageID="general.showOnMap"
-        icon={<Map />}
-        onClick={(e) => {
-          e.preventDefault();
-          if (navigator) {
-            navigator.openMap();
-          }
-        }}
-        margin
-        role="link"
-      />
-      {feedbackButton()}
-    </div>
-  );
-
 
   const renderHead = () => {
     if (!unit || !unit.complete) {
@@ -384,6 +367,30 @@ const UnitView = (props) => {
       </Helmet>
     );
   };
+
+  const renderUnitLocation = () => (
+    <div className={classes.unitLocationContainer}>
+      <SMButton
+        color="primary"
+        className={classes.mapButton}
+        aria-label={intl.formatMessage({ id: 'map.button.expand.aria' })}
+        icon={<StyledMapIcon />}
+        onClick={(e) => {
+          e.preventDefault();
+          if (navigator) {
+            navigator.openMap();
+          }
+        }}
+      >
+        <Typography sx={{ fontSize: '0.875rem', fontWeight: '500' }}>
+          <FormattedMessage id="map.button.expand" />
+        </Typography>
+      </SMButton>
+      <div className={classes.mapContainer}>
+        <MapView disableInteraction />
+      </div>
+    </div>
+  );
 
   const render = () => {
     const title = unit && unit.name ? getLocaleText(unit.name) : '';
@@ -484,25 +491,24 @@ const UnitView = (props) => {
                 {TopArea}
                 {/* Unit image */}
                 {
-                unit.picture_url
-                && (
-
-                  <div className={classes.imageContainer}>
-                    <img
-                      className={classes.image}
-                      alt={imageAlt}
-                      src={unit.picture_url}
-                    />
-                    {
-                      unit.picture_caption
-                      && (
-                        <Typography variant="body2" className={classes.imageCaption}>{getLocaleText(unit.picture_caption)}</Typography>
-                      )
-                    }
-                  </div>
-                )
-              }
-                {isMobile && renderMobileButtons()}
+                  isMobile
+                    ? renderUnitLocation(unit)
+                    : unit.picture_url && (
+                      <div className={classes.imageContainer}>
+                        <img
+                          className={classes.image}
+                          alt={imageAlt}
+                          src={unit.picture_url}
+                        />
+                        {
+                          unit.picture_caption
+                          && (
+                            <Typography variant="body2" className={classes.imageCaption}>{getLocaleText(unit.picture_caption)}</Typography>
+                          )
+                        }
+                      </div>
+                    )
+                }
               </>
           )}
           />
@@ -526,6 +532,13 @@ const UnitView = (props) => {
 };
 
 export default UnitView;
+
+const StyledMapIcon = styled(OpenInFull)(({ theme }) => ({
+  order: 2,
+  marginRight: '-4px',
+  paddingLeft: theme.spacing(1),
+  fontSize: '18px',
+}));
 
 // Typechecking
 UnitView.propTypes = {

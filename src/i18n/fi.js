@@ -408,6 +408,8 @@ const translations = {
   'map.unit.cluster.popup.info': '{count} toimipistettä',
   'map.button.sidebar.hide': 'Pienennä sivupaneeli',
   'map.button.sidebar.show': 'Laajenna sivupaneeli',
+  'map.button.expand': 'Laajenna',
+  'map.button.expand.aria': 'Avaa kartta',
 
 
   // Print

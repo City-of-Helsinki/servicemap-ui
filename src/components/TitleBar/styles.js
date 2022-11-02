@@ -83,6 +83,6 @@ export default theme => ({
   mobileSticky: {
     position: 'sticky',
     top: topBarHeightMobile,
-    zIndex: theme.zIndex.sticky,
+    zIndex: 100,
   },
 });
