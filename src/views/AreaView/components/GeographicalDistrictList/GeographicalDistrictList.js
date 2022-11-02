@@ -75,7 +75,7 @@ const GeographicalDistrictList = ({ district, classes }) => {
   return (
     <>
       <div className={classes.municipalitySubtitle}>
-        <Typography component="h5" className={classes.bold}>
+        <Typography component="h4" className={classes.bold}>
           <FormattedMessage id={`area.${district.name}.title`} />
         </Typography>
         {

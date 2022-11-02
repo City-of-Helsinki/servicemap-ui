@@ -127,7 +127,7 @@ const GeographicalTab = ({
         {localAddressData?.address && localAddressData.districts?.length && (
           renderAddressInfo()
         )}
-        <Typography style={visuallyHidden} component="h4">
+        <Typography style={visuallyHidden} component="h3">
           <FormattedMessage id="area.list" />
         </Typography>
         <List className={`${classes.listNoPadding} ${classes.listLevelTwo}`}>

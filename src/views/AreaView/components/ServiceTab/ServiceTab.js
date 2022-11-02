@@ -193,7 +193,7 @@ const ServiceTab = (props) => {
 
   return (
     <div>
-      <Typography style={visuallyHidden} component="h4">
+      <Typography style={visuallyHidden} component="h3">
         <FormattedMessage id="area.list" />
       </Typography>
       <List className={classes.listLevelTwo}>
