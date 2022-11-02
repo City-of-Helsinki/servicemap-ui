@@ -303,6 +303,7 @@ const translations = {
   'general.distance.kilometers': 'Kilometrin päässä',
   'general.yes': 'Kyllä',
   'general.no': 'Ei',
+  'general.openSettings': 'Avaa asetukset',
   'general.closeSettings': 'Sulje asetukset',
   'general.fetching': 'Ladataan tietoja...',
   'general.home': 'Koti',
@@ -596,6 +597,8 @@ const translations = {
 
   // Settings
   'settings': 'Asetukset',
+  'settings.open': 'Avaa asetusvalinnat',
+  'settings.close': 'Sulje asetusvalinnat',
   'settings.change': 'Muokkaa asetuksiasi',
   'settings.drawer.aria.title': 'Tämän hetkiset asetukset',
   'settings.citySettings': 'Kaupunki',
@@ -649,6 +652,9 @@ const translations = {
   'settings.aria.open': 'Avaa asetukset',
   'settings.aria.opened': 'Asetukset avattu',
   'settings.aria.saved': 'Asetukset on tallennettu',
+  'settings.choose.mobility': 'Valitse liikkumisrajoitteesi',
+  'settings.choose.senses': 'Valitse aistirajoitteesi',
+  'settings.choose.cities': 'Valitse kaupunkiasetuksesi',
 
   // Tools
   'tool.download': 'Lataa tiedot',

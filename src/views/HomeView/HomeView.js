@@ -1,17 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Map } from '@mui/icons-material';
+import { useIntl } from 'react-intl';
 import {
   getIcon,
   MobileComponent,
   NewsInfo,
   PaperButton,
   SearchBar,
+  SettingsComponent,
 } from '../../components';
 import config from '../../../config';
 import { useNavigationParams } from '../../utils/address';
 import useLocaleText from '../../utils/useLocaleText';
-import { useIntl } from 'react-intl';
 
 const HomeView = (props) => {
   const {
@@ -19,7 +20,7 @@ const HomeView = (props) => {
   } = props;
 
   const getLocaleText = useLocaleText();
-  const { formatMessage } = useIntl()
+  const { formatMessage } = useIntl();
   const getAddressNavigatorParams = useNavigationParams();
 
 
@@ -48,7 +49,7 @@ const HomeView = (props) => {
     return (
       <div className={classes.background}>
         <div className={classes.buttonContainer}>
-          <nav aria-label={formatMessage({ id: `app.navigation.home` })}>
+          <nav aria-label={formatMessage({ id: 'app.navigation.home' })}>
             {areaSelection}
             <PaperButton
               messageID="home.buttons.closeByServices"
@@ -102,6 +103,7 @@ const HomeView = (props) => {
         hideBackButton
         header
       />
+      <SettingsComponent />
       {
         renderNavigationOptions()
       }

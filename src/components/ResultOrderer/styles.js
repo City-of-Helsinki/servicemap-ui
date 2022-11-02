@@ -8,7 +8,7 @@ export default theme => ({
     flex: '0 0 auto',
     background: theme.palette.primary.main,
     color: theme.palette.primary.highContrast,
-    padding: theme.spacing(0, 3, 3, 3),
+    padding: theme.spacing(0, 4, 3, 3),
   },
   formControl: {
     display: 'flex',

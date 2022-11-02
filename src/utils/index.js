@@ -94,6 +94,7 @@ export const keyboardHandler = (callback, keys) => {
     event.stopPropagation();
     const ref = event.which;
     if (ref && codes.indexOf(ref) >= 0) {
+      event.preventDefault();
       return callback(event);
     }
     return null;

@@ -304,6 +304,7 @@ const translations = {
   'general.distance.kilometers': 'Kilometers avstånd',
   'general.yes': 'Ja',
   'general.no': 'Nej',
+  'general.openSettings': 'Öppna inställningarna',
   'general.closeSettings': 'Stäng inställningarna',
   'general.fetching': 'Laddar data...',
   'general.home': 'Hem',
@@ -595,6 +596,8 @@ const translations = {
 
   // Settings
   'settings': 'Inställningar',
+  'settings.open': 'Avaa asetusvalinnat', // TODO: translate
+  'settings.close': 'Sulje asetusvalinnat', // TODO: translate
   'settings.change': 'Redigera dina inställningar',
   'settings.drawer.aria.title': 'Nuvarande inställningar',
   'settings.citySettings': 'Stad',
@@ -648,6 +651,9 @@ const translations = {
   'settings.aria.open': 'Öppna inställningarna',
   'settings.aria.opened': 'Inställningarna har öppnats',
   'settings.aria.saved': 'Inställningarna har sparats',
+  'settings.choose.mobility': 'Valitse liikkumisrajoitteesi', // TODO: translate
+  'settings.choose.senses': 'Valitse aistirajoitteesi', // TODO: translate
+  'settings.choose.cities': 'Valitse kaupunkiasetuksesi', // TODO: translate
 
   // Tools
   'tool.download': 'Exportera',
