@@ -325,22 +325,23 @@ const AreaView = ({
       return (
         <div>
           <TitleBar
-            title={intl.formatMessage({ id: 'general.pageTitles.area' })}
+            title={intl.formatMessage({ id: 'general.pageLink.area' })}
             titleComponent="p"
             backButton
           />
-          <div className={classes.addressArea}>
-            <AddressSearchBar
-              handleAddressChange={setSelectedAddress}
-              title={(
-                <>
-                  <FormattedMessage id="area.searchbar.infoText.address" />
-                  {' '}
-                  <FormattedMessage id="area.searchbar.infoText.optional" />
-                </>
+          <Typography className={classes.infoText}>
+            <FormattedMessage id="home.buttons.area" />
+          </Typography>
+          <AddressSearchBar
+            handleAddressChange={setSelectedAddress}
+            title={(
+              <>
+                <FormattedMessage id="area.searchbar.infoText.address" />
+                {' '}
+                <FormattedMessage id="area.searchbar.infoText.optional" />
+              </>
               )}
-            />
-          </div>
+          />
           <List>
             {
               categories.map((category, i) => (

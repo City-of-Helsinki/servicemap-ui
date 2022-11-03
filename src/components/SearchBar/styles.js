@@ -6,8 +6,7 @@ export default theme => ({
     color: theme.palette.primary.highContrast,
     display: 'flex',
     flexDirection: 'column',
-    padding: theme.spacing(3),
-    paddingTop: theme.spacing(0.5),
+    padding: theme.spacing(2),
     boxShadow: '0 2px 2px 0 rgba(0,0,0,0.5)',
     flex: '0 0 auto',
   },
@@ -131,7 +130,7 @@ export default theme => ({
   },
   headerText: {
     fontWeight: 'bold',
-    margin: theme.spacing(3, 0.5, 1, 0.5),
+    margin: theme.spacing(3, 0, 1, 0),
   },
   headerBackground: {
     background: theme.palette.primary.main,

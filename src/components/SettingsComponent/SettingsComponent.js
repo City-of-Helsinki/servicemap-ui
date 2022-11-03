@@ -157,7 +157,7 @@ const SettingsNew = () => {
           disableUnmount
           onOpen={(e, open) => setSettingVisible(!open)}
           titleContent={settingsVisible
-            ? <Typography><FormattedMessage id="general.closeSettings" /></Typography>
+            ? <Typography><FormattedMessage id="general.hideSettings" /></Typography>
             : <Typography><FormattedMessage id="general.openSettings" /></Typography>
           }
           collapseContent={(
@@ -178,8 +178,8 @@ const StyledAccordion = styled(SMAccordion)(({ theme }) => ({
   height: 32,
   backgroundColor: theme.palette.primary.main,
   color: theme.palette.primary.highContrast,
-  paddingLeft: theme.spacing(3),
-  paddingRight: theme.spacing(4),
+  paddingLeft: theme.spacing(2),
+  paddingRight: theme.spacing(3),
   '& svg': {
     color: theme.palette.primary.highContrast,
   },
@@ -187,8 +187,8 @@ const StyledAccordion = styled(SMAccordion)(({ theme }) => ({
 
 const StyledAutocomplete = styled(Autocomplete)(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
-  paddingLeft: theme.spacing(3),
-  paddingRight: theme.spacing(3),
+  paddingLeft: theme.spacing(2),
+  paddingRight: theme.spacing(2),
   paddingTop: theme.spacing(1),
   paddingBottom: theme.spacing(1),
 

@@ -212,7 +212,7 @@ const AddressSearchBar = ({ title, intl, handleAddressChange }) => {
 };
 
 const StyledContainer = styled.div(({ theme }) => ({
-  padding: theme.spacing(3),
+  padding: theme.spacing(2),
   paddingTop: 0,
   backgroundColor: theme.palette.primary.main,
   color: '#fff',

@@ -305,6 +305,7 @@ const translations = {
   'general.no': 'Ei',
   'general.openSettings': 'Avaa asetukset',
   'general.closeSettings': 'Sulje asetukset',
+  'general.hideSettings': 'Piilota asetukset',
   'general.fetching': 'Ladataan tietoja...',
   'general.home': 'Koti',
   'general.home.logo.ariaLabel': 'Palvelukartta - Siirry etusivulle',

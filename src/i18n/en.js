@@ -305,6 +305,7 @@ const translations = {
   'general.no': 'No',
   'general.openSettings': 'Open settings',
   'general.closeSettings': 'Close settings',
+  'general.hideSettings': 'Hide settings',
   'general.fetching': 'Loading data...',
   'general.home': 'Home',
   'general.home.logo.ariaLabel': 'Servicemap - Go to home page',
