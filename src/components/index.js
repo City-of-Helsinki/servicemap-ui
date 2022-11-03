@@ -22,6 +22,7 @@ import SettingsText from './SettingsText';
 import SMButton from './ServiceMapButton';
 import SMRadio from './SMRadio';
 import SMAccordion from './SMAccordion';
+import SMSwitch from './SMSwitch';
 import TabLists from './TabLists';
 import TitleBar from './TitleBar';
 import Dialog from './Dialog';
@@ -85,6 +86,7 @@ export {
   SMAccordion,
   SMButton,
   SMRadio,
+  SMSwitch,
   SuggestionItem,
   TabLists,
   TitleBar,

@@ -96,12 +96,12 @@ const StatisticalDistrictListComponent = ({
           const disableServicesAccordion = !Object.keys(selectedAreas).some(a => selectedAreas[a]);
           return (
             <ListItem
-              divider
               disableGutters
               key={layer}
               className={`${classes.listItem} ${layer}`}
             >
               <SMAccordion // Layers in top level category
+                className={classes.statisticalLayerAccordion}
                 defaultOpen={false}
                 onOpen={(e, open) => handleAccordionToggle(layer, !open, isForecast)}
                 isOpen={selected}
@@ -123,7 +123,7 @@ const StatisticalDistrictListComponent = ({
                   </Typography>
                 )}
                 collapseContent={(
-                  <div className={classes.districtServiceList}>
+                  <div className={`${classes.districtServiceList} ${classes.listLevelFour}`}>
                     <Typography component="h3" style={visuallyHidden}>
                       <FormattedMessage id="area.tab.statisticalDistricts" />
                       <FormattedMessage id={`area.list.statistic.${category.type}`} />
@@ -152,9 +152,9 @@ const StatisticalDistrictListComponent = ({
                         />
                       )}
                     />
-                    <StyledInfoText component="p" variant="caption">
+                    <Typography className={classes.statisticalUnitInfo} component="p" variant="caption">
                       <FormattedMessage id="area.statisticalDistrict.info" />
-                    </StyledInfoText>
+                    </Typography>
                     <StatisticalDistrictListContent
                       shownLayer={layer}
                     />
@@ -172,7 +172,7 @@ const StatisticalDistrictListComponent = ({
   const renderLayerCategories = () => {
     if (layerCategoryKeys.length) {
       return (
-        <List className={classes.listNoPadding}>
+        <List className={`${classes.listNoPadding} ${classes.listLevelTwo}`}>
           {
             layerCategoryKeys.map((key) => {
               const layerCategory = layerCategories[key];
@@ -186,6 +186,7 @@ const StatisticalDistrictListComponent = ({
                   className={`${classes.listItem} ${key}`}
                 >
                   <SMAccordion // Top level categories
+                    className={classes.statisticalCategoryAccordion}
                     defaultOpen={false}
                     disableUnmount
                     onOpen={(e, open) => handleCategoryAccoridonToggle(layerCategory.type, !open)}
@@ -198,7 +199,7 @@ const StatisticalDistrictListComponent = ({
                       </Typography>
                     )}
                     collapseContent={(
-                      <List className={classes.listNoPadding}>
+                      <List className={`${classes.listNoPadding} ${classes.listLevelThree}`}>
                         {renderLayers(layerCategory)}
                       </List>
                     )}
@@ -244,12 +245,4 @@ const StyledLoadingContainer = styled('div')(({ theme }) => ({
 
 const StyledNoDataTypography = styled(Typography)(({ theme }) => ({
   margin: `${theme.spacing(0.5)} ${theme.spacing(2)}`,
-}));
-
-const StyledInfoText = styled(Typography)(({ theme }) => ({
-  backgroundColor: 'rgba(222, 222, 222, 0.56)',
-  padding: `${theme.spacing(2)} ${theme.spacing(4)}`,
-  paddingLeft: theme.spacing(10),
-  fontWeight: 'normal',
-  color: 'black',
 }));
