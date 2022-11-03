@@ -148,13 +148,13 @@ const StatisticalDistrictListContentComponent = ({
             const isIndeterminate = someChildIsChecked && someChildNotChecked;
             return (
               <ListItem
-                divider
                 disableGutters
                 key={municipality}
                 className={`${classes.listItem}`}
               >
                 <React.Fragment key={municipality}>
                   <SMAccordion // City list accordion
+                    className={classes.statisticalCityAccordion}
                     defaultOpen={false}
                     disableUnmount
                     adornment={(

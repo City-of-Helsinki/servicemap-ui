@@ -5,7 +5,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { List, ListItem, Typography } from '@mui/material';
-import { Map } from '@mui/icons-material';
+import { BusinessCenter, EscalatorWarning, LocationCity, Map } from '@mui/icons-material';
 import { visuallyHidden } from '@mui/utils';
 import { focusDistrict, focusDistricts, useMapFocusDisabled } from '../MapView/utils/mapActions';
 import GeographicalTab from './components/GeographicalTab';
@@ -311,14 +311,17 @@ const AreaView = ({
       {
         component: renderServiceTab(),
         title: intl.formatMessage({ id: 'area.tab.publicServices' }),
+        icon: <BusinessCenter className={classes.icon} />,
       },
       {
         component: renderGeographicalTab(),
         title: intl.formatMessage({ id: 'area.tab.geographical' }),
+        icon: <LocationCity className={classes.icon} />,
       },
       {
         component: <StatisticalDistrictList />,
         title: intl.formatMessage({ id: 'area.tab.statisticalDistricts' }),
+        icon: <EscalatorWarning className={classes.icon} />,
       },
     ];
     if (!embed) {
@@ -352,6 +355,7 @@ const AreaView = ({
                   className={`${classes.listItem}`}
                 >
                   <SMAccordion // Top level categories
+                    adornment={category.icon}
                     defaultOpen={false}
                     disableUnmount
                     onOpen={(e, open) => areaSectionSelection(open, i)}
