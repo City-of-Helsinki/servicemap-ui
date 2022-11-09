@@ -177,6 +177,7 @@ export default {
   },
   "serviceMapAPI": {
     "root": settings.SERVICEMAP_API,
+    "version": settings.SERVICEMAP_API_VERSION,
     "id": 'SERVICEMAP_API',
   },
   "eventsAPI": {

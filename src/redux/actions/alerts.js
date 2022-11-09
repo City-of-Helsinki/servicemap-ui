@@ -9,7 +9,7 @@ export const fetchNews = () => async (dispatch) => {
   } = alertNews;
 
   dispatch(isFetching());
-  fetch(`${config.serviceMapAPI.root}/announcement/`)
+  fetch(`${config.serviceMapAPI.root}/${config.serviceMapAPI.version}/announcement/`)
     .then(res => res.json())
     .then(data => dispatch(fetchSuccess(data.results)))
     .catch((e) => {
@@ -27,7 +27,7 @@ export const fetchErrors = () => async (dispatch) => {
   } = alertErrors;
 
   dispatch(isFetching());
-  fetch(`${config.serviceMapAPI.root}/error_message/`)
+  fetch(`${config.serviceMapAPI.root}/${config.serviceMapAPI.version}/error_message/`)
     .then(res => res.json())
     .then(data => dispatch(fetchSuccess(data.results)))
     .catch((e) => {

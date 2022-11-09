@@ -6,10 +6,12 @@ export default class ServiceMapAPI extends HttpClient {
     if (
       typeof config?.serviceMapAPI?.root === 'string'
       && config.serviceMapAPI.root.indexOf('undefined') !== -1
+      && typeof config?.serviceMapAPI?.version === 'string'
+      && config.serviceMapAPI.version.indexOf('undefined') !== -1
     ) {
       throw new APIFetchError('ServicemapAPI baseURL missing');
     }
-    super(config.serviceMapAPI.root, serviceMapAPIName);
+    super(`${config.serviceMapAPI.root}/${config.serviceMapAPI.version}`, serviceMapAPIName);
   }
 
   search = async (query, additionalOptions) => {
@@ -121,10 +123,9 @@ export default class ServiceMapAPI extends HttpClient {
       page: 1,
       page_size: 500,
       geometry: true,
-      type: 'statistical_district'
+      type: 'statistical_district',
     };
     return this.getConcurrent('administrative_division', options);
-
   }
 
   areas = async (idList, geometry, additionalOptions) => {
@@ -197,5 +198,21 @@ export default class ServiceMapAPI extends HttpClient {
     };
 
     return this.getConcurrent('unit', options);
+  }
+
+  sendStats = async (data) => {
+    if (typeof data.embed === 'undefined' || typeof data.mobile_device === 'undefined') {
+      throw new APIFetchError('Invalid data provided for ServiceMapAPI sendStats fetch method');
+    }
+    if (
+      typeof config?.serviceMapAPI?.root === 'string'
+      && config.serviceMapAPI.root.indexOf('undefined') !== -1
+    ) {
+      throw new APIFetchError('ServicemapAPI missing serviceMapAPI root url in sendStats fetch');
+    }
+
+    const baseUrlOverride = config.serviceMapAPI.root;
+
+    return this.post('stats', data, baseUrlOverride);
   }
 }
