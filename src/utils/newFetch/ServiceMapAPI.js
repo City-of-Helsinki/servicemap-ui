@@ -4,14 +4,20 @@ import HttpClient, { APIFetchError, serviceMapAPIName } from './HTTPClient';
 export default class ServiceMapAPI extends HttpClient {
   constructor() {
     if (
-      typeof config?.serviceMapAPI?.root === 'string'
-      && config.serviceMapAPI.root.indexOf('undefined') !== -1
-      && typeof config?.serviceMapAPI?.version === 'string'
-      && config.serviceMapAPI.version.indexOf('undefined') !== -1
+      typeof config?.serviceMapAPI?.root !== 'string'
+      || typeof config?.serviceMapAPI?.version !== 'string'
+      || (
+        typeof config?.serviceMapAPI?.root === 'string'
+        && config.serviceMapAPI.root.indexOf('undefined') !== -1
+      )
+      || (
+        typeof config?.serviceMapAPI?.version === 'string'
+        && config.serviceMapAPI.version.indexOf('undefined') !== -1
+      )
     ) {
       throw new APIFetchError('ServicemapAPI baseURL missing');
     }
-    super(`${config.serviceMapAPI.root}/${config.serviceMapAPI.version}`, serviceMapAPIName);
+    super(`${config.serviceMapAPI.root}${config.serviceMapAPI.version}`, serviceMapAPIName);
   }
 
   search = async (query, additionalOptions) => {

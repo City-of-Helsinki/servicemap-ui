@@ -12,14 +12,14 @@ export const APIHandlers = {
     envName: config.accessibilitySentenceAPI.id,
   },
   address: {
-    url: `${config.serviceMapAPI.root}/${config.serviceMapAPI.version}/address/`,
+    url: `${config.serviceMapAPI.root}${config.serviceMapAPI.version}/address/`,
     options: {
       page_size: 5,
     },
     envName: config.serviceMapAPI.id,
   },
   district: {
-    url: `${config.serviceMapAPI.root}/${config.serviceMapAPI.version}/administrative_division/`,
+    url: `${config.serviceMapAPI.root}${config.serviceMapAPI.version}/administrative_division/`,
     options: {
       geometry: true,
     },
@@ -33,7 +33,7 @@ export const APIHandlers = {
     envName: config.serviceMapAPI.id,
   },
   search: {
-    url: `${config.serviceMapAPI.root}/${config.serviceMapAPI.version}/search/`,
+    url: `${config.serviceMapAPI.root}${config.serviceMapAPI.version}/search/`,
     options: {
       page: 1,
       page_size: 200,
@@ -44,17 +44,17 @@ export const APIHandlers = {
     envName: config.serviceMapAPI.id,
   },
   service: {
-    url: id => `${config.serviceMapAPI.root}/${config.serviceMapAPI.version}/service/${id}/`,
+    url: id => `${config.serviceMapAPI.root}${config.serviceMapAPI.version}/service/${id}/`,
     options: {},
     envName: config.serviceMapAPI.id,
   },
   serviceRedirect: {
-    url: `${config.serviceMapAPI.root}/${config.serviceMapAPI.version}/redirect/unit/`,
+    url: `${config.serviceMapAPI.root}${config.serviceMapAPI.version}/redirect/unit/`,
     options: {},
     envName: config.serviceMapAPI.id,
   },
   unit: {
-    url: id => `${config.serviceMapAPI.root}/${config.serviceMapAPI.version}/unit/${id}/`,
+    url: id => `${config.serviceMapAPI.root}${config.serviceMapAPI.version}/unit/${id}/`,
     options: {
       accessibility_description: true,
       include: 'service_nodes,services,keywords,department,entrances',
@@ -63,7 +63,7 @@ export const APIHandlers = {
     envName: config.serviceMapAPI.id,
   },
   units: {
-    url: `${config.serviceMapAPI.root}/${config.serviceMapAPI.version}/unit/`,
+    url: `${config.serviceMapAPI.root}${config.serviceMapAPI.version}/unit/`,
     options: {
       page: 1,
       page_size: 200,
@@ -74,7 +74,7 @@ export const APIHandlers = {
     envName: config.serviceMapAPI.id,
   },
   idFetch: {
-    url: type => `${config.serviceMapAPI.root}/${config.serviceMapAPI.version}/${type}/`,
+    url: type => `${config.serviceMapAPI.root}${config.serviceMapAPI.version}/${type}/`,
     options: {
       page: 1,
       page_size: 500,

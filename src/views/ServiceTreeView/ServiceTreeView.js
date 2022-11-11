@@ -58,7 +58,7 @@ const ServiceTreeView = (props) => {
 
   const fetchRootNodes = () => (
     // Fetch all top level 0 nodes (root nodes)
-    fetch(`${config.serviceMapAPI.root}/${config.serviceMapAPI.version}/service_node/?level=0&page=1&page_size=100`)
+    fetch(`${config.serviceMapAPI.root}${config.serviceMapAPI.version}/service_node/?level=0&page=1&page_size=100`)
       .then(response => response.json())
       .then(data => data.results)
   );
@@ -71,7 +71,7 @@ const ServiceTreeView = (props) => {
 
   const fetchChildServices = async (service) => {
     // Fetch and set to state the child nodes of the opened node
-    fetch(`${config.serviceMapAPI.root}/${config.serviceMapAPI.version}/service_node/?parent=${service}&page=1&page_size=1000`)
+    fetch(`${config.serviceMapAPI.root}${config.serviceMapAPI.version}/service_node/?parent=${service}&page=1&page_size=1000`)
       .then(response => response.json())
       .then((data) => {
         setServices([...services, ...data.results]);
