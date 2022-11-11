@@ -1,4 +1,4 @@
-function getSettings() {
+export function getSettings() {
   if (typeof window !== 'undefined' && typeof window.nodeEnvSettings !== 'undefined') {
       // Needed in browser run context
       return window.nodeEnvSettings;
