@@ -5,7 +5,7 @@ import { breadcrumbPush, breadcrumbPop, breadcrumbReplace } from '../../redux/ac
 import { generatePath, isEmbed } from '../../utils/path';
 import config from '../../../config';
 import SettingsUtility from '../../utils/settings';
-import matomoTracker from '../../utils/tracking';
+import matomoTracker, { servicemapTrackPageView } from '../../utils/tracking';
 
 class Navigator extends React.Component {
   unlisten = null;
@@ -52,6 +52,8 @@ class Navigator extends React.Component {
   }
 
   trackPageView = (settings) => {
+    // Simple custom servicemap page view tracking
+    servicemapTrackPageView();
     const embed = isEmbed();
     if (typeof window !== 'undefined' && !embed && window?.cookiehub?.hasConsented('analytics')) {
       if (matomoTracker) {

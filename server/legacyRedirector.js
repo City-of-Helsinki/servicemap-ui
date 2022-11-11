@@ -234,7 +234,7 @@ const getMunicipalityFromGeocoder = function(address, language, callback) {
   timeout = setTimeout((function() {
     return callback(null);
   }), 3000);
-  url = `${config.serviceMapAPI.root}/address/?language=${language}&number=${address.number}&street=${address.street}&page_size=1`;
+  url = `${config.serviceMapAPI.root}${config.serviceMapAPI.version}/address/?language=${language}&number=${address.number}&street=${address.street}&page_size=1`;
   request = https.get(url, function(apiResponse) {
     var respData;
     if (apiResponse.statusCode !== 200) {
