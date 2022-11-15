@@ -234,6 +234,7 @@ export default {
   "smallScreenBreakpoint": 899,
   "topBarHeight": 90,
   "topBarHeightMobile": 78,
+  "bottomNavHeight": 78,
   "searchTimeout": 15000,
   // locales
   "defaultLocale": 'fi',

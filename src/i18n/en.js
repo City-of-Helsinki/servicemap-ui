@@ -655,6 +655,7 @@ const translations = {
   'settings.choose.mobility': 'Valitse liikkumisrajoitteesi', // TODO: translate
   'settings.choose.senses': 'Valitse aistirajoitteesi', // TODO: translate
   'settings.choose.cities': 'Valitse kaupunkiasetuksesi', // TODO: translate
+  'settings.map.info': 'Kartta-asetuksista voit valita sinulle parhaiten sopivan pohjakartan.', // TODO: translate
 
   // Tools
   'tool.download': 'Download data',

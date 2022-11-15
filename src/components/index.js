@@ -3,6 +3,7 @@ import DataFetcher from './DataFetchers/DataFetcher';
 import NewsInfo from './NewsInfo';
 import Settings from './Settings';
 import TopBar from './TopBar';
+import BottomNav from './BottomNav/BottomNav';
 import DescriptionText from './DescriptionText';
 import DesktopComponent from './DesktopComponent';
 import FocusableSRLinks from './FocusableSRLinks';
@@ -27,6 +28,7 @@ import SMSwitch from './SMSwitch';
 import TabLists from './TabLists';
 import TitleBar from './TitleBar';
 import Dialog from './Dialog';
+import MapSettings from './MapSettings/MapSettings';
 
 // Lists
 import PaginatedList from './Lists/PaginatedList';
@@ -96,4 +98,6 @@ export {
   TopBar,
   UnitItem,
   Dialog,
+  BottomNav,
+  MapSettings,
 };

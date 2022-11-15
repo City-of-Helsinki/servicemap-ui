@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import { keyboardHandler } from '../../utils';
+import MapSettings from '../MapSettings/MapSettings';
 
 class DropDownMenuButton extends React.Component {
   state = {
@@ -20,7 +21,6 @@ class DropDownMenuButton extends React.Component {
   };
 
   handleClose = (event, refocus = false) => {
-
     this.setState({ open: false });
     // If refocus set to true focus back to DropDownMenuButton
     if (refocus && this.anchorEl) {
@@ -31,16 +31,6 @@ class DropDownMenuButton extends React.Component {
   handleItemClick = (event, item) => {
     this.handleClose(event);
     item.onClick();
-  }
-
-  // Menu should close if user leaves the selection area
-  closeMenuOnFocusExit = (event) => {
-    const { menuItems } = this.props;
-    const menuItemIds = menuItems.map(v => v.id);
-
-    if (!menuItemIds.includes(event?.relatedTarget.id)) {
-      this.handleClose(event);
-    }
   }
 
   renderMenu = () => {
@@ -72,7 +62,6 @@ class DropDownMenuButton extends React.Component {
                   onClick={e => this.handleItemClick(e, v)}
                   onKeyDown={keyboardHandler(e => this.handleClose(e, true), ['esc'])}
                   onKeyPress={keyboardHandler(this.handleItemClick, ['space', 'enter'])}
-                  onBlur={this.closeMenuOnFocusExit}
                   component="span"
                   tabIndex={0}
                   aria-hidden={v.ariaHidden}
@@ -87,6 +76,8 @@ class DropDownMenuButton extends React.Component {
               </>
             ))
           }
+          <MapSettings />
+          <div aria-hidden role="button" tabIndex="0" onFocus={() => this.handleClose()} />
         </div>
       </ClickAwayListener>
     );
@@ -108,7 +99,6 @@ class DropDownMenuButton extends React.Component {
           aria-controls={open ? panelID : undefined}
           aria-haspopup="true"
           aria-expanded={open}
-          onBlur={this.closeMenuOnFocusExit}
           onClick={this.handleToggle}
           onKeyDown={(e) => {
             if (open) {
