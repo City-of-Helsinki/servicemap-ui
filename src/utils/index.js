@@ -197,4 +197,23 @@ export const addSearchParametersToObject = (obj, params) => {
 };
 
 
+export const isMobileDevice = () => {
+  if (!window) {
+    return false;
+  }
+  const toMatch = [
+    /Android/i,
+    /webOS/i,
+    /iPhone/i,
+    /iPad/i,
+    /iPod/i,
+    /BlackBerry/i,
+    /Windows Phone/i,
+  ];
+
+  const { userAgent } = navigator;
+  return toMatch.some(toMatchItem => userAgent.match(toMatchItem));
+};
+
+
 export default isClient;
