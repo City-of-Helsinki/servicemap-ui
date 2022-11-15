@@ -19,9 +19,9 @@ const AlertBox = ({ classes, intl, errors }) => {
   const savedMessage = LocalStorageUtility.getItem(lsKey);
 
   if (
-    !visible ||
-    !abData.length ||
-    JSON.stringify(abData[0].title) === savedMessage
+    !visible
+    || !abData.length
+    || JSON.stringify(abData[0].title) === savedMessage
   ) {
     return null;
   }
@@ -49,12 +49,12 @@ const AlertBox = ({ classes, intl, errors }) => {
 
   return (
     <section className={classes.container}>
-      <Typography style={visuallyHidden} component='h2'>
-        <FormattedMessage id='general.news.alert.title' />
+      <Typography style={visuallyHidden} component="h2">
+        <FormattedMessage id="general.news.alert.title" />
       </Typography>
       <Button
         aria-label={closeButtonTextAria}
-        color='inherit'
+        color="inherit"
         classes={{
           endIcon: classes.endIcon,
         }}
@@ -68,13 +68,13 @@ const AlertBox = ({ classes, intl, errors }) => {
       <div className={classes.textContent}>
         <Typography
           className={classes.title}
-          component='h3'
-          variant='subtitle1'
-          color='inherit'
+          component="h3"
+          variant="subtitle1"
+          color="inherit"
         >
           {tTitle}
         </Typography>
-        <Typography className={classes.messageText} color='inherit'>
+        <Typography className={classes.messageText} color="inherit">
           {tLeadParagraph}
         </Typography>
       </div>
@@ -95,17 +95,7 @@ AlertBox.propTypes = {
       title: PropTypes.shape({
         fi: PropTypes.string,
       }),
-    })
-  ).isRequired,
-  news: PropTypes.arrayOf(
-    PropTypes.shape({
-      lead_paragraph: PropTypes.shape({
-        fi: PropTypes.string,
-      }),
-      title: PropTypes.shape({
-        fi: PropTypes.string,
-      }),
-    })
+    }),
   ).isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,

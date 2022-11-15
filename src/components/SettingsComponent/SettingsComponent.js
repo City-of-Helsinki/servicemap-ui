@@ -1,5 +1,5 @@
 import {
-  Autocomplete, Checkbox, Container, ListItem, NoSsr, TextField, Typography,
+  Autocomplete, Checkbox, Chip, Container, ListItem, NoSsr, TextField, Typography,
 } from '@mui/material';
 import { styled } from '@mui/styles';
 import React, { useRef, useState } from 'react';
@@ -9,7 +9,7 @@ import config from '../../../config';
 import {
   setMobility, toggleCity, toggleColorblind, toggleHearingAid, toggleVisuallyImpaired,
 } from '../../redux/actions/settings';
-import { keyboardHandler } from '../../utils';
+import { keyboardHandler, uppercaseFirst } from '../../utils';
 import SMAccordion from '../SMAccordion';
 
 
@@ -49,6 +49,23 @@ const SettingsNew = () => {
   const citySettingsList = config.cities.map(city => (
     { id: city, title: intl.formatMessage({ id: `settings.city.${city}` }) }
   ));
+
+  // Returns settings as simple list of selected settings
+  const getListOfSettings = () => {
+    const senseTitles = settingsValues.senses.map((sense) => {
+      const match = senseSettingList.find(item => item.id === sense);
+      return match?.title;
+    });
+    const mobility = settingsValues.mobility !== 'none'
+      ? mobilitySettingList.find(item => item.id === settingsValues.mobility)
+      : null;
+
+    return [
+      ...senseTitles,
+      ...(mobility ? [mobility.title] : []),
+      ...settingsValues.cities,
+    ];
+  };
 
 
   const toggleSettingsBox = (id) => {
@@ -146,6 +163,8 @@ const SettingsNew = () => {
     );
   };
 
+  const settingsList = getListOfSettings().slice(0, 2);
+
   return (
     <NoSsr>
       <Container
@@ -153,12 +172,38 @@ const SettingsNew = () => {
         sx={{ pb: 2, bgcolor: 'primary.main' }}
       >
         <StyledAccordion
+          settingsVisible={settingsVisible}
           defaultOpen
           disableUnmount
           onOpen={(e, open) => setSettingVisible(!open)}
           titleContent={settingsVisible
             ? <Typography><FormattedMessage id="general.hideSettings" /></Typography>
-            : <Typography><FormattedMessage id="general.openSettings" /></Typography>
+            : (
+              <>
+                <Typography>
+                  <FormattedMessage id="general.openSettings" />
+                </Typography>
+                <StyledChipContainer>
+                  {settingsList.map(setting => (
+                    <StyledChip
+                      tabIndex={-1}
+                      key={setting}
+                      clickable
+                      size="small"
+                      label={uppercaseFirst(setting)}
+                    />
+                  ))}
+                  <StyledChip
+                    tabIndex={-1}
+                    key="all"
+                    all="true"
+                    clickable
+                    size="small"
+                    label={intl.formatMessage({ id: 'settings.accordion.open' })}
+                  />
+                </StyledChipContainer>
+              </>
+            )
           }
           collapseContent={(
             <>
@@ -174,8 +219,8 @@ const SettingsNew = () => {
 };
 
 
-const StyledAccordion = styled(SMAccordion)(({ theme }) => ({
-  height: 32,
+const StyledAccordion = styled(SMAccordion)(({ theme, settingsVisible }) => ({
+  height: settingsVisible ? 32 : '100%',
   backgroundColor: theme.palette.primary.main,
   color: theme.palette.primary.highContrast,
   paddingLeft: theme.spacing(2),
@@ -183,6 +228,39 @@ const StyledAccordion = styled(SMAccordion)(({ theme }) => ({
   '& svg': {
     color: theme.palette.primary.highContrast,
   },
+  '& button': {
+    flexWrap: 'wrap',
+  },
+  '& p': {
+    whiteSpace: 'nowrap',
+  },
+}));
+
+const StyledChip = styled(Chip)(({ theme, all }) => ({
+  color: all
+    ? theme.palette.white.contrastText
+    : theme.palette.white.main,
+  backgroundColor: all
+    ? theme.palette.white.main
+    : 'rgb(47, 60, 187)',
+  flex: all ? 2 : 1,
+  marginRight: theme.spacing(1),
+  minWidth: all ? 'unset' : 0,
+  maxWidth: 'fit-content',
+
+  '&:hover': {
+    backgroundColor: all ? theme.palette.white.main : 'rgb(47, 60, 187)',
+  },
+}));
+
+
+const StyledChipContainer = styled('div')(({ theme }) => ({
+  display: 'flex',
+  width: '100%',
+  flexDirection: 'row',
+  paddingTop: theme.spacing(1),
+  paddingBottom: theme.spacing(1),
+  order: 2,
 }));
 
 const StyledAutocomplete = styled(Autocomplete)(({ theme }) => ({
