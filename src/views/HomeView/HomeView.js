@@ -49,7 +49,7 @@ const HomeView = (props) => {
 
 const StyledContainer = styled.div(({ theme }) => ({
   paddingTop: theme.spacing(1),
-  paddingLeft: theme.spacing(3),
+  paddingLeft: theme.spacing(2),
   paddingRight: theme.spacing(2),
   paddingBottom: theme.spacing(4),
 }));

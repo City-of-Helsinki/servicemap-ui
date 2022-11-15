@@ -48,7 +48,6 @@ export default theme => ({
     flexDirection: 'column',
     position: 'absolute',
     width: 450,
-    height: 300,
     padding: theme.spacing(2),
     paddingTop: theme.spacing(3),
     paddingBottom: theme.spacing(2),

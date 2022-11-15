@@ -21,10 +21,12 @@ import config from '../../../config';
 import { getLocale } from '../../redux/selectors/locale';
 import MobileNavButton from './MobileNavButton/MobileNavButton';
 import LanguageMenuComponent from './LanguageMenu/LanguageMenuComponent';
+import useMobileStatus from '../../utils/isMobile';
 
 const TopBar = (props) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const location = useLocation();
+  const isMobile = useMobileStatus();
   const intl = useIntl();
   const locale = useSelector(getLocale);
   const getAddressNavigatorParams = useNavigationParams();
@@ -93,6 +95,8 @@ const TopBar = (props) => {
     if (location.search.indexOf('showMap=true') > -1) {
       navigator.closeMap();
     }
+
+    if (currentPage === target) return;
 
     switch (target) {
       case 'home':
@@ -182,8 +186,13 @@ const TopBar = (props) => {
                 {/* Right side links */}
                 <Container disableGutters sx={{ justifyContent: 'flex-end', display: 'flex', mr: 0 }}>
                   {topBarLink('general.contrast', () => handleContrastChange(), false, contrastAriaLabel)}
-                  {topBarLink('info.statement', () => openA11yLink())}
-                  {topBarLink('general.pageTitles.info', () => handleNavigation('info'), currentPage === 'info')}
+                  {!smallScreen ? (
+                    <>
+                      {topBarLink('info.statement', () => openA11yLink())}
+                      {topBarLink('general.pageTitles.info', () => handleNavigation('info'), currentPage === 'info')}
+                      {topBarLink('home.send.feedback', () => handleNavigation('feedback'), currentPage === 'feedback')}
+                    </>
+                  ) : null }
                 </Container>
               </Toolbar>
             </nav>

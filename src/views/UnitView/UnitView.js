@@ -371,6 +371,7 @@ const UnitView = (props) => {
   const renderUnitLocation = () => (
     <div className={classes.unitLocationContainer}>
       <SMButton
+        role="link"
         color="primary"
         className={classes.mapButton}
         aria-label={intl.formatMessage({ id: 'map.button.expand.aria' })}
@@ -417,7 +418,6 @@ const UnitView = (props) => {
         <TitleBar
           sticky
           title={title}
-          backButton={!!isMobile}
           titleComponent="h3"
           shareLink={elem}
         />

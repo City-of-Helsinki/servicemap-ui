@@ -21,15 +21,11 @@ export default theme => ({
     height: 72,
   },
   textBar: {
-    paddingLeft: theme.spacing(3),
+    paddingLeft: theme.spacing(2),
   },
   linkContainer: {
     display: 'flex',
     flexDirection: 'row',
-    paddingBottom: theme.spacing(1.5),
-    [theme.breakpoints.down('sm')]: {
-      width: '100%',
-    },
   },
   titleContainer: {
     flexDirection: 'row',
@@ -57,6 +53,7 @@ export default theme => ({
     color: 'inherit',
     flex: '0 1 auto',
     padding: 0,
+    paddingBottom: theme.spacing(1.5),
     margin: 0,
     fontSize: '1.125rem',
     marginLeft: theme.spacing(-0.5),

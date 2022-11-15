@@ -650,6 +650,7 @@ const translations = {
   'settings.aria.changed': 'Settings have changed. Remember to save',
   'settings.aria.closed': 'Settings closed',
   'settings.aria.open': 'Open settings',
+  'settings.accordion.open': 'Avaa kaikki tehdyt asetukset', // TODO: translate
   'settings.aria.opened': 'Settings have been opened',
   'settings.aria.saved': 'Settings have been saved',
   'settings.choose.mobility': 'Valitse liikkumisrajoitteesi', // TODO: translate

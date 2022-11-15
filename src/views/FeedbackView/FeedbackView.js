@@ -16,6 +16,7 @@ import {
   TitleBar,
 } from '../../components';
 import { validateEmail } from '../../utils';
+import useMobileStatus from '../../utils/isMobile';
 
 const formFieldInitialState = {
   email: {
@@ -34,6 +35,7 @@ const FeedbackView = ({
   classes, navigator, intl, location, selectedUnit,
 }) => {
   const getLocaleText = useLocaleText();
+  const isMobile = useMobileStatus();
   // State
   const [permission, setPermission] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
@@ -265,7 +267,7 @@ const FeedbackView = ({
 
       <form className={classes.container}>
         <TitleBar
-          backButton
+          backButton={!isMobile}
           backButtonOnClick={backButtonCallback}
           backButtonSrText={backButtonSrText}
           title={feedbackTitle}

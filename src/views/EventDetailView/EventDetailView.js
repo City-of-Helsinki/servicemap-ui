@@ -217,7 +217,6 @@ const EventDetailView = (props) => {
         titleComponent="h3"
         icon={event ? <Event /> : null}
         primary={isMobile}
-        backButton={isMobile}
       />
       {renderEventDetails()}
     </div>

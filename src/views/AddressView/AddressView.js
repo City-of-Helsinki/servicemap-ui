@@ -182,7 +182,6 @@ const AddressView = (props) => {
           title={title}
           titleComponent="h3"
           primary
-          backButton
         />
       </MobileComponent>
     </>

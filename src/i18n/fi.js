@@ -653,6 +653,7 @@ const translations = {
   'settings.aria.changed': 'Asetukset muutettu. Muista tallentaa',
   'settings.aria.closed': 'Asetukset suljettu',
   'settings.aria.open': 'Avaa asetukset',
+  'settings.accordion.open': 'Avaa kaikki tehdyt asetukset',
   'settings.aria.opened': 'Asetukset avattu',
   'settings.aria.saved': 'Asetukset on tallennettu',
   'settings.choose.mobility': 'Valitse liikkumisrajoitteesi',

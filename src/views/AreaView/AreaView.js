@@ -5,7 +5,9 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { List, ListItem, Typography } from '@mui/material';
-import { BusinessCenter, EscalatorWarning, LocationCity, Map } from '@mui/icons-material';
+import {
+  BusinessCenter, EscalatorWarning, LocationCity, Map,
+} from '@mui/icons-material';
 import { visuallyHidden } from '@mui/utils';
 import { focusDistrict, focusDistricts, useMapFocusDisabled } from '../MapView/utils/mapActions';
 import GeographicalTab from './components/GeographicalTab';
@@ -22,11 +24,11 @@ import {
   AddressSearchBar,
   MobileComponent,
   TitleBar,
-  SettingsInfo,
   SMButton,
   SMAccordion,
 } from '../../components';
 import StatisticalDistrictList from './components/StatisticalDistrictList';
+import useMobileStatus from '../../utils/isMobile';
 
 
 const AreaView = ({
@@ -54,6 +56,7 @@ const AreaView = ({
   const dispatch = useDispatch();
   const location = useLocation();
   const history = useHistory();
+  const isMobile = useMobileStatus();
   const addressDistrict = useSelector(getAddressDistrict);
   const selectedDistrictType = useSelector(state => state.districts.selectedDistrictType);
   const districtsFetching = useSelector(state => state.districts.districtsFetching);
@@ -330,7 +333,7 @@ const AreaView = ({
           <TitleBar
             title={intl.formatMessage({ id: 'general.pageLink.area' })}
             titleComponent="p"
-            backButton
+            backButton={!isMobile}
           />
           <Typography className={classes.infoText}>
             <FormattedMessage id="home.buttons.area" />
@@ -372,13 +375,6 @@ const AreaView = ({
               ))
             }
           </List>
-          <SettingsInfo
-            onlyCities
-            title="settings.info.title.city"
-            altTitle="settings.info.title.noSettings.city"
-            settingsPage="area"
-            noDivider
-          />
           <MobileComponent>
             {!districtsFetching.length && (
               <SMButton

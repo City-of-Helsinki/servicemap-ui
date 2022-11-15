@@ -13,7 +13,7 @@ const styles = theme => ({
   scrollContainer: {
     display: 'flex',
     flexDirection: 'column',
-    height: `calc(100vh - ${config.topBarHeight}px)`,
+    height: `calc(100vh - ${config.topBarHeight}px - ${config.bottomNavHeight}px)`,
     overflowY: 'auto',
   },
   drawerContainerMobile: {

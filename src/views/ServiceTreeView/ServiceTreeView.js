@@ -8,6 +8,7 @@ import styled from '@emotion/styled';
 import config from '../../../config';
 import useLocaleText from '../../utils/useLocaleText';
 import { SMAccordion, SMButton, TitleBar } from '../../components';
+import useMobileStatus from '../../utils/isMobile';
 
 const ServiceTreeView = (props) => {
   const {
@@ -21,6 +22,7 @@ const ServiceTreeView = (props) => {
     settings,
   } = props;
   const getLocaleText = useLocaleText();
+  const isMobile = useMobileStatus();
 
   // State
   const [services, setServices] = useState(prevServices);
@@ -302,7 +304,7 @@ const ServiceTreeView = (props) => {
       <TitleBar
         title={intl.formatMessage({ id: 'general.pageTitles.serviceTree.title' })}
         titleComponent="h3"
-        backButton
+        backButton={!isMobile}
         className={classes.topBarColor}
       />
       <Typography className={classes.guidanceInfoText} variant="body2">{intl.formatMessage({ id: 'services.info' })}</Typography>

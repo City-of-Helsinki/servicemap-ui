@@ -130,7 +130,7 @@ export default theme => ({
   },
   headerText: {
     fontWeight: 'bold',
-    margin: theme.spacing(3, 0, 1, 0),
+    margin: theme.spacing(2, 0, 1, 0),
   },
   headerBackground: {
     background: theme.palette.primary.main,

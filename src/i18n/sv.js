@@ -652,6 +652,7 @@ const translations = {
   'settings.aria.changed': 'Inställningarna har ändrats. Kom ihåg att spara.',
   'settings.aria.closed': 'Inställningarna har stängts',
   'settings.aria.open': 'Öppna inställningarna',
+  'settings.accordion.open': 'Avaa kaikki tehdyt asetukset', // TODO: translate
   'settings.aria.opened': 'Inställningarna har öppnats',
   'settings.aria.saved': 'Inställningarna har sparats',
   'settings.choose.mobility': 'Valitse liikkumisrajoitteesi', // TODO: translate

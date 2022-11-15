@@ -53,11 +53,6 @@ const TitleBar = ({
             </div>
           )
         }
-        {shareLink && isMobile && (
-          <Typography className={classes.distance}>
-            {shareLink}
-          </Typography>
-        )}
       </div>
       <div className={classes.titleContainer}>
         <Typography
@@ -68,7 +63,7 @@ const TitleBar = ({
         >
           {title}
         </Typography>
-        {shareLink && !isMobile && (
+        {shareLink && (
           <Typography className={classes.distance}>
             {shareLink}
           </Typography>

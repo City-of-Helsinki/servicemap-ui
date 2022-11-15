@@ -424,7 +424,6 @@ const SearchView = (props) => {
       {searchFetchState.isFetching ? (
         <Loading reducer={searchFetchState} />
       ) : renderResults() }
-      <SettingsInfo />
       {renderNotFound()}
       {isMobile ? (
         // Jump link back to beginning of current page
