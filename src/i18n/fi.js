@@ -16,6 +16,7 @@ const translations = {
   'accessibility': 'Esteettömyys',
   'accessibility.info': 'Esteettömyystiedot',
   'accessibility.details': 'Tarkemmat tiedot',
+  'accessibility.details.summary': 'Koostesivu (uusi välilehti)',
   'accessibility.stamp': 'Esteettömyys huomioitu',
   'accessibility.shortcomings': 'Puutteet',
   'accessibility.shortcomings.plural': `{count, plural,
@@ -44,7 +45,7 @@ const translations = {
   'address.emergency_care.common.link': 'https://www.hus.fi/potilaalle/sairaalat-ja-toimipisteet/uusi-lastensairaala',
   'address.emergency_care.unit.26107': 'Malmin sairaalassa',
   'address.emergency_care.unit.26104': 'Haartmanin sairaalassa',
-  'address.emergency_care.link': 'https://www.hel.fi/fi/sosiaali-ja-terveyspalvelut/terveydenhoito/kiireellinen-hoito-ja-terveyskeskuspaivystys',
+  'address.emergency_care.link': 'https://www.hel.fi/fi/sosiaali-ja-terveyspalvelut/terveydenhoito/kiireellinen-hoito-ja-paivystys',
   'address.emergency_care.link.text': '[<a>päivystyssivut</a>]',
 
   // Area

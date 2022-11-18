@@ -16,6 +16,7 @@ const translations = {
   'accessibility': 'Tillgänglighet',
   'accessibility.info': 'Tillgänglighetsuppgifter', // TODO: Verify
   'accessibility.details': 'Noggrannare uppgifter',
+  'accessibility.details.summary': 'Samlingssida (ny flik)',
   'accessibility.stamp': 'Tillgängligheten beaktad',
   'accessibility.shortcomings': 'Brister',
   'accessibility.shortcomings.plural': `{count, plural,
