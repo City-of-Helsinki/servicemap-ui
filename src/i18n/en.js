@@ -16,6 +16,7 @@ const translations = {
   'accessibility': 'Accessibility',
   'accessibility.info': 'Accessibility details',
   'accessibility.details': 'Accessibility details',
+  'accessibility.details.summary': 'Summary page (new tab)',
   'accessibility.stamp': 'Accessibility acknowledged',
   'accessibility.shortcomings': 'Shortcomings',
   'accessibility.shortcomings.plural': `{count, plural,
