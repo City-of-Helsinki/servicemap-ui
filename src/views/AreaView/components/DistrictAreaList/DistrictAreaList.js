@@ -45,19 +45,14 @@ export const DistrictAreaList = ({
   }
 
   const renderServiceListAccordion = (title, districts) => (
-    <SMAccordion
-      className={classes.serviceListAccordion}
-      defaultOpen
-      titleContent={<Typography>{`${title} (${districts.length})`}</Typography>}
-      disabled={!districts.length}
-      collapseContent={(
-        <List className={classes.serviceListPadding} disablePadding>
-          {districts.map(district => (
-            <DistrictItem key={district.id} area={district} title={false} paddedDivider />
-          ))}
-        </List>
-      )}
-    />
+    <div className={classes.serviceTabServiceList}>
+      <Typography>{`${title} (${districts.length})`}</Typography>
+      <List disablePadding>
+        {districts.map(district => (
+          <DistrictItem key={district.id} area={district} title={false} paddedDivider />
+        ))}
+      </List>
+    </div>
   );
 
   sortByOriginID(filteredData);
@@ -113,7 +108,7 @@ export const DistrictAreaList = ({
   }
 
   return (
-    <div className={classes.districtServiceList}>
+    <div className={`${classes.districtServiceList} ${classes.listLevelFour}`}>
       {
         renderServiceListAccordion(
           sectionText,

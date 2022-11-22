@@ -1,4 +1,19 @@
 const styles = theme => ({
+  listLevelTwo: {
+    backgroundColor: 'rgb(250,250,250)',
+  },
+  listLevelThree: {
+    backgroundColor: 'rgb(245,245,245)',
+  },
+  listLevelFour: {
+    backgroundColor: 'rgb(240,240,240)',
+  },
+  listLevelFive: {
+    backgroundColor: 'rgb(235,235,235)',
+  },
+  listLevelSix: {
+    backgroundColor: 'rgb(230,230,230)',
+  },
   topBar: {
     height: 24,
     backgroundColor: theme.palette.primary.main,
@@ -53,6 +68,19 @@ const styles = theme => ({
     paddingBottom: theme.spacing(1),
     paddingLeft: 26,
   },
+  serviceTabCategoryList: {
+    '& > li:last-of-type': {
+      borderBottom: 'none',
+    },
+  },
+  serviceTabSubtitle: {
+    height: 48,
+    display: 'flex',
+    alignItems: 'center',
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
+    paddingLeft: theme.spacing(9),
+  },
   municipalityAdjustedCheckboxPadding: {
     paddingLeft: theme.spacing(2),
     marginRight: 0,
@@ -64,12 +92,28 @@ const styles = theme => ({
     display: 'flex',
     flex: '1 1 auto',
   },
+  statisticalCityAccordion: {
+    paddingLeft: theme.spacing(9),
+  },
   statisticalDistrictListItemLabel: {
     margin: `${theme.spacing(1)} 0`,
   },
   statisticalDistrictListItemLabelInfo: {
     display: 'flex',
     flexDirection: 'column',
+  },
+  statisticalCategoryAccordion: {
+    paddingLeft: theme.spacing(9),
+  },
+  statisticalLayerAccordion: {
+    paddingLeft: theme.spacing(7),
+  },
+  statisticalUnitInfo: {
+    backgroundColor: 'rgba(222, 222, 222, 0.56)',
+    padding: `${theme.spacing(2)} ${theme.spacing(4)}`,
+    paddingLeft: theme.spacing(9),
+    fontWeight: 'normal',
+    color: 'black',
   },
   municipalityCheckbox: {
     padding: 0,
@@ -81,7 +125,7 @@ const styles = theme => ({
     alignItems: 'start',
     paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(1),
-    paddingLeft: theme.spacing(4),
+    paddingLeft: theme.spacing(9),
     boxSizing: 'border-box',
   },
   listItem: {
@@ -89,14 +133,17 @@ const styles = theme => ({
     minHeight: theme.spacing(7),
   },
   areaItem: {
-    paddingLeft: theme.spacing(2),
+    paddingLeft: theme.spacing(8),
     paddingRight: theme.spacing(2),
   },
   geoItem: {
     paddingLeft: theme.spacing(2),
   },
+  geographicalCategoryListAccordion: {
+    paddingLeft: theme.spacing(7),
+  },
   serviceTitle: {
-    paddingLeft: 63,
+    paddingLeft: theme.spacing(10),
   },
   categoryItemContent: {
     paddingLeft: 32,
@@ -159,8 +206,8 @@ const styles = theme => ({
   subdistrictList: {
     paddingLeft: theme.spacing(3),
   },
-  accodrion: {
-    paddingLeft: theme.spacing(3),
+  accordion: {
+    paddingLeft: theme.spacing(9),
   },
   expandingElementContent: {
     marginBottom: -1,
@@ -192,7 +239,7 @@ const styles = theme => ({
     paddingRight: 0,
   },
   unitList: {
-    paddingLeft: theme.spacing(8),
+    paddingLeft: theme.spacing(10),
     paddingRight: theme.spacing(4),
     paddingBottom: theme.spacing(1),
   },
@@ -200,20 +247,20 @@ const styles = theme => ({
     backgroundColor: 'rgba(222, 222, 222, 0.12)',
   },
   districtServiceList: {
-    backgroundColor: 'rgb(245,245,245)',
     boxShadow: 'inset 0px 4px 4px rgba(0, 0, 0, 0.06)',
   },
-  geogrpahicalDiststrictlist: {
-    backgroundColor: 'rgb(245,245,245)',
-    paddingLeft: 30,
+  serviceTabServiceList: {
+    paddingLeft: theme.spacing(10),
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
   },
-  serviceListAccordion: {
-    paddingLeft: 77,
-    height: 48,
+  icon: {
+    padding: theme.spacing(2),
+    paddingLeft: theme.spacing(0),
   },
   iconPadding: {
     padding: theme.spacing(2.5),
-    paddingLeft: 60,
+    paddingLeft: theme.spacing(7),
   },
   areaSwitch: {
     paddingLeft: theme.spacing(2),
@@ -292,9 +339,6 @@ const styles = theme => ({
     paddingBottom: theme.spacing(2),
     paddingLeft: 77,
     backgroundColor: 'rgb(230,243,254)',
-  },
-  serviceListPadding: {
-    paddingLeft: 72,
   },
   serviceDivider: {
     marginLeft: -72,

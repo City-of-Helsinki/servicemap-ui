@@ -79,7 +79,7 @@ const ParkingAreaList = ({ areas, classes }) => {
 
 
   return (
-    <List className="districtList" disablePadding>
+    <List className={`districtList ${classes.listLevelThree}`} disablePadding>
       {areaDataInfo.map((area, i) => {
         const fullId = area.extra.class;
         return (
