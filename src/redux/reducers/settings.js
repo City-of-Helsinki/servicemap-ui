@@ -3,7 +3,8 @@ import config from '../../../config';
 const initialState = false;
 
 const cityInitialState = {};
-config.cities.forEach((city) => {
+const configList = [...config.cities, ...config.wellbeingAreas];
+configList.forEach((city) => {
   cityInitialState[city] = false;
 });
 

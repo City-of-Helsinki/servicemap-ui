@@ -14,9 +14,11 @@ const SettingsText = ({ classes, type, variant }) => {
   const a11ySettings = useSelector(state => ['colorblind', 'hearingAid', 'visuallyImpaired'].filter(a => state.settings[a]));
   const map = useSelector(state => state.settings.mapType);
   const mobility = useSelector(state => state.settings.mobility);
+
+  const cityList = [...config.cities, ...config.wellbeingAreas];
   const citySettings = useSelector((state) => {
     const { cities } = state.settings;
-    return config.cities.filter(c => cities[c]);
+    return cityList.filter(c => cities[c]);
   });
 
   if (!isClient()) {
@@ -29,7 +31,7 @@ const SettingsText = ({ classes, type, variant }) => {
   try {
     switch (type) {
       case 'citySettings':
-        if (citySettings.length && citySettings.length !== config.cities.length) {
+        if (citySettings?.length !== cityList.length) {
           settings = citySettings.map(c => ({ id: `settings.city.${c}` }));
           break;
         }

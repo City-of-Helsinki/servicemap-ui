@@ -32,11 +32,12 @@ const ServiceTreeView = (props) => {
 
 
   let citySettings = [];
-  config.cities.forEach((city) => {
+  const configCities = [...config.cities, config.wellbeingAreas];
+  configCities.forEach((city) => {
     citySettings.push(...settings.cities[city] ? [city] : []);
   });
 
-  if (citySettings.length === config.cities.length) {
+  if (citySettings.length === configCities.length) {
     citySettings = [];
   }
 
@@ -240,10 +241,10 @@ const ServiceTreeView = (props) => {
 
     let resultCount = 0;
 
-    if (!citySettings.length || citySettings.length === config.cities.length) {
+    if (!citySettings.length || citySettings.length === configCities.length) {
       resultCount = item.unit_count.total;
     } else {
-      config.cities.forEach((city) => {
+      configCities.forEach((city) => {
         resultCount += (settings.cities[city] ? item.unit_count.municipality[city] || 0 : 0);
       });
     }

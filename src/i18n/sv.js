@@ -656,6 +656,10 @@ const translations = {
   'settings.city.siuntio': 'Sjundeå',
   'settings.city.tuusula': 'Tusby',
   'settings.city.vihti': 'Vichtis',
+  // TODO: these three are temporary translations. Can be removed once new ui is released
+  'settings.city.0c8e4f99-3d52-47b9-84df-395716bd8b11': 'Västra Nylands välfärdsområde',
+  'settings.city.5de91045-92ab-484b-9f96-7010ff7fb35e': 'Vanda och Kervo välfärdsområde',
+  'settings.city.7af4b54b-6b69-4a6d-a5ef-38a263eb9d35': 'Östra Nylands välfärdsområde',
   'settings.map.title': 'Kartunderlag',
   'settings.map.servicemap': 'Servicekarta',
   'settings.map.ortographic': 'Flygbild',

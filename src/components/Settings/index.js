@@ -13,11 +13,14 @@ import {
 import Settings from './Settings';
 import styles from './styles';
 import { changeTheme } from '../../redux/actions/user';
+import { getLocaleString } from '../../redux/selectors/locale';
 
 const mapStateToProps = (state) => {
   const { settings } = state;
+  const getLocaleText = textObject => getLocaleString(state, textObject);
   return {
     settings,
+    getLocaleText,
   };
 };
 

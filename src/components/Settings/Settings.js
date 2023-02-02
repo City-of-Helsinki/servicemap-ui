@@ -28,6 +28,7 @@ import SettingsTitle from './SettingsTitle';
 import TitleBar from '../TitleBar';
 import SMButton from '../ServiceMapButton';
 import config from '../../../config';
+import ServiceMapAPI from '../../utils/newFetch/ServiceMapAPI';
 
 class Settings extends React.Component {
   buttonID = 'SettingsButton';
@@ -41,6 +42,7 @@ class Settings extends React.Component {
       currentSettings: {},
       previousSettings: null,
       saved: false,
+      wellbeingAreas: [],
     };
   }
 
@@ -55,6 +57,8 @@ class Settings extends React.Component {
       mapType,
     } = settings;
 
+    this.fetchWellbeingAreaSettings();
+
     // Create current settings from redux data
     const newCurrent = {
       ...current,
@@ -64,9 +68,11 @@ class Settings extends React.Component {
       visuallyImpaired,
       mapType: mapType !== false ? mapType : 'servicemap',
       cities: {},
+      wellbeingAreas: [],
     };
 
-    config.cities.forEach((city) => { newCurrent.cities[city] = settings.cities[city]; });
+    const configList = [...config.cities, ...config.wellbeingAreas];
+    configList.forEach((city) => { newCurrent.cities[city] = settings.cities[city]; });
     const initialPreviousSearch = {
       ...newCurrent,
       cities: { ...newCurrent.cities },
@@ -112,7 +118,8 @@ class Settings extends React.Component {
         return;
       }
       if (key === 'cities') {
-        config.cities.forEach((city) => {
+        const configList = [...config.cities, ...config.wellbeingAreas];
+        configList.forEach((city) => {
           if (settings.cities[city] !== currentSettings.cities[city]) {
             changed = true;
           }
@@ -168,6 +175,13 @@ class Settings extends React.Component {
     buttons[buttons.length - 1].focus();
   }
 
+  fetchWellbeingAreaSettings = async () => {
+    const smAPI = new ServiceMapAPI();
+    const fetchOptions = { level: '0', organization_type: 'WELLBEING_AREA' };
+    const results = await smAPI.departments(fetchOptions);
+    this.setState({ wellbeingAreas: results });
+  }
+
   /**
    * Toggle settings container visible/hidden
    */
@@ -212,6 +226,8 @@ class Settings extends React.Component {
     };
     if (config.cities.includes(key)) {
       newCurrent.cities[key] = value;
+    } else if (key === 'wellbeingAreas') {
+      newCurrent.cities[value] = !newCurrent.cities[value];
     } else {
       newCurrent[key] = value;
     }
@@ -548,6 +564,53 @@ class Settings extends React.Component {
     );
   };
 
+  renderWellbeingAreaSettings = (close) => {
+    const { currentSettings, wellbeingAreas } = this.state;
+    const { classes, intl, getLocaleText } = this.props;
+
+    if (!wellbeingAreas.length) return null;
+    const filteredAreas = wellbeingAreas.filter(area => config.wellbeingAreas.includes(area.id));
+    if (!filteredAreas.length) return null;
+
+    return (
+      <>
+        <Container className={classes.formContainer}>
+          <SettingsTitle
+            classes={classes}
+            intl={intl}
+            close={close ? () => this.toggleSettingsContainer() : null}
+            id="WellbeingSettings"
+            titleID="settings.wellbeingArea.title"
+          />
+          <FormGroup row role="group">
+            <List className={classes.list}>
+              {filteredAreas.map(area => (
+                <ListItem className={classes.checkbox} key={area.id}>
+                  <FormControlLabel
+                    label={getLocaleText(area.name)}
+                    control={(
+                      <Checkbox
+                        color="primary"
+                        checked={!!currentSettings.cities[area.id]}
+                        value={area.id}
+                        onChange={() => {
+                          this.setAlert(false);
+                          this.handleChange('wellbeingAreas', area.id);
+                        }}
+                      />
+                    )}
+                  />
+                </ListItem>
+              ))
+            }
+            </List>
+          </FormGroup>
+        </Container>
+        <Divider aria-hidden="true" />
+      </>
+    );
+  };
+
   renderMapSettings = (close) => {
     const { classes, intl, setMapType } = this.props;
     const { currentSettings } = this.state;
@@ -681,7 +744,12 @@ class Settings extends React.Component {
     );
 
     if (settingsPage === 'citySettings' || settingsPage === 'area') {
-      pageContent = this.renderCitySettings('close');
+      pageContent = (
+        <>
+          {this.renderCitySettings('close')}
+          {this.renderWellbeingAreaSettings()}
+        </>
+      );
     } else if (settingsPage === 'mapSettings') {
       pageContent = this.renderMapSettings('close');
     } else if (settingsPage === 'accessibilitySettings') {
@@ -756,6 +824,7 @@ Settings.propTypes = {
   isMobile: PropTypes.bool,
   toggleSettings: PropTypes.func.isRequired,
   changeTheme: PropTypes.func.isRequired,
+  getLocaleText: PropTypes.func.isRequired,
 };
 
 Settings.defaultProps = {

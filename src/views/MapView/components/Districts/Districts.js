@@ -13,6 +13,7 @@ import useLocaleText from '../../../../utils/useLocaleText';
 import { geographicalDistricts, getCategoryDistricts } from '../../../AreaView/utils/districtDataHelper';
 import UnitHelper from '../../../../utils/unitHelper';
 import ParkingAreas from './ParkingAreas';
+import { getSelectedCities } from '../../../../redux/selectors/settings';
 
 
 const Districts = ({
@@ -39,7 +40,7 @@ const Districts = ({
   const useContrast = theme === 'dark';
   const location = useLocation();
   const getLocaleText = useLocaleText();
-  const citySettings = useSelector(state => state.settings.cities);
+  const selectedCities = useSelector(state => getSelectedCities(state));
   const selectedDistrictType = useSelector(state => state.districts.selectedDistrictType);
   const selectedParkingAreas = useSelector(state => state.districts.selectedParkingAreas);
   const [areaPopup, setAreaPopup] = useState(null);
@@ -152,13 +153,12 @@ const Districts = ({
       return null;
     }
 
-    const selectedCities = Object.values(citySettings).filter(city => city);
     let filteredData = [];
     if (selectedCities.length) {
       const searchParams = parseSearchParams(location.search);
       filteredData = areasWithBoundary.filter(district => (searchParams.city
         ? embedded && district.municipality === searchParams.city
-        : citySettings[district.municipality]));
+        : selectedCities.includes(district.municipality)));
     } else {
       filteredData = areasWithBoundary;
     }

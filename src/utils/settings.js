@@ -48,7 +48,7 @@ class SettingsUtility {
 
   static isValidCitySetting(values) {
     Object.keys(values).forEach((key) => {
-      if (!config.cities.includes(key)) {
+      if (!config.cities.includes(key) && !config.wellbeingAreas.includes(key)) {
         throw new Error(`Invalid value for city setting: ${key}`);
       }
     });
@@ -113,7 +113,8 @@ class SettingsUtility {
       cities: {},
     };
 
-    config.cities.forEach((city) => {
+    const configList = [...config.cities, ...config.wellbeingAreas];
+    configList.forEach((city) => {
       settings.cities[city] = LocalStorageUtility.getItem(city) === 'true';
     });
 

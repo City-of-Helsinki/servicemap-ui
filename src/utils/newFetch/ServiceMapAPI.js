@@ -206,6 +206,8 @@ export default class ServiceMapAPI extends HttpClient {
     return this.getConcurrent('unit', options);
   }
 
+  departments = async options => this.get('department', options || {})
+
   sendStats = async (data) => {
     if (typeof data.embed === 'undefined' || typeof data.mobile_device === 'undefined') {
       throw new APIFetchError('Invalid data provided for ServiceMapAPI sendStats fetch method');

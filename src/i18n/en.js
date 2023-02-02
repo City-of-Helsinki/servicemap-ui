@@ -655,6 +655,11 @@ const translations = {
   'settings.city.siuntio': 'Siuntio',
   'settings.city.tuusula': 'Tuusula',
   'settings.city.vihti': 'Vihti',
+  // TODO: these three are temporary translations. Can be removed once new ui is released
+  'settings.city.0c8e4f99-3d52-47b9-84df-395716bd8b11': 'Western Uusimaa Wellbeing Services County',
+  'settings.city.5de91045-92ab-484b-9f96-7010ff7fb35e': 'Wellbeing services county of Vantaa and Kerava',
+  'settings.city.7af4b54b-6b69-4a6d-a5ef-38a263eb9d35': 'The wellbeing services county of East Uusimaa',
+  'settings.wellbeingArea.title': 'Hyvinvointialue',
   'settings.map.title': 'Background map',
   'settings.map.servicemap': 'Service map',
   'settings.map.ortographic': 'Aerial view',

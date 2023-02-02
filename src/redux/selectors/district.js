@@ -1,4 +1,7 @@
+import { useSelector } from 'react-redux';
 import { createSelector } from 'reselect';
+import config from '../../../config';
+import { getSelectedCities } from './settings';
 
 export const getHighlightedDistrict = state => state.districts.highlitedDistrict;
 
@@ -8,18 +11,18 @@ const getAddressDistrictData = state => state.districts.districtAddressData.dist
 export const getSubdistrictUnits = state => state.districts.subdistrictUnits;
 const getSubdistrictSelection = state => state.districts.selectedSubdistricts;
 const getSelectedDistrictServices = state => state.districts.selectedDistrictServices;
-const getCitySettings = state => state.settings.cities;
+
 export const getParkingUnits = state => state.districts.parkingUnits.filter(unit => unit.object_type === 'unit');
 
 export const getDistrictsByType = createSelector(
-  [getSelectedDistrict, getDistrictData, getCitySettings],
-  (selectedDistrictType, districtData, citySettings) => {
+  [getSelectedDistrict, getDistrictData, getSelectedCities],
+  (selectedDistrictType, districtData, selectedCities) => {
     if (selectedDistrictType && districtData.length) {
       const districtType = districtData.find(obj => obj.id === selectedDistrictType);
-      const selectedCities = Object.values(citySettings).filter(city => city);
+
       // Filter distircts by user city settings
       if (districtType && selectedCities.length) {
-        return districtType.data.filter(district => citySettings[district.municipality]);
+        return districtType.data.filter(district => selectedCities.includes(district.municipality));
       }
       return districtType ? districtType.data : [];
     }
@@ -66,11 +69,10 @@ export const getDistrictPrimaryUnits = createSelector(
 
 // Get selected geographical district units
 export const getFilteredSubdistrictServices = createSelector(
-  [getSubdistrictSelection, getSubdistrictUnits, getCitySettings],
+  [getSubdistrictSelection, getSubdistrictUnits, getSelectedCities],
   (selectedSubdistricts, unitData, citySettings) => {
-    const selectedCities = Object.values(citySettings).filter(city => city);
-    const cityFilteredUnits = selectedCities?.length
-      ? unitData.filter(unit => citySettings[unit.municipality])
+    const cityFilteredUnits = citySettings?.length
+      ? unitData.filter(unit => citySettings.includes(unit.municipality))
       : unitData;
     if (selectedSubdistricts?.length && unitData) {
       return cityFilteredUnits.filter(

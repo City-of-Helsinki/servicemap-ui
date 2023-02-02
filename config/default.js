@@ -56,6 +56,11 @@ if (typeof settings.CITIES === 'undefined') {
   settings.CITIES = 'helsinki,espoo,vantaa,kauniainen,kirkkonummi';
 }
 
+if (typeof settings.WELLBEING_AREAS === 'undefined') {
+  // If not set default to Helsinki
+  settings.WELLBEING_AREAS = [];
+}
+
 if (typeof settings.SERVICE_MAP_URL === 'undefined') {
   // If not set default to Helsinki
   settings.SERVICE_MAP_URL = 'https://tiles.hel.ninja/styles/hel-osm-bright/{z}/{x}/{y}';
@@ -227,6 +232,7 @@ export default {
   "natureAreaURL": settings.NATURE_AREA_URL,
   "embedderDocumentationUrl": settings.EMBEDDER_DOCUMENTATION_URL,
   "cities": settings.CITIES.split(','),
+  "wellbeingAreas": settings.WELLBEING_AREAS.split(','),
   "hslRouteGuideCities": settings.HSL_ROUTE_GUIDE_CITIES.split(','),
   "maps": settings.MAPS.split(','),
   "smallContentAreaBreakpoint": 449,

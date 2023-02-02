@@ -9,14 +9,15 @@ import { getAddressDistrict } from '../../../../redux/selectors/district';
 import { getAddressFromUnit } from '../../../../utils/address';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { sortByOriginID } from '../../utils';
-import { DivisionItem, SMAccordion } from '../../../../components';
+import { DivisionItem } from '../../../../components';
+import { getSelectedCities } from '../../../../redux/selectors/settings';
 
 const DistrictUnitList = (props) => {
   const {
     classes, intl, selectedAddress, district,
   } = props;
 
-  const citySettings = useSelector(state => state.settings.cities);
+  const selectedCities = useSelector(state => getSelectedCities(state));
   const addressDistrict = useSelector(state => getAddressDistrict(state));
   const districtsFetching = useSelector(state => state.districts.districtsFetching);
   const getLocaleText = useLocaleText();
@@ -76,10 +77,9 @@ const DistrictUnitList = (props) => {
     }
 
 
-    const selectedCities = Object.values(citySettings).filter(city => city);
     const cityFilteredDistricts = !selectedCities.length
       ? district.data
-      : district.data.filter(obj => citySettings[obj.municipality]);
+      : district.data.filter(obj => selectedCities.includes(obj.municipality));
 
     if (district.id === 'rescue_area') {
       sortByOriginID(cityFilteredDistricts);

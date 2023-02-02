@@ -12,7 +12,8 @@ export const getServiceUnits = createSelector(
   [getUnits, getSettings, getSortingParameters],
   (units, settings, sortingParameters) => {
     const cities = [];
-    config.cities.forEach(city => cities.push(...settings.cities[city] ? [city] : []));
+    const configCities = [...config.cities, config.wellbeingAreas];
+    configCities.forEach(city => cities.push(...settings.cities[city] ? [city] : []));
     const filteredUnits = units.filter(filterCities(cities, true));
     const orderedUnits = orderUnits(filteredUnits, sortingParameters);
     return orderedUnits;

@@ -39,14 +39,15 @@ const setMapTypeSetting = setting => async (dispatch) => {
 export const toggleCity = values => async (dispatch) => {
   const keyIsValid = SettingsUtility.isValidCitySetting(values);
   const citySettings = {};
-  config.cities.forEach((city) => { citySettings[city] = values[city]; });
+  const configList = [...config.cities, ...config.wellbeingAreas];
+  configList.forEach((city) => { citySettings[city] = values[city]; });
 
   if (keyIsValid) {
     dispatch({
       type: 'CITY_SET_SELECTION',
       selection: citySettings,
     });
-    config.cities.forEach((city) => {
+    configList.forEach((city) => {
       LocalStorageUtility.saveItem(city, values[city]); // Save values to localStorage
     });
   }

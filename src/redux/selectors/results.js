@@ -17,8 +17,9 @@ const settings = state => state.settings;
  * @param {*} settings - user settings, used in filtering
  */
 const getFilteredData = (data, options, settings) => {
+  const configCities = [...config.cities, ...config.wellbeingAreas];
   const cities = [];
-  config.cities.forEach((city) => {
+  configCities.forEach((city) => {
     cities.push(...settings.cities[city] ? [city] : []);
   });
 

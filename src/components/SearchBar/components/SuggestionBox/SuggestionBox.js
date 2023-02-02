@@ -52,7 +52,8 @@ const SuggestionBox = (props) => {
 
   const citySettings = useSelector((state) => {
     const { cities } = state.settings;
-    return config.cities.filter(c => cities[c]);
+    const cityList = [...config.cities, config.wellbeingAreas];
+    return cityList.filter(c => cities[c]);
   });
 
   const getAddressText = (item) => {
