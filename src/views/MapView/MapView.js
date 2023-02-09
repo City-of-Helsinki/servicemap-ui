@@ -231,13 +231,13 @@ const MapView = (props) => {
     let center = mapOptions.initialPosition;
     let zoom = isMobile ? mapObject.options.mobileZoom : mapObject.options.zoom;
     if (prevMap && llMapHasMapPane(prevMap)) { // If changing map type, use viewport values of previous map
-      center = prevMap.getCenter() || prevMap.props.center;
+      center = prevMap.getCenter() || prevMap.options.center;
       /* Different map types have different zoom levels
       Use the zoom difference to calculate the new zoom level */
       const zoomDifference = mapObject.options.zoom - prevMap.defaultZoom;
       zoom = prevMap.getZoom()
         ? prevMap.getZoom() + zoomDifference
-        : prevMap.props.zoom + zoomDifference;
+        : prevMap.options.zoom + zoomDifference;
     }
 
     const showLoadingScreen = statisticalDistrictFetch.isFetching
