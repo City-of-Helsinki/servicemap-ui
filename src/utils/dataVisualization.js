@@ -30,7 +30,7 @@ class DataVisualization {
 
   POPULATION_FORECAST_STRING = '_population_forecast';
 
-  CURRENT_YEAR = new Date().getFullYear() - 1;
+  CURRENT_YEAR = new Date().getFullYear() - 2;
 
   FORECAST_YEAR = new Date().getFullYear() + 5;
 
