@@ -90,6 +90,7 @@ export const APIHandlers = {
       start: 'today',
       sort: 'end_time',
       include: 'location',
+      event_status: 'EventScheduled'
     },
     envName: config.eventsAPI.id,
   },
