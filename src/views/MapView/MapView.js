@@ -203,6 +203,8 @@ const MapView = (props) => {
     }
   }, [measuringMode]);
 
+  const unitHasLocationAndGeometry = (un) => un?.location && un?.geometry;
+
   // Render
 
   const renderUnitGeometry = () => {
@@ -214,7 +216,7 @@ const MapView = (props) => {
           : null
       ));
     }
-    if (highlightedUnit) {
+    if (unitHasLocationAndGeometry(highlightedUnit)) {
       return <UnitGeometry data={highlightedUnit} />;
     }
     return null;
@@ -323,7 +325,7 @@ const MapView = (props) => {
             <AddressMarker embedded={embedded} />
           )}
 
-          {currentPage === 'unit' && highlightedUnit?.entrances?.length && (
+          {currentPage === 'unit' && highlightedUnit?.entrances?.length && unitHasLocationAndGeometry(highlightedUnit) && (
             <EntranceMarker />
           )}
 
