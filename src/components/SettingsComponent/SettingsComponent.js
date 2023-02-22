@@ -1,15 +1,11 @@
-import {
-  Autocomplete, Checkbox, Chip, Container, ListItem, NoSsr, TextField, Typography,
-} from '@mui/material';
-import { styled } from '@mui/styles';
-import React, { useRef, useState } from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
-import { useDispatch, useSelector } from 'react-redux';
+import {Autocomplete, Checkbox, Chip, Container, ListItem, NoSsr, TextField, Typography,} from '@mui/material';
+import {styled} from '@mui/styles';
+import React, {useRef, useState} from 'react';
+import {FormattedMessage, useIntl} from 'react-intl';
+import {useDispatch, useSelector} from 'react-redux';
 import config from '../../../config';
-import {
-  setMobility, toggleCity, toggleColorblind, toggleHearingAid, toggleVisuallyImpaired,
-} from '../../redux/actions/settings';
-import { keyboardHandler, uppercaseFirst } from '../../utils';
+import {setMobility, toggleCity, toggleColorblind, toggleHearingAid, toggleVisuallyImpaired,} from '../../redux/actions/settings';
+import {keyboardHandler, uppercaseFirst} from '../../utils';
 import SMAccordion from '../SMAccordion';
 
 
@@ -52,18 +48,18 @@ const SettingsNew = () => {
 
   // Returns settings as simple list of selected settings
   const getListOfSettings = () => {
-    const senseTitles = settingsValues.senses.map((sense) => {
+    const sense = settingsValues.senses.map((sense) => {
       const match = senseSettingList.find(item => item.id === sense);
-      return match?.title;
+      return { title: match?.title, category: 'senses', id: sense };
     });
     const mobility = settingsValues.mobility !== 'none'
       ? mobilitySettingList.find(item => item.id === settingsValues.mobility)
       : null;
 
     return [
-      ...senseTitles,
-      ...(mobility ? [mobility.title] : []),
-      ...settingsValues.cities,
+      ...sense,
+      ...(mobility ? [mobility] : []).map(mobility => ({title: mobility.title, category: 'mobility', id: mobility.id})),
+      ...settingsValues.cities.map(city => ({category: 'cities', id: city, title: city})),
     ];
   };
 
@@ -76,7 +72,9 @@ const SettingsNew = () => {
   const handleOptionSelecting = (id, category) => {
     if (!id) return;
     if (category === 'mobility') {
-      dispatch(setMobility(id));
+      let hasMobility = !!getListOfSettings().find(setting => setting.category === 'mobility');
+      const newValue = hasMobility ? 'none' : id;
+      dispatch(setMobility(newValue));
       setOpenSettings(null);
     }
     if (category === 'cities') {
@@ -187,10 +185,11 @@ const SettingsNew = () => {
                   {settingsList.map(setting => (
                     <StyledChip
                       tabIndex={-1}
-                      key={setting}
+                      key={setting.id}
                       clickable
                       size="small"
-                      label={uppercaseFirst(setting)}
+                      label={uppercaseFirst(setting.title)}
+                      onDelete={() => handleOptionSelecting(setting.id, setting.category)}
                     />
                   ))}
                   <StyledChip
