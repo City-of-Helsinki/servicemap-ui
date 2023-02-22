@@ -42,6 +42,8 @@ import PriceInfo from './components/PriceInfo';
 import { parseSearchParams } from '../../utils';
 import { fetchServiceUnits } from '../../redux/actions/services';
 import MapView from '../MapView';
+import SettingsComponent from "../../components/SettingsComponent/SettingsComponent";
+
 
 const UnitView = (props) => {
   const {
@@ -508,6 +510,7 @@ const UnitView = (props) => {
                       </div>
                     )
                 }
+                {<SettingsComponent/>}
               </>
           )}
           />
@@ -522,6 +525,7 @@ const UnitView = (props) => {
           <Typography color="primary" variant="body1">
             <FormattedMessage id="unit.details.notFound" />
           </Typography>
+          <SettingsComponent/>
         </div>
       </div>
     );
