@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Typography, List, ListItem, ListItemIcon, ListItemText, Divider, NoSsr, ButtonBase,
+  Typography, List, ListItem, ListItemIcon, ListItemText, Divider, NoSsr,
 } from '@mui/material';
-import { Warning, VerifiedUser, Accessibility } from '@mui/icons-material';
+import { Warning, VerifiedUser } from '@mui/icons-material';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import SettingsUtility from '../../../../utils/settings';
 import useLocaleText from '../../../../utils/useLocaleText';
-import { toggleSettings } from '../../../../redux/actions/settings';
 import { Container, Loading, SettingsText } from '../../../../components';
 
 const AccessibilityInfo = (props) => {
@@ -82,23 +81,6 @@ const AccessibilityInfo = (props) => {
 
     return renderedShortcomings;
   };
-
-  const renderAccessibilitySettings = () => (
-    <div className={classes.aSettingsContainer}>
-      <Accessibility className={classes.infoIcon} />
-      <div>
-        <SettingsText variant="plain" type="accessibilitySettings" />
-        <ButtonBase
-          id="SettingsLink"
-          onClick={() => dispatch(toggleSettings('search'))}
-        >
-          <Typography className={classes.settingsLink}>
-            <FormattedMessage id="settings.change" />
-          </Typography>
-        </ButtonBase>
-      </div>
-    </div>
-  );
 
   const renderAccessibilityShortcomings = (heading, shortcomings) => {
     const data = shortcomings;
@@ -257,7 +239,6 @@ const AccessibilityInfo = (props) => {
   const noInfo = !aDescriptions && !aShortcomings;
   const noShortcomings = aDescriptions && !aShortcomings;
 
-  const accessibilitySettings = renderAccessibilitySettings();
   const infoText = renderInfoText(noInfo, noShortcomings);
 
   return (
@@ -272,9 +253,6 @@ const AccessibilityInfo = (props) => {
         }
       <Divider className={classes.divider} aria-hidden="true" />
       <NoSsr>
-        {
-          accessibilitySettings
-        }
         {
             infoText
         }
