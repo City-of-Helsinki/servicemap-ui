@@ -4,7 +4,7 @@ import React, {useRef, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 import config from '../../../config';
-import {setMobility, toggleCity, toggleColorblind, toggleHearingAid, toggleVisuallyImpaired,} from '../../redux/actions/settings';
+import {setMobility, setSettingsAccordionCollapsed, toggleCity, toggleColorblind, toggleHearingAid, toggleVisuallyImpaired} from '../../redux/actions/settings';
 import {keyboardHandler, uppercaseFirst} from '../../utils';
 import SMAccordion from '../SMAccordion';
 
@@ -14,20 +14,20 @@ const SettingsNew = () => {
   const dispatch = useDispatch();
   const settings = useSelector(state => state.settings);
 
-  const [settingsVisible, setSettingVisible] = useState(true);
-  const [openSettings, setOpenSettings] = useState(null);
-  const highlightedOption = useRef(null);
-
   const senses = ['colorblind', 'hearingAid', 'visuallyImpaired'];
-
   // Format settings from redux to easier structure
   const settingsValues = {
     mobility: settings.mobility,
     senses: Object.keys(settings)
-      .filter(key => senses.includes(key) && settings[key] === true),
+        .filter(key => senses.includes(key) && settings[key] === true),
     cities: Object.keys(settings.cities)
-      .filter(city => settings.cities[city] === true),
+        .filter(city => settings.cities[city] === true),
+    settingsCollapsed: settings.settingsCollapsed,
   };
+
+  const [settingsVisible, setSettingVisible] = useState(!settingsValues.settingsCollapsed);
+  const [openSettings, setOpenSettings] = useState(null);
+  const highlightedOption = useRef(null);
 
   // Configure rendered settings items
   const senseSettingList = [
@@ -45,6 +45,11 @@ const SettingsNew = () => {
   const citySettingsList = config.cities.map(city => (
     { id: city, title: intl.formatMessage({ id: `settings.city.${city}` }) }
   ));
+
+  const setSettingsCollapsed = collapsed => {
+    dispatch(setSettingsAccordionCollapsed(collapsed));
+    setSettingVisible(collapsed);
+  }
 
   // Returns settings as simple list of selected settings
   const getListOfSettings = () => {
@@ -171,9 +176,9 @@ const SettingsNew = () => {
       >
         <StyledAccordion
           settingsVisible={settingsVisible}
-          defaultOpen
+          defaultOpen={settingsVisible}
           disableUnmount
-          onOpen={(e, open) => setSettingVisible(!open)}
+          onOpen={(e, open) => setSettingsCollapsed(open)}
           titleContent={settingsVisible
             ? <Typography><FormattedMessage id="general.hideSettings" /></Typography>
             : (

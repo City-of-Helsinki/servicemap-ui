@@ -1,6 +1,7 @@
 import config from '../../../config';
 
 const initialState = false;
+const settingsCollapsedInitially = true;
 
 const cityInitialState = {};
 config.cities.forEach((city) => {
@@ -24,6 +25,15 @@ export const cities = (state = cityInitialState, action) => {
       return state;
   }
 };
+
+export const settingsCollapsed = (state = settingsCollapsedInitially, action) => {
+  switch (action.type) {
+    case 'SETTINGS_OPENED':
+      return action.selection;
+    default:
+      return state;
+  }
+}
 
 export const hearingAid = (state, action) => basicSelection(state, action, 'HEARING');
 
