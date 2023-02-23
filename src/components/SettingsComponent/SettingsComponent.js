@@ -25,7 +25,7 @@ const SettingsNew = () => {
     settingsCollapsed: settings.settingsCollapsed,
   };
 
-  const [settingsVisible, setSettingVisible] = useState(!settingsValues.settingsCollapsed);
+  const settingsVisible = !settingsValues.settingsCollapsed;
   const [openSettings, setOpenSettings] = useState(null);
   const highlightedOption = useRef(null);
 
@@ -48,7 +48,6 @@ const SettingsNew = () => {
 
   const setSettingsCollapsed = collapsed => {
     dispatch(setSettingsAccordionCollapsed(collapsed));
-    setSettingVisible(collapsed);
   }
 
   // Returns settings as simple list of selected settings
