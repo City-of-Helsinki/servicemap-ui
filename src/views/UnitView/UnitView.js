@@ -1,28 +1,14 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useState, useEffect, useRef } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
-import { Button, ButtonBase, Typography } from '@mui/material';
-import { FormattedMessage } from 'react-intl';
-import {
-  Map, Mail, Hearing, Share, Expand, OpenInFull,
-} from '@mui/icons-material';
-import { visuallyHidden } from '@mui/utils';
-import { Helmet } from 'react-helmet';
-import { useDispatch, useSelector } from 'react-redux';
+import {Button, Typography} from '@mui/material';
+import {FormattedMessage} from 'react-intl';
+import {Hearing, Mail, OpenInFull, Share,} from '@mui/icons-material';
+import {visuallyHidden} from '@mui/utils';
+import {Helmet} from 'react-helmet';
+import {useDispatch, useSelector} from 'react-redux';
 import styled from '@emotion/styled';
-import {
-  AcceptSettingsDialog,
-  AddressIcon,
-  Container,
-  LinkSettingsDialog,
-  ReadSpeakerButton,
-  SearchBar,
-  SimpleListItem,
-  SMButton,
-  TabLists,
-  TitleBar,
-  TitledList,
-} from '../../components';
+import {AcceptSettingsDialog, Container, LinkSettingsDialog, ReadSpeakerButton, SearchBar, SimpleListItem, SMButton, TabLists, TitleBar, TitledList,} from '../../components';
 import AccessibilityInfo from './components/AccessibilityInfo';
 import ContactInfo from './components/ContactInfo';
 import Highlights from './components/Highlights';
@@ -39,8 +25,8 @@ import SettingsUtility from '../../utils/settings';
 import UnitDataList from './components/UnitDataList';
 import UnitsServicesList from './components/UnitsServicesList';
 import PriceInfo from './components/PriceInfo';
-import { parseSearchParams } from '../../utils';
-import { fetchServiceUnits } from '../../redux/actions/services';
+import {parseSearchParams} from '../../utils';
+import {fetchServiceUnits} from '../../redux/actions/services';
 import MapView from '../MapView';
 
 const UnitView = (props) => {
@@ -338,13 +324,14 @@ const UnitView = (props) => {
     );
   };
 
+  const getImageAlt = () => `${intl.formatMessage({id: 'unit.picture'})}${getLocaleText(unit.name)}`;
 
   const renderHead = () => {
     if (!unit || !unit.complete) {
       return null;
     }
     const title = unit && unit.name ? getLocaleText(unit.name) : '';
-    const imageAlt = `${intl.formatMessage({ id: 'unit.picture' })}${getLocaleText(unit.name)}`;
+    const imageAlt = getImageAlt();
     const description = unit.description ? getLocaleText(unit.description) : null;
 
     return (
@@ -438,7 +425,7 @@ const UnitView = (props) => {
     }
 
     if (unit && unit.complete) {
-      const imageAlt = `${intl.formatMessage({ id: 'unit.picture' })}${getLocaleText(unit.name)}`;
+      const imageAlt = getImageAlt();
       const tabs = [
         {
           id: 'basicInfo',
