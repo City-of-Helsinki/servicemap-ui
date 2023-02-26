@@ -9,30 +9,24 @@ config.cities.forEach((city) => {
 });
 
 const basicSelection = (state = initialState, action, prefix) => {
-  switch (action.type) {
-    case `${prefix}_SET_SELECTION`:
-      return action.selection;
-    default:
-      return state;
+  if (action.type === `${prefix}_SET_SELECTION`) {
+    return action.selection;
   }
+  return state;
 };
 
 export const cities = (state = cityInitialState, action) => {
-  switch (action.type) {
-    case 'CITY_SET_SELECTION':
-      return action.selection;
-    default:
-      return state;
+  if (action.type === 'CITY_SET_SELECTION') {
+    return action.selection;
   }
+  return state;
 };
 
 export const settingsCollapsed = (state = settingsCollapsedInitially, action) => {
-  switch (action.type) {
-    case 'SETTINGS_OPENED':
+  if (action.type === 'SETTINGS_OPENED') {
       return action.selection;
-    default:
-      return state;
   }
+  return state;
 }
 
 export const hearingAid = (state, action) => basicSelection(state, action, 'HEARING');
