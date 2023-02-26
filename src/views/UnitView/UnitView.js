@@ -380,6 +380,24 @@ const UnitView = (props) => {
     </div>
   );
 
+  function renderPicture() {
+    return (
+        <div className={classes.imageContainer}>
+          <img
+              className={classes.image}
+              alt={getImageAlt()}
+              src={unit.picture_url}
+          />
+          {
+              unit.picture_caption
+              && (
+                  <Typography variant="body2" className={classes.imageCaption}>{getLocaleText(unit.picture_caption)}</Typography>
+              )
+          }
+        </div>
+    );
+  }
+
   const render = () => {
     const title = unit && unit.name ? getLocaleText(unit.name) : '';
     const onLinkOpenClick = () => {
@@ -425,7 +443,6 @@ const UnitView = (props) => {
     }
 
     if (unit && unit.complete) {
-      const imageAlt = getImageAlt();
       const tabs = [
         {
           id: 'basicInfo',
@@ -479,21 +496,7 @@ const UnitView = (props) => {
                 {
                   isMobile
                     ? renderUnitLocation(unit)
-                    : unit.picture_url && (
-                      <div className={classes.imageContainer}>
-                        <img
-                          className={classes.image}
-                          alt={imageAlt}
-                          src={unit.picture_url}
-                        />
-                        {
-                          unit.picture_caption
-                          && (
-                            <Typography variant="body2" className={classes.imageCaption}>{getLocaleText(unit.picture_caption)}</Typography>
-                          )
-                        }
-                      </div>
-                    )
+                    : unit.picture_url && renderPicture()
                 }
               </>
           )}
