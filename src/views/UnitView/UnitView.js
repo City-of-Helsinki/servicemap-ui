@@ -256,6 +256,7 @@ const UnitView = (props) => {
           <UnitLinks unit={unit} />
           <ElectronicServices unit={unit} />
           {!isMobile && feedbackButton()}
+          {isMobile && renderPicture()}
         </div>
       </div>
     );
