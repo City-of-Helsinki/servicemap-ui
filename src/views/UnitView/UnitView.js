@@ -413,7 +413,7 @@ const UnitView = (props) => {
     const TopArea = (
       <>
         {!isMobile && (
-          <SearchBar />
+          <SearchBar hideBackButton />
         )}
         <TitleBar
           sticky
