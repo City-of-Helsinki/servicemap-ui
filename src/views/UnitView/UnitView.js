@@ -413,15 +413,11 @@ const UnitView = (props) => {
 
     const TopArea = (
       <>
-        <div className={classes.buttonContainer}>
-          <BackButton
-              text={intl.formatMessage({id: 'general.backTo'})}
-              ariaLabel={'backButtonSrText'}
-              className={classes.iconButton}
-              focusVisibleClassName={classes.buttonFocus}
-              variant="container"
-          />
-        </div>
+        <BackButton
+          text={intl.formatMessage({id: 'general.backTo'})}
+          ariaLabel={'backButtonSrText'}
+          variant="topBackButton"
+        />
         {!isMobile && (
           <SearchBar hideBackButton />
         )}

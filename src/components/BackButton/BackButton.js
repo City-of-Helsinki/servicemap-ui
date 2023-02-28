@@ -99,6 +99,34 @@ const BackButton = (props) => {
     );
   }
 
+  if (variant === 'topBackButton') {
+    classNames += ` ${classes.topBackButton} ${className}`;
+    return (
+      <div className={classes.topBackButtonContainer}>
+        <ButtonBase
+          role="link"
+          className={classNames}
+          style={style}
+          aria-hidden={srHidden}
+          aria-label={ariaLabel || buttonTitle}
+          onClick={(e) => {
+            e.preventDefault();
+            if (onClick) {
+              onClick(e);
+            } else if (navigator) {
+              navigator.goBack();
+            }
+          }}
+        >
+          <ArrowBack fontSize="inherit"/>
+          <Typography aria-hidden className={`${classes.containerText}`} fontSize="inherit" color="inherit" variant="body2">
+            {text || buttonTitle}
+          </Typography>
+        </ButtonBase>
+      </div>
+    );
+  }
+
   return (
     <Button
       aria-hidden={srHidden}
@@ -131,7 +159,7 @@ BackButton.propTypes = {
   navigator: PropTypes.objectOf(PropTypes.any),
   style: PropTypes.objectOf(PropTypes.any),
   onClick: PropTypes.func,
-  variant: PropTypes.oneOf(['container', 'icon', null]),
+  variant: PropTypes.oneOf(['container', 'icon', 'topBackButton', null]),
   srHidden: PropTypes.bool,
   ariaLabel: PropTypes.string,
   text: PropTypes.string,
