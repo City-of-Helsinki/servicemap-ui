@@ -1,10 +1,10 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Button, ButtonBase, Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import {
-  Map, Mail, Hearing, Share, Expand, OpenInFull,
+  Mail, Hearing, Share, OpenInFull,
 } from '@mui/icons-material';
 import { visuallyHidden } from '@mui/utils';
 import { Helmet } from 'react-helmet';
@@ -42,6 +42,7 @@ import PriceInfo from './components/PriceInfo';
 import { parseSearchParams } from '../../utils';
 import { fetchServiceUnits } from '../../redux/actions/services';
 import MapView from '../MapView';
+import BackButton from "../../components/BackButton";
 
 const UnitView = (props) => {
   const {
@@ -412,6 +413,15 @@ const UnitView = (props) => {
 
     const TopArea = (
       <>
+        <div className={classes.buttonContainer}>
+          <BackButton
+              text={intl.formatMessage({id: 'general.backTo'})}
+              ariaLabel={'backButtonSrText'}
+              className={classes.iconButton}
+              focusVisibleClassName={classes.buttonFocus}
+              variant="container"
+          />
+        </div>
         {!isMobile && (
           <SearchBar hideBackButton />
         )}

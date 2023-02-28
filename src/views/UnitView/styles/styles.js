@@ -29,11 +29,23 @@ export default theme => ({
     padding: 10,
   },
   iconButton: {
-    padding: 10,
+    display: 'flex',
+    color: 'inherit',
+    flex: '0 1 auto',
+    padding: 0,
+    paddingTop: theme.spacing(2),
+    paddingLeft: theme.spacing(2),
+    margin: 0,
+    fontSize: '1.125rem',
+    marginLeft: theme.spacing(-0.5),
   },
   icon: {
     fontSize: 24,
     margin: 0,
+  },
+  buttonFocus: {
+    outline: '2px solid transparent',
+    boxShadow: `0 0 0 4px ${theme.palette.primary.highContrast}`,
   },
   eventIcon: {
     marginRight: theme.spacing(2),
@@ -44,6 +56,10 @@ export default theme => ({
   link: {
     color: theme.palette.link.main,
     textDecoration: 'underline',
+  },
+  buttonContainer: {
+    color: '#fff',
+    backgroundColor: theme.palette.primary.main,
   },
   linkButton: {
     color: 'white',
