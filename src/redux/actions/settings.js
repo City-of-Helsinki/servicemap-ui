@@ -37,7 +37,7 @@ const setMapTypeSetting = setting => async (dispatch) => {
 };
 
 export const setSettingsAccordionCollapsed = collapsed => async (dispatch) => {
-  if (SettingsUtility.isSettingsCollapsed(collapsed)) {
+  if (SettingsUtility.isValidValueForSettingsCollapsed(collapsed)) {
     LocalStorageUtility.saveItem('settingsCollapsed', collapsed);
     dispatch({ type: 'SETTINGS_OPENED', selection: collapsed });
   }

@@ -65,7 +65,7 @@ class SettingsUtility {
     return true;
   }
 
-  static isSettingsCollapsed(value) {
+  static isValidValueForSettingsCollapsed(value) {
     if (SettingsUtility.settingsCollapsed.indexOf(value) < 0) {
       throw new Error(`Invalid value for settings open: ${value}`);
     }
