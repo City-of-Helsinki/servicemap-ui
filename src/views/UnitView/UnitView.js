@@ -381,21 +381,21 @@ const UnitView = (props) => {
     </div>
   );
 
-  function renderPicture() {
+  const renderPicture = () => {
     return (
-        <div className={classes.imageContainer}>
-          <img
-              className={classes.image}
-              alt={getImageAlt()}
-              src={unit.picture_url}
-          />
-          {
-              unit.picture_caption
-              && (
-                  <Typography variant="body2" className={classes.imageCaption}>{getLocaleText(unit.picture_caption)}</Typography>
-              )
-          }
-        </div>
+      <div className={classes.imageContainer}>
+        <img
+          className={classes.image}
+          alt={getImageAlt()}
+          src={unit.picture_url}
+        />
+        {
+          unit.picture_caption
+          && (
+            <Typography variant="body2" className={classes.imageCaption}>{getLocaleText(unit.picture_caption)}</Typography>
+          )
+        }
+      </div>
     );
   }
 
