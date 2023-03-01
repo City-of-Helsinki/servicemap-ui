@@ -27,6 +27,7 @@ const AddressSearchBar = ({
   const getLocaleText = useLocaleText();
   const dispatch = useDispatch();
   const isMobile = useMobileStatus();
+  const locale = useSelector(state => state.user.locale);
   const map = useSelector(state => state.mapRef);
 
   const [addressResults, setAddressResults] = useState([]);
@@ -44,6 +45,7 @@ const AddressSearchBar = ({
       page_size: suggestionCount,
       type: 'address',
       address_limit: suggestionCount,
+      language: locale,
     };
     setIsFetching(true);
     const results = smAPI.search(text, fetchOptions);
