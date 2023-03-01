@@ -254,6 +254,9 @@ const StyledChip = styled(Chip)(({ theme, all }) => ({
   '&:hover': {
     backgroundColor: all ? theme.palette.white.main : 'rgb(47, 60, 187)',
   },
+  '& .MuiChip-deleteIcon': {
+    color: theme.palette.white.main,
+  },
 }));
 
 
