@@ -9,7 +9,7 @@ import {keyboardHandler, uppercaseFirst} from '../../utils';
 import SMAccordion from '../SMAccordion';
 
 
-const SettingsNew = () => {
+const SettingsComponent = ({variant, classes}) => {
   const intl = useIntl();
   const dispatch = useDispatch();
   const settings = useSelector(state => state.settings);
@@ -166,12 +166,17 @@ const SettingsNew = () => {
   };
 
   const settingsList = getListOfSettings().slice(0, 2);
+  let classNames = '';
+  if (variant === 'paddingTopSettings') {
+    classNames = `${classes.paddingTopSettings}`;
+  }
 
   return (
     <NoSsr>
       <Container
         disableGutters
         sx={{ pb: 2, bgcolor: 'primary.main' }}
+        className={classNames}
       >
         <StyledAccordion
           settingsVisible={settingsVisible}
@@ -309,4 +314,4 @@ const StyledAutocomplete = styled(Autocomplete)(({ theme }) => ({
   },
 }));
 
-export default SettingsNew;
+export default SettingsComponent;

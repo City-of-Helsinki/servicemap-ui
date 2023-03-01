@@ -507,7 +507,7 @@ const UnitView = (props) => {
                       </div>
                     )
                 }
-                {<SettingsComponent/>}
+                {<SettingsComponent variant={"paddingTopSettings"}/>}
               </>
           )}
           />
