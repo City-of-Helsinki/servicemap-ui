@@ -1,22 +1,20 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Button, ButtonBase, Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
-import {
-  Map, Mail, Hearing, Share, Expand, OpenInFull,
-} from '@mui/icons-material';
+import { Mail, Hearing, Share, OpenInFull } from '@mui/icons-material';
 import { visuallyHidden } from '@mui/utils';
 import { Helmet } from 'react-helmet';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from '@emotion/styled';
 import {
   AcceptSettingsDialog,
-  AddressIcon,
   Container,
   LinkSettingsDialog,
   ReadSpeakerButton,
   SearchBar,
+  SettingsComponent,
   SimpleListItem,
   SMButton,
   TabLists,
@@ -42,7 +40,6 @@ import PriceInfo from './components/PriceInfo';
 import { parseSearchParams } from '../../utils';
 import { fetchServiceUnits } from '../../redux/actions/services';
 import MapView from '../MapView';
-import SettingsComponent from "../../components/SettingsComponent/SettingsComponent";
 
 
 const UnitView = (props) => {
