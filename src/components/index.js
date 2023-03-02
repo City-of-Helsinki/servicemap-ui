@@ -1,4 +1,5 @@
 import Navigator from './Navigator';
+import BackButton from './BackButton';
 import DataFetcher from './DataFetchers/DataFetcher';
 import NewsInfo from './NewsInfo';
 import Settings from './Settings';
@@ -60,6 +61,7 @@ export {
   AddressItem,
   AddressSearchBar,
   AlertBox,
+  BackButton,
   CloseButton,
   Container,
   DataFetcher,

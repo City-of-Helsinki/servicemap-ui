@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from '@emotion/styled';
 import {
   AcceptSettingsDialog,
-  AddressIcon,
+  BackButton,
   Container,
   LinkSettingsDialog,
   ReadSpeakerButton,
@@ -42,7 +42,6 @@ import PriceInfo from './components/PriceInfo';
 import { parseSearchParams } from '../../utils';
 import { fetchServiceUnits } from '../../redux/actions/services';
 import MapView from '../MapView';
-import BackButton from "../../components/BackButton";
 
 const UnitView = (props) => {
   const {
