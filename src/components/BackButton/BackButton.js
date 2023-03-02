@@ -40,6 +40,33 @@ const BackButton = (props) => {
     }
   }
 
+  const renderContainerVariantButton = () => {
+    return (
+      <>
+        <ButtonBase
+          role="link"
+          className={classNames}
+          style={style}
+          aria-hidden={srHidden}
+          aria-label={ariaLabel || buttonTitle}
+          onClick={(e) => {
+            e.preventDefault();
+            if (onClick) {
+              onClick(e);
+            } else if (navigator) {
+              navigator.goBack();
+            }
+          }}
+        >
+          <ArrowBack fontSize="inherit"/>
+          <Typography aria-hidden className={`${classes.containerText}`} fontSize="inherit" color="inherit" variant="body2">
+            {text || buttonTitle}
+          </Typography>
+        </ButtonBase>
+      </>
+    );
+  }
+
   // Attempt to generate custom text
   const textId = `general.back.${idSuffix}`;
   const defaultMessage = intl.formatMessage({ id: 'general.back' });
@@ -75,54 +102,14 @@ const BackButton = (props) => {
 
   if (variant === 'container') {
     classNames += ` ${classes.containerButton} ${className}`;
-    return (
-      <ButtonBase
-        role="link"
-        className={classNames}
-        style={style}
-        aria-hidden={srHidden}
-        aria-label={ariaLabel || buttonTitle}
-        onClick={(e) => {
-          e.preventDefault();
-          if (onClick) {
-            onClick(e);
-          } else if (navigator) {
-            navigator.goBack();
-          }
-        }}
-      >
-        <ArrowBack fontSize="inherit" />
-        <Typography aria-hidden className={`${classes.containerText}`} fontSize="inherit" color="inherit" variant="body2">
-          {text || buttonTitle}
-        </Typography>
-      </ButtonBase>
-    );
+    return renderContainerVariantButton();
   }
 
   if (variant === 'topBackButton') {
     classNames += ` ${classes.topBackButton} ${className}`;
     return (
       <div className={classes.topBackButtonContainer}>
-        <ButtonBase
-          role="link"
-          className={classNames}
-          style={style}
-          aria-hidden={srHidden}
-          aria-label={ariaLabel || buttonTitle}
-          onClick={(e) => {
-            e.preventDefault();
-            if (onClick) {
-              onClick(e);
-            } else if (navigator) {
-              navigator.goBack();
-            }
-          }}
-        >
-          <ArrowBack fontSize="inherit"/>
-          <Typography aria-hidden className={`${classes.containerText}`} fontSize="inherit" color="inherit" variant="body2">
-            {text || buttonTitle}
-          </Typography>
-        </ButtonBase>
+        {renderContainerVariantButton()}
       </div>
     );
   }
