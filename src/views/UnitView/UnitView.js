@@ -411,11 +411,12 @@ const UnitView = (props) => {
       </Button>
     );
 
+    const backButtonText = intl.formatMessage({id: 'general.backTo'});
     const TopArea = (
       <>
         <BackButton
-          text={intl.formatMessage({id: 'general.backTo'})}
-          ariaLabel={'backButtonSrText'}
+          text={backButtonText}
+          ariaLabel={backButtonText}
           variant="topBackButton"
         />
         {!isMobile && (
