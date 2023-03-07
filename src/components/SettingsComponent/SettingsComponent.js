@@ -76,9 +76,7 @@ const SettingsComponent = ({variant, classes}) => {
   const handleOptionSelecting = (id, category) => {
     if (!id) return;
     if (category === 'mobility') {
-      let hasMobility = !!getListOfSettings().find(setting => setting.category === 'mobility');
-      const newValue = hasMobility ? 'none' : id;
-      dispatch(setMobility(newValue));
+      dispatch(setMobility(id));
       setOpenSettings(null);
     }
     if (category === 'cities') {
