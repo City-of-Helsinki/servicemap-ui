@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Button, Typography } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import {
-  Hearing, Mail, OpenInFull, Share,
+  Mail, Hearing, Share, OpenInFull,
 } from '@mui/icons-material';
 import { visuallyHidden } from '@mui/utils';
 import { Helmet } from 'react-helmet';
@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from '@emotion/styled';
 import {
   AcceptSettingsDialog,
+  BackButton,
   Container,
   LinkSettingsDialog,
   ReadSpeakerButton,
@@ -428,10 +429,16 @@ const UnitView = (props) => {
       </Button>
     );
 
+    const backButtonText = intl.formatMessage({ id: 'general.backTo' });
     const TopArea = (
       <>
+        <BackButton
+          text={backButtonText}
+          ariaLabel={backButtonText}
+          variant="topBackButton"
+        />
         {!isMobile && (
-          <SearchBar margin />
+          <SearchBar hideBackButton />
         )}
         <TitleBar
           sticky
