@@ -1,10 +1,10 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button, ButtonBase, Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import {
-  Map, Mail, Hearing, Share, Expand, OpenInFull,
+  Hearing, Mail, OpenInFull, Share,
 } from '@mui/icons-material';
 import { visuallyHidden } from '@mui/utils';
 import { Helmet } from 'react-helmet';
@@ -12,7 +12,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from '@emotion/styled';
 import {
   AcceptSettingsDialog,
-  AddressIcon,
   Container,
   LinkSettingsDialog,
   ReadSpeakerButton,
@@ -77,6 +76,8 @@ const UnitView = (props) => {
   const dispatch = useDispatch();
 
   const map = useSelector(state => state.mapRef);
+
+  const getImageAlt = () => `${intl.formatMessage({ id: 'unit.picture' })}${getLocaleText(unit.name)}`;
 
   const shouldShowAcceptSettingsDialog = () => {
     const search = new URLSearchParams(location.search);
@@ -217,6 +218,22 @@ const UnitView = (props) => {
     );
   };
 
+  const renderPicture = () => (
+    <div className={classes.imageContainer}>
+      <img
+        className={classes.image}
+        alt={getImageAlt()}
+        src={unit.picture_url}
+      />
+      {
+          unit.picture_caption
+          && (
+            <Typography variant="body2" className={classes.imageCaption}>{getLocaleText(unit.picture_caption)}</Typography>
+          )
+        }
+    </div>
+  );
+
   const renderDetailTab = () => {
     if (!unit || !unit.complete) {
       return <></>;
@@ -270,6 +287,7 @@ const UnitView = (props) => {
           <UnitLinks unit={unit} />
           <ElectronicServices unit={unit} />
           {!isMobile && feedbackButton()}
+          {isMobile && renderPicture()}
         </div>
       </div>
     );
@@ -338,13 +356,12 @@ const UnitView = (props) => {
     );
   };
 
-
   const renderHead = () => {
     if (!unit || !unit.complete) {
       return null;
     }
     const title = unit && unit.name ? getLocaleText(unit.name) : '';
-    const imageAlt = `${intl.formatMessage({ id: 'unit.picture' })}${getLocaleText(unit.name)}`;
+    const imageAlt = getImageAlt();
     const description = unit.description ? getLocaleText(unit.description) : null;
 
     return (
@@ -393,6 +410,7 @@ const UnitView = (props) => {
     </div>
   );
 
+
   const render = () => {
     const title = unit && unit.name ? getLocaleText(unit.name) : '';
     const onLinkOpenClick = () => {
@@ -438,7 +456,6 @@ const UnitView = (props) => {
     }
 
     if (unit && unit.complete) {
-      const imageAlt = `${intl.formatMessage({ id: 'unit.picture' })}${getLocaleText(unit.name)}`;
       const tabs = [
         {
           id: 'basicInfo',
@@ -492,21 +509,7 @@ const UnitView = (props) => {
                 {
                   isMobile
                     ? renderUnitLocation(unit)
-                    : unit.picture_url && (
-                      <div className={classes.imageContainer}>
-                        <img
-                          className={classes.image}
-                          alt={imageAlt}
-                          src={unit.picture_url}
-                        />
-                        {
-                          unit.picture_caption
-                          && (
-                            <Typography variant="body2" className={classes.imageCaption}>{getLocaleText(unit.picture_caption)}</Typography>
-                          )
-                        }
-                      </div>
-                    )
+                    : unit.picture_url && renderPicture()
                 }
               </>
           )}
