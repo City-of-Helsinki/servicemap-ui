@@ -410,7 +410,7 @@ const UnitView = (props) => {
       </Button>
     );
 
-    const backButtonText = intl.formatMessage({id: 'general.backTo'});
+    const backButtonText = intl.formatMessage({ id: 'general.backTo' });
     const TopArea = (
       <>
         <BackButton

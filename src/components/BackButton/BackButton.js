@@ -40,32 +40,6 @@ const BackButton = (props) => {
     }
   }
 
-  const renderContainerVariantButton = () => {
-    return (
-      <>
-        <ButtonBase
-          role="link"
-          className={classNames}
-          style={style}
-          aria-hidden={srHidden}
-          aria-label={ariaLabel || buttonTitle}
-          onClick={(e) => {
-            e.preventDefault();
-            if (onClick) {
-              onClick(e);
-            } else if (navigator) {
-              navigator.goBack();
-            }
-          }}
-        >
-          <ArrowBack fontSize="inherit"/>
-          <Typography aria-hidden className={`${classes.containerText}`} fontSize="inherit" color="inherit" variant="body2">
-            {text || buttonTitle}
-          </Typography>
-        </ButtonBase>
-      </>
-    );
-  }
 
   // Attempt to generate custom text
   const textId = `general.back.${idSuffix}`;
@@ -74,6 +48,31 @@ const BackButton = (props) => {
   // Set button text as state, so that it does not change
   const [buttonTitle] = useState(buttonText);
   let classNames = 'SMBackButton';
+
+  const renderContainerVariantButton = () => (
+    <>
+      <ButtonBase
+        role="link"
+        className={classNames}
+        style={style}
+        aria-hidden={srHidden}
+        aria-label={ariaLabel || buttonTitle}
+        onClick={(e) => {
+          e.preventDefault();
+          if (onClick) {
+            onClick(e);
+          } else if (navigator) {
+            navigator.goBack();
+          }
+        }}
+      >
+        <ArrowBack fontSize="inherit" />
+        <Typography aria-hidden className={`${classes.containerText}`} fontSize="inherit" color="inherit" variant="body2">
+          {text || buttonTitle}
+        </Typography>
+      </ButtonBase>
+    </>
+  );
 
 
   if (variant === 'icon') {
