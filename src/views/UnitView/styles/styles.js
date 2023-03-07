@@ -28,9 +28,6 @@ export default theme => ({
     flex: 1,
     padding: 10,
   },
-  iconButton: {
-    padding: 10,
-  },
   icon: {
     fontSize: 24,
     margin: 0,

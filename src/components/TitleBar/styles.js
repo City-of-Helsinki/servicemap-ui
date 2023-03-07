@@ -64,10 +64,6 @@ export default theme => ({
     margin: theme.spacing(1),
     padding: 0,
   },
-  buttonFocus: {
-    outline: '2px solid transparent',
-    boxShadow: `0 0 0 4px ${theme.palette.primary.highContrast}`,
-  },
   colorLight: {
     color: '#000',
   },

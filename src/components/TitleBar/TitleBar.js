@@ -39,7 +39,6 @@ const TitleBar = ({
             text={backButtonText}
             ariaLabel={backButtonSrText}
             className={classes.iconButton}
-            focusVisibleClassName={classes.buttonFocus}
             variant="container"
           />
           )

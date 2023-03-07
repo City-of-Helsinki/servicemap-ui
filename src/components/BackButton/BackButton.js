@@ -40,6 +40,7 @@ const BackButton = (props) => {
     }
   }
 
+
   // Attempt to generate custom text
   const textId = `general.back.${idSuffix}`;
   const defaultMessage = intl.formatMessage({ id: 'general.back' });
@@ -47,6 +48,31 @@ const BackButton = (props) => {
   // Set button text as state, so that it does not change
   const [buttonTitle] = useState(buttonText);
   let classNames = 'SMBackButton';
+
+  const renderContainerVariantButton = () => (
+    <>
+      <ButtonBase
+        role="link"
+        className={classNames}
+        style={style}
+        aria-hidden={srHidden}
+        aria-label={ariaLabel || buttonTitle}
+        onClick={(e) => {
+          e.preventDefault();
+          if (onClick) {
+            onClick(e);
+          } else if (navigator) {
+            navigator.goBack();
+          }
+        }}
+      >
+        <ArrowBack fontSize="inherit" />
+        <Typography aria-hidden className={`${classes.containerText}`} fontSize="inherit" color="inherit" variant="body2">
+          {text || buttonTitle}
+        </Typography>
+      </ButtonBase>
+    </>
+  );
 
 
   if (variant === 'icon') {
@@ -75,27 +101,15 @@ const BackButton = (props) => {
 
   if (variant === 'container') {
     classNames += ` ${classes.containerButton} ${className}`;
+    return renderContainerVariantButton();
+  }
+
+  if (variant === 'topBackButton') {
+    classNames += ` ${classes.topBackButton} ${className}`;
     return (
-      <ButtonBase
-        role="link"
-        className={classNames}
-        style={style}
-        aria-hidden={srHidden}
-        aria-label={ariaLabel || buttonTitle}
-        onClick={(e) => {
-          e.preventDefault();
-          if (onClick) {
-            onClick(e);
-          } else if (navigator) {
-            navigator.goBack();
-          }
-        }}
-      >
-        <ArrowBack fontSize="inherit" />
-        <Typography aria-hidden className={`${classes.containerText}`} fontSize="inherit" color="inherit" variant="body2">
-          {text || buttonTitle}
-        </Typography>
-      </ButtonBase>
+      <div className={classes.topBackButtonContainer}>
+        {renderContainerVariantButton()}
+      </div>
     );
   }
 
@@ -131,7 +145,7 @@ BackButton.propTypes = {
   navigator: PropTypes.objectOf(PropTypes.any),
   style: PropTypes.objectOf(PropTypes.any),
   onClick: PropTypes.func,
-  variant: PropTypes.oneOf(['container', 'icon', null]),
+  variant: PropTypes.oneOf(['container', 'icon', 'topBackButton', null]),
   srHidden: PropTypes.bool,
   ariaLabel: PropTypes.string,
   text: PropTypes.string,
