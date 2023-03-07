@@ -90,10 +90,7 @@ const UnitView = (props) => {
     const sensesValid = senses.filter(
       s => SettingsUtility.isValidAccessibilitySenseImpairment(s),
     ).length > 0;
-    if (mobilityValid || sensesValid) {
-      return true;
-    }
-    return false;
+    return !!(mobilityValid || sensesValid);
   };
 
   useEffect(() => {
@@ -520,7 +517,7 @@ const UnitView = (props) => {
                     ? renderUnitLocation(unit)
                     : unit.picture_url && renderPicture()
                 }
-                {<SettingsComponent variant={"paddingTopSettings"}/>}
+                <SettingsComponent variant="paddingTopSettings" />
               </>
           )}
           />
@@ -535,7 +532,7 @@ const UnitView = (props) => {
           <Typography color="primary" variant="body1">
             <FormattedMessage id="unit.details.notFound" />
           </Typography>
-          <SettingsComponent/>
+          <SettingsComponent />
         </div>
       </div>
     );

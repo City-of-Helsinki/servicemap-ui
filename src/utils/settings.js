@@ -121,7 +121,7 @@ class SettingsUtility {
       visuallyImpaired: LocalStorageUtility.getItem('visuallyImpaired') === 'true',
       hearingAid: LocalStorageUtility.getItem('hearingAid') === 'true',
       cities: {},
-      settingsCollapsed: LocalStorageUtility.getItem('settingsCollapsed') === 'true'
+      settingsCollapsed: LocalStorageUtility.getItem('settingsCollapsed') === 'true',
     };
 
     config.cities.forEach((city) => {

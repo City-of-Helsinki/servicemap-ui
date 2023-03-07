@@ -24,10 +24,10 @@ export const cities = (state = cityInitialState, action) => {
 
 export const settingsCollapsed = (state = settingsCollapsedInitially, action) => {
   if (action.type === 'SETTINGS_OPENED') {
-      return action.selection;
+    return action.selection;
   }
   return state;
-}
+};
 
 export const hearingAid = (state, action) => basicSelection(state, action, 'HEARING');
 

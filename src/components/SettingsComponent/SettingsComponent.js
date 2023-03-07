@@ -1,15 +1,25 @@
-import {Autocomplete, Checkbox, Chip, Container, ListItem, NoSsr, TextField, Typography,} from '@mui/material';
-import {styled} from '@mui/styles';
-import React, {useRef, useState} from 'react';
-import {FormattedMessage, useIntl} from 'react-intl';
-import {useDispatch, useSelector} from 'react-redux';
+import PropTypes from 'prop-types';
+import {
+  Autocomplete, Checkbox, Chip, Container, ListItem, NoSsr, TextField, Typography,
+} from '@mui/material';
+import { styled } from '@mui/styles';
+import React, { useRef, useState } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
 import config from '../../../config';
-import {setMobility, setSettingsAccordionCollapsed, toggleCity, toggleColorblind, toggleHearingAid, toggleVisuallyImpaired} from '../../redux/actions/settings';
-import {keyboardHandler, uppercaseFirst} from '../../utils';
+import {
+  setMobility,
+  setSettingsAccordionCollapsed,
+  toggleCity,
+  toggleColorblind,
+  toggleHearingAid,
+  toggleVisuallyImpaired,
+} from '../../redux/actions/settings';
+import { keyboardHandler, uppercaseFirst } from '../../utils';
 import SMAccordion from '../SMAccordion';
 
 
-const SettingsComponent = ({variant, classes}) => {
+const SettingsComponent = ({ variant, classes }) => {
   const intl = useIntl();
   const dispatch = useDispatch();
   const settings = useSelector(state => state.settings);
@@ -19,9 +29,9 @@ const SettingsComponent = ({variant, classes}) => {
   const settingsValues = {
     mobility: settings.mobility,
     senses: Object.keys(settings)
-        .filter(key => senses.includes(key) && settings[key] === true),
+      .filter(key => senses.includes(key) && settings[key] === true),
     cities: Object.keys(settings.cities)
-        .filter(city => settings.cities[city] === true),
+      .filter(city => settings.cities[city] === true),
     settingsCollapsed: settings.settingsCollapsed,
   };
 
@@ -46,9 +56,9 @@ const SettingsComponent = ({variant, classes}) => {
     { id: city, title: intl.formatMessage({ id: `settings.city.${city}` }) }
   ));
 
-  const setSettingsCollapsed = collapsed => {
+  const setSettingsCollapsed = (collapsed) => {
     dispatch(setSettingsAccordionCollapsed(collapsed));
-  }
+  };
 
   // Returns settings as simple list of selected settings
   const getListOfSettings = () => {
@@ -62,8 +72,8 @@ const SettingsComponent = ({variant, classes}) => {
 
     return [
       ...sense,
-      ...(mobility ? [mobility] : []).map(mobility => ({title: mobility.title, category: 'mobility', id: mobility.id})),
-      ...settingsValues.cities.map(city => ({category: 'cities', id: city, title: city})),
+      ...(mobility ? [mobility] : []).map(mobility => ({ title: mobility.title, category: 'mobility', id: mobility.id })),
+      ...settingsValues.cities.map(city => ({ category: 'cities', id: city, title: city })),
     ];
   };
 
@@ -311,5 +321,14 @@ const StyledAutocomplete = styled(Autocomplete)(({ theme }) => ({
     backgroundColor: 'rgb(47, 60, 187)',
   },
 }));
+
+SettingsComponent.propTypes = {
+  classes: PropTypes.objectOf(PropTypes.any).isRequired,
+  variant: PropTypes.string,
+};
+
+SettingsComponent.defaultProps = {
+  variant: null,
+};
 
 export default SettingsComponent;

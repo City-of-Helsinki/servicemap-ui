@@ -5,10 +5,9 @@ import {
 } from '@mui/material';
 import { Warning, VerifiedUser } from '@mui/icons-material';
 import { FormattedMessage } from 'react-intl';
-import { useDispatch } from 'react-redux';
 import SettingsUtility from '../../../../utils/settings';
 import useLocaleText from '../../../../utils/useLocaleText';
-import { Container, Loading, SettingsText } from '../../../../components';
+import { Container, Loading } from '../../../../components';
 
 const AccessibilityInfo = (props) => {
   const {
@@ -16,7 +15,6 @@ const AccessibilityInfo = (props) => {
   } = props;
 
   const getLocaleText = useLocaleText();
-  const dispatch = useDispatch();
 
   if (!unit) {
     return null;
