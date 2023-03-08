@@ -32,10 +32,9 @@ const SettingsComponent = ({ variant, classes }) => {
       .filter(key => senses.includes(key) && settings[key] === true),
     cities: Object.keys(settings.cities)
       .filter(city => settings.cities[city] === true),
-    settingsCollapsed: settings.settingsCollapsed,
   };
 
-  const settingsVisible = !settingsValues.settingsCollapsed;
+  const settingsVisible = !settings.settingsCollapsed;
   const [openSettings, setOpenSettings] = useState(null);
   const highlightedOption = useRef(null);
 
