@@ -2,11 +2,12 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import {
-  Autocomplete, FormControl, ListItem, TextField, Typography,
+  FormControl, ListItem, TextField, Typography,
 } from '@mui/material';
 import { Tune } from '@mui/icons-material';
 import { styled } from '@mui/styles';
 import { useAcccessibilitySettings } from '../../utils/settings';
+import SMAutocomplete from '../SMAutocomplete';
 
 const allowedDirections = [
   'asc',
@@ -163,45 +164,13 @@ const StyledTune = styled(Tune)(() => ({
   padding: '13px',
 }));
 
-const StyledAutocomplete = styled(Autocomplete)(({ theme }) => ({
-  backgroundColor: theme.palette.primary.main,
+const StyledAutocomplete = styled(SMAutocomplete)(({ theme }) => ({
   paddingLeft: 0,
   paddingRight: theme.spacing(1),
   paddingTop: 0,
   paddingBottom: 0,
   width: '100%',
 
-  '& .MuiInputLabel-root': {
-    color: theme.palette.white.main,
-  },
-  '&.Mui-focused .MuiInputLabel-root': {
-    color: theme.palette.white.main,
-  },
-
-  '& .MuiAutocomplete-input': {
-    color: theme.palette.white.main,
-  },
-  '& .MuiOutlinedInput-notchedOutline': {
-    borderColor: theme.palette.white.dark,
-  },
-  '&:hover .MuiOutlinedInput-notchedOutline': {
-    borderColor: theme.palette.white.main,
-  },
-  '&.Mui-focused .MuiOutlinedInput-root': {
-    outline: 'none',
-    boxShadow: 'none',
-  },
-  '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-    borderColor: theme.palette.white.main,
-  },
-
-  '& .MuiAutocomplete-popupIndicator, .MuiChip-deleteIcon': {
-    color: theme.palette.white.main,
-  },
-  '& .MuiAutocomplete-tag': {
-    color: theme.palette.white.main,
-    backgroundColor: 'rgb(47, 60, 187)',
-  },
   '& .MuiInput-root:before': {
     borderBottom: 'unset',
   },

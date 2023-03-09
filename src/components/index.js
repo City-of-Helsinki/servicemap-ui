@@ -25,6 +25,7 @@ import SettingsComponent from './SettingsComponent';
 import SMButton from './ServiceMapButton';
 import SMRadio from './SMRadio';
 import SMAccordion from './SMAccordion';
+import SMAutocomplete from './SMAutocomplete';
 import SMSwitch from './SMSwitch';
 import TabLists from './TabLists';
 import TitleBar from './TitleBar';
@@ -90,6 +91,7 @@ export {
   SettingsComponent,
   SimpleListItem,
   SMAccordion,
+  SMAutocomplete,
   SMButton,
   SMRadio,
   SMSwitch,
