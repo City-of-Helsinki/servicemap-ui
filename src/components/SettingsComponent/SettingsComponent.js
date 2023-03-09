@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import {
   Autocomplete, Checkbox, Chip, Container, ListItem, NoSsr, TextField, Typography,
 } from '@mui/material';
@@ -7,23 +8,23 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import config from '../../../config';
 import {
-  setMobility, toggleCity, toggleColorblind, toggleHearingAid, toggleVisuallyImpaired,
+  setMobility,
+  setSettingsAccordionCollapsed,
+  toggleCity,
+  toggleColorblind,
+  toggleHearingAid,
+  toggleVisuallyImpaired,
 } from '../../redux/actions/settings';
 import { keyboardHandler, uppercaseFirst } from '../../utils';
 import SMAccordion from '../SMAccordion';
 
 
-const SettingsNew = () => {
+const SettingsComponent = ({ variant, classes }) => {
   const intl = useIntl();
   const dispatch = useDispatch();
   const settings = useSelector(state => state.settings);
 
-  const [settingsVisible, setSettingVisible] = useState(true);
-  const [openSettings, setOpenSettings] = useState(null);
-  const highlightedOption = useRef(null);
-
   const senses = ['colorblind', 'hearingAid', 'visuallyImpaired'];
-
   // Format settings from redux to easier structure
   const settingsValues = {
     mobility: settings.mobility,
@@ -32,6 +33,10 @@ const SettingsNew = () => {
     cities: Object.keys(settings.cities)
       .filter(city => settings.cities[city] === true),
   };
+
+  const settingsVisible = !settings.settingsCollapsed;
+  const [openSettings, setOpenSettings] = useState(null);
+  const highlightedOption = useRef(null);
 
   // Configure rendered settings items
   const senseSettingList = [
@@ -50,20 +55,24 @@ const SettingsNew = () => {
     { id: city, title: intl.formatMessage({ id: `settings.city.${city}` }) }
   ));
 
+  const setSettingsCollapsed = (collapsed) => {
+    dispatch(setSettingsAccordionCollapsed(collapsed));
+  };
+
   // Returns settings as simple list of selected settings
   const getListOfSettings = () => {
-    const senseTitles = settingsValues.senses.map((sense) => {
+    const sense = settingsValues.senses.map((sense) => {
       const match = senseSettingList.find(item => item.id === sense);
-      return match?.title;
+      return { title: match?.title, category: 'senses', id: sense };
     });
     const mobility = settingsValues.mobility !== 'none'
       ? mobilitySettingList.find(item => item.id === settingsValues.mobility)
       : null;
 
     return [
-      ...senseTitles,
-      ...(mobility ? [mobility.title] : []),
-      ...settingsValues.cities,
+      ...sense,
+      ...(mobility ? [mobility] : []).map(mobility => ({ title: mobility.title, category: 'mobility', id: mobility.id })),
+      ...settingsValues.cities.map(city => ({ category: 'cities', id: city, title: city })),
     ];
   };
 
@@ -164,18 +173,23 @@ const SettingsNew = () => {
   };
 
   const settingsList = getListOfSettings().slice(0, 2);
+  let classNames = '';
+  if (variant === 'paddingTopSettings') {
+    classNames = `${classes.paddingTopSettings}`;
+  }
 
   return (
     <NoSsr>
       <Container
         disableGutters
         sx={{ pb: 2, bgcolor: 'primary.main' }}
+        className={classNames}
       >
         <StyledAccordion
           settingsVisible={settingsVisible}
-          defaultOpen
+          defaultOpen={settingsVisible}
           disableUnmount
-          onOpen={(e, open) => setSettingVisible(!open)}
+          onOpen={(e, open) => setSettingsCollapsed(open)}
           titleContent={settingsVisible
             ? <Typography><FormattedMessage id="general.hideSettings" /></Typography>
             : (
@@ -187,10 +201,11 @@ const SettingsNew = () => {
                   {settingsList.map(setting => (
                     <StyledChip
                       tabIndex={-1}
-                      key={setting}
+                      key={setting.id}
                       clickable
                       size="small"
-                      label={uppercaseFirst(setting)}
+                      label={uppercaseFirst(setting.title)}
+                      onDelete={() => handleOptionSelecting(setting.id, setting.category)}
                     />
                   ))}
                   <StyledChip
@@ -251,6 +266,9 @@ const StyledChip = styled(Chip)(({ theme, all }) => ({
   '&:hover': {
     backgroundColor: all ? theme.palette.white.main : 'rgb(47, 60, 187)',
   },
+  '& .MuiChip-deleteIcon': {
+    color: theme.palette.white.main,
+  },
 }));
 
 
@@ -303,4 +321,13 @@ const StyledAutocomplete = styled(Autocomplete)(({ theme }) => ({
   },
 }));
 
-export default SettingsNew;
+SettingsComponent.propTypes = {
+  classes: PropTypes.objectOf(PropTypes.any).isRequired,
+  variant: PropTypes.string,
+};
+
+SettingsComponent.defaultProps = {
+  variant: null,
+};
+
+export default SettingsComponent;

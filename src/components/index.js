@@ -21,7 +21,7 @@ import ReadSpeakerButton from './ReadSpeakerButton';
 import ResultOrderer from './ResultOrderer';
 import SettingsInfo from './SettingsInfo';
 import SettingsText from './SettingsText';
-import SettingsComponent from './SettingsComponent/SettingsComponent';
+import SettingsComponent from './SettingsComponent';
 import SMButton from './ServiceMapButton';
 import SMRadio from './SMRadio';
 import SMAccordion from './SMAccordion';

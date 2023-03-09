@@ -6,6 +6,7 @@ const ALLOWED = {
   mobility: [null, 'none', 'wheelchair', 'reduced_mobility', 'rollator', 'stroller'],
   city: [null, ...config.cities],
   map: config.maps,
+  settingsCollapsed: [true, false],
 };
 
 const ACCESSIBILITY_MAPPING = {
@@ -20,6 +21,8 @@ class SettingsUtility {
   static citySettings = ALLOWED.city;
 
   static mapSettings = ALLOWED.map;
+
+  static settingsCollapsed = ALLOWED.settingsCollapsed;
 
   static accessibilityImpairmentKeys = Object.keys(ACCESSIBILITY_MAPPING).map(
     key => (key),
@@ -58,6 +61,13 @@ class SettingsUtility {
   static isValidMapSetting(value) {
     if (SettingsUtility.mapSettings.indexOf(value) < 0) {
       throw new Error(`Invalid value for map setting: ${value}`);
+    }
+    return true;
+  }
+
+  static isValidValueForSettingsCollapsed(value) {
+    if (SettingsUtility.settingsCollapsed.indexOf(value) < 0) {
+      throw new Error(`Invalid value for settings open: ${value}`);
     }
     return true;
   }
@@ -111,6 +121,7 @@ class SettingsUtility {
       visuallyImpaired: LocalStorageUtility.getItem('visuallyImpaired') === 'true',
       hearingAid: LocalStorageUtility.getItem('hearingAid') === 'true',
       cities: {},
+      settingsCollapsed: LocalStorageUtility.getItem('settingsCollapsed') === 'true',
     };
 
     config.cities.forEach((city) => {

@@ -17,6 +17,7 @@ import {
   LinkSettingsDialog,
   ReadSpeakerButton,
   SearchBar,
+  SettingsComponent,
   SimpleListItem,
   SMButton,
   TabLists,
@@ -42,6 +43,7 @@ import PriceInfo from './components/PriceInfo';
 import { parseSearchParams } from '../../utils';
 import { fetchServiceUnits } from '../../redux/actions/services';
 import MapView from '../MapView';
+
 
 const UnitView = (props) => {
   const {
@@ -88,10 +90,7 @@ const UnitView = (props) => {
     const sensesValid = senses.filter(
       s => SettingsUtility.isValidAccessibilitySenseImpairment(s),
     ).length > 0;
-    if (mobilityValid || sensesValid) {
-      return true;
-    }
-    return false;
+    return !!(mobilityValid || sensesValid);
   };
 
   useEffect(() => {
@@ -518,6 +517,7 @@ const UnitView = (props) => {
                     ? renderUnitLocation(unit)
                     : unit.picture_url && renderPicture()
                 }
+                <SettingsComponent variant="paddingTopSettings" />
               </>
           )}
           />
@@ -532,6 +532,7 @@ const UnitView = (props) => {
           <Typography color="primary" variant="body1">
             <FormattedMessage id="unit.details.notFound" />
           </Typography>
+          <SettingsComponent />
         </div>
       </div>
     );
