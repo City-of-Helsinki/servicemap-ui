@@ -1,3 +1,4 @@
+import { filterCities } from '../../utils/filters';
 import ServiceMapAPI from '../../utils/newFetch/ServiceMapAPI';
 
 const createSuggestions = (
@@ -14,6 +15,7 @@ const createSuggestions = (
   const serviceLimit = 10;
   const addressLimit = 1;
   const servicenodeLimit = 10;
+  const administrativeDivisionLimit = 0;
   const pageSize = unitLimit + serviceLimit + addressLimit + servicenodeLimit;
 
   const additionalOptions = {
@@ -22,7 +24,7 @@ const createSuggestions = (
     service_limit: serviceLimit,
     address_limit: addressLimit,
     servicenode_limit: servicenodeLimit,
-    municipality: citySettings.join(','),
+    administrativedivision_limit: administrativeDivisionLimit,
     language: locale,
   };
 
@@ -46,6 +48,8 @@ const createSuggestions = (
     });
   }
 
+  // Filter units with city settings
+  filteredResults = filteredResults.filter(filterCities(citySettings));
 
   // Handle address results
   filteredResults.forEach((item) => {
