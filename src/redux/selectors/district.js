@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import { getFilteredData } from './results';
 
 export const getHighlightedDistrict = state => state.districts.highlitedDistrict;
 
@@ -8,6 +9,7 @@ const getAddressDistrictData = state => state.districts.districtAddressData.dist
 export const getSubdistrictUnits = state => state.districts.subdistrictUnits;
 const getSubdistrictSelection = state => state.districts.selectedSubdistricts;
 const getSelectedDistrictServices = state => state.districts.selectedDistrictServices;
+const getSettings = state => state.settings;
 const getCitySettings = state => state.settings.cities;
 export const getParkingUnits = state => state.districts.parkingUnits.filter(unit => unit.object_type === 'unit');
 
@@ -66,12 +68,9 @@ export const getDistrictPrimaryUnits = createSelector(
 
 // Get selected geographical district units
 export const getFilteredSubdistrictServices = createSelector(
-  [getSubdistrictSelection, getSubdistrictUnits, getCitySettings],
-  (selectedSubdistricts, unitData, citySettings) => {
-    const selectedCities = Object.values(citySettings).filter(city => city);
-    const cityFilteredUnits = selectedCities?.length
-      ? unitData.filter(unit => citySettings[unit.municipality])
-      : unitData;
+  [getSubdistrictSelection, getSubdistrictUnits, getSettings],
+  (selectedSubdistricts, unitData, settings) => {
+    const cityFilteredUnits = getFilteredData(unitData, settings);
     if (selectedSubdistricts?.length && unitData) {
       return cityFilteredUnits.filter(
         unit => selectedSubdistricts.some(district => district === unit.division_id),
