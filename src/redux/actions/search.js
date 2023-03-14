@@ -3,6 +3,7 @@ import LinkedEventsAPI from '../../utils/newFetch/LinkedEventsAPI';
 import ServiceMapAPI from '../../utils/newFetch/ServiceMapAPI';
 import { getLocaleString } from '../selectors/locale';
 import { searchResults } from './fetchDataActions';
+import { isEmbed } from '../../utils/path';
 
 // Actions
 const {
@@ -70,7 +71,11 @@ const fetchSearchResults = (options = null) => async (dispatch, getState) => {
 
   dispatch(isFetching(searchQuery));
 
-  const fetchOptions = { ...options, language: locale };
+  const fetchOptions = {
+    ...options,
+    language: locale,
+    include: isEmbed() ? 'unit.connections' : null,
+  };
   let results = await smFetch(dispatch, fetchOptions);
 
   /* Handle search results */
