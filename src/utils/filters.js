@@ -28,10 +28,16 @@ export const filterEmptyServices = cities => (obj) => {
 
 export const filterCities = (cities, onlyUnits = false) => (result) => {
   const resultMunicipality = result.municipality?.id || result.municipality;
+  // Wellbeing area settings are checked with department values
+  const resultDepartment = result.department?.id;
+  const resultRootDepartment = result.root_department?.id;
+
   return (cities.length === 0)
-    || (!resultMunicipality)
+    || (!(resultMunicipality || resultDepartment || resultRootDepartment))
     || (onlyUnits && result.object_type === 'unit')
-    || (cities.includes(resultMunicipality));
+    || (cities.includes(resultMunicipality))
+    || (cities.includes(resultDepartment))
+    || (cities.includes(resultRootDepartment));
 };
 
 export const filterResultTypes = () => (obj) => {
