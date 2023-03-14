@@ -72,7 +72,9 @@ const SettingsComponent = ({ variant, classes }) => {
     return [
       ...sense,
       ...(mobility ? [mobility] : []).map(mobility => ({ title: mobility.title, category: 'mobility', id: mobility.id })),
-      ...settingsValues.cities.map(city => ({ category: 'cities', id: city, title: city })),
+      ...settingsValues.cities.map(city => (
+        { category: 'cities', id: city, title: intl.formatMessage({ id: `settings.city.${city}` }) }
+      )),
     ];
   };
 

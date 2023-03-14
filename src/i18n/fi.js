@@ -645,6 +645,8 @@ const translations = {
   'settings.city.vantaa': 'Vantaa',
   'settings.city.kauniainen': 'Kauniainen',
   'settings.city.kirkkonummi': 'Kirkkonummi',
+  'settings.city.0c8e4f99-3d52-47b9-84df-395716bd8b11': 'Länsi-Uudenmaan hyvinvointialue',
+  'settings.city.5de91045-92ab-484b-9f96-7010ff7fb35e': 'Vantaan ja Keravan hyvinvointialue',
   'settings.map.title': 'Karttapohja',
   'settings.map.servicemap': 'Palvelukartta',
   'settings.map.ortographic': 'Ilmakuva',

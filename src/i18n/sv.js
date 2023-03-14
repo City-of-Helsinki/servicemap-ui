@@ -644,6 +644,8 @@ const translations = {
   'settings.city.vantaa': 'Vanda',
   'settings.city.kauniainen': 'Grankulla',
   'settings.city.kirkkonummi': 'Kyrkslätt',
+  'settings.city.0c8e4f99-3d52-47b9-84df-395716bd8b11': 'Västra Nylands välfärdsområde',
+  'settings.city.5de91045-92ab-484b-9f96-7010ff7fb35e': 'Vanda och Kervo välfärdsområde',
   'settings.map.title': 'Kartunderlag',
   'settings.map.servicemap': 'Servicekarta',
   'settings.map.ortographic': 'Flygbild',

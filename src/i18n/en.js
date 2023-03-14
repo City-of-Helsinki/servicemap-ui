@@ -642,6 +642,8 @@ const translations = {
   'settings.city.vantaa': 'Vantaa',
   'settings.city.kauniainen': 'Kauniainen',
   'settings.city.kirkkonummi': 'Kirkkonummi',
+  'settings.city.0c8e4f99-3d52-47b9-84df-395716bd8b11': 'Western Uusimaa Wellbeing Services County',
+  'settings.city.5de91045-92ab-484b-9f96-7010ff7fb35e': 'Wellbeing services county of Vantaa and Kerava',
   'settings.map.title': 'Background map',
   'settings.map.servicemap': 'Service map',
   'settings.map.ortographic': 'Aerial view',
