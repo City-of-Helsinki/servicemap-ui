@@ -112,7 +112,7 @@ test('AddressView buttons work correctly', async (t) => {
 //     // .expect(unitTitle.textContent).contains('Haarmanin sairaala')
 //     // .navigateTo(testLocation)
 //     .click(links.nth(2))
-//     .expect(getLocation()).eql('https://www.hel.fi/fi/sosiaali-ja-terveyspalvelut/terveydenhoito/kiireellinen-hoito-ja-terveyskeskuspaivystys')
+//     .expect(getLocation()).eql('https://www.hel.fi/fi/sosiaali-ja-terveyspalvelut/terveydenhoito/kiireellinen-hoito-ja-paivystys')
 //     .navigateTo(testLocation)
 //   ;
 // });
