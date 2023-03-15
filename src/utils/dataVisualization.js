@@ -32,7 +32,7 @@ class DataVisualization {
 
   CURRENT_YEAR = new Date().getFullYear() - 2;
 
-  FORECAST_YEAR = new Date().getFullYear() + 5;
+  FORECAST_YEAR = new Date().getFullYear() + 4;
 
   CATEGORIES = {
     population_age: `${this.CURRENT_YEAR}_population_by_age`,
