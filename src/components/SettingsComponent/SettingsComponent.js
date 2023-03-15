@@ -134,7 +134,7 @@ const SettingsComponent = ({ variant, classes }) => {
     const getValue = () => {
       if (category === 'mobility') {
         const val = options.find(option => settingsValues.mobility === option.id);
-        return val?.title;
+        return val?.title || null;
       }
       const list = options.filter(option => settingsValues[category].includes(option.id));
       return list.map(item => item.title);
@@ -151,7 +151,11 @@ const SettingsComponent = ({ variant, classes }) => {
         options={options}
         clearIcon={null}
         value={getValue()}
-        isOptionEqualToValue={option => settingsValues[category].includes(option.id)}
+        isOptionEqualToValue={option => (
+          category === 'mobility'
+            ? settingsValues[category] === option.id
+            : settingsValues[category].includes(option.id)
+        )}
         disableCloseOnSelect={!isSingleOption}
         getOptionLabel={option => option.title || option}
         onKeyDown={keyboardHandler(e => handleKeyboardSelect(label, category, e), ['space', 'enter', 'up', 'down'])}
