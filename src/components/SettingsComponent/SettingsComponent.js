@@ -225,7 +225,10 @@ const SettingsComponent = ({ variant, classes }) => {
                       clickable
                       size="small"
                       label={uppercaseFirst(setting.title)}
-                      onDelete={() => handleOptionSelecting(setting.id, setting.category)}
+                      onDelete={() => {
+                        const settingId = setting.category === 'mobility' ? 'none' : setting.id;
+                        handleOptionSelecting(settingId, setting.category);
+                      }}
                     />
                   ))}
                   <StyledChip
