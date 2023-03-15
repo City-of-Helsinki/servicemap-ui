@@ -1,6 +1,13 @@
 import PropTypes from 'prop-types';
 import {
-  Autocomplete, Checkbox, Chip, Container, ListItem, NoSsr, TextField, Typography,
+  Autocomplete,
+  Checkbox,
+  Chip,
+  Container,
+  ListItem,
+  NoSsr,
+  TextField,
+  Typography,
 } from '@mui/material';
 import { styled } from '@mui/styles';
 import React, { useRef, useState } from 'react';
@@ -131,14 +138,14 @@ const SettingsComponent = ({ variant, classes }) => {
 
 
   const renderSettingsElement = (options, label, category, isSingleOption) => {
-    const getValue = () => {
-      if (category === 'mobility') {
-        const val = options.find(option => settingsValues.mobility === option.id);
-        return val?.title;
-      }
-      const list = options.filter(option => settingsValues[category].includes(option.id));
-      return list.map(item => item.title);
-    };
+    const getValue = () => options
+      .filter((option) => {
+        if (category === 'mobility') {
+          return settingsValues.mobility === option.id;
+        }
+        return settingsValues[category].includes(option.id);
+      })
+      .map(item => item.title);
 
     return (
       <StyledAutocomplete
