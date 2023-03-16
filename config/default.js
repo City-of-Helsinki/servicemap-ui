@@ -53,7 +53,7 @@ if (typeof settings.OLD_MAP_LINK_EN === 'undefined'
 
 if (typeof settings.CITIES === 'undefined') {
   // If not set default to Helsinki
-  settings.CITIES = 'helsinki,espoo,vantaa,kauniainen,kirkkonummi';
+  settings.CITIES = 'helsinki,espoo,vantaa,kauniainen,kirkkonummi,0c8e4f99-3d52-47b9-84df-395716bd8b11,5de91045-92ab-484b-9f96-7010ff7fb35e';
 }
 
 if (typeof settings.SERVICE_MAP_URL === 'undefined') {
