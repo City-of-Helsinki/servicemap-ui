@@ -179,7 +179,7 @@ test('Unit view hearing map link opens correctly', async (t) => {
 
   const hearingMapLink = aLinks.nth(0);
   await t
-    .expect(hearingMapLink.textContent).contains('Kino Regina')
+    .expect(hearingMapLink.textContent).contains('Lainaus 1 - palvelupiste 3. krs')
     .click(hearingMapLink)
     .expect(getLocation()).contains('https://kuulokuvat.fi')
     .closeWindow() // Since hearing map link opens in new window we need to close it

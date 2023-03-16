@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Typography, List, ListItem, ListItemIcon, ListItemText, Divider, NoSsr,
+  Typography, List, ListItem, ListItemIcon, ListItemText, Divider, NoSsr, Link,
 } from '@mui/material';
 import { Warning, VerifiedUser } from '@mui/icons-material';
 import { FormattedMessage } from 'react-intl';
@@ -264,6 +264,11 @@ const AccessibilityInfo = (props) => {
               <>
                 <Typography className={classes.descriptionsTitle} component={heading} variant="subtitle1" align="left">
                   <FormattedMessage id="accessibility.details" />
+                  {unit.accessibility_www ? (
+                    <Link target="_blank" href={unit.accessibility_www}>
+                      <FormattedMessage id="accessibility.details.summary" />
+                    </Link>
+                  ) : null}
                 </Typography>
                 <Divider className={classes.divider} aria-hidden="true" />
               </>

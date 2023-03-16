@@ -40,6 +40,8 @@ export default theme => ({
   descriptionsTitle: {
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(1),
+    display: 'flex',
+    flexDirection: 'column',
   },
   aSettingsContainer: {
     display: 'flex',

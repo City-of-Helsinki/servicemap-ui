@@ -8,6 +8,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import config from '../../../config';
 import {
+  setMapType,
   setMobility,
   setSettingsAccordionCollapsed,
   toggleCity,
@@ -97,9 +98,28 @@ const SettingsComponent = ({ variant, classes }) => {
     }
 
     if (category === 'senses') {
-      if (id === 'colorblind') dispatch(toggleColorblind());
-      if (id === 'hearingAid') dispatch(toggleHearingAid());
-      if (id === 'visuallyImpaired') dispatch(toggleVisuallyImpaired());
+      if (id === 'hearingAid') {
+        dispatch(toggleHearingAid());
+      }
+      // settingsValues.senses contains all previous sense settings. So now if it does not include
+      // "id" then it was turned on just now.
+      const settingTurnedOn = !settingsValues.senses.includes(id);
+      if (id === 'colorblind') {
+        dispatch(toggleColorblind());
+        if (settingTurnedOn) {
+          dispatch(setMapType('accessible_map'));
+        } else if (!settingsValues.senses.includes('visuallyImpaired')) {
+          dispatch(setMapType('servicemap'));
+        }
+      }
+      if (id === 'visuallyImpaired') {
+        dispatch(toggleVisuallyImpaired());
+        if (settingTurnedOn) {
+          dispatch(setMapType('accessible_map'));
+        } else if (!settingsValues.senses.includes('colorblind')) {
+          dispatch(setMapType('servicemap'));
+        }
+      }
     }
   };
 

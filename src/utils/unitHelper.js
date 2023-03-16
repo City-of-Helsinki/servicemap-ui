@@ -149,23 +149,9 @@ class UnitHelper {
   }
 
   static getContractText = (unit, intl, getLocaleText) => {
-    const { contract_type, department } = unit;
-    if (!contract_type?.description) return null;
-
-    const contractText = uppercaseFirst(getLocaleText(contract_type.description));
-    const contractMunicipality = department?.municipality;
-
-    if (contractMunicipality) {
-      const cityString = intl.formatMessage({
-        id: `settings.city.${contractMunicipality}`,
-        defaultMessage: ' ',
-      });
-      if (cityString.length > 1) {
-        return `${contractText}, ${cityString}`;
-      }
-      return contractText;
-    }
-    return contractText;
+    const { contract_type } = unit;
+    if (!contract_type?.description?.fi) return null;
+    return uppercaseFirst(getLocaleText(contract_type.description));
   }
 }
 
