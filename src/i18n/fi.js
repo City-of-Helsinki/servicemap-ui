@@ -682,7 +682,7 @@ const translations = {
   'settings.aria.saved': 'Asetukset on tallennettu',
   'settings.choose.mobility': 'Valitse liikkumisrajoitteesi',
   'settings.choose.senses': 'Valitse aistirajoitteesi',
-  'settings.choose.cities': 'Valitse kaupunkiasetuksesi',
+  'settings.choose.cities': 'Valitse alueasetuksesi',
   'settings.map.info': 'Kartta-asetuksista voit valita sinulle parhaiten sopivan pohjakartan.',
 
   // Tools
