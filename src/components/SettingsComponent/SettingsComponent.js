@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import {
-  Autocomplete, Checkbox, Chip, Container, ListItem, NoSsr, TextField, Typography,
+  Checkbox, Chip, Container, ListItem, NoSsr, TextField, Typography,
 } from '@mui/material';
 import { styled } from '@mui/styles';
 import React, { useRef, useState } from 'react';
@@ -18,6 +18,7 @@ import {
 } from '../../redux/actions/settings';
 import { keyboardHandler, uppercaseFirst } from '../../utils';
 import SMAccordion from '../SMAccordion';
+import SMAutocomplete from '../SMAutocomplete';
 
 
 const SettingsComponent = ({ variant, classes }) => {
@@ -301,44 +302,11 @@ const StyledChipContainer = styled('div')(({ theme }) => ({
   order: 2,
 }));
 
-const StyledAutocomplete = styled(Autocomplete)(({ theme }) => ({
-  backgroundColor: theme.palette.primary.main,
+const StyledAutocomplete = styled(SMAutocomplete)(({ theme }) => ({
   paddingLeft: theme.spacing(2),
   paddingRight: theme.spacing(2),
   paddingTop: theme.spacing(1),
   paddingBottom: theme.spacing(1),
-
-  '& .MuiInputLabel-root': {
-    color: theme.palette.white.main,
-  },
-  '&.Mui-focused .MuiInputLabel-root': {
-    color: theme.palette.white.main,
-  },
-
-  '& .MuiAutocomplete-input': {
-    color: theme.palette.white.main,
-  },
-  '& .MuiOutlinedInput-notchedOutline': {
-    borderColor: theme.palette.white.dark,
-  },
-  '&:hover .MuiOutlinedInput-notchedOutline': {
-    borderColor: theme.palette.white.main,
-  },
-  '&.Mui-focused .MuiOutlinedInput-root': {
-    outline: 'none',
-    boxShadow: 'none',
-  },
-  '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-    borderColor: theme.palette.white.main,
-  },
-
-  '& .MuiAutocomplete-popupIndicator, .MuiChip-deleteIcon': {
-    color: theme.palette.white.main,
-  },
-  '& .MuiAutocomplete-tag': {
-    color: theme.palette.white.main,
-    backgroundColor: 'rgb(47, 60, 187)',
-  },
 }));
 
 SettingsComponent.propTypes = {
