@@ -138,7 +138,7 @@ class SettingsUtility {
     }
     const data = [];
     const { mobility } = settings;
-    if (typeof mobility === 'string') {
+    if (typeof mobility === 'string' && mobility !== 'none') {
       data.push(mobility);
     }
 
