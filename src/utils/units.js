@@ -15,3 +15,9 @@ export const unitsSortAlphabetically = (locale, reverse = false) => (
     return 0;
   }
 );
+
+export const getUnitCount = (service, municipalityOrOrganisation) => {
+  const unitCount = service?.unit_count;
+  const municipality = unitCount?.municipality[municipalityOrOrganisation];
+  return municipality || unitCount?.organization[municipalityOrOrganisation] || 0;
+};

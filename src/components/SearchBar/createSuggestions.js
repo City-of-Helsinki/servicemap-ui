@@ -1,4 +1,5 @@
 import { filterCities } from '../../utils/filters';
+import { getUnitCount } from '../../utils/units';
 import ServiceMapAPI from '../../utils/newFetch/ServiceMapAPI';
 
 const createSuggestions = (
@@ -36,12 +37,9 @@ const createSuggestions = (
   if (citySettings.length) {
     filteredResults = filteredResults.filter((result) => {
       if (result.object_type === 'service' || result.object_type === 'servicenode') {
-        let totalResultCount = 0;
-        citySettings.forEach((city) => {
-          if (result.unit_count?.municipality[city]) {
-            totalResultCount += result.unit_count.municipality[city];
-          }
-        });
+        const totalResultCount = citySettings
+          .map(city => getUnitCount(result, city))
+          .reduce((partial, a) => partial + a, 0);
         if (totalResultCount === 0) return false;
       }
       return true;
