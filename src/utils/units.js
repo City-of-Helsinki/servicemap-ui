@@ -18,6 +18,6 @@ export const unitsSortAlphabetically = (locale, reverse = false) => (
 
 export const getUnitCount = (service, municipalityOrOrganisation) => {
   const unitCount = service?.unit_count;
-  const municipality = unitCount?.municipality[municipalityOrOrganisation];
-  return municipality || unitCount?.organization[municipalityOrOrganisation] || 0;
+  const municipality = unitCount?.municipality?.[municipalityOrOrganisation];
+  return municipality || unitCount?.organization?.[municipalityOrOrganisation] || 0;
 };
