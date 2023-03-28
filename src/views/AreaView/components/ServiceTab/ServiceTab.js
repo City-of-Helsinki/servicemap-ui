@@ -37,6 +37,7 @@ const ServiceTab = (props) => {
   const selectedDistrictType = useSelector(state => state.districts.selectedDistrictType);
   const selectedParkingAreas = useSelector(state => state.districts.selectedParkingAreas);
   const parkingUnits = useSelector(state => state.districts.parkingUnits);
+  const citySettings = useSelector(state => state.settings.cities);
   const selectedCategory = dataStructure.find(
     data => data.districts.some(obj => obj.id === selectedDistrictType),
   )?.id;
@@ -119,13 +120,34 @@ const ServiceTab = (props) => {
     ));
     const parkingAreas = districList.filter(obj => !obj.id.includes('parking_area'));
     const parkingSpaces = districList.filter(obj => obj.id.includes('parking_area') && obj.id !== 'parking_area0');
-    return (
+    const elementsForHelsinki = (
       <>
+        <div className={classes.serviceTabSubtitle}>
+          <Typography><FormattedMessage id="settings.city.helsinki" /></Typography>
+        </div>
         {renderDistrictList(parkingAreas)}
         <div className={classes.serviceTabSubtitle}>
           <Typography><FormattedMessage id="area.list.parkingSpaces" /></Typography>
         </div>
-        <ParkingAreaList areas={parkingSpaces} />
+        <ParkingAreaList areas={parkingSpaces} variant="helsinki" />
+      </>
+    );
+
+    const elementsForVantaa = (
+      <>
+        <div className={classes.serviceTabSubtitle}>
+          <Typography><FormattedMessage id="settings.city.vantaa" /></Typography>
+        </div>
+        <div className={classes.serviceTabSubtitle}>
+          <Typography><FormattedMessage id="area.list.parkingSpaces" /></Typography>
+        </div>
+        <ParkingAreaList areas={parkingSpaces} variant="vantaa" />
+      </>
+    );
+    return (
+      <>
+        {citySettings.helsinki ? elementsForHelsinki : null}
+        {citySettings.vantaa ? elementsForVantaa : null}
       </>
     );
   };

@@ -18,8 +18,9 @@ import useLocaleText from '../../../../utils/useLocaleText';
 import { getDistrictCategory } from '../../utils/districtDataHelper';
 
 const parkingSpaceIDs = ['1', '2', '3', '4', '5', '6'];
+const parkingSpaceVantaaTypes = ['12h-24h', '2h-3h', '4h-11h', 'Ei rajoitusta', 'Lyhytaikainen', 'Maksullinen', 'Muu', 'Varattu päivisin'];
 
-const ParkingAreaList = ({ areas, classes }) => {
+const ParkingAreaList = ({ areas, variant, classes }) => {
   const dispatch = useDispatch();
   const getLocaleText = useLocaleText();
   const selectedDistrictType = useSelector(state => state.districts.selectedDistrictType);
@@ -60,9 +61,18 @@ const ParkingAreaList = ({ areas, classes }) => {
   const fetchParkingData = async () => {
     // This fetches only 1 result from each parking space type to get category names for list
     const smAPI = new ServiceMapAPI();
-    const parkingAreaObjects = await Promise.all(
-      parkingSpaceIDs.map(async id => smAPI.parkingAreaInfo(id)),
-    );
+    let promises = [];
+    if (variant === 'helsinki') {
+      promises = parkingSpaceIDs.map(
+        async id => smAPI.parkingAreaInfo({ extra__class: id }),
+      );
+    }
+    if (variant === 'vantaa') {
+      promises = parkingSpaceVantaaTypes.map(
+        async id => smAPI.parkingAreaInfo({ extra__tyyppi: id }),
+      );
+    }
+    const parkingAreaObjects = await Promise.all(promises);
     setAreaDataInfo(parkingAreaObjects.flat());
   };
 
@@ -144,6 +154,7 @@ const ParkingAreaList = ({ areas, classes }) => {
 ParkingAreaList.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   areas: PropTypes.arrayOf(PropTypes.object).isRequired,
+  variant: PropTypes.string.isRequired,
 };
 
 export default ParkingAreaList;
