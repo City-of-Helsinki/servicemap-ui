@@ -123,11 +123,11 @@ const ServiceTab = (props) => {
     const elementsForHelsinki = (
       <>
         <div className={classes.serviceTabSubtitle}>
-          <Typography component="p" className={classes.bold}><FormattedMessage id="settings.city.helsinki" /></Typography>
+          <Typography component="h4" className={classes.bold}><FormattedMessage id="settings.city.helsinki" /></Typography>
         </div>
         {renderDistrictList(parkingAreas)}
         <div className={classes.serviceTabSubtitle}>
-          <Typography><FormattedMessage id="area.list.parkingSpaces" /></Typography>
+          <Typography component="h6"><FormattedMessage id="area.list.parkingSpaces" /></Typography>
         </div>
         <ParkingAreaList areas={parkingSpaces} variant="helsinki" />
       </>
@@ -136,10 +136,10 @@ const ServiceTab = (props) => {
     const elementsForVantaa = (
       <>
         <div className={classes.serviceTabSubtitle}>
-          <Typography component="p" className={classes.bold}><FormattedMessage id="settings.city.vantaa" /></Typography>
+          <Typography component="h4" className={classes.bold}><FormattedMessage id="settings.city.vantaa" /></Typography>
         </div>
         <div className={classes.serviceTabSubtitle}>
-          <Typography><FormattedMessage id="area.list.parkingSpaces" /></Typography>
+          <Typography component="h6"><FormattedMessage id="area.list.parkingSpaces" /></Typography>
         </div>
         <ParkingAreaList areas={parkingSpaces} variant="vantaa" />
       </>
