@@ -123,7 +123,7 @@ const ServiceTab = (props) => {
     const elementsForHelsinki = (
       <>
         <div className={classes.serviceTabSubtitle}>
-          <Typography><FormattedMessage id="settings.city.helsinki" /></Typography>
+          <Typography component="p" className={classes.bold}><FormattedMessage id="settings.city.helsinki" /></Typography>
         </div>
         {renderDistrictList(parkingAreas)}
         <div className={classes.serviceTabSubtitle}>
@@ -136,7 +136,7 @@ const ServiceTab = (props) => {
     const elementsForVantaa = (
       <>
         <div className={classes.serviceTabSubtitle}>
-          <Typography><FormattedMessage id="settings.city.vantaa" /></Typography>
+          <Typography component="p" className={classes.bold}><FormattedMessage id="settings.city.vantaa" /></Typography>
         </div>
         <div className={classes.serviceTabSubtitle}>
           <Typography><FormattedMessage id="area.list.parkingSpaces" /></Typography>
