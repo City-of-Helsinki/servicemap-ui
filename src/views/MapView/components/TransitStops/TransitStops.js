@@ -15,6 +15,8 @@ const TransitStops = ({ mapObject, classes }) => {
 
   const [transitStops, setTransitStops] = useState([]);
   const [rentalBikeStations, setRentalBikeStations] = useState([]);
+  const [visibleBikeStations, setVisibleBikeStations] = useState([]);
+  const [bikeStationsLoaded, setBikeStationsLoaded] = useState(false);
 
   const map = useMapEvents({
     moveend() {
@@ -51,17 +53,25 @@ const TransitStops = ({ mapObject, classes }) => {
   const handleTransit = () => {
     if (showTransitStops()) {
       fetchTransitStops();
-    } else if (transitStops.length) {
-      clearTransitStops();
+      setVisibleBikeStations(rentalBikeStations);
+    } else {
+      if (transitStops.length) {
+        clearTransitStops();
+      }
+      if (visibleBikeStations.length) {
+        setVisibleBikeStations([]);
+      }
     }
   };
 
   useEffect(() => {
-    if (!rentalBikeStations.length) {
+    if (!bikeStationsLoaded) {
       fetchBikeStations()
         .then((stations) => {
           const list = stations?.data?.bikeRentalStations;
           if (list?.length) setRentalBikeStations(list);
+          setBikeStationsLoaded(true);
+          setVisibleBikeStations(showTransitStops() ? list : []);
         });
     }
   }, []);
