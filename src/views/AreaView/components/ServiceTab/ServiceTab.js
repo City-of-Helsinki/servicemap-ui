@@ -1,10 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import {
-  List,
-  ListItem,
-  Typography,
-  Divider,
+  Divider, List, ListItem, Typography,
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { FormattedMessage } from 'react-intl';
@@ -21,9 +18,8 @@ import DistrictToggleButton from '../DistrictToggleButton';
 import { dataStructure, getDistrictCategory } from '../../utils/districtDataHelper';
 import DistrictAreaList from '../DistrictAreaList';
 import ParkingAreaList from '../ParkingAreaList';
-import {
-  SMAccordion,
-} from '../../../../components';
+import { SMAccordion } from '../../../../components';
+import config from '../../../../../config';
 
 const ServiceTab = (props) => {
   const {
@@ -144,10 +140,13 @@ const ServiceTab = (props) => {
         <ParkingAreaList areas={parkingSpaces} variant="vantaa" />
       </>
     );
+
+    const showHelsinki = citySettings.helsinki || config.cities.every(city => !citySettings[city]);
+    const showVantaa = citySettings.vantaa || config.cities.every(city => !citySettings[city]);
     return (
       <>
-        {citySettings.helsinki ? elementsForHelsinki : null}
-        {citySettings.vantaa ? elementsForVantaa : null}
+        {showHelsinki ? elementsForHelsinki : null}
+        {showVantaa ? elementsForVantaa : null}
       </>
     );
   };
