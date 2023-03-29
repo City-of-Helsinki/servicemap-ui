@@ -91,7 +91,7 @@ const ParkingAreaList = ({ areas, variant, classes }) => {
   return (
     <List className={`districtList ${classes.listLevelThree}`} disablePadding>
       {areaDataInfo.map((area, i) => {
-        const fullId = area.extra.class;
+        const fullId = variant === 'helsinki' ? area.extra.class : area.extra.tyyppi;
         return (
           <Fragment key={fullId}>
             <ListItem
