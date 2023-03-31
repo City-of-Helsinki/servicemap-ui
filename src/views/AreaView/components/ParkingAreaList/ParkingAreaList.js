@@ -123,30 +123,32 @@ const ParkingAreaList = ({ areas, variant, classes }) => {
         );
       })}
 
-      <Fragment>
-        <ListItem
-          key="parkingSpaces"
-          divider
-          className={`${classes.listItem} ${classes.areaItem} parkingSpaces`}
-        >
-          <FormControlLabel
-            className={classes.checkboxPadding}
-            control={(
-              <Checkbox
-                color="primary"
-                icon={<span className={classes.checkBoxIcon} />}
-                checked={unitsSelected}
-                onChange={e => toggleParkingUnits(e)}
-              />
-            )}
-            label={(
-              <Typography id="parkingSpacesName" aria-hidden>
-                <FormattedMessage id="area.list.parkingUnits" />
-              </Typography>
-            )}
-          />
-        </ListItem>
-      </Fragment>
+      { variant === 'helsinki' && (
+        <Fragment>
+          <ListItem
+            key="parkingSpaces"
+            divider
+            className={`${classes.listItem} ${classes.areaItem} parkingSpaces`}
+          >
+            <FormControlLabel
+              className={classes.checkboxPadding}
+              control={(
+                <Checkbox
+                  color="primary"
+                  icon={<span className={classes.checkBoxIcon}/>}
+                  checked={unitsSelected}
+                  onChange={e => toggleParkingUnits(e)}
+                />
+              )}
+              label={(
+                <Typography id="parkingSpacesName" aria-hidden>
+                  <FormattedMessage id="area.list.parkingUnits"/>
+                </Typography>
+              )}
+            />
+          </ListItem>
+        </Fragment>
+      )}
     </List>
   );
 };
