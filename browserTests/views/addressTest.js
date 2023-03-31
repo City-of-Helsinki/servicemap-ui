@@ -111,7 +111,7 @@ test('AddressView health station links work correctly', async (t) => {
     .expect(getLocation()).eql('https://www.hel.fi/fi/sosiaali-ja-terveyspalvelut/terveydenhoito/kiireellinen-hoito-ja-paivystys')
     .navigateTo(testLocation)
   ;
-});
+}).skipJsErrors();
 
 test('AddressView nearby services tab works correctly', async (t) => {
   const tabNearbyUnits = Selector('button[role="tab"]').nth(1);

@@ -1,10 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import {
-  List,
-  ListItem,
-  Typography,
-  Divider,
+  Divider, List, ListItem, Typography,
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { FormattedMessage } from 'react-intl';
@@ -21,9 +18,8 @@ import DistrictToggleButton from '../DistrictToggleButton';
 import { dataStructure, getDistrictCategory } from '../../utils/districtDataHelper';
 import DistrictAreaList from '../DistrictAreaList';
 import ParkingAreaList from '../ParkingAreaList';
-import {
-  SMAccordion,
-} from '../../../../components';
+import { SMAccordion } from '../../../../components';
+import config from '../../../../../config';
 
 const ServiceTab = (props) => {
   const {
@@ -37,6 +33,7 @@ const ServiceTab = (props) => {
   const selectedDistrictType = useSelector(state => state.districts.selectedDistrictType);
   const selectedParkingAreas = useSelector(state => state.districts.selectedParkingAreas);
   const parkingUnits = useSelector(state => state.districts.parkingUnits);
+  const citySettings = useSelector(state => state.settings.cities);
   const selectedCategory = dataStructure.find(
     data => data.districts.some(obj => obj.id === selectedDistrictType),
   )?.id;
@@ -119,13 +116,37 @@ const ServiceTab = (props) => {
     ));
     const parkingAreas = districList.filter(obj => !obj.id.includes('parking_area'));
     const parkingSpaces = districList.filter(obj => obj.id.includes('parking_area') && obj.id !== 'parking_area0');
-    return (
+    const elementsForHelsinki = (
       <>
+        <div className={classes.serviceTabSubtitle}>
+          <Typography component="h4" className={classes.bold}><FormattedMessage id="settings.city.helsinki" /></Typography>
+        </div>
         {renderDistrictList(parkingAreas)}
         <div className={classes.serviceTabSubtitle}>
-          <Typography><FormattedMessage id="area.list.parkingSpaces" /></Typography>
+          <Typography component="h6"><FormattedMessage id="area.list.parkingSpaces" /></Typography>
         </div>
-        <ParkingAreaList areas={parkingSpaces} />
+        <ParkingAreaList areas={parkingSpaces} variant="helsinki" />
+      </>
+    );
+
+    const elementsForVantaa = (
+      <>
+        <div className={classes.serviceTabSubtitle}>
+          <Typography component="h4" className={classes.bold}><FormattedMessage id="settings.city.vantaa" /></Typography>
+        </div>
+        <div className={classes.serviceTabSubtitle}>
+          <Typography component="h6"><FormattedMessage id="area.list.parkingSpaces" /></Typography>
+        </div>
+        <ParkingAreaList areas={parkingSpaces} variant="vantaa" />
+      </>
+    );
+
+    const showHelsinki = citySettings.helsinki || config.cities.every(city => !citySettings[city]);
+    const showVantaa = citySettings.vantaa || config.cities.every(city => !citySettings[city]);
+    return (
+      <>
+        {showHelsinki ? elementsForHelsinki : null}
+        {showVantaa ? elementsForVantaa : null}
       </>
     );
   };
