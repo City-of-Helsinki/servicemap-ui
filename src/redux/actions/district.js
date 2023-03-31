@@ -6,6 +6,10 @@ import {
   parseDistrictGeometry,
 } from '../../views/AreaView/utils/districtDataHelper';
 
+export const parkingSpaceIDs = ['1', '2', '3', '4', '5', '6'];
+export const parkingSpaceVantaaTypes = ['12h-24h', '2h-3h', '4h-11h', 'Ei rajoitusta', 'Lyhytaikainen', 'Maksullinen', 'Muu', 'Varattu päivisin'];
+
+
 export const setHighlightedDistrict = district => ({
   type: 'SET_DISTRICT_HIGHLIGHT',
   district,
@@ -203,7 +207,9 @@ export const fetchParkingAreaGeometry = areaId => (
   async (dispatch) => {
     const type = 'parking_area';
     const areaNumber = areaId.match(/\d+/g);
-    const options = { extra__class: areaNumber };
+    const options = parkingSpaceIDs.includes(areaId)
+      ? { extra__class: areaNumber }
+      : { extra__tyyppi: areaId };
 
     dispatch(startDistrictFetch(areaId));
     const smAPI = new ServiceMapAPI();

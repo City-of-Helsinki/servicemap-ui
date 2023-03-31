@@ -12,13 +12,12 @@ import {
   removeSelectedParkingArea,
   setParkingUnits,
   setSelectedDistrictType,
+  parkingSpaceIDs,
+  parkingSpaceVantaaTypes,
 } from '../../../../redux/actions/district';
 import ServiceMapAPI from '../../../../utils/newFetch/ServiceMapAPI';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { getDistrictCategory } from '../../utils/districtDataHelper';
-
-const parkingSpaceIDs = ['1', '2', '3', '4', '5', '6'];
-const parkingSpaceVantaaTypes = ['12h-24h', '2h-3h', '4h-11h', 'Ei rajoitusta', 'Lyhytaikainen', 'Maksullinen', 'Muu', 'Varattu päivisin'];
 
 const ParkingAreaList = ({ areas, variant, classes }) => {
   const dispatch = useDispatch();
@@ -53,7 +52,7 @@ const ParkingAreaList = ({ areas, variant, classes }) => {
     } else {
       dispatch(addSelectedParkingArea(id));
     }
-    if (!parkingAreas.some(obj => obj.extra.class === id)) {
+    if (!parkingAreas.some(obj => obj.extra.class === id || obj.extra.tyyppi === id)) {
       dispatch(fetchParkingAreaGeometry(id));
     }
   };
@@ -64,12 +63,12 @@ const ParkingAreaList = ({ areas, variant, classes }) => {
     let promises = [];
     if (variant === 'helsinki') {
       promises = parkingSpaceIDs.map(
-        async id => smAPI.parkingAreaInfo({ extra__class: id }),
+        async id => smAPI.parkingAreaInfo({ extra__class: id, municipality: 'helsinki' }),
       );
     }
     if (variant === 'vantaa') {
       promises = parkingSpaceVantaaTypes.map(
-        async id => smAPI.parkingAreaInfo({ extra__tyyppi: id }),
+        async id => smAPI.parkingAreaInfo({ extra__tyyppi: id, municipality: 'vantaa' }),
       );
     }
     const parkingAreaObjects = await Promise.all(promises);
@@ -123,30 +122,32 @@ const ParkingAreaList = ({ areas, variant, classes }) => {
         );
       })}
 
-      <Fragment>
-        <ListItem
-          key="parkingSpaces"
-          divider
-          className={`${classes.listItem} ${classes.areaItem} parkingSpaces`}
-        >
-          <FormControlLabel
-            className={classes.checkboxPadding}
-            control={(
-              <Checkbox
-                color="primary"
-                icon={<span className={classes.checkBoxIcon} />}
-                checked={unitsSelected}
-                onChange={e => toggleParkingUnits(e)}
-              />
-            )}
-            label={(
-              <Typography id="parkingSpacesName" aria-hidden>
-                <FormattedMessage id="area.list.parkingUnits" />
-              </Typography>
-            )}
-          />
-        </ListItem>
-      </Fragment>
+      { variant === 'helsinki' && (
+        <Fragment>
+          <ListItem
+            key="parkingSpaces"
+            divider
+            className={`${classes.listItem} ${classes.areaItem} parkingSpaces`}
+          >
+            <FormControlLabel
+              className={classes.checkboxPadding}
+              control={(
+                <Checkbox
+                  color="primary"
+                  icon={<span className={classes.checkBoxIcon}/>}
+                  checked={unitsSelected}
+                  onChange={e => toggleParkingUnits(e)}
+                />
+              )}
+              label={(
+                <Typography id="parkingSpacesName" aria-hidden>
+                  <FormattedMessage id="area.list.parkingUnits"/>
+                </Typography>
+              )}
+            />
+          </ListItem>
+        </Fragment>
+      )}
     </List>
   );
 };
