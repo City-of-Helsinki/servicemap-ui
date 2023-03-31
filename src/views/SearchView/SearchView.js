@@ -18,12 +18,15 @@ import useMobileStatus from '../../utils/isMobile';
 import { viewTitleID } from '../../utils/accessibility';
 import { getOrderedData } from '../../redux/selectors/results';
 import {
+  AddressSearchBar,
   Container,
   Loading,
   SearchBar,
   SettingsInfo,
+  SettingsComponent,
   TabLists,
 } from '../../components';
+import { changeCustomUserLocation } from '../../redux/actions/user';
 
 const focusClass = 'TabListFocusTarget';
 
@@ -218,6 +221,17 @@ const SearchView = (props) => {
     return null;
   };
 
+  const handleUserAddressChange = (address) => {
+    if (address) {
+      dispatch(changeCustomUserLocation(
+        [address.location.coordinates[1], address.location.coordinates[0]],
+        address,
+      ));
+    } else {
+      dispatch(changeCustomUserLocation(null));
+    }
+  };
+
   useEffect(() => {
     const options = getSearchParamData();
     if (shouldFetch() && Object.keys(options).length) {
@@ -254,36 +268,21 @@ const SearchView = (props) => {
     <SearchBar expand className={classes.searchbarPlain} />
   );
 
-  const renderSearchInfo = () => {
-    const unitList = getResultsByType('unit');
-    const unitCount = unitList.length || searchResults.length;
-    const className = `SearchInfo ${classes.searchInfo}`;
-
-    return (
-      <NoSsr>
-        <Typography
-          role="link"
-          tabIndex={-1}
-          onClick={() => skipToContent()}
-          onKeyPress={() => {
-            keyboardHandler(() => skipToContent(), ['space', 'enter']);
-          }}
-          style={visuallyHidden}
-        >
-          <FormattedMessage id="search.skipLink" />
-        </Typography>
-        {!searchFetchState.isFetching && (
-          <div align="left" className={className}>
-            <div aria-live="polite" className={classes.infoContainer}>
-              <Typography className={`${classes.infoText} ${classes.bold}`}>
-                <FormattedMessage id="search.infoText" values={{ count: unitCount }} />
-              </Typography>
-            </div>
-          </div>
-        )}
-      </NoSsr>
-    );
-  };
+  const renderSearchInfo = () => (
+    <NoSsr>
+      <Typography
+        role="link"
+        tabIndex={-1}
+        onClick={() => skipToContent()}
+        onKeyPress={() => {
+          keyboardHandler(() => skipToContent(), ['space', 'enter']);
+        }}
+        style={visuallyHidden}
+      >
+        <FormattedMessage id="search.skipLink" />
+      </Typography>
+    </NoSsr>
+  );
 
   const renderScreenReaderInfo = () => {
     const { isFetching, max } = searchFetchState;
@@ -417,11 +416,14 @@ const SearchView = (props) => {
     <div className={classes.root}>
       {renderSearchBar()}
       {renderSearchInfo()}
+      <NoSsr>
+        <AddressSearchBar title={<FormattedMessage id="area.searchbar.infoText.address" />} handleAddressChange={handleUserAddressChange} />
+        <SettingsComponent />
+      </NoSsr>
       {renderScreenReaderInfo()}
       {searchFetchState.isFetching ? (
         <Loading reducer={searchFetchState} />
       ) : renderResults() }
-      <SettingsInfo />
       {renderNotFound()}
       {isMobile ? (
         // Jump link back to beginning of current page

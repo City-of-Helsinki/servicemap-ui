@@ -1,11 +1,13 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import React, { useEffect, useState } from 'react';
 import {
-  FormControl, Select, Typography,
+  FormControl, ListItem, TextField, Typography,
 } from '@mui/material';
+import { Tune } from '@mui/icons-material';
+import { styled } from '@mui/styles';
 import { useAcccessibilitySettings } from '../../utils/settings';
+import SMAutocomplete from '../SMAutocomplete';
 
 const allowedDirections = [
   'asc',
@@ -39,21 +41,10 @@ const ResultOrderer = ({
   userLocation,
 }) => {
   const accessibiliySettingsLength = useAcccessibilitySettings().length;
-
+  const [openSettings, setOpenSettings] = useState(null);
   const isValidDirection = direction => direction && allowedDirections.indexOf(direction) > -1;
 
   const isValidOrder = order => order && allowedOrders.indexOf(order) > -1;
-
-  const defaultHandleChange = (event) => {
-    const array = event.target.value.split('-');
-    const direction = array[1];
-    const order = array[0];
-
-    if (isValidDirection(direction) && isValidOrder(order)) {
-      setDirection(direction);
-      setOrder(order);
-    }
-  };
 
   useEffect(() => {
     if (initialOrder) {
@@ -74,40 +65,77 @@ const ResultOrderer = ({
     }
   }, [accessibiliySettingsLength]);
 
+  let selectedOptionId = `${order}-${direction}`;
+  const handleOptionSelecting = (optionId) => {
+    selectedOptionId = optionId;
+    const array = optionId.split('-');
+    const direction = array[1];
+    const order = array[0];
+
+    if (isValidDirection(direction) && isValidOrder(order)) {
+      setDirection(direction);
+      setOrder(order);
+    }
+    setOpenSettings(false);
+  };
+
+  const options = [
+    { id: 'alphabetical-desc', title: intl.formatMessage({ id: 'sorting.alphabetical.desc' }) },
+    { id: 'alphabetical-asc', title: intl.formatMessage({ id: 'sorting.alphabetical.asc' }) },
+    { id: 'accessibility-desc', title: intl.formatMessage({ id: 'sorting.accessibility.desc' }) },
+  ];
+  if (userLocation) {
+    options.push({ id: 'distance-asc', title: intl.formatMessage({ id: 'sorting.distance.asc' }) });
+  }
+
+
+  const getValue = () => {
+    const selectedOption = options.find(option => option.id === selectedOptionId);
+    return selectedOption?.title;
+  };
+
   return (
     <form className={classes.root} autoComplete="off">
       <FormControl className={classes.formControl}>
-        <Typography color="inherit" variant="caption" component="label" htmlFor="result-sorter" className={classes.inputLabel}>
-          <FormattedMessage id="sorting.label" />
-        </Typography>
-        <Select
-          disabled={disabled}
-          className={classes.select}
-          native
-          variant="standard"
-          value={`${order}-${direction}`}
-          onChange={defaultHandleChange}
-          classes={{ select: classes.selectElement }}
-          inputProps={{
-            name: 'result-sorter',
-            id: 'result-sorter',
-            classes: {
-              icon: classes.icon,
-            },
-            className: `${classes.input}`,
-          }}
-        >
-          {/* <option className={classes.black} value="match-desc">{intl.formatMessage({ id: 'sorting.match.desc' })}</option> */}
-          <option className={classes.black} value="alphabetical-desc">{intl.formatMessage({ id: 'sorting.alphabetical.desc' })}</option>
-          <option className={classes.black} value="alphabetical-asc">{intl.formatMessage({ id: 'sorting.alphabetical.asc' })}</option>
-          <option className={classes.black} value="accessibility-desc">{intl.formatMessage({ id: 'sorting.accessibility.desc' })}</option>
-          {
-            userLocation
-            && (
-              <option className={classes.black} value="distance-asc">{intl.formatMessage({ id: 'sorting.distance.asc' })}</option>
-            )
-          }
-        </Select>
+        <div style={{ display: 'flex', width: '100%', borderBottom: 'solid 1px white' }}>
+          <StyledTune />
+          <div style={{ display: 'flex', width: '100%' }}>
+            <StyledAutocomplete
+              open={openSettings}
+              size="small"
+              disablePortal
+              disabled={disabled}
+              multiple={false}
+              openText={intl.formatMessage({ id: 'settings.open' })}
+              closeText={intl.formatMessage({ id: 'settings.close' })}
+              options={options}
+              clearIcon={null}
+              value={getValue()}
+              isOptionEqualToValue={option => selectedOptionId === option.id}
+              disableCloseOnSelect={false}
+              getOptionLabel={option => option.title || option}
+              ChipProps={{ clickable: true, onDelete: null }}
+              renderOption={(props, option) => (
+                <ListItem {...props} onClick={() => handleOptionSelecting(option.id)}>
+                  <Typography>{option.title}</Typography>
+                </ListItem>
+              )}
+              renderInput={({ inputProps, ...rest }) => (
+                <TextField
+                  label={intl.formatMessage({ id: 'sorting.label' })}
+                  variant="standard"
+                  onClick={() => setOpenSettings(!openSettings)}
+                  {...rest}
+                  inputProps={{
+                    ...inputProps,
+                    readOnly: true,
+                    sx: { cursor: 'pointer' },
+                  }}
+                />
+              )}
+            />
+          </div>
+        </div>
       </FormControl>
     </form>
   );
@@ -130,5 +158,25 @@ ResultOrderer.defaultProps = {
   disabled: false,
   userLocation: null,
 };
+
+const StyledTune = styled(Tune)(() => ({
+  position: 'relative',
+  padding: '13px',
+}));
+
+const StyledAutocomplete = styled(SMAutocomplete)(({ theme }) => ({
+  paddingLeft: 0,
+  paddingRight: theme.spacing(1),
+  paddingTop: 0,
+  paddingBottom: 0,
+  width: '100%',
+
+  '& .MuiInput-root:before': {
+    borderBottom: 'unset',
+  },
+  '& :hover .MuiInput-root:before': {
+    borderBottom: 'unset',
+  },
+}));
 
 export default ResultOrderer;

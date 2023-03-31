@@ -11,14 +11,11 @@ import useLocaleText from '../../utils/useLocaleText';
 // LocalStorage key for alert message
 const lsKey = 'alertMessage';
 
-const AlertBox = ({
-  classes, intl, errors, news,
-}) => {
+const AlertBox = ({ classes, intl, errors }) => {
   const getLocaleText = useLocaleText();
 
   const [visible, setVisible] = useState(true);
-  const isErrorMessage = !!errors.length;
-  const abData = isErrorMessage ? errors : news;
+  const abData = errors;
   const savedMessage = LocalStorageUtility.getItem(lsKey);
 
   if (
@@ -41,7 +38,9 @@ const AlertBox = ({
   });
   const closeButtonIcon = getIcon('closeIcon');
   const closeButtonText = intl.formatMessage({ id: 'general.close' });
-  const closeButtonTextAria = intl.formatMessage({ id: 'general.news.alert.close.aria' });
+  const closeButtonTextAria = intl.formatMessage({
+    id: 'general.news.alert.close.aria',
+  });
   const closeButtonClick = () => {
     setVisible(false);
     setMessageAsWatched();
@@ -75,7 +74,9 @@ const AlertBox = ({
         >
           {tTitle}
         </Typography>
-        <Typography className={classes.messageText} color="inherit">{tLeadParagraph}</Typography>
+        <Typography className={classes.messageText} color="inherit">
+          {tLeadParagraph}
+        </Typography>
       </div>
       <div className={classes.padder} />
     </section>
@@ -86,22 +87,16 @@ const AlertBox = ({
 (not by inseting to code) these props should be changed to isRequired */
 
 AlertBox.propTypes = {
-  errors: PropTypes.arrayOf(PropTypes.shape({
-    lead_paragraph: PropTypes.shape({
-      fi: PropTypes.string,
+  errors: PropTypes.arrayOf(
+    PropTypes.shape({
+      lead_paragraph: PropTypes.shape({
+        fi: PropTypes.string,
+      }),
+      title: PropTypes.shape({
+        fi: PropTypes.string,
+      }),
     }),
-    title: PropTypes.shape({
-      fi: PropTypes.string,
-    }),
-  })).isRequired,
-  news: PropTypes.arrayOf(PropTypes.shape({
-    lead_paragraph: PropTypes.shape({
-      fi: PropTypes.string,
-    }),
-    title: PropTypes.shape({
-      fi: PropTypes.string,
-    }),
-  })).isRequired,
+  ).isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
 };

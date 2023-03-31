@@ -305,6 +305,8 @@ const translations = {
   'general.distance.kilometers': 'Kilometers avstånd',
   'general.yes': 'Ja',
   'general.no': 'Nej',
+  'general.openSettings': 'Öppna inställningarna',
+  'general.hideSettings': 'Piilota asetukset', // TODO: translate
   'general.closeSettings': 'Stäng inställningarna',
   'general.fetching': 'Laddar data...',
   'general.home': 'Hem',
@@ -337,6 +339,8 @@ const translations = {
   'general.pageTitles.info': 'Infosida',
   'general.pageTitles.feedback': 'Responssida',
   'general.pageTitles.area': 'Områdessida',
+  'general.pageLink.area': 'Alueesi palvelut', // TODO: translate
+
 
   // General - Pagination
   'general.pagination.previous': 'Föregående sida',
@@ -356,7 +360,7 @@ const translations = {
   'general.search': 'Sök',
   'general.share.link': 'Dela länken',
   'general.time.short': 'kl.',
-  'general.tools': 'Verktyg',
+  'general.tools': 'Karttatyökalut', // TODO: translate
   // Readspeaker
   'general.readspeaker.buttonText': 'Lyssna', // TODO: verify
   'general.readspeaker.title': 'Lyssna med ReadSpeaker webReader', // TODO: verify
@@ -395,6 +399,8 @@ const translations = {
 
   // Map
   'map': 'Karta',
+  'map.open': 'Öppna Karta',
+  'map.close': 'Stäng Karta',
   'map.ariaLabel': 'Kartvy. Kartans uppgifter kan i nuläget granskas endast visuellt.',
   'map.attribution.osm': '&copy; <a href="http://osm.org/copyright">Upphovsmännen bakom OpenStreetMaps</a>',
   'map.attribution.helsinki': '&copy; Helsingfors, Esbo, Vanda och Grankulla städer',
@@ -406,6 +412,8 @@ const translations = {
   'map.unit.cluster.popup.info': '{count} verksamhetsställen', // TODO: Verify
   'map.button.sidebar.hide': 'Minska sidopanelen',
   'map.button.sidebar.show': 'Utvidga sidopanelen',
+  'map.button.expand': 'Laajenna', // TODO: translate
+  'map.button.expand.aria': 'Avaa kartta', // TODO: translate
 
   // Print
   'print.alert': 'Använd utskriftsalternativet i verktygsmenyn',
@@ -592,6 +600,8 @@ const translations = {
 
   // Settings
   'settings': 'Inställningar',
+  'settings.open': 'Avaa asetusvalinnat', // TODO: translate
+  'settings.close': 'Sulje asetusvalinnat', // TODO: translate
   'settings.change': 'Redigera dina inställningar',
   'settings.drawer.aria.title': 'Nuvarande inställningar',
   'settings.citySettings': 'Stad',
@@ -664,17 +674,22 @@ const translations = {
   'settings.aria.changed': 'Inställningarna har ändrats. Kom ihåg att spara.',
   'settings.aria.closed': 'Inställningarna har stängts',
   'settings.aria.open': 'Öppna inställningarna',
+  'settings.accordion.open': 'Avaa kaikki tehdyt asetukset', // TODO: translate
   'settings.aria.opened': 'Inställningarna har öppnats',
   'settings.aria.saved': 'Inställningarna har sparats',
+  'settings.choose.mobility': 'Valitse liikkumisrajoitteesi', // TODO: translate
+  'settings.choose.senses': 'Valitse aistirajoitteesi', // TODO: translate
+  'settings.choose.cities': 'Valitse kaupunkiasetuksesi', // TODO: translate
+  'settings.map.info': 'Kartta-asetuksista voit valita sinulle parhaiten sopivan pohjakartan.', // TODO: translate
 
   // Tools
   'tool.download': 'Exportera',
-  'tool.measuring': 'Mät avstånd (granskas endast visuellt och med mus)',
+  'tool.measuring': 'Mittaa etäisyys hiirellä', // TODO: translate
   'tool.measuring.stop': 'Sluta mäta',
   'tool.print': 'Skriv ut',
 
   'info.title': 'Om tjänsten och tillgänglighetsredogörelsen',
-  'info.statement': 'Tillgänglighetsredogörelsen (ny flik)',
+  'info.statement': 'Tillgänglighetsredogörelsen',
 
   'alert.close': 'Stäng meddelande',
 };

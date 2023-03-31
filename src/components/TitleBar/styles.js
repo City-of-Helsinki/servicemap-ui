@@ -6,8 +6,8 @@ export default theme => ({
   container: {
     display: 'flex',
     alignItems: 'center',
-    minHeight: 44,
-    background: theme.palette.background.main,
+    height: 44,
+    background: theme.palette.primary.main,
     boxShadow: '0 2px 4px 0 rgba(0,0,0,0.5)',
     color: '#fff',
     padding: theme.spacing(1),
@@ -17,10 +17,15 @@ export default theme => ({
     flexDirection: 'column',
     alignItems: 'flex-start',
     paddingLeft: theme.spacing(2),
-    paddingBottom: theme.spacing(2),
+    paddingBottom: theme.spacing(1),
+    height: 72,
   },
   textBar: {
-    paddingLeft: 36,
+    paddingLeft: theme.spacing(2),
+  },
+  linkContainer: {
+    display: 'flex',
+    flexDirection: 'row',
   },
   titleContainer: {
     flexDirection: 'row',
@@ -34,7 +39,6 @@ export default theme => ({
     flex: '1 1 auto',
     textTransform: 'none',
     textAlign: 'left',
-    marginLeft: 10,
     '&:focus': {
       outlineStyle: 'none',
     },
@@ -49,19 +53,16 @@ export default theme => ({
     color: 'inherit',
     flex: '0 1 auto',
     padding: 0,
-    margin: theme.spacing(1),
-    marginTop: 0,
+    paddingBottom: theme.spacing(1.5),
+    margin: 0,
     fontSize: '1.125rem',
+    marginLeft: theme.spacing(-0.5),
   },
   icon: {
     display: 'flex',
     color: 'inherit',
     margin: theme.spacing(1),
     padding: 0,
-  },
-  buttonFocus: {
-    outline: '2px solid transparent',
-    boxShadow: `0 0 0 4px ${theme.palette.primary.highContrast}`,
   },
   colorLight: {
     color: '#000',
@@ -83,6 +84,6 @@ export default theme => ({
   mobileSticky: {
     position: 'sticky',
     top: topBarHeightMobile,
-    zIndex: theme.zIndex.sticky,
+    zIndex: 100,
   },
 });

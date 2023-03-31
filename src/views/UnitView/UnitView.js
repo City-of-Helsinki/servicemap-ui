@@ -1,21 +1,23 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Typography } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import {
-  Map, Mail, Hearing, Share,
+  Mail, Hearing, Share, OpenInFull,
 } from '@mui/icons-material';
 import { visuallyHidden } from '@mui/utils';
 import { Helmet } from 'react-helmet';
 import { useDispatch, useSelector } from 'react-redux';
+import styled from '@emotion/styled';
 import {
   AcceptSettingsDialog,
-  AddressIcon,
+  BackButton,
   Container,
   LinkSettingsDialog,
   ReadSpeakerButton,
   SearchBar,
+  SettingsComponent,
   SimpleListItem,
   SMButton,
   TabLists,
@@ -40,6 +42,8 @@ import UnitsServicesList from './components/UnitsServicesList';
 import PriceInfo from './components/PriceInfo';
 import { parseSearchParams } from '../../utils';
 import { fetchServiceUnits } from '../../redux/actions/services';
+import MapView from '../MapView';
+
 
 const UnitView = (props) => {
   const {
@@ -76,6 +80,8 @@ const UnitView = (props) => {
 
   const map = useSelector(state => state.mapRef);
 
+  const getImageAlt = () => `${intl.formatMessage({ id: 'unit.picture' })}${getLocaleText(unit.name)}`;
+
   const shouldShowAcceptSettingsDialog = () => {
     const search = new URLSearchParams(location.search);
     const mobility = search.get('mobility');
@@ -84,10 +90,7 @@ const UnitView = (props) => {
     const sensesValid = senses.filter(
       s => SettingsUtility.isValidAccessibilitySenseImpairment(s),
     ).length > 0;
-    if (mobilityValid || sensesValid) {
-      return true;
-    }
-    return false;
+    return !!(mobilityValid || sensesValid);
   };
 
   useEffect(() => {
@@ -215,6 +218,22 @@ const UnitView = (props) => {
     );
   };
 
+  const renderPicture = () => (
+    <div className={classes.imageContainer}>
+      <img
+        className={classes.image}
+        alt={getImageAlt()}
+        src={unit.picture_url}
+      />
+      {
+          unit.picture_caption
+          && (
+            <Typography variant="body2" className={classes.imageCaption}>{getLocaleText(unit.picture_caption)}</Typography>
+          )
+        }
+    </div>
+  );
+
   const renderDetailTab = () => {
     if (!unit || !unit.complete) {
       return <></>;
@@ -268,6 +287,7 @@ const UnitView = (props) => {
           <UnitLinks unit={unit} />
           <ElectronicServices unit={unit} />
           {!isMobile && feedbackButton()}
+          {isMobile && renderPicture()}
         </div>
       </div>
     );
@@ -336,32 +356,12 @@ const UnitView = (props) => {
     );
   };
 
-  const renderMobileButtons = () => (
-    <div className={classes.mobileButtonArea}>
-      <SMButton
-        aria-hidden
-        messageID="general.showOnMap"
-        icon={<Map />}
-        onClick={(e) => {
-          e.preventDefault();
-          if (navigator) {
-            navigator.openMap();
-          }
-        }}
-        margin
-        role="link"
-      />
-      {feedbackButton()}
-    </div>
-  );
-
-
   const renderHead = () => {
     if (!unit || !unit.complete) {
       return null;
     }
     const title = unit && unit.name ? getLocaleText(unit.name) : '';
-    const imageAlt = `${intl.formatMessage({ id: 'unit.picture' })}${getLocaleText(unit.name)}`;
+    const imageAlt = getImageAlt();
     const description = unit.description ? getLocaleText(unit.description) : null;
 
     return (
@@ -385,6 +385,32 @@ const UnitView = (props) => {
     );
   };
 
+  const renderUnitLocation = () => (
+    <div className={classes.unitLocationContainer}>
+      <SMButton
+        role="link"
+        color="primary"
+        className={classes.mapButton}
+        aria-label={intl.formatMessage({ id: 'map.button.expand.aria' })}
+        icon={<StyledMapIcon />}
+        onClick={(e) => {
+          e.preventDefault();
+          if (navigator) {
+            navigator.openMap();
+          }
+        }}
+      >
+        <Typography sx={{ fontSize: '0.875rem', fontWeight: '500' }}>
+          <FormattedMessage id="map.button.expand" />
+        </Typography>
+      </SMButton>
+      <div className={classes.mapContainer}>
+        <MapView disableInteraction />
+      </div>
+    </div>
+  );
+
+
   const render = () => {
     const title = unit && unit.name ? getLocaleText(unit.name) : '';
     const onLinkOpenClick = () => {
@@ -395,25 +421,29 @@ const UnitView = (props) => {
         className={classes.linkButton}
         onClick={onLinkOpenClick}
       >
-        <Typography color="inherit" variant="body2">
+        <Typography fontSize="0.773rem" color="inherit" variant="body2">
           <FormattedMessage id="general.share.link" />
         </Typography>
         <Share className={classes.linkButtonIcon} />
       </Button>
     );
 
+    const backButtonText = intl.formatMessage({ id: 'general.backTo' });
     const TopArea = (
       <>
+        <BackButton
+          text={backButtonText}
+          ariaLabel={backButtonText}
+          variant="topBackButton"
+        />
         {!isMobile && (
-          <SearchBar margin />
+          <SearchBar hideBackButton />
         )}
         <TitleBar
           sticky
-          icon={!isMobile ? <AddressIcon className={classes.icon} /> : null}
           title={title}
-          backButton={!!isMobile}
           titleComponent="h3"
-          distance={elem}
+          shareLink={elem}
         />
       </>
     );
@@ -432,7 +462,6 @@ const UnitView = (props) => {
     }
 
     if (unit && unit.complete) {
-      const imageAlt = `${intl.formatMessage({ id: 'unit.picture' })}${getLocaleText(unit.name)}`;
       const tabs = [
         {
           id: 'basicInfo',
@@ -484,25 +513,11 @@ const UnitView = (props) => {
                 {TopArea}
                 {/* Unit image */}
                 {
-                unit.picture_url
-                && (
-
-                  <div className={classes.imageContainer}>
-                    <img
-                      className={classes.image}
-                      alt={imageAlt}
-                      src={unit.picture_url}
-                    />
-                    {
-                      unit.picture_caption
-                      && (
-                        <Typography variant="body2" className={classes.imageCaption}>{getLocaleText(unit.picture_caption)}</Typography>
-                      )
-                    }
-                  </div>
-                )
-              }
-                {isMobile && renderMobileButtons()}
+                  isMobile
+                    ? renderUnitLocation(unit)
+                    : unit.picture_url && renderPicture()
+                }
+                <SettingsComponent variant="paddingTopSettings" />
               </>
           )}
           />
@@ -517,6 +532,7 @@ const UnitView = (props) => {
           <Typography color="primary" variant="body1">
             <FormattedMessage id="unit.details.notFound" />
           </Typography>
+          <SettingsComponent />
         </div>
       </div>
     );
@@ -526,6 +542,13 @@ const UnitView = (props) => {
 };
 
 export default UnitView;
+
+const StyledMapIcon = styled(OpenInFull)(({ theme }) => ({
+  order: 2,
+  marginRight: '-4px',
+  paddingLeft: theme.spacing(1),
+  fontSize: '18px',
+}));
 
 // Typechecking
 UnitView.propTypes = {

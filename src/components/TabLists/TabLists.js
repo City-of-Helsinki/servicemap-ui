@@ -2,19 +2,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Tabs, Tab, Typography,
+  Tabs, Tab, Typography, Autocomplete,
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
-import { FormattedMessage } from 'react-intl';
 import { parseSearchParams, stringifySearchParams } from '../../utils';
 import ResultOrderer from '../ResultOrderer';
 import config from '../../../config';
 import useMobileStatus from '../../utils/isMobile';
-import AddressSearchBar from '../AddressSearchBar';
 import PaginatedList from '../Lists/PaginatedList';
 
 const TabLists = ({
-  changeCustomUserLocation,
   location,
   data,
   onTabChange,
@@ -23,10 +20,8 @@ const TabLists = ({
   headerComponents,
   navigator,
   classes,
-  userAddress,
 }) => {
   const isMobile = useMobileStatus();
-
   const searchParams = parseSearchParams(location.search);
   const filteredData = data.filter(item => item.component || (item.data && item.data.length > 0));
   const getTabfromUrl = () => {
@@ -51,16 +46,6 @@ const TabLists = ({
     setTabIndex(0);
   }
 
-  const handleAddressChange = (address) => {
-    if (address) {
-      changeCustomUserLocation(
-        [address.location.coordinates[1], address.location.coordinates[0]],
-        address,
-      );
-    } else {
-      changeCustomUserLocation(null);
-    }
-  };
   const adjustScrollDistance = (scroll = null) => {
     let scrollDistanceFromTop = scrollDistance;
     const elem = document.getElementsByClassName(sidebarClass)[0];
@@ -190,13 +175,6 @@ const TabLists = ({
           fullData.length > 0 && (
             <>
               <ResultOrderer disabled={disabled} />
-              <AddressSearchBar
-                defaultAddress={userAddress}
-                containerClassName={classes.addressBar}
-                inputClassName={classes.addressBarInput}
-                title={<FormattedMessage id="area.searchbar.infoText.address" />}
-                handleAddressChange={address => handleAddressChange(address)}
-              />
             </>
           )
         }
@@ -210,9 +188,6 @@ const TabLists = ({
         <Tabs
           ref={tabsRef}
           className={`sticky ${classes.root}`}
-          classes={{
-            indicator: classes.indicator,
-          }}
           value={tabIndex}
           onChange={handleTabChange}
           variant="fullWidth"
@@ -358,7 +333,6 @@ TabLists.propTypes = {
     data: PropTypes.arrayOf(PropTypes.any),
     itemsPerPage: PropTypes.number,
   })).isRequired,
-  changeCustomUserLocation: PropTypes.func.isRequired,
   userAddress: PropTypes.objectOf(PropTypes.any),
   headerComponents: PropTypes.objectOf(PropTypes.any),
   onTabChange: PropTypes.func,

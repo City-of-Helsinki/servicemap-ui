@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import PropTypes from 'prop-types';
 import {
-  InputBase, Paper, Typography, Button, IconButton, Divider,
+  InputBase, Paper, Typography, IconButton, Divider, ButtonBase,
 } from '@mui/material';
 import {
   Search, Cancel,
@@ -317,23 +317,17 @@ const SearchBarComponent = ({
           }
         />
 
-        <Button
+        <ButtonBase
           id="SearchButton"
           aria-label={intl.formatMessage({ id: 'search' })}
           type="submit"
           className={classes.iconButtonSearch}
-          disableRipple
-          disableFocusRipple
-          classes={{
-            label: classes.iconButtonSearchLabel,
-            focusVisible: classes.searchButtonFocus,
-          }}
           color="secondary"
           variant="contained"
         >
+          <Typography><FormattedMessage id="general.search" /></Typography>
           <Search />
-          <Typography variant="caption" color="inherit"><FormattedMessage id="general.search" /></Typography>
-        </Button>
+        </ButtonBase>
       </form>
     );
   };

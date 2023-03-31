@@ -1,95 +1,67 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
+  ButtonBase,
+  Divider,
   Drawer,
+  Typography,
 } from '@mui/material';
-import { Map } from '@mui/icons-material';
-import { getIcon } from '../../SMIcon';
-import DrawerButton from './DrawerButton';
-import useLocaleText from '../../../utils/useLocaleText';
-import DrawerSettings from './DrawerSettings';
+import { ArrowForward } from '@mui/icons-material';
+import { FormattedMessage } from 'react-intl';
+import styled from '@emotion/styled';
+import { useDispatch, useSelector } from 'react-redux';
+import { getTheme, getPage } from '../../../redux/selectors/user';
+import { changeTheme } from '../../../redux/actions/user';
 
 const DrawerMenu = (props) => {
   const {
     classes,
-    toggleSettings,
-    userLocation,
-    findUserLocation,
-    intl,
-    // currentPage,
-    // settingsOpen,
     pageType,
     isOpen,
     toggleDrawerMenu,
     handleNavigation,
   } = props;
-  const getLocaleText = useLocaleText();
+  const dispatch = useDispatch();
+  const currentPage = useSelector(getPage);
+  const theme = useSelector(getTheme);
 
-  const menuContent = [
-    { // Nearby services button
-      name: intl.formatMessage({ id: 'home.buttons.closeByServices' }),
-      // active: currentPage === 'address' && !settingsOpen,
-      disabled: !userLocation.coordinates,
-      subText: userLocation.allowed
-        ? intl.formatMessage({ id: 'location.notFound' })
-        : intl.formatMessage({ id: 'location.notAllowed' }),
-      icon: getIcon('location'),
-      clickEvent: () => {
-        if (!userLocation.coordinates) {
-          findUserLocation();
-        } else {
-          handleNavigation('address', userLocation.addressData);
-          toggleDrawerMenu();
-        }
-      },
-    },
-    { // Service list button
-      name: intl.formatMessage({ id: 'home.buttons.services' }),
-      // active: currentPage === 'serviceTree' && !settingsOpen,
-      icon: getIcon('serviceList'),
-      clickEvent: () => {
-        handleNavigation('services');
+
+  const menuMainButton = (headerId, textId, pageId) => (
+    <StyledButtonBase
+      aria-current={currentPage === pageId}
+      role="link"
+      onClick={() => {
         toggleDrawerMenu();
-      },
-    },
-    { // Settings button
-      type: 'settings',
-      clickEvent: () => {
-        toggleSettings('mobile');
+        handleNavigation(pageId);
+      }}
+    >
+      <StyledTextContainer>
+        <StyledTitle><FormattedMessage id={headerId} /></StyledTitle>
+        <Typography sx={{ color: '#666', fontSize: '0.913rem', lineHeight: '1.5rem' }}>
+          <FormattedMessage id={textId} />
+        </Typography>
+      </StyledTextContainer>
+      <ArrowForward sx={{ fontSize: '2.5rem', ml: 'auto' }} />
+    </StyledButtonBase>
+  );
+
+  const menuSecondaryButton = (headerId, pageId, handleClick, isLink) => (
+    <StyledButtonBase
+      sx={{ backgroundColor: 'rgba(167, 200, 232, 0.15)' }}
+      aria-current={pageId && currentPage === pageId}
+      role={isLink ? 'link' : 'button'}
+      onClick={handleClick || (() => {
         toggleDrawerMenu();
-      },
-    },
-    { // Instructions button
-      name: intl.formatMessage({ id: 'info.title' }),
-      icon: getIcon('help'),
-      clickEvent: () => {
-        handleNavigation('info');
-        toggleDrawerMenu();
-      },
-    },
-    { // Feedback button
-      name: intl.formatMessage({ id: 'home.send.feedback' }),
-      icon: getIcon('feedback'),
-      clickEvent: () => {
-        handleNavigation('feedback');
-        toggleDrawerMenu();
-      },
-    },
-    { // Link to old
-      name: intl.formatMessage({ id: 'home.old.link' }),
-      icon: <Map />,
-      clickEvent: () => {
-        window.open(getLocaleText({
-          fi: 'https://palvelukartta-vanha.hel.fi/?lang=fi',
-          sv: 'https://palvelukartta-vanha.hel.fi/?lang=sv',
-          en: 'https://palvelukartta-vanha.hel.fi/?lang=en',
-        }));
-      },
-    },
-  ];
+        handleNavigation(pageId);
+      })}
+    >
+      <StyledTextContainer>
+        <StyledTitle><FormattedMessage id={headerId} /></StyledTitle>
+      </StyledTextContainer>
+    </StyledButtonBase>
+  );
 
   return (
-  // <ClickAwayListener onClickAway={isOpen ? () => toggleDrawerMenu() : () => {}}>
     <Drawer
       variant="persistent"
       anchor="right"
@@ -97,52 +69,58 @@ const DrawerMenu = (props) => {
       classes={{ paper: pageType === 'mobile' ? classes.drawerContainerMobile : classes.drawerContainer }}
     >
       <div className={classes.scrollContainer}>
-        {menuContent.map((item) => {
-          if (item.type === 'settings') {
-            return (
-              <DrawerSettings
-                key={item.type}
-                onClick={item.clickEvent}
-              />
-            );
-          }
+        {/* Main links */}
+        {menuMainButton('general.frontPage', 'app.description', 'home')}
+        <Divider />
+        {menuMainButton('general.pageLink.area', 'home.buttons.area', 'area')}
+        <Divider />
+        {menuMainButton('services', 'home.buttons.services', 'services')}
+        <Divider />
 
-          return (
-            <DrawerButton
-              key={item.name}
-              active={item.active}
-              disabled={item.disabled}
-              disableRipple
-              icon={item.icon}
-              isOpen={isOpen}
-              text={item.name}
-              onClick={item.clickEvent}
-              subText={item.subText}
-            />
-          );
-        })}
+        {/* Smaller buttons  */}
+        {menuSecondaryButton(
+          theme === 'default'
+            ? 'general.contrast.ariaLabel.on'
+            : 'general.contrast.ariaLabel.off',
+          null,
+          () => dispatch(changeTheme(theme === 'default' ? 'dark' : 'default')),
+        )}
+        <Divider />
+        {menuSecondaryButton('home.send.feedback', 'feedback', null, true)}
+        <Divider />
+        {menuSecondaryButton('general.pageTitles.info', 'info', null, true)}
       </div>
     </Drawer>
-  // </ClickAwayListener>
   );
 };
 
+const StyledButtonBase = styled(ButtonBase)(({ theme }) => ({
+  paddingLeft: theme.spacing(2),
+  paddingRight: theme.spacing(1.5),
+  paddingTop: theme.spacing(3),
+  paddingBottom: theme.spacing(3),
+  justifyContent: 'flex-start',
+}));
+
+const StyledTextContainer = styled.div(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'flex-start',
+  textAlign: 'left',
+  paddingRight: theme.spacing(2),
+}));
+
+const StyledTitle = styled(Typography)(() => ({
+  fontSize: '1.25rem',
+  fontWeight: 500,
+}));
+
 DrawerMenu.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  toggleSettings: PropTypes.func.isRequired,
-  // currentPage: PropTypes.string.isRequired,
-  userLocation: PropTypes.objectOf(PropTypes.any).isRequired,
-  findUserLocation: PropTypes.func.isRequired,
-  intl: PropTypes.objectOf(PropTypes.any).isRequired,
-  // settingsOpen: PropTypes.string,
   pageType: PropTypes.string.isRequired,
   isOpen: PropTypes.bool.isRequired,
   toggleDrawerMenu: PropTypes.func.isRequired,
   handleNavigation: PropTypes.func.isRequired,
-};
-
-DrawerMenu.defaultProps = {
-  // settingsOpen: null,
 };
 
 export default DrawerMenu;

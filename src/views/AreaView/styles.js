@@ -19,8 +19,11 @@ const styles = theme => ({
     backgroundColor: theme.palette.primary.main,
   },
   infoText: {
-    padding: theme.spacing(3),
+    padding: theme.spacing(2),
+    paddingTop: 0,
     textAlign: 'start',
+    backgroundColor: theme.palette.primary.main,
+    color: '#fff',
   },
   infoTitle: {
     padding: theme.spacing(1),
@@ -162,10 +165,6 @@ const styles = theme => ({
   },
   rightPadding: {
     paddingRight: theme.spacing(1),
-  },
-  addressArea: {
-    padding: theme.spacing(3),
-    textAlign: 'start',
   },
   addressTitle: {
     marginBottom: theme.spacing(2),

@@ -15,7 +15,7 @@ const TitleBar = ({
   title,
   titleComponent,
   icon,
-  distance,
+  shareLink,
   className,
   ariaHidden,
   sticky,
@@ -30,28 +30,29 @@ const TitleBar = ({
 
   return (
     <div className={componentClasses}>
-      {
-        backButton
-        && (
-        <BackButton
-          onClick={backButtonOnClick}
-          text={backButtonText}
-          ariaLabel={backButtonSrText}
-          className={classes.iconButton}
-          focusVisibleClassName={classes.buttonFocus}
-          variant="container"
-        />
-        )
-      }
-      {
-        !backButton
-        && icon
-        && (
-          <div className={classes.icon} aria-hidden="true">
-            {icon}
-          </div>
-        )
-      }
+      <div className={classes.linkContainer}>
+        {
+          backButton
+          && (
+          <BackButton
+            onClick={backButtonOnClick}
+            text={backButtonText}
+            ariaLabel={backButtonSrText}
+            className={classes.iconButton}
+            variant="container"
+          />
+          )
+        }
+        {
+          !backButton
+          && icon
+          && (
+            <div className={classes.icon} aria-hidden="true">
+              {icon}
+            </div>
+          )
+        }
+      </div>
       <div className={classes.titleContainer}>
         <Typography
           aria-hidden={ariaHidden}
@@ -61,10 +62,9 @@ const TitleBar = ({
         >
           {title}
         </Typography>
-
-        {distance && (
+        {shareLink && (
           <Typography className={classes.distance}>
-            {distance}
+            {shareLink}
           </Typography>
         )}
       </div>
@@ -82,7 +82,7 @@ TitleBar.propTypes = {
   titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p']).isRequired,
   icon: PropTypes.objectOf(PropTypes.any),
   className: PropTypes.string,
-  distance: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  shareLink: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   ariaHidden: PropTypes.bool,
   sticky: PropTypes.bool,
 };
@@ -94,7 +94,7 @@ TitleBar.defaultProps = {
   backButtonSrText: null,
   icon: null,
   className: null,
-  distance: null,
+  shareLink: null,
   ariaHidden: false,
   sticky: false,
 };

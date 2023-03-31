@@ -304,7 +304,9 @@ const translations = {
   'general.distance.kilometers': 'Kilometrin päässä',
   'general.yes': 'Kyllä',
   'general.no': 'Ei',
+  'general.openSettings': 'Avaa asetukset',
   'general.closeSettings': 'Sulje asetukset',
+  'general.hideSettings': 'Piilota asetukset',
   'general.fetching': 'Ladataan tietoja...',
   'general.home': 'Koti',
   'general.home.logo.ariaLabel': 'Palvelukartta - Siirry etusivulle',
@@ -336,6 +338,7 @@ const translations = {
   'general.pageTitles.info': 'Tietoa palvelusta',
   'general.pageTitles.feedback': 'Palautesivu',
   'general.pageTitles.area': 'Aluesivu',
+  'general.pageLink.area': 'Alueesi palvelut',
   // Readspeaker
   'general.readspeaker.buttonText': 'Kuuntele',
   'general.readspeaker.title': 'Kuuntele ReadSpeaker webReaderilla',
@@ -357,7 +360,7 @@ const translations = {
   'general.save.confirmation': 'Haluatko tallentaa muutokset?',
   'general.search': 'Hae',
   'general.share.link': 'Jaa linkki',
-  'general.tools': 'Työkalut',
+  'general.tools': 'Karttatyökalut',
   'general.time.short': 'klo',
 
   // Home
@@ -394,6 +397,8 @@ const translations = {
 
   // Map
   'map': 'Kartta',
+  'map.open': 'Avaa Kartta',
+  'map.close': 'Sulje Kartta',
   'map.ariaLabel': 'Karttanäkymä. Kartan tietoja voi tarkastella tällä hetkellä vain näönvaraisesti.',
   'map.attribution.osm': '&copy; <a href="http://osm.org/copyright">OpenStreetMapin tekijät</a>',
   'map.attribution.helsinki': '&copy; Helsingin, Espoon, Vantaan ja Kauniaisen kaupungit',
@@ -405,6 +410,8 @@ const translations = {
   'map.unit.cluster.popup.info': '{count} toimipistettä',
   'map.button.sidebar.hide': 'Pienennä sivupaneeli',
   'map.button.sidebar.show': 'Laajenna sivupaneeli',
+  'map.button.expand': 'Laajenna',
+  'map.button.expand.aria': 'Avaa kartta',
 
 
   // Print
@@ -594,6 +601,8 @@ const translations = {
 
   // Settings
   'settings': 'Asetukset',
+  'settings.open': 'Avaa asetusvalinnat',
+  'settings.close': 'Sulje asetusvalinnat',
   'settings.change': 'Muokkaa asetuksiasi',
   'settings.drawer.aria.title': 'Tämän hetkiset asetukset',
   'settings.citySettings': 'Kaupunki',
@@ -666,17 +675,22 @@ const translations = {
   'settings.aria.changed': 'Asetukset muutettu. Muista tallentaa',
   'settings.aria.closed': 'Asetukset suljettu',
   'settings.aria.open': 'Avaa asetukset',
+  'settings.accordion.open': 'Avaa kaikki tehdyt asetukset',
   'settings.aria.opened': 'Asetukset avattu',
   'settings.aria.saved': 'Asetukset on tallennettu',
+  'settings.choose.mobility': 'Valitse liikkumisrajoitteesi',
+  'settings.choose.senses': 'Valitse aistirajoitteesi',
+  'settings.choose.cities': 'Valitse kaupunkiasetuksesi',
+  'settings.map.info': 'Kartta-asetuksista voit valita sinulle parhaiten sopivan pohjakartan.',
 
   // Tools
   'tool.download': 'Lataa tiedot',
-  'tool.measuring': 'Mittaa etäisyys (käytettävissä vain näönvaraisesti hiirellä)',
+  'tool.measuring': 'Mittaa etäisyys hiirellä',
   'tool.measuring.stop': 'Lopeta mittaus',
   'tool.print': 'Tulosta',
 
   'info.title': 'Tietoa palvelusta ja saavutettavuusseloste',
-  'info.statement': 'Saavutettavuusseloste (uusi välilehti)',
+  'info.statement': 'Saavutettavuusseloste',
 
   'alert.close': 'Sulje ilmoitus',
 };

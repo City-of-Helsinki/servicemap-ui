@@ -121,7 +121,6 @@ const ServiceView = (props) => {
               title={getLocaleText(current.name)}
               titleComponent="h3"
               primary
-              backButton
             />
           </MobileComponent>
         )

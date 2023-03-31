@@ -1,13 +1,12 @@
 export default theme => ({
   background: {
-    background: theme.palette.background.main,
+    background: theme.palette.primary.main,
   },
   root: {
     color: theme.palette.primary.highContrast,
     display: 'flex',
     flexDirection: 'column',
-    padding: theme.spacing(3),
-    paddingTop: theme.spacing(0.5),
+    padding: theme.spacing(2),
     boxShadow: '0 2px 2px 0 rgba(0,0,0,0.5)',
     flex: '0 0 auto',
   },
@@ -26,11 +25,11 @@ export default theme => ({
   wrapper: {
     position: 'relative',
     flex: '0 1 auto',
-    borderRadius: 4,
+    borderRadius: '4px',
   },
   mobileWrapper: {
     flex: '0 1 auto',
-    borderRadius: 4,
+    borderRadius: '4px',
   },
   mobileWrapperActive: {
     flex: '0 1 auto',
@@ -40,6 +39,7 @@ export default theme => ({
   container: {
     alignItems: 'center',
     display: 'flex',
+    height: 54,
     flex: '0 0 auto',
     backgroundColor: '#fff',
     border: '1px solid #ACACAC',
@@ -58,7 +58,8 @@ export default theme => ({
     justifyContent: 'center',
     display: 'flex',
     flexDirection: 'column',
-    padding: theme.spacing(1, 0.5),
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(0.5),
   },
   infoTextSticky: {
     backgroundColor: theme.palette.primary.main,
@@ -89,22 +90,26 @@ export default theme => ({
   },
   iconButtonSearch: {
     flex: '0 0 auto',
+    width: 87,
+    height: '100%',
     borderRadius: 0,
     borderTopRightRadius: 4,
     borderBottomRightRadius: 4,
     boxShadow: 'none',
     padding: theme.spacing(0.5, 0),
+    backgroundColor: theme.palette.primary.main,
+    color: '#fff',
+    display: 'flex',
+    flexDirection: 'row',
     textTransform: 'none',
-    '& svg': {
-      fontSize: 28,
+    '&:hover': {
+      backgroundColor: 'rgb(30, 32, 39)',
+      transition: '0.5s',
     },
-    flexDirection: 'column',
-  },
-  searchButtonFocus: {
-    boxShadow: '0 0 0 4px #fff !important',
-  },
-  iconButtonSearchLabel: {
-    flexDirection: 'column',
+    '& svg': {
+      fontSize: 24,
+      paddingLeft: theme.spacing(0.5),
+    },
   },
   icon: {
     flex: '0 1 auto',
@@ -125,10 +130,10 @@ export default theme => ({
   },
   headerText: {
     fontWeight: 'bold',
-    margin: theme.spacing(3, 0.5, 1, 0.5),
+    margin: theme.spacing(2, 0, 1, 0),
   },
   headerBackground: {
-    background: theme.palette.background.front,
+    background: theme.palette.primary.main,
   },
   suggestionSubtitle: {
     display: 'flex',

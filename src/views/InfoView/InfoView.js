@@ -8,8 +8,11 @@ import {
 } from '@mui/material';
 import config from '../../../config';
 import { TitleBar } from '../../components';
+import useMobileStatus from '../../utils/isMobile';
 
 const InfoView = ({ classes, locale }) => {
+  const isMobile = useMobileStatus();
+
   const a11yURLs = config.accessibilityStatementURL;
   const localeUrl = !a11yURLs[locale] || a11yURLs[locale] === 'undefined' ? null : a11yURLs[locale];
 
@@ -21,7 +24,7 @@ const InfoView = ({ classes, locale }) => {
     <TitleBar
       sticky
       ariaHidden
-      backButton
+      backButton={!isMobile}
       title={<FormattedMessage id="info.title" />}
       titleComponent="h3"
     />

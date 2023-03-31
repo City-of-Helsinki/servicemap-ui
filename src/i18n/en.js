@@ -304,7 +304,9 @@ const translations = {
   'general.distance.kilometers': 'Kilometers away',
   'general.yes': 'Yes',
   'general.no': 'No',
+  'general.openSettings': 'Open settings',
   'general.closeSettings': 'Close settings',
+  'general.hideSettings': 'Hide settings',
   'general.fetching': 'Loading data...',
   'general.home': 'Home',
   'general.home.logo.ariaLabel': 'Servicemap - Go to home page',
@@ -336,7 +338,8 @@ const translations = {
   'general.pageTitles.info': 'Info page',
   'general.pageTitles.feedback': 'Feedback page',
   'general.pageTitles.area': 'Area page',
-  'general.tools': 'Tools',
+  'general.pageLink.area': 'Alueesi palvelut', // TODO: translate
+  'general.tools': 'Map Tools',
   // Readspeaker
   'general.readspeaker.buttonText': 'Listen',
   'general.readspeaker.title': 'Listen with ReadSpeaker webReader',
@@ -394,6 +397,8 @@ const translations = {
 
   // Map
   'map': 'Map',
+  'map.open': 'Open Map',
+  'map.close': 'Close Map',
   'map.ariaLabel': 'Map. Currently map information is only accessible visually.',
   'map.attribution.osm': '&copy; <a href="http://osm.org/copyright">OpenStreetMap contributors</a>',
   'map.attribution.helsinki': '&copy; Cities of Helsinki, Espoo, Vantaa ja Kauniainen',
@@ -405,6 +410,8 @@ const translations = {
   'map.unit.cluster.popup.info': '{count} service points',
   'map.button.sidebar.hide': 'Hide sidebar',
   'map.button.sidebar.show': 'Show sidebar',
+  'map.button.expand': 'Expand',
+  'map.button.expand.aria': 'Open map',
 
   // Print
   'print.alert': 'Use the toolbox printing option',
@@ -591,6 +598,8 @@ const translations = {
 
   // Settings
   'settings': 'Settings',
+  'settings.open': 'Avaa asetusvalinnat', // TODO: translate
+  'settings.close': 'Sulje asetusvalinnat', // TODO: translate
   'settings.change': 'Edit your settings',
   'settings.drawer.aria.title': 'Current settings',
   'settings.citySettings': 'City',
@@ -663,17 +672,22 @@ const translations = {
   'settings.aria.changed': 'Settings have changed. Remember to save',
   'settings.aria.closed': 'Settings closed',
   'settings.aria.open': 'Open settings',
+  'settings.accordion.open': 'Avaa kaikki tehdyt asetukset', // TODO: translate
   'settings.aria.opened': 'Settings have been opened',
   'settings.aria.saved': 'Settings have been saved',
+  'settings.choose.mobility': 'Valitse liikkumisrajoitteesi', // TODO: translate
+  'settings.choose.senses': 'Valitse aistirajoitteesi', // TODO: translate
+  'settings.choose.cities': 'Valitse kaupunkiasetuksesi', // TODO: translate
+  'settings.map.info': 'Kartta-asetuksista voit valita sinulle parhaiten sopivan pohjakartan.', // TODO: translate
 
   // Tools
   'tool.download': 'Download data',
-  'tool.measuring': 'Measure distance (accessible only visually and with a mouse)',
+  'tool.measuring': 'Measure distance with a mouse',
   'tool.measuring.stop': 'Stop measuring',
   'tool.print': 'Print',
 
   'info.title': 'About the service and accessibility statement',
-  'info.statement': 'Accessibility statement (new tab)',
+  'info.statement': 'Accessibility statement',
 
   'alert.close': 'Close the notification',
 };
