@@ -53,7 +53,7 @@ const ParkingAreaList = ({ areas, variant, classes }) => {
     } else {
       dispatch(addSelectedParkingArea(id));
     }
-    if (!parkingAreas.some(obj => obj.extra.class === id)) {
+    if (!parkingAreas.some(obj => obj.extra.class === id || obj.extra.tyyppi === id)) {
       dispatch(fetchParkingAreaGeometry(id));
     }
   };
@@ -64,12 +64,12 @@ const ParkingAreaList = ({ areas, variant, classes }) => {
     let promises = [];
     if (variant === 'helsinki') {
       promises = parkingSpaceIDs.map(
-        async id => smAPI.parkingAreaInfo({ extra__class: id }),
+        async id => smAPI.parkingAreaInfo({ extra__class: id, municipality: 'helsinki' }),
       );
     }
     if (variant === 'vantaa') {
       promises = parkingSpaceVantaaTypes.map(
-        async id => smAPI.parkingAreaInfo({ extra__tyyppi: id }),
+        async id => smAPI.parkingAreaInfo({ extra__tyyppi: id, municipality: 'vantaa' }),
       );
     }
     const parkingAreaObjects = await Promise.all(promises);

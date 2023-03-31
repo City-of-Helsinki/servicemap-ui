@@ -63,7 +63,10 @@ const ParkingAreas = ({ classes }) => {
     }
   };
 
-  const selectedAreas = parkingAreas.filter(obj => selectedParkingAreas.includes(obj.extra.class));
+  const selectedAreas = parkingAreas.filter(
+    obj => selectedParkingAreas.includes(obj.extra.class)
+      || selectedParkingAreas.includes(obj.extra.tyyppi),
+  );
 
   return (
     <>
