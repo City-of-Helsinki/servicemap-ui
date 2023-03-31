@@ -69,7 +69,7 @@ export const DistrictAreaList = ({
     });
     const otherAreaDistricts = [];
     otherDistricts.forEach((district) => {
-      if (district.municipality === selectedAddress.street.municipality) {
+      if (district.municipality === selectedAddress.municipality.id) {
         const newValue = district;
         otherAreaDistricts.push(newValue);
       }

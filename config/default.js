@@ -193,6 +193,10 @@ export default {
     "root": settings.DIGITRANSIT_API,
     "id": 'DIGITRANSIT_API',
   },
+  "digitransitApiKey": {
+    "root": settings.DIGITRANSIT_API_KEY,
+    "id": 'DIGITRANSIT_API_KEY',
+  },
   "feedbackURL": {
     "root": settings.FEEDBACK_URL,
     "id": 'FEEDBACK_URL',

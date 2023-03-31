@@ -179,16 +179,13 @@ export default class ServiceMapAPI extends HttpClient {
     return this.getConcurrent('unit', options);
   }
 
-  parkingAreaInfo = async (parkingID) => {
-    if (typeof parkingID !== 'string') {
-      throw new APIFetchError('Invalid parkingID string provided to ServiceMapAPI area unit fetch method');
-    }
+  parkingAreaInfo = async (params) => {
     const options = {
       page: 1,
       page_size: 1,
       type: 'parking_area',
       geometry: false,
-      extra__class: parkingID,
+      ...params,
     };
 
     return this.getSinglePage('administrative_division', options);
