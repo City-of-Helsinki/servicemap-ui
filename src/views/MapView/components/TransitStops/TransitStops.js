@@ -68,7 +68,7 @@ const TransitStops = ({ mapObject, classes }) => {
     if (!bikeStationsLoaded) {
       fetchBikeStations()
         .then((stations) => {
-          const list = stations?.data?.bikeRentalStations;
+          const list = stations?.data?.bikeRentalStations || [];
           if (list?.length) setRentalBikeStations(list);
           setBikeStationsLoaded(true);
           setVisibleBikeStations(showTransitStops() ? list : []);
