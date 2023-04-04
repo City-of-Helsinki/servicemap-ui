@@ -28,17 +28,18 @@ const BottomNav = () => {
   const navigator = useSelector(state => state.navigator);
   const breadcrumb = useSelector(state => state.breadcrumb);
 
+  const [ownSettingsOpen, setOwnSettingsOpen] = useState(false);
   const [mapSettingsOpen, setMapSettingsOpen] = useState(false);
 
   const mapPage = location.search.indexOf('showMap=true') > -1;
-
 
   const handleNav = (value) => {
     switch (value) {
       // Back button
       case 0:
         if (navigator) {
-          if (mapSettingsOpen) {
+          if (ownSettingsOpen || mapSettingsOpen) {
+            setOwnSettingsOpen(false);
             setMapSettingsOpen(false);
           } else {
             navigator.goBack();
@@ -48,8 +49,11 @@ const BottomNav = () => {
 
       // Map button
       case 1:
-        if (mapSettingsOpen) {
-          if (!mapPage) navigator.openMap();
+        if (ownSettingsOpen || mapSettingsOpen) {
+          if (!mapPage) {
+            navigator.openMap();
+          }
+          setOwnSettingsOpen(false);
           setMapSettingsOpen(false);
           break;
         }
@@ -57,15 +61,19 @@ const BottomNav = () => {
           navigator.closeMap(breadcrumb.length ? 'replace' : null);
         } else {
           navigator.openMap();
+          setOwnSettingsOpen(false);
           setMapSettingsOpen(false);
         }
         break;
 
       case 2:
+        setOwnSettingsOpen(!ownSettingsOpen);
+        setMapSettingsOpen(false);
         break;
 
       // Settings button
       case 3:
+        setOwnSettingsOpen(false);
         setMapSettingsOpen(!mapSettingsOpen);
         break;
       default:
@@ -76,6 +84,22 @@ const BottomNav = () => {
 
   return (
     <>
+      <StyledDrawer
+        open={ownSettingsOpen}
+        anchor="top"
+        hideBackdrop
+        transitionDuration={0}
+        elevation={0}
+        PaperProps={{
+          sx: {
+            height: `calc(100% - ${bottomNavHeight}px)`,
+            p: 2,
+            boxSizing: 'border-box',
+          },
+        }}
+      >
+        <div>TODO</div>
+      </StyledDrawer>
       <StyledDrawer
         open={mapSettingsOpen}
         anchor="top"
