@@ -45,19 +45,30 @@ const ParkingAreas = ({ classes }) => {
   };
 
   const getColor = (area) => {
-    switch (area.extra?.class) {
+    const type = area.extra?.class || area.extra?.tyyppi;
+    switch (type) {
       case '1':
+      case '12h-24h':
         return 'rgb(25, 100, 230)';
       case '2':
+      case '2h-3h':
         return 'rgb(86, 24, 227)';
       case '3':
+      case '4h-11h':
         return 'rgb(232, 70, 61)';
       case '4':
+      case 'Ei rajoitusta':
         return 'rgb(17, 37, 140)';
       case '5':
+      case 'Lyhytaikainen':
         return 'rgb(65, 32, 8)';
       case '6':
+      case 'Maksullinen':
         return 'rgb(69, 138, 47)';
+      case 'Muu':
+        return 'rgb(255,0,168)';
+      case 'Varattu päivisin':
+        return 'rgb(255,60,0)';
       default:
         return '#ff8400';
     }
