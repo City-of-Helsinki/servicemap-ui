@@ -53,7 +53,7 @@ class DropDownMenuButton extends React.Component {
           </Typography>
           {
             menuItems.map((v, i) => (
-              <>
+              <React.Fragment key={v.key}>
                 <ButtonBase
                   id={v.id}
                   key={v.key}
@@ -73,7 +73,7 @@ class DropDownMenuButton extends React.Component {
                   ? <Divider aria-hidden />
                   : null
                 }
-              </>
+              </React.Fragment>
             ))
           }
           <MapSettings />
