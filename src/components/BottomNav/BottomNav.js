@@ -1,6 +1,9 @@
 import styled from '@emotion/styled';
 import {
-  ArrowBack, Map, Settings,
+  AccountCircle,
+  ArrowBack,
+  Map,
+  Settings,
 } from '@mui/icons-material';
 import {
   BottomNavigation,
@@ -25,7 +28,7 @@ const BottomNav = () => {
   const navigator = useSelector(state => state.navigator);
   const breadcrumb = useSelector(state => state.breadcrumb);
 
-  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [mapSettingsOpen, setMapSettingsOpen] = useState(false);
 
   const mapPage = location.search.indexOf('showMap=true') > -1;
 
@@ -35,8 +38,8 @@ const BottomNav = () => {
       // Back button
       case 0:
         if (navigator) {
-          if (settingsOpen) {
-            setSettingsOpen(false);
+          if (mapSettingsOpen) {
+            setMapSettingsOpen(false);
           } else {
             navigator.goBack();
           }
@@ -45,22 +48,25 @@ const BottomNav = () => {
 
       // Map button
       case 1:
-        if (settingsOpen) {
+        if (mapSettingsOpen) {
           if (!mapPage) navigator.openMap();
-          setSettingsOpen(false);
+          setMapSettingsOpen(false);
           break;
         }
         if (mapPage) {
           navigator.closeMap(breadcrumb.length ? 'replace' : null);
         } else {
           navigator.openMap();
-          setSettingsOpen(false);
+          setMapSettingsOpen(false);
         }
         break;
 
-      // Settings button
       case 2:
-        setSettingsOpen(!settingsOpen);
+        break;
+
+      // Settings button
+      case 3:
+        setMapSettingsOpen(!mapSettingsOpen);
         break;
       default:
         break;
@@ -71,7 +77,7 @@ const BottomNav = () => {
   return (
     <>
       <StyledDrawer
-        open={settingsOpen}
+        open={mapSettingsOpen}
         anchor="top"
         hideBackdrop
         transitionDuration={0}
@@ -94,10 +100,14 @@ const BottomNav = () => {
               icon={<ArrowBack />}
             />
             <StyledBottomNavigationAction
-              label={!mapPage || settingsOpen
+              label={!mapPage || mapSettingsOpen
                 ? intl.formatMessage({ id: 'map.open' })
                 : intl.formatMessage({ id: 'map.close' })}
               icon={<Map />}
+            />
+            <StyledBottomNavigationAction
+              label={intl.formatMessage({ id: 'general.settings' })}
+              icon={<AccountCircle />}
             />
             <StyledBottomNavigationAction
               label={intl.formatMessage({ id: 'general.tools' })}
