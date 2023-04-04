@@ -3,16 +3,18 @@ import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
 import URI from 'urijs';
 import {
-  Code, GetApp, Print, Settings,
+  Code, GetApp, Print, Settings, AccountCircle,
 } from '@mui/icons-material';
 import { useSelector } from 'react-redux';
 import DropDownMenuButton from '../DropDownMenuButton';
+import OwnSettingsMenuButton from '../OwnSettingsMenuButton';
 import SMIcon from '../SMIcon/SMIcon';
 import PrintContext from '../../context/PrintContext';
 import DownloadDialog from '../Dialog/DownloadDialog';
 import MeasuringStopButton from './MeasuringStopButton';
 
 const ToolMenuButtonID = 'ToolMenuButton';
+const SettingsMenuButtonID = 'SettingsMenuButton';
 
 const ToolMenu = ({
   intl, classes, mapUtility, navigator, setMeasuringMode, measuringMode, currentPage,
@@ -134,17 +136,26 @@ const ToolMenu = ({
     return null;
   }
 
-  const toolMenuText = intl.formatMessage({ id: 'general.tools' });
+  const settingsMenuText = intl.formatMessage({ id: 'general.settings' });
+  const mapToolsMenuText = intl.formatMessage({ id: 'general.tools' });
 
   return (
     <>
+      <OwnSettingsMenuButton
+        id={SettingsMenuButtonID}
+        panelID="SettingsMenuPanel"
+        buttonIcon={<AccountCircle />}
+        buttonText={settingsMenuText}
+        menuAriaLabel={settingsMenuText}
+        menuItems={[]}
+      />
       <DropDownMenuButton
         id={ToolMenuButtonID}
         ref={toolMenuButton}
         panelID="ToolMenuPanel"
         buttonIcon={<Settings />}
-        buttonText={toolMenuText}
-        menuAriaLabel={toolMenuText}
+        buttonText={mapToolsMenuText}
+        menuAriaLabel={mapToolsMenuText}
         menuItems={menuItems}
       />
       {measuringMode && (
