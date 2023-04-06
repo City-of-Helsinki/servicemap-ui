@@ -17,6 +17,7 @@ import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import config from '../../../config';
 import MapSettings from '../MapSettings/MapSettings';
+import SettingsComponent from '../SettingsComponent';
 
 const { bottomNavHeight } = config;
 
@@ -98,7 +99,7 @@ const BottomNav = () => {
           },
         }}
       >
-        <div>TODO</div>
+        <SettingsComponent />
       </StyledDrawer>
       <StyledDrawer
         open={mapSettingsOpen}

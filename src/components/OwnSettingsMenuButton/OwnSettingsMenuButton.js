@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Button, ClickAwayListener, Typography } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import { keyboardHandler } from '../../utils';
+import SettingsComponent from '../SettingsComponent';
 
 class OwnSettingsMenuButton extends React.Component {
   state = {
@@ -39,6 +40,7 @@ class OwnSettingsMenuButton extends React.Component {
           >
             <FormattedMessage id="general.settings" />
           </Typography>
+          <SettingsComponent />
           <div aria-hidden role="button" tabIndex="0" onFocus={() => this.handleClose()} />
         </div>
       </ClickAwayListener>
