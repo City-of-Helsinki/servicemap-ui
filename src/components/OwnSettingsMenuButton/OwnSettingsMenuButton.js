@@ -38,7 +38,7 @@ class OwnSettingsMenuButton extends React.Component {
             textAlign: 'left', fontWeight: 700, fontSize: '1.03rem', pb: 1,
           }}
           >
-            <FormattedMessage id="general.settings" />
+            <FormattedMessage id="general.ownSettings" />
           </Typography>
           <SettingsDropdowns variant="ownSettings" />
           <div aria-hidden role="button" tabIndex="0" onFocus={() => this.handleClose()} />
