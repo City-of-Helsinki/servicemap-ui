@@ -96,7 +96,7 @@ const BottomNav = ({ classes }) => {
         }}
       >
         <div className={classes.container}>
-          <MobileSettingsHeader textId="general.settings" />
+          <MobileSettingsHeader textId="general.ownSettings" />
           <SettingsDropdowns variant="ownSettings" />
         </div>
       </StyledDrawer>
@@ -130,7 +130,7 @@ const BottomNav = ({ classes }) => {
               icon={<Map />}
             />
             <StyledBottomNavigationAction
-              label={intl.formatMessage({ id: 'general.settings' })}
+              label={intl.formatMessage({ id: 'general.ownSettings' })}
               icon={<AccountCircle />}
             />
             <StyledBottomNavigationAction

@@ -136,7 +136,7 @@ const ToolMenu = ({
     return null;
   }
 
-  const settingsMenuText = intl.formatMessage({ id: 'general.settings' });
+  const settingsMenuText = intl.formatMessage({ id: 'general.ownSettings' });
   const mapToolsMenuText = intl.formatMessage({ id: 'general.tools' });
 
   return (

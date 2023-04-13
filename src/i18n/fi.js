@@ -361,7 +361,7 @@ const translations = {
   'general.search': 'Hae',
   'general.share.link': 'Jaa linkki',
   'general.tools': 'Karttatyökalut',
-  'general.settings': 'Omat asetukset',
+  'general.ownSettings': 'Omat asetukset',
   'general.time.short': 'klo',
 
   // Home
