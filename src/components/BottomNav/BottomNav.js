@@ -13,11 +13,13 @@ import config from '../../../config';
 import MapSettings from '../MapSettings/MapSettings';
 import SettingsDropdowns from '../SettingsDropdowns';
 import MobileSettingsHeader from '../MobileSettingsHeader/MobileSettingsHeader';
+import PropTypes from 'prop-types';
+import SettingsText from '../SettingsText/SettingsText';
 
 const { bottomNavHeight } = config;
 
 
-const BottomNav = () => {
+const BottomNav = ({ classes }) => {
   const location = useLocation();
   const intl = useIntl();
 
@@ -94,8 +96,10 @@ const BottomNav = () => {
           },
         }}
       >
-        <MobileSettingsHeader textId="general.settings" />
-        <SettingsDropdowns variant="white" />
+        <div className={classes.container}>
+          <MobileSettingsHeader textId="general.settings" />
+          <SettingsDropdowns variant="white" />
+        </div>
       </StyledDrawer>
       <StyledDrawer
         open={mapSettingsOpen}
@@ -164,5 +168,10 @@ const StyledBottomNavigationAction = styled(BottomNavigationAction)(() => ({
   color: '#000',
 }));
 
+BottomNav.propTypes = {
+  classes: PropTypes.shape({
+    container: PropTypes.string,
+  }).isRequired,
+};
 
 export default BottomNav;

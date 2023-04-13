@@ -4,7 +4,7 @@ import DataFetcher from './DataFetchers/DataFetcher';
 import NewsInfo from './NewsInfo';
 import Settings from './Settings';
 import TopBar from './TopBar';
-import BottomNav from './BottomNav/BottomNav';
+import BottomNav from './BottomNav';
 import DescriptionText from './DescriptionText';
 import DesktopComponent from './DesktopComponent';
 import FocusableSRLinks from './FocusableSRLinks';
