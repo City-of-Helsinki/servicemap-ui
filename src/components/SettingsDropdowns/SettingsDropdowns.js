@@ -111,13 +111,13 @@ const SettingsDropdowns = ({ variant }) => {
       return list.map(item => item.title);
     };
 
-    const whiteVariant = variant === 'white';
+    const ownSettingsVariant = variant === 'ownSettings';
     return (
       <StyledAutocomplete
         open={openSettings === label}
         size="small"
         disablePortal
-        white={whiteVariant}
+        ownSettings={ownSettingsVariant}
         multiple={!isSingleOption}
         openText={intl.formatMessage({ id: 'settings.open' })}
         closeText={intl.formatMessage({ id: 'settings.close' })}
@@ -137,7 +137,7 @@ const SettingsDropdowns = ({ variant }) => {
         }}
         onBlur={() => setOpenSettings(null)}
         ChipProps={{
-          clickable: true, onDelete: null, variant: whiteVariant ? 'outlined' : 'filled',
+          clickable: true, onDelete: null, variant: ownSettingsVariant ? 'outlined' : 'filled',
         }}
         renderOption={(props, option) => (isSingleOption
           ? ( // Single option options box
@@ -181,17 +181,15 @@ const SettingsDropdowns = ({ variant }) => {
 };
 
 
-const StyledAutocomplete = styled(SMAutocomplete)(({ theme, white }) => {
+const StyledAutocomplete = styled(SMAutocomplete)(({ theme, ownSettings }) => {
   const styles = {
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2),
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(1),
   };
-  if (!white) {
-    return styles;
+  if (!ownSettings) {
+    return { ...styles, paddingLeft: theme.spacing(2), paddingRight: theme.spacing(2) };
   }
-  const whiteStyles = {
+  const ownSettingsStyles = {
     backgroundColor: theme.palette.white.main,
     '& .MuiInputLabel-root': {
       color: theme.palette.white.contrastText,
@@ -220,12 +218,12 @@ const StyledAutocomplete = styled(SMAutocomplete)(({ theme, white }) => {
       backgroundColor: theme.palette.white.main,
     },
   };
-  return { ...styles, ...whiteStyles };
+  return { ...styles, ...ownSettingsStyles };
 });
 
 SettingsDropdowns.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  variant: PropTypes.oneOf(['default', 'white']),
+  variant: PropTypes.oneOf(['default', 'ownSettings']),
 };
 
 SettingsDropdowns.defaultProps = {
