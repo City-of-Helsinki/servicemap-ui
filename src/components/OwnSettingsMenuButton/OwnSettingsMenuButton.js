@@ -40,7 +40,7 @@ class OwnSettingsMenuButton extends React.Component {
           >
             <FormattedMessage id="general.settings" />
           </Typography>
-          <SettingsDropdowns variant="white" />
+          <SettingsDropdowns variant="ownSettings" />
           <div aria-hidden role="button" tabIndex="0" onFocus={() => this.handleClose()} />
         </div>
       </ClickAwayListener>

@@ -9,12 +9,11 @@ import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import PropTypes from 'prop-types';
 import config from '../../../config';
 import MapSettings from '../MapSettings/MapSettings';
 import SettingsDropdowns from '../SettingsDropdowns';
 import MobileSettingsHeader from '../MobileSettingsHeader/MobileSettingsHeader';
-import PropTypes from 'prop-types';
-import SettingsText from '../SettingsText/SettingsText';
 
 const { bottomNavHeight } = config;
 
@@ -98,7 +97,7 @@ const BottomNav = ({ classes }) => {
       >
         <div className={classes.container}>
           <MobileSettingsHeader textId="general.settings" />
-          <SettingsDropdowns variant="white" />
+          <SettingsDropdowns variant="ownSettings" />
         </div>
       </StyledDrawer>
       <StyledDrawer
