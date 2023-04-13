@@ -1,12 +1,11 @@
 import PropTypes from 'prop-types';
 import {
-  Checkbox, Chip, Container, ListItem, NoSsr, TextField, Typography,
+  Chip, Container, NoSsr, Typography,
 } from '@mui/material';
 import { styled } from '@mui/styles';
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import config from '../../../config';
 import {
   setMapType,
   setMobility,
@@ -16,9 +15,9 @@ import {
   toggleHearingAid,
   toggleVisuallyImpaired,
 } from '../../redux/actions/settings';
-import { keyboardHandler, uppercaseFirst } from '../../utils';
+import { uppercaseFirst } from '../../utils';
 import SMAccordion from '../SMAccordion';
-import SMAutocomplete from '../SMAutocomplete';
+import SettingsDropdowns from '../SettingsDropdowns';
 
 
 const SettingsComponent = ({ variant, classes }) => {
@@ -37,8 +36,6 @@ const SettingsComponent = ({ variant, classes }) => {
   };
 
   const settingsVisible = !settings.settingsCollapsed;
-  const [openSettings, setOpenSettings] = useState(null);
-  const highlightedOption = useRef(null);
 
   // Configure rendered settings items
   const senseSettingList = [
@@ -53,9 +50,6 @@ const SettingsComponent = ({ variant, classes }) => {
     { id: 'rollator', title: intl.formatMessage({ id: 'settings.mobility.rollator' }) },
     { id: 'stroller', title: intl.formatMessage({ id: 'settings.mobility.stroller' }) },
   ];
-  const citySettingsList = config.cities.map(city => (
-    { id: city, title: intl.formatMessage({ id: `settings.city.${city}` }) }
-  ));
 
   const setSettingsCollapsed = (collapsed) => {
     dispatch(setSettingsAccordionCollapsed(collapsed));
@@ -79,16 +73,10 @@ const SettingsComponent = ({ variant, classes }) => {
   };
 
 
-  const toggleSettingsBox = (id) => {
-    if (openSettings === id) setOpenSettings(null);
-    else setOpenSettings(id);
-  };
-
-  const handleOptionSelecting = (id, category) => {
+  const handleOptionDelete = (id, category) => {
     if (!id) return;
     if (category === 'mobility') {
       dispatch(setMobility(id));
-      setOpenSettings(null);
     }
     if (category === 'cities') {
       const settingObj = settings.cities;
@@ -122,80 +110,6 @@ const SettingsComponent = ({ variant, classes }) => {
     }
   };
 
-  const handleKeyboardSelect = (id, category, event) => {
-    if (openSettings !== id) setOpenSettings(id);
-    else if (event?.which === 13 || event?.which === 32) {
-      const highlightedItemId = highlightedOption?.current?.id;
-      handleOptionSelecting(highlightedItemId, category);
-    }
-  };
-
-
-  const renderSettingsElement = (options, label, category, isSingleOption) => {
-    const getValue = () => {
-      if (category === 'mobility') {
-        const val = options.find(option => settingsValues.mobility === option.id);
-        return val?.title || null;
-      }
-      const list = options.filter(option => settingsValues[category].includes(option.id));
-      return list.map(item => item.title);
-    };
-
-    return (
-      <StyledAutocomplete
-        open={openSettings === label}
-        size="small"
-        disablePortal
-        multiple={!isSingleOption}
-        openText={intl.formatMessage({ id: 'settings.open' })}
-        closeText={intl.formatMessage({ id: 'settings.close' })}
-        options={options}
-        clearIcon={null}
-        value={getValue()}
-        isOptionEqualToValue={option => (
-          category === 'mobility'
-            ? settingsValues[category] === option.id
-            : settingsValues[category].includes(option.id)
-        )}
-        disableCloseOnSelect={!isSingleOption}
-        getOptionLabel={option => option.title || option}
-        onKeyDown={keyboardHandler(e => handleKeyboardSelect(label, category, e), ['space', 'enter', 'up', 'down'])}
-        onHighlightChange={(e, option) => {
-          highlightedOption.current = option;
-        }}
-        onBlur={() => setOpenSettings(null)}
-        ChipProps={{ clickable: true, onDelete: null }}
-        renderOption={(props, option) => (isSingleOption
-          ? ( // Single option options box
-            <ListItem {...props} onClick={() => handleOptionSelecting(option.id, category)}>
-              <Typography>{option.title}</Typography>
-            </ListItem>
-          )
-          : ( // Checkbox options box
-            <ListItem {...props} onClick={() => handleOptionSelecting(option.id, category)}>
-              <Checkbox
-                sx={{ mr: 1 }}
-                checked={settingsValues[category].includes(option.id)}
-              />
-              <Typography>{option.title}</Typography>
-            </ListItem>
-          ))
-        }
-        renderInput={({ inputProps, ...rest }) => (
-          <TextField
-            label={label}
-            onClick={() => toggleSettingsBox(label)}
-            {...rest}
-            inputProps={{
-              ...inputProps,
-              readOnly: true,
-              sx: { cursor: 'pointer' },
-            }}
-          />
-        )}
-      />
-    );
-  };
 
   const settingsList = getListOfSettings().slice(0, 2);
   let classNames = '';
@@ -232,7 +146,7 @@ const SettingsComponent = ({ variant, classes }) => {
                       label={uppercaseFirst(setting.title)}
                       onDelete={() => {
                         const settingId = setting.category === 'mobility' ? 'none' : setting.id;
-                        handleOptionSelecting(settingId, setting.category);
+                        handleOptionDelete(settingId, setting.category);
                       }}
                     />
                   ))}
@@ -248,13 +162,7 @@ const SettingsComponent = ({ variant, classes }) => {
               </>
             )
           }
-          collapseContent={(
-            <>
-              {renderSettingsElement(senseSettingList, intl.formatMessage({ id: 'settings.choose.senses' }), 'senses')}
-              {renderSettingsElement(mobilitySettingList, intl.formatMessage({ id: 'settings.choose.mobility' }), 'mobility', true)}
-              {renderSettingsElement(citySettingsList, intl.formatMessage({ id: 'settings.choose.cities' }), 'cities')}
-            </>
-          )}
+          collapseContent={(<SettingsDropdowns />)}
         />
       </Container>
     </NoSsr>
@@ -307,13 +215,6 @@ const StyledChipContainer = styled('div')(({ theme }) => ({
   paddingTop: theme.spacing(1),
   paddingBottom: theme.spacing(1),
   order: 2,
-}));
-
-const StyledAutocomplete = styled(SMAutocomplete)(({ theme }) => ({
-  paddingLeft: theme.spacing(2),
-  paddingRight: theme.spacing(2),
-  paddingTop: theme.spacing(1),
-  paddingBottom: theme.spacing(1),
 }));
 
 SettingsComponent.propTypes = {
