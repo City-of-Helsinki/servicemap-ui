@@ -6,12 +6,13 @@ import {
   BottomNavigation, BottomNavigationAction, Drawer, Paper,
 } from '@mui/material';
 import React, { useState } from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import config from '../../../config';
 import MapSettings from '../MapSettings/MapSettings';
 import SettingsDropdowns from '../SettingsDropdowns';
+import MobileSettingsHeader from '../MobileSettingsHeader/MobileSettingsHeader';
 
 const { bottomNavHeight } = config;
 
@@ -93,7 +94,7 @@ const BottomNav = () => {
           },
         }}
       >
-        <FormattedMessage id="general.settings" />
+        <MobileSettingsHeader textId="general.settings" />
         <SettingsDropdowns variant="white" />
       </StyledDrawer>
       <StyledDrawer
