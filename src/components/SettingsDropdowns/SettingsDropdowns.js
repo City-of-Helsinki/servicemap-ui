@@ -111,11 +111,13 @@ const SettingsDropdowns = ({ variant }) => {
       return list.map(item => item.title);
     };
 
+    const whiteVariant = variant === 'white';
     return (
       <StyledAutocomplete
         open={openSettings === label}
         size="small"
         disablePortal
+        white={whiteVariant}
         multiple={!isSingleOption}
         openText={intl.formatMessage({ id: 'settings.open' })}
         closeText={intl.formatMessage({ id: 'settings.close' })}
@@ -134,7 +136,9 @@ const SettingsDropdowns = ({ variant }) => {
           highlightedOption.current = option;
         }}
         onBlur={() => setOpenSettings(null)}
-        ChipProps={{ clickable: true, onDelete: null }}
+        ChipProps={{
+          clickable: true, onDelete: null, variant: whiteVariant ? 'outlined' : 'filled',
+        }}
         renderOption={(props, option) => (isSingleOption
           ? ( // Single option options box
             <ListItem {...props} onClick={() => handleOptionSelecting(option.id, category)}>
@@ -177,12 +181,47 @@ const SettingsDropdowns = ({ variant }) => {
 };
 
 
-const StyledAutocomplete = styled(SMAutocomplete)(({ theme }) => ({
-  paddingLeft: theme.spacing(2),
-  paddingRight: theme.spacing(2),
-  paddingTop: theme.spacing(1),
-  paddingBottom: theme.spacing(1),
-}));
+const StyledAutocomplete = styled(SMAutocomplete)(({ theme, white }) => {
+  const styles = {
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
+  };
+  if (!white) {
+    return styles;
+  }
+  const whiteStyles = {
+    backgroundColor: theme.palette.white.main,
+    '& .MuiInputLabel-root': {
+      color: theme.palette.white.contrastText,
+    },
+    '&.Mui-focused .MuiInputLabel-root': {
+      color: theme.palette.white.contrastText,
+    },
+    '& .MuiAutocomplete-input': {
+      color: theme.palette.white.contrastText,
+    },
+    '& .MuiOutlinedInput-notchedOutline': {
+      borderColor: theme.palette.white.dark,
+    },
+    '&:hover .MuiOutlinedInput-notchedOutline': {
+      borderColor: theme.palette.white.main,
+    },
+    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+      borderColor: theme.palette.white.main,
+    },
+
+    '& .MuiAutocomplete-popupIndicator, .MuiChip-deleteIcon': {
+      color: theme.palette.white.contrastText,
+    },
+    '& .MuiAutocomplete-tag': {
+      color: theme.palette.white.contrastText,
+      backgroundColor: theme.palette.white.main,
+    },
+  };
+  return { ...styles, ...whiteStyles };
+});
 
 SettingsDropdowns.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
