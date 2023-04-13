@@ -1,12 +1,12 @@
 import {
-  FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography,
+  FormControl, FormControlLabel, Radio, RadioGroup, Typography,
 } from '@mui/material';
-import styled from '@emotion/styled';
 import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import SettingsUtility from '../../utils/settings';
 import { setMapType } from '../../redux/actions/settings';
+import MobileSettingsHeader from '../MobileSettingsHeader/MobileSettingsHeader';
 
 const MapSettings = () => {
   const intl = useIntl();
@@ -25,9 +25,7 @@ const MapSettings = () => {
 
   return (
     <FormControl sx={{ textAlign: 'left', pt: 3 }} component="fieldset" fullWidth>
-      <StyledFormLabel>
-        <FormattedMessage id="settings.map.title" />
-      </StyledFormLabel>
+      <MobileSettingsHeader textId="settings.map.title" />
       <Typography><FormattedMessage id="settings.map.info" /></Typography>
       <RadioGroup
         aria-label={intl.formatMessage({ id: 'settings.map.title' })}
@@ -54,14 +52,5 @@ const MapSettings = () => {
     </FormControl>
   );
 };
-
-
-const StyledFormLabel = styled(FormLabel)(() => ({
-  fontWeight: 700,
-  fontSize: '1.03rem',
-  lineHeight: '24px',
-  letterSpacing: '0.15px',
-  color: '#000',
-}));
 
 export default MapSettings;
