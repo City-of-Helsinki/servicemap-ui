@@ -1,23 +1,17 @@
 import styled from '@emotion/styled';
 import {
-  AccountCircle,
-  ArrowBack,
-  Map,
-  Settings,
+  AccountCircle, ArrowBack, Map, Settings,
 } from '@mui/icons-material';
 import {
-  BottomNavigation,
-  BottomNavigationAction,
-  Drawer,
-  Paper,
+  BottomNavigation, BottomNavigationAction, Drawer, Paper,
 } from '@mui/material';
 import React, { useState } from 'react';
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import config from '../../../config';
 import MapSettings from '../MapSettings/MapSettings';
-import SettingsComponent from '../SettingsComponent';
+import SettingsDropdowns from '../SettingsDropdowns';
 
 const { bottomNavHeight } = config;
 
@@ -99,7 +93,8 @@ const BottomNav = () => {
           },
         }}
       >
-        <SettingsComponent />
+        <FormattedMessage id="general.settings" />
+        <SettingsDropdowns variant="white" />
       </StyledDrawer>
       <StyledDrawer
         open={mapSettingsOpen}
