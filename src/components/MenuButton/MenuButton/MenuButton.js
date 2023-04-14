@@ -23,6 +23,11 @@ class MenuButton extends React.Component {
     }
   };
 
+  handleItemClick = (event, item) => {
+    this.handleClose(event);
+    item.onClick();
+  };
+
   renderMenu = () => {
     const {
       intl, classes, menuAriaLabel, panelID, children, menuHeader, menuItems,
