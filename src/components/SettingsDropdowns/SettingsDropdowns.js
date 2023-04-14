@@ -19,17 +19,8 @@ const SettingsDropdowns = ({ variant }) => {
   const intl = useIntl();
   const dispatch = useDispatch();
   const settings = useSelector(state => state.settings);
-
-  const senses = ['colorblind', 'hearingAid', 'visuallyImpaired'];
   // Format settings from redux to easier structure
-  const settingsValues = {
-    mobility: settings.mobility,
-    senses: Object.keys(settings)
-      .filter(key => senses.includes(key) && settings[key] === true),
-    cities: Object.keys(settings.cities)
-      .filter(city => settings.cities[city] === true),
-  };
-
+  const settingsValues = constants.convertToSettingsValues(settings);
   const [openSettings, setOpenSettings] = useState(null);
   const highlightedOption = useRef(null);
 

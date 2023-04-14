@@ -1,3 +1,5 @@
+const senses = ['colorblind', 'hearingAid', 'visuallyImpaired'];
+
 export default {
   senseSettingList: [
     { id: 'colorblind', title: 'settings.sense.colorblind' },
@@ -14,4 +16,11 @@ export default {
   convertSettingsList: (list, intl) => list.map(
     ({ id, title }) => ({ id, title: intl.formatMessage({ id: title }) }),
   ),
+  convertToSettingsValues: settings => ({
+    mobility: settings.mobility,
+    senses: Object.keys(settings)
+      .filter(key => senses.includes(key) && settings[key] === true),
+    cities: Object.keys(settings.cities)
+      .filter(city => settings.cities[city] === true),
+  }),
 };
