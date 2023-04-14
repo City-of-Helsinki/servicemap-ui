@@ -51,7 +51,7 @@ const styles = theme => ({
     fontWeight: 'bold',
   },
   greyText: {
-    color: '#CCCBCB',
+    color: '#DEDFE1',
   },
   navContainer: {
     display: 'flex',
