@@ -59,7 +59,7 @@ const styles = theme => ({
     height: '100%',
   },
   navigationButtonsContainer: {
-    paddingLeft: 88,
+    paddingLeft: 88 + parseInt(theme.spacing(2.5), 10),
     display: 'flex',
     flex: '1 1 auto',
   },
@@ -120,6 +120,13 @@ const styles = theme => ({
     marginLeft: 'auto',
     width: 223,
     justifyContent: 'flex-end',
+  },
+  navigationButton: {
+    paddingLeft: theme.spacing(2.5),
+    paddingRight: theme.spacing(2.5),
+    '&:hover': {
+      backgroundColor: 'rgba(0, 0, 0, 0.08)',
+    },
   },
 });
 
