@@ -12,6 +12,7 @@ import {
 } from '../../redux/actions/settings';
 import { keyboardHandler } from '../../utils';
 import SMAutocomplete from '../SMAutocomplete';
+import constants from '../SettingsComponent/constants';
 
 
 const SettingsDropdowns = ({ variant }) => {
@@ -33,18 +34,8 @@ const SettingsDropdowns = ({ variant }) => {
   const highlightedOption = useRef(null);
 
   // Configure rendered settings items
-  const senseSettingList = [
-    { id: 'colorblind', title: intl.formatMessage({ id: 'settings.sense.colorblind' }) },
-    { id: 'hearingAid', title: intl.formatMessage({ id: 'settings.sense.hearingAid' }) },
-    { id: 'visuallyImpaired', title: intl.formatMessage({ id: 'settings.sense.visuallyImpaired' }) },
-  ];
-  const mobilitySettingList = [
-    { id: 'none', title: intl.formatMessage({ id: 'settings.mobility.none' }) },
-    { id: 'wheelchair', title: intl.formatMessage({ id: 'settings.mobility.wheelchair' }) },
-    { id: 'reduced_mobility', title: intl.formatMessage({ id: 'settings.mobility.reduced_mobility' }) },
-    { id: 'rollator', title: intl.formatMessage({ id: 'settings.mobility.rollator' }) },
-    { id: 'stroller', title: intl.formatMessage({ id: 'settings.mobility.stroller' }) },
-  ];
+  const senseSettingList = constants.convertSettingsList(constants.senseSettingList, intl);
+  const mobilitySettingList = constants.convertSettingsList(constants.mobilitySettingList, intl);
   const citySettingsList = config.cities.map(city => (
     { id: city, title: intl.formatMessage({ id: `settings.city.${city}` }) }
   ));

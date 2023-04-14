@@ -18,6 +18,7 @@ import {
 import { uppercaseFirst } from '../../utils';
 import SMAccordion from '../SMAccordion';
 import SettingsDropdowns from '../SettingsDropdowns';
+import constants from './constants';
 
 
 const SettingsComponent = ({ variant, classes }) => {
@@ -37,19 +38,8 @@ const SettingsComponent = ({ variant, classes }) => {
 
   const settingsVisible = !settings.settingsCollapsed;
 
-  // Configure rendered settings items
-  const senseSettingList = [
-    { id: 'colorblind', title: intl.formatMessage({ id: 'settings.sense.colorblind' }) },
-    { id: 'hearingAid', title: intl.formatMessage({ id: 'settings.sense.hearingAid' }) },
-    { id: 'visuallyImpaired', title: intl.formatMessage({ id: 'settings.sense.visuallyImpaired' }) },
-  ];
-  const mobilitySettingList = [
-    { id: 'none', title: intl.formatMessage({ id: 'settings.mobility.none' }) },
-    { id: 'wheelchair', title: intl.formatMessage({ id: 'settings.mobility.wheelchair' }) },
-    { id: 'reduced_mobility', title: intl.formatMessage({ id: 'settings.mobility.reduced_mobility' }) },
-    { id: 'rollator', title: intl.formatMessage({ id: 'settings.mobility.rollator' }) },
-    { id: 'stroller', title: intl.formatMessage({ id: 'settings.mobility.stroller' }) },
-  ];
+  const senseSettingList = constants.convertSettingsList(constants.senseSettingList, intl);
+  const mobilitySettingList = constants.convertSettingsList(constants.mobilitySettingList, intl);
 
   const setSettingsCollapsed = (collapsed) => {
     dispatch(setSettingsAccordionCollapsed(collapsed));
