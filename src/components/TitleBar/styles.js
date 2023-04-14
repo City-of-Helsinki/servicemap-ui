@@ -24,6 +24,7 @@ export default theme => ({
     paddingLeft: theme.spacing(2),
   },
   linkContainer: {
+    paddingTop: theme.spacing(1),
     display: 'flex',
     flexDirection: 'row',
   },
