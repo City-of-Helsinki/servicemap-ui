@@ -25,17 +25,8 @@ const SettingsComponent = ({ variant, classes }) => {
   const intl = useIntl();
   const dispatch = useDispatch();
   const settings = useSelector(state => state.settings);
-
-  const senses = ['colorblind', 'hearingAid', 'visuallyImpaired'];
   // Format settings from redux to easier structure
-  const settingsValues = {
-    mobility: settings.mobility,
-    senses: Object.keys(settings)
-      .filter(key => senses.includes(key) && settings[key] === true),
-    cities: Object.keys(settings.cities)
-      .filter(city => settings.cities[city] === true),
-  };
-
+  const settingsValues = constants.convertToSettingsValues(settings);
   const settingsVisible = !settings.settingsCollapsed;
 
   const senseSettingList = constants.convertSettingsList(constants.senseSettingList, intl);
