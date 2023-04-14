@@ -306,7 +306,7 @@ const translations = {
   'general.yes': 'Ja',
   'general.no': 'Nej',
   'general.openSettings': 'Öppna inställningarna',
-  'general.hideSettings': 'Piilota asetukset', // TODO: translate
+  'general.hideSettings': 'Piilota omat asetukset', // TODO: translate
   'general.closeSettings': 'Stäng inställningarna',
   'general.fetching': 'Laddar data...',
   'general.home': 'Hem',

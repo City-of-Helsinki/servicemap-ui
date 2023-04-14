@@ -168,7 +168,7 @@ const TopBar = (props) => {
     );
 
     const navigationButton = (textId, onClick, isCurrent) => (
-      <ButtonBase sx={{ ml: 5 }} onClick={onClick} aria-current={isCurrent}>
+      <ButtonBase onClick={onClick} aria-current={isCurrent} className={classes.navigationButton}>
         <Typography sx={{ color: '#000', fontSize: '1.125rem', fontWeight: 600 }}>
           <FormattedMessage id={textId} />
         </Typography>

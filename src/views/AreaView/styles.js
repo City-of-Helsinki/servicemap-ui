@@ -122,14 +122,19 @@ const styles = theme => ({
     padding: 0,
     margin: 0,
   },
-  municipalitySubtitle: {
+  municipalitySubtitleBase: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'start',
     paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(1),
-    paddingLeft: theme.spacing(9),
     boxSizing: 'border-box',
+  },
+  municipalitySubtitle: {
+    paddingLeft: theme.spacing(9),
+  },
+  municipalitTitle: {
+    paddingLeft: theme.spacing(7),
   },
   listItem: {
     padding: 0,
