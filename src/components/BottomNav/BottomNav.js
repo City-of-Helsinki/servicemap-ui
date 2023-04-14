@@ -30,37 +30,45 @@ const BottomNav = ({ classes }) => {
 
   const mapPage = location.search.indexOf('showMap=true') > -1;
 
+  const handleBackButton = () => {
+    if (navigator) {
+      if (ownSettingsOpen || mapSettingsOpen) {
+        setOwnSettingsOpen(false);
+        setMapSettingsOpen(false);
+      } else {
+        navigator.goBack();
+      }
+    }
+  };
+
+  const handleMapButton = () => {
+    if (ownSettingsOpen || mapSettingsOpen) {
+      if (!mapPage) {
+        navigator.openMap();
+      }
+      setOwnSettingsOpen(false);
+      setMapSettingsOpen(false);
+      return;
+    }
+    if (mapPage) {
+      navigator.closeMap(breadcrumb.length ? 'replace' : null);
+    } else {
+      navigator.openMap();
+      setOwnSettingsOpen(false);
+      setMapSettingsOpen(false);
+    }
+  };
+
   const handleNav = (value) => {
     switch (value) {
       // Back button
       case 0:
-        if (navigator) {
-          if (ownSettingsOpen || mapSettingsOpen) {
-            setOwnSettingsOpen(false);
-            setMapSettingsOpen(false);
-          } else {
-            navigator.goBack();
-          }
-        }
+        handleBackButton();
         break;
 
       // Map button
       case 1:
-        if (ownSettingsOpen || mapSettingsOpen) {
-          if (!mapPage) {
-            navigator.openMap();
-          }
-          setOwnSettingsOpen(false);
-          setMapSettingsOpen(false);
-          break;
-        }
-        if (mapPage) {
-          navigator.closeMap(breadcrumb.length ? 'replace' : null);
-        } else {
-          navigator.openMap();
-          setOwnSettingsOpen(false);
-          setMapSettingsOpen(false);
-        }
+        handleMapButton();
         break;
 
       case 2:
