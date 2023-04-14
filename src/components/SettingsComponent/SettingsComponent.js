@@ -6,15 +6,7 @@ import { styled } from '@mui/styles';
 import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  setMapType,
-  setMobility,
-  setSettingsAccordionCollapsed,
-  toggleCity,
-  toggleColorblind,
-  toggleHearingAid,
-  toggleVisuallyImpaired,
-} from '../../redux/actions/settings';
+import { setSettingsAccordionCollapsed } from '../../redux/actions/settings';
 import { uppercaseFirst } from '../../utils';
 import SMAccordion from '../SMAccordion';
 import SettingsDropdowns from '../SettingsDropdowns';
