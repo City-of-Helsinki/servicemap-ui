@@ -117,7 +117,7 @@ const SettingsDropdowns = ({ variant }) => {
         open={openSettings === label}
         size="small"
         disablePortal
-        ownSettings={ownSettingsVariant}
+        ownsettings={ownSettingsVariant.toString()}
         multiple={!isSingleOption}
         openText={intl.formatMessage({ id: 'settings.open' })}
         closeText={intl.formatMessage({ id: 'settings.close' })}
@@ -181,12 +181,12 @@ const SettingsDropdowns = ({ variant }) => {
 };
 
 
-const StyledAutocomplete = styled(SMAutocomplete)(({ theme, ownSettings }) => {
+const StyledAutocomplete = styled(SMAutocomplete)(({ theme, ownsettings }) => {
   const styles = {
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(1),
   };
-  if (!ownSettings) {
+  if (!ownsettings) {
     return { ...styles, paddingLeft: theme.spacing(2), paddingRight: theme.spacing(2) };
   }
   const ownSettingsStyles = {
