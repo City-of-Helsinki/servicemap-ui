@@ -1,11 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, ClickAwayListener, Typography } from '@mui/material';
+import {
+  Button,
+  ClickAwayListener,
+  Typography,
+  ButtonBase,
+  Divider,
+} from '@mui/material';
 import { FormattedMessage } from 'react-intl';
-import { keyboardHandler } from '../../utils';
-import SettingsDropdowns from '../SettingsDropdowns';
+import { keyboardHandler } from '../../../utils';
+import MapSettings from '../../MapSettings/MapSettings';
 
-class OwnSettingsMenuButton extends React.Component {
+class DropDownMenuButton extends React.Component {
   state = {
     open: false,
   };
@@ -16,15 +22,20 @@ class OwnSettingsMenuButton extends React.Component {
 
   handleClose = (event, refocus = false) => {
     this.setState({ open: false });
-    // If refocus set to true focus back to OwnSettingsMenuButton
+    // If refocus set to true focus back to DropDownMenuButton
     if (refocus && this.anchorEl) {
       this.anchorEl.focus();
     }
   };
 
+  handleItemClick = (event, item) => {
+    this.handleClose(event);
+    item.onClick();
+  }
+
   renderMenu = () => {
     const {
-      classes, menuAriaLabel, panelID,
+      classes, menuItems, menuAriaLabel, panelID,
     } = this.props;
     return (
       <ClickAwayListener onClickAway={this.handleClose}>
@@ -38,14 +49,39 @@ class OwnSettingsMenuButton extends React.Component {
             textAlign: 'left', fontWeight: 700, fontSize: '1.03rem', pb: 1,
           }}
           >
-            <FormattedMessage id="general.ownSettings" />
+            <FormattedMessage id="general.tools" />
           </Typography>
-          <SettingsDropdowns variant="ownSettings" />
+          {
+            menuItems.map((v, i) => (
+              <React.Fragment key={v.key}>
+                <ButtonBase
+                  id={v.id}
+                  key={v.key}
+                  className={classes.menuItem}
+                  role="link"
+                  onClick={e => this.handleItemClick(e, v)}
+                  onKeyDown={keyboardHandler(e => this.handleClose(e, true), ['esc'])}
+                  onKeyPress={keyboardHandler(this.handleItemClick, ['space', 'enter'])}
+                  component="span"
+                  tabIndex={0}
+                  aria-hidden={v.ariaHidden}
+                >
+                  <span>{v.icon}</span>
+                  <Typography sx={{ pl: 3, fontWeight: 700 }} variant="subtitle1">{v.text}</Typography>
+                </ButtonBase>
+                {i !== menuItems.length - 1
+                  ? <Divider aria-hidden />
+                  : null
+                }
+              </React.Fragment>
+            ))
+          }
+          <MapSettings />
           <div aria-hidden role="button" tabIndex="0" onFocus={() => this.handleClose()} />
         </div>
       </ClickAwayListener>
     );
-  };
+  }
 
   render() {
     const {
@@ -86,7 +122,7 @@ class OwnSettingsMenuButton extends React.Component {
   }
 }
 
-OwnSettingsMenuButton.propTypes = {
+DropDownMenuButton.propTypes = {
   buttonIcon: PropTypes.node,
   buttonText: PropTypes.string.isRequired,
   classes: PropTypes.shape({
@@ -98,13 +134,19 @@ OwnSettingsMenuButton.propTypes = {
     iconRight: PropTypes.string,
   }).isRequired,
   id: PropTypes.string,
+  menuItems: PropTypes.arrayOf(PropTypes.shape({
+    key: PropTypes.string.isRequired,
+    id: PropTypes.string,
+    text: PropTypes.string.isRequired,
+    onClick: PropTypes.func.isRequired,
+  })).isRequired,
   menuAriaLabel: PropTypes.string.isRequired,
   panelID: PropTypes.string.isRequired,
 };
 
-OwnSettingsMenuButton.defaultProps = {
+DropDownMenuButton.defaultProps = {
   buttonIcon: null,
   id: null,
 };
 
-export default OwnSettingsMenuButton;
+export default DropDownMenuButton;

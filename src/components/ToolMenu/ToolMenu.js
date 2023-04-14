@@ -6,8 +6,7 @@ import {
   Code, GetApp, Print, Settings, AccountCircle,
 } from '@mui/icons-material';
 import { useSelector } from 'react-redux';
-import DropDownMenuButton from '../DropDownMenuButton';
-import OwnSettingsMenuButton from '../OwnSettingsMenuButton';
+import { DropDownMenuButton, OwnSettingsMenuButton } from '../MenuButton';
 import SMIcon from '../SMIcon/SMIcon';
 import PrintContext from '../../context/PrintContext';
 import DownloadDialog from '../Dialog/DownloadDialog';
