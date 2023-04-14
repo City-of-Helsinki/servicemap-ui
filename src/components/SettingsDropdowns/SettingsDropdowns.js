@@ -117,7 +117,7 @@ const SettingsDropdowns = ({ variant }) => {
         open={openSettings === label}
         size="small"
         disablePortal
-        ownsettings={ownSettingsVariant.toString()}
+        ownsettings={+ownSettingsVariant}
         multiple={!isSingleOption}
         openText={intl.formatMessage({ id: 'settings.open' })}
         closeText={intl.formatMessage({ id: 'settings.close' })}
