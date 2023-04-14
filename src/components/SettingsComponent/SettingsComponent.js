@@ -55,40 +55,7 @@ const SettingsComponent = ({ variant, classes }) => {
 
 
   const handleOptionDelete = (id, category) => {
-    if (!id) return;
-    if (category === 'mobility') {
-      dispatch(setMobility(id));
-    }
-    if (category === 'cities') {
-      const settingObj = settings.cities;
-      settingObj[id] = !settingObj[id];
-      dispatch(toggleCity(settingObj));
-    }
-
-    if (category === 'senses') {
-      if (id === 'hearingAid') {
-        dispatch(toggleHearingAid());
-      }
-      // settingsValues.senses contains all previous sense settings. So now if it does not include
-      // "id" then it was turned on just now.
-      const settingTurnedOn = !settingsValues.senses.includes(id);
-      if (id === 'colorblind') {
-        dispatch(toggleColorblind());
-        if (settingTurnedOn) {
-          dispatch(setMapType('accessible_map'));
-        } else if (!settingsValues.senses.includes('visuallyImpaired')) {
-          dispatch(setMapType('servicemap'));
-        }
-      }
-      if (id === 'visuallyImpaired') {
-        dispatch(toggleVisuallyImpaired());
-        if (settingTurnedOn) {
-          dispatch(setMapType('accessible_map'));
-        } else if (!settingsValues.senses.includes('colorblind')) {
-          dispatch(setMapType('servicemap'));
-        }
-      }
-    }
+    constants.handleOptionSelecting(id, category, dispatch, settings.cities, settingsValues);
   };
 
 
