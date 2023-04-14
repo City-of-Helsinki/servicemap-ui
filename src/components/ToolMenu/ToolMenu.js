@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
 import URI from 'urijs';
 import {
-  Code, GetApp, Print, Settings, AccountCircle,
+  Code, GetApp, Print, Settings,
 } from '@mui/icons-material';
 import { useSelector } from 'react-redux';
 import { DropDownMenuButton, OwnSettingsMenuButton } from '../MenuButton';
@@ -13,7 +13,6 @@ import DownloadDialog from '../Dialog/DownloadDialog';
 import MeasuringStopButton from './MeasuringStopButton';
 
 const ToolMenuButtonID = 'ToolMenuButton';
-const SettingsMenuButtonID = 'SettingsMenuButton';
 
 const ToolMenu = ({
   intl, classes, mapUtility, navigator, setMeasuringMode, measuringMode, currentPage,
@@ -135,19 +134,11 @@ const ToolMenu = ({
     return null;
   }
 
-  const settingsMenuText = intl.formatMessage({ id: 'general.ownSettings' });
   const mapToolsMenuText = intl.formatMessage({ id: 'general.tools' });
 
   return (
     <>
-      <OwnSettingsMenuButton
-        id={SettingsMenuButtonID}
-        panelID="SettingsMenuPanel"
-        buttonIcon={<AccountCircle />}
-        buttonText={settingsMenuText}
-        menuAriaLabel={settingsMenuText}
-        menuItems={[]}
-      />
+      <OwnSettingsMenuButton />
       <DropDownMenuButton
         id={ToolMenuButtonID}
         ref={toolMenuButton}
