@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, ClickAwayListener, Typography } from '@mui/material';
+import {
+  Button, ButtonBase, ClickAwayListener, Divider, Typography,
+} from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import { keyboardHandler } from '../../../utils';
 
@@ -23,7 +25,7 @@ class MenuButton extends React.Component {
 
   renderMenu = () => {
     const {
-      intl, classes, menuAriaLabel, panelID, children, menuHeader,
+      intl, classes, menuAriaLabel, panelID, children, menuHeader, menuItems,
     } = this.props;
     const menuAriaLabelTranslated = intl.formatMessage({ id: menuAriaLabel });
     return (
@@ -40,6 +42,31 @@ class MenuButton extends React.Component {
           >
             <FormattedMessage id={menuHeader} />
           </Typography>
+          {
+            menuItems.map((v, i) => (
+              <React.Fragment key={v.key}>
+                <ButtonBase
+                  id={v.id}
+                  key={v.key}
+                  className={classes.menuItem}
+                  role="link"
+                  onClick={e => this.handleItemClick(e, v)}
+                  onKeyDown={keyboardHandler(e => this.handleClose(e, true), ['esc'])}
+                  onKeyPress={keyboardHandler(this.handleItemClick, ['space', 'enter'])}
+                  component="span"
+                  tabIndex={0}
+                  aria-hidden={v.ariaHidden}
+                >
+                  <span>{v.icon}</span>
+                  <Typography sx={{ pl: 3, fontWeight: 700 }} variant="subtitle1">{v.text}</Typography>
+                </ButtonBase>
+                {i !== menuItems.length - 1
+                  ? <Divider aria-hidden />
+                  : null
+                }
+              </React.Fragment>
+            ))
+          }
           {children}
           <div aria-hidden role="button" tabIndex="0" onFocus={() => this.handleClose()} />
         </div>
@@ -105,6 +132,12 @@ MenuButton.propTypes = {
   children: PropTypes.node.isRequired,
   menuHeader: PropTypes.string.isRequired,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
+  menuItems: PropTypes.arrayOf(PropTypes.shape({
+    key: PropTypes.string.isRequired,
+    id: PropTypes.string,
+    text: PropTypes.string.isRequired,
+    onClick: PropTypes.func.isRequired,
+  })).isRequired,
 };
 
 MenuButton.defaultProps = {

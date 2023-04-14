@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
 import URI from 'urijs';
 import {
-  Code, GetApp, Print, Settings,
+  Code, GetApp, Print,
 } from '@mui/icons-material';
 import { useSelector } from 'react-redux';
 import { DropDownMenuButton, OwnSettingsMenuButton } from '../MenuButton';
@@ -130,22 +130,11 @@ const ToolMenu = ({
     },
   ];
 
-  if (menuItems.length === 0) {
-    return null;
-  }
-
-  const mapToolsMenuText = intl.formatMessage({ id: 'general.tools' });
-
   return (
     <>
       <OwnSettingsMenuButton />
       <DropDownMenuButton
-        id={ToolMenuButtonID}
         ref={toolMenuButton}
-        panelID="ToolMenuPanel"
-        buttonIcon={<Settings />}
-        buttonText={mapToolsMenuText}
-        menuAriaLabel={mapToolsMenuText}
         menuItems={menuItems}
       />
       {measuringMode && (
