@@ -19,14 +19,6 @@ const DropDownMenuButton = ({ menuItems }) => (
 );
 
 DropDownMenuButton.propTypes = {
-  classes: PropTypes.shape({
-    root: PropTypes.string,
-    button: PropTypes.string,
-    menuItem: PropTypes.string,
-    menuPanel: PropTypes.string,
-    icon: PropTypes.string,
-    iconRight: PropTypes.string,
-  }).isRequired,
   menuItems: PropTypes.arrayOf(PropTypes.shape({
     key: PropTypes.string.isRequired,
     id: PropTypes.string,
