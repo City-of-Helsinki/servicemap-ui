@@ -132,10 +132,15 @@ const ToolMenu = ({
 
   return (
     <>
-      <OwnSettingsMenuButton />
+      <OwnSettingsMenuButton
+        menuAriaLabel={intl.formatMessage({ id: 'general.ownSettings' })}
+        buttonText={intl.formatMessage({ id: 'general.ownSettings' })}
+      />
       <DropDownMenuButton
-        ref={toolMenuButton}
+        innerRef={toolMenuButton}
         menuItems={menuItems}
+        menuAriaLabel={intl.formatMessage({ id: 'general.tools' })}
+        buttonText={intl.formatMessage({ id: 'general.tools' })}
       />
       {measuringMode && (
         <MeasuringStopButton onClick={() => setMeasuringMode(false)} />

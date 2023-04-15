@@ -30,14 +30,13 @@ class MenuButton extends React.Component {
 
   renderMenu = () => {
     const {
-      intl, classes, menuAriaLabel, panelID, children, menuHeader, menuItems,
+      classes, panelID, children, menuHeader, menuItems, menuAriaLabel,
     } = this.props;
-    const menuAriaLabelTranslated = intl.formatMessage({ id: menuAriaLabel });
     return (
       <ClickAwayListener onClickAway={this.handleClose}>
         <div
           id={panelID}
-          aria-label={menuAriaLabelTranslated}
+          aria-label={menuAriaLabel}
           className={classes.menuPanel}
           role="region"
         >
@@ -81,11 +80,9 @@ class MenuButton extends React.Component {
 
   render() {
     const {
-      intl, buttonIcon, buttonText, classes, id, panelID,
+      buttonIcon, buttonText, classes, id, panelID,
     } = this.props;
     const { open } = this.state;
-    const buttonTextTranslated = intl.formatMessage({ id: buttonText });
-
 
     return (
       <div className={classes.root}>
@@ -110,7 +107,7 @@ class MenuButton extends React.Component {
               <span className={classes.icon}>{buttonIcon}</span>
             )
           }
-          <Typography component="p" variant="subtitle1">{buttonTextTranslated}</Typography>
+          <Typography component="p" variant="subtitle1">{buttonText}</Typography>
         </Button>
         {
           open && this.renderMenu()
@@ -136,7 +133,6 @@ MenuButton.propTypes = {
   panelID: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
   menuHeader: PropTypes.string.isRequired,
-  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   menuItems: PropTypes.arrayOf(PropTypes.shape({
     key: PropTypes.string.isRequired,
     id: PropTypes.string,
