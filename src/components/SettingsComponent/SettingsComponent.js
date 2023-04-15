@@ -7,7 +7,6 @@ import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSettingsAccordionCollapsed } from '../../redux/actions/settings';
-import { uppercaseFirst } from '../../utils';
 import SMAccordion from '../SMAccordion';
 import SettingsDropdowns from '../SettingsDropdowns';
 import constants from './constants';
@@ -46,17 +45,12 @@ const SettingsComponent = ({ variant, classes }) => {
   };
 
 
-  const handleOptionDelete = (id, category) => {
-    constants.handleOptionSelecting(id, category, dispatch, settings.cities, settingsValues);
-  };
-
-
-  const settingsList = getListOfSettings().slice(0, 2);
   let classNames = '';
   if (variant === 'paddingTopSettings') {
     classNames = `${classes.paddingTopSettings}`;
   }
 
+  const chipLabel = intl.formatMessage({ id: 'settings.accordion.open' });
   return (
     <NoSsr>
       <Container
@@ -76,29 +70,18 @@ const SettingsComponent = ({ variant, classes }) => {
                 <Typography>
                   <FormattedMessage id="general.openSettings" />
                 </Typography>
-                <StyledChipContainer>
-                  {settingsList.map(setting => (
+                { getListOfSettings().length > 0 && (
+                  <StyledChipContainer>
                     <StyledChip
                       tabIndex={-1}
-                      key={setting.id}
+                      key="all"
+                      all="true"
                       clickable
                       size="small"
-                      label={uppercaseFirst(setting.title)}
-                      onDelete={() => {
-                        const settingId = setting.category === 'mobility' ? 'none' : setting.id;
-                        handleOptionDelete(settingId, setting.category);
-                      }}
+                      label={`${chipLabel} (${getListOfSettings().length})`}
                     />
-                  ))}
-                  <StyledChip
-                    tabIndex={-1}
-                    key="all"
-                    all="true"
-                    clickable
-                    size="small"
-                    label={intl.formatMessage({ id: 'settings.accordion.open' })}
-                  />
-                </StyledChipContainer>
+                  </StyledChipContainer>
+                )}
               </>
             )
           }
