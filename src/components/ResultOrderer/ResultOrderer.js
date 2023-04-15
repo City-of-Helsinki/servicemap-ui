@@ -177,6 +177,10 @@ const StyledAutocomplete = styled(SMAutocomplete)(({ theme }) => ({
   '& :hover .MuiInput-root:before': {
     borderBottom: 'unset',
   },
+  '&.Mui-focused .MuiInputBase-root': {
+    outline: 'none',
+    boxShadow: 'none',
+  },
 }));
 
 export default ResultOrderer;
