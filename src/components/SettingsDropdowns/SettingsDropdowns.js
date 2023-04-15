@@ -10,6 +10,9 @@ import config from '../../../config';
 import { keyboardHandler } from '../../utils';
 import SMAutocomplete from '../SMAutocomplete';
 import constants from '../SettingsComponent/constants';
+import {
+  setMapType, setMobility, toggleCity, toggleColorblind, toggleHearingAid, toggleVisuallyImpaired,
+} from '../../redux/actions/settings';
 
 
 const SettingsDropdowns = ({ variant }) => {
@@ -22,8 +25,18 @@ const SettingsDropdowns = ({ variant }) => {
   const highlightedOption = useRef(null);
 
   // Configure rendered settings items
-  const senseSettingList = constants.convertSettingsList(constants.senseSettingList, intl);
-  const mobilitySettingList = constants.convertSettingsList(constants.mobilitySettingList, intl);
+  const senseSettingList = [
+    { id: 'colorblind', title: intl.formatMessage({ id: 'settings.sense.colorblind' }) },
+    { id: 'hearingAid', title: intl.formatMessage({ id: 'settings.sense.hearingAid' }) },
+    { id: 'visuallyImpaired', title: intl.formatMessage({ id: 'settings.sense.visuallyImpaired' }) },
+  ];
+  const mobilitySettingList = [
+    { id: 'none', title: intl.formatMessage({ id: 'settings.mobility.none' }) },
+    { id: 'wheelchair', title: intl.formatMessage({ id: 'settings.mobility.wheelchair' }) },
+    { id: 'reduced_mobility', title: intl.formatMessage({ id: 'settings.mobility.reduced_mobility' }) },
+    { id: 'rollator', title: intl.formatMessage({ id: 'settings.mobility.rollator' }) },
+    { id: 'stroller', title: intl.formatMessage({ id: 'settings.mobility.stroller' }) },
+  ];
   const citySettingsList = config.cities.map(city => (
     { id: city, title: intl.formatMessage({ id: `settings.city.${city}` }) }
   ));
@@ -34,9 +47,42 @@ const SettingsDropdowns = ({ variant }) => {
   };
 
   const handleOptionSelecting = (id, category) => {
-    constants.handleOptionSelecting(id, category, dispatch, settings.cities, settingsValues);
+    if (!id) {
+      return;
+    }
     if (category === 'mobility') {
+      dispatch(setMobility(id));
       setOpenSettings(null);
+    }
+    if (category === 'cities') {
+      const settingObj = settings.cities;
+      settingObj[id] = !settingObj[id];
+      dispatch(toggleCity(settingObj));
+    }
+
+    if (category === 'senses') {
+      if (id === 'hearingAid') {
+        dispatch(toggleHearingAid());
+      }
+      // settingsValues.senses contains all previous sense settings. So now if it does not include
+      // "id" then it was turned on just now.
+      const settingTurnedOn = !settingsValues.senses.includes(id);
+      if (id === 'colorblind') {
+        dispatch(toggleColorblind());
+        if (settingTurnedOn) {
+          dispatch(setMapType('accessible_map'));
+        } else if (!settingsValues.senses.includes('visuallyImpaired')) {
+          dispatch(setMapType('servicemap'));
+        }
+      }
+      if (id === 'visuallyImpaired') {
+        dispatch(toggleVisuallyImpaired());
+        if (settingTurnedOn) {
+          dispatch(setMapType('accessible_map'));
+        } else if (!settingsValues.senses.includes('colorblind')) {
+          dispatch(setMapType('servicemap'));
+        }
+      }
     }
   };
 
