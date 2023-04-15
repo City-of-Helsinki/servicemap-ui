@@ -22,6 +22,12 @@ const SMAutocomplete = styled(Autocomplete)(({ theme }) => ({
     outline: 'none',
     boxShadow: 'none',
   },
+  '& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline': {
+    border: '1px solid #FFFFFF',
+  },
+  '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+    border: '1px solid #FFFFFF',
+  },
 
   '& .MuiAutocomplete-popupIndicator, .MuiChip-deleteIcon': {
     color: theme.palette.white.main,
