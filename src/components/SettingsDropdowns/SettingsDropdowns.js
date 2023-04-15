@@ -94,7 +94,6 @@ const SettingsDropdowns = ({ variant }) => {
     }
   };
 
-
   const renderSettingsElement = (options, label, category, isSingleOption) => {
     const getValue = () => {
       if (category === 'mobility') {
@@ -154,6 +153,15 @@ const SettingsDropdowns = ({ variant }) => {
             label={label}
             onClick={() => toggleSettingsBox(label)}
             {...rest}
+            sx={{
+              fieldset: {
+                border: 1,
+                boxShadow: 0,
+                '&:hover': {
+                  border: '1px solid red',
+                },
+              },
+            }}
             inputProps={{
               ...inputProps,
               readOnly: true,
