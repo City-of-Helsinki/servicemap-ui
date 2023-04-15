@@ -15,15 +15,12 @@ const SMAutocomplete = styled(Autocomplete)(({ theme }) => ({
   '& .MuiOutlinedInput-notchedOutline': {
     borderColor: theme.palette.white.dark,
   },
-  '&:hover .MuiOutlinedInput-notchedOutline': {
+  '&:hover .MuiOutlinedInput-root': {
     borderColor: theme.palette.white.main,
   },
   '&.Mui-focused .MuiOutlinedInput-root': {
     outline: 'none',
     boxShadow: 'none',
-  },
-  '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-    borderColor: theme.palette.white.main,
   },
 
   '& .MuiAutocomplete-popupIndicator, .MuiChip-deleteIcon': {

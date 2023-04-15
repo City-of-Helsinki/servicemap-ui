@@ -14,7 +14,7 @@ const props = {
   },
 };
 
-const components = (theme) => ({
+const components = theme => ({
   MuiListItem: {
     styleOverrides: {
       button: {
@@ -91,6 +91,18 @@ const components = (theme) => ({
   MuiTypography: {
     defaultProps: {
       variant: 'body2',
+    },
+  },
+  MuiOutlinedInput: {
+    styleOverrides: {
+      root: {
+        '&:hover .MuiOutlinedInput-notchedOutline': {
+          border: '1px solid #FFFFFF',
+        },
+        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+          border: '1px solid #FFFFFF',
+        },
+      },
     },
   },
   PrivateSwitchBase: {
