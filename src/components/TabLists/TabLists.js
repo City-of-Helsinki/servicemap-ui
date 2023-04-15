@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Tabs, Tab, Typography, Autocomplete,
+  Tabs, Tab, Typography,
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { parseSearchParams, stringifySearchParams } from '../../utils';
