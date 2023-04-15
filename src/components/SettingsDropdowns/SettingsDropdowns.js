@@ -224,7 +224,6 @@ const StyledAutocomplete = styled(SMAutocomplete)(({ theme, ownsettings }) => {
 });
 
 SettingsDropdowns.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   variant: PropTypes.oneOf(['default', 'ownSettings']),
 };
 
