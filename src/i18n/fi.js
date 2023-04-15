@@ -16,7 +16,7 @@ const translations = {
   'accessibility': 'Esteettömyys',
   'accessibility.info': 'Esteettömyystiedot',
   'accessibility.details': 'Tarkemmat tiedot',
-  'accessibility.details.summary': 'Koostesivu (uusi välilehti)',
+  'accessibility.details.summary': 'Tarkemmat tiedot esteettömyydestä (uusi välilehti)',
   'accessibility.stamp': 'Esteettömyys huomioitu',
   'accessibility.shortcomings': 'Puutteet',
   'accessibility.shortcomings.plural': `{count, plural,
