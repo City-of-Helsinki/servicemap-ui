@@ -20,28 +20,16 @@ const SettingsComponent = ({ variant, classes }) => {
   const settingsValues = constants.convertToSettingsValues(settings);
   const settingsVisible = !settings.settingsCollapsed;
 
-  const senseSettingList = constants.convertSettingsList(constants.senseSettingList, intl);
-  const mobilitySettingList = constants.convertSettingsList(constants.mobilitySettingList, intl);
-
   const setSettingsCollapsed = (collapsed) => {
     dispatch(setSettingsAccordionCollapsed(collapsed));
   };
 
-  // Returns settings as simple list of selected settings
-  const getListOfSettings = () => {
-    const sense = settingsValues.senses.map((sense) => {
-      const match = senseSettingList.find(item => item.id === sense);
-      return { title: match?.title, category: 'senses', id: sense };
-    });
-    const mobility = settingsValues.mobility !== 'none'
-      ? mobilitySettingList.find(item => item.id === settingsValues.mobility)
-      : null;
-
-    return [
-      ...sense,
-      ...(mobility ? [mobility] : []).map(mobility => ({ title: mobility.title, category: 'mobility', id: mobility.id })),
-      ...settingsValues.cities.map(city => ({ category: 'cities', id: city, title: city })),
-    ];
+  // Returns number of selected settings, sense: 0-n, mobility: 0-1, cities: 0-n
+  const getSelectedSettingsCount = () => {
+    const sense = settingsValues.senses.length;
+    const mobility = settingsValues.mobility !== 'none' ? 1 : 0;
+    const cities = settingsValues.cities.length;
+    return sense + mobility + cities;
   };
 
 
@@ -70,7 +58,7 @@ const SettingsComponent = ({ variant, classes }) => {
                 <Typography>
                   <FormattedMessage id="general.openSettings" />
                 </Typography>
-                { getListOfSettings().length > 0 && (
+                { getSelectedSettingsCount() > 0 && (
                   <StyledChipContainer>
                     <StyledChip
                       tabIndex={-1}
@@ -78,7 +66,7 @@ const SettingsComponent = ({ variant, classes }) => {
                       all="true"
                       clickable
                       size="small"
-                      label={`${chipLabel} (${getListOfSettings().length})`}
+                      label={`${chipLabel} (${getSelectedSettingsCount()})`}
                     />
                   </StyledChipContainer>
                 )}
