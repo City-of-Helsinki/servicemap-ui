@@ -28,8 +28,7 @@ const SMAutocomplete = styled(Autocomplete)(({ theme }) => ({
     borderWidth: '1px',
     borderStyle: 'solid',
   },
-
-  '& .MuiAutocomplete-popupIndicator, .MuiChip-deleteIcon': {
+  '& .MuiAutocomplete-popupIndicator': {
     color: theme.palette.white.main,
   },
   '& .MuiAutocomplete-tag': {

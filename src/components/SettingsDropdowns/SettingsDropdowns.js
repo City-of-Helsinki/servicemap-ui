@@ -205,7 +205,7 @@ const StyledAutocomplete = styled(SMAutocomplete)(({ theme, ownsettings }) => {
     '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
       borderColor: theme.palette.white.dark,
     },
-    '& .MuiAutocomplete-popupIndicator, .MuiChip-deleteIcon': {
+    '& .MuiAutocomplete-popupIndicator': {
       color: theme.palette.white.contrastText,
     },
     '& .MuiAutocomplete-tag': {
