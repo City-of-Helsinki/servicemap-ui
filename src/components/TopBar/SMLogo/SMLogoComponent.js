@@ -11,6 +11,7 @@ import useMobileStatus from '../../../utils/isMobile';
 const SMLogoComponent = ({
   onClick,
   classes,
+  small,
 }) => {
   const intl = useIntl();
   const theme = useSelector(state => state.user.theme);
@@ -28,10 +29,15 @@ const SMLogoComponent = ({
 
 SMLogoComponent.propTypes = {
   onClick: PropTypes.func.isRequired,
+  small: PropTypes.bool,
   classes: PropTypes.shape({
     logo: PropTypes.string,
     mobileLogo: PropTypes.string,
   }).isRequired,
+};
+
+SMLogoComponent.defaultProps = {
+  small: false,
 };
 
 export default SMLogoComponent;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Typography, AppBar, Toolbar, ButtonBase, Container,
+  AppBar, ButtonBase, Container, Toolbar, Typography, useMediaQuery,
 } from '@mui/material';
 import { Map } from '@mui/icons-material';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -21,12 +21,10 @@ import config from '../../../config';
 import { getLocale } from '../../redux/selectors/locale';
 import MobileNavButton from './MobileNavButton/MobileNavButton';
 import LanguageMenuComponent from './LanguageMenu/LanguageMenuComponent';
-import useMobileStatus from '../../utils/isMobile';
 
 const TopBar = (props) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const location = useLocation();
-  const isMobile = useMobileStatus();
   const intl = useIntl();
   const locale = useSelector(getLocale);
   const getAddressNavigatorParams = useNavigationParams();
@@ -136,6 +134,8 @@ const TopBar = (props) => {
     }
   };
 
+  const large = useMediaQuery('(min-width:360px)');
+
   const renderDrawerMenu = pageType => (
     <DrawerMenu
       isOpen={drawerOpen}
@@ -200,7 +200,7 @@ const TopBar = (props) => {
 
           {/* Toolbar white area */}
           <Toolbar disableGutters className={pageType === 'mobile' ? classes.toolbarWhiteMobile : classes.toolbarWhite}>
-            <SMLogo onClick={() => handleNavigation('home')} />
+            <SMLogo small={!large} onClick={() => handleNavigation('home')} />
             {hideButtons
               ? null
               : (
