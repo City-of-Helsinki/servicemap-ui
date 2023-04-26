@@ -9,17 +9,21 @@ import logoEN from '../../../assets/images/Logo-ENG.svg';
 import logoENContrast from '../../../assets/images/Logo-ENG-Contrast.svg';
 import logoSV from '../../../assets/images/Logo-SWE.svg';
 import logoSVContrast from '../../../assets/images/Logo-SWE-Contrast.svg';
+import IconPalvelukarttaPrimary from '../../../assets/icons/IconPalvelukarttaPrimary.svg';
 import styles from './styles';
 import config from '../../../../config';
 import { useUserLocale } from '../../../utils/user';
 
 const HomeLogo = React.forwardRef((props, ref) => {
   const {
-    contrast, classes, ...rest
+    contrast, classes, small, ...rest
   } = props;
   const locale = useUserLocale();
 
-  const getLogo = (production = false, contrast = false) => {
+  const getLogo = (production = false, contrast = false, small = false) => {
+    if (small) {
+      return IconPalvelukarttaPrimary; // TODO insert ternary operator on `contrast`
+    }
     if (production) {
       let logo = null;
 
@@ -40,7 +44,7 @@ const HomeLogo = React.forwardRef((props, ref) => {
     return contrast ? logoContrastDev : logoNormalDev;
   };
 
-  const logo = getLogo(config.production, contrast);
+  const logo = getLogo(config.production, contrast, small);
 
   return (
     <div ref={ref} role="img" {...rest}>
@@ -52,10 +56,12 @@ const HomeLogo = React.forwardRef((props, ref) => {
 HomeLogo.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   contrast: PropTypes.bool,
+  small: PropTypes.bool,
 };
 
 HomeLogo.defaultProps = {
   contrast: false,
+  small: false,
 };
 
 export default withStyles(styles)(HomeLogo);
