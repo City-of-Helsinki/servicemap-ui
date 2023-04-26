@@ -8,15 +8,11 @@ const SMAutocomplete = styled(Autocomplete)(({ theme }) => ({
   '&.Mui-focused .MuiInputLabel-root': {
     color: theme.palette.white.main,
   },
-
   '& .MuiAutocomplete-input': {
     color: theme.palette.white.main,
   },
   '& .MuiOutlinedInput-notchedOutline': {
     borderColor: theme.palette.white.dark,
-  },
-  '&:hover .MuiOutlinedInput-root': {
-    borderColor: theme.palette.white.main,
   },
   '&.Mui-focused .MuiOutlinedInput-root': {
     outline: 'none',

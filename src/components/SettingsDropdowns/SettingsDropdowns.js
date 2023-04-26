@@ -199,24 +199,12 @@ const StyledAutocomplete = styled(SMAutocomplete)(({ theme, ownsettings }) => {
     '& .MuiAutocomplete-input': {
       color: theme.palette.white.contrastText,
     },
-    '& .MuiOutlinedInput-notchedOutline': {
-      borderColor: theme.palette.white.dark,
-    },
-    '&:hover .MuiOutlinedInput-notchedOutline': {
-      borderColor: theme.palette.white.dark,
-    },
-    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-      borderColor: theme.palette.white.dark,
-    },
-
     '& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline': {
       borderColor: theme.palette.white.dark,
     },
     '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
       borderColor: theme.palette.white.dark,
     },
-
-
     '& .MuiAutocomplete-popupIndicator, .MuiChip-deleteIcon': {
       color: theme.palette.white.contrastText,
     },
