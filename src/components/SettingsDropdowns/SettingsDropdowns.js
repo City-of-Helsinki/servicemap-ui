@@ -14,7 +14,6 @@ import {
   setMapType, setMobility, toggleCity, toggleColorblind, toggleHearingAid, toggleVisuallyImpaired,
 } from '../../redux/actions/settings';
 
-
 const SettingsDropdowns = ({ variant }) => {
   const intl = useIntl();
   const dispatch = useDispatch();
@@ -151,7 +150,10 @@ const SettingsDropdowns = ({ variant }) => {
         renderInput={({ inputProps, ...rest }) => (
           <TextField
             label={label}
-            onClick={() => toggleSettingsBox(label)}
+            onClick={(e) => {
+              e?.stopPropagation();
+              toggleSettingsBox(label);
+            }}
             {...rest}
             sx={{
               fieldset: {
