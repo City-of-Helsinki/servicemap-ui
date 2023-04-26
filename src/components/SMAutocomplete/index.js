@@ -23,10 +23,14 @@ const SMAutocomplete = styled(Autocomplete)(({ theme }) => ({
     boxShadow: 'none',
   },
   '& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline': {
-    border: '1px solid #FFFFFF',
+    borderColor: theme.palette.white.main,
+    borderWidth: '1px',
+    borderStyle: 'solid',
   },
   '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-    border: '1px solid #FFFFFF',
+    borderColor: theme.palette.white.main,
+    borderWidth: '1px',
+    borderStyle: 'solid',
   },
 
   '& .MuiAutocomplete-popupIndicator, .MuiChip-deleteIcon': {

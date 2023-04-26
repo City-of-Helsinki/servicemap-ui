@@ -157,9 +157,6 @@ const SettingsDropdowns = ({ variant }) => {
               fieldset: {
                 border: 1,
                 boxShadow: 0,
-                '&:hover': {
-                  border: '1px solid red',
-                },
               },
             }}
             inputProps={{
@@ -206,11 +203,19 @@ const StyledAutocomplete = styled(SMAutocomplete)(({ theme, ownsettings }) => {
       borderColor: theme.palette.white.dark,
     },
     '&:hover .MuiOutlinedInput-notchedOutline': {
-      borderColor: theme.palette.white.main,
+      borderColor: theme.palette.white.dark,
     },
     '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-      borderColor: theme.palette.white.main,
+      borderColor: theme.palette.white.dark,
     },
+
+    '& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline': {
+      borderColor: theme.palette.white.dark,
+    },
+    '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+      borderColor: theme.palette.white.dark,
+    },
+
 
     '& .MuiAutocomplete-popupIndicator, .MuiChip-deleteIcon': {
       color: theme.palette.white.contrastText,
