@@ -236,7 +236,7 @@ const translations = {
   'embedder.title': 'Palvelukartan upotustyökalu',
   'embedder.title.info': 'Palvelukartan upotustyökalulla voit upottaa Palvelukartan yksittäisiä näkymiä osaksi mitä tahansa verkkosivua.',
   'embedder.info.title': 'Ohjeet upotustyökalun käyttöön',
-  'embedder.info.description': 'Valitse alla olevasta valikoimasta karttanäkymään haluamasi toiminnallisuudet. Kopioi kartanalta URL-linkki tai html-koodi käyttöösi.\n\n Tarkemmat ohjeet upotustyökalun käyttöön eri tilanteissa löydät',
+  'embedder.info.description': 'Valitse alla olevasta valikoimasta karttanäkymään haluamasi toiminnallisuudet. Kopioi kartan alta URL-linkki tai html-koodi käyttöösi.\n\n Tarkemmat ohjeet upotustyökalun käyttöön eri tilanteissa löydät',
   'embedder.info.link': 'täältä (uusi välilehti)',
   'embedder.url.title': 'Kopioi URL',
   'embedder.width.title': 'Upotuksen leveys',

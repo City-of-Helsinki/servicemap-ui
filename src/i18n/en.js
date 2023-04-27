@@ -222,10 +222,10 @@ const translations = {
   'embedder.preview.title': 'Map preview',
   'embedder.options.title': 'Show on the map',
   'embedder.options.label.units': 'Show service points',
-  'embedder.options.list.title': 'Toimipistelista', // TODO: translate
-  'embedder.options.label.list.none': 'Piilota toimipistelista', // TODO: translate
-  'embedder.options.label.list.side': 'Näytä toimipisteet listana (kartan vieressä)', // TODO: translate
-  'embedder.options.label.list.bottom': 'Näytä toimipisteet listana (kartan alla)', // TODO: translate
+  'embedder.options.list.title': 'List of service points',
+  'embedder.options.label.list.none': 'Hide the list of service points',
+  'embedder.options.label.list.side': 'Show service points as a list (beside the map)',
+  'embedder.options.label.list.bottom': 'Show service points as a list (under the map)',
   'embedder.options.label.transit': 'Show public transport stops (Zoom in the map to see the stops)',
   'embedder.options.label.bbox': 'Limit the embedded map to the area in the preview window',
   'embedder.service.title': 'Services',
@@ -234,10 +234,10 @@ const translations = {
   'embedder.service.common': 'The city resident\'s most common everyday service points are shown on the map: schools, daycares and health stations.',
   'embedder.service.all': 'All service points are shown on the map. Too extensive area borders slow down the embedding and decreases its clarity.',
   'embedder.title': 'Embedding tool',
-  'embedder.title.info': 'Palvelukartan upotustyökalulla voit upottaa Palvelukartan yksittäisiä näkymiä osaksi mitä tahansa verkkosivua.', // TODO: translate
-  'embedder.info.title': 'Ohjeet upotustyökalun käyttöön', // TODO: translate
-  'embedder.info.description': 'Valitse alla olevasta valikoimasta karttanäkymään haluamasi toiminnallisuudet. Kopioi kartanalta URL-linkki tai html-koodi käyttöösi.\n\n Tarkemmat ohjeet upotustyökalun käyttöön eri tilanteissa löydät', // TODO: translate
-  'embedder.info.link': 'täältä (uusi välilehti)', // TODO: translate
+  'embedder.title.info': 'You can embed views of the Service Map into any web page with the embedding tool of the Service Map.',
+  'embedder.info.title': 'Instructions for using the embedding tool',
+  'embedder.info.description': 'Select the functions you want to use while viewing the map from the selection below. Copy the URL link or html code you want to use from the map.\n\n More detailed instructions for using the embedding tool in different situations can be found',
+  'embedder.info.link': 'here (new tab).',
   'embedder.url.title': 'Copy URL',
   'embedder.width.title': 'Width of the embedding',
   'embedder.width.aria.label': 'Choose width of the embedding',
@@ -403,7 +403,7 @@ const translations = {
   'map.attribution.osm': '&copy; <a href="http://osm.org/copyright">OpenStreetMap contributors</a>',
   'map.attribution.helsinki': '&copy; Cities of Helsinki, Espoo, Vantaa ja Kauniainen',
   'map.transit.endStation': 'Terminus',
-  'map.address.coordinate': 'Tee linkki GPS-koordinaatteihin', // TODO: translate
+  'map.address.coordinate': 'Create a link to the GPS coordinates',
   'map.address.searching': 'Retreiving address...',
   'map.address.notFound': 'The address could not be found',
   'map.address.info': 'Address information',
