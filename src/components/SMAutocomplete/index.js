@@ -31,10 +31,6 @@ const SMAutocomplete = styled(Autocomplete)(({ theme }) => ({
   '& .MuiAutocomplete-popupIndicator': {
     color: theme.palette.white.main,
   },
-  '& .MuiAutocomplete-tag': {
-    color: theme.palette.white.main,
-    backgroundColor: 'rgb(47, 60, 187)',
-  },
 }));
 
 export default SMAutocomplete;

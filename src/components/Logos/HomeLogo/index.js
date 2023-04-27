@@ -26,7 +26,6 @@ const HomeLogo = React.forwardRef((props, ref) => {
   );
 
   const getProductionLogo = (contrast) => {
-
     switch (locale) {
       case 'en':
         return contrast ? logoENContrast : logoEN;
