@@ -687,7 +687,7 @@ const translations = {
   'tool.print': 'Print',
 
   'info.title': 'About the service and accessibility statement',
-  'info.statement': 'Accessibility statement',
+  'info.statement': 'Accessibility statement (new tab)',
 
   'alert.close': 'Close the notification',
 };
