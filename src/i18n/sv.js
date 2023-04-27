@@ -649,7 +649,7 @@ const translations = {
   'settings.city.hanko': 'Hangö',
   'settings.city.hyvinkää': 'Hyvinge',
   'settings.city.inkoo': 'Ingå',
-  'settings.city.järvempää': 'Träskända',
+  'settings.city.järvenpää': 'Träskända',
   'settings.city.karkkila': 'Högfors',
   'settings.city.kerava': 'Kervo',
   'settings.city.lapinjärvi': 'Lappträsk',

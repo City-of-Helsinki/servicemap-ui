@@ -651,7 +651,7 @@ const translations = {
   'settings.city.hanko': 'Hanko',
   'settings.city.hyvinkää': 'Hyvinkää',
   'settings.city.inkoo': 'Inkoo',
-  'settings.city.järvempää': 'Järvempää',
+  'settings.city.järvenpää': 'järvenpää',
   'settings.city.karkkila': 'Karkkila',
   'settings.city.kerava': 'Kerava',
   'settings.city.lapinjärvi': 'Lapinjärvi',
