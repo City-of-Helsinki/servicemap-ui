@@ -320,8 +320,8 @@ const translations = {
   'general.loading': 'Loading',
   'general.loading.done': 'Loading completed',
   'general.showOnMap': 'Show on map',
-  'general.open': 'Open', // TODO: Verify
-  'general.page.close': 'Close page', // TODO: Verify
+  'general.open': 'Open',
+  'general.page.close': 'Close page',
   'general.pageTitles.home': 'Home page',
   'general.pageTitles.search': 'Search results page',
   'general.pageTitles.unit': 'Service point page',
@@ -555,7 +555,7 @@ const translations = {
   'search.suggestions.loading': 'Loading suggestions',
   'search.suggestions.error': 'No suggestions',
   'search.suggestions.areas': 'Show areas',
-  'search.suggestions.addresses': 'Hae osoitteella', // TODO: translate
+  'search.suggestions.addresses': 'Search with address',
   'search.suggestions.suggestions': '{count} search suggestions',
   // 'search.suggestions.expandSuggestions': '{count} refinement suggestions',
   'search.suggestions.results': '{count} results',
@@ -672,13 +672,13 @@ const translations = {
   'settings.aria.changed': 'Settings have changed. Remember to save',
   'settings.aria.closed': 'Settings closed',
   'settings.aria.open': 'Open settings',
-  'settings.accordion.open': 'Avaa kaikki tehdyt asetukset', // TODO: translate
+  'settings.accordion.open': 'Open all selected settings',
   'settings.aria.opened': 'Settings have been opened',
   'settings.aria.saved': 'Settings have been saved',
   'settings.choose.mobility': 'Valitse liikkumisrajoitteesi', // TODO: translate
   'settings.choose.senses': 'Valitse aistirajoitteesi', // TODO: translate
   'settings.choose.cities': 'Valitse kaupunkiasetuksesi', // TODO: translate
-  'settings.map.info': 'Kartta-asetuksista voit valita sinulle parhaiten sopivan pohjakartan.', // TODO: translate
+  'settings.map.info': 'You can select the background map that best suits you in the map settings.',
 
   // Tools
   'tool.download': 'Download data',

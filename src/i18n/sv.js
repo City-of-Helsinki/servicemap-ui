@@ -306,7 +306,7 @@ const translations = {
   'general.yes': 'Ja',
   'general.no': 'Nej',
   'general.openSettings': 'Öppna inställningarna',
-  'general.hideSettings': 'Piilota omat asetukset', // TODO: translate
+  'general.hideSettings': 'Dölj inställningarna',
   'general.closeSettings': 'Stäng inställningarna',
   'general.fetching': 'Laddar data...',
   'general.home': 'Hem',
@@ -321,8 +321,8 @@ const translations = {
   'general.loading': 'Laddar',
   'general.loading.done': 'Laddning färdig',
   'general.showOnMap': 'Visa på kartan',
-  'general.open': 'Open', // TODO: Translate
-  'general.page.close': 'Close page', // TODO: Translate
+  'general.open': 'Öppna',
+  'general.page.close': 'Stäng sidan',
   'general.pageTitles.home': 'Hemsida',
   'general.pageTitles.search': 'Sökresultatsida',
   'general.pageTitles.unit': 'Vy med verksamhetsställen',
@@ -412,8 +412,8 @@ const translations = {
   'map.unit.cluster.popup.info': '{count} verksamhetsställen', // TODO: Verify
   'map.button.sidebar.hide': 'Minska sidopanelen',
   'map.button.sidebar.show': 'Utvidga sidopanelen',
-  'map.button.expand': 'Laajenna', // TODO: translate
-  'map.button.expand.aria': 'Avaa kartta', // TODO: translate
+  'map.button.expand': 'Utvidga',
+  'map.button.expand.aria': 'Öppna kartan',
 
   // Print
   'print.alert': 'Använd utskriftsalternativet i verktygsmenyn',
@@ -509,7 +509,7 @@ const translations = {
   'search': 'Sök',
   'search.arrowLabel': 'Precisera',
   'search.cancelText': 'Töm sökfältet',
-  'search.removeSuggestion': 'Remove', // TODO: translate
+  'search.removeSuggestion': 'Ta bort',
   'search.notFoundWith': 'Inga träffar för sökningen "{query}".',
   'search.placeholder': 'Sök tjänst eller verksamhetsställe',
   'search.info': `{count, plural,
@@ -557,7 +557,7 @@ const translations = {
   'search.suggestions.loading': 'Laddar förslag',
   'search.suggestions.error': 'Inga förslag',
   'search.suggestions.areas': 'Näytä alueet', // TODO: translate
-  'search.suggestions.addresses': 'Hae osoitteella', // TODO: translate
+  'search.suggestions.addresses': 'Sök med adress', // TODO: translate
   'search.suggestions.suggestions': '{count} sökförslag',
   // 'search.suggestions.expandSuggestions': '{count} preciseringsförslag',
   'search.suggestions.results': '{count} resultat',
@@ -674,17 +674,17 @@ const translations = {
   'settings.aria.changed': 'Inställningarna har ändrats. Kom ihåg att spara.',
   'settings.aria.closed': 'Inställningarna har stängts',
   'settings.aria.open': 'Öppna inställningarna',
-  'settings.accordion.open': 'Avaa kaikki tehdyt asetukset', // TODO: translate
+  'settings.accordion.open': 'Öppna alla valda inställningar',
   'settings.aria.opened': 'Inställningarna har öppnats',
   'settings.aria.saved': 'Inställningarna har sparats',
   'settings.choose.mobility': 'Valitse liikkumisrajoitteesi', // TODO: translate
   'settings.choose.senses': 'Valitse aistirajoitteesi', // TODO: translate
   'settings.choose.cities': 'Valitse kaupunkiasetuksesi', // TODO: translate
-  'settings.map.info': 'Kartta-asetuksista voit valita sinulle parhaiten sopivan pohjakartan.', // TODO: translate
+  'settings.map.info': 'I kartinställningarna kan du välja det kartunderlag som passar dig bäst.',
 
   // Tools
   'tool.download': 'Exportera',
-  'tool.measuring': 'Mittaa etäisyys hiirellä', // TODO: translate
+  'tool.measuring': 'Mät avstånd med musen',
   'tool.measuring.stop': 'Sluta mäta',
   'tool.print': 'Skriv ut',
 
