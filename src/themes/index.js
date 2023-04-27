@@ -93,18 +93,6 @@ const components = theme => ({
       variant: 'body2',
     },
   },
-  MuiOutlinedInput: {
-    styleOverrides: {
-      root: {
-        '&:hover .MuiOutlinedInput-notchedOutline': {
-          border: '1px solid #FFFFFF',
-        },
-        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-          border: '1px solid #FFFFFF',
-        },
-      },
-    },
-  },
   PrivateSwitchBase: {
     styleOverrides: {
       root: {

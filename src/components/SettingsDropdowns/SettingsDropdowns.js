@@ -14,7 +14,6 @@ import {
   setMapType, setMobility, toggleCity, toggleColorblind, toggleHearingAid, toggleVisuallyImpaired,
 } from '../../redux/actions/settings';
 
-
 const SettingsDropdowns = ({ variant }) => {
   const intl = useIntl();
   const dispatch = useDispatch();
@@ -23,6 +22,7 @@ const SettingsDropdowns = ({ variant }) => {
   const settingsValues = constants.convertToSettingsValues(settings);
   const [openSettings, setOpenSettings] = useState(null);
   const highlightedOption = useRef(null);
+  const theme = useSelector(state => state.user.theme);
 
   // Configure rendered settings items
   const senseSettingList = [
@@ -111,6 +111,7 @@ const SettingsDropdowns = ({ variant }) => {
         size="small"
         disablePortal
         ownsettings={+ownSettingsVariant}
+        colorMode={theme}
         multiple={!isSingleOption}
         openText={intl.formatMessage({ id: 'settings.open' })}
         closeText={intl.formatMessage({ id: 'settings.close' })}
@@ -151,15 +152,15 @@ const SettingsDropdowns = ({ variant }) => {
         renderInput={({ inputProps, ...rest }) => (
           <TextField
             label={label}
-            onClick={() => toggleSettingsBox(label)}
+            onClick={(e) => {
+              e?.stopPropagation();
+              toggleSettingsBox(label);
+            }}
             {...rest}
             sx={{
               fieldset: {
                 border: 1,
                 boxShadow: 0,
-                '&:hover': {
-                  border: '1px solid red',
-                },
               },
             }}
             inputProps={{
@@ -183,10 +184,19 @@ const SettingsDropdowns = ({ variant }) => {
 };
 
 
-const StyledAutocomplete = styled(SMAutocomplete)(({ theme, ownsettings }) => {
+const StyledAutocomplete = styled(SMAutocomplete)(({ theme, ownsettings, colorMode }) => {
+  const whiteChip = {
+    color: theme.palette.white.contrastText,
+    backgroundColor: theme.palette.white.main,
+  };
   const styles = {
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(1),
+    '& .MuiAutocomplete-tag': colorMode === 'dark'
+      ? whiteChip
+      : {
+        color: theme.palette.white.main, backgroundColor: 'rgb(47, 60, 187)',
+      },
   };
   if (!ownsettings) {
     return { ...styles, paddingLeft: theme.spacing(2), paddingRight: theme.spacing(2) };
@@ -202,23 +212,16 @@ const StyledAutocomplete = styled(SMAutocomplete)(({ theme, ownsettings }) => {
     '& .MuiAutocomplete-input': {
       color: theme.palette.white.contrastText,
     },
-    '& .MuiOutlinedInput-notchedOutline': {
+    '& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline': {
       borderColor: theme.palette.white.dark,
     },
-    '&:hover .MuiOutlinedInput-notchedOutline': {
-      borderColor: theme.palette.white.main,
+    '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+      borderColor: theme.palette.white.dark,
     },
-    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-      borderColor: theme.palette.white.main,
-    },
-
-    '& .MuiAutocomplete-popupIndicator, .MuiChip-deleteIcon': {
+    '& .MuiAutocomplete-popupIndicator': {
       color: theme.palette.white.contrastText,
     },
-    '& .MuiAutocomplete-tag': {
-      color: theme.palette.white.contrastText,
-      backgroundColor: theme.palette.white.main,
-    },
+    '& .MuiAutocomplete-tag': whiteChip,
   };
   return { ...styles, ...ownSettingsStyles };
 });

@@ -8,33 +8,28 @@ const SMAutocomplete = styled(Autocomplete)(({ theme }) => ({
   '&.Mui-focused .MuiInputLabel-root': {
     color: theme.palette.white.main,
   },
-
   '& .MuiAutocomplete-input': {
     color: theme.palette.white.main,
   },
   '& .MuiOutlinedInput-notchedOutline': {
     borderColor: theme.palette.white.dark,
   },
-  '&:hover .MuiOutlinedInput-root': {
-    borderColor: theme.palette.white.main,
-  },
   '&.Mui-focused .MuiOutlinedInput-root': {
     outline: 'none',
     boxShadow: 'none',
   },
   '& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline': {
-    border: '1px solid #FFFFFF',
+    borderColor: theme.palette.white.main,
+    borderWidth: '1px',
+    borderStyle: 'solid',
   },
   '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-    border: '1px solid #FFFFFF',
+    borderColor: theme.palette.white.main,
+    borderWidth: '1px',
+    borderStyle: 'solid',
   },
-
-  '& .MuiAutocomplete-popupIndicator, .MuiChip-deleteIcon': {
+  '& .MuiAutocomplete-popupIndicator': {
     color: theme.palette.white.main,
-  },
-  '& .MuiAutocomplete-tag': {
-    color: theme.palette.white.main,
-    backgroundColor: 'rgb(47, 60, 187)',
   },
 }));
 

@@ -63,7 +63,6 @@ const SettingsComponent = ({ variant, classes }) => {
                     <StyledChip
                       tabIndex={-1}
                       key="all"
-                      all="true"
                       clickable
                       size="small"
                       label={`${chipLabel} (${getSelectedSettingsCount()})`}
@@ -98,23 +97,15 @@ const StyledAccordion = styled(SMAccordion)(({ theme, settingsVisible }) => ({
   },
 }));
 
-const StyledChip = styled(Chip)(({ theme, all }) => ({
-  color: all
-    ? theme.palette.white.contrastText
-    : theme.palette.white.main,
-  backgroundColor: all
-    ? theme.palette.white.main
-    : 'rgb(47, 60, 187)',
-  flex: all ? 2 : 1,
+const StyledChip = styled(Chip)(({ theme }) => ({
+  color: theme.palette.white.contrastText,
+  backgroundColor: theme.palette.white.main,
+  flex: 1,
   marginRight: theme.spacing(1),
-  minWidth: all ? 'unset' : 0,
+  minWidth: 'unset',
   maxWidth: 'fit-content',
-
   '&:hover': {
-    backgroundColor: all ? theme.palette.white.main : 'rgb(47, 60, 187)',
-  },
-  '& .MuiChip-deleteIcon': {
-    color: theme.palette.white.main,
+    backgroundColor: theme.palette.white.main,
   },
 }));
 
