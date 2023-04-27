@@ -58,7 +58,7 @@ const translations = {
   'area.tab.statisticalDistricts': 'Väestötiedot',
   'area.services.local': 'Oman alueesi palvelut',
   'area.services.nearby': 'Lähialueiden toimipisteet listana',
-  'area.services.nearby.rescue_area': 'Lähialueiden palvelut listana', // TODO: correct name to replace "palvelut"
+  'area.services.nearby.rescue_area': 'Lähialueiden suojelupiirit listana',
   'area.services.nearby.rescue_district': 'Lähialueiden suojelulohkot listana',
   'area.services.nearby.rescue_sub_district': 'Lähialueiden suojelualalohkot listana',
   'area.services.all': 'Toimipisteet listana',

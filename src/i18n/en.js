@@ -56,9 +56,9 @@ const translations = {
   'area.tab.publicServices': 'Public service areas',
   'area.tab.geographical': 'Neighbourhoods and postal code areas',
   'area.tab.statisticalDistricts': 'Demographic data',
-  'area.services.local': 'Services in your own area',
+  'area.services.local': 'Your civil defence district',
   'area.services.nearby': 'Locations in nearby areas as a list',
-  'area.services.nearby.rescue_area': 'Services in nearby areas as a list', // TODO: correct name to replace "Services"
+  'area.services.nearby.rescue_area': 'Civil defence districts in surrounding areas',
   'area.services.nearby.rescue_district': 'Civil defence sections in nearby areas as a list',
   'area.services.nearby.rescue_sub_district': 'Civil defence subsections in nearby areas as a list',
   'area.services.all': 'Locations as a list',
