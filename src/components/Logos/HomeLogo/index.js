@@ -21,28 +21,33 @@ const HomeLogo = React.forwardRef((props, ref) => {
   } = props;
   const locale = useUserLocale();
 
+  const getSmallLogo = contrast => (
+    contrast ? IconPalvelukarttaContrast : IconPalvelukarttaPrimary
+  );
+
+  const getProductionLogo = (contrast) => {
+
+    switch (locale) {
+      case 'en':
+        return contrast ? logoENContrast : logoEN;
+      case 'sv':
+        return contrast ? logoSVContrast : logoSV;
+      case 'fi':
+      default:
+        return contrast ? logoContrast : logoNormal;
+    }
+  };
+
+  const getDevLogo = contrast => (contrast ? logoContrastDev : logoNormalDev);
+
   const getLogo = (production = false, contrast = false, small = false) => {
     if (small) {
-      return contrast ? IconPalvelukarttaContrast : IconPalvelukarttaPrimary;
+      return getSmallLogo(contrast);
     }
     if (production) {
-      let logo = null;
-
-      switch (locale) {
-        case 'en':
-          logo = contrast ? logoENContrast : logoEN;
-          break;
-        case 'sv':
-          logo = contrast ? logoSVContrast : logoSV;
-          break;
-        case 'fi':
-        default:
-          logo = contrast ? logoContrast : logoNormal;
-      }
-
-      return logo;
+      return getProductionLogo(contrast);
     }
-    return contrast ? logoContrastDev : logoNormalDev;
+    return getDevLogo(contrast);
   };
 
   const logo = getLogo(config.production, contrast, small);
