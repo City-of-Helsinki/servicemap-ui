@@ -17,10 +17,10 @@ import MenuButton from './MenuButton';
 import SMLogo from './SMLogo';
 import { isHomePage } from '../../utils/path';
 import LanguageMenu from './LanguageMenu';
-import config from '../../../config';
 import { getLocale } from '../../redux/selectors/locale';
 import MobileNavButton from './MobileNavButton/MobileNavButton';
 import LanguageMenuComponent from './LanguageMenu/LanguageMenuComponent';
+import openA11yLink from './util';
 
 const TopBar = (props) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -146,13 +146,6 @@ const TopBar = (props) => {
     />
   );
 
-  const openA11yLink = () => {
-    const a11yURLs = config.accessibilityStatementURL;
-    const localeUrl = !a11yURLs[locale] || a11yURLs[locale] === 'undefined' ? null : a11yURLs[locale];
-    window.open(localeUrl);
-  };
-
-
   const renderTopBar = (pageType) => {
     const toolbarBlueClass = `${
       classes.toolbarBlue
@@ -188,7 +181,7 @@ const TopBar = (props) => {
                   {topBarLink('general.contrast', () => handleContrastChange(), false, contrastAriaLabel)}
                   {!smallScreen ? (
                     <>
-                      {topBarLink('info.statement', () => openA11yLink())}
+                      {topBarLink('info.statement', () => openA11yLink(locale))}
                       {topBarLink('general.pageTitles.info', () => handleNavigation('info'), currentPage === 'info')}
                       {topBarLink('home.send.feedback', () => handleNavigation('feedback'), currentPage === 'feedback')}
                     </>

@@ -12,6 +12,8 @@ import styled from '@emotion/styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTheme, getPage } from '../../../redux/selectors/user';
 import { changeTheme } from '../../../redux/actions/user';
+import openA11yLink from '../util';
+import { getLocale } from '../../../redux/selectors/locale';
 
 const DrawerMenu = (props) => {
   const {
@@ -23,6 +25,7 @@ const DrawerMenu = (props) => {
   } = props;
   const dispatch = useDispatch();
   const currentPage = useSelector(getPage);
+  const locale = useSelector(getLocale);
   const theme = useSelector(getTheme);
 
 
@@ -85,6 +88,8 @@ const DrawerMenu = (props) => {
           null,
           () => dispatch(changeTheme(theme === 'default' ? 'dark' : 'default')),
         )}
+        <Divider />
+        {menuSecondaryButton('info.statement', 'accessibilityStatement', () => openA11yLink(locale), true)}
         <Divider />
         {menuSecondaryButton('home.send.feedback', 'feedback', null, true)}
         <Divider />
