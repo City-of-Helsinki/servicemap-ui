@@ -111,7 +111,7 @@ const SettingsDropdowns = ({ variant }) => {
         size="small"
         disablePortal
         ownsettings={+ownSettingsVariant}
-        colorMode={theme}
+        colormode={theme}
         multiple={!isSingleOption}
         openText={intl.formatMessage({ id: 'settings.open' })}
         closeText={intl.formatMessage({ id: 'settings.close' })}
@@ -184,7 +184,7 @@ const SettingsDropdowns = ({ variant }) => {
 };
 
 
-const StyledAutocomplete = styled(SMAutocomplete)(({ theme, ownsettings, colorMode }) => {
+const StyledAutocomplete = styled(SMAutocomplete)(({ theme, ownsettings, colormode }) => {
   const whiteChip = {
     color: theme.palette.white.contrastText,
     backgroundColor: theme.palette.white.main,
@@ -192,7 +192,7 @@ const StyledAutocomplete = styled(SMAutocomplete)(({ theme, ownsettings, colorMo
   const styles = {
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(1),
-    '& .MuiAutocomplete-tag': colorMode === 'dark'
+    '& .MuiAutocomplete-tag': colormode === 'dark'
       ? whiteChip
       : {
         color: theme.palette.white.main, backgroundColor: 'rgb(47, 60, 187)',

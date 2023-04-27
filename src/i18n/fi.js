@@ -58,7 +58,7 @@ const translations = {
   'area.tab.statisticalDistricts': 'Väestötiedot',
   'area.services.local': 'Oman alueesi palvelut',
   'area.services.nearby': 'Lähialueiden toimipisteet listana',
-  'area.services.nearby.rescue_area': 'Lähialueiden palvelut listana', // TODO: correct name to replace "palvelut"
+  'area.services.nearby.rescue_area': 'Lähialueiden suojelupiirit listana',
   'area.services.nearby.rescue_district': 'Lähialueiden suojelulohkot listana',
   'area.services.nearby.rescue_sub_district': 'Lähialueiden suojelualalohkot listana',
   'area.services.all': 'Toimipisteet listana',
@@ -236,7 +236,7 @@ const translations = {
   'embedder.title': 'Palvelukartan upotustyökalu',
   'embedder.title.info': 'Palvelukartan upotustyökalulla voit upottaa Palvelukartan yksittäisiä näkymiä osaksi mitä tahansa verkkosivua.',
   'embedder.info.title': 'Ohjeet upotustyökalun käyttöön',
-  'embedder.info.description': 'Valitse alla olevasta valikoimasta karttanäkymään haluamasi toiminnallisuudet. Kopioi kartanalta URL-linkki tai html-koodi käyttöösi.\n\n Tarkemmat ohjeet upotustyökalun käyttöön eri tilanteissa löydät',
+  'embedder.info.description': 'Valitse alla olevasta valikoimasta karttanäkymään haluamasi toiminnallisuudet. Kopioi kartan alta URL-linkki tai html-koodi käyttöösi.\n\n Tarkemmat ohjeet upotustyökalun käyttöön eri tilanteissa löydät',
   'embedder.info.link': 'täältä (uusi välilehti)',
   'embedder.url.title': 'Kopioi URL',
   'embedder.width.title': 'Upotuksen leveys',
@@ -651,7 +651,7 @@ const translations = {
   'settings.city.hanko': 'Hanko',
   'settings.city.hyvinkää': 'Hyvinkää',
   'settings.city.inkoo': 'Inkoo',
-  'settings.city.järvempää': 'Järvempää',
+  'settings.city.järvenpää': 'järvenpää',
   'settings.city.karkkila': 'Karkkila',
   'settings.city.kerava': 'Kerava',
   'settings.city.lapinjärvi': 'Lapinjärvi',
@@ -682,6 +682,7 @@ const translations = {
   'settings.choose.mobility': 'Valitse liikkumisrajoitteesi',
   'settings.choose.senses': 'Valitse aistirajoitteesi',
   'settings.choose.cities': 'Valitse kaupunkiasetuksesi',
+  'settings.choose.districts': 'Valitse alueasetuksesi', // TODO is waiting here for wellness districts
   'settings.map.info': 'Kartta-asetuksista voit valita sinulle parhaiten sopivan pohjakartan.',
 
   // Tools
