@@ -338,7 +338,7 @@ const translations = {
   'general.pageTitles.info': 'Info page',
   'general.pageTitles.feedback': 'Feedback page',
   'general.pageTitles.area': 'Area page',
-  'general.pageLink.area': 'Alueesi palvelut', // TODO: translate
+  'general.pageLink.area': 'Services in your area',
   'general.tools': 'Map Tools',
   // Readspeaker
   'general.readspeaker.buttonText': 'Listen',
@@ -675,9 +675,10 @@ const translations = {
   'settings.accordion.open': 'Open all selected settings',
   'settings.aria.opened': 'Settings have been opened',
   'settings.aria.saved': 'Settings have been saved',
-  'settings.choose.mobility': 'Valitse liikkumisrajoitteesi', // TODO: translate
-  'settings.choose.senses': 'Valitse aistirajoitteesi', // TODO: translate
-  'settings.choose.cities': 'Valitse kaupunkiasetuksesi', // TODO: translate
+  'settings.choose.mobility': 'Select your mobility issue',
+  'settings.choose.senses': 'Select your sensory processing issues',
+  'settings.choose.cities': 'Select your city setting',
+  'settings.choose.districts': 'Select your regional settings', // TODO is waiting here for wellness districts
   'settings.map.info': 'You can select the background map that best suits you in the map settings.',
 
   // Tools

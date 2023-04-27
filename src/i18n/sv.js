@@ -339,7 +339,7 @@ const translations = {
   'general.pageTitles.info': 'Infosida',
   'general.pageTitles.feedback': 'Responssida',
   'general.pageTitles.area': 'Områdessida',
-  'general.pageLink.area': 'Alueesi palvelut', // TODO: translate
+  'general.pageLink.area': 'Tjänster i ditt område',
 
 
   // General - Pagination
@@ -360,7 +360,7 @@ const translations = {
   'general.search': 'Sök',
   'general.share.link': 'Dela länken',
   'general.time.short': 'kl.',
-  'general.tools': 'Karttatyökalut', // TODO: translate
+  'general.tools': 'Kartverktyg',
   // Readspeaker
   'general.readspeaker.buttonText': 'Lyssna', // TODO: verify
   'general.readspeaker.title': 'Lyssna med ReadSpeaker webReader', // TODO: verify
@@ -677,9 +677,10 @@ const translations = {
   'settings.accordion.open': 'Öppna alla valda inställningar',
   'settings.aria.opened': 'Inställningarna har öppnats',
   'settings.aria.saved': 'Inställningarna har sparats',
-  'settings.choose.mobility': 'Valitse liikkumisrajoitteesi', // TODO: translate
-  'settings.choose.senses': 'Valitse aistirajoitteesi', // TODO: translate
-  'settings.choose.cities': 'Valitse kaupunkiasetuksesi', // TODO: translate
+  'settings.choose.mobility': 'Välj fysisk funktionsnedsättning',
+  'settings.choose.senses': 'Välj sensorisk funktionsnedsättning',
+  'settings.choose.cities': 'Välj stadsinställningar',
+  'settings.choose.districts': 'Välj regionala inställningar', // TODO is waiting here for wellness districts
   'settings.map.info': 'I kartinställningarna kan du välja det kartunderlag som passar dig bäst.',
 
   // Tools
