@@ -52,10 +52,10 @@ const SettingsComponent = ({ variant, classes }) => {
           disableUnmount
           onOpen={(e, open) => setSettingsCollapsed(open)}
           titleContent={settingsVisible
-            ? <Typography><FormattedMessage id="general.hideSettings" /></Typography>
+            ? <Typography id="settings-accordion"><FormattedMessage id="general.hideSettings" /></Typography>
             : (
               <>
-                <Typography>
+                <Typography id="settings-accordion">
                   <FormattedMessage id="general.openSettings" />
                 </Typography>
                 { getSelectedSettingsCount() > 0 && (

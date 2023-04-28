@@ -44,6 +44,7 @@ test('ToolMenu does close correctly', async (t) => {
     .pressKey('tab') // Tab to second element
     .pressKey('tab') // Tab to third element
     .pressKey('tab') // Tab to fourth element
+    .pressKey('tab') // Tab to fifth element
     .expect(toolMenuItems.exists).ok('ToolMenuPanel should exist and have items')
     .pressKey('tab') // Tab outside of ToolMenuPanel which should close the menu
     .expect(toolMenuItems.exists).notOk('ToolMenuPanel should not exists after moving focus out of ToolMenuPanel')

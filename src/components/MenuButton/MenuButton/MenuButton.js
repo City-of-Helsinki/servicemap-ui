@@ -28,6 +28,18 @@ class MenuButton extends React.Component {
     item.onClick();
   };
 
+  // Menu should close if user leaves the selection area
+  closeMenuOnFocusExit = (event) => {
+    const { menuItems } = this.props;
+    const menuItemIds = menuItems.map(v => v.id);
+
+    const relatedTargetId = event?.relatedTarget.id || '';
+    // TODO not good to have "-map-type-radio" here
+    if (!menuItemIds.includes(relatedTargetId) && !relatedTargetId.includes('-map-type-radio')) {
+      this.handleClose(event);
+    }
+  };
+
   renderMenu = () => {
     const {
       classes, panelID, children, menuHeader, menuItems, menuAriaLabel,
@@ -57,6 +69,7 @@ class MenuButton extends React.Component {
                   onClick={e => this.handleItemClick(e, v)}
                   onKeyDown={keyboardHandler(e => this.handleClose(e, true), ['esc'])}
                   onKeyPress={keyboardHandler(this.handleItemClick, ['space', 'enter'])}
+                  onBlur={this.closeMenuOnFocusExit}
                   component="span"
                   tabIndex={0}
                   aria-hidden={v.ariaHidden}

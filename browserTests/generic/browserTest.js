@@ -20,7 +20,7 @@ fixture`General tests`
 test('Language does change', async (t) => {
   const languageButtons = Selector('header button');
   const title = Selector('.app-title');
-  let text = await languageButtons.nth(2).innerText;
+  let text = await languageButtons.nth(1).innerText;
 
   await t
     .expect(getLocation()).contains(`${siteRoot}/fi`)
@@ -35,7 +35,7 @@ test('Language does change', async (t) => {
   ;
 
 
-  text = await languageButtons.nth(3).innerText;
+  text = await languageButtons.nth(2).innerText;
 
   await t
     .expect(text.toLowerCase()).contains('på svenska')
@@ -49,12 +49,12 @@ test('Language does change', async (t) => {
 });
 
 test('Contrast does change', async (t) => {
-  const contrastButton = Selector('header button').nth(4);
+  const contrastButton = Selector('#ContrastLink');
   const searchbarContainer = Selector('main').find('.SearchBar');
 
   await t
-    .expect(searchbarContainer.getStyleProperty('background-image')).contains(paletteDefault.background.front)
+    .expect(searchbarContainer.getStyleProperty('background-color')).contains(paletteDefault.primary.main)
     .click(contrastButton)
-    .expect(searchbarContainer.getStyleProperty('background-image')).contains(paletteDark.background.front)
+    .expect(searchbarContainer.getStyleProperty('background-color')).contains(paletteDark.primary.main)
   ;
 });

@@ -20,7 +20,7 @@ test('AddressView does render correct view', async (t) => {
   const tab2 = Selector('div[role="tablist"] button').nth(1);
   const divisions = ReactSelector('DivisionItem').count;
   const tab2Text = await tab2.textContent;
-  
+
   await t
     .expect(title).eql('Topeliuksenkatu 27,  Helsinki')
     .expect(tab1).eql('Palvelualueet')
@@ -122,7 +122,7 @@ test('AddressView nearby services tab works correctly', async (t) => {
   const unitTitle = Selector('.TitleText');
   const listItems = Selector('#tab-content-1 li[role="link"]');
   const listItemTopRow = (listItem) => listItem.find('div[class*="ResultItem-topRow"] p[aria-hidden="true"]');
-  const backToAddressButton = Selector('#SearchBar .SMBackButton')
+  const backToAddressButton = ReactSelector('BackButton').find('.SMBackButton');
 
   await t
     .click(tabNearbyUnits)

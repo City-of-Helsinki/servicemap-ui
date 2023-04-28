@@ -161,12 +161,11 @@ class SettingsUtility {
 // Return active accessibility settings
 export const useAcccessibilitySettings = () => {
   const userSettings = useSelector(state => state.settings);
-  const accessibiliySettingsValues = [
-    userSettings.mobility,
+  return [
+    userSettings.mobility !== 'none' ? userSettings.mobility : null,
     ...SettingsUtility.accessibilityImpairmentKeys.filter(key => userSettings[key]),
-  ].filter(i => (i !== false && i !== null));
-
-  return accessibiliySettingsValues;
+  ]
+    .filter(i => (i !== false && i !== null));
 };
 
 export default SettingsUtility;

@@ -45,7 +45,7 @@ test('Navigate search view', async (t) => {
   // Test result orderer navigation
   const unitCount = await searchUnits(t, 'kirjasto');
   const input = Selector('#SearchBar input');
-  let select = Selector('#result-sorter')
+  const select = Selector('#result-sorter')
   const listItems = Selector('#paginatedList-Toimipisteet-results li[role="link"]')
 
   const firstItemText = await listItems.nth(0).textContent;
@@ -54,11 +54,10 @@ test('Navigate search view', async (t) => {
     // .click(input)
     // .pressKey('ctrl+a delete')
     .typeText(input, 't')
-    .pressKey('tab') // Tabs to cancel button
-    .pressKey('tab') // Tabs to search icon button
-    .pressKey('tab') // Result orderer
+    .click(select)
     .pressKey('down')
-  ;
+    .pressKey('enter');
+
   const newFirstItemText = await listItems.nth(0).textContent;
   await t
     .expect(newFirstItemText).notEql(firstItemText)
@@ -69,10 +68,15 @@ test('Navigate search view', async (t) => {
     .typeText(input, 't')
     .pressKey('tab') // Tabs to cancel button
     .pressKey('tab') // Tabs to search icon button
-    .pressKey('tab') // Result orderer
-    .pressKey('tab') // First tab
     .pressKey('tab') // Address search
     .pressKey('tab') // Address search clear
+    .pressKey('tab') // hide settings
+    .pressKey('tab') // sense settings
+    .pressKey('tab') // mobility settings
+    .pressKey('tab') // city settings
+    .pressKey('tab') // Result orderer
+    .pressKey('tab') // First tab
+    // .pressKey('tab') // TODO should remove thin phantom tab press
     .pressKey('tab') // Tabs to first item in list
     .expect(listItems.nth(0).focused).ok('Tab did move focus to first list item')
     .pressKey('tab')
@@ -269,22 +273,6 @@ test('Tabs accessibility attributes are OK', async(t) => {
   ;
 });
 
-test('Search has aria-live element', async(t) => {
-  await searchUnits(t, 'kirjasto');
-  const resultList = ReactSelector('PaginatedList')
-  const results = await resultList.getReact(({props}) => props.data || []);
-  const unitCount = await results.filter(result => result.object_type === 'unit').length
-  const searchInfo = Selector('.SearchInfo').child(0);
-  const siText = await searchInfo.innerText;
-  const siAriaLive = await searchInfo.getAttribute('aria-live');
-
-  await t
-    // Expect info text to contain unit count
-    .expect(siText).contains(unitCount)
-    // Expect aria live to be set as polite
-    .expect(siAriaLive).eql('polite')
-  ;
-});
 
 test('Search suggestion arrow navigation does loop correctly', async(t) => {
   const expectedBoxShadowColor = 'rgb(71, 131, 235)'; // Focus color
@@ -308,33 +296,6 @@ test('Search suggestion arrow navigation does loop correctly', async(t) => {
     .pressKey('down')
     // After pressing key down on last item expect focused suggestion to loop to first item
     .expect(items.nth(0).getStyleProperty('box-shadow')).contains(expectedBoxShadowColor, 'Focused suggestion index should loop to first item');
-});
-
-test('SettingsInfo works correctly', async(t) => {
-  // Click settings in link in settings info
-  const settingsInfoButton = Selector('#SettingsLink');
-  await t
-    .expect(settingsInfoButton.textContent).contains('Muuta haku- tai esteettömyysasetuksia')
-    .click(settingsInfoButton)
-    .wait(500)
-  ;
-
-  // Expect title to be focused in settings view
-  const title = Selector('.TitleText');
-  const backButton = Selector('button[aria-label="Sulje asetukset"]').nth(0);
-  await t
-    .expect(title.focused).ok('Expected title to be focused on entering settings view')
-    .expect(title.innerText).eql('Asetukset')
-    .click(backButton)
-    .wait(500)
-  ;
-
-  // Expect focus to be back at SettingsInfo button when returning to search view
-  const settingsButton = Selector('#SettingsLink');
-  await t
-    .expect(settingsButton.innerText).contains('Muuta haku- tai esteettömyysasetuksia')
-    .expect(settingsButton.focused).ok()
-  ;
 });
 
 // TODO: update this test

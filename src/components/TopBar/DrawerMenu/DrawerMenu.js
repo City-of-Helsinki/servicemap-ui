@@ -48,8 +48,9 @@ const DrawerMenu = (props) => {
     </StyledButtonBase>
   );
 
-  const menuSecondaryButton = (headerId, pageId, handleClick, isLink) => (
+  const menuSecondaryButton = (headerId, pageId, handleClick, isLink, buttonId) => (
     <StyledButtonBase
+      id={buttonId}
       sx={{ backgroundColor: 'rgba(167, 200, 232, 0.15)' }}
       aria-current={pageId && currentPage === pageId}
       role={isLink ? 'link' : 'button'}
@@ -87,13 +88,15 @@ const DrawerMenu = (props) => {
             : 'general.contrast.ariaLabel.off',
           null,
           () => dispatch(changeTheme(theme === 'default' ? 'dark' : 'default')),
+          false,
+          'ContrastButton',
         )}
         <Divider />
-        {menuSecondaryButton('info.statement', 'accessibilityStatement', () => openA11yLink(locale), true)}
+        {menuSecondaryButton('info.statement', 'accessibilityStatement', () => openA11yLink(locale), true, 'AccessibilityStatementButton')}
         <Divider />
-        {menuSecondaryButton('home.send.feedback', 'feedback', null, true)}
+        {menuSecondaryButton('home.send.feedback', 'feedback', null, true, 'FeedbackButton')}
         <Divider />
-        {menuSecondaryButton('general.pageTitles.info', 'info', null, true)}
+        {menuSecondaryButton('general.pageTitles.info', 'info', null, true, 'PageInfoButton')}
       </div>
     </Drawer>
   );

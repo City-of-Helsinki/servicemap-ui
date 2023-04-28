@@ -361,6 +361,7 @@ const FeedbackView = ({
             id="FeedbackInfoLink"
             className={classes.link}
             role="link"
+            href={config.feedbackAdditionalInfoLink}
             onClick={() => window.open(config.feedbackAdditionalInfoLink)}
           >
             <Typography><FormattedMessage id="feedback.additionalInfo.link" /></Typography>

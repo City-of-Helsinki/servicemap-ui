@@ -41,7 +41,7 @@ const MapSettings = () => {
               <FormControlLabel
                 value={key}
                 key={key}
-                control={(<Radio color="primary" />)}
+                control={(<Radio id={`${key}-map-type-radio`} color="primary" />)}
                 labelPlacement="end"
                 label={<FormattedMessage id={item.labelId} />}
               />

@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   FormControl, ListItem, TextField, Typography,
 } from '@mui/material';
@@ -8,6 +8,7 @@ import { Tune } from '@mui/icons-material';
 import { styled } from '@mui/styles';
 import { useAcccessibilitySettings } from '../../utils/settings';
 import SMAutocomplete from '../SMAutocomplete';
+import { keyboardHandler } from '../../utils';
 
 const allowedDirections = [
   'asc',
@@ -42,6 +43,8 @@ const ResultOrderer = ({
 }) => {
   const accessibiliySettingsLength = useAcccessibilitySettings().length;
   const [openSettings, setOpenSettings] = useState(false);
+  const [selectedOption, setSelectedOption] = useState({ direction, order });
+  const highlightedOption = useRef(null);
   const isValidDirection = direction => direction && allowedDirections.indexOf(direction) > -1;
 
   const isValidOrder = order => order && allowedOrders.indexOf(order) > -1;
@@ -65,9 +68,11 @@ const ResultOrderer = ({
     }
   }, [accessibiliySettingsLength]);
 
-  let selectedOptionId = `${order}-${direction}`;
+  const selectedOptionId = `${selectedOption.order}-${selectedOption.direction}`;
   const handleOptionSelecting = (optionId) => {
-    selectedOptionId = optionId;
+    if (!optionId) {
+      return;
+    }
     const array = optionId.split('-');
     const direction = array[1];
     const order = array[0];
@@ -75,8 +80,18 @@ const ResultOrderer = ({
     if (isValidDirection(direction) && isValidOrder(order)) {
       setDirection(direction);
       setOrder(order);
+      setSelectedOption({ direction, order });
     }
     setOpenSettings(false);
+  };
+
+  const handleKeyboardSelect = (event) => {
+    if (!openSettings) {
+      setOpenSettings(true);
+    }
+    if (event?.which === 13 || event?.which === 32) {
+      handleOptionSelecting(highlightedOption?.current?.id);
+    }
   };
 
   const options = [
@@ -108,6 +123,10 @@ const ResultOrderer = ({
               multiple={false}
               openText={intl.formatMessage({ id: 'settings.open' })}
               closeText={intl.formatMessage({ id: 'settings.close' })}
+              onKeyDown={keyboardHandler(e => handleKeyboardSelect(e), ['space', 'enter', 'up', 'down'])}
+              onHighlightChange={(e, option) => {
+                highlightedOption.current = option;
+              }}
               options={options}
               clearIcon={null}
               value={getValue()}
@@ -124,10 +143,13 @@ const ResultOrderer = ({
                 <TextField
                   label={intl.formatMessage({ id: 'sorting.label' })}
                   variant="standard"
-                  onClick={() => setOpenSettings(!openSettings)}
+                  onClick={() => {
+                    setOpenSettings(!openSettings);
+                  }}
                   {...rest}
                   inputProps={{
                     ...inputProps,
+                    id: 'result-sorter',
                     readOnly: true,
                     sx: { cursor: 'pointer' },
                   }}

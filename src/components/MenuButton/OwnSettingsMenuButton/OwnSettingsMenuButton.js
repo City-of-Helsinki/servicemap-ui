@@ -17,7 +17,7 @@ class OwnSettingsMenuButton extends React.Component {
         menuHeader="general.ownSettings"
         menuItems={[]}
       >
-        <SettingsDropdowns variant="ownSettings"/>
+        <SettingsDropdowns variant="ownSettings" />
       </MenuButton>
     );
   }

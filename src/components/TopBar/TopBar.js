@@ -154,8 +154,8 @@ const TopBar = (props) => {
     }`;
     const contrastAriaLabel = intl.formatMessage({ id: `general.contrast.ariaLabel.${theme === 'dark' ? 'off' : 'on'}` });
 
-    const topBarLink = (textId, onClick, isCurrent, ariaLabel) => (
-      <ButtonBase sx={{ ml: 3 }} onClick={onClick} aria-current={isCurrent} aria-label={ariaLabel}>
+    const topBarLink = (textId, onClick, isCurrent, ariaLabel, linkId) => (
+      <ButtonBase sx={{ ml: 3 }} onClick={onClick} aria-current={isCurrent} aria-label={ariaLabel} id={linkId}>
         <Typography><FormattedMessage id={textId} /></Typography>
       </ButtonBase>
     );
@@ -178,12 +178,12 @@ const TopBar = (props) => {
                 <LanguageMenu mobile={pageType === 'mobile'} />
                 {/* Right side links */}
                 <Container disableGutters sx={{ justifyContent: 'flex-end', display: 'flex', mr: 0 }}>
-                  {topBarLink('general.contrast', () => handleContrastChange(), false, contrastAriaLabel)}
+                  {topBarLink('general.contrast', () => handleContrastChange(), false, contrastAriaLabel, 'ContrastLink')}
                   {!smallScreen ? (
                     <>
-                      {topBarLink('info.statement', () => openA11yLink(locale))}
-                      {topBarLink('general.pageTitles.info', () => handleNavigation('info'), currentPage === 'info')}
-                      {topBarLink('home.send.feedback', () => handleNavigation('feedback'), currentPage === 'feedback')}
+                      {topBarLink('info.statement', () => openA11yLink(locale), 'AccessibilityStatementLink')}
+                      {topBarLink('general.pageTitles.info', () => handleNavigation('info'), currentPage === 'info', 'PageInfoLink')}
+                      {topBarLink('home.send.feedback', () => handleNavigation('feedback'), currentPage === 'feedback', 'FeedbackLink')}
                     </>
                   ) : null }
                 </Container>

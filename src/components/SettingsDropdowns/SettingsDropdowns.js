@@ -108,6 +108,7 @@ const SettingsDropdowns = ({ variant }) => {
     return (
       <StyledAutocomplete
         open={openSettings === label}
+        id={`${category}-setting-dropdown`}
         size="small"
         disablePortal
         ownsettings={+ownSettingsVariant}
@@ -135,12 +136,12 @@ const SettingsDropdowns = ({ variant }) => {
         }}
         renderOption={(props, option) => (isSingleOption
           ? ( // Single option options box
-            <ListItem {...props} onClick={() => handleOptionSelecting(option.id, category)}>
+            <ListItem {...props} onClick={() => handleOptionSelecting(option.id, category)} id={`${category}-${option.id}`}>
               <Typography>{option.title}</Typography>
             </ListItem>
           )
           : ( // Checkbox options box
-            <ListItem {...props} onClick={() => handleOptionSelecting(option.id, category)}>
+            <ListItem {...props} onClick={() => handleOptionSelecting(option.id, category)} id={`${category}-${option.id}`}>
               <Checkbox
                 sx={{ mr: 1 }}
                 checked={settingsValues[category].includes(option.id)}
