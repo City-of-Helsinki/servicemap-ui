@@ -514,7 +514,7 @@ const UnitView = (props) => {
                 {/* Unit image */}
                 {
                   isMobile
-                    ? renderUnitLocation(unit)
+                    ? renderUnitLocation()
                     : unit.picture_url && renderPicture()
                 }
                 <SettingsComponent variant="paddingTopSettings" />
