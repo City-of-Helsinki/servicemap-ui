@@ -603,7 +603,7 @@ const translations = {
   // Settings
   'settings': 'Asetukset',
   'settings.open': 'Avaa asetusvalinnat',
-  'settings.close': 'Sulje asetusvalinnat',
+  'settings.close': 'Piilota asetusvalinnat',
   'settings.change': 'Muokkaa asetuksiasi',
   'settings.drawer.aria.title': 'Tämän hetkiset asetukset',
   'settings.citySettings': 'Kaupunki',
