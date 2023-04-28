@@ -14,7 +14,7 @@ const translations = {
 
   // Accessibility
   'accessibility': 'Tillgänglighet',
-  'accessibility.info': 'Tillgänglighetsuppgifter', // TODO: Verify
+  'accessibility.info': 'Tillgänglighetsuppgifter',
   'accessibility.details': 'Noggrannare uppgifter',
   'accessibility.details.summary': 'Samlingssida (ny flik)',
   'accessibility.stamp': 'Tillgängligheten beaktad',
@@ -363,8 +363,8 @@ const translations = {
   'general.time.short': 'kl.',
   'general.tools': 'Kartverktyg',
   // Readspeaker
-  'general.readspeaker.buttonText': 'Lyssna', // TODO: verify
-  'general.readspeaker.title': 'Lyssna med ReadSpeaker webReader', // TODO: verify
+  'general.readspeaker.buttonText': 'Lyssna',
+  'general.readspeaker.title': 'Lyssna med ReadSpeaker webReader',
 
   // Home
   'home.buttons.settings': 'Spara dina egna stads- och tillgänglighetsinställningar',
@@ -410,7 +410,7 @@ const translations = {
   'map.address.searching': 'Söker adress...',
   'map.address.notFound': 'Adressen hittades ej',
   'map.address.info': 'Adressens uppgifter',
-  'map.unit.cluster.popup.info': '{count} verksamhetsställen', // TODO: Verify
+  'map.unit.cluster.popup.info': '{count} verksamhetsställen',
   'map.button.sidebar.hide': 'Minska sidopanelen',
   'map.button.sidebar.show': 'Utvidga sidopanelen',
   'map.button.expand': 'Utvidga',
