@@ -41,7 +41,7 @@ const ResultOrderer = ({
   userLocation,
 }) => {
   const accessibiliySettingsLength = useAcccessibilitySettings().length;
-  const [openSettings, setOpenSettings] = useState(null);
+  const [openSettings, setOpenSettings] = useState(false);
   const isValidDirection = direction => direction && allowedDirections.indexOf(direction) > -1;
 
   const isValidOrder = order => order && allowedOrders.indexOf(order) > -1;
