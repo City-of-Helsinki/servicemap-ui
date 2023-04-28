@@ -359,6 +359,7 @@ const translations = {
   'general.save.confirmation': 'Vill du spara ändringarna?',
   'general.search': 'Sök',
   'general.share.link': 'Dela länken',
+  'general.ownSettings': 'Mina inställningar',
   'general.time.short': 'kl.',
   'general.tools': 'Kartverktyg',
   // Readspeaker
@@ -556,7 +557,7 @@ const translations = {
   'search.suggestions.expand': 'Sökförslag',
   'search.suggestions.loading': 'Laddar förslag',
   'search.suggestions.error': 'Inga förslag',
-  'search.suggestions.areas': 'Näytä alueet', // TODO: translate
+  'search.suggestions.areas': 'Visa områden',
   'search.suggestions.addresses': 'Sök med adress', // TODO: translate
   'search.suggestions.suggestions': '{count} sökförslag',
   // 'search.suggestions.expandSuggestions': '{count} preciseringsförslag',
@@ -600,8 +601,8 @@ const translations = {
 
   // Settings
   'settings': 'Inställningar',
-  'settings.open': 'Avaa asetusvalinnat', // TODO: translate
-  'settings.close': 'Sulje asetusvalinnat', // TODO: translate
+  'settings.open': 'Öppna inställningar',
+  'settings.close': 'Dölj inställningar',
   'settings.change': 'Redigera dina inställningar',
   'settings.drawer.aria.title': 'Nuvarande inställningar',
   'settings.citySettings': 'Stad',

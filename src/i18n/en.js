@@ -361,6 +361,7 @@ const translations = {
   'general.save.confirmation': 'Would you like to save changes?',
   'general.search': 'Search',
   'general.share.link': 'Share the link',
+  'general.ownSettings': 'My settings',
   'general.time.short': 'at',
 
   // Home
@@ -598,8 +599,8 @@ const translations = {
 
   // Settings
   'settings': 'Settings',
-  'settings.open': 'Avaa asetusvalinnat', // TODO: translate
-  'settings.close': 'Sulje asetusvalinnat', // TODO: translate
+  'settings.open': 'Open settings options',
+  'settings.close': 'Hide setting options',
   'settings.change': 'Edit your settings',
   'settings.drawer.aria.title': 'Current settings',
   'settings.citySettings': 'City',
