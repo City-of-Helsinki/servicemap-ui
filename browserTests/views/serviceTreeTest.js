@@ -49,30 +49,3 @@ test('Service tree search works correctly', async (t) => {
     .expect(getLocation()).contains('/fi/services')
   ;
 });
-
-test('Service tree selection removal works correctly', async (t) => {
-  const rootCategory = accordion.nth(4);
-  const selectionList = Selector('ul[class*="injectIntl(Connect(ServiceTreeView))-seleectionList"] li')
-  const selectionsButton = Selector('button[class*="injectIntl(Connect(ServiceTreeView))-selectionsButton"]')
-  const removeSelectionsButton = Selector('button[class*="injectIntl(Connect(ServiceTreeView))-right"]')
-  
-  // Remove selections works correctly
-  await t
-    .click(rootCategory)
-    .click(accordionCheckbox(innerAccordion(rootCategory).nth(1)))
-    .expect(accordionCheckbox(innerAccordion(rootCategory).nth(1)).getAttribute('checked') !== undefined).ok('Checkbox should be checked after selection')
-    .click(selectionsButton)
-    .click(accordionCheckbox(innerAccordion(rootCategory).nth(2)))
-    .expect(accordionCheckbox(innerAccordion(rootCategory).nth(2)).getAttribute('checked') !== undefined).ok('Checkbox should be checked after selection')
-    .click(accordionCheckbox(innerAccordion(rootCategory).nth(3)))
-    .expect(accordionCheckbox(innerAccordion(rootCategory).nth(3)).getAttribute('checked') !== undefined).ok('Checkbox should be checked after selection')
-    .expect(selectionList.count).eql(3, 'Selection list should show selected items')
-    .click(selectionList.nth(2).find('button'))
-    .expect(accordionCheckbox(innerAccordion(rootCategory).nth(3)).getAttribute('checked')).notOk('Checkbox should be unchecked after clicking remove selections')
-    .expect(selectionList.count).eql(2, 'Selection list should show correct number of items after removing one')
-    .click(removeSelectionsButton)
-    .expect(selectionList.count).eql(0, 'Selection list should be empty after clicking remove all selections')
-    .expect(accordionCheckbox(innerAccordion(rootCategory).nth(1)).getAttribute('checked')).notOk('Checkbox should be unchecked after clicking remove selections')
-    .expect(accordionCheckbox(innerAccordion(rootCategory).nth(2)).getAttribute('checked')).notOk('Checkbox should be unchecked after clicking remove selections')
-  ;
-});

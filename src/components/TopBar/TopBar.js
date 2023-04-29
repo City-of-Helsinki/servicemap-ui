@@ -160,8 +160,8 @@ const TopBar = (props) => {
       </ButtonBase>
     );
 
-    const navigationButton = (textId, onClick, isCurrent) => (
-      <ButtonBase onClick={onClick} aria-current={isCurrent} className={classes.navigationButton}>
+    const navigationButton = (textId, onClick, isCurrent, buttonId) => (
+      <ButtonBase onClick={onClick} aria-current={isCurrent} className={classes.navigationButton} id={buttonId}>
         <Typography sx={{ color: '#000', fontSize: '1.125rem', fontWeight: 600 }}>
           <FormattedMessage id={textId} />
         </Typography>
@@ -179,13 +179,16 @@ const TopBar = (props) => {
                 {/* Right side links */}
                 <Container disableGutters sx={{ justifyContent: 'flex-end', display: 'flex', mr: 0 }}>
                   {topBarLink('general.contrast', () => handleContrastChange(), false, contrastAriaLabel, 'ContrastLink')}
-                  {!smallScreen ? (
-                    <>
-                      {topBarLink('info.statement', () => openA11yLink(locale), 'AccessibilityStatementLink')}
-                      {topBarLink('general.pageTitles.info', () => handleNavigation('info'), currentPage === 'info', 'PageInfoLink')}
-                      {topBarLink('home.send.feedback', () => handleNavigation('feedback'), currentPage === 'feedback', 'FeedbackLink')}
-                    </>
-                  ) : null }
+                  {!smallScreen
+                    ? (
+                      <>
+                        {topBarLink('info.statement', () => openA11yLink(locale), false, undefined, 'AccessibilityStatementLink')}
+                        {topBarLink('general.pageTitles.info', () => handleNavigation('info'), currentPage === 'info', undefined, 'PageInfoLink')}
+                        {topBarLink('home.send.feedback', () => handleNavigation('feedback'), currentPage === 'feedback', undefined, 'FeedbackLink')}
+                      </>
+                    )
+                    : null
+                  }
                 </Container>
               </Toolbar>
             </nav>
@@ -210,9 +213,9 @@ const TopBar = (props) => {
                     <nav className={classes.navContainer}>
                       {!smallScreen ? (
                         <div className={classes.navigationButtonsContainer}>
-                          {navigationButton('general.frontPage', () => handleNavigation('home'), currentPage === 'home')}
-                          {navigationButton('general.pageLink.area', () => handleNavigation('area'), currentPage === 'area')}
-                          {navigationButton('services', () => handleNavigation('services'), currentPage === 'services')}
+                          {navigationButton('general.frontPage', () => handleNavigation('home'), currentPage === 'home', 'HomePage')}
+                          {navigationButton('general.pageLink.area', () => handleNavigation('area'), currentPage === 'area', 'AreaPage')}
+                          {navigationButton('services', () => handleNavigation('services'), currentPage === 'services', 'ServicePage')}
                         </div>
                       ) : (
                         <>
