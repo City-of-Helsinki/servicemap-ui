@@ -1,8 +1,7 @@
 /* eslint-disable */
-import { Selector, ClientFunction } from 'testcafe';
+import { Selector } from 'testcafe';
 import { waitForReact } from 'testcafe-react-selectors';
 
-import finnish from '../../src/i18n/fi';
 import config from '../config';
 import { getLocation } from '../utility';
 const { server } = config;

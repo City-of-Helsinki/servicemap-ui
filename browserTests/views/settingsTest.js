@@ -1,8 +1,7 @@
 /* eslint-disable */
-import { Selector, ClientFunction } from 'testcafe';
-import { waitForReact, ReactSelector } from 'testcafe-react-selectors';
+import { Selector } from 'testcafe';
+import { waitForReact } from 'testcafe-react-selectors';
 import config from '../config';
-import finnish from '../../src/i18n/fi';
 
 const { server } = config;
 

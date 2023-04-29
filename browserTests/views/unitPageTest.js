@@ -186,7 +186,6 @@ test('Unit view accessibility tab changes according to accessibility settings', 
   const accessibilityInfoContainer = Selector('div[class*="Connect(AccessibilityInfo)-infoContainer"]');
   const accessibilityShortcomingTitle = Selector('h5[class*="AccessibilityInfoShortcomingTitle"]');
   const accessibilityShortcoming = Selector('li[class*="AccessibilityInfoShortcoming"]')
-  const accessibilitySettings = Selector('#tab-content-1 p[class*="SettingsTextCurrentSettings"]');
 
 
   await t
