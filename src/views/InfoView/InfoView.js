@@ -8,8 +8,11 @@ import {
 } from '@mui/material';
 import config from '../../../config';
 import { TitleBar } from '../../components';
+import useMobileStatus from '../../utils/isMobile';
 
 const InfoView = ({ classes, locale }) => {
+  const isMobile = useMobileStatus();
+
   const a11yURLs = config.accessibilityStatementURL;
   const localeUrl = !a11yURLs[locale] || a11yURLs[locale] === 'undefined' ? null : a11yURLs[locale];
 
@@ -21,7 +24,7 @@ const InfoView = ({ classes, locale }) => {
     <TitleBar
       sticky
       ariaHidden
-      backButton
+      backButton={!isMobile}
       title={<FormattedMessage id="info.title" />}
       titleComponent="h3"
     />
@@ -175,8 +178,12 @@ const InfoView = ({ classes, locale }) => {
       <Typography component="h3" variant="body2">Palaute</Typography>
       <Typography className={classes.text} variant="body2">
         Kiitämme kaikesta palautteesta, jotta voimme kehittää Palvelukarttaa yhä paremmaksi.
-        Voit lähettää palvelukartasta yleistä palautetta palvelukartan kehittäjille:
-        Hel.fi/palaute (linkki, avautuu uudella välilehdellä)
+        Voit lähettää palvelukartasta yleistä palautetta palvelukartan kehittäjille:&nbsp;
+        <Link target="_blank" href="https://Hel.fi/palaute">
+          <Typography variant="string">https://Hel.fi/palaute</Typography>
+        </Link>
+        &nbsp;
+        (linkki, avautuu uudella välilehdellä)
         Voit lähettää toimipisteeseen liittyvää palautetta suoraan palvelukartan toimipistesivulta.
         Hae haluamasi toimipiste, niin löydät palautelomakkeen toimipisteen tiedoista perustiedot –välilehdeltä.
       </Typography>

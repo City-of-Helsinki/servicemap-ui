@@ -79,7 +79,7 @@ const ContactInfo = ({
           <SMAccordion
             className={classes.accordionRoot}
             disableUnmount
-            titleContent={<Typography><FormattedMessage id="unit.entrances.show" /></Typography>}
+            titleContent={<Typography id="additional-entrances"><FormattedMessage id="unit.entrances.show" /></Typography>}
             collapseContent={(
               <div className={classes.accordionContaianer}>
                 {additionalEntrances.map(entrance => (

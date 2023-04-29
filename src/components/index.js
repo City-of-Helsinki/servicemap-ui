@@ -1,8 +1,10 @@
 import Navigator from './Navigator';
+import BackButton from './BackButton';
 import DataFetcher from './DataFetchers/DataFetcher';
 import NewsInfo from './NewsInfo';
 import Settings from './Settings';
 import TopBar from './TopBar';
+import BottomNav from './BottomNav';
 import DescriptionText from './DescriptionText';
 import DesktopComponent from './DesktopComponent';
 import FocusableSRLinks from './FocusableSRLinks';
@@ -19,13 +21,16 @@ import ReadSpeakerButton from './ReadSpeakerButton';
 import ResultOrderer from './ResultOrderer';
 import SettingsInfo from './SettingsInfo';
 import SettingsText from './SettingsText';
+import SettingsComponent from './SettingsComponent';
 import SMButton from './ServiceMapButton';
 import SMRadio from './SMRadio';
 import SMAccordion from './SMAccordion';
+import SMAutocomplete from './SMAutocomplete';
 import SMSwitch from './SMSwitch';
 import TabLists from './TabLists';
 import TitleBar from './TitleBar';
 import Dialog from './Dialog';
+import MapSettings from './MapSettings/MapSettings';
 
 // Lists
 import PaginatedList from './Lists/PaginatedList';
@@ -57,6 +62,7 @@ export {
   AddressItem,
   AddressSearchBar,
   AlertBox,
+  BackButton,
   CloseButton,
   Container,
   DataFetcher,
@@ -82,8 +88,10 @@ export {
   Settings,
   SettingsInfo,
   SettingsText,
+  SettingsComponent,
   SimpleListItem,
   SMAccordion,
+  SMAutocomplete,
   SMButton,
   SMRadio,
   SMSwitch,
@@ -94,4 +102,6 @@ export {
   TopBar,
   UnitItem,
   Dialog,
+  BottomNav,
+  MapSettings,
 };

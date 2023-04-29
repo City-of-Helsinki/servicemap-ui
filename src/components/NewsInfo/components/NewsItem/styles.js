@@ -1,10 +1,13 @@
-export default theme => ({
+export default (theme) => ({
   container: {
     flex: '0 0 auto',
-    margin: theme.spacing(1),
+    marginTop: theme.spacing(1),
     width: '100%',
-    border: `${theme.palette.detail.alpha} solid 0.5px`,
+    border: `1px solid ${theme.palette.border.main}`,
+    borderRadius: '4px',
     textAlign: 'left',
+    boxShadow:
+      '0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)',
     '& .row': {
       display: 'flex',
       alignItems: 'center',
@@ -42,7 +45,7 @@ export default theme => ({
     width: 40,
     height: 40,
     borderRadius: '50%',
-    boxShadow: '0 4px 8px 0 #898989',
+    backgroundColor: '#F4F4F4',
   },
   image: {
     objectFit: 'cover',
@@ -54,5 +57,11 @@ export default theme => ({
   },
   hidePaddingBottom: {
     paddingBottom: '0 !important',
+  },
+
+  newsButton: {
+    width: 'fit-content',
+    marginLeft: 'auto',
+    marginRight: 0,
   },
 });

@@ -3,6 +3,6 @@ export default theme => ({
     height: 24,
   },
   titlebar: {
-    background: theme.palette.background.plain,
+    background: theme.palette.primary.main,
   },
 });

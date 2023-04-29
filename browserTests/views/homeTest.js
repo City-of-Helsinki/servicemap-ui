@@ -1,10 +1,8 @@
 /* eslint-disable */
-import { Selector, ClientFunction } from 'testcafe';
+import { Selector } from 'testcafe';
 import { waitForReact } from 'testcafe-react-selectors';
 
-import finnish from '../../src/i18n/fi';
 import config from '../config';
-import PaperButtonTest from '../components/PaperButton.tc';
 import { getLocation } from '../utility';
 const { server } = config;
 
@@ -16,22 +14,15 @@ fixture`Home view test`
     await waitForReact();
   });
 
-test('PaperButtons work correctly', async (t) => {
-  await PaperButtonTest(t);
-});
-
 test('Test home page navigation button clicks take user to correct pages', async (t) => {
-  const paperButtons = Selector('div[class*="HomeView-buttonContainer"] button');
-  const backButton = Selector(`button[aria-label="${finnish['general.back.home']}"]`)
-  
+  const backButton = Selector('#BackButton');
   //Buttons
-  const areaButton = paperButtons.nth(0);
-  const servicesButton = paperButtons.nth(2);
-  const feedbackButton = paperButtons.nth(3);
-  const infoButton = paperButtons.nth(4);
+  const areaButton = Selector('#AreaPage');
+  const servicesButton = Selector('#ServicePage');
+  const feedbackButton = Selector('#FeedbackLink');
+  const infoButton = Selector('#PageInfoLink');
 
   await t
-    .expect(paperButtons.count).eql(5, 'HomeView should have navigation buttons rendered')
     // Test area button
     .click(areaButton)
     .expect(getLocation()).contains(`${viewUrl}area`)

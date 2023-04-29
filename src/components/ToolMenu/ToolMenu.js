@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
 import URI from 'urijs';
 import {
-  Build, Code, GetApp, Print,
+  Code, GetApp, Print,
 } from '@mui/icons-material';
 import { useSelector } from 'react-redux';
-import DropDownMenuButton from '../DropDownMenuButton';
+import { DropDownMenuButton, OwnSettingsMenuButton } from '../MenuButton';
 import SMIcon from '../SMIcon/SMIcon';
 import PrintContext from '../../context/PrintContext';
 import DownloadDialog from '../Dialog/DownloadDialog';
@@ -130,22 +130,17 @@ const ToolMenu = ({
     },
   ];
 
-  if (menuItems.length === 0) {
-    return null;
-  }
-
-  const toolMenuText = intl.formatMessage({ id: 'general.tools' });
-
   return (
     <>
+      <OwnSettingsMenuButton
+        menuAriaLabel={intl.formatMessage({ id: 'general.ownSettings' })}
+        buttonText={intl.formatMessage({ id: 'general.ownSettings' })}
+      />
       <DropDownMenuButton
-        id={ToolMenuButtonID}
-        ref={toolMenuButton}
-        panelID="ToolMenuPanel"
-        buttonIcon={<Build />}
-        buttonText={toolMenuText}
-        menuAriaLabel={toolMenuText}
+        innerRef={toolMenuButton}
         menuItems={menuItems}
+        menuAriaLabel={intl.formatMessage({ id: 'general.tools' })}
+        buttonText={intl.formatMessage({ id: 'general.tools' })}
       />
       {measuringMode && (
         <MeasuringStopButton onClick={() => setMeasuringMode(false)} />

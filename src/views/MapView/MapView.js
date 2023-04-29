@@ -21,6 +21,7 @@ import DistanceMeasure from './components/DistanceMeasure';
 import MarkerCluster from './components/MarkerCluster';
 import UnitGeometry from './components/UnitGeometry';
 import MapUtility from './utils/mapUtility';
+import Util from '../../utils/mapUtility';
 import HideSidebarButton from './components/HideSidebarButton';
 import CoordinateMarker from './components/CoordinateMarker';
 import { useNavigationParams } from '../../utils/address';
@@ -77,6 +78,7 @@ const MapView = (props) => {
     measuringMode,
     toggleSidebar,
     sidebarHidden,
+    disableInteraction,
   } = props;
 
   // State
@@ -222,17 +224,12 @@ const MapView = (props) => {
     return null;
   };
 
-  const llMapHasMapPane = (leafLetMap) => {
-    // `getCenter()` call requires existence of mapPane (what ever that means). So check for that before calling it. Just another null check.
-    const panes = leafLetMap.getPanes();
-    return !!panes && !!panes.mapPane;
-  }
-
   if (global.rL && mapObject) {
     const { MapContainer, TileLayer, WMSTileLayer } = global.rL || {};
     let center = mapOptions.initialPosition;
     let zoom = isMobile ? mapObject.options.mobileZoom : mapObject.options.zoom;
-    if (prevMap && llMapHasMapPane(prevMap)) { // If changing map type, use viewport values of previous map
+    // If changing map type, use viewport values of previous map
+    if (prevMap && Util.mapHasMapPane(prevMap)) {
       center = prevMap.getCenter() || prevMap.options.center;
       /* Different map types have different zoom levels
       Use the zoom difference to calculate the new zoom level */
@@ -287,6 +284,7 @@ const MapView = (props) => {
               <MarkerCluster
                 data={unitData}
                 measuringMode={measuringMode}
+                disableInteraction={disableInteraction}
               />
             )
           }
@@ -356,31 +354,37 @@ const MapView = (props) => {
               />
             ) : null}
           </CustomControls>
+
           <CustomControls position="topright">
             <SimpleStatisticalComponent />
           </CustomControls>
-          <CustomControls position="bottomright">
-            {!embedded ? (
-              /* Custom user location map button */
-              <div key="userLocation" className="UserLocation">
-                <ButtonBase
-                  aria-hidden
-                  aria-label={userLocationAriaLabel}
-                  disabled={!userLocation}
-                  className={`${classes.showLocationButton} ${!userLocation ? classes.locationDisabled : ''}`}
-                  onClick={() => focusOnUser()}
-                  focusVisibleClassName={classes.locationButtonFocus}
-                >
-                  {userLocation
-                    ? <MyLocation className={classes.showLocationIcon} />
-                    : <LocationDisabled className={classes.showLocationIcon} />
-                  }
-                </ButtonBase>
-              </div>
-            ) : null}
 
-            <PanControl key="panControl" />
-          </CustomControls>
+          {!disableInteraction
+            ? (
+              <CustomControls position="bottomright">
+                {!embedded ? (
+                /* Custom user location map button */
+                  <div key="userLocation" className="UserLocation">
+                    <ButtonBase
+                      aria-hidden
+                      aria-label={userLocationAriaLabel}
+                      disabled={!userLocation}
+                      className={`${classes.showLocationButton} ${!userLocation ? classes.locationDisabled : ''}`}
+                      onClick={() => focusOnUser()}
+                      focusVisibleClassName={classes.locationButtonFocus}
+                    >
+                      {userLocation
+                        ? <MyLocation className={classes.showLocationIcon} />
+                        : <LocationDisabled className={classes.showLocationIcon} />
+                  }
+                    </ButtonBase>
+                  </div>
+                ) : null}
+
+                <PanControl key="panControl" />
+              </CustomControls>
+            )
+            : null}
           <CoordinateMarker position={getCoordinatesFromUrl()} />
           <EmbeddedActions />
         </MapContainer>
@@ -413,6 +417,7 @@ MapView.propTypes = {
   measuringMode: PropTypes.bool.isRequired,
   toggleSidebar: PropTypes.func,
   sidebarHidden: PropTypes.bool,
+  disableInteraction: PropTypes.bool,
 };
 
 MapView.defaultProps = {
@@ -425,4 +430,5 @@ MapView.defaultProps = {
   toggleSidebar: null,
   sidebarHidden: false,
   userLocation: null,
+  disableInteraction: false,
 };

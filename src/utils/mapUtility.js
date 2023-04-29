@@ -28,6 +28,13 @@ class MapUtility {
     return bbox;
   }
 
+  static mapHasMapPane(leafLetMap) {
+    // `getCenter()` call requires existence of mapPane (what ever that means). So check for that
+    // before calling it. Just another null check.
+    const panes = leafLetMap.getPanes();
+    return !!panes && !!panes.mapPane;
+  }
+
   getBbox() {
     const bounds = this.map.getBounds();
     return MapUtility.getBboxFromBounds(bounds);

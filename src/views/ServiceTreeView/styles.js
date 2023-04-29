@@ -1,13 +1,13 @@
 export default theme => ({
   topArea: {
-    background: theme.palette.background.plain,
+    background: theme.palette.primary.main,
     // paddingTop: theme.spacing(1),
     paddingLeft: 27,
     paddingRight: 21,
     paddingBottom: theme.spacing(2),
   },
   topBarColor: {
-    background: theme.palette.background.plain,
+    background: theme.palette.primary.main,
   },
   mainContent: {
     textAlign: 'left',
@@ -65,8 +65,11 @@ export default theme => ({
     boxShadow: `inset 0 0 0 4px ${theme.palette.primary.main} !important`,
   },
   guidanceInfoText: {
-    margin: `${theme.spacing(2)} ${theme.spacing(3)}`,
-    marginBottom: 0,
+    backgroundColor: theme.palette.primary.main,
+    padding: `${theme.spacing(3)} ${theme.spacing(2)}`,
+    paddingTop: theme.spacing(1),
+    color: '#fff',
+    textAlign: 'left',
   },
   outerLines: {
     height: '100%',
@@ -74,9 +77,8 @@ export default theme => ({
     flexShrink: 0,
   },
   searchButton: {
-    marginTop: theme.spacing(2),
-    marginBottom: 10,
-    marginLeft: 21,
+    flexGrow: 1,
+    marginRight: 0,
   },
   seleectionList: {
     marginTop: theme.spacing(1),

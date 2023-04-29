@@ -19,6 +19,7 @@ const styles = theme => ({
       outline: '2px solid transparent',
       boxShadow: `0 0 0 4px ${theme.palette.focusBorder.main}`,
     },
+    zIndex: theme.zIndex.forward,
   },
   mapNoSidebar: {
     '&:focus': {
@@ -122,7 +123,7 @@ const styles = theme => ({
     color: 'inherit',
   },
   topArea: {
-    background: theme.palette.background.main,
+    background: theme.palette.primary.main,
     color: theme.palette.primary.highContrast,
     position: 'fixed',
     top: config.topBarHeightMobile,

@@ -237,8 +237,9 @@ export default {
   "mobileUiBreakpoint": 699,
   "municipality": municipalities,
   "smallScreenBreakpoint": 899,
-  "topBarHeight": 100,
-  "topBarHeightMobile": 90,
+  "topBarHeight": 90,
+  "topBarHeightMobile": 78,
+  "bottomNavHeight": 78,
   "searchTimeout": 15000,
   // locales
   "defaultLocale": 'fi',

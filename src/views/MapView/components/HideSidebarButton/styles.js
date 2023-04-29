@@ -5,7 +5,7 @@ const styles = theme => ({
     minWidth: 50,
     height: 40,
     marginLeft: -10,
-    marginTop: -10,
+    marginTop: -4,
     padding: 10,
     backgroundColor: '#fff',
     transition: '0.2s',
