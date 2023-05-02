@@ -52,6 +52,7 @@ const MarkerCluster = ({
   settings,
   theme,
   measuringMode,
+  disableInteraction,
 }) => {
   const map = useMap();
   const getLocaleText = useLocaleText();
@@ -96,6 +97,7 @@ const MarkerCluster = ({
 
   // Open highlighted units' popup
   const openHighlightUnitPopup = (mapLayers) => {
+    if (disableInteraction) return;
     const highlightedMarker = getHighlightedMarker(mapLayers);
     if (highlightedMarker && UnitHelper.isUnitPage()) {
       // Close all open popups
@@ -432,8 +434,8 @@ const MarkerCluster = ({
     document.querySelectorAll('.leaflet-marker-icon').forEach((item) => {
       item.setAttribute('tabindex', '-1');
       item.setAttribute('aria-hidden', 'true');
-      // Remove marker interaction when using measuring tool
-      if (measuringMode) item.classList.remove('leaflet-interactive');
+      // Remove marker interaction when using measuring tool or if interactions are disabled
+      if (measuringMode || disableInteraction) item.classList.remove('leaflet-interactive');
     });
   }, [cluster, data, isMobile, measuringMode]);
 

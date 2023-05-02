@@ -116,7 +116,7 @@ export default theme => ({
     alignItems: 'center',
     height: 57,
     paddingLeft: 46,
-    background: theme.palette.background.main,
+    background: theme.palette.primary.main,
   },
   pageTitleText: {
     fontSize: '1.125rem',

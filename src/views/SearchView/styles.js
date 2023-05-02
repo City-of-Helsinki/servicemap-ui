@@ -11,7 +11,7 @@ export default theme => ({
     margin: theme.spacing(1),
   },
   searchbarPlain: {
-    background: theme.palette.background.plain,
+    background: theme.palette.primary.main,
     paddingBottom: theme.spacing(1),
   },
   label: {
@@ -35,7 +35,7 @@ export default theme => ({
   },
   searchInfo: {
     color: '#fff',
-    background: theme.palette.background.plain,
+    background: theme.palette.primary.main,
     padding: theme.spacing(3),
     paddingTop: theme.spacing(0.5),
     paddingBottom: theme.spacing(1),

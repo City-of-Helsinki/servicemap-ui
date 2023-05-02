@@ -6,7 +6,7 @@ exports[`<MenuButton /> should work 1`] = `
     aria-expanded="false"
     aria-haspopup="true"
     aria-label="Menu"
-    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium undefined undefined css-1p2nkht-MuiButtonBase-root-MuiButton-root"
+    class="MuiButtonBase-root undefined css-1me7l7o-MuiButtonBase-root"
     id="MenuButton"
     tabindex="0"
     type="button"
@@ -23,7 +23,7 @@ exports[`<MenuButton /> should work 1`] = `
       />
     </svg>
     <p
-      class="MuiTypography-root MuiTypography-body2 css-q91igz-MuiTypography-root"
+      class="MuiTypography-root MuiTypography-body2 css-1lfflzs-MuiTypography-root"
     >
       Menu
     </p>

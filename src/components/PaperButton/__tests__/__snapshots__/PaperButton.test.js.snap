@@ -7,7 +7,7 @@ exports[`<PaperButton /> should work 1`] = `
   >
     <button
       aria-label="Show nearby services Location not allowed "
-      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium PaperButton-iconButton-3 css-1p2nkht-MuiButtonBase-root-MuiButton-root"
+      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium PaperButton-iconButton-3 css-1gxfrj0-MuiButtonBase-root-MuiButton-root"
       role="link"
       tabindex="0"
       type="button"

@@ -3,7 +3,7 @@
 exports[`<ServiceItem /> should work 1`] = `
 <div>
   <li
-    class="MuiButtonBase-root MuiListItem-root SimpleListItem-listItem-2 MuiListItem-gutters MuiListItem-padding MuiListItem-button null  css-16e6fe9-MuiButtonBase-root-MuiListItem-root"
+    class="MuiButtonBase-root MuiListItem-root SimpleListItem-listItem-2 MuiListItem-gutters MuiListItem-padding MuiListItem-button null  css-18azhdn-MuiButtonBase-root-MuiListItem-root"
     role="link"
     tabindex="0"
   >

@@ -21,6 +21,7 @@ import {
   FocusableSRLinks,
   TopBar,
   Settings,
+  BottomNav,
 } from '../components';
 
 const { smallScreenBreakpoint } = config;
@@ -35,6 +36,7 @@ const createContentStyles = (
     width = '50%';
   }
   const topBarHeight = isMobile ? `${config.topBarHeightMobile}px` : `${config.topBarHeight}px`;
+  const bottomNavHeight = isMobile ? `${config.bottomNavHeight}px` : 0;
 
   const styles = {
     activeRoot: {
@@ -42,13 +44,14 @@ const createContentStyles = (
       width: '100%',
       display: 'flex',
       flexWrap: 'nowrap',
-      height: `calc(100vh - ${topBarHeight})`,
+      height: !isMobile ? `calc(100vh - ${topBarHeight})` : 'initial',
       flex: '1 1 auto',
     },
     map: {
       position: isMobile ? 'fixed' : null,
       bottom: 0,
       margin: 0,
+      marginBottom: bottomNavHeight,
       flex: !isMobile || fullMobileMap ? 1 : 0,
       display: 'flex',
       visibility: isMobile && (!fullMobileMap || settingsOpen) ? 'hidden' : '',
@@ -71,6 +74,10 @@ const createContentStyles = (
     },
     sidebarContent: {
       height: '100%',
+    },
+    bottomAligner: {
+      height: bottomNavHeight,
+      padding: 4,
     },
   };
 
@@ -200,6 +207,13 @@ const DefaultLayout = (props) => {
                 />
               </div>
             </div>
+
+            {isMobile ? (
+              <>
+                <BottomNav />
+                <div style={styles.bottomAligner} />
+              </>
+            ) : null}
 
             <footer role="contentinfo" aria-hidden={!!settingsToggled} className="sr-only">
               <DesktopComponent>

@@ -42,7 +42,7 @@ const SMButton = (props) => {
       disabled={disabled}
       className={buttonClasses}
       onClick={onClick}
-      role={role || 'button'}
+      role={role}
       style={{
         ...style,
       }}
@@ -79,7 +79,7 @@ SMButton.propTypes = {
   style: PropTypes.objectOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   children: PropTypes.node,
-  role: PropTypes.oneOf(['button', 'link']).isRequired,
+  role: PropTypes.oneOf(['button', 'link']),
   disabled: PropTypes.bool,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   textVariant: PropTypes.string,
@@ -101,6 +101,7 @@ SMButton.defaultProps = {
   textVariant: 'caption',
   messageCount: null,
   passingRef: null,
+  role: 'button',
 };
 
 export default SMButton;

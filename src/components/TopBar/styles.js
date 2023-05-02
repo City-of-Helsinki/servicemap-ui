@@ -13,12 +13,14 @@ const styles = theme => ({
     height: topBarHeightMobile,
   },
   appBar: {
-    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
     zIndex: theme.zIndex.appBar,
   },
   buttonLabel: {
     display: 'flex',
     flexDirection: 'column',
+  },
+  logoMobile: {
+    height: 25,
   },
   logo: {
     height: 29,
@@ -30,40 +32,34 @@ const styles = theme => ({
     letterSpacing: 'normal',
     color: 'inherit',
   },
-  toolbarBlack: {
-    minHeight: 30,
-    height: 30,
-    backgroundColor: '#141823',
+  toolbarBlue: {
+    minHeight: 32,
+    height: 32,
+    backgroundColor: theme.palette.primary.main,
     padding: 0,
-    paddingLeft: 18,
-    paddingRight: 18,
+    paddingLeft: theme.spacing(3),
+    paddingRight: theme.spacing(3),
   },
-  toolbarBlackMobile: {
+  toolbarBlueMobile: {
     paddingLeft: 14,
     paddingRight: 14,
-
-  },
-  toolbarBlackContainer: {
-    justifyContent: 'space-around',
-    display: 'flex',
-    width: '28rem',
-    color: '#fff',
   },
   topButtonFocused: {
-    boxShadow: '0 0 0 2px #fff !important',
+    boxShadow: '0 0 0 2px !important',
   },
   bold: {
     fontWeight: 'bold',
   },
   greyText: {
-    color: '#CCCBCB',
+    color: '#DEDFE1',
   },
   navContainer: {
     display: 'flex',
     flex: '1 1 auto',
+    height: '100%',
   },
-  settingsButtonsContainer: {
-    paddingLeft: 50,
+  navigationButtonsContainer: {
+    paddingLeft: 88 + parseInt(theme.spacing(2.5), 10),
     display: 'flex',
     flex: '1 1 auto',
   },
@@ -92,41 +88,20 @@ const styles = theme => ({
     lineHeight: 1,
   },
   toolbarWhite: {
+    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    paddingLeft: 28,
-    height: 70,
+    paddingLeft: theme.spacing(3),
+    height: 60,
     backgroundColor: '#fff',
     zIndex: theme.zIndex.infront,
   },
   toolbarWhiteMobile: {
-    paddingLeft: 28,
-    minHeight: 60,
-    height: 60,
+    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+    paddingLeft: theme.spacing(1.5),
+    height: 78,
     backgroundColor: '#fff',
-    paddingRight: 0,
-    zIndex: theme.zIndex.infront,
-  },
-  toolbarButtonPressed: {
-    display: 'inline-block',
-    width: '4.125rem',
-    textTransform: 'none',
-    backgroundColor: '#353638',
-    color: '#fff',
-    marginLeft: 4,
-    borderRadius: 0,
-    '&:hover': {
-      backgroundColor: '#353638',
-    },
-  },
-  toolbarButton: {
-    display: 'inline-block',
-    width: '4.125rem',
-    textTransform: 'none',
-    color: '#000',
-    marginLeft: 4,
-    borderRadius: 0,
   },
   largeButton: {
     height: 66,
@@ -141,7 +116,17 @@ const styles = theme => ({
     marginRight: 4,
   },
   mobileButtonContainer: {
+    display: 'flex',
     marginLeft: 'auto',
+    width: 223,
+    justifyContent: 'flex-end',
+  },
+  navigationButton: {
+    paddingLeft: theme.spacing(2.5),
+    paddingRight: theme.spacing(2.5),
+    '&:hover': {
+      backgroundColor: 'rgba(0, 0, 0, 0.08)',
+    },
   },
 });
 

@@ -1,6 +1,7 @@
 export default theme => ({
   container: {
     height: '100%',
+    paddingBottom: theme.spacing(3),
     backgroundColor: '#EEEEEE',
   },
   contentArea: {

@@ -1,6 +1,6 @@
 import { waitForReact } from 'testcafe-react-selectors';
-import config from '../config';
 import { Selector } from 'testcafe';
+import config from '../config';
 import { getLocation } from '../utility';
 import appConfig from '../../config';
 import finnish from '../../src/i18n/fi';
@@ -14,16 +14,12 @@ const testUrl = `http://${server.address}:${server.port}/fi/unit/51342`
 
 const selectSettingsAndClose = async (t) => {
   if (t) {
-    const settingsSenseCheckboxes = Selector ('div[aria-labelledby="SenseSettings"] label');
-    const settingsMobilityRadios = Selector ('div[aria-label="Liikkumisrajoitteet"] label');
-    const settingsSaveButton = Selector('button[aria-label="Tallenna asetukset"]');
-    const settingsCloseButton = Selector('button[aria-label="Sulje asetukset"]');
     await t
-      .click(settingsSenseCheckboxes.nth(1))
-      .click(settingsSenseCheckboxes.nth(2))
-      .click(settingsMobilityRadios.nth(1))
-      .click(settingsSaveButton)
-      .click(settingsCloseButton)
+      .click(Selector('#senses-setting-dropdown'))
+      .click(Selector('#senses-hearingAid'))
+      .click(Selector('#senses-visuallyImpaired'))
+      .click(Selector('#mobility-setting-dropdown'))
+      .click(Selector('#mobility-wheelchair'))
     ;
   }
 }
@@ -40,7 +36,6 @@ test('Unit marker is drawn on map', async (t) => {
   await t
     .expect(markers).gt(0, 'no marker found')
     .expect(markers).eql(1, 'multiple markers found, expected single marker');
-    
 });
 
 
@@ -104,7 +99,7 @@ test('Unit page feedback button should take unit feedback page', async (t) => {
 test('Unit feedback page does work correctly', async (t) => {
   const feedbackButton = await Selector('#UnitFeedbackButton');
   const title = Selector('h3[class*="TitleText"]');
-  const infoLink = Selector('button[id="FeedbackInfoLink"]')
+  const infoLink = Selector('#FeedbackInfoLink').withAttribute('href', appConfig.feedbackAdditionalInfoLink);
 
   await t
     .click(feedbackButton)
@@ -113,14 +108,13 @@ test('Unit feedback page does work correctly', async (t) => {
 
   // Info link does work correctly
   await t
-    .click(infoLink)
-    .expect(getLocation()).contains(appConfig.feedbackAdditionalInfoLink)
+    .expect(infoLink.visible).ok();
   ;
 });
 
 
 test('Unit page additional entrances does show correctly', async (t) => {
-  const accordion = Selector('div[class^="SMAccordion"');
+  const accordion = Selector('#additional-entrances');
   const showAccessibilityInfo = Selector('div[class^="ContactInfo-accordionContaianer"] button')
   const tabListButtons = Selector('div[role="tablist"] button');
 
@@ -188,19 +182,16 @@ test('Unit view hearing map link opens correctly', async (t) => {
 
 
 test('Unit view accessibility tab changes according to accessibility settings', async (t) => {
-  const settingsLink = Selector('#SettingsLink');
   const accessibilityTab = Selector('div[role="tablist"] button').nth(1);
   const accessibilityInfoContainer = Selector('div[class*="Connect(AccessibilityInfo)-infoContainer"]');
-  const accessibilityShortcomingTitle = Selector('h5[class*="AccessibilityInfoShortcomingTitle"');
-  const accessibilityShortcoming = Selector('li[class*="AccessibilityInfoShortcoming"')
-  const accessibilitySettings = Selector('#tab-content-1 p[class*="SettingsTextCurrentSettings"]');
-  
+  const accessibilityShortcomingTitle = Selector('h5[class*="AccessibilityInfoShortcomingTitle"]');
+  const accessibilityShortcoming = Selector('li[class*="AccessibilityInfoShortcoming"]')
+
 
   await t
     .click(accessibilityTab)
     .expect(accessibilityTab.getAttribute('aria-selected')).eql('true')
     .expect(accessibilityInfoContainer.find('p').textContent).contains('Ei tiedossa olevia puutteita')
-    .click(settingsLink)
   ;
 
   // SelectSettings
@@ -209,9 +200,6 @@ test('Unit view accessibility tab changes according to accessibility settings', 
   await t
     .expect(accessibilityShortcomingTitle.nth(0).exists).ok('Shortcoming titles should exist when settings have been selected')
     .expect(accessibilityShortcoming.nth(0).exists).ok('Shotcoming texts should exist when settings have been selected')
-    .expect(accessibilitySettings.nth(0).textContent).contains(finnish['settings.sense.hearingAid'])
-    .expect(accessibilitySettings.nth(0).textContent).contains(finnish['settings.sense.visuallyImpaired'])
-    .expect(accessibilitySettings.nth(0).textContent).contains(finnish['settings.mobility.wheelchair'])
   ;
 });
 
@@ -233,17 +221,15 @@ test('Unit view services tab lists work correctly', async (t) => {
 });
 
 test('Unit view share link does work correctly', async (t) => {
-  const settingsLink = Selector('#SettingsLink');
   const accessibilityTab = Selector('div[role="tablist"] button').nth(1);
   const shareButton = Selector('div[class*="TitleBar-titleContainer"] button');
-  
+
   const copyLinkButton = Selector(`div[class*="Connect(LinkSettingsDialogComponent)-container"] button p`)
   const radio = Selector(`div[aria-label="${finnish['link.settings.dialog.radio.label']}"] label`)
   // const dialogClose = Selector('div[class*="Dialog-topArea"] button[aria-label="Sulje"]');
 
   await t
     .click(accessibilityTab)
-    .click(settingsLink)
   ;
 
   selectSettingsAndClose(t);

@@ -1,17 +1,5 @@
 import { createTheme } from '@mui/material/styles';
 
-const focusIndicator = {
-  outline: '2px solid transparent',
-  boxShadow: '0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(71, 131, 235), 0 0 0 8px rgb(255, 255, 255)',
-  zIndex: '1',
-};
-
-const focusIndicatorDark = {
-  outline: '2px solid transparent',
-  boxShadow: '0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(0, 0, 0), 0 0 0 8px rgb(255, 255, 255)',
-  zIndex: '1',
-};
-
 const props = {
   // Globally disable all default mui focus effects
   MuiButtonBase: {
@@ -43,7 +31,8 @@ const components = theme => ({
     styleOverrides: {
       root: {
         // Default keyboard focus indicator for buttons
-        '&.Mui-focusVisible': theme === 'dark' ? focusIndicatorDark : focusIndicator,
+        '&.Mui-focusVisible':
+          theme === 'dark' ? focusIndicatorDark : focusIndicator,
       },
     },
   },
@@ -69,7 +58,8 @@ const components = theme => ({
   MuiRadio: {
     styleOverrides: {
       root: {
-        '&.Mui-focusVisible': theme === 'dark' ? focusIndicatorDark : focusIndicator,
+        '&.Mui-focusVisible':
+          theme === 'dark' ? focusIndicatorDark : focusIndicator,
         marginRight: 8,
       },
     },
@@ -77,7 +67,8 @@ const components = theme => ({
   MuiCheckbox: {
     styleOverrides: {
       root: {
-        '&.Mui-focusVisible': theme === 'dark' ? focusIndicatorDark : focusIndicator,
+        '&.Mui-focusVisible':
+          theme === 'dark' ? focusIndicatorDark : focusIndicator,
         marginRight: 8,
       },
     },
@@ -135,15 +126,14 @@ const zIndex = {
   forward: 50,
   sticky: 51,
   infront: 900,
+  appBar: 1200,
 };
 
 const typography = {
   useNextVariants: true,
   fontSize: 16,
   // Use the system font instead of the default Roboto font.
-  fontFamily: [
-    'Lato',
-  ].join(','),
+  fontFamily: ['Lato'].join(','),
   body1: {
     fontSize: '1.043rem',
     letterSpacing: '0.03125rem', // 0.5px
@@ -210,20 +200,21 @@ const typography = {
   },
 };
 
+// Color palette from Helsinki Design System
+const colors = {
+  lightGray: 'rgba(222, 222, 222, 1)',
+  black03: '#F4F4F4',
+};
+
 // Color palette for normal theme
 export const paletteDefault = {
   primary: {
-    main: 'rgb(25, 100, 230)',
+    main: 'rgb(10, 26, 175)',
     highContrast: '#fff',
   },
   secondary: {
     main: 'rgb(43, 47, 57)',
     hover: '#1d39ad',
-  },
-  background: {
-    main: 'linear-gradient(340.58deg, rgb(11, 123, 237) 0%, rgb(20, 108, 232) 67.04%, rgb(25, 100, 230) 100%)',
-    plain: 'rgb(20, 108, 232)',
-    front: 'linear-gradient(340.58deg, rgb(11, 123, 237) 0%, rgb(20, 108, 232) 67.04%, rgb(25, 100, 230) 100%)',
   },
   white: {
     light: '#f2f2f2',
@@ -232,8 +223,8 @@ export const paletteDefault = {
     contrastText: '#000',
   },
   detail: {
-    main: 'rgb(25, 100, 230)',
-    alpha: 'rgba(25,100,230,0.5)',
+    main: 'rgb(10, 26, 175)',
+    alpha: 'rgb(10, 26, 175, 0.5)',
   },
   disabled: {
     main: 'rgb(239, 239, 239)',
@@ -247,18 +238,24 @@ export const paletteDefault = {
   },
   measuringStroke: {
     main: '#fff',
-    background: 'rgb(25, 100, 230)',
+    background: 'rgb(10, 26, 175)',
     border: '#fff',
   },
   link: {
     main: '#3333FF',
+  },
+  border: {
+    main: colors.lightGray,
+  },
+  hover: {
+    main: colors.black03,
   },
 };
 
 // Color palette for dark theme
 export const paletteDark = {
   primary: {
-    main: '#353638',
+    main: 'rgb(53, 54, 56)',
     highContrast: '#fff',
   },
   secondary: {
@@ -268,7 +265,8 @@ export const paletteDark = {
   background: {
     main: '#4A4A4C',
     plain: '#4A4A4C',
-    front: 'linear-gradient(326.21deg, rgba(0, 0, 0, 0.79) 0%, rgba(71, 71, 71, 0.79) 100%)',
+    front:
+      'linear-gradient(326.21deg, rgba(0, 0, 0, 0.79) 0%, rgba(71, 71, 71, 0.79) 100%)',
   },
   white: {
     light: '#f2f2f2',
@@ -298,6 +296,26 @@ export const paletteDark = {
   link: {
     main: '#3333FF',
   },
+  border: {
+    main: colors.lightGray,
+  },
+  hover: {
+    main: colors.black03,
+  },
+};
+
+const focusIndicator = {
+  outline: '2px solid transparent',
+  borderRadius: '4px',
+  boxShadow: `0 0 0 2px rgb(255, 255, 255), 0 0 0 6px ${paletteDefault.primary.main}, 0 0 0 8px rgb(255, 255, 255)`,
+  zIndex: '1',
+};
+
+const focusIndicatorDark = {
+  outline: '2px solid transparent',
+  boxShadow:
+    '0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(0, 0, 0), 0 0 0 8px rgb(255, 255, 255)',
+  zIndex: '1',
 };
 
 // Themes
@@ -324,6 +342,5 @@ const SMThemeDark = createTheme({
   zIndex,
   focusIndicator: focusIndicatorDark,
 });
-
 
 export default { SMTheme, SMThemeDark };

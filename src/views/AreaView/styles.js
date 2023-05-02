@@ -19,8 +19,11 @@ const styles = theme => ({
     backgroundColor: theme.palette.primary.main,
   },
   infoText: {
-    padding: theme.spacing(3),
+    padding: theme.spacing(2),
+    paddingTop: 0,
     textAlign: 'start',
+    backgroundColor: theme.palette.primary.main,
+    color: '#fff',
   },
   infoTitle: {
     padding: theme.spacing(1),
@@ -119,14 +122,19 @@ const styles = theme => ({
     padding: 0,
     margin: 0,
   },
-  municipalitySubtitle: {
+  municipalitySubtitleBase: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'start',
     paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(1),
-    paddingLeft: theme.spacing(9),
     boxSizing: 'border-box',
+  },
+  municipalitySubtitle: {
+    paddingLeft: theme.spacing(9),
+  },
+  municipalitTitle: {
+    paddingLeft: theme.spacing(7),
   },
   listItem: {
     padding: 0,
@@ -162,10 +170,6 @@ const styles = theme => ({
   },
   rightPadding: {
     paddingRight: theme.spacing(1),
-  },
-  addressArea: {
-    padding: theme.spacing(3),
-    textAlign: 'start',
   },
   addressTitle: {
     marginBottom: theme.spacing(2),

@@ -1,15 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Button,
-  ClickAwayListener,
-  Typography,
-  ButtonBase,
+  Button, ButtonBase, ClickAwayListener, Divider, Typography,
 } from '@mui/material';
-import { ArrowDropUp, ArrowDropDown } from '@mui/icons-material';
-import { keyboardHandler } from '../../utils';
+import { FormattedMessage } from 'react-intl';
+import { keyboardHandler } from '../../../utils';
 
-class DropDownMenuButton extends React.Component {
+class MenuButton extends React.Component {
   state = {
     open: false,
   };
@@ -19,9 +16,8 @@ class DropDownMenuButton extends React.Component {
   };
 
   handleClose = (event, refocus = false) => {
-
     this.setState({ open: false });
-    // If refocus set to true focus back to DropDownMenuButton
+    // If refocus set to true focus back to MenuButton
     if (refocus && this.anchorEl) {
       this.anchorEl.focus();
     }
@@ -30,21 +26,23 @@ class DropDownMenuButton extends React.Component {
   handleItemClick = (event, item) => {
     this.handleClose(event);
     item.onClick();
-  }
+  };
 
   // Menu should close if user leaves the selection area
   closeMenuOnFocusExit = (event) => {
     const { menuItems } = this.props;
     const menuItemIds = menuItems.map(v => v.id);
 
-    if (!menuItemIds.includes(event?.relatedTarget.id)) {
+    const relatedTargetId = event?.relatedTarget.id || '';
+    // TODO not good to have "-map-type-radio" here
+    if (!menuItemIds.includes(relatedTargetId) && !relatedTargetId.includes('-map-type-radio')) {
       this.handleClose(event);
     }
-  }
+  };
 
   renderMenu = () => {
     const {
-      classes, menuItems, menuAriaLabel, panelID,
+      classes, panelID, children, menuHeader, menuItems, menuAriaLabel,
     } = this.props;
     return (
       <ClickAwayListener onClickAway={this.handleClose}>
@@ -54,39 +52,50 @@ class DropDownMenuButton extends React.Component {
           className={classes.menuPanel}
           role="region"
         >
+          <Typography sx={{
+            textAlign: 'left', fontWeight: 700, fontSize: '1.03rem', pb: 1,
+          }}
+          >
+            <FormattedMessage id={menuHeader} />
+          </Typography>
           {
-            menuItems.map(v => (
-              <ButtonBase
-                id={v.id}
-                key={v.key}
-                className={classes.menuItem}
-                role="link"
-                onClick={e => this.handleItemClick(e, v)}
-                onKeyDown={keyboardHandler(e => this.handleClose(e, true), ['esc'])}
-                onKeyPress={keyboardHandler(this.handleItemClick, ['space', 'enter'])}
-                onBlur={this.closeMenuOnFocusExit}
-                component="span"
-                tabIndex={0}
-                aria-hidden={v.ariaHidden}
-              >
-                <span>{v.icon}</span>
-                <Typography component="p" variant="body2">{v.text}</Typography>
-              </ButtonBase>
+            menuItems.map((v, i) => (
+              <React.Fragment key={v.key}>
+                <ButtonBase
+                  id={v.id}
+                  key={v.key}
+                  className={classes.menuItem}
+                  role="link"
+                  onClick={e => this.handleItemClick(e, v)}
+                  onKeyDown={keyboardHandler(e => this.handleClose(e, true), ['esc'])}
+                  onKeyPress={keyboardHandler(this.handleItemClick, ['space', 'enter'])}
+                  onBlur={this.closeMenuOnFocusExit}
+                  component="span"
+                  tabIndex={0}
+                  aria-hidden={v.ariaHidden}
+                >
+                  <span>{v.icon}</span>
+                  <Typography sx={{ pl: 3, fontWeight: 700 }} variant="subtitle1">{v.text}</Typography>
+                </ButtonBase>
+                {i !== menuItems.length - 1
+                  ? <Divider aria-hidden />
+                  : null
+                }
+              </React.Fragment>
             ))
           }
+          {children}
+          <div aria-hidden role="button" tabIndex="0" onFocus={() => this.handleClose()} />
         </div>
       </ClickAwayListener>
     );
-  }
+  };
 
   render() {
     const {
       buttonIcon, buttonText, classes, id, panelID,
     } = this.props;
     const { open } = this.state;
-    const arrowIcon = open
-      ? <ArrowDropUp className={classes.iconRight} />
-      : <ArrowDropDown className={classes.iconRight} />;
 
     return (
       <div className={classes.root}>
@@ -98,7 +107,6 @@ class DropDownMenuButton extends React.Component {
           aria-controls={open ? panelID : undefined}
           aria-haspopup="true"
           aria-expanded={open}
-          onBlur={this.closeMenuOnFocusExit}
           onClick={this.handleToggle}
           onKeyDown={(e) => {
             if (open) {
@@ -113,7 +121,6 @@ class DropDownMenuButton extends React.Component {
             )
           }
           <Typography component="p" variant="subtitle1">{buttonText}</Typography>
-          {arrowIcon}
         </Button>
         {
           open && this.renderMenu()
@@ -123,7 +130,7 @@ class DropDownMenuButton extends React.Component {
   }
 }
 
-DropDownMenuButton.propTypes = {
+MenuButton.propTypes = {
   buttonIcon: PropTypes.node,
   buttonText: PropTypes.string.isRequired,
   classes: PropTypes.shape({
@@ -135,19 +142,21 @@ DropDownMenuButton.propTypes = {
     iconRight: PropTypes.string,
   }).isRequired,
   id: PropTypes.string,
+  menuAriaLabel: PropTypes.string.isRequired,
+  panelID: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
+  menuHeader: PropTypes.string.isRequired,
   menuItems: PropTypes.arrayOf(PropTypes.shape({
     key: PropTypes.string.isRequired,
     id: PropTypes.string,
     text: PropTypes.string.isRequired,
     onClick: PropTypes.func.isRequired,
   })).isRequired,
-  menuAriaLabel: PropTypes.string.isRequired,
-  panelID: PropTypes.string.isRequired,
 };
 
-DropDownMenuButton.defaultProps = {
+MenuButton.defaultProps = {
   buttonIcon: null,
   id: null,
 };
 
-export default DropDownMenuButton;
+export default MenuButton;

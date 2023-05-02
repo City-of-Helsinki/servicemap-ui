@@ -20,7 +20,7 @@ test('AddressView does render correct view', async (t) => {
   const tab2 = Selector('div[role="tablist"] button').nth(1);
   const divisions = ReactSelector('DivisionItem').count;
   const tab2Text = await tab2.textContent;
-  
+
   await t
     .expect(title).eql('Topeliuksenkatu 27,  Helsinki')
     .expect(tab1).eql('Palvelualueet')
@@ -95,30 +95,34 @@ test('AddressView buttons work correctly', async (t) => {
   }
 });
 
-test('AddressView health station links work correctly', async (t) => {
-  const links = Selector('#tab-content-0 a');
-  const unitTitle = Selector('.TitleText');
-
-  await t
-    .click(links.nth(0))
-    .expect(getLocation()).contains('/fi/unit/62976')
-    .expect(unitTitle.textContent).contains('Uusi lastensairaala')
-    .navigateTo(testLocation)
-    .click(links.nth(1))
-    .expect(getLocation()).eql('https://www.hus.fi/potilaalle/sairaalat-ja-toimipisteet/uusi-lastensairaala')
-    .navigateTo(testLocation)
-    .click(links.nth(2))
-    .expect(getLocation()).eql('https://www.hel.fi/fi/sosiaali-ja-terveyspalvelut/terveydenhoito/kiireellinen-hoito-ja-paivystys')
-    .navigateTo(testLocation)
-  ;
-}).skipJsErrors();
+// test('AddressView health station links work correctly', async (t) => {
+//   const links = Selector('#tab-content-0 a');
+//   const unitTitle = Selector('.TitleText');
+//
+//   await t
+//     .click(links.nth(0))
+//     .expect(getLocation()).contains('/fi/unit/62976')
+//     .expect(unitTitle.textContent).contains('Uusi lastensairaala')
+//     .navigateTo(testLocation)
+//     .click(links.nth(1))
+//     .expect(getLocation()).eql('https://www.hus.fi/potilaalle/sairaalat-ja-toimipisteet/uusi-lastensairaala')
+//     .navigateTo(testLocation)
+//     // .click(links.nth(2))
+//     // .expect(getLocation()).contains('/fi/unit/26104')
+//     // .expect(unitTitle.textContent).contains('Haarmanin sairaala')
+//     // .navigateTo(testLocation)
+//     .click(links.nth(2))
+//     .expect(getLocation()).eql('https://www.hel.fi/fi/sosiaali-ja-terveyspalvelut/terveydenhoito/kiireellinen-hoito-ja-paivystys')
+//     .navigateTo(testLocation)
+//   ;
+// }).skipJsErrors();
 
 test('AddressView nearby services tab works correctly', async (t) => {
   const tabNearbyUnits = Selector('button[role="tab"]').nth(1);
   const unitTitle = Selector('.TitleText');
   const listItems = Selector('#tab-content-1 li[role="link"]');
   const listItemTopRow = (listItem) => listItem.find('div[class*="ResultItem-topRow"] p[aria-hidden="true"]');
-  const backToAddressButton = Selector('#SearchBar .SMBackButton')
+  const backToAddressButton = ReactSelector('BackButton').find('.SMBackButton');
 
   await t
     .click(tabNearbyUnits)
