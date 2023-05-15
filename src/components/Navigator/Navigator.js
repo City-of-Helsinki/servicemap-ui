@@ -98,7 +98,7 @@ class Navigator extends React.Component {
     const { params } = match;
     const locale = params && params.lng;
 
-    return generatePath(target, locale, data);
+    return generatePath(target, locale, data, isEmbed());
   }
 
 
