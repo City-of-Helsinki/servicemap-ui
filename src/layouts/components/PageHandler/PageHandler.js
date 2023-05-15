@@ -17,7 +17,7 @@ const PageHandler = (props) => {
   useEffect(() => {
     // Save current page to redux
     setCurrentPage(page);
-  }, []);
+  }, [page]);
 
   // Modify html head
   const message = messageId ? intl.formatMessage({ id: messageId }) : '';
