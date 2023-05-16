@@ -22,7 +22,6 @@ import {
   Container,
   Loading,
   SearchBar,
-  SettingsInfo,
   SettingsComponent,
   TabLists,
 } from '../../components';

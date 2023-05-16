@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Typography } from '@mui/material';
-import { visuallyHidden } from '@mui/utils';
 import { FormattedMessage } from 'react-intl';
 import NewsItem from './components/NewsItem/NewsItem';
 

@@ -29,6 +29,7 @@ import {
 } from '../../components';
 import StatisticalDistrictList from './components/StatisticalDistrictList';
 import useMobileStatus from '../../utils/isMobile';
+import MapUtility from '../../utils/mapUtility';
 
 
 const AreaView = ({
@@ -126,7 +127,7 @@ const AreaView = ({
   }, []);
 
   useEffect(() => () => {
-    if (map) {
+    if (map && MapUtility.mapHasMapPane(map)) {
       // On unmount, save map position
       setMapState(getViewState());
     }

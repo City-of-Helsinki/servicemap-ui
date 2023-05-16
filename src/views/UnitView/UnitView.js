@@ -43,7 +43,7 @@ import PriceInfo from './components/PriceInfo';
 import { parseSearchParams } from '../../utils';
 import { fetchServiceUnits } from '../../redux/actions/services';
 import MapView from '../MapView';
-
+import Util from '../../utils/mapUtility';
 
 const UnitView = (props) => {
   const {
@@ -161,7 +161,7 @@ const UnitView = (props) => {
 
   const saveMapPosition = () => {
     // Remember user's map postition to return to on unmount
-    if (map) {
+    if (map && Util.mapHasMapPane(map)) {
       viewPosition.current = {
         center: map.getCenter(),
         zoom: map.getZoom(),
@@ -189,7 +189,7 @@ const UnitView = (props) => {
       const isSearchPage = paths.search.regex.test(window.location.href);
       const isServicePage = paths.service.regex.test(window.location.href);
       if (map && (isSearchPage || isServicePage)) {
-        map.setView(viewPosition.current.center, viewPosition.current.zoom);
+        map.setView(viewPosition?.current?.center, viewPosition?.current?.zoom);
       }
     };
   }, []);
@@ -514,7 +514,7 @@ const UnitView = (props) => {
                 {/* Unit image */}
                 {
                   isMobile
-                    ? renderUnitLocation(unit)
+                    ? renderUnitLocation()
                     : unit.picture_url && renderPicture()
                 }
                 <SettingsComponent variant="paddingTopSettings" />

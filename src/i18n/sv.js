@@ -14,7 +14,7 @@ const translations = {
 
   // Accessibility
   'accessibility': 'Tillgänglighet',
-  'accessibility.info': 'Tillgänglighetsuppgifter', // TODO: Verify
+  'accessibility.info': 'Tillgänglighetsuppgifter',
   'accessibility.details': 'Noggrannare uppgifter',
   'accessibility.details.summary': 'Samlingssida (ny flik)',
   'accessibility.stamp': 'Tillgängligheten beaktad',
@@ -56,9 +56,9 @@ const translations = {
   'area.tab.publicServices': 'Områden för offentliga tjänster',
   'area.tab.geographical': 'Stadsdelar och postnummerområden',
   'area.tab.statisticalDistricts': 'Demografisk data',
-  'area.services.local': 'Tjänster i ditt eget område',
+  'area.services.local': 'Ditt eget skyddsdistrikt',
   'area.services.nearby': 'Lista över verksamhetsställen i närområden',
-  'area.services.nearby.rescue_area': 'Lista över tjänster i närområden', // TODO: correct name to replace "tjänster"
+  'area.services.nearby.rescue_area': 'Skyddsdistrikt i närområdena',
   'area.services.nearby.rescue_district': 'Lista över skyddsavsnitten i närområden',
   'area.services.nearby.rescue_sub_district': 'Lista över skyddsunderavsnitten i närområden',
   'area.services.all': 'Lista över verksamhetsställen',
@@ -221,10 +221,10 @@ const translations = {
   'embedder.map.title': 'Bakgrundskarta',
   'embedder.map.aria.label': 'Välj bakgrundskarta',
   'embedder.options.title': 'Visa på kartan',
-  'embedder.options.list.title': 'Toimipistelista', // TODO: translate
-  'embedder.options.label.list.none': 'Piilota toimipistelista', // TODO: translate
-  'embedder.options.label.list.side': 'Näytä toimipisteet listana (kartan vieressä)', // TODO: translate
-  'embedder.options.label.list.bottom': 'Näytä toimipisteet listana (kartan alla)', // TODO: translate
+  'embedder.options.list.title': 'Lista över verksamhetsställen',
+  'embedder.options.label.list.none': 'Dölj listan över verksamhetsställen',
+  'embedder.options.label.list.side': 'Visa verksamhetsställen i en lista (vid kartan)',
+  'embedder.options.label.list.bottom': 'Visa verksamhetsställen i en lista (under kartan)',
   'embedder.options.label.units': 'Visa verksamhetsställen',
   'embedder.options.label.transit': 'Visa kollektivtrafikens hållplatser (Zooma in kartan för att se hållplatserna)',
   'embedder.options.label.bbox': 'Begränsa den inbäddade kartan till området i förhandsgranskningsfönstret',
@@ -235,10 +235,10 @@ const translations = {
   'embedder.service.common': 'På kartan visas de vanligaste verksamhetsställena i stadsbons vardag: skolor, daghem och hälsostationer.',
   'embedder.service.all': 'Alla verksamhetsställen visas på kartan. För omfattande områdesgränser gör inbäddningen långsammare och otydligare.',
   'embedder.title': 'Inbäddningsverktyg',
-  'embedder.title.info': 'Palvelukartan upotustyökalulla voit upottaa Palvelukartan yksittäisiä näkymiä osaksi mitä tahansa verkkosivua.', // TODO: translate
-  'embedder.info.title': 'Ohjeet upotustyökalun käyttöön', // TODO: translate
-  'embedder.info.description': 'Valitse alla olevasta valikoimasta karttanäkymään haluamasi toiminnallisuudet. Kopioi kartanalta URL-linkki tai html-koodi käyttöösi.\n\n Tarkemmat ohjeet upotustyökalun käyttöön eri tilanteissa löydät', // TODO: translate
-  'embedder.info.link': 'täältä (uusi välilehti)', // TODO: translate
+  'embedder.title.info': 'Med hjälp av Servicekartans inbäddningsverktyg kan du bädda in en vy av Servicekartan som en del av vilken webbsida som helst.',
+  'embedder.info.title': 'Anvisningar för hur du använder inbäddningsverktyget ',
+  'embedder.info.description': 'Välj bland urvalet nedan vilka funktioner du vill ha i kartvyn. Du kan kopiera URL-länken eller html-koden under kartan.\n\n Närmare anvisningar om hur du använder inbäddningsverktyget i olika situationer finns',
+  'embedder.info.link': 'här (ny flik).',
   'embedder.url.title': 'Kopiera URL',
   'embedder.width.title': 'Inbäddningens bredd',
   'embedder.width.aria.label': 'Välj inbäddningens bredd',
@@ -305,9 +305,9 @@ const translations = {
   'general.distance.kilometers': 'Kilometers avstånd',
   'general.yes': 'Ja',
   'general.no': 'Nej',
-  'general.openSettings': 'Öppna inställningarna',
-  'general.hideSettings': 'Piilota asetukset', // TODO: translate
+  'general.openSettings': 'Öppna kartinställningar',
   'general.closeSettings': 'Stäng inställningarna',
+  'general.hideSettings': 'Stäng kartinställningar',
   'general.fetching': 'Laddar data...',
   'general.home': 'Hem',
   'general.home.logo.ariaLabel': 'Servicekarta - Gå till startsidan',
@@ -321,8 +321,8 @@ const translations = {
   'general.loading': 'Laddar',
   'general.loading.done': 'Laddning färdig',
   'general.showOnMap': 'Visa på kartan',
-  'general.open': 'Open', // TODO: Translate
-  'general.page.close': 'Close page', // TODO: Translate
+  'general.open': 'Öppna',
+  'general.page.close': 'Stäng sidan',
   'general.pageTitles.home': 'Hemsida',
   'general.pageTitles.search': 'Sökresultatsida',
   'general.pageTitles.unit': 'Vy med verksamhetsställen',
@@ -359,11 +359,12 @@ const translations = {
   'general.save.confirmation': 'Vill du spara ändringarna?',
   'general.search': 'Sök',
   'general.share.link': 'Dela länken',
+  'general.ownSettings': 'Mina inställningar',
   'general.time.short': 'kl.',
   'general.tools': 'Kartverktyg',
   // Readspeaker
-  'general.readspeaker.buttonText': 'Lyssna', // TODO: verify
-  'general.readspeaker.title': 'Lyssna med ReadSpeaker webReader', // TODO: verify
+  'general.readspeaker.buttonText': 'Lyssna',
+  'general.readspeaker.title': 'Lyssna med ReadSpeaker webReader',
 
   // Home
   'home.buttons.settings': 'Spara dina egna stads- och tillgänglighetsinställningar',
@@ -405,15 +406,15 @@ const translations = {
   'map.attribution.osm': '&copy; <a href="http://osm.org/copyright">Upphovsmännen bakom OpenStreetMaps</a>',
   'map.attribution.helsinki': '&copy; Helsingfors, Esbo, Vanda och Grankulla städer',
   'map.transit.endStation': 'Ändhållplats',
-  'map.address.coordinate': 'Tee linkki GPS-koordinaatteihin', // TODO: translate
+  'map.address.coordinate': 'Skapa en länk till GPS-koordinaterna',
   'map.address.searching': 'Söker adress...',
   'map.address.notFound': 'Adressen hittades ej',
   'map.address.info': 'Adressens uppgifter',
-  'map.unit.cluster.popup.info': '{count} verksamhetsställen', // TODO: Verify
+  'map.unit.cluster.popup.info': '{count} verksamhetsställen',
   'map.button.sidebar.hide': 'Minska sidopanelen',
   'map.button.sidebar.show': 'Utvidga sidopanelen',
-  'map.button.expand': 'Laajenna', // TODO: translate
-  'map.button.expand.aria': 'Avaa kartta', // TODO: translate
+  'map.button.expand': 'Utvidga',
+  'map.button.expand.aria': 'Öppna kartan',
 
   // Print
   'print.alert': 'Använd utskriftsalternativet i verktygsmenyn',
@@ -509,7 +510,7 @@ const translations = {
   'search': 'Sök',
   'search.arrowLabel': 'Precisera',
   'search.cancelText': 'Töm sökfältet',
-  'search.removeSuggestion': 'Remove', // TODO: translate
+  'search.removeSuggestion': 'Ta bort',
   'search.notFoundWith': 'Inga träffar för sökningen "{query}".',
   'search.placeholder': 'Sök tjänst eller verksamhetsställe',
   'search.info': `{count, plural,
@@ -556,8 +557,8 @@ const translations = {
   'search.suggestions.expand': 'Sökförslag',
   'search.suggestions.loading': 'Laddar förslag',
   'search.suggestions.error': 'Inga förslag',
-  'search.suggestions.areas': 'Näytä alueet', // TODO: translate
-  'search.suggestions.addresses': 'Hae osoitteella', // TODO: translate
+  'search.suggestions.areas': 'Visa områden',
+  'search.suggestions.addresses': 'Sök med adress', // TODO: translate
   'search.suggestions.suggestions': '{count} sökförslag',
   // 'search.suggestions.expandSuggestions': '{count} preciseringsförslag',
   'search.suggestions.results': '{count} resultat',
@@ -600,8 +601,8 @@ const translations = {
 
   // Settings
   'settings': 'Inställningar',
-  'settings.open': 'Avaa asetusvalinnat', // TODO: translate
-  'settings.close': 'Sulje asetusvalinnat', // TODO: translate
+  'settings.open': 'Öppna inställningar',
+  'settings.close': 'Dölj inställningar',
   'settings.change': 'Redigera dina inställningar',
   'settings.drawer.aria.title': 'Nuvarande inställningar',
   'settings.citySettings': 'Stad',
@@ -651,7 +652,7 @@ const translations = {
   'settings.city.hanko': 'Hangö',
   'settings.city.hyvinkää': 'Hyvinge',
   'settings.city.inkoo': 'Ingå',
-  'settings.city.järvempää': 'Träskända',
+  'settings.city.järvenpää': 'Träskända',
   'settings.city.karkkila': 'Högfors',
   'settings.city.kerava': 'Kervo',
   'settings.city.lapinjärvi': 'Lappträsk',
@@ -676,22 +677,23 @@ const translations = {
   'settings.aria.changed': 'Inställningarna har ändrats. Kom ihåg att spara.',
   'settings.aria.closed': 'Inställningarna har stängts',
   'settings.aria.open': 'Öppna inställningarna',
-  'settings.accordion.open': 'Avaa kaikki tehdyt asetukset', // TODO: translate
+  'settings.accordion.open': 'Öppna alla valda inställningar',
   'settings.aria.opened': 'Inställningarna har öppnats',
   'settings.aria.saved': 'Inställningarna har sparats',
   'settings.choose.mobility': 'Välj fysisk funktionsnedsättning',
   'settings.choose.senses': 'Välj sensorisk funktionsnedsättning',
-  'settings.choose.cities': 'Välj regionala inställningar',
-  'settings.map.info': 'Kartta-asetuksista voit valita sinulle parhaiten sopivan pohjakartan.', // TODO: translate
+  'settings.choose.cities': 'Välj stadsinställningar',
+  'settings.choose.districts': 'Välj regionala inställningar', // TODO is waiting here for wellness districts
+  'settings.map.info': 'I kartinställningarna kan du välja det kartunderlag som passar dig bäst.',
 
   // Tools
   'tool.download': 'Exportera',
-  'tool.measuring': 'Mittaa etäisyys hiirellä', // TODO: translate
+  'tool.measuring': 'Mät avstånd med musen',
   'tool.measuring.stop': 'Sluta mäta',
   'tool.print': 'Skriv ut',
 
   'info.title': 'Om tjänsten och tillgänglighetsredogörelsen',
-  'info.statement': 'Tillgänglighetsredogörelsen',
+  'info.statement': 'Tillgänglighetsredogörelsen (ny flik)',
 
   'alert.close': 'Stäng meddelande',
 };

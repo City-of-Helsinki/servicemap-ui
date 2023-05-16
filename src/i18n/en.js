@@ -56,9 +56,9 @@ const translations = {
   'area.tab.publicServices': 'Public service areas',
   'area.tab.geographical': 'Neighbourhoods and postal code areas',
   'area.tab.statisticalDistricts': 'Demographic data',
-  'area.services.local': 'Services in your own area',
+  'area.services.local': 'Your civil defence district',
   'area.services.nearby': 'Locations in nearby areas as a list',
-  'area.services.nearby.rescue_area': 'Services in nearby areas as a list', // TODO: correct name to replace "Services"
+  'area.services.nearby.rescue_area': 'Civil defence districts in surrounding areas',
   'area.services.nearby.rescue_district': 'Civil defence sections in nearby areas as a list',
   'area.services.nearby.rescue_sub_district': 'Civil defence subsections in nearby areas as a list',
   'area.services.all': 'Locations as a list',
@@ -222,10 +222,10 @@ const translations = {
   'embedder.preview.title': 'Map preview',
   'embedder.options.title': 'Show on the map',
   'embedder.options.label.units': 'Show service points',
-  'embedder.options.list.title': 'Toimipistelista', // TODO: translate
-  'embedder.options.label.list.none': 'Piilota toimipistelista', // TODO: translate
-  'embedder.options.label.list.side': 'Näytä toimipisteet listana (kartan vieressä)', // TODO: translate
-  'embedder.options.label.list.bottom': 'Näytä toimipisteet listana (kartan alla)', // TODO: translate
+  'embedder.options.list.title': 'List of service points',
+  'embedder.options.label.list.none': 'Hide the list of service points',
+  'embedder.options.label.list.side': 'Show service points as a list (beside the map)',
+  'embedder.options.label.list.bottom': 'Show service points as a list (under the map)',
   'embedder.options.label.transit': 'Show public transport stops (Zoom in the map to see the stops)',
   'embedder.options.label.bbox': 'Limit the embedded map to the area in the preview window',
   'embedder.service.title': 'Services',
@@ -234,10 +234,10 @@ const translations = {
   'embedder.service.common': 'The city resident\'s most common everyday service points are shown on the map: schools, daycares and health stations.',
   'embedder.service.all': 'All service points are shown on the map. Too extensive area borders slow down the embedding and decreases its clarity.',
   'embedder.title': 'Embedding tool',
-  'embedder.title.info': 'Palvelukartan upotustyökalulla voit upottaa Palvelukartan yksittäisiä näkymiä osaksi mitä tahansa verkkosivua.', // TODO: translate
-  'embedder.info.title': 'Ohjeet upotustyökalun käyttöön', // TODO: translate
-  'embedder.info.description': 'Valitse alla olevasta valikoimasta karttanäkymään haluamasi toiminnallisuudet. Kopioi kartanalta URL-linkki tai html-koodi käyttöösi.\n\n Tarkemmat ohjeet upotustyökalun käyttöön eri tilanteissa löydät', // TODO: translate
-  'embedder.info.link': 'täältä (uusi välilehti)', // TODO: translate
+  'embedder.title.info': 'You can embed views of the Service Map into any web page with the embedding tool of the Service Map.',
+  'embedder.info.title': 'Instructions for using the embedding tool',
+  'embedder.info.description': 'Select the functions you want to use while viewing the map from the selection below. Copy the URL link or html code you want to use from the map.\n\n More detailed instructions for using the embedding tool in different situations can be found',
+  'embedder.info.link': 'here (new tab).',
   'embedder.url.title': 'Copy URL',
   'embedder.width.title': 'Width of the embedding',
   'embedder.width.aria.label': 'Choose width of the embedding',
@@ -304,9 +304,9 @@ const translations = {
   'general.distance.kilometers': 'Kilometers away',
   'general.yes': 'Yes',
   'general.no': 'No',
-  'general.openSettings': 'Open settings',
+  'general.openSettings': 'Open map settings',
   'general.closeSettings': 'Close settings',
-  'general.hideSettings': 'Hide settings',
+  'general.hideSettings': 'Close map settings',
   'general.fetching': 'Loading data...',
   'general.home': 'Home',
   'general.home.logo.ariaLabel': 'Servicemap - Go to home page',
@@ -320,8 +320,8 @@ const translations = {
   'general.loading': 'Loading',
   'general.loading.done': 'Loading completed',
   'general.showOnMap': 'Show on map',
-  'general.open': 'Open', // TODO: Verify
-  'general.page.close': 'Close page', // TODO: Verify
+  'general.open': 'Open',
+  'general.page.close': 'Close page',
   'general.pageTitles.home': 'Home page',
   'general.pageTitles.search': 'Search results page',
   'general.pageTitles.unit': 'Service point page',
@@ -361,6 +361,7 @@ const translations = {
   'general.save.confirmation': 'Would you like to save changes?',
   'general.search': 'Search',
   'general.share.link': 'Share the link',
+  'general.ownSettings': 'My settings',
   'general.time.short': 'at',
 
   // Home
@@ -403,7 +404,7 @@ const translations = {
   'map.attribution.osm': '&copy; <a href="http://osm.org/copyright">OpenStreetMap contributors</a>',
   'map.attribution.helsinki': '&copy; Cities of Helsinki, Espoo, Vantaa ja Kauniainen',
   'map.transit.endStation': 'Terminus',
-  'map.address.coordinate': 'Tee linkki GPS-koordinaatteihin', // TODO: translate
+  'map.address.coordinate': 'Create a link to the GPS coordinates',
   'map.address.searching': 'Retreiving address...',
   'map.address.notFound': 'The address could not be found',
   'map.address.info': 'Address information',
@@ -555,7 +556,7 @@ const translations = {
   'search.suggestions.loading': 'Loading suggestions',
   'search.suggestions.error': 'No suggestions',
   'search.suggestions.areas': 'Show areas',
-  'search.suggestions.addresses': 'Hae osoitteella', // TODO: translate
+  'search.suggestions.addresses': 'Search with address',
   'search.suggestions.suggestions': '{count} search suggestions',
   // 'search.suggestions.expandSuggestions': '{count} refinement suggestions',
   'search.suggestions.results': '{count} results',
@@ -598,8 +599,8 @@ const translations = {
 
   // Settings
   'settings': 'Settings',
-  'settings.open': 'Avaa asetusvalinnat', // TODO: translate
-  'settings.close': 'Sulje asetusvalinnat', // TODO: translate
+  'settings.open': 'Open settings options',
+  'settings.close': 'Hide setting options',
   'settings.change': 'Edit your settings',
   'settings.drawer.aria.title': 'Current settings',
   'settings.citySettings': 'City',
@@ -649,7 +650,7 @@ const translations = {
   'settings.city.hanko': 'Hanko',
   'settings.city.hyvinkää': 'Hyvinkää',
   'settings.city.inkoo': 'Inkoo',
-  'settings.city.järvempää': 'Järvempää',
+  'settings.city.järvenpää': 'järvenpää',
   'settings.city.karkkila': 'Karkkila',
   'settings.city.kerava': 'Kerava',
   'settings.city.lapinjärvi': 'Lapinjärvi',
@@ -674,13 +675,14 @@ const translations = {
   'settings.aria.changed': 'Settings have changed. Remember to save',
   'settings.aria.closed': 'Settings closed',
   'settings.aria.open': 'Open settings',
-  'settings.accordion.open': 'Avaa kaikki tehdyt asetukset', // TODO: translate
+  'settings.accordion.open': 'Open all selected settings',
   'settings.aria.opened': 'Settings have been opened',
   'settings.aria.saved': 'Settings have been saved',
   'settings.choose.mobility': 'Select your mobility issue',
   'settings.choose.senses': 'Select your sensory processing issues',
-  'settings.choose.cities': 'Select your regional settings',
-  'settings.map.info': 'Kartta-asetuksista voit valita sinulle parhaiten sopivan pohjakartan.', // TODO: translate
+  'settings.choose.cities': 'Select your city setting',
+  'settings.choose.districts': 'Select your regional settings', // TODO is waiting here for wellness districts
+  'settings.map.info': 'You can select the background map that best suits you in the map settings.',
 
   // Tools
   'tool.download': 'Download data',
@@ -689,7 +691,7 @@ const translations = {
   'tool.print': 'Print',
 
   'info.title': 'About the service and accessibility statement',
-  'info.statement': 'Accessibility statement',
+  'info.statement': 'Accessibility statement (new tab)',
 
   'alert.close': 'Close the notification',
 };

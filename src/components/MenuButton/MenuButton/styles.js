@@ -20,10 +20,6 @@ export default theme => ({
     color: theme.palette.primary.main,
     paddingRight: theme.spacing(1),
   },
-  iconRight: {
-    marginLeft: 'auto',
-    fontSize: '1.5rem',
-  },
   menuItem: {
     height: 56,
     padding: theme.spacing(1),

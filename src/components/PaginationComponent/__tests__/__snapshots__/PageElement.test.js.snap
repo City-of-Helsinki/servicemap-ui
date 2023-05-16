@@ -4,7 +4,7 @@ exports[`<PageElement /> should work 1`] = `
 <div>
   <li>
     <button
-      class="MuiButtonBase-root css-fvdnvy-MuiButtonBase-root"
+      class="MuiButtonBase-root css-l9l1yv-MuiButtonBase-root"
       role="link"
       tabindex="0"
       type="button"

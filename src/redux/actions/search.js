@@ -71,10 +71,18 @@ const fetchSearchResults = (options = null) => async (dispatch, getState) => {
 
   dispatch(isFetching(searchQuery));
 
+  const extraFields = [
+    'unit.connections',
+    'unit.phone',
+    'unit.call_charge_info',
+    'unit.email',
+    'unit.www',
+    'unit.address_zip',
+  ];
   const fetchOptions = {
     ...options,
     language: locale,
-    include: isEmbed() ? 'unit.connections' : null,
+    include: isEmbed() ? extraFields : null,
   };
   let results = await smFetch(dispatch, fetchOptions);
 

@@ -14,7 +14,7 @@ const props = {
   },
 };
 
-const components = (theme) => ({
+const components = theme => ({
   MuiListItem: {
     styleOverrides: {
       button: {
@@ -255,7 +255,7 @@ export const paletteDefault = {
 // Color palette for dark theme
 export const paletteDark = {
   primary: {
-    main: '#353638',
+    main: 'rgb(53, 54, 56)',
     highContrast: '#fff',
   },
   secondary: {

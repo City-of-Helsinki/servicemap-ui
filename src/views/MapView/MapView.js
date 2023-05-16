@@ -21,6 +21,7 @@ import DistanceMeasure from './components/DistanceMeasure';
 import MarkerCluster from './components/MarkerCluster';
 import UnitGeometry from './components/UnitGeometry';
 import MapUtility from './utils/mapUtility';
+import Util from '../../utils/mapUtility';
 import HideSidebarButton from './components/HideSidebarButton';
 import CoordinateMarker from './components/CoordinateMarker';
 import { useNavigationParams } from '../../utils/address';
@@ -223,17 +224,12 @@ const MapView = (props) => {
     return null;
   };
 
-  const llMapHasMapPane = (leafLetMap) => {
-    // `getCenter()` call requires existence of mapPane (what ever that means). So check for that before calling it. Just another null check.
-    const panes = leafLetMap.getPanes();
-    return !!panes && !!panes.mapPane;
-  }
-
   if (global.rL && mapObject) {
     const { MapContainer, TileLayer, WMSTileLayer } = global.rL || {};
     let center = mapOptions.initialPosition;
     let zoom = isMobile ? mapObject.options.mobileZoom : mapObject.options.zoom;
-    if (prevMap && llMapHasMapPane(prevMap)) { // If changing map type, use viewport values of previous map
+    // If changing map type, use viewport values of previous map
+    if (prevMap && Util.mapHasMapPane(prevMap)) {
       center = prevMap.getCenter() || prevMap.options.center;
       /* Different map types have different zoom levels
       Use the zoom difference to calculate the new zoom level */

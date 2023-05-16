@@ -316,6 +316,7 @@ const ServiceTreeView = (props) => {
       </div>
       <StyledFloatingDiv>
         <SMButton
+          id="ServiceTreeSearchButton"
           className={classes.searchButton}
           color="primary"
           disabled={!ids.length}

@@ -41,7 +41,7 @@ test('Service view list item click takes to correct unit view', async (t) => {
   const units =  Selector('#paginatedList-events li[role="link"]');
   const name = await units.nth(0).find('p[role="textbox"]').textContent;
   const unitTitleSelector = Selector('.TitleText');
-  const backToServiceButton = Selector('#SearchBar .SMBackButton');
+  const backToServiceButton = ReactSelector('BackButton').find('.SMBackButton');
   const servicePageTitle = Selector('#view-title');
 
   await t

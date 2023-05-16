@@ -1,7 +1,7 @@
 import {
-  ButtonBase, Divider, Menu, MenuItem, Typography,
+  ButtonBase, Menu, MenuItem, Typography,
 } from '@mui/material';
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';

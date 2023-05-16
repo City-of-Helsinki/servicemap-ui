@@ -16,7 +16,7 @@ const translations = {
   'accessibility': 'Esteettömyys',
   'accessibility.info': 'Esteettömyystiedot',
   'accessibility.details': 'Tarkemmat tiedot',
-  'accessibility.details.summary': 'Koostesivu (uusi välilehti)',
+  'accessibility.details.summary': 'Tarkemmat tiedot esteettömyydestä (uusi välilehti)',
   'accessibility.stamp': 'Esteettömyys huomioitu',
   'accessibility.shortcomings': 'Puutteet',
   'accessibility.shortcomings.plural': `{count, plural,
@@ -58,7 +58,7 @@ const translations = {
   'area.tab.statisticalDistricts': 'Väestötiedot',
   'area.services.local': 'Oman alueesi palvelut',
   'area.services.nearby': 'Lähialueiden toimipisteet listana',
-  'area.services.nearby.rescue_area': 'Lähialueiden palvelut listana', // TODO: correct name to replace "palvelut"
+  'area.services.nearby.rescue_area': 'Lähialueiden suojelupiirit listana',
   'area.services.nearby.rescue_district': 'Lähialueiden suojelulohkot listana',
   'area.services.nearby.rescue_sub_district': 'Lähialueiden suojelualalohkot listana',
   'area.services.all': 'Toimipisteet listana',
@@ -236,7 +236,7 @@ const translations = {
   'embedder.title': 'Palvelukartan upotustyökalu',
   'embedder.title.info': 'Palvelukartan upotustyökalulla voit upottaa Palvelukartan yksittäisiä näkymiä osaksi mitä tahansa verkkosivua.',
   'embedder.info.title': 'Ohjeet upotustyökalun käyttöön',
-  'embedder.info.description': 'Valitse alla olevasta valikoimasta karttanäkymään haluamasi toiminnallisuudet. Kopioi kartanalta URL-linkki tai html-koodi käyttöösi.\n\n Tarkemmat ohjeet upotustyökalun käyttöön eri tilanteissa löydät',
+  'embedder.info.description': 'Valitse alla olevasta valikoimasta karttanäkymään haluamasi toiminnallisuudet. Kopioi kartan alta URL-linkki tai html-koodi käyttöösi.\n\n Tarkemmat ohjeet upotustyökalun käyttöön eri tilanteissa löydät',
   'embedder.info.link': 'täältä (uusi välilehti)',
   'embedder.url.title': 'Kopioi URL',
   'embedder.width.title': 'Upotuksen leveys',
@@ -304,9 +304,9 @@ const translations = {
   'general.distance.kilometers': 'Kilometrin päässä',
   'general.yes': 'Kyllä',
   'general.no': 'Ei',
-  'general.openSettings': 'Avaa asetukset',
+  'general.openSettings': 'Avaa omat asetukset',
   'general.closeSettings': 'Sulje asetukset',
-  'general.hideSettings': 'Piilota asetukset',
+  'general.hideSettings': 'Piilota omat asetukset',
   'general.fetching': 'Ladataan tietoja...',
   'general.home': 'Koti',
   'general.home.logo.ariaLabel': 'Palvelukartta - Siirry etusivulle',
@@ -361,6 +361,7 @@ const translations = {
   'general.search': 'Hae',
   'general.share.link': 'Jaa linkki',
   'general.tools': 'Karttatyökalut',
+  'general.ownSettings': 'Omat asetukset',
   'general.time.short': 'klo',
 
   // Home
@@ -602,7 +603,7 @@ const translations = {
   // Settings
   'settings': 'Asetukset',
   'settings.open': 'Avaa asetusvalinnat',
-  'settings.close': 'Sulje asetusvalinnat',
+  'settings.close': 'Piilota asetusvalinnat',
   'settings.change': 'Muokkaa asetuksiasi',
   'settings.drawer.aria.title': 'Tämän hetkiset asetukset',
   'settings.citySettings': 'Kaupunki',
@@ -652,7 +653,7 @@ const translations = {
   'settings.city.hanko': 'Hanko',
   'settings.city.hyvinkää': 'Hyvinkää',
   'settings.city.inkoo': 'Inkoo',
-  'settings.city.järvempää': 'Järvempää',
+  'settings.city.järvenpää': 'järvenpää',
   'settings.city.karkkila': 'Karkkila',
   'settings.city.kerava': 'Kerava',
   'settings.city.lapinjärvi': 'Lapinjärvi',
@@ -676,13 +677,14 @@ const translations = {
   'settings.map.accessible_map': 'Korkeakontrastinen kartta',
   'settings.aria.changed': 'Asetukset muutettu. Muista tallentaa',
   'settings.aria.closed': 'Asetukset suljettu',
-  'settings.aria.open': 'Avaa asetukset',
+  'settings.aria.open': 'Avaa omat asetukset',
   'settings.accordion.open': 'Avaa kaikki tehdyt asetukset',
   'settings.aria.opened': 'Asetukset avattu',
   'settings.aria.saved': 'Asetukset on tallennettu',
   'settings.choose.mobility': 'Valitse liikkumisrajoitteesi',
   'settings.choose.senses': 'Valitse aistirajoitteesi',
-  'settings.choose.cities': 'Valitse alueasetuksesi',
+  'settings.choose.cities': 'Valitse kaupunkiasetuksesi',
+  'settings.choose.districts': 'Valitse alueasetuksesi', // TODO is waiting here for wellness districts
   'settings.map.info': 'Kartta-asetuksista voit valita sinulle parhaiten sopivan pohjakartan.',
 
   // Tools
@@ -692,7 +694,7 @@ const translations = {
   'tool.print': 'Tulosta',
 
   'info.title': 'Tietoa palvelusta ja saavutettavuusseloste',
-  'info.statement': 'Saavutettavuusseloste',
+  'info.statement': 'Saavutettavuusseloste (uusi välilehti)',
 
   'alert.close': 'Sulje ilmoitus',
 };

@@ -24,6 +24,7 @@ jobs:
       RESERVATIONS_API: https://api.hel.fi/respa/v1
       PRODUCTION_PREFIX: SM
       DIGITRANSIT_API: https://api.digitransit.fi/routing/v1/routers/hsl/index/graphql
+      DIGITRANSIT_API_KEY: a9219bfb875d4cc79b5f69123b57d0db
       FEEDBACK_URL: https://api.hel.fi/servicemap/open311/
       HEARING_MAP_API: https://kuulokuvat.fi/api/v1/servicemap-url
       MODE: production

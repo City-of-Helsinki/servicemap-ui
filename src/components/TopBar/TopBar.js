@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Typography, AppBar, Toolbar, ButtonBase, Container,
+  AppBar, ButtonBase, Container, Toolbar, Typography, useMediaQuery,
 } from '@mui/material';
 import { Map } from '@mui/icons-material';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -17,16 +17,14 @@ import MenuButton from './MenuButton';
 import SMLogo from './SMLogo';
 import { isHomePage } from '../../utils/path';
 import LanguageMenu from './LanguageMenu';
-import config from '../../../config';
 import { getLocale } from '../../redux/selectors/locale';
 import MobileNavButton from './MobileNavButton/MobileNavButton';
 import LanguageMenuComponent from './LanguageMenu/LanguageMenuComponent';
-import useMobileStatus from '../../utils/isMobile';
+import openA11yLink from './util';
 
 const TopBar = (props) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const location = useLocation();
-  const isMobile = useMobileStatus();
   const intl = useIntl();
   const locale = useSelector(getLocale);
   const getAddressNavigatorParams = useNavigationParams();
@@ -136,6 +134,8 @@ const TopBar = (props) => {
     }
   };
 
+  const large = useMediaQuery('(min-width:360px)');
+
   const renderDrawerMenu = pageType => (
     <DrawerMenu
       isOpen={drawerOpen}
@@ -146,13 +146,6 @@ const TopBar = (props) => {
     />
   );
 
-  const openA11yLink = () => {
-    const a11yURLs = config.accessibilityStatementURL;
-    const localeUrl = !a11yURLs[locale] || a11yURLs[locale] === 'undefined' ? null : a11yURLs[locale];
-    window.open(localeUrl);
-  };
-
-
   const renderTopBar = (pageType) => {
     const toolbarBlueClass = `${
       classes.toolbarBlue
@@ -161,14 +154,14 @@ const TopBar = (props) => {
     }`;
     const contrastAriaLabel = intl.formatMessage({ id: `general.contrast.ariaLabel.${theme === 'dark' ? 'off' : 'on'}` });
 
-    const topBarLink = (textId, onClick, isCurrent, ariaLabel) => (
-      <ButtonBase sx={{ ml: 3 }} onClick={onClick} aria-current={isCurrent} aria-label={ariaLabel}>
+    const topBarLink = (textId, onClick, isCurrent, ariaLabel, linkId) => (
+      <ButtonBase sx={{ ml: 3 }} onClick={onClick} aria-current={isCurrent} aria-label={ariaLabel} id={linkId}>
         <Typography><FormattedMessage id={textId} /></Typography>
       </ButtonBase>
     );
 
-    const navigationButton = (textId, onClick, isCurrent) => (
-      <ButtonBase sx={{ ml: 5 }} onClick={onClick} aria-current={isCurrent}>
+    const navigationButton = (textId, onClick, isCurrent, buttonId) => (
+      <ButtonBase onClick={onClick} aria-current={isCurrent} className={classes.navigationButton} id={buttonId}>
         <Typography sx={{ color: '#000', fontSize: '1.125rem', fontWeight: 600 }}>
           <FormattedMessage id={textId} />
         </Typography>
@@ -185,14 +178,17 @@ const TopBar = (props) => {
                 <LanguageMenu mobile={pageType === 'mobile'} />
                 {/* Right side links */}
                 <Container disableGutters sx={{ justifyContent: 'flex-end', display: 'flex', mr: 0 }}>
-                  {topBarLink('general.contrast', () => handleContrastChange(), false, contrastAriaLabel)}
-                  {!smallScreen ? (
-                    <>
-                      {topBarLink('info.statement', () => openA11yLink())}
-                      {topBarLink('general.pageTitles.info', () => handleNavigation('info'), currentPage === 'info')}
-                      {topBarLink('home.send.feedback', () => handleNavigation('feedback'), currentPage === 'feedback')}
-                    </>
-                  ) : null }
+                  {topBarLink('general.contrast', () => handleContrastChange(), false, contrastAriaLabel, 'ContrastLink')}
+                  {!smallScreen
+                    ? (
+                      <>
+                        {topBarLink('info.statement', () => openA11yLink(locale), false, undefined, 'AccessibilityStatementLink')}
+                        {topBarLink('general.pageTitles.info', () => handleNavigation('info'), currentPage === 'info', undefined, 'PageInfoLink')}
+                        {topBarLink('home.send.feedback', () => handleNavigation('feedback'), currentPage === 'feedback', undefined, 'FeedbackLink')}
+                      </>
+                    )
+                    : null
+                  }
                 </Container>
               </Toolbar>
             </nav>
@@ -200,7 +196,7 @@ const TopBar = (props) => {
 
           {/* Toolbar white area */}
           <Toolbar disableGutters className={pageType === 'mobile' ? classes.toolbarWhiteMobile : classes.toolbarWhite}>
-            <SMLogo onClick={() => handleNavigation('home')} />
+            <SMLogo small={!large} onClick={() => handleNavigation('home')} />
             {hideButtons
               ? null
               : (
@@ -217,9 +213,9 @@ const TopBar = (props) => {
                     <nav className={classes.navContainer}>
                       {!smallScreen ? (
                         <div className={classes.navigationButtonsContainer}>
-                          {navigationButton('general.frontPage', () => handleNavigation('home'), currentPage === 'home')}
-                          {navigationButton('general.pageLink.area', () => handleNavigation('area'), currentPage === 'area')}
-                          {navigationButton('services', () => handleNavigation('services'), currentPage === 'services')}
+                          {navigationButton('general.frontPage', () => handleNavigation('home'), currentPage === 'home', 'HomePage')}
+                          {navigationButton('general.pageLink.area', () => handleNavigation('area'), currentPage === 'area', 'AreaPage')}
+                          {navigationButton('services', () => handleNavigation('services'), currentPage === 'services', 'ServicePage')}
                         </div>
                       ) : (
                         <>

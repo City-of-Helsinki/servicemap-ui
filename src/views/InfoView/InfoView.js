@@ -41,11 +41,16 @@ const InfoView = ({ classes, locale }) => {
       ) : null}
       <Typography component="h3" variant="body2"><FormattedMessage id="app.title" /></Typography>
       <Typography className={classes.text} variant="body2">
-        Palvelukartalta löydät Espoon, Helsingin, Kauniaisten, Vantaan ja Kirkkonummen julkiset toimipisteet ja niiden palvelut.
-        Esimerkiksi koulut, päiväkodit, terveysasemat. Palvelukartalta löytyy myös muitakin palveluja, esimerkiksi
-        HUSin (esimerkiksi röntgenit), HSY:n (esimerkiksi kierrätyspisteet), Aalto-yliopiston ja muita valtion
-        palveluja. Yksityisiä palveluja, esimerkiksi turistikohteita (esimerkiksi ravintoloita) tulee palvelukartalle
-        MyHelsinki-rajapinnan kautta.
+        Palvelukartalta löytyy Espoon, Helsingin, Kauniaisten, Vantaan, Länsi-Uudenmaan sekä Vantaan
+        ja Keravan hyvinvointialueiden julkiset toimipisteet ja niiden palvelut. Esimerkiksi koulut,
+        päiväkodit sekä terveysasemat.
+      </Typography>
+
+      <Typography className={classes.text} variant="body2">
+        Palvelukartalta löytyy lisäksi muitakin palveluja, kuten HUSin röntgenit, Kirkkonummen
+        liikuntapalvelut, HSY:n kierrätyspisteet, Aalto-yliopiston ja muita valtion palveluja.
+        Lisäksi kartalta löytyy yksityisiä palveluita, jotka tulevat Kaupunki alustana palvelun
+        kautta.
       </Typography>
       {
         // Haku
@@ -68,125 +73,169 @@ const InfoView = ({ classes, locale }) => {
         <li><Typography variant="body2">veistoksia</Typography></li>
         <li><Typography variant="body2">tapahtumia</Typography></li>
         <li><Typography variant="body2">osoitteita</Typography></li>
+        <li><Typography variant="body2">väestönsuojia</Typography></li>
+      </ul>
+      <Typography component="h4" variant="body2">Vaihtoehtoisia hakutapoja:</Typography>
+      <ul>
+        <li>
+          <Typography variant="body2">
+            Aloita kirjoittamaan hakukenttään hakemaasi sanaa, jolloin saat hakuehdotuksia, joista
+            voit valita itsellesi sopivimman. Esimerkiksi ”päiväko”
+          </Typography>
+        </li>
+        <li>
+          <Typography variant="body2">
+            Voit myös kirjoittaa hakemasi sanan kokonaisuudessaan ja painaa tämän jälkeen Hae
+            –painiketta tai Enter näppäimistöltä. Esimerkiksi ”luontopolku”.
+          </Typography>
+        </li>
+        <li>
+          <Typography variant="body2">
+            Jos hakutulos ei ollut hyvä, voit tarkentaa hakua Tarkenna–painikkeella.
+          </Typography>
+        </li>
+        <li>
+          <Typography variant="body2">
+            Voit hakea myös usean sanan yhdistelmällä, esimerkiksi ”koulu espanja”.
+          </Typography>
+        </li>
+        <li>
+          <Typography variant="body2">
+            Hae osoitteella: kirjoita osoite, minkä läheltä etsit palvelua. Hae osoitteella:
+            kirjoita osoite, minkä läheltä etsit palvelua.
+          </Typography>
+        </li>
       </ul>
       <Typography className={classes.text} variant="body2">
-        Kirjoita palvelukartan hakukenttään haluamasi sana. Saat hakuehdotuksia, joista voit valita itsellesi sopivan.
-        Voit myös kirjoittaa hakemasi sanan loppuun ja painaa Hae –painiketta tai Enter näppäimistöltä. Jos
-        hakutulos ei ollut hyvä, voit tarkentaa hakua Tarkenna –painikkeella. Voit hakea myös usean sanan
-        yhdistelmällä, esimerkiksi ”koulu espanja”.
-      </Typography>
-      <Typography className={classes.text} variant="body2">
-        Jos hakutulos on tyhjä, tarkista kirjoitusasu ja kaupunkivalinnat. Kirjoita osoite, minkä läheltä etsit palvelua.
-        Kirjoita avainsanoja, esim ”luontopolku”, ”ruotsinkielinen päiväkoti”. Hakukentässä on ruksi, jota
-        painamalla voit tyhjentää haun. Palvelukartan hakukentän nuolipainikkeella voit palata edelliseen
-        näkymään.
+        Hakukentässä on ruksi, jota painamalla voit tyhjentää haun. Palvelukartan hakukentän
+        nuolipainikkeella voit palata edelliseen näkymään. Jos hakutulos on tyhjä, tarkista
+        kirjoitusasu ja aluevalinnat.
       </Typography>
       <Typography component="h4" variant="body2">Voit järjestää hakutulokset:</Typography>
       <ul>
-        <li><Typography variant="body2">osuvin ensin</Typography></li>
         <li><Typography variant="body2">aakkosjärjestys, A-Ö</Typography></li>
         <li><Typography variant="body2">käänteinen aakkosjärjestys Ö-A</Typography></li>
         <li><Typography variant="body2">esteettömin ensin</Typography></li>
         <li><Typography variant="body2">lähin ensin (anna palvelukartalle lupa paikantaa sinut)</Typography></li>
       </ul>
-      {/* </Typography> */}
+      <Typography className={classes.text} variant="body2">
+        Jos olet valinnut jonkin esteettömyysasetuksen (esim. käytän kuulolaitetta), hakutulos
+        järjestyy esteettömin palvelu ensin (palvelussa on induktiosilmukka). Jos vaihdat
+        esteettömyysasetusta, järjestys voi muuttua.
+      </Typography>
+      <Typography className={classes.text} variant="body2">
+        Jos annat luvan Palvelukartan paikantaa sinut, hakutulos järjestyy sinua lähin palvelu
+        ensin. Osoitteen voi myös kirjoittaa käsin.
+      </Typography>
       <Typography component="h3" variant="body2">Osoitehaku</Typography>
       <Typography className={classes.text} variant="body2">
-        Voit kirjoittaa hakukenttään myös osoitteen, josta haluat etsiä palveluja. Haku antaa sinulle osoite- ja alue-
-        ehdotuksia. Voit myös kirjoittaa osoitteen loppuun saakka.
+        Voit kirjoittaa hakukenttään kadun nimen, josta haluat etsiä palveluja. Haku antaa sinulle
+        valittavaksi kadun nimen, valittuasi tulee osoite-ehdotukset. Helsingin kohdalla tulee myös
+        alue-ehdotuksia (esim. oppilaaksiotto-alueet).
       </Typography>
-      <Typography component="h4" variant="body2">Näet välilehdellä ”Alueet”, seuraavat palvelut:</Typography>
+      <Typography component="h4" variant="body2">Kohdasta ”Alueesi palvelut” löydät mm. seuraavat palvelut:</Typography>
       <ul>
         <li><Typography variant="body2">terveyskeskus</Typography></li>
         <li><Typography variant="body2">neuvola</Typography></li>
-        <li><Typography variant="body2">suomenkielinen esiopetus</Typography></li>
-        <li><Typography variant="body2">suomenkielinen ala-aste</Typography></li>
-        <li><Typography variant="body2">suomenkielinen yläaste</Typography></li>
-        <li><Typography variant="body2">ruotsinkielinen esiopetus</Typography></li>
-        <li><Typography variant="body2">ruotsinkielinen yläaste</Typography></li>
-        <li><Typography variant="body2">pelastusasema</Typography></li>
-        <li><Typography variant="body2">lähin väestöhälytin</Typography></li>
-        <li><Typography variant="body2">lähellä olevat yhteiskalliosuojat</Typography></li>
-      </ul>
-      <Typography component="h4" variant="body2">Alueet ja piirit, joihin osoite kuuluu:</Typography>
-      <ul>
+        <li><Typography variant="body2">suomen- ja ruotsinkielinen esiopetus</Typography></li>
+        <li><Typography variant="body2">suomen- ja ruotsinkielinen ala-aste</Typography></li>
+        <li><Typography variant="body2">suomen- ja ruotsinkielinen ylä-aste</Typography></li>
+        <li><Typography variant="body2">pysäköintialueet</Typography></li>
         <li><Typography variant="body2">postinumeroalue</Typography></li>
         <li><Typography variant="body2">kaupunginosa</Typography></li>
-        <li><Typography variant="body2">terveysasema- alue</Typography></li>
-        <li><Typography variant="body2">neuvola-alue</Typography></li>
-        <li><Typography variant="body2">suomenkielinen esiopetusalue</Typography></li>
-        <li><Typography variant="body2">suomenkielinen ala-astealue</Typography></li>
-        <li><Typography variant="body2">suomenkielinen yläastealue</Typography></li>
-        <li><Typography variant="body2">ruotsinkielinen esiopetusalue</Typography></li>
-        <li><Typography variant="body2">ruotsinkielinen ala-astealue</Typography></li>
-        <li><Typography variant="body2">ruotsinkielinen yläastealue</Typography></li>
         <li><Typography variant="body2">suojelupiiri</Typography></li>
         <li><Typography variant="body2">suojelulohko</Typography></li>
         <li><Typography variant="body2">suojelu alalohko</Typography></li>
+        <li><Typography variant="body2">luonnonsuojelu-alueet</Typography></li>
       </ul>
       <Typography component="h3" variant="body2">Palveluluettelo</Typography>
       <Typography className={classes.text} variant="body2">
-        Palveluluettelo löytyy palvelukartan etusivulta.
-        Voit siinä etsiä palvelupuun avulla yhtä tai useampaa palvelukokonaisuutta.
-        Esim. lähiliikunta, liikuntapuistot ja päiväkoti. Voit poistaa tekemiäsi valintoja.
+        Palveluluettelo löytyy Palvelukartan ylä-osioista. Voit etsiä palvelupuun avulla yhtä tai
+        useampaa palvelukokonaisuutta. Esim. lähiliikunta, liikuntapuistot ja päiväkoti. Muista
+        painaa lopuksi ”Tee haku” painiketta.
       </Typography>
-      <Typography component="h3" variant="body2">Asetukset</Typography>
-      <Typography className={classes.text} variant="body2">Sivun ylävalikosta löydät seuraavat asetukset:</Typography>
-      <Typography component="h4" variant="body2">Esteettömyysasetukset</Typography>
-      <Typography className={classes.text} variant="body2">Täältä voit valita seuraavista rajoitteista itsellesi sopivan asetuksen</Typography>
+      <Typography component="h3" variant="body2">Omat asetukset</Typography>
+      <Typography className={classes.text} variant="body2">
+        Sivun ylälaidasta sekä hakuruudun alapuolelta löydät omat asetukset. Täältä voit valita
+        seuraavista itsellesi sopivat asetukset:
+      </Typography>
       <ul>
-        <li>
-          <Typography variant="body2">Aistirajoitteet:</Typography>
-          <ul>
-            <li><Typography variant="body2">käytän kuulolaitetta</Typography></li>
-            <li><Typography variant="body2">olen näkövammainen</Typography></li>
-            <li><Typography variant="body2">minun on vaikea erottaa värejä</Typography></li>
-          </ul>
-        </li>
-        <li>
-          <Typography variant="body2">Liikkumisrajoitteet:</Typography>
-          <ul>
-            <li><Typography variant="body2">käytän pyörätuolia</Typography></li>
-            <li><Typography variant="body2">olen liikkumisesteinen</Typography></li>
-            <li><Typography variant="body2">käytän rollaattoria</Typography></li>
-            <li><Typography variant="body2">työnnän rattaita</Typography></li>
-          </ul>
-        </li>
+        <li><Typography variant="body2">Aistirajoitteet:</Typography></li>
+        <ul>
+          <li><Typography variant="body2">käytän kuulolaitetta</Typography></li>
+          <li><Typography variant="body2">olen näkövammainen</Typography></li>
+          <li><Typography variant="body2">minun on vaikea erottaa värejä</Typography></li>
+        </ul>
+        <li><Typography variant="body2">Liikkumisrajoitteet:</Typography></li>
+        <ul>
+          <li><Typography variant="body2">käytän pyörätuolia</Typography></li>
+          <li><Typography variant="body2">olen liikkumisesteinen</Typography></li>
+          <li><Typography variant="body2">käytän rollaattoria</Typography></li>
+          <li><Typography variant="body2">työnnän rattaita</Typography></li>
+        </ul>
+        <li><Typography variant="body2">Kaupunkiasetuksesi:</Typography></li>
+        <ul>
+          <li><Typography variant="body2">Helsinki</Typography></li>
+          <li><Typography variant="body2">Espoo</Typography></li>
+          <li><Typography variant="body2">Vantaa</Typography></li>
+          <li><Typography variant="body2">Kauniainen</Typography></li>
+          <li><Typography variant="body2">Kirkkonummi</Typography></li>
+        </ul>
       </ul>
+
       <Typography className={classes.text} variant="body2">
-        Jos valitset jonkin esteettömyysasetuksen, hakemasi toimipistesivu näyttää sinulle esimerkiksi,
-        miten pääset rollaattorilla toimipisteeseen ja mitkä ovat mahdolliset esteet siellä
+        Jos valitset jonkin esteettömyysasetuksen, hakemasi toimipistesivu näyttää sinulle
+        esimerkiksi, miten pääset rollaattorilla toimipisteeseen ja mitkä ovat mahdolliset esteet
+        siellä.
       </Typography>
-      <Typography component="h4" variant="body2">Kaupunkiasetukset</Typography>
       <Typography className={classes.text} variant="body2">
-        Täältä voit valita joko yhden tai useamman seuraavista kaupungeista: Espoo, Helsinki, Kauniainen, Vantaa, Kirkkonummi
-        Kun valitset jonkin kaupungin, hakutulokset kohdistuvat ainoastaan tämän kaupungin tietoihin.
-        Jos et ole valinnut yhtäkään kaupunkia, haku kohdistuu kaikkiin kaupunkeihin.
+        Kun valitset jonkin kaupungin, hakutulokset kohdistuvat ainoastaan tämän kaupungin
+        tietoihin. Jos et ole valinnut yhtäkään kaupunkia, haku kohdistuu kaikkiin kaupunkeihin.
       </Typography>
+
+      <Typography component="h4" variant="body2">Karttatyökalut</Typography>
+      <Typography className={classes.text} variant="body2">
+        Karttatyökaluista löydät mahdollisuuksia hyödyntää Palvelukarttaa seuraavien työkalujen
+        avulla:
+      </Typography>
+      <ul>
+        <li><Typography variant="body2">Palvelukartan upotustyökalu</Typography></li>
+        <li><Typography variant="body2">Lataa tiedot</Typography></li>
+        <li><Typography variant="body2">Tulosta</Typography></li>
+        <li><Typography variant="body2">Mittaa etäisyys hiirellä</Typography></li>
+      </ul>
+
       <Typography component="h4" variant="body2">Karttapohjan asetukset</Typography>
-      <Typography className={classes.text} variant="body2">Voit valita karttapohjaksi</Typography>
+      <Typography className={classes.text} variant="body2">
+        Löydät halutun karttapohjan karttatyökaluista. Voit valita karttapohjaksi seuraavat:
+      </Typography>
       <ul>
-        <li><Typography variant="body2">palvelukartta</Typography></li>
-        <li><Typography variant="body2">suurikontrastinen kartta</Typography></li>
+        <li><Typography variant="body2">palvelukartta/oletuskartta</Typography></li>
+        <li><Typography variant="body2">ilmakuva</Typography></li>
         <li><Typography variant="body2">opaskartta</Typography></li>
+        <li><Typography variant="body2">korkeakontrastinen kartta</Typography></li>
       </ul>
-      {/* <Typography className={classes.text} variant="body2">
-        in the accessibility settings you have chosen “I am visually impaired” or “I have color vision deficiency”,
-        then the background map will automatically change into a high-contrast background map. You can change
-        the background map in the settings.
-      </Typography> */}
+
       <Typography component="h3" variant="body2">Palaute</Typography>
       <Typography className={classes.text} variant="body2">
-        Kiitämme kaikesta palautteesta, jotta voimme kehittää Palvelukarttaa yhä paremmaksi.
-        Voit lähettää palvelukartasta yleistä palautetta palvelukartan kehittäjille:
-        Hel.fi/palaute (linkki, avautuu uudella välilehdellä)
-        Voit lähettää toimipisteeseen liittyvää palautetta suoraan palvelukartan toimipistesivulta.
-        Hae haluamasi toimipiste, niin löydät palautelomakkeen toimipisteen tiedoista perustiedot –välilehdeltä.
+        Kiitämme kaikesta palautteesta, jotta voimme kehittää Palvelukarttaa yhä paremmaksi. Voit
+        lähettää Palvelukartasta yleistä palautetta kartan kehittäjille:&nbsp;
+        <Link target="_blank" href="https://palvelukartta.hel.fi/fi/feedback">
+          <Typography variant="string">https://palvelukartta.hel.fi/fi/feedback</Typography>
+        </Link>
+        &nbsp;
+        (linkki, avautuu uudella välilehdellä).
       </Typography>
+      <Typography className={classes.text} variant="body2">
+        Voit lähettää toimipisteeseen liittyvää palautetta suoraan palvelukartan toimipistesivulta.
+        Hae haluamasi toimipiste, niin löydät palautelomakkeen toimipisteen tiedoista perustiedot
+        –välilehdeltä.
+      </Typography>
+
       <Typography component="h3" variant="body2">Tiedot ja tekijänoikeudet</Typography>
       <Typography className={classes.text} variant="body2">
-        Palvelukartta on rakennettu mahdollisimman täydellisesti avointa dataa ja avointa lähdekoodia käyttäen.
-        Kartan lähdekoodi löytyy GitHubista ja sen kehittämiseen rohkaistaan.
+        Palvelukartta on rakennettu mahdollisimman täydellisesti avointa dataa ja avointa
+        lähdekoodia käyttäen. Kartan lähdekoodi löytyy GitHubista ja sen kehittämiseen rohkaistaan.
       </Typography>
       <ul>
         <li>
@@ -201,18 +250,33 @@ const InfoView = ({ classes, locale }) => {
         </li>
       </ul>
       <Typography className={classes.text} variant="body2">
-        Karttatiedot haetaan avoimesta OpenStreetMapista ja niiden tekijänoikeus kuuluu OpenStreetMapin tekijöille.
-        Reittitiedot tuodaan palveluumme HSL:n reittioppaasta.
-        Palvelukartan tietoja voit käyttää vapaasti, paitsi veistosten ja julkisen taiteen pisteiden valokuvat,
-        jotka ovat tekijänoikeussuojattuja, eikä niitä voi käyttää kaupallisiin tarkoituksiin.
-        Rekisteriselosteet löydät kootusti hel.fi-portaalista.
-        Katso kohdat Kaupunginkanslia: Toimipisterekisterin keskitetty tietovarasto ja Helsingin kaupungin palautejärjestelmä.
+        Karttatiedot haetaan avoimesta OpenStreetMapista ja niiden tekijänoikeus kuuluu
+        OpenStreetMapin tekijöille. Reittitiedot tuodaan palveluumme HSL:n reittioppaasta.
+        Palvelukartan tietoja voit käyttää vapaasti, paitsi veistosten ja julkisen taiteen pisteiden
+        valokuvat, jotka ovat tekijänoikeussuojattuja, eikä niitä voi käyttää kaupallisiin
+        tarkoituksiin. Rekisteriselosteet löydät kootusti hel.fi sivuilta:&nbsp;
+        <Link target="_blank" href="https://www.hel.fi/fi/paatoksenteko-ja-hallinto/tietoa-helsingista/tietosuoja-ja-tiedonhallinta/tietosuoja/tietosuojaselosteet">
+          <Typography variant="string">https://www.hel.fi/fi/paatoksenteko-ja-hallinto/tietoa-helsingista/tietosuoja-ja-tiedonhallinta/tietosuoja/tietosuojaselosteet</Typography>
+        </Link>
       </Typography>
       <Typography component="h3" variant="body2">Evästeet</Typography>
       <Typography className={classes.text} variant="body2">
-        Käytämme sivustollamme evästeitä parantaaksemme sivuston suorituskykyä. Sivustolla kerätään automaattisesti alla kuvatut tiedot kävijöistä. Näitä tietoja käytetään sivuston käyttöliittymän ja käyttökokemuksen parantamiseen sekä kävijämäärien tilastolliseen seurantaan. Tietoja ei luovuteta ulkopuolisille tahoille. Sivustolla käytetään evästeitä (cookies) käyttäjäistunnon ylläpitämiseksi. Teknisiin evästeisiin ei kerätä eikä tallenneta käyttäjän yksilöiviä henkilötietoja.
-        Käyttäjällä on mahdollisuus estää evästeiden käyttö muuttamalla selaimensa asetuksia. Sivuston käyttäminen ilman evästeitä saattaa kuitenkin vaikuttaa sivujen toiminnallisuuteen.
-        Palvelun kävijätilastointia varten kerätyt tiedot anonymisoidaan, joten niitä ei voida liittää yksittäiseen henkilöön. Tällaisia tietoja ovat:
+        Käytämme sivustollamme evästeitä parantaaksemme sivuston suorituskykyä. Sivustolla kerätään
+        alla kuvatut tiedot kävijöistä. Näitä tietoja käytetään sivuston käyttöliittymän ja
+        käyttökokemuksen parantamiseen sekä kävijämäärien tilastolliseen seurantaan. Tietoja ei
+        luovuteta ulkopuolisille tahoille.
+      </Typography>
+      <Typography className={classes.text} variant="body2">
+        Sivustolla käytetään evästeitä (cookies) käyttäjäistunnon ylläpitämiseksi. Teknisiin
+        evästeisiin ei kerätä eikä tallenneta käyttäjän yksilöiviä henkilötietoja.
+      </Typography>
+      <Typography className={classes.text} variant="body2">
+        Käyttäjällä on mahdollisuus estää evästeiden käyttö muuttamalla selaimensa asetuksia.
+        Sivuston käyttäminen ilman evästeitä saattaa kuitenkin vaikuttaa sivujen toiminnallisuuteen.
+      </Typography>
+      <Typography className={classes.text} variant="body2">
+        Palvelun kävijätilastointia varten kerätyt tiedot anonymisoidaan, joten niitä ei voida
+        liittää yksittäiseen henkilöön. Tällaisia tietoja ovat:
       </Typography>
       <ul>
         <li>
