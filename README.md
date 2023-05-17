@@ -2,8 +2,8 @@
 
 ## Requirements 
 Using following:
-* Node LTS (v14)
-* npm (v6)
+* Node LTS (v18)
+* npm (v9)
 If you are using NVM you can also use `nvm use` to get correct version.
 
 For development:
