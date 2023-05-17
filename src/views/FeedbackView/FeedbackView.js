@@ -154,24 +154,20 @@ const FeedbackView = ({
 
     if (feedbackType === 'unit') {
       // When accessibility options are added to feedback, different service codes will be used
-      const serviceCode = 1363;
       body = new URLSearchParams({
         description: formFields.feedback.value,
         email: formFields.email.value,
         can_be_published: permission,
-        service_code: serviceCode,
         service_object_id: selectedUnit.id,
         service_object_type: 'https://www.hel.fi/servicemap/v2',
         service_request_type: 'OTHER',
       }).toString();
     } else if (feedbackType === 'general') {
-      const serviceCode = 1363;
       body = new URLSearchParams({
         description: formFields.feedback.value,
         email: formFields.email.value,
         internal_feedback: true,
         can_be_published: permission,
-        service_code: serviceCode,
         service_request_type: 'OTHER',
       }).toString();
     }
