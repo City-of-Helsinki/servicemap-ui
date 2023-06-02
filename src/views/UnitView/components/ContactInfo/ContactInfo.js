@@ -22,6 +22,7 @@ const ContactInfo = ({
   const additionalEntrances = unit?.entrances?.filter(entrance => !entrance.is_main_entrance);
   const subgroupContacts = unit?.connections?.filter(c => c.section_type === 'SUBGROUP');
 
+  const showCallInfo = unit.call_charge_info && unit.call_charge_info !== 'pvm/mpm' && unit.call_charge_info.fi !== 'pvm/mpm';
   const address = {
     type: 'ADDRESS',
     value: unit.street_address ? getAddressFromUnit(unit, getLocaleText, intl) : intl.formatMessage({ id: 'unit.address.missing' }),
@@ -30,7 +31,7 @@ const ContactInfo = ({
   const phone = {
     type: 'PHONE',
     value: unit.phone ? { phone: unit.phone } : intl.formatMessage({ id: 'unit.phone.missing' }),
-    noDivider: (unit.call_charge_info && unit.call_charge_info.fi !== 'pvm/mpm') || (subgroupContacts && subgroupContacts.length > 0), // TODO: fix this hard coded value when unit data returns call charge boolean
+    noDivider: showCallInfo || (subgroupContacts && subgroupContacts.length > 0), // TODO: fix this hard coded value when unit data returns call charge boolean
   };
   const email = {
     type: 'EMAIL',
@@ -46,7 +47,7 @@ const ContactInfo = ({
 
   // Custom list item component for call charge info
   const callInformation = {
-    component: unit.call_charge_info && unit.call_charge_info.fi !== 'pvm/mpm' // TODO: fix this hard coded value when unit data returns call charge boolean
+    component: showCallInfo // TODO: fix this hard coded value when unit data returns call charge boolean
       && (
         <React.Fragment key="callInformation">
           <ListItem className={classes.accordionItem}>
@@ -57,7 +58,7 @@ const ContactInfo = ({
               collapseContent={(
                 <div className={classes.accordionContaianer}>
                   <Typography className={classes.callInfoText}>
-                    {getLocaleText(unit.call_charge_info)}
+                    {typeof unit.call_charge_info === 'string' ? unit.call_charge_info : getLocaleText(unit.call_charge_info)}
                   </Typography>
                 </div>
               )}
