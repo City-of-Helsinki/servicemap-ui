@@ -16,6 +16,7 @@ class OwnSettingsMenuButton extends React.Component {
         panelID="SettingsMenuPanel"
         menuHeader="general.ownSettings"
         menuItems={[]}
+        maxHeight="241px"
       >
         <SettingsDropdowns variant="ownSettings" />
       </MenuButton>
