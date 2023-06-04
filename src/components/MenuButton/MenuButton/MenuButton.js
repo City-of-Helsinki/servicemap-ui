@@ -42,7 +42,7 @@ class MenuButton extends React.Component {
 
   renderMenu = () => {
     const {
-      classes, panelID, children, menuHeader, menuItems, menuAriaLabel,
+      classes, panelID, children, menuHeader, menuItems, menuAriaLabel, maxHeight,
     } = this.props;
     return (
       <ClickAwayListener onClickAway={this.handleClose}>
@@ -50,6 +50,7 @@ class MenuButton extends React.Component {
           id={panelID}
           aria-label={menuAriaLabel}
           className={classes.menuPanel}
+          style={{ maxHeight }}
           role="region"
         >
           <Typography sx={{
@@ -152,6 +153,7 @@ MenuButton.propTypes = {
     text: PropTypes.string.isRequired,
     onClick: PropTypes.func.isRequired,
   })).isRequired,
+  maxHeight: PropTypes.string.isRequired,
 };
 
 MenuButton.defaultProps = {
