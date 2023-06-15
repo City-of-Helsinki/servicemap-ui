@@ -54,9 +54,5 @@ export default theme => ({
     border: `${theme.palette.detail.alpha} solid 0.5px`,
     borderRadius: 4,
     right: 0,
-    overflow: 'auto',
-    minHeight: 0,
-    height: 'calc(100vh - 96px)',
-    // maxHeight: '569px',
   },
 });
