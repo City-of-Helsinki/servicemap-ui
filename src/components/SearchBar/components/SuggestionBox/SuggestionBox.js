@@ -55,6 +55,12 @@ const SuggestionBox = (props) => {
     return config.cities.filter(c => cities[c]);
   });
 
+  const organizationSettings = useSelector((state) => {
+    const { organizations } = state.settings;
+    return config.organizations?.filter(org => organizations[org.id]);
+  });
+
+
   const getAddressText = (item) => {
     if (item.isExact) {
       return `${getLocaleText(item.name)}, ${getLocaleText(item.municipality.name)}`;
@@ -99,6 +105,7 @@ const SuggestionBox = (props) => {
         fetchController.current,
         getLocaleText,
         citySettings,
+        organizationSettings,
         locale,
       ))
         .then((data) => {

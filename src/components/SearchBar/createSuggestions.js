@@ -1,4 +1,4 @@
-import { filterCities } from '../../utils/filters';
+import { filterCitiesAndOrganizations } from '../../utils/filters';
 import { getUnitCount } from '../../utils/units';
 import ServiceMapAPI from '../../utils/newFetch/ServiceMapAPI';
 
@@ -7,6 +7,7 @@ const createSuggestions = (
   abortController,
   getLocaleText,
   citySettings,
+  organizationSettings,
   locale,
 ) => async () => {
   const smAPI = new ServiceMapAPI();
@@ -46,8 +47,10 @@ const createSuggestions = (
     });
   }
 
-  // Filter units with city settings
-  filteredResults = filteredResults.filter(filterCities(citySettings));
+  // Filter units with city and organization settings
+  filteredResults = filteredResults.filter(
+    filterCitiesAndOrganizations(citySettings, organizationSettings),
+  );
 
   // Handle address results
   filteredResults.forEach((item) => {
