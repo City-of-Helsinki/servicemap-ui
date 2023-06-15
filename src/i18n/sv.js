@@ -683,7 +683,7 @@ const translations = {
   'settings.choose.mobility': 'Välj fysisk funktionsnedsättning',
   'settings.choose.senses': 'Välj sensorisk funktionsnedsättning',
   'settings.choose.cities': 'Välj stadsinställningar',
-  'settings.choose.districts': 'Välj regionala inställningar', // TODO is waiting here for wellness districts
+  'settings.choose.organization': 'Valitse palveluntarjoaja', // TODO: translate
   'settings.map.info': 'I kartinställningarna kan du välja det kartunderlag som passar dig bäst.',
 
   // Tools
