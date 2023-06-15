@@ -57,6 +57,6 @@ export default theme => ({
     overflow: 'auto',
     minHeight: 0,
     height: 'calc(100vh - 96px)',
-    // maxHeight: '569px',
+    maxHeight: '569px',
   },
 });
