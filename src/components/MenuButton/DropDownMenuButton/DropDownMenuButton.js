@@ -19,7 +19,6 @@ class DropDownMenuButton extends React.Component {
         menuAriaLabel={menuAriaLabel}
         menuHeader="general.tools"
         menuItems={menuItems}
-        maxHeight="569px"
       >
         <MapSettings />
       </MenuButton>

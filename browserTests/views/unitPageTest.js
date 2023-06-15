@@ -161,7 +161,8 @@ test('Unit page links do work correctly', async (t) => {
     .closeWindow() // Since hsl link opens in new window we need to close it
     .navigateTo(testUrl)
   ;
-});
+})
+  .skipJsErrors({ pageUrl: /.www.helmet.fi*/ });
 
 test('Unit view hearing map link opens correctly', async (t) => {
   // Test accessibility hearing map link
