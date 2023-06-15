@@ -19,7 +19,14 @@ import event from './reducers/event';
 import address from './reducers/address';
 import serviceTree from './reducers/serviceTree';
 import {
-  colorblind, hearingAid, mobility, mapType, visuallyImpaired, cities, settingsCollapsed,
+  colorblind,
+  hearingAid,
+  mobility,
+  mapType,
+  visuallyImpaired,
+  cities,
+  organizations,
+  settingsCollapsed,
 } from './reducers/settings';
 import {
   direction, order, mapRef, settingsToggled, measuringMode,
@@ -57,6 +64,7 @@ export default combineReducers({
     mobility,
     visuallyImpaired,
     cities,
+    organizations,
     mapType,
     settingsCollapsed,
   }),

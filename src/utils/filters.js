@@ -14,18 +14,23 @@ export const filterEmptyServices = cities => (obj) => {
   return cities.some(city => getUnitCount(obj, city) > 0);
 };
 
-export const filterCities = (cities, onlyUnits = false) => (result) => {
+export const filterCitiesAndOrganizations = (
+  cities = [], organizations = [], onlyUnits = false,
+) => (result) => {
+  if (onlyUnits && result.object_type !== 'unit') return false;
+
   const resultMunicipality = result.municipality?.id || result.municipality;
-  // Wellbeing area settings are checked with department values
   const resultDepartment = result.department?.id;
   const resultRootDepartment = result.root_department?.id;
 
-  return (cities.length === 0)
-    || (!(resultMunicipality || resultDepartment || resultRootDepartment))
-    || (onlyUnits && result.object_type === 'unit')
-    || (cities.includes(resultMunicipality))
-    || (cities.includes(resultDepartment))
-    || (cities.includes(resultRootDepartment));
+  const cityMatch = cities.length === 0
+    || (cities.includes(resultMunicipality));
+
+  const organizationMatch = organizations.length === 0
+    || (organizations.includes(resultDepartment))
+    || (organizations.includes(resultRootDepartment));
+
+  return cityMatch && organizationMatch;
 };
 
 export const filterResultTypes = () => (obj) => {

@@ -59,6 +59,24 @@ export const toggleCity = values => async (dispatch) => {
   }
 };
 
+export const toggleOrganization = values => async (dispatch) => {
+  const keyIsValid = SettingsUtility.isValidOrganizationSetting(values);
+  const organizationSettings = {};
+  config.organizations.forEach((organization) => {
+    organizationSettings[organization.id] = values[organization.id];
+  });
+
+  if (keyIsValid) {
+    dispatch({
+      type: 'ORGANIZATION_SET_SELECTION',
+      selection: organizationSettings,
+    });
+    config.organizations.forEach((organization) => {
+      LocalStorageUtility.saveItem(organization.id, values[organization.id]);
+    });
+  }
+};
+
 export const toggleHearingAid = (value = undefined) => setAccessibilitySelection('HEARING', 'hearingAid', value);
 
 export const toggleVisuallyImpaired = (value = undefined) => setAccessibilitySelection('SIGHT', 'visuallyImpaired', value);
