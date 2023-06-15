@@ -13,7 +13,7 @@ export function getSettings() {
 function getVersion() {
   let version = {};
   if (typeof window !== 'undefined' && typeof window.nodeEnvSettings !== 'undefined') {
-    version = window.appVersion;
+    version = window.nodeEnvSettings.appVersion;
   }
   console.log('Palvelukartta version', version);
   return version;
