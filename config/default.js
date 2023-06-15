@@ -11,10 +11,12 @@ export function getSettings() {
 }
 
 function getVersion() {
+  let version = {};
   if (typeof window !== 'undefined' && typeof window.nodeEnvSettings !== 'undefined') {
-      return window.appVersion;
+    version = window.appVersion;
   }
-  return {};
+  console.log('Palvelukartta version', version);
+  return version;
 }
 
 const settings = getSettings();
