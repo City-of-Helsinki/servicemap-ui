@@ -19,7 +19,6 @@ import MobileComponent from './MobileComponent';
 import PaperButton from './PaperButton';
 import ReadSpeakerButton from './ReadSpeakerButton';
 import ResultOrderer from './ResultOrderer';
-import SettingsInfo from './SettingsInfo';
 import SettingsText from './SettingsText';
 import SettingsComponent from './SettingsComponent';
 import SMButton from './ServiceMapButton';
@@ -86,7 +85,6 @@ export {
   ResultOrderer,
   ServiceItem,
   Settings,
-  SettingsInfo,
   SettingsText,
   SettingsComponent,
   SimpleListItem,
