@@ -241,6 +241,7 @@ const htmlTemplate = (req, reactDom, preloadedState, css, cssString, emotionCss,
         window.nodeEnvSettings.NATURE_AREA_URL = "${process.env.NATURE_AREA_URL}";
         window.nodeEnvSettings.EMBEDDER_DOCUMENTATION_URL = "${process.env.EMBEDDER_DOCUMENTATION_URL}";
         window.nodeEnvSettings.CITIES = "${process.env.CITIES}";
+        window.nodeEnvSettings.ORGANIZATIONS = '${process.env.ORGANIZATIONS}';
         window.nodeEnvSettings.MAPS = "${process.env.MAPS}";
         window.nodeEnvSettings.ACCESSIBILITY_STATEMENT_URL_FI = "${process.env.ACCESSIBILITY_STATEMENT_URL_FI}";
         window.nodeEnvSettings.ACCESSIBILITY_STATEMENT_URL_SV = "${process.env.ACCESSIBILITY_STATEMENT_URL_SV}";
