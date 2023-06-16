@@ -708,15 +708,7 @@ const InfoView = ({ classes, locale }) => {
 
   const version = config.version || '';
   const commit = config.commit ? `${config.commit}` : '';
-  const versionTextParts = ['Version:', version];
-  // either both are empty or both are same, either way there is no need to show
-  if (config.versionCommit !== commit) {
-    if (config.version && config.commit) {
-      versionTextParts.push('-');
-      versionTextParts.push(commit);
-    }
-  }
-  const versionText = versionTextParts.join(' ');
+  const versionText = `Version: ${version} ${(config.version && config.commit) ? '-' : ''} ${commit}`;
 
   return (
     <div>

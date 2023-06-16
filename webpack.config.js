@@ -66,13 +66,10 @@ const css = {
   ],
 };
 
-const tag = cp.execSync('git describe --abbrev=0 --tags', { cwd: '.' })
-  .toString()
-  .replace(/\r?\n|\r/g, '');
 const gitVersionInfoPlugin = new webpack.DefinePlugin({
-  GIT_TAG: JSON.stringify(tag),
-  GIT_TAG_COMMIT: JSON.stringify(cp.execSync(`git rev-list --abbrev-commit -n 1 tags/${tag}`, { cwd: '.' })
-    .toString().trim()),
+  GIT_TAG: JSON.stringify(cp.execSync('git describe --abbrev=0 --tags', { cwd: '.' })
+    .toString()
+    .replace(/\r?\n|\r/g, '')),
   GIT_COMMIT: JSON.stringify(cp.execSync('git rev-parse --short HEAD', { cwd: '.' })
     .toString()
     .trim()),
