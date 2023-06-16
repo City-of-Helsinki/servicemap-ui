@@ -171,6 +171,7 @@ try {
 
 export default {
   "version": version.tag,
+  "versionCommit": version.tagCommit,
   "commit": version.commit,
   // API
   "accessibilitySentenceAPI": {

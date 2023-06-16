@@ -17,16 +17,37 @@ const getLastTag = () => {
   try {
     ensureSafeDir();
     const lastTagCommand = 'git describe --abbrev=0 --tags';
-    return cp.execSync(lastTagCommand, { cwd: '.' }).toString();
+    return cp.execSync(lastTagCommand, { cwd: '.' })
+      .toString()
+      .replace(/\r?\n|\r/g, '');
   } catch (e) {
     console.error('Repository does not contain tags', e);
-    return false;
+    return null;
   }
 };
 
+const getTagCommit = (tag) => {
+  try {
+    ensureSafeDir();
+    const tagCommitCommand = `git rev-list --abbrev-commit -n 1 tags/${tag}`;
+    return cp.execSync(tagCommitCommand, { cwd: '.' })
+      .toString().trim();
+  } catch (e) {
+    console.error(`Could not query commit of tag ${tag}`, e);
+    return '';
+  }
+};
+
+/**
+ * @returns {tag: string, tagCommit: string}, tag is the latest git tag, tagCommit is the short
+ * commit hash of the tag.
+ */
 export const getVersion = () => {
   const lastTag = getLastTag();
-  return lastTag ? lastTag.replace(/\r?\n|\r/g, '') : '';
+  if (lastTag) {
+    return { tag: lastTag, tagCommit: getTagCommit(lastTag) };
+  }
+  return {};
 };
 
 export const getLastCommit = () => {

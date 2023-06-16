@@ -260,7 +260,8 @@ const htmlTemplate = (req, reactDom, preloadedState, css, cssString, emotionCss,
         window.nodeEnvSettings.FEATURE_SERVICEMAP_PAGE_TRACKING = "${process.env.FEATURE_SERVICEMAP_PAGE_TRACKING}";
 
         window.nodeEnvSettings.appVersion = {};
-        window.nodeEnvSettings.appVersion.tag = "${versionTag}";
+        window.nodeEnvSettings.appVersion.tag = "${versionTag.tag}";
+        window.nodeEnvSettings.appVersion.tagCommit = "${versionTag.tagCommit}";
         window.nodeEnvSettings.appVersion.commit = "${versionCommit}";
     </script>
     <script>
