@@ -22,9 +22,8 @@ import IntlPolyfill from 'intl';
 import paths from '../config/paths';
 import legacyRedirector from './legacyRedirector';
 import { appDynamicsTrackingCode, cookieHubCode } from './externalScripts';
-import { getLastCommit, getVersion } from './version';
 import ieHandler from './ieMiddleware';
-import schedule from 'node-schedule'
+import schedule from 'node-schedule';
 import ogImage from '../src/assets/images/servicemap-meta-img.png';
 import { generateSitemap, getRobotsFile, getSitemap } from './sitemapMiddlewares';
 import createEmotionCache from './createEmotionCache';
@@ -68,9 +67,6 @@ setupTests();
 const app = express();
 app.disable('x-powered-by');
 const supportedLanguages = config.supportedLanguages;
-
-const versionTag = getVersion();
-const versionCommit = getLastCommit();
 
 // This is required for proxy setups to work in production
 app.set('trust proxy', true);
@@ -160,7 +156,7 @@ app.get('/*', (req, res, next) => {
 if (Sentry) {
   app.use(Sentry.Handlers.errorHandler());
 }
-
+console.log('Application version tag:', GIT_TAG, 'commit:', GIT_COMMIT);
 console.log(`Starting server on port ${process.env.PORT || 2048}`);
 app.listen(process.env.PORT || 2048);
 
@@ -258,9 +254,9 @@ const htmlTemplate = (req, reactDom, preloadedState, css, cssString, emotionCss,
 
         window.nodeEnvSettings.FEATURE_SERVICEMAP_PAGE_TRACKING = "${process.env.FEATURE_SERVICEMAP_PAGE_TRACKING}";
 
-        window.appVersion = {};
-        window.appVersion.tag = "${versionTag}";
-        window.appVersion.commit = "${versionCommit}";
+        window.nodeEnvSettings.appVersion = {};
+        window.nodeEnvSettings.appVersion.tag = "${GIT_TAG}";
+        window.nodeEnvSettings.appVersion.commit = "${GIT_COMMIT}";
     </script>
     <script>
       // WARNING: See the following for security issues around embedding JSON in HTML:
