@@ -2,12 +2,8 @@ const cp = require('child_process');
 
 const ensureSafeDir = () => {
   try {
-    const getSafeDirs = 'git config --global --get-all safe.directory';
     const addSafeDir = 'git config --global --add safe.directory /servicemap-ui';
-    const currentSafeDirs = cp.execSync(getSafeDirs, { cwd: '.' }).toString().trim();
-    if (!currentSafeDirs.includes('/servicemap-ui')) {
-      cp.execSync(addSafeDir, { cwd: '.' });
-    }
+    cp.execSync(addSafeDir, { cwd: '.' });
   } catch (e) {
     console.error('Could not ensure safe dir /servicemap-ui', e);
   }
