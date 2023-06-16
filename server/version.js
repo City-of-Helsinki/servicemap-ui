@@ -1,7 +1,21 @@
 const cp = require('child_process');
 
+const ensureSafeDir = () => {
+  try {
+    const getSafeDirs = 'git config --global --get-all safe.directory';
+    const addSafeDir = 'git config --global --add safe.directory /servicemap-ui';
+    const currentSafeDirs = cp.execSync(getSafeDirs, { cwd: '.' }).toString().trim();
+    if (!currentSafeDirs.includes('/servicemap-ui')) {
+      cp.execSync(addSafeDir, { cwd: '.' });
+    }
+  } catch (e) {
+    console.error('Could not ensure safe dir /servicemap-ui', e);
+  }
+};
+
 const getLastTag = () => {
   try {
+    ensureSafeDir();
     const lastTagCommand = 'git describe --abbrev=0 --tags';
     return cp.execSync(lastTagCommand, { cwd: '.' }).toString();
   } catch (e) {
@@ -17,6 +31,7 @@ export const getVersion = () => {
 
 export const getLastCommit = () => {
   try {
+    ensureSafeDir();
     const lastCommitCommand = 'git rev-parse --short HEAD';
     return cp.execSync(lastCommitCommand, { cwd: '.' }).toString().trim();
   } catch (e) {
