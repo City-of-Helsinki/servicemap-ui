@@ -22,9 +22,8 @@ import IntlPolyfill from 'intl';
 import paths from '../config/paths';
 import legacyRedirector from './legacyRedirector';
 import { appDynamicsTrackingCode, cookieHubCode } from './externalScripts';
-import { getLastCommit, getVersion } from './version';
 import ieHandler from './ieMiddleware';
-import schedule from 'node-schedule'
+import schedule from 'node-schedule';
 import ogImage from '../src/assets/images/servicemap-meta-img.png';
 import { generateSitemap, getRobotsFile, getSitemap } from './sitemapMiddlewares';
 import createEmotionCache from './createEmotionCache';
@@ -68,11 +67,6 @@ setupTests();
 const app = express();
 app.disable('x-powered-by');
 const supportedLanguages = config.supportedLanguages;
-
-const versionTag = getVersion();
-const versionCommit = getLastCommit();
-console.log('Resolved tag:', versionTag, 'commit:', versionCommit);
-console.log('Resolved2 tag:', GIT_TAG, GIT_TAG_COMMIT, 'commit:', GIT_COMMIT);
 
 // This is required for proxy setups to work in production
 app.set('trust proxy', true);
@@ -162,7 +156,7 @@ app.get('/*', (req, res, next) => {
 if (Sentry) {
   app.use(Sentry.Handlers.errorHandler());
 }
-
+console.log('Application version tag:', GIT_TAG, 'commit:', GIT_COMMIT);
 console.log(`Starting server on port ${process.env.PORT || 2048}`);
 app.listen(process.env.PORT || 2048);
 
@@ -262,7 +256,6 @@ const htmlTemplate = (req, reactDom, preloadedState, css, cssString, emotionCss,
 
         window.nodeEnvSettings.appVersion = {};
         window.nodeEnvSettings.appVersion.tag = "${GIT_TAG}";
-        window.nodeEnvSettings.appVersion.tagCommit = "${GIT_TAG_COMMIT}";
         window.nodeEnvSettings.appVersion.commit = "${GIT_COMMIT}";
     </script>
     <script>
