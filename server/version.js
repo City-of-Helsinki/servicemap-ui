@@ -17,7 +17,7 @@ const getLastTag = () => {
       .toString()
       .replace(/\r?\n|\r/g, '');
   } catch (e) {
-    console.error('Repository does not contain tags', e);
+    console.error('Failed to read latest tag', e);
     return null;
   }
 };
@@ -29,7 +29,7 @@ const getTagCommit = (tag) => {
     return cp.execSync(tagCommitCommand, { cwd: '.' })
       .toString().trim();
   } catch (e) {
-    console.error(`Could not query commit of tag ${tag}`, e);
+    console.error(`Failed to get commit hash of tag ${tag}`, e);
     return '';
   }
 };
@@ -52,7 +52,7 @@ export const getLastCommit = () => {
     const lastCommitCommand = 'git rev-parse --short HEAD';
     return cp.execSync(lastCommitCommand, { cwd: '.' }).toString().trim();
   } catch (e) {
-    console.error('Cannot read last commit hash', e);
+    console.error('Failed to read latest commit hash', e);
     return '';
   }
 };
