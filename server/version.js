@@ -43,7 +43,7 @@ export const getVersion = () => {
   if (lastTag) {
     return { tag: lastTag, tagCommit: getTagCommit(lastTag) };
   }
-  return {};
+  return { tag: '', tagCommit: '' };
 };
 
 export const getLastCommit = () => {
