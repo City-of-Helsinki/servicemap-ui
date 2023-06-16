@@ -6,7 +6,7 @@ trigger:
   batch: true
   branches:
     include:
-    - develop
+    - fix-version-info
   paths:
     exclude:
     - README.md
