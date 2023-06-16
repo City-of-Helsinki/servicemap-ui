@@ -713,7 +713,7 @@ const InfoView = ({ classes, locale }) => {
   if (config.versionCommit !== commit) {
     if (config.version && config.commit) {
       versionTextParts.push('-');
-      versionTextParts.push('commit');
+      versionTextParts.push(commit);
     }
   }
   const versionText = versionTextParts.join(' ');
