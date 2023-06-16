@@ -72,7 +72,7 @@ const supportedLanguages = config.supportedLanguages;
 const versionTag = getVersion();
 const versionCommit = getLastCommit();
 console.log('Resolved tag:', versionTag, 'commit:', versionCommit);
-console.log('Resolved2 tag:', VERSION, 'commit:', COMMITHASH);
+console.log('Resolved2 tag:', GIT_TAG, GIT_TAG_COMMIT, 'commit:', GIT_COMMIT);
 
 // This is required for proxy setups to work in production
 app.set('trust proxy', true);
@@ -261,9 +261,9 @@ const htmlTemplate = (req, reactDom, preloadedState, css, cssString, emotionCss,
         window.nodeEnvSettings.FEATURE_SERVICEMAP_PAGE_TRACKING = "${process.env.FEATURE_SERVICEMAP_PAGE_TRACKING}";
 
         window.nodeEnvSettings.appVersion = {};
-        window.nodeEnvSettings.appVersion.tag = "${versionTag.tag}";
-        window.nodeEnvSettings.appVersion.tagCommit = "${versionTag.tagCommit}";
-        window.nodeEnvSettings.appVersion.commit = "${versionCommit}";
+        window.nodeEnvSettings.appVersion.tag = "${GIT_TAG}";
+        window.nodeEnvSettings.appVersion.tagCommit = "${GIT_TAG_COMMIT}";
+        window.nodeEnvSettings.appVersion.commit = "${GIT_COMMIT}";
     </script>
     <script>
       // WARNING: See the following for security issues around embedding JSON in HTML:

@@ -1,10 +1,9 @@
 const webpack = require('webpack'); //to access built-in plugins
 const path = require('path');
-const { GitRevisionPlugin } = require('git-revision-webpack-plugin');
+const cp = require('child_process');
 const dotenv = require('dotenv');
 dotenv.config();
 
-const gitRevisionPlugin = new GitRevisionPlugin();
 const NODE_ENV = process.env.NODE_ENV;
 const isEnvProduction = NODE_ENV === 'production';
 const isEnvDevelopment = !isEnvProduction;
@@ -67,14 +66,19 @@ const css = {
   ],
 };
 
+const tag = cp.execSync('git describe --abbrev=0 --tags', { cwd: '.' })
+  .toString()
+  .replace(/\r?\n|\r/g, '');
 const gitVersionInfoPlugin = new webpack.DefinePlugin({
-  VERSION: JSON.stringify(gitRevisionPlugin.version()),
-  COMMITHASH: JSON.stringify(gitRevisionPlugin.commithash()),
-  BRANCH: JSON.stringify(gitRevisionPlugin.branch()),
-  LASTCOMMITDATETIME: JSON.stringify(gitRevisionPlugin.lastcommitdatetime()),
+  GIT_TAG: JSON.stringify(tag),
+  GIT_TAG_COMMIT: JSON.stringify(cp.execSync(`git rev-list --abbrev-commit -n 1 tags/${tag}`, { cwd: '.' })
+    .toString().trim()),
+  GIT_COMMIT: JSON.stringify(cp.execSync('git rev-parse --short HEAD', { cwd: '.' })
+    .toString()
+    .trim()),
 });
 
-const plugins = [gitRevisionPlugin, gitVersionInfoPlugin];
+const plugins = [gitVersionInfoPlugin];
 
 const serverConfig = {
   mode: isEnvProduction ? 'production' : 'development',
