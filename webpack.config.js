@@ -1,8 +1,10 @@
 const webpack = require('webpack'); //to access built-in plugins
 const path = require('path');
+const { GitRevisionPlugin } = require('git-revision-webpack-plugin');
 const dotenv = require('dotenv');
 dotenv.config();
 
+const gitRevisionPlugin = new GitRevisionPlugin();
 const NODE_ENV = process.env.NODE_ENV;
 const isEnvProduction = NODE_ENV === 'production';
 const isEnvDevelopment = !isEnvProduction;
@@ -65,6 +67,15 @@ const css = {
   ],
 };
 
+const gitVersionInfoPlugin = new webpack.DefinePlugin({
+  VERSION: JSON.stringify(gitRevisionPlugin.version()),
+  COMMITHASH: JSON.stringify(gitRevisionPlugin.commithash()),
+  BRANCH: JSON.stringify(gitRevisionPlugin.branch()),
+  LASTCOMMITDATETIME: JSON.stringify(gitRevisionPlugin.lastcommitdatetime()),
+});
+
+const plugins = [gitRevisionPlugin, gitVersionInfoPlugin];
+
 const serverConfig = {
   mode: isEnvProduction ? 'production' : 'development',
   target: 'node',
@@ -92,7 +103,8 @@ const serverConfig = {
   optimization: {
     minimize: false,
     concatenateModules: false,
-  }
+  },
+  plugins,
 };
 
 const clientConfig = {
@@ -127,6 +139,7 @@ const clientConfig = {
     filename: '[name]',
   },
   devtool: isEnvDevelopment ? 'source-map' : undefined,
+  plugins,
 };
 
 module.exports = [serverConfig, clientConfig];

@@ -72,6 +72,7 @@ const supportedLanguages = config.supportedLanguages;
 const versionTag = getVersion();
 const versionCommit = getLastCommit();
 console.log('Resolved tag:', versionTag, 'commit:', versionCommit);
+console.log('Resolved2 tag:', VERSION, 'commit:', COMMITHASH);
 
 // This is required for proxy setups to work in production
 app.set('trust proxy', true);
