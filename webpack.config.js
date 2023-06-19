@@ -1,5 +1,6 @@
 const webpack = require('webpack'); //to access built-in plugins
 const path = require('path');
+const cp = require('child_process');
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -65,6 +66,17 @@ const css = {
   ],
 };
 
+const gitVersionInfoPlugin = new webpack.DefinePlugin({
+  GIT_TAG: JSON.stringify(cp.execSync('git describe --abbrev=0 --tags', { cwd: '.' })
+    .toString()
+    .replace(/\r?\n|\r/g, '')),
+  GIT_COMMIT: JSON.stringify(cp.execSync('git rev-parse --short HEAD', { cwd: '.' })
+    .toString()
+    .trim()),
+});
+
+const plugins = [gitVersionInfoPlugin];
+
 const serverConfig = {
   mode: isEnvProduction ? 'production' : 'development',
   target: 'node',
@@ -92,7 +104,8 @@ const serverConfig = {
   optimization: {
     minimize: false,
     concatenateModules: false,
-  }
+  },
+  plugins,
 };
 
 const clientConfig = {
@@ -127,6 +140,7 @@ const clientConfig = {
     filename: '[name]',
   },
   devtool: isEnvDevelopment ? 'source-map' : undefined,
+  plugins,
 };
 
 module.exports = [serverConfig, clientConfig];

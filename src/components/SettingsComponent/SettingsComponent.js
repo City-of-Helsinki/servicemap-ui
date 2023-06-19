@@ -27,7 +27,7 @@ const SettingsComponent = ({ variant, classes }) => {
   // Returns number of selected settings, sense: 0-n, mobility: 0-1, cities: 0-n
   const getSelectedSettingsCount = () => {
     const sense = settingsValues.senses.length;
-    const mobility = settingsValues.mobility !== 'none' ? 1 : 0;
+    const mobility = (settingsValues.mobility && settingsValues.mobility !== 'none') ? 1 : 0;
     const cities = settingsValues.cities.length;
     return sense + mobility + cities;
   };

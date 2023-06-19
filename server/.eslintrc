@@ -1,0 +1,6 @@
+{
+  "globals": {
+    "GIT_TAG": true,
+    "GIT_COMMIT": true
+  }
+}
