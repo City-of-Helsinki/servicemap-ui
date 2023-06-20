@@ -74,6 +74,7 @@ test('Navigate search view', async (t) => {
     .pressKey('tab') // sense settings
     .pressKey('tab') // mobility settings
     .pressKey('tab') // city settings
+    .pressKey('tab') // organization settings
     .pressKey('tab') // Result orderer
     .pressKey('tab') // First tab
     // .pressKey('tab') // TODO should remove thin phantom tab press

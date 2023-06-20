@@ -17,7 +17,7 @@ const createSuggestions = (
   const serviceLimit = 10;
   const addressLimit = 1;
   const servicenodeLimit = 10;
-  const administrativeDivisionLimit = 0;
+  const administrativeDivisionLimit = 1;
   const pageSize = unitLimit + serviceLimit + addressLimit + servicenodeLimit;
 
   const additionalOptions = {
@@ -26,6 +26,8 @@ const createSuggestions = (
     service_limit: serviceLimit,
     address_limit: addressLimit,
     servicenode_limit: servicenodeLimit,
+    municipality: citySettings.join(','),
+    organization: organizationSettings.map(org => org.id).join(','),
     administrativedivision_limit: administrativeDivisionLimit,
     language: locale,
   };

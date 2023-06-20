@@ -33,7 +33,7 @@ export const getFilteredData = (data, settings, options) => {
   }
 
   let filteredData = data
-    .filter(filterEmptyServices(cities))
+    .filter(filterEmptyServices(cities, organizations))
     .filter(filterResultTypes());
 
   if (!embed) {
