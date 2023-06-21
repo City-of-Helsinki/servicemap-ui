@@ -25,6 +25,7 @@ test('Settings does opens and closes correctly', async (t) => {
     .expect(Selector('#senses-setting-dropdown').visible).ok()
     .expect(Selector('#mobility-setting-dropdown').visible).ok()
     .expect(Selector('#cities-setting-dropdown').visible).ok()
+    .expect(Selector('#organizations-setting-dropdown').visible).ok()
   ;
 
   await t
@@ -35,6 +36,7 @@ test('Settings does opens and closes correctly', async (t) => {
     .expect(Selector('#senses-setting-dropdown').visible).notOk()
     .expect(Selector('#mobility-setting-dropdown').visible).notOk()
     .expect(Selector('#cities-setting-dropdown').visible).notOk()
+    .expect(Selector('#organizations-setting-dropdown').visible).notOk()
   ;
 
   await t
@@ -45,6 +47,7 @@ test('Settings does opens and closes correctly', async (t) => {
     .expect(Selector('#senses-setting-dropdown').visible).ok()
     .expect(Selector('#mobility-setting-dropdown').visible).ok()
     .expect(Selector('#cities-setting-dropdown').visible).ok()
+    .expect(Selector('#organizations-setting-dropdown').visible).ok()
   ;
 });
 

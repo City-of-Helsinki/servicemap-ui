@@ -18,6 +18,7 @@ const selectSettingsAndClose = async (t) => {
       .click(Selector('#senses-setting-dropdown'))
       .click(Selector('#senses-hearingAid'))
       .click(Selector('#senses-visuallyImpaired'))
+      .click(Selector('#senses-setting-dropdown'))
       .click(Selector('#mobility-setting-dropdown'))
       .click(Selector('#mobility-wheelchair'))
     ;
