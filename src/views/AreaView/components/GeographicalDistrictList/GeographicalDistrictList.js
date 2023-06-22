@@ -40,7 +40,7 @@ const GeographicalDistrictList = ({ district, classes }) => {
     } else {
       newArray = selectedSubdistricts.filter(i => i !== district.ocd_id);
     }
-    if (newArray === []) {
+    if (newArray.length === 0) {
       dispatch(setSelectedDistrictServices([]));
     }
     dispatch(setSelectedSubdistricts(newArray));
