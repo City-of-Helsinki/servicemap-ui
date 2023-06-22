@@ -11,12 +11,14 @@ import { keyboardHandler } from '../../utils';
 import SMAutocomplete from '../SMAutocomplete';
 import constants from '../SettingsComponent/constants';
 import {
-  setMapType, setMobility, toggleCity, toggleColorblind, toggleHearingAid, toggleVisuallyImpaired,
+  setMapType, setMobility, toggleCity, toggleColorblind, toggleHearingAid, toggleOrganization, toggleVisuallyImpaired,
 } from '../../redux/actions/settings';
+import useLocaleText from '../../utils/useLocaleText';
 
 const SettingsDropdowns = ({ variant }) => {
   const intl = useIntl();
   const dispatch = useDispatch();
+  const getLocaleText = useLocaleText();
   const settings = useSelector(state => state.settings);
   // Format settings from redux to easier structure
   const settingsValues = constants.convertToSettingsValues(settings);
@@ -40,6 +42,9 @@ const SettingsDropdowns = ({ variant }) => {
   const citySettingsList = config.cities.map(city => (
     { id: city, title: intl.formatMessage({ id: `settings.city.${city}` }) }
   ));
+  const organizationSettingsList = config.organizations?.map(organization => (
+    { id: organization.id, title: getLocaleText(organization.name) }
+  ));
 
   const toggleSettingsBox = (id) => {
     if (openSettings === id) setOpenSettings(null);
@@ -58,6 +63,12 @@ const SettingsDropdowns = ({ variant }) => {
       const settingObj = settings.cities;
       settingObj[id] = !settingObj[id];
       dispatch(toggleCity(settingObj));
+    }
+
+    if (category === 'organizations') {
+      const settingObj = settings.organizations;
+      settingObj[id] = !settingObj[id];
+      dispatch(toggleOrganization(settingObj));
     }
 
     if (category === 'senses') {
@@ -180,6 +191,7 @@ const SettingsDropdowns = ({ variant }) => {
       {renderSettingsElement(senseSettingList, intl.formatMessage({ id: 'settings.choose.senses' }), 'senses')}
       {renderSettingsElement(mobilitySettingList, intl.formatMessage({ id: 'settings.choose.mobility' }), 'mobility', true)}
       {renderSettingsElement(citySettingsList, intl.formatMessage({ id: 'settings.choose.cities' }), 'cities')}
+      {renderSettingsElement(organizationSettingsList, intl.formatMessage({ id: 'settings.choose.organization' }), 'organizations')}
     </>
   );
 };

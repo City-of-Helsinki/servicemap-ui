@@ -1,37 +1,47 @@
-export const filterEmptyServices = cities => (obj) => {
+import { getUnitCount } from './units';
+
+export const filterEmptyServices = (cities, organizations) => (obj) => {
   if (!obj || obj.object_type !== 'service' || !obj.unit_count) {
     return true;
   }
   if (obj.unit_count.total === 0) {
     return false;
   }
-  if (!cities.length) {
+  if (!cities.length && !organizations.length) {
     return true;
   }
+  const unitsByCity = cities.length
+    ? cities.some(city => getUnitCount(obj, city) > 0)
+    : true;
+  const unitsByOrg = organizations.length
+    ? organizations.some(org => getUnitCount(obj, org) > 0)
+    : true;
 
-  let hasUnits = false;
-  cities.forEach((city) => {
-    if (hasUnits) {
-      return;
-    }
-    const { municipality } = obj.unit_count;
-    if (municipality) {
-      const unitCount = municipality[city];
-      if (unitCount) {
-        hasUnits = true;
-      }
-    }
-  });
-
-  return hasUnits;
+  return unitsByCity && unitsByOrg;
 };
 
-export const filterCities = (cities, onlyUnits = false) => (result) => {
+export const filterCitiesAndOrganizations = (
+  cities = [], organizations = [], onlyUnits = false,
+) => (result) => {
+  if (onlyUnits && result.object_type !== 'unit') return false;
+  // Services are not filtered by cities or organizations
+  if (['service', 'servicenode'].includes(result.object_type)) return true;
+
   const resultMunicipality = result.municipality?.id || result.municipality;
-  return (cities.length === 0)
-    || (!resultMunicipality)
-    || (onlyUnits && result.object_type === 'unit')
+  const resultDepartment = result.department?.id;
+  const resultRootDepartment = result.root_department?.id;
+
+  const cityMatch = cities.length === 0
     || (cities.includes(resultMunicipality));
+
+  // Addresses are not filtered by organizations
+  if (result.object_type === 'address') return cityMatch;
+
+  const organizationMatch = organizations.length === 0
+    || (organizations.includes(resultDepartment))
+    || (organizations.includes(resultRootDepartment));
+
+  return cityMatch && organizationMatch;
 };
 
 export const filterResultTypes = () => (obj) => {

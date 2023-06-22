@@ -9,6 +9,7 @@ import config from '../../../config';
 import useLocaleText from '../../utils/useLocaleText';
 import { SMAccordion, SMButton, TitleBar } from '../../components';
 import useMobileStatus from '../../utils/isMobile';
+import { getUnitCount } from "../../utils/units";
 
 const ServiceTreeView = (props) => {
   const {
@@ -214,9 +215,11 @@ const ServiceTreeView = (props) => {
     if (!citySettings.length || citySettings.length === config.cities.length) {
       resultCount = item.unit_count.total;
     } else {
-      config.cities.forEach((city) => {
-        resultCount += (settings.cities[city] ? item.unit_count.municipality[city] || 0 : 0);
-      });
+      config.cities
+        .filter(city => settings.cities[city])
+        .forEach((city) => {
+          resultCount += getUnitCount(item, city);
+        });
     }
 
     const checkboxSrTitle = `${intl.formatMessage({ id: 'services.tree.level' })} ${level + 1} ${getLocaleText(item.name)} ${intl.formatMessage({ id: 'services.category.select' })}`;

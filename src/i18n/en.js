@@ -644,6 +644,8 @@ const translations = {
   'settings.city.vantaa': 'Vantaa',
   'settings.city.kauniainen': 'Kauniainen',
   'settings.city.kirkkonummi': 'Kirkkonummi',
+  'settings.city.länsi-uudenmaan hyvinvointialue': 'Western Uusimaa Wellbeing Services County',
+  'settings.city.vantaan ja keravan hyvinvointialue': 'Wellbeing services county of Vantaa and Kerava',
   'settings.city.askola': 'Askola',
   'settings.city.hanko': 'Hanko',
   'settings.city.hyvinkää': 'Hyvinkää',
@@ -679,7 +681,7 @@ const translations = {
   'settings.choose.mobility': 'Select your mobility issue',
   'settings.choose.senses': 'Select your sensory processing issues',
   'settings.choose.cities': 'Select your city setting',
-  'settings.choose.districts': 'Select your regional settings', // TODO is waiting here for wellness districts
+  'settings.choose.organization': 'Valitse palveluntarjoaja', // TODO: translate
   'settings.map.info': 'You can select the background map that best suits you in the map settings.',
 
   // Tools

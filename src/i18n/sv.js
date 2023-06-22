@@ -646,6 +646,8 @@ const translations = {
   'settings.city.vantaa': 'Vanda',
   'settings.city.kauniainen': 'Grankulla',
   'settings.city.kirkkonummi': 'Kyrkslätt',
+  'settings.city.länsi-uudenmaan hyvinvointialue': 'Västra Nylands välfärdsområde',
+  'settings.city.vantaan ja keravan hyvinvointialue': 'Vanda och Kervo välfärdsområde',
   'settings.city.askola': 'Askola',
   'settings.city.hanko': 'Hangö',
   'settings.city.hyvinkää': 'Hyvinge',
@@ -681,7 +683,7 @@ const translations = {
   'settings.choose.mobility': 'Välj fysisk funktionsnedsättning',
   'settings.choose.senses': 'Välj sensorisk funktionsnedsättning',
   'settings.choose.cities': 'Välj stadsinställningar',
-  'settings.choose.districts': 'Välj regionala inställningar', // TODO is waiting here for wellness districts
+  'settings.choose.organization': 'Valitse palveluntarjoaja', // TODO: translate
   'settings.map.info': 'I kartinställningarna kan du välja det kartunderlag som passar dig bäst.',
 
   // Tools

@@ -5,6 +5,7 @@ import config from '../../config';
 const ALLOWED = {
   mobility: [null, 'none', 'wheelchair', 'reduced_mobility', 'rollator', 'stroller'],
   city: [null, ...config.cities],
+  organizations: [null, ...config.organizations.map((org) => org.id)],
   map: config.maps,
   settingsCollapsed: [true, false],
 };
@@ -21,6 +22,8 @@ class SettingsUtility {
   static citySettings = ALLOWED.city;
 
   static mapSettings = ALLOWED.map;
+
+  static organizationSettings = ALLOWED.organizations;
 
   static settingsCollapsed = ALLOWED.settingsCollapsed;
 
@@ -53,6 +56,15 @@ class SettingsUtility {
     Object.keys(values).forEach((key) => {
       if (!config.cities.includes(key)) {
         throw new Error(`Invalid value for city setting: ${key}`);
+      }
+    });
+    return true;
+  }
+
+  static isValidOrganizationSetting(values) {
+    Object.keys(values).forEach((key) => {
+      if (!config.organizations.map((org) => org.id).includes(key)) {
+        throw new Error(`Invalid value for organization setting: ${key}`);
       }
     });
     return true;
@@ -121,11 +133,16 @@ class SettingsUtility {
       visuallyImpaired: LocalStorageUtility.getItem('visuallyImpaired') === 'true',
       hearingAid: LocalStorageUtility.getItem('hearingAid') === 'true',
       cities: {},
+      organizations: {},
       settingsCollapsed: LocalStorageUtility.getItem('settingsCollapsed') === 'true',
     };
 
     config.cities.forEach((city) => {
       settings.cities[city] = LocalStorageUtility.getItem(city) === 'true';
+    });
+
+    config.organizations.forEach((organization) => {
+      settings.organizations[organization.id] = LocalStorageUtility.getItem(organization.id) === 'true';
     });
 
     return settings;
