@@ -28,8 +28,8 @@ export const filterCitiesAndOrganizations = (
   if (['service', 'servicenode'].includes(result.object_type)) return true;
 
   const resultMunicipality = result.municipality?.id || result.municipality;
-  const resultDepartment = result.department?.id;
-  const resultRootDepartment = result.root_department?.id;
+  const resultDepartment = result.department?.id || result.department;
+  const resultRootDepartment = result.root_department?.id || result.root_department;
 
   const cityMatch = cities.length === 0
     || (cities.includes(resultMunicipality));
