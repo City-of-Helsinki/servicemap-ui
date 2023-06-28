@@ -32,7 +32,7 @@ const PaperButton = ({
         onClick={onClick}
         role={bRole}
         disabled={disabled}
-        aria-label={`${intl.formatMessage({ id: messageID })} ${subtitleID ? intl.formatMessage({ id: subtitleID }) : ''} ${newTab ? intl.formatMessage({ id: 'unit.opens.new.tab' }) : ''}`}
+        aria-label={`${intl.formatMessage({ id: messageID })} ${subtitleID ? intl.formatMessage({ id: subtitleID }) : ''} ${newTab ? intl.formatMessage({ id: 'opens.new.tab' }) : ''}`}
         {...rest}
       >
         <div className={`${classes.iconContainer} ${disabled ? classes.iconDisabled : ''}`}>
@@ -44,7 +44,7 @@ const PaperButton = ({
             {newTab ? (
               <>
                 {' '}
-                <FormattedMessage id="unit.opens.new.tab" />
+                <FormattedMessage id="opens.new.tab" />
               </>
             ) : null}
           </Typography>

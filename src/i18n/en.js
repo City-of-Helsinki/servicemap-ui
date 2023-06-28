@@ -473,7 +473,6 @@ const translations = {
   'unit.otherAddress.show': 'Other entrance',
   'unit.contact': 'Contact person',
   'unit.school.year': 'School year',
-  'unit.opens.new.tab': '(new tab)',
   'unit.reservations.description': 'Here you can find information about the unit’s spaces and equipment that may be reserved.',
   'unit.reservations.count': `{count, plural,
     =0 {}
@@ -694,6 +693,7 @@ const translations = {
   'info.title': 'About the service and accessibility statement',
   'info.statement': 'Accessibility statement (new tab)',
 
+  'opens.new.tab': '(new tab)',
   'alert.close': 'Close the notification',
 };
 

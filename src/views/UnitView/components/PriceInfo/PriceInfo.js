@@ -20,7 +20,7 @@ const PriceInfo = ({ unit, classes }) => {
         <Link className={classes.link} href={getLocaleText(link.value.www)} target="_blank">
           {getLocaleText(link.value.name)}
           {' '}
-          <FormattedMessage id="unit.opens.new.tab" />
+          <FormattedMessage id="opens.new.tab" />
         </Link>
       </Typography>
       <br />

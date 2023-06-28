@@ -474,7 +474,6 @@ const translations = {
   'unit.otherAddress.show': 'Muu sisäänkäynti',
   'unit.contact': 'Yhteyshenkilö',
   'unit.school.year': 'Lukuvuosi',
-  'unit.opens.new.tab': '(uusi välilehti)',
   'unit.reservations.description': 'Tästä löydät tietoa toimipisteen tarjoamista varattavista tiloista ja tarvikkeista.',
 
   'unit.reservations.count': `{count, plural,
@@ -697,6 +696,7 @@ const translations = {
   'info.title': 'Tietoa palvelusta ja saavutettavuusseloste',
   'info.statement': 'Saavutettavuusseloste (uusi välilehti)',
 
+  'opens.new.tab': '(uusi välilehti)',
   'alert.close': 'Sulje ilmoitus',
 };
 

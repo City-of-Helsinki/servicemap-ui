@@ -46,6 +46,8 @@ const ContactInfo = ({
     } : intl.formatMessage({ id: 'unit.homepage.missing' }),
   };
 
+  const addNewTabSuffix = (text) => `${text} ${intl.formatMessage({ id: 'opens.new.tab' })}`;
+
   // Custom list item component for call charge info
   const callInformation = {
     component: showCallInfo // TODO: fix this hard coded value when unit data returns call charge boolean
@@ -103,7 +105,7 @@ const ContactInfo = ({
                   }}
                 >
                   <Typography>
-                    <FormattedMessage id="unit.entrances.accessibility" />
+                    {addNewTabSuffix(intl.formatMessage({ id: 'unit.entrances.accessibility' }))}
                   </Typography>
                 </ButtonBase>
               </div>
@@ -142,7 +144,7 @@ const ContactInfo = ({
                           onClick={() => window.open(getLocaleText(otherAddressData.www))}
                         >
                           <Typography>
-                            {getLocaleText(otherAddressData.www)}
+                            {addNewTabSuffix(getLocaleText(otherAddressData.www))}
                           </Typography>
                         </ButtonBase>
                       )

@@ -475,7 +475,6 @@ const translations = {
   'unit.otherAddress.show': 'Annan ingång',
   'unit.contact': 'Kontaktperson',
   'unit.school.year': 'Läsåret',
-  'unit.opens.new.tab': '(ny flik)',
   'unit.reservations.description': 'Här hittar du information om lokaler och redskap som kan bokas vid verksamhetsstället.',
   'unit.reservations.count': `{count, plural,
     =0 {}
@@ -696,6 +695,7 @@ const translations = {
   'info.title': 'Om tjänsten och tillgänglighetsredogörelsen',
   'info.statement': 'Tillgänglighetsredogörelsen (ny flik)',
 
+  'opens.new.tab': '(ny flik)',
   'alert.close': 'Stäng meddelande',
 };
 
