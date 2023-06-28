@@ -471,6 +471,7 @@ const translations = {
   'unit.opening.hours': 'Aukioloajat',
   'unit.opening.hours.missing': 'Aukioloaikoja ei ilmoitettu',
   'unit.opening.hours.info': 'Lisätietoa aukioloajoista',
+  'unit.otherAddress.show': 'Muu sisäänkäynti',
   'unit.contact': 'Yhteyshenkilö',
   'unit.school.year': 'Lukuvuosi',
   'unit.opens.new.tab': '(uusi välilehti)',

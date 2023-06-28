@@ -28,6 +28,7 @@ const ContactInfo = ({
     value: unit.street_address ? getAddressFromUnit(unit, getLocaleText, intl) : intl.formatMessage({ id: 'unit.address.missing' }),
     noDivider: additionalEntrances?.length,
   };
+  const otherAddressData = unit.connections?.find(x => x.section_type === 'OTHER_ADDRESS');
   const phone = {
     type: 'PHONE',
     value: unit.phone ? { phone: unit.phone } : intl.formatMessage({ id: 'unit.phone.missing' }),
@@ -116,6 +117,48 @@ const ContactInfo = ({
     ),
   };
 
+  const otherAddress = {
+    component: otherAddressData
+      && (
+        <React.Fragment key="otherAddress">
+          <ListItem className={classes.accordionItem}>
+            <SMAccordion
+              className={classes.accordionRoot}
+              disableUnmount
+              titleContent={<Typography id="other-address"><FormattedMessage id="unit.otherAddress.show" /></Typography>}
+              collapseContent={(
+                <div className={classes.accordionContaianer}>
+                  {
+                    otherAddressData.name
+                      ? (<Typography>{getLocaleText(otherAddressData.name)}</Typography>)
+                      : null
+                  }
+                  {
+                    otherAddressData.www
+                      ? (
+                        <ButtonBase
+                          role="link"
+                          className={classes.accessibilityLink}
+                          onClick={() => window.open(getLocaleText(otherAddressData.www))}
+                        >
+                          <Typography>
+                            {getLocaleText(otherAddressData.www)}
+                          </Typography>
+                        </ButtonBase>
+                      )
+                      : null
+                  }
+                </div>
+              )}
+            />
+          </ListItem>
+          <li aria-hidden>
+            <Divider className={classes.dividerShort} />
+          </li>
+        </React.Fragment>
+      ),
+  };
+
   const subgroups = {
     component: subgroupContacts?.length > 0 && (
       <React.Fragment key="entrances">
@@ -163,6 +206,7 @@ const ContactInfo = ({
   const data = [
     address,
     entrances,
+    otherAddress,
     phone,
     subgroups,
     callInformation,

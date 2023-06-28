@@ -470,6 +470,7 @@ const translations = {
   'unit.opening.hours': 'Opening hours',
   'unit.opening.hours.missing': 'No opening hours provided',
   'unit.opening.hours.info': 'Additional information about opening hours', // TODO verify
+  'unit.otherAddress.show': 'Other entrance',
   'unit.contact': 'Contact person',
   'unit.school.year': 'School year',
   'unit.opens.new.tab': '(new tab)',

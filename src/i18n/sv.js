@@ -472,6 +472,7 @@ const translations = {
   'unit.opening.hours': 'Öppettider',
   'unit.opening.hours.missing': 'Öppettider har inte meddelats',
   'unit.opening.hours.info': 'Mer om öppettiderna',
+  'unit.otherAddress.show': 'Annan ingång',
   'unit.contact': 'Kontaktperson',
   'unit.school.year': 'Läsåret',
   'unit.opens.new.tab': '(ny flik)',
