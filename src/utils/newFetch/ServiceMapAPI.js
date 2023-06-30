@@ -78,7 +78,7 @@ export default class ServiceMapAPI extends HttpClient {
       service: serviceId,
       page: 1,
       page_size: 200,
-      only: 'street_address,name,accessibility_shortcoming_count,location,municipality,contract_type',
+      only: 'street_address,name,accessibility_shortcoming_count,location,municipality,contract_type,department,root_department',
       geometry: true,
       ...additionalOptions,
     };
