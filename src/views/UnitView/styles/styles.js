@@ -140,7 +140,7 @@ export default theme => ({
     height: 32,
     minHeight: 32,
   },
-  accordionContaianer: {
+  accordionContainer: {
     padding: theme.spacing(2),
     paddingBottom: theme.spacing(1),
     paddingTop: 0,

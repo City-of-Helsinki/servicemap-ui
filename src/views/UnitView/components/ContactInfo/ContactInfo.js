@@ -59,7 +59,7 @@ const ContactInfo = ({
               disableUnmount
               titleContent={<Typography><FormattedMessage id="unit.phone.charge" /></Typography>}
               collapseContent={(
-                <div className={classes.accordionContaianer}>
+                <div className={classes.accordionContainer}>
                   <Typography className={classes.callInfoText}>
                     {typeof unit.call_charge_info === 'string' ? unit.call_charge_info : getLocaleText(unit.call_charge_info)}
                   </Typography>
@@ -85,7 +85,7 @@ const ContactInfo = ({
             disableUnmount
             titleContent={<Typography id="additional-entrances"><FormattedMessage id="unit.entrances.show" /></Typography>}
             collapseContent={(
-              <div className={classes.accordionContaianer}>
+              <div className={classes.accordionContainer}>
                 {additionalEntrances.map(entrance => (
                   entrance.name ? (
                     <Typography key={getLocaleText(entrance.name)}>
@@ -129,7 +129,7 @@ const ContactInfo = ({
               disableUnmount
               titleContent={<Typography id="other-address"><FormattedMessage id="unit.otherAddress.show" /></Typography>}
               collapseContent={(
-                <div className={classes.accordionContaianer}>
+                <div className={classes.accordionContainer}>
                   {
                     otherAddressData.name
                       ? (<Typography>{getLocaleText(otherAddressData.name)}</Typography>)
@@ -170,7 +170,7 @@ const ContactInfo = ({
             disableUnmount
             titleContent={<Typography><FormattedMessage id="unit.subgroup.title" /></Typography>}
             collapseContent={(
-              <div className={classes.accordionContaianer}>
+              <div className={classes.accordionContainer}>
                 {subgroupContacts.map(subgroup => (
                   subgroup.contact_person ? (
                     <div key={subgroup.contact_person} className={classes.subgroupItem}>
