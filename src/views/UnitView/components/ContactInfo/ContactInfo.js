@@ -28,6 +28,7 @@ const ContactInfo = ({
     value: unit.street_address ? getAddressFromUnit(unit, getLocaleText, intl) : intl.formatMessage({ id: 'unit.address.missing' }),
     noDivider: additionalEntrances?.length,
   };
+  const otherAddressData = unit.connections?.find(x => x.section_type === 'OTHER_ADDRESS');
   const phone = {
     type: 'PHONE',
     value: unit.phone ? { phone: unit.phone } : intl.formatMessage({ id: 'unit.phone.missing' }),
@@ -45,6 +46,8 @@ const ContactInfo = ({
     } : intl.formatMessage({ id: 'unit.homepage.missing' }),
   };
 
+  const addNewTabSuffix = (text) => `${text} ${intl.formatMessage({ id: 'opens.new.tab' })}`;
+
   // Custom list item component for call charge info
   const callInformation = {
     component: showCallInfo // TODO: fix this hard coded value when unit data returns call charge boolean
@@ -56,7 +59,7 @@ const ContactInfo = ({
               disableUnmount
               titleContent={<Typography><FormattedMessage id="unit.phone.charge" /></Typography>}
               collapseContent={(
-                <div className={classes.accordionContaianer}>
+                <div className={classes.accordionContainer}>
                   <Typography className={classes.callInfoText}>
                     {typeof unit.call_charge_info === 'string' ? unit.call_charge_info : getLocaleText(unit.call_charge_info)}
                   </Typography>
@@ -82,7 +85,7 @@ const ContactInfo = ({
             disableUnmount
             titleContent={<Typography id="additional-entrances"><FormattedMessage id="unit.entrances.show" /></Typography>}
             collapseContent={(
-              <div className={classes.accordionContaianer}>
+              <div className={classes.accordionContainer}>
                 {additionalEntrances.map(entrance => (
                   entrance.name ? (
                     <Typography key={getLocaleText(entrance.name)}>
@@ -102,7 +105,7 @@ const ContactInfo = ({
                   }}
                 >
                   <Typography>
-                    <FormattedMessage id="unit.entrances.accessibility" />
+                    {addNewTabSuffix(intl.formatMessage({ id: 'unit.entrances.accessibility' }))}
                   </Typography>
                 </ButtonBase>
               </div>
@@ -116,6 +119,48 @@ const ContactInfo = ({
     ),
   };
 
+  const otherAddress = {
+    component: otherAddressData
+      && (
+        <React.Fragment key="otherAddress">
+          <ListItem className={classes.accordionItem}>
+            <SMAccordion
+              className={classes.accordionRoot}
+              disableUnmount
+              titleContent={<Typography id="other-address"><FormattedMessage id="unit.otherAddress.show" /></Typography>}
+              collapseContent={(
+                <div className={classes.accordionContainer}>
+                  {
+                    otherAddressData.name
+                      ? (<Typography>{getLocaleText(otherAddressData.name)}</Typography>)
+                      : null
+                  }
+                  {
+                    otherAddressData.www
+                      ? (
+                        <ButtonBase
+                          role="link"
+                          className={classes.accessibilityLink}
+                          onClick={() => window.open(getLocaleText(otherAddressData.www))}
+                        >
+                          <Typography>
+                            {addNewTabSuffix(getLocaleText(otherAddressData.www))}
+                          </Typography>
+                        </ButtonBase>
+                      )
+                      : null
+                  }
+                </div>
+              )}
+            />
+          </ListItem>
+          <li aria-hidden>
+            <Divider className={classes.dividerShort} />
+          </li>
+        </React.Fragment>
+      ),
+  };
+
   const subgroups = {
     component: subgroupContacts?.length > 0 && (
       <React.Fragment key="entrances">
@@ -125,7 +170,7 @@ const ContactInfo = ({
             disableUnmount
             titleContent={<Typography><FormattedMessage id="unit.subgroup.title" /></Typography>}
             collapseContent={(
-              <div className={classes.accordionContaianer}>
+              <div className={classes.accordionContainer}>
                 {subgroupContacts.map(subgroup => (
                   subgroup.contact_person ? (
                     <div key={subgroup.contact_person} className={classes.subgroupItem}>
@@ -163,6 +208,7 @@ const ContactInfo = ({
   const data = [
     address,
     entrances,
+    otherAddress,
     phone,
     subgroups,
     callInformation,

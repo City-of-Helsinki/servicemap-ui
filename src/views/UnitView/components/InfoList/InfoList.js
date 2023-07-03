@@ -52,7 +52,7 @@ const InfoList = ({
     }
     // Add extra text
     if (data.www) {
-      fullText += ` ${data.extraText || intl.formatMessage({ id: 'unit.opens.new.tab' })}`;
+      fullText += ` ${data.extraText || intl.formatMessage({ id: 'opens.new.tab' })}`;
     }
     if (data.phone) {
       fullText += ` ${data.extraText || intl.formatMessage({ id: 'unit.call.number' })}`;

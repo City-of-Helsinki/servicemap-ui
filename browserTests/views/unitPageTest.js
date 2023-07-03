@@ -116,7 +116,7 @@ test('Unit feedback page does work correctly', async (t) => {
 
 test('Unit page additional entrances does show correctly', async (t) => {
   const accordion = Selector('#additional-entrances');
-  const showAccessibilityInfo = Selector('div[class^="ContactInfo-accordionContaianer"] button')
+  const showAccessibilityInfo = Selector('div[class^="ContactInfo-accordionContainer"] button')
   const tabListButtons = Selector('div[role="tablist"] button');
 
   await t
