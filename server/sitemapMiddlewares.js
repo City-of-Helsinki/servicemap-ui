@@ -5,7 +5,6 @@ import { fetchIDs } from './dataFetcher';
 import { sitemapActive } from './utils';
 
 const fs = require('fs');
-const path = require('path');
 const supportedLanguages = config.supportedLanguages;
 
 // This returns sitemaps for different languages
@@ -14,9 +13,8 @@ export const getSitemap = (req, res) => {
   res.header('Content-Encoding', 'gzip');
 
   // Send sitemap file
-  if (fs.existsSync('tmp/sitemap.xml')) {
-    const filePath = path.join(__dirname, '../tmp/sitemap.xml');
-    res.sendFile(filePath);
+  if (fs.existsSync('/tmp/sitemap.xml')) {
+    res.sendFile('/tmp/sitemap.xml');
     return;
   } else {
     res.status(404).end();
@@ -99,7 +97,7 @@ export const generateSitemap = async () => {
 
     // Save the sitemap as file
     streamToPromise(pipeline).then(sm => {
-      fs.writeFile('tmp/sitemap.xml', sm, (err) => {
+      fs.writeFile('/tmp/sitemap.xml', sm, (err) => {
         if (err) return console.log(err)
         else return console.log('New sitemap created')
       })
