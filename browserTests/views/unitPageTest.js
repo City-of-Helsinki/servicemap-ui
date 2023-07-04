@@ -209,7 +209,7 @@ test('Unit view services tab lists work correctly', async (t) => {
   const serviceTab = Selector('div[role="tablist"] button').nth(2);
   const moreServicesButton = Selector('#UnitservicesButton');
   const serviceTitle = Selector('.ExtendedData-title h3');
-  const backButton = Selector(`button[aria-label="${finnish['general.back.unit']}"`);
+  const backButton = Selector(`#BackButton`);
   const reservableObjects = Selector('li[class*="reservationItem"]')
 
   await t

@@ -188,8 +188,8 @@ test('Statistical area district selection works correctly', async (t) => {
     .pressKey('shift+tab') // Return to city button
     .pressKey('shift+tab') // Return to city checkbox
     .expect(firstCityCheckbox.focused).ok() // City checkbox should be focused
-    .pressKey('enter') // Select city
-    .pressKey('enter') // Remove selection
+    .pressKey('space') // Select city
+    .pressKey('space') // Remove selection
     .expect(serviceButton.getAttribute('disabled')).eql('', 'Expect service button disabled attribute to exist while no selections')
 
   ;
