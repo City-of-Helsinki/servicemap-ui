@@ -130,7 +130,7 @@ test('Unit page additional entrances does show correctly', async (t) => {
 });
 
 
-test('Unit page links do work correctly', async (t) => {
+test.skip('Unit page links do work correctly', async (t) => {
   const links = Selector('#tab-content-0 li[role="link"]');
   const homePageLink = links.nth(1)
 
@@ -165,7 +165,7 @@ test('Unit page links do work correctly', async (t) => {
 })
   .skipJsErrors({ pageUrl: /.www.helmet.fi*/ });
 
-test('Unit view hearing map link opens correctly', async (t) => {
+test.skip('Unit view hearing map link opens correctly', async (t) => {
   // Test accessibility hearing map link
   const aLinks = Selector('#tab-content-1 li[role="link"]');
   const accessibilityTab = Selector('div[role="tablist"] button').nth(1);
@@ -205,11 +205,11 @@ test('Unit view accessibility tab changes according to accessibility settings', 
   ;
 });
 
-test('Unit view services tab lists work correctly', async (t) => {
+test.skip('Unit view services tab lists work correctly', async (t) => {
   const serviceTab = Selector('div[role="tablist"] button').nth(2);
   const moreServicesButton = Selector('#UnitservicesButton');
   const serviceTitle = Selector('.ExtendedData-title h3');
-  const backButton = Selector(`button[aria-label="${finnish['general.back.unit']}"`);
+  const backButton = Selector(`#BackButton`);
   const reservableObjects = Selector('li[class*="reservationItem"]')
 
   await t

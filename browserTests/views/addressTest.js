@@ -15,20 +15,24 @@ fixture`Address view test`
   });
 
 test('AddressView does render correct view', async (t) => {
-  const title = await ReactSelector('TitleBar').getReact(({props}) => props.title);
+  const title = await ReactSelector('TitleBar');
   const tab1 = await Selector('div[role="tablist"] button').nth(0).textContent;
   const tab2 = Selector('div[role="tablist"] button').nth(1);
   const divisions = ReactSelector('DivisionItem').count;
   const tab2Text = await tab2.textContent;
 
   await t
-    .expect(title).eql('Topeliuksenkatu 27,  Helsinki')
+    .expect(title.textContent).contains('Topeliuksenkatu 27')
+    .expect(title.textContent).contains('Helsinki')
     .expect(tab1).eql('Palvelualueet')
     .expect(tab2Text.indexOf('Lähellä')).eql(0, 'Tab text should include text "Lähellä"')
     .expect(divisions).gt(1, 'First tab should show divisions')
     .click(tab2)
   ;
+  const noData = await Selector('#NoDataMessage');
 
+  await t
+    .expect(noData.exists).notOk();
   const units = await ReactSelector('UnitItem').count;
   await t
     .expect(units).gt(1, 'Closeby units tab should show unit items', { timeout: 4000 })

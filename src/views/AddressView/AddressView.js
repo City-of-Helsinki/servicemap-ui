@@ -163,36 +163,41 @@ const AddressView = (props) => {
     } return null;
   };
 
-  const renderTopBar = () => (
-    <>
-      <DesktopComponent>
-        <SearchBar margin />
-        <TitleBar
-          sticky
-          icon={<AddressIcon className={classes.titleIcon} />}
-          title={error || title}
-          titleComponent="h3"
-          primary
-        />
-      </DesktopComponent>
-      <MobileComponent>
-        <TitleBar
-          sticky
-          icon={<AddressIcon />}
-          title={title}
-          titleComponent="h3"
-          primary
-        />
-      </MobileComponent>
-    </>
-  );
+  const renderTopBar = () => {
+    if (!addressData) {
+      return null;
+    }
+    return (
+      <>
+        <DesktopComponent>
+          <SearchBar margin />
+          <TitleBar
+            sticky
+            icon={<AddressIcon className={classes.titleIcon} />}
+            title={error || title}
+            titleComponent="h3"
+            primary
+          />
+        </DesktopComponent>
+        <MobileComponent>
+          <TitleBar
+            sticky
+            icon={<AddressIcon />}
+            title={title}
+            titleComponent="h3"
+            primary
+          />
+        </MobileComponent>
+      </>
+    );
+  };
 
   const renderNearbyList = () => {
     if (isFetching || !units) {
-      return <Typography><FormattedMessage id="general.loading" /></Typography>;
+      return <Typography id="LoadingMessage"><FormattedMessage id="general.loading" /></Typography>;
     }
     if (units && !units.length) {
-      return <Typography><FormattedMessage id="general.noData" /></Typography>;
+      return <Typography id="NoDataMessage"><FormattedMessage id="general.noData" /></Typography>;
     }
     return null;
   };
