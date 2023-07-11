@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ArrowForwardIos } from '@mui/icons-material';
+import styled from '@emotion/styled';
 import Container from '../Container';
 import PageElement from './PageElement';
 import SMButton from '../ServiceMapButton';
@@ -41,7 +42,7 @@ class PaginationComponent extends React.Component {
       );
     }
     return (
-      <Container className={classes.buttonContainer}>
+      <Container className={classes.buttonContainer} data-sm="PaginationComponent">
         {
           // Button backwards one page
           <SMButton
@@ -57,7 +58,7 @@ class PaginationComponent extends React.Component {
             variant="contained"
             role="link"
           >
-            <ArrowForwardIos className={classes.arrowIcon} />
+            <StyledArrowForwardIos />
           </SMButton>
         }
         {
@@ -75,18 +76,18 @@ class PaginationComponent extends React.Component {
             variant="contained"
             role="link"
           >
-            <ArrowForwardIos className={classes.arrowIcon} />
+            <StyledArrowForwardIos />
           </SMButton>
         }
         {
           // Page numbers
           !embeddedList
             ? (
-              <Container className={classes.listContainer}>
-                <ul className={classes.list}>
+              <StyledListContainer>
+                <StyledList>
                   {pages}
-                </ul>
-              </Container>
+                </StyledList>
+              </StyledListContainer>
             )
             : null
         }
@@ -94,6 +95,23 @@ class PaginationComponent extends React.Component {
     );
   }
 }
+
+const StyledList = styled('ul')(() => ({
+  display: 'inherit',
+  flexDirection: 'row',
+  listStyleType: 'none',
+  margin: 0,
+  padding: 0,
+}));
+
+const StyledListContainer = styled(Container)(() => ({
+  flexDirection: 'row',
+  margin: 0,
+}));
+
+const StyledArrowForwardIos = styled(ArrowForwardIos)(() => ({
+  fontSize: 18,
+}));
 
 PaginationComponent.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,

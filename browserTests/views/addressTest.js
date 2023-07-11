@@ -142,11 +142,11 @@ test('AddressView nearby services tab works correctly', async (t) => {
 
   // Test pagination
   const firstUnitText = await listItemTopRow(listItems.nth(0)).textContent;
-  const pagination = ReactSelector('PaginationComponent');
-  const buttons = pagination.find('button');
+  const pagination = Selector('[data-sm="PaginationComponent"]');
+  const nextPageButton = pagination.find('#PaginationNextButton');
   await t
   .expect(listItemTopRow(listItems.nth(0)).textContent).eql(firstUnitText, 'List items should change on pagination page change')
-    .click(buttons.nth(1))
+    .click(nextPageButton)
     .expect(getLocation()).contains('p=2')
     .expect(listItemTopRow(listItems.nth(0)).textContent).notEql(firstUnitText, 'List items should change on pagination page change')
   ;

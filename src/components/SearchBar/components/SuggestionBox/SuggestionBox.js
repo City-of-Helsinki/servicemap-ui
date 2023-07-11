@@ -3,22 +3,24 @@ import PropTypes from 'prop-types';
 import {
   AccessTime, ArrowDropUp, LocationOn, Search,
 } from '@mui/icons-material';
-import {
-  Paper, List, Typography,
-} from '@mui/material';
+import { List } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import createSuggestions from '../../createSuggestions';
 import SuggestionItem from '../../../ListItems/SuggestionItem';
 import { keyboardHandler, uppercaseFirst } from '../../../../utils';
 import { getIcon } from '../../../SMIcon';
-import { CloseSuggestionButton } from '../CloseSuggestionButton';
 import useLocaleText from '../../../../utils/useLocaleText';
 import UnitIcon from '../../../SMIcon/UnitIcon';
 import config from '../../../../../config';
 import { getPreviousSearches, removeSearchFromHistory, saveSearchToHistory } from '../../previousSearchData';
 import { useNavigationParams } from '../../../../utils/address';
 import { getLocale } from '../../../../redux/selectors/locale';
+import {
+  StyledInfoText,
+  StyledCloseSuggestionButton,
+  StyledPaper, StyledPaperMobile,
+} from './styles';
 
 const suggestionCount = 8;
 
@@ -29,7 +31,6 @@ const SuggestionBox = (props) => {
     searchQuery,
     handleSubmit,
     handleBlur,
-    classes,
     focusedSuggestion,
     isMobile,
     intl,
@@ -133,17 +134,17 @@ const SuggestionBox = (props) => {
 
   const renderNoResults = () => (
     <>
-      <Typography align="left" className={classes.infoText}>
+      <StyledInfoText align="left">
         <FormattedMessage id="search.suggestions.error" />
-      </Typography>
+      </StyledInfoText>
     </>
   );
 
   const renderLoading = () => (
     <>
-      <Typography align="left" className={classes.infoText}>
+      <StyledInfoText align="left">
         <FormattedMessage id="search.suggestions.loading" />
-      </Typography>
+      </StyledInfoText>
     </>
   );
 
@@ -226,9 +227,9 @@ const SuggestionBox = (props) => {
     // If no searches in search history, display info text
     if (type === 'history' && !suggestionList?.length) {
       return (
-        <Typography align="left" aria-live="polite" className={classes.infoText}>
+        <StyledInfoText align="left" aria-live="polite">
           <FormattedMessage id="search.suggestions.noHistory" />
-        </Typography>
+        </StyledInfoText>
       );
     }
 
@@ -268,8 +269,7 @@ const SuggestionBox = (props) => {
     }
 
     return (
-      <CloseSuggestionButton
-        className={classes.minimizeLink}
+      <StyledCloseSuggestionButton
         onClick={(e) => {
           e.preventDefault();
           closeMobileSuggestions();
@@ -337,23 +337,21 @@ const SuggestionBox = (props) => {
       component = renderSuggestionList('history');
     }
 
-    const containerStyles = isMobile
-      ? `${classes.suggestionAreaMobile}`
-      : `${classes.suggestionArea}`;
+    const PaperComponent = isMobile
+      ? StyledPaperMobile
+      : StyledPaper;
 
     return (
-      <>
-        <Paper elevation={20} className={containerStyles}>
-          <p className="sr-only" aria-live="polite">{srText}</p>
-          {
-            renderHideSuggestions()
-          }
-          {component}
-        </Paper>
-      </>
+      <PaperComponent elevation={20}>
+        <p className="sr-only" aria-live="polite">{srText}</p>
+        {
+          renderHideSuggestions()
+        }
+        {component}
+      </PaperComponent>
     );
   }
-  return <></>;
+  return null;
 };
 
 SuggestionBox.propTypes = {
@@ -362,7 +360,6 @@ SuggestionBox.propTypes = {
   searchQuery: PropTypes.string,
   handleSubmit: PropTypes.func.isRequired,
   handleBlur: PropTypes.func.isRequired,
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   focusedSuggestion: PropTypes.number,
   navigator: PropTypes.objectOf(PropTypes.any),
   isMobile: PropTypes.bool,

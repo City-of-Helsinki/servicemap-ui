@@ -3,7 +3,7 @@
 exports[`<PaperButton /> should work 1`] = `
 <div>
   <div
-    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 Container-root-9 Container-margin-11   SM-PaperButton PaperButton-container-1    css-1ps6pg7-MuiPaper-root"
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 SM-PaperButton PaperButton-container-1    css-8415q9-MuiPaper-root"
   >
     <button
       aria-label="Show nearby services Location not allowed "

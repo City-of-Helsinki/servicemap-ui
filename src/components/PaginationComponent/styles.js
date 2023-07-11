@@ -1,9 +1,6 @@
 
 // Styles
 export default theme => ({
-  arrowIcon: {
-    fontSize: 18,
-  },
   arrowFlip: {
     transform: 'scaleX(-1)',
   },
@@ -21,32 +18,5 @@ export default theme => ({
     flexDirection: 'row',
     margin: theme.spacing(1, 2),
     padding: theme.spacing(0.5),
-  },
-  list: {
-    display: 'inherit',
-    flexDirection: 'row',
-    listStyleType: 'none',
-    margin: 0,
-    padding: 0,
-  },
-  listContainer: {
-    flexDirection: 'row',
-    margin: 0,
-  },
-  pageElement: {
-    color: 'black',
-    cursor: 'pointer',
-    fontWeight: 'normal',
-    textDecoration: 'none',
-  },
-  pageElementActive: {
-    cursor: 'auto',
-    fontWeight: 'normal',
-    textDecoration: 'underline',
-  },
-  pageItem: {
-    margin: 0,
-    marginLeft: theme.spacing(0.5),
-    marginRight: theme.spacing(0.5),
   },
 });
