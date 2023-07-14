@@ -73,7 +73,6 @@ const StyledTitle = styled(Title)(() => ({
 Container.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node.isRequired,
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   margin: PropTypes.bool,
   noMargin: PropTypes.bool,
   paper: PropTypes.bool,

@@ -21,13 +21,13 @@ exports[`<UnitDataList /> should work 1`] = `
       class="MuiList-root css-1mk9mw3-MuiList-root"
     >
       <li
-        class="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button ResultItem-listItem-19 css-18azhdn-MuiButtonBase-root-MuiListItem-root"
+        class="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button ResultItem-listItem-11 css-18azhdn-MuiButtonBase-root-MuiListItem-root"
         data-testid="EventItem"
         role="link"
         tabindex="0"
       >
         <div
-          class="MuiListItemIcon-root ResultItem-listItemIcon-20 css-cveggr-MuiListItemIcon-root"
+          class="MuiListItemIcon-root ResultItem-listItemIcon-12 css-cveggr-MuiListItemIcon-root"
         >
           <svg
             aria-hidden="true"
@@ -42,13 +42,13 @@ exports[`<UnitDataList /> should work 1`] = `
           </svg>
         </div>
         <div
-          class="ResultItem-itemTextContainer-26  "
+          class="ResultItem-itemTextContainer-18  "
         >
           <div
-            class="ResultItem-topRow-28"
+            class="ResultItem-topRow-20"
           >
             <p
-              class="MuiTypography-root MuiTypography-body2 ResultItem-title-24 ResultItem-srOnly css-1ak20dk-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body2 ResultItem-title-16 ResultItem-srOnly css-1ak20dk-MuiTypography-root"
               style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
             >
               
@@ -61,7 +61,7 @@ exports[`<UnitDataList /> should work 1`] = `
             </p>
             <p
               aria-hidden="true"
-              class="MuiTypography-root MuiTypography-body2 ResultItem-title-24    ResultItem-title css-1ak20dk-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body2 ResultItem-title-16    ResultItem-title css-1ak20dk-MuiTypography-root"
               role="textbox"
             >
               Suomen kielen kielikahvila
@@ -73,17 +73,17 @@ exports[`<UnitDataList /> should work 1`] = `
         aria-hidden="true"
       >
         <hr
-          class="MuiDivider-root MuiDivider-inset ResultItem-divider-34 css-uls1yk-MuiDivider-root"
+          class="MuiDivider-root MuiDivider-inset ResultItem-divider-26 css-uls1yk-MuiDivider-root"
         />
       </li>
       <li
-        class="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button ResultItem-listItem-19 css-18azhdn-MuiButtonBase-root-MuiListItem-root"
+        class="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button ResultItem-listItem-11 css-18azhdn-MuiButtonBase-root-MuiListItem-root"
         data-testid="EventItem"
         role="link"
         tabindex="0"
       >
         <div
-          class="MuiListItemIcon-root ResultItem-listItemIcon-20 css-cveggr-MuiListItemIcon-root"
+          class="MuiListItemIcon-root ResultItem-listItemIcon-12 css-cveggr-MuiListItemIcon-root"
         >
           <svg
             aria-hidden="true"
@@ -98,13 +98,13 @@ exports[`<UnitDataList /> should work 1`] = `
           </svg>
         </div>
         <div
-          class="ResultItem-itemTextContainer-26  "
+          class="ResultItem-itemTextContainer-18  "
         >
           <div
-            class="ResultItem-topRow-28"
+            class="ResultItem-topRow-20"
           >
             <p
-              class="MuiTypography-root MuiTypography-body2 ResultItem-title-24 ResultItem-srOnly css-1ak20dk-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body2 ResultItem-title-16 ResultItem-srOnly css-1ak20dk-MuiTypography-root"
               style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
             >
               
@@ -117,7 +117,7 @@ exports[`<UnitDataList /> should work 1`] = `
             </p>
             <p
               aria-hidden="true"
-              class="MuiTypography-root MuiTypography-body2 ResultItem-title-24    ResultItem-title css-1ak20dk-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body2 ResultItem-title-16    ResultItem-title css-1ak20dk-MuiTypography-root"
               role="textbox"
             >
               R&A x Armas: Vanhenemisen estetiikka
@@ -129,17 +129,17 @@ exports[`<UnitDataList /> should work 1`] = `
         aria-hidden="true"
       >
         <hr
-          class="MuiDivider-root MuiDivider-inset ResultItem-divider-34 css-uls1yk-MuiDivider-root"
+          class="MuiDivider-root MuiDivider-inset ResultItem-divider-26 css-uls1yk-MuiDivider-root"
         />
       </li>
       <li
-        class="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button ResultItem-listItem-19 css-18azhdn-MuiButtonBase-root-MuiListItem-root"
+        class="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button ResultItem-listItem-11 css-18azhdn-MuiButtonBase-root-MuiListItem-root"
         data-testid="EventItem"
         role="link"
         tabindex="0"
       >
         <div
-          class="MuiListItemIcon-root ResultItem-listItemIcon-20 css-cveggr-MuiListItemIcon-root"
+          class="MuiListItemIcon-root ResultItem-listItemIcon-12 css-cveggr-MuiListItemIcon-root"
         >
           <svg
             aria-hidden="true"
@@ -154,13 +154,13 @@ exports[`<UnitDataList /> should work 1`] = `
           </svg>
         </div>
         <div
-          class="ResultItem-itemTextContainer-26  "
+          class="ResultItem-itemTextContainer-18  "
         >
           <div
-            class="ResultItem-topRow-28"
+            class="ResultItem-topRow-20"
           >
             <p
-              class="MuiTypography-root MuiTypography-body2 ResultItem-title-24 ResultItem-srOnly css-1ak20dk-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body2 ResultItem-title-16 ResultItem-srOnly css-1ak20dk-MuiTypography-root"
               style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
             >
               
@@ -173,7 +173,7 @@ exports[`<UnitDataList /> should work 1`] = `
             </p>
             <p
               aria-hidden="true"
-              class="MuiTypography-root MuiTypography-body2 ResultItem-title-24    ResultItem-title css-1ak20dk-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body2 ResultItem-title-16    ResultItem-title css-1ak20dk-MuiTypography-root"
               role="textbox"
             >
               Digital guidance for seniors
@@ -184,7 +184,8 @@ exports[`<UnitDataList /> should work 1`] = `
     </ul>
     <button
       aria-label="Show more events (2)"
-      class="MuiButtonBase-root SMButton SMButton-button-10 SMButton-smallButton-11 SMButton-margin-12  SMButton-default-16 css-l9l1yv-MuiButtonBase-root"
+      class="MuiButtonBase-root SMButton  css-nttxw8-MuiButtonBase-root"
+      color="default"
       id="UniteventsButton"
       role="link"
       tabindex="0"
@@ -204,7 +205,7 @@ exports[`<UnitDataList /> should work 1`] = `
       </svg>
       <p
         aria-hidden="true"
-        class="MuiTypography-root MuiTypography-button SMButton-typography-17 css-kkeniz-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-button css-1rnrch9-MuiTypography-root"
       >
         Show more events (2)
       </p>

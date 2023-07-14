@@ -3,12 +3,13 @@
 exports[`<PaginationComponent /> should work 1`] = `
 <div>
   <div
-    class="injectIntl(PaginationComponent)-buttonContainer-4 css-aypa7x"
+    class=" css-fvjx4"
     data-sm="PaginationComponent"
   >
     <button
       aria-label="Previous page"
-      class="MuiButtonBase-root SMButton SMButton-button-5  SMButton-marginRight-8 injectIntl(PaginationComponent)-button-3 injectIntl(PaginationComponent)-arrowFlip-1 injectIntl(PaginationComponent)-borderBlack-2 SMButton-primary-9 css-l9l1yv-MuiButtonBase-root"
+      class="MuiButtonBase-root SMButton css-340475-MuiButtonBase-root"
+      color="primary"
       id="PaginationPreviousButton"
       role="link"
       tabindex="0"
@@ -29,7 +30,8 @@ exports[`<PaginationComponent /> should work 1`] = `
     </button>
     <button
       aria-label="Next page"
-      class="MuiButtonBase-root SMButton SMButton-button-5  SMButton-marginRight-8 injectIntl(PaginationComponent)-button-3 injectIntl(PaginationComponent)-borderBlack-2 SMButton-primary-9 css-l9l1yv-MuiButtonBase-root"
+      class="MuiButtonBase-root SMButton css-1xn2qt0-MuiButtonBase-root"
+      color="primary"
       id="PaginationNextButton"
       role="link"
       tabindex="0"
