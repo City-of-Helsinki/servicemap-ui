@@ -12,6 +12,7 @@ import AddressSearchBar from './AddressSearchBar';
 import AlertBox from './AlertBox';
 import CloseButton from './CloseButton';
 import Container from './Container';
+import DistrictItem from './ListItems/DistrictItem';
 import ErrorBoundary from './ErrorBoundary';
 import HomeLogo from './Logos/HomeLogo';
 import Loading from './Loading';
@@ -46,11 +47,9 @@ import SimpleListItem from './ListItems/SimpleListItem';
 import SuggestionItem from './ListItems/SuggestionItem';
 import UnitItem from './ListItems/UnitItem';
 
-export * from './ErrorBoundary/ErrorBoundary';
 export * from './ErrorBoundary/ErrorComponent';
 export * from './ErrorBoundary/ErrorTrigger';
 
-export * from './ListItems/DistrictItem';
 export * from './Dialog/AcceptSettingsDialog';
 export * from './Dialog/LinkSettingsDialog';
 export * from './SearchBar';
@@ -66,6 +65,7 @@ export {
   DataFetcher,
   DescriptionText,
   DesktopComponent,
+  DistrictItem,
   DivisionItem,
   ErrorBoundary,
   EventItem,

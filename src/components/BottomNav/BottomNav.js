@@ -9,7 +9,6 @@ import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
-import PropTypes from 'prop-types';
 import config from '../../../config';
 import MapSettings from '../MapSettings/MapSettings';
 import SettingsDropdowns from '../SettingsDropdowns';
@@ -17,8 +16,7 @@ import MobileSettingsHeader from '../MobileSettingsHeader/MobileSettingsHeader';
 
 const { bottomNavHeight } = config;
 
-
-const BottomNav = ({ classes }) => {
+const BottomNav = () => {
   const location = useLocation();
   const intl = useIntl();
 
@@ -103,10 +101,10 @@ const BottomNav = ({ classes }) => {
           },
         }}
       >
-        <div className={classes.container}>
+        <StyledDiv>
           <MobileSettingsHeader textId="general.ownSettings" />
           <SettingsDropdowns variant="ownSettings" />
-        </div>
+        </StyledDiv>
       </StyledDrawer>
       <StyledDrawer
         open={mapSettingsOpen}
@@ -175,10 +173,11 @@ const StyledBottomNavigationAction = styled(BottomNavigationAction)(() => ({
   color: '#000',
 }));
 
+const StyledDiv = styled('div')(({ theme }) => ({
+  paddingTop: theme.spacing(3),
+}));
+
 BottomNav.propTypes = {
-  classes: PropTypes.shape({
-    container: PropTypes.string,
-  }).isRequired,
 };
 
 export default BottomNav;

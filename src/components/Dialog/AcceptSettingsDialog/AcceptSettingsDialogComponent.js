@@ -6,16 +6,15 @@ import {
 } from '@mui/material';
 import React, { useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-// import { useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import styled from '@emotion/styled';
 import isClient from '../../../utils';
 import SettingsUtility from '../../../utils/settings';
 import SMButton from '../../ServiceMapButton';
 import Dialog from '../index';
 
 const AcceptSettingsDialogComponent = ({
-  classes,
   activateSetting,
   resetAccessibilitySettings,
   setOpen,
@@ -107,9 +106,8 @@ const AcceptSettingsDialogComponent = ({
         <div>
           <Typography variant="body2"><FormattedMessage id="accept.settings.dialog.description" /></Typography>
           <div>
-            <RadioGroup
+            <StyledRadioGroup
               aria-label={intl.formatMessage({ id: 'download.format' })}
-              className={classes.radioGroup}
               name="setting"
               value={selected}
               onChange={(event, value) => {
@@ -130,22 +128,39 @@ const AcceptSettingsDialogComponent = ({
                   />
                 ))
               }
-            </RadioGroup>
+            </StyledRadioGroup>
           </div>
         </div>
       )}
       actions={(
-        <SMButton color="primary" role="button" onClick={activateSettings} className={classes.opnButton}>
+        <StyledButton color="primary" role="button" onClick={activateSettings}>
           {intl.formatMessage({ id: 'general.open' })}
-        </SMButton>
+        </StyledButton>
       )
       }
     />
   );
 };
 
+const StyledButton = styled(SMButton)(() => ({
+  marginRight: 0,
+}));
+
+const StyledRadioGroup = styled(RadioGroup)(({ theme }) => ({
+  flexWrap: 'nowrap',
+  flexDirection: 'row',
+  margin: `${theme.spacing(2)} 0`,
+  [theme.breakpoints.down('sm')]: {
+    flexDirection: 'column',
+  },
+  radioGroupItem: {
+    [theme.breakpoints.down('sm')]: {
+      margin: `${theme.spacing(1)} 0`,
+    },
+  },
+}));
+
 AcceptSettingsDialogComponent.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   activateSetting: PropTypes.func.isRequired,
   resetAccessibilitySettings: PropTypes.func.isRequired,
   setOpen: PropTypes.func.isRequired,

@@ -4,18 +4,18 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Button } from '@mui/material';
 import { Close } from '@mui/icons-material';
+import styled from '@emotion/styled';
 
 const CloseButton = ({
-  classes,
   className,
   intl,
   onClick,
   textID,
   ...rest
 }) => (
-  <Button
+  <StyledButton
     aria-label={intl.formatMessage({ id: 'general.close' })}
-    className={`${classes.flexBase} ${classes.button} ${className || ''}`}
+    className={`${className || ''}`}
     onClick={() => {
       onClick();
     }}
@@ -27,11 +27,19 @@ const CloseButton = ({
         ? <FormattedMessage id={textID} />
         : <FormattedMessage id="general.close" />
     }
-  </Button>
+  </StyledButton>
 );
 
+const StyledButton = styled(Button)(() => ({
+  flex: '0 0 auto',
+  flexDirection: 'column',
+  textTransform: 'none',
+  fontSize: '0.75rem',
+  color: 'black',
+}));
+
+
 CloseButton.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   className: PropTypes.string,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   onClick: PropTypes.func.isRequired,

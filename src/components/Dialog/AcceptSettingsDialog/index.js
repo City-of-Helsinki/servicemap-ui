@@ -1,18 +1,13 @@
-import { withStyles } from '@mui/styles';
 import { connect } from 'react-redux';
-import styles from './styles';
 import AcceptSettingsDialogComponent from './AcceptSettingsDialogComponent';
-import {
-  activateSetting,
-  resetAccessibilitySettings,
-} from '../../../redux/actions/settings';
+import { activateSetting, resetAccessibilitySettings } from '../../../redux/actions/settings';
 
-export const AcceptSettingsDialog = withStyles(styles)(connect(
+export const AcceptSettingsDialog = connect(
   null,
   {
     activateSetting,
     resetAccessibilitySettings,
   },
-)(AcceptSettingsDialogComponent));
+)(AcceptSettingsDialogComponent);
 
 export default AcceptSettingsDialog;
