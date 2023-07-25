@@ -16,7 +16,6 @@ import ErrorBoundary from './ErrorBoundary';
 import HomeLogo from './Logos/HomeLogo';
 import Loading from './Loading';
 import MobileComponent from './MobileComponent';
-import PaperButton from './PaperButton';
 import ReadSpeakerButton from './ReadSpeakerButton';
 import ResultOrderer from './ResultOrderer';
 import SettingsText from './SettingsText';
@@ -77,7 +76,6 @@ export {
   Navigator,
   NewsInfo,
   PaginatedList,
-  PaperButton,
   ReadSpeakerButton,
   ReservationItem,
   ResultItem,

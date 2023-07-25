@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from '@emotion/styled';
 import SimpleListItem from '../SimpleListItem';
 import { AddressIcon } from '../../SMIcon';
 import { getAddressText, useNavigationParams } from '../../../utils/address';
@@ -9,7 +10,6 @@ const AddressItem = (props) => {
   const {
     navigator,
     address,
-    classes,
     selected,
     className,
     showPostalCode,
@@ -21,13 +21,12 @@ const AddressItem = (props) => {
 
   const text = getAddressText(address, getLocaleText, showPostalCode);
 
-
   return (
     <SimpleListItem
       className={className}
       button
       text={text}
-      icon={<AddressIcon className={classes.icon} />}
+      icon={<StyledAddressIcon />}
       divider
       handleItemClick={(e) => {
         e.preventDefault();
@@ -42,11 +41,13 @@ const AddressItem = (props) => {
   );
 };
 
+const StyledAddressIcon = styled(AddressIcon)(() => ({
+  margin: 0,
+}));
 
 export default AddressItem;
 
 AddressItem.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   address: PropTypes.objectOf(PropTypes.any).isRequired,
   selected: PropTypes.bool,

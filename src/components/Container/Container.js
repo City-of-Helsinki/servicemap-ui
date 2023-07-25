@@ -51,7 +51,7 @@ const StyledPaper = styled(Paper)(containerStyles);
 
 const Container = (props) => {
   const {
-    className, children, classes, margin, noMargin, paper, text, title, titleComponent, ...rest
+    className, children, margin, noMargin, paper, text, title, titleComponent, ...rest
   } = props;
 
   const ContainerComponent = paper ? StyledPaper : StyledDiv;
