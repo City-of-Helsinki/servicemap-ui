@@ -84,6 +84,7 @@ const ResultItem = ({
   return (
     <>
       <ListItem
+        data-sm="ResultItemComponent"
         selected={selected}
         button
         role={role}

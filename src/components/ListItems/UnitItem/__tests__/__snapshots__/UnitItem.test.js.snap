@@ -4,6 +4,7 @@ exports[`<UnitItem /> should work 1`] = `
 <div>
   <li
     class="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button ResultItem-listItem-3 css-18azhdn-MuiButtonBase-root-MuiListItem-root"
+    data-sm="ResultItemComponent"
     role="link"
     tabindex="0"
   >

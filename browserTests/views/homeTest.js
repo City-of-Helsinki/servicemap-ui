@@ -15,7 +15,7 @@ fixture`Home view test`
   });
 
 test('Test home page navigation button clicks take user to correct pages', async (t) => {
-  const backButton = Selector('#BackButton');
+  const backButton = Selector('[data-sm="BackButton"]');
   //Buttons
   const areaButton = Selector('#AreaPage');
   const servicesButton = Selector('#ServicePage');

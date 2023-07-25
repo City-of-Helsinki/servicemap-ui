@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Typography, LinearProgress } from '@mui/material';
-import { withStyles } from '@mui/styles';
+import { LinearProgress, Typography } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
-import styles from './styles';
+import styled from '@emotion/styled';
 
 const Loading = (props) => {
   const {
-    children, classes, hideNumbers, text, intl, progress, reducer,
+    children, hideNumbers, text, intl, progress, reducer,
   } = props;
 
   if (reducer) {
@@ -20,35 +19,43 @@ const Loading = (props) => {
         const progress = (isFetching && count) ? Math.floor((count / max * 100)) : 0;
         const text = intl && intl.formatMessage({ id: 'search.loading.units' }, { count, max });
         return (
-          <div className={classes.root}>
+          <StyledDivRoot>
             <Typography variant="body2" aria-hidden="true">{(!hideNumbers && text) || <FormattedMessage id="general.fetching" />}</Typography>
             <LinearProgress variant="determinate" value={Math.min(progress, 100)} />
-          </div>
+          </StyledDivRoot>
         );
       }
-      return <Typography className={classes.root}><FormattedMessage id="general.loading" /></Typography>;
+      return <StyledTypographyRoot><FormattedMessage id="general.loading" /></StyledTypographyRoot>;
     }
     // Check if data exists or if data is an array that it has results
     if (!data || (Array.isArray(data) && !data.length)) {
-      return <Typography className={classes.root}><FormattedMessage id="general.noData" /></Typography>;
+      return <StyledTypographyRoot><FormattedMessage id="general.noData" /></StyledTypographyRoot>;
     }
     return children;
   }
 
   return (
-    <div className={classes.root}>
+    <StyledDivRoot>
       <Typography variant="body2" aria-hidden="true">{text || <FormattedMessage id="general.fetching" />}</Typography>
       <LinearProgress variant="determinate" value={Math.min(progress, 100)} />
-    </div>
+    </StyledDivRoot>
   );
 };
 
-export default withStyles(styles)(Loading);
+const rootStyles = ({ theme }) => ({
+  padding: theme.spacing(2),
+  backgroundColor: '#fff',
+  borderRadius: 2,
+});
+
+const StyledTypographyRoot = styled(Typography)(rootStyles);
+const StyledDivRoot = styled('div')(rootStyles);
+
+export default Loading;
 
 // Typechecking
 Loading.propTypes = {
   children: PropTypes.node,
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   hideNumbers: PropTypes.bool,
   text: PropTypes.string,
   progress: PropTypes.number,

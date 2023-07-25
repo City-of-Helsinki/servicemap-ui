@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { ButtonBase, Collapse } from '@mui/material';
 import { ArrowDropDown } from '@mui/icons-material';
+import styled from '@emotion/styled';
 
 const SMAccordion = ({
   isOpen,
@@ -15,7 +16,6 @@ const SMAccordion = ({
   simpleItem,
   openButtonSrText,
   className,
-  classes,
   elevated,
 }) => {
   const [open, setOpen] = useState(defaultOpen);
@@ -24,8 +24,6 @@ const SMAccordion = ({
   const [pendingOpen, setPendingOpen] = useState(false);
 
   const openState = isOpen !== null ? isOpen : open;
-
-  const icon = <ArrowDropDown className={`${classes.icon} ${openState ? classes.iconOpen : ''}  ${disabled ? classes.iconDisabled : ''}`} />;
 
   const handleOpen = (e) => {
     if (!hasBeenOpened) setHasBeenOpened(true);
@@ -50,30 +48,86 @@ const SMAccordion = ({
   const shouldRenderCollapse = disableUnmount ? hasBeenOpened : openState;
 
   return (
-    <div className={classes.accordionContainer}>
-      <div className={`${classes.accordion} ${className}`}>
+    <StyledAccordionContainer data-sm="AccordionComponent">
+      <StyledAccordion className={`${className}`}>
         {adornment}
         {!simpleItem ? (
-          <ButtonBase
+          <StyledClickAreaButton
             disabled={disabled}
-            className={classes.clickArea}
             aria-label={openButtonSrText}
             aria-expanded={openState}
             onClick={e => handleOpen(e)}
           >
             {titleContent}
-            {icon}
-          </ButtonBase>
+            <StyledArrowDropDown open={openState || undefined} disabled={disabled || undefined} />
+          </StyledClickAreaButton>
         ) : titleContent}
-      </div>
-      <Collapse className={`${classes.collapseContainer} ${elevated ? classes.elevated : ''}`} in={openState}>
+      </StyledAccordion>
+      <StyledCollapse elevated={elevated || undefined} in={openState}>
         {shouldRenderCollapse ? (
           collapseContent
         ) : null}
-      </Collapse>
-    </div>
+      </StyledCollapse>
+    </StyledAccordionContainer>
   );
 };
+
+const StyledArrowDropDown = styled(ArrowDropDown)(({ theme, open, disabled }) => {
+  const styles = {
+    fontSize: '1.5rem',
+    transition: '0.3s',
+    marginLeft: 'auto',
+    color: theme.palette.primary.main,
+  };
+  if (open) {
+    Object.assign(styles, {
+      transform: 'rotate(180deg)',
+    });
+  }
+  if (disabled) {
+    Object.assign(styles, {
+      color: theme.palette.disabled.strong,
+    });
+  }
+  return styles;
+});
+
+const StyledAccordionContainer = styled('div')(() => ({
+  flexDirection: 'column',
+  width: '100%',
+}));
+
+const StyledAccordion = styled('div')(({ theme }) => ({
+  alignSelf: 'center',
+  height: theme.spacing(7),
+  display: 'flex',
+  flexDirection: 'row',
+  padding: 0,
+  paddingRight: theme.spacing(2),
+  paddingLeft: theme.spacing(2),
+  alignItems: 'center',
+}));
+
+const StyledClickAreaButton = styled(ButtonBase)(() => ({
+  width: '100%',
+  height: '100%',
+  justifyContent: 'left',
+  textAlign: 'start',
+  wordBreak: 'break-word',
+}));
+
+const StyledCollapse = styled(Collapse)(({ elevated }) => {
+  const styles = {
+    width: '100%',
+  };
+  if (elevated) {
+    Object.assign(styles, {
+      boxShadow: 'inset 0px 4px 4px rgba(0, 0, 0, 0.06)',
+      position: 'relative',
+    });
+  }
+  return styles;
+});
 
 
 SMAccordion.propTypes = {
@@ -90,7 +144,6 @@ SMAccordion.propTypes = {
   elevated: PropTypes.bool,
   openButtonSrText: PropTypes.string,
   className: PropTypes.string,
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   disableUnmount: PropTypes.bool,
 };
 

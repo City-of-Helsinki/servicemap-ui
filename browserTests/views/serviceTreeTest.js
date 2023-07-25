@@ -7,10 +7,10 @@ import finnish from '../../src/i18n/fi';
 const { server } = config;
 
 const searchButton = Selector('#ServiceTreeSearchButton');
-const accordion = Selector('div[class*="SMAccordion-accordionContainer"]');
-const innerAccordion = (accordion) => accordion.find('div[class*="MuiCollapse-root"] ul li div[class*="SMAccordion-accordionContainer"]');
-const accordionCheckbox = (accordion) => accordion.find('input[type="checkbox"]')
-const searchBackButton = Selector('#SearchBar .SMBackButton')
+const accordion = Selector('[data-sm="AccordionComponent"]');
+const innerAccordion = (accordion) => accordion.find('div[class*="MuiCollapse-root"] [data-sm="AccordionComponent"]');
+const accordionCheckbox = (accordion) => accordion.find('input[type="checkbox"]');
+const searchBackButton = Selector('#SearchBar .SMBackButton');
 
 /* eslint-disable */
 fixture`Service tree page tests`

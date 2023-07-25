@@ -20,7 +20,6 @@ const BackButton = (props) => {
     ariaLabel,
     text,
     focusVisibleClassName,
-    buttonId,
   } = props;
   // Generate dynamic text
   // Figure out correct translation id suffix
@@ -52,7 +51,7 @@ const BackButton = (props) => {
   const renderContainerVariantButton = (CustomButton) => (
     <>
       <CustomButton
-        id={buttonId}
+        data-sm="BackButton"
         role="link"
         className={`SMBackButton ${className}`}
         style={style}
@@ -80,7 +79,7 @@ const BackButton = (props) => {
     return (
       <IconButton
         role="link"
-        id={buttonId}
+        data-sm="BackButton"
         className={`SMBackButton ${className}`}
         style={style}
         aria-hidden={srHidden}
@@ -116,7 +115,7 @@ const BackButton = (props) => {
     <Button
       aria-hidden={srHidden}
       aria-label={ariaLabel || buttonText}
-      id={buttonId}
+      data-sm="BackButton"
       className="SMBackButton"
       role="link"
       variant="contained"
@@ -178,7 +177,6 @@ BackButton.propTypes = {
   ariaLabel: PropTypes.string,
   text: PropTypes.string,
   focusVisibleClassName: PropTypes.string,
-  buttonId: PropTypes.string,
 };
 
 BackButton.defaultProps = {
@@ -191,7 +189,6 @@ BackButton.defaultProps = {
   ariaLabel: null,
   text: null,
   focusVisibleClassName: null,
-  buttonId: 'BackButton',
 };
 
 export default BackButton;
