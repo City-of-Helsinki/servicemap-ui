@@ -157,7 +157,6 @@ ToolMenu.propTypes = {
   classes: PropTypes.shape({
     menuContainer: PropTypes.string,
     smIcon: PropTypes.string,
-    measuringButton: PropTypes.string,
   }).isRequired,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   mapUtility: PropTypes.shape({

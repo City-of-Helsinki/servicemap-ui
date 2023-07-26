@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import {
   Chip, Container, NoSsr, Typography,
 } from '@mui/material';
-import { styled } from '@mui/styles';
+import styled from '@emotion/styled';
 import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';

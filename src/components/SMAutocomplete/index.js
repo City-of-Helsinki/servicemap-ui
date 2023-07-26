@@ -1,4 +1,5 @@
-import { styled, Autocomplete } from '@mui/material';
+import { Autocomplete } from '@mui/material';
+import styled from '@emotion/styled';
 
 const SMAutocomplete = styled(Autocomplete)(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,

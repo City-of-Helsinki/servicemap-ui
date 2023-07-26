@@ -5,7 +5,7 @@ import {
   FormControl, ListItem, TextField, Typography,
 } from '@mui/material';
 import { Tune } from '@mui/icons-material';
-import { styled } from '@mui/styles';
+import styled from '@emotion/styled';
 import { useAcccessibilitySettings } from '../../utils/settings';
 import SMAutocomplete from '../SMAutocomplete';
 import { keyboardHandler } from '../../utils';
@@ -31,7 +31,6 @@ const allowedInitialValues = [
 ];
 
 const ResultOrderer = ({
-  classes,
   initialOrder,
   direction,
   intl,
@@ -110,8 +109,8 @@ const ResultOrderer = ({
   };
 
   return (
-    <form className={classes.root} autoComplete="off">
-      <FormControl className={classes.formControl}>
+    <StyledForm autoComplete="off">
+      <StyledFormControl>
         <div style={{ display: 'flex', width: '100%', borderBottom: 'solid 1px white' }}>
           <StyledTune />
           <div style={{ display: 'flex', width: '100%' }}>
@@ -158,14 +157,13 @@ const ResultOrderer = ({
             />
           </div>
         </div>
-      </FormControl>
-    </form>
+      </StyledFormControl>
+    </StyledForm>
   );
 };
 
 ResultOrderer.propTypes = {
   initialOrder: PropTypes.oneOf(allowedInitialValues),
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   direction: PropTypes.oneOf(allowedDirections).isRequired,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   order: PropTypes.oneOf(allowedOrders).isRequired,
@@ -203,6 +201,25 @@ const StyledAutocomplete = styled(SMAutocomplete)(({ theme }) => ({
     outline: 'none',
     boxShadow: 'none',
   },
+}));
+
+const StyledForm = styled('form')(({ theme }) => ({
+  display: 'flex',
+  flexWrap: 'wrap',
+  flex: '0 0 auto',
+  background: theme.palette.primary.main,
+  color: theme.palette.primary.highContrast,
+  padding: theme.spacing(0, 2, 2, 2),
+}));
+
+const StyledFormControl = styled(FormControl)(() => ({
+  display: 'flex',
+  flexDirection: 'row',
+  flex: '1 0 auto',
+  flexWrap: 'nowrap',
+  textAlign: 'left',
+  color: 'inherit',
+  alignItems: 'center',
 }));
 
 export default ResultOrderer;

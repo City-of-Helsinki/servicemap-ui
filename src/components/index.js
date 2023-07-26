@@ -2,7 +2,6 @@ import Navigator from './Navigator';
 import BackButton from './BackButton';
 import DataFetcher from './DataFetchers/DataFetcher';
 import NewsInfo from './NewsInfo';
-import Settings from './Settings';
 import TopBar from './TopBar';
 import BottomNav from './BottomNav';
 import DescriptionText from './DescriptionText';
@@ -82,7 +81,6 @@ export {
   ResultList,
   ResultOrderer,
   ServiceItem,
-  Settings,
   SettingsText,
   SettingsComponent,
   SimpleListItem,

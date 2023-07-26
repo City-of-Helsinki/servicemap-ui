@@ -32,9 +32,7 @@ const TopBar = (props) => {
 
   const {
     hideButtons,
-    settingsOpen,
     classes,
-    toggleSettings,
     breadcrumb,
     changeTheme,
     theme,
@@ -55,9 +53,6 @@ const TopBar = (props) => {
         text={<FormattedMessage id={textId} />}
         onClick={(e) => {
           e.preventDefault();
-          if (settingsOpen) {
-            toggleSettings();
-          }
           if (mapPage) {
             navigator.closeMap(breadcrumb.length ? 'replace' : null);
           } else {
@@ -89,7 +84,6 @@ const TopBar = (props) => {
 
   const handleNavigation = (target, data) => {
     // Hide settings and map if open
-    toggleSettings();
     if (location.search.indexOf('showMap=true') > -1) {
       navigator.closeMap();
     }
@@ -141,7 +135,6 @@ const TopBar = (props) => {
       isOpen={drawerOpen}
       pageType={pageType}
       toggleDrawerMenu={() => toggleDrawerMenu()}
-      toggleSettings={toggleSettings}
       handleNavigation={handleNavigation}
     />
   );
@@ -265,16 +258,13 @@ TopBar.propTypes = {
   currentPage: PropTypes.string.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   setMapType: PropTypes.func.isRequired,
-  settingsOpen: PropTypes.string,
   smallScreen: PropTypes.bool.isRequired,
   theme: PropTypes.string.isRequired,
-  toggleSettings: PropTypes.func.isRequired,
   hideButtons: PropTypes.bool,
 };
 
 TopBar.defaultProps = {
   navigator: null,
-  settingsOpen: null,
   hideButtons: false,
 };
 

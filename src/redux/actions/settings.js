@@ -85,14 +85,6 @@ export const toggleColorblind = (value = undefined) => setAccessibilitySelection
 
 export const setMobility = value => setMobilitySetting(value);
 
-export const toggleSettings = value => async (dispatch, getState) => {
-  const { settings } = getState();
-  const { toggled } = settings;
-  const newValue = (!value || value === toggled) ? null : value;
-
-  dispatch(simpleAction('SETTINGS_TOGGLE', newValue));
-};
-
 export const setMapType = value => setMapTypeSetting(value);
 
 export const resetAccessibilitySettings = () => async (dispatch) => {

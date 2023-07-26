@@ -29,7 +29,7 @@ import {
   settingsCollapsed,
 } from './reducers/settings';
 import {
-  direction, order, mapRef, settingsToggled, measuringMode,
+  direction, order, mapRef, measuringMode,
 } from './reducers/simpleReducers';
 import statisticalDistrict from './reducers/statisticalDistrict';
 
@@ -58,7 +58,6 @@ export default combineReducers({
   address,
   serviceTree,
   settings: combineReducers({
-    toggled: settingsToggled,
     colorblind,
     hearingAid,
     mobility,
