@@ -137,8 +137,8 @@ const ResultItem = ({
                 <StyledRightColumn data-sm="ResultItemRightColumn">
                   <StyledText
                     variant="caption"
-                    caption
-                    marginleft
+                    caption="true"
+                    marginleft="true"
                     className={`${typographyClasses.topRight || ''} ResultItem-distance`}
                     component="p"
                     aria-hidden="true"
@@ -158,7 +158,7 @@ const ResultItem = ({
                 <div>
                   <StyledText
                     variant="caption"
-                    nomargin
+                    hidemargin="true"
                     className={`${typographyClasses.subtitle || ''} ResultItem-subtitle`}
                     component="p"
                     aria-hidden="true"
@@ -169,7 +169,7 @@ const ResultItem = ({
                 {
                   bottomText
                   && (
-                  <StyledBottomContainer bottomHighlight={bottomHighlight || undefined}>
+                  <StyledBottomContainer bottomhighlight={bottomHighlight || undefined}>
                     <Typography
                       className={`${typographyClasses.bottom || ''} ResultItem-bottom`}
                       color="inherit"
@@ -264,7 +264,7 @@ const StyledRightColumn = styled('div')(() => ({
 }));
 
 const StyledText = styled(Typography)(({
-  theme, caption, marginleft, nomargin,
+  theme, caption, marginleft, hidemargin,
 }) => {
   const styles = {
     color: '#000', fontWeight: 'normal',
@@ -279,7 +279,7 @@ const StyledText = styled(Typography)(({
       color: 'rgba(0,0,0,0.6)',
     });
   }
-  if (nomargin) {
+  if (hidemargin) {
     Object.assign(styles, {
       margin: 0,
     });
@@ -287,7 +287,7 @@ const StyledText = styled(Typography)(({
   return styles;
 });
 
-const StyledBottomContainer = styled('div')(({ bottomHighlight }) => {
+const StyledBottomContainer = styled('div')(({ bottomhighlight }) => {
   const styles = {
     display: 'inline-block',
     marginTop: '6px',
@@ -295,7 +295,7 @@ const StyledBottomContainer = styled('div')(({ bottomHighlight }) => {
       fontWeight: 'normal',
     },
   };
-  if (bottomHighlight) {
+  if (bottomhighlight) {
     Object.assign(styles, {
       backgroundColor: '#323232',
       color: '#FFF',

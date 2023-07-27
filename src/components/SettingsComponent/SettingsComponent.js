@@ -1,6 +1,9 @@
 import PropTypes from 'prop-types';
 import {
-  Chip, Container, NoSsr, Typography,
+  Chip,
+  Container,
+  NoSsr,
+  Typography,
 } from '@mui/material';
 import styled from '@emotion/styled';
 import React from 'react';
@@ -12,7 +15,7 @@ import SettingsDropdowns from '../SettingsDropdowns';
 import constants from './constants';
 
 
-const SettingsComponent = ({ variant, classes }) => {
+const SettingsComponent = ({ variant }) => {
   const intl = useIntl();
   const dispatch = useDispatch();
   const settings = useSelector(state => state.settings);
@@ -32,19 +35,13 @@ const SettingsComponent = ({ variant, classes }) => {
     return sense + mobility + cities;
   };
 
-
-  let classNames = '';
-  if (variant === 'paddingTopSettings') {
-    classNames = `${classes.paddingTopSettings}`;
-  }
-
   const chipLabel = intl.formatMessage({ id: 'settings.accordion.open' });
   return (
     <NoSsr>
-      <Container
+      <StyledContainer
         disableGutters
         sx={{ pb: 2, bgcolor: 'primary.main' }}
-        className={classNames}
+        paddingtopsettings={variant === 'paddingTopSettings' || undefined}
       >
         <StyledAccordion
           settingsVisible={settingsVisible}
@@ -74,11 +71,14 @@ const SettingsComponent = ({ variant, classes }) => {
           }
           collapseContent={(<SettingsDropdowns />)}
         />
-      </Container>
+      </StyledContainer>
     </NoSsr>
   );
 };
 
+const StyledContainer = styled(Container)(({ theme, paddingtopsettings }) => (
+  paddingtopsettings ? { paddingTop: theme.spacing(2) } : {}
+));
 
 const StyledAccordion = styled(SMAccordion)(({ theme, settingsVisible }) => ({
   height: settingsVisible ? 32 : '100%',
@@ -120,7 +120,6 @@ const StyledChipContainer = styled('div')(({ theme }) => ({
 }));
 
 SettingsComponent.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   variant: PropTypes.string,
 };
 

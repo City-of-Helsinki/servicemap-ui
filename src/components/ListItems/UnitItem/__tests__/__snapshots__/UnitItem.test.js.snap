@@ -51,6 +51,7 @@ exports[`<UnitItem /> should work 1`] = `
           <p
             aria-hidden="true"
             class="MuiTypography-root MuiTypography-caption  ResultItem-subtitle css-16auzzq-MuiTypography-root"
+            hidemargin="true"
           >
             Kunnallinen palvelu
           </p>

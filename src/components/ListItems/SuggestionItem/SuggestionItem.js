@@ -97,7 +97,7 @@ const SuggestionItem = (props) => {
 
             <StyledHistoryText
               aria-hidden
-              handleRemoveClick={handleRemoveClick || undefined}
+              handleremoveclick={handleRemoveClick ? 'true' : undefined}
               variant="body2"
             >
               {
@@ -173,9 +173,9 @@ const StyledListItemText = styled(ListItemText)(() => ({
   alignSelf: 'center',
 }));
 
-const StyledHistoryText = styled(Typography)(({ handleRemoveClick }) => {
+const StyledHistoryText = styled(Typography)(({ handleremoveclick }) => {
   const styles = {};
-  if (handleRemoveClick) {
+  if (handleremoveclick) {
     Object.assign(styles, {
       color: '#660DD7',
     });

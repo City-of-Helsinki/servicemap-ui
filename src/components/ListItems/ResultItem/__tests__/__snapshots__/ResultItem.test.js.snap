@@ -41,7 +41,9 @@ exports[`<ResultItem /> should work 1`] = `
         >
           <p
             aria-hidden="true"
+            caption="true"
             class="MuiTypography-root MuiTypography-caption  ResultItem-distance css-bgkxzc-MuiTypography-root"
+            marginleft="true"
           >
             100m
           </p>
@@ -52,6 +54,7 @@ exports[`<ResultItem /> should work 1`] = `
           <p
             aria-hidden="true"
             class="MuiTypography-root MuiTypography-caption  ResultItem-subtitle css-16auzzq-MuiTypography-root"
+            hidemargin="true"
           >
             Subtitle text
           </p>

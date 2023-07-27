@@ -114,18 +114,18 @@ const SuggestionBox = (props) => {
             return;
           }
           fetchController.current = null;
-          setLoading(false);
           if (data.length) {
             setSuggestions(data);
           } else {
             setSuggestionError(true);
           }
-        }).catch(() => {
+          setLoading(false);
+        }).catch((e) => {
           // Do nothing
         });
     } else {
-      setLoading(false);
       setSuggestions(null);
+      setLoading(false);
       if (fetchController.current) {
         fetchController.current.abort();
       }
@@ -143,7 +143,7 @@ const SuggestionBox = (props) => {
   const renderLoading = () => (
     <>
       <StyledInfoText align="left">
-        <FormattedMessage id="search.suggestions.loading" />
+        <FormattedMessage data-cm="SuggestionsLoading" id="search.suggestions.loading" />
       </StyledInfoText>
     </>
   );
@@ -324,12 +324,12 @@ const SuggestionBox = (props) => {
   if (visible) {
     let component = null;
     let srText = null;
-    if (suggestions) {
-      component = renderSuggestionList('suggestion');
-      srText = intl.formatMessage({ id: 'search.suggestions.suggestions' }, { count: suggestions.length });
-    } else if (loading) {
+    if (loading) {
       component = renderLoading();
       srText = null;
+    } else if (suggestions) {
+      component = renderSuggestionList('suggestion');
+      srText = intl.formatMessage({ id: 'search.suggestions.suggestions' }, { count: suggestions.length });
     } else if (suggestionError) {
       component = renderNoResults();
       srText = intl.formatMessage({ id: 'search.suggestions.error' });
