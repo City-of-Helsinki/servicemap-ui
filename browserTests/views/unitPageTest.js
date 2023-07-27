@@ -226,7 +226,7 @@ test('Unit view share link does work correctly', async (t) => {
   const accessibilityTab = Selector('div[role="tablist"] button').nth(1);
   const shareButton = Selector('div[class*="TitleBar-titleContainer"] button');
 
-  const copyLinkButton = Selector(`div[class*="Connect(LinkSettingsDialogComponent)-container"] button p`)
+  const copyLinkButton = Selector(`div[data-sm="DialogContainer"] button p`)
   const radio = Selector(`div[aria-label="${finnish['link.settings.dialog.radio.label']}"] label`)
   // const dialogClose = Selector('div[class*="Dialog-topArea"] button[aria-label="Sulje"]');
 

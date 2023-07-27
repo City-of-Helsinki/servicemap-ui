@@ -6,6 +6,7 @@ import {
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { useSelector } from 'react-redux';
+import styled from '@emotion/styled';
 import locationIcon from '../../../assets/icons/LocationDefault.svg';
 import locationIconHover from '../../../assets/icons/LocationHover.svg';
 import locationIconContrast from '../../../assets/icons/LocationDefaultContrast.svg';
@@ -14,7 +15,6 @@ import locationIconContrastHover from '../../../assets/icons/LocationHoverContra
 const ResultItem = ({
   bottomHighlight,
   bottomText,
-  classes,
   onClick,
   icon,
   subtitle,
@@ -67,7 +67,6 @@ const ResultItem = ({
     resetMarkerHighlight();
   };
 
-
   // Screen reader text
   const srText = `
     ${title || ''} 
@@ -78,12 +77,10 @@ const ResultItem = ({
   `;
 
   const typographyClasses = (extendedClasses && extendedClasses.typography) || {};
-  const listItemClasses = padded ? classes.paddedItem : classes.listItem;
-  const listItemIconClasses = padded ? classes.listItemIconPadded : classes.listItemIcon;
 
   return (
     <>
-      <ListItem
+      <StyledListItem
         data-sm="ResultItemComponent"
         selected={selected}
         button
@@ -95,82 +92,86 @@ const ResultItem = ({
         onBlur={unitId ? onMouseLeave : null}
         onMouseEnter={unitId ? onMouseEnter : null}
         onMouseLeave={unitId ? onMouseLeave : null}
-        className={listItemClasses}
         {...rest}
       >
         {
           icon
           && (
-          <ListItemIcon className={listItemIconClasses}>
+          <StyledListItemIcon>
             {icon}
-          </ListItemIcon>
+          </StyledListItemIcon>
           )
         }
-        <div className={`${classes.itemTextContainer}  ${simpleItem ? classes.compactTextContainer : ''}`}>
-          <div className={`${classes.topRow || ''}`}>
+        <StyledItemTextContainer simpleitem={simpleItem || undefined}>
+          <StyledTopRow data-sm="ResultItemTopRow">
             {
               // SROnly element with full readable text
             }
-            <Typography
-              className={`${classes.title || ''} ResultItem-srOnly`}
+            <StyledTitle
+              className="ResultItem-srOnly ResultItem-title"
               component="p"
               style={visuallyHidden}
             >
               {srText}
-            </Typography>
+            </StyledTitle>
 
             {
               // Title
             }
-            <Typography
-              className={`${classes.title || ''}  ${typographyClasses.title || ''} ${simpleItem ? classes.compactItem : ''} ResultItem-title`}
+            <StyledTitle
+              simpleitem={simpleItem || undefined}
+              data-sm="ResultItemTitle"
+              className={`${typographyClasses.title || ''} ResultItem-title`}
               component="p"
               role="textbox"
               variant="body2"
               aria-hidden="true"
             >
               {title}
-            </Typography>
+            </StyledTitle>
 
             {
               // Distance text
               distance && distance.text
               && (
-                <div className={`${classes.rightColumn || ''}`}>
-                  <Typography
+                <StyledRightColumn data-sm="ResultItemRightColumn">
+                  <StyledText
                     variant="caption"
-                    className={`${classes.caption || ''} ${classes.text} ${classes.marginLeft || ''} ${typographyClasses.topRight || ''} ResultItem-distance`}
+                    caption
+                    marginleft
+                    className={`${typographyClasses.topRight || ''} ResultItem-distance`}
                     component="p"
                     aria-hidden="true"
                   >
                     {distance.text}
-                  </Typography>
-                </div>
+                  </StyledText>
+                </StyledRightColumn>
               )
             }
 
-          </div>
+          </StyledTopRow>
           {
             // Bottom row
             (subtitle || bottomText)
             && (
               <div>
                 <div>
-                  <Typography
+                  <StyledText
                     variant="caption"
-                    className={`${classes.noMargin || ''} ${classes.text} ${typographyClasses.subtitle || ''} ResultItem-subtitle`}
+                    nomargin
+                    className={`${typographyClasses.subtitle || ''} ResultItem-subtitle`}
                     component="p"
                     aria-hidden="true"
                   >
                     {subtitle || ''}
-                  </Typography>
+                  </StyledText>
                 </div>
                 {
                   bottomText
                   && (
-                  <div className={`${classes.bottomContainer} ${bottomHighlight ? classes.bottomHighlight : ''}`}>
+                  <StyledBottomContainer bottomHighlight={bottomHighlight || undefined}>
                     <Typography
-                      className={`${classes.smallFont || ''} ${typographyClasses.bottom || ''} ResultItem-bottom`}
+                      className={`${typographyClasses.bottom || ''} ResultItem-bottom`}
                       color="inherit"
                       component="p"
                       variant="caption"
@@ -178,19 +179,19 @@ const ResultItem = ({
                     >
                       {bottomText}
                     </Typography>
-                  </div>
+                  </StyledBottomContainer>
                   )
                 }
 
               </div>
             )
           }
-        </div>
-      </ListItem>
+        </StyledItemTextContainer>
+      </StyledListItem>
       {divider && (
         <li aria-hidden>
-          <Divider
-            className={simpleItem ? classes.shortDivider : classes.divider}
+          <StyledDivider
+            simpleitem={simpleItem || undefined}
             variant={icon ? 'inset' : 'fullWidth'}
           />
         </li>
@@ -199,13 +200,118 @@ const ResultItem = ({
   );
 };
 
+const StyledDivider = styled(Divider)(({ theme, simpleitem }) => (
+  simpleitem
+    ? {
+      marginLeft: theme.spacing(2),
+      marginRight: theme.spacing(-2),
+    }
+    : {
+      marginRight: theme.spacing(-2),
+    }
+));
+
+const StyledListItem = styled(ListItem)(({ theme }) => ({
+  padding: theme.spacing(1),
+}));
+
+const StyledListItemIcon = styled(ListItemIcon)(({ theme }) => ({
+  margin: theme.spacing(1),
+  marginRight: theme.spacing(2),
+  minWidth: 0,
+}));
+
+const StyledItemTextContainer = styled('div')(({ theme, simpleitem }) => {
+  const styles = {
+    flex: '1 1 auto',
+    margin: 0,
+    marginLeft: theme.spacing(2),
+  };
+  if (simpleitem) {
+    Object.assign(styles, {
+      width: '100%',
+      marginLeft: 0,
+      paddingLeft: theme.spacing(1),
+      boxSizing: 'border-box',
+    });
+  }
+  return styles;
+});
+
+const StyledTopRow = styled('div')(() => ({
+  display: 'flex',
+  width: '100%',
+  justifyContent: 'space-between',
+}));
+
+const StyledTitle = styled(Typography)(({ simpleitem }) => {
+  const styles = {
+    flex: '1 1 auto',
+    textOverflow: 'ellipsis',
+    margin: 0,
+  };
+  if (simpleitem) {
+    Object.assign(styles, {
+      overflow: 'hidden',
+      whiteSpace: 'nowrap',
+    });
+  }
+  return styles;
+});
+
+const StyledRightColumn = styled('div')(() => ({
+  textAlign: 'right',
+}));
+
+const StyledText = styled(Typography)(({
+  theme, caption, marginleft, nomargin,
+}) => {
+  const styles = {
+    color: '#000', fontWeight: 'normal',
+  };
+  if (caption) {
+    Object.assign(styles, {
+      marginleft: theme.spacing(1),
+    });
+  }
+  if (marginleft) {
+    Object.assign(styles, {
+      color: 'rgba(0,0,0,0.6)',
+    });
+  }
+  if (nomargin) {
+    Object.assign(styles, {
+      margin: 0,
+    });
+  }
+  return styles;
+});
+
+const StyledBottomContainer = styled('div')(({ bottomHighlight }) => {
+  const styles = {
+    display: 'inline-block',
+    marginTop: '6px',
+    '& p': {
+      fontWeight: 'normal',
+    },
+  };
+  if (bottomHighlight) {
+    Object.assign(styles, {
+      backgroundColor: '#323232',
+      color: '#FFF',
+      padding: '0 8px',
+      marginBottom: '2px',
+    });
+  }
+  return styles;
+});
+
 export default ResultItem;
 
 // Typechecking
 ResultItem.propTypes = {
   bottomHighlight: PropTypes.bool,
   bottomText: PropTypes.string,
-  classes: PropTypes.objectOf(PropTypes.any),
   extendedClasses: PropTypes.objectOf(PropTypes.shape({
     typography: PropTypes.shape({
       bottom: PropTypes.string,
@@ -234,7 +340,6 @@ ResultItem.propTypes = {
 ResultItem.defaultProps = {
   bottomHighlight: false,
   bottomText: null,
-  classes: {},
   extendedClasses: null,
   unitId: null,
   icon: null,

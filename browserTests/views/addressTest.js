@@ -125,7 +125,7 @@ test('AddressView nearby services tab works correctly', async (t) => {
   const tabNearbyUnits = Selector('button[role="tab"]').nth(1);
   const unitTitle = Selector('.TitleText');
   const listItems = Selector('#tab-content-1 li[role="link"]');
-  const listItemTopRow = (listItem) => listItem.find('div[class*="ResultItem-topRow"] p[aria-hidden="true"]');
+  const listItemTopRow = (listItem) => listItem.find('div[data-sm="ResultItemTopRow"] p[aria-hidden="true"]');
   const backToAddressButton = Selector('[data-sm="BackButton"]');
 
   await t

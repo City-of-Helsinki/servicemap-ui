@@ -14,7 +14,6 @@ const UnitItem = ({
   unit,
   onClick,
   intl,
-  padded,
   divider,
   navigator,
   settings,
@@ -89,7 +88,6 @@ const UnitItem = ({
           }
         }}
         unitId={id}
-        padded={padded}
         divider={divider}
       />
     );
@@ -133,7 +131,6 @@ UnitItem.propTypes = {
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
-  padded: PropTypes.bool,
   divider: PropTypes.bool,
   simpleItem: PropTypes.bool,
 };
@@ -143,7 +140,6 @@ UnitItem.defaultProps = {
   unit: {},
   onClick: null,
   navigator: null,
-  padded: false,
   divider: true,
   simpleItem: false,
 };

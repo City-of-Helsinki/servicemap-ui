@@ -3,24 +3,24 @@
 exports[`<ServiceItem /> should work 1`] = `
 <div>
   <li
-    class="MuiButtonBase-root MuiListItem-root SimpleListItem-listItem-2 MuiListItem-gutters MuiListItem-padding MuiListItem-button null  css-18azhdn-MuiButtonBase-root-MuiListItem-root"
+    class="MuiButtonBase-root MuiListItem-root SimpleListItem-listItem-1 MuiListItem-gutters MuiListItem-padding MuiListItem-button null  css-18azhdn-MuiButtonBase-root-MuiListItem-root"
     role="link"
     tabindex="0"
   >
     <div
       aria-hidden="true"
-      class="MuiListItemIcon-root SimpleListItem-listIcon-6  css-cveggr-MuiListItemIcon-root"
+      class="MuiListItemIcon-root SimpleListItem-listIcon-5  css-cveggr-MuiListItemIcon-root"
     >
       <img
         alt=""
         aria-hidden="true"
-        class="Connect(ServiceItem)-icon-1"
+        class="css-15p9n5u"
         src="test-file-stub"
         style=""
       />
     </div>
     <div
-      class="MuiListItemText-root SimpleListItem-textContainer-3 css-vt7cuc-MuiListItemText-root"
+      class="MuiListItemText-root SimpleListItem-textContainer-2 css-vt7cuc-MuiListItemText-root"
     >
       <span
         class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10wsksd-MuiTypography-root"
@@ -41,7 +41,7 @@ exports[`<ServiceItem /> should work 1`] = `
     aria-hidden="true"
   >
     <hr
-      class="MuiDivider-root MuiDivider-fullWidth SimpleListItem-divider-7 css-9mgopn-MuiDivider-root"
+      class="MuiDivider-root MuiDivider-fullWidth SimpleListItem-divider-6 css-9mgopn-MuiDivider-root"
     />
   </li>
 </div>

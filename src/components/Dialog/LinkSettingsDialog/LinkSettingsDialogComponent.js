@@ -11,6 +11,9 @@ import { visuallyHidden } from '@mui/utils';
 import React, { useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
+import { css } from '@emotion/css';
+import styled from '@emotion/styled';
+import { useTheme } from '@mui/styles';
 import isClient from '../../../utils';
 import SettingsUtility, { useAcccessibilitySettings } from '../../../utils/settings';
 import Dialog from '../index';
@@ -41,7 +44,6 @@ CopyTooltip.propTypes = {
 };
 
 const LinkSettingsDialogComponent = ({
-  classes,
   activateSetting,
   resetAccessibilitySettings,
   setOpen,
@@ -55,6 +57,7 @@ const LinkSettingsDialogComponent = ({
   const [copyTooltipOpen1, setCopyTooltipOpen1] = useState(false);
   const [copyTooltipOpen2, setCopyTooltipOpen2] = useState(false);
   const [showAriaAlert, setShowAriaAlert] = useState(false);
+  const theme = useTheme();
   let timeout = null;
   let timeoutAriaAlert = null;
 
@@ -161,6 +164,12 @@ const LinkSettingsDialogComponent = ({
     }, 2000);
   };
 
+  const radioGroupItemClass = css({
+    [theme.breakpoints.down('sm')]: {
+      margin: `${theme.spacing(1)} 0`,
+    },
+  });
+
   return (
     <Dialog
       open
@@ -168,14 +177,13 @@ const LinkSettingsDialogComponent = ({
       {...rest}
       title={title}
       content={(
-        <div className={classes.container}>
+        <StyledContainer data-sm="DialogContainer">
           <CopyTooltip
             open={copyTooltipOpen1}
             title={tooltip}
             aria-label={tooltipAria}
           >
-            <ButtonBase
-              className={classes.urlContainer}
+            <StyledUrlContainer
               onClick={() => {
                 toggleAriaLive();
                 copyToClipboard(setCopyTooltipOpen1);
@@ -186,17 +194,16 @@ const LinkSettingsDialogComponent = ({
             >
               <div>
                 <Typography variant="subtitle1">{unitName}</Typography>
-                <Typography className={classes.linkText}>{url}</Typography>
+                <StyledLinkText>{url}</StyledLinkText>
               </div>
-              <FileCopy className={classes.linkIcon} />
-            </ButtonBase>
+              <StyledFileCopy />
+            </StyledUrlContainer>
           </CopyTooltip>
           <Typography variant="subtitle1"><FormattedMessage id="link.settings.dialog.subtitle" /></Typography>
           <Typography variant="body2"><FormattedMessage id="link.settings.dialog.description" /></Typography>
           <div>
-            <RadioGroup
+            <StyledRadioGroup
               aria-label={radioAria}
-              className={classes.radioGroup}
               name="setting"
               value={selected}
               onChange={(event, value) => {
@@ -215,12 +222,12 @@ const LinkSettingsDialogComponent = ({
                     label={item.label}
                     value={item.value}
                     classes={{
-                      root: classes.radioGroupItem,
+                      root: radioGroupItemClass,
                     }}
                   />
                 ))
               }
-            </RadioGroup>
+            </StyledRadioGroup>
           </div>
           {
             showAriaAlert
@@ -228,7 +235,7 @@ const LinkSettingsDialogComponent = ({
               <Typography aria-live="polite" id="copy_link_aria_live" style={visuallyHidden}><FormattedMessage id="link.settings.dialog.tooltip" /></Typography>
             )
           }
-        </div>
+        </StyledContainer>
       )}
       actions={(
         <CopyTooltip
@@ -236,24 +243,81 @@ const LinkSettingsDialogComponent = ({
           title={tooltip}
           aria-label={tooltipAria}
         >
-          <ButtonBase
-            className={classes.shareButton}
+          <StyledShareButton
             onClick={() => {
               toggleAriaLive();
               copyToClipboard(setCopyTooltipOpen2);
             }}
           >
             {actionButtonText}
-            <Share className={classes.shareIcon} />
-          </ButtonBase>
+            <StyledShare />
+          </StyledShareButton>
         </CopyTooltip>
       )}
     />
   );
 };
 
+const StyledContainer = styled('div')(({ theme }) => ({
+  padding: theme.spacing(1),
+}));
+
+const StyledUrlContainer = styled(ButtonBase)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  backgroundColor: 'rgba(222, 223, 225, 0.25)',
+  padding: `${theme.spacing(1)} ${theme.spacing(2)}`,
+  margin: `0 0 ${theme.spacing(3)} 0`,
+  border: '1px solid #DEDFE1',
+  width: '100%',
+  textAlign: 'left',
+  '&:hover': {
+    backgroundColor: 'rgba(222, 223, 225, 0.50)',
+  },
+}));
+
+const StyledLinkText = styled(Typography)(({ theme }) => ({
+  color: theme.palette.primary.main,
+  wordBreak: 'break-word',
+}));
+
+const StyledFileCopy = styled(FileCopy)(({ theme }) => ({
+  color: theme.palette.primary.main,
+  marginLeft: theme.spacing(1),
+}));
+
+const StyledRadioGroup = styled(RadioGroup)(({ theme }) => ({
+  flexWrap: 'nowrap',
+  flexDirection: 'row',
+  margin: `${theme.spacing(2)} 0`,
+  [theme.breakpoints.down('sm')]: {
+    flexDirection: 'column',
+  },
+}));
+
+const StyledShare = styled(Share)(({ theme }) => ({
+  fontSize: '1rem',
+  marginLeft: theme.spacing(1),
+}));
+
+const StyledShareButton = styled(ButtonBase)(({ theme }) => ({
+  ...theme.typography.body2,
+  boxSizing: 'border-box',
+  borderRadius: 2,
+  color: theme.palette.primary.highContrast,
+  backgroundColor: theme.palette.primary.main,
+  '&:hover': {
+    backgroundColor: theme.palette.primary.light,
+  },
+  '&:disabled': {
+    backgroundColor: theme.palette.disabled.strong,
+  },
+  minHeight: 38,
+  padding: '0 11px',
+}));
+
 LinkSettingsDialogComponent.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   activateSetting: PropTypes.func.isRequired,
   resetAccessibilitySettings: PropTypes.func.isRequired,
   setOpen: PropTypes.func.isRequired,

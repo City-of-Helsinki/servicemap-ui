@@ -137,7 +137,7 @@ test('Address search does work', async (t) => {
   const addressInput = Selector('#addressSearchbar');
   const suggestions = Selector('#address-results div[role="option"]');
   const marker = Selector('div[class*="userMarker"]');
-  const distanceText = Selector('div[class*="ResultItem-rightColumn"]');
+  const distanceText = Selector('div[data-sm="ResultItemRightColumn"]');
 
   await t
     .typeText(addressInput, 'mannerheimintie')

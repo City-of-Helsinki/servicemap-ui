@@ -34,13 +34,13 @@ exports[`<ResultList /> should work 1`] = `
       id="testID"
     >
       <li
-        class="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button ResultItem-listItem-3 css-18azhdn-MuiButtonBase-root-MuiListItem-root"
+        class="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button css-tjwta7-MuiButtonBase-root-MuiListItem-root"
         data-sm="ResultItemComponent"
         role="link"
         tabindex="0"
       >
         <div
-          class="MuiListItemIcon-root ResultItem-listItemIcon-4 css-cveggr-MuiListItemIcon-root"
+          class="MuiListItemIcon-root css-1v52qf3-MuiListItemIcon-root"
         >
           <img
             alt=""
@@ -50,13 +50,13 @@ exports[`<ResultList /> should work 1`] = `
           />
         </div>
         <div
-          class="ResultItem-itemTextContainer-10  "
+          class="css-188n6a2"
         >
           <div
-            class="ResultItem-topRow-12"
+            class="css-1ufrzn0"
           >
             <p
-              class="MuiTypography-root MuiTypography-body2 ResultItem-title-8 ResultItem-srOnly css-1ak20dk-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body2 ResultItem-srOnly css-1eygwv7-MuiTypography-root"
               style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
             >
               
@@ -69,7 +69,7 @@ exports[`<ResultList /> should work 1`] = `
             </p>
             <p
               aria-hidden="true"
-              class="MuiTypography-root MuiTypography-body2 ResultItem-title-8  Connect(UnitItem)-title-1  ResultItem-title css-1ak20dk-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body2 Connect(UnitItem)-title-1 ResultItem-title css-1eygwv7-MuiTypography-root"
               role="textbox"
             >
               Lippulaivan kirjasto
@@ -79,7 +79,7 @@ exports[`<ResultList /> should work 1`] = `
             <div>
               <p
                 aria-hidden="true"
-                class="MuiTypography-root MuiTypography-caption ResultItem-noMargin-9 ResultItem-text-17  ResultItem-subtitle css-r3hlsg-MuiTypography-root"
+                class="MuiTypography-root MuiTypography-caption  ResultItem-subtitle css-16auzzq-MuiTypography-root"
               >
                 Kunnallinen palvelu
               </p>
@@ -91,17 +91,17 @@ exports[`<ResultList /> should work 1`] = `
         aria-hidden="true"
       >
         <hr
-          class="MuiDivider-root MuiDivider-inset ResultItem-divider-18 css-uls1yk-MuiDivider-root"
+          class="MuiDivider-root MuiDivider-inset css-1tvkns7-MuiDivider-root"
         />
       </li>
       <li
-        class="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button ResultItem-listItem-3 css-18azhdn-MuiButtonBase-root-MuiListItem-root"
+        class="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button css-tjwta7-MuiButtonBase-root-MuiListItem-root"
         data-sm="ResultItemComponent"
         role="link"
         tabindex="0"
       >
         <div
-          class="MuiListItemIcon-root ResultItem-listItemIcon-4 css-cveggr-MuiListItemIcon-root"
+          class="MuiListItemIcon-root css-1v52qf3-MuiListItemIcon-root"
         >
           <img
             alt=""
@@ -111,13 +111,13 @@ exports[`<ResultList /> should work 1`] = `
           />
         </div>
         <div
-          class="ResultItem-itemTextContainer-10  "
+          class="css-188n6a2"
         >
           <div
-            class="ResultItem-topRow-12"
+            class="css-1ufrzn0"
           >
             <p
-              class="MuiTypography-root MuiTypography-body2 ResultItem-title-8 ResultItem-srOnly css-1ak20dk-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body2 ResultItem-srOnly css-1eygwv7-MuiTypography-root"
               style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
             >
               
@@ -130,7 +130,7 @@ exports[`<ResultList /> should work 1`] = `
             </p>
             <p
               aria-hidden="true"
-              class="MuiTypography-root MuiTypography-body2 ResultItem-title-8  Connect(UnitItem)-title-1  ResultItem-title css-1ak20dk-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body2 Connect(UnitItem)-title-1 ResultItem-title css-1eygwv7-MuiTypography-root"
               role="textbox"
             >
               Kivistön kirjasto
@@ -140,7 +140,7 @@ exports[`<ResultList /> should work 1`] = `
             <div>
               <p
                 aria-hidden="true"
-                class="MuiTypography-root MuiTypography-caption ResultItem-noMargin-9 ResultItem-text-17  ResultItem-subtitle css-r3hlsg-MuiTypography-root"
+                class="MuiTypography-root MuiTypography-caption  ResultItem-subtitle css-16auzzq-MuiTypography-root"
               >
                 Kunnallinen palvelu
               </p>
@@ -152,7 +152,7 @@ exports[`<ResultList /> should work 1`] = `
         aria-hidden="true"
       >
         <hr
-          class="MuiDivider-root MuiDivider-inset ResultItem-divider-18 css-uls1yk-MuiDivider-root"
+          class="MuiDivider-root MuiDivider-inset css-1tvkns7-MuiDivider-root"
         />
       </li>
     </ul>
