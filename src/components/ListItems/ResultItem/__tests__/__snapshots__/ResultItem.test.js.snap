@@ -41,7 +41,7 @@ exports[`<ResultItem /> should work 1`] = `
         >
           <p
             aria-hidden="true"
-            class="MuiTypography-root MuiTypography-caption  ResultItem-distance css-gw7tom-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-caption  ResultItem-distance css-bgkxzc-MuiTypography-root"
           >
             100m
           </p>

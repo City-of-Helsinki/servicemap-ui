@@ -5,6 +5,9 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { Typography, Divider } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
+import styled from '@emotion/styled';
+import { css } from '@emotion/css';
+import { useTheme } from '@mui/styles';
 import { keyboardHandler } from '../../../utils';
 
 const SimpleListItem = (props) => {
@@ -12,7 +15,6 @@ const SimpleListItem = (props) => {
     button,
     dark,
     text,
-    classes,
     link,
     icon,
     handleItemClick,
@@ -24,6 +26,39 @@ const SimpleListItem = (props) => {
     id,
   } = props;
   const isLinkOrButton = button || link;
+  const theme = useTheme();
+
+  const listItemRootClass = css({
+    minHeight: '3.5rem',
+    padding: theme.spacing(1),
+    color: '#000',
+    '&.dark': {
+      paddingLeft: 26,
+      color: '#fff',
+    },
+  });
+
+  const listItemSelectedClass = css({
+    outline: '2px solid transparent',
+    boxShadow: `0 0 0 4px ${theme.palette.focusBorder.main}`,
+  });
+
+  const listItemTextClass = css({
+    padding: theme.spacing(1, 0),
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(2),
+    whiteSpace: 'pre-line',
+  });
+
+  const linkClass = css({
+    color: theme.palette.link.main,
+    textDecoration: 'underline',
+  });
+
+  const whiteTextClass = css({
+    color: '#fff',
+  });
+
   return (
     <React.Fragment>
       <ListItem
@@ -35,8 +70,8 @@ const SimpleListItem = (props) => {
         onClick={isLinkOrButton ? handleItemClick : null}
         onKeyDown={isLinkOrButton ? keyboardHandler(handleItemClick, ['enter', 'space']) : null}
         classes={{
-          root: classes.listItem,
-          selected: classes.itemFocus,
+          root: listItemRootClass,
+          selected: listItemSelectedClass,
         }}
         selected={selected}
         id={id}
@@ -44,19 +79,19 @@ const SimpleListItem = (props) => {
         {
           icon
           && (
-            <ListItemIcon aria-hidden className={`${classes.listIcon} ${link ? classes.link : ''}`}>
+            <StyledListItemIcon aria-hidden link={!!link || undefined}>
               {icon}
-            </ListItemIcon>
+            </StyledListItemIcon>
           )
         }
 
         <ListItemText
-          classes={{ root: classes.textContainer }}
+          classes={{ root: listItemTextClass }}
         >
           <Typography
             color="inherit"
             variant="body2"
-            classes={{ root: `${link ? classes.link : null} ${dark ? classes.whiteText : ''}` }}
+            classes={{ root: `${link ? linkClass : null} ${dark ? whiteTextClass : ''}` }}
           >
             {text}
           </Typography>
@@ -65,18 +100,40 @@ const SimpleListItem = (props) => {
       </ListItem>
       {divider && (
         <li aria-hidden>
-          <Divider className={classes.divider} />
+          <StyledDivider />
         </li>
       )}
     </React.Fragment>
   );
 };
 
+const StyledListItemIcon = styled(ListItemIcon)(({ theme, link }) => {
+  const styles = {
+    width: '1.5rem',
+    height: '1.5rem',
+    margin: theme.spacing(1),
+    marginRight: theme.spacing(2),
+    minWidth: 0,
+    color: 'inherit',
+  };
+  if (link) {
+    Object.assign(styles, {
+      color: theme.palette.link.main,
+      textDecoration: 'underline',
+    });
+  }
+  return styles;
+});
+
+const StyledDivider = styled(Divider)(({ theme }) => ({
+  marginLeft: theme.spacing(9),
+  marginRight: theme.spacing(-2),
+}));
+
 export default SimpleListItem;
 
 SimpleListItem.propTypes = {
   button: PropTypes.bool,
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   dark: PropTypes.bool,
   text: PropTypes.string.isRequired,
   srText: PropTypes.string,

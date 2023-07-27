@@ -3,13 +3,13 @@
 exports[`<AddressItem /> should work 1`] = `
 <div>
   <li
-    class="MuiButtonBase-root MuiListItem-root SimpleListItem-listItem-1 MuiListItem-gutters MuiListItem-padding MuiListItem-button null  css-18azhdn-MuiButtonBase-root-MuiListItem-root"
+    class="MuiButtonBase-root MuiListItem-root css-1ls6ttt MuiListItem-gutters MuiListItem-padding MuiListItem-button null  css-18azhdn-MuiButtonBase-root-MuiListItem-root"
     role="link"
     tabindex="0"
   >
     <div
       aria-hidden="true"
-      class="MuiListItemIcon-root SimpleListItem-listIcon-5  css-cveggr-MuiListItemIcon-root"
+      class="MuiListItemIcon-root css-1wnb45k-MuiListItemIcon-root"
     >
       <span
         aria-hidden="true"
@@ -17,7 +17,7 @@ exports[`<AddressItem /> should work 1`] = `
       />
     </div>
     <div
-      class="MuiListItemText-root SimpleListItem-textContainer-2 css-vt7cuc-MuiListItemText-root"
+      class="MuiListItemText-root css-xzi2h1 css-vt7cuc-MuiListItemText-root"
     >
       <span
         class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10wsksd-MuiTypography-root"
@@ -36,7 +36,7 @@ exports[`<AddressItem /> should work 1`] = `
     aria-hidden="true"
   >
     <hr
-      class="MuiDivider-root MuiDivider-fullWidth SimpleListItem-divider-6 css-9mgopn-MuiDivider-root"
+      class="MuiDivider-root MuiDivider-fullWidth css-1tvkns7-MuiDivider-root"
     />
   </li>
 </div>

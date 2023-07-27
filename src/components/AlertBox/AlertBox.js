@@ -4,7 +4,7 @@ import { Button, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { FormattedMessage } from 'react-intl';
 import styled from '@emotion/styled';
-import css from '@emotion/css';
+import { css } from '@emotion/css';
 import { getIcon } from '../SMIcon';
 import LocalStorageUtility from '../../utils/localStorage';
 import { focusToViewTitle } from '../../utils/accessibility';

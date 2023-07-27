@@ -2,8 +2,8 @@ import { Selector } from "testcafe";
 
 export default () => {
   test('Result sorter does change result order', async (t) => {
-    const select = Selector('#result-sorter')
-    const listItems = Selector('div[class*="ResultList-root"] li[role="link"]');
+    const select = Selector('#result-sorter');
+    const listItems = Selector('div[data-sm="ResultListRoot"] li[role="link"]');
     const alphabeticalFirstItemContent = await listItems.nth(0).textContent;
 
     await t

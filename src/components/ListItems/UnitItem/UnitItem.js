@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { css } from '@emotion/css';
 import UnitHelper from '../../../utils/unitHelper';
 import ResultItem from '../ResultItem';
 import SettingsUtility from '../../../utils/settings';
@@ -9,7 +10,6 @@ import isClient from '../../../utils';
 import useLocaleText from '../../../utils/useLocaleText';
 
 const UnitItem = ({
-  classes,
   distance,
   unit,
   onClick,
@@ -65,6 +65,10 @@ const UnitItem = ({
       : intl.formatMessage({ id: 'general.distance.kilometers' })}`,
   } : {};
 
+  const titleClass = css({
+    fontWeight: 'bold',
+  });
+
   if (!simpleItem) {
     return (
       <ResultItem
@@ -74,7 +78,7 @@ const UnitItem = ({
         bottomHighlight={problemCount !== null && typeof problemCount !== 'undefined'}
         extendedClasses={{
           typography: {
-            title: classes.title,
+            title: titleClass,
           },
         }}
         distance={distanceText}
@@ -98,7 +102,7 @@ const UnitItem = ({
       simpleItem={simpleItem}
       extendedClasses={{
         typography: {
-          title: classes.title,
+          title: titleClass,
         },
       }}
       distance={distanceText}
@@ -120,7 +124,6 @@ export default UnitItem;
 
 // Typechecking
 UnitItem.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   distance: PropTypes.shape({
     distance: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     type: PropTypes.oneOf(['m', 'km']),

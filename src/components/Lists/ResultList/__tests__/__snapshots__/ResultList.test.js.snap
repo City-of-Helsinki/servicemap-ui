@@ -2,12 +2,19 @@
 
 exports[`<ResultList /> should work 1`] = `
 <div>
-  <div>
-    <div>
-      <div>
+  <div
+    class="css-ju3ci1"
+    data-sm="ResultListRoot"
+  >
+    <div
+      class="css-1age63q"
+    >
+      <div
+        class="css-c4ostz"
+      >
         <h3
           aria-labelledby="testID-result-title testID-result-title-info"
-          class="MuiTypography-root MuiTypography-subtitle1 undefined undefined SearchResultTitle css-dlbwt1-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-subtitle1 SearchResultTitle css-1y46r1w-MuiTypography-root"
           id="testID-result-title"
           tabindex="-1"
         >
@@ -15,7 +22,7 @@ exports[`<ResultList /> should work 1`] = `
         </h3>
         <p
           aria-hidden="true"
-          class="MuiTypography-root MuiTypography-caption css-r3hlsg-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-caption css-16408jj-MuiTypography-root"
           id="testID-result-title-info"
         >
           5 matches
@@ -30,7 +37,7 @@ exports[`<ResultList /> should work 1`] = `
       Test before list
     </p>
     <ul
-      class="MuiList-root MuiList-padding css-h4y409-MuiList-root"
+      class="MuiList-root MuiList-padding css-1smhy3p-MuiList-root"
       id="testID"
     >
       <li
@@ -54,9 +61,10 @@ exports[`<ResultList /> should work 1`] = `
         >
           <div
             class="css-1ufrzn0"
+            data-sm="ResultItemTopRow"
           >
             <p
-              class="MuiTypography-root MuiTypography-body2 ResultItem-srOnly css-1eygwv7-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body2 ResultItem-srOnly ResultItem-title css-1eygwv7-MuiTypography-root"
               style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
             >
               
@@ -69,7 +77,8 @@ exports[`<ResultList /> should work 1`] = `
             </p>
             <p
               aria-hidden="true"
-              class="MuiTypography-root MuiTypography-body2 Connect(UnitItem)-title-1 ResultItem-title css-1eygwv7-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body2 css-in3yi3 ResultItem-title css-1eygwv7-MuiTypography-root"
+              data-sm="ResultItemTitle"
               role="textbox"
             >
               Lippulaivan kirjasto
@@ -115,9 +124,10 @@ exports[`<ResultList /> should work 1`] = `
         >
           <div
             class="css-1ufrzn0"
+            data-sm="ResultItemTopRow"
           >
             <p
-              class="MuiTypography-root MuiTypography-body2 ResultItem-srOnly css-1eygwv7-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body2 ResultItem-srOnly ResultItem-title css-1eygwv7-MuiTypography-root"
               style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
             >
               
@@ -130,7 +140,8 @@ exports[`<ResultList /> should work 1`] = `
             </p>
             <p
               aria-hidden="true"
-              class="MuiTypography-root MuiTypography-body2 Connect(UnitItem)-title-1 ResultItem-title css-1eygwv7-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body2 css-in3yi3 ResultItem-title css-1eygwv7-MuiTypography-root"
+              data-sm="ResultItemTitle"
               role="textbox"
             >
               Kivistön kirjasto

@@ -71,7 +71,7 @@ describe('<ResultList />', () => {
     expect(text).toEqual('Test before list');
   });
 
-  it.only('does render accessibility attributes correctly', () => {
+  it('does render accessibility attributes correctly', () => {
     const { getAllByRole } = renderWithProviders(<ResultList {...mockProps} />);
     const items = getAllByRole('link', { selector: 'li' });
     const firstItem = items[0];

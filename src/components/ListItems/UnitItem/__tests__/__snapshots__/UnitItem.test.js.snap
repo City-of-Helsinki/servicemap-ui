@@ -39,7 +39,7 @@ exports[`<UnitItem /> should work 1`] = `
         </p>
         <p
           aria-hidden="true"
-          class="MuiTypography-root MuiTypography-body2 Connect(UnitItem)-title-1 ResultItem-title css-1eygwv7-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body2 css-in3yi3 ResultItem-title css-1eygwv7-MuiTypography-root"
           data-sm="ResultItemTitle"
           role="textbox"
         >

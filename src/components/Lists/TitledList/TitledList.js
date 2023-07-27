@@ -5,11 +5,11 @@ import {
 } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import { ArrowDropDown } from '@mui/icons-material';
+import styled from '@emotion/styled';
 import SMButton from '../../ServiceMapButton';
 
 const TitledList = ({
   children,
-  classes,
   buttonMessageID,
   buttonMessageCount,
   buttonID,
@@ -27,33 +27,31 @@ const TitledList = ({
   return (
     <>
       {title ? (
-        <div className={`${classes.titleContainer} ${classes.marginHorizontal}`}>
-          <Typography
-            className={`${classes.left} ${classes.marginVertical}`}
+        <StyledContainer>
+          <StyledTitleLeft
             component={titleComponent}
             variant="subtitle1"
           >
             {title}
-          </Typography>
+          </StyledTitleLeft>
           {
           subtitle
           && (
-            <Typography
-              className={`${classes.right} ${classes.marginVertical}`}
+            <StyledTitleRight
               component="p"
               variant="caption"
             >
               {subtitle}
-            </Typography>
+            </StyledTitleRight>
           )
         }
-        </div>
+        </StyledContainer>
       ) : null}
       {description && (
-        <Typography align="left" className={classes.description}>{description}</Typography>
+        <StyledDescription align="left">{description}</StyledDescription>
       )}
       {divider ? (
-        <Divider className={classes.divider} aria-hidden="true" />
+        <StyledDivider aria-hidden="true" />
       ) : null }
 
       <List disablePadding>
@@ -66,7 +64,7 @@ const TitledList = ({
           small
           messageID={buttonMessageID}
           messageCount={buttonMessageCount}
-          icon={<ArrowDropDown className={classes.buttonIcon} />}
+          icon={<StyledArrowDropDown />}
           textVariant="button"
           onClick={(e) => {
             e.preventDefault();
@@ -76,19 +74,61 @@ const TitledList = ({
         />
       )}
       {loading && (
-        <Typography aria-live="polite" className={classes.loadingText}>
+        <StyledLoadingText aria-live="polite">
           <FormattedMessage id="general.loading" />
-        </Typography>
+        </StyledLoadingText>
       )}
     </>
   );
 };
 
+const StyledContainer = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  overflow: 'hidden',
+  lineHeight: `${24}px`,
+  marginLeft: theme.spacing(2),
+  marginRight: theme.spacing(2),
+}));
+
+const StyledTitle = styled(Typography)(({ theme }) => ({
+  lineHeight: 'inherit',
+  marginTop: theme.spacing(2),
+  marginBottom: theme.spacing(2),
+}));
+
+const StyledTitleLeft = styled(StyledTitle)(() => ({
+  textAlign: 'right',
+}));
+
+const StyledTitleRight = styled(StyledTitle)(() => ({
+  textAlign: 'right',
+}));
+
+const StyledDescription = styled(Typography)(({ theme }) => ({
+  padding: theme.spacing(2),
+}));
+
+const StyledLoadingText = styled(Typography)(() => ({
+  margin: 20,
+  height: 34,
+}));
+
+const StyledDivider = styled(Divider)(({ theme }) => ({
+  marginLeft: theme.spacing(-2),
+  marginRight: theme.spacing(-2),
+}));
+
+const StyledArrowDropDown = styled(ArrowDropDown)(({ theme }) => ({
+  order: 2,
+  marginRight: theme.spacing(-0.5),
+}));
+
 TitledList.propTypes = {
   buttonID: PropTypes.string,
   buttonMessageID: PropTypes.string,
   children: PropTypes.node.isRequired,
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   subtitle: PropTypes.node,
   title: PropTypes.node,
   description: PropTypes.node,

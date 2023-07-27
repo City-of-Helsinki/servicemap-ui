@@ -4,16 +4,16 @@ exports[`<UnitDataList /> should work 1`] = `
 <div>
   <div>
     <div
-      class="TitledList-titleContainer-6 TitledList-marginHorizontal-4"
+      class="css-1d2iwu5"
     >
       <h4
-        class="MuiTypography-root MuiTypography-subtitle1 TitledList-left-1 TitledList-marginVertical-3 css-dlbwt1-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-subtitle1 css-kdfysq-MuiTypography-root"
       >
         Events
       </h4>
     </div>
     <p
-      class="MuiTypography-root MuiTypography-body2 MuiTypography-alignLeft TitledList-description-5 css-10dderv-MuiTypography-root"
+      class="MuiTypography-root MuiTypography-body2 MuiTypography-alignLeft css-r3354m-MuiTypography-root"
     >
       Here you can find information about events provided by the unit
     </p>
@@ -203,7 +203,7 @@ exports[`<UnitDataList /> should work 1`] = `
     >
       <svg
         aria-hidden="true"
-        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium TitledList-buttonIcon-9 css-6yqi1c-MuiSvgIcon-root"
+        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1macy6t-MuiSvgIcon-root"
         data-testid="ArrowDropDownIcon"
         focusable="false"
         viewBox="0 0 24 24"
