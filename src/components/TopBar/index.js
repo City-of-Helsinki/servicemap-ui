@@ -1,6 +1,4 @@
 import { connect } from 'react-redux';
-import { withStyles } from '@mui/styles';
-import styles from './styles';
 import TopBar from './TopBar';
 import { setMapType } from '../../redux/actions/settings';
 import { changeTheme } from '../../redux/actions/user';
@@ -19,7 +17,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default withStyles(styles)(connect(
+export default connect(
   mapStateToProps,
   { changeTheme, setMapType },
-)(TopBar));
+)(TopBar);

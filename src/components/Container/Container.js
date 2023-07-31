@@ -14,7 +14,7 @@ Title.propTypes = {
   text: PropTypes.string.isRequired,
 };
 
-const containerStyles = ({ theme, noMargin, text, margin }) => {
+const containerStyles = ({ theme, nomargin, text, margin }) => {
   const styles = {
     display: 'flex',
     flexDirection: 'column',
@@ -23,7 +23,7 @@ const containerStyles = ({ theme, noMargin, text, margin }) => {
     padding: theme.spacing(1),
     position: 'relative',
   };
-  if (noMargin) {
+  if (nomargin) {
     Object.assign(styles, {
       margin: 0,
       paddingLeft: theme.spacing(1),
@@ -56,7 +56,13 @@ const Container = (props) => {
 
   const ContainerComponent = paper ? StyledPaper : StyledDiv;
   return (
-    <ContainerComponent noMargin={noMargin} text={text} margin={!noMargin && (paper || margin)} className={`${className}`} {...rest}>
+    <ContainerComponent
+      nomargin={noMargin || undefined}
+      text={text}
+      margin={(!noMargin && (paper || margin)) || undefined}
+      className={`${className}`}
+      {...rest}
+    >
       {
         title
         && <StyledTitle component={titleComponent} text={title} variant="h6" />

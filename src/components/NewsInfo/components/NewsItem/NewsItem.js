@@ -51,7 +51,7 @@ const NewsItem = ({ item }) => {
       {imgSrc && <StyledImage alt="" src={imgSrc} />}
 
       <StyledBottomContent
-        hidePaddingTop={!imgSrc || undefined}
+        hidepaddingtop={!imgSrc || undefined}
         className="column"
       >
         <Typography align="left" component="p" variant="body2">
@@ -117,11 +117,11 @@ const StyledServiceMapButton = styled(ServiceMapButton)(() => ({
   marginRight: 0,
 }));
 
-const StyledBottomContent = styled('div')(({ theme, hidePaddingTop }) => {
+const StyledBottomContent = styled('div')(({ theme, hidepaddingtop }) => {
   const styles = {
     padding: theme.spacing(1.5, 2.5, 2, 2.5),
   };
-  if (hidePaddingTop) {
+  if (hidepaddingtop) {
     Object.assign(styles, {
       paddingTop: '0 !important',
     });

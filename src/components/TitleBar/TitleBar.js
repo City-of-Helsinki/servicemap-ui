@@ -30,7 +30,7 @@ const TitleBar = ({
     <StyledContainer
       data-sm="TitleBar"
       titlebar={(!backButton && !icon) || undefined}
-      multiline={!!backButton || undefined}
+      multiline={backButton || undefined}
       stickymobile={(sticky && isMobile) || undefined}
       stickydesktop={(sticky && !isMobile) || undefined}
       className={componentClasses}
@@ -62,7 +62,7 @@ const TitleBar = ({
       >
         <StyledTitle
           aria-hidden={ariaHidden}
-          large={!!backButton || undefined}
+          large={+!!backButton}
           className="TitleText"
           component={titleComponent}
           tabIndex={-1}

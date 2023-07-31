@@ -7,6 +7,7 @@ import { Map } from '@mui/icons-material';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import styled from '@emotion/styled';
 import DrawerMenu from './DrawerMenu';
 import DesktopComponent from '../DesktopComponent';
 import MobileComponent from '../MobileComponent';
@@ -21,6 +22,9 @@ import { getLocale } from '../../redux/selectors/locale';
 import MobileNavButton from './MobileNavButton/MobileNavButton';
 import LanguageMenuComponent from './LanguageMenu/LanguageMenuComponent';
 import openA11yLink from './util';
+import config from '../../../config';
+
+const { topBarHeight, topBarHeightMobile } = config;
 
 const TopBar = (props) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -32,7 +36,6 @@ const TopBar = (props) => {
 
   const {
     hideButtons,
-    classes,
     breadcrumb,
     changeTheme,
     theme,
@@ -140,11 +143,6 @@ const TopBar = (props) => {
   );
 
   const renderTopBar = (pageType) => {
-    const toolbarBlueClass = `${
-      classes.toolbarBlue
-    } ${
-      pageType === 'mobile' ? classes.toolbarBlueMobile : ''
-    }`;
     const contrastAriaLabel = intl.formatMessage({ id: `general.contrast.ariaLabel.${theme === 'dark' ? 'off' : 'on'}` });
 
     const topBarLink = (textId, onClick, isCurrent, ariaLabel, linkId) => (
@@ -154,20 +152,20 @@ const TopBar = (props) => {
     );
 
     const navigationButton = (textId, onClick, isCurrent, buttonId) => (
-      <ButtonBase onClick={onClick} aria-current={isCurrent} className={classes.navigationButton} id={buttonId}>
+      <StyledButton onClick={onClick} aria-current={isCurrent} id={buttonId}>
         <Typography sx={{ color: '#000', fontSize: '1.125rem', fontWeight: 600 }}>
           <FormattedMessage id={textId} />
         </Typography>
-      </ButtonBase>
+      </StyledButton>
     );
 
     return (
       <>
-        <AppBar className={classes.appBar}>
+        <StyledAppBar>
           {/* Toolbar blue area */}
           <DesktopComponent>
             <nav aria-label={intl.formatMessage({ id: 'app.navigation.language' })}>
-              <Toolbar className={toolbarBlueClass}>
+              <StyledToolbarBlue mobile={pageType === 'mobile' || undefined}>
                 <LanguageMenu mobile={pageType === 'mobile'} />
                 {/* Right side links */}
                 <Container disableGutters sx={{ justifyContent: 'flex-end', display: 'flex', mr: 0 }}>
@@ -183,42 +181,42 @@ const TopBar = (props) => {
                     : null
                   }
                 </Container>
-              </Toolbar>
+              </StyledToolbarBlue>
             </nav>
           </DesktopComponent>
 
           {/* Toolbar white area */}
-          <Toolbar disableGutters className={pageType === 'mobile' ? classes.toolbarWhiteMobile : classes.toolbarWhite}>
+          <StyledToolbarWhite disableGutters mobile={pageType === 'mobile' || undefined}>
             <SMLogo small={!large} onClick={() => handleNavigation('home')} />
             {hideButtons
               ? null
               : (
                 <>
                   <MobileComponent>
-                    <div className={classes.mobileButtonContainer}>
-                      <LanguageMenuComponent mobile classes={classes} />
+                    <StyledMobileButtonContainer>
+                      <LanguageMenuComponent mobile />
                       {renderMapButton()}
                       {renderMenuButton(pageType)}
-                    </div>
+                    </StyledMobileButtonContainer>
                     {renderDrawerMenu(pageType)}
                   </MobileComponent>
                   <DesktopComponent>
-                    <nav className={classes.navContainer}>
+                    <StyledNav>
                       {!smallScreen ? (
-                        <div className={classes.navigationButtonsContainer}>
+                        <StyledNavigationButtonsContainer>
                           {navigationButton('general.frontPage', () => handleNavigation('home'), currentPage === 'home', 'HomePage')}
                           {navigationButton('general.pageLink.area', () => handleNavigation('area'), currentPage === 'area', 'AreaPage')}
                           {navigationButton('services', () => handleNavigation('services'), currentPage === 'services', 'ServicePage')}
-                        </div>
+                        </StyledNavigationButtonsContainer>
                       ) : (
                         <>
-                          <div className={classes.mobileButtonContainer}>
+                          <StyledMobileButtonContainer>
                             {renderMenuButton()}
-                          </div>
+                          </StyledMobileButtonContainer>
                           {renderDrawerMenu(pageType)}
                         </>
                       )}
-                    </nav>
+                    </StyledNav>
                     {
                       !smallScreen && (
                         <ToolMenu />
@@ -227,10 +225,10 @@ const TopBar = (props) => {
                   </DesktopComponent>
                 </>
               )}
-          </Toolbar>
-        </AppBar>
+          </StyledToolbarWhite>
+        </StyledAppBar>
         {/* This empty toolbar fixes the issue where App bar hides the top page content */}
-        <Toolbar className={pageType === 'mobile' ? classes.alignerMobile : classes.aligner} />
+        <StyledToolbarAligner mobile={pageType === 'mobile' || undefined} />
       </>
     );
   };
@@ -250,11 +248,83 @@ const TopBar = (props) => {
     </>
   );
 };
+const StyledNav = styled('nav')(() => ({
+  display: 'flex',
+  flex: '1 1 auto',
+  height: '100%',
+}));
+const StyledNavigationButtonsContainer = styled('div')(({ theme }) => ({
+  paddingLeft: 88 + parseInt(theme.spacing(2.5), 10),
+  display: 'flex',
+  flex: '1 1 auto',
+}));
+const StyledMobileButtonContainer = styled('div')(() => ({
+  display: 'flex',
+  marginLeft: 'auto',
+  width: 223,
+  justifyContent: 'flex-end',
+}));
+
+const StyledButton = styled(ButtonBase)(({ theme }) => ({
+  paddingLeft: theme.spacing(2.5),
+  paddingRight: theme.spacing(2.5),
+  '&:hover': {
+    backgroundColor: 'rgba(0, 0, 0, 0.08)',
+  },
+}));
+const StyledAppBar = styled(AppBar)(({ theme }) => ({
+  zIndex: theme.zIndex.appBar,
+}));
+const StyledToolbarAligner = styled(Toolbar)(({ mobile }) => ({
+  height: mobile ? topBarHeightMobile : topBarHeight,
+}));
+const StyledToolbarBlue = styled(Toolbar)(({ theme, mobile }) => {
+  const styles = {
+    // override breakpoints
+    [theme.breakpoints.up('xs')]: {
+      minHeight: 32,
+      height: 32,
+      paddingLeft: theme.spacing(3),
+      paddingRight: theme.spacing(3),
+    },
+    minHeight: 32,
+    height: 32,
+    backgroundColor: theme.palette.primary.main,
+    padding: 0,
+    paddingLeft: theme.spacing(3),
+    paddingRight: theme.spacing(3),
+  };
+  if (mobile) {
+    Object.assign(styles, {
+      paddingLeft: 14,
+      paddingRight: 14,
+    });
+  }
+  return styles;
+});
+const StyledToolbarWhite = styled(Toolbar)(({ theme, mobile }) => (
+  mobile
+    ? {
+      boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+      paddingLeft: theme.spacing(1.5),
+      height: 78,
+      backgroundColor: '#fff',
+    }
+    : {
+      boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingLeft: theme.spacing(3),
+      height: 60,
+      backgroundColor: '#fff',
+      zIndex: theme.zIndex.infront,
+    }
+));
 
 TopBar.propTypes = {
   breadcrumb: PropTypes.arrayOf(PropTypes.any).isRequired,
   changeTheme: PropTypes.func.isRequired,
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   currentPage: PropTypes.string.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   setMapType: PropTypes.func.isRequired,

@@ -9,15 +9,19 @@ import {
 import { ArrowForward } from '@mui/icons-material';
 import { FormattedMessage } from 'react-intl';
 import styled from '@emotion/styled';
+import { css } from '@emotion/css';
+import { useTheme } from '@mui/styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { getTheme, getPage } from '../../../redux/selectors/user';
+import { getTheme as getThemeMode, getPage } from '../../../redux/selectors/user';
 import { changeTheme } from '../../../redux/actions/user';
 import openA11yLink from '../util';
 import { getLocale } from '../../../redux/selectors/locale';
+import config from '../../../../config';
+
+const { topBarHeight, topBarHeightMobile } = config;
 
 const DrawerMenu = (props) => {
   const {
-    classes,
     pageType,
     isOpen,
     toggleDrawerMenu,
@@ -26,7 +30,8 @@ const DrawerMenu = (props) => {
   const dispatch = useDispatch();
   const currentPage = useSelector(getPage);
   const locale = useSelector(getLocale);
-  const theme = useSelector(getTheme);
+  const themeMode = useSelector(getThemeMode);
+  const theme = useTheme();
 
 
   const menuMainButton = (headerId, textId, pageId) => (
@@ -64,15 +69,29 @@ const DrawerMenu = (props) => {
       </StyledTextContainer>
     </StyledButtonBase>
   );
+  const drawerContainerClass = css({
+    top: topBarHeight,
+    backgroundColor: '#fff',
+    width: '100%',
+    overflow: 'visible',
+    zIndex: theme.zIndex.infront,
+  });
+  const drawerContainerMobileClass = css({
+    top: topBarHeightMobile,
+    backgroundColor: '#fff',
+    width: '100%',
+    overflow: 'visible',
+    zIndex: theme.zIndex.behind,
+  });
 
   return (
     <Drawer
       variant="persistent"
       anchor="right"
       open={isOpen}
-      classes={{ paper: pageType === 'mobile' ? classes.drawerContainerMobile : classes.drawerContainer }}
+      classes={{ paper: pageType === 'mobile' ? drawerContainerMobileClass : drawerContainerClass }}
     >
-      <div className={classes.scrollContainer}>
+      <StyledScrollContainer>
         {/* Main links */}
         {menuMainButton('general.frontPage', 'app.description', 'home')}
         <Divider />
@@ -83,11 +102,11 @@ const DrawerMenu = (props) => {
 
         {/* Smaller buttons  */}
         {menuSecondaryButton(
-          theme === 'default'
+          themeMode === 'default'
             ? 'general.contrast.ariaLabel.on'
             : 'general.contrast.ariaLabel.off',
           null,
-          () => dispatch(changeTheme(theme === 'default' ? 'dark' : 'default')),
+          () => dispatch(changeTheme(themeMode === 'default' ? 'dark' : 'default')),
           false,
           'ContrastButton',
         )}
@@ -97,7 +116,7 @@ const DrawerMenu = (props) => {
         {menuSecondaryButton('home.send.feedback', 'feedback', null, true, 'FeedbackButton')}
         <Divider />
         {menuSecondaryButton('general.pageTitles.info', 'info', null, true, 'PageInfoButton')}
-      </div>
+      </StyledScrollContainer>
     </Drawer>
   );
 };
@@ -123,8 +142,14 @@ const StyledTitle = styled(Typography)(() => ({
   fontWeight: 500,
 }));
 
+const StyledScrollContainer = styled('div')(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  height: `calc(100vh - ${config.topBarHeight}px - ${config.bottomNavHeight}px)`,
+  overflowY: 'auto',
+}));
+
 DrawerMenu.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   pageType: PropTypes.string.isRequired,
   isOpen: PropTypes.bool.isRequired,
   toggleDrawerMenu: PropTypes.func.isRequired,

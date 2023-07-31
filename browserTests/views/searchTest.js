@@ -45,7 +45,7 @@ test('Navigate search view', async (t) => {
   // Test result orderer navigation
   const unitCount = await searchUnits(t, 'kirjasto');
   const input = Selector('#SearchBar input');
-  const select = Selector('#result-sorter')
+  const select = Selector('[data-sm="ResultSorterInput"]')
   const listItems = Selector('#paginatedList-Toimipisteet-results li[role="link"]')
 
   const firstItemText = await listItems.nth(0).textContent;

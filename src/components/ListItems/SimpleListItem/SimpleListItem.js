@@ -79,7 +79,7 @@ const SimpleListItem = (props) => {
         {
           icon
           && (
-            <StyledListItemIcon aria-hidden link={!!link || undefined}>
+            <StyledListItemIcon aria-hidden link={link || undefined}>
               {icon}
             </StyledListItemIcon>
           )

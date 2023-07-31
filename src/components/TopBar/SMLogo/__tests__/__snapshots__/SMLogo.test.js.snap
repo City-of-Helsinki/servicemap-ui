@@ -12,7 +12,7 @@ exports[`<SMLogo /> should work 1`] = `
   >
     <div
       aria-hidden="true"
-      class="SMLogoComponent-logo-7"
+      class="css-1loc9t1"
       role="img"
     >
       <img

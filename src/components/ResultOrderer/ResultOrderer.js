@@ -148,7 +148,7 @@ const ResultOrderer = ({
                   {...rest}
                   inputProps={{
                     ...inputProps,
-                    id: 'result-sorter',
+                    'data-sm': 'ResultSorterInput',
                     readOnly: true,
                     sx: { cursor: 'pointer' },
                   }}
