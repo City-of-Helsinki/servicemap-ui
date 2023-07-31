@@ -6,6 +6,7 @@ import {
   Code, GetApp, Print,
 } from '@mui/icons-material';
 import { useSelector } from 'react-redux';
+import styled from '@emotion/styled';
 import { DropDownMenuButton, OwnSettingsMenuButton } from '../MenuButton';
 import SMIcon from '../SMIcon/SMIcon';
 import PrintContext from '../../context/PrintContext';
@@ -15,7 +16,7 @@ import MeasuringStopButton from './MeasuringStopButton';
 const ToolMenuButtonID = 'ToolMenuButton';
 
 const ToolMenu = ({
-  intl, classes, mapUtility, navigator, setMeasuringMode, measuringMode, currentPage,
+  intl, mapUtility, navigator, setMeasuringMode, measuringMode, currentPage,
 }) => {
   const togglePrintView = useContext(PrintContext);
   const location = useLocation();
@@ -111,7 +112,7 @@ const ToolMenu = ({
       key: 'printTool',
       id: 'PrintToolMenuButton',
       text: intl.formatMessage({ id: 'tool.print' }),
-      icon: <Print className={classes.smIcon} />,
+      icon: <StyledPrintIcon />,
       onClick: () => {
         if (typeof togglePrintView === 'function') {
           togglePrintView();
@@ -122,7 +123,7 @@ const ToolMenu = ({
       key: 'measuringTool',
       id: 'MesuringToolMenuButton',
       text: measuringMode ? intl.formatMessage({ id: 'tool.measuring.stop' }) : intl.formatMessage({ id: 'tool.measuring' }),
-      icon: <SMIcon className={classes.smIcon} icon="icon-icon-measuring-tool" />,
+      icon: <StyledSMIcon icon="icon-icon-measuring-tool" />,
       ariaHidden: false,
       onClick: () => {
         setMeasuringMode(!measuringMode);
@@ -150,14 +151,19 @@ const ToolMenu = ({
   );
 };
 
+const iconClass = {
+  margin: '0px !important',
+  width: '24px !important',
+  height: '24px !important',
+};
+const StyledPrintIcon = styled(Print)(() => iconClass);
+
+const StyledSMIcon = styled(SMIcon)(() => iconClass);
+
 ToolMenu.propTypes = {
   setMeasuringMode: PropTypes.func.isRequired,
   measuringMode: PropTypes.bool.isRequired,
   currentPage: PropTypes.string.isRequired,
-  classes: PropTypes.shape({
-    menuContainer: PropTypes.string,
-    smIcon: PropTypes.string,
-  }).isRequired,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   mapUtility: PropTypes.shape({
     getBbox: PropTypes.func,

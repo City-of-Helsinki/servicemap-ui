@@ -15,7 +15,7 @@ fixture`Address view test`
   });
 
 test('AddressView does render correct view', async (t) => {
-  const title = await ReactSelector('TitleBar');
+  const title = await Selector('[data-sm="TitleBar"]');
   const tab1 = await Selector('div[role="tablist"] button').nth(0).textContent;
   const tab2 = Selector('div[role="tablist"] button').nth(1);
   const divisions = ReactSelector('DivisionItem').count;

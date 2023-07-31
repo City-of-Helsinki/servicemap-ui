@@ -1,9 +1,7 @@
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
-import { withStyles } from '@mui/styles';
 import { withRouter } from 'react-router-dom';
 import TabLists from './TabLists';
-import styles from './styles';
 
 // Listen to redux state
 const mapStateToProps = (state) => {
@@ -17,4 +15,4 @@ const mapStateToProps = (state) => {
 
 export default connect(
   mapStateToProps,
-)(injectIntl(withRouter(withStyles(styles)(TabLists))));
+)(injectIntl(withRouter(TabLists)));

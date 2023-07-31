@@ -18,7 +18,6 @@ import Loading from './Loading';
 import MobileComponent from './MobileComponent';
 import ReadSpeakerButton from './ReadSpeakerButton';
 import ResultOrderer from './ResultOrderer';
-import SettingsText from './SettingsText';
 import SettingsComponent from './SettingsComponent';
 import SMButton from './ServiceMapButton';
 import SMRadio from './SMRadio';
@@ -81,7 +80,6 @@ export {
   ResultList,
   ResultOrderer,
   ServiceItem,
-  SettingsText,
   SettingsComponent,
   SimpleListItem,
   SMAccordion,

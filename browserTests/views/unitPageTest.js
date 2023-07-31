@@ -224,7 +224,7 @@ test.skip('Unit view services tab lists work correctly', async (t) => {
 
 test('Unit view share link does work correctly', async (t) => {
   const accessibilityTab = Selector('div[role="tablist"] button').nth(1);
-  const shareButton = Selector('div[class*="TitleBar-titleContainer"] button');
+  const shareButton = Selector('[data-sm="TitleContainer"] button');
 
   const copyLinkButton = Selector(`div[data-sm="DialogContainer"] button p`)
   const radio = Selector(`div[aria-label="${finnish['link.settings.dialog.radio.label']}"] label`)
