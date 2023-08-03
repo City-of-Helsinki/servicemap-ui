@@ -18,7 +18,7 @@ const SMLogoComponent = ({ onClick, small }) => {
   return (
     <ButtonBase aria-current={isOnHomePage ? 'page' : null} aria-label={intl.formatMessage({ id: 'general.home.logo.ariaLabel' })} role="link" onClick={onClick}>
       <NoSsr>
-        <StyledHomeLogo aria-hidden contrast={theme === 'dark'} mobile={isMobile || undefined} small={small} />
+        <StyledHomeLogo aria-hidden contrast={theme === 'dark'} mobile={+isMobile} small={small} />
       </NoSsr>
     </ButtonBase>
   );

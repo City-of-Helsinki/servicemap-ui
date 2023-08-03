@@ -16,29 +16,6 @@ const LanguageMenuComponent = ({ mobile }) => {
   const locale = useSelector(state => state.user.locale);
   const location = useLocation();
   const [langAnchorEl, setLangAnchorEl] = useState(null);
-  const StyledTypography = styled(Typography)(({ theme, mobile, bold }) => {
-    const styles = {};
-    if (mobile) {
-      Object.assign(styles, {
-        ...theme.typography.caption,
-        lineHeight: '13px',
-        fontWeight: 'normal',
-        letterSpacing: 'normal',
-        color: 'inherit',
-      });
-    }
-    if (bold) {
-      Object.assign(styles, {
-        fontWeight: 'bold',
-      });
-    } else {
-      // grey text
-      Object.assign(styles, {
-        color: '#DEDFE1',
-      });
-    }
-    return styles;
-  });
 
   const changeLang = (value) => {
     const newLocation = location;
@@ -71,7 +48,7 @@ const LanguageMenuComponent = ({ mobile }) => {
                   color="inherit"
                   variant="body2"
                 >
-                  <FormattedMessage id={`general.language.${currentLocale}`}/>
+                  <FormattedMessage id={`general.language.${currentLocale}`} />
                 </StyledTypography>
               </ButtonBase>
             );
@@ -124,6 +101,30 @@ const LanguageMenuComponent = ({ mobile }) => {
     </>
   );
 };
+
+const StyledTypography = styled(Typography)(({ theme, mobile, bold }) => {
+  const styles = {};
+  if (mobile) {
+    Object.assign(styles, {
+      ...theme.typography.caption,
+      lineHeight: '13px',
+      fontWeight: 'normal',
+      letterSpacing: 'normal',
+      color: 'inherit',
+    });
+  }
+  if (bold) {
+    Object.assign(styles, {
+      fontWeight: 'bold',
+    });
+  } else {
+    // grey text
+    Object.assign(styles, {
+      color: '#DEDFE1',
+    });
+  }
+  return styles;
+});
 
 LanguageMenuComponent.propTypes = {
   mobile: PropTypes.bool,

@@ -133,7 +133,7 @@ const StatisticalDistrictListComponent = ({
                     <SMAccordion // Unit list accordion
                       defaultOpen={false}
                       disableUnmount
-                      disabled={disableServicesAccordion}
+                      disabled={!!disableServicesAccordion}
                       className={classes.unitsAccordion}
                       adornment={<FormatListBulleted className={classes.iconPadding} />}
                       titleContent={(
@@ -191,7 +191,7 @@ const StatisticalDistrictListComponent = ({
                     disableUnmount
                     onOpen={(e, open) => handleCategoryAccoridonToggle(layerCategory.type, !open)}
                     isOpen={selected}
-                    disabled={isFetchingDistricts}
+                    disabled={!!isFetchingDistricts}
                     elevated={selected}
                     titleContent={(
                       <Typography id={`${key}Name`}>

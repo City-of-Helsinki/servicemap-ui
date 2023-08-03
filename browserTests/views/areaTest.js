@@ -1,9 +1,10 @@
 /* eslint-disable */
-import { waitForReact, ReactSelector } from 'testcafe-react-selectors';
+import { ReactSelector, waitForReact } from 'testcafe-react-selectors';
 import { Selector } from 'testcafe';
 
 import config from '../config';
 import { getLocation } from '../utility';
+
 const { server } = config;
 
 fixture`Area view test`
@@ -13,7 +14,7 @@ fixture`Area view test`
   });
 
 const drawerButtons = Selector('[data-sm="ServiceTabComponent"]').find('[data-sm="AccordionComponent"]');
-const radioButtons = ReactSelector('DistrictToggleButton');
+const radioButtons = Selector('[data-sm="DistrictToggleButton"]');
 const accordions = Selector('[data-sm="AccordionComponent"]');
 
 // Get inner accordions for given element
