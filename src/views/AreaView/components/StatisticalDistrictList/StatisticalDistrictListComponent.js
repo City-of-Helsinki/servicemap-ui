@@ -1,42 +1,41 @@
-import React, { useCallback, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
 import { FormatListBulleted } from '@mui/icons-material';
-import { FormattedMessage, useIntl } from 'react-intl';
-import {
-  List,
-  ListItem,
-  styled,
-  Typography,
-} from '@mui/material';
+import { styled, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
+import React, { useCallback, useEffect } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
 import { Loading, SMAccordion } from '../../../../components';
-import DistrictToggleButton from '../DistrictToggleButton';
-import {
-  getStatisticalDistrictAreaSelections,
-  getStatisticalDistrictSelectedServices,
-  getStatisticalDistrictSelection,
-  getStatisticalDistrictUnits,
-  getStatisticalDistrictSelectedCategory,
-  getStatisticalDistrictsIsFetching,
-  getStatisticalDistrictCategories,
-} from '../../../../redux/selectors/statisticalDistrict';
 import {
   addSelectedService,
   fetchServices,
-  fetchStatisticalDistrictServiceUnits,
   fetchStatisticalDistricts,
+  fetchStatisticalDistrictServiceUnits,
   removeSelectedService,
-  selectStatisticalDistrict,
   selectCategory,
+  selectStatisticalDistrict,
 } from '../../../../redux/actions/statisticalDistrict';
+import {
+  getStatisticalDistrictAreaSelections,
+  getStatisticalDistrictCategories,
+  getStatisticalDistrictSelectedCategory,
+  getStatisticalDistrictSelectedServices,
+  getStatisticalDistrictSelection,
+  getStatisticalDistrictsIsFetching,
+  getStatisticalDistrictUnits,
+} from '../../../../redux/selectors/statisticalDistrict';
+import DistrictToggleButton from '../DistrictToggleButton';
 import StatisticalDistrictUnitList from '../StatisticalDistrictUnitList';
+import {
+  StyledCaptionText,
+  StyledDistrictServiceListLevelFour,
+  StyledListItem,
+  StyledListNoPaddingLevelThree,
+  StyledListNoPaddingLevelTwo,
+  StyledUnitsAccordion,
+} from '../styled/styled';
 import StatisticalDistrictListContent from './StatisticalDistrictListContent';
 
-
-const StatisticalDistrictListComponent = ({
-  classes,
-}) => {
+const StatisticalDistrictListComponent = () => {
   const dispatch = useDispatch();
   const { formatMessage } = useIntl();
   const { section } = useSelector(getStatisticalDistrictSelection);
@@ -95,13 +94,12 @@ const StatisticalDistrictListComponent = ({
           const serviceTitle = formatMessage({ id: 'area.statisticalDistrict.service.filter' });
           const disableServicesAccordion = !Object.keys(selectedAreas).some(a => selectedAreas[a]);
           return (
-            <ListItem
+            <StyledListItem
               disableGutters
               key={layer}
-              className={`${classes.listItem} ${layer}`}
+              className={`${layer}`}
             >
-              <SMAccordion // Layers in top level category
-                className={classes.statisticalLayerAccordion}
+              <StyledStatisticalLayerAccordion // Layers in top level category
                 defaultOpen={false}
                 onOpen={(e, open) => handleAccordionToggle(layer, !open, isForecast)}
                 isOpen={selected}
@@ -123,26 +121,25 @@ const StatisticalDistrictListComponent = ({
                   </Typography>
                 )}
                 collapseContent={(
-                  <div className={`${classes.districtServiceList} ${classes.listLevelFour}`}>
+                  <StyledDistrictServiceListLevelFour>
                     <Typography component="h3" style={visuallyHidden}>
                       <FormattedMessage id="area.tab.statisticalDistricts" />
                       <FormattedMessage id={`area.list.statistic.${category.type}`} />
                       {category.year}
                       <FormattedMessage id={`area.list.statistic.${layer}`} />
                     </Typography>
-                    <SMAccordion // Unit list accordion
+                    <StyledUnitsAccordion // Unit list accordion
                       defaultOpen={false}
                       disableUnmount
                       disabled={!!disableServicesAccordion}
-                      className={classes.unitsAccordion}
-                      adornment={<FormatListBulleted className={classes.iconPadding} />}
+                      adornment={<StyledFormatListBulleted />}
                       titleContent={(
-                        <Typography className={classes.captionText} variant="caption">
+                        <StyledCaptionText variant="caption">
                           <FormattedMessage
                             id="area.geographicalServices.statistical_district"
                             values={{ length: filteredSubdistrictUnitsLength }}
                           />
-                        </Typography>
+                        </StyledCaptionText>
                       )}
                       collapseContent={(
                         <StatisticalDistrictUnitList
@@ -152,16 +149,16 @@ const StatisticalDistrictListComponent = ({
                         />
                       )}
                     />
-                    <Typography className={classes.statisticalUnitInfo} component="p" variant="caption">
+                    <StyledStatisticalUnitInfo component="p" variant="caption">
                       <FormattedMessage id="area.statisticalDistrict.info" />
-                    </Typography>
+                    </StyledStatisticalUnitInfo>
                     <StatisticalDistrictListContent
                       shownLayer={layer}
                     />
-                  </div>
+                  </StyledDistrictServiceListLevelFour>
                 )}
               />
-            </ListItem>
+            </StyledListItem>
           );
         })
       );
@@ -172,21 +169,20 @@ const StatisticalDistrictListComponent = ({
   const renderLayerCategories = () => {
     if (layerCategoryKeys.length) {
       return (
-        <List className={`${classes.listNoPadding} ${classes.listLevelTwo}`}>
+        <StyledListNoPaddingLevelTwo>
           {
             layerCategoryKeys.map((key) => {
               const layerCategory = layerCategories[key];
               const selected = layerCategory.type === selectedCategory;
               const titleText = `${formatMessage({ id: `area.list.statistic.${layerCategory.type}` })} ${layerCategory.year}`;
               return (
-                <ListItem
+                <StyledListItem
                   divider
                   disableGutters
                   key={key}
-                  className={`${classes.listItem} ${key}`}
+                  className={`${key}`}
                 >
-                  <SMAccordion // Top level categories
-                    className={classes.statisticalCategoryAccordion}
+                  <StyledStatisticalCategoryAccordion // Top level categories
                     defaultOpen={false}
                     disableUnmount
                     onOpen={(e, open) => handleCategoryAccoridonToggle(layerCategory.type, !open)}
@@ -199,16 +195,16 @@ const StatisticalDistrictListComponent = ({
                       </Typography>
                     )}
                     collapseContent={(
-                      <List className={`${classes.listNoPadding} ${classes.listLevelThree}`}>
+                      <StyledListNoPaddingLevelThree>
                         {renderLayers(layerCategory)}
-                      </List>
+                      </StyledListNoPaddingLevelThree>
                     )}
                   />
-                </ListItem>
+                </StyledListItem>
               );
             })
           }
-        </List>
+        </StyledListNoPaddingLevelTwo>
       );
     }
     return <StyledNoDataTypography aria-live="polite" variant="body2"><FormattedMessage id="area.statisticalDistrict.noData" /></StyledNoDataTypography>;
@@ -231,10 +227,6 @@ const StatisticalDistrictListComponent = ({
   );
 };
 
-StatisticalDistrictListComponent.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
-};
-
 export default StatisticalDistrictListComponent;
 
 const StyledLoadingContainer = styled('div')(({ theme }) => ({
@@ -245,4 +237,25 @@ const StyledLoadingContainer = styled('div')(({ theme }) => ({
 
 const StyledNoDataTypography = styled(Typography)(({ theme }) => ({
   margin: `${theme.spacing(0.5)} ${theme.spacing(2)}`,
+}));
+
+const StyledStatisticalCategoryAccordion = styled(SMAccordion)(({ theme }) => ({
+  paddingLeft: theme.spacing(9),
+}));
+
+const StyledStatisticalLayerAccordion = styled(SMAccordion)(({ theme }) => ({
+  paddingLeft: theme.spacing(7),
+}));
+
+const StyledStatisticalUnitInfo = styled(Typography)(({ theme }) => ({
+  backgroundColor: 'rgba(222, 222, 222, 0.56)',
+  padding: `${theme.spacing(2)} ${theme.spacing(4)}`,
+  paddingLeft: theme.spacing(9),
+  fontWeight: 'normal',
+  color: 'black',
+}));
+
+const StyledFormatListBulleted = styled(FormatListBulleted)(({ theme }) => ({
+  padding: theme.spacing(2.5),
+  paddingLeft: theme.spacing(7),
 }));

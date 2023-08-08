@@ -1,22 +1,19 @@
+import styled from '@emotion/styled';
 import {
-  Checkbox,
-  FormControlLabel,
-  List,
-  ListItem,
-  Typography,
+  Checkbox, FormControlLabel, List, ListItem, Typography,
 } from '@mui/material';
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import styled from '@emotion/styled';
+import { SMAccordion } from '../../../../components';
 import {
   setSelectedDistrictServices, setSelectedSubdistricts,
 } from '../../../../redux/actions/district';
 import { getDistrictsByType } from '../../../../redux/selectors/district';
-import { panViewToBounds } from '../../../MapView/utils/mapActions';
 import useLocaleText from '../../../../utils/useLocaleText';
-import { SMAccordion } from '../../../../components';
+import { panViewToBounds } from '../../../MapView/utils/mapActions';
+import { StyledCheckBoxIcon } from '../styled/styled';
 
 const GeographicalDistrictList = ({ district }) => {
   const dispatch = useDispatch();
@@ -111,7 +108,7 @@ const GeographicalDistrictList = ({ district }) => {
                         control={(
                           <Checkbox
                             color="primary"
-                            icon={<StyledCheckBox />}
+                            icon={<StyledCheckBoxIcon />}
                             onChange={e => handleCheckboxChange(e, district)}
                             checked={selectedSubdistricts.includes(district.ocd_id)}
                           />
@@ -159,16 +156,6 @@ const StyledFormControlLabel = styled(FormControlLabel)(({ theme }) => ({
 
 const StyledBoldText = styled(Typography)(() => ({
   fontWeight: 'bold',
-}));
-
-const StyledCheckBox = styled('span')(() => ({
-  margin: 2,
-  width: 18,
-  height: 18,
-  backgroundColor: '#fff',
-  border: '0.5px solid #949494',
-  boxShadow: 'inset 1px 1px 2px rgba(0, 0, 0, 0.05)',
-  borderRadius: 2,
 }));
 
 GeographicalDistrictList.propTypes = {

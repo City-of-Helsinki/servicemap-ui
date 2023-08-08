@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { useHistory, useLocation } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { List, ListItem, Typography } from '@mui/material';
+import { List, Typography } from '@mui/material';
 import {
   BusinessCenter, EscalatorWarning, LocationCity, Map,
 } from '@mui/icons-material';
@@ -30,7 +30,7 @@ import {
 import StatisticalDistrictList from './components/StatisticalDistrictList';
 import useMobileStatus from '../../utils/isMobile';
 import MapUtility from '../../utils/mapUtility';
-
+import { StyledListItem } from './components/styled/styled';
 
 const AreaView = ({
   setSelectedDistrictType,
@@ -352,11 +352,10 @@ const AreaView = ({
           <List>
             {
               categories.map((category, i) => (
-                <ListItem
+                <StyledListItem
                   divider
                   disableGutters
                   key={category.title}
-                  className={`${classes.listItem}`}
                 >
                   <SMAccordion // Top level categories
                     adornment={category.icon}
@@ -372,7 +371,7 @@ const AreaView = ({
                     )}
                     collapseContent={category.component}
                   />
-                </ListItem>
+                </StyledListItem>
               ))
             }
           </List>

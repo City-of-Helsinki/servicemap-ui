@@ -1,32 +1,24 @@
-import {
-  Button,
-  Checkbox,
-  IconButton,
-  InputBase,
-  List,
-  ListItem,
-  Typography,
-} from '@mui/material';
-import React, {
-  useMemo, useRef, useState,
-} from 'react';
-import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
 import { Clear } from '@mui/icons-material';
-import { FormattedMessage, useIntl } from 'react-intl';
+import {
+  Button, Checkbox, IconButton, InputBase, List, Typography,
+} from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { visuallyHidden } from '@mui/utils';
+import PropTypes from 'prop-types';
+import React, { useMemo, useRef, useState } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { useSelector } from 'react-redux';
+import { UnitItem } from '../../../../components';
+import {
+  getOrderedStatisticalDistrictServices, getServiceFilteredStatisticalDistrictUnits,
+} from '../../../../redux/selectors/statisticalDistrict';
 import { keyboardHandler, uppercaseFirst } from '../../../../utils';
 import useLocaleText from '../../../../utils/useLocaleText';
 import {
-  SMAccordion,
-  UnitItem,
-} from '../../../../components';
-import {
-  getOrderedStatisticalDistrictServices,
-  getServiceFilteredStatisticalDistrictUnits,
-} from '../../../../redux/selectors/statisticalDistrict';
-
+  StyledAccordionServiceTitle,
+  StyledListItem, StyledUnitList,
+  StyledUnitListArea,
+} from '../styled/styled';
 
 // Custom uncontrolled checkbox that allows default value
 const UnitCheckbox = ({
@@ -78,7 +70,7 @@ const StatisticalDistrictUnitListComponent = ({
 
   // Render list of units for neighborhood and postcode-area subdistricts
   const renderServiceList = useMemo(() => (
-    <div className={classes.unitListArea}>
+    <StyledUnitListArea>
       <div className={classes.serviceFilterContainer}>
         {
           typeof title === 'string' && (
@@ -143,14 +135,12 @@ const StatisticalDistrictUnitListComponent = ({
           const disableUnitAccordion = !selectedServices[service.id] || units.length === 0;
           const titleText = `${uppercaseFirst(getLocaleText(service.name))} ${selectedServices[service.id] ? `(${units.length})` : ''}`;
           return (
-            <ListItem
+            <StyledListItem
               key={`${service.id}${service.period ? service.period[0] : ''}`}
               disableGutters
-              className={classes.listItem}
               divider
             >
-              <SMAccordion
-                className={classes.serviceTitle}
+              <StyledAccordionServiceTitle
                 disabled={disableUnitAccordion}
                 titleContent={(
                   <div>
@@ -171,7 +161,7 @@ const StatisticalDistrictUnitListComponent = ({
                   />
                 )}
                 collapseContent={(
-                  <List className={classes.unitList} disablePadding>
+                  <StyledUnitList disablePadding>
                     {units.map((unit, i) => (
                       <UnitItem
                         key={`${unit.id}-${service.id}`}
@@ -179,14 +169,14 @@ const StatisticalDistrictUnitListComponent = ({
                         divider={i !== units.length - 1}
                       />
                     ))}
-                  </List>
+                  </StyledUnitList>
                 )}
               />
-            </ListItem>
+            </StyledListItem>
           );
         })}
       </List>
-    </div>
+    </StyledUnitListArea>
   ), [filteredServiceList, filterValue]);
 
   return renderServiceList;

@@ -1,5 +1,5 @@
 import {
-  Checkbox, FormControlLabel, List, ListItem, Typography,
+  Checkbox, FormControlLabel, List, Typography,
 } from '@mui/material';
 import PropTypes from 'prop-types';
 import React, { Fragment, useEffect, useState } from 'react';
@@ -9,15 +9,16 @@ import {
   addSelectedParkingArea,
   fetchParkingAreaGeometry,
   fetchParkingUnits,
+  parkingSpaceIDs,
+  parkingSpaceVantaaTypes,
   removeSelectedParkingArea,
   setParkingUnits,
   setSelectedDistrictType,
-  parkingSpaceIDs,
-  parkingSpaceVantaaTypes,
 } from '../../../../redux/actions/district';
 import ServiceMapAPI from '../../../../utils/newFetch/ServiceMapAPI';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { getDistrictCategory } from '../../utils/districtDataHelper';
+import { StyledAreaListItem } from '../styled/styled';
 
 const ParkingAreaList = ({ areas, variant, classes }) => {
   const dispatch = useDispatch();
@@ -93,10 +94,10 @@ const ParkingAreaList = ({ areas, variant, classes }) => {
         const fullId = variant === 'helsinki' ? area.extra.class : area.extra.tyyppi;
         return (
           <Fragment key={fullId}>
-            <ListItem
+            <StyledAreaListItem
               key={fullId}
               divider={areas.length !== i + 1}
-              className={`${classes.listItem} ${classes.areaItem} ${fullId}`}
+              className={`${fullId}`}
             >
               <FormControlLabel
                 className={classes.checkboxPadding}
@@ -117,17 +118,17 @@ const ParkingAreaList = ({ areas, variant, classes }) => {
                   </Typography>
                 )}
               />
-            </ListItem>
+            </StyledAreaListItem>
           </Fragment>
         );
       })}
 
       { variant === 'helsinki' && (
         <Fragment>
-          <ListItem
+          <StyledAreaListItem
             key="parkingSpaces"
             divider
-            className={`${classes.listItem} ${classes.areaItem} parkingSpaces`}
+            className={`parkingSpaces`}
           >
             <FormControlLabel
               className={classes.checkboxPadding}
@@ -145,7 +146,7 @@ const ParkingAreaList = ({ areas, variant, classes }) => {
                 </Typography>
               )}
             />
-          </ListItem>
+          </StyledAreaListItem>
         </Fragment>
       )}
     </List>

@@ -1,19 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import distance from '@turf/distance';
-import { useSelector } from 'react-redux';
 import { List, Typography } from '@mui/material';
+import distance from '@turf/distance';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import styled from '@emotion/styled';
-import { formatDistanceObject } from '../../../../utils';
+import { useSelector } from 'react-redux';
+import { DivisionItem } from '../../../../components';
 import { getAddressDistrict } from '../../../../redux/selectors/district';
+import { formatDistanceObject } from '../../../../utils';
 import { getAddressFromUnit } from '../../../../utils/address';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { sortByOriginID } from '../../utils';
-import { DivisionItem } from '../../../../components';
 import {
-  StyledDistrictServiceList,
+  StyledDistrictServiceListLevelFour,
   StyledDivider,
+  StyledLoadingText,
   StyledServiceList,
   StyledServiceTabServiceList,
 } from '../styled/styled';
@@ -174,19 +174,12 @@ const DistrictUnitList = (props) => {
   };
 
   return (
-    <StyledDistrictServiceList>
+    <StyledDistrictServiceListLevelFour>
       {render()}
       <StyledDivider aria-hidden />
-    </StyledDistrictServiceList>
+    </StyledDistrictServiceListLevelFour>
   );
 };
-
-const StyledLoadingText = styled('div')(() => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  height: 56,
-}));
 
 DistrictUnitList.propTypes = {
   district: PropTypes.objectOf(PropTypes.any).isRequired,

@@ -1,11 +1,11 @@
-import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
-import {
-  Divider, List, ListItem, Typography,
-} from '@mui/material';
+import { Divider, List, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
+import PropTypes from 'prop-types';
+import React, { Fragment } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
+import config from '../../../../../config';
+import { SMAccordion } from '../../../../components';
 import {
   fetchDistrictGeometry,
   handleOpenItems,
@@ -13,13 +13,12 @@ import {
   setSelectedDistrictType,
   setSelectedParkingAreas,
 } from '../../../../redux/actions/district';
-import DistrictUnitList from '../DistrictUnitList';
-import DistrictToggleButton from '../DistrictToggleButton';
 import { dataStructure, getDistrictCategory } from '../../utils/districtDataHelper';
 import DistrictAreaList from '../DistrictAreaList';
+import DistrictToggleButton from '../DistrictToggleButton';
+import DistrictUnitList from '../DistrictUnitList';
 import ParkingAreaList from '../ParkingAreaList';
-import { SMAccordion } from '../../../../components';
-import config from '../../../../../config';
+import { StyledAreaListItem, StyledListItem } from '../styled/styled';
 
 const ServiceTab = (props) => {
   const {
@@ -87,12 +86,12 @@ const ServiceTab = (props) => {
       <List className={`districtList ${classes.listLevelThree}`} disablePadding>
         {districList.map(district => (
           <Fragment key={district.id}>
-            <ListItem
+            <StyledAreaListItem
               key={district.id}
-              className={`${classes.listItem} ${classes.areaItem} ${district.id}`}
+              className={`${district.id}`}
             >
               {renderDistrictItem(district)}
-            </ListItem>
+            </StyledAreaListItem>
 
             {/* Service list */}
             {selectedDistrictType === district.id && (
@@ -181,7 +180,7 @@ const ServiceTab = (props) => {
     const defaultExpanded = initialOpenItems.includes(item.id) || selectedCategory === item.id;
     const ariaHidden = item.id === 'parking';
     return (
-      <ListItem aria-hidden={ariaHidden} key={item.titleID} className={classes.listItem} divider>
+      <StyledListItem aria-hidden={ariaHidden} key={item.titleID} divider>
         <SMAccordion
           className={classes.accordion}
           onOpen={() => dispatch(handleOpenItems(item.id))}
@@ -196,7 +195,7 @@ const ServiceTab = (props) => {
             </>
           )}
         />
-      </ListItem>
+      </StyledListItem>
     );
   };
 
