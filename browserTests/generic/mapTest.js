@@ -19,7 +19,7 @@ test('Transit marker visible after zoom', async (t) => {
   for(let i = 0; i < 6; i++) {
     await t 
       .click(zoomIn)
-      .wait(500)
+      .wait(1000)
   }
   await t
   // Wait for markers to appear

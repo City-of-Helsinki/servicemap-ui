@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import { Divider, List, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import PropTypes from 'prop-types';
@@ -18,14 +19,19 @@ import DistrictAreaList from '../DistrictAreaList';
 import DistrictToggleButton from '../DistrictToggleButton';
 import DistrictUnitList from '../DistrictUnitList';
 import ParkingAreaList from '../ParkingAreaList';
-import { StyledAreaListItem, StyledListItem } from '../styled/styled';
+import {
+  StyledAreaListItem,
+  StyledBoldText,
+  StyledCaptionText,
+  StyledListItem,
+  StyledListLevelThree, StyledLoadingText,
+} from '../styled/styled';
 
 const ServiceTab = (props) => {
   const {
     selectedAddress,
     districtData,
     initialOpenItems,
-    classes,
   } = props;
   const dispatch = useDispatch();
   const districtsFetching = useSelector(state => state.districts.districtsFetching);
@@ -69,9 +75,9 @@ const ServiceTab = (props) => {
             <FormattedMessage id={`area.list.${district.name}`} />
           </Typography>
           {district.period && (
-            <Typography id={`${district.id}Period`} aria-hidden className={classes.captionText} variant="caption">
+            <StyledCaptionText id={`${district.id}Period`} aria-hidden variant="caption">
               {district.period}
-            </Typography>
+            </StyledCaptionText>
           )}
         </>
       )}
@@ -83,7 +89,7 @@ const ServiceTab = (props) => {
     const listDistrictAreas = ['rescue_area', 'rescue_district', 'rescue_sub_district'].includes(selectedDistrictType);
     const DistrictList = listDistrictAreas ? DistrictAreaList : DistrictUnitList;
     return (
-      <List className={`districtList ${classes.listLevelThree}`} disablePadding>
+      <StyledListLevelThree className="districtList" disablePadding>
         {districList.map(district => (
           <Fragment key={district.id}>
             <StyledAreaListItem
@@ -104,10 +110,9 @@ const ServiceTab = (props) => {
             )}
           </Fragment>
         ))}
-      </List>
+      </StyledListLevelThree>
     );
   };
-
 
   const renderParkingAreaSelection = (item) => { // Custom implementation for parking areas
     const districList = districtData.filter(obj => item.districts.some(
@@ -117,25 +122,25 @@ const ServiceTab = (props) => {
     const parkingSpaces = districList.filter(obj => obj.id.includes('parking_area') && obj.id !== 'parking_area0');
     const elementsForHelsinki = (
       <>
-        <div className={classes.serviceTabSubtitle}>
-          <Typography component="h4" className={classes.bold}><FormattedMessage id="settings.city.helsinki" /></Typography>
-        </div>
+        <StyledServiceTabSubtitle>
+          <StyledBoldText component="h4"><FormattedMessage id="settings.city.helsinki" /></StyledBoldText>
+        </StyledServiceTabSubtitle>
         {renderDistrictList(parkingAreas)}
-        <div className={classes.serviceTabSubtitle}>
+        <StyledServiceTabSubtitle>
           <Typography component="h6"><FormattedMessage id="area.list.parkingSpaces" /></Typography>
-        </div>
+        </StyledServiceTabSubtitle>
         <ParkingAreaList areas={parkingSpaces} variant="helsinki" />
       </>
     );
 
     const elementsForVantaa = (
       <>
-        <div className={classes.serviceTabSubtitle}>
-          <Typography component="h4" className={classes.bold}><FormattedMessage id="settings.city.vantaa" /></Typography>
-        </div>
-        <div className={classes.serviceTabSubtitle}>
+        <StyledServiceTabSubtitle>
+          <StyledBoldText component="h4"><FormattedMessage id="settings.city.vantaa" /></StyledBoldText>
+        </StyledServiceTabSubtitle>
+        <StyledServiceTabSubtitle>
           <Typography component="h6"><FormattedMessage id="area.list.parkingSpaces" /></Typography>
-        </div>
+        </StyledServiceTabSubtitle>
         <ParkingAreaList areas={parkingSpaces} variant="vantaa" />
       </>
     );
@@ -160,9 +165,9 @@ const ServiceTab = (props) => {
         const districList = districtData.filter(i => obj.districts.includes(i.name));
         return (
           <React.Fragment key={obj.titleID}>
-            <div className={classes.serviceTabSubtitle}>
+            <StyledServiceTabSubtitle>
               <Typography><FormattedMessage id={obj.titleID} /></Typography>
-            </div>
+            </StyledServiceTabSubtitle>
             {renderDistrictList(districList)}
           </React.Fragment>
         );
@@ -181,17 +186,16 @@ const ServiceTab = (props) => {
     const ariaHidden = item.id === 'parking';
     return (
       <StyledListItem aria-hidden={ariaHidden} key={item.titleID} divider>
-        <SMAccordion
-          className={classes.accordion}
+        <StyledStyledAccordion
           onOpen={() => dispatch(handleOpenItems(item.id))}
           defaultOpen={defaultExpanded}
-          titleContent={<Typography id={`${item.id}-content`} className={classes.bold}><FormattedMessage id={item.titleID} /></Typography>}
+          titleContent={<StyledBoldText id={`${item.id}-content`}><FormattedMessage id={item.titleID} /></StyledBoldText>}
           collapseContent={(
             <>
               <Divider aria-hidden />
-              <div className={classes.collapseArea}>
+              <StyledCollapseAreaContainer>
                 {renderCollapseContent(item)}
-              </div>
+              </StyledCollapseAreaContainer>
             </>
           )}
         />
@@ -203,11 +207,11 @@ const ServiceTab = (props) => {
 
   if (!districtData.length && districtsFetching) {
     return (
-      <div className={classes.loadingText} data-sm="ServiceTabComponent">
+      <StyledLoadingText data-sm="ServiceTabComponent">
         <Typography aria-hidden>
           <FormattedMessage id="general.loading" />
         </Typography>
-      </div>
+      </StyledLoadingText>
     );
   }
 
@@ -216,15 +220,38 @@ const ServiceTab = (props) => {
       <Typography style={visuallyHidden} component="h3">
         <FormattedMessage id="area.list" />
       </Typography>
-      <List className={`${classes.listLevelTwo} ${classes.serviceTabCategoryList}`}>
+      <StyledListLevelTwo>
         {districtCategoryList.map(item => renderCategoryItem(item))}
-      </List>
+      </StyledListLevelTwo>
     </div>
   );
 };
 
+const StyledServiceTabSubtitle = styled('div')(({ theme }) => ({
+  height: 48,
+  display: 'flex',
+  alignItems: 'center',
+  paddingTop: theme.spacing(1),
+  paddingBottom: theme.spacing(1),
+  paddingLeft: theme.spacing(9),
+}));
+
+const StyledStyledAccordion = styled(SMAccordion)(({ theme }) => ({
+  paddingLeft: theme.spacing(9),
+}));
+
+const StyledCollapseAreaContainer = styled('div')(() => ({
+  backgroundColor: 'rgba(222, 222, 222, 0.12)',
+}));
+
+const StyledListLevelTwo = styled(List)(() => ({
+  backgroundColor: 'rgb(250,250,250)',
+  '& > li:last-of-type': {
+    borderBottom: 'none',
+  },
+}));
+
 ServiceTab.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   districtData: PropTypes.arrayOf(PropTypes.object),
   initialOpenItems: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
   selectedAddress: PropTypes.objectOf(PropTypes.any),

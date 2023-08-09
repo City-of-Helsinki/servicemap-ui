@@ -13,7 +13,7 @@ import {
 import { getDistrictsByType } from '../../../../redux/selectors/district';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { panViewToBounds } from '../../../MapView/utils/mapActions';
-import { StyledCheckBoxIcon } from '../styled/styled';
+import { StyledBoldText, StyledCheckBoxIcon } from '../styled/styled';
 
 const GeographicalDistrictList = ({ district }) => {
   const dispatch = useDispatch();
@@ -152,10 +152,6 @@ const StyledAreaItem = styled(ListItem)(({ theme }) => ({
 }));
 const StyledFormControlLabel = styled(FormControlLabel)(({ theme }) => ({
   paddingLeft: theme.spacing(2),
-}));
-
-const StyledBoldText = styled(Typography)(() => ({
-  fontWeight: 'bold',
 }));
 
 GeographicalDistrictList.propTypes = {

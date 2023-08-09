@@ -1,24 +1,22 @@
-import {
-  Checkbox, List, Typography,
-} from '@mui/material';
+import { Checkbox, List, Typography } from '@mui/material';
+import PropTypes from 'prop-types';
 import React, {
   useCallback, useEffect, useMemo, useState,
 } from 'react';
-import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { addSelectedDistrictService, handleOpenItems, removeSelectedDistrictService } from '../../../../redux/actions/district';
+import { UnitItem } from '../../../../components';
+import {
+  addSelectedDistrictService, handleOpenItems, removeSelectedDistrictService,
+} from '../../../../redux/actions/district';
 import { getFilteredSubdistrictServices } from '../../../../redux/selectors/district';
 import { uppercaseFirst } from '../../../../utils';
 import useLocaleText from '../../../../utils/useLocaleText';
 import {
-  SMAccordion,
-  UnitItem,
-} from '../../../../components';
-import {
   StyledAccordionServiceTitle,
   StyledCaptionText,
   StyledCheckBoxIcon,
-  StyledListItem, StyledUnitList,
+  StyledListItem,
+  StyledUnitList,
   StyledUnitListArea,
 } from '../styled/styled';
 

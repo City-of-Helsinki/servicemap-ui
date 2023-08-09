@@ -1,104 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import styled from '@emotion/styled';
 import {
-  Typography,
-  Paper,
-  InputBase,
-  Divider,
-  Button,
-  List,
-  FormGroup,
-  FormControlLabel,
-  ListItem,
-  Checkbox,
+  Checkbox, FormControlLabel, FormGroup, List, ListItem, Paper, Typography,
 } from '@mui/material';
-import { withStyles } from '@mui/styles';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import styles from '../styles';
 import { SMRadio } from '../../../components';
-
-
-const customStyles = () => ({
-  root: {
-    padding: '2px 4px',
-    display: 'inline-flex',
-    alignItems: 'center',
-  },
-  input: {
-    marginLeft: 8,
-    flex: 1,
-  },
-  iconButton: {
-    padding: 10,
-  },
-  divider: {
-    width: 1,
-    height: 28,
-    margin: 4,
-  },
-});
-
-/**
- * CustomInput component
- */
-const CustomInput = withStyles(customStyles)(({
-  ariaLabel, buttonClick, buttonText, classes, disabled, initialValue, onChange, preText,
-}) => {
-  const [value, setValue] = useState(initialValue);
-  useEffect(() => {
-    setValue(initialValue);
-  }, [initialValue]);
-
-  const inputOnChange = (e) => {
-    setValue(e.target.value);
-    if (onChange) {
-      onChange(e, e.target.value);
-    }
-  };
-
-  return (
-    <Paper className={classes.root} elevation={1}>
-      <InputBase
-        className={classes.input}
-        disabled={disabled}
-        inputProps={{
-          'aria-label': ariaLabel,
-        }}
-        onChange={inputOnChange}
-        value={value}
-      />
-      {
-        preText && (
-          <pre className={classes.iconButton} aria-hidden>
-            {preText}
-          </pre>
-        )
-      }
-      {
-        buttonClick && buttonText && (
-          <>
-            <Divider className={classes.divider} />
-            <Button
-              aria-label={buttonText}
-              color="primary"
-              className={classes.iconButton}
-              onClick={(e) => { buttonClick(e, value); }}
-              variant="contained"
-            >
-              {buttonText}
-            </Button>
-          </>
-        )
-      }
-    </Paper>
-  );
-});
+import CustomInput from './CustomInput';
 
 /**
  * EmbedController that renders radio controls
  */
 const EmbedController = ({
-  classes,
   titleComponent,
   titleID,
   description,
@@ -124,10 +37,10 @@ const EmbedController = ({
     return (
       <>
         <FormGroup row role="group" aria-labelledby={checkboxLabelledBy}>
-          <List className={classes.list}>
+          <List>
             {
               checkboxControls.map(item => (
-                <ListItem className={classes.checkbox} key={item.key}>
+                <StyledListItem key={item.key}>
                   <FormControlLabel
                     control={(
                       <Checkbox
@@ -150,7 +63,7 @@ const EmbedController = ({
                       </>
                     )}
                   />
-                </ListItem>
+                </StyledListItem>
               ))
             }
           </List>
@@ -196,7 +109,7 @@ const EmbedController = ({
   };
 
   return (
-    <Paper className={classes.formContainerPaper}>
+    <StyledPaper>
       {
         titleID
         && (
@@ -225,20 +138,30 @@ const EmbedController = ({
       {
         renderCheckboxes()
       }
-    </Paper>
+    </StyledPaper>
   );
 };
 
+const StyledListItem = styled(ListItem)(() => ({
+  paddingLeft: 0,
+  paddingRight: 0,
+}));
+const StyledPaper = styled(Paper)(({ theme }) => ({
+  width: '100%',
+  boxSizing: 'border-box',
+  display: 'inline-block',
+  margin: `${theme.spacing(3)} 0`,
+  padding: `${theme.spacing(2)} ${theme.spacing(3)}`,
+  textAlign: 'left',
+  '& label': {
+    margin: `${theme.spacing(1)} 0`,
+  },
+  '& fieldset': {
+    margin: '0 -12px',
+  },
+}));
+
 EmbedController.propTypes = {
-  classes: PropTypes.shape({
-    checkbox: PropTypes.string,
-    divider: PropTypes.string,
-    root: PropTypes.string,
-    formContainerPaper: PropTypes.string,
-    input: PropTypes.string,
-    iconButton: PropTypes.string,
-    list: PropTypes.string,
-  }).isRequired,
   titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']).isRequired,
   titleID: PropTypes.string.isRequired,
   description: PropTypes.node,
@@ -286,4 +209,4 @@ EmbedController.defaultProps = {
   radioValue: null,
 };
 
-export default withStyles(styles)(EmbedController);
+export default EmbedController;

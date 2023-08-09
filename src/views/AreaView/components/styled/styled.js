@@ -29,6 +29,7 @@ const StyledDistrictServiceList = styled('div')(() => ({
 
 const StyledDistrictServiceListLevelFour = styled(StyledDistrictServiceList)(() => levelFour());
 const StyledDistrictServiceListLevelThree = styled(StyledDistrictServiceList)(() => levelThree());
+const StyledListLevelThree = styled(List)(() => levelThree());
 
 const StyledServiceList = styled('div')(({ theme }) => ({
   paddingTop: theme.spacing(2),
@@ -83,6 +84,10 @@ const StyledLoadingText = styled('div')(() => ({
   height: 56,
 }));
 
+const StyledBoldText = styled(Typography)(() => ({
+  fontWeight: 'bold',
+}));
+
 const StyledCheckBoxIcon = styled('span')(() => ({
   margin: 2,
   width: 18,
@@ -113,6 +118,7 @@ export {
   StyledDistrictServiceList,
   StyledDistrictServiceListLevelThree,
   StyledDistrictServiceListLevelFour,
+  StyledListLevelThree,
   StyledListItem,
   StyledAreaListItem,
   StyledListNoPadding,
@@ -123,6 +129,7 @@ export {
   StyledUnitsAccordion,
   StyledCaptionText,
   StyledLoadingText,
+  StyledBoldText,
   StyledCheckBoxIcon,
   StyledUnitListArea,
   StyledAccordionServiceTitle,

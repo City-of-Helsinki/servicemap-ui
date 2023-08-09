@@ -15,7 +15,7 @@ import {
 import useLocaleText from '../../../../utils/useLocaleText';
 import { focusDistricts } from '../../../MapView/utils/mapActions';
 import {
-  StyledAreaListItem, StyledCheckBoxIcon, StyledListItem, StyledListNoPadding,
+  StyledAreaListItem, StyledBoldText, StyledCheckBoxIcon, StyledListItem, StyledListNoPadding,
 } from '../styled/styled';
 
 const StatisticalDistrictListContent = () => {
@@ -234,9 +234,6 @@ const StyledLabelInfo = styled('span')(() => ({
 }));
 const StyledMunicipalitySubtitle = styled('div')(({ theme }) => ({
   paddingLeft: theme.spacing(9),
-}));
-const StyledBoldText = styled(Typography)(() => ({
-  fontWeight: 'bold',
 }));
 const StyledSMAccordion = styled(SMAccordion)(({ theme }) => ({
   paddingLeft: theme.spacing(9),
