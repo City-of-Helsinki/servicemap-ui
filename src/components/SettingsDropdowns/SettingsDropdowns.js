@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import {
   Checkbox, ListItem, TextField, Typography,
 } from '@mui/material';
-import { styled } from '@mui/styles';
+import styled from '@emotion/styled';
 import React, { useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';

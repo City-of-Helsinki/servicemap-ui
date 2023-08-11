@@ -4,16 +4,16 @@ exports[`<SuggestionItem /> should work 1`] = `
 <div>
   <li
     aria-label="Title text Subtitle text"
-    class="MuiButtonBase-root MuiListItem-root SuggestionItem-listItem-2 MuiListItem-gutters MuiListItem-padding MuiListItem-button suggestion  css-18azhdn-MuiButtonBase-root-MuiListItem-root"
+    class="MuiButtonBase-root MuiListItem-root css-zkfegi MuiListItem-gutters MuiListItem-padding MuiListItem-button suggestion  css-18azhdn-MuiButtonBase-root-MuiListItem-root"
     role="link"
     tabindex="0"
   >
     <span
-      class="SuggestionItem-container-1"
+      class="css-grbm2p"
     >
       <div
         aria-hidden="true"
-        class="MuiListItemIcon-root SuggestionItem-listIcon-4 css-cveggr-MuiListItemIcon-root"
+        class="MuiListItemIcon-root css-1s4rx4l-MuiListItemIcon-root"
       >
         <svg
           aria-hidden="true"
@@ -28,20 +28,20 @@ exports[`<SuggestionItem /> should work 1`] = `
         </svg>
       </div>
       <div
-        class="MuiListItemText-root SuggestionItem-textContainer-3 SuggestionItem-text-10 css-vt7cuc-MuiListItemText-root"
+        class="MuiListItemText-root css-1rd6w3o css-1ars949-MuiListItemText-root"
       >
         <span
           class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10wsksd-MuiTypography-root"
         >
           <p
             aria-hidden="true"
-            class="MuiTypography-root MuiTypography-body2 css-1ak20dk-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body2 css-1op8tun-MuiTypography-root"
           >
             Title text
           </p>
           <p
             aria-hidden="true"
-            class="MuiTypography-root MuiTypography-body2 SuggestionItem-subtitle-7 css-1ak20dk-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body2 css-1c037km-MuiTypography-root"
           >
             Subtitle text
           </p>

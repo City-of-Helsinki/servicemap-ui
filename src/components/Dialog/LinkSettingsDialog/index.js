@@ -1,18 +1,13 @@
-import { withStyles } from '@mui/styles';
 import { connect } from 'react-redux';
-import styles from './styles';
-import {
-  activateSetting,
-  resetAccessibilitySettings,
-} from '../../../redux/actions/settings';
+import { activateSetting, resetAccessibilitySettings } from '../../../redux/actions/settings';
 import LinkSettingsDialogComponent from './LinkSettingsDialogComponent';
 
-export const LinkSettingsDialog = withStyles(styles)(connect(
+export const LinkSettingsDialog = connect(
   null,
   {
     activateSetting,
     resetAccessibilitySettings,
   },
-)(LinkSettingsDialogComponent));
+)(LinkSettingsDialogComponent);
 
 export default LinkSettingsDialog;

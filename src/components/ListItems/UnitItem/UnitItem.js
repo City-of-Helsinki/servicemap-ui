@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { css } from '@emotion/css';
 import UnitHelper from '../../../utils/unitHelper';
 import ResultItem from '../ResultItem';
 import SettingsUtility from '../../../utils/settings';
@@ -9,12 +10,10 @@ import isClient from '../../../utils';
 import useLocaleText from '../../../utils/useLocaleText';
 
 const UnitItem = ({
-  classes,
   distance,
   unit,
   onClick,
   intl,
-  padded,
   divider,
   navigator,
   settings,
@@ -66,6 +65,10 @@ const UnitItem = ({
       : intl.formatMessage({ id: 'general.distance.kilometers' })}`,
   } : {};
 
+  const titleClass = css({
+    fontWeight: 'bold',
+  });
+
   if (!simpleItem) {
     return (
       <ResultItem
@@ -75,7 +78,7 @@ const UnitItem = ({
         bottomHighlight={problemCount !== null && typeof problemCount !== 'undefined'}
         extendedClasses={{
           typography: {
-            title: classes.title,
+            title: titleClass,
           },
         }}
         distance={distanceText}
@@ -89,7 +92,6 @@ const UnitItem = ({
           }
         }}
         unitId={id}
-        padded={padded}
         divider={divider}
       />
     );
@@ -100,7 +102,7 @@ const UnitItem = ({
       simpleItem={simpleItem}
       extendedClasses={{
         typography: {
-          title: classes.title,
+          title: titleClass,
         },
       }}
       distance={distanceText}
@@ -122,7 +124,6 @@ export default UnitItem;
 
 // Typechecking
 UnitItem.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   distance: PropTypes.shape({
     distance: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     type: PropTypes.oneOf(['m', 'km']),
@@ -133,7 +134,6 @@ UnitItem.propTypes = {
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
-  padded: PropTypes.bool,
   divider: PropTypes.bool,
   simpleItem: PropTypes.bool,
 };
@@ -143,7 +143,6 @@ UnitItem.defaultProps = {
   unit: {},
   onClick: null,
   navigator: null,
-  padded: false,
   divider: true,
   simpleItem: false,
 };

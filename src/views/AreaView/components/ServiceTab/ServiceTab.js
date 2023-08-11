@@ -204,7 +204,7 @@ const ServiceTab = (props) => {
 
   if (!districtData.length && districtsFetching) {
     return (
-      <div className={classes.loadingText}>
+      <div className={classes.loadingText} data-sm="ServiceTabComponent">
         <Typography aria-hidden>
           <FormattedMessage id="general.loading" />
         </Typography>
@@ -213,7 +213,7 @@ const ServiceTab = (props) => {
   }
 
   return (
-    <div>
+    <div data-sm="ServiceTabComponent">
       <Typography style={visuallyHidden} component="h3">
         <FormattedMessage id="area.list" />
       </Typography>

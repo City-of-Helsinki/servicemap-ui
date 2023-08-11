@@ -15,7 +15,7 @@ fixture`Address view test`
   });
 
 test('AddressView does render correct view', async (t) => {
-  const title = await ReactSelector('TitleBar');
+  const title = await Selector('[data-sm="TitleBar"]');
   const tab1 = await Selector('div[role="tablist"] button').nth(0).textContent;
   const tab2 = Selector('div[role="tablist"] button').nth(1);
   const divisions = ReactSelector('DivisionItem').count;
@@ -125,8 +125,8 @@ test('AddressView nearby services tab works correctly', async (t) => {
   const tabNearbyUnits = Selector('button[role="tab"]').nth(1);
   const unitTitle = Selector('.TitleText');
   const listItems = Selector('#tab-content-1 li[role="link"]');
-  const listItemTopRow = (listItem) => listItem.find('div[class*="ResultItem-topRow"] p[aria-hidden="true"]');
-  const backToAddressButton = ReactSelector('BackButton').find('.SMBackButton');
+  const listItemTopRow = (listItem) => listItem.find('div[data-sm="ResultItemTopRow"] p[aria-hidden="true"]');
+  const backToAddressButton = Selector('[data-sm="BackButton"]');
 
   await t
     .click(tabNearbyUnits)
@@ -142,11 +142,11 @@ test('AddressView nearby services tab works correctly', async (t) => {
 
   // Test pagination
   const firstUnitText = await listItemTopRow(listItems.nth(0)).textContent;
-  const pagination = ReactSelector('PaginationComponent');
-  const buttons = pagination.find('button');
+  const pagination = Selector('[data-sm="PaginationComponent"]');
+  const nextPageButton = pagination.find('#PaginationNextButton');
   await t
   .expect(listItemTopRow(listItems.nth(0)).textContent).eql(firstUnitText, 'List items should change on pagination page change')
-    .click(buttons.nth(1))
+    .click(nextPageButton)
     .expect(getLocation()).contains('p=2')
     .expect(listItemTopRow(listItems.nth(0)).textContent).notEql(firstUnitText, 'List items should change on pagination page change')
   ;

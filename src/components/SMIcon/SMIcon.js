@@ -1,17 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@mui/styles';
-import styles from './styles';
+import styled from '@emotion/styled';
 
 const SMIcon = ({
-  className, classes, icon, ...rest
+  className, icon, ...rest
 }) => (
-  <span aria-hidden="true" className={`${className} ${icon} ${classes.icon}`} {...rest} />
+  <StyledIcon aria-hidden="true" className={`${className} ${icon}`} {...rest} />
 );
+
+const StyledIcon = styled('span')(({ theme }) => ({
+  alignSelf: 'center',
+  display: 'inline-block',
+  marginLeft: theme.spacing(1),
+  marginRight: theme.spacing(1),
+  fontSize: 24,
+}));
 
 SMIcon.propTypes = {
   className: PropTypes.string,
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   icon: PropTypes.string.isRequired,
 };
 
@@ -19,4 +25,4 @@ SMIcon.defaultProps = {
   className: '',
 };
 
-export default withStyles(styles)(SMIcon);
+export default SMIcon;

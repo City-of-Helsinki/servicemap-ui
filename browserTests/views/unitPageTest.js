@@ -209,7 +209,7 @@ test.skip('Unit view services tab lists work correctly', async (t) => {
   const serviceTab = Selector('div[role="tablist"] button').nth(2);
   const moreServicesButton = Selector('#UnitservicesButton');
   const serviceTitle = Selector('.ExtendedData-title h3');
-  const backButton = Selector(`#BackButton`);
+  const backButton = Selector(`[data-sm="BackButton"]`);
   const reservableObjects = Selector('li[class*="reservationItem"]')
 
   await t
@@ -224,9 +224,9 @@ test.skip('Unit view services tab lists work correctly', async (t) => {
 
 test('Unit view share link does work correctly', async (t) => {
   const accessibilityTab = Selector('div[role="tablist"] button').nth(1);
-  const shareButton = Selector('div[class*="TitleBar-titleContainer"] button');
+  const shareButton = Selector('[data-sm="TitleContainer"] button');
 
-  const copyLinkButton = Selector(`div[class*="Connect(LinkSettingsDialogComponent)-container"] button p`)
+  const copyLinkButton = Selector(`div[data-sm="DialogContainer"] button p`)
   const radio = Selector(`div[aria-label="${finnish['link.settings.dialog.radio.label']}"] label`)
   // const dialogClose = Selector('div[class*="Dialog-topArea"] button[aria-label="Sulje"]');
 

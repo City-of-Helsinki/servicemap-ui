@@ -12,14 +12,6 @@ fixture`Settings view tests`
     await waitForReact();
   });
 
-const openSettings = async (t, selector) => {
-  const openButton = selector ? selector : Selector('#SettingsButtonaccessibilitySettings');
-  await t
-    .click(openButton)
-  ;
-  return openButton;
-}
-
 test('Settings does opens and closes correctly', async (t) => {
   await t
     .expect(Selector('#senses-setting-dropdown').visible).ok()

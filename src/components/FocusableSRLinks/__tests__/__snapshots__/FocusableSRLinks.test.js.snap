@@ -3,10 +3,10 @@
 exports[`<FocusableSRLinks /> should work 1`] = `
 <div>
   <div
-    class="FocusableSRLinks-srFocusedContainer-1"
+    class="css-7h79yk"
   >
     <a
-      class="FocusableSRLinks-srFocused-2"
+      class="css-r07z57"
       href="#test-href"
     >
       Title text

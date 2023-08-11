@@ -1,9 +1,7 @@
-import { withStyles } from '@mui/styles';
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 import { setDirection, setOrder } from '../../redux/actions/sort';
 import ResultOrderer from './ResultOrderer';
-import styles from './styles';
 
 // Listen to redux state
 const mapStateToProps = (state) => {
@@ -18,7 +16,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default withStyles(styles)(connect(
+export default connect(
   mapStateToProps,
   { setDirection, setOrder },
-)(injectIntl(ResultOrderer)));
+)(injectIntl(ResultOrderer));

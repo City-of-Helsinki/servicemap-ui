@@ -9,6 +9,9 @@ import {
 } from '@mui/icons-material';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import styled from '@emotion/styled';
+import { css } from '@emotion/css';
+import { useTheme } from '@mui/styles';
 import BackButton from '../BackButton';
 import { keyboardHandler, uppercaseFirst, useQuery } from '../../utils';
 import SuggestionBox from './components/SuggestionBox';
@@ -24,7 +27,6 @@ let blurTimeout = null;
 const SearchBarComponent = ({
   background,
   changeSelectedUnit,
-  classes,
   className,
   fetchSearchResults,
   hideBackButton,
@@ -47,6 +49,7 @@ const SearchBarComponent = ({
   const location = useLocation();
   const queryParams = useQuery();
   const searchRef = useRef();
+  const theme = useTheme();
 
   const setSearchbarValue = (value) => {
     searchRef.current.value = value;
@@ -255,25 +258,27 @@ const SearchBarComponent = ({
       : null;
 
     // Style classes
-    const backButtonStyles = `${classes.iconButton}`;
     const showSuggestions = isActive;
     const inputHasValue = searchRef.current?.value?.length;
     const listID = inputHasValue ? 'SuggestionList' : 'PreviousList';
-    const containerStyles = `${isActive ? classes.containerSticky : classes.containerInactive} ${classes.container}`;
+    const focusedClass = css({
+      outline: '2px solid transparent',
+      boxShadow: `inset 0 0 0 4px ${theme.palette.focusBorder.main}`,
+    });
+
     return (
-      <form id="SearchBar" action="" onSubmit={onSubmit} className={containerStyles} autoComplete="off">
+      <StyledForm id="SearchBar" action="" onSubmit={onSubmit} isactive={isActive || undefined} autoComplete="off">
         {
           (!hideBackButton || (isActive && isMobile))
           && (
-            <BackButton
-              className={backButtonStyles}
+            <StyledBackButton
               onClick={backButtonEvent}
               variant="icon"
               srHidden={!!hideBackButton}
             />
           )
         }
-        <InputBase
+        <StyledInputBase
           inputProps={{
             role: 'combobox',
             'aria-haspopup': !!showSuggestions,
@@ -283,8 +288,7 @@ const SearchBarComponent = ({
           }}
           type="text"
           inputRef={searchRef}
-          className={classes.input}
-          classes={{ focused: classes.fieldFocus }}
+          classes={{ focused: focusedClass }}
           onChange={() => {
             if (focusedSuggestion) {
               setFocusedSuggestion(null);
@@ -298,9 +302,8 @@ const SearchBarComponent = ({
           endAdornment={
             inputHasValue
               ? (
-                <IconButton
+                <StyledIconButton
                   aria-label={intl.formatMessage({ id: 'search.cancelText' })}
-                  className={classes.cancelButton}
                   onClick={() => {
                     if (searchRef?.current) {
                       // Clear blur timeout to keep suggestion box active
@@ -311,32 +314,36 @@ const SearchBarComponent = ({
                   }}
                 >
                   <Cancel />
-                </IconButton>
+                </StyledIconButton>
               )
               : null
           }
         />
 
-        <ButtonBase
+        <StyledSearchButton
           id="SearchButton"
           aria-label={intl.formatMessage({ id: 'search' })}
           type="submit"
-          className={classes.iconButtonSearch}
           color="secondary"
           variant="contained"
         >
           <Typography><FormattedMessage id="general.search" /></Typography>
           <Search />
-        </ButtonBase>
-      </form>
+        </StyledSearchButton>
+      </StyledForm>
     );
   };
 
   const renderText = (isMobile = false) => {
-    const textClasses = `${classes.infoText} ${isActive && isMobile ? classes.infoTextSticky : ''}`;
-
     return (
-      <Typography align="left" className={textClasses} color="inherit" variant="body2"><FormattedMessage id="search.searchbar.infoText" /></Typography>
+      <StyledInfoText
+        align="left"
+        sticky={(isActive && isMobile) || undefined}
+        color="inherit"
+        variant="body2"
+      >
+        <FormattedMessage id="search.searchbar.infoText" />
+      </StyledInfoText>
     );
   };
 
@@ -345,67 +352,46 @@ const SearchBarComponent = ({
       return null;
     }
     return (
-      <Typography align="left" className={classes.headerText} variant="h5" component="p" color="inherit"><FormattedMessage id="search.searchbar.headerText" /></Typography>
+      <StyledHeaderText align="left" variant="h5" component="p" color="inherit"><FormattedMessage id="search.searchbar.headerText" /></StyledHeaderText>
     );
   };
 
   const renderMobile = () => {
-    const rootClasses = `${
-      rootClass
-    } ${
-      isActive ? classes.mobileActiveRoot : classes.root
-    } ${
-      !isActive && typeof isSticky === 'number' ? classes.sticky : ''
-    } ${
-      header ? classes.headerBackground : ''
-    } ${
-      background === 'default' ? classes.background : ''
-    }  ${
-      className
-    }`;
-    const wrapperClasses = `${isActive ? classes.mobileWrapperActive : classes.mobileWrapper}`;
+    const rootClasses = `${rootClass} ${className}`;
     const stickyStyles = typeof isSticky === 'number' ? { top: isSticky } : null;
 
     return (
       <>
-        <div className={rootClasses} style={stickyStyles}>
+        <StyledMobileContainer
+          className={rootClasses}
+          isactive={isActive || undefined}
+          sticky={(typeof isSticky === 'number') || undefined}
+          header={header || undefined}
+          background={(background === 'default') || undefined}
+          style={stickyStyles}
+        >
           {
             renderHeaderText(true)
           }
-          <div className={wrapperClasses}>
+          <StyledMobileWrapper isactive={isActive || undefined}>
             {
               renderText(true)
             }
-            <div className={classes.inputContainer}>
+            <StyledInputContainer>
               {
                 renderInput(true)
               }
               {
                 renderSuggestionBox()
               }
-            </div>
-          </div>
-        </div>
+            </StyledInputContainer>
+          </StyledMobileWrapper>
+        </StyledMobileContainer>
       </>
     );
   };
 
-  const rootClasses = `${
-    rootClass
-  } ${
-    classes.root
-  } ${
-    typeof isSticky === 'number' ? classes.sticky : ''
-  } ${
-    margin ? classes.bottomMargin : ''
-  } ${
-    header ? classes.headerBackground : ''
-  } ${
-    background === 'default' ? classes.background : ''
-  } ${
-    className
-  }`;
-  const wrapperClasses = classes.wrapper;
+  const rootClasses = `${rootClass} ${className}`;
   const stickyStyles = typeof isSticky === 'number' ? { top: isSticky } : null;
 
   return (
@@ -414,31 +400,233 @@ const SearchBarComponent = ({
         {renderMobile()}
       </MobileComponent>
       <DesktopComponent>
-        <div className={rootClasses} style={stickyStyles}>
+        <StyledDesktopContainer
+          className={rootClasses}
+          style={stickyStyles}
+          sticky={(typeof isSticky === 'number') || undefined}
+          margin={margin || undefined}
+          header={header || undefined}
+          background={(background === 'default') || undefined}
+        >
           {
             renderHeaderText()
           }
           {
             renderText()
           }
-          <Paper className={wrapperClasses} elevation={1} square>
+          <StyledPaper elevation={1} square>
             {
               renderInput()
             }
             {
               renderSuggestionBox(true)
             }
-          </Paper>
-        </div>
+          </StyledPaper>
+        </StyledDesktopContainer>
       </DesktopComponent>
     </>
   );
 };
 
+const StyledMobileWrapper = styled('div')(({ isactive }) => (
+  isactive
+    ? {
+      flex: '0 1 auto',
+      display: 'flex',
+      flexDirection: 'column',
+    }
+    : {
+      flex: '0 1 auto',
+      borderRadius: '4px',
+    }
+));
+
+const StyledInputContainer = styled('div')(({ theme }) => ({
+  backgroundColor: '#fff',
+  display: 'flex',
+  flexDirection: 'column',
+  borderRadius: theme.spacing(0.5),
+}));
+
+const StyledPaper = styled(Paper)(() => ({
+  position: 'relative',
+  flex: '0 1 auto',
+  borderRadius: '4px',
+}));
+
+const StyledDesktopContainer = styled('div')(({
+  theme, sticky, margin, header, background,
+}) => {
+  const styles = {
+    color: theme.palette.primary.highContrast,
+    display: 'flex',
+    flexDirection: 'column',
+    padding: theme.spacing(2),
+    boxShadow: '0 2px 2px 0 rgba(0,0,0,0.5)',
+    flex: '0 0 auto',
+  };
+  if (sticky) {
+    Object.assign(styles, {
+      position: 'sticky',
+      zIndex: theme.zIndex.sticky,
+    });
+  }
+  if (margin) {
+    Object.assign(styles, {
+      marginBottom: 4,
+    });
+  }
+  if (header) {
+    Object.assign(styles, {
+      background: theme.palette.primary.main,
+    });
+  }
+  if (background) {
+    Object.assign(styles, {
+      background: theme.palette.primary.main,
+    });
+  }
+  return styles;
+});
+
+const StyledBackButton = styled(BackButton)(({ theme }) => ({
+  flex: '0 1 auto',
+  padding: theme.spacing(1),
+  margin: theme.spacing(0.5),
+}));
+
+const StyledForm = styled('form')(({ theme, isactive }) => {
+  const styles = isactive
+    ? {
+      position: 'sticky',
+      top: 35,
+      zIndex: theme.zIndex.infront,
+    }
+    : {
+      borderRadius: theme.spacing(0.5),
+    };
+  Object.assign(styles, {
+    alignItems: 'center',
+    display: 'flex',
+    height: 54,
+    flex: '0 0 auto',
+    backgroundColor: '#fff',
+    border: '1px solid #ACACAC',
+    borderTopLeftRadius: theme.spacing(0.5),
+    borderTopRightRadius: theme.spacing(0.5),
+  });
+  return styles;
+});
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  flex: '1 1 auto',
+  paddingLeft: theme.spacing(0.5),
+  paddingRight: theme.spacing(0.5),
+  marginLeft: theme.spacing(0.5),
+  marginRight: theme.spacing(0.5),
+}));
+
+const StyledIconButton = styled(IconButton)(() => ({
+  '& svg': {
+    fontSize: '0.875rem',
+  },
+}));
+
+const StyledSearchButton = styled(ButtonBase)(({ theme }) => ({
+  flex: '0 0 auto',
+  width: 87,
+  height: '100%',
+  borderRadius: 0,
+  borderTopRightRadius: 4,
+  borderBottomRightRadius: 4,
+  boxShadow: 'none',
+  padding: theme.spacing(0.5, 0),
+  backgroundColor: theme.palette.primary.main,
+  color: '#fff',
+  display: 'flex',
+  flexDirection: 'row',
+  textTransform: 'none',
+  '&:hover': {
+    backgroundColor: 'rgb(30, 32, 39)',
+    transition: '0.5s',
+  },
+  '& svg': {
+    fontSize: 24,
+    paddingLeft: theme.spacing(0.5),
+  },
+}));
+
+const StyledInfoText = styled(Typography)(({ theme, sticky }) => {
+  const styles = {
+    justifyContent: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(0.5),
+  };
+  if (sticky) {
+    Object.assign(styles, {
+      backgroundColor: theme.palette.primary.main,
+      position: 'sticky',
+      top: 0,
+      zIndex: theme.zIndex.sticky,
+      paddingTop: theme.spacing(2),
+    });
+  }
+  return styles;
+});
+
+const StyledHeaderText = styled(Typography)(({ theme }) => ({
+  fontWeight: 'bold',
+  margin: theme.spacing(2, 0, 1, 0),
+}));
+
+const StyledMobileContainer = styled('div')(({
+  theme, isactive, sticky, header, background,
+}) => {
+  const styles = isactive
+    ? {
+      color: theme.palette.primary.highContrast,
+      padding: theme.spacing(1),
+      paddingTop: 0,
+      top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0,
+      position: 'fixed',
+      zIndex: theme.zIndex.modal,
+      overflow: 'auto',
+    }
+    : {
+      color: theme.palette.primary.highContrast,
+      display: 'flex',
+      flexDirection: 'column',
+      padding: theme.spacing(2),
+      boxShadow: '0 2px 2px 0 rgba(0,0,0,0.5)',
+      flex: '0 0 auto',
+    };
+  if (!isactive && sticky) {
+    Object.assign(styles, {
+      position: 'sticky',
+      zIndex: theme.zIndex.sticky,
+    });
+  }
+  if (header) {
+    Object.assign(styles, {
+      background: theme.palette.primary.main,
+    });
+  }
+  if (background) {
+    Object.assign(styles, {
+      background: theme.palette.primary.main,
+    });
+  }
+  return styles;
+});
+
 SearchBarComponent.propTypes = {
   background: PropTypes.oneOf(['default', 'none']),
   changeSelectedUnit: PropTypes.func.isRequired,
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   className: PropTypes.string,
   fetchSearchResults: PropTypes.func.isRequired,
   header: PropTypes.bool,

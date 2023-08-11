@@ -33,7 +33,7 @@ fixture`Embed view test`
   ('Embedded search view shows search results', async (t) => {
     const unitList = Selector('#paginatedList-embeddedResults');
     const unitListItem = unitList.child(0);
-    const unitListItemTitle = Selector('.ResultItem-title').textContent;
+    const unitListItemTitle = Selector('[data-sm="ResultItemTitle"]').textContent;
     const unitDialogTitle = Selector('#form-dialog-title').textContent;
 
     await t

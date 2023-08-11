@@ -2,16 +2,36 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
 import { Typography, ButtonBase } from '@mui/material';
-import { withStyles } from '@mui/styles';
+import styled from '@emotion/styled';
 import { visuallyHidden } from '@mui/utils';
-import styles from './styles';
 import { keyboardHandler } from '../../utils';
+
+const StyledTypography = styled(Typography)(({ theme }) => ({
+  margin: 0,
+  marginLeft: theme.spacing(0.5),
+  marginRight: theme.spacing(0.5),
+}));
+
+const StyledTypographyPageElement = styled(StyledTypography)(() => ({
+  color: 'black',
+  cursor: 'pointer',
+  fontWeight: 'normal',
+  textDecoration: 'none',
+}));
+
+const StyledTypographyPageElementActive = styled(StyledTypography)(() => ({
+  cursor: 'auto',
+  fontWeight: 'normal',
+  textDecoration: 'underline',
+}));
 
 // Page number element
 const PageElement = ({
-  classes, className, intl, isActive, number, onClick, ...rest
+  className, intl, isActive, number, onClick, ...rest
 }) => {
-  const newClassName = `${className} ${classes.pageItem} ${isActive ? classes.pageElementActive : classes.pageElement}`;
+  const TypographyComponent = isActive
+    ? StyledTypographyPageElementActive
+    : StyledTypographyPageElement;
   return (
     <li>
       <ButtonBase
@@ -21,16 +41,16 @@ const PageElement = ({
         onKeyDown={keyboardHandler(onClick, ['space', 'enter'])}
         tabIndex={isActive ? -1 : 0}
       >
-        <Typography
+        <TypographyComponent
           variant="subtitle1"
           component="p"
-          className={newClassName}
+          className={className}
           {...rest}
         >
           <span aria-hidden="true">
             {number}
           </span>
-        </Typography>
+        </TypographyComponent>
         <Typography style={visuallyHidden}>
           {isActive
             ? intl.formatMessage({ id: 'general.pagination.currentlyOpenedPage' }, { count: number })
@@ -43,7 +63,6 @@ const PageElement = ({
 };
 
 PageElement.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   className: PropTypes.string,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   isActive: PropTypes.bool.isRequired,
@@ -55,4 +74,4 @@ PageElement.defaultProps = {
   className: '',
 };
 
-export default injectIntl(withStyles(styles)(PageElement));
+export default injectIntl(PageElement);

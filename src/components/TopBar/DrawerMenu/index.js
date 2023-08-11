@@ -1,9 +1,7 @@
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
-import { withStyles } from '@mui/styles';
 import DrawerMenu from './DrawerMenu';
 import { findUserLocation } from '../../../redux/actions/user';
-import styles from './styles';
 
 const mapStateToProps = (state) => {
   const { user } = state;
@@ -13,7 +11,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default injectIntl(withStyles(styles)(connect(
+export default injectIntl(connect(
   mapStateToProps,
   { findUserLocation },
-)(DrawerMenu)));
+)(DrawerMenu));

@@ -1,17 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Typography, ListItem, Divider, ButtonBase,
-} from '@mui/material';
+import { ButtonBase, Divider, ListItem, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { FormattedMessage } from 'react-intl';
+import styled from '@emotion/styled';
 import UnitIcon from '../../SMIcon/UnitIcon';
 import SMLink from '../../Link';
 import { getAddressFromUnit } from '../../../utils/address';
 import useLocaleText from '../../../utils/useLocaleText';
 
 const DivisionItem = ({
-  classes,
   data,
   distance,
   divider,
@@ -76,13 +74,12 @@ const DivisionItem = ({
 
   return (
     <>
-      <ListItem
+      <StyledListItem
         component="li"
-        className={`${classes.listItem} ${className || ''}`}
+        className={`${className || ''}`}
       >
-        <ButtonBase
+        <StyledLinkButton
           role="link"
-          className={classes.linkButton}
           onClick={unitOnClick}
         >
           {
@@ -98,67 +95,63 @@ const DivisionItem = ({
             area
             && !disableTitle
             && (
-              <Typography align="left" aria-hidden className={classes.divisionTitle} variant="subtitle1">
+              <StyledDivisionTitle align="left" aria-hidden variant="subtitle1">
                 {title}
-              </Typography>
+              </StyledDivisionTitle>
             )
           }
-          <div className={classes.containerInner}>
-            <UnitIcon className={classes.icon} />
-            <div className={classes.content}>
-              <div className={classes.flexRow}>
+          <StyledContainer>
+            <StyledUnitIcon />
+            <StyledContent>
+              <StyledFlexRow>
                 {
                   name
                   && (
-                    <Typography
+                    <StyledWeightBold
                       align="left"
                       aria-hidden
                       variant="body2"
-                      className={classes.weightBold}
                       component="p"
                     >
                       {name}
-                    </Typography>
+                    </StyledWeightBold>
                   )
                 }
                 {
                   distance
                   && (
-                    <Typography
+                    <StyledDivisionDistance
                       align="left"
                       aria-hidden
-                      className={classes.divisionDistance}
                       variant="caption"
                     >
                       {distance.distance}
                       {distance.type}
-                    </Typography>
+                    </StyledDivisionDistance>
                   )
                 }
-              </div>
+              </StyledFlexRow>
               {
                 address
                 && (
-                  <Typography
+                  <StyledDivisionAddress
                     align="left"
                     aria-hidden
-                    className={classes.divisionAddress}
                     variant="caption"
                   >
                     {address}
-                  </Typography>
+                  </StyledDivisionAddress>
                 )
               }
-            </div>
-          </div>
-        </ButtonBase>
+            </StyledContent>
+          </StyledContainer>
+        </StyledLinkButton>
         {
           emergencyUnitId
           && (
-            <div className={classes.emergencyContent}>
-              <Typography
+            <StyledEmergencyContent>
+              <StyledEmergencyTypography
                 align="left"
-                className={classes.emergencyTypography}
                 variant="caption"
               >
                 <FormattedMessage
@@ -191,22 +184,96 @@ const DivisionItem = ({
                   id="address.emergency_care.link.text"
                   values={{ a: emergencyCareLink }}
                 />
-              </Typography>
-            </div>
+              </StyledEmergencyTypography>
+            </StyledEmergencyContent>
           )
         }
-      </ListItem>
+      </StyledListItem>
       {divider && (
-        <li aria-hidden className={classes.li}>
+        <StyledLi aria-hidden>
           <Divider />
-        </li>
+        </StyledLi>
       )}
     </>
   );
 };
+const StyledListItem = styled(ListItem)(({ theme }) => ({
+  alignItems: 'stretch',
+  display: 'flex',
+  flexDirection: 'column',
+  padding: theme.spacing(1),
+  paddingTop: theme.spacing(1.5),
+  paddingBottom: theme.spacing(1.5),
+}));
+
+const StyledLinkButton = styled(ButtonBase)(() => ({
+  flexDirection: 'column',
+  alignItems: 'initial',
+  '&:hover': {
+    textDecoration: 'underline',
+  },
+}));
+
+const StyledContainer = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'row',
+  padding: theme.spacing(0, 1.5),
+}));
+
+const StyledContent = styled('div')(() => ({
+  alignSelf: 'center',
+  flex: '1 1 auto',
+}));
+
+const StyledFlexRow = styled('div')(() => ({
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+}));
+
+const StyledUnitIcon = styled(UnitIcon)(({ theme }) => ({
+  marginRight: theme.spacing(2),
+}));
+
+const StyledDivisionTitle = styled(Typography)(({ theme }) => ({
+  fontWeight: 'bold',
+  paddingLeft: theme.spacing(2),
+  marginBottom: theme.spacing(1),
+}));
+
+const StyledDivisionAddress = styled(Typography)(() => ({
+  color: 'black',
+  display: 'block',
+  fontWeight: 'normal',
+}));
+
+const StyledDivisionDistance = styled(Typography)(() => ({
+  color: 'black',
+  fontWeight: 'normal',
+}));
+
+const StyledWeightBold = styled(Typography)(() => ({
+  fontWeight: 'bold',
+}));
+
+const StyledEmergencyContent = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'row',
+  padding: theme.spacing(0, 1),
+  marginLeft: theme.spacing(5),
+  marginRight: 60,
+}));
+
+const StyledEmergencyTypography = styled(Typography)(() => ({
+  color: 'black',
+  fontWeight: 'normal',
+}));
+
+const StyledLi = styled('li')(() => ({
+  listStyleType: 'none',
+}));
 
 DivisionItem.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   className: PropTypes.string,
   data: PropTypes.objectOf(PropTypes.any).isRequired,
   distance: PropTypes.shape({

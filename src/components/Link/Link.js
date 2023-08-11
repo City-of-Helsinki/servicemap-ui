@@ -1,29 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from '@emotion/styled';
 
 const Link = ({
   children,
   className,
-  classes,
   onClick,
 }) => (
-  <span
-    className={`${classes.link} ${className || ''} link`}
+  <StyledLink
+    className={`${className || ''} link`}
     role="link"
     tabIndex={0}
     onClick={onClick}
     onKeyPress={onClick}
   >
     {children}
-  </span>
+  </StyledLink>
 );
+
+const StyledLink = styled('span')(() => ({
+  cursor: 'pointer',
+  textDecoration: 'underline',
+  '&:hover': {
+    cursor: 'pointer',
+  },
+}));
 
 Link.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
-  classes: PropTypes.shape({
-    link: PropTypes.string,
-  }).isRequired,
   onClick: PropTypes.func.isRequired,
 };
 

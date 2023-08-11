@@ -25,7 +25,7 @@ const searchUnits = async (t, search = 'uimastadion') => {
     .expect(getLocation()).contains(`http://${server.address}:${server.port}/fi/search`)
     .click(input)
     .pressKey('ctrl+a delete')
-    .typeText(input, search)
+    .typeText(input, search, { replace: true })
     .pressKey('enter');
 }
 
@@ -45,7 +45,7 @@ test('Navigate search view', async (t) => {
   // Test result orderer navigation
   const unitCount = await searchUnits(t, 'kirjasto');
   const input = Selector('#SearchBar input');
-  const select = Selector('#result-sorter')
+  const select = Selector('[data-sm="ResultSorterInput"]')
   const listItems = Selector('#paginatedList-Toimipisteet-results li[role="link"]')
 
   const firstItemText = await listItems.nth(0).textContent;
@@ -137,7 +137,7 @@ test('Address search does work', async (t) => {
   const addressInput = Selector('#addressSearchbar');
   const suggestions = Selector('#address-results div[role="option"]');
   const marker = Selector('div[class*="userMarker"]');
-  const distanceText = Selector('div[class*="ResultItem-rightColumn"]');
+  const distanceText = Selector('div[data-sm="ResultItemRightColumn"]');
 
   await t
     .typeText(addressInput, 'mannerheimintie')
@@ -263,7 +263,6 @@ test('ResultList accessibility attributes are OK', async(t) => {
 // });
 
 test('Tabs accessibility attributes are OK', async(t) => {
-  await searchUnits(t, 'kirjasto');
   const tabs =  Selector('div[role="tablist"] button[role="tab"]');
   const tab1 = await tabs.nth(0);
   const tab2 = await tabs.nth(1);
@@ -277,17 +276,18 @@ test('Tabs accessibility attributes are OK', async(t) => {
 
 test('Search suggestion arrow navigation does loop correctly', async(t) => {
   const expectedBoxShadowColor = 'rgb(71, 131, 235)'; // Focus color
-
+  // Suggestion items selector
+  const items = Selector('#SuggestionList li[role="option"]');
   // Get SearchBar input
   const input = Selector('#SearchBar input');
   await t
     .click(input)
+    .expect(Selector('[data-cm="SuggestionsLoading"]').exists).notOk()
+    .expect(items.exists).ok()
+    .expect(items.count).gt(0)
     .pressKey('down');
 
-  // Suggestion items selector
-  const items = Selector('#SuggestionList li[role="option"]');
   let maxItemIndex = await items.count - 1;
-
   await t
     // After first key down we expect focused suggestion to be at first item
     .expect(items.nth(0).getStyleProperty('box-shadow')).contains(expectedBoxShadowColor, 'Focused suggestion index should be set to first item')

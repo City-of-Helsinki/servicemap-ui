@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ArrowForwardIos } from '@mui/icons-material';
+import styled from '@emotion/styled';
 import Container from '../Container';
 import PageElement from './PageElement';
 import SMButton from '../ServiceMapButton';
@@ -14,15 +15,13 @@ class PaginationComponent extends React.Component {
 
   render() {
     const {
-      classes, current, handlePageChange, intl, maxShownPages, pageCount, embeddedList,
+      current, handlePageChange, intl, maxShownPages, pageCount, embeddedList,
     } = this.props;
 
     // Return if only 1 page
     if (pageCount === 1) {
       return null;
     }
-
-    const buttonClass = classes.borderBlack;
 
     const pages = [];
     const maxVisible = pageCount < maxShownPages ? pageCount : maxShownPages;
@@ -41,13 +40,12 @@ class PaginationComponent extends React.Component {
       );
     }
     return (
-      <Container className={classes.buttonContainer}>
+      <ButtonContainer data-sm="PaginationComponent">
         {
           // Button backwards one page
-          <SMButton
+          <StyledButtonFlipped
             id="PaginationPreviousButton"
             aria-label={intl.formatMessage({ id: 'general.pagination.previous' })}
-            className={`${classes.button} ${classes.arrowFlip} ${buttonClass}`}
             onClick={(e) => {
               e.preventDefault();
               handlePageChange(current - 1, pageCount);
@@ -57,15 +55,14 @@ class PaginationComponent extends React.Component {
             variant="contained"
             role="link"
           >
-            <ArrowForwardIos className={classes.arrowIcon} />
-          </SMButton>
+            <StyledArrowForwardIos />
+          </StyledButtonFlipped>
         }
         {
           // Button forward one page
-          <SMButton
+          <StyledButton
             id="PaginationNextButton"
             aria-label={intl.formatMessage({ id: 'general.pagination.next' })}
-            className={`${classes.button} ${buttonClass}`}
             onClick={(e) => {
               e.preventDefault();
               handlePageChange(current + 1, pageCount);
@@ -75,28 +72,63 @@ class PaginationComponent extends React.Component {
             variant="contained"
             role="link"
           >
-            <ArrowForwardIos className={classes.arrowIcon} />
-          </SMButton>
+            <StyledArrowForwardIos />
+          </StyledButton>
         }
         {
           // Page numbers
           !embeddedList
             ? (
-              <Container className={classes.listContainer}>
-                <ul className={classes.list}>
+              <StyledListContainer>
+                <StyledList>
                   {pages}
-                </ul>
-              </Container>
+                </StyledList>
+              </StyledListContainer>
             )
             : null
         }
-      </Container>
+      </ButtonContainer>
     );
   }
 }
 
+const StyledList = styled('ul')(() => ({
+  display: 'inherit',
+  flexDirection: 'row',
+  listStyleType: 'none',
+  margin: 0,
+  padding: 0,
+}));
+
+const StyledListContainer = styled(Container)(() => ({
+  flexDirection: 'row',
+  margin: 0,
+}));
+
+const StyledArrowForwardIos = styled(ArrowForwardIos)(() => ({
+  fontSize: 18,
+}));
+
+const StyledButton = styled(SMButton)(({ theme }) => ({
+  margin: theme.spacing(0.5),
+  height: 32,
+  width: 32,
+  minHeight: 32,
+  minWidth: 32,
+  border: '1px solid #000000',
+}));
+
+const StyledButtonFlipped = styled(StyledButton)(() => ({
+  transform: 'scaleX(-1)',
+}));
+
+const ButtonContainer = styled(Container)(({ theme }) => ({
+  flexDirection: 'row',
+  margin: theme.spacing(1, 2),
+  padding: theme.spacing(0.5),
+}));
+
 PaginationComponent.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   current: PropTypes.number.isRequired,
   handlePageChange: PropTypes.func.isRequired,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,

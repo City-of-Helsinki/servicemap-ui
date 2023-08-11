@@ -12,12 +12,12 @@ exports[`<SMLogo /> should work 1`] = `
   >
     <div
       aria-hidden="true"
-      class="SMLogoComponent-logo-7"
+      class="css-1loc9t1"
       role="img"
     >
       <img
         alt=""
-        class="ForwardRef-icon-26"
+        class="css-o3ihhy"
         src="test-file-stub"
       />
     </div>

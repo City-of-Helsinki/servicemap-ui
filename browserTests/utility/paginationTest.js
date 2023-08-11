@@ -1,15 +1,16 @@
-import { ReactSelector } from 'testcafe-react-selectors';
 import { ClientFunction, Selector } from 'testcafe';
 import { getLocation } from '.';
 
 export default (pageUrl) => {
   test('Keyboard navigation is OK', async (t) => {
-  
-    const pagination = ReactSelector('PaginationComponent');
+
+    const pagination = Selector('[data-sm="PaginationComponent"]');
+    const previousPageButton = pagination.find('#PaginationPreviousButton');
+    const nextPageButton = pagination.find('#PaginationNextButton');
     const buttons = pagination.find('button');
     await t
       // Click next page button
-      .click(buttons.nth(1))
+      .click(nextPageButton)
       // Focus is lost to start of the page after button click
       // Pagination moves focus to p element with tabindex -1 which doesn't seem to work
       // with testCafe tests but works on live version
@@ -19,13 +20,13 @@ export default (pageUrl) => {
 
     const focusNextButton = await ClientFunction(() => document.getElementById('PaginationNextButton').focus());
     await focusNextButton();
-  
+
     // Check keyboard navigation
     await t
       .pressKey('shift+tab') // Move back to previous page button
-      .expect(buttons.nth(0).focused).ok()
+      .expect(previousPageButton.focused).ok()
       .pressKey('tab') // next page button
-      .expect(buttons.nth(1).focused).ok()
+      .expect(nextPageButton.focused).ok()
       .pressKey('tab') // 1st page button
       .expect(buttons.nth(2).focused).ok()
       // Tab to 3rd page element since 2nd is active and tabindex -1
@@ -37,10 +38,10 @@ export default (pageUrl) => {
   });
   
   test('Pagination attributes change correctly', async (t) => {
-    const pagination = ReactSelector('PaginationComponent');
+    const pagination = Selector('[data-sm="PaginationComponent"]');
     const buttons = pagination.find('button');
-    const previousPageButton = buttons.nth(0);
-    const nextPageButton = buttons.nth(1);
+    const previousPageButton = pagination.find('#PaginationPreviousButton');
+    const nextPageButton = pagination.find('#PaginationNextButton');
     await t
       .expect(previousPageButton.getAttribute('tabindex')).eql('-1')
       .expect(previousPageButton.getAttribute('disabled')).eql('')
@@ -70,7 +71,7 @@ export default (pageUrl) => {
   
   test('Pagination\'s page change focuses correctly', async(t) => {
     const focusTarget = Selector('#PaginatedListFocusTarget');
-    const pagination = ReactSelector('PaginationComponent');
+    const pagination = Selector('[data-sm="PaginationComponent"]');
     const buttons = pagination.find('button');
   
     await t
@@ -83,7 +84,7 @@ export default (pageUrl) => {
   });
 
   test('Pagination\'s page defaults correctly', async(t) => {
-    const pagination = ReactSelector('PaginationComponent');
+    const pagination = Selector('[data-sm="PaginationComponent"]');
     // 4th button is second page element
     const secondPageElement = pagination.find('button').nth(3);
     const location = await getLocation();

@@ -5,6 +5,7 @@ import {
   List, Typography, Divider,
 } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
+import styled from '@emotion/styled';
 import UnitItem from '../../ListItems/UnitItem';
 import ServiceItem from '../../ListItems/ServiceItem';
 import AddressItem from '../../ListItems/AddressItem';
@@ -20,7 +21,6 @@ class ResultList extends React.Component {
   render() {
     const {
       beforeList,
-      classes,
       data,
       customComponent,
       listId,
@@ -31,15 +31,15 @@ class ResultList extends React.Component {
     } = this.props;
 
     return (
-      <div className={classes.root}>
+      <StyledContainer data-sm="ResultListRoot">
         {
           title
           && (
-            <div className={classes.title}>
-              <div className={classes.titleContainer}>
-                <Typography
+            <StyledTitleRoot>
+              <StyledTitleContainer>
+                <StyledTitle
                   id={`${listId}-result-title`}
-                  className={`${classes.titleText} ${classes.left} SearchResultTitle`}
+                  className="SearchResultTitle"
                   component={titleComponent}
                   variant="subtitle1"
                   aria-labelledby={`${listId}-result-title ${listId}-result-title-info`}
@@ -47,23 +47,22 @@ class ResultList extends React.Component {
                 >
                   {title}
 
-                </Typography>
-                <Typography
+                </StyledTitle>
+                <StyledTitleInfo
                   id={`${listId}-result-title-info`}
-                  className={classes.right}
                   component="p"
                   variant="caption"
                   aria-hidden="true"
                 >
                   <FormattedMessage id="search.resultList" values={{ count: resultCount || data.length }} />
-                </Typography>
-              </div>
-            </div>
+                </StyledTitleInfo>
+              </StyledTitleContainer>
+            </StyledTitleRoot>
           )
         }
         {!embeddedList ? <Divider aria-hidden="true" /> : null}
         {beforeList}
-        <List className={classes.list} id={listId}>
+        <StyledList id={listId}>
           {
             data && data.length
             && data.map((item) => {
@@ -94,18 +93,58 @@ class ResultList extends React.Component {
               return null;
             })
           }
-        </List>
-      </div>
+        </StyledList>
+      </StyledContainer>
     );
   }
 }
+
+const StyledContainer = styled('div')(() => ({
+  height: 'auto',
+  overflowY: 'auto',
+  flex: '1 1 auto',
+  maxWidth: '100%',
+  overflowX: 'hidden',
+}));
+
+const StyledTitleRoot = styled('div')(() => ({
+  width: '100%',
+  display: 'flex',
+}));
+
+const StyledTitleContainer = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  width: '100%',
+  overflow: 'hidden',
+  padding: theme.spacing(1, 2),
+}));
+
+const StyledList = styled(List)(() => ({
+  maxHeight: '100%',
+}));
+
+const StyledTitle = styled(Typography)(({ theme }) => ({
+  ...theme.typography.body2,
+  textTransform: 'uppercase',
+  fontWeight: 'bold',
+  textAlign: 'left',
+  float: 'left',
+  margin: theme.spacing(1),
+}));
+
+const StyledTitleInfo = styled(Typography)(({ theme }) => ({
+  float: 'right',
+  margin: theme.spacing(1),
+  whiteSpace: 'nowrap',
+}));
 
 export default ResultList;
 
 // Typechecking
 ResultList.propTypes = {
   beforeList: PropTypes.node,
-  classes: PropTypes.objectOf(PropTypes.any),
   customComponent: PropTypes.func,
   data: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)).isRequired,
   listId: PropTypes.string.isRequired,
@@ -117,7 +156,6 @@ ResultList.propTypes = {
 
 ResultList.defaultProps = {
   beforeList: null,
-  classes: {},
   customComponent: null,
   resultCount: null,
   title: null,

@@ -3,11 +3,13 @@
 exports[`<PaginationComponent /> should work 1`] = `
 <div>
   <div
-    class="Container-root-11    injectIntl(PaginationComponent)-buttonContainer-5"
+    class=" css-fvjx4"
+    data-sm="PaginationComponent"
   >
     <button
       aria-label="Previous page"
-      class="MuiButtonBase-root SMButton SMButton-button-16  SMButton-marginRight-19 injectIntl(PaginationComponent)-button-4 injectIntl(PaginationComponent)-arrowFlip-2 injectIntl(PaginationComponent)-borderBlack-3 SMButton-primary-20 css-l9l1yv-MuiButtonBase-root"
+      class="MuiButtonBase-root SMButton css-340475-MuiButtonBase-root"
+      color="primary"
       id="PaginationPreviousButton"
       role="link"
       tabindex="0"
@@ -16,7 +18,7 @@ exports[`<PaginationComponent /> should work 1`] = `
     >
       <svg
         aria-hidden="true"
-        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium injectIntl(PaginationComponent)-arrowIcon-1 css-6yqi1c-MuiSvgIcon-root"
+        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1nnfdj9-MuiSvgIcon-root"
         data-testid="ArrowForwardIosIcon"
         focusable="false"
         viewBox="0 0 24 24"
@@ -28,7 +30,8 @@ exports[`<PaginationComponent /> should work 1`] = `
     </button>
     <button
       aria-label="Next page"
-      class="MuiButtonBase-root SMButton SMButton-button-16  SMButton-marginRight-19 injectIntl(PaginationComponent)-button-4 injectIntl(PaginationComponent)-borderBlack-3 SMButton-primary-20 css-l9l1yv-MuiButtonBase-root"
+      class="MuiButtonBase-root SMButton css-1xn2qt0-MuiButtonBase-root"
+      color="primary"
       id="PaginationNextButton"
       role="link"
       tabindex="0"
@@ -37,7 +40,7 @@ exports[`<PaginationComponent /> should work 1`] = `
     >
       <svg
         aria-hidden="true"
-        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium injectIntl(PaginationComponent)-arrowIcon-1 css-6yqi1c-MuiSvgIcon-root"
+        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1nnfdj9-MuiSvgIcon-root"
         data-testid="ArrowForwardIosIcon"
         focusable="false"
         viewBox="0 0 24 24"
@@ -48,10 +51,10 @@ exports[`<PaginationComponent /> should work 1`] = `
       </svg>
     </button>
     <div
-      class="Container-root-11    injectIntl(PaginationComponent)-listContainer-7"
+      class=" css-18m5ppr"
     >
       <ul
-        class="injectIntl(PaginationComponent)-list-6"
+        class="css-5yfqfi"
       >
         <li>
           <button
@@ -61,7 +64,7 @@ exports[`<PaginationComponent /> should work 1`] = `
             type="button"
           >
             <p
-              class="MuiTypography-root MuiTypography-subtitle1  PageElement-pageItem-33 PageElement-pageElement-31 css-dlbwt1-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-subtitle1  css-1p7ah8z-MuiTypography-root"
             >
               <span
                 aria-hidden="true"
@@ -86,7 +89,7 @@ exports[`<PaginationComponent /> should work 1`] = `
             type="button"
           >
             <p
-              class="MuiTypography-root MuiTypography-subtitle1  PageElement-pageItem-33 PageElement-pageElementActive-32 css-dlbwt1-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-subtitle1  css-n45i7m-MuiTypography-root"
             >
               <span
                 aria-hidden="true"
@@ -110,7 +113,7 @@ exports[`<PaginationComponent /> should work 1`] = `
             type="button"
           >
             <p
-              class="MuiTypography-root MuiTypography-subtitle1  PageElement-pageItem-33 PageElement-pageElement-31 css-dlbwt1-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-subtitle1  css-1p7ah8z-MuiTypography-root"
             >
               <span
                 aria-hidden="true"
@@ -134,7 +137,7 @@ exports[`<PaginationComponent /> should work 1`] = `
             type="button"
           >
             <p
-              class="MuiTypography-root MuiTypography-subtitle1  PageElement-pageItem-33 PageElement-pageElement-31 css-dlbwt1-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-subtitle1  css-1p7ah8z-MuiTypography-root"
             >
               <span
                 aria-hidden="true"
@@ -158,7 +161,7 @@ exports[`<PaginationComponent /> should work 1`] = `
             type="button"
           >
             <p
-              class="MuiTypography-root MuiTypography-subtitle1  PageElement-pageItem-33 PageElement-pageElement-31 css-dlbwt1-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-subtitle1  css-1p7ah8z-MuiTypography-root"
             >
               <span
                 aria-hidden="true"

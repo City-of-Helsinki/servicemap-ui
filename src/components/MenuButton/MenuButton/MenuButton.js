@@ -4,6 +4,7 @@ import {
   Button, ButtonBase, ClickAwayListener, Divider, Typography,
 } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
+import styled from '@emotion/styled';
 import { keyboardHandler } from '../../../utils';
 
 class MenuButton extends React.Component {
@@ -42,14 +43,13 @@ class MenuButton extends React.Component {
 
   renderMenu = () => {
     const {
-      classes, panelID, children, menuHeader, menuItems, menuAriaLabel,
+      panelID, children, menuHeader, menuItems, menuAriaLabel,
     } = this.props;
     return (
       <ClickAwayListener onClickAway={this.handleClose}>
-        <div
+        <StyledMenuPanel
           id={panelID}
           aria-label={menuAriaLabel}
-          className={classes.menuPanel}
           role="region"
         >
           <Typography sx={{
@@ -61,10 +61,9 @@ class MenuButton extends React.Component {
           {
             menuItems.map((v, i) => (
               <React.Fragment key={v.key}>
-                <ButtonBase
+                <StyledMenuItemButton
                   id={v.id}
                   key={v.key}
-                  className={classes.menuItem}
                   role="link"
                   onClick={e => this.handleItemClick(e, v)}
                   onKeyDown={keyboardHandler(e => this.handleClose(e, true), ['esc'])}
@@ -76,7 +75,7 @@ class MenuButton extends React.Component {
                 >
                   <span>{v.icon}</span>
                   <Typography sx={{ pl: 3, fontWeight: 700 }} variant="subtitle1">{v.text}</Typography>
-                </ButtonBase>
+                </StyledMenuItemButton>
                 {i !== menuItems.length - 1
                   ? <Divider aria-hidden />
                   : null
@@ -86,20 +85,20 @@ class MenuButton extends React.Component {
           }
           {children}
           <div aria-hidden role="button" tabIndex="0" onFocus={() => this.handleClose()} />
-        </div>
+        </StyledMenuPanel>
       </ClickAwayListener>
     );
   };
 
   render() {
     const {
-      buttonIcon, buttonText, classes, id, panelID,
+      buttonIcon, buttonText, id, panelID,
     } = this.props;
     const { open } = this.state;
 
     return (
-      <div className={classes.root}>
-        <Button
+      <StyledContainer>
+        <StyledButton
           id={id}
           ref={(node) => {
             this.anchorEl = node;
@@ -113,34 +112,85 @@ class MenuButton extends React.Component {
               keyboardHandler(this.handleClose, ['esc'])(e);
             }
           }}
-          className={classes.button}
         >
           {
             buttonIcon && (
-              <span className={classes.icon}>{buttonIcon}</span>
+              <StyledIcon>{buttonIcon}</StyledIcon>
             )
           }
           <Typography component="p" variant="subtitle1">{buttonText}</Typography>
-        </Button>
+        </StyledButton>
         {
           open && this.renderMenu()
         }
-      </div>
+      </StyledContainer>
     );
   }
 }
 
+const StyledMenuPanel = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  position: 'absolute',
+  width: 450,
+  padding: theme.spacing(2),
+  paddingTop: theme.spacing(3),
+  paddingBottom: theme.spacing(2),
+  boxSizing: 'border-box',
+  backgroundColor: 'white',
+  color: 'black',
+  zIndex: 2,
+  border: `${theme.palette.detail.alpha} solid 0.5px`,
+  borderRadius: 4,
+  right: 0,
+}));
+
+const StyledMenuItemButton = styled(ButtonBase)(({ theme }) => ({
+  height: 56,
+  padding: theme.spacing(1),
+  paddingRight: theme.spacing(2),
+  justifyContent: 'start',
+  flex: '1 0 auto',
+  alignItems: 'center',
+  cursor: 'pointer',
+  ...theme.typography.body2,
+  // Text element
+  '& p': {
+    textAlign: 'left',
+    textTransform: 'none',
+    fontWeight: 'normal',
+  },
+  '&:hover': {
+    backgroundColor: 'rgba(0, 0, 0, 0.08)',
+  },
+}));
+
+const StyledContainer = styled('div')(() => ({
+  alignItems: 'center',
+  display: 'block',
+  height: '100%',
+  width: 180,
+  flex: '0 1 auto',
+}));
+
+const StyledButton = styled(Button)(() => ({
+  height: '100%',
+  width: '100%',
+  '& p': {
+    textTransform: 'none',
+  },
+  color: 'black',
+  justifyContent: 'flex-start',
+}));
+
+const StyledIcon = styled('span')(({ theme }) => ({
+  color: theme.palette.primary.main,
+  paddingRight: theme.spacing(1),
+}));
+
 MenuButton.propTypes = {
   buttonIcon: PropTypes.node,
   buttonText: PropTypes.string.isRequired,
-  classes: PropTypes.shape({
-    root: PropTypes.string,
-    button: PropTypes.string,
-    menuItem: PropTypes.string,
-    menuPanel: PropTypes.string,
-    icon: PropTypes.string,
-    iconRight: PropTypes.string,
-  }).isRequired,
   id: PropTypes.string,
   menuAriaLabel: PropTypes.string.isRequired,
   panelID: PropTypes.string.isRequired,
