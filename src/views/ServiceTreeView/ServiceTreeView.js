@@ -22,10 +22,17 @@ const ServiceTreeView = (props) => {
     prevSelected,
     prevOpened,
     settings,
+    variant,
   } = props;
   const getLocaleText = useLocaleText();
   const isMobile = useMobileStatus();
   const theme = useTheme();
+  const serviceApi = (() => {
+    if (variant === 'ServiceTree') {
+      return `${config.serviceMapAPI.root}${config.serviceMapAPI.version}/service_node/`;
+    }
+    return `${config.serviceMapAPI.root}${config.serviceMapAPI.version}/mobility/`;
+  })();
 
   // State
   const [services, setServices] = useState(prevServices);
@@ -59,7 +66,7 @@ const ServiceTreeView = (props) => {
 
   const fetchRootNodes = () => (
     // Fetch all top level 0 nodes (root nodes)
-    fetch(`${config.serviceMapAPI.root}${config.serviceMapAPI.version}/service_node/?level=0&page=1&page_size=100`)
+    fetch(`${serviceApi}?level=0&page=1&page_size=100`)
       .then(response => response.json())
       .then(data => data.results)
   );
@@ -72,7 +79,7 @@ const ServiceTreeView = (props) => {
 
   const fetchChildServices = async (service) => {
     // Fetch and set to state the child nodes of the opened node
-    fetch(`${config.serviceMapAPI.root}${config.serviceMapAPI.version}/service_node/?parent=${service}&page=1&page_size=1000`)
+    fetch(`${serviceApi}?parent=${service}&page=1&page_size=1000`)
       .then(response => response.json())
       .then((data) => {
         setServices([...services, ...data.results]);
@@ -447,6 +454,7 @@ ServiceTreeView.propTypes = {
   prevSelected: PropTypes.arrayOf(PropTypes.any),
   prevOpened: PropTypes.arrayOf(PropTypes.any),
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
+  variant: PropTypes.oneOf(['ServiceTree', 'Mobility']).isRequired,
 };
 
 ServiceTreeView.defaultProps = {

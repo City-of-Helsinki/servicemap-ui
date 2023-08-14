@@ -40,7 +40,7 @@ const PageHandler = (props) => {
   }
 
   const title = `${uppercaseFirst(pageMessage)} ${message}${appTitle}`;
-  const hideFromCrawlers = ['search', 'info', 'serviceTree', 'feedback'];
+  const hideFromCrawlers = ['search', 'info', 'serviceTree', 'feedback', 'mobility'];
 
   return (
     <Helmet>

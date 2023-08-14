@@ -298,6 +298,7 @@ const translations = {
   'general.backToHome': 'Sulje haku ja palaa alkuun',
   'general.backToStart': 'Palaa sivun alkuun',
   'general.back.serviceTree': 'Palaa palveluluettelosivulle',
+  'general.back.mobility': 'Palaa liikenne- ja liikkuminensivulle',
   'general.cancel': 'Peruuta',
   'general.close': 'Sulje',
   'general.distance.meters': 'Metrin päässä',
@@ -338,7 +339,10 @@ const translations = {
   'general.pageTitles.info': 'Tietoa palvelusta',
   'general.pageTitles.feedback': 'Palautesivu',
   'general.pageTitles.area': 'Aluesivu',
+  'general.pageTitles.mobility': 'Liikenne- ja liikkuminensivu',
+  'general.pageTitles.mobility.title': 'Liikenne ja liikkuminen',
   'general.pageLink.area': 'Alueesi palvelut',
+  'general.pageLink.mobility': 'Liikenne ja liikkuminen',
   // Readspeaker
   'general.readspeaker.buttonText': 'Kuuntele',
   'general.readspeaker.title': 'Kuuntele ReadSpeaker webReaderilla',
