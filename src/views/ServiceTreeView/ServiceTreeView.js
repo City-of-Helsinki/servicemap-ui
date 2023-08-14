@@ -27,12 +27,15 @@ const ServiceTreeView = (props) => {
   const getLocaleText = useLocaleText();
   const isMobile = useMobileStatus();
   const theme = useTheme();
-  const serviceApi = (() => {
-    if (variant === 'ServiceTree') {
-      return `${config.serviceMapAPI.root}${config.serviceMapAPI.version}/service_node/`;
-    }
-    return `${config.serviceMapAPI.root}${config.serviceMapAPI.version}/mobility/`;
-  })();
+  const serviceApi = variant === 'ServiceTree'
+    ? `${config.serviceMapAPI.root}${config.serviceMapAPI.version}/service_node/`
+    : `${config.serviceMapAPI.root}${config.serviceMapAPI.version}/mobility/`;
+  const titleKey = variant === 'ServiceTree'
+    ? 'general.pageTitles.serviceTree.title'
+    : 'general.pageTitles.mobility.title';
+  const guidanceKey = variant === 'ServiceTree'
+    ? 'services.info'
+    : 'mobility.info';
 
   // State
   const [services, setServices] = useState(prevServices);
@@ -318,11 +321,11 @@ const ServiceTreeView = (props) => {
   return (
     <StyledFlexContainer>
       <StyledTitleBar
-        title={intl.formatMessage({ id: 'general.pageTitles.serviceTree.title' })}
+        title={intl.formatMessage({ id: titleKey })}
         titleComponent="h3"
         backButton={!isMobile}
       />
-      <StyledGuidanceInfoText variant="body2">{intl.formatMessage({ id: 'services.info' })}</StyledGuidanceInfoText>
+      <StyledGuidanceInfoText variant="body2">{intl.formatMessage({ id: guidanceKey })}</StyledGuidanceInfoText>
       <StyledMainContent>
         {renderServiceNodeList()}
       </StyledMainContent>

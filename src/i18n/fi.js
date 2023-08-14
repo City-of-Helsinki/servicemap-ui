@@ -604,6 +604,7 @@ const translations = {
   'services.category.open': 'Avaa kategoria',
   'services.info': 'Valitse vähintään yksi palvelu alla olevasta palveluluettelosta, että voit suorittaa haun.',
   'services.tree.level': 'Taso',
+  'mobility.info': 'Tutustu liikkumisen vaihtoehtoihin valitsemalla vähintään yksi palvelu alla olevista vaihtoehdoista suorittaaksesi haun.',
 
   // Settings
   'settings': 'Asetukset',
