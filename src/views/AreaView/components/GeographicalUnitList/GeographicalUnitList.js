@@ -1,24 +1,28 @@
-import {
-  Checkbox, List, ListItem, Typography,
-} from '@mui/material';
+import { Checkbox, List, Typography } from '@mui/material';
+import PropTypes from 'prop-types';
 import React, {
   useCallback, useEffect, useMemo, useState,
 } from 'react';
-import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { addSelectedDistrictService, handleOpenItems, removeSelectedDistrictService } from '../../../../redux/actions/district';
+import { UnitItem } from '../../../../components';
+import {
+  addSelectedDistrictService, handleOpenItems, removeSelectedDistrictService,
+} from '../../../../redux/actions/district';
 import { getFilteredSubdistrictServices } from '../../../../redux/selectors/district';
 import { uppercaseFirst } from '../../../../utils';
 import useLocaleText from '../../../../utils/useLocaleText';
 import {
-  SMAccordion,
-  UnitItem,
-} from '../../../../components';
-
+  StyledAccordionServiceTitle,
+  StyledCaptionText,
+  StyledCheckBoxIcon,
+  StyledListItem,
+  StyledUnitList,
+  StyledUnitListArea,
+} from '../styled/styled';
 
 // Custom uncontrolled checkbox that allows default value
 const UnitCheckbox = ({
-  handleUnitCheckboxChange, id, defaultChecked, classes,
+  handleUnitCheckboxChange, id, defaultChecked,
 }) => {
   const [checked, setChecked] = useState(defaultChecked);
 
@@ -30,7 +34,7 @@ const UnitCheckbox = ({
   return (
     <Checkbox
       color="primary"
-      icon={<span className={classes.checkBoxIcon} />}
+      icon={<StyledCheckBoxIcon />}
       aria-hidden
       checked={checked}
       onChange={e => handleChange(e)}
@@ -39,7 +43,7 @@ const UnitCheckbox = ({
 };
 
 
-const GeographicalUnitList = ({ classes, initialOpenItems }) => {
+const GeographicalUnitList = ({ initialOpenItems }) => {
   const dispatch = useDispatch();
   const getLocaleText = useLocaleText();
   const filteredSubdistrictUnits = useSelector(state => getFilteredSubdistrictServices(state));
@@ -109,17 +113,15 @@ const GeographicalUnitList = ({ classes, initialOpenItems }) => {
 
   // Render list of units for neighborhood and postcode-area subdistricts
   const renderUnitList = useMemo(() => (
-    <div className={classes.unitListArea}>
+    <StyledUnitListArea>
       <List disablePadding>
         {serviceList.map(category => (
-          <ListItem
+          <StyledListItem
             key={`${category.id}${category.period ? category.period[0] : ''}`}
             disableGutters
-            className={classes.listItem}
             divider
           >
-            <SMAccordion
-              className={classes.serviceTitle}
+            <StyledAccordionServiceTitle
               onOpen={() => dispatch(handleOpenItems(category.id))}
               defaultOpen={initialOpenItems.includes(category.id)}
               titleContent={(
@@ -127,21 +129,20 @@ const GeographicalUnitList = ({ classes, initialOpenItems }) => {
                   <Typography>
                     {`${uppercaseFirst(getLocaleText(category.name))} (${category.units.length})`}
                   </Typography>
-                  <Typography aria-hidden className={classes.captionText} variant="caption">
+                  <StyledCaptionText aria-hidden variant="caption">
                     {`${category.period ? `${category.period[0]}-${category.period[1]}` : ''}`}
-                  </Typography>
+                  </StyledCaptionText>
                 </div>
               )}
               adornment={(
                 <UnitCheckbox
                   id={category.id}
                   handleUnitCheckboxChange={handleUnitCheckboxChange}
-                  classes={classes}
                   defaultChecked={initialCheckedItems.includes(category.id)}
                 />
               )}
               collapseContent={(
-                <List className={classes.unitList} disablePadding>
+                <StyledUnitList disablePadding>
                   {category.units.map((unit, i) => (
                     <UnitItem
                       key={`${unit.id}-${category.id}`}
@@ -149,23 +150,19 @@ const GeographicalUnitList = ({ classes, initialOpenItems }) => {
                       divider={i !== category.units.length - 1}
                     />
                   ))}
-                </List>
+                </StyledUnitList>
               )}
             />
-          </ListItem>
+          </StyledListItem>
         ))}
       </List>
-    </div>
+    </StyledUnitListArea>
   ), [serviceList]);
 
   return renderUnitList;
 };
-GeographicalUnitList.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
-};
 
 UnitCheckbox.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   handleUnitCheckboxChange: PropTypes.func.isRequired,
   defaultChecked: PropTypes.bool,
   id: PropTypes.number.isRequired,

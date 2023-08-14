@@ -1,36 +1,31 @@
-import {
-  Button,
-  Checkbox,
-  IconButton,
-  InputBase,
-  List,
-  ListItem,
-  Typography,
-} from '@mui/material';
-import React, {
-  useMemo, useRef, useState,
-} from 'react';
-import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { css } from '@emotion/css';
 import { Clear } from '@mui/icons-material';
-import { FormattedMessage, useIntl } from 'react-intl';
+import {
+  Button, Checkbox, IconButton, InputBase, List, Typography,
+} from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { useTheme } from '@mui/styles';
 import { visuallyHidden } from '@mui/utils';
+import PropTypes from 'prop-types';
+import React, { useMemo, useRef, useState } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { useSelector } from 'react-redux';
+import { UnitItem } from '../../../../components';
+import {
+  getOrderedStatisticalDistrictServices, getServiceFilteredStatisticalDistrictUnits,
+} from '../../../../redux/selectors/statisticalDistrict';
 import { keyboardHandler, uppercaseFirst } from '../../../../utils';
 import useLocaleText from '../../../../utils/useLocaleText';
 import {
-  SMAccordion,
-  UnitItem,
-} from '../../../../components';
-import {
-  getOrderedStatisticalDistrictServices,
-  getServiceFilteredStatisticalDistrictUnits,
-} from '../../../../redux/selectors/statisticalDistrict';
-
+  StyledAccordionServiceTitle, StyledCheckBoxIcon,
+  StyledListItem,
+  StyledUnitList,
+  StyledUnitListArea,
+} from '../styled/styled';
 
 // Custom uncontrolled checkbox that allows default value
 const UnitCheckbox = ({
-  handleUnitCheckboxChange, id, defaultChecked, classes, inputProps,
+  handleUnitCheckboxChange, id, defaultChecked, inputProps,
 }) => {
   const [checked, setChecked] = useState(defaultChecked);
 
@@ -43,16 +38,14 @@ const UnitCheckbox = ({
     <Checkbox
       color="primary"
       inputProps={inputProps}
-      icon={<span className={classes.checkBoxIcon} />}
+      icon={<StyledCheckBoxIcon />}
       checked={checked}
       onChange={e => handleChange(e)}
     />
   );
 };
 
-
 const StatisticalDistrictUnitListComponent = ({
-  classes,
   handleUnitCheckboxChange,
   selectedServices,
   title,
@@ -60,6 +53,7 @@ const StatisticalDistrictUnitListComponent = ({
   const inputRef = useRef();
   const { formatMessage } = useIntl();
   const getLocaleText = useLocaleText();
+  const theme = useTheme();
   const statisticalDistrictUnits = useSelector(getServiceFilteredStatisticalDistrictUnits);
   const [initialCheckedItems] = useState(selectedServices || []);
   const [filterValue, setFilterValue] = useState('');
@@ -75,32 +69,39 @@ const StatisticalDistrictUnitListComponent = ({
       setFilterValue(inputRef.current.value);
     }
   };
+  const serviceFilterInputClass = css({
+    margin: theme.spacing(1),
+  });
+  const serviceFilterButtonLabelClass = css({
+    flexDirection: 'column',
+  });
+  const serviceFilterButtonFocusClass = css({
+    boxShadow: `0 0 0 4px ${theme.palette.focusBorder.main} !important`,
+  });
 
   // Render list of units for neighborhood and postcode-area subdistricts
   const renderServiceList = useMemo(() => (
-    <div className={classes.unitListArea}>
-      <div className={classes.serviceFilterContainer}>
+    <StyledUnitListArea>
+      <StyledServiceFilterContainer>
         {
           typeof title === 'string' && (
-            <Typography id="ServiceListTitle" className={classes.serviceFilterText} variant="body2">{title}</Typography>
+            <StyledServiceFilterText id="ServiceListTitle" variant="body2">{title}</StyledServiceFilterText>
           )
         }
         <StyledRowContainer>
-          <InputBase
+          <StyledServiceFilter
             inputRef={inputRef}
             inputProps={{
-              className: classes.serviceFilterInput,
+              className: serviceFilterInputClass,
               'aria-labelledby': 'ServiceListTitle',
             }}
             type="text"
-            className={classes.serviceFilter}
             onKeyPress={keyboardHandler(() => handlefilterButtonClick(), ['enter'])}
             endAdornment={
               filterValue
                 ? (
                   <IconButton
                     aria-label={formatMessage({ id: 'search.cancelText' })}
-                    className={classes.cancelButton}
                     onClick={() => {
                       inputRef.current.value = '';
                       setFilterValue('');
@@ -112,24 +113,23 @@ const StatisticalDistrictUnitListComponent = ({
                 : null
             }
           />
-          <Button
+          <StyledServiceFilterButton
             id="ServiceListFilterButton"
             aria-label={formatMessage({ id: 'area.statisticalDistrict.service.filter.button.aria' })}
-            className={classes.serviceFilterButton}
             disableRipple
             disableFocusRipple
             classes={{
-              label: classes.serviceFilterButtonLabel,
-              focusVisible: classes.serviceFilterButtonFocus,
+              label: serviceFilterButtonLabelClass,
+              focusVisible: serviceFilterButtonFocusClass,
             }}
             onClick={handlefilterButtonClick}
             color="secondary"
             variant="contained"
           >
             <Typography variant="caption" color="inherit"><FormattedMessage id="area.statisticalDistrict.service.filter.button" /></Typography>
-          </Button>
+          </StyledServiceFilterButton>
         </StyledRowContainer>
-      </div>
+      </StyledServiceFilterContainer>
       <Typography aria-live="assertive" variant="body2" style={visuallyHidden}>
         {
           filterValue && filterValue !== ''
@@ -143,14 +143,12 @@ const StatisticalDistrictUnitListComponent = ({
           const disableUnitAccordion = !selectedServices[service.id] || units.length === 0;
           const titleText = `${uppercaseFirst(getLocaleText(service.name))} ${selectedServices[service.id] ? `(${units.length})` : ''}`;
           return (
-            <ListItem
+            <StyledListItem
               key={`${service.id}${service.period ? service.period[0] : ''}`}
               disableGutters
-              className={classes.listItem}
               divider
             >
-              <SMAccordion
-                className={classes.serviceTitle}
+              <StyledAccordionServiceTitle
                 disabled={disableUnitAccordion}
                 titleContent={(
                   <div>
@@ -163,7 +161,6 @@ const StatisticalDistrictUnitListComponent = ({
                   <UnitCheckbox
                     id={service.id}
                     handleUnitCheckboxChange={handleUnitCheckboxChange}
-                    classes={classes}
                     defaultChecked={!!initialCheckedItems[service.id]}
                     inputProps={{
                       'aria-label': titleText,
@@ -171,7 +168,7 @@ const StatisticalDistrictUnitListComponent = ({
                   />
                 )}
                 collapseContent={(
-                  <List className={classes.unitList} disablePadding>
+                  <StyledUnitList disablePadding>
                     {units.map((unit, i) => (
                       <UnitItem
                         key={`${unit.id}-${service.id}`}
@@ -179,25 +176,20 @@ const StatisticalDistrictUnitListComponent = ({
                         divider={i !== units.length - 1}
                       />
                     ))}
-                  </List>
+                  </StyledUnitList>
                 )}
               />
-            </ListItem>
+            </StyledListItem>
           );
         })}
       </List>
-    </div>
+    </StyledUnitListArea>
   ), [filteredServiceList, filterValue]);
 
   return renderServiceList;
 };
 
-StatisticalDistrictUnitListComponent.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
-};
-
 UnitCheckbox.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   handleUnitCheckboxChange: PropTypes.func.isRequired,
   defaultChecked: PropTypes.bool,
   id: PropTypes.number.isRequired,
@@ -213,9 +205,36 @@ UnitCheckbox.defaultProps = {
 
 export default StatisticalDistrictUnitListComponent;
 
-
 const StyledRowContainer = styled('div')`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 `;
+const StyledServiceFilterContainer = styled('div')(({ theme }) => ({
+  padding: theme.spacing(2),
+  paddingLeft: 72,
+  display: 'flex',
+  flexDirection: 'column',
+}));
+const StyledServiceFilterText = styled(Typography)(({ theme }) => ({
+  paddingBottom: theme.spacing(1),
+  fontWeight: 'bold',
+}));
+const StyledServiceFilter = styled(InputBase)(({ theme }) => ({
+  backgroundColor: theme.palette.white.main,
+  flex: '1 0 auto',
+}));
+const StyledServiceFilterButton = styled(Button)(({ theme }) => ({
+  flex: '0 0 auto',
+  borderRadius: 0,
+  borderTopRightRadius: 4,
+  borderBottomRightRadius: 4,
+  boxShadow: 'none',
+  padding: theme.spacing(1, 2),
+  textTransform: 'none',
+  '& svg': {
+    fontSize: 20,
+    marginBottom: theme.spacing(0.5),
+  },
+  flexDirection: 'column',
+}));

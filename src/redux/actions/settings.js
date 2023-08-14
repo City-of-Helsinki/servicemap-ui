@@ -1,6 +1,5 @@
 import SettingsUtility from '../../utils/settings';
 import LocalStorageUtility from '../../utils/localStorage';
-import simpleAction from './simpleActions';
 import config from '../../../config';
 
 const setAccessibilitySelection = (prefix, key, value) => async (dispatch, getState) => {

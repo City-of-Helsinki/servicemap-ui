@@ -13,6 +13,7 @@ exports[`<SMLogo /> should work 1`] = `
     <div
       aria-hidden="true"
       class="css-1loc9t1"
+      mobile="0"
       role="img"
     >
       <img

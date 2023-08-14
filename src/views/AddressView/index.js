@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { withStyles } from '@mui/styles';
 import { injectIntl } from 'react-intl';
 import { setDistrictAddressData } from '../../redux/actions/district';
 import {
@@ -10,7 +9,6 @@ import {
   setAdminDistricts,
   setToRender,
 } from '../../redux/actions/address';
-import styles from './styles';
 import AddressView from './AddressView';
 import { formatDistanceObject } from '../../utils';
 import { calculateDistance, getCurrentlyUsedPosition } from '../../redux/selectors/unit';
@@ -34,8 +32,7 @@ const mapStateToProps = (state, props) => {
   };
 };
 
-
-export default withRouter(withStyles(styles)(injectIntl(connect(
+export default withRouter(injectIntl(connect(
   mapStateToProps,
   {
     setAddressData,
@@ -45,4 +42,4 @@ export default withRouter(withStyles(styles)(injectIntl(connect(
     setToRender,
     setDistrictAddressData,
   },
-)(AddressView))));
+)(AddressView)));

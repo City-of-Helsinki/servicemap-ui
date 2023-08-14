@@ -165,7 +165,7 @@ const TopBar = (props) => {
           {/* Toolbar blue area */}
           <DesktopComponent>
             <nav aria-label={intl.formatMessage({ id: 'app.navigation.language' })}>
-              <StyledToolbarBlue mobile={pageType === 'mobile' || undefined}>
+              <StyledToolbarBlue mobile={+(pageType === 'mobile')}>
                 <LanguageMenu mobile={pageType === 'mobile'} />
                 {/* Right side links */}
                 <Container disableGutters sx={{ justifyContent: 'flex-end', display: 'flex', mr: 0 }}>
@@ -186,7 +186,7 @@ const TopBar = (props) => {
           </DesktopComponent>
 
           {/* Toolbar white area */}
-          <StyledToolbarWhite disableGutters mobile={pageType === 'mobile' || undefined}>
+          <StyledToolbarWhite disableGutters mobile={+(pageType === 'mobile')}>
             <SMLogo small={!large} onClick={() => handleNavigation('home')} />
             {hideButtons
               ? null
@@ -228,7 +228,7 @@ const TopBar = (props) => {
           </StyledToolbarWhite>
         </StyledAppBar>
         {/* This empty toolbar fixes the issue where App bar hides the top page content */}
-        <StyledToolbarAligner mobile={pageType === 'mobile' || undefined} />
+        <StyledToolbarAligner mobile={+(pageType === 'mobile')} />
       </>
     );
   };

@@ -1,6 +1,5 @@
-import {
-  Checkbox, FormControlLabel, List, ListItem, Typography,
-} from '@mui/material';
+import styled from '@emotion/styled';
+import { Checkbox, FormControlLabel, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 import React, { Fragment, useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -9,17 +8,18 @@ import {
   addSelectedParkingArea,
   fetchParkingAreaGeometry,
   fetchParkingUnits,
+  parkingSpaceIDs,
+  parkingSpaceVantaaTypes,
   removeSelectedParkingArea,
   setParkingUnits,
   setSelectedDistrictType,
-  parkingSpaceIDs,
-  parkingSpaceVantaaTypes,
 } from '../../../../redux/actions/district';
 import ServiceMapAPI from '../../../../utils/newFetch/ServiceMapAPI';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { getDistrictCategory } from '../../utils/districtDataHelper';
+import { StyledAreaListItem, StyledCheckBoxIcon, StyledListLevelThree } from '../styled/styled';
 
-const ParkingAreaList = ({ areas, variant, classes }) => {
+const ParkingAreaList = ({ areas, variant }) => {
   const dispatch = useDispatch();
   const getLocaleText = useLocaleText();
   const selectedDistrictType = useSelector(state => state.districts.selectedDistrictType);
@@ -86,24 +86,22 @@ const ParkingAreaList = ({ areas, variant, classes }) => {
     if (parkingUnits.length) setUnitsSelected(true);
   }, [parkingUnits]);
 
-
   return (
-    <List className={`districtList ${classes.listLevelThree}`} disablePadding>
+    <StyledListLevelThree className="districtList" disablePadding>
       {areaDataInfo.map((area, i) => {
         const fullId = variant === 'helsinki' ? area.extra.class : area.extra.tyyppi;
         return (
           <Fragment key={fullId}>
-            <ListItem
+            <StyledAreaListItem
               key={fullId}
               divider={areas.length !== i + 1}
-              className={`${classes.listItem} ${classes.areaItem} ${fullId}`}
+              className={`${fullId}`}
             >
-              <FormControlLabel
-                className={classes.checkboxPadding}
+              <StyledFormControlLabel
                 control={(
                   <Checkbox
                     color="primary"
-                    icon={<span className={classes.checkBoxIcon} />}
+                    icon={<StyledCheckBoxIcon />}
                     checked={selectedParkingAreas.includes(fullId)}
                     onChange={() => handleParkingCheckboxChange(fullId)}
                   />
@@ -117,24 +115,23 @@ const ParkingAreaList = ({ areas, variant, classes }) => {
                   </Typography>
                 )}
               />
-            </ListItem>
+            </StyledAreaListItem>
           </Fragment>
         );
       })}
 
       { variant === 'helsinki' && (
         <Fragment>
-          <ListItem
+          <StyledAreaListItem
             key="parkingSpaces"
             divider
-            className={`${classes.listItem} ${classes.areaItem} parkingSpaces`}
+            className="parkingSpaces"
           >
-            <FormControlLabel
-              className={classes.checkboxPadding}
+            <StyledFormControlLabel
               control={(
                 <Checkbox
                   color="primary"
-                  icon={<span className={classes.checkBoxIcon}/>}
+                  icon={<StyledCheckBoxIcon />}
                   checked={unitsSelected}
                   onChange={e => toggleParkingUnits(e)}
                 />
@@ -145,15 +142,18 @@ const ParkingAreaList = ({ areas, variant, classes }) => {
                 </Typography>
               )}
             />
-          </ListItem>
+          </StyledAreaListItem>
         </Fragment>
       )}
-    </List>
+    </StyledListLevelThree>
   );
 };
 
+const StyledFormControlLabel = styled(FormControlLabel)(({ theme }) => ({
+  paddingLeft: theme.spacing(2),
+}));
+
 ParkingAreaList.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   areas: PropTypes.arrayOf(PropTypes.object).isRequired,
   variant: PropTypes.string.isRequired,
 };

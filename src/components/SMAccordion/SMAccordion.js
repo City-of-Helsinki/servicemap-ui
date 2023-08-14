@@ -63,7 +63,7 @@ const SMAccordion = ({
           </StyledClickAreaButton>
         ) : titleContent}
       </StyledAccordion>
-      <StyledCollapse elevated={elevated || undefined} in={openState}>
+      <StyledCollapse elevated={+elevated} in={openState}>
         {shouldRenderCollapse ? (
           collapseContent
         ) : null}

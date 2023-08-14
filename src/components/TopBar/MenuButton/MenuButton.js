@@ -22,7 +22,7 @@ const MenuButton = ({
       aria-label={intl.formatMessage({ id: 'general.menu' })}
       aria-expanded={drawerOpen}
       aria-haspopup="true"
-      largebutton={pageType !== 'mobile' || undefined}
+      largebutton={+(pageType !== 'mobile')}
       classes={{ label: buttonLabelClass }}
       onClick={() => toggleDrawerMenu()}
       icon={drawerOpen ? <Close /> : <Menu />}
