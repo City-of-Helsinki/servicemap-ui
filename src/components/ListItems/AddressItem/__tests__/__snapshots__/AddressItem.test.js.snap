@@ -10,6 +10,7 @@ exports[`<AddressItem /> should work 1`] = `
     <div
       aria-hidden="true"
       class="MuiListItemIcon-root css-1wnb45k-MuiListItemIcon-root"
+      link="0"
     >
       <span
         aria-hidden="true"

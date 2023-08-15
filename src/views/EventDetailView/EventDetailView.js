@@ -1,8 +1,8 @@
 /* eslint-disable no-underscore-dangle */
+import styled from '@emotion/styled';
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-// TODO Remove this when redux selected event is used
 import { AccessTime, Phone, Event } from '@mui/icons-material';
 import {
   DescriptionText,
@@ -27,7 +27,6 @@ const EventDetailView = (props) => {
     selectedUnit,
     map,
     intl,
-    classes,
     embed,
   } = props;
 
@@ -137,13 +136,12 @@ const EventDetailView = (props) => {
     return (
       <>
         {event.images && event.images.length ? (
-          <img
-            className={classes.eventImage}
+          <StyledImage
             alt={intl.formatMessage({ id: 'event.picture' })}
             src={event.images[0].url}
           />
         ) : null}
-        <div className={classes.content}>
+        <StyledContent>
           <TitledList titleComponent="h4" title={intl.formatMessage({ id: 'unit.contact.info' })}>
             <SimpleListItem
               key="eventHours"
@@ -185,11 +183,10 @@ const EventDetailView = (props) => {
             title={intl.formatMessage({ id: 'event.description' })}
             titleComponent="h4"
           />
-        </div>
+        </StyledContent>
       </>
     );
   };
-
 
   if (embed) {
     return null;
@@ -223,8 +220,19 @@ const EventDetailView = (props) => {
   );
 };
 
+const StyledImage = styled('img')(() => ({
+  width: '100%',
+  maxHeight: 300,
+  objectFit: 'contain',
+  backgroundColor: 'rgba(0,0,0,0.15)',
+}));
+
+const StyledContent = styled('div')(({ theme }) => ({
+  padding: theme.spacing(2),
+  paddingTop: 0,
+}));
+
 EventDetailView.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   changeSelectedEvent: PropTypes.func.isRequired,
   embed: PropTypes.bool,
   event: PropTypes.objectOf(PropTypes.any),

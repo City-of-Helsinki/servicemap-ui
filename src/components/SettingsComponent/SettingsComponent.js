@@ -41,7 +41,7 @@ const SettingsComponent = ({ variant }) => {
       <StyledContainer
         disableGutters
         sx={{ pb: 2, bgcolor: 'primary.main' }}
-        paddingtopsettings={variant === 'paddingTopSettings' || undefined}
+        paddingtopsettings={+(variant === 'paddingTopSettings')}
       >
         <StyledAccordion
           settingsVisible={settingsVisible}
