@@ -32,8 +32,8 @@ const SMButton = (props) => {
 
   return (
     <StyledButtonBase
-      small={small || undefined}
-      margin={margin || undefined}
+      small={+small}
+      margin={+margin}
       color={color}
       {...rest}
       ref={passingRef}

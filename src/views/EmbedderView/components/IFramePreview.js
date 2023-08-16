@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Typography, Paper } from '@mui/material';
@@ -5,7 +6,6 @@ import { FormattedMessage } from 'react-intl';
 import embedderConfig from '../embedderConfig';
 
 const IFramePreview = ({
-  classes,
   customWidth,
   embedUrl,
   fixedHeight,
@@ -59,18 +59,16 @@ const IFramePreview = ({
   };
   const element = hasContainer ? (
     <div style={wrapperStyleObject()}>
-      <iframe
+      <StyledIframeWrapper
         key={new Date().getTime()}
-        className={classes.iframeWrapper}
         title={title}
         style={styles}
         src={embedUrl}
       />
     </div>
   ) : (
-    <iframe
+    <StyledIframeWrapper
       key={new Date().getTime()}
-      className={classes.iframeWrapper}
       title={title}
       style={styles}
       src={embedUrl}
@@ -78,32 +76,49 @@ const IFramePreview = ({
   );
 
   return (
-    <Paper className={classes.formContainerPaper}>
-      <Typography
+    <StyledPaper>
+      <StyledTypography
         align="left"
-        className={classes.marginBottom}
         variant="h5"
         component={titleComponent}
       >
         <FormattedMessage id="embedder.preview.title" />
-      </Typography>
+      </StyledTypography>
       {renderMapControls()}
-      <div className={classes.iframeContainer} style={{ width: '100%' }}>
+      <StyledIframeContainer style={{ width: '100%' }}>
         {
           element
         }
-      </div>
-    </Paper>
+      </StyledIframeContainer>
+    </StyledPaper>
   );
 };
 
+const StyledIframeWrapper = styled('iframe')(() => ({
+  border: '3px dashed #666',
+}));
+const StyledPaper = styled(Paper)(({ theme }) => ({
+  width: '100%',
+  boxSizing: 'border-box',
+  display: 'inline-block',
+  margin: `${theme.spacing(3)} 0`,
+  padding: `${theme.spacing(2)} ${theme.spacing(3)}`,
+  textAlign: 'left',
+  '& label': {
+    margin: `${theme.spacing(1)} 0`,
+  },
+  '& fieldset': {
+    margin: '0 -12px',
+  },
+}));
+const StyledTypography = styled(Typography)(({ theme }) => ({
+  marginBottom: theme.spacing(2),
+}));
+const StyledIframeContainer = styled('div')(() => ({
+  width: '100%',
+}));
+
 IFramePreview.propTypes = {
-  classes: PropTypes.shape({
-    formContainerPaper: PropTypes.string,
-    iframeContainer: PropTypes.string,
-    iframeWrapper: PropTypes.string,
-    marginBottom: PropTypes.string,
-  }).isRequired,
   customWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   embedUrl: PropTypes.string.isRequired,
   fixedHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

@@ -34,7 +34,8 @@ const DescriptionText = ({
         )}
       </StyledDiv>
     );
-  } return null;
+  }
+  return null;
 };
 
 const StyledDiv = styled('div')(() => ({

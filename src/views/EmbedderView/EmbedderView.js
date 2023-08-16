@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import React, {
   useState, useRef, useEffect, useCallback,
 } from 'react';
@@ -42,10 +43,10 @@ const hideServicesIn = [
 let timeout;
 const timeoutDelay = 1000;
 const documentationLink = config.embedderDocumentationUrl;
+const { topBarHeight } = config;
 
 const EmbedderView = ({
   citySettings,
-  classes,
   intl,
   mapType,
   navigator,
@@ -437,9 +438,8 @@ const EmbedderView = ({
     );
   };
 
-
   const renderMapControls = useCallback(() => (
-    <div className={classes.mapControlContainer}>
+    <StyledMapControlContainer>
       {/* Map bounds */}
       <FormControlLabel
         control={(
@@ -452,9 +452,8 @@ const EmbedderView = ({
         )}
         label={(<FormattedMessage id="embedder.options.label.bbox" />)}
       />
-    </div>
+    </StyledMapControlContainer>
   ), [restrictBounds]);
-
 
   const renderMarkerOptionsControl = () => {
     const controls = [
@@ -526,35 +525,34 @@ const EmbedderView = ({
         {
           renderHeadInfo()
         }
-        <div className={classes.container}>
-          <div className={classes.titleContainer}>
-            <CloseButton
+        <StyledContainer>
+          <StyledTitleContainer>
+            <StyledCloseButton
               aria-label={intl.formatMessage({ id: 'embedder.close' })}
-              className={classes.closeButton}
               onClick={closeView}
               role="link"
               textID="embedder.close"
             />
-            <Typography align="left" className={classes.title} variant="h1">
+            <StyledTitle align="left" variant="h1">
               <FormattedMessage id="embedder.title" />
-            </Typography>
-          </div>
-          <div className={classes.scrollContainer}>
-            <div className={classes.formContainer}>
-              <Typography className={classes.infoText} align="left" variant="body2">
+            </StyledTitle>
+          </StyledTitleContainer>
+          <StyledScrollContainer>
+            <StyledFormContainer>
+              <StyledInfoText align="left" variant="body2">
                 <FormattedMessage id="embedder.title.info" />
-              </Typography>
+              </StyledInfoText>
               <br />
-              <Typography className={classes.infoTitle} variant="h6" component="h2" align="left">
+              <StyledInfoTitle variant="h6" component="h2" align="left">
                 <FormattedMessage id="embedder.info.title" />
-              </Typography>
-              <Typography className={classes.infoText} align="left">
+              </StyledInfoTitle>
+              <StyledInfoText align="left">
                 <FormattedMessage id="embedder.info.description" />
                 {' '}
                 <Link underline="always" href={documentationLink} target="_blank">
                   <FormattedMessage id="embedder.info.link" />
                 </Link>
-              </Typography>
+              </StyledInfoText>
               <br />
               <form>
                 {
@@ -582,15 +580,14 @@ const EmbedderView = ({
                 renderListOptionsControl()
               }
               </form>
-            </div>
+            </StyledFormContainer>
 
             <div>
-              <Divider className={classes.divider} orientation="vertical" aria-hidden />
+              <StyledDivider orientation="vertical" aria-hidden />
             </div>
 
-            <div className={classes.previewContainer}>
+            <StyledPreviewContainer>
               <IFramePreview
-                classes={classes}
                 customWidth={customWidth}
                 embedUrl={embedUrl}
                 fixedHeight={fixedHeight}
@@ -605,50 +602,95 @@ const EmbedderView = ({
               />
 
               <EmbedHTML
-                classes={classes}
                 url={embedUrl}
                 createEmbedHTML={createEmbedHTML}
                 setBoundsRef={setBoundsRef}
                 restrictBounds={restrictBounds}
               />
-              <SMButton
+              <StyledButton
                 aria-label={intl.formatMessage({ id: 'embedder.close' })}
-                className={classes.button}
                 small
                 role="link"
                 onClick={closeView}
                 messageID="embedder.close"
               />
-            </div>
-          </div>
-        </div>
+            </StyledPreviewContainer>
+          </StyledScrollContainer>
+        </StyledContainer>
       </div>
     </>
   );
 };
-
+const StyledMapControlContainer = styled('div')(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+}));
+const StyledContainer = styled('div')(() => ({
+  display: 'inline-flex',
+  flexDirection: 'column',
+  margin: 0,
+  height: `calc(100vh - ${topBarHeight}px)`,
+}));
+const StyledTitleContainer = styled('div')(({ theme }) => ({
+  margin: `${theme.spacing(2)} 0`,
+  paddingTop: 0,
+  paddingLeft: '9.5vw',
+  paddingRight: '9.5vw',
+  paddingBottom: theme.spacing(3),
+  position: 'relative',
+  display: 'flex',
+  flexWrap: 'wrap',
+}));
+const StyledScrollContainer = styled('div')(() => ({
+  display: 'flex',
+  flexDirection: 'row',
+  overflow: 'hidden',
+}));
+const StyledFormContainer = styled('div')(({ theme }) => ({
+  margin: `${theme.spacing(2)} 0`,
+  marginTop: 0,
+  width: '45%',
+  height: '100%',
+  overflowY: 'auto',
+  paddingLeft: '9.5vw',
+  paddingRight: theme.spacing(3),
+}));
+const StyledInfoText = styled(Typography)(() => ({
+  whiteSpace: 'pre-line',
+  lineHeight: '1.5rem',
+}));
+const StyledCloseButton = styled(CloseButton)(() => ({
+  marginLeft: 'auto',
+}));
+const StyledTitle = styled(Typography)(({ theme }) => ({
+  ...theme.typography.h4,
+  width: '100%',
+}));
+const StyledInfoTitle = styled(Typography)(() => ({
+  lineHeight: '2rem',
+}));
+const StyledDivider = styled(Divider)(() => ({
+  width: 4,
+}));
+const StyledPreviewContainer = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  width: '55%',
+  height: '100%',
+  overflowY: 'auto',
+  marginLeft: theme.spacing(3),
+  marginRight: '6.5vw',
+  paddingRight: theme.spacing(2),
+}));
+const StyledButton = styled(SMButton)(({ theme }) => ({
+  width: 'fit-content',
+  alignSelf: 'flex-end',
+  margin: 0,
+  marginTop: 'auto',
+  marginBottom: theme.spacing(2),
+}));
 EmbedderView.propTypes = {
   citySettings: PropTypes.arrayOf(PropTypes.string).isRequired,
-  classes: PropTypes.shape({
-    appBar: PropTypes.string,
-    button: PropTypes.string,
-    closeButton: PropTypes.string,
-    container: PropTypes.string,
-    formContainer: PropTypes.string,
-    formContainerPaper: PropTypes.string,
-    marginBottom: PropTypes.string,
-    pre: PropTypes.string,
-    pusher: PropTypes.string,
-    textField: PropTypes.string,
-    title: PropTypes.string,
-    titleContainer: PropTypes.string,
-    scrollContainer: PropTypes.string,
-    previewContainer: PropTypes.string,
-    divider: PropTypes.string,
-    infoTitle: PropTypes.string,
-    infoText: PropTypes.string,
-    mapControlContainer: PropTypes.string,
-  }).isRequired,
   location: PropTypes.shape({
     hash: PropTypes.string,
     pathname: PropTypes.string,
@@ -663,6 +705,5 @@ EmbedderView.defaultProps = {
   navigator: null,
   mapType: null,
 };
-
 
 export default EmbedderView;
