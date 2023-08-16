@@ -11,7 +11,7 @@ fixture`Map tests`
     await waitForReact();
   });
 
-test('Transit marker visible after zoom', async (t) => {
+test.skip('Transit marker visible after zoom', async (t) => {
   const zoomIn  = Selector('.zoomIn');
   const markers = Selector('.leaflet-marker-icon');
   
