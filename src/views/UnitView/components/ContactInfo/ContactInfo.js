@@ -127,7 +127,7 @@ const ContactInfo = ({
             <SMAccordion
               className={classes.accordionRoot}
               disableUnmount
-              titleContent={<Typography id="other-address"><FormattedMessage id="unit.otherAddress.show" /></Typography>}
+              titleContent={<Typography data-sm="other-address"><FormattedMessage id="unit.otherAddress.show" /></Typography>}
               collapseContent={(
                 <div className={classes.accordionContainer}>
                   {
@@ -144,7 +144,7 @@ const ContactInfo = ({
                           onClick={() => window.open(getLocaleText(otherAddressData.www))}
                         >
                           <Typography>
-                            {addNewTabSuffix(getLocaleText(otherAddressData.www))}
+                            <FormattedMessage id="unit.otherAddress.link" />
                           </Typography>
                         </ButtonBase>
                       )
@@ -202,7 +202,6 @@ const ContactInfo = ({
     openingHours = [...hours, ...hoursObject];
     contact = unitSectionFilter(unit.connections, 'PHONE_OR_EMAIL');
   }
-
 
   // Form data array
   const data = [
