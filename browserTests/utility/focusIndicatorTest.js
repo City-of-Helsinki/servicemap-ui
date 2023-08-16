@@ -49,7 +49,7 @@ export default () => {
     const buttons = Selector(`main button`);
     const buttonsCount = await buttons.count;
 
-    for(let i = 0; i < buttonsCount; i++) {  
+    for (let i = 0; i < buttonsCount; i++) {
       const button = buttons.nth(i);
       const disabled = await button.getAttribute('disabled');
       const tabindex = await button.getAttribute('tabindex');

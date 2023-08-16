@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import { css } from '@emotion/css';
+import styled from '@emotion/styled';
 import { Typography, useTheme } from '@mui/material';
+import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { useMapEvents } from 'react-leaflet';
-
+import { StyledHslIcon } from '../styled/styled';
 
 const DistanceMeasure = (props) => {
   const {
-    classes, markerArray, setMarkerArray, lineArray, setLineArray,
+    markerArray, setMarkerArray, lineArray, setLineArray,
   } = props;
 
   const {
@@ -54,7 +56,12 @@ const DistanceMeasure = (props) => {
     updateArray[index] = event.latlng;
     setLineArray([...updateArray]);
   };
-
+  const addressIconClass = css({
+    fontSize: 50,
+    color: theme.palette.primary.main,
+    textShadow: '-1px 0 #fff, 0 1px #fff, 1px 0 #fff, 0 -1px #fff',
+    outline: 'none',
+  });
 
   useEffect(() => {
     const mapElement = document.getElementsByClassName('leaflet-container')[0];
@@ -72,10 +79,10 @@ const DistanceMeasure = (props) => {
       iconSize: global.L.point([50, 50]),
       iconAnchor: global.L.point([25, 56]),
       popupAnchor: global.L.point([0, -40]),
-      className: classes.addressIcon,
+      className: addressIconClass,
       html: renderToStaticMarkup(
         <>
-          <span className={`${classes.distanceMarkerBackground} icon-icon-hsl-background`} />
+          <StyledHslIcon className="icon-icon-hsl-background" />
           <span className="icon-icon-address" />
         </>,
       ),
@@ -114,11 +121,11 @@ const DistanceMeasure = (props) => {
             {/* Show distance popup on markers when clicked */}
             {i !== 0 && i !== markerArray.length - 1 && (
             <Popup closeButton={false} autoPan={false}>
-              <div className={classes.distancePopup}>
+              <StyledDistancePopup>
                 <Typography>
                   {`${getDistance(i)}m`}
                 </Typography>
-              </div>
+              </StyledDistancePopup>
             </Popup>
             )}
           </Marker>
@@ -131,13 +138,15 @@ const DistanceMeasure = (props) => {
   }
   return null;
 };
+const StyledDistancePopup = styled.div(() => ({
+  padding: 8,
+}));
 
 DistanceMeasure.propTypes = {
   markerArray: PropTypes.arrayOf(PropTypes.any).isRequired,
   lineArray: PropTypes.arrayOf(PropTypes.any).isRequired,
   setMarkerArray: PropTypes.func.isRequired,
   setLineArray: PropTypes.func.isRequired,
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default DistanceMeasure;

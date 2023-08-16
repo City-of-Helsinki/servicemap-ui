@@ -1,19 +1,20 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import { css } from '@emotion/css';
 import { List, ListItem, Typography } from '@mui/material';
-import { withStyles } from '@mui/styles';
+import { useTheme } from '@mui/styles';
+import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
-import styles from '../../styles';
 import useLocaleText from '../../../../utils/useLocaleText';
 import swapCoordinates from '../../utils/swapCoordinates';
+import { StyledAreaPopup } from '../styled/styled';
 
 // This component renders parking areas to map
-const ParkingAreas = ({ classes }) => {
+const ParkingAreas = () => {
   const { Polygon, Tooltip, Popup } = global.rL;
 
   const getLocaleText = useLocaleText();
   const intl = useIntl();
+  const theme = useTheme();
   const parkingAreas = useSelector(state => state.districts.parkingAreas);
   const selectedParkingAreas = useSelector(state => state.districts.selectedParkingAreas);
 
@@ -79,6 +80,10 @@ const ParkingAreas = ({ classes }) => {
       || selectedParkingAreas.includes(obj.extra.tyyppi),
   );
 
+  const parkingLayerClass = css({
+    zIndex: theme.zIndex.infront,
+  });
+
   return (
     <>
       {selectedAreas.map((area) => {
@@ -90,7 +95,7 @@ const ParkingAreas = ({ classes }) => {
           <Polygon
             key={area.id}
             positions={boundary}
-            className={classes.parkingLayer}
+            className={parkingLayerClass}
             color={getColor(area)}
             pathOptions={{
               fillOpacity: '0',
@@ -124,18 +129,13 @@ const ParkingAreas = ({ classes }) => {
       })}
       {areaPopup?.textContent ? (
         <Popup onClose={() => setAreaPopup(null)} position={areaPopup.position}>
-          <div className={classes.areaPopup}>
+          <StyledAreaPopup>
             {areaPopup.textContent}
-          </div>
+          </StyledAreaPopup>
         </Popup>
       ) : null}
     </>
   );
 };
 
-
-export default withStyles(styles)(ParkingAreas);
-
-ParkingAreas.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
-};
+export default ParkingAreas;
