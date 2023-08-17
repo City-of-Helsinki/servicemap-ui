@@ -16,14 +16,17 @@ export default () => {
 
     const reverseAlphabeticalFirstItemContent = await listItems.nth(0).textContent;
     await t
+      .expect(reverseAlphabeticalFirstItemContent).notEql(alphabeticalFirstItemContent)
       .expect(listItems.nth(0).textContent).notEql(alphabeticalFirstItemContent, 'After selecting reverse order first item should be different than with alphabetical order')
       .pressKey('down')
       .pressKey('down')
       .pressKey('enter')
     ;
-    
+
     const accessibilityOrderFirstItemContent = await listItems.nth(0).textContent;
     await t
+      .expect(accessibilityOrderFirstItemContent).notEql(alphabeticalFirstItemContent)
+      .expect(accessibilityOrderFirstItemContent).notEql(reverseAlphabeticalFirstItemContent)
       .expect(listItems.nth(0).textContent).notEql(reverseAlphabeticalFirstItemContent, 'After selecting accessibility order first item should be different than reverse alphabetical first item')
       .pressKey('up')
       .pressKey('up')
