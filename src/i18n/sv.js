@@ -473,6 +473,7 @@ const translations = {
   'unit.opening.hours.missing': 'Öppettider har inte meddelats',
   'unit.opening.hours.info': 'Mer om öppettiderna',
   'unit.otherAddress.show': 'Annan ingång',
+  'unit.otherAddress.link': 'Se mer information (ny flik)',
   'unit.contact': 'Kontaktperson',
   'unit.school.year': 'Läsåret',
   'unit.reservations.description': 'Här hittar du information om lokaler och redskap som kan bokas vid verksamhetsstället.',

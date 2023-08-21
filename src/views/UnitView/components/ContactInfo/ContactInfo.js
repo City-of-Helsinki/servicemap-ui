@@ -127,7 +127,7 @@ const ContactInfo = ({
             <SMAccordion
               className={classes.accordionRoot}
               disableUnmount
-              titleContent={<Typography id="other-address"><FormattedMessage id="unit.otherAddress.show" /></Typography>}
+              titleContent={<Typography data-sm="other-address"><FormattedMessage id="unit.otherAddress.show" /></Typography>}
               collapseContent={(
                 <div className={classes.accordionContainer}>
                   {
@@ -144,7 +144,7 @@ const ContactInfo = ({
                           onClick={() => window.open(getLocaleText(otherAddressData.www))}
                         >
                           <Typography>
-                            {addNewTabSuffix(getLocaleText(otherAddressData.www))}
+                            <FormattedMessage id="unit.otherAddress.link" />
                           </Typography>
                         </ButtonBase>
                       )
@@ -203,7 +203,6 @@ const ContactInfo = ({
     contact = unitSectionFilter(unit.connections, 'PHONE_OR_EMAIL');
   }
 
-
   // Form data array
   const data = [
     address,
@@ -221,11 +220,11 @@ const ContactInfo = ({
   // Add route info to data in location exists
   const unitLocation = unit.location;
 
-  if (unitLocation && unitLocation.coordinates) {
+  if (unitLocation?.coordinates) {
     // Temporary link implementation for route info
     let currentLocationString = ' ';
 
-    if (userLocation && userLocation.addressData) {
+    if (userLocation?.addressData) {
       const { street, number } = userLocation.addressData;
       const { latitude, longitude } = userLocation.coordinates;
 
