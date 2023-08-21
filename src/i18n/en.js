@@ -471,6 +471,7 @@ const translations = {
   'unit.opening.hours.missing': 'No opening hours provided',
   'unit.opening.hours.info': 'Additional information about opening hours', // TODO verify
   'unit.otherAddress.show': 'Other entrance',
+  'unit.otherAddress.link': 'See more information (new tab)',
   'unit.contact': 'Contact person',
   'unit.school.year': 'School year',
   'unit.reservations.description': 'Here you can find information about the unit’s spaces and equipment that may be reserved.',
