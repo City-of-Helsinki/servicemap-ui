@@ -20,6 +20,13 @@ const basicSelection = (state = initialState, action, prefix) => {
   return state;
 };
 
+const basicSelectionNullInitial = (state = null, action, prefix) => {
+  if (action.type === `${prefix}_SET_SELECTION`) {
+    return action.selection;
+  }
+  return state;
+};
+
 export const cities = (state = cityInitialState, action) => {
   if (action.type === 'CITY_SET_SELECTION') {
     return action.selection;
@@ -47,6 +54,6 @@ export const visuallyImpaired = (state, action) => basicSelection(state, action,
 
 export const colorblind = (state, action) => basicSelection(state, action, 'COLORBLIND');
 
-export const mobility = (state, action) => basicSelection(state, action, 'MOBILITY');
+export const mobility = (state, action) => basicSelectionNullInitial(state, action, 'MOBILITY');
 
-export const mapType = (state, action) => basicSelection(state, action, 'MAP_TYPE');
+export const mapType = (state, action) => basicSelectionNullInitial(state, action, 'MAP_TYPE');
