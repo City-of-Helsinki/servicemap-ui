@@ -122,13 +122,13 @@ const SettingsDropdowns = ({ variant }) => {
         id={`${category}-setting-dropdown`}
         size="small"
         disablePortal
+        disableClearable
         ownsettings={+ownSettingsVariant}
         colormode={theme}
         multiple={!isSingleOption}
         openText={intl.formatMessage({ id: 'settings.open' })}
         closeText={intl.formatMessage({ id: 'settings.close' })}
         options={options}
-        clearIcon={null}
         value={getValue()}
         isOptionEqualToValue={option => (
           category === 'mobility'
@@ -144,6 +144,9 @@ const SettingsDropdowns = ({ variant }) => {
         onBlur={() => setOpenSettings(null)}
         ChipProps={{
           clickable: true, onDelete: null, variant: ownSettingsVariant ? 'outlined' : 'filled',
+        }}
+        slotProps={{ 
+          popper:{ sx: { pb: 1 } } // This padding fixes the listBox position on small screens where the list is renderend to top of input
         }}
         renderOption={(props, option) => (isSingleOption
           ? ( // Single option options box
