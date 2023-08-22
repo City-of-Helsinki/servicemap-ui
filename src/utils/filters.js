@@ -38,7 +38,9 @@ export const filterCitiesAndOrganizations = (
   if (result.object_type === 'address') return cityMatch;
 
   // Private service units need to be filtered out
-  const isNotPrivateService = result.contract_type?.id !== 'PRIVATE_SERVICE' && result.organizer_type !== 'PRIVATE_ENTERPRISE';
+  const privateOrganizerTypes = [10, 'PRIVATE_ENTERPRISE'];
+  const isNotPrivateService = result.contract_type?.id !== 'PRIVATE_SERVICE' && !privateOrganizerTypes.includes(result.organizer_type);
+
   const organizationMatch = organizations.length === 0
     || (isNotPrivateService
     && (organizations.includes(resultDepartment)
