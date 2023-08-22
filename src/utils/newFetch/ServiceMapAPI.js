@@ -32,6 +32,7 @@ export default class ServiceMapAPI extends HttpClient {
       service_limit: 500,
       address_limit: 700,
       administrativedivision_limit: 1,
+      include: 'unit.organizer_type',
       ...additionalOptions,
     };
 
@@ -59,7 +60,7 @@ export default class ServiceMapAPI extends HttpClient {
     const options = {
       page: 1,
       page_size: 200,
-      only: 'street_address,location,name,municipality,accessibility_shortcoming_count,service_nodes,contract_type',
+      only: 'street_address,location,name,municipality,accessibility_shortcoming_count,service_nodes,contract_type,organizer_type',
       geometry: true,
       include: 'service_nodes,services,accessibility_properties,department',
       service_node: idList,
@@ -78,7 +79,7 @@ export default class ServiceMapAPI extends HttpClient {
       service: serviceId,
       page: 1,
       page_size: 200,
-      only: 'street_address,name,accessibility_shortcoming_count,location,municipality,contract_type,department,root_department',
+      only: 'street_address,name,accessibility_shortcoming_count,location,municipality,contract_type,department,root_department,organizer_type',
       geometry: true,
       ...additionalOptions,
     };
@@ -96,7 +97,7 @@ export default class ServiceMapAPI extends HttpClient {
       service: idList,
       page_size: 200,
       geometry: true,
-      only: 'street_address,phone,call_charge_info,email,www,name,accessibility_shortcoming_count,location,municipality,contract_type,connections,picture_url',
+      only: 'street_address,phone,call_charge_info,email,www,name,accessibility_shortcoming_count,location,municipality,contract_type,connections,picture_url,organizer_type',
       ...additionalOptions,
     };
 
@@ -194,7 +195,7 @@ export default class ServiceMapAPI extends HttpClient {
   units = async (additionalOptions) => {
     const options = {
       page_size: 200,
-      only: 'street_address,location,name,municipality,accessibility_shortcoming_count,service_nodes,contract_type',
+      only: 'street_address,location,name,municipality,accessibility_shortcoming_count,service_nodes,contract_type,organizer_type',
       include: 'service_nodes,services,accessibility_properties,department',
       geometry: true,
       ...additionalOptions,
