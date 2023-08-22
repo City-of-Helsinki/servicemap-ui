@@ -32,6 +32,7 @@ export default class ServiceMapAPI extends HttpClient {
       service_limit: 500,
       address_limit: 700,
       administrativedivision_limit: 1,
+      include: 'unit.organizer_type',
       ...additionalOptions,
     };
 

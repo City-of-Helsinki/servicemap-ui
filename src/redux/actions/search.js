@@ -82,7 +82,7 @@ const fetchSearchResults = (options = null) => async (dispatch, getState) => {
   const fetchOptions = {
     ...options,
     language: locale,
-    include: isEmbed() ? extraFields : null,
+    ...(isEmbed() ? { include: extraFields } : {}),
   };
   let results = await smFetch(dispatch, fetchOptions);
 

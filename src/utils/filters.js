@@ -37,9 +37,12 @@ export const filterCitiesAndOrganizations = (
   // Addresses are not filtered by organizations
   if (result.object_type === 'address') return cityMatch;
 
+  // Private service units need to be filtered out
+  const isNotPrivateService = result.contract_type?.id !== 'PRIVATE_SERVICE' && result.organizer_type !== 'PRIVATE_ENTERPRISE';
   const organizationMatch = organizations.length === 0
-    || (organizations.includes(resultDepartment))
-    || (organizations.includes(resultRootDepartment));
+    || (isNotPrivateService
+    && (organizations.includes(resultDepartment)
+    || organizations.includes(resultRootDepartment)));
 
   return cityMatch && organizationMatch;
 };
