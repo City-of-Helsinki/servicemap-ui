@@ -13,18 +13,19 @@ config.organizations.forEach((organization) => {
   organizationInitialState[organization.id] = false;
 });
 
-const basicSelection = (state = initialState, action, prefix) => {
+function basicSelectionFunc(action, prefix, state) {
   if (action.type === `${prefix}_SET_SELECTION`) {
     return action.selection;
   }
   return state;
+}
+
+const basicSelection = (action, prefix, state = initialState) => {
+  return basicSelectionFunc(action, prefix, state);
 };
 
-const basicSelectionNullInitial = (state = null, action, prefix) => {
-  if (action.type === `${prefix}_SET_SELECTION`) {
-    return action.selection;
-  }
-  return state;
+const basicSelectionNullInitial = (action, prefix, state = null) => {
+  return basicSelectionFunc(action, prefix, state);
 };
 
 export const cities = (state = cityInitialState, action) => {
@@ -48,12 +49,12 @@ export const settingsCollapsed = (state = settingsCollapsedInitially, action) =>
   return state;
 };
 
-export const hearingAid = (state, action) => basicSelection(state, action, 'HEARING');
+export const hearingAid = (state, action) => basicSelection(action, 'HEARING', state);
 
-export const visuallyImpaired = (state, action) => basicSelection(state, action, 'SIGHT');
+export const visuallyImpaired = (state, action) => basicSelection(action, 'SIGHT', state);
 
-export const colorblind = (state, action) => basicSelection(state, action, 'COLORBLIND');
+export const colorblind = (state, action) => basicSelection(action, 'COLORBLIND', state);
 
-export const mobility = (state, action) => basicSelectionNullInitial(state, action, 'MOBILITY');
+export const mobility = (state, action) => basicSelectionNullInitial(action, 'MOBILITY', state);
 
-export const mapType = (state, action) => basicSelectionNullInitial(state, action, 'MAP_TYPE');
+export const mapType = (state, action) => basicSelectionNullInitial(action, 'MAP_TYPE', state);
