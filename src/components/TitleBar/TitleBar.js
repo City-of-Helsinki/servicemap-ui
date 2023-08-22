@@ -90,6 +90,7 @@ const StyledContainer = styled('div')(({
     boxShadow: '0 2px 4px 0 rgba(0,0,0,0.5)',
     color: '#fff',
     padding: theme.spacing(1),
+    paddingLeft: theme.spacing(2),
   };
   if (textbar) {
     Object.assign(styles, {
