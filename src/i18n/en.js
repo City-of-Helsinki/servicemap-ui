@@ -371,6 +371,7 @@ const translations = {
   // Home
   'home.buttons.settings': 'Save your own city and accessibility options',
   'home.buttons.services': 'Get to know the services using the Services list',
+  'home.buttons.mobility': 'Get to know the versatile options for movement',
   'home.buttons.closeByServices': 'Show nearby services',
   'home.buttons.instructions': 'Tips for using the service map',
   'home.buttons.area': 'View the areas for healthcare, education, pre-primary education, civil defence, nature and neighborhoods.',

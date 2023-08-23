@@ -372,6 +372,7 @@ const translations = {
   // Home
   'home.buttons.settings': 'Spara dina egna stads- och tillgänglighetsinställningar',
   'home.buttons.services': 'Läs mer om tjänsterna i servicekatalogen',
+  'home.buttons.mobility': 'Bekanta dig med de mångsidiga alternativen för rörelse',
   'home.buttons.closeByServices': 'Visa närtjänster',
   'home.buttons.instructions': 'Tips för användning av servicekartan',
   'home.buttons.area': 'Se hälsovårds-, rådgivnings-, elevupptagnings-, förskole-, befolkningsskydds- och naturskyddsområdena samt stadsdelarna',
