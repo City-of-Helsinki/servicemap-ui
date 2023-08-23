@@ -12,19 +12,12 @@ fixture`Settings view tests`
     await waitForReact();
   });
 
-const openSettings = async (t, selector) => {
-  const openButton = selector ? selector : Selector('#SettingsButtonaccessibilitySettings');
-  await t
-    .click(openButton)
-  ;
-  return openButton;
-}
-
 test('Settings does opens and closes correctly', async (t) => {
   await t
     .expect(Selector('#senses-setting-dropdown').visible).ok()
     .expect(Selector('#mobility-setting-dropdown').visible).ok()
     .expect(Selector('#cities-setting-dropdown').visible).ok()
+    .expect(Selector('#organizations-setting-dropdown').visible).ok()
   ;
 
   await t
@@ -35,6 +28,7 @@ test('Settings does opens and closes correctly', async (t) => {
     .expect(Selector('#senses-setting-dropdown').visible).notOk()
     .expect(Selector('#mobility-setting-dropdown').visible).notOk()
     .expect(Selector('#cities-setting-dropdown').visible).notOk()
+    .expect(Selector('#organizations-setting-dropdown').visible).notOk()
   ;
 
   await t
@@ -45,6 +39,7 @@ test('Settings does opens and closes correctly', async (t) => {
     .expect(Selector('#senses-setting-dropdown').visible).ok()
     .expect(Selector('#mobility-setting-dropdown').visible).ok()
     .expect(Selector('#cities-setting-dropdown').visible).ok()
+    .expect(Selector('#organizations-setting-dropdown').visible).ok()
   ;
 });
 

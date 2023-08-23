@@ -4,16 +4,19 @@ exports[`<MeasuringStopButton /> should work 1`] = `
 <div>
   <button
     aria-label="Stop measuring"
-    class="MuiButtonBase-root Mui-focusVisible SMButton SMButton-button-7  SMButton-marginRight-10 MeasuringStopButtonComponent-measuringButton-6 SMButton-primary-11 css-l9l1yv-MuiButtonBase-root"
+    class="MuiButtonBase-root Mui-focusVisible SMButton css-1nl5i45-MuiButtonBase-root"
+    color="primary"
     id="MeasuringStopButton"
+    margin="0"
     role="button"
+    small="0"
     tabindex="0"
     type="button"
     variant="contained"
   >
     <p
       aria-hidden="true"
-      class="MuiTypography-root MuiTypography-caption SMButton-typography-14 css-o763o0-MuiTypography-root"
+      class="MuiTypography-root MuiTypography-caption css-14ohs2l-MuiTypography-root"
     >
       Stop measuring
     </p>

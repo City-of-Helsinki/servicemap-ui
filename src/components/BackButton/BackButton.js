@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
-  IconButton, Typography, Button, ButtonBase,
+  IconButton, Typography, Button, ButtonBase, useMediaQuery,
 } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
+import styled from '@emotion/styled';
 import { getPathName } from '../../utils/path';
 
 const BackButton = (props) => {
   const {
     breadcrumb,
-    classes,
     className,
     intl,
     onClick,
@@ -20,7 +20,6 @@ const BackButton = (props) => {
     ariaLabel,
     text,
     focusVisibleClassName,
-    buttonId,
   } = props;
   // Generate dynamic text
   // Figure out correct translation id suffix
@@ -48,14 +47,13 @@ const BackButton = (props) => {
   const buttonText = intl.formatMessage({ id: textId, defaultMessage });
   // Set button text as state, so that it does not change
   const [buttonTitle] = useState(buttonText);
-  let classNames = 'SMBackButton';
 
-  const renderContainerVariantButton = () => (
+  const renderContainerVariantButton = (CustomButton) => (
     <>
-      <ButtonBase
-        id={buttonId}
+      <CustomButton
+        data-sm="BackButton"
         role="link"
-        className={classNames}
+        className={`SMBackButton ${className}`}
         style={style}
         aria-hidden={srHidden}
         aria-label={ariaLabel || buttonTitle}
@@ -69,21 +67,20 @@ const BackButton = (props) => {
         }}
       >
         <ArrowBack fontSize="inherit" />
-        <Typography aria-hidden className={`${classes.containerText}`} fontSize="inherit" color="inherit" variant="body2">
+        <StyledContainerText aria-hidden fontSize="inherit" color="inherit" variant="body2">
           {text || buttonTitle}
-        </Typography>
-      </ButtonBase>
+        </StyledContainerText>
+      </CustomButton>
     </>
   );
 
 
   if (variant === 'icon') {
-    classNames += ` ${className}`;
     return (
       <IconButton
         role="link"
-        id={buttonId}
-        className={classNames}
+        data-sm="BackButton"
+        className={`SMBackButton ${className}`}
         style={style}
         aria-hidden={srHidden}
         aria-label={ariaLabel || buttonText}
@@ -103,16 +100,14 @@ const BackButton = (props) => {
   }
 
   if (variant === 'container') {
-    classNames += ` ${classes.containerButton} ${className}`;
-    return renderContainerVariantButton();
+    return renderContainerVariantButton(StyledButton);
   }
 
   if (variant === 'topBackButton') {
-    classNames += ` ${classes.topBackButton} ${className}`;
     return (
-      <div className={classes.topBackButtonContainer}>
-        {renderContainerVariantButton()}
-      </div>
+      <StyledTopBackButtonContainer>
+        {renderContainerVariantButton(StyledTopBackButton)}
+      </StyledTopBackButtonContainer>
     );
   }
 
@@ -120,8 +115,8 @@ const BackButton = (props) => {
     <Button
       aria-hidden={srHidden}
       aria-label={ariaLabel || buttonText}
-      id={buttonId}
-      className={classNames}
+      data-sm="BackButton"
+      className="SMBackButton"
       role="link"
       variant="contained"
       color="primary"
@@ -141,9 +136,44 @@ const BackButton = (props) => {
   );
 };
 
+const StyledContainerText = styled(Typography)(({ theme }) => ({
+  color: 'inherit',
+  fontSize: '0.773rem',
+  paddingLeft: theme.spacing(1),
+}));
+
+const StyledTopBackButtonContainer = styled('div')(({ theme }) => {
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const marginTop = isMobile ? theme.spacing(-1) : 'auto';
+  const marginBottom = isMobile ? theme.spacing(-0.5) : theme.spacing(-1);
+
+  return {
+    color: '#fff',
+    backgroundColor: theme.palette.primary.main,
+    marginTop,
+    marginBottom,
+  };
+});
+
+const StyledButton = styled(ButtonBase)(({ theme }) => ({
+  zIndex: 0,
+  color: 'inherit',
+  padding: theme.spacing(1),
+}));
+
+const StyledTopBackButton = styled(ButtonBase)(({ theme }) => ({
+  display: 'flex',
+  zIndex: 0,
+  color: 'inherit',
+  padding: 0,
+  paddingRight: theme.spacing(1),
+  paddingTop: theme.spacing(1),
+  marginTop: theme.spacing(1),
+  marginLeft: theme.spacing(2),
+}));
+
 BackButton.propTypes = {
   breadcrumb: PropTypes.arrayOf(PropTypes.any).isRequired,
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   className: PropTypes.string,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
@@ -154,7 +184,6 @@ BackButton.propTypes = {
   ariaLabel: PropTypes.string,
   text: PropTypes.string,
   focusVisibleClassName: PropTypes.string,
-  buttonId: PropTypes.string,
 };
 
 BackButton.defaultProps = {
@@ -167,7 +196,6 @@ BackButton.defaultProps = {
   ariaLabel: null,
   text: null,
   focusVisibleClassName: null,
-  buttonId: 'BackButton',
 };
 
 export default BackButton;

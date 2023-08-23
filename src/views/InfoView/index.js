@@ -1,8 +1,6 @@
 import { connect } from 'react-redux';
-import { withStyles } from '@mui/styles';
 import { withRouter } from 'react-router-dom';
 import InfoView from './InfoView';
-import styles from './styles';
 
 // Listen to redux state
 const mapStateToProps = (state) => {
@@ -14,6 +12,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default withStyles(styles)(withRouter(connect(
+export default withRouter(connect(
   mapStateToProps,
-)(InfoView)));
+)(InfoView));

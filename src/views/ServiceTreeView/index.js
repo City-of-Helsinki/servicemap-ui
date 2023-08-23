@@ -1,9 +1,7 @@
 import { connect } from 'react-redux';
-import { withStyles } from '@mui/styles';
 import { injectIntl } from 'react-intl';
 import setTreeState from '../../redux/actions/serviceTree';
 import ServiceTreeView from './ServiceTreeView';
-import styles from './styles';
 
 const mapStateToProps = (state) => {
   const { navigator, serviceTree, settings } = state;
@@ -16,7 +14,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default withStyles(styles)(injectIntl(connect(
+export default injectIntl(connect(
   mapStateToProps,
   { setTreeState },
-)(ServiceTreeView)));
+)(ServiceTreeView));

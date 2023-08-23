@@ -1,19 +1,26 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import { List, Typography } from '@mui/material';
 import distance from '@turf/distance';
-import { useSelector } from 'react-redux';
-import { Divider, List, Typography } from '@mui/material';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { formatDistanceObject } from '../../../../utils';
+import { useSelector } from 'react-redux';
+import { DivisionItem } from '../../../../components';
 import { getAddressDistrict } from '../../../../redux/selectors/district';
+import { formatDistanceObject } from '../../../../utils';
 import { getAddressFromUnit } from '../../../../utils/address';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { sortByOriginID } from '../../utils';
-import { DivisionItem, SMAccordion } from '../../../../components';
+import {
+  StyledDistrictServiceListLevelFour,
+  StyledDivider,
+  StyledLoadingText,
+  StyledServiceList,
+  StyledServiceTabServiceList,
+} from '../styled/styled';
 
 const DistrictUnitList = (props) => {
   const {
-    classes, intl, selectedAddress, district,
+    intl, selectedAddress, district,
   } = props;
 
   const citySettings = useSelector(state => state.settings.cities);
@@ -55,23 +62,23 @@ const DistrictUnitList = (props) => {
 
 
   const renderServiceListAccordion = (title, unitList) => (
-    <div className={classes.serviceTabServiceList}>
+    <StyledServiceTabServiceList>
       <Typography>{`${title} (${unitList.length})`}</Typography>
       <List className="districtUnits" disablePadding>
         {unitList.map(unit => renderDistrictUnitItem(unit))}
       </List>
-    </div>
+    </StyledServiceTabServiceList>
   );
 
 
   const render = () => {
     if (districtsFetching.length) {
       return (
-        <div className={classes.loadingText}>
+        <StyledLoadingText>
           <Typography aria-hidden>
             <FormattedMessage id="general.loading" />
           </Typography>
-        </div>
+        </StyledLoadingText>
       );
     }
 
@@ -136,15 +143,15 @@ const DistrictUnitList = (props) => {
         <div>
           {localUnits.length ? (
             <>
-              <div className={classes.servciceList}>
+              <StyledServiceList>
                 <Typography>
                   <FormattedMessage id="area.services.local" />
                 </Typography>
                 <List disablePadding>
                   {localUnits.map(unit => renderDistrictUnitItem(unit))}
                 </List>
-              </div>
-              <Divider className={classes.serviceDivider} aria-hidden />
+              </StyledServiceList>
+              <StyledDivider aria-hidden />
             </>
           ) : null}
 
@@ -167,15 +174,14 @@ const DistrictUnitList = (props) => {
   };
 
   return (
-    <div className={`${classes.districtServiceList} ${classes.listLevelFour}`}>
+    <StyledDistrictServiceListLevelFour>
       {render()}
-      <Divider aria-hidden className={classes.serviceDivider} />
-    </div>
+      <StyledDivider aria-hidden />
+    </StyledDistrictServiceListLevelFour>
   );
 };
 
 DistrictUnitList.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   district: PropTypes.objectOf(PropTypes.any).isRequired,
   selectedAddress: PropTypes.objectOf(PropTypes.any),
   intl: PropTypes.objectOf(PropTypes.any).isRequired,

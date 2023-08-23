@@ -1,5 +1,4 @@
-
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -14,20 +13,13 @@ import { PrintProvider } from '../context/PrintContext';
 import { viewTitleID } from '../utils/accessibility';
 import { ErrorProvider } from '../context/ErrorContext';
 import {
-  AlertBox,
-  DesktopComponent,
-  ErrorBoundary,
-  ErrorComponent,
-  FocusableSRLinks,
-  TopBar,
-  Settings,
-  BottomNav,
+  AlertBox, BottomNav, DesktopComponent, ErrorBoundary, ErrorComponent, FocusableSRLinks, TopBar,
 } from '../components';
 
 const { smallScreenBreakpoint } = config;
 
 const createContentStyles = (
-  isMobile, isSmallScreen, landscape, fullMobileMap, settingsOpen, currentPage, sidebarHidden,
+  isMobile, isSmallScreen, landscape, fullMobileMap, currentPage, sidebarHidden,
 ) => {
   let width = 450;
   if (isMobile) {
@@ -54,7 +46,7 @@ const createContentStyles = (
       marginBottom: bottomNavHeight,
       flex: !isMobile || fullMobileMap ? 1 : 0,
       display: 'flex',
-      visibility: isMobile && (!fullMobileMap || settingsOpen) ? 'hidden' : '',
+      visibility: isMobile && !fullMobileMap ? 'hidden' : '',
       height: isMobile ? `calc(100% - ${topBarHeight})` : '100%',
       width: '100%',
       zIndex: 900,
@@ -67,9 +59,8 @@ const createContentStyles = (
       width,
       margin: 0,
       // eslint-disable-next-line no-nested-ternary
-      overflow: settingsOpen ? 'hidden'
-        : isMobile ? 'visible' : 'auto',
-      visibility: fullMobileMap && !settingsOpen ? 'hidden' : null,
+      overflow: isMobile ? 'visible' : 'auto',
+      visibility: fullMobileMap ? 'hidden' : null,
       flex: '0 1 auto',
     },
     sidebarContent: {
@@ -107,7 +98,6 @@ const DefaultLayout = (props) => {
     fetchNews,
     intl,
     location,
-    settingsToggled,
   } = props;
   const isMobile = useMobileStatus();
   const isSmallScreen = useMediaQuery(`(max-width:${smallScreenBreakpoint}px)`);
@@ -121,7 +111,7 @@ const DefaultLayout = (props) => {
   }, []);
 
   const styles = createContentStyles(
-    isMobile, isSmallScreen, landscape, fullMobileMap, settingsToggled, currentPage, sidebarHidden,
+    isMobile, isSmallScreen, landscape, fullMobileMap, currentPage, sidebarHidden,
   );
   const srLinks = [
     {
@@ -161,7 +151,7 @@ const DefaultLayout = (props) => {
         !error && 
         (
           <ErrorBoundary>
-            <div id="topArea" aria-hidden={!!settingsToggled} className={printClass}>
+            <div id="topArea" aria-hidden={false} className={printClass}>
               <h1 id="app-title" tabIndex={-1} className="sr-only app-title" component="h1">
                 <FormattedMessage id="app.title" />
               </h1>
@@ -169,10 +159,7 @@ const DefaultLayout = (props) => {
               Must be first interactable element on page */}
               <FocusableSRLinks items={srLinks} />
               <PrintProvider value={togglePrint}>
-                <TopBar
-                  settingsOpen={settingsToggled}
-                  smallScreen={isSmallScreen}
-                />
+                <TopBar smallScreen={isSmallScreen} />
               </PrintProvider>
             </div>
             {
@@ -184,13 +171,7 @@ const DefaultLayout = (props) => {
             <div id="activeRoot" style={styles.activeRoot} className={printClass}>
               <main className="SidebarWrapper" style={styles.sidebar}>
                 <AlertBox />
-                {settingsToggled && (
-                  <Settings
-                    key={settingsToggled}
-                    isMobile={!!isMobile}
-                  />
-                )}
-                <div style={styles.sidebarContent} aria-hidden={!!settingsToggled}>
+                <div style={styles.sidebarContent} aria-hidden={false}>
                   <ViewRouter />
                 </div>
               </main>
@@ -215,7 +196,7 @@ const DefaultLayout = (props) => {
               </>
             ) : null}
 
-            <footer role="contentinfo" aria-hidden={!!settingsToggled} className="sr-only">
+            <footer role="contentinfo" aria-hidden={false} className="sr-only">
               <DesktopComponent>
                 <a href="#app-title">
                   <FormattedMessage id="general.backToStart" />
@@ -237,12 +218,10 @@ DefaultLayout.propTypes = {
   fetchNews: PropTypes.func.isRequired,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
-  settingsToggled: PropTypes.string,
 };
 
 DefaultLayout.defaultProps = {
   currentPage: null,
-  settingsToggled: null,
 };
 
 export default DefaultLayout;

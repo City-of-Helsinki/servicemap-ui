@@ -1,6 +1,5 @@
 import SettingsUtility from '../../utils/settings';
 import LocalStorageUtility from '../../utils/localStorage';
-import simpleAction from './simpleActions';
 import config from '../../../config';
 
 const setAccessibilitySelection = (prefix, key, value) => async (dispatch, getState) => {
@@ -59,6 +58,24 @@ export const toggleCity = values => async (dispatch) => {
   }
 };
 
+export const toggleOrganization = values => async (dispatch) => {
+  const keyIsValid = SettingsUtility.isValidOrganizationSetting(values);
+  const organizationSettings = {};
+  config.organizations.forEach((organization) => {
+    organizationSettings[organization.id] = values[organization.id];
+  });
+
+  if (keyIsValid) {
+    dispatch({
+      type: 'ORGANIZATION_SET_SELECTION',
+      selection: organizationSettings,
+    });
+    config.organizations.forEach((organization) => {
+      LocalStorageUtility.saveItem(organization.id, values[organization.id]);
+    });
+  }
+};
+
 export const toggleHearingAid = (value = undefined) => setAccessibilitySelection('HEARING', 'hearingAid', value);
 
 export const toggleVisuallyImpaired = (value = undefined) => setAccessibilitySelection('SIGHT', 'visuallyImpaired', value);
@@ -66,14 +83,6 @@ export const toggleVisuallyImpaired = (value = undefined) => setAccessibilitySel
 export const toggleColorblind = (value = undefined) => setAccessibilitySelection('COLORBLIND', 'colorblind', value);
 
 export const setMobility = value => setMobilitySetting(value);
-
-export const toggleSettings = value => async (dispatch, getState) => {
-  const { settings } = getState();
-  const { toggled } = settings;
-  const newValue = (!value || value === toggled) ? null : value;
-
-  dispatch(simpleAction('SETTINGS_TOGGLE', newValue));
-};
 
 export const setMapType = value => setMapTypeSetting(value);
 

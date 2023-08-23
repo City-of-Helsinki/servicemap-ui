@@ -1,17 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Divider, List, Typography } from '@mui/material';
+import { List, Typography } from '@mui/material';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { getAddressDistrict } from '../../../../redux/selectors/district';
-import { DistrictItem, SMAccordion } from '../../../../components';
+import { DistrictItem } from '../../../../components';
 import { sortByOriginID } from '../../utils';
+import {
+  StyledDistrictServiceList,
+  StyledDivider,
+  StyledServiceList,
+  StyledServiceTabServiceList,
+} from '../styled/styled';
 
-export const DistrictAreaList = ({
-  classes,
-  selectedAddress,
-  district,
-}) => {
+export const DistrictAreaList = ({ selectedAddress, district }) => {
   const intl = useIntl();
   const citySettings = useSelector(state => state.settings.cities);
   const addressDistrict = useSelector(state => getAddressDistrict(state));
@@ -45,14 +47,14 @@ export const DistrictAreaList = ({
   }
 
   const renderServiceListAccordion = (title, districts) => (
-    <div className={classes.serviceTabServiceList}>
+    <StyledServiceTabServiceList>
       <Typography>{`${title} (${districts.length})`}</Typography>
       <List disablePadding>
         {districts.map(district => (
           <DistrictItem key={district.id} area={district} title={false} paddedDivider />
         ))}
       </List>
-    </div>
+    </StyledServiceTabServiceList>
   );
 
   sortByOriginID(filteredData);
@@ -83,7 +85,7 @@ export const DistrictAreaList = ({
       <div>
         {localAreaDistricts.length ? (
           <>
-            <div className={classes.servciceList}>
+            <StyledServiceList>
               <Typography>
                 <FormattedMessage id="area.services.local" />
               </Typography>
@@ -92,8 +94,8 @@ export const DistrictAreaList = ({
                   <DistrictItem key={district.id} area={district} title={false} hideDivider />
                 ))}
               </List>
-            </div>
-            <Divider className={classes.serviceDivider} aria-hidden />
+            </StyledServiceList>
+            <StyledDivider aria-hidden />
           </>
         ) : null}
 
@@ -108,20 +110,19 @@ export const DistrictAreaList = ({
   }
 
   return (
-    <div className={`${classes.districtServiceList} ${classes.listLevelFour}`}>
+    <StyledDistrictServiceList>
       {
         renderServiceListAccordion(
           sectionText,
           filteredData,
         )
       }
-      <Divider aria-hidden className={classes.serviceDivider} />
-    </div>
+      <StyledDivider aria-hidden />
+    </StyledDistrictServiceList>
   );
 };
 
 DistrictAreaList.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   district: PropTypes.objectOf(PropTypes.any).isRequired,
   selectedAddress: PropTypes.objectOf(PropTypes.any),
 };

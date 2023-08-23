@@ -3,16 +3,19 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Typography, Divider, List, ButtonBase,
+  ButtonBase,
+  Divider,
+  List,
+  Typography,
 } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import { Map } from '@mui/icons-material';
 import Helmet from 'react-helmet';
 import { useSelector } from 'react-redux';
 import { useLocation, useRouteMatch } from 'react-router-dom';
+import styled from '@emotion/styled';
 import { focusToPosition, useMapFocusDisabled } from '../MapView/utils/mapActions';
 import fetchAdministrativeDistricts from './utils/fetchAdministrativeDistricts';
-
 import fetchAddressUnits from './utils/fetchAddressUnits';
 import fetchAddressData from './utils/fetchAddressData';
 import { getAddressText } from '../../utils/address';
@@ -23,15 +26,14 @@ import { getCategoryDistricts } from '../AreaView/utils/districtDataHelper';
 import {
   AddressIcon,
   DesktopComponent,
-  DivisionItem,
   DistrictItem,
+  DivisionItem,
   MobileComponent,
   SearchBar,
   SMButton,
   TabLists,
   TitleBar,
 } from '../../components';
-
 
 const hiddenDivisions = {
   emergency_care_district: true,
@@ -69,7 +71,6 @@ const AddressView = (props) => {
   const {
     addressData,
     adminDistricts,
-    classes,
     embed,
     intl,
     getDistance,
@@ -163,36 +164,41 @@ const AddressView = (props) => {
     } return null;
   };
 
-  const renderTopBar = () => (
-    <>
-      <DesktopComponent>
-        <SearchBar margin />
-        <TitleBar
-          sticky
-          icon={<AddressIcon className={classes.titleIcon} />}
-          title={error || title}
-          titleComponent="h3"
-          primary
-        />
-      </DesktopComponent>
-      <MobileComponent>
-        <TitleBar
-          sticky
-          icon={<AddressIcon />}
-          title={title}
-          titleComponent="h3"
-          primary
-        />
-      </MobileComponent>
-    </>
-  );
+  const renderTopBar = () => {
+    if (!addressData) {
+      return null;
+    }
+    return (
+      <>
+        <DesktopComponent>
+          <SearchBar margin />
+          <TitleBar
+            sticky
+            icon={<StyledAddressIcon />}
+            title={error || title}
+            titleComponent="h3"
+            primary
+          />
+        </DesktopComponent>
+        <MobileComponent>
+          <TitleBar
+            sticky
+            icon={<AddressIcon />}
+            title={title}
+            titleComponent="h3"
+            primary
+          />
+        </MobileComponent>
+      </>
+    );
+  };
 
   const renderNearbyList = () => {
     if (isFetching || !units) {
-      return <Typography><FormattedMessage id="general.loading" /></Typography>;
+      return <Typography id="LoadingMessage"><FormattedMessage id="general.loading" /></Typography>;
     }
     if (units && !units.length) {
-      return <Typography><FormattedMessage id="general.noData" /></Typography>;
+      return <Typography id="NoDataMessage"><FormattedMessage id="general.noData" /></Typography>;
     }
     return null;
   };
@@ -237,11 +243,10 @@ const AddressView = (props) => {
 
     return (
       <>
-        <div className={classes.servicesTitle}>
+        <StyledServicesTitle>
           <Typography align="left" variant="body2"><FormattedMessage id="address.services.info" /></Typography>
-          <ButtonBase
+          <StyledButtonBase
             role="link"
-            className={classes.areaLink}
             onClick={() => {
               setDistrictAddressData({ address: addressData });
               navigator.push('area');
@@ -251,8 +256,8 @@ const AddressView = (props) => {
             <Typography align="left" variant="body2">
               <FormattedMessage id="address.area.link" />
             </Typography>
-          </ButtonBase>
-        </div>
+          </StyledButtonBase>
+        </StyledServicesTitle>
         <Divider aria-hidden />
         <List>
           {
@@ -346,15 +351,14 @@ const AddressView = (props) => {
       <TabLists
         data={tabs}
         headerComponents={(
-          <div className={classes.topArea}>
+          <StyledTopArea>
             {addressData && units && (
               <MobileComponent>
-                <SMButton
+                <StyledSMButton
                   aria-hidden
                   margin
                   messageID="general.showOnMap"
                   icon={<Map />}
-                  className={classes.mapButton}
                   onClick={() => {
                     if (navigator) {
                       focusToPosition(map, addressData.location.coordinates);
@@ -364,12 +368,47 @@ const AddressView = (props) => {
                 />
               </MobileComponent>
             )}
-          </div>
+          </StyledTopArea>
         )}
       />
     </div>
   );
 };
+
+const StyledAddressIcon = styled(AddressIcon)(() => ({
+  fontSize: 28,
+  height: 24,
+  width: 24,
+  marginLeft: 0,
+  marginRight: 0,
+}));
+
+const StyledButtonBase = styled(ButtonBase)(({ theme }) => ({
+  color: theme.palette.link.main,
+  textDecoration: 'underline',
+  marginBottom: theme.spacing(1),
+  marginTop: theme.spacing(1),
+  '&:hover': {
+    opacity: '0.7',
+  },
+}));
+
+const StyledSMButton = styled(SMButton)(({ theme }) => ({
+  marginTop: theme.spacing(3),
+  marginLeft: theme.spacing(3),
+  marginBottom: theme.spacing(1),
+}));
+
+const StyledServicesTitle = styled('div')(({ theme }) => ({
+  padding: theme.spacing(1),
+  margin: theme.spacing(1, 2),
+  textAlign: 'left',
+}));
+
+const StyledTopArea = styled('div')(() => ({
+  backgroundColor: '#fff',
+  textAlign: 'left',
+}));
 
 export default AddressView;
 
@@ -388,7 +427,6 @@ AddressView.propTypes = {
   setAdminDistricts: PropTypes.func.isRequired,
   setDistrictAddressData: PropTypes.func.isRequired,
   setToRender: PropTypes.func.isRequired,
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   embed: PropTypes.bool,
   units: PropTypes.arrayOf(PropTypes.shape({

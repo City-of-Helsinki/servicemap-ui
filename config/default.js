@@ -58,6 +58,11 @@ if (typeof settings.CITIES === 'undefined') {
   settings.CITIES = 'helsinki,espoo,vantaa,kauniainen,kirkkonummi';
 }
 
+if (typeof settings.ORGANIZATIONS === 'undefined') {
+  // If not set default to Helsinki
+  settings.ORGANIZATIONS = '[{"id": "0c8e4f99-3d52-47b9-84df-395716bd8b11", "name": { "fi": "Länsi-Uudenmaan hyvinvointialue", "sv": "Västra Nylands välfärdsområde", "en": "Western Uusimaa Wellbeing Services County"}}, {"id": "5de91045-92ab-484b-9f96-7010ff7fb35e", "name": { "fi": "Vantaan ja Keravan hyvinvointialue", "sv": "Vanda och Kervo välfärdsområde", "en": "Wellbeing services county of Vantaa and Kerava"}}]';
+}
+
 if (typeof settings.SERVICE_MAP_URL === 'undefined') {
   // If not set default to Helsinki
   settings.SERVICE_MAP_URL = 'https://tiles.hel.ninja/styles/hel-osm-bright/{z}/{x}/{y}';
@@ -233,6 +238,7 @@ export default {
   "natureAreaURL": settings.NATURE_AREA_URL,
   "embedderDocumentationUrl": settings.EMBEDDER_DOCUMENTATION_URL,
   "cities": settings.CITIES.split(','),
+  "organizations": JSON.parse(settings.ORGANIZATIONS),
   "hslRouteGuideCities": settings.HSL_ROUTE_GUIDE_CITIES.split(','),
   "maps": settings.MAPS.split(','),
   "smallContentAreaBreakpoint": 449,

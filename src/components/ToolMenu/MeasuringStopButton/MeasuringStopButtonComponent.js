@@ -1,10 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+import styled from '@emotion/styled';
 import SMButton from '../../ServiceMapButton';
 
-
 const MeasuringStopButtonComponent = ({
-  classes,
   onClick,
 }) => {
   const buttonRef = useRef();
@@ -16,10 +15,9 @@ const MeasuringStopButtonComponent = ({
   }, []);
 
   return (
-    <SMButton
+    <StyledButton
       passingRef={buttonRef}
       id="MeasuringStopButton"
-      className={classes.measuringButton}
       color="primary"
       role="button"
       messageID="tool.measuring.stop"
@@ -27,14 +25,15 @@ const MeasuringStopButtonComponent = ({
     />
   );
 };
-
+const StyledButton = styled(SMButton)(() => ({
+  position: 'absolute',
+  right: 0,
+  top: 86,
+  borderRadius: 4,
+  border: '2px solid #fff',
+}));
 
 MeasuringStopButtonComponent.propTypes = {
-  classes: PropTypes.shape({
-    menuContainer: PropTypes.string,
-    smIcon: PropTypes.string,
-    measuringButton: PropTypes.string,
-  }).isRequired,
   onClick: PropTypes.func.isRequired,
 };
 

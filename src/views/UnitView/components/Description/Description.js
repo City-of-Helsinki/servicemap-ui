@@ -37,7 +37,7 @@ const Description = ({ unit, classes }) => {
                 <Link className={classes.link} href={getLocaleText(item.value.www)} target="_blank">
                   {getLocaleText(item.value.name)}
                   {' '}
-                  <FormattedMessage id="unit.opens.new.tab" />
+                  <FormattedMessage id="opens.new.tab" />
                 </Link>
 
               </Typography>

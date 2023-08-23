@@ -5,14 +5,16 @@ import {
 } from '@mui/material';
 import { Search } from '@mui/icons-material';
 import styled from '@emotion/styled';
+import { css } from '@emotion/css';
+import { useTheme } from '@mui/styles';
 import config from '../../../config';
 import useLocaleText from '../../utils/useLocaleText';
 import { SMAccordion, SMButton, TitleBar } from '../../components';
 import useMobileStatus from '../../utils/isMobile';
+import { getUnitCount } from '../../utils/units';
 
 const ServiceTreeView = (props) => {
   const {
-    classes,
     navigator,
     intl,
     setTreeState,
@@ -23,6 +25,7 @@ const ServiceTreeView = (props) => {
   } = props;
   const getLocaleText = useLocaleText();
   const isMobile = useMobileStatus();
+  const theme = useTheme();
 
   // State
   const [services, setServices] = useState(prevServices);
@@ -170,9 +173,9 @@ const ServiceTreeView = (props) => {
     const line = paths.join(' ');
 
     return (
-      <svg key={`innerLine${id}`} className={classes.checkBoxLines}>
+      <StyledCheckboxLines key={`innerLine${id}`}>
         <path d={line} stroke={strokeColor} fill="transparent" />
-      </svg>
+      </StyledCheckboxLines>
     );
   };
 
@@ -192,9 +195,9 @@ const ServiceTreeView = (props) => {
 
   const drawOuterLines = (level, last, id) => (
     [...Array(level)].map((none, i) => (
-      <svg key={`outerLine${level + i}`} className={classes.outerLines}>
+      <StyledOuterLines key={`outerLine${level + i}`}>
         {generateDrawPath(last, level === i + 1, i, id)}
-      </svg>
+      </StyledOuterLines>
     ))
   );
 
@@ -214,9 +217,11 @@ const ServiceTreeView = (props) => {
     if (!citySettings.length || citySettings.length === config.cities.length) {
       resultCount = item.unit_count.total;
     } else {
-      config.cities.forEach((city) => {
-        resultCount += (settings.cities[city] ? item.unit_count.municipality[city] || 0 : 0);
-      });
+      config.cities
+        .filter(city => settings.cities[city])
+        .forEach((city) => {
+          resultCount += getUnitCount(item, city);
+        });
     }
 
     const checkboxSrTitle = `${intl.formatMessage({ id: 'services.tree.level' })} ${level + 1} ${getLocaleText(item.name)} ${intl.formatMessage({ id: 'services.category.select' })}`;
@@ -228,10 +233,14 @@ const ServiceTreeView = (props) => {
     const childIsSelected = checkChildNodes(item)
       .some(node => selected.some(item => item.id === node.id));
 
+    const checkBoxFocusClass = css({
+      boxShadow: `inset 0 0 0 4px ${theme.palette.primary.main} !important`,
+    });
+
     return (
       <li key={item.id}>
-        <SMAccordion
-          className={`${classes.listItem} ${classes[`level${level}`]}`}
+        <StyledAccordion
+          level={level}
           onOpen={hasChildren ? () => handleExpand(item, isOpen) : () => null}
           simpleItem={!hasChildren}
           defaultOpen={isOpen}
@@ -239,24 +248,24 @@ const ServiceTreeView = (props) => {
           adornment={(
             <>
               {level > 0 && (drawOuterLines(level, last, item.id))}
-              <div className={classes.checkBox}>
+              <StyledCheckBox>
                 {drawCheckboxLines(isOpen, level, item.id)}
                 <Checkbox
-                  focusVisibleClassName={classes.checkboxFocus}
+                  focusVisibleClassName={checkBoxFocusClass}
                   inputProps={{ title: checkboxSrTitle }}
                   onClick={e => handleCheckboxClick(e, item)}
-                  icon={<span className={classes.checkBoxIcon} />}
+                  icon={<StyledCheckBoxIcon />}
                   color="primary"
                   checked={isSelected}
                   indeterminate={childIsSelected && !isSelected}
                 />
-              </div>
+              </StyledCheckBox>
             </>
           )}
           titleContent={(
-            <Typography aria-hidden className={classes.text}>
+            <StyledText aria-hidden>
               {`${getLocaleText(item.name)} (${resultCount})`}
-            </Typography>
+            </StyledText>
           )}
           collapseContent={
             children && children.length ? (
@@ -301,20 +310,18 @@ const ServiceTreeView = (props) => {
 
   return (
     <StyledFlexContainer>
-      <TitleBar
+      <StyledTitleBar
         title={intl.formatMessage({ id: 'general.pageTitles.serviceTree.title' })}
         titleComponent="h3"
         backButton={!isMobile}
-        className={classes.topBarColor}
       />
-      <Typography className={classes.guidanceInfoText} variant="body2">{intl.formatMessage({ id: 'services.info' })}</Typography>
-      <div className={classes.mainContent}>
+      <StyledGuidanceInfoText variant="body2">{intl.formatMessage({ id: 'services.info' })}</StyledGuidanceInfoText>
+      <StyledMainContent>
         {renderServiceNodeList()}
-      </div>
+      </StyledMainContent>
       <StyledFloatingDiv>
-        <SMButton
+        <StyledSearchButton
           id="ServiceTreeSearchButton"
-          className={classes.searchButton}
           color="primary"
           disabled={!ids.length}
           icon={<Search />}
@@ -347,8 +354,92 @@ const StyledFloatingDiv = styled.div(({ theme }) => ({
   boxShadow: '0px -4px 4px rgba(0, 0, 0, 0.36)',
 }));
 
+const StyledCheckboxLines = styled.svg(() => ({
+  height: 'inherit',
+  width: 'inherit',
+  position: 'absolute',
+}));
+
+const StyledOuterLines = styled.svg(() => ({
+  height: '100%',
+  width: 26,
+  flexShrink: 0,
+}));
+
+const StyledMainContent = styled.div(() => ({
+  textAlign: 'left',
+}));
+
+const StyledTitleBar = styled(TitleBar)(({ theme }) => ({
+  background: theme.palette.primary.main,
+}));
+
+const StyledSearchButton = styled(SMButton)(() => ({
+  flexGrow: 1,
+  marginRight: 0,
+}));
+
+const StyledGuidanceInfoText = styled(Typography)(({ theme }) => ({
+  backgroundColor: theme.palette.primary.main,
+  padding: `${theme.spacing(3)} ${theme.spacing(2)}`,
+  paddingTop: theme.spacing(1),
+  color: '#fff',
+  textAlign: 'left',
+}));
+
+const StyledCheckBoxIcon = styled('span')(() => ({
+  margin: -1,
+  width: 15,
+  height: 15,
+  backgroundColor: '#fff',
+  border: '1px solid #323232;',
+  borderRadius: 1,
+}));
+
+const StyledCheckBox = styled('div')(() => ({
+  width: 40,
+  height: '100%',
+  alignItems: 'center',
+  justifyContent: 'center',
+  display: 'flex',
+  position: 'relative',
+  flexShrink: 0,
+}));
+
+const StyledText = styled(Typography)(() => ({
+  fontSize: '0.938rem',
+  lineHeight: '1.125rem',
+}));
+
+const StyledAccordion = styled(SMAccordion)(({ level }) => {
+  switch (level) {
+    case 0:
+      return {
+        borderBottom: '0.5px solid rgba(151, 151, 151, 0.5)',
+        backgroundColor: '#fff',
+        '& p': {
+          fontWeight: 'bold',
+        },
+      };
+    case 1:
+      return {
+        backgroundColor: '#e3f3ff',
+        borderBottom: '0.5px solid #fff',
+        '& p': {
+          fontWeight: 'bold',
+        },
+      };
+    case 2:
+      return {
+        borderBottom: '0.5px solid #fff',
+        backgroundColor: '#f5f5f5',
+      };
+    default:
+      return {};
+  }
+});
+
 ServiceTreeView.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   setTreeState: PropTypes.func.isRequired,

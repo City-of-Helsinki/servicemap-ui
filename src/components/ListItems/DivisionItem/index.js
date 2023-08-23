@@ -1,7 +1,5 @@
 import { connect } from 'react-redux';
-import { withStyles } from '@mui/styles';
 import { injectIntl } from 'react-intl';
-import styles from './styles';
 import DivisionItem from './DivisionItem';
 
 const mapStateToProps = (state) => {
@@ -14,4 +12,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default injectIntl(connect(mapStateToProps)(withStyles(styles)(DivisionItem)));
+export default injectIntl(connect(mapStateToProps)(DivisionItem));

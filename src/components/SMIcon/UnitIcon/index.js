@@ -1,22 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withStyles } from '@mui/styles';
+import styled from '@emotion/styled';
 import UnitHelper from '../../../utils/unitHelper';
-import styles from './styles';
 
 const UnitIcon = ({
-  classes, className, unit, settings,
+  className, unit, settings,
 }) => {
-  const iconClass = `${classes.icon} ${className || ''}`;
+  const iconClass = `${className || ''}`;
   if (unit && settings) {
-    return <img alt="" src={UnitHelper.getIcon(unit, settings, true)} className={iconClass} aria-hidden="true" />;
+    return <StyledIcon alt="" src={UnitHelper.getIcon(unit, settings, true)} className={iconClass} aria-hidden="true" />;
   }
-  return <img alt="" src={UnitHelper.getDefaultIcon()} className={iconClass} aria-hidden="true" />;
+  return <StyledIcon alt="" src={UnitHelper.getDefaultIcon()} className={iconClass} aria-hidden="true" />;
 };
 
+const StyledIcon = styled('img')(() => ({
+  height: 24,
+}));
+
 UnitIcon.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   className: PropTypes.string,
   unit: PropTypes.objectOf(PropTypes.any),
   settings: PropTypes.objectOf(PropTypes.any),
@@ -35,6 +37,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default withStyles(styles)(connect(
-  mapStateToProps,
-)(UnitIcon));
+export default connect(mapStateToProps)(UnitIcon);

@@ -12,7 +12,7 @@ const ReservationItem = ({ reservation, intl, divider }) => {
       className="reservationItem"
       icon={<EventAvailable color="primary" />}
       link
-      text={`${getLocaleText(reservation.name)} ${intl.formatMessage({ id: 'unit.opens.new.tab' })}`}
+      text={`${getLocaleText(reservation.name)} ${intl.formatMessage({ id: 'opens.new.tab' })}`}
       divider={divider}
       handleItemClick={() => {
         window.open(`https://varaamo.hel.fi/resources/${reservation.id}`);

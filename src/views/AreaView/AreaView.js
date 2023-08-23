@@ -1,10 +1,11 @@
 /* eslint-disable camelcase */
+import { styled } from '@mui/material/styles';
 import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory, useLocation } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { List, ListItem, Typography } from '@mui/material';
+import { List, Typography } from '@mui/material';
 import {
   BusinessCenter, EscalatorWarning, LocationCity, Map,
 } from '@mui/icons-material';
@@ -30,7 +31,7 @@ import {
 import StatisticalDistrictList from './components/StatisticalDistrictList';
 import useMobileStatus from '../../utils/isMobile';
 import MapUtility from '../../utils/mapUtility';
-
+import { StyledListItem, StyledLoadingText } from './components/styled/styled';
 
 const AreaView = ({
   setSelectedDistrictType,
@@ -52,7 +53,6 @@ const AreaView = ({
   navigator,
   embed,
   intl,
-  classes,
 }) => {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -315,17 +315,17 @@ const AreaView = ({
       {
         component: renderServiceTab(),
         title: intl.formatMessage({ id: 'area.tab.publicServices' }),
-        icon: <BusinessCenter className={classes.icon} />,
+        icon: <StyledBusinessCenter />,
       },
       {
         component: renderGeographicalTab(),
         title: intl.formatMessage({ id: 'area.tab.geographical' }),
-        icon: <LocationCity className={classes.icon} />,
+        icon: <StyledLocationCity />,
       },
       {
         component: <StatisticalDistrictList />,
         title: intl.formatMessage({ id: 'area.tab.statisticalDistricts' }),
-        icon: <EscalatorWarning className={classes.icon} />,
+        icon: <StyledEscalatorWarning />,
       },
     ];
     if (!embed) {
@@ -336,9 +336,9 @@ const AreaView = ({
             titleComponent="p"
             backButton={!isMobile}
           />
-          <Typography className={classes.infoText}>
+          <StyledInfoText>
             <FormattedMessage id="home.buttons.area" />
-          </Typography>
+          </StyledInfoText>
           <AddressSearchBar
             handleAddressChange={setSelectedAddress}
             title={(
@@ -352,11 +352,10 @@ const AreaView = ({
           <List>
             {
               categories.map((category, i) => (
-                <ListItem
+                <StyledListItem
                   divider
                   disableGutters
                   key={category.title}
-                  className={`${classes.listItem}`}
                 >
                   <SMAccordion // Top level categories
                     adornment={category.icon}
@@ -372,7 +371,7 @@ const AreaView = ({
                     )}
                     collapseContent={category.component}
                   />
-                </ListItem>
+                </StyledListItem>
               ))
             }
           </List>
@@ -384,19 +383,18 @@ const AreaView = ({
                 margin
                 messageID="general.showOnMap"
                 icon={<Map />}
-                className={classes.mapButton}
                 onClick={() => navigator.openMap()}
               />
             )}
           </MobileComponent>
-          <div className={classes.loadingText}>
+          <StyledLoadingText>
             <Typography style={visuallyHidden} aria-live="assertive">
               {districtsFetching.length
                 ? <FormattedMessage id="general.loading" />
                 : <FormattedMessage id="general.loading.done" />
                }
             </Typography>
-          </div>
+          </StyledLoadingText>
         </div>
       );
     }
@@ -405,6 +403,22 @@ const AreaView = ({
 
   return render();
 };
+
+const iconClass = (theme) => ({
+  padding: theme.spacing(2),
+  paddingLeft: theme.spacing(0),
+});
+
+const StyledBusinessCenter = styled(BusinessCenter)(({ theme }) => iconClass(theme));
+const StyledLocationCity = styled(LocationCity)(({ theme }) => iconClass(theme));
+const StyledEscalatorWarning = styled(EscalatorWarning)(({ theme }) => iconClass(theme));
+const StyledInfoText = styled(Typography)(({ theme }) => ({
+  padding: theme.spacing(2),
+  paddingTop: 0,
+  textAlign: 'start',
+  backgroundColor: theme.palette.primary.main,
+  color: '#fff',
+}));
 
 AreaView.propTypes = {
   setSelectedDistrictType: PropTypes.func.isRequired,

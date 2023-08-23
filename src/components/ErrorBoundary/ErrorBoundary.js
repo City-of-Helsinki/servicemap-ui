@@ -25,10 +25,6 @@ class ErrorBoundary extends React.Component {
 
 ErrorBoundary.propTypes = {
   children: PropTypes.node.isRequired,
-  classes: PropTypes.shape({
-    container: PropTypes.string,
-    text: PropTypes.string,
-  }).isRequired,
   errorComponent: PropTypes.node,
 };
 

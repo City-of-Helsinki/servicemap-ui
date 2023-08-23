@@ -1,3 +1,5 @@
+import { filterCitiesAndOrganizations } from '../../utils/filters';
+import { getUnitCount } from '../../utils/units';
 import ServiceMapAPI from '../../utils/newFetch/ServiceMapAPI';
 
 const createSuggestions = (
@@ -5,6 +7,7 @@ const createSuggestions = (
   abortController,
   getLocaleText,
   citySettings,
+  organizationSettings,
   locale,
 ) => async () => {
   const smAPI = new ServiceMapAPI();
@@ -14,6 +17,7 @@ const createSuggestions = (
   const serviceLimit = 10;
   const addressLimit = 1;
   const servicenodeLimit = 10;
+  const administrativeDivisionLimit = 1;
   const pageSize = unitLimit + serviceLimit + addressLimit + servicenodeLimit;
 
   const additionalOptions = {
@@ -23,6 +27,8 @@ const createSuggestions = (
     address_limit: addressLimit,
     servicenode_limit: servicenodeLimit,
     municipality: citySettings.join(','),
+    organization: organizationSettings.map(org => org.id).join(','),
+    administrativedivision_limit: administrativeDivisionLimit,
     language: locale,
   };
 
@@ -34,18 +40,19 @@ const createSuggestions = (
   if (citySettings.length) {
     filteredResults = filteredResults.filter((result) => {
       if (result.object_type === 'service' || result.object_type === 'servicenode') {
-        let totalResultCount = 0;
-        citySettings.forEach((city) => {
-          if (result.unit_count?.municipality[city]) {
-            totalResultCount += result.unit_count.municipality[city];
-          }
-        });
+        const totalResultCount = citySettings
+          .map(city => getUnitCount(result, city))
+          .reduce((partial, a) => partial + a, 0);
         if (totalResultCount === 0) return false;
       }
       return true;
     });
   }
 
+  // Filter units with city and organization settings
+  filteredResults = filteredResults.filter(
+    filterCitiesAndOrganizations(citySettings, organizationSettings),
+  );
 
   // Handle address results
   filteredResults.forEach((item) => {

@@ -1,9 +1,10 @@
 /* eslint-disable */
-import { waitForReact, ReactSelector } from 'testcafe-react-selectors';
+import { ReactSelector, waitForReact } from 'testcafe-react-selectors';
 import { Selector } from 'testcafe';
 
 import config from '../config';
 import { getLocation } from '../utility';
+
 const { server } = config;
 
 fixture`Area view test`
@@ -12,14 +13,14 @@ fixture`Area view test`
     await waitForReact();
   });
 
-const drawerButtons = ReactSelector('ServiceTab SMAccordion');
-const radioButtons = ReactSelector('DistrictToggleButton');
-const accordions = ReactSelector('SMAccordion');
+const drawerButtons = Selector('[data-sm="ServiceTabComponent"]').find('[data-sm="AccordionComponent"]');
+const radioButtons = Selector('[data-sm="DistrictToggleButton"]');
+const accordions = Selector('[data-sm="AccordionComponent"]');
 
 // Get inner accordions for given element
 // Expects ReactSelector element as second parameter
 const openInnerAccordion = async (t, element) => {
-  const clickedAccordion = element.child().findReact('SMAccordion').nth(0);
+  const clickedAccordion = element.child().find('[data-sm="AccordionComponent"]').nth(0);
   await t
     .click(clickedAccordion)
   ;
@@ -128,8 +129,8 @@ test('Unit list functions correctly' , async (t) => {
 test('Statistical areas accordions open correctly', async (t) => {
   const totalAccordion = await openStatisticalTotals(t);
 
-  const innerAccordions = totalAccordion.child().findReact('SMAccordion');
-  const cityAccordions = totalAccordion.child().find('#StatisticalCityList').findReact('SMAccordion');
+  const innerAccordions = totalAccordion.child().find('[data-sm="AccordionComponent"]');
+  const cityAccordions = totalAccordion.child().find('#StatisticalCityList').find('[data-sm="AccordionComponent"]');
   const serviceAccordion = await innerAccordions.nth(0);
   const helsinkiAccordion = await cityAccordions.nth(0);
   await t
@@ -140,14 +141,14 @@ test('Statistical areas accordions open correctly', async (t) => {
     .click(serviceAccordion)
   ;
 
-  const serviceListAccordions = serviceAccordion.child().findReact('SMAccordion');
+  const serviceListAccordions = serviceAccordion.child().find('[data-sm="AccordionComponent"]');
   await t
     .expect(serviceListAccordions.count).gt(0, 'Service list should have accordion elements', { timeout: 8000 })
     .click(serviceListAccordions.nth(0).find('input[type="checkbox"]'))
     .click(serviceListAccordions.nth(0).find('button'))
   ;
   
-  const unitItems = serviceListAccordions.nth(0).child().findReact('ResultItem');
+  const unitItems = serviceListAccordions.nth(0).child().find('[data-sm="ResultItemComponent"]');
   await t
     .expect(unitItems.count).gt(0)
   ;
@@ -156,9 +157,9 @@ test('Statistical areas accordions open correctly', async (t) => {
 test('Statistical area district selection works correctly', async (t) => {
   const totalAccordion = await openStatisticalTotals(t);
 
-  const serviceButton = await totalAccordion.child().findReact('SMAccordion').nth(0).find('button');
-  // const innerAccordions = totalAccordion.child().findReact('SMAccordion');
-  const cityAccordions = totalAccordion.child().find('#StatisticalCityList').findReact('SMAccordion');
+  const serviceButton = await totalAccordion.child().find('[data-sm="AccordionComponent"]').nth(0).find('button');
+  // const innerAccordions = totalAccordion.child().find('[data-sm="AccordionComponent"]');
+  const cityAccordions = totalAccordion.child().find('#StatisticalCityList').find('[data-sm="AccordionComponent"]');
   const firstCityAreaCheckbox = cityAccordions.nth(0).find('div').nth(1).find('.MuiCollapse-root input[type="checkbox"]');
   const firstCityCheckbox = cityAccordions.nth(0).find('input[type="checkbox"]');
 
@@ -188,8 +189,8 @@ test('Statistical area district selection works correctly', async (t) => {
     .pressKey('shift+tab') // Return to city button
     .pressKey('shift+tab') // Return to city checkbox
     .expect(firstCityCheckbox.focused).ok() // City checkbox should be focused
-    .pressKey('enter') // Select city
-    .pressKey('enter') // Remove selection
+    .pressKey('space') // Select city
+    .pressKey('space') // Remove selection
     .expect(serviceButton.getAttribute('disabled')).eql('', 'Expect service button disabled attribute to exist while no selections')
 
   ;

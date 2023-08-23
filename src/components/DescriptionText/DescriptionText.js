@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Typography, Divider } from '@mui/material';
+import styled from '@emotion/styled';
 import isClient from '../../utils';
 
 const DescriptionText = ({
-  description, html, classes, title, titleComponent,
+  description, html, title, titleComponent,
 }) => {
   // Hide linebreak html elements from screen readers
   const hideBRFromSR = text => text.replaceAll('<br>', '<br aria-hidden="true" />');
@@ -16,32 +17,49 @@ const DescriptionText = ({
 
   if (description && isClient()) {
     return (
-      <div className={classes.left}>
-        <Typography
-          className={classes.subtitle}
+      <StyledDiv>
+        <StyledTypographySubtitle
           component={titleComponent}
           variant="subtitle1"
         >
           {title}
-        </Typography>
-        <Divider className={classes.divider} aria-hidden="true" />
+        </StyledTypographySubtitle>
+        <StyledDivider aria-hidden="true" />
         { !html ? (
-          <Typography className={classes.paragraph} variant="body2">
+          <StyledTypographyParagraph variant="body2">
             {description}
-          </Typography>
+          </StyledTypographyParagraph>
         ) : (
-          <Typography dangerouslySetInnerHTML={{ __html: hideBRFromSR(description) }} className={classes.paragraph} variant="body2" />
+          <StyledTypographyParagraph dangerouslySetInnerHTML={{ __html: hideBRFromSR(description) }} variant="body2" />
         )}
-      </div>
+      </StyledDiv>
     );
-  } return null;
+  }
+  return null;
 };
+
+const StyledDiv = styled('div')(() => ({
+  textAlign: 'left',
+}));
+
+const StyledTypographyParagraph = styled(Typography)(({ theme }) => ({
+  margin: theme.spacing(2),
+  whiteSpace: 'pre-line',
+}));
+
+const StyledTypographySubtitle = styled(Typography)(({ theme }) => ({
+  margin: theme.spacing(2),
+}));
+
+const StyledDivider = styled(Divider)(({ theme }) => ({
+  marginLeft: theme.spacing(-2),
+  marginRight: theme.spacing(-2),
+}));
 
 DescriptionText.propTypes = {
   description: PropTypes.string.isRequired,
   title: PropTypes.node.isRequired,
   html: PropTypes.bool,
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']).isRequired,
 };
 

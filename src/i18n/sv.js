@@ -472,9 +472,10 @@ const translations = {
   'unit.opening.hours': 'Öppettider',
   'unit.opening.hours.missing': 'Öppettider har inte meddelats',
   'unit.opening.hours.info': 'Mer om öppettiderna',
+  'unit.otherAddress.show': 'Annan ingång',
+  'unit.otherAddress.link': 'Se mer information (ny flik)',
   'unit.contact': 'Kontaktperson',
   'unit.school.year': 'Läsåret',
-  'unit.opens.new.tab': '(ny flik)',
   'unit.reservations.description': 'Här hittar du information om lokaler och redskap som kan bokas vid verksamhetsstället.',
   'unit.reservations.count': `{count, plural,
     =0 {}
@@ -646,6 +647,8 @@ const translations = {
   'settings.city.vantaa': 'Vanda',
   'settings.city.kauniainen': 'Grankulla',
   'settings.city.kirkkonummi': 'Kyrkslätt',
+  'settings.city.länsi-uudenmaan hyvinvointialue': 'Västra Nylands välfärdsområde',
+  'settings.city.vantaan ja keravan hyvinvointialue': 'Vanda och Kervo välfärdsområde',
   'settings.city.askola': 'Askola',
   'settings.city.hanko': 'Hangö',
   'settings.city.hyvinkää': 'Hyvinge',
@@ -681,7 +684,7 @@ const translations = {
   'settings.choose.mobility': 'Välj fysisk funktionsnedsättning',
   'settings.choose.senses': 'Välj sensorisk funktionsnedsättning',
   'settings.choose.cities': 'Välj stadsinställningar',
-  'settings.choose.districts': 'Välj regionala inställningar', // TODO is waiting here for wellness districts
+  'settings.choose.organization': 'Valitse palveluntarjoaja', // TODO: translate
   'settings.map.info': 'I kartinställningarna kan du välja det kartunderlag som passar dig bäst.',
 
   // Tools
@@ -693,6 +696,7 @@ const translations = {
   'info.title': 'Om tjänsten och tillgänglighetsredogörelsen',
   'info.statement': 'Tillgänglighetsredogörelsen (ny flik)',
 
+  'opens.new.tab': '(ny flik)',
   'alert.close': 'Stäng meddelande',
 };
 

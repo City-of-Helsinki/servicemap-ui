@@ -1,11 +1,9 @@
-import { connect } from 'react-redux';
-import { withStyles } from '@mui/styles';
-import { withRouter } from 'react-router-dom';
 import { injectIntl } from 'react-intl';
-import EventDetailView from './EventDetailView';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { changeSelectedEvent } from '../../redux/actions/event';
 import { fetchSelectedUnit } from '../../redux/actions/selectedUnit';
-import styles from './styles';
+import EventDetailView from './EventDetailView';
 
 const mapStateToProps = (state) => {
   const { event, mapRef, navigator } = state;
@@ -19,7 +17,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default withStyles(styles)(withRouter(injectIntl(connect(
+export default withRouter(injectIntl(connect(
   mapStateToProps,
   { changeSelectedEvent, fetchSelectedUnit },
-)(EventDetailView))));
+)(EventDetailView)));

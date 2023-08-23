@@ -1,35 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { css } from '@emotion/css';
 import {
-  Checkbox,
-  FormControlLabel,
-  List,
-  ListItem,
-  styled,
-  Typography,
+  Checkbox, FormControlLabel, List, styled, Typography,
 } from '@mui/material';
-import { withStyles } from '@mui/styles';
-import styles from '../../styles';
-import {
-  getStatisticalDistrictAreaSelections,
-  getCityGroupedData,
-  getStatisticalDistrictSelection,
-} from '../../../../redux/selectors/statisticalDistrict';
-import {
-  addAreaSelection,
-  removeAreaSelection,
-  replaceAreaSelection,
-} from '../../../../redux/actions/statisticalDistrict';
-import useLocaleText from '../../../../utils/useLocaleText';
+import React, { useEffect } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
 import { SMAccordion } from '../../../../components';
+import {
+  addAreaSelection, removeAreaSelection, replaceAreaSelection,
+} from '../../../../redux/actions/statisticalDistrict';
+import {
+  getCityGroupedData, getStatisticalDistrictAreaSelections, getStatisticalDistrictSelection,
+} from '../../../../redux/selectors/statisticalDistrict';
+import useLocaleText from '../../../../utils/useLocaleText';
 import { focusDistricts } from '../../../MapView/utils/mapActions';
+import {
+  StyledAreaListItem, StyledBoldText, StyledCheckBoxIcon, StyledListItem, StyledListNoPadding,
+} from '../styled/styled';
 
-
-const StatisticalDistrictListContentComponent = ({
-  classes,
-}) => {
+const StatisticalDistrictListContent = () => {
   const dispatch = useDispatch();
   const cityFilteredData = useSelector(getCityGroupedData);
   const getLocaleText = useLocaleText();
@@ -125,19 +114,25 @@ const StatisticalDistrictListContentComponent = ({
     );
   };
 
+  const statisticalCategoryTitleClass = css({
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    flex: '1 1 auto',
+  });
   return (
     <>
-      <div className={classes.municipalitySubtitle}>
-        <Typography component="p" className={classes.bold}>
+      <StyledMunicipalitySubtitle>
+        <StyledBoldText component="p">
           <FormattedMessage id="area.statisticalDistrict.title" />
-        </Typography>
+        </StyledBoldText>
         {
           cityFilteredData.length === 0
           && (
             <Typography variant="body2"><FormattedMessage id="area.city.selection.empty" /></Typography>
           )
         }
-      </div>
+      </StyledMunicipalitySubtitle>
       <List id="StatisticalCityList">
         {
           cityFilteredData.map((data) => {
@@ -147,21 +142,18 @@ const StatisticalDistrictListContentComponent = ({
             const isChecked = someChildIsChecked && !someChildNotChecked;
             const isIndeterminate = someChildIsChecked && someChildNotChecked;
             return (
-              <ListItem
+              <StyledListItem
                 disableGutters
                 key={municipality}
-                className={`${classes.listItem}`}
               >
                 <React.Fragment key={municipality}>
-                  <SMAccordion // City list accordion
-                    className={classes.statisticalCityAccordion}
+                  <StyledSMAccordion // City list accordion
                     defaultOpen={false}
                     disableUnmount
                     adornment={(
-                      <FormControlLabel
-                        className={classes.municipalityAdjustedCheckboxPadding}
+                      <StyledFormControlLabel
                         classes={{
-                          label: classes.statisticalCategoryTitle,
+                          label: statisticalCategoryTitleClass,
                         }}
                         control={(
                           <Checkbox
@@ -169,7 +161,7 @@ const StatisticalDistrictListContentComponent = ({
                             inputProps={{
                               'aria-label': formatMessage({ id: `settings.city.${municipality}` }),
                             }}
-                            icon={<span className={classes.checkBoxIcon} />}
+                            icon={<StyledCheckBoxIcon />}
                             onChange={() => handleMultiSelect(!isChecked, municipality)}
                             checked={isChecked}
                             indeterminate={isIndeterminate}
@@ -183,14 +175,13 @@ const StatisticalDistrictListContentComponent = ({
                       </Typography>
                     )}
                     collapseContent={(
-                      <List className={classes.listNoPadding}>
+                      <StyledListNoPadding>
                         {
                           data.map(district => (
-                            <ListItem className={`${classes.listItem} ${classes.areaItem}`} key={district.id} divider>
-                              <FormControlLabel
-                                className={classes.statisticalAreaAdjustedCheckboxPadding}
+                            <StyledAreaListItem key={district.id} divider>
+                              <StyledFormControlLabelAdjusted
                                 classes={{
-                                  label: classes.statisticalCategoryTitle,
+                                  label: statisticalCategoryTitleClass,
                                 }}
                                 control={(
                                   <Checkbox
@@ -198,30 +189,30 @@ const StatisticalDistrictListContentComponent = ({
                                     inputProps={{
                                       'aria-label': `${getLocaleText(district.name)}, ${getDistrictDataInfo(district)}`,
                                     }}
-                                    icon={<span className={classes.checkBoxIcon} />}
+                                    icon={<StyledCheckBoxIcon />}
                                     onChange={e => handleCheckboxChange(e, district)}
                                     checked={areaSelections[`${district.id}`] || false}
                                   />
                               )}
                                 label={(
-                                  <StyledLabelTypography variant="body2" aria-hidden className={classes.statisticalDistrictListItemLabel}>
+                                  <StyledLabelTypography variant="body2" aria-hidden>
                                     <span>
                                       {`${getLocaleText(district.name)}`}
                                     </span>
-                                    <span className={classes.statisticalDistrictListItemLabelInfo}>
+                                    <StyledLabelInfo>
                                       {getDistrictDataInfo(district)}
-                                    </span>
+                                    </StyledLabelInfo>
                                   </StyledLabelTypography>
                                 )}
                               />
-                            </ListItem>
+                            </StyledAreaListItem>
                           ))
                         }
-                      </List>
+                      </StyledListNoPadding>
                     )}
                   />
                 </React.Fragment>
-              </ListItem>
+              </StyledListItem>
             );
           })
         }
@@ -230,15 +221,31 @@ const StatisticalDistrictListContentComponent = ({
   );
 };
 
-StatisticalDistrictListContentComponent.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
-};
-
-const StatisticalDistrictListContent = withStyles(styles)(StatisticalDistrictListContentComponent);
-
 export default StatisticalDistrictListContent;
 
-const StyledLabelTypography = styled(Typography)`
-  display: flex;
-  flex-direction: column;
-`;
+const StyledLabelTypography = styled(Typography)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  margin: `${theme.spacing(1)} 0`,
+}));
+const StyledLabelInfo = styled('span')(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+}));
+const StyledMunicipalitySubtitle = styled('div')(({ theme }) => ({
+  paddingLeft: theme.spacing(9),
+}));
+const StyledSMAccordion = styled(SMAccordion)(({ theme }) => ({
+  paddingLeft: theme.spacing(9),
+}));
+const StyledFormControlLabel = styled(FormControlLabel)(({ theme }) => ({
+  paddingLeft: theme.spacing(2),
+  marginRight: 0,
+  display: 'flex',
+  flex: '1 1 auto',
+}));
+const StyledFormControlLabelAdjusted = styled(FormControlLabel)(({ theme }) => ({
+  paddingLeft: theme.spacing(6),
+  display: 'flex',
+  flex: '1 1 auto',
+}));

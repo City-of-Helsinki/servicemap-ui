@@ -68,7 +68,7 @@ const Districts = ({
       } else {
         newArray = [...selectedSubdistricts, district.ocd_id];
       }
-      if (newArray === []) {
+      if (newArray.length === 0) {
         setSelectedDistrictServices([]);
       }
       setSelectedSubdistricts(newArray);

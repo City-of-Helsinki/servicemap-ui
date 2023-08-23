@@ -1,23 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { StyledDiv, StyledLink } from './styles';
 
-const FocusableSRLinks = ({ classes, items }) => (
-  <div className={classes.srFocusedContainer}>
+const FocusableSRLinks = ({ items }) => (
+  <StyledDiv>
     {
       items.map(v => (
-        <a href={v.href} className={classes.srFocused} key={v.href}>
+        <StyledLink href={v.href} key={v.href}>
           {v.text}
-        </a>
+        </StyledLink>
       ))
     }
-  </div>
+  </StyledDiv>
 );
 
 FocusableSRLinks.propTypes = {
-  classes: PropTypes.shape({
-    srFocusedContainer: PropTypes.string,
-    srFocused: PropTypes.string,
-  }).isRequired,
   items: PropTypes.arrayOf(PropTypes.shape({
     href: PropTypes.string.isRequired,
     text: PropTypes.node.isRequired,

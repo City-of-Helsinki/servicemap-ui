@@ -470,9 +470,10 @@ const translations = {
   'unit.opening.hours': 'Opening hours',
   'unit.opening.hours.missing': 'No opening hours provided',
   'unit.opening.hours.info': 'Additional information about opening hours', // TODO verify
+  'unit.otherAddress.show': 'Other entrance',
+  'unit.otherAddress.link': 'See more information (new tab)',
   'unit.contact': 'Contact person',
   'unit.school.year': 'School year',
-  'unit.opens.new.tab': '(new tab)',
   'unit.reservations.description': 'Here you can find information about the unit’s spaces and equipment that may be reserved.',
   'unit.reservations.count': `{count, plural,
     =0 {}
@@ -644,6 +645,8 @@ const translations = {
   'settings.city.vantaa': 'Vantaa',
   'settings.city.kauniainen': 'Kauniainen',
   'settings.city.kirkkonummi': 'Kirkkonummi',
+  'settings.city.länsi-uudenmaan hyvinvointialue': 'Western Uusimaa Wellbeing Services County',
+  'settings.city.vantaan ja keravan hyvinvointialue': 'Wellbeing services county of Vantaa and Kerava',
   'settings.city.askola': 'Askola',
   'settings.city.hanko': 'Hanko',
   'settings.city.hyvinkää': 'Hyvinkää',
@@ -679,7 +682,7 @@ const translations = {
   'settings.choose.mobility': 'Select your mobility issue',
   'settings.choose.senses': 'Select your sensory processing issues',
   'settings.choose.cities': 'Select your city setting',
-  'settings.choose.districts': 'Select your regional settings', // TODO is waiting here for wellness districts
+  'settings.choose.organization': 'Valitse palveluntarjoaja', // TODO: translate
   'settings.map.info': 'You can select the background map that best suits you in the map settings.',
 
   // Tools
@@ -691,6 +694,7 @@ const translations = {
   'info.title': 'About the service and accessibility statement',
   'info.statement': 'Accessibility statement (new tab)',
 
+  'opens.new.tab': '(new tab)',
   'alert.close': 'Close the notification',
 };
 

@@ -1,22 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import { css } from '@emotion/css';
+import styled from '@emotion/styled';
 import { Warning } from '@mui/icons-material';
 import {
-  Typography, InputBase, Checkbox, FormControl, Dialog, ButtonBase, DialogTitle, DialogContent,
+  ButtonBase, Checkbox, Dialog, DialogContent, DialogTitle, FormControl, InputBase, Typography,
 } from '@mui/material';
+import { useTheme } from '@mui/styles';
 import { visuallyHidden } from '@mui/utils';
+import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Prompt } from 'react-router-dom';
 import config from '../../../config';
-import { focusToViewTitle } from '../../utils/accessibility';
-import useLocaleText from '../../utils/useLocaleText';
-import {
-  DesktopComponent,
-  SMButton,
-  TitleBar,
-} from '../../components';
+import { DesktopComponent, SMButton, TitleBar } from '../../components';
 import { validateEmail } from '../../utils';
+import { focusToViewTitle } from '../../utils/accessibility';
 import useMobileStatus from '../../utils/isMobile';
+import useLocaleText from '../../utils/useLocaleText';
 
 const formFieldInitialState = {
   email: {
@@ -32,10 +31,11 @@ const formFieldInitialState = {
 };
 
 const FeedbackView = ({
-  classes, navigator, intl, location, selectedUnit,
+  navigator, intl, location, selectedUnit,
 }) => {
   const getLocaleText = useLocaleText();
   const isMobile = useMobileStatus();
+  const theme = useTheme();
   // State
   const [permission, setPermission] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
@@ -196,15 +196,19 @@ const FeedbackView = ({
   };
 
   let feedbackPermission = null;
-
+  const boxClass = css({
+    marginLeft: -8,
+    padding: 8,
+    marginRight: 8,
+  });
   // Show/Hide feedback permission checkbox dynamically
   if (config.feedbackIsPublished) {
     feedbackPermission = (
       /* Permission checkbox */
       <FormControl>
-        <div className={classes.checkbox}>
+        <StyledCheckboxContainer>
           <Checkbox
-            icon={<span className={classes.checkBoxIcon} />}
+            icon={<StyledCheckboxIcon />}
             size="small"
             color="primary"
             onChange={() => setPermission(!permission)}
@@ -213,14 +217,31 @@ const FeedbackView = ({
               'aria-labelledby': 'checkboxTitle',
             }}
             aria-labelledby="checkboxTitle"
-            classes={{ root: classes.box }}
+            classes={{ root: boxClass }}
           />
           <Typography aria-hidden><FormattedMessage id="feedback.permission" /></Typography>
-        </div>
+        </StyledCheckboxContainer>
       </FormControl>
     );
   }
-
+  const errorClass = css({
+    border: `1px solid ${theme.palette.warning.main}`,
+    boxShadow: `0 0 0 1px ${theme.palette.warning.main}`,
+  });
+  const inputClass = css({
+    fontSize: '0.75rem',
+    lineHeight: '20px',
+    padding: 10,
+    paddingLeft: 14,
+    paddingRight: 14,
+    width: '100%',
+    borderRadius: 2,
+    border: '1px solid #000',
+    '&:focus': {
+      outline: '2px solid transparent',
+      boxShadow: `0 0 0 4px ${theme.palette.focusBorder.main}`,
+    },
+  });
   return (
     <>
       {/* Exit dialog */}
@@ -235,17 +256,16 @@ const FeedbackView = ({
         modalOpen
         && (
           <Dialog open={!!modalOpen} onEntered={() => document.getElementById('dialog-title').focus()}>
-            <div className={classes.modalContainer}>
+            <StyledModalContainer>
               <DialogTitle tabIndex={-1} id="dialog-title">
-                <Typography aria-live="polite" className={classes.modalTitle}>
+                <StyledModalTitle aria-live="polite">
                   <FormattedMessage id={modalOpen === 'send' ? 'feedback.modal.success' : 'feedback.modal.error'} />
-                </Typography>
+                </StyledModalTitle>
               </DialogTitle>
               <DialogContent>
-                <SMButton
+                <StyledModalButton
                   margin
                   role="button"
-                  className={classes.modalButton}
                   messageID="feedback.modal.confirm"
                   color="primary"
                   onClick={() => {
@@ -256,12 +276,12 @@ const FeedbackView = ({
                   }}
                 />
               </DialogContent>
-            </div>
+            </StyledModalContainer>
           </Dialog>
         )
       }
 
-      <form className={classes.container}>
+      <StyledFormContainer>
         <TitleBar
           backButton={!isMobile}
           backButtonOnClick={backButtonCallback}
@@ -269,19 +289,18 @@ const FeedbackView = ({
           title={feedbackTitle}
           titleComponent="h3"
         />
-        <div className={classes.contentArea}>
+        <StyledContentArea>
           {/* Email field */}
           <FormControl>
-            <Typography id="emailTitle" className={classes.title}>
+            <StyledTitle id="emailTitle">
               <span style={visuallyHidden}><FormattedMessage id="feedback.email" /></span>
               <FormattedMessage id="feedback.email.info" />
-            </Typography>
-            <Typography aria-hidden className={classes.subtitle}><FormattedMessage id="feedback.email" /></Typography>
-            <InputBase
+            </StyledTitle>
+            <StyledSubtitle aria-hidden><FormattedMessage id="feedback.email" /></StyledSubtitle>
+            <StyledInput
               autoComplete="email"
               type="email"
-              className={classes.inputField}
-              classes={{ input: `${classes.input} ${formFields.email.error ? classes.errorField : ''}` }}
+              classes={{ input: `${inputClass} ${formFields.email.error ? errorClass : ''}` }}
               onChange={e => handleChange('email', e)}
               onBlur={() => validateEmailField()}
               inputProps={{
@@ -291,35 +310,34 @@ const FeedbackView = ({
               }}
             />
           </FormControl>
-          <div className={classes.inputInfo}>
+          <StyledInputInfoContainer>
             {formFields.email.error && (
               <>
-                <div aria-hidden className={classes.errorContainer}>
-                  <Warning className={classes.errorIcon} />
+                <StyledErrorContainer aria-hidden>
+                  <StyledWarning />
                   &nbsp;
-                  <Typography color="inherit" aria-hidden className={classes.errorText}>
+                  <StyledErrorText color="inherit" aria-hidden>
                     {intl.formatMessage({ id: formFields.email.errorMessageId })}
-                  </Typography>
-                </div>
+                  </StyledErrorText>
+                </StyledErrorContainer>
                 <Typography id="srErrorEmail" role="alert" style={visuallyHidden}>
                   <FormattedMessage id="feedback.srError.email.invalid" />
                 </Typography>
               </>
             )}
-          </div>
+          </StyledInputInfoContainer>
 
           {/* Feedback field */}
           <FormControl>
-            <Typography id="feedbackTitle" className={classes.title}>
+            <StyledTitle id="feedbackTitle">
               <span style={visuallyHidden}><FormattedMessage id="feedback.feedback" /></span>
               <FormattedMessage id="feedback.feedback.info" />
-            </Typography>
-            <Typography aria-hidden className={classes.subtitle}><FormattedMessage id="feedback.feedback" /></Typography>
-            <InputBase
-              className={classes.inputField}
+            </StyledTitle>
+            <StyledSubtitle aria-hidden><FormattedMessage id="feedback.feedback" /></StyledSubtitle>
+            <StyledInput
               multiline
               rows="5"
-              classes={{ input: `${classes.input} ${formFields.feedback.error ? classes.errorField : ''}` }}
+              classes={{ input: `${inputClass} ${formFields.feedback.error ? errorClass : ''}` }}
               onChange={e => handleChange('feedback', e)}
               onBlur={() => validateFeedbackField()}
               inputProps={{
@@ -329,53 +347,153 @@ const FeedbackView = ({
               }}
             />
           </FormControl>
-          <div className={classes.inputInfo}>
+          <StyledInputInfoContainer>
             {formFields.feedback.error && (
               <>
-                <div aria-hidden className={classes.errorContainer}>
-                  <Warning className={classes.errorIcon} />
+                <StyledErrorContainer aria-hidden>
+                  <StyledWarning />
                   &nbsp;
-                  <Typography color="inherit" aria-hidden className={classes.errorText}>
+                  <StyledErrorText color="inherit" aria-hidden>
                     {intl.formatMessage({ id: formFields.feedback.errorMessageId })}
-                  </Typography>
-                </div>
+                  </StyledErrorText>
+                </StyledErrorContainer>
                 <Typography id="srErrorFeedback" role="alert" style={visuallyHidden}>
                   <FormattedMessage id="feedback.srError.feedback.required" />
                 </Typography>
               </>
             )}
-            <Typography aria-hidden className={`${classes.characterInfo} ${feedbackFull ? classes.characterInfoError : ''}`}>
+            <StyledCharacterInfo aria-hidden feedback={+feedbackFull}>
               {`${feedbackLength}/${feedbackMaxLength}`}
-            </Typography>
-          </div>
+            </StyledCharacterInfo>
+          </StyledInputInfoContainer>
           {feedbackPermission}
-        </div>
+        </StyledContentArea>
 
-        <div className={classes.bottomArea}>
-          <Typography className={classes.infoText}><FormattedMessage id="feedback.additionalInfo" /></Typography>
-          <ButtonBase
+        <StyledBottomArea>
+          <StyledInfoText><FormattedMessage id="feedback.additionalInfo" /></StyledInfoText>
+          <StyledLink
             id="FeedbackInfoLink"
-            className={classes.link}
             role="link"
             href={config.feedbackAdditionalInfoLink}
             onClick={() => window.open(config.feedbackAdditionalInfoLink)}
           >
             <Typography><FormattedMessage id="feedback.additionalInfo.link" /></Typography>
-          </ButtonBase>
+          </StyledLink>
           <SMButton
             role="button"
             onClick={() => handleSend()}
             messageID={sending ? 'feedback.sending' : 'feedback.send'}
             color="primary"
           />
-        </div>
-      </form>
+        </StyledBottomArea>
+      </StyledFormContainer>
     </>
   );
 };
-
+const StyledCharacterInfo = styled(Typography)(({ theme, feedback }) => {
+  const styles = {
+    color: '#000',
+    margin: 0,
+    marginLeft: 'auto',
+  };
+  if (feedback) {
+    Object.assign(styles, {
+      color: `${theme.palette.warning.main}`,
+    });
+  }
+  return styles;
+});
+const StyledErrorText = styled(Typography)(() => ({
+  fontSize: '0.75rem',
+  margin: 0,
+}));
+const StyledWarning = styled(Warning)(() => ({
+  fontSize: '1rem',
+}));
+const StyledErrorContainer = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  color: `${theme.palette.warning.main}`,
+}));
+const StyledInputInfoContainer = styled('div')(() => ({
+  display: 'flex',
+}));
+const StyledFormContainer = styled('form')(({ theme }) => ({
+  height: '100%',
+  paddingBottom: theme.spacing(3),
+  backgroundColor: '#EEEEEE',
+}));
+const StyledContentArea = styled('div')(() => ({
+  paddingLeft: 28,
+  paddingRight: 28,
+  textAlign: 'left',
+}));
+const StyledTitle = styled(Typography)(() => ({
+  paddingTop: 16,
+  paddingBottom: 14,
+  paddingRight: 16,
+  fontSize: '0.875rem',
+  fontWeight: 'bold',
+}));
+const StyledSubtitle = styled(Typography)(() => ({
+  paddingLeft: 8,
+  fontSize: '0.75rem',
+}));
+const StyledInput = styled(InputBase)(() => ({
+  backgroundColor: '#fff',
+  marginTop: 4,
+  marginBottom: 4,
+  padding: 0,
+}));
+const StyledModalContainer = styled('div')(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  padding: 24,
+}));
+const StyledModalTitle = styled(Typography)(() => ({
+  fontSize: '1rem',
+  fontWeight: 'bold',
+  textAlign: 'center',
+}));
+const StyledModalButton = styled(SMButton)(() => ({
+  width: 135,
+  color: '#fff',
+}));
+const StyledLink = styled(ButtonBase)(({ theme }) => ({
+  color: theme.palette.link.main,
+  marginTop: 14,
+  marginBottom: 26,
+  textAlign: 'left',
+  textDecoration: 'underline',
+}));
+const StyledBottomArea = styled('div')(() => ({
+  paddingTop: 8,
+  textAlign: 'left',
+  borderTop: '1px solid rgba(0,0,0,0.2)',
+  paddingLeft: 28,
+  paddingRight: 28,
+}));
+const StyledInfoText = styled(Typography)(() => ({
+  marginTop: 14,
+}));
+const StyledCheckboxContainer = styled('div')(() => ({
+  display: 'flex',
+  paddingTop: 16,
+  paddingBottom: 32,
+  alignItems: 'center',
+  '&:focus': {
+    border: '1px solid #1964E6',
+  },
+}));
+const StyledCheckboxIcon = styled('span')(({ theme }) => ({
+  width: 15,
+  height: 15,
+  backgroundColor: '#fff',
+  border: `1px solid ${theme.palette.primary.main};`,
+  borderRadius: 1,
+}));
 FeedbackView.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,

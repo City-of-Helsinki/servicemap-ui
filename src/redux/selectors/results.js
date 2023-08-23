@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 import config from '../../../config';
 import { isEmbed } from '../../utils/path';
-import { filterEmptyServices, filterCities, filterResultTypes } from '../../utils/filters';
+import { filterEmptyServices, filterCitiesAndOrganizations, filterResultTypes } from '../../utils/filters';
 import isClient from '../../utils';
 import orderUnits from '../../utils/orderUnits';
 import getSortingParameters from './ordering';
@@ -16,10 +16,15 @@ const settings = state => state.settings;
  * @param {*} options - options for filtering - municipality: to override city setting filtering
  * @param {*} settings - user settings, used in filtering
  */
-const getFilteredData = (data, options, settings) => {
-  const cities = [];
+export const getFilteredData = (data, settings, options) => {
+  let cities = [];
   config.cities.forEach((city) => {
     cities.push(...settings.cities[city] ? [city] : []);
+  });
+
+  let organizations = [];
+  config.organizations.forEach((organization) => {
+    organizations.push(...settings.organizations[organization.id] ? [organization.id] : []);
   });
 
   let embed = false;
@@ -28,15 +33,15 @@ const getFilteredData = (data, options, settings) => {
   }
 
   let filteredData = data
-    .filter(filterEmptyServices(cities))
+    .filter(filterEmptyServices(cities, organizations))
     .filter(filterResultTypes());
 
   if (!embed) {
-    if (options && options.municipality) {
-      filteredData = filteredData.filter(filterCities(options.municipality.split(',')));
-    } else {
-      filteredData = filteredData.filter(filterCities(cities));
+    if (options) {
+      if (options.municipality) cities = options.municipality.split(',');
+      if (options.organizations) organizations = options.organizations.split(',');
     }
+    filteredData = filteredData.filter(filterCitiesAndOrganizations(cities, organizations));
   }
   return filteredData;
 };
@@ -56,7 +61,7 @@ export const getProcessedData = createSelector(
       options.municipality = overrideMunicipality;
     }
 
-    return getFilteredData(data, options, settings);
+    return getFilteredData(data, settings, options);
   },
 );
 

@@ -322,7 +322,7 @@ const UnitView = (props) => {
                   divider
                   icon={<Hearing />}
                   key={item.name}
-                  text={`${item.name} ${intl.formatMessage({ id: 'unit.opens.new.tab' })}`}
+                  text={`${item.name} ${intl.formatMessage({ id: 'opens.new.tab' })}`}
                   handleItemClick={() => window.open(item.url)}
                 />
               ))}

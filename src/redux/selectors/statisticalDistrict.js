@@ -4,7 +4,7 @@ import flip from '@turf/flip';
 import dataVisualization from '../../utils/dataVisualization';
 import { getCitySettings } from './settings';
 import { getLocale } from './user';
-import { unitsSortAlphabetically } from '../../utils/units';
+import { getUnitCount, unitsSortAlphabetically } from '../../utils/units';
 
 export const getStatisticalDistrictSelection = state => (
   state.statisticalDistrict.districts.selection
@@ -169,7 +169,7 @@ export const getOrderedStatisticalDistrictServices = createSelector(
         .filter((s) => {
           // Filter services that have any units or with city
           // selections active if selected cities has units
-          const selectedCitiesHasUnits = selectedCities.some(c => s?.unit_count?.municipality[c]);
+          const selectedCitiesHasUnits = selectedCities.some(c => getUnitCount(s, c) > 0);
           return s.unit_count?.total > 0
                 && (
                   selectedCities.length === 0

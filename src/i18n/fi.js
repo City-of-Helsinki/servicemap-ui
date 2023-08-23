@@ -471,9 +471,10 @@ const translations = {
   'unit.opening.hours': 'Aukioloajat',
   'unit.opening.hours.missing': 'Aukioloaikoja ei ilmoitettu',
   'unit.opening.hours.info': 'Lisätietoa aukioloajoista',
+  'unit.otherAddress.show': 'Muu sisäänkäynti',
+  'unit.otherAddress.link': 'Katso lisätiedot (uusi välilehti)',
   'unit.contact': 'Yhteyshenkilö',
   'unit.school.year': 'Lukuvuosi',
-  'unit.opens.new.tab': '(uusi välilehti)',
   'unit.reservations.description': 'Tästä löydät tietoa toimipisteen tarjoamista varattavista tiloista ja tarvikkeista.',
 
   'unit.reservations.count': `{count, plural,
@@ -647,6 +648,8 @@ const translations = {
   'settings.city.vantaa': 'Vantaa',
   'settings.city.kauniainen': 'Kauniainen',
   'settings.city.kirkkonummi': 'Kirkkonummi',
+  'settings.city.länsi-uudenmaan hyvinvointialue': 'Länsi-Uudenmaan hyvinvointialue',
+  'settings.city.vantaan ja keravan hyvinvointialue': 'Vantaan ja Keravan hyvinvointialue',
   'settings.city.askola': 'Askola',
   'settings.city.hanko': 'Hanko',
   'settings.city.hyvinkää': 'Hyvinkää',
@@ -682,7 +685,7 @@ const translations = {
   'settings.choose.mobility': 'Valitse liikkumisrajoitteesi',
   'settings.choose.senses': 'Valitse aistirajoitteesi',
   'settings.choose.cities': 'Valitse kaupunkiasetuksesi',
-  'settings.choose.districts': 'Valitse alueasetuksesi', // TODO is waiting here for wellness districts
+  'settings.choose.organization': 'Valitse palveluntarjoaja',
   'settings.map.info': 'Kartta-asetuksista voit valita sinulle parhaiten sopivan pohjakartan.',
 
   // Tools
@@ -694,6 +697,7 @@ const translations = {
   'info.title': 'Tietoa palvelusta ja saavutettavuusseloste',
   'info.statement': 'Saavutettavuusseloste (uusi välilehti)',
 
+  'opens.new.tab': '(uusi välilehti)',
   'alert.close': 'Sulje ilmoitus',
 };
 

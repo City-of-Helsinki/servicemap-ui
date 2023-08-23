@@ -7,17 +7,15 @@ import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { Language } from '@mui/icons-material';
+import { css } from '@emotion/css';
+import styled from '@emotion/styled';
 import LocaleUtility from '../../../utils/locale';
 import MobileNavButton from '../MobileNavButton/MobileNavButton';
 
-const LanguageMenuComponent = ({
-  mobile,
-  classes,
-}) => {
+const LanguageMenuComponent = ({ mobile }) => {
   const locale = useSelector(state => state.user.locale);
   const location = useLocation();
   const [langAnchorEl, setLangAnchorEl] = useState(null);
-  const typographyClass = className => `${mobile ? classes.mobileFont : ''} ${className || ''}`;
 
   const changeLang = (value) => {
     const newLocation = location;
@@ -27,32 +25,34 @@ const LanguageMenuComponent = ({
   };
 
   if (!mobile) {
+    const topButtonFocusedClass = css({
+      boxShadow: '0 0 0 2px !important',
+    });
     return (
       <>
         {LocaleUtility.availableLocales
-          .map(currentLocale => (
-            <ButtonBase
-              sx={{ mr: 3, height: '100%', whiteSpace: 'nowrap' }}
-              aria-current={currentLocale === locale ? 'true' : false}
-              role="link"
-              key={currentLocale}
-              focusVisibleClassName={classes.topButtonFocused}
-              lang={currentLocale}
-              onClick={() => changeLang(currentLocale)}
-            >
-              <Typography
-                className={typographyClass(
-                  currentLocale === locale
-                    ? classes.bold
-                    : classes.greyText,
-                )}
-                color="inherit"
-                variant="body2"
+          .map((currentLocale) => {
+            return (
+              <ButtonBase
+                sx={{ mr: 3, height: '100%', whiteSpace: 'nowrap' }}
+                aria-current={currentLocale === locale ? 'true' : false}
+                role="link"
+                key={currentLocale}
+                focusVisibleClassName={topButtonFocusedClass}
+                lang={currentLocale}
+                onClick={() => changeLang(currentLocale)}
               >
-                <FormattedMessage id={`general.language.${currentLocale}`} />
-              </Typography>
-            </ButtonBase>
-          ))}
+                <StyledTypography
+                  mobile={+(!!mobile)}
+                  bold={+(currentLocale === locale)}
+                  color="inherit"
+                  variant="body2"
+                >
+                  <FormattedMessage id={`general.language.${currentLocale}`} />
+                </StyledTypography>
+              </ButtonBase>
+            );
+          })}
       </>
     );
   }
@@ -102,13 +102,31 @@ const LanguageMenuComponent = ({
   );
 };
 
+const StyledTypography = styled(Typography)(({ theme, mobile, bold }) => {
+  const styles = {};
+  if (mobile) {
+    Object.assign(styles, {
+      ...theme.typography.caption,
+      lineHeight: '13px',
+      fontWeight: 'normal',
+      letterSpacing: 'normal',
+      color: 'inherit',
+    });
+  }
+  if (bold) {
+    Object.assign(styles, {
+      fontWeight: 'bold',
+    });
+  } else {
+    // grey text
+    Object.assign(styles, {
+      color: '#DEDFE1',
+    });
+  }
+  return styles;
+});
+
 LanguageMenuComponent.propTypes = {
-  classes: PropTypes.shape({
-    bold: PropTypes.string,
-    greyText: PropTypes.string,
-    mobileFont: PropTypes.string,
-    topButtonFocused: PropTypes.string,
-  }).isRequired,
   mobile: PropTypes.bool,
 };
 

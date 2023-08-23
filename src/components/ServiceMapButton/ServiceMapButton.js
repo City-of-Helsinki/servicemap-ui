@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ButtonBase, Typography } from '@mui/material';
+import styled from '@emotion/styled';
 
 // ServiceMapButton
 const SMButton = (props) => {
   const {
     'aria-label': ariaLabel,
     children,
-    classes,
     intl,
     className,
     small,
@@ -24,10 +24,6 @@ const SMButton = (props) => {
     passingRef,
     ...rest
   } = props;
-  const colorStyle = classes[color] || '';
-  const buttonClasses = `SMButton ${classes.button} ${small ? classes.smallButton : ''} ${margin ? classes.margin : classes.marginRight} ${className} ${colorStyle}`;
-  const textClasses = classes.typography;
-
   let buttonTitle = null;
 
   if (messageID) {
@@ -35,12 +31,15 @@ const SMButton = (props) => {
   }
 
   return (
-    <ButtonBase
+    <StyledButtonBase
+      small={+small}
+      margin={+margin}
+      color={color}
       {...rest}
       ref={passingRef}
       aria-label={ariaLabel || buttonTitle}
       disabled={disabled}
-      className={buttonClasses}
+      className={`SMButton ${className}`}
       onClick={onClick}
       role={role}
       style={{
@@ -54,18 +53,91 @@ const SMButton = (props) => {
       {
         messageID
         && (
-          <Typography aria-hidden color="inherit" component="p" variant={textVariant || 'caption'} className={textClasses}>
+          <StyledTypography aria-hidden color="inherit" component="p" variant={textVariant || 'caption'}>
             {buttonTitle}
-          </Typography>
+          </StyledTypography>
         )
       }
       {
         !messageID
         && children
       }
-    </ButtonBase>
+    </StyledButtonBase>
   );
 };
+
+const StyledTypography = styled(Typography)(() => ({
+  fontSize: '0.875rem',
+}));
+
+const StyledButtonBase = styled(ButtonBase)(({ theme, small, margin, color }) => {
+  const styles = {
+    minHeight: 38,
+    padding: '0 11px',
+    boxSizing: 'border-box',
+    borderRadius: 4,
+  };
+  if (small) {
+    Object.assign(styles, {
+      minHeight: 32,
+      padding: '0 8px',
+    });
+  }
+  if (margin) {
+    Object.assign(styles, {
+      marginTop: theme.spacing(2),
+      marginBottom: theme.spacing(2),
+      marginLeft: theme.spacing(1),
+      marginRight: theme.spacing(1),
+    });
+  } else {
+    Object.assign(styles, {
+      marginRight: theme.spacing(2),
+    });
+  }
+  if (color === 'primary') {
+    Object.assign(styles, {
+      color: theme.palette.primary.highContrast,
+      backgroundColor: theme.palette.primary.main,
+      '&:hover': {
+        backgroundColor: theme.palette.primary.light,
+      },
+      '&:disabled': {
+        backgroundColor: theme.palette.disabled.strong,
+      },
+    });
+  }
+  if (color === 'secondary') {
+    Object.assign(styles, {
+      color: theme.palette.secondary.contrastText,
+      backgroundColor: '#353638',
+      border: `0.5px solid ${theme.palette.secondary.contrastText}`,
+      '&:hover': {
+        backgroundColor: theme.palette.secondary.light,
+      },
+      '&:disabled': {
+        backgroundColor: theme.palette.secondary.light,
+        color: 'rgba(0, 0, 0, 0.5)',
+      },
+    });
+  }
+  if (color === 'default') {
+    Object.assign(styles, {
+      color: theme.palette.white.contrastText,
+      backgroundColor: theme.palette.white.main,
+      border: `0.5px solid ${theme.palette.white.contrastText}`,
+      '&:hover': {
+        backgroundColor: theme.palette.white.light,
+      },
+      '&:disabled': {
+        // backgroundColor: theme.palette.white.dark,
+        borderColor: theme.palette.white.dark,
+        color: 'rgba(0, 0, 0, 0.5)',
+      },
+    });
+  }
+  return styles;
+});
 
 SMButton.propTypes = {
   'aria-label': PropTypes.string,
@@ -77,7 +149,6 @@ SMButton.propTypes = {
   messageID: PropTypes.string,
   onClick: PropTypes.func.isRequired,
   style: PropTypes.objectOf(PropTypes.any),
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   children: PropTypes.node,
   role: PropTypes.oneOf(['button', 'link']),
   disabled: PropTypes.bool,

@@ -25,7 +25,9 @@ createTestCafe('localhost')
       ])
       .browsers(['chrome:headless'])
       // .reporter('list')
-      .run();
+      .run({
+        disableNativeAutomation: true,
+      });
   })
   .then((failedCount) => {
     console.log(`Tests failed: ${failedCount}`);
