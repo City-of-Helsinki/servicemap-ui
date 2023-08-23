@@ -225,7 +225,7 @@ const ServiceTreeView = (props) => {
     let resultCount = 0;
 
     if (!citySettings.length || citySettings.length === config.cities.length) {
-      resultCount = item.unit_count.total;
+      resultCount = item.unit_count?.total || 0;
     } else {
       config.cities
         .filter(city => settings.cities[city])
