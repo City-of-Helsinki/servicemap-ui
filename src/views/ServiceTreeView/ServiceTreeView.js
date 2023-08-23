@@ -217,11 +217,10 @@ const ServiceTreeView = (props) => {
     }
   }, []);
 
-  const expandingComponent = (item, level, last = []) => {
-    const hasChildren = item.children.length;
-    const isOpen = opened.includes(item.id);
-    const children = hasChildren ? services.filter(e => e.parent === item.id) : null;
-
+  function calculateTitle(item) {
+    if (variant === 'Mobility') {
+      return getLocaleText(item.name);
+    }
     let resultCount = 0;
 
     if (!citySettings.length || citySettings.length === config.cities.length) {
@@ -233,6 +232,14 @@ const ServiceTreeView = (props) => {
           resultCount += getUnitCount(item, city);
         });
     }
+    return `${getLocaleText(item.name)} (${resultCount})`;
+  }
+
+  const expandingComponent = (item, level, last = []) => {
+    const hasChildren = item.children.length;
+    const isOpen = opened.includes(item.id);
+    const children = hasChildren ? services.filter(e => e.parent === item.id) : null;
+    const titleText = calculateTitle(item);
 
     const checkboxSrTitle = `${intl.formatMessage({ id: 'services.tree.level' })} ${level + 1} ${getLocaleText(item.name)} ${intl.formatMessage({ id: 'services.category.select' })}`;
     const itemSrTitle = `${getLocaleText(item.name)} ${intl.formatMessage({ id: 'services.category.open' })}`;
@@ -274,7 +281,7 @@ const ServiceTreeView = (props) => {
           )}
           titleContent={(
             <StyledText aria-hidden>
-              {`${getLocaleText(item.name)} (${resultCount})`}
+              {titleText}
             </StyledText>
           )}
           collapseContent={
